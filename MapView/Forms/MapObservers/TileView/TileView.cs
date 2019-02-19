@@ -56,19 +56,15 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 		}
 
-		private IList<TilepartBase> _tileparts;
 		private IList<TilepartBase> TileParts
 		{
-			get { return _tileparts; }
 			set
 			{
-				_tileparts = value;
-
 				for (int id = 0; id != _panels.Length; ++id)
-					_panels[id].SetTiles(_tileparts);
+					_panels[id].SetTiles(value);
 
-				tsslTotal.Text = "Total " + _tileparts.Count;
-				if (_tileparts.Count > MapFileBase.MaxTerrainId)
+				tsslTotal.Text = "Total " + value.Count;
+				if (value.Count > MapFileBase.MaxTerrainId)
 					tsslTotal.ForeColor = Color.MediumVioletRed;
 				else
 					tsslTotal.ForeColor = SystemColors.ControlText;
