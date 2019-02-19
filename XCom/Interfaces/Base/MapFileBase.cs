@@ -28,6 +28,8 @@ namespace XCom.Interfaces.Base
 		#region Fields (static)
 		private const int HalfWidthConst  = 16;
 		private const int HalfHeightConst =  8;
+
+		public const int MaxTerrainId = 253;
 		#endregion
 
 

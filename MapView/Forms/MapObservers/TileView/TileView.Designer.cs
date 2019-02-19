@@ -32,8 +32,12 @@
 			this.tsmiVolutarMcdEditor = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsddbEdit = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmiOptions = new System.Windows.Forms.ToolStripMenuItem();
+			this.ssStatusbar = new System.Windows.Forms.StatusStrip();
+			this.tsslTotal = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tsslOver = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tcTileTypes.SuspendLayout();
 			this.tsMain.SuspendLayout();
+			this.ssStatusbar.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tcTileTypes
@@ -48,14 +52,14 @@
 			this.tcTileTypes.Location = new System.Drawing.Point(0, 25);
 			this.tcTileTypes.Name = "tcTileTypes";
 			this.tcTileTypes.SelectedIndex = 0;
-			this.tcTileTypes.Size = new System.Drawing.Size(640, 455);
+			this.tcTileTypes.Size = new System.Drawing.Size(640, 433);
 			this.tcTileTypes.TabIndex = 0;
 			// 
 			// tpAll
 			// 
 			this.tpAll.Location = new System.Drawing.Point(4, 21);
 			this.tpAll.Name = "tpAll";
-			this.tpAll.Size = new System.Drawing.Size(632, 430);
+			this.tpAll.Size = new System.Drawing.Size(632, 408);
 			this.tpAll.TabIndex = 0;
 			this.tpAll.Text = "ALL";
 			// 
@@ -174,9 +178,40 @@
 			this.tsmiOptions.Text = "Options";
 			this.tsmiOptions.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
+			// ssStatusbar
+			// 
+			this.ssStatusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tsslTotal,
+			this.tsslOver});
+			this.ssStatusbar.Location = new System.Drawing.Point(0, 458);
+			this.ssStatusbar.Name = "ssStatusbar";
+			this.ssStatusbar.Size = new System.Drawing.Size(640, 22);
+			this.ssStatusbar.TabIndex = 2;
+			this.ssStatusbar.Text = "statusStrip1";
+			// 
+			// tsslTotal
+			// 
+			this.tsslTotal.AutoSize = false;
+			this.tsslTotal.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tsslTotal.Name = "tsslTotal";
+			this.tsslTotal.Size = new System.Drawing.Size(65, 22);
+			this.tsslTotal.Text = "Total";
+			this.tsslTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tsslOver
+			// 
+			this.tsslOver.AutoSize = false;
+			this.tsslOver.Margin = new System.Windows.Forms.Padding(0);
+			this.tsslOver.Name = "tsslOver";
+			this.tsslOver.Size = new System.Drawing.Size(524, 22);
+			this.tsslOver.Spring = true;
+			this.tsslOver.Text = "Over";
+			this.tsslOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// TileView
 			// 
 			this.Controls.Add(this.tcTileTypes);
+			this.Controls.Add(this.ssStatusbar);
 			this.Controls.Add(this.tsMain);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "TileView";
@@ -184,6 +219,8 @@
 			this.tcTileTypes.ResumeLayout(false);
 			this.tsMain.ResumeLayout(false);
 			this.tsMain.PerformLayout();
+			this.ssStatusbar.ResumeLayout(false);
+			this.ssStatusbar.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -206,5 +243,8 @@
 		private System.Windows.Forms.TabPage tpObjects;
 		private System.Windows.Forms.TabPage tpNorthwalls;
 		private System.Windows.Forms.TabPage tpWestwalls;
+		private System.Windows.Forms.StatusStrip ssStatusbar;
+		private System.Windows.Forms.ToolStripStatusLabel tsslTotal;
+		private System.Windows.Forms.ToolStripStatusLabel tsslOver;
 	}
 }

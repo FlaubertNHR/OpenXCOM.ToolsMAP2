@@ -225,6 +225,7 @@ namespace MapView.Forms.MapObservers.TileViews
 						_scrollBar.Value += _scrollBar.LargeChange;
 				}
 			}
+			OnMouseMove(e); // update Overinfo on the statusbar.
 		}
 
 		/// <summary>
@@ -270,6 +271,27 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 		}
 
+		/// <summary>
+		/// Prints info about a mouseovered tilepart to the statusbar.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseMove(MouseEventArgs e)
+		{
+			TilepartBase part = null;
+
+			int id = GetOverId(e);
+			if (id != -1 && id < _parts.Length)
+				part = _parts[id];
+
+			ViewerFormsManager.TileView.Control.StatusbarOverInfo(part);
+		}
+
+
+		/// <summary>
+		/// Gets the ID of a tilepart at a mouse-position.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <returns></returns>
 		private int GetOverId(MouseEventArgs e)
 		{
 			if (_parts != null && _parts.Length != 0

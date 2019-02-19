@@ -56,12 +56,22 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 		}
 
+		private IList<TilepartBase> _tileparts;
 		private IList<TilepartBase> TileParts
 		{
+			get { return _tileparts; }
 			set
 			{
+				_tileparts = value;
+
 				for (int id = 0; id != _panels.Length; ++id)
-					_panels[id].SetTiles(value);
+					_panels[id].SetTiles(_tileparts);
+
+				tsslTotal.Text = "Total " + _tileparts.Count;
+				if (_tileparts.Count > MapFileBase.MaxTerrainId)
+					tsslTotal.ForeColor = Color.MediumVioletRed;
+				else
+					tsslTotal.ForeColor = SystemColors.ControlText;
 
 				OnResize(null);
 			}
@@ -155,7 +165,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Fires when a tile is selected. Passes an event to
+		/// Fires when a tilepart is selected. Passes an event to
 		/// 'TileSelectedEvent_Observer0'.
 		/// </summary>
 		/// <param name="part"></param>
@@ -181,7 +191,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		/// <summary>
 		/// Changes the currently selected quadrant in the QuadrantPanel when
-		/// a tile is selected in TileView.
+		/// a tilepart is selected in TileView.
 		/// That is, fires
 		///   TopView.Control.SelectQuadrant()
 		/// and
@@ -207,7 +217,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// These are the default colors for tiles' Special Properties.
+		/// These are the default colors for tileparts' Special Properties.
 		/// TileView will load these colors when the program loads, then any
 		/// Special Property colors that were customized will be set and
 		/// accessed by TilePanel and/or the Help screen later.
@@ -444,7 +454,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Opens PckView with the tileset of the currently selected tile loaded.
+		/// Opens PckView with the tileset of the currently selected tilepart
+		/// loaded.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -561,8 +572,8 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		#region Methods
 		/// <summary>
-		/// Builds and returns a string that's appropriate for the currently
-		/// selected tile.
+		/// Builds and returns a string that's appropriate for a currently
+		/// selected tilepart.
 		/// </summary>
 		/// <param name="setId">the ID in total-terrains</param>
 		/// <param name="terId">the ID in a terrain</param>
@@ -578,7 +589,28 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Gets the label of the tileset of the currently selected tile.
+		/// Prints info for a mouseovered tilepart.
+		/// </summary>
+		/// <param name="part"></param>
+		internal void StatusbarOverInfo(TilepartBase part)
+		{
+			string info = String.Empty;
+
+			if (part != null)
+			{
+				string label = ((MapFileChild)MapBase).GetTerrainLabel(part);
+				info = String.Format(
+								System.Globalization.CultureInfo.CurrentCulture,
+								"{2}  terId {1}  setId {0}",
+								part.SetId,
+								part.TerId,
+								label);
+			}
+			tsslOver.Text = "Over " + info;
+		}
+
+		/// <summary>
+		/// Gets the label of the terrain of the currently selected tilepart.
 		/// </summary>
 		/// <returns></returns>
 		private string GetTerrainLabel()

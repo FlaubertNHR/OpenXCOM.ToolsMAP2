@@ -122,7 +122,7 @@ namespace XCom
 			this.lbl_InfoHeader.Name = "lbl_InfoHeader";
 			this.lbl_InfoHeader.Size = new System.Drawing.Size(390, 15);
 			this.lbl_InfoHeader.TabIndex = 1;
-			this.lbl_InfoHeader.Text = "MCD records allocated by terrains exceeds 254.";
+			this.lbl_InfoHeader.Text = "Total MCD records allocated by terrains exceeds 254.";
 			// 
 			// rtb_Text
 			// 
