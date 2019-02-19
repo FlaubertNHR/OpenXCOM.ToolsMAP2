@@ -123,6 +123,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			AddPanel(westwalls,  tpWestwalls);
 			AddPanel(northwalls, tpNorthwalls);
 			AddPanel(content,    tpObjects);
+
+			_allTiles.SetTickerSubscription(true);
 		}
 		#endregion
 
@@ -138,17 +140,25 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <summary>
 		/// Fires when a tab is clicked.
 		/// Focuses the selected page/panel, updates the quadrant and MCD-info
-		/// if applicable.
+		/// if applicable. And subscribes/unsubscribes panels to the static
+		/// ticker's eventhandler.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnSelectedIndexChanged(object sender, EventArgs e)
 		{
-			GetSelectedPanel().Focus();
+			var panel = GetSelectedPanel() as TilePanel;
+
+			foreach (var panel_ in _panels)
+			{
+				panel_.SetTickerSubscription(panel_ == panel);
+			}
+
+			panel.Focus();
+
+			McdRecord record;
+
 			var f = FindForm();
-
-			McdRecord record = null;
-
 			if (SelectedTilepart != null)
 			{
 				ViewerFormsManager.TopView     .Control   .SelectQuadrant(SelectedTilepart.Record.PartType);
@@ -158,7 +168,10 @@ namespace MapView.Forms.MapObservers.TileViews
 				record = SelectedTilepart.Record;
 			}
 			else
+			{
 				f.Text = "TileView";
+				record = null;
+			}
 
 			if (_mcdInfoForm != null)
 				_mcdInfoForm.UpdateData(record);

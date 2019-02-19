@@ -46,6 +46,8 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		private static Hashtable _specialTypeBrushes;
 
+		private static Timer _t1 = new Timer();
+
 		private int _tilesX = 1;
 		private int _startY;
 		private int _id;
@@ -105,6 +107,13 @@ namespace MapView.Forms.MapObservers.TileViews
 					_id = 0;
 			}
 		}
+
+//		private static SpriteCollection _extraFile;
+//		public static SpriteCollection ExtraFile
+//		{
+//			get { return _extraFile; }
+//			set { _extraFile = value; }
+//		}
 		#endregion
 
 
@@ -117,13 +126,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			_specialTypeBrushes = brushes;
 		}
-
-//		private static SpriteCollection _extraFile;
-//		public static SpriteCollection ExtraFile
-//		{
-//			get { return _extraFile; }
-//			set { _extraFile = value; }
-//		}
 
 
 		#region cTor
@@ -151,11 +153,40 @@ namespace MapView.Forms.MapObservers.TileViews
 				   | ControlStyles.AllPaintingInWmPaint
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
-		}
+
+
+			_t1.Interval = 250;	// because the mouse OnLeave event doesn't fire
+			_t1.Enabled = true;	// when the mouse moves out of the panel directly
+		}						// from a tilepart's part-icon.
 		#endregion
 
 
 		#region Event Calls
+		/// <summary>
+		/// Ensures that any Overinfo on the statusbar is cleared when the
+		/// mouse-cursor leaves this panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void t1_Tick(object sender, EventArgs e)
+		{
+			if (!Bounds.Contains(PointToClient(Cursor.Position)))
+			{
+				ViewerFormsManager.TileView.Control.StatusbarOverInfo(null);
+			}
+		}
+
+		/// <summary>
+		/// Subscribes or unsubscribes this panel's ticker-handler to the static
+		/// timer-object; prevents all 5 panels' handlers from firing needlessly.
+		/// </summary>
+		/// <param name="subscribe"></param>
+		internal void SetTickerSubscription(bool subscribe)
+		{
+			if (subscribe) _t1.Tick += t1_Tick;
+			else           _t1.Tick -= t1_Tick;
+		}
+
 		/// <summary>
 		/// Fires when anything changes the Value of the scroll-bar.
 		/// </summary>

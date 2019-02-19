@@ -169,16 +169,16 @@ namespace MapView.Forms.MapObservers.RouteViews
 			MainViewUnderlay.Instance.MainViewOverlay.MouseDragEvent += PathSelectedLozenge;
 
 
-			var timer1 = new Timer();	// because the mouse OnLeave event doesn't fire
-			timer1.Interval = 250;		// when the mouse moves over a different form before
-			timer1.Enabled = true;		// actually "leaving" this control.
-			timer1.Tick += timer1_Tick;	// btw, this is only to stop the overlay from drawing
-		}								// on both RouteView and TopRouteView(Route) simultaneously.
-		#endregion						// so uh yeah it's overkill
-										// Good Lord it works.
+			var t1 = new Timer();	// because the mouse OnLeave event doesn't fire
+			t1.Interval = 250;		// when the mouse moves over a different form before
+			t1.Enabled = true;		// actually "leaving" this control.
+			t1.Tick += t1_Tick;		// btw, this is only to stop the overlay from drawing
+		}							// on both RouteView and TopRouteView(Route) simultaneously.
+		#endregion					// so uh yeah it's overkill
+									// Good Lord it works.
 
 		#region Eventcalls
-		private void timer1_Tick(object sender, EventArgs e)
+		private void t1_Tick(object sender, EventArgs e)
 		{
 			if (!Bounds.Contains(PointToClient(Cursor.Position)))
 				CursorPosition = new Point(
@@ -192,14 +192,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
-			timer1_Tick(this, e);
+			t1_Tick(this, e);
 		}
 
 
 		protected override void OnResize(EventArgs e)
 		{
-//			base.OnResize(e);
-
 			if (MapFile != null)
 			{
 				int width  = Width  - OffsetX * 2;
@@ -242,8 +240,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-//			base.OnMouseDown(e);
-
 			Select();
 
 			if (MapFile != null) // safety.
@@ -290,8 +286,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-//			base.OnMouseUp(e);
-
 			if (MapFile != null // safety.
 				&& RoutePanelMouseUpEvent != null)
 			{
