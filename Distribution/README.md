@@ -9,6 +9,16 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 February 19<br>
+[MapView2_190219.7z](https://drive.google.com/file/d/1IZ_IrFpHJRb8oTd59zFwcCe4N6NtHr77/view?usp=sharing)
+
+- show an error dialog if the quantity of sprites in the PCK file does not match the quantity expected by its TAB file
+- output MainView screenshots as PNG
+- PckView: print selected and over IDs as 0-based
+- update CHM helpfile
+- MainView toolbar: enable/disable the levelup/leveldown and scale-in/scale-out buttons when they hit their min and max values
+- TileView: add statusbar that shows the count of total tileparts in assigned terrains as well as info about a tilepart when it's mouseovered
+
 2019 February 7<br>
 [MapView2_190207.7z](https://drive.google.com/file/d/1C8mEQAeIBz1EFhcEuEjkg93gd2vbaUsi/view?usp=sharing)
 
