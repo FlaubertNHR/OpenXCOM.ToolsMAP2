@@ -22,9 +22,15 @@ namespace MapView
 		:
 			Form
 	{
+		const string TitlePref = " ScanG - ";
+
+
 		MapFileBase _base;
 		int[,] _blobs;
 		Palette _pal;
+
+		bool _singleLevel;
+		int Level;
 
 
 		#region cTor
@@ -35,10 +41,15 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			KeyDown += OnKeyDown;
+			SetStyle(ControlStyles.OptimizedDoubleBuffer // this should be set on the Panel but it doesn't like that
+				   | ControlStyles.AllPaintingInWmPaint
+				   | ControlStyles.UserPaint
+				   | ControlStyles.ResizeRedraw, true);
 
 
 			_base = @base;
+			Level = _base.Level;
+			Text = TitlePref + GetTitlePost();
 
 			if (_base.Descriptor.Pal == Palette.TftdBattle)
 			{
@@ -81,11 +92,8 @@ namespace MapView
 				return;
 
 			var graphics = e.Graphics;
-//			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality; // probly unused.
 
 			var mainViewOverlay = XCMainWindow.Instance._mainViewUnderlay.MainViewOverlay;
-
-//			graphics.InterpolationMode = InterpolationLocal; // see MainViewOverlay
 
 			var spriteAttributes = new ImageAttributes();
 			if (mainViewOverlay._spriteShadeEnabled)
@@ -120,12 +128,15 @@ namespace MapView
 				XCMapTile tile;
 				int blobid, palid, j;
 
-				for (int z = _base.MapSize.Levs - 1; z >= _base.Level; --z)
+
+				int zStart;
+				if (_singleLevel) zStart = Level;
+				else              zStart = _base.MapSize.Levs - 1;
+
+				for (int z = zStart; z >= Level; --z)
 				for (int y = 0; y != _base.MapSize.Rows; ++y)
 				for (int x = 0; x != _base.MapSize.Cols; ++x)
 				{
-					//LogFile.WriteLine("x= " + x + " y= " + y + " z= " + z);
-
 					ptrPixel = pos + (x * 16) + (y * 16 * data.Stride);
 
 					tile = _base[y,x,z] as XCMapTile;
@@ -133,10 +144,6 @@ namespace MapView
 					if (tile.Ground != null)
 					{
 						blobid = tile.Ground.Record.ScanG;
-
-						//string debug = ". ground= " + blobid + ":";
-						//for (int id = 0; id != 16; ++id) debug += " " + _blobs[blobid, id];
-						//LogFile.WriteLine(debug);
 
 						for (int i = 0; i != 256; ++i)
 						{
@@ -167,7 +174,6 @@ namespace MapView
 					if (tile.West != null)
 					{
 						blobid = tile.West.Record.ScanG;
-						//LogFile.WriteLine(". west= " + blobid);
 
 						for (int i = 0; i != 256; ++i)
 						{
@@ -185,7 +191,6 @@ namespace MapView
 					if (tile.North != null)
 					{
 						blobid = tile.North.Record.ScanG;
-						//LogFile.WriteLine(". north= " + blobid);
 
 						for (int i = 0; i != 256; ++i)
 						{
@@ -203,7 +208,6 @@ namespace MapView
 					if (tile.Content != null)
 					{
 						blobid = tile.Content.Record.ScanG;
-						//LogFile.WriteLine(". content= " + blobid);
 
 						for (int i = 0; i != 256; ++i)
 						{
@@ -219,12 +223,10 @@ namespace MapView
 					}
 				}
 			}
-
 			pic.UnlockBits(data);
 
 			pic.Palette = _pal.ColorTable;
 
-//			graphics.DrawImage(pic, 1, 1);
 			graphics.DrawImage(
 							pic,
 							new Rectangle(1, 1, pic.Width, pic.Height),
@@ -232,7 +234,57 @@ namespace MapView
 							GraphicsUnit.Pixel,
 							spriteAttributes);
 		}
+
+
+		/// <summary>
+		/// Double-click handler for the panel. Toggles between single-level
+		/// view and multilevel view.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnDoubleClick(object sender, EventArgs e)
+		{
+			_singleLevel = !_singleLevel;
+
+			Text = TitlePref + GetTitlePost();
+
+			pnl_ScanG.Invalidate();
+		}
+
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			if (e.Delta < 0 && Level != 0)
+			{
+				--Level;
+				pnl_ScanG.Invalidate();
+			}
+			else if (e.Delta > 0 && Level != _base.MapSize.Levs - 1)
+			{
+				++Level;
+				pnl_ScanG.Invalidate();
+			}
+			Text = TitlePref + GetTitlePost();
+		}
+
+		/// <summary>
+		/// This works great. Absolutely kills flicker on redraws.
+		/// </summary>
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000;
+				return cp;
+			}
+		}
 		#endregion
+
+
+		string GetTitlePost()
+		{
+			return "L" + (_base.MapSize.Levs - Level) + (_singleLevel ? "  single" : String.Empty);
+		}
 
 
 		#region Windows Form Designer generated code
@@ -266,18 +318,19 @@ namespace MapView
 			this.pnl_ScanG.Size = new System.Drawing.Size(292, 274);
 			this.pnl_ScanG.TabIndex = 0;
 			this.pnl_ScanG.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
+			this.pnl_ScanG.DoubleClick += new System.EventHandler(this.OnDoubleClick);
 			// 
 			// ScanGViewer
 			// 
 			this.ClientSize = new System.Drawing.Size(292, 274);
 			this.Controls.Add(this.pnl_ScanG);
-			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MaximizeBox = false;
 			this.Name = "ScanGViewer";
 			this.ShowIcon = false;
-			this.Text = " ScanG view";
+			this.Text = " ScanG";
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ResumeLayout(false);
 
 		}
