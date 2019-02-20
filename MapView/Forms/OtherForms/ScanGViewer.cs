@@ -258,6 +258,7 @@ namespace MapView
 			// 
 			// pnl_ScanG
 			// 
+			this.pnl_ScanG.BackColor = System.Drawing.SystemColors.Desktop;
 			this.pnl_ScanG.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnl_ScanG.Location = new System.Drawing.Point(0, 0);
 			this.pnl_ScanG.Margin = new System.Windows.Forms.Padding(0);
@@ -276,7 +277,7 @@ namespace MapView
 			this.MaximizeBox = false;
 			this.Name = "ScanGViewer";
 			this.ShowIcon = false;
-			this.Text = " ScanG";
+			this.Text = " ScanG view";
 			this.ResumeLayout(false);
 
 		}

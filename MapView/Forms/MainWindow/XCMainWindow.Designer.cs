@@ -208,7 +208,7 @@ namespace MapView
 			this.miScanG.Enabled = false;
 			this.miScanG.Index = 13;
 			this.miScanG.Shortcut = System.Windows.Forms.Shortcut.CtrlG;
-			this.miScanG.Text = "Scan&G";
+			this.miScanG.Text = "Scan&G view";
 			this.miScanG.Click += new System.EventHandler(this.OnScanGClick);
 			// 
 			// miRegenOccult
