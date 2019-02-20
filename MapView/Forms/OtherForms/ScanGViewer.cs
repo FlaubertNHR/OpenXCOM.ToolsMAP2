@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
@@ -78,6 +79,18 @@ namespace MapView
 		{
 			if (_blobs == null || _pal == null)
 				return;
+
+			var graphics = e.Graphics;
+//			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality; // probly unused.
+
+			var mainViewOverlay = XCMainWindow.Instance._mainViewUnderlay.MainViewOverlay;
+
+//			graphics.InterpolationMode = InterpolationLocal; // see MainViewOverlay
+
+			var spriteAttributes = new ImageAttributes();
+			if (mainViewOverlay._spriteShadeEnabled)
+				spriteAttributes.SetGamma(mainViewOverlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
+
 
 			var pic = new Bitmap(
 							_base.MapSize.Cols * 16,
@@ -211,7 +224,13 @@ namespace MapView
 
 			pic.Palette = _pal.ColorTable;
 
-			e.Graphics.DrawImage(pic, 1, 1);
+//			graphics.DrawImage(pic, 1, 1);
+			graphics.DrawImage(
+							pic,
+							new Rectangle(1, 1, pic.Width, pic.Height),
+							0, 0, pic.Width, pic.Height,
+							GraphicsUnit.Pixel,
+							spriteAttributes);
 		}
 		#endregion
 

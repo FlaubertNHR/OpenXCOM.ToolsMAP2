@@ -35,7 +35,7 @@ namespace MapView
 
 
 		#region Fields
-		private readonly MainViewUnderlay _mainViewUnderlay;
+		internal readonly MainViewUnderlay _mainViewUnderlay; // was private, see ScanGViewer
 
 		private readonly ViewersManager   _viewersManager;
 		private readonly MainMenusManager _mainMenusManager;

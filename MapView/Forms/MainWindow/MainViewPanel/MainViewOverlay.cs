@@ -230,7 +230,7 @@ namespace MapView
 		}
 
 #if !LOCKBITS
-		private bool _spriteShadeEnabled = true;
+		internal bool _spriteShadeEnabled = true; // was private, see ScanGViewer
 #endif
 		// NOTE: Options don't like floats afaict, hence this workaround w/
 		// 'SpriteShade' and 'SpriteShadeLocal' ->
@@ -257,7 +257,7 @@ namespace MapView
 			}
 		}
 		private float _spriteShadeLocal = 1.0f;										// initial val for local sprite shade
-		private float SpriteShadeLocal
+		internal float SpriteShadeLocal // was private, see ScanGViewer
 		{
 			get { return _spriteShadeLocal; }
 			set { _spriteShadeLocal = value; }
