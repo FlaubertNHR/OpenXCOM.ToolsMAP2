@@ -210,6 +210,7 @@
     <Compile Include="Forms\OtherForms\MapTreeInputBox.Designer.cs">
       <DependentUpon>MapTreeInputBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OtherForms\ScanGViewer.cs" />
     <Compile Include="Forms\OtherForms\TilesetEditor.cs" />
     <Compile Include="Forms\OtherForms\TilesetEditor.Designer.cs">
       <DependentUpon>TilesetEditor.cs</DependentUpon>
@@ -333,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\MapTreeInputBox.resx">
       <DependentUpon>MapTreeInputBox.Designer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OtherForms\ScanGViewer.resx">
+      <DependentUpon>ScanGViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\TilesetEditor.resx">
       <DependentUpon>TilesetEditor.Designer.cs</DependentUpon>

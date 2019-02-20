@@ -45,6 +45,7 @@ namespace MapView
 			this.miExport = new System.Windows.Forms.MenuItem();
 			this.miResize = new System.Windows.Forms.MenuItem();
 			this.miInfo = new System.Windows.Forms.MenuItem();
+			this.miScanG = new System.Windows.Forms.MenuItem();
 			this.miRegenOccult = new System.Windows.Forms.MenuItem();
 			this.miHq = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
@@ -104,6 +105,7 @@ namespace MapView
 			this.miExport,
 			this.miResize,
 			this.miInfo,
+			this.miScanG,
 			this.miRegenOccult,
 			this.miHq,
 			this.miSeparator4,
@@ -201,29 +203,37 @@ namespace MapView
 			this.miInfo.Text = "Map In&fo";
 			this.miInfo.Click += new System.EventHandler(this.OnInfoClick);
 			// 
+			// miScanG
+			// 
+			this.miScanG.Enabled = false;
+			this.miScanG.Index = 13;
+			this.miScanG.Shortcut = System.Windows.Forms.Shortcut.CtrlG;
+			this.miScanG.Text = "Scan&G";
+			this.miScanG.Click += new System.EventHandler(this.OnScanGClick);
+			// 
 			// miRegenOccult
 			// 
 			this.miRegenOccult.Enabled = false;
-			this.miRegenOccult.Index = 13;
+			this.miRegenOccult.Index = 14;
 			this.miRegenOccult.Text = "Regen &Occult";
 			this.miRegenOccult.Visible = false;
 			this.miRegenOccult.Click += new System.EventHandler(this.OnRegenOccultClick);
 			// 
 			// miHq
 			// 
-			this.miHq.Index = 14;
+			this.miHq.Index = 15;
 			this.miHq.Text = "Hq&2x";
 			this.miHq.Visible = false;
 			this.miHq.Click += new System.EventHandler(this.OnHq2xClick);
 			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 15;
+			this.miSeparator4.Index = 16;
 			this.miSeparator4.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 16;
+			this.miQuit.Index = 17;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
@@ -500,6 +510,7 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miSaveImage;
 		private System.Windows.Forms.MenuItem miResize;
 		private System.Windows.Forms.MenuItem miInfo;
+		private System.Windows.Forms.MenuItem miScanG;
 		private System.Windows.Forms.MenuItem miRegenOccult;
 		private System.Windows.Forms.MenuItem miExport;
 		private System.Windows.Forms.MenuItem miHq;

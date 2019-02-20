@@ -35,7 +35,7 @@ namespace XCom
 			record.Loft11 = bindata[18];
 			record.Loft12 = bindata[19];
 
-			record.ScanG = (ushort)(bindata[21] * 255 + bindata[20]);
+			record.ScanG = (ushort)(bindata[21] * 256 + bindata[20] + 35);
 
 			record.Unknown22 = bindata[22];
 			record.Unknown23 = bindata[23];
@@ -103,7 +103,7 @@ namespace XCom
 										"scang reference:",
 										bindata[20],
 										bindata[21],
-										bindata[20] * 256 + bindata[21]);
+										bindata[21] * 256 + bindata[20] + 35);
 
 			record.LoftReference = string.Format(
 										System.Globalization.CultureInfo.CurrentCulture,

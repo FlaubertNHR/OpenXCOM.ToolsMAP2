@@ -16,6 +16,8 @@ namespace XCom
 		public const string Palettes              = "Palettes";
 
 		public static string CursorFilePrefix     = "UFOGRAPH" + Path.DirectorySeparatorChar + "CURSOR"; // the cursor is determined in XCMainWindow.cTor
+
+		public static string ScanGfile            = "GEODATA" + Path.DirectorySeparatorChar + "SCANG.DAT";
 		#endregion
 
 

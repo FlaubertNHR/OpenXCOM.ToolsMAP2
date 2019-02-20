@@ -15,6 +15,9 @@ namespace XCom
 						  = new Dictionary<Palette, Dictionary<string, SpriteCollection>>();
 
 		public static bool ReloadSprites;
+
+		public static int[,] ScanGufo;
+		public static int[,] ScanGtftd;
 		#endregion
 
 
@@ -150,6 +153,51 @@ namespace XCom
 		{
 			var pfSpriteset = Path.Combine(dirTerrain, terrain);
 			return _palSpritesets[pal][pfSpriteset].Count;
+		}
+
+
+		public static bool LoadScanGufo(string dirUfo)
+		{
+			if (!String.IsNullOrEmpty(dirUfo))
+			{
+				string pfe = Path.Combine(dirUfo, SharedSpace.ScanGfile);
+				if (File.Exists(pfe))
+				{
+					byte[] bytes = File.ReadAllBytes(pfe);
+					int d1 = bytes.Length / 16;
+					ScanGufo = new int[d1, 16];
+
+					for (int i = 0; i != d1; ++i)
+					for (int j = 0; j != 16; ++j)
+					{
+						ScanGufo[i,j] = bytes[i * 16 + j];
+					}
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static bool LoadScanGtftd(string dirTftd)
+		{
+			if (!String.IsNullOrEmpty(dirTftd))
+			{
+				string pfe = Path.Combine(dirTftd, SharedSpace.ScanGfile);
+				if (File.Exists(pfe))
+				{
+					byte[] bytes = File.ReadAllBytes(pfe);
+					int d1 = bytes.Length / 16;
+					ScanGtftd = new int[d1, 16];
+
+					for (int i = 0; i != d1; ++i)
+					for (int j = 0; j != 16; ++j)
+					{
+						ScanGtftd[i,j] = bytes[i * 16 + j];
+					}
+					return true;
+				}
+			}
+			return false;
 		}
 		#endregion
 	}

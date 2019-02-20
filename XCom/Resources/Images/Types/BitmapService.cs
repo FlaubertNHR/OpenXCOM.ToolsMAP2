@@ -65,7 +65,7 @@ namespace XCom
 					pos = (byte*)start.ToPointer();
 				else
 					pos = (byte*)start.ToPointer() + locked.Stride * (b.Height - 1);
-				
+
 				uint stride = (uint)Math.Abs(locked.Stride);
 
 				int i = -1;

@@ -369,6 +369,17 @@ namespace MapView
 				LogFile.WriteLine("TFTD Cursor not found.");
 
 
+			if (ResourceInfo.LoadScanGufo(shared.GetShare(SharedSpace.ResourceDirectoryUfo)))
+				LogFile.WriteLine("ScanG UFO loaded.");
+			else
+				LogFile.WriteLine("ScanG UFO not found.");
+
+			if (ResourceInfo.LoadScanGtftd(shared.GetShare(SharedSpace.ResourceDirectoryTftd)))
+				LogFile.WriteLine("ScanG TFTD loaded.");
+			else
+				LogFile.WriteLine("ScanG TFTD not found.");
+
+
 			ResourceInfo.InitializeResources(pathTilesets); // load resources from YAML.
 			LogFile.WriteLine("ResourceInfo initialized.");
 
@@ -1412,6 +1423,15 @@ namespace MapView
 				var f = new MapInfoOutputBox();
 				f.Show();
 				f.Analyze(_mainViewUnderlay.MapBase as MapFileChild);
+			}
+		}
+
+		private void OnScanGClick(object sender, EventArgs e)
+		{
+			if (_mainViewUnderlay.MapBase != null)
+			{
+				var f = new ScanGViewer(_mainViewUnderlay.MapBase);
+				f.Show();
 			}
 		}
 
@@ -2470,7 +2490,8 @@ namespace MapView
 					miSaveAs     .Enabled =
 					miSaveImage  .Enabled =
 					miResize     .Enabled =
-					miInfo       .Enabled = true;
+					miInfo       .Enabled =
+					miScanG      .Enabled = true;
 
 //					miRegenOccult.Enabled = true; // disabled in designer w/ Visible=FALSE.
 //					miExport     .Enabled = true; // disabled in designer w/ Visible=FALSE.
