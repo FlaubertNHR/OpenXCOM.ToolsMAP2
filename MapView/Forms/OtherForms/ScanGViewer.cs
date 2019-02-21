@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
@@ -17,20 +16,37 @@ namespace MapView
 	/// part, and finally the content-part. The MCD-record of each tilepart
 	/// references a ScanG entry using this formula:
 	///     offset = [21] * 256 + [20] + 35
+	/// Note that the draw-scale is 4x.
 	/// </summary>
 	internal sealed class ScanGViewer
 		:
 			Form
 	{
-		const string TitlePref = " ScanG - ";
+		#region Fields
+		private MapFileBase _base;
+
+		private int[,]  _blobs;
+		private Palette _pal;
+
+		private int  Level;
+		private bool SingleLevel;
+		#endregion
 
 
-		MapFileBase _base;
-		int[,] _blobs;
-		Palette _pal;
-
-		bool _singleLevel;
-		int Level;
+		#region Properties (override)
+		/// <summary>
+		/// This works great. Absolutely kills flicker on redraws.
+		/// </summary>
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000;
+				return cp;
+			}
+		}
+		#endregion
 
 
 		#region cTor
@@ -41,15 +57,15 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			SetStyle(ControlStyles.OptimizedDoubleBuffer // this should be set on the Panel but it doesn't like that
-				   | ControlStyles.AllPaintingInWmPaint
+			SetStyle(ControlStyles.OptimizedDoubleBuffer	// perhaps this should be set on the Panel
+				   | ControlStyles.AllPaintingInWmPaint		// but it doesn't like that
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
 
 
 			_base = @base;
 			Level = _base.Level;
-			Text = TitlePref + GetTitlePost();
+			Text = GetTitle();
 
 			if (_base.Descriptor.Pal == Palette.TftdBattle)
 			{
@@ -130,8 +146,8 @@ namespace MapView
 
 
 				int zStart;
-				if (_singleLevel) zStart = Level;
-				else              zStart = _base.MapSize.Levs - 1;
+				if (SingleLevel) zStart = Level;
+				else             zStart = _base.MapSize.Levs - 1;
 
 				for (int z = zStart; z >= Level; --z)
 				for (int y = 0; y != _base.MapSize.Rows; ++y)
@@ -244,47 +260,46 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnDoubleClick(object sender, EventArgs e)
 		{
-			_singleLevel = !_singleLevel;
+			SingleLevel = !SingleLevel;
 
-			Text = TitlePref + GetTitlePost();
+			Text = GetTitle();
 
 			pnl_ScanG.Invalidate();
 		}
+		#endregion
 
+
+		#region Eventcalls (override)
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
+			int level = Level;
+
 			if (e.Delta < 0 && Level != 0)
 			{
 				--Level;
-				pnl_ScanG.Invalidate();
 			}
 			else if (e.Delta > 0 && Level != _base.MapSize.Levs - 1)
 			{
 				++Level;
-				pnl_ScanG.Invalidate();
 			}
-			Text = TitlePref + GetTitlePost();
-		}
 
-		/// <summary>
-		/// This works great. Absolutely kills flicker on redraws.
-		/// </summary>
-		protected override CreateParams CreateParams
-		{
-			get
+			if (level != Level)
 			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000;
-				return cp;
+				Text = GetTitle();
+				pnl_ScanG.Invalidate();
 			}
 		}
 		#endregion
 
 
-		string GetTitlePost()
+		#region Methods
+		private string GetTitle()
 		{
-			return "L" + (_base.MapSize.Levs - Level) + (_singleLevel ? "  single" : String.Empty);
+			return " ScanG - "
+				 + "L " + (_base.MapSize.Levs - Level)
+				 + (SingleLevel ? " - 1" : String.Empty);
 		}
+		#endregion
 
 
 		#region Windows Form Designer generated code
