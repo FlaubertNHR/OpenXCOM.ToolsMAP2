@@ -12,8 +12,8 @@ Built against .NET 4.5.1
 2019 February 21<br>
 [MapView2_190221.7z](https://drive.google.com/file/d/1lu_sXFIsHBue9uTfrq1m2MWi25qcPDjD/view?usp=sharing)
 
-- overhead ScanG viewer: File->ScanG view (mousewheel does levelup/down; doubleclick toggles between multilevel view and single-level view; requires a legitimate ScanG.Dat in the GEODATA folder of the Configurator's basepath)
-- if ScanG.Dat is not found the viewer will simply display black on all levels
+- overhead ScanG viewer: File->ScanG view (mousewheel does levelup/down; doubleclick toggles between multilevel view and single-level view)
+- ScanG view requires a legitimate ScanG.Dat in the GEODATA folder of the Configurator's basepath; if ScanG.Dat is not found the viewer will simply display black on all levels
 - check that the reference to ScanG.Dat in a tilepart's MCD-record doesn't exceed the entries in ScanG.Dat itself
 
 2019 February 19<br>
