@@ -9,6 +9,11 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 February 20<br>
+[MapView2_190220.7z](https://drive.google.com/file/d/1ahLaGFHNPDG-CYNST3ppNKRh2e1eXfVL/view?usp=sharing)
+
+- overhead ScanG viewer wohoo: File->ScanG view
+
 2019 February 19<br>
 [MapView2_190219.7z](https://drive.google.com/file/d/1IZ_IrFpHJRb8oTd59zFwcCe4N6NtHr77/view?usp=sharing)
 
