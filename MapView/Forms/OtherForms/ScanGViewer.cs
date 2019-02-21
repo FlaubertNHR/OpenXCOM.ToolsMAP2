@@ -160,29 +160,31 @@ namespace MapView
 					if (tile.Ground != null)
 					{
 						blobid = tile.Ground.Record.ScanG;
-
-						for (int i = 0; i != 256; ++i)
+						if (blobid < _blobs.Length / 16)
 						{
-							//   0..  3  #0    4..  7  #1    8.. 11   #2   12.. 15   #3
-							//  16.. 19  #0   20.. 23  #1   24.. 27   #2   28.. 31   #3
-							//  32.. 35  #0   36.. 39  #1   40.. 43   #2   44.. 47   #3
-							//  48.. 51  #0   52.. 55  #1   56.. 59   #2   60.. 63   #3
-
-							//  64.. 67  #4   68.. 71  #5   72.. 75   #6   76.. 79   #7
-							//  80.. 83  #4   84.. 87  #5   88.. 91   #6   92.. 95   #7
-							//  96.. 99  #4  100..103  #5  104..107   #6  108..111   #7
-							// 112..115  #4  116..119  #5  120..123   #6  124..127   #7
-
-							// 128..131  #8  132..135  #9  136..139  #10  140..143  #11
-							//
-							// etc ......255 #16
-							j = ((i / 64) * 4) + ((i % 16) / 4);
-
-							palid = _blobs[blobid, j];
-							if (palid != Palette.TransparentId)
+							for (int i = 0; i != 256; ++i)
 							{
-								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
-								*ptr = (byte)palid;
+								//   0..  3  #0    4..  7  #1    8.. 11   #2   12.. 15   #3
+								//  16.. 19  #0   20.. 23  #1   24.. 27   #2   28.. 31   #3
+								//  32.. 35  #0   36.. 39  #1   40.. 43   #2   44.. 47   #3
+								//  48.. 51  #0   52.. 55  #1   56.. 59   #2   60.. 63   #3
+
+								//  64.. 67  #4   68.. 71  #5   72.. 75   #6   76.. 79   #7
+								//  80.. 83  #4   84.. 87  #5   88.. 91   #6   92.. 95   #7
+								//  96.. 99  #4  100..103  #5  104..107   #6  108..111   #7
+								// 112..115  #4  116..119  #5  120..123   #6  124..127   #7
+
+								// 128..131  #8  132..135  #9  136..139  #10  140..143  #11
+								//
+								// etc ......255 #16
+								j = ((i / 64) * 4) + ((i % 16) / 4);
+
+								palid = _blobs[blobid, j];
+								if (palid != Palette.TransparentId)
+								{
+									ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+									*ptr = (byte)palid;
+								}
 							}
 						}
 					}
@@ -190,16 +192,18 @@ namespace MapView
 					if (tile.West != null)
 					{
 						blobid = tile.West.Record.ScanG;
-
-						for (int i = 0; i != 256; ++i)
+						if (blobid < _blobs.Length / 16)
 						{
-							j = ((i / 64) * 4) + ((i % 16) / 4);
-
-							palid = _blobs[blobid, j];
-							if (palid != Palette.TransparentId)
+							for (int i = 0; i != 256; ++i)
 							{
-								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
-								*ptr = (byte)palid;
+								j = ((i / 64) * 4) + ((i % 16) / 4);
+
+								palid = _blobs[blobid, j];
+								if (palid != Palette.TransparentId)
+								{
+									ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+									*ptr = (byte)palid;
+								}
 							}
 						}
 					}
@@ -207,16 +211,18 @@ namespace MapView
 					if (tile.North != null)
 					{
 						blobid = tile.North.Record.ScanG;
-
-						for (int i = 0; i != 256; ++i)
+						if (blobid < _blobs.Length / 16)
 						{
-							j = ((i / 64) * 4) + ((i % 16) / 4);
-
-							palid = _blobs[blobid, j];
-							if (palid != Palette.TransparentId)
+							for (int i = 0; i != 256; ++i)
 							{
-								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
-								*ptr = (byte)palid;
+								j = ((i / 64) * 4) + ((i % 16) / 4);
+
+								palid = _blobs[blobid, j];
+								if (palid != Palette.TransparentId)
+								{
+									ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+									*ptr = (byte)palid;
+								}
 							}
 						}
 					}
@@ -224,16 +230,18 @@ namespace MapView
 					if (tile.Content != null)
 					{
 						blobid = tile.Content.Record.ScanG;
-
-						for (int i = 0; i != 256; ++i)
+						if (blobid < _blobs.Length / 16)
 						{
-							j = ((i / 64) * 4) + ((i % 16) / 4);
-
-							palid = _blobs[blobid, j];
-							if (palid != Palette.TransparentId)
+							for (int i = 0; i != 256; ++i)
 							{
-								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
-								*ptr = (byte)palid;
+								j = ((i / 64) * 4) + ((i % 16) / 4);
+	
+								palid = _blobs[blobid, j];
+								if (palid != Palette.TransparentId)
+								{
+									ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+									*ptr = (byte)palid;
+								}
 							}
 						}
 					}
