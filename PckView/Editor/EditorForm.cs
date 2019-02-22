@@ -100,12 +100,12 @@ namespace PckView
 		{
 //			base.OnResize(e);
 
-			_trackBar.Width    =
-			_lblEditMode.Width =
-			_pnlEditor.Width   = ClientSize.Width;
-			_pnlEditor.Height  = ClientSize.Height
-									- _trackBar.Height
-									- _lblEditMode.Height;
+			_trackBar   .Width  =
+			_lblEditMode.Width  =
+			_pnlEditor  .Width  = ClientSize.Width;
+			_pnlEditor  .Height = ClientSize.Height
+								- _trackBar.Height
+								- _lblEditMode.Height;
 		}
 		#endregion
 

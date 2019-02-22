@@ -76,7 +76,7 @@ namespace MapView
 
 				int i = -1, h,w;
 				for (h = 0; h != XCImage.SpriteHeight40; ++h)
-				for (w = 0; w != XCImage.SpriteWidth;    ++w)
+				for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 				{
 					palid = bindata[++i];
 					if (palid != Palette.TransparentId)
@@ -113,7 +113,7 @@ namespace MapView
 
 				int i = -1, h,w;
 				for (h = 0; h != XCImage.SpriteHeight40; ++h)
-				for (w = 0; w != XCImage.SpriteWidth;    ++w)
+				for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 				{
 					palid = bindata[++i];
 					if (palid != Palette.TransparentId)

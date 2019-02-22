@@ -1006,6 +1006,21 @@ namespace PckView
 			}
 		}
 
+		private void OnOpenScanGClick(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.Title  = "Select a ScanG file";
+				ofd.Filter = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					IsBigobs = false;
+					LoadScanG(ofd.FileName);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Saves all the sprites to the currently loaded PCK+TAB files.
 		/// Called when the mainmenu's file-menu Click event is raised.
@@ -1470,6 +1485,8 @@ namespace PckView
 
 			if (File.Exists(pfeTab))	// TODO: This check needs to be bypassed to open PCK-files that don't have a corresponding TAB-file.
 			{							// Ie. single-image Bigobs in the UFOGRAPH directory.
+				XCImage.SpriteWidth = 32;
+
 				if (IsBigobs) // Bigobs support for XCImage/PckImage ->
 					XCImage.SpriteHeight = 48;
 				else
@@ -1565,6 +1582,32 @@ namespace PckView
 							0);
 			}
 		}
+
+		private void LoadScanG(string pfeScanG)
+		{
+			SpritesetDirectory = Path.GetDirectoryName(pfeScanG);
+			SpritesetLabel     = Path.GetFileNameWithoutExtension(pfeScanG);
+
+			XCImage.SpriteWidth  = 4;
+			XCImage.SpriteHeight = 4;
+
+			SpriteCollection spriteset = null;
+
+			using (var fs = File.OpenRead(pfeScanG))
+				spriteset = new SpriteCollection(fs);
+
+			if (spriteset != null)
+				spriteset.Label = SpritesetLabel;
+
+			OnPaletteClick(
+						_paletteItems[DefaultPalette],
+						EventArgs.Empty);
+
+			_pnlView.Spriteset = spriteset;
+
+			Text = "PckView - " + pfeScanG;
+		}
+
 
 		/// <summary>
 		/// Backs up the PCK+TAB files before trying a Save or SaveAs.

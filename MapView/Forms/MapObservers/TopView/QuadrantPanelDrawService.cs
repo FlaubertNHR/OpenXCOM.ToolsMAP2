@@ -19,7 +19,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private const int MarginHori = 5;
 		private const int MarginVert = 3;
 
-		internal const int QuadWidthTotal = XCImage.SpriteWidth + MarginHori * 2;
+		internal const int QuadWidthTotal = XCImage.SpriteWidth32 + MarginHori * 2;
 
 		internal const int StartX = 26;
 		private  const int StartY =  3;
@@ -81,10 +81,10 @@ namespace MapView.Forms.MapObservers.TopViews
 								StartX + QuadWidthTotal * quad - 1,
 								StartY);
 				var p1 = new Point(
-								StartX + QuadWidthTotal * quad + XCImage.SpriteWidth + 1,
+								StartX + QuadWidthTotal * quad + XCImage.SpriteWidth32 + 1,
 								StartY);
 				var p2 = new Point(
-								StartX + QuadWidthTotal * quad + XCImage.SpriteWidth + 1,
+								StartX + QuadWidthTotal * quad + XCImage.SpriteWidth32 + 1,
 								StartY + XCImage.SpriteHeight40 + 1);
 				var p3 = new Point(
 								StartX + QuadWidthTotal * quad,
@@ -276,7 +276,7 @@ namespace MapView.Forms.MapObservers.TopViews
 							Door,
 							Font,
 							System.Drawing.Brushes.Black,
-							StartX + (XCImage.SpriteWidth - DoorWidth) / 2 + QuadWidthTotal * (int)quadType + 1,
+							StartX + (XCImage.SpriteWidth32 - DoorWidth) / 2 + QuadWidthTotal * (int)quadType + 1,
 							StartY +  XCImage.SpriteHeight40 - Font.Height + PrintOffsetY);
 		}
 
@@ -314,7 +314,7 @@ namespace MapView.Forms.MapObservers.TopViews
 							type,
 							Font,
 							System.Drawing.Brushes.Black,
-							StartX + (XCImage.SpriteWidth - width) / 2 + QuadWidthTotal * (int)quadType + 1,
+							StartX + (XCImage.SpriteWidth32 - width) / 2 + QuadWidthTotal * (int)quadType + 1,
 							StartY +  XCImage.SpriteHeight40 + MarginVert);
 		}
 
@@ -347,7 +347,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								new RectangleF(
 											StartX + QuadWidthTotal * (int)quadType,
 											StartY + XCImage.SpriteHeight40 + MarginVert + Font.Height + 1,
-											XCImage.SpriteWidth,
+											XCImage.SpriteWidth32,
 											SwatchHeight));
 		}
 

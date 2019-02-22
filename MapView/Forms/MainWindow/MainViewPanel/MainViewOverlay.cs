@@ -1355,7 +1355,7 @@ namespace MapView
 
 			int i = -1, w,h;
 			for (h = 0; h != XCImage.SpriteHeight40; ++h)
-			for (w = 0; w != XCImage.SpriteWidth;    ++w)
+			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 			{
 				palid = bindata[++i];
 				if (palid != Palette.TransparentId) // <- this is the fix for Mono.
@@ -1380,7 +1380,7 @@ namespace MapView
 				_graphics.DrawImage(
 								sprite,
 								rect,
-								0, 0, XCImage.SpriteWidth, XCImage.SpriteHeight40,
+								0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 								GraphicsUnit.Pixel,
 								_spriteAttributes);
 			else

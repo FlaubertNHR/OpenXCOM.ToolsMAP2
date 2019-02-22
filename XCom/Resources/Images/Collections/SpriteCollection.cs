@@ -50,6 +50,7 @@ namespace XCom
 			Pal       = pal;
 			TabOffset = tabOffset;
 		}
+
 		/// <summary>
 		/// cTor[2]. Parses a PCK-file into a collection of images according to
 		/// its TAB-file.
@@ -184,6 +185,43 @@ namespace XCom
 			}
 
 			//LogFile.WriteLine(". spritecount= " + Count);
+		}
+
+		/// <summary>
+		/// cTor[3]. Creates a spriteset of ScanG icons.
+		/// </summary>
+		/// <param name="fsScanG">filestream of the PCK file</param>
+		public SpriteCollection(Stream fsScanG)
+		{
+			TabOffset = 0;
+			Pal = null;
+
+			Borked       =
+			BorkedBigobs = false;
+
+			fsScanG.Position = 0;
+
+			var bindata = new byte[(int)fsScanG.Length];
+			fsScanG.Read(
+						bindata,			// buffer
+						0,					// offset
+						bindata.Length);	// count
+
+			// chop bindata into 16-byte icons
+			int icons = bindata.Length / 16;
+
+			for (int i = 0; i != icons; ++i)
+			{
+				var icondata = new byte[16];
+
+				for (int j = 0; j != 16; ++j)
+					icondata[j] = bindata[i * 16 + j];
+
+				var icon = new ScanGicon(
+									icondata,
+									this);
+				Add(icon);
+			}
 		}
 		#endregion
 
