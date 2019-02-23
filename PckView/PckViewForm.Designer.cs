@@ -53,6 +53,12 @@ namespace PckView
 			this.miAbout = new System.Windows.Forms.MenuItem();
 			this.miConsole = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
+			this.ss_Status = new System.Windows.Forms.StatusStrip();
+			this.tssl_TilesTotal = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_TileOver = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_TileSelected = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_SpritesetLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.ss_Status.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mmMainMenu
@@ -280,10 +286,70 @@ namespace PckView
 			this.miHelp.Text = "&Help";
 			this.miHelp.Click += new System.EventHandler(this.OnHelpClick);
 			// 
+			// ss_Status
+			// 
+			this.ss_Status.Font = new System.Drawing.Font("Consolas", 7F);
+			this.ss_Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tssl_TilesTotal,
+			this.tssl_TileOver,
+			this.tssl_TileSelected,
+			this.tssl_SpritesetLabel});
+			this.ss_Status.Location = new System.Drawing.Point(0, 592);
+			this.ss_Status.Name = "ss_Status";
+			this.ss_Status.Size = new System.Drawing.Size(472, 22);
+			this.ss_Status.TabIndex = 0;
+			this.ss_Status.Text = "ss_Status";
+			// 
+			// tssl_TilesTotal
+			// 
+			this.tssl_TilesTotal.AutoSize = false;
+			this.tssl_TilesTotal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tssl_TilesTotal.Font = new System.Drawing.Font("Verdana", 7F);
+			this.tssl_TilesTotal.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_TilesTotal.Name = "tssl_TilesTotal";
+			this.tssl_TilesTotal.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tssl_TilesTotal.Size = new System.Drawing.Size(75, 22);
+			this.tssl_TilesTotal.Text = "total";
+			this.tssl_TilesTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tssl_TileOver
+			// 
+			this.tssl_TileOver.AutoSize = false;
+			this.tssl_TileOver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tssl_TileOver.Font = new System.Drawing.Font("Verdana", 7F);
+			this.tssl_TileOver.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_TileOver.Name = "tssl_TileOver";
+			this.tssl_TileOver.Size = new System.Drawing.Size(80, 22);
+			this.tssl_TileOver.Text = "over";
+			this.tssl_TileOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tssl_TileSelected
+			// 
+			this.tssl_TileSelected.AutoSize = false;
+			this.tssl_TileSelected.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tssl_TileSelected.Font = new System.Drawing.Font("Verdana", 7F);
+			this.tssl_TileSelected.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_TileSelected.Name = "tssl_TileSelected";
+			this.tssl_TileSelected.Size = new System.Drawing.Size(100, 22);
+			this.tssl_TileSelected.Text = "select";
+			this.tssl_TileSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tssl_SpritesetLabel
+			// 
+			this.tssl_SpritesetLabel.AutoSize = false;
+			this.tssl_SpritesetLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tssl_SpritesetLabel.Font = new System.Drawing.Font("Verdana", 7F);
+			this.tssl_SpritesetLabel.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_SpritesetLabel.Name = "tssl_SpritesetLabel";
+			this.tssl_SpritesetLabel.Size = new System.Drawing.Size(202, 22);
+			this.tssl_SpritesetLabel.Spring = true;
+			this.tssl_SpritesetLabel.Text = "label";
+			// 
 			// PckViewForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(472, 614);
+			this.Controls.Add(this.ss_Status);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.KeyPreview = true;
 			this.Location = new System.Drawing.Point(50, 50);
@@ -295,7 +361,10 @@ namespace PckView
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnPckViewFormClosing);
 			this.Shown += new System.EventHandler(this.OnShown);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
+			this.ss_Status.ResumeLayout(false);
+			this.ss_Status.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion
@@ -341,5 +410,10 @@ namespace PckView
 		private System.Windows.Forms.MenuItem miCompare;
 
 		private System.Windows.Forms.MenuItem miSave;
+		private System.Windows.Forms.StatusStrip ss_Status;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_TilesTotal;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_TileOver;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_TileSelected;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_SpritesetLabel;
 	}
 }

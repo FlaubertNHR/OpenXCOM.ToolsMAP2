@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -32,16 +33,20 @@ namespace PckView
 		#region Fields (static)
 		private readonly Palette DefaultPalette = Palette.UfoBattle;
 
+		private const string Total    = "Total ";
+		private const string Selected = "Selected ";
+		private const string Over     = "Over ";
+		private const string None     = "n/a";
+
 		private const string PngExt = ".PNG";
 		#endregion
 
 
 		#region Fields
-		private readonly PckViewPanel _pnlView = new PckViewPanel();
-		private readonly EditorForm _feditor   = new EditorForm();
+		private readonly PckViewPanel TilePanel;
+		private readonly EditorForm Editor;
 
-		private ConsoleForm _fconsole;
-
+//		private ConsoleForm _fconsole;
 //		private TabControl _tcTabs; // for OnCompareClick()
 
 		private MenuItem _miEdit;
@@ -91,13 +96,13 @@ namespace PckView
 		/// <summary>
 		/// True if a Bigobs PCK+TAB set is opened.
 		/// </summary>
-		internal static bool IsBigobs
-		{ get; private set; }
+		private bool IsBigobs
+		{ get; set; }
 
 		/// <summary>
 		/// True if a ScanG iconset is opened.
 		/// </summary>
-		internal static bool IsScanG
+		internal bool IsScanG
 		{ get; private set; }
 		#endregion
 
@@ -118,14 +123,13 @@ namespace PckView
 			LoadWindowMetrics();
 
 
-			#region SharedSpace information
+/*			#region SharedSpace information
 			_fconsole = new ConsoleSharedSpace(new SharedSpace()).Console;
 			_fconsole.FormClosing += (sender, e) =>
 									{
 										e.Cancel = true;
 										_fconsole.Hide();
 									};
-
 			FormClosed += (sender, e) => _fconsole.Close();
 
 
@@ -142,17 +146,23 @@ namespace PckView
 //			XConsole.AdZerg("Application directory: " + _share[SharedSpace.ApplicationDirectory]);
 //			XConsole.AdZerg("Settings directory: "    + _share[SharedSpace.SettingsDirectory].ToString());
 //			XConsole.AdZerg("Custom directory: "      + _share[SharedSpace.CustomDirectory].ToString());
-			#endregion
+			#endregion */
 
 
-			_pnlView.Dock = DockStyle.Fill;
-			_pnlView.ContextMenu = ViewerContextMenu();
-			_pnlView.SpritesetChangedEvent += OnSpritesetChanged;
-			_pnlView.Click                 += OnSpriteClick;
-			_pnlView.DoubleClick           += OnSpriteEditorClick;
+			TilePanel = new PckViewPanel(this);
+			TilePanel.Dock = DockStyle.Fill;
+			TilePanel.ContextMenu = ViewerContextMenu();
+			TilePanel.SpritesetChangedEvent += OnSpritesetChanged;
+			TilePanel.Click                 += OnSpriteClick;
+			TilePanel.DoubleClick           += OnSpriteEditorClick;
 
-			Controls.Add(_pnlView);
+			Controls.Add(TilePanel);
+			TilePanel.BringToFront();
 
+			PrintStatusSpriteSelected();
+			PrintStatusSpriteOver();
+
+			tssl_SpritesetLabel.Text = None;
 
 //			_share[SharedSpace.Palettes] = new Dictionary<string, Palette>();
 
@@ -163,7 +173,8 @@ namespace PckView
 
 			_paletteItems[Pal].Checked = true;
 
-			_feditor.FormClosing += OnEditorFormClosing;
+			Editor = new EditorForm();
+			Editor.FormClosing += OnEditorFormClosing;
 
 
 			miCreate.MenuItems.Add(miNewTerrain);
@@ -174,6 +185,10 @@ namespace PckView
 //			var regInfo = new RegistryInfo(RegistryInfo.PckView, this); // subscribe to Load and Closing events.
 //			regInfo.RegisterProperties();
 //			regInfo.AddProperty("SelectedPalette");
+
+			tssl_TilesTotal.Text = String.Format(
+											CultureInfo.InvariantCulture,
+											Total + None);
 		}
 		#endregion
 
@@ -414,7 +429,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnShown(object sender, EventArgs e)
 		{
-			_pnlView.Select();
+			TilePanel.Select();
 		}
 
 		/// <summary>
@@ -452,7 +467,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSpriteClick(object sender, EventArgs e)
 		{
-			bool valid = (_pnlView.SelectedId != -1);
+			bool valid = (TilePanel.SelectedId != -1);
 
 			// on Context menu
 			_miEdit        .Enabled =
@@ -461,8 +476,8 @@ namespace PckView
 			_miReplace     .Enabled =
 			_miDelete      .Enabled =
 			_miExport      .Enabled = valid;
-			_miMoveLeft    .Enabled = valid && (_pnlView.SelectedId != 0);
-			_miMoveRight   .Enabled = valid && (_pnlView.SelectedId != _pnlView.Spriteset.Count - 1);
+			_miMoveLeft    .Enabled = valid && (TilePanel.SelectedId != 0);
+			_miMoveRight   .Enabled = valid && (TilePanel.SelectedId != TilePanel.Spriteset.Count - 1);
 		}
 
 		/// <summary>
@@ -474,24 +489,24 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSpriteEditorClick(object sender, EventArgs e)
 		{
-			if (_pnlView.Spriteset != null && _pnlView.SelectedId != -1)
+			if (TilePanel.Spriteset != null && TilePanel.SelectedId != -1)
 			{
-				EditorPanel.Instance.Sprite = _pnlView.Spriteset[_pnlView.SelectedId];
+				EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
-				if (!_feditor.Visible)
+				if (!Editor.Visible)
 				{
 					_miEdit.Checked = true;	// TODO: show as Checked only if the currently
 											// selected sprite is actually open in the editor.
 					if (!_editorInited)
 					{
 						_editorInited = true;
-						_feditor.Left = Left + 20;
-						_feditor.Top  = Top  + 20;
+						Editor.Left = Left + 20;
+						Editor.Top  = Top  + 20;
 					}
-					_feditor.Show();
+					Editor.Show();
 				}
 				else
-					_feditor.BringToFront();
+					Editor.BringToFront();
 			}
 		}
 
@@ -505,7 +520,7 @@ namespace PckView
 			_miEdit.Checked = false;
 
 			e.Cancel = true;
-			_feditor.Hide();
+			Editor.Hide();
 		}
 
 
@@ -585,7 +600,7 @@ namespace PckView
 						}
 					}
 
-					int id = _pnlView.Spriteset.Count - 1;
+					int id = TilePanel.Spriteset.Count - 1;
 					foreach (var b in bs)
 					{
 						var sprite = BitmapService.CreateSprite(
@@ -594,15 +609,15 @@ namespace PckView
 															Pal,
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight);
-						_pnlView.Spriteset.Add(sprite);
+						TilePanel.Spriteset.Add(sprite);
 					}
 
 					OnSpriteClick(null, EventArgs.Empty);
 
-					_pnlView.PrintStatusTotal();
+					PrintStatusTotal();
 
-					_pnlView.ForceResize();
-					_pnlView.Refresh();
+					TilePanel.ForceResize();
+					TilePanel.Refresh();
 				}
 			}
 		}
@@ -631,10 +646,10 @@ namespace PckView
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (InsertSprites(_pnlView.SelectedId, ofd.FileNames))
+					if (InsertSprites(TilePanel.SelectedId, ofd.FileNames))
 					{
-						_pnlView.SelectedId += ofd.FileNames.Length;
-						EditorPanel.Instance.Sprite = _pnlView.Spriteset[_pnlView.SelectedId];
+						TilePanel.SelectedId += ofd.FileNames.Length;
+						EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
 						InsertSpritesFinish();
 					}
@@ -668,7 +683,7 @@ namespace PckView
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (InsertSprites(_pnlView.SelectedId + 1, ofd.FileNames))
+					if (InsertSprites(TilePanel.SelectedId + 1, ofd.FileNames))
 						InsertSpritesFinish();
 					else
 						ShowBitmapError();
@@ -703,8 +718,8 @@ namespace PckView
 			}
 
 			int length = files.Length;
-			for (int i = id; i != _pnlView.Spriteset.Count; ++i)
-				_pnlView.Spriteset[i].TerrainId = i + length;
+			for (int i = id; i != TilePanel.Spriteset.Count; ++i)
+				TilePanel.Spriteset[i].TerrainId = i + length;
 
 			foreach (var b in bs)
 			{
@@ -714,7 +729,7 @@ namespace PckView
 													Pal,
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight);
-				_pnlView.Spriteset.Insert(id++, sprite);
+				TilePanel.Spriteset.Insert(id++, sprite);
 			}
 			return true;
 		}
@@ -726,10 +741,10 @@ namespace PckView
 		{
 			OnSpriteClick(null, EventArgs.Empty);
 
-			_pnlView.PrintStatusTotal();
+			PrintStatusTotal();
 
-			_pnlView.ForceResize();
-			_pnlView.Refresh();
+			TilePanel.ForceResize();
+			TilePanel.Refresh();
 		}
 
 		/// <summary>
@@ -763,14 +778,14 @@ namespace PckView
 					{
 						var sprite = BitmapService.CreateSprite(
 															b,
-															_pnlView.SelectedId,
+															TilePanel.SelectedId,
 															Pal,
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight);
-						_pnlView.Spriteset[_pnlView.SelectedId] =
+						TilePanel.Spriteset[TilePanel.SelectedId] =
 						EditorPanel.Instance.Sprite = sprite;
 
-						_pnlView.Refresh();
+						TilePanel.Refresh();
 					}
 					else
 						ShowBitmapError();
@@ -804,21 +819,21 @@ namespace PckView
 		/// <param name="dir">-1 to move left, +1 to move right</param>
 		private void MoveSprite(int dir)
 		{
-			var sprite = _pnlView.Spriteset[_pnlView.SelectedId];
+			var sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
-			_pnlView.Spriteset[_pnlView.SelectedId]       = _pnlView.Spriteset[_pnlView.SelectedId + dir];
-			_pnlView.Spriteset[_pnlView.SelectedId + dir] = sprite;
+			TilePanel.Spriteset[TilePanel.SelectedId]       = TilePanel.Spriteset[TilePanel.SelectedId + dir];
+			TilePanel.Spriteset[TilePanel.SelectedId + dir] = sprite;
 
-			_pnlView.Spriteset[_pnlView.SelectedId].TerrainId = _pnlView.SelectedId;
-			_pnlView.SelectedId += dir;
-			_pnlView.Spriteset[_pnlView.SelectedId].TerrainId = _pnlView.SelectedId;
+			TilePanel.Spriteset[TilePanel.SelectedId].TerrainId = TilePanel.SelectedId;
+			TilePanel.SelectedId += dir;
+			TilePanel.Spriteset[TilePanel.SelectedId].TerrainId = TilePanel.SelectedId;
 
-			EditorPanel.Instance.Sprite = _pnlView.Spriteset[_pnlView.SelectedId];
+			EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
-			_pnlView.PrintStatusSpriteSelected();
+			PrintStatusSpriteSelected();
 
 			OnSpriteClick(null, EventArgs.Empty);
-			_pnlView.Refresh();
+			TilePanel.Refresh();
 		}
 
 		/// <summary>
@@ -829,20 +844,20 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnDeleteSpriteClick(object sender, EventArgs e)
 		{
-			_pnlView.Spriteset.RemoveAt(_pnlView.SelectedId);
+			TilePanel.Spriteset.RemoveAt(TilePanel.SelectedId);
 
-			for (int i = _pnlView.SelectedId; i != _pnlView.Spriteset.Count; ++i)
-				_pnlView.Spriteset[i].TerrainId = i;
+			for (int i = TilePanel.SelectedId; i != TilePanel.Spriteset.Count; ++i)
+				TilePanel.Spriteset[i].TerrainId = i;
 
 			EditorPanel.Instance.Sprite = null;
 
-			_pnlView.SelectedId = -1;
+			TilePanel.SelectedId = -1;
 			OnSpriteClick(null, EventArgs.Empty);
 
-			_pnlView.PrintStatusTotal();
+			PrintStatusTotal();
 
-			_pnlView.ForceResize();
-			_pnlView.Refresh();
+			TilePanel.ForceResize();
+			TilePanel.Refresh();
 		}
 
 		/// <summary>
@@ -876,25 +891,25 @@ namespace PckView
 		{
 			string digits = String.Empty;
 
-			int count = _pnlView.Spriteset.Count;
+			int count = TilePanel.Spriteset.Count;
 			do
 			{
 				digits += "0";
 			}
 			while ((count /= 10) != 0);
 
-			var sprite = _pnlView.Spriteset[_pnlView.SelectedId];
+			var sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 			string suffix = String.Format(
 										System.Globalization.CultureInfo.InvariantCulture,
 										"{0:" + digits + "}",
-										_pnlView.SelectedId);
+										TilePanel.SelectedId);
 
 			using (var sfd = new SaveFileDialog())
 			{
 				sfd.Title      = "Export sprite to 8-bpp PNG file";
 				sfd.Filter     = "PNG files (*.PNG)|*.PNG|All files (*.*)|*.*";
 				sfd.DefaultExt = "PNG";
-				sfd.FileName   = _pnlView.Spriteset.Label + suffix;
+				sfd.FileName   = TilePanel.Spriteset.Label + suffix;
 
 				if (sfd.ShowDialog() == DialogResult.OK)
 					BitmapService.ExportSprite(sfd.FileName, sprite.Sprite);
@@ -1006,7 +1021,7 @@ namespace PckView
 
 					OnPaletteClick(_paletteItems[pal], EventArgs.Empty);
 
-					_pnlView.Spriteset = spriteset;
+					TilePanel.Spriteset = spriteset;
 					OnSpriteClick(null, EventArgs.Empty);
 
 					Text = "PckView - " + pfePck;
@@ -1054,8 +1069,8 @@ namespace PckView
 			if (SpriteCollection.SaveSpriteset(
 											SpritesetDirectory,
 											SpritesetLabel,
-											_pnlView.Spriteset,
-											((SpriteCollection)_pnlView.Spriteset).TabOffset)) //tabOffset
+											TilePanel.Spriteset,
+											((SpriteCollection)TilePanel.Spriteset).TabOffset)) //tabOffset
 			{
 				SpritesChanged = true; // NOTE: is used by MapView's TileView to flag the Map to reload.
 			}
@@ -1097,8 +1112,8 @@ namespace PckView
 					if (SpriteCollection.SaveSpriteset(
 													dir,
 													file,
-													_pnlView.Spriteset,
-													((SpriteCollection)_pnlView.Spriteset).TabOffset))
+													TilePanel.Spriteset,
+													((SpriteCollection)TilePanel.Spriteset).TabOffset))
 					{
 						if (!revertReady) // load the SavedAs files ->
 							LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
@@ -1131,11 +1146,11 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnExportSpritesClick(object sender, EventArgs e)
 		{
-			if (_pnlView.Spriteset != null && _pnlView.Spriteset.Count != 0)
+			if (TilePanel.Spriteset != null && TilePanel.Spriteset.Count != 0)
 			{
 				using (var fbd = new FolderBrowserDialog())
 				{
-					string file = _pnlView.Spriteset.Label.ToUpperInvariant();
+					string file = TilePanel.Spriteset.Label.ToUpperInvariant();
 
 					fbd.Description = String.Format(
 												System.Globalization.CultureInfo.CurrentCulture,
@@ -1148,7 +1163,7 @@ namespace PckView
 						string path = fbd.SelectedPath;
 
 						string digits = String.Empty;
-						int count = _pnlView.Spriteset.Count;
+						int count = TilePanel.Spriteset.Count;
 						do
 						{
 							digits += "0";
@@ -1156,7 +1171,7 @@ namespace PckView
 						}
 						while (count != 0);
 
-						foreach (XCImage sprite in _pnlView.Spriteset)
+						foreach (XCImage sprite in TilePanel.Spriteset)
 						{
 							string suffix = String.Format(
 														System.Globalization.CultureInfo.InvariantCulture,
@@ -1179,11 +1194,11 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnExportSpritesheetClick(object sender, EventArgs e)
 		{
-			if (_pnlView.Spriteset != null && _pnlView.Spriteset.Count != 0)
+			if (TilePanel.Spriteset != null && TilePanel.Spriteset.Count != 0)
 			{
 				using (var fbd = new FolderBrowserDialog())
 				{
-					string file = _pnlView.Spriteset.Label.ToUpperInvariant();
+					string file = TilePanel.Spriteset.Label.ToUpperInvariant();
 
 					fbd.Description = String.Format(
 												System.Globalization.CultureInfo.CurrentCulture,
@@ -1196,7 +1211,7 @@ namespace PckView
 						string fullpath = Path.Combine(fbd.SelectedPath, file + PngExt);
 						if (!File.Exists(fullpath))
 						{
-							BitmapService.ExportSpritesheet(fullpath, (SpriteCollection)_pnlView.Spriteset, Pal, 8);
+							BitmapService.ExportSpritesheet(fullpath, (SpriteCollection)TilePanel.Spriteset, Pal, 8);
 						}
 						else
 							MessageBox.Show(
@@ -1219,7 +1234,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnImportSpritesheetClick(object sender, EventArgs e)
 		{
-			if (_pnlView.Spriteset != null)
+			if (TilePanel.Spriteset != null)
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1230,7 +1245,7 @@ namespace PckView
 
 					if (ofd.ShowDialog() == DialogResult.OK)
 					{
-						_pnlView.Spriteset.Clear();
+						TilePanel.Spriteset.Clear();
 
 						byte[] bindata = File.ReadAllBytes(ofd.FileName);
 						Bitmap b = BitmapHandler.LoadBitmap(bindata);
@@ -1245,7 +1260,7 @@ namespace PckView
 																							XCImage.SpriteWidth,
 																							XCImage.SpriteHeight);
 							for (int i = 0; i != spriteset.Count; ++i)
-								_pnlView.Spriteset.Add(spriteset[i]);
+								TilePanel.Spriteset.Add(spriteset[i]);
 
 							InsertSpritesFinish();
 						}
@@ -1270,7 +1285,7 @@ namespace PckView
 //			_totalViewPck.Hq2x();
 //
 //			OnResize(null);
-//			_pnlView.Refresh();
+//			TileTable.Refresh();
 		}
 
 		/// <summary>
@@ -1295,8 +1310,8 @@ namespace PckView
 		{
 			SaveWindowMetrics();
 
-			_feditor.ClosePalette();	// these are needed when PckView
-			_feditor.Close();			// was opened via MapView.
+			Editor.ClosePalette();	// these are needed when PckView
+			Editor.Close();			// was opened via MapView.
 
 			if (miBytes.Checked)
 				SpriteBytesManager.HideBytesTable(true);
@@ -1320,7 +1335,7 @@ namespace PckView
 
 				_paletteItems[Pal].Checked = true;
 
-				_pnlView.Spriteset.Pal = Pal;
+				TilePanel.Spriteset.Pal = Pal;
 
 				var handler = PaletteChangedEvent;
 				if (handler != null)
@@ -1338,7 +1353,7 @@ namespace PckView
 		{
 			Pal.SetTransparent(miTransparent.Checked = !miTransparent.Checked);
 
-			_pnlView.Spriteset.Pal = Pal;
+			TilePanel.Spriteset.Pal = Pal;
 
 			PalettePanel.Instance.PrintStatusPaletteId();	// update the palette-panel's statusbar
 															// in case palette-id #0 is currently selected.
@@ -1358,11 +1373,11 @@ namespace PckView
 		{
 			if (!miBytes.Checked)
 			{
-				if (_pnlView.SelectedId != -1)
+				if (TilePanel.SelectedId != -1)
 				{
 					miBytes.Checked = true;
 					SpriteBytesManager.LoadBytesTable(
-												_pnlView.Spriteset[_pnlView.SelectedId],
+												TilePanel.Spriteset[TilePanel.SelectedId],
 												BytesClosingCallback);
 				}
 			}
@@ -1418,23 +1433,23 @@ namespace PckView
 
 		private void OnCompareClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE
 		{
-/*			var original = _pnlView.Spriteset; // store original spriteset
+/*			var original = TileTable.Spriteset; // store original spriteset
 
 			OnOpenClick(null, EventArgs.Empty); // load a second spriteset
-			var spriteset = _pnlView.Spriteset;
+			var spriteset = TileTable.Spriteset;
 
-			_pnlView.Spriteset = original; // revert to original spriteset
+			TileTable.Spriteset = original; // revert to original spriteset
 
-			if (Controls.Contains(_pnlView))
+			if (Controls.Contains(TileTable))
 			{
-				Controls.Remove(_pnlView); // ...
+				Controls.Remove(TileTable); // ...
 
 				_tcTabs = new TabControl(); // create tabs
 				_tcTabs.Dock = DockStyle.Fill;
 				pnlView.Controls.Add(_tcTabs); // add the tabs to the stock panel
 
 				var tabpage = new TabPage(); // create a page
-				tabpage.Controls.Add(_pnlView); // add the viewer to the page
+				tabpage.Controls.Add(TileTable); // add the viewer to the page
 				tabpage.Text = "Original";
 				_tcTabs.TabPages.Add(tabpage); // add the page to the tab-control
 
@@ -1571,7 +1586,7 @@ namespace PckView
 								_paletteItems[DefaultPalette],
 								EventArgs.Empty);
 
-					_pnlView.Spriteset = spriteset;
+					TilePanel.Spriteset = spriteset;
 
 					Text = "PckView - " + pfePck;
 				}
@@ -1612,7 +1627,7 @@ namespace PckView
 						_paletteItems[DefaultPalette],
 						EventArgs.Empty);
 
-			_pnlView.Spriteset = spriteset;
+			TilePanel.Spriteset = spriteset;
 
 			Text = "PckView - " + pfeScanG;
 		}
@@ -1694,6 +1709,74 @@ namespace PckView
 						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,
 						0);
+		}
+
+
+		/// <summary>
+		/// Prints the quantity of sprites in the currently loaded spriteset to
+		/// the statusbar. Note that this will clear the sprite-over info.
+		/// </summary>
+		internal void PrintStatusTotal()
+		{
+			PrintStatusSpriteOver();
+			PrintStatusSpriteSelected();
+
+			tssl_TilesTotal.Text = String.Format(
+											CultureInfo.InvariantCulture,
+											Total + "{0}", TilePanel.Spriteset.Count);
+		}
+
+		/// <summary>
+		/// Updates the status-information for the sprite that is currently
+		/// selected.
+		/// </summary>
+		internal void PrintStatusSpriteSelected()
+		{
+			string selected;
+			if (TilePanel.SelectedId != -1)
+				selected = TilePanel.SelectedId.ToString(CultureInfo.InvariantCulture);
+			else
+				selected = None;
+
+			tssl_TileSelected.Text = String.Format(
+												CultureInfo.InvariantCulture,
+												Selected + "{0}", selected);
+		}
+
+		/// <summary>
+		/// Updates the status-information for the sprite that the cursor is
+		/// currently over.
+		/// </summary>
+		internal void PrintStatusSpriteOver()
+		{
+			string over;
+			if (TilePanel.OverId != -1)
+				over = TilePanel.OverId.ToString(CultureInfo.InvariantCulture);
+			else
+				over = None;
+
+			tssl_TileOver.Text = String.Format(
+										CultureInfo.InvariantCulture,
+										Over + "{0}", over);
+		}
+
+		/// <summary>
+		/// Prints the label of the currently loaded spriteset to the statubar.
+		/// </summary>
+		internal void PrintSpritesetLabel()
+		{
+			tssl_SpritesetLabel.Text = TilePanel.Spriteset.Label;
+
+			if (IsBigobs) // TODO: Use bitflags.
+			{
+				tssl_SpritesetLabel.Text += " (32x48)";
+			}
+			else if (IsScanG)
+			{
+				tssl_SpritesetLabel.Text += " (4x4)";
+			}
+			else
+				tssl_SpritesetLabel.Text += " (32x40)";
 		}
 		#endregion
 	}

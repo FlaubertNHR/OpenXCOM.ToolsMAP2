@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Globalization;
 using System.Windows.Forms;
 
 using XCom;
@@ -25,9 +24,6 @@ namespace PckView
 		#region Fields (static)
 		private const int SpriteMargin = 2; // the pad between the tile's inner border and its contained sprite's edges
 
-		private const string Total = "Total ";
-		private const string None  = "n/a";
-
 		private static int TileWidth  = 32; // default to 32px (terrain/unit/bigobs width - alt is ScanG 4px)
 		private static int TileHeight = 40; // default to 40px (terrain/unit height - alt is Bigobs 48px / ScanG 4px)
 
@@ -37,13 +33,14 @@ namespace PckView
 
 
 		#region Fields
-		private readonly VScrollBar _scrollBar = new VScrollBar();
-		private readonly StatusBar  _statusBar = new StatusBar();
+		private readonly PckViewForm _f;
 
-		private readonly StatusBarPanel _sbpTilesTotal   = new StatusBarPanel();
-		private readonly StatusBarPanel _sbpTileOver     = new StatusBarPanel();
-		private readonly StatusBarPanel _sbpTileSelected = new StatusBarPanel();
-		private readonly StatusBarPanel _sbpSpritesLabel = new StatusBarPanel();
+		private readonly VScrollBar _scrollBar = new VScrollBar();
+
+//		private readonly StatusBarPanel _sbpTilesTotal   = new StatusBarPanel();
+//		private readonly StatusBarPanel _sbpTileOver     = new StatusBarPanel();
+//		private readonly StatusBarPanel _sbpTileSelected = new StatusBarPanel();
+//		private readonly StatusBarPanel _sbpSpritesLabel = new StatusBarPanel();
 
 		private int HoriCount = 1;
 		private int TableHeight;
@@ -77,7 +74,7 @@ namespace PckView
 				_spriteset = value;
 				_spriteset.Pal = PckViewForm.Pal;
 
-				if (!PckViewForm.IsScanG)
+				if (!_f.IsScanG)
 				{
 					TileWidth  = XCImage.SpriteWidth;
 					TileHeight = XCImage.SpriteHeight;
@@ -97,26 +94,16 @@ namespace PckView
 
 				EditorPanel.Instance.Sprite = null;
 
-				_sbpSpritesLabel.Text = _spriteset.Label;
-				if (PckViewForm.IsBigobs) // TODO: Use bitflags.
-				{
-					_sbpSpritesLabel.Text += " (32x48)";
-				}
-				else if (PckViewForm.IsScanG)
-				{
-					_sbpSpritesLabel.Text += " (4x4)";
-				}
-				else
-					_sbpSpritesLabel.Text += " (32x40)";
+				_f.PrintSpritesetLabel();
 
 				SelectedId =
 				OverId     = -1;
-				PrintStatusTotal();
+				_f.PrintStatusTotal();
 
 				if (SpritesetChangedEvent != null)
-					SpritesetChangedEvent(value != null);
+					SpritesetChangedEvent(_spriteset != null);
 
-				// TODO: update PaletteViewer if the spriteset palette changes.
+				// TODO: update PaletteViewer if the spriteset's palette changes.
 				Refresh();
 			}
 		}
@@ -124,7 +111,7 @@ namespace PckView
 		internal int SelectedId
 		{ get; set; }
 
-		private int OverId
+		internal int OverId
 		{ get; set; }
 		#endregion
 
@@ -133,7 +120,7 @@ namespace PckView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal PckViewPanel()
+		internal PckViewPanel(PckViewForm f)
 		{
 #if DEBUG
 			LogFile.SetLogFilePath(System.IO.Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
@@ -143,39 +130,17 @@ namespace PckView
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
 
+			_f = f;
+
 			_scrollBar.Dock = DockStyle.Right;
 			_scrollBar.SmallChange = 1;
 			_scrollBar.ValueChanged += OnScrollBarValueChanged;
 
-			_sbpTilesTotal.Text = String.Format(
-											CultureInfo.InvariantCulture,
-											Total + None);
-			_sbpTilesTotal.Width   = 85;
-			_sbpTileOver.Width     = 75;
-			_sbpTileSelected.Width = 100;
-
-			_sbpSpritesLabel.AutoSize = StatusBarPanelAutoSize.Spring;
-			_sbpSpritesLabel.Alignment = HorizontalAlignment.Center;
-
-			_statusBar.Dock = DockStyle.Bottom;
-			_statusBar.ShowPanels = true;
-			_statusBar.Panels.Add(_sbpTilesTotal);
-			_statusBar.Panels.Add(_sbpTileOver);
-			_statusBar.Panels.Add(_sbpTileSelected);
-			_statusBar.Panels.Add(_sbpSpritesLabel);
-
-			Controls.AddRange(new Control[]
-			{
-				_scrollBar,
-				_statusBar
-			});
+			Controls.Add(_scrollBar);
 
 
-			SelectedId = -1;
-			PrintStatusSpriteSelected();
-
-			OverId = -1;
-			PrintStatusSpriteOver();
+			SelectedId =
+			OverId     = -1;
 
 			PckViewForm.PaletteChangedEvent += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
 
@@ -271,7 +236,7 @@ namespace PckView
 
 					EditorPanel.Instance.Sprite = sprite;
 
-					PrintStatusSpriteSelected();
+					_f.PrintStatusSpriteSelected();
 					Refresh();
 				}
 				ScrollToTile(SelectedId);
@@ -293,7 +258,7 @@ namespace PckView
 				if (id != OverId)
 				{
 					OverId = id;
-					PrintStatusSpriteOver();
+					_f.PrintStatusSpriteOver();
 				}
 			}
 		}
@@ -308,7 +273,7 @@ namespace PckView
 //			base.OnMouseLeave(e);
 
 			OverId = -1;
-			PrintStatusSpriteOver();
+			_f.PrintStatusSpriteOver();
 		}
 
 		/// <summary>
@@ -322,11 +287,10 @@ namespace PckView
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
 				var graphics = e.Graphics;
-//				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
+				graphics.PixelOffsetMode    = PixelOffsetMode.Half;
 				graphics.InterpolationMode  = InterpolationMode.NearestNeighbor;
 				graphics.SmoothingMode      = SmoothingMode.None;
-				graphics.PixelOffsetMode    = PixelOffsetMode.Half;
 //				graphics.CompositingQuality = CompositingQuality.HighQuality;
 
 
@@ -355,7 +319,7 @@ namespace PckView
 											TableOffsetHori + TileWidth  - SpriteMargin * 2,
 											TableOffsetVert + TileHeight - SpriteMargin - 1);
 
-					if (!PckViewForm.IsScanG)
+					if (!_f.IsScanG)
 					{
 						graphics.DrawImage(
 										Spriteset[id].Sprite,
@@ -389,7 +353,6 @@ namespace PckView
 									new Point(
 											TableOffsetHori + TileWidth * tileX,
 											TableOffsetVert - _scrollBar.Value + TableHeight));
-//											TableOffsetVert + _scrollBar.Value + TableHeight - TileHeight));
 
 				int tilesY = Spriteset.Count / HoriCount;
 				if (Spriteset.Count % HoriCount != 0)
@@ -438,8 +401,8 @@ namespace PckView
 		/// <param name="resetTrack">true to set the thing to the top of the track</param>
 		private void CalculateScrollRange(bool resetTrack)
 		{
-			LogFile.WriteLine("");
-			LogFile.WriteLine("CalculateScrollRange()");
+			//LogFile.WriteLine("");
+			//LogFile.WriteLine("CalculateScrollRange()");
 
 			HoriCount   = 1;
 			TableHeight = 0;
@@ -455,41 +418,26 @@ namespace PckView
 				if (HoriCount > Spriteset.Count)
 					HoriCount = Spriteset.Count;
 
-				LogFile.WriteLine(". HoriCount= " + HoriCount);
-
-//				int @add = 0;
-//				if (Spriteset.Count % HoriCount != 0)
-//					@add = 1;
-//				TableHeight = (((Spriteset.Count + (HoriCount - 1)) / HoriCount) + @add) * TileHeight;
+				//LogFile.WriteLine(". HoriCount= " + HoriCount);
 
 				TableHeight = (((Spriteset.Count + (HoriCount - 1)) / HoriCount) + 1) * TileHeight;
-				LogFile.WriteLine(". TileHeight= " + TileHeight);
-				LogFile.WriteLine(". TableHeight= " + TableHeight);
+				//LogFile.WriteLine(". TileHeight= " + TileHeight);
+				//LogFile.WriteLine(". TableHeight= " + TableHeight);
 
 				range = TableOffsetVert
 					  + TableHeight
 					  + _largeChange
 					  + (_largeChange - 1)
-					  - Height
-					  - _statusBar.Height;
-				LogFile.WriteLine(". range= " + range);
-				LogFile.WriteLine(". _largeChange= " + _largeChange);
+					  - Height;
+				//LogFile.WriteLine(". range= " + range);
+				//LogFile.WriteLine(". _largeChange= " + _largeChange);
 
 				if (range < _largeChange)
 					range = 0;
-				LogFile.WriteLine(". range= " + range);
+				//LogFile.WriteLine(". range= " + range);
 			}
 			_scrollBar.Maximum = range;
-//			_scrollBar.Visible = (range != 0);
-
-			if (_scrollBar.Visible = (range != 0))
-			{
-				int val = _scrollBar.Value;
-				_scrollBar.Value = 0;
-				_scrollBar.Value = val;
-			}
-//			if (_scrollBar.Value + (_scrollBar.LargeChange - 1) + _scrollBar.LargeChange > _scrollBar.Maximum)
-//				_scrollBar.Value = _scrollBar.Maximum - (_scrollBar.LargeChange - 1);
+			_scrollBar.Visible = (range != 0);
 		}
 
 		/// <summary>
@@ -499,34 +447,34 @@ namespace PckView
 		/// <param name="id"></param>
 		private void ScrollToTile(int id)
 		{
-			LogFile.WriteLine("");
-			LogFile.WriteLine("ScrollToTile() id= " + id);
-			LogFile.WriteLine(". _scrollBar.Value= " + _scrollBar.Value);
-			LogFile.WriteLine(". _scrollBar.Maximum= " + _scrollBar.Maximum);
+			//LogFile.WriteLine("");
+			//LogFile.WriteLine("ScrollToTile() id= " + id);
+			//LogFile.WriteLine(". _scrollBar.Value= " + _scrollBar.Value);
+			//LogFile.WriteLine(". _scrollBar.Maximum= " + _scrollBar.Maximum);
 
 			if (id != -1 && _scrollBar.Visible)
 			{
-				int tileY = id / HoriCount;
-				LogFile.WriteLine(". . tileY= " + tileY);
+				int r = id / HoriCount;
+				//LogFile.WriteLine(". . r= " + r);
 
-				int cutoff = tileY * TileHeight + TableOffsetVert - 1;
-				LogFile.WriteLine(". . cutoff= " + cutoff);
+				int cutoff = r * TileHeight + TableOffsetVert - 1;
+				//LogFile.WriteLine(". . cutoff= " + cutoff);
 
 				if (cutoff < _scrollBar.Value)	// <- check cutoff high
 				{
-					LogFile.WriteLine(". . . (cutoff < _scrollBar.Value)");
+					//LogFile.WriteLine(". . . (cutoff < _scrollBar.Value)");
 					_scrollBar.Value = cutoff;
 				}
 				else							// <- check cutoff low
 				{
-					LogFile.WriteLine(". . . (cutoff >= _scrollBar.Value)");
+					//LogFile.WriteLine(". . . (cutoff >= _scrollBar.Value)");
 
-					cutoff = (tileY + 1) * TileHeight - Height + _statusBar.Height + 1;// + TableOffsetVert;
-					LogFile.WriteLine(". . . cutoff= " + cutoff);
+					cutoff = (r + 1) * TileHeight - Height + 1;
+					//LogFile.WriteLine(". . . cutoff= " + cutoff);
 
 					if (cutoff > _scrollBar.Value)
 					{
-						LogFile.WriteLine(". . . . (cutoff > _scrollBar.Value)");
+						//LogFile.WriteLine(". . . . (cutoff > _scrollBar.Value)");
 						_scrollBar.Value = cutoff;
 					}
 				}
@@ -550,47 +498,6 @@ namespace PckView
 					return id;
 			}
 			return -1;
-		}
-
-
-		/// <summary>
-		/// Prints the quantity of sprites in the currently loaded spriteset to
-		/// the statusbar. Note that this will clear the sprite-over info.
-		/// </summary>
-		internal void PrintStatusTotal()
-		{
-			PrintStatusSpriteOver();
-			PrintStatusSpriteSelected();
-
-			_sbpTilesTotal.Text = String.Format(
-											CultureInfo.InvariantCulture,
-											Total + "{0}", Spriteset.Count);
-		}
-
-		/// <summary>
-		/// Updates the status-information for the sprite that is currently
-		/// selected.
-		/// </summary>
-		internal void PrintStatusSpriteSelected()
-		{
-			string selected = (SelectedId != -1) ? SelectedId.ToString(CultureInfo.InvariantCulture)
-												 : None;
-			_sbpTileSelected.Text = String.Format(
-												CultureInfo.InvariantCulture,
-												"Selected {0}", selected);
-		}
-
-		/// <summary>
-		/// Updates the status-information for the sprite that the cursor is
-		/// currently over.
-		/// </summary>
-		private void PrintStatusSpriteOver()
-		{
-			string over = (OverId != -1) ? OverId.ToString(CultureInfo.InvariantCulture)
-										 : None;
-			_sbpTileOver.Text = String.Format(
-										CultureInfo.InvariantCulture,
-										"Over {0}", over);
 		}
 		#endregion
 	}
