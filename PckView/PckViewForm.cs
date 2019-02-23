@@ -151,7 +151,7 @@ namespace PckView
 			_pnlView.Click                 += OnSpriteClick;
 			_pnlView.DoubleClick           += OnSpriteEditorClick;
 
-			pnlView.Controls.Add(_pnlView);
+			Controls.Add(_pnlView);
 
 
 //			_share[SharedSpace.Palettes] = new Dictionary<string, Palette>();

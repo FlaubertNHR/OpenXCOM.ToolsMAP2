@@ -53,7 +53,6 @@ namespace PckView
 			this.miAbout = new System.Windows.Forms.MenuItem();
 			this.miConsole = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
-			this.pnlView = new System.Windows.Forms.Panel();
 			this.SuspendLayout();
 			// 
 			// mmMainMenu
@@ -122,14 +121,14 @@ namespace PckView
 			this.miNewBigobs.Text = "Create b&igobs ...";
 			this.miNewBigobs.Click += new System.EventHandler(this.OnCreateClick);
 			// 
-			// miNewUnitsUfo
+			// miNewUnitUfo
 			// 
 			this.miNewUnitUfo.Index = 5;
 			this.miNewUnitUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
 			this.miNewUnitUfo.Text = "Create &ufo unit ...";
 			this.miNewUnitUfo.Click += new System.EventHandler(this.OnCreateClick);
 			// 
-			// miNewUnitsTftd
+			// miNewUnitTftd
 			// 
 			this.miNewUnitTftd.Index = 6;
 			this.miNewUnitTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
@@ -281,19 +280,10 @@ namespace PckView
 			this.miHelp.Text = "&Help";
 			this.miHelp.Click += new System.EventHandler(this.OnHelpClick);
 			// 
-			// pnlView
-			// 
-			this.pnlView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnlView.Location = new System.Drawing.Point(0, 0);
-			this.pnlView.Name = "pnlView";
-			this.pnlView.Size = new System.Drawing.Size(472, 614);
-			this.pnlView.TabIndex = 1;
-			// 
 			// PckViewForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(472, 614);
-			this.Controls.Add(this.pnlView);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.KeyPreview = true;
 			this.Location = new System.Drawing.Point(50, 50);
@@ -312,7 +302,6 @@ namespace PckView
 
 		private System.ComponentModel.IContainer components = null;
 
-		private System.Windows.Forms.Panel pnlView;
 
 		private System.Windows.Forms.MainMenu mmMainMenu;
 
