@@ -207,8 +207,10 @@ namespace XCom
 						0,					// offset
 						bindata.Length);	// count
 
-			// chop bindata into 16-byte icons
+			// chop bindata into 16-byte icons (4x4 256-color indexed)
 			int icons = bindata.Length / 16;
+
+			// TODO: Test that ScanG.Dat is not corrupt (ie. is evenly divisible by 16).
 
 			for (int i = 0; i != icons; ++i)
 			{
@@ -217,10 +219,7 @@ namespace XCom
 				for (int j = 0; j != 16; ++j)
 					icondata[j] = bindata[i * 16 + j];
 
-				var icon = new ScanGicon(
-									icondata,
-									this);
-				Add(icon);
+				Add(new ScanGicon(icondata));
 			}
 		}
 		#endregion

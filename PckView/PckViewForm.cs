@@ -93,6 +93,12 @@ namespace PckView
 		/// </summary>
 		internal static bool IsBigobs
 		{ get; private set; }
+
+		/// <summary>
+		/// True if a ScanG iconset is opened.
+		/// </summary>
+		internal static bool IsScanG
+		{ get; private set; }
 		#endregion
 
 
@@ -596,7 +602,7 @@ namespace PckView
 					_pnlView.PrintStatusTotal();
 
 					_pnlView.ForceResize();
-					Refresh();
+					_pnlView.Refresh();
 				}
 			}
 		}
@@ -723,7 +729,7 @@ namespace PckView
 			_pnlView.PrintStatusTotal();
 
 			_pnlView.ForceResize();
-			Refresh();
+			_pnlView.Refresh();
 		}
 
 		/// <summary>
@@ -764,7 +770,7 @@ namespace PckView
 						_pnlView.Spriteset[_pnlView.SelectedId] =
 						EditorPanel.Instance.Sprite = sprite;
 
-						Refresh();
+						_pnlView.Refresh();
 					}
 					else
 						ShowBitmapError();
@@ -812,7 +818,7 @@ namespace PckView
 			_pnlView.PrintStatusSpriteSelected();
 
 			OnSpriteClick(null, EventArgs.Empty);
-			Refresh();
+			_pnlView.Refresh();
 		}
 
 		/// <summary>
@@ -836,7 +842,7 @@ namespace PckView
 			_pnlView.PrintStatusTotal();
 
 			_pnlView.ForceResize();
-			Refresh();
+			_pnlView.Refresh();
 		}
 
 		/// <summary>
@@ -910,7 +916,8 @@ namespace PckView
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					IsBigobs = false;
+					IsBigobs =
+					IsScanG  = false;
 					LoadSpriteset(ofd.FileName);
 				}
 			}
@@ -932,6 +939,7 @@ namespace PckView
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					IsBigobs = true;
+					IsScanG  = false;
 					LoadSpriteset(ofd.FileName);
 				}
 			}
@@ -1016,6 +1024,7 @@ namespace PckView
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					IsBigobs = false;
+					IsScanG  = true;
 					LoadScanG(ofd.FileName);
 				}
 			}
@@ -1261,7 +1270,7 @@ namespace PckView
 //			_totalViewPck.Hq2x();
 //
 //			OnResize(null);
-//			Refresh();
+//			_pnlView.Refresh();
 		}
 
 		/// <summary>

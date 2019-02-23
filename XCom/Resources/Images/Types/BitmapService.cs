@@ -89,7 +89,7 @@ namespace XCom
 
 			b.UnlockBits(locked);
 
-			return new XCImage(bindata, width, height, pal, id); // note: XCImage..cTor calls MakeBitmapTrue() below.
+			return new XCImage(bindata, width, height, pal, id); // note: XCImage..cTor calls CreateColorized() below.
 		}
 
 		/// <summary>

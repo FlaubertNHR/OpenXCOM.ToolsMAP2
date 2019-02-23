@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Windows.Forms;
 
 using XCom;
@@ -22,7 +23,7 @@ namespace PckView
 
 
 		#region Fields (static)
-		private const int SpriteMargin = 2;
+		private const int SpriteMargin = 2; // the pad between the tile's inner border and its contained sprite's edges
 
 		private const string Total = "Total ";
 		private const string None  = "n/a";
@@ -30,8 +31,8 @@ namespace PckView
 		private static int TileWidth  = 32; // default to 32px (terrain/unit/bigobs width - alt is ScanG 4px)
 		private static int TileHeight = 40; // default to 40px (terrain/unit height - alt is Bigobs 48px / ScanG 4px)
 
-		private const int TableOffsetHori = 3;
-		private const int TableOffsetVert = 2;
+		private const int TableOffsetHori = 3; // the pad between the panel's inner border and the table's vertical borders
+		private const int TableOffsetVert = 2; // the pad between the panel's inner border and the table's horizontal borders
 		#endregion
 
 
@@ -44,8 +45,8 @@ namespace PckView
 		private readonly StatusBarPanel _sbpTileSelected = new StatusBarPanel();
 		private readonly StatusBarPanel _sbpSpritesLabel = new StatusBarPanel();
 
-		private int _tilesX = 1;
-		private int _startY;
+		private int HoriCount = 1;
+		private int TableHeight;
 
 		private Pen   _penBlack        = new Pen(Brushes.Black, 1);
 		private Pen   _penControlLight = new Pen(SystemColors.ControlLight, 1);
@@ -74,20 +75,39 @@ namespace PckView
 			set
 			{
 				_spriteset = value;
-
 				_spriteset.Pal = PckViewForm.Pal;
 
-				TileWidth  = XCImage.SpriteWidth  + SpriteMargin * 2 + 1;
-				TileHeight = XCImage.SpriteHeight + SpriteMargin * 2 + 1;
+				if (!PckViewForm.IsScanG)
+				{
+					TileWidth  = XCImage.SpriteWidth;
+					TileHeight = XCImage.SpriteHeight;
+				}
+				else // is ScanG iconset ->
+				{
+					TileWidth  = XCImage.SpriteWidth  * 4;
+					TileHeight = XCImage.SpriteHeight * 4;
+				}
+				TileWidth  += SpriteMargin * 2 + 1;
+				TileHeight += SpriteMargin * 2 + 1;
 
 				_largeChange           =
 				_scrollBar.LargeChange = TileHeight;
 
-				UpdateScrollbar(true);
+				CalculateScrollRange(true);
 
 				EditorPanel.Instance.Sprite = null;
 
-				_sbpSpritesLabel.Text = _spriteset.Label + (PckViewForm.IsBigobs ? " (32x48)" : " (32x40)");
+				_sbpSpritesLabel.Text = _spriteset.Label;
+				if (PckViewForm.IsBigobs) // TODO: Use bitflags.
+				{
+					_sbpSpritesLabel.Text += " (32x48)";
+				}
+				else if (PckViewForm.IsScanG)
+				{
+					_sbpSpritesLabel.Text += " (4x4)";
+				}
+				else
+					_sbpSpritesLabel.Text += " (32x40)";
 
 				SelectedId =
 				OverId     = -1;
@@ -106,23 +126,6 @@ namespace PckView
 
 		private int OverId
 		{ get; set; }
-
-		/// <summary>
-		/// Used by UpdateScrollBar() to determine its Maximum value.
-		/// </summary>
-		private int TableHeight
-		{
-			get // TODO: calculate and cache this value in the OnResize event.
-			{
-				SetTilesX();
-
-				int height = 0;
-				if (Spriteset != null)
-					height = (Spriteset.Count / _tilesX + 2) * TileHeight;
-
-				return height;
-			}
-		}
 		#endregion
 
 
@@ -145,7 +148,7 @@ namespace PckView
 			_scrollBar.ValueChanged += OnScrollBarValueChanged;
 
 			_sbpTilesTotal.Text = String.Format(
-											System.Globalization.CultureInfo.InvariantCulture,
+											CultureInfo.InvariantCulture,
 											Total + None);
 			_sbpTilesTotal.Width   = 85;
 			_sbpTileOver.Width     = 75;
@@ -193,7 +196,7 @@ namespace PckView
 
 			if (FindForm().WindowState != FormWindowState.Minimized)
 			{
-				UpdateScrollbar(false);
+				CalculateScrollRange(false);
 				ScrollToTile(SelectedId);
 			}
 		}
@@ -241,16 +244,16 @@ namespace PckView
 			{
 				// IMPORTANT: 'SelectedId' is currently allowed only 1 entry.
 
-				int terrainId = GetTileId(e);
-				if (terrainId != SelectedId)
+				int id = GetTileId(e);
+				if (id != SelectedId)
 				{
 					XCImage sprite = null;
 
-					if ((SelectedId = terrainId) != -1)
+					if ((SelectedId = id) != -1)
 					{
-//						SelectedId = Spriteset[SelectedId].TerrainId; // use the proper Id of the sprite itself.
-						sprite = Spriteset[SelectedId];
-
+//						SelectedId = Spriteset[SelectedId].TerrainId;	// use the proper Id of the sprite itself.
+						sprite = Spriteset[SelectedId];					// nopt. Screws with ScanG icons (that have no integral TerrainId)
+																		// TODO: assign a "TerrainId" to ScanG icons ...
 //						if (ModifierKeys == Keys.Control)
 //						{
 //							SpriteSelected spritePre = null;
@@ -286,10 +289,10 @@ namespace PckView
 
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
-				int terrainId = GetTileId(e);
-				if (terrainId != OverId)
+				int id = GetTileId(e);
+				if (id != OverId)
 				{
-					OverId = terrainId;
+					OverId = id;
 					PrintStatusSpriteOver();
 				}
 			}
@@ -319,7 +322,12 @@ namespace PckView
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
 				var graphics = e.Graphics;
-				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+//				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+				graphics.InterpolationMode  = InterpolationMode.NearestNeighbor;
+				graphics.SmoothingMode      = SmoothingMode.None;
+				graphics.PixelOffsetMode    = PixelOffsetMode.Half;
+//				graphics.CompositingQuality = CompositingQuality.HighQuality;
 
 
 				if (!_scrollBar.Visible) // indicate the reserved width for scrollbar.
@@ -333,45 +341,58 @@ namespace PckView
 //				foreach (var sprite in Selected)
 //					selectedIds.Add(sprite.Sprite.TerrainId);
 
-				for (int id = 0; id != Spriteset.Count; ++id) // fill selected tiles and draw sprites.
+				for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
 				{
-					int tileX = id % _tilesX;
-					int tileY = id / _tilesX;
+					int tileX = id % HoriCount;
+					int tileY = id / HoriCount;
 
 //					if (selectedIds.Contains(id))
 					if (id == SelectedId)
 						graphics.FillRectangle(
 											_brushCrimson,
 											TableOffsetHori + TileWidth  * tileX,
-											TableOffsetVert + TileHeight * tileY + _startY,
+											TableOffsetVert + TileHeight * tileY - _scrollBar.Value,
 											TableOffsetHori + TileWidth  - SpriteMargin * 2,
 											TableOffsetVert + TileHeight - SpriteMargin - 1);
 
-					graphics.DrawImage(
-									Spriteset[id].Sprite,
-									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-									TableOffsetVert + tileY * TileHeight + SpriteMargin + _startY);
+					if (!PckViewForm.IsScanG)
+					{
+						graphics.DrawImage(
+										Spriteset[id].Sprite,
+										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
+					}
+					else
+					{
+						graphics.DrawImage(
+										Spriteset[id].Sprite,
+										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+										Spriteset[id].Sprite.Width  * 4,
+										Spriteset[id].Sprite.Height * 4);
+					}
 				}
 
 
 				graphics.FillRectangle(
 									new SolidBrush(_penBlack.Color),
 									TableOffsetHori - 1,
-									TableOffsetVert + _startY - 1,
+									TableOffsetVert - 1 - _scrollBar.Value,
 									1, 1); // so bite me.
 
-				for (int tileX = 0; tileX <= _tilesX; ++tileX) // draw vertical lines
+				for (int tileX = 0; tileX <= HoriCount; ++tileX) // draw vertical lines
 					graphics.DrawLine(
 									_penBlack,
 									new Point(
 											TableOffsetHori + TileWidth * tileX,
-											TableOffsetVert + _startY),
+											TableOffsetVert - _scrollBar.Value),
 									new Point(
 											TableOffsetHori + TileWidth * tileX,
-											TableOffsetVert - _startY + Height));
+											TableOffsetVert - _scrollBar.Value + TableHeight));
+//											TableOffsetVert + _scrollBar.Value + TableHeight - TileHeight));
 
-				int tilesY = Spriteset.Count / _tilesX;
-				if (Spriteset.Count % _tilesX != 0)
+				int tilesY = Spriteset.Count / HoriCount;
+				if (Spriteset.Count % HoriCount != 0)
 					++tilesY;
 
 				for (int tileY = 0; tileY <= tilesY; ++tileY) // draw horizontal lines
@@ -379,16 +400,19 @@ namespace PckView
 									_penBlack,
 									new Point(
 											TableOffsetHori,
-											TableOffsetVert + TileHeight * tileY + _startY),
+											TableOffsetVert + TileHeight * tileY - _scrollBar.Value),
 									new Point(
-											TableOffsetHori + TileWidth  * _tilesX,
-											TableOffsetVert + TileHeight * tileY + _startY));
+											TableOffsetHori + TileWidth  * HoriCount,
+											TableOffsetVert + TileHeight * tileY - _scrollBar.Value));
 			}
 		}
 		#endregion
 
 
 		#region Eventcalls
+		/// <summary>
+		/// Handler for PaletteChangedEvent.
+		/// </summary>
 		private void OnPaletteChanged()
 		{
 			Refresh();
@@ -401,7 +425,6 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnScrollBarValueChanged(object sender, EventArgs e)
 		{
-			_startY = -_scrollBar.Value;
 			Refresh();
 		}
 		#endregion
@@ -409,45 +432,101 @@ namespace PckView
 
 		#region Methods
 		/// <summary>
-		/// Gets the terrain-id of a sprite at coordinates x/y.
+		/// Calculates the scrollbar-range after a resize event or a spriteset-
+		/// changed event.
 		/// </summary>
-		/// <param name="e"></param>
-		/// <returns>the terrain-id or -1 if out of bounds</returns>
-		private int GetTileId(MouseEventArgs e)
+		/// <param name="resetTrack">true to set the thing to the top of the track</param>
+		private void CalculateScrollRange(bool resetTrack)
 		{
-			if (e.X < _tilesX * TileWidth + TableOffsetHori - 1) // not out of bounds to right
-			{
-				int tileX = (e.X - TableOffsetHori + 1)           / TileWidth;
-				int tileY = (e.Y - TableOffsetHori + 1 - _startY) / TileHeight;
+			LogFile.WriteLine("");
+			LogFile.WriteLine("CalculateScrollRange()");
 
-				int terrainId = tileY * _tilesX + tileX;
-				if (terrainId < Spriteset.Count) // not out of bounds below
-					return terrainId;
+			HoriCount   = 1;
+			TableHeight = 0;
+
+			int range = 0;
+			if (Spriteset != null && Spriteset.Count != 0)
+			{
+				if (resetTrack)
+					_scrollBar.Value = 0;
+
+				HoriCount = (Width - TableOffsetHori - _scrollBar.Width - 1) / TileWidth;
+
+				if (HoriCount > Spriteset.Count)
+					HoriCount = Spriteset.Count;
+
+				LogFile.WriteLine(". HoriCount= " + HoriCount);
+
+//				int @add = 0;
+//				if (Spriteset.Count % HoriCount != 0)
+//					@add = 1;
+//				TableHeight = (((Spriteset.Count + (HoriCount - 1)) / HoriCount) + @add) * TileHeight;
+
+				TableHeight = (((Spriteset.Count + (HoriCount - 1)) / HoriCount) + 1) * TileHeight;
+				LogFile.WriteLine(". TileHeight= " + TileHeight);
+				LogFile.WriteLine(". TableHeight= " + TableHeight);
+
+				range = TableOffsetVert
+					  + TableHeight
+					  + _largeChange
+					  + (_largeChange - 1)
+					  - Height
+					  - _statusBar.Height;
+				LogFile.WriteLine(". range= " + range);
+				LogFile.WriteLine(". _largeChange= " + _largeChange);
+
+				if (range < _largeChange)
+					range = 0;
+				LogFile.WriteLine(". range= " + range);
 			}
-			return -1;
+			_scrollBar.Maximum = range;
+//			_scrollBar.Visible = (range != 0);
+
+			if (_scrollBar.Visible = (range != 0))
+			{
+				int val = _scrollBar.Value;
+				_scrollBar.Value = 0;
+				_scrollBar.Value = val;
+			}
+//			if (_scrollBar.Value + (_scrollBar.LargeChange - 1) + _scrollBar.LargeChange > _scrollBar.Maximum)
+//				_scrollBar.Value = _scrollBar.Maximum - (_scrollBar.LargeChange - 1);
 		}
 
 		/// <summary>
 		/// Checks if a selected tile is fully visible in the view-panel and
 		/// scrolls the table to show it if not.
 		/// </summary>
-		/// <param name="terrainId"></param>
-		private void ScrollToTile(int terrainId)
+		/// <param name="id"></param>
+		private void ScrollToTile(int id)
 		{
-			if (terrainId != -1)
-			{
-				int tileY = terrainId / _tilesX;
+			LogFile.WriteLine("");
+			LogFile.WriteLine("ScrollToTile() id= " + id);
+			LogFile.WriteLine(". _scrollBar.Value= " + _scrollBar.Value);
+			LogFile.WriteLine(". _scrollBar.Maximum= " + _scrollBar.Maximum);
 
-				int cutoff = tileY * TileHeight;
-				if (cutoff < -_startY)		// <- check cutoff high
+			if (id != -1 && _scrollBar.Visible)
+			{
+				int tileY = id / HoriCount;
+				LogFile.WriteLine(". . tileY= " + tileY);
+
+				int cutoff = tileY * TileHeight + TableOffsetVert - 1;
+				LogFile.WriteLine(". . cutoff= " + cutoff);
+
+				if (cutoff < _scrollBar.Value)	// <- check cutoff high
 				{
+					LogFile.WriteLine(". . . (cutoff < _scrollBar.Value)");
 					_scrollBar.Value = cutoff;
 				}
-				else						// <- check cutoff low
+				else							// <- check cutoff low
 				{
-					cutoff = (tileY + 1) * TileHeight - Height + _statusBar.Height + TableOffsetVert + 1;
-					if (cutoff > -_startY)
+					LogFile.WriteLine(". . . (cutoff >= _scrollBar.Value)");
+
+					cutoff = (tileY + 1) * TileHeight - Height + _statusBar.Height + 1;// + TableOffsetVert;
+					LogFile.WriteLine(". . . cutoff= " + cutoff);
+
+					if (cutoff > _scrollBar.Value)
 					{
+						LogFile.WriteLine(". . . . (cutoff > _scrollBar.Value)");
 						_scrollBar.Value = cutoff;
 					}
 				}
@@ -455,39 +534,24 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Updates the scrollbar after a resize event or a spriteset changed
-		/// event.
+		/// Gets the id of a sprite at coordinates x/y.
 		/// </summary>
-		/// <param name="resetTrack">true to set the thing to the top of the track</param>
-		private void UpdateScrollbar(bool resetTrack)
+		/// <param name="e"></param>
+		/// <returns>the terrain-id or -1 if out of bounds</returns>
+		private int GetTileId(MouseEventArgs e)
 		{
-			int range = 0;
-			if (Spriteset != null && Spriteset.Count != 0)
+			if (e.X < HoriCount * TileWidth + TableOffsetHori - 1) // not out of bounds to right
 			{
-				if (resetTrack)
-					_scrollBar.Value = 0;
+				int tileX = (e.X - TableOffsetHori + 1)                    / TileWidth;
+				int tileY = (e.Y - TableOffsetHori + 1 + _scrollBar.Value) / TileHeight;
 
-				range = TableOffsetVert + TableHeight + _largeChange - Height - _statusBar.Height;
-				if (range < _largeChange)
-					range = 0;
+				int id = tileY * HoriCount + tileX;
+				if (id < Spriteset.Count) // not out of bounds below
+					return id;
 			}
-			_scrollBar.Maximum = range;
-			_scrollBar.Visible = (range != 0);
+			return -1;
 		}
 
-		private void SetTilesX()
-		{
-			int tilesX = 1;
-
-			if (Spriteset != null && Spriteset.Count != 0)
-			{
-				tilesX = (Width - TableOffsetHori - _scrollBar.Width - 1) / TileWidth;
-
-				if (tilesX > Spriteset.Count)
-					tilesX = Spriteset.Count;
-			}
-			_tilesX = tilesX;
-		}
 
 		/// <summary>
 		/// Prints the quantity of sprites in the currently loaded spriteset to
@@ -499,7 +563,7 @@ namespace PckView
 			PrintStatusSpriteSelected();
 
 			_sbpTilesTotal.Text = String.Format(
-											System.Globalization.CultureInfo.InvariantCulture,
+											CultureInfo.InvariantCulture,
 											Total + "{0}", Spriteset.Count);
 		}
 
@@ -509,10 +573,10 @@ namespace PckView
 		/// </summary>
 		internal void PrintStatusSpriteSelected()
 		{
-			string selected = (SelectedId != -1) ? SelectedId.ToString(System.Globalization.CultureInfo.InvariantCulture)
+			string selected = (SelectedId != -1) ? SelectedId.ToString(CultureInfo.InvariantCulture)
 												 : None;
 			_sbpTileSelected.Text = String.Format(
-												System.Globalization.CultureInfo.InvariantCulture,
+												CultureInfo.InvariantCulture,
 												"Selected {0}", selected);
 		}
 
@@ -522,10 +586,10 @@ namespace PckView
 		/// </summary>
 		private void PrintStatusSpriteOver()
 		{
-			string over = (OverId != -1) ? OverId.ToString(System.Globalization.CultureInfo.InvariantCulture)
+			string over = (OverId != -1) ? OverId.ToString(CultureInfo.InvariantCulture)
 										 : None;
 			_sbpTileOver.Text = String.Format(
-										System.Globalization.CultureInfo.InvariantCulture,
+										CultureInfo.InvariantCulture,
 										"Over {0}", over);
 		}
 		#endregion
@@ -564,9 +628,9 @@ namespace PckView
 //				if (Spriteset.Count != 0)
 //				{
 //					var selected = new SelectedSprite();
-//					selected.Y   = lowestId / _tilesX;
+//					selected.Y   = lowestId / HoriCount;
 //					selected.X   = lowestId - selected.Y;
-//					selected.Id  = selected.X + selected.Y * _tilesX;
+//					selected.Id  = selected.X + selected.Y * HoriCount;
 //	
 //					Selected.Add(selected);
 //				}
