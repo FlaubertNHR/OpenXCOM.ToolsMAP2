@@ -190,7 +190,7 @@ namespace XCom
 		/// <summary>
 		/// cTor[3]. Creates a spriteset of ScanG icons.
 		/// </summary>
-		/// <param name="fsScanG">filestream of the PCK file</param>
+		/// <param name="fsScanG">filestream of the SCANG.DAT file</param>
 		public SpriteCollection(Stream fsScanG)
 		{
 			TabOffset = 0;

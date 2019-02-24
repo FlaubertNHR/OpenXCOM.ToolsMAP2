@@ -460,14 +460,13 @@ namespace PckView
 			_miAdd             .Enabled = valid;
 
 			Editor.OnLoad(null, EventArgs.Empty); // resize the Editor to the spriteset's sprite-size
+			OnSpriteClick(null, EventArgs.Empty); // disable items on the contextmenu
 		}
 
 		/// <summary>
-		/// Bring back the dinosaurs. Enables (or disables) several menuitems.
-		/// Also freshens sprite data in the sprite-editor and byte-viewer if
-		/// applicable.
-		/// Called when the viewer-panel's Click event is raised.
-		/// NOTE: This fires after PckViewPanel.OnMouseDown(). Thought you'd
+		/// Bring back the dinosaurs. Enables (or disables) several contextmenu
+		/// items. Called when the tile-panel's Click event is raised.
+		/// @note This fires after PckViewPanel.OnMouseDown(). Thought you'd
 		/// like to know.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -490,7 +489,7 @@ namespace PckView
 		/// <summary>
 		/// Opens the currently selected sprite in the sprite-editor.
 		/// Called when the contextmenu's Click event or the viewer-panel's
-		/// DoubleClick event is raised.
+		/// DoubleClick event is raised or [Enter] is pressed.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

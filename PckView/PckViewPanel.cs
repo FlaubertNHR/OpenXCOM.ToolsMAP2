@@ -69,15 +69,15 @@ namespace PckView
 				_spriteset = value;
 				_spriteset.Pal = PckViewForm.Pal;
 
-				if (!_f.IsScanG)
-				{
-					TileWidth  = XCImage.SpriteWidth;
-					TileHeight = XCImage.SpriteHeight;
-				}
-				else // is ScanG iconset ->
+				if (_f.IsScanG)
 				{
 					TileWidth  = XCImage.SpriteWidth  * 4;
 					TileHeight = XCImage.SpriteHeight * 4;
+				}
+				else
+				{
+					TileWidth  = XCImage.SpriteWidth;
+					TileHeight = XCImage.SpriteHeight;
 				}
 				TileWidth  += SpriteMargin * 2 + 1;
 				TileHeight += SpriteMargin * 2 + 1;
@@ -217,9 +217,9 @@ namespace PckView
 
 					if ((SelectedId = id) != -1)
 					{
-//						SelectedId = Spriteset[SelectedId].TerrainId;	// use the proper Id of the sprite itself.
-						sprite = Spriteset[SelectedId];					// nopt. Screws with ScanG icons (that have no integral TerrainId)
-																		// TODO: assign a "TerrainId" to ScanG icons ...
+//						SelectedId = Spriteset[SelectedId].TerrainId; // use the proper Id of the sprite itself. don't bother
+						sprite = Spriteset[SelectedId];
+
 //						if (ModifierKeys == Keys.Control)
 //						{
 //							SpriteSelected spritePre = null;
