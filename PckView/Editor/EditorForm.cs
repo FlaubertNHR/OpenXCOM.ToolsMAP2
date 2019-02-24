@@ -113,6 +113,7 @@ namespace PckView
 		#region Eventcalls
 		/// <summary>
 		/// Sets the *proper* ClientSize.
+		/// @note Also called by PckViewForm.OnSpritesetChanged()
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -121,9 +122,9 @@ namespace PckView
 			ClientSize = new Size(
 								XCImage.SpriteWidth32 * 10 + EditorPanel.Pad, // <- keep the statusbar at 32px width
 								XCImage.SpriteHeight  * 10 + EditorPanel.Pad
-									+ _trackBar.Height
+									+ _trackBar   .Height
 									+ _lblEditMode.Height
-									+ ss_Status.Height);
+									+ ss_Status   .Height);
 		}
 
 		private void OnTrackScroll(object sender, EventArgs e)

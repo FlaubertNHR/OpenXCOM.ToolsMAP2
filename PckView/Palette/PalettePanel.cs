@@ -36,11 +36,11 @@ namespace PckView
 
 
 		#region Properties
-		private int _id = -1;
-		internal int PaletteId
+		private int _palid = -1;
+		internal int Palid
 		{
-			get { return _id; }
-			set { _id = value; }
+			get { return _palid; }
+			set { _palid = value; }
 		}
 
 		private int _clickX = -1;
@@ -82,10 +82,10 @@ namespace PckView
 			_swatchWidth  = Width  / SwatchesPerSide;
 			_swatchHeight = Height / SwatchesPerSide;
 
-			if (PaletteId != -1)
+			if (Palid != -1)
 			{
-				ClickX = PaletteId % SwatchesPerSide * _swatchWidth  + 1;
-				ClickY = PaletteId / SwatchesPerSide * _swatchHeight + 1;
+				ClickX = Palid % SwatchesPerSide * _swatchWidth  + 1;
+				ClickY = Palid / SwatchesPerSide * _swatchHeight + 1;
 			}
 			Refresh();
 		}
@@ -100,7 +100,7 @@ namespace PckView
 			ClickX = swatchX * _swatchWidth  + 1;
 			ClickY = swatchY * _swatchHeight + 1;
 
-			PaletteId = swatchY * SwatchesPerSide + swatchX;
+			Palid = swatchY * SwatchesPerSide + swatchX;
 
 			PrintStatusPaletteId();
 		}
@@ -141,7 +141,7 @@ namespace PckView
 					}
 				}
 
-				if (PaletteId != -1)
+				if (Palid != -1)
 				{
 					graphics.DrawRectangle(
 										Pens.Red,
@@ -164,10 +164,10 @@ namespace PckView
 		#region Eventcalls
 		private void OnPaletteChanged()
 		{
-			if (PaletteId > -1 && PaletteId < 256
+			if (Palid > -1 && Palid < 256
 				&& PaletteIdChangedEvent != null)
 			{
-				PaletteIdChangedEvent(PaletteId);
+				PaletteIdChangedEvent(Palid);
 			}
 			Refresh();
 		}
@@ -178,23 +178,23 @@ namespace PckView
 		/// <summary>
 		/// Forces selection of a specific palette-id.
 		/// </summary>
-		/// <param name="palId">the palette id</param>
-		internal void SelectPaletteId(int palId)
+		/// <param name="palid">the palette id</param>
+		internal void SelectPaletteId(int palid)
 		{
-			PaletteId = palId;
+			Palid = palid;
 
-			ClickX = palId % SwatchesPerSide * _swatchWidth  + 1;
-			ClickY = palId / SwatchesPerSide * _swatchHeight + 1;
+			ClickX = palid % SwatchesPerSide * _swatchWidth  + 1;
+			ClickY = palid / SwatchesPerSide * _swatchHeight + 1;
 
 			PrintStatusPaletteId();
 		}
 
 		internal void PrintStatusPaletteId()
 		{
-			if (PaletteId > -1 && PaletteId < 256
+			if (Palid > -1 && Palid < 256
 				&& PaletteIdChangedEvent != null)
 			{
-				PaletteIdChangedEvent(PaletteId);
+				PaletteIdChangedEvent(Palid);
 				Refresh();
 			}
 		}

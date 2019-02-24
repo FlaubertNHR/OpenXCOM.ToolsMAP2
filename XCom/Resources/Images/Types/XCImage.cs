@@ -62,7 +62,7 @@ namespace XCom.Interfaces
 				Palette pal,
 				int id)
 		{
-			TerrainId = id; // NOTE: Is not necessarily Terrain. Could be Bigobs or Units ...
+			TerrainId = id; // NOTE: Is not necessarily Terrain. Could be Bigobs or Units or a ScanG icon ...
 
 			Bindata = bindata;
 			Pal     = pal;

@@ -14,14 +14,17 @@ namespace XCom
 		/// Instantiates a ScanG icon, based on an XCImage.
 		/// </summary>
 		/// <param name="bindata">the ScanG.Dat source data</param>
-		internal ScanGicon(byte[] bindata)
+		/// <param name="id"></param>
+		internal ScanGicon(
+				byte[] bindata,
+				int id)
 			:
 				base(
 					bindata,
 					XCImage.SpriteWidth,
 					XCImage.SpriteHeight,
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
-					-1)
+					id)
 		{
 			Pal = Palette.UfoBattle; // default: icons have no integral palette.
 

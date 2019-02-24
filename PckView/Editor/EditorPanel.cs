@@ -153,8 +153,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Changes a clicked pixel's palette-id (color) to whatever the current
-		/// 'PaletteId' is in PalettePanel.
+		/// Handles a mousedown event on the editor-panel.
+		/// EditMode.Enabled: changes a clicked pixel's palette-id (color) to
+		/// whatever the current 'PaletteId' is in PalettePanel.
+		/// EditMode.Locked: changes the 'PaletteId' in the PalettePanel to
+		/// whatever a clicked pixel's palette-id (color) is.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -177,12 +180,12 @@ namespace PckView
 						{
 							case EditorForm.EditMode.Enabled: // paint ->
 							{
-								int palId = PalettePanel.Instance.PaletteId;
-								if (palId > -1 && palId < PckImage.SpriteTransparencyByte)	// NOTE: 0xFE and 0xFF are reserved for special
-								{															// stuff when reading/writing the .PCK file.
-//									var color = PckViewForm.Pal[palId];
-
-									Sprite.Bindata[bindataId] = (byte)palId;
+								int palid = PalettePanel.Instance.Palid;
+								if (palid > -1
+									&& (palid < PckImage.SpriteTransparencyByte					// NOTE: 0xFE and 0xFF are reserved for special stuff when
+										|| (/*palid < 256 &&*/ PckViewForm.Instance.IsScanG)))	// reading/writing a .PCK file but not a .DAT (ScanG) file.
+								{
+									Sprite.Bindata[bindataId] = (byte)palid;
 									Sprite.Sprite = BitmapService.CreateColorized(
 																			XCImage.SpriteWidth,
 																			XCImage.SpriteHeight,
@@ -193,7 +196,7 @@ namespace PckView
 								}
 								else
 								{
-									switch (palId)
+									switch (palid)
 									{
 										case PckImage.SpriteTransparencyByte:	// #254
 										case PckImage.SpriteStopByte:			// #255

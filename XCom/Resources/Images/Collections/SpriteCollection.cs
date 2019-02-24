@@ -212,14 +212,14 @@ namespace XCom
 
 			// TODO: Test that ScanG.Dat is not corrupt (ie. is evenly divisible by 16).
 
-			for (int i = 0; i != icons; ++i)
+			for (int id = 0; id != icons; ++id)
 			{
 				var icondata = new byte[16];
 
-				for (int j = 0; j != 16; ++j)
-					icondata[j] = bindata[i * 16 + j];
+				for (int i = 0; i != 16; ++i)
+					icondata[i] = bindata[id * 16 + i];
 
-				Add(new ScanGicon(icondata));
+				Add(new ScanGicon(icondata, id));
 			}
 		}
 		#endregion
