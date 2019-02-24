@@ -26,33 +26,34 @@ namespace PckView
 			this.components = new System.ComponentModel.Container();
 			this.mmMainMenu = new System.Windows.Forms.MainMenu(this.components);
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
+			this.miCreate = new System.Windows.Forms.MenuItem();
+			this.miCreateTerrain = new System.Windows.Forms.MenuItem();
+			this.miCreateBigobs = new System.Windows.Forms.MenuItem();
+			this.miCreateUnitUfo = new System.Windows.Forms.MenuItem();
+			this.miCreateUnitTftd = new System.Windows.Forms.MenuItem();
 			this.miOpen = new System.Windows.Forms.MenuItem();
 			this.miOpenBigobs = new System.Windows.Forms.MenuItem();
-			this.miCreate = new System.Windows.Forms.MenuItem();
-			this.miNewTerrain = new System.Windows.Forms.MenuItem();
-			this.miNewBigobs = new System.Windows.Forms.MenuItem();
-			this.miNewUnitUfo = new System.Windows.Forms.MenuItem();
-			this.miNewUnitTftd = new System.Windows.Forms.MenuItem();
 			this.miOpenScanG = new System.Windows.Forms.MenuItem();
 			this.miSeparator1 = new System.Windows.Forms.MenuItem();
-			this.miCompare = new System.Windows.Forms.MenuItem();
 			this.miSave = new System.Windows.Forms.MenuItem();
 			this.miSaveAs = new System.Windows.Forms.MenuItem();
+			this.miSeparator2 = new System.Windows.Forms.MenuItem();
 			this.miExportSprites = new System.Windows.Forms.MenuItem();
 			this.miExportSpritesheet = new System.Windows.Forms.MenuItem();
 			this.miImportSpritesheet = new System.Windows.Forms.MenuItem();
-			this.miHq2x = new System.Windows.Forms.MenuItem();
-			this.miSeparator2 = new System.Windows.Forms.MenuItem();
+			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
+			this.miCompare = new System.Windows.Forms.MenuItem();
+			this.miHq2x = new System.Windows.Forms.MenuItem();
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
 			this.miTransparentMenu = new System.Windows.Forms.MenuItem();
 			this.miTransparent = new System.Windows.Forms.MenuItem();
 			this.miBytesMenu = new System.Windows.Forms.MenuItem();
 			this.miBytes = new System.Windows.Forms.MenuItem();
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
+			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miAbout = new System.Windows.Forms.MenuItem();
 			this.miConsole = new System.Windows.Forms.MenuItem();
-			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.ss_Status = new System.Windows.Forms.StatusStrip();
 			this.tssl_TilesTotal = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_TileOver = new System.Windows.Forms.ToolStripStatusLabel();
@@ -74,72 +75,73 @@ namespace PckView
 			// 
 			this.miFileMenu.Index = 0;
 			this.miFileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miCreate,
+			this.miCreateTerrain,
+			this.miCreateBigobs,
+			this.miCreateUnitUfo,
+			this.miCreateUnitTftd,
 			this.miOpen,
 			this.miOpenBigobs,
-			this.miCreate,
-			this.miNewTerrain,
-			this.miNewBigobs,
-			this.miNewUnitUfo,
-			this.miNewUnitTftd,
 			this.miOpenScanG,
 			this.miSeparator1,
-			this.miCompare,
 			this.miSave,
 			this.miSaveAs,
+			this.miSeparator2,
 			this.miExportSprites,
 			this.miExportSpritesheet,
 			this.miImportSpritesheet,
-			this.miHq2x,
-			this.miSeparator2,
-			this.miQuit});
+			this.miSeparator3,
+			this.miQuit,
+			this.miCompare,
+			this.miHq2x});
 			this.miFileMenu.Text = "&File";
+			// 
+			// miCreate
+			// 
+			this.miCreate.Index = 0;
+			this.miCreate.Text = "Create Pck file";
+			// 
+			// miNewTerrain
+			// 
+			this.miCreateTerrain.Index = 1;
+			this.miCreateTerrain.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
+			this.miCreateTerrain.Text = "&Create terrain ...";
+			this.miCreateTerrain.Click += new System.EventHandler(this.OnCreateClick);
+			// 
+			// miNewBigobs
+			// 
+			this.miCreateBigobs.Index = 2;
+			this.miCreateBigobs.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
+			this.miCreateBigobs.Text = "Create b&igobs ...";
+			this.miCreateBigobs.Click += new System.EventHandler(this.OnCreateClick);
+			// 
+			// miNewUnitUfo
+			// 
+			this.miCreateUnitUfo.Index = 3;
+			this.miCreateUnitUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
+			this.miCreateUnitUfo.Text = "Create &ufo unit ...";
+			this.miCreateUnitUfo.Click += new System.EventHandler(this.OnCreateClick);
+			// 
+			// miNewUnitTftd
+			// 
+			this.miCreateUnitTftd.Index = 4;
+			this.miCreateUnitTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
+			this.miCreateUnitTftd.Text = "Create t&ftd unit ...";
+			this.miCreateUnitTftd.Click += new System.EventHandler(this.OnCreateClick);
 			// 
 			// miOpen
 			// 
-			this.miOpen.Index = 0;
+			this.miOpen.Index = 5;
 			this.miOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOpen.Text = "&Open Pck (terrain/unit) file ...";
 			this.miOpen.Click += new System.EventHandler(this.OnOpenClick);
 			// 
 			// miOpenBigobs
 			// 
-			this.miOpenBigobs.Index = 1;
+			this.miOpenBigobs.Index = 6;
 			this.miOpenBigobs.Shortcut = System.Windows.Forms.Shortcut.CtrlG;
 			this.miOpenBigobs.Text = "Open Pck (bi&gobs) file ...";
 			this.miOpenBigobs.Click += new System.EventHandler(this.OnOpenBigobsClick);
-			// 
-			// miCreate
-			// 
-			this.miCreate.Index = 2;
-			this.miCreate.Text = "Create Pck file";
-			// 
-			// miNewTerrain
-			// 
-			this.miNewTerrain.Index = 3;
-			this.miNewTerrain.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
-			this.miNewTerrain.Text = "&Create terrain ...";
-			this.miNewTerrain.Click += new System.EventHandler(this.OnCreateClick);
-			// 
-			// miNewBigobs
-			// 
-			this.miNewBigobs.Index = 4;
-			this.miNewBigobs.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
-			this.miNewBigobs.Text = "Create b&igobs ...";
-			this.miNewBigobs.Click += new System.EventHandler(this.OnCreateClick);
-			// 
-			// miNewUnitUfo
-			// 
-			this.miNewUnitUfo.Index = 5;
-			this.miNewUnitUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
-			this.miNewUnitUfo.Text = "Create &ufo unit ...";
-			this.miNewUnitUfo.Click += new System.EventHandler(this.OnCreateClick);
-			// 
-			// miNewUnitTftd
-			// 
-			this.miNewUnitTftd.Index = 6;
-			this.miNewUnitTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
-			this.miNewUnitTftd.Text = "Create t&ftd unit ...";
-			this.miNewUnitTftd.Click += new System.EventHandler(this.OnCreateClick);
 			// 
 			// miOpenScanG
 			// 
@@ -153,18 +155,10 @@ namespace PckView
 			this.miSeparator1.Index = 8;
 			this.miSeparator1.Text = "-";
 			// 
-			// miCompare
-			// 
-			this.miCompare.Index = 9;
-			this.miCompare.Shortcut = System.Windows.Forms.Shortcut.CtrlM;
-			this.miCompare.Text = "Co&mpare";
-			this.miCompare.Visible = false;
-			this.miCompare.Click += new System.EventHandler(this.OnCompareClick);
-			// 
 			// miSave
 			// 
 			this.miSave.Enabled = false;
-			this.miSave.Index = 10;
+			this.miSave.Index = 9;
 			this.miSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
 			this.miSave.Text = "&Save";
 			this.miSave.Click += new System.EventHandler(this.OnSaveClick);
@@ -172,10 +166,15 @@ namespace PckView
 			// miSaveAs
 			// 
 			this.miSaveAs.Enabled = false;
-			this.miSaveAs.Index = 11;
+			this.miSaveAs.Index = 10;
 			this.miSaveAs.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
 			this.miSaveAs.Text = "Save &As ...";
 			this.miSaveAs.Click += new System.EventHandler(this.OnSaveAsClick);
+			// 
+			// miSeparator2
+			// 
+			this.miSeparator2.Index = 11;
+			this.miSeparator2.Text = "-";
 			// 
 			// miExportSprites
 			// 
@@ -201,24 +200,32 @@ namespace PckView
 			this.miImportSpritesheet.Text = "Im&port Spritesheet ...";
 			this.miImportSpritesheet.Click += new System.EventHandler(this.OnImportSpritesheetClick);
 			// 
-			// miHq2x
+			// miSeparator3
 			// 
-			this.miHq2x.Index = 15;
-			this.miHq2x.Text = "Hq&2x";
-			this.miHq2x.Visible = false;
-			this.miHq2x.Click += new System.EventHandler(this.OnHq2xClick);
-			// 
-			// miSeparator2
-			// 
-			this.miSeparator2.Index = 16;
-			this.miSeparator2.Text = "-";
+			this.miSeparator3.Index = 15;
+			this.miSeparator3.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 17;
+			this.miQuit.Index = 16;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
+			// 
+			// miCompare
+			// 
+			this.miCompare.Index = 17;
+			this.miCompare.Shortcut = System.Windows.Forms.Shortcut.CtrlM;
+			this.miCompare.Text = "Co&mpare";
+			this.miCompare.Visible = false;
+			this.miCompare.Click += new System.EventHandler(this.OnCompareClick);
+			// 
+			// miHq2x
+			// 
+			this.miHq2x.Index = 18;
+			this.miHq2x.Text = "Hq&2x";
+			this.miHq2x.Visible = false;
+			this.miHq2x.Click += new System.EventHandler(this.OnHq2xClick);
 			// 
 			// miPaletteMenu
 			// 
@@ -261,30 +268,30 @@ namespace PckView
 			// 
 			this.miHelpMenu.Index = 4;
 			this.miHelpMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miHelp,
 			this.miAbout,
-			this.miConsole,
-			this.miHelp});
-			this.miHelpMenu.Text = "Help";
+			this.miConsole});
+			this.miHelpMenu.Text = "&Help";
+			// 
+			// miHelp
+			// 
+			this.miHelp.Index = 0;
+			this.miHelp.Shortcut = System.Windows.Forms.Shortcut.CtrlH;
+			this.miHelp.Text = "&Help";
+			this.miHelp.Click += new System.EventHandler(this.OnHelpClick);
 			// 
 			// miAbout
 			// 
-			this.miAbout.Index = 0;
+			this.miAbout.Index = 1;
 			this.miAbout.Text = "&About";
 			this.miAbout.Click += new System.EventHandler(this.OnAboutClick);
 			// 
 			// miConsole
 			// 
-			this.miConsole.Index = 1;
+			this.miConsole.Index = 2;
 			this.miConsole.Text = "Console";
 			this.miConsole.Visible = false;
 			this.miConsole.Click += new System.EventHandler(this.OnConsoleClick);
-			// 
-			// miHelp
-			// 
-			this.miHelp.Index = 2;
-			this.miHelp.Shortcut = System.Windows.Forms.Shortcut.CtrlH;
-			this.miHelp.Text = "&Help";
-			this.miHelp.Click += new System.EventHandler(this.OnHelpClick);
 			// 
 			// ss_Status
 			// 
@@ -371,26 +378,28 @@ namespace PckView
 
 		private System.ComponentModel.IContainer components = null;
 
-
 		private System.Windows.Forms.MainMenu mmMainMenu;
 
+		private System.Windows.Forms.MenuItem miCreate;
+		private System.Windows.Forms.MenuItem miCreateTerrain;
+		private System.Windows.Forms.MenuItem miCreateBigobs;
+		private System.Windows.Forms.MenuItem miCreateUnitUfo;
+		private System.Windows.Forms.MenuItem miCreateUnitTftd;
 		private System.Windows.Forms.MenuItem miFileMenu;
 		private System.Windows.Forms.MenuItem miOpen;
 		private System.Windows.Forms.MenuItem miOpenBigobs;
-		private System.Windows.Forms.MenuItem miCreate;
 		private System.Windows.Forms.MenuItem miOpenScanG;
-		private System.Windows.Forms.MenuItem miNewTerrain;
-		private System.Windows.Forms.MenuItem miNewBigobs;
-		private System.Windows.Forms.MenuItem miNewUnitUfo;
-		private System.Windows.Forms.MenuItem miNewUnitTftd;
 		private System.Windows.Forms.MenuItem miSeparator1;
+		private System.Windows.Forms.MenuItem miSave;
+		private System.Windows.Forms.MenuItem miSaveAs;
+		private System.Windows.Forms.MenuItem miSeparator2;
 		private System.Windows.Forms.MenuItem miExportSprites;
 		private System.Windows.Forms.MenuItem miExportSpritesheet;
 		private System.Windows.Forms.MenuItem miImportSpritesheet;
-		private System.Windows.Forms.MenuItem miSaveAs;
-		private System.Windows.Forms.MenuItem miHq2x;
-		private System.Windows.Forms.MenuItem miSeparator2;
+		private System.Windows.Forms.MenuItem miSeparator3;
 		private System.Windows.Forms.MenuItem miQuit;
+		private System.Windows.Forms.MenuItem miCompare;
+		private System.Windows.Forms.MenuItem miHq2x;
 
 		private System.Windows.Forms.MenuItem miBytesMenu;
 		private System.Windows.Forms.MenuItem miBytes;
@@ -403,13 +412,8 @@ namespace PckView
 		private System.Windows.Forms.MenuItem miHelpMenu;
 		private System.Windows.Forms.MenuItem miHelp;
 		private System.Windows.Forms.MenuItem miAbout;
-
-
 		private System.Windows.Forms.MenuItem miConsole;
 
-		private System.Windows.Forms.MenuItem miCompare;
-
-		private System.Windows.Forms.MenuItem miSave;
 		private System.Windows.Forms.StatusStrip ss_Status;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_TilesTotal;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_TileOver;

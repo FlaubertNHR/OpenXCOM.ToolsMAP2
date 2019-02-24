@@ -37,11 +37,6 @@ namespace PckView
 
 		private readonly VScrollBar _scrollBar = new VScrollBar();
 
-//		private readonly StatusBarPanel _sbpTilesTotal   = new StatusBarPanel();
-//		private readonly StatusBarPanel _sbpTileOver     = new StatusBarPanel();
-//		private readonly StatusBarPanel _sbpTileSelected = new StatusBarPanel();
-//		private readonly StatusBarPanel _sbpSpritesLabel = new StatusBarPanel();
-
 		private int HoriCount = 1;
 		private int TableHeight;
 

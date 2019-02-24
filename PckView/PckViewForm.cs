@@ -177,10 +177,10 @@ namespace PckView
 			Editor.FormClosing += OnEditorFormClosing;
 
 
-			miCreate.MenuItems.Add(miNewTerrain);
-			miCreate.MenuItems.Add(miNewBigobs);
-			miCreate.MenuItems.Add(miNewUnitUfo);
-			miCreate.MenuItems.Add(miNewUnitTftd);
+			miCreate.MenuItems.Add(miCreateTerrain);
+			miCreate.MenuItems.Add(miCreateBigobs);
+			miCreate.MenuItems.Add(miCreateUnitUfo);
+			miCreate.MenuItems.Add(miCreateUnitTftd);
 
 //			var regInfo = new RegistryInfo(RegistryInfo.PckView, this); // subscribe to Load and Closing events.
 //			regInfo.RegisterProperties();
@@ -971,7 +971,7 @@ namespace PckView
 			using (var sfd = new SaveFileDialog())
 			{
 				int tabOffsetLength;
-				if (IsBigobs = (sender == miNewBigobs)) // Bigobs support for XCImage/PckImage
+				if (IsBigobs = (sender == miCreateBigobs)) // Bigobs support for XCImage/PckImage
 				{
 					sfd.Title = "Create a PCK (bigobs) file";
 					XCImage.SpriteHeight = 48;
@@ -981,7 +981,7 @@ namespace PckView
 				{
 					XCImage.SpriteHeight = 40;
 
-					if (sender == miNewUnitTftd) // Tftd Unit support for XCImage/PckImage
+					if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckImage
 					{
 						sfd.Title = "Create a PCK (tftd unit) file";
 						tabOffsetLength = 4;
@@ -990,7 +990,7 @@ namespace PckView
 					{
 						tabOffsetLength = 2;
 
-						if (sender == miNewUnitUfo) // Ufo Unit support for XCImage/PckImage
+						if (sender == miCreateUnitUfo) // Ufo Unit support for XCImage/PckImage
 							sfd.Title = "Create a PCK (ufo unit) file";
 						else
 							sfd.Title = "Create a PCK (terrain) file";
