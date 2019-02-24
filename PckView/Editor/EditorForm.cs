@@ -119,8 +119,8 @@ namespace PckView
 		internal void OnLoad(object sender, EventArgs e)
 		{
 			ClientSize = new Size(
-								XCImage.SpriteWidth  * 10 + EditorPanel.Pad,
-								XCImage.SpriteHeight * 10 + EditorPanel.Pad
+								XCImage.SpriteWidth32 * 10 + EditorPanel.Pad, // <- keep the statusbar at 32px width
+								XCImage.SpriteHeight  * 10 + EditorPanel.Pad
 									+ _trackBar.Height
 									+ _lblEditMode.Height
 									+ ss_Status.Height);
