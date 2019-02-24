@@ -31,7 +31,7 @@ namespace PckView
 
 
 		#region Fields (static)
-		private readonly Palette DefaultPalette = Palette.UfoBattle;
+		private static readonly Palette DefaultPalette = Palette.UfoBattle;
 
 		private const string Total    = "Total ";
 		private const string Selected = "Selected ";
@@ -73,6 +73,9 @@ namespace PckView
 
 
 		#region Properties (static)
+		internal static PckViewForm Instance
+		{ get; private set; }
+
 		internal static Palette Pal
 		{ get; set; }
 		#endregion
@@ -94,13 +97,13 @@ namespace PckView
 
 
 		/// <summary>
-		/// True if a Bigobs PCK+TAB set is opened.
+		/// True if a Bigobs PCK+TAB set is currently loaded.
 		/// </summary>
 		private bool IsBigobs
 		{ get; set; }
 
 		/// <summary>
-		/// True if a ScanG iconset is opened.
+		/// True if a ScanG iconset is currently loaded.
 		/// </summary>
 		internal bool IsScanG
 		{ get; private set; }
@@ -121,6 +124,8 @@ namespace PckView
 			MaximumSize = new Size(0, 0); // fu.net
 
 			LoadWindowMetrics();
+
+			Instance = this;
 
 
 /*			#region SharedSpace information
@@ -1361,8 +1366,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Changes the loaded palette.
-		/// Called when the mainmenu's palette-menu Click event is raised.
+		/// Changes the current palette.
+		/// Called when the mainmenu's palette-menu Click event is raised by
+		/// mouseclick or hotkey.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1380,15 +1386,15 @@ namespace PckView
 
 				TilePanel.Spriteset.Pal = Pal;
 
-				var handler = PaletteChangedEvent;
-				if (handler != null)
-					handler();
+				if (PaletteChangedEvent != null)
+					PaletteChangedEvent();
 			}
 		}
 
 		/// <summary>
 		/// Toggles transparency of the currently loaded palette.
-		/// Called when the mainmenu's transparency-menu Click event is raised.
+		/// Called when the mainmenu's transparency-menu Click event is raised
+		/// by mouseclick or hotkey.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1400,9 +1406,8 @@ namespace PckView
 
 			PalettePanel.Instance.PrintStatusPaletteId();	// update the palette-panel's statusbar
 															// in case palette-id #0 is currently selected.
-			var handler = PaletteChangedEvent;
-			if (handler != null)
-				handler();
+			if (PaletteChangedEvent != null)
+				PaletteChangedEvent();
 		}
 
 		/// <summary>

@@ -25,16 +25,11 @@ namespace PckView
 
 
 		#region Fields
-		private EditorForm _f;
-
-		private readonly StatusBar      _statusBar     = new StatusBar();
-		private readonly StatusBarPanel _sbpEyeDropper = new StatusBarPanel();
+		private EditorForm _feditor;
 
 		private Pen _penGrid;
 		private readonly Pen _gridBlack = new Pen(Color.FromArgb(50,    0,   0,   0)); // black w/ 50  alpha
 		private readonly Pen _gridWhite = new Pen(Color.FromArgb(200, 255, 255, 255)); // white w/ 200 alpha
-
-		private int _palId = -1;
 		#endregion
 
 
@@ -53,18 +48,31 @@ namespace PckView
 			{
 				_sprite = value;
 
-				_palId = -1;
+				Palid = -1;
 
 				string caption = "Sprite Editor";
 				if (_sprite != null)
 					caption += " - id " + _sprite.TerrainId;
-				_f.Text = caption;
-
-				_sbpEyeDropper.Text = String.Empty;
+				_feditor.Text = caption;
 
 				SpriteBytesManager.ReloadBytesTable(_sprite); // this will clear the show-bytes box if null.
 
 				Refresh();
+			}
+		}
+
+		private int _palid = -1;
+		private int Palid
+		{
+			get { return _palid; }
+			set
+			{
+				if ((_palid = value) != -1)
+				{
+					_feditor.PrintColorInfo(GetColorInfo(_palid));
+				}
+				else
+					_feditor.ClearColorInfo();
 			}
 		}
 
@@ -96,7 +104,7 @@ namespace PckView
 		/// </summary>
 		internal EditorPanel(EditorForm f)
 		{
-			_f  = f;
+			_feditor = f;
 			Instance = this;
 
 			// form level code to fix flicker
@@ -129,15 +137,6 @@ namespace PckView
 //			UpdateStyles();
 
 
-			_sbpEyeDropper.AutoSize = StatusBarPanelAutoSize.Spring;
-
-			_statusBar.Dock = DockStyle.Bottom;
-			_statusBar.SizingGrip = false;
-			_statusBar.ShowPanels = true;
-			_statusBar.Panels.Add(_sbpEyeDropper);
-
-			Controls.Add(_statusBar);
-
 			PckViewForm.PaletteChangedEvent += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
 
 			_penGrid = _gridBlack;
@@ -150,8 +149,7 @@ namespace PckView
 		{
 //			base.OnMouseLeave(e);
 
-			_palId = -1;
-			_sbpEyeDropper.Text = String.Empty;
+			Palid = -1;
 		}
 
 		/// <summary>
@@ -247,21 +245,15 @@ namespace PckView
 
 					if (bindataId > -1 && bindataId < Sprite.Bindata.Length) // safety.
 					{
-						int palId = Sprite.Bindata[bindataId];
-						if (palId != _palId)
-							_sbpEyeDropper.Text = GetColorInfo(_palId = palId);
+						int palid = Sprite.Bindata[bindataId];
+						if (palid != Palid)
+							Palid = palid;
 					}
 					else
-					{
-						_palId = -1;
-						_sbpEyeDropper.Text = String.Empty;
-					}
+						Palid = -1;
 				}
 				else
-				{
-					_palId = -1;
-					_sbpEyeDropper.Text = String.Empty;
-				}
+					Palid = -1;
 			}
 		}
 
@@ -348,14 +340,23 @@ namespace PckView
 
 
 		#region Methods (static)
-		internal static string GetColorInfo(int palId)
+		/// <summary>
+		/// Gets a string of information that describes either a pixel's or a
+		/// palette-swatch's color.
+		/// @note Palette ids #254 and #255 are invalid (as colors) in PCK files
+		/// because the RLE-compression algorithm uses them as markers with
+		/// different meanings.
+		/// </summary>
+		/// <param name="palid">a palette-id to get info about</param>
+		/// <returns>string of color-info</returns>
+		internal static string GetColorInfo(int palid)
 		{
 			string text = String.Format(
 									System.Globalization.CultureInfo.CurrentCulture,
 									"id:{0} (0x{0:X2})",
-									palId);
+									palid);
 
-			var color = PckViewForm.Pal[palId];
+			var color = PckViewForm.Pal[palid];
 			text += String.Format(
 								System.Globalization.CultureInfo.CurrentCulture,
 								" r:{0} g:{1} b:{2} a:{3}",
@@ -364,16 +365,18 @@ namespace PckView
 								color.B,
 								color.A);
 
-			switch (palId)
+			switch (palid)
 			{
 				case 0:
 					text += " [transparent]";
 					break;
 
-				// the following values cannot be palette-ids. They have special meaning in the .PCK file.
 				case 254: // transparency marker
 				case 255: // end of file marker
-					text += " [invalid]";
+					if (!PckViewForm.Instance.IsScanG)
+					{
+						text += " [invalid]";
+					}
 					break;
 			}
 
@@ -383,11 +386,6 @@ namespace PckView
 
 
 		#region Methods
-		internal int GetStatusbarHeight()
-		{
-			return _statusBar.Height;
-		}
-
 		internal void InvertGridColor(bool invert)
 		{
 			_penGrid = (invert) ? _gridWhite

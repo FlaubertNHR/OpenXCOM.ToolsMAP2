@@ -164,22 +164,17 @@ namespace PckView
 		#region Eventcalls
 		private void OnPaletteChanged()
 		{
+			if (PaletteId > -1 && PaletteId < 256
+				&& PaletteIdChangedEvent != null)
+			{
+				PaletteIdChangedEvent(PaletteId);
+			}
 			Refresh();
 		}
 		#endregion
 
 
 		#region Methods
-		internal void PrintStatusPaletteId()
-		{
-			if (PaletteId > -1 && PaletteId < 256
-				&& PaletteIdChangedEvent != null)
-			{
-				PaletteIdChangedEvent(PaletteId);
-				Refresh();
-			}
-		}
-
 		/// <summary>
 		/// Forces selection of a specific palette-id.
 		/// </summary>
@@ -192,6 +187,16 @@ namespace PckView
 			ClickY = palId / SwatchesPerSide * _swatchHeight + 1;
 
 			PrintStatusPaletteId();
+		}
+
+		internal void PrintStatusPaletteId()
+		{
+			if (PaletteId > -1 && PaletteId < 256
+				&& PaletteIdChangedEvent != null)
+			{
+				PaletteIdChangedEvent(PaletteId);
+				Refresh();
+			}
 		}
 		#endregion
 	}

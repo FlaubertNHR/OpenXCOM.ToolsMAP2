@@ -123,7 +123,7 @@ namespace PckView
 								XCImage.SpriteHeight * 10 + EditorPanel.Pad
 									+ _trackBar.Height
 									+ _lblEditMode.Height
-									+ _pnlEditor.GetStatusbarHeight());
+									+ ss_Status.Height);
 		}
 
 		private void OnTrackScroll(object sender, EventArgs e)
@@ -188,6 +188,16 @@ namespace PckView
 
 
 		#region Methods
+		internal void PrintColorInfo(string info)
+		{
+			tssl_ColorInfo.Text = info;
+		}
+
+		internal void ClearColorInfo()
+		{
+			tssl_ColorInfo.Text = String.Empty;
+		}
+
 		/// <summary>
 		/// Closes the palette-form when PckView closes. This is required only
 		/// when PckView opens via MapView.
@@ -224,6 +234,9 @@ namespace PckView
 			this.miGridMenu = new System.Windows.Forms.MenuItem();
 			this.miGrid = new System.Windows.Forms.MenuItem();
 			this.miGridInvert = new System.Windows.Forms.MenuItem();
+			this.ss_Status = new System.Windows.Forms.StatusStrip();
+			this.tssl_ColorInfo = new System.Windows.Forms.ToolStripStatusLabel();
+			this.ss_Status.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mmMainMenu
@@ -268,10 +281,31 @@ namespace PckView
 			this.miGridInvert.Text = "Invert color";
 			this.miGridInvert.Click += new System.EventHandler(this.OnInvertGridColorClick);
 			// 
+			// ss_Status
+			// 
+			this.ss_Status.Font = new System.Drawing.Font("Verdana", 7F);
+			this.ss_Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tssl_ColorInfo});
+			this.ss_Status.Location = new System.Drawing.Point(0, 254);
+			this.ss_Status.Name = "ss_Status";
+			this.ss_Status.Size = new System.Drawing.Size(294, 22);
+			this.ss_Status.SizingGrip = false;
+			this.ss_Status.TabIndex = 0;
+			// 
+			// tssl_ColorInfo
+			// 
+			this.tssl_ColorInfo.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tssl_ColorInfo.Name = "tssl_ColorInfo";
+			this.tssl_ColorInfo.Size = new System.Drawing.Size(243, 22);
+			this.tssl_ColorInfo.Spring = true;
+			this.tssl_ColorInfo.Text = "colorinfo";
+			this.tssl_ColorInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// EditorForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(294, 276);
+			this.Controls.Add(this.ss_Status);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
@@ -283,7 +317,10 @@ namespace PckView
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Sprite Editor";
 			this.Load += new System.EventHandler(this.OnLoad);
+			this.ss_Status.ResumeLayout(false);
+			this.ss_Status.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion
@@ -296,5 +333,7 @@ namespace PckView
 		private MenuItem miGridMenu;
 		private MenuItem miGrid;
 		private MenuItem miGridInvert;
+		private System.Windows.Forms.StatusStrip ss_Status;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_ColorInfo;
 	}
 }
