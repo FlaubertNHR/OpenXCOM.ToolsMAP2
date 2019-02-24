@@ -16,7 +16,7 @@ namespace PckView
 			Form
 	{
 		#region Fields
-		private PalettePanel _pnlPalette;
+		private PalettePanel _pnlPalette = new PalettePanel();
 		#endregion
 
 
@@ -28,35 +28,19 @@ namespace PckView
 		{
 			InitializeComponent();
 
-			var size = new Size(
-							PalettePanel.SwatchesPerSide * 20,
-							PalettePanel.SwatchesPerSide * 20 + lblStatus.Height);
-			ClientSize = size;
+			ClientSize = new Size(
+								PalettePanel.SwatchesPerSide * 20,
+								PalettePanel.SwatchesPerSide * 20 + lblStatus.Height);
 
+			_pnlPalette.Dock = DockStyle.Fill;
 			_pnlPalette.PaletteIdChangedEvent += OnPaletteIdChanged;
 
+			Controls.Add(_pnlPalette);
+
+			lblStatus.SendToBack();
 
 			var regInfo = new RegistryInfo(RegistryInfo.PaletteViewer, this); // subscribe to Load and Closing events.
 			regInfo.RegisterProperties();
-		}
-		#endregion
-
-
-		#region Eventcalls (override)
-		protected override void OnResize(EventArgs e)
-		{
-//			base.OnResize(e);
-
-			if (_pnlPalette != null)
-			{
-				_pnlPalette.Width  = ClientSize.Width;
-				_pnlPalette.Height = ClientSize.Height - lblStatus.Height;
-
-				lblStatus.Location = new Point(
-											_pnlPalette.Left,
-											_pnlPalette.Bottom);
-				lblStatus.Width = ClientSize.Width;
-			}
 		}
 		#endregion
 
@@ -80,14 +64,6 @@ namespace PckView
 			base.Dispose(disposing);
 		}
 
-// This will get deleted from InitializeComponent() when any changes are
-// made in the designer ... and trying to make it stick with default
-// initialization doesn't work either. So copy it back in at the top of
-// InitializeComponent() after making changes in the designer.
-/*
-			this._pnlPalette = new PalettePanel();
-*/
-
 		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -95,36 +71,27 @@ namespace PckView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this._pnlPalette = new PalettePanel();
 			this.lblStatus = new System.Windows.Forms.Label();
 			this.SuspendLayout();
-			// 
-			// _pnlPalette
-			// 
-			this._pnlPalette.Dock = System.Windows.Forms.DockStyle.Fill;
-			this._pnlPalette.Location = new System.Drawing.Point(0, 0);
-			this._pnlPalette.Name = "_pnlPalette";
-			this._pnlPalette.Size = new System.Drawing.Size(292, 255);
-			this._pnlPalette.TabIndex = 0;
 			// 
 			// lblStatus
 			// 
 			this.lblStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.lblStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.lblStatus.Location = new System.Drawing.Point(0, 255);
+			this.lblStatus.Location = new System.Drawing.Point(0, 254);
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblStatus.Size = new System.Drawing.Size(292, 19);
-			this.lblStatus.TabIndex = 1;
+			this.lblStatus.Size = new System.Drawing.Size(292, 20);
+			this.lblStatus.TabIndex = 0;
 			this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// PaletteForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(292, 274);
-			this.Controls.Add(this._pnlPalette);
 			this.Controls.Add(this.lblStatus);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "PaletteForm";

@@ -453,6 +453,8 @@ namespace PckView
 
 			// on Context menu
 			_miAdd             .Enabled = valid;
+
+			Editor.OnLoad(null, EventArgs.Empty); // resize the Editor to the spriteset's sprite-size
 		}
 
 		/// <summary>

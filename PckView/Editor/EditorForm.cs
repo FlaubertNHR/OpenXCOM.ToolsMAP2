@@ -17,8 +17,8 @@ namespace PckView
 		#region Enums
 		internal enum EditMode
 		{
-			ModeLocked,
-			ModeEnabled
+			Locked,
+			Enabled
 		}
 		#endregion
 
@@ -68,7 +68,7 @@ namespace PckView
 
 			_lblEditMode.MouseClick += OnEditModeMouseClick;
 
-			Mode = EditMode.ModeLocked;
+			Mode = EditMode.Locked;
 
 
 			_pnlEditor = new EditorPanel(this);
@@ -116,14 +116,14 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnLoad(object sender, EventArgs e)
+		internal void OnLoad(object sender, EventArgs e)
 		{
 			ClientSize = new Size(
 								XCImage.SpriteWidth  * 10 + EditorPanel.Pad,
 								XCImage.SpriteHeight * 10 + EditorPanel.Pad
 									+ _trackBar.Height
 									+ _lblEditMode.Height
-									+ _pnlEditor.GetStatusBarHeight());
+									+ _pnlEditor.GetStatusbarHeight());
 		}
 
 		private void OnTrackScroll(object sender, EventArgs e)
@@ -135,14 +135,14 @@ namespace PckView
 		{
 			switch (Mode)
 			{
-				case EditMode.ModeLocked:
-					Mode = EditMode.ModeEnabled;
+				case EditMode.Locked:
+					Mode = EditMode.Enabled;
 					_lblEditMode.Text = "Enabled";
 					_lblEditMode.BackColor = Color.AliceBlue;
 					break;
 
-				case EditMode.ModeEnabled:
-					Mode = EditMode.ModeLocked;
+				case EditMode.Enabled:
+					Mode = EditMode.Locked;
 					_lblEditMode.Text = "Locked";
 					_lblEditMode.BackColor = Control.DefaultBackColor;
 					break;

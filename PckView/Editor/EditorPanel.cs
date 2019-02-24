@@ -25,7 +25,7 @@ namespace PckView
 
 
 		#region Fields
-		private EditorForm _parent;
+		private EditorForm _f;
 
 		private readonly StatusBar      _statusBar     = new StatusBar();
 		private readonly StatusBarPanel _sbpEyeDropper = new StatusBarPanel();
@@ -57,8 +57,8 @@ namespace PckView
 
 				string caption = "Sprite Editor";
 				if (_sprite != null)
-					caption += " - id " + (_sprite.TerrainId + 1);
-				_parent.Text = caption;
+					caption += " - id " + _sprite.TerrainId;
+				_f.Text = caption;
 
 				_sbpEyeDropper.Text = String.Empty;
 
@@ -94,9 +94,9 @@ namespace PckView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal EditorPanel(EditorForm parent)
+		internal EditorPanel(EditorForm f)
 		{
-			_parent  = parent;
+			_f  = f;
 			Instance = this;
 
 			// form level code to fix flicker
@@ -177,7 +177,7 @@ namespace PckView
 					{
 						switch (EditorForm.Mode)
 						{
-							case EditorForm.EditMode.ModeEnabled: // paint ->
+							case EditorForm.EditMode.Enabled: // paint ->
 							{
 								int palId = PalettePanel.Instance.PaletteId;
 								if (palId > -1 && palId < PckImage.SpriteTransparencyByte)	// NOTE: 0xFE and 0xFF are reserved for special
@@ -218,7 +218,7 @@ namespace PckView
 								break;
 							}
 
-							case EditorForm.EditMode.ModeLocked: // eye-dropper ->
+							case EditorForm.EditMode.Locked: // eye-dropper ->
 								PalettePanel.Instance.SelectPaletteId((int)Sprite.Bindata[bindataId]);
 								break;
 						}
@@ -383,7 +383,7 @@ namespace PckView
 
 
 		#region Methods
-		internal int GetStatusBarHeight()
+		internal int GetStatusbarHeight()
 		{
 			return _statusBar.Height;
 		}
