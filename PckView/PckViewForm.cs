@@ -221,7 +221,7 @@ namespace PckView
 							int w = 0;
 							int h = 0;
 
-							var invariant = System.Globalization.CultureInfo.InvariantCulture;
+							var invariant = CultureInfo.InvariantCulture;
 
 							var keyvals = nodeRoot.Children[new YamlScalarNode(viewer)] as YamlMappingNode;
 							foreach (var keyval in keyvals) // NOTE: There is a better way to do this. See TilesetLoader..cTor
@@ -538,11 +538,11 @@ namespace PckView
 				error += Environment.NewLine + Environment.NewLine;
 				if (IsBigobs)
 					error += String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"Image needs to be 32x48 8-bpp");
 				else
 					error += String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"Image needs to be 32x40 8-bpp");
 			}
 
@@ -900,7 +900,7 @@ namespace PckView
 
 			var sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 			string suffix = String.Format(
-										System.Globalization.CultureInfo.InvariantCulture,
+										CultureInfo.InvariantCulture,
 										"{0:" + digits + "}",
 										TilePanel.SelectedId);
 
@@ -1053,31 +1053,42 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSaveClick(object sender, EventArgs e)
 		{
-			// http://www.ufopaedia.org/index.php/Image_Formats
-			// - that says that all TFTD terrains use 2-byte tab-offsets ...
-//			const int tabOffset = 2;
-//			if (   Pal.Equals(Palette.TftdBattle)
-//				|| Pal.Equals(Palette.TftdGeo)
-//				|| Pal.Equals(Palette.TftdGraph)
-//				|| Pal.Equals(Palette.TftdResearch))
-//			{
-//				tabOffset = 4; // NOTE: I don't have TFTD and I do have no clue if this works correctly.
-//			}
-
-			BackupSpritesetFiles();
-
-			if (SpriteCollection.SaveSpriteset(
-											SpritesetDirectory,
-											SpritesetLabel,
-											TilePanel.Spriteset,
-											((SpriteCollection)TilePanel.Spriteset).TabOffset)) //tabOffset
+			if (IsScanG)
 			{
-				SpritesChanged = true; // NOTE: is used by MapView's TileView to flag the Map to reload.
+				if (!SpriteCollection.SaveScanGiconset(
+													SpritesetDirectory,
+													SpritesetLabel,
+													TilePanel.Spriteset))
+				{
+					string error = String.Format(
+											CultureInfo.CurrentCulture,
+											"An I/O error occurred.");
+					MessageBox.Show(
+								error,
+								"Error",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error,
+								MessageBoxDefaultButton.Button1,
+								0);
+				}
 			}
-			else
+			else // save Pck+Tab terrain/unit/bigobs ->
 			{
-				ShowSaveError();
-				RevertFiles();
+				BackupSpritesetFiles();
+
+				if (SpriteCollection.SaveSpriteset(
+												SpritesetDirectory,
+												SpritesetLabel,
+												TilePanel.Spriteset,
+												((SpriteCollection)TilePanel.Spriteset).TabOffset))
+				{
+					SpritesChanged = true; // NOTE: is used by MapView's TileView to flag the Map to reload.
+				}
+				else
+				{
+					ShowSaveError();
+					RevertFiles();
+				}
 			}
 		}
 
@@ -1091,47 +1102,77 @@ namespace PckView
 		{
 			using (var sfd = new SaveFileDialog())
 			{
-				sfd.Title    = "Save as";
-				sfd.Filter   = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+				sfd.Title = "Save as";
 				sfd.FileName = SpritesetLabel;
+
+				if (IsScanG)
+					sfd.Filter = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+				else
+					sfd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
 
 				if (sfd.ShowDialog() == DialogResult.OK)
 				{
 					string dir  = Path.GetDirectoryName(sfd.FileName);
 					string file = Path.GetFileNameWithoutExtension(sfd.FileName);
 
-					bool revertReady; // user requested to save the files to the same filenames.
-					if (file.Equals(SpritesetLabel, StringComparison.OrdinalIgnoreCase))
+					if (IsScanG)
 					{
-						BackupSpritesetFiles();
-						revertReady = true;
-					}
-					else
-						revertReady = false;
-
-					if (SpriteCollection.SaveSpriteset(
-													dir,
-													file,
-													TilePanel.Spriteset,
-													((SpriteCollection)TilePanel.Spriteset).TabOffset))
-					{
-						if (!revertReady) // load the SavedAs files ->
-							LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
-
-						SpritesChanged = true;	// NOTE: is used by MapView's TileView to flag the Map to reload.
-					}							// btw, reload MapView's Map in either case; the new terrain may also be in its Map's terrainset ...
-					else
-					{
-						ShowSaveError();
-
-						if (revertReady)
+						if (!SpriteCollection.SaveScanGiconset(
+															dir,
+															file,
+															TilePanel.Spriteset))
 						{
-							RevertFiles();
+							string error = String.Format(
+													CultureInfo.CurrentCulture,
+													"An I/O error occurred.");
+							MessageBox.Show(
+										error,
+										"Error",
+										MessageBoxButtons.OK,
+										MessageBoxIcon.Error,
+										MessageBoxDefaultButton.Button1,
+										0);
 						}
 						else
+							LoadScanG(sfd.FileName); // TODO: Maintain current Palette.
+					}
+					else
+					{
+						// TODO: rework the following conglomeration
+
+						bool revertReady; // user requested to save the files to the same filenames.
+						if (file.Equals(SpritesetLabel, StringComparison.OrdinalIgnoreCase))
 						{
-							File.Delete(Path.Combine(dir, file + GlobalsXC.PckExt));
-							File.Delete(Path.Combine(dir, file + GlobalsXC.TabExt));
+							BackupSpritesetFiles();
+							revertReady = true;
+						}
+						else
+							revertReady = false;
+
+						if (SpriteCollection.SaveSpriteset(
+														dir,
+														file,
+														TilePanel.Spriteset,
+														((SpriteCollection)TilePanel.Spriteset).TabOffset))
+						{
+							if (!revertReady) // load the SavedAs files ->
+								LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
+
+							SpritesChanged = true;	// NOTE: is used by MapView's TileView to flag the Map to reload.
+						}							// btw, reload MapView's Map in either case; the new terrain-label may also be in the Map's terrainset ...
+						else
+						{
+							ShowSaveError();
+
+							if (revertReady)
+							{
+								RevertFiles();
+							}
+							else
+							{
+								File.Delete(Path.Combine(dir, file + GlobalsXC.PckExt));
+								File.Delete(Path.Combine(dir, file + GlobalsXC.TabExt));
+							}
 						}
 					}
 				}
@@ -1153,7 +1194,7 @@ namespace PckView
 					string file = TilePanel.Spriteset.Label.ToUpperInvariant();
 
 					fbd.Description = String.Format(
-												System.Globalization.CultureInfo.CurrentCulture,
+												CultureInfo.CurrentCulture,
 												"Export spriteset to 8-bpp PNG files"
 													+ Environment.NewLine + Environment.NewLine
 													+ "\t" + file);
@@ -1174,7 +1215,7 @@ namespace PckView
 						foreach (XCImage sprite in TilePanel.Spriteset)
 						{
 							string suffix = String.Format(
-														System.Globalization.CultureInfo.InvariantCulture,
+														CultureInfo.InvariantCulture,
 														"{0:" + digits + "}",
 														sprite.TerrainId);
 							string fullpath = Path.Combine(path, file + suffix + PngExt);
@@ -1201,7 +1242,7 @@ namespace PckView
 					string file = TilePanel.Spriteset.Label.ToUpperInvariant();
 
 					fbd.Description = String.Format(
-												System.Globalization.CultureInfo.CurrentCulture,
+												CultureInfo.CurrentCulture,
 												"Export spriteset to an 8-bpp PNG spritesheet file"
 													+ Environment.NewLine + Environment.NewLine
 													+ "\t" + file);
@@ -1563,11 +1604,11 @@ namespace PckView
 					string error = String.Empty;
 					if (!IsBigobs)
 						error = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"Cannot load Bigobs in a 32x40 spriteset.");
 					else
 						error = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"Cannot load Terrain or Units in a 32x48 spriteset.");
 					MessageBox.Show(
 								error,

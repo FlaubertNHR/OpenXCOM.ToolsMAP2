@@ -282,6 +282,40 @@ namespace XCom
 			}
 			return true;
 		}
+
+		/// <summary>
+		/// Saves the current iconset to SCANG.DAT.
+		/// </summary>
+		/// <param name="dir">the directory to save to</param>
+		/// <param name="file">the filename without extension</param>
+		/// <param name="iconset">pointer to the base iconset</param>
+		/// <returns>true if mission was successful</returns>
+		public static bool SaveScanGiconset(
+				string dir,
+				string file,
+				SpriteCollectionBase iconset)
+		{
+			string pfeScanG = Path.Combine(dir, file + GlobalsXC.DatExt);
+
+			try
+			{
+				using (var bwDat = new BinaryWriter(File.Create(pfeScanG)))
+				{
+					foreach (XCImage icon in iconset)
+					{
+						for (int i = 0; i != icon.Bindata.Length; ++i)
+						{
+							bwDat.Write(icon.Bindata[i]);
+						}
+					}
+				}
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
 		#endregion
 	}
 }

@@ -17,6 +17,8 @@ namespace XCom
 		public const string RoutesDir = "ROUTES";
 		public const string RouteExt = ".RMP";
 
+		public const string DatExt = ".DAT"; // for SCANG.DAT
+
 
 		// const-strings that appear in MapTilesets.yml
 		public const string TILESETS = "tilesets";
