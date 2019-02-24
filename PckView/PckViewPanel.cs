@@ -163,6 +163,12 @@ namespace PckView
 			{
 				CalculateScrollRange(false);
 				ScrollToTile(SelectedId);
+
+				if (_scrollBar.Visible
+					&& _scrollBar.Value + (_scrollBar.LargeChange - 1) + _scrollBar.LargeChange > _scrollBar.Maximum)
+				{
+					_scrollBar.Value = _scrollBar.Maximum - (_scrollBar.LargeChange - 1);
+				}
 			}
 		}
 
@@ -426,8 +432,7 @@ namespace PckView
 
 				range = TableOffsetVert
 					  + TableHeight
-					  + _largeChange
-					  + (_largeChange - 1)
+					  + TileHeight
 					  - Height;
 				//LogFile.WriteLine(". range= " + range);
 				//LogFile.WriteLine(". _largeChange= " + _largeChange);
