@@ -407,9 +407,6 @@ namespace PckView
 		/// <param name="resetTrack">true to set the thing to the top of the track</param>
 		private void CalculateScrollRange(bool resetTrack)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("CalculateScrollRange()");
-
 			HoriCount   = 1;
 			TableHeight = 0;
 
@@ -424,22 +421,15 @@ namespace PckView
 				if (HoriCount > Spriteset.Count)
 					HoriCount = Spriteset.Count;
 
-				//LogFile.WriteLine(". HoriCount= " + HoriCount);
-
 				TableHeight = (((Spriteset.Count + (HoriCount - 1)) / HoriCount) + 1) * TileHeight;
-				//LogFile.WriteLine(". TileHeight= " + TileHeight);
-				//LogFile.WriteLine(". TableHeight= " + TableHeight);
 
 				range = TableOffsetVert
 					  + TableHeight
 					  + TileHeight
 					  - Height;
-				//LogFile.WriteLine(". range= " + range);
-				//LogFile.WriteLine(". _largeChange= " + _largeChange);
 
 				if (range < _largeChange)
 					range = 0;
-				//LogFile.WriteLine(". range= " + range);
 			}
 			_scrollBar.Maximum = range;
 			_scrollBar.Visible = (range != 0);
@@ -452,34 +442,20 @@ namespace PckView
 		/// <param name="id"></param>
 		private void ScrollToTile(int id)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("ScrollToTile() id= " + id);
-			//LogFile.WriteLine(". _scrollBar.Value= " + _scrollBar.Value);
-			//LogFile.WriteLine(". _scrollBar.Maximum= " + _scrollBar.Maximum);
-
 			if (id != -1 && _scrollBar.Visible)
 			{
 				int r = id / HoriCount;
-				//LogFile.WriteLine(". . r= " + r);
 
 				int cutoff = r * TileHeight + TableOffsetVert - 1;
-				//LogFile.WriteLine(". . cutoff= " + cutoff);
-
 				if (cutoff < _scrollBar.Value)	// <- check cutoff high
 				{
-					//LogFile.WriteLine(". . . (cutoff < _scrollBar.Value)");
 					_scrollBar.Value = cutoff;
 				}
 				else							// <- check cutoff low
 				{
-					//LogFile.WriteLine(". . . (cutoff >= _scrollBar.Value)");
-
 					cutoff = (r + 1) * TileHeight - Height + 1;
-					//LogFile.WriteLine(". . . cutoff= " + cutoff);
-
 					if (cutoff > _scrollBar.Value)
 					{
-						//LogFile.WriteLine(". . . . (cutoff > _scrollBar.Value)");
 						_scrollBar.Value = cutoff;
 					}
 				}
