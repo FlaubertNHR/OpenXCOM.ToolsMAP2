@@ -25,7 +25,7 @@ namespace MapView
 		#region Fields
 		private MapFileBase _base;
 
-		private int[,]  _blobs;
+		private int[,]  _icons;
 		private Palette _pal;
 
 		private int  Level;
@@ -69,18 +69,20 @@ namespace MapView
 
 			if (_base.Descriptor.Pal == Palette.TftdBattle)
 			{
-				_blobs = ResourceInfo.ScanGtftd;
+				_icons = ResourceInfo.ScanGtftd;
 				_pal   = Palette.TftdBattle;
 			}
 			else
 			{
-				_blobs = ResourceInfo.ScanGufo;
+				_icons = ResourceInfo.ScanGufo;
 				_pal   = Palette.UfoBattle;
 			}
 
 			ClientSize = new Size(
 								_base.MapSize.Cols * 16 + 2,
 								_base.MapSize.Rows * 16 + 2);
+
+			pnl_ScanG.MouseDoubleClick += handleMouseDoubleClickyouidiots;
 		}
 		#endregion
 
@@ -104,7 +106,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnPaint(object sender, PaintEventArgs e)
 		{
-			if (_blobs == null || _pal == null)
+			if (_icons == null || _pal == null)
 				return;
 
 			var graphics = e.Graphics;
@@ -142,12 +144,14 @@ namespace MapView
 				byte* ptrPixel, ptr;
 
 				XCMapTile tile;
-				int blobid, palid, j;
+				int iconid, palid, j;
 
 
 				int zStart;
 				if (SingleLevel) zStart = Level;
 				else             zStart = _base.MapSize.Levs - 1;
+
+				int iconsTotal = _icons.Length / 16;
 
 				for (int z = zStart; z >= Level; --z)
 				for (int y = 0; y != _base.MapSize.Rows; ++y)
@@ -157,91 +161,79 @@ namespace MapView
 
 					tile = _base[y,x,z] as XCMapTile;
 
-					if (tile.Ground != null)
+					if (tile.Ground != null
+						&& (iconid = tile.Ground.Record.ScanG) < iconsTotal)
 					{
-						blobid = tile.Ground.Record.ScanG;
-						if (blobid < _blobs.Length / 16)
+						for (int i = 0; i != 256; ++i)
 						{
-							for (int i = 0; i != 256; ++i)
+							//   0..  3  #0    4..  7  #1    8.. 11   #2   12.. 15   #3
+							//  16.. 19  #0   20.. 23  #1   24.. 27   #2   28.. 31   #3
+							//  32.. 35  #0   36.. 39  #1   40.. 43   #2   44.. 47   #3
+							//  48.. 51  #0   52.. 55  #1   56.. 59   #2   60.. 63   #3
+
+							//  64.. 67  #4   68.. 71  #5   72.. 75   #6   76.. 79   #7
+							//  80.. 83  #4   84.. 87  #5   88.. 91   #6   92.. 95   #7
+							//  96.. 99  #4  100..103  #5  104..107   #6  108..111   #7
+							// 112..115  #4  116..119  #5  120..123   #6  124..127   #7
+
+							// 128..131  #8  132..135  #9  136..139  #10  140..143  #11
+							//
+							// etc ......255 #15
+							j = ((i / 64) * 4) + ((i % 16) / 4);
+
+							palid = _icons[iconid, j];
+							if (palid != Palette.TransparentId)
 							{
-								//   0..  3  #0    4..  7  #1    8.. 11   #2   12.. 15   #3
-								//  16.. 19  #0   20.. 23  #1   24.. 27   #2   28.. 31   #3
-								//  32.. 35  #0   36.. 39  #1   40.. 43   #2   44.. 47   #3
-								//  48.. 51  #0   52.. 55  #1   56.. 59   #2   60.. 63   #3
-
-								//  64.. 67  #4   68.. 71  #5   72.. 75   #6   76.. 79   #7
-								//  80.. 83  #4   84.. 87  #5   88.. 91   #6   92.. 95   #7
-								//  96.. 99  #4  100..103  #5  104..107   #6  108..111   #7
-								// 112..115  #4  116..119  #5  120..123   #6  124..127   #7
-
-								// 128..131  #8  132..135  #9  136..139  #10  140..143  #11
-								//
-								// etc ......255 #16
-								j = ((i / 64) * 4) + ((i % 16) / 4);
-
-								palid = _blobs[blobid, j];
-								if (palid != Palette.TransparentId)
-								{
-									ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
-									*ptr = (byte)palid;
-								}
+								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+								*ptr = (byte)palid;
 							}
 						}
 					}
 
-					if (tile.West != null)
+					if (tile.West != null
+						&& (iconid = tile.West.Record.ScanG) < iconsTotal)
 					{
-						blobid = tile.West.Record.ScanG;
-						if (blobid < _blobs.Length / 16)
+						for (int i = 0; i != 256; ++i)
 						{
-							for (int i = 0; i != 256; ++i)
-							{
-								j = ((i / 64) * 4) + ((i % 16) / 4);
+							j = ((i / 64) * 4) + ((i % 16) / 4);
 
-								palid = _blobs[blobid, j];
-								if (palid != Palette.TransparentId)
-								{
-									ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
-									*ptr = (byte)palid;
-								}
+							palid = _icons[iconid, j];
+							if (palid != Palette.TransparentId)
+							{
+								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+								*ptr = (byte)palid;
 							}
 						}
 					}
 
-					if (tile.North != null)
+					if (tile.North != null
+						&& (iconid = tile.North.Record.ScanG) < iconsTotal)
 					{
-						blobid = tile.North.Record.ScanG;
-						if (blobid < _blobs.Length / 16)
+						for (int i = 0; i != 256; ++i)
 						{
-							for (int i = 0; i != 256; ++i)
-							{
-								j = ((i / 64) * 4) + ((i % 16) / 4);
+							j = ((i / 64) * 4) + ((i % 16) / 4);
 
-								palid = _blobs[blobid, j];
-								if (palid != Palette.TransparentId)
-								{
-									ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
-									*ptr = (byte)palid;
-								}
+							palid = _icons[iconid, j];
+							if (palid != Palette.TransparentId)
+							{
+								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+								*ptr = (byte)palid;
 							}
 						}
 					}
 
-					if (tile.Content != null)
+					if (tile.Content != null
+						&& (iconid = tile.Content.Record.ScanG) < iconsTotal)
 					{
-						blobid = tile.Content.Record.ScanG;
-						if (blobid < _blobs.Length / 16)
+						for (int i = 0; i != 256; ++i)
 						{
-							for (int i = 0; i != 256; ++i)
+							j = ((i / 64) * 4) + ((i % 16) / 4);
+
+							palid = _icons[iconid, j];
+							if (palid != Palette.TransparentId)
 							{
-								j = ((i / 64) * 4) + ((i % 16) / 4);
-	
-								palid = _blobs[blobid, j];
-								if (palid != Palette.TransparentId)
-								{
-									ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
-									*ptr = (byte)palid;
-								}
+								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+								*ptr = (byte)palid;
 							}
 						}
 					}
@@ -257,22 +249,6 @@ namespace MapView
 							0, 0, pic.Width, pic.Height,
 							GraphicsUnit.Pixel,
 							spriteAttributes);
-		}
-
-
-		/// <summary>
-		/// Double-click handler for the panel. Toggles between single-level
-		/// view and multilevel view.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnDoubleClick(object sender, EventArgs e)
-		{
-			SingleLevel = !SingleLevel;
-
-			Text = GetTitle();
-
-			pnl_ScanG.Invalidate();
 		}
 		#endregion
 
@@ -296,6 +272,77 @@ namespace MapView
 				Text = GetTitle();
 				pnl_ScanG.Invalidate();
 			}
+		}
+
+		/// <summary>
+		/// MouseDoubleClick handler for the panel. LMB toggles between
+		/// single-level view and multilevel view. RMB reloads ScanG.Dat file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void handleMouseDoubleClickyouidiots(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				SingleLevel = !SingleLevel;
+				Text = GetTitle();
+				pnl_ScanG.Invalidate();
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				string result, title;
+				MessageBoxIcon icon;
+
+				var shared = SharedSpace.Instance;
+
+				if (_base.Descriptor.Pal == Palette.TftdBattle)
+				{
+					if (ResourceInfo.LoadScanGtftd(shared.GetShare(SharedSpace.ResourceDirectoryTftd)))
+					{
+						_icons = ResourceInfo.ScanGtftd;
+
+						result = "SCANG.DAT has reloaded.";
+						title  = "Info";
+						icon   = MessageBoxIcon.Information;
+					}
+					else
+					{
+						result = "SCANG.DAT failed to reload.";
+						title  = "Error";
+						icon   = MessageBoxIcon.Error;
+					}
+				}
+				else if (ResourceInfo.LoadScanGufo(shared.GetShare(SharedSpace.ResourceDirectoryUfo)))
+				{
+					_icons = ResourceInfo.ScanGufo;
+
+					result = "SCANG.DAT has reloaded.";
+					title  = "Info";
+					icon   = MessageBoxIcon.Information;
+				}
+				else
+				{
+					result = "SCANG.DAT failed to reload.";
+					title  = "Error";
+					icon   = MessageBoxIcon.Error;
+				}
+				ShowReloadResult(result, title, icon);
+				// NOTE: invalidate/refresh is not needed apparently.
+			}
+		}
+
+		private void ShowReloadResult(
+				string result,
+				string title,
+				MessageBoxIcon icon)
+		{
+			MessageBox.Show(
+						result,
+						title,
+						MessageBoxButtons.OK,
+						icon,
+						MessageBoxDefaultButton.Button1,
+						0);
 		}
 		#endregion
 
@@ -341,7 +388,6 @@ namespace MapView
 			this.pnl_ScanG.Size = new System.Drawing.Size(292, 274);
 			this.pnl_ScanG.TabIndex = 0;
 			this.pnl_ScanG.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
-			this.pnl_ScanG.DoubleClick += new System.EventHandler(this.OnDoubleClick);
 			// 
 			// ScanGViewer
 			// 

@@ -93,7 +93,7 @@ namespace PckView
 
 				SelectedId =
 				OverId     = -1;
-				_f.PrintStatusTotal();
+				_f.PrintTotal();
 
 				if (SpritesetChangedEvent != null)
 					SpritesetChangedEvent(_spriteset != null);
@@ -237,7 +237,7 @@ namespace PckView
 
 					EditorPanel.Instance.Sprite = sprite;
 
-					_f.PrintStatusSpriteSelected();
+					_f.PrintSelectedId();
 					Refresh();
 				}
 				ScrollToTile(SelectedId);
@@ -259,7 +259,7 @@ namespace PckView
 				if (id != OverId)
 				{
 					OverId = id;
-					_f.PrintStatusSpriteOver();
+					_f.PrintOverId();
 				}
 			}
 		}
@@ -274,7 +274,7 @@ namespace PckView
 //			base.OnMouseLeave(e);
 
 			OverId = -1;
-			_f.PrintStatusSpriteOver();
+			_f.PrintOverId();
 		}
 
 		/// <summary>

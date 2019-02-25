@@ -99,11 +99,12 @@ namespace XCom
 
 			record.ScanGReference = string.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
-										"{0,-20}{1} : {2} -> {3}" + Environment.NewLine,
+										"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
 										"scang reference:",
 										bindata[20],
 										bindata[21],
-										bindata[21] * 256 + bindata[20] + 35);
+										bindata[21] * 256 + bindata[20] + 35,
+										bindata[21] * 256 + bindata[20]);
 
 			record.LoftReference = string.Format(
 										System.Globalization.CultureInfo.CurrentCulture,

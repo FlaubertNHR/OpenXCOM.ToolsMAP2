@@ -164,8 +164,8 @@ namespace PckView
 			Controls.Add(TilePanel);
 			TilePanel.BringToFront();
 
-			PrintStatusSpriteSelected();
-			PrintStatusSpriteOver();
+			PrintSelectedId();
+			PrintOverId();
 
 			tssl_SpritesetLabel.Text = None;
 
@@ -755,7 +755,7 @@ namespace PckView
 		{
 			OnSpriteClick(null, EventArgs.Empty);
 
-			PrintStatusTotal();
+			PrintTotal();
 
 			TilePanel.ForceResize();
 			TilePanel.Refresh();
@@ -847,7 +847,7 @@ namespace PckView
 
 			EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
-			PrintStatusSpriteSelected();
+			PrintSelectedId();
 
 			OnSpriteClick(null, EventArgs.Empty);
 			TilePanel.Refresh();
@@ -1766,10 +1766,10 @@ namespace PckView
 		/// Prints the quantity of sprites in the currently loaded spriteset to
 		/// the statusbar. Note that this will clear the sprite-over info.
 		/// </summary>
-		internal void PrintStatusTotal()
+		internal void PrintTotal()
 		{
-			PrintStatusSpriteOver();
-			PrintStatusSpriteSelected();
+			PrintSelectedId();
+			PrintOverId();
 
 			tssl_TilesTotal.Text = String.Format(
 											CultureInfo.InvariantCulture,
@@ -1780,11 +1780,19 @@ namespace PckView
 		/// Updates the status-information for the sprite that is currently
 		/// selected.
 		/// </summary>
-		internal void PrintStatusSpriteSelected()
+		internal void PrintSelectedId()
 		{
 			string selected;
-			if (TilePanel.SelectedId != -1)
-				selected = TilePanel.SelectedId.ToString(CultureInfo.InvariantCulture);
+
+			int id = TilePanel.SelectedId;
+			if (id != -1)
+			{
+				selected = id.ToString(CultureInfo.InvariantCulture);
+				if (id > 34)
+					selected += " [" + (id - 35).ToString(CultureInfo.InvariantCulture) + "]";
+				else
+					selected += " [0]";
+			}
 			else
 				selected = None;
 
@@ -1797,7 +1805,7 @@ namespace PckView
 		/// Updates the status-information for the sprite that the cursor is
 		/// currently over.
 		/// </summary>
-		internal void PrintStatusSpriteOver()
+		internal void PrintOverId()
 		{
 			string over;
 			if (TilePanel.OverId != -1)

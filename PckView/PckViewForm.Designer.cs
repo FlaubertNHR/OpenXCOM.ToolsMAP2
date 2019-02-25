@@ -101,28 +101,28 @@ namespace PckView
 			this.miCreate.Index = 0;
 			this.miCreate.Text = "Create Pck file";
 			// 
-			// miNewTerrain
+			// miCreateTerrain
 			// 
 			this.miCreateTerrain.Index = 1;
 			this.miCreateTerrain.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
 			this.miCreateTerrain.Text = "&Create terrain ...";
 			this.miCreateTerrain.Click += new System.EventHandler(this.OnCreateClick);
 			// 
-			// miNewBigobs
+			// miCreateBigobs
 			// 
 			this.miCreateBigobs.Index = 2;
 			this.miCreateBigobs.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
 			this.miCreateBigobs.Text = "Create b&igobs ...";
 			this.miCreateBigobs.Click += new System.EventHandler(this.OnCreateClick);
 			// 
-			// miNewUnitUfo
+			// miCreateUnitUfo
 			// 
 			this.miCreateUnitUfo.Index = 3;
 			this.miCreateUnitUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
 			this.miCreateUnitUfo.Text = "Create &ufo unit ...";
 			this.miCreateUnitUfo.Click += new System.EventHandler(this.OnCreateClick);
 			// 
-			// miNewUnitTftd
+			// miCreateUnitTftd
 			// 
 			this.miCreateUnitTftd.Index = 4;
 			this.miCreateUnitTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
@@ -337,7 +337,7 @@ namespace PckView
 			this.tssl_TileSelected.Font = new System.Drawing.Font("Verdana", 7F);
 			this.tssl_TileSelected.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_TileSelected.Name = "tssl_TileSelected";
-			this.tssl_TileSelected.Size = new System.Drawing.Size(100, 22);
+			this.tssl_TileSelected.Size = new System.Drawing.Size(120, 22);
 			this.tssl_TileSelected.Text = "select";
 			this.tssl_TileSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -348,7 +348,7 @@ namespace PckView
 			this.tssl_SpritesetLabel.Font = new System.Drawing.Font("Verdana", 7F);
 			this.tssl_SpritesetLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_SpritesetLabel.Name = "tssl_SpritesetLabel";
-			this.tssl_SpritesetLabel.Size = new System.Drawing.Size(202, 22);
+			this.tssl_SpritesetLabel.Size = new System.Drawing.Size(182, 22);
 			this.tssl_SpritesetLabel.Spring = true;
 			this.tssl_SpritesetLabel.Text = "label";
 			// 
