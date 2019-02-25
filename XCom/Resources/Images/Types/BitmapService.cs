@@ -100,16 +100,18 @@ namespace XCom
 		/// Called by PckViewForm.OnImportSpritesheetClick()
 		/// </summary>
 		/// <param name="b">an indexed Bitmap of a spritesheet</param>
-		/// <param name="pal"></param>
-		/// <param name="width"></param>
-		/// <param name="height"></param>
-		/// <param name="pad"></param>
+		/// <param name="pal">an XCOM Palette-object</param>
+		/// <param name="width">the width of a sprite in the collection</param>
+		/// <param name="height">the height of a sprite in the collection</param>
+		/// <param name="isScanG">true if creating a ScanG iconset</param>
+		/// <param name="pad">padding between sprites</param>
 		/// <returns></returns>
-		public static SpriteCollectionBase CreateSheetSprites(
+		public static SpriteCollectionBase CreateSpriteCollection(
 				Bitmap b,
 				Palette pal,
 				int width,
 				int height,
+				bool isScanG,
 				int pad = 0)
 		{
 			var spriteset = new SpriteCollectionBase();
@@ -128,10 +130,9 @@ namespace XCom
 										++id,
 										pal,
 										width, height,
-										false,
+										isScanG,
 										x, y));
 			}
-
 			spriteset.Pal = pal;
 
 			return spriteset;
@@ -145,36 +146,36 @@ namespace XCom
 
 		/// <summary>
 		/// Saves a spriteset as a PNG spritesheet.
+		/// @note Check that spriteset is not null or blank before call.
+		/// @note DO NOT PASS IN 0 COLS idiot.
 		/// </summary>
 		/// <param name="fullpath">fullpath of the output file</param>
 		/// <param name="spriteset">spriteset</param>
 		/// <param name="pal">palette</param>
-		/// <param name="width">quantity of cols</param>
-		/// <param name="pad">padding between sprites</param>
+		/// <param name="cols">quantity of cols</param>
+		/// <param name="pad">padding between sprites in the spritesheet</param>
 		public static void ExportSpritesheet(
 				string fullpath,
 				SpriteCollection spriteset,
 				Palette pal,
-				int width,
+				int cols,
 				int pad = 0)
 		{
-			if (spriteset.Count == 1)
-				width = 1;
-
-			int extra = (spriteset.Count % width == 0) ? 0 : 1;
+			if (spriteset.Count < cols)
+				cols = spriteset.Count;
 
 			using (var b = CreateTransparent(
-										width * (XCImage.SpriteWidth + pad) - pad,
-										(spriteset.Count / width + extra) * (XCImage.SpriteHeight + pad) - pad,
+										cols * (XCImage.SpriteWidth + pad) - pad,
+										((spriteset.Count + (cols - 1)) / cols) * (XCImage.SpriteHeight + pad) - pad,
 										pal.ColorTable))
 			{
 				for (int i = 0; i != spriteset.Count; ++i)
 				{
-					int x = i % width * (XCImage.SpriteWidth  + pad);
-					int y = i / width * (XCImage.SpriteHeight + pad);
-					Draw(spriteset[i].Sprite, b, x, y);
-				}
+					int x = i % cols * (XCImage.SpriteWidth  + pad);
+					int y = i / cols * (XCImage.SpriteHeight + pad);
 
+					Insert(spriteset[i].Sprite, b, x, y);
+				}
 				ExportSprite(fullpath, b);
 			}
 		}
@@ -246,7 +247,7 @@ namespace XCom
 
 
 		/// <summary>
-		/// Used by MapFileBase.SaveGifFile()
+		/// Used by ExportSpritesheet() and MapFileBase.SaveGifFile()
 		/// </summary>
 		/// <param name="width">width of final Bitmap</param>
 		/// <param name="height">height of final Bitmap</param>
@@ -307,14 +308,13 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Used by MapFileBase.SaveGifFile()
-		/// NOTE: not a Draw function.
+		/// Used by ExportSpritesheet() and MapFileBase.SaveGifFile()
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="dst"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		internal static void Draw(
+		internal static void Insert(
 				Bitmap src,
 				Bitmap dst,
 				int x,
@@ -354,7 +354,6 @@ namespace XCom
 				for (uint row = 0; row != src.Height; ++row)
 				for (uint col = 0; col != src.Width;  ++col)
 				{
-//					byte* srcPixel = srcBits + ((row / PckImage.Scale) * srcStride + (col / PckImage.Scale));
 					byte* srcPixel = srcPos +  row      * srcStride +  col;
 					byte* dstPixel = dstPos + (row + y) * dstStride + (col + x);
 

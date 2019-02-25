@@ -264,7 +264,7 @@ namespace XCom.Interfaces.Base
 							foreach (var part in parts)
 							{
 								var tilepart = part as Tilepart;
-								BitmapService.Draw( // NOTE: not actually drawing anything.
+								BitmapService.Insert(
 												tilepart[0].Sprite,
 												b,
 												x,
