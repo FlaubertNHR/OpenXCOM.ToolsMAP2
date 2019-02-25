@@ -36,10 +36,11 @@ namespace XCom
 		/// <param name="b">a 32x40 indexed Bitmap</param>
 		/// <param name="id">an appropriate set-id</param>
 		/// <param name="pal">an XCOM Palette-object</param>
-		/// <param name="width"></param>
-		/// <param name="height"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="width">the width of the image</param>
+		/// <param name="height">the height of the image</param>
+		/// <param name="isScanG">true if creating a ScanG icon</param>
+		/// <param name="x">used by spritesheets only</param>
+		/// <param name="y">used by spritesheets only</param>
 		/// <returns>an XCImage-object (base of PckImage)</returns>
 		public static XCImage CreateSprite(
 				Bitmap b,
@@ -47,6 +48,7 @@ namespace XCom
 				Palette pal,
 				int width,
 				int height,
+				bool isScanG = false,
 				int x = 0,
 				int y = 0)
 		{
@@ -58,8 +60,10 @@ namespace XCom
 								PixelFormat.Format8bppIndexed);
 			var start = locked.Scan0;
 
-			unsafe // change any palette-indices 0xFF or 0xFE to #253 ->
+			unsafe // change any palette-indices 0xFF or 0xFE to #253 if *not* a ScanG icon ->
 			{
+				// kL_note: I suspect any of this negative-stride stuff is redundant.
+
 				byte* pos;
 				if (locked.Stride > 0)
 					pos = (byte*)start.ToPointer();
@@ -72,21 +76,21 @@ namespace XCom
 				for (uint row = 0; row != height; ++row)
 				for (uint col = 0; col != width;  ++col)
 				{
-//					bindata[i++] = *(bits + row * stride + col); // bork.
+					byte palid = *(pos + row * stride + col);
 
-					byte colorId = *(pos + row * stride + col);
-					switch (colorId)
+					if (!isScanG)
 					{
-						case PckImage.SpriteStopByte:			// convert #255 transparency to #0. uh no ->
-						case PckImage.SpriteTransparencyByte:	// drop #254 transparency-marker down to #253.
-							colorId = 253;
-							break;
+						switch (palid)
+						{
+							case PckImage.SpriteStopByte:			// convert #255 transparency to #0. uh no ->
+							case PckImage.SpriteTransparencyByte:	// drop #254 transparency-marker down to #253.
+								palid = 253;
+								break;
+						}
 					}
-
-					bindata[++i] = colorId;
+					bindata[++i] = palid;
 				}
 			}
-
 			b.UnlockBits(locked);
 
 			return new XCImage(bindata, width, height, pal, id); // note: XCImage..cTor calls CreateColorized() below.
@@ -124,6 +128,7 @@ namespace XCom
 										++id,
 										pal,
 										width, height,
+										false,
 										x, y));
 			}
 

@@ -473,7 +473,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSpriteClick(object sender, EventArgs e)
 		{
-			bool valid = (TilePanel.SelectedId != -1);
+			bool enabled = (TilePanel.SelectedId != -1);
 
 			// on Context menu
 			_miEdit        .Enabled =
@@ -481,9 +481,10 @@ namespace PckView
 			_miInsertAfter .Enabled =
 			_miReplace     .Enabled =
 			_miDelete      .Enabled =
-			_miExport      .Enabled = valid;
-			_miMoveLeft    .Enabled = valid && (TilePanel.SelectedId != 0);
-			_miMoveRight   .Enabled = valid && (TilePanel.SelectedId != TilePanel.Spriteset.Count - 1);
+			_miExport      .Enabled = enabled;
+
+			_miMoveLeft    .Enabled = enabled && (TilePanel.SelectedId != 0);
+			_miMoveRight   .Enabled = enabled && (TilePanel.SelectedId != TilePanel.Spriteset.Count - 1);
 		}
 
 		/// <summary>
@@ -542,7 +543,11 @@ namespace PckView
 			if (hint)
 			{
 				error += Environment.NewLine + Environment.NewLine;
-				if (IsBigobs)
+				if (IsScanG)
+					error += String.Format(
+										CultureInfo.CurrentCulture,
+										"Image needs to be 4x4 8-bpp");
+				else if (IsBigobs)
 					error += String.Format(
 										CultureInfo.CurrentCulture,
 										"Image needs to be 32x48 8-bpp");
@@ -573,7 +578,9 @@ namespace PckView
 			{
 				ofd.Multiselect = true;
 
-				if (IsBigobs)
+				if (IsScanG)
+					ofd.Title = "Add 4x4 8-bpp Image file(s)";
+				else if (IsBigobs)
 					ofd.Title = "Add 32x48 8-bpp Image file(s)";
 				else
 					ofd.Title = "Add 32x40 8-bpp Image file(s)";
@@ -606,7 +613,7 @@ namespace PckView
 						}
 					}
 
-					int id = TilePanel.Spriteset.Count - 1;
+					int id = (TilePanel.Spriteset.Count - 1);
 					foreach (var b in bs)
 					{
 						var sprite = BitmapService.CreateSprite(
@@ -614,16 +621,12 @@ namespace PckView
 															++id,
 															Pal,
 															XCImage.SpriteWidth,
-															XCImage.SpriteHeight);
+															XCImage.SpriteHeight,
+															IsScanG);
 						TilePanel.Spriteset.Add(sprite);
 					}
 
-					OnSpriteClick(null, EventArgs.Empty);
-
-					PrintStatusTotal();
-
-					TilePanel.ForceResize();
-					TilePanel.Refresh();
+					InsertSpritesFinish();
 				}
 			}
 		}
@@ -641,7 +644,9 @@ namespace PckView
 			{
 				ofd.Multiselect = true;
 
-				if (IsBigobs)
+				if (IsScanG)
+					ofd.Title = "Add 4x4 8-bpp Image file(s)";
+				else if (IsBigobs)
 					ofd.Title = "Add 32x48 8-bpp Image file(s)";
 				else
 					ofd.Title = "Add 32x40 8-bpp Image file(s)";
@@ -678,7 +683,9 @@ namespace PckView
 			{
 				ofd.Multiselect = true;
 
-				if (IsBigobs)
+				if (IsScanG)
+					ofd.Title = "Add 4x4 8-bpp Image file(s)";
+				else if (IsBigobs)
 					ofd.Title = "Add 32x48 8-bpp Image file(s)";
 				else
 					ofd.Title = "Add 32x40 8-bpp Image file(s)";
@@ -734,7 +741,8 @@ namespace PckView
 													id,
 													Pal,
 													XCImage.SpriteWidth,
-													XCImage.SpriteHeight);
+													XCImage.SpriteHeight,
+													IsScanG);
 				TilePanel.Spriteset.Insert(id++, sprite);
 			}
 			return true;
@@ -764,7 +772,9 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				if (IsBigobs)
+				if (IsScanG)
+					ofd.Title = "Add 4x4 8-bpp Image file(s)";
+				else if (IsBigobs)
 					ofd.Title = "Add 32x48 8-bpp Image file";
 				else
 					ofd.Title = "Add 32x40 8-bpp Image file";
@@ -787,7 +797,8 @@ namespace PckView
 															TilePanel.SelectedId,
 															Pal,
 															XCImage.SpriteWidth,
-															XCImage.SpriteHeight);
+															XCImage.SpriteHeight,
+															IsScanG);
 						TilePanel.Spriteset[TilePanel.SelectedId] =
 						EditorPanel.Instance.Sprite = sprite;
 
@@ -856,35 +867,9 @@ namespace PckView
 				TilePanel.Spriteset[i].TerrainId = i;
 
 			EditorPanel.Instance.Sprite = null;
-
 			TilePanel.SelectedId = -1;
-			OnSpriteClick(null, EventArgs.Empty);
 
-			PrintStatusTotal();
-
-			TilePanel.ForceResize();
-			TilePanel.Refresh();
-		}
-
-		/// <summary>
-		/// Deletes the currently selected sprite w/ a keydown event.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnKeyDown(object sender, KeyEventArgs e)
-		{
-			switch (e.KeyCode)
-			{
-				case Keys.Delete:
-					if (_miDelete.Enabled)
-						OnDeleteSpriteClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.Enter:
-					if (_miEdit.Enabled)
-						OnSpriteEditorClick(null, EventArgs.Empty);
-					break;
-			}
+			InsertSpritesFinish();
 		}
 
 		/// <summary>
@@ -923,48 +908,26 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a PCK sprite collection.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// Deletes the currently selected sprite w/ a keydown event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnOpenClick(object sender, EventArgs e)
+		private void OnKeyDown(object sender, KeyEventArgs e)
 		{
-			using (var ofd = new OpenFileDialog())
+			switch (e.KeyCode)
 			{
-				ofd.Title  = "Select a PCK (terrain/unit) file";
-				ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+				case Keys.Delete:
+					if (_miDelete.Enabled)
+						OnDeleteSpriteClick(null, EventArgs.Empty);
+					break;
 
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					IsBigobs =
-					IsScanG  = false;
-					LoadSpriteset(ofd.FileName);
-				}
+				case Keys.Enter:
+					if (_miEdit.Enabled)
+						OnSpriteEditorClick(null, EventArgs.Empty);
+					break;
 			}
 		}
 
-		/// <summary>
-		/// Opens a PCK sprite collection.
-		/// Called when the mainmenu's file-menu Click event is raised.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnOpenBigobsClick(object sender, EventArgs e)
-		{
-			using (var ofd = new OpenFileDialog())
-			{
-				ofd.Title  = "Select a PCK (bigobs) file";
-				ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					IsBigobs = true;
-					IsScanG  = false;
-					LoadSpriteset(ofd.FileName);
-				}
-			}
-		}
 
 		/// <summary>
 		/// Creates a brand sparkling new (blank) PCK sprite collection.
@@ -1031,6 +994,50 @@ namespace PckView
 					OnSpriteClick(null, EventArgs.Empty);
 
 					Text = "PckView - " + pfePck;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Opens a PCK sprite collection.
+		/// Called when the mainmenu's file-menu Click event is raised.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnOpenClick(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.Title  = "Select a PCK (terrain/unit) file";
+				ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					IsBigobs =
+					IsScanG  = false;
+					LoadSpriteset(ofd.FileName);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Opens a PCK sprite collection.
+		/// Called when the mainmenu's file-menu Click event is raised.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnOpenBigobsClick(object sender, EventArgs e)
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.Title  = "Select a PCK (bigobs) file";
+				ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					IsBigobs = true;
+					IsScanG  = false;
+					LoadSpriteset(ofd.FileName);
 				}
 			}
 		}
