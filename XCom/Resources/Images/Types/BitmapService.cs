@@ -141,6 +141,10 @@ namespace XCom
 
 		public static void ExportSprite(string fullpath, Bitmap b)
 		{
+			ColorPalette pal = b.Palette;
+			pal.Entries[Palette.TransparentId] = Color.Transparent;
+			b.Palette = pal;
+
 			b.Save(fullpath, ImageFormat.Png);
 		}
 

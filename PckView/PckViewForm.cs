@@ -884,15 +884,13 @@ namespace PckView
 
 			int count = TilePanel.Spriteset.Count;
 			do
-			{
-				digits += "0";
-			}
+			{ digits += "0"; }
 			while ((count /= 10) != 0);
 
 			var sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 			string suffix = String.Format(
 										CultureInfo.InvariantCulture,
-										"{0:" + digits + "}",
+										"_{0:" + digits + "}",
 										TilePanel.SelectedId);
 
 			using (var sfd = new SaveFileDialog())
@@ -1219,17 +1217,14 @@ namespace PckView
 						string digits = String.Empty;
 						int count = TilePanel.Spriteset.Count;
 						do
-						{
-							digits += "0";
-							count /= 10;
-						}
-						while (count != 0);
+						{ digits += "0"; }
+						while ((count /= 10) != 0);
 
 						foreach (XCImage sprite in TilePanel.Spriteset)
 						{
 							string suffix = String.Format(
 														CultureInfo.InvariantCulture,
-														"{0:" + digits + "}",
+														"_{0:" + digits + "}",
 														sprite.TerrainId);
 							string fullpath = Path.Combine(path, file + suffix + PngExt);
 							BitmapService.ExportSprite(fullpath, sprite.Sprite);

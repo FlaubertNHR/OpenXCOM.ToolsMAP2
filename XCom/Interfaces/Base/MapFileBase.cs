@@ -275,14 +275,23 @@ namespace XCom.Interfaces.Base
 				}
 			}
 
-			try
+			try // TODO: what is this.
 			{
 				var rect = BitmapService.GetNontransparentRectangle(b, Palette.TransparentId);
 				b = BitmapService.Crop(b, rect);
+
+				ColorPalette p = b.Palette;
+				p.Entries[Palette.TransparentId] = Color.Transparent;
+				b.Palette = p;
+
 				b.Save(fullpath, ImageFormat.Png);
 			}
 			catch // TODO: Deal with exceptions appropriately.
 			{
+				ColorPalette p = b.Palette;
+				p.Entries[Palette.TransparentId] = Color.Transparent;
+				b.Palette = p;
+
 				b.Save(fullpath, ImageFormat.Png);
 				throw;
 			}
