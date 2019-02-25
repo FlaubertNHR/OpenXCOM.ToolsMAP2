@@ -10,11 +10,11 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 Built against .NET 4.5.1
 
 2019 February 25<br>
-[MapView2_190225.7z]()
+[MapView2_190225.7z](https://drive.google.com/file/d/16Nx0gzNblEpSenPds5YUVgI52WQlSZhJ/view?usp=sharing)
 
 - PckView: support for SCANG.DAT files
 - PNG output sets palette-id #0 transparent
-- code improvements and bug fixes
+- minor fixes and code improvements
 
 2019 February 21<br>
 [MapView2_190221.7z](https://drive.google.com/file/d/1lu_sXFIsHBue9uTfrq1m2MWi25qcPDjD/view?usp=sharing)
