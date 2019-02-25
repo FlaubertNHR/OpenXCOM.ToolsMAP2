@@ -277,7 +277,7 @@ namespace XCom.Interfaces.Base
 
 			try // TODO: what is this.
 			{
-				var rect = BitmapService.GetNontransparentRectangle(b, Palette.TransparentId);
+				var rect = BitmapService.GetCloseRectangle(b, Palette.TransparentId);
 				b = BitmapService.Crop(b, rect);
 
 				ColorPalette p = b.Palette;

@@ -375,7 +375,7 @@ namespace XCom
 		/// <param name="b"></param>
 		/// <param name="transparent"></param>
 		/// <returns></returns>
-		internal static Rectangle GetNontransparentRectangle(Bitmap b, int transparent)
+		internal static Rectangle GetCloseRectangle(Bitmap b, int transparent)
 		{
 			var locked = b.LockBits(
 								new Rectangle(0, 0, b.Width, b.Height),
