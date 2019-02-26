@@ -22,7 +22,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			MapObserverControl1
 	{
 		#region Fields & Properties
-		private readonly QuadrantPanelDrawService _drawService = new QuadrantPanelDrawService();
+		private readonly QuadrantPanelDrawService _drawService =
+					 new QuadrantPanelDrawService();
 
 		private XCMapTile _tile;
 		private MapLocation _location;
@@ -146,6 +147,9 @@ namespace MapView.Forms.MapObservers.TopViews
 						ViewerFormsManager.TopView     .Refresh();
 						ViewerFormsManager.RouteView   .Refresh();
 						ViewerFormsManager.TopRouteView.Refresh();
+
+						if (XCMainWindow.ScanG != null)
+							XCMainWindow.ScanG.RefreshPanel();
 					}
 					Refresh();
 					break;
@@ -200,7 +204,9 @@ namespace MapView.Forms.MapObservers.TopViews
 									_tile[SelectedQuadrant] = tileView.SelectedTilepart;
 
 									MainViewUnderlay.Instance.Refresh();
-									ViewerFormsManager.RouteView.Control.Refresh();
+
+									ViewerFormsManager.RouteView   .Control     .Refresh();
+									ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
 									break;
 
 								case 2:

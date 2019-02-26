@@ -484,7 +484,10 @@ namespace MapView
 			ViewerFormsManager.TopView     .Refresh();
 			ViewerFormsManager.RouteView   .Refresh();
 			ViewerFormsManager.TopRouteView.Refresh();
-		}
+
+			if (XCMainWindow.ScanG != null)
+				XCMainWindow.ScanG.RefreshPanel();	// incl/ ProcessTileSelection() for selection rectangle
+		}											// not used by ScanG view at present
 		#endregion
 
 

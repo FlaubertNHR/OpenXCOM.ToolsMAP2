@@ -372,6 +372,11 @@ namespace MapView
 
 			Invalidate();
 		}
+
+		internal void RefreshPanel()
+		{
+			pnl_ScanG.Invalidate();
+		}
 		#endregion
 
 
