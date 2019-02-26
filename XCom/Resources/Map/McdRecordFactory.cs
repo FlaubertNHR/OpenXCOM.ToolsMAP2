@@ -58,8 +58,8 @@ namespace XCom
 			record.Unknown38 = bindata[38]; // unsigned char u39;
 
 			record.TU_Walk     = bindata[39];
-			record.TU_Fly      = bindata[40]; // unsigned char TU_Fly;                  // remember, 0xFF means it's impassable!
-			record.TU_Slide    = bindata[41]; // unsigned char TU_Slide;                // sliding things include snakemen and silacoids
+			record.TU_Slide    = bindata[40]; // unsigned char TU_Slide;                // sliding things include snakemen and silacoids
+			record.TU_Fly      = bindata[41]; // unsigned char TU_Fly;                  // remember, 0xFF means it's impassable!
 			record.Armor       = bindata[42];
 			record.HE_Block    = bindata[43]; // unsigned char HE_Block;                // How much of an explosion this tile will block
 			record.DieTile     = bindata[44];

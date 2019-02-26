@@ -132,8 +132,8 @@ namespace XCom
 
 		public byte Unknown38    { get; set; }      // info[38];}}                     // unsigned char u39;
 		public byte TU_Walk      { get; set; }      // info[39];}}                     // unsigned char TU_Walk;       // The number of TUs require to pass the tile while walking. 0xFF (255) means it's unpassable.
-		public byte TU_Fly       { get; set; }      // info[40];}}                     // unsigned char TU_Fly;        // remember, 0xFF means it's impassable!
-		public byte TU_Slide     { get; set; }      // info[41];}}                     // unsigned char TU_Slide;      // sliding things include snakemen and silacoids
+		public byte TU_Slide     { get; set; }      // info[40];}}                     // unsigned char TU_Fly;        // remember, 0xFF means it's impassable!
+		public byte TU_Fly       { get; set; }      // info[41];}}                     // unsigned char TU_Slide;      // sliding things include snakemen and silacoids
 		public byte Armor        { get; set; }      // info[42];}}                     // unsigned char Armour;        // The higher this is the less likely it is that a weapon will destroy this tile when it's hit.
 		public byte HE_Block     { get; set; }      // info[43];}}                     // unsigned char HE_Block;      // How much of an explosion this tile will block
 		public byte DieTile      { get; set; }      // info[44];}}                     // unsigned char Die_MCD;       // If the terrain is destroyed, it is set to 0 and a tile of type Die_MCD is added

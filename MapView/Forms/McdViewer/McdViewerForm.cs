@@ -136,16 +136,16 @@ namespace MapView.Forms.McdViewer
 				rtbInfo.AppendText(string.Format(
 											System.Globalization.CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
-											"tu fly:",
-											record.TU_Fly));
-//				unsigned char TU_Fly; // remember, 0xFF means it's impassable!
+											"tu slide:",
+											record.TU_Slide));
+//				unsigned char TU_Slide; // sliding things include snakemen and silacoids
 
 				rtbInfo.AppendText(string.Format(
 											System.Globalization.CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
-											"tu slide:",
-											record.TU_Slide));
-//				unsigned char TU_Slide; // sliding things include snakemen and silacoids
+											"tu fly:",
+											record.TU_Fly));
+//				unsigned char TU_Fly; // remember, 0xFF means it's impassable!
 
 				rtbInfo.AppendText(string.Format(
 											System.Globalization.CultureInfo.InvariantCulture,
