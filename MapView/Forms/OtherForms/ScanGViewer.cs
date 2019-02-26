@@ -23,7 +23,7 @@ namespace MapView
 			Form
 	{
 		#region Fields
-		private MapFileBase _base;
+		internal MapFileBase _base;
 
 		private int[,]  _icons;
 		private Palette _pal;
@@ -81,13 +81,19 @@ namespace MapView
 			ClientSize = new Size(
 								_base.MapSize.Cols * 16 + 2,
 								_base.MapSize.Rows * 16 + 2);
-
-			pnl_ScanG.MouseDoubleClick += handleMouseDoubleClickyouidiots;
 		}
 		#endregion
 
 
 		#region EventCalls
+		private void OnFormClosed(object sender, FormClosedEventArgs e)
+		{
+			XCMainWindow.Instance.UncheckScanG();
+			XCMainWindow.ScanG = null;
+
+			Dispose();
+		}
+
 		/// <summary>
 		/// Closes the screen on an Escape keydown event.
 		/// </summary>
@@ -280,7 +286,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void handleMouseDoubleClickyouidiots(object sender, MouseEventArgs e)
+		private void OnMouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
 			{
@@ -354,6 +360,16 @@ namespace MapView
 				 + "L " + (_base.MapSize.Levs - Level)
 				 + (SingleLevel ? " - 1" : String.Empty);
 		}
+
+		internal void LoadMapfile(MapFileBase @base)
+		{
+			_base = @base;
+			ClientSize = new Size(
+								_base.MapSize.Cols * 16 + 2,
+								_base.MapSize.Rows * 16 + 2);
+			Level = _base.Level;
+			Text = GetTitle();
+		}
 		#endregion
 
 
@@ -388,6 +404,7 @@ namespace MapView
 			this.pnl_ScanG.Size = new System.Drawing.Size(292, 274);
 			this.pnl_ScanG.TabIndex = 0;
 			this.pnl_ScanG.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
+			this.pnl_ScanG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseDoubleClick);
 			// 
 			// ScanGViewer
 			// 
@@ -399,6 +416,7 @@ namespace MapView
 			this.Name = "ScanGViewer";
 			this.ShowIcon = false;
 			this.Text = " ScanG";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ResumeLayout(false);
 

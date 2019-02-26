@@ -39,7 +39,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
 
-		private McdViewerForm _mcdInfoForm;
+		internal McdViewerForm _mcdInfoForm;
 
 		private Hashtable _brushesSpecial = new Hashtable();
 		#endregion

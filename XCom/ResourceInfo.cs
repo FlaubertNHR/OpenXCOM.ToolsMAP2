@@ -11,8 +11,8 @@ namespace XCom
 	public static class ResourceInfo
 	{
 		#region Fields (static)
-		private static readonly Dictionary<Palette, Dictionary<string, SpriteCollection>> _palSpritesets
-						  = new Dictionary<Palette, Dictionary<string, SpriteCollection>>();
+		private static readonly Dictionary<Palette, Dictionary<string, SpriteCollection>> _palSpritesets =
+							new Dictionary<Palette, Dictionary<string, SpriteCollection>>();
 
 		public static bool ReloadSprites;
 
@@ -41,7 +41,7 @@ namespace XCom
 
 		/// <summary>
 		/// Loads a given spriteset for UFO or TFTD. This could go in Descriptor
-		/// except the XCOM cursor-sprites load w/out a descriptor. So do the
+		/// except the XCOM cursor-sprites load w/out a descriptor. As do the
 		/// 'ExtraSprites'.
 		/// @note Both UFO and TFTD use 2-byte Tab-offsetLengths for 32x40 terrain pcks
 		/// (TFTD unitsprites use 4-byte Tab-offsetLengths although Bigobs 32x48 uses 2-byte)

@@ -47,11 +47,9 @@ namespace MapView.Forms.McdViewer
 		/// <param name="record"></param>
 		internal void UpdateData(McdRecord record)
 		{
-			bsInfo.DataSource = record;
-
 			rtbInfo.Text = String.Empty;
 
-			if (record != null)
+			if ((bsInfo.DataSource = record) != null)
 			{
 				rtbInfo.SelectionColor = Color.Black;
 				rtbInfo.AppendText(record.Images);

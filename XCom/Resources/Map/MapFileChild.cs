@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -64,7 +65,7 @@ namespace XCom
 			else
 			{
 				string error = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"The file does not exist{0}{0}{1}",
 										Environment.NewLine,
 										Fullpath);

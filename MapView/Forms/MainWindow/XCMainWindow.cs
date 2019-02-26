@@ -58,6 +58,9 @@ namespace MapView
 		internal static XCMainWindow Instance
 		{ get; set; }
 
+		internal static ScanGViewer ScanG
+		{ get; set; }
+
 		public static bool UseMonoDraw
 		{ get; private set; }
 		#endregion
@@ -291,7 +294,7 @@ namespace MapView
 			_viewersManager.ManageViewers();
 
 
-			ViewerFormsManager.TileView.Control.PckSavedEvent += OnPckSavedEvent;
+			ViewerFormsManager.TileView.Control.PckSavedEvent += OnReloadMapfile;
 
 			MainViewUnderlay.AnimationUpdateEvent += OnAnimationUpdate;	// FIX: "Subscription to static events without unsubscription may cause memory leaks."
 																		// NOTE: it's not really a problem, since both publisher and subscriber are expected to
@@ -1430,9 +1433,26 @@ namespace MapView
 		{
 			if (_mainViewUnderlay.MapBase != null)
 			{
-				var f = new ScanGViewer(_mainViewUnderlay.MapBase);
-				f.Show();
+				if (!miScanG.Checked)
+				{
+					miScanG.Checked = true;
+
+					ScanG = new ScanGViewer(_mainViewUnderlay.MapBase);
+					ScanG.Show();
+				}
+				else
+					ScanG.BringToFront();
 			}
+		}
+
+		internal void UncheckScanG()
+		{
+			miScanG.Checked = false;
+		}
+
+		private void OnReloadTerrainsClick(object sender, EventArgs e)
+		{
+			OnReloadMapfile();
 		}
 
 
@@ -2422,9 +2442,16 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Reloads the map when a save is done in PckView (via TileView).
+		/// Reloads the Map/Routes/Terrains when a save is done in PckView (via
+		/// TileView).
+		/// @note Is double-purposed to reload the Map/Routes/Terrains when user
+		/// chooses to reload current Map et al. on the File menu.
+		/// TODO: Neither event really needs to reload the Map/Routes (in fact
+		/// it would be better if it didn't so that the SaveAlerts would get
+		/// bypassed) - so this function should be reworked to reload only the
+		/// Terrains (MCDs/PCKs/TABs). But that's a headache and a half ....
 		/// </summary>
-		private void OnPckSavedEvent()
+		private void OnReloadMapfile()
 		{
 			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
@@ -2484,14 +2511,15 @@ namespace MapView
 
 				if (@base != null)
 				{
-					miSaveAll    .Enabled =
-					miSaveMap    .Enabled =
-					miSaveRoutes .Enabled =
-					miSaveAs     .Enabled =
-					miSaveImage  .Enabled =
-					miResize     .Enabled =
-					miInfo       .Enabled =
-					miScanG      .Enabled = true;
+					miSaveAll       .Enabled =
+					miSaveMap       .Enabled =
+					miSaveRoutes    .Enabled =
+					miSaveAs        .Enabled =
+					miSaveImage     .Enabled =
+					miResize        .Enabled =
+					miInfo          .Enabled =
+					miScanG         .Enabled =
+					miReloadTerrains.Enabled = true;
 
 //					miRegenOccult.Enabled = true; // disabled in designer w/ Visible=FALSE.
 //					miExport     .Enabled = true; // disabled in designer w/ Visible=FALSE.
@@ -2543,9 +2571,25 @@ namespace MapView
 					}
 
 					Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
+
+					if (ScanG != null) // update ScanG viewer if open
+						ScanG.LoadMapfile(@base);
+
+					var tileview = ViewerFormsManager.TileView.Control; // update MCD Info if open
+					if (tileview._mcdInfoForm != null)
+					{
+						if (tileview.SelectedTilepart != null)
+							tileview._mcdInfoForm.UpdateData(tileview.SelectedTilepart.Record);
+						else
+							tileview._mcdInfoForm.UpdateData(null);
+					}
+
+
+					// TODO: Also update ScanG viewer if the MapSize changes
 				}
 			}
 		}
+
 
 		/// <summary>
 		/// Toggles the door-sprites to animate or not.

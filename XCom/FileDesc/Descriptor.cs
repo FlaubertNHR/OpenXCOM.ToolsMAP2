@@ -29,7 +29,8 @@ namespace XCom
 		public string Basepath
 		{ get; internal set; }
 
-		private Dictionary<int, Tuple<string,string>> _terrains = new Dictionary<int, Tuple<string,string>>();
+		private Dictionary<int, Tuple<string,string>> _terrains =
+			new Dictionary<int, Tuple<string,string>>();
 		/// <summary>
 		/// A dictionary of this tileset's terrains as IDs that keys a tuple
 		/// that pairs terrain-labels with basepath-strings. A basepath-string
@@ -103,12 +104,12 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			var tiles = TilepartFactory.CreateTileparts(
-													terr, path,
-													ResourceInfo.LoadSpriteset(terr, path, 2, Pal));	// NOTE: That loads the sprites in addition to
-			return new McdRecordCollection(tiles);														// getting the MCD-records. here just because it can be
-		}																								// concealed inside a function called GetTerrainRecords()
-																										// that returns an McdRecordCollection that's why.
+			var tileparts = TilepartFactory.CreateTileparts(
+														terr, path,
+														ResourceInfo.LoadSpriteset(terr, path, 2, Pal));	// NOTE: That loads the sprites in addition to
+			return new McdRecordCollection(tileparts);														// getting the MCD-records. here just because it can be
+		}																									// concealed inside a function called GetTerrainRecords()
+																											// that returns an McdRecordCollection that's why.
 		/// <summary>
 		/// Gets the count of MCD-records in an MCD-file.
 		/// </summary>
