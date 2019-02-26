@@ -369,6 +369,8 @@ namespace MapView
 								_base.MapSize.Rows * 16 + 2);
 			Level = _base.Level;
 			Text = GetTitle();
+
+			Invalidate();
 		}
 		#endregion
 

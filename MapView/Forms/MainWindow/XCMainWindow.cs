@@ -1384,11 +1384,13 @@ namespace MapView
 
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						int bit = f.MapBase.MapResize(
-													f.Rows,
-													f.Cols,
-													f.Levs,
-													f.ZType);
+						MapFileBase @base = f.MapBase;
+
+						int bit = @base.MapResize(
+												f.Rows,
+												f.Cols,
+												f.Levs,
+												f.ZType);
 
 						if (!_mainViewUnderlay.MapBase.MapChanged && ((bit & 0x1) != 0))
 							MapChanged = true;
@@ -1403,16 +1405,19 @@ namespace MapView
 
 						_mainViewUnderlay.MainViewOverlay.FirstClick = false;
 
-						tsslDimensions   .Text = f.MapBase.MapSize.ToString();
+						tsslDimensions   .Text = @base.MapSize.ToString();
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						ViewerFormsManager.SetObservers(f.MapBase);
+						ViewerFormsManager.SetObservers(@base);
 
 //						ViewerFormsManager.RouteView.Control.ClearSelectedLocation(); // ... why not
 
 						ViewerFormsManager.TopView     .Control   .TopViewPanel.ClearSelectorLozenge();
 						ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.ClearSelectorLozenge();
+
+						if (ScanG != null) // update ScanG viewer if open
+							ScanG.LoadMapfile(@base);
 					}
 				}
 			}
@@ -2583,9 +2588,6 @@ namespace MapView
 						else
 							tileview._mcdInfoForm.UpdateData(null);
 					}
-
-
-					// TODO: Also update ScanG viewer if the MapSize changes
 				}
 			}
 		}
