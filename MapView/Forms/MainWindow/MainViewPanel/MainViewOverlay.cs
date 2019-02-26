@@ -230,7 +230,7 @@ namespace MapView
 		}
 
 #if !LOCKBITS
-		internal bool _spriteShadeEnabled = true; // was private, see ScanGViewer and TilePanel
+		internal bool _spriteShadeEnabled = true; // was private, see ScanGViewer and TilePanel and QuadrantPanel
 #endif
 		// NOTE: Options don't like floats afaict, hence this workaround w/
 		// 'SpriteShade' and 'SpriteShadeLocal' ->
@@ -255,11 +255,13 @@ namespace MapView
 #endif
 				Refresh();
 
-				// refresh ScanGViewer panel and TilePanel
+				// refresh ScanGViewer panel and TilePanel and QuadrantPanel
 				if (XCMainWindow.ScanG != null)
 					XCMainWindow.ScanG.RefreshPanel();
 
-				ViewerFormsManager.TileView.Control.Refresh();
+				ViewerFormsManager.TileView    .Control                  .Refresh();
+				ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
+				ViewerFormsManager.TopRouteView.ControlTop.QuadrantsPanel.Refresh();
 			}
 		}
 		private float _spriteShadeLocal = 1.0f;										// initial val for local sprite shade

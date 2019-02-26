@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 using MapView.Forms.MainWindow;
 
@@ -120,6 +121,12 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			if (!Globals.RT) return; // don't try to draw the QuadrantPanel in the designer.
 
+			var mainViewOverlay = XCMainWindow.Instance._mainViewUnderlay.MainViewOverlay;
+
+			var spriteAttributes = new ImageAttributes();
+			if (mainViewOverlay._spriteShadeEnabled)
+				spriteAttributes.SetGamma(mainViewOverlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
+
 			if (!Inited)
 			{
 				Inited = true;
@@ -172,15 +179,27 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 			// draw the Sprites
+			Bitmap sprite;
 			int anistep = MainViewUnderlay.AniStep;
 
 			// Ground ->
 			if (tile != null && tile.Ground != null)
 			{
+//				graphics.DrawImage(
+//								tile.Ground[anistep].Sprite,
+//								StartX,
+//								StartY - tile.Ground.Record.TileOffset);
+				sprite = tile.Ground[anistep].Sprite;
 				graphics.DrawImage(
-								tile.Ground[anistep].Sprite,
-								StartX,
-								StartY - tile.Ground.Record.TileOffset);
+								sprite,
+								new Rectangle(
+											StartX,
+											StartY - tile.Ground.Record.TileOffset,
+											sprite.Width,
+											sprite.Height),
+								0, 0, sprite.Width, sprite.Height,
+								GraphicsUnit.Pixel,
+								spriteAttributes);
 
 				if (tile.Ground.Record.HumanDoor || tile.Ground.Record.UfoDoor)
 					DrawDoorString(graphics, QuadrantType.Ground);
@@ -194,10 +213,21 @@ namespace MapView.Forms.MapObservers.TopViews
 			// Westwall ->
 			if (tile != null && tile.West != null)
 			{
+//				graphics.DrawImage(
+//								tile.West[anistep].Sprite,
+//								StartX + QuadWidthTotal,
+//								StartY - tile.West.Record.TileOffset);
+				sprite = tile.West[anistep].Sprite;
 				graphics.DrawImage(
-								tile.West[anistep].Sprite,
-								StartX + QuadWidthTotal,
-								StartY - tile.West.Record.TileOffset);
+								sprite,
+								new Rectangle(
+											StartX + QuadWidthTotal,
+											StartY - tile.West.Record.TileOffset,
+											sprite.Width,
+											sprite.Height),
+								0, 0, sprite.Width, sprite.Height,
+								GraphicsUnit.Pixel,
+								spriteAttributes);
 
 				if (tile.West.Record.HumanDoor || tile.West.Record.UfoDoor)
 					DrawDoorString(graphics, QuadrantType.West);
@@ -211,10 +241,21 @@ namespace MapView.Forms.MapObservers.TopViews
 			// Northwall ->
 			if (tile != null && tile.North != null)
 			{
+//				graphics.DrawImage(
+//								tile.North[anistep].Sprite,
+//								StartX + QuadWidthTotal * 2,
+//								StartY - tile.North.Record.TileOffset);
+				sprite = tile.North[anistep].Sprite;
 				graphics.DrawImage(
-								tile.North[anistep].Sprite,
-								StartX + QuadWidthTotal * 2,
-								StartY - tile.North.Record.TileOffset);
+								sprite,
+								new Rectangle(
+											StartX + QuadWidthTotal * 2,
+											StartY - tile.North.Record.TileOffset,
+											sprite.Width,
+											sprite.Height),
+								0, 0, sprite.Width, sprite.Height,
+								GraphicsUnit.Pixel,
+								spriteAttributes);
 
 				if (tile.North.Record.HumanDoor || tile.North.Record.UfoDoor)
 					DrawDoorString(graphics, QuadrantType.North);
@@ -228,10 +269,21 @@ namespace MapView.Forms.MapObservers.TopViews
 			// Content ->
 			if (tile != null && tile.Content != null)
 			{
+//				graphics.DrawImage(
+//								tile.Content[anistep].Sprite,
+//								StartX + QuadWidthTotal * 3,
+//								StartY - tile.Content.Record.TileOffset);
+				sprite = tile.Content[anistep].Sprite;
 				graphics.DrawImage(
-								tile.Content[anistep].Sprite,
-								StartX + QuadWidthTotal * 3,
-								StartY - tile.Content.Record.TileOffset);
+								sprite,
+								new Rectangle(
+											StartX + QuadWidthTotal * 3,
+											StartY - tile.Content.Record.TileOffset,
+											sprite.Width,
+											sprite.Height),
+								0, 0, sprite.Width, sprite.Height,
+								GraphicsUnit.Pixel,
+								spriteAttributes);
 
 				if (tile.Content.Record.HumanDoor || tile.Content.Record.UfoDoor)
 					DrawDoorString(graphics, QuadrantType.Content);
