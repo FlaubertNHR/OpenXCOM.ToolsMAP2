@@ -9,14 +9,14 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
-<br>
-[]()
+2019 February 26<br>
+[MapView2_190226.7z](https://drive.google.com/file/d/15q7w1h_R_QggKs0l3AV-VZwsx63KAAWG/view?usp=sharing)
 
 - more integration of ScanG viewer; update when the Map changes; etc.
 - ScanG view: double right-click to reload SCANG.DAT from disk
 - File->ReloadTerrains: reload Map/Routes/Terrains from disk (without having to click to a different Map and back, or reload the app)
 - MCD Info: fix TU_Slide/TU_Fly inversion
-- extend MainView's SpriteShade setting to TileView sprites and refresh both TileView and ScanG viewer when user changes the shade
+- extend MainView's SpriteShade setting to TileView and TopView sprites and refresh all sprites when user changes the shade
 
 2019 February 25<br>
 [MapView2_190225.7z](https://drive.google.com/file/d/16Nx0gzNblEpSenPds5YUVgI52WQlSZhJ/view?usp=sharing)
