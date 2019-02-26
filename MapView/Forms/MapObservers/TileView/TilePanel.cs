@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
@@ -355,6 +356,12 @@ namespace MapView.Forms.MapObservers.TileViews
 				var graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
+				var mainViewOverlay = XCMainWindow.Instance._mainViewUnderlay.MainViewOverlay;
+
+				var spriteAttributes = new ImageAttributes();
+				if (mainViewOverlay._spriteShadeEnabled)
+					spriteAttributes.SetGamma(mainViewOverlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
+
 				int x = 0;
 				int y = 0;
 				int top;
@@ -387,10 +394,20 @@ namespace MapView.Forms.MapObservers.TileViews
 
 						if ((sprite = part[MainViewUnderlay.AniStep]) != null)
 						{
-							graphics.DrawImage(									// then draw the sprite itself
+//							graphics.DrawImage(									// then draw the sprite itself
+//											sprite.Sprite,
+//											left + SpriteMargin,
+//											top  + SpriteMargin - part.Record.TileOffset);
+							graphics.DrawImage(
 											sprite.Sprite,
-											left + SpriteMargin,
-											top  + SpriteMargin - part.Record.TileOffset);
+											new Rectangle(
+														left + SpriteMargin,
+														top  + SpriteMargin - part.Record.TileOffset,
+														sprite.Sprite.Width,
+														sprite.Sprite.Height),
+											0, 0, sprite.Sprite.Width, sprite.Sprite.Height,
+											GraphicsUnit.Pixel,
+											spriteAttributes);
 						}
 
 						// NOTE: keep the door-string and its placement consistent with
