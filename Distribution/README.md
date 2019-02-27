@@ -10,7 +10,7 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 Built against .NET 4.5.1
 
 2019 February 26<br>
-[MapView2_190226.7z](https://drive.google.com/file/d/15q7w1h_R_QggKs0l3AV-VZwsx63KAAWG/view?usp=sharing)
+[MapView2_190226b.7z](https://drive.google.com/file/d/1OF7eIp8_LTYo_jHmTR-ksz6VjcvSkzME/view?usp=sharing)
 
 - more integration of ScanG viewer; update when the Map changes; etc.
 - ScanG view: double right-click to reload SCANG.DAT from disk
