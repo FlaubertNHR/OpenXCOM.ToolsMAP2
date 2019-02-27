@@ -153,7 +153,7 @@ namespace XCom
 		public sbyte Fuel             { get; set; } // (sbyte)info[57];}}              // unsigned char Fuel;           // The number of turns the tile will burn when set aflame
 		public sbyte LightSource      { get; set; } // (sbyte)info[58];}}              // unsigned char Light_Source;   // The amount of light this tile produces
 		public SpecialType TargetType { get; set; } // (SpecialType)(sbyte)info[59];}} // unsigned char Target_Type;    // The special properties of the tile
-		public byte Unknown60         { get; set; } // info[60];}}                     // unsigned char u61;
+		public byte BaseObject        { get; set; } // info[60];}}                     // unsigned char u61;
 		public byte Unknown61         { get; set; } // info[61];}}                     // unsigned char u62;
 
 
