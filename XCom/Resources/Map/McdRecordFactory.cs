@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace XCom
 {
-	internal static class McdRecordFactory
+	public static class McdRecordFactory
 	{
 		// TODO: do some basic checks, like issue a warning if the Die or
 		// Alternate MCD entry is outside the range, etc.
 
-		internal static McdRecord CreateRecord(IList<byte> bindata)
+		public static McdRecord CreateRecord(IList<byte> bindata)
 		{
 			var record = new McdRecord();
 
@@ -103,25 +103,25 @@ namespace XCom
 										"scang reference:",
 										bindata[20],
 										bindata[21],
-										bindata[21] * 256 + bindata[20] + 35,
+										record.ScanG,
 										bindata[21] * 256 + bindata[20]);
 
 			record.LoftReference = string.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
 										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
 										"loft references:",
-										bindata[8],
-										bindata[9],
-										bindata[10],
-										bindata[11],
-										bindata[12],
-										bindata[13],
-										bindata[14],
-										bindata[15],
-										bindata[16],
-										bindata[17],
-										bindata[18],
-										bindata[19]);
+										record.Loft1,
+										record.Loft2,
+										record.Loft3,
+										record.Loft4,
+										record.Loft5,
+										record.Loft6,
+										record.Loft7,
+										record.Loft8,
+										record.Loft9,
+										record.Loft10,
+										record.Loft11,
+										record.Loft12);
 			#endregion
 
 			record.ByteTable = BytesTable(bindata);

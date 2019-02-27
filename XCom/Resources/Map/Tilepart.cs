@@ -14,9 +14,9 @@ namespace XCom
 		private readonly SpriteCollection _spriteset;
 
 		public Tilepart Dead
-		{ get; internal set; }
+		{ get; set; }
 
-		internal Tilepart Alternate
+		public Tilepart Alternate
 		{ get; set; }
 		#endregion
 
@@ -28,7 +28,7 @@ namespace XCom
 		/// <param name="id"></param>
 		/// <param name="spriteset"></param>
 		/// <param name="record"></param>
-		internal Tilepart(
+		public Tilepart(
 				int id,
 				SpriteCollection spriteset,
 				McdRecord record)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 using System.IO;
 
@@ -8,7 +9,7 @@ namespace XCom.Resources.Map
 	public static class TilepartFactory
 	{
 		#region Fields (static)
-		private const int Length = 62; // there are 62 bytes in each MCD record.
+		public const int Length = 62; // there are 62 bytes in each MCD record.
 		#endregion
 
 
@@ -120,7 +121,7 @@ namespace XCom.Resources.Map
 		/// <param name="record"></param>
 		/// <param name="tileparts"></param>
 		/// <returns></returns>
-		private static Tilepart GetDeadPart(
+		public static Tilepart GetDeadPart(
 				string file,
 				int id,
 				McdRecord record,
@@ -132,7 +133,7 @@ namespace XCom.Resources.Map
 					return tileparts[record.DieTile];
 
 				string warn = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"In the MCD file {0}, the tile entry {1} has an invalid dead tile (id {2} of {3} records).",
 										file,
 										id,
@@ -157,7 +158,7 @@ namespace XCom.Resources.Map
 		/// <param name="record"></param>
 		/// <param name="tileparts"></param>
 		/// <returns></returns>
-		private static Tilepart GetAlternatePart(
+		public static Tilepart GetAlternatePart(
 				string file,
 				int id,
 				McdRecord record,
@@ -169,7 +170,7 @@ namespace XCom.Resources.Map
 					return tileparts[record.Alt_MCD];
 
 				string warn = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"In the MCD file {0}, the tile entry {1} has an invalid alternate tile (id {2} of {3} records).",
 										file,
 										id,

@@ -11,7 +11,7 @@ namespace XCom
 	public static class ResourceInfo
 	{
 		#region Fields (static)
-		private static readonly Dictionary<Palette, Dictionary<string, SpriteCollection>> _palSpritesets =
+		private static readonly Dictionary<Palette, Dictionary<string, SpriteCollection>> _spritesets_byPalette =
 							new Dictionary<Palette, Dictionary<string, SpriteCollection>>();
 
 		public static bool ReloadSprites;
@@ -74,10 +74,10 @@ namespace XCom
 
 				if (File.Exists(pfePck) && File.Exists(pfeTab))
 				{
-					if (!_palSpritesets.ContainsKey(pal))
-						_palSpritesets.Add(pal, new Dictionary<string, SpriteCollection>());
+					if (!_spritesets_byPalette.ContainsKey(pal))
+						 _spritesets_byPalette.Add(pal, new Dictionary<string, SpriteCollection>());
 
-					var spritesets = _palSpritesets[pal];
+					var spritesets = _spritesets_byPalette[pal];
 
 					if (ReloadSprites) // used by XCMainWindow.OnPckSavedEvent <- TileView's pck-editor
 					{
@@ -118,7 +118,7 @@ namespace XCom
 					}
 					// else WARN: Spriteset already found in the collection.
 
-					return _palSpritesets[pal][pfSpriteset];
+					return _spritesets_byPalette[pal][pfSpriteset];
 				}
 
 				MessageBox.Show(
@@ -152,7 +152,7 @@ namespace XCom
 				Palette pal)
 		{
 			var pfSpriteset = Path.Combine(dirTerrain, terrain);
-			return _palSpritesets[pal][pfSpriteset].Count;
+			return _spritesets_byPalette[pal][pfSpriteset].Count;
 		}
 
 

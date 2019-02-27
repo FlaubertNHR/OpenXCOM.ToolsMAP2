@@ -9,6 +9,10 @@
 
 		private System.Windows.Forms.MainMenu mmMainMenu;
 		private System.Windows.Forms.MenuItem miFileMenu;
+		private System.Windows.Forms.MenuItem miOpen;
+		private System.Windows.Forms.MenuItem miPaletteMenu;
+		private System.Windows.Forms.MenuItem miPaletteUfo;
+		private System.Windows.Forms.MenuItem miPaletteTftd;
 
 		private System.Windows.Forms.Label lbl20_scang;
 		private System.Windows.Forms.Label lbl30_ufodoor;
@@ -172,6 +176,10 @@
 			this.components = new System.ComponentModel.Container();
 			this.mmMainMenu = new System.Windows.Forms.MainMenu(this.components);
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
+			this.miOpen = new System.Windows.Forms.MenuItem();
+			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
+			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
+			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.lbl20_scang = new System.Windows.Forms.Label();
 			this.lbl30_ufodoor = new System.Windows.Forms.Label();
 			this.lbl20 = new System.Windows.Forms.Label();
@@ -327,12 +335,45 @@
 			// mmMainMenu
 			// 
 			this.mmMainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miFileMenu});
+			this.miFileMenu,
+			this.miPaletteMenu});
 			// 
 			// miFileMenu
 			// 
 			this.miFileMenu.Index = 0;
 			this.miFileMenu.Text = "&File";
+			this.miFileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miOpen});
+			// 
+			// miOpen
+			// 
+			this.miOpen.Index = 0;
+			this.miOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
+			this.miOpen.Text = "&Open MCD file ...";
+			this.miOpen.Click += new System.EventHandler(this.OnOpenClick);
+			// 
+			// miPaletteMenu
+			// 
+			this.miPaletteMenu.Index = 1;
+			this.miPaletteMenu.Text = "&Palette";
+			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miPaletteUfo,
+			this.miPaletteTftd});
+			// 
+			// miPaletteUfo
+			// 
+			this.miPaletteUfo.Index = 0;
+			this.miPaletteUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
+			this.miPaletteUfo.Text = "&UFO";
+			this.miPaletteUfo.Click += new System.EventHandler(this.OnPaletteUfoClick);
+			this.miPaletteUfo.Checked = true;
+			// 
+			// miPaletteTftd
+			// 
+			this.miPaletteTftd.Index = 1;
+			this.miPaletteTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
+			this.miPaletteTftd.Text = "&TFTD";
+			this.miPaletteTftd.Click += new System.EventHandler(this.OnPaletteTftdClick);
 			// 
 			// lbl20_scang
 			// 
@@ -1557,7 +1598,7 @@
 			// ss_Statusbar
 			// 
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
-			this.ss_Statusbar.Location = new System.Drawing.Point(0, 652);
+			this.ss_Statusbar.Location = new System.Drawing.Point(0, 667);
 			this.ss_Statusbar.Name = "ss_Statusbar";
 			this.ss_Statusbar.Size = new System.Drawing.Size(692, 22);
 			this.ss_Statusbar.TabIndex = 123;
@@ -1587,7 +1628,7 @@
 			this.gb_Unused.Controls.Add(this.lbl50);
 			this.gb_Unused.Controls.Add(this.lbl61_);
 			this.gb_Unused.Controls.Add(this.lbl61);
-			this.gb_Unused.Location = new System.Drawing.Point(385, 240);
+			this.gb_Unused.Location = new System.Drawing.Point(385, 280);
 			this.gb_Unused.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Unused.Name = "gb_Unused";
 			this.gb_Unused.Padding = new System.Windows.Forms.Padding(0);
@@ -1622,7 +1663,7 @@
 			this.gb_Loft.Controls.Add(this.lbl10);
 			this.gb_Loft.Controls.Add(this.lbl9);
 			this.gb_Loft.Controls.Add(this.lbl9_loft20);
-			this.gb_Loft.Location = new System.Drawing.Point(505, 245);
+			this.gb_Loft.Location = new System.Drawing.Point(510, 280);
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
@@ -1651,23 +1692,23 @@
 			this.gb_Sprites.Controls.Add(this.lbl4);
 			this.gb_Sprites.Controls.Add(this.lbl38);
 			this.gb_Sprites.Controls.Add(this.lbl38_startphase);
-			this.gb_Sprites.Location = new System.Drawing.Point(5, 95);
+			this.gb_Sprites.Location = new System.Drawing.Point(5, 135);
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Name = "gb_Sprites";
 			this.gb_Sprites.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Size = new System.Drawing.Size(680, 135);
 			this.gb_Sprites.TabIndex = 126;
 			this.gb_Sprites.TabStop = false;
-			this.gb_Sprites.Text = "sprites";
+			this.gb_Sprites.Text = "sprite animation";
 			// 
 			// gb_Collection
 			// 
 			this.gb_Collection.Controls.Add(this.pnl_Collection);
-			this.gb_Collection.Location = new System.Drawing.Point(15, 5);
+			this.gb_Collection.Location = new System.Drawing.Point(5, 45);
 			this.gb_Collection.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Collection.Name = "gb_Collection";
 			this.gb_Collection.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Collection.Size = new System.Drawing.Size(665, 80);
+			this.gb_Collection.Size = new System.Drawing.Size(680, 80);
 			this.gb_Collection.TabIndex = 127;
 			this.gb_Collection.TabStop = false;
 			this.gb_Collection.Text = "collection";
@@ -1683,7 +1724,7 @@
 			// 
 			this.gb_Minimap.Controls.Add(this.lbl20_scang);
 			this.gb_Minimap.Controls.Add(this.lbl20);
-			this.gb_Minimap.Location = new System.Drawing.Point(15, 240);
+			this.gb_Minimap.Location = new System.Drawing.Point(5, 280);
 			this.gb_Minimap.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Minimap.Name = "gb_Minimap";
 			this.gb_Minimap.Padding = new System.Windows.Forms.Padding(0);
@@ -1700,7 +1741,7 @@
 			this.gb_Tu.Controls.Add(this.lbl40);
 			this.gb_Tu.Controls.Add(this.lbl41_tufly);
 			this.gb_Tu.Controls.Add(this.lbl41);
-			this.gb_Tu.Location = new System.Drawing.Point(200, 240);
+			this.gb_Tu.Location = new System.Drawing.Point(195, 280);
 			this.gb_Tu.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Tu.Name = "gb_Tu";
 			this.gb_Tu.Padding = new System.Windows.Forms.Padding(0);
@@ -1715,7 +1756,7 @@
 			this.gb_Yoffset.Controls.Add(this.lbl49);
 			this.gb_Yoffset.Controls.Add(this.lbl48_unitoffset);
 			this.gb_Yoffset.Controls.Add(this.lbl48);
-			this.gb_Yoffset.Location = new System.Drawing.Point(15, 490);
+			this.gb_Yoffset.Location = new System.Drawing.Point(5, 530);
 			this.gb_Yoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Yoffset.Name = "gb_Yoffset";
 			this.gb_Yoffset.Padding = new System.Windows.Forms.Padding(0);
@@ -1738,7 +1779,7 @@
 			this.gb_Block.Controls.Add(this.lbl51);
 			this.gb_Block.Controls.Add(this.lbl56_smokeblock);
 			this.gb_Block.Controls.Add(this.lbl56);
-			this.gb_Block.Location = new System.Drawing.Point(200, 485);
+			this.gb_Block.Location = new System.Drawing.Point(195, 525);
 			this.gb_Block.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Block.Name = "gb_Block";
 			this.gb_Block.Padding = new System.Windows.Forms.Padding(0);
@@ -1755,7 +1796,7 @@
 			this.gb_Door.Controls.Add(this.lbl35);
 			this.gb_Door.Controls.Add(this.lbl46_alttile);
 			this.gb_Door.Controls.Add(this.lbl46);
-			this.gb_Door.Location = new System.Drawing.Point(15, 545);
+			this.gb_Door.Location = new System.Drawing.Point(5, 585);
 			this.gb_Door.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Door.Name = "gb_Door";
 			this.gb_Door.Padding = new System.Windows.Forms.Padding(0);
@@ -1770,7 +1811,7 @@
 			this.gb_Step.Controls.Add(this.lbl32_nofloor);
 			this.gb_Step.Controls.Add(this.lbl32);
 			this.gb_Step.Controls.Add(this.lbl52);
-			this.gb_Step.Location = new System.Drawing.Point(200, 320);
+			this.gb_Step.Location = new System.Drawing.Point(195, 360);
 			this.gb_Step.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Step.Name = "gb_Step";
 			this.gb_Step.Padding = new System.Windows.Forms.Padding(0);
@@ -1789,7 +1830,7 @@
 			this.gb_Explosive.Controls.Add(this.lbl45);
 			this.gb_Explosive.Controls.Add(this.lbl57_fuel);
 			this.gb_Explosive.Controls.Add(this.lbl57);
-			this.gb_Explosive.Location = new System.Drawing.Point(200, 385);
+			this.gb_Explosive.Location = new System.Drawing.Point(195, 425);
 			this.gb_Explosive.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Explosive.Name = "gb_Explosive";
 			this.gb_Explosive.Padding = new System.Windows.Forms.Padding(0);
@@ -1804,7 +1845,7 @@
 			this.gb_Health.Controls.Add(this.lbl42);
 			this.gb_Health.Controls.Add(this.lbl44_dietile);
 			this.gb_Health.Controls.Add(this.lbl44);
-			this.gb_Health.Location = new System.Drawing.Point(15, 310);
+			this.gb_Health.Location = new System.Drawing.Point(5, 350);
 			this.gb_Health.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Health.Name = "gb_Health";
 			this.gb_Health.Padding = new System.Windows.Forms.Padding(0);
@@ -1827,7 +1868,7 @@
 			this.gb_Characteristics.Controls.Add(this.lbl60_baseobject);
 			this.gb_Characteristics.Controls.Add(this.lbl58_lightsource);
 			this.gb_Characteristics.Controls.Add(this.lbl58);
-			this.gb_Characteristics.Location = new System.Drawing.Point(15, 370);
+			this.gb_Characteristics.Location = new System.Drawing.Point(5, 410);
 			this.gb_Characteristics.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Characteristics.Name = "gb_Characteristics";
 			this.gb_Characteristics.Padding = new System.Windows.Forms.Padding(0);
@@ -1840,7 +1881,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(692, 674);
+			this.ClientSize = new System.Drawing.Size(692, 689);
 			this.Controls.Add(this.gb_Characteristics);
 			this.Controls.Add(this.gb_Health);
 			this.Controls.Add(this.gb_Explosive);

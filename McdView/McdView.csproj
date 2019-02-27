@@ -87,5 +87,11 @@
       <DependentUpon>McdviewF.Designer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XCom\XCom.csproj">
+      <Project>{66dc3c20-8041-48dd-962b-dea050f89179}</Project>
+      <Name>XCom</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
