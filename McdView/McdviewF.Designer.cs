@@ -157,7 +157,6 @@
 			this.components = new System.ComponentModel.Container();
 			this.mmMainMenu = new System.Windows.Forms.MainMenu(this.components);
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
-
 			this.lbl20_scang = new System.Windows.Forms.Label();
 			this.lbl30_ufodoor = new System.Windows.Forms.Label();
 			this.lbl20 = new System.Windows.Forms.Label();
@@ -1640,9 +1639,9 @@
 			this.Controls.Add(this.lbl30_ufodoor);
 			this.Controls.Add(this.lbl20_scang);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";
 			this.Text = "McdView";
-			this.Menu = this.mmMainMenu;
 			this.ResumeLayout(false);
 
 		}
