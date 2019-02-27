@@ -82,6 +82,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\McdView\McdView.csproj">
+      <Project>{9020b77c-a186-4d85-82cd-0c4e65e738f2}</Project>
+      <Name>McdView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YamlDotNet\YamlDotNet.csproj">
       <Project>{bf32de1b-6276-4341-b212-f8862adbba7a}</Project>
       <Name>YamlDotNet</Name>
@@ -424,6 +428,7 @@ copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\DSShared.dll C:\0xC_kL\editors
 copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\XCom.dll C:\0xC_kL\editors\MapView_kL\
 copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\YamlDotNet.dll C:\0xC_kL\editors\MapView_kL\
 copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\PckView.exe C:\0xC_kL\editors\MapView_kL\
+copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\McdView.exe C:\0xC_kL\editors\MapView_kL\
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
