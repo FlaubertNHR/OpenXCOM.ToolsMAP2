@@ -16,22 +16,23 @@ namespace McdView
 			Form
 	{
 		#region Fields
-		private Tilepart[] Records;
-
 		private SpriteCollectionPanel SpriteCollectionPanel;
 		#endregion Fields
 
 
 		#region Properties
-		private SpriteCollection _spriteset;
-		internal SpriteCollection SpriteCollection
+		private Tilepart[] _records;
+		private Tilepart[] Records
 		{
-			get { return _spriteset; }
+			get { return _records; }
 			set
 			{
-				SpriteCollectionPanel.SpriteCollection = (_spriteset = value);
+				SpriteCollectionPanel.Records = (_records = value);
 			}
 		}
+
+		private SpriteCollection Spriteset
+		{ get; set; }
 		#endregion Properties
 
 
@@ -42,6 +43,7 @@ namespace McdView
 
 			SpriteCollectionPanel = new SpriteCollectionPanel(this);
 			gb_Collection.Controls.Add(SpriteCollectionPanel);
+			SpriteCollectionPanel.Width = gb_Collection.Width - 10;
 		}
 		#endregion cTor
 
@@ -76,11 +78,11 @@ namespace McdView
 
 						// NOTE: The spriteset is also maintained by a pointer
 						// to it that's stored in each tilepart.
-						SpriteCollection = ResourceInfo.LoadSpriteset(
-																	terrain,
-																	Path.GetDirectoryName(pfeMcd),
-																	2,
-																	pal);
+						Spriteset = ResourceInfo.LoadSpriteset(
+															terrain,
+															Path.GetDirectoryName(pfeMcd),
+															2,
+															pal);
 
 						for (int id = 0; id != Records.Length; ++id)
 						{
@@ -88,7 +90,7 @@ namespace McdView
 							bs.Read(bindata, 0, TilepartFactory.Length);
 							McdRecord record = McdRecordFactory.CreateRecord(bindata);
 
-							Records[id] = new Tilepart(id, SpriteCollection, record);
+							Records[id] = new Tilepart(id, Spriteset, record);
 						}
 
 						for (int id = 0; id != Records.Length; ++id)
@@ -110,8 +112,10 @@ namespace McdView
 				miPaletteUfo .Checked = true;
 				miPaletteTftd.Checked = false;
 
-				_spriteset.Pal = Palette.UfoBattle;
-				// TODO: refresh all sprites
+				Spriteset.Pal = Palette.UfoBattle;
+
+				SpriteCollectionPanel.Invalidate();
+				// TODO: refresh anisprites
 			}
 		}
 
@@ -122,8 +126,10 @@ namespace McdView
 				miPaletteTftd.Checked = true;
 				miPaletteUfo .Checked = false;
 
-				_spriteset.Pal = Palette.TftdBattle;
-				// TODO: refresh all sprites
+				Spriteset.Pal = Palette.TftdBattle;
+
+				SpriteCollectionPanel.Invalidate();
+				// TODO: refresh anisprites
 			}
 		}
 		#endregion Menuitems

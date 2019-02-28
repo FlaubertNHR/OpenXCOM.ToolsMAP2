@@ -40,10 +40,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		private const int _largeChange = SpriteHeight;	// apparently .NET won't return an accurate value
 														// for LargeChange unless the scrollbar is visible.
 
-		private Pen   _penBlack        = new Pen(Brushes.Black, 1);
-		private Pen   _penRed          = new Pen(Brushes.Red, 3);
-		private Pen   _penControlLight = new Pen(SystemColors.ControlLight, 1);
-		private Brush _brushBlack      = new SolidBrush(Color.Black);
+		private readonly Pen   _penBlack        = new Pen(Color.Black, 1);
+		private readonly Pen   _penRed          = new Pen(Color.Red, 3);
+		private readonly Pen   _penControlLight = new Pen(SystemColors.ControlLight, 1);
+		private readonly Brush _brushBlack      = new SolidBrush(Color.Black);
 
 		private static Hashtable _specialTypeBrushes;
 
