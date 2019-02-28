@@ -15,15 +15,33 @@ namespace McdView
 		:
 			Form
 	{
-		#region
+		#region Fields
 		private Tilepart[] Records;
-		#endregion
+
+		private SpriteCollectionPanel SpriteCollectionPanel;
+		#endregion Fields
+
+
+		#region Properties
+		private SpriteCollection _spriteset;
+		internal SpriteCollection SpriteCollection
+		{
+			get { return _spriteset; }
+			set
+			{
+				SpriteCollectionPanel.SpriteCollection = (_spriteset = value);
+			}
+		}
+		#endregion Properties
 
 
 		#region cTor
 		internal McdviewF()
 		{
 			InitializeComponent();
+
+			SpriteCollectionPanel = new SpriteCollectionPanel(this);
+			gb_Collection.Controls.Add(SpriteCollectionPanel);
 		}
 		#endregion cTor
 
@@ -56,11 +74,13 @@ namespace McdView
 						else
 							pal = Palette.TftdBattle;
 
-						SpriteCollection spriteset = ResourceInfo.LoadSpriteset(
-																			terrain,
-																			Path.GetDirectoryName(pfeMcd),
-																			2,
-																			pal);
+						// NOTE: The spriteset is also maintained by a pointer
+						// to it that's stored in each tilepart.
+						SpriteCollection = ResourceInfo.LoadSpriteset(
+																	terrain,
+																	Path.GetDirectoryName(pfeMcd),
+																	2,
+																	pal);
 
 						for (int id = 0; id != Records.Length; ++id)
 						{
@@ -68,7 +88,7 @@ namespace McdView
 							bs.Read(bindata, 0, TilepartFactory.Length);
 							McdRecord record = McdRecordFactory.CreateRecord(bindata);
 
-							Records[id] = new Tilepart(id, spriteset, record);
+							Records[id] = new Tilepart(id, SpriteCollection, record);
 						}
 
 						for (int id = 0; id != Records.Length; ++id)
@@ -90,6 +110,8 @@ namespace McdView
 				miPaletteUfo .Checked = true;
 				miPaletteTftd.Checked = false;
 
+				_spriteset.Pal = Palette.UfoBattle;
+				// TODO: refresh all sprites
 			}
 		}
 
@@ -100,8 +122,14 @@ namespace McdView
 				miPaletteTftd.Checked = true;
 				miPaletteUfo .Checked = false;
 
+				_spriteset.Pal = Palette.TftdBattle;
+				// TODO: refresh all sprites
 			}
 		}
 		#endregion Menuitems
+
+
+		#region Events
+		#endregion Events
 	}
 }

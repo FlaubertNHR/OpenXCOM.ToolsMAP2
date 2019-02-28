@@ -15,19 +15,19 @@
 		private System.Windows.Forms.MenuItem miPaletteTftd;
 
 		private System.Windows.Forms.Label lbl20_scang;
-		private System.Windows.Forms.Label lbl30_ufodoor;
+		private System.Windows.Forms.Label lbl30_isufodoor;
 		private System.Windows.Forms.Label lbl20;
 		private System.Windows.Forms.Label lbl30;
 		private System.Windows.Forms.Label lbl31;
 		private System.Windows.Forms.Label lbl31_stoplos;
 		private System.Windows.Forms.Label lbl32;
-		private System.Windows.Forms.Label lbl32_nofloor;
+		private System.Windows.Forms.Label lbl32_isnofloor;
 		private System.Windows.Forms.Label lbl33;
-		private System.Windows.Forms.Label lbl33_bigwall;
+		private System.Windows.Forms.Label lbl33_isbigwall;
 		private System.Windows.Forms.Label lbl34;
-		private System.Windows.Forms.Label lbl34_gravlift;
+		private System.Windows.Forms.Label lbl34_isgravlift;
 		private System.Windows.Forms.Label lbl35;
-		private System.Windows.Forms.Label lbl35_humandoor;
+		private System.Windows.Forms.Label lbl35_ishumandoor;
 		private System.Windows.Forms.Label lbl36;
 		private System.Windows.Forms.Label lbl36_blockfire;
 		private System.Windows.Forms.Label lbl37;
@@ -45,17 +45,17 @@
 		private System.Windows.Forms.Label lbl43;
 		private System.Windows.Forms.Label lbl43_heblock;
 		private System.Windows.Forms.Label lbl44;
-		private System.Windows.Forms.Label lbl44_dietile;
+		private System.Windows.Forms.Label lbl44_deadid;
 		private System.Windows.Forms.Label lbl45;
 		private System.Windows.Forms.Label lbl45_flammable;
 		private System.Windows.Forms.Label lbl46;
-		private System.Windows.Forms.Label lbl46_alttile;
+		private System.Windows.Forms.Label lbl46_alternateid;
 		private System.Windows.Forms.Label lbl47;
 		private System.Windows.Forms.Label lbl47_;
 		private System.Windows.Forms.Label lbl48;
 		private System.Windows.Forms.Label lbl48_unitoffset;
 		private System.Windows.Forms.Label lbl49;
-		private System.Windows.Forms.Label lbl49_tileoffset;
+		private System.Windows.Forms.Label lbl49_spriteoffset;
 		private System.Windows.Forms.Label lbl50;
 		private System.Windows.Forms.Label lbl50_;
 		private System.Windows.Forms.Label lbl51;
@@ -73,11 +73,11 @@
 		private System.Windows.Forms.Label lbl57;
 		private System.Windows.Forms.Label lbl57_fuel;
 		private System.Windows.Forms.Label lbl58;
-		private System.Windows.Forms.Label lbl58_lightsource;
+		private System.Windows.Forms.Label lbl58_islightsource;
 		private System.Windows.Forms.Label lbl59;
 		private System.Windows.Forms.Label lbl59_specialtype;
 		private System.Windows.Forms.Label lbl60;
-		private System.Windows.Forms.Label lbl60_baseobject;
+		private System.Windows.Forms.Label lbl60_isbaseobject;
 		private System.Windows.Forms.Label lbl61;
 		private System.Windows.Forms.Label lbl61_;
 		private System.Windows.Forms.Label lbl19;
@@ -141,10 +141,9 @@
 		private System.Windows.Forms.GroupBox gb_Loft;
 		private System.Windows.Forms.GroupBox gb_Sprites;
 		private System.Windows.Forms.GroupBox gb_Collection;
-		private System.Windows.Forms.Panel pnl_Collection;
 		private System.Windows.Forms.GroupBox gb_Minimap;
 		private System.Windows.Forms.GroupBox gb_Tu;
-		private System.Windows.Forms.GroupBox gb_Yoffset;
+		private System.Windows.Forms.GroupBox gb_Elevation;
 		private System.Windows.Forms.GroupBox gb_Block;
 		private System.Windows.Forms.GroupBox gb_Door;
 		private System.Windows.Forms.GroupBox gb_Step;
@@ -181,19 +180,19 @@
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.lbl20_scang = new System.Windows.Forms.Label();
-			this.lbl30_ufodoor = new System.Windows.Forms.Label();
+			this.lbl30_isufodoor = new System.Windows.Forms.Label();
 			this.lbl20 = new System.Windows.Forms.Label();
 			this.lbl30 = new System.Windows.Forms.Label();
 			this.lbl31 = new System.Windows.Forms.Label();
 			this.lbl31_stoplos = new System.Windows.Forms.Label();
 			this.lbl32 = new System.Windows.Forms.Label();
-			this.lbl32_nofloor = new System.Windows.Forms.Label();
+			this.lbl32_isnofloor = new System.Windows.Forms.Label();
 			this.lbl33 = new System.Windows.Forms.Label();
-			this.lbl33_bigwall = new System.Windows.Forms.Label();
+			this.lbl33_isbigwall = new System.Windows.Forms.Label();
 			this.lbl34 = new System.Windows.Forms.Label();
-			this.lbl34_gravlift = new System.Windows.Forms.Label();
+			this.lbl34_isgravlift = new System.Windows.Forms.Label();
 			this.lbl35 = new System.Windows.Forms.Label();
-			this.lbl35_humandoor = new System.Windows.Forms.Label();
+			this.lbl35_ishumandoor = new System.Windows.Forms.Label();
 			this.lbl36 = new System.Windows.Forms.Label();
 			this.lbl36_blockfire = new System.Windows.Forms.Label();
 			this.lbl37 = new System.Windows.Forms.Label();
@@ -211,17 +210,17 @@
 			this.lbl43 = new System.Windows.Forms.Label();
 			this.lbl43_heblock = new System.Windows.Forms.Label();
 			this.lbl44 = new System.Windows.Forms.Label();
-			this.lbl44_dietile = new System.Windows.Forms.Label();
+			this.lbl44_deadid = new System.Windows.Forms.Label();
 			this.lbl45 = new System.Windows.Forms.Label();
 			this.lbl45_flammable = new System.Windows.Forms.Label();
 			this.lbl46 = new System.Windows.Forms.Label();
-			this.lbl46_alttile = new System.Windows.Forms.Label();
+			this.lbl46_alternateid = new System.Windows.Forms.Label();
 			this.lbl47 = new System.Windows.Forms.Label();
 			this.lbl47_ = new System.Windows.Forms.Label();
 			this.lbl48 = new System.Windows.Forms.Label();
 			this.lbl48_unitoffset = new System.Windows.Forms.Label();
 			this.lbl49 = new System.Windows.Forms.Label();
-			this.lbl49_tileoffset = new System.Windows.Forms.Label();
+			this.lbl49_spriteoffset = new System.Windows.Forms.Label();
 			this.lbl50 = new System.Windows.Forms.Label();
 			this.lbl50_ = new System.Windows.Forms.Label();
 			this.lbl51 = new System.Windows.Forms.Label();
@@ -239,11 +238,11 @@
 			this.lbl57 = new System.Windows.Forms.Label();
 			this.lbl57_fuel = new System.Windows.Forms.Label();
 			this.lbl58 = new System.Windows.Forms.Label();
-			this.lbl58_lightsource = new System.Windows.Forms.Label();
+			this.lbl58_islightsource = new System.Windows.Forms.Label();
 			this.lbl59 = new System.Windows.Forms.Label();
 			this.lbl59_specialtype = new System.Windows.Forms.Label();
 			this.lbl60 = new System.Windows.Forms.Label();
-			this.lbl60_baseobject = new System.Windows.Forms.Label();
+			this.lbl60_isbaseobject = new System.Windows.Forms.Label();
 			this.lbl61 = new System.Windows.Forms.Label();
 			this.lbl61_ = new System.Windows.Forms.Label();
 			this.lbl19 = new System.Windows.Forms.Label();
@@ -307,10 +306,9 @@
 			this.gb_Loft = new System.Windows.Forms.GroupBox();
 			this.gb_Sprites = new System.Windows.Forms.GroupBox();
 			this.gb_Collection = new System.Windows.Forms.GroupBox();
-			this.pnl_Collection = new System.Windows.Forms.Panel();
 			this.gb_Minimap = new System.Windows.Forms.GroupBox();
 			this.gb_Tu = new System.Windows.Forms.GroupBox();
-			this.gb_Yoffset = new System.Windows.Forms.GroupBox();
+			this.gb_Elevation = new System.Windows.Forms.GroupBox();
 			this.gb_Block = new System.Windows.Forms.GroupBox();
 			this.gb_Door = new System.Windows.Forms.GroupBox();
 			this.gb_Step = new System.Windows.Forms.GroupBox();
@@ -320,10 +318,9 @@
 			this.gb_Unused.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
 			this.gb_Sprites.SuspendLayout();
-			this.gb_Collection.SuspendLayout();
 			this.gb_Minimap.SuspendLayout();
 			this.gb_Tu.SuspendLayout();
-			this.gb_Yoffset.SuspendLayout();
+			this.gb_Elevation.SuspendLayout();
 			this.gb_Block.SuspendLayout();
 			this.gb_Door.SuspendLayout();
 			this.gb_Step.SuspendLayout();
@@ -341,9 +338,9 @@
 			// miFileMenu
 			// 
 			this.miFileMenu.Index = 0;
-			this.miFileMenu.Text = "&File";
 			this.miFileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miOpen});
+			this.miFileMenu.Text = "&File";
 			// 
 			// miOpen
 			// 
@@ -355,18 +352,18 @@
 			// miPaletteMenu
 			// 
 			this.miPaletteMenu.Index = 1;
-			this.miPaletteMenu.Text = "&Palette";
 			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miPaletteUfo,
 			this.miPaletteTftd});
+			this.miPaletteMenu.Text = "&Palette";
 			// 
 			// miPaletteUfo
 			// 
+			this.miPaletteUfo.Checked = true;
 			this.miPaletteUfo.Index = 0;
 			this.miPaletteUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
 			this.miPaletteUfo.Text = "&UFO";
 			this.miPaletteUfo.Click += new System.EventHandler(this.OnPaletteUfoClick);
-			this.miPaletteUfo.Checked = true;
 			// 
 			// miPaletteTftd
 			// 
@@ -385,15 +382,15 @@
 			this.lbl20_scang.Text = "ScanG";
 			this.lbl20_scang.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl30_ufodoor
+			// lbl30_isufodoor
 			// 
-			this.lbl30_ufodoor.Location = new System.Drawing.Point(65, 20);
-			this.lbl30_ufodoor.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl30_ufodoor.Name = "lbl30_ufodoor";
-			this.lbl30_ufodoor.Size = new System.Drawing.Size(100, 15);
-			this.lbl30_ufodoor.TabIndex = 1;
-			this.lbl30_ufodoor.Text = "UfoDoor";
-			this.lbl30_ufodoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl30_isufodoor.Location = new System.Drawing.Point(65, 20);
+			this.lbl30_isufodoor.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl30_isufodoor.Name = "lbl30_isufodoor";
+			this.lbl30_isufodoor.Size = new System.Drawing.Size(100, 15);
+			this.lbl30_isufodoor.TabIndex = 1;
+			this.lbl30_isufodoor.Text = "isUfoDoor";
+			this.lbl30_isufodoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl20
 			// 
@@ -445,15 +442,15 @@
 			this.lbl32.Text = "#32";
 			this.lbl32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl32_nofloor
+			// lbl32_isnofloor
 			// 
-			this.lbl32_nofloor.Location = new System.Drawing.Point(65, 35);
-			this.lbl32_nofloor.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl32_nofloor.Name = "lbl32_nofloor";
-			this.lbl32_nofloor.Size = new System.Drawing.Size(100, 15);
-			this.lbl32_nofloor.TabIndex = 6;
-			this.lbl32_nofloor.Text = "NoFloor";
-			this.lbl32_nofloor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl32_isnofloor.Location = new System.Drawing.Point(65, 35);
+			this.lbl32_isnofloor.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl32_isnofloor.Name = "lbl32_isnofloor";
+			this.lbl32_isnofloor.Size = new System.Drawing.Size(100, 15);
+			this.lbl32_isnofloor.TabIndex = 6;
+			this.lbl32_isnofloor.Text = "isNoFloor";
+			this.lbl32_isnofloor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl33
 			// 
@@ -465,15 +462,15 @@
 			this.lbl33.Text = "#33";
 			this.lbl33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl33_bigwall
+			// lbl33_isbigwall
 			// 
-			this.lbl33_bigwall.Location = new System.Drawing.Point(65, 35);
-			this.lbl33_bigwall.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl33_bigwall.Name = "lbl33_bigwall";
-			this.lbl33_bigwall.Size = new System.Drawing.Size(100, 15);
-			this.lbl33_bigwall.TabIndex = 8;
-			this.lbl33_bigwall.Text = "BigWall";
-			this.lbl33_bigwall.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl33_isbigwall.Location = new System.Drawing.Point(65, 35);
+			this.lbl33_isbigwall.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl33_isbigwall.Name = "lbl33_isbigwall";
+			this.lbl33_isbigwall.Size = new System.Drawing.Size(100, 15);
+			this.lbl33_isbigwall.TabIndex = 8;
+			this.lbl33_isbigwall.Text = "isBigWall";
+			this.lbl33_isbigwall.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl34
 			// 
@@ -485,15 +482,15 @@
 			this.lbl34.Text = "#34";
 			this.lbl34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl34_gravlift
+			// lbl34_isgravlift
 			// 
-			this.lbl34_gravlift.Location = new System.Drawing.Point(65, 50);
-			this.lbl34_gravlift.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl34_gravlift.Name = "lbl34_gravlift";
-			this.lbl34_gravlift.Size = new System.Drawing.Size(100, 15);
-			this.lbl34_gravlift.TabIndex = 10;
-			this.lbl34_gravlift.Text = "GravLift";
-			this.lbl34_gravlift.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl34_isgravlift.Location = new System.Drawing.Point(65, 50);
+			this.lbl34_isgravlift.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl34_isgravlift.Name = "lbl34_isgravlift";
+			this.lbl34_isgravlift.Size = new System.Drawing.Size(100, 15);
+			this.lbl34_isgravlift.TabIndex = 10;
+			this.lbl34_isgravlift.Text = "isGravLift";
+			this.lbl34_isgravlift.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl35
 			// 
@@ -505,15 +502,15 @@
 			this.lbl35.Text = "#35";
 			this.lbl35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl35_humandoor
+			// lbl35_ishumandoor
 			// 
-			this.lbl35_humandoor.Location = new System.Drawing.Point(65, 35);
-			this.lbl35_humandoor.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl35_humandoor.Name = "lbl35_humandoor";
-			this.lbl35_humandoor.Size = new System.Drawing.Size(100, 15);
-			this.lbl35_humandoor.TabIndex = 12;
-			this.lbl35_humandoor.Text = "HumanDoor";
-			this.lbl35_humandoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl35_ishumandoor.Location = new System.Drawing.Point(65, 35);
+			this.lbl35_ishumandoor.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl35_ishumandoor.Name = "lbl35_ishumandoor";
+			this.lbl35_ishumandoor.Size = new System.Drawing.Size(100, 15);
+			this.lbl35_ishumandoor.TabIndex = 12;
+			this.lbl35_ishumandoor.Text = "isHumanDoor";
+			this.lbl35_ishumandoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl36
 			// 
@@ -685,15 +682,15 @@
 			this.lbl44.Text = "#44";
 			this.lbl44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl44_dietile
+			// lbl44_deadid
 			// 
-			this.lbl44_dietile.Location = new System.Drawing.Point(65, 35);
-			this.lbl44_dietile.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl44_dietile.Name = "lbl44_dietile";
-			this.lbl44_dietile.Size = new System.Drawing.Size(100, 15);
-			this.lbl44_dietile.TabIndex = 30;
-			this.lbl44_dietile.Text = "DieTile";
-			this.lbl44_dietile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl44_deadid.Location = new System.Drawing.Point(65, 35);
+			this.lbl44_deadid.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl44_deadid.Name = "lbl44_deadid";
+			this.lbl44_deadid.Size = new System.Drawing.Size(100, 15);
+			this.lbl44_deadid.TabIndex = 30;
+			this.lbl44_deadid.Text = "DeadId";
+			this.lbl44_deadid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl45
 			// 
@@ -725,15 +722,15 @@
 			this.lbl46.Text = "#46";
 			this.lbl46.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl46_alttile
+			// lbl46_alternateid
 			// 
-			this.lbl46_alttile.Location = new System.Drawing.Point(65, 55);
-			this.lbl46_alttile.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl46_alttile.Name = "lbl46_alttile";
-			this.lbl46_alttile.Size = new System.Drawing.Size(100, 15);
-			this.lbl46_alttile.TabIndex = 34;
-			this.lbl46_alttile.Text = "AltTile";
-			this.lbl46_alttile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl46_alternateid.Location = new System.Drawing.Point(65, 55);
+			this.lbl46_alternateid.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl46_alternateid.Name = "lbl46_alternateid";
+			this.lbl46_alternateid.Size = new System.Drawing.Size(100, 15);
+			this.lbl46_alternateid.TabIndex = 34;
+			this.lbl46_alternateid.Text = "AlternateId";
+			this.lbl46_alternateid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl47
 			// 
@@ -785,15 +782,15 @@
 			this.lbl49.Text = "#49";
 			this.lbl49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl49_tileoffset
+			// lbl49_spriteoffset
 			// 
-			this.lbl49_tileoffset.Location = new System.Drawing.Point(65, 15);
-			this.lbl49_tileoffset.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl49_tileoffset.Name = "lbl49_tileoffset";
-			this.lbl49_tileoffset.Size = new System.Drawing.Size(100, 15);
-			this.lbl49_tileoffset.TabIndex = 40;
-			this.lbl49_tileoffset.Text = "TileOffset";
-			this.lbl49_tileoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl49_spriteoffset.Location = new System.Drawing.Point(65, 15);
+			this.lbl49_spriteoffset.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl49_spriteoffset.Name = "lbl49_spriteoffset";
+			this.lbl49_spriteoffset.Size = new System.Drawing.Size(100, 15);
+			this.lbl49_spriteoffset.TabIndex = 40;
+			this.lbl49_spriteoffset.Text = "SpriteOffset";
+			this.lbl49_spriteoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl50
 			// 
@@ -965,15 +962,15 @@
 			this.lbl58.Text = "#58";
 			this.lbl58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl58_lightsource
+			// lbl58_islightsource
 			// 
-			this.lbl58_lightsource.Location = new System.Drawing.Point(65, 95);
-			this.lbl58_lightsource.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl58_lightsource.Name = "lbl58_lightsource";
-			this.lbl58_lightsource.Size = new System.Drawing.Size(100, 15);
-			this.lbl58_lightsource.TabIndex = 59;
-			this.lbl58_lightsource.Text = "LightSource";
-			this.lbl58_lightsource.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl58_islightsource.Location = new System.Drawing.Point(65, 95);
+			this.lbl58_islightsource.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl58_islightsource.Name = "lbl58_islightsource";
+			this.lbl58_islightsource.Size = new System.Drawing.Size(100, 15);
+			this.lbl58_islightsource.TabIndex = 59;
+			this.lbl58_islightsource.Text = "isLightSource";
+			this.lbl58_islightsource.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl59
 			// 
@@ -1005,15 +1002,15 @@
 			this.lbl60.Text = "#60";
 			this.lbl60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl60_baseobject
+			// lbl60_isbaseobject
 			// 
-			this.lbl60_baseobject.Location = new System.Drawing.Point(65, 80);
-			this.lbl60_baseobject.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl60_baseobject.Name = "lbl60_baseobject";
-			this.lbl60_baseobject.Size = new System.Drawing.Size(100, 15);
-			this.lbl60_baseobject.TabIndex = 63;
-			this.lbl60_baseobject.Text = "BaseObject";
-			this.lbl60_baseobject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl60_isbaseobject.Location = new System.Drawing.Point(65, 80);
+			this.lbl60_isbaseobject.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl60_isbaseobject.Name = "lbl60_isbaseobject";
+			this.lbl60_isbaseobject.Size = new System.Drawing.Size(100, 15);
+			this.lbl60_isbaseobject.TabIndex = 63;
+			this.lbl60_isbaseobject.Text = "isBaseObject";
+			this.lbl60_isbaseobject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl61
 			// 
@@ -1598,7 +1595,7 @@
 			// ss_Statusbar
 			// 
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
-			this.ss_Statusbar.Location = new System.Drawing.Point(0, 667);
+			this.ss_Statusbar.Location = new System.Drawing.Point(0, 607);
 			this.ss_Statusbar.Name = "ss_Statusbar";
 			this.ss_Statusbar.Size = new System.Drawing.Size(692, 22);
 			this.ss_Statusbar.TabIndex = 123;
@@ -1628,7 +1625,7 @@
 			this.gb_Unused.Controls.Add(this.lbl50);
 			this.gb_Unused.Controls.Add(this.lbl61_);
 			this.gb_Unused.Controls.Add(this.lbl61);
-			this.gb_Unused.Location = new System.Drawing.Point(385, 280);
+			this.gb_Unused.Location = new System.Drawing.Point(385, 225);
 			this.gb_Unused.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Unused.Name = "gb_Unused";
 			this.gb_Unused.Padding = new System.Windows.Forms.Padding(0);
@@ -1663,7 +1660,7 @@
 			this.gb_Loft.Controls.Add(this.lbl10);
 			this.gb_Loft.Controls.Add(this.lbl9);
 			this.gb_Loft.Controls.Add(this.lbl9_loft20);
-			this.gb_Loft.Location = new System.Drawing.Point(510, 280);
+			this.gb_Loft.Location = new System.Drawing.Point(510, 225);
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
@@ -1692,7 +1689,7 @@
 			this.gb_Sprites.Controls.Add(this.lbl4);
 			this.gb_Sprites.Controls.Add(this.lbl38);
 			this.gb_Sprites.Controls.Add(this.lbl38_startphase);
-			this.gb_Sprites.Location = new System.Drawing.Point(5, 135);
+			this.gb_Sprites.Location = new System.Drawing.Point(5, 85);
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Name = "gb_Sprites";
 			this.gb_Sprites.Padding = new System.Windows.Forms.Padding(0);
@@ -1703,8 +1700,7 @@
 			// 
 			// gb_Collection
 			// 
-			this.gb_Collection.Controls.Add(this.pnl_Collection);
-			this.gb_Collection.Location = new System.Drawing.Point(5, 45);
+			this.gb_Collection.Location = new System.Drawing.Point(5, 0);
 			this.gb_Collection.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Collection.Name = "gb_Collection";
 			this.gb_Collection.Padding = new System.Windows.Forms.Padding(0);
@@ -1713,18 +1709,11 @@
 			this.gb_Collection.TabStop = false;
 			this.gb_Collection.Text = "collection";
 			// 
-			// pnl_Collection
-			// 
-			this.pnl_Collection.Location = new System.Drawing.Point(10, 20);
-			this.pnl_Collection.Name = "pnl_Collection";
-			this.pnl_Collection.Size = new System.Drawing.Size(650, 50);
-			this.pnl_Collection.TabIndex = 0;
-			// 
 			// gb_Minimap
 			// 
 			this.gb_Minimap.Controls.Add(this.lbl20_scang);
 			this.gb_Minimap.Controls.Add(this.lbl20);
-			this.gb_Minimap.Location = new System.Drawing.Point(5, 280);
+			this.gb_Minimap.Location = new System.Drawing.Point(5, 225);
 			this.gb_Minimap.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Minimap.Name = "gb_Minimap";
 			this.gb_Minimap.Padding = new System.Windows.Forms.Padding(0);
@@ -1741,7 +1730,7 @@
 			this.gb_Tu.Controls.Add(this.lbl40);
 			this.gb_Tu.Controls.Add(this.lbl41_tufly);
 			this.gb_Tu.Controls.Add(this.lbl41);
-			this.gb_Tu.Location = new System.Drawing.Point(195, 280);
+			this.gb_Tu.Location = new System.Drawing.Point(195, 225);
 			this.gb_Tu.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Tu.Name = "gb_Tu";
 			this.gb_Tu.Padding = new System.Windows.Forms.Padding(0);
@@ -1750,20 +1739,20 @@
 			this.gb_Tu.TabStop = false;
 			this.gb_Tu.Text = "tu";
 			// 
-			// gb_Yoffset
+			// gb_Elevation
 			// 
-			this.gb_Yoffset.Controls.Add(this.lbl49_tileoffset);
-			this.gb_Yoffset.Controls.Add(this.lbl49);
-			this.gb_Yoffset.Controls.Add(this.lbl48_unitoffset);
-			this.gb_Yoffset.Controls.Add(this.lbl48);
-			this.gb_Yoffset.Location = new System.Drawing.Point(5, 530);
-			this.gb_Yoffset.Margin = new System.Windows.Forms.Padding(0);
-			this.gb_Yoffset.Name = "gb_Yoffset";
-			this.gb_Yoffset.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Yoffset.Size = new System.Drawing.Size(175, 50);
-			this.gb_Yoffset.TabIndex = 130;
-			this.gb_Yoffset.TabStop = false;
-			this.gb_Yoffset.Text = "y-offsets";
+			this.gb_Elevation.Controls.Add(this.lbl49_spriteoffset);
+			this.gb_Elevation.Controls.Add(this.lbl49);
+			this.gb_Elevation.Controls.Add(this.lbl48_unitoffset);
+			this.gb_Elevation.Controls.Add(this.lbl48);
+			this.gb_Elevation.Location = new System.Drawing.Point(5, 475);
+			this.gb_Elevation.Margin = new System.Windows.Forms.Padding(0);
+			this.gb_Elevation.Name = "gb_Elevation";
+			this.gb_Elevation.Padding = new System.Windows.Forms.Padding(0);
+			this.gb_Elevation.Size = new System.Drawing.Size(175, 50);
+			this.gb_Elevation.TabIndex = 130;
+			this.gb_Elevation.TabStop = false;
+			this.gb_Elevation.Text = "elevation";
 			// 
 			// gb_Block
 			// 
@@ -1779,7 +1768,7 @@
 			this.gb_Block.Controls.Add(this.lbl51);
 			this.gb_Block.Controls.Add(this.lbl56_smokeblock);
 			this.gb_Block.Controls.Add(this.lbl56);
-			this.gb_Block.Location = new System.Drawing.Point(195, 525);
+			this.gb_Block.Location = new System.Drawing.Point(195, 470);
 			this.gb_Block.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Block.Name = "gb_Block";
 			this.gb_Block.Padding = new System.Windows.Forms.Padding(0);
@@ -1790,13 +1779,13 @@
 			// 
 			// gb_Door
 			// 
-			this.gb_Door.Controls.Add(this.lbl30_ufodoor);
+			this.gb_Door.Controls.Add(this.lbl30_isufodoor);
 			this.gb_Door.Controls.Add(this.lbl30);
-			this.gb_Door.Controls.Add(this.lbl35_humandoor);
+			this.gb_Door.Controls.Add(this.lbl35_ishumandoor);
 			this.gb_Door.Controls.Add(this.lbl35);
-			this.gb_Door.Controls.Add(this.lbl46_alttile);
+			this.gb_Door.Controls.Add(this.lbl46_alternateid);
 			this.gb_Door.Controls.Add(this.lbl46);
-			this.gb_Door.Location = new System.Drawing.Point(5, 585);
+			this.gb_Door.Location = new System.Drawing.Point(5, 530);
 			this.gb_Door.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Door.Name = "gb_Door";
 			this.gb_Door.Padding = new System.Windows.Forms.Padding(0);
@@ -1808,10 +1797,10 @@
 			// gb_Step
 			// 
 			this.gb_Step.Controls.Add(this.lbl52_footsound);
-			this.gb_Step.Controls.Add(this.lbl32_nofloor);
+			this.gb_Step.Controls.Add(this.lbl32_isnofloor);
 			this.gb_Step.Controls.Add(this.lbl32);
 			this.gb_Step.Controls.Add(this.lbl52);
-			this.gb_Step.Location = new System.Drawing.Point(195, 360);
+			this.gb_Step.Location = new System.Drawing.Point(195, 305);
 			this.gb_Step.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Step.Name = "gb_Step";
 			this.gb_Step.Padding = new System.Windows.Forms.Padding(0);
@@ -1830,7 +1819,7 @@
 			this.gb_Explosive.Controls.Add(this.lbl45);
 			this.gb_Explosive.Controls.Add(this.lbl57_fuel);
 			this.gb_Explosive.Controls.Add(this.lbl57);
-			this.gb_Explosive.Location = new System.Drawing.Point(195, 425);
+			this.gb_Explosive.Location = new System.Drawing.Point(195, 370);
 			this.gb_Explosive.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Explosive.Name = "gb_Explosive";
 			this.gb_Explosive.Padding = new System.Windows.Forms.Padding(0);
@@ -1843,9 +1832,9 @@
 			// 
 			this.gb_Health.Controls.Add(this.lbl42_armor);
 			this.gb_Health.Controls.Add(this.lbl42);
-			this.gb_Health.Controls.Add(this.lbl44_dietile);
+			this.gb_Health.Controls.Add(this.lbl44_deadid);
 			this.gb_Health.Controls.Add(this.lbl44);
-			this.gb_Health.Location = new System.Drawing.Point(5, 350);
+			this.gb_Health.Location = new System.Drawing.Point(5, 295);
 			this.gb_Health.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Health.Name = "gb_Health";
 			this.gb_Health.Padding = new System.Windows.Forms.Padding(0);
@@ -1859,16 +1848,16 @@
 			this.gb_Characteristics.Controls.Add(this.lbl53_parttype);
 			this.gb_Characteristics.Controls.Add(this.lbl53);
 			this.gb_Characteristics.Controls.Add(this.lbl33);
-			this.gb_Characteristics.Controls.Add(this.lbl33_bigwall);
-			this.gb_Characteristics.Controls.Add(this.lbl34_gravlift);
+			this.gb_Characteristics.Controls.Add(this.lbl33_isbigwall);
+			this.gb_Characteristics.Controls.Add(this.lbl34_isgravlift);
 			this.gb_Characteristics.Controls.Add(this.lbl34);
 			this.gb_Characteristics.Controls.Add(this.lbl59_specialtype);
 			this.gb_Characteristics.Controls.Add(this.lbl59);
 			this.gb_Characteristics.Controls.Add(this.lbl60);
-			this.gb_Characteristics.Controls.Add(this.lbl60_baseobject);
-			this.gb_Characteristics.Controls.Add(this.lbl58_lightsource);
+			this.gb_Characteristics.Controls.Add(this.lbl60_isbaseobject);
+			this.gb_Characteristics.Controls.Add(this.lbl58_islightsource);
 			this.gb_Characteristics.Controls.Add(this.lbl58);
-			this.gb_Characteristics.Location = new System.Drawing.Point(5, 410);
+			this.gb_Characteristics.Location = new System.Drawing.Point(5, 355);
 			this.gb_Characteristics.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Characteristics.Name = "gb_Characteristics";
 			this.gb_Characteristics.Padding = new System.Windows.Forms.Padding(0);
@@ -1881,14 +1870,14 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(692, 689);
+			this.ClientSize = new System.Drawing.Size(692, 629);
 			this.Controls.Add(this.gb_Characteristics);
 			this.Controls.Add(this.gb_Health);
 			this.Controls.Add(this.gb_Explosive);
 			this.Controls.Add(this.gb_Step);
 			this.Controls.Add(this.gb_Door);
 			this.Controls.Add(this.gb_Block);
-			this.Controls.Add(this.gb_Yoffset);
+			this.Controls.Add(this.gb_Elevation);
 			this.Controls.Add(this.gb_Tu);
 			this.Controls.Add(this.gb_Minimap);
 			this.Controls.Add(this.gb_Collection);
@@ -1903,10 +1892,9 @@
 			this.gb_Unused.ResumeLayout(false);
 			this.gb_Loft.ResumeLayout(false);
 			this.gb_Sprites.ResumeLayout(false);
-			this.gb_Collection.ResumeLayout(false);
 			this.gb_Minimap.ResumeLayout(false);
 			this.gb_Tu.ResumeLayout(false);
-			this.gb_Yoffset.ResumeLayout(false);
+			this.gb_Elevation.ResumeLayout(false);
 			this.gb_Block.ResumeLayout(false);
 			this.gb_Door.ResumeLayout(false);
 			this.gb_Step.ResumeLayout(false);
