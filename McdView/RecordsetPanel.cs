@@ -252,16 +252,19 @@ namespace McdView
 		{
 			Select();
 
-			if (Records != null && Records.Length != 0)
+			if (Records != null && Records.Length != 0
+				&& e.Y < Height - Scroller.Height)
 			{
-				int col = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
-				if (col >= Records.Length)
+				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
+				if (id >= Records.Length)
 				{
-					col = -1;
+					id = -1;
 					// TODO: clear record info.
 				}
 
-				_f.SelId = col;
+				_f.SelId = id;
+				_f.PopulateTextFields();
+
 				Invalidate();
 			}
 		}

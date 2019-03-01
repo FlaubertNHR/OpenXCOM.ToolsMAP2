@@ -35,7 +35,8 @@ namespace XCom
 			record.Loft11 = bindata[18];
 			record.Loft12 = bindata[19];
 
-			record.ScanG = (ushort)(bindata[21] * 256 + bindata[20] + 35);
+			record.ScanG         = (ushort)(bindata[21] * 256 + bindata[20] + 35);
+			record.ScanG_reduced = (ushort)(bindata[21] * 256 + bindata[20]);
 
 			record.Unknown22 = bindata[22];
 			record.Unknown23 = bindata[23];
@@ -55,8 +56,7 @@ namespace XCom
 			record.BlockFire  = bindata[36] == 1; // unsigned char Block_Fire;          // If 1, fire won't go through the tile
 			record.BlockSmoke = bindata[37] == 1; // unsigned char Block_Smoke;         // If 1, smoke won't go through the tile
 
-			record.Unknown38 = bindata[38]; // unsigned char u39;
-
+			record.StartPhase  = bindata[38]; // unsigned char u39;
 			record.TU_Walk     = bindata[39];
 			record.TU_Slide    = bindata[40]; // unsigned char TU_Slide;                // sliding things include snakemen and silacoids
 			record.TU_Fly      = bindata[41]; // unsigned char TU_Fly;                  // remember, 0xFF means it's impassable!
@@ -104,7 +104,7 @@ namespace XCom
 										bindata[20],
 										bindata[21],
 										record.ScanG,
-										bindata[21] * 256 + bindata[20]);
+										record.ScanG_reduced);
 
 			record.LoftReference = string.Format(
 										System.Globalization.CultureInfo.CurrentCulture,

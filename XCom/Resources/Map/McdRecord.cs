@@ -110,7 +110,8 @@ namespace XCom
 		public byte Loft11 { get; set; }
 		public byte Loft12 { get; set; }
 
-		public ushort ScanG { get; set; }
+		public ushort ScanG         { get; set; }
+		public ushort ScanG_reduced { get; set; }
 
 		public byte Unknown22 { get; set; }                                            // unsigned char u62;
 		public byte Unknown23 { get; set; }                                            // unsigned char u62;
@@ -130,7 +131,7 @@ namespace XCom
 		public bool BlockFire  { get; set; }        // info[36]==1;}}                  // unsigned char Block_Fire;   // If 1, fire won't go through the tile
 		public bool BlockSmoke { get; set; }        // info[37]==1;}}                  // unsigned char Block_Smoke;  // If 1, smoke won't go through the tile
 
-		public byte Unknown38    { get; set; }      // info[38];}}                     // unsigned char u39;
+		public byte StartPhase   { get; set; }      // info[38];}}                     // unsigned char u39;
 		public byte TU_Walk      { get; set; }      // info[39];}}                     // unsigned char TU_Walk;       // The number of TUs require to pass the tile while walking. 0xFF (255) means it's unpassable.
 		public byte TU_Slide     { get; set; }      // info[40];}}                     // unsigned char TU_Fly;        // remember, 0xFF means it's impassable!
 		public byte TU_Fly       { get; set; }      // info[41];}}                     // unsigned char TU_Slide;      // sliding things include snakemen and silacoids
@@ -170,22 +171,22 @@ namespace XCom
 		#region Methods
 		public List<byte> GetLoftList()
 		{
-			var list = new List<byte>();
+			var lofts = new List<byte>();
 
-			list.Add(Loft1);
-			list.Add(Loft2);
-			list.Add(Loft3);
-			list.Add(Loft4);
-			list.Add(Loft5);
-			list.Add(Loft6);
-			list.Add(Loft7);
-			list.Add(Loft8);
-			list.Add(Loft9);
-			list.Add(Loft10);
-			list.Add(Loft11);
-			list.Add(Loft12);
+			lofts.Add(Loft1);
+			lofts.Add(Loft2);
+			lofts.Add(Loft3);
+			lofts.Add(Loft4);
+			lofts.Add(Loft5);
+			lofts.Add(Loft6);
+			lofts.Add(Loft7);
+			lofts.Add(Loft8);
+			lofts.Add(Loft9);
+			lofts.Add(Loft10);
+			lofts.Add(Loft11);
+			lofts.Add(Loft12);
 
-			return list;
+			return lofts;
 		}
 		#endregion
 	}
