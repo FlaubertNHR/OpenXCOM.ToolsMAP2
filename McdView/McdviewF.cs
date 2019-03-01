@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
 using XCom;
+using XCom.Interfaces;
 using XCom.Resources.Map;
 
 
@@ -38,7 +41,7 @@ namespace McdView
 
 		internal bool _spriteShadeEnabled;
 
-		private int _spriteShadeInt = 12;// 33; // unity (default) //-1
+		private int _spriteShadeInt = 13;// 33; // unity (default) //-1
 		private int SpriteShadeInt
 		{
 			get { return _spriteShadeInt; }
@@ -48,7 +51,7 @@ namespace McdView
 					SpriteShadeFloat = ((float)_spriteShadeInt * 0.03f);
 
 				RecordPanel.Invalidate();
-				// TODO: refresh anisprites
+				gb_Sprites .Invalidate();
 			}
 		}
 		internal float SpriteShadeFloat
@@ -59,7 +62,14 @@ namespace McdView
 		internal int SelId
 		{
 			get { return _selId; }
-			set { _selId = value; }
+			set
+			{
+				if (_selId != value)
+				{
+					_selId = value;
+					gb_Sprites.Invalidate();
+				}
+			}
 		}
 		#endregion Properties
 
@@ -157,7 +167,7 @@ namespace McdView
 				Spriteset.Pal = Palette.UfoBattle;
 
 				RecordPanel.Invalidate();
-				// TODO: refresh anisprites
+				gb_Sprites .Invalidate();
 			}
 		}
 
@@ -171,7 +181,7 @@ namespace McdView
 				Spriteset.Pal = Palette.TftdBattle;
 
 				RecordPanel.Invalidate();
-				// TODO: refresh anisprites
+				gb_Sprites .Invalidate();
 			}
 		}
 		#endregion Menuitems
@@ -192,6 +202,84 @@ namespace McdView
 			}
 			else
 				tb_SpriteShade.Text = "-1"; // recurse
+		}
+
+
+		Graphics _graphics;
+		ImageAttributes _attri;
+
+		private void OnPaint_Sprites(object sender, PaintEventArgs e)
+		{
+			if (SelId != -1)
+			{
+				_graphics = e.Graphics;
+				_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
+				_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+				_attri = new ImageAttributes();
+				if (_spriteShadeEnabled)
+					_attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+
+				const int xOrigin = 26;
+				const int yOrigin = 15;
+
+				const int xOffset = 83;
+
+				DrawSprite(
+						Spriteset[Records[SelId].Record.Sprite1].Sprite,
+						xOrigin,
+						yOrigin);
+				DrawSprite(
+						Spriteset[Records[SelId].Record.Sprite2].Sprite,
+						xOrigin + xOffset,
+						yOrigin);
+				DrawSprite(
+						Spriteset[Records[SelId].Record.Sprite3].Sprite,
+						xOrigin + xOffset * 2,
+						yOrigin);
+				DrawSprite(
+						Spriteset[Records[SelId].Record.Sprite4].Sprite,
+						xOrigin + xOffset * 3,
+						yOrigin);
+				DrawSprite(
+						Spriteset[Records[SelId].Record.Sprite5].Sprite,
+						xOrigin + xOffset * 4,
+						yOrigin);
+				DrawSprite(
+						Spriteset[Records[SelId].Record.Sprite6].Sprite,
+						xOrigin + xOffset * 5,
+						yOrigin);
+				DrawSprite(
+						Spriteset[Records[SelId].Record.Sprite7].Sprite,
+						xOrigin + xOffset * 6,
+						yOrigin);
+				DrawSprite(
+						Spriteset[Records[SelId].Record.Sprite8].Sprite,
+						xOrigin + xOffset * 7,
+						yOrigin);
+			}
+		}
+
+		/// <summary>
+		/// Helper for OnPaint().
+		/// </summary>
+		/// <param name="sprite"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		private void DrawSprite(
+				Image sprite,
+				int x,
+				int y)
+		{
+			_graphics.DrawImage(
+							sprite,
+							new Rectangle(
+										x, y,
+										XCImage.SpriteWidth32  * 2,
+										XCImage.SpriteHeight40 * 2),
+							0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+							GraphicsUnit.Pixel,
+							_attri);
 		}
 		#endregion Events
 
