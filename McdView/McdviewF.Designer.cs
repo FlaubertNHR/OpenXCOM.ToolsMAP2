@@ -105,21 +105,21 @@
 		private System.Windows.Forms.Label lbl8;
 		private System.Windows.Forms.Label lbl8_loft00;
 		private System.Windows.Forms.Label lbl0;
-		private System.Windows.Forms.Label lbl0_sprite1;
+		private System.Windows.Forms.Label lbl0_phase1;
 		private System.Windows.Forms.Label lbl1;
-		private System.Windows.Forms.Label lbl1_sprite2;
+		private System.Windows.Forms.Label lbl1_phase2;
 		private System.Windows.Forms.Label lbl2;
-		private System.Windows.Forms.Label lbl2_sprite3;
+		private System.Windows.Forms.Label lbl2_phase3;
 		private System.Windows.Forms.Label lbl3;
-		private System.Windows.Forms.Label lbl3_sprite4;
+		private System.Windows.Forms.Label lbl3_phase4;
 		private System.Windows.Forms.Label lbl7;
-		private System.Windows.Forms.Label lbl7_sprite8;
+		private System.Windows.Forms.Label lbl7_phase8;
 		private System.Windows.Forms.Label lbl6;
-		private System.Windows.Forms.Label lbl6_sprite7;
+		private System.Windows.Forms.Label lbl6_phase7;
 		private System.Windows.Forms.Label lbl5;
-		private System.Windows.Forms.Label lbl5_sprite6;
+		private System.Windows.Forms.Label lbl5_phase6;
 		private System.Windows.Forms.Label lbl4;
-		private System.Windows.Forms.Label lbl4_sprite5;
+		private System.Windows.Forms.Label lbl4_phase5;
 		private System.Windows.Forms.Label lbl22;
 		private System.Windows.Forms.Label lbl22_;
 		private System.Windows.Forms.Label lbl23;
@@ -193,14 +193,14 @@
 		private System.Windows.Forms.TextBox tb34_isgravlift;
 		private System.Windows.Forms.TextBox tb33_isbigwall;
 		private System.Windows.Forms.TextBox tb53_parttype;
-		private System.Windows.Forms.TextBox tb7_sprite8;
-		private System.Windows.Forms.TextBox tb6_sprite7;
-		private System.Windows.Forms.TextBox tb5_sprite6;
-		private System.Windows.Forms.TextBox tb4_sprite5;
-		private System.Windows.Forms.TextBox tb3_sprite4;
-		private System.Windows.Forms.TextBox tb2_sprite3;
-		private System.Windows.Forms.TextBox tb1_sprite2;
-		private System.Windows.Forms.TextBox tb0_sprite1;
+		private System.Windows.Forms.TextBox tb7_phase8;
+		private System.Windows.Forms.TextBox tb6_phase7;
+		private System.Windows.Forms.TextBox tb5_phase6;
+		private System.Windows.Forms.TextBox tb4_phase5;
+		private System.Windows.Forms.TextBox tb3_phase4;
+		private System.Windows.Forms.TextBox tb2_phase3;
+		private System.Windows.Forms.TextBox tb1_phase2;
+		private System.Windows.Forms.TextBox tb0_phase1;
 		private System.Windows.Forms.TextBox tb19_loft22;
 		private System.Windows.Forms.TextBox tb18_loft20;
 		private System.Windows.Forms.TextBox tb17_loft18;
@@ -214,7 +214,8 @@
 		private System.Windows.Forms.TextBox tb9_loft02;
 		private System.Windows.Forms.TextBox tb8_loft00;
 		private System.Windows.Forms.TextBox tb20_scang2;
-		
+		private System.Windows.Forms.Panel pnl_Sprites;
+
 		/// <summary>
 		/// Disposes resources used by the form.
 		/// </summary>
@@ -227,7 +228,7 @@
 
 			base.Dispose(disposing);
 		}
-		
+
 		/// <summary>
 		/// This method is required for Windows Forms designer support.
 		/// Do not change the method contents inside the source code editor. The
@@ -334,21 +335,21 @@
 			this.lbl8 = new System.Windows.Forms.Label();
 			this.lbl8_loft00 = new System.Windows.Forms.Label();
 			this.lbl0 = new System.Windows.Forms.Label();
-			this.lbl0_sprite1 = new System.Windows.Forms.Label();
+			this.lbl0_phase1 = new System.Windows.Forms.Label();
 			this.lbl1 = new System.Windows.Forms.Label();
-			this.lbl1_sprite2 = new System.Windows.Forms.Label();
+			this.lbl1_phase2 = new System.Windows.Forms.Label();
 			this.lbl2 = new System.Windows.Forms.Label();
-			this.lbl2_sprite3 = new System.Windows.Forms.Label();
+			this.lbl2_phase3 = new System.Windows.Forms.Label();
 			this.lbl3 = new System.Windows.Forms.Label();
-			this.lbl3_sprite4 = new System.Windows.Forms.Label();
+			this.lbl3_phase4 = new System.Windows.Forms.Label();
 			this.lbl7 = new System.Windows.Forms.Label();
-			this.lbl7_sprite8 = new System.Windows.Forms.Label();
+			this.lbl7_phase8 = new System.Windows.Forms.Label();
 			this.lbl6 = new System.Windows.Forms.Label();
-			this.lbl6_sprite7 = new System.Windows.Forms.Label();
+			this.lbl6_phase7 = new System.Windows.Forms.Label();
 			this.lbl5 = new System.Windows.Forms.Label();
-			this.lbl5_sprite6 = new System.Windows.Forms.Label();
+			this.lbl5_phase6 = new System.Windows.Forms.Label();
 			this.lbl4 = new System.Windows.Forms.Label();
-			this.lbl4_sprite5 = new System.Windows.Forms.Label();
+			this.lbl4_phase5 = new System.Windows.Forms.Label();
 			this.lbl22 = new System.Windows.Forms.Label();
 			this.lbl22_ = new System.Windows.Forms.Label();
 			this.lbl23 = new System.Windows.Forms.Label();
@@ -392,14 +393,15 @@
 			this.tb9_loft02 = new System.Windows.Forms.TextBox();
 			this.tb8_loft00 = new System.Windows.Forms.TextBox();
 			this.gb_Sprites = new System.Windows.Forms.GroupBox();
-			this.tb7_sprite8 = new System.Windows.Forms.TextBox();
-			this.tb6_sprite7 = new System.Windows.Forms.TextBox();
-			this.tb5_sprite6 = new System.Windows.Forms.TextBox();
-			this.tb4_sprite5 = new System.Windows.Forms.TextBox();
-			this.tb3_sprite4 = new System.Windows.Forms.TextBox();
-			this.tb2_sprite3 = new System.Windows.Forms.TextBox();
-			this.tb1_sprite2 = new System.Windows.Forms.TextBox();
-			this.tb0_sprite1 = new System.Windows.Forms.TextBox();
+			this.pnl_Sprites = new System.Windows.Forms.Panel();
+			this.tb7_phase8 = new System.Windows.Forms.TextBox();
+			this.tb6_phase7 = new System.Windows.Forms.TextBox();
+			this.tb5_phase6 = new System.Windows.Forms.TextBox();
+			this.tb4_phase5 = new System.Windows.Forms.TextBox();
+			this.tb3_phase4 = new System.Windows.Forms.TextBox();
+			this.tb2_phase3 = new System.Windows.Forms.TextBox();
+			this.tb1_phase2 = new System.Windows.Forms.TextBox();
+			this.tb0_phase1 = new System.Windows.Forms.TextBox();
 			this.tb38_startphase = new System.Windows.Forms.TextBox();
 			this.gb_Collection = new System.Windows.Forms.GroupBox();
 			this.gb_Minimap = new System.Windows.Forms.GroupBox();
@@ -438,9 +440,9 @@
 			this.tb58_lightpower = new System.Windows.Forms.TextBox();
 			this.tb60_isbaseobject = new System.Windows.Forms.TextBox();
 			this.tb59_specialtype = new System.Windows.Forms.TextBox();
+			this.tb53_parttype = new System.Windows.Forms.TextBox();
 			this.tb34_isgravlift = new System.Windows.Forms.TextBox();
 			this.tb33_isbigwall = new System.Windows.Forms.TextBox();
-			this.tb53_parttype = new System.Windows.Forms.TextBox();
 			this.lbl_SpriteShade = new System.Windows.Forms.Label();
 			this.tb_SpriteShade = new System.Windows.Forms.TextBox();
 			this.gb_Unused.SuspendLayout();
@@ -475,10 +477,11 @@
 			this.miOpen.Index = 0;
 			this.miOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOpen.Text = "&Open MCD file ...";
-			this.miOpen.Click += new System.EventHandler(this.OnOpenClick);
+			this.miOpen.Click += new System.EventHandler(this.OnClick_Open);
 			// 
 			// miPaletteMenu
 			// 
+			this.miPaletteMenu.Enabled = false;
 			this.miPaletteMenu.Index = 1;
 			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miPaletteUfo,
@@ -491,14 +494,14 @@
 			this.miPaletteUfo.Index = 0;
 			this.miPaletteUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
 			this.miPaletteUfo.Text = "&UFO";
-			this.miPaletteUfo.Click += new System.EventHandler(this.OnPaletteUfoClick);
+			this.miPaletteUfo.Click += new System.EventHandler(this.OnClick_PaletteUfo);
 			// 
 			// miPaletteTftd
 			// 
 			this.miPaletteTftd.Index = 1;
 			this.miPaletteTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
 			this.miPaletteTftd.Text = "&TFTD";
-			this.miPaletteTftd.Click += new System.EventHandler(this.OnPaletteTftdClick);
+			this.miPaletteTftd.Click += new System.EventHandler(this.OnClick_PaletteTftd);
 			// 
 			// lbl20_scang
 			// 
@@ -1410,15 +1413,15 @@
 			this.lbl0.Text = "#0";
 			this.lbl0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl0_sprite1
+			// lbl0_phase1
 			// 
-			this.lbl0_sprite1.Location = new System.Drawing.Point(35, 125);
-			this.lbl0_sprite1.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl0_sprite1.Name = "lbl0_sprite1";
-			this.lbl0_sprite1.Size = new System.Drawing.Size(50, 15);
-			this.lbl0_sprite1.TabIndex = 91;
-			this.lbl0_sprite1.Text = "Sprite 1";
-			this.lbl0_sprite1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl0_phase1.Location = new System.Drawing.Point(35, 125);
+			this.lbl0_phase1.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl0_phase1.Name = "lbl0_phase1";
+			this.lbl0_phase1.Size = new System.Drawing.Size(50, 15);
+			this.lbl0_phase1.TabIndex = 91;
+			this.lbl0_phase1.Text = "phase 1";
+			this.lbl0_phase1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl1
 			// 
@@ -1430,15 +1433,15 @@
 			this.lbl1.Text = "#1";
 			this.lbl1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl1_sprite2
+			// lbl1_phase2
 			// 
-			this.lbl1_sprite2.Location = new System.Drawing.Point(120, 125);
-			this.lbl1_sprite2.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl1_sprite2.Name = "lbl1_sprite2";
-			this.lbl1_sprite2.Size = new System.Drawing.Size(50, 15);
-			this.lbl1_sprite2.TabIndex = 93;
-			this.lbl1_sprite2.Text = "Sprite 2";
-			this.lbl1_sprite2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl1_phase2.Location = new System.Drawing.Point(120, 125);
+			this.lbl1_phase2.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl1_phase2.Name = "lbl1_phase2";
+			this.lbl1_phase2.Size = new System.Drawing.Size(50, 15);
+			this.lbl1_phase2.TabIndex = 93;
+			this.lbl1_phase2.Text = "phase 2";
+			this.lbl1_phase2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl2
 			// 
@@ -1450,15 +1453,15 @@
 			this.lbl2.Text = "#2";
 			this.lbl2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl2_sprite3
+			// lbl2_phase3
 			// 
-			this.lbl2_sprite3.Location = new System.Drawing.Point(205, 125);
-			this.lbl2_sprite3.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl2_sprite3.Name = "lbl2_sprite3";
-			this.lbl2_sprite3.Size = new System.Drawing.Size(50, 15);
-			this.lbl2_sprite3.TabIndex = 95;
-			this.lbl2_sprite3.Text = "Sprite 3";
-			this.lbl2_sprite3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl2_phase3.Location = new System.Drawing.Point(205, 125);
+			this.lbl2_phase3.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl2_phase3.Name = "lbl2_phase3";
+			this.lbl2_phase3.Size = new System.Drawing.Size(50, 15);
+			this.lbl2_phase3.TabIndex = 95;
+			this.lbl2_phase3.Text = "phase 3";
+			this.lbl2_phase3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl3
 			// 
@@ -1470,15 +1473,15 @@
 			this.lbl3.Text = "#3";
 			this.lbl3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl3_sprite4
+			// lbl3_phase4
 			// 
-			this.lbl3_sprite4.Location = new System.Drawing.Point(290, 125);
-			this.lbl3_sprite4.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl3_sprite4.Name = "lbl3_sprite4";
-			this.lbl3_sprite4.Size = new System.Drawing.Size(50, 15);
-			this.lbl3_sprite4.TabIndex = 97;
-			this.lbl3_sprite4.Text = "Sprite 4";
-			this.lbl3_sprite4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl3_phase4.Location = new System.Drawing.Point(290, 125);
+			this.lbl3_phase4.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl3_phase4.Name = "lbl3_phase4";
+			this.lbl3_phase4.Size = new System.Drawing.Size(50, 15);
+			this.lbl3_phase4.TabIndex = 97;
+			this.lbl3_phase4.Text = "phase 4";
+			this.lbl3_phase4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl7
 			// 
@@ -1490,15 +1493,15 @@
 			this.lbl7.Text = "#7";
 			this.lbl7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl7_sprite8
+			// lbl7_phase8
 			// 
-			this.lbl7_sprite8.Location = new System.Drawing.Point(630, 125);
-			this.lbl7_sprite8.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl7_sprite8.Name = "lbl7_sprite8";
-			this.lbl7_sprite8.Size = new System.Drawing.Size(50, 15);
-			this.lbl7_sprite8.TabIndex = 105;
-			this.lbl7_sprite8.Text = "Sprite 8";
-			this.lbl7_sprite8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl7_phase8.Location = new System.Drawing.Point(630, 125);
+			this.lbl7_phase8.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl7_phase8.Name = "lbl7_phase8";
+			this.lbl7_phase8.Size = new System.Drawing.Size(50, 15);
+			this.lbl7_phase8.TabIndex = 105;
+			this.lbl7_phase8.Text = "phase 8";
+			this.lbl7_phase8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl6
 			// 
@@ -1510,15 +1513,15 @@
 			this.lbl6.Text = "#6";
 			this.lbl6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl6_sprite7
+			// lbl6_phase7
 			// 
-			this.lbl6_sprite7.Location = new System.Drawing.Point(545, 125);
-			this.lbl6_sprite7.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl6_sprite7.Name = "lbl6_sprite7";
-			this.lbl6_sprite7.Size = new System.Drawing.Size(50, 15);
-			this.lbl6_sprite7.TabIndex = 103;
-			this.lbl6_sprite7.Text = "Sprite 7";
-			this.lbl6_sprite7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl6_phase7.Location = new System.Drawing.Point(545, 125);
+			this.lbl6_phase7.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl6_phase7.Name = "lbl6_phase7";
+			this.lbl6_phase7.Size = new System.Drawing.Size(50, 15);
+			this.lbl6_phase7.TabIndex = 103;
+			this.lbl6_phase7.Text = "phase 7";
+			this.lbl6_phase7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl5
 			// 
@@ -1530,15 +1533,15 @@
 			this.lbl5.Text = "#5";
 			this.lbl5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl5_sprite6
+			// lbl5_phase6
 			// 
-			this.lbl5_sprite6.Location = new System.Drawing.Point(460, 125);
-			this.lbl5_sprite6.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl5_sprite6.Name = "lbl5_sprite6";
-			this.lbl5_sprite6.Size = new System.Drawing.Size(50, 15);
-			this.lbl5_sprite6.TabIndex = 101;
-			this.lbl5_sprite6.Text = "Sprite 6";
-			this.lbl5_sprite6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl5_phase6.Location = new System.Drawing.Point(460, 125);
+			this.lbl5_phase6.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl5_phase6.Name = "lbl5_phase6";
+			this.lbl5_phase6.Size = new System.Drawing.Size(50, 15);
+			this.lbl5_phase6.TabIndex = 101;
+			this.lbl5_phase6.Text = "phase 6";
+			this.lbl5_phase6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl4
 			// 
@@ -1550,15 +1553,15 @@
 			this.lbl4.Text = "#4";
 			this.lbl4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl4_sprite5
+			// lbl4_phase5
 			// 
-			this.lbl4_sprite5.Location = new System.Drawing.Point(375, 125);
-			this.lbl4_sprite5.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl4_sprite5.Name = "lbl4_sprite5";
-			this.lbl4_sprite5.Size = new System.Drawing.Size(50, 15);
-			this.lbl4_sprite5.TabIndex = 99;
-			this.lbl4_sprite5.Text = "Sprite 5";
-			this.lbl4_sprite5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl4_phase5.Location = new System.Drawing.Point(375, 125);
+			this.lbl4_phase5.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl4_phase5.Name = "lbl4_phase5";
+			this.lbl4_phase5.Size = new System.Drawing.Size(50, 15);
+			this.lbl4_phase5.TabIndex = 99;
+			this.lbl4_phase5.Text = "phase 5";
+			this.lbl4_phase5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl22
 			// 
@@ -2055,30 +2058,31 @@
 			// 
 			// gb_Sprites
 			// 
-			this.gb_Sprites.Controls.Add(this.tb7_sprite8);
-			this.gb_Sprites.Controls.Add(this.tb6_sprite7);
-			this.gb_Sprites.Controls.Add(this.tb5_sprite6);
-			this.gb_Sprites.Controls.Add(this.tb4_sprite5);
-			this.gb_Sprites.Controls.Add(this.tb3_sprite4);
-			this.gb_Sprites.Controls.Add(this.tb2_sprite3);
-			this.gb_Sprites.Controls.Add(this.tb1_sprite2);
-			this.gb_Sprites.Controls.Add(this.tb0_sprite1);
+			this.gb_Sprites.Controls.Add(this.pnl_Sprites);
+			this.gb_Sprites.Controls.Add(this.tb7_phase8);
+			this.gb_Sprites.Controls.Add(this.tb6_phase7);
+			this.gb_Sprites.Controls.Add(this.tb5_phase6);
+			this.gb_Sprites.Controls.Add(this.tb4_phase5);
+			this.gb_Sprites.Controls.Add(this.tb3_phase4);
+			this.gb_Sprites.Controls.Add(this.tb2_phase3);
+			this.gb_Sprites.Controls.Add(this.tb1_phase2);
+			this.gb_Sprites.Controls.Add(this.tb0_phase1);
 			this.gb_Sprites.Controls.Add(this.tb38_startphase);
-			this.gb_Sprites.Controls.Add(this.lbl3_sprite4);
-			this.gb_Sprites.Controls.Add(this.lbl0_sprite1);
+			this.gb_Sprites.Controls.Add(this.lbl3_phase4);
+			this.gb_Sprites.Controls.Add(this.lbl0_phase1);
 			this.gb_Sprites.Controls.Add(this.lbl0);
-			this.gb_Sprites.Controls.Add(this.lbl1_sprite2);
+			this.gb_Sprites.Controls.Add(this.lbl1_phase2);
 			this.gb_Sprites.Controls.Add(this.lbl7);
 			this.gb_Sprites.Controls.Add(this.lbl1);
-			this.gb_Sprites.Controls.Add(this.lbl7_sprite8);
-			this.gb_Sprites.Controls.Add(this.lbl2_sprite3);
+			this.gb_Sprites.Controls.Add(this.lbl7_phase8);
+			this.gb_Sprites.Controls.Add(this.lbl2_phase3);
 			this.gb_Sprites.Controls.Add(this.lbl6);
 			this.gb_Sprites.Controls.Add(this.lbl2);
-			this.gb_Sprites.Controls.Add(this.lbl6_sprite7);
+			this.gb_Sprites.Controls.Add(this.lbl6_phase7);
 			this.gb_Sprites.Controls.Add(this.lbl3);
 			this.gb_Sprites.Controls.Add(this.lbl5);
-			this.gb_Sprites.Controls.Add(this.lbl4_sprite5);
-			this.gb_Sprites.Controls.Add(this.lbl5_sprite6);
+			this.gb_Sprites.Controls.Add(this.lbl4_phase5);
+			this.gb_Sprites.Controls.Add(this.lbl5_phase6);
 			this.gb_Sprites.Controls.Add(this.lbl4);
 			this.gb_Sprites.Controls.Add(this.lbl38);
 			this.gb_Sprites.Controls.Add(this.lbl38_startphase);
@@ -2091,87 +2095,98 @@
 			this.gb_Sprites.TabIndex = 126;
 			this.gb_Sprites.TabStop = false;
 			this.gb_Sprites.Text = " Animation sprites ";
-			this.gb_Sprites.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Sprites);
 			// 
-			// tb7_sprite8
+			// pnl_Sprites
 			// 
-			this.tb7_sprite8.Location = new System.Drawing.Point(630, 105);
-			this.tb7_sprite8.Margin = new System.Windows.Forms.Padding(0);
-			this.tb7_sprite8.Name = "tb7_sprite8";
-			this.tb7_sprite8.Size = new System.Drawing.Size(35, 19);
-			this.tb7_sprite8.TabIndex = 115;
-			this.tb7_sprite8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb7_sprite8.WordWrap = false;
+			this.pnl_Sprites.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.pnl_Sprites.Location = new System.Drawing.Point(5, 15);
+			this.pnl_Sprites.Margin = new System.Windows.Forms.Padding(0);
+			this.pnl_Sprites.Name = "pnl_Sprites";
+			this.pnl_Sprites.Size = new System.Drawing.Size(680, 80);
+			this.pnl_Sprites.TabIndex = 116;
+			this.pnl_Sprites.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Sprites);
+			this.pnl_Sprites.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown_SpritePanel);
 			// 
-			// tb6_sprite7
+			// tb7_phase8
 			// 
-			this.tb6_sprite7.Location = new System.Drawing.Point(545, 105);
-			this.tb6_sprite7.Margin = new System.Windows.Forms.Padding(0);
-			this.tb6_sprite7.Name = "tb6_sprite7";
-			this.tb6_sprite7.Size = new System.Drawing.Size(35, 19);
-			this.tb6_sprite7.TabIndex = 114;
-			this.tb6_sprite7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb6_sprite7.WordWrap = false;
+			this.tb7_phase8.Location = new System.Drawing.Point(630, 105);
+			this.tb7_phase8.Margin = new System.Windows.Forms.Padding(0);
+			this.tb7_phase8.Name = "tb7_phase8";
+			this.tb7_phase8.Size = new System.Drawing.Size(35, 19);
+			this.tb7_phase8.TabIndex = 115;
+			this.tb7_phase8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb7_phase8.WordWrap = false;
 			// 
-			// tb5_sprite6
+			// tb6_phase7
 			// 
-			this.tb5_sprite6.Location = new System.Drawing.Point(460, 105);
-			this.tb5_sprite6.Margin = new System.Windows.Forms.Padding(0);
-			this.tb5_sprite6.Name = "tb5_sprite6";
-			this.tb5_sprite6.Size = new System.Drawing.Size(35, 19);
-			this.tb5_sprite6.TabIndex = 113;
-			this.tb5_sprite6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb5_sprite6.WordWrap = false;
+			this.tb6_phase7.Location = new System.Drawing.Point(545, 105);
+			this.tb6_phase7.Margin = new System.Windows.Forms.Padding(0);
+			this.tb6_phase7.Name = "tb6_phase7";
+			this.tb6_phase7.Size = new System.Drawing.Size(35, 19);
+			this.tb6_phase7.TabIndex = 114;
+			this.tb6_phase7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb6_phase7.WordWrap = false;
 			// 
-			// tb4_sprite5
+			// tb5_phase6
 			// 
-			this.tb4_sprite5.Location = new System.Drawing.Point(375, 105);
-			this.tb4_sprite5.Margin = new System.Windows.Forms.Padding(0);
-			this.tb4_sprite5.Name = "tb4_sprite5";
-			this.tb4_sprite5.Size = new System.Drawing.Size(35, 19);
-			this.tb4_sprite5.TabIndex = 112;
-			this.tb4_sprite5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb4_sprite5.WordWrap = false;
+			this.tb5_phase6.Location = new System.Drawing.Point(460, 105);
+			this.tb5_phase6.Margin = new System.Windows.Forms.Padding(0);
+			this.tb5_phase6.Name = "tb5_phase6";
+			this.tb5_phase6.Size = new System.Drawing.Size(35, 19);
+			this.tb5_phase6.TabIndex = 113;
+			this.tb5_phase6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb5_phase6.WordWrap = false;
 			// 
-			// tb3_sprite4
+			// tb4_phase5
 			// 
-			this.tb3_sprite4.Location = new System.Drawing.Point(290, 105);
-			this.tb3_sprite4.Margin = new System.Windows.Forms.Padding(0);
-			this.tb3_sprite4.Name = "tb3_sprite4";
-			this.tb3_sprite4.Size = new System.Drawing.Size(35, 19);
-			this.tb3_sprite4.TabIndex = 111;
-			this.tb3_sprite4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb3_sprite4.WordWrap = false;
+			this.tb4_phase5.Location = new System.Drawing.Point(375, 105);
+			this.tb4_phase5.Margin = new System.Windows.Forms.Padding(0);
+			this.tb4_phase5.Name = "tb4_phase5";
+			this.tb4_phase5.Size = new System.Drawing.Size(35, 19);
+			this.tb4_phase5.TabIndex = 112;
+			this.tb4_phase5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb4_phase5.WordWrap = false;
 			// 
-			// tb2_sprite3
+			// tb3_phase4
 			// 
-			this.tb2_sprite3.Location = new System.Drawing.Point(205, 105);
-			this.tb2_sprite3.Margin = new System.Windows.Forms.Padding(0);
-			this.tb2_sprite3.Name = "tb2_sprite3";
-			this.tb2_sprite3.Size = new System.Drawing.Size(35, 19);
-			this.tb2_sprite3.TabIndex = 110;
-			this.tb2_sprite3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb2_sprite3.WordWrap = false;
+			this.tb3_phase4.Location = new System.Drawing.Point(290, 105);
+			this.tb3_phase4.Margin = new System.Windows.Forms.Padding(0);
+			this.tb3_phase4.Name = "tb3_phase4";
+			this.tb3_phase4.Size = new System.Drawing.Size(35, 19);
+			this.tb3_phase4.TabIndex = 111;
+			this.tb3_phase4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb3_phase4.WordWrap = false;
 			// 
-			// tb1_sprite2
+			// tb2_phase3
 			// 
-			this.tb1_sprite2.Location = new System.Drawing.Point(120, 105);
-			this.tb1_sprite2.Margin = new System.Windows.Forms.Padding(0);
-			this.tb1_sprite2.Name = "tb1_sprite2";
-			this.tb1_sprite2.Size = new System.Drawing.Size(35, 19);
-			this.tb1_sprite2.TabIndex = 109;
-			this.tb1_sprite2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb1_sprite2.WordWrap = false;
+			this.tb2_phase3.Location = new System.Drawing.Point(205, 105);
+			this.tb2_phase3.Margin = new System.Windows.Forms.Padding(0);
+			this.tb2_phase3.Name = "tb2_phase3";
+			this.tb2_phase3.Size = new System.Drawing.Size(35, 19);
+			this.tb2_phase3.TabIndex = 110;
+			this.tb2_phase3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb2_phase3.WordWrap = false;
 			// 
-			// tb0_sprite1
+			// tb1_phase2
 			// 
-			this.tb0_sprite1.Location = new System.Drawing.Point(40, 105);
-			this.tb0_sprite1.Margin = new System.Windows.Forms.Padding(0);
-			this.tb0_sprite1.Name = "tb0_sprite1";
-			this.tb0_sprite1.Size = new System.Drawing.Size(35, 19);
-			this.tb0_sprite1.TabIndex = 108;
-			this.tb0_sprite1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb0_sprite1.WordWrap = false;
+			this.tb1_phase2.Location = new System.Drawing.Point(120, 105);
+			this.tb1_phase2.Margin = new System.Windows.Forms.Padding(0);
+			this.tb1_phase2.Name = "tb1_phase2";
+			this.tb1_phase2.Size = new System.Drawing.Size(35, 19);
+			this.tb1_phase2.TabIndex = 109;
+			this.tb1_phase2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb1_phase2.WordWrap = false;
+			// 
+			// tb0_phase1
+			// 
+			this.tb0_phase1.Location = new System.Drawing.Point(40, 105);
+			this.tb0_phase1.Margin = new System.Windows.Forms.Padding(0);
+			this.tb0_phase1.Name = "tb0_phase1";
+			this.tb0_phase1.Size = new System.Drawing.Size(35, 19);
+			this.tb0_phase1.TabIndex = 108;
+			this.tb0_phase1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb0_phase1.WordWrap = false;
 			// 
 			// tb38_startphase
 			// 
@@ -2656,6 +2671,16 @@
 			this.tb59_specialtype.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb59_specialtype.WordWrap = false;
 			// 
+			// tb53_parttype
+			// 
+			this.tb53_parttype.Location = new System.Drawing.Point(125, 13);
+			this.tb53_parttype.Margin = new System.Windows.Forms.Padding(0);
+			this.tb53_parttype.Name = "tb53_parttype";
+			this.tb53_parttype.Size = new System.Drawing.Size(35, 19);
+			this.tb53_parttype.TabIndex = 65;
+			this.tb53_parttype.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb53_parttype.WordWrap = false;
+			// 
 			// tb34_isgravlift
 			// 
 			this.tb34_isgravlift.Location = new System.Drawing.Point(125, 73);
@@ -2675,16 +2700,6 @@
 			this.tb33_isbigwall.TabIndex = 66;
 			this.tb33_isbigwall.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb33_isbigwall.WordWrap = false;
-			// 
-			// tb53_parttype
-			// 
-			this.tb53_parttype.Location = new System.Drawing.Point(125, 13);
-			this.tb53_parttype.Margin = new System.Windows.Forms.Padding(0);
-			this.tb53_parttype.Name = "tb53_parttype";
-			this.tb53_parttype.Size = new System.Drawing.Size(35, 19);
-			this.tb53_parttype.TabIndex = 65;
-			this.tb53_parttype.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb53_parttype.WordWrap = false;
 			// 
 			// lbl_SpriteShade
 			// 

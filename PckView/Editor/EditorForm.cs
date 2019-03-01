@@ -334,7 +334,7 @@ namespace PckView
 		private MenuItem miGridMenu;
 		private MenuItem miGrid;
 		private MenuItem miGridInvert;
-		private System.Windows.Forms.StatusStrip ss_Status;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_ColorInfo;
+		private StatusStrip ss_Status;
+		private ToolStripStatusLabel tssl_ColorInfo;
 	}
 }

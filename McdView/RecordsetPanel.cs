@@ -25,13 +25,8 @@ namespace McdView
 		private int TableWidth;
 		private const int _largeChange = XCImage.SpriteWidth32 + 1;
 
-		private readonly Pen _penControl     = new Pen(SystemColors.Control, 1);
+		private readonly Pen   _penControl   = new Pen(SystemColors.Control, 1);
 		private readonly Brush _brushControl = new SolidBrush(SystemColors.Control);
-		private readonly Brush _brushHilight = new SolidBrush(Color.FromArgb(60, SystemColors.MenuHighlight));
-
-		private const TextFormatFlags flags = TextFormatFlags.HorizontalCenter
-											| TextFormatFlags.VerticalCenter
-											| TextFormatFlags.NoPadding;
 		#endregion Fields
 
 
@@ -142,7 +137,7 @@ namespace McdView
 
 				if (_f.SelId != -1)
 					_graphics.FillRectangle(
-										_brushHilight,
+										McdviewF.BrushHilight,
 										_f.SelId * (XCImage.SpriteWidth32 + 1) + offset,
 										y1_fill,
 										XCImage.SpriteWidth32,
@@ -161,7 +156,7 @@ namespace McdView
 									Font,
 									rect,
 									SystemColors.ControlText,
-									flags);
+									McdviewF.FLAGS);
 				}
 
 				for (i = 0; i != Records.Length; ++i) // dead part ->
@@ -259,13 +254,8 @@ namespace McdView
 				if (id >= Records.Length)
 				{
 					id = -1;
-					// TODO: clear record info.
 				}
-
 				_f.SelId = id;
-				_f.PopulateTextFields();
-
-				Invalidate();
 			}
 		}
 

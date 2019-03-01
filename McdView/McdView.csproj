@@ -79,6 +79,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordsetPanel.cs" />
+    <Compile Include="SpritesetviewF.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -86,6 +87,9 @@
   <ItemGroup>
     <EmbeddedResource Include="McdviewF.resx">
       <DependentUpon>McdviewF.Designer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpritesetviewF.resx">
+      <DependentUpon>SpritesetviewF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
