@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -33,6 +34,25 @@ namespace McdView
 
 		private SpriteCollection Spriteset
 		{ get; set; }
+
+
+		internal bool _spriteShadeEnabled;
+
+		private int _spriteShadeInt = 12;// 33; // unity (default)
+		private int SpriteShadeInt
+		{
+			get { return _spriteShadeInt; }
+			set
+			{
+				if (_spriteShadeEnabled = ((_spriteShadeInt = value) != -1))
+					SpriteShadeFloat = ((float)_spriteShadeInt * 0.03f);
+
+				SpriteCollectionPanel.Invalidate();
+				// TODO: refresh anisprites
+			}
+		}
+		internal float SpriteShadeFloat
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -41,9 +61,13 @@ namespace McdView
 		{
 			InitializeComponent();
 
+			MaximumSize = new Size(0,0);
+
 			SpriteCollectionPanel = new SpriteCollectionPanel(this);
 			gb_Collection.Controls.Add(SpriteCollectionPanel);
 			SpriteCollectionPanel.Width = gb_Collection.Width - 10;
+
+			tb_SpriteShade.Text = SpriteShadeInt.ToString();
 		}
 		#endregion cTor
 
@@ -136,6 +160,21 @@ namespace McdView
 
 
 		#region Events
+		private void OnTextChanged_SpriteShade(object sender, EventArgs e)
+		{
+			// TODO: "SpriteShade does NOT get saved."
+			int result;
+			if (Int32.TryParse(tb_SpriteShade.Text, out result))
+			{
+				if      (result <  -1) tb_SpriteShade.Text =  "-1"; // recurse
+				else if (result ==  0) tb_SpriteShade.Text =  "-1"; // recurse
+				else if (result > 100) tb_SpriteShade.Text = "100"; // recurse
+				else
+					SpriteShadeInt = result;
+			}
+			else
+				tb_SpriteShade.Text = "-1"; // recurse
+		}
 		#endregion Events
 	}
 }

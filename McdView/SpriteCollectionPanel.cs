@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using XCom;
@@ -21,6 +22,9 @@ namespace McdView
 		private readonly McdviewF _f;
 		private readonly HScrollBar Scroller = new HScrollBar();
 
+		private int TableWidth;
+		private const int _largeChange = XCImage.SpriteWidth32 + 1;
+
 		private readonly Pen _penControl     = new Pen(SystemColors.Control, 1);
 		private readonly Brush _brushControl = new SolidBrush(SystemColors.Control);
 
@@ -38,6 +42,11 @@ namespace McdView
 			set
 			{
 				_records = value;
+
+				TableWidth = _records.Length * (XCImage.SpriteWidth32 + 1) - 1;
+
+				OnResize(null);
+				Scroller.Value = 0;
 				Invalidate();
 			}
 		}
@@ -63,6 +72,8 @@ namespace McdView
 			Location = new Point(5, 15);
 
 			Scroller.Dock = DockStyle.Bottom;
+			Scroller.LargeChange = _largeChange;
+			Scroller.ValueChanged += OnValueChanged_Scroll;
 			Controls.Add(Scroller);
 
 			Height = y3_sprite + XCImage.SpriteHeight40 + Scroller.Height;
@@ -70,58 +81,72 @@ namespace McdView
 		#endregion cTor
 
 
+		#region Events
+		private void OnValueChanged_Scroll(object sender, EventArgs e)
+		{
+			Invalidate();
+		}
+		#endregion Events
+
+
 		#region Events (override)
+		Graphics _graphics;
+		ImageAttributes _attri;
+
 		// constants for vertical align ->
-		const int y1_sprite     = 0;
-		const int y1_filltop    = XCImage.SpriteHeight40;
-		const int y1_fillheight = 18;
-		const int y2_sprite     = y1_filltop + y1_fillheight;
-		const int y2_line       = y2_sprite + XCImage.SpriteHeight40 + 1;
-		const int y3_sprite     = y2_line;
+		const int y1_sprite = 0;
+		const int y1_fill   = XCImage.SpriteHeight40;
+		const int y1_fill_h = 18;
+		const int y2_sprite = y1_fill + y1_fill_h;
+		const int y2_line   = y2_sprite + XCImage.SpriteHeight40 + 1;
+		const int y3_sprite = y2_line;
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			if (Records != null && Records.Length != 0)
 			{
-				var graphics = e.Graphics;
-				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+				_graphics = e.Graphics;
+				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+				_attri = new ImageAttributes();
+				if (_f._spriteShadeEnabled)
+					_attri.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 				Bitmap sprite;
 
 				Rectangle rect;
 
+				int offset = -Scroller.Value;
+
 				int i;
 				for (i = 0; i != Records.Length; ++i)
 				{
-					graphics.DrawLine( // vertical lines
-									_penControl,
-									i * XCImage.SpriteWidth32 + i, 0,
-									i * XCImage.SpriteWidth32 + i, Height);
+					if (i != 0)
+						_graphics.DrawLine( // draw vertical line before each sprite except the first sprite
+										_penControl,
+										i * XCImage.SpriteWidth32 + i + offset, 0,
+										i * XCImage.SpriteWidth32 + i + offset, Height);
 
 					if ((sprite = Records[i][0].Sprite) != null)
-						graphics.DrawImage(
-										sprite,
-										i * XCImage.SpriteWidth32 + i, y1_sprite);
+						DrawSprite(
+								sprite,
+								i * XCImage.SpriteWidth32 + i + offset,
+								y1_sprite - Records[i].Record.TileOffset);
 				}
-				graphics.DrawLine( // last vertical line
-								_penControl,
-								i * XCImage.SpriteWidth32 + i, 0,
-								i * XCImage.SpriteWidth32 + i, Height);
 
-
-				graphics.FillRectangle(
+				_graphics.FillRectangle(
 									_brushControl,
-									0,     y1_filltop,
-									Width, y1_fillheight);
+									0,     y1_fill,
+									Width, y1_fill_h);
 				for (i = 0; i != Records.Length; ++i)
 				{
 					rect = new Rectangle(
-									i * XCImage.SpriteWidth32 + i,
-									y1_filltop,
+									i * XCImage.SpriteWidth32 + i + offset,
+									y1_fill,
 									XCImage.SpriteWidth32,
-									y1_fillheight);
+									y1_fill_h);
 					TextRenderer.DrawText(
-									graphics,
+									_graphics,
 									i.ToString(),
 									Font,
 									rect,
@@ -129,34 +154,85 @@ namespace McdView
 									flags);
 				}
 
-				// dead part
-				for (i = 0; i != Records.Length; ++i)
+				for (i = 0; i != Records.Length; ++i) // dead part ->
 				{
 					if (Records[i].Dead != null
 						&& (sprite = Records[i].Dead[0].Sprite) != null)
 					{
-						graphics.DrawImage(
-										sprite,
-										i * XCImage.SpriteWidth32 + i, y2_sprite);
+						DrawSprite(
+								sprite,
+								i * XCImage.SpriteWidth32 + i + offset,
+								y2_sprite - Records[i].Record.TileOffset);
 					}
 				}
 
-				graphics.DrawLine(
+				_graphics.DrawLine(
 								_penControl,
 								0,     y2_line,
 								Width, y2_line);
 
-				// alternate part
-				for (i = 0; i != Records.Length; ++i)
+				for (i = 0; i != Records.Length; ++i) // alternate part ->
 				{
 					if (Records[i].Alternate != null
-					    && (sprite = Records[i].Alternate[0].Sprite) != null)
+						&& (sprite = Records[i].Alternate[0].Sprite) != null)
 					{
-						graphics.DrawImage(
-										sprite,
-										i * XCImage.SpriteWidth32 + i, y3_sprite);
+						DrawSprite(
+								sprite,
+								i * XCImage.SpriteWidth32 + i + offset,
+								y3_sprite - Records[i].Record.TileOffset);
 					}
 				}
+			}
+		}
+
+		/// <summary>
+		/// Helper for OnPaint().
+		/// </summary>
+		/// <param name="sprite"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		private void DrawSprite(
+				Image sprite,
+				int x,
+				int y)
+		{
+			_graphics.DrawImage(
+							sprite,
+							new Rectangle(
+										x, y,
+										XCImage.SpriteWidth32,
+										XCImage.SpriteHeight40),
+							0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+							GraphicsUnit.Pixel,
+							_attri);
+		}
+
+
+		/// <summary>
+		/// Handles client resizing. Sets the scrollbar's Enabled and Maximum
+		/// values.
+		/// </summary>
+		/// <param name="eventargs"></param>
+		protected override void OnResize(EventArgs eventargs)
+		{
+			if (eventargs != null) // ie. is *not* Records load
+				base.OnResize(eventargs);
+
+			int range = 0;
+			if (Records != null && Records.Length != 0)
+			{
+				range = TableWidth + (_largeChange - 1) - Width;
+				if (range < _largeChange)
+					range = 0;
+			}
+
+			Scroller.Maximum =  range;
+			Scroller.Enabled = (range != 0);
+
+			if (Scroller.Enabled
+				&& TableWidth < Width + Scroller.Value)
+			{
+				Scroller.Value = TableWidth - Width;
 			}
 		}
 		#endregion Events (override)

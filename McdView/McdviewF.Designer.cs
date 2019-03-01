@@ -150,6 +150,8 @@
 		private System.Windows.Forms.GroupBox gb_Explosive;
 		private System.Windows.Forms.GroupBox gb_Health;
 		private System.Windows.Forms.GroupBox gb_Characteristics;
+		private System.Windows.Forms.Label lbl_SpriteShade;
+		private System.Windows.Forms.TextBox tb_SpriteShade;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -315,6 +317,8 @@
 			this.gb_Explosive = new System.Windows.Forms.GroupBox();
 			this.gb_Health = new System.Windows.Forms.GroupBox();
 			this.gb_Characteristics = new System.Windows.Forms.GroupBox();
+			this.lbl_SpriteShade = new System.Windows.Forms.Label();
+			this.tb_SpriteShade = new System.Windows.Forms.TextBox();
 			this.gb_Unused.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
 			this.gb_Sprites.SuspendLayout();
@@ -1595,7 +1599,7 @@
 			// ss_Statusbar
 			// 
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
-			this.ss_Statusbar.Location = new System.Drawing.Point(0, 765);
+			this.ss_Statusbar.Location = new System.Drawing.Point(0, 752);
 			this.ss_Statusbar.Name = "ss_Statusbar";
 			this.ss_Statusbar.Size = new System.Drawing.Size(692, 22);
 			this.ss_Statusbar.TabIndex = 123;
@@ -1665,7 +1669,7 @@
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Loft.Size = new System.Drawing.Size(175, 458);
+			this.gb_Loft.Size = new System.Drawing.Size(175, 445);
 			this.gb_Loft.TabIndex = 125;
 			this.gb_Loft.TabStop = false;
 			this.gb_Loft.Text = " loft ";
@@ -1723,7 +1727,7 @@
 			this.gb_Minimap.Size = new System.Drawing.Size(175, 65);
 			this.gb_Minimap.TabIndex = 128;
 			this.gb_Minimap.TabStop = false;
-			this.gb_Minimap.Text = " minimap ";
+			this.gb_Minimap.Text = " minimap icon ";
 			// 
 			// gb_Tu
 			// 
@@ -1869,11 +1873,33 @@
 			this.gb_Characteristics.TabStop = false;
 			this.gb_Characteristics.Text = " characteristics ";
 			// 
+			// lbl_SpriteShade
+			// 
+			this.lbl_SpriteShade.Location = new System.Drawing.Point(400, 725);
+			this.lbl_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_SpriteShade.Name = "lbl_SpriteShade";
+			this.lbl_SpriteShade.Size = new System.Drawing.Size(75, 15);
+			this.lbl_SpriteShade.TabIndex = 137;
+			this.lbl_SpriteShade.Text = "SpriteShade";
+			this.lbl_SpriteShade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tb_SpriteShade
+			// 
+			this.tb_SpriteShade.Location = new System.Drawing.Point(475, 723);
+			this.tb_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
+			this.tb_SpriteShade.Name = "tb_SpriteShade";
+			this.tb_SpriteShade.Size = new System.Drawing.Size(30, 19);
+			this.tb_SpriteShade.TabIndex = 138;
+			this.tb_SpriteShade.WordWrap = false;
+			this.tb_SpriteShade.TextChanged += new System.EventHandler(this.OnTextChanged_SpriteShade);
+			// 
 			// McdviewF
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(692, 787);
+			this.ClientSize = new System.Drawing.Size(692, 774);
+			this.Controls.Add(this.tb_SpriteShade);
+			this.Controls.Add(this.lbl_SpriteShade);
 			this.Controls.Add(this.gb_Loft);
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
@@ -1889,6 +1915,7 @@
 			this.Controls.Add(this.gb_Minimap);
 			this.Controls.Add(this.gb_Unused);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MaximumSize = new System.Drawing.Size(700, 800);
 			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";
 			this.Text = "McdView";
