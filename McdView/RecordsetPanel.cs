@@ -265,6 +265,31 @@ namespace McdView
 				Invalidate();
 			}
 		}
+
+		/// <summary>
+		/// Scrolls the table by the mousewheel.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			if (Scroller.Enabled)
+			{
+				if (e.Delta > 0)
+				{
+					if (Scroller.Value - Scroller.LargeChange < 0)
+						Scroller.Value = 0;
+					else
+						Scroller.Value -= Scroller.LargeChange;
+				}
+				else if (e.Delta < 0)
+				{
+					if (Scroller.Value + Scroller.LargeChange + (Scroller.LargeChange - 1) > Scroller.Maximum)
+						Scroller.Value = Scroller.Maximum - (Scroller.LargeChange - 1);
+					else
+						Scroller.Value += Scroller.LargeChange;
+				}
+			}
+		}
 		#endregion Events (override)
 	}
 }
