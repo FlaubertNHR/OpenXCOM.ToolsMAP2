@@ -78,7 +78,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpriteCollectionPanel.cs" />
+    <Compile Include="RecordsetPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -117,6 +117,7 @@ namespace PckView
 		public PckViewForm()
 		{
 			// NOTE: Set the debug-logfile-path in PckViewPanel, since it instantiates first.
+			// uh ... changed.
 
 			InitializeComponent();
 

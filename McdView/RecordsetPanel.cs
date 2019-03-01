@@ -14,7 +14,7 @@ namespace McdView
 	/// The panel that displays the entire MCD recordset with each record's
 	/// Sprite1 sprite.
 	/// </summary>
-	internal sealed class SpriteCollectionPanel
+	internal sealed class RecordsetPanel
 		:
 			Panel
 	{
@@ -27,6 +27,7 @@ namespace McdView
 
 		private readonly Pen _penControl     = new Pen(SystemColors.Control, 1);
 		private readonly Brush _brushControl = new SolidBrush(SystemColors.Control);
+		private readonly Brush _brushHilight = new SolidBrush(Color.FromArgb(60, SystemColors.MenuHighlight));
 
 		private const TextFormatFlags flags = TextFormatFlags.HorizontalCenter
 											| TextFormatFlags.VerticalCenter
@@ -54,7 +55,7 @@ namespace McdView
 
 
 		#region cTor
-		internal SpriteCollectionPanel(McdviewF f)
+		internal RecordsetPanel(McdviewF f)
 		{
 			_f = f;
 
@@ -138,6 +139,15 @@ namespace McdView
 									_brushControl,
 									0,     y1_fill,
 									Width, y1_fill_h);
+
+				if (_f.SelId != -1)
+					_graphics.FillRectangle(
+										_brushHilight,
+										_f.SelId * (XCImage.SpriteWidth32 + 1) + offset,
+										y1_fill,
+										XCImage.SpriteWidth32,
+										y1_fill_h);
+
 				for (i = 0; i != Records.Length; ++i)
 				{
 					rect = new Rectangle(
@@ -211,6 +221,7 @@ namespace McdView
 		/// <summary>
 		/// Handles client resizing. Sets the scrollbar's Enabled and Maximum
 		/// values.
+		/// @note Holy f*ck I hate .NET scrollbars.
 		/// </summary>
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
@@ -233,6 +244,25 @@ namespace McdView
 				&& TableWidth < Width + Scroller.Value)
 			{
 				Scroller.Value = TableWidth - Width;
+			}
+		}
+
+
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			Select();
+
+			if (Records != null && Records.Length != 0)
+			{
+				int col = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
+				if (col >= Records.Length)
+				{
+					col = -1;
+					// TODO: clear record info.
+				}
+
+				_f.SelId = col;
+				Invalidate();
 			}
 		}
 		#endregion Events (override)

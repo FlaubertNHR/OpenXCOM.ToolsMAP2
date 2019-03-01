@@ -17,7 +17,7 @@ namespace McdView
 			Form
 	{
 		#region Fields
-		private SpriteCollectionPanel SpriteCollectionPanel;
+		private RecordsetPanel RecordPanel;
 		#endregion Fields
 
 
@@ -28,7 +28,7 @@ namespace McdView
 			get { return _records; }
 			set
 			{
-				SpriteCollectionPanel.Records = (_records = value);
+				RecordPanel.Records = (_records = value);
 			}
 		}
 
@@ -47,27 +47,41 @@ namespace McdView
 				if (_spriteShadeEnabled = ((_spriteShadeInt = value) != -1))
 					SpriteShadeFloat = ((float)_spriteShadeInt * 0.03f);
 
-				SpriteCollectionPanel.Invalidate();
+				RecordPanel.Invalidate();
 				// TODO: refresh anisprites
 			}
 		}
 		internal float SpriteShadeFloat
 		{ get; private set; }
+
+
+		private int _selId = -1;
+		internal int SelId
+		{
+			get { return _selId; }
+			set { _selId = value; }
+		}
 		#endregion Properties
 
 
 		#region cTor
 		internal McdviewF()
 		{
+#if DEBUG
+			LogFile.SetLogFilePath(Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
+#endif
+
 			InitializeComponent();
 
 			MaximumSize = new Size(0,0);
 
-			SpriteCollectionPanel = new SpriteCollectionPanel(this);
-			gb_Collection.Controls.Add(SpriteCollectionPanel);
-			SpriteCollectionPanel.Width = gb_Collection.Width - 10;
+			RecordPanel = new RecordsetPanel(this);
+			gb_Collection.Controls.Add(RecordPanel);
+			RecordPanel.Width = gb_Collection.Width - 10;
 
 			tb_SpriteShade.Text = SpriteShadeInt.ToString();
+
+			RecordPanel.Select();
 		}
 		#endregion cTor
 
@@ -123,7 +137,11 @@ namespace McdView
 							Records[id].Alternate = TilepartFactory.GetAlternatePart(terrain, id, Records[id].Record, Records);
 						}
 					}
+
+					SelId = -1;
 					ResourceInfo.ReloadSprites = false;
+
+					Text = "McdView - " + pfeMcd;
 				}
 			}
 		}
@@ -138,7 +156,7 @@ namespace McdView
 
 				Spriteset.Pal = Palette.UfoBattle;
 
-				SpriteCollectionPanel.Invalidate();
+				RecordPanel.Invalidate();
 				// TODO: refresh anisprites
 			}
 		}
@@ -152,7 +170,7 @@ namespace McdView
 
 				Spriteset.Pal = Palette.TftdBattle;
 
-				SpriteCollectionPanel.Invalidate();
+				RecordPanel.Invalidate();
 				// TODO: refresh anisprites
 			}
 		}
