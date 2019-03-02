@@ -2106,7 +2106,7 @@
 			this.pnl_Sprites.Size = new System.Drawing.Size(680, 80);
 			this.pnl_Sprites.TabIndex = 116;
 			this.pnl_Sprites.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Sprites);
-			this.pnl_Sprites.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown_SpritePanel);
+			this.pnl_Sprites.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_SpritePanel);
 			// 
 			// tb7_phase8
 			// 

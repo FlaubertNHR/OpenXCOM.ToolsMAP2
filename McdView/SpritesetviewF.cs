@@ -14,15 +14,15 @@ namespace McdView
 			Form
 	{
 		#region Fields (constant)
-		const int COLS = 16;
-		const int VERT_TEXT_PAD = 16;
+		private const int COLS          = 16;
+		private const int VERT_TEXT_PAD = 16;
 		#endregion Fields (constant)
 
 
 		#region Fields
 		private readonly McdviewF _f;
 
-		private int Pos;
+		private int Phase;
 		private int SpriteId;
 		#endregion Fields
 
@@ -32,11 +32,11 @@ namespace McdView
 		/// 
 		/// </summary>
 		/// <param name="f"></param>
-		/// <param name="pos"></param>
+		/// <param name="phase"></param>
 		/// <param name="spriteId"></param>
 		internal SpritesetF(
 				McdviewF f,
-				int pos,
+				int phase,
 				int spriteId)
 		{
 			InitializeComponent();
@@ -47,19 +47,19 @@ namespace McdView
 				   | ControlStyles.ResizeRedraw, true);
 
 			_f = f;
-			Pos = pos;
+			Phase = phase;
 			SpriteId = spriteId;
 
-			Text = " " + _f.Label + " - phase " + (Pos + 1);
+			Text = " " + _f.Label + " - phase " + (Phase + 1);
 
 			int w;
-			if (_f.Spriteset.Count < 16)
+			if (_f.Spriteset.Count < COLS)
 			{
 				w = _f.Spriteset.Count;
 				if (w < 8) w = 8;
 			}
 			else
-				w = 16;
+				w = COLS;
 
 			w *= XCImage.SpriteWidth32;
 
@@ -73,8 +73,6 @@ namespace McdView
 		#region Events (override)
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			//base.OnPaint(e);
-
 			var graphics = e.Graphics;
 			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
@@ -93,8 +91,7 @@ namespace McdView
 				graphics.DrawImage(
 								_f.Spriteset[i].Sprite,
 								new Rectangle(
-											x,
-											y,
+											x, y,
 											XCImage.SpriteWidth32,
 											XCImage.SpriteHeight40),
 								0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
@@ -113,29 +110,40 @@ namespace McdView
 										rect);
 
 				TextRenderer.DrawText(
-								graphics,
-								i.ToString(),
-								Font,
-								rect,
-								SystemColors.ControlText,
-								McdviewF.FLAGS);
+									graphics,
+									i.ToString(),
+									Font,
+									rect,
+									SystemColors.ControlText,
+									McdviewF.FLAGS);
 			}
 		}
-		#endregion Events (override)
 
 
-		#region Events
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
+				   + e.X /  XCImage.SpriteWidth32;
+
+			if (id < _f.Spriteset.Count)
+			{
+				_f.SetSprite(Phase, id);
+				Close();
+			}
+		}
+
+
+
 		/// <summary>
 		/// Closes the screen on an Escape keydown event.
 		/// </summary>
-		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnKeyDown(object sender, KeyEventArgs e)
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 				Close();
 		}
-		#endregion Events
+		#endregion Events (override)
 
 
 		#region Designer
@@ -147,8 +155,7 @@ namespace McdView
 		/// <summary>
 		/// Disposes resources used by the form.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be
-		/// disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -180,7 +187,6 @@ namespace McdView
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "spriteset";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ResumeLayout(false);
 
 		}

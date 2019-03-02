@@ -32,7 +32,7 @@ namespace McdView
 
 		private RecordsetPanel RecordPanel;
 
-		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(60, SystemColors.MenuHighlight));
+		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(67, SystemColors.MenuHighlight));
 		#endregion Fields
 
 
@@ -97,6 +97,23 @@ namespace McdView
 				}
 			}
 		}
+
+
+		private bool _changed;
+		private bool Changed
+		{
+			get { return _changed; }
+			set
+			{
+				if (_changed != value)
+				{
+					if (_changed = value)
+						Text += "*";
+					else
+						Text = Text.Substring(0, Text.Length - 1);
+				}
+			}
+		}
 		#endregion Properties
 
 
@@ -108,6 +125,7 @@ namespace McdView
 #endif
 
 			InitializeComponent();
+			SetDoubleBuffered(pnl_Sprites);
 
 			MaximumSize = new Size(0,0);
 
@@ -120,14 +138,85 @@ namespace McdView
 			RecordPanel.Select();
 
 			pnl_Sprites.Width = Width - 10;
+			SpaceSpriteFields();
+		}
+
+		private void SpaceSpriteFields()
+		{
+			int left = pnl_Sprites.Left;
+			int offset = XCImage.SpriteWidth32 - tb0_phase1.Width / 2;
+
+			tb0_phase1.Left = left + SPRITE_ORIGIN_X + offset;
+			tb1_phase2.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X;
+			tb2_phase3.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 2;
+			tb3_phase4.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 3;
+			tb4_phase5.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 4;
+			tb5_phase6.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 5;
+			tb6_phase7.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 6;
+			tb7_phase8.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 7;
+
+			lbl0.Left = tb0_phase1.Left + tb0_phase1.Width / 2 - (lbl0.Width + lbl0_phase1.Width) / 2;
+			lbl0_phase1.Left = lbl0.Right;
+
+			lbl1.Left = lbl0.Left + SPRITE_OFFSET_X;
+			lbl1_phase2.Left = lbl1.Right;
+
+			lbl2.Left = lbl1.Left + SPRITE_OFFSET_X;
+			lbl2_phase3.Left = lbl2.Right;
+
+			lbl3.Left = lbl2.Left + SPRITE_OFFSET_X;
+			lbl3_phase4.Left = lbl3.Right;
+
+			lbl4.Left = lbl3.Left + SPRITE_OFFSET_X;
+			lbl4_phase5.Left = lbl4.Right;
+
+			lbl5.Left = lbl4.Left + SPRITE_OFFSET_X;
+			lbl5_phase6.Left = lbl5.Right;
+
+			lbl6.Left = lbl5.Left + SPRITE_OFFSET_X;
+			lbl6_phase7.Left = lbl6.Right;
+
+			lbl7.Left = lbl6.Left + SPRITE_OFFSET_X;
+			lbl7_phase8.Left = lbl7.Right;
 		}
 		#endregion cTor
+
+
+		/// <summary>
+		/// Some controls, such as the DataGridView, do not allow setting the
+		/// DoubleBuffered property. It is set as a protected property. This
+		/// method is a work-around to allow setting it. Call this in the
+		/// constructor just after InitializeComponent().
+		/// https://stackoverflow.com/questions/118528/horrible-redraw-performance-of-the-datagridview-on-one-of-my-two-screens#answer-16625788
+		/// @note I wonder if this works on Mono. It stops the redraw-flick when
+		/// setting the anisprite on return from SpritesetviewF on my system
+		/// (Win7-64).
+		/// </summary>
+		/// <param name="control">the Control on which to set DoubleBuffered to true</param>
+		private static void SetDoubleBuffered(object control)
+		{
+			// if not remote desktop session then enable double-buffering optimization
+			if (!SystemInformation.TerminalServerSession)
+			{
+				// set instance non-public property with name "DoubleBuffered" to true
+				typeof(Control).InvokeMember("DoubleBuffered",
+											 System.Reflection.BindingFlags.SetProperty
+										   | System.Reflection.BindingFlags.Instance
+										   | System.Reflection.BindingFlags.NonPublic,
+											 null,
+											 control,
+											 new object[] { true });
+			}
+		}
 
 
 		#region Menuitems
 		private void OnClick_Open(object sender, EventArgs e)
 		{
 			// TODO: Check changed.
+//			if (Changed)
+//			{
+//			}
 
 			using (var ofd = new OpenFileDialog())
 			{
@@ -179,6 +268,7 @@ namespace McdView
 					SelId = -1;
 					ResourceInfo.ReloadSprites = false;
 
+					_changed = false;
 					Text = "McdView - " + _pfeMcd;
 				}
 			}
@@ -236,9 +326,9 @@ namespace McdView
 		Graphics _graphics;
 		ImageAttributes _attri;
 
-		const int xOrigin = 20;
-		const int yOrigin =  0;
-		const int xOffset = 80;
+		const int SPRITE_ORIGIN_X = 20;
+		const int SPRITE_ORIGIN_Y =  0;
+		const int SPRITE_OFFSET_X = 80;
 
 		/// <summary>
 		/// Handles the Paint event for the anisprite groupbox's sprite-panel.
@@ -259,36 +349,36 @@ namespace McdView
 
 				DrawSprite(
 						Spriteset[Records[SelId].Record.Sprite1].Sprite,
-						xOrigin,
-						yOrigin);
+						SPRITE_ORIGIN_X,
+						SPRITE_ORIGIN_Y);
 				DrawSprite(
 						Spriteset[Records[SelId].Record.Sprite2].Sprite,
-						xOrigin + xOffset,
-						yOrigin);
+						SPRITE_ORIGIN_X + SPRITE_OFFSET_X,
+						SPRITE_ORIGIN_Y);
 				DrawSprite(
 						Spriteset[Records[SelId].Record.Sprite3].Sprite,
-						xOrigin + xOffset * 2,
-						yOrigin);
+						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 2,
+						SPRITE_ORIGIN_Y);
 				DrawSprite(
 						Spriteset[Records[SelId].Record.Sprite4].Sprite,
-						xOrigin + xOffset * 3,
-						yOrigin);
+						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 3,
+						SPRITE_ORIGIN_Y);
 				DrawSprite(
 						Spriteset[Records[SelId].Record.Sprite5].Sprite,
-						xOrigin + xOffset * 4,
-						yOrigin);
+						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 4,
+						SPRITE_ORIGIN_Y);
 				DrawSprite(
 						Spriteset[Records[SelId].Record.Sprite6].Sprite,
-						xOrigin + xOffset * 5,
-						yOrigin);
+						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 5,
+						SPRITE_ORIGIN_Y);
 				DrawSprite(
 						Spriteset[Records[SelId].Record.Sprite7].Sprite,
-						xOrigin + xOffset * 6,
-						yOrigin);
+						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 6,
+						SPRITE_ORIGIN_Y);
 				DrawSprite(
 						Spriteset[Records[SelId].Record.Sprite8].Sprite,
-						xOrigin + xOffset * 7,
-						yOrigin);
+						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 7,
+						SPRITE_ORIGIN_Y);
 			}
 		}
 
@@ -320,39 +410,144 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMouseDown_SpritePanel(object sender, MouseEventArgs e)
+		private void OnMouseUp_SpritePanel(object sender, MouseEventArgs e)
 		{
-			if (Spriteset != null && SelId != -1)
+			if (Spriteset != null && SelId != -1
+				&& e.Y > -1 && e.Y < pnl_Sprites.Height)
 			{
-				int pos;
-				for (pos = 0; pos != 8; ++pos)
+				int phase;
+				for (phase = 0; phase != 8; ++phase)
 				{
-					if (   e.X > xOrigin + (pos * xOffset)
-						&& e.X < xOrigin + (pos * xOffset) + (XCImage.SpriteWidth32 * 2))
+					if (   e.X > SPRITE_ORIGIN_X + (phase * SPRITE_OFFSET_X)
+						&& e.X < SPRITE_ORIGIN_X + (phase * SPRITE_OFFSET_X) + (XCImage.SpriteWidth32 * 2))
 					{
 						break;
 					}
 				}
 
-				if (pos != 8)
+				if (phase != 8)
 				{
-					int spriteId;
-					switch (pos)
+					int id;
+					switch (phase)
 					{
-						default: spriteId = Int32.Parse(tb0_phase1.Text); break; // #0
-						case 1:  spriteId = Int32.Parse(tb1_phase2.Text); break;
-						case 2:  spriteId = Int32.Parse(tb2_phase3.Text); break;
-						case 3:  spriteId = Int32.Parse(tb3_phase4.Text); break;
-						case 4:  spriteId = Int32.Parse(tb4_phase5.Text); break;
-						case 5:  spriteId = Int32.Parse(tb5_phase6.Text); break;
-						case 6:  spriteId = Int32.Parse(tb6_phase7.Text); break;
-						case 7:  spriteId = Int32.Parse(tb7_phase8.Text); break;
+						default: id = Int32.Parse(tb0_phase1.Text); break; // #0
+						case 1:  id = Int32.Parse(tb1_phase2.Text); break;
+						case 2:  id = Int32.Parse(tb2_phase3.Text); break;
+						case 3:  id = Int32.Parse(tb3_phase4.Text); break;
+						case 4:  id = Int32.Parse(tb4_phase5.Text); break;
+						case 5:  id = Int32.Parse(tb5_phase6.Text); break;
+						case 6:  id = Int32.Parse(tb6_phase7.Text); break;
+						case 7:  id = Int32.Parse(tb7_phase8.Text); break;
 					}
 
-					var f = new SpritesetF(this, pos, spriteId);
-					f.Location = new Point(Location.X + 20, Location.Y + 350);
-					f.ShowDialog();
+					using (var f = new SpritesetF(this, phase, id))
+					{
+						f.Location = new Point(Location.X + 20, Location.Y + 350);
+						f.ShowDialog();
+					}
 				}
+			}
+		}
+
+		/// <summary>
+		/// Sets an anisprite when returning from SpritesetviewF.
+		/// </summary>
+		/// <param name="phase"></param>
+		/// <param name="id"></param>
+		internal void SetSprite(int phase, int id)
+		{
+			bool changed = false;
+
+			switch (phase)
+			{
+				case 0:
+					if (Int32.Parse(tb0_phase1.Text) != id)
+					{
+						changed = true;
+
+						tb0_phase1.Text = id.ToString();
+						Records[SelId].Record.Sprite1 = (byte)id;
+					}
+					break;
+
+				case 1:
+					if (Int32.Parse(tb1_phase2.Text) != id)
+					{
+						changed = true;
+
+					tb1_phase2.Text = id.ToString();
+					Records[SelId].Record.Sprite2 = (byte)id;
+					}
+					break;
+
+				case 2:
+					if (Int32.Parse(tb2_phase3.Text) != id)
+					{
+						changed = true;
+
+						tb2_phase3.Text = id.ToString();
+						Records[SelId].Record.Sprite3 = (byte)id;
+					}
+					break;
+
+				case 3:
+					if (Int32.Parse(tb3_phase4.Text) != id)
+					{
+						changed = true;
+
+						tb3_phase4.Text = id.ToString();
+						Records[SelId].Record.Sprite4 = (byte)id;
+					}
+					break;
+
+				case 4:
+					if (Int32.Parse(tb4_phase5.Text) != id)
+					{
+						changed = true;
+
+						tb4_phase5.Text = id.ToString();
+						Records[SelId].Record.Sprite5 = (byte)id;
+					}
+					break;
+
+				case 5:
+					if (Int32.Parse(tb5_phase6.Text) != id)
+					{
+						changed = true;
+
+						tb5_phase6.Text = id.ToString();
+						Records[SelId].Record.Sprite6 = (byte)id;
+					}
+					break;
+
+				case 6:
+					if (Int32.Parse(tb6_phase7.Text) != id)
+					{
+						changed = true;
+
+						tb6_phase7.Text = id.ToString();
+						Records[SelId].Record.Sprite7 = (byte)id;
+					}
+					break;
+
+				case 7:
+					if (Int32.Parse(tb7_phase8.Text) != id)
+					{
+						changed = true;
+
+						tb7_phase8.Text = id.ToString();
+						Records[SelId].Record.Sprite8 = (byte)id;
+					}
+					break;
+			}
+
+			if (changed)
+			{
+				Changed = true;
+				Records[SelId].Anisprites[phase] = Spriteset[id];
+
+				RecordPanel.Invalidate();
+				pnl_Sprites.Invalidate();
 			}
 		}
 		#endregion Events

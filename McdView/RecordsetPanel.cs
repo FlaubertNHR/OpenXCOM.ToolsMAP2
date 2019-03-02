@@ -150,13 +150,14 @@ namespace McdView
 									y1_fill,
 									XCImage.SpriteWidth32,
 									y1_fill_h);
+
 					TextRenderer.DrawText(
-									_graphics,
-									i.ToString(),
-									Font,
-									rect,
-									SystemColors.ControlText,
-									McdviewF.FLAGS);
+										_graphics,
+										i.ToString(),
+										Font,
+										rect,
+										SystemColors.ControlText,
+										McdviewF.FLAGS);
 				}
 
 				for (i = 0; i != Records.Length; ++i) // dead part ->
