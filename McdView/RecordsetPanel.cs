@@ -244,6 +244,12 @@ namespace McdView
 		}
 
 
+		/// <summary>
+		/// @note If user has the openfile dialog open and double-clicks to open
+		/// a file that happens to be over the panel a mouse-up event fires. So
+		/// use MouseDown here.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			Select();
@@ -257,6 +263,7 @@ namespace McdView
 					id = -1;
 				}
 				_f.SelId = id;
+				ScrollTile();
 			}
 		}
 
@@ -285,5 +292,45 @@ namespace McdView
 			}
 		}
 		#endregion Events (override)
+
+
+		#region Methods
+		/// <summary>
+		/// Scrolls the panel to ensure that the currently selected tile is
+		/// fully displayed.
+		/// </summary>
+		private void ScrollTile()
+		{
+			if (Scroller.Enabled && _f.SelId != -1)
+			{
+				int x = _f.SelId * (XCImage.SpriteWidth32 + 1);
+				if (x < Scroller.Value)
+				{
+					Scroller.Value = x;
+				}
+				else if ((x += XCImage.SpriteWidth32) > Width + Scroller.Value)
+				{
+					Scroller.Value = x - Width;
+				}
+			}
+		}
+
+/*		/// <summary>
+		/// Gets the loc of the currently selected tile relative to the table.
+		/// </summary>
+		/// <returns></returns>
+		private int GetTileLeft()
+		{
+			return _f.SelId * (XCImage.SpriteWidth32 + 1);
+		}
+		/// <summary>
+		/// Gets the loc+width of the currently selected tile relative to the table.
+		/// </summary>
+		/// <returns></returns>
+		private int GetTileRight()
+		{
+			return _f.SelId * (XCImage.SpriteWidth32 + 1) + XCImage.SpriteWidth32;
+		} */
+		#endregion Methods
 	}
 }

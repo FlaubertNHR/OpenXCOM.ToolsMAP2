@@ -19,11 +19,13 @@ namespace McdView
 		:
 			Form
 	{
-		#region Fields (constant)
+		#region Fields (static)
+		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(69, SystemColors.MenuHighlight));
+
 		internal const TextFormatFlags FLAGS = TextFormatFlags.HorizontalCenter
 											 | TextFormatFlags.VerticalCenter
 											 | TextFormatFlags.NoPadding;
-		#endregion Fields (constant)
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -31,8 +33,6 @@ namespace McdView
 		internal string Label;
 
 		private RecordsetPanel RecordPanel;
-
-		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(67, SystemColors.MenuHighlight));
 		#endregion Fields
 
 
