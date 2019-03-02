@@ -137,7 +137,7 @@ namespace McdView
 
 			RecordPanel.Select();
 
-			pnl_Sprites.Width = Width - 10;
+			pnl_Sprites.Width = gb_Sprites.Width - 10;
 			SpaceSpriteFields();
 		}
 
@@ -597,19 +597,19 @@ namespace McdView
 			tb29_.Text = ((int)record.Unknown29).ToString();
 
 			tb30_isufodoor  .Text = Convert.ToInt32(record.UfoDoor)   .ToString();
-			tb31_blocklos   .Text = Convert.ToInt32(record.StopLOS)   .ToString();
+			tb31_isblocklos   .Text = Convert.ToInt32(record.StopLOS)   .ToString();
 			tb32_isdropthrou.Text = Convert.ToInt32(record.NoGround)  .ToString();
 			tb33_isbigwall  .Text = Convert.ToInt32(record.BigWall)   .ToString();
 			tb34_isgravlift .Text = Convert.ToInt32(record.GravLift)  .ToString();
 			tb35_ishumandoor.Text = Convert.ToInt32(record.HumanDoor) .ToString();
-			tb36_blockfire  .Text = Convert.ToInt32(record.BlockFire) .ToString();
-			tb37_blocksmoke .Text = Convert.ToInt32(record.BlockSmoke).ToString();
+			tb36_isblockfire  .Text = Convert.ToInt32(record.BlockFire) .ToString();
+			tb37_isblocksmoke .Text = Convert.ToInt32(record.BlockSmoke).ToString();
 
 			tb38_startphase .Text = ((int)record.StartPhase).ToString();
 			tb39_tuwalk     .Text = ((int)record.TU_Walk)   .ToString();
 			tb40_tuslide    .Text = ((int)record.TU_Slide)  .ToString();
 			tb41_tufly      .Text = ((int)record.TU_Fly)    .ToString();
-			tb42_armor      .Text = ((int)record.Armor)     .ToString();
+			tb42_hitpoints      .Text = ((int)record.Armor)     .ToString();
 			tb43_heblock    .Text = ((int)record.HE_Block)  .ToString();
 			tb44_deathid    .Text = ((int)record.DieTile)   .ToString();
 			tb45_flammable  .Text = ((int)record.Flammable) .ToString();
@@ -676,19 +676,19 @@ namespace McdView
 			tb29_.Text =
 
 			tb30_isufodoor  .Text =
-			tb31_blocklos   .Text =
+			tb31_isblocklos   .Text =
 			tb32_isdropthrou.Text =
 			tb33_isbigwall  .Text =
 			tb34_isgravlift .Text =
 			tb35_ishumandoor.Text =
-			tb36_blockfire  .Text =
-			tb37_blocksmoke .Text =
+			tb36_isblockfire  .Text =
+			tb37_isblocksmoke .Text =
 
 			tb38_startphase .Text =
 			tb39_tuwalk     .Text =
 			tb40_tuslide    .Text =
 			tb41_tufly      .Text =
-			tb42_armor      .Text =
+			tb42_hitpoints      .Text =
 			tb43_heblock    .Text =
 			tb44_deathid    .Text =
 			tb45_flammable  .Text =

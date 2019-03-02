@@ -19,7 +19,7 @@
 		private System.Windows.Forms.Label lbl20;
 		private System.Windows.Forms.Label lbl30;
 		private System.Windows.Forms.Label lbl31;
-		private System.Windows.Forms.Label lbl31_blocklos;
+		private System.Windows.Forms.Label lbl31_isblocklos;
 		private System.Windows.Forms.Label lbl32;
 		private System.Windows.Forms.Label lbl32_isdropthrou;
 		private System.Windows.Forms.Label lbl33;
@@ -29,9 +29,9 @@
 		private System.Windows.Forms.Label lbl35;
 		private System.Windows.Forms.Label lbl35_ishumandoor;
 		private System.Windows.Forms.Label lbl36;
-		private System.Windows.Forms.Label lbl36_blockfire;
+		private System.Windows.Forms.Label lbl36_isblockfire;
 		private System.Windows.Forms.Label lbl37;
-		private System.Windows.Forms.Label lbl37_blocksmoke;
+		private System.Windows.Forms.Label lbl37_isblocksmoke;
 		private System.Windows.Forms.Label lbl38;
 		private System.Windows.Forms.Label lbl38_startphase;
 		private System.Windows.Forms.Label lbl39;
@@ -41,7 +41,7 @@
 		private System.Windows.Forms.Label lbl41;
 		private System.Windows.Forms.Label lbl41_tufly;
 		private System.Windows.Forms.Label lbl42;
-		private System.Windows.Forms.Label lbl42_armor;
+		private System.Windows.Forms.Label lbl42_hitpoints;
 		private System.Windows.Forms.Label lbl43;
 		private System.Windows.Forms.Label lbl43_heblock;
 		private System.Windows.Forms.Label lbl44;
@@ -154,7 +154,7 @@
 		private System.Windows.Forms.TextBox tb_SpriteShade;
 		private System.Windows.Forms.TextBox tb20_scang1;
 		private System.Windows.Forms.TextBox tb44_deathid;
-		private System.Windows.Forms.TextBox tb42_armor;
+		private System.Windows.Forms.TextBox tb42_hitpoints;
 		private System.Windows.Forms.TextBox tb38_startphase;
 		private System.Windows.Forms.TextBox tb61_;
 		private System.Windows.Forms.TextBox tb50_;
@@ -175,9 +175,9 @@
 		private System.Windows.Forms.TextBox tb51_lightblock;
 		private System.Windows.Forms.TextBox tb56_smokeblock;
 		private System.Windows.Forms.TextBox tb43_heblock;
-		private System.Windows.Forms.TextBox tb37_blocksmoke;
-		private System.Windows.Forms.TextBox tb36_blockfire;
-		private System.Windows.Forms.TextBox tb31_blocklos;
+		private System.Windows.Forms.TextBox tb37_isblocksmoke;
+		private System.Windows.Forms.TextBox tb36_isblockfire;
+		private System.Windows.Forms.TextBox tb31_isblocklos;
 		private System.Windows.Forms.TextBox tb46_alternateid;
 		private System.Windows.Forms.TextBox tb35_ishumandoor;
 		private System.Windows.Forms.TextBox tb30_isufodoor;
@@ -249,7 +249,7 @@
 			this.lbl20 = new System.Windows.Forms.Label();
 			this.lbl30 = new System.Windows.Forms.Label();
 			this.lbl31 = new System.Windows.Forms.Label();
-			this.lbl31_blocklos = new System.Windows.Forms.Label();
+			this.lbl31_isblocklos = new System.Windows.Forms.Label();
 			this.lbl32 = new System.Windows.Forms.Label();
 			this.lbl32_isdropthrou = new System.Windows.Forms.Label();
 			this.lbl33 = new System.Windows.Forms.Label();
@@ -259,9 +259,9 @@
 			this.lbl35 = new System.Windows.Forms.Label();
 			this.lbl35_ishumandoor = new System.Windows.Forms.Label();
 			this.lbl36 = new System.Windows.Forms.Label();
-			this.lbl36_blockfire = new System.Windows.Forms.Label();
+			this.lbl36_isblockfire = new System.Windows.Forms.Label();
 			this.lbl37 = new System.Windows.Forms.Label();
-			this.lbl37_blocksmoke = new System.Windows.Forms.Label();
+			this.lbl37_isblocksmoke = new System.Windows.Forms.Label();
 			this.lbl38 = new System.Windows.Forms.Label();
 			this.lbl38_startphase = new System.Windows.Forms.Label();
 			this.lbl39 = new System.Windows.Forms.Label();
@@ -271,7 +271,7 @@
 			this.lbl41 = new System.Windows.Forms.Label();
 			this.lbl41_tufly = new System.Windows.Forms.Label();
 			this.lbl42 = new System.Windows.Forms.Label();
-			this.lbl42_armor = new System.Windows.Forms.Label();
+			this.lbl42_hitpoints = new System.Windows.Forms.Label();
 			this.lbl43 = new System.Windows.Forms.Label();
 			this.lbl43_heblock = new System.Windows.Forms.Label();
 			this.lbl44 = new System.Windows.Forms.Label();
@@ -418,9 +418,9 @@
 			this.tb51_lightblock = new System.Windows.Forms.TextBox();
 			this.tb56_smokeblock = new System.Windows.Forms.TextBox();
 			this.tb43_heblock = new System.Windows.Forms.TextBox();
-			this.tb37_blocksmoke = new System.Windows.Forms.TextBox();
-			this.tb36_blockfire = new System.Windows.Forms.TextBox();
-			this.tb31_blocklos = new System.Windows.Forms.TextBox();
+			this.tb37_isblocksmoke = new System.Windows.Forms.TextBox();
+			this.tb36_isblockfire = new System.Windows.Forms.TextBox();
+			this.tb31_isblocklos = new System.Windows.Forms.TextBox();
 			this.gb_Door = new System.Windows.Forms.GroupBox();
 			this.tb46_alternateid = new System.Windows.Forms.TextBox();
 			this.tb35_ishumandoor = new System.Windows.Forms.TextBox();
@@ -435,7 +435,7 @@
 			this.tb54_hetype = new System.Windows.Forms.TextBox();
 			this.gb_Health = new System.Windows.Forms.GroupBox();
 			this.tb44_deathid = new System.Windows.Forms.TextBox();
-			this.tb42_armor = new System.Windows.Forms.TextBox();
+			this.tb42_hitpoints = new System.Windows.Forms.TextBox();
 			this.gb_General = new System.Windows.Forms.GroupBox();
 			this.tb58_lightpower = new System.Windows.Forms.TextBox();
 			this.tb60_isbaseobject = new System.Windows.Forms.TextBox();
@@ -553,15 +553,15 @@
 			this.lbl31.Text = "#31";
 			this.lbl31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl31_blocklos
+			// lbl31_isblocklos
 			// 
-			this.lbl31_blocklos.Location = new System.Drawing.Point(40, 15);
-			this.lbl31_blocklos.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl31_blocklos.Name = "lbl31_blocklos";
-			this.lbl31_blocklos.Size = new System.Drawing.Size(75, 15);
-			this.lbl31_blocklos.TabIndex = 4;
-			this.lbl31_blocklos.Text = "BlockLoS";
-			this.lbl31_blocklos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl31_isblocklos.Location = new System.Drawing.Point(40, 15);
+			this.lbl31_isblocklos.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl31_isblocklos.Name = "lbl31_isblocklos";
+			this.lbl31_isblocklos.Size = new System.Drawing.Size(85, 15);
+			this.lbl31_isblocklos.TabIndex = 4;
+			this.lbl31_isblocklos.Text = "isBlockLoS";
+			this.lbl31_isblocklos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl32
 			// 
@@ -653,15 +653,15 @@
 			this.lbl36.Text = "#36";
 			this.lbl36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl36_blockfire
+			// lbl36_isblockfire
 			// 
-			this.lbl36_blockfire.Location = new System.Drawing.Point(40, 35);
-			this.lbl36_blockfire.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl36_blockfire.Name = "lbl36_blockfire";
-			this.lbl36_blockfire.Size = new System.Drawing.Size(75, 15);
-			this.lbl36_blockfire.TabIndex = 15;
-			this.lbl36_blockfire.Text = "BlockFire";
-			this.lbl36_blockfire.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl36_isblockfire.Location = new System.Drawing.Point(40, 35);
+			this.lbl36_isblockfire.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl36_isblockfire.Name = "lbl36_isblockfire";
+			this.lbl36_isblockfire.Size = new System.Drawing.Size(85, 15);
+			this.lbl36_isblockfire.TabIndex = 15;
+			this.lbl36_isblockfire.Text = "isBlockFire";
+			this.lbl36_isblockfire.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl37
 			// 
@@ -673,15 +673,15 @@
 			this.lbl37.Text = "#37";
 			this.lbl37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl37_blocksmoke
+			// lbl37_isblocksmoke
 			// 
-			this.lbl37_blocksmoke.Location = new System.Drawing.Point(40, 55);
-			this.lbl37_blocksmoke.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl37_blocksmoke.Name = "lbl37_blocksmoke";
-			this.lbl37_blocksmoke.Size = new System.Drawing.Size(75, 15);
-			this.lbl37_blocksmoke.TabIndex = 16;
-			this.lbl37_blocksmoke.Text = "BlockSmoke";
-			this.lbl37_blocksmoke.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl37_isblocksmoke.Location = new System.Drawing.Point(40, 55);
+			this.lbl37_isblocksmoke.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl37_isblocksmoke.Name = "lbl37_isblocksmoke";
+			this.lbl37_isblocksmoke.Size = new System.Drawing.Size(85, 15);
+			this.lbl37_isblocksmoke.TabIndex = 16;
+			this.lbl37_isblocksmoke.Text = "isBlockSmoke";
+			this.lbl37_isblocksmoke.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl38
 			// 
@@ -773,15 +773,15 @@
 			this.lbl42.Text = "#42";
 			this.lbl42.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl42_armor
+			// lbl42_hitpoints
 			// 
-			this.lbl42_armor.Location = new System.Drawing.Point(40, 15);
-			this.lbl42_armor.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl42_armor.Name = "lbl42_armor";
-			this.lbl42_armor.Size = new System.Drawing.Size(50, 15);
-			this.lbl42_armor.TabIndex = 26;
-			this.lbl42_armor.Text = "Armor";
-			this.lbl42_armor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl42_hitpoints.Location = new System.Drawing.Point(40, 15);
+			this.lbl42_hitpoints.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl42_hitpoints.Name = "lbl42_hitpoints";
+			this.lbl42_hitpoints.Size = new System.Drawing.Size(55, 15);
+			this.lbl42_hitpoints.TabIndex = 26;
+			this.lbl42_hitpoints.Text = "Hitpoints";
+			this.lbl42_hitpoints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl43
 			// 
@@ -798,7 +798,7 @@
 			this.lbl43_heblock.Location = new System.Drawing.Point(40, 75);
 			this.lbl43_heblock.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl43_heblock.Name = "lbl43_heblock";
-			this.lbl43_heblock.Size = new System.Drawing.Size(75, 15);
+			this.lbl43_heblock.Size = new System.Drawing.Size(85, 15);
 			this.lbl43_heblock.TabIndex = 28;
 			this.lbl43_heblock.Text = "HeBlock";
 			this.lbl43_heblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -818,7 +818,7 @@
 			this.lbl44_deathid.Location = new System.Drawing.Point(40, 35);
 			this.lbl44_deathid.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl44_deathid.Name = "lbl44_deathid";
-			this.lbl44_deathid.Size = new System.Drawing.Size(50, 15);
+			this.lbl44_deathid.Size = new System.Drawing.Size(55, 15);
 			this.lbl44_deathid.TabIndex = 30;
 			this.lbl44_deathid.Text = "DeathId";
 			this.lbl44_deathid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -958,7 +958,7 @@
 			this.lbl51_lightblock.Location = new System.Drawing.Point(40, 115);
 			this.lbl51_lightblock.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl51_lightblock.Name = "lbl51_lightblock";
-			this.lbl51_lightblock.Size = new System.Drawing.Size(75, 15);
+			this.lbl51_lightblock.Size = new System.Drawing.Size(85, 15);
 			this.lbl51_lightblock.TabIndex = 44;
 			this.lbl51_lightblock.Text = "LightBlock";
 			this.lbl51_lightblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1058,7 +1058,7 @@
 			this.lbl56_smokeblock.Location = new System.Drawing.Point(40, 95);
 			this.lbl56_smokeblock.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl56_smokeblock.Name = "lbl56_smokeblock";
-			this.lbl56_smokeblock.Size = new System.Drawing.Size(75, 15);
+			this.lbl56_smokeblock.Size = new System.Drawing.Size(85, 15);
 			this.lbl56_smokeblock.TabIndex = 54;
 			this.lbl56_smokeblock.Text = "SmokeBlock";
 			this.lbl56_smokeblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1780,7 +1780,7 @@
 			// 
 			// tb61_
 			// 
-			this.tb61_.Location = new System.Drawing.Point(125, 213);
+			this.tb61_.Location = new System.Drawing.Point(130, 213);
 			this.tb61_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb61_.Name = "tb61_";
 			this.tb61_.Size = new System.Drawing.Size(35, 19);
@@ -1790,7 +1790,7 @@
 			// 
 			// tb50_
 			// 
-			this.tb50_.Location = new System.Drawing.Point(125, 193);
+			this.tb50_.Location = new System.Drawing.Point(130, 193);
 			this.tb50_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb50_.Name = "tb50_";
 			this.tb50_.Size = new System.Drawing.Size(35, 19);
@@ -1800,7 +1800,7 @@
 			// 
 			// tb47_
 			// 
-			this.tb47_.Location = new System.Drawing.Point(125, 173);
+			this.tb47_.Location = new System.Drawing.Point(130, 173);
 			this.tb47_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb47_.Name = "tb47_";
 			this.tb47_.Size = new System.Drawing.Size(35, 19);
@@ -1810,7 +1810,7 @@
 			// 
 			// tb29_
 			// 
-			this.tb29_.Location = new System.Drawing.Point(125, 153);
+			this.tb29_.Location = new System.Drawing.Point(130, 153);
 			this.tb29_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb29_.Name = "tb29_";
 			this.tb29_.Size = new System.Drawing.Size(35, 19);
@@ -1820,7 +1820,7 @@
 			// 
 			// tb28_
 			// 
-			this.tb28_.Location = new System.Drawing.Point(125, 133);
+			this.tb28_.Location = new System.Drawing.Point(130, 133);
 			this.tb28_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb28_.Name = "tb28_";
 			this.tb28_.Size = new System.Drawing.Size(35, 19);
@@ -1830,7 +1830,7 @@
 			// 
 			// tb27_
 			// 
-			this.tb27_.Location = new System.Drawing.Point(125, 113);
+			this.tb27_.Location = new System.Drawing.Point(130, 113);
 			this.tb27_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb27_.Name = "tb27_";
 			this.tb27_.Size = new System.Drawing.Size(35, 19);
@@ -1840,7 +1840,7 @@
 			// 
 			// tb26_
 			// 
-			this.tb26_.Location = new System.Drawing.Point(125, 93);
+			this.tb26_.Location = new System.Drawing.Point(130, 93);
 			this.tb26_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb26_.Name = "tb26_";
 			this.tb26_.Size = new System.Drawing.Size(35, 19);
@@ -1850,7 +1850,7 @@
 			// 
 			// tb25_
 			// 
-			this.tb25_.Location = new System.Drawing.Point(125, 73);
+			this.tb25_.Location = new System.Drawing.Point(130, 73);
 			this.tb25_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb25_.Name = "tb25_";
 			this.tb25_.Size = new System.Drawing.Size(35, 19);
@@ -1860,7 +1860,7 @@
 			// 
 			// tb24_
 			// 
-			this.tb24_.Location = new System.Drawing.Point(125, 53);
+			this.tb24_.Location = new System.Drawing.Point(130, 53);
 			this.tb24_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb24_.Name = "tb24_";
 			this.tb24_.Size = new System.Drawing.Size(35, 19);
@@ -1870,7 +1870,7 @@
 			// 
 			// tb23_
 			// 
-			this.tb23_.Location = new System.Drawing.Point(125, 33);
+			this.tb23_.Location = new System.Drawing.Point(130, 33);
 			this.tb23_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb23_.Name = "tb23_";
 			this.tb23_.Size = new System.Drawing.Size(35, 19);
@@ -1880,7 +1880,7 @@
 			// 
 			// tb22_
 			// 
-			this.tb22_.Location = new System.Drawing.Point(125, 13);
+			this.tb22_.Location = new System.Drawing.Point(130, 13);
 			this.tb22_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb22_.Name = "tb22_";
 			this.tb22_.Size = new System.Drawing.Size(35, 19);
@@ -2190,7 +2190,7 @@
 			// 
 			// tb38_startphase
 			// 
-			this.tb38_startphase.Location = new System.Drawing.Point(120, 143);
+			this.tb38_startphase.Location = new System.Drawing.Point(115, 143);
 			this.tb38_startphase.Margin = new System.Windows.Forms.Padding(0);
 			this.tb38_startphase.Name = "tb38_startphase";
 			this.tb38_startphase.Size = new System.Drawing.Size(35, 19);
@@ -2227,7 +2227,7 @@
 			// 
 			// tb20_scang2
 			// 
-			this.tb20_scang2.Location = new System.Drawing.Point(60, 30);
+			this.tb20_scang2.Location = new System.Drawing.Point(60, 31);
 			this.tb20_scang2.Margin = new System.Windows.Forms.Padding(0);
 			this.tb20_scang2.Name = "tb20_scang2";
 			this.tb20_scang2.Size = new System.Drawing.Size(35, 19);
@@ -2237,7 +2237,7 @@
 			// 
 			// tb20_scang1
 			// 
-			this.tb20_scang1.Location = new System.Drawing.Point(20, 30);
+			this.tb20_scang1.Location = new System.Drawing.Point(20, 31);
 			this.tb20_scang1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb20_scang1.Name = "tb20_scang1";
 			this.tb20_scang1.Size = new System.Drawing.Size(35, 19);
@@ -2267,7 +2267,7 @@
 			// 
 			// tb41_tufly
 			// 
-			this.tb41_tufly.Location = new System.Drawing.Point(125, 53);
+			this.tb41_tufly.Location = new System.Drawing.Point(130, 53);
 			this.tb41_tufly.Margin = new System.Windows.Forms.Padding(0);
 			this.tb41_tufly.Name = "tb41_tufly";
 			this.tb41_tufly.Size = new System.Drawing.Size(35, 19);
@@ -2277,7 +2277,7 @@
 			// 
 			// tb40_tuslide
 			// 
-			this.tb40_tuslide.Location = new System.Drawing.Point(125, 33);
+			this.tb40_tuslide.Location = new System.Drawing.Point(130, 33);
 			this.tb40_tuslide.Margin = new System.Windows.Forms.Padding(0);
 			this.tb40_tuslide.Name = "tb40_tuslide";
 			this.tb40_tuslide.Size = new System.Drawing.Size(35, 19);
@@ -2287,7 +2287,7 @@
 			// 
 			// tb39_tuwalk
 			// 
-			this.tb39_tuwalk.Location = new System.Drawing.Point(125, 13);
+			this.tb39_tuwalk.Location = new System.Drawing.Point(130, 13);
 			this.tb39_tuwalk.Margin = new System.Windows.Forms.Padding(0);
 			this.tb39_tuwalk.Name = "tb39_tuwalk";
 			this.tb39_tuwalk.Size = new System.Drawing.Size(35, 19);
@@ -2316,7 +2316,7 @@
 			// 
 			// tb49_spriteoffset
 			// 
-			this.tb49_spriteoffset.Location = new System.Drawing.Point(125, 33);
+			this.tb49_spriteoffset.Location = new System.Drawing.Point(130, 33);
 			this.tb49_spriteoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.tb49_spriteoffset.Name = "tb49_spriteoffset";
 			this.tb49_spriteoffset.Size = new System.Drawing.Size(35, 19);
@@ -2326,7 +2326,7 @@
 			// 
 			// tb48_unitoffset
 			// 
-			this.tb48_unitoffset.Location = new System.Drawing.Point(125, 13);
+			this.tb48_unitoffset.Location = new System.Drawing.Point(130, 13);
 			this.tb48_unitoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.tb48_unitoffset.Name = "tb48_unitoffset";
 			this.tb48_unitoffset.Size = new System.Drawing.Size(35, 19);
@@ -2339,14 +2339,14 @@
 			this.gb_Block.Controls.Add(this.tb51_lightblock);
 			this.gb_Block.Controls.Add(this.tb56_smokeblock);
 			this.gb_Block.Controls.Add(this.tb43_heblock);
-			this.gb_Block.Controls.Add(this.tb37_blocksmoke);
-			this.gb_Block.Controls.Add(this.tb36_blockfire);
-			this.gb_Block.Controls.Add(this.tb31_blocklos);
+			this.gb_Block.Controls.Add(this.tb37_isblocksmoke);
+			this.gb_Block.Controls.Add(this.tb36_isblockfire);
+			this.gb_Block.Controls.Add(this.tb31_isblocklos);
 			this.gb_Block.Controls.Add(this.lbl31);
-			this.gb_Block.Controls.Add(this.lbl31_blocklos);
-			this.gb_Block.Controls.Add(this.lbl36_blockfire);
+			this.gb_Block.Controls.Add(this.lbl31_isblocklos);
+			this.gb_Block.Controls.Add(this.lbl36_isblockfire);
 			this.gb_Block.Controls.Add(this.lbl36);
-			this.gb_Block.Controls.Add(this.lbl37_blocksmoke);
+			this.gb_Block.Controls.Add(this.lbl37_isblocksmoke);
 			this.gb_Block.Controls.Add(this.lbl37);
 			this.gb_Block.Controls.Add(this.lbl43_heblock);
 			this.gb_Block.Controls.Add(this.lbl43);
@@ -2365,7 +2365,7 @@
 			// 
 			// tb51_lightblock
 			// 
-			this.tb51_lightblock.Location = new System.Drawing.Point(125, 113);
+			this.tb51_lightblock.Location = new System.Drawing.Point(130, 113);
 			this.tb51_lightblock.Margin = new System.Windows.Forms.Padding(0);
 			this.tb51_lightblock.Name = "tb51_lightblock";
 			this.tb51_lightblock.Size = new System.Drawing.Size(35, 19);
@@ -2375,7 +2375,7 @@
 			// 
 			// tb56_smokeblock
 			// 
-			this.tb56_smokeblock.Location = new System.Drawing.Point(125, 93);
+			this.tb56_smokeblock.Location = new System.Drawing.Point(130, 93);
 			this.tb56_smokeblock.Margin = new System.Windows.Forms.Padding(0);
 			this.tb56_smokeblock.Name = "tb56_smokeblock";
 			this.tb56_smokeblock.Size = new System.Drawing.Size(35, 19);
@@ -2385,7 +2385,7 @@
 			// 
 			// tb43_heblock
 			// 
-			this.tb43_heblock.Location = new System.Drawing.Point(125, 73);
+			this.tb43_heblock.Location = new System.Drawing.Point(130, 73);
 			this.tb43_heblock.Margin = new System.Windows.Forms.Padding(0);
 			this.tb43_heblock.Name = "tb43_heblock";
 			this.tb43_heblock.Size = new System.Drawing.Size(35, 19);
@@ -2393,35 +2393,35 @@
 			this.tb43_heblock.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb43_heblock.WordWrap = false;
 			// 
-			// tb37_blocksmoke
+			// tb37_isblocksmoke
 			// 
-			this.tb37_blocksmoke.Location = new System.Drawing.Point(125, 53);
-			this.tb37_blocksmoke.Margin = new System.Windows.Forms.Padding(0);
-			this.tb37_blocksmoke.Name = "tb37_blocksmoke";
-			this.tb37_blocksmoke.Size = new System.Drawing.Size(35, 19);
-			this.tb37_blocksmoke.TabIndex = 83;
-			this.tb37_blocksmoke.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb37_blocksmoke.WordWrap = false;
+			this.tb37_isblocksmoke.Location = new System.Drawing.Point(130, 53);
+			this.tb37_isblocksmoke.Margin = new System.Windows.Forms.Padding(0);
+			this.tb37_isblocksmoke.Name = "tb37_isblocksmoke";
+			this.tb37_isblocksmoke.Size = new System.Drawing.Size(35, 19);
+			this.tb37_isblocksmoke.TabIndex = 83;
+			this.tb37_isblocksmoke.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb37_isblocksmoke.WordWrap = false;
 			// 
-			// tb36_blockfire
+			// tb36_isblockfire
 			// 
-			this.tb36_blockfire.Location = new System.Drawing.Point(125, 33);
-			this.tb36_blockfire.Margin = new System.Windows.Forms.Padding(0);
-			this.tb36_blockfire.Name = "tb36_blockfire";
-			this.tb36_blockfire.Size = new System.Drawing.Size(35, 19);
-			this.tb36_blockfire.TabIndex = 82;
-			this.tb36_blockfire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb36_blockfire.WordWrap = false;
+			this.tb36_isblockfire.Location = new System.Drawing.Point(130, 33);
+			this.tb36_isblockfire.Margin = new System.Windows.Forms.Padding(0);
+			this.tb36_isblockfire.Name = "tb36_isblockfire";
+			this.tb36_isblockfire.Size = new System.Drawing.Size(35, 19);
+			this.tb36_isblockfire.TabIndex = 82;
+			this.tb36_isblockfire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb36_isblockfire.WordWrap = false;
 			// 
-			// tb31_blocklos
+			// tb31_isblocklos
 			// 
-			this.tb31_blocklos.Location = new System.Drawing.Point(125, 13);
-			this.tb31_blocklos.Margin = new System.Windows.Forms.Padding(0);
-			this.tb31_blocklos.Name = "tb31_blocklos";
-			this.tb31_blocklos.Size = new System.Drawing.Size(35, 19);
-			this.tb31_blocklos.TabIndex = 81;
-			this.tb31_blocklos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb31_blocklos.WordWrap = false;
+			this.tb31_isblocklos.Location = new System.Drawing.Point(130, 13);
+			this.tb31_isblocklos.Margin = new System.Windows.Forms.Padding(0);
+			this.tb31_isblocklos.Name = "tb31_isblocklos";
+			this.tb31_isblocklos.Size = new System.Drawing.Size(35, 19);
+			this.tb31_isblocklos.TabIndex = 81;
+			this.tb31_isblocklos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb31_isblocklos.WordWrap = false;
 			// 
 			// gb_Door
 			// 
@@ -2445,7 +2445,7 @@
 			// 
 			// tb46_alternateid
 			// 
-			this.tb46_alternateid.Location = new System.Drawing.Point(125, 53);
+			this.tb46_alternateid.Location = new System.Drawing.Point(130, 53);
 			this.tb46_alternateid.Margin = new System.Windows.Forms.Padding(0);
 			this.tb46_alternateid.Name = "tb46_alternateid";
 			this.tb46_alternateid.Size = new System.Drawing.Size(35, 19);
@@ -2455,7 +2455,7 @@
 			// 
 			// tb35_ishumandoor
 			// 
-			this.tb35_ishumandoor.Location = new System.Drawing.Point(125, 33);
+			this.tb35_ishumandoor.Location = new System.Drawing.Point(130, 33);
 			this.tb35_ishumandoor.Margin = new System.Windows.Forms.Padding(0);
 			this.tb35_ishumandoor.Name = "tb35_ishumandoor";
 			this.tb35_ishumandoor.Size = new System.Drawing.Size(35, 19);
@@ -2465,7 +2465,7 @@
 			// 
 			// tb30_isufodoor
 			// 
-			this.tb30_isufodoor.Location = new System.Drawing.Point(125, 13);
+			this.tb30_isufodoor.Location = new System.Drawing.Point(130, 13);
 			this.tb30_isufodoor.Margin = new System.Windows.Forms.Padding(0);
 			this.tb30_isufodoor.Name = "tb30_isufodoor";
 			this.tb30_isufodoor.Size = new System.Drawing.Size(35, 19);
@@ -2494,7 +2494,7 @@
 			// 
 			// tb32_isdropthrou
 			// 
-			this.tb32_isdropthrou.Location = new System.Drawing.Point(125, 33);
+			this.tb32_isdropthrou.Location = new System.Drawing.Point(130, 33);
 			this.tb32_isdropthrou.Margin = new System.Windows.Forms.Padding(0);
 			this.tb32_isdropthrou.Name = "tb32_isdropthrou";
 			this.tb32_isdropthrou.Size = new System.Drawing.Size(35, 19);
@@ -2504,7 +2504,7 @@
 			// 
 			// tb52_footsound
 			// 
-			this.tb52_footsound.Location = new System.Drawing.Point(125, 13);
+			this.tb52_footsound.Location = new System.Drawing.Point(130, 13);
 			this.tb52_footsound.Margin = new System.Windows.Forms.Padding(0);
 			this.tb52_footsound.Name = "tb52_footsound";
 			this.tb52_footsound.Size = new System.Drawing.Size(35, 19);
@@ -2537,7 +2537,7 @@
 			// 
 			// tb57_fuel
 			// 
-			this.tb57_fuel.Location = new System.Drawing.Point(125, 73);
+			this.tb57_fuel.Location = new System.Drawing.Point(130, 73);
 			this.tb57_fuel.Margin = new System.Windows.Forms.Padding(0);
 			this.tb57_fuel.Name = "tb57_fuel";
 			this.tb57_fuel.Size = new System.Drawing.Size(35, 19);
@@ -2547,7 +2547,7 @@
 			// 
 			// tb45_flammable
 			// 
-			this.tb45_flammable.Location = new System.Drawing.Point(125, 53);
+			this.tb45_flammable.Location = new System.Drawing.Point(130, 53);
 			this.tb45_flammable.Margin = new System.Windows.Forms.Padding(0);
 			this.tb45_flammable.Name = "tb45_flammable";
 			this.tb45_flammable.Size = new System.Drawing.Size(35, 19);
@@ -2557,7 +2557,7 @@
 			// 
 			// tb55_hestrength
 			// 
-			this.tb55_hestrength.Location = new System.Drawing.Point(125, 33);
+			this.tb55_hestrength.Location = new System.Drawing.Point(130, 33);
 			this.tb55_hestrength.Margin = new System.Windows.Forms.Padding(0);
 			this.tb55_hestrength.Name = "tb55_hestrength";
 			this.tb55_hestrength.Size = new System.Drawing.Size(35, 19);
@@ -2567,7 +2567,7 @@
 			// 
 			// tb54_hetype
 			// 
-			this.tb54_hetype.Location = new System.Drawing.Point(125, 13);
+			this.tb54_hetype.Location = new System.Drawing.Point(130, 13);
 			this.tb54_hetype.Margin = new System.Windows.Forms.Padding(0);
 			this.tb54_hetype.Name = "tb54_hetype";
 			this.tb54_hetype.Size = new System.Drawing.Size(35, 19);
@@ -2578,8 +2578,8 @@
 			// gb_Health
 			// 
 			this.gb_Health.Controls.Add(this.tb44_deathid);
-			this.gb_Health.Controls.Add(this.tb42_armor);
-			this.gb_Health.Controls.Add(this.lbl42_armor);
+			this.gb_Health.Controls.Add(this.tb42_hitpoints);
+			this.gb_Health.Controls.Add(this.lbl42_hitpoints);
 			this.gb_Health.Controls.Add(this.lbl42);
 			this.gb_Health.Controls.Add(this.lbl44_deathid);
 			this.gb_Health.Controls.Add(this.lbl44);
@@ -2594,7 +2594,7 @@
 			// 
 			// tb44_deathid
 			// 
-			this.tb44_deathid.Location = new System.Drawing.Point(125, 33);
+			this.tb44_deathid.Location = new System.Drawing.Point(130, 33);
 			this.tb44_deathid.Margin = new System.Windows.Forms.Padding(0);
 			this.tb44_deathid.Name = "tb44_deathid";
 			this.tb44_deathid.Size = new System.Drawing.Size(35, 19);
@@ -2602,15 +2602,15 @@
 			this.tb44_deathid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb44_deathid.WordWrap = false;
 			// 
-			// tb42_armor
+			// tb42_hitpoints
 			// 
-			this.tb42_armor.Location = new System.Drawing.Point(125, 13);
-			this.tb42_armor.Margin = new System.Windows.Forms.Padding(0);
-			this.tb42_armor.Name = "tb42_armor";
-			this.tb42_armor.Size = new System.Drawing.Size(35, 19);
-			this.tb42_armor.TabIndex = 32;
-			this.tb42_armor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb42_armor.WordWrap = false;
+			this.tb42_hitpoints.Location = new System.Drawing.Point(130, 13);
+			this.tb42_hitpoints.Margin = new System.Windows.Forms.Padding(0);
+			this.tb42_hitpoints.Name = "tb42_hitpoints";
+			this.tb42_hitpoints.Size = new System.Drawing.Size(35, 19);
+			this.tb42_hitpoints.TabIndex = 32;
+			this.tb42_hitpoints.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb42_hitpoints.WordWrap = false;
 			// 
 			// gb_General
 			// 
@@ -2643,7 +2643,7 @@
 			// 
 			// tb58_lightpower
 			// 
-			this.tb58_lightpower.Location = new System.Drawing.Point(125, 113);
+			this.tb58_lightpower.Location = new System.Drawing.Point(130, 113);
 			this.tb58_lightpower.Margin = new System.Windows.Forms.Padding(0);
 			this.tb58_lightpower.Name = "tb58_lightpower";
 			this.tb58_lightpower.Size = new System.Drawing.Size(35, 19);
@@ -2653,7 +2653,7 @@
 			// 
 			// tb60_isbaseobject
 			// 
-			this.tb60_isbaseobject.Location = new System.Drawing.Point(125, 93);
+			this.tb60_isbaseobject.Location = new System.Drawing.Point(130, 93);
 			this.tb60_isbaseobject.Margin = new System.Windows.Forms.Padding(0);
 			this.tb60_isbaseobject.Name = "tb60_isbaseobject";
 			this.tb60_isbaseobject.Size = new System.Drawing.Size(35, 19);
@@ -2663,7 +2663,7 @@
 			// 
 			// tb59_specialtype
 			// 
-			this.tb59_specialtype.Location = new System.Drawing.Point(125, 33);
+			this.tb59_specialtype.Location = new System.Drawing.Point(130, 33);
 			this.tb59_specialtype.Margin = new System.Windows.Forms.Padding(0);
 			this.tb59_specialtype.Name = "tb59_specialtype";
 			this.tb59_specialtype.Size = new System.Drawing.Size(35, 19);
@@ -2673,7 +2673,7 @@
 			// 
 			// tb53_parttype
 			// 
-			this.tb53_parttype.Location = new System.Drawing.Point(125, 13);
+			this.tb53_parttype.Location = new System.Drawing.Point(130, 13);
 			this.tb53_parttype.Margin = new System.Windows.Forms.Padding(0);
 			this.tb53_parttype.Name = "tb53_parttype";
 			this.tb53_parttype.Size = new System.Drawing.Size(35, 19);
@@ -2683,7 +2683,7 @@
 			// 
 			// tb34_isgravlift
 			// 
-			this.tb34_isgravlift.Location = new System.Drawing.Point(125, 73);
+			this.tb34_isgravlift.Location = new System.Drawing.Point(130, 73);
 			this.tb34_isgravlift.Margin = new System.Windows.Forms.Padding(0);
 			this.tb34_isgravlift.Name = "tb34_isgravlift";
 			this.tb34_isgravlift.Size = new System.Drawing.Size(35, 19);
@@ -2693,7 +2693,7 @@
 			// 
 			// tb33_isbigwall
 			// 
-			this.tb33_isbigwall.Location = new System.Drawing.Point(125, 53);
+			this.tb33_isbigwall.Location = new System.Drawing.Point(130, 53);
 			this.tb33_isbigwall.Margin = new System.Windows.Forms.Padding(0);
 			this.tb33_isbigwall.Name = "tb33_isbigwall";
 			this.tb33_isbigwall.Size = new System.Drawing.Size(35, 19);
