@@ -215,6 +215,7 @@
 		private System.Windows.Forms.TextBox tb8_loft00;
 		private System.Windows.Forms.TextBox tb20_scang2;
 		private System.Windows.Forms.Panel pnl_Sprites;
+		private System.Windows.Forms.Panel pnl_ScanGic;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -405,6 +406,7 @@
 			this.tb38_startphase = new System.Windows.Forms.TextBox();
 			this.gb_Collection = new System.Windows.Forms.GroupBox();
 			this.gb_Minimap = new System.Windows.Forms.GroupBox();
+			this.pnl_ScanGic = new System.Windows.Forms.Panel();
 			this.tb20_scang2 = new System.Windows.Forms.TextBox();
 			this.tb20_scang1 = new System.Windows.Forms.TextBox();
 			this.gb_Tu = new System.Windows.Forms.GroupBox();
@@ -2212,6 +2214,7 @@
 			// 
 			// gb_Minimap
 			// 
+			this.gb_Minimap.Controls.Add(this.pnl_ScanGic);
 			this.gb_Minimap.Controls.Add(this.tb20_scang2);
 			this.gb_Minimap.Controls.Add(this.tb20_scang1);
 			this.gb_Minimap.Controls.Add(this.lbl20_scang);
@@ -2224,7 +2227,17 @@
 			this.gb_Minimap.TabIndex = 128;
 			this.gb_Minimap.TabStop = false;
 			this.gb_Minimap.Text = " Minimap graphic ";
-			this.gb_Minimap.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_ScanG);
+			this.gb_Minimap.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_ScanG_group);
+			// 
+			// pnl_ScanGic
+			// 
+			this.pnl_ScanGic.Location = new System.Drawing.Point(120, 15);
+			this.pnl_ScanGic.Margin = new System.Windows.Forms.Padding(0);
+			this.pnl_ScanGic.Name = "pnl_ScanGic";
+			this.pnl_ScanGic.Size = new System.Drawing.Size(32, 32);
+			this.pnl_ScanGic.TabIndex = 5;
+			this.pnl_ScanGic.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_ScanG_panel);
+			this.pnl_ScanGic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_ScanGicon);
 			// 
 			// tb20_scang2
 			// 

@@ -38,7 +38,7 @@ namespace McdView
 		internal string Label;
 
 		private RecordsetPanel RecordPanel;
-		private int[,] ScanG;
+		internal int[,] ScanG;
 
 		private readonly Pen _penBlack = new Pen(Color.Black, 1);
 		#endregion Fields
@@ -79,7 +79,7 @@ namespace McdView
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
-				gb_Minimap .Invalidate();
+				pnl_ScanGic.Invalidate();
 			}
 		}
 		internal float SpriteShadeFloat
@@ -103,7 +103,7 @@ namespace McdView
 
 					RecordPanel.Invalidate();
 					pnl_Sprites.Invalidate();
-					gb_Minimap .Invalidate();
+					pnl_ScanGic.Invalidate();
 				}
 			}
 		}
@@ -523,7 +523,7 @@ namespace McdView
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
-				gb_Minimap .Invalidate();
+				pnl_ScanGic.Invalidate();
 			}
 		}
 
@@ -539,7 +539,7 @@ namespace McdView
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
-				gb_Minimap .Invalidate();
+				pnl_ScanGic.Invalidate();
 			}
 		}
 		#endregion Menuitems
@@ -793,21 +793,25 @@ namespace McdView
 
 
 		/// <summary>
-		/// Draws a ScanG icon in the minimap groupbox.
+		/// Draws a square around the ScanG icon.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnPaint_ScanG(object sender, PaintEventArgs e)
+		private void OnPaint_ScanG_group(object sender, PaintEventArgs e)
 		{
-			const int x = 119;
-			const int y = 14;
-			const int w = 33;
-			const int h = 33;
-
 			e.Graphics.DrawRectangle(
 								_penBlack,
-								x, y, w, h);
+								119, 14,
+								33, 33);
+		}
 
+		/// <summary>
+		/// Draws a ScanG icon in the ScanG panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_ScanG_panel(object sender, PaintEventArgs e)
+		{
 			if (SelId != -1 && ScanG != null)
 			{
 				int id = Int32.Parse(tb20_scang1.Text);
@@ -822,11 +826,11 @@ namespace McdView
 						_attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 					var icon = new Bitmap(
-										4, 4,
+										4,4,
 										PixelFormat.Format8bppIndexed);
 
 					var data = icon.LockBits(
-										new Rectangle(0, 0, icon.Width, icon.Height),
+										new Rectangle(0,0, icon.Width, icon.Height),
 										ImageLockMode.WriteOnly,
 										PixelFormat.Format8bppIndexed);
 					var start = data.Scan0;
@@ -858,11 +862,53 @@ namespace McdView
 
 					_graphics.DrawImage(
 									icon,
-									new Rectangle(x + 1, y + 1, w - 1, h - 1),
-									0, 0, icon.Width, icon.Height,
+									new Rectangle(0,0, 32,32),
+									0,0, icon.Width, icon.Height,
 									GraphicsUnit.Pixel,
 									_attri);
 				}
+			}
+		}
+
+		private void OnMouseUp_ScanGicon(object sender, MouseEventArgs e)
+		{
+			if (SelId != -1 && ScanG != null)
+			{
+				ColorPalette pal;
+				if (miPaletteTftd.Checked)
+					pal = Palette.TftdBattle.ColorTable;
+				else
+					pal = Palette.UfoBattle.ColorTable;
+
+				using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), pal))
+				{
+					f.Location = new Point(
+										Location.X + gb_Minimap.Width,
+										Location.Y + Height - f.Height);
+					f.ShowDialog();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Sets a ScanG icon when returning from ScanGiconF.
+		/// </summary>
+		/// <param name="id"></param>
+		internal void SetIcon(int id)
+		{
+			if (Int32.Parse(tb20_scang1.Text) != id)
+			{
+				Changed = true;
+
+				int id_reduced = id - 35;
+
+				tb20_scang1.Text = id        .ToString();
+				tb20_scang2.Text = id_reduced.ToString();
+
+				Records[SelId].Record.ScanG         = (byte)id;
+				Records[SelId].Record.ScanG_reduced = (byte)id_reduced;
+
+				pnl_ScanGic.Invalidate();
 			}
 		}
 		#endregion Events
