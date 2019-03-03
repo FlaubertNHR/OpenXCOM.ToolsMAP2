@@ -872,7 +872,9 @@ namespace McdView
 
 		private void OnMouseUp_ScanGicon(object sender, MouseEventArgs e)
 		{
-			if (SelId != -1 && ScanG != null)
+			if (SelId != -1 && ScanG != null
+				&& e.X > -1 && e.X < pnl_ScanGic.Width
+				&& e.Y > -1 && e.Y < pnl_ScanGic.Height)
 			{
 				ColorPalette pal;
 				if (miPaletteTftd.Checked)

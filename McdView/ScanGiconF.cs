@@ -120,8 +120,15 @@ namespace McdView
 				}
 				icon.UnlockBits(data);
 
-				ColorPalette pal = Pal; // palettes get copied not referenced ->
-				pal.Entries[Palette.TransparentId] = Color.Transparent;
+				// - if assigning a Bitmap's palette it gets cloned
+				// - if assigning a standalone palette it gets referenced
+				// so yes this higgledy-piggeldy is necessary.
+				// The point is to draw icons that are unavailable to terrain-
+				// parts with a non-transparent background.
+				icon.Palette = Pal;
+				ColorPalette pal = icon.Palette; // <- clone Palette
+				if (i > 35)
+					pal.Entries[Palette.TransparentId] = Color.Transparent;
 				icon.Palette = pal;
 
 				graphics.DrawImage(

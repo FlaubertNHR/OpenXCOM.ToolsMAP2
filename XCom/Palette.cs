@@ -303,8 +303,8 @@ namespace XCom
 		/// <returns>true if the palette names are the same</returns>
 		public override bool Equals(Object obj)
 		{
-			var palette = obj as Palette;
-			return (palette != null && ColorTable.Equals(palette.ColorTable));
+			var pal2 = obj as Palette;
+			return (pal2 != null && ColorTable.Equals(pal2.ColorTable));
 		}
 
 		public override int GetHashCode()
