@@ -5,9 +5,14 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
+using DSShared;
+using DSShared.Windows;
+
 using XCom;
 using XCom.Interfaces;
 using XCom.Resources.Map;
+
+using YamlDotNet.RepresentationModel; // read values (deserialization)
 
 
 namespace McdView
@@ -33,6 +38,9 @@ namespace McdView
 		internal string Label;
 
 		private RecordsetPanel RecordPanel;
+		private int[,] ScanG;
+
+		private readonly Pen _penBlack = new Pen(Color.Black, 1);
 		#endregion Fields
 
 
@@ -71,6 +79,7 @@ namespace McdView
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
+				gb_Minimap .Invalidate();
 			}
 		}
 		internal float SpriteShadeFloat
@@ -94,6 +103,7 @@ namespace McdView
 
 					RecordPanel.Invalidate();
 					pnl_Sprites.Invalidate();
+					gb_Minimap .Invalidate();
 				}
 			}
 		}
@@ -129,6 +139,8 @@ namespace McdView
 
 			MaximumSize = new Size(0,0);
 
+			LoadWindowMetrics();
+
 			RecordPanel = new RecordsetPanel(this);
 			gb_Collection.Controls.Add(RecordPanel);
 			RecordPanel.Width = gb_Collection.Width - 10;
@@ -139,8 +151,19 @@ namespace McdView
 
 			pnl_Sprites.Width = gb_Sprites.Width - 10;
 			SpaceSpriteFields();
+
+
+			string pathufo, pathtftd;
+			GetResourcePaths(out pathufo, out pathtftd);
+			ResourceInfo.LoadScanGufo(pathufo);		// -> ResourceInfo.ScanGufo
+			ResourceInfo.LoadScanGtftd(pathtftd);	// -> ResourceInfo.ScanGtftd
+			ScanG = ResourceInfo.ScanGufo;
 		}
 
+		/// <summary>
+		/// Spaces the layout of the fields under the anisprites in the sprite-
+		/// panel.
+		/// </summary>
 		private void SpaceSpriteFields()
 		{
 			int left = pnl_Sprites.Left;
@@ -179,7 +202,220 @@ namespace McdView
 			lbl7.Left = lbl6.Left + SPRITE_OFFSET_X;
 			lbl7_phase8.Left = lbl7.Right;
 		}
+
+/*		private string GetScanG_pathufo()
+		{
+			string dirSettings = Path.Combine(
+											Path.GetDirectoryName(Application.ExecutablePath),
+											PathInfo.SettingsDirectory);
+			string fileResources = Path.Combine(dirSettings, PathInfo.ConfigResources); // "MapResources.yml"
+		}
+		private string GetScanG_pathtftd()
+		{
+		} */
+
+		private void GetResourcePaths(out string pathufo, out string pathtftd)
+		{
+			pathufo  = null;
+			pathtftd = null;
+
+			// First check the current Terrain's basepath ...
+//			string path = Path.GetDirectoryName(_pfeMcd);
+//			if (path.EndsWith(GlobalsXC.TerrainDir, StringComparison.InvariantCulture))
+//			{
+//				path = path.Substring(0, path.Length - GlobalsXC.TerrainDir.Length + 1);
+//				return Path.Combine(path, SharedSpace.ScanGfile);
+//			}
+
+			// Second check the Configurator's basepath ...
+			string dirSettings = Path.Combine(
+											Path.GetDirectoryName(Application.ExecutablePath),
+											PathInfo.SettingsDirectory);
+			string fileResources = Path.Combine(dirSettings, PathInfo.ConfigResources); // "MapResources.yml"
+			if (File.Exists(fileResources))
+			{
+				using (var sr = new StreamReader(File.OpenRead(fileResources)))
+				{
+					var str = new YamlStream();
+					str.Load(sr);
+
+					string val;
+
+					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
+					foreach (var node in nodeRoot.Children)
+					{
+						switch (node.Key.ToString())
+						{
+							case "ufo":
+								if (//miPaletteUfo.Checked &&
+									(val = node.Value.ToString()) != PathInfo.NotConfigured)
+								{
+									pathufo = val;
+//									return Path.Combine(val, SharedSpace.ScanGfile);
+								}
+								break;
+
+							case "tftd":
+								if (//miPaletteTftd.Checked &&
+									(val = node.Value.ToString()) != PathInfo.NotConfigured)
+								{
+									pathtftd = val;
+//									return Path.Combine(val, SharedSpace.ScanGfile);
+								}
+								break;
+						}
+					}
+				}
+			}
+
+			// Third let the user load a ScanG.Dat file from a ScanG->menuitem or so.
+
+//			return null;
+		}
 		#endregion cTor
+
+
+		#region Load/Save 'registry' info
+		/// <summary>
+		/// Positions the window at user-defined coordinates w/ size.
+		/// @note Adapted from PckViewForm.
+		/// </summary>
+		private void LoadWindowMetrics()
+		{
+			string dirSettings = Path.Combine(
+											Path.GetDirectoryName(Application.ExecutablePath),
+											PathInfo.SettingsDirectory);
+			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
+			if (File.Exists(fileViewers))
+			{
+				using (var sr = new StreamReader(File.OpenRead(fileViewers)))
+				{
+					var str = new YamlStream();
+					str.Load(sr);
+
+					var invariant = System.Globalization.CultureInfo.InvariantCulture;
+
+					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
+					foreach (var node in nodeRoot.Children)
+					{
+						string viewer = ((YamlScalarNode)node.Key).Value;
+						if (String.Equals(viewer, RegistryInfo.McdView, StringComparison.Ordinal))
+						{
+							int x = 0;
+							int y = 0;
+							int w = 0;
+							int h = 0;
+
+							var keyvals = nodeRoot.Children[new YamlScalarNode(viewer)] as YamlMappingNode;
+							foreach (var keyval in keyvals) // NOTE: There is a better way to do this. See TilesetLoader..cTor
+							{
+								switch (keyval.Key.ToString()) // TODO: Error handling. ->
+								{
+									case "left":
+										x = Int32.Parse(keyval.Value.ToString(), invariant);
+										break;
+									case "top":
+										y = Int32.Parse(keyval.Value.ToString(), invariant);
+										break;
+									case "width":
+										w = Int32.Parse(keyval.Value.ToString(), invariant);
+										break;
+									case "height":
+										h = Int32.Parse(keyval.Value.ToString(), invariant);
+										break;
+								}
+							}
+
+							var rectScreen = Screen.GetWorkingArea(new Point(x, y));
+							if (!rectScreen.Contains(x + 200, y + 100)) // check to ensure that McdView is at least partly onscreen.
+							{
+								x = 100;
+								y =  50;
+							}
+
+							Left = x;
+							Top  = y;
+
+							ClientSize = new Size(w, h);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Saves the window position and size to YAML.
+		/// </summary>
+		private void SaveWindowMetrics()
+		{
+			string dirSettings = Path.Combine(
+											Path.GetDirectoryName(Application.ExecutablePath),
+											PathInfo.SettingsDirectory);
+			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
+
+			if (File.Exists(fileViewers))
+			{
+				WindowState = FormWindowState.Normal;
+
+				string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);
+				string dst = Path.Combine(dirSettings, PathInfo.ConfigViewersOld);
+
+				File.Copy(src, dst, true);
+
+				using (var sr = new StreamReader(File.OpenRead(dst))) // but now use dst as src ->
+
+				using (var fs = new FileStream(src, FileMode.Create)) // overwrite previous viewers-config.
+				using (var sw = new StreamWriter(fs))
+				{
+					bool found = false;
+
+					while (sr.Peek() != -1)
+					{
+						string line = sr.ReadLine().TrimEnd();
+
+						if (String.Equals(line, RegistryInfo.McdView + ":", StringComparison.Ordinal))
+						{
+							found = true;
+
+							sw.WriteLine(line);
+
+							line = sr.ReadLine();
+							line = sr.ReadLine();
+							line = sr.ReadLine();
+							line = sr.ReadLine(); // heh
+
+							sw.WriteLine("  left: "   + Math.Max(0, Location.X));	// =Left
+							sw.WriteLine("  top: "    + Math.Max(0, Location.Y));	// =Top
+							sw.WriteLine("  width: "  + ClientSize.Width);			// <- use ClientSize, since Width and Height
+							sw.WriteLine("  height: " + ClientSize.Height);			// screw up due to the titlebar/menubar area.
+						}
+						else
+							sw.WriteLine(line);
+					}
+
+					if (!found)
+					{
+						sw.WriteLine(RegistryInfo.McdView + ":");
+
+						sw.WriteLine("  left: "   + Math.Max(0, Location.X));
+						sw.WriteLine("  top: "    + Math.Max(0, Location.Y));
+						sw.WriteLine("  width: "  + ClientSize.Width);
+						sw.WriteLine("  height: " + ClientSize.Height);
+					}
+				}
+				File.Delete(dst);
+			}
+		}
+		#endregion Load/Save 'registry' info
+
+
+		#region Events (override)
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			SaveWindowMetrics();
+			base.OnFormClosing(e);
+		}
+		#endregion Events (override)
 
 
 		/// <summary>
@@ -283,9 +519,11 @@ namespace McdView
 				miPaletteTftd.Checked = false;
 
 				Spriteset.Pal = Palette.UfoBattle;
+				ScanG = ResourceInfo.ScanGufo;
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
+				gb_Minimap .Invalidate();
 			}
 		}
 
@@ -297,9 +535,11 @@ namespace McdView
 				miPaletteUfo .Checked = false;
 
 				Spriteset.Pal = Palette.TftdBattle;
+				ScanG = ResourceInfo.ScanGtftd;
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
+				gb_Minimap .Invalidate();
 			}
 		}
 		#endregion Menuitems
@@ -550,6 +790,81 @@ namespace McdView
 				pnl_Sprites.Invalidate();
 			}
 		}
+
+
+		/// <summary>
+		/// Draws a ScanG icon in the minimap groupbox.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_ScanG(object sender, PaintEventArgs e)
+		{
+			const int x = 119;
+			const int y = 14;
+			const int w = 33;
+			const int h = 33;
+
+			e.Graphics.DrawRectangle(
+								_penBlack,
+								x, y, w, h);
+
+			if (SelId != -1 && ScanG != null)
+			{
+				int id = Int32.Parse(tb20_scang1.Text);
+				if (id > 35 && id < ScanG.Length / 16)
+				{
+					_graphics = e.Graphics;
+					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
+					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+					_attri = new ImageAttributes();
+					if (_spriteShadeEnabled)
+						_attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+
+					var icon = new Bitmap(
+										4, 4,
+										PixelFormat.Format8bppIndexed);
+
+					var data = icon.LockBits(
+										new Rectangle(0, 0, icon.Width, icon.Height),
+										ImageLockMode.WriteOnly,
+										PixelFormat.Format8bppIndexed);
+					var start = data.Scan0;
+
+					unsafe
+					{
+						var pos = (byte*)start.ToPointer();
+
+						int palid;
+						for (uint row = 0; row != icon.Height; ++row)
+						for (uint col = 0; col != icon.Width;  ++col)
+						{
+							byte* pixel = pos + col + row * data.Stride;
+
+							palid = ScanG[id, row * 4 + col];
+							*pixel = (byte)palid;
+						}
+					}
+					icon.UnlockBits(data);
+
+					if (miPaletteTftd.Checked)
+						icon.Palette = Palette.TftdBattle.ColorTable;
+					else
+						icon.Palette = Palette.UfoBattle.ColorTable;
+
+					ColorPalette pal = icon.Palette; // palettes get copied not referenced ->
+					pal.Entries[Palette.TransparentId] = Color.Transparent;
+					icon.Palette = pal;
+
+					_graphics.DrawImage(
+									icon,
+									new Rectangle(x + 1, y + 1, w - 1, h - 1),
+									0, 0, icon.Width, icon.Height,
+									GraphicsUnit.Pixel,
+									_attri);
+				}
+			}
+		}
 		#endregion Events
 
 
@@ -596,20 +911,20 @@ namespace McdView
 			tb28_.Text = ((int)record.Unknown28).ToString();
 			tb29_.Text = ((int)record.Unknown29).ToString();
 
-			tb30_isufodoor  .Text = Convert.ToInt32(record.UfoDoor)   .ToString();
-			tb31_isblocklos   .Text = Convert.ToInt32(record.StopLOS)   .ToString();
-			tb32_isdropthrou.Text = Convert.ToInt32(record.NoGround)  .ToString();
-			tb33_isbigwall  .Text = Convert.ToInt32(record.BigWall)   .ToString();
-			tb34_isgravlift .Text = Convert.ToInt32(record.GravLift)  .ToString();
-			tb35_ishumandoor.Text = Convert.ToInt32(record.HumanDoor) .ToString();
-			tb36_isblockfire  .Text = Convert.ToInt32(record.BlockFire) .ToString();
-			tb37_isblocksmoke .Text = Convert.ToInt32(record.BlockSmoke).ToString();
+			tb30_isufodoor   .Text = Convert.ToInt32(record.UfoDoor)   .ToString();
+			tb31_isblocklos  .Text = Convert.ToInt32(record.StopLOS)   .ToString();
+			tb32_isdropthrou .Text = Convert.ToInt32(record.NoGround)  .ToString();
+			tb33_isbigwall   .Text = Convert.ToInt32(record.BigWall)   .ToString();
+			tb34_isgravlift  .Text = Convert.ToInt32(record.GravLift)  .ToString();
+			tb35_ishumandoor .Text = Convert.ToInt32(record.HumanDoor) .ToString();
+			tb36_isblockfire .Text = Convert.ToInt32(record.BlockFire) .ToString();
+			tb37_isblocksmoke.Text = Convert.ToInt32(record.BlockSmoke).ToString();
 
 			tb38_startphase .Text = ((int)record.StartPhase).ToString();
 			tb39_tuwalk     .Text = ((int)record.TU_Walk)   .ToString();
 			tb40_tuslide    .Text = ((int)record.TU_Slide)  .ToString();
 			tb41_tufly      .Text = ((int)record.TU_Fly)    .ToString();
-			tb42_hitpoints      .Text = ((int)record.Armor)     .ToString();
+			tb42_hitpoints  .Text = ((int)record.Armor)     .ToString();
 			tb43_heblock    .Text = ((int)record.HE_Block)  .ToString();
 			tb44_deathid    .Text = ((int)record.DieTile)   .ToString();
 			tb45_flammable  .Text = ((int)record.Flammable) .ToString();
@@ -675,20 +990,20 @@ namespace McdView
 			tb28_.Text =
 			tb29_.Text =
 
-			tb30_isufodoor  .Text =
-			tb31_isblocklos   .Text =
-			tb32_isdropthrou.Text =
-			tb33_isbigwall  .Text =
-			tb34_isgravlift .Text =
-			tb35_ishumandoor.Text =
-			tb36_isblockfire  .Text =
-			tb37_isblocksmoke .Text =
+			tb30_isufodoor   .Text =
+			tb31_isblocklos  .Text =
+			tb32_isdropthrou .Text =
+			tb33_isbigwall   .Text =
+			tb34_isgravlift  .Text =
+			tb35_ishumandoor .Text =
+			tb36_isblockfire .Text =
+			tb37_isblocksmoke.Text =
 
 			tb38_startphase .Text =
 			tb39_tuwalk     .Text =
 			tb40_tuslide    .Text =
 			tb41_tufly      .Text =
-			tb42_hitpoints      .Text =
+			tb42_hitpoints  .Text =
 			tb43_heblock    .Text =
 			tb44_deathid    .Text =
 			tb45_flammable  .Text =

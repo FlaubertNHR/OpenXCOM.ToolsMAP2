@@ -17,6 +17,7 @@ namespace XCom
 		public const string RoutesDir = "ROUTES";
 		public const string RouteExt = ".RMP";
 
+		public const string GeodataDir = "GEODATA";
 		public const string DatExt = ".DAT"; // for SCANG.DAT
 
 

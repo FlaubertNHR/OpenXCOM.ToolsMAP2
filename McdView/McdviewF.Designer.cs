@@ -2224,6 +2224,7 @@
 			this.gb_Minimap.TabIndex = 128;
 			this.gb_Minimap.TabStop = false;
 			this.gb_Minimap.Text = " Minimap graphic ";
+			this.gb_Minimap.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_ScanG);
 			// 
 			// tb20_scang2
 			// 
@@ -2747,6 +2748,7 @@
 			this.MaximumSize = new System.Drawing.Size(700, 750);
 			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "McdView";
 			this.gb_Unused.ResumeLayout(false);
 			this.gb_Unused.PerformLayout();

@@ -208,7 +208,7 @@ namespace PckView
 			string dirSettings = Path.Combine(
 											Path.GetDirectoryName(Application.ExecutablePath),
 											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers);
+			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
 			if (File.Exists(fileViewers))
 			{
 				using (var sr = new StreamReader(File.OpenRead(fileViewers)))
@@ -274,7 +274,7 @@ namespace PckView
 			string dirSettings = Path.Combine(
 											Path.GetDirectoryName(Application.ExecutablePath),
 											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers);
+			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
 
 			if (File.Exists(fileViewers))
 			{
@@ -290,12 +290,16 @@ namespace PckView
 				using (var fs = new FileStream(src, FileMode.Create)) // overwrite previous viewers-config.
 				using (var sw = new StreamWriter(fs))
 				{
+					bool found = false;
+
 					while (sr.Peek() != -1)
 					{
 						string line = sr.ReadLine().TrimEnd();
 
 						if (String.Equals(line, RegistryInfo.PckView + ":", StringComparison.Ordinal))
 						{
+							found = true;
+
 							sw.WriteLine(line);
 
 							line = sr.ReadLine();
@@ -310,6 +314,16 @@ namespace PckView
 						}
 						else
 							sw.WriteLine(line);
+					}
+
+					if (!found)
+					{
+						sw.WriteLine(RegistryInfo.PckView + ":");
+
+						sw.WriteLine("  left: "   + Math.Max(0, Location.X));
+						sw.WriteLine("  top: "    + Math.Max(0, Location.Y));
+						sw.WriteLine("  width: "  + ClientSize.Width);
+						sw.WriteLine("  height: " + ClientSize.Height);
 					}
 				}
 				File.Delete(dst);
