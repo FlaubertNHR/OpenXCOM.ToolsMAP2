@@ -919,13 +919,15 @@ namespace McdView
 				tb20_scang1.Text = id        .ToString();
 				tb20_scang2.Text = id_reduced.ToString();
 
-				Records[SelId].Record.ScanG         = (byte)id;
-				Records[SelId].Record.ScanG_reduced = (byte)id_reduced;
+				Records[SelId].Record.ScanG         = (ushort)id;
+				Records[SelId].Record.ScanG_reduced = (ushort)id_reduced;
 
 				pnl_ScanGic.Invalidate();
 			}
 		}
 
+
+		Panel _pnlLoFT;
 
 		/// <summary>
 		/// Opens the LoFT viewer when a LoFT icon is clicked.
@@ -936,24 +938,24 @@ namespace McdView
 		{
 			if (SelId != -1 && LoFT != null)
 			{
-				var loft = sender as Panel;
+				_pnlLoFT = sender as Panel;
 
-				if (   e.X > -1 && e.X < loft.Width
-					&& e.Y > -1 && e.Y < loft.Height)
+				if (   e.X > -1 && e.X < _pnlLoFT.Width
+					&& e.Y > -1 && e.Y < _pnlLoFT.Height)
 				{
 					string id;
-					if      (loft == pnl_Loft08) id = tb8_loft00 .Text;
-					else if (loft == pnl_Loft09) id = tb9_loft02 .Text;
-					else if (loft == pnl_Loft10) id = tb10_loft04.Text;
-					else if (loft == pnl_Loft11) id = tb11_loft06.Text;
-					else if (loft == pnl_Loft12) id = tb12_loft08.Text;
-					else if (loft == pnl_Loft13) id = tb13_loft10.Text;
-					else if (loft == pnl_Loft14) id = tb14_loft12.Text;
-					else if (loft == pnl_Loft15) id = tb15_loft14.Text;
-					else if (loft == pnl_Loft16) id = tb16_loft16.Text;
-					else if (loft == pnl_Loft17) id = tb17_loft18.Text;
-					else if (loft == pnl_Loft18) id = tb18_loft20.Text;
-					else                         id = tb19_loft22.Text; // if (loft == pnl_Loft19)
+					if      (_pnlLoFT == pnl_Loft08) id = tb8_loft00 .Text;
+					else if (_pnlLoFT == pnl_Loft09) id = tb9_loft02 .Text;
+					else if (_pnlLoFT == pnl_Loft10) id = tb10_loft04.Text;
+					else if (_pnlLoFT == pnl_Loft11) id = tb11_loft06.Text;
+					else if (_pnlLoFT == pnl_Loft12) id = tb12_loft08.Text;
+					else if (_pnlLoFT == pnl_Loft13) id = tb13_loft10.Text;
+					else if (_pnlLoFT == pnl_Loft14) id = tb14_loft12.Text;
+					else if (_pnlLoFT == pnl_Loft15) id = tb15_loft14.Text;
+					else if (_pnlLoFT == pnl_Loft16) id = tb16_loft16.Text;
+					else if (_pnlLoFT == pnl_Loft17) id = tb17_loft18.Text;
+					else if (_pnlLoFT == pnl_Loft18) id = tb18_loft20.Text;
+					else                             id = tb19_loft22.Text; // if (_pnlLoFT == pnl_Loft19)
 
 					using (var f = new LoftF(this, Int32.Parse(id)))
 					{
@@ -972,6 +974,40 @@ namespace McdView
 		/// <param name="id"></param>
 		internal void SetLoft(int id)
 		{
+			TextBox tb;
+			if      (_pnlLoFT == pnl_Loft08) tb = tb8_loft00;
+			else if (_pnlLoFT == pnl_Loft09) tb = tb9_loft02;
+			else if (_pnlLoFT == pnl_Loft10) tb = tb10_loft04;
+			else if (_pnlLoFT == pnl_Loft11) tb = tb11_loft06;
+			else if (_pnlLoFT == pnl_Loft12) tb = tb12_loft08;
+			else if (_pnlLoFT == pnl_Loft13) tb = tb13_loft10;
+			else if (_pnlLoFT == pnl_Loft14) tb = tb14_loft12;
+			else if (_pnlLoFT == pnl_Loft15) tb = tb15_loft14;
+			else if (_pnlLoFT == pnl_Loft16) tb = tb16_loft16;
+			else if (_pnlLoFT == pnl_Loft17) tb = tb17_loft18;
+			else if (_pnlLoFT == pnl_Loft18) tb = tb18_loft20;
+			else                             tb = tb19_loft22; // if (_pnlLoFT == pnl_Loft19)
+
+			if (Int32.Parse(tb.Text) != id)
+			{
+				Changed = true;
+
+				tb.Text = id.ToString();
+				if      (_pnlLoFT == pnl_Loft08) Records[SelId].Record.Loft1  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft09) Records[SelId].Record.Loft2  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft10) Records[SelId].Record.Loft3  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft11) Records[SelId].Record.Loft4  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft12) Records[SelId].Record.Loft5  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft13) Records[SelId].Record.Loft6  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft14) Records[SelId].Record.Loft7  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft15) Records[SelId].Record.Loft8  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft16) Records[SelId].Record.Loft9  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft17) Records[SelId].Record.Loft10 = (byte)id;
+				else if (_pnlLoFT == pnl_Loft18) Records[SelId].Record.Loft11 = (byte)id;
+				else                             Records[SelId].Record.Loft12 = (byte)id;
+
+				_pnlLoFT.Invalidate();
+			}
 		}
 		#endregion Events
 
