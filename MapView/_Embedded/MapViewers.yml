@@ -51,5 +51,5 @@ PckView:
 McdView:
   left: 230
   top: 200
-  width: 750
-  height: 750
+  width: 710
+  height: 825

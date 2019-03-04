@@ -18,6 +18,9 @@ namespace XCom
 		public static string CursorFilePrefix     = "UFOGRAPH" + Path.DirectorySeparatorChar + "CURSOR"; // the cursor is determined in XCMainWindow.cTor
 
 		public static string ScanGfile            = "GEODATA" + Path.DirectorySeparatorChar + "SCANG.DAT";
+
+		public static string LoftfileUfo          = "GEODATA" + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
+		public static string LoftfileTftd         = "TERRAIN" + Path.DirectorySeparatorChar + "LOFTEMPS.DAT"; // *snap*
 		#endregion
 
 

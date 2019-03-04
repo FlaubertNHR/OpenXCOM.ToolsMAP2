@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -18,6 +19,9 @@ namespace XCom
 
 		public static int[,] ScanGufo;
 		public static int[,] ScanGtftd;
+
+		public static BitArray LoFTufo;
+		public static BitArray LoFTtftd;
 		#endregion
 
 
@@ -198,6 +202,85 @@ namespace XCom
 				}
 			}
 			return false;
+		}
+
+
+		/// <summary>
+		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
+		/// </summary>
+		/// <param name="dirUfo"></param>
+		public static void LoadLoFTufo(string dirUfo)
+		{
+			if (!String.IsNullOrEmpty(dirUfo))
+			{
+				string pfe = Path.Combine(dirUfo, SharedSpace.LoftfileUfo);
+				if (File.Exists(pfe))
+				{
+					// 32 bytes in a loft
+					// 256 bits in a loft
+
+					byte[] bytes = File.ReadAllBytes(pfe);
+					int length = bytes.Length * 8;
+
+					LoFTufo = new BitArray(length); // init to Falses
+
+					// read the file as little-endian unsigned shorts
+					// eg. C0 01 -> 01 C0
+
+					int id = -1;
+					for (int i = 0; i != bytes.Length; i += 2)
+					{
+						for (int j = 0x80; j != 0x00; j >>= 1)
+						{
+							LoFTufo[++id] = ((bytes[i + 1] & j) != 0);
+						}
+
+						for (int j = 0x80; j != 0x00; j >>= 1)
+						{
+							LoFTufo[++id] = ((bytes[i] & j) != 0);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
+		/// </summary>
+		/// <param name="dirTftd"></param>
+		public static void LoadLoFTtftd(string dirTftd)
+		{
+			if (!String.IsNullOrEmpty(dirTftd))
+			{
+				string pfe = Path.Combine(dirTftd, SharedSpace.LoftfileTftd);
+				if (File.Exists(pfe))
+				{
+					// 32 bytes in a loft
+					// 256 bits in a loft
+
+					byte[] bytes = File.ReadAllBytes(pfe);
+					int length = bytes.Length * 8;
+
+					LoFTtftd = new BitArray(length); // init to Falses
+
+					// read the file as little-endian unsigned shorts
+					// eg. C0 01 -> 01 C0
+
+					int id = -1;
+					for (int i = 0; i != bytes.Length; i += 2)
+					{
+						for (int j = 0x80; j != 0x00; j >>= 1)
+						{
+							LoFTtftd[++id] = ((bytes[i + 1] & j) != 0);
+						}
+
+						for (int j = 0x80; j != 0x00; j >>= 1)
+						{
+							LoFTtftd[++id] = ((bytes[i] & j) != 0);
+						}
+					}
+				}
+			}
 		}
 		#endregion
 	}

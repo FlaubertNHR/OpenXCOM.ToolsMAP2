@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -39,6 +40,7 @@ namespace McdView
 
 		private RecordsetPanel RecordPanel;
 		internal int[,] ScanG;
+		internal BitArray LoFT;
 
 		private readonly Pen _penBlack = new Pen(Color.Black, 1);
 		#endregion Fields
@@ -158,6 +160,11 @@ namespace McdView
 			ResourceInfo.LoadScanGufo(pathufo);		// -> ResourceInfo.ScanGufo
 			ResourceInfo.LoadScanGtftd(pathtftd);	// -> ResourceInfo.ScanGtftd
 			ScanG = ResourceInfo.ScanGufo;
+
+
+			ResourceInfo.LoadLoFTufo(pathufo);		// -> ResourceInfo.LoFTufo
+			ResourceInfo.LoadLoFTtftd(pathtftd);	// -> ResourceInfo.LoFTtftd
+			LoFT = ResourceInfo.LoFTufo;
 		}
 
 		/// <summary>
@@ -167,40 +174,40 @@ namespace McdView
 		private void SpaceSpriteFields()
 		{
 			int left = pnl_Sprites.Left;
-			int offset = XCImage.SpriteWidth32 - tb0_phase1.Width / 2;
+			int offset = XCImage.SpriteWidth32 - tb0_phase0.Width / 2;
 
-			tb0_phase1.Left = left + SPRITE_ORIGIN_X + offset;
-			tb1_phase2.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X;
-			tb2_phase3.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 2;
-			tb3_phase4.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 3;
-			tb4_phase5.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 4;
-			tb5_phase6.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 5;
-			tb6_phase7.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 6;
-			tb7_phase8.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 7;
+			tb0_phase0.Left = left + SPRITE_ORIGIN_X + offset;
+			tb1_phase1.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X;
+			tb2_phase2.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 2;
+			tb3_phase3.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 3;
+			tb4_phase4.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 4;
+			tb5_phase5.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 5;
+			tb6_phase6.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 6;
+			tb7_phase7.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 7;
 
-			lbl0.Left = tb0_phase1.Left + tb0_phase1.Width / 2 - (lbl0.Width + lbl0_phase1.Width) / 2;
-			lbl0_phase1.Left = lbl0.Right;
+			lbl0.Left = tb0_phase0.Left + tb0_phase0.Width / 2 - (lbl0.Width + lbl0_phase0.Width) / 2;
+			lbl0_phase0.Left = lbl0.Right;
 
 			lbl1.Left = lbl0.Left + SPRITE_OFFSET_X;
-			lbl1_phase2.Left = lbl1.Right;
+			lbl1_phase1.Left = lbl1.Right;
 
 			lbl2.Left = lbl1.Left + SPRITE_OFFSET_X;
-			lbl2_phase3.Left = lbl2.Right;
+			lbl2_phase2.Left = lbl2.Right;
 
 			lbl3.Left = lbl2.Left + SPRITE_OFFSET_X;
-			lbl3_phase4.Left = lbl3.Right;
+			lbl3_phase3.Left = lbl3.Right;
 
 			lbl4.Left = lbl3.Left + SPRITE_OFFSET_X;
-			lbl4_phase5.Left = lbl4.Right;
+			lbl4_phase4.Left = lbl4.Right;
 
 			lbl5.Left = lbl4.Left + SPRITE_OFFSET_X;
-			lbl5_phase6.Left = lbl5.Right;
+			lbl5_phase5.Left = lbl5.Right;
 
 			lbl6.Left = lbl5.Left + SPRITE_OFFSET_X;
-			lbl6_phase7.Left = lbl6.Right;
+			lbl6_phase6.Left = lbl6.Right;
 
 			lbl7.Left = lbl6.Left + SPRITE_OFFSET_X;
-			lbl7_phase8.Left = lbl7.Right;
+			lbl7_phase7.Left = lbl7.Right;
 		}
 
 /*		private string GetScanG_pathufo()
@@ -670,14 +677,14 @@ namespace McdView
 					int id;
 					switch (phase)
 					{
-						default: id = Int32.Parse(tb0_phase1.Text); break; // #0
-						case 1:  id = Int32.Parse(tb1_phase2.Text); break;
-						case 2:  id = Int32.Parse(tb2_phase3.Text); break;
-						case 3:  id = Int32.Parse(tb3_phase4.Text); break;
-						case 4:  id = Int32.Parse(tb4_phase5.Text); break;
-						case 5:  id = Int32.Parse(tb5_phase6.Text); break;
-						case 6:  id = Int32.Parse(tb6_phase7.Text); break;
-						case 7:  id = Int32.Parse(tb7_phase8.Text); break;
+						default: id = Int32.Parse(tb0_phase0.Text); break; // #0
+						case 1:  id = Int32.Parse(tb1_phase1.Text); break;
+						case 2:  id = Int32.Parse(tb2_phase2.Text); break;
+						case 3:  id = Int32.Parse(tb3_phase3.Text); break;
+						case 4:  id = Int32.Parse(tb4_phase4.Text); break;
+						case 5:  id = Int32.Parse(tb5_phase5.Text); break;
+						case 6:  id = Int32.Parse(tb6_phase6.Text); break;
+						case 7:  id = Int32.Parse(tb7_phase7.Text); break;
 					}
 
 					using (var f = new SpritesetF(this, phase, id))
@@ -701,81 +708,81 @@ namespace McdView
 			switch (phase)
 			{
 				case 0:
-					if (Int32.Parse(tb0_phase1.Text) != id)
+					if (Int32.Parse(tb0_phase0.Text) != id)
 					{
 						changed = true;
 
-						tb0_phase1.Text = id.ToString();
+						tb0_phase0.Text = id.ToString();
 						Records[SelId].Record.Sprite1 = (byte)id;
 					}
 					break;
 
 				case 1:
-					if (Int32.Parse(tb1_phase2.Text) != id)
+					if (Int32.Parse(tb1_phase1.Text) != id)
 					{
 						changed = true;
 
-					tb1_phase2.Text = id.ToString();
+					tb1_phase1.Text = id.ToString();
 					Records[SelId].Record.Sprite2 = (byte)id;
 					}
 					break;
 
 				case 2:
-					if (Int32.Parse(tb2_phase3.Text) != id)
+					if (Int32.Parse(tb2_phase2.Text) != id)
 					{
 						changed = true;
 
-						tb2_phase3.Text = id.ToString();
+						tb2_phase2.Text = id.ToString();
 						Records[SelId].Record.Sprite3 = (byte)id;
 					}
 					break;
 
 				case 3:
-					if (Int32.Parse(tb3_phase4.Text) != id)
+					if (Int32.Parse(tb3_phase3.Text) != id)
 					{
 						changed = true;
 
-						tb3_phase4.Text = id.ToString();
+						tb3_phase3.Text = id.ToString();
 						Records[SelId].Record.Sprite4 = (byte)id;
 					}
 					break;
 
 				case 4:
-					if (Int32.Parse(tb4_phase5.Text) != id)
+					if (Int32.Parse(tb4_phase4.Text) != id)
 					{
 						changed = true;
 
-						tb4_phase5.Text = id.ToString();
+						tb4_phase4.Text = id.ToString();
 						Records[SelId].Record.Sprite5 = (byte)id;
 					}
 					break;
 
 				case 5:
-					if (Int32.Parse(tb5_phase6.Text) != id)
+					if (Int32.Parse(tb5_phase5.Text) != id)
 					{
 						changed = true;
 
-						tb5_phase6.Text = id.ToString();
+						tb5_phase5.Text = id.ToString();
 						Records[SelId].Record.Sprite6 = (byte)id;
 					}
 					break;
 
 				case 6:
-					if (Int32.Parse(tb6_phase7.Text) != id)
+					if (Int32.Parse(tb6_phase6.Text) != id)
 					{
 						changed = true;
 
-						tb6_phase7.Text = id.ToString();
+						tb6_phase6.Text = id.ToString();
 						Records[SelId].Record.Sprite7 = (byte)id;
 					}
 					break;
 
 				case 7:
-					if (Int32.Parse(tb7_phase8.Text) != id)
+					if (Int32.Parse(tb7_phase7.Text) != id)
 					{
 						changed = true;
 
-						tb7_phase8.Text = id.ToString();
+						tb7_phase7.Text = id.ToString();
 						Records[SelId].Record.Sprite8 = (byte)id;
 					}
 					break;
@@ -870,6 +877,11 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// Opens the ScanG viewer when the ScanG icon is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnMouseUp_ScanGicon(object sender, MouseEventArgs e)
 		{
 			if (SelId != -1 && ScanG != null
@@ -913,6 +925,54 @@ namespace McdView
 				pnl_ScanGic.Invalidate();
 			}
 		}
+
+
+		/// <summary>
+		/// Opens the LoFT viewer when a LoFT icon is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMouseUp_LoftPanel(object sender, MouseEventArgs e)
+		{
+			if (SelId != -1 && LoFT != null)
+			{
+				var loft = sender as Panel;
+
+				if (   e.X > -1 && e.X < loft.Width
+					&& e.Y > -1 && e.Y < loft.Height)
+				{
+					string id;
+					if      (loft == pnl_Loft08) id = tb8_loft00 .Text;
+					else if (loft == pnl_Loft09) id = tb9_loft02 .Text;
+					else if (loft == pnl_Loft10) id = tb10_loft04.Text;
+					else if (loft == pnl_Loft11) id = tb11_loft06.Text;
+					else if (loft == pnl_Loft12) id = tb12_loft08.Text;
+					else if (loft == pnl_Loft13) id = tb13_loft10.Text;
+					else if (loft == pnl_Loft14) id = tb14_loft12.Text;
+					else if (loft == pnl_Loft15) id = tb15_loft14.Text;
+					else if (loft == pnl_Loft16) id = tb16_loft16.Text;
+					else if (loft == pnl_Loft17) id = tb17_loft18.Text;
+					else if (loft == pnl_Loft18) id = tb18_loft20.Text;
+					else                         id = tb19_loft22.Text; // if (loft == pnl_Loft19)
+
+					using (var f = new LoftF(this, Int32.Parse(id)))
+					{
+						f.Location = new Point(
+											Location.X +  10,
+											Location.Y + 400);
+						f.ShowDialog();
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Sets a LoFT when returning from LoftF.
+		/// </summary>
+		/// <param name="id"></param>
+		internal void SetLoft(int id)
+		{
+		}
 		#endregion Events
 
 
@@ -925,14 +985,14 @@ namespace McdView
 		{
 			McdRecord record = Records[SelId].Record;
 
-			tb0_phase1.Text = ((int)record.Sprite1).ToString();
-			tb1_phase2.Text = ((int)record.Sprite2).ToString();
-			tb2_phase3.Text = ((int)record.Sprite3).ToString();
-			tb3_phase4.Text = ((int)record.Sprite4).ToString();
-			tb4_phase5.Text = ((int)record.Sprite5).ToString();
-			tb5_phase6.Text = ((int)record.Sprite6).ToString();
-			tb6_phase7.Text = ((int)record.Sprite7).ToString();
-			tb7_phase8.Text = ((int)record.Sprite8).ToString();
+			tb0_phase0.Text = ((int)record.Sprite1).ToString();
+			tb1_phase1.Text = ((int)record.Sprite2).ToString();
+			tb2_phase2.Text = ((int)record.Sprite3).ToString();
+			tb3_phase3.Text = ((int)record.Sprite4).ToString();
+			tb4_phase4.Text = ((int)record.Sprite5).ToString();
+			tb5_phase5.Text = ((int)record.Sprite6).ToString();
+			tb6_phase6.Text = ((int)record.Sprite7).ToString();
+			tb7_phase7.Text = ((int)record.Sprite8).ToString();
 
 			tb8_loft00 .Text = ((int)record.Loft1) .ToString();
 			tb9_loft02 .Text = ((int)record.Loft2) .ToString();
@@ -985,16 +1045,16 @@ namespace McdView
 
 			tb50_.Text = ((int)record.Unknown50).ToString();
 
-			tb51_lightblock  .Text = ((int)record.LightBlock)   .ToString();
-			tb52_footsound   .Text = ((int)record.Footstep)     .ToString();
-			tb53_parttype    .Text = ((int)record.PartType)     .ToString();
-			tb54_hetype      .Text = ((int)record.HE_Type)      .ToString();
-			tb55_hestrength  .Text = ((int)record.HE_Strength)  .ToString();
-			tb56_smokeblock  .Text = ((int)record.SmokeBlockage).ToString();
-			tb57_fuel        .Text = ((int)record.Fuel)         .ToString();
-			tb58_lightpower  .Text = ((int)record.LightSource)  .ToString();
-			tb59_specialtype .Text = ((int)record.TargetType)   .ToString();
-			tb60_isbaseobject.Text = ((int)record.BaseObject)   .ToString();
+			tb51_lightblock    .Text = ((int)record.LightBlock)   .ToString();
+			tb52_footsound     .Text = ((int)record.Footstep)     .ToString();
+			tb53_parttype      .Text = ((int)record.PartType)     .ToString();
+			tb54_hetype        .Text = ((int)record.HE_Type)      .ToString();
+			tb55_hestrength    .Text = ((int)record.HE_Strength)  .ToString();
+			tb56_smokeblock    .Text = ((int)record.SmokeBlockage).ToString();
+			tb57_fuel          .Text = ((int)record.Fuel)         .ToString();
+			tb58_lightintensity.Text = ((int)record.LightSource)  .ToString();
+			tb59_specialtype   .Text = ((int)record.TargetType)   .ToString();
+			tb60_isbaseobject  .Text = ((int)record.BaseObject)   .ToString();
 
 			tb61_.Text = ((int)record.Unknown61).ToString();
 		}
@@ -1004,14 +1064,14 @@ namespace McdView
 		/// </summary>
 		internal void ClearTextFields()
 		{
-			tb0_phase1.Text =
-			tb1_phase2.Text =
-			tb2_phase3.Text =
-			tb3_phase4.Text =
-			tb4_phase5.Text =
-			tb5_phase6.Text =
-			tb6_phase7.Text =
-			tb7_phase8.Text =
+			tb0_phase0.Text =
+			tb1_phase1.Text =
+			tb2_phase2.Text =
+			tb3_phase3.Text =
+			tb4_phase4.Text =
+			tb5_phase5.Text =
+			tb6_phase6.Text =
+			tb7_phase7.Text =
 
 			tb8_loft00 .Text =
 			tb9_loft02 .Text =
@@ -1064,16 +1124,16 @@ namespace McdView
 
 			tb50_.Text =
 
-			tb51_lightblock  .Text =
-			tb52_footsound   .Text =
-			tb53_parttype    .Text =
-			tb54_hetype      .Text =
-			tb55_hestrength  .Text =
-			tb56_smokeblock  .Text =
-			tb57_fuel        .Text =
-			tb58_lightpower  .Text =
-			tb59_specialtype .Text =
-			tb60_isbaseobject.Text =
+			tb51_lightblock    .Text =
+			tb52_footsound     .Text =
+			tb53_parttype      .Text =
+			tb54_hetype        .Text =
+			tb55_hestrength    .Text =
+			tb56_smokeblock    .Text =
+			tb57_fuel          .Text =
+			tb58_lightintensity.Text =
+			tb59_specialtype   .Text =
+			tb60_isbaseobject  .Text =
 
 			tb61_.Text = String.Empty;
 		}
