@@ -1191,7 +1191,7 @@
 			// 
 			// lbl19
 			// 
-			this.lbl19.Location = new System.Drawing.Point(10, 20);
+			this.lbl19.Location = new System.Drawing.Point(10, 25);
 			this.lbl19.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl19.Name = "lbl19";
 			this.lbl19.Size = new System.Drawing.Size(30, 15);
@@ -1201,7 +1201,7 @@
 			// 
 			// lbl19_loft22
 			// 
-			this.lbl19_loft22.Location = new System.Drawing.Point(40, 20);
+			this.lbl19_loft22.Location = new System.Drawing.Point(40, 25);
 			this.lbl19_loft22.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl19_loft22.Name = "lbl19_loft22";
 			this.lbl19_loft22.Size = new System.Drawing.Size(45, 15);
@@ -1211,7 +1211,7 @@
 			// 
 			// lbl18
 			// 
-			this.lbl18.Location = new System.Drawing.Point(10, 55);
+			this.lbl18.Location = new System.Drawing.Point(10, 60);
 			this.lbl18.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl18.Name = "lbl18";
 			this.lbl18.Size = new System.Drawing.Size(30, 15);
@@ -1221,7 +1221,7 @@
 			// 
 			// lbl18_loft20
 			// 
-			this.lbl18_loft20.Location = new System.Drawing.Point(40, 55);
+			this.lbl18_loft20.Location = new System.Drawing.Point(40, 60);
 			this.lbl18_loft20.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl18_loft20.Name = "lbl18_loft20";
 			this.lbl18_loft20.Size = new System.Drawing.Size(45, 15);
@@ -1231,7 +1231,7 @@
 			// 
 			// lbl17
 			// 
-			this.lbl17.Location = new System.Drawing.Point(10, 90);
+			this.lbl17.Location = new System.Drawing.Point(10, 95);
 			this.lbl17.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl17.Name = "lbl17";
 			this.lbl17.Size = new System.Drawing.Size(30, 15);
@@ -1241,7 +1241,7 @@
 			// 
 			// lbl17_loft18
 			// 
-			this.lbl17_loft18.Location = new System.Drawing.Point(40, 90);
+			this.lbl17_loft18.Location = new System.Drawing.Point(40, 95);
 			this.lbl17_loft18.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl17_loft18.Name = "lbl17_loft18";
 			this.lbl17_loft18.Size = new System.Drawing.Size(45, 15);
@@ -1251,7 +1251,7 @@
 			// 
 			// lbl16
 			// 
-			this.lbl16.Location = new System.Drawing.Point(10, 125);
+			this.lbl16.Location = new System.Drawing.Point(10, 130);
 			this.lbl16.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl16.Name = "lbl16";
 			this.lbl16.Size = new System.Drawing.Size(30, 15);
@@ -1261,7 +1261,7 @@
 			// 
 			// lbl16_loft16
 			// 
-			this.lbl16_loft16.Location = new System.Drawing.Point(40, 125);
+			this.lbl16_loft16.Location = new System.Drawing.Point(40, 130);
 			this.lbl16_loft16.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl16_loft16.Name = "lbl16_loft16";
 			this.lbl16_loft16.Size = new System.Drawing.Size(45, 15);
@@ -1271,7 +1271,7 @@
 			// 
 			// lbl15
 			// 
-			this.lbl15.Location = new System.Drawing.Point(10, 160);
+			this.lbl15.Location = new System.Drawing.Point(10, 165);
 			this.lbl15.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl15.Name = "lbl15";
 			this.lbl15.Size = new System.Drawing.Size(30, 15);
@@ -1281,7 +1281,7 @@
 			// 
 			// lbl15_loft14
 			// 
-			this.lbl15_loft14.Location = new System.Drawing.Point(40, 160);
+			this.lbl15_loft14.Location = new System.Drawing.Point(40, 165);
 			this.lbl15_loft14.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl15_loft14.Name = "lbl15_loft14";
 			this.lbl15_loft14.Size = new System.Drawing.Size(45, 15);
@@ -1291,7 +1291,7 @@
 			// 
 			// lbl14
 			// 
-			this.lbl14.Location = new System.Drawing.Point(10, 195);
+			this.lbl14.Location = new System.Drawing.Point(10, 200);
 			this.lbl14.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl14.Name = "lbl14";
 			this.lbl14.Size = new System.Drawing.Size(30, 15);
@@ -1301,7 +1301,7 @@
 			// 
 			// lbl14_loft12
 			// 
-			this.lbl14_loft12.Location = new System.Drawing.Point(40, 195);
+			this.lbl14_loft12.Location = new System.Drawing.Point(40, 200);
 			this.lbl14_loft12.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl14_loft12.Name = "lbl14_loft12";
 			this.lbl14_loft12.Size = new System.Drawing.Size(45, 15);
@@ -1311,7 +1311,7 @@
 			// 
 			// lbl13
 			// 
-			this.lbl13.Location = new System.Drawing.Point(10, 230);
+			this.lbl13.Location = new System.Drawing.Point(10, 235);
 			this.lbl13.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl13.Name = "lbl13";
 			this.lbl13.Size = new System.Drawing.Size(30, 15);
@@ -1321,7 +1321,7 @@
 			// 
 			// lbl13_loft10
 			// 
-			this.lbl13_loft10.Location = new System.Drawing.Point(40, 230);
+			this.lbl13_loft10.Location = new System.Drawing.Point(40, 235);
 			this.lbl13_loft10.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl13_loft10.Name = "lbl13_loft10";
 			this.lbl13_loft10.Size = new System.Drawing.Size(45, 15);
@@ -1331,7 +1331,7 @@
 			// 
 			// lbl12
 			// 
-			this.lbl12.Location = new System.Drawing.Point(10, 265);
+			this.lbl12.Location = new System.Drawing.Point(10, 270);
 			this.lbl12.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl12.Name = "lbl12";
 			this.lbl12.Size = new System.Drawing.Size(30, 15);
@@ -1341,7 +1341,7 @@
 			// 
 			// lbl12_loft08
 			// 
-			this.lbl12_loft08.Location = new System.Drawing.Point(40, 265);
+			this.lbl12_loft08.Location = new System.Drawing.Point(40, 270);
 			this.lbl12_loft08.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl12_loft08.Name = "lbl12_loft08";
 			this.lbl12_loft08.Size = new System.Drawing.Size(45, 15);
@@ -1351,7 +1351,7 @@
 			// 
 			// lbl11
 			// 
-			this.lbl11.Location = new System.Drawing.Point(10, 300);
+			this.lbl11.Location = new System.Drawing.Point(10, 305);
 			this.lbl11.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl11.Name = "lbl11";
 			this.lbl11.Size = new System.Drawing.Size(30, 15);
@@ -1361,7 +1361,7 @@
 			// 
 			// lbl11_loft06
 			// 
-			this.lbl11_loft06.Location = new System.Drawing.Point(40, 300);
+			this.lbl11_loft06.Location = new System.Drawing.Point(40, 305);
 			this.lbl11_loft06.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl11_loft06.Name = "lbl11_loft06";
 			this.lbl11_loft06.Size = new System.Drawing.Size(45, 15);
@@ -1371,7 +1371,7 @@
 			// 
 			// lbl10
 			// 
-			this.lbl10.Location = new System.Drawing.Point(10, 335);
+			this.lbl10.Location = new System.Drawing.Point(10, 340);
 			this.lbl10.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl10.Name = "lbl10";
 			this.lbl10.Size = new System.Drawing.Size(30, 15);
@@ -1381,7 +1381,7 @@
 			// 
 			// lbl10_loft04
 			// 
-			this.lbl10_loft04.Location = new System.Drawing.Point(40, 335);
+			this.lbl10_loft04.Location = new System.Drawing.Point(40, 340);
 			this.lbl10_loft04.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl10_loft04.Name = "lbl10_loft04";
 			this.lbl10_loft04.Size = new System.Drawing.Size(45, 15);
@@ -1391,7 +1391,7 @@
 			// 
 			// lbl9
 			// 
-			this.lbl9.Location = new System.Drawing.Point(10, 370);
+			this.lbl9.Location = new System.Drawing.Point(10, 375);
 			this.lbl9.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl9.Name = "lbl9";
 			this.lbl9.Size = new System.Drawing.Size(30, 15);
@@ -1401,7 +1401,7 @@
 			// 
 			// lbl9_loft02
 			// 
-			this.lbl9_loft02.Location = new System.Drawing.Point(40, 370);
+			this.lbl9_loft02.Location = new System.Drawing.Point(40, 375);
 			this.lbl9_loft02.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl9_loft02.Name = "lbl9_loft02";
 			this.lbl9_loft02.Size = new System.Drawing.Size(45, 15);
@@ -1411,7 +1411,7 @@
 			// 
 			// lbl8
 			// 
-			this.lbl8.Location = new System.Drawing.Point(10, 405);
+			this.lbl8.Location = new System.Drawing.Point(10, 410);
 			this.lbl8.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl8.Name = "lbl8";
 			this.lbl8.Size = new System.Drawing.Size(30, 15);
@@ -1421,7 +1421,7 @@
 			// 
 			// lbl8_loft00
 			// 
-			this.lbl8_loft00.Location = new System.Drawing.Point(40, 405);
+			this.lbl8_loft00.Location = new System.Drawing.Point(40, 410);
 			this.lbl8_loft00.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl8_loft00.Name = "lbl8_loft00";
 			this.lbl8_loft00.Size = new System.Drawing.Size(45, 15);
@@ -1431,7 +1431,7 @@
 			// 
 			// lbl0
 			// 
-			this.lbl0.Location = new System.Drawing.Point(15, 125);
+			this.lbl0.Location = new System.Drawing.Point(10, 125);
 			this.lbl0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl0.Name = "lbl0";
 			this.lbl0.Size = new System.Drawing.Size(20, 15);
@@ -1441,7 +1441,7 @@
 			// 
 			// lbl0_phase0
 			// 
-			this.lbl0_phase0.Location = new System.Drawing.Point(35, 125);
+			this.lbl0_phase0.Location = new System.Drawing.Point(30, 125);
 			this.lbl0_phase0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl0_phase0.Name = "lbl0_phase0";
 			this.lbl0_phase0.Size = new System.Drawing.Size(50, 15);
@@ -1451,7 +1451,7 @@
 			// 
 			// lbl1
 			// 
-			this.lbl1.Location = new System.Drawing.Point(100, 125);
+			this.lbl1.Location = new System.Drawing.Point(90, 125);
 			this.lbl1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl1.Name = "lbl1";
 			this.lbl1.Size = new System.Drawing.Size(20, 15);
@@ -1461,7 +1461,7 @@
 			// 
 			// lbl1_phase1
 			// 
-			this.lbl1_phase1.Location = new System.Drawing.Point(120, 125);
+			this.lbl1_phase1.Location = new System.Drawing.Point(110, 125);
 			this.lbl1_phase1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl1_phase1.Name = "lbl1_phase1";
 			this.lbl1_phase1.Size = new System.Drawing.Size(50, 15);
@@ -1471,7 +1471,7 @@
 			// 
 			// lbl2
 			// 
-			this.lbl2.Location = new System.Drawing.Point(185, 125);
+			this.lbl2.Location = new System.Drawing.Point(170, 125);
 			this.lbl2.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl2.Name = "lbl2";
 			this.lbl2.Size = new System.Drawing.Size(20, 15);
@@ -1481,7 +1481,7 @@
 			// 
 			// lbl2_phase2
 			// 
-			this.lbl2_phase2.Location = new System.Drawing.Point(205, 125);
+			this.lbl2_phase2.Location = new System.Drawing.Point(190, 125);
 			this.lbl2_phase2.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl2_phase2.Name = "lbl2_phase2";
 			this.lbl2_phase2.Size = new System.Drawing.Size(50, 15);
@@ -1491,7 +1491,7 @@
 			// 
 			// lbl3
 			// 
-			this.lbl3.Location = new System.Drawing.Point(270, 125);
+			this.lbl3.Location = new System.Drawing.Point(245, 125);
 			this.lbl3.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl3.Name = "lbl3";
 			this.lbl3.Size = new System.Drawing.Size(20, 15);
@@ -1501,7 +1501,7 @@
 			// 
 			// lbl3_phase3
 			// 
-			this.lbl3_phase3.Location = new System.Drawing.Point(290, 125);
+			this.lbl3_phase3.Location = new System.Drawing.Point(265, 125);
 			this.lbl3_phase3.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl3_phase3.Name = "lbl3_phase3";
 			this.lbl3_phase3.Size = new System.Drawing.Size(50, 15);
@@ -1511,7 +1511,7 @@
 			// 
 			// lbl7
 			// 
-			this.lbl7.Location = new System.Drawing.Point(610, 125);
+			this.lbl7.Location = new System.Drawing.Point(560, 125);
 			this.lbl7.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl7.Name = "lbl7";
 			this.lbl7.Size = new System.Drawing.Size(20, 15);
@@ -1521,7 +1521,7 @@
 			// 
 			// lbl7_phase7
 			// 
-			this.lbl7_phase7.Location = new System.Drawing.Point(630, 125);
+			this.lbl7_phase7.Location = new System.Drawing.Point(580, 125);
 			this.lbl7_phase7.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl7_phase7.Name = "lbl7_phase7";
 			this.lbl7_phase7.Size = new System.Drawing.Size(50, 15);
@@ -1531,7 +1531,7 @@
 			// 
 			// lbl6
 			// 
-			this.lbl6.Location = new System.Drawing.Point(525, 125);
+			this.lbl6.Location = new System.Drawing.Point(480, 125);
 			this.lbl6.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl6.Name = "lbl6";
 			this.lbl6.Size = new System.Drawing.Size(20, 15);
@@ -1541,7 +1541,7 @@
 			// 
 			// lbl6_phase6
 			// 
-			this.lbl6_phase6.Location = new System.Drawing.Point(545, 125);
+			this.lbl6_phase6.Location = new System.Drawing.Point(500, 125);
 			this.lbl6_phase6.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl6_phase6.Name = "lbl6_phase6";
 			this.lbl6_phase6.Size = new System.Drawing.Size(50, 15);
@@ -1551,7 +1551,7 @@
 			// 
 			// lbl5
 			// 
-			this.lbl5.Location = new System.Drawing.Point(440, 125);
+			this.lbl5.Location = new System.Drawing.Point(400, 125);
 			this.lbl5.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl5.Name = "lbl5";
 			this.lbl5.Size = new System.Drawing.Size(20, 15);
@@ -1561,7 +1561,7 @@
 			// 
 			// lbl5_phase5
 			// 
-			this.lbl5_phase5.Location = new System.Drawing.Point(460, 125);
+			this.lbl5_phase5.Location = new System.Drawing.Point(420, 125);
 			this.lbl5_phase5.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl5_phase5.Name = "lbl5_phase5";
 			this.lbl5_phase5.Size = new System.Drawing.Size(50, 15);
@@ -1571,7 +1571,7 @@
 			// 
 			// lbl4
 			// 
-			this.lbl4.Location = new System.Drawing.Point(355, 125);
+			this.lbl4.Location = new System.Drawing.Point(320, 125);
 			this.lbl4.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl4.Name = "lbl4";
 			this.lbl4.Size = new System.Drawing.Size(20, 15);
@@ -1581,7 +1581,7 @@
 			// 
 			// lbl4_phase4
 			// 
-			this.lbl4_phase4.Location = new System.Drawing.Point(375, 125);
+			this.lbl4_phase4.Location = new System.Drawing.Point(340, 125);
 			this.lbl4_phase4.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl4_phase4.Name = "lbl4_phase4";
 			this.lbl4_phase4.Size = new System.Drawing.Size(50, 15);
@@ -1754,7 +1754,7 @@
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
 			this.ss_Statusbar.Location = new System.Drawing.Point(0, 777);
 			this.ss_Statusbar.Name = "ss_Statusbar";
-			this.ss_Statusbar.Size = new System.Drawing.Size(702, 22);
+			this.ss_Statusbar.Size = new System.Drawing.Size(682, 22);
 			this.ss_Statusbar.TabIndex = 123;
 			this.ss_Statusbar.Text = "ss_Statusbar";
 			// 
@@ -1793,18 +1793,18 @@
 			this.gb_Unused.Controls.Add(this.lbl50);
 			this.gb_Unused.Controls.Add(this.lbl61_);
 			this.gb_Unused.Controls.Add(this.lbl61);
-			this.gb_Unused.Location = new System.Drawing.Point(355, 460);
+			this.gb_Unused.Location = new System.Drawing.Point(345, 460);
 			this.gb_Unused.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Unused.Name = "gb_Unused";
 			this.gb_Unused.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Unused.Size = new System.Drawing.Size(170, 235);
+			this.gb_Unused.Size = new System.Drawing.Size(165, 235);
 			this.gb_Unused.TabIndex = 124;
 			this.gb_Unused.TabStop = false;
 			this.gb_Unused.Text = " doh! ";
 			// 
 			// tb61_
 			// 
-			this.tb61_.Location = new System.Drawing.Point(130, 213);
+			this.tb61_.Location = new System.Drawing.Point(125, 213);
 			this.tb61_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb61_.Name = "tb61_";
 			this.tb61_.Size = new System.Drawing.Size(35, 19);
@@ -1814,7 +1814,7 @@
 			// 
 			// tb50_
 			// 
-			this.tb50_.Location = new System.Drawing.Point(130, 193);
+			this.tb50_.Location = new System.Drawing.Point(125, 193);
 			this.tb50_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb50_.Name = "tb50_";
 			this.tb50_.Size = new System.Drawing.Size(35, 19);
@@ -1824,7 +1824,7 @@
 			// 
 			// tb47_
 			// 
-			this.tb47_.Location = new System.Drawing.Point(130, 173);
+			this.tb47_.Location = new System.Drawing.Point(125, 173);
 			this.tb47_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb47_.Name = "tb47_";
 			this.tb47_.Size = new System.Drawing.Size(35, 19);
@@ -1834,7 +1834,7 @@
 			// 
 			// tb29_
 			// 
-			this.tb29_.Location = new System.Drawing.Point(130, 153);
+			this.tb29_.Location = new System.Drawing.Point(125, 153);
 			this.tb29_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb29_.Name = "tb29_";
 			this.tb29_.Size = new System.Drawing.Size(35, 19);
@@ -1844,7 +1844,7 @@
 			// 
 			// tb28_
 			// 
-			this.tb28_.Location = new System.Drawing.Point(130, 133);
+			this.tb28_.Location = new System.Drawing.Point(125, 133);
 			this.tb28_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb28_.Name = "tb28_";
 			this.tb28_.Size = new System.Drawing.Size(35, 19);
@@ -1854,7 +1854,7 @@
 			// 
 			// tb27_
 			// 
-			this.tb27_.Location = new System.Drawing.Point(130, 113);
+			this.tb27_.Location = new System.Drawing.Point(125, 113);
 			this.tb27_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb27_.Name = "tb27_";
 			this.tb27_.Size = new System.Drawing.Size(35, 19);
@@ -1864,7 +1864,7 @@
 			// 
 			// tb26_
 			// 
-			this.tb26_.Location = new System.Drawing.Point(130, 93);
+			this.tb26_.Location = new System.Drawing.Point(125, 93);
 			this.tb26_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb26_.Name = "tb26_";
 			this.tb26_.Size = new System.Drawing.Size(35, 19);
@@ -1874,7 +1874,7 @@
 			// 
 			// tb25_
 			// 
-			this.tb25_.Location = new System.Drawing.Point(130, 73);
+			this.tb25_.Location = new System.Drawing.Point(125, 73);
 			this.tb25_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb25_.Name = "tb25_";
 			this.tb25_.Size = new System.Drawing.Size(35, 19);
@@ -1884,7 +1884,7 @@
 			// 
 			// tb24_
 			// 
-			this.tb24_.Location = new System.Drawing.Point(130, 53);
+			this.tb24_.Location = new System.Drawing.Point(125, 53);
 			this.tb24_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb24_.Name = "tb24_";
 			this.tb24_.Size = new System.Drawing.Size(35, 19);
@@ -1894,7 +1894,7 @@
 			// 
 			// tb23_
 			// 
-			this.tb23_.Location = new System.Drawing.Point(130, 33);
+			this.tb23_.Location = new System.Drawing.Point(125, 33);
 			this.tb23_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb23_.Name = "tb23_";
 			this.tb23_.Size = new System.Drawing.Size(35, 19);
@@ -1904,7 +1904,7 @@
 			// 
 			// tb22_
 			// 
-			this.tb22_.Location = new System.Drawing.Point(130, 13);
+			this.tb22_.Location = new System.Drawing.Point(125, 13);
 			this.tb22_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb22_.Name = "tb22_";
 			this.tb22_.Size = new System.Drawing.Size(35, 19);
@@ -1963,126 +1963,139 @@
 			this.gb_Loft.Controls.Add(this.lbl9);
 			this.gb_Loft.Controls.Add(this.lbl9_loft02);
 			this.gb_Loft.Dock = System.Windows.Forms.DockStyle.Right;
-			this.gb_Loft.Location = new System.Drawing.Point(530, 340);
+			this.gb_Loft.Location = new System.Drawing.Point(515, 340);
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Loft.Size = new System.Drawing.Size(172, 437);
+			this.gb_Loft.Size = new System.Drawing.Size(167, 437);
 			this.gb_Loft.TabIndex = 125;
 			this.gb_Loft.TabStop = false;
 			this.gb_Loft.Text = " LoFT ";
+			this.gb_Loft.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_group);
 			// 
 			// pnl_Loft08
 			// 
-			this.pnl_Loft08.Location = new System.Drawing.Point(135, 400);
+			this.pnl_Loft08.Location = new System.Drawing.Point(130, 400);
 			this.pnl_Loft08.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft08.Name = "pnl_Loft08";
 			this.pnl_Loft08.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft08.TabIndex = 129;
+			this.pnl_Loft08.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft08.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft09
 			// 
-			this.pnl_Loft09.Location = new System.Drawing.Point(135, 365);
+			this.pnl_Loft09.Location = new System.Drawing.Point(130, 365);
 			this.pnl_Loft09.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft09.Name = "pnl_Loft09";
 			this.pnl_Loft09.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft09.TabIndex = 129;
+			this.pnl_Loft09.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft09.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft10
 			// 
-			this.pnl_Loft10.Location = new System.Drawing.Point(135, 330);
+			this.pnl_Loft10.Location = new System.Drawing.Point(130, 330);
 			this.pnl_Loft10.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft10.Name = "pnl_Loft10";
 			this.pnl_Loft10.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft10.TabIndex = 129;
+			this.pnl_Loft10.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft11
 			// 
-			this.pnl_Loft11.Location = new System.Drawing.Point(135, 295);
+			this.pnl_Loft11.Location = new System.Drawing.Point(130, 295);
 			this.pnl_Loft11.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft11.Name = "pnl_Loft11";
 			this.pnl_Loft11.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft11.TabIndex = 129;
+			this.pnl_Loft11.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft12
 			// 
-			this.pnl_Loft12.Location = new System.Drawing.Point(135, 260);
+			this.pnl_Loft12.Location = new System.Drawing.Point(130, 260);
 			this.pnl_Loft12.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft12.Name = "pnl_Loft12";
 			this.pnl_Loft12.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft12.TabIndex = 129;
+			this.pnl_Loft12.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft12.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft13
 			// 
-			this.pnl_Loft13.Location = new System.Drawing.Point(135, 225);
+			this.pnl_Loft13.Location = new System.Drawing.Point(130, 225);
 			this.pnl_Loft13.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft13.Name = "pnl_Loft13";
 			this.pnl_Loft13.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft13.TabIndex = 129;
+			this.pnl_Loft13.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft13.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft14
 			// 
-			this.pnl_Loft14.Location = new System.Drawing.Point(135, 190);
+			this.pnl_Loft14.Location = new System.Drawing.Point(130, 190);
 			this.pnl_Loft14.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft14.Name = "pnl_Loft14";
 			this.pnl_Loft14.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft14.TabIndex = 132;
+			this.pnl_Loft14.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft14.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft15
 			// 
-			this.pnl_Loft15.Location = new System.Drawing.Point(135, 155);
+			this.pnl_Loft15.Location = new System.Drawing.Point(130, 155);
 			this.pnl_Loft15.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft15.Name = "pnl_Loft15";
 			this.pnl_Loft15.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft15.TabIndex = 129;
+			this.pnl_Loft15.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft15.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft16
 			// 
-			this.pnl_Loft16.Location = new System.Drawing.Point(135, 120);
+			this.pnl_Loft16.Location = new System.Drawing.Point(130, 120);
 			this.pnl_Loft16.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft16.Name = "pnl_Loft16";
 			this.pnl_Loft16.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft16.TabIndex = 131;
+			this.pnl_Loft16.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft16.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft17
 			// 
-			this.pnl_Loft17.Location = new System.Drawing.Point(135, 85);
+			this.pnl_Loft17.Location = new System.Drawing.Point(130, 85);
 			this.pnl_Loft17.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft17.Name = "pnl_Loft17";
 			this.pnl_Loft17.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft17.TabIndex = 130;
+			this.pnl_Loft17.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft17.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft18
 			// 
-			this.pnl_Loft18.Location = new System.Drawing.Point(135, 50);
+			this.pnl_Loft18.Location = new System.Drawing.Point(130, 50);
 			this.pnl_Loft18.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft18.Name = "pnl_Loft18";
 			this.pnl_Loft18.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft18.TabIndex = 129;
+			this.pnl_Loft18.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft18.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft19
 			// 
-			this.pnl_Loft19.Location = new System.Drawing.Point(135, 15);
+			this.pnl_Loft19.Location = new System.Drawing.Point(130, 15);
 			this.pnl_Loft19.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Loft19.Name = "pnl_Loft19";
 			this.pnl_Loft19.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft19.TabIndex = 128;
+			this.pnl_Loft19.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
 			this.pnl_Loft19.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// tb19_loft22
 			// 
-			this.tb19_loft22.Location = new System.Drawing.Point(90, 18);
+			this.tb19_loft22.Location = new System.Drawing.Point(85, 23);
 			this.tb19_loft22.Margin = new System.Windows.Forms.Padding(0);
 			this.tb19_loft22.Name = "tb19_loft22";
 			this.tb19_loft22.Size = new System.Drawing.Size(35, 19);
@@ -2092,7 +2105,7 @@
 			// 
 			// tb18_loft20
 			// 
-			this.tb18_loft20.Location = new System.Drawing.Point(90, 53);
+			this.tb18_loft20.Location = new System.Drawing.Point(85, 58);
 			this.tb18_loft20.Margin = new System.Windows.Forms.Padding(0);
 			this.tb18_loft20.Name = "tb18_loft20";
 			this.tb18_loft20.Size = new System.Drawing.Size(35, 19);
@@ -2102,7 +2115,7 @@
 			// 
 			// tb17_loft18
 			// 
-			this.tb17_loft18.Location = new System.Drawing.Point(90, 88);
+			this.tb17_loft18.Location = new System.Drawing.Point(85, 93);
 			this.tb17_loft18.Margin = new System.Windows.Forms.Padding(0);
 			this.tb17_loft18.Name = "tb17_loft18";
 			this.tb17_loft18.Size = new System.Drawing.Size(35, 19);
@@ -2112,7 +2125,7 @@
 			// 
 			// tb16_loft16
 			// 
-			this.tb16_loft16.Location = new System.Drawing.Point(90, 123);
+			this.tb16_loft16.Location = new System.Drawing.Point(85, 128);
 			this.tb16_loft16.Margin = new System.Windows.Forms.Padding(0);
 			this.tb16_loft16.Name = "tb16_loft16";
 			this.tb16_loft16.Size = new System.Drawing.Size(35, 19);
@@ -2122,7 +2135,7 @@
 			// 
 			// tb15_loft14
 			// 
-			this.tb15_loft14.Location = new System.Drawing.Point(90, 158);
+			this.tb15_loft14.Location = new System.Drawing.Point(85, 163);
 			this.tb15_loft14.Margin = new System.Windows.Forms.Padding(0);
 			this.tb15_loft14.Name = "tb15_loft14";
 			this.tb15_loft14.Size = new System.Drawing.Size(35, 19);
@@ -2132,7 +2145,7 @@
 			// 
 			// tb14_loft12
 			// 
-			this.tb14_loft12.Location = new System.Drawing.Point(90, 193);
+			this.tb14_loft12.Location = new System.Drawing.Point(85, 198);
 			this.tb14_loft12.Margin = new System.Windows.Forms.Padding(0);
 			this.tb14_loft12.Name = "tb14_loft12";
 			this.tb14_loft12.Size = new System.Drawing.Size(35, 19);
@@ -2142,7 +2155,7 @@
 			// 
 			// tb13_loft10
 			// 
-			this.tb13_loft10.Location = new System.Drawing.Point(90, 228);
+			this.tb13_loft10.Location = new System.Drawing.Point(85, 233);
 			this.tb13_loft10.Margin = new System.Windows.Forms.Padding(0);
 			this.tb13_loft10.Name = "tb13_loft10";
 			this.tb13_loft10.Size = new System.Drawing.Size(35, 19);
@@ -2152,7 +2165,7 @@
 			// 
 			// tb12_loft08
 			// 
-			this.tb12_loft08.Location = new System.Drawing.Point(90, 263);
+			this.tb12_loft08.Location = new System.Drawing.Point(85, 268);
 			this.tb12_loft08.Margin = new System.Windows.Forms.Padding(0);
 			this.tb12_loft08.Name = "tb12_loft08";
 			this.tb12_loft08.Size = new System.Drawing.Size(35, 19);
@@ -2162,7 +2175,7 @@
 			// 
 			// tb11_loft06
 			// 
-			this.tb11_loft06.Location = new System.Drawing.Point(90, 298);
+			this.tb11_loft06.Location = new System.Drawing.Point(85, 303);
 			this.tb11_loft06.Margin = new System.Windows.Forms.Padding(0);
 			this.tb11_loft06.Name = "tb11_loft06";
 			this.tb11_loft06.Size = new System.Drawing.Size(35, 19);
@@ -2172,7 +2185,7 @@
 			// 
 			// tb10_loft04
 			// 
-			this.tb10_loft04.Location = new System.Drawing.Point(90, 333);
+			this.tb10_loft04.Location = new System.Drawing.Point(85, 338);
 			this.tb10_loft04.Margin = new System.Windows.Forms.Padding(0);
 			this.tb10_loft04.Name = "tb10_loft04";
 			this.tb10_loft04.Size = new System.Drawing.Size(35, 19);
@@ -2182,7 +2195,7 @@
 			// 
 			// tb9_loft02
 			// 
-			this.tb9_loft02.Location = new System.Drawing.Point(90, 368);
+			this.tb9_loft02.Location = new System.Drawing.Point(85, 373);
 			this.tb9_loft02.Margin = new System.Windows.Forms.Padding(0);
 			this.tb9_loft02.Name = "tb9_loft02";
 			this.tb9_loft02.Size = new System.Drawing.Size(35, 19);
@@ -2192,7 +2205,7 @@
 			// 
 			// tb8_loft00
 			// 
-			this.tb8_loft00.Location = new System.Drawing.Point(90, 403);
+			this.tb8_loft00.Location = new System.Drawing.Point(85, 408);
 			this.tb8_loft00.Margin = new System.Windows.Forms.Padding(0);
 			this.tb8_loft00.Name = "tb8_loft00";
 			this.tb8_loft00.Size = new System.Drawing.Size(35, 19);
@@ -2235,7 +2248,7 @@
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Name = "gb_Sprites";
 			this.gb_Sprites.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Sprites.Size = new System.Drawing.Size(702, 165);
+			this.gb_Sprites.Size = new System.Drawing.Size(682, 165);
 			this.gb_Sprites.TabIndex = 126;
 			this.gb_Sprites.TabStop = false;
 			this.gb_Sprites.Text = " Animation sprites ";
@@ -2247,14 +2260,14 @@
 			this.pnl_Sprites.Location = new System.Drawing.Point(5, 15);
 			this.pnl_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Sprites.Name = "pnl_Sprites";
-			this.pnl_Sprites.Size = new System.Drawing.Size(690, 80);
+			this.pnl_Sprites.Size = new System.Drawing.Size(620, 80);
 			this.pnl_Sprites.TabIndex = 116;
 			this.pnl_Sprites.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Sprites);
 			this.pnl_Sprites.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_SpritePanel);
 			// 
 			// tb7_phase7
 			// 
-			this.tb7_phase7.Location = new System.Drawing.Point(630, 105);
+			this.tb7_phase7.Location = new System.Drawing.Point(580, 105);
 			this.tb7_phase7.Margin = new System.Windows.Forms.Padding(0);
 			this.tb7_phase7.Name = "tb7_phase7";
 			this.tb7_phase7.Size = new System.Drawing.Size(35, 19);
@@ -2264,7 +2277,7 @@
 			// 
 			// tb6_phase6
 			// 
-			this.tb6_phase6.Location = new System.Drawing.Point(545, 105);
+			this.tb6_phase6.Location = new System.Drawing.Point(500, 105);
 			this.tb6_phase6.Margin = new System.Windows.Forms.Padding(0);
 			this.tb6_phase6.Name = "tb6_phase6";
 			this.tb6_phase6.Size = new System.Drawing.Size(35, 19);
@@ -2274,7 +2287,7 @@
 			// 
 			// tb5_phase5
 			// 
-			this.tb5_phase5.Location = new System.Drawing.Point(460, 105);
+			this.tb5_phase5.Location = new System.Drawing.Point(420, 105);
 			this.tb5_phase5.Margin = new System.Windows.Forms.Padding(0);
 			this.tb5_phase5.Name = "tb5_phase5";
 			this.tb5_phase5.Size = new System.Drawing.Size(35, 19);
@@ -2284,7 +2297,7 @@
 			// 
 			// tb4_phase4
 			// 
-			this.tb4_phase4.Location = new System.Drawing.Point(375, 105);
+			this.tb4_phase4.Location = new System.Drawing.Point(340, 105);
 			this.tb4_phase4.Margin = new System.Windows.Forms.Padding(0);
 			this.tb4_phase4.Name = "tb4_phase4";
 			this.tb4_phase4.Size = new System.Drawing.Size(35, 19);
@@ -2294,7 +2307,7 @@
 			// 
 			// tb3_phase3
 			// 
-			this.tb3_phase3.Location = new System.Drawing.Point(290, 105);
+			this.tb3_phase3.Location = new System.Drawing.Point(265, 105);
 			this.tb3_phase3.Margin = new System.Windows.Forms.Padding(0);
 			this.tb3_phase3.Name = "tb3_phase3";
 			this.tb3_phase3.Size = new System.Drawing.Size(35, 19);
@@ -2304,7 +2317,7 @@
 			// 
 			// tb2_phase2
 			// 
-			this.tb2_phase2.Location = new System.Drawing.Point(205, 105);
+			this.tb2_phase2.Location = new System.Drawing.Point(190, 105);
 			this.tb2_phase2.Margin = new System.Windows.Forms.Padding(0);
 			this.tb2_phase2.Name = "tb2_phase2";
 			this.tb2_phase2.Size = new System.Drawing.Size(35, 19);
@@ -2314,7 +2327,7 @@
 			// 
 			// tb1_phase1
 			// 
-			this.tb1_phase1.Location = new System.Drawing.Point(120, 105);
+			this.tb1_phase1.Location = new System.Drawing.Point(110, 105);
 			this.tb1_phase1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb1_phase1.Name = "tb1_phase1";
 			this.tb1_phase1.Size = new System.Drawing.Size(35, 19);
@@ -2324,7 +2337,7 @@
 			// 
 			// tb0_phase0
 			// 
-			this.tb0_phase0.Location = new System.Drawing.Point(40, 105);
+			this.tb0_phase0.Location = new System.Drawing.Point(35, 105);
 			this.tb0_phase0.Margin = new System.Windows.Forms.Padding(0);
 			this.tb0_phase0.Name = "tb0_phase0";
 			this.tb0_phase0.Size = new System.Drawing.Size(35, 19);
@@ -2349,7 +2362,7 @@
 			this.gb_Collection.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Collection.Name = "gb_Collection";
 			this.gb_Collection.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Collection.Size = new System.Drawing.Size(702, 175);
+			this.gb_Collection.Size = new System.Drawing.Size(682, 175);
 			this.gb_Collection.TabIndex = 127;
 			this.gb_Collection.TabStop = false;
 			this.gb_Collection.Text = " RECORD COLLECTION ";
@@ -2365,7 +2378,7 @@
 			this.gb_Minimap.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Minimap.Name = "gb_Minimap";
 			this.gb_Minimap.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Minimap.Size = new System.Drawing.Size(170, 55);
+			this.gb_Minimap.Size = new System.Drawing.Size(165, 55);
 			this.gb_Minimap.TabIndex = 128;
 			this.gb_Minimap.TabStop = false;
 			this.gb_Minimap.Text = " Minimap graphic ";
@@ -2412,18 +2425,18 @@
 			this.gb_Tu.Controls.Add(this.lbl40);
 			this.gb_Tu.Controls.Add(this.lbl41_tufly);
 			this.gb_Tu.Controls.Add(this.lbl41);
-			this.gb_Tu.Location = new System.Drawing.Point(180, 340);
+			this.gb_Tu.Location = new System.Drawing.Point(175, 340);
 			this.gb_Tu.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Tu.Name = "gb_Tu";
 			this.gb_Tu.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Tu.Size = new System.Drawing.Size(170, 75);
+			this.gb_Tu.Size = new System.Drawing.Size(165, 75);
 			this.gb_Tu.TabIndex = 129;
 			this.gb_Tu.TabStop = false;
 			this.gb_Tu.Text = " TU ";
 			// 
 			// tb41_tufly
 			// 
-			this.tb41_tufly.Location = new System.Drawing.Point(130, 53);
+			this.tb41_tufly.Location = new System.Drawing.Point(125, 53);
 			this.tb41_tufly.Margin = new System.Windows.Forms.Padding(0);
 			this.tb41_tufly.Name = "tb41_tufly";
 			this.tb41_tufly.Size = new System.Drawing.Size(35, 19);
@@ -2433,7 +2446,7 @@
 			// 
 			// tb40_tuslide
 			// 
-			this.tb40_tuslide.Location = new System.Drawing.Point(130, 33);
+			this.tb40_tuslide.Location = new System.Drawing.Point(125, 33);
 			this.tb40_tuslide.Margin = new System.Windows.Forms.Padding(0);
 			this.tb40_tuslide.Name = "tb40_tuslide";
 			this.tb40_tuslide.Size = new System.Drawing.Size(35, 19);
@@ -2443,7 +2456,7 @@
 			// 
 			// tb39_tuwalk
 			// 
-			this.tb39_tuwalk.Location = new System.Drawing.Point(130, 13);
+			this.tb39_tuwalk.Location = new System.Drawing.Point(125, 13);
 			this.tb39_tuwalk.Margin = new System.Windows.Forms.Padding(0);
 			this.tb39_tuwalk.Name = "tb39_tuwalk";
 			this.tb39_tuwalk.Size = new System.Drawing.Size(35, 19);
@@ -2459,18 +2472,18 @@
 			this.gb_Elevation.Controls.Add(this.lbl48_unitoffset);
 			this.gb_Elevation.Controls.Add(this.lbl49);
 			this.gb_Elevation.Controls.Add(this.lbl48);
-			this.gb_Elevation.Location = new System.Drawing.Point(355, 400);
+			this.gb_Elevation.Location = new System.Drawing.Point(345, 400);
 			this.gb_Elevation.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Elevation.Name = "gb_Elevation";
 			this.gb_Elevation.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Elevation.Size = new System.Drawing.Size(170, 55);
+			this.gb_Elevation.Size = new System.Drawing.Size(165, 55);
 			this.gb_Elevation.TabIndex = 130;
 			this.gb_Elevation.TabStop = false;
 			this.gb_Elevation.Text = " Elevation ";
 			// 
 			// tb49_spriteoffset
 			// 
-			this.tb49_spriteoffset.Location = new System.Drawing.Point(130, 33);
+			this.tb49_spriteoffset.Location = new System.Drawing.Point(125, 33);
 			this.tb49_spriteoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.tb49_spriteoffset.Name = "tb49_spriteoffset";
 			this.tb49_spriteoffset.Size = new System.Drawing.Size(35, 19);
@@ -2480,7 +2493,7 @@
 			// 
 			// tb48_unitoffset
 			// 
-			this.tb48_unitoffset.Location = new System.Drawing.Point(130, 13);
+			this.tb48_unitoffset.Location = new System.Drawing.Point(125, 13);
 			this.tb48_unitoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.tb48_unitoffset.Name = "tb48_unitoffset";
 			this.tb48_unitoffset.Size = new System.Drawing.Size(35, 19);
@@ -2508,18 +2521,18 @@
 			this.gb_Block.Controls.Add(this.lbl51);
 			this.gb_Block.Controls.Add(this.lbl56_smokeblock);
 			this.gb_Block.Controls.Add(this.lbl56);
-			this.gb_Block.Location = new System.Drawing.Point(180, 520);
+			this.gb_Block.Location = new System.Drawing.Point(175, 520);
 			this.gb_Block.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Block.Name = "gb_Block";
 			this.gb_Block.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Block.Size = new System.Drawing.Size(170, 135);
+			this.gb_Block.Size = new System.Drawing.Size(165, 135);
 			this.gb_Block.TabIndex = 131;
 			this.gb_Block.TabStop = false;
 			this.gb_Block.Text = " Block ";
 			// 
 			// tb51_lightblock
 			// 
-			this.tb51_lightblock.Location = new System.Drawing.Point(130, 113);
+			this.tb51_lightblock.Location = new System.Drawing.Point(125, 113);
 			this.tb51_lightblock.Margin = new System.Windows.Forms.Padding(0);
 			this.tb51_lightblock.Name = "tb51_lightblock";
 			this.tb51_lightblock.Size = new System.Drawing.Size(35, 19);
@@ -2529,7 +2542,7 @@
 			// 
 			// tb56_smokeblock
 			// 
-			this.tb56_smokeblock.Location = new System.Drawing.Point(130, 93);
+			this.tb56_smokeblock.Location = new System.Drawing.Point(125, 93);
 			this.tb56_smokeblock.Margin = new System.Windows.Forms.Padding(0);
 			this.tb56_smokeblock.Name = "tb56_smokeblock";
 			this.tb56_smokeblock.Size = new System.Drawing.Size(35, 19);
@@ -2539,7 +2552,7 @@
 			// 
 			// tb43_heblock
 			// 
-			this.tb43_heblock.Location = new System.Drawing.Point(130, 73);
+			this.tb43_heblock.Location = new System.Drawing.Point(125, 73);
 			this.tb43_heblock.Margin = new System.Windows.Forms.Padding(0);
 			this.tb43_heblock.Name = "tb43_heblock";
 			this.tb43_heblock.Size = new System.Drawing.Size(35, 19);
@@ -2549,7 +2562,7 @@
 			// 
 			// tb37_isblocksmoke
 			// 
-			this.tb37_isblocksmoke.Location = new System.Drawing.Point(130, 53);
+			this.tb37_isblocksmoke.Location = new System.Drawing.Point(125, 53);
 			this.tb37_isblocksmoke.Margin = new System.Windows.Forms.Padding(0);
 			this.tb37_isblocksmoke.Name = "tb37_isblocksmoke";
 			this.tb37_isblocksmoke.Size = new System.Drawing.Size(35, 19);
@@ -2559,7 +2572,7 @@
 			// 
 			// tb36_isblockfire
 			// 
-			this.tb36_isblockfire.Location = new System.Drawing.Point(130, 33);
+			this.tb36_isblockfire.Location = new System.Drawing.Point(125, 33);
 			this.tb36_isblockfire.Margin = new System.Windows.Forms.Padding(0);
 			this.tb36_isblockfire.Name = "tb36_isblockfire";
 			this.tb36_isblockfire.Size = new System.Drawing.Size(35, 19);
@@ -2569,7 +2582,7 @@
 			// 
 			// tb31_isblocklos
 			// 
-			this.tb31_isblocklos.Location = new System.Drawing.Point(130, 13);
+			this.tb31_isblocklos.Location = new System.Drawing.Point(125, 13);
 			this.tb31_isblocklos.Margin = new System.Windows.Forms.Padding(0);
 			this.tb31_isblocklos.Name = "tb31_isblocklos";
 			this.tb31_isblocklos.Size = new System.Drawing.Size(35, 19);
@@ -2592,14 +2605,14 @@
 			this.gb_Door.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Door.Name = "gb_Door";
 			this.gb_Door.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Door.Size = new System.Drawing.Size(170, 75);
+			this.gb_Door.Size = new System.Drawing.Size(165, 75);
 			this.gb_Door.TabIndex = 132;
 			this.gb_Door.TabStop = false;
 			this.gb_Door.Text = " Door ";
 			// 
 			// tb46_alternateid
 			// 
-			this.tb46_alternateid.Location = new System.Drawing.Point(130, 53);
+			this.tb46_alternateid.Location = new System.Drawing.Point(125, 53);
 			this.tb46_alternateid.Margin = new System.Windows.Forms.Padding(0);
 			this.tb46_alternateid.Name = "tb46_alternateid";
 			this.tb46_alternateid.Size = new System.Drawing.Size(35, 19);
@@ -2609,7 +2622,7 @@
 			// 
 			// tb35_ishumandoor
 			// 
-			this.tb35_ishumandoor.Location = new System.Drawing.Point(130, 33);
+			this.tb35_ishumandoor.Location = new System.Drawing.Point(125, 33);
 			this.tb35_ishumandoor.Margin = new System.Windows.Forms.Padding(0);
 			this.tb35_ishumandoor.Name = "tb35_ishumandoor";
 			this.tb35_ishumandoor.Size = new System.Drawing.Size(35, 19);
@@ -2619,7 +2632,7 @@
 			// 
 			// tb30_isufodoor
 			// 
-			this.tb30_isufodoor.Location = new System.Drawing.Point(130, 13);
+			this.tb30_isufodoor.Location = new System.Drawing.Point(125, 13);
 			this.tb30_isufodoor.Margin = new System.Windows.Forms.Padding(0);
 			this.tb30_isufodoor.Name = "tb30_isufodoor";
 			this.tb30_isufodoor.Size = new System.Drawing.Size(35, 19);
@@ -2635,18 +2648,18 @@
 			this.gb_Step.Controls.Add(this.lbl32_isdropthrou);
 			this.gb_Step.Controls.Add(this.lbl32);
 			this.gb_Step.Controls.Add(this.lbl52);
-			this.gb_Step.Location = new System.Drawing.Point(355, 340);
+			this.gb_Step.Location = new System.Drawing.Point(345, 340);
 			this.gb_Step.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Step.Name = "gb_Step";
 			this.gb_Step.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Step.Size = new System.Drawing.Size(170, 55);
+			this.gb_Step.Size = new System.Drawing.Size(165, 55);
 			this.gb_Step.TabIndex = 133;
 			this.gb_Step.TabStop = false;
 			this.gb_Step.Text = " Step ";
 			// 
 			// tb32_isdropthrou
 			// 
-			this.tb32_isdropthrou.Location = new System.Drawing.Point(130, 33);
+			this.tb32_isdropthrou.Location = new System.Drawing.Point(125, 33);
 			this.tb32_isdropthrou.Margin = new System.Windows.Forms.Padding(0);
 			this.tb32_isdropthrou.Name = "tb32_isdropthrou";
 			this.tb32_isdropthrou.Size = new System.Drawing.Size(35, 19);
@@ -2656,7 +2669,7 @@
 			// 
 			// tb52_footsound
 			// 
-			this.tb52_footsound.Location = new System.Drawing.Point(130, 13);
+			this.tb52_footsound.Location = new System.Drawing.Point(125, 13);
 			this.tb52_footsound.Margin = new System.Windows.Forms.Padding(0);
 			this.tb52_footsound.Name = "tb52_footsound";
 			this.tb52_footsound.Size = new System.Drawing.Size(35, 19);
@@ -2678,18 +2691,18 @@
 			this.gb_Explosive.Controls.Add(this.lbl45);
 			this.gb_Explosive.Controls.Add(this.lbl57_fuel);
 			this.gb_Explosive.Controls.Add(this.lbl57);
-			this.gb_Explosive.Location = new System.Drawing.Point(180, 420);
+			this.gb_Explosive.Location = new System.Drawing.Point(175, 420);
 			this.gb_Explosive.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Explosive.Name = "gb_Explosive";
 			this.gb_Explosive.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Explosive.Size = new System.Drawing.Size(170, 95);
+			this.gb_Explosive.Size = new System.Drawing.Size(165, 95);
 			this.gb_Explosive.TabIndex = 134;
 			this.gb_Explosive.TabStop = false;
 			this.gb_Explosive.Text = " Explosive ";
 			// 
 			// tb57_fuel
 			// 
-			this.tb57_fuel.Location = new System.Drawing.Point(130, 73);
+			this.tb57_fuel.Location = new System.Drawing.Point(125, 73);
 			this.tb57_fuel.Margin = new System.Windows.Forms.Padding(0);
 			this.tb57_fuel.Name = "tb57_fuel";
 			this.tb57_fuel.Size = new System.Drawing.Size(35, 19);
@@ -2699,7 +2712,7 @@
 			// 
 			// tb45_flammable
 			// 
-			this.tb45_flammable.Location = new System.Drawing.Point(130, 53);
+			this.tb45_flammable.Location = new System.Drawing.Point(125, 53);
 			this.tb45_flammable.Margin = new System.Windows.Forms.Padding(0);
 			this.tb45_flammable.Name = "tb45_flammable";
 			this.tb45_flammable.Size = new System.Drawing.Size(35, 19);
@@ -2709,7 +2722,7 @@
 			// 
 			// tb55_hestrength
 			// 
-			this.tb55_hestrength.Location = new System.Drawing.Point(130, 33);
+			this.tb55_hestrength.Location = new System.Drawing.Point(125, 33);
 			this.tb55_hestrength.Margin = new System.Windows.Forms.Padding(0);
 			this.tb55_hestrength.Name = "tb55_hestrength";
 			this.tb55_hestrength.Size = new System.Drawing.Size(35, 19);
@@ -2719,7 +2732,7 @@
 			// 
 			// tb54_hetype
 			// 
-			this.tb54_hetype.Location = new System.Drawing.Point(130, 13);
+			this.tb54_hetype.Location = new System.Drawing.Point(125, 13);
 			this.tb54_hetype.Margin = new System.Windows.Forms.Padding(0);
 			this.tb54_hetype.Name = "tb54_hetype";
 			this.tb54_hetype.Size = new System.Drawing.Size(35, 19);
@@ -2739,14 +2752,14 @@
 			this.gb_Health.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Health.Name = "gb_Health";
 			this.gb_Health.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Health.Size = new System.Drawing.Size(170, 55);
+			this.gb_Health.Size = new System.Drawing.Size(165, 55);
 			this.gb_Health.TabIndex = 135;
 			this.gb_Health.TabStop = false;
 			this.gb_Health.Text = " Health ";
 			// 
 			// tb44_deathid
 			// 
-			this.tb44_deathid.Location = new System.Drawing.Point(130, 33);
+			this.tb44_deathid.Location = new System.Drawing.Point(125, 33);
 			this.tb44_deathid.Margin = new System.Windows.Forms.Padding(0);
 			this.tb44_deathid.Name = "tb44_deathid";
 			this.tb44_deathid.Size = new System.Drawing.Size(35, 19);
@@ -2756,7 +2769,7 @@
 			// 
 			// tb42_hitpoints
 			// 
-			this.tb42_hitpoints.Location = new System.Drawing.Point(130, 13);
+			this.tb42_hitpoints.Location = new System.Drawing.Point(125, 13);
 			this.tb42_hitpoints.Margin = new System.Windows.Forms.Padding(0);
 			this.tb42_hitpoints.Name = "tb42_hitpoints";
 			this.tb42_hitpoints.Size = new System.Drawing.Size(35, 19);
@@ -2788,14 +2801,14 @@
 			this.gb_General.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_General.Name = "gb_General";
 			this.gb_General.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_General.Size = new System.Drawing.Size(170, 135);
+			this.gb_General.Size = new System.Drawing.Size(165, 135);
 			this.gb_General.TabIndex = 136;
 			this.gb_General.TabStop = false;
 			this.gb_General.Text = " General ";
 			// 
 			// tb58_lightintensity
 			// 
-			this.tb58_lightintensity.Location = new System.Drawing.Point(130, 113);
+			this.tb58_lightintensity.Location = new System.Drawing.Point(125, 113);
 			this.tb58_lightintensity.Margin = new System.Windows.Forms.Padding(0);
 			this.tb58_lightintensity.Name = "tb58_lightintensity";
 			this.tb58_lightintensity.Size = new System.Drawing.Size(35, 19);
@@ -2805,7 +2818,7 @@
 			// 
 			// tb60_isbaseobject
 			// 
-			this.tb60_isbaseobject.Location = new System.Drawing.Point(130, 93);
+			this.tb60_isbaseobject.Location = new System.Drawing.Point(125, 93);
 			this.tb60_isbaseobject.Margin = new System.Windows.Forms.Padding(0);
 			this.tb60_isbaseobject.Name = "tb60_isbaseobject";
 			this.tb60_isbaseobject.Size = new System.Drawing.Size(35, 19);
@@ -2815,7 +2828,7 @@
 			// 
 			// tb59_specialtype
 			// 
-			this.tb59_specialtype.Location = new System.Drawing.Point(130, 33);
+			this.tb59_specialtype.Location = new System.Drawing.Point(125, 33);
 			this.tb59_specialtype.Margin = new System.Windows.Forms.Padding(0);
 			this.tb59_specialtype.Name = "tb59_specialtype";
 			this.tb59_specialtype.Size = new System.Drawing.Size(35, 19);
@@ -2825,7 +2838,7 @@
 			// 
 			// tb53_parttype
 			// 
-			this.tb53_parttype.Location = new System.Drawing.Point(130, 13);
+			this.tb53_parttype.Location = new System.Drawing.Point(125, 13);
 			this.tb53_parttype.Margin = new System.Windows.Forms.Padding(0);
 			this.tb53_parttype.Name = "tb53_parttype";
 			this.tb53_parttype.Size = new System.Drawing.Size(35, 19);
@@ -2835,7 +2848,7 @@
 			// 
 			// tb34_isgravlift
 			// 
-			this.tb34_isgravlift.Location = new System.Drawing.Point(130, 73);
+			this.tb34_isgravlift.Location = new System.Drawing.Point(125, 73);
 			this.tb34_isgravlift.Margin = new System.Windows.Forms.Padding(0);
 			this.tb34_isgravlift.Name = "tb34_isgravlift";
 			this.tb34_isgravlift.Size = new System.Drawing.Size(35, 19);
@@ -2845,7 +2858,7 @@
 			// 
 			// tb33_isbigwall
 			// 
-			this.tb33_isbigwall.Location = new System.Drawing.Point(130, 53);
+			this.tb33_isbigwall.Location = new System.Drawing.Point(125, 53);
 			this.tb33_isbigwall.Margin = new System.Windows.Forms.Padding(0);
 			this.tb33_isbigwall.Name = "tb33_isbigwall";
 			this.tb33_isbigwall.Size = new System.Drawing.Size(35, 19);
@@ -2855,7 +2868,7 @@
 			// 
 			// lbl_SpriteShade
 			// 
-			this.lbl_SpriteShade.Location = new System.Drawing.Point(210, 670);
+			this.lbl_SpriteShade.Location = new System.Drawing.Point(205, 665);
 			this.lbl_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_SpriteShade.Name = "lbl_SpriteShade";
 			this.lbl_SpriteShade.Size = new System.Drawing.Size(75, 15);
@@ -2865,7 +2878,7 @@
 			// 
 			// tb_SpriteShade
 			// 
-			this.tb_SpriteShade.Location = new System.Drawing.Point(285, 668);
+			this.tb_SpriteShade.Location = new System.Drawing.Point(280, 663);
 			this.tb_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_SpriteShade.Name = "tb_SpriteShade";
 			this.tb_SpriteShade.Size = new System.Drawing.Size(35, 19);
@@ -2878,7 +2891,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(702, 799);
+			this.ClientSize = new System.Drawing.Size(682, 799);
 			this.Controls.Add(this.gb_Loft);
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
@@ -2896,7 +2909,7 @@
 			this.Controls.Add(this.tb_SpriteShade);
 			this.Controls.Add(this.lbl_SpriteShade);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MaximumSize = new System.Drawing.Size(710, 825);
+			this.MaximumSize = new System.Drawing.Size(690, 825);
 			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

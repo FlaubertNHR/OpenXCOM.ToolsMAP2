@@ -106,6 +106,19 @@ namespace McdView
 					RecordPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 					pnl_ScanGic.Invalidate();
+
+					pnl_Loft08.Invalidate();
+					pnl_Loft09.Invalidate();
+					pnl_Loft10.Invalidate();
+					pnl_Loft11.Invalidate();
+					pnl_Loft12.Invalidate();
+					pnl_Loft13.Invalidate();
+					pnl_Loft14.Invalidate();
+					pnl_Loft15.Invalidate();
+					pnl_Loft16.Invalidate();
+					pnl_Loft17.Invalidate();
+					pnl_Loft18.Invalidate();
+					pnl_Loft19.Invalidate();
 				}
 			}
 		}
@@ -527,10 +540,24 @@ namespace McdView
 
 				Spriteset.Pal = Palette.UfoBattle;
 				ScanG = ResourceInfo.ScanGufo;
+				LoFT  = ResourceInfo.LoFTufo;
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
 				pnl_ScanGic.Invalidate();
+
+				pnl_Loft08.Invalidate();
+				pnl_Loft09.Invalidate();
+				pnl_Loft10.Invalidate();
+				pnl_Loft11.Invalidate();
+				pnl_Loft12.Invalidate();
+				pnl_Loft13.Invalidate();
+				pnl_Loft14.Invalidate();
+				pnl_Loft15.Invalidate();
+				pnl_Loft16.Invalidate();
+				pnl_Loft17.Invalidate();
+				pnl_Loft18.Invalidate();
+				pnl_Loft19.Invalidate();
 			}
 		}
 
@@ -543,10 +570,24 @@ namespace McdView
 
 				Spriteset.Pal = Palette.TftdBattle;
 				ScanG = ResourceInfo.ScanGtftd;
+				LoFT  = ResourceInfo.LoFTtftd;
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
 				pnl_ScanGic.Invalidate();
+
+				pnl_Loft08.Invalidate();
+				pnl_Loft09.Invalidate();
+				pnl_Loft10.Invalidate();
+				pnl_Loft11.Invalidate();
+				pnl_Loft12.Invalidate();
+				pnl_Loft13.Invalidate();
+				pnl_Loft14.Invalidate();
+				pnl_Loft15.Invalidate();
+				pnl_Loft16.Invalidate();
+				pnl_Loft17.Invalidate();
+				pnl_Loft18.Invalidate();
+				pnl_Loft19.Invalidate();
 			}
 		}
 		#endregion Menuitems
@@ -808,8 +849,10 @@ namespace McdView
 		{
 			e.Graphics.DrawRectangle(
 								_penBlack,
-								119, 14,
-								33, 33);
+								pnl_ScanGic.Location.X - 1,
+								pnl_ScanGic.Location.Y - 1,
+								pnl_ScanGic.Width  + 1,
+								pnl_ScanGic.Height + 1);
 		}
 
 		/// <summary>
@@ -869,7 +912,10 @@ namespace McdView
 
 					_graphics.DrawImage(
 									icon,
-									new Rectangle(0,0, 32,32),
+									new Rectangle(
+												0,0,
+												((Panel)sender).Width,
+												((Panel)sender).Height),
 									0,0, icon.Width, icon.Height,
 									GraphicsUnit.Pixel,
 									_attri);
@@ -923,6 +969,114 @@ namespace McdView
 				Records[SelId].Record.ScanG_reduced = (ushort)id_reduced;
 
 				pnl_ScanGic.Invalidate();
+			}
+		}
+
+
+		/// <summary>
+		/// Draws squares around the LoFT icons.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_LoFT_group(object sender, PaintEventArgs e)
+		{
+			Panel pnlLoFT;
+			for (int i = 0; i != 12; ++i)
+			{
+				switch (i)
+				{
+					default: pnlLoFT = pnl_Loft08; break; // case 0
+					case  1: pnlLoFT = pnl_Loft09; break;
+					case  2: pnlLoFT = pnl_Loft10; break;
+					case  3: pnlLoFT = pnl_Loft11; break;
+					case  4: pnlLoFT = pnl_Loft12; break;
+					case  5: pnlLoFT = pnl_Loft13; break;
+					case  6: pnlLoFT = pnl_Loft14; break;
+					case  7: pnlLoFT = pnl_Loft15; break;
+					case  8: pnlLoFT = pnl_Loft16; break;
+					case  9: pnlLoFT = pnl_Loft17; break;
+					case 10: pnlLoFT = pnl_Loft18; break;
+					case 11: pnlLoFT = pnl_Loft19; break;
+				}
+				e.Graphics.DrawRectangle(
+									_penBlack,
+									pnlLoFT.Location.X - 1,
+									pnlLoFT.Location.Y - 1,
+									pnlLoFT.Width  + 1,
+									pnlLoFT.Height + 1);
+			}
+		}
+
+		/// <summary>
+		/// Draws a LoFT icon in a LoFT panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_LoFT_panel(object sender, PaintEventArgs e)
+		{
+			if (SelId != -1 && LoFT != null)
+			{
+				var pnlLoFT = sender as Panel;
+
+				string val;
+				if      (pnlLoFT == pnl_Loft08) val = tb8_loft00 .Text;
+				else if (pnlLoFT == pnl_Loft09) val = tb9_loft02 .Text;
+				else if (pnlLoFT == pnl_Loft10) val = tb10_loft04.Text;
+				else if (pnlLoFT == pnl_Loft11) val = tb11_loft06.Text;
+				else if (pnlLoFT == pnl_Loft12) val = tb12_loft08.Text;
+				else if (pnlLoFT == pnl_Loft13) val = tb13_loft10.Text;
+				else if (pnlLoFT == pnl_Loft14) val = tb14_loft12.Text;
+				else if (pnlLoFT == pnl_Loft15) val = tb15_loft14.Text;
+				else if (pnlLoFT == pnl_Loft16) val = tb16_loft16.Text;
+				else if (pnlLoFT == pnl_Loft17) val = tb17_loft18.Text;
+				else if (pnlLoFT == pnl_Loft18) val = tb18_loft20.Text;
+				else                            val = tb19_loft22.Text; // if (pnlLoFT == pnl_Loft19)
+
+				int id = Int32.Parse(val);
+				if (id < LoFT.Length / 256)
+				{
+					_graphics = e.Graphics;
+					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
+					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+					var loft = new Bitmap(
+										16,16,
+										PixelFormat.Format8bppIndexed);	// Format1bppIndexed <- uses only 1 BIT per pixel
+																		// - causes probs setting the pixels below.
+					var data = loft.LockBits(
+										new Rectangle(0,0, loft.Width, loft.Height),
+										ImageLockMode.WriteOnly,
+										PixelFormat.Format8bppIndexed); // Format1bppIndexed
+					var start = data.Scan0;
+
+					unsafe
+					{
+						var pos = (byte*)start.ToPointer();
+
+						byte palid;
+						for (int row = 0; row != loft.Height; ++row)
+						for (int col = 0; col != loft.Width;  ++col)
+						{
+							byte* pixel = pos + (row * data.Stride) + col;
+
+							palid = Convert.ToByte(LoFT[(id * 256) + (row * loft.Width) + col]);
+							*pixel = palid;
+						}
+					}
+					loft.UnlockBits(data);
+
+					ColorPalette pal = loft.Palette;
+					pal.Entries[0] = SystemColors.ControlDarkDark;
+					pal.Entries[1] = SystemColors.ControlLightLight;
+					loft.Palette = pal;
+
+					_graphics.DrawImage(
+									loft,
+									new Rectangle(
+												0,0,
+												pnlLoFT.Width,
+												pnlLoFT.Height));
+				}
 			}
 		}
 
