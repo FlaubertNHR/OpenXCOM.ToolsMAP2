@@ -22,6 +22,51 @@ namespace McdView
 		const int SPRITE_OFFSET_X = 80;
 
 		/// <summary>
+		/// Spaces the layout of the fields etc. of the anisprites in the
+		/// sprite-group and -panel.
+		/// </summary>
+		private void LayoutSpriteGroup()
+		{
+			pnl_Sprites.Width = (gb_Sprites.Width - 10);
+
+			int left = pnl_Sprites.Left;
+			int offset = XCImage.SpriteWidth32 - (tb0_phase0.Width / 2);
+
+			tb0_phase0.Left = left + SPRITE_ORIGIN_X + offset;
+			tb1_phase1.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X;
+			tb2_phase2.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 2;
+			tb3_phase3.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 3;
+			tb4_phase4.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 4;
+			tb5_phase5.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 5;
+			tb6_phase6.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 6;
+			tb7_phase7.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 7;
+
+			lbl0.Left = tb0_phase0.Left + (tb0_phase0.Width / 2) - ((lbl0.Width + lbl0_phase0.Width) / 2);
+			lbl0_phase0.Left = lbl0.Right;
+
+			lbl1.Left = lbl0.Left + SPRITE_OFFSET_X;
+			lbl1_phase1.Left = lbl1.Right;
+
+			lbl2.Left = lbl1.Left + SPRITE_OFFSET_X;
+			lbl2_phase2.Left = lbl2.Right;
+
+			lbl3.Left = lbl2.Left + SPRITE_OFFSET_X;
+			lbl3_phase3.Left = lbl3.Right;
+
+			lbl4.Left = lbl3.Left + SPRITE_OFFSET_X;
+			lbl4_phase4.Left = lbl4.Right;
+
+			lbl5.Left = lbl4.Left + SPRITE_OFFSET_X;
+			lbl5_phase5.Left = lbl5.Right;
+
+			lbl6.Left = lbl5.Left + SPRITE_OFFSET_X;
+			lbl6_phase6.Left = lbl6.Right;
+
+			lbl7.Left = lbl6.Left + SPRITE_OFFSET_X;
+			lbl7_phase7.Left = lbl7.Right;
+		}
+
+		/// <summary>
 		/// Handles the Paint event for the anisprite groupbox's sprite-panel.
 		/// </summary>
 		/// <param name="sender"></param>

@@ -1965,6 +1965,7 @@
 			this.gb_Loft.Dock = System.Windows.Forms.DockStyle.Right;
 			this.gb_Loft.Location = new System.Drawing.Point(515, 340);
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
+			this.gb_Loft.MinimumSize = new System.Drawing.Size(167, 437);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.Size = new System.Drawing.Size(167, 437);
