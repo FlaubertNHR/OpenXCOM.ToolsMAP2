@@ -12,7 +12,7 @@ namespace McdView
 			Form
 	{
 		#region Fields (constant)
-		private const int COLS          = 32;
+		private const int COLS          = 16;
 		private const int LOFT_WIDTH    = 16;
 		private const int LOFT_HEIGHT   = 16;
 		private const int VERT_TEXT_PAD = 16;

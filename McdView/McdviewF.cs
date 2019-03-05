@@ -70,14 +70,14 @@ namespace McdView
 
 		internal bool _spriteShadeEnabled;
 
-		private int _spriteShadeInt = 13;// 33; // unity (default) //-1
+		private int _spriteShadeInt = -1;
 		private int SpriteShadeInt
 		{
 			get { return _spriteShadeInt; }
 			set
 			{
 				if (_spriteShadeEnabled = ((_spriteShadeInt = value) != -1))
-					SpriteShadeFloat = ((float)_spriteShadeInt * 0.03f);
+					SpriteShadeFloat = ((float)_spriteShadeInt * 0.03f); // NOTE: 33 is unity.
 
 				RecordPanel.Invalidate();
 				pnl_Sprites.Invalidate();
