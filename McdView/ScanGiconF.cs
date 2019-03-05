@@ -13,20 +13,25 @@ namespace McdView
 		:
 			Form
 	{
-		#region Fields (constant)
-		private const int COLS          = 32;
-		private const int ICON_WIDTH    = 16;
-		private const int ICON_HEIGHT   = 16;
+		#region Fields (static)
+		private const int COLS          = 16;
+		private const int ICON_WIDTH    = 32;
+		private const int ICON_HEIGHT   = 32;
 		private const int VERT_TEXT_PAD = 16;
 		private const int HORI_PAD      =  1;
-		#endregion Fields (constant)
+		#endregion Fields (static)
 
 
 		#region Fields
 		private readonly McdviewF _f;
 
-		private int IconId;
-		private ColorPalette Pal;
+		private readonly int IconId;
+		private readonly ColorPalette Pal;
+
+		private readonly VScrollBar Scroller = new VScrollBar();
+		private readonly int MaxScrollVal;
+		private readonly int TotalHeight;
+		private int _scrolloffset;
 		#endregion Fields
 
 
@@ -55,6 +60,10 @@ namespace McdView
 
 			Text = " SCANG.DAT"; // TODO: + "ufo"/"tftd"
 
+			Scroller.Dock = DockStyle.Right;
+			Scroller.Scroll += OnScroll;
+			Controls.Add(Scroller);
+
 			int icons = _f.ScanG.Length / 16;
 
 			int w;
@@ -66,11 +75,18 @@ namespace McdView
 			else
 				w = COLS;
 
-			w = (w * ICON_WIDTH) + (w * HORI_PAD) - 1;
+			w = (w * ICON_WIDTH) + (w * HORI_PAD) - 1 + Scroller.Width;
 
 			int h = (icons + COLS - 1) / COLS * (ICON_HEIGHT + VERT_TEXT_PAD);
 
+			TotalHeight = h;
+
+			if (h > (ICON_HEIGHT + VERT_TEXT_PAD) * 16)
+				h = (ICON_HEIGHT + VERT_TEXT_PAD) * 16;
+
 			ClientSize = new Size(w, h);
+
+			MaxScrollVal = Scroller.Maximum - (Scroller.LargeChange - 1);
 		}
 		#endregion cTor
 
@@ -85,6 +101,8 @@ namespace McdView
 			var attri = new ImageAttributes();
 			if (_f._spriteShadeEnabled)
 				attri.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
+
+			_scrolloffset = (-Scroller.Value * (TotalHeight - ClientSize.Height)) / MaxScrollVal;
 
 			Rectangle rect;
 
@@ -134,7 +152,7 @@ namespace McdView
 				graphics.DrawImage(
 								icon,
 								new Rectangle(
-											x, y,
+											x, y + _scrolloffset,
 											ICON_WIDTH, ICON_HEIGHT),
 								0,0, icon.Width, icon.Height,
 								GraphicsUnit.Pixel,
@@ -142,7 +160,7 @@ namespace McdView
 
 				rect = new Rectangle(
 								x,
-								y + ICON_HEIGHT,
+								y + ICON_HEIGHT + _scrolloffset,
 								ICON_WIDTH,
 								VERT_TEXT_PAD);
 
@@ -161,13 +179,12 @@ namespace McdView
 			}
 		}
 
-
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			if (   e.X > -1 && e.X < ClientSize.Width
 				&& e.Y > -1 && e.Y < ClientSize.Height)
 			{
-				int id = e.Y / (ICON_HEIGHT + VERT_TEXT_PAD) * COLS
+				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_TEXT_PAD) * COLS
 					   + e.X / (ICON_WIDTH  + HORI_PAD);
 
 				if (id < _f.ScanG.Length / 16)
@@ -180,7 +197,31 @@ namespace McdView
 			}
 		}
 
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			if (e.Delta > 0)
+			{
+				int val0 = Scroller.Value;
+				int val = Scroller.Value - Scroller.LargeChange;
+				if (val < 0)
+					val = 0;
+				Scroller.Value = val;
 
+				if (Scroller.Value != val0)
+					Invalidate();
+			}
+			else if (e.Delta < 0)
+			{
+				int val0 = Scroller.Value;
+				int val = Scroller.Value + Scroller.LargeChange;
+				if (val > MaxScrollVal)
+					val = MaxScrollVal;
+				Scroller.Value = val;
+
+				if (Scroller.Value != val0)
+					Invalidate();
+			}
+		}
 
 		/// <summary>
 		/// Closes the screen on an Escape keydown event.
@@ -192,6 +233,14 @@ namespace McdView
 				Close();
 		}
 		#endregion Events (override)
+
+
+		#region Events
+		private void OnScroll(object sender, EventArgs e)
+		{
+			Invalidate();
+		}
+		#endregion Events
 
 
 		#region Designer
@@ -225,7 +274,7 @@ namespace McdView
 			// ScanGiconF
 			// 
 			this.ClientSize = new System.Drawing.Size(494, 276);
-			this.Font = new System.Drawing.Font("Verdana", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;

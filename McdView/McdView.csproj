@@ -91,6 +91,9 @@
     <EmbeddedResource Include="McdviewF.resx">
       <DependentUpon>McdviewF.Designer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ScanGiconF.resx">
+      <DependentUpon>ScanGiconF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SpritesetF.resx">
       <DependentUpon>SpritesetF.cs</DependentUpon>
     </EmbeddedResource>

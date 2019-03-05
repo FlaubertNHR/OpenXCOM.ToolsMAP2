@@ -74,8 +74,6 @@ namespace McdView
 		#region Events (override)
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			base.OnPaint(e);
-
 			var graphics = e.Graphics;
 			graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 			graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
