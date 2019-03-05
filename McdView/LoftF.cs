@@ -32,9 +32,11 @@ namespace McdView
 		/// 
 		/// </summary>
 		/// <param name="f"></param>
+		/// <param name="loftslot"></param>
 		/// <param name="loftId"></param>
 		internal LoftF(
 				McdviewF f,
+				int loftslot,
 				int loftId)
 		{
 			InitializeComponent();
@@ -47,7 +49,7 @@ namespace McdView
 			_f = f;
 			LoftId = loftId;
 
-			Text = " LOFTEMPS.DAT"; // TODO: + "ufo"/"tftd"
+			Text = " LOFTEMPS.DAT - slot " + loftslot; // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
 

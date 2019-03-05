@@ -504,21 +504,21 @@ namespace McdView
 				if (   e.X > -1 && e.X < _pnlLoFT.Width
 					&& e.Y > -1 && e.Y < _pnlLoFT.Height)
 				{
-					string id;
-					if      (_pnlLoFT == pnl_Loft08) id = tb8_loft00 .Text;
-					else if (_pnlLoFT == pnl_Loft09) id = tb9_loft02 .Text;
-					else if (_pnlLoFT == pnl_Loft10) id = tb10_loft04.Text;
-					else if (_pnlLoFT == pnl_Loft11) id = tb11_loft06.Text;
-					else if (_pnlLoFT == pnl_Loft12) id = tb12_loft08.Text;
-					else if (_pnlLoFT == pnl_Loft13) id = tb13_loft10.Text;
-					else if (_pnlLoFT == pnl_Loft14) id = tb14_loft12.Text;
-					else if (_pnlLoFT == pnl_Loft15) id = tb15_loft14.Text;
-					else if (_pnlLoFT == pnl_Loft16) id = tb16_loft16.Text;
-					else if (_pnlLoFT == pnl_Loft17) id = tb17_loft18.Text;
-					else if (_pnlLoFT == pnl_Loft18) id = tb18_loft20.Text;
-					else                             id = tb19_loft22.Text; // if (_pnlLoFT == pnl_Loft19)
+					string id; int slot;
+					if      (_pnlLoFT == pnl_Loft08) { id = tb8_loft00 .Text; slot =  0; }
+					else if (_pnlLoFT == pnl_Loft09) { id = tb9_loft02 .Text; slot =  2; }
+					else if (_pnlLoFT == pnl_Loft10) { id = tb10_loft04.Text; slot =  4; }
+					else if (_pnlLoFT == pnl_Loft11) { id = tb11_loft06.Text; slot =  6; }
+					else if (_pnlLoFT == pnl_Loft12) { id = tb12_loft08.Text; slot =  8; }
+					else if (_pnlLoFT == pnl_Loft13) { id = tb13_loft10.Text; slot = 10; }
+					else if (_pnlLoFT == pnl_Loft14) { id = tb14_loft12.Text; slot = 12; }
+					else if (_pnlLoFT == pnl_Loft15) { id = tb15_loft14.Text; slot = 14; }
+					else if (_pnlLoFT == pnl_Loft16) { id = tb16_loft16.Text; slot = 16; }
+					else if (_pnlLoFT == pnl_Loft17) { id = tb17_loft18.Text; slot = 18; }
+					else if (_pnlLoFT == pnl_Loft18) { id = tb18_loft20.Text; slot = 20; }
+					else                             { id = tb19_loft22.Text; slot = 22; } // if (_pnlLoFT == pnl_Loft19)
 
-					using (var f = new LoftF(this, Int32.Parse(id)))
+					using (var f = new LoftF(this, slot, Int32.Parse(id)))
 					{
 						f.Location = new Point(
 											Location.X +  10,
