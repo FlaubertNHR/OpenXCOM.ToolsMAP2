@@ -33,7 +33,7 @@
 		private System.Windows.Forms.Label lbl37;
 		private System.Windows.Forms.Label lbl37_isblocksmoke;
 		private System.Windows.Forms.Label lbl38;
-		private System.Windows.Forms.Label lbl38_startphase;
+		private System.Windows.Forms.Label lbl38_leftrighthalf;
 		private System.Windows.Forms.Label lbl39;
 		private System.Windows.Forms.Label lbl39_tuwalk;
 		private System.Windows.Forms.Label lbl40;
@@ -155,7 +155,7 @@
 		private System.Windows.Forms.TextBox tb20_scang1;
 		private System.Windows.Forms.TextBox tb44_deathid;
 		private System.Windows.Forms.TextBox tb42_hitpoints;
-		private System.Windows.Forms.TextBox tb38_startphase;
+		private System.Windows.Forms.TextBox tb38_leftrighthalf;
 		private System.Windows.Forms.TextBox tb61_;
 		private System.Windows.Forms.TextBox tb50_;
 		private System.Windows.Forms.TextBox tb47_;
@@ -228,6 +228,10 @@
 		private System.Windows.Forms.Panel pnl_Loft16;
 		private System.Windows.Forms.Panel pnl_Loft17;
 		private System.Windows.Forms.Panel pnl_Loft18;
+		private System.Windows.Forms.GroupBox gb_Description;
+		private System.Windows.Forms.Label lbl_Description;
+		private System.Windows.Forms.CheckBox cb_Strict;
+		private System.Windows.Forms.Label lbl_Strict;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -276,7 +280,7 @@
 			this.lbl37 = new System.Windows.Forms.Label();
 			this.lbl37_isblocksmoke = new System.Windows.Forms.Label();
 			this.lbl38 = new System.Windows.Forms.Label();
-			this.lbl38_startphase = new System.Windows.Forms.Label();
+			this.lbl38_leftrighthalf = new System.Windows.Forms.Label();
 			this.lbl39 = new System.Windows.Forms.Label();
 			this.lbl39_tuwalk = new System.Windows.Forms.Label();
 			this.lbl40 = new System.Windows.Forms.Label();
@@ -427,7 +431,7 @@
 			this.tb2_phase2 = new System.Windows.Forms.TextBox();
 			this.tb1_phase1 = new System.Windows.Forms.TextBox();
 			this.tb0_phase0 = new System.Windows.Forms.TextBox();
-			this.tb38_startphase = new System.Windows.Forms.TextBox();
+			this.tb38_leftrighthalf = new System.Windows.Forms.TextBox();
 			this.gb_Collection = new System.Windows.Forms.GroupBox();
 			this.gb_Minimap = new System.Windows.Forms.GroupBox();
 			this.pnl_ScanGic = new System.Windows.Forms.Panel();
@@ -471,6 +475,10 @@
 			this.tb33_isbigwall = new System.Windows.Forms.TextBox();
 			this.lbl_SpriteShade = new System.Windows.Forms.Label();
 			this.tb_SpriteShade = new System.Windows.Forms.TextBox();
+			this.gb_Description = new System.Windows.Forms.GroupBox();
+			this.lbl_Description = new System.Windows.Forms.Label();
+			this.cb_Strict = new System.Windows.Forms.CheckBox();
+			this.lbl_Strict = new System.Windows.Forms.Label();
 			this.gb_Unused.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
 			this.gb_Sprites.SuspendLayout();
@@ -483,6 +491,7 @@
 			this.gb_Explosive.SuspendLayout();
 			this.gb_Health.SuspendLayout();
 			this.gb_General.SuspendLayout();
+			this.gb_Description.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// mmMainMenu
@@ -719,15 +728,15 @@
 			this.lbl38.Text = "#38";
 			this.lbl38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl38_startphase
+			// lbl38_leftrighthalf
 			// 
-			this.lbl38_startphase.Location = new System.Drawing.Point(45, 145);
-			this.lbl38_startphase.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl38_startphase.Name = "lbl38_startphase";
-			this.lbl38_startphase.Size = new System.Drawing.Size(65, 15);
-			this.lbl38_startphase.TabIndex = 18;
-			this.lbl38_startphase.Text = "StartPhase";
-			this.lbl38_startphase.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl38_leftrighthalf.Location = new System.Drawing.Point(45, 145);
+			this.lbl38_leftrighthalf.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl38_leftrighthalf.Name = "lbl38_leftrighthalf";
+			this.lbl38_leftrighthalf.Size = new System.Drawing.Size(80, 15);
+			this.lbl38_leftrighthalf.TabIndex = 18;
+			this.lbl38_leftrighthalf.Text = "LeftRightHalf";
+			this.lbl38_leftrighthalf.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl39
 			// 
@@ -2225,7 +2234,7 @@
 			this.gb_Sprites.Controls.Add(this.tb2_phase2);
 			this.gb_Sprites.Controls.Add(this.tb1_phase1);
 			this.gb_Sprites.Controls.Add(this.tb0_phase0);
-			this.gb_Sprites.Controls.Add(this.tb38_startphase);
+			this.gb_Sprites.Controls.Add(this.tb38_leftrighthalf);
 			this.gb_Sprites.Controls.Add(this.lbl3_phase3);
 			this.gb_Sprites.Controls.Add(this.lbl0_phase0);
 			this.gb_Sprites.Controls.Add(this.lbl0);
@@ -2243,7 +2252,7 @@
 			this.gb_Sprites.Controls.Add(this.lbl5_phase5);
 			this.gb_Sprites.Controls.Add(this.lbl4);
 			this.gb_Sprites.Controls.Add(this.lbl38);
-			this.gb_Sprites.Controls.Add(this.lbl38_startphase);
+			this.gb_Sprites.Controls.Add(this.lbl38_leftrighthalf);
 			this.gb_Sprites.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gb_Sprites.Location = new System.Drawing.Point(0, 175);
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
@@ -2346,15 +2355,18 @@
 			this.tb0_phase0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb0_phase0.WordWrap = false;
 			// 
-			// tb38_startphase
+			// tb38_leftrighthalf
 			// 
-			this.tb38_startphase.Location = new System.Drawing.Point(115, 143);
-			this.tb38_startphase.Margin = new System.Windows.Forms.Padding(0);
-			this.tb38_startphase.Name = "tb38_startphase";
-			this.tb38_startphase.Size = new System.Drawing.Size(35, 19);
-			this.tb38_startphase.TabIndex = 107;
-			this.tb38_startphase.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb38_startphase.WordWrap = false;
+			this.tb38_leftrighthalf.Location = new System.Drawing.Point(130, 143);
+			this.tb38_leftrighthalf.Margin = new System.Windows.Forms.Padding(0);
+			this.tb38_leftrighthalf.Name = "tb38_leftrighthalf";
+			this.tb38_leftrighthalf.Size = new System.Drawing.Size(35, 19);
+			this.tb38_leftrighthalf.TabIndex = 107;
+			this.tb38_leftrighthalf.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb38_leftrighthalf.WordWrap = false;
+			this.tb38_leftrighthalf.TextChanged += new System.EventHandler(this.OnChanged38);
+			this.tb38_leftrighthalf.Enter += new System.EventHandler(this.OnEnter38);
+			this.tb38_leftrighthalf.Leave += new System.EventHandler(this.OnLeave);
 			// 
 			// gb_Collection
 			// 
@@ -2869,17 +2881,19 @@
 			// 
 			// lbl_SpriteShade
 			// 
-			this.lbl_SpriteShade.Location = new System.Drawing.Point(205, 665);
+			this.lbl_SpriteShade.Location = new System.Drawing.Point(205, 660);
 			this.lbl_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_SpriteShade.Name = "lbl_SpriteShade";
 			this.lbl_SpriteShade.Size = new System.Drawing.Size(75, 15);
 			this.lbl_SpriteShade.TabIndex = 137;
 			this.lbl_SpriteShade.Text = "SpriteShade";
 			this.lbl_SpriteShade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_SpriteShade.MouseEnter += new System.EventHandler(this.OnEnterSpriteShade);
+			this.lbl_SpriteShade.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb_SpriteShade
 			// 
-			this.tb_SpriteShade.Location = new System.Drawing.Point(280, 663);
+			this.tb_SpriteShade.Location = new System.Drawing.Point(280, 658);
 			this.tb_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_SpriteShade.Name = "tb_SpriteShade";
 			this.tb_SpriteShade.Size = new System.Drawing.Size(35, 19);
@@ -2887,12 +2901,75 @@
 			this.tb_SpriteShade.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb_SpriteShade.WordWrap = false;
 			this.tb_SpriteShade.TextChanged += new System.EventHandler(this.OnTextChanged_SpriteShade);
+			this.tb_SpriteShade.Enter += new System.EventHandler(this.OnEnterSpriteShade);
+			this.tb_SpriteShade.Leave += new System.EventHandler(this.OnLeave);
+			this.tb_SpriteShade.MouseEnter += new System.EventHandler(this.OnEnterSpriteShade);
+			this.tb_SpriteShade.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+			// 
+			// gb_Description
+			// 
+			this.gb_Description.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.gb_Description.Controls.Add(this.lbl_Description);
+			this.gb_Description.Location = new System.Drawing.Point(5, 695);
+			this.gb_Description.Margin = new System.Windows.Forms.Padding(0);
+			this.gb_Description.Name = "gb_Description";
+			this.gb_Description.Padding = new System.Windows.Forms.Padding(0);
+			this.gb_Description.Size = new System.Drawing.Size(505, 80);
+			this.gb_Description.TabIndex = 139;
+			this.gb_Description.TabStop = false;
+			this.gb_Description.Text = " description ";
+			// 
+			// lbl_Description
+			// 
+			this.lbl_Description.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lbl_Description.Location = new System.Drawing.Point(5, 15);
+			this.lbl_Description.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_Description.Name = "lbl_Description";
+			this.lbl_Description.Size = new System.Drawing.Size(495, 60);
+			this.lbl_Description.TabIndex = 0;
+			// 
+			// cb_Strict
+			// 
+			this.cb_Strict.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
+			this.cb_Strict.Checked = true;
+			this.cb_Strict.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_Strict.Location = new System.Drawing.Point(280, 680);
+			this.cb_Strict.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_Strict.Name = "cb_Strict";
+			this.cb_Strict.Size = new System.Drawing.Size(15, 15);
+			this.cb_Strict.TabIndex = 140;
+			this.cb_Strict.UseVisualStyleBackColor = true;
+			this.cb_Strict.CheckedChanged += new System.EventHandler(this.OnCheckChanged_Strict);
+			this.cb_Strict.Enter += new System.EventHandler(this.OnEnterStrict);
+			this.cb_Strict.Leave += new System.EventHandler(this.OnLeave);
+			this.cb_Strict.MouseEnter += new System.EventHandler(this.OnEnterStrict);
+			this.cb_Strict.MouseLeave += new System.EventHandler(this.OnMouseLeaveStrict);
+			// 
+			// lbl_Strict
+			// 
+			this.lbl_Strict.Location = new System.Drawing.Point(205, 680);
+			this.lbl_Strict.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_Strict.Name = "lbl_Strict";
+			this.lbl_Strict.Size = new System.Drawing.Size(75, 15);
+			this.lbl_Strict.TabIndex = 141;
+			this.lbl_Strict.Text = "STRICT";
+			this.lbl_Strict.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_Strict.MouseEnter += new System.EventHandler(this.OnEnterStrict);
+			this.lbl_Strict.MouseLeave += new System.EventHandler(this.OnMouseLeaveStrict);
 			// 
 			// McdviewF
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(682, 799);
+			this.Controls.Add(this.tb_SpriteShade);
+			this.Controls.Add(this.cb_Strict);
+			this.Controls.Add(this.lbl_Strict);
+			this.Controls.Add(this.gb_Description);
 			this.Controls.Add(this.gb_Loft);
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
@@ -2907,7 +2984,6 @@
 			this.Controls.Add(this.gb_Tu);
 			this.Controls.Add(this.gb_Minimap);
 			this.Controls.Add(this.gb_Unused);
-			this.Controls.Add(this.tb_SpriteShade);
 			this.Controls.Add(this.lbl_SpriteShade);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MaximumSize = new System.Drawing.Size(690, 825);
@@ -2939,6 +3015,7 @@
 			this.gb_Health.PerformLayout();
 			this.gb_General.ResumeLayout(false);
 			this.gb_General.PerformLayout();
+			this.gb_Description.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

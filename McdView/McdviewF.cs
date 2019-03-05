@@ -502,6 +502,23 @@ namespace McdView
 			else
 				tb_SpriteShade.Text = "-1"; // recurse
 		}
+
+		private void OnCheckChanged_Strict(object sender, EventArgs e)
+		{
+			if (SelId != -1 && cb_Strict.Checked)
+			{
+				// TODO: test if any values are outside standard limits and issue
+				// a warning that checking STRICT will set those values to within
+				// regular operating bounds. If user chooses
+				//
+				//   Ignore: don't reset values
+				//   Retry:  reset values
+				//   Abort:  set STRICT unchecked.
+				//
+				// This needs to be done only when STRICT becomes checked;
+				// unchecking STRICT shall do nothing here.
+			}
+		}
 		#endregion Events
 
 
@@ -584,15 +601,15 @@ namespace McdView
 			tb36_isblockfire .Text = Convert.ToInt32(record.BlockFire) .ToString();
 			tb37_isblocksmoke.Text = Convert.ToInt32(record.BlockSmoke).ToString();
 
-			tb38_startphase .Text = ((int)record.StartPhase).ToString();
-			tb39_tuwalk     .Text = ((int)record.TU_Walk)   .ToString();
-			tb40_tuslide    .Text = ((int)record.TU_Slide)  .ToString();
-			tb41_tufly      .Text = ((int)record.TU_Fly)    .ToString();
-			tb42_hitpoints  .Text = ((int)record.Armor)     .ToString();
-			tb43_heblock    .Text = ((int)record.HE_Block)  .ToString();
-			tb44_deathid    .Text = ((int)record.DieTile)   .ToString();
-			tb45_flammable  .Text = ((int)record.Flammable) .ToString();
-			tb46_alternateid.Text = ((int)record.Alt_MCD)   .ToString();
+			tb38_leftrighthalf.Text = ((int)record.StartPhase).ToString();
+			tb39_tuwalk       .Text = ((int)record.TU_Walk)   .ToString();
+			tb40_tuslide      .Text = ((int)record.TU_Slide)  .ToString();
+			tb41_tufly        .Text = ((int)record.TU_Fly)    .ToString();
+			tb42_hitpoints    .Text = ((int)record.Armor)     .ToString();
+			tb43_heblock      .Text = ((int)record.HE_Block)  .ToString();
+			tb44_deathid      .Text = ((int)record.DieTile)   .ToString();
+			tb45_flammable    .Text = ((int)record.Flammable) .ToString();
+			tb46_alternateid  .Text = ((int)record.Alt_MCD)   .ToString();
 
 			tb47_.Text = ((int)record.Unknown47).ToString();
 
@@ -663,15 +680,15 @@ namespace McdView
 			tb36_isblockfire .Text =
 			tb37_isblocksmoke.Text =
 
-			tb38_startphase .Text =
-			tb39_tuwalk     .Text =
-			tb40_tuslide    .Text =
-			tb41_tufly      .Text =
-			tb42_hitpoints  .Text =
-			tb43_heblock    .Text =
-			tb44_deathid    .Text =
-			tb45_flammable  .Text =
-			tb46_alternateid.Text =
+			tb38_leftrighthalf.Text =
+			tb39_tuwalk       .Text =
+			tb40_tuslide      .Text =
+			tb41_tufly        .Text =
+			tb42_hitpoints    .Text =
+			tb43_heblock      .Text =
+			tb44_deathid      .Text =
+			tb45_flammable    .Text =
+			tb46_alternateid  .Text =
 
 			tb47_.Text =
 
