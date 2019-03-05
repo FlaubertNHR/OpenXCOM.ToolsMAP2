@@ -13,8 +13,8 @@ namespace McdView
 	{
 		#region Fields (constant)
 		private const int COLS          = 16;
-		private const int LOFT_WIDTH    = 16;
-		private const int LOFT_HEIGHT   = 16;
+		private const int LOFT_WIDTH    = 32;
+		private const int LOFT_HEIGHT   = 32;
 		private const int VERT_TEXT_PAD = 16;
 		private const int HORI_PAD      =  1;
 		#endregion Fields (constant)
@@ -206,7 +206,7 @@ namespace McdView
 			// LoftF
 			// 
 			this.ClientSize = new System.Drawing.Size(494, 276);
-			this.Font = new System.Drawing.Font("Verdana", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
