@@ -88,6 +88,10 @@ namespace XCom
 		public int SetId
 		{ get; private set; }
 
+		// kL_note: All values in an MCD record are unsigned bytes except the
+		// ScanG ref (little endian unsigned short) and the TerrainOffset
+		// (signed byte).
+
 		public byte Sprite1 { get; set; }
 		public byte Sprite2 { get; set; }
 		public byte Sprite3 { get; set; }
