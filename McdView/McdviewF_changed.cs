@@ -195,7 +195,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// #59 SpecialType (sbyte/SpecialType)
+		/// #59 SpecialType (byte/SpecialType)
 		/// @note aka TargetType
 		/// </summary>
 		/// <param name="sender"></param>
@@ -209,7 +209,7 @@ namespace McdView
 				int result;
 				if (Int32.TryParse(tb59_specialtype.Text, out result)
 					&&     ((strict && result > -1 && result < 15)
-						|| (!strict && result > -129 && result < 128)))
+						|| (!strict && result > -1 && result < 256)))
 				{
 					Records[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
 				}															// explicitly defined in the enum is allowed.

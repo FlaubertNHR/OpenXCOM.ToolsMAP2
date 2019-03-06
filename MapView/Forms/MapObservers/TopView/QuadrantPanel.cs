@@ -119,16 +119,16 @@ namespace MapView.Forms.MapObservers.TopViews
 					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Ground);
 					break;
 				case QuadrantType.West:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.WestWall);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.WestWall);
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Westwall);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Westwall);
 					break;
 				case QuadrantType.North:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.NorthWall);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.NorthWall);
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Northwall);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Northwall);
 					break;
 				case QuadrantType.Content:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Object);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Object);
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Content);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Content);
 					break;
 			}
 

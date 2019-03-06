@@ -57,11 +57,11 @@ namespace XCom
 {
 	public enum PartType
 	{
-		All       = -1,
+		All       = -1, // <- for TileView's ALL tabpage only.
 		Ground    =  0,
-		WestWall  =  1,
-		NorthWall =  2,
-		Object    =  3
+		Westwall  =  1,
+		Northwall =  2,
+		Content   =  3
 	};
 
 

@@ -234,15 +234,15 @@ namespace MapView.Forms.MapObservers.TopViews
 					QuadrantsPanel.SelectedQuadrant = QuadrantType.Ground;
 					break;
 
-				case PartType.WestWall:
+				case PartType.Westwall:
 					QuadrantsPanel.SelectedQuadrant = QuadrantType.West;
 					break;
 
-				case PartType.NorthWall:
+				case PartType.Northwall:
 					QuadrantsPanel.SelectedQuadrant = QuadrantType.North;
 					break;
 
-				case PartType.Object:
+				case PartType.Content:
 					QuadrantsPanel.SelectedQuadrant = QuadrantType.Content;
 					break;
 			}
