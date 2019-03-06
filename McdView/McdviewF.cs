@@ -40,6 +40,8 @@ namespace McdView
 		internal BitArray LoFT;
 
 		private readonly Pen _penBlack = new Pen(Color.Black, 1);
+
+		private bool strict;
 		#endregion Fields
 
 
@@ -93,7 +95,10 @@ namespace McdView
 				{
 					if ((_selId = value) != -1)
 					{
+						bool strict0 = strict;
+						strict = false;
 						PopulateTextFields();
+						strict = strict0;
 					}
 					else
 						ClearTextFields();
@@ -505,7 +510,7 @@ namespace McdView
 
 		private void OnCheckChanged_Strict(object sender, EventArgs e)
 		{
-			if (SelId != -1 && cb_Strict.Checked)
+			if ((strict = cb_Strict.Checked) && SelId != -1)
 			{
 				// TODO: test if any values are outside standard limits and issue
 				// a warning that checking STRICT will set those values to within
@@ -556,6 +561,13 @@ namespace McdView
 		/// </summary>
 		internal void PopulateTextFields()
 		{
+			// TODO: This is going to cause a lot of problems if/when user loads
+			// a nonstandard record that has values that are outside the strict-
+			// bounds. Ie, the vals will set to standard defaults.
+			// 
+			// So don't turn 'strict' on until after the record loads/populates
+			// the textfields. See 'SelId' setter
+
 			McdRecord record = Records[SelId].Record;
 
 			tb0_phase0.Text = ((int)record.Sprite1).ToString();

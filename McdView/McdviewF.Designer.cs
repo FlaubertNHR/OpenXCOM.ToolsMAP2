@@ -727,6 +727,8 @@
 			this.lbl38.TabIndex = 19;
 			this.lbl38.Text = "#38";
 			this.lbl38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl38.MouseEnter += new System.EventHandler(this.OnEnter38);
+			this.lbl38.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl38_leftrighthalf
 			// 
@@ -737,6 +739,8 @@
 			this.lbl38_leftrighthalf.TabIndex = 18;
 			this.lbl38_leftrighthalf.Text = "LeftRightHalf";
 			this.lbl38_leftrighthalf.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl38_leftrighthalf.MouseEnter += new System.EventHandler(this.OnEnter38);
+			this.lbl38_leftrighthalf.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl39
 			// 
@@ -1027,6 +1031,8 @@
 			this.lbl53.TabIndex = 49;
 			this.lbl53.Text = "#53";
 			this.lbl53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl53.MouseEnter += new System.EventHandler(this.OnEnter53);
+			this.lbl53.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl53_parttype
 			// 
@@ -1037,6 +1043,8 @@
 			this.lbl53_parttype.TabIndex = 48;
 			this.lbl53_parttype.Text = "PartType";
 			this.lbl53_parttype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl53_parttype.MouseEnter += new System.EventHandler(this.OnEnter53);
+			this.lbl53_parttype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl54
 			// 
@@ -1147,6 +1155,8 @@
 			this.lbl59.TabIndex = 62;
 			this.lbl59.Text = "#59";
 			this.lbl59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl59.MouseEnter += new System.EventHandler(this.OnEnter59);
+			this.lbl59.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl59_specialtype
 			// 
@@ -1157,6 +1167,8 @@
 			this.lbl59_specialtype.TabIndex = 61;
 			this.lbl59_specialtype.Text = "SpecialType";
 			this.lbl59_specialtype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl59_specialtype.MouseEnter += new System.EventHandler(this.OnEnter59);
+			this.lbl59_specialtype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl60
 			// 
@@ -2367,6 +2379,8 @@
 			this.tb38_leftrighthalf.TextChanged += new System.EventHandler(this.OnChanged38);
 			this.tb38_leftrighthalf.Enter += new System.EventHandler(this.OnEnter38);
 			this.tb38_leftrighthalf.Leave += new System.EventHandler(this.OnLeave);
+			this.tb38_leftrighthalf.MouseEnter += new System.EventHandler(this.OnEnter38);
+			this.tb38_leftrighthalf.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Collection
 			// 
@@ -2848,6 +2862,11 @@
 			this.tb59_specialtype.TabIndex = 68;
 			this.tb59_specialtype.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb59_specialtype.WordWrap = false;
+			this.tb59_specialtype.TextChanged += new System.EventHandler(this.OnChanged59);
+			this.tb59_specialtype.Enter += new System.EventHandler(this.OnEnter59);
+			this.tb59_specialtype.Leave += new System.EventHandler(this.OnLeave);
+			this.tb59_specialtype.MouseEnter += new System.EventHandler(this.OnEnter59);
+			this.tb59_specialtype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb53_parttype
 			// 
@@ -2858,6 +2877,11 @@
 			this.tb53_parttype.TabIndex = 65;
 			this.tb53_parttype.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb53_parttype.WordWrap = false;
+			this.tb53_parttype.TextChanged += new System.EventHandler(this.OnChanged53);
+			this.tb53_parttype.Enter += new System.EventHandler(this.OnEnter53);
+			this.tb53_parttype.Leave += new System.EventHandler(this.OnLeave);
+			this.tb53_parttype.MouseEnter += new System.EventHandler(this.OnEnter53);
+			this.tb53_parttype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb34_isgravlift
 			// 
