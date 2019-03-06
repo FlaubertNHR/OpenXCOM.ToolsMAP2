@@ -613,15 +613,15 @@ namespace McdView
 			tb36_isblockfire .Text = Convert.ToInt32(record.BlockFire) .ToString();
 			tb37_isblocksmoke.Text = Convert.ToInt32(record.BlockSmoke).ToString();
 
-			tb38_leftrighthalf.Text = ((int)record.StartPhase).ToString();
-			tb39_tuwalk       .Text = ((int)record.TU_Walk)   .ToString();
-			tb40_tuslide      .Text = ((int)record.TU_Slide)  .ToString();
-			tb41_tufly        .Text = ((int)record.TU_Fly)    .ToString();
-			tb42_hitpoints    .Text = ((int)record.Armor)     .ToString();
-			tb43_heblock      .Text = ((int)record.HE_Block)  .ToString();
-			tb44_deathid      .Text = ((int)record.DieTile)   .ToString();
-			tb45_flammable    .Text = ((int)record.Flammable) .ToString();
-			tb46_alternateid  .Text = ((int)record.Alt_MCD)   .ToString();
+			tb38_leftrighthalf.Text = ((int)record.LeftRightHalf).ToString();
+			tb39_tuwalk       .Text = ((int)record.TU_Walk)      .ToString();
+			tb40_tuslide      .Text = ((int)record.TU_Slide)     .ToString();
+			tb41_tufly        .Text = ((int)record.TU_Fly)       .ToString();
+			tb42_hitpoints    .Text = ((int)record.Armor)        .ToString();
+			tb43_heblock      .Text = ((int)record.HE_Block)     .ToString();
+			tb44_deathid      .Text = ((int)record.DieTile)      .ToString();
+			tb45_flammable    .Text = ((int)record.Flammable)    .ToString();
+			tb46_alternateid  .Text = ((int)record.Alt_MCD)      .ToString();
 
 			tb47_.Text = ((int)record.Unknown47).ToString();
 

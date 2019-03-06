@@ -113,7 +113,7 @@ namespace McdView
 					&&     ((strict && result == 3)
 						|| (!strict && result > -1 && result < 256)))
 				{
-					Records[SelId].Record.StartPhase = (byte)result;
+					Records[SelId].Record.LeftRightHalf = (byte)result;
 				}
 				else
 					tb38_leftrighthalf.Text = "3"; // recurse w/ default.

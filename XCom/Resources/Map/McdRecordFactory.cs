@@ -56,21 +56,21 @@ namespace XCom
 			record.BlockFire  = bindata[36] == 1; // unsigned char Block_Fire;          // If 1, fire won't go through the tile
 			record.BlockSmoke = bindata[37] == 1; // unsigned char Block_Smoke;         // If 1, smoke won't go through the tile
 
-			record.StartPhase  = bindata[38]; // unsigned char u39;
-			record.TU_Walk     = bindata[39];
-			record.TU_Slide    = bindata[40]; // unsigned char TU_Slide;                // sliding things include snakemen and silacoids
-			record.TU_Fly      = bindata[41]; // unsigned char TU_Fly;                  // remember, 0xFF means it's impassable!
-			record.Armor       = bindata[42];
-			record.HE_Block    = bindata[43]; // unsigned char HE_Block;                // How much of an explosion this tile will block
-			record.DieTile     = bindata[44];
-			record.Flammable   = bindata[45];
-			record.Alt_MCD     = bindata[46];
-			record.Unknown47   = bindata[47]; // unsigned char u48;
-			record.StandOffset = (sbyte)bindata[48];
-			record.TileOffset  = (sbyte)bindata[49];
-			record.Unknown50   = bindata[50];        // unsigned char u51;
-			record.LightBlock  = (sbyte)bindata[51]; // unsigned char Light_Block;      // The amount of light it blocks, from 0 to 10
-			record.Footstep    = (sbyte)bindata[52];
+			record.LeftRightHalf = bindata[38]; // unsigned char u39;
+			record.TU_Walk       = bindata[39];
+			record.TU_Slide      = bindata[40]; // unsigned char TU_Slide;                // sliding things include snakemen and silacoids
+			record.TU_Fly        = bindata[41]; // unsigned char TU_Fly;                  // remember, 0xFF means it's impassable!
+			record.Armor         = bindata[42];
+			record.HE_Block      = bindata[43]; // unsigned char HE_Block;                // How much of an explosion this tile will block
+			record.DieTile       = bindata[44];
+			record.Flammable     = bindata[45];
+			record.Alt_MCD       = bindata[46];
+			record.Unknown47     = bindata[47]; // unsigned char u48;
+			record.StandOffset   = (sbyte)bindata[48];
+			record.TileOffset    = (sbyte)bindata[49];
+			record.Unknown50     = bindata[50];        // unsigned char u51;
+			record.LightBlock    = (sbyte)bindata[51]; // unsigned char Light_Block;      // The amount of light it blocks, from 0 to 10
+			record.Footstep      = (sbyte)bindata[52];
 
 			record.PartType      = (PartType)bindata[53];
 			record.HE_Type       = (sbyte)bindata[54]; // unsigned char HE_Type;        // 0=HE 1=Smoke

@@ -131,21 +131,21 @@ namespace XCom
 		public bool BlockFire  { get; set; }        // info[36]==1;}}                  // unsigned char Block_Fire;   // If 1, fire won't go through the tile
 		public bool BlockSmoke { get; set; }        // info[37]==1;}}                  // unsigned char Block_Smoke;  // If 1, smoke won't go through the tile
 
-		public byte StartPhase   { get; set; }      // info[38];}}                     // unsigned char u39;
-		public byte TU_Walk      { get; set; }      // info[39];}}                     // unsigned char TU_Walk;       // The number of TUs require to pass the tile while walking. 0xFF (255) means it's unpassable.
-		public byte TU_Slide     { get; set; }      // info[40];}}                     // unsigned char TU_Fly;        // remember, 0xFF means it's impassable!
-		public byte TU_Fly       { get; set; }      // info[41];}}                     // unsigned char TU_Slide;      // sliding things include snakemen and silacoids
-		public byte Armor        { get; set; }      // info[42];}}                     // unsigned char Armour;        // The higher this is the less likely it is that a weapon will destroy this tile when it's hit.
-		public byte HE_Block     { get; set; }      // info[43];}}                     // unsigned char HE_Block;      // How much of an explosion this tile will block
-		public byte DieTile      { get; set; }      // info[44];}}                     // unsigned char Die_MCD;       // If the terrain is destroyed, it is set to 0 and a tile of type Die_MCD is added
-		public byte Flammable    { get; set; }      // info[45];}}                     // unsigned char Flammable;     // How flammable it is (the higher the harder it is to set aflame)
-		public byte Alt_MCD      { get; set; }      // info[46];}}                     // unsigned char Alt_MCD;       // If "Door" or "UFO_Door" is on, then when a unit walks through it the door is set to 0 and a tile type Alt_MCD is added.
-		public byte Unknown47    { get; set; }      // info[47];}}                     // unsigned char u48;
-		public sbyte StandOffset { get; set; }      // (sbyte)info[48];}}              // signed char T_Level;         // When a unit or object is standing on the tile, the unit is shifted by this amount
-		public sbyte TileOffset  { get; set; }      // (sbyte)info[49];}}              // unsigned char P_Level;       // When the tile is drawn, this amount is subtracted from its y (so y position-P_Level is where it's drawn)
-		public byte Unknown50    { get; set; }      // info[50];}}                     // unsigned char u51;
-		public sbyte LightBlock  { get; set; }      // (sbyte)info[51];}}              // unsigned char Light_Block;    // The amount of light it blocks, from 0 to 10
-		public sbyte Footstep    { get; set; }      // (sbyte)info[52];}}              // unsigned char Footstep;       // The Sound Effect set to choose from when footsteps are on the tile
+		public byte LeftRightHalf { get; set; }      // info[38];}}                     // unsigned char u39;
+		public byte TU_Walk       { get; set; }      // info[39];}}                     // unsigned char TU_Walk;       // The number of TUs require to pass the tile while walking. 0xFF (255) means it's unpassable.
+		public byte TU_Slide      { get; set; }      // info[40];}}                     // unsigned char TU_Fly;        // remember, 0xFF means it's impassable!
+		public byte TU_Fly        { get; set; }      // info[41];}}                     // unsigned char TU_Slide;      // sliding things include snakemen and silacoids
+		public byte Armor         { get; set; }      // info[42];}}                     // unsigned char Armour;        // The higher this is the less likely it is that a weapon will destroy this tile when it's hit.
+		public byte HE_Block      { get; set; }      // info[43];}}                     // unsigned char HE_Block;      // How much of an explosion this tile will block
+		public byte DieTile       { get; set; }      // info[44];}}                     // unsigned char Die_MCD;       // If the terrain is destroyed, it is set to 0 and a tile of type Die_MCD is added
+		public byte Flammable     { get; set; }      // info[45];}}                     // unsigned char Flammable;     // How flammable it is (the higher the harder it is to set aflame)
+		public byte Alt_MCD       { get; set; }      // info[46];}}                     // unsigned char Alt_MCD;       // If "Door" or "UFO_Door" is on, then when a unit walks through it the door is set to 0 and a tile type Alt_MCD is added.
+		public byte Unknown47     { get; set; }      // info[47];}}                     // unsigned char u48;
+		public sbyte StandOffset  { get; set; }      // (sbyte)info[48];}}              // signed char T_Level;         // When a unit or object is standing on the tile, the unit is shifted by this amount
+		public sbyte TileOffset   { get; set; }      // (sbyte)info[49];}}              // unsigned char P_Level;       // When the tile is drawn, this amount is subtracted from its y (so y position-P_Level is where it's drawn)
+		public byte Unknown50     { get; set; }      // info[50];}}                     // unsigned char u51;
+		public sbyte LightBlock   { get; set; }      // (sbyte)info[51];}}              // unsigned char Light_Block;    // The amount of light it blocks, from 0 to 10
+		public sbyte Footstep     { get; set; }      // (sbyte)info[52];}}              // unsigned char Footstep;       // The Sound Effect set to choose from when footsteps are on the tile
 
 		public PartType PartType      { get; set; } // (TileType)info[53];}}           // unsigned char Tile_Type;      // This is the type of tile it is meant to be -- 0=floor, 1=west wall, 2=north wall, 3=object. When this type of tile is in the Die_As or Open_As flags, this value is added to the tile coordinate to determine the byte in which the tile type should be written.
 		public sbyte HE_Type          { get; set; } // (sbyte)info[54];}}              // unsigned char HE_Type;        // 0=HE 1=Smoke
