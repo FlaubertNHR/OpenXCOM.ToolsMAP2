@@ -78,7 +78,7 @@ namespace XCom
 			record.SmokeBlockage = (sbyte)bindata[56]; // unsigned char Smoke_Blockage; // ? Not sure about this
 			record.Fuel          = (sbyte)bindata[57];
 			record.LightSource   = (sbyte)bindata[58]; // unsigned char Light_Source;   // The amount of light this tile produces
-			record.Special       = (SpecialType)(sbyte)bindata[59];
+			record.Special       = (SpecialType)bindata[59];
 			record.BaseObject    = bindata[60];        // unsigned char u61;
 			record.Unknown61     = bindata[61];        // unsigned char u62;
 

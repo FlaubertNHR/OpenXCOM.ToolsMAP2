@@ -292,7 +292,7 @@ namespace MapView
 				lblType07.Text = "entertainment";
 				lblType08.Text = "surgery";
 				lblType09.Text = "examination";
-				lblType10.Text = "alien alloys";
+				lblType10.Text = "alloys";
 				lblType11.Text = "habitat";
 				lblType12.Text = "dead tile";
 				lblType13.Text = "exit point";
@@ -303,13 +303,13 @@ namespace MapView
 				lblType00.Text = "tile"; // switch to TFTD ->
 				lblType01.Text = "entry point";
 				lblType02.Text = "ion accelerator";
-				lblType03.Text = "destroy";
-				lblType04.Text = "navigation";
+				lblType03.Text = "navigation";
+				lblType04.Text = "construction";
 				lblType05.Text = "cryogenics";
 				lblType06.Text = "cloning";
 				lblType07.Text = "learning arrays";
 				lblType08.Text = "implanter";
-				lblType09.Text = "unknown";
+				lblType09.Text = "examination";
 				lblType10.Text = "plastics";
 				lblType11.Text = "re-animation";
 				lblType12.Text = "dead tile";

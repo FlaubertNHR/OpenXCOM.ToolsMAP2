@@ -231,7 +231,6 @@ namespace McdView
 								 + " 8\u00A0Surgery/Implanter, 9\u00A0Examination, 10\u00A0Alloys/Plastics,"
 								 + " 11\u00A0Habitat/Reanimation, 12\u00A0RuinedAlloys/Plastics, 13\u00A0ExitPoint,"
 								 + " 14\u00A0MustDestroyToSucceed"; //AlienBrain/T'lethPowerCylinders
-			// TODO: Conform MapView2 to the proper descriptions.
 		}
 		private void OnMouseEnterTextbox59(object sender, EventArgs e)
 		{
