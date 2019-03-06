@@ -2379,7 +2379,7 @@
 			this.tb38_leftrighthalf.TextChanged += new System.EventHandler(this.OnChanged38);
 			this.tb38_leftrighthalf.Enter += new System.EventHandler(this.OnEnter38);
 			this.tb38_leftrighthalf.Leave += new System.EventHandler(this.OnLeave);
-			this.tb38_leftrighthalf.MouseEnter += new System.EventHandler(this.OnEnter38);
+			this.tb38_leftrighthalf.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox38);
 			this.tb38_leftrighthalf.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Collection
@@ -2865,7 +2865,7 @@
 			this.tb59_specialtype.TextChanged += new System.EventHandler(this.OnChanged59);
 			this.tb59_specialtype.Enter += new System.EventHandler(this.OnEnter59);
 			this.tb59_specialtype.Leave += new System.EventHandler(this.OnLeave);
-			this.tb59_specialtype.MouseEnter += new System.EventHandler(this.OnEnter59);
+			this.tb59_specialtype.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox59);
 			this.tb59_specialtype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb53_parttype
@@ -2880,7 +2880,7 @@
 			this.tb53_parttype.TextChanged += new System.EventHandler(this.OnChanged53);
 			this.tb53_parttype.Enter += new System.EventHandler(this.OnEnter53);
 			this.tb53_parttype.Leave += new System.EventHandler(this.OnLeave);
-			this.tb53_parttype.MouseEnter += new System.EventHandler(this.OnEnter53);
+			this.tb53_parttype.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox53);
 			this.tb53_parttype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb34_isgravlift

@@ -41,7 +41,7 @@ namespace McdView
 
 		private readonly Pen _penBlack = new Pen(Color.Black, 1);
 
-		private bool strict;
+		private bool strict = true;
 		#endregion Fields
 
 

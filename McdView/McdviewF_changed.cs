@@ -80,13 +80,13 @@ namespace McdView
 		{
 			lbl_Description.Text = "Checked enforces valid values in XCOM."
 								 + " Unchecked allows values outside what's expected (for expert experts only"
-								 + " - ie people who code their own executable and require extended values)."
+								 + " - ie people who code their own XCOM executable and require extended values)."
 								 + " This value is not saved. (default checked)";
 		}
 
 		private void OnEnterSpriteShade(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "SpriteShade is an inverse gamma-value for any sprites drawn in McdView."
+			lbl_Description.Text = "SpriteShade is an inverse gamma-value for sprites drawn in this app."
 								 + " It has nothing to do with palette-based sprite-shading in XCOM itself."
 								 + " This value is not saved. (1..100, unity 33, default -1 off)";
 		}
@@ -129,6 +129,23 @@ namespace McdView
 								 + " are possibly used for the map designer. But the actual game"
 								 + " totally ignores this value.";
 		}
+		private void OnMouseEnterTextbox38(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb38_leftrighthalf.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 1: text = "1 Lefthalf";  break;
+					case 2: text = "2 Righthalf"; break;
+					case 3: text = "3 Full";      break;
+
+					default: text = result.ToString(); break;
+				}
+				lbl_Description.Text = text;
+			}
+		}
 
 		/// <summary>
 		/// #53 PartType (byte/PartType)
@@ -157,6 +174,24 @@ namespace McdView
 		private void OnEnter53(object sender, EventArgs e)
 		{
 			lbl_Description.Text = "0 Floor, 1 Westwall, 2 Northwall, 3 Content";
+		}
+		private void OnMouseEnterTextbox53(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb53_parttype.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 Floor";     break;
+					case 1: text = "1 Westwall";  break;
+					case 2: text = "2 Northwall"; break;
+					case 3: text = "3 Content";   break;
+
+					default: text = result.ToString(); break;
+				}
+				lbl_Description.Text = text;
+			}
 		}
 
 		/// <summary>
@@ -197,6 +232,35 @@ namespace McdView
 								 + " 11\u00A0Habitat/Reanimation, 12\u00A0RuinedAlloys/Plastics, 13\u00A0ExitPoint,"
 								 + " 14\u00A0MustDestroyToSucceed"; //AlienBrain/T'lethPowerCylinders
 			// TODO: Conform MapView2 to the proper descriptions.
+		}
+		private void OnMouseEnterTextbox59(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb59_specialtype.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case  0: text =  "0 None";                            break;
+					case  1: text =  "1 EntryPoint";                      break;
+					case  2: text =  "2 PowerSource/IonBeamAccelerators"; break;
+					case  3: text =  "3 Navigation";                      break;
+					case  4: text =  "4 Construction";                    break;
+					case  5: text =  "5 Food/Cryogenics";                 break;
+					case  6: text =  "6 Reproduction/Cloning";            break;
+					case  7: text =  "7 Entertainment/LearningArrays";    break;
+					case  8: text =  "8 Surgery/Implanter";               break;
+					case  9: text =  "9 Examination";                     break;
+					case 10: text = "10 Alloys/Plastics";                 break;
+					case 11: text = "11 Habitat/Reanimation";             break;
+					case 12: text = "12 RuinedAlloys/Plastics";           break;
+					case 13: text = "13 ExitPoint";                       break;
+					case 14: text = "14 MustDestroyToSucceed";            break;
+
+					default: text = result.ToString(); break;
+				}
+				lbl_Description.Text = text;
+			}
 		}
 		#endregion Changed events
 	}
