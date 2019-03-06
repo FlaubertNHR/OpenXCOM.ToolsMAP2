@@ -211,7 +211,7 @@ namespace McdView
 					&&     ((strict && result > -1 && result < 15)
 						|| (!strict && result > -129 && result < 128)))
 				{
-					Records[SelId].Record.TargetType = (SpecialType)result;	// NOTE: Assigning integers that are not
+					Records[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
 				}															// explicitly defined in the enum is allowed.
 				else
 					tb59_specialtype.Text = "0"; // recurse w/ default.

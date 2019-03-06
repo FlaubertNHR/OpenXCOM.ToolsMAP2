@@ -268,8 +268,8 @@ namespace MapView.Forms.McdViewer
 											CultureInfo.InvariantCulture,
 											"{0,-20}{1} - {2}" + Environment.NewLine,
 											"special property:",
-											(sbyte)record.TargetType,
-											Enum.GetName(typeof(SpecialType), record.TargetType)));
+											(sbyte)record.Special,
+											Enum.GetName(typeof(SpecialType), record.Special)));
 //				unsigned char Target_Type; // The special properties of the tile
 
 				rtbInfo.AppendText(string.Format(

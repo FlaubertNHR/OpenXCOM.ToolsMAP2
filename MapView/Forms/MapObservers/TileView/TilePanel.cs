@@ -388,7 +388,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 					if (part != null) // draw tile-sprite ->
 					{
-						string specialType = part.Record.TargetType.ToString();	// first fill Special Property color
+						string specialType = part.Record.Special.ToString();	// first fill Special Property color
 						if (_specialTypeBrushes.ContainsKey(specialType))
 							graphics.FillRectangle((SolidBrush)_specialTypeBrushes[specialType], rect);
 

@@ -147,15 +147,15 @@ namespace XCom
 		public sbyte LightBlock   { get; set; }      // (sbyte)info[51];}}              // unsigned char Light_Block;    // The amount of light it blocks, from 0 to 10
 		public sbyte Footstep     { get; set; }      // (sbyte)info[52];}}              // unsigned char Footstep;       // The Sound Effect set to choose from when footsteps are on the tile
 
-		public PartType PartType      { get; set; } // (TileType)info[53];}}           // unsigned char Tile_Type;      // This is the type of tile it is meant to be -- 0=floor, 1=west wall, 2=north wall, 3=object. When this type of tile is in the Die_As or Open_As flags, this value is added to the tile coordinate to determine the byte in which the tile type should be written.
-		public sbyte HE_Type          { get; set; } // (sbyte)info[54];}}              // unsigned char HE_Type;        // 0=HE 1=Smoke
-		public sbyte HE_Strength      { get; set; } // (sbyte)info[55];}}              // unsigned char HE_Strength;    // The strength of the explosion caused when it's destroyed.  0 means no explosion.
-		public sbyte SmokeBlockage    { get; set; } // (sbyte)info[56];}}              // unsigned char Smoke_Blockage; // ? Not sure about this
-		public sbyte Fuel             { get; set; } // (sbyte)info[57];}}              // unsigned char Fuel;           // The number of turns the tile will burn when set aflame
-		public sbyte LightSource      { get; set; } // (sbyte)info[58];}}              // unsigned char Light_Source;   // The amount of light this tile produces
-		public SpecialType TargetType { get; set; } // (SpecialType)(sbyte)info[59];}} // unsigned char Target_Type;    // The special properties of the tile
-		public byte BaseObject        { get; set; } // info[60];}}                     // unsigned char u61;
-		public byte Unknown61         { get; set; } // info[61];}}                     // unsigned char u62;
+		public PartType PartType   { get; set; } // (TileType)info[53];}}           // unsigned char Tile_Type;      // This is the type of tile it is meant to be -- 0=floor, 1=west wall, 2=north wall, 3=object. When this type of tile is in the Die_As or Open_As flags, this value is added to the tile coordinate to determine the byte in which the tile type should be written.
+		public sbyte HE_Type       { get; set; } // (sbyte)info[54];}}              // unsigned char HE_Type;        // 0=HE 1=Smoke
+		public sbyte HE_Strength   { get; set; } // (sbyte)info[55];}}              // unsigned char HE_Strength;    // The strength of the explosion caused when it's destroyed.  0 means no explosion.
+		public sbyte SmokeBlockage { get; set; } // (sbyte)info[56];}}              // unsigned char Smoke_Blockage; // ? Not sure about this
+		public sbyte Fuel          { get; set; } // (sbyte)info[57];}}              // unsigned char Fuel;           // The number of turns the tile will burn when set aflame
+		public sbyte LightSource   { get; set; } // (sbyte)info[58];}}              // unsigned char Light_Source;   // The amount of light this tile produces
+		public SpecialType Special { get; set; } // (SpecialType)(sbyte)info[59];}} // unsigned char Target_Type;    // The special properties of the tile
+		public byte BaseObject     { get; set; } // info[60];}}                     // unsigned char u61;
+		public byte Unknown61      { get; set; } // info[61];}}                     // unsigned char u62;
 
 
 //		unsigned char Frame[8]; // Each frame is an index into the ____.TAB file; it cycles through the frames constantly.
