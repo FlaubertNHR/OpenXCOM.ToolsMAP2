@@ -244,7 +244,7 @@ namespace MapView.Forms.McdInfo
 											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"base object:",
-											(sbyte)record.BaseObject));
+											record.BaseObject));
 
 //				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[61]));
 

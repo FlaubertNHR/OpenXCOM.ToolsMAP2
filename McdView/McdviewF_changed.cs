@@ -39,6 +39,12 @@ namespace McdView
 			if (label == lbl_SpriteShade)
 				return tb_SpriteShade;
 
+			if (label == lbl33 || label == lbl33_isbigwall)
+				return tb33_isbigwall;
+
+			if (label == lbl34 || label == lbl34_isgravlift)
+				return tb34_isgravlift;
+
 			if (label == lbl38 || label == lbl38_leftrighthalf)
 				return tb38_leftrighthalf;
 
@@ -51,8 +57,14 @@ namespace McdView
 			if (label == lbl53 || label == lbl53_parttype)
 				return tb53_parttype;
 
+			if (label == lbl58 || label == lbl58_lightintensity)
+				return tb58_lightintensity;
+
 			if (label == lbl59 || label == lbl59_specialtype)
 				return tb59_specialtype;
+
+			if (label == lbl60 || label == lbl60_isbaseobject)
+				return tb60_isbaseobject;
 
 			return null;
 		}
@@ -101,6 +113,107 @@ namespace McdView
 
 		#region Changed events
 		// TODO: If value is outside of strict-bounds color its text red.
+
+		/// <summary>
+		/// #33 isBigWall (bool)
+		/// TODO: Allow the bigwall value to be stored as a byte.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged33(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb33_isbigwall.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.BigWall = Convert.ToBoolean(result);
+				}
+				else
+					tb33_isbigwall.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb33_isbigwall.Text = String.Empty; // recurse.
+		}
+		private void OnEnter33(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isBigwall is a true/false value that is relevant only to"
+								 + " content parts. A tile with such a part placed in it is"
+								 + " not navigable; a unit is not even allowed to clip through"
+								 + " such a tile's corner by walking past it diagonally."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox33(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb33_isbigwall.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				lbl_Description.Text = text;
+			}
+		}
+
+		/// <summary>
+		/// #34 isGravLift (bool)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged34(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb34_isgravlift.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.GravLift = Convert.ToBoolean(result);
+				}
+				else
+					tb34_isgravlift.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb34_isgravlift.Text = String.Empty; // recurse.
+		}
+		private void OnEnter34(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isGravLift is a true/false value that is relevant only to"
+								 + " floor parts. A unit on a tile with such a part can use"
+								 + " it as an elevator to a tile that's a level higher or"
+								 + " lower as long as that tile also has a GravLift floor part."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox34(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb34_isgravlift.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				lbl_Description.Text = text;
+			}
+		}
 
 		/// <summary>
 		/// #38 LeftRightHalf (byte)
@@ -295,6 +408,45 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// #58 LightIntensity (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged58(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb58_lightintensity.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.LightSource = (byte)result;
+				}
+				else
+					tb58_lightintensity.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb58_lightintensity.Text = String.Empty; // recurse.
+		}
+		private void OnEnter58(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "LightIntensity controls how brightly a part lights up its surroundings."
+								 + " A part with a value of 0 should not emit light although the exact"
+								 + " effect depends on the XCOM build.";
+		}
+		private void OnMouseEnterTextbox58(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb58_lightintensity.Text, out result))
+			{
+				lbl_Description.Text = result.ToString();
+			}
+		}
+
+		/// <summary>
 		/// #59 SpecialType (byte/SpecialType)
 		/// @note aka TargetType
 		/// </summary>
@@ -357,6 +509,55 @@ namespace McdView
 					case 12: text = "12 RuinedAlloys/Plastics";           break;
 					case 13: text = "13 ExitPoint";                       break;
 					case 14: text = "14 MustDestroyToSucceed";            break;
+
+					default: text = result.ToString(); break;
+				}
+				lbl_Description.Text = text;
+			}
+		}
+
+		/// <summary>
+		/// #60 isBaseObject (bool)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged60(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb60_isbaseobject.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.BaseObject = Convert.ToBoolean(result);
+				}
+				else
+					tb60_isbaseobject.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb60_isbaseobject.Text = String.Empty; // recurse.
+		}
+		private void OnEnter60(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isBaseObject is a true/false value that is relevant only to"
+								 + " content parts. aLiens will shoot these parts during base defense"
+								 + " tacticals as they try to destroy XCOM facilities."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox60(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb60_isbaseobject.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
 
 					default: text = result.ToString(); break;
 				}

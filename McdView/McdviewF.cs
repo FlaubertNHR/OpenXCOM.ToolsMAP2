@@ -644,7 +644,8 @@ namespace McdView
 			tb57_fuel          .Text = ((int)record.Fuel)         .ToString();
 			tb58_lightintensity.Text = ((int)record.LightSource)  .ToString();
 			tb59_specialtype   .Text = ((int)record.Special)      .ToString();
-			tb60_isbaseobject  .Text = ((int)record.BaseObject)   .ToString();
+
+			tb60_isbaseobject.Text = Convert.ToInt32(record.BaseObject).ToString();
 
 			tb61_.Text = ((int)record.Unknown61).ToString();
 

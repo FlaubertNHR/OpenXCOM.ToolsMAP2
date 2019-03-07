@@ -110,7 +110,7 @@ namespace XCom
 		public byte Fuel           { get; set; }
 		public byte LightSource    { get; set; }
 		public SpecialType Special { get; set; }
-		public byte BaseObject     { get; set; }
+		public bool BaseObject     { get; set; }
 		public byte Unknown61      { get; set; }
 
 

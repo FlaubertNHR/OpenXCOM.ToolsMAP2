@@ -47,14 +47,14 @@ namespace XCom
 			record.Unknown28 = bindata[28];
 			record.Unknown29 = bindata[29];
 
-			record.UfoDoor    = bindata[30] == 1;
-			record.StopLOS    = bindata[31] == 1;
-			record.NoGround   = bindata[32] == 1;
-			record.BigWall    = bindata[33] == 1;
-			record.GravLift   = bindata[34] == 1;
-			record.HumanDoor  = bindata[35] == 1;
-			record.BlockFire  = bindata[36] == 1;
-			record.BlockSmoke = bindata[37] == 1;
+			record.UfoDoor    = bindata[30] != 0;
+			record.StopLOS    = bindata[31] != 0;
+			record.NoGround   = bindata[32] != 0;
+			record.BigWall    = bindata[33] != 0; // TODO: store as a byte
+			record.GravLift   = bindata[34] != 0;
+			record.HumanDoor  = bindata[35] != 0;
+			record.BlockFire  = bindata[36] != 0;
+			record.BlockSmoke = bindata[37] != 0;
 
 			record.LeftRightHalf = bindata[38];
 			record.TU_Walk       = bindata[39];
@@ -79,7 +79,7 @@ namespace XCom
 			record.Fuel          = bindata[57];
 			record.LightSource   = bindata[58];
 			record.Special       = (SpecialType)bindata[59];
-			record.BaseObject    = bindata[60];
+			record.BaseObject    = bindata[60] != 0;
 			record.Unknown61     = bindata[61];
 
 
