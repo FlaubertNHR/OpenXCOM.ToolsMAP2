@@ -955,6 +955,8 @@
 			this.lbl49.TabIndex = 41;
 			this.lbl49.Text = "#49";
 			this.lbl49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl49.MouseEnter += new System.EventHandler(this.OnEnter49);
+			this.lbl49.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl49_spriteoffset
 			// 
@@ -965,6 +967,8 @@
 			this.lbl49_spriteoffset.TabIndex = 40;
 			this.lbl49_spriteoffset.Text = "SpriteOffset";
 			this.lbl49_spriteoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl49_spriteoffset.MouseEnter += new System.EventHandler(this.OnEnter49);
+			this.lbl49_spriteoffset.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl50
 			// 
@@ -2521,6 +2525,11 @@
 			this.tb49_spriteoffset.TabIndex = 90;
 			this.tb49_spriteoffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb49_spriteoffset.WordWrap = false;
+			this.tb49_spriteoffset.TextChanged += new System.EventHandler(this.OnChanged49);
+			this.tb49_spriteoffset.Enter += new System.EventHandler(this.OnEnter49);
+			this.tb49_spriteoffset.Leave += new System.EventHandler(this.OnLeave);
+			this.tb49_spriteoffset.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox49);
+			this.tb49_spriteoffset.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb48_terrainoffset
 			// 

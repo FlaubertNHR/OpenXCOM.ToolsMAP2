@@ -70,7 +70,7 @@ namespace McdView
 
 		internal bool _spriteShadeEnabled;
 
-		private int _spriteShadeInt = -1;
+		private int _spriteShadeInt = 11;
 		private int SpriteShadeInt
 		{
 			get { return _spriteShadeInt; }

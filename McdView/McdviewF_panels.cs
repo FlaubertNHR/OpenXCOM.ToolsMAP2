@@ -83,38 +83,44 @@ namespace McdView
 				if (_spriteShadeEnabled)
 					_attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 
-				DrawSprite(
-						Spriteset[Records[SelId].Record.Sprite1].Sprite,
-						SPRITE_ORIGIN_X,
-						SPRITE_ORIGIN_Y);
-				DrawSprite(
-						Spriteset[Records[SelId].Record.Sprite2].Sprite,
-						SPRITE_ORIGIN_X + SPRITE_OFFSET_X,
-						SPRITE_ORIGIN_Y);
-				DrawSprite(
-						Spriteset[Records[SelId].Record.Sprite3].Sprite,
-						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 2,
-						SPRITE_ORIGIN_Y);
-				DrawSprite(
-						Spriteset[Records[SelId].Record.Sprite4].Sprite,
-						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 3,
-						SPRITE_ORIGIN_Y);
-				DrawSprite(
-						Spriteset[Records[SelId].Record.Sprite5].Sprite,
-						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 4,
-						SPRITE_ORIGIN_Y);
-				DrawSprite(
-						Spriteset[Records[SelId].Record.Sprite6].Sprite,
-						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 5,
-						SPRITE_ORIGIN_Y);
-				DrawSprite(
-						Spriteset[Records[SelId].Record.Sprite7].Sprite,
-						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 6,
-						SPRITE_ORIGIN_Y);
-				DrawSprite(
-						Spriteset[Records[SelId].Record.Sprite8].Sprite,
-						SPRITE_ORIGIN_X + SPRITE_OFFSET_X * 7,
-						SPRITE_ORIGIN_Y);
+				McdRecord record = Records[SelId].Record;
+				int y = SPRITE_ORIGIN_Y;
+
+				int yoffset = record.TileOffset;
+				if (yoffset != 0)
+				{
+					y -= yoffset * 2;
+
+					var brush = new SolidBrush(Color.Black); // actually palette-id #0 Transparent
+					for (int i = 0; i != 8; ++i)
+					{
+						_graphics.FillRectangle(
+											brush,
+											SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i,
+											SPRITE_ORIGIN_Y,
+											XCImage.SpriteWidth32  * 2,
+											XCImage.SpriteHeight40 * 2);
+					}
+				}
+
+				byte phase;
+				for (int i = 0; i != 8; ++i)
+				{
+					switch (i)
+					{
+						default: phase = record.Sprite1; break;
+						case 1:  phase = record.Sprite2; break;
+						case 2:  phase = record.Sprite3; break;
+						case 3:  phase = record.Sprite4; break;
+						case 4:  phase = record.Sprite5; break;
+						case 5:  phase = record.Sprite6; break;
+						case 6:  phase = record.Sprite7; break;
+						case 7:  phase = record.Sprite8; break;
+					}
+					DrawSprite(
+							Spriteset[phase].Sprite,
+							SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
+				}
 			}
 		}
 

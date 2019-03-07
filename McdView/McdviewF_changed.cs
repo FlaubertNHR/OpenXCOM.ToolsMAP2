@@ -45,6 +45,9 @@ namespace McdView
 			if (label == lbl48 || label == lbl48_terrainoffset)
 				return tb48_terrainoffset;
 
+			if (label == lbl49 || label == lbl49_spriteoffset)
+				return tb49_spriteoffset;
+
 			if (label == lbl53 || label == lbl53_parttype)
 				return tb53_parttype;
 
@@ -181,18 +184,61 @@ namespace McdView
 								 + " as units and items (possibly including smoke and fire graphics)"
 								 + " should appear at and be considered to have their bottom voxel"
 								 + " positioned at (if applicable). Note that a negative value"
-								 + " raises the object and that the default value of 0 places the"
+								 + " raises the object and that the standard value of 0 places the"
 								 + " object at the floor-level of a tile. This variable has"
 								 + " relevance only for floor and content parts; the TerrainOffset"
 								 + " of westwall or northwall parts is not evaluated. Also note that"
 								 + " for a unit to step from one tile to another their respective"
 								 + " terrain-heights can be no greater than 8 voxels and that the"
-								 + " total distance between any two levels on a Map is 24 voxels.";
+								 + " total distance between levels on a Map is 24 voxels.";
 		}
 		private void OnMouseEnterTextbox48(object sender, EventArgs e)
 		{
 			int result;
 			if (Int32.TryParse(tb48_terrainoffset.Text, out result))
+			{
+				lbl_Description.Text = result.ToString();
+			}
+		}
+
+		/// <summary>
+		/// #49 SpriteOffset (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged49(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb49_spriteoffset.Text, out result)
+					&&     ((strict && result > -1 && result < 25)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.TileOffset = (byte)result;
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb49_spriteoffset.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb49_spriteoffset.Text = String.Empty; // recurse.
+		}
+		private void OnEnter49(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "SpriteOffset is the vertical distance in pixels between"
+								 + " the position a part's sprite is usually drawn at and"
+								 + " the position at which it will actually be drawn. Note"
+								 + " that a positive value raises the sprite and that the"
+								 + " standard value is 0.";
+		}
+		private void OnMouseEnterTextbox49(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb49_spriteoffset.Text, out result))
 			{
 				lbl_Description.Text = result.ToString();
 			}
