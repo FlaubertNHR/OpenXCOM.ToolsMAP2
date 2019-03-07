@@ -232,6 +232,7 @@
 		private System.Windows.Forms.Label lbl_Description;
 		private System.Windows.Forms.CheckBox cb_Strict;
 		private System.Windows.Forms.Label lbl_Strict;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_Overvalue;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -384,6 +385,7 @@
 			this.lbl29 = new System.Windows.Forms.Label();
 			this.lbl29_ = new System.Windows.Forms.Label();
 			this.ss_Statusbar = new System.Windows.Forms.StatusStrip();
+			this.tssl_Overvalue = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gb_Unused = new System.Windows.Forms.GroupBox();
 			this.tb61_ = new System.Windows.Forms.TextBox();
 			this.tb50_ = new System.Windows.Forms.TextBox();
@@ -479,6 +481,7 @@
 			this.lbl_Description = new System.Windows.Forms.Label();
 			this.cb_Strict = new System.Windows.Forms.CheckBox();
 			this.lbl_Strict = new System.Windows.Forms.Label();
+			this.ss_Statusbar.SuspendLayout();
 			this.gb_Unused.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
 			this.gb_Sprites.SuspendLayout();
@@ -1797,11 +1800,22 @@
 			// ss_Statusbar
 			// 
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
+			this.ss_Statusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tssl_Overvalue});
 			this.ss_Statusbar.Location = new System.Drawing.Point(0, 813);
 			this.ss_Statusbar.Name = "ss_Statusbar";
 			this.ss_Statusbar.Size = new System.Drawing.Size(722, 22);
 			this.ss_Statusbar.TabIndex = 123;
 			this.ss_Statusbar.Text = "ss_Statusbar";
+			// 
+			// tssl_Overvalue
+			// 
+			this.tssl_Overvalue.AutoSize = false;
+			this.tssl_Overvalue.Font = new System.Drawing.Font("Consolas", 8F);
+			this.tssl_Overvalue.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tssl_Overvalue.Name = "tssl_Overvalue";
+			this.tssl_Overvalue.Size = new System.Drawing.Size(280, 22);
+			this.tssl_Overvalue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// gb_Unused
 			// 
@@ -3069,6 +3083,8 @@
 			this.Name = "McdviewF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "McdView";
+			this.ss_Statusbar.ResumeLayout(false);
+			this.ss_Statusbar.PerformLayout();
 			this.gb_Unused.ResumeLayout(false);
 			this.gb_Unused.PerformLayout();
 			this.gb_Loft.ResumeLayout(false);

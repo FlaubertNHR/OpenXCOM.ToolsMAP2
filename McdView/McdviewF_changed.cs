@@ -21,6 +21,8 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnMouseLeave(object sender, EventArgs e)
 		{
+			tssl_Overvalue.Text = String.Empty;
+
 			var tb = sender as TextBox;
 			if (tb == null)
 				tb = GetTextbox(sender);
@@ -36,35 +38,79 @@ namespace McdView
 		/// <returns></returns>
 		private TextBox GetTextbox(object label)
 		{
-			if (label == lbl_SpriteShade)
-				return tb_SpriteShade;
+			if (label == lbl_SpriteShade)                        return tb_SpriteShade;
 
-			if (label == lbl33 || label == lbl33_isbigwall)
-				return tb33_isbigwall;
 
-			if (label == lbl34 || label == lbl34_isgravlift)
-				return tb34_isgravlift;
+			if (label == lbl0  || label == lbl0_phase0)          return tb0_phase0;
+			if (label == lbl1  || label == lbl1_phase1)          return tb1_phase1;
+			if (label == lbl2  || label == lbl2_phase2)          return tb2_phase2;
+			if (label == lbl3  || label == lbl3_phase3)          return tb3_phase3;
+			if (label == lbl4  || label == lbl4_phase4)          return tb4_phase4;
+			if (label == lbl5  || label == lbl5_phase5)          return tb5_phase5;
+			if (label == lbl6  || label == lbl6_phase6)          return tb6_phase6;
+			if (label == lbl7  || label == lbl7_phase7)          return tb7_phase7;
 
-			if (label == lbl38 || label == lbl38_leftrighthalf)
-				return tb38_leftrighthalf;
+			if (label == lbl8  || label == lbl8_loft00)          return tb8_loft00;
+			if (label == lbl9  || label == lbl9_loft02)          return tb9_loft02;
+			if (label == lbl10 || label == lbl10_loft04)         return tb10_loft04;
+			if (label == lbl11 || label == lbl11_loft06)         return tb11_loft06;
+			if (label == lbl12 || label == lbl12_loft08)         return tb12_loft08;
+			if (label == lbl13 || label == lbl13_loft10)         return tb13_loft10;
+			if (label == lbl14 || label == lbl14_loft12)         return tb14_loft12;
+			if (label == lbl15 || label == lbl15_loft14)         return tb15_loft14;
+			if (label == lbl16 || label == lbl16_loft16)         return tb16_loft16;
+			if (label == lbl17 || label == lbl17_loft18)         return tb17_loft18;
+			if (label == lbl18 || label == lbl18_loft20)         return tb18_loft20;
+			if (label == lbl19 || label == lbl19_loft22)         return tb19_loft22;
 
-			if (label == lbl48 || label == lbl48_terrainoffset)
-				return tb48_terrainoffset;
+//			if (label == lbl20 || label == lbl20_scang)          return tb20_scang1; // tb21_scang2
 
-			if (label == lbl49 || label == lbl49_spriteoffset)
-				return tb49_spriteoffset;
+			if (label == lbl22 || label == lbl22_)               return tb22_;
+			if (label == lbl23 || label == lbl23_)               return tb23_;
+			if (label == lbl24 || label == lbl24_)               return tb24_;
+			if (label == lbl25 || label == lbl25_)               return tb25_;
+			if (label == lbl26 || label == lbl26_)               return tb26_;
+			if (label == lbl27 || label == lbl27_)               return tb27_;
+			if (label == lbl28 || label == lbl28_)               return tb28_;
+			if (label == lbl29 || label == lbl29_)               return tb29_;
 
-			if (label == lbl53 || label == lbl53_parttype)
-				return tb53_parttype;
+			if (label == lbl30 || label == lbl30_isufodoor)      return tb30_isufodoor;
+			if (label == lbl31 || label == lbl31_isblocklos)     return tb31_isblocklos;
+			if (label == lbl32 || label == lbl32_isdropthrou)    return tb32_isdropthrou;
+			if (label == lbl33 || label == lbl33_isbigwall)      return tb33_isbigwall;
+			if (label == lbl34 || label == lbl34_isgravlift)     return tb34_isgravlift;
+			if (label == lbl35 || label == lbl35_ishumandoor)    return tb35_ishumandoor;
+			if (label == lbl36 || label == lbl36_isblockfire)    return tb36_isblockfire;
+			if (label == lbl37 || label == lbl37_isblocksmoke)   return tb37_isblocksmoke;
+			if (label == lbl38 || label == lbl38_leftrighthalf)  return tb38_leftrighthalf;
+			if (label == lbl39 || label == lbl39_tuwalk)         return tb39_tuwalk;
+			if (label == lbl40 || label == lbl40_tuslide)        return tb40_tuslide;
+			if (label == lbl41 || label == lbl41_tufly)          return tb41_tufly;
+			if (label == lbl42 || label == lbl42_armor)          return tb42_armor;
+			if (label == lbl43 || label == lbl43_heblock)        return tb43_heblock;
+			if (label == lbl44 || label == lbl44_deathid)        return tb44_deathid;
+			if (label == lbl45 || label == lbl45_fireresist)     return tb45_fireresist;
+			if (label == lbl46 || label == lbl46_alternateid)    return tb46_alternateid;
 
-			if (label == lbl58 || label == lbl58_lightintensity)
-				return tb58_lightintensity;
+			if (label == lbl47 || label == lbl47_)               return tb47_;
 
-			if (label == lbl59 || label == lbl59_specialtype)
-				return tb59_specialtype;
+			if (label == lbl48 || label == lbl48_terrainoffset)  return tb48_terrainoffset;
+			if (label == lbl49 || label == lbl49_spriteoffset)   return tb49_spriteoffset;
 
-			if (label == lbl60 || label == lbl60_isbaseobject)
-				return tb60_isbaseobject;
+			if (label == lbl50 || label == lbl50_)               return tb50_;
+
+			if (label == lbl51 || label == lbl51_lightblock)     return tb51_lightblock;
+			if (label == lbl52 || label == lbl52_footsound)      return tb52_footsound;
+			if (label == lbl53 || label == lbl53_parttype)       return tb53_parttype;
+			if (label == lbl54 || label == lbl54_hetype)         return tb54_hetype;
+			if (label == lbl55 || label == lbl55_hestrength)     return tb55_hestrength;
+			if (label == lbl56 || label == lbl56_smokeblock)     return tb56_smokeblock;
+			if (label == lbl57 || label == lbl57_fuel)           return tb57_fuel;
+			if (label == lbl58 || label == lbl58_lightintensity) return tb58_lightintensity;
+			if (label == lbl59 || label == lbl59_specialtype)    return tb59_specialtype;
+			if (label == lbl60 || label == lbl60_isbaseobject)   return tb60_isbaseobject;
+
+			if (label == lbl61 || label == lbl61_)               return tb61_;
 
 			return null;
 		}
@@ -99,14 +145,18 @@ namespace McdView
 			lbl_Description.Text = "Checked enforces valid values in XCOM."
 								 + " Unchecked allows values outside what's expected (for expert experts only"
 								 + " - ie people who code their own XCOM executable and require extended values)."
-								 + " This value is not saved. (default checked)";
+								 + " This value is not saved."
+								 + Environment.NewLine + Environment.NewLine
+								 + "default checked";
 		}
 
 		private void OnEnterSpriteShade(object sender, EventArgs e)
 		{
 			lbl_Description.Text = "SpriteShade is an inverse gamma-value for sprites drawn in this app."
 								 + " It has nothing to do with palette-based sprite-shading in XCOM itself."
-								 + " This value is not saved. (1..100, unity 33, default -1 off)";
+								 + " This value is not saved."
+								 + Environment.NewLine + Environment.NewLine
+								 + "1..100, unity 33, default -1 off";
 		}
 		#endregion Enter (options)
 
@@ -141,7 +191,7 @@ namespace McdView
 		}
 		private void OnEnter33(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "isBigwall is a true/false value that is relevant only to"
+			lbl_Description.Text = "isBigWall (bool) is a true/false value that is relevant only to"
 								 + " content parts. A tile with such a part placed in it is"
 								 + " not navigable; a unit is not even allowed to clip through"
 								 + " such a tile's corner by walking past it diagonally."
@@ -161,7 +211,8 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				lbl_Description.Text = text;
+				tssl_Overvalue.Text = "isBigWall: " + text;
+				OnEnter33(null, EventArgs.Empty);
 			}
 		}
 
@@ -191,7 +242,7 @@ namespace McdView
 		}
 		private void OnEnter34(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "isGravLift is a true/false value that is relevant only to"
+			lbl_Description.Text = "isGravLift (bool) is a true/false value that is relevant only to"
 								 + " floor parts. A unit on a tile with such a part can use"
 								 + " it as an elevator to a tile that's a level higher or"
 								 + " lower as long as that tile also has a GravLift floor part."
@@ -211,7 +262,8 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				lbl_Description.Text = text;
+				tssl_Overvalue.Text = "isGravLift: " + text;
+				OnEnter34(null, EventArgs.Empty);
 			}
 		}
 
@@ -242,11 +294,11 @@ namespace McdView
 		}
 		private void OnEnter38(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "LeftRightHalf is always 3. It is supposed to decide whether to"
+			lbl_Description.Text = "LeftRightHalf (ubyte) is always 3. It is supposed to decide whether to"
 								 + " draw the left-half, the right-half, or both halves of a part's"
 								 + " sprite but is not used."
 								 + Environment.NewLine + Environment.NewLine
-								 + "1 Left, 2 Right, 3 Full";
+								 + "3 Full (1 Left, 2 Right)";
 		}
 		private void OnMouseEnterTextbox38(object sender, EventArgs e)
 		{
@@ -262,7 +314,8 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				lbl_Description.Text = text;
+				tssl_Overvalue.Text = "LeftRightHalf: " + text;
+				OnEnter38(null, EventArgs.Empty);
 			}
 		}
 
@@ -292,7 +345,7 @@ namespace McdView
 		}
 		private void OnEnter48(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "TerrainOffset is the distance in voxels between the height of"
+			lbl_Description.Text = "TerrainOffset (sbyte) is the distance in voxels between the height of"
 								 + " a tile's lowest voxel-level and the height that objects such"
 								 + " as units and items (possibly including smoke and fire graphics)"
 								 + " should appear at and be considered to have their bottom voxel"
@@ -303,14 +356,17 @@ namespace McdView
 								 + " of westwall or northwall parts is not evaluated. Also note that"
 								 + " for a unit to step from one tile to another their respective"
 								 + " terrain-heights can be no greater than 8 voxels and that the"
-								 + " total distance between levels on a Map is 24 voxels.";
+								 + " total distance between levels on a Map is 24 voxels."
+								 + Environment.NewLine + Environment.NewLine
+								 + "-24..0";
 		}
 		private void OnMouseEnterTextbox48(object sender, EventArgs e)
 		{
 			int result;
 			if (Int32.TryParse(tb48_terrainoffset.Text, out result))
 			{
-				lbl_Description.Text = result.ToString();
+				tssl_Overvalue.Text = "TerrainOffset: " + result;
+				OnEnter48(null, EventArgs.Empty);
 			}
 		}
 
@@ -327,7 +383,7 @@ namespace McdView
 
 				int result;
 				if (Int32.TryParse(tb49_spriteoffset.Text, out result)
-					&&     ((strict && result > -1 && result < 25)
+					&&     ((strict && result > -1 && result < 41)
 						|| (!strict && result > -1 && result < 256)))
 				{
 					Records[SelId].Record.TileOffset = (byte)result;
@@ -342,18 +398,21 @@ namespace McdView
 		}
 		private void OnEnter49(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "SpriteOffset is the vertical distance in pixels between"
+			lbl_Description.Text = "SpriteOffset (ubyte) is the vertical distance in pixels between"
 								 + " the position a part's sprite is usually drawn at and"
 								 + " the position at which it will actually be drawn. Note"
 								 + " that a positive value raises the sprite and that the"
-								 + " standard value is 0.";
+								 + " standard value is 0."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..40";
 		}
 		private void OnMouseEnterTextbox49(object sender, EventArgs e)
 		{
 			int result;
 			if (Int32.TryParse(tb49_spriteoffset.Text, out result))
 			{
-				lbl_Description.Text = result.ToString();
+				tssl_Overvalue.Text = "SpriteOffset: " + result;
+				OnEnter49(null, EventArgs.Empty);
 			}
 		}
 
@@ -383,7 +442,7 @@ namespace McdView
 		}
 		private void OnEnter53(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "PartType specifies the tile-slot in which a tile-part should"
+			lbl_Description.Text = "PartType (ubyte) specifies the tile-slot in which a tile-part should"
 								 + " be placed."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0 Floor, 1 Westwall, 2 Northwall, 3 Content";
@@ -403,7 +462,8 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				lbl_Description.Text = text;
+				tssl_Overvalue.Text = "PartType: " + text;
+				OnEnter53(null, EventArgs.Empty);
 			}
 		}
 
@@ -433,16 +493,19 @@ namespace McdView
 		}
 		private void OnEnter58(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "LightIntensity controls how brightly a part lights up its surroundings."
+			lbl_Description.Text = "LightIntensity (ubyte) controls how brightly a part lights up its surroundings."
 								 + " A part with a value of 0 should not emit light although the exact"
-								 + " effect depends on the XCOM build.";
+								 + " effect depends on the XCOM build."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
 		}
 		private void OnMouseEnterTextbox58(object sender, EventArgs e)
 		{
 			int result;
 			if (Int32.TryParse(tb58_lightintensity.Text, out result))
 			{
-				lbl_Description.Text = result.ToString();
+				tssl_Overvalue.Text = "LightIntensity: " + result;
+				OnEnter58(null, EventArgs.Empty);
 			}
 		}
 
@@ -474,7 +537,7 @@ namespace McdView
 		private void OnEnter59(object sender, EventArgs e)
 		{
 			// NOTE: "\u00A0" is a UTF nonbreaking-space char.
-			lbl_Description.Text = "SpecialType is the special property of a part. It determines where"
+			lbl_Description.Text = "SpecialType (ubyte) is the special property of a part. It determines where"
 								 + " XCOM agents can enter and exit a Map, or what is salvaged at the"
 								 + " end of tactical, or if the part must be destroyed for XCOM to"
 								 + " succeed at tactical. (UFO/TFTD)"
@@ -512,7 +575,8 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				lbl_Description.Text = text;
+				tssl_Overvalue.Text = "SpecialType: " + text;
+				OnEnter59(null, EventArgs.Empty);
 			}
 		}
 
@@ -542,7 +606,7 @@ namespace McdView
 		}
 		private void OnEnter60(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "isBaseObject is a true/false value that is relevant only to"
+			lbl_Description.Text = "isBaseObject (bool) is a true/false value that is relevant only to"
 								 + " content parts. aLiens will shoot these parts during base defense"
 								 + " tacticals as they try to destroy XCOM facilities."
 								 + Environment.NewLine + Environment.NewLine
@@ -561,7 +625,8 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				lbl_Description.Text = text;
+				tssl_Overvalue.Text = "isBaseObject: " + text;
+				OnEnter60(null, EventArgs.Empty);
 			}
 		}
 		#endregion Changed events
