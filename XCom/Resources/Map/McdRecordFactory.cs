@@ -48,43 +48,43 @@ namespace XCom
 			record.Unknown29 = bindata[29];
 
 			record.UfoDoor    = bindata[30] == 1;
-			record.StopLOS    = bindata[31] == 1; // unsigned char Stop_LOS;            // You cannot see through this tile.
-			record.NoGround   = bindata[32] == 1; // unsigned char No_Floor;            // If 1, then a non-flying unit can't stand here
+			record.StopLOS    = bindata[31] == 1;
+			record.NoGround   = bindata[32] == 1;
 			record.BigWall    = bindata[33] == 1;
-			record.GravLift   = bindata[34] == 1; // unsigned char Gravlift;
+			record.GravLift   = bindata[34] == 1;
 			record.HumanDoor  = bindata[35] == 1;
-			record.BlockFire  = bindata[36] == 1; // unsigned char Block_Fire;          // If 1, fire won't go through the tile
-			record.BlockSmoke = bindata[37] == 1; // unsigned char Block_Smoke;         // If 1, smoke won't go through the tile
+			record.BlockFire  = bindata[36] == 1;
+			record.BlockSmoke = bindata[37] == 1;
 
-			record.LeftRightHalf = bindata[38]; // unsigned char u39;
+			record.LeftRightHalf = bindata[38];
 			record.TU_Walk       = bindata[39];
-			record.TU_Slide      = bindata[40]; // unsigned char TU_Slide;                // sliding things include snakemen and silacoids
-			record.TU_Fly        = bindata[41]; // unsigned char TU_Fly;                  // remember, 0xFF means it's impassable!
+			record.TU_Slide      = bindata[40];
+			record.TU_Fly        = bindata[41];
 			record.Armor         = bindata[42];
-			record.HE_Block      = bindata[43]; // unsigned char HE_Block;                // How much of an explosion this tile will block
+			record.HE_Block      = bindata[43];
 			record.DieTile       = bindata[44];
 			record.Flammable     = bindata[45];
 			record.Alt_MCD       = bindata[46];
-			record.Unknown47     = bindata[47]; // unsigned char u48;
+			record.Unknown47     = bindata[47];
 			record.StandOffset   = (sbyte)bindata[48];
 			record.TileOffset    = (sbyte)bindata[49];
-			record.Unknown50     = bindata[50];        // unsigned char u51;
-			record.LightBlock    = (sbyte)bindata[51]; // unsigned char Light_Block;      // The amount of light it blocks, from 0 to 10
-			record.Footstep      = (sbyte)bindata[52];
+			record.Unknown50     = bindata[50];
+			record.LightBlock    = bindata[51];
+			record.Footstep      = bindata[52];
 
 			record.PartType      = (PartType)bindata[53];
-			record.HE_Type       = (sbyte)bindata[54]; // unsigned char HE_Type;        // 0=HE 1=Smoke
-			record.HE_Strength   = (sbyte)bindata[55];
-			record.SmokeBlockage = (sbyte)bindata[56]; // unsigned char Smoke_Blockage; // ? Not sure about this
-			record.Fuel          = (sbyte)bindata[57];
-			record.LightSource   = (sbyte)bindata[58]; // unsigned char Light_Source;   // The amount of light this tile produces
+			record.HE_Type       = bindata[54];
+			record.HE_Strength   = bindata[55];
+			record.SmokeBlockage = bindata[56];
+			record.Fuel          = bindata[57];
+			record.LightSource   = bindata[58];
 			record.Special       = (SpecialType)bindata[59];
-			record.BaseObject    = bindata[60];        // unsigned char u61;
-			record.Unknown61     = bindata[61];        // unsigned char u62;
+			record.BaseObject    = bindata[60];
+			record.Unknown61     = bindata[61];
 
 
-			#region Arrays
-			record.Images = string.Format(
+			#region Descript
+			record.stSprites = string.Format(
 										System.Globalization.CultureInfo.InvariantCulture,
 										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
 										"images:",
@@ -97,7 +97,7 @@ namespace XCom
 										record.Sprite7,
 										record.Sprite8);
 
-			record.ScanGReference = string.Format(
+			record.stScanG = string.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
 										"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
 										"scang reference:",
@@ -106,7 +106,7 @@ namespace XCom
 										record.ScanG,
 										record.ScanG_reduced);
 
-			record.LoftReference = string.Format(
+			record.stLoFTs = string.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
 										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
 										"loft references:",

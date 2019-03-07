@@ -6,9 +6,9 @@ using System.Windows.Forms;
 using XCom;
 
 
-namespace MapView.Forms.McdViewer
+namespace MapView.Forms.McdInfo
 {
-	internal sealed partial class McdViewerForm
+	internal sealed partial class McdInfoF
 		:
 			Form
 	{
@@ -16,7 +16,7 @@ namespace MapView.Forms.McdViewer
 		/// <summary>
 		/// cTor. Instantiates an MCD-info screen.
 		/// </summary>
-		internal McdViewerForm()
+		internal McdInfoF()
 		{
 			InitializeComponent();
 
@@ -53,18 +53,18 @@ namespace MapView.Forms.McdViewer
 			if ((bsInfo.DataSource = record) != null)
 			{
 				rtbInfo.SelectionColor = Color.Black;
-				rtbInfo.AppendText(record.Images);
-				rtbInfo.AppendText(record.LoftReference);
-				rtbInfo.AppendText(record.ScanGReference);
+				rtbInfo.AppendText(record.stSprites);
+				rtbInfo.AppendText(record.stLoFTs);
+				rtbInfo.AppendText(record.stScanG);
 
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[22])); // unsigned char u23;
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[23])); // unsigned char u24;
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[24])); // unsigned char u25;
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[25])); // unsigned char u26;
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[26])); // unsigned char u27;
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[27])); // unsigned char u28;
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[28])); // unsigned char u29;
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[29])); // unsigned char u30;
+//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[22]));
+//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[23]));
+//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[24]));
+//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[25]));
+//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[26]));
+//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[27]));
+//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[28]));
+//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[29]));
 
 				rtbInfo.AppendText(string.Format(
 											CultureInfo.InvariantCulture,
@@ -237,7 +237,7 @@ namespace MapView.Forms.McdViewer
 											CultureInfo.InvariantCulture,
 											"{0,-20}{1} - {2}" + Environment.NewLine,
 											"special property:",
-											(sbyte)record.Special,
+											(byte)record.Special,
 											Enum.GetName(typeof(SpecialType), record.Special)));
 
 				rtbInfo.AppendText(string.Format(

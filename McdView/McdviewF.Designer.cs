@@ -41,13 +41,13 @@
 		private System.Windows.Forms.Label lbl41;
 		private System.Windows.Forms.Label lbl41_tufly;
 		private System.Windows.Forms.Label lbl42;
-		private System.Windows.Forms.Label lbl42_hitpoints;
+		private System.Windows.Forms.Label lbl42_armor;
 		private System.Windows.Forms.Label lbl43;
 		private System.Windows.Forms.Label lbl43_heblock;
 		private System.Windows.Forms.Label lbl44;
 		private System.Windows.Forms.Label lbl44_deathid;
 		private System.Windows.Forms.Label lbl45;
-		private System.Windows.Forms.Label lbl45_flammable;
+		private System.Windows.Forms.Label lbl45_fireresist;
 		private System.Windows.Forms.Label lbl46;
 		private System.Windows.Forms.Label lbl46_alternateid;
 		private System.Windows.Forms.Label lbl47;
@@ -154,7 +154,7 @@
 		private System.Windows.Forms.TextBox tb_SpriteShade;
 		private System.Windows.Forms.TextBox tb20_scang1;
 		private System.Windows.Forms.TextBox tb44_deathid;
-		private System.Windows.Forms.TextBox tb42_hitpoints;
+		private System.Windows.Forms.TextBox tb42_armor;
 		private System.Windows.Forms.TextBox tb38_leftrighthalf;
 		private System.Windows.Forms.TextBox tb61_;
 		private System.Windows.Forms.TextBox tb50_;
@@ -184,7 +184,7 @@
 		private System.Windows.Forms.TextBox tb32_isdropthrou;
 		private System.Windows.Forms.TextBox tb52_footsound;
 		private System.Windows.Forms.TextBox tb57_fuel;
-		private System.Windows.Forms.TextBox tb45_flammable;
+		private System.Windows.Forms.TextBox tb45_fireresist;
 		private System.Windows.Forms.TextBox tb55_hestrength;
 		private System.Windows.Forms.TextBox tb54_hetype;
 		private System.Windows.Forms.TextBox tb58_lightintensity;
@@ -288,13 +288,13 @@
 			this.lbl41 = new System.Windows.Forms.Label();
 			this.lbl41_tufly = new System.Windows.Forms.Label();
 			this.lbl42 = new System.Windows.Forms.Label();
-			this.lbl42_hitpoints = new System.Windows.Forms.Label();
+			this.lbl42_armor = new System.Windows.Forms.Label();
 			this.lbl43 = new System.Windows.Forms.Label();
 			this.lbl43_heblock = new System.Windows.Forms.Label();
 			this.lbl44 = new System.Windows.Forms.Label();
 			this.lbl44_deathid = new System.Windows.Forms.Label();
 			this.lbl45 = new System.Windows.Forms.Label();
-			this.lbl45_flammable = new System.Windows.Forms.Label();
+			this.lbl45_fireresist = new System.Windows.Forms.Label();
 			this.lbl46 = new System.Windows.Forms.Label();
 			this.lbl46_alternateid = new System.Windows.Forms.Label();
 			this.lbl47 = new System.Windows.Forms.Label();
@@ -460,12 +460,12 @@
 			this.tb52_footsound = new System.Windows.Forms.TextBox();
 			this.gb_Explosive = new System.Windows.Forms.GroupBox();
 			this.tb57_fuel = new System.Windows.Forms.TextBox();
-			this.tb45_flammable = new System.Windows.Forms.TextBox();
+			this.tb45_fireresist = new System.Windows.Forms.TextBox();
 			this.tb55_hestrength = new System.Windows.Forms.TextBox();
 			this.tb54_hetype = new System.Windows.Forms.TextBox();
 			this.gb_Health = new System.Windows.Forms.GroupBox();
 			this.tb44_deathid = new System.Windows.Forms.TextBox();
-			this.tb42_hitpoints = new System.Windows.Forms.TextBox();
+			this.tb42_armor = new System.Windows.Forms.TextBox();
 			this.gb_General = new System.Windows.Forms.GroupBox();
 			this.tb58_lightintensity = new System.Windows.Forms.TextBox();
 			this.tb60_isbaseobject = new System.Windows.Forms.TextBox();
@@ -812,15 +812,15 @@
 			this.lbl42.Text = "#42";
 			this.lbl42.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl42_hitpoints
+			// lbl42_armor
 			// 
-			this.lbl42_hitpoints.Location = new System.Drawing.Point(40, 15);
-			this.lbl42_hitpoints.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl42_hitpoints.Name = "lbl42_hitpoints";
-			this.lbl42_hitpoints.Size = new System.Drawing.Size(55, 15);
-			this.lbl42_hitpoints.TabIndex = 26;
-			this.lbl42_hitpoints.Text = "Hitpoints";
-			this.lbl42_hitpoints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl42_armor.Location = new System.Drawing.Point(40, 15);
+			this.lbl42_armor.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl42_armor.Name = "lbl42_armor";
+			this.lbl42_armor.Size = new System.Drawing.Size(55, 15);
+			this.lbl42_armor.TabIndex = 26;
+			this.lbl42_armor.Text = "Armor";
+			this.lbl42_armor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl43
 			// 
@@ -872,15 +872,15 @@
 			this.lbl45.Text = "#45";
 			this.lbl45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl45_flammable
+			// lbl45_fireresist
 			// 
-			this.lbl45_flammable.Location = new System.Drawing.Point(40, 55);
-			this.lbl45_flammable.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl45_flammable.Name = "lbl45_flammable";
-			this.lbl45_flammable.Size = new System.Drawing.Size(70, 15);
-			this.lbl45_flammable.TabIndex = 32;
-			this.lbl45_flammable.Text = "Flammable";
-			this.lbl45_flammable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl45_fireresist.Location = new System.Drawing.Point(40, 55);
+			this.lbl45_fireresist.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl45_fireresist.Name = "lbl45_fireresist";
+			this.lbl45_fireresist.Size = new System.Drawing.Size(70, 15);
+			this.lbl45_fireresist.TabIndex = 32;
+			this.lbl45_fireresist.Text = "FireResist";
+			this.lbl45_fireresist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl46
 			// 
@@ -2548,7 +2548,7 @@
 			this.gb_Block.Controls.Add(this.lbl51);
 			this.gb_Block.Controls.Add(this.lbl56_smokeblock);
 			this.gb_Block.Controls.Add(this.lbl56);
-			this.gb_Block.Location = new System.Drawing.Point(175, 520);
+			this.gb_Block.Location = new System.Drawing.Point(175, 420);
 			this.gb_Block.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Block.Name = "gb_Block";
 			this.gb_Block.Padding = new System.Windows.Forms.Padding(0);
@@ -2707,18 +2707,18 @@
 			// gb_Explosive
 			// 
 			this.gb_Explosive.Controls.Add(this.tb57_fuel);
-			this.gb_Explosive.Controls.Add(this.tb45_flammable);
+			this.gb_Explosive.Controls.Add(this.tb45_fireresist);
 			this.gb_Explosive.Controls.Add(this.tb55_hestrength);
 			this.gb_Explosive.Controls.Add(this.tb54_hetype);
 			this.gb_Explosive.Controls.Add(this.lbl54_hetype);
 			this.gb_Explosive.Controls.Add(this.lbl54);
 			this.gb_Explosive.Controls.Add(this.lbl55_hestrength);
 			this.gb_Explosive.Controls.Add(this.lbl55);
-			this.gb_Explosive.Controls.Add(this.lbl45_flammable);
+			this.gb_Explosive.Controls.Add(this.lbl45_fireresist);
 			this.gb_Explosive.Controls.Add(this.lbl45);
 			this.gb_Explosive.Controls.Add(this.lbl57_fuel);
 			this.gb_Explosive.Controls.Add(this.lbl57);
-			this.gb_Explosive.Location = new System.Drawing.Point(175, 420);
+			this.gb_Explosive.Location = new System.Drawing.Point(175, 560);
 			this.gb_Explosive.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Explosive.Name = "gb_Explosive";
 			this.gb_Explosive.Padding = new System.Windows.Forms.Padding(0);
@@ -2737,15 +2737,15 @@
 			this.tb57_fuel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb57_fuel.WordWrap = false;
 			// 
-			// tb45_flammable
+			// tb45_fireresist
 			// 
-			this.tb45_flammable.Location = new System.Drawing.Point(125, 53);
-			this.tb45_flammable.Margin = new System.Windows.Forms.Padding(0);
-			this.tb45_flammable.Name = "tb45_flammable";
-			this.tb45_flammable.Size = new System.Drawing.Size(35, 19);
-			this.tb45_flammable.TabIndex = 79;
-			this.tb45_flammable.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb45_flammable.WordWrap = false;
+			this.tb45_fireresist.Location = new System.Drawing.Point(125, 53);
+			this.tb45_fireresist.Margin = new System.Windows.Forms.Padding(0);
+			this.tb45_fireresist.Name = "tb45_fireresist";
+			this.tb45_fireresist.Size = new System.Drawing.Size(35, 19);
+			this.tb45_fireresist.TabIndex = 79;
+			this.tb45_fireresist.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb45_fireresist.WordWrap = false;
 			// 
 			// tb55_hestrength
 			// 
@@ -2770,8 +2770,8 @@
 			// gb_Health
 			// 
 			this.gb_Health.Controls.Add(this.tb44_deathid);
-			this.gb_Health.Controls.Add(this.tb42_hitpoints);
-			this.gb_Health.Controls.Add(this.lbl42_hitpoints);
+			this.gb_Health.Controls.Add(this.tb42_armor);
+			this.gb_Health.Controls.Add(this.lbl42_armor);
 			this.gb_Health.Controls.Add(this.lbl42);
 			this.gb_Health.Controls.Add(this.lbl44_deathid);
 			this.gb_Health.Controls.Add(this.lbl44);
@@ -2794,15 +2794,15 @@
 			this.tb44_deathid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb44_deathid.WordWrap = false;
 			// 
-			// tb42_hitpoints
+			// tb42_armor
 			// 
-			this.tb42_hitpoints.Location = new System.Drawing.Point(125, 13);
-			this.tb42_hitpoints.Margin = new System.Windows.Forms.Padding(0);
-			this.tb42_hitpoints.Name = "tb42_hitpoints";
-			this.tb42_hitpoints.Size = new System.Drawing.Size(35, 19);
-			this.tb42_hitpoints.TabIndex = 32;
-			this.tb42_hitpoints.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb42_hitpoints.WordWrap = false;
+			this.tb42_armor.Location = new System.Drawing.Point(125, 13);
+			this.tb42_armor.Margin = new System.Windows.Forms.Padding(0);
+			this.tb42_armor.Name = "tb42_armor";
+			this.tb42_armor.Size = new System.Drawing.Size(35, 19);
+			this.tb42_armor.TabIndex = 32;
+			this.tb42_armor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb42_armor.WordWrap = false;
 			// 
 			// gb_General
 			// 
@@ -2990,6 +2990,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(682, 799);
+			this.Controls.Add(this.gb_Block);
 			this.Controls.Add(this.tb_SpriteShade);
 			this.Controls.Add(this.cb_Strict);
 			this.Controls.Add(this.lbl_Strict);
@@ -3003,7 +3004,6 @@
 			this.Controls.Add(this.gb_Explosive);
 			this.Controls.Add(this.gb_Step);
 			this.Controls.Add(this.gb_Door);
-			this.Controls.Add(this.gb_Block);
 			this.Controls.Add(this.gb_Elevation);
 			this.Controls.Add(this.gb_Tu);
 			this.Controls.Add(this.gb_Minimap);

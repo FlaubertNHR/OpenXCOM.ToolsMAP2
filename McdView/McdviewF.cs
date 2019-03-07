@@ -617,10 +617,10 @@ namespace McdView
 			tb39_tuwalk       .Text = ((int)record.TU_Walk)      .ToString();
 			tb40_tuslide      .Text = ((int)record.TU_Slide)     .ToString();
 			tb41_tufly        .Text = ((int)record.TU_Fly)       .ToString();
-			tb42_hitpoints    .Text = ((int)record.Armor)        .ToString();
+			tb42_armor        .Text = ((int)record.Armor)        .ToString();
 			tb43_heblock      .Text = ((int)record.HE_Block)     .ToString();
 			tb44_deathid      .Text = ((int)record.DieTile)      .ToString();
-			tb45_flammable    .Text = ((int)record.Flammable)    .ToString();
+			tb45_fireresist   .Text = ((int)record.Flammable)    .ToString();
 			tb46_alternateid  .Text = ((int)record.Alt_MCD)      .ToString();
 
 			tb47_.Text = ((int)record.Unknown47).ToString();
@@ -696,10 +696,10 @@ namespace McdView
 			tb39_tuwalk       .Text =
 			tb40_tuslide      .Text =
 			tb41_tufly        .Text =
-			tb42_hitpoints    .Text =
+			tb42_armor        .Text =
 			tb43_heblock      .Text =
 			tb44_deathid      .Text =
-			tb45_flammable    .Text =
+			tb45_fireresist   .Text =
 			tb46_alternateid  .Text =
 
 			tb47_.Text =

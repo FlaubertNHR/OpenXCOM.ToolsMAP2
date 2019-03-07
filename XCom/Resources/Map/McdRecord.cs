@@ -2,57 +2,6 @@ using System;
 using System.Collections.Generic;
 
 
-#region About the MCD record
-// http://ufo2k-allegro.lxnt.info/srcdocs/terrapck_8h-source.html
-/* struct MCD
-{
-	-unsigned char Frame[8];		// Each frame is an index into the ____.TAB file; it rotates between the frames constantly.
-	-unsigned char LOFT[12];		// The 12 levels of references into GEODATA\LOFTEMPS.DAT
-	-short int ScanG;				// A reference into the GEODATA\SCANG.DAT
-	unsigned char u23;	22
-	unsigned char u24;	23
-	unsigned char u25;	24
-	unsigned char u26;	25
-	unsigned char u27;	26
-	unsigned char u28;	27
-	unsigned char u29;	28
-	unsigned char u30;	29
-	unsigned char UFO_Door;			// If it's a UFO door it uses only Frame[0] until it is walked through, then it animates once and becomes Alt_MCD. It changes back at the end of the turn.
-	unsigned char Stop_LOS;			// You cannot see through this tile.
-	unsigned char No_Floor;			// If 1, then a non-flying unit can't stand here
-	unsigned char Big_Wall;			// It's an object (tile type 3), but it acts like a wall
-	unsigned char Gravlift;
-	unsigned char Door;				// It's a human style door--you walk through it and it changes to Alt_MCD
-	unsigned char Block_Fire;		// If 1, fire won't go through the tile
-	unsigned char Block_Smoke;		// If 1, smoke won't go through the tile
-	unsigned char u39;
-	unsigned char TU_Walk;			// The number of TUs require to pass the tile while walking. 0xFF (255) means it's unpassable.
-	unsigned char TU_Fly;			// remember, 0xFF means it's impassable!
-	unsigned char TU_Slide;			// sliding things include snakemen and silacoids
-	unsigned char Armour;			// The higher this is the less likely it is that a weapon will destroy this tile when it's hit.
-	unsigned char HE_Block;			// How much of an explosion this tile will block
-	unsigned char Die_MCD;			// If the terrain is destroyed, it is set to 0 and a tile of type Die_MCD is added
-	unsigned char Flammable;		// How flammable it is (the higher the harder it is to set aflame)
-	unsigned char Alt_MCD;			// If "Door" or "UFO_Door" is on, then when a unit walks through it the door is set to 0 and a tile type Alt_MCD is added.
-	unsigned char u48;
-	signed char T_Level;			// When a unit or object is standing on the tile, the unit is shifted by this amount
-	unsigned char P_Level;			// When the tile is drawn, this amount is subtracted from its y (so y position-P_Level is where it's drawn)
-	unsigned char u51;
-	unsigned char Light_Block;		// The amount of light it blocks, from 0 to 10
-	unsigned char Footstep;			// The Sound Effect set to choose from when footsteps are on the tile
-	unsigned char Tile_Type;		// This is the type of tile it is meant to be -- 0=floor, 1=west wall, 2=north wall, 3=object. When this type of tile is in the Die_As or Open_As flags, this value is added to the tile coordinate to determine the byte in which the tile type should be written.
-	unsigned char HE_Type;			// 0=HE  1=Smoke
-	unsigned char HE_Strength;		// The strength of the explosion caused when it's destroyed.  0 means no explosion.
-	unsigned char Smoke_Blockage;	// ? Not sure about this ...
-	unsigned char Fuel;				// The number of turns the tile will burn when set aflame
-	unsigned char Light_Source;		// The amount of light this tile produces
-	unsigned char Target_Type;		// The special properties of the tile
-	unsigned char u61;
-	unsigned char u62;
-}; */
-#endregion
-
-
 namespace XCom
 {
 	public enum PartType
@@ -67,6 +16,9 @@ namespace XCom
 
 	public sealed class McdRecord
 	{
+		// Descriptions of MCD entries are at
+		// https://www.ufopaedia.org/index.php/MCD
+
 		private static int _id;
 
 
@@ -117,58 +69,57 @@ namespace XCom
 		public ushort ScanG         { get; set; }
 		public ushort ScanG_reduced { get; set; }
 
-		public byte Unknown22 { get; set; }                                            // unsigned char u62;
-		public byte Unknown23 { get; set; }                                            // unsigned char u62;
-		public byte Unknown24 { get; set; }                                            // unsigned char u62;
-		public byte Unknown25 { get; set; }                                            // unsigned char u62;
-		public byte Unknown26 { get; set; }                                            // unsigned char u62;
-		public byte Unknown27 { get; set; }                                            // unsigned char u62;
-		public byte Unknown28 { get; set; }                                            // unsigned char u62;
-		public byte Unknown29 { get; set; }                                            // unsigned char u62;
+		public byte Unknown22 { get; set; }
+		public byte Unknown23 { get; set; }
+		public byte Unknown24 { get; set; }
+		public byte Unknown25 { get; set; }
+		public byte Unknown26 { get; set; }
+		public byte Unknown27 { get; set; }
+		public byte Unknown28 { get; set; }
+		public byte Unknown29 { get; set; }
 
-		public bool UfoDoor    { get; set; }        // info[30]==1;}}                                                 // If it's a UFO door it uses only Frame[0] until it is walked through, then it animates once and becomes Alt_MCD. It changes back at the end of the turn.
-		public bool StopLOS    { get; set; }        // info[31]==1;}}                  // unsigned char Stop_LOS;     // You cannot see through this tile.
-		public bool NoGround   { get; set; }        // info[32]==1;}}                  // unsigned char No_Floor;     // If 1, then a non-flying unit can't stand here
-		public bool BigWall    { get; set; }        // info[33]==1;}}                  // unsigned char Big_Wall;     // It's an object (tile type 3), but it acts like a wall
-		public bool GravLift   { get; set; }        // info[34]==1;}}                  // unsigned char Gravlift;
-		public bool HumanDoor  { get; set; }        // info[35]==1;}}                  // unsigned char Door;         // It's a human style door--you walk through it and it changes to Alt_MCD - does not change back at end of turn
-		public bool BlockFire  { get; set; }        // info[36]==1;}}                  // unsigned char Block_Fire;   // If 1, fire won't go through the tile
-		public bool BlockSmoke { get; set; }        // info[37]==1;}}                  // unsigned char Block_Smoke;  // If 1, smoke won't go through the tile
+		public bool UfoDoor    { get; set; }
+		public bool StopLOS    { get; set; }
+		public bool NoGround   { get; set; }
+		public bool BigWall    { get; set; }
+		public bool GravLift   { get; set; }
+		public bool HumanDoor  { get; set; }
+		public bool BlockFire  { get; set; }
+		public bool BlockSmoke { get; set; }
 
-		public byte LeftRightHalf { get; set; }      // info[38];}}                     // unsigned char u39;
-		public byte TU_Walk       { get; set; }      // info[39];}}                     // unsigned char TU_Walk;       // The number of TUs require to pass the tile while walking. 0xFF (255) means it's unpassable.
-		public byte TU_Slide      { get; set; }      // info[40];}}                     // unsigned char TU_Fly;        // remember, 0xFF means it's impassable!
-		public byte TU_Fly        { get; set; }      // info[41];}}                     // unsigned char TU_Slide;      // sliding things include snakemen and silacoids
-		public byte Armor         { get; set; }      // info[42];}}                     // unsigned char Armour;        // The higher this is the less likely it is that a weapon will destroy this tile when it's hit.
-		public byte HE_Block      { get; set; }      // info[43];}}                     // unsigned char HE_Block;      // How much of an explosion this tile will block
-		public byte DieTile       { get; set; }      // info[44];}}                     // unsigned char Die_MCD;       // If the terrain is destroyed, it is set to 0 and a tile of type Die_MCD is added
-		public byte Flammable     { get; set; }      // info[45];}}                     // unsigned char Flammable;     // How flammable it is (the higher the harder it is to set aflame)
-		public byte Alt_MCD       { get; set; }      // info[46];}}                     // unsigned char Alt_MCD;       // If "Door" or "UFO_Door" is on, then when a unit walks through it the door is set to 0 and a tile type Alt_MCD is added.
-		public byte Unknown47     { get; set; }      // info[47];}}                     // unsigned char u48;
-		public sbyte StandOffset  { get; set; }      // (sbyte)info[48];}}              // signed char T_Level;         // When a unit or object is standing on the tile, the unit is shifted by this amount
-		public sbyte TileOffset   { get; set; }      // (sbyte)info[49];}}              // unsigned char P_Level;       // When the tile is drawn, this amount is subtracted from its y (so y position-P_Level is where it's drawn)
-		public byte Unknown50     { get; set; }      // info[50];}}                     // unsigned char u51;
-		public sbyte LightBlock   { get; set; }      // (sbyte)info[51];}}              // unsigned char Light_Block;    // The amount of light it blocks, from 0 to 10
-		public sbyte Footstep     { get; set; }      // (sbyte)info[52];}}              // unsigned char Footstep;       // The Sound Effect set to choose from when footsteps are on the tile
+		public byte LeftRightHalf { get; set; }
+		public byte TU_Walk       { get; set; }
+		public byte TU_Slide      { get; set; }
+		public byte TU_Fly        { get; set; }
+		public byte Armor         { get; set; }
+		public byte HE_Block      { get; set; }
+		public byte DieTile       { get; set; }
+		public byte Flammable     { get; set; }
+		public byte Alt_MCD       { get; set; }
+		public byte Unknown47     { get; set; }
+		public sbyte StandOffset  { get; set; }
+		public sbyte TileOffset   { get; set; }
+		public byte Unknown50     { get; set; }
+		public byte LightBlock    { get; set; }
+		public byte Footstep      { get; set; }
 
-		public PartType PartType   { get; set; } // (TileType)info[53];}}           // unsigned char Tile_Type;      // This is the type of tile it is meant to be -- 0=floor, 1=west wall, 2=north wall, 3=object. When this type of tile is in the Die_As or Open_As flags, this value is added to the tile coordinate to determine the byte in which the tile type should be written.
-		public sbyte HE_Type       { get; set; } // (sbyte)info[54];}}              // unsigned char HE_Type;        // 0=HE 1=Smoke
-		public sbyte HE_Strength   { get; set; } // (sbyte)info[55];}}              // unsigned char HE_Strength;    // The strength of the explosion caused when it's destroyed.  0 means no explosion.
-		public sbyte SmokeBlockage { get; set; } // (sbyte)info[56];}}              // unsigned char Smoke_Blockage; // ? Not sure about this
-		public sbyte Fuel          { get; set; } // (sbyte)info[57];}}              // unsigned char Fuel;           // The number of turns the tile will burn when set aflame
-		public sbyte LightSource   { get; set; } // (sbyte)info[58];}}              // unsigned char Light_Source;   // The amount of light this tile produces
-		public SpecialType Special { get; set; } // (SpecialType)(sbyte)info[59];}} // unsigned char Target_Type;    // The special properties of the tile
-		public byte BaseObject     { get; set; } // info[60];}}                     // unsigned char u61;
-		public byte Unknown61      { get; set; } // info[61];}}                     // unsigned char u62;
+		public PartType PartType   { get; set; }
+		public byte HE_Type        { get; set; }
+		public byte HE_Strength    { get; set; }
+		public byte SmokeBlockage  { get; set; }
+		public byte Fuel           { get; set; }
+		public byte LightSource    { get; set; }
+		public SpecialType Special { get; set; }
+		public byte BaseObject     { get; set; }
+		public byte Unknown61      { get; set; }
 
 
-//		unsigned char Frame[8]; // Each frame is an index into the ____.TAB file; it cycles through the frames constantly.
-		public string Images          { get; set; }
-		public string ScanGReference  { get; set; }
-//		unsigned char LOFT[12]; // The 12 levels of references into GEODATA\LOFTEMPS.DAT
-		public string LoftReference   { get; set; }
+		// The following strings are used by the McdInfoF only.
+		public string stSprites { get; set; }
+		public string stScanG   { get; set; }
+		public string stLoFTs   { get; set; }
 
-		public string ByteTable       { get; set; }
+		public string ByteTable { get; set; }
 		#endregion
 
 

@@ -8,7 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
-using MapView.Forms.McdViewer;
+using MapView.Forms.McdInfo;
 using MapView.OptionsServices;
 
 using PckView;
@@ -39,7 +39,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
 
-		internal McdViewerForm _mcdInfoForm;
+		internal McdInfoF _mcdInfoForm;
 
 		private Hashtable _brushesSpecial = new Hashtable();
 		#endregion
@@ -397,7 +397,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				if (_mcdInfoForm == null)
 				{
-					_mcdInfoForm = new McdViewerForm();
+					_mcdInfoForm = new McdInfoF();
 					_mcdInfoForm.FormClosing += OnMcdInfoFormClosing;
 
 					var f = FindForm();

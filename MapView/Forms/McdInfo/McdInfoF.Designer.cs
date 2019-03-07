@@ -1,6 +1,6 @@
-﻿namespace MapView.Forms.McdViewer
+﻿namespace MapView.Forms.McdInfo
 {
-	partial class McdViewerForm
+	partial class McdInfoF
 	{
 		/// <summary>
 		/// Required designer variable.
