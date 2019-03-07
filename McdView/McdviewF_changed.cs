@@ -477,9 +477,8 @@ namespace McdView
 			}
 		}
 
-		//
 		/// <summary>
-		/// #4 DeathId (byte)
+		/// #44 DeathId (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -526,6 +525,58 @@ namespace McdView
 			{
 				tssl_Overvalue.Text = "DeathId: " + result;
 				OnEnter44(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #46 AlternateId (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged46(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb46_alternateid.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && result < Records.Length)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Alt_MCD = (byte)result;
+
+					if (result != 0 && result < Records.Length)
+						Records[SelId].Alternate = Records[result];
+					else
+						Records[SelId].Alternate = null;
+
+					RecordPanel.Invalidate();
+				}
+				else
+					tb46_alternateid.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb46_alternateid.Text = String.Empty; // recurse.
+		}
+		private void OnEnter46(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "AlternateId (ubyte) is the ID of the part that will replace a"
+								 + " part that is a door and has been opened. The alternate-part"
+								 + " should be in the MCD file with the original part. A value of"
+								 + " 0 indicates that if a part is opened it will not be replaced"
+								 + " by an alternate-part; that is, a value of 0 does not"
+								 + " reference ID #0."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Records != null ? (Records.Length - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox46(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb46_alternateid.Text, out result))
+			{
+				tssl_Overvalue.Text = "AlternateId: " + result;
+				OnEnter46(null, EventArgs.Empty);
 			}
 		}
 

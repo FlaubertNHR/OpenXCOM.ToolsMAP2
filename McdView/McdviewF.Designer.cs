@@ -918,6 +918,8 @@
 			this.lbl46.TabIndex = 35;
 			this.lbl46.Text = "#46";
 			this.lbl46.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl46.MouseEnter += new System.EventHandler(this.OnEnter46);
+			this.lbl46.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl46_alternateid
 			// 
@@ -928,6 +930,8 @@
 			this.lbl46_alternateid.TabIndex = 34;
 			this.lbl46_alternateid.Text = "AlternateId";
 			this.lbl46_alternateid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl46_alternateid.MouseEnter += new System.EventHandler(this.OnEnter46);
+			this.lbl46_alternateid.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl47
 			// 
@@ -2710,6 +2714,11 @@
 			this.tb46_alternateid.TabIndex = 73;
 			this.tb46_alternateid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb46_alternateid.WordWrap = false;
+			this.tb46_alternateid.TextChanged += new System.EventHandler(this.OnChanged46);
+			this.tb46_alternateid.Enter += new System.EventHandler(this.OnEnter46);
+			this.tb46_alternateid.Leave += new System.EventHandler(this.OnLeave);
+			this.tb46_alternateid.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox46);
+			this.tb46_alternateid.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb35_ishingeddoor
 			// 
