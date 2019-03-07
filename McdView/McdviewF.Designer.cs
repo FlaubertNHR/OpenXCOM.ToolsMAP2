@@ -822,6 +822,8 @@
 			this.lbl42.TabIndex = 27;
 			this.lbl42.Text = "#42";
 			this.lbl42.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl42.MouseEnter += new System.EventHandler(this.OnEnter42);
+			this.lbl42.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl42_armor
 			// 
@@ -832,6 +834,8 @@
 			this.lbl42_armor.TabIndex = 26;
 			this.lbl42_armor.Text = "Armor";
 			this.lbl42_armor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl42_armor.MouseEnter += new System.EventHandler(this.OnEnter42);
+			this.lbl42_armor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl43
 			// 
@@ -862,6 +866,8 @@
 			this.lbl44.TabIndex = 31;
 			this.lbl44.Text = "#44";
 			this.lbl44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl44.MouseEnter += new System.EventHandler(this.OnEnter44);
+			this.lbl44.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl44_deathid
 			// 
@@ -872,6 +878,8 @@
 			this.lbl44_deathid.TabIndex = 30;
 			this.lbl44_deathid.Text = "DeathId";
 			this.lbl44_deathid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl44_deathid.MouseEnter += new System.EventHandler(this.OnEnter44);
+			this.lbl44_deathid.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl45
 			// 
@@ -2841,6 +2849,11 @@
 			this.tb44_deathid.TabIndex = 33;
 			this.tb44_deathid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb44_deathid.WordWrap = false;
+			this.tb44_deathid.TextChanged += new System.EventHandler(this.OnChanged44);
+			this.tb44_deathid.Enter += new System.EventHandler(this.OnEnter44);
+			this.tb44_deathid.Leave += new System.EventHandler(this.OnLeave);
+			this.tb44_deathid.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox44);
+			this.tb44_deathid.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb42_armor
 			// 
@@ -2851,6 +2864,11 @@
 			this.tb42_armor.TabIndex = 32;
 			this.tb42_armor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb42_armor.WordWrap = false;
+			this.tb42_armor.TextChanged += new System.EventHandler(this.OnChanged42);
+			this.tb42_armor.Enter += new System.EventHandler(this.OnEnter42);
+			this.tb42_armor.Leave += new System.EventHandler(this.OnLeave);
+			this.tb42_armor.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox42);
+			this.tb42_armor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_General
 			// 

@@ -191,6 +191,14 @@ namespace McdView
 		}
 		private void OnEnter33(object sender, EventArgs e)
 		{
+/*			var tb = sender as TextBox; // uh, mouseclick position overrules SelectAll()
+			if (tb != null)
+			{
+				tb.SelectAll();
+//				tb.SelectionStart = 0;
+//				tb.SelectionLength = tb.Text.Length;
+			} */
+
 			lbl_Description.Text = "isBigWall (bool) is a true/false value that is relevant only to"
 								 + " content parts. A tile with such a part placed in it is"
 								 + " not navigable; a unit is not even allowed to clip through"
@@ -316,6 +324,102 @@ namespace McdView
 				}
 				tssl_Overvalue.Text = "LeftRightHalf: " + text;
 				OnEnter38(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #42 Armor (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged42(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb42_armor.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Armor = (byte)result;
+				}
+				else
+					tb42_armor.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb42_armor.Text = String.Empty; // recurse.
+		}
+		private void OnEnter42(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "Armor (ubyte) is the damage that a part must sustain in a single"
+								 + " hit in order to be destroyed. Note that part-damage in XCOM is"
+								 + " not cumulative; it's all or nothing. A value of 255 typically"
+								 + " designates a part as indestructible although it depends on the"
+								 + " XCOM build."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox42(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb42_armor.Text, out result))
+			{
+				tssl_Overvalue.Text = "Armor: " + result;
+				OnEnter42(null, EventArgs.Empty);
+			}
+		}
+
+		//
+		/// <summary>
+		/// #4 DeathId (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged44(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb44_deathid.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && result < Records.Length)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.DieTile = (byte)result;
+
+					if (result != 0 && result < Records.Length)
+						Records[SelId].Dead = Records[result];
+					else
+						Records[SelId].Dead = null;
+
+					RecordPanel.Invalidate();
+				}
+				else
+					tb44_deathid.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb44_deathid.Text = String.Empty; // recurse.
+		}
+		private void OnEnter44(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "DeathId (ubyte) is the ID of the part that will replace a"
+								 + " part when it gets destroyed. The death-part should be in the"
+								 + " MCD file with the original part. A value of 0 indicates"
+								 + " that if a part is destroyed it will not be replaced by a"
+								 + " death-part; that is, a value of 0 does not reference ID #0."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Records != null ? (Records.Length - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox44(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb44_deathid.Text, out result))
+			{
+				tssl_Overvalue.Text = "DeathId: " + result;
+				OnEnter44(null, EventArgs.Empty);
 			}
 		}
 
