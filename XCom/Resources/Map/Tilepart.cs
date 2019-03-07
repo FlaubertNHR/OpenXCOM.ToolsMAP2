@@ -68,7 +68,7 @@ namespace XCom
 		/// </summary>
 		private void InitializeSprites()
 		{
-			if (Record.UfoDoor || Record.HumanDoor)
+			if (Record.SlidingDoor || Record.HingedDoor)
 			{
 				for (int i = 0; i != 8; ++i)
 					Anisprites[i] = _spriteset[Record.Sprite1];
@@ -93,11 +93,11 @@ namespace XCom
 		/// <param name="animate">true to animate</param>
 		public void SetDoorSprites(bool animate)
 		{
-			if (Record.UfoDoor || Record.HumanDoor)
+			if (Record.SlidingDoor || Record.HingedDoor)
 			{
 				if (animate)
 				{
-					if (Record.UfoDoor || Alternate == null)
+					if (Record.SlidingDoor || Alternate == null)
 					{
 						Anisprites[0] = _spriteset[Record.Sprite1];
 						Anisprites[1] = _spriteset[Record.Sprite2];
@@ -125,7 +125,7 @@ namespace XCom
 
 		public void SetDoorToAlternateSprite()
 		{
-			if (Record.UfoDoor || Record.HumanDoor)
+			if (Record.SlidingDoor || Record.HingedDoor)
 			{
 				byte alt = Alternate.Record.Sprite1;
 				for (int i = 0; i != 8; ++i)

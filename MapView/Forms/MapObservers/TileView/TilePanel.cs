@@ -388,13 +388,13 @@ namespace MapView.Forms.MapObservers.TileViews
 
 					if (part != null) // draw tile-sprite ->
 					{
-						string special = part.Record.Special.ToString();	// first fill Special Property color
+						string special = part.Record.Special.ToString();		// first fill Special Property color
 						if (_specialTypeBrushes.ContainsKey(special))
 							graphics.FillRectangle((SolidBrush)_specialTypeBrushes[special], rect);
 
 						if ((sprite = part[MainViewUnderlay.AniStep]) != null)
 						{
-//							graphics.DrawImage(								// then draw the sprite itself
+//							graphics.DrawImage(									// then draw the sprite itself
 //											sprite.Sprite,
 //											left + SpriteMargin,
 //											top  + SpriteMargin - part.Record.TileOffset);
@@ -412,7 +412,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 						// NOTE: keep the door-string and its placement consistent with
 						// QuadrantPanelDrawService.Draw().
-						if (part.Record.HumanDoor || part.Record.UfoDoor)	// finally print "door" if it's a door
+						if (part.Record.HingedDoor || part.Record.SlidingDoor)	// finally print "door" if it's a door
 							graphics.DrawString(
 											Door,
 											Font,

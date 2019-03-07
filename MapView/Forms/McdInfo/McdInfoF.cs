@@ -70,7 +70,7 @@ namespace MapView.Forms.McdInfo
 											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"ufo door:",
-											record.UfoDoor));
+											record.SlidingDoor));
 
 				rtbInfo.AppendText(string.Format(
 											CultureInfo.InvariantCulture,
@@ -100,7 +100,7 @@ namespace MapView.Forms.McdInfo
 											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"standard door:",
-											record.HumanDoor));
+											record.HingedDoor));
 
 				rtbInfo.AppendText(string.Format(
 											CultureInfo.InvariantCulture,

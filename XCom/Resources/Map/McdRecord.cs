@@ -78,14 +78,14 @@ namespace XCom
 		public byte Unknown28 { get; set; }
 		public byte Unknown29 { get; set; }
 
-		public bool UfoDoor    { get; set; }
-		public bool StopLOS    { get; set; }
-		public bool NoGround   { get; set; }
-		public bool BigWall    { get; set; }
-		public bool GravLift   { get; set; }
-		public bool HumanDoor  { get; set; }
-		public bool BlockFire  { get; set; }
-		public bool BlockSmoke { get; set; }
+		public bool SlidingDoor { get; set; }
+		public bool StopLOS     { get; set; }
+		public bool NoGround    { get; set; }
+		public bool BigWall     { get; set; }
+		public bool GravLift    { get; set; }
+		public bool HingedDoor  { get; set; }
+		public bool BlockFire   { get; set; }
+		public bool BlockSmoke  { get; set; }
 
 		public byte LeftRightHalf { get; set; }
 		public byte TU_Walk       { get; set; }

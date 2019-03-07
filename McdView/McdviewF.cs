@@ -609,14 +609,14 @@ namespace McdView
 			tb28_.Text = ((int)record.Unknown28).ToString();
 			tb29_.Text = ((int)record.Unknown29).ToString();
 
-			tb30_isufodoor   .Text = Convert.ToInt32(record.UfoDoor)   .ToString();
-			tb31_isblocklos  .Text = Convert.ToInt32(record.StopLOS)   .ToString();
-			tb32_isdropthrou .Text = Convert.ToInt32(record.NoGround)  .ToString();
-			tb33_isbigwall   .Text = Convert.ToInt32(record.BigWall)   .ToString();
-			tb34_isgravlift  .Text = Convert.ToInt32(record.GravLift)  .ToString();
-			tb35_ishumandoor .Text = Convert.ToInt32(record.HumanDoor) .ToString();
-			tb36_isblockfire .Text = Convert.ToInt32(record.BlockFire) .ToString();
-			tb37_isblocksmoke.Text = Convert.ToInt32(record.BlockSmoke).ToString();
+			tb30_isslidingdoor.Text = Convert.ToInt32(record.SlidingDoor).ToString();
+			tb31_isblocklos   .Text = Convert.ToInt32(record.StopLOS)    .ToString();
+			tb32_isdropthrou  .Text = Convert.ToInt32(record.NoGround)   .ToString();
+			tb33_isbigwall    .Text = Convert.ToInt32(record.BigWall)    .ToString();
+			tb34_isgravlift   .Text = Convert.ToInt32(record.GravLift)   .ToString();
+			tb35_ishingeddoor .Text = Convert.ToInt32(record.HingedDoor) .ToString();
+			tb36_isblockfire  .Text = Convert.ToInt32(record.BlockFire)  .ToString();
+			tb37_isblocksmoke .Text = Convert.ToInt32(record.BlockSmoke) .ToString();
 
 			tb38_leftrighthalf.Text = ((int)record.LeftRightHalf).ToString();
 			tb39_tuwalk       .Text = ((int)record.TU_Walk)      .ToString();
@@ -691,14 +691,14 @@ namespace McdView
 			tb28_.Text =
 			tb29_.Text =
 
-			tb30_isufodoor   .Text =
-			tb31_isblocklos  .Text =
-			tb32_isdropthrou .Text =
-			tb33_isbigwall   .Text =
-			tb34_isgravlift  .Text =
-			tb35_ishumandoor .Text =
-			tb36_isblockfire .Text =
-			tb37_isblocksmoke.Text =
+			tb30_isslidingdoor.Text =
+			tb31_isblocklos   .Text =
+			tb32_isdropthrou  .Text =
+			tb33_isbigwall    .Text =
+			tb34_isgravlift   .Text =
+			tb35_ishingeddoor .Text =
+			tb36_isblockfire  .Text =
+			tb37_isblocksmoke .Text =
 
 			tb38_leftrighthalf.Text =
 			tb39_tuwalk       .Text =

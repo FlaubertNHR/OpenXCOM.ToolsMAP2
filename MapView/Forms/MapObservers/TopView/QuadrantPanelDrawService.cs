@@ -201,7 +201,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
-				if (tile.Ground.Record.HumanDoor || tile.Ground.Record.UfoDoor)
+				if (tile.Ground.Record.HingedDoor || tile.Ground.Record.SlidingDoor)
 					DrawDoorString(graphics, QuadrantType.Ground);
 			}
 			else
@@ -229,7 +229,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
-				if (tile.West.Record.HumanDoor || tile.West.Record.UfoDoor)
+				if (tile.West.Record.HingedDoor || tile.West.Record.SlidingDoor)
 					DrawDoorString(graphics, QuadrantType.West);
 			}
 			else
@@ -257,7 +257,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
-				if (tile.North.Record.HumanDoor || tile.North.Record.UfoDoor)
+				if (tile.North.Record.HingedDoor || tile.North.Record.SlidingDoor)
 					DrawDoorString(graphics, QuadrantType.North);
 			}
 			else
@@ -285,7 +285,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
-				if (tile.Content.Record.HumanDoor || tile.Content.Record.UfoDoor)
+				if (tile.Content.Record.HingedDoor || tile.Content.Record.SlidingDoor)
 					DrawDoorString(graphics, QuadrantType.Content);
 			}
 			else

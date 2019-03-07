@@ -15,7 +15,7 @@
 		private System.Windows.Forms.MenuItem miPaletteTftd;
 
 		private System.Windows.Forms.Label lbl20_scang;
-		private System.Windows.Forms.Label lbl30_isufodoor;
+		private System.Windows.Forms.Label lbl30_isslidingdoor;
 		private System.Windows.Forms.Label lbl20;
 		private System.Windows.Forms.Label lbl30;
 		private System.Windows.Forms.Label lbl31;
@@ -27,7 +27,7 @@
 		private System.Windows.Forms.Label lbl34;
 		private System.Windows.Forms.Label lbl34_isgravlift;
 		private System.Windows.Forms.Label lbl35;
-		private System.Windows.Forms.Label lbl35_ishumandoor;
+		private System.Windows.Forms.Label lbl35_ishingeddoor;
 		private System.Windows.Forms.Label lbl36;
 		private System.Windows.Forms.Label lbl36_isblockfire;
 		private System.Windows.Forms.Label lbl37;
@@ -179,8 +179,8 @@
 		private System.Windows.Forms.TextBox tb36_isblockfire;
 		private System.Windows.Forms.TextBox tb31_isblocklos;
 		private System.Windows.Forms.TextBox tb46_alternateid;
-		private System.Windows.Forms.TextBox tb35_ishumandoor;
-		private System.Windows.Forms.TextBox tb30_isufodoor;
+		private System.Windows.Forms.TextBox tb35_ishingeddoor;
+		private System.Windows.Forms.TextBox tb30_isslidingdoor;
 		private System.Windows.Forms.TextBox tb32_isdropthrou;
 		private System.Windows.Forms.TextBox tb52_footsound;
 		private System.Windows.Forms.TextBox tb57_fuel;
@@ -263,7 +263,7 @@
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.lbl20_scang = new System.Windows.Forms.Label();
-			this.lbl30_isufodoor = new System.Windows.Forms.Label();
+			this.lbl30_isslidingdoor = new System.Windows.Forms.Label();
 			this.lbl20 = new System.Windows.Forms.Label();
 			this.lbl30 = new System.Windows.Forms.Label();
 			this.lbl31 = new System.Windows.Forms.Label();
@@ -275,7 +275,7 @@
 			this.lbl34 = new System.Windows.Forms.Label();
 			this.lbl34_isgravlift = new System.Windows.Forms.Label();
 			this.lbl35 = new System.Windows.Forms.Label();
-			this.lbl35_ishumandoor = new System.Windows.Forms.Label();
+			this.lbl35_ishingeddoor = new System.Windows.Forms.Label();
 			this.lbl36 = new System.Windows.Forms.Label();
 			this.lbl36_isblockfire = new System.Windows.Forms.Label();
 			this.lbl37 = new System.Windows.Forms.Label();
@@ -455,8 +455,8 @@
 			this.tb31_isblocklos = new System.Windows.Forms.TextBox();
 			this.gb_Door = new System.Windows.Forms.GroupBox();
 			this.tb46_alternateid = new System.Windows.Forms.TextBox();
-			this.tb35_ishumandoor = new System.Windows.Forms.TextBox();
-			this.tb30_isufodoor = new System.Windows.Forms.TextBox();
+			this.tb35_ishingeddoor = new System.Windows.Forms.TextBox();
+			this.tb30_isslidingdoor = new System.Windows.Forms.TextBox();
 			this.gb_Step = new System.Windows.Forms.GroupBox();
 			this.tb32_isdropthrou = new System.Windows.Forms.TextBox();
 			this.tb52_footsound = new System.Windows.Forms.TextBox();
@@ -551,15 +551,17 @@
 			this.lbl20_scang.Text = "ScanG";
 			this.lbl20_scang.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl30_isufodoor
+			// lbl30_isslidingdoor
 			// 
-			this.lbl30_isufodoor.Location = new System.Drawing.Point(40, 15);
-			this.lbl30_isufodoor.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl30_isufodoor.Name = "lbl30_isufodoor";
-			this.lbl30_isufodoor.Size = new System.Drawing.Size(80, 15);
-			this.lbl30_isufodoor.TabIndex = 1;
-			this.lbl30_isufodoor.Text = "isUfoDoor";
-			this.lbl30_isufodoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl30_isslidingdoor.Location = new System.Drawing.Point(40, 15);
+			this.lbl30_isslidingdoor.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl30_isslidingdoor.Name = "lbl30_isslidingdoor";
+			this.lbl30_isslidingdoor.Size = new System.Drawing.Size(80, 15);
+			this.lbl30_isslidingdoor.TabIndex = 1;
+			this.lbl30_isslidingdoor.Text = "isSlidingDoor";
+			this.lbl30_isslidingdoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl30_isslidingdoor.MouseEnter += new System.EventHandler(this.OnEnter30);
+			this.lbl30_isslidingdoor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl20
 			// 
@@ -580,6 +582,8 @@
 			this.lbl30.TabIndex = 3;
 			this.lbl30.Text = "#30";
 			this.lbl30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl30.MouseEnter += new System.EventHandler(this.OnEnter30);
+			this.lbl30.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl31
 			// 
@@ -678,16 +682,20 @@
 			this.lbl35.TabIndex = 13;
 			this.lbl35.Text = "#35";
 			this.lbl35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl35.MouseEnter += new System.EventHandler(this.OnEnter35);
+			this.lbl35.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
-			// lbl35_ishumandoor
+			// lbl35_ishingeddoor
 			// 
-			this.lbl35_ishumandoor.Location = new System.Drawing.Point(40, 35);
-			this.lbl35_ishumandoor.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl35_ishumandoor.Name = "lbl35_ishumandoor";
-			this.lbl35_ishumandoor.Size = new System.Drawing.Size(80, 15);
-			this.lbl35_ishumandoor.TabIndex = 12;
-			this.lbl35_ishumandoor.Text = "isHumanDoor";
-			this.lbl35_ishumandoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl35_ishingeddoor.Location = new System.Drawing.Point(40, 35);
+			this.lbl35_ishingeddoor.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl35_ishingeddoor.Name = "lbl35_ishingeddoor";
+			this.lbl35_ishingeddoor.Size = new System.Drawing.Size(80, 15);
+			this.lbl35_ishingeddoor.TabIndex = 12;
+			this.lbl35_ishingeddoor.Text = "isHingedDoor";
+			this.lbl35_ishingeddoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl35_ishingeddoor.MouseEnter += new System.EventHandler(this.OnEnter35);
+			this.lbl35_ishingeddoor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl36
 			// 
@@ -2676,11 +2684,11 @@
 			// gb_Door
 			// 
 			this.gb_Door.Controls.Add(this.tb46_alternateid);
-			this.gb_Door.Controls.Add(this.tb35_ishumandoor);
-			this.gb_Door.Controls.Add(this.tb30_isufodoor);
-			this.gb_Door.Controls.Add(this.lbl30_isufodoor);
+			this.gb_Door.Controls.Add(this.tb35_ishingeddoor);
+			this.gb_Door.Controls.Add(this.tb30_isslidingdoor);
+			this.gb_Door.Controls.Add(this.lbl30_isslidingdoor);
 			this.gb_Door.Controls.Add(this.lbl30);
-			this.gb_Door.Controls.Add(this.lbl35_ishumandoor);
+			this.gb_Door.Controls.Add(this.lbl35_ishingeddoor);
 			this.gb_Door.Controls.Add(this.lbl35);
 			this.gb_Door.Controls.Add(this.lbl46_alternateid);
 			this.gb_Door.Controls.Add(this.lbl46);
@@ -2703,25 +2711,35 @@
 			this.tb46_alternateid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb46_alternateid.WordWrap = false;
 			// 
-			// tb35_ishumandoor
+			// tb35_ishingeddoor
 			// 
-			this.tb35_ishumandoor.Location = new System.Drawing.Point(125, 33);
-			this.tb35_ishumandoor.Margin = new System.Windows.Forms.Padding(0);
-			this.tb35_ishumandoor.Name = "tb35_ishumandoor";
-			this.tb35_ishumandoor.Size = new System.Drawing.Size(35, 19);
-			this.tb35_ishumandoor.TabIndex = 72;
-			this.tb35_ishumandoor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb35_ishumandoor.WordWrap = false;
+			this.tb35_ishingeddoor.Location = new System.Drawing.Point(125, 33);
+			this.tb35_ishingeddoor.Margin = new System.Windows.Forms.Padding(0);
+			this.tb35_ishingeddoor.Name = "tb35_ishingeddoor";
+			this.tb35_ishingeddoor.Size = new System.Drawing.Size(35, 19);
+			this.tb35_ishingeddoor.TabIndex = 72;
+			this.tb35_ishingeddoor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb35_ishingeddoor.WordWrap = false;
+			this.tb35_ishingeddoor.TextChanged += new System.EventHandler(this.OnChanged35);
+			this.tb35_ishingeddoor.Enter += new System.EventHandler(this.OnEnter35);
+			this.tb35_ishingeddoor.Leave += new System.EventHandler(this.OnLeave);
+			this.tb35_ishingeddoor.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox35);
+			this.tb35_ishingeddoor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
-			// tb30_isufodoor
+			// tb30_isslidingdoor
 			// 
-			this.tb30_isufodoor.Location = new System.Drawing.Point(125, 13);
-			this.tb30_isufodoor.Margin = new System.Windows.Forms.Padding(0);
-			this.tb30_isufodoor.Name = "tb30_isufodoor";
-			this.tb30_isufodoor.Size = new System.Drawing.Size(35, 19);
-			this.tb30_isufodoor.TabIndex = 71;
-			this.tb30_isufodoor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb30_isufodoor.WordWrap = false;
+			this.tb30_isslidingdoor.Location = new System.Drawing.Point(125, 13);
+			this.tb30_isslidingdoor.Margin = new System.Windows.Forms.Padding(0);
+			this.tb30_isslidingdoor.Name = "tb30_isslidingdoor";
+			this.tb30_isslidingdoor.Size = new System.Drawing.Size(35, 19);
+			this.tb30_isslidingdoor.TabIndex = 71;
+			this.tb30_isslidingdoor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb30_isslidingdoor.WordWrap = false;
+			this.tb30_isslidingdoor.TextChanged += new System.EventHandler(this.OnChanged30);
+			this.tb30_isslidingdoor.Enter += new System.EventHandler(this.OnEnter30);
+			this.tb30_isslidingdoor.Leave += new System.EventHandler(this.OnLeave);
+			this.tb30_isslidingdoor.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox30);
+			this.tb30_isslidingdoor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Step
 			// 

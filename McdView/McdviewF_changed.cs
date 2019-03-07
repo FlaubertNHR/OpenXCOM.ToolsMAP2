@@ -74,12 +74,12 @@ namespace McdView
 			if (label == lbl28 || label == lbl28_)               return tb28_;
 			if (label == lbl29 || label == lbl29_)               return tb29_;
 
-			if (label == lbl30 || label == lbl30_isufodoor)      return tb30_isufodoor;
+			if (label == lbl30 || label == lbl30_isslidingdoor)  return tb30_isslidingdoor;
 			if (label == lbl31 || label == lbl31_isblocklos)     return tb31_isblocklos;
 			if (label == lbl32 || label == lbl32_isdropthrou)    return tb32_isdropthrou;
 			if (label == lbl33 || label == lbl33_isbigwall)      return tb33_isbigwall;
 			if (label == lbl34 || label == lbl34_isgravlift)     return tb34_isgravlift;
-			if (label == lbl35 || label == lbl35_ishumandoor)    return tb35_ishumandoor;
+			if (label == lbl35 || label == lbl35_ishingeddoor)   return tb35_ishingeddoor;
 			if (label == lbl36 || label == lbl36_isblockfire)    return tb36_isblockfire;
 			if (label == lbl37 || label == lbl37_isblocksmoke)   return tb37_isblocksmoke;
 			if (label == lbl38 || label == lbl38_leftrighthalf)  return tb38_leftrighthalf;
@@ -163,6 +163,60 @@ namespace McdView
 
 		#region Changed events
 		// TODO: If value is outside of strict-bounds color its text red.
+
+		/// <summary>
+		/// #30 isSlidingDoor (bool)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged30(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb30_isslidingdoor.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
+				}
+				else
+					tb30_isslidingdoor.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb30_isslidingdoor.Text = String.Empty; // recurse.
+		}
+		private void OnEnter30(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isSlidingDoor (bool) is a true/false value that is relevant only to"
+								 + " westwall and northwall parts. Such a part will cycle through its"
+								 + " first four animation sprites when opened, then the part will be"
+								 + " replaced by the part designated as its AlternateId; at the end"
+								 + " of the turn it will revert to the orginal part. Note that"
+								 + " specifying a part as both isSlidingDoor and isHingedDoor might have"
+								 + " an unpredictable effect."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox30(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb30_isslidingdoor.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overvalue.Text = "isSlidingDoor: " + text;
+				OnEnter30(null, EventArgs.Empty);
+			}
+		}
 
 		/// <summary>
 		/// #33 isBigWall (bool)
@@ -272,6 +326,58 @@ namespace McdView
 				}
 				tssl_Overvalue.Text = "isGravLift: " + text;
 				OnEnter34(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #35 isHingedDoor (bool)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged35(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb35_ishingeddoor.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.HingedDoor = Convert.ToBoolean(result);
+				}
+				else
+					tb35_ishingeddoor.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb35_ishingeddoor.Text = String.Empty; // recurse.
+		}
+		private void OnEnter35(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isHingedDoor (bool) is a true/false value that is relevant only to"
+								 + " westwall and northwall parts. Such a part will be replaced by the"
+								 + " part designated as its AlternateId when opened. Note that"
+								 + " specifying a part as both isHingedDoor and isSlidingDoor might have"
+								 + " an unpredictable effect."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox35(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb35_ishingeddoor.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overvalue.Text = "isHingedDoor: " + text;
+				OnEnter35(null, EventArgs.Empty);
 			}
 		}
 

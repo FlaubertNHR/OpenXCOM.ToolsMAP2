@@ -527,7 +527,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			var record = part.Record;
 			return (record != null
-				&& (record.HumanDoor || record.UfoDoor));
+				&& (record.HingedDoor || record.SlidingDoor));
 		}
 		#endregion
 	}
