@@ -196,7 +196,7 @@ namespace McdView
 								 + " replaced by the part designated as its AlternateId; at the end"
 								 + " of the turn it will revert to the orginal part. Note that"
 								 + " specifying a part as both isSlidingDoor and isHingedDoor might have"
-								 + " an unpredictable effect."
+								 + " an unpredictable effect. See #46 AlternateId."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0 False, 1 True";
 		}
@@ -359,7 +359,7 @@ namespace McdView
 								 + " westwall and northwall parts. Such a part will be replaced by the"
 								 + " part designated as its AlternateId when opened. Note that"
 								 + " specifying a part as both isHingedDoor and isSlidingDoor might have"
-								 + " an unpredictable effect."
+								 + " an unpredictable effect. See #46 AlternateId."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0 False, 1 True";
 		}
@@ -463,7 +463,7 @@ namespace McdView
 								 + " hit in order to be destroyed. Note that part-damage in XCOM is"
 								 + " not cumulative; it's all or nothing. A value of 255 typically"
 								 + " designates a part as indestructible although it depends on the"
-								 + " XCOM build."
+								 + " XCOM build. See #44 DeathId."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0..255";
 		}
@@ -515,6 +515,7 @@ namespace McdView
 								 + " MCD file with the original part. A value of 0 indicates"
 								 + " that if a part is destroyed it will not be replaced by a"
 								 + " death-part; that is, a value of 0 does not reference ID #0."
+								 + " See #42 Armor."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Records != null ? (Records.Length - 1).ToString() : "255");
 		}
@@ -566,7 +567,7 @@ namespace McdView
 								 + " should be in the MCD file with the original part. A value of"
 								 + " 0 indicates that if a part is opened it will not be replaced"
 								 + " by an alternate-part; that is, a value of 0 does not"
-								 + " reference ID #0."
+								 + " reference ID #0. See #30 isSlidingDoor and #35 isHingedDoor."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Records != null ? (Records.Length - 1).ToString() : "255");
 		}
