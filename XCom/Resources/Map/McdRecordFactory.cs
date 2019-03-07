@@ -67,7 +67,7 @@ namespace XCom
 			record.Alt_MCD       = bindata[46];
 			record.Unknown47     = bindata[47];
 			record.StandOffset   = (sbyte)bindata[48];
-			record.TileOffset    = (sbyte)bindata[49];
+			record.TileOffset    = bindata[49];
 			record.Unknown50     = bindata[50];
 			record.LightBlock    = bindata[51];
 			record.Footstep      = bindata[52];

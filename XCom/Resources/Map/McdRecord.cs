@@ -98,7 +98,7 @@ namespace XCom
 		public byte Alt_MCD       { get; set; }
 		public byte Unknown47     { get; set; }
 		public sbyte StandOffset  { get; set; }
-		public sbyte TileOffset   { get; set; }
+		public byte TileOffset    { get; set; }
 		public byte Unknown50     { get; set; }
 		public byte LightBlock    { get; set; }
 		public byte Footstep      { get; set; }
