@@ -53,7 +53,7 @@
 		private System.Windows.Forms.Label lbl47;
 		private System.Windows.Forms.Label lbl47_;
 		private System.Windows.Forms.Label lbl48;
-		private System.Windows.Forms.Label lbl48_unitoffset;
+		private System.Windows.Forms.Label lbl48_terrainoffset;
 		private System.Windows.Forms.Label lbl49;
 		private System.Windows.Forms.Label lbl49_spriteoffset;
 		private System.Windows.Forms.Label lbl50;
@@ -171,7 +171,7 @@
 		private System.Windows.Forms.TextBox tb40_tuslide;
 		private System.Windows.Forms.TextBox tb39_tuwalk;
 		private System.Windows.Forms.TextBox tb49_spriteoffset;
-		private System.Windows.Forms.TextBox tb48_unitoffset;
+		private System.Windows.Forms.TextBox tb48_terrainoffset;
 		private System.Windows.Forms.TextBox tb51_lightblock;
 		private System.Windows.Forms.TextBox tb56_smokeblock;
 		private System.Windows.Forms.TextBox tb43_heblock;
@@ -300,7 +300,7 @@
 			this.lbl47 = new System.Windows.Forms.Label();
 			this.lbl47_ = new System.Windows.Forms.Label();
 			this.lbl48 = new System.Windows.Forms.Label();
-			this.lbl48_unitoffset = new System.Windows.Forms.Label();
+			this.lbl48_terrainoffset = new System.Windows.Forms.Label();
 			this.lbl49 = new System.Windows.Forms.Label();
 			this.lbl49_spriteoffset = new System.Windows.Forms.Label();
 			this.lbl50 = new System.Windows.Forms.Label();
@@ -443,7 +443,7 @@
 			this.tb39_tuwalk = new System.Windows.Forms.TextBox();
 			this.gb_Elevation = new System.Windows.Forms.GroupBox();
 			this.tb49_spriteoffset = new System.Windows.Forms.TextBox();
-			this.tb48_unitoffset = new System.Windows.Forms.TextBox();
+			this.tb48_terrainoffset = new System.Windows.Forms.TextBox();
 			this.gb_Block = new System.Windows.Forms.GroupBox();
 			this.tb51_lightblock = new System.Windows.Forms.TextBox();
 			this.tb56_smokeblock = new System.Windows.Forms.TextBox();
@@ -931,16 +931,20 @@
 			this.lbl48.TabIndex = 39;
 			this.lbl48.Text = "#48";
 			this.lbl48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl48.MouseEnter += new System.EventHandler(this.OnEnter48);
+			this.lbl48.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
-			// lbl48_unitoffset
+			// lbl48_terrainoffset
 			// 
-			this.lbl48_unitoffset.Location = new System.Drawing.Point(40, 15);
-			this.lbl48_unitoffset.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl48_unitoffset.Name = "lbl48_unitoffset";
-			this.lbl48_unitoffset.Size = new System.Drawing.Size(75, 15);
-			this.lbl48_unitoffset.TabIndex = 38;
-			this.lbl48_unitoffset.Text = "UnitOffset";
-			this.lbl48_unitoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl48_terrainoffset.Location = new System.Drawing.Point(40, 15);
+			this.lbl48_terrainoffset.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl48_terrainoffset.Name = "lbl48_terrainoffset";
+			this.lbl48_terrainoffset.Size = new System.Drawing.Size(80, 15);
+			this.lbl48_terrainoffset.TabIndex = 38;
+			this.lbl48_terrainoffset.Text = "TerrainOffset";
+			this.lbl48_terrainoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl48_terrainoffset.MouseEnter += new System.EventHandler(this.OnEnter48);
+			this.lbl48_terrainoffset.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl49
 			// 
@@ -957,7 +961,7 @@
 			this.lbl49_spriteoffset.Location = new System.Drawing.Point(40, 35);
 			this.lbl49_spriteoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl49_spriteoffset.Name = "lbl49_spriteoffset";
-			this.lbl49_spriteoffset.Size = new System.Drawing.Size(75, 15);
+			this.lbl49_spriteoffset.Size = new System.Drawing.Size(80, 15);
 			this.lbl49_spriteoffset.TabIndex = 40;
 			this.lbl49_spriteoffset.Text = "SpriteOffset";
 			this.lbl49_spriteoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1773,9 +1777,9 @@
 			// ss_Statusbar
 			// 
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
-			this.ss_Statusbar.Location = new System.Drawing.Point(0, 777);
+			this.ss_Statusbar.Location = new System.Drawing.Point(0, 813);
 			this.ss_Statusbar.Name = "ss_Statusbar";
-			this.ss_Statusbar.Size = new System.Drawing.Size(682, 22);
+			this.ss_Statusbar.Size = new System.Drawing.Size(722, 22);
 			this.ss_Statusbar.TabIndex = 123;
 			this.ss_Statusbar.Text = "ss_Statusbar";
 			// 
@@ -1984,12 +1988,12 @@
 			this.gb_Loft.Controls.Add(this.lbl9);
 			this.gb_Loft.Controls.Add(this.lbl9_loft02);
 			this.gb_Loft.Dock = System.Windows.Forms.DockStyle.Right;
-			this.gb_Loft.Location = new System.Drawing.Point(515, 340);
+			this.gb_Loft.Location = new System.Drawing.Point(555, 340);
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.MinimumSize = new System.Drawing.Size(167, 437);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Loft.Size = new System.Drawing.Size(167, 437);
+			this.gb_Loft.Size = new System.Drawing.Size(167, 473);
 			this.gb_Loft.TabIndex = 125;
 			this.gb_Loft.TabStop = false;
 			this.gb_Loft.Text = " LoFT ";
@@ -2270,7 +2274,7 @@
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Name = "gb_Sprites";
 			this.gb_Sprites.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Sprites.Size = new System.Drawing.Size(682, 165);
+			this.gb_Sprites.Size = new System.Drawing.Size(722, 165);
 			this.gb_Sprites.TabIndex = 126;
 			this.gb_Sprites.TabStop = false;
 			this.gb_Sprites.Text = " Animation sprites ";
@@ -2282,7 +2286,7 @@
 			this.pnl_Sprites.Location = new System.Drawing.Point(5, 15);
 			this.pnl_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Sprites.Name = "pnl_Sprites";
-			this.pnl_Sprites.Size = new System.Drawing.Size(620, 80);
+			this.pnl_Sprites.Size = new System.Drawing.Size(660, 80);
 			this.pnl_Sprites.TabIndex = 116;
 			this.pnl_Sprites.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Sprites);
 			this.pnl_Sprites.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_SpritePanel);
@@ -2389,7 +2393,7 @@
 			this.gb_Collection.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Collection.Name = "gb_Collection";
 			this.gb_Collection.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Collection.Size = new System.Drawing.Size(682, 175);
+			this.gb_Collection.Size = new System.Drawing.Size(722, 175);
 			this.gb_Collection.TabIndex = 127;
 			this.gb_Collection.TabStop = false;
 			this.gb_Collection.Text = " RECORD COLLECTION ";
@@ -2494,9 +2498,9 @@
 			// gb_Elevation
 			// 
 			this.gb_Elevation.Controls.Add(this.tb49_spriteoffset);
-			this.gb_Elevation.Controls.Add(this.tb48_unitoffset);
+			this.gb_Elevation.Controls.Add(this.tb48_terrainoffset);
 			this.gb_Elevation.Controls.Add(this.lbl49_spriteoffset);
-			this.gb_Elevation.Controls.Add(this.lbl48_unitoffset);
+			this.gb_Elevation.Controls.Add(this.lbl48_terrainoffset);
 			this.gb_Elevation.Controls.Add(this.lbl49);
 			this.gb_Elevation.Controls.Add(this.lbl48);
 			this.gb_Elevation.Location = new System.Drawing.Point(345, 400);
@@ -2518,15 +2522,20 @@
 			this.tb49_spriteoffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb49_spriteoffset.WordWrap = false;
 			// 
-			// tb48_unitoffset
+			// tb48_terrainoffset
 			// 
-			this.tb48_unitoffset.Location = new System.Drawing.Point(125, 13);
-			this.tb48_unitoffset.Margin = new System.Windows.Forms.Padding(0);
-			this.tb48_unitoffset.Name = "tb48_unitoffset";
-			this.tb48_unitoffset.Size = new System.Drawing.Size(35, 19);
-			this.tb48_unitoffset.TabIndex = 89;
-			this.tb48_unitoffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb48_unitoffset.WordWrap = false;
+			this.tb48_terrainoffset.Location = new System.Drawing.Point(125, 13);
+			this.tb48_terrainoffset.Margin = new System.Windows.Forms.Padding(0);
+			this.tb48_terrainoffset.Name = "tb48_terrainoffset";
+			this.tb48_terrainoffset.Size = new System.Drawing.Size(35, 19);
+			this.tb48_terrainoffset.TabIndex = 89;
+			this.tb48_terrainoffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb48_terrainoffset.WordWrap = false;
+			this.tb48_terrainoffset.TextChanged += new System.EventHandler(this.OnChanged48);
+			this.tb48_terrainoffset.Enter += new System.EventHandler(this.OnEnter48);
+			this.tb48_terrainoffset.Leave += new System.EventHandler(this.OnLeave);
+			this.tb48_terrainoffset.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox48);
+			this.tb48_terrainoffset.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Block
 			// 
@@ -2940,7 +2949,7 @@
 			this.gb_Description.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Description.Name = "gb_Description";
 			this.gb_Description.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Description.Size = new System.Drawing.Size(505, 80);
+			this.gb_Description.Size = new System.Drawing.Size(545, 116);
 			this.gb_Description.TabIndex = 139;
 			this.gb_Description.TabStop = false;
 			this.gb_Description.Text = " description ";
@@ -2953,7 +2962,7 @@
 			this.lbl_Description.Location = new System.Drawing.Point(5, 15);
 			this.lbl_Description.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Description.Name = "lbl_Description";
-			this.lbl_Description.Size = new System.Drawing.Size(495, 60);
+			this.lbl_Description.Size = new System.Drawing.Size(535, 96);
 			this.lbl_Description.TabIndex = 0;
 			// 
 			// cb_Strict
@@ -2989,7 +2998,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(682, 799);
+			this.ClientSize = new System.Drawing.Size(722, 835);
 			this.Controls.Add(this.gb_Block);
 			this.Controls.Add(this.tb_SpriteShade);
 			this.Controls.Add(this.cb_Strict);
@@ -3010,7 +3019,7 @@
 			this.Controls.Add(this.gb_Unused);
 			this.Controls.Add(this.lbl_SpriteShade);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MaximumSize = new System.Drawing.Size(690, 825);
+			this.MaximumSize = new System.Drawing.Size(730, 861);
 			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

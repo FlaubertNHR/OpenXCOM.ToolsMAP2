@@ -42,6 +42,9 @@ namespace McdView
 			if (label == lbl38 || label == lbl38_leftrighthalf)
 				return tb38_leftrighthalf;
 
+			if (label == lbl48 || label == lbl48_terrainoffset)
+				return tb48_terrainoffset;
+
 			if (label == lbl53 || label == lbl53_parttype)
 				return tb53_parttype;
 
@@ -123,11 +126,11 @@ namespace McdView
 		}
 		private void OnEnter38(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "Always 3. Defined as \"printype\"; 3=whole, 2=right side,"
-								 + " 1=left side. Since this is always 3 the game prints the"
-								 + " entire object, while the assumption is that values of 2 or 1"
-								 + " are possibly used for the map designer. But the actual game"
-								 + " totally ignores this value.";
+			lbl_Description.Text = "LeftRightHalf is always 3. It is supposed to decide whether to"
+								 + " draw the left-half, the right-half, or both halves of a part's"
+								 + " sprite but is not used."
+								 + Environment.NewLine + Environment.NewLine
+								 + "1 Left, 2 Right, 3 Full";
 		}
 		private void OnMouseEnterTextbox38(object sender, EventArgs e)
 		{
@@ -144,6 +147,54 @@ namespace McdView
 					default: text = result.ToString(); break;
 				}
 				lbl_Description.Text = text;
+			}
+		}
+
+		/// <summary>
+		/// #48 TerrainOffset (sbyte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged48(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb48_terrainoffset.Text, out result)
+					&&     ((strict && result > - 25 && result < 1)
+						|| (!strict && result > -129 && result < 128)))
+				{
+					Records[SelId].Record.StandOffset = (sbyte)result;
+				}
+				else
+					tb48_terrainoffset.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb48_terrainoffset.Text = String.Empty; // recurse.
+		}
+		private void OnEnter48(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "TerrainOffset is the distance in voxels between the height of"
+								 + " a tile's lowest voxel-level and the height that objects such"
+								 + " as units and items (possibly including smoke and fire graphics)"
+								 + " should appear at and be considered to have their bottom voxel"
+								 + " positioned at (if applicable). Note that a negative value"
+								 + " raises the object and that the default value of 0 places the"
+								 + " object at the floor-level of a tile. This variable has"
+								 + " relevance only for floor and content parts; the TerrainOffset"
+								 + " of westwall or northwall parts is not evaluated. Also note that"
+								 + " for a unit to step from one tile to another their respective"
+								 + " terrain-heights can be no greater than 8 voxels and that the"
+								 + " total distance between any two levels on a Map is 24 voxels.";
+		}
+		private void OnMouseEnterTextbox48(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb48_terrainoffset.Text, out result))
+			{
+				lbl_Description.Text = result.ToString();
 			}
 		}
 
@@ -173,7 +224,10 @@ namespace McdView
 		}
 		private void OnEnter53(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "0 Floor, 1 Westwall, 2 Northwall, 3 Content";
+			lbl_Description.Text = "PartType specifies the tile-slot in which a tile-part should"
+								 + " be placed."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 Floor, 1 Westwall, 2 Northwall, 3 Content";
 		}
 		private void OnMouseEnterTextbox53(object sender, EventArgs e)
 		{
@@ -183,10 +237,10 @@ namespace McdView
 				string text;
 				switch (result)
 				{
-					case 0: text = "0 Floor";     break;
-					case 1: text = "1 Westwall";  break;
-					case 2: text = "2 Northwall"; break;
-					case 3: text = "3 Content";   break;
+					case 0: text = "0 FLOOR";   break;
+					case 1: text = "1 WEST";    break;
+					case 2: text = "2 NORTH";   break;
+					case 3: text = "3 CONTENT"; break;
 
 					default: text = result.ToString(); break;
 				}
@@ -222,9 +276,11 @@ namespace McdView
 		private void OnEnter59(object sender, EventArgs e)
 		{
 			// NOTE: "\u00A0" is a UTF nonbreaking-space char.
-			lbl_Description.Text = "Special properties of the part. Determines where XCOM agents can"
-								 + " enter and exit a Map, or what is salvaged at the end of tactical."
-								 + " (UFO/TFTD)" + Environment.NewLine
+			lbl_Description.Text = "SpecialType is the special property of a part. It determines where"
+								 + " XCOM agents can enter and exit a Map, or what is salvaged at the"
+								 + " end of tactical, or if the part must be destroyed for XCOM to"
+								 + " succeed at tactical. (UFO/TFTD)"
+								 + Environment.NewLine + Environment.NewLine
 								 + "0\u00A0None, 1\u00A0EntryPoint, 2\u00A0PowerSource/IonBeamAccelerators,"
 								 + " 3\u00A0Navigation, 4\u00A0Construction, 5\u00A0Food/Cryogenics,"
 								 + " 6\u00A0Reproduction/Cloning, 7\u00A0Entertainment/LearningArrays,"

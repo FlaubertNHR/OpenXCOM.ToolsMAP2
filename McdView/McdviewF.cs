@@ -630,8 +630,8 @@ namespace McdView
 
 			tb47_.Text = ((int)record.Unknown47).ToString();
 
-			tb48_unitoffset  .Text = ((int)record.StandOffset).ToString();
-			tb49_spriteoffset.Text = ((int)record.TileOffset) .ToString();
+			tb48_terrainoffset.Text = ((int)record.StandOffset).ToString();
+			tb49_spriteoffset .Text = ((int)record.TileOffset) .ToString();
 
 			tb50_.Text = ((int)record.Unknown50).ToString();
 
@@ -711,8 +711,8 @@ namespace McdView
 
 			tb47_.Text =
 
-			tb48_unitoffset  .Text =
-			tb49_spriteoffset.Text =
+			tb48_terrainoffset.Text =
+			tb49_spriteoffset .Text =
 
 			tb50_.Text =
 
