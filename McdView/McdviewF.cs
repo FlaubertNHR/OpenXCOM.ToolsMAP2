@@ -42,6 +42,7 @@ namespace McdView
 		private readonly Pen _penBlack = new Pen(Color.Black, 1);
 
 		private bool strict = true;
+		private bool InitFields;
 		#endregion Fields
 
 
@@ -95,6 +96,8 @@ namespace McdView
 				{
 					if ((_selId = value) != -1)
 					{
+						
+
 						bool strict0 = strict;
 						strict = false;
 						PopulateTextFields();
@@ -561,6 +564,8 @@ namespace McdView
 		/// </summary>
 		internal void PopulateTextFields()
 		{
+			InitFields = true;
+
 			// TODO: This is going to cause a lot of problems if/when user loads
 			// a nonstandard record that has values that are outside the strict-
 			// bounds. Ie, the vals will set to standard defaults.
@@ -642,6 +647,8 @@ namespace McdView
 			tb60_isbaseobject  .Text = ((int)record.BaseObject)   .ToString();
 
 			tb61_.Text = ((int)record.Unknown61).ToString();
+
+			InitFields = false;
 		}
 
 		/// <summary>

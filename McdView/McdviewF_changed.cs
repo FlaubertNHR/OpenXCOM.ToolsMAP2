@@ -106,7 +106,7 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed = true;
+				Changed |= !InitFields;
 
 				int result;
 				if (Int32.TryParse(tb38_leftrighthalf.Text, out result)
@@ -156,7 +156,7 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed = true;
+				Changed |= !InitFields;
 
 				int result;
 				if (Int32.TryParse(tb53_parttype.Text, out result)
@@ -204,7 +204,7 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed = true;
+				Changed |= !InitFields;
 
 				int result;
 				if (Int32.TryParse(tb59_specialtype.Text, out result)
