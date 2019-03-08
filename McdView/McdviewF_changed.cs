@@ -434,6 +434,129 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// #39 TuWalk (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged39(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb39_tuwalk.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.TU_Walk = (byte)result;
+				}
+				else
+					tb39_tuwalk.Text = "4"; // recurse w/ default.
+			}
+			else
+				tb39_tuwalk.Text = String.Empty; // recurse.
+		}
+		private void OnEnter39(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "TuWalk (ubyte) is the turnunits required to navigate a part"
+								 + " by a walking unit. A value of 255 means the part is non-navigable."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox39(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb39_tuwalk.Text, out result))
+			{
+				tssl_Overvalue.Text = "TuWalk: " + result;
+				OnEnter39(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #40 TuSlide (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged40(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb40_tuslide.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.TU_Slide = (byte)result;
+				}
+				else
+					tb40_tuslide.Text = "4"; // recurse w/ default.
+			}
+			else
+				tb40_tuslide.Text = String.Empty; // recurse.
+		}
+		private void OnEnter40(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "TuSlide (ubyte) is the turnunits required to navigate a part"
+								 + " by a sliding unit. A value of 255 means the part is non-navigable."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox40(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb40_tuslide.Text, out result))
+			{
+				tssl_Overvalue.Text = "TuSlide: " + result;
+				OnEnter40(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #41 TuFly (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged41(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb41_tufly.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.TU_Fly = (byte)result;
+				}
+				else
+					tb41_tufly.Text = "4"; // recurse w/ default.
+			}
+			else
+				tb41_tufly.Text = String.Empty; // recurse.
+		}
+		private void OnEnter41(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "TuFly (ubyte) is the turnunits required to navigate a part"
+								 + " by a flying unit. A value of 255 means the part is non-navigable."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox41(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb41_tufly.Text, out result))
+			{
+				tssl_Overvalue.Text = "TuFly: " + result;
+				OnEnter41(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
 		/// #42 Armor (byte)
 		/// </summary>
 		/// <param name="sender"></param>

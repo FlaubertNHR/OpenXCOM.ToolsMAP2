@@ -770,6 +770,8 @@
 			this.lbl39.TabIndex = 21;
 			this.lbl39.Text = "#39";
 			this.lbl39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl39.MouseEnter += new System.EventHandler(this.OnEnter39);
+			this.lbl39.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl39_tuwalk
 			// 
@@ -780,6 +782,8 @@
 			this.lbl39_tuwalk.TabIndex = 20;
 			this.lbl39_tuwalk.Text = "TuWalk";
 			this.lbl39_tuwalk.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl39_tuwalk.MouseEnter += new System.EventHandler(this.OnEnter39);
+			this.lbl39_tuwalk.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl40
 			// 
@@ -790,6 +794,8 @@
 			this.lbl40.TabIndex = 23;
 			this.lbl40.Text = "#40";
 			this.lbl40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl40.MouseEnter += new System.EventHandler(this.OnEnter40);
+			this.lbl40.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl40_tuslide
 			// 
@@ -800,6 +806,8 @@
 			this.lbl40_tuslide.TabIndex = 22;
 			this.lbl40_tuslide.Text = "TuSlide";
 			this.lbl40_tuslide.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl40_tuslide.MouseEnter += new System.EventHandler(this.OnEnter40);
+			this.lbl40_tuslide.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl41
 			// 
@@ -810,6 +818,8 @@
 			this.lbl41.TabIndex = 25;
 			this.lbl41.Text = "#41";
 			this.lbl41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl41.MouseEnter += new System.EventHandler(this.OnEnter41);
+			this.lbl41.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl41_tufly
 			// 
@@ -820,6 +830,8 @@
 			this.lbl41_tufly.TabIndex = 24;
 			this.lbl41_tufly.Text = "TuFly";
 			this.lbl41_tufly.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl41_tufly.MouseEnter += new System.EventHandler(this.OnEnter40);
+			this.lbl41_tufly.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl42
 			// 
@@ -2528,6 +2540,11 @@
 			this.tb41_tufly.TabIndex = 76;
 			this.tb41_tufly.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb41_tufly.WordWrap = false;
+			this.tb41_tufly.TextChanged += new System.EventHandler(this.OnChanged41);
+			this.tb41_tufly.Enter += new System.EventHandler(this.OnEnter41);
+			this.tb41_tufly.Leave += new System.EventHandler(this.OnLeave);
+			this.tb41_tufly.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox41);
+			this.tb41_tufly.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb40_tuslide
 			// 
@@ -2538,6 +2555,11 @@
 			this.tb40_tuslide.TabIndex = 75;
 			this.tb40_tuslide.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb40_tuslide.WordWrap = false;
+			this.tb40_tuslide.TextChanged += new System.EventHandler(this.OnChanged40);
+			this.tb40_tuslide.Enter += new System.EventHandler(this.OnEnter40);
+			this.tb40_tuslide.Leave += new System.EventHandler(this.OnLeave);
+			this.tb40_tuslide.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox40);
+			this.tb40_tuslide.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb39_tuwalk
 			// 
@@ -2548,6 +2570,11 @@
 			this.tb39_tuwalk.TabIndex = 74;
 			this.tb39_tuwalk.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb39_tuwalk.WordWrap = false;
+			this.tb39_tuwalk.TextChanged += new System.EventHandler(this.OnChanged39);
+			this.tb39_tuwalk.Enter += new System.EventHandler(this.OnEnter39);
+			this.tb39_tuwalk.Leave += new System.EventHandler(this.OnLeave);
+			this.tb39_tuwalk.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox39);
+			this.tb39_tuwalk.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Elevation
 			// 
