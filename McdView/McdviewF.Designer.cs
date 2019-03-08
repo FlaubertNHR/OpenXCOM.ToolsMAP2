@@ -556,7 +556,7 @@
 			this.lbl30_isslidingdoor.Location = new System.Drawing.Point(40, 15);
 			this.lbl30_isslidingdoor.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl30_isslidingdoor.Name = "lbl30_isslidingdoor";
-			this.lbl30_isslidingdoor.Size = new System.Drawing.Size(80, 15);
+			this.lbl30_isslidingdoor.Size = new System.Drawing.Size(85, 15);
 			this.lbl30_isslidingdoor.TabIndex = 1;
 			this.lbl30_isslidingdoor.Text = "isSlidingDoor";
 			this.lbl30_isslidingdoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -620,7 +620,7 @@
 			this.lbl32_isdropthrou.Location = new System.Drawing.Point(40, 35);
 			this.lbl32_isdropthrou.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl32_isdropthrou.Name = "lbl32_isdropthrou";
-			this.lbl32_isdropthrou.Size = new System.Drawing.Size(75, 15);
+			this.lbl32_isdropthrou.Size = new System.Drawing.Size(85, 15);
 			this.lbl32_isdropthrou.TabIndex = 6;
 			this.lbl32_isdropthrou.Text = "isDropThrou";
 			this.lbl32_isdropthrou.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -690,7 +690,7 @@
 			this.lbl35_ishingeddoor.Location = new System.Drawing.Point(40, 35);
 			this.lbl35_ishingeddoor.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl35_ishingeddoor.Name = "lbl35_ishingeddoor";
-			this.lbl35_ishingeddoor.Size = new System.Drawing.Size(80, 15);
+			this.lbl35_ishingeddoor.Size = new System.Drawing.Size(85, 15);
 			this.lbl35_ishingeddoor.TabIndex = 12;
 			this.lbl35_ishingeddoor.Text = "isHingedDoor";
 			this.lbl35_ishingeddoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -754,7 +754,7 @@
 			this.lbl38_leftrighthalf.Location = new System.Drawing.Point(45, 145);
 			this.lbl38_leftrighthalf.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl38_leftrighthalf.Name = "lbl38_leftrighthalf";
-			this.lbl38_leftrighthalf.Size = new System.Drawing.Size(80, 15);
+			this.lbl38_leftrighthalf.Size = new System.Drawing.Size(85, 15);
 			this.lbl38_leftrighthalf.TabIndex = 18;
 			this.lbl38_leftrighthalf.Text = "LeftRightHalf";
 			this.lbl38_leftrighthalf.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -778,7 +778,7 @@
 			this.lbl39_tuwalk.Location = new System.Drawing.Point(40, 15);
 			this.lbl39_tuwalk.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl39_tuwalk.Name = "lbl39_tuwalk";
-			this.lbl39_tuwalk.Size = new System.Drawing.Size(50, 15);
+			this.lbl39_tuwalk.Size = new System.Drawing.Size(85, 15);
 			this.lbl39_tuwalk.TabIndex = 20;
 			this.lbl39_tuwalk.Text = "TuWalk";
 			this.lbl39_tuwalk.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -802,7 +802,7 @@
 			this.lbl40_tuslide.Location = new System.Drawing.Point(40, 35);
 			this.lbl40_tuslide.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl40_tuslide.Name = "lbl40_tuslide";
-			this.lbl40_tuslide.Size = new System.Drawing.Size(50, 15);
+			this.lbl40_tuslide.Size = new System.Drawing.Size(85, 15);
 			this.lbl40_tuslide.TabIndex = 22;
 			this.lbl40_tuslide.Text = "TuSlide";
 			this.lbl40_tuslide.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -826,7 +826,7 @@
 			this.lbl41_tufly.Location = new System.Drawing.Point(40, 55);
 			this.lbl41_tufly.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl41_tufly.Name = "lbl41_tufly";
-			this.lbl41_tufly.Size = new System.Drawing.Size(50, 15);
+			this.lbl41_tufly.Size = new System.Drawing.Size(85, 15);
 			this.lbl41_tufly.TabIndex = 24;
 			this.lbl41_tufly.Text = "TuFly";
 			this.lbl41_tufly.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -850,7 +850,7 @@
 			this.lbl42_armor.Location = new System.Drawing.Point(40, 15);
 			this.lbl42_armor.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl42_armor.Name = "lbl42_armor";
-			this.lbl42_armor.Size = new System.Drawing.Size(55, 15);
+			this.lbl42_armor.Size = new System.Drawing.Size(85, 15);
 			this.lbl42_armor.TabIndex = 26;
 			this.lbl42_armor.Text = "Armor";
 			this.lbl42_armor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -894,7 +894,7 @@
 			this.lbl44_deathid.Location = new System.Drawing.Point(40, 35);
 			this.lbl44_deathid.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl44_deathid.Name = "lbl44_deathid";
-			this.lbl44_deathid.Size = new System.Drawing.Size(55, 15);
+			this.lbl44_deathid.Size = new System.Drawing.Size(85, 15);
 			this.lbl44_deathid.TabIndex = 30;
 			this.lbl44_deathid.Text = "DeathId";
 			this.lbl44_deathid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -916,7 +916,7 @@
 			this.lbl45_fireresist.Location = new System.Drawing.Point(40, 55);
 			this.lbl45_fireresist.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl45_fireresist.Name = "lbl45_fireresist";
-			this.lbl45_fireresist.Size = new System.Drawing.Size(70, 15);
+			this.lbl45_fireresist.Size = new System.Drawing.Size(85, 15);
 			this.lbl45_fireresist.TabIndex = 32;
 			this.lbl45_fireresist.Text = "FireResist";
 			this.lbl45_fireresist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -938,7 +938,7 @@
 			this.lbl46_alternateid.Location = new System.Drawing.Point(40, 55);
 			this.lbl46_alternateid.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl46_alternateid.Name = "lbl46_alternateid";
-			this.lbl46_alternateid.Size = new System.Drawing.Size(80, 15);
+			this.lbl46_alternateid.Size = new System.Drawing.Size(85, 15);
 			this.lbl46_alternateid.TabIndex = 34;
 			this.lbl46_alternateid.Text = "AlternateId";
 			this.lbl46_alternateid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -960,7 +960,7 @@
 			this.lbl47_.Location = new System.Drawing.Point(50, 173);
 			this.lbl47_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl47_.Name = "lbl47_";
-			this.lbl47_.Size = new System.Drawing.Size(15, 15);
+			this.lbl47_.Size = new System.Drawing.Size(75, 15);
 			this.lbl47_.TabIndex = 36;
 			this.lbl47_.Text = "_";
 			this.lbl47_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -982,7 +982,7 @@
 			this.lbl48_terrainoffset.Location = new System.Drawing.Point(40, 15);
 			this.lbl48_terrainoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl48_terrainoffset.Name = "lbl48_terrainoffset";
-			this.lbl48_terrainoffset.Size = new System.Drawing.Size(80, 15);
+			this.lbl48_terrainoffset.Size = new System.Drawing.Size(85, 15);
 			this.lbl48_terrainoffset.TabIndex = 38;
 			this.lbl48_terrainoffset.Text = "TerrainOffset";
 			this.lbl48_terrainoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1006,7 +1006,7 @@
 			this.lbl49_spriteoffset.Location = new System.Drawing.Point(40, 35);
 			this.lbl49_spriteoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl49_spriteoffset.Name = "lbl49_spriteoffset";
-			this.lbl49_spriteoffset.Size = new System.Drawing.Size(80, 15);
+			this.lbl49_spriteoffset.Size = new System.Drawing.Size(85, 15);
 			this.lbl49_spriteoffset.TabIndex = 40;
 			this.lbl49_spriteoffset.Text = "SpriteOffset";
 			this.lbl49_spriteoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1028,7 +1028,7 @@
 			this.lbl50_.Location = new System.Drawing.Point(50, 195);
 			this.lbl50_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl50_.Name = "lbl50_";
-			this.lbl50_.Size = new System.Drawing.Size(15, 15);
+			this.lbl50_.Size = new System.Drawing.Size(75, 15);
 			this.lbl50_.TabIndex = 42;
 			this.lbl50_.Text = "_";
 			this.lbl50_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1068,7 +1068,7 @@
 			this.lbl52_footsound.Location = new System.Drawing.Point(40, 15);
 			this.lbl52_footsound.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl52_footsound.Name = "lbl52_footsound";
-			this.lbl52_footsound.Size = new System.Drawing.Size(75, 15);
+			this.lbl52_footsound.Size = new System.Drawing.Size(85, 15);
 			this.lbl52_footsound.TabIndex = 46;
 			this.lbl52_footsound.Text = "FootSound";
 			this.lbl52_footsound.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1112,7 +1112,7 @@
 			this.lbl54_hetype.Location = new System.Drawing.Point(40, 15);
 			this.lbl54_hetype.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl54_hetype.Name = "lbl54_hetype";
-			this.lbl54_hetype.Size = new System.Drawing.Size(70, 15);
+			this.lbl54_hetype.Size = new System.Drawing.Size(85, 15);
 			this.lbl54_hetype.TabIndex = 50;
 			this.lbl54_hetype.Text = "HeType";
 			this.lbl54_hetype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1132,7 +1132,7 @@
 			this.lbl55_hestrength.Location = new System.Drawing.Point(40, 35);
 			this.lbl55_hestrength.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl55_hestrength.Name = "lbl55_hestrength";
-			this.lbl55_hestrength.Size = new System.Drawing.Size(70, 15);
+			this.lbl55_hestrength.Size = new System.Drawing.Size(85, 15);
 			this.lbl55_hestrength.TabIndex = 52;
 			this.lbl55_hestrength.Text = "HeStrength";
 			this.lbl55_hestrength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1172,7 +1172,7 @@
 			this.lbl57_fuel.Location = new System.Drawing.Point(40, 75);
 			this.lbl57_fuel.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl57_fuel.Name = "lbl57_fuel";
-			this.lbl57_fuel.Size = new System.Drawing.Size(70, 15);
+			this.lbl57_fuel.Size = new System.Drawing.Size(85, 15);
 			this.lbl57_fuel.TabIndex = 57;
 			this.lbl57_fuel.Text = "Fuel";
 			this.lbl57_fuel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1264,7 +1264,7 @@
 			this.lbl61_.Location = new System.Drawing.Point(50, 215);
 			this.lbl61_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl61_.Name = "lbl61_";
-			this.lbl61_.Size = new System.Drawing.Size(15, 15);
+			this.lbl61_.Size = new System.Drawing.Size(75, 15);
 			this.lbl61_.TabIndex = 65;
 			this.lbl61_.Text = "_";
 			this.lbl61_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1684,7 +1684,7 @@
 			this.lbl22_.Location = new System.Drawing.Point(50, 15);
 			this.lbl22_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl22_.Name = "lbl22_";
-			this.lbl22_.Size = new System.Drawing.Size(15, 15);
+			this.lbl22_.Size = new System.Drawing.Size(75, 15);
 			this.lbl22_.TabIndex = 107;
 			this.lbl22_.Text = "_";
 			this.lbl22_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1704,7 +1704,7 @@
 			this.lbl23_.Location = new System.Drawing.Point(50, 35);
 			this.lbl23_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl23_.Name = "lbl23_";
-			this.lbl23_.Size = new System.Drawing.Size(15, 15);
+			this.lbl23_.Size = new System.Drawing.Size(75, 15);
 			this.lbl23_.TabIndex = 109;
 			this.lbl23_.Text = "_";
 			this.lbl23_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1724,7 +1724,7 @@
 			this.lbl24_.Location = new System.Drawing.Point(50, 55);
 			this.lbl24_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl24_.Name = "lbl24_";
-			this.lbl24_.Size = new System.Drawing.Size(15, 15);
+			this.lbl24_.Size = new System.Drawing.Size(75, 15);
 			this.lbl24_.TabIndex = 111;
 			this.lbl24_.Text = "_";
 			this.lbl24_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1744,7 +1744,7 @@
 			this.lbl25_.Location = new System.Drawing.Point(50, 75);
 			this.lbl25_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl25_.Name = "lbl25_";
-			this.lbl25_.Size = new System.Drawing.Size(15, 15);
+			this.lbl25_.Size = new System.Drawing.Size(75, 15);
 			this.lbl25_.TabIndex = 113;
 			this.lbl25_.Text = "_";
 			this.lbl25_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1764,7 +1764,7 @@
 			this.lbl26_.Location = new System.Drawing.Point(50, 95);
 			this.lbl26_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl26_.Name = "lbl26_";
-			this.lbl26_.Size = new System.Drawing.Size(15, 15);
+			this.lbl26_.Size = new System.Drawing.Size(75, 15);
 			this.lbl26_.TabIndex = 115;
 			this.lbl26_.Text = "_";
 			this.lbl26_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1784,7 +1784,7 @@
 			this.lbl27_.Location = new System.Drawing.Point(50, 115);
 			this.lbl27_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl27_.Name = "lbl27_";
-			this.lbl27_.Size = new System.Drawing.Size(15, 15);
+			this.lbl27_.Size = new System.Drawing.Size(75, 15);
 			this.lbl27_.TabIndex = 117;
 			this.lbl27_.Text = "_";
 			this.lbl27_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1804,7 +1804,7 @@
 			this.lbl28_.Location = new System.Drawing.Point(50, 135);
 			this.lbl28_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl28_.Name = "lbl28_";
-			this.lbl28_.Size = new System.Drawing.Size(15, 15);
+			this.lbl28_.Size = new System.Drawing.Size(75, 15);
 			this.lbl28_.TabIndex = 119;
 			this.lbl28_.Text = "_";
 			this.lbl28_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1824,7 +1824,7 @@
 			this.lbl29_.Location = new System.Drawing.Point(50, 155);
 			this.lbl29_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl29_.Name = "lbl29_";
-			this.lbl29_.Size = new System.Drawing.Size(15, 15);
+			this.lbl29_.Size = new System.Drawing.Size(75, 15);
 			this.lbl29_.TabIndex = 121;
 			this.lbl29_.Text = "_";
 			this.lbl29_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
