@@ -164,6 +164,336 @@ namespace McdView
 		#region Changed events
 		// TODO: If value is outside of strict-bounds color its text red.
 
+		// TODO: OnEnter**() -> select text in TextBox when it gains focus
+/*			var tb = sender as TextBox; // uh, mouseclick position overrules SelectAll()
+			if (tb != null)
+			{
+				tb.SelectAll();
+//				tb.SelectionStart = 0;
+//				tb.SelectionLength = tb.Text.Length;
+			} */
+
+
+		/// <summary>
+		/// #22 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged22(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb22_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown22 = (byte)result;
+				}
+				else
+					tb22_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb22_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter22(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "22 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox22(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb22_.Text, out result))
+			{
+				tssl_Overvalue.Text = "22: " + result;
+				OnEnter22(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #23 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged23(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb23_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown23 = (byte)result;
+				}
+				else
+					tb23_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb23_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter23(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "23 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox23(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb23_.Text, out result))
+			{
+				tssl_Overvalue.Text = "23: " + result;
+				OnEnter23(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #24 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged24(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb24_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown24 = (byte)result;
+				}
+				else
+					tb24_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb24_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter24(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "24 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox24(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb24_.Text, out result))
+			{
+				tssl_Overvalue.Text = "24: " + result;
+				OnEnter24(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #25 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged25(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb25_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown25 = (byte)result;
+				}
+				else
+					tb25_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb25_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter25(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "25 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox25(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb25_.Text, out result))
+			{
+				tssl_Overvalue.Text = "25: " + result;
+				OnEnter25(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #26 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged26(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb26_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown26 = (byte)result;
+				}
+				else
+					tb26_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb26_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter26(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "26 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox26(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb26_.Text, out result))
+			{
+				tssl_Overvalue.Text = "26: " + result;
+				OnEnter26(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #27 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged27(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb27_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown27 = (byte)result;
+				}
+				else
+					tb27_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb27_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter27(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "27 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox27(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb27_.Text, out result))
+			{
+				tssl_Overvalue.Text = "27: " + result;
+				OnEnter27(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #28 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged28(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb28_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown28 = (byte)result;
+				}
+				else
+					tb28_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb28_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter28(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "28 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox28(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb28_.Text, out result))
+			{
+				tssl_Overvalue.Text = "28: " + result;
+				OnEnter28(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #29 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged29(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb29_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown29 = (byte)result;
+				}
+				else
+					tb29_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb29_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter29(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "29 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox29(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb29_.Text, out result))
+			{
+				tssl_Overvalue.Text = "29: " + result;
+				OnEnter29(null, EventArgs.Empty);
+			}
+		}
+
 		/// <summary>
 		/// #30 isSlidingDoor (bool)
 		/// </summary>
@@ -219,6 +549,104 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// #31 isBlockLoS (bool)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged31(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb31_isblocklos.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.StopLOS = Convert.ToBoolean(result);
+				}
+				else
+					tb31_isblocklos.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb31_isblocklos.Text = String.Empty; // recurse.
+		}
+		private void OnEnter31(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isBlockLoS (bool) is a true/false value that signifies"
+								 + " whether or not a part stops Line of Sight."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox31(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb31_isblocklos.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overvalue.Text = "isBlockLoS: " + text;
+				OnEnter31(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #32 isDropThrou (bool)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged32(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb32_isdropthrou.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.NotFloored = Convert.ToBoolean(result);
+				}
+				else
+					tb32_isdropthrou.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb32_isdropthrou.Text = String.Empty; // recurse.
+		}
+		private void OnEnter32(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isDropThrou (bool) is a true/false value that is relevant only to"
+								 + " floor parts. A non-flying unit will drop through such a part if true."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox32(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb32_isdropthrou.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overvalue.Text = "isDropThrou: " + text;
+				OnEnter32(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
 		/// #33 isBigWall (bool)
 		/// TODO: Allow the bigwall value to be stored as a byte.
 		/// </summary>
@@ -245,14 +673,6 @@ namespace McdView
 		}
 		private void OnEnter33(object sender, EventArgs e)
 		{
-/*			var tb = sender as TextBox; // uh, mouseclick position overrules SelectAll()
-			if (tb != null)
-			{
-				tb.SelectAll();
-//				tb.SelectionStart = 0;
-//				tb.SelectionLength = tb.Text.Length;
-			} */
-
 			lbl_Description.Text = "isBigWall (bool) is a true/false value that is relevant only to"
 								 + " content parts. A tile with such a part placed in it is"
 								 + " not navigable; a unit is not even allowed to clip through"
@@ -382,6 +802,104 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// #36 isBlockFire (bool)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged36(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb36_isblockfire.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.BlockFire = Convert.ToBoolean(result);
+				}
+				else
+					tb36_isblockfire.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb36_isblockfire.Text = String.Empty; // recurse.
+		}
+		private void OnEnter36(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isBlockFire (bool) is a true/false value that signifies"
+								 + " whether or not a part stops fire spreading."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox36(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb36_isblockfire.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overvalue.Text = "isBlockFire: " + text;
+				OnEnter36(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #37 isBlockSmoke (bool)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged37(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb37_isblocksmoke.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 2)))
+				{
+					Records[SelId].Record.BlockSmoke = Convert.ToBoolean(result);
+				}
+				else
+					tb37_isblocksmoke.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb37_isblocksmoke.Text = String.Empty; // recurse.
+		}
+		private void OnEnter37(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "isBlockSmoke (bool) is a true/false value that signifies"
+								 + " whether or not a part stops smoke spreading."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 False, 1 True";
+		}
+		private void OnMouseEnterTextbox37(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb37_isblocksmoke.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 False"; break;
+					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overvalue.Text = "isBlockSmoke: " + text;
+				OnEnter37(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
 		/// #38 LeftRightHalf (byte)
 		/// @note aka StartPhase
 		/// </summary>
@@ -451,8 +969,12 @@ namespace McdView
 				{
 					Records[SelId].Record.TU_Walk = (byte)result;
 				}
-				else
+				else if (Records[SelId].Record.PartType == PartType.Floor)
+				{
 					tb39_tuwalk.Text = "4"; // recurse w/ default.
+				}
+				else
+					tb39_tuwalk.Text = "255"; // recurse w/ default.
 			}
 			else
 				tb39_tuwalk.Text = String.Empty; // recurse.
@@ -469,7 +991,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb39_tuwalk.Text, out result))
 			{
-				tssl_Overvalue.Text = "TuWalk: " + result;
+				tssl_Overvalue.Text = "TuWalk: " + result + (result == 255 ? " impassable" : String.Empty);
 				OnEnter39(null, EventArgs.Empty);
 			}
 		}
@@ -492,8 +1014,12 @@ namespace McdView
 				{
 					Records[SelId].Record.TU_Slide = (byte)result;
 				}
-				else
+				else if (Records[SelId].Record.PartType == PartType.Floor)
+				{
 					tb40_tuslide.Text = "4"; // recurse w/ default.
+				}
+				else
+					tb40_tuslide.Text = "255"; // recurse w/ default.
 			}
 			else
 				tb40_tuslide.Text = String.Empty; // recurse.
@@ -510,7 +1036,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb40_tuslide.Text, out result))
 			{
-				tssl_Overvalue.Text = "TuSlide: " + result;
+				tssl_Overvalue.Text = "TuSlide: " + result + (result == 255 ? " impassable" : String.Empty);
 				OnEnter40(null, EventArgs.Empty);
 			}
 		}
@@ -533,8 +1059,12 @@ namespace McdView
 				{
 					Records[SelId].Record.TU_Fly = (byte)result;
 				}
-				else
+				else if (Records[SelId].Record.PartType == PartType.Floor)
+				{
 					tb41_tufly.Text = "4"; // recurse w/ default.
+				}
+				else
+					tb41_tufly.Text = "255"; // recurse w/ default.
 			}
 			else
 				tb41_tufly.Text = String.Empty; // recurse.
@@ -551,7 +1081,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb41_tufly.Text, out result))
 			{
-				tssl_Overvalue.Text = "TuFly: " + result;
+				tssl_Overvalue.Text = "TuFly: " + result + (result == 255 ? " impassable" : String.Empty);
 				OnEnter41(null, EventArgs.Empty);
 			}
 		}
@@ -595,8 +1125,49 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb42_armor.Text, out result))
 			{
-				tssl_Overvalue.Text = "Armor: " + result;
+				tssl_Overvalue.Text = "Armor: " + result + (result == 255 ? " indestructible" : String.Empty);
 				OnEnter42(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #43 HeBlock (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged43(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb43_heblock.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.HE_Block = (byte)result;
+				}
+				else
+					tb43_heblock.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb43_heblock.Text = String.Empty; // recurse.
+		}
+		private void OnEnter43(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "HeBlock (ubyte) is the reduction of damage that occurs as"
+								 + " an explosion passes through a tile with this part."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox43(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb43_heblock.Text, out result))
+			{
+				tssl_Overvalue.Text = "HeBlock: " + result;
+				OnEnter43(null, EventArgs.Empty);
 			}
 		}
 
@@ -647,8 +1218,52 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb44_deathid.Text, out result))
 			{
-				tssl_Overvalue.Text = "DeathId: " + result;
+				tssl_Overvalue.Text = "DeathId: " + result + (result == 0 ? " none" : String.Empty);
 				OnEnter44(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #45 FireResist (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged45(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb45_fireresist.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Flammable = (byte)result;
+				}
+				else
+					tb45_fireresist.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb45_fireresist.Text = String.Empty; // recurse.
+		}
+		private void OnEnter45(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "FireResist (ubyte) is a part's resistance to catching fire."
+								 + " A value of 255 means that the part is impervious to fire"
+								 + " although this could depend on the XCOM build; in any case"
+								 + " a value of 255 makes a part highly unlikely to burn. See"
+								 + " also #57 Fuel"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox45(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb45_fireresist.Text, out result))
+			{
+				tssl_Overvalue.Text = "FireResist: " + result + (result == 255 ? " impervious" : String.Empty);
+				OnEnter45(null, EventArgs.Empty);
 			}
 		}
 
@@ -699,8 +1314,48 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb46_alternateid.Text, out result))
 			{
-				tssl_Overvalue.Text = "AlternateId: " + result;
+				tssl_Overvalue.Text = "AlternateId: " + result + (result == 0 ? " none" : String.Empty);
 				OnEnter46(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #47 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged47(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb47_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown47 = (byte)result;
+				}
+				else
+					tb47_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb47_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter47(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "47 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox47(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb47_.Text, out result))
+			{
+				tssl_Overvalue.Text = "47: " + result;
+				OnEnter47(null, EventArgs.Empty);
 			}
 		}
 
@@ -802,6 +1457,144 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// #50 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged50(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb50_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown50 = (byte)result;
+				}
+				else
+					tb50_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb50_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter50(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "50 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox50(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb50_.Text, out result))
+			{
+				tssl_Overvalue.Text = "50: " + result;
+				OnEnter50(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #51 LightBlock (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged51(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb51_lightblock.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.LightBlock = (byte)result;
+				}
+				else
+					tb51_lightblock.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb51_lightblock.Text = String.Empty; // recurse.
+		}
+		private void OnEnter51(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "LightBlock (ubyte) is the reduction of light that occurs as"
+								 + " light passes through a tile with this part. This value"
+								 + " is not used although it could depend on the XCOM build."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox51(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb51_lightblock.Text, out result))
+			{
+				tssl_Overvalue.Text = "LightBlock: " + result;
+				OnEnter51(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #52 FootSound (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged52(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb52_footsound.Text, out result)
+					&&     ((strict && result > -1 && result < 7)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Footstep = (byte)result;
+				}
+				else
+					tb52_footsound.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb52_footsound.Text = String.Empty; // recurse.
+		}
+		private void OnEnter52(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "FootSound (ubyte) specifies the footstep-sound that units make"
+								 + " when walking on a part. This value has relevance to floor and"
+								 + " content parts only. Note that the sounds and sound-types will"
+								 + " differ depending on your XCOM version/edition."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 None, 1 Metal, 2 Wood/Stone, 3 Dirt, 4 Mud, 5 Sand, 6 Snow"; // TODO: <- Investigate.
+		}
+		private void OnMouseEnterTextbox52(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb52_footsound.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 None";       break;
+					case 1: text = "1 Metal";      break;
+					case 2: text = "2 Wood/Stone"; break;
+					case 3: text = "3 Dirt";       break; // TODO: <- Investigate.
+					case 4: text = "4 Mud";        break;
+					case 5: text = "5 Sand";       break;
+					case 6: text = "6 Snow";       break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overvalue.Text = "FootSound: " + text;
+				OnEnter52(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
 		/// #53 PartType (byte/PartType)
 		/// </summary>
 		/// <param name="sender"></param>
@@ -853,6 +1646,181 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// #54 HeType (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged54(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb54_hetype.Text, out result)
+					&&     ((strict && result > -1 && result < 2)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.HE_Type = (byte)result;
+				}
+				else
+					tb54_hetype.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb54_hetype.Text = String.Empty; // recurse.
+		}
+		private void OnEnter54(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "HeType (ubyte) is the type of explosion that occurs when this"
+								 + " part gets destroyed. No explosion will occur if #55 HeStrength"
+								 + " has a value of 0."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0 HighExplosive, 1 Smoke";
+		}
+		private void OnMouseEnterTextbox54(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb54_hetype.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 HighExplosive"; break;
+					case 1: text = "1 Smoke";         break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overvalue.Text = "HeType: " + text;
+				OnEnter54(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #55 HeStrength (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged55(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb55_hestrength.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.HE_Strength = (byte)result;
+				}
+				else
+					tb55_hestrength.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb55_hestrength.Text = String.Empty; // recurse.
+		}
+		private void OnEnter55(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "HeStrength (ubyte) is the power of an explosion that occurs when"
+								 + " a part is destroyed. The type of explosion (high explosive or"
+								 + " smoke) is determined by #54 HeType."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox55(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb55_hestrength.Text, out result))
+			{
+				tssl_Overvalue.Text = "HeStrength: " + result;
+				OnEnter55(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #56 SmokeBlock (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged56(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb56_smokeblock.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.SmokeBlockage = (byte)result;
+				}
+				else
+					tb56_smokeblock.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb56_smokeblock.Text = String.Empty; // recurse.
+		}
+		private void OnEnter56(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "SmokeBlock (ubyte) is the reduction of smoke that occurs as"
+								 + " an explosion passes through a tile with this part. This value"
+								 + " is not used; see #37 isBlockSmoke instead."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox56(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb56_smokeblock.Text, out result))
+			{
+				tssl_Overvalue.Text = "SmokeBlock: " + result;
+				OnEnter56(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #57 Fuel (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged57(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb57_fuel.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Fuel = (byte)result;
+				}
+				else
+					tb57_fuel.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb57_fuel.Text = String.Empty; // recurse.
+		}
+		private void OnEnter57(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "Fuel (ubyte) is the number of turns that a part will"
+								 + " burn for once it catches fire. See #45 FireResist."
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox57(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb57_fuel.Text, out result))
+			{
+				tssl_Overvalue.Text = "Fuel: " + result;
+				OnEnter57(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
 		/// #58 LightIntensity (byte)
 		/// </summary>
 		/// <param name="sender"></param>
@@ -889,7 +1857,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb58_lightintensity.Text, out result))
 			{
-				tssl_Overvalue.Text = "LightIntensity: " + result;
+				tssl_Overvalue.Text = "LightIntensity: " + result + (result == 0 ? " none" : String.Empty);
 				OnEnter58(null, EventArgs.Empty);
 			}
 		}
@@ -1012,6 +1980,46 @@ namespace McdView
 				}
 				tssl_Overvalue.Text = "isBaseObject: " + text;
 				OnEnter60(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #61 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged61(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb61_.Text, out result)
+					&&     ((strict && result > -1 && result < 256)
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Unknown61 = (byte)result;
+				}
+				else
+					tb61_.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb61_.Text = String.Empty; // recurse.
+		}
+		private void OnEnter61(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "61 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0..255";
+		}
+		private void OnMouseEnterTextbox61(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb61_.Text, out result))
+			{
+				tssl_Overvalue.Text = "61: " + result;
+				OnEnter61(null, EventArgs.Empty);
 			}
 		}
 		#endregion Changed events

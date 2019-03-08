@@ -76,7 +76,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			SuspendLayout();
 
-			quadrants.SelectedQuadrant = QuadrantType.Ground;
+			quadrants.SelectedQuadrant = QuadrantType.Floor;
 
 
 			_topViewPanel = new TopViewPanel();
@@ -230,8 +230,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			switch (parttype)
 			{
-				case PartType.Ground:
-					QuadrantsPanel.SelectedQuadrant = QuadrantType.Ground;
+				case PartType.Floor:
+					QuadrantsPanel.SelectedQuadrant = QuadrantType.Floor;
 					break;
 
 				case PartType.Westwall:

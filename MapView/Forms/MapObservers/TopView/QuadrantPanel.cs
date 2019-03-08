@@ -114,9 +114,9 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			switch (quad)
 			{
-				case QuadrantType.Ground:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Ground);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Ground);
+				case QuadrantType.Floor:
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Floor);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Floor);
 					break;
 				case QuadrantType.West:
 					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Westwall);
@@ -134,7 +134,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			switch (quad)
 			{
-				case QuadrantType.Ground:
+				case QuadrantType.Floor:
 				case QuadrantType.West:
 				case QuadrantType.North:
 				case QuadrantType.Content:

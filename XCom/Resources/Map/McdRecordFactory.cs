@@ -49,7 +49,7 @@ namespace XCom
 
 			record.SlidingDoor = bindata[30] != 0;
 			record.StopLOS     = bindata[31] != 0;
-			record.NoGround    = bindata[32] != 0;
+			record.NotFloored  = bindata[32] != 0;
 			record.BigWall     = bindata[33] != 0; // TODO: store as a byte
 			record.GravLift    = bindata[34] != 0;
 			record.HingedDoor  = bindata[35] != 0;

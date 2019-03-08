@@ -69,12 +69,12 @@ namespace MapView
 				var tile = file[row, col, lev] as XCMapTile;
 				if (!tile.Vacant)
 				{
-					if (tile.Ground != null)
+					if (tile.Floor != null)
 					{
 						++parts;
-						Count(tile.Ground, recordsTable, spritesTable);
+						Count(tile.Floor, recordsTable, spritesTable);
 
-						var part = tile.Ground as Tilepart;
+						var part = tile.Floor as Tilepart;
 						if (part != null)
 							Count(part.Dead, recordsTable, spritesTable);
 					}

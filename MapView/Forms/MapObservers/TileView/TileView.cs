@@ -100,7 +100,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			tcTileTypes.SelectedIndexChanged += OnSelectedIndexChanged;
 
 			_allTiles      = new TilePanel(PartType.All);
-			var floors     = new TilePanel(PartType.Ground);
+			var floors     = new TilePanel(PartType.Floor);
 			var westwalls  = new TilePanel(PartType.Westwall);
 			var northwalls = new TilePanel(PartType.Northwall);
 			var content    = new TilePanel(PartType.Content);

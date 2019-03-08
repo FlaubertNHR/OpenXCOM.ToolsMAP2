@@ -594,6 +594,8 @@
 			this.lbl31.TabIndex = 5;
 			this.lbl31.Text = "#31";
 			this.lbl31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl31.MouseEnter += new System.EventHandler(this.OnEnter31);
+			this.lbl31.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl31_isblocklos
 			// 
@@ -604,6 +606,8 @@
 			this.lbl31_isblocklos.TabIndex = 4;
 			this.lbl31_isblocklos.Text = "isBlockLoS";
 			this.lbl31_isblocklos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl31_isblocklos.MouseEnter += new System.EventHandler(this.OnEnter31);
+			this.lbl31_isblocklos.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl32
 			// 
@@ -614,6 +618,8 @@
 			this.lbl32.TabIndex = 7;
 			this.lbl32.Text = "#32";
 			this.lbl32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl32.MouseEnter += new System.EventHandler(this.OnEnter32);
+			this.lbl32.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl32_isdropthrou
 			// 
@@ -624,6 +630,8 @@
 			this.lbl32_isdropthrou.TabIndex = 6;
 			this.lbl32_isdropthrou.Text = "isDropThrou";
 			this.lbl32_isdropthrou.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl32_isdropthrou.MouseEnter += new System.EventHandler(this.OnEnter32);
+			this.lbl32_isdropthrou.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl33
 			// 
@@ -706,6 +714,8 @@
 			this.lbl36.TabIndex = 15;
 			this.lbl36.Text = "#36";
 			this.lbl36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl36.MouseEnter += new System.EventHandler(this.OnEnter36);
+			this.lbl36.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl36_isblockfire
 			// 
@@ -716,6 +726,8 @@
 			this.lbl36_isblockfire.TabIndex = 15;
 			this.lbl36_isblockfire.Text = "isBlockFire";
 			this.lbl36_isblockfire.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl36_isblockfire.MouseEnter += new System.EventHandler(this.OnEnter36);
+			this.lbl36_isblockfire.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl37
 			// 
@@ -726,6 +738,8 @@
 			this.lbl37.TabIndex = 17;
 			this.lbl37.Text = "#37";
 			this.lbl37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl37.MouseEnter += new System.EventHandler(this.OnEnter37);
+			this.lbl37.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl37_isblocksmoke
 			// 
@@ -736,6 +750,8 @@
 			this.lbl37_isblocksmoke.TabIndex = 16;
 			this.lbl37_isblocksmoke.Text = "isBlockSmoke";
 			this.lbl37_isblocksmoke.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl37_isblocksmoke.MouseEnter += new System.EventHandler(this.OnEnter37);
+			this.lbl37_isblocksmoke.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl38
 			// 
@@ -866,6 +882,8 @@
 			this.lbl43.TabIndex = 29;
 			this.lbl43.Text = "#43";
 			this.lbl43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl43.MouseEnter += new System.EventHandler(this.OnEnter43);
+			this.lbl43.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl43_heblock
 			// 
@@ -876,6 +894,8 @@
 			this.lbl43_heblock.TabIndex = 28;
 			this.lbl43_heblock.Text = "HeBlock";
 			this.lbl43_heblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl43_heblock.MouseEnter += new System.EventHandler(this.OnEnter43);
+			this.lbl43_heblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl44
 			// 
@@ -910,6 +930,8 @@
 			this.lbl45.TabIndex = 33;
 			this.lbl45.Text = "#45";
 			this.lbl45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl45.MouseEnter += new System.EventHandler(this.OnEnter45);
+			this.lbl45.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl45_fireresist
 			// 
@@ -920,6 +942,8 @@
 			this.lbl45_fireresist.TabIndex = 32;
 			this.lbl45_fireresist.Text = "FireResist";
 			this.lbl45_fireresist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl45_fireresist.MouseEnter += new System.EventHandler(this.OnEnter45);
+			this.lbl45_fireresist.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl46
 			// 
@@ -954,6 +978,8 @@
 			this.lbl47.TabIndex = 37;
 			this.lbl47.Text = "#47";
 			this.lbl47.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl47.MouseEnter += new System.EventHandler(this.OnEnter47);
+			this.lbl47.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl47_
 			// 
@@ -964,6 +990,8 @@
 			this.lbl47_.TabIndex = 36;
 			this.lbl47_.Text = "_";
 			this.lbl47_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl47_.MouseEnter += new System.EventHandler(this.OnEnter47);
+			this.lbl47_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl48
 			// 
@@ -1022,6 +1050,8 @@
 			this.lbl50.TabIndex = 43;
 			this.lbl50.Text = "#50";
 			this.lbl50.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl50.MouseEnter += new System.EventHandler(this.OnEnter50);
+			this.lbl50.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl50_
 			// 
@@ -1032,6 +1062,8 @@
 			this.lbl50_.TabIndex = 42;
 			this.lbl50_.Text = "_";
 			this.lbl50_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl50_.MouseEnter += new System.EventHandler(this.OnEnter50);
+			this.lbl50_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl51
 			// 
@@ -1042,6 +1074,8 @@
 			this.lbl51.TabIndex = 45;
 			this.lbl51.Text = "#51";
 			this.lbl51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl51.MouseEnter += new System.EventHandler(this.OnEnter51);
+			this.lbl51.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl51_lightblock
 			// 
@@ -1052,6 +1086,8 @@
 			this.lbl51_lightblock.TabIndex = 44;
 			this.lbl51_lightblock.Text = "LightBlock";
 			this.lbl51_lightblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl51_lightblock.MouseEnter += new System.EventHandler(this.OnEnter51);
+			this.lbl51_lightblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl52
 			// 
@@ -1062,6 +1098,8 @@
 			this.lbl52.TabIndex = 47;
 			this.lbl52.Text = "#52";
 			this.lbl52.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl52.MouseEnter += new System.EventHandler(this.OnEnter52);
+			this.lbl52.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl52_footsound
 			// 
@@ -1072,6 +1110,8 @@
 			this.lbl52_footsound.TabIndex = 46;
 			this.lbl52_footsound.Text = "FootSound";
 			this.lbl52_footsound.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl52_footsound.MouseEnter += new System.EventHandler(this.OnEnter52);
+			this.lbl52_footsound.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl53
 			// 
@@ -1106,6 +1146,8 @@
 			this.lbl54.TabIndex = 51;
 			this.lbl54.Text = "#54";
 			this.lbl54.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl54.MouseEnter += new System.EventHandler(this.OnEnter54);
+			this.lbl54.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl54_hetype
 			// 
@@ -1116,6 +1158,8 @@
 			this.lbl54_hetype.TabIndex = 50;
 			this.lbl54_hetype.Text = "HeType";
 			this.lbl54_hetype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl54_hetype.MouseEnter += new System.EventHandler(this.OnEnter54);
+			this.lbl54_hetype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl55
 			// 
@@ -1126,6 +1170,8 @@
 			this.lbl55.TabIndex = 53;
 			this.lbl55.Text = "#55";
 			this.lbl55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl55.MouseEnter += new System.EventHandler(this.OnEnter55);
+			this.lbl55.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl55_hestrength
 			// 
@@ -1136,6 +1182,8 @@
 			this.lbl55_hestrength.TabIndex = 52;
 			this.lbl55_hestrength.Text = "HeStrength";
 			this.lbl55_hestrength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl55_hestrength.MouseEnter += new System.EventHandler(this.OnEnter55);
+			this.lbl55_hestrength.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl56
 			// 
@@ -1146,6 +1194,8 @@
 			this.lbl56.TabIndex = 56;
 			this.lbl56.Text = "#56";
 			this.lbl56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl56.MouseEnter += new System.EventHandler(this.OnEnter56);
+			this.lbl56.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl56_smokeblock
 			// 
@@ -1156,6 +1206,8 @@
 			this.lbl56_smokeblock.TabIndex = 54;
 			this.lbl56_smokeblock.Text = "SmokeBlock";
 			this.lbl56_smokeblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl56_smokeblock.MouseEnter += new System.EventHandler(this.OnEnter56);
+			this.lbl56_smokeblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl57
 			// 
@@ -1166,6 +1218,8 @@
 			this.lbl57.TabIndex = 58;
 			this.lbl57.Text = "#57";
 			this.lbl57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl57.MouseEnter += new System.EventHandler(this.OnEnter57);
+			this.lbl57.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl57_fuel
 			// 
@@ -1176,6 +1230,8 @@
 			this.lbl57_fuel.TabIndex = 57;
 			this.lbl57_fuel.Text = "Fuel";
 			this.lbl57_fuel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl57_fuel.MouseEnter += new System.EventHandler(this.OnEnter57);
+			this.lbl57_fuel.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl58
 			// 
@@ -1258,6 +1314,8 @@
 			this.lbl61.TabIndex = 66;
 			this.lbl61.Text = "#61";
 			this.lbl61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl61.MouseEnter += new System.EventHandler(this.OnEnter61);
+			this.lbl61.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl61_
 			// 
@@ -1268,6 +1326,8 @@
 			this.lbl61_.TabIndex = 65;
 			this.lbl61_.Text = "_";
 			this.lbl61_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl61_.MouseEnter += new System.EventHandler(this.OnEnter61);
+			this.lbl61_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl19
 			// 
@@ -1678,6 +1738,8 @@
 			this.lbl22.TabIndex = 108;
 			this.lbl22.Text = "#22";
 			this.lbl22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl22.MouseEnter += new System.EventHandler(this.OnEnter22);
+			this.lbl22.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl22_
 			// 
@@ -1688,6 +1750,8 @@
 			this.lbl22_.TabIndex = 107;
 			this.lbl22_.Text = "_";
 			this.lbl22_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl22_.MouseEnter += new System.EventHandler(this.OnEnter22);
+			this.lbl22_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl23
 			// 
@@ -1698,6 +1762,8 @@
 			this.lbl23.TabIndex = 110;
 			this.lbl23.Text = "#23";
 			this.lbl23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl23.MouseEnter += new System.EventHandler(this.OnEnter23);
+			this.lbl23.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl23_
 			// 
@@ -1708,6 +1774,8 @@
 			this.lbl23_.TabIndex = 109;
 			this.lbl23_.Text = "_";
 			this.lbl23_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl23_.MouseEnter += new System.EventHandler(this.OnEnter23);
+			this.lbl23_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl24
 			// 
@@ -1718,6 +1786,8 @@
 			this.lbl24.TabIndex = 112;
 			this.lbl24.Text = "#24";
 			this.lbl24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl24.MouseEnter += new System.EventHandler(this.OnEnter24);
+			this.lbl24.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl24_
 			// 
@@ -1728,6 +1798,8 @@
 			this.lbl24_.TabIndex = 111;
 			this.lbl24_.Text = "_";
 			this.lbl24_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl24_.MouseEnter += new System.EventHandler(this.OnEnter24);
+			this.lbl24_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl25
 			// 
@@ -1738,6 +1810,8 @@
 			this.lbl25.TabIndex = 114;
 			this.lbl25.Text = "#25";
 			this.lbl25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl25.MouseEnter += new System.EventHandler(this.OnEnter25);
+			this.lbl25.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl25_
 			// 
@@ -1748,6 +1822,8 @@
 			this.lbl25_.TabIndex = 113;
 			this.lbl25_.Text = "_";
 			this.lbl25_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl25_.MouseEnter += new System.EventHandler(this.OnEnter25);
+			this.lbl25_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl26
 			// 
@@ -1758,6 +1834,8 @@
 			this.lbl26.TabIndex = 116;
 			this.lbl26.Text = "#26";
 			this.lbl26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl26.MouseEnter += new System.EventHandler(this.OnEnter26);
+			this.lbl26.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl26_
 			// 
@@ -1768,6 +1846,8 @@
 			this.lbl26_.TabIndex = 115;
 			this.lbl26_.Text = "_";
 			this.lbl26_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl26_.MouseEnter += new System.EventHandler(this.OnEnter26);
+			this.lbl26_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl27
 			// 
@@ -1778,6 +1858,8 @@
 			this.lbl27.TabIndex = 118;
 			this.lbl27.Text = "#27";
 			this.lbl27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl27.MouseEnter += new System.EventHandler(this.OnEnter27);
+			this.lbl27.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl27_
 			// 
@@ -1788,6 +1870,8 @@
 			this.lbl27_.TabIndex = 117;
 			this.lbl27_.Text = "_";
 			this.lbl27_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl27_.MouseEnter += new System.EventHandler(this.OnEnter27);
+			this.lbl27_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl28
 			// 
@@ -1798,6 +1882,8 @@
 			this.lbl28.TabIndex = 120;
 			this.lbl28.Text = "#28";
 			this.lbl28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl28.MouseEnter += new System.EventHandler(this.OnEnter28);
+			this.lbl28.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl28_
 			// 
@@ -1808,6 +1894,8 @@
 			this.lbl28_.TabIndex = 119;
 			this.lbl28_.Text = "_";
 			this.lbl28_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl28_.MouseEnter += new System.EventHandler(this.OnEnter28);
+			this.lbl28_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl29
 			// 
@@ -1818,6 +1906,8 @@
 			this.lbl29.TabIndex = 122;
 			this.lbl29.Text = "#29";
 			this.lbl29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl29.MouseEnter += new System.EventHandler(this.OnEnter29);
+			this.lbl29.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl29_
 			// 
@@ -1828,6 +1918,8 @@
 			this.lbl29_.TabIndex = 121;
 			this.lbl29_.Text = "_";
 			this.lbl29_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl29_.MouseEnter += new System.EventHandler(this.OnEnter29);
+			this.lbl29_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// ss_Statusbar
 			// 
@@ -1902,6 +1994,11 @@
 			this.tb61_.TabIndex = 133;
 			this.tb61_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb61_.WordWrap = false;
+			this.tb61_.TextChanged += new System.EventHandler(this.OnChanged61);
+			this.tb61_.Enter += new System.EventHandler(this.OnEnter61);
+			this.tb61_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb61_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox61);
+			this.tb61_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb50_
 			// 
@@ -1912,6 +2009,11 @@
 			this.tb50_.TabIndex = 132;
 			this.tb50_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb50_.WordWrap = false;
+			this.tb50_.TextChanged += new System.EventHandler(this.OnChanged50);
+			this.tb50_.Enter += new System.EventHandler(this.OnEnter50);
+			this.tb50_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb50_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox50);
+			this.tb50_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb47_
 			// 
@@ -1922,6 +2024,11 @@
 			this.tb47_.TabIndex = 131;
 			this.tb47_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb47_.WordWrap = false;
+			this.tb47_.TextChanged += new System.EventHandler(this.OnChanged47);
+			this.tb47_.Enter += new System.EventHandler(this.OnEnter47);
+			this.tb47_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb47_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox47);
+			this.tb47_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb29_
 			// 
@@ -1932,6 +2039,11 @@
 			this.tb29_.TabIndex = 130;
 			this.tb29_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb29_.WordWrap = false;
+			this.tb29_.TextChanged += new System.EventHandler(this.OnChanged29);
+			this.tb29_.Enter += new System.EventHandler(this.OnEnter29);
+			this.tb29_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb29_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox29);
+			this.tb29_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb28_
 			// 
@@ -1942,6 +2054,11 @@
 			this.tb28_.TabIndex = 129;
 			this.tb28_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb28_.WordWrap = false;
+			this.tb28_.TextChanged += new System.EventHandler(this.OnChanged28);
+			this.tb28_.Enter += new System.EventHandler(this.OnEnter28);
+			this.tb28_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb28_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox28);
+			this.tb28_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb27_
 			// 
@@ -1952,6 +2069,11 @@
 			this.tb27_.TabIndex = 128;
 			this.tb27_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb27_.WordWrap = false;
+			this.tb27_.TextChanged += new System.EventHandler(this.OnChanged27);
+			this.tb27_.Enter += new System.EventHandler(this.OnEnter27);
+			this.tb27_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb27_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox27);
+			this.tb27_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb26_
 			// 
@@ -1962,6 +2084,11 @@
 			this.tb26_.TabIndex = 127;
 			this.tb26_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb26_.WordWrap = false;
+			this.tb26_.TextChanged += new System.EventHandler(this.OnChanged26);
+			this.tb26_.Enter += new System.EventHandler(this.OnEnter26);
+			this.tb26_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb26_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox26);
+			this.tb26_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb25_
 			// 
@@ -1972,6 +2099,11 @@
 			this.tb25_.TabIndex = 126;
 			this.tb25_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb25_.WordWrap = false;
+			this.tb25_.TextChanged += new System.EventHandler(this.OnChanged25);
+			this.tb25_.Enter += new System.EventHandler(this.OnEnter25);
+			this.tb25_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb25_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox25);
+			this.tb25_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb24_
 			// 
@@ -1982,6 +2114,11 @@
 			this.tb24_.TabIndex = 125;
 			this.tb24_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb24_.WordWrap = false;
+			this.tb24_.TextChanged += new System.EventHandler(this.OnChanged24);
+			this.tb24_.Enter += new System.EventHandler(this.OnEnter24);
+			this.tb24_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb24_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox24);
+			this.tb24_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb23_
 			// 
@@ -1992,6 +2129,11 @@
 			this.tb23_.TabIndex = 124;
 			this.tb23_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb23_.WordWrap = false;
+			this.tb23_.TextChanged += new System.EventHandler(this.OnChanged23);
+			this.tb23_.Enter += new System.EventHandler(this.OnEnter23);
+			this.tb23_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb23_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox23);
+			this.tb23_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb22_
 			// 
@@ -2002,6 +2144,11 @@
 			this.tb22_.TabIndex = 123;
 			this.tb22_.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb22_.WordWrap = false;
+			this.tb22_.TextChanged += new System.EventHandler(this.OnChanged22);
+			this.tb22_.Enter += new System.EventHandler(this.OnEnter22);
+			this.tb22_.Leave += new System.EventHandler(this.OnLeave);
+			this.tb22_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox22);
+			this.tb22_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Loft
 			// 
@@ -2661,6 +2808,11 @@
 			this.tb51_lightblock.TabIndex = 86;
 			this.tb51_lightblock.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb51_lightblock.WordWrap = false;
+			this.tb51_lightblock.TextChanged += new System.EventHandler(this.OnChanged51);
+			this.tb51_lightblock.Enter += new System.EventHandler(this.OnEnter51);
+			this.tb51_lightblock.Leave += new System.EventHandler(this.OnLeave);
+			this.tb51_lightblock.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox51);
+			this.tb51_lightblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb56_smokeblock
 			// 
@@ -2671,6 +2823,11 @@
 			this.tb56_smokeblock.TabIndex = 85;
 			this.tb56_smokeblock.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb56_smokeblock.WordWrap = false;
+			this.tb56_smokeblock.TextChanged += new System.EventHandler(this.OnChanged56);
+			this.tb56_smokeblock.Enter += new System.EventHandler(this.OnEnter56);
+			this.tb56_smokeblock.Leave += new System.EventHandler(this.OnLeave);
+			this.tb56_smokeblock.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox56);
+			this.tb56_smokeblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb43_heblock
 			// 
@@ -2681,6 +2838,11 @@
 			this.tb43_heblock.TabIndex = 84;
 			this.tb43_heblock.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb43_heblock.WordWrap = false;
+			this.tb43_heblock.TextChanged += new System.EventHandler(this.OnChanged43);
+			this.tb43_heblock.Enter += new System.EventHandler(this.OnEnter43);
+			this.tb43_heblock.Leave += new System.EventHandler(this.OnLeave);
+			this.tb43_heblock.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox43);
+			this.tb43_heblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb37_isblocksmoke
 			// 
@@ -2691,6 +2853,11 @@
 			this.tb37_isblocksmoke.TabIndex = 83;
 			this.tb37_isblocksmoke.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb37_isblocksmoke.WordWrap = false;
+			this.tb37_isblocksmoke.TextChanged += new System.EventHandler(this.OnChanged37);
+			this.tb37_isblocksmoke.Enter += new System.EventHandler(this.OnEnter37);
+			this.tb37_isblocksmoke.Leave += new System.EventHandler(this.OnLeave);
+			this.tb37_isblocksmoke.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox37);
+			this.tb37_isblocksmoke.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb36_isblockfire
 			// 
@@ -2701,6 +2868,11 @@
 			this.tb36_isblockfire.TabIndex = 82;
 			this.tb36_isblockfire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb36_isblockfire.WordWrap = false;
+			this.tb36_isblockfire.TextChanged += new System.EventHandler(this.OnChanged36);
+			this.tb36_isblockfire.Enter += new System.EventHandler(this.OnEnter36);
+			this.tb36_isblockfire.Leave += new System.EventHandler(this.OnLeave);
+			this.tb36_isblockfire.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox36);
+			this.tb36_isblockfire.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb31_isblocklos
 			// 
@@ -2711,6 +2883,11 @@
 			this.tb31_isblocklos.TabIndex = 81;
 			this.tb31_isblocklos.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb31_isblocklos.WordWrap = false;
+			this.tb31_isblocklos.TextChanged += new System.EventHandler(this.OnChanged31);
+			this.tb31_isblocklos.Enter += new System.EventHandler(this.OnEnter31);
+			this.tb31_isblocklos.Leave += new System.EventHandler(this.OnLeave);
+			this.tb31_isblocklos.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox31);
+			this.tb31_isblocklos.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Door
 			// 
@@ -2803,6 +2980,11 @@
 			this.tb32_isdropthrou.TabIndex = 88;
 			this.tb32_isdropthrou.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb32_isdropthrou.WordWrap = false;
+			this.tb32_isdropthrou.TextChanged += new System.EventHandler(this.OnChanged32);
+			this.tb32_isdropthrou.Enter += new System.EventHandler(this.OnEnter32);
+			this.tb32_isdropthrou.Leave += new System.EventHandler(this.OnLeave);
+			this.tb32_isdropthrou.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox32);
+			this.tb32_isdropthrou.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb52_footsound
 			// 
@@ -2813,6 +2995,11 @@
 			this.tb52_footsound.TabIndex = 87;
 			this.tb52_footsound.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb52_footsound.WordWrap = false;
+			this.tb52_footsound.TextChanged += new System.EventHandler(this.OnChanged52);
+			this.tb52_footsound.Enter += new System.EventHandler(this.OnEnter52);
+			this.tb52_footsound.Leave += new System.EventHandler(this.OnLeave);
+			this.tb52_footsound.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox52);
+			this.tb52_footsound.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Explosive
 			// 
@@ -2846,6 +3033,11 @@
 			this.tb57_fuel.TabIndex = 80;
 			this.tb57_fuel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb57_fuel.WordWrap = false;
+			this.tb57_fuel.TextChanged += new System.EventHandler(this.OnChanged57);
+			this.tb57_fuel.Enter += new System.EventHandler(this.OnEnter57);
+			this.tb57_fuel.Leave += new System.EventHandler(this.OnLeave);
+			this.tb57_fuel.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox57);
+			this.tb57_fuel.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb45_fireresist
 			// 
@@ -2856,6 +3048,11 @@
 			this.tb45_fireresist.TabIndex = 79;
 			this.tb45_fireresist.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb45_fireresist.WordWrap = false;
+			this.tb45_fireresist.TextChanged += new System.EventHandler(this.OnChanged45);
+			this.tb45_fireresist.Enter += new System.EventHandler(this.OnEnter45);
+			this.tb45_fireresist.Leave += new System.EventHandler(this.OnLeave);
+			this.tb45_fireresist.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox45);
+			this.tb45_fireresist.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb55_hestrength
 			// 
@@ -2866,6 +3063,11 @@
 			this.tb55_hestrength.TabIndex = 78;
 			this.tb55_hestrength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb55_hestrength.WordWrap = false;
+			this.tb55_hestrength.TextChanged += new System.EventHandler(this.OnChanged55);
+			this.tb55_hestrength.Enter += new System.EventHandler(this.OnEnter55);
+			this.tb55_hestrength.Leave += new System.EventHandler(this.OnLeave);
+			this.tb55_hestrength.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox55);
+			this.tb55_hestrength.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb54_hetype
 			// 
@@ -2876,6 +3078,11 @@
 			this.tb54_hetype.TabIndex = 77;
 			this.tb54_hetype.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb54_hetype.WordWrap = false;
+			this.tb54_hetype.TextChanged += new System.EventHandler(this.OnChanged54);
+			this.tb54_hetype.Enter += new System.EventHandler(this.OnEnter54);
+			this.tb54_hetype.Leave += new System.EventHandler(this.OnLeave);
+			this.tb54_hetype.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox54);
+			this.tb54_hetype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Health
 			// 

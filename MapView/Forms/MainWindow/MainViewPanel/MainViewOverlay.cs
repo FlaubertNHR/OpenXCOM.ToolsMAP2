@@ -375,7 +375,7 @@ namespace MapView
 				{
 					tile = (XCMapTile)MapBase[row, col];
 
-					tile.Ground  = null;
+					tile.Floor   = null;
 					tile.West    = null;
 					tile.North   = null;
 					tile.Content = null;
@@ -411,7 +411,7 @@ namespace MapView
 				{
 					@base = (XCMapTile)MapBase[row, col];
 					copy = new XCMapTile(
-									@base.Ground,
+									@base.Floor,
 									@base.West,
 									@base.North,
 									@base.Content);
@@ -444,7 +444,7 @@ namespace MapView
 							if ((tileCopy = _copied[row - DragStart.Y,
 													col - DragStart.X] as XCMapTile) != null)
 							{
-								tile.Ground  = tileCopy.Ground;
+								tile.Floor   = tileCopy.Floor;
 								tile.Content = tileCopy.Content;
 								tile.West    = tileCopy.West;
 								tile.North   = tileCopy.North;
@@ -1260,7 +1260,7 @@ namespace MapView
 
 			var topView = ViewerFormsManager.TopView.Control;
 			if (topView.GroundVisible
-				&& (part = tile.Ground) != null)
+				&& (part = tile.Floor) != null)
 			{
 				DrawSprite(
 						part[_anistep].Bindata,
@@ -1318,7 +1318,7 @@ namespace MapView
 
 			var topView = ViewerFormsManager.TopView.Control;
 			if (topView.GroundVisible
-				&& (part = tile.Ground) != null)
+				&& (part = tile.Floor) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr
 									: part[_anistep].Sprite;

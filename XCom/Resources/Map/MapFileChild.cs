@@ -224,18 +224,18 @@ namespace XCom
 					if ((tile = this[row, col, lev]) != null) // safety. The tile should always be valid.
 					{
 						if (!forceVis
-							&& ((XCMapTile)this[row,     col,     lev - 1]).Ground != null // above
+							&& ((XCMapTile)this[row,     col,     lev - 1]).Floor != null // above
 
-							&& ((XCMapTile)this[row + 1, col,     lev - 1]).Ground != null // south
-							&& ((XCMapTile)this[row + 2, col,     lev - 1]).Ground != null
+							&& ((XCMapTile)this[row + 1, col,     lev - 1]).Floor != null // south
+							&& ((XCMapTile)this[row + 2, col,     lev - 1]).Floor != null
 
-							&& ((XCMapTile)this[row,     col + 1, lev - 1]).Ground != null // east
-							&& ((XCMapTile)this[row,     col + 2, lev - 1]).Ground != null
+							&& ((XCMapTile)this[row,     col + 1, lev - 1]).Floor != null // east
+							&& ((XCMapTile)this[row,     col + 2, lev - 1]).Floor != null
 
-							&& ((XCMapTile)this[row + 1, col + 1, lev - 1]).Ground != null // southeast
-							&& ((XCMapTile)this[row + 1, col + 2, lev - 1]).Ground != null
-							&& ((XCMapTile)this[row + 2, col + 1, lev - 1]).Ground != null
-							&& ((XCMapTile)this[row + 2, col + 2, lev - 1]).Ground != null)
+							&& ((XCMapTile)this[row + 1, col + 1, lev - 1]).Floor != null // southeast
+							&& ((XCMapTile)this[row + 1, col + 2, lev - 1]).Floor != null
+							&& ((XCMapTile)this[row + 2, col + 1, lev - 1]).Floor != null
+							&& ((XCMapTile)this[row + 2, col + 2, lev - 1]).Floor != null)
 						{
 							tile.Occulted = true;
 						}
@@ -371,7 +371,7 @@ namespace XCom
 				{
 					var tile = this[row, col, lev] as XCMapTile;
 
-					if (tile.Ground == null || (id = tile.Ground.SetId + IdOffset) > (int)byte.MaxValue)
+					if (tile.Floor == null || (id = tile.Floor.SetId + IdOffset) > (int)byte.MaxValue)
 						fs.WriteByte(0);
 					else
 						fs.WriteByte((byte)id);

@@ -167,8 +167,8 @@ namespace MapView
 
 					tile = _base[y,x,z] as XCMapTile;
 
-					if (tile.Ground != null
-						&& (iconid = tile.Ground.Record.ScanG) < iconsTotal)
+					if (tile.Floor != null
+						&& (iconid = tile.Floor.Record.ScanG) < iconsTotal)
 					{
 						for (int i = 0; i != 256; ++i)
 						{

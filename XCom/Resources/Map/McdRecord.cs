@@ -7,7 +7,7 @@ namespace XCom
 	public enum PartType
 	{
 		All       = -1, // <- for TileView's ALL tabpage only.
-		Ground    =  0,
+		Floor     =  0,
 		Westwall  =  1,
 		Northwall =  2,
 		Content   =  3
@@ -80,7 +80,7 @@ namespace XCom
 
 		public bool SlidingDoor { get; set; }
 		public bool StopLOS     { get; set; }
-		public bool NoGround    { get; set; }
+		public bool NotFloored  { get; set; }
 		public bool BigWall     { get; set; }
 		public bool GravLift    { get; set; }
 		public bool HingedDoor  { get; set; }

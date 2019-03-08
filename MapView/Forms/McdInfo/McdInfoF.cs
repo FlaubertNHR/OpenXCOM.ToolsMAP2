@@ -82,7 +82,7 @@ namespace MapView.Forms.McdInfo
 											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"no floor:",
-											record.NoGround));
+											record.NotFloored));
 
 				rtbInfo.AppendText(string.Format(
 											CultureInfo.InvariantCulture,
