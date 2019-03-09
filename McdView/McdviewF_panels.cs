@@ -91,15 +91,17 @@ namespace McdView
 				{
 					y -= yoffset * 2;
 
+					var rect = new Rectangle(
+										0,
+										SPRITE_ORIGIN_Y,
+										XCImage.SpriteWidth32  * 2,
+										XCImage.SpriteHeight40 * 2);
+
 					var brush = new SolidBrush(Color.Black); // actually palette-id #0 Transparent
 					for (int i = 0; i != 8; ++i)
 					{
-						_graphics.FillRectangle(
-											brush,
-											SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i,
-											SPRITE_ORIGIN_Y,
-											XCImage.SpriteWidth32  * 2,
-											XCImage.SpriteHeight40 * 2);
+						rect.X = SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i;
+						_graphics.FillRectangle(brush, rect);
 					}
 				}
 
