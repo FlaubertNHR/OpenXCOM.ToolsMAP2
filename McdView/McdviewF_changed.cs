@@ -175,6 +175,498 @@ namespace McdView
 
 
 		/// <summary>
+		/// #8 loft 00 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged8(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb8_loft00.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft1 = (byte)result;
+					pnl_Loft08.Invalidate();
+				}
+				else
+					tb8_loft00.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb8_loft00.Text = String.Empty; // recurse.
+		}
+		private void OnEnter8(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 00 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox8(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb8_loft00.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 00: " + result;
+				OnEnter8(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #9 loft 02 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged9(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb9_loft02.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft2 = (byte)result;
+					pnl_Loft09.Invalidate();
+				}
+				else
+					tb9_loft02.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb9_loft02.Text = String.Empty; // recurse.
+		}
+		private void OnEnter9(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 02 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox9(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb9_loft02.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 02: " + result;
+				OnEnter9(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #10 loft 04 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged10(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb10_loft04.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft3 = (byte)result;
+					pnl_Loft10.Invalidate();
+				}
+				else
+					tb10_loft04.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb10_loft04.Text = String.Empty; // recurse.
+		}
+		private void OnEnter10(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 04 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox10(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb10_loft04.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 04: " + result;
+				OnEnter10(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #11 loft 06 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged11(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb11_loft06.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft4 = (byte)result;
+					pnl_Loft11.Invalidate();
+				}
+				else
+					tb11_loft06.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb11_loft06.Text = String.Empty; // recurse.
+		}
+		private void OnEnter11(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 06 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox11(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb11_loft06.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 06: " + result;
+				OnEnter11(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #12 loft 08 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged12(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb12_loft08.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft5 = (byte)result;
+					pnl_Loft12.Invalidate();
+				}
+				else
+					tb12_loft08.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb12_loft08.Text = String.Empty; // recurse.
+		}
+		private void OnEnter12(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 08 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox12(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb12_loft08.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 08: " + result;
+				OnEnter12(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #13 loft 10 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged13(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb13_loft10.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft6 = (byte)result;
+					pnl_Loft13.Invalidate();
+				}
+				else
+					tb13_loft10.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb13_loft10.Text = String.Empty; // recurse.
+		}
+		private void OnEnter13(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 10 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox13(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb13_loft10.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 10: " + result;
+				OnEnter13(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #14 loft 12 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged14(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb14_loft12.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft7 = (byte)result;
+					pnl_Loft14.Invalidate();
+				}
+				else
+					tb14_loft12.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb14_loft12.Text = String.Empty; // recurse.
+		}
+		private void OnEnter14(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 12 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox14(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb14_loft12.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 12: " + result;
+				OnEnter14(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #15 loft 14 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged15(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb15_loft14.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft8 = (byte)result;
+					pnl_Loft15.Invalidate();
+				}
+				else
+					tb15_loft14.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb15_loft14.Text = String.Empty; // recurse.
+		}
+		private void OnEnter15(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 14 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox15(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb15_loft14.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 14: " + result;
+				OnEnter15(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #16 loft 16 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged16(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb16_loft16.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft9 = (byte)result;
+					pnl_Loft16.Invalidate();
+				}
+				else
+					tb16_loft16.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb16_loft16.Text = String.Empty; // recurse.
+		}
+		private void OnEnter16(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 16 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox16(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb16_loft16.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 16: " + result;
+				OnEnter16(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #17 loft 18 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged17(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb17_loft18.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft10 = (byte)result;
+					pnl_Loft17.Invalidate();
+				}
+				else
+					tb17_loft18.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb17_loft18.Text = String.Empty; // recurse.
+		}
+		private void OnEnter17(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 18 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox17(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb17_loft18.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 18: " + result;
+				OnEnter17(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #18 loft 20 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged18(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb18_loft20.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft11 = (byte)result;
+					pnl_Loft18.Invalidate();
+				}
+				else
+					tb18_loft20.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb18_loft20.Text = String.Empty; // recurse.
+		}
+		private void OnEnter18(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 20 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox18(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb18_loft20.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 20: " + result;
+				OnEnter18(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #19 loft 22 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged19(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb19_loft22.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Loft12 = (byte)result;
+					pnl_Loft19.Invalidate();
+				}
+				else
+					tb19_loft22.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb19_loft22.Text = String.Empty; // recurse.
+		}
+		private void OnEnter19(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "loft 22 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox19(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb19_loft22.Text, out result))
+			{
+				tssl_Overvalue.Text = "loft 22: " + result;
+				OnEnter19(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
 		/// #22 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
@@ -1184,7 +1676,7 @@ namespace McdView
 
 				int result;
 				if (Int32.TryParse(tb44_deathid.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && result < Records.Length)
+					&&     ((strict && result > -1 && result < 256 && result < Records.Length) // NOTE: 'Records' shall not be null here.
 						|| (!strict && result > -1 && result < 256)))
 				{
 					Records[SelId].Record.DieTile = (byte)result;
@@ -1280,7 +1772,7 @@ namespace McdView
 
 				int result;
 				if (Int32.TryParse(tb46_alternateid.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && result < Records.Length)
+					&&     ((strict && result > -1 && result < 256 && result < Records.Length) // NOTE: 'Records' shall not be null here.
 						|| (!strict && result > -1 && result < 256)))
 				{
 					Records[SelId].Record.Alt_MCD = (byte)result;
