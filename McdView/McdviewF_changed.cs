@@ -2240,7 +2240,7 @@ namespace McdView
 								 + " A value of 255 means that the part is impervious to fire"
 								 + " although this could depend on the XCOM build; in any case"
 								 + " a value of 255 makes a part highly unlikely to burn. See"
-								 + " also #57 Fuel"
+								 + " also #57 Fuel."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0..255";
 		}
@@ -2793,7 +2793,7 @@ namespace McdView
 		private void OnEnter57(object sender, EventArgs e)
 		{
 			lbl_Description.Text = "Fuel (ubyte) is the number of turns that a part will"
-								 + " burn for once it catches fire. See #45 FireResist."
+								 + " burn once it catches fire. See #45 FireResist."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0..255";
 		}

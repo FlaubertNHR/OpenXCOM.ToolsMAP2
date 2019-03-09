@@ -497,7 +497,6 @@ namespace McdView
 		#region Events
 		private void OnTextChanged_SpriteShade(object sender, EventArgs e)
 		{
-			// TODO: "SpriteShade does NOT get saved."
 			int result;
 			if (Int32.TryParse(tb_SpriteShade.Text, out result))
 			{
@@ -505,27 +504,46 @@ namespace McdView
 				else if (result ==  0) tb_SpriteShade.Text =  "-1"; // recurse
 				else if (result > 100) tb_SpriteShade.Text = "100"; // recurse
 				else
+				{
 					SpriteShadeInt = result;
+					bar_SpriteShade.Value = (result != -1 ? result : 0);
+				}
 			}
 			else
 				tb_SpriteShade.Text = "-1"; // recurse
 		}
 
+		private void OnValueChanged_SpriteShade(object sender, EventArgs e)
+		{
+			int val = bar_SpriteShade.Value;
+			if (val == 0)
+				val = -1;
+
+			tb_SpriteShade.Text = val.ToString();
+		}
+
 		private void OnCheckChanged_Strict(object sender, EventArgs e)
 		{
-			if ((strict = cb_Strict.Checked) && SelId != -1)
+			if (strict = cb_Strict.Checked)
 			{
-				// TODO: test if any values are outside standard limits and issue
-				// a warning that checking STRICT will set those values to within
-				// regular operating bounds. If user chooses
-				//
-				//   Ignore: don't reset values
-				//   Retry:  reset values
-				//   Abort:  set STRICT unchecked.
-				//
-				// This needs to be done only when STRICT becomes checked;
-				// unchecking STRICT shall do nothing here.
+				lbl_Strict.ForeColor = SystemColors.ControlText;
+
+				if (SelId != -1)
+				{
+					// TODO: test if any values are outside standard limits and issue
+					// a warning that checking STRICT will set those values to within
+					// regular operating bounds. If user chooses
+					//
+					//   Ignore: don't reset values
+					//   Retry:  reset values
+					//   Abort:  set STRICT unchecked.
+					//
+					// This needs to be done only when STRICT becomes checked;
+					// unchecking STRICT shall do nothing here.
+				}
 			}
+			else
+				lbl_Strict.ForeColor = Color.Red;
 		}
 		#endregion Events
 

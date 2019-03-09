@@ -233,6 +233,7 @@
 		private System.Windows.Forms.CheckBox cb_Strict;
 		private System.Windows.Forms.Label lbl_Strict;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_Overvalue;
+		private System.Windows.Forms.TrackBar bar_SpriteShade;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -481,6 +482,7 @@
 			this.lbl_Description = new System.Windows.Forms.Label();
 			this.cb_Strict = new System.Windows.Forms.CheckBox();
 			this.lbl_Strict = new System.Windows.Forms.Label();
+			this.bar_SpriteShade = new System.Windows.Forms.TrackBar();
 			this.ss_Statusbar.SuspendLayout();
 			this.gb_Unused.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
@@ -495,6 +497,7 @@
 			this.gb_Health.SuspendLayout();
 			this.gb_General.SuspendLayout();
 			this.gb_Description.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bar_SpriteShade)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// mmMainMenu
@@ -3446,10 +3449,10 @@
 			// 
 			// lbl_SpriteShade
 			// 
-			this.lbl_SpriteShade.Location = new System.Drawing.Point(205, 660);
+			this.lbl_SpriteShade.Location = new System.Drawing.Point(180, 662);
 			this.lbl_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_SpriteShade.Name = "lbl_SpriteShade";
-			this.lbl_SpriteShade.Size = new System.Drawing.Size(75, 15);
+			this.lbl_SpriteShade.Size = new System.Drawing.Size(80, 15);
 			this.lbl_SpriteShade.TabIndex = 137;
 			this.lbl_SpriteShade.Text = "SpriteShade";
 			this.lbl_SpriteShade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3458,7 +3461,7 @@
 			// 
 			// tb_SpriteShade
 			// 
-			this.tb_SpriteShade.Location = new System.Drawing.Point(280, 658);
+			this.tb_SpriteShade.Location = new System.Drawing.Point(260, 660);
 			this.tb_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_SpriteShade.Name = "tb_SpriteShade";
 			this.tb_SpriteShade.Size = new System.Drawing.Size(35, 19);
@@ -3502,7 +3505,7 @@
 			this.cb_Strict.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.cb_Strict.Checked = true;
 			this.cb_Strict.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_Strict.Location = new System.Drawing.Point(280, 680);
+			this.cb_Strict.Location = new System.Drawing.Point(65, 680);
 			this.cb_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_Strict.Name = "cb_Strict";
 			this.cb_Strict.Size = new System.Drawing.Size(15, 15);
@@ -3516,22 +3519,37 @@
 			// 
 			// lbl_Strict
 			// 
-			this.lbl_Strict.Location = new System.Drawing.Point(205, 680);
+			this.lbl_Strict.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lbl_Strict.Location = new System.Drawing.Point(15, 680);
 			this.lbl_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Strict.Name = "lbl_Strict";
-			this.lbl_Strict.Size = new System.Drawing.Size(75, 15);
+			this.lbl_Strict.Size = new System.Drawing.Size(50, 15);
 			this.lbl_Strict.TabIndex = 141;
 			this.lbl_Strict.Text = "STRICT";
 			this.lbl_Strict.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl_Strict.MouseEnter += new System.EventHandler(this.OnEnterStrict);
 			this.lbl_Strict.MouseLeave += new System.EventHandler(this.OnMouseLeaveStrict);
 			// 
+			// bar_SpriteShade
+			// 
+			this.bar_SpriteShade.AutoSize = false;
+			this.bar_SpriteShade.Location = new System.Drawing.Point(175, 680);
+			this.bar_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
+			this.bar_SpriteShade.Maximum = 100;
+			this.bar_SpriteShade.Name = "bar_SpriteShade";
+			this.bar_SpriteShade.Size = new System.Drawing.Size(165, 16);
+			this.bar_SpriteShade.TabIndex = 142;
+			this.bar_SpriteShade.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.bar_SpriteShade.ValueChanged += new System.EventHandler(this.OnValueChanged_SpriteShade);
+			// 
 			// McdviewF
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(722, 835);
+			this.Controls.Add(this.bar_SpriteShade);
 			this.Controls.Add(this.gb_Block);
+			this.Controls.Add(this.lbl_SpriteShade);
 			this.Controls.Add(this.tb_SpriteShade);
 			this.Controls.Add(this.cb_Strict);
 			this.Controls.Add(this.lbl_Strict);
@@ -3549,7 +3567,6 @@
 			this.Controls.Add(this.gb_Tu);
 			this.Controls.Add(this.gb_Minimap);
 			this.Controls.Add(this.gb_Unused);
-			this.Controls.Add(this.lbl_SpriteShade);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MaximumSize = new System.Drawing.Size(730, 861);
 			this.Menu = this.mmMainMenu;
@@ -3583,6 +3600,7 @@
 			this.gb_General.ResumeLayout(false);
 			this.gb_General.PerformLayout();
 			this.gb_Description.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.bar_SpriteShade)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
