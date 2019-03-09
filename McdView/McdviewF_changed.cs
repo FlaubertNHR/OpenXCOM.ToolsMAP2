@@ -1059,6 +1059,109 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// #20|21 ScanG - this is a special mouseover handler for the ScanG labels.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMouseEnterLabel20(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "ScanG (unsigned short) is a reference"
+								 + " to an icon in SCANG.DAT that represents a part on"
+								 + " the overhead Minimap during tactical.";
+		}
+
+		/// <summary>
+		/// #20|21 ScanG (little endian unsigned short) + 35
+		/// @note This is the value in the MCD file with 35 added = the ID in
+		/// SCANG.DAT.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged20(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb20_scang1.Text, out result)
+					&&     ((strict && result > 34 && result < 65571 && (ScanG == null || result < ScanG.Length / 16))
+						|| (!strict && result > 34 && result < 65571)))
+				{
+					Records[SelId].Record.ScanG         = (byte)(result);
+					Records[SelId].Record.ScanG_reduced = (byte)(result - 35);
+
+					tb20_scang2.Text = (result - 35).ToString();
+					pnl_ScanGic.Invalidate();
+				}
+				else
+					tb20_scang1.Text = "35"; // recurse w/ default.
+			}
+			else
+				tb20_scang1.Text = String.Empty; // recurse.
+		}
+		private void OnEnter20(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "ScanG (unsigned short) + 35"
+								 + Environment.NewLine + Environment.NewLine
+								 + "35.." + (ScanG != null ? (ScanG.Length / 16 - 1).ToString() : "65570");
+		}
+		private void OnMouseEnterTextbox20(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb20_scang1.Text, out result))
+			{
+				tssl_Overvalue.Text = "ScanG: " + result;
+				OnEnter20(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #20|21 ScanG_reduced (little endian unsigned short)
+		/// @note This is the unadjusted value in the MCD file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged20r(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb20_scang2.Text, out result)
+					&&     ((strict && result > -1 && result < 65536 && (ScanG == null || result < ScanG.Length / 16 - 35))
+						|| (!strict && result > -1 && result < 65536)))
+				{
+					Records[SelId].Record.ScanG         = (byte)(result + 35);
+					Records[SelId].Record.ScanG_reduced = (byte)(result);
+
+					tb20_scang1.Text = (result + 35).ToString();
+					pnl_ScanGic.Invalidate();
+				}
+				else
+					tb20_scang2.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb20_scang2.Text = String.Empty; // recurse.
+		}
+		private void OnEnter20r(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "ScanG_reduced (unsigned short)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (ScanG != null ? (ScanG.Length / 16 - 36).ToString() : "65535");
+		}
+		private void OnMouseEnterTextbox20r(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb20_scang2.Text, out result))
+			{
+				tssl_Overvalue.Text = "ScanG_reduced: " + result;
+				OnEnter20r(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
 		/// #22 (byte)
 		/// </summary>
 		/// <param name="sender"></param>

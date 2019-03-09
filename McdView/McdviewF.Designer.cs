@@ -550,6 +550,8 @@
 			this.lbl20_scang.TabIndex = 0;
 			this.lbl20_scang.Text = "ScanG";
 			this.lbl20_scang.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl20_scang.MouseEnter += new System.EventHandler(this.OnMouseEnterLabel20);
+			this.lbl20_scang.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl30_isslidingdoor
 			// 
@@ -572,6 +574,8 @@
 			this.lbl20.TabIndex = 2;
 			this.lbl20.Text = "#20|21";
 			this.lbl20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl20.MouseEnter += new System.EventHandler(this.OnMouseEnterLabel20);
+			this.lbl20.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl30
 			// 
@@ -2827,6 +2831,11 @@
 			this.tb20_scang2.TabIndex = 4;
 			this.tb20_scang2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb20_scang2.WordWrap = false;
+			this.tb20_scang2.TextChanged += new System.EventHandler(this.OnChanged20r);
+			this.tb20_scang2.Enter += new System.EventHandler(this.OnEnter20r);
+			this.tb20_scang2.Leave += new System.EventHandler(this.OnLeave);
+			this.tb20_scang2.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox20r);
+			this.tb20_scang2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb20_scang1
 			// 
@@ -2837,6 +2846,11 @@
 			this.tb20_scang1.TabIndex = 3;
 			this.tb20_scang1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb20_scang1.WordWrap = false;
+			this.tb20_scang1.TextChanged += new System.EventHandler(this.OnChanged20);
+			this.tb20_scang1.Enter += new System.EventHandler(this.OnEnter20);
+			this.tb20_scang1.Leave += new System.EventHandler(this.OnLeave);
+			this.tb20_scang1.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox20);
+			this.tb20_scang1.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Tu
 			// 
