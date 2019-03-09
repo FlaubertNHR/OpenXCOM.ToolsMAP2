@@ -175,6 +175,398 @@ namespace McdView
 
 
 		/// <summary>
+		/// #0 phase 0 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged0(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb0_phase0.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Sprite1 = (byte)result;
+					if (Spriteset != null && result < Spriteset.Count)
+					{
+						Records[SelId].Anisprites[0] = Spriteset[result];
+					}
+					else
+						Records[SelId].Anisprites[0] = null;
+
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb0_phase0.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb0_phase0.Text = String.Empty; // recurse.
+		}
+		private void OnEnter0(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "phase 0 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox0(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb0_phase0.Text, out result))
+			{
+				tssl_Overvalue.Text = "phase 0: " + result;
+				OnEnter0(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #1 phase 1 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged1(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb1_phase1.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Sprite2 = (byte)result;
+					if (Spriteset != null && result < Spriteset.Count)
+					{
+						Records[SelId].Anisprites[1] = Spriteset[result];
+					}
+					else
+						Records[SelId].Anisprites[1] = null;
+
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb1_phase1.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb1_phase1.Text = String.Empty; // recurse.
+		}
+		private void OnEnter1(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "phase 1 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox1(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb1_phase1.Text, out result))
+			{
+				tssl_Overvalue.Text = "phase 1: " + result;
+				OnEnter1(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #2 phase 2 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged2(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb2_phase2.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Sprite3 = (byte)result;
+					if (Spriteset != null && result < Spriteset.Count)
+					{
+						Records[SelId].Anisprites[2] = Spriteset[result];
+					}
+					else
+						Records[SelId].Anisprites[2] = null;
+
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb2_phase2.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb2_phase2.Text = String.Empty; // recurse.
+		}
+		private void OnEnter2(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "phase 2 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox2(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb2_phase2.Text, out result))
+			{
+				tssl_Overvalue.Text = "phase 2: " + result;
+				OnEnter2(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #3 phase 3 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged3(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb3_phase3.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Sprite4 = (byte)result;
+					if (Spriteset != null && result < Spriteset.Count)
+					{
+						Records[SelId].Anisprites[3] = Spriteset[result];
+					}
+					else
+						Records[SelId].Anisprites[3] = null;
+
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb3_phase3.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb3_phase3.Text = String.Empty; // recurse.
+		}
+		private void OnEnter3(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "phase 3 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox3(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb3_phase3.Text, out result))
+			{
+				tssl_Overvalue.Text = "phase 3: " + result;
+				OnEnter3(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #4 phase 4 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged4(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb4_phase4.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Sprite5 = (byte)result;
+					if (Spriteset != null && result < Spriteset.Count)
+					{
+						Records[SelId].Anisprites[4] = Spriteset[result];
+					}
+					else
+						Records[SelId].Anisprites[4] = null;
+
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb4_phase4.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb4_phase4.Text = String.Empty; // recurse.
+		}
+		private void OnEnter4(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "phase 4 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox4(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb4_phase4.Text, out result))
+			{
+				tssl_Overvalue.Text = "phase 4: " + result;
+				OnEnter4(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #5 phase 5 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged5(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb5_phase5.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Sprite6 = (byte)result;
+					if (Spriteset != null && result < Spriteset.Count)
+					{
+						Records[SelId].Anisprites[5] = Spriteset[result];
+					}
+					else
+						Records[SelId].Anisprites[5] = null;
+
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb5_phase5.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb5_phase5.Text = String.Empty; // recurse.
+		}
+		private void OnEnter5(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "phase 5 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox5(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb5_phase5.Text, out result))
+			{
+				tssl_Overvalue.Text = "phase 5: " + result;
+				OnEnter5(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #6 phase 6 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged6(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb6_phase6.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Sprite7 = (byte)result;
+					if (Spriteset != null && result < Spriteset.Count)
+					{
+						Records[SelId].Anisprites[6] = Spriteset[result];
+					}
+					else
+						Records[SelId].Anisprites[6] = null;
+
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb6_phase6.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb6_phase6.Text = String.Empty; // recurse.
+		}
+		private void OnEnter6(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "phase 6 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox6(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb6_phase6.Text, out result))
+			{
+				tssl_Overvalue.Text = "phase 6: " + result;
+				OnEnter6(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
+		/// #7 phase 7 (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnChanged7(object sender, EventArgs e)
+		{
+			if (SelId != -1)
+			{
+				Changed |= !InitFields;
+
+				int result;
+				if (Int32.TryParse(tb7_phase7.Text, out result)
+					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+						|| (!strict && result > -1 && result < 256)))
+				{
+					Records[SelId].Record.Sprite8 = (byte)result;
+					if (Spriteset != null && result < Spriteset.Count)
+					{
+						Records[SelId].Anisprites[7] = Spriteset[result];
+					}
+					else
+						Records[SelId].Anisprites[7] = null;
+
+					RecordPanel.Invalidate();
+					pnl_Sprites.Invalidate();
+				}
+				else
+					tb7_phase7.Text = "0"; // recurse w/ default.
+			}
+			else
+				tb7_phase7.Text = String.Empty; // recurse.
+		}
+		private void OnEnter7(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "phase 7 (ubyte)"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
+		}
+		private void OnMouseEnterTextbox7(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb7_phase7.Text, out result))
+			{
+				tssl_Overvalue.Text = "phase 7: " + result;
+				OnEnter7(null, EventArgs.Empty);
+			}
+		}
+
+		/// <summary>
 		/// #8 loft 00 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
