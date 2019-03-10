@@ -174,6 +174,12 @@ namespace McdView
 			} */
 
 
+		private string GetPhaseDescription()
+		{
+			return " Terrain sprites typically cycle through eight phases ("
+				 + "sliding doors are static at phase 0 - see #30 isSlidingDoor).";
+		}
+
 		/// <summary>
 		/// #0 phase 0 (byte)
 		/// </summary>
@@ -209,7 +215,7 @@ namespace McdView
 		}
 		private void OnEnter0(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 0 (ubyte)"
+			lbl_Description.Text = "phase 0 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -258,7 +264,7 @@ namespace McdView
 		}
 		private void OnEnter1(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 1 (ubyte)"
+			lbl_Description.Text = "phase 1 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -307,7 +313,7 @@ namespace McdView
 		}
 		private void OnEnter2(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 2 (ubyte)"
+			lbl_Description.Text = "phase 2 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -356,7 +362,7 @@ namespace McdView
 		}
 		private void OnEnter3(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 3 (ubyte)"
+			lbl_Description.Text = "phase 3 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -405,7 +411,7 @@ namespace McdView
 		}
 		private void OnEnter4(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 4 (ubyte)"
+			lbl_Description.Text = "phase 4 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -454,7 +460,7 @@ namespace McdView
 		}
 		private void OnEnter5(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 5 (ubyte)"
+			lbl_Description.Text = "phase 5 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -503,7 +509,7 @@ namespace McdView
 		}
 		private void OnEnter6(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 6 (ubyte)"
+			lbl_Description.Text = "phase 6 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -552,7 +558,7 @@ namespace McdView
 		}
 		private void OnEnter7(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 7 (ubyte)"
+			lbl_Description.Text = "phase 7 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -564,6 +570,14 @@ namespace McdView
 				tssl_Overvalue.Text = "phase 7: " + result;
 				OnEnter7(null, EventArgs.Empty);
 			}
+		}
+
+		private string GetLoftDescription()
+		{
+			return " Line of Fire Templates (LoFTs) are representations of solid voxel-space"
+				 + " (white in the graphical icons to the right). A 3d-tile in XCOM has"
+				 + " x/y/z dimensions of 16/16/24 voxels, and each of the twelve"
+				 + " templates is double-layered to stack to the total 24-voxel height.";
 		}
 
 		/// <summary>
@@ -594,7 +608,7 @@ namespace McdView
 		}
 		private void OnEnter8(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 00 (ubyte)"
+			lbl_Description.Text = "loft 00 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -636,7 +650,7 @@ namespace McdView
 		}
 		private void OnEnter9(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 02 (ubyte)"
+			lbl_Description.Text = "loft 02 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -678,7 +692,7 @@ namespace McdView
 		}
 		private void OnEnter10(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 04 (ubyte)"
+			lbl_Description.Text = "loft 04 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -720,7 +734,7 @@ namespace McdView
 		}
 		private void OnEnter11(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 06 (ubyte)"
+			lbl_Description.Text = "loft 06 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -762,7 +776,7 @@ namespace McdView
 		}
 		private void OnEnter12(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 08 (ubyte)"
+			lbl_Description.Text = "loft 08 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -804,7 +818,7 @@ namespace McdView
 		}
 		private void OnEnter13(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 10 (ubyte)"
+			lbl_Description.Text = "loft 10 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -846,7 +860,7 @@ namespace McdView
 		}
 		private void OnEnter14(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 12 (ubyte)"
+			lbl_Description.Text = "loft 12 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -888,7 +902,7 @@ namespace McdView
 		}
 		private void OnEnter15(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 14 (ubyte)"
+			lbl_Description.Text = "loft 14 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -930,7 +944,7 @@ namespace McdView
 		}
 		private void OnEnter16(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 16 (ubyte)"
+			lbl_Description.Text = "loft 16 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -972,7 +986,7 @@ namespace McdView
 		}
 		private void OnEnter17(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 18 (ubyte)"
+			lbl_Description.Text = "loft 18 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -1014,7 +1028,7 @@ namespace McdView
 		}
 		private void OnEnter18(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 20 (ubyte)"
+			lbl_Description.Text = "loft 20 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -1056,7 +1070,7 @@ namespace McdView
 		}
 		private void OnEnter19(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 22 (ubyte)"
+			lbl_Description.Text = "loft 22 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
@@ -1520,12 +1534,14 @@ namespace McdView
 		private void OnEnter30(object sender, EventArgs e)
 		{
 			lbl_Description.Text = "isSlidingDoor (bool) is a true/false value that is relevant only to"
-								 + " westwall and northwall parts. Such a part will cycle through its"
-								 + " first four animation sprites when opened, then the part will be"
-								 + " replaced by the part designated as its AlternateId; at the end"
-								 + " of the turn it will revert to the orginal part. Note that"
-								 + " specifying a part as both isSlidingDoor and isHingedDoor might have"
-								 + " an unpredictable effect. See #46 AlternateId."
+								 + " westwall and northwall parts. Such a part will iterate through the"
+								 + " phases of its animation sprites while opening (see #0..7 phase 0..7);"
+								 + " only the first four phases are iterated if the part is designated"
+								 + " as an EntryPoint (see #59 SpecialType) otherwise all eight phases"
+								 + " are iterated. A sliding door displays its phase 7 sprite while open,"
+								 + " then at the end of the turn it closes and reverts to phase 0."
+								 + " Note that specifying a part as both isSlidingDoor and #35 isHingedDoor"
+								 + " could have an unpredictable effect."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0 False, 1 True";
 		}
@@ -1777,8 +1793,8 @@ namespace McdView
 			lbl_Description.Text = "isHingedDoor (bool) is a true/false value that is relevant only to"
 								 + " westwall and northwall parts. Such a part will be replaced by the"
 								 + " part designated as its AlternateId when opened. Note that"
-								 + " specifying a part as both isHingedDoor and isSlidingDoor might have"
-								 + " an unpredictable effect. See #46 AlternateId."
+								 + " specifying a part as both isHingedDoor and #30 isSlidingDoor could"
+								 + " have an unpredictable effect. See #46 AlternateId."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0 False, 1 True";
 		}
@@ -2300,11 +2316,11 @@ namespace McdView
 		private void OnEnter46(object sender, EventArgs e)
 		{
 			lbl_Description.Text = "AlternateId (ubyte) is the ID of the part that will replace a"
-								 + " part that is a door and has been opened. The alternate-part"
+								 + " part that is a hinged door and has been opened. The alternate-part"
 								 + " should be in the MCD file with the original part. A value of"
 								 + " 0 indicates that if a part is opened it will not be replaced"
 								 + " by an alternate-part; that is, a value of 0 does not"
-								 + " reference ID #0. See #30 isSlidingDoor and #35 isHingedDoor."
+								 + " reference ID #0. See #35 isHingedDoor."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Records != null ? (Records.Length - 1).ToString() : "255");
 		}
