@@ -27,8 +27,7 @@ namespace McdView
 
 			//     p0
 			// p5      p1
-			//
-			//
+			//     .
 			// p4      p2
 			//     p3
 
@@ -36,8 +35,8 @@ namespace McdView
 			var p1 = new Point(pnlwidth / 2 - 1 + width * 10 + 4, pnlheight - (OFFSET_VERT + height * 18));
 			var p2 = new Point(pnlwidth / 2 - 1 + width * 10 + 4, pnlheight - (OFFSET_VERT + height *  6));
 			var p3 = new Point(pnlwidth / 2 - 1,                  pnlheight - (OFFSET_VERT));
-			var p4 = new Point(pnlwidth / 2 - 1 - width * 10 - 3, pnlheight - (OFFSET_VERT + height *  6));
-			var p5 = new Point(pnlwidth / 2 - 1 - width * 10 - 3, pnlheight - (OFFSET_VERT + height * 18));
+			var p4 = new Point(pnlwidth / 2 - 1 - width * 10 - 3, pnlheight - (OFFSET_VERT + height *  6) + 1);
+			var p5 = new Point(pnlwidth / 2 - 1 - width * 10 - 3, pnlheight - (OFFSET_VERT + height * 18) - 1);
 
 			var cuboid = new GraphicsPath();
 
@@ -63,11 +62,13 @@ namespace McdView
 			int width  = McdviewF.Isocube.Width;
 			int height = McdviewF.Isocube.Height;
 
+			//     .
 			// p0      p2
 			//     p1
-			//
+			// .       .
+			//     .
 
-			var p0 = new Point(pnlwidth / 2 - 1 - width * 10 - 3, pnlheight - (OFFSET_VERT + height * 18));
+			var p0 = new Point(pnlwidth / 2 - 1 - width * 10 - 3, pnlheight - (OFFSET_VERT + height * 18) - 1);
 			var p1 = new Point(pnlwidth / 2 - 1,                  pnlheight - (OFFSET_VERT + height * 12));
 			var p2 = new Point(pnlwidth / 2 - 1 + width * 10 + 4, pnlheight - (OFFSET_VERT + height * 18));
 
@@ -91,11 +92,13 @@ namespace McdView
 			int width  = McdviewF.Isocube.Width;
 			int height = McdviewF.Isocube.Height;
 
-			//
+			//     .
+			// .       .
 			//     p1
 			// p0      p2
+			//     .
 
-			var p0 = new Point(pnlwidth / 2 - 1 - width * 10 - 3, pnlheight - (OFFSET_VERT + height *  6));
+			var p0 = new Point(pnlwidth / 2 - 1 - width * 10 - 3, pnlheight - (OFFSET_VERT + height *  6) + 1);
 			var p1 = new Point(pnlwidth / 2 - 1,                  pnlheight - (OFFSET_VERT + height * 12));
 			var p2 = new Point(pnlwidth / 2 - 1 + width * 10 + 4, pnlheight - (OFFSET_VERT + height *  6));
 
@@ -119,9 +122,10 @@ namespace McdView
 			int height = McdviewF.Isocube.Height;
 
 			//     p0
-			//
+			// .       .
 			//     p1
-			//
+			// .       .
+			//     .
 
 			var p0 = new Point(pnlwidth / 2 - 1, pnlheight - (OFFSET_VERT + height * 24));
 			var p1 = new Point(pnlwidth / 2 - 1, pnlheight - (OFFSET_VERT + height * 12));
@@ -144,9 +148,10 @@ namespace McdView
 		{
 			int height = McdviewF.Isocube.Height;
 
-			//
+			//     .
+			// .       .
 			//     p0
-			//
+			// .       .
 			//     p1
 
 			var p0 = new Point(pnlwidth / 2 - 1, pnlheight - (OFFSET_VERT + height * 12));
