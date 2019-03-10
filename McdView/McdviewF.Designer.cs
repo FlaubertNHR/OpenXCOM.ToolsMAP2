@@ -234,6 +234,8 @@
 		private System.Windows.Forms.Label lbl_Strict;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_Overvalue;
 		private System.Windows.Forms.TrackBar bar_SpriteShade;
+		private System.Windows.Forms.Panel pnl_IsoLoft;
+		private System.Windows.Forms.TrackBar bar_IsoLoft;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -388,6 +390,7 @@
 			this.ss_Statusbar = new System.Windows.Forms.StatusStrip();
 			this.tssl_Overvalue = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gb_Unused = new System.Windows.Forms.GroupBox();
+			this.tb38_leftrighthalf = new System.Windows.Forms.TextBox();
 			this.tb61_ = new System.Windows.Forms.TextBox();
 			this.tb50_ = new System.Windows.Forms.TextBox();
 			this.tb47_ = new System.Windows.Forms.TextBox();
@@ -434,7 +437,6 @@
 			this.tb2_phase2 = new System.Windows.Forms.TextBox();
 			this.tb1_phase1 = new System.Windows.Forms.TextBox();
 			this.tb0_phase0 = new System.Windows.Forms.TextBox();
-			this.tb38_leftrighthalf = new System.Windows.Forms.TextBox();
 			this.gb_Collection = new System.Windows.Forms.GroupBox();
 			this.gb_Minimap = new System.Windows.Forms.GroupBox();
 			this.pnl_ScanGic = new System.Windows.Forms.Panel();
@@ -483,6 +485,8 @@
 			this.cb_Strict = new System.Windows.Forms.CheckBox();
 			this.lbl_Strict = new System.Windows.Forms.Label();
 			this.bar_SpriteShade = new System.Windows.Forms.TrackBar();
+			this.pnl_IsoLoft = new System.Windows.Forms.Panel();
+			this.bar_IsoLoft = new System.Windows.Forms.TrackBar();
 			this.ss_Statusbar.SuspendLayout();
 			this.gb_Unused.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
@@ -498,6 +502,7 @@
 			this.gb_General.SuspendLayout();
 			this.gb_Description.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.bar_SpriteShade)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.bar_IsoLoft)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// mmMainMenu
@@ -762,7 +767,7 @@
 			// 
 			// lbl38
 			// 
-			this.lbl38.Location = new System.Drawing.Point(15, 145);
+			this.lbl38.Location = new System.Drawing.Point(10, 175);
 			this.lbl38.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl38.Name = "lbl38";
 			this.lbl38.Size = new System.Drawing.Size(30, 15);
@@ -774,12 +779,12 @@
 			// 
 			// lbl38_leftrighthalf
 			// 
-			this.lbl38_leftrighthalf.Location = new System.Drawing.Point(45, 145);
+			this.lbl38_leftrighthalf.Location = new System.Drawing.Point(40, 175);
 			this.lbl38_leftrighthalf.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl38_leftrighthalf.Name = "lbl38_leftrighthalf";
 			this.lbl38_leftrighthalf.Size = new System.Drawing.Size(85, 15);
 			this.lbl38_leftrighthalf.TabIndex = 18;
-			this.lbl38_leftrighthalf.Text = "LeftRightHalf";
+			this.lbl38_leftrighthalf.Text = "draw half";
 			this.lbl38_leftrighthalf.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl38_leftrighthalf.MouseEnter += new System.EventHandler(this.OnEnter38);
 			this.lbl38_leftrighthalf.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -978,7 +983,7 @@
 			// 
 			// lbl47
 			// 
-			this.lbl47.Location = new System.Drawing.Point(10, 175);
+			this.lbl47.Location = new System.Drawing.Point(10, 195);
 			this.lbl47.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl47.Name = "lbl47";
 			this.lbl47.Size = new System.Drawing.Size(30, 15);
@@ -990,12 +995,12 @@
 			// 
 			// lbl47_
 			// 
-			this.lbl47_.Location = new System.Drawing.Point(50, 173);
+			this.lbl47_.Location = new System.Drawing.Point(40, 195);
 			this.lbl47_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl47_.Name = "lbl47_";
-			this.lbl47_.Size = new System.Drawing.Size(75, 15);
+			this.lbl47_.Size = new System.Drawing.Size(85, 15);
 			this.lbl47_.TabIndex = 36;
-			this.lbl47_.Text = "_";
+			this.lbl47_.Text = "close doors";
 			this.lbl47_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl47_.MouseEnter += new System.EventHandler(this.OnEnter47);
 			this.lbl47_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1050,7 +1055,7 @@
 			// 
 			// lbl50
 			// 
-			this.lbl50.Location = new System.Drawing.Point(10, 195);
+			this.lbl50.Location = new System.Drawing.Point(10, 215);
 			this.lbl50.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl50.Name = "lbl50";
 			this.lbl50.Size = new System.Drawing.Size(30, 15);
@@ -1062,12 +1067,12 @@
 			// 
 			// lbl50_
 			// 
-			this.lbl50_.Location = new System.Drawing.Point(50, 195);
+			this.lbl50_.Location = new System.Drawing.Point(40, 215);
 			this.lbl50_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl50_.Name = "lbl50_";
-			this.lbl50_.Size = new System.Drawing.Size(75, 15);
+			this.lbl50_.Size = new System.Drawing.Size(85, 15);
 			this.lbl50_.TabIndex = 42;
-			this.lbl50_.Text = "_";
+			this.lbl50_.Text = "dType mod";
 			this.lbl50_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl50_.MouseEnter += new System.EventHandler(this.OnEnter50);
 			this.lbl50_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1314,7 +1319,7 @@
 			// 
 			// lbl61
 			// 
-			this.lbl61.Location = new System.Drawing.Point(10, 215);
+			this.lbl61.Location = new System.Drawing.Point(10, 235);
 			this.lbl61.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl61.Name = "lbl61";
 			this.lbl61.Size = new System.Drawing.Size(30, 15);
@@ -1326,12 +1331,12 @@
 			// 
 			// lbl61_
 			// 
-			this.lbl61_.Location = new System.Drawing.Point(50, 215);
+			this.lbl61_.Location = new System.Drawing.Point(40, 235);
 			this.lbl61_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl61_.Name = "lbl61_";
-			this.lbl61_.Size = new System.Drawing.Size(75, 15);
+			this.lbl61_.Size = new System.Drawing.Size(85, 15);
 			this.lbl61_.TabIndex = 65;
-			this.lbl61_.Text = "_";
+			this.lbl61_.Text = "victory pts";
 			this.lbl61_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl61_.MouseEnter += new System.EventHandler(this.OnEnter61);
 			this.lbl61_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1626,7 +1631,7 @@
 			// 
 			// lbl0
 			// 
-			this.lbl0.Location = new System.Drawing.Point(10, 125);
+			this.lbl0.Location = new System.Drawing.Point(10, 120);
 			this.lbl0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl0.Name = "lbl0";
 			this.lbl0.Size = new System.Drawing.Size(20, 15);
@@ -1638,7 +1643,7 @@
 			// 
 			// lbl0_phase0
 			// 
-			this.lbl0_phase0.Location = new System.Drawing.Point(30, 125);
+			this.lbl0_phase0.Location = new System.Drawing.Point(30, 120);
 			this.lbl0_phase0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl0_phase0.Name = "lbl0_phase0";
 			this.lbl0_phase0.Size = new System.Drawing.Size(50, 15);
@@ -1650,7 +1655,7 @@
 			// 
 			// lbl1
 			// 
-			this.lbl1.Location = new System.Drawing.Point(90, 125);
+			this.lbl1.Location = new System.Drawing.Point(90, 120);
 			this.lbl1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl1.Name = "lbl1";
 			this.lbl1.Size = new System.Drawing.Size(20, 15);
@@ -1662,7 +1667,7 @@
 			// 
 			// lbl1_phase1
 			// 
-			this.lbl1_phase1.Location = new System.Drawing.Point(110, 125);
+			this.lbl1_phase1.Location = new System.Drawing.Point(110, 120);
 			this.lbl1_phase1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl1_phase1.Name = "lbl1_phase1";
 			this.lbl1_phase1.Size = new System.Drawing.Size(50, 15);
@@ -1674,7 +1679,7 @@
 			// 
 			// lbl2
 			// 
-			this.lbl2.Location = new System.Drawing.Point(170, 125);
+			this.lbl2.Location = new System.Drawing.Point(170, 120);
 			this.lbl2.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl2.Name = "lbl2";
 			this.lbl2.Size = new System.Drawing.Size(20, 15);
@@ -1686,7 +1691,7 @@
 			// 
 			// lbl2_phase2
 			// 
-			this.lbl2_phase2.Location = new System.Drawing.Point(190, 125);
+			this.lbl2_phase2.Location = new System.Drawing.Point(190, 120);
 			this.lbl2_phase2.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl2_phase2.Name = "lbl2_phase2";
 			this.lbl2_phase2.Size = new System.Drawing.Size(50, 15);
@@ -1698,7 +1703,7 @@
 			// 
 			// lbl3
 			// 
-			this.lbl3.Location = new System.Drawing.Point(245, 125);
+			this.lbl3.Location = new System.Drawing.Point(245, 120);
 			this.lbl3.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl3.Name = "lbl3";
 			this.lbl3.Size = new System.Drawing.Size(20, 15);
@@ -1710,7 +1715,7 @@
 			// 
 			// lbl3_phase3
 			// 
-			this.lbl3_phase3.Location = new System.Drawing.Point(265, 125);
+			this.lbl3_phase3.Location = new System.Drawing.Point(265, 120);
 			this.lbl3_phase3.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl3_phase3.Name = "lbl3_phase3";
 			this.lbl3_phase3.Size = new System.Drawing.Size(50, 15);
@@ -1722,7 +1727,7 @@
 			// 
 			// lbl7
 			// 
-			this.lbl7.Location = new System.Drawing.Point(560, 125);
+			this.lbl7.Location = new System.Drawing.Point(560, 120);
 			this.lbl7.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl7.Name = "lbl7";
 			this.lbl7.Size = new System.Drawing.Size(20, 15);
@@ -1734,7 +1739,7 @@
 			// 
 			// lbl7_phase7
 			// 
-			this.lbl7_phase7.Location = new System.Drawing.Point(580, 125);
+			this.lbl7_phase7.Location = new System.Drawing.Point(580, 120);
 			this.lbl7_phase7.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl7_phase7.Name = "lbl7_phase7";
 			this.lbl7_phase7.Size = new System.Drawing.Size(50, 15);
@@ -1746,7 +1751,7 @@
 			// 
 			// lbl6
 			// 
-			this.lbl6.Location = new System.Drawing.Point(480, 125);
+			this.lbl6.Location = new System.Drawing.Point(480, 120);
 			this.lbl6.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl6.Name = "lbl6";
 			this.lbl6.Size = new System.Drawing.Size(20, 15);
@@ -1758,7 +1763,7 @@
 			// 
 			// lbl6_phase6
 			// 
-			this.lbl6_phase6.Location = new System.Drawing.Point(500, 125);
+			this.lbl6_phase6.Location = new System.Drawing.Point(500, 120);
 			this.lbl6_phase6.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl6_phase6.Name = "lbl6_phase6";
 			this.lbl6_phase6.Size = new System.Drawing.Size(50, 15);
@@ -1770,7 +1775,7 @@
 			// 
 			// lbl5
 			// 
-			this.lbl5.Location = new System.Drawing.Point(400, 125);
+			this.lbl5.Location = new System.Drawing.Point(400, 120);
 			this.lbl5.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl5.Name = "lbl5";
 			this.lbl5.Size = new System.Drawing.Size(20, 15);
@@ -1782,7 +1787,7 @@
 			// 
 			// lbl5_phase5
 			// 
-			this.lbl5_phase5.Location = new System.Drawing.Point(420, 125);
+			this.lbl5_phase5.Location = new System.Drawing.Point(420, 120);
 			this.lbl5_phase5.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl5_phase5.Name = "lbl5_phase5";
 			this.lbl5_phase5.Size = new System.Drawing.Size(50, 15);
@@ -1794,7 +1799,7 @@
 			// 
 			// lbl4
 			// 
-			this.lbl4.Location = new System.Drawing.Point(320, 125);
+			this.lbl4.Location = new System.Drawing.Point(320, 120);
 			this.lbl4.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl4.Name = "lbl4";
 			this.lbl4.Size = new System.Drawing.Size(20, 15);
@@ -1806,7 +1811,7 @@
 			// 
 			// lbl4_phase4
 			// 
-			this.lbl4_phase4.Location = new System.Drawing.Point(340, 125);
+			this.lbl4_phase4.Location = new System.Drawing.Point(340, 120);
 			this.lbl4_phase4.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl4_phase4.Name = "lbl4_phase4";
 			this.lbl4_phase4.Size = new System.Drawing.Size(50, 15);
@@ -1830,12 +1835,12 @@
 			// 
 			// lbl22_
 			// 
-			this.lbl22_.Location = new System.Drawing.Point(50, 15);
+			this.lbl22_.Location = new System.Drawing.Point(40, 15);
 			this.lbl22_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl22_.Name = "lbl22_";
-			this.lbl22_.Size = new System.Drawing.Size(75, 15);
+			this.lbl22_.Size = new System.Drawing.Size(85, 15);
 			this.lbl22_.TabIndex = 107;
-			this.lbl22_.Text = "_";
+			this.lbl22_.Text = "tab ram";
 			this.lbl22_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl22_.MouseEnter += new System.EventHandler(this.OnEnter22);
 			this.lbl22_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1854,12 +1859,12 @@
 			// 
 			// lbl23_
 			// 
-			this.lbl23_.Location = new System.Drawing.Point(50, 35);
+			this.lbl23_.Location = new System.Drawing.Point(40, 35);
 			this.lbl23_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl23_.Name = "lbl23_";
-			this.lbl23_.Size = new System.Drawing.Size(75, 15);
+			this.lbl23_.Size = new System.Drawing.Size(85, 15);
 			this.lbl23_.TabIndex = 109;
-			this.lbl23_.Text = "_";
+			this.lbl23_.Text = "tab ram";
 			this.lbl23_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl23_.MouseEnter += new System.EventHandler(this.OnEnter23);
 			this.lbl23_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1878,12 +1883,12 @@
 			// 
 			// lbl24_
 			// 
-			this.lbl24_.Location = new System.Drawing.Point(50, 55);
+			this.lbl24_.Location = new System.Drawing.Point(40, 55);
 			this.lbl24_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl24_.Name = "lbl24_";
-			this.lbl24_.Size = new System.Drawing.Size(75, 15);
+			this.lbl24_.Size = new System.Drawing.Size(85, 15);
 			this.lbl24_.TabIndex = 111;
-			this.lbl24_.Text = "_";
+			this.lbl24_.Text = "tab ram";
 			this.lbl24_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl24_.MouseEnter += new System.EventHandler(this.OnEnter24);
 			this.lbl24_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1902,12 +1907,12 @@
 			// 
 			// lbl25_
 			// 
-			this.lbl25_.Location = new System.Drawing.Point(50, 75);
+			this.lbl25_.Location = new System.Drawing.Point(40, 75);
 			this.lbl25_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl25_.Name = "lbl25_";
-			this.lbl25_.Size = new System.Drawing.Size(75, 15);
+			this.lbl25_.Size = new System.Drawing.Size(85, 15);
 			this.lbl25_.TabIndex = 113;
-			this.lbl25_.Text = "_";
+			this.lbl25_.Text = "tab ram";
 			this.lbl25_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl25_.MouseEnter += new System.EventHandler(this.OnEnter25);
 			this.lbl25_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1926,12 +1931,12 @@
 			// 
 			// lbl26_
 			// 
-			this.lbl26_.Location = new System.Drawing.Point(50, 95);
+			this.lbl26_.Location = new System.Drawing.Point(40, 95);
 			this.lbl26_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl26_.Name = "lbl26_";
-			this.lbl26_.Size = new System.Drawing.Size(75, 15);
+			this.lbl26_.Size = new System.Drawing.Size(85, 15);
 			this.lbl26_.TabIndex = 115;
-			this.lbl26_.Text = "_";
+			this.lbl26_.Text = "pck ram";
 			this.lbl26_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl26_.MouseEnter += new System.EventHandler(this.OnEnter26);
 			this.lbl26_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1950,12 +1955,12 @@
 			// 
 			// lbl27_
 			// 
-			this.lbl27_.Location = new System.Drawing.Point(50, 115);
+			this.lbl27_.Location = new System.Drawing.Point(40, 115);
 			this.lbl27_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl27_.Name = "lbl27_";
-			this.lbl27_.Size = new System.Drawing.Size(75, 15);
+			this.lbl27_.Size = new System.Drawing.Size(85, 15);
 			this.lbl27_.TabIndex = 117;
-			this.lbl27_.Text = "_";
+			this.lbl27_.Text = "pck ram";
 			this.lbl27_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl27_.MouseEnter += new System.EventHandler(this.OnEnter27);
 			this.lbl27_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1974,12 +1979,12 @@
 			// 
 			// lbl28_
 			// 
-			this.lbl28_.Location = new System.Drawing.Point(50, 135);
+			this.lbl28_.Location = new System.Drawing.Point(40, 135);
 			this.lbl28_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl28_.Name = "lbl28_";
-			this.lbl28_.Size = new System.Drawing.Size(75, 15);
+			this.lbl28_.Size = new System.Drawing.Size(85, 15);
 			this.lbl28_.TabIndex = 119;
-			this.lbl28_.Text = "_";
+			this.lbl28_.Text = "pck ram";
 			this.lbl28_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl28_.MouseEnter += new System.EventHandler(this.OnEnter28);
 			this.lbl28_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -1998,12 +2003,12 @@
 			// 
 			// lbl29_
 			// 
-			this.lbl29_.Location = new System.Drawing.Point(50, 155);
+			this.lbl29_.Location = new System.Drawing.Point(40, 155);
 			this.lbl29_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl29_.Name = "lbl29_";
-			this.lbl29_.Size = new System.Drawing.Size(75, 15);
+			this.lbl29_.Size = new System.Drawing.Size(85, 15);
 			this.lbl29_.TabIndex = 121;
-			this.lbl29_.Text = "_";
+			this.lbl29_.Text = "pck ram";
 			this.lbl29_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl29_.MouseEnter += new System.EventHandler(this.OnEnter29);
 			this.lbl29_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
@@ -2013,9 +2018,9 @@
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
 			this.ss_Statusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tssl_Overvalue});
-			this.ss_Statusbar.Location = new System.Drawing.Point(0, 813);
+			this.ss_Statusbar.Location = new System.Drawing.Point(0, 807);
 			this.ss_Statusbar.Name = "ss_Statusbar";
-			this.ss_Statusbar.Size = new System.Drawing.Size(722, 22);
+			this.ss_Statusbar.Size = new System.Drawing.Size(832, 22);
 			this.ss_Statusbar.TabIndex = 123;
 			this.ss_Statusbar.Text = "ss_Statusbar";
 			// 
@@ -2030,7 +2035,10 @@
 			// 
 			// gb_Unused
 			// 
+			this.gb_Unused.Controls.Add(this.tb38_leftrighthalf);
 			this.gb_Unused.Controls.Add(this.tb61_);
+			this.gb_Unused.Controls.Add(this.lbl38_leftrighthalf);
+			this.gb_Unused.Controls.Add(this.lbl38);
 			this.gb_Unused.Controls.Add(this.tb50_);
 			this.gb_Unused.Controls.Add(this.tb47_);
 			this.gb_Unused.Controls.Add(this.tb29_);
@@ -2063,18 +2071,33 @@
 			this.gb_Unused.Controls.Add(this.lbl50);
 			this.gb_Unused.Controls.Add(this.lbl61_);
 			this.gb_Unused.Controls.Add(this.lbl61);
-			this.gb_Unused.Location = new System.Drawing.Point(345, 460);
+			this.gb_Unused.Location = new System.Drawing.Point(345, 420);
 			this.gb_Unused.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Unused.Name = "gb_Unused";
 			this.gb_Unused.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Unused.Size = new System.Drawing.Size(165, 235);
+			this.gb_Unused.Size = new System.Drawing.Size(165, 255);
 			this.gb_Unused.TabIndex = 124;
 			this.gb_Unused.TabStop = false;
 			this.gb_Unused.Text = " doh! ";
 			// 
+			// tb38_leftrighthalf
+			// 
+			this.tb38_leftrighthalf.Location = new System.Drawing.Point(125, 173);
+			this.tb38_leftrighthalf.Margin = new System.Windows.Forms.Padding(0);
+			this.tb38_leftrighthalf.Name = "tb38_leftrighthalf";
+			this.tb38_leftrighthalf.Size = new System.Drawing.Size(35, 19);
+			this.tb38_leftrighthalf.TabIndex = 107;
+			this.tb38_leftrighthalf.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb38_leftrighthalf.WordWrap = false;
+			this.tb38_leftrighthalf.TextChanged += new System.EventHandler(this.OnChanged38);
+			this.tb38_leftrighthalf.Enter += new System.EventHandler(this.OnEnter38);
+			this.tb38_leftrighthalf.Leave += new System.EventHandler(this.OnLeave);
+			this.tb38_leftrighthalf.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox38);
+			this.tb38_leftrighthalf.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+			// 
 			// tb61_
 			// 
-			this.tb61_.Location = new System.Drawing.Point(125, 213);
+			this.tb61_.Location = new System.Drawing.Point(125, 233);
 			this.tb61_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb61_.Name = "tb61_";
 			this.tb61_.Size = new System.Drawing.Size(35, 19);
@@ -2089,7 +2112,7 @@
 			// 
 			// tb50_
 			// 
-			this.tb50_.Location = new System.Drawing.Point(125, 193);
+			this.tb50_.Location = new System.Drawing.Point(125, 213);
 			this.tb50_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb50_.Name = "tb50_";
 			this.tb50_.Size = new System.Drawing.Size(35, 19);
@@ -2104,7 +2127,7 @@
 			// 
 			// tb47_
 			// 
-			this.tb47_.Location = new System.Drawing.Point(125, 173);
+			this.tb47_.Location = new System.Drawing.Point(125, 193);
 			this.tb47_.Margin = new System.Windows.Forms.Padding(0);
 			this.tb47_.Name = "tb47_";
 			this.tb47_.Size = new System.Drawing.Size(35, 19);
@@ -2288,12 +2311,12 @@
 			this.gb_Loft.Controls.Add(this.lbl9);
 			this.gb_Loft.Controls.Add(this.lbl9_loft02);
 			this.gb_Loft.Dock = System.Windows.Forms.DockStyle.Right;
-			this.gb_Loft.Location = new System.Drawing.Point(555, 340);
+			this.gb_Loft.Location = new System.Drawing.Point(665, 315);
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.MinimumSize = new System.Drawing.Size(167, 437);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Loft.Size = new System.Drawing.Size(167, 473);
+			this.gb_Loft.Size = new System.Drawing.Size(167, 492);
 			this.gb_Loft.TabIndex = 125;
 			this.gb_Loft.TabStop = false;
 			this.gb_Loft.Text = " LoFT ";
@@ -2610,7 +2633,6 @@
 			this.gb_Sprites.Controls.Add(this.tb2_phase2);
 			this.gb_Sprites.Controls.Add(this.tb1_phase1);
 			this.gb_Sprites.Controls.Add(this.tb0_phase0);
-			this.gb_Sprites.Controls.Add(this.tb38_leftrighthalf);
 			this.gb_Sprites.Controls.Add(this.lbl3_phase3);
 			this.gb_Sprites.Controls.Add(this.lbl0_phase0);
 			this.gb_Sprites.Controls.Add(this.lbl0);
@@ -2627,14 +2649,12 @@
 			this.gb_Sprites.Controls.Add(this.lbl4_phase4);
 			this.gb_Sprites.Controls.Add(this.lbl5_phase5);
 			this.gb_Sprites.Controls.Add(this.lbl4);
-			this.gb_Sprites.Controls.Add(this.lbl38);
-			this.gb_Sprites.Controls.Add(this.lbl38_leftrighthalf);
 			this.gb_Sprites.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gb_Sprites.Location = new System.Drawing.Point(0, 175);
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Name = "gb_Sprites";
 			this.gb_Sprites.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Sprites.Size = new System.Drawing.Size(722, 165);
+			this.gb_Sprites.Size = new System.Drawing.Size(832, 140);
 			this.gb_Sprites.TabIndex = 126;
 			this.gb_Sprites.TabStop = false;
 			this.gb_Sprites.Text = " Animation sprites ";
@@ -2646,14 +2666,14 @@
 			this.pnl_Sprites.Location = new System.Drawing.Point(5, 15);
 			this.pnl_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Sprites.Name = "pnl_Sprites";
-			this.pnl_Sprites.Size = new System.Drawing.Size(660, 80);
+			this.pnl_Sprites.Size = new System.Drawing.Size(680, 80);
 			this.pnl_Sprites.TabIndex = 116;
 			this.pnl_Sprites.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Sprites);
 			this.pnl_Sprites.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_SpritePanel);
 			// 
 			// tb7_phase7
 			// 
-			this.tb7_phase7.Location = new System.Drawing.Point(580, 105);
+			this.tb7_phase7.Location = new System.Drawing.Point(580, 100);
 			this.tb7_phase7.Margin = new System.Windows.Forms.Padding(0);
 			this.tb7_phase7.Name = "tb7_phase7";
 			this.tb7_phase7.Size = new System.Drawing.Size(35, 19);
@@ -2668,7 +2688,7 @@
 			// 
 			// tb6_phase6
 			// 
-			this.tb6_phase6.Location = new System.Drawing.Point(500, 105);
+			this.tb6_phase6.Location = new System.Drawing.Point(500, 100);
 			this.tb6_phase6.Margin = new System.Windows.Forms.Padding(0);
 			this.tb6_phase6.Name = "tb6_phase6";
 			this.tb6_phase6.Size = new System.Drawing.Size(35, 19);
@@ -2683,7 +2703,7 @@
 			// 
 			// tb5_phase5
 			// 
-			this.tb5_phase5.Location = new System.Drawing.Point(420, 105);
+			this.tb5_phase5.Location = new System.Drawing.Point(420, 100);
 			this.tb5_phase5.Margin = new System.Windows.Forms.Padding(0);
 			this.tb5_phase5.Name = "tb5_phase5";
 			this.tb5_phase5.Size = new System.Drawing.Size(35, 19);
@@ -2698,7 +2718,7 @@
 			// 
 			// tb4_phase4
 			// 
-			this.tb4_phase4.Location = new System.Drawing.Point(340, 105);
+			this.tb4_phase4.Location = new System.Drawing.Point(340, 100);
 			this.tb4_phase4.Margin = new System.Windows.Forms.Padding(0);
 			this.tb4_phase4.Name = "tb4_phase4";
 			this.tb4_phase4.Size = new System.Drawing.Size(35, 19);
@@ -2713,7 +2733,7 @@
 			// 
 			// tb3_phase3
 			// 
-			this.tb3_phase3.Location = new System.Drawing.Point(265, 105);
+			this.tb3_phase3.Location = new System.Drawing.Point(265, 100);
 			this.tb3_phase3.Margin = new System.Windows.Forms.Padding(0);
 			this.tb3_phase3.Name = "tb3_phase3";
 			this.tb3_phase3.Size = new System.Drawing.Size(35, 19);
@@ -2728,7 +2748,7 @@
 			// 
 			// tb2_phase2
 			// 
-			this.tb2_phase2.Location = new System.Drawing.Point(190, 105);
+			this.tb2_phase2.Location = new System.Drawing.Point(190, 100);
 			this.tb2_phase2.Margin = new System.Windows.Forms.Padding(0);
 			this.tb2_phase2.Name = "tb2_phase2";
 			this.tb2_phase2.Size = new System.Drawing.Size(35, 19);
@@ -2743,7 +2763,7 @@
 			// 
 			// tb1_phase1
 			// 
-			this.tb1_phase1.Location = new System.Drawing.Point(110, 105);
+			this.tb1_phase1.Location = new System.Drawing.Point(110, 100);
 			this.tb1_phase1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb1_phase1.Name = "tb1_phase1";
 			this.tb1_phase1.Size = new System.Drawing.Size(35, 19);
@@ -2758,7 +2778,7 @@
 			// 
 			// tb0_phase0
 			// 
-			this.tb0_phase0.Location = new System.Drawing.Point(35, 105);
+			this.tb0_phase0.Location = new System.Drawing.Point(35, 100);
 			this.tb0_phase0.Margin = new System.Windows.Forms.Padding(0);
 			this.tb0_phase0.Name = "tb0_phase0";
 			this.tb0_phase0.Size = new System.Drawing.Size(35, 19);
@@ -2771,21 +2791,6 @@
 			this.tb0_phase0.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox0);
 			this.tb0_phase0.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
-			// tb38_leftrighthalf
-			// 
-			this.tb38_leftrighthalf.Location = new System.Drawing.Point(130, 143);
-			this.tb38_leftrighthalf.Margin = new System.Windows.Forms.Padding(0);
-			this.tb38_leftrighthalf.Name = "tb38_leftrighthalf";
-			this.tb38_leftrighthalf.Size = new System.Drawing.Size(35, 19);
-			this.tb38_leftrighthalf.TabIndex = 107;
-			this.tb38_leftrighthalf.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb38_leftrighthalf.WordWrap = false;
-			this.tb38_leftrighthalf.TextChanged += new System.EventHandler(this.OnChanged38);
-			this.tb38_leftrighthalf.Enter += new System.EventHandler(this.OnEnter38);
-			this.tb38_leftrighthalf.Leave += new System.EventHandler(this.OnLeave);
-			this.tb38_leftrighthalf.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox38);
-			this.tb38_leftrighthalf.MouseLeave += new System.EventHandler(this.OnMouseLeave);
-			// 
 			// gb_Collection
 			// 
 			this.gb_Collection.Dock = System.Windows.Forms.DockStyle.Top;
@@ -2793,7 +2798,7 @@
 			this.gb_Collection.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Collection.Name = "gb_Collection";
 			this.gb_Collection.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Collection.Size = new System.Drawing.Size(722, 175);
+			this.gb_Collection.Size = new System.Drawing.Size(832, 175);
 			this.gb_Collection.TabIndex = 127;
 			this.gb_Collection.TabStop = false;
 			this.gb_Collection.Text = " RECORD COLLECTION ";
@@ -2805,7 +2810,7 @@
 			this.gb_Minimap.Controls.Add(this.tb20_scang1);
 			this.gb_Minimap.Controls.Add(this.lbl20_scang);
 			this.gb_Minimap.Controls.Add(this.lbl20);
-			this.gb_Minimap.Location = new System.Drawing.Point(5, 340);
+			this.gb_Minimap.Location = new System.Drawing.Point(5, 320);
 			this.gb_Minimap.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Minimap.Name = "gb_Minimap";
 			this.gb_Minimap.Padding = new System.Windows.Forms.Padding(0);
@@ -2866,7 +2871,7 @@
 			this.gb_Tu.Controls.Add(this.lbl40);
 			this.gb_Tu.Controls.Add(this.lbl41_tufly);
 			this.gb_Tu.Controls.Add(this.lbl41);
-			this.gb_Tu.Location = new System.Drawing.Point(175, 340);
+			this.gb_Tu.Location = new System.Drawing.Point(175, 320);
 			this.gb_Tu.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Tu.Name = "gb_Tu";
 			this.gb_Tu.Padding = new System.Windows.Forms.Padding(0);
@@ -2928,7 +2933,7 @@
 			this.gb_Elevation.Controls.Add(this.lbl48_terrainoffset);
 			this.gb_Elevation.Controls.Add(this.lbl49);
 			this.gb_Elevation.Controls.Add(this.lbl48);
-			this.gb_Elevation.Location = new System.Drawing.Point(345, 400);
+			this.gb_Elevation.Location = new System.Drawing.Point(175, 600);
 			this.gb_Elevation.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Elevation.Name = "gb_Elevation";
 			this.gb_Elevation.Padding = new System.Windows.Forms.Padding(0);
@@ -2987,7 +2992,7 @@
 			this.gb_Block.Controls.Add(this.lbl51);
 			this.gb_Block.Controls.Add(this.lbl56_smokeblock);
 			this.gb_Block.Controls.Add(this.lbl56);
-			this.gb_Block.Location = new System.Drawing.Point(175, 420);
+			this.gb_Block.Location = new System.Drawing.Point(175, 400);
 			this.gb_Block.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Block.Name = "gb_Block";
 			this.gb_Block.Padding = new System.Windows.Forms.Padding(0);
@@ -3097,7 +3102,7 @@
 			this.gb_Door.Controls.Add(this.lbl35);
 			this.gb_Door.Controls.Add(this.lbl46_alternateid);
 			this.gb_Door.Controls.Add(this.lbl46);
-			this.gb_Door.Location = new System.Drawing.Point(5, 600);
+			this.gb_Door.Location = new System.Drawing.Point(5, 580);
 			this.gb_Door.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Door.Name = "gb_Door";
 			this.gb_Door.Padding = new System.Windows.Forms.Padding(0);
@@ -3159,7 +3164,7 @@
 			this.gb_Step.Controls.Add(this.lbl32_isdropthrou);
 			this.gb_Step.Controls.Add(this.lbl32);
 			this.gb_Step.Controls.Add(this.lbl52);
-			this.gb_Step.Location = new System.Drawing.Point(345, 340);
+			this.gb_Step.Location = new System.Drawing.Point(175, 540);
 			this.gb_Step.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Step.Name = "gb_Step";
 			this.gb_Step.Padding = new System.Windows.Forms.Padding(0);
@@ -3212,7 +3217,7 @@
 			this.gb_Explosive.Controls.Add(this.lbl45);
 			this.gb_Explosive.Controls.Add(this.lbl57_fuel);
 			this.gb_Explosive.Controls.Add(this.lbl57);
-			this.gb_Explosive.Location = new System.Drawing.Point(175, 560);
+			this.gb_Explosive.Location = new System.Drawing.Point(345, 320);
 			this.gb_Explosive.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Explosive.Name = "gb_Explosive";
 			this.gb_Explosive.Padding = new System.Windows.Forms.Padding(0);
@@ -3289,7 +3294,7 @@
 			this.gb_Health.Controls.Add(this.lbl42);
 			this.gb_Health.Controls.Add(this.lbl44_deathid);
 			this.gb_Health.Controls.Add(this.lbl44);
-			this.gb_Health.Location = new System.Drawing.Point(5, 540);
+			this.gb_Health.Location = new System.Drawing.Point(5, 520);
 			this.gb_Health.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Health.Name = "gb_Health";
 			this.gb_Health.Padding = new System.Windows.Forms.Padding(0);
@@ -3348,7 +3353,7 @@
 			this.gb_General.Controls.Add(this.lbl58_lightintensity);
 			this.gb_General.Controls.Add(this.lbl33);
 			this.gb_General.Controls.Add(this.lbl58);
-			this.gb_General.Location = new System.Drawing.Point(5, 400);
+			this.gb_General.Location = new System.Drawing.Point(5, 380);
 			this.gb_General.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_General.Name = "gb_General";
 			this.gb_General.Padding = new System.Windows.Forms.Padding(0);
@@ -3449,10 +3454,10 @@
 			// 
 			// lbl_SpriteShade
 			// 
-			this.lbl_SpriteShade.Location = new System.Drawing.Point(180, 662);
+			this.lbl_SpriteShade.Location = new System.Drawing.Point(90, 660);
 			this.lbl_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_SpriteShade.Name = "lbl_SpriteShade";
-			this.lbl_SpriteShade.Size = new System.Drawing.Size(80, 15);
+			this.lbl_SpriteShade.Size = new System.Drawing.Size(75, 15);
 			this.lbl_SpriteShade.TabIndex = 137;
 			this.lbl_SpriteShade.Text = "SpriteShade";
 			this.lbl_SpriteShade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3461,7 +3466,7 @@
 			// 
 			// tb_SpriteShade
 			// 
-			this.tb_SpriteShade.Location = new System.Drawing.Point(260, 660);
+			this.tb_SpriteShade.Location = new System.Drawing.Point(165, 658);
 			this.tb_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_SpriteShade.Name = "tb_SpriteShade";
 			this.tb_SpriteShade.Size = new System.Drawing.Size(35, 19);
@@ -3476,15 +3481,13 @@
 			// 
 			// gb_Description
 			// 
-			this.gb_Description.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
 			this.gb_Description.Controls.Add(this.lbl_Description);
-			this.gb_Description.Location = new System.Drawing.Point(5, 695);
+			this.gb_Description.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.gb_Description.Location = new System.Drawing.Point(0, 674);
 			this.gb_Description.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Description.Name = "gb_Description";
 			this.gb_Description.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Description.Size = new System.Drawing.Size(545, 116);
+			this.gb_Description.Size = new System.Drawing.Size(665, 133);
 			this.gb_Description.TabIndex = 139;
 			this.gb_Description.TabStop = false;
 			this.gb_Description.Text = " description ";
@@ -3497,7 +3500,7 @@
 			this.lbl_Description.Location = new System.Drawing.Point(5, 15);
 			this.lbl_Description.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Description.Name = "lbl_Description";
-			this.lbl_Description.Size = new System.Drawing.Size(535, 96);
+			this.lbl_Description.Size = new System.Drawing.Size(655, 112);
 			this.lbl_Description.TabIndex = 0;
 			// 
 			// cb_Strict
@@ -3505,7 +3508,7 @@
 			this.cb_Strict.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.cb_Strict.Checked = true;
 			this.cb_Strict.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_Strict.Location = new System.Drawing.Point(65, 680);
+			this.cb_Strict.Location = new System.Drawing.Point(65, 660);
 			this.cb_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_Strict.Name = "cb_Strict";
 			this.cb_Strict.Size = new System.Drawing.Size(15, 15);
@@ -3520,10 +3523,10 @@
 			// lbl_Strict
 			// 
 			this.lbl_Strict.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lbl_Strict.Location = new System.Drawing.Point(15, 680);
+			this.lbl_Strict.Location = new System.Drawing.Point(10, 660);
 			this.lbl_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Strict.Name = "lbl_Strict";
-			this.lbl_Strict.Size = new System.Drawing.Size(50, 15);
+			this.lbl_Strict.Size = new System.Drawing.Size(55, 15);
 			this.lbl_Strict.TabIndex = 141;
 			this.lbl_Strict.Text = "STRICT";
 			this.lbl_Strict.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -3533,42 +3536,71 @@
 			// bar_SpriteShade
 			// 
 			this.bar_SpriteShade.AutoSize = false;
-			this.bar_SpriteShade.Location = new System.Drawing.Point(175, 680);
+			this.bar_SpriteShade.Location = new System.Drawing.Point(200, 660);
 			this.bar_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.bar_SpriteShade.Maximum = 100;
 			this.bar_SpriteShade.Name = "bar_SpriteShade";
-			this.bar_SpriteShade.Size = new System.Drawing.Size(165, 16);
+			this.bar_SpriteShade.Size = new System.Drawing.Size(140, 16);
 			this.bar_SpriteShade.TabIndex = 142;
 			this.bar_SpriteShade.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.bar_SpriteShade.ValueChanged += new System.EventHandler(this.OnValueChanged_SpriteShade);
+			// 
+			// pnl_IsoLoft
+			// 
+			this.pnl_IsoLoft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnl_IsoLoft.Location = new System.Drawing.Point(530, 330);
+			this.pnl_IsoLoft.Margin = new System.Windows.Forms.Padding(0);
+			this.pnl_IsoLoft.Name = "pnl_IsoLoft";
+			this.pnl_IsoLoft.Size = new System.Drawing.Size(130, 195);
+			this.pnl_IsoLoft.TabIndex = 143;
+			this.pnl_IsoLoft.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_IsoLoft);
+			// 
+			// bar_IsoLoft
+			// 
+			this.bar_IsoLoft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.bar_IsoLoft.AutoSize = false;
+			this.bar_IsoLoft.LargeChange = 6;
+			this.bar_IsoLoft.Location = new System.Drawing.Point(515, 325);
+			this.bar_IsoLoft.Margin = new System.Windows.Forms.Padding(0);
+			this.bar_IsoLoft.Maximum = 24;
+			this.bar_IsoLoft.Minimum = 1;
+			this.bar_IsoLoft.Name = "bar_IsoLoft";
+			this.bar_IsoLoft.Orientation = System.Windows.Forms.Orientation.Vertical;
+			this.bar_IsoLoft.Size = new System.Drawing.Size(16, 205);
+			this.bar_IsoLoft.TabIndex = 144;
+			this.bar_IsoLoft.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.bar_IsoLoft.Value = 24;
+			this.bar_IsoLoft.ValueChanged += new System.EventHandler(this.OnValueChanged_IsoLoft);
 			// 
 			// McdviewF
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(722, 835);
+			this.ClientSize = new System.Drawing.Size(832, 829);
+			this.Controls.Add(this.pnl_IsoLoft);
+			this.Controls.Add(this.bar_IsoLoft);
+			this.Controls.Add(this.gb_Description);
+			this.Controls.Add(this.gb_Loft);
+			this.Controls.Add(this.gb_Explosive);
 			this.Controls.Add(this.bar_SpriteShade);
 			this.Controls.Add(this.gb_Block);
 			this.Controls.Add(this.lbl_SpriteShade);
 			this.Controls.Add(this.tb_SpriteShade);
 			this.Controls.Add(this.cb_Strict);
 			this.Controls.Add(this.lbl_Strict);
-			this.Controls.Add(this.gb_Description);
-			this.Controls.Add(this.gb_Loft);
-			this.Controls.Add(this.gb_Sprites);
-			this.Controls.Add(this.gb_Collection);
-			this.Controls.Add(this.ss_Statusbar);
 			this.Controls.Add(this.gb_General);
 			this.Controls.Add(this.gb_Health);
-			this.Controls.Add(this.gb_Explosive);
 			this.Controls.Add(this.gb_Step);
 			this.Controls.Add(this.gb_Door);
 			this.Controls.Add(this.gb_Elevation);
 			this.Controls.Add(this.gb_Tu);
 			this.Controls.Add(this.gb_Minimap);
 			this.Controls.Add(this.gb_Unused);
+			this.Controls.Add(this.gb_Sprites);
+			this.Controls.Add(this.gb_Collection);
+			this.Controls.Add(this.ss_Statusbar);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MaximumSize = new System.Drawing.Size(730, 861);
+			this.MaximumSize = new System.Drawing.Size(840, 855);
 			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -3601,6 +3633,7 @@
 			this.gb_General.PerformLayout();
 			this.gb_Description.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.bar_SpriteShade)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.bar_IsoLoft)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

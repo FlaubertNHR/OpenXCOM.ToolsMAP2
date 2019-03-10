@@ -40,6 +40,7 @@ namespace McdView
 		internal BitArray LoFT;
 
 		private readonly Pen _penBlack = new Pen(Color.Black, 1);
+		private readonly Pen _penGray  = new Pen(Color.LightGray, 1);
 
 		private bool strict = true;
 		private bool InitFields;
@@ -142,6 +143,7 @@ namespace McdView
 
 			InitializeComponent();
 			SetDoubleBuffered(pnl_Sprites);
+			SetDoubleBuffered(pnl_IsoLoft);
 
 			MaximumSize = new Size(0,0);
 
@@ -167,6 +169,23 @@ namespace McdView
 			ResourceInfo.LoadLoFTufo(pathufo);		// -> ResourceInfo.LoFTufo
 			ResourceInfo.LoadLoFTtftd(pathtftd);	// -> ResourceInfo.LoFTtftd
 			LoFT = ResourceInfo.LoFTufo;
+
+
+/*			// RotatingCube ->
+			Scale(100, 100, 100);
+			RotateCuboid(Math.PI / 4, Math.Atan(Math.Sqrt(2)));
+//			var timer = new DispatcherTimer();
+			var timer = new Timer();
+			timer.Tick += (s, e) => { RotateCuboid(Math.PI / 180, 0); Refresh(); };
+			timer.Interval = 150;//new TimeSpan(0, 0, 0, 0, 17);
+			timer.Start(); */
+
+			Isocube               = isocube.GetIsocube();
+			CuboidOutlinePath     = isocube.GetCuboidOutline(  pnl_IsoLoft.Width, pnl_IsoLoft.Height);
+			CuboidTopAnglePath    = isocube.GetTopAngle(       pnl_IsoLoft.Width, pnl_IsoLoft.Height);
+			CuboidBotAnglePath    = isocube.GetBotAngle(       pnl_IsoLoft.Width, pnl_IsoLoft.Height);
+			CuboidVertLineTopPath = isocube.GetVerticalLineTop(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
+			CuboidVertLineBotPath = isocube.GetVerticalLineBot(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
 		}
 
 		/// <summary>
@@ -177,7 +196,7 @@ namespace McdView
 		/// https://stackoverflow.com/questions/118528/horrible-redraw-performance-of-the-datagridview-on-one-of-my-two-screens#answer-16625788
 		/// @note I wonder if this works on Mono. It stops the redraw-flick when
 		/// setting the anisprite on return from SpritesetviewF on my system
-		/// (Win7-64).
+		/// (Win7-64). Also stops flicker on the IsoLoft panel.
 		/// </summary>
 		/// <param name="control">the Control on which to set DoubleBuffered to true</param>
 		private static void SetDoubleBuffered(object control)
@@ -394,6 +413,16 @@ namespace McdView
 			SaveWindowMetrics();
 			base.OnFormClosing(e);
 		}
+
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+
+			gb_Description.Height = ClientSize.Height - lbl_Strict.Location.Y - lbl_Strict.Height - 25;
+			gb_Description.Location = new Point(
+											gb_Description.Location.X,
+											lbl_Strict.Location.Y + lbl_Strict.Height + 25);
+		}
 		#endregion Events (override)
 
 
@@ -545,6 +574,11 @@ namespace McdView
 			else
 				lbl_Strict.ForeColor = Color.Red;
 		}
+
+		private void OnValueChanged_IsoLoft(object sender, EventArgs e)
+		{
+			pnl_IsoLoft.Invalidate();
+		}
 		#endregion Events
 
 
@@ -573,6 +607,8 @@ namespace McdView
 				pnl_Loft17.Invalidate();
 				pnl_Loft18.Invalidate();
 				pnl_Loft19.Invalidate();
+
+				pnl_IsoLoft.Invalidate();
 			}
 		}
 

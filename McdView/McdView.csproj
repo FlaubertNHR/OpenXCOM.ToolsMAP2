@@ -72,6 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="isocube.cs" />
     <Compile Include="LoftF.cs" />
     <Compile Include="McdviewF.cs" />
     <Compile Include="McdviewF.Designer.cs">

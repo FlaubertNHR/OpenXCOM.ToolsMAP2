@@ -142,7 +142,7 @@ namespace McdView
 		#region Enter (options)
 		private void OnEnterStrict(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "Checked enforces valid values in XCOM."
+			lbl_Description.Text = "STRICT enforces valid values in XCOM."
 								 + " Unchecked allows values outside what's expected (for expert experts only"
 								 + " - ie people who code their own XCOM executable and require extended values)."
 								 + " This value is not saved."
@@ -152,7 +152,7 @@ namespace McdView
 
 		private void OnEnterSpriteShade(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "SpriteShade is an inverse gamma-value for sprites drawn in this app."
+			lbl_Description.Text = "SpriteShade is an inverse gamma-value only for sprites drawn in this app."
 								 + " It has nothing to do with palette-based sprite-shading in XCOM itself."
 								 + " This value is not saved."
 								 + Environment.NewLine + Environment.NewLine
@@ -584,6 +584,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft1 = (byte)result;
 					pnl_Loft08.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb8_loft00.Text = "0"; // recurse w/ default.
@@ -625,6 +626,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft2 = (byte)result;
 					pnl_Loft09.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb9_loft02.Text = "0"; // recurse w/ default.
@@ -666,6 +668,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft3 = (byte)result;
 					pnl_Loft10.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb10_loft04.Text = "0"; // recurse w/ default.
@@ -707,6 +710,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft4 = (byte)result;
 					pnl_Loft11.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb11_loft06.Text = "0"; // recurse w/ default.
@@ -748,6 +752,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft5 = (byte)result;
 					pnl_Loft12.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb12_loft08.Text = "0"; // recurse w/ default.
@@ -789,6 +794,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft6 = (byte)result;
 					pnl_Loft13.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb13_loft10.Text = "0"; // recurse w/ default.
@@ -830,6 +836,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft7 = (byte)result;
 					pnl_Loft14.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb14_loft12.Text = "0"; // recurse w/ default.
@@ -871,6 +878,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft8 = (byte)result;
 					pnl_Loft15.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb15_loft14.Text = "0"; // recurse w/ default.
@@ -912,6 +920,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft9 = (byte)result;
 					pnl_Loft16.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb16_loft16.Text = "0"; // recurse w/ default.
@@ -953,6 +962,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft10 = (byte)result;
 					pnl_Loft17.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb17_loft18.Text = "0"; // recurse w/ default.
@@ -994,6 +1004,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft11 = (byte)result;
 					pnl_Loft18.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb18_loft20.Text = "0"; // recurse w/ default.
@@ -1035,6 +1046,7 @@ namespace McdView
 				{
 					Records[SelId].Record.Loft12 = (byte)result;
 					pnl_Loft19.Invalidate();
+					pnl_IsoLoft.Invalidate();
 				}
 				else
 					tb19_loft22.Text = "0"; // recurse w/ default.
@@ -2607,7 +2619,7 @@ namespace McdView
 		}
 		private void OnEnter53(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "PartType (ubyte) specifies the tile-slot in which a tile-part should"
+			lbl_Description.Text = "PartType (ubyte) specifies the tile-slot in which a part should"
 								 + " be placed."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0 Floor, 1 Westwall, 2 Northwall, 3 Content";

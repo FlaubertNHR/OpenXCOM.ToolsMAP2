@@ -7,6 +7,13 @@ using System.Windows.Forms;
 using XCom;
 using XCom.Interfaces;
 
+// RotatingCube ->
+//using System;
+//using System.Drawing;
+//using System.Drawing.Drawing2D;
+//using System.Windows.Forms;
+//using System.Windows.Threading;
+
 
 namespace McdView
 {
@@ -434,7 +441,7 @@ namespace McdView
 
 		#region LoFT
 		/// <summary>
-		/// Draws squares around the LoFT icons.
+		/// Draws squares around the LoFT panels.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -623,6 +630,178 @@ namespace McdView
 				_pnlLoFT.Invalidate();
 			}
 		}
+
+
+		internal static Bitmap Isocube;
+		private static GraphicsPath CuboidOutlinePath;
+		private static GraphicsPath CuboidTopAnglePath;
+		private static GraphicsPath CuboidBotAnglePath;
+		private static GraphicsPath CuboidVertLineTopPath;
+		private static GraphicsPath CuboidVertLineBotPath;
+
+		/// <summary>
+		/// Paints a 3d LoFT representation in the IsoLoft panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_IsoLoft(object sender, PaintEventArgs e)
+		{
+			var graphics = e.Graphics;
+
+			graphics.DrawRectangle(
+								_penBlack,
+								0,
+								0,
+								pnl_IsoLoft.Width  - 1,
+								pnl_IsoLoft.Height - 1);
+
+			if (SelId != -1 && LoFT != null)
+			{
+				graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+				graphics.DrawPath(_penGray, CuboidOutlinePath);
+				graphics.DrawPath(_penGray, CuboidBotAnglePath);
+				graphics.DrawPath(_penGray, CuboidVertLineTopPath);
+
+
+				int halfwidth  = Isocube.Width  / 2;
+				int halfheight = Isocube.Height / 2;
+
+				int x_origin = pnl_IsoLoft.Width / 2 - 3;
+
+				int y_layer, y_cell, x_cell;
+				int loftid;
+
+				McdRecord record = Records[SelId].Record;
+				for (int layer = 0; layer != bar_IsoLoft.Value; ++layer)
+				{
+					switch (layer / 2)
+					{
+						default: loftid = record.Loft1;  break; // case 0
+						case  1: loftid = record.Loft2;  break;
+						case  2: loftid = record.Loft3;  break;
+						case  3: loftid = record.Loft4;  break;
+						case  4: loftid = record.Loft5;  break;
+						case  5: loftid = record.Loft6;  break;
+						case  6: loftid = record.Loft7;  break;
+						case  7: loftid = record.Loft8;  break;
+						case  8: loftid = record.Loft9;  break;
+						case  9: loftid = record.Loft10; break;
+						case 10: loftid = record.Loft11; break;
+						case 11: loftid = record.Loft12; break;
+					}
+
+					y_layer = pnl_IsoLoft.Height - ((layer + 1) * halfheight) - (halfheight * 24);
+
+					for (int r = 0; r != 16; ++r)
+					for (int c = 0; c != 16; ++c)
+					{
+						y_cell = y_layer + (c * halfheight) + (r * halfheight) - (r + c);
+
+						x_cell = x_origin + ((c * halfwidth) - (r * halfwidth));
+						if      (x_cell > x_origin) x_cell += (c - r);
+						else if (x_cell < x_origin) x_cell -= (r - c);
+
+						if (LoFT[(loftid * 256) + (r * 16) + c])
+						{
+							graphics.DrawImage(Isocube, x_cell, y_cell);
+						}
+					}
+				}
+				graphics.DrawPath(_penGray, CuboidTopAnglePath);
+				graphics.DrawPath(_penGray, CuboidVertLineBotPath);
+			}
+		}
+
+/*		// RotatingCube -->
+
+			var g = e.Graphics;
+			g.SmoothingMode = SmoothingMode.HighQuality;
+			g.Clear(Color.Transparent);
+
+			g.TranslateTransform(Width / 2, Height / 2);
+
+			foreach (var edge in edges)
+			{
+				double[] xy1 = nodes[edge[0]];
+				double[] xy2 = nodes[edge[1]];
+				g.DrawLine(
+						Pens.Black,
+						(int)Math.Round(xy1[0]),
+						(int)Math.Round(xy1[1]),
+						(int)Math.Round(xy2[0]),
+						(int)Math.Round(xy2[1]));
+			}
+
+			foreach (var node in nodes)
+			{
+				g.FillEllipse(
+						Brushes.Black,
+						(int)Math.Round(node[0]) - 4,
+						(int)Math.Round(node[1]) - 4,
+						8,8);
+			} */
+/*		double[][] nodes =
+		{
+			new double[] {-1, -1, -1},
+			new double[] {-1, -1,  1},
+			new double[] {-1,  1, -1},
+			new double[] {-1,  1,  1},
+			new double[] { 1, -1, -1},
+			new double[] { 1, -1,  1},
+			new double[] { 1,  1, -1},
+			new double[] { 1,  1,  1}
+		};
+
+		int[][] edges =
+		{
+			new int[] {0, 1},
+			new int[] {1, 3},
+			new int[] {3, 2},
+			new int[] {2, 0},
+			new int[] {4, 5},
+			new int[] {5, 7},
+			new int[] {7, 6},
+			new int[] {6, 4},
+			new int[] {0, 4},
+			new int[] {1, 5},
+			new int[] {2, 6},
+			new int[] {3, 7}
+		};
+
+		private void RotateCuboid(double angleX, double angleY)
+		{
+			double sinX = Math.Sin(angleX);
+			double cosX = Math.Cos(angleX);
+
+			double sinY = Math.Sin(angleY);
+			double cosY = Math.Cos(angleY);
+
+			foreach (var node in nodes)
+			{
+				double x = node[0];
+				double y = node[1];
+				double z = node[2];
+
+				node[0] = x * cosX - z * sinX;
+				node[2] = z * cosX + x * sinX;
+
+				z = node[2];
+
+				node[1] = y * cosY - z * sinY;
+				node[2] = z * cosY + y * sinY;
+			}
+		}
+
+		private void Scale(int v1, int v2, int v3)
+		{
+			foreach (var item in nodes)
+			{
+				item[0] *= v1;
+				item[1] *= v2;
+				item[2] *= v3;
+			}
+		} */
 		#endregion LoFT
 	}
 }
