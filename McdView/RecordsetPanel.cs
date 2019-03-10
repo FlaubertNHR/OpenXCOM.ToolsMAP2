@@ -241,6 +241,7 @@ namespace McdView
 			{
 				Scroller.Value = TableWidth - Width;
 			}
+			ScrollTile();
 		}
 
 
