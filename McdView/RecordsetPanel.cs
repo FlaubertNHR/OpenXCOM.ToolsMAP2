@@ -168,7 +168,7 @@ namespace McdView
 						DrawSprite(
 								sprite,
 								i * XCImage.SpriteWidth32 + i + offset,
-								y2_sprite - Records[i].Record.TileOffset);
+								y2_sprite - Records[i].Dead.Record.TileOffset);
 					}
 				}
 
@@ -185,7 +185,7 @@ namespace McdView
 						DrawSprite(
 								sprite,
 								i * XCImage.SpriteWidth32 + i + offset,
-								y3_sprite - Records[i].Record.TileOffset);
+								y3_sprite - Records[i].Alternate.Record.TileOffset);
 					}
 				}
 			}
