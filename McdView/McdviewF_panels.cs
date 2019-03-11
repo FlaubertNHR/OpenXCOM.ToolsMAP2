@@ -667,13 +667,13 @@ namespace McdView
 					{
 						default: //case 0:
 							rose = "w";
-							pt.X = 12;
-							pt.Y =  7;
+							pt.X = 11;
+							pt.Y =  6;
 							break;
 						case 1:
 							rose = "n";
-							pt.X = pnl_IsoLoft.Width - 25;
-							pt.Y = 7;
+							pt.X = pnl_IsoLoft.Width - 24;
+							pt.Y = 6;
 							break;
 						case 2:
 							rose = "e";
