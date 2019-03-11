@@ -14,11 +14,12 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
-		private const int COLS          = 16;
-		private const int ICON_WIDTH    = 32;
-		private const int ICON_HEIGHT   = 32;
-		private const int VERT_TEXT_PAD = 16;
-		private const int HORI_PAD      =  1;
+		private const int COLS             = 16;
+		private const int ROWS_VISIBLE_Max = 16;
+		private const int ICON_WIDTH       = 32;
+		private const int ICON_HEIGHT      = 32;
+		private const int VERT_TEXT_PAD    = 16;
+		private const int HORI_PAD         =  1;
 		#endregion Fields (static)
 
 
@@ -37,7 +38,7 @@ namespace McdView
 
 		#region cTor
 		/// <summary>
-		/// 
+		/// Creates a ScanG icon viewer/chooser.
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="iconId"></param>
@@ -81,14 +82,31 @@ namespace McdView
 
 			TotalHeight = h;
 
-			if (h > (ICON_HEIGHT + VERT_TEXT_PAD) * 16)
-				h = (ICON_HEIGHT + VERT_TEXT_PAD) * 16;
+			if (h > (ICON_HEIGHT + VERT_TEXT_PAD) * ROWS_VISIBLE_Max)
+				h = (ICON_HEIGHT + VERT_TEXT_PAD) * ROWS_VISIBLE_Max;
 
 			ClientSize = new Size(w, h);
 
 			MaxScrollVal = Scroller.Maximum - (Scroller.LargeChange - 1);
+			ScrollIcon();
 		}
 		#endregion cTor
+
+
+		#region Methods
+		private void ScrollIcon()
+		{
+			int r = IconId / COLS;
+			if (r > ROWS_VISIBLE_Max)
+			{
+				r -= ROWS_VISIBLE_Max - 1;
+				r *= ICON_HEIGHT + VERT_TEXT_PAD;
+				r = (r * MaxScrollVal + (TotalHeight - ClientSize.Height - 1)) / (TotalHeight - ClientSize.Height);
+
+				Scroller.Value = r;
+			}
+		}
+		#endregion Methods
 
 
 		#region Events (override)
@@ -185,7 +203,7 @@ namespace McdView
 				&& e.Y > -1 && e.Y < ClientSize.Height)
 			{
 				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_TEXT_PAD) * COLS
-					   + e.X / (ICON_WIDTH  + HORI_PAD);
+					   +  e.X / (ICON_WIDTH  + HORI_PAD);
 
 				if (id < _f.ScanG.Length / 16)
 				{
