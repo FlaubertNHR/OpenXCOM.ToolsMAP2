@@ -678,7 +678,8 @@ namespace McdView
 			tb36_isblockfire  .Text = Convert.ToInt32(record.BlockFire)  .ToString();
 			tb37_isblocksmoke .Text = Convert.ToInt32(record.BlockSmoke) .ToString();
 
-			tb38_leftrighthalf.Text = ((int)record.LeftRightHalf).ToString();
+			tb38_.Text = ((int)record.LeftRightHalf).ToString();
+
 			tb39_tuwalk       .Text = ((int)record.TU_Walk)      .ToString();
 			tb40_tuslide      .Text = ((int)record.TU_Slide)     .ToString();
 			tb41_tufly        .Text = ((int)record.TU_Fly)       .ToString();
@@ -760,7 +761,8 @@ namespace McdView
 			tb36_isblockfire  .Text =
 			tb37_isblocksmoke .Text =
 
-			tb38_leftrighthalf.Text =
+			tb38_.Text =
+
 			tb39_tuwalk       .Text =
 			tb40_tuslide      .Text =
 			tb41_tufly        .Text =

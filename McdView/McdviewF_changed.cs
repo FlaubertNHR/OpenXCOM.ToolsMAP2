@@ -65,7 +65,7 @@ namespace McdView
 
 //			if (label == lbl20 || label == lbl20_scang)          return tb20_scang1; // tb21_scang2
 
-			if (label == lbl22 || label == lbl22_)               return tb22_;
+			if (label == lbl22 || label == lbl22_)               return tb22_; // internal RAM addresses ->
 			if (label == lbl23 || label == lbl23_)               return tb23_;
 			if (label == lbl24 || label == lbl24_)               return tb24_;
 			if (label == lbl25 || label == lbl25_)               return tb25_;
@@ -82,7 +82,9 @@ namespace McdView
 			if (label == lbl35 || label == lbl35_ishingeddoor)   return tb35_ishingeddoor;
 			if (label == lbl36 || label == lbl36_isblockfire)    return tb36_isblockfire;
 			if (label == lbl37 || label == lbl37_isblocksmoke)   return tb37_isblocksmoke;
-			if (label == lbl38 || label == lbl38_leftrighthalf)  return tb38_leftrighthalf;
+
+			if (label == lbl38 || label == lbl38_)               return tb38_; // LeftRightHalf
+
 			if (label == lbl39 || label == lbl39_tuwalk)         return tb39_tuwalk;
 			if (label == lbl40 || label == lbl40_tuslide)        return tb40_tuslide;
 			if (label == lbl41 || label == lbl41_tufly)          return tb41_tufly;
@@ -92,12 +94,12 @@ namespace McdView
 			if (label == lbl45 || label == lbl45_fireresist)     return tb45_fireresist;
 			if (label == lbl46 || label == lbl46_alternateid)    return tb46_alternateid;
 
-			if (label == lbl47 || label == lbl47_)               return tb47_;
+			if (label == lbl47 || label == lbl47_)               return tb47_; // CloseDoors
 
 			if (label == lbl48 || label == lbl48_terrainoffset)  return tb48_terrainoffset;
 			if (label == lbl49 || label == lbl49_spriteoffset)   return tb49_spriteoffset;
 
-			if (label == lbl50 || label == lbl50_)               return tb50_;
+			if (label == lbl50 || label == lbl50_)               return tb50_; // dTypeMod
 
 			if (label == lbl51 || label == lbl51_lightblock)     return tb51_lightblock;
 			if (label == lbl52 || label == lbl52_footsound)      return tb52_footsound;
@@ -110,7 +112,7 @@ namespace McdView
 			if (label == lbl59 || label == lbl59_specialtype)    return tb59_specialtype;
 			if (label == lbl60 || label == lbl60_isbaseobject)   return tb60_isbaseobject;
 
-			if (label == lbl61 || label == lbl61_)               return tb61_;
+			if (label == lbl61 || label == lbl61_)               return tb61_; // VictoryPoints
 
 			return null;
 		}
@@ -1935,17 +1937,17 @@ namespace McdView
 				Changed |= !InitFields;
 
 				int result;
-				if (Int32.TryParse(tb38_leftrighthalf.Text, out result)
+				if (Int32.TryParse(tb38_.Text, out result)
 					&&     ((strict && result == 3)
 						|| (!strict && result > -1 && result < 256)))
 				{
 					Records[SelId].Record.LeftRightHalf = (byte)result;
 				}
 				else
-					tb38_leftrighthalf.Text = "3"; // recurse w/ default.
+					tb38_.Text = "3"; // recurse w/ default.
 			}
 			else
-				tb38_leftrighthalf.Text = String.Empty; // recurse.
+				tb38_.Text = String.Empty; // recurse.
 		}
 		private void OnEnter38(object sender, EventArgs e)
 		{
@@ -1958,7 +1960,7 @@ namespace McdView
 		private void OnMouseEnterTextbox38(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb38_leftrighthalf.Text, out result))
+			if (Int32.TryParse(tb38_.Text, out result))
 			{
 				string text;
 				switch (result)
@@ -2343,7 +2345,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// #47 (byte)
+		/// #47 CloseDoors (byte)
+		/// @note Is probably a boolean.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2368,7 +2371,9 @@ namespace McdView
 		}
 		private void OnEnter47(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "47 (ubyte)"
+			lbl_Description.Text = "CloseDoors (ubyte) is a flag that MicroProse uses to check if"
+								 + " sliding doors are open and should be closed at the end of a turn."
+								 + " It is a runtime variable and is not used by newer executables."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0..255";
 		}
@@ -2377,7 +2382,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb47_.Text, out result))
 			{
-				tssl_Overvalue.Text = "47: " + result;
+				tssl_Overvalue.Text = "CloseDoors: " + result;
 				OnEnter47(null, EventArgs.Empty);
 			}
 		}
@@ -2480,7 +2485,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// #50 (byte)
+		/// #50 dTypeMod (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2505,7 +2510,8 @@ namespace McdView
 		}
 		private void OnEnter50(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "50 (ubyte)"
+			lbl_Description.Text = "dTypeMod (ubyte) was perhaps intended to be a received damage-type"
+								 + " modifier (eg. soft target, hard target, etc.) but is not used."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0..255";
 		}
@@ -2514,7 +2520,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb50_.Text, out result))
 			{
-				tssl_Overvalue.Text = "50: " + result;
+				tssl_Overvalue.Text = "dTypeMod: " + result;
 				OnEnter50(null, EventArgs.Empty);
 			}
 		}
@@ -3007,7 +3013,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// #61 (byte)
+		/// #61 VictoryPoints (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3032,7 +3038,8 @@ namespace McdView
 		}
 		private void OnEnter61(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "61 (ubyte)"
+			lbl_Description.Text = "VictoryPoints (ubyte) was perhaps intended to be points awarded"
+								 + " for destroying a part but is not used."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0..255";
 		}
@@ -3041,7 +3048,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb61_.Text, out result))
 			{
-				tssl_Overvalue.Text = "61: " + result;
+				tssl_Overvalue.Text = "VictoryPoints: " + result;
 				OnEnter61(null, EventArgs.Empty);
 			}
 		}
