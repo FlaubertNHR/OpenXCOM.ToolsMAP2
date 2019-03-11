@@ -1114,10 +1114,14 @@ namespace McdView
 					&&     ((strict && result > 34 && result < 65571 && (ScanG == null || result < ScanG.Length / 16))
 						|| (!strict && result > 34 && result < 65571)))
 				{
-					Records[SelId].Record.ScanG         = (byte)(result);
-					Records[SelId].Record.ScanG_reduced = (byte)(result - 35);
+					//LogFile.WriteLine("\nOnChanged20() text1= " + tb20_scang1.Text + " result= " + result);
+					Records[SelId].Record.ScanG         = (ushort)(result);
+					Records[SelId].Record.ScanG_reduced = (ushort)(result - 35);
+					//LogFile.WriteLine(". ScanG= " + Records[SelId].Record.ScanG);
+					//LogFile.WriteLine(". ScanG_r= " + Records[SelId].Record.ScanG_reduced);
 
 					tb20_scang2.Text = (result - 35).ToString();
+					//LogFile.WriteLine(". . text2= " + tb20_scang2.Text);
 					pnl_ScanGic.Invalidate();
 				}
 				else
@@ -1159,10 +1163,14 @@ namespace McdView
 					&&     ((strict && result > -1 && result < 65536 && (ScanG == null || result < ScanG.Length / 16 - 35))
 						|| (!strict && result > -1 && result < 65536)))
 				{
-					Records[SelId].Record.ScanG         = (byte)(result + 35);
-					Records[SelId].Record.ScanG_reduced = (byte)(result);
+					//LogFile.WriteLine("\nOnChanged20r() text2= " + tb20_scang2.Text + " result= " + result);
+					Records[SelId].Record.ScanG         = (ushort)(result + 35);
+					Records[SelId].Record.ScanG_reduced = (ushort)(result);
+					//LogFile.WriteLine(". ScanG= "   + Records[SelId].Record.ScanG);
+					//LogFile.WriteLine(". ScanG_r= " + Records[SelId].Record.ScanG_reduced);
 
 					tb20_scang1.Text = (result + 35).ToString();
+					//LogFile.WriteLine(". . text1= " + tb20_scang1.Text);
 					pnl_ScanGic.Invalidate();
 				}
 				else

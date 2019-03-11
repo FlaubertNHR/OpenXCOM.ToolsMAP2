@@ -97,8 +97,6 @@ namespace McdView
 				{
 					if ((_selId = value) != -1)
 					{
-						
-
 						bool strict0 = strict;
 						strict = false;
 						PopulateTextFields();
@@ -651,8 +649,16 @@ namespace McdView
 			tb18_loft20.Text = ((int)record.Loft11).ToString();
 			tb19_loft22.Text = ((int)record.Loft12).ToString();
 
-			tb20_scang1.Text = ((int)record.ScanG)        .ToString();
-			tb20_scang2.Text = ((int)record.ScanG_reduced).ToString();
+			//LogFile.WriteLine("record.ScanG= " + record.ScanG);
+			//LogFile.WriteLine("record.ScanG_reduced= " + record.ScanG_reduced);
+//			tb20_scang1.Text = ((int)record.ScanG)        .ToString(); // no.
+//			tb20_scang2.Text = ((int)record.ScanG_reduced).ToString();
+			string scanG         = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
+			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// god only knows why else the cast from ushort won't work right.
+			tb20_scang1.Text = scanG;										// TODO: There could still be probls in the OnChanged mechanism ...
+			tb20_scang2.Text = scanG_reduced;
+			//LogFile.WriteLine("tb20_scang1.Text= " + tb20_scang1.Text);
+			//LogFile.WriteLine("tb20_scang2.Text= " + tb20_scang2.Text);
 
 			tb22_.Text = ((int)record.Unknown22).ToString();
 			tb23_.Text = ((int)record.Unknown23).ToString();

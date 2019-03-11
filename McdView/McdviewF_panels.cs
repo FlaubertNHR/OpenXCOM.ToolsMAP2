@@ -306,7 +306,7 @@ namespace McdView
 
 		#region ScanG icon
 		/// <summary>
-		/// Draws a square around the ScanG icon.
+		/// Draws a square border around the ScanG icon.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -360,7 +360,7 @@ namespace McdView
 						{
 							byte* pixel = pos + col + row * data.Stride;
 
-							palid = ScanG[id, row * 4 + col];
+							palid = ScanG[id, (row * 4) + col];
 							*pixel = (byte)palid;
 						}
 					}
