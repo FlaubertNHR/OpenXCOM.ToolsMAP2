@@ -713,8 +713,13 @@ namespace McdView
 			}
 		}
 
-/*		// RotatingCube -->
+		private void OnClick_IsoLoft(object sender, EventArgs e)
+		{
+			bar_IsoLoft.Select();
+		}
 
+/*		// RotatingCube -->
+// OnPaint ->
 			var g = e.Graphics;
 			g.SmoothingMode = SmoothingMode.HighQuality;
 			g.Clear(Color.Transparent);
@@ -741,6 +746,7 @@ namespace McdView
 						(int)Math.Round(node[1]) - 4,
 						8,8);
 			} */
+// class vars/functs ->
 /*		double[][] nodes =
 		{
 			new double[] {-1, -1, -1},
