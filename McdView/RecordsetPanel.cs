@@ -336,6 +336,11 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// Takes keyboard-input from the Form's KeyDown event to scroll this
+		/// panel.
+		/// </summary>
+		/// <param name="e"></param>
 		internal void KeyTile(KeyEventArgs e)
 		{
 			switch (e.KeyCode)
@@ -355,10 +360,26 @@ namespace McdView
 					break;
 
 				case Keys.PageUp:
+				{
+					int d = Width / (XCImage.SpriteWidth32 + 1);
+					if (_f.SelId - d < 0)
+						_f.SelId = 0;
+					else
+						_f.SelId -= d;
+
 					break;
+				}
 
 				case Keys.PageDown:
+				{
+					int d = Width / (XCImage.SpriteWidth32 + 1);
+					if (_f.SelId + d > Records.Length - 1)
+						_f.SelId = Records.Length - 1;
+					else
+						_f.SelId += d;
+
 					break;
+				}
 
 				case Keys.Home:
 					_f.SelId = 0;
