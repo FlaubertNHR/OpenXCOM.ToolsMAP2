@@ -577,20 +577,31 @@ namespace McdView
 		#region Events
 		private void OnTextChanged_SpriteShade(object sender, EventArgs e)
 		{
-			int result;
-			if (Int32.TryParse(tb_SpriteShade.Text, out result))
+			string text = tb_SpriteShade.Text.Trim();
+			while (text.StartsWith("0", StringComparison.InvariantCulture))
+				text = text.Substring(1);
+
+			if (text != tb_SpriteShade.Text)
 			{
-				if      (result <  -1) tb_SpriteShade.Text =  "-1"; // recurse
-				else if (result ==  0) tb_SpriteShade.Text =  "-1"; // recurse
-				else if (result > 100) tb_SpriteShade.Text = "100"; // recurse
-				else
-				{
-					SpriteShadeInt = result;
-					bar_SpriteShade.Value = (result != -1 ? result : 0);
-				}
+				tb_SpriteShade.Text = text; // recurse
 			}
 			else
-				tb_SpriteShade.Text = "-1"; // recurse
+			{
+				int result;
+				if (Int32.TryParse(tb_SpriteShade.Text, out result))
+				{
+					if      (result <  -1) tb_SpriteShade.Text =  "-1"; // recurse
+					else if (result ==  0) tb_SpriteShade.Text =  "-1"; // recurse
+					else if (result > 100) tb_SpriteShade.Text = "100"; // recurse
+					else
+					{
+						SpriteShadeInt = result;
+						bar_SpriteShade.Value = (result != -1 ? result : 0);
+					}
+				}
+				else
+					tb_SpriteShade.Text = "-1"; // recurse
+			}
 		}
 
 		private void OnValueChanged_SpriteShade(object sender, EventArgs e)

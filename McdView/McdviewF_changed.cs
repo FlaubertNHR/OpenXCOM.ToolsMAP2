@@ -182,6 +182,33 @@ namespace McdView
 				 + "sliding doors are static at phase 0 - see #30 isSlidingDoor).";
 		}
 
+
+		/// <summary>
+		/// Checks the text of a TextBox for validity. This changes the text if
+		/// it's not valid, which causes the OnChanged handler to recurse. It
+		/// trims the string and disallows any superfluous preceeding zeros.
+		/// Non-numeric text will be checked afterward in the OnChanged handler
+		/// itself.
+		/// </summary>
+		/// <param name="tb">a TextBox to check the text of</param>
+		/// <returns>tru if valid</returns>
+		private bool TryParseText(Control tb)
+		{
+			string text = tb.Text.Trim();
+			if (text.Length > 1)
+			{
+				while (text.StartsWith("0", StringComparison.InvariantCulture))
+					text = text.Substring(1);
+			}
+
+			if (text != tb.Text)
+			{
+				tb.Text = text; // recurse
+				return false;
+			}
+			return true;
+		}
+
 		/// <summary>
 		/// #0 phase 0 (byte)
 		/// </summary>
@@ -191,26 +218,29 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb0_phase0.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb0_phase0)) // else recurse
 				{
-					Records[SelId].Record.Sprite1 = (byte)result;
-					if (Spriteset != null && result < Spriteset.Count)
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb0_phase0.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Anisprites[0] = Spriteset[result];
+						Records[SelId].Record.Sprite1 = (byte)result;
+						if (Spriteset != null && result < Spriteset.Count)
+						{
+							Records[SelId].Anisprites[0] = Spriteset[result];
+						}
+						else
+							Records[SelId].Anisprites[0] = null;
+
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
 					}
 					else
-						Records[SelId].Anisprites[0] = null;
-
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+						tb0_phase0.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb0_phase0.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb0_phase0.Text = String.Empty; // recurse.
@@ -240,26 +270,29 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb1_phase1.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb1_phase1)) // else recurse
 				{
-					Records[SelId].Record.Sprite2 = (byte)result;
-					if (Spriteset != null && result < Spriteset.Count)
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb1_phase1.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Anisprites[1] = Spriteset[result];
+						Records[SelId].Record.Sprite2 = (byte)result;
+						if (Spriteset != null && result < Spriteset.Count)
+						{
+							Records[SelId].Anisprites[1] = Spriteset[result];
+						}
+						else
+							Records[SelId].Anisprites[1] = null;
+
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
 					}
 					else
-						Records[SelId].Anisprites[1] = null;
-
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+						tb1_phase1.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb1_phase1.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb1_phase1.Text = String.Empty; // recurse.
@@ -289,26 +322,29 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb2_phase2.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb2_phase2)) // else recurse
 				{
-					Records[SelId].Record.Sprite3 = (byte)result;
-					if (Spriteset != null && result < Spriteset.Count)
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb2_phase2.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Anisprites[2] = Spriteset[result];
+						Records[SelId].Record.Sprite3 = (byte)result;
+						if (Spriteset != null && result < Spriteset.Count)
+						{
+							Records[SelId].Anisprites[2] = Spriteset[result];
+						}
+						else
+							Records[SelId].Anisprites[2] = null;
+
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
 					}
 					else
-						Records[SelId].Anisprites[2] = null;
-
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+						tb2_phase2.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb2_phase2.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb2_phase2.Text = String.Empty; // recurse.
@@ -338,26 +374,29 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb3_phase3.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb3_phase3)) // else recurse
 				{
-					Records[SelId].Record.Sprite4 = (byte)result;
-					if (Spriteset != null && result < Spriteset.Count)
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb3_phase3.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Anisprites[3] = Spriteset[result];
+						Records[SelId].Record.Sprite4 = (byte)result;
+						if (Spriteset != null && result < Spriteset.Count)
+						{
+							Records[SelId].Anisprites[3] = Spriteset[result];
+						}
+						else
+							Records[SelId].Anisprites[3] = null;
+
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
 					}
 					else
-						Records[SelId].Anisprites[3] = null;
-
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+						tb3_phase3.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb3_phase3.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb3_phase3.Text = String.Empty; // recurse.
@@ -387,26 +426,29 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb4_phase4.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb4_phase4)) // else recurse
 				{
-					Records[SelId].Record.Sprite5 = (byte)result;
-					if (Spriteset != null && result < Spriteset.Count)
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb4_phase4.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Anisprites[4] = Spriteset[result];
+						Records[SelId].Record.Sprite5 = (byte)result;
+						if (Spriteset != null && result < Spriteset.Count)
+						{
+							Records[SelId].Anisprites[4] = Spriteset[result];
+						}
+						else
+							Records[SelId].Anisprites[4] = null;
+
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
 					}
 					else
-						Records[SelId].Anisprites[4] = null;
-
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+						tb4_phase4.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb4_phase4.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb4_phase4.Text = String.Empty; // recurse.
@@ -436,26 +478,29 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb5_phase5.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb5_phase5)) // else recurse
 				{
-					Records[SelId].Record.Sprite6 = (byte)result;
-					if (Spriteset != null && result < Spriteset.Count)
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb5_phase5.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Anisprites[5] = Spriteset[result];
+						Records[SelId].Record.Sprite6 = (byte)result;
+						if (Spriteset != null && result < Spriteset.Count)
+						{
+							Records[SelId].Anisprites[5] = Spriteset[result];
+						}
+						else
+							Records[SelId].Anisprites[5] = null;
+
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
 					}
 					else
-						Records[SelId].Anisprites[5] = null;
-
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+						tb5_phase5.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb5_phase5.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb5_phase5.Text = String.Empty; // recurse.
@@ -485,26 +530,29 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb6_phase6.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb6_phase6)) // else recurse
 				{
-					Records[SelId].Record.Sprite7 = (byte)result;
-					if (Spriteset != null && result < Spriteset.Count)
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb6_phase6.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Anisprites[6] = Spriteset[result];
+						Records[SelId].Record.Sprite7 = (byte)result;
+						if (Spriteset != null && result < Spriteset.Count)
+						{
+							Records[SelId].Anisprites[6] = Spriteset[result];
+						}
+						else
+							Records[SelId].Anisprites[6] = null;
+
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
 					}
 					else
-						Records[SelId].Anisprites[6] = null;
-
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+						tb6_phase6.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb6_phase6.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb6_phase6.Text = String.Empty; // recurse.
@@ -534,26 +582,29 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb7_phase7.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb7_phase7)) // else recurse
 				{
-					Records[SelId].Record.Sprite8 = (byte)result;
-					if (Spriteset != null && result < Spriteset.Count)
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb7_phase7.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
+							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Anisprites[7] = Spriteset[result];
+						Records[SelId].Record.Sprite8 = (byte)result;
+						if (Spriteset != null && result < Spriteset.Count)
+						{
+							Records[SelId].Anisprites[7] = Spriteset[result];
+						}
+						else
+							Records[SelId].Anisprites[7] = null;
+
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
 					}
 					else
-						Records[SelId].Anisprites[7] = null;
-
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+						tb7_phase7.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb7_phase7.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb7_phase7.Text = String.Empty; // recurse.
@@ -591,19 +642,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb8_loft00.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb8_loft00)) // else recurse
 				{
-					Records[SelId].Record.Loft1 = (byte)result;
-					pnl_Loft08.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb8_loft00.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft1 = (byte)result;
+						pnl_Loft08.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb8_loft00.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb8_loft00.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb8_loft00.Text = String.Empty; // recurse.
@@ -633,19 +687,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb9_loft02.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb9_loft02)) // else recurse
 				{
-					Records[SelId].Record.Loft2 = (byte)result;
-					pnl_Loft09.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb9_loft02.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft2 = (byte)result;
+						pnl_Loft09.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb9_loft02.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb9_loft02.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb9_loft02.Text = String.Empty; // recurse.
@@ -675,19 +732,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb10_loft04.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb10_loft04)) // else recurse
 				{
-					Records[SelId].Record.Loft3 = (byte)result;
-					pnl_Loft10.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb10_loft04.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft3 = (byte)result;
+						pnl_Loft10.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb10_loft04.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb10_loft04.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb10_loft04.Text = String.Empty; // recurse.
@@ -717,19 +777,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb11_loft06.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb11_loft06)) // else recurse
 				{
-					Records[SelId].Record.Loft4 = (byte)result;
-					pnl_Loft11.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb11_loft06.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft4 = (byte)result;
+						pnl_Loft11.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb11_loft06.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb11_loft06.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb11_loft06.Text = String.Empty; // recurse.
@@ -759,19 +822,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb12_loft08.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb12_loft08)) // else recurse
 				{
-					Records[SelId].Record.Loft5 = (byte)result;
-					pnl_Loft12.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb12_loft08.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft5 = (byte)result;
+						pnl_Loft12.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb12_loft08.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb12_loft08.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb12_loft08.Text = String.Empty; // recurse.
@@ -801,19 +867,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb13_loft10.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb13_loft10)) // else recurse
 				{
-					Records[SelId].Record.Loft6 = (byte)result;
-					pnl_Loft13.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb13_loft10.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft6 = (byte)result;
+						pnl_Loft13.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb13_loft10.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb13_loft10.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb13_loft10.Text = String.Empty; // recurse.
@@ -843,19 +912,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb14_loft12.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb14_loft12)) // else recurse
 				{
-					Records[SelId].Record.Loft7 = (byte)result;
-					pnl_Loft14.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb14_loft12.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft7 = (byte)result;
+						pnl_Loft14.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb14_loft12.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb14_loft12.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb14_loft12.Text = String.Empty; // recurse.
@@ -885,19 +957,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb15_loft14.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb15_loft14)) // else recurse
 				{
-					Records[SelId].Record.Loft8 = (byte)result;
-					pnl_Loft15.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb15_loft14.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft8 = (byte)result;
+						pnl_Loft15.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb15_loft14.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb15_loft14.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb15_loft14.Text = String.Empty; // recurse.
@@ -927,19 +1002,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb16_loft16.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb16_loft16)) // else recurse
 				{
-					Records[SelId].Record.Loft9 = (byte)result;
-					pnl_Loft16.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb16_loft16.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft9 = (byte)result;
+						pnl_Loft16.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb16_loft16.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb16_loft16.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb16_loft16.Text = String.Empty; // recurse.
@@ -969,19 +1047,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb17_loft18.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb17_loft18)) // else recurse
 				{
-					Records[SelId].Record.Loft10 = (byte)result;
-					pnl_Loft17.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb17_loft18.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft10 = (byte)result;
+						pnl_Loft17.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb17_loft18.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb17_loft18.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb17_loft18.Text = String.Empty; // recurse.
@@ -1011,19 +1092,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb18_loft20.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb18_loft20)) // else recurse
 				{
-					Records[SelId].Record.Loft11 = (byte)result;
-					pnl_Loft18.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb18_loft20.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft11 = (byte)result;
+						pnl_Loft18.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb18_loft20.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb18_loft20.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb18_loft20.Text = String.Empty; // recurse.
@@ -1053,19 +1137,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb19_loft22.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb19_loft22)) // else recurse
 				{
-					Records[SelId].Record.Loft12 = (byte)result;
-					pnl_Loft19.Invalidate();
-					pnl_IsoLoft.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb19_loft22.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Loft12 = (byte)result;
+						pnl_Loft19.Invalidate();
+						pnl_IsoLoft.Invalidate();
+					}
+					else
+						tb19_loft22.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb19_loft22.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb19_loft22.Text = String.Empty; // recurse.
@@ -1109,25 +1196,24 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb20_scang1.Text, out result)
-					&&     ((strict && result > 34 && result < 65571 && (ScanG == null || result < ScanG.Length / 16))
-						|| (!strict && result > 34 && result < 65571)))
+				if (TryParseText(tb20_scang1)) // else recurse
 				{
-					//LogFile.WriteLine("\nOnChanged20() text1= " + tb20_scang1.Text + " result= " + result);
-					Records[SelId].Record.ScanG         = (ushort)(result);
-					Records[SelId].Record.ScanG_reduced = (ushort)(result - 35);
-					//LogFile.WriteLine(". ScanG= " + Records[SelId].Record.ScanG);
-					//LogFile.WriteLine(". ScanG_r= " + Records[SelId].Record.ScanG_reduced);
+					Changed |= !InitFields;
 
-					tb20_scang2.Text = (result - 35).ToString();
-					//LogFile.WriteLine(". . text2= " + tb20_scang2.Text);
-					pnl_ScanGic.Invalidate();
+					int result;
+					if (Int32.TryParse(tb20_scang1.Text, out result)
+						&&     ((strict && result > 34 && result < 65571 && (ScanG == null || result < ScanG.Length / 16))
+							|| (!strict && result > 34 && result < 65571)))
+					{
+						Records[SelId].Record.ScanG         = (ushort)(result);
+						Records[SelId].Record.ScanG_reduced = (ushort)(result - 35);
+
+						tb20_scang2.Text = (result - 35).ToString();
+						pnl_ScanGic.Invalidate();
+					}
+					else
+						tb20_scang1.Text = "35"; // recurse w/ default.
 				}
-				else
-					tb20_scang1.Text = "35"; // recurse w/ default.
 			}
 			else
 				tb20_scang1.Text = String.Empty; // recurse.
@@ -1158,25 +1244,28 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb20_scang2.Text, out result)
-					&&     ((strict && result > -1 && result < 65536 && (ScanG == null || result < ScanG.Length / 16 - 35))
-						|| (!strict && result > -1 && result < 65536)))
+				if (TryParseText(tb20_scang2)) // else recurse
 				{
-					//LogFile.WriteLine("\nOnChanged20r() text2= " + tb20_scang2.Text + " result= " + result);
-					Records[SelId].Record.ScanG         = (ushort)(result + 35);
-					Records[SelId].Record.ScanG_reduced = (ushort)(result);
-					//LogFile.WriteLine(". ScanG= "   + Records[SelId].Record.ScanG);
-					//LogFile.WriteLine(". ScanG_r= " + Records[SelId].Record.ScanG_reduced);
+					Changed |= !InitFields;
 
-					tb20_scang1.Text = (result + 35).ToString();
-					//LogFile.WriteLine(". . text1= " + tb20_scang1.Text);
-					pnl_ScanGic.Invalidate();
+					int result;
+					if (Int32.TryParse(tb20_scang2.Text, out result)
+						&&     ((strict && result > -1 && result < 65536 && (ScanG == null || result < ScanG.Length / 16 - 35))
+							|| (!strict && result > -1 && result < 65536)))
+					{
+						//LogFile.WriteLine("\nOnChanged20r() text2= " + tb20_scang2.Text + " result= " + result);
+						Records[SelId].Record.ScanG         = (ushort)(result + 35);
+						Records[SelId].Record.ScanG_reduced = (ushort)(result);
+						//LogFile.WriteLine(". ScanG= "   + Records[SelId].Record.ScanG);
+						//LogFile.WriteLine(". ScanG_r= " + Records[SelId].Record.ScanG_reduced);
+
+						tb20_scang1.Text = (result + 35).ToString();
+						//LogFile.WriteLine(". . text1= " + tb20_scang1.Text);
+						pnl_ScanGic.Invalidate();
+					}
+					else
+						tb20_scang2.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb20_scang2.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb20_scang2.Text = String.Empty; // recurse.
@@ -1206,17 +1295,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb22_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb22_)) // else recurse
 				{
-					Records[SelId].Record.Unknown22 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb22_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown22 = (byte)result;
+					}
+					else
+						tb22_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb22_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb22_.Text = String.Empty; // recurse.
@@ -1246,17 +1338,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb23_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb23_)) // else recurse
 				{
-					Records[SelId].Record.Unknown23 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb23_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown23 = (byte)result;
+					}
+					else
+						tb23_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb23_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb23_.Text = String.Empty; // recurse.
@@ -1286,17 +1381,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb24_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb24_)) // else recurse
 				{
-					Records[SelId].Record.Unknown24 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb24_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown24 = (byte)result;
+					}
+					else
+						tb24_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb24_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb24_.Text = String.Empty; // recurse.
@@ -1326,17 +1424,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb25_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb25_)) // else recurse
 				{
-					Records[SelId].Record.Unknown25 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb25_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown25 = (byte)result;
+					}
+					else
+						tb25_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb25_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb25_.Text = String.Empty; // recurse.
@@ -1366,17 +1467,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb26_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb26_)) // else recurse
 				{
-					Records[SelId].Record.Unknown26 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb26_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown26 = (byte)result;
+					}
+					else
+						tb26_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb26_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb26_.Text = String.Empty; // recurse.
@@ -1406,17 +1510,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb27_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb27_)) // else recurse
 				{
-					Records[SelId].Record.Unknown27 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb27_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown27 = (byte)result;
+					}
+					else
+						tb27_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb27_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb27_.Text = String.Empty; // recurse.
@@ -1446,17 +1553,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb28_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb28_)) // else recurse
 				{
-					Records[SelId].Record.Unknown28 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb28_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown28 = (byte)result;
+					}
+					else
+						tb28_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb28_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb28_.Text = String.Empty; // recurse.
@@ -1486,17 +1596,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb29_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb29_)) // else recurse
 				{
-					Records[SelId].Record.Unknown29 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb29_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown29 = (byte)result;
+					}
+					else
+						tb29_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb29_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb29_.Text = String.Empty; // recurse.
@@ -1526,17 +1639,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb30_isslidingdoor.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb30_isslidingdoor)) // else recurse
 				{
-					Records[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb30_isslidingdoor.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
+					}
+					else
+						tb30_isslidingdoor.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb30_isslidingdoor.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb30_isslidingdoor.Text = String.Empty; // recurse.
@@ -1583,17 +1699,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb31_isblocklos.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb31_isblocklos)) // else recurse
 				{
-					Records[SelId].Record.StopLOS = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb31_isblocklos.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.StopLOS = Convert.ToBoolean(result);
+					}
+					else
+						tb31_isblocklos.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb31_isblocklos.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb31_isblocklos.Text = String.Empty; // recurse.
@@ -1632,17 +1751,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb32_isdropthrou.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb32_isdropthrou)) // else recurse
 				{
-					Records[SelId].Record.NotFloored = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb32_isdropthrou.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.NotFloored = Convert.ToBoolean(result);
+					}
+					else
+						tb32_isdropthrou.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb32_isdropthrou.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb32_isdropthrou.Text = String.Empty; // recurse.
@@ -1682,17 +1804,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb33_isbigwall.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb33_isbigwall)) // else recurse
 				{
-					Records[SelId].Record.BigWall = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb33_isbigwall.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.BigWall = Convert.ToBoolean(result);
+					}
+					else
+						tb33_isbigwall.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb33_isbigwall.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb33_isbigwall.Text = String.Empty; // recurse.
@@ -1733,17 +1858,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb34_isgravlift.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb34_isgravlift)) // else recurse
 				{
-					Records[SelId].Record.GravLift = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb34_isgravlift.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.GravLift = Convert.ToBoolean(result);
+					}
+					else
+						tb34_isgravlift.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb34_isgravlift.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb34_isgravlift.Text = String.Empty; // recurse.
@@ -1784,17 +1912,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb35_ishingeddoor.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb35_ishingeddoor)) // else recurse
 				{
-					Records[SelId].Record.HingedDoor = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb35_ishingeddoor.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.HingedDoor = Convert.ToBoolean(result);
+					}
+					else
+						tb35_ishingeddoor.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb35_ishingeddoor.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb35_ishingeddoor.Text = String.Empty; // recurse.
@@ -1836,17 +1967,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb36_isblockfire.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb36_isblockfire)) // else recurse
 				{
-					Records[SelId].Record.BlockFire = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb36_isblockfire.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.BlockFire = Convert.ToBoolean(result);
+					}
+					else
+						tb36_isblockfire.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb36_isblockfire.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb36_isblockfire.Text = String.Empty; // recurse.
@@ -1885,17 +2019,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb37_isblocksmoke.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb37_isblocksmoke)) // else recurse
 				{
-					Records[SelId].Record.BlockSmoke = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb37_isblocksmoke.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.BlockSmoke = Convert.ToBoolean(result);
+					}
+					else
+						tb37_isblocksmoke.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb37_isblocksmoke.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb37_isblocksmoke.Text = String.Empty; // recurse.
@@ -1935,17 +2072,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb38_.Text, out result)
-					&&     ((strict && result == 3)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb38_)) // else recurse
 				{
-					Records[SelId].Record.LeftRightHalf = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb38_.Text, out result)
+						&&     ((strict && result == 3)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.LeftRightHalf = (byte)result;
+					}
+					else
+						tb38_.Text = "3"; // recurse w/ default.
 				}
-				else
-					tb38_.Text = "3"; // recurse w/ default.
 			}
 			else
 				tb38_.Text = String.Empty; // recurse.
@@ -1986,21 +2126,24 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
+				if (TryParseText(tb39_tuwalk)) // else recurse
+				{
+					Changed |= !InitFields;
 
-				int result;
-				if (Int32.TryParse(tb39_tuwalk.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
-				{
-					Records[SelId].Record.TU_Walk = (byte)result;
+					int result;
+					if (Int32.TryParse(tb39_tuwalk.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.TU_Walk = (byte)result;
+					}
+					else if (Records[SelId].Record.PartType == PartType.Floor)
+					{
+						tb39_tuwalk.Text = "4"; // recurse w/ default.
+					}
+					else
+						tb39_tuwalk.Text = "255"; // recurse w/ default.
 				}
-				else if (Records[SelId].Record.PartType == PartType.Floor)
-				{
-					tb39_tuwalk.Text = "4"; // recurse w/ default.
-				}
-				else
-					tb39_tuwalk.Text = "255"; // recurse w/ default.
 			}
 			else
 				tb39_tuwalk.Text = String.Empty; // recurse.
@@ -2031,21 +2174,24 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
+				if (TryParseText(tb40_tuslide)) // else recurse
+				{
+					Changed |= !InitFields;
 
-				int result;
-				if (Int32.TryParse(tb40_tuslide.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
-				{
-					Records[SelId].Record.TU_Slide = (byte)result;
+					int result;
+					if (Int32.TryParse(tb40_tuslide.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.TU_Slide = (byte)result;
+					}
+					else if (Records[SelId].Record.PartType == PartType.Floor)
+					{
+						tb40_tuslide.Text = "4"; // recurse w/ default.
+					}
+					else
+						tb40_tuslide.Text = "255"; // recurse w/ default.
 				}
-				else if (Records[SelId].Record.PartType == PartType.Floor)
-				{
-					tb40_tuslide.Text = "4"; // recurse w/ default.
-				}
-				else
-					tb40_tuslide.Text = "255"; // recurse w/ default.
 			}
 			else
 				tb40_tuslide.Text = String.Empty; // recurse.
@@ -2076,21 +2222,24 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
+				if (TryParseText(tb41_tufly)) // else recurse
+				{
+					Changed |= !InitFields;
 
-				int result;
-				if (Int32.TryParse(tb41_tufly.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
-				{
-					Records[SelId].Record.TU_Fly = (byte)result;
+					int result;
+					if (Int32.TryParse(tb41_tufly.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.TU_Fly = (byte)result;
+					}
+					else if (Records[SelId].Record.PartType == PartType.Floor)
+					{
+						tb41_tufly.Text = "4"; // recurse w/ default.
+					}
+					else
+						tb41_tufly.Text = "255"; // recurse w/ default.
 				}
-				else if (Records[SelId].Record.PartType == PartType.Floor)
-				{
-					tb41_tufly.Text = "4"; // recurse w/ default.
-				}
-				else
-					tb41_tufly.Text = "255"; // recurse w/ default.
 			}
 			else
 				tb41_tufly.Text = String.Empty; // recurse.
@@ -2121,17 +2270,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb42_armor.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb42_armor)) // else recurse
 				{
-					Records[SelId].Record.Armor = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb42_armor.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Armor = (byte)result;
+					}
+					else
+						tb42_armor.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb42_armor.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb42_armor.Text = String.Empty; // recurse.
@@ -2165,17 +2317,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb43_heblock.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb43_heblock)) // else recurse
 				{
-					Records[SelId].Record.HE_Block = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb43_heblock.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.HE_Block = (byte)result;
+					}
+					else
+						tb43_heblock.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb43_heblock.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb43_heblock.Text = String.Empty; // recurse.
@@ -2206,24 +2361,27 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb44_deathid.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && result < Records.Length) // NOTE: 'Records' shall not be null here.
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb44_deathid)) // else recurse
 				{
-					Records[SelId].Record.DieTile = (byte)result;
+					Changed |= !InitFields;
 
-					if (result != 0 && result < Records.Length)
-						Records[SelId].Dead = Records[result];
+					int result;
+					if (Int32.TryParse(tb44_deathid.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && result < Records.Length) // NOTE: 'Records' shall not be null here.
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.DieTile = (byte)result;
+
+						if (result != 0 && result < Records.Length)
+							Records[SelId].Dead = Records[result];
+						else
+							Records[SelId].Dead = null;
+
+						RecordsPanel.Invalidate();
+					}
 					else
-						Records[SelId].Dead = null;
-
-					RecordsPanel.Invalidate();
+						tb44_deathid.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb44_deathid.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb44_deathid.Text = String.Empty; // recurse.
@@ -2258,17 +2416,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb45_fireresist.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb45_fireresist)) // else recurse
 				{
-					Records[SelId].Record.Flammable = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb45_fireresist.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Flammable = (byte)result;
+					}
+					else
+						tb45_fireresist.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb45_fireresist.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb45_fireresist.Text = String.Empty; // recurse.
@@ -2302,24 +2463,27 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb46_alternateid.Text, out result)
-					&&     ((strict && result > -1 && result < 256 && result < Records.Length) // NOTE: 'Records' shall not be null here.
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb46_alternateid)) // else recurse
 				{
-					Records[SelId].Record.Alt_MCD = (byte)result;
+					Changed |= !InitFields;
 
-					if (result != 0 && result < Records.Length)
-						Records[SelId].Alternate = Records[result];
+					int result;
+					if (Int32.TryParse(tb46_alternateid.Text, out result)
+						&&     ((strict && result > -1 && result < 256 && result < Records.Length) // NOTE: 'Records' shall not be null here.
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Alt_MCD = (byte)result;
+
+						if (result != 0 && result < Records.Length)
+							Records[SelId].Alternate = Records[result];
+						else
+							Records[SelId].Alternate = null;
+
+						RecordsPanel.Invalidate();
+					}
 					else
-						Records[SelId].Alternate = null;
-
-					RecordsPanel.Invalidate();
+						tb46_alternateid.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb46_alternateid.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb46_alternateid.Text = String.Empty; // recurse.
@@ -2355,17 +2519,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb47_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb47_)) // else recurse
 				{
-					Records[SelId].Record.Unknown47 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb47_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown47 = (byte)result;
+					}
+					else
+						tb47_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb47_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb47_.Text = String.Empty; // recurse.
@@ -2397,17 +2564,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb48_terrainoffset.Text, out result)
-					&&     ((strict && result > - 25 && result < 1)
-						|| (!strict && result > -129 && result < 128)))
+				if (TryParseText(tb48_terrainoffset)) // else recurse // TODO: check 0 after "-" sign
 				{
-					Records[SelId].Record.StandOffset = (sbyte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb48_terrainoffset.Text, out result)
+						&&     ((strict && result > - 25 && result < 1)
+							|| (!strict && result > -129 && result < 128)))
+					{
+						Records[SelId].Record.StandOffset = (sbyte)result;
+					}
+					else
+						tb48_terrainoffset.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb48_terrainoffset.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb48_terrainoffset.Text = String.Empty; // recurse.
@@ -2448,19 +2618,22 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb49_spriteoffset.Text, out result)
-					&&     ((strict && result > -1 && result < 41)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb49_spriteoffset)) // else recurse
 				{
-					Records[SelId].Record.TileOffset = (byte)result;
-					RecordsPanel.Invalidate();
-					pnl_Sprites.Invalidate();
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb49_spriteoffset.Text, out result)
+						&&     ((strict && result > -1 && result < 41)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.TileOffset = (byte)result;
+						RecordsPanel.Invalidate();
+						pnl_Sprites.Invalidate();
+					}
+					else
+						tb49_spriteoffset.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb49_spriteoffset.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb49_spriteoffset.Text = String.Empty; // recurse.
@@ -2494,17 +2667,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb50_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb50_)) // else recurse
 				{
-					Records[SelId].Record.Unknown50 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb50_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown50 = (byte)result;
+					}
+					else
+						tb50_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb50_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb50_.Text = String.Empty; // recurse.
@@ -2535,17 +2711,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb51_lightblock.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb51_lightblock)) // else recurse
 				{
-					Records[SelId].Record.LightBlock = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb51_lightblock.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.LightBlock = (byte)result;
+					}
+					else
+						tb51_lightblock.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb51_lightblock.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb51_lightblock.Text = String.Empty; // recurse.
@@ -2577,17 +2756,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb52_footsound.Text, out result)
-					&&     ((strict && result > -1 && result < 7)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb52_footsound)) // else recurse
 				{
-					Records[SelId].Record.Footstep = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb52_footsound.Text, out result)
+						&&     ((strict && result > -1 && result < 7)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Footstep = (byte)result;
+					}
+					else
+						tb52_footsound.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb52_footsound.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb52_footsound.Text = String.Empty; // recurse.
@@ -2633,17 +2815,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb53_parttype.Text, out result)
-					&&     ((strict && result > -1 && result < 4)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb53_parttype)) // else recurse
 				{
-					Records[SelId].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
-				}														// explicitly defined in the enum is allowed.
-				else
-					tb53_parttype.Text = "0"; // recurse w/ default.
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb53_parttype.Text, out result)
+						&&     ((strict && result > -1 && result < 4)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
+					}														// explicitly defined in the enum is allowed.
+					else
+						tb53_parttype.Text = "0"; // recurse w/ default.
+				}
 			}
 			else
 				tb53_parttype.Text = String.Empty; // recurse.
@@ -2684,17 +2869,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb54_hetype.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb54_hetype)) // else recurse
 				{
-					Records[SelId].Record.HE_Type = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb54_hetype.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.HE_Type = (byte)result;
+					}
+					else
+						tb54_hetype.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb54_hetype.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb54_hetype.Text = String.Empty; // recurse.
@@ -2734,17 +2922,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb55_hestrength.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb55_hestrength)) // else recurse
 				{
-					Records[SelId].Record.HE_Strength = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb55_hestrength.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.HE_Strength = (byte)result;
+					}
+					else
+						tb55_hestrength.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb55_hestrength.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb55_hestrength.Text = String.Empty; // recurse.
@@ -2776,17 +2967,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb56_smokeblock.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb56_smokeblock)) // else recurse
 				{
-					Records[SelId].Record.SmokeBlockage = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb56_smokeblock.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.SmokeBlockage = (byte)result;
+					}
+					else
+						tb56_smokeblock.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb56_smokeblock.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb56_smokeblock.Text = String.Empty; // recurse.
@@ -2818,17 +3012,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb57_fuel.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb57_fuel)) // else recurse
 				{
-					Records[SelId].Record.Fuel = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb57_fuel.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Fuel = (byte)result;
+					}
+					else
+						tb57_fuel.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb57_fuel.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb57_fuel.Text = String.Empty; // recurse.
@@ -2859,17 +3056,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb58_lightintensity.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb58_lightintensity)) // else recurse
 				{
-					Records[SelId].Record.LightSource = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb58_lightintensity.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.LightSource = (byte)result;
+					}
+					else
+						tb58_lightintensity.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb58_lightintensity.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb58_lightintensity.Text = String.Empty; // recurse.
@@ -2902,17 +3102,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb59_specialtype.Text, out result)
-					&&     ((strict && result > -1 && result < 15)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb59_specialtype)) // else recurse
 				{
-					Records[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
-				}															// explicitly defined in the enum is allowed.
-				else
-					tb59_specialtype.Text = "0"; // recurse w/ default.
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb59_specialtype.Text, out result)
+						&&     ((strict && result > -1 && result < 15)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
+					}															// explicitly defined in the enum is allowed.
+					else
+						tb59_specialtype.Text = "0"; // recurse w/ default.
+				}
 			}
 			else
 				tb59_specialtype.Text = String.Empty; // recurse.
@@ -2972,17 +3175,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb60_isbaseobject.Text, out result)
-					&&     ((strict && result > -1 && result < 2)
-						|| (!strict && result > -1 && result < 2)))
+				if (TryParseText(tb60_isbaseobject)) // else recurse
 				{
-					Records[SelId].Record.BaseObject = Convert.ToBoolean(result);
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb60_isbaseobject.Text, out result)
+						&&     ((strict && result > -1 && result < 2)
+							|| (!strict && result > -1 && result < 2)))
+					{
+						Records[SelId].Record.BaseObject = Convert.ToBoolean(result);
+					}
+					else
+						tb60_isbaseobject.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb60_isbaseobject.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb60_isbaseobject.Text = String.Empty; // recurse.
@@ -3022,17 +3228,20 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				Changed |= !InitFields;
-
-				int result;
-				if (Int32.TryParse(tb61_.Text, out result)
-					&&     ((strict && result > -1 && result < 256)
-						|| (!strict && result > -1 && result < 256)))
+				if (TryParseText(tb61_)) // else recurse
 				{
-					Records[SelId].Record.Unknown61 = (byte)result;
+					Changed |= !InitFields;
+
+					int result;
+					if (Int32.TryParse(tb61_.Text, out result)
+						&&     ((strict && result > -1 && result < 256)
+							|| (!strict && result > -1 && result < 256)))
+					{
+						Records[SelId].Record.Unknown61 = (byte)result;
+					}
+					else
+						tb61_.Text = "0"; // recurse w/ default.
 				}
-				else
-					tb61_.Text = "0"; // recurse w/ default.
 			}
 			else
 				tb61_.Text = String.Empty; // recurse.
