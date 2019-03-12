@@ -3601,6 +3601,7 @@
 			this.Controls.Add(this.gb_Collection);
 			this.Controls.Add(this.ss_Statusbar);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.KeyPreview = true;
 			this.MaximumSize = new System.Drawing.Size(840, 855);
 			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";

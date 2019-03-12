@@ -57,13 +57,15 @@ namespace McdView
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint
 				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
+				   | ControlStyles.ResizeRedraw
+				   | ControlStyles.Selectable, true);
 
 			Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
 			BackColor = SystemColors.Desktop;
 			Margin = new Padding(0);
 			Name = "pnl_Collection";
 			TabIndex = 0;
+			TabStop = true;
 
 			Location = new Point(5, 15);
 
@@ -264,7 +266,6 @@ namespace McdView
 					id = -1;
 				}
 				_f.SelId = id;
-				ScrollTile();
 			}
 		}
 
@@ -292,6 +293,25 @@ namespace McdView
 				}
 			}
 		}
+
+		/// <summary>
+		/// This is required in order to accept arrow-keyboard-input via
+		/// McdviewF.OnKeyDown().
+		/// </summary>
+		/// <param name="keyData"></param>
+		/// <returns></returns>
+		protected override bool IsInputKey(Keys keyData)
+		{
+			switch (keyData)
+			{
+				case Keys.Left:
+				case Keys.Up:
+				case Keys.Right:
+				case Keys.Down:
+					return true;
+			}
+			return base.IsInputKey(keyData);
+		}
 		#endregion Events (override)
 
 
@@ -300,7 +320,7 @@ namespace McdView
 		/// Scrolls the panel to ensure that the currently selected tile is
 		/// fully displayed.
 		/// </summary>
-		private void ScrollTile()
+		internal void ScrollTile()
 		{
 			if (Scroller.Enabled && _f.SelId != -1)
 			{
@@ -313,6 +333,40 @@ namespace McdView
 				{
 					Scroller.Value = x - Width;
 				}
+			}
+		}
+
+		internal void KeyTile(KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Left:
+				case Keys.Up:
+				case Keys.Back:
+					if (_f.SelId != 0)
+						_f.SelId -= 1;
+					break;
+
+				case Keys.Right:
+				case Keys.Down:
+				case Keys.Space:
+					if (_f.SelId != Records.Length - 1)
+						_f.SelId += 1;
+					break;
+
+				case Keys.PageUp:
+					break;
+
+				case Keys.PageDown:
+					break;
+
+				case Keys.Home:
+					_f.SelId = 0;
+					break;
+
+				case Keys.End:
+					_f.SelId = Records.Length - 1;
+					break;
 			}
 		}
 

@@ -206,7 +206,7 @@ namespace McdView
 					else
 						Records[SelId].Anisprites[0] = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else
@@ -255,7 +255,7 @@ namespace McdView
 					else
 						Records[SelId].Anisprites[1] = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else
@@ -304,7 +304,7 @@ namespace McdView
 					else
 						Records[SelId].Anisprites[2] = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else
@@ -353,7 +353,7 @@ namespace McdView
 					else
 						Records[SelId].Anisprites[3] = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else
@@ -402,7 +402,7 @@ namespace McdView
 					else
 						Records[SelId].Anisprites[4] = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else
@@ -451,7 +451,7 @@ namespace McdView
 					else
 						Records[SelId].Anisprites[5] = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else
@@ -500,7 +500,7 @@ namespace McdView
 					else
 						Records[SelId].Anisprites[6] = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else
@@ -549,7 +549,7 @@ namespace McdView
 					else
 						Records[SelId].Anisprites[7] = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else
@@ -2220,7 +2220,7 @@ namespace McdView
 					else
 						Records[SelId].Dead = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 				}
 				else
 					tb44_deathid.Text = "0"; // recurse w/ default.
@@ -2316,7 +2316,7 @@ namespace McdView
 					else
 						Records[SelId].Alternate = null;
 
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 				}
 				else
 					tb46_alternateid.Text = "0"; // recurse w/ default.
@@ -2456,7 +2456,7 @@ namespace McdView
 						|| (!strict && result > -1 && result < 256)))
 				{
 					Records[SelId].Record.TileOffset = (byte)result;
-					RecordPanel.Invalidate();
+					RecordsPanel.Invalidate();
 					pnl_Sprites.Invalidate();
 				}
 				else

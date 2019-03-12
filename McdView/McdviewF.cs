@@ -35,7 +35,7 @@ namespace McdView
 		private string _pfeMcd;
 		internal string Label;
 
-		private RecordsetPanel RecordPanel;
+		private RecordsetPanel RecordsPanel;
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
@@ -54,7 +54,7 @@ namespace McdView
 			get { return _records; }
 			set
 			{
-				RecordPanel.Records = (_records = value);
+				RecordsPanel.Records = (_records = value);
 			}
 		}
 
@@ -101,6 +101,8 @@ namespace McdView
 						strict = false;
 						PopulateTextFields();
 						strict = strict0;
+
+						RecordsPanel.ScrollTile();
 					}
 					else
 						ClearTextFields();
@@ -147,13 +149,13 @@ namespace McdView
 
 			LoadWindowMetrics();
 
-			RecordPanel = new RecordsetPanel(this);
-			gb_Collection.Controls.Add(RecordPanel);
-			RecordPanel.Width = gb_Collection.Width - 10;
+			RecordsPanel = new RecordsetPanel(this);
+			gb_Collection.Controls.Add(RecordsPanel);
+			RecordsPanel.Width = gb_Collection.Width - 10;
 
 			tb_SpriteShade.Text = SpriteShadeInt.ToString();
 
-			RecordPanel.Select();
+			RecordsPanel.Select();
 
 			LayoutSpriteGroup();
 
@@ -421,6 +423,57 @@ namespace McdView
 											gb_Description.Location.X,
 											lbl_Strict.Location.Y + lbl_Strict.Height + 25);
 		}
+
+		/// <summary>
+		/// The joys of keyboard events in Winforms. Bypasses forwarding a
+		/// keyboard-event to the RecordsPanel if a control that should use the
+		/// keyboard-input instead currently has focus already. blah blah blah
+		/// @note Requires 'KeyPreview' true.
+		/// @note The STRICT CheckBox (focused) will allow all keyboard-input to
+		/// forward to the RecordsPanel - except the arrow-keys. foffff
+		/// @note Keys that need to be forwarded: Arrows Up/Down/Left/Right,
+		/// PageUp/Down, Home/End ... and Delete when editing an MCD.
+		/// @note Holy fuck. I make the RecordsPanel selectable w/ TabStop and
+		/// - lo && behold - the arrow-keys no longer get forwarded. lovely
+		/// So, set IsInputKey() for the arrow-keys in the RecordsPanel. lovely
+		/// @ IMPORTANT: If any other (types of) controls that can accept focus
+		/// are added to this Form they need to be accounted for here.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (SelId == -1)
+			{
+				if (e.KeyCode == Keys.Space // select record #0 ->
+					&& Records != null
+					&& Records.Length != 0)
+				{
+					if (!cb_Strict.Focused && !bar_SpriteShade.Focused && !bar_IsoLoft.Focused)
+					{
+						RecordsPanel.Select();
+						SelId = 0;
+					}
+				}
+			}
+			else if (!cb_Strict.Focused && !bar_IsoLoft.Focused && !bar_SpriteShade.Focused)
+			{
+				foreach (Control control in Controls)
+				{
+					if (control.Focused && (control as TextBox) != null)
+						return;
+
+//					if ((control as GroupBox) != null)
+//					{
+					foreach (Control control1 in control.Controls)
+					{
+						if (control1.Focused && (control1 as TextBox) != null)
+							return;
+					}
+//					}
+				}
+				RecordsPanel.KeyTile(e);
+			}
+		}
 		#endregion Events (override)
 
 
@@ -587,7 +640,7 @@ namespace McdView
 		/// <param name="lofts">incl/ lofts</param>
 		private void InvalidatePanels(bool lofts = true)
 		{
-			RecordPanel.Invalidate();
+			RecordsPanel.Invalidate();
 			pnl_Sprites.Invalidate();
 			pnl_ScanGic.Invalidate();
 
