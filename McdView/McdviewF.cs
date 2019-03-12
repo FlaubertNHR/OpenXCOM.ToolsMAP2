@@ -632,6 +632,7 @@ namespace McdView
 			if (strict = cb_Strict.Checked)
 			{
 				lbl_Strict.ForeColor = SystemColors.ControlText;
+				lbl_Strict.Text = "STRICT";
 
 				if (SelId != -1)
 				{
@@ -648,7 +649,10 @@ namespace McdView
 				}
 			}
 			else
+			{
 				lbl_Strict.ForeColor = Color.Red;
+				lbl_Strict.Text = "LOOSE";
+			}
 		}
 
 		private void OnValueChanged_IsoLoft(object sender, EventArgs e)

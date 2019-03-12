@@ -2584,18 +2584,18 @@ namespace McdView
 		}
 		private void OnEnter48(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "TerrainOffset (sbyte) is the distance in voxels between the height of"
-								 + " a tile's lowest voxel-level and the height that objects such"
+			lbl_Description.Text = "TerrainOffset (sbyte) is the distance in voxels between the height"
+								 + " of a tile's lowest voxel-level and the height that objects such"
 								 + " as units and items (possibly including smoke and fire graphics)"
 								 + " should appear at and be considered to have their bottom voxel"
-								 + " positioned at (if applicable). Note that a negative value"
-								 + " raises the object and that the standard value of 0 places the"
-								 + " object at the floor-level of a tile. This variable has"
-								 + " relevance only for floor and content parts; the TerrainOffset"
-								 + " of westwall or northwall parts is not evaluated. Also note that"
-								 + " for a unit to step from one tile to another their respective"
-								 + " terrain-heights can be no greater than 8 voxels and that the"
-								 + " total distance between levels on a Map is 24 voxels."
+								 + " positioned at (if applicable). Note that a negative value raises"
+								 + " the object and that the standard value of 0 positions the object"
+								 + " at the floor-level of a tile. This variable has relevance only"
+								 + " for floor and content parts; the TerrainOffset of westwall or"
+								 + " northwall parts is not evaluated. Also note that for a unit to"
+								 + " step from one tile to another their respective terrain-heights"
+								 + " can be no greater than 8 voxels and that the total distance"
+								 + " between levels is 24 voxels."
 								 + Environment.NewLine + Environment.NewLine
 								 + "-24..0";
 		}
@@ -2624,7 +2624,7 @@ namespace McdView
 
 					int result;
 					if (Int32.TryParse(tb49_spriteoffset.Text, out result)
-						&&     ((strict && result > -1 && result < 41)
+						&&     ((strict && result > -1 && result < 25)
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Records[SelId].Record.TileOffset = (byte)result;
@@ -2641,12 +2641,12 @@ namespace McdView
 		private void OnEnter49(object sender, EventArgs e)
 		{
 			lbl_Description.Text = "SpriteOffset (ubyte) is the vertical distance in pixels between"
-								 + " the position a part's sprite is usually drawn at and"
-								 + " the position at which it will actually be drawn. Note"
-								 + " that a positive value raises the sprite and that the"
-								 + " standard value is 0."
+								 + " the position that a part's sprite is usually drawn at and the"
+								 + " position at which it will actually be drawn. Note that a positive"
+								 + " value raises the sprite and that the standard value is 0. A value"
+								 + " of 24 raises the sprite 1 vertical level."
 								 + Environment.NewLine + Environment.NewLine
-								 + "0..40";
+								 + "0..24";
 		}
 		private void OnMouseEnterTextbox49(object sender, EventArgs e)
 		{
