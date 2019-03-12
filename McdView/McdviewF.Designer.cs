@@ -10,6 +10,9 @@
 		private System.Windows.Forms.MainMenu mmMainMenu;
 		private System.Windows.Forms.MenuItem miFileMenu;
 		private System.Windows.Forms.MenuItem miOpen;
+		private System.Windows.Forms.MenuItem miSave;
+		private System.Windows.Forms.MenuItem miSeparator0;
+		private System.Windows.Forms.MenuItem miQuit;
 		private System.Windows.Forms.MenuItem miPaletteMenu;
 		private System.Windows.Forms.MenuItem miPaletteUfo;
 		private System.Windows.Forms.MenuItem miPaletteTftd;
@@ -262,6 +265,9 @@
 			this.mmMainMenu = new System.Windows.Forms.MainMenu(this.components);
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
 			this.miOpen = new System.Windows.Forms.MenuItem();
+			this.miSave = new System.Windows.Forms.MenuItem();
+			this.miSeparator0 = new System.Windows.Forms.MenuItem();
+			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
@@ -515,7 +521,10 @@
 			// 
 			this.miFileMenu.Index = 0;
 			this.miFileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miOpen});
+			this.miOpen,
+			this.miSave,
+			this.miSeparator0,
+			this.miQuit});
 			this.miFileMenu.Text = "&File";
 			// 
 			// miOpen
@@ -524,6 +533,25 @@
 			this.miOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOpen.Text = "&Open MCD file ...";
 			this.miOpen.Click += new System.EventHandler(this.OnClick_Open);
+			// 
+			// miSave
+			// 
+			this.miSave.Index = 1;
+			this.miSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
+			this.miSave.Text = "&Save MCD file";
+			this.miSave.Click += new System.EventHandler(this.OnClick_Save);
+			// 
+			// miSeparator0
+			// 
+			this.miSeparator0.Index = 2;
+			this.miSeparator0.Text = "-";
+			// 
+			// miQuit
+			// 
+			this.miQuit.Index = 3;
+			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
+			this.miQuit.Text = "&Quit";
+			this.miQuit.Click += new System.EventHandler(this.OnClick_Quit);
 			// 
 			// miPaletteMenu
 			// 

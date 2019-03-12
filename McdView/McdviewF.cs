@@ -424,6 +424,34 @@ namespace McdView
 		#region Events (override)
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
+			if (Changed)
+			{
+				switch (MessageBox.Show(
+									this,
+									"The MCD has changed. Do you want to ..."
+										+ Environment.NewLine + Environment.NewLine
+										+ "abort\t- Cancel"         + Environment.NewLine
+										+ "retry\t- Save and close" + Environment.NewLine
+										+ "ignore\t- lose changes"  + Environment.NewLine,
+									"Exclamation",
+									MessageBoxButtons.AbortRetryIgnore,
+									MessageBoxIcon.Exclamation,
+									MessageBoxDefaultButton.Button3,
+									0))
+				{
+					case DialogResult.Abort:
+						e.Cancel = true;
+						return;
+
+					case DialogResult.Retry:
+						Save(_pfeMcd); // TODO: Error handle.
+						break;
+
+					case DialogResult.Ignore:
+						break;
+				}
+			}
+
 			SaveWindowMetrics();
 			base.OnFormClosing(e);
 		}
@@ -443,8 +471,6 @@ namespace McdView
 		/// keyboard-event to the RecordsPanel if a control that should use the
 		/// keyboard-input instead currently has focus already. blah blah blah
 		/// @note Requires 'KeyPreview' true.
-		/// @note The STRICT CheckBox (focused) will allow all keyboard-input to
-		/// forward to the RecordsPanel - except the arrow-keys. foffff
 		/// @note Keys that need to be forwarded: Arrows Up/Down/Left/Right,
 		/// PageUp/Down, Home/End ... and Delete when editing an MCD.
 		/// @note Holy fuck. I make the RecordsPanel selectable w/ TabStop and
@@ -476,14 +502,11 @@ namespace McdView
 					if (control.Focused && (control as TextBox) != null)
 						return;
 
-//					if ((control as GroupBox) != null)
-//					{
 					foreach (Control control1 in control.Controls)
 					{
 						if (control1.Focused && (control1 as TextBox) != null)
 							return;
 					}
-//					}
 				}
 				RecordsPanel.KeyTile(e);
 			}
@@ -494,10 +517,32 @@ namespace McdView
 		#region Menuitems
 		private void OnClick_Open(object sender, EventArgs e)
 		{
-			// TODO: Check changed.
-//			if (Changed)
-//			{
-//			}
+			if (Changed)
+			{
+				switch (MessageBox.Show(
+									this,
+									"The MCD has changed. Do you want to ..."
+										+ Environment.NewLine + Environment.NewLine
+										+ "abort\t- Cancel"            + Environment.NewLine
+										+ "retry\t- Save and continue" + Environment.NewLine
+										+ "ignore\t- lose changes"     + Environment.NewLine,
+									"Exclamation",
+									MessageBoxButtons.AbortRetryIgnore,
+									MessageBoxIcon.Exclamation,
+									MessageBoxDefaultButton.Button3,
+									0))
+				{
+					case DialogResult.Abort:
+						return;
+
+					case DialogResult.Retry:
+						Save(_pfeMcd); // TODO: Error handle.
+						break;
+
+					case DialogResult.Ignore:
+						break;
+				}
+			}
 
 			using (var ofd = new OpenFileDialog())
 			{
@@ -553,6 +598,20 @@ namespace McdView
 					Text = "McdView - " + _pfeMcd;
 				}
 			}
+		}
+
+		private void OnClick_Save(object sender, EventArgs e)
+		{
+		}
+
+		private void Save(string pfeMcd)
+		{
+		}
+
+
+		private void OnClick_Quit(object sender, EventArgs e)
+		{
+			Close();
 		}
 
 
