@@ -186,6 +186,20 @@ namespace McdView
 			CuboidBotAnglePath    = isocube.GetBotAngle(       pnl_IsoLoft.Width, pnl_IsoLoft.Height);
 			CuboidVertLineTopPath = isocube.GetVerticalLineTop(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
 			CuboidVertLineBotPath = isocube.GetVerticalLineBot(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
+
+			foreach (Control control in Controls)
+				if ((control as GroupBox) != null)
+					control.Click += OnClick_SelectRecordPanel;
+		}
+
+		/// <summary>
+		/// Selects the RecordsPanel if a group's label is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_SelectRecordPanel(object sender, EventArgs e)
+		{
+			RecordsPanel.Select();
 		}
 
 		/// <summary>
