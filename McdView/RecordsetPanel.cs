@@ -125,7 +125,10 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset, 0,
 										i * XCImage.SpriteWidth32 + i + offset, Height);
 
-					if (_f.Spriteset != null && Records[i][0] != null
+					if (_f.Spriteset != null
+						&& Records[i] != null // not sure why Tilepart entries go null but aren't null but they do
+						&& Records[i].Anisprites != null
+						&& Records[i][0] != null
 						&& (sprite = Records[i][0].Sprite) != null)
 					{
 						DrawSprite(
@@ -169,7 +172,10 @@ namespace McdView
 				{
 					for (i = 0; i != Records.Length; ++i) // dead part ->
 					{
-						if (Records[i].Dead != null && Records[i].Dead[0] != null
+						if (Records[i] != null
+							&& Records[i].Dead != null
+							&& Records[i].Dead.Anisprites != null
+							&& Records[i].Dead[0] != null
 							&& (sprite = Records[i].Dead[0].Sprite) != null)
 						{
 							DrawSprite(
@@ -189,7 +195,10 @@ namespace McdView
 				{
 					for (i = 0; i != Records.Length; ++i) // alternate part ->
 					{
-						if (Records[i].Alternate != null && Records[i].Alternate[0] != null
+						if (Records[i] != null
+							&& Records[i].Alternate != null
+							&& Records[i].Alternate.Anisprites != null
+							&& Records[i].Alternate[0] != null
 							&& (sprite = Records[i].Alternate[0].Sprite) != null)
 						{
 							DrawSprite(

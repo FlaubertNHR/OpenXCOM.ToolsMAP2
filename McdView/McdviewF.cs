@@ -606,6 +606,8 @@ namespace McdView
 
 					miSave  .Enabled =
 					miSaveas.Enabled = true;
+
+					RecordsPanel.Select();
 				}
 			}
 		}
