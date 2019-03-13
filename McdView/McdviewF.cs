@@ -289,7 +289,7 @@ namespace McdView
 
 		#region Load/Save 'registry' info
 		/// <summary>
-		/// Positions the window at user-defined coordinates w/ size.
+		/// Positions the Form at user-defined coordinates w/ size.
 		/// @note Adapted from PckViewForm.
 		/// </summary>
 		private void LoadWindowMetrics()
@@ -356,7 +356,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Saves the window position and size to YAML.
+		/// Saves the Form's position and size to YAML.
 		/// </summary>
 		private void SaveWindowMetrics()
 		{
@@ -422,6 +422,10 @@ namespace McdView
 
 
 		#region Events (override)
+		/// <summary>
+		/// Handles the Form's FormClosing event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (Changed)
@@ -444,7 +448,7 @@ namespace McdView
 						return;
 
 					case DialogResult.Retry:
-						Save(_pfeMcd); // TODO: Error handle.
+						Save(_pfeMcd);
 						break;
 
 					case DialogResult.Ignore:
@@ -456,6 +460,10 @@ namespace McdView
 			base.OnFormClosing(e);
 		}
 
+		/// <summary>
+		/// Handles the Form's Resize event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
@@ -515,6 +523,11 @@ namespace McdView
 
 
 		#region Menuitems
+		/// <summary>
+		/// Handles clicking the File|Open menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_Open(object sender, EventArgs e)
 		{
 			if (Changed)
@@ -536,7 +549,7 @@ namespace McdView
 						return;
 
 					case DialogResult.Retry:
-						Save(_pfeMcd); // TODO: Error handle.
+						Save(_pfeMcd);
 						break;
 
 					case DialogResult.Ignore:
@@ -600,21 +613,149 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// Handles clicking the File|Save menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_Save(object sender, EventArgs e)
 		{
+			Save(_pfeMcd);
 		}
 
+		/// <summary>
+		/// Conducts the save-procedure.
+		/// </summary>
+		/// <param name="pfeMcd"></param>
 		private void Save(string pfeMcd)
 		{
+			WriteMcdData(pfeMcd + ".t");
+
+			File.Replace(
+					pfeMcd + ".t",		// src
+					pfeMcd,				// dst
+					pfeMcd + ".mvb",	// bak (MapViewBackup)
+					true);				// ignoreMetadataErrors
+
+			Changed = false;
+		}
+
+		/// <summary>
+		/// Writes/overwrites the specified MCD file.
+		/// </summary>
+		/// <param name="pfeMcdT"></param>
+		private void WriteMcdData(string pfeMcdT)
+		{
+			using (var fs = File.Create(pfeMcdT))
+			{
+				McdRecord record;
+
+				foreach (Tilepart part in Records)
+				{
+					record = part.Record;
+
+					fs.WriteByte((byte)record.Sprite1);					//  0
+					fs.WriteByte((byte)record.Sprite2);					//  1
+					fs.WriteByte((byte)record.Sprite3);					//  2
+					fs.WriteByte((byte)record.Sprite4);					//  3
+					fs.WriteByte((byte)record.Sprite5);					//  4
+					fs.WriteByte((byte)record.Sprite6);					//  5
+					fs.WriteByte((byte)record.Sprite7);					//  6
+					fs.WriteByte((byte)record.Sprite8);					//  7
+
+					fs.WriteByte((byte)record.Loft1);					//  8
+					fs.WriteByte((byte)record.Loft2);					//  9
+					fs.WriteByte((byte)record.Loft3);					// 10
+					fs.WriteByte((byte)record.Loft4);					// 11
+					fs.WriteByte((byte)record.Loft5);					// 12
+					fs.WriteByte((byte)record.Loft6);					// 13
+					fs.WriteByte((byte)record.Loft7);					// 14
+					fs.WriteByte((byte)record.Loft8);					// 15
+					fs.WriteByte((byte)record.Loft9);					// 16
+					fs.WriteByte((byte)record.Loft10);					// 17
+					fs.WriteByte((byte)record.Loft11);					// 18
+					fs.WriteByte((byte)record.Loft12);					// 19
+
+					ushort u = record.ScanG_reduced;
+					if (BitConverter.IsLittleEndian)
+					{
+						byte b = (byte)(u & 0x00FF);
+						fs.WriteByte(b);								// 20
+						b = (byte)((u & 0xFF00) >> 8);
+						fs.WriteByte(b);								// 21
+					}
+					else // swap bytes.
+					{
+						byte b = (byte)((u & 0xFF00) >> 8);
+						fs.WriteByte(b);								// 20
+						b = (byte)(u & 0x00FF);
+						fs.WriteByte(b);								// 21
+					}
+
+					fs.WriteByte((byte)record.Unknown22);				// 22
+					fs.WriteByte((byte)record.Unknown23);				// 23
+					fs.WriteByte((byte)record.Unknown24);				// 24
+					fs.WriteByte((byte)record.Unknown25);				// 25
+					fs.WriteByte((byte)record.Unknown26);				// 26
+					fs.WriteByte((byte)record.Unknown27);				// 27
+					fs.WriteByte((byte)record.Unknown28);				// 28
+					fs.WriteByte((byte)record.Unknown29);				// 29
+
+					fs.WriteByte(Convert.ToByte(record.SlidingDoor));	// 30 (bool)
+					fs.WriteByte(Convert.ToByte(record.StopLOS));		// 31 (bool)
+					fs.WriteByte(Convert.ToByte(record.NotFloored));	// 32 (bool)
+					fs.WriteByte(Convert.ToByte(record.BigWall));		// 33 (bool)
+					fs.WriteByte(Convert.ToByte(record.GravLift));		// 34 (bool)
+					fs.WriteByte(Convert.ToByte(record.HingedDoor));	// 35 (bool)
+					fs.WriteByte(Convert.ToByte(record.BlockFire));		// 36 (bool)
+					fs.WriteByte(Convert.ToByte(record.BlockSmoke));	// 37 (bool)
+
+					fs.WriteByte((byte)record.LeftRightHalf);			// 38
+					fs.WriteByte((byte)record.TU_Walk);					// 39
+					fs.WriteByte((byte)record.TU_Slide);				// 40
+					fs.WriteByte((byte)record.TU_Fly);					// 41
+					fs.WriteByte((byte)record.Armor);					// 42
+					fs.WriteByte((byte)record.HE_Block);				// 43
+					fs.WriteByte((byte)record.DieTile);					// 44
+					fs.WriteByte((byte)record.Flammable);				// 45
+					fs.WriteByte((byte)record.Alt_MCD);					// 46
+					fs.WriteByte((byte)record.Unknown47);				// 47
+					fs.WriteByte(unchecked((byte)record.StandOffset));	// 48 (sbyte)
+					fs.WriteByte((byte)record.TileOffset);				// 49
+					fs.WriteByte((byte)record.Unknown50);				// 50
+					fs.WriteByte((byte)record.LightBlock);				// 51
+					fs.WriteByte((byte)record.Footstep);				// 52
+
+					fs.WriteByte((byte)record.PartType);				// 53 (PartType)
+					fs.WriteByte((byte)record.HE_Type);					// 54
+					fs.WriteByte((byte)record.HE_Strength);				// 55
+					fs.WriteByte((byte)record.SmokeBlockage);			// 56
+					fs.WriteByte((byte)record.Fuel);					// 57
+					fs.WriteByte((byte)record.LightSource);				// 58
+					fs.WriteByte((byte)record.Special);					// 59 (SpecialType)
+					fs.WriteByte(Convert.ToByte(record.BaseObject));	// 60 (bool)
+					fs.WriteByte((byte)record.Unknown61);				// 61
+				}
+			}
 		}
 
 
+		/// <summary>
+		/// Handles clicking the File|Quit menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_Quit(object sender, EventArgs e)
 		{
 			Close();
 		}
 
 
+		/// <summary>
+		/// Handles clicking the Palette|UFO menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_PaletteUfo(object sender, EventArgs e)
 		{
 			if (!miPaletteUfo.Checked)
@@ -630,6 +771,11 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// Handles clicking the Palette|TFTD menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_PaletteTftd(object sender, EventArgs e)
 		{
 			if (!miPaletteTftd.Checked)
@@ -648,6 +794,11 @@ namespace McdView
 
 
 		#region Events
+		/// <summary>
+		/// Handles SpriteShade's TextChanged event for its TextBox.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTextChanged_SpriteShade(object sender, EventArgs e)
 		{
 			string text = tb_SpriteShade.Text.Trim();
@@ -677,6 +828,11 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// Handles SpriteShade's ValueChanged event for its TrackBar.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnValueChanged_SpriteShade(object sender, EventArgs e)
 		{
 			int val = bar_SpriteShade.Value;
@@ -686,6 +842,11 @@ namespace McdView
 			tb_SpriteShade.Text = val.ToString();
 		}
 
+		/// <summary>
+		/// Handles STRICT's CheckChanged event for its CheckBox.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnCheckChanged_Strict(object sender, EventArgs e)
 		{
 			if (strict = cb_Strict.Checked)
@@ -714,6 +875,11 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// Handles IsoLoFT's ValueChanged event for its TrackBar.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnValueChanged_IsoLoft(object sender, EventArgs e)
 		{
 			pnl_IsoLoft.Invalidate();
