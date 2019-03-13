@@ -11,6 +11,7 @@
 		private System.Windows.Forms.MenuItem miFileMenu;
 		private System.Windows.Forms.MenuItem miOpen;
 		private System.Windows.Forms.MenuItem miSave;
+		private System.Windows.Forms.MenuItem miSaveas;
 		private System.Windows.Forms.MenuItem miSeparator0;
 		private System.Windows.Forms.MenuItem miQuit;
 		private System.Windows.Forms.MenuItem miPaletteMenu;
@@ -266,6 +267,7 @@
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
 			this.miOpen = new System.Windows.Forms.MenuItem();
 			this.miSave = new System.Windows.Forms.MenuItem();
+			this.miSaveas = new System.Windows.Forms.MenuItem();
 			this.miSeparator0 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
@@ -523,6 +525,7 @@
 			this.miFileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miOpen,
 			this.miSave,
+			this.miSaveas,
 			this.miSeparator0,
 			this.miQuit});
 			this.miFileMenu.Text = "&File";
@@ -540,15 +543,24 @@
 			this.miSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
 			this.miSave.Text = "&Save MCD file";
 			this.miSave.Click += new System.EventHandler(this.OnClick_Save);
+			this.miSave.Enabled = false;
+			// 
+			// miSaveas
+			// 
+			this.miSaveas.Index = 2;
+			this.miSaveas.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
+			this.miSaveas.Text = "Save MCD file &as ...";
+			this.miSaveas.Click += new System.EventHandler(this.OnClick_Saveas);
+			this.miSaveas.Enabled = false;
 			// 
 			// miSeparator0
 			// 
-			this.miSeparator0.Index = 2;
+			this.miSeparator0.Index = 3;
 			this.miSeparator0.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 3;
+			this.miQuit.Index = 4;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnClick_Quit);

@@ -112,23 +112,26 @@ namespace McdView
 					}
 				}
 
-				byte phase;
-				for (int i = 0; i != 8; ++i)
+				if (Spriteset != null)
 				{
-					switch (i)
+					byte phase;
+					for (int i = 0; i != 8; ++i)
 					{
-						default: phase = record.Sprite1; break;
-						case 1:  phase = record.Sprite2; break;
-						case 2:  phase = record.Sprite3; break;
-						case 3:  phase = record.Sprite4; break;
-						case 4:  phase = record.Sprite5; break;
-						case 5:  phase = record.Sprite6; break;
-						case 6:  phase = record.Sprite7; break;
-						case 7:  phase = record.Sprite8; break;
+						switch (i)
+						{
+							default: phase = record.Sprite1; break;
+							case 1:  phase = record.Sprite2; break;
+							case 2:  phase = record.Sprite3; break;
+							case 3:  phase = record.Sprite4; break;
+							case 4:  phase = record.Sprite5; break;
+							case 5:  phase = record.Sprite6; break;
+							case 6:  phase = record.Sprite7; break;
+							case 7:  phase = record.Sprite8; break;
+						}
+						DrawSprite(
+								Spriteset[phase].Sprite,
+								SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
 					}
-					DrawSprite(
-							Spriteset[phase].Sprite,
-							SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
 				}
 			}
 		}

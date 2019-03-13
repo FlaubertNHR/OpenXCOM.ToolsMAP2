@@ -54,19 +54,12 @@ namespace McdView
 			get { return _records; }
 			set
 			{
-				RecordsPanel.Records = (_records = value);
+				miPaletteMenu.Enabled = ((RecordsPanel.Records = (_records = value)) != null); // perfect.
 			}
 		}
 
-		private SpriteCollection _spriteset;
 		internal SpriteCollection Spriteset
-		{
-			get { return _spriteset; }
-			private set
-			{
-				miPaletteMenu.Enabled = ((_spriteset = value) != null);
-			}
-		}
+		{ get; private set; }
 
 
 		internal bool _spriteShadeEnabled;
@@ -586,7 +579,8 @@ namespace McdView
 															Label,
 															Path.GetDirectoryName(_pfeMcd),
 															2,
-															pal);
+															pal,
+															true);
 
 						for (int id = 0; id != Records.Length; ++id)
 						{
@@ -609,6 +603,9 @@ namespace McdView
 
 					_changed = false;
 					Text = "McdView - " + _pfeMcd;
+
+					miSave  .Enabled =
+					miSaveas.Enabled = true;
 				}
 			}
 		}
@@ -624,18 +621,48 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// Handles clicking the File|Saveas menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_Saveas(object sender, EventArgs e)
+		{
+			using (var sfd = new SaveFileDialog())
+			{
+				sfd.Title = "Save MCD file as ...";
+				sfd.DefaultExt = "MCD";
+				sfd.Filter = "MCD files (*.MCD)|*.MCD|All files (*.*)|(*.*)";
+
+				if (sfd.ShowDialog() == DialogResult.OK)
+				{
+					_pfeMcd = sfd.FileName;
+					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
+
+					Save(_pfeMcd, true);
+
+					Text = "McdView - " + _pfeMcd;
+				}
+			}
+		}
+
+		/// <summary>
 		/// Conducts the save-procedure.
 		/// </summary>
 		/// <param name="pfeMcd"></param>
-		private void Save(string pfeMcd)
+		/// <param name="as"></param>
+		private void Save(string pfeMcd, bool @as = false)
 		{
-			WriteMcdData(pfeMcd + ".t");
-
-			File.Replace(
-					pfeMcd + ".t",		// src
-					pfeMcd,				// dst
-					pfeMcd + ".mvb",	// bak (MapViewBackup)
-					true);				// ignoreMetadataErrors
+			if (!@as)
+			{
+				WriteMcdData(pfeMcd + ".t");
+				File.Replace(
+						pfeMcd + ".t",		// src
+						pfeMcd,				// dst
+						pfeMcd + ".mvb",	// bak (MapViewBackup)
+						true);				// ignoreMetadataErrors
+			}
+			else
+				WriteMcdData(pfeMcd);
 
 			Changed = false;
 		}
@@ -643,10 +670,10 @@ namespace McdView
 		/// <summary>
 		/// Writes/overwrites the specified MCD file.
 		/// </summary>
-		/// <param name="pfeMcdT"></param>
-		private void WriteMcdData(string pfeMcdT)
+		/// <param name="pfeMcd"></param>
+		private void WriteMcdData(string pfeMcd)
 		{
-			using (var fs = File.Create(pfeMcdT))
+			using (var fs = File.Create(pfeMcd))
 			{
 				McdRecord record;
 
@@ -763,7 +790,9 @@ namespace McdView
 				miPaletteUfo .Checked = true;
 				miPaletteTftd.Checked = false;
 
-				Spriteset.Pal = Palette.UfoBattle;
+				if (Spriteset != null)
+					Spriteset.Pal = Palette.UfoBattle;
+
 				ScanG = ResourceInfo.ScanGufo;
 				LoFT  = ResourceInfo.LoFTufo;
 
@@ -783,7 +812,9 @@ namespace McdView
 				miPaletteTftd.Checked = true;
 				miPaletteUfo .Checked = false;
 
-				Spriteset.Pal = Palette.TftdBattle;
+				if (Spriteset != null)
+					Spriteset.Pal = Palette.TftdBattle;
+
 				ScanG = ResourceInfo.ScanGtftd;
 				LoFT  = ResourceInfo.LoFTtftd;
 

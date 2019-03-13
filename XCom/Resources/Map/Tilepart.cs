@@ -68,21 +68,24 @@ namespace XCom
 		/// </summary>
 		private void InitializeSprites()
 		{
-			if (Record.SlidingDoor || Record.HingedDoor)
+			if (_spriteset != null)
 			{
-				for (int i = 0; i != 8; ++i)
-					Anisprites[i] = _spriteset[Record.Sprite1];
-			}
-			else
-			{
-				Anisprites[0] = _spriteset[Record.Sprite1];
-				Anisprites[1] = _spriteset[Record.Sprite2];
-				Anisprites[2] = _spriteset[Record.Sprite3];
-				Anisprites[3] = _spriteset[Record.Sprite4];
-				Anisprites[4] = _spriteset[Record.Sprite5];
-				Anisprites[5] = _spriteset[Record.Sprite6];
-				Anisprites[6] = _spriteset[Record.Sprite7];
-				Anisprites[7] = _spriteset[Record.Sprite8];
+				if (Record.SlidingDoor || Record.HingedDoor)
+				{
+					for (int i = 0; i != 8; ++i)
+						Anisprites[i] = _spriteset[Record.Sprite1];
+				}
+				else
+				{
+					Anisprites[0] = _spriteset[Record.Sprite1];
+					Anisprites[1] = _spriteset[Record.Sprite2];
+					Anisprites[2] = _spriteset[Record.Sprite3];
+					Anisprites[3] = _spriteset[Record.Sprite4];
+					Anisprites[4] = _spriteset[Record.Sprite5];
+					Anisprites[5] = _spriteset[Record.Sprite6];
+					Anisprites[6] = _spriteset[Record.Sprite7];
+					Anisprites[7] = _spriteset[Record.Sprite8];
+				}
 			}
 		}
 
@@ -93,43 +96,49 @@ namespace XCom
 		/// <param name="animate">true to animate</param>
 		public void SetDoorSprites(bool animate)
 		{
-			if (Record.SlidingDoor || Record.HingedDoor)
+			if (_spriteset != null)
 			{
-				if (animate)
+				if (Record.SlidingDoor || Record.HingedDoor)
 				{
-					if (Record.SlidingDoor || Alternate == null)
+					if (animate)
 					{
-						Anisprites[0] = _spriteset[Record.Sprite1];
-						Anisprites[1] = _spriteset[Record.Sprite2];
-						Anisprites[2] = _spriteset[Record.Sprite3];
-						Anisprites[3] = _spriteset[Record.Sprite4];
-						Anisprites[4] = _spriteset[Record.Sprite5];
-						Anisprites[5] = _spriteset[Record.Sprite6];
-						Anisprites[6] = _spriteset[Record.Sprite7];
-						Anisprites[7] = _spriteset[Record.Sprite8];
+						if (Record.SlidingDoor || Alternate == null)
+						{
+							Anisprites[0] = _spriteset[Record.Sprite1];
+							Anisprites[1] = _spriteset[Record.Sprite2];
+							Anisprites[2] = _spriteset[Record.Sprite3];
+							Anisprites[3] = _spriteset[Record.Sprite4];
+							Anisprites[4] = _spriteset[Record.Sprite5];
+							Anisprites[5] = _spriteset[Record.Sprite6];
+							Anisprites[6] = _spriteset[Record.Sprite7];
+							Anisprites[7] = _spriteset[Record.Sprite8];
+						}
+						else
+						{
+							byte alt = Alternate.Record.Sprite1;
+							for (int i = 4; i != 8; ++i)
+								Anisprites[i] = _spriteset[alt];
+						}
 					}
 					else
 					{
-						byte alt = Alternate.Record.Sprite1;
-						for (int i = 4; i != 8; ++i)
-							Anisprites[i] = _spriteset[alt];
+						for (int i = 0; i != 8; ++i)
+							Anisprites[i] = _spriteset[Record.Sprite1];
 					}
-				}
-				else
-				{
-					for (int i = 0; i != 8; ++i)
-						Anisprites[i] = _spriteset[Record.Sprite1];
 				}
 			}
 		}
 
 		public void SetDoorToAlternateSprite()
 		{
-			if (Record.SlidingDoor || Record.HingedDoor)
+			if (_spriteset != null)
 			{
-				byte alt = Alternate.Record.Sprite1;
-				for (int i = 0; i != 8; ++i)
-					Anisprites[i] = _spriteset[alt];
+				if (Record.SlidingDoor || Record.HingedDoor)
+				{
+					byte alt = Alternate.Record.Sprite1;
+					for (int i = 0; i != 8; ++i)
+						Anisprites[i] = _spriteset[alt];
+				}
 			}
 		}
 		#endregion

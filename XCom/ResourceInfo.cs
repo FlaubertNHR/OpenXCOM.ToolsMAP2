@@ -55,12 +55,14 @@ namespace XCom
 		/// <param name="dirTerrain">path to the directory of the terrain file</param>
 		/// <param name="offsetLength"></param>
 		/// <param name="pal"></param>
+		/// <param name="mcdview">true if called by McdView</param>
 		/// <returns>a SpriteCollection containing all the sprites for a given Terrain</returns>
 		public static SpriteCollection LoadSpriteset(
 				string terrain,
 				string dirTerrain,
 				int offsetLength,
-				Palette pal)
+				Palette pal,
+				bool mcdview = false)
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("ResourceInfo.LoadSpriteset");
@@ -125,14 +127,17 @@ namespace XCom
 					return _spritesets_byPalette[pal][pfSpriteset];
 				}
 
-				MessageBox.Show(
-							"Can't find files for the spriteset"
+				string info = "Can't find files for the spriteset"
 								+ Environment.NewLine + Environment.NewLine
 								+ pfePck + Environment.NewLine
 								+ pfeTab
-								+ Environment.NewLine + Environment.NewLine
-								+ "Open the Map in the TilesetEditor and re-assign the basepath"
-								+ " for the TERRAIN folder of the .PCK and .TAB files.",
+								+ Environment.NewLine + Environment.NewLine;
+				if (!mcdview)
+					info += "Open the Map in the TilesetEditor and re-assign the basepath"
+						  + " for the TERRAIN folder of the .PCK and .TAB files.";
+
+				MessageBox.Show(
+							info,
 							"Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,

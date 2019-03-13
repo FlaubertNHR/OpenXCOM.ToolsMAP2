@@ -125,11 +125,14 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset, 0,
 										i * XCImage.SpriteWidth32 + i + offset, Height);
 
-					if ((sprite = Records[i][0].Sprite) != null)
+					if (_f.Spriteset != null && Records[i][0] != null
+						&& (sprite = Records[i][0].Sprite) != null)
+					{
 						DrawSprite(
 								sprite,
 								i * XCImage.SpriteWidth32 + i + offset,
 								y1_sprite - Records[i].Record.TileOffset);
+					}
 				}
 
 				_graphics.FillRectangle(
@@ -162,15 +165,18 @@ namespace McdView
 										McdviewF.FLAGS);
 				}
 
-				for (i = 0; i != Records.Length; ++i) // dead part ->
+				if (_f.Spriteset != null)
 				{
-					if (Records[i].Dead != null
-						&& (sprite = Records[i].Dead[0].Sprite) != null)
+					for (i = 0; i != Records.Length; ++i) // dead part ->
 					{
-						DrawSprite(
-								sprite,
-								i * XCImage.SpriteWidth32 + i + offset,
-								y2_sprite - Records[i].Dead.Record.TileOffset);
+						if (Records[i].Dead != null && Records[i].Dead[0] != null
+							&& (sprite = Records[i].Dead[0].Sprite) != null)
+						{
+							DrawSprite(
+									sprite,
+									i * XCImage.SpriteWidth32 + i + offset,
+									y2_sprite - Records[i].Dead.Record.TileOffset);
+						}
 					}
 				}
 
@@ -179,15 +185,18 @@ namespace McdView
 								0,     y2_line,
 								Width, y2_line);
 
-				for (i = 0; i != Records.Length; ++i) // alternate part ->
+				if (_f.Spriteset != null)
 				{
-					if (Records[i].Alternate != null
-						&& (sprite = Records[i].Alternate[0].Sprite) != null)
+					for (i = 0; i != Records.Length; ++i) // alternate part ->
 					{
-						DrawSprite(
-								sprite,
-								i * XCImage.SpriteWidth32 + i + offset,
-								y3_sprite - Records[i].Alternate.Record.TileOffset);
+						if (Records[i].Alternate != null && Records[i].Alternate[0] != null
+							&& (sprite = Records[i].Alternate[0].Sprite) != null)
+						{
+							DrawSprite(
+									sprite,
+									i * XCImage.SpriteWidth32 + i + offset,
+									y3_sprite - Records[i].Alternate.Record.TileOffset);
+						}
 					}
 				}
 			}
