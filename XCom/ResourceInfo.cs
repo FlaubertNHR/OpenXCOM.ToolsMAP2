@@ -55,14 +55,14 @@ namespace XCom
 		/// <param name="dirTerrain">path to the directory of the terrain file</param>
 		/// <param name="offsetLength"></param>
 		/// <param name="pal"></param>
-		/// <param name="noError">true if called by McdView (warn-only if spriteset not found)</param>
+		/// <param name="warnonly">true if called by McdView (warn-only if spriteset not found)</param>
 		/// <returns>a SpriteCollection containing all the sprites for a given Terrain</returns>
 		public static SpriteCollection LoadSpriteset(
 				string terrain,
 				string dirTerrain,
 				int offsetLength,
 				Palette pal,
-				bool noError = false)
+				bool warnonly = false)
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("ResourceInfo.LoadSpriteset");
@@ -134,7 +134,7 @@ namespace XCom
 								+ pfePck + Environment.NewLine
 								+ pfeTab;
 				MessageBoxIcon icon;
-				if (noError)
+				if (warnonly)
 				{
 					title = "Warning";
 					icon = MessageBoxIcon.Warning;

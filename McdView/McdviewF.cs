@@ -49,6 +49,10 @@ namespace McdView
 
 		#region Properties
 		private Tilepart[] _records;
+		/// <summary>
+		/// 'Records' is not a collection of 'McdRecords' but an array of
+		/// 'Tileparts'. Each entry's record is referenced w/ 'Record'.
+		/// </summary>
 		private Tilepart[] Records
 		{
 			get { return _records; }
@@ -65,6 +69,9 @@ namespace McdView
 		internal bool _spriteShadeEnabled;
 
 		private int _spriteShadeInt = 11;
+		/// <summary>
+		/// The inverse-gamma adjustment for sprites and icons.
+		/// </summary>
 		private int SpriteShadeInt
 		{
 			get { return _spriteShadeInt; }
@@ -81,6 +88,9 @@ namespace McdView
 
 
 		private int _selId = -1;
+		/// <summary>
+		/// The currently selected 'Records' ID.
+		/// </summary>
 		internal int SelId
 		{
 			get { return _selId; }
@@ -107,6 +117,9 @@ namespace McdView
 
 
 		private bool _changed;
+		/// <summary>
+		/// Tracks if state has changed.
+		/// </summary>
 		private bool Changed
 		{
 			get { return _changed; }
