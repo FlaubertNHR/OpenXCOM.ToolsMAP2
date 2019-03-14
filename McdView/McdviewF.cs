@@ -766,11 +766,15 @@ namespace McdView
 			if (!@as)
 			{
 				WriteMcdData(pfeMcd + ".t");
+
+				string bak = Path.Combine(Path.GetDirectoryName(pfeMcd), GlobalsXC.MV_Backup);
+				Directory.CreateDirectory(bak);
+
 				File.Replace(
-						pfeMcd + ".t",		// src
-						pfeMcd,				// dst
-						pfeMcd + ".mvb",	// bak (MapViewBackup)
-						true);				// ignoreMetadataErrors
+						pfeMcd + ".t",	// src
+						pfeMcd,			// dst
+						Path.Combine(bak, Path.GetFileName(pfeMcd)),
+						true);			// ignoreMetadataErrors
 			}
 			else
 				WriteMcdData(pfeMcd);
