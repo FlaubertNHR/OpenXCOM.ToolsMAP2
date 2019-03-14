@@ -1723,7 +1723,7 @@ namespace PckView
 			_pfePckOld =
 			_pfeTabOld = String.Empty;
 
-			string dirBackup = Path.Combine(SpritesetDirectory, "MV_Backup");
+			string dirBackup = Path.Combine(SpritesetDirectory, GlobalsXC.MV_Backup);
 
 			if (File.Exists(_pfePck))
 			{

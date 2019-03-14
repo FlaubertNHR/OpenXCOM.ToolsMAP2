@@ -9,6 +9,7 @@
 
 		private System.Windows.Forms.MainMenu mmMainMenu;
 		private System.Windows.Forms.MenuItem miFileMenu;
+		private System.Windows.Forms.MenuItem miCreate;
 		private System.Windows.Forms.MenuItem miOpen;
 		private System.Windows.Forms.MenuItem miSave;
 		private System.Windows.Forms.MenuItem miSaveas;
@@ -265,6 +266,7 @@
 			this.components = new System.ComponentModel.Container();
 			this.mmMainMenu = new System.Windows.Forms.MainMenu(this.components);
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
+			this.miCreate = new System.Windows.Forms.MenuItem();
 			this.miOpen = new System.Windows.Forms.MenuItem();
 			this.miSave = new System.Windows.Forms.MenuItem();
 			this.miSaveas = new System.Windows.Forms.MenuItem();
@@ -523,6 +525,7 @@
 			// 
 			this.miFileMenu.Index = 0;
 			this.miFileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miCreate,
 			this.miOpen,
 			this.miSave,
 			this.miSaveas,
@@ -530,16 +533,23 @@
 			this.miQuit});
 			this.miFileMenu.Text = "&File";
 			// 
+			// miCreate
+			// 
+			this.miCreate.Index = 0;
+			this.miCreate.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
+			this.miCreate.Text = "Crea&te MCD file ...";
+			this.miCreate.Click += new System.EventHandler(this.OnClick_Create);
+			// 
 			// miOpen
 			// 
-			this.miOpen.Index = 0;
+			this.miOpen.Index = 1;
 			this.miOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOpen.Text = "&Open MCD file ...";
 			this.miOpen.Click += new System.EventHandler(this.OnClick_Open);
 			// 
 			// miSave
 			// 
-			this.miSave.Index = 1;
+			this.miSave.Index = 2;
 			this.miSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
 			this.miSave.Text = "&Save MCD file";
 			this.miSave.Click += new System.EventHandler(this.OnClick_Save);
@@ -547,7 +557,7 @@
 			// 
 			// miSaveas
 			// 
-			this.miSaveas.Index = 2;
+			this.miSaveas.Index = 3;
 			this.miSaveas.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
 			this.miSaveas.Text = "Save MCD file &as ...";
 			this.miSaveas.Click += new System.EventHandler(this.OnClick_Saveas);
@@ -555,12 +565,12 @@
 			// 
 			// miSeparator0
 			// 
-			this.miSeparator0.Index = 3;
+			this.miSeparator0.Index = 4;
 			this.miSeparator0.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 4;
+			this.miQuit.Index = 5;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnClick_Quit);

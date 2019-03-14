@@ -530,6 +530,101 @@ namespace McdView
 
 		#region Menuitems
 		/// <summary>
+		/// Handles clicking the File|Create menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_Create(object sender, EventArgs e)
+		{
+			if (Changed)
+			{
+				switch (MessageBox.Show(
+									this,
+									"The MCD has changed. Do you want to ..."
+										+ Environment.NewLine + Environment.NewLine
+										+ "abort\t- Cancel"            + Environment.NewLine
+										+ "retry\t- Save and continue" + Environment.NewLine
+										+ "ignore\t- lose changes"     + Environment.NewLine,
+									"Exclamation",
+									MessageBoxButtons.AbortRetryIgnore,
+									MessageBoxIcon.Exclamation,
+									MessageBoxDefaultButton.Button3,
+									0))
+				{
+					case DialogResult.Abort:
+						return;
+
+					case DialogResult.Retry:
+						Save(_pfeMcd);
+						break;
+
+					case DialogResult.Ignore:
+						break;
+				}
+			}
+
+			using (var sfd = new SaveFileDialog())
+			{
+				sfd.Title      = "Create MCD file as ...";
+				sfd.DefaultExt = "MCD";
+				sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
+
+				if (sfd.ShowDialog() == DialogResult.OK)
+				{
+					_pfeMcd = sfd.FileName;
+					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
+
+//					Save(_pfeMcd, true);
+
+					ResourceInfo.ReloadSprites = true;
+
+					Records = new Tilepart[0];
+
+					Palette pal;
+					if (miPaletteUfo.Checked)
+						pal = Palette.UfoBattle;
+					else
+						pal = Palette.TftdBattle;
+
+					// NOTE: The spriteset is also maintained by a pointer
+					// to it that's stored in each tilepart.
+					Spriteset = ResourceInfo.LoadSpriteset(
+														Label,
+														Path.GetDirectoryName(_pfeMcd),
+														2,
+														pal,
+														true);
+
+//					for (int id = 0; id != Records.Length; ++id)
+//					{
+//						var bindata = new byte[TilepartFactory.Length];
+//						bs.Read(bindata, 0, TilepartFactory.Length);
+//						McdRecord record = McdRecordFactory.CreateRecord(bindata);
+//
+//						Records[id] = new Tilepart(id, Spriteset, record);
+//					}
+//
+//					for (int id = 0; id != Records.Length; ++id)
+//					{
+//						Records[id].Dead      = TilepartFactory.GetDeadPart(     Label, id, Records[id].Record, Records);
+//						Records[id].Alternate = TilepartFactory.GetAlternatePart(Label, id, Records[id].Record, Records);
+//					}
+
+					SelId = -1;
+					ResourceInfo.ReloadSprites = false;
+
+					_changed = false;
+					Text = "McdView - " + _pfeMcd;
+
+					miSave  .Enabled =
+					miSaveas.Enabled = true;
+
+					RecordsPanel.Select();
+				}
+			}
+		}
+
+		/// <summary>
 		/// Handles clicking the File|Open menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -644,9 +739,10 @@ namespace McdView
 		{
 			using (var sfd = new SaveFileDialog())
 			{
-				sfd.Title = "Save MCD file as ...";
+				sfd.Title      = "Save MCD file as ...";
 				sfd.DefaultExt = "MCD";
-				sfd.Filter = "MCD files (*.MCD)|*.MCD|All files (*.*)|(*.*)";
+				sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|(*.*)";
+				sfd.FileName   = Label + GlobalsXC.McdExt;
 
 				if (sfd.ShowDialog() == DialogResult.OK)
 				{

@@ -46,6 +46,9 @@ namespace McdView
 				Invalidate();
 			}
 		}
+
+		private ContextMenu Context
+		{ get; set; }
 		#endregion Properties
 
 
@@ -75,11 +78,68 @@ namespace McdView
 			Controls.Add(Scroller);
 
 			Height = y3_sprite + XCImage.SpriteHeight40 + Scroller.Height;
+
+			CreateContext();
+		}
+
+		/// <summary>
+		/// Builds and assigns an RMB context-menu.
+		/// </summary>
+		private void CreateContext()
+		{
+			var itAdd    = new MenuItem("++record", OnAddClick);
+			var itDelete = new MenuItem("--record", OnDeleteClick);
+			var itSep0   = new MenuItem("-");
+			var itImport = new MenuItem("file",     OnImportClick);
+			var itSep1   = new MenuItem("-");
+			var itLeft   = new MenuItem("left",     OnLeftClick);
+			var itRight  = new MenuItem("right",    OnRightClick);
+
+			Context = new ContextMenu();
+			Context.MenuItems.AddRange(new []
+										{
+											itAdd,
+											itDelete,
+											itSep0,
+											itImport,
+											itSep1,
+											itLeft,
+											itRight
+										});
+			ContextMenu = Context;
+
+			Context.Popup += OnPopup_Context;
+		}
+
+		private void OnPopup_Context(object sender, EventArgs e)
+		{
+			Context.MenuItems[5].Enabled = (Records != null && Records.Length != 0); // left
+			Context.MenuItems[6].Enabled = (Records != null && Records.Length != 0); // right
 		}
 		#endregion cTor
 
 
 		#region Events
+		private void OnAddClick(object sender, EventArgs e)
+		{
+		}
+
+		private void OnDeleteClick(object sender, EventArgs e)
+		{
+		}
+
+		private void OnImportClick(object sender, EventArgs e)
+		{
+		}
+
+		private void OnLeftClick(object sender, EventArgs e)
+		{
+		}
+
+		private void OnRightClick(object sender, EventArgs e)
+		{
+		}
+
 		private void OnValueChanged_Scroll(object sender, EventArgs e)
 		{
 			Invalidate();
@@ -275,15 +335,22 @@ namespace McdView
 		{
 			Select();
 
-			if (Records != null && Records.Length != 0
-				&& e.Y < Height - Scroller.Height)
+			if (e.Button == MouseButtons.Left)
 			{
-				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
-				if (id >= Records.Length)
+				if (Records != null && Records.Length != 0
+					&& e.Y < Height - Scroller.Height)
 				{
-					id = -1;
+					int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
+					if (id >= Records.Length)
+					{
+						id = -1;
+					}
+					_f.SelId = id;
 				}
-				_f.SelId = id;
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				
 			}
 		}
 
