@@ -35,7 +35,7 @@ namespace McdView
 		private string _pfeMcd;
 		internal string Label;
 
-		private RecordsetPanel RecordsPanel;
+		private TilesetPanel PartsPanel;
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
@@ -57,7 +57,7 @@ namespace McdView
 			get { return _parts; }
 			set
 			{
-				miPaletteMenu.Enabled = ((RecordsPanel.Parts = (_parts = value)) != null); // perfect.
+				miPaletteMenu.Enabled = ((PartsPanel.Parts = (_parts = value)) != null); // perfect.
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace McdView
 						PopulateTextFields();
 						strict = strict0;
 
-						RecordsPanel.ScrollTile();
+						PartsPanel.ScrollTile();
 					}
 					else
 						ClearTextFields();
@@ -154,13 +154,13 @@ namespace McdView
 
 			LoadWindowMetrics();
 
-			RecordsPanel = new RecordsetPanel(this);
-			gb_Collection.Controls.Add(RecordsPanel);
-			RecordsPanel.Width = gb_Collection.Width - 10;
+			PartsPanel = new TilesetPanel(this);
+			gb_Collection.Controls.Add(PartsPanel);
+			PartsPanel.Width = gb_Collection.Width - 10;
 
 			tb_SpriteShade.Text = SpriteShadeInt.ToString();
 
-			RecordsPanel.Select();
+			PartsPanel.Select();
 
 			LayoutSpriteGroup();
 
@@ -198,13 +198,13 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Selects the RecordsPanel if a group's label is clicked.
+		/// Selects the PartsPanel if a group's label is clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnClick_SelectRecordPanel(object sender, EventArgs e)
 		{
-			RecordsPanel.Select();
+			PartsPanel.Select();
 		}
 
 		/// <summary>
@@ -481,14 +481,14 @@ namespace McdView
 
 		/// <summary>
 		/// The joys of keyboard events in Winforms. Bypasses forwarding a
-		/// keyboard-event to the RecordsPanel if a control that should use the
+		/// keyboard-event to the PartsPanel if a control that should use the
 		/// keyboard-input instead currently has focus already. blah blah blah
 		/// @note Requires 'KeyPreview' true.
 		/// @note Keys that need to be forwarded: Arrows Up/Down/Left/Right,
 		/// PageUp/Down, Home/End ... and Delete when editing an MCD.
-		/// @note Holy fuck. I make the RecordsPanel selectable w/ TabStop and
+		/// @note Holy fuck. I make the PartsPanel selectable w/ TabStop and
 		/// - lo && behold - the arrow-keys no longer get forwarded. lovely
-		/// So, set IsInputKey() for the arrow-keys in the RecordsPanel. lovely
+		/// So, set IsInputKey() for the arrow-keys in the PartsPanel. lovely
 		/// @ IMPORTANT: If any other (types of) controls that can accept focus
 		/// are added to this Form they need to be accounted for here.
 		/// </summary>
@@ -503,7 +503,7 @@ namespace McdView
 				{
 					if (!cb_Strict.Focused && !bar_SpriteShade.Focused && !bar_IsoLoft.Focused)
 					{
-						RecordsPanel.Select();
+						PartsPanel.Select();
 						SelId = 0;
 					}
 				}
@@ -521,7 +521,7 @@ namespace McdView
 							return;
 					}
 				}
-				RecordsPanel.KeyTile(e);
+				PartsPanel.KeyTile(e);
 			}
 		}
 		#endregion Events (override)
@@ -604,7 +604,7 @@ namespace McdView
 					miSave  .Enabled =
 					miSaveas.Enabled = true;
 
-					RecordsPanel.Select();
+					PartsPanel.Select();
 				}
 			}
 		}
@@ -701,7 +701,7 @@ namespace McdView
 					miSave  .Enabled =
 					miSaveas.Enabled = true;
 
-					RecordsPanel.Select();
+					PartsPanel.Select();
 				}
 			}
 		}
@@ -1026,7 +1026,7 @@ namespace McdView
 		/// <param name="lofts">incl/ lofts</param>
 		private void InvalidatePanels(bool lofts = true)
 		{
-			RecordsPanel.Invalidate();
+			PartsPanel.Invalidate();
 			pnl_Sprites.Invalidate();
 			pnl_ScanGic.Invalidate();
 

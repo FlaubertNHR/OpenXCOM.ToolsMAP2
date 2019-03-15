@@ -15,7 +15,7 @@ namespace McdView
 	/// The panel that displays the entire MCD recordset with each record's
 	/// Sprite1 sprite.
 	/// </summary>
-	internal sealed class RecordsetPanel
+	internal sealed class TilesetPanel
 		:
 			Panel
 	{
@@ -54,7 +54,7 @@ namespace McdView
 
 
 		#region cTor
-		internal RecordsetPanel(McdviewF f)
+		internal TilesetPanel(McdviewF f)
 		{
 			_f = f;
 

@@ -300,7 +300,7 @@ namespace McdView
 				Changed = true;
 				Parts[SelId].Anisprites[phase] = Spriteset[id];
 
-				RecordsPanel.Invalidate();
+				PartsPanel.Invalidate();
 				pnl_Sprites.Invalidate();
 			}
 		}
