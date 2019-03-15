@@ -119,9 +119,9 @@ namespace McdView
 		/// <summary>
 		/// Tracks if state has changed.
 		/// </summary>
-		private bool Changed
+		internal bool Changed
 		{
-			get { return _changed; }
+			private get { return _changed; }
 			set
 			{
 				if (_changed != value)

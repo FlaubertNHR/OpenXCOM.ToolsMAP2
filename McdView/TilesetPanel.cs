@@ -27,6 +27,8 @@ namespace McdView
 
 		private readonly Pen   _penControl   = new Pen(SystemColors.Control, 1);
 		private readonly Brush _brushControl = new SolidBrush(SystemColors.Control);
+
+		private bool _bypassScrollZero;
 		#endregion Fields
 
 
@@ -35,14 +37,19 @@ namespace McdView
 		internal Tilepart[] Parts
 		{
 			private get { return _parts; }
-			set
+			set // IMPORTANT: Set 'Parts' via McdviewF only.
 			{
 				_parts = value;
 
 				TableWidth = _parts.Length * (XCImage.SpriteWidth32 + 1) - 1;
 
 				OnResize(null);
-				Scroller.Value = 0;
+
+				if (!_bypassScrollZero)
+					Scroller.Value = 0;
+				else
+					_bypassScrollZero = false;
+
 				Invalidate();
 			}
 		}
@@ -87,28 +94,48 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itAdd      = new MenuItem("++record", OnAddClick);
-			var itDelete   = new MenuItem("--record", OnDeleteClick);
-			var itSep0     = new MenuItem("-");
-			var itImport   = new MenuItem("file",     OnImportClick);
-			var itSep1     = new MenuItem("-");
-			var itLeft     = new MenuItem("left",     OnLeftClick);
-			var itRight    = new MenuItem("right",    OnRightClick);
-			var itSep2     = new MenuItem("-");
-			var itDeselect = new MenuItem("deselect", OnDeselectClick);
+			var itAdd         = new MenuItem("add",          OnAddClick);
+			var itAddRange    = new MenuItem("add range",    OnAddRangeClick);
+			var itDelete      = new MenuItem("delete",       OnDeleteClick);
+			var itDeleteRange = new MenuItem("delete range", OnDeleteRangeClick);
+
+			var itSep0        = new MenuItem("-");
+
+			var itCut         = new MenuItem("cut",          OnCutClick);
+			var itCopy        = new MenuItem("copy",         OnCopyClick);
+			var itPaste       = new MenuItem("paste",        OnPasteClick);
+
+			var itSep1        = new MenuItem("-");
+
+			var itFile        = new MenuItem("file",         OnFileClick);
+
+			var itSep2        = new MenuItem("-");
+
+			var itLeft        = new MenuItem("left",         OnLeftClick);
+			var itRight       = new MenuItem("right",        OnRightClick);
+
+			var itSep3        = new MenuItem("-");
+
+			var itDeselect    = new MenuItem("deselect",     OnDeselectClick);
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
 										{
-											itAdd,
-											itDelete,
-											itSep0,
-											itImport,
-											itSep1,
-											itLeft,
-											itRight,
-											itSep2,
-											itDeselect
+											itAdd,			//  0
+											itAddRange,		//  1
+											itDelete,		//  2
+											itDeleteRange,	//  3
+											itSep0,			//  4
+											itCut,			//  5
+											itCopy,			//  6
+											itPaste,		//  7
+											itSep1,			//  8
+											itFile,			//  9
+											itSep2,			// 10
+											itLeft,			// 11
+											itRight,		// 12
+											itSep3,			// 13
+											itDeselect		// 14
 										});
 			ContextMenu = Context;
 
@@ -120,31 +147,49 @@ namespace McdView
 		#region Events
 		private void OnPopup_Context(object sender, EventArgs e)
 		{
-			Context.MenuItems[0].Enabled = (Parts != null);						// ++record - add before SelId if SelId=-1, else add after SelId
-			Context.MenuItems[1].Enabled = (Parts != null && _f.SelId != -1);	// --record - TODO: that means there should be a way to clear SelId ...
+			// add #0 - after selid even if selid=-1
+			Context.MenuItems[0].Enabled = (Parts != null);
+			// add range #1 - after selid even if selid=-1
+			Context.MenuItems[1].Enabled = (Parts != null && false);
+			// delete #2 - selid if selid>-1 & selid<Parts.Length
+			Context.MenuItems[2].Enabled = (_f.SelId != -1); //Parts != null &&
+			// delete range #3 - selid if selid>-1 & selid<Parts.Length
+			Context.MenuItems[3].Enabled = (Parts != null && _f.SelId != -1 && false);
 
-			Context.MenuItems[3].Enabled = (Parts != null);						// file - append I suppose.
+			// cut #5 - selid if selid>-1 & selid<Parts.Length
+			Context.MenuItems[5].Enabled = (Parts != null && _f.SelId != -1);
+			// copy #6 - selid if selid>-1 & selid<Parts.Length
+			Context.MenuItems[6].Enabled = (Parts != null && _f.SelId != -1);
+			// paste #7 - selid if selid>-1 & selid<Parts.Length
+			Context.MenuItems[7].Enabled = (Parts != null && _f.SelId != -1);
 
-			Context.MenuItems[5].Enabled = (Parts != null && _f.SelId > 0);										// left
-			Context.MenuItems[6].Enabled = (Parts != null && _f.SelId != -1 && _f.SelId != Parts.Length - 1);	// right
+			// file #9 - inject after selid even if seld=-1
+			Context.MenuItems[9].Enabled = (Parts != null);
 
-			Context.MenuItems[8].Enabled = (Parts != null && _f.SelId != -1);	// deselect
+			// left #11 - swap selid w/ pre if selid not 0
+			Context.MenuItems[11].Enabled = (Parts != null && _f.SelId > 0);
+			// right #12 - swap selid w/ post if selid not Parts.Length-1
+			Context.MenuItems[12].Enabled = (Parts != null && _f.SelId != -1 && _f.SelId != Parts.Length - 1);
+
+			// deselect #14 - if selid>-1 & selid<Parts.Length
+			Context.MenuItems[14].Enabled = (_f.SelId != -1); //Parts != null &&
 		}
 
 		private void OnAddClick(object sender, EventArgs e)
 		{
+			_f.Changed = true;
+
 			if (_f.Parts == null)
 				_f.Parts = new Tilepart[0];
 
 			var array = new Tilepart[Parts.Length + 1];
-			for (int i = 0; i != Parts.Length; ++i)
-			{
+
+			int id = _f.SelId + 1;
+			for (int i = 0; i != id; ++i)
 				array[i] = Parts[i];
-			}
 
 			McdRecord record = McdRecordFactory.CreateRecord();
 
-			int id = Parts.Length;
 			array[id] = new Tilepart(
 								id,
 								_f.Spriteset,
@@ -153,16 +198,65 @@ namespace McdView
 			array[id].Dead      =
 			array[id].Alternate = null;
 
+			Tilepart part;
+			for (int i = id + 1; i != array.Length; ++i)
+			{
+				part = Parts[i - 1];
+				part.TerId += 1; // not used in McdView but keep things consistent ....
+				array[i] = part;
+			}
+
+			_bypassScrollZero = true;
 			_f.Parts = array; // assign back to 'Parts' via McdviewF
 
-			Invalidate();
+			_f.SelId = id;
+		}
+
+		private void OnAddRangeClick(object sender, EventArgs e)
+		{
 		}
 
 		private void OnDeleteClick(object sender, EventArgs e)
 		{
+			_f.Changed = true;
+
+			var array = new Tilepart[Parts.Length - 1];
+
+			int id = _f.SelId;
+			for (int i = 0; i != id; ++i)
+				array[i] = Parts[i];
+
+			Tilepart part;
+			for (int i = id; i != array.Length; ++i)
+			{
+				part = Parts[i + 1];
+				part.TerId -= 1;
+				array[i] = part;
+			}
+
+			_f.SelId = -1;
+
+			_bypassScrollZero = true;
+			_f.Parts = array;
 		}
 
-		private void OnImportClick(object sender, EventArgs e)
+		private void OnDeleteRangeClick(object sender, EventArgs e)
+		{
+		}
+
+		private void OnCutClick(object sender, EventArgs e)
+		{
+		}
+
+		private void OnCopyClick(object sender, EventArgs e)
+		{
+		}
+
+		private void OnPasteClick(object sender, EventArgs e)
+		{
+		}
+
+		private void OnFileClick(object sender, EventArgs e)
 		{
 		}
 

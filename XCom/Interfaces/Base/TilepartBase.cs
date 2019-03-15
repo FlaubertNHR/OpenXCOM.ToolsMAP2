@@ -35,7 +35,7 @@ namespace XCom.Interfaces.Base
 		/// The ID of this tilepart that's unique to its terrain/MCD-record.
 		/// </summary>
 		public int TerId
-		{ get; private set; }
+		{ get; set; }
 
 		/// <summary>
 		/// The ID of this tilepart that's unique to the Map across all
