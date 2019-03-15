@@ -298,9 +298,9 @@ namespace McdView
 			if (changed)
 			{
 				Changed = true;
-				Parts[SelId].Anisprites[phase] = Spriteset[id];
+				Parts[SelId].Sprites[phase] = Spriteset[id];
 
-				PartsPanel.Invalidate();
+				PartsPanel .Invalidate();
 				pnl_Sprites.Invalidate();
 			}
 		}
@@ -660,7 +660,7 @@ namespace McdView
 								pnl_IsoLoft.Width  - 1,
 								pnl_IsoLoft.Height - 1);
 
-			if (SelId != -1 && LoFT != null)
+			if (Parts != null && SelId != -1 && LoFT != null)
 			{
 				string rose;
 				var pt = new Point();

@@ -139,7 +139,7 @@ namespace MapView
 			{
 				recordsTable[part.Record.SetId] = true;
 
-				var sprites = part.Anisprites;
+				var sprites = part.Sprites;
 				foreach (PckImage sprite in sprites)
 					spritesTable[sprite.SetId] = true;
 			}

@@ -18,7 +18,7 @@ namespace XCom.Interfaces.Base
 		/// <summary>
 		/// Gets the sprite-array used to animate this tile.
 		/// </summary>
-		public XCImage[] Anisprites
+		public XCImage[] Sprites
 		{ get; set; }
 
 		/// <summary>
@@ -28,7 +28,7 @@ namespace XCom.Interfaces.Base
 		/// <returns></returns>
 		public XCImage this[int id]
 		{
-			get { return Anisprites[id]; }
+			get { return Sprites[id]; }
 		}
 
 		/// <summary>

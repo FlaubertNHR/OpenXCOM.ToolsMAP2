@@ -38,7 +38,7 @@ namespace XCom
 			_spriteset = spriteset;
 			Record     = record;
 
-			Anisprites = new XCImage[8]; // every tile-part contains refs to 8 sprites.
+			Sprites = new XCImage[8]; // every tile-part contains refs to 8 sprites.
 			InitializeSprites();
 		}
 		#endregion
@@ -73,18 +73,18 @@ namespace XCom
 				if (Record.SlidingDoor || Record.HingedDoor)
 				{
 					for (int i = 0; i != 8; ++i)
-						Anisprites[i] = _spriteset[Record.Sprite1];
+						Sprites[i] = _spriteset[Record.Sprite1];
 				}
 				else
 				{
-					Anisprites[0] = _spriteset[Record.Sprite1];
-					Anisprites[1] = _spriteset[Record.Sprite2];
-					Anisprites[2] = _spriteset[Record.Sprite3];
-					Anisprites[3] = _spriteset[Record.Sprite4];
-					Anisprites[4] = _spriteset[Record.Sprite5];
-					Anisprites[5] = _spriteset[Record.Sprite6];
-					Anisprites[6] = _spriteset[Record.Sprite7];
-					Anisprites[7] = _spriteset[Record.Sprite8];
+					Sprites[0] = _spriteset[Record.Sprite1];
+					Sprites[1] = _spriteset[Record.Sprite2];
+					Sprites[2] = _spriteset[Record.Sprite3];
+					Sprites[3] = _spriteset[Record.Sprite4];
+					Sprites[4] = _spriteset[Record.Sprite5];
+					Sprites[5] = _spriteset[Record.Sprite6];
+					Sprites[6] = _spriteset[Record.Sprite7];
+					Sprites[7] = _spriteset[Record.Sprite8];
 				}
 			}
 		}
@@ -104,26 +104,26 @@ namespace XCom
 					{
 						if (Record.SlidingDoor || Alternate == null)
 						{
-							Anisprites[0] = _spriteset[Record.Sprite1];
-							Anisprites[1] = _spriteset[Record.Sprite2];
-							Anisprites[2] = _spriteset[Record.Sprite3];
-							Anisprites[3] = _spriteset[Record.Sprite4];
-							Anisprites[4] = _spriteset[Record.Sprite5];
-							Anisprites[5] = _spriteset[Record.Sprite6];
-							Anisprites[6] = _spriteset[Record.Sprite7];
-							Anisprites[7] = _spriteset[Record.Sprite8];
+							Sprites[0] = _spriteset[Record.Sprite1];
+							Sprites[1] = _spriteset[Record.Sprite2];
+							Sprites[2] = _spriteset[Record.Sprite3];
+							Sprites[3] = _spriteset[Record.Sprite4];
+							Sprites[4] = _spriteset[Record.Sprite5];
+							Sprites[5] = _spriteset[Record.Sprite6];
+							Sprites[6] = _spriteset[Record.Sprite7];
+							Sprites[7] = _spriteset[Record.Sprite8];
 						}
 						else
 						{
 							byte alt = Alternate.Record.Sprite1;
 							for (int i = 4; i != 8; ++i)
-								Anisprites[i] = _spriteset[alt];
+								Sprites[i] = _spriteset[alt];
 						}
 					}
 					else
 					{
 						for (int i = 0; i != 8; ++i)
-							Anisprites[i] = _spriteset[Record.Sprite1];
+							Sprites[i] = _spriteset[Record.Sprite1];
 					}
 				}
 			}
@@ -137,7 +137,7 @@ namespace XCom
 				{
 					byte alt = Alternate.Record.Sprite1;
 					for (int i = 0; i != 8; ++i)
-						Anisprites[i] = _spriteset[alt];
+						Sprites[i] = _spriteset[alt];
 				}
 			}
 		}

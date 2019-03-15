@@ -48,7 +48,7 @@ namespace McdView
 
 
 		#region Properties
-		internal Tilepart[] _parts;
+		private Tilepart[] _parts;
 		/// <summary>
 		/// An array of 'Tileparts'. Each entry's record is referenced w/ 'Record'.
 		/// </summary>
@@ -573,8 +573,6 @@ namespace McdView
 					_pfeMcd = sfd.FileName;
 					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
 
-//					Save(_pfeMcd, true);
-
 					ResourceInfo.ReloadSprites = true;
 
 					Parts = new Tilepart[0];
@@ -598,8 +596,8 @@ namespace McdView
 					SelId = -1;
 					ResourceInfo.ReloadSprites = false;
 
-					_changed = false;
 					Text = "McdView - " + _pfeMcd;
+					Changed = true;
 
 					miSave  .Enabled =
 					miSaveas.Enabled = true;
@@ -1063,13 +1061,6 @@ namespace McdView
 			// 
 			// So don't turn 'strict' on until after the record loads/populates
 			// the textfields. See 'SelId' setter
-
-			LogFile.WriteLine("");
-			LogFile.WriteLine("SelId= " + SelId);
-			LogFile.WriteLine((Parts == null) ? "Parts null" : "Parts valid");
-			LogFile.WriteLine("Parts.Length= " + Parts.Length);
-			LogFile.WriteLine("Parts[SelId]= " + Parts[SelId]);
-			LogFile.WriteLine("Parts[SelId].Record= " + Parts[SelId].Record);
 
 			McdRecord record = Parts[SelId].Record;
 

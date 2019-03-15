@@ -230,10 +230,10 @@ namespace McdView
 						Parts[SelId].Record.Sprite1 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Parts[SelId].Anisprites[0] = Spriteset[result];
+							Parts[SelId].Sprites[0] = Spriteset[result];
 						}
 						else
-							Parts[SelId].Anisprites[0] = null;
+							Parts[SelId].Sprites[0] = null;
 
 						PartsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -282,10 +282,10 @@ namespace McdView
 						Parts[SelId].Record.Sprite2 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Parts[SelId].Anisprites[1] = Spriteset[result];
+							Parts[SelId].Sprites[1] = Spriteset[result];
 						}
 						else
-							Parts[SelId].Anisprites[1] = null;
+							Parts[SelId].Sprites[1] = null;
 
 						PartsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -334,10 +334,10 @@ namespace McdView
 						Parts[SelId].Record.Sprite3 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Parts[SelId].Anisprites[2] = Spriteset[result];
+							Parts[SelId].Sprites[2] = Spriteset[result];
 						}
 						else
-							Parts[SelId].Anisprites[2] = null;
+							Parts[SelId].Sprites[2] = null;
 
 						PartsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -386,10 +386,10 @@ namespace McdView
 						Parts[SelId].Record.Sprite4 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Parts[SelId].Anisprites[3] = Spriteset[result];
+							Parts[SelId].Sprites[3] = Spriteset[result];
 						}
 						else
-							Parts[SelId].Anisprites[3] = null;
+							Parts[SelId].Sprites[3] = null;
 
 						PartsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -438,10 +438,10 @@ namespace McdView
 						Parts[SelId].Record.Sprite5 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Parts[SelId].Anisprites[4] = Spriteset[result];
+							Parts[SelId].Sprites[4] = Spriteset[result];
 						}
 						else
-							Parts[SelId].Anisprites[4] = null;
+							Parts[SelId].Sprites[4] = null;
 
 						PartsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -490,10 +490,10 @@ namespace McdView
 						Parts[SelId].Record.Sprite6 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Parts[SelId].Anisprites[5] = Spriteset[result];
+							Parts[SelId].Sprites[5] = Spriteset[result];
 						}
 						else
-							Parts[SelId].Anisprites[5] = null;
+							Parts[SelId].Sprites[5] = null;
 
 						PartsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -542,10 +542,10 @@ namespace McdView
 						Parts[SelId].Record.Sprite7 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Parts[SelId].Anisprites[6] = Spriteset[result];
+							Parts[SelId].Sprites[6] = Spriteset[result];
 						}
 						else
-							Parts[SelId].Anisprites[6] = null;
+							Parts[SelId].Sprites[6] = null;
 
 						PartsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -594,10 +594,10 @@ namespace McdView
 						Parts[SelId].Record.Sprite8 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Parts[SelId].Anisprites[7] = Spriteset[result];
+							Parts[SelId].Sprites[7] = Spriteset[result];
 						}
 						else
-							Parts[SelId].Anisprites[7] = null;
+							Parts[SelId].Sprites[7] = null;
 
 						PartsPanel.Invalidate();
 						pnl_Sprites.Invalidate();

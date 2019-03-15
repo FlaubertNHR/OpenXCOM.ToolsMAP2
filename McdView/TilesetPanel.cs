@@ -131,37 +131,27 @@ namespace McdView
 			if (_f.Parts == null)
 				_f.Parts = new Tilepart[0];
 
-			var data = new byte[TilepartFactory.Length];
-			McdRecord record = McdRecordFactory.CreateRecord(data);
+			var array = new Tilepart[Parts.Length + 1];
+			for (int i = 0; i != Parts.Length; ++i)
+			{
+				array[i] = Parts[i];
+			}
 
-			Array.Resize(ref _f._parts, _f.Parts.Length + 1); // TODO: Fix that.
-//			Parts = _parts;
+			var bytes = new byte[TilepartFactory.Length];
+			McdRecord record = McdRecordFactory.CreateRecord(bytes);
 
-			int id = _f.Parts.Length - 1;
-			_f.Parts[id] = new Tilepart(
-										id,
-										_f.Spriteset,
-										record);
+			int id = Parts.Length;
+			array[id] = new Tilepart(
+								id,
+								_f.Spriteset,
+								record);
 
-			_f.Parts[id].Dead      =
-			_f.Parts[id].Alternate = null;
+			array[id].Dead      =
+			array[id].Alternate = null;
+
+			_f.Parts = array; // assign back to 'Parts' via McdviewF
 
 			Invalidate();
-
-//			for (int id = 0; id != Parts.Length; ++id)
-//			{
-//				var bindata = new byte[TilepartFactory.Length];
-//				bs.Read(bindata, 0, TilepartFactory.Length);
-//				McdRecord record = McdRecordFactory.CreateRecord(bindata);
-//
-//				Parts[id] = new Tilepart(id, Spriteset, record);
-//			}
-//
-//			for (int id = 0; id != Parts.Length; ++id)
-//			{
-//				Parts[id].Dead      = TilepartFactory.GetDeadPart(     Label, id, Parts[id].Record, Parts);
-//				Parts[id].Alternate = TilepartFactory.GetAlternatePart(Label, id, Parts[id].Record, Parts);
-//			}
 		}
 
 		private void OnDeleteClick(object sender, EventArgs e)
@@ -228,7 +218,7 @@ namespace McdView
 
 					if (_f.Spriteset != null
 						&& Parts[i] != null // not sure why Tilepart entries go null but aren't null but they do
-						&& Parts[i].Anisprites != null
+						&& Parts[i].Sprites != null
 						&& Parts[i][0] != null
 						&& (sprite = Parts[i][0].Sprite) != null)
 					{
@@ -275,7 +265,7 @@ namespace McdView
 					{
 						if (Parts[i] != null
 							&& Parts[i].Dead != null
-							&& Parts[i].Dead.Anisprites != null
+							&& Parts[i].Dead.Sprites != null
 							&& Parts[i].Dead[0] != null
 							&& (sprite = Parts[i].Dead[0].Sprite) != null)
 						{
@@ -298,7 +288,7 @@ namespace McdView
 					{
 						if (Parts[i] != null
 							&& Parts[i].Alternate != null
-							&& Parts[i].Alternate.Anisprites != null
+							&& Parts[i].Alternate.Sprites != null
 							&& Parts[i].Alternate[0] != null
 							&& (sprite = Parts[i].Alternate[0].Sprite) != null)
 						{
