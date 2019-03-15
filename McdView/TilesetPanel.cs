@@ -87,13 +87,15 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itAdd    = new MenuItem("++record", OnAddClick);
-			var itDelete = new MenuItem("--record", OnDeleteClick);
-			var itSep0   = new MenuItem("-");
-			var itImport = new MenuItem("file",     OnImportClick);
-			var itSep1   = new MenuItem("-");
-			var itLeft   = new MenuItem("left",     OnLeftClick);
-			var itRight  = new MenuItem("right",    OnRightClick);
+			var itAdd      = new MenuItem("++record", OnAddClick);
+			var itDelete   = new MenuItem("--record", OnDeleteClick);
+			var itSep0     = new MenuItem("-");
+			var itImport   = new MenuItem("file",     OnImportClick);
+			var itSep1     = new MenuItem("-");
+			var itLeft     = new MenuItem("left",     OnLeftClick);
+			var itRight    = new MenuItem("right",    OnRightClick);
+			var itSep2     = new MenuItem("-");
+			var itDeselect = new MenuItem("deselect", OnDeselectClick);
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
@@ -104,7 +106,9 @@ namespace McdView
 											itImport,
 											itSep1,
 											itLeft,
-											itRight
+											itRight,
+											itSep2,
+											itDeselect
 										});
 			ContextMenu = Context;
 
@@ -123,6 +127,8 @@ namespace McdView
 
 			Context.MenuItems[5].Enabled = (Parts != null && _f.SelId > 0);										// left
 			Context.MenuItems[6].Enabled = (Parts != null && _f.SelId != -1 && _f.SelId != Parts.Length - 1);	// right
+
+			Context.MenuItems[8].Enabled = (Parts != null && _f.SelId != -1);	// deselect
 		}
 
 		private void OnAddClick(object sender, EventArgs e)
@@ -166,6 +172,11 @@ namespace McdView
 
 		private void OnRightClick(object sender, EventArgs e)
 		{
+		}
+
+		private void OnDeselectClick(object sender, EventArgs e)
+		{
+			_f.SelId = -1;
 		}
 
 

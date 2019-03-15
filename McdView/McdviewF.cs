@@ -194,15 +194,17 @@ namespace McdView
 
 			foreach (Control control in Controls)
 				if ((control as GroupBox) != null)
-					control.Click += OnClick_SelectRecordPanel;
+					control.Click += OnClick_Groupbox;
 		}
 
 		/// <summary>
-		/// Selects the PartsPanel if a group's label is clicked.
+		/// Selects the PartsPanel if a group's label is clicked. Clears the
+		/// selected-id in the PartsPanel if the PartsPanel title or border is
+		/// clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnClick_SelectRecordPanel(object sender, EventArgs e)
+		private void OnClick_Groupbox(object sender, EventArgs e)
 		{
 			PartsPanel.Select();
 		}
