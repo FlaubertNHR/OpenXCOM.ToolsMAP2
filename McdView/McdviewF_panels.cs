@@ -90,7 +90,7 @@ namespace McdView
 				if (_spriteShadeEnabled)
 					_attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 
-				McdRecord record = Records[SelId].Record;
+				McdRecord record = Parts[SelId].Record;
 				int y = SPRITE_ORIGIN_Y;
 
 				int yoffset = record.TileOffset;
@@ -220,7 +220,7 @@ namespace McdView
 						changed = true;
 
 						tb0_phase0.Text = id.ToString();
-						Records[SelId].Record.Sprite1 = (byte)id;
+						Parts[SelId].Record.Sprite1 = (byte)id;
 					}
 					break;
 
@@ -230,7 +230,7 @@ namespace McdView
 						changed = true;
 
 					tb1_phase1.Text = id.ToString();
-					Records[SelId].Record.Sprite2 = (byte)id;
+					Parts[SelId].Record.Sprite2 = (byte)id;
 					}
 					break;
 
@@ -240,7 +240,7 @@ namespace McdView
 						changed = true;
 
 						tb2_phase2.Text = id.ToString();
-						Records[SelId].Record.Sprite3 = (byte)id;
+						Parts[SelId].Record.Sprite3 = (byte)id;
 					}
 					break;
 
@@ -250,7 +250,7 @@ namespace McdView
 						changed = true;
 
 						tb3_phase3.Text = id.ToString();
-						Records[SelId].Record.Sprite4 = (byte)id;
+						Parts[SelId].Record.Sprite4 = (byte)id;
 					}
 					break;
 
@@ -260,7 +260,7 @@ namespace McdView
 						changed = true;
 
 						tb4_phase4.Text = id.ToString();
-						Records[SelId].Record.Sprite5 = (byte)id;
+						Parts[SelId].Record.Sprite5 = (byte)id;
 					}
 					break;
 
@@ -270,7 +270,7 @@ namespace McdView
 						changed = true;
 
 						tb5_phase5.Text = id.ToString();
-						Records[SelId].Record.Sprite6 = (byte)id;
+						Parts[SelId].Record.Sprite6 = (byte)id;
 					}
 					break;
 
@@ -280,7 +280,7 @@ namespace McdView
 						changed = true;
 
 						tb6_phase6.Text = id.ToString();
-						Records[SelId].Record.Sprite7 = (byte)id;
+						Parts[SelId].Record.Sprite7 = (byte)id;
 					}
 					break;
 
@@ -290,7 +290,7 @@ namespace McdView
 						changed = true;
 
 						tb7_phase7.Text = id.ToString();
-						Records[SelId].Record.Sprite8 = (byte)id;
+						Parts[SelId].Record.Sprite8 = (byte)id;
 					}
 					break;
 			}
@@ -298,7 +298,7 @@ namespace McdView
 			if (changed)
 			{
 				Changed = true;
-				Records[SelId].Anisprites[phase] = Spriteset[id];
+				Parts[SelId].Anisprites[phase] = Spriteset[id];
 
 				RecordsPanel.Invalidate();
 				pnl_Sprites.Invalidate();
@@ -433,8 +433,8 @@ namespace McdView
 				tb20_scang1.Text = id        .ToString();
 				tb20_scang2.Text = id_reduced.ToString();
 
-				Records[SelId].Record.ScanG         = (ushort)id;
-				Records[SelId].Record.ScanG_reduced = (ushort)id_reduced;
+				Parts[SelId].Record.ScanG         = (ushort)id;
+				Parts[SelId].Record.ScanG_reduced = (ushort)id_reduced;
 
 				pnl_ScanGic.Invalidate();
 			}
@@ -617,18 +617,18 @@ namespace McdView
 				Changed = true;
 
 				tb.Text = id.ToString();
-				if      (_pnlLoFT == pnl_Loft08) Records[SelId].Record.Loft1  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft09) Records[SelId].Record.Loft2  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft10) Records[SelId].Record.Loft3  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft11) Records[SelId].Record.Loft4  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft12) Records[SelId].Record.Loft5  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft13) Records[SelId].Record.Loft6  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft14) Records[SelId].Record.Loft7  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft15) Records[SelId].Record.Loft8  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft16) Records[SelId].Record.Loft9  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft17) Records[SelId].Record.Loft10 = (byte)id;
-				else if (_pnlLoFT == pnl_Loft18) Records[SelId].Record.Loft11 = (byte)id;
-				else                             Records[SelId].Record.Loft12 = (byte)id;
+				if      (_pnlLoFT == pnl_Loft08) Parts[SelId].Record.Loft1  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft09) Parts[SelId].Record.Loft2  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft10) Parts[SelId].Record.Loft3  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft11) Parts[SelId].Record.Loft4  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft12) Parts[SelId].Record.Loft5  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft13) Parts[SelId].Record.Loft6  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft14) Parts[SelId].Record.Loft7  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft15) Parts[SelId].Record.Loft8  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft16) Parts[SelId].Record.Loft9  = (byte)id;
+				else if (_pnlLoFT == pnl_Loft17) Parts[SelId].Record.Loft10 = (byte)id;
+				else if (_pnlLoFT == pnl_Loft18) Parts[SelId].Record.Loft11 = (byte)id;
+				else                             Parts[SelId].Record.Loft12 = (byte)id;
 
 				_pnlLoFT.Invalidate();
 			}
@@ -712,7 +712,7 @@ namespace McdView
 				int y_layer, y_cell, x_cell;
 				int loftid;
 
-				McdRecord record = Records[SelId].Record;
+				McdRecord record = Parts[SelId].Record;
 				for (int layer = 0; layer != bar_IsoLoft.Value; ++layer)
 				{
 					switch (layer / 2)

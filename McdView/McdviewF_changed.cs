@@ -227,13 +227,13 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Sprite1 = (byte)result;
+						Parts[SelId].Record.Sprite1 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Records[SelId].Anisprites[0] = Spriteset[result];
+							Parts[SelId].Anisprites[0] = Spriteset[result];
 						}
 						else
-							Records[SelId].Anisprites[0] = null;
+							Parts[SelId].Anisprites[0] = null;
 
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -279,13 +279,13 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Sprite2 = (byte)result;
+						Parts[SelId].Record.Sprite2 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Records[SelId].Anisprites[1] = Spriteset[result];
+							Parts[SelId].Anisprites[1] = Spriteset[result];
 						}
 						else
-							Records[SelId].Anisprites[1] = null;
+							Parts[SelId].Anisprites[1] = null;
 
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -331,13 +331,13 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Sprite3 = (byte)result;
+						Parts[SelId].Record.Sprite3 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Records[SelId].Anisprites[2] = Spriteset[result];
+							Parts[SelId].Anisprites[2] = Spriteset[result];
 						}
 						else
-							Records[SelId].Anisprites[2] = null;
+							Parts[SelId].Anisprites[2] = null;
 
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -383,13 +383,13 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Sprite4 = (byte)result;
+						Parts[SelId].Record.Sprite4 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Records[SelId].Anisprites[3] = Spriteset[result];
+							Parts[SelId].Anisprites[3] = Spriteset[result];
 						}
 						else
-							Records[SelId].Anisprites[3] = null;
+							Parts[SelId].Anisprites[3] = null;
 
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -435,13 +435,13 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Sprite5 = (byte)result;
+						Parts[SelId].Record.Sprite5 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Records[SelId].Anisprites[4] = Spriteset[result];
+							Parts[SelId].Anisprites[4] = Spriteset[result];
 						}
 						else
-							Records[SelId].Anisprites[4] = null;
+							Parts[SelId].Anisprites[4] = null;
 
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -487,13 +487,13 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Sprite6 = (byte)result;
+						Parts[SelId].Record.Sprite6 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Records[SelId].Anisprites[5] = Spriteset[result];
+							Parts[SelId].Anisprites[5] = Spriteset[result];
 						}
 						else
-							Records[SelId].Anisprites[5] = null;
+							Parts[SelId].Anisprites[5] = null;
 
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -539,13 +539,13 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Sprite7 = (byte)result;
+						Parts[SelId].Record.Sprite7 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Records[SelId].Anisprites[6] = Spriteset[result];
+							Parts[SelId].Anisprites[6] = Spriteset[result];
 						}
 						else
-							Records[SelId].Anisprites[6] = null;
+							Parts[SelId].Anisprites[6] = null;
 
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -591,13 +591,13 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Sprite8 = (byte)result;
+						Parts[SelId].Record.Sprite8 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
-							Records[SelId].Anisprites[7] = Spriteset[result];
+							Parts[SelId].Anisprites[7] = Spriteset[result];
 						}
 						else
-							Records[SelId].Anisprites[7] = null;
+							Parts[SelId].Anisprites[7] = null;
 
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
@@ -651,7 +651,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft1 = (byte)result;
+						Parts[SelId].Record.Loft1 = (byte)result;
 						pnl_Loft08.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -696,7 +696,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft2 = (byte)result;
+						Parts[SelId].Record.Loft2 = (byte)result;
 						pnl_Loft09.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -741,7 +741,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft3 = (byte)result;
+						Parts[SelId].Record.Loft3 = (byte)result;
 						pnl_Loft10.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -786,7 +786,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft4 = (byte)result;
+						Parts[SelId].Record.Loft4 = (byte)result;
 						pnl_Loft11.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -831,7 +831,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft5 = (byte)result;
+						Parts[SelId].Record.Loft5 = (byte)result;
 						pnl_Loft12.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -876,7 +876,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft6 = (byte)result;
+						Parts[SelId].Record.Loft6 = (byte)result;
 						pnl_Loft13.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -921,7 +921,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft7 = (byte)result;
+						Parts[SelId].Record.Loft7 = (byte)result;
 						pnl_Loft14.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -966,7 +966,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft8 = (byte)result;
+						Parts[SelId].Record.Loft8 = (byte)result;
 						pnl_Loft15.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -1011,7 +1011,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft9 = (byte)result;
+						Parts[SelId].Record.Loft9 = (byte)result;
 						pnl_Loft16.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -1056,7 +1056,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft10 = (byte)result;
+						Parts[SelId].Record.Loft10 = (byte)result;
 						pnl_Loft17.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -1101,7 +1101,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft11 = (byte)result;
+						Parts[SelId].Record.Loft11 = (byte)result;
 						pnl_Loft18.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -1146,7 +1146,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Loft12 = (byte)result;
+						Parts[SelId].Record.Loft12 = (byte)result;
 						pnl_Loft19.Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
@@ -1205,8 +1205,8 @@ namespace McdView
 						&&     ((strict && result > 34 && result < 65571 && (ScanG == null || result < ScanG.Length / 16))
 							|| (!strict && result > 34 && result < 65571)))
 					{
-						Records[SelId].Record.ScanG         = (ushort)(result);
-						Records[SelId].Record.ScanG_reduced = (ushort)(result - 35);
+						Parts[SelId].Record.ScanG         = (ushort)(result);
+						Parts[SelId].Record.ScanG_reduced = (ushort)(result - 35);
 
 						tb20_scang2.Text = (result - 35).ToString();
 						pnl_ScanGic.Invalidate();
@@ -1254,10 +1254,10 @@ namespace McdView
 							|| (!strict && result > -1 && result < 65536)))
 					{
 						//LogFile.WriteLine("\nOnChanged20r() text2= " + tb20_scang2.Text + " result= " + result);
-						Records[SelId].Record.ScanG         = (ushort)(result + 35);
-						Records[SelId].Record.ScanG_reduced = (ushort)(result);
-						//LogFile.WriteLine(". ScanG= "   + Records[SelId].Record.ScanG);
-						//LogFile.WriteLine(". ScanG_r= " + Records[SelId].Record.ScanG_reduced);
+						Parts[SelId].Record.ScanG         = (ushort)(result + 35);
+						Parts[SelId].Record.ScanG_reduced = (ushort)(result);
+						//LogFile.WriteLine(". ScanG= "   + Parts[SelId].Record.ScanG);
+						//LogFile.WriteLine(". ScanG_r= " + Parts[SelId].Record.ScanG_reduced);
 
 						tb20_scang1.Text = (result + 35).ToString();
 						//LogFile.WriteLine(". . text1= " + tb20_scang1.Text);
@@ -1304,7 +1304,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown22 = (byte)result;
+						Parts[SelId].Record.Unknown22 = (byte)result;
 					}
 					else
 						tb22_.Text = "0"; // recurse w/ default.
@@ -1347,7 +1347,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown23 = (byte)result;
+						Parts[SelId].Record.Unknown23 = (byte)result;
 					}
 					else
 						tb23_.Text = "0"; // recurse w/ default.
@@ -1390,7 +1390,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown24 = (byte)result;
+						Parts[SelId].Record.Unknown24 = (byte)result;
 					}
 					else
 						tb24_.Text = "0"; // recurse w/ default.
@@ -1433,7 +1433,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown25 = (byte)result;
+						Parts[SelId].Record.Unknown25 = (byte)result;
 					}
 					else
 						tb25_.Text = "0"; // recurse w/ default.
@@ -1476,7 +1476,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown26 = (byte)result;
+						Parts[SelId].Record.Unknown26 = (byte)result;
 					}
 					else
 						tb26_.Text = "0"; // recurse w/ default.
@@ -1519,7 +1519,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown27 = (byte)result;
+						Parts[SelId].Record.Unknown27 = (byte)result;
 					}
 					else
 						tb27_.Text = "0"; // recurse w/ default.
@@ -1562,7 +1562,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown28 = (byte)result;
+						Parts[SelId].Record.Unknown28 = (byte)result;
 					}
 					else
 						tb28_.Text = "0"; // recurse w/ default.
@@ -1605,7 +1605,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown29 = (byte)result;
+						Parts[SelId].Record.Unknown29 = (byte)result;
 					}
 					else
 						tb29_.Text = "0"; // recurse w/ default.
@@ -1648,7 +1648,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
+						Parts[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
 					}
 					else
 						tb30_isslidingdoor.Text = "0"; // recurse w/ default.
@@ -1708,7 +1708,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.StopLOS = Convert.ToBoolean(result);
+						Parts[SelId].Record.StopLOS = Convert.ToBoolean(result);
 					}
 					else
 						tb31_isblocklos.Text = "0"; // recurse w/ default.
@@ -1760,7 +1760,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.NotFloored = Convert.ToBoolean(result);
+						Parts[SelId].Record.NotFloored = Convert.ToBoolean(result);
 					}
 					else
 						tb32_isdropthrou.Text = "0"; // recurse w/ default.
@@ -1813,7 +1813,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.BigWall = Convert.ToBoolean(result);
+						Parts[SelId].Record.BigWall = Convert.ToBoolean(result);
 					}
 					else
 						tb33_isbigwall.Text = "0"; // recurse w/ default.
@@ -1867,7 +1867,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.GravLift = Convert.ToBoolean(result);
+						Parts[SelId].Record.GravLift = Convert.ToBoolean(result);
 					}
 					else
 						tb34_isgravlift.Text = "0"; // recurse w/ default.
@@ -1921,7 +1921,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.HingedDoor = Convert.ToBoolean(result);
+						Parts[SelId].Record.HingedDoor = Convert.ToBoolean(result);
 					}
 					else
 						tb35_ishingeddoor.Text = "0"; // recurse w/ default.
@@ -1976,7 +1976,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.BlockFire = Convert.ToBoolean(result);
+						Parts[SelId].Record.BlockFire = Convert.ToBoolean(result);
 					}
 					else
 						tb36_isblockfire.Text = "0"; // recurse w/ default.
@@ -2028,7 +2028,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.BlockSmoke = Convert.ToBoolean(result);
+						Parts[SelId].Record.BlockSmoke = Convert.ToBoolean(result);
 					}
 					else
 						tb37_isblocksmoke.Text = "0"; // recurse w/ default.
@@ -2081,7 +2081,7 @@ namespace McdView
 						&&     ((strict && result == 3)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.LeftRightHalf = (byte)result;
+						Parts[SelId].Record.LeftRightHalf = (byte)result;
 					}
 					else
 						tb38_.Text = "3"; // recurse w/ default.
@@ -2135,9 +2135,9 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.TU_Walk = (byte)result;
+						Parts[SelId].Record.TU_Walk = (byte)result;
 					}
-					else if (Records[SelId].Record.PartType == PartType.Floor)
+					else if (Parts[SelId].Record.PartType == PartType.Floor)
 					{
 						tb39_tuwalk.Text = "4"; // recurse w/ default.
 					}
@@ -2183,9 +2183,9 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.TU_Slide = (byte)result;
+						Parts[SelId].Record.TU_Slide = (byte)result;
 					}
-					else if (Records[SelId].Record.PartType == PartType.Floor)
+					else if (Parts[SelId].Record.PartType == PartType.Floor)
 					{
 						tb40_tuslide.Text = "4"; // recurse w/ default.
 					}
@@ -2231,9 +2231,9 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.TU_Fly = (byte)result;
+						Parts[SelId].Record.TU_Fly = (byte)result;
 					}
-					else if (Records[SelId].Record.PartType == PartType.Floor)
+					else if (Parts[SelId].Record.PartType == PartType.Floor)
 					{
 						tb41_tufly.Text = "4"; // recurse w/ default.
 					}
@@ -2279,7 +2279,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Armor = (byte)result;
+						Parts[SelId].Record.Armor = (byte)result;
 					}
 					else
 						tb42_armor.Text = "0"; // recurse w/ default.
@@ -2326,7 +2326,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.HE_Block = (byte)result;
+						Parts[SelId].Record.HE_Block = (byte)result;
 					}
 					else
 						tb43_heblock.Text = "0"; // recurse w/ default.
@@ -2367,15 +2367,15 @@ namespace McdView
 
 					int result;
 					if (Int32.TryParse(tb44_deathid.Text, out result)
-						&&     ((strict && result > -1 && result < 256 && result < Records.Length) // NOTE: 'Records' shall not be null here.
+						&&     ((strict && result > -1 && result < 256 && result < Parts.Length) // NOTE: 'Parts' shall not be null here.
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.DieTile = (byte)result;
+						Parts[SelId].Record.DieTile = (byte)result;
 
-						if (result != 0 && result < Records.Length)
-							Records[SelId].Dead = Records[result];
+						if (result != 0 && result < Parts.Length)
+							Parts[SelId].Dead = Parts[result];
 						else
-							Records[SelId].Dead = null;
+							Parts[SelId].Dead = null;
 
 						RecordsPanel.Invalidate();
 					}
@@ -2395,7 +2395,7 @@ namespace McdView
 								 + " death-part; that is, a value of 0 does not reference ID #0."
 								 + " See #42 Armor."
 								 + Environment.NewLine + Environment.NewLine
-								 + "0.." + (Records != null ? (Records.Length - 1).ToString() : "255");
+								 + "0.." + (Parts != null ? (Parts.Length - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox44(object sender, EventArgs e)
 		{
@@ -2425,7 +2425,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Flammable = (byte)result;
+						Parts[SelId].Record.Flammable = (byte)result;
 					}
 					else
 						tb45_fireresist.Text = "0"; // recurse w/ default.
@@ -2469,15 +2469,15 @@ namespace McdView
 
 					int result;
 					if (Int32.TryParse(tb46_alternateid.Text, out result)
-						&&     ((strict && result > -1 && result < 256 && result < Records.Length) // NOTE: 'Records' shall not be null here.
+						&&     ((strict && result > -1 && result < 256 && result < Parts.Length) // NOTE: 'Parts' shall not be null here.
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Alt_MCD = (byte)result;
+						Parts[SelId].Record.Alt_MCD = (byte)result;
 
-						if (result != 0 && result < Records.Length)
-							Records[SelId].Alternate = Records[result];
+						if (result != 0 && result < Parts.Length)
+							Parts[SelId].Alternate = Parts[result];
 						else
-							Records[SelId].Alternate = null;
+							Parts[SelId].Alternate = null;
 
 						RecordsPanel.Invalidate();
 					}
@@ -2497,7 +2497,7 @@ namespace McdView
 								 + " by an alternate-part; that is, a value of 0 does not"
 								 + " reference ID #0. See #35 isHingedDoor."
 								 + Environment.NewLine + Environment.NewLine
-								 + "0.." + (Records != null ? (Records.Length - 1).ToString() : "255");
+								 + "0.." + (Parts != null ? (Parts.Length - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox46(object sender, EventArgs e)
 		{
@@ -2528,7 +2528,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown47 = (byte)result;
+						Parts[SelId].Record.Unknown47 = (byte)result;
 					}
 					else
 						tb47_.Text = "0"; // recurse w/ default.
@@ -2573,7 +2573,7 @@ namespace McdView
 						&&     ((strict && result > - 25 && result < 1)
 							|| (!strict && result > -129 && result < 128)))
 					{
-						Records[SelId].Record.StandOffset = (sbyte)result;
+						Parts[SelId].Record.StandOffset = (sbyte)result;
 					}
 					else
 						tb48_terrainoffset.Text = "0"; // recurse w/ default.
@@ -2627,7 +2627,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 25)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.TileOffset = (byte)result;
+						Parts[SelId].Record.TileOffset = (byte)result;
 						RecordsPanel.Invalidate();
 						pnl_Sprites.Invalidate();
 					}
@@ -2676,7 +2676,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown50 = (byte)result;
+						Parts[SelId].Record.Unknown50 = (byte)result;
 					}
 					else
 						tb50_.Text = "0"; // recurse w/ default.
@@ -2720,7 +2720,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.LightBlock = (byte)result;
+						Parts[SelId].Record.LightBlock = (byte)result;
 					}
 					else
 						tb51_lightblock.Text = "0"; // recurse w/ default.
@@ -2765,7 +2765,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 7)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Footstep = (byte)result;
+						Parts[SelId].Record.Footstep = (byte)result;
 					}
 					else
 						tb52_footsound.Text = "0"; // recurse w/ default.
@@ -2824,7 +2824,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 4)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
+						Parts[SelId].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
 					}														// explicitly defined in the enum is allowed.
 					else
 						tb53_parttype.Text = "0"; // recurse w/ default.
@@ -2878,7 +2878,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.HE_Type = (byte)result;
+						Parts[SelId].Record.HE_Type = (byte)result;
 					}
 					else
 						tb54_hetype.Text = "0"; // recurse w/ default.
@@ -2931,7 +2931,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.HE_Strength = (byte)result;
+						Parts[SelId].Record.HE_Strength = (byte)result;
 					}
 					else
 						tb55_hestrength.Text = "0"; // recurse w/ default.
@@ -2976,7 +2976,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.SmokeBlockage = (byte)result;
+						Parts[SelId].Record.SmokeBlockage = (byte)result;
 					}
 					else
 						tb56_smokeblock.Text = "0"; // recurse w/ default.
@@ -3021,7 +3021,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Fuel = (byte)result;
+						Parts[SelId].Record.Fuel = (byte)result;
 					}
 					else
 						tb57_fuel.Text = "0"; // recurse w/ default.
@@ -3065,7 +3065,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.LightSource = (byte)result;
+						Parts[SelId].Record.LightSource = (byte)result;
 					}
 					else
 						tb58_lightintensity.Text = "0"; // recurse w/ default.
@@ -3111,7 +3111,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 15)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
+						Parts[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
 					}															// explicitly defined in the enum is allowed.
 					else
 						tb59_specialtype.Text = "0"; // recurse w/ default.
@@ -3184,7 +3184,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Records[SelId].Record.BaseObject = Convert.ToBoolean(result);
+						Parts[SelId].Record.BaseObject = Convert.ToBoolean(result);
 					}
 					else
 						tb60_isbaseobject.Text = "0"; // recurse w/ default.
@@ -3237,7 +3237,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Records[SelId].Record.Unknown61 = (byte)result;
+						Parts[SelId].Record.Unknown61 = (byte)result;
 					}
 					else
 						tb61_.Text = "0"; // recurse w/ default.

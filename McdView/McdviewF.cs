@@ -48,17 +48,16 @@ namespace McdView
 
 
 		#region Properties
-		private Tilepart[] _records;
+		internal Tilepart[] _parts;
 		/// <summary>
-		/// 'Records' is not a collection of 'McdRecords' but an array of
-		/// 'Tileparts'. Each entry's record is referenced w/ 'Record'.
+		/// An array of 'Tileparts'. Each entry's record is referenced w/ 'Record'.
 		/// </summary>
-		private Tilepart[] Records
+		internal Tilepart[] Parts
 		{
-			get { return _records; }
+			get { return _parts; }
 			set
 			{
-				miPaletteMenu.Enabled = ((RecordsPanel.Records = (_records = value)) != null); // perfect.
+				miPaletteMenu.Enabled = ((RecordsPanel.Parts = (_parts = value)) != null); // perfect.
 			}
 		}
 
@@ -89,7 +88,7 @@ namespace McdView
 
 		private int _selId = -1;
 		/// <summary>
-		/// The currently selected 'Records' ID.
+		/// The currently selected 'Parts' ID.
 		/// </summary>
 		internal int SelId
 		{
@@ -499,8 +498,8 @@ namespace McdView
 			if (SelId == -1)
 			{
 				if (e.KeyCode == Keys.Space // select record #0 ->
-					&& Records != null
-					&& Records.Length != 0)
+					&& Parts != null
+					&& Parts.Length != 0)
 				{
 					if (!cb_Strict.Focused && !bar_SpriteShade.Focused && !bar_IsoLoft.Focused)
 					{
@@ -578,7 +577,7 @@ namespace McdView
 
 					ResourceInfo.ReloadSprites = true;
 
-					Records = new Tilepart[0];
+					Parts = new Tilepart[0];
 
 					Palette pal;
 					if (miPaletteUfo.Checked)
@@ -586,29 +585,15 @@ namespace McdView
 					else
 						pal = Palette.TftdBattle;
 
-					// NOTE: The spriteset is also maintained by a pointer
-					// to it that's stored in each tilepart.
+					// NOTE: The spriteset is also maintained by a pointer to it
+					// that's stored in each tilepart.
+					// NOTE: Can be null.
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(_pfeMcd),
 														2,
 														pal,
 														true);
-
-//					for (int id = 0; id != Records.Length; ++id)
-//					{
-//						var bindata = new byte[TilepartFactory.Length];
-//						bs.Read(bindata, 0, TilepartFactory.Length);
-//						McdRecord record = McdRecordFactory.CreateRecord(bindata);
-//
-//						Records[id] = new Tilepart(id, Spriteset, record);
-//					}
-//
-//					for (int id = 0; id != Records.Length; ++id)
-//					{
-//						Records[id].Dead      = TilepartFactory.GetDeadPart(     Label, id, Records[id].Record, Records);
-//						Records[id].Alternate = TilepartFactory.GetAlternatePart(Label, id, Records[id].Record, Records);
-//					}
 
 					SelId = -1;
 					ResourceInfo.ReloadSprites = false;
@@ -673,7 +658,7 @@ namespace McdView
 
 					using (var bs = new BufferedStream(File.OpenRead(_pfeMcd)))
 					{
-						Records = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+						Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
 						Palette pal;
 						if (miPaletteUfo.Checked)
@@ -681,8 +666,9 @@ namespace McdView
 						else
 							pal = Palette.TftdBattle;
 
-						// NOTE: The spriteset is also maintained by a pointer
-						// to it that's stored in each tilepart.
+						// NOTE: The spriteset is also maintained by a pointer to it
+						// that's stored in each tilepart.
+						// NOTE: Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(_pfeMcd),
@@ -690,19 +676,19 @@ namespace McdView
 															pal,
 															true);
 
-						for (int id = 0; id != Records.Length; ++id)
+						for (int id = 0; id != Parts.Length; ++id)
 						{
 							var bindata = new byte[TilepartFactory.Length];
 							bs.Read(bindata, 0, TilepartFactory.Length);
 							McdRecord record = McdRecordFactory.CreateRecord(bindata);
 
-							Records[id] = new Tilepart(id, Spriteset, record);
+							Parts[id] = new Tilepart(id, Spriteset, record);
 						}
 
-						for (int id = 0; id != Records.Length; ++id)
+						for (int id = 0; id != Parts.Length; ++id)
 						{
-							Records[id].Dead      = TilepartFactory.GetDeadPart(     Label, id, Records[id].Record, Records);
-							Records[id].Alternate = TilepartFactory.GetAlternatePart(Label, id, Records[id].Record, Records);
+							Parts[id].Dead      = TilepartFactory.GetDeadPart(     Label, id, Parts[id].Record, Parts);
+							Parts[id].Alternate = TilepartFactory.GetAlternatePart(Label, id, Parts[id].Record, Parts);
 						}
 					}
 
@@ -792,7 +778,7 @@ namespace McdView
 			{
 				McdRecord record;
 
-				foreach (Tilepart part in Records)
+				foreach (Tilepart part in Parts)
 				{
 					record = part.Record;
 
@@ -1078,7 +1064,14 @@ namespace McdView
 			// So don't turn 'strict' on until after the record loads/populates
 			// the textfields. See 'SelId' setter
 
-			McdRecord record = Records[SelId].Record;
+			LogFile.WriteLine("");
+			LogFile.WriteLine("SelId= " + SelId);
+			LogFile.WriteLine((Parts == null) ? "Parts null" : "Parts valid");
+			LogFile.WriteLine("Parts.Length= " + Parts.Length);
+			LogFile.WriteLine("Parts[SelId]= " + Parts[SelId]);
+			LogFile.WriteLine("Parts[SelId].Record= " + Parts[SelId].Record);
+
+			McdRecord record = Parts[SelId].Record;
 
 			tb0_phase0.Text = ((int)record.Sprite1).ToString();
 			tb1_phase1.Text = ((int)record.Sprite2).ToString();
@@ -1102,16 +1095,10 @@ namespace McdView
 			tb18_loft20.Text = ((int)record.Loft11).ToString();
 			tb19_loft22.Text = ((int)record.Loft12).ToString();
 
-			//LogFile.WriteLine("record.ScanG= " + record.ScanG);
-			//LogFile.WriteLine("record.ScanG_reduced= " + record.ScanG_reduced);
-//			tb20_scang1.Text = ((int)record.ScanG)        .ToString(); // no.
-//			tb20_scang2.Text = ((int)record.ScanG_reduced).ToString();
 			string scanG         = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
 			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// god only knows why else the cast from ushort won't work right.
-			tb20_scang1.Text = scanG;										// TODO: There could still be probls in the OnChanged mechanism ...
+			tb20_scang1.Text = scanG;										// See also the OnChanged mechanism ...
 			tb20_scang2.Text = scanG_reduced;
-			//LogFile.WriteLine("tb20_scang1.Text= " + tb20_scang1.Text);
-			//LogFile.WriteLine("tb20_scang2.Text= " + tb20_scang2.Text);
 
 			tb22_.Text = ((int)record.Unknown22).ToString();
 			tb23_.Text = ((int)record.Unknown23).ToString();

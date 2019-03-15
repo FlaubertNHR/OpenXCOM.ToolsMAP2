@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 using XCom;
 using XCom.Interfaces;
+using XCom.Resources.Map;
 
 
 namespace McdView
@@ -31,15 +32,15 @@ namespace McdView
 
 
 		#region Properties
-		private Tilepart[] _records;
-		internal Tilepart[] Records
+		private Tilepart[] _parts;
+		internal Tilepart[] Parts
 		{
-			private get { return _records; }
+			private get { return _parts; }
 			set
 			{
-				_records = value;
+				_parts = value;
 
-				TableWidth = _records.Length * (XCImage.SpriteWidth32 + 1) - 1;
+				TableWidth = _parts.Length * (XCImage.SpriteWidth32 + 1) - 1;
 
 				OnResize(null);
 				Scroller.Value = 0;
@@ -110,18 +111,57 @@ namespace McdView
 
 			Context.Popup += OnPopup_Context;
 		}
-
-		private void OnPopup_Context(object sender, EventArgs e)
-		{
-			Context.MenuItems[5].Enabled = (Records != null && Records.Length != 0); // left
-			Context.MenuItems[6].Enabled = (Records != null && Records.Length != 0); // right
-		}
 		#endregion cTor
 
 
 		#region Events
+		private void OnPopup_Context(object sender, EventArgs e)
+		{
+			Context.MenuItems[0].Enabled = (Parts != null);						// ++record - add before SelId if SelId=-1, else add after SelId
+			Context.MenuItems[1].Enabled = (Parts != null && _f.SelId != -1);	// --record - TODO: that means there should be a way to clear SelId ...
+
+			Context.MenuItems[3].Enabled = (Parts != null);						// file - append I suppose.
+
+			Context.MenuItems[5].Enabled = (Parts != null && _f.SelId > 0);										// left
+			Context.MenuItems[6].Enabled = (Parts != null && _f.SelId != -1 && _f.SelId != Parts.Length - 1);	// right
+		}
+
 		private void OnAddClick(object sender, EventArgs e)
 		{
+			if (_f.Parts == null)
+				_f.Parts = new Tilepart[0];
+
+			var data = new byte[TilepartFactory.Length];
+			McdRecord record = McdRecordFactory.CreateRecord(data);
+
+			Array.Resize(ref _f._parts, _f.Parts.Length + 1); // TODO: Fix that.
+//			Parts = _parts;
+
+			int id = _f.Parts.Length - 1;
+			_f.Parts[id] = new Tilepart(
+										id,
+										_f.Spriteset,
+										record);
+
+			_f.Parts[id].Dead      =
+			_f.Parts[id].Alternate = null;
+
+			Invalidate();
+
+//			for (int id = 0; id != Parts.Length; ++id)
+//			{
+//				var bindata = new byte[TilepartFactory.Length];
+//				bs.Read(bindata, 0, TilepartFactory.Length);
+//				McdRecord record = McdRecordFactory.CreateRecord(bindata);
+//
+//				Parts[id] = new Tilepart(id, Spriteset, record);
+//			}
+//
+//			for (int id = 0; id != Parts.Length; ++id)
+//			{
+//				Parts[id].Dead      = TilepartFactory.GetDeadPart(     Label, id, Parts[id].Record, Parts);
+//				Parts[id].Alternate = TilepartFactory.GetAlternatePart(Label, id, Parts[id].Record, Parts);
+//			}
 		}
 
 		private void OnDeleteClick(object sender, EventArgs e)
@@ -139,6 +179,7 @@ namespace McdView
 		private void OnRightClick(object sender, EventArgs e)
 		{
 		}
+
 
 		private void OnValueChanged_Scroll(object sender, EventArgs e)
 		{
@@ -161,7 +202,7 @@ namespace McdView
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			if (Records != null && Records.Length != 0)
+			if (Parts != null && Parts.Length != 0)
 			{
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
@@ -177,7 +218,7 @@ namespace McdView
 				int offset = -Scroller.Value;
 
 				int i;
-				for (i = 0; i != Records.Length; ++i)
+				for (i = 0; i != Parts.Length; ++i)
 				{
 					if (i != 0)
 						_graphics.DrawLine( // draw vertical line before each sprite except the first sprite
@@ -186,15 +227,15 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset, Height);
 
 					if (_f.Spriteset != null
-						&& Records[i] != null // not sure why Tilepart entries go null but aren't null but they do
-						&& Records[i].Anisprites != null
-						&& Records[i][0] != null
-						&& (sprite = Records[i][0].Sprite) != null)
+						&& Parts[i] != null // not sure why Tilepart entries go null but aren't null but they do
+						&& Parts[i].Anisprites != null
+						&& Parts[i][0] != null
+						&& (sprite = Parts[i][0].Sprite) != null)
 					{
 						DrawSprite(
 								sprite,
 								i * XCImage.SpriteWidth32 + i + offset,
-								y1_sprite - Records[i].Record.TileOffset);
+								y1_sprite - Parts[i].Record.TileOffset);
 					}
 				}
 
@@ -211,7 +252,7 @@ namespace McdView
 										XCImage.SpriteWidth32,
 										y1_fill_h);
 
-				for (i = 0; i != Records.Length; ++i)
+				for (i = 0; i != Parts.Length; ++i)
 				{
 					rect = new Rectangle(
 									i * XCImage.SpriteWidth32 + i + offset,
@@ -230,18 +271,18 @@ namespace McdView
 
 				if (_f.Spriteset != null)
 				{
-					for (i = 0; i != Records.Length; ++i) // dead part ->
+					for (i = 0; i != Parts.Length; ++i) // dead part ->
 					{
-						if (Records[i] != null
-							&& Records[i].Dead != null
-							&& Records[i].Dead.Anisprites != null
-							&& Records[i].Dead[0] != null
-							&& (sprite = Records[i].Dead[0].Sprite) != null)
+						if (Parts[i] != null
+							&& Parts[i].Dead != null
+							&& Parts[i].Dead.Anisprites != null
+							&& Parts[i].Dead[0] != null
+							&& (sprite = Parts[i].Dead[0].Sprite) != null)
 						{
 							DrawSprite(
 									sprite,
 									i * XCImage.SpriteWidth32 + i + offset,
-									y2_sprite - Records[i].Dead.Record.TileOffset);
+									y2_sprite - Parts[i].Dead.Record.TileOffset);
 						}
 					}
 				}
@@ -253,18 +294,18 @@ namespace McdView
 
 				if (_f.Spriteset != null)
 				{
-					for (i = 0; i != Records.Length; ++i) // alternate part ->
+					for (i = 0; i != Parts.Length; ++i) // alternate part ->
 					{
-						if (Records[i] != null
-							&& Records[i].Alternate != null
-							&& Records[i].Alternate.Anisprites != null
-							&& Records[i].Alternate[0] != null
-							&& (sprite = Records[i].Alternate[0].Sprite) != null)
+						if (Parts[i] != null
+							&& Parts[i].Alternate != null
+							&& Parts[i].Alternate.Anisprites != null
+							&& Parts[i].Alternate[0] != null
+							&& (sprite = Parts[i].Alternate[0].Sprite) != null)
 						{
 							DrawSprite(
 									sprite,
 									i * XCImage.SpriteWidth32 + i + offset,
-									y3_sprite - Records[i].Alternate.Record.TileOffset);
+									y3_sprite - Parts[i].Alternate.Record.TileOffset);
 						}
 					}
 				}
@@ -302,11 +343,11 @@ namespace McdView
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
 		{
-			if (eventargs != null) // ie. is *not* Records load
+			if (eventargs != null) // ie. is *not* Parts load
 				base.OnResize(eventargs);
 
 			int range = 0;
-			if (Records != null && Records.Length != 0)
+			if (Parts != null && Parts.Length != 0)
 			{
 				range = TableWidth + (_largeChange - 1) - Width;
 				if (range < _largeChange)
@@ -337,21 +378,17 @@ namespace McdView
 
 			if (e.Button == MouseButtons.Left)
 			{
-				if (Records != null && Records.Length != 0
+				if (Parts != null && Parts.Length != 0
 					&& e.Y < Height - Scroller.Height)
 				{
 					int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
-					if (id >= Records.Length)
-					{
+					if (id >= Parts.Length)
 						id = -1;
-					}
+
 					_f.SelId = id;
 				}
 			}
-			else if (e.Button == MouseButtons.Right)
-			{
-				
-			}
+			// else if (e.Button == MouseButtons.Right) // This is handled auto by the panel's ContextMenu var.
 		}
 
 		/// <summary>
@@ -440,7 +477,7 @@ namespace McdView
 				case Keys.Right:
 				case Keys.Down:
 				case Keys.Space:
-					if (_f.SelId != Records.Length - 1)
+					if (_f.SelId != Parts.Length - 1)
 						_f.SelId += 1;
 					break;
 
@@ -458,8 +495,8 @@ namespace McdView
 				case Keys.PageDown:
 				{
 					int d = Width / (XCImage.SpriteWidth32 + 1);
-					if (_f.SelId + d > Records.Length - 1)
-						_f.SelId = Records.Length - 1;
+					if (_f.SelId + d > Parts.Length - 1)
+						_f.SelId = Parts.Length - 1;
 					else
 						_f.SelId += d;
 
@@ -471,7 +508,7 @@ namespace McdView
 					break;
 
 				case Keys.End:
-					_f.SelId = Records.Length - 1;
+					_f.SelId = Parts.Length - 1;
 					break;
 			}
 		}
