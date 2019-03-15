@@ -1024,9 +1024,9 @@ namespace McdView
 		/// Invalidates panels.
 		/// </summary>
 		/// <param name="lofts">incl/ lofts</param>
-		private void InvalidatePanels(bool lofts = true)
+		internal void InvalidatePanels(bool lofts = true)
 		{
-			PartsPanel.Invalidate();
+			PartsPanel .Invalidate();
 			pnl_Sprites.Invalidate();
 			pnl_ScanGic.Invalidate();
 

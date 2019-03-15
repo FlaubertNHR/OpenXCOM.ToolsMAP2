@@ -143,6 +143,97 @@ namespace XCom
 
 			return lofts;
 		}
+
+		public McdRecord Clone()
+		{
+			var record = new McdRecord();
+
+			// SetId is used only by 'MapInfoOutputBox'.
+			record.SetId = -1;
+
+			// kL_note: All values in an MCD record are unsigned bytes except the
+			// ScanG ref (little endian unsigned short) and the TerrainOffset
+			// (signed byte).
+
+			record.Sprite1 = Sprite1;
+			record.Sprite2 = Sprite2;
+			record.Sprite3 = Sprite3;
+			record.Sprite4 = Sprite4;
+			record.Sprite5 = Sprite5;
+			record.Sprite6 = Sprite6;
+			record.Sprite7 = Sprite7;
+			record.Sprite8 = Sprite8;
+
+			record.Loft1  = Loft1;
+			record.Loft2  = Loft2;
+			record.Loft3  = Loft3;
+			record.Loft4  = Loft4;
+			record.Loft5  = Loft5;
+			record.Loft6  = Loft6;
+			record.Loft7  = Loft7;
+			record.Loft8  = Loft8;
+			record.Loft9  = Loft9;
+			record.Loft10 = Loft10;
+			record.Loft11 = Loft11;
+			record.Loft12 = Loft12;
+
+			record.ScanG         = ScanG;			// ushort
+			record.ScanG_reduced = ScanG_reduced;	// ushort
+
+			record.Unknown22 = Unknown22;
+			record.Unknown23 = Unknown23;
+			record.Unknown24 = Unknown24;
+			record.Unknown25 = Unknown25;
+			record.Unknown26 = Unknown26;
+			record.Unknown27 = Unknown27;
+			record.Unknown28 = Unknown28;
+			record.Unknown29 = Unknown29;
+
+			record.SlidingDoor = SlidingDoor;	// bool
+			record.StopLOS     = StopLOS;		// bool
+			record.NotFloored  = NotFloored;	// bool
+			record.BigWall     = BigWall;		// bool
+			record.GravLift    = GravLift;		// bool
+			record.HingedDoor  = HingedDoor;	// bool
+			record.BlockFire   = BlockFire;		// bool
+			record.BlockSmoke  = BlockSmoke;	// bool
+
+			record.LeftRightHalf = LeftRightHalf;
+			record.TU_Walk       = TU_Walk;
+			record.TU_Slide      = TU_Slide;
+			record.TU_Fly        = TU_Fly;
+			record.Armor         = Armor;
+			record.HE_Block      = HE_Block;
+			record.DieTile       = DieTile;
+			record.Flammable     = Flammable;
+			record.Alt_MCD       = Alt_MCD;
+			record.Unknown47     = Unknown47;
+			record.StandOffset   = StandOffset;	// sbyte
+			record.TileOffset    = TileOffset;
+			record.Unknown50     = Unknown50;
+			record.LightBlock    = LightBlock;
+			record.Footstep      = Footstep;
+
+			record.PartType      = PartType;	// PartType
+			record.HE_Type       = HE_Type;
+			record.HE_Strength   = HE_Strength;
+			record.SmokeBlockage = SmokeBlockage;
+			record.Fuel          = Fuel;
+			record.LightSource   = LightSource;
+			record.Special       = Special;		// SpecialType
+			record.BaseObject    = BaseObject;	// bool
+			record.Unknown61     = Unknown61;
+
+
+			// The following strings are used by the McdInfoF only.
+			record.stSprites = stSprites;
+			record.stScanG   = stScanG;
+			record.stLoFTs   = stLoFTs;
+
+			record.ByteTable = ByteTable;
+
+			return record;
+		}
 		#endregion
 	}
 }

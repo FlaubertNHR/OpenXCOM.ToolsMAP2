@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -29,6 +30,9 @@ namespace McdView
 		private readonly Brush _brushControl = new SolidBrush(SystemColors.Control);
 
 		private bool _bypassScrollZero;
+
+		private Tilepart _copypart;
+		private List<int> SelIds = new List<int>();
 		#endregion Fields
 
 
@@ -107,7 +111,7 @@ namespace McdView
 
 			var itSep1        = new MenuItem("-");
 
-			var itFile        = new MenuItem("file",         OnFileClick);
+			var itFile        = new MenuItem("file ...",     OnFileClick);
 
 			var itSep2        = new MenuItem("-");
 
@@ -147,32 +151,39 @@ namespace McdView
 		#region Events
 		private void OnPopup_Context(object sender, EventArgs e)
 		{
+			bool selid = (_f.SelId != -1);
+
 			// add #0 - after selid even if selid=-1
-			Context.MenuItems[0].Enabled = (Parts != null);
+			Context.MenuItems[0].Enabled = Parts != null;
 			// add range #1 - after selid even if selid=-1
-			Context.MenuItems[1].Enabled = (Parts != null && false);
+			Context.MenuItems[1].Enabled = Parts != null && false;
 			// delete #2 - selid if selid>-1 & selid<Parts.Length
-			Context.MenuItems[2].Enabled = (_f.SelId != -1); //Parts != null &&
+			Context.MenuItems[2].Enabled = selid;
 			// delete range #3 - selid if selid>-1 & selid<Parts.Length
-			Context.MenuItems[3].Enabled = (Parts != null && _f.SelId != -1 && false);
+			Context.MenuItems[3].Enabled = selid && false;
 
 			// cut #5 - selid if selid>-1 & selid<Parts.Length
-			Context.MenuItems[5].Enabled = (Parts != null && _f.SelId != -1);
+			Context.MenuItems[5].Enabled = selid;
 			// copy #6 - selid if selid>-1 & selid<Parts.Length
-			Context.MenuItems[6].Enabled = (Parts != null && _f.SelId != -1);
+			Context.MenuItems[6].Enabled = selid;
 			// paste #7 - selid if selid>-1 & selid<Parts.Length
-			Context.MenuItems[7].Enabled = (Parts != null && _f.SelId != -1);
+			Context.MenuItems[7].Enabled = selid && _copypart != null;
 
-			// file #9 - inject after selid even if seld=-1
-			Context.MenuItems[9].Enabled = (Parts != null);
+			// file #9 - inject after selid even if selid=-1
+			Context.MenuItems[9].Enabled = (Parts != null && false);
 
 			// left #11 - swap selid w/ pre if selid not 0
-			Context.MenuItems[11].Enabled = (Parts != null && _f.SelId > 0);
+			Context.MenuItems[11].Enabled = _f.SelId > 0;
 			// right #12 - swap selid w/ post if selid not Parts.Length-1
-			Context.MenuItems[12].Enabled = (Parts != null && _f.SelId != -1 && _f.SelId != Parts.Length - 1);
+			Context.MenuItems[12].Enabled = selid && _f.SelId != Parts.Length - 1;
 
 			// deselect #14 - if selid>-1 & selid<Parts.Length
-			Context.MenuItems[14].Enabled = (_f.SelId != -1); //Parts != null &&
+			Context.MenuItems[14].Enabled = selid;
+		}
+
+		private void OnIdClick(object sender, EventArgs e)
+		{
+			Context.Dispose();
 		}
 
 		private void OnAddClick(object sender, EventArgs e)
@@ -246,14 +257,22 @@ namespace McdView
 
 		private void OnCutClick(object sender, EventArgs e)
 		{
+			OnCopyClick(  null, EventArgs.Empty);
+			OnDeleteClick(null, EventArgs.Empty);
 		}
 
 		private void OnCopyClick(object sender, EventArgs e)
 		{
+			_copypart = Parts[_f.SelId].Clone();
 		}
 
 		private void OnPasteClick(object sender, EventArgs e)
 		{
+			_f.Changed = true;
+
+			Parts[_f.SelId] = _copypart.Clone();
+			_f.InvalidatePanels();
+			_f.PopulateTextFields();
 		}
 
 		private void OnFileClick(object sender, EventArgs e)
@@ -262,15 +281,52 @@ namespace McdView
 
 		private void OnLeftClick(object sender, EventArgs e)
 		{
+			_f.Changed = true;
+
+			var array = new Tilepart[Parts.Length];
+
+			int id = _f.SelId;
+			for (int i = 0; i != id - 1; ++i)
+				array[i] = Parts[i];
+
+			array[id - 1] = Parts[id];
+			array[id]     = Parts[id - 1];
+
+			for (int i = id + 1; i != Parts.Length; ++i)
+				array[i] = Parts[i];
+
+			_bypassScrollZero = true;
+			_f.Parts = array;
+
+			_f.SelId = id - 1;
 		}
 
 		private void OnRightClick(object sender, EventArgs e)
 		{
+			_f.Changed = true;
+
+			var array = new Tilepart[Parts.Length];
+
+			int id = _f.SelId;
+			for (int i = 0; i != id; ++i)
+				array[i] = Parts[i];
+
+			array[id]     = Parts[id + 1];
+			array[id + 1] = Parts[id];
+
+			for (int i = id + 2; i != Parts.Length; ++i)
+				array[i] = Parts[i];
+
+			_bypassScrollZero = true;
+			_f.Parts = array;
+
+			_f.SelId = id + 1;
 		}
 
 		private void OnDeselectClick(object sender, EventArgs e)
 		{
 			_f.SelId = -1;
+			SelIds.Clear();
 		}
 
 
@@ -338,12 +394,22 @@ namespace McdView
 									Width, y1_fill_h);
 
 				if (_f.SelId != -1)
+				{
 					_graphics.FillRectangle(
 										McdviewF.BrushHilight,
 										_f.SelId * (XCImage.SpriteWidth32 + 1) + offset,
 										y1_fill,
 										XCImage.SpriteWidth32,
 										y1_fill_h);
+
+					foreach (int id in SelIds)
+						_graphics.FillRectangle(
+											McdviewF.BrushHilight,
+											id * (XCImage.SpriteWidth32 + 1) + offset,
+											y1_fill,
+											XCImage.SpriteWidth32,
+											y1_fill_h);
+				}
 
 				for (i = 0; i != Parts.Length; ++i)
 				{
@@ -469,19 +535,64 @@ namespace McdView
 		{
 			Select();
 
-			if (e.Button == MouseButtons.Left)
+			if (e.Button == MouseButtons.Left
+				&& Parts != null && Parts.Length != 0
+				&& e.Y < Height - Scroller.Height)
 			{
-				if (Parts != null && Parts.Length != 0
-					&& e.Y < Height - Scroller.Height)
+				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
+				if (id >= Parts.Length)
 				{
-					int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
-					if (id >= Parts.Length)
-						id = -1;
+					SelIds.Clear();
+					_f.SelId = -1;
+				}
+				else if (id != _f.SelId)
+				{
+					if (ModifierKeys == Keys.Control)
+					{
+						if (!SelIds.Contains(id))
+							SelIds.Add(id);
+						else
+							SelIds.Remove(id);
 
-					_f.SelId = id;
+						Invalidate();
+					}
+					else if (ModifierKeys == Keys.Shift)
+					{
+						if (id < _f.SelId)
+						{
+							for (int i = id; i != _f.SelId; ++i)
+							{
+								if (!SelIds.Contains(i))
+								{
+									SelIds.Add(i);
+									Invalidate();
+								}
+							}
+						}
+						else
+						{
+							for (int i = id; i != _f.SelId; --i)
+							{
+								if (!SelIds.Contains(i))
+								{
+									SelIds.Add(i);
+									Invalidate();
+								}
+							}
+						}
+					}
+					else
+					{
+						SelIds.Clear();
+						_f.SelId = id;
+					}
+				}
+				else
+				{
+					SelIds.Clear();
+					Invalidate();
 				}
 			}
-			// else if (e.Button == MouseButtons.Right) // This is handled auto by the panel's ContextMenu var.
 		}
 
 		/// <summary>
@@ -558,53 +669,68 @@ namespace McdView
 		/// <param name="e"></param>
 		internal void KeyTile(KeyEventArgs e)
 		{
+			// TODO: Ctrl and Shift to select SelIds
+
 			switch (e.KeyCode)
 			{
 				case Keys.Left:
 				case Keys.Up:
 				case Keys.Back:
+					SelIds.Clear();
 					if (_f.SelId != 0)
 						_f.SelId -= 1;
+					else
+						Invalidate();
 					break;
 
 				case Keys.Right:
 				case Keys.Down:
 				case Keys.Space:
+					SelIds.Clear();
 					if (_f.SelId != Parts.Length - 1)
 						_f.SelId += 1;
+					else
+						Invalidate();
 					break;
 
 				case Keys.PageUp:
 				{
+					SelIds.Clear();
 					int d = Width / (XCImage.SpriteWidth32 + 1);
 					if (_f.SelId - d < 0)
 						_f.SelId = 0;
 					else
 						_f.SelId -= d;
-
+					Invalidate();
 					break;
 				}
 
 				case Keys.PageDown:
 				{
+					SelIds.Clear();
 					int d = Width / (XCImage.SpriteWidth32 + 1);
 					if (_f.SelId + d > Parts.Length - 1)
 						_f.SelId = Parts.Length - 1;
 					else
 						_f.SelId += d;
-
+					Invalidate();
 					break;
 				}
 
 				case Keys.Home:
+					SelIds.Clear();
 					_f.SelId = 0;
+					Invalidate();
 					break;
 
 				case Keys.End:
+					SelIds.Clear();
 					_f.SelId = Parts.Length - 1;
+					Invalidate();
 					break;
 			}
 		}
+
 
 /*		/// <summary>
 		/// Gets the loc of the currently selected tile relative to the table.

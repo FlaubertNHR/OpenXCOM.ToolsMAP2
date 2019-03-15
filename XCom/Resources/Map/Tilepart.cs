@@ -141,6 +141,29 @@ namespace XCom
 				}
 			}
 		}
+
+
+		/// <summary>
+		/// Returns a copy of this Tilepart with a deep-cloned Record.
+		/// All referred to sprites and tileparts maintain their objects.
+		/// - classvars:
+		///   Record
+		///   Sprites
+		///   TerId
+		///   SetId = -1
+		///
+		///   Dead
+		///   Alternate
+		///   _spriteset
+		/// </summary>
+		/// <returns></returns>
+		public Tilepart Clone()
+		{
+			return new Tilepart(
+							TerId,
+							_spriteset,
+							Record.Clone());
+		}
 		#endregion
 	}
 }
