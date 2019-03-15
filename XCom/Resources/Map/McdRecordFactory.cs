@@ -1,16 +1,23 @@
 using System;
 using System.Collections.Generic;
 
+using XCom.Resources.Map;
+
 
 namespace XCom
 {
 	public static class McdRecordFactory
 	{
-		// TODO: do some basic checks, like issue a warning if the Die or
-		// Alternate MCD entry is outside the range, etc.
-
-		public static McdRecord CreateRecord(IList<byte> bindata)
+		/// <summary>
+		/// Instantiates an MCD record.
+		/// </summary>
+		/// <param name="bindata">if null a new byte-array gets created</param>
+		/// <returns></returns>
+		public static McdRecord CreateRecord(IList<byte> bindata = null)
 		{
+			if (bindata == null)
+				bindata = new byte[TilepartFactory.Length]; // all values in the byte-array default to "0"
+
 			var record = new McdRecord();
 
 			record.Sprite1 = bindata[0];

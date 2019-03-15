@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 using XCom;
 using XCom.Interfaces;
-using XCom.Resources.Map;
 
 
 namespace McdView
@@ -137,8 +136,7 @@ namespace McdView
 				array[i] = Parts[i];
 			}
 
-			var bytes = new byte[TilepartFactory.Length];
-			McdRecord record = McdRecordFactory.CreateRecord(bytes);
+			McdRecord record = McdRecordFactory.CreateRecord();
 
 			int id = Parts.Length;
 			array[id] = new Tilepart(
