@@ -23,7 +23,7 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
-		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(69, SystemColors.MenuHighlight));
+		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(102, SystemColors.MenuHighlight));
 
 		internal const TextFormatFlags FLAGS = TextFormatFlags.HorizontalCenter
 											 | TextFormatFlags.VerticalCenter

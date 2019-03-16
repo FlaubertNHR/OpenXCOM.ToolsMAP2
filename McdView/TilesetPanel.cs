@@ -19,6 +19,11 @@ namespace McdView
 		:
 			Panel
 	{
+		#region Fields (static)
+		private readonly static Brush BrushHilightGhost = new SolidBrush(Color.FromArgb(33, SystemColors.MenuHighlight));
+		#endregion Fields (static)
+
+
 		#region Fields
 		private readonly McdviewF _f;
 		private readonly HScrollBar Scroller = new HScrollBar();
@@ -32,7 +37,7 @@ namespace McdView
 		private bool _bypassScrollZero;
 
 		private Tilepart _copypart;
-		private List<int> SelIds = new List<int>();
+		private readonly List<int> SelIds = new List<int>();
 		#endregion Fields
 
 
@@ -404,7 +409,7 @@ namespace McdView
 
 					foreach (int id in SelIds)
 						_graphics.FillRectangle(
-											McdviewF.BrushHilight,
+											BrushHilightGhost,
 											id * (XCImage.SpriteWidth32 + 1) + offset,
 											y1_fill,
 											XCImage.SpriteWidth32,
