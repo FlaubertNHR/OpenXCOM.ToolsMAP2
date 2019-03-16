@@ -149,6 +149,18 @@ namespace McdView
 			InitializeComponent();
 			SetDoubleBuffered(pnl_Sprites);
 			SetDoubleBuffered(pnl_IsoLoft);
+			SetDoubleBuffered(pnl_Loft19);
+			SetDoubleBuffered(pnl_Loft18);
+			SetDoubleBuffered(pnl_Loft17);
+			SetDoubleBuffered(pnl_Loft16);
+			SetDoubleBuffered(pnl_Loft15);
+			SetDoubleBuffered(pnl_Loft14);
+			SetDoubleBuffered(pnl_Loft13);
+			SetDoubleBuffered(pnl_Loft12);
+			SetDoubleBuffered(pnl_Loft11);
+			SetDoubleBuffered(pnl_Loft10);
+			SetDoubleBuffered(pnl_Loft09);
+			SetDoubleBuffered(pnl_Loft08);
 
 			MaximumSize = new Size(0,0);
 
@@ -439,11 +451,11 @@ namespace McdView
 			{
 				switch (MessageBox.Show(
 									this,
-									"The MCD has changed. Do you want to ..."
+									"The MCD has changed. Do you want to"
 										+ Environment.NewLine + Environment.NewLine
 										+ "abort\t- Cancel"         + Environment.NewLine
 										+ "retry\t- Save and close" + Environment.NewLine
-										+ "ignore\t- lose changes"  + Environment.NewLine,
+										+ "ignore\t- Lose changes"  + Environment.NewLine,
 									"Exclamation",
 									MessageBoxButtons.AbortRetryIgnore,
 									MessageBoxIcon.Exclamation,
@@ -541,11 +553,11 @@ namespace McdView
 			{
 				switch (MessageBox.Show(
 									this,
-									"The MCD has changed. Do you want to ..."
+									"The MCD has changed. Do you want to"
 										+ Environment.NewLine + Environment.NewLine
 										+ "abort\t- Cancel"            + Environment.NewLine
 										+ "retry\t- Save and continue" + Environment.NewLine
-										+ "ignore\t- lose changes"     + Environment.NewLine,
+										+ "ignore\t- Lose changes"     + Environment.NewLine,
 									"Exclamation",
 									MessageBoxButtons.AbortRetryIgnore,
 									MessageBoxIcon.Exclamation,
@@ -620,11 +632,11 @@ namespace McdView
 			{
 				switch (MessageBox.Show(
 									this,
-									"The MCD has changed. Do you want to ..."
+									"The MCD has changed. Do you want to"
 										+ Environment.NewLine + Environment.NewLine
 										+ "abort\t- Cancel"            + Environment.NewLine
 										+ "retry\t- Save and continue" + Environment.NewLine
-										+ "ignore\t- lose changes"     + Environment.NewLine,
+										+ "ignore\t- Lose changes"     + Environment.NewLine,
 									"Exclamation",
 									MessageBoxButtons.AbortRetryIgnore,
 									MessageBoxIcon.Exclamation,

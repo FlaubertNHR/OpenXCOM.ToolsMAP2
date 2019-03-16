@@ -567,6 +567,8 @@ namespace McdView
 				if (   e.X > -1 && e.X < _pnlLoFT.Width
 					&& e.Y > -1 && e.Y < _pnlLoFT.Height)
 				{
+					PartsPanel.Select(); // workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
+
 					string id; int slot;
 					if      (_pnlLoFT == pnl_Loft08) { id = tb8_loft00 .Text; slot =  0; }
 					else if (_pnlLoFT == pnl_Loft09) { id = tb9_loft02 .Text; slot =  2; }
@@ -588,6 +590,8 @@ namespace McdView
 											Location.Y + 400);
 						f.ShowDialog();
 					}
+
+					bar_IsoLoft.Select();
 				}
 			}
 		}
