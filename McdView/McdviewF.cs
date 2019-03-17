@@ -588,6 +588,7 @@ namespace McdView
 					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
 
 					ResourceInfo.ReloadSprites = true;
+					SelId = -1;
 
 					Parts = new Tilepart[0];
 
@@ -607,7 +608,6 @@ namespace McdView
 														pal,
 														true);
 
-					SelId = -1;
 					ResourceInfo.ReloadSprites = false;
 
 					Text = "McdView - " + _pfeMcd;

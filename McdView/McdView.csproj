@@ -72,6 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addrangeinput.cs" />
     <Compile Include="isocube.cs" />
     <Compile Include="LoftF.cs" />
     <Compile Include="McdviewF.cs" />
@@ -90,6 +91,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="addrangeinput.resx">
+      <DependentUpon>addrangeinput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="McdviewF.resx">
       <DependentUpon>McdviewF.Designer.cs</DependentUpon>
     </EmbeddedResource>

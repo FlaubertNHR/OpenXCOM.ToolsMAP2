@@ -105,13 +105,13 @@ namespace McdView
 		{
 			var itAdd         = new MenuItem("add",          OnAddClick);
 			var itAddRange    = new MenuItem("add range",    OnAddRangeClick);
-			var itDelete      = new MenuItem("delete",       OnDeleteClick);
 
 			var itSep0        = new MenuItem("-");
 
 			var itCut         = new MenuItem("cut",          OnCutClick);
 			var itCopy        = new MenuItem("copy",         OnCopyClick);
 			var itPaste       = new MenuItem("paste",        OnPasteClick);
+			var itDelete      = new MenuItem("delete",       OnDeleteClick);
 
 			var itSep1        = new MenuItem("-");
 
@@ -131,11 +131,11 @@ namespace McdView
 										{
 											itAdd,			//  0
 											itAddRange,		//  1
-											itDelete,		//  2
-											itSep0,			//  3
-											itCut,			//  4
-											itCopy,			//  5
-											itPaste,		//  6
+											itSep0,			//  2
+											itCut,			//  3
+											itCopy,			//  4
+											itPaste,		//  5
+											itDelete,		//  6
 											itSep1,			//  7
 											itFile,			//  8
 											itSep2,			//  9
@@ -163,12 +163,12 @@ namespace McdView
 			bool selid = (_f.SelId != -1);
 
 			Context.MenuItems[0].Enabled = Parts != null;							// add
-			Context.MenuItems[1].Enabled = Parts != null && false;					// add range TODO: use "add"
-			Context.MenuItems[2].Enabled = selid;									// delete
+			Context.MenuItems[1].Enabled = Parts != null;							// add range
 
-			Context.MenuItems[4].Enabled = selid;									// cut
-			Context.MenuItems[5].Enabled = selid;									// copy
-			Context.MenuItems[6].Enabled = selid && _copyparts.Count != 0;			// paste
+			Context.MenuItems[3].Enabled = selid;									// cut
+			Context.MenuItems[4].Enabled = selid;									// copy
+			Context.MenuItems[5].Enabled = selid && _copyparts.Count != 0;			// paste
+			Context.MenuItems[6].Enabled = selid;									// delete
 
 			Context.MenuItems[8].Enabled = (Parts != null && false);				// file
 
@@ -216,12 +216,10 @@ namespace McdView
 			array[id].Dead      =
 			array[id].Alternate = null;
 
-			Tilepart part;
 			for (int i = id + 1; i != array.Length; ++i)
 			{
-				part = Parts[i - 1];
-				part.TerId += 1; // not used in McdView but keep things consistent ....
-				array[i] = part;
+				array[i] = Parts[i - 1];
+				array[i].TerId = i; // not used in McdView but keep things consistent ....
 			}
 
 			_bypassScrollZero = true;
@@ -231,48 +229,19 @@ namespace McdView
 			_f.SelId = id;
 		}
 
+		internal static int _add;
 		private void OnAddRangeClick(object sender, EventArgs e)
 		{
-		}
-
-		/// <summary>
-		/// Deletes a currently selected part 'SelId' and any sub-selected parts
-		/// 'SelIds'.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnDeleteClick(object sender, EventArgs e)
-		{
-			_f.Changed = true;
-
-			var array = new Tilepart[Parts.Length - (1 + SelIds.Count)];
-
-			for (int i = 0, j = 0; i != Parts.Length; ++i)
+			using (var ari = new AddRangeInput())
 			{
-				if (i == _f.SelId || SelIds.Contains(i))
+				if (ari.ShowDialog() == DialogResult.OK)
 				{
-					++j;
+					if (_add != 0) // input allows 0 but not neg
+					{
+						
+					}
 				}
-				else
-					array[i - j] = Parts[i];
 			}
-/*			var array = new Tilepart[Parts.Length - 1]; // old delete single ->
-			int id = _f.SelId;
-			for (int i = 0; i != id; ++i)
-				array[i] = Parts[i];
-			Tilepart part;
-			for (int i = id; i != array.Length; ++i)
-			{
-				part = Parts[i + 1];
-				part.TerId -= 1;
-				array[i] = part;
-			} */
-
-			SelIds.Clear();
-			_f.SelId = -1;
-
-			_bypassScrollZero = true;
-			_f.Parts = array;
 		}
 
 		/// <summary>
@@ -327,9 +296,11 @@ namespace McdView
 						for (int id = 1; id != _copyparts.Count; ++id, ++i)
 						{
 							array[i] = _copyparts[id].Clone();
+							array[i].TerId = i;
 						}
 					}
 					array[i] = Parts[j];
+					array[i].TerId = i;
 				}
 
 				_f.Parts = array;
@@ -337,6 +308,49 @@ namespace McdView
 
 			_f.InvalidatePanels();
 			_f.PopulateTextFields();
+		}
+
+		/// <summary>
+		/// Deletes a currently selected part 'SelId' and any sub-selected parts
+		/// 'SelIds'.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnDeleteClick(object sender, EventArgs e)
+		{
+			_f.Changed = true;
+
+			var array = new Tilepart[Parts.Length - (1 + SelIds.Count)];
+
+			for (int i = 0, j = 0; i != Parts.Length; ++i)
+			{
+				if (i == _f.SelId || SelIds.Contains(i))
+				{
+					++j;
+				}
+				else
+				{
+					array[i - j] = Parts[i];
+					array[i - j].TerId = i - j;
+				}
+			}
+/*			var array = new Tilepart[Parts.Length - 1]; // old delete single ->
+			int id = _f.SelId;
+			for (int i = 0; i != id; ++i)
+				array[i] = Parts[i];
+			Tilepart part;
+			for (int i = id; i != array.Length; ++i)
+			{
+				part = Parts[i + 1];
+				part.TerId -= 1;
+				array[i] = part;
+			} */
+
+			SelIds.Clear();
+			_f.SelId = -1;
+
+			_bypassScrollZero = true;
+			_f.Parts = array;
 		}
 
 		private void OnFileClick(object sender, EventArgs e)
@@ -359,7 +373,10 @@ namespace McdView
 				array[i] = Parts[i];
 
 			array[id - 1] = Parts[id];
-			array[id]     = Parts[id - 1];
+			array[id - 1].TerId = id - 1;
+
+			array[id] = Parts[id - 1];
+			array[id].TerId = id;
 
 			for (int i = id + 1; i != Parts.Length; ++i)
 				array[i] = Parts[i];
@@ -385,8 +402,11 @@ namespace McdView
 			for (int i = 0; i != id; ++i)
 				array[i] = Parts[i];
 
-			array[id]     = Parts[id + 1];
+			array[id] = Parts[id + 1];
+			array[id].TerId = id;
+
 			array[id + 1] = Parts[id];
+			array[id + 1].TerId = id + 1;
 
 			for (int i = id + 2; i != Parts.Length; ++i)
 				array[i] = Parts[i];

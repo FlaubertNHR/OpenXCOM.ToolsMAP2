@@ -539,8 +539,8 @@
 			// miCreate
 			// 
 			this.miCreate.Index = 0;
-			this.miCreate.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
-			this.miCreate.Text = "Crea&te MCD file ...";
+			this.miCreate.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
+			this.miCreate.Text = "C&reate MCD file ...";
 			this.miCreate.Click += new System.EventHandler(this.OnClick_Create);
 			// 
 			// miSeparator0
