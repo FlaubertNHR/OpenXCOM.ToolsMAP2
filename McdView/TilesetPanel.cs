@@ -197,9 +197,6 @@ namespace McdView
 		{
 			_f.Changed = true;
 
-			if (_f.Parts == null)
-				_f.Parts = new Tilepart[0];
-
 			var array = new Tilepart[Parts.Length + 1];
 
 			int id = _f.SelId + 1;
@@ -209,10 +206,9 @@ namespace McdView
 			McdRecord record = McdRecordFactory.CreateRecord();
 
 			array[id] = new Tilepart(
-								id,
-								_f.Spriteset,
-								record);
-
+									id,
+									_f.Spriteset,
+									record);
 			array[id].Dead      =
 			array[id].Alternate = null;
 
@@ -238,7 +234,41 @@ namespace McdView
 				{
 					if (_add != 0) // input allows 0 but not neg
 					{
-						
+						_f.Changed = true;
+
+						int length = Parts.Length + _add;
+						var array = new Tilepart[length];
+
+						int id = _f.SelId + 1;
+						int i;
+						for (i = 0; i != id; ++i)
+							array[i] = Parts[i];
+
+						McdRecord record;
+						int stop = i + _add;
+						for (; i != stop; ++i)
+						{
+							record = McdRecordFactory.CreateRecord();
+
+							array[i] = new Tilepart(
+												i,
+												_f.Spriteset,
+												record);
+							array[i].Dead =
+							array[i].Alternate = null;
+						}
+
+						for (; i != length; ++i)
+						{
+							array[i] = Parts[i - _add];
+							array[i].TerId = i;
+						}
+
+						_bypassScrollZero = true;
+						_f.Parts = array;
+
+						SelIds.Clear();
+						_f.SelId = id;
 					}
 				}
 			}
