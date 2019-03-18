@@ -19,6 +19,8 @@
 		private System.Windows.Forms.MenuItem miPaletteMenu;
 		private System.Windows.Forms.MenuItem miPaletteUfo;
 		private System.Windows.Forms.MenuItem miPaletteTftd;
+		private System.Windows.Forms.MenuItem miEditMenu;
+		private System.Windows.Forms.MenuItem miZeroVals;
 
 		private System.Windows.Forms.Label lbl20_scang;
 		private System.Windows.Forms.Label lbl30_isslidingdoor;
@@ -277,6 +279,8 @@
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
+			this.miEditMenu = new System.Windows.Forms.MenuItem();
+			this.miZeroVals = new System.Windows.Forms.MenuItem();
 			this.lbl20_scang = new System.Windows.Forms.Label();
 			this.lbl30_isslidingdoor = new System.Windows.Forms.Label();
 			this.lbl20 = new System.Windows.Forms.Label();
@@ -521,7 +525,8 @@
 			// 
 			this.mmMainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miFileMenu,
-			this.miPaletteMenu});
+			this.miPaletteMenu,
+			this.miEditMenu});
 			// 
 			// miFileMenu
 			// 
@@ -585,7 +590,6 @@
 			// 
 			// miPaletteMenu
 			// 
-			this.miPaletteMenu.Enabled = false;
 			this.miPaletteMenu.Index = 1;
 			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miPaletteUfo,
@@ -595,6 +599,7 @@
 			// miPaletteUfo
 			// 
 			this.miPaletteUfo.Checked = true;
+			this.miPaletteUfo.Enabled = false;
 			this.miPaletteUfo.Index = 0;
 			this.miPaletteUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
 			this.miPaletteUfo.Text = "&UFO";
@@ -602,10 +607,26 @@
 			// 
 			// miPaletteTftd
 			// 
+			this.miPaletteTftd.Enabled = false;
 			this.miPaletteTftd.Index = 1;
 			this.miPaletteTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
 			this.miPaletteTftd.Text = "&TFTD";
 			this.miPaletteTftd.Click += new System.EventHandler(this.OnClick_PaletteTftd);
+			// 
+			// miEditMenu
+			// 
+			this.miEditMenu.Index = 2;
+			this.miEditMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miZeroVals});
+			this.miEditMenu.Text = "&Edit";
+			// 
+			// miZeroVals
+			// 
+			this.miZeroVals.Enabled = false;
+			this.miZeroVals.Index = 0;
+			this.miZeroVals.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
+			this.miZeroVals.Text = "Z&ero this part's values";
+			this.miZeroVals.Click += new System.EventHandler(this.OnClick_ZeroVals);
 			// 
 			// lbl20_scang
 			// 

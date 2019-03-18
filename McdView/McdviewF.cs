@@ -57,7 +57,8 @@ namespace McdView
 			get { return _parts; }
 			set
 			{
-				miPaletteMenu.Enabled = ((PartsPanel.Parts = (_parts = value)) != null); // perfect.
+				miPaletteUfo .Enabled =
+				miPaletteTftd.Enabled = ((PartsPanel.Parts = (_parts = value)) != null); // perfect.
 			}
 		}
 
@@ -105,9 +106,14 @@ namespace McdView
 						strict = strict0;
 
 						PartsPanel.ScrollTile();
+
+						miZeroVals.Enabled = true;
 					}
 					else
+					{
 						ClearTextFields();
+						miZeroVals.Enabled = false;
+					}
 
 					InvalidatePanels();
 				}
@@ -908,6 +914,17 @@ namespace McdView
 				InvalidatePanels();
 			}
 		}
+
+
+		/// <summary>
+		/// Handles clicking the Edit|ZeroVals menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_ZeroVals(object sender, EventArgs e)
+		{
+			ClearTextFields(true);
+		}
 		#endregion Menuitems
 
 
@@ -1043,13 +1060,6 @@ namespace McdView
 		{
 			InitFields = true;
 
-			// TODO: This is going to cause a lot of problems if/when user loads
-			// a nonstandard record that has values that are outside the strict-
-			// bounds. Ie, the vals will set to standard defaults.
-			// 
-			// So don't turn 'strict' on until after the record loads/populates
-			// the textfields. See 'SelId' setter
-
 			McdRecord record = Parts[SelId].Record;
 
 			tb0_phase0.Text = ((int)record.Sprite1).ToString();
@@ -1135,8 +1145,15 @@ namespace McdView
 		/// <summary>
 		/// Clears all textfields.
 		/// </summary>
-		internal void ClearTextFields()
+		/// <param name="zero">true to "0" all textfields</param>
+		internal void ClearTextFields(bool zero = false)
 		{
+			string text;
+			if (zero)
+				text = "0";
+			else
+				text = String.Empty;
+
 			tb0_phase0.Text =
 			tb1_phase1.Text =
 			tb2_phase2.Text =
@@ -1209,7 +1226,7 @@ namespace McdView
 			tb59_specialtype   .Text =
 			tb60_isbaseobject  .Text =
 
-			tb61_.Text = String.Empty;
+			tb61_.Text = text;
 		}
 		#endregion Methods
 	}
