@@ -210,9 +210,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Selects the PartsPanel if a group's label is clicked. Clears the
-		/// selected-id in the PartsPanel if the PartsPanel title or border is
-		/// clicked.
+		/// Selects the PartsPanel if a group's label is clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -449,29 +447,21 @@ namespace McdView
 		{
 			if (Changed)
 			{
-				switch (MessageBox.Show(
-									this,
-									"The MCD has changed. Do you want to"
-										+ Environment.NewLine + Environment.NewLine
-										+ "abort\t- Cancel"         + Environment.NewLine
-										+ "retry\t- Save and close" + Environment.NewLine
-										+ "ignore\t- Lose changes"  + Environment.NewLine,
-									"Exclamation",
-									MessageBoxButtons.AbortRetryIgnore,
-									MessageBoxIcon.Exclamation,
-									MessageBoxDefaultButton.Button3,
-									0))
+				using (var f = new ChangedBox())
 				{
-					case DialogResult.Abort:
-						e.Cancel = true;
-						return;
+					switch (f.ShowDialog(this))
+					{
+						case DialogResult.Cancel:
+							e.Cancel = true;
+							return;
 
-					case DialogResult.Retry:
-						Save(_pfeMcd);
-						break;
+						case DialogResult.Yes:
+							Save(_pfeMcd);
+							break;
 
-					case DialogResult.Ignore:
-						break;
+						case DialogResult.No:
+							break;
+					}
 				}
 			}
 
@@ -551,28 +541,20 @@ namespace McdView
 		{
 			if (Changed)
 			{
-				switch (MessageBox.Show(
-									this,
-									"The MCD has changed. Do you want to"
-										+ Environment.NewLine + Environment.NewLine
-										+ "abort\t- Cancel"            + Environment.NewLine
-										+ "retry\t- Save and continue" + Environment.NewLine
-										+ "ignore\t- Lose changes"     + Environment.NewLine,
-									"Exclamation",
-									MessageBoxButtons.AbortRetryIgnore,
-									MessageBoxIcon.Exclamation,
-									MessageBoxDefaultButton.Button3,
-									0))
+				using (var f = new ChangedBox())
 				{
-					case DialogResult.Abort:
-						return;
+					switch (f.ShowDialog(this))
+					{
+						case DialogResult.Cancel:
+							return;
 
-					case DialogResult.Retry:
-						Save(_pfeMcd);
-						break;
+						case DialogResult.Yes:
+							Save(_pfeMcd);
+							break;
 
-					case DialogResult.Ignore:
-						break;
+						case DialogResult.No:
+							break;
+					}
 				}
 			}
 
@@ -630,28 +612,20 @@ namespace McdView
 		{
 			if (Changed)
 			{
-				switch (MessageBox.Show(
-									this,
-									"The MCD has changed. Do you want to"
-										+ Environment.NewLine + Environment.NewLine
-										+ "abort\t- Cancel"            + Environment.NewLine
-										+ "retry\t- Save and continue" + Environment.NewLine
-										+ "ignore\t- Lose changes"     + Environment.NewLine,
-									"Exclamation",
-									MessageBoxButtons.AbortRetryIgnore,
-									MessageBoxIcon.Exclamation,
-									MessageBoxDefaultButton.Button3,
-									0))
+				using (var f = new ChangedBox())
 				{
-					case DialogResult.Abort:
-						return;
+					switch (f.ShowDialog(this))
+					{
+						case DialogResult.Cancel:
+							return;
 
-					case DialogResult.Retry:
-						Save(_pfeMcd);
-						break;
+						case DialogResult.Yes:
+							Save(_pfeMcd);
+							break;
 
-					case DialogResult.Ignore:
-						break;
+						case DialogResult.No:
+							break;
+					}
 				}
 			}
 
