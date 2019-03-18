@@ -8,6 +8,7 @@ namespace McdView
 		:
 			Form
 	{
+		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
@@ -18,15 +19,19 @@ namespace McdView
 			tb_records.Text = TilesetPanel._add.ToString();
 			tb_records.Focus();
 		}
+		#endregion cTor
 
 
+		#region Events (override)
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 				Close();
 		}
+		#endregion Events (override)
 
 
+		#region Events
 		private void OnClick_Accept(object sender, EventArgs e)
 		{
 			TilesetPanel._add = Int32.Parse(tb_records.Text);
@@ -44,8 +49,10 @@ namespace McdView
 				tb_records.Text = "0";
 			}
 		}
+		#endregion Events
 
 
+		#region Designer
 		private Label lbl_info;
 		private TextBox tb_records;
 		private Button btn_accept;
@@ -115,5 +122,6 @@ namespace McdView
 			this.PerformLayout();
 
 		}
+		#endregion Designer
 	}
 }

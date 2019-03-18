@@ -20,7 +20,7 @@ namespace McdView
 			Panel
 	{
 		#region Fields (static)
-		private readonly static Brush BrushHilightGhost = new SolidBrush(Color.FromArgb(33, SystemColors.MenuHighlight));
+		private readonly static Brush BrushHilightsub = new SolidBrush(Color.FromArgb(33, SystemColors.MenuHighlight));
 		#endregion Fields (static)
 
 
@@ -36,8 +36,8 @@ namespace McdView
 
 		private bool _bypassScrollZero;
 
+		private readonly List<int>      SubSelIds  = new List<int>();
 		private readonly List<Tilepart> _copyparts = new List<Tilepart>();
-		private readonly List<int> SelIds = new List<int>();
 		#endregion Fields
 
 
@@ -103,28 +103,28 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itAdd         = new MenuItem("add",          OnAddClick);
-			var itAddRange    = new MenuItem("add range",    OnAddRangeClick);
+			var itAdd         = new MenuItem("add",           OnAddClick);
+			var itAddRange    = new MenuItem("add range ...", OnAddRangeClick);
 
 			var itSep0        = new MenuItem("-");
 
-			var itCut         = new MenuItem("cut",          OnCutClick);
-			var itCopy        = new MenuItem("copy",         OnCopyClick);
-			var itPaste       = new MenuItem("paste",        OnPasteClick);
-			var itDelete      = new MenuItem("delete",       OnDeleteClick);
+			var itCut         = new MenuItem("cut",           OnCutClick);
+			var itCopy        = new MenuItem("copy",          OnCopyClick);
+			var itPaste       = new MenuItem("paste",         OnPasteClick);
+			var itDelete      = new MenuItem("delete",        OnDeleteClick);
 
 			var itSep1        = new MenuItem("-");
 
-			var itFile        = new MenuItem("file ...",     OnFileClick);
+			var itFile        = new MenuItem("file ...",      OnFileClick);
 
 			var itSep2        = new MenuItem("-");
 
-			var itLeft        = new MenuItem("left",         OnLeftClick);
-			var itRight       = new MenuItem("right",        OnRightClick);
+			var itLeft        = new MenuItem("left",          OnLeftClick);
+			var itRight       = new MenuItem("right",         OnRightClick);
 
 			var itSep3        = new MenuItem("-");
 
-			var itDeselect    = new MenuItem("deselect",     OnDeselectClick);
+			var itDeselect    = new MenuItem("deselect",      OnDeselectClick);
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
@@ -221,7 +221,9 @@ namespace McdView
 			_bypassScrollZero = true;
 			_f.Parts = array; // assign back to 'Parts' via McdviewF
 
-			SelIds.Clear();
+			UpdateRefs(id, 1);
+
+			SubSelIds.Clear();
 			_f.SelId = id;
 		}
 
@@ -267,7 +269,9 @@ namespace McdView
 						_bypassScrollZero = true;
 						_f.Parts = array;
 
-						SelIds.Clear();
+						UpdateRefs(id, _add);
+
+						SubSelIds.Clear();
 						_f.SelId = id;
 					}
 				}
@@ -297,7 +301,7 @@ namespace McdView
 
 			_copyparts.Add(Parts[_f.SelId].Clone());
 
-			foreach (int i in SelIds)
+			foreach (int i in SubSelIds)
 				_copyparts.Add(Parts[i].Clone());
 		}
 
@@ -306,6 +310,11 @@ namespace McdView
 		/// currently selected part. Ergo if user wants to insert the copyparts
 		/// (without overwriting any part) a blank-part shall be added and
 		/// selected to be overwritten before pasting.
+		/// NOTE: If a pasted part's refs are less than the insertion point then
+		/// the refs are okay; if the refs are equal to or greater than the
+		/// insertion point then the refs need to be advanced. This assumes that
+		/// the pasted parts are from the same recordset; if not then the refs
+		/// ought be deleted.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -314,10 +323,17 @@ namespace McdView
 			_f.Changed = true;
 
 			Parts[_f.SelId] = _copyparts[0].Clone();
+			Parts[_f.SelId].TerId = _f.SelId;
+
+			Parts[_f.SelId].Record.DieTile = (byte)0;
+			Parts[_f.SelId].Dead = null;
+
+			Parts[_f.SelId].Record.Alt_MCD = (byte)0;
+			Parts[_f.SelId].Alternate = null;
 
 			if (_copyparts.Count > 1)
 			{
-				var array = new Tilepart[Parts.Length + _copyparts.Count - 1];
+				var array = new Tilepart[Parts.Length + (_copyparts.Count - 1)];
 
 				for (int i = 0, j = 0; i != array.Length; ++i, ++j)
 				{
@@ -327,8 +343,18 @@ namespace McdView
 						{
 							array[i] = _copyparts[id].Clone();
 							array[i].TerId = i;
+
+							array[i].Record.DieTile = (byte)0;
+							array[i].Dead = null;
+
+							array[i].Record.Alt_MCD = (byte)0;
+							array[i].Alternate = null;
 						}
 					}
+
+					if (i == array.Length)
+						break;
+
 					array[i] = Parts[j];
 					array[i].TerId = i;
 				}
@@ -336,13 +362,15 @@ namespace McdView
 				_f.Parts = array;
 			}
 
+			UpdateRefs(_f.SelId, _copyparts.Count - 1); // is overwriting the first ID, then inserting the rest.
+
 			_f.InvalidatePanels();
 			_f.PopulateTextFields();
 		}
 
 		/// <summary>
 		/// Deletes a currently selected part 'SelId' and any sub-selected parts
-		/// 'SelIds'.
+		/// 'SubSelIds'.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -350,11 +378,11 @@ namespace McdView
 		{
 			_f.Changed = true;
 
-			var array = new Tilepart[Parts.Length - (1 + SelIds.Count)];
+			var array = new Tilepart[Parts.Length - (1 + SubSelIds.Count)];
 
 			for (int i = 0, j = 0; i != Parts.Length; ++i)
 			{
-				if (i == _f.SelId || SelIds.Contains(i))
+				if (i == _f.SelId || SubSelIds.Contains(i))
 				{
 					++j;
 				}
@@ -364,23 +392,23 @@ namespace McdView
 					array[i - j].TerId = i - j;
 				}
 			}
-/*			var array = new Tilepart[Parts.Length - 1]; // old delete single ->
-			int id = _f.SelId;
-			for (int i = 0; i != id; ++i)
-				array[i] = Parts[i];
-			Tilepart part;
-			for (int i = id; i != array.Length; ++i)
-			{
-				part = Parts[i + 1];
-				part.TerId -= 1;
-				array[i] = part;
-			} */
 
-			SelIds.Clear();
+			var sels = new List<int>();
+			sels.Add(_f.SelId);
+			foreach (int sel in SubSelIds)
+				sels.Add(sel);
+
+			SubSelIds.Clear();
 			_f.SelId = -1;
 
 			_bypassScrollZero = true;
 			_f.Parts = array;
+
+			for (int id = 0; id != sels.Count; ++id)
+				UpdateRef(sels[id], 0);
+
+			UpdateRefs(sels);
+//			Invalidate(); // not needed apparently.
 		}
 
 		private void OnFileClick(object sender, EventArgs e)
@@ -414,7 +442,10 @@ namespace McdView
 			_bypassScrollZero = true;
 			_f.Parts = array;
 
-			_f.SelId = id - 1;
+			UpdateRef(id, id - 1);
+			UpdateRef(id - 1, id);
+
+			_f.SelId = id - 1; // does refresh.
 		}
 
 		/// <summary>
@@ -444,7 +475,150 @@ namespace McdView
 			_bypassScrollZero = true;
 			_f.Parts = array;
 
-			_f.SelId = id + 1;
+			UpdateRef(id, id + 1);
+			UpdateRef(id + 1, id);
+
+			_f.SelId = id + 1; // does refresh.
+		}
+
+		/// <summary>
+		/// Updates refs when parts are added.
+		/// Shifts references to death- and alternate-parts by a given amount
+		/// starting at references at or greater than a given ID.
+		/// </summary>
+		/// <param name="start"></param>
+		/// <param name="shift"></param>
+		private void UpdateRefs(int start, int shift)
+		{
+			if (start + shift != Parts.Length)
+			{
+				Tilepart part;
+				McdRecord record;
+
+				for (int i = 0; i != Parts.Length; ++i)
+				{
+					part   = Parts[i];
+					record = part.Record;
+
+					if (record.DieTile != 0 && record.DieTile >= start)
+					{
+						record.DieTile += (byte)shift;
+
+						if (record.DieTile < Parts.Length)
+							part.Dead = Parts[record.DieTile];
+						else
+						{
+							part.Dead = null;
+							record.DieTile = (byte)0;
+						}
+					}
+
+					if (record.Alt_MCD != 0 && record.Alt_MCD >= start)
+					{
+						record.Alt_MCD += (byte)shift;
+
+						if (record.Alt_MCD < Parts.Length)
+							part.Alternate = Parts[record.Alt_MCD];
+						else
+						{
+							part.Alternate = null;
+							record.Alt_MCD = (byte)0;
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Updates refs when a part or parts get deleted.
+		/// </summary>
+		/// <param name ="sels">a list of IDs that got deleted</param>
+		private void UpdateRefs(List<int> sels)
+		{
+			sels.Sort();
+
+			Tilepart part;
+			McdRecord record;
+
+			for (int i = 0; i != Parts.Length; ++i)
+			{
+				part   = Parts[i];
+				record = part.Record;
+
+				int id = sels.Count - 1;
+
+				byte @ref = record.DieTile;
+				if (@ref != 0)// && (@add = sels.FindIndex(val => val == @ref)) != -1)
+				{
+					while (id != -1 && @ref > sels[id--])
+						--@ref;
+
+					record.DieTile = @ref;
+					part.Dead = Parts[record.DieTile];
+				}
+
+				id = sels.Count - 1;
+
+				@ref = record.Alt_MCD;
+				if (@ref != 0)// && (@add = sels.FindIndex(val => val == @ref)) != -1)
+				{
+					while (id != -1 && @ref > sels[id--])
+						--@ref;
+
+					record.Alt_MCD = @ref;
+					part.Alternate = Parts[record.Alt_MCD];
+				}
+			}
+		}
+
+		/// <summary>
+		/// Compare the DeathId and AlternateId of every part in the set to a
+		/// partid that changed, and if they match set that DeathId or
+		/// AlternateId to its relocated partid. If the referred part is null
+		/// then set the referring part's ref to #0.
+		/// TODO: Issue warnings if the post-part is #0 or overflows Parts.Length.
+		/// </summary>
+		/// <param name="pre"></param>
+		/// <param name="pst"></param>
+		private void UpdateRef(int pre, int pst)
+		{
+			if (pre != 0) // NOTE: DeathId or AlternateId #0 is null-part. Leave it null.
+			{
+				Tilepart part;
+				McdRecord record;
+
+				for (int i = 0; i != Parts.Length; ++i)
+				{
+					part   = Parts[i];
+					record = part.Record;
+
+					if (record.DieTile == pre)
+					{
+						record.DieTile = (byte)pst;
+
+						if (pst != 0 && pst < Parts.Length)
+							part.Dead = Parts[pst];
+						else
+						{
+							part.Dead = null;
+							record.DieTile = (byte)0;
+						}
+					}
+
+					if (record.Alt_MCD == pre)
+					{
+						record.Alt_MCD = (byte)pst;
+
+						if (pst != 0 && pst < Parts.Length)
+							part.Alternate = Parts[pst];
+						else
+						{
+							part.Alternate = null;
+							record.Alt_MCD = (byte)0;
+						}
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -456,7 +630,7 @@ namespace McdView
 		private void OnDeselectClick(object sender, EventArgs e)
 		{
 			_f.SelId = -1;
-			SelIds.Clear();
+			SubSelIds.Clear();
 		}
 		#endregion Events (context)
 
@@ -543,9 +717,9 @@ namespace McdView
 										XCImage.SpriteWidth32,
 										y1_fill_h);
 
-					foreach (int id in SelIds)
+					foreach (int id in SubSelIds)
 						_graphics.FillRectangle(
-											BrushHilightGhost,
+											BrushHilightsub,
 											id * (XCImage.SpriteWidth32 + 1) + offset,
 											y1_fill,
 											XCImage.SpriteWidth32,
@@ -683,20 +857,20 @@ namespace McdView
 				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
 				if (id >= Parts.Length)
 				{
-					SelIds.Clear();
+					SubSelIds.Clear();
 					_f.SelId = -1;
 				}
 				else if (id != _f.SelId)
 				{
 					if (ModifierKeys == Keys.Control)
 					{
-						if (!SelIds.Contains(id))
+						if (!SubSelIds.Contains(id))
 						{
-							SelIds.Add(id);
-							SelIds.Sort();
+							SubSelIds.Add(id);
+							SubSelIds.Sort();
 						}
 						else
-							SelIds.Remove(id);
+							SubSelIds.Remove(id);
 
 						Invalidate();
 					}
@@ -706,10 +880,10 @@ namespace McdView
 						{
 							for (int i = id; i != _f.SelId; ++i)
 							{
-								if (!SelIds.Contains(i))
+								if (!SubSelIds.Contains(i))
 								{
-									SelIds.Add(i);
-									SelIds.Sort();
+									SubSelIds.Add(i);
+									SubSelIds.Sort();
 									Invalidate();
 								}
 							}
@@ -718,10 +892,10 @@ namespace McdView
 						{
 							for (int i = id; i != _f.SelId; --i)
 							{
-								if (!SelIds.Contains(i))
+								if (!SubSelIds.Contains(i))
 								{
-									SelIds.Add(i);
-									SelIds.Sort();
+									SubSelIds.Add(i);
+									SubSelIds.Sort();
 									Invalidate();
 								}
 							}
@@ -729,13 +903,13 @@ namespace McdView
 					}
 					else
 					{
-						SelIds.Clear();
+						SubSelIds.Clear();
 						_f.SelId = id;
 					}
 				}
 				else
 				{
-					SelIds.Clear();
+					SubSelIds.Clear();
 					Invalidate();
 				}
 			}
@@ -815,14 +989,14 @@ namespace McdView
 		/// <param name="e"></param>
 		internal void KeyTile(KeyEventArgs e)
 		{
-			// TODO: Ctrl and Shift to select SelIds
+			// TODO: Ctrl and Shift to select SubSelIds
 
 			switch (e.KeyCode)
 			{
 				case Keys.Left:
 				case Keys.Up:
 				case Keys.Back:
-					SelIds.Clear();
+					SubSelIds.Clear();
 					if (_f.SelId != 0)
 						_f.SelId -= 1;
 					else
@@ -832,7 +1006,7 @@ namespace McdView
 				case Keys.Right:
 				case Keys.Down:
 				case Keys.Space:
-					SelIds.Clear();
+					SubSelIds.Clear();
 					if (_f.SelId != Parts.Length - 1)
 						_f.SelId += 1;
 					else
@@ -841,7 +1015,7 @@ namespace McdView
 
 				case Keys.PageUp:
 				{
-					SelIds.Clear();
+					SubSelIds.Clear();
 					int d = Width / (XCImage.SpriteWidth32 + 1);
 					if (_f.SelId - d < 0)
 						_f.SelId = 0;
@@ -853,7 +1027,7 @@ namespace McdView
 
 				case Keys.PageDown:
 				{
-					SelIds.Clear();
+					SubSelIds.Clear();
 					int d = Width / (XCImage.SpriteWidth32 + 1);
 					if (_f.SelId + d > Parts.Length - 1)
 						_f.SelId = Parts.Length - 1;
@@ -864,13 +1038,13 @@ namespace McdView
 				}
 
 				case Keys.Home:
-					SelIds.Clear();
+					SubSelIds.Clear();
 					_f.SelId = 0;
 					Invalidate();
 					break;
 
 				case Keys.End:
-					SelIds.Clear();
+					SubSelIds.Clear();
 					_f.SelId = Parts.Length - 1;
 					Invalidate();
 					break;
