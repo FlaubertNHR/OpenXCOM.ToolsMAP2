@@ -460,7 +460,6 @@ namespace McdView
 				ClearRefs(sels[id]);
 
 			UpdateRefs(sels);
-//			Invalidate(); // not needed apparently.
 		}
 
 		/// <summary>

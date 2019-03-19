@@ -68,7 +68,7 @@ namespace McdView
 
 		internal bool _spriteShadeEnabled;
 
-		private int _spriteShadeInt = 11;
+		private int _spriteShadeInt = 10; // TODO: "-1" for release
 		/// <summary>
 		/// The inverse-gamma adjustment for sprites and icons.
 		/// </summary>

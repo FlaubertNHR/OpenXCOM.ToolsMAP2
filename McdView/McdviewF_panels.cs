@@ -196,7 +196,6 @@ namespace McdView
 
 					using (var f = new SpritesetF(this, phase, id))
 					{
-						f.Location = new Point(Location.X + 20, Location.Y + 350);
 						f.ShowDialog();
 					}
 				}
@@ -410,9 +409,6 @@ namespace McdView
 
 				using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), pal))
 				{
-					f.Location = new Point(
-										Location.X + gb_Minimap.Width,
-										Location.Y + Height - f.Height);
 					f.ShowDialog();
 				}
 			}
@@ -585,9 +581,6 @@ namespace McdView
 
 					using (var f = new LoftF(this, slot, Int32.Parse(id)))
 					{
-						f.Location = new Point(
-											Location.X +  10,
-											Location.Y + 400);
 						f.ShowDialog();
 					}
 

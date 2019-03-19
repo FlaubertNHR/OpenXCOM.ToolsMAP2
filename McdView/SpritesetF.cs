@@ -19,6 +19,11 @@ namespace McdView
 		#endregion Fields (constant)
 
 
+		#region Fields (static)
+		internal static Point Loc = new Point(-1,-1);
+		#endregion Fields (static)
+
+
 		#region Fields
 		private readonly McdviewF _f;
 
@@ -132,8 +137,6 @@ namespace McdView
 			}
 		}
 
-
-
 		/// <summary>
 		/// Closes the screen on an Escape keydown event.
 		/// </summary>
@@ -142,6 +145,24 @@ namespace McdView
 		{
 			if (e.KeyCode == Keys.Escape)
 				Close();
+		}
+
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			Loc = new Point(Location.X, Location.Y);
+			base.OnFormClosing(e);
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			if (Loc.X == -1)
+			{
+				Location = new Point(_f.Location.X + 25, _f.Location.Y + 345);
+			}
+			else
+				Location = new Point(Loc.X, Loc.Y);
+
+			base.OnLoad(e);
 		}
 		#endregion Events (override)
 

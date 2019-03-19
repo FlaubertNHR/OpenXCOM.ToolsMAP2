@@ -13,13 +13,18 @@ namespace McdView
 		:
 			Form
 	{
-		#region Fields (static)
+		#region Fields (constant)
 		private const int COLS             = 16;
 		private const int ROWS_VISIBLE_Max = 16;
 		private const int ICON_WIDTH       = 32;
 		private const int ICON_HEIGHT      = 32;
 		private const int VERT_TEXT_PAD    = 16;
 		private const int HORI_PAD         =  1;
+		#endregion Fields (constant)
+
+
+		#region Fields (static)
+		internal static Point Loc = new Point(-1,-1);
 		#endregion Fields (static)
 
 
@@ -197,24 +202,6 @@ namespace McdView
 			}
 		}
 
-		protected override void OnMouseUp(MouseEventArgs e)
-		{
-			if (   e.X > -1 && e.X < ClientSize.Width
-				&& e.Y > -1 && e.Y < ClientSize.Height)
-			{
-				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_TEXT_PAD) * COLS
-					   +  e.X / (ICON_WIDTH  + HORI_PAD);
-
-				if (id < _f.ScanG.Length / 16)
-				{
-					if (id < 35) id = 35;
-
-					_f.SetIcon(id);
-					Close();
-				}
-			}
-		}
-
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			if (e.Delta > 0)
@@ -241,6 +228,24 @@ namespace McdView
 			}
 		}
 
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			if (   e.X > -1 && e.X < ClientSize.Width
+				&& e.Y > -1 && e.Y < ClientSize.Height)
+			{
+				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_TEXT_PAD) * COLS
+					   +  e.X / (ICON_WIDTH  + HORI_PAD);
+
+				if (id < _f.ScanG.Length / 16)
+				{
+					if (id < 35) id = 35;
+
+					_f.SetIcon(id);
+					Close();
+				}
+			}
+		}
+
 		/// <summary>
 		/// Closes the screen on an Escape keydown event.
 		/// </summary>
@@ -249,6 +254,24 @@ namespace McdView
 		{
 			if (e.KeyCode == Keys.Escape)
 				Close();
+		}
+
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			Loc = new Point(Location.X, Location.Y);
+			base.OnFormClosing(e);
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			if (Loc.X == -1)
+			{
+				Location = new Point(_f.Location.X + 170, _f.Location.Y + 30);
+			}
+			else
+				Location = new Point(Loc.X, Loc.Y);
+
+			base.OnLoad(e);
 		}
 		#endregion Events (override)
 
