@@ -38,6 +38,7 @@ namespace McdView
 
 		private readonly List<int>      SubSelIds  = new List<int>();
 		private readonly List<Tilepart> _copyparts = new List<Tilepart>();
+		private string _copylabel;
 		#endregion Fields
 
 
@@ -300,6 +301,7 @@ namespace McdView
 			_copyparts.Clear();
 
 			_copyparts.Add(Parts[_f.SelId].Clone());
+			_copylabel = _f.Label;
 
 			foreach (int i in SubSelIds)
 				_copyparts.Add(Parts[i].Clone());
@@ -325,11 +327,16 @@ namespace McdView
 			Parts[_f.SelId] = _copyparts[0].Clone();
 			Parts[_f.SelId].TerId = _f.SelId;
 
-			Parts[_f.SelId].Record.DieTile = (byte)0;
-			Parts[_f.SelId].Dead = null;
+			bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
 
-			Parts[_f.SelId].Record.Alt_MCD = (byte)0;
-			Parts[_f.SelId].Alternate = null;
+			if (!isTer)
+			{
+				Parts[_f.SelId].Record.DieTile = (byte)0;
+				Parts[_f.SelId].Dead = null;
+
+				Parts[_f.SelId].Record.Alt_MCD = (byte)0;
+				Parts[_f.SelId].Alternate = null;
+			}
 
 			if (_copyparts.Count > 1)
 			{
@@ -344,11 +351,14 @@ namespace McdView
 							array[i] = _copyparts[id].Clone();
 							array[i].TerId = i;
 
-							array[i].Record.DieTile = (byte)0;
-							array[i].Dead = null;
+							if (!isTer)
+							{
+								array[i].Record.DieTile = (byte)0;
+								array[i].Dead = null;
 
-							array[i].Record.Alt_MCD = (byte)0;
-							array[i].Alternate = null;
+								array[i].Record.Alt_MCD = (byte)0;
+								array[i].Alternate = null;
+							}
 						}
 					}
 

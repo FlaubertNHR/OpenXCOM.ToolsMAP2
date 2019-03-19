@@ -3657,10 +3657,9 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(832, 829);
-			this.Controls.Add(this.pnl_IsoLoft);
-			this.Controls.Add(this.bar_IsoLoft);
 			this.Controls.Add(this.gb_Description);
 			this.Controls.Add(this.gb_Loft);
+			this.Controls.Add(this.ss_Statusbar);
 			this.Controls.Add(this.gb_Explosive);
 			this.Controls.Add(this.bar_SpriteShade);
 			this.Controls.Add(this.gb_Block);
@@ -3678,7 +3677,8 @@
 			this.Controls.Add(this.gb_Unused);
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
-			this.Controls.Add(this.ss_Statusbar);
+			this.Controls.Add(this.pnl_IsoLoft);
+			this.Controls.Add(this.bar_IsoLoft);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.KeyPreview = true;
 			this.MaximumSize = new System.Drawing.Size(840, 855);
