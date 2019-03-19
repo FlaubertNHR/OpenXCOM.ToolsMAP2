@@ -111,7 +111,7 @@ namespace McdView
 
 			var itCut         = new MenuItem("cut",           OnCutClick);
 			var itCopy        = new MenuItem("copy",          OnCopyClick);
-			var itPaste       = new MenuItem("paste",         OnPasteClick);
+			var itInsert      = new MenuItem("insert",        OnInsertClick);
 			var itDelete      = new MenuItem("delete",        OnDeleteClick);
 
 			var itSep1        = new MenuItem("-");
@@ -135,7 +135,7 @@ namespace McdView
 											itSep0,			//  2
 											itCut,			//  3
 											itCopy,			//  4
-											itPaste,		//  5
+											itInsert,		//  5
 											itDelete,		//  6
 											itSep1,			//  7
 											itFile,			//  8
@@ -161,19 +161,20 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPopup_Context(object sender, EventArgs e)
 		{
+			bool parts = (Parts != null);
 			bool selid = (_f.SelId != -1);
 
-			Context.MenuItems[0].Enabled = Parts != null;							// add
-			Context.MenuItems[1].Enabled = Parts != null;							// add range
+			Context.MenuItems[0].Enabled = parts;									// add
+			Context.MenuItems[1].Enabled = parts;									// add range
 
 			Context.MenuItems[3].Enabled = selid;									// cut
 			Context.MenuItems[4].Enabled = selid;									// copy
-			Context.MenuItems[5].Enabled = selid && _copyparts.Count != 0;			// paste
+			Context.MenuItems[5].Enabled = parts && _copyparts.Count != 0;			// insert
 			Context.MenuItems[6].Enabled = selid;									// delete
 
-			Context.MenuItems[8].Enabled = (Parts != null && false);				// file
+			Context.MenuItems[8].Enabled = (parts && false);						// file
 
-			Context.MenuItems[10].Enabled = _f.SelId > 0;							// left
+			Context.MenuItems[10].Enabled =          _f.SelId > 0;					// left
 			Context.MenuItems[11].Enabled = selid && _f.SelId != Parts.Length - 1;	// right
 
 			Context.MenuItems[13].Enabled = selid;									// deselect
@@ -248,8 +249,8 @@ namespace McdView
 							array[i] = Parts[i];
 
 						McdRecord record;
-						int stop = i + _add;
-						for (; i != stop; ++i)
+						int j = i + _add;
+						for (; i != j; ++i)
 						{
 							record = McdRecordFactory.CreateRecord();
 
@@ -308,74 +309,64 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Pastes the copy-array into the parts-array, overwriting the
-		/// currently selected part. Ergo if user wants to insert the copyparts
-		/// (without overwriting any part) a blank-part shall be added and
-		/// selected to be overwritten before pasting.
-		/// NOTE: If a pasted part's refs are less than the insertion point then
-		/// the refs are okay; if the refs are equal to or greater than the
-		/// insertion point then the refs need to be advanced. This assumes that
-		/// the pasted parts are from the same recordset; if not then the refs
-		/// ought be deleted.
+		/// Inserts the copy-array into the parts-array after the currently
+		/// selected part or at the start of the array if there is no selected
+		/// part.
+		/// NOTE: If inserted part(s)' refs are less than the insertion point
+		/// then the refs are okay; if the refs are equal to or greater than the
+		/// insertion point then the refs need to be advanced. But only if the
+		/// inserted parts are from the same recordset; if not then the refs
+		/// shall be deleted. This behavior is warranteed only on the first
+		/// insert of copied parts; the refs can still go wonky on 2+ inserts.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnPasteClick(object sender, EventArgs e)
+		private void OnInsertClick(object sender, EventArgs e)
 		{
 			_f.Changed = true;
 
-			Parts[_f.SelId] = _copyparts[0].Clone();
-			Parts[_f.SelId].TerId = _f.SelId;
-
 			bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
 
-			if (!isTer)
+			int id = _f.SelId + 1;
+
+			var array = new Tilepart[Parts.Length + _copyparts.Count];
+
+			for (int i = 0, j = 0; i != array.Length; ++i, ++j)
 			{
-				Parts[_f.SelId].Record.DieTile = (byte)0;
-				Parts[_f.SelId].Dead = null;
-
-				Parts[_f.SelId].Record.Alt_MCD = (byte)0;
-				Parts[_f.SelId].Alternate = null;
-			}
-
-			if (_copyparts.Count > 1)
-			{
-				var array = new Tilepart[Parts.Length + (_copyparts.Count - 1)];
-
-				for (int i = 0, j = 0; i != array.Length; ++i, ++j)
+				if (i == id)
 				{
-					if (i == _f.SelId + 1)
+					for (int pos = 0; pos != _copyparts.Count; ++pos, ++i)
 					{
-						for (int id = 1; id != _copyparts.Count; ++id, ++i)
+						array[i] = _copyparts[pos].Clone();
+						array[i].TerId = i;
+
+						if (!isTer)
 						{
-							array[i] = _copyparts[id].Clone();
-							array[i].TerId = i;
+							array[i].Record.DieTile = (byte)0;
+							array[i].Dead = null;
 
-							if (!isTer)
-							{
-								array[i].Record.DieTile = (byte)0;
-								array[i].Dead = null;
-
-								array[i].Record.Alt_MCD = (byte)0;
-								array[i].Alternate = null;
-							}
+							array[i].Record.Alt_MCD = (byte)0;
+							array[i].Alternate = null;
 						}
 					}
-
-					if (i == array.Length)
-						break;
-
-					array[i] = Parts[j];
-					array[i].TerId = i;
 				}
 
-				_f.Parts = array;
+				if (i == array.Length)
+					break;
+
+				array[i] = Parts[j];
+				array[i].TerId = i;
 			}
 
-			ShiftRefs(_f.SelId, _copyparts.Count - 1); // is overwriting the first ID, then inserting the rest.
+			_bypassScrollZero = true;
+			_f.Parts = array;
 
-			_f.InvalidatePanels();
-			_f.PopulateTextFields();
+			ShiftRefs(id, _copyparts.Count);
+
+			SubSelIds.Clear();
+			_f.SelId = id;
+
+			// why. Why do you not repaint correctly.
 		}
 
 		/// <summary>
@@ -387,7 +378,7 @@ namespace McdView
 		/// <param name="shift"></param>
 		private void ShiftRefs(int start, int shift)
 		{
-			if (start + shift != Parts.Length)
+			if (start + shift != Parts.Length) // don't bother shifting any refs if the parts are inserted at the end of the array
 			{
 				Tilepart part;
 				McdRecord record;
@@ -736,16 +727,20 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset, 0,
 										i * XCImage.SpriteWidth32 + i + offset, Height);
 
-					if (_f.Spriteset != null
-						&& Parts[i] != null // not sure why Tilepart entries go null but aren't null but they do
-						&& Parts[i].Sprites != null
-						&& Parts[i][0] != null
-						&& (sprite = Parts[i][0].Sprite) != null)
+					if (_f.Spriteset != null)
 					{
-						DrawSprite(
-								sprite,
-								i * XCImage.SpriteWidth32 + i + offset,
-								y1_sprite - Parts[i].Record.TileOffset);
+						Tilepart part = Parts[i];
+						if (part != null // not sure why Tilepart entries are null that aren't null but they are
+//							&& part.Record != null
+//							&& part.Sprites != null
+//							&& part[0] != null
+							&& (sprite = part[0].Sprite) != null)
+						{
+							DrawSprite(
+									sprite,
+									i * XCImage.SpriteWidth32 + i + offset,
+									y1_sprite - part.Record.TileOffset);
+						}
 					}
 				}
 
@@ -793,16 +788,21 @@ namespace McdView
 				{
 					for (i = 0; i != Parts.Length; ++i) // dead part ->
 					{
-						if (Parts[i] != null
-							&& Parts[i].Dead != null
-							&& Parts[i].Dead.Sprites != null
-							&& Parts[i].Dead[0] != null
-							&& (sprite = Parts[i].Dead[0].Sprite) != null)
+						Tilepart part = Parts[i];
+						if (part != null
+//							&& part.Record != null
+//							&& part.Record.DieTile < _f.Spriteset.Count
+//							&& (sprite = _f.Spriteset[part.Record.DieTile].Sprite) != null
+							&& part.Dead != null
+//							&& part.Dead.Record != null
+//							&& part.Dead.Sprites != null
+//							&& part.Dead[0] != null
+							&& (sprite = part.Dead[0].Sprite) != null)
 						{
 							DrawSprite(
 									sprite,
 									i * XCImage.SpriteWidth32 + i + offset,
-									y2_sprite - Parts[i].Dead.Record.TileOffset);
+									y2_sprite - part.Dead.Record.TileOffset);
 						}
 					}
 				}
@@ -816,16 +816,21 @@ namespace McdView
 				{
 					for (i = 0; i != Parts.Length; ++i) // alternate part ->
 					{
-						if (Parts[i] != null
-							&& Parts[i].Alternate != null
-							&& Parts[i].Alternate.Sprites != null
-							&& Parts[i].Alternate[0] != null
-							&& (sprite = Parts[i].Alternate[0].Sprite) != null)
+						Tilepart part = Parts[i];
+						if (part != null
+//							&& part.Record != null
+//							&& part.Record.Alt_MCD < _f.Spriteset.Count
+//							&& (sprite = _f.Spriteset[part.Record.Alt_MCD].Sprite) != null
+							&& part.Alternate != null
+//							&& part.Alternate.Record != null
+//							&& part.Alternate.Sprites != null
+//							&& part.Alternate[0] != null
+							&& (sprite = part.Alternate[0].Sprite) != null)
 						{
 							DrawSprite(
 									sprite,
 									i * XCImage.SpriteWidth32 + i + offset,
-									y3_sprite - Parts[i].Alternate.Record.TileOffset);
+									y3_sprite - part.Alternate.Record.TileOffset);
 						}
 					}
 				}
