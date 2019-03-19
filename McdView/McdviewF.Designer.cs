@@ -562,19 +562,19 @@
 			// 
 			// miSave
 			// 
+			this.miSave.Enabled = false;
 			this.miSave.Index = 3;
 			this.miSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
 			this.miSave.Text = "&Save MCD file";
 			this.miSave.Click += new System.EventHandler(this.OnClick_Save);
-			this.miSave.Enabled = false;
 			// 
 			// miSaveas
 			// 
+			this.miSaveas.Enabled = false;
 			this.miSaveas.Index = 4;
 			this.miSaveas.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
 			this.miSaveas.Text = "Save MCD file &as ...";
 			this.miSaveas.Click += new System.EventHandler(this.OnClick_Saveas);
-			this.miSaveas.Enabled = false;
 			// 
 			// miSeparator1
 			// 
@@ -625,7 +625,7 @@
 			this.miZeroVals.Enabled = false;
 			this.miZeroVals.Index = 0;
 			this.miZeroVals.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
-			this.miZeroVals.Text = "Z&ero this part's values";
+			this.miZeroVals.Text = "Z&ero this part\'s values";
 			this.miZeroVals.Click += new System.EventHandler(this.OnClick_ZeroVals);
 			// 
 			// lbl20_scang
@@ -3587,7 +3587,7 @@
 			this.cb_Strict.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.cb_Strict.Checked = true;
 			this.cb_Strict.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_Strict.Location = new System.Drawing.Point(65, 660);
+			this.cb_Strict.Location = new System.Drawing.Point(60, 660);
 			this.cb_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_Strict.Name = "cb_Strict";
 			this.cb_Strict.Size = new System.Drawing.Size(15, 15);
@@ -3605,7 +3605,7 @@
 			this.lbl_Strict.Location = new System.Drawing.Point(10, 660);
 			this.lbl_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Strict.Name = "lbl_Strict";
-			this.lbl_Strict.Size = new System.Drawing.Size(55, 15);
+			this.lbl_Strict.Size = new System.Drawing.Size(50, 15);
 			this.lbl_Strict.TabIndex = 15;
 			this.lbl_Strict.Text = "STRICT";
 			this.lbl_Strict.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

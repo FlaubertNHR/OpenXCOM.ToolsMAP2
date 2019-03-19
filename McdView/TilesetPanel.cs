@@ -221,7 +221,7 @@ namespace McdView
 			_bypassScrollZero = true;
 			_f.Parts = array; // assign back to 'Parts' via McdviewF
 
-			UpdateRefs(id, 1);
+			ShiftRefs(id, 1);
 
 			SubSelIds.Clear();
 			_f.SelId = id;
@@ -269,7 +269,7 @@ namespace McdView
 						_bypassScrollZero = true;
 						_f.Parts = array;
 
-						UpdateRefs(id, _add);
+						ShiftRefs(id, _add);
 
 						SubSelIds.Clear();
 						_f.SelId = id;
@@ -362,10 +362,62 @@ namespace McdView
 				_f.Parts = array;
 			}
 
-			UpdateRefs(_f.SelId, _copyparts.Count - 1); // is overwriting the first ID, then inserting the rest.
+			ShiftRefs(_f.SelId, _copyparts.Count - 1); // is overwriting the first ID, then inserting the rest.
 
 			_f.InvalidatePanels();
 			_f.PopulateTextFields();
+		}
+
+		/// <summary>
+		/// Updates refs when parts are added.
+		/// Shifts references to death- and alternate-parts by a given amount
+		/// starting at references at or greater than a given ID.
+		/// </summary>
+		/// <param name="start"></param>
+		/// <param name="shift"></param>
+		private void ShiftRefs(int start, int shift)
+		{
+			if (start + shift != Parts.Length)
+			{
+				Tilepart part;
+				McdRecord record;
+
+				int id;
+
+				for (int i = 0; i != Parts.Length; ++i)
+				{
+					part   = Parts[i];
+					record = part.Record;
+
+					if ((id = record.DieTile) != 0 && id >= start)
+					{
+						if ((id = record.DieTile + shift) < Parts.Length)
+						{
+							record.DieTile = (byte)id;
+							part.Dead = Parts[id];
+						}
+						else
+						{
+							record.DieTile = (byte)0;
+							part.Dead = null;
+						}
+					}
+
+					if ((id = record.Alt_MCD) != 0 && id >= start)
+					{
+						if ((id = record.Alt_MCD + shift) < Parts.Length)
+						{
+							record.Alt_MCD = (byte)id;
+							part.Alternate = Parts[id];
+						}
+						else
+						{
+							record.Alt_MCD = (byte)0;
+							part.Alternate = null;
+						}
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -405,10 +457,89 @@ namespace McdView
 			_f.Parts = array;
 
 			for (int id = 0; id != sels.Count; ++id)
-				UpdateRef(sels[id], 0);
+				ClearRefs(sels[id]);
 
 			UpdateRefs(sels);
 //			Invalidate(); // not needed apparently.
+		}
+
+		/// <summary>
+		/// Nulls all death- and alternate-references to a given part.
+		/// </summary>
+		/// <param name="id"></param>
+		private void ClearRefs(int id)
+		{
+			if (id != 0) // ie. DeathId or AlternateId is not already null-part.
+			{
+				Tilepart part;
+				McdRecord record;
+
+				for (int i = 0; i != Parts.Length; ++i)
+				{
+					part   = Parts[i];
+					record = part.Record;
+
+					if (record.DieTile == id)
+					{
+						record.DieTile = (byte)0;
+						part.Dead = null;
+					}
+
+					if (record.Alt_MCD == id)
+					{
+						record.Alt_MCD = (byte)0;
+						part.Alternate = null;
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Updates refs when a part or parts get deleted.
+		/// </summary>
+		/// <param name ="sels">a list of IDs that got deleted</param>
+		private void UpdateRefs(List<int> sels)
+		{
+			sels.Sort();
+
+			Tilepart part;
+			McdRecord record;
+
+			int pos, id;
+
+			for (int i = 0; i != Parts.Length; ++i)
+			{
+				part   = Parts[i];
+				record = part.Record;
+
+				pos = sels.Count - 1; // start with the last entry in 'sels'
+
+				if ((id = record.DieTile) != 0)// && (pos = sels.FindIndex(val => val == @ref)) != -1)
+				{
+					while (pos != -1 && id > sels[pos--])
+						--id;
+
+					if (id != record.DieTile)
+					{
+						record.DieTile = (byte)id;
+						part.Dead = Parts[id];
+					}
+				}
+
+				pos = sels.Count - 1;
+
+				if ((id = record.Alt_MCD) != 0)// && (pos = sels.FindIndex(val => val == @ref)) != -1)
+				{
+					while (pos != -1 && id > sels[pos--])
+						--id;
+
+					if (id != record.Alt_MCD)
+					{
+						record.Alt_MCD = (byte)id;
+						part.Alternate = Parts[id];
+					}
+				}
+			}
 		}
 
 		private void OnFileClick(object sender, EventArgs e)
@@ -442,8 +573,7 @@ namespace McdView
 			_bypassScrollZero = true;
 			_f.Parts = array;
 
-			UpdateRef(id, id - 1);
-			UpdateRef(id - 1, id);
+			SwapRefs(id, id - 1);
 
 			_f.SelId = id - 1; // does refresh.
 		}
@@ -475,147 +605,54 @@ namespace McdView
 			_bypassScrollZero = true;
 			_f.Parts = array;
 
-			UpdateRef(id, id + 1);
-			UpdateRef(id + 1, id);
+			SwapRefs(id, id + 1);
 
 			_f.SelId = id + 1; // does refresh.
 		}
 
 		/// <summary>
-		/// Updates refs when parts are added.
-		/// Shifts references to death- and alternate-parts by a given amount
-		/// starting at references at or greater than a given ID.
+		/// Swaps two death- and alternate-references. Any references that point
+		/// to 'a' point to 'b' and vice versa.
 		/// </summary>
-		/// <param name="start"></param>
-		/// <param name="shift"></param>
-		private void UpdateRefs(int start, int shift)
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		private void SwapRefs(int a, int b)
 		{
-			if (start + shift != Parts.Length)
-			{
-				Tilepart part;
-				McdRecord record;
-
-				for (int i = 0; i != Parts.Length; ++i)
-				{
-					part   = Parts[i];
-					record = part.Record;
-
-					if (record.DieTile != 0 && record.DieTile >= start)
-					{
-						record.DieTile += (byte)shift;
-
-						if (record.DieTile < Parts.Length)
-							part.Dead = Parts[record.DieTile];
-						else
-						{
-							part.Dead = null;
-							record.DieTile = (byte)0;
-						}
-					}
-
-					if (record.Alt_MCD != 0 && record.Alt_MCD >= start)
-					{
-						record.Alt_MCD += (byte)shift;
-
-						if (record.Alt_MCD < Parts.Length)
-							part.Alternate = Parts[record.Alt_MCD];
-						else
-						{
-							part.Alternate = null;
-							record.Alt_MCD = (byte)0;
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary>
-		/// Updates refs when a part or parts get deleted.
-		/// </summary>
-		/// <param name ="sels">a list of IDs that got deleted</param>
-		private void UpdateRefs(List<int> sels)
-		{
-			sels.Sort();
-
 			Tilepart part;
 			McdRecord record;
+
+			int id;
 
 			for (int i = 0; i != Parts.Length; ++i)
 			{
 				part   = Parts[i];
 				record = part.Record;
 
-				int id = sels.Count - 1;
-
-				byte @ref = record.DieTile;
-				if (@ref != 0)// && (@add = sels.FindIndex(val => val == @ref)) != -1)
+				if ((id = record.DieTile) != 0)
 				{
-					while (id != -1 && @ref > sels[id--])
-						--@ref;
-
-					record.DieTile = @ref;
-					part.Dead = Parts[record.DieTile];
-				}
-
-				id = sels.Count - 1;
-
-				@ref = record.Alt_MCD;
-				if (@ref != 0)// && (@add = sels.FindIndex(val => val == @ref)) != -1)
-				{
-					while (id != -1 && @ref > sels[id--])
-						--@ref;
-
-					record.Alt_MCD = @ref;
-					part.Alternate = Parts[record.Alt_MCD];
-				}
-			}
-		}
-
-		/// <summary>
-		/// Compare the DeathId and AlternateId of every part in the set to a
-		/// partid that changed, and if they match set that DeathId or
-		/// AlternateId to its relocated partid. If the referred part is null
-		/// then set the referring part's ref to #0.
-		/// TODO: Issue warnings if the post-part is #0 or overflows Parts.Length.
-		/// </summary>
-		/// <param name="pre"></param>
-		/// <param name="pst"></param>
-		private void UpdateRef(int pre, int pst)
-		{
-			if (pre != 0) // NOTE: DeathId or AlternateId #0 is null-part. Leave it null.
-			{
-				Tilepart part;
-				McdRecord record;
-
-				for (int i = 0; i != Parts.Length; ++i)
-				{
-					part   = Parts[i];
-					record = part.Record;
-
-					if (record.DieTile == pre)
+					if (id == a)
 					{
-						record.DieTile = (byte)pst;
-
-						if (pst != 0 && pst < Parts.Length)
-							part.Dead = Parts[pst];
-						else
-						{
-							part.Dead = null;
-							record.DieTile = (byte)0;
-						}
+						record.DieTile = (byte)b;
+						part.Dead = Parts[b];
 					}
-
-					if (record.Alt_MCD == pre)
+					else if (id == b)
 					{
-						record.Alt_MCD = (byte)pst;
+						record.DieTile = (byte)a;
+						part.Dead = Parts[a];
+					}
+				}
 
-						if (pst != 0 && pst < Parts.Length)
-							part.Alternate = Parts[pst];
-						else
-						{
-							part.Alternate = null;
-							record.Alt_MCD = (byte)0;
-						}
+				if ((id = record.Alt_MCD) != 0)
+				{
+					if (id == a)
+					{
+						record.Alt_MCD = (byte)b;
+						part.Alternate = Parts[b];
+					}
+					else if (id == b)
+					{
+						record.Alt_MCD = (byte)a;
+						part.Alternate = Parts[a];
 					}
 				}
 			}

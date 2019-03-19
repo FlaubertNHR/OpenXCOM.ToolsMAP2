@@ -46,26 +46,28 @@ namespace XCom.Resources.Map
 				{
 					using (var bs = new BufferedStream(File.OpenRead(pfeMcd)))
 					{
-						var tileparts = new Tilepart[(int)bs.Length / Length]; // TODO: Error if this don't work out right.
+						var parts = new Tilepart[(int)bs.Length / Length]; // TODO: Error if this don't work out right.
 
-						for (int id = 0; id != tileparts.Length; ++id)
+						for (int id = 0; id != parts.Length; ++id)
 						{
 							var bindata = new byte[Length];
 							bs.Read(bindata, 0, Length);
-							var record = McdRecordFactory.CreateRecord(bindata);
 
-							var part = new Tilepart(id, spriteset, record);
-
-							tileparts[id] = part;
+							parts[id] = new Tilepart(
+												id,
+												spriteset,
+												McdRecordFactory.CreateRecord(bindata));
 						}
 
-						for (int id = 0; id != tileparts.Length; ++id)
+						Tilepart part;
+						for (int id = 0; id != parts.Length; ++id)
 						{
-							tileparts[id].Dead      = GetDeadPart(     terrain, id, tileparts[id].Record, tileparts);
-							tileparts[id].Alternate = GetAlternatePart(terrain, id, tileparts[id].Record, tileparts);
+							part = parts[id];
+							part.Dead      = GetDeadPart(     terrain, id, part.Record, parts);
+							part.Alternate = GetAlternatePart(terrain, id, part.Record, parts);
 						}
 
-						return tileparts;
+						return parts;
 					}
 				}
 			}

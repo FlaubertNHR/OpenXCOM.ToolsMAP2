@@ -677,10 +677,12 @@ namespace McdView
 							Parts[id] = new Tilepart(id, Spriteset, record);
 						}
 
+						Tilepart part;
 						for (int id = 0; id != Parts.Length; ++id)
 						{
-							Parts[id].Dead      = TilepartFactory.GetDeadPart(     Label, id, Parts[id].Record, Parts);
-							Parts[id].Alternate = TilepartFactory.GetAlternatePart(Label, id, Parts[id].Record, Parts);
+							part = Parts[id];
+							part.Dead      = TilepartFactory.GetDeadPart(     Label, id, part.Record, Parts);
+							part.Alternate = TilepartFactory.GetAlternatePart(Label, id, part.Record, Parts);
 						}
 					}
 
