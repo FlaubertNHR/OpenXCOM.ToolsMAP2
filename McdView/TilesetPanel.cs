@@ -887,7 +887,7 @@ namespace McdView
 			{
 				Scroller.Value = TableWidth - Width;
 			}
-			ScrollTile();
+			ScrollToPart(_f.SelId);
 		}
 
 
@@ -1014,14 +1014,14 @@ namespace McdView
 
 		#region Methods
 		/// <summary>
-		/// Scrolls the panel to ensure that the currently selected tile is
+		/// Scrolls the panel to ensure that the part with a specified ID is
 		/// fully displayed.
 		/// </summary>
-		internal void ScrollTile()
+		internal void ScrollToPart(int id)
 		{
-			if (Scroller.Enabled && _f.SelId != -1)
+			if (id != -1 && Scroller.Enabled)
 			{
-				int x = _f.SelId * (XCImage.SpriteWidth32 + 1);
+				int x = id * (XCImage.SpriteWidth32 + 1);
 				if (x < Scroller.Value)
 				{
 					Scroller.Value = x;
@@ -1034,13 +1034,12 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Takes keyboard-input from the Form's KeyDown event to scroll this
-		/// panel.
+		/// Takes keyboard-input from the Form's KeyDown event to select a part.
 		/// </summary>
 		/// <param name="e"></param>
 		internal void KeyTile(KeyEventArgs e)
 		{
-			// TODO: Ctrl and Shift to select SubIds
+			// TODO: Ctrl and Shift to select 'SubIds'
 
 			switch (e.KeyCode)
 			{

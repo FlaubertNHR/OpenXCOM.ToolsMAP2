@@ -105,7 +105,7 @@ namespace McdView
 						PopulateTextFields();
 						strict = strict0;
 
-						PartsPanel.ScrollTile();
+						PartsPanel.ScrollToPart(_selId);
 
 						miZeroVals.Enabled = true;
 					}
@@ -505,34 +505,57 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (SelId == -1)
+			switch (e.KeyCode)
 			{
-				if (e.KeyCode == Keys.Space // select record #0 ->
-					&& Parts != null
-					&& Parts.Length != 0)
-				{
-					if (!cb_Strict.Focused && !bar_SpriteShade.Focused && !bar_IsoLoft.Focused)
+				case Keys.Escape:
+					if (!isTextboxFocused())
+						SelId = -1;
+
+					PartsPanel.Select();
+					break;
+
+				case Keys.Space: // select record #0
+					if (!cb_Strict.Focused
+						&& Parts != null
+						&& Parts.Length != 0)
 					{
 						PartsPanel.Select();
-						SelId = 0;
+						PartsPanel.KeyTile(e);
 					}
-				}
-			}
-			else if (!cb_Strict.Focused && !bar_IsoLoft.Focused && !bar_SpriteShade.Focused)
-			{
-				foreach (Control control in Controls)
-				{
-					if (control.Focused && (control as TextBox) != null)
-						return;
+					break;
 
-					foreach (Control control1 in control.Controls)
+				default:
+					if (   !bar_IsoLoft.Focused		// these controls need navigation key-input so
+						&& !bar_SpriteShade.Focused	// don't pass the keys on if they are focused
+						&& Parts != null
+						&& Parts.Length != 0
+						&& !isTextboxFocused())
 					{
-						if (control1.Focused && (control1 as TextBox) != null)
-							return;
+						PartsPanel.Select();
+						PartsPanel.KeyTile(e);
 					}
-				}
-				PartsPanel.KeyTile(e);
+					break;
 			}
+		}
+
+		/// <summary>
+		/// Helper for keypreviewed OnKeyDown().
+		/// </summary>
+		/// <returns></returns>
+		private bool isTextboxFocused()
+		{
+			foreach (Control control in Controls)
+			{
+				if (control.Focused && (control as TextBox) != null)
+					return true;
+
+				foreach (Control control1 in control.Controls)
+				{
+					if (control1.Focused && (control1 as TextBox) != null)
+						return true;
+				}
+			}
+			return false;
 		}
 		#endregion Events (override)
 
@@ -991,7 +1014,7 @@ namespace McdView
 				lbl_Strict.ForeColor = SystemColors.ControlText;
 				lbl_Strict.Text = "STRICT";
 
-				if (SelId != -1)
+/*				if (SelId != -1)
 				{
 					// TODO: test if any values are outside standard limits and issue
 					// a warning that checking STRICT will set those values to within
@@ -1003,7 +1026,7 @@ namespace McdView
 					//
 					// This needs to be done only when STRICT becomes checked;
 					// unchecking STRICT shall do nothing here.
-				}
+				} */
 			}
 			else
 			{
