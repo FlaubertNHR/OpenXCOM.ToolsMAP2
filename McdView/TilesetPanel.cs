@@ -36,7 +36,7 @@ namespace McdView
 
 		private bool _bypassScrollZero;
 
-		private readonly List<int>      SubSelIds  = new List<int>();
+		private readonly List<int> SubIds = new List<int>();
 		private readonly List<Tilepart> _copyparts = new List<Tilepart>();
 		private string _copylabel;
 		#endregion Fields
@@ -225,7 +225,7 @@ namespace McdView
 
 			ShiftRefs(id, 1);
 
-			SubSelIds.Clear();
+			SubIds.Clear();
 			_f.SelId = id;
 		}
 
@@ -273,7 +273,7 @@ namespace McdView
 
 						ShiftRefs(id, _add);
 
-						SubSelIds.Clear();
+						SubIds.Clear();
 						_f.SelId = id;
 					}
 				}
@@ -304,7 +304,7 @@ namespace McdView
 			_copyparts.Add(Parts[_f.SelId].Clone());
 			_copylabel = _f.Label;
 
-			foreach (int i in SubSelIds)
+			foreach (int i in SubIds)
 				_copyparts.Add(Parts[i].Clone());
 		}
 
@@ -363,7 +363,7 @@ namespace McdView
 
 			ShiftRefs(id, _copyparts.Count);
 
-			SubSelIds.Clear();
+			SubIds.Clear();
 			_f.SelId = id;
 
 			// why. Why do you not repaint correctly.
@@ -423,7 +423,7 @@ namespace McdView
 
 		/// <summary>
 		/// Deletes a currently selected part 'SelId' and any sub-selected parts
-		/// 'SubSelIds'.
+		/// 'SubIds'.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -431,11 +431,11 @@ namespace McdView
 		{
 			_f.Changed = true;
 
-			var array = new Tilepart[Parts.Length - (1 + SubSelIds.Count)];
+			var array = new Tilepart[Parts.Length - (1 + SubIds.Count)]; // ie. SelId + SubIds
 
 			for (int i = 0, j = 0; i != Parts.Length; ++i)
 			{
-				if (i == _f.SelId || SubSelIds.Contains(i))
+				if (i == _f.SelId || SubIds.Contains(i))
 				{
 					++j;
 				}
@@ -448,17 +448,17 @@ namespace McdView
 
 			var sels = new List<int>();
 			sels.Add(_f.SelId);
-			foreach (int sel in SubSelIds)
+			foreach (int sel in SubIds)
 				sels.Add(sel);
 
-			SubSelIds.Clear();
+			SubIds.Clear();
 			_f.SelId = -1;
 
 			_bypassScrollZero = true;
 			_f.Parts = array;
 
-			for (int id = 0; id != sels.Count; ++id)
-				ClearRefs(sels[id]);
+			for (int i = 0; i != sels.Count; ++i)
+				ClearRefs(sels[i]);
 
 			UpdateRefs(sels);
 		}
@@ -667,7 +667,7 @@ namespace McdView
 		private void OnDeselectClick(object sender, EventArgs e)
 		{
 			_f.SelId = -1;
-			SubSelIds.Clear();
+			SubIds.Clear();
 		}
 		#endregion Events (context)
 
@@ -758,7 +758,7 @@ namespace McdView
 										XCImage.SpriteWidth32,
 										y1_fill_h);
 
-					foreach (int id in SubSelIds)
+					foreach (int id in SubIds)
 						_graphics.FillRectangle(
 											BrushHilightsub,
 											id * (XCImage.SpriteWidth32 + 1) + offset,
@@ -908,20 +908,20 @@ namespace McdView
 				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
 				if (id >= Parts.Length)
 				{
-					SubSelIds.Clear();
+					SubIds.Clear();
 					_f.SelId = -1;
 				}
 				else if (id != _f.SelId)
 				{
 					if (ModifierKeys == Keys.Control)
 					{
-						if (!SubSelIds.Contains(id))
+						if (!SubIds.Contains(id))
 						{
-							SubSelIds.Add(id);
-							SubSelIds.Sort();
+							SubIds.Add(id);
+							SubIds.Sort();
 						}
 						else
-							SubSelIds.Remove(id);
+							SubIds.Remove(id);
 
 						Invalidate();
 					}
@@ -931,10 +931,10 @@ namespace McdView
 						{
 							for (int i = id; i != _f.SelId; ++i)
 							{
-								if (!SubSelIds.Contains(i))
+								if (!SubIds.Contains(i))
 								{
-									SubSelIds.Add(i);
-									SubSelIds.Sort();
+									SubIds.Add(i);
+									SubIds.Sort();
 									Invalidate();
 								}
 							}
@@ -943,10 +943,10 @@ namespace McdView
 						{
 							for (int i = id; i != _f.SelId; --i)
 							{
-								if (!SubSelIds.Contains(i))
+								if (!SubIds.Contains(i))
 								{
-									SubSelIds.Add(i);
-									SubSelIds.Sort();
+									SubIds.Add(i);
+									SubIds.Sort();
 									Invalidate();
 								}
 							}
@@ -954,13 +954,13 @@ namespace McdView
 					}
 					else
 					{
-						SubSelIds.Clear();
+						SubIds.Clear();
 						_f.SelId = id;
 					}
 				}
 				else
 				{
-					SubSelIds.Clear();
+					SubIds.Clear();
 					Invalidate();
 				}
 			}
@@ -1040,14 +1040,14 @@ namespace McdView
 		/// <param name="e"></param>
 		internal void KeyTile(KeyEventArgs e)
 		{
-			// TODO: Ctrl and Shift to select SubSelIds
+			// TODO: Ctrl and Shift to select SubIds
 
 			switch (e.KeyCode)
 			{
 				case Keys.Left:
 				case Keys.Up:
 				case Keys.Back:
-					SubSelIds.Clear();
+					SubIds.Clear();
 					if (_f.SelId != 0)
 						_f.SelId -= 1;
 					else
@@ -1057,7 +1057,7 @@ namespace McdView
 				case Keys.Right:
 				case Keys.Down:
 				case Keys.Space:
-					SubSelIds.Clear();
+					SubIds.Clear();
 					if (_f.SelId != Parts.Length - 1)
 						_f.SelId += 1;
 					else
@@ -1066,7 +1066,7 @@ namespace McdView
 
 				case Keys.PageUp:
 				{
-					SubSelIds.Clear();
+					SubIds.Clear();
 					int d = Width / (XCImage.SpriteWidth32 + 1);
 					if (_f.SelId - d < 0)
 						_f.SelId = 0;
@@ -1078,7 +1078,7 @@ namespace McdView
 
 				case Keys.PageDown:
 				{
-					SubSelIds.Clear();
+					SubIds.Clear();
 					int d = Width / (XCImage.SpriteWidth32 + 1);
 					if (_f.SelId + d > Parts.Length - 1)
 						_f.SelId = Parts.Length - 1;
@@ -1089,13 +1089,13 @@ namespace McdView
 				}
 
 				case Keys.Home:
-					SubSelIds.Clear();
+					SubIds.Clear();
 					_f.SelId = 0;
 					Invalidate();
 					break;
 
 				case Keys.End:
-					SubSelIds.Clear();
+					SubIds.Clear();
 					_f.SelId = Parts.Length - 1;
 					Invalidate();
 					break;
