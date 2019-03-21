@@ -301,11 +301,14 @@ namespace McdView
 		{
 			_copyparts.Clear();
 
-			_copyparts.Add(Parts[_f.SelId].Clone());
 			_copylabel = _f.Label;
 
-			foreach (int i in SubIds)
-				_copyparts.Add(Parts[i].Clone());
+			var sels = new List<int>(SubIds);
+			sels.Add(_f.SelId);
+			sels.Sort();
+
+			foreach (int id in sels)
+				_copyparts.Add(Parts[id].Clone());
 		}
 
 		/// <summary>
@@ -366,7 +369,7 @@ namespace McdView
 			SubIds.Clear();
 			_f.SelId = id;
 
-			// why. Why do you not repaint correctly.
+			// TODO: why. Why do you not repaint correctly.
 		}
 
 		/// <summary>
@@ -446,11 +449,8 @@ namespace McdView
 				}
 			}
 
-			var sels = new List<int>();
-			sels.Add(_f.SelId);
-
-			foreach (int sel in SubIds)
-				sels.Add(sel);
+			SubIds.Add(_f.SelId);
+			var sels = new List<int>(SubIds);
 
 			SubIds.Clear();
 			_f.SelId = -1;
