@@ -125,8 +125,8 @@ namespace McdView
 
 			var itSep3        = new MenuItem("-");
 
-			var itDeselect    = new MenuItem("deselect all",  OnDeselectClick);
-			// TODO: "select all"													// TODO: Ctrl+a key
+			var itSelect      = new MenuItem("select all",    OnSelectAllClick);	// TODO: Ctrl+a key
+			var itDeselect    = new MenuItem("deselect all",  OnDeselectAllClick);	// Esc
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
@@ -144,7 +144,8 @@ namespace McdView
 											itLeft,			// 10
 											itRight,		// 11
 											itSep3,			// 12
-											itDeselect		// 13
+											itSelect,		// 13
+											itDeselect		// 14
 										});
 			ContextMenu = Context;
 
@@ -178,7 +179,8 @@ namespace McdView
 			Context.MenuItems[10].Enabled =          _f.SelId > 0;					// left
 			Context.MenuItems[11].Enabled = selid && _f.SelId != Parts.Length - 1;	// right
 
-			Context.MenuItems[13].Enabled = selid;									// deselect
+			Context.MenuItems[13].Enabled = parts;									// select
+			Context.MenuItems[14].Enabled = selid;									// deselect
 		}
 
 		/// <summary>
@@ -659,15 +661,28 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// Selects the last part and sub-selects all other parts.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSelectAllClick(object sender, EventArgs e)
+		{
+			for (int i = 0; i != Parts.Length - 1; ++i)
+				SubIds.Add(i);
+
+			_f.SelId = Parts.Length - 1;
+		}
+
+		/// <summary>
 		/// Deselects a currently selected part as well as any sub-selected
 		/// parts.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnDeselectClick(object sender, EventArgs e)
+		private void OnDeselectAllClick(object sender, EventArgs e)
 		{
-			_f.SelId = -1;
 			SubIds.Clear();
+			_f.SelId = -1;
 		}
 		#endregion Events (context)
 

@@ -579,9 +579,37 @@ namespace McdView
 					else if (_pnlLoFT == pnl_Loft18) { id = tb18_loft20.Text; slot = 20; }
 					else                             { id = tb19_loft22.Text; slot = 22; } // if (_pnlLoFT == pnl_Loft19)
 
-					using (var f = new LoftF(this, slot, Int32.Parse(id)))
+					if (e.Button == MouseButtons.Left)
 					{
-						f.ShowDialog();
+						using (var f = new LoftF(this, slot, Int32.Parse(id)))
+						{
+							f.ShowDialog();
+						}
+					}
+					else if (e.Button == MouseButtons.Right)
+					{
+						if (MessageBox.Show(
+										this,
+										"Set all LoFTs to #" + id,
+										"Set all LoFTs",
+										MessageBoxButtons.YesNo,
+										MessageBoxIcon.Question,
+										MessageBoxDefaultButton.Button1,
+										0) == DialogResult.Yes)
+						{
+							tb8_loft00 .Text =
+							tb9_loft02 .Text =
+							tb10_loft04.Text =
+							tb11_loft06.Text =
+							tb12_loft08.Text =
+							tb13_loft10.Text =
+							tb14_loft12.Text =
+							tb15_loft14.Text =
+							tb16_loft16.Text =
+							tb17_loft18.Text =
+							tb18_loft20.Text =
+							tb19_loft22.Text = id;
+						}
 					}
 
 					bar_IsoLoft.Select();
