@@ -930,6 +930,7 @@ namespace McdView
 				&& e.Y < Height - Scroller.Height)
 			{
 				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
+
 				if (id >= Parts.Length)
 				{
 					SubIds.Clear();
@@ -945,41 +946,38 @@ namespace McdView
 					else
 						_f.SelId = -1;
 				}
-				else // (id != _f.SelId)
+				else if (ModifierKeys == Keys.Control && _f.SelId != -1)
 				{
-					if (ModifierKeys == Keys.Control && _f.SelId != -1)
+					if (SubIds.Contains(id))
 					{
-						if (SubIds.Contains(id))
-						{
-							SubIds.Remove(id);
-							Invalidate();
-						}
-						else
-						{
-							SubIds.Add(_f.SelId);
-							_f.SelId = id;
-						}
-					}
-					else if (ModifierKeys == Keys.Shift && _f.SelId != -1)
-					{
-						SubIds.Clear();
-						if (id < _f.SelId)
-						{
-							for (int i = _f.SelId; i != id; --i)
-								SubIds.Add(i);
-						}
-						else // (id > _f.SelId)
-						{
-							for (int i = _f.SelId; i != id; ++i)
-								SubIds.Add(i);
-						}
-						_f.SelId = id;
+						SubIds.Remove(id);
+						Invalidate();
 					}
 					else
 					{
-						SubIds.Clear();
+						SubIds.Add(_f.SelId);
 						_f.SelId = id;
 					}
+				}
+				else if (ModifierKeys == Keys.Shift && _f.SelId != -1)
+				{
+					SubIds.Clear();
+					if (id < _f.SelId)
+					{
+						for (int i = _f.SelId; i != id; --i)
+							SubIds.Add(i);
+					}
+					else // (id > _f.SelId)
+					{
+						for (int i = _f.SelId; i != id; ++i)
+							SubIds.Add(i);
+					}
+					_f.SelId = id;
+				}
+				else
+				{
+					SubIds.Clear();
+					_f.SelId = id;
 				}
 			}
 		}
