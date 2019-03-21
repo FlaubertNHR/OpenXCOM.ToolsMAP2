@@ -23,7 +23,7 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
-		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(102, SystemColors.MenuHighlight));
+		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(107, SystemColors.MenuHighlight));
 
 		internal const TextFormatFlags FLAGS = TextFormatFlags.HorizontalCenter
 											 | TextFormatFlags.VerticalCenter
@@ -100,7 +100,7 @@ namespace McdView
 				{
 					if ((_selId = value) != -1)
 					{
-						bool strict0 = strict;
+						bool strict0 = strict; // don't let STRICT policies screw up populating the textfields
 						strict = false;
 						PopulateTextFields();
 						strict = strict0;
@@ -114,6 +114,8 @@ namespace McdView
 						ClearTextFields();
 						miZeroVals.Enabled = false;
 					}
+
+					PartsPanel.SubIds.Remove(_selId); // safety. The SelId shall never be in the SubIds.
 
 					InvalidatePanels();
 				}
@@ -515,24 +517,25 @@ namespace McdView
 					break;
 
 				case Keys.Space: // select record #0
-					if (!cb_Strict.Focused
-						&& Parts != null
+					if (!cb_Strict.Focused	// this control needs navigation key-input so
+						&& Parts != null	// don't pass the key on if it is focused
 						&& Parts.Length != 0)
 					{
 						PartsPanel.Select();
-						PartsPanel.KeyTile(e);
+						PartsPanel.KeyPartSelect(e);
 					}
 					break;
 
 				default:
 					if (   !bar_IsoLoft.Focused		// these controls need navigation key-input so
 						&& !bar_SpriteShade.Focused	// don't pass the keys on if they are focused
+						&& SelId != -1
 						&& Parts != null
 						&& Parts.Length != 0
 						&& !isTextboxFocused())
 					{
 						PartsPanel.Select();
-						PartsPanel.KeyTile(e);
+						PartsPanel.KeyPartSelect(e);
 					}
 					break;
 			}

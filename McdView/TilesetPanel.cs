@@ -20,7 +20,7 @@ namespace McdView
 			Panel
 	{
 		#region Fields (static)
-		private readonly static Brush BrushHilightsub = new SolidBrush(Color.FromArgb(33, SystemColors.MenuHighlight));
+		private readonly static Brush BrushHilightsub = new SolidBrush(Color.FromArgb(36, SystemColors.MenuHighlight));
 		#endregion Fields (static)
 
 
@@ -36,7 +36,7 @@ namespace McdView
 
 		private bool _bypassScrollZero;
 
-		private readonly List<int> SubIds = new List<int>();
+		internal readonly SortedSet<int> SubIds = new SortedSet<int>();
 		private readonly List<Tilepart> _copyparts = new List<Tilepart>();
 		private string _copylabel;
 		#endregion Fields
@@ -120,8 +120,8 @@ namespace McdView
 
 			var itSep2        = new MenuItem("-");
 
-			var itLeft        = new MenuItem("left",          OnLeftClick);
-			var itRight       = new MenuItem("right",         OnRightClick);
+			var itLeft        = new MenuItem("left",          OnSwapLeftClick);
+			var itRight       = new MenuItem("right",         OnSwapRightClick);
 
 			var itSep3        = new MenuItem("-");
 
@@ -448,6 +448,7 @@ namespace McdView
 
 			var sels = new List<int>();
 			sels.Add(_f.SelId);
+
 			foreach (int sel in SubIds)
 				sels.Add(sel);
 
@@ -498,10 +499,8 @@ namespace McdView
 		/// Updates refs when a part or parts get deleted.
 		/// </summary>
 		/// <param name ="sels">a list of IDs that got deleted</param>
-		private void UpdateRefs(List<int> sels)
+		private void UpdateRefs(IList<int> sels)
 		{
-			sels.Sort();
-
 			Tilepart part;
 			McdRecord record;
 
@@ -551,7 +550,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnLeftClick(object sender, EventArgs e)
+		private void OnSwapLeftClick(object sender, EventArgs e)
 		{
 			_f.Changed = true;
 
@@ -583,7 +582,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnRightClick(object sender, EventArgs e)
+		private void OnSwapRightClick(object sender, EventArgs e)
 		{
 			_f.Changed = true;
 
@@ -890,82 +889,6 @@ namespace McdView
 			ScrollToPart(_f.SelId);
 		}
 
-
-		/// <summary>
-		/// @note If user has the openfile dialog open and double-clicks to open
-		/// a file that happens to be over the panel a mouse-up event fires. So
-		/// use MouseDown here.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnMouseDown(MouseEventArgs e)
-		{
-			Select();
-
-			if (e.Button == MouseButtons.Left
-				&& Parts != null && Parts.Length != 0
-				&& e.Y < Height - Scroller.Height)
-			{
-				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
-				if (id >= Parts.Length)
-				{
-					SubIds.Clear();
-					_f.SelId = -1;
-				}
-				else if (id != _f.SelId)
-				{
-					if (ModifierKeys == Keys.Control)
-					{
-						if (!SubIds.Contains(id))
-						{
-							SubIds.Add(id);
-							SubIds.Sort();
-						}
-						else
-							SubIds.Remove(id);
-
-						Invalidate();
-					}
-					else if (ModifierKeys == Keys.Shift)
-					{
-						if (id < _f.SelId)
-						{
-							for (int i = id; i != _f.SelId; ++i)
-							{
-								if (!SubIds.Contains(i))
-								{
-									SubIds.Add(i);
-									SubIds.Sort();
-									Invalidate();
-								}
-							}
-						}
-						else
-						{
-							for (int i = id; i != _f.SelId; --i)
-							{
-								if (!SubIds.Contains(i))
-								{
-									SubIds.Add(i);
-									SubIds.Sort();
-									Invalidate();
-								}
-							}
-						}
-					}
-					else
-					{
-						SubIds.Clear();
-						_f.SelId = id;
-					}
-				}
-				else
-				{
-					SubIds.Clear();
-					Invalidate();
-				}
-			}
-		}
-
 		/// <summary>
 		/// Scrolls the table by the mousewheel.
 		/// </summary>
@@ -987,6 +910,76 @@ namespace McdView
 						Scroller.Value = Scroller.Maximum - (Scroller.LargeChange - 1);
 					else
 						Scroller.Value += Scroller.LargeChange;
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// @note If user has the openfile dialog open and double-clicks to open
+		/// a file that happens to be over the panel a mouse-up event fires. So
+		/// use MouseDown here.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			Select();
+
+			if (e.Button == MouseButtons.Left
+				&& Parts != null && Parts.Length != 0
+				&& e.Y < Height - Scroller.Height)
+			{
+				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
+				if (id >= Parts.Length)
+				{
+					SubIds.Clear();
+					_f.SelId = -1;
+				}
+				else if (id == _f.SelId)
+				{
+					if (SubIds.Count != 0)
+					{
+						SubIds.Clear();
+						Invalidate();
+					}
+					else
+						_f.SelId = -1;
+				}
+				else // (id != _f.SelId)
+				{
+					if (ModifierKeys == Keys.Control && _f.SelId != -1)
+					{
+						if (SubIds.Contains(id))
+						{
+							SubIds.Remove(id);
+							Invalidate();
+						}
+						else
+						{
+							SubIds.Add(_f.SelId);
+							_f.SelId = id;
+						}
+					}
+					else if (ModifierKeys == Keys.Shift && _f.SelId != -1)
+					{
+						SubIds.Clear();
+						if (id < _f.SelId)
+						{
+							for (int i = _f.SelId; i != id; --i)
+								SubIds.Add(i);
+						}
+						else // (id > _f.SelId)
+						{
+							for (int i = _f.SelId; i != id; ++i)
+								SubIds.Add(i);
+						}
+						_f.SelId = id;
+					}
+					else
+					{
+						SubIds.Clear();
+						_f.SelId = id;
+					}
 				}
 			}
 		}
@@ -1037,66 +1030,116 @@ namespace McdView
 		/// Takes keyboard-input from the Form's KeyDown event to select a part.
 		/// </summary>
 		/// <param name="e"></param>
-		internal void KeyTile(KeyEventArgs e)
+		internal void KeyPartSelect(KeyEventArgs e)
 		{
-			// TODO: Ctrl and Shift to select 'SubIds'
-
 			switch (e.KeyCode)
 			{
 				case Keys.Left:
 				case Keys.Up:
 				case Keys.Back:
-					SubIds.Clear();
+					if ((ModifierKeys & Keys.Control) == 0)
+					{
+						SubIds.Clear();
+						if (_f.SelId == 0)
+							Invalidate();
+					}
+					else if (_f.SelId != 0)
+						SubIds.Add(_f.SelId);
+
 					if (_f.SelId != 0)
 						_f.SelId -= 1;
-					else
-						Invalidate();
 					break;
 
 				case Keys.Right:
 				case Keys.Down:
 				case Keys.Space:
-					SubIds.Clear();
+					if ((ModifierKeys & Keys.Control) == 0)
+					{
+						SubIds.Clear();
+						if (_f.SelId == Parts.Length - 1)
+							Invalidate();
+					}
+					else if (_f.SelId != Parts.Length - 1)
+						SubIds.Add(_f.SelId);
+
 					if (_f.SelId != Parts.Length - 1)
 						_f.SelId += 1;
-					else
-						Invalidate();
 					break;
 
 				case Keys.PageUp:
 				{
-					SubIds.Clear();
-					int d = Width / (XCImage.SpriteWidth32 + 1);
-					if (_f.SelId - d < 0)
-						_f.SelId = 0;
-					else
-						_f.SelId -= d;
-					Invalidate();
+					int id = _f.SelId - (Width / (XCImage.SpriteWidth32 + 1));
+					if (id < 0) id = 0;
+
+					if ((ModifierKeys & Keys.Control) == 0)
+					{
+						SubIds.Clear();
+						if (_f.SelId == 0)
+							Invalidate();
+					}
+					else if (_f.SelId != 0)
+					{
+						for (int i = _f.SelId; i != id; --i)
+							SubIds.Add(i);
+					}
+
+					if (_f.SelId != 0)
+						_f.SelId = id;
 					break;
 				}
 
 				case Keys.PageDown:
 				{
-					SubIds.Clear();
-					int d = Width / (XCImage.SpriteWidth32 + 1);
-					if (_f.SelId + d > Parts.Length - 1)
-						_f.SelId = Parts.Length - 1;
+					int id = _f.SelId + (Width / (XCImage.SpriteWidth32 + 1));
+					if (id > Parts.Length - 1) id = Parts.Length - 1;
+
+					if ((ModifierKeys & Keys.Control) == 0)
+					{
+						SubIds.Clear();
+						if (_f.SelId == Parts.Length - 1)
+							Invalidate();
+					}
 					else
-						_f.SelId += d;
-					Invalidate();
+					{
+						for (int i = _f.SelId; i != id; ++i)
+							SubIds.Add(i);
+					}
+
+					if (_f.SelId != Parts.Length - 1)
+						_f.SelId = id;
 					break;
 				}
 
 				case Keys.Home:
-					SubIds.Clear();
+					if ((ModifierKeys & Keys.Control) == 0)
+					{
+						SubIds.Clear();
+						if (_f.SelId == 0)
+							Invalidate();
+					}
+					else if (_f.SelId != 0)
+					{
+						for (int i = _f.SelId; i != 0; --i)
+							SubIds.Add(i);
+					}
+
 					_f.SelId = 0;
-					Invalidate();
 					break;
 
 				case Keys.End:
-					SubIds.Clear();
+					if ((ModifierKeys & Keys.Control) == 0)
+					{
+						SubIds.Clear();
+						if (_f.SelId == Parts.Length - 1)
+							Invalidate();
+					}
+					else if (_f.SelId != Parts.Length - 1)
+					{
+						for (int i = _f.SelId; i != Parts.Length - 1; ++i)
+							SubIds.Add(i);
+					}
+
 					_f.SelId = Parts.Length - 1;
-					Invalidate();
 					break;
 			}
 		}
