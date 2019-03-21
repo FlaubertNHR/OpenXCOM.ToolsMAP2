@@ -104,28 +104,29 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itAdd         = new MenuItem("add",           OnAddClick);
-			var itAddRange    = new MenuItem("add range ...", OnAddRangeClick);
+			var itAdd         = new MenuItem("add",           OnAddClick);			// TODO: d key
+			var itAddRange    = new MenuItem("add range ...", OnAddRangeClick);		// TODO: Ctrl+d key
 
 			var itSep0        = new MenuItem("-");
 
-			var itCut         = new MenuItem("cut",           OnCutClick);
-			var itCopy        = new MenuItem("copy",          OnCopyClick);
-			var itInsert      = new MenuItem("insert",        OnInsertClick);
-			var itDelete      = new MenuItem("delete",        OnDeleteClick);
+			var itCut         = new MenuItem("cut",           OnCutClick);			// TODO: Ctrl+x key
+			var itCopy        = new MenuItem("copy",          OnCopyClick);			// TODO: Ctrl+c key
+			var itInsert      = new MenuItem("insert after",  OnInsertClick);		// TODO: Ctrl+v key
+			var itDelete      = new MenuItem("delete",        OnDeleteClick);		// TODO: Delete key
 
 			var itSep1        = new MenuItem("-");
 
-			var itFile        = new MenuItem("file ...",      OnFileClick);
+			var itFile        = new MenuItem("file ...",      OnFileClick);			// TODO: f key
 
 			var itSep2        = new MenuItem("-");
 
-			var itLeft        = new MenuItem("left",          OnSwapLeftClick);
-			var itRight       = new MenuItem("right",         OnSwapRightClick);
+			var itLeft        = new MenuItem("swap left",     OnSwapLeftClick);		// TODO: + key
+			var itRight       = new MenuItem("swap right",    OnSwapRightClick);	// TODO: - key
 
 			var itSep3        = new MenuItem("-");
 
-			var itDeselect    = new MenuItem("deselect",      OnDeselectClick);
+			var itDeselect    = new MenuItem("deselect all",  OnDeselectClick);
+			// TODO: "select all"													// TODO: Ctrl+a key
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
