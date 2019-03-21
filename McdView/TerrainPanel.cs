@@ -15,7 +15,7 @@ namespace McdView
 	/// The panel that displays the entire MCD recordset with each record's
 	/// Sprite1 sprite.
 	/// </summary>
-	internal sealed class TilesetPanel
+	internal sealed class TerrainPanel
 		:
 			Panel
 	{
@@ -70,7 +70,7 @@ namespace McdView
 
 
 		#region cTor
-		internal TilesetPanel(McdviewF f)
+		internal TerrainPanel(McdviewF f)
 		{
 			_f = f;
 
@@ -697,7 +697,7 @@ namespace McdView
 		const int y3_sprite = y2_line;
 
 		/// <summary>
-		/// Paints this TilesetPanel.
+		/// Paints this TerrainPanel.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)

@@ -16,7 +16,7 @@ namespace McdView
 		{
 			InitializeComponent();
 
-			tb_records.Text = TilesetPanel._add.ToString();
+			tb_records.Text = TerrainPanel._add.ToString();
 			tb_records.Focus();
 		}
 		#endregion cTor
@@ -34,7 +34,7 @@ namespace McdView
 		#region Events
 		private void OnClick_Accept(object sender, EventArgs e)
 		{
-			TilesetPanel._add = Int32.Parse(tb_records.Text);
+			TerrainPanel._add = Int32.Parse(tb_records.Text);
 
 			DialogResult = DialogResult.OK;
 			Close();

@@ -35,7 +35,7 @@ namespace McdView
 		private string _pfeMcd;
 		internal string Label;
 
-		private TilesetPanel PartsPanel;
+		private TerrainPanel PartsPanel;
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
@@ -174,7 +174,7 @@ namespace McdView
 
 			LoadWindowMetrics();
 
-			PartsPanel = new TilesetPanel(this);
+			PartsPanel = new TerrainPanel(this);
 			gb_Collection.Controls.Add(PartsPanel);
 			PartsPanel.Width = gb_Collection.Width - 10;
 
