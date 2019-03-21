@@ -887,7 +887,7 @@ namespace McdView
 			{
 				Scroller.Value = TableWidth - Width;
 			}
-			ScrollToPart(_f.SelId);
+			ScrollToPart();
 		}
 
 		/// <summary>
@@ -1010,14 +1010,14 @@ namespace McdView
 
 		#region Methods
 		/// <summary>
-		/// Scrolls the panel to ensure that the part with a specified ID is
+		/// Scrolls the panel to ensure that the currently selected part is
 		/// fully displayed.
 		/// </summary>
-		internal void ScrollToPart(int id)
+		internal void ScrollToPart()
 		{
-			if (id != -1 && Scroller.Enabled)
+			if (_f.SelId != -1 && Scroller.Enabled)
 			{
-				int x = id * (XCImage.SpriteWidth32 + 1);
+				int x = _f.SelId * (XCImage.SpriteWidth32 + 1);
 				if (x < Scroller.Value)
 				{
 					Scroller.Value = x;

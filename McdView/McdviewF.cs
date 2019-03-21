@@ -105,7 +105,7 @@ namespace McdView
 						PopulateTextFields();
 						strict = strict0;
 
-						PartsPanel.ScrollToPart(_selId);
+						PartsPanel.ScrollToPart();
 
 						miZeroVals.Enabled = true;
 					}
