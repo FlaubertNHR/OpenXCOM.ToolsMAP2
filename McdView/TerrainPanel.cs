@@ -998,6 +998,10 @@ namespace McdView
 				case Keys.Up:
 				case Keys.Right:
 				case Keys.Down:
+				case Keys.Shift | Keys.Left:
+				case Keys.Shift | Keys.Up:
+				case Keys.Shift | Keys.Right:
+				case Keys.Shift | Keys.Down:
 					return true;
 			}
 			return base.IsInputKey(keyData);
@@ -1027,7 +1031,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Takes keyboard-input from the Form's KeyDown event to select a part.
+		/// Takes keyboard-input from the Form's KeyDown event to select a part
+		/// or parts.
 		/// </summary>
 		/// <param name="e"></param>
 		internal void KeyPartSelect(KeyEventArgs e)
@@ -1037,11 +1042,16 @@ namespace McdView
 				case Keys.Left:
 				case Keys.Up:
 				case Keys.Back:
-					if ((ModifierKeys & Keys.Control) == 0)
+					if (!e.Control)
 					{
-						SubIds.Clear();
-						if (_f.SelId == 0)
-							Invalidate();
+						if (!e.Shift)
+						{
+							SubIds.Clear();
+							if (_f.SelId == 0)
+								Invalidate();
+						}
+						else if (_f.SelId != 0)
+							SubIds.Remove(_f.SelId);
 					}
 					else if (_f.SelId != 0)
 						SubIds.Add(_f.SelId);
@@ -1053,11 +1063,16 @@ namespace McdView
 				case Keys.Right:
 				case Keys.Down:
 				case Keys.Space:
-					if ((ModifierKeys & Keys.Control) == 0)
+					if (!e.Control)
 					{
-						SubIds.Clear();
-						if (_f.SelId == Parts.Length - 1)
-							Invalidate();
+						if (!e.Shift)
+						{
+							SubIds.Clear();
+							if (_f.SelId == Parts.Length - 1)
+								Invalidate();
+						}
+						else if (_f.SelId != Parts.Length - 1)
+							SubIds.Remove(_f.SelId);
 					}
 					else if (_f.SelId != Parts.Length - 1)
 						SubIds.Add(_f.SelId);
@@ -1071,11 +1086,19 @@ namespace McdView
 					int id = _f.SelId - (Width / (XCImage.SpriteWidth32 + 1));
 					if (id < 0) id = 0;
 
-					if ((ModifierKeys & Keys.Control) == 0)
+					if (!e.Control)
 					{
-						SubIds.Clear();
-						if (_f.SelId == 0)
-							Invalidate();
+						if (!e.Shift)
+						{
+							SubIds.Clear();
+							if (_f.SelId == 0)
+								Invalidate();
+						}
+						else if (_f.SelId != 0)
+						{
+							for (int i = _f.SelId; i != id; --i)
+								SubIds.Remove(i);
+						}
 					}
 					else if (_f.SelId != 0)
 					{
@@ -1093,13 +1116,21 @@ namespace McdView
 					int id = _f.SelId + (Width / (XCImage.SpriteWidth32 + 1));
 					if (id > Parts.Length - 1) id = Parts.Length - 1;
 
-					if ((ModifierKeys & Keys.Control) == 0)
+					if (!e.Control)
 					{
-						SubIds.Clear();
-						if (_f.SelId == Parts.Length - 1)
-							Invalidate();
+						if (!e.Shift)
+						{
+							SubIds.Clear();
+							if (_f.SelId == Parts.Length - 1)
+								Invalidate();
+						}
+						else if (_f.SelId != Parts.Length - 1)
+						{
+							for (int i = _f.SelId; i != id; ++i)
+								SubIds.Remove(i);
+						}
 					}
-					else
+					else if (_f.SelId != Parts.Length - 1)
 					{
 						for (int i = _f.SelId; i != id; ++i)
 							SubIds.Add(i);
@@ -1111,11 +1142,19 @@ namespace McdView
 				}
 
 				case Keys.Home:
-					if ((ModifierKeys & Keys.Control) == 0)
+					if (!e.Control)
 					{
-						SubIds.Clear();
-						if (_f.SelId == 0)
-							Invalidate();
+						if (!e.Shift)
+						{
+							SubIds.Clear();
+							if (_f.SelId == 0)
+								Invalidate();
+						}
+						else if (_f.SelId != 0)
+						{
+							for (int i = _f.SelId; i != 0; --i)
+								SubIds.Remove(i);
+						}
 					}
 					else if (_f.SelId != 0)
 					{
@@ -1127,11 +1166,19 @@ namespace McdView
 					break;
 
 				case Keys.End:
-					if ((ModifierKeys & Keys.Control) == 0)
+					if (!e.Control)
 					{
-						SubIds.Clear();
-						if (_f.SelId == Parts.Length - 1)
-							Invalidate();
+						if (!e.Shift)
+						{
+							SubIds.Clear();
+							if (_f.SelId == Parts.Length - 1)
+								Invalidate();
+						}
+						else if (_f.SelId != Parts.Length - 1)
+						{
+							for (int i = _f.SelId; i != Parts.Length - 1; ++i)
+								SubIds.Remove(i);
+						}
 					}
 					else if (_f.SelId != Parts.Length - 1)
 					{
