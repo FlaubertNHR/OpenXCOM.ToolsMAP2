@@ -177,6 +177,7 @@ namespace McdView
 			PartsPanel = new TerrainPanel(this);
 			gb_Collection.Controls.Add(PartsPanel);
 			PartsPanel.Width = gb_Collection.Width - 10;
+			SetDoubleBuffered(PartsPanel);
 
 			tb_SpriteShade.Text = SpriteShadeInt.ToString();
 
@@ -701,6 +702,7 @@ namespace McdView
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					ResourceInfo.ReloadSprites = true;
+					SelId = -1;
 
 					_pfeMcd = ofd.FileName;
 					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
@@ -743,7 +745,6 @@ namespace McdView
 						}
 					}
 
-					SelId = -1;
 					ResourceInfo.ReloadSprites = false;
 
 					_changed = false;
@@ -770,6 +771,7 @@ namespace McdView
 			if (File.Exists(_pfeMcd))
 			{
 				ResourceInfo.ReloadSprites = true;
+				SelId = -1;
 
 				using (var bs = new BufferedStream(File.OpenRead(_pfeMcd)))
 				{
@@ -809,7 +811,6 @@ namespace McdView
 					}
 				}
 
-				SelId = -1;
 				ResourceInfo.ReloadSprites = false;
 
 				Changed = false;

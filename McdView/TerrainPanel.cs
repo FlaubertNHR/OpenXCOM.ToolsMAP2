@@ -74,11 +74,12 @@ namespace McdView
 		{
 			_f = f;
 
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw
-				   | ControlStyles.Selectable, true);
+//			SetStyle(ControlStyles.OptimizedDoubleBuffer
+//				   | ControlStyles.AllPaintingInWmPaint
+//				   | ControlStyles.UserPaint
+//				   | ControlStyles.ResizeRedraw
+//				   | ControlStyles.Selectable, true);
+			SetStyle(ControlStyles.Selectable, true);
 
 			Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
 			BackColor = SystemColors.Desktop;
