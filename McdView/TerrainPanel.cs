@@ -952,55 +952,78 @@ namespace McdView
 			{
 				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
 
-				if (id >= Parts.Length)
+				if (id < Parts.Length)
 				{
-					SubIds.Clear();
-					_f.SelId = -1;
-				}
-				else if (id == _f.SelId && SubIds.Count != 0)
-				{
-					SubIds.Clear();
-					Invalidate();
-//					if (SubIds.Count != 0) // or toggle on/off selid ->
-//					{
-//						SubIds.Clear();
-//						Invalidate();
-//					}
-//					else
-//						_f.SelId = -1;
-				}
-				else if (ModifierKeys == Keys.Control && _f.SelId != -1)
-				{
-					if (SubIds.Contains(id))
+					if (id == _f.SelId && SubIds.Count != 0)
 					{
-						SubIds.Remove(id);
-						Invalidate();
+						if ((ModifierKeys & (Keys.Control | Keys.Shift)) != 0)
+						{
+							int idl, idr;
+
+							for (idl = id; idl != -1; --idl) // find subid left ->
+							{
+								if (SubIds.Contains(idl))
+									break;
+							}
+
+							for (idr = id; idr != Parts.Length; ++idr) // find subid right ->
+							{
+								if (SubIds.Contains(idr))
+									break;
+							}
+
+							if      (idl == -1)                        id = idr; // find closer of subid left/right ->
+							else if (idr == Parts.Length)              id = idl;
+							else if (idr - _f.SelId <= _f.SelId - idl) id = idr; // bias: right
+							else                                       id = idl;
+
+							SubIds.Remove(_f.SelId);
+							_f.SelId = id;
+						}
+						else
+						{
+							SubIds.Clear();
+							Invalidate();
+						}
+					}
+					else if (ModifierKeys == Keys.Control && _f.SelId != -1)
+					{
+						if (SubIds.Contains(id))
+						{
+							SubIds.Remove(id);
+							Invalidate();
+						}
+						else if (id != _f.SelId)
+						{
+							SubIds.Add(_f.SelId);
+							_f.SelId = id;
+						}
+					}
+					else if (ModifierKeys == Keys.Shift && _f.SelId != -1)
+					{
+						SubIds.Clear();
+
+						if (id == _f.SelId)
+						{
+							id = -1;
+						}
+						if (id < _f.SelId)
+						{
+							for (int i = _f.SelId; i != id; --i)
+								SubIds.Add(i);
+						}
+						else // (id > _f.SelId)
+						{
+							for (int i = _f.SelId; i != id; ++i)
+								SubIds.Add(i);
+						}
+						_f.SelId = id;
 					}
 					else
 					{
-						SubIds.Add(_f.SelId);
+						SubIds.Clear();
 						_f.SelId = id;
 					}
-				}
-				else if (ModifierKeys == Keys.Shift && _f.SelId != -1)
-				{
-					SubIds.Clear();
-					if (id < _f.SelId)
-					{
-						for (int i = _f.SelId; i != id; --i)
-							SubIds.Add(i);
-					}
-					else // (id > _f.SelId)
-					{
-						for (int i = _f.SelId; i != id; ++i)
-							SubIds.Add(i);
-					}
-					_f.SelId = id;
-				}
-				else
-				{
-					SubIds.Clear();
-					_f.SelId = id;
 				}
 			}
 		}
