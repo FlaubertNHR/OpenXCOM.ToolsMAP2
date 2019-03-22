@@ -522,20 +522,18 @@ namespace McdView
 						&& Parts.Length != 0)
 					{
 						PartsPanel.Select();
-						PartsPanel.KeyPartSelect(e);
+						PartsPanel.KeyInput(e);
 					}
 					break;
 
 				default:
 					if (   !bar_IsoLoft.Focused		// these controls need navigation key-input so
 						&& !bar_SpriteShade.Focused	// don't pass the keys on if they are focused
-						&& SelId != -1
 						&& Parts != null
-						&& Parts.Length != 0
 						&& !isTextboxFocused())
 					{
 						PartsPanel.Select();
-						PartsPanel.KeyPartSelect(e);
+						PartsPanel.KeyInput(e);
 					}
 					break;
 			}

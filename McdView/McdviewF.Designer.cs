@@ -572,8 +572,8 @@
 			// 
 			this.miSaveas.Enabled = false;
 			this.miSaveas.Index = 4;
-			this.miSaveas.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
-			this.miSaveas.Text = "Save MCD file &as ...";
+			this.miSaveas.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
+			this.miSaveas.Text = "Sav&e MCD file as ...";
 			this.miSaveas.Click += new System.EventHandler(this.OnClick_Saveas);
 			// 
 			// miSeparator1
@@ -624,8 +624,8 @@
 			// 
 			this.miZeroVals.Enabled = false;
 			this.miZeroVals.Index = 0;
-			this.miZeroVals.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
-			this.miZeroVals.Text = "Z&ero this part\'s values";
+			this.miZeroVals.Shortcut = System.Windows.Forms.Shortcut.Ctrl0;
+			this.miZeroVals.Text = "Zero this part\'s values";
 			this.miZeroVals.Click += new System.EventHandler(this.OnClick_ZeroVals);
 			// 
 			// lbl20_scang

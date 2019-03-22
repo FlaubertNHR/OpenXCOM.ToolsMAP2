@@ -104,29 +104,29 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itAdd         = new MenuItem("add",           OnAddClick);			// TODO: d key
-			var itAddRange    = new MenuItem("add range ...", OnAddRangeClick);		// TODO: Ctrl+d key
+			var itAdd         = new MenuItem("add",             OnAddClick);			// d key
+			var itAddRange    = new MenuItem("add range ...",   OnAddRangeClick);		// Ctrl+d key
 
 			var itSep0        = new MenuItem("-");
 
-			var itCut         = new MenuItem("cut",           OnCutClick);			// TODO: Ctrl+x key
-			var itCopy        = new MenuItem("copy",          OnCopyClick);			// TODO: Ctrl+c key
-			var itInsert      = new MenuItem("insert after",  OnInsertClick);		// TODO: Ctrl+v key
-			var itDelete      = new MenuItem("delete",        OnDeleteClick);		// TODO: Delete key
+			var itCut         = new MenuItem("cut",             OnCutClick);			// Ctrl+x key
+			var itCopy        = new MenuItem("copy",            OnCopyClick);			// Ctrl+c key
+			var itInsert      = new MenuItem("insert after",    OnInsertClick);			// Ctrl+v key
+			var itDelete      = new MenuItem("delete",          OnDeleteClick);			// Delete key
 
 			var itSep1        = new MenuItem("-");
 
-			var itFile        = new MenuItem("file ...",      OnFileClick);			// TODO: f key
+			var itFile        = new MenuItem("append file ...", OnFileClick);			// f key
 
 			var itSep2        = new MenuItem("-");
 
-			var itLeft        = new MenuItem("swap left",     OnSwapLeftClick);		// TODO: + key
-			var itRight       = new MenuItem("swap right",    OnSwapRightClick);	// TODO: - key
+			var itLeft        = new MenuItem("swap left",       OnSwapLeftClick);		// - key
+			var itRight       = new MenuItem("swap right",      OnSwapRightClick);		// + key
 
 			var itSep3        = new MenuItem("-");
 
-			var itSelect      = new MenuItem("select all",    OnSelectAllClick);	// TODO: Ctrl+a key
-			var itDeselect    = new MenuItem("deselect all",  OnDeselectAllClick);	// Esc
+			var itSelect      = new MenuItem("select all",      OnSelectAllClick);		// Ctrl+a key
+			var itDeselect    = new MenuItem("deselect all",    OnDeselectAllClick);	// Esc
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
@@ -158,6 +158,7 @@ namespace McdView
 		/// <summary>
 		/// Determines which contextmenu commands are enabled when the menu
 		/// is opened.
+		/// IMPORTANT: The conditions shall be synched w/ KeyInput().
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -179,11 +180,11 @@ namespace McdView
 			Context.MenuItems[10].Enabled =          _f.SelId > 0;					// left
 			Context.MenuItems[11].Enabled = selid && _f.SelId != Parts.Length - 1;	// right
 
-			Context.MenuItems[13].Enabled = parts;									// select
+			Context.MenuItems[13].Enabled = parts && Parts.Length != 0;				// select
 			Context.MenuItems[14].Enabled = selid;									// deselect
 		}
 
-		/// <summary>
+/*		/// <summary>
 		/// Closes the contextmenu.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -191,7 +192,7 @@ namespace McdView
 		private void OnIdClick(object sender, EventArgs e)
 		{
 			Context.Dispose();
-		}
+		} */
 
 		/// <summary>
 		/// Adds a blank part to the parts-array.
@@ -670,7 +671,10 @@ namespace McdView
 			for (int i = 0; i != Parts.Length - 1; ++i)
 				SubIds.Add(i);
 
-			_f.SelId = Parts.Length - 1;
+			if (_f.SelId != Parts.Length - 1)
+				_f.SelId  = Parts.Length - 1;
+			else
+				Invalidate();
 		}
 
 		/// <summary>
@@ -1049,34 +1053,40 @@ namespace McdView
 		/// or parts.
 		/// </summary>
 		/// <param name="e"></param>
-		internal void KeyPartSelect(KeyEventArgs e)
+		internal void KeyInput(KeyEventArgs e)
 		{
 			switch (e.KeyCode)
 			{
 				case Keys.Left:
 				case Keys.Up:
 				case Keys.Back:
-					if (!e.Control)
+					if (_f.SelId != -1)
 					{
-						if (!e.Shift)
+						if (!e.Control)
 						{
-							SubIds.Clear();
-							if (_f.SelId == 0)
-								Invalidate();
+							if (!e.Shift)
+							{
+								SubIds.Clear();
+								if (_f.SelId == 0)
+									Invalidate();
+							}
+							else if (_f.SelId != 0)
+								SubIds.Remove(_f.SelId);
 						}
 						else if (_f.SelId != 0)
-							SubIds.Remove(_f.SelId);
-					}
-					else if (_f.SelId != 0)
-						SubIds.Add(_f.SelId);
+							SubIds.Add(_f.SelId);
 
-					if (_f.SelId != 0)
-						_f.SelId -= 1;
+						if (_f.SelId != 0)
+							_f.SelId -= 1;
+					}
 					break;
 
 				case Keys.Right:
 				case Keys.Down:
-				case Keys.Space:
+					if (_f.SelId != -1)
+						goto case Keys.Space;
+					break;
+				case Keys.Space: // at present only the spacebar can change the selected id from #-1 to #0
 					if (!e.Control)
 					{
 						if (!e.Shift)
@@ -1096,115 +1106,182 @@ namespace McdView
 					break;
 
 				case Keys.PageUp:
-				{
-					int id = _f.SelId - (Width / (XCImage.SpriteWidth32 + 1));
-					if (id < 0) id = 0;
-
-					if (!e.Control)
+					if (_f.SelId != -1)
 					{
-						if (!e.Shift)
+						int id = _f.SelId - (Width / (XCImage.SpriteWidth32 + 1));
+						if (id < 0) id = 0;
+	
+						if (!e.Control)
 						{
-							SubIds.Clear();
-							if (_f.SelId == 0)
-								Invalidate();
+							if (!e.Shift)
+							{
+								SubIds.Clear();
+								if (_f.SelId == 0)
+									Invalidate();
+							}
+							else if (_f.SelId != 0)
+							{
+								for (int i = _f.SelId; i != id; --i)
+									SubIds.Remove(i);
+							}
 						}
 						else if (_f.SelId != 0)
 						{
 							for (int i = _f.SelId; i != id; --i)
-								SubIds.Remove(i);
+								SubIds.Add(i);
 						}
+	
+						if (_f.SelId != 0)
+							_f.SelId = id;
 					}
-					else if (_f.SelId != 0)
-					{
-						for (int i = _f.SelId; i != id; --i)
-							SubIds.Add(i);
-					}
-
-					if (_f.SelId != 0)
-						_f.SelId = id;
 					break;
-				}
 
 				case Keys.PageDown:
-				{
-					int id = _f.SelId + (Width / (XCImage.SpriteWidth32 + 1));
-					if (id > Parts.Length - 1) id = Parts.Length - 1;
-
-					if (!e.Control)
+					if (_f.SelId != -1)
 					{
-						if (!e.Shift)
+						int id = _f.SelId + (Width / (XCImage.SpriteWidth32 + 1));
+						if (id > Parts.Length - 1) id = Parts.Length - 1;
+	
+						if (!e.Control)
 						{
-							SubIds.Clear();
-							if (_f.SelId == Parts.Length - 1)
-								Invalidate();
+							if (!e.Shift)
+							{
+								SubIds.Clear();
+								if (_f.SelId == Parts.Length - 1)
+									Invalidate();
+							}
+							else if (_f.SelId != Parts.Length - 1)
+							{
+								for (int i = _f.SelId; i != id; ++i)
+									SubIds.Remove(i);
+							}
 						}
 						else if (_f.SelId != Parts.Length - 1)
 						{
 							for (int i = _f.SelId; i != id; ++i)
-								SubIds.Remove(i);
+								SubIds.Add(i);
 						}
+	
+						if (_f.SelId != Parts.Length - 1)
+							_f.SelId = id;
 					}
-					else if (_f.SelId != Parts.Length - 1)
-					{
-						for (int i = _f.SelId; i != id; ++i)
-							SubIds.Add(i);
-					}
-
-					if (_f.SelId != Parts.Length - 1)
-						_f.SelId = id;
 					break;
-				}
 
 				case Keys.Home:
-					if (!e.Control)
+					if (_f.SelId != -1)
 					{
-						if (!e.Shift)
+						if (!e.Control)
 						{
-							SubIds.Clear();
-							if (_f.SelId == 0)
-								Invalidate();
+							if (!e.Shift)
+							{
+								SubIds.Clear();
+								if (_f.SelId == 0)
+									Invalidate();
+							}
+							else if (_f.SelId != 0)
+							{
+								for (int i = _f.SelId; i != 0; --i)
+									SubIds.Remove(i);
+							}
 						}
 						else if (_f.SelId != 0)
 						{
 							for (int i = _f.SelId; i != 0; --i)
-								SubIds.Remove(i);
+								SubIds.Add(i);
 						}
-					}
-					else if (_f.SelId != 0)
-					{
-						for (int i = _f.SelId; i != 0; --i)
-							SubIds.Add(i);
-					}
 
-					_f.SelId = 0;
+						_f.SelId = 0;
+					}
 					break;
 
 				case Keys.End:
-					if (!e.Control)
+					if (_f.SelId != -1)
 					{
-						if (!e.Shift)
+						if (!e.Control)
 						{
-							SubIds.Clear();
-							if (_f.SelId == Parts.Length - 1)
-								Invalidate();
+							if (!e.Shift)
+							{
+								SubIds.Clear();
+								if (_f.SelId == Parts.Length - 1)
+									Invalidate();
+							}
+							else if (_f.SelId != Parts.Length - 1)
+							{
+								for (int i = _f.SelId; i != Parts.Length - 1; ++i)
+									SubIds.Remove(i);
+							}
 						}
 						else if (_f.SelId != Parts.Length - 1)
 						{
 							for (int i = _f.SelId; i != Parts.Length - 1; ++i)
-								SubIds.Remove(i);
+								SubIds.Add(i);
 						}
-					}
-					else if (_f.SelId != Parts.Length - 1)
-					{
-						for (int i = _f.SelId; i != Parts.Length - 1; ++i)
-							SubIds.Add(i);
-					}
 
-					_f.SelId = Parts.Length - 1;
+						_f.SelId = Parts.Length - 1;
+					}
+					break;
+
+
+				// Edit functions (keyboard) follow ...
+				// IMPORTANT: The conditions shall be synched w/ OnPopup_Context().
+				case Keys.D:
+					if (Parts != null)
+					{
+						if (!e.Control)											// add
+							OnAddClick(null, EventArgs.Empty);
+						else													// add range
+							OnAddRangeClick(null, EventArgs.Empty);
+					}
+					break;
+
+
+				case Keys.X:													// cut
+					if (e.Control && _f.SelId != -1)
+						OnCutClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.C:													// copy
+					if (e.Control && _f.SelId != -1)
+						OnCopyClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.V:													// insert
+					if (e.Control && Parts != null && _copyparts.Count != 0)
+						OnInsertClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.Delete:												// delete
+					if (_f.SelId != -1)
+						OnDeleteClick(null, EventArgs.Empty);
+					break;
+
+
+				case Keys.OemMinus: // drugs ...
+				case Keys.Subtract:												// swap left
+					if (_f.SelId > 0)
+						OnSwapLeftClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.Oemplus: // drugs ...
+				case Keys.Add:													// swap right
+					if (_f.SelId != -1 && _f.SelId != Parts.Length - 1)
+						OnSwapRightClick(null, EventArgs.Empty);
+					break;
+
+
+				case Keys.A:													// select all
+					if (e.Control && Parts != null && Parts.Length != 0)
+						OnSelectAllClick(null, EventArgs.Empty);
+					break;
+
+				// NOTE: Escape for deselect all is handled by the caller: McdviewF.OnKeyDown().
+
+				case Keys.F:													// append file
+					if (Parts != null)
+						OnFileClick(null, EventArgs.Empty);
 					break;
 			}
 		}
-
 
 /*		/// <summary>
 		/// Gets the loc of the currently selected tile relative to the table.
