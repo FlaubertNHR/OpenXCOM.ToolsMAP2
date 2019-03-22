@@ -957,15 +957,17 @@ namespace McdView
 					SubIds.Clear();
 					_f.SelId = -1;
 				}
-				else if (id == _f.SelId)
+				else if (id == _f.SelId && SubIds.Count != 0)
 				{
-					if (SubIds.Count != 0)
-					{
-						SubIds.Clear();
-						Invalidate();
-					}
-					else
-						_f.SelId = -1;
+					SubIds.Clear();
+					Invalidate();
+//					if (SubIds.Count != 0) // or toggle on/off selid ->
+//					{
+//						SubIds.Clear();
+//						Invalidate();
+//					}
+//					else
+//						_f.SelId = -1;
 				}
 				else if (ModifierKeys == Keys.Control && _f.SelId != -1)
 				{
