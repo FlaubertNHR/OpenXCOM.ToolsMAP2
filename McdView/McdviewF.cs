@@ -564,6 +564,7 @@ namespace McdView
 		#region Menuitems
 		/// <summary>
 		/// Handles clicking the File|Create menuitem.
+		/// Creates an MCD file. See also OnClick_Open() and OnClick_Reload().
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -596,45 +597,77 @@ namespace McdView
 
 				if (sfd.ShowDialog() == DialogResult.OK)
 				{
-					_pfeMcd = sfd.FileName;
-					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
+					// NOTE: Would need to close the currently loaded file to
+					// release its handle if trying to move or create that file.
 
-					ResourceInfo.ReloadSprites = true;
-					SelId = -1;
-
-					Parts = new Tilepart[0];
-
-					Palette pal;
-					if (miPaletteUfo.Checked)
-						pal = Palette.UfoBattle;
+					if (sfd.FileName == _pfeMcd)
+					{
+						MessageBox.Show(
+									this,
+									"Creating a file that is currently loaded is not allowed."
+										+ Environment.NewLine + Environment.NewLine
+										+ "Create a different file or delete all records in this file.",
+									" punt",
+									MessageBoxButtons.OK,
+									MessageBoxIcon.Stop,
+									MessageBoxDefaultButton.Button1,
+									0);
+					}
 					else
-						pal = Palette.TftdBattle;
+					{
+						_pfeMcd = sfd.FileName;
+						Label = Path.GetFileNameWithoutExtension(_pfeMcd);
 
-					// NOTE: The spriteset is also maintained by a pointer to it
-					// that's stored in each tilepart.
-					// NOTE: Can be null.
-					Spriteset = ResourceInfo.LoadSpriteset(
-														Label,
-														Path.GetDirectoryName(_pfeMcd),
-														2,
-														pal,
-														true);
+						if (File.Exists(_pfeMcd))
+						{
+							string bak = Path.Combine(Path.GetDirectoryName(_pfeMcd), GlobalsXC.MV_Backup);
+							Directory.CreateDirectory(bak);
 
-					ResourceInfo.ReloadSprites = false;
+							bak = Path.Combine(bak, Path.GetFileName(_pfeMcd));
+							File.Delete(bak);
+							File.Move(_pfeMcd, bak);
+						}
 
-					Text = "McdView - " + _pfeMcd;
-					Changed = true;
+						File.Create(_pfeMcd);
 
-					miSave  .Enabled =
-					miSaveas.Enabled = true;
+						ResourceInfo.ReloadSprites = true;
+						SelId = -1;
 
-					PartsPanel.Select();
+						Parts = new Tilepart[0];
+
+						Palette pal;
+						if (miPaletteUfo.Checked)
+							pal = Palette.UfoBattle;
+						else
+							pal = Palette.TftdBattle;
+
+						// NOTE: The spriteset is also maintained by a pointer to it
+						// that's stored in each tilepart.
+						// NOTE: Can be null.
+						Spriteset = ResourceInfo.LoadSpriteset(
+															Label,
+															Path.GetDirectoryName(_pfeMcd),
+															2,
+															pal,
+															true);
+
+						ResourceInfo.ReloadSprites = false;
+
+						Text = "McdView - " + _pfeMcd;
+
+						miSave  .Enabled =
+						miSaveas.Enabled =
+						miReload.Enabled = true;
+
+						PartsPanel.Select();
+					}
 				}
 			}
 		}
 
 		/// <summary>
 		/// Handles clicking the File|Open menuitem.
+		/// Loads an MCD file. See also OnClick_Create() and OnClick_Reload().
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -717,12 +750,85 @@ namespace McdView
 					Text = "McdView - " + _pfeMcd;
 
 					miSave  .Enabled =
-					miSaveas.Enabled = true;
+					miSaveas.Enabled =
+					miReload.Enabled = true;
 
 					PartsPanel.Select();
 				}
 			}
 		}
+
+		/// <summary>
+		/// Handles clicking the File|Reload menuitem.
+		/// Reloads the currently loaded MCD file. See also OnClick_Create() and
+		/// OnClick_Open().
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_Reload(object sender, EventArgs e)
+		{
+			if (File.Exists(_pfeMcd))
+			{
+				ResourceInfo.ReloadSprites = true;
+
+				using (var bs = new BufferedStream(File.OpenRead(_pfeMcd)))
+				{
+					Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+
+					Palette pal;
+					if (miPaletteUfo.Checked)
+						pal = Palette.UfoBattle;
+					else
+						pal = Palette.TftdBattle;
+
+					// NOTE: The spriteset is also maintained by a pointer to it
+					// that's stored in each tilepart.
+					// NOTE: Can be null.
+					Spriteset = ResourceInfo.LoadSpriteset(
+														Label,
+														Path.GetDirectoryName(_pfeMcd),
+														2,
+														pal,
+														true);
+
+					for (int id = 0; id != Parts.Length; ++id)
+					{
+						var bindata = new byte[TilepartFactory.Length];
+						bs.Read(bindata, 0, TilepartFactory.Length);
+						McdRecord record = McdRecordFactory.CreateRecord(bindata);
+
+						Parts[id] = new Tilepart(id, Spriteset, record);
+					}
+
+					Tilepart part;
+					for (int id = 0; id != Parts.Length; ++id)
+					{
+						part = Parts[id];
+						part.Dead      = TilepartFactory.GetDeadPart(     Label, id, part.Record, Parts);
+						part.Alternate = TilepartFactory.GetAlternatePart(Label, id, part.Record, Parts);
+					}
+				}
+
+				SelId = -1;
+				ResourceInfo.ReloadSprites = false;
+
+				Changed = false;
+
+				PartsPanel.Select();
+			}
+			else
+			{
+				MessageBox.Show(
+							this,
+							"The file no longer exists.",
+							" File invalid",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Exclamation,
+							MessageBoxDefaultButton.Button1,
+							0);
+			}
+		}
+
 
 		/// <summary>
 		/// Handles clicking the File|Save menuitem.

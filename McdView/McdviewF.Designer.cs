@@ -14,6 +14,7 @@
 		private System.Windows.Forms.MenuItem miOpen;
 		private System.Windows.Forms.MenuItem miSave;
 		private System.Windows.Forms.MenuItem miSaveas;
+		private System.Windows.Forms.MenuItem miReload;
 		private System.Windows.Forms.MenuItem miSeparator1;
 		private System.Windows.Forms.MenuItem miQuit;
 		private System.Windows.Forms.MenuItem miPaletteMenu;
@@ -274,6 +275,7 @@
 			this.miOpen = new System.Windows.Forms.MenuItem();
 			this.miSave = new System.Windows.Forms.MenuItem();
 			this.miSaveas = new System.Windows.Forms.MenuItem();
+			this.miReload = new System.Windows.Forms.MenuItem();
 			this.miSeparator1 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
@@ -537,6 +539,7 @@
 			this.miOpen,
 			this.miSave,
 			this.miSaveas,
+			this.miReload,
 			this.miSeparator1,
 			this.miQuit});
 			this.miFileMenu.Text = "&File";
@@ -576,14 +579,22 @@
 			this.miSaveas.Text = "Sav&e MCD file as ...";
 			this.miSaveas.Click += new System.EventHandler(this.OnClick_Saveas);
 			// 
+			// miReload
+			// 
+			this.miReload.Enabled = false;
+			this.miReload.Index = 5;
+			this.miReload.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
+			this.miReload.Text = "Re&load MCD file";
+			this.miReload.Click += new System.EventHandler(this.OnClick_Reload);
+			// 
 			// miSeparator1
 			// 
-			this.miSeparator1.Index = 5;
+			this.miSeparator1.Index = 6;
 			this.miSeparator1.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 6;
+			this.miQuit.Index = 7;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnClick_Quit);
