@@ -145,7 +145,8 @@ namespace XCom
 
 		/// <summary>
 		/// Returns a copy of this Tilepart with a deep-cloned Record.
-		/// All referred to sprites and tileparts maintain their objects.
+		/// But any referred to anisprites and dead/alternate tileparts maintain
+		/// their current objects.
 		/// - classvars:
 		///   Record
 		///   Sprites
@@ -159,10 +160,14 @@ namespace XCom
 		/// <returns></returns>
 		public Tilepart Clone()
 		{
-			return new Tilepart(
-							TerId,
-							_spriteset,
-							Record.Clone());
+			var part = new Tilepart(
+								TerId,
+								_spriteset,
+								Record.Clone());
+			part.Dead      = Dead;
+			part.Alternate = Alternate;
+
+			return part;
 		}
 		#endregion
 	}
