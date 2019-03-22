@@ -144,10 +144,10 @@ namespace McdView
 		#region Enter (options)
 		private void OnEnterStrict(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "STRICT enforces valid values in XCOM."
-								 + " Unchecked allows values outside what's expected (for expert experts only"
-								 + " - ie people who code their own XCOM executable and require extended values)."
-								 + " This value is not saved."
+			lbl_Description.Text = "STRICT enforces valid values for XCOM. Unchecked allows values"
+								 + " outside what's expected (for expert experts only - ie people"
+								 + " who code their own XCOM executable and require extended values)."
+								 + " This setting is not saved."
 								 + Environment.NewLine + Environment.NewLine
 								 + "default checked";
 		}
@@ -156,7 +156,7 @@ namespace McdView
 		{
 			lbl_Description.Text = "SpriteShade is an inverse gamma-value only for sprites drawn in this app."
 								 + " It has nothing to do with palette-based sprite-shading in XCOM itself."
-								 + " This value is not saved."
+								 + " This setting is not saved."
 								 + Environment.NewLine + Environment.NewLine
 								 + "1..100, unity 33, default -1 off";
 		}

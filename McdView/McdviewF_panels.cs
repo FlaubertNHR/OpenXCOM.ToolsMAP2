@@ -181,22 +181,44 @@ namespace McdView
 
 				if (phase != 8)
 				{
-					int id;
+					string id;
 					switch (phase)
 					{
-						default: id = Int32.Parse(tb0_phase0.Text); break; // #0
-						case 1:  id = Int32.Parse(tb1_phase1.Text); break;
-						case 2:  id = Int32.Parse(tb2_phase2.Text); break;
-						case 3:  id = Int32.Parse(tb3_phase3.Text); break;
-						case 4:  id = Int32.Parse(tb4_phase4.Text); break;
-						case 5:  id = Int32.Parse(tb5_phase5.Text); break;
-						case 6:  id = Int32.Parse(tb6_phase6.Text); break;
-						case 7:  id = Int32.Parse(tb7_phase7.Text); break;
+						default: id = tb0_phase0.Text; break; // #0
+						case 1:  id = tb1_phase1.Text; break;
+						case 2:  id = tb2_phase2.Text; break;
+						case 3:  id = tb3_phase3.Text; break;
+						case 4:  id = tb4_phase4.Text; break;
+						case 5:  id = tb5_phase5.Text; break;
+						case 6:  id = tb6_phase6.Text; break;
+						case 7:  id = tb7_phase7.Text; break;
 					}
 
-					using (var f = new SpritesetF(this, phase, id))
+					if (e.Button == MouseButtons.Left)
 					{
-						f.ShowDialog();
+						using (var f = new SpritesetF(this, phase, Int32.Parse(id)))
+						{
+							f.ShowDialog();
+						}
+					}
+					else if (e.Button == MouseButtons.Right
+						&& MessageBox.Show(
+										this,
+										"Set all sprite phases to #" + id,
+										"Set all sprite phases",
+										MessageBoxButtons.YesNo,
+										MessageBoxIcon.Question,
+										MessageBoxDefaultButton.Button1,
+										0) == DialogResult.Yes)
+					{
+						tb0_phase0.Text =
+						tb1_phase1.Text =
+						tb2_phase2.Text =
+						tb3_phase3.Text =
+						tb4_phase4.Text =
+						tb5_phase5.Text =
+						tb6_phase6.Text =
+						tb7_phase7.Text = id;
 					}
 				}
 			}
@@ -586,9 +608,8 @@ namespace McdView
 							f.ShowDialog();
 						}
 					}
-					else if (e.Button == MouseButtons.Right)
-					{
-						if (MessageBox.Show(
+					else if (e.Button == MouseButtons.Right
+						&& MessageBox.Show(
 										this,
 										"Set all LoFTs to #" + id,
 										"Set all LoFTs",
@@ -596,20 +617,19 @@ namespace McdView
 										MessageBoxIcon.Question,
 										MessageBoxDefaultButton.Button1,
 										0) == DialogResult.Yes)
-						{
-							tb8_loft00 .Text =
-							tb9_loft02 .Text =
-							tb10_loft04.Text =
-							tb11_loft06.Text =
-							tb12_loft08.Text =
-							tb13_loft10.Text =
-							tb14_loft12.Text =
-							tb15_loft14.Text =
-							tb16_loft16.Text =
-							tb17_loft18.Text =
-							tb18_loft20.Text =
-							tb19_loft22.Text = id;
-						}
+					{
+						tb8_loft00 .Text =
+						tb9_loft02 .Text =
+						tb10_loft04.Text =
+						tb11_loft06.Text =
+						tb12_loft08.Text =
+						tb13_loft10.Text =
+						tb14_loft12.Text =
+						tb15_loft14.Text =
+						tb16_loft16.Text =
+						tb17_loft18.Text =
+						tb18_loft20.Text =
+						tb19_loft22.Text = id;
 					}
 
 					bar_IsoLoft.Select();
