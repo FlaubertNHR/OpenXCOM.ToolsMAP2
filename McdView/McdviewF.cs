@@ -115,10 +115,11 @@ namespace McdView
 						miZeroVals.Enabled = false;
 					}
 
-					PartsPanel.SubIds.Remove(_selId); // safety. The SelId shall never be in the SubIds.
-
 					InvalidatePanels();
 				}
+
+				if (PartsPanel.SubIds.Remove(_selId)) // safety. The SelId shall never be in the SubIds.
+					PartsPanel.Invalidate();
 			}
 		}
 
