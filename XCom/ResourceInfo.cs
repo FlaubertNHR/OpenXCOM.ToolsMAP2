@@ -107,17 +107,14 @@ namespace XCom
 																pal);
 							if (spriteset.Borked)
 							{
-								MessageBox.Show(
-											"The quantity of sprites in the PCK file does not match the"
-												+ " quantity of sprites expected by the TAB file."
-												+ Environment.NewLine + Environment.NewLine
-												+ pfePck + Environment.NewLine
-												+ pfeTab,
-											"Error",
-											MessageBoxButtons.OK,
-											MessageBoxIcon.Error,
-											MessageBoxDefaultButton.Button1,
-											0);
+								using (var f = new Infobox(
+														"  Spriteset borked",
+														"The quantity of sprites in the PCK file does not match"
+															+ " the quantity of sprites expected by the TAB file.",
+														pfePck + Environment.NewLine + pfeTab))
+								{
+									f.ShowDialog();
+								}
 							}
 							spritesets.Add(pfSpriteset, spriteset); // NOTE: Add the spriteset even if it is Borked.
 						}
@@ -128,32 +125,23 @@ namespace XCom
 				}
 
 				// error/warn ->
-				string title;
-				string info = "Can't find files for the spriteset"
-								+ Environment.NewLine + Environment.NewLine
-								+ pfePck + Environment.NewLine
-								+ pfeTab;
-				MessageBoxIcon icon;
-				if (warnonly)
+				string info;
+				if (!warnonly)
 				{
-					title = "Warning";
-					icon = MessageBoxIcon.Warning;
+					info = Environment.NewLine + Environment.NewLine
+						 + "Open the Map in the TilesetEditor and re-assign the basepath"
+						 + " for the TERRAIN folder of the .PCK and .TAB files.";
 				}
 				else
+					info = String.Empty;
+
+				using (var f = new Infobox(
+										"  Spriteset not found",
+										"Can't find files for the spriteset." + info,
+										pfePck + Environment.NewLine + pfeTab))
 				{
-					title = "Error";
-					icon = MessageBoxIcon.Error;
-					info += Environment.NewLine + Environment.NewLine
-						  + "Open the Map in the TilesetEditor and re-assign the basepath"
-						  + " for the TERRAIN folder of the .PCK and .TAB files.";
+					f.ShowDialog();
 				}
-				MessageBox.Show(
-							info,
-							title,
-							MessageBoxButtons.OK,
-							icon,
-							MessageBoxDefaultButton.Button1,
-							0);
 			}
 			return null;
 		}
