@@ -36,7 +36,6 @@ namespace McdView
 		private string _pfeMcd;
 		internal string Label;
 
-		private TerrainPanel PartsPanel;
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
@@ -49,6 +48,9 @@ namespace McdView
 
 
 		#region Properties
+		internal TerrainPanel PartsPanel
+		{ get; private set; }
+
 		private Tilepart[] _parts;
 		/// <summary>
 		/// An array of 'Tileparts'. Each entry's record is referenced w/ 'Record'.
@@ -157,6 +159,13 @@ namespace McdView
 #endif
 
 			InitializeComponent();
+
+			RecordLabel.SetParent(this);
+			RecordLabel.SetStatusLabel(tssl_Overvalue);
+			RecordLabel.SetDescriptionLabel(lbl_Description);
+
+			RecordTextbox.SetStatusLabel(tssl_Overvalue);
+			RecordTextbox.SetDescriptionLabel(lbl_Description);
 
 			SetDoubleBuffered(pnl_Sprites);
 			SetDoubleBuffered(pnl_IsoLoft);
@@ -1161,7 +1170,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles SpriteShade's ValueChanged event for its TrackBar.
+		/// Handles SpriteShade's trackbar's ValueChanged event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1173,6 +1182,35 @@ namespace McdView
 
 			tb_SpriteShade.Text = val.ToString();
 		}
+
+		/// <summary>
+		/// Handles the "SpriteShade" textbox gaining focus as well as
+		/// mouseovers on its label and textbox.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnEnterSpriteShade(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "SpriteShade is an inverse gamma-value only for sprites drawn in this app."
+								 + " It has nothing to do with palette-based sprite-shading in XCOM itself."
+								 + " This setting is not saved."
+								 + Environment.NewLine + Environment.NewLine
+								 + "1..100, unity 33, default -1 off";
+		}
+
+		/// <summary>
+		/// Handles mouseover leaving the "SpriteShade" Label or TextBox.
+		/// @note Retains the current description if the TextBox has
+		/// input-focus.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMouseLeaveSpriteShade(object sender, EventArgs e)
+		{
+			if (!tb_SpriteShade.Focused)
+				lbl_Description.Text = String.Empty;
+		}
+
 
 		/// <summary>
 		/// Handles STRICT's CheckChanged event for its CheckBox.
@@ -1208,7 +1246,49 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles IsoLoFT's ValueChanged event for its TrackBar.
+		/// Handles the "STRICT" checkbox gaining focus as well as mouseovers on
+		/// its label and checkbox.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnEnterStrict(object sender, EventArgs e)
+		{
+			lbl_Description.Text = "STRICT enforces valid values for XCOM. Unchecked allows values"
+								 + " outside what's expected (for expert experts only - ie people"
+								 + " who code their own XCOM executable and require extended values)."
+								 + " This setting is not saved."
+								 + Environment.NewLine + Environment.NewLine
+								 + "default checked";
+		}
+
+		/// <summary>
+		/// Handles mouseover leaving the "STRICT" Label or CheckBox.
+		/// @note Retains the current description if the CheckBox has
+		/// input-focus.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMouseLeaveStrict(object sender, EventArgs e)
+		{
+			if (!cb_Strict.Focused)
+				lbl_Description.Text = String.Empty;
+		}
+
+		/// <summary>
+		/// Handles the "STRICT" checkbox and the "SpriteShade" textbox losing
+		/// focus.
+		/// @note Clears the current description disregarding mouseover state.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnLeave(object sender, EventArgs e)
+		{
+			lbl_Description.Text = String.Empty;
+		}
+
+
+		/// <summary>
+		/// Handles IsoLoFT's trackbar's ValueChanged event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

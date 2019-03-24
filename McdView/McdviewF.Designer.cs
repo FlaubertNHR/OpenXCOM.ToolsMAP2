@@ -23,128 +23,128 @@
 		private System.Windows.Forms.MenuItem miEditMenu;
 		private System.Windows.Forms.MenuItem miZeroVals;
 
-		private System.Windows.Forms.Label lbl20_scang;
-		private System.Windows.Forms.Label lbl30_isslidingdoor;
-		private System.Windows.Forms.Label lbl20;
-		private System.Windows.Forms.Label lbl30;
-		private System.Windows.Forms.Label lbl31;
-		private System.Windows.Forms.Label lbl31_isblocklos;
-		private System.Windows.Forms.Label lbl32;
-		private System.Windows.Forms.Label lbl32_isdropthrou;
-		private System.Windows.Forms.Label lbl33;
-		private System.Windows.Forms.Label lbl33_isbigwall;
-		private System.Windows.Forms.Label lbl34;
-		private System.Windows.Forms.Label lbl34_isgravlift;
-		private System.Windows.Forms.Label lbl35;
-		private System.Windows.Forms.Label lbl35_ishingeddoor;
-		private System.Windows.Forms.Label lbl36;
-		private System.Windows.Forms.Label lbl36_isblockfire;
-		private System.Windows.Forms.Label lbl37;
-		private System.Windows.Forms.Label lbl37_isblocksmoke;
-		private System.Windows.Forms.Label lbl38;
-		private System.Windows.Forms.Label lbl38_;
-		private System.Windows.Forms.Label lbl39;
-		private System.Windows.Forms.Label lbl39_tuwalk;
-		private System.Windows.Forms.Label lbl40;
-		private System.Windows.Forms.Label lbl40_tuslide;
-		private System.Windows.Forms.Label lbl41;
-		private System.Windows.Forms.Label lbl41_tufly;
-		private System.Windows.Forms.Label lbl42;
-		private System.Windows.Forms.Label lbl42_armor;
-		private System.Windows.Forms.Label lbl43;
-		private System.Windows.Forms.Label lbl43_heblock;
-		private System.Windows.Forms.Label lbl44;
-		private System.Windows.Forms.Label lbl44_deathid;
-		private System.Windows.Forms.Label lbl45;
-		private System.Windows.Forms.Label lbl45_fireresist;
-		private System.Windows.Forms.Label lbl46;
-		private System.Windows.Forms.Label lbl46_alternateid;
-		private System.Windows.Forms.Label lbl47;
-		private System.Windows.Forms.Label lbl47_;
-		private System.Windows.Forms.Label lbl48;
-		private System.Windows.Forms.Label lbl48_terrainoffset;
-		private System.Windows.Forms.Label lbl49;
-		private System.Windows.Forms.Label lbl49_spriteoffset;
-		private System.Windows.Forms.Label lbl50;
-		private System.Windows.Forms.Label lbl50_;
-		private System.Windows.Forms.Label lbl51;
-		private System.Windows.Forms.Label lbl51_lightblock;
-		private System.Windows.Forms.Label lbl52;
-		private System.Windows.Forms.Label lbl52_footsound;
-		private System.Windows.Forms.Label lbl53;
-		private System.Windows.Forms.Label lbl53_parttype;
-		private System.Windows.Forms.Label lbl54;
-		private System.Windows.Forms.Label lbl54_hetype;
-		private System.Windows.Forms.Label lbl55;
-		private System.Windows.Forms.Label lbl55_hestrength;
-		private System.Windows.Forms.Label lbl56;
-		private System.Windows.Forms.Label lbl56_smokeblock;
-		private System.Windows.Forms.Label lbl57;
-		private System.Windows.Forms.Label lbl57_fuel;
-		private System.Windows.Forms.Label lbl58;
-		private System.Windows.Forms.Label lbl58_lightintensity;
-		private System.Windows.Forms.Label lbl59;
-		private System.Windows.Forms.Label lbl59_specialtype;
-		private System.Windows.Forms.Label lbl60;
-		private System.Windows.Forms.Label lbl60_isbaseobject;
-		private System.Windows.Forms.Label lbl61;
-		private System.Windows.Forms.Label lbl61_;
-		private System.Windows.Forms.Label lbl19;
-		private System.Windows.Forms.Label lbl19_loft22;
-		private System.Windows.Forms.Label lbl18;
-		private System.Windows.Forms.Label lbl18_loft20;
-		private System.Windows.Forms.Label lbl17;
-		private System.Windows.Forms.Label lbl17_loft18;
-		private System.Windows.Forms.Label lbl16;
-		private System.Windows.Forms.Label lbl16_loft16;
-		private System.Windows.Forms.Label lbl15;
-		private System.Windows.Forms.Label lbl15_loft14;
-		private System.Windows.Forms.Label lbl14;
-		private System.Windows.Forms.Label lbl14_loft12;
-		private System.Windows.Forms.Label lbl13;
-		private System.Windows.Forms.Label lbl13_loft10;
-		private System.Windows.Forms.Label lbl12;
-		private System.Windows.Forms.Label lbl12_loft08;
-		private System.Windows.Forms.Label lbl11;
-		private System.Windows.Forms.Label lbl11_loft06;
-		private System.Windows.Forms.Label lbl10;
-		private System.Windows.Forms.Label lbl10_loft04;
-		private System.Windows.Forms.Label lbl9;
-		private System.Windows.Forms.Label lbl9_loft02;
-		private System.Windows.Forms.Label lbl8;
-		private System.Windows.Forms.Label lbl8_loft00;
-		private System.Windows.Forms.Label lbl0;
-		private System.Windows.Forms.Label lbl0_phase0;
-		private System.Windows.Forms.Label lbl1;
-		private System.Windows.Forms.Label lbl1_phase1;
-		private System.Windows.Forms.Label lbl2;
-		private System.Windows.Forms.Label lbl2_phase2;
-		private System.Windows.Forms.Label lbl3;
-		private System.Windows.Forms.Label lbl3_phase3;
-		private System.Windows.Forms.Label lbl7;
-		private System.Windows.Forms.Label lbl7_phase7;
-		private System.Windows.Forms.Label lbl6;
-		private System.Windows.Forms.Label lbl6_phase6;
-		private System.Windows.Forms.Label lbl5;
-		private System.Windows.Forms.Label lbl5_phase5;
-		private System.Windows.Forms.Label lbl4;
-		private System.Windows.Forms.Label lbl4_phase4;
-		private System.Windows.Forms.Label lbl22;
-		private System.Windows.Forms.Label lbl22_;
-		private System.Windows.Forms.Label lbl23;
-		private System.Windows.Forms.Label lbl23_;
-		private System.Windows.Forms.Label lbl24;
-		private System.Windows.Forms.Label lbl24_;
-		private System.Windows.Forms.Label lbl25;
-		private System.Windows.Forms.Label lbl25_;
-		private System.Windows.Forms.Label lbl26;
-		private System.Windows.Forms.Label lbl26_;
-		private System.Windows.Forms.Label lbl27;
-		private System.Windows.Forms.Label lbl27_;
-		private System.Windows.Forms.Label lbl28;
-		private System.Windows.Forms.Label lbl28_;
-		private System.Windows.Forms.Label lbl29;
-		private System.Windows.Forms.Label lbl29_;
+		private McdView.RecordLabel lbl20_scang;
+		private McdView.RecordLabel lbl30_isslidingdoor;
+		private McdView.RecordLabel lbl20;
+		private McdView.RecordLabel lbl30;
+		private McdView.RecordLabel lbl31;
+		private McdView.RecordLabel lbl31_isblocklos;
+		private McdView.RecordLabel lbl32;
+		private McdView.RecordLabel lbl32_isdropthrou;
+		private McdView.RecordLabel lbl33;
+		private McdView.RecordLabel lbl33_isbigwall;
+		private McdView.RecordLabel lbl34;
+		private McdView.RecordLabel lbl34_isgravlift;
+		private McdView.RecordLabel lbl35;
+		private McdView.RecordLabel lbl35_ishingeddoor;
+		private McdView.RecordLabel lbl36;
+		private McdView.RecordLabel lbl36_isblockfire;
+		private McdView.RecordLabel lbl37;
+		private McdView.RecordLabel lbl37_isblocksmoke;
+		private McdView.RecordLabel lbl38;
+		private McdView.RecordLabel lbl38_;
+		private McdView.RecordLabel lbl39;
+		private McdView.RecordLabel lbl39_tuwalk;
+		private McdView.RecordLabel lbl40;
+		private McdView.RecordLabel lbl40_tuslide;
+		private McdView.RecordLabel lbl41;
+		private McdView.RecordLabel lbl41_tufly;
+		private McdView.RecordLabel lbl42;
+		private McdView.RecordLabel lbl42_armor;
+		private McdView.RecordLabel lbl43;
+		private McdView.RecordLabel lbl43_heblock;
+		private McdView.RecordLabel lbl44;
+		private McdView.RecordLabel lbl44_deathid;
+		private McdView.RecordLabel lbl45;
+		private McdView.RecordLabel lbl45_fireresist;
+		private McdView.RecordLabel lbl46;
+		private McdView.RecordLabel lbl46_alternateid;
+		private McdView.RecordLabel lbl47;
+		private McdView.RecordLabel lbl47_;
+		private McdView.RecordLabel lbl48;
+		private McdView.RecordLabel lbl48_terrainoffset;
+		private McdView.RecordLabel lbl49;
+		private McdView.RecordLabel lbl49_spriteoffset;
+		private McdView.RecordLabel lbl50;
+		private McdView.RecordLabel lbl50_;
+		private McdView.RecordLabel lbl51;
+		private McdView.RecordLabel lbl51_lightblock;
+		private McdView.RecordLabel lbl52;
+		private McdView.RecordLabel lbl52_footsound;
+		private McdView.RecordLabel lbl53;
+		private McdView.RecordLabel lbl53_parttype;
+		private McdView.RecordLabel lbl54;
+		private McdView.RecordLabel lbl54_hetype;
+		private McdView.RecordLabel lbl55;
+		private McdView.RecordLabel lbl55_hestrength;
+		private McdView.RecordLabel lbl56;
+		private McdView.RecordLabel lbl56_smokeblock;
+		private McdView.RecordLabel lbl57;
+		private McdView.RecordLabel lbl57_fuel;
+		private McdView.RecordLabel lbl58;
+		private McdView.RecordLabel lbl58_lightintensity;
+		private McdView.RecordLabel lbl59;
+		private McdView.RecordLabel lbl59_specialtype;
+		private McdView.RecordLabel lbl60;
+		private McdView.RecordLabel lbl60_isbaseobject;
+		private McdView.RecordLabel lbl61;
+		private McdView.RecordLabel lbl61_;
+		private McdView.RecordLabel lbl19;
+		private McdView.RecordLabel lbl19_loft22;
+		private McdView.RecordLabel lbl18;
+		private McdView.RecordLabel lbl18_loft20;
+		private McdView.RecordLabel lbl17;
+		private McdView.RecordLabel lbl17_loft18;
+		private McdView.RecordLabel lbl16;
+		private McdView.RecordLabel lbl16_loft16;
+		private McdView.RecordLabel lbl15;
+		private McdView.RecordLabel lbl15_loft14;
+		private McdView.RecordLabel lbl14;
+		private McdView.RecordLabel lbl14_loft12;
+		private McdView.RecordLabel lbl13;
+		private McdView.RecordLabel lbl13_loft10;
+		private McdView.RecordLabel lbl12;
+		private McdView.RecordLabel lbl12_loft08;
+		private McdView.RecordLabel lbl11;
+		private McdView.RecordLabel lbl11_loft06;
+		private McdView.RecordLabel lbl10;
+		private McdView.RecordLabel lbl10_loft04;
+		private McdView.RecordLabel lbl9;
+		private McdView.RecordLabel lbl9_loft02;
+		private McdView.RecordLabel lbl8;
+		private McdView.RecordLabel lbl8_loft00;
+		private McdView.RecordLabel lbl0;
+		private McdView.RecordLabel lbl0_phase0;
+		private McdView.RecordLabel lbl1;
+		private McdView.RecordLabel lbl1_phase1;
+		private McdView.RecordLabel lbl2;
+		private McdView.RecordLabel lbl2_phase2;
+		private McdView.RecordLabel lbl3;
+		private McdView.RecordLabel lbl3_phase3;
+		private McdView.RecordLabel lbl7;
+		private McdView.RecordLabel lbl7_phase7;
+		private McdView.RecordLabel lbl6;
+		private McdView.RecordLabel lbl6_phase6;
+		private McdView.RecordLabel lbl5;
+		private McdView.RecordLabel lbl5_phase5;
+		private McdView.RecordLabel lbl4;
+		private McdView.RecordLabel lbl4_phase4;
+		private McdView.RecordLabel lbl22;
+		private McdView.RecordLabel lbl22_;
+		private McdView.RecordLabel lbl23;
+		private McdView.RecordLabel lbl23_;
+		private McdView.RecordLabel lbl24;
+		private McdView.RecordLabel lbl24_;
+		private McdView.RecordLabel lbl25;
+		private McdView.RecordLabel lbl25_;
+		private McdView.RecordLabel lbl26;
+		private McdView.RecordLabel lbl26_;
+		private McdView.RecordLabel lbl27;
+		private McdView.RecordLabel lbl27_;
+		private McdView.RecordLabel lbl28;
+		private McdView.RecordLabel lbl28_;
+		private McdView.RecordLabel lbl29;
+		private McdView.RecordLabel lbl29_;
 		private System.Windows.Forms.StatusStrip ss_Statusbar;
 		private System.Windows.Forms.GroupBox gb_Unused;
 		private System.Windows.Forms.GroupBox gb_Loft;
@@ -161,68 +161,68 @@
 		private System.Windows.Forms.GroupBox gb_General;
 		private System.Windows.Forms.Label lbl_SpriteShade;
 		private System.Windows.Forms.TextBox tb_SpriteShade;
-		private System.Windows.Forms.TextBox tb20_scang1;
-		private System.Windows.Forms.TextBox tb44_deathid;
-		private System.Windows.Forms.TextBox tb42_armor;
-		private System.Windows.Forms.TextBox tb38_;
-		private System.Windows.Forms.TextBox tb61_;
-		private System.Windows.Forms.TextBox tb50_;
-		private System.Windows.Forms.TextBox tb47_;
-		private System.Windows.Forms.TextBox tb29_;
-		private System.Windows.Forms.TextBox tb28_;
-		private System.Windows.Forms.TextBox tb27_;
-		private System.Windows.Forms.TextBox tb26_;
-		private System.Windows.Forms.TextBox tb25_;
-		private System.Windows.Forms.TextBox tb24_;
-		private System.Windows.Forms.TextBox tb23_;
-		private System.Windows.Forms.TextBox tb22_;
-		private System.Windows.Forms.TextBox tb41_tufly;
-		private System.Windows.Forms.TextBox tb40_tuslide;
-		private System.Windows.Forms.TextBox tb39_tuwalk;
-		private System.Windows.Forms.TextBox tb49_spriteoffset;
-		private System.Windows.Forms.TextBox tb48_terrainoffset;
-		private System.Windows.Forms.TextBox tb51_lightblock;
-		private System.Windows.Forms.TextBox tb56_smokeblock;
-		private System.Windows.Forms.TextBox tb43_heblock;
-		private System.Windows.Forms.TextBox tb37_isblocksmoke;
-		private System.Windows.Forms.TextBox tb36_isblockfire;
-		private System.Windows.Forms.TextBox tb31_isblocklos;
-		private System.Windows.Forms.TextBox tb46_alternateid;
-		private System.Windows.Forms.TextBox tb35_ishingeddoor;
-		private System.Windows.Forms.TextBox tb30_isslidingdoor;
-		private System.Windows.Forms.TextBox tb32_isdropthrou;
-		private System.Windows.Forms.TextBox tb52_footsound;
-		private System.Windows.Forms.TextBox tb57_fuel;
-		private System.Windows.Forms.TextBox tb45_fireresist;
-		private System.Windows.Forms.TextBox tb55_hestrength;
-		private System.Windows.Forms.TextBox tb54_hetype;
-		private System.Windows.Forms.TextBox tb58_lightintensity;
-		private System.Windows.Forms.TextBox tb60_isbaseobject;
-		private System.Windows.Forms.TextBox tb59_specialtype;
-		private System.Windows.Forms.TextBox tb34_isgravlift;
-		private System.Windows.Forms.TextBox tb33_isbigwall;
-		private System.Windows.Forms.TextBox tb53_parttype;
-		private System.Windows.Forms.TextBox tb7_phase7;
-		private System.Windows.Forms.TextBox tb6_phase6;
-		private System.Windows.Forms.TextBox tb5_phase5;
-		private System.Windows.Forms.TextBox tb4_phase4;
-		private System.Windows.Forms.TextBox tb3_phase3;
-		private System.Windows.Forms.TextBox tb2_phase2;
-		private System.Windows.Forms.TextBox tb1_phase1;
-		private System.Windows.Forms.TextBox tb0_phase0;
-		private System.Windows.Forms.TextBox tb19_loft22;
-		private System.Windows.Forms.TextBox tb18_loft20;
-		private System.Windows.Forms.TextBox tb17_loft18;
-		private System.Windows.Forms.TextBox tb16_loft16;
-		private System.Windows.Forms.TextBox tb15_loft14;
-		private System.Windows.Forms.TextBox tb14_loft12;
-		private System.Windows.Forms.TextBox tb13_loft10;
-		private System.Windows.Forms.TextBox tb12_loft08;
-		private System.Windows.Forms.TextBox tb11_loft06;
-		private System.Windows.Forms.TextBox tb10_loft04;
-		private System.Windows.Forms.TextBox tb9_loft02;
-		private System.Windows.Forms.TextBox tb8_loft00;
-		private System.Windows.Forms.TextBox tb20_scang2;
+		private McdView.RecordTextbox tb20_scang1;
+		private McdView.RecordTextbox tb44_deathid;
+		private McdView.RecordTextbox tb42_armor;
+		private McdView.RecordTextbox tb38_;
+		private McdView.RecordTextbox tb61_;
+		private McdView.RecordTextbox tb50_;
+		private McdView.RecordTextbox tb47_;
+		private McdView.RecordTextbox tb29_;
+		private McdView.RecordTextbox tb28_;
+		private McdView.RecordTextbox tb27_;
+		private McdView.RecordTextbox tb26_;
+		private McdView.RecordTextbox tb25_;
+		private McdView.RecordTextbox tb24_;
+		private McdView.RecordTextbox tb23_;
+		private McdView.RecordTextbox tb22_;
+		private McdView.RecordTextbox tb41_tufly;
+		private McdView.RecordTextbox tb40_tuslide;
+		private McdView.RecordTextbox tb39_tuwalk;
+		private McdView.RecordTextbox tb49_spriteoffset;
+		private McdView.RecordTextbox tb48_terrainoffset;
+		private McdView.RecordTextbox tb51_lightblock;
+		private McdView.RecordTextbox tb56_smokeblock;
+		private McdView.RecordTextbox tb43_heblock;
+		private McdView.RecordTextbox tb37_isblocksmoke;
+		private McdView.RecordTextbox tb36_isblockfire;
+		private McdView.RecordTextbox tb31_isblocklos;
+		private McdView.RecordTextbox tb46_alternateid;
+		private McdView.RecordTextbox tb35_ishingeddoor;
+		private McdView.RecordTextbox tb30_isslidingdoor;
+		private McdView.RecordTextbox tb32_isdropthrou;
+		private McdView.RecordTextbox tb52_footsound;
+		private McdView.RecordTextbox tb57_fuel;
+		private McdView.RecordTextbox tb45_fireresist;
+		private McdView.RecordTextbox tb55_hestrength;
+		private McdView.RecordTextbox tb54_hetype;
+		private McdView.RecordTextbox tb58_lightintensity;
+		private McdView.RecordTextbox tb60_isbaseobject;
+		private McdView.RecordTextbox tb59_specialtype;
+		private McdView.RecordTextbox tb34_isgravlift;
+		private McdView.RecordTextbox tb33_isbigwall;
+		private McdView.RecordTextbox tb53_parttype;
+		private McdView.RecordTextbox tb7_phase7;
+		private McdView.RecordTextbox tb6_phase6;
+		private McdView.RecordTextbox tb5_phase5;
+		private McdView.RecordTextbox tb4_phase4;
+		private McdView.RecordTextbox tb3_phase3;
+		private McdView.RecordTextbox tb2_phase2;
+		private McdView.RecordTextbox tb1_phase1;
+		private McdView.RecordTextbox tb0_phase0;
+		private McdView.RecordTextbox tb19_loft22;
+		private McdView.RecordTextbox tb18_loft20;
+		private McdView.RecordTextbox tb17_loft18;
+		private McdView.RecordTextbox tb16_loft16;
+		private McdView.RecordTextbox tb15_loft14;
+		private McdView.RecordTextbox tb14_loft12;
+		private McdView.RecordTextbox tb13_loft10;
+		private McdView.RecordTextbox tb12_loft08;
+		private McdView.RecordTextbox tb11_loft06;
+		private McdView.RecordTextbox tb10_loft04;
+		private McdView.RecordTextbox tb9_loft02;
+		private McdView.RecordTextbox tb8_loft00;
+		private McdView.RecordTextbox tb20_scang2;
 		private System.Windows.Forms.Panel pnl_Sprites;
 		private System.Windows.Forms.Panel pnl_ScanGic;
 		private System.Windows.Forms.Panel pnl_Loft19;
@@ -247,10 +247,9 @@
 		private System.Windows.Forms.TrackBar bar_IsoLoft;
 
 		/// <summary>
-		/// Disposes resources used by the form.
+		/// Disposes resources used by the Form.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be
-		/// disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -283,143 +282,143 @@
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.miEditMenu = new System.Windows.Forms.MenuItem();
 			this.miZeroVals = new System.Windows.Forms.MenuItem();
-			this.lbl20_scang = new System.Windows.Forms.Label();
-			this.lbl30_isslidingdoor = new System.Windows.Forms.Label();
-			this.lbl20 = new System.Windows.Forms.Label();
-			this.lbl30 = new System.Windows.Forms.Label();
-			this.lbl31 = new System.Windows.Forms.Label();
-			this.lbl31_isblocklos = new System.Windows.Forms.Label();
-			this.lbl32 = new System.Windows.Forms.Label();
-			this.lbl32_isdropthrou = new System.Windows.Forms.Label();
-			this.lbl33 = new System.Windows.Forms.Label();
-			this.lbl33_isbigwall = new System.Windows.Forms.Label();
-			this.lbl34 = new System.Windows.Forms.Label();
-			this.lbl34_isgravlift = new System.Windows.Forms.Label();
-			this.lbl35 = new System.Windows.Forms.Label();
-			this.lbl35_ishingeddoor = new System.Windows.Forms.Label();
-			this.lbl36 = new System.Windows.Forms.Label();
-			this.lbl36_isblockfire = new System.Windows.Forms.Label();
-			this.lbl37 = new System.Windows.Forms.Label();
-			this.lbl37_isblocksmoke = new System.Windows.Forms.Label();
-			this.lbl38 = new System.Windows.Forms.Label();
-			this.lbl38_ = new System.Windows.Forms.Label();
-			this.lbl39 = new System.Windows.Forms.Label();
-			this.lbl39_tuwalk = new System.Windows.Forms.Label();
-			this.lbl40 = new System.Windows.Forms.Label();
-			this.lbl40_tuslide = new System.Windows.Forms.Label();
-			this.lbl41 = new System.Windows.Forms.Label();
-			this.lbl41_tufly = new System.Windows.Forms.Label();
-			this.lbl42 = new System.Windows.Forms.Label();
-			this.lbl42_armor = new System.Windows.Forms.Label();
-			this.lbl43 = new System.Windows.Forms.Label();
-			this.lbl43_heblock = new System.Windows.Forms.Label();
-			this.lbl44 = new System.Windows.Forms.Label();
-			this.lbl44_deathid = new System.Windows.Forms.Label();
-			this.lbl45 = new System.Windows.Forms.Label();
-			this.lbl45_fireresist = new System.Windows.Forms.Label();
-			this.lbl46 = new System.Windows.Forms.Label();
-			this.lbl46_alternateid = new System.Windows.Forms.Label();
-			this.lbl47 = new System.Windows.Forms.Label();
-			this.lbl47_ = new System.Windows.Forms.Label();
-			this.lbl48 = new System.Windows.Forms.Label();
-			this.lbl48_terrainoffset = new System.Windows.Forms.Label();
-			this.lbl49 = new System.Windows.Forms.Label();
-			this.lbl49_spriteoffset = new System.Windows.Forms.Label();
-			this.lbl50 = new System.Windows.Forms.Label();
-			this.lbl50_ = new System.Windows.Forms.Label();
-			this.lbl51 = new System.Windows.Forms.Label();
-			this.lbl51_lightblock = new System.Windows.Forms.Label();
-			this.lbl52 = new System.Windows.Forms.Label();
-			this.lbl52_footsound = new System.Windows.Forms.Label();
-			this.lbl53 = new System.Windows.Forms.Label();
-			this.lbl53_parttype = new System.Windows.Forms.Label();
-			this.lbl54 = new System.Windows.Forms.Label();
-			this.lbl54_hetype = new System.Windows.Forms.Label();
-			this.lbl55 = new System.Windows.Forms.Label();
-			this.lbl55_hestrength = new System.Windows.Forms.Label();
-			this.lbl56 = new System.Windows.Forms.Label();
-			this.lbl56_smokeblock = new System.Windows.Forms.Label();
-			this.lbl57 = new System.Windows.Forms.Label();
-			this.lbl57_fuel = new System.Windows.Forms.Label();
-			this.lbl58 = new System.Windows.Forms.Label();
-			this.lbl58_lightintensity = new System.Windows.Forms.Label();
-			this.lbl59 = new System.Windows.Forms.Label();
-			this.lbl59_specialtype = new System.Windows.Forms.Label();
-			this.lbl60 = new System.Windows.Forms.Label();
-			this.lbl60_isbaseobject = new System.Windows.Forms.Label();
-			this.lbl61 = new System.Windows.Forms.Label();
-			this.lbl61_ = new System.Windows.Forms.Label();
-			this.lbl19 = new System.Windows.Forms.Label();
-			this.lbl19_loft22 = new System.Windows.Forms.Label();
-			this.lbl18 = new System.Windows.Forms.Label();
-			this.lbl18_loft20 = new System.Windows.Forms.Label();
-			this.lbl17 = new System.Windows.Forms.Label();
-			this.lbl17_loft18 = new System.Windows.Forms.Label();
-			this.lbl16 = new System.Windows.Forms.Label();
-			this.lbl16_loft16 = new System.Windows.Forms.Label();
-			this.lbl15 = new System.Windows.Forms.Label();
-			this.lbl15_loft14 = new System.Windows.Forms.Label();
-			this.lbl14 = new System.Windows.Forms.Label();
-			this.lbl14_loft12 = new System.Windows.Forms.Label();
-			this.lbl13 = new System.Windows.Forms.Label();
-			this.lbl13_loft10 = new System.Windows.Forms.Label();
-			this.lbl12 = new System.Windows.Forms.Label();
-			this.lbl12_loft08 = new System.Windows.Forms.Label();
-			this.lbl11 = new System.Windows.Forms.Label();
-			this.lbl11_loft06 = new System.Windows.Forms.Label();
-			this.lbl10 = new System.Windows.Forms.Label();
-			this.lbl10_loft04 = new System.Windows.Forms.Label();
-			this.lbl9 = new System.Windows.Forms.Label();
-			this.lbl9_loft02 = new System.Windows.Forms.Label();
-			this.lbl8 = new System.Windows.Forms.Label();
-			this.lbl8_loft00 = new System.Windows.Forms.Label();
-			this.lbl0 = new System.Windows.Forms.Label();
-			this.lbl0_phase0 = new System.Windows.Forms.Label();
-			this.lbl1 = new System.Windows.Forms.Label();
-			this.lbl1_phase1 = new System.Windows.Forms.Label();
-			this.lbl2 = new System.Windows.Forms.Label();
-			this.lbl2_phase2 = new System.Windows.Forms.Label();
-			this.lbl3 = new System.Windows.Forms.Label();
-			this.lbl3_phase3 = new System.Windows.Forms.Label();
-			this.lbl7 = new System.Windows.Forms.Label();
-			this.lbl7_phase7 = new System.Windows.Forms.Label();
-			this.lbl6 = new System.Windows.Forms.Label();
-			this.lbl6_phase6 = new System.Windows.Forms.Label();
-			this.lbl5 = new System.Windows.Forms.Label();
-			this.lbl5_phase5 = new System.Windows.Forms.Label();
-			this.lbl4 = new System.Windows.Forms.Label();
-			this.lbl4_phase4 = new System.Windows.Forms.Label();
-			this.lbl22 = new System.Windows.Forms.Label();
-			this.lbl22_ = new System.Windows.Forms.Label();
-			this.lbl23 = new System.Windows.Forms.Label();
-			this.lbl23_ = new System.Windows.Forms.Label();
-			this.lbl24 = new System.Windows.Forms.Label();
-			this.lbl24_ = new System.Windows.Forms.Label();
-			this.lbl25 = new System.Windows.Forms.Label();
-			this.lbl25_ = new System.Windows.Forms.Label();
-			this.lbl26 = new System.Windows.Forms.Label();
-			this.lbl26_ = new System.Windows.Forms.Label();
-			this.lbl27 = new System.Windows.Forms.Label();
-			this.lbl27_ = new System.Windows.Forms.Label();
-			this.lbl28 = new System.Windows.Forms.Label();
-			this.lbl28_ = new System.Windows.Forms.Label();
-			this.lbl29 = new System.Windows.Forms.Label();
-			this.lbl29_ = new System.Windows.Forms.Label();
+			this.lbl20_scang = new McdView.RecordLabel();
+			this.lbl30_isslidingdoor = new McdView.RecordLabel();
+			this.lbl20 = new McdView.RecordLabel();
+			this.lbl30 = new McdView.RecordLabel();
+			this.lbl31 = new McdView.RecordLabel();
+			this.lbl31_isblocklos = new McdView.RecordLabel();
+			this.lbl32 = new McdView.RecordLabel();
+			this.lbl32_isdropthrou = new McdView.RecordLabel();
+			this.lbl33 = new McdView.RecordLabel();
+			this.lbl33_isbigwall = new McdView.RecordLabel();
+			this.lbl34 = new McdView.RecordLabel();
+			this.lbl34_isgravlift = new McdView.RecordLabel();
+			this.lbl35 = new McdView.RecordLabel();
+			this.lbl35_ishingeddoor = new McdView.RecordLabel();
+			this.lbl36 = new McdView.RecordLabel();
+			this.lbl36_isblockfire = new McdView.RecordLabel();
+			this.lbl37 = new McdView.RecordLabel();
+			this.lbl37_isblocksmoke = new McdView.RecordLabel();
+			this.lbl38 = new McdView.RecordLabel();
+			this.lbl38_ = new McdView.RecordLabel();
+			this.lbl39 = new McdView.RecordLabel();
+			this.lbl39_tuwalk = new McdView.RecordLabel();
+			this.lbl40 = new McdView.RecordLabel();
+			this.lbl40_tuslide = new McdView.RecordLabel();
+			this.lbl41 = new McdView.RecordLabel();
+			this.lbl41_tufly = new McdView.RecordLabel();
+			this.lbl42 = new McdView.RecordLabel();
+			this.lbl42_armor = new McdView.RecordLabel();
+			this.lbl43 = new McdView.RecordLabel();
+			this.lbl43_heblock = new McdView.RecordLabel();
+			this.lbl44 = new McdView.RecordLabel();
+			this.lbl44_deathid = new McdView.RecordLabel();
+			this.lbl45 = new McdView.RecordLabel();
+			this.lbl45_fireresist = new McdView.RecordLabel();
+			this.lbl46 = new McdView.RecordLabel();
+			this.lbl46_alternateid = new McdView.RecordLabel();
+			this.lbl47 = new McdView.RecordLabel();
+			this.lbl47_ = new McdView.RecordLabel();
+			this.lbl48 = new McdView.RecordLabel();
+			this.lbl48_terrainoffset = new McdView.RecordLabel();
+			this.lbl49 = new McdView.RecordLabel();
+			this.lbl49_spriteoffset = new McdView.RecordLabel();
+			this.lbl50 = new McdView.RecordLabel();
+			this.lbl50_ = new McdView.RecordLabel();
+			this.lbl51 = new McdView.RecordLabel();
+			this.lbl51_lightblock = new McdView.RecordLabel();
+			this.lbl52 = new McdView.RecordLabel();
+			this.lbl52_footsound = new McdView.RecordLabel();
+			this.lbl53 = new McdView.RecordLabel();
+			this.lbl53_parttype = new McdView.RecordLabel();
+			this.lbl54 = new McdView.RecordLabel();
+			this.lbl54_hetype = new McdView.RecordLabel();
+			this.lbl55 = new McdView.RecordLabel();
+			this.lbl55_hestrength = new McdView.RecordLabel();
+			this.lbl56 = new McdView.RecordLabel();
+			this.lbl56_smokeblock = new McdView.RecordLabel();
+			this.lbl57 = new McdView.RecordLabel();
+			this.lbl57_fuel = new McdView.RecordLabel();
+			this.lbl58 = new McdView.RecordLabel();
+			this.lbl58_lightintensity = new McdView.RecordLabel();
+			this.lbl59 = new McdView.RecordLabel();
+			this.lbl59_specialtype = new McdView.RecordLabel();
+			this.lbl60 = new McdView.RecordLabel();
+			this.lbl60_isbaseobject = new McdView.RecordLabel();
+			this.lbl61 = new McdView.RecordLabel();
+			this.lbl61_ = new McdView.RecordLabel();
+			this.lbl19 = new McdView.RecordLabel();
+			this.lbl19_loft22 = new McdView.RecordLabel();
+			this.lbl18 = new McdView.RecordLabel();
+			this.lbl18_loft20 = new McdView.RecordLabel();
+			this.lbl17 = new McdView.RecordLabel();
+			this.lbl17_loft18 = new McdView.RecordLabel();
+			this.lbl16 = new McdView.RecordLabel();
+			this.lbl16_loft16 = new McdView.RecordLabel();
+			this.lbl15 = new McdView.RecordLabel();
+			this.lbl15_loft14 = new McdView.RecordLabel();
+			this.lbl14 = new McdView.RecordLabel();
+			this.lbl14_loft12 = new McdView.RecordLabel();
+			this.lbl13 = new McdView.RecordLabel();
+			this.lbl13_loft10 = new McdView.RecordLabel();
+			this.lbl12 = new McdView.RecordLabel();
+			this.lbl12_loft08 = new McdView.RecordLabel();
+			this.lbl11 = new McdView.RecordLabel();
+			this.lbl11_loft06 = new McdView.RecordLabel();
+			this.lbl10 = new McdView.RecordLabel();
+			this.lbl10_loft04 = new McdView.RecordLabel();
+			this.lbl9 = new McdView.RecordLabel();
+			this.lbl9_loft02 = new McdView.RecordLabel();
+			this.lbl8 = new McdView.RecordLabel();
+			this.lbl8_loft00 = new McdView.RecordLabel();
+			this.lbl0 = new McdView.RecordLabel();
+			this.lbl0_phase0 = new McdView.RecordLabel();
+			this.lbl1 = new McdView.RecordLabel();
+			this.lbl1_phase1 = new McdView.RecordLabel();
+			this.lbl2 = new McdView.RecordLabel();
+			this.lbl2_phase2 = new McdView.RecordLabel();
+			this.lbl3 = new McdView.RecordLabel();
+			this.lbl3_phase3 = new McdView.RecordLabel();
+			this.lbl7 = new McdView.RecordLabel();
+			this.lbl7_phase7 = new McdView.RecordLabel();
+			this.lbl6 = new McdView.RecordLabel();
+			this.lbl6_phase6 = new McdView.RecordLabel();
+			this.lbl5 = new McdView.RecordLabel();
+			this.lbl5_phase5 = new McdView.RecordLabel();
+			this.lbl4 = new McdView.RecordLabel();
+			this.lbl4_phase4 = new McdView.RecordLabel();
+			this.lbl22 = new McdView.RecordLabel();
+			this.lbl22_ = new McdView.RecordLabel();
+			this.lbl23 = new McdView.RecordLabel();
+			this.lbl23_ = new McdView.RecordLabel();
+			this.lbl24 = new McdView.RecordLabel();
+			this.lbl24_ = new McdView.RecordLabel();
+			this.lbl25 = new McdView.RecordLabel();
+			this.lbl25_ = new McdView.RecordLabel();
+			this.lbl26 = new McdView.RecordLabel();
+			this.lbl26_ = new McdView.RecordLabel();
+			this.lbl27 = new McdView.RecordLabel();
+			this.lbl27_ = new McdView.RecordLabel();
+			this.lbl28 = new McdView.RecordLabel();
+			this.lbl28_ = new McdView.RecordLabel();
+			this.lbl29 = new McdView.RecordLabel();
+			this.lbl29_ = new McdView.RecordLabel();
 			this.ss_Statusbar = new System.Windows.Forms.StatusStrip();
 			this.tssl_Overvalue = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gb_Unused = new System.Windows.Forms.GroupBox();
-			this.tb38_ = new System.Windows.Forms.TextBox();
-			this.tb61_ = new System.Windows.Forms.TextBox();
-			this.tb50_ = new System.Windows.Forms.TextBox();
-			this.tb47_ = new System.Windows.Forms.TextBox();
-			this.tb29_ = new System.Windows.Forms.TextBox();
-			this.tb28_ = new System.Windows.Forms.TextBox();
-			this.tb27_ = new System.Windows.Forms.TextBox();
-			this.tb26_ = new System.Windows.Forms.TextBox();
-			this.tb25_ = new System.Windows.Forms.TextBox();
-			this.tb24_ = new System.Windows.Forms.TextBox();
-			this.tb23_ = new System.Windows.Forms.TextBox();
-			this.tb22_ = new System.Windows.Forms.TextBox();
+			this.tb38_ = new McdView.RecordTextbox();
+			this.tb61_ = new McdView.RecordTextbox();
+			this.tb50_ = new McdView.RecordTextbox();
+			this.tb47_ = new McdView.RecordTextbox();
+			this.tb29_ = new McdView.RecordTextbox();
+			this.tb28_ = new McdView.RecordTextbox();
+			this.tb27_ = new McdView.RecordTextbox();
+			this.tb26_ = new McdView.RecordTextbox();
+			this.tb25_ = new McdView.RecordTextbox();
+			this.tb24_ = new McdView.RecordTextbox();
+			this.tb23_ = new McdView.RecordTextbox();
+			this.tb22_ = new McdView.RecordTextbox();
 			this.gb_Loft = new System.Windows.Forms.GroupBox();
 			this.pnl_Loft08 = new System.Windows.Forms.Panel();
 			this.pnl_Loft09 = new System.Windows.Forms.Panel();
@@ -433,69 +432,69 @@
 			this.pnl_Loft17 = new System.Windows.Forms.Panel();
 			this.pnl_Loft18 = new System.Windows.Forms.Panel();
 			this.pnl_Loft19 = new System.Windows.Forms.Panel();
-			this.tb19_loft22 = new System.Windows.Forms.TextBox();
-			this.tb18_loft20 = new System.Windows.Forms.TextBox();
-			this.tb17_loft18 = new System.Windows.Forms.TextBox();
-			this.tb16_loft16 = new System.Windows.Forms.TextBox();
-			this.tb15_loft14 = new System.Windows.Forms.TextBox();
-			this.tb14_loft12 = new System.Windows.Forms.TextBox();
-			this.tb13_loft10 = new System.Windows.Forms.TextBox();
-			this.tb12_loft08 = new System.Windows.Forms.TextBox();
-			this.tb11_loft06 = new System.Windows.Forms.TextBox();
-			this.tb10_loft04 = new System.Windows.Forms.TextBox();
-			this.tb9_loft02 = new System.Windows.Forms.TextBox();
-			this.tb8_loft00 = new System.Windows.Forms.TextBox();
+			this.tb19_loft22 = new McdView.RecordTextbox();
+			this.tb18_loft20 = new McdView.RecordTextbox();
+			this.tb17_loft18 = new McdView.RecordTextbox();
+			this.tb16_loft16 = new McdView.RecordTextbox();
+			this.tb15_loft14 = new McdView.RecordTextbox();
+			this.tb14_loft12 = new McdView.RecordTextbox();
+			this.tb13_loft10 = new McdView.RecordTextbox();
+			this.tb12_loft08 = new McdView.RecordTextbox();
+			this.tb11_loft06 = new McdView.RecordTextbox();
+			this.tb10_loft04 = new McdView.RecordTextbox();
+			this.tb9_loft02 = new McdView.RecordTextbox();
+			this.tb8_loft00 = new McdView.RecordTextbox();
 			this.gb_Sprites = new System.Windows.Forms.GroupBox();
 			this.pnl_Sprites = new System.Windows.Forms.Panel();
-			this.tb7_phase7 = new System.Windows.Forms.TextBox();
-			this.tb6_phase6 = new System.Windows.Forms.TextBox();
-			this.tb5_phase5 = new System.Windows.Forms.TextBox();
-			this.tb4_phase4 = new System.Windows.Forms.TextBox();
-			this.tb3_phase3 = new System.Windows.Forms.TextBox();
-			this.tb2_phase2 = new System.Windows.Forms.TextBox();
-			this.tb1_phase1 = new System.Windows.Forms.TextBox();
-			this.tb0_phase0 = new System.Windows.Forms.TextBox();
+			this.tb7_phase7 = new McdView.RecordTextbox();
+			this.tb6_phase6 = new McdView.RecordTextbox();
+			this.tb5_phase5 = new McdView.RecordTextbox();
+			this.tb4_phase4 = new McdView.RecordTextbox();
+			this.tb3_phase3 = new McdView.RecordTextbox();
+			this.tb2_phase2 = new McdView.RecordTextbox();
+			this.tb1_phase1 = new McdView.RecordTextbox();
+			this.tb0_phase0 = new McdView.RecordTextbox();
 			this.gb_Collection = new System.Windows.Forms.GroupBox();
 			this.gb_Minimap = new System.Windows.Forms.GroupBox();
 			this.pnl_ScanGic = new System.Windows.Forms.Panel();
-			this.tb20_scang2 = new System.Windows.Forms.TextBox();
-			this.tb20_scang1 = new System.Windows.Forms.TextBox();
+			this.tb20_scang2 = new McdView.RecordTextbox();
+			this.tb20_scang1 = new McdView.RecordTextbox();
 			this.gb_Tu = new System.Windows.Forms.GroupBox();
-			this.tb41_tufly = new System.Windows.Forms.TextBox();
-			this.tb40_tuslide = new System.Windows.Forms.TextBox();
-			this.tb39_tuwalk = new System.Windows.Forms.TextBox();
+			this.tb41_tufly = new McdView.RecordTextbox();
+			this.tb40_tuslide = new McdView.RecordTextbox();
+			this.tb39_tuwalk = new McdView.RecordTextbox();
 			this.gb_Elevation = new System.Windows.Forms.GroupBox();
-			this.tb49_spriteoffset = new System.Windows.Forms.TextBox();
-			this.tb48_terrainoffset = new System.Windows.Forms.TextBox();
+			this.tb49_spriteoffset = new McdView.RecordTextbox();
+			this.tb48_terrainoffset = new McdView.RecordTextbox();
 			this.gb_Block = new System.Windows.Forms.GroupBox();
-			this.tb51_lightblock = new System.Windows.Forms.TextBox();
-			this.tb56_smokeblock = new System.Windows.Forms.TextBox();
-			this.tb43_heblock = new System.Windows.Forms.TextBox();
-			this.tb37_isblocksmoke = new System.Windows.Forms.TextBox();
-			this.tb36_isblockfire = new System.Windows.Forms.TextBox();
-			this.tb31_isblocklos = new System.Windows.Forms.TextBox();
+			this.tb51_lightblock = new McdView.RecordTextbox();
+			this.tb56_smokeblock = new McdView.RecordTextbox();
+			this.tb43_heblock = new McdView.RecordTextbox();
+			this.tb37_isblocksmoke = new McdView.RecordTextbox();
+			this.tb36_isblockfire = new McdView.RecordTextbox();
+			this.tb31_isblocklos = new McdView.RecordTextbox();
 			this.gb_Door = new System.Windows.Forms.GroupBox();
-			this.tb46_alternateid = new System.Windows.Forms.TextBox();
-			this.tb35_ishingeddoor = new System.Windows.Forms.TextBox();
-			this.tb30_isslidingdoor = new System.Windows.Forms.TextBox();
+			this.tb46_alternateid = new McdView.RecordTextbox();
+			this.tb35_ishingeddoor = new McdView.RecordTextbox();
+			this.tb30_isslidingdoor = new McdView.RecordTextbox();
 			this.gb_Step = new System.Windows.Forms.GroupBox();
-			this.tb32_isdropthrou = new System.Windows.Forms.TextBox();
-			this.tb52_footsound = new System.Windows.Forms.TextBox();
+			this.tb32_isdropthrou = new McdView.RecordTextbox();
+			this.tb52_footsound = new McdView.RecordTextbox();
 			this.gb_Explosive = new System.Windows.Forms.GroupBox();
-			this.tb57_fuel = new System.Windows.Forms.TextBox();
-			this.tb45_fireresist = new System.Windows.Forms.TextBox();
-			this.tb55_hestrength = new System.Windows.Forms.TextBox();
-			this.tb54_hetype = new System.Windows.Forms.TextBox();
+			this.tb57_fuel = new McdView.RecordTextbox();
+			this.tb45_fireresist = new McdView.RecordTextbox();
+			this.tb55_hestrength = new McdView.RecordTextbox();
+			this.tb54_hetype = new McdView.RecordTextbox();
 			this.gb_Health = new System.Windows.Forms.GroupBox();
-			this.tb44_deathid = new System.Windows.Forms.TextBox();
-			this.tb42_armor = new System.Windows.Forms.TextBox();
+			this.tb44_deathid = new McdView.RecordTextbox();
+			this.tb42_armor = new McdView.RecordTextbox();
 			this.gb_General = new System.Windows.Forms.GroupBox();
-			this.tb58_lightintensity = new System.Windows.Forms.TextBox();
-			this.tb60_isbaseobject = new System.Windows.Forms.TextBox();
-			this.tb59_specialtype = new System.Windows.Forms.TextBox();
-			this.tb53_parttype = new System.Windows.Forms.TextBox();
-			this.tb34_isgravlift = new System.Windows.Forms.TextBox();
-			this.tb33_isbigwall = new System.Windows.Forms.TextBox();
+			this.tb58_lightintensity = new McdView.RecordTextbox();
+			this.tb60_isbaseobject = new McdView.RecordTextbox();
+			this.tb59_specialtype = new McdView.RecordTextbox();
+			this.tb53_parttype = new McdView.RecordTextbox();
+			this.tb34_isgravlift = new McdView.RecordTextbox();
+			this.tb33_isbigwall = new McdView.RecordTextbox();
 			this.lbl_SpriteShade = new System.Windows.Forms.Label();
 			this.tb_SpriteShade = new System.Windows.Forms.TextBox();
 			this.gb_Description = new System.Windows.Forms.GroupBox();
@@ -649,7 +648,6 @@
 			this.lbl20_scang.Text = "ScanG";
 			this.lbl20_scang.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl20_scang.MouseEnter += new System.EventHandler(this.OnMouseEnterLabel20);
-			this.lbl20_scang.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl30_isslidingdoor
 			// 
@@ -661,7 +659,6 @@
 			this.lbl30_isslidingdoor.Text = "isSlidingDoor";
 			this.lbl30_isslidingdoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl30_isslidingdoor.MouseEnter += new System.EventHandler(this.OnEnter30);
-			this.lbl30_isslidingdoor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl20
 			// 
@@ -673,7 +670,6 @@
 			this.lbl20.Text = "#20|21";
 			this.lbl20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl20.MouseEnter += new System.EventHandler(this.OnMouseEnterLabel20);
-			this.lbl20.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl30
 			// 
@@ -685,7 +681,6 @@
 			this.lbl30.Text = "#30";
 			this.lbl30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl30.MouseEnter += new System.EventHandler(this.OnEnter30);
-			this.lbl30.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl31
 			// 
@@ -697,7 +692,6 @@
 			this.lbl31.Text = "#31";
 			this.lbl31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl31.MouseEnter += new System.EventHandler(this.OnEnter31);
-			this.lbl31.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl31_isblocklos
 			// 
@@ -709,7 +703,6 @@
 			this.lbl31_isblocklos.Text = "isBlockLoS";
 			this.lbl31_isblocklos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl31_isblocklos.MouseEnter += new System.EventHandler(this.OnEnter31);
-			this.lbl31_isblocklos.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl32
 			// 
@@ -721,7 +714,6 @@
 			this.lbl32.Text = "#32";
 			this.lbl32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl32.MouseEnter += new System.EventHandler(this.OnEnter32);
-			this.lbl32.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl32_isdropthrou
 			// 
@@ -733,7 +725,6 @@
 			this.lbl32_isdropthrou.Text = "isDropThrou";
 			this.lbl32_isdropthrou.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl32_isdropthrou.MouseEnter += new System.EventHandler(this.OnEnter32);
-			this.lbl32_isdropthrou.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl33
 			// 
@@ -745,7 +736,6 @@
 			this.lbl33.Text = "#33";
 			this.lbl33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl33.MouseEnter += new System.EventHandler(this.OnEnter33);
-			this.lbl33.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl33_isbigwall
 			// 
@@ -757,7 +747,6 @@
 			this.lbl33_isbigwall.Text = "isBigWall";
 			this.lbl33_isbigwall.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl33_isbigwall.MouseEnter += new System.EventHandler(this.OnEnter33);
-			this.lbl33_isbigwall.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl34
 			// 
@@ -769,7 +758,6 @@
 			this.lbl34.Text = "#34";
 			this.lbl34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl34.MouseEnter += new System.EventHandler(this.OnEnter34);
-			this.lbl34.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl34_isgravlift
 			// 
@@ -781,7 +769,6 @@
 			this.lbl34_isgravlift.Text = "isGravLift";
 			this.lbl34_isgravlift.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl34_isgravlift.MouseEnter += new System.EventHandler(this.OnEnter34);
-			this.lbl34_isgravlift.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl35
 			// 
@@ -793,7 +780,6 @@
 			this.lbl35.Text = "#35";
 			this.lbl35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl35.MouseEnter += new System.EventHandler(this.OnEnter35);
-			this.lbl35.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl35_ishingeddoor
 			// 
@@ -805,7 +791,6 @@
 			this.lbl35_ishingeddoor.Text = "isHingedDoor";
 			this.lbl35_ishingeddoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl35_ishingeddoor.MouseEnter += new System.EventHandler(this.OnEnter35);
-			this.lbl35_ishingeddoor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl36
 			// 
@@ -817,7 +802,6 @@
 			this.lbl36.Text = "#36";
 			this.lbl36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl36.MouseEnter += new System.EventHandler(this.OnEnter36);
-			this.lbl36.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl36_isblockfire
 			// 
@@ -829,7 +813,6 @@
 			this.lbl36_isblockfire.Text = "isBlockFire";
 			this.lbl36_isblockfire.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl36_isblockfire.MouseEnter += new System.EventHandler(this.OnEnter36);
-			this.lbl36_isblockfire.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl37
 			// 
@@ -841,7 +824,6 @@
 			this.lbl37.Text = "#37";
 			this.lbl37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl37.MouseEnter += new System.EventHandler(this.OnEnter37);
-			this.lbl37.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl37_isblocksmoke
 			// 
@@ -853,7 +835,6 @@
 			this.lbl37_isblocksmoke.Text = "isBlockSmoke";
 			this.lbl37_isblocksmoke.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl37_isblocksmoke.MouseEnter += new System.EventHandler(this.OnEnter37);
-			this.lbl37_isblocksmoke.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl38
 			// 
@@ -865,7 +846,6 @@
 			this.lbl38.Text = "#38";
 			this.lbl38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl38.MouseEnter += new System.EventHandler(this.OnEnter38);
-			this.lbl38.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl38_
 			// 
@@ -877,7 +857,6 @@
 			this.lbl38_.Text = "LeftRightHalf";
 			this.lbl38_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl38_.MouseEnter += new System.EventHandler(this.OnEnter38);
-			this.lbl38_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl39
 			// 
@@ -889,7 +868,6 @@
 			this.lbl39.Text = "#39";
 			this.lbl39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl39.MouseEnter += new System.EventHandler(this.OnEnter39);
-			this.lbl39.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl39_tuwalk
 			// 
@@ -901,7 +879,6 @@
 			this.lbl39_tuwalk.Text = "TuWalk";
 			this.lbl39_tuwalk.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl39_tuwalk.MouseEnter += new System.EventHandler(this.OnEnter39);
-			this.lbl39_tuwalk.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl40
 			// 
@@ -913,7 +890,6 @@
 			this.lbl40.Text = "#40";
 			this.lbl40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl40.MouseEnter += new System.EventHandler(this.OnEnter40);
-			this.lbl40.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl40_tuslide
 			// 
@@ -925,7 +901,6 @@
 			this.lbl40_tuslide.Text = "TuSlide";
 			this.lbl40_tuslide.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl40_tuslide.MouseEnter += new System.EventHandler(this.OnEnter40);
-			this.lbl40_tuslide.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl41
 			// 
@@ -937,7 +912,6 @@
 			this.lbl41.Text = "#41";
 			this.lbl41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl41.MouseEnter += new System.EventHandler(this.OnEnter41);
-			this.lbl41.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl41_tufly
 			// 
@@ -949,7 +923,6 @@
 			this.lbl41_tufly.Text = "TuFly";
 			this.lbl41_tufly.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl41_tufly.MouseEnter += new System.EventHandler(this.OnEnter40);
-			this.lbl41_tufly.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl42
 			// 
@@ -961,7 +934,6 @@
 			this.lbl42.Text = "#42";
 			this.lbl42.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl42.MouseEnter += new System.EventHandler(this.OnEnter42);
-			this.lbl42.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl42_armor
 			// 
@@ -973,7 +945,6 @@
 			this.lbl42_armor.Text = "Armor";
 			this.lbl42_armor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl42_armor.MouseEnter += new System.EventHandler(this.OnEnter42);
-			this.lbl42_armor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl43
 			// 
@@ -985,7 +956,6 @@
 			this.lbl43.Text = "#43";
 			this.lbl43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl43.MouseEnter += new System.EventHandler(this.OnEnter43);
-			this.lbl43.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl43_heblock
 			// 
@@ -997,7 +967,6 @@
 			this.lbl43_heblock.Text = "HeBlock";
 			this.lbl43_heblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl43_heblock.MouseEnter += new System.EventHandler(this.OnEnter43);
-			this.lbl43_heblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl44
 			// 
@@ -1009,7 +978,6 @@
 			this.lbl44.Text = "#44";
 			this.lbl44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl44.MouseEnter += new System.EventHandler(this.OnEnter44);
-			this.lbl44.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl44_deathid
 			// 
@@ -1021,7 +989,6 @@
 			this.lbl44_deathid.Text = "DeathId";
 			this.lbl44_deathid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl44_deathid.MouseEnter += new System.EventHandler(this.OnEnter44);
-			this.lbl44_deathid.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl45
 			// 
@@ -1033,7 +1000,6 @@
 			this.lbl45.Text = "#45";
 			this.lbl45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl45.MouseEnter += new System.EventHandler(this.OnEnter45);
-			this.lbl45.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl45_fireresist
 			// 
@@ -1045,7 +1011,6 @@
 			this.lbl45_fireresist.Text = "FireResist";
 			this.lbl45_fireresist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl45_fireresist.MouseEnter += new System.EventHandler(this.OnEnter45);
-			this.lbl45_fireresist.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl46
 			// 
@@ -1057,7 +1022,6 @@
 			this.lbl46.Text = "#46";
 			this.lbl46.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl46.MouseEnter += new System.EventHandler(this.OnEnter46);
-			this.lbl46.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl46_alternateid
 			// 
@@ -1069,7 +1033,6 @@
 			this.lbl46_alternateid.Text = "AlternateId";
 			this.lbl46_alternateid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl46_alternateid.MouseEnter += new System.EventHandler(this.OnEnter46);
-			this.lbl46_alternateid.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl47
 			// 
@@ -1081,7 +1044,6 @@
 			this.lbl47.Text = "#47";
 			this.lbl47.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl47.MouseEnter += new System.EventHandler(this.OnEnter47);
-			this.lbl47.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl47_
 			// 
@@ -1093,7 +1055,6 @@
 			this.lbl47_.Text = "CloseDoors";
 			this.lbl47_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl47_.MouseEnter += new System.EventHandler(this.OnEnter47);
-			this.lbl47_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl48
 			// 
@@ -1105,7 +1066,6 @@
 			this.lbl48.Text = "#48";
 			this.lbl48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl48.MouseEnter += new System.EventHandler(this.OnEnter48);
-			this.lbl48.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl48_terrainoffset
 			// 
@@ -1117,7 +1077,6 @@
 			this.lbl48_terrainoffset.Text = "TerrainOffset";
 			this.lbl48_terrainoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl48_terrainoffset.MouseEnter += new System.EventHandler(this.OnEnter48);
-			this.lbl48_terrainoffset.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl49
 			// 
@@ -1129,7 +1088,6 @@
 			this.lbl49.Text = "#49";
 			this.lbl49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl49.MouseEnter += new System.EventHandler(this.OnEnter49);
-			this.lbl49.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl49_spriteoffset
 			// 
@@ -1141,7 +1099,6 @@
 			this.lbl49_spriteoffset.Text = "SpriteOffset";
 			this.lbl49_spriteoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl49_spriteoffset.MouseEnter += new System.EventHandler(this.OnEnter49);
-			this.lbl49_spriteoffset.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl50
 			// 
@@ -1153,7 +1110,6 @@
 			this.lbl50.Text = "#50";
 			this.lbl50.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl50.MouseEnter += new System.EventHandler(this.OnEnter50);
-			this.lbl50.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl50_
 			// 
@@ -1165,7 +1121,6 @@
 			this.lbl50_.Text = "dTypeMod";
 			this.lbl50_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl50_.MouseEnter += new System.EventHandler(this.OnEnter50);
-			this.lbl50_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl51
 			// 
@@ -1177,7 +1132,6 @@
 			this.lbl51.Text = "#51";
 			this.lbl51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl51.MouseEnter += new System.EventHandler(this.OnEnter51);
-			this.lbl51.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl51_lightblock
 			// 
@@ -1189,7 +1143,6 @@
 			this.lbl51_lightblock.Text = "LightBlock";
 			this.lbl51_lightblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl51_lightblock.MouseEnter += new System.EventHandler(this.OnEnter51);
-			this.lbl51_lightblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl52
 			// 
@@ -1201,7 +1154,6 @@
 			this.lbl52.Text = "#52";
 			this.lbl52.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl52.MouseEnter += new System.EventHandler(this.OnEnter52);
-			this.lbl52.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl52_footsound
 			// 
@@ -1213,7 +1165,6 @@
 			this.lbl52_footsound.Text = "FootSound";
 			this.lbl52_footsound.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl52_footsound.MouseEnter += new System.EventHandler(this.OnEnter52);
-			this.lbl52_footsound.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl53
 			// 
@@ -1225,7 +1176,6 @@
 			this.lbl53.Text = "#53";
 			this.lbl53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl53.MouseEnter += new System.EventHandler(this.OnEnter53);
-			this.lbl53.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl53_parttype
 			// 
@@ -1237,7 +1187,6 @@
 			this.lbl53_parttype.Text = "PartType";
 			this.lbl53_parttype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl53_parttype.MouseEnter += new System.EventHandler(this.OnEnter53);
-			this.lbl53_parttype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl54
 			// 
@@ -1249,7 +1198,6 @@
 			this.lbl54.Text = "#54";
 			this.lbl54.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl54.MouseEnter += new System.EventHandler(this.OnEnter54);
-			this.lbl54.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl54_hetype
 			// 
@@ -1261,7 +1209,6 @@
 			this.lbl54_hetype.Text = "HeType";
 			this.lbl54_hetype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl54_hetype.MouseEnter += new System.EventHandler(this.OnEnter54);
-			this.lbl54_hetype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl55
 			// 
@@ -1273,7 +1220,6 @@
 			this.lbl55.Text = "#55";
 			this.lbl55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl55.MouseEnter += new System.EventHandler(this.OnEnter55);
-			this.lbl55.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl55_hestrength
 			// 
@@ -1285,7 +1231,6 @@
 			this.lbl55_hestrength.Text = "HeStrength";
 			this.lbl55_hestrength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl55_hestrength.MouseEnter += new System.EventHandler(this.OnEnter55);
-			this.lbl55_hestrength.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl56
 			// 
@@ -1297,7 +1242,6 @@
 			this.lbl56.Text = "#56";
 			this.lbl56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl56.MouseEnter += new System.EventHandler(this.OnEnter56);
-			this.lbl56.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl56_smokeblock
 			// 
@@ -1309,7 +1253,6 @@
 			this.lbl56_smokeblock.Text = "SmokeBlock";
 			this.lbl56_smokeblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl56_smokeblock.MouseEnter += new System.EventHandler(this.OnEnter56);
-			this.lbl56_smokeblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl57
 			// 
@@ -1321,7 +1264,6 @@
 			this.lbl57.Text = "#57";
 			this.lbl57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl57.MouseEnter += new System.EventHandler(this.OnEnter57);
-			this.lbl57.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl57_fuel
 			// 
@@ -1333,7 +1275,6 @@
 			this.lbl57_fuel.Text = "Fuel";
 			this.lbl57_fuel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl57_fuel.MouseEnter += new System.EventHandler(this.OnEnter57);
-			this.lbl57_fuel.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl58
 			// 
@@ -1345,7 +1286,6 @@
 			this.lbl58.Text = "#58";
 			this.lbl58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl58.MouseEnter += new System.EventHandler(this.OnEnter58);
-			this.lbl58.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl58_lightintensity
 			// 
@@ -1357,7 +1297,6 @@
 			this.lbl58_lightintensity.Text = "LightIntensity";
 			this.lbl58_lightintensity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl58_lightintensity.MouseEnter += new System.EventHandler(this.OnEnter58);
-			this.lbl58_lightintensity.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl59
 			// 
@@ -1369,7 +1308,6 @@
 			this.lbl59.Text = "#59";
 			this.lbl59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl59.MouseEnter += new System.EventHandler(this.OnEnter59);
-			this.lbl59.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl59_specialtype
 			// 
@@ -1381,7 +1319,6 @@
 			this.lbl59_specialtype.Text = "SpecialType";
 			this.lbl59_specialtype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl59_specialtype.MouseEnter += new System.EventHandler(this.OnEnter59);
-			this.lbl59_specialtype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl60
 			// 
@@ -1393,7 +1330,6 @@
 			this.lbl60.Text = "#60";
 			this.lbl60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl60.MouseEnter += new System.EventHandler(this.OnEnter60);
-			this.lbl60.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl60_isbaseobject
 			// 
@@ -1405,7 +1341,6 @@
 			this.lbl60_isbaseobject.Text = "isBaseObject";
 			this.lbl60_isbaseobject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl60_isbaseobject.MouseEnter += new System.EventHandler(this.OnEnter60);
-			this.lbl60_isbaseobject.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl61
 			// 
@@ -1417,7 +1352,6 @@
 			this.lbl61.Text = "#61";
 			this.lbl61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl61.MouseEnter += new System.EventHandler(this.OnEnter61);
-			this.lbl61.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl61_
 			// 
@@ -1429,7 +1363,6 @@
 			this.lbl61_.Text = "VictoryPoints";
 			this.lbl61_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl61_.MouseEnter += new System.EventHandler(this.OnEnter61);
-			this.lbl61_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl19
 			// 
@@ -1441,7 +1374,6 @@
 			this.lbl19.Text = "#19";
 			this.lbl19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl19.MouseEnter += new System.EventHandler(this.OnEnter19);
-			this.lbl19.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl19_loft22
 			// 
@@ -1453,7 +1385,6 @@
 			this.lbl19_loft22.Text = "loft 22";
 			this.lbl19_loft22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl19_loft22.MouseEnter += new System.EventHandler(this.OnEnter19);
-			this.lbl19_loft22.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl18
 			// 
@@ -1465,7 +1396,6 @@
 			this.lbl18.Text = "#18";
 			this.lbl18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl18.MouseEnter += new System.EventHandler(this.OnEnter18);
-			this.lbl18.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl18_loft20
 			// 
@@ -1477,7 +1407,6 @@
 			this.lbl18_loft20.Text = "loft 20";
 			this.lbl18_loft20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl18_loft20.MouseEnter += new System.EventHandler(this.OnEnter18);
-			this.lbl18_loft20.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl17
 			// 
@@ -1489,7 +1418,6 @@
 			this.lbl17.Text = "#17";
 			this.lbl17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl17.MouseEnter += new System.EventHandler(this.OnEnter17);
-			this.lbl17.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl17_loft18
 			// 
@@ -1501,7 +1429,6 @@
 			this.lbl17_loft18.Text = "loft 18";
 			this.lbl17_loft18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl17_loft18.MouseEnter += new System.EventHandler(this.OnEnter17);
-			this.lbl17_loft18.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl16
 			// 
@@ -1513,7 +1440,6 @@
 			this.lbl16.Text = "#16";
 			this.lbl16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl16.MouseEnter += new System.EventHandler(this.OnEnter16);
-			this.lbl16.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl16_loft16
 			// 
@@ -1525,7 +1451,6 @@
 			this.lbl16_loft16.Text = "loft 16";
 			this.lbl16_loft16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl16_loft16.MouseEnter += new System.EventHandler(this.OnEnter16);
-			this.lbl16_loft16.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl15
 			// 
@@ -1537,7 +1462,6 @@
 			this.lbl15.Text = "#15";
 			this.lbl15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl15.MouseEnter += new System.EventHandler(this.OnEnter15);
-			this.lbl15.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl15_loft14
 			// 
@@ -1549,7 +1473,6 @@
 			this.lbl15_loft14.Text = "loft 14";
 			this.lbl15_loft14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl15_loft14.MouseEnter += new System.EventHandler(this.OnEnter15);
-			this.lbl15_loft14.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl14
 			// 
@@ -1561,7 +1484,6 @@
 			this.lbl14.Text = "#14";
 			this.lbl14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl14.MouseEnter += new System.EventHandler(this.OnEnter14);
-			this.lbl14.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl14_loft12
 			// 
@@ -1573,7 +1495,6 @@
 			this.lbl14_loft12.Text = "loft 12";
 			this.lbl14_loft12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl14_loft12.MouseEnter += new System.EventHandler(this.OnEnter14);
-			this.lbl14_loft12.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl13
 			// 
@@ -1585,7 +1506,6 @@
 			this.lbl13.Text = "#13";
 			this.lbl13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl13.MouseEnter += new System.EventHandler(this.OnEnter13);
-			this.lbl13.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl13_loft10
 			// 
@@ -1597,7 +1517,6 @@
 			this.lbl13_loft10.Text = "loft 10";
 			this.lbl13_loft10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl13_loft10.MouseEnter += new System.EventHandler(this.OnEnter13);
-			this.lbl13_loft10.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl12
 			// 
@@ -1609,7 +1528,6 @@
 			this.lbl12.Text = "#12";
 			this.lbl12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl12.MouseEnter += new System.EventHandler(this.OnEnter12);
-			this.lbl12.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl12_loft08
 			// 
@@ -1621,7 +1539,6 @@
 			this.lbl12_loft08.Text = "loft 08";
 			this.lbl12_loft08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl12_loft08.MouseEnter += new System.EventHandler(this.OnEnter12);
-			this.lbl12_loft08.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl11
 			// 
@@ -1633,7 +1550,6 @@
 			this.lbl11.Text = "#11";
 			this.lbl11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl11.MouseEnter += new System.EventHandler(this.OnEnter11);
-			this.lbl11.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl11_loft06
 			// 
@@ -1645,7 +1561,6 @@
 			this.lbl11_loft06.Text = "loft 06";
 			this.lbl11_loft06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl11_loft06.MouseEnter += new System.EventHandler(this.OnEnter11);
-			this.lbl11_loft06.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl10
 			// 
@@ -1657,7 +1572,6 @@
 			this.lbl10.Text = "#10";
 			this.lbl10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl10.MouseEnter += new System.EventHandler(this.OnEnter10);
-			this.lbl10.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl10_loft04
 			// 
@@ -1669,7 +1583,6 @@
 			this.lbl10_loft04.Text = "loft 04";
 			this.lbl10_loft04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl10_loft04.MouseEnter += new System.EventHandler(this.OnEnter10);
-			this.lbl10_loft04.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl9
 			// 
@@ -1681,7 +1594,6 @@
 			this.lbl9.Text = "#9";
 			this.lbl9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl9.MouseEnter += new System.EventHandler(this.OnEnter9);
-			this.lbl9.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl9_loft02
 			// 
@@ -1693,7 +1605,6 @@
 			this.lbl9_loft02.Text = "loft 02";
 			this.lbl9_loft02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl9_loft02.MouseEnter += new System.EventHandler(this.OnEnter9);
-			this.lbl9_loft02.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl8
 			// 
@@ -1705,7 +1616,6 @@
 			this.lbl8.Text = "#8";
 			this.lbl8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl8.MouseEnter += new System.EventHandler(this.OnEnter8);
-			this.lbl8.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl8_loft00
 			// 
@@ -1717,7 +1627,6 @@
 			this.lbl8_loft00.Text = "loft 00";
 			this.lbl8_loft00.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl8_loft00.MouseEnter += new System.EventHandler(this.OnEnter8);
-			this.lbl8_loft00.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl0
 			// 
@@ -1729,7 +1638,6 @@
 			this.lbl0.Text = "#0";
 			this.lbl0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl0.MouseEnter += new System.EventHandler(this.OnEnter0);
-			this.lbl0.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl0_phase0
 			// 
@@ -1741,7 +1649,6 @@
 			this.lbl0_phase0.Text = "phase 0";
 			this.lbl0_phase0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl0_phase0.MouseEnter += new System.EventHandler(this.OnEnter0);
-			this.lbl0_phase0.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl1
 			// 
@@ -1753,7 +1660,6 @@
 			this.lbl1.Text = "#1";
 			this.lbl1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl1.MouseEnter += new System.EventHandler(this.OnEnter1);
-			this.lbl1.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl1_phase1
 			// 
@@ -1765,7 +1671,6 @@
 			this.lbl1_phase1.Text = "phase 1";
 			this.lbl1_phase1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl1_phase1.MouseEnter += new System.EventHandler(this.OnEnter1);
-			this.lbl1_phase1.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl2
 			// 
@@ -1777,7 +1682,6 @@
 			this.lbl2.Text = "#2";
 			this.lbl2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl2.MouseEnter += new System.EventHandler(this.OnEnter2);
-			this.lbl2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl2_phase2
 			// 
@@ -1789,7 +1693,6 @@
 			this.lbl2_phase2.Text = "phase 2";
 			this.lbl2_phase2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl2_phase2.MouseEnter += new System.EventHandler(this.OnEnter2);
-			this.lbl2_phase2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl3
 			// 
@@ -1801,7 +1704,6 @@
 			this.lbl3.Text = "#3";
 			this.lbl3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl3.MouseEnter += new System.EventHandler(this.OnEnter3);
-			this.lbl3.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl3_phase3
 			// 
@@ -1813,7 +1715,6 @@
 			this.lbl3_phase3.Text = "phase 3";
 			this.lbl3_phase3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl3_phase3.MouseEnter += new System.EventHandler(this.OnEnter3);
-			this.lbl3_phase3.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl7
 			// 
@@ -1825,7 +1726,6 @@
 			this.lbl7.Text = "#7";
 			this.lbl7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl7.MouseEnter += new System.EventHandler(this.OnEnter7);
-			this.lbl7.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl7_phase7
 			// 
@@ -1837,7 +1737,6 @@
 			this.lbl7_phase7.Text = "phase 7";
 			this.lbl7_phase7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl7_phase7.MouseEnter += new System.EventHandler(this.OnEnter7);
-			this.lbl7_phase7.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl6
 			// 
@@ -1849,7 +1748,6 @@
 			this.lbl6.Text = "#6";
 			this.lbl6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl6.MouseEnter += new System.EventHandler(this.OnEnter6);
-			this.lbl6.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl6_phase6
 			// 
@@ -1861,7 +1759,6 @@
 			this.lbl6_phase6.Text = "phase 6";
 			this.lbl6_phase6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl6_phase6.MouseEnter += new System.EventHandler(this.OnEnter6);
-			this.lbl6_phase6.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl5
 			// 
@@ -1873,7 +1770,6 @@
 			this.lbl5.Text = "#5";
 			this.lbl5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl5.MouseEnter += new System.EventHandler(this.OnEnter5);
-			this.lbl5.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl5_phase5
 			// 
@@ -1885,7 +1781,6 @@
 			this.lbl5_phase5.Text = "phase 5";
 			this.lbl5_phase5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl5_phase5.MouseEnter += new System.EventHandler(this.OnEnter5);
-			this.lbl5_phase5.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl4
 			// 
@@ -1897,7 +1792,6 @@
 			this.lbl4.Text = "#4";
 			this.lbl4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl4.MouseEnter += new System.EventHandler(this.OnEnter4);
-			this.lbl4.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl4_phase4
 			// 
@@ -1909,7 +1803,6 @@
 			this.lbl4_phase4.Text = "phase 4";
 			this.lbl4_phase4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl4_phase4.MouseEnter += new System.EventHandler(this.OnEnter4);
-			this.lbl4_phase4.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl22
 			// 
@@ -1921,7 +1814,6 @@
 			this.lbl22.Text = "#22";
 			this.lbl22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl22.MouseEnter += new System.EventHandler(this.OnEnter22);
-			this.lbl22.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl22_
 			// 
@@ -1933,7 +1825,6 @@
 			this.lbl22_.Text = "tab ram";
 			this.lbl22_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl22_.MouseEnter += new System.EventHandler(this.OnEnter22);
-			this.lbl22_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl23
 			// 
@@ -1945,7 +1836,6 @@
 			this.lbl23.Text = "#23";
 			this.lbl23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl23.MouseEnter += new System.EventHandler(this.OnEnter23);
-			this.lbl23.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl23_
 			// 
@@ -1957,7 +1847,6 @@
 			this.lbl23_.Text = "tab ram";
 			this.lbl23_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl23_.MouseEnter += new System.EventHandler(this.OnEnter23);
-			this.lbl23_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl24
 			// 
@@ -1969,7 +1858,6 @@
 			this.lbl24.Text = "#24";
 			this.lbl24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl24.MouseEnter += new System.EventHandler(this.OnEnter24);
-			this.lbl24.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl24_
 			// 
@@ -1981,7 +1869,6 @@
 			this.lbl24_.Text = "tab ram";
 			this.lbl24_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl24_.MouseEnter += new System.EventHandler(this.OnEnter24);
-			this.lbl24_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl25
 			// 
@@ -1993,7 +1880,6 @@
 			this.lbl25.Text = "#25";
 			this.lbl25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl25.MouseEnter += new System.EventHandler(this.OnEnter25);
-			this.lbl25.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl25_
 			// 
@@ -2005,7 +1891,6 @@
 			this.lbl25_.Text = "tab ram";
 			this.lbl25_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl25_.MouseEnter += new System.EventHandler(this.OnEnter25);
-			this.lbl25_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl26
 			// 
@@ -2017,7 +1902,6 @@
 			this.lbl26.Text = "#26";
 			this.lbl26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl26.MouseEnter += new System.EventHandler(this.OnEnter26);
-			this.lbl26.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl26_
 			// 
@@ -2029,7 +1913,6 @@
 			this.lbl26_.Text = "pck ram";
 			this.lbl26_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl26_.MouseEnter += new System.EventHandler(this.OnEnter26);
-			this.lbl26_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl27
 			// 
@@ -2041,7 +1924,6 @@
 			this.lbl27.Text = "#27";
 			this.lbl27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl27.MouseEnter += new System.EventHandler(this.OnEnter27);
-			this.lbl27.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl27_
 			// 
@@ -2053,7 +1935,6 @@
 			this.lbl27_.Text = "pck ram";
 			this.lbl27_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl27_.MouseEnter += new System.EventHandler(this.OnEnter27);
-			this.lbl27_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl28
 			// 
@@ -2065,7 +1946,6 @@
 			this.lbl28.Text = "#28";
 			this.lbl28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl28.MouseEnter += new System.EventHandler(this.OnEnter28);
-			this.lbl28.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl28_
 			// 
@@ -2077,7 +1957,6 @@
 			this.lbl28_.Text = "pck ram";
 			this.lbl28_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl28_.MouseEnter += new System.EventHandler(this.OnEnter28);
-			this.lbl28_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl29
 			// 
@@ -2089,7 +1968,6 @@
 			this.lbl29.Text = "#29";
 			this.lbl29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl29.MouseEnter += new System.EventHandler(this.OnEnter29);
-			this.lbl29.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl29_
 			// 
@@ -2101,7 +1979,6 @@
 			this.lbl29_.Text = "pck ram";
 			this.lbl29_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl29_.MouseEnter += new System.EventHandler(this.OnEnter29);
-			this.lbl29_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// ss_Statusbar
 			// 
@@ -2181,9 +2058,7 @@
 			this.tb38_.WordWrap = false;
 			this.tb38_.TextChanged += new System.EventHandler(this.OnChanged38);
 			this.tb38_.Enter += new System.EventHandler(this.OnEnter38);
-			this.tb38_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb38_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox38);
-			this.tb38_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb61_
 			// 
@@ -2196,9 +2071,7 @@
 			this.tb61_.WordWrap = false;
 			this.tb61_.TextChanged += new System.EventHandler(this.OnChanged61);
 			this.tb61_.Enter += new System.EventHandler(this.OnEnter61);
-			this.tb61_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb61_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox61);
-			this.tb61_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb50_
 			// 
@@ -2211,9 +2084,7 @@
 			this.tb50_.WordWrap = false;
 			this.tb50_.TextChanged += new System.EventHandler(this.OnChanged50);
 			this.tb50_.Enter += new System.EventHandler(this.OnEnter50);
-			this.tb50_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb50_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox50);
-			this.tb50_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb47_
 			// 
@@ -2226,9 +2097,7 @@
 			this.tb47_.WordWrap = false;
 			this.tb47_.TextChanged += new System.EventHandler(this.OnChanged47);
 			this.tb47_.Enter += new System.EventHandler(this.OnEnter47);
-			this.tb47_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb47_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox47);
-			this.tb47_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb29_
 			// 
@@ -2241,9 +2110,7 @@
 			this.tb29_.WordWrap = false;
 			this.tb29_.TextChanged += new System.EventHandler(this.OnChanged29);
 			this.tb29_.Enter += new System.EventHandler(this.OnEnter29);
-			this.tb29_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb29_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox29);
-			this.tb29_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb28_
 			// 
@@ -2256,9 +2123,7 @@
 			this.tb28_.WordWrap = false;
 			this.tb28_.TextChanged += new System.EventHandler(this.OnChanged28);
 			this.tb28_.Enter += new System.EventHandler(this.OnEnter28);
-			this.tb28_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb28_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox28);
-			this.tb28_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb27_
 			// 
@@ -2271,9 +2136,7 @@
 			this.tb27_.WordWrap = false;
 			this.tb27_.TextChanged += new System.EventHandler(this.OnChanged27);
 			this.tb27_.Enter += new System.EventHandler(this.OnEnter27);
-			this.tb27_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb27_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox27);
-			this.tb27_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb26_
 			// 
@@ -2286,9 +2149,7 @@
 			this.tb26_.WordWrap = false;
 			this.tb26_.TextChanged += new System.EventHandler(this.OnChanged26);
 			this.tb26_.Enter += new System.EventHandler(this.OnEnter26);
-			this.tb26_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb26_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox26);
-			this.tb26_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb25_
 			// 
@@ -2301,9 +2162,7 @@
 			this.tb25_.WordWrap = false;
 			this.tb25_.TextChanged += new System.EventHandler(this.OnChanged25);
 			this.tb25_.Enter += new System.EventHandler(this.OnEnter25);
-			this.tb25_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb25_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox25);
-			this.tb25_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb24_
 			// 
@@ -2316,9 +2175,7 @@
 			this.tb24_.WordWrap = false;
 			this.tb24_.TextChanged += new System.EventHandler(this.OnChanged24);
 			this.tb24_.Enter += new System.EventHandler(this.OnEnter24);
-			this.tb24_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb24_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox24);
-			this.tb24_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb23_
 			// 
@@ -2331,9 +2188,7 @@
 			this.tb23_.WordWrap = false;
 			this.tb23_.TextChanged += new System.EventHandler(this.OnChanged23);
 			this.tb23_.Enter += new System.EventHandler(this.OnEnter23);
-			this.tb23_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb23_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox23);
-			this.tb23_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb22_
 			// 
@@ -2346,9 +2201,7 @@
 			this.tb22_.WordWrap = false;
 			this.tb22_.TextChanged += new System.EventHandler(this.OnChanged22);
 			this.tb22_.Enter += new System.EventHandler(this.OnEnter22);
-			this.tb22_.Leave += new System.EventHandler(this.OnLeave);
 			this.tb22_.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox22);
-			this.tb22_.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Loft
 			// 
@@ -2543,9 +2396,7 @@
 			this.tb19_loft22.WordWrap = false;
 			this.tb19_loft22.TextChanged += new System.EventHandler(this.OnChanged19);
 			this.tb19_loft22.Enter += new System.EventHandler(this.OnEnter19);
-			this.tb19_loft22.Leave += new System.EventHandler(this.OnLeave);
 			this.tb19_loft22.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox19);
-			this.tb19_loft22.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb18_loft20
 			// 
@@ -2558,9 +2409,7 @@
 			this.tb18_loft20.WordWrap = false;
 			this.tb18_loft20.TextChanged += new System.EventHandler(this.OnChanged18);
 			this.tb18_loft20.Enter += new System.EventHandler(this.OnEnter18);
-			this.tb18_loft20.Leave += new System.EventHandler(this.OnLeave);
 			this.tb18_loft20.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox18);
-			this.tb18_loft20.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb17_loft18
 			// 
@@ -2573,9 +2422,7 @@
 			this.tb17_loft18.WordWrap = false;
 			this.tb17_loft18.TextChanged += new System.EventHandler(this.OnChanged17);
 			this.tb17_loft18.Enter += new System.EventHandler(this.OnEnter17);
-			this.tb17_loft18.Leave += new System.EventHandler(this.OnLeave);
 			this.tb17_loft18.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox17);
-			this.tb17_loft18.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb16_loft16
 			// 
@@ -2588,9 +2435,7 @@
 			this.tb16_loft16.WordWrap = false;
 			this.tb16_loft16.TextChanged += new System.EventHandler(this.OnChanged16);
 			this.tb16_loft16.Enter += new System.EventHandler(this.OnEnter16);
-			this.tb16_loft16.Leave += new System.EventHandler(this.OnLeave);
 			this.tb16_loft16.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox16);
-			this.tb16_loft16.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb15_loft14
 			// 
@@ -2603,9 +2448,7 @@
 			this.tb15_loft14.WordWrap = false;
 			this.tb15_loft14.TextChanged += new System.EventHandler(this.OnChanged15);
 			this.tb15_loft14.Enter += new System.EventHandler(this.OnEnter15);
-			this.tb15_loft14.Leave += new System.EventHandler(this.OnLeave);
 			this.tb15_loft14.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox15);
-			this.tb15_loft14.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb14_loft12
 			// 
@@ -2618,9 +2461,7 @@
 			this.tb14_loft12.WordWrap = false;
 			this.tb14_loft12.TextChanged += new System.EventHandler(this.OnChanged14);
 			this.tb14_loft12.Enter += new System.EventHandler(this.OnEnter14);
-			this.tb14_loft12.Leave += new System.EventHandler(this.OnLeave);
 			this.tb14_loft12.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox14);
-			this.tb14_loft12.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb13_loft10
 			// 
@@ -2633,9 +2474,7 @@
 			this.tb13_loft10.WordWrap = false;
 			this.tb13_loft10.TextChanged += new System.EventHandler(this.OnChanged13);
 			this.tb13_loft10.Enter += new System.EventHandler(this.OnEnter13);
-			this.tb13_loft10.Leave += new System.EventHandler(this.OnLeave);
 			this.tb13_loft10.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox13);
-			this.tb13_loft10.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb12_loft08
 			// 
@@ -2648,9 +2487,7 @@
 			this.tb12_loft08.WordWrap = false;
 			this.tb12_loft08.TextChanged += new System.EventHandler(this.OnChanged12);
 			this.tb12_loft08.Enter += new System.EventHandler(this.OnEnter12);
-			this.tb12_loft08.Leave += new System.EventHandler(this.OnLeave);
 			this.tb12_loft08.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox12);
-			this.tb12_loft08.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb11_loft06
 			// 
@@ -2663,9 +2500,7 @@
 			this.tb11_loft06.WordWrap = false;
 			this.tb11_loft06.TextChanged += new System.EventHandler(this.OnChanged11);
 			this.tb11_loft06.Enter += new System.EventHandler(this.OnEnter11);
-			this.tb11_loft06.Leave += new System.EventHandler(this.OnLeave);
 			this.tb11_loft06.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox11);
-			this.tb11_loft06.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb10_loft04
 			// 
@@ -2678,9 +2513,7 @@
 			this.tb10_loft04.WordWrap = false;
 			this.tb10_loft04.TextChanged += new System.EventHandler(this.OnChanged10);
 			this.tb10_loft04.Enter += new System.EventHandler(this.OnEnter10);
-			this.tb10_loft04.Leave += new System.EventHandler(this.OnLeave);
 			this.tb10_loft04.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox10);
-			this.tb10_loft04.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb9_loft02
 			// 
@@ -2693,9 +2526,7 @@
 			this.tb9_loft02.WordWrap = false;
 			this.tb9_loft02.TextChanged += new System.EventHandler(this.OnChanged9);
 			this.tb9_loft02.Enter += new System.EventHandler(this.OnEnter9);
-			this.tb9_loft02.Leave += new System.EventHandler(this.OnLeave);
 			this.tb9_loft02.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox9);
-			this.tb9_loft02.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb8_loft00
 			// 
@@ -2708,9 +2539,7 @@
 			this.tb8_loft00.WordWrap = false;
 			this.tb8_loft00.TextChanged += new System.EventHandler(this.OnChanged8);
 			this.tb8_loft00.Enter += new System.EventHandler(this.OnEnter8);
-			this.tb8_loft00.Leave += new System.EventHandler(this.OnLeave);
 			this.tb8_loft00.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox8);
-			this.tb8_loft00.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Sprites
 			// 
@@ -2772,9 +2601,7 @@
 			this.tb7_phase7.WordWrap = false;
 			this.tb7_phase7.TextChanged += new System.EventHandler(this.OnChanged7);
 			this.tb7_phase7.Enter += new System.EventHandler(this.OnEnter7);
-			this.tb7_phase7.Leave += new System.EventHandler(this.OnLeave);
 			this.tb7_phase7.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox7);
-			this.tb7_phase7.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb6_phase6
 			// 
@@ -2787,9 +2614,7 @@
 			this.tb6_phase6.WordWrap = false;
 			this.tb6_phase6.TextChanged += new System.EventHandler(this.OnChanged6);
 			this.tb6_phase6.Enter += new System.EventHandler(this.OnEnter6);
-			this.tb6_phase6.Leave += new System.EventHandler(this.OnLeave);
 			this.tb6_phase6.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox6);
-			this.tb6_phase6.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb5_phase5
 			// 
@@ -2802,9 +2627,7 @@
 			this.tb5_phase5.WordWrap = false;
 			this.tb5_phase5.TextChanged += new System.EventHandler(this.OnChanged5);
 			this.tb5_phase5.Enter += new System.EventHandler(this.OnEnter5);
-			this.tb5_phase5.Leave += new System.EventHandler(this.OnLeave);
 			this.tb5_phase5.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox5);
-			this.tb5_phase5.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb4_phase4
 			// 
@@ -2817,9 +2640,7 @@
 			this.tb4_phase4.WordWrap = false;
 			this.tb4_phase4.TextChanged += new System.EventHandler(this.OnChanged4);
 			this.tb4_phase4.Enter += new System.EventHandler(this.OnEnter4);
-			this.tb4_phase4.Leave += new System.EventHandler(this.OnLeave);
 			this.tb4_phase4.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox4);
-			this.tb4_phase4.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb3_phase3
 			// 
@@ -2832,9 +2653,7 @@
 			this.tb3_phase3.WordWrap = false;
 			this.tb3_phase3.TextChanged += new System.EventHandler(this.OnChanged3);
 			this.tb3_phase3.Enter += new System.EventHandler(this.OnEnter3);
-			this.tb3_phase3.Leave += new System.EventHandler(this.OnLeave);
 			this.tb3_phase3.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox3);
-			this.tb3_phase3.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb2_phase2
 			// 
@@ -2847,9 +2666,7 @@
 			this.tb2_phase2.WordWrap = false;
 			this.tb2_phase2.TextChanged += new System.EventHandler(this.OnChanged2);
 			this.tb2_phase2.Enter += new System.EventHandler(this.OnEnter2);
-			this.tb2_phase2.Leave += new System.EventHandler(this.OnLeave);
 			this.tb2_phase2.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox2);
-			this.tb2_phase2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb1_phase1
 			// 
@@ -2862,9 +2679,7 @@
 			this.tb1_phase1.WordWrap = false;
 			this.tb1_phase1.TextChanged += new System.EventHandler(this.OnChanged1);
 			this.tb1_phase1.Enter += new System.EventHandler(this.OnEnter1);
-			this.tb1_phase1.Leave += new System.EventHandler(this.OnLeave);
 			this.tb1_phase1.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox1);
-			this.tb1_phase1.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb0_phase0
 			// 
@@ -2877,9 +2692,7 @@
 			this.tb0_phase0.WordWrap = false;
 			this.tb0_phase0.TextChanged += new System.EventHandler(this.OnChanged0);
 			this.tb0_phase0.Enter += new System.EventHandler(this.OnEnter0);
-			this.tb0_phase0.Leave += new System.EventHandler(this.OnLeave);
 			this.tb0_phase0.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox0);
-			this.tb0_phase0.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Collection
 			// 
@@ -2931,9 +2744,7 @@
 			this.tb20_scang2.WordWrap = false;
 			this.tb20_scang2.TextChanged += new System.EventHandler(this.OnChanged20r);
 			this.tb20_scang2.Enter += new System.EventHandler(this.OnEnter20r);
-			this.tb20_scang2.Leave += new System.EventHandler(this.OnLeave);
 			this.tb20_scang2.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox20r);
-			this.tb20_scang2.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb20_scang1
 			// 
@@ -2946,9 +2757,7 @@
 			this.tb20_scang1.WordWrap = false;
 			this.tb20_scang1.TextChanged += new System.EventHandler(this.OnChanged20);
 			this.tb20_scang1.Enter += new System.EventHandler(this.OnEnter20);
-			this.tb20_scang1.Leave += new System.EventHandler(this.OnLeave);
 			this.tb20_scang1.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox20);
-			this.tb20_scang1.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Tu
 			// 
@@ -2981,9 +2790,7 @@
 			this.tb41_tufly.WordWrap = false;
 			this.tb41_tufly.TextChanged += new System.EventHandler(this.OnChanged41);
 			this.tb41_tufly.Enter += new System.EventHandler(this.OnEnter41);
-			this.tb41_tufly.Leave += new System.EventHandler(this.OnLeave);
 			this.tb41_tufly.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox41);
-			this.tb41_tufly.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb40_tuslide
 			// 
@@ -2996,9 +2803,7 @@
 			this.tb40_tuslide.WordWrap = false;
 			this.tb40_tuslide.TextChanged += new System.EventHandler(this.OnChanged40);
 			this.tb40_tuslide.Enter += new System.EventHandler(this.OnEnter40);
-			this.tb40_tuslide.Leave += new System.EventHandler(this.OnLeave);
 			this.tb40_tuslide.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox40);
-			this.tb40_tuslide.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb39_tuwalk
 			// 
@@ -3011,9 +2816,7 @@
 			this.tb39_tuwalk.WordWrap = false;
 			this.tb39_tuwalk.TextChanged += new System.EventHandler(this.OnChanged39);
 			this.tb39_tuwalk.Enter += new System.EventHandler(this.OnEnter39);
-			this.tb39_tuwalk.Leave += new System.EventHandler(this.OnLeave);
 			this.tb39_tuwalk.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox39);
-			this.tb39_tuwalk.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Elevation
 			// 
@@ -3043,9 +2846,7 @@
 			this.tb49_spriteoffset.WordWrap = false;
 			this.tb49_spriteoffset.TextChanged += new System.EventHandler(this.OnChanged49);
 			this.tb49_spriteoffset.Enter += new System.EventHandler(this.OnEnter49);
-			this.tb49_spriteoffset.Leave += new System.EventHandler(this.OnLeave);
 			this.tb49_spriteoffset.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox49);
-			this.tb49_spriteoffset.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb48_terrainoffset
 			// 
@@ -3058,9 +2859,7 @@
 			this.tb48_terrainoffset.WordWrap = false;
 			this.tb48_terrainoffset.TextChanged += new System.EventHandler(this.OnChanged48);
 			this.tb48_terrainoffset.Enter += new System.EventHandler(this.OnEnter48);
-			this.tb48_terrainoffset.Leave += new System.EventHandler(this.OnLeave);
 			this.tb48_terrainoffset.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox48);
-			this.tb48_terrainoffset.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Block
 			// 
@@ -3102,9 +2901,7 @@
 			this.tb51_lightblock.WordWrap = false;
 			this.tb51_lightblock.TextChanged += new System.EventHandler(this.OnChanged51);
 			this.tb51_lightblock.Enter += new System.EventHandler(this.OnEnter51);
-			this.tb51_lightblock.Leave += new System.EventHandler(this.OnLeave);
 			this.tb51_lightblock.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox51);
-			this.tb51_lightblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb56_smokeblock
 			// 
@@ -3117,9 +2914,7 @@
 			this.tb56_smokeblock.WordWrap = false;
 			this.tb56_smokeblock.TextChanged += new System.EventHandler(this.OnChanged56);
 			this.tb56_smokeblock.Enter += new System.EventHandler(this.OnEnter56);
-			this.tb56_smokeblock.Leave += new System.EventHandler(this.OnLeave);
 			this.tb56_smokeblock.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox56);
-			this.tb56_smokeblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb43_heblock
 			// 
@@ -3132,9 +2927,7 @@
 			this.tb43_heblock.WordWrap = false;
 			this.tb43_heblock.TextChanged += new System.EventHandler(this.OnChanged43);
 			this.tb43_heblock.Enter += new System.EventHandler(this.OnEnter43);
-			this.tb43_heblock.Leave += new System.EventHandler(this.OnLeave);
 			this.tb43_heblock.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox43);
-			this.tb43_heblock.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb37_isblocksmoke
 			// 
@@ -3147,9 +2940,7 @@
 			this.tb37_isblocksmoke.WordWrap = false;
 			this.tb37_isblocksmoke.TextChanged += new System.EventHandler(this.OnChanged37);
 			this.tb37_isblocksmoke.Enter += new System.EventHandler(this.OnEnter37);
-			this.tb37_isblocksmoke.Leave += new System.EventHandler(this.OnLeave);
 			this.tb37_isblocksmoke.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox37);
-			this.tb37_isblocksmoke.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb36_isblockfire
 			// 
@@ -3162,9 +2953,7 @@
 			this.tb36_isblockfire.WordWrap = false;
 			this.tb36_isblockfire.TextChanged += new System.EventHandler(this.OnChanged36);
 			this.tb36_isblockfire.Enter += new System.EventHandler(this.OnEnter36);
-			this.tb36_isblockfire.Leave += new System.EventHandler(this.OnLeave);
 			this.tb36_isblockfire.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox36);
-			this.tb36_isblockfire.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb31_isblocklos
 			// 
@@ -3177,9 +2966,7 @@
 			this.tb31_isblocklos.WordWrap = false;
 			this.tb31_isblocklos.TextChanged += new System.EventHandler(this.OnChanged31);
 			this.tb31_isblocklos.Enter += new System.EventHandler(this.OnEnter31);
-			this.tb31_isblocklos.Leave += new System.EventHandler(this.OnLeave);
 			this.tb31_isblocklos.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox31);
-			this.tb31_isblocklos.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Door
 			// 
@@ -3212,9 +2999,7 @@
 			this.tb46_alternateid.WordWrap = false;
 			this.tb46_alternateid.TextChanged += new System.EventHandler(this.OnChanged46);
 			this.tb46_alternateid.Enter += new System.EventHandler(this.OnEnter46);
-			this.tb46_alternateid.Leave += new System.EventHandler(this.OnLeave);
 			this.tb46_alternateid.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox46);
-			this.tb46_alternateid.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb35_ishingeddoor
 			// 
@@ -3227,9 +3012,7 @@
 			this.tb35_ishingeddoor.WordWrap = false;
 			this.tb35_ishingeddoor.TextChanged += new System.EventHandler(this.OnChanged35);
 			this.tb35_ishingeddoor.Enter += new System.EventHandler(this.OnEnter35);
-			this.tb35_ishingeddoor.Leave += new System.EventHandler(this.OnLeave);
 			this.tb35_ishingeddoor.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox35);
-			this.tb35_ishingeddoor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb30_isslidingdoor
 			// 
@@ -3242,9 +3025,7 @@
 			this.tb30_isslidingdoor.WordWrap = false;
 			this.tb30_isslidingdoor.TextChanged += new System.EventHandler(this.OnChanged30);
 			this.tb30_isslidingdoor.Enter += new System.EventHandler(this.OnEnter30);
-			this.tb30_isslidingdoor.Leave += new System.EventHandler(this.OnLeave);
 			this.tb30_isslidingdoor.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox30);
-			this.tb30_isslidingdoor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Step
 			// 
@@ -3274,9 +3055,7 @@
 			this.tb32_isdropthrou.WordWrap = false;
 			this.tb32_isdropthrou.TextChanged += new System.EventHandler(this.OnChanged32);
 			this.tb32_isdropthrou.Enter += new System.EventHandler(this.OnEnter32);
-			this.tb32_isdropthrou.Leave += new System.EventHandler(this.OnLeave);
 			this.tb32_isdropthrou.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox32);
-			this.tb32_isdropthrou.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb52_footsound
 			// 
@@ -3289,9 +3068,7 @@
 			this.tb52_footsound.WordWrap = false;
 			this.tb52_footsound.TextChanged += new System.EventHandler(this.OnChanged52);
 			this.tb52_footsound.Enter += new System.EventHandler(this.OnEnter52);
-			this.tb52_footsound.Leave += new System.EventHandler(this.OnLeave);
 			this.tb52_footsound.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox52);
-			this.tb52_footsound.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Explosive
 			// 
@@ -3327,9 +3104,7 @@
 			this.tb57_fuel.WordWrap = false;
 			this.tb57_fuel.TextChanged += new System.EventHandler(this.OnChanged57);
 			this.tb57_fuel.Enter += new System.EventHandler(this.OnEnter57);
-			this.tb57_fuel.Leave += new System.EventHandler(this.OnLeave);
 			this.tb57_fuel.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox57);
-			this.tb57_fuel.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb45_fireresist
 			// 
@@ -3342,9 +3117,7 @@
 			this.tb45_fireresist.WordWrap = false;
 			this.tb45_fireresist.TextChanged += new System.EventHandler(this.OnChanged45);
 			this.tb45_fireresist.Enter += new System.EventHandler(this.OnEnter45);
-			this.tb45_fireresist.Leave += new System.EventHandler(this.OnLeave);
 			this.tb45_fireresist.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox45);
-			this.tb45_fireresist.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb55_hestrength
 			// 
@@ -3357,9 +3130,7 @@
 			this.tb55_hestrength.WordWrap = false;
 			this.tb55_hestrength.TextChanged += new System.EventHandler(this.OnChanged55);
 			this.tb55_hestrength.Enter += new System.EventHandler(this.OnEnter55);
-			this.tb55_hestrength.Leave += new System.EventHandler(this.OnLeave);
 			this.tb55_hestrength.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox55);
-			this.tb55_hestrength.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb54_hetype
 			// 
@@ -3372,9 +3143,7 @@
 			this.tb54_hetype.WordWrap = false;
 			this.tb54_hetype.TextChanged += new System.EventHandler(this.OnChanged54);
 			this.tb54_hetype.Enter += new System.EventHandler(this.OnEnter54);
-			this.tb54_hetype.Leave += new System.EventHandler(this.OnLeave);
 			this.tb54_hetype.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox54);
-			this.tb54_hetype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_Health
 			// 
@@ -3404,9 +3173,7 @@
 			this.tb44_deathid.WordWrap = false;
 			this.tb44_deathid.TextChanged += new System.EventHandler(this.OnChanged44);
 			this.tb44_deathid.Enter += new System.EventHandler(this.OnEnter44);
-			this.tb44_deathid.Leave += new System.EventHandler(this.OnLeave);
 			this.tb44_deathid.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox44);
-			this.tb44_deathid.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb42_armor
 			// 
@@ -3419,9 +3186,7 @@
 			this.tb42_armor.WordWrap = false;
 			this.tb42_armor.TextChanged += new System.EventHandler(this.OnChanged42);
 			this.tb42_armor.Enter += new System.EventHandler(this.OnEnter42);
-			this.tb42_armor.Leave += new System.EventHandler(this.OnLeave);
 			this.tb42_armor.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox42);
-			this.tb42_armor.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// gb_General
 			// 
@@ -3463,9 +3228,7 @@
 			this.tb58_lightintensity.WordWrap = false;
 			this.tb58_lightintensity.TextChanged += new System.EventHandler(this.OnChanged58);
 			this.tb58_lightintensity.Enter += new System.EventHandler(this.OnEnter58);
-			this.tb58_lightintensity.Leave += new System.EventHandler(this.OnLeave);
 			this.tb58_lightintensity.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox58);
-			this.tb58_lightintensity.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb60_isbaseobject
 			// 
@@ -3478,9 +3241,7 @@
 			this.tb60_isbaseobject.WordWrap = false;
 			this.tb60_isbaseobject.TextChanged += new System.EventHandler(this.OnChanged60);
 			this.tb60_isbaseobject.Enter += new System.EventHandler(this.OnEnter60);
-			this.tb60_isbaseobject.Leave += new System.EventHandler(this.OnLeave);
 			this.tb60_isbaseobject.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox60);
-			this.tb60_isbaseobject.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb59_specialtype
 			// 
@@ -3493,9 +3254,7 @@
 			this.tb59_specialtype.WordWrap = false;
 			this.tb59_specialtype.TextChanged += new System.EventHandler(this.OnChanged59);
 			this.tb59_specialtype.Enter += new System.EventHandler(this.OnEnter59);
-			this.tb59_specialtype.Leave += new System.EventHandler(this.OnLeave);
 			this.tb59_specialtype.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox59);
-			this.tb59_specialtype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb53_parttype
 			// 
@@ -3508,9 +3267,7 @@
 			this.tb53_parttype.WordWrap = false;
 			this.tb53_parttype.TextChanged += new System.EventHandler(this.OnChanged53);
 			this.tb53_parttype.Enter += new System.EventHandler(this.OnEnter53);
-			this.tb53_parttype.Leave += new System.EventHandler(this.OnLeave);
 			this.tb53_parttype.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox53);
-			this.tb53_parttype.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb34_isgravlift
 			// 
@@ -3523,9 +3280,7 @@
 			this.tb34_isgravlift.WordWrap = false;
 			this.tb34_isgravlift.TextChanged += new System.EventHandler(this.OnChanged34);
 			this.tb34_isgravlift.Enter += new System.EventHandler(this.OnEnter34);
-			this.tb34_isgravlift.Leave += new System.EventHandler(this.OnLeave);
 			this.tb34_isgravlift.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox34);
-			this.tb34_isgravlift.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// tb33_isbigwall
 			// 
@@ -3538,9 +3293,7 @@
 			this.tb33_isbigwall.WordWrap = false;
 			this.tb33_isbigwall.TextChanged += new System.EventHandler(this.OnChanged33);
 			this.tb33_isbigwall.Enter += new System.EventHandler(this.OnEnter33);
-			this.tb33_isbigwall.Leave += new System.EventHandler(this.OnLeave);
 			this.tb33_isbigwall.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox33);
-			this.tb33_isbigwall.MouseLeave += new System.EventHandler(this.OnMouseLeave);
 			// 
 			// lbl_SpriteShade
 			// 
@@ -3552,7 +3305,7 @@
 			this.lbl_SpriteShade.Text = "SpriteShade";
 			this.lbl_SpriteShade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl_SpriteShade.MouseEnter += new System.EventHandler(this.OnEnterSpriteShade);
-			this.lbl_SpriteShade.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+			this.lbl_SpriteShade.MouseLeave += new System.EventHandler(this.OnMouseLeaveSpriteShade);
 			// 
 			// tb_SpriteShade
 			// 
@@ -3567,7 +3320,7 @@
 			this.tb_SpriteShade.Enter += new System.EventHandler(this.OnEnterSpriteShade);
 			this.tb_SpriteShade.Leave += new System.EventHandler(this.OnLeave);
 			this.tb_SpriteShade.MouseEnter += new System.EventHandler(this.OnEnterSpriteShade);
-			this.tb_SpriteShade.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+			this.tb_SpriteShade.MouseLeave += new System.EventHandler(this.OnMouseLeaveSpriteShade);
 			// 
 			// gb_Description
 			// 
