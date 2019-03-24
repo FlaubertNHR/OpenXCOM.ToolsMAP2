@@ -191,7 +191,7 @@ namespace McdView
 		/// itself.
 		/// </summary>
 		/// <param name="tb">a TextBox to check the text of</param>
-		/// <returns>tru if valid</returns>
+		/// <returns>true if the textbox's text is valid</returns>
 		private bool TryParseText(Control tb)
 		{
 			string text = tb.Text.Trim();

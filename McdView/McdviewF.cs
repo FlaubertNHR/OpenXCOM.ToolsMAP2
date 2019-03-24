@@ -100,7 +100,7 @@ namespace McdView
 				{
 					if ((_selId = value) != -1)
 					{
-						bool strict0 = strict; // don't let STRICT policies screw up populating the textfields
+						bool strict0 = strict; // don't let the STRICT policy screw up populating the textfields
 						strict = false;
 						PopulateTextFields();
 						strict = strict0;
@@ -512,7 +512,7 @@ namespace McdView
 			switch (e.KeyCode)
 			{
 				case Keys.Escape:
-					if (!isTextboxFocused())
+					if ((ActiveControl as TextBox) == null)
 						SelId = -1;
 
 					PartsPanel.Select();
@@ -529,37 +529,63 @@ namespace McdView
 					break;
 
 				default:
-					if (   !bar_IsoLoft.Focused		// these controls need navigation key-input so
+				{
+					TextBox tb;
+					if ((tb = (ActiveControl as TextBox)) != null)
+					{
+						//LogFile.WriteLine("tb Focused - KeyCode=" + e.KeyCode + " KeyData=" + e.KeyData + " KeyValue=" + e.KeyValue);
+
+						// key +/- to inc/dec focused val
+						int val;
+						switch (e.KeyCode)
+						{
+							case Keys.OemMinus: // on the numeric row
+							case Keys.Subtract: // on the numeric keypad (regardless of NumLock)
+								e.SuppressKeyPress = true;
+								val = Int32.Parse(tb.Text);
+								tb.Text = (--val).ToString();
+								break;
+
+							case Keys.Oemplus:
+							case Keys.Add:
+								e.SuppressKeyPress = true;
+								val = Int32.Parse(tb.Text);
+								tb.Text = (++val).ToString();
+								break;
+						}
+					}
+					else if (!bar_IsoLoft.Focused	// these controls need navigation key-input so
 						&& !bar_SpriteShade.Focused	// don't pass the keys on if they are focused
-						&& Parts != null
-						&& !isTextboxFocused())
+						&& Parts != null)
 					{
 						PartsPanel.Select();
 						PartsPanel.KeyInput(e);
 					}
 					break;
+				}
 			}
 		}
 
-		/// <summary>
+/*		/// <summary>
 		/// Helper for keypreviewed OnKeyDown().
 		/// </summary>
 		/// <returns></returns>
-		private bool isTextboxFocused()
+		private TextBox isTextboxFocused()
 		{
+			return ActiveControl as TextBox;
+
 			foreach (Control control in Controls)
 			{
 				if (control.Focused && (control as TextBox) != null)
-					return true;
+					return control as TextBox;
 
 				foreach (Control control1 in control.Controls)
 				{
 					if (control1.Focused && (control1 as TextBox) != null)
-						return true;
+						return control1 as TextBox;
 				}
 			}
-			return false;
-		}
+		} */
 		#endregion Events (override)
 
 
@@ -1057,7 +1083,20 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_ZeroVals(object sender, EventArgs e)
 		{
-			ClearTextFields(true);
+			if (MessageBox.Show(
+							this,
+							"Zero the current record's values",
+							" Zero all values",
+							MessageBoxButtons.YesNo,
+							MessageBoxIcon.Exclamation,
+							MessageBoxDefaultButton.Button2,
+							0) == DialogResult.Yes)
+			{
+				bool strict0 = strict; // don't let the STRICT policy prevent setting LeftRightHalf to "0"
+				strict = false;
+				ClearTextFields(true);
+				strict = strict0;
+			}
 		}
 		#endregion Menuitems
 

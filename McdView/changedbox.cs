@@ -4,6 +4,10 @@ using System.Windows.Forms;
 
 namespace McdView
 {
+	/// <summary>
+	/// A dialog that asks the user what to do when closing a file that has been
+	/// changed: Save, Lose changes, or Cancel.
+	/// </summary>
 	internal sealed class ChangedBox
 		:
 			Form
