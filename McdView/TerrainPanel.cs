@@ -754,6 +754,7 @@ namespace McdView
 //							&& part.Record != null
 //							&& part.Sprites != null
 //							&& part[0] != null
+						    && part.Record.Sprite1 < _f.Spriteset.Count
 							&& (sprite = part[0].Sprite) != null)
 						{
 							DrawSprite(
@@ -761,6 +762,13 @@ namespace McdView
 									i * XCImage.SpriteWidth32 + i + offset,
 									y1_sprite - part.Record.TileOffset);
 						}
+						else
+							_graphics.FillRectangle(
+												McdviewF.BrushSpriteInvalid,
+												i * XCImage.SpriteWidth32 + i + offset,
+												y1_sprite,
+												XCImage.SpriteWidth32,
+												XCImage.SpriteHeight40);
 					}
 				}
 
@@ -817,12 +825,23 @@ namespace McdView
 //							&& part.Dead.Record != null
 //							&& part.Dead.Sprites != null
 //							&& part.Dead[0] != null
-							&& (sprite = part.Dead[0].Sprite) != null)
+							)
 						{
-							DrawSprite(
-									sprite,
-									i * XCImage.SpriteWidth32 + i + offset,
-									y2_sprite - part.Dead.Record.TileOffset);
+							if (part.Dead.Record.Sprite1 < _f.Spriteset.Count
+								&& (sprite = part.Dead[0].Sprite) != null)
+							{
+								DrawSprite(
+										sprite,
+										i * XCImage.SpriteWidth32 + i + offset,
+										y2_sprite - part.Dead.Record.TileOffset);
+							}
+							else
+								_graphics.FillRectangle(
+													McdviewF.BrushSpriteInvalid,
+													i * XCImage.SpriteWidth32 + i + offset,
+													y2_sprite,
+													XCImage.SpriteWidth32,
+													XCImage.SpriteHeight40);
 						}
 					}
 				}
@@ -845,12 +864,23 @@ namespace McdView
 //							&& part.Alternate.Record != null
 //							&& part.Alternate.Sprites != null
 //							&& part.Alternate[0] != null
-							&& (sprite = part.Alternate[0].Sprite) != null)
+							)
 						{
-							DrawSprite(
-									sprite,
-									i * XCImage.SpriteWidth32 + i + offset,
-									y3_sprite - part.Alternate.Record.TileOffset);
+							if (part.Alternate.Record.Sprite1 < _f.Spriteset.Count
+								&& (sprite = part.Alternate[0].Sprite) != null)
+							{
+								DrawSprite(
+										sprite,
+										i * XCImage.SpriteWidth32 + i + offset,
+										y3_sprite - part.Alternate.Record.TileOffset);
+							}
+							else
+								_graphics.FillRectangle(
+													McdviewF.BrushSpriteInvalid,
+													i * XCImage.SpriteWidth32 + i + offset,
+													y3_sprite,
+													XCImage.SpriteWidth32,
+													XCImage.SpriteHeight40);
 						}
 					}
 				}

@@ -114,23 +114,32 @@ namespace McdView
 
 				if (Spriteset != null)
 				{
-					byte phase;
+					byte id;
 					for (int i = 0; i != 8; ++i)
 					{
 						switch (i)
 						{
-							default: phase = record.Sprite1; break;
-							case 1:  phase = record.Sprite2; break;
-							case 2:  phase = record.Sprite3; break;
-							case 3:  phase = record.Sprite4; break;
-							case 4:  phase = record.Sprite5; break;
-							case 5:  phase = record.Sprite6; break;
-							case 6:  phase = record.Sprite7; break;
-							case 7:  phase = record.Sprite8; break;
+							default: id = record.Sprite1; break;
+							case 1:  id = record.Sprite2; break;
+							case 2:  id = record.Sprite3; break;
+							case 3:  id = record.Sprite4; break;
+							case 4:  id = record.Sprite5; break;
+							case 5:  id = record.Sprite6; break;
+							case 6:  id = record.Sprite7; break;
+							case 7:  id = record.Sprite8; break;
 						}
-						DrawSprite(
-								Spriteset[phase].Sprite,
-								SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
+
+						if (id < Spriteset.Count)
+							DrawSprite(
+									Spriteset[id].Sprite,
+									SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
+						else
+							_graphics.FillRectangle(
+												BrushSpriteInvalid,
+												SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i,
+												SPRITE_ORIGIN_Y,
+												XCImage.SpriteWidth32  * 2,
+												XCImage.SpriteHeight40 * 2);
 					}
 				}
 			}
@@ -520,11 +529,12 @@ namespace McdView
 				else if (pnlLoFT == pnl_Loft18) val = tb18_loft20.Text;
 				else                            val = tb19_loft22.Text; // if (pnlLoFT == pnl_Loft19)
 
+				_graphics = e.Graphics;
+				_graphics.PixelOffsetMode = PixelOffsetMode.Half;
+
 				int id = Int32.Parse(val);
 				if (id < LoFT.Length / 256)
 				{
-					_graphics = e.Graphics;
-					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
 					var loft = new Bitmap(
@@ -565,6 +575,12 @@ namespace McdView
 												pnlLoFT.Width,
 												pnlLoFT.Height));
 				}
+				else
+					_graphics.FillRectangle(
+										BrushSpriteInvalid,
+										0,0,
+										pnlLoFT.Width,
+										pnlLoFT.Height);
 			}
 		}
 
@@ -755,7 +771,7 @@ namespace McdView
 				int x_origin = pnl_IsoLoft.Width / 2 - 3;
 
 				int y_layer, y_cell, x_cell;
-				int loftid;
+				int loftid, pos;
 
 				McdRecord record = Parts[SelId].Record;
 				for (int layer = 0; layer != bar_IsoLoft.Value; ++layer)
@@ -787,7 +803,8 @@ namespace McdView
 						if      (x_cell > x_origin) x_cell += (c - r);
 						else if (x_cell < x_origin) x_cell -= (r - c);
 
-						if (LoFT[(loftid * 256) + (r * 16) + c])
+						pos = (loftid * 256) + (r * 16) + c;
+						if (pos < LoFT.Length && LoFT[pos])
 						{
 							graphics.DrawImage(Isocube, x_cell, y_cell);
 						}

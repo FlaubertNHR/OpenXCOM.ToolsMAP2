@@ -32,15 +32,13 @@ namespace XCom.Resources.Map
 
 				if (!File.Exists(pfeMcd))
 				{
-					MessageBox.Show(
-								"Can't find file for MCD data."
-									+ Environment.NewLine + Environment.NewLine
-									+ pfeMcd,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+					using (var f = new Infobox(
+											" File not found",
+											"Can't find file with MCD records.",
+											pfeMcd))
+					{
+						f.ShowDialog();
+					}
 				}
 				else
 				{
@@ -102,15 +100,13 @@ namespace XCom.Resources.Map
 
 			if (!suppressError)
 			{
-				MessageBox.Show(
-							"Can't find file for MCD data."
-								+ Environment.NewLine + Environment.NewLine
-								+ pfeMcd,
-							"Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				using (var f = new Infobox(
+										" File not found",
+										"Can't find file with MCD records.",
+										pfeMcd))
+				{
+					f.ShowDialog();
+				}
 			}
 			return 0;
 		}
@@ -136,18 +132,25 @@ namespace XCom.Resources.Map
 
 				string warn = String.Format(
 										CultureInfo.CurrentCulture,
-										"In the MCD file {0}, the tile entry {1} has an invalid dead tile (id {2} of {3} records).",
+										"In the MCD file {0}, part #{1} has an invalid dead part (id #{2} of {3} records).",
 										file,
 										id,
 										record.DieTile,
 										tileparts.Length);
-				MessageBox.Show(
-							warn,
-							"Warning",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0);
+				using (var f = new Infobox(
+										" Invalid dead part",
+										warn,
+										String.Empty))
+				{
+					f.ShowDialog();
+				}
+//				MessageBox.Show(
+//							warn,
+//							"Warning",
+//							MessageBoxButtons.OK,
+//							MessageBoxIcon.Warning,
+//							MessageBoxDefaultButton.Button1,
+//							0);
 			}
 			return null;
 		}
@@ -173,18 +176,25 @@ namespace XCom.Resources.Map
 
 				string warn = String.Format(
 										CultureInfo.CurrentCulture,
-										"In the MCD file {0}, the tile entry {1} has an invalid alternate tile (id {2} of {3} records).",
+										"In the MCD file {0}, part #{1} has an invalid alternate part (id #{2} of {3} records).",
 										file,
 										id,
 										record.Alt_MCD,
 										tileparts.Length);
-				MessageBox.Show(
-							warn,
-							"Warning",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0);
+				using (var f = new Infobox(
+										" Invalid alternate part",
+										warn,
+										String.Empty))
+				{
+					f.ShowDialog();
+				}
+//				MessageBox.Show(
+//							warn,
+//							"Warning",
+//							MessageBoxButtons.OK,
+//							MessageBoxIcon.Warning,
+//							MessageBoxDefaultButton.Button1,
+//							0);
 			}
 			return null;
 		}

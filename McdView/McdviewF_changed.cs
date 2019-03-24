@@ -176,13 +176,6 @@ namespace McdView
 			} */
 
 
-		private string GetPhaseDescription()
-		{
-			return " Terrain sprites typically cycle through eight phases ("
-				 + "sliding doors are static at phase 0 - see #30 isSlidingDoor).";
-		}
-
-
 		/// <summary>
 		/// Checks the text of a TextBox for validity. This changes the text if
 		/// it's not valid, which causes the OnChanged handler to recurse. It
@@ -209,6 +202,17 @@ namespace McdView
 			return true;
 		}
 
+
+		/// <summary>
+		/// Gets a generic description for the aniphase fields.
+		/// </summary>
+		/// <returns></returns>
+		private string GetPhaseDescription()
+		{
+			return " Terrain sprites typically cycle through eight phases ("
+				 + "sliding doors are static at phase 0 - see #30 isSlidingDoor).";
+		}
+
 		/// <summary>
 		/// #0 phase 0 (byte)
 		/// </summary>
@@ -220,13 +224,12 @@ namespace McdView
 			{
 				if (TryParseText(tb0_phase0)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb0_phase0.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite1 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -235,11 +238,15 @@ namespace McdView
 						else
 							Parts[SelId].Sprites[0] = null;
 
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb0_phase0.Text = "0"; // recurse w/ default.
+					else if (strict && Spriteset != null)
+						tb0_phase0.Text = (Spriteset.Count - 1).ToString();
+					else
+						tb0_phase0.Text = "255";
 				}
 			}
 			else
@@ -272,13 +279,12 @@ namespace McdView
 			{
 				if (TryParseText(tb1_phase1)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb1_phase1.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite2 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -287,11 +293,15 @@ namespace McdView
 						else
 							Parts[SelId].Sprites[1] = null;
 
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb1_phase1.Text = "0"; // recurse w/ default.
+					else if (strict && Spriteset != null)
+						tb1_phase1.Text = (Spriteset.Count - 1).ToString();
+					else
+						tb1_phase1.Text = "255";
 				}
 			}
 			else
@@ -324,13 +334,12 @@ namespace McdView
 			{
 				if (TryParseText(tb2_phase2)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb2_phase2.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite3 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -339,11 +348,15 @@ namespace McdView
 						else
 							Parts[SelId].Sprites[2] = null;
 
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb2_phase2.Text = "0"; // recurse w/ default.
+					else if (strict && Spriteset != null)
+						tb2_phase2.Text = (Spriteset.Count - 1).ToString();
+					else
+						tb2_phase2.Text = "255";
 				}
 			}
 			else
@@ -376,13 +389,12 @@ namespace McdView
 			{
 				if (TryParseText(tb3_phase3)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb3_phase3.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite4 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -391,11 +403,15 @@ namespace McdView
 						else
 							Parts[SelId].Sprites[3] = null;
 
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb3_phase3.Text = "0"; // recurse w/ default.
+					else if (strict && Spriteset != null)
+						tb3_phase3.Text = (Spriteset.Count - 1).ToString();
+					else
+						tb3_phase3.Text = "255";
 				}
 			}
 			else
@@ -428,13 +444,12 @@ namespace McdView
 			{
 				if (TryParseText(tb4_phase4)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb4_phase4.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite5 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -443,11 +458,15 @@ namespace McdView
 						else
 							Parts[SelId].Sprites[4] = null;
 
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb4_phase4.Text = "0"; // recurse w/ default.
+					else if (strict && Spriteset != null)
+						tb4_phase4.Text = (Spriteset.Count - 1).ToString();
+					else
+						tb4_phase4.Text = "255";
 				}
 			}
 			else
@@ -480,13 +499,12 @@ namespace McdView
 			{
 				if (TryParseText(tb5_phase5)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb5_phase5.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite6 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -495,11 +513,15 @@ namespace McdView
 						else
 							Parts[SelId].Sprites[5] = null;
 
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb5_phase5.Text = "0"; // recurse w/ default.
+					else if (strict && Spriteset != null)
+						tb5_phase5.Text = (Spriteset.Count - 1).ToString();
+					else
+						tb5_phase5.Text = "255";
 				}
 			}
 			else
@@ -532,13 +554,12 @@ namespace McdView
 			{
 				if (TryParseText(tb6_phase6)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb6_phase6.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite7 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -547,11 +568,15 @@ namespace McdView
 						else
 							Parts[SelId].Sprites[6] = null;
 
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb6_phase6.Text = "0"; // recurse w/ default.
+					else if (strict && Spriteset != null)
+						tb6_phase6.Text = (Spriteset.Count - 1).ToString();
+					else
+						tb6_phase6.Text = "255";
 				}
 			}
 			else
@@ -584,13 +609,12 @@ namespace McdView
 			{
 				if (TryParseText(tb7_phase7)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb7_phase7.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite8 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -599,11 +623,15 @@ namespace McdView
 						else
 							Parts[SelId].Sprites[7] = null;
 
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb7_phase7.Text = "0"; // recurse w/ default.
+					else if (strict && Spriteset != null)
+						tb7_phase7.Text = (Spriteset.Count - 1).ToString();
+					else
+						tb7_phase7.Text = "255";
 				}
 			}
 			else
@@ -644,19 +672,22 @@ namespace McdView
 			{
 				if (TryParseText(tb8_loft00)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb8_loft00.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft1 = (byte)result;
-						pnl_Loft08.Invalidate();
+						pnl_Loft08 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb8_loft00.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb8_loft00.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb8_loft00.Text = "255";
 				}
 			}
 			else
@@ -689,19 +720,22 @@ namespace McdView
 			{
 				if (TryParseText(tb9_loft02)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb9_loft02.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft2 = (byte)result;
-						pnl_Loft09.Invalidate();
+						pnl_Loft09 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb9_loft02.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb9_loft02.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb9_loft02.Text = "255";
 				}
 			}
 			else
@@ -734,19 +768,22 @@ namespace McdView
 			{
 				if (TryParseText(tb10_loft04)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb10_loft04.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft3 = (byte)result;
-						pnl_Loft10.Invalidate();
+						pnl_Loft10 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb10_loft04.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb10_loft04.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb10_loft04.Text = "255";
 				}
 			}
 			else
@@ -779,19 +816,22 @@ namespace McdView
 			{
 				if (TryParseText(tb11_loft06)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb11_loft06.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft4 = (byte)result;
-						pnl_Loft11.Invalidate();
+						pnl_Loft11 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb11_loft06.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb11_loft06.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb11_loft06.Text = "255";
 				}
 			}
 			else
@@ -824,19 +864,22 @@ namespace McdView
 			{
 				if (TryParseText(tb12_loft08)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb12_loft08.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft5 = (byte)result;
-						pnl_Loft12.Invalidate();
+						pnl_Loft12 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb12_loft08.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb12_loft08.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb12_loft08.Text = "255";
 				}
 			}
 			else
@@ -869,19 +912,22 @@ namespace McdView
 			{
 				if (TryParseText(tb13_loft10)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb13_loft10.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft6 = (byte)result;
-						pnl_Loft13.Invalidate();
+						pnl_Loft13 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb13_loft10.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb13_loft10.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb13_loft10.Text = "255";
 				}
 			}
 			else
@@ -914,19 +960,22 @@ namespace McdView
 			{
 				if (TryParseText(tb14_loft12)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb14_loft12.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft7 = (byte)result;
-						pnl_Loft14.Invalidate();
+						pnl_Loft14 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb14_loft12.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb14_loft12.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb14_loft12.Text = "255";
 				}
 			}
 			else
@@ -959,19 +1008,22 @@ namespace McdView
 			{
 				if (TryParseText(tb15_loft14)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb15_loft14.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft8 = (byte)result;
-						pnl_Loft15.Invalidate();
+						pnl_Loft15 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb15_loft14.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb15_loft14.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb15_loft14.Text = "255";
 				}
 			}
 			else
@@ -1004,19 +1056,22 @@ namespace McdView
 			{
 				if (TryParseText(tb16_loft16)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb16_loft16.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft9 = (byte)result;
-						pnl_Loft16.Invalidate();
+						pnl_Loft16 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb16_loft16.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb16_loft16.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb16_loft16.Text = "255";
 				}
 			}
 			else
@@ -1049,19 +1104,22 @@ namespace McdView
 			{
 				if (TryParseText(tb17_loft18)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb17_loft18.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft10 = (byte)result;
-						pnl_Loft17.Invalidate();
+						pnl_Loft17 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb17_loft18.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb17_loft18.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb17_loft18.Text = "255";
 				}
 			}
 			else
@@ -1094,19 +1152,22 @@ namespace McdView
 			{
 				if (TryParseText(tb18_loft20)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb18_loft20.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft11 = (byte)result;
-						pnl_Loft18.Invalidate();
+						pnl_Loft18 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb18_loft20.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb18_loft20.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb18_loft20.Text = "255";
 				}
 			}
 			else
@@ -1139,19 +1200,22 @@ namespace McdView
 			{
 				if (TryParseText(tb19_loft22)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb19_loft22.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Loft12 = (byte)result;
-						pnl_Loft19.Invalidate();
+						pnl_Loft19 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb19_loft22.Text = "0"; // recurse w/ default.
+					else if (strict && LoFT != null)
+						tb19_loft22.Text = (LoFT.Length / 256 - 1).ToString();
+					else
+						tb19_loft22.Text = "255";
 				}
 			}
 			else
@@ -1198,21 +1262,24 @@ namespace McdView
 			{
 				if (TryParseText(tb20_scang1)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb20_scang1.Text, out result)
 						&&     ((strict && result > 34 && result < 65571 && (ScanG == null || result < ScanG.Length / 16))
 							|| (!strict && result > 34 && result < 65571)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.ScanG         = (ushort)(result);
 						Parts[SelId].Record.ScanG_reduced = (ushort)(result - 35);
 
 						tb20_scang2.Text = (result - 35).ToString();
 						pnl_ScanGic.Invalidate();
 					}
-					else
+					else if (result < 35)
 						tb20_scang1.Text = "35"; // recurse w/ default.
+					else if (strict && ScanG != null)
+						tb20_scang1.Text = (ScanG.Length / 16 - 1).ToString();
+					else
+						tb20_scang1.Text = "65570";
 				}
 			}
 			else
@@ -1246,25 +1313,24 @@ namespace McdView
 			{
 				if (TryParseText(tb20_scang2)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb20_scang2.Text, out result)
 						&&     ((strict && result > -1 && result < 65536 && (ScanG == null || result < ScanG.Length / 16 - 35))
 							|| (!strict && result > -1 && result < 65536)))
 					{
-						//LogFile.WriteLine("\nOnChanged20r() text2= " + tb20_scang2.Text + " result= " + result);
+						Changed |= !InitFields;
 						Parts[SelId].Record.ScanG         = (ushort)(result + 35);
 						Parts[SelId].Record.ScanG_reduced = (ushort)(result);
-						//LogFile.WriteLine(". ScanG= "   + Parts[SelId].Record.ScanG);
-						//LogFile.WriteLine(". ScanG_r= " + Parts[SelId].Record.ScanG_reduced);
 
 						tb20_scang1.Text = (result + 35).ToString();
-						//LogFile.WriteLine(". . text1= " + tb20_scang1.Text);
 						pnl_ScanGic.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb20_scang2.Text = "0"; // recurse w/ default.
+					else if (strict && ScanG != null)
+						tb20_scang2.Text = (ScanG.Length / 16 - 36).ToString();
+					else
+						tb20_scang2.Text = "65535";
 				}
 			}
 			else
@@ -1297,17 +1363,18 @@ namespace McdView
 			{
 				if (TryParseText(tb22_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb22_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown22 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb22_.Text = "0"; // recurse w/ default.
+					else
+						tb22_.Text = "255";
 				}
 			}
 			else
@@ -1340,17 +1407,18 @@ namespace McdView
 			{
 				if (TryParseText(tb23_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb23_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown23 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb23_.Text = "0"; // recurse w/ default.
+					else
+						tb23_.Text = "255";
 				}
 			}
 			else
@@ -1383,17 +1451,18 @@ namespace McdView
 			{
 				if (TryParseText(tb24_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb24_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown24 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb24_.Text = "0"; // recurse w/ default.
+					else
+						tb24_.Text = "255";
 				}
 			}
 			else
@@ -1426,17 +1495,18 @@ namespace McdView
 			{
 				if (TryParseText(tb25_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb25_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown25 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb25_.Text = "0"; // recurse w/ default.
+					else
+						tb25_.Text = "255";
 				}
 			}
 			else
@@ -1469,17 +1539,18 @@ namespace McdView
 			{
 				if (TryParseText(tb26_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb26_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown26 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb26_.Text = "0"; // recurse w/ default.
+					else
+						tb26_.Text = "255";
 				}
 			}
 			else
@@ -1512,17 +1583,18 @@ namespace McdView
 			{
 				if (TryParseText(tb27_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb27_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown27 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb27_.Text = "0"; // recurse w/ default.
+					else
+						tb27_.Text = "255";
 				}
 			}
 			else
@@ -1555,17 +1627,18 @@ namespace McdView
 			{
 				if (TryParseText(tb28_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb28_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown28 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb28_.Text = "0"; // recurse w/ default.
+					else
+						tb28_.Text = "255";
 				}
 			}
 			else
@@ -1598,17 +1671,18 @@ namespace McdView
 			{
 				if (TryParseText(tb29_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb29_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown29 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb29_.Text = "0"; // recurse w/ default.
+					else
+						tb29_.Text = "255";
 				}
 			}
 			else
@@ -1641,17 +1715,18 @@ namespace McdView
 			{
 				if (TryParseText(tb30_isslidingdoor)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb30_isslidingdoor.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb30_isslidingdoor.Text = "0"; // recurse w/ default.
+					else
+						tb30_isslidingdoor.Text = "1";
 				}
 			}
 			else
@@ -1701,17 +1776,18 @@ namespace McdView
 			{
 				if (TryParseText(tb31_isblocklos)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb31_isblocklos.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.StopLOS = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb31_isblocklos.Text = "0"; // recurse w/ default.
+					else
+						tb31_isblocklos.Text = "1";
 				}
 			}
 			else
@@ -1753,17 +1829,18 @@ namespace McdView
 			{
 				if (TryParseText(tb32_isdropthrou)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb32_isdropthrou.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.NotFloored = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb32_isdropthrou.Text = "0"; // recurse w/ default.
+					else
+						tb32_isdropthrou.Text = "1";
 				}
 			}
 			else
@@ -1806,17 +1883,18 @@ namespace McdView
 			{
 				if (TryParseText(tb33_isbigwall)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb33_isbigwall.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.BigWall = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb33_isbigwall.Text = "0"; // recurse w/ default.
+					else
+						tb33_isbigwall.Text = "1";
 				}
 			}
 			else
@@ -1860,17 +1938,18 @@ namespace McdView
 			{
 				if (TryParseText(tb34_isgravlift)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb34_isgravlift.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.GravLift = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb34_isgravlift.Text = "0"; // recurse w/ default.
+					else
+						tb34_isgravlift.Text = "1";
 				}
 			}
 			else
@@ -1914,17 +1993,18 @@ namespace McdView
 			{
 				if (TryParseText(tb35_ishingeddoor)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb35_ishingeddoor.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.HingedDoor = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb35_ishingeddoor.Text = "0"; // recurse w/ default.
+					else
+						tb35_ishingeddoor.Text = "1";
 				}
 			}
 			else
@@ -1969,17 +2049,18 @@ namespace McdView
 			{
 				if (TryParseText(tb36_isblockfire)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb36_isblockfire.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.BlockFire = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb36_isblockfire.Text = "0"; // recurse w/ default.
+					else
+						tb36_isblockfire.Text = "1";
 				}
 			}
 			else
@@ -2021,17 +2102,18 @@ namespace McdView
 			{
 				if (TryParseText(tb37_isblocksmoke)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb37_isblocksmoke.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.BlockSmoke = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb37_isblocksmoke.Text = "0"; // recurse w/ default.
+					else
+						tb37_isblocksmoke.Text = "1";
 				}
 			}
 			else
@@ -2074,17 +2156,20 @@ namespace McdView
 			{
 				if (TryParseText(tb38_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb38_.Text, out result)
 						&&     ((strict && result == 3)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.LeftRightHalf = (byte)result;
 					}
+					else if (!strict && result < 1)
+						tb38_.Text = "0"; // recurse w/ default.
+					else if (strict)
+						tb38_.Text = "3";
 					else
-						tb38_.Text = "3"; // recurse w/ default.
+						tb38_.Text = "255";
 				}
 			}
 			else
@@ -2128,21 +2213,18 @@ namespace McdView
 			{
 				if (TryParseText(tb39_tuwalk)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb39_tuwalk.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.TU_Walk = (byte)result;
 					}
-					else if (Parts[SelId].Record.PartType == PartType.Floor)
-					{
-						tb39_tuwalk.Text = "4"; // recurse w/ default.
-					}
+					else if (result < 1) //|| Parts[SelId].Record.PartType == PartType.Floor)
+						tb39_tuwalk.Text = "0"; // recurse w/ default.
 					else
-						tb39_tuwalk.Text = "255"; // recurse w/ default.
+						tb39_tuwalk.Text = "255";
 				}
 			}
 			else
@@ -2176,21 +2258,18 @@ namespace McdView
 			{
 				if (TryParseText(tb40_tuslide)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb40_tuslide.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.TU_Slide = (byte)result;
 					}
-					else if (Parts[SelId].Record.PartType == PartType.Floor)
-					{
-						tb40_tuslide.Text = "4"; // recurse w/ default.
-					}
+					else if (result < 1) //|| Parts[SelId].Record.PartType == PartType.Floor)
+						tb40_tuslide.Text = "0"; // recurse w/ default.
 					else
-						tb40_tuslide.Text = "255"; // recurse w/ default.
+						tb40_tuslide.Text = "255";
 				}
 			}
 			else
@@ -2224,21 +2303,18 @@ namespace McdView
 			{
 				if (TryParseText(tb41_tufly)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb41_tufly.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.TU_Fly = (byte)result;
 					}
-					else if (Parts[SelId].Record.PartType == PartType.Floor)
-					{
-						tb41_tufly.Text = "4"; // recurse w/ default.
-					}
+					else if (result < 1) //|| Parts[SelId].Record.PartType == PartType.Floor)
+						tb41_tufly.Text = "0"; // recurse w/ default.
 					else
-						tb41_tufly.Text = "255"; // recurse w/ default.
+						tb41_tufly.Text = "255";
 				}
 			}
 			else
@@ -2272,17 +2348,18 @@ namespace McdView
 			{
 				if (TryParseText(tb42_armor)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb42_armor.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Armor = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb42_armor.Text = "0"; // recurse w/ default.
+					else
+						tb42_armor.Text = "255";
 				}
 			}
 			else
@@ -2319,17 +2396,18 @@ namespace McdView
 			{
 				if (TryParseText(tb43_heblock)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb43_heblock.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.HE_Block = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb43_heblock.Text = "0"; // recurse w/ default.
+					else
+						tb43_heblock.Text = "255";
 				}
 			}
 			else
@@ -2363,13 +2441,12 @@ namespace McdView
 			{
 				if (TryParseText(tb44_deathid)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb44_deathid.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && result < Parts.Length) // NOTE: 'Parts' shall not be null here.
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.DieTile = (byte)result;
 
 						if (result != 0 && result < Parts.Length)
@@ -2379,8 +2456,12 @@ namespace McdView
 
 						PartsPanel.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb44_deathid.Text = "0"; // recurse w/ default.
+					else if (strict)
+						tb44_deathid.Text = (Parts.Length - 1).ToString();
+					else
+						tb44_deathid.Text = "255";
 				}
 			}
 			else
@@ -2418,17 +2499,18 @@ namespace McdView
 			{
 				if (TryParseText(tb45_fireresist)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb45_fireresist.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Flammable = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb45_fireresist.Text = "0"; // recurse w/ default.
+					else
+						tb45_fireresist.Text = "255";
 				}
 			}
 			else
@@ -2465,13 +2547,12 @@ namespace McdView
 			{
 				if (TryParseText(tb46_alternateid)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb46_alternateid.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && result < Parts.Length) // NOTE: 'Parts' shall not be null here.
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Alt_MCD = (byte)result;
 
 						if (result != 0 && result < Parts.Length)
@@ -2481,8 +2562,12 @@ namespace McdView
 
 						PartsPanel.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb46_alternateid.Text = "0"; // recurse w/ default.
+					else if (strict)
+						tb46_alternateid.Text = (Parts.Length - 1).ToString();
+					else
+						tb46_alternateid.Text = "255";
 				}
 			}
 			else
@@ -2521,17 +2606,18 @@ namespace McdView
 			{
 				if (TryParseText(tb47_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb47_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown47 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb47_.Text = "0"; // recurse w/ default.
+					else
+						tb47_.Text = "255";
 				}
 			}
 			else
@@ -2566,17 +2652,23 @@ namespace McdView
 			{
 				if (TryParseText(tb48_terrainoffset)) // else recurse // TODO: check 0 after "-" sign
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb48_terrainoffset.Text, out result)
 						&&     ((strict && result > - 25 && result < 1)
 							|| (!strict && result > -129 && result < 128)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.StandOffset = (sbyte)result;
 					}
-					else
+					else if (result == 0) // ie. failed to parse
 						tb48_terrainoffset.Text = "0"; // recurse w/ default.
+					else if (strict)
+					{
+						if      (result < -24) tb48_terrainoffset.Text = "-24";
+						else if (result >   0) tb48_terrainoffset.Text =   "0";
+					}
+					else if (result < -128) tb48_terrainoffset.Text = "-128";
+					else                    tb48_terrainoffset.Text =  "127";
 				}
 			}
 			else
@@ -2620,19 +2712,22 @@ namespace McdView
 			{
 				if (TryParseText(tb49_spriteoffset)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb49_spriteoffset.Text, out result)
 						&&     ((strict && result > -1 && result < 25)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.TileOffset = (byte)result;
-						PartsPanel.Invalidate();
+						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 					}
-					else
+					else if (result < 1)
 						tb49_spriteoffset.Text = "0"; // recurse w/ default.
+					else if (strict)
+						tb49_spriteoffset.Text = "24";
+					else
+						tb49_spriteoffset.Text = "255";
 				}
 			}
 			else
@@ -2669,17 +2764,18 @@ namespace McdView
 			{
 				if (TryParseText(tb50_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb50_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown50 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb50_.Text = "0"; // recurse w/ default.
+					else
+						tb50_.Text = "255";
 				}
 			}
 			else
@@ -2713,17 +2809,18 @@ namespace McdView
 			{
 				if (TryParseText(tb51_lightblock)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb51_lightblock.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.LightBlock = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb51_lightblock.Text = "0"; // recurse w/ default.
+					else
+						tb51_lightblock.Text = "255";
 				}
 			}
 			else
@@ -2758,17 +2855,20 @@ namespace McdView
 			{
 				if (TryParseText(tb52_footsound)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb52_footsound.Text, out result)
 						&&     ((strict && result > -1 && result < 7)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Footstep = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb52_footsound.Text = "0"; // recurse w/ default.
+					else if (strict)
+						tb52_footsound.Text = "6";
+					else
+						tb52_footsound.Text = "255";
 				}
 			}
 			else
@@ -2779,7 +2879,8 @@ namespace McdView
 			lbl_Description.Text = "FootSound (ubyte) specifies the footstep-sound that units make"
 								 + " when walking on a part. This value has relevance to floor and"
 								 + " content parts only. Note that the sounds and sound-types will"
-								 + " differ depending on your XCOM version/edition."
+								 + " differ depending on your XCOM version/edition and/or executable."
+								 + " The listed descriptions should be considered as approximations."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0 None, 1 Metal, 2 Wood/Stone, 3 Dirt, 4 Mud, 5 Sand, 6 Snow"; // TODO: <- Investigate.
 		}
@@ -2817,17 +2918,20 @@ namespace McdView
 			{
 				if (TryParseText(tb53_parttype)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb53_parttype.Text, out result)
 						&&     ((strict && result > -1 && result < 4)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
 					}														// explicitly defined in the enum is allowed.
-					else
+					else if (result < 1)
 						tb53_parttype.Text = "0"; // recurse w/ default.
+					else if (strict)
+						tb53_parttype.Text = "3";
+					else
+						tb53_parttype.Text = "255";
 				}
 			}
 			else
@@ -2871,17 +2975,20 @@ namespace McdView
 			{
 				if (TryParseText(tb54_hetype)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb54_hetype.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.HE_Type = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb54_hetype.Text = "0"; // recurse w/ default.
+					else if (strict)
+						tb54_hetype.Text = "1";
+					else
+						tb54_hetype.Text = "255";
 				}
 			}
 			else
@@ -2924,17 +3031,18 @@ namespace McdView
 			{
 				if (TryParseText(tb55_hestrength)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb55_hestrength.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.HE_Strength = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb55_hestrength.Text = "0"; // recurse w/ default.
+					else
+						tb55_hestrength.Text = "255";
 				}
 			}
 			else
@@ -2969,17 +3077,18 @@ namespace McdView
 			{
 				if (TryParseText(tb56_smokeblock)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb56_smokeblock.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.SmokeBlockage = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb56_smokeblock.Text = "0"; // recurse w/ default.
+					else
+						tb56_smokeblock.Text = "255";
 				}
 			}
 			else
@@ -3014,17 +3123,18 @@ namespace McdView
 			{
 				if (TryParseText(tb57_fuel)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb57_fuel.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Fuel = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb57_fuel.Text = "0"; // recurse w/ default.
+					else
+						tb57_fuel.Text = "255";
 				}
 			}
 			else
@@ -3058,17 +3168,18 @@ namespace McdView
 			{
 				if (TryParseText(tb58_lightintensity)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb58_lightintensity.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.LightSource = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb58_lightintensity.Text = "0"; // recurse w/ default.
+					else
+						tb58_lightintensity.Text = "255";
 				}
 			}
 			else
@@ -3104,17 +3215,20 @@ namespace McdView
 			{
 				if (TryParseText(tb59_specialtype)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb59_specialtype.Text, out result)
 						&&     ((strict && result > -1 && result < 15)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
-					}															// explicitly defined in the enum is allowed.
-					else
+					}														// explicitly defined in the enum is allowed.
+					else if (result < 1)
 						tb59_specialtype.Text = "0"; // recurse w/ default.
+					else if (strict)
+						tb59_specialtype.Text = "14";
+					else
+						tb59_specialtype.Text = "255";
 				}
 			}
 			else
@@ -3177,17 +3291,18 @@ namespace McdView
 			{
 				if (TryParseText(tb60_isbaseobject)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb60_isbaseobject.Text, out result)
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.BaseObject = Convert.ToBoolean(result);
 					}
-					else
+					else if (result < 1)
 						tb60_isbaseobject.Text = "0"; // recurse w/ default.
+					else
+						tb60_isbaseobject.Text = "1";
 				}
 			}
 			else
@@ -3230,17 +3345,18 @@ namespace McdView
 			{
 				if (TryParseText(tb61_)) // else recurse
 				{
-					Changed |= !InitFields;
-
 					int result;
 					if (Int32.TryParse(tb61_.Text, out result)
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
+						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown61 = (byte)result;
 					}
-					else
+					else if (result < 1)
 						tb61_.Text = "0"; // recurse w/ default.
+					else
+						tb61_.Text = "255";
 				}
 			}
 			else

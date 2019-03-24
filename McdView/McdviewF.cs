@@ -23,7 +23,8 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
-		internal readonly static Brush BrushHilight = new SolidBrush(Color.FromArgb(107, SystemColors.MenuHighlight));
+		internal readonly static Brush BrushHilight       = new SolidBrush(Color.FromArgb(107, SystemColors.MenuHighlight));
+		internal readonly static Brush BrushSpriteInvalid = new SolidBrush(Color.Firebrick);
 
 		internal const TextFormatFlags FLAGS = TextFormatFlags.HorizontalCenter
 											 | TextFormatFlags.VerticalCenter
@@ -156,6 +157,7 @@ namespace McdView
 #endif
 
 			InitializeComponent();
+
 			SetDoubleBuffered(pnl_Sprites);
 			SetDoubleBuffered(pnl_IsoLoft);
 			SetDoubleBuffered(pnl_Loft19);
@@ -511,7 +513,13 @@ namespace McdView
 		{
 			switch (e.KeyCode)
 			{
+				case Keys.Enter:
+					e.SuppressKeyPress = true;
+					PartsPanel.Select();
+					break;
+
 				case Keys.Escape:
+					e.SuppressKeyPress = true;
 					if ((ActiveControl as TextBox) == null)
 						SelId = -1;
 
@@ -519,8 +527,9 @@ namespace McdView
 					break;
 
 				case Keys.Space: // select record #0
-					if (!cb_Strict.Focused	// this control needs navigation key-input so
-						&& Parts != null	// don't pass the key on if it is focused
+					if ((ActiveControl as TextBox) == null	// <- this control doesn't need spacebar but it's confusing to advance the SelId.
+						&& !cb_Strict.Focused				// <- this control needs spacebar so don't pass the key to PartsPanel if it's focused
+						&& Parts != null
 						&& Parts.Length != 0)
 					{
 						PartsPanel.Select();
@@ -535,23 +544,26 @@ namespace McdView
 					{
 						//LogFile.WriteLine("tb Focused - KeyCode=" + e.KeyCode + " KeyData=" + e.KeyData + " KeyValue=" + e.KeyValue);
 
-						// key +/- to inc/dec focused val
-						int val;
-						switch (e.KeyCode)
+						if (SelId != -1)
 						{
-							case Keys.OemMinus: // on the numeric row
-							case Keys.Subtract: // on the numeric keypad (regardless of NumLock)
-								e.SuppressKeyPress = true;
-								val = Int32.Parse(tb.Text);
-								tb.Text = (--val).ToString();
-								break;
+							// keypad +/- to inc/dec focused val
+							int val;
+							switch (e.KeyCode)
+							{
+//								case Keys.OemMinus: // on the numeric row -> don't do that; #48 TerrainOffset (sbyte) wants "-" key-input
+								case Keys.Subtract: // on the numeric keypad (regardless of NumLock)
+									e.SuppressKeyPress = true;
+									val = Int32.Parse(tb.Text);
+									tb.Text = (--val).ToString();
+									break;
 
-							case Keys.Oemplus:
-							case Keys.Add:
-								e.SuppressKeyPress = true;
-								val = Int32.Parse(tb.Text);
-								tb.Text = (++val).ToString();
-								break;
+//								case Keys.Oemplus:
+								case Keys.Add:
+									e.SuppressKeyPress = true;
+									val = Int32.Parse(tb.Text);
+									tb.Text = (++val).ToString();
+									break;
+							}
 						}
 					}
 					else if (!bar_IsoLoft.Focused	// these controls need navigation key-input so
@@ -897,27 +909,39 @@ namespace McdView
 		/// <summary>
 		/// Conducts the save-procedure.
 		/// </summary>
-		/// <param name="pfeMcd"></param>
-		/// <param name="as"></param>
+		/// <param name="pfeMcd">path-file-extension to save to</param>
+		/// <param name="as">true if doing a SaveAs operation</param>
 		private void Save(string pfeMcd, bool @as = false)
 		{
-			if (!@as)
+			if (Parts.Length <= MapFileService.MAX_MCDRECORDS
+				|| MessageBox.Show(
+								this,
+								"Total MCD records in the terrain exceeds "
+									+ MapFileService.MAX_MCDRECORDS + ".",
+								" Records exceeded",
+								MessageBoxButtons.OKCancel,
+								MessageBoxIcon.Exclamation,
+								MessageBoxDefaultButton.Button2,
+								0) == DialogResult.OK)
 			{
-				WriteMcdData(pfeMcd + ".t");
+				if (!@as)
+				{
+					WriteMcdData(pfeMcd + ".t");
 
-				string bak = Path.Combine(Path.GetDirectoryName(pfeMcd), GlobalsXC.MV_Backup);
-				Directory.CreateDirectory(bak);
+					string bak = Path.Combine(Path.GetDirectoryName(pfeMcd), GlobalsXC.MV_Backup);
+					Directory.CreateDirectory(bak);
 
-				File.Replace(
-						pfeMcd + ".t",	// src
-						pfeMcd,			// dst
-						Path.Combine(bak, Path.GetFileName(pfeMcd)),
-						true);			// ignoreMetadataErrors
+					File.Replace(
+							pfeMcd + ".t",	// src
+							pfeMcd,			// dst
+							Path.Combine(bak, Path.GetFileName(pfeMcd)),
+							true);			// ignoreMetadataErrors
+				}
+				else
+					WriteMcdData(pfeMcd);
+
+				Changed = false;
 			}
-			else
-				WriteMcdData(pfeMcd);
-
-			Changed = false;
 		}
 
 		/// <summary>
@@ -1258,7 +1282,7 @@ namespace McdView
 			tb19_loft22.Text = ((int)record.Loft12).ToString();
 
 			string scanG         = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
-			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// god only knows why else the cast from ushort won't work right.
+			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// else only god knows why the cast from ushort won't work right.
 			tb20_scang1.Text = scanG;										// See also the OnChanged mechanism ...
 			tb20_scang2.Text = scanG_reduced;
 
