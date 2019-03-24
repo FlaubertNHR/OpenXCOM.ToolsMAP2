@@ -751,10 +751,8 @@ namespace McdView
 					{
 						Tilepart part = Parts[i];
 						if (part != null // not sure why Tilepart entries are null that aren't null but they are
-//							&& part.Record != null
-//							&& part.Sprites != null
-//							&& part[0] != null
-						    && part.Record.Sprite1 < _f.Spriteset.Count
+							&& part.Record.Sprite1 < _f.Spriteset.Count
+							&& part[0] != null
 							&& (sprite = part[0].Sprite) != null)
 						{
 							DrawSprite(
@@ -817,17 +815,11 @@ namespace McdView
 					for (i = 0; i != Parts.Length; ++i) // dead part ->
 					{
 						Tilepart part = Parts[i];
-						if (part != null
-//							&& part.Record != null
-//							&& part.Record.DieTile < _f.Spriteset.Count
-//							&& (sprite = _f.Spriteset[part.Record.DieTile].Sprite) != null
-							&& part.Dead != null
-//							&& part.Dead.Record != null
-//							&& part.Dead.Sprites != null
-//							&& part.Dead[0] != null
-							)
+						if (part != null)
 						{
-							if (part.Dead.Record.Sprite1 < _f.Spriteset.Count
+							if (part.Dead != null
+								&& part.Dead.Record.Sprite1 < _f.Spriteset.Count
+								&& part.Dead[0] != null
 								&& (sprite = part.Dead[0].Sprite) != null)
 							{
 								DrawSprite(
@@ -835,7 +827,7 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset,
 										y2_sprite - part.Dead.Record.TileOffset);
 							}
-							else
+							else if (part.Record.DieTile != 0)
 								_graphics.FillRectangle(
 													McdviewF.BrushSpriteInvalid,
 													i * XCImage.SpriteWidth32 + i + offset,
@@ -856,17 +848,11 @@ namespace McdView
 					for (i = 0; i != Parts.Length; ++i) // alternate part ->
 					{
 						Tilepart part = Parts[i];
-						if (part != null
-//							&& part.Record != null
-//							&& part.Record.Alt_MCD < _f.Spriteset.Count
-//							&& (sprite = _f.Spriteset[part.Record.Alt_MCD].Sprite) != null
-							&& part.Alternate != null
-//							&& part.Alternate.Record != null
-//							&& part.Alternate.Sprites != null
-//							&& part.Alternate[0] != null
-							)
+						if (part != null)
 						{
-							if (part.Alternate.Record.Sprite1 < _f.Spriteset.Count
+							if (part.Alternate != null
+								&& part.Alternate.Record.Sprite1 < _f.Spriteset.Count
+								&& part.Alternate[0] != null
 								&& (sprite = part.Alternate[0].Sprite) != null)
 							{
 								DrawSprite(
@@ -874,7 +860,7 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset,
 										y3_sprite - part.Alternate.Record.TileOffset);
 							}
-							else
+							else if (part.Record.Alt_MCD != 0)
 								_graphics.FillRectangle(
 													McdviewF.BrushSpriteInvalid,
 													i * XCImage.SpriteWidth32 + i + offset,

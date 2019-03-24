@@ -117,6 +117,8 @@ namespace McdView
 			return null;
 		}
 
+		// TODO: OnClick label focuses PartsPanel.
+
 		/// <summary>
 		/// Handles a TextBox or CheckBox losing input-focus.
 		/// @note Clears the current description disregarding mouseover state.
