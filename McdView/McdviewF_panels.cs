@@ -477,7 +477,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPaint_LoFT_group(object sender, PaintEventArgs e)
 		{
-			Panel pnlLoFT;
+			LoftPanel pnlLoFT;
 			for (int i = 0; i != 12; ++i)
 			{
 				switch (i)
@@ -504,278 +504,35 @@ namespace McdView
 			}
 		}
 
-		/// <summary>
-		/// Draws a LoFT icon in a LoFT panel.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnPaint_LoFT_panel(object sender, PaintEventArgs e)
-		{
-			if (SelId != -1 && LoFT != null)
-			{
-				var pnlLoFT = sender as Panel;
-
-				string val; Color color;
-				if      (pnlLoFT == pnl_Loft08)
-				{
-					val = tb8_loft00.Text;
-					if (bar_IsoLoft.Value > 0)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft09)
-				{
-					val = tb9_loft02.Text;
-					if (bar_IsoLoft.Value > 2)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft10)
-				{
-					val = tb10_loft04.Text;
-					if (bar_IsoLoft.Value > 4)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft11)
-				{
-					val = tb11_loft06.Text;
-					if (bar_IsoLoft.Value > 6)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft12)
-				{
-					val = tb12_loft08.Text;
-					if (bar_IsoLoft.Value > 8)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft13)
-				{
-					val = tb13_loft10.Text;
-					if (bar_IsoLoft.Value > 10)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft14)
-				{
-					val = tb14_loft12.Text;
-					if (bar_IsoLoft.Value > 12)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft15)
-				{
-					val = tb15_loft14.Text;
-					if (bar_IsoLoft.Value > 14)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft16)
-				{
-					val = tb16_loft16.Text;
-					if (bar_IsoLoft.Value > 16)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft17)
-				{
-					val = tb17_loft18.Text;
-					if (bar_IsoLoft.Value > 18)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else if (pnlLoFT == pnl_Loft18)
-				{
-					val = tb18_loft20.Text;
-					if (bar_IsoLoft.Value > 20)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-				else // if (pnlLoFT == pnl_Loft19)
-				{
-					val = tb19_loft22.Text;
-					if (bar_IsoLoft.Value > 22)
-						color = SystemColors.ControlLightLight;
-					else
-						color = SystemColors.ControlLight;
-				}
-
-				_graphics = e.Graphics;
-				_graphics.PixelOffsetMode = PixelOffsetMode.Half;
-
-				int id = Int32.Parse(val);
-				if (id < LoFT.Length / 256)
-				{
-					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-
-					var loft = new Bitmap(
-										16,16,
-										PixelFormat.Format8bppIndexed);	// Format1bppIndexed <- uses only 1 BIT per pixel
-																		// - causes probs setting the pixels below.
-					var data = loft.LockBits(
-										new Rectangle(0,0, loft.Width, loft.Height),
-										ImageLockMode.WriteOnly,
-										PixelFormat.Format8bppIndexed); // Format1bppIndexed
-					var start = data.Scan0;
-
-					unsafe
-					{
-						var pos = (byte*)start.ToPointer();
-
-						byte palid;
-						for (int row = 0; row != loft.Height; ++row)
-						for (int col = 0; col != loft.Width;  ++col)
-						{
-							byte* pixel = pos + (row * data.Stride) + col;
-
-							palid = Convert.ToByte(LoFT[(id * 256) + (row * loft.Width) + col]);
-							*pixel = palid;
-						}
-					}
-					loft.UnlockBits(data);
-
-					ColorPalette pal = loft.Palette;
-					pal.Entries[0] = SystemColors.ControlDarkDark;
-					pal.Entries[1] = color;
-					loft.Palette = pal;
-
-					_graphics.DrawImage(
-									loft,
-									0,0,
-									pnlLoFT.Width,
-									pnlLoFT.Height);
-				}
-				else
-					_graphics.FillRectangle(
-										BrushSpriteInvalid,
-										0,0,
-										pnlLoFT.Width,
-										pnlLoFT.Height);
-			}
-		}
-
-
-		Panel _pnlLoFT;
-
-		/// <summary>
-		/// Opens the LoFT viewer when a LoFT icon is clicked.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnMouseUp_LoftPanel(object sender, MouseEventArgs e)
-		{
-			if (SelId != -1 && LoFT != null)
-			{
-				_pnlLoFT = sender as Panel;
-
-				if (   e.X > -1 && e.X < _pnlLoFT.Width
-					&& e.Y > -1 && e.Y < _pnlLoFT.Height)
-				{
-					PartsPanel.Select(); // workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
-
-					string id; int slot;
-					if      (_pnlLoFT == pnl_Loft08) { id = tb8_loft00 .Text; slot =  0; }
-					else if (_pnlLoFT == pnl_Loft09) { id = tb9_loft02 .Text; slot =  2; }
-					else if (_pnlLoFT == pnl_Loft10) { id = tb10_loft04.Text; slot =  4; }
-					else if (_pnlLoFT == pnl_Loft11) { id = tb11_loft06.Text; slot =  6; }
-					else if (_pnlLoFT == pnl_Loft12) { id = tb12_loft08.Text; slot =  8; }
-					else if (_pnlLoFT == pnl_Loft13) { id = tb13_loft10.Text; slot = 10; }
-					else if (_pnlLoFT == pnl_Loft14) { id = tb14_loft12.Text; slot = 12; }
-					else if (_pnlLoFT == pnl_Loft15) { id = tb15_loft14.Text; slot = 14; }
-					else if (_pnlLoFT == pnl_Loft16) { id = tb16_loft16.Text; slot = 16; }
-					else if (_pnlLoFT == pnl_Loft17) { id = tb17_loft18.Text; slot = 18; }
-					else if (_pnlLoFT == pnl_Loft18) { id = tb18_loft20.Text; slot = 20; }
-					else                             { id = tb19_loft22.Text; slot = 22; } // if (_pnlLoFT == pnl_Loft19)
-
-					if (e.Button == MouseButtons.Left)
-					{
-						using (var f = new LoftF(this, slot, Int32.Parse(id)))
-						{
-							f.ShowDialog();
-						}
-					}
-					else if (e.Button == MouseButtons.Right
-						&& MessageBox.Show(
-										this,
-										"Set all LoFTs to #" + id,
-										"Set all LoFTs",
-										MessageBoxButtons.YesNo,
-										MessageBoxIcon.Question,
-										MessageBoxDefaultButton.Button1,
-										0) == DialogResult.Yes)
-					{
-						tb8_loft00 .Text =
-						tb9_loft02 .Text =
-						tb10_loft04.Text =
-						tb11_loft06.Text =
-						tb12_loft08.Text =
-						tb13_loft10.Text =
-						tb14_loft12.Text =
-						tb15_loft14.Text =
-						tb16_loft16.Text =
-						tb17_loft18.Text =
-						tb18_loft20.Text =
-						tb19_loft22.Text = id;
-					}
-
-					bar_IsoLoft.Select();
-				}
-			}
-		}
+		internal LoftPanel _pnlLoFT;
 
 		/// <summary>
 		/// Sets a LoFT when returning from LoftF.
 		/// </summary>
-		/// <param name="id"></param>
-		internal void SetLoft(int id)
+		/// <param name="loftid"></param>
+		internal void SetLoft(int loftid)
 		{
-			TextBox tb;
-			if      (_pnlLoFT == pnl_Loft08) tb = tb8_loft00;
-			else if (_pnlLoFT == pnl_Loft09) tb = tb9_loft02;
-			else if (_pnlLoFT == pnl_Loft10) tb = tb10_loft04;
-			else if (_pnlLoFT == pnl_Loft11) tb = tb11_loft06;
-			else if (_pnlLoFT == pnl_Loft12) tb = tb12_loft08;
-			else if (_pnlLoFT == pnl_Loft13) tb = tb13_loft10;
-			else if (_pnlLoFT == pnl_Loft14) tb = tb14_loft12;
-			else if (_pnlLoFT == pnl_Loft15) tb = tb15_loft14;
-			else if (_pnlLoFT == pnl_Loft16) tb = tb16_loft16;
-			else if (_pnlLoFT == pnl_Loft17) tb = tb17_loft18;
-			else if (_pnlLoFT == pnl_Loft18) tb = tb18_loft20;
-			else                             tb = tb19_loft22; // if (_pnlLoFT == pnl_Loft19)
+			(_pnlLoFT.Tag as TextBox).Text = loftid.ToString();
+		}
 
-			if (Int32.Parse(tb.Text) != id)
-			{
-				Changed = true;
-
-				tb.Text = id.ToString();
-				if      (_pnlLoFT == pnl_Loft08) Parts[SelId].Record.Loft1  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft09) Parts[SelId].Record.Loft2  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft10) Parts[SelId].Record.Loft3  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft11) Parts[SelId].Record.Loft4  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft12) Parts[SelId].Record.Loft5  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft13) Parts[SelId].Record.Loft6  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft14) Parts[SelId].Record.Loft7  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft15) Parts[SelId].Record.Loft8  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft16) Parts[SelId].Record.Loft9  = (byte)id;
-				else if (_pnlLoFT == pnl_Loft17) Parts[SelId].Record.Loft10 = (byte)id;
-				else if (_pnlLoFT == pnl_Loft18) Parts[SelId].Record.Loft11 = (byte)id;
-				else                             Parts[SelId].Record.Loft12 = (byte)id;
-
-				_pnlLoFT.Invalidate();
-			}
+		/// <summary>
+		/// Sets all LoFTs to a specified id.
+		/// </summary>
+		/// <param name="loftid"></param>
+		internal void SetAllLofts(string loftid)
+		{
+			tb8_loft00 .Text =
+			tb9_loft02 .Text =
+			tb10_loft04.Text =
+			tb11_loft06.Text =
+			tb12_loft08.Text =
+			tb13_loft10.Text =
+			tb14_loft12.Text =
+			tb15_loft14.Text =
+			tb16_loft16.Text =
+			tb17_loft18.Text =
+			tb18_loft20.Text =
+			tb19_loft22.Text = loftid;
 		}
 
 
@@ -903,7 +660,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnClick_IsoLoft(object sender, EventArgs e)
+		internal void OnClick_IsoLoft(object sender, EventArgs e)
 		{
 			bar_IsoLoft.Select();
 		}

@@ -23,6 +23,8 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
+		internal static bool isRunT; // shut the designer up.
+
 		internal readonly static Brush BrushHilight       = new SolidBrush(Color.FromArgb(107, SystemColors.MenuHighlight));
 		internal readonly static Brush BrushSpriteInvalid = new SolidBrush(Color.Firebrick);
 
@@ -158,10 +160,15 @@ namespace McdView
 			LogFile.SetLogFilePath(Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
 #endif
 
+			isRunT = true;
 			InitializeComponent();
+
+//			TagLabels();
+			TagLoftPanels();
 
 			RecordLabel  .SetStaticVars(tssl_Overvalue, lbl_Description, this);
 			RecordTextbox.SetStaticVars(tssl_Overvalue, lbl_Description);
+			LoftPanel    .SetStaticVars(this);
 
 			SetDoubleBuffered(pnl_Sprites);
 			SetDoubleBuffered(pnl_IsoLoft);
@@ -1309,6 +1316,15 @@ namespace McdView
 
 
 		#region Methods
+		/// <summary>
+		/// Gets the IsoLoFT's trackbar's current value.
+		/// </summary>
+		/// <returns></returns>
+		internal int GetIsoLoftVal()
+		{
+			return bar_IsoLoft.Value;
+		}
+
 		/// <summary>
 		/// Invalidates panels.
 		/// </summary>

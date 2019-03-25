@@ -37,12 +37,12 @@ namespace McdView
 		/// 
 		/// </summary>
 		/// <param name="f"></param>
-		/// <param name="loftslot"></param>
-		/// <param name="loftId"></param>
+		/// <param name="panelid"></param>
+		/// <param name="loftid"></param>
 		internal LoftF(
 				McdviewF f,
-				int loftslot,
-				int loftId)
+				int panelid,
+				int loftid)
 		{
 			InitializeComponent();
 
@@ -52,9 +52,10 @@ namespace McdView
 				   | ControlStyles.ResizeRedraw, true);
 
 			_f = f;
-			LoftId = loftId;
+			LoftId = loftid;
 
-			Text = " LOFTEMPS.DAT - slot " + loftslot; // TODO: + "ufo"/"tftd"
+			string z = (panelid * 2 + 1) + "/" + (panelid * 2 + 2);
+			Text = " LOFTEMPS.DAT - slots " + z; // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
 

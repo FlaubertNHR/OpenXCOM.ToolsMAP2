@@ -11,6 +11,101 @@ namespace McdView
 		// Descriptions of MCD entries are at
 		// https://www.ufopaedia.org/index.php/MCD
 
+		/// <summary>
+		/// Tags each LoftPanel with its corresponding RecordTextbox.
+		/// </summary>
+		private void TagLoftPanels()
+		{
+			pnl_Loft08.Tag = tb8_loft00;
+			pnl_Loft09.Tag = tb9_loft02;
+			pnl_Loft10.Tag = tb10_loft04;
+			pnl_Loft11.Tag = tb11_loft06;
+			pnl_Loft12.Tag = tb12_loft08;
+			pnl_Loft13.Tag = tb13_loft10;
+			pnl_Loft14.Tag = tb14_loft12;
+			pnl_Loft15.Tag = tb15_loft14;
+			pnl_Loft16.Tag = tb16_loft16;
+			pnl_Loft17.Tag = tb17_loft18;
+			pnl_Loft18.Tag = tb18_loft20;
+			pnl_Loft19.Tag = tb19_loft22;
+		}
+
+/*		private void TagLabels()
+		{
+			lbl0.Tag = lbl0_phase0.Tag = tb0_phase0;
+			lbl1.Tag = lbl1_phase1.Tag = tb1_phase1;
+			lbl2.Tag = lbl2_phase2.Tag = tb2_phase2;
+			lbl3.Tag = lbl3_phase3.Tag = tb3_phase3;
+			lbl4.Tag = lbl4_phase4.Tag = tb4_phase4;
+			lbl5.Tag = lbl5_phase5.Tag = tb5_phase5;
+			lbl6.Tag = lbl6_phase6.Tag = tb6_phase6;
+			lbl7.Tag = lbl7_phase7.Tag = tb7_phase7;
+
+			lbl8 .Tag = lbl8_loft00 .Tag = tb8_loft00;
+			lbl9 .Tag = lbl9_loft02 .Tag = tb9_loft02;
+			lbl10.Tag = lbl10_loft04.Tag = tb10_loft04;
+			lbl11.Tag = lbl11_loft06.Tag = tb11_loft06;
+			lbl12.Tag = lbl12_loft08.Tag = tb12_loft08;
+			lbl13.Tag = lbl13_loft10.Tag = tb13_loft10;
+			lbl14.Tag = lbl14_loft12.Tag = tb14_loft12;
+			lbl15.Tag = lbl15_loft14.Tag = tb15_loft14;
+			lbl16.Tag = lbl16_loft16.Tag = tb16_loft16;
+			lbl17.Tag = lbl17_loft18.Tag = tb17_loft18;
+			lbl18.Tag = lbl18_loft20.Tag = tb18_loft20;
+			lbl19.Tag = lbl19_loft22.Tag = tb19_loft22;
+
+//			lbl20.Tag = lbl20_scang.Tag = tb20_scang1 || tb20_scang2;
+
+			lbl22.Tag = lbl22_.Tag = tb22_; // internal RAM addresses ->
+			lbl23.Tag = lbl23_.Tag = tb23_;
+			lbl24.Tag = lbl24_.Tag = tb24_;
+			lbl25.Tag = lbl25_.Tag = tb25_;
+			lbl26.Tag = lbl26_.Tag = tb26_;
+			lbl27.Tag = lbl27_.Tag = tb27_;
+			lbl28.Tag = lbl28_.Tag = tb28_;
+			lbl29.Tag = lbl29_.Tag = tb29_;
+
+			lbl30.Tag = lbl30_isslidingdoor.Tag = tb30_isslidingdoor;
+			lbl31.Tag = lbl31_isblocklos   .Tag = tb31_isblocklos;
+			lbl32.Tag = lbl32_isdropthrou  .Tag = tb32_isdropthrou;
+			lbl33.Tag = lbl33_isbigwall    .Tag = tb33_isbigwall;
+			lbl34.Tag = lbl34_isgravlift   .Tag = tb34_isgravlift;
+			lbl35.Tag = lbl35_ishingeddoor .Tag = tb35_ishingeddoor;
+			lbl36.Tag = lbl36_isblockfire  .Tag = tb36_isblockfire;
+			lbl37.Tag = lbl37_isblocksmoke .Tag = tb37_isblocksmoke;
+
+			lbl38.Tag = lbl38_.Tag = tb38_; // LeftRightHalf
+
+			lbl39.Tag = lbl39_tuwalk     .Tag = tb39_tuwalk;
+			lbl40.Tag = lbl40_tuslide    .Tag = tb40_tuslide;
+			lbl41.Tag = lbl41_tufly      .Tag = tb41_tufly;
+			lbl42.Tag = lbl42_armor      .Tag = tb42_armor;
+			lbl43.Tag = lbl43_heblock    .Tag = tb43_heblock;
+			lbl44.Tag = lbl44_deathid    .Tag = tb44_deathid;
+			lbl45.Tag = lbl45_fireresist .Tag = tb45_fireresist;
+			lbl46.Tag = lbl46_alternateid.Tag = tb46_alternateid;
+
+			lbl47.Tag = lbl47_.Tag = tb47_; // CloseDoors
+
+			lbl48.Tag = lbl48_terrainoffset.Tag = tb48_terrainoffset;
+			lbl49.Tag = lbl49_spriteoffset .Tag = tb49_spriteoffset;
+
+			lbl50.Tag = lbl50_.Tag = tb50_; // dTypeMod
+
+			lbl51.Tag = lbl51_lightblock    .Tag = tb51_lightblock;
+			lbl52.Tag = lbl52_footsound     .Tag = tb52_footsound;
+			lbl53.Tag = lbl53_parttype      .Tag = tb53_parttype;
+			lbl54.Tag = lbl54_hetype        .Tag = tb54_hetype;
+			lbl55.Tag = lbl55_hestrength    .Tag = tb55_hestrength;
+			lbl56.Tag = lbl56_smokeblock    .Tag = tb56_smokeblock;
+			lbl57.Tag = lbl57_fuel          .Tag = tb57_fuel;
+			lbl58.Tag = lbl58_lightintensity.Tag = tb58_lightintensity;
+			lbl59.Tag = lbl59_specialtype   .Tag = tb59_specialtype;
+			lbl60.Tag = lbl60_isbaseobject  .Tag = tb60_isbaseobject;
+
+			lbl61.Tag = lbl61_.Tag = tb61_; // VictoryPoints
+		} */
+
 		#region Leave
 		internal bool isAssociatedTextboxFocused(object label)
 		{

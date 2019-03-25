@@ -225,18 +225,18 @@
 		private McdView.RecordTextbox tb20_scang2;
 		private System.Windows.Forms.Panel pnl_Sprites;
 		private System.Windows.Forms.Panel pnl_ScanGic;
-		private System.Windows.Forms.Panel pnl_Loft19;
-		private System.Windows.Forms.Panel pnl_Loft08;
-		private System.Windows.Forms.Panel pnl_Loft09;
-		private System.Windows.Forms.Panel pnl_Loft10;
-		private System.Windows.Forms.Panel pnl_Loft11;
-		private System.Windows.Forms.Panel pnl_Loft12;
-		private System.Windows.Forms.Panel pnl_Loft13;
-		private System.Windows.Forms.Panel pnl_Loft14;
-		private System.Windows.Forms.Panel pnl_Loft15;
-		private System.Windows.Forms.Panel pnl_Loft16;
-		private System.Windows.Forms.Panel pnl_Loft17;
-		private System.Windows.Forms.Panel pnl_Loft18;
+		private McdView.LoftPanel pnl_Loft08;
+		private McdView.LoftPanel pnl_Loft09;
+		private McdView.LoftPanel pnl_Loft10;
+		private McdView.LoftPanel pnl_Loft11;
+		private McdView.LoftPanel pnl_Loft12;
+		private McdView.LoftPanel pnl_Loft13;
+		private McdView.LoftPanel pnl_Loft14;
+		private McdView.LoftPanel pnl_Loft15;
+		private McdView.LoftPanel pnl_Loft16;
+		private McdView.LoftPanel pnl_Loft17;
+		private McdView.LoftPanel pnl_Loft18;
+		private McdView.LoftPanel pnl_Loft19;
 		private System.Windows.Forms.GroupBox gb_Description;
 		private System.Windows.Forms.Label lbl_Description;
 		private System.Windows.Forms.CheckBox cb_Strict;
@@ -420,18 +420,18 @@
 			this.tb23_ = new McdView.RecordTextbox();
 			this.tb22_ = new McdView.RecordTextbox();
 			this.gb_Loft = new System.Windows.Forms.GroupBox();
-			this.pnl_Loft08 = new System.Windows.Forms.Panel();
-			this.pnl_Loft09 = new System.Windows.Forms.Panel();
-			this.pnl_Loft10 = new System.Windows.Forms.Panel();
-			this.pnl_Loft11 = new System.Windows.Forms.Panel();
-			this.pnl_Loft12 = new System.Windows.Forms.Panel();
-			this.pnl_Loft13 = new System.Windows.Forms.Panel();
-			this.pnl_Loft14 = new System.Windows.Forms.Panel();
-			this.pnl_Loft15 = new System.Windows.Forms.Panel();
-			this.pnl_Loft16 = new System.Windows.Forms.Panel();
-			this.pnl_Loft17 = new System.Windows.Forms.Panel();
-			this.pnl_Loft18 = new System.Windows.Forms.Panel();
-			this.pnl_Loft19 = new System.Windows.Forms.Panel();
+			this.pnl_Loft08 = new McdView.LoftPanel();
+			this.pnl_Loft09 = new McdView.LoftPanel();
+			this.pnl_Loft10 = new McdView.LoftPanel();
+			this.pnl_Loft11 = new McdView.LoftPanel();
+			this.pnl_Loft12 = new McdView.LoftPanel();
+			this.pnl_Loft13 = new McdView.LoftPanel();
+			this.pnl_Loft14 = new McdView.LoftPanel();
+			this.pnl_Loft15 = new McdView.LoftPanel();
+			this.pnl_Loft16 = new McdView.LoftPanel();
+			this.pnl_Loft17 = new McdView.LoftPanel();
+			this.pnl_Loft18 = new McdView.LoftPanel();
+			this.pnl_Loft19 = new McdView.LoftPanel();
 			this.tb19_loft22 = new McdView.RecordTextbox();
 			this.tb18_loft20 = new McdView.RecordTextbox();
 			this.tb17_loft18 = new McdView.RecordTextbox();
@@ -2272,8 +2272,6 @@
 			this.pnl_Loft08.Name = "pnl_Loft08";
 			this.pnl_Loft08.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft08.TabIndex = 47;
-			this.pnl_Loft08.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft08.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft09
 			// 
@@ -2282,8 +2280,6 @@
 			this.pnl_Loft09.Name = "pnl_Loft09";
 			this.pnl_Loft09.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft09.TabIndex = 43;
-			this.pnl_Loft09.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft09.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft10
 			// 
@@ -2292,8 +2288,6 @@
 			this.pnl_Loft10.Name = "pnl_Loft10";
 			this.pnl_Loft10.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft10.TabIndex = 39;
-			this.pnl_Loft10.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft11
 			// 
@@ -2302,8 +2296,6 @@
 			this.pnl_Loft11.Name = "pnl_Loft11";
 			this.pnl_Loft11.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft11.TabIndex = 35;
-			this.pnl_Loft11.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft12
 			// 
@@ -2312,8 +2304,6 @@
 			this.pnl_Loft12.Name = "pnl_Loft12";
 			this.pnl_Loft12.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft12.TabIndex = 31;
-			this.pnl_Loft12.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft12.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft13
 			// 
@@ -2322,8 +2312,6 @@
 			this.pnl_Loft13.Name = "pnl_Loft13";
 			this.pnl_Loft13.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft13.TabIndex = 27;
-			this.pnl_Loft13.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft13.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft14
 			// 
@@ -2332,8 +2320,6 @@
 			this.pnl_Loft14.Name = "pnl_Loft14";
 			this.pnl_Loft14.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft14.TabIndex = 23;
-			this.pnl_Loft14.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft14.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft15
 			// 
@@ -2342,8 +2328,6 @@
 			this.pnl_Loft15.Name = "pnl_Loft15";
 			this.pnl_Loft15.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft15.TabIndex = 19;
-			this.pnl_Loft15.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft15.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft16
 			// 
@@ -2352,8 +2336,6 @@
 			this.pnl_Loft16.Name = "pnl_Loft16";
 			this.pnl_Loft16.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft16.TabIndex = 15;
-			this.pnl_Loft16.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft16.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft17
 			// 
@@ -2362,8 +2344,6 @@
 			this.pnl_Loft17.Name = "pnl_Loft17";
 			this.pnl_Loft17.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft17.TabIndex = 11;
-			this.pnl_Loft17.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft17.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft18
 			// 
@@ -2372,8 +2352,6 @@
 			this.pnl_Loft18.Name = "pnl_Loft18";
 			this.pnl_Loft18.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft18.TabIndex = 7;
-			this.pnl_Loft18.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft18.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// pnl_Loft19
 			// 
@@ -2382,8 +2360,6 @@
 			this.pnl_Loft19.Name = "pnl_Loft19";
 			this.pnl_Loft19.Size = new System.Drawing.Size(32, 32);
 			this.pnl_Loft19.TabIndex = 3;
-			this.pnl_Loft19.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_panel);
-			this.pnl_Loft19.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_LoftPanel);
 			// 
 			// tb19_loft22
 			// 
@@ -2392,6 +2368,7 @@
 			this.tb19_loft22.Name = "tb19_loft22";
 			this.tb19_loft22.Size = new System.Drawing.Size(35, 19);
 			this.tb19_loft22.TabIndex = 2;
+			this.tb19_loft22.Tag = "11";
 			this.tb19_loft22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb19_loft22.WordWrap = false;
 			this.tb19_loft22.TextChanged += new System.EventHandler(this.OnChanged19);
@@ -2405,6 +2382,7 @@
 			this.tb18_loft20.Name = "tb18_loft20";
 			this.tb18_loft20.Size = new System.Drawing.Size(35, 19);
 			this.tb18_loft20.TabIndex = 6;
+			this.tb18_loft20.Tag = "10";
 			this.tb18_loft20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb18_loft20.WordWrap = false;
 			this.tb18_loft20.TextChanged += new System.EventHandler(this.OnChanged18);
@@ -2418,6 +2396,7 @@
 			this.tb17_loft18.Name = "tb17_loft18";
 			this.tb17_loft18.Size = new System.Drawing.Size(35, 19);
 			this.tb17_loft18.TabIndex = 10;
+			this.tb17_loft18.Tag = "9";
 			this.tb17_loft18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb17_loft18.WordWrap = false;
 			this.tb17_loft18.TextChanged += new System.EventHandler(this.OnChanged17);
@@ -2431,6 +2410,7 @@
 			this.tb16_loft16.Name = "tb16_loft16";
 			this.tb16_loft16.Size = new System.Drawing.Size(35, 19);
 			this.tb16_loft16.TabIndex = 14;
+			this.tb16_loft16.Tag = "8";
 			this.tb16_loft16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb16_loft16.WordWrap = false;
 			this.tb16_loft16.TextChanged += new System.EventHandler(this.OnChanged16);
@@ -2444,6 +2424,7 @@
 			this.tb15_loft14.Name = "tb15_loft14";
 			this.tb15_loft14.Size = new System.Drawing.Size(35, 19);
 			this.tb15_loft14.TabIndex = 18;
+			this.tb15_loft14.Tag = "7";
 			this.tb15_loft14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb15_loft14.WordWrap = false;
 			this.tb15_loft14.TextChanged += new System.EventHandler(this.OnChanged15);
@@ -2457,6 +2438,7 @@
 			this.tb14_loft12.Name = "tb14_loft12";
 			this.tb14_loft12.Size = new System.Drawing.Size(35, 19);
 			this.tb14_loft12.TabIndex = 22;
+			this.tb14_loft12.Tag = "6";
 			this.tb14_loft12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb14_loft12.WordWrap = false;
 			this.tb14_loft12.TextChanged += new System.EventHandler(this.OnChanged14);
@@ -2470,6 +2452,7 @@
 			this.tb13_loft10.Name = "tb13_loft10";
 			this.tb13_loft10.Size = new System.Drawing.Size(35, 19);
 			this.tb13_loft10.TabIndex = 26;
+			this.tb13_loft10.Tag = "5";
 			this.tb13_loft10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb13_loft10.WordWrap = false;
 			this.tb13_loft10.TextChanged += new System.EventHandler(this.OnChanged13);
@@ -2483,6 +2466,7 @@
 			this.tb12_loft08.Name = "tb12_loft08";
 			this.tb12_loft08.Size = new System.Drawing.Size(35, 19);
 			this.tb12_loft08.TabIndex = 30;
+			this.tb12_loft08.Tag = "4";
 			this.tb12_loft08.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb12_loft08.WordWrap = false;
 			this.tb12_loft08.TextChanged += new System.EventHandler(this.OnChanged12);
@@ -2496,6 +2480,7 @@
 			this.tb11_loft06.Name = "tb11_loft06";
 			this.tb11_loft06.Size = new System.Drawing.Size(35, 19);
 			this.tb11_loft06.TabIndex = 34;
+			this.tb11_loft06.Tag = "3";
 			this.tb11_loft06.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb11_loft06.WordWrap = false;
 			this.tb11_loft06.TextChanged += new System.EventHandler(this.OnChanged11);
@@ -2509,6 +2494,7 @@
 			this.tb10_loft04.Name = "tb10_loft04";
 			this.tb10_loft04.Size = new System.Drawing.Size(35, 19);
 			this.tb10_loft04.TabIndex = 38;
+			this.tb10_loft04.Tag = "2";
 			this.tb10_loft04.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb10_loft04.WordWrap = false;
 			this.tb10_loft04.TextChanged += new System.EventHandler(this.OnChanged10);
@@ -2522,6 +2508,7 @@
 			this.tb9_loft02.Name = "tb9_loft02";
 			this.tb9_loft02.Size = new System.Drawing.Size(35, 19);
 			this.tb9_loft02.TabIndex = 42;
+			this.tb9_loft02.Tag = "1";
 			this.tb9_loft02.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb9_loft02.WordWrap = false;
 			this.tb9_loft02.TextChanged += new System.EventHandler(this.OnChanged9);
@@ -2535,6 +2522,7 @@
 			this.tb8_loft00.Name = "tb8_loft00";
 			this.tb8_loft00.Size = new System.Drawing.Size(35, 19);
 			this.tb8_loft00.TabIndex = 46;
+			this.tb8_loft00.Tag = "0";
 			this.tb8_loft00.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb8_loft00.WordWrap = false;
 			this.tb8_loft00.TextChanged += new System.EventHandler(this.OnChanged8);
