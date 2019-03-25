@@ -160,12 +160,8 @@ namespace McdView
 
 			InitializeComponent();
 
-			RecordLabel.SetParent(this);
-			RecordLabel.SetStatusLabel(tssl_Overvalue);
-			RecordLabel.SetDescriptionLabel(lbl_Description);
-
-			RecordTextbox.SetStatusLabel(tssl_Overvalue);
-			RecordTextbox.SetDescriptionLabel(lbl_Description);
+			RecordLabel  .SetStaticVars(tssl_Overvalue, lbl_Description, this);
+			RecordTextbox.SetStaticVars(tssl_Overvalue, lbl_Description);
 
 			SetDoubleBuffered(pnl_Sprites);
 			SetDoubleBuffered(pnl_IsoLoft);
@@ -1295,6 +1291,19 @@ namespace McdView
 		private void OnValueChanged_IsoLoft(object sender, EventArgs e)
 		{
 			pnl_IsoLoft.Invalidate();
+
+			pnl_Loft08.Invalidate();
+			pnl_Loft09.Invalidate();
+			pnl_Loft10.Invalidate();
+			pnl_Loft11.Invalidate();
+			pnl_Loft12.Invalidate();
+			pnl_Loft13.Invalidate();
+			pnl_Loft14.Invalidate();
+			pnl_Loft15.Invalidate();
+			pnl_Loft16.Invalidate();
+			pnl_Loft17.Invalidate();
+			pnl_Loft18.Invalidate();
+			pnl_Loft19.Invalidate();
 		}
 		#endregion Events
 

@@ -515,19 +515,103 @@ namespace McdView
 			{
 				var pnlLoFT = sender as Panel;
 
-				string val;
-				if      (pnlLoFT == pnl_Loft08) val = tb8_loft00 .Text;
-				else if (pnlLoFT == pnl_Loft09) val = tb9_loft02 .Text;
-				else if (pnlLoFT == pnl_Loft10) val = tb10_loft04.Text;
-				else if (pnlLoFT == pnl_Loft11) val = tb11_loft06.Text;
-				else if (pnlLoFT == pnl_Loft12) val = tb12_loft08.Text;
-				else if (pnlLoFT == pnl_Loft13) val = tb13_loft10.Text;
-				else if (pnlLoFT == pnl_Loft14) val = tb14_loft12.Text;
-				else if (pnlLoFT == pnl_Loft15) val = tb15_loft14.Text;
-				else if (pnlLoFT == pnl_Loft16) val = tb16_loft16.Text;
-				else if (pnlLoFT == pnl_Loft17) val = tb17_loft18.Text;
-				else if (pnlLoFT == pnl_Loft18) val = tb18_loft20.Text;
-				else                            val = tb19_loft22.Text; // if (pnlLoFT == pnl_Loft19)
+				string val; Color color;
+				if      (pnlLoFT == pnl_Loft08)
+				{
+					val = tb8_loft00.Text;
+					if (bar_IsoLoft.Value > 0)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft09)
+				{
+					val = tb9_loft02.Text;
+					if (bar_IsoLoft.Value > 2)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft10)
+				{
+					val = tb10_loft04.Text;
+					if (bar_IsoLoft.Value > 4)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft11)
+				{
+					val = tb11_loft06.Text;
+					if (bar_IsoLoft.Value > 6)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft12)
+				{
+					val = tb12_loft08.Text;
+					if (bar_IsoLoft.Value > 8)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft13)
+				{
+					val = tb13_loft10.Text;
+					if (bar_IsoLoft.Value > 10)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft14)
+				{
+					val = tb14_loft12.Text;
+					if (bar_IsoLoft.Value > 12)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft15)
+				{
+					val = tb15_loft14.Text;
+					if (bar_IsoLoft.Value > 14)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft16)
+				{
+					val = tb16_loft16.Text;
+					if (bar_IsoLoft.Value > 16)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft17)
+				{
+					val = tb17_loft18.Text;
+					if (bar_IsoLoft.Value > 18)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else if (pnlLoFT == pnl_Loft18)
+				{
+					val = tb18_loft20.Text;
+					if (bar_IsoLoft.Value > 20)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
+				else // if (pnlLoFT == pnl_Loft19)
+				{
+					val = tb19_loft22.Text;
+					if (bar_IsoLoft.Value > 22)
+						color = SystemColors.ControlLightLight;
+					else
+						color = SystemColors.ControlLight;
+				}
 
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.Half;
@@ -565,15 +649,14 @@ namespace McdView
 
 					ColorPalette pal = loft.Palette;
 					pal.Entries[0] = SystemColors.ControlDarkDark;
-					pal.Entries[1] = SystemColors.ControlLightLight;
+					pal.Entries[1] = color;
 					loft.Palette = pal;
 
 					_graphics.DrawImage(
 									loft,
-									new Rectangle(
-												0,0,
-												pnlLoFT.Width,
-												pnlLoFT.Height));
+									0,0,
+									pnlLoFT.Width,
+									pnlLoFT.Height);
 				}
 				else
 					_graphics.FillRectangle(
@@ -712,9 +795,9 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPaint_IsoLoft(object sender, PaintEventArgs e)
 		{
-			var graphics = e.Graphics;
+			_graphics = e.Graphics;
 
-			graphics.DrawRectangle(
+			_graphics.DrawRectangle(
 								_penBlack,
 								0,
 								0,
@@ -751,18 +834,18 @@ namespace McdView
 							break;
 					}
 					TextRenderer.DrawText(
-										graphics,
+										_graphics,
 										rose,
 										fontRose,
 										pt,
 										Color.Gray);
 				}
 
-				graphics.SmoothingMode = SmoothingMode.AntiAlias;
+				_graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-				graphics.DrawPath(_penGray, CuboidOutlinePath);
-				graphics.DrawPath(_penGray, CuboidBotAnglePath);
-				graphics.DrawPath(_penGray, CuboidVertLineTopPath);
+				_graphics.DrawPath(_penGray, CuboidOutlinePath);
+				_graphics.DrawPath(_penGray, CuboidBotAnglePath);
+				_graphics.DrawPath(_penGray, CuboidVertLineTopPath);
 
 
 				int halfwidth  = Isocube.Width  / 2;
@@ -806,15 +889,20 @@ namespace McdView
 						pos = (loftid * 256) + (r * 16) + c;
 						if (pos < LoFT.Length && LoFT[pos])
 						{
-							graphics.DrawImage(Isocube, x_cell, y_cell);
+							_graphics.DrawImage(Isocube, x_cell, y_cell);
 						}
 					}
 				}
-				graphics.DrawPath(_penGray, CuboidTopAnglePath);
-				graphics.DrawPath(_penGray, CuboidVertLineBotPath);
+				_graphics.DrawPath(_penGray, CuboidTopAnglePath);
+				_graphics.DrawPath(_penGray, CuboidVertLineBotPath);
 			}
 		}
 
+		/// <summary>
+		/// Clicking on the IsoLoFT panel selects its trackbar.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_IsoLoft(object sender, EventArgs e)
 		{
 			bar_IsoLoft.Select();
