@@ -163,7 +163,7 @@ namespace McdView
 			isRunT = true;
 			InitializeComponent();
 
-//			TagLabels();
+			TagLabels();
 			TagLoftPanels();
 
 			RecordLabel  .SetStaticVars(tssl_Overvalue, lbl_Description, this);
@@ -592,27 +592,6 @@ namespace McdView
 				}
 			}
 		}
-
-/*		/// <summary>
-		/// Helper for keypreviewed OnKeyDown().
-		/// </summary>
-		/// <returns></returns>
-		private TextBox isTextboxFocused()
-		{
-			return ActiveControl as TextBox;
-
-			foreach (Control control in Controls)
-			{
-				if (control.Focused && (control as TextBox) != null)
-					return control as TextBox;
-
-				foreach (Control control1 in control.Controls)
-				{
-					if (control1.Focused && (control1 as TextBox) != null)
-						return control1 as TextBox;
-				}
-			}
-		} */
 		#endregion Events (override)
 
 

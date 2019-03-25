@@ -45,7 +45,8 @@ namespace McdView
 		{
 			StatusLabel.Text = String.Empty;
 
-			if (!_f.isAssociatedTextboxFocused(this))
+			var tb = Tag as RecordTextbox;
+			if (!((tb != null && tb.Focused) || _f.isScanG_tb_focused(this)))
 				DescriptLabel.Text = String.Empty;
 		}
 
