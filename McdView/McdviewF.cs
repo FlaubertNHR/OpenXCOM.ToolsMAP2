@@ -5,13 +5,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-using DSShared;
-using DSShared.Windows;
-
 using XCom;
 using XCom.Resources.Map;
-
-using YamlDotNet.RepresentationModel; // read values (deserialization)
 
 
 namespace McdView
@@ -175,7 +170,7 @@ namespace McdView
 
 			MaximumSize = new Size(0,0);
 
-			LoadWindowMetrics();
+			YamlMetrics.LoadWindowMetrics(this);
 
 			PartsPanel = new TerrainPanel(this);
 			gb_Collection.Controls.Add(PartsPanel);
@@ -196,7 +191,7 @@ namespace McdView
 			LayoutSpriteGroup();
 
 			string pathufo, pathtftd;
-			GetResourcePaths(out pathufo, out pathtftd);
+			YamlMetrics.GetResourcePaths(out pathufo, out pathtftd);
 
 			ResourceInfo.LoadScanGufo(pathufo);		// -> ResourceInfo.ScanGufo
 			ResourceInfo.LoadScanGtftd(pathtftd);	// -> ResourceInfo.ScanGtftd
@@ -275,197 +270,7 @@ namespace McdView
 			foreach (var control in controls)
 				SetDoubleBuffered(control);
 		}
-
-		/// <summary>
-		/// Assigns MapView's Configurator's basepath to 'pathufo' and 'pathtftd'.
-		/// </summary>
-		/// <param name="pathufo"></param>
-		/// <param name="pathtftd"></param>
-		private void GetResourcePaths(out string pathufo, out string pathtftd)
-		{
-			pathufo  = null;
-			pathtftd = null;
-
-			// First check the current Terrain's basepath ...
-//			string path = Path.GetDirectoryName(_pfeMcd);
-//			if (path.EndsWith(GlobalsXC.TerrainDir, StringComparison.InvariantCulture))
-//			{
-//				path = path.Substring(0, path.Length - GlobalsXC.TerrainDir.Length + 1);
-//				return Path.Combine(path, SharedSpace.ScanGfile);
-//			}
-
-			// Second check the Configurator's basepath ...
-			string dirSettings = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string fileResources = Path.Combine(dirSettings, PathInfo.ConfigResources);
-			if (File.Exists(fileResources))
-			{
-				using (var sr = new StreamReader(File.OpenRead(fileResources)))
-				{
-					var str = new YamlStream();
-					str.Load(sr);
-
-					string val;
-
-					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
-					foreach (var node in nodeRoot.Children)
-					{
-						switch (node.Key.ToString())
-						{
-							case "ufo":
-								if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
-									pathufo = val;
-
-								break;
-
-							case "tftd":
-								if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
-									pathtftd = val;
-
-								break;
-						}
-					}
-				}
-			}
-
-			// Third let the user load ScanG.Dat/LoFT.Dat files from menuitems.
-		}
 		#endregion cTor
-
-
-		#region Load/Save 'registry' info
-		/// <summary>
-		/// Positions the Form at user-defined coordinates w/ size.
-		/// @note Adapted from PckViewForm.
-		/// </summary>
-		private void LoadWindowMetrics()
-		{
-			string dirSettings = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
-			if (File.Exists(fileViewers))
-			{
-				using (var sr = new StreamReader(File.OpenRead(fileViewers)))
-				{
-					var str = new YamlStream();
-					str.Load(sr);
-
-					var invariant = System.Globalization.CultureInfo.InvariantCulture;
-
-					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
-					foreach (var node in nodeRoot.Children)
-					{
-						string viewer = ((YamlScalarNode)node.Key).Value;
-						if (String.Equals(viewer, RegistryInfo.McdView, StringComparison.Ordinal))
-						{
-							int x = 0;
-							int y = 0;
-							int w = 0;
-							int h = 0;
-
-							var keyvals = nodeRoot.Children[new YamlScalarNode(viewer)] as YamlMappingNode;
-							foreach (var keyval in keyvals) // NOTE: There is a better way to do this. See TilesetLoader..cTor
-							{
-								switch (keyval.Key.ToString()) // TODO: Error handling. ->
-								{
-									case "left":
-										x = Int32.Parse(keyval.Value.ToString(), invariant);
-										break;
-									case "top":
-										y = Int32.Parse(keyval.Value.ToString(), invariant);
-										break;
-									case "width":
-										w = Int32.Parse(keyval.Value.ToString(), invariant);
-										break;
-									case "height":
-										h = Int32.Parse(keyval.Value.ToString(), invariant);
-										break;
-								}
-							}
-
-							var rectScreen = Screen.GetWorkingArea(new Point(x, y));
-							if (!rectScreen.Contains(x + 200, y + 100)) // check to ensure that McdView is at least partly onscreen.
-							{
-								x = 100;
-								y =  50;
-							}
-
-							Left = x;
-							Top  = y;
-
-							ClientSize = new Size(w, h);
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary>
-		/// Saves the Form's position and size to YAML.
-		/// </summary>
-		private void SaveWindowMetrics()
-		{
-			string dirSettings = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
-
-			if (File.Exists(fileViewers))
-			{
-				WindowState = FormWindowState.Normal;
-
-				string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);
-				string dst = Path.Combine(dirSettings, PathInfo.ConfigViewersOld);
-
-				File.Copy(src, dst, true);
-
-				using (var sr = new StreamReader(File.OpenRead(dst))) // but now use dst as src ->
-
-				using (var fs = new FileStream(src, FileMode.Create)) // overwrite previous viewers-config.
-				using (var sw = new StreamWriter(fs))
-				{
-					bool found = false;
-
-					while (sr.Peek() != -1)
-					{
-						string line = sr.ReadLine().TrimEnd();
-
-						if (String.Equals(line, RegistryInfo.McdView + ":", StringComparison.Ordinal))
-						{
-							found = true;
-
-							sw.WriteLine(line);
-
-							line = sr.ReadLine();
-							line = sr.ReadLine();
-							line = sr.ReadLine();
-							line = sr.ReadLine(); // heh
-
-							sw.WriteLine("  left: "   + Math.Max(0, Location.X));	// =Left
-							sw.WriteLine("  top: "    + Math.Max(0, Location.Y));	// =Top
-							sw.WriteLine("  width: "  + ClientSize.Width);			// <- use ClientSize, since Width and Height
-							sw.WriteLine("  height: " + ClientSize.Height);			// screw up due to the titlebar/menubar area.
-						}
-						else
-							sw.WriteLine(line);
-					}
-
-					if (!found)
-					{
-						sw.WriteLine(RegistryInfo.McdView + ":");
-
-						sw.WriteLine("  left: "   + Math.Max(0, Location.X));
-						sw.WriteLine("  top: "    + Math.Max(0, Location.Y));
-						sw.WriteLine("  width: "  + ClientSize.Width);
-						sw.WriteLine("  height: " + ClientSize.Height);
-					}
-				}
-				File.Delete(dst);
-			}
-		}
-		#endregion Load/Save 'registry' info
 
 
 		#region Events (override)
@@ -495,7 +300,7 @@ namespace McdView
 				}
 			}
 
-			SaveWindowMetrics();
+			YamlMetrics.SaveWindowMetrics(this);
 			base.OnFormClosing(e);
 		}
 

@@ -90,6 +90,7 @@
     <Compile Include="TerrainPanel.cs" />
     <Compile Include="ScanGiconF.cs" />
     <Compile Include="SpritesetF.cs" />
+    <Compile Include="YamlMetrics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
