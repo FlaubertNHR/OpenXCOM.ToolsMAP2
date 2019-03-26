@@ -1893,6 +1893,10 @@ namespace McdView
 			{
 				borks.Add("#30 isSlidingDoor (record) does not equal isSlidingDoor (text).");
 			}
+			if (valB && tb35_ishingeddoor.Text == "1")
+			{
+				borks.Add("#30 isSlidingDoor and #35 isHingedDoor are both true.");
+			}
 			valB = Parts[SelId].Record.StopLOS;
 			if (    (valB && tb31_isblocklos.Text == "0")
 				|| (!valB && tb31_isblocklos.Text == "1"))
@@ -1922,6 +1926,10 @@ namespace McdView
 				|| (!valB && tb35_ishingeddoor.Text == "1"))
 			{
 				borks.Add("#35 isHingedDoor (record) does not equal isHingedDoor (text).");
+			}
+			if (valB && tb30_isslidingdoor.Text == "1")
+			{
+				borks.Add("#35 isHingedDoor and #30 isSlidingDoor are both true.");
 			}
 			valB = Parts[SelId].Record.BlockFire;
 			if (    (valB && tb36_isblockfire.Text == "0")
