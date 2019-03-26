@@ -1687,6 +1687,13 @@ namespace McdView
 					{
 						Changed |= !InitFields;
 						Parts[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
+
+						if (strict
+							&& Parts[SelId].Record.SlidingDoor
+							&& Parts[SelId].Record.HingedDoor)
+						{
+							tb35_ishingeddoor.Text = "0";
+						}
 					}
 					else if (result < 1)
 						tb30_isslidingdoor.Text = "0"; // recurse w/ default.
@@ -1965,6 +1972,13 @@ namespace McdView
 					{
 						Changed |= !InitFields;
 						Parts[SelId].Record.HingedDoor = Convert.ToBoolean(result);
+
+						if (strict
+							&& Parts[SelId].Record.HingedDoor
+							&& Parts[SelId].Record.SlidingDoor)
+						{
+							tb30_isslidingdoor.Text = "0";
+						}
 					}
 					else if (result < 1)
 						tb35_ishingeddoor.Text = "0"; // recurse w/ default.
