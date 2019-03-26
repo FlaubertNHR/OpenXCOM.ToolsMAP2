@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -112,12 +113,14 @@ namespace McdView
 
 						PartsPanel.ScrollToPart();
 
-						miZeroVals.Enabled = true;
+						miZeroVals .Enabled =
+						miCheckVals.Enabled = true;
 					}
 					else
 					{
 						ClearTextFields();
-						miZeroVals.Enabled = false;
+						miZeroVals .Enabled =
+						miCheckVals.Enabled = false;
 					}
 
 					InvalidatePanels();
@@ -550,6 +553,15 @@ namespace McdView
 						PartsPanel.Select();
 						PartsPanel.KeyInput(e);
 					}
+					break;
+
+				case Keys.S:
+					if (e.Modifiers == 0)
+					{
+						e.SuppressKeyPress = true; // NOTE: all alphabetic codes can be suppressed ...
+						cb_Strict.Checked = !cb_Strict.Checked;
+					}
+
 					break;
 
 				default:
@@ -1015,7 +1027,7 @@ namespace McdView
 					fs.WriteByte((byte)record.Armor);					// 42
 					fs.WriteByte((byte)record.HE_Block);				// 43
 					fs.WriteByte((byte)record.DieTile);					// 44
-					fs.WriteByte((byte)record.Flammable);				// 45
+					fs.WriteByte((byte)record.FireResist);				// 45
 					fs.WriteByte((byte)record.Alt_MCD);					// 46
 					fs.WriteByte((byte)record.Unknown47);				// 47
 					fs.WriteByte(unchecked((byte)record.StandOffset));	// 48 (sbyte)
@@ -1114,6 +1126,47 @@ namespace McdView
 				strict = false;
 				ClearTextFields(true);
 				strict = strict0;
+			}
+		}
+
+		/// <summary>
+		/// Handles clicking the Edit|CheckVals menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_CheckVals(object sender, EventArgs e)
+		{
+			List<string> borks = GetStrictBorks();
+
+			if (borks.Count != 0)
+			{
+				string copyable = String.Empty;
+				foreach (var bork in borks)
+				{
+					if (!String.IsNullOrEmpty(copyable))
+						copyable += Environment.NewLine;
+
+					copyable += bork;
+				}
+
+				using (var f = new Infobox(
+										" Strict test",
+										"The following items exhibit anomalies.",
+										copyable))
+				{
+					f.ShowDialog();
+				}
+			}
+			else
+			{
+				MessageBox.Show(
+							this,
+							"All values appear to fall within acceptable ranges.",
+							" Strict test",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Information,
+							MessageBoxDefaultButton.Button1,
+							0);
 			}
 		}
 		#endregion Menuitems
@@ -1399,7 +1452,7 @@ namespace McdView
 			tb42_armor        .Text = ((int)record.Armor)        .ToString();
 			tb43_heblock      .Text = ((int)record.HE_Block)     .ToString();
 			tb44_deathid      .Text = ((int)record.DieTile)      .ToString();
-			tb45_fireresist   .Text = ((int)record.Flammable)    .ToString();
+			tb45_fireresist   .Text = ((int)record.FireResist)   .ToString();
 			tb46_alternateid  .Text = ((int)record.Alt_MCD)      .ToString();
 
 			tb47_.Text = ((int)record.Unknown47).ToString();
@@ -1511,6 +1564,583 @@ namespace McdView
 			tb60_isbaseobject  .Text =
 
 			tb61_.Text = text;
+		}
+
+		/// <summary>
+		/// Tests all values for STRICT.
+		/// @note These tests shall stay synched w/ McdviewF_changed events.
+		/// @note Tests are done against the values that are currently stored in
+		/// the records - not against the values shown in the textboxes.
+		/// </summary>
+		/// <returns>a list of borks if any</returns>
+		private List<string> GetStrictBorks()
+		{
+			var borks = new List<string>();
+
+			int val, y;
+
+			// Sprites
+			if (Spriteset != null)
+			{
+				if ((y = Spriteset.Count - 1) > 255)
+				{
+					borks.Add("The terrain's spriteset count exceeds 256 but an MCD record"
+								+ " cannot deal with a sprite ref in excess of 256 because the"
+								+ " MCD values of sprite refs are stored in a single byte (0..255)");
+				}
+			}
+			else
+				y = 255;
+
+			val = Parts[SelId].Record.Sprite1;
+			if (val != Int32.Parse(tb0_phase0.Text))
+			{
+				borks.Add("#0 phase0 (record) does not equal phase0 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#0 phase0 id exceeds the terrain's spriteset count.");
+			}
+
+			val = Parts[SelId].Record.Sprite2;
+			if (val != Int32.Parse(tb1_phase1.Text))
+			{
+				borks.Add("#1 phase1 (record) does not equal phase1 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#1 phase1 id exceeds the terrain's spriteset count.");
+			}
+
+			val = Parts[SelId].Record.Sprite3;
+			if (val != Int32.Parse(tb2_phase2.Text))
+			{
+				borks.Add("#2 phase2 (record) does not equal phase2 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#2 phase2 id exceeds the terrain's spriteset count.");
+			}
+
+			val = Parts[SelId].Record.Sprite4;
+			if (val != Int32.Parse(tb3_phase3.Text))
+			{
+				borks.Add("#3 phase3 (record) does not equal phase3 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#3 phase3 id exceeds the terrain's spriteset count.");
+			}
+
+			val = Parts[SelId].Record.Sprite5;
+			if (val != Int32.Parse(tb4_phase4.Text))
+			{
+				borks.Add("#4 phase4 (record) does not equal phase4 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#4 phase4 id exceeds the terrain's spriteset count.");
+			}
+
+			val = Parts[SelId].Record.Sprite6;
+			if (val != Int32.Parse(tb5_phase5.Text))
+			{
+				borks.Add("#5 phase5 (record) does not equal phase5 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#5 phase5 id exceeds the terrain's spriteset count.");
+			}
+
+			val = Parts[SelId].Record.Sprite7;
+			if (val != Int32.Parse(tb6_phase6.Text))
+			{
+				borks.Add("#6 phase6 (record) does not equal phase6 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#6 phase6 id exceeds the terrain's spriteset count.");
+			}
+
+			val = Parts[SelId].Record.Sprite8;
+			if (val != Int32.Parse(tb7_phase7.Text))
+			{
+				borks.Add("#7 phase7 (record) does not equal phase7 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#7 phase7 id exceeds the terrain's spriteset count.");
+			}
+
+
+			// LoFTs
+			if (LoFT != null)
+			{
+				if ((y = LoFT.Length / 256 - 1) > 255)
+				{
+					borks.Add("The LoFTs count exceeds 256 but an MCD record"
+								+ " cannot deal with a LoFT ref in excess of 256 because the"
+								+ " MCD values of LoFT refs are stored in a single byte (0..255)");
+				}
+			}
+			else
+				y = 255;
+
+			val = Parts[SelId].Record.Loft1;
+			if (val != Int32.Parse(tb8_loft00.Text))
+			{
+				borks.Add("#8 loft00 (record) does not equal loft00 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#8 loft00 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft2;
+			if (val != Int32.Parse(tb9_loft02.Text))
+			{
+				borks.Add("#9 loft02 (record) does not equal loft02 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#9 loft02 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft3;
+			if (val != Int32.Parse(tb10_loft04.Text))
+			{
+				borks.Add("#10 loft04 (record) does not equal loft04 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#10 loft04 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft4;
+			if (val != Int32.Parse(tb11_loft06.Text))
+			{
+				borks.Add("#11 loft06 (record) does not equal loft06 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#11 loft06 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft5;
+			if (val != Int32.Parse(tb12_loft08.Text))
+			{
+				borks.Add("#12 loft08 (record) does not equal loft08 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#12 loft08 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft6;
+			if (val != Int32.Parse(tb13_loft10.Text))
+			{
+				borks.Add("#13 loft10 (record) does not equal loft10 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#13 loft10 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft7;
+			if (val != Int32.Parse(tb14_loft12.Text))
+			{
+				borks.Add("#14 loft12 (record) does not equal loft12 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#14 loft12 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft8;
+			if (val != Int32.Parse(tb15_loft14.Text))
+			{
+				borks.Add("#15 loft14 (record) does not equal loft14 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#15 loft14 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft9;
+			if (val != Int32.Parse(tb16_loft16.Text))
+			{
+				borks.Add("#16 loft16 (record) does not equal loft16 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#16 loft16 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft10;
+			if (val != Int32.Parse(tb17_loft18.Text))
+			{
+				borks.Add("#17 loft18 (record) does not equal loft18 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#17 loft18 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft11;
+			if (val != Int32.Parse(tb18_loft20.Text))
+			{
+				borks.Add("#18 loft20 (record) does not equal loft20 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#18 loft20 id exceeds the LoFT count.");
+			}
+
+			val = Parts[SelId].Record.Loft12;
+			if (val != Int32.Parse(tb19_loft22.Text))
+			{
+				borks.Add("#19 loft22 (record) does not equal loft22 (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#19 loft22 id exceeds the LoFT count.");
+			}
+
+
+			// ScanG
+			if (ScanG != null)
+			{
+				if ((y = ScanG.Length / 16 - 1) > 65535)
+				{
+					borks.Add("The ScanG count exceeds 65536 but an MCD record"
+								+ " cannot deal with a ScanG ref in excess of 65536 because the"
+								+ " MCD values of ScanG refs are stored in an unsigned short (0..65535)"); // yeah, right.
+				}
+			}
+			else
+				y = 65535;
+
+			val = Parts[SelId].Record.ScanG;
+			if (val != Int32.Parse(tb20_scang1.Text))
+			{
+				borks.Add("#20 ScanG (record) does not equal ScanG (text).");
+			}
+			if (!Test(val, 35, y + 35))
+			{
+				borks.Add("#20 ScanG id is outside the ScanG limits.");
+			}
+
+			val = Parts[SelId].Record.ScanG_reduced;
+			if (val != Int32.Parse(tb20_scang2.Text))
+			{
+				borks.Add("#20 ScanG_reduced (record) does not equal ScanG_reduced (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#20 ScanG_reduced id exceeds the ScanG count.");
+			}
+
+
+			// RAM addresses
+			val = Parts[SelId].Record.Unknown22;
+			if (val != Int32.Parse(tb22_.Text))
+			{
+				borks.Add("#22 tab ram (record) does not equal tab ram (text).");
+			}
+			val = Parts[SelId].Record.Unknown23;
+			if (val != Int32.Parse(tb23_.Text))
+			{
+				borks.Add("#23 tab ram (record) does not equal tab ram (text).");
+			}
+			val = Parts[SelId].Record.Unknown24;
+			if (val != Int32.Parse(tb24_.Text))
+			{
+				borks.Add("#24 tab ram (record) does not equal tab ram (text).");
+			}
+			val = Parts[SelId].Record.Unknown25;
+			if (val != Int32.Parse(tb25_.Text))
+			{
+				borks.Add("#25 tab ram (record) does not equal tab ram (text).");
+			}
+			val = Parts[SelId].Record.Unknown26;
+			if (val != Int32.Parse(tb26_.Text))
+			{
+				borks.Add("#26 pck ram (record) does not equal pck ram (text).");
+			}
+			val = Parts[SelId].Record.Unknown27;
+			if (val != Int32.Parse(tb27_.Text))
+			{
+				borks.Add("#27 pck ram (record) does not equal pck ram (text).");
+			}
+			val = Parts[SelId].Record.Unknown28;
+			if (val != Int32.Parse(tb28_.Text))
+			{
+				borks.Add("#28 pck ram (record) does not equal pck ram (text).");
+			}
+			val = Parts[SelId].Record.Unknown29;
+			if (val != Int32.Parse(tb29_.Text))
+			{
+				borks.Add("#29 pck ram (record) does not equal pck ram (text).");
+			}
+
+
+			// booleans
+			bool valB;
+
+			valB = Parts[SelId].Record.SlidingDoor;
+			if (    (valB && tb30_isslidingdoor.Text == "0")
+				|| (!valB && tb30_isslidingdoor.Text == "1"))
+			{
+				borks.Add("#30 isSlidingDoor (record) does not equal isSlidingDoor (text).");
+			}
+			valB = Parts[SelId].Record.StopLOS;
+			if (    (valB && tb31_isblocklos.Text == "0")
+				|| (!valB && tb31_isblocklos.Text == "1"))
+			{
+				borks.Add("#31 isBlockLoS (record) does not equal isBlockLoS (text).");
+			}
+			valB = Parts[SelId].Record.NotFloored;
+			if (    (valB && tb32_isdropthrou.Text == "0")
+				|| (!valB && tb32_isdropthrou.Text == "1"))
+			{
+				borks.Add("#32 isDropThrou (record) does not equal isDropThrou (text).");
+			}
+			valB = Parts[SelId].Record.BigWall;
+			if (    (valB && tb33_isbigwall.Text == "0")
+				|| (!valB && tb33_isbigwall.Text == "1"))
+			{
+				borks.Add("#33 isBigWall (record) does not equal isBigWall (text).");
+			}
+			valB = Parts[SelId].Record.GravLift;
+			if (    (valB && tb34_isgravlift.Text == "0")
+				|| (!valB && tb34_isgravlift.Text == "1"))
+			{
+				borks.Add("#34 isGravLift (record) does not equal isGravLift (text).");
+			}
+			valB = Parts[SelId].Record.HingedDoor;
+			if (    (valB && tb35_ishingeddoor.Text == "0")
+				|| (!valB && tb35_ishingeddoor.Text == "1"))
+			{
+				borks.Add("#35 isHingedDoor (record) does not equal isHingedDoor (text).");
+			}
+			valB = Parts[SelId].Record.BlockFire;
+			if (    (valB && tb36_isblockfire.Text == "0")
+				|| (!valB && tb36_isblockfire.Text == "1"))
+			{
+				borks.Add("#36 isBlockFire (record) does not equal isBlockFire (text).");
+			}
+			valB = Parts[SelId].Record.BlockSmoke;
+			if (    (valB && tb37_isblocksmoke.Text == "0")
+				|| (!valB && tb37_isblocksmoke.Text == "1"))
+			{
+				borks.Add("#37 isBlockSmoke (record) does not equal isBlockSmoke (text).");
+			}
+
+
+			// ints
+			val = Parts[SelId].Record.LeftRightHalf;
+			if (val != Int32.Parse(tb38_.Text))
+			{
+				borks.Add("#38 LeftRightHalf (record) does not equal LeftRightHalf (text).");
+			}
+			if (val != 3)
+			{
+				borks.Add("#38 LeftRightHalf is not \"3\".");
+			}
+
+			val = Parts[SelId].Record.TU_Walk;
+			if (val != Int32.Parse(tb39_tuwalk.Text))
+			{
+				borks.Add("#39 TuWalk (record) does not equal TuWalk (text).");
+			}
+			val = Parts[SelId].Record.TU_Slide;
+			if (val != Int32.Parse(tb40_tuslide.Text))
+			{
+				borks.Add("#40 TuSlide (record) does not equal TuSlide (text).");
+			}
+			val = Parts[SelId].Record.TU_Fly;
+			if (val != Int32.Parse(tb41_tufly.Text))
+			{
+				borks.Add("#41 TuFly (record) does not equal TuFly (text).");
+			}
+
+			val = Parts[SelId].Record.Armor;
+			if (val != Int32.Parse(tb42_armor.Text))
+			{
+				borks.Add("#42 Armor (record) does not equal Armor (text).");
+			}
+
+			val = Parts[SelId].Record.HE_Block;
+			if (val != Int32.Parse(tb43_heblock.Text))
+			{
+				borks.Add("#43 HeBlock (record) does not equal HeBlock (text).");
+			}
+
+
+			y = Parts.Length - 1;
+
+			val = Parts[SelId].Record.DieTile;
+			if (val != Int32.Parse(tb44_deathid.Text))
+			{
+				borks.Add("#44 DeathId (record) does not equal DeathId (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#44 DeathId exceeds the count of the MCD.");
+			}
+			if (val != 0 && Parts[SelId].Dead == null)
+			{
+				borks.Add("#44 Dead part is null.");
+			}
+
+			val = Parts[SelId].Record.FireResist;
+			if (val != Int32.Parse(tb45_fireresist.Text))
+			{
+				borks.Add("#45 FireResist (record) does not equal FireResist (text).");
+			}
+
+			val = Parts[SelId].Record.Alt_MCD;
+			if (val != Int32.Parse(tb46_alternateid.Text))
+			{
+				borks.Add("#46 AlternateId (record) does not equal AlternateId (text).");
+			}
+			if (!Test(val, 0, y))
+			{
+				borks.Add("#46 AlternateId exceeds the count of the MCD.");
+			}
+			if (val != 0 && Parts[SelId].Alternate == null)
+			{
+				borks.Add("#46 Alternate part is null.");
+			}
+
+			val = Parts[SelId].Record.Unknown47;
+			if (val != Int32.Parse(tb47_.Text))
+			{
+				borks.Add("#47 CloseDoors (record) does not equal CloseDoors (text).");
+			}
+
+			val = Parts[SelId].Record.StandOffset;
+			if (val != Int32.Parse(tb48_terrainoffset.Text))
+			{
+				borks.Add("#48 TerrainOffset (record) does not equal TerrainOffset (text).");
+			}
+			if (!Test(val, -24, 0))
+			{
+				borks.Add("#48 TerrainOffset has an unusual value.");
+			}
+
+			val = Parts[SelId].Record.TileOffset;
+			if (val != Int32.Parse(tb49_spriteoffset.Text))
+			{
+				borks.Add("#49 SpriteOffset (record) does not equal SpriteOffset (text).");
+			}
+			if (!Test(val, 0, 24))
+			{
+				borks.Add("#49 SpriteOffset has an unusual value.");
+			}
+
+			val = Parts[SelId].Record.Unknown50;
+			if (val != Int32.Parse(tb50_.Text))
+			{
+				borks.Add("#50 dTypeMod (record) does not equal dTypeMod (text).");
+			}
+
+			val = Parts[SelId].Record.LightBlock;
+			if (val != Int32.Parse(tb51_lightblock.Text))
+			{
+				borks.Add("#51 LightBlock (record) does not equal LightBlock (text).");
+			}
+
+			val = Parts[SelId].Record.Footstep;
+			if (val != Int32.Parse(tb52_footsound.Text))
+			{
+				borks.Add("#52 FootSound (record) does not equal FootSound (text).");
+			}
+			if (!Test(val, 0, 6))
+			{
+				borks.Add("#52 FootSound exceeds expected value.");
+			}
+
+			val = (int)Parts[SelId].Record.PartType;
+			if (val != Int32.Parse(tb53_parttype.Text))
+			{
+				borks.Add("#53 PartType (record) does not equal PartType (text).");
+			}
+			if (!Test(val, 0, 3))
+			{
+				borks.Add("#53 PartType exceeds expected value.");
+			}
+
+			val = Parts[SelId].Record.HE_Type;
+			if (val != Int32.Parse(tb54_hetype.Text))
+			{
+				borks.Add("#54 HeType (record) does not equal HeType (text).");
+			}
+			if (!Test(val, 0, 1))
+			{
+				borks.Add("#54 HeType exceeds expected value.");
+			}
+
+			val = Parts[SelId].Record.HE_Strength;
+			if (val != Int32.Parse(tb55_hestrength.Text))
+			{
+				borks.Add("#55 HeStrength (record) does not equal HeStrength (text).");
+			}
+
+			val = Parts[SelId].Record.SmokeBlockage;
+			if (val != Int32.Parse(tb56_smokeblock.Text))
+			{
+				borks.Add("#56 SmokeBlock (record) does not equal SmokeBlock (text).");
+			}
+
+			val = Parts[SelId].Record.Fuel;
+			if (val != Int32.Parse(tb57_fuel.Text))
+			{
+				borks.Add("#57 Fuel (record) does not equal Fuel (text).");
+			}
+
+			val = Parts[SelId].Record.LightSource;
+			if (val != Int32.Parse(tb58_lightintensity.Text))
+			{
+				borks.Add("#58 LightIntensity (record) does not equal LightIntensity (text).");
+			}
+
+			val = (int)Parts[SelId].Record.Special;
+			if (val != Int32.Parse(tb59_specialtype.Text))
+			{
+				borks.Add("#59 SpecialType (record) does not equal SpecialType (text).");
+			}
+			if (!Test(val, 0, 14))
+			{
+				borks.Add("#59 SpecialType exceeds expected value.");
+			}
+
+			valB = Parts[SelId].Record.BaseObject;
+			if (    (valB && tb60_isbaseobject.Text == "0")
+				|| (!valB && tb60_isbaseobject.Text == "1"))
+			{
+				borks.Add("#60 isBaseObject (record) does not equal isBaseObject (text).");
+			}
+
+			val = Parts[SelId].Record.Unknown61;
+			if (val != Int32.Parse(tb61_.Text))
+			{
+				borks.Add("#61 VictoryPoints (record) does not equal VictoryPoints (text).");
+			}
+
+			return borks;
+		}
+
+		/// <summary>
+		/// Checks if a specified value is within specified parameters.
+		/// </summary>
+		/// <param name="val">a value to test</param>
+		/// <param name="x">the minimum acceptable value</param>
+		/// <param name="y">the maximum acceptable value</param>
+		/// <returns></returns>
+		private bool Test(int val, int x, int y)
+		{
+			return (val >= x && val <= y);
 		}
 		#endregion Methods
 	}

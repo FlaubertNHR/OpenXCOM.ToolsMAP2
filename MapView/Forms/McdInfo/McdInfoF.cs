@@ -151,7 +151,7 @@ namespace MapView.Forms.McdInfo
 											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"anti-flammability:",
-											record.Flammable));
+											record.FireResist));
 
 				rtbInfo.SelectionColor = Color.Firebrick;
 				rtbInfo.AppendText(string.Format(

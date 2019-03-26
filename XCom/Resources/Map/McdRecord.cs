@@ -94,7 +94,7 @@ namespace XCom
 		public byte Armor         { get; set; }
 		public byte HE_Block      { get; set; }
 		public byte DieTile       { get; set; }
-		public byte Flammable     { get; set; }
+		public byte FireResist    { get; set; }
 		public byte Alt_MCD       { get; set; }
 		public byte Unknown47     { get; set; }
 		public sbyte StandOffset  { get; set; }
@@ -205,7 +205,7 @@ namespace XCom
 			record.Armor         = Armor;
 			record.HE_Block      = HE_Block;
 			record.DieTile       = DieTile;
-			record.Flammable     = Flammable;
+			record.FireResist    = FireResist;
 			record.Alt_MCD       = Alt_MCD;
 			record.Unknown47     = Unknown47;
 			record.StandOffset   = StandOffset;	// sbyte

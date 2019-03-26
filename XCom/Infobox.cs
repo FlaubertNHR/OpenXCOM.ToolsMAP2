@@ -11,7 +11,7 @@ namespace XCom
 	/// The point is to stop wrapping long path-strings like the stock .NET
 	/// MessageBox does.
 	/// </summary>
-	internal sealed class Infobox
+	public sealed class Infobox
 		:
 			Form
 	{
@@ -19,7 +19,7 @@ namespace XCom
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal Infobox(string title, string label, string copyable)
+		public Infobox(string title, string label, string copyable)
 		{
 			InitializeComponent();
 

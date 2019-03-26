@@ -22,6 +22,7 @@
 		private System.Windows.Forms.MenuItem miPaletteTftd;
 		private System.Windows.Forms.MenuItem miEditMenu;
 		private System.Windows.Forms.MenuItem miZeroVals;
+		private System.Windows.Forms.MenuItem miCheckVals;
 
 		private McdView.RecordLabel lbl20_scang;
 		private McdView.RecordLabel lbl30_isslidingdoor;
@@ -282,6 +283,7 @@
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.miEditMenu = new System.Windows.Forms.MenuItem();
 			this.miZeroVals = new System.Windows.Forms.MenuItem();
+			this.miCheckVals = new System.Windows.Forms.MenuItem();
 			this.lbl20_scang = new McdView.RecordLabel();
 			this.lbl30_isslidingdoor = new McdView.RecordLabel();
 			this.lbl20 = new McdView.RecordLabel();
@@ -627,7 +629,8 @@
 			// 
 			this.miEditMenu.Index = 2;
 			this.miEditMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miZeroVals});
+			this.miZeroVals,
+			this.miCheckVals});
 			this.miEditMenu.Text = "&Edit";
 			// 
 			// miZeroVals
@@ -637,6 +640,14 @@
 			this.miZeroVals.Shortcut = System.Windows.Forms.Shortcut.Ctrl0;
 			this.miZeroVals.Text = "Zero this part\'s values";
 			this.miZeroVals.Click += new System.EventHandler(this.OnClick_ZeroVals);
+			// 
+			// miCheckVals
+			// 
+			this.miCheckVals.Enabled = false;
+			this.miCheckVals.Index = 1;
+			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
+			this.miCheckVals.Text = "Check STRICT va&lues";
+			this.miCheckVals.Click += new System.EventHandler(this.OnClick_CheckVals);
 			// 
 			// lbl20_scang
 			// 

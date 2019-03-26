@@ -2470,7 +2470,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Changed |= !InitFields;
-						Parts[SelId].Record.Flammable = (byte)result;
+						Parts[SelId].Record.FireResist = (byte)result;
 					}
 					else if (result < 1)
 						tb45_fireresist.Text = "0"; // recurse w/ default.

@@ -70,7 +70,7 @@ namespace XCom
 			record.Armor         = bindata[42];
 			record.HE_Block      = bindata[43];
 			record.DieTile       = bindata[44];
-			record.Flammable     = bindata[45];
+			record.FireResist    = bindata[45];
 			record.Alt_MCD       = bindata[46];
 			record.Unknown47     = bindata[47];
 			record.StandOffset   = (sbyte)bindata[48];
