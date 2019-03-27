@@ -19,7 +19,91 @@ namespace XCom
 		// Descriptions of MCD entries are at
 		// https://www.ufopaedia.org/index.php/MCD
 
+		#region Fields (static)
 		private static int _id;
+		#endregion Fields (static)
+
+
+		#region Properties
+		public int this[int id]
+		{
+			get
+			{
+				switch (id)
+				{
+					case  0: return (int)Sprite1;
+					case  1: return (int)Sprite2;
+					case  2: return (int)Sprite3;
+					case  3: return (int)Sprite4;
+					case  4: return (int)Sprite5;
+					case  5: return (int)Sprite6;
+					case  6: return (int)Sprite7;
+					case  7: return (int)Sprite8;
+
+					case  8: return (int)Loft1;
+					case  9: return (int)Loft2;
+					case 10: return (int)Loft3;
+					case 11: return (int)Loft4;
+					case 12: return (int)Loft5;
+					case 13: return (int)Loft6;
+					case 14: return (int)Loft7;
+					case 15: return (int)Loft8;
+					case 16: return (int)Loft9;
+					case 17: return (int)Loft10;
+					case 18: return (int)Loft11;
+					case 19: return (int)Loft12;
+
+					case 20: return (int)ScanG;						// ushort +35
+					case 21: return (int)ScanG_reduced;				// ushort
+
+					case 22: return (int)Unknown22;
+					case 23: return (int)Unknown23;
+					case 24: return (int)Unknown24;
+					case 25: return (int)Unknown25;
+					case 26: return (int)Unknown26;
+					case 27: return (int)Unknown27;
+					case 28: return (int)Unknown28;
+					case 29: return (int)Unknown29;
+
+					case 30: return Convert.ToInt32(SlidingDoor);	// bools ->
+					case 31: return Convert.ToInt32(StopLOS);
+					case 32: return Convert.ToInt32(NotFloored);
+					case 33: return Convert.ToInt32(BigWall);
+					case 34: return Convert.ToInt32(GravLift);
+					case 35: return Convert.ToInt32(HingedDoor);
+					case 36: return Convert.ToInt32(BlockFire);
+					case 37: return Convert.ToInt32(BlockSmoke);
+
+					case 38: return (int)LeftRightHalf;
+					case 39: return (int)TU_Walk;
+					case 40: return (int)TU_Slide;
+					case 41: return (int)TU_Fly;
+					case 42: return (int)Armor;
+					case 43: return (int)HE_Block;
+					case 44: return (int)DieTile;
+					case 45: return (int)FireResist;
+					case 46: return (int)Alt_MCD;
+					case 47: return (int)Unknown47;
+					case 48: return (int)StandOffset;				// sbyte
+					case 49: return (int)TileOffset;
+					case 50: return (int)Unknown50;
+					case 51: return (int)LightBlock;
+					case 52: return (int)Footstep;
+
+					case 53: return (int)PartType;					// PartType
+					case 54: return (int)HE_Type;
+					case 55: return (int)HE_Strength;
+					case 56: return (int)SmokeBlockage;
+					case 57: return (int)Fuel;
+					case 58: return (int)LightSource;
+					case 59: return (int)Special;					// SpecialType
+					case 60: return Convert.ToInt32(BaseObject);	// bool
+					case 61: return (int)Unknown61;
+				}
+				return 0;
+			}
+		}
+		#endregion Properties
 
 
 		#region cTor
@@ -28,8 +112,8 @@ namespace XCom
 		/// </summary>
 		internal McdRecord()
 		{
-			SetId = _id++;
-		}
+			SetId = _id++;	// TODO: Investigate that; 'SetId' should not be incrementing on each record.
+		}					//       'SetId' should be incremented only on each recordset/terrainset that loads.
 		#endregion
 
 

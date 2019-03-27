@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="addrangeinput.cs" />
+    <Compile Include="CacheLoad.cs" />
     <Compile Include="changedbox.cs" />
     <Compile Include="isocube.cs" />
     <Compile Include="LoftF.cs" />

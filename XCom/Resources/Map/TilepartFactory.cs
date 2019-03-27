@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 using System.IO;
 
 
@@ -52,9 +52,9 @@ namespace XCom.Resources.Map
 							bs.Read(bindata, 0, Length);
 
 							parts[id] = new Tilepart(
-												id,
-												spriteset,
-												McdRecordFactory.CreateRecord(bindata));
+													id,
+													spriteset,
+													McdRecordFactory.CreateRecord(bindata));
 						}
 
 						Tilepart part;

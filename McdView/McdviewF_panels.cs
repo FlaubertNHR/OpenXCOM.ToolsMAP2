@@ -234,104 +234,23 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Sets an anisprite when returning from SpritesetviewF.
+		/// Sets an anisprite before returning from SpritesetF.
 		/// </summary>
 		/// <param name="phase"></param>
 		/// <param name="id"></param>
 		internal void SetSprite(int phase, int id)
 		{
-			bool changed = false;
-
+			string val = id.ToString();
 			switch (phase)
 			{
-				case 0:
-					if (Int32.Parse(tb0_phase0.Text) != id)
-					{
-						changed = true;
-
-						tb0_phase0.Text = id.ToString();
-						Parts[SelId].Record.Sprite1 = (byte)id;
-					}
-					break;
-
-				case 1:
-					if (Int32.Parse(tb1_phase1.Text) != id)
-					{
-						changed = true;
-
-					tb1_phase1.Text = id.ToString();
-					Parts[SelId].Record.Sprite2 = (byte)id;
-					}
-					break;
-
-				case 2:
-					if (Int32.Parse(tb2_phase2.Text) != id)
-					{
-						changed = true;
-
-						tb2_phase2.Text = id.ToString();
-						Parts[SelId].Record.Sprite3 = (byte)id;
-					}
-					break;
-
-				case 3:
-					if (Int32.Parse(tb3_phase3.Text) != id)
-					{
-						changed = true;
-
-						tb3_phase3.Text = id.ToString();
-						Parts[SelId].Record.Sprite4 = (byte)id;
-					}
-					break;
-
-				case 4:
-					if (Int32.Parse(tb4_phase4.Text) != id)
-					{
-						changed = true;
-
-						tb4_phase4.Text = id.ToString();
-						Parts[SelId].Record.Sprite5 = (byte)id;
-					}
-					break;
-
-				case 5:
-					if (Int32.Parse(tb5_phase5.Text) != id)
-					{
-						changed = true;
-
-						tb5_phase5.Text = id.ToString();
-						Parts[SelId].Record.Sprite6 = (byte)id;
-					}
-					break;
-
-				case 6:
-					if (Int32.Parse(tb6_phase6.Text) != id)
-					{
-						changed = true;
-
-						tb6_phase6.Text = id.ToString();
-						Parts[SelId].Record.Sprite7 = (byte)id;
-					}
-					break;
-
-				case 7:
-					if (Int32.Parse(tb7_phase7.Text) != id)
-					{
-						changed = true;
-
-						tb7_phase7.Text = id.ToString();
-						Parts[SelId].Record.Sprite8 = (byte)id;
-					}
-					break;
-			}
-
-			if (changed)
-			{
-				Changed = true;
-				Parts[SelId].Sprites[phase] = Spriteset[id];
-
-				PartsPanel .Invalidate();
-				pnl_Sprites.Invalidate();
+				case 0: tb0_phase0.Text = val; break;
+				case 1: tb1_phase1.Text = val; break;
+				case 2: tb2_phase2.Text = val; break;
+				case 3: tb3_phase3.Text = val; break;
+				case 4: tb4_phase4.Text = val; break;
+				case 5: tb5_phase5.Text = val; break;
+				case 6: tb6_phase6.Text = val; break;
+				case 7: tb7_phase7.Text = val; break;
 			}
 		}
 		#endregion Anisprites
@@ -446,25 +365,12 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Sets a ScanG icon when returning from ScanGiconF.
+		/// Sets a ScanG icon before returning from ScanGiconF.
 		/// </summary>
 		/// <param name="id"></param>
 		internal void SetIcon(int id)
 		{
-			if (Int32.Parse(tb20_scang1.Text) != id)
-			{
-				Changed = true;
-
-				int id_reduced = id - 35;
-
-				tb20_scang1.Text = id        .ToString();
-				tb20_scang2.Text = id_reduced.ToString();
-
-				Parts[SelId].Record.ScanG         = (ushort)id;
-				Parts[SelId].Record.ScanG_reduced = (ushort)id_reduced;
-
-				pnl_ScanGic.Invalidate();
-			}
+			tb20_scang1.Text = id.ToString();
 		}
 		#endregion ScanG icon
 
@@ -507,19 +413,19 @@ namespace McdView
 		internal LoftPanel _pnlLoFT;
 
 		/// <summary>
-		/// Sets a LoFT when returning from LoftF.
+		/// Sets a LoFT before returning from LoftF.
 		/// </summary>
-		/// <param name="loftid"></param>
-		internal void SetLoft(int loftid)
+		/// <param name="id"></param>
+		internal void SetLoft(int id)
 		{
-			(_pnlLoFT.Tag as TextBox).Text = loftid.ToString();
+			(_pnlLoFT.Tag as TextBox).Text = id.ToString();
 		}
 
 		/// <summary>
 		/// Sets all LoFTs to a specified id.
 		/// </summary>
-		/// <param name="loftid"></param>
-		internal void SetAllLofts(string loftid)
+		/// <param name="id"></param>
+		internal void SetAllLofts(string id)
 		{
 			tb8_loft00 .Text =
 			tb9_loft02 .Text =
@@ -532,7 +438,7 @@ namespace McdView
 			tb16_loft16.Text =
 			tb17_loft18.Text =
 			tb18_loft20.Text =
-			tb19_loft22.Text = loftid;
+			tb19_loft22.Text = id;
 		}
 
 

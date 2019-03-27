@@ -202,8 +202,6 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnAddClick(object sender, EventArgs e)
 		{
-			_f.Changed = true;
-
 			var array = new Tilepart[Parts.Length + 1];
 
 			int id = _f.SelId + 1;
@@ -232,6 +230,8 @@ namespace McdView
 
 			SubIds.Clear();
 			_f.SelId = id;
+
+			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		internal static int _add;
@@ -243,8 +243,6 @@ namespace McdView
 				{
 					if (_add != 0) // input allows 0 but not neg
 					{
-						_f.Changed = true;
-
 						int length = Parts.Length + _add;
 						var array = new Tilepart[length];
 
@@ -280,6 +278,8 @@ namespace McdView
 
 						SubIds.Clear();
 						_f.SelId = id;
+
+						_f.Changed = CacheLoad.Changed(_f.Parts);
 					}
 				}
 			}
@@ -331,8 +331,6 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnInsertClick(object sender, EventArgs e)
 		{
-			_f.Changed = true;
-
 			bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
 
 			int id = _f.SelId + 1;
@@ -374,7 +372,7 @@ namespace McdView
 			SubIds.Clear();
 			_f.SelId = id;
 
-			// TODO: why. Why do you not repaint correctly.
+			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		/// <summary>
@@ -395,7 +393,7 @@ namespace McdView
 
 				for (int i = 0; i != Parts.Length; ++i)
 				{
-					part   = Parts[i];
+					part = Parts[i];
 					record = part.Record;
 
 					if ((id = record.DieTile) != 0 && id >= start)
@@ -437,8 +435,6 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnDeleteClick(object sender, EventArgs e)
 		{
-			_f.Changed = true;
-
 			var array = new Tilepart[Parts.Length - (1 + SubIds.Count)]; // ie. SelId + SubIds
 
 			for (int i = 0, j = 0; i != Parts.Length; ++i)
@@ -467,6 +463,8 @@ namespace McdView
 				ClearRefs(sels[i]);
 
 			UpdateRefs(sels);
+
+			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		/// <summary>
@@ -482,7 +480,7 @@ namespace McdView
 
 				for (int i = 0; i != Parts.Length; ++i)
 				{
-					part   = Parts[i];
+					part = Parts[i];
 					record = part.Record;
 
 					if (record.DieTile == id)
@@ -513,7 +511,7 @@ namespace McdView
 
 			for (int i = 0; i != Parts.Length; ++i)
 			{
-				part   = Parts[i];
+				part = Parts[i];
 				record = part.Record;
 
 				pos = sels.Count - 1; // start with the last entry in 'sels'
@@ -557,8 +555,6 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnSwapLeftClick(object sender, EventArgs e)
 		{
-			_f.Changed = true;
-
 			var array = new Tilepart[Parts.Length];
 
 			int id = _f.SelId;
@@ -580,6 +576,8 @@ namespace McdView
 			SwapRefs(id, id - 1);
 
 			_f.SelId = id - 1; // does refresh.
+
+			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		/// <summary>
@@ -589,8 +587,6 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnSwapRightClick(object sender, EventArgs e)
 		{
-			_f.Changed = true;
-
 			var array = new Tilepart[Parts.Length];
 
 			int id = _f.SelId;
@@ -612,6 +608,8 @@ namespace McdView
 			SwapRefs(id, id + 1);
 
 			_f.SelId = id + 1; // does refresh.
+
+			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		/// <summary>

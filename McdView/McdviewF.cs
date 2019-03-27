@@ -481,8 +481,8 @@ namespace McdView
 
 						File.Create(_pfeMcd);
 
-						ResourceInfo.ReloadSprites = true;
 						SelId = -1;
+						ResourceInfo.ReloadSprites = true;
 
 						Parts = new Tilepart[0];
 
@@ -551,8 +551,8 @@ namespace McdView
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					ResourceInfo.ReloadSprites = true;
 					SelId = -1;
+					ResourceInfo.ReloadSprites = true;
 
 					_pfeMcd = ofd.FileName;
 					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
@@ -597,7 +597,8 @@ namespace McdView
 
 					ResourceInfo.ReloadSprites = false;
 
-					_changed = false;
+					CacheLoad.SetCache(Parts);
+					Changed = false;
 					Text = "McdView - " + _pfeMcd;
 
 					miSave  .Enabled =
@@ -620,8 +621,8 @@ namespace McdView
 		{
 			if (File.Exists(_pfeMcd))
 			{
-				ResourceInfo.ReloadSprites = true;
 				SelId = -1;
+				ResourceInfo.ReloadSprites = true;
 
 				using (var bs = new BufferedStream(File.OpenRead(_pfeMcd)))
 				{
@@ -663,6 +664,7 @@ namespace McdView
 
 				ResourceInfo.ReloadSprites = false;
 
+				CacheLoad.SetCache(Parts);
 				Changed = false;
 
 				PartsPanel.Select();
@@ -751,6 +753,7 @@ namespace McdView
 				else
 					WriteMcdData(pfeMcd);
 
+				CacheLoad.SetCache(Parts);
 				Changed = false;
 			}
 		}

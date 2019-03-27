@@ -194,7 +194,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite1 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -205,6 +204,9 @@ namespace McdView
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb0_phase0.Text = "0"; // recurse w/ default.
@@ -249,7 +251,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite2 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -260,6 +261,9 @@ namespace McdView
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb1_phase1.Text = "0"; // recurse w/ default.
@@ -304,7 +308,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite3 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -315,6 +318,9 @@ namespace McdView
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb2_phase2.Text = "0"; // recurse w/ default.
@@ -359,7 +365,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite4 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -370,6 +375,9 @@ namespace McdView
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb3_phase3.Text = "0"; // recurse w/ default.
@@ -414,7 +422,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite5 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -425,6 +432,9 @@ namespace McdView
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb4_phase4.Text = "0"; // recurse w/ default.
@@ -469,7 +479,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite6 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -480,6 +489,9 @@ namespace McdView
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb5_phase5.Text = "0"; // recurse w/ default.
@@ -524,7 +536,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite7 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -535,6 +546,9 @@ namespace McdView
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb6_phase6.Text = "0"; // recurse w/ default.
@@ -579,7 +593,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Sprite8 = (byte)result;
 						if (Spriteset != null && result < Spriteset.Count)
 						{
@@ -590,6 +603,9 @@ namespace McdView
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb7_phase7.Text = "0"; // recurse w/ default.
@@ -642,10 +658,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft1 = (byte)result;
 						pnl_Loft08 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb8_loft00.Text = "0"; // recurse w/ default.
@@ -690,10 +708,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft2 = (byte)result;
 						pnl_Loft09 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb9_loft02.Text = "0"; // recurse w/ default.
@@ -738,10 +758,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft3 = (byte)result;
 						pnl_Loft10 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb10_loft04.Text = "0"; // recurse w/ default.
@@ -786,10 +808,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft4 = (byte)result;
 						pnl_Loft11 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb11_loft06.Text = "0"; // recurse w/ default.
@@ -834,10 +858,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft5 = (byte)result;
 						pnl_Loft12 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb12_loft08.Text = "0"; // recurse w/ default.
@@ -882,10 +908,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft6 = (byte)result;
 						pnl_Loft13 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb13_loft10.Text = "0"; // recurse w/ default.
@@ -930,10 +958,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft7 = (byte)result;
 						pnl_Loft14 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb14_loft12.Text = "0"; // recurse w/ default.
@@ -978,10 +1008,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft8 = (byte)result;
 						pnl_Loft15 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb15_loft14.Text = "0"; // recurse w/ default.
@@ -1026,10 +1058,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft9 = (byte)result;
 						pnl_Loft16 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb16_loft16.Text = "0"; // recurse w/ default.
@@ -1074,10 +1108,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft10 = (byte)result;
 						pnl_Loft17 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb17_loft18.Text = "0"; // recurse w/ default.
@@ -1122,10 +1158,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft11 = (byte)result;
 						pnl_Loft18 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb18_loft20.Text = "0"; // recurse w/ default.
@@ -1170,10 +1208,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Loft12 = (byte)result;
 						pnl_Loft19 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb19_loft22.Text = "0"; // recurse w/ default.
@@ -1232,12 +1272,14 @@ namespace McdView
 						&&     ((strict && result > 34 && result < 65571 && (ScanG == null || result < ScanG.Length / 16))
 							|| (!strict && result > 34 && result < 65571)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.ScanG         = (ushort)(result);
 						Parts[SelId].Record.ScanG_reduced = (ushort)(result - 35);
 
 						tb20_scang2.Text = (result - 35).ToString();
-						pnl_ScanGic.Invalidate();
+						pnl_ScanGic.Invalidate(); // uh how does the IsoLoFT panel refresh - it seems to okay ...
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 35)
 						tb20_scang1.Text = "35"; // recurse w/ default.
@@ -1283,12 +1325,14 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 65536 && (ScanG == null || result < ScanG.Length / 16 - 35))
 							|| (!strict && result > -1 && result < 65536)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.ScanG         = (ushort)(result + 35);
 						Parts[SelId].Record.ScanG_reduced = (ushort)(result);
 
 						tb20_scang1.Text = (result + 35).ToString();
-						pnl_ScanGic.Invalidate();
+						pnl_ScanGic.Invalidate(); // uh how does the IsoLoFT panel refresh - it seems to okay ...
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb20_scang2.Text = "0"; // recurse w/ default.
@@ -1333,8 +1377,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown22 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb22_.Text = "0"; // recurse w/ default.
@@ -1377,8 +1423,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown23 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb23_.Text = "0"; // recurse w/ default.
@@ -1421,8 +1469,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown24 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb24_.Text = "0"; // recurse w/ default.
@@ -1465,8 +1515,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown25 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb25_.Text = "0"; // recurse w/ default.
@@ -1509,8 +1561,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown26 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb26_.Text = "0"; // recurse w/ default.
@@ -1553,8 +1607,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown27 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb27_.Text = "0"; // recurse w/ default.
@@ -1597,8 +1653,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown28 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb28_.Text = "0"; // recurse w/ default.
@@ -1641,8 +1699,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown29 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb29_.Text = "0"; // recurse w/ default.
@@ -1685,7 +1745,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
 
 						if (strict
@@ -1694,6 +1753,9 @@ namespace McdView
 						{
 							tb35_ishingeddoor.Text = "0";
 						}
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb30_isslidingdoor.Text = "0"; // recurse w/ default.
@@ -1753,8 +1815,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.StopLOS = Convert.ToBoolean(result);
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb31_isblocklos.Text = "0"; // recurse w/ default.
@@ -1806,8 +1870,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.NotFloored = Convert.ToBoolean(result);
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb32_isdropthrou.Text = "0"; // recurse w/ default.
@@ -1860,8 +1926,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.BigWall = Convert.ToBoolean(result);
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb33_isbigwall.Text = "0"; // recurse w/ default.
@@ -1915,8 +1983,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.GravLift = Convert.ToBoolean(result);
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb34_isgravlift.Text = "0"; // recurse w/ default.
@@ -1970,7 +2040,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.HingedDoor = Convert.ToBoolean(result);
 
 						if (strict
@@ -1979,6 +2048,9 @@ namespace McdView
 						{
 							tb30_isslidingdoor.Text = "0";
 						}
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb35_ishingeddoor.Text = "0"; // recurse w/ default.
@@ -2033,8 +2105,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.BlockFire = Convert.ToBoolean(result);
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb36_isblockfire.Text = "0"; // recurse w/ default.
@@ -2086,8 +2160,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.BlockSmoke = Convert.ToBoolean(result);
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb37_isblocksmoke.Text = "0"; // recurse w/ default.
@@ -2140,8 +2216,10 @@ namespace McdView
 						&&     ((strict && result == 3)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.LeftRightHalf = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (!strict && result < 1)
 						tb38_.Text = "0"; // recurse w/ default.
@@ -2197,8 +2275,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.TU_Walk = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1) //|| Parts[SelId].Record.PartType == PartType.Floor)
 						tb39_tuwalk.Text = "0"; // recurse w/ default.
@@ -2242,8 +2322,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.TU_Slide = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1) //|| Parts[SelId].Record.PartType == PartType.Floor)
 						tb40_tuslide.Text = "0"; // recurse w/ default.
@@ -2287,8 +2369,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.TU_Fly = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1) //|| Parts[SelId].Record.PartType == PartType.Floor)
 						tb41_tufly.Text = "0"; // recurse w/ default.
@@ -2332,8 +2416,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Armor = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb42_armor.Text = "0"; // recurse w/ default.
@@ -2380,8 +2466,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.HE_Block = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb43_heblock.Text = "0"; // recurse w/ default.
@@ -2425,7 +2513,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && result < Parts.Length) // NOTE: 'Parts' shall not be null here.
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.DieTile = (byte)result;
 
 						if (result != 0 && result < Parts.Length)
@@ -2434,6 +2521,9 @@ namespace McdView
 							Parts[SelId].Dead = null;
 
 						PartsPanel.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb44_deathid.Text = "0"; // recurse w/ default.
@@ -2483,8 +2573,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.FireResist = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb45_fireresist.Text = "0"; // recurse w/ default.
@@ -2531,7 +2623,6 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && result < Parts.Length) // NOTE: 'Parts' shall not be null here.
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Alt_MCD = (byte)result;
 
 						if (result != 0 && result < Parts.Length)
@@ -2540,6 +2631,9 @@ namespace McdView
 							Parts[SelId].Alternate = null;
 
 						PartsPanel.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb46_alternateid.Text = "0"; // recurse w/ default.
@@ -2590,8 +2684,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown47 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb47_.Text = "0"; // recurse w/ default.
@@ -2636,8 +2732,10 @@ namespace McdView
 						&&     ((strict && result > - 25 && result < 1)
 							|| (!strict && result > -129 && result < 128)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.StandOffset = (sbyte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result == 0) // ie. failed to parse
 						tb48_terrainoffset.Text = "0"; // recurse w/ default.
@@ -2696,10 +2794,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 25)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.TileOffset = (byte)result;
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb49_spriteoffset.Text = "0"; // recurse w/ default.
@@ -2748,8 +2848,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown50 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb50_.Text = "0"; // recurse w/ default.
@@ -2793,8 +2895,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.LightBlock = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb51_lightblock.Text = "0"; // recurse w/ default.
@@ -2839,8 +2943,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 7)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Footstep = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb52_footsound.Text = "0"; // recurse w/ default.
@@ -2902,9 +3008,11 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 4)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
-					}														// explicitly defined in the enum is allowed.
+																			// explicitly defined in the enum is allowed.
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
+					}
 					else if (result < 1)
 						tb53_parttype.Text = "0"; // recurse w/ default.
 					else if (strict)
@@ -2959,8 +3067,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.HE_Type = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb54_hetype.Text = "0"; // recurse w/ default.
@@ -3015,8 +3125,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.HE_Strength = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb55_hestrength.Text = "0"; // recurse w/ default.
@@ -3061,8 +3173,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.SmokeBlockage = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb56_smokeblock.Text = "0"; // recurse w/ default.
@@ -3107,8 +3221,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Fuel = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb57_fuel.Text = "0"; // recurse w/ default.
@@ -3152,8 +3268,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.LightSource = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb58_lightintensity.Text = "0"; // recurse w/ default.
@@ -3199,9 +3317,11 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 15)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
-					}														// explicitly defined in the enum is allowed.
+																			// explicitly defined in the enum is allowed.
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
+					}
 					else if (result < 1)
 						tb59_specialtype.Text = "0"; // recurse w/ default.
 					else if (strict)
@@ -3275,8 +3395,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.BaseObject = Convert.ToBoolean(result);
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb60_isbaseobject.Text = "0"; // recurse w/ default.
@@ -3329,8 +3451,10 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Changed |= !InitFields;
 						Parts[SelId].Record.Unknown61 = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb61_.Text = "0"; // recurse w/ default.
