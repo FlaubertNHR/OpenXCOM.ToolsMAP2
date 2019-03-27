@@ -107,10 +107,12 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if (_f.SelId != -1 && _f.LoFT != null)
-			{
-				_f.PartsPanel.Select(); // workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
+			_f.PartsPanel.Select(); // NOTE: Workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
 
+			if (_f.SelId != -1 && _f.LoFT != null
+				&& e.X > -1 && e.X < Width // NOTE: Bypass event if cursor moves off the panel before released.
+				&& e.Y > -1 && e.Y < Height)
+			{
 				var tb = Tag as TextBox;
 				string loftid = tb.Text;
 

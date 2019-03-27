@@ -175,8 +175,10 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnMouseUp_SpritePanel(object sender, MouseEventArgs e)
 		{
+			PartsPanel.Select();
+
 			if (Spriteset != null && SelId != -1
-				&& e.Y > -1 && e.Y < pnl_Sprites.Height)
+				&& e.Y > -1 && e.Y < pnl_Sprites.Height) // NOTE: Bypass event if cursor moves off the panel before released.
 			{
 				int phase;
 				for (phase = 0; phase != 8; ++phase)
@@ -347,8 +349,10 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnMouseUp_ScanGicon(object sender, MouseEventArgs e)
 		{
+			PartsPanel.Select();
+
 			if (SelId != -1 && ScanG != null
-				&& e.X > -1 && e.X < pnl_ScanGic.Width
+				&& e.X > -1 && e.X < pnl_ScanGic.Width // NOTE: Bypass event if cursor moves off the panel before released.
 				&& e.Y > -1 && e.Y < pnl_ScanGic.Height)
 			{
 				ColorPalette pal;
