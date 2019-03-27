@@ -127,13 +127,33 @@ namespace McdView
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
-				   + e.X /  XCImage.SpriteWidth32;
-
-			if (id < _f.Spriteset.Count)
+			if (   e.X > -1 && e.X < ClientSize.Width // NOTE: Bypass event if cursor moves off the clientarea before released.
+				&& e.Y > -1 && e.Y < ClientSize.Height)
 			{
-				_f.SetSprite(Phase, id);
-				Close();
+				int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
+					   + e.X /  XCImage.SpriteWidth32;
+
+				if (id < _f.Spriteset.Count)
+				{
+					if (e.Button == MouseButtons.Left)
+						_f.SetSprite(Phase, id);
+					else if (e.Button == MouseButtons.Right)
+					{
+						if (MessageBox.Show(
+										this,
+										"Set all sprite phases to #" + id,
+										"Set all sprite phases",
+										MessageBoxButtons.YesNo,
+										MessageBoxIcon.Question,
+										MessageBoxDefaultButton.Button1,
+										0) == DialogResult.No)
+						{
+							return; // do nothing if No.
+						}
+						_f.SetAllSprites(id.ToString());
+					}
+					Close();
+				}
 			}
 		}
 

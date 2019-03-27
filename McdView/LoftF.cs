@@ -153,7 +153,7 @@ namespace McdView
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if (   e.X > -1 && e.X < ClientSize.Width
+			if (   e.X > -1 && e.X < ClientSize.Width // NOTE: Bypass event if cursor moves off the clientarea before released.
 				&& e.Y > -1 && e.Y < ClientSize.Height)
 			{
 				int id = e.Y / (LOFT_HEIGHT + VERT_TEXT_PAD) * COLS
@@ -161,7 +161,23 @@ namespace McdView
 
 				if (id < _f.LoFT.Length / 256)
 				{
-					_f.SetLoft(id);
+					if (e.Button == MouseButtons.Left)
+						_f.SetLoft(id);
+					else if (e.Button == MouseButtons.Right)
+					{
+						if (MessageBox.Show(
+										this,
+										"Set all LoFTs to #" + id,
+										"Set all LoFTs",
+										MessageBoxButtons.YesNo,
+										MessageBoxIcon.Question,
+										MessageBoxDefaultButton.Button1,
+										0) == DialogResult.No)
+						{
+							return; // do nothing if No.
+						}
+						_f.SetAllLofts(id.ToString());
+					}
 					Close();
 				}
 			}

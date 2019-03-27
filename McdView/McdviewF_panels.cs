@@ -222,14 +222,7 @@ namespace McdView
 										MessageBoxDefaultButton.Button1,
 										0) == DialogResult.Yes)
 					{
-						tb0_phase0.Text =
-						tb1_phase1.Text =
-						tb2_phase2.Text =
-						tb3_phase3.Text =
-						tb4_phase4.Text =
-						tb5_phase5.Text =
-						tb6_phase6.Text =
-						tb7_phase7.Text = id;
+						SetAllSprites(id);
 					}
 				}
 			}
@@ -254,6 +247,22 @@ namespace McdView
 				case 6: tb6_phase6.Text = val; break;
 				case 7: tb7_phase7.Text = val; break;
 			}
+		}
+
+		/// <summary>
+		/// Sets all anisprites to a specified id.
+		/// </summary>
+		/// <param name="id"></param>
+		internal void SetAllSprites(string id)
+		{
+			tb0_phase0.Text =
+			tb1_phase1.Text =
+			tb2_phase2.Text =
+			tb3_phase3.Text =
+			tb4_phase4.Text =
+			tb5_phase5.Text =
+			tb6_phase6.Text =
+			tb7_phase7.Text = id;
 		}
 		#endregion Anisprites
 
