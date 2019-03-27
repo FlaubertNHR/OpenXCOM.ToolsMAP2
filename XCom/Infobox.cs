@@ -59,7 +59,7 @@ namespace XCom
 				height = (int)Math.Ceiling(heightF);
 
 				if (expectation == 0)
-					expectation = height; // IMPORTANT: 1st line shall not be blank.
+					expectation = height; // IMPORTANT: 1st line shall not be blank (unless all are blank).
 				else if (height == 0)
 					height = expectation;
 
@@ -73,8 +73,8 @@ namespace XCom
 													size).Height;
 
 			ClientSize = new Size(
-								width + 20,
-								lbl_Info.Height + rtb_Info.Height + btn_Okay.Height + 15);
+								width + 30,
+								lbl_Info.Height + rtb_Info.Height + btn_Okay.Height + 20);
 
 
 			DialogResult = DialogResult.OK;
@@ -124,10 +124,10 @@ namespace XCom
 			// 
 			this.btn_Okay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_Okay.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Okay.Location = new System.Drawing.Point(407, 247);
+			this.btn_Okay.Location = new System.Drawing.Point(405, 240);
 			this.btn_Okay.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Okay.Name = "btn_Okay";
-			this.btn_Okay.Size = new System.Drawing.Size(80, 25);
+			this.btn_Okay.Size = new System.Drawing.Size(80, 30);
 			this.btn_Okay.TabIndex = 0;
 			this.btn_Okay.Text = "ok";
 			this.btn_Okay.UseVisualStyleBackColor = true;
