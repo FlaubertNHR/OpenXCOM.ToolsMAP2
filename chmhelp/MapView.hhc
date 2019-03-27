@@ -59,5 +59,9 @@
 			<param name="Local" value="html\spriteeditor.htm">
 			</OBJECT>
 	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="McdView">
+		<param name="Local" value="html\mcdview.htm">
+		</OBJECT>
 </UL>
 </BODY></HTML>

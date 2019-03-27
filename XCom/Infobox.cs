@@ -73,7 +73,7 @@ namespace XCom
 													size).Height;
 
 			ClientSize = new Size(
-								width + 30,
+								width + 35,
 								lbl_Info.Height + rtb_Info.Height + btn_Okay.Height + 20);
 
 

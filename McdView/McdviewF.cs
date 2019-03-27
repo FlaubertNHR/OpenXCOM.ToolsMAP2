@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 using XCom;
@@ -969,13 +970,55 @@ namespace McdView
 			{
 				MessageBox.Show(
 							this,
-							"All values appear to fall within acceptable ranges.",
+							"All values appear to be within accepted ranges.",
 							" Strict test",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Information,
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
+		}
+
+		/// <summary>
+		/// Shows the CHM helpfile.
+		/// Handles clicking the Help|Help menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_Help(object sender, EventArgs e)
+		{
+			string help = Path.GetDirectoryName(Application.ExecutablePath);
+				   help = Path.Combine(help, "MapView.chm");
+			Help.ShowHelp(this, "file://" + help, HelpNavigator.Topic, "html/mcdview.htm");
+		}
+
+		/// <summary>
+		/// Shows the about-box.
+		/// Handles clicking the Help|About menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_About(object sender, EventArgs e)
+		{
+			var an = Assembly.GetExecutingAssembly().GetName();
+			string ver = "Ver "
+					   + an.Version.Major + "."
+					   + an.Version.Minor + "."
+					   + an.Version.Build + "."
+					   + an.Version.Revision;
+#if DEBUG
+			ver += " - debug";
+#else
+			ver += " - release";
+#endif
+			MessageBox.Show(
+						this,
+						ver,
+						"Version info",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Information,
+						MessageBoxDefaultButton.Button1,
+						0);
 		}
 		#endregion Menuitems
 

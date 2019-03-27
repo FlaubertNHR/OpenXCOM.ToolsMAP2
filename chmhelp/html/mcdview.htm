@@ -1,0 +1,84 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../css/mapview.css">
+	</head>
+
+	<body>
+		<h2>McdView</h2>
+		<img src="../png/mcdview.png" />
+
+		<p>McdView is an MCD (MapControlData) editor for XCOM.</p>
+
+		<p>McdView can load, create, edit, and save MCD files. An MCD file is a collection of data about tileparts with which every XCOM battlefield is built. Each entry in the collection is a tilepart, or simply a part, and the 62 values of each part are called a record.</p>
+
+		<p>IMPORTANT: ScanG and LoFT icons for UFO and TFTD are different. So UFO and/or TFTD resources need to be set in MapView II's Configurator basepath for them to appear in McdView. The respective resources that should be used to draw the icons can then be selected under the Palette menu: UFO or TFTD. Note that McdView is still functional without ScanG or LoFT resources but the ScanG and LoFT values will no longer be capped at the number of entries in those resources - and that can cause problems if you don't know what yer doing.</p>
+
+		<p>The top panel displays three rows of sprites. The first row displays the first sprite of each tilepart in the collection; the second row displays the first sprite of that part's Dead part; and the third row displays the first sprite of that part's Alternate part. The row of numbers beneath the first row of sprites is the 0-based ID of the tileparts in the collection.</p>
+
+		<p>Left-click selects a part. Ctrl and Shift can be used to modify the current selection. Note that left/right/up/down arrows, Home/End, and PageUp/Down can also be used to navigate through a collection. The Spacebar can be used to select the first part in the collection if there is <b>not</b> a part selected; if a part is already selected it selects the next part in the collection. Backspace selects the previous part in the collection.</p>
+
+		<p>A note on selections. There is only ever 1 truly selected part; all fields that are displayed belong to that part. Any other parts that are also selected are considered sub-selected and their IDs in the Record Collection panel ought appear in a lighter hue to indicate their sub-status. The actual color of selected parts should depend on your system settings ... if there are problems I may hardcode it to neon pink.</p>
+
+		<p>Right-click opens a contextmenu of operations that can be performed on the currently selected part(s). Note that right-click does <b>not</b> select a part.<br><br>
+&nbsp;&nbsp;add [d] - adds a blank record after the currently selected part. Adds a blank record at the beginning of the collection if there is not a part selected.<br>
+&nbsp;&nbsp;add range ... [Ctrl+d] - opens a popup asking how many blank records to add after the currently selected part. The blank records will be added at the beginning of the collection if there is not a part selected.<br>
+&nbsp;&nbsp;cut [Ctrl+x] - cuts the currently selected part or range of selected parts if applicable.<br>
+&nbsp;&nbsp;copy [Ctrl+c] - copies the currently selected part or range of selected parts if applicable.<br>
+&nbsp;&nbsp;insert after [Ctrl+v] - pastes any cut or copied records after the currently selected part. Such records will be pasted at the beginning of the collection if there is not a part selected. Note that records can be cut/copied from a record collection and inserted into a different collection after either opening or creating another collection.<br>
+&nbsp;&nbsp;delete [Delete] - deletes the currently selected part or range of selected parts if applicable.<br>
+&nbsp;&nbsp;append file ... - not done yet.<br>
+&nbsp;&nbsp;swap left [-] - swaps the currently selected part with the part to its left.<br>
+&nbsp;&nbsp;swap right [+] - swaps the currently selected part with the part to its right.<br>
+&nbsp;&nbsp;select all [Ctrl+a] - selects all parts in the collection.<br>
+&nbsp;&nbsp;deselect all [Esc] - deselects any selected parts in the collection as long as a value field is not currently focused.</p>
+
+		<p>Beneath the Record Collection panel is a panel that displays the 8 animation sprites that XCOM usually cycles through continually while rendering a part onscreen. Left-clicking an animation sprite brings up a spriteset viewer; clicking a sprite in the spriteset viewer sets that sprite in the respective phase. Right-clicking a sprite either in the panel or the spriteset viewer brings up an option to assign the clicked sprite to all phases.</p>
+
+		<p>On the lower right is a list of LoFTs (Line of Fire Templates). There are 12 LoFTs stacked vertically to model a 3D representation of a part; each layer is doubled to fill the 24-voxel height of a tile on the battlefield. Left-clicking an icon brings up a LoFT icon viewer; clicking an icon in the viewer sets that icon in the respective LoFT. Right-clicking an icon either in the panel or the icon viewer brings up an option to assign the clicked icon to all LoFTs.</p>
+
+		<p>The IsoLoFT panel is a (roughly) isometric projection of the LoFT entries of the currently selected part. The vertical trackbar to the left of the panel will slice down through the LoFTs for a better understanding of a part's 3D voxel-model. Note that the value of the trackbar is irrelevant to XCOM and its setting is not saved.</p>
+
+		<p>[s] - toggles the STRICT setting. Values that XCOM is not expected to use properly cannot be entered in any value field when STRICT is on. I suggest leaving it on unless you really know what you're doing - or unless I goofed in which case it's a bug and should be reported.</p>
+
+		<p>SpriteShade is simply a gamma-adjustment internal to McdView. It is <b>not</b> palette-based, has nothing to do with XCOM itself, and is not saved.</p>
+
+		<p>description - shows general information about any mouse-overed and/or selected field.</p>
+
+		<p>The statusbar along the bottom shows the value of a currently selected field along with its interpretation if applicable.</p>
+
+		<p>Value Fields - The fields will be blank until a part is selected. Other than that they should never be blank, a value cannot be deleted for example - you might have to select the text in the field and type in a different value to change it. Fields accept numeric values only. If the STRICT setting is enabled then accepted values shall be limited to those that XCOM expects; if STRICT is unchecked then you're basically dealing with an unsigned byte: 0..255 (the ScanG field is an unsigned short: 0..65535; and the TerrainOffset field is a signed byte: -128..127).</p>
+
+		<p>The [+/-] keys on the numeric keypad can be used to increment and decrement a value within its limits when the field is focused for editing.</p>
+
+		<p>[Esc] or [Enter] will unfocus a field and refocus the Record Collection panel, as will clicking almost anywhere on the background of the app. TODO: place a panel under the groups, deselect on description panel click, STRICT label click, SpriteShade label click</p>
+
+		<br>
+		<h3>File menu</h3>
+
+		<p>Create MCD file ... [Ctrl+r] - creates a blank record collection. Confirmation is required if a collection is already loaded and its values were changed.</p>
+		<p>Open MCD file ... [Ctrl+o] - opens a record collection. Confirmation is required if a collection is already loaded and its values were changed.</p>
+		<p>Save MCD file [Ctrl+s] - saves the current record collection.</p>
+		<p>Save MCD file as ... [Ctrl+e] - saves the current record collection to disk as a different file.</p>
+		<p>Reload MCD file [Ctrl+l] - reloads the current record collection from disk. <b>There is no confirmation for reloads.</b></p>
+		<p>Quit [Ctrl+q] - exits the application. Confirmation is required if values were changed.</p>
+
+		<br>
+		<h3>Palette menu</h3>
+
+		<p>UFO [Ctrl+u] - displays sprites with the standard UFO battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if UFO resources are not configured in MapView II's basepath. The UFO palette is enabled by default.</p>
+		<p>TFTD [Ctrl+t] - displays sprites with the standard TFTD battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if TFTD resources are not configured in MapView II's basepath.</p>
+
+		<br>
+		<h3>Edit menu</h3>
+
+		<p>zero this part's values [Ctrl+0] - zeros all fields of the currently selected tilepart.</p>
+		<p>check STRICT values [Ctrl+i] - runs a test of the values of the currently selected tilepart against a range of values that are suitable for XCOM in general. Also runs tests for internal consistency. The results are displayed in a dialog.</p>
+
+		<br>
+		<h3>Help menu</h3>
+
+		<p>Help [Ctrl+h] - shows this CHM helpfile.</p>
+		<p>About [Ctrl+b] - version information. Also shows the build-type and currently running OS architecture.</p>
+		<br>
+		</body>
+</html>

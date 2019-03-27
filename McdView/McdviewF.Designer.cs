@@ -23,6 +23,9 @@
 		private System.Windows.Forms.MenuItem miEditMenu;
 		private System.Windows.Forms.MenuItem miZeroVals;
 		private System.Windows.Forms.MenuItem miCheckVals;
+		private System.Windows.Forms.MenuItem miHelpMenu;
+		private System.Windows.Forms.MenuItem miHelp;
+		private System.Windows.Forms.MenuItem miAbout;
 
 		private McdView.RecordLabel lbl20_scang;
 		private McdView.RecordLabel lbl30_isslidingdoor;
@@ -284,6 +287,9 @@
 			this.miEditMenu = new System.Windows.Forms.MenuItem();
 			this.miZeroVals = new System.Windows.Forms.MenuItem();
 			this.miCheckVals = new System.Windows.Forms.MenuItem();
+			this.miHelpMenu = new System.Windows.Forms.MenuItem();
+			this.miHelp = new System.Windows.Forms.MenuItem();
+			this.miAbout = new System.Windows.Forms.MenuItem();
 			this.lbl20_scang = new McdView.RecordLabel();
 			this.lbl30_isslidingdoor = new McdView.RecordLabel();
 			this.lbl20 = new McdView.RecordLabel();
@@ -529,7 +535,8 @@
 			this.mmMainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miFileMenu,
 			this.miPaletteMenu,
-			this.miEditMenu});
+			this.miEditMenu,
+			this.miHelpMenu});
 			// 
 			// miFileMenu
 			// 
@@ -645,9 +652,31 @@
 			// 
 			this.miCheckVals.Enabled = false;
 			this.miCheckVals.Index = 1;
-			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
-			this.miCheckVals.Text = "Check STRICT va&lues";
+			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
+			this.miCheckVals.Text = "Check STR&ICT values";
 			this.miCheckVals.Click += new System.EventHandler(this.OnClick_CheckVals);
+			// 
+			// miHelpMenu
+			// 
+			this.miHelpMenu.Index = 3;
+			this.miHelpMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miHelp,
+			this.miAbout});
+			this.miHelpMenu.Text = "&Help";
+			// 
+			// miHelp
+			// 
+			this.miHelp.Index = 0;
+			this.miHelp.Shortcut = System.Windows.Forms.Shortcut.CtrlH;
+			this.miHelp.Text = "&Help";
+			this.miHelp.Click += new System.EventHandler(this.OnClick_Help);
+			// 
+			// miAbout
+			// 
+			this.miAbout.Index = 1;
+			this.miAbout.Shortcut = System.Windows.Forms.Shortcut.CtrlB;
+			this.miAbout.Text = "A&bout";
+			this.miAbout.Click += new System.EventHandler(this.OnClick_About);
 			// 
 			// lbl20_scang
 			// 
