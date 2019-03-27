@@ -980,8 +980,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Shows the CHM helpfile.
 		/// Handles clicking the Help|Help menuitem.
+		/// Shows the CHM helpfile.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -993,8 +993,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Shows the about-box.
 		/// Handles clicking the Help|About menuitem.
+		/// Shows the about-box.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
