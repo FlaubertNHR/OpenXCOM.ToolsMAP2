@@ -11,13 +11,17 @@
 
 		<p>McdView can load, create, edit, and save MCD files. An MCD file is a collection of data about tileparts with which every XCOM battlefield is built. Each entry in the collection is a tilepart, or simply a part, and the 62 values of each part are called a record.</p>
 
-		<p>IMPORTANT: ScanG and LoFT icons for UFO and TFTD are different. So UFO and/or TFTD resources need to be set in MapView II's Configurator basepath for them to appear in McdView. The respective resources that should be used to draw the icons can then be selected under the Palette menu: UFO or TFTD. Note that McdView is still functional without ScanG or LoFT resources but the ScanG and LoFT values will no longer be capped at the number of entries in those resources - and that can cause problems if you don't know what yer doing.</p>
+		<p>IMPORTANT: ScanG and LoFT icons for UFO and TFTD are different. So UFO and/or TFTD resources have to be set in MapView II's Configurator basepath for them to appear in McdView. The respective resources that should be used to draw the icons can then be selected under the Palette menu: UFO or TFTD. Note that McdView is still functional without ScanG or LoFT resources but the ScanG and LoFT values will no longer be capped at the number of entries in those resources.</p>
 
 		<p>The top panel displays three rows of sprites. The first row displays the first sprite of each tilepart in the collection; the second row displays the first sprite of that part's Dead part; and the third row displays the first sprite of that part's Alternate part. The row of numbers beneath the first row of sprites is the 0-based ID of the tileparts in the collection.</p>
 
-		<p>Left-click selects a part. Ctrl and Shift can be used to modify the current selection. Note that left/right/up/down arrows, Home/End, and PageUp/Down can also be used to navigate through a collection. The Spacebar can be used to select the first part in the collection if there is <b>not</b> a part selected; if a part is already selected it selects the next part in the collection. Backspace selects the previous part in the collection.</p>
+		<p>Left-click selects a part. The left/right/up/down arrows, Home/End, and PageUp/Down can also be used to navigate through a collection. The Spacebar can be used to select the first part in the collection if there is <b>not</b> a part selected; if a part is already selected it selects the next part in the collection. Backspace selects the previous part in the collection.</p>
 
-		<p>A note on selections. There is only ever 1 truly selected part; all fields that are displayed belong to that part. Any other parts that are also selected are considered sub-selected and their IDs in the Record Collection panel ought appear in a lighter hue to indicate their sub-status. The actual color of selected parts should depend on your system settings ... if there are problems I may hardcode it to neon pink.</p>
+		<p>A note on selections. There is only ever 1 truly selected part; all fields that are displayed belong to that part. Any other parts that are also selected are considered sub-selected and their IDs in the Record Collection panel ought appear in a lighter hue to indicate their sub-status. The actual color of selected parts depends on your system settings ...</p>
+
+		<p>Ctrl and Shift can be used to modify the current selection. Ctrl+LMB toggles a part's selected status unless it's the only selected part, in which case it does nothing. Shift+LMB selects a range of parts between the currently selected part and the part that is clicked; it can also toggle the currently selected part's selected status, similar to Ctrl but unlike Ctrl it can be used to deselect an only selected part also.</p>
+
+		<p>Ctrl and Shift work differently when using the keyboard to navigate a collection. Ctrl selects parts that are navigated over and Shift deselects parts.</p>
 
 		<p>Right-click opens a contextmenu of operations that can be performed on the currently selected part(s). Note that right-click does <b>not</b> select a part.<br><br>
 &nbsp;&nbsp;add [d] - adds a blank record after the currently selected part. Adds a blank record at the beginning of the collection if there is not a part selected.<br>
@@ -50,7 +54,9 @@
 
 		<p>The [+/-] keys on the numeric keypad can be used to increment and decrement a value within its limits when the field is focused for editing.</p>
 
-		<p>[Esc] or [Enter] will unfocus a field and refocus the Record Collection panel, as will clicking almost anywhere on the background of the app. TODO: place a panel under the groups, deselect on description panel click, STRICT label click, SpriteShade label click</p>
+		<p>[Esc] or [Enter] will unfocus a field and focus the Record Collection panel for navigation, as will clicking almost anywhere on the background of the app.</p>
+
+		<p>Clicking on the IsoLoFT panel focuses its vertical trackbar.</p>
 
 		<br>
 		<h3>File menu</h3>
