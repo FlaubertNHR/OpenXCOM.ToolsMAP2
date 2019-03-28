@@ -103,10 +103,8 @@ namespace XCom
 			Graphics graphics = CreateGraphics();
 			foreach (var line in lines)
 			{
-				LogFile.WriteLine(". line= " + line);
 				heightF = graphics.MeasureString(line, lbl_Info.Font, size).Height; // NOTE: TextRenderer ain't workin right for that.
 				height = (int)Math.Ceiling(heightF);
-				LogFile.WriteLine(". height= " + height);
 
 				if (height_ == 0)
 					height_ = height;
@@ -121,8 +119,8 @@ namespace XCom
 		private int GetWidth(string text)
 		{
 			string[] lines = text.Split(
-										new[]{ "\r\n", "\r", "\n" },
-										StringSplitOptions.RemoveEmptyEntries);
+									new[]{ "\r\n", "\r", "\n" },
+									StringSplitOptions.RemoveEmptyEntries);
 
 			int width = 0, test;
 			foreach (var line in lines)
@@ -150,8 +148,9 @@ namespace XCom
 		private Container components = null;
 		private Button btn_Okay;
 		private Label lbl_Info;
-		private System.Windows.Forms.RichTextBox rtb_Info;
-		private System.Windows.Forms.Panel pnl_Info;
+		private RichTextBox rtb_Info;
+		private Panel pnl_Info;
+
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
