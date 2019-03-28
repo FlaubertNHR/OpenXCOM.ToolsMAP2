@@ -172,8 +172,8 @@ namespace McdView
 			gb_Step     .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
 			gb_Elevation.Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
 
-			gb_Explosive.Location = new Point(gb_Tu.Right, 0);
-			gb_Unused   .Location = new Point(gb_Tu.Right, gb_Explosive.Bottom);
+			gb_Explode.Location = new Point(gb_Tu.Right, 0);
+			gb_Unused .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
 
 			lbl_Strict.Location = new Point(5,                gb_Door.Bottom + 5);
 			cb_Strict .Location = new Point(lbl_Strict.Right, gb_Door.Bottom + 5);
@@ -186,7 +186,13 @@ namespace McdView
 			bar_IsoLoft.Location = new Point(pnl_IsoLoft.Left - 5 - bar_IsoLoft.Width, 10);
 
 			ClientSize = new Size(
-								gb_Overhead.Width + gb_Tu.Width + gb_Explosive.Width + gb_Loft.Width + pnl_IsoLoft.Width + bar_IsoLoft.Width + 15,
+								gb_Overhead      .Width
+									+ gb_Tu      .Width
+									+ gb_Explode .Width
+									+ gb_Loft    .Width
+									+ pnl_IsoLoft.Width
+									+ bar_IsoLoft.Width
+									+ 15,
 								ClientSize.Height);
 
 			TagLabels();

@@ -160,7 +160,7 @@
 		private System.Windows.Forms.GroupBox gb_Block;
 		private System.Windows.Forms.GroupBox gb_Door;
 		private System.Windows.Forms.GroupBox gb_Step;
-		private System.Windows.Forms.GroupBox gb_Explosive;
+		private System.Windows.Forms.GroupBox gb_Explode;
 		private System.Windows.Forms.GroupBox gb_Health;
 		private System.Windows.Forms.GroupBox gb_General;
 		private System.Windows.Forms.Label lbl_SpriteShade;
@@ -489,7 +489,7 @@
 			this.gb_Step = new System.Windows.Forms.GroupBox();
 			this.tb32_isdropthrou = new McdView.RecordTextbox();
 			this.tb52_footsound = new McdView.RecordTextbox();
-			this.gb_Explosive = new System.Windows.Forms.GroupBox();
+			this.gb_Explode = new System.Windows.Forms.GroupBox();
 			this.tb57_fuel = new McdView.RecordTextbox();
 			this.tb45_fireresist = new McdView.RecordTextbox();
 			this.tb55_hestrength = new McdView.RecordTextbox();
@@ -524,7 +524,7 @@
 			this.gb_Block.SuspendLayout();
 			this.gb_Door.SuspendLayout();
 			this.gb_Step.SuspendLayout();
-			this.gb_Explosive.SuspendLayout();
+			this.gb_Explode.SuspendLayout();
 			this.gb_Health.SuspendLayout();
 			this.gb_General.SuspendLayout();
 			this.gb_Description.SuspendLayout();
@@ -3100,28 +3100,28 @@
 			this.tb52_footsound.Enter += new System.EventHandler(this.OnEnter52);
 			this.tb52_footsound.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox52);
 			// 
-			// gb_Explosive
+			// gb_Explode
 			// 
-			this.gb_Explosive.Controls.Add(this.lbl54);
-			this.gb_Explosive.Controls.Add(this.lbl55);
-			this.gb_Explosive.Controls.Add(this.lbl45);
-			this.gb_Explosive.Controls.Add(this.lbl57);
-			this.gb_Explosive.Controls.Add(this.lbl54_hetype);
-			this.gb_Explosive.Controls.Add(this.lbl55_hestrength);
-			this.gb_Explosive.Controls.Add(this.lbl45_fireresist);
-			this.gb_Explosive.Controls.Add(this.lbl57_fuel);
-			this.gb_Explosive.Controls.Add(this.tb57_fuel);
-			this.gb_Explosive.Controls.Add(this.tb45_fireresist);
-			this.gb_Explosive.Controls.Add(this.tb55_hestrength);
-			this.gb_Explosive.Controls.Add(this.tb54_hetype);
-			this.gb_Explosive.Location = new System.Drawing.Point(345, 5);
-			this.gb_Explosive.Margin = new System.Windows.Forms.Padding(0);
-			this.gb_Explosive.Name = "gb_Explosive";
-			this.gb_Explosive.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Explosive.Size = new System.Drawing.Size(165, 95);
-			this.gb_Explosive.TabIndex = 8;
-			this.gb_Explosive.TabStop = false;
-			this.gb_Explosive.Text = " Explosive ";
+			this.gb_Explode.Controls.Add(this.lbl54);
+			this.gb_Explode.Controls.Add(this.lbl55);
+			this.gb_Explode.Controls.Add(this.lbl45);
+			this.gb_Explode.Controls.Add(this.lbl57);
+			this.gb_Explode.Controls.Add(this.lbl54_hetype);
+			this.gb_Explode.Controls.Add(this.lbl55_hestrength);
+			this.gb_Explode.Controls.Add(this.lbl45_fireresist);
+			this.gb_Explode.Controls.Add(this.lbl57_fuel);
+			this.gb_Explode.Controls.Add(this.tb57_fuel);
+			this.gb_Explode.Controls.Add(this.tb45_fireresist);
+			this.gb_Explode.Controls.Add(this.tb55_hestrength);
+			this.gb_Explode.Controls.Add(this.tb54_hetype);
+			this.gb_Explode.Location = new System.Drawing.Point(345, 5);
+			this.gb_Explode.Margin = new System.Windows.Forms.Padding(0);
+			this.gb_Explode.Name = "gb_Explode";
+			this.gb_Explode.Padding = new System.Windows.Forms.Padding(0);
+			this.gb_Explode.Size = new System.Drawing.Size(165, 95);
+			this.gb_Explode.TabIndex = 8;
+			this.gb_Explode.TabStop = false;
+			this.gb_Explode.Text = " Explode ";
 			// 
 			// tb57_fuel
 			// 
@@ -3460,7 +3460,7 @@
 			this.pnl_bg.Controls.Add(this.gb_Loft);
 			this.pnl_bg.Controls.Add(this.gb_Overhead);
 			this.pnl_bg.Controls.Add(this.gb_Tu);
-			this.pnl_bg.Controls.Add(this.gb_Explosive);
+			this.pnl_bg.Controls.Add(this.gb_Explode);
 			this.pnl_bg.Controls.Add(this.gb_Block);
 			this.pnl_bg.Controls.Add(this.gb_General);
 			this.pnl_bg.Controls.Add(this.gb_Unused);
@@ -3514,8 +3514,8 @@
 			this.gb_Door.PerformLayout();
 			this.gb_Step.ResumeLayout(false);
 			this.gb_Step.PerformLayout();
-			this.gb_Explosive.ResumeLayout(false);
-			this.gb_Explosive.PerformLayout();
+			this.gb_Explode.ResumeLayout(false);
+			this.gb_Explode.PerformLayout();
 			this.gb_Health.ResumeLayout(false);
 			this.gb_Health.PerformLayout();
 			this.gb_General.ResumeLayout(false);
