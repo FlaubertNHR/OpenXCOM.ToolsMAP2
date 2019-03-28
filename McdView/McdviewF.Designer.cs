@@ -3331,7 +3331,7 @@
 			this.lbl_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_SpriteShade.Name = "lbl_SpriteShade";
 			this.lbl_SpriteShade.Size = new System.Drawing.Size(75, 15);
-			this.lbl_SpriteShade.TabIndex = 13;
+			this.lbl_SpriteShade.TabIndex = 15;
 			this.lbl_SpriteShade.Text = "SpriteShade";
 			this.lbl_SpriteShade.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl_SpriteShade.Click += new System.EventHandler(this.OnClick_FocusShade);
@@ -3344,7 +3344,7 @@
 			this.tb_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_SpriteShade.Name = "tb_SpriteShade";
 			this.tb_SpriteShade.Size = new System.Drawing.Size(35, 19);
-			this.tb_SpriteShade.TabIndex = 14;
+			this.tb_SpriteShade.TabIndex = 16;
 			this.tb_SpriteShade.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb_SpriteShade.WordWrap = false;
 			this.tb_SpriteShade.TextChanged += new System.EventHandler(this.OnTextChanged_SpriteShade);
@@ -3387,7 +3387,7 @@
 			this.cb_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_Strict.Name = "cb_Strict";
 			this.cb_Strict.Size = new System.Drawing.Size(15, 15);
-			this.cb_Strict.TabIndex = 12;
+			this.cb_Strict.TabIndex = 14;
 			this.cb_Strict.UseVisualStyleBackColor = true;
 			this.cb_Strict.CheckedChanged += new System.EventHandler(this.OnCheckChanged_Strict);
 			this.cb_Strict.Enter += new System.EventHandler(this.OnEnterStrict);
@@ -3402,7 +3402,7 @@
 			this.lbl_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Strict.Name = "lbl_Strict";
 			this.lbl_Strict.Size = new System.Drawing.Size(50, 15);
-			this.lbl_Strict.TabIndex = 11;
+			this.lbl_Strict.TabIndex = 13;
 			this.lbl_Strict.Text = "STRICT";
 			this.lbl_Strict.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl_Strict.Click += new System.EventHandler(this.OnClick_FocusStrict);
@@ -3417,7 +3417,7 @@
 			this.bar_SpriteShade.Maximum = 100;
 			this.bar_SpriteShade.Name = "bar_SpriteShade";
 			this.bar_SpriteShade.Size = new System.Drawing.Size(140, 16);
-			this.bar_SpriteShade.TabIndex = 15;
+			this.bar_SpriteShade.TabIndex = 17;
 			this.bar_SpriteShade.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.bar_SpriteShade.ValueChanged += new System.EventHandler(this.OnValueChanged_SpriteShade);
 			// 
@@ -3428,7 +3428,7 @@
 			this.pnl_IsoLoft.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_IsoLoft.Name = "pnl_IsoLoft";
 			this.pnl_IsoLoft.Size = new System.Drawing.Size(130, 195);
-			this.pnl_IsoLoft.TabIndex = 17;
+			this.pnl_IsoLoft.TabIndex = 11;
 			this.pnl_IsoLoft.Click += new System.EventHandler(this.OnClick_IsoLoft);
 			this.pnl_IsoLoft.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_IsoLoft);
 			// 
@@ -3444,7 +3444,7 @@
 			this.bar_IsoLoft.Name = "bar_IsoLoft";
 			this.bar_IsoLoft.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.bar_IsoLoft.Size = new System.Drawing.Size(16, 205);
-			this.bar_IsoLoft.TabIndex = 16;
+			this.bar_IsoLoft.TabIndex = 12;
 			this.bar_IsoLoft.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.bar_IsoLoft.Value = 24;
 			this.bar_IsoLoft.ValueChanged += new System.EventHandler(this.OnValueChanged_IsoLoft);
