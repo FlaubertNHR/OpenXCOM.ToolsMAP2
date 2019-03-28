@@ -158,13 +158,18 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Closes the screen on an Escape keydown event.
+		/// Closes the screen on an Escape or Enter keydown event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
-				Close();
+			switch (e.KeyCode)
+			{
+				case Keys.Escape:
+				case Keys.Enter:
+					Close();
+					break;
+			}
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)

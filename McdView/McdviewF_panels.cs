@@ -19,21 +19,24 @@ namespace McdView
 {
 	internal partial class McdviewF
 	{
-		Graphics _graphics;
-		ImageAttributes _attri;
+		private Graphics _graphics;
+		private ImageAttributes _attri;
 
 
 		#region Anisprites
-		const int SPRITE_ORIGIN_X = 20;
-		const int SPRITE_ORIGIN_Y =  0;
-		const int SPRITE_OFFSET_X = 80;
+		private static int SPRITE_ORIGIN_X;
+		private const  int SPRITE_ORIGIN_Y =  0;
+		private const  int SPRITE_OFFSET_X = 80;
 
 		/// <summary>
 		/// Spaces the layout of the fields etc. of the anisprites in the
 		/// sprite-group and -panel.
 		/// </summary>
-		private void LayoutSpriteGroup()
+		private void LayoutSpritesGroup()
 		{
+			SPRITE_ORIGIN_X = gb_Sprites.Width / 2 - SPRITE_OFFSET_X * 4;
+			if (SPRITE_ORIGIN_X < 0) SPRITE_ORIGIN_X = 0;
+
 			pnl_Sprites.Width = (gb_Sprites.Width - 10);
 
 			int left = pnl_Sprites.Left;
@@ -80,10 +83,11 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPaint_Sprites(object sender, PaintEventArgs e)
 		{
-			if (SelId != -1)
+			_graphics = e.Graphics;
+
+			if (SelId != -1 && Spriteset != null)
 			{
-				_graphics = e.Graphics;
-				_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
+				_graphics.PixelOffsetMode = PixelOffsetMode.Half;
 				_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
 				_attri = new ImageAttributes();
@@ -112,35 +116,46 @@ namespace McdView
 					}
 				}
 
-				if (Spriteset != null)
+				byte id;
+				for (int i = 0; i != 8; ++i)
 				{
-					byte id;
-					for (int i = 0; i != 8; ++i)
+					switch (i)
 					{
-						switch (i)
-						{
-							default: id = record.Sprite1; break;
-							case 1:  id = record.Sprite2; break;
-							case 2:  id = record.Sprite3; break;
-							case 3:  id = record.Sprite4; break;
-							case 4:  id = record.Sprite5; break;
-							case 5:  id = record.Sprite6; break;
-							case 6:  id = record.Sprite7; break;
-							case 7:  id = record.Sprite8; break;
-						}
-
-						if (id < Spriteset.Count)
-							DrawSprite(
-									Spriteset[id].Sprite,
-									SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
-						else
-							_graphics.FillRectangle(
-												BrushSpriteInvalid,
-												SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i,
-												SPRITE_ORIGIN_Y,
-												XCImage.SpriteWidth32  * 2,
-												XCImage.SpriteHeight40 * 2);
+						default: id = record.Sprite1; break;
+						case 1:  id = record.Sprite2; break;
+						case 2:  id = record.Sprite3; break;
+						case 3:  id = record.Sprite4; break;
+						case 4:  id = record.Sprite5; break;
+						case 5:  id = record.Sprite6; break;
+						case 6:  id = record.Sprite7; break;
+						case 7:  id = record.Sprite8; break;
 					}
+
+					if (id < Spriteset.Count)
+						DrawSprite(
+								Spriteset[id].Sprite,
+								SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
+					else
+						_graphics.FillRectangle(
+											BrushSpriteInvalid,
+											SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i,
+											SPRITE_ORIGIN_Y,
+											XCImage.SpriteWidth32  * 2,
+											XCImage.SpriteHeight40 * 2);
+				}
+			}
+			else // draw blank rectanges ->
+			{
+				var rect = new Rectangle(
+									0,
+									SPRITE_ORIGIN_Y + 1,
+									XCImage.SpriteWidth32  * 2 - 2,
+									XCImage.SpriteHeight40 * 2 - 2);
+
+				for (int i = 0; i != 8; ++i)
+				{
+					rect.X = SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i + 1;
+					_graphics.DrawRectangle(_penBlack, rect);
 				}
 			}
 		}
@@ -514,7 +529,7 @@ namespace McdView
 										rose,
 										fontRose,
 										pt,
-										Color.Gray);
+										SystemColors.ControlDark);
 				}
 
 				_graphics.SmoothingMode = SmoothingMode.AntiAlias;

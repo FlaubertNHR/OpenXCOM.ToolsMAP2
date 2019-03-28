@@ -38,8 +38,8 @@ namespace McdView
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
-		private readonly Pen _penBlack = new Pen(Color.Black, 1);
-		private readonly Pen _penGray  = new Pen(Color.LightGray, 1);
+		private readonly Pen _penBlack = SystemPens.ControlText;	// new Pen(Color.Black, 1)
+		private readonly Pen _penGray  = SystemPens.ControlLight;	// new Pen(Color.LightGray, 1)
 
 		private bool strict = true;
 		private bool InitFields;
@@ -162,6 +162,33 @@ namespace McdView
 			isRunT = true;
 			InitializeComponent();
 
+			gb_Overhead.Location = new Point(0, 0);
+			gb_General .Location = new Point(0, gb_Overhead.Bottom);
+			gb_Health  .Location = new Point(0, gb_General .Bottom);
+			gb_Door    .Location = new Point(0, gb_Health  .Bottom);
+
+			gb_Tu       .Location = new Point(gb_Overhead.Right, 0);
+			gb_Block    .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
+			gb_Step     .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
+			gb_Elevation.Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
+
+			gb_Explosive.Location = new Point(gb_Tu.Right, 0);
+			gb_Unused   .Location = new Point(gb_Tu.Right, gb_Explosive.Bottom);
+
+			lbl_Strict.Location = new Point(5,                gb_Door.Bottom + 5);
+			cb_Strict .Location = new Point(lbl_Strict.Right, gb_Door.Bottom + 5);
+
+			lbl_SpriteShade.Location = new Point(cb_Strict.Right + 10,  gb_Door.Bottom + 5);
+			tb_SpriteShade .Location = new Point(lbl_SpriteShade.Right, gb_Door.Bottom + 5);
+			bar_SpriteShade.Location = new Point(tb_SpriteShade.Right,  gb_Door.Bottom + 5);
+
+			pnl_IsoLoft.Location = new Point(gb_Loft    .Left - 5 - pnl_IsoLoft.Width, 15);
+			bar_IsoLoft.Location = new Point(pnl_IsoLoft.Left - 5 - bar_IsoLoft.Width, 10);
+
+			ClientSize = new Size(
+								gb_Overhead.Width + gb_Tu.Width + gb_Explosive.Width + gb_Loft.Width + pnl_IsoLoft.Width + bar_IsoLoft.Width + 15,
+								ClientSize.Height);
+
 			TagLabels();
 			TagLoftPanels();
 
@@ -189,7 +216,7 @@ namespace McdView
 
 			PartsPanel.Select();
 
-			LayoutSpriteGroup();
+			LayoutSpritesGroup();
 
 			string pathufo, pathtftd;
 			YamlMetrics.GetResourcePaths(out pathufo, out pathtftd);
@@ -220,19 +247,18 @@ namespace McdView
 			CuboidVertLineBotPath = isocube.GetVerticalLineBot(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
 
 			foreach (Control control in Controls)
+			{
 				if ((control as GroupBox) != null)
-					control.Click += OnClick_Groupbox;
-		}
-
-		/// <summary>
-		/// Selects the PartsPanel if a group's title (or a blank point inside
-		/// of the groupbox) is clicked.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnClick_Groupbox(object sender, EventArgs e)
-		{
-			PartsPanel.Select();
+					control.Click += OnClick_FocusCollection;
+				else if ((control as Panel) != null)
+				{
+					for (int i = 0; i != control.Controls.Count; ++i) // yes they really fucked .NET up that badly.
+					{
+						if ((control.Controls[i] as GroupBox) != null)
+							control.Controls[i].Click += OnClick_FocusCollection;
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -313,10 +339,14 @@ namespace McdView
 		{
 			base.OnResize(e);
 
-			gb_Description.Height = ClientSize.Height - lbl_Strict.Location.Y - lbl_Strict.Height - 25;
-			gb_Description.Location = new Point(
-											gb_Description.Location.X,
-											lbl_Strict.Location.Y + lbl_Strict.Height + 25);
+			LayoutSpritesGroup();
+			pnl_Sprites.Invalidate();
+
+			gb_Description.Height = pnl_bg.Height - gb_Unused.Bottom;
+//			gb_Description.Height = ClientSize.Height - lbl_Strict.Location.Y - lbl_Strict.Height - 25;
+//			gb_Description.Location = new Point(
+//											gb_Description.Location.X,
+//											lbl_Strict.Location.Y + lbl_Strict.Height + 25);
 		}
 
 		/// <summary>
@@ -1025,6 +1055,38 @@ namespace McdView
 
 
 		#region Events
+		/// <summary>
+		/// Selects the PartsPanel if a group's title (or a blank point inside
+		/// of the groupbox), etc is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_FocusCollection(object sender, EventArgs e)
+		{
+			PartsPanel.Select();
+		}
+
+		/// <summary>
+		/// Selects the STRICT checkbox if the label is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_FocusStrict(object sender, EventArgs e)
+		{
+			cb_Strict.Select();
+		}
+
+		/// <summary>
+		/// Selects the SpriteShade trackbar if the label is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_FocusShade(object sender, EventArgs e)
+		{
+			bar_SpriteShade.Select();
+		}
+
+
 		/// <summary>
 		/// Handles SpriteShade's TextChanged event for its TextBox.
 		/// </summary>
