@@ -963,6 +963,7 @@ namespace McdView
 										"The following items exhibit anomalies.",
 										copyable))
 				{
+					f.Owner = this;
 					f.ShowDialog();
 				}
 			}
@@ -1011,14 +1012,14 @@ namespace McdView
 #else
 			ver += " - release";
 #endif
-			MessageBox.Show(
-						this,
-						ver,
-						"Version info",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Information,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox(
+									" Version info",
+									null,
+									ver))
+			{
+				f.Owner = this;
+				f.ShowDialog();
+			}
 		}
 		#endregion Menuitems
 

@@ -140,7 +140,7 @@ namespace XCom.Resources.Map
 				using (var f = new Infobox(
 										" Invalid dead part",
 										warn,
-										String.Empty))
+										null))
 				{
 					f.ShowDialog();
 				}
@@ -184,7 +184,7 @@ namespace XCom.Resources.Map
 				using (var f = new Infobox(
 										" Invalid alternate part",
 										warn,
-										String.Empty))
+										null))
 				{
 					f.ShowDialog();
 				}
