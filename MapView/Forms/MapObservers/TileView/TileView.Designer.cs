@@ -67,7 +67,7 @@
 			// 
 			this.tpFloors.Location = new System.Drawing.Point(4, 21);
 			this.tpFloors.Name = "tpFloors";
-			this.tpFloors.Size = new System.Drawing.Size(632, 430);
+			this.tpFloors.Size = new System.Drawing.Size(632, 408);
 			this.tpFloors.TabIndex = 1;
 			this.tpFloors.Text = "fLoOr";
 			// 
@@ -75,7 +75,7 @@
 			// 
 			this.tpWestwalls.Location = new System.Drawing.Point(4, 21);
 			this.tpWestwalls.Name = "tpWestwalls";
-			this.tpWestwalls.Size = new System.Drawing.Size(632, 430);
+			this.tpWestwalls.Size = new System.Drawing.Size(632, 408);
 			this.tpWestwalls.TabIndex = 2;
 			this.tpWestwalls.Text = "WEst";
 			// 
@@ -83,7 +83,7 @@
 			// 
 			this.tpNorthwalls.Location = new System.Drawing.Point(4, 21);
 			this.tpNorthwalls.Name = "tpNorthwalls";
-			this.tpNorthwalls.Size = new System.Drawing.Size(632, 430);
+			this.tpNorthwalls.Size = new System.Drawing.Size(632, 408);
 			this.tpNorthwalls.TabIndex = 3;
 			this.tpNorthwalls.Text = "noRtH";
 			// 
@@ -91,7 +91,7 @@
 			// 
 			this.tpObjects.Location = new System.Drawing.Point(4, 21);
 			this.tpObjects.Name = "tpObjects";
-			this.tpObjects.Size = new System.Drawing.Size(632, 430);
+			this.tpObjects.Size = new System.Drawing.Size(632, 408);
 			this.tpObjects.TabIndex = 4;
 			this.tpObjects.Text = "ConTeNt";
 			// 
@@ -125,8 +125,8 @@
 			// tsmiEditPck
 			// 
 			this.tsmiEditPck.Name = "tsmiEditPck";
-			this.tsmiEditPck.Size = new System.Drawing.Size(213, 22);
-			this.tsmiEditPck.Text = "Open spriteset in PckView";
+			this.tsmiEditPck.Size = new System.Drawing.Size(159, 22);
+			this.tsmiEditPck.Text = "open in PckView";
 			this.tsmiEditPck.Click += new System.EventHandler(this.OnPckEditClick);
 			// 
 			// tsddbMcd
@@ -146,14 +146,14 @@
 			// tsmiMcdInfo
 			// 
 			this.tsmiMcdInfo.Name = "tsmiMcdInfo";
-			this.tsmiMcdInfo.Size = new System.Drawing.Size(182, 22);
-			this.tsmiMcdInfo.Text = "Tilepart Information";
+			this.tsmiMcdInfo.Size = new System.Drawing.Size(173, 22);
+			this.tsmiMcdInfo.Text = "Tilepart Info";
 			this.tsmiMcdInfo.Click += new System.EventHandler(this.OnMcdInfoClick);
 			// 
 			// tsmiVolutarMcdEditor
 			// 
 			this.tsmiVolutarMcdEditor.Name = "tsmiVolutarMcdEditor";
-			this.tsmiVolutarMcdEditor.Size = new System.Drawing.Size(182, 22);
+			this.tsmiVolutarMcdEditor.Size = new System.Drawing.Size(173, 22);
 			this.tsmiVolutarMcdEditor.Text = "Volutar MCD Editor";
 			this.tsmiVolutarMcdEditor.Click += new System.EventHandler(this.OnVolutarMcdEditorClick);
 			// 
@@ -203,7 +203,7 @@
 			this.tsslOver.AutoSize = false;
 			this.tsslOver.Margin = new System.Windows.Forms.Padding(0);
 			this.tsslOver.Name = "tsslOver";
-			this.tsslOver.Size = new System.Drawing.Size(524, 22);
+			this.tsslOver.Size = new System.Drawing.Size(555, 22);
 			this.tsslOver.Spring = true;
 			this.tsslOver.Text = "Over";
 			this.tsslOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
