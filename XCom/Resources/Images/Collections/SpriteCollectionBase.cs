@@ -37,7 +37,7 @@ namespace XCom
 					base[id] = value;
 				else
 				{
-					value.TerrainId = Count;
+					value.Id = Count;
 					Add(value);
 				}
 			}

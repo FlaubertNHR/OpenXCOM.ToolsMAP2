@@ -43,10 +43,10 @@ namespace XCom
 			if (!File.Exists(pfeMap)) // Open a folderbrowser for user to point to a basepath ->
 			{
 				if (MessageBox.Show(
-							"The Mapfile does not exist."
+							"The Mapfile was not found."
 								+ Environment.NewLine + Environment.NewLine
-								+ "Do you want to browse for a different basepath to the .MAP and .RMP files?",
-							"Warning",
+								+ "Browse for a basepath to the .MAP and .RMP files ...",
+							" Warning",
 							MessageBoxButtons.YesNo,
 							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button1,
@@ -81,7 +81,7 @@ namespace XCom
 								MessageBox.Show(
 											descriptor.Label + GlobalsXC.MapExt
 												+ " was not found in that basepath.",
-											"Error",
+											" Error",
 											MessageBoxButtons.OK,
 											MessageBoxIcon.Error,
 											MessageBoxDefaultButton.Button1,
@@ -149,7 +149,7 @@ namespace XCom
 				//LogFile.WriteLine(". . . descriptor has no terrains");
 				MessageBox.Show(
 							"There are no terrains allocated or they do not contain MCD records.",
-							"Warning",
+							" Warning",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button1,

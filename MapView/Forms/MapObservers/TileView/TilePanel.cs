@@ -282,7 +282,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Opens the MCD-info screen when a valid tile is double-clicked.
+		/// Opens PckView when a valid tile is double-left-clicked or the
+		/// MCD-info screen when a valid tile is double-right-clicked.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
@@ -293,7 +294,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				switch (e.Button)
 				{
 					case MouseButtons.Left:
-						ViewerFormsManager.TileView.Control.OnPckEditorClick(null, EventArgs.Empty);
+						ViewerFormsManager.TileView.Control.OnPckEditClick(null, EventArgs.Empty);
 						break;
 
 					case MouseButtons.Right:

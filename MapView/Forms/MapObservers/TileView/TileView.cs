@@ -468,7 +468,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnPckEditorClick(object sender, EventArgs e)
+		internal void OnPckEditClick(object sender, EventArgs e)
 		{
 			if (SelectedTilepart != null)
 			{
@@ -484,29 +484,13 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				if (!File.Exists(pfePck))
 				{
-					MessageBox.Show(
-								this,
-								"File does not exist"
-									+ Environment.NewLine + Environment.NewLine
-									+ pfePck,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+					using (var f = new Infobox(" File not found", "File does not exist.", pfePck))
+						f.ShowDialog();
 				}
 				else if (!File.Exists(pfeTab))
 				{
-					MessageBox.Show(
-								this,
-								"File does not exist"
-									+ Environment.NewLine + Environment.NewLine
-									+ pfeTab,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+					using (var f = new Infobox(" File not found", "File does not exist.", pfeTab))
+						f.ShowDialog();
 				}
 				else
 				{
@@ -514,6 +498,7 @@ namespace MapView.Forms.MapObservers.TileViews
 					{
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapBase.Descriptor.Pal.Label);
+						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
 						_showHideManager.HideViewers();
 						fPckView.ShowDialog(FindForm());
@@ -522,7 +507,7 @@ namespace MapView.Forms.MapObservers.TileViews
 						if (fPckView.SpritesChanged) // (re)load the selected Map.
 						{
 							string notice = "The Map needs to reload to show any"
-										  + " changes that were made to its terrainset.";
+										  + " changes that were made to the terrainset.";
 
 							string changed = String.Empty;
 							if (MapBase.MapChanged)
@@ -546,7 +531,7 @@ namespace MapView.Forms.MapObservers.TileViews
 							if (MessageBox.Show(
 											this,
 											notice,
-											"Reload Map",
+											" Reload Map",
 											MessageBoxButtons.OKCancel,
 											MessageBoxIcon.Information,
 											MessageBoxDefaultButton.Button1,

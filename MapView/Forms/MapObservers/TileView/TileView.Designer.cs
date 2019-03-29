@@ -127,7 +127,7 @@
 			this.tsmiEditPck.Name = "tsmiEditPck";
 			this.tsmiEditPck.Size = new System.Drawing.Size(213, 22);
 			this.tsmiEditPck.Text = "Open spriteset in PckView";
-			this.tsmiEditPck.Click += new System.EventHandler(this.OnPckEditorClick);
+			this.tsmiEditPck.Click += new System.EventHandler(this.OnPckEditClick);
 			// 
 			// tsddbMcd
 			// 

@@ -19,7 +19,7 @@ namespace XCom.Interfaces
 		public byte[] Bindata
 		{ get; protected set; }
 
-		public int TerrainId
+		public int Id
 		{ get; set; }
 
 		public Bitmap Sprite
@@ -62,7 +62,7 @@ namespace XCom.Interfaces
 				Palette pal,
 				int id)
 		{
-			TerrainId = id; // NOTE: Is not necessarily Terrain. Could be Bigobs or Units or a ScanG icon ...
+			Id = id;
 
 			Bindata = bindata;
 			Pal     = pal;

@@ -747,7 +747,7 @@ namespace PckView
 
 			int length = files.Length;
 			for (int i = id; i != TilePanel.Spriteset.Count; ++i)
-				TilePanel.Spriteset[i].TerrainId = i + length;
+				TilePanel.Spriteset[i].Id = i + length;
 
 			foreach (var b in bs)
 			{
@@ -856,9 +856,9 @@ namespace PckView
 			TilePanel.Spriteset[TilePanel.SelectedId]       = TilePanel.Spriteset[TilePanel.SelectedId + dir];
 			TilePanel.Spriteset[TilePanel.SelectedId + dir] = sprite;
 
-			TilePanel.Spriteset[TilePanel.SelectedId].TerrainId = TilePanel.SelectedId;
+			TilePanel.Spriteset[TilePanel.SelectedId].Id = TilePanel.SelectedId;
 			TilePanel.SelectedId += dir;
-			TilePanel.Spriteset[TilePanel.SelectedId].TerrainId = TilePanel.SelectedId;
+			TilePanel.Spriteset[TilePanel.SelectedId].Id = TilePanel.SelectedId;
 
 			EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
@@ -879,7 +879,7 @@ namespace PckView
 			TilePanel.Spriteset.RemoveAt(TilePanel.SelectedId);
 
 			for (int i = TilePanel.SelectedId; i != TilePanel.Spriteset.Count; ++i)
-				TilePanel.Spriteset[i].TerrainId = i;
+				TilePanel.Spriteset[i].Id = i;
 
 			EditorPanel.Instance.Sprite = null;
 			TilePanel.SelectedId = -1;
@@ -1240,7 +1240,7 @@ namespace PckView
 							string suffix = String.Format(
 														CultureInfo.InvariantCulture,
 														"_{0:" + digits + "}",
-														sprite.TerrainId);
+														sprite.Id);
 							string fullpath = Path.Combine(path, file + suffix + PngExt);
 							BitmapService.ExportSprite(fullpath, sprite.Sprite);
 						}
@@ -1556,6 +1556,18 @@ namespace PckView
 		}
 
 		/// <summary>
+		/// Sets the currently selected id.
+		/// NOTE: Called only from TileView to set 'SelectedId' externally.
+		/// </summary>
+		/// <param name="id"></param>
+		public void SetSelectedId(int id)
+		{
+			TilePanel.SelectedId = id;
+			PrintSelectedId();
+		}
+
+
+		/// <summary>
 		/// Loads a PCK file.
 		/// NOTE: May be called from MapView.Forms.MapObservers.TileViews.TileView.OnPckEditorClick()
 		/// - with a string like that you'd think this was .NET itself.
@@ -1803,10 +1815,13 @@ namespace PckView
 			if (id != -1)
 			{
 				selected = id.ToString(CultureInfo.InvariantCulture);
-				if (id > 34)
-					selected += " [" + (id - 35).ToString(CultureInfo.InvariantCulture) + "]";
-				else
-					selected += " [0]";
+				if (IsScanG)
+				{
+					if (id > 34)
+						selected += " [" + (id - 35).ToString(CultureInfo.InvariantCulture) + "]";
+					else
+						selected += " [0]";
+				}
 			}
 			else
 				selected = None;

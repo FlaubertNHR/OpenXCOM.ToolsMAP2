@@ -52,7 +52,7 @@ namespace PckView
 
 				string caption = "Sprite Editor";
 				if (_sprite != null)
-					caption += " - id " + _sprite.TerrainId;
+					caption += " - id " + _sprite.Id;
 				_feditor.Text = caption;
 
 				SpriteBytesManager.ReloadBytesTable(_sprite); // this will clear the show-bytes box if null.
