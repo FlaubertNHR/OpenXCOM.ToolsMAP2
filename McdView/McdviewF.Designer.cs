@@ -1,6 +1,6 @@
 ﻿namespace McdView
 {
-	internal partial class McdviewF
+	public partial class McdviewF
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.

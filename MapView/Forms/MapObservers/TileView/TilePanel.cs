@@ -40,10 +40,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		private const int _largeChange = SpriteHeight;	// apparently .NET won't return an accurate value
 														// for LargeChange unless the scrollbar is visible.
 
-		private readonly Pen   _penBlack        = new Pen(Color.Black, 1);
+		private readonly Pen   _penBlack        = Pens.Black;
 		private readonly Pen   _penRed          = new Pen(Color.Red, 3);
-		private readonly Pen   _penControlLight = new Pen(SystemColors.ControlLight, 1);
-		private readonly Brush _brushBlack      = new SolidBrush(Color.Black);
+		private readonly Pen   _penControlLight = SystemPens.ControlLight;
+		private readonly Brush _brushBlack      = Brushes.Black;
 
 		private static Hashtable _specialTypeBrushes;
 
@@ -148,6 +148,8 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			Controls.Add(_scrollBar);
 
+			ContextMenu = CreateContext();
+
 			MainViewUnderlay.AnimationUpdateEvent += OnAnimationUpdate; // FIX: "Subscription to static events without unsubscription may cause memory leaks."
 
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
@@ -159,10 +161,40 @@ namespace MapView.Forms.MapObservers.TileViews
 			_t1.Interval = 250;	// because the mouse OnLeave event doesn't fire
 			_t1.Enabled = true;	// when the mouse moves out of the panel directly
 		}						// from a tilepart's part-icon.
+
+		/// <summary>
+		/// Builds a ContextMenu for RMB on this TilePanel.
+		/// </summary>
+		/// <returns>the ContextMenu</returns>
+		private ContextMenu CreateContext()
+		{
+			var context = new ContextMenu();
+
+			context.MenuItems.Add(new MenuItem("open in PckView", OnClick_OpenPckview));
+			context.MenuItems.Add(new MenuItem("open in McdView", OnClick_OpenMcdview));
+			context.MenuItems.Add(new MenuItem("Tilepart Info"  , OnClick_OpenMcdinfo));
+
+			return context;
+		}
 		#endregion
 
 
-		#region Event Calls
+		#region Events
+		private void OnClick_OpenPckview(object sender, EventArgs e)
+		{
+			ViewerFormsManager.TileView.Control.OnPckEditClick(sender, e);
+		}
+
+		private void OnClick_OpenMcdview(object sender, EventArgs e)
+		{
+			ViewerFormsManager.TileView.Control.OnMcdEditClick(sender, e);
+		}
+
+		private void OnClick_OpenMcdinfo(object sender, EventArgs e)
+		{
+			 ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
+		}
+
 		/// <summary>
 		/// Ensures that any Overinfo on the statusbar is cleared when the
 		/// mouse-cursor leaves this panel.
@@ -288,7 +320,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
 		{
-			int id = GetOverId(e);
+/*			int id = GetOverId(e);
 			if (id != -1 && id < _parts.Length)
 			{
 				switch (e.Button)
@@ -301,7 +333,7 @@ namespace MapView.Forms.MapObservers.TileViews
 						ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
 						break;
 				}
-			}
+			} */
 		}
 
 		/// <summary>

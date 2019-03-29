@@ -6,7 +6,7 @@ using XCom;
 
 namespace McdView
 {
-	internal partial class McdviewF
+	public partial class McdviewF
 	{
 		// Descriptions of MCD entries are at
 		// https://www.ufopaedia.org/index.php/MCD

@@ -11,6 +11,8 @@ using MapView.Forms.MainWindow;
 using MapView.Forms.McdInfo;
 using MapView.OptionsServices;
 
+using McdView;
+
 using PckView;
 
 using XCom;
@@ -394,6 +396,10 @@ namespace MapView.Forms.MapObservers.TileViews
 			if (!tsmiMcdInfo.Checked)
 			{
 				tsmiMcdInfo.Checked = true;
+				foreach (var panel in _panels)
+				{
+					panel.ContextMenu.MenuItems[2].Checked = true;
+				}
 
 				if (_mcdInfoForm == null)
 				{
@@ -429,10 +435,14 @@ namespace MapView.Forms.MapObservers.TileViews
 		private void OnMcdInfoFormClosing(object sender, CancelEventArgs e)
 		{
 			tsmiMcdInfo.Checked = false;
+			foreach (var panel in _panels)
+			{
+				panel.ContextMenu.MenuItems[2].Checked = false;
+			}
 
 			if (e != null)			// if (e==null) the form is hiding due to a menu-click, or a double-click on a tile
 				e.Cancel = true;	// if (e!=null) the form really was closed, so cancel that.
-
+									// NOTE: wtf - is way too complicated for what it is
 			_mcdInfoForm.Hide();
 		}
 
@@ -463,7 +473,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Opens PckView with the tileset of the currently selected tilepart
+		/// Opens PckView with the spriteset of the currently selected tilepart
 		/// loaded.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -501,7 +511,7 @@ namespace MapView.Forms.MapObservers.TileViews
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
 						_showHideManager.HideViewers();
-						fPckView.ShowDialog(FindForm());
+						fPckView.ShowDialog(FindForm()); // <- Pause until PckView is closed.
 						_showHideManager.RestoreViewers();
 
 						if (fPckView.SpritesChanged) // (re)load the selected Map.
@@ -547,7 +557,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				MessageBox.Show(
 							this,
 							"Select a Tile.",
-							String.Empty,
+							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Asterisk,
 							MessageBoxDefaultButton.Button1,
@@ -561,6 +571,98 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if (PckSavedEvent != null)
 				PckSavedEvent();
+		}
+
+		/// <summary>
+		/// Opens McdView with the recordset of the currently selected tilepart
+		/// loaded.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnMcdEditClick(object sender, EventArgs e)
+		{
+			if (SelectedTilepart != null)
+			{
+				var terrain = ((MapFileChild)MapBase).GetTerrain(SelectedTilepart);
+
+				string terr = terrain.Item1;
+				string path = terrain.Item2;
+
+				path = MapBase.Descriptor.GetTerrainDirectory(path);
+
+				string pfeMcd = Path.Combine(path, terr + GlobalsXC.McdExt);
+
+				if (!File.Exists(pfeMcd))
+				{
+					using (var f = new Infobox(" File not found", "File does not exist.", pfeMcd))
+						f.ShowDialog();
+				}
+				else
+				{
+					using (var fMcdView = new McdviewF())
+					{
+						Palette.UfoBattle .SetTransparent(false);
+						Palette.TftdBattle.SetTransparent(false);
+						fMcdView.LoadRecords(
+										pfeMcd,
+										MapBase.Descriptor.Pal.Label,
+										SelectedTilepart.TerId);
+
+						_showHideManager.HideViewers();
+						fMcdView.ShowDialog(FindForm()); // <- Pause until McdView is closed.
+						_showHideManager.RestoreViewers();
+						Palette.UfoBattle .SetTransparent(true);
+						Palette.TftdBattle.SetTransparent(true);
+
+
+						if (fMcdView.RecordsChanged) // (re)load the selected Map.
+						{
+							string notice = "The Map needs to reload to show any"
+										  + " changes that were made to the terrainset.";
+
+							string changed = String.Empty;
+							if (MapBase.MapChanged)
+								changed = "Map";
+
+							if (MapBase.RoutesChanged)
+							{
+								if (!String.IsNullOrEmpty(changed))
+									changed += " and its ";
+
+								changed += "Routes";
+							}
+
+							if (!String.IsNullOrEmpty(changed))
+							{
+								notice += Environment.NewLine + Environment.NewLine
+										+ "You will be asked to save the current"
+										+ " changes to the " + changed + ".";
+							}
+
+							if (MessageBox.Show(
+											this,
+											notice,
+											" Reload Map",
+											MessageBoxButtons.OKCancel,
+											MessageBoxIcon.Information,
+											MessageBoxDefaultButton.Button1,
+											0) == DialogResult.OK)
+							{
+								TriggerPckSaved();
+							}
+						}
+					}
+				}
+			}
+			else
+				MessageBox.Show(
+							this,
+							"Select a Tile.",
+							" Error",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Asterisk,
+							MessageBoxDefaultButton.Button1,
+							0);
 		}
 
 

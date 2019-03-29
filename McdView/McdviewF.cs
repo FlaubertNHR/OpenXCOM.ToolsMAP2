@@ -15,7 +15,7 @@ namespace McdView
 	/// <summary>
 	/// 
 	/// </summary>
-	internal partial class McdviewF
+	public partial class McdviewF
 		:
 			Form
 	{
@@ -146,6 +146,16 @@ namespace McdView
 				}
 			}
 		}
+
+		/// <summary>
+		/// For reloading the Map when McdView is invoked via TileView. That is,
+		/// it's *not* a "do you want to save" alert. It is used by MapView's
+		/// TileView to flag the Map to reload. btw, reload MapView's Map even
+		/// if the MCD is saved as a different file; the new terrain-label might
+		/// also be in the Map's terrainset.
+		/// </summary>
+		public bool RecordsChanged
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -153,7 +163,7 @@ namespace McdView
 		/// <summary>
 		/// Instantiates the McdView app.
 		/// </summary>
-		internal McdviewF()
+		public McdviewF()
 		{
 #if DEBUG
 			LogFile.SetLogFilePath(Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
@@ -349,10 +359,6 @@ namespace McdView
 			pnl_Sprites.Invalidate();
 
 			gb_Description.Height = pnl_bg.Height - gb_Unused.Bottom;
-//			gb_Description.Height = ClientSize.Height - lbl_Strict.Location.Y - lbl_Strict.Height - 25;
-//			gb_Description.Location = new Point(
-//											gb_Description.Location.X,
-//											lbl_Strict.Location.Y + lbl_Strict.Height + 25);
 		}
 
 		/// <summary>
@@ -530,8 +536,7 @@ namespace McdView
 							pal = Palette.TftdBattle;
 
 						// NOTE: The spriteset is also maintained by a pointer to it
-						// that's stored in each tilepart.
-						// NOTE: Can be null.
+						// that's stored in each tilepart. Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(_pfeMcd),
@@ -605,8 +610,7 @@ namespace McdView
 							pal = Palette.TftdBattle;
 
 						// NOTE: The spriteset is also maintained by a pointer to it
-						// that's stored in each tilepart.
-						// NOTE: Can be null.
+						// that's stored in each tilepart. Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(_pfeMcd),
@@ -672,8 +676,7 @@ namespace McdView
 						pal = Palette.TftdBattle;
 
 					// NOTE: The spriteset is also maintained by a pointer to it
-					// that's stored in each tilepart.
-					// NOTE: Can be null.
+					// that's stored in each tilepart. Can be null.
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(_pfeMcd),
@@ -717,6 +720,71 @@ namespace McdView
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
+		}
+
+		/// <summary>
+		/// Loads a specified Mcdfile as called from TileView.
+		/// </summary>
+		/// <param name="pfeMcd"></param>
+		/// <param name="palette"></param>
+		/// <param name="terId"></param>
+		public void LoadRecords(
+				string pfeMcd,
+				string palette,
+				int terId)
+		{
+			_pfeMcd = pfeMcd;
+			Label = Path.GetFileNameWithoutExtension(_pfeMcd);
+
+			using (var bs = new BufferedStream(File.OpenRead(_pfeMcd)))
+			{
+				Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+
+				ResourceInfo.ReloadSprites = true;	// is needed here to change palette transparency.
+													// Ie, the palette is transparent in MapView but I want it non-transparent in McdView.
+
+				// NOTE: The spriteset is also maintained by a pointer to it
+				// that's stored in each tilepart. Can be null.
+				Spriteset = ResourceInfo.LoadSpriteset(
+													Label,
+													Path.GetDirectoryName(_pfeMcd),
+													2,
+													Palette.UfoBattle,
+													true);
+
+				for (int id = 0; id != Parts.Length; ++id)
+				{
+					var bindata = new byte[TilepartFactory.Length];
+					bs.Read(bindata, 0, TilepartFactory.Length);
+					McdRecord record = McdRecordFactory.CreateRecord(bindata);
+
+					Parts[id] = new Tilepart(id, Spriteset, record);
+				}
+
+				Tilepart part;
+				for (int id = 0; id != Parts.Length; ++id)
+				{
+					part = Parts[id];
+					part.Dead      = TilepartFactory.GetDeadPart(     Label, id, part.Record, Parts);
+					part.Alternate = TilepartFactory.GetAlternatePart(Label, id, part.Record, Parts);
+				}
+			}
+
+			ResourceInfo.ReloadSprites = false;
+
+			if (palette.Substring(0,4) == "tftd")
+				OnClick_PaletteTftd(null, EventArgs.Empty);
+
+			CacheLoad.SetCache(Parts);
+			Changed = false;
+			Text = "McdView - " + _pfeMcd;
+
+			miSave  .Enabled =
+			miSaveas.Enabled =
+			miReload.Enabled = true;
+
+			PartsPanel.Select();
+			SelId = terId;
 		}
 
 
@@ -792,6 +860,7 @@ namespace McdView
 
 				CacheLoad.SetCache(Parts);
 				Changed = false;
+				RecordsChanged = true;
 			}
 		}
 

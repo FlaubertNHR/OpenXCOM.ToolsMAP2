@@ -1185,8 +1185,8 @@ namespace PckView
 								LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
 
 							SpritesChanged = true;	// NOTE: is used by MapView's TileView to flag the Map to reload.
-						}							// btw, reload MapView's Map in either case; the new terrain-label may also be in the Map's terrainset ...
-						else
+						}							// btw, reload MapView's Map in either case;
+						else						// the new (Save As...) terrain-label may also be in the Map's terrainset.
 						{
 							ShowSaveError();
 

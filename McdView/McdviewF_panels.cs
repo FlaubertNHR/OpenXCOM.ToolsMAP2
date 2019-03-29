@@ -17,7 +17,7 @@ using XCom.Interfaces;
 
 namespace McdView
 {
-	internal partial class McdviewF
+	public partial class McdviewF
 	{
 		private Graphics _graphics;
 		private ImageAttributes _attri;

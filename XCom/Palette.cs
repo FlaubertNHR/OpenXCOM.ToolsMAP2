@@ -58,7 +58,6 @@ namespace XCom
 											  .GetManifestResourceStream(Embedded + ufobattle + PalExt));
 					CreateUfoBrushes();
 				}
-
 				return _palettes[ufobattle] as Palette;
 			}
 		}
