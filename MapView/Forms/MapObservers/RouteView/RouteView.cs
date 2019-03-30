@@ -1964,11 +1964,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnOptionsClick(object sender, EventArgs e)
 		{
-			var it = sender as ToolStripMenuItem;
-			if (!it.Checked)
+			var tsb = sender as ToolStripButton;
+			if (!tsb.Checked)
 			{
-				ViewerFormsManager.RouteView   .Control     .tsmiOptions.Checked =
-				ViewerFormsManager.TopRouteView.ControlRoute.tsmiOptions.Checked = true;
+				ViewerFormsManager.RouteView   .Control     .tsb_Options.Checked =
+				ViewerFormsManager.TopRouteView.ControlRoute.tsb_Options.Checked = true;
 
 				_foptions = new OptionsForm("RouteViewOptions", Options);
 				_foptions.Text = "RouteView Options";
@@ -1976,17 +1976,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 				_foptions.Show();
 
 				_foptions.FormClosing += (sender1, e1) => // a note describing why this is here could be helpful ...
-										{
-											if (!_closing)
-												OnOptionsClick(sender, e);
+				{
+					if (!_closing)
+						OnOptionsClick(sender, e);
 
-											_closing = false;
-										};
+					_closing = false;
+				};
 			}
 			else
 			{
-				ViewerFormsManager.RouteView   .Control     .tsmiOptions.Checked =
-				ViewerFormsManager.TopRouteView.ControlRoute.tsmiOptions.Checked = false;
+				ViewerFormsManager.RouteView   .Control     .tsb_Options.Checked =
+				ViewerFormsManager.TopRouteView.ControlRoute.tsb_Options.Checked = false;
 
 				_closing = true;
 				_foptions.Close();

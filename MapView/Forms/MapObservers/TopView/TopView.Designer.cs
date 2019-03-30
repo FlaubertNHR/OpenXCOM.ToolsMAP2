@@ -131,7 +131,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			// 
 			this.tsb_Options.AutoToolTip = false;
 			this.tsb_Options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsb_Options.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Options.Image")));
 			this.tsb_Options.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsb_Options.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
 			this.tsb_Options.Name = "tsb_Options";
