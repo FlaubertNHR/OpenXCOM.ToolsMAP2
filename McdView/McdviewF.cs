@@ -188,9 +188,9 @@ namespace McdView
 			lbl_Strict.Location = new Point(5,                gb_Door.Bottom + 5);
 			cb_Strict .Location = new Point(lbl_Strict.Right, gb_Door.Bottom + 5);
 
-			lbl_SpriteShade.Location = new Point(cb_Strict.Right + 10,  gb_Door.Bottom + 5);
-			tb_SpriteShade .Location = new Point(lbl_SpriteShade.Right, gb_Door.Bottom + 5);
-			bar_SpriteShade.Location = new Point(tb_SpriteShade.Right,  gb_Door.Bottom + 5);
+			lbl_SpriteShade.Location = new Point(cb_Strict      .Right + 10, gb_Door.Bottom + 5);
+			tb_SpriteShade .Location = new Point(lbl_SpriteShade.Right,      gb_Door.Bottom + 5);
+			bar_SpriteShade.Location = new Point(tb_SpriteShade .Right,      gb_Door.Bottom + 5);
 
 			pnl_IsoLoft.Location = new Point(gb_Loft    .Left - 5 - pnl_IsoLoft.Width, 15);
 			bar_IsoLoft.Location = new Point(pnl_IsoLoft.Left - 5 - bar_IsoLoft.Width, 10);
@@ -203,7 +203,7 @@ namespace McdView
 									+ pnl_IsoLoft.Width
 									+ bar_IsoLoft.Width
 									+ 15,
-								ClientSize.Height);
+								ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
 
 			TagLabels();
 			TagLoftPanels();
@@ -278,6 +278,16 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// Calls SetDoubleBuffered(object) on an array of objects.
+		/// </summary>
+		/// <param name="controls"></param>
+		private static void SetDoubleBuffered(object[] controls)
+		{
+			foreach (var control in controls)
+				SetDoubleBuffered(control);
+		}
+
+		/// <summary>
 		/// Some controls, such as the DataGridView, do not allow setting the
 		/// DoubleBuffered property. It is set as a protected property. This
 		/// method is a work-around to allow setting it. Call this in the
@@ -302,16 +312,6 @@ namespace McdView
 											 control,
 											 new object[] { true });
 			}
-		}
-
-		/// <summary>
-		/// Calls SetDoubleBuffered(object) on an array of objects.
-		/// </summary>
-		/// <param name="controls"></param>
-		private static void SetDoubleBuffered(object[] controls)
-		{
-			foreach (var control in controls)
-				SetDoubleBuffered(control);
 		}
 		#endregion cTor
 

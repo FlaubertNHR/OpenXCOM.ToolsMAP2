@@ -2028,7 +2028,7 @@
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
 			this.ss_Statusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tssl_Overvalue});
-			this.ss_Statusbar.Location = new System.Drawing.Point(0, 752);
+			this.ss_Statusbar.Location = new System.Drawing.Point(0, 772);
 			this.ss_Statusbar.Name = "ss_Statusbar";
 			this.ss_Statusbar.Size = new System.Drawing.Size(832, 22);
 			this.ss_Statusbar.TabIndex = 3;
@@ -2301,7 +2301,7 @@
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Loft.Size = new System.Drawing.Size(160, 437);
+			this.gb_Loft.Size = new System.Drawing.Size(160, 457);
 			this.gb_Loft.TabIndex = 10;
 			this.gb_Loft.TabStop = false;
 			this.gb_Loft.Text = " LoFT ";
@@ -3357,11 +3357,11 @@
 			// 
 			this.gb_Description.Controls.Add(this.lbl_Description);
 			this.gb_Description.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.gb_Description.Location = new System.Drawing.Point(0, 360);
+			this.gb_Description.Location = new System.Drawing.Point(0, 365);
 			this.gb_Description.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Description.Name = "gb_Description";
 			this.gb_Description.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Description.Size = new System.Drawing.Size(672, 77);
+			this.gb_Description.Size = new System.Drawing.Size(672, 92);
 			this.gb_Description.TabIndex = 18;
 			this.gb_Description.TabStop = false;
 			this.gb_Description.Text = " description ";
@@ -3374,7 +3374,7 @@
 			this.lbl_Description.Location = new System.Drawing.Point(5, 15);
 			this.lbl_Description.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Description.Name = "lbl_Description";
-			this.lbl_Description.Size = new System.Drawing.Size(662, 56);
+			this.lbl_Description.Size = new System.Drawing.Size(662, 71);
 			this.lbl_Description.TabIndex = 0;
 			this.lbl_Description.Click += new System.EventHandler(this.OnClick_FocusCollection);
 			// 
@@ -3474,7 +3474,7 @@
 			this.pnl_bg.Location = new System.Drawing.Point(0, 315);
 			this.pnl_bg.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_bg.Name = "pnl_bg";
-			this.pnl_bg.Size = new System.Drawing.Size(832, 437);
+			this.pnl_bg.Size = new System.Drawing.Size(832, 457);
 			this.pnl_bg.TabIndex = 2;
 			this.pnl_bg.Click += new System.EventHandler(this.OnClick_FocusCollection);
 			// 
@@ -3482,14 +3482,14 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(832, 774);
+			this.ClientSize = new System.Drawing.Size(832, 794);
 			this.Controls.Add(this.pnl_bg);
 			this.Controls.Add(this.ss_Statusbar);
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.KeyPreview = true;
-			this.MaximumSize = new System.Drawing.Size(840, 800);
+			this.MaximumSize = new System.Drawing.Size(840, 820);
 			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
