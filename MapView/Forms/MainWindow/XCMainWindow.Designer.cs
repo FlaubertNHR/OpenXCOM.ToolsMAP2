@@ -154,7 +154,8 @@ namespace MapView
 			// 
 			this.miSaveAs.Enabled = false;
 			this.miSaveAs.Index = 5;
-			this.miSaveAs.Text = "Save As ...";
+			this.miSaveAs.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
+			this.miSaveAs.Text = "Sav&e As ...";
 			this.miSaveAs.Click += new System.EventHandler(this.OnSaveAsClick);
 			// 
 			// miSeparator2
@@ -252,22 +253,22 @@ namespace MapView
 			// 
 			this.menuEdit.Index = 1;
 			this.menuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miOptions,
-			this.miConfigurator});
+			this.miConfigurator,
+			this.miOptions});
 			this.menuEdit.Text = "&Edit";
-			// 
-			// miOptions
-			// 
-			this.miOptions.Index = 0;
-			this.miOptions.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
-			this.miOptions.Text = "&Options";
-			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// miConfigurator
 			// 
-			this.miConfigurator.Index = 1;
+			this.miConfigurator.Index = 0;
 			this.miConfigurator.Text = "&Configurator";
 			this.miConfigurator.Click += new System.EventHandler(this.OnConfiguratorClick);
+			// 
+			// miOptions
+			// 
+			this.miOptions.Index = 1;
+			this.miOptions.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
+			this.miOptions.Text = "&Options";
+			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// menuAnimation
 			// 
