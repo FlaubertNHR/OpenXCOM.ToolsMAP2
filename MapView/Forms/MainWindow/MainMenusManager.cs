@@ -15,7 +15,7 @@ namespace MapView.Forms.MainWindow
 	internal sealed class MainMenusManager
 	{
 		#region Fields (static)
-		private const string Divider = "-";
+		private const string Separator = "-";
 		#endregion
 
 
@@ -28,7 +28,7 @@ namespace MapView.Forms.MainWindow
 
 		private Options _options;
 
-		private bool _quitting;
+		private bool _quit;
 		#endregion
 
 
@@ -102,13 +102,13 @@ namespace MapView.Forms.MainWindow
 			_options = options;
 
 			// Viewers menuitems ->
-			CreateMenuItem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     _menuViewers);
+			CreateMenuItem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     _menuViewers, Shortcut.F5);
 
-			_menuViewers.MenuItems.Add(new MenuItem(Divider));
+			_menuViewers.MenuItems.Add(new MenuItem(Separator));
 
-			CreateMenuItem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      _menuViewers);
-			CreateMenuItem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    _menuViewers);
-			CreateMenuItem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, _menuViewers);
+			CreateMenuItem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      _menuViewers, Shortcut.F6);
+			CreateMenuItem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    _menuViewers, Shortcut.F7);
+			CreateMenuItem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, _menuViewers, Shortcut.F8);
 
 //			_menuViewers.MenuItems.Add(new MenuItem(Divider));
 //			CreateMenuItem(fconsole, RegistryInfo.Console, _menuViewers); // TODO: either use the Console or lose it.
@@ -131,14 +131,17 @@ namespace MapView.Forms.MainWindow
 		/// <param name="f"></param>
 		/// <param name="caption"></param>
 		/// <param name="parent"></param>
+		/// <param name="shortcut"></param>
 		private void CreateMenuItem(
 				Form f,
 				string caption,
-				Menu parent)
+				Menu parent,
+				Shortcut shortcut = Shortcut.None)
 		{
 			f.Text = caption; // set the titlebar text.
 
 			var it = new MenuItem(caption);
+			it.Shortcut = shortcut;
 			it.Tag = f;
 
 			parent.MenuItems.Add(it);
@@ -146,11 +149,11 @@ namespace MapView.Forms.MainWindow
 			it.Click += OnMenuItemClick;
 
 			f.FormClosing += (sender, e) =>
-								{
-									it.Checked = false;
-									e.Cancel = true;
-									f.Hide();
-								};
+			{
+				it.Checked = false;
+				e.Cancel = true;
+				f.Hide();
+			};
 
 			_allItems.Add(it);
 			_allForms.Add(f);
@@ -164,7 +167,7 @@ namespace MapView.Forms.MainWindow
 			foreach (MenuItem it in _menuViewers.MenuItems)
 			{
 				string key = it.Text;
-				if (!key.Equals(Divider, StringComparison.Ordinal))
+				if (!key.Equals(Separator, StringComparison.Ordinal))
 				{
 					_options.AddOption(
 									key,
@@ -180,14 +183,14 @@ namespace MapView.Forms.MainWindow
 					if (f != null)
 					{
 						f.VisibleChanged += (sender, e) =>
-											{
-												if (!_quitting)
-												{
-													var fsender = sender as Form;
-													if (fsender != null)
-														_options[key].Value = fsender.Visible;
-												}
-											};
+						{
+							if (!_quit)
+							{
+								var fsender = sender as Form;
+								if (fsender != null)
+									_options[key].Value = fsender.Visible;
+							}
+						};
 					}
 				}
 			}
@@ -202,7 +205,7 @@ namespace MapView.Forms.MainWindow
 			foreach (MenuItem it in _menuViewers.MenuItems)
 			{
 				string key = it.Text;
-				if (!key.Equals(Divider, StringComparison.Ordinal)
+				if (!key.Equals(Separator, StringComparison.Ordinal)
 					&& _options[key].IsTrue)
 				{
 					it.PerformClick();
@@ -215,9 +218,9 @@ namespace MapView.Forms.MainWindow
 		/// Effectively disables the 'VisibleChanged' event for all subsidiary
 		/// viewers.
 		/// </summary>
-		internal void IsQuitting()
+		internal void Quit()
 		{
-			_quitting = true;
+			_quit = true;
 		}
 
 		/// <summary>

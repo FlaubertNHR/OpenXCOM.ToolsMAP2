@@ -106,6 +106,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.ClientSize = new System.Drawing.Size(632, 454);
 			this.Controls.Add(this.tabControl);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.KeyPreview = true;
 			this.Name = "TopRouteViewForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Top/Route Views";

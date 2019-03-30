@@ -6,7 +6,7 @@ using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TopViews;
 
 
-namespace MapView.Forms.MapObservers.TileViews
+namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifing the concept of namespaces in the back.
 {
 	internal sealed partial class TopRouteViewForm
 		:
@@ -30,5 +30,23 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			get { return RouteViewControl; }
 		}
+
+
+		#region Events (override)
+		/// <summary>
+		/// Closes/hides this viewer when the F8 key is pressed.
+		/// @note Requires 'KeyPreview' true.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.F8)
+			{
+				Close();
+			}
+			else
+				base.OnKeyDown(e);
+		}
+		#endregion Events (override)
 	}
 }

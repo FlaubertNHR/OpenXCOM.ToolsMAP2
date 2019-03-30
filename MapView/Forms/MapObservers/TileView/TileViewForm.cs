@@ -49,6 +49,24 @@ namespace MapView.Forms.MapObservers.TileViews
 		#endregion
 
 
+		#region Events (override)
+		/// <summary>
+		/// Closes/hides this viewer when the F5 key is pressed.
+		/// @note Requires 'KeyPreview' true.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.F5)
+			{
+				Close();
+			}
+			else
+				base.OnKeyDown(e);
+		}
+		#endregion Events (override)
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -63,7 +81,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		/* The #develop designer is going to delete this:
 
-			TileViewControl = new TileView();
+			TileViewControl = new MapView.Forms.MapObservers.TileViews.TileView();
 
 		- so copy it back into InitializeComponent() */
 
@@ -74,7 +92,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// </summary>
 		private void InitializeComponent()
 		{
-			TileViewControl = new TileView();
+			TileViewControl = new MapView.Forms.MapObservers.TileViews.TileView();
 			this.SuspendLayout();
 			// 
 			// TileViewControl
@@ -93,6 +111,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.ClientSize = new System.Drawing.Size(632, 454);
 			this.Controls.Add(this.TileViewControl);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.KeyPreview = true;
 			this.Name = "TileViewForm";
 			this.ShowInTaskbar = false;
 			this.Text = "TileView";

@@ -816,6 +816,8 @@ namespace MapView
 					}
 					else if (miOn.Checked && miDoors.Checked) // doors need to animate if they were already toggled on.
 						ToggleDoorSprites(true);
+
+					_mainViewUnderlay.MainViewOverlay.Invalidate();
 					break;
 
 				case Doors: // NOTE: 'miDoors.Checked' is used by the F3 key to toggle door animations.
@@ -929,7 +931,7 @@ namespace MapView
 
 			if (_quit)
 			{
-				_mainMenusManager.IsQuitting();
+				_mainMenusManager.Quit();
 
 				_optionsManager.SaveOptions(); // save MV_OptionsFile // TODO: Save settings when closing the Options form(s).
 
