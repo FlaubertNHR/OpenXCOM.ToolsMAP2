@@ -321,20 +321,22 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
 		{
-/*			int id = GetOverId(e);
+			int id = GetOverId(e);
 			if (id != -1 && id < _parts.Length)
 			{
 				switch (e.Button)
 				{
 					case MouseButtons.Left:
-						ViewerFormsManager.TileView.Control.OnPckEditClick(null, EventArgs.Empty);
-						break;
-
-					case MouseButtons.Right:
 						ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
 						break;
 				}
-			} */
+			}
+		}
+
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.I)
+				ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
 		}
 
 		/// <summary>

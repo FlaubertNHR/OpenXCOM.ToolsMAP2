@@ -27,15 +27,38 @@ namespace MapView.Forms.McdInfo
 		#endregion
 
 
-		#region EventCalls
+		#region Events
+		private void OnKeyDown_rtb(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Escape:
+					Close();
+					break;
+
+				case Keys.Up:
+				case Keys.Down:
+				case Keys.PageUp:
+				case Keys.PageDown:
+				case Keys.Home:
+				case Keys.End:
+				case Keys.Left:
+				case Keys.Right:
+					return;
+			}
+
+			if (e.Modifiers == 0)
+				e.Handled = e.SuppressKeyPress = true;
+		}
+
 		/// <summary>
-		/// Closes the screen on an Escape keydown event.
+		/// Closes the screen on an [Esc] or [i] keyup event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnKeyDown(object sender, KeyEventArgs e)
+		private void OnKeyUp_rtb(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			if (e.KeyCode == Keys.I)
 				Close();
 		}
 		#endregion

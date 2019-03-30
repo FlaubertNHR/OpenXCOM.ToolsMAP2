@@ -44,13 +44,14 @@
 			this.rtbInfo.Size = new System.Drawing.Size(512, 609);
 			this.rtbInfo.TabIndex = 0;
 			this.rtbInfo.Text = "";
-			this.rtbInfo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
+			this.rtbInfo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown_rtb);
+			this.rtbInfo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUp_rtb);
 			// 
 			// bsInfo
 			// 
 			this.bsInfo.DataSource = typeof(XCom.McdRecord);
 			// 
-			// McdViewerForm
+			// McdInfoF
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -59,7 +60,7 @@
 			this.ClientSize = new System.Drawing.Size(512, 609);
 			this.Controls.Add(this.rtbInfo);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Name = "McdViewerForm";
+			this.Name = "McdInfoF";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "MCD Info";
