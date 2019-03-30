@@ -9,11 +9,13 @@
 
 		<p>McdView is an MCD (MapControlData) editor for XCOM.</p>
 
-		<p>McdView can load, create, edit, and save MCD files. An MCD file is a collection of data about tileparts with which every XCOM battlefield is built. Each entry in the collection is a tilepart, or simply a part, and the 62 values of each part are called a record.</p>
+		<p>McdView can load, create, edit, and save MCD files. An MCD file - or recordset - is a collection of data - records - denoting the characteristics of tileparts. A tilepart is the basic building block for the terrain of every XCOM battlefield. Each record in the collection is a tilepart and the 62 values of each part are called a record.</p>
 
-		<p>IMPORTANT: ScanG and LoFT icons for UFO and TFTD are different. So UFO and/or TFTD resources have to be set in MapView II's Configurator basepath for them to appear in McdView. The respective resources that should be used to draw the icons can then be selected under the Palette menu: UFO or TFTD. Note that McdView is still functional without ScanG or LoFT resources but the ScanG and LoFT values will no longer be capped at the number of entries in those resources.</p>
+		<p>IMPORTANT: ScanG and LoFT icons for UFO and TFTD are different. So UFO and/or TFTD resources have to be set in MapView II's Configurator basepath for ScanG and LoFT icons to appear in McdView. The respective resources that should be used to draw the icons can then be selected under the Palette menu: UFO or TFTD. Note that McdView is still functional without ScanG or LoFT resources but the ScanG and LoFT values will no longer be capped at the number of entries in their respective resource files.</p>
 
-		<p>The top panel displays three rows of sprites. The first row displays the first sprite of each tilepart in the collection; the second row displays the first sprite of that part's Dead part; and the third row displays the first sprite of that part's Alternate part. The row of numbers beneath the first row of sprites is the 0-based ID of the tileparts in the collection.</p>
+		<p>Also note that McdView can be used to edit an MCD file without requiring its corresponding terrain sprites. But sprite values will no longer be capped at the number of entries in those rogue terrain files.</p>
+
+		<p>The top panel displays three rows of sprites. The first row displays the first sprite of each tilepart in the collection; the second row displays the first sprite of that part's Dead part; and the third row displays the first sprite of that part's Alternate part. The row of numbers beneath the first row of sprites is a 0-based ID of the tileparts in the collection.</p>
 
 		<p>Left-click selects a part. The left/right/up/down arrows, Home/End, and PageUp/Down can also be used to navigate through a collection. The Spacebar can be used to select the first part in the collection if there is <b>not</b> a part selected; if a part is already selected it selects the next part in the collection. Backspace selects the previous part in the collection.</p>
 
@@ -36,27 +38,27 @@
 &nbsp;&nbsp;&nbsp;&nbsp;select all [Ctrl+a] - selects all parts in the collection.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;deselect all [Esc] - deselects any selected parts in the collection as long as a value field is not currently focused.</p>
 
-		<p>Beneath the Record Collection panel is a panel that displays the 8 animation sprites that XCOM usually cycles through continually while rendering a part onscreen. Left-clicking an animation sprite brings up a spriteset viewer; clicking a sprite in the spriteset viewer sets that sprite in the respective phase. Right-clicking a sprite either in the panel or the spriteset viewer brings up an option to assign the clicked sprite to all phases.</p>
+		<p>Beneath the Record Collection panel is a panel that displays the 8 sprites that XCOM usually animates through continuously to rendering a part onscreen. Left-clicking an animation sprite brings up a spriteset viewer; clicking a sprite in the spriteset viewer selects that sprite for the phase that was clicked to open the viewer. Right-clicking a sprite either in the panel or the spriteset viewer brings up an option to assign the clicked sprite to all phases.</p>
 
-		<p>On the lower right is a list of LoFTs (Line of Fire Templates). There are 12 LoFTs stacked vertically to model a 3D representation of a part; each layer is doubled to fill the 24-voxel height of a tile on the battlefield. Left-clicking an icon brings up a LoFT icon viewer; clicking an icon in the viewer sets that icon in the respective LoFT. Right-clicking an icon either in the panel or the icon viewer brings up an option to assign the clicked icon to all LoFTs.</p>
+		<p>On the lower right is a list of LoFTs (Line of Fire Templates). There are 12 LoFTs stacked vertically to model a 3D representation of a part; each layer is doubled to fill the 24-voxel height of a tile on the battlefield. Left-clicking an icon brings up a LoFT icon viewer; clicking an icon in the viewer selects that icon for the respective LoFT layer. Right-clicking an icon either in the panel or the icon viewer brings up an option to assign the clicked icon to all layers.</p>
 
 		<p>The IsoLoFT panel is a (roughly) isometric projection of the LoFT entries of the currently selected part. The vertical trackbar to the left of the panel will slice down through the LoFTs for a better understanding of a part's 3D voxel-model. Note that the value of the trackbar is irrelevant to XCOM and its setting is not saved.</p>
 
 		<p>[s] - toggles the STRICT setting. Values that XCOM is not expected to use properly cannot be entered in any value field when STRICT is on. I suggest leaving it on unless you really know what you're doing - or unless I goofed in which case it's a bug and should be reported.</p>
 
-		<p>SpriteShade is simply a gamma-adjustment internal to McdView. It is <b>not</b> palette-based, has nothing to do with XCOM itself, and is not saved.</p>
+		<p>SpriteShade is simply a gamma-adjustment that's internal to McdView. It is <b>not</b> palette-based, has nothing to do with XCOM itself, and is not saved.</p>
 
 		<p>description - shows general information about any mouse-overed and/or selected field.</p>
 
 		<p>The statusbar along the bottom shows the value of a currently selected field along with its interpretation if applicable.</p>
 
-		<p>Value Fields - The fields will be blank until a part is selected. Other than that they should never be blank, a value cannot be deleted for example - you might have to select the text in the field and type in a different value to change it. Fields accept numeric values only. If the STRICT setting is enabled then accepted values shall be limited to those that XCOM expects; if STRICT is unchecked then you're basically dealing with an unsigned byte: 0..255 (the ScanG field is an unsigned short: 0..65535; and the TerrainOffset field is a signed byte: -128..127).</p>
+		<p>Value Fields - All fields will be blank until a part is selected. Other than that they should never be blank, a value cannot be deleted - you might have to select the text in the field and type in a different value to change it. Fields accept numeric values only. If the STRICT setting is enabled then accepted values shall be limited to those that XCOM expects; if STRICT is unchecked then you're basically dealing with an unsigned byte: 0..255 (the ScanG field is an unsigned short: 0..65535; and the TerrainOffset field is a signed byte: -128..127).</p>
 
 		<p>The [+/-] keys on the numeric keypad can be used to increment and decrement a value within its limits when the field is focused for editing.</p>
 
-		<p>[Esc] or [Enter] will unfocus a field and focus the Record Collection panel for navigation, as will clicking almost anywhere on the background of the app.</p>
+		<p>[Esc] or [Enter] will unfocus a field and focus the Record Collection panel for navigation, as will clicking most anywhere on the background of the app.</p>
 
-		<p>Clicking on the IsoLoFT panel focuses its vertical trackbar.</p>
+		<p>Clicking on the IsoLoFT panel focuses its vertical trackbar, as does returning from the LoFTs viewer.</p>
 
 		<br>
 		<h3>File menu</h3>
@@ -66,12 +68,12 @@
 		<p>Save MCD file [Ctrl+s] - saves the current record collection.</p>
 		<p>Save MCD file as ... [Ctrl+e] - saves the current record collection to disk as a different file.</p>
 		<p>Reload MCD file [Ctrl+l] - reloads the current record collection from disk. <b>There is no confirmation for reloads.</b></p>
-		<p>Quit [Ctrl+q] - exits the application. Confirmation is required if values were changed.</p>
+		<p>Quit [Ctrl+q] - exits the application. Confirmation is required if a collection is loaded and its values were changed.</p>
 
 		<br>
 		<h3>Palette menu</h3>
 
-		<p>UFO [Ctrl+u] - displays sprites with the standard UFO battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if UFO resources are not configured in MapView II's basepath. The UFO palette is enabled by default.</p>
+		<p>UFO [Ctrl+u] - displays sprites with the standard UFO battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if UFO resources are not configured in MapView II's basepath. The UFO palette is selected by default.</p>
 		<p>TFTD [Ctrl+t] - displays sprites with the standard TFTD battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if TFTD resources are not configured in MapView II's basepath.</p>
 
 		<br>
@@ -84,7 +86,7 @@
 		<h3>Help menu</h3>
 
 		<p>Help [Ctrl+h] - shows this CHM helpfile.</p>
-		<p>About [Ctrl+b] - version information. Also shows the build-type and currently running OS architecture.</p>
+		<p>About [Ctrl+b] - version information.</p>
 		<br>
 		</body>
 </html>
