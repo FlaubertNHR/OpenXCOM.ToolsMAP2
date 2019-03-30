@@ -398,7 +398,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				tsmiMcdInfo.Checked = true;
 				foreach (var panel in _panels)
 				{
-					panel.ContextMenu.MenuItems[2].Checked = true;
+					panel.ContextMenu.MenuItems[3].Checked = true;
 				}
 
 				if (_mcdInfoForm == null)
@@ -437,7 +437,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			tsmiMcdInfo.Checked = false;
 			foreach (var panel in _panels)
 			{
-				panel.ContextMenu.MenuItems[2].Checked = false;
+				panel.ContextMenu.MenuItems[3].Checked = false;
 			}
 
 			if (e != null)			// if (e==null) the form is hiding due to a menu-click, or a double-click on a tile
