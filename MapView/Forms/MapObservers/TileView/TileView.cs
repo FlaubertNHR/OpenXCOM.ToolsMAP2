@@ -145,7 +145,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		private void OnSelectedIndexChanged(object sender, EventArgs e)
 		{
-			var panel = GetSelectedPanel() as TilePanel;
+			var panel = GetSelectedPanel();
 
 			foreach (var panel_ in _panels)
 			{
@@ -389,9 +389,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		internal void OnMcdInfoClick(object sender, EventArgs e)
 		{
-			if (!tsmiMcdInfo.Checked)
+			if (!GetSelectedPanel().ContextMenu.MenuItems[3].Checked)
 			{
-				tsmiMcdInfo.Checked = true;
 				foreach (var panel in _panels)
 				{
 					panel.ContextMenu.MenuItems[3].Checked = true;
@@ -430,7 +429,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		private void OnMcdInfoFormClosing(object sender, CancelEventArgs e)
 		{
-			tsmiMcdInfo.Checked = false;
 			foreach (var panel in _panels)
 			{
 				panel.ContextMenu.MenuItems[3].Checked = false;
@@ -715,9 +713,9 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Gets the panel of the currently displayed tabpage.
 		/// </summary>
 		/// <returns></returns>
-		internal Panel GetSelectedPanel()
+		internal TilePanel GetSelectedPanel()
 		{
-			return _panels[tcTileTypes.SelectedIndex];
+			return _panels[tcTileTypes.SelectedIndex] as TilePanel;
 		}
 		#endregion
 	}

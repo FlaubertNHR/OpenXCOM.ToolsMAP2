@@ -17,7 +17,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		// The #develop designer is going to delete this. Copy it back in at the
 		// top of InitializeComponent().
 		/*
-			this.quadrants = new QuadrantPanel();
+			this.quadrants = new MapView.Forms.MapObservers.TopViews.QuadrantPanel();
 		*/
 
 		#region Windows Form Designer generated code
@@ -27,8 +27,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.quadrants = new QuadrantPanel();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TopView));
+			this.quadrants = new MapView.Forms.MapObservers.TopViews.QuadrantPanel();
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
 			this.pMain = new System.Windows.Forms.Panel();
 			this.tsTools = new System.Windows.Forms.ToolStrip();
@@ -120,7 +119,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			// 
 			this.tsddbVisibleQuads.AutoToolTip = false;
 			this.tsddbVisibleQuads.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsddbVisibleQuads.Image = ((System.Drawing.Image)(resources.GetObject("tsddbVisibleQuads.Image")));
 			this.tsddbVisibleQuads.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbVisibleQuads.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
 			this.tsddbVisibleQuads.Name = "tsddbVisibleQuads";

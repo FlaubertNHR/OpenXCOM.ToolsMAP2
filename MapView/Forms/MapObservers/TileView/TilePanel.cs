@@ -170,8 +170,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			var context = new ContextMenu();
 
-			context.MenuItems.Add(new MenuItem("open in PckView", OnClick_OpenPckview));
-			context.MenuItems.Add(new MenuItem("open in McdView", OnClick_OpenMcdview));
+			context.MenuItems.Add(new MenuItem("open in PckView", OnClick_OpenPckview, Shortcut.F9));
+			context.MenuItems.Add(new MenuItem("open in McdView", OnClick_OpenMcdview, Shortcut.F10));
 			context.MenuItems.Add(new MenuItem("-"));
 			context.MenuItems.Add(new MenuItem("Tilepart Info"  , OnClick_OpenMcdinfo));
 

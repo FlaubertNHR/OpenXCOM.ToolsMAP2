@@ -27,7 +27,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RouteView));
 			this.cbLink5Dest = new System.Windows.Forms.ComboBox();
 			this.cbLink4Dest = new System.Windows.Forms.ComboBox();
 			this.cbLink3Dest = new System.Windows.Forms.ComboBox();
@@ -535,7 +534,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsmiExport,
 			this.tsmiImport});
-			this.tsddbFile.Image = ((System.Drawing.Image)(resources.GetObject("tsddbFile.Image")));
 			this.tsddbFile.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbFile.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
 			this.tsddbFile.Name = "tsddbFile";
@@ -568,7 +566,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmi_RaiseNode,
 			this.tsmi_LowerNode});
 			this.tsddbEdit.Font = new System.Drawing.Font("Verdana", 7F);
-			this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
 			this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbEdit.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
 			this.tsddbEdit.Name = "tsddbEdit";
@@ -623,12 +620,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbDebug.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsmiCheckNodeRanks,
 			this.tsmiCheckOobNodes});
-			this.tsddbDebug.Image = ((System.Drawing.Image)(resources.GetObject("tsddbDebug.Image")));
 			this.tsddbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbDebug.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
 			this.tsddbDebug.Name = "tsddbDebug";
-			this.tsddbDebug.Size = new System.Drawing.Size(53, 23);
-			this.tsddbDebug.Text = "debug";
+			this.tsddbDebug.Size = new System.Drawing.Size(54, 23);
+			this.tsddbDebug.Text = "Debug";
 			// 
 			// tsmiCheckNodeRanks
 			// 
