@@ -359,7 +359,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		private void OnOptionsClick(object sender, EventArgs e)
 		{
-			var tsb = (ToolStripButton)sender;
+			var tsb = sender as ToolStripButton;
 			if (tsb.Checked = !tsb.Checked)
 			{
 				_foptions = new OptionsForm("TileViewOptions", Options);

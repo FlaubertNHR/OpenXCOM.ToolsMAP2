@@ -181,11 +181,11 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="e"></param>
 		private void OnOptionsClick(object sender, EventArgs e)
 		{
-			var it = sender as ToolStripMenuItem;
-			if (!it.Checked)
+			var tsb = sender as ToolStripButton;
+			if (!tsb.Checked)
 			{
-				ViewerFormsManager.TopView     .Control   .tsmiOptions.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.tsmiOptions.Checked = true;
+				ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = true;
 
 				_foptions = new OptionsForm("TopViewOptions", Options);
 				_foptions.Text = "TopView Options";
@@ -193,17 +193,17 @@ namespace MapView.Forms.MapObservers.TopViews
 				_foptions.Show();
 
 				_foptions.FormClosing += (sender1, e1) => // a note describing why this is here could be helpful ...
-										{
-											if (!_closing)
-												OnOptionsClick(sender, e);
+				{
+					if (!_closing)
+						OnOptionsClick(sender, e);
 
-											_closing = false;
-										};
+					_closing = false;
+				};
 			}
 			else
 			{
-				ViewerFormsManager.TopView     .Control   .tsmiOptions.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.tsmiOptions.Checked = false;
+				ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = false;
 
 				_closing = true;
 				_foptions.Close();
