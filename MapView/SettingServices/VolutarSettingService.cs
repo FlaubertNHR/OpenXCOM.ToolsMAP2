@@ -33,7 +33,7 @@ namespace MapView.OptionsServices
 				_fullpath = option.Value as String;
 				if (!File.Exists(_fullpath))
 				{
-					using (var f = new FindFileForm("Enter the Volutar MCD Editor Path in full"))
+					using (var f = new FindFileForm("Enter the Volutar MCD Editor Path in full."))
 					{
 						if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 						{
@@ -45,7 +45,7 @@ namespace MapView.OptionsServices
 							else
 								MessageBox.Show(
 											"File not found.",
-											"Error",
+											" Error",
 											MessageBoxButtons.OK,
 											MessageBoxIcon.Error,
 											MessageBoxDefaultButton.Button1,

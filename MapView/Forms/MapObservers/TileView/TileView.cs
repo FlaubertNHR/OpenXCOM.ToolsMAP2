@@ -355,15 +355,13 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		private Form _foptions;
-		private bool _closing;
+		private bool _closing; // wtf is this for like really
 
 		private void OnOptionsClick(object sender, EventArgs e)
 		{
-			var it = (ToolStripMenuItem)sender;
-			if (!it.Checked)
+			var tsb = (ToolStripButton)sender;
+			if (tsb.Checked = !tsb.Checked)
 			{
-				it.Checked = true;
-
 				_foptions = new OptionsForm("TileViewOptions", Options);
 				_foptions.Text = "TileView Options";
 
@@ -380,8 +378,6 @@ namespace MapView.Forms.MapObservers.TileViews
 			else
 			{
 				_closing = true;
-
-				it.Checked = false;
 				_foptions.Close();
 			}
 		}
