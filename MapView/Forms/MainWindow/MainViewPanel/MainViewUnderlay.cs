@@ -232,6 +232,10 @@ namespace MapView
 		{
 			MainViewOverlay.Paste();
 		}
+		internal void OnDelete(object sender, EventArgs e)
+		{
+			MainViewOverlay.ClearSelection();
+		}
 		internal void OnFill(object sender, EventArgs e)
 		{
 			MainViewOverlay.FillSelectedTiles();

@@ -34,6 +34,7 @@ namespace MapView.Forms.MainWindow
 		private ToolStripButton _tsbCut      = new ToolStripButton();
 		private ToolStripButton _tsbCopy     = new ToolStripButton();
 		private ToolStripButton _tsbPaste    = new ToolStripButton();
+		private ToolStripButton _tsbDelete   = new ToolStripButton();
 		private ToolStripButton _tsbFill     = new ToolStripButton();
 		#endregion
 
@@ -135,25 +136,28 @@ namespace MapView.Forms.MainWindow
 			ToolStripButton tsbCut;
 			ToolStripButton tsbCopy;
 			ToolStripButton tsbPaste;
+			ToolStripButton tsbDelete;
 			ToolStripButton tsbFill;
 
 			if (tertiary)
 			{
-				tsbDown  = new ToolStripButton(); // NOTE: MainView's toolstrip buttons are classvars because
-				tsbUp    = new ToolStripButton(); // they will be disabled when the app loads and will be enabled
-				tsbCut   = new ToolStripButton(); // when the user clicks and loads a Map. The tertiary viewers'
-				tsbCopy  = new ToolStripButton(); // toolstrip buttons don't need to be disabled because those
-				tsbPaste = new ToolStripButton(); // viewers appear to the user after user clicks and loads a
-				tsbFill  = new ToolStripButton(); // Map (at which the buttons will already be enabled).
+				tsbDown   = new ToolStripButton(); // NOTE: MainView's toolstrip buttons are classvars because
+				tsbUp     = new ToolStripButton(); // they will be disabled when the app loads and will be enabled
+				tsbCut    = new ToolStripButton(); // when the user clicks and loads a Map. The tertiary viewers'
+				tsbCopy   = new ToolStripButton(); // toolstrip buttons don't need to be disabled because those
+				tsbPaste  = new ToolStripButton(); // viewers appear to the user after user clicks and loads a
+				tsbDelete = new ToolStripButton(); // Map (at which the buttons will already be enabled).
+				tsbFill   = new ToolStripButton();
 			}
 			else
 			{
-				tsbDown  = _tsbDown;
-				tsbUp    = _tsbUp;
-				tsbCut   = _tsbCut;
-				tsbCopy  = _tsbCopy;
-				tsbPaste = _tsbPaste;
-				tsbFill  = _tsbFill;
+				tsbDown   = _tsbDown;
+				tsbUp     = _tsbUp;
+				tsbCut    = _tsbCut;
+				tsbCopy   = _tsbCopy;
+				tsbPaste  = _tsbPaste;
+				tsbDelete = _tsbDelete;
+				tsbFill   = _tsbFill;
 			}
 
 			var tsItems = new ToolStripItem[]
@@ -165,6 +169,7 @@ namespace MapView.Forms.MainWindow
 				tsbCut,
 				tsbCopy,
 				tsbPaste,
+				tsbDelete,
 				new ToolStripSeparator(),
 				tsbFill,
 				new ToolStripSeparator()
@@ -181,54 +186,61 @@ namespace MapView.Forms.MainWindow
 			_downers.Add(tsbDown);
 
 			// LevelUp btn
-			tsbUp.Name            = "tsbUp";
-			tsbUp.DisplayStyle    = ToolStripItemDisplayStyle.Image;
-			tsbUp.Image           = Resources.up;
-			tsbUp.ToolTipText     = "level up";
-			tsbUp.Click          += OnUpClick;
+			tsbUp.Name             = "tsbUp";
+			tsbUp.DisplayStyle     = ToolStripItemDisplayStyle.Image;
+			tsbUp.Image            = Resources.up;
+			tsbUp.ToolTipText      = "level up";
+			tsbUp.Click           += OnUpClick;
 
 			_uppers.Add(tsbUp);
 
 			// Cut btn
-			tsbCut.Name           = "tsbCut";
-			tsbCut.DisplayStyle   = ToolStripItemDisplayStyle.Image;
-			tsbCut.Image          = Resources.cut;
-			tsbCut.ToolTipText    = "cut";
-			tsbCut.Click         += _mainViewUnderlay.OnCut;
-//			tsbCut.Click         += (sender, e) => // -> example of ... lambda usage
+			tsbCut.Name            = "tsbCut";
+			tsbCut.DisplayStyle    = ToolStripItemDisplayStyle.Image;
+			tsbCut.Image           = Resources.cut;
+			tsbCut.ToolTipText     = "cut";
+			tsbCut.Click          += _mainViewUnderlay.OnCut;
+//			tsbCut.Click          += (sender, e) => // -> example of ... lambda usage
 //									{
 //										EnablePasteButton();
 //										_mainViewUnderlay.OnCut(sender, e);
 //									};
 
 			// Copy btn
-			tsbCopy.Name          = "tsbCopy";
-			tsbCopy.DisplayStyle  = ToolStripItemDisplayStyle.Image;
-			tsbCopy.Image         = Resources.copy;
-			tsbCopy.ToolTipText   = "copy";
-			tsbCopy.Click        += _mainViewUnderlay.OnCopy;
-//			tsbCopy.Click        += (sender, e) => // -> example of ... lambda usage
+			tsbCopy.Name           = "tsbCopy";
+			tsbCopy.DisplayStyle   = ToolStripItemDisplayStyle.Image;
+			tsbCopy.Image          = Resources.copy;
+			tsbCopy.ToolTipText    = "copy";
+			tsbCopy.Click         += _mainViewUnderlay.OnCopy;
+//			tsbCopy.Click         += (sender, e) => // -> example of ... lambda usage
 //									{
 //										EnablePasteButton();
 //										_mainViewUnderlay.OnCopy(sender, e);
 //									};
 
 			// Paste btn
-			tsbPaste.Name         = "tsbPaste";
-			tsbPaste.DisplayStyle = ToolStripItemDisplayStyle.Image;
-			tsbPaste.Image        = Resources.paste;
-			tsbPaste.ToolTipText  = "paste";
-			tsbPaste.Enabled      = false;
-			tsbPaste.Click       += _mainViewUnderlay.OnPaste;
+			tsbPaste.Name          = "tsbPaste";
+			tsbPaste.DisplayStyle  = ToolStripItemDisplayStyle.Image;
+			tsbPaste.Image         = Resources.paste;
+			tsbPaste.ToolTipText   = "paste";
+			tsbPaste.Enabled       = false;
+			tsbPaste.Click        += _mainViewUnderlay.OnPaste;
 
 			_pasters.Add(tsbPaste);
 
+			// Delete btn
+			tsbDelete.Name         = "tsbDelete";
+			tsbDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
+			tsbDelete.Image        = Resources.delete;
+			tsbDelete.ToolTipText  = "delete";
+			tsbDelete.Click       += _mainViewUnderlay.OnDelete;
+
 			// Fill btn
-			tsbFill.Name          = "tsbFill";
-			tsbFill.DisplayStyle  = ToolStripItemDisplayStyle.Image;
-			tsbFill.Image         = Resources.fill;
-			tsbFill.ToolTipText   = "fill";
-			tsbFill.Click        += _mainViewUnderlay.OnFill;
+			tsbFill.Name           = "tsbFill";
+			tsbFill.DisplayStyle   = ToolStripItemDisplayStyle.Image;
+			tsbFill.Image          = Resources.fill;
+			tsbFill.ToolTipText    = "fill";
+			tsbFill.Click         += _mainViewUnderlay.OnFill;
 		}
 
 
@@ -300,6 +312,7 @@ namespace MapView.Forms.MainWindow
 			_tsbCut     .Enabled =
 			_tsbCopy    .Enabled =
 //			_tsbPaste   .Enabled = // do not enable Paste until a Cut or Copy has occured
+			_tsbDelete  .Enabled =
 			_tsbFill    .Enabled = enable;
 		}
 		#endregion
