@@ -60,6 +60,8 @@ namespace MapView
 		#region Methods (static)
 		/// <summary>
 		/// Loads the sprites for TopView's blank quads and TileView's eraser.
+		/// @note These sprites could be broken out and put in Resources but
+		/// it's kinda cute this way too.
 		/// </summary>
 		internal static void LoadExtraSprites()
 		{

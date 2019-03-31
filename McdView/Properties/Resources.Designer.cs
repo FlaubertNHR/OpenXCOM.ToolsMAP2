@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PckView.Properties
+namespace McdView.Properties
 {
 	using System;
 	
@@ -45,7 +45,7 @@ namespace PckView.Properties
 			{
 				if (object.ReferenceEquals(resourceMan, null))
 				{
-					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PckView.Properties.Resources", typeof(Resources).Assembly);
+					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("McdView.Properties.Resources", typeof(Resources).Assembly);
 					resourceMan = temp;
 				}
 				return resourceMan;

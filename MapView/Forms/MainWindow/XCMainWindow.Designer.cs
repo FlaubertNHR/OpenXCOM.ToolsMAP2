@@ -52,8 +52,8 @@ namespace MapView
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.menuEdit = new System.Windows.Forms.MenuItem();
-			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
+			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.menuAnimation = new System.Windows.Forms.MenuItem();
 			this.miOn = new System.Windows.Forms.MenuItem();
 			this.miOff = new System.Windows.Forms.MenuItem();
@@ -479,13 +479,13 @@ namespace MapView
 			this.Controls.Add(this.csSplitter);
 			this.Controls.Add(this.tvMaps);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.Icon = global::MapView.Properties.Resources.icon;
 			this.MaximumSize = new System.Drawing.Size(640, 480);
 			this.Menu = this.mmMain;
 			this.MinimumSize = new System.Drawing.Size(640, 480);
 			this.Name = "XCMainWindow";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "Map Editor";
+			this.Text = "Map Editor ||";
 			this.ssMain.ResumeLayout(false);
 			this.ssMain.PerformLayout();
 			this.tscPanel.TopToolStripPanel.ResumeLayout(false);

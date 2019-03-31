@@ -96,11 +96,11 @@ namespace MapView.Properties
 		/// <summary>
 		///   Looks up a localized resource of type System.Drawing.Bitmap.
 		/// </summary>
-		internal static System.Drawing.Bitmap DeleteRed
+		internal static System.Drawing.Bitmap delete
 		{
 			get
 			{
-				object obj = ResourceManager.GetObject("DeleteRed", resourceCulture);
+				object obj = ResourceManager.GetObject("delete", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}
@@ -120,6 +120,30 @@ namespace MapView.Properties
 		/// <summary>
 		///   Looks up a localized resource of type System.Drawing.Bitmap.
 		/// </summary>
+		internal static System.Drawing.Bitmap fill
+		{
+			get
+			{
+				object obj = ResourceManager.GetObject("fill", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+		/// </summary>
+		internal static System.Drawing.Icon icon
+		{
+			get
+			{
+				object obj = ResourceManager.GetObject("icon", resourceCulture);
+				return ((System.Drawing.Icon)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   Looks up a localized resource of type System.Drawing.Bitmap.
+		/// </summary>
 		internal static System.Drawing.Bitmap paste
 		{
 			get
@@ -132,11 +156,11 @@ namespace MapView.Properties
 		/// <summary>
 		///   Looks up a localized resource of type System.Drawing.Bitmap.
 		/// </summary>
-		internal static System.Drawing.Bitmap philup
+		internal static System.Drawing.Bitmap scale
 		{
 			get
 			{
-				object obj = ResourceManager.GetObject("philup", resourceCulture);
+				object obj = ResourceManager.GetObject("scale", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}
@@ -144,11 +168,23 @@ namespace MapView.Properties
 		/// <summary>
 		///   Looks up a localized resource of type System.Drawing.Bitmap.
 		/// </summary>
-		internal static System.Drawing.Bitmap Search1
+		internal static System.Drawing.Bitmap scaleIn
 		{
 			get
 			{
-				object obj = ResourceManager.GetObject("Search1", resourceCulture);
+				object obj = ResourceManager.GetObject("scaleIn", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   Looks up a localized resource of type System.Drawing.Bitmap.
+		/// </summary>
+		internal static System.Drawing.Bitmap scaleOut
+		{
+			get
+			{
+				object obj = ResourceManager.GetObject("scaleOut", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}
@@ -161,30 +197,6 @@ namespace MapView.Properties
 			get
 			{
 				object obj = ResourceManager.GetObject("up", resourceCulture);
-				return ((System.Drawing.Bitmap)(obj));
-			}
-		}
-		
-		/// <summary>
-		///   Looks up a localized resource of type System.Drawing.Bitmap.
-		/// </summary>
-		internal static System.Drawing.Bitmap ZoomIn1
-		{
-			get
-			{
-				object obj = ResourceManager.GetObject("ZoomIn1", resourceCulture);
-				return ((System.Drawing.Bitmap)(obj));
-			}
-		}
-		
-		/// <summary>
-		///   Looks up a localized resource of type System.Drawing.Bitmap.
-		/// </summary>
-		internal static System.Drawing.Bitmap ZoomOut1
-		{
-			get
-			{
-				object obj = ResourceManager.GetObject("ZoomOut1", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}

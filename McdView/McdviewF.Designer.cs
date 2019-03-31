@@ -3488,6 +3488,7 @@
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Icon = global::McdView.Properties.Resources.icon;
 			this.KeyPreview = true;
 			this.MaximumSize = new System.Drawing.Size(840, 820);
 			this.Menu = this.mmMainMenu;

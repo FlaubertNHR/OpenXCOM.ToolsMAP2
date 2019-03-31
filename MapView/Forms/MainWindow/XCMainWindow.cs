@@ -30,6 +30,8 @@ namespace MapView
 			Form
 	{
 		#region Fields (static)
+		private const string title = "Map Editor ||";
+
 		private const double ScaleDelta = 0.125;
 		#endregion
 
@@ -115,9 +117,6 @@ namespace MapView
 			}
 		}
 
-//		internal bool RoutesChanged
-//		{ get; set; }
-
 		/// <summary>
 		/// The currently searched and found and highlighted Treenode on the MapTree.
 		/// </summary>
@@ -141,7 +140,6 @@ namespace MapView
 #endif
 
 			LogFile.WriteLine("Starting MAIN MapView window ...");
-
 
 			// TODO: further optimize this loading sequence ....
 
@@ -2546,7 +2544,7 @@ namespace MapView
 					ViewerFormsManager.ToolFactory.ToggleDownButtons(@base.Level != @base.MapSize.Levs - 1);
 					ViewerFormsManager.ToolFactory.ToggleUpButtons(  @base.Level != 0);
 
-					Text = "Map Editor - " + descriptor.Basepath;
+					Text = title + " " + descriptor.Basepath;
 					if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
 
 					tsslMapLabel     .Text = descriptor.Label;

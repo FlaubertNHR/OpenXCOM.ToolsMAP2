@@ -10,7 +10,6 @@
     <AssemblyName>McdView</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <ApplicationIcon>App.ico</ApplicationIcon>
     <NoWin32Manifest>False</NoWin32Manifest>
     <SignAssembly>True</SignAssembly>
     <DelaySign>False</DelaySign>
@@ -48,7 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
-    <BaseAddress>4194304</BaseAddress>
+    <BaseAddress>285212672</BaseAddress>
     <PlatformTarget>x86</PlatformTarget>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
@@ -94,6 +93,11 @@
     <Compile Include="ScanGiconF.cs" />
     <Compile Include="SpritesetF.cs" />
     <Compile Include="YamlMetrics.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -107,6 +111,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="McdviewF.resx">
       <DependentUpon>McdviewF.Designer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ScanGiconF.resx">
       <DependentUpon>ScanGiconF.cs</DependentUpon>

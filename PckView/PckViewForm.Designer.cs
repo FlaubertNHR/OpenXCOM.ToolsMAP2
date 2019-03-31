@@ -358,6 +358,7 @@ namespace PckView
 			this.ClientSize = new System.Drawing.Size(472, 614);
 			this.Controls.Add(this.ss_Status);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Icon = global::PckView.Properties.Resources.icon;
 			this.KeyPreview = true;
 			this.Location = new System.Drawing.Point(50, 50);
 			this.MaximumSize = new System.Drawing.Size(480, 640);

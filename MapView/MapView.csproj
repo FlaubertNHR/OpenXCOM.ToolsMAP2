@@ -7,7 +7,6 @@
     <ProjectGuid>{AAB9EA5A-403E-488D-894F-6014B85D09CC}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>MapEdit.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>MapView</AssemblyName>
@@ -300,9 +299,6 @@
       <DependentUpon>XCMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Varidia.cs" />
-    <Content Include="_Embedded\11_Search-16.png" />
-    <Content Include="_Embedded\12_Zoom_in-16.png" />
-    <Content Include="_Embedded\13_Zoom_out-16.png" />
     <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -365,18 +361,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="_Embedded\copy.gif" />
-    <EmbeddedResource Include="_Embedded\cut.gif" />
-    <EmbeddedResource Include="_Embedded\down.gif" />
     <EmbeddedResource Include="_Embedded\Extra.PCK" />
     <EmbeddedResource Include="_Embedded\Extra.TAB" />
-    <EmbeddedResource Include="_Embedded\paste.gif" />
-    <EmbeddedResource Include="_Embedded\up.gif" />
     <EmbeddedResource Include="Forms\MainWindow\XCMainWindow.resx">
       <SubType>Designer</SubType>
       <DependentUpon>XCMainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="MapEdit.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -7,7 +7,6 @@
     <ProjectGuid>{040161D8-6B6F-4274-98EC-EB9C31856114}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>App.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>PckView</AssemblyName>
@@ -163,7 +162,6 @@
     <Compile Include="PckViewForm.Designer.cs">
       <DependentUpon>PckViewForm.cs</DependentUpon>
     </Compile>
-    <Content Include="App.ico" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Editor\EditorForm.resx">

@@ -76,7 +76,7 @@ namespace MapView.Forms.MainWindow
 			// ClearSearch btn
 			tsbClearSearch.Name         = "tsbClearSearch";
 			tsbClearSearch.DisplayStyle = ToolStripItemDisplayStyle.Image;
-			tsbClearSearch.Image        = Resources.DeleteRed;
+			tsbClearSearch.Image        = Resources.delete;
 			tsbClearSearch.ToolTipText  = "reset highlight";
 			tsbClearSearch.Click       += OnClearHighlightClick;
 		}
@@ -101,7 +101,7 @@ namespace MapView.Forms.MainWindow
 			// AutoZoom btn
 			_tsbZoomAuto.Name         = "tsbZoomAuto";
 			_tsbZoomAuto.DisplayStyle = ToolStripItemDisplayStyle.Image;
-			_tsbZoomAuto.Image        = Resources.Search1;
+			_tsbZoomAuto.Image        = Resources.scale;
 			_tsbZoomAuto.Checked      = true;
 			_tsbZoomAuto.ToolTipText  = "autoscale";
 			_tsbZoomAuto.Click       += XCMainWindow.Instance.OnAutoScaleClick;
@@ -109,14 +109,14 @@ namespace MapView.Forms.MainWindow
 			// ZoomOut btn
 			_tsbZoomOut.Name          = "tsbZoomOut";
 			_tsbZoomOut.DisplayStyle  = ToolStripItemDisplayStyle.Image;
-			_tsbZoomOut.Image         = Resources.ZoomOut1;
+			_tsbZoomOut.Image         = Resources.scaleOut;
 			_tsbZoomOut.ToolTipText   = "scale Out";
 			_tsbZoomOut.Click        += XCMainWindow.Instance.OnZoomOutClick;
 
 			// ZoomIn btn
 			_tsbZoomIn.Name           = "tsbZoomIn";
 			_tsbZoomIn.DisplayStyle   = ToolStripItemDisplayStyle.Image;
-			_tsbZoomIn.Image          = Resources.ZoomIn1;
+			_tsbZoomIn.Image          = Resources.scaleIn;
 			_tsbZoomIn.ToolTipText    = "scale In";
 			_tsbZoomIn.Click         += XCMainWindow.Instance.OnZoomInClick;
 		}
@@ -226,7 +226,7 @@ namespace MapView.Forms.MainWindow
 			// Fill btn
 			tsbFill.Name          = "tsbFill";
 			tsbFill.DisplayStyle  = ToolStripItemDisplayStyle.Image;
-			tsbFill.Image         = Resources.philup;
+			tsbFill.Image         = Resources.fill;
 			tsbFill.ToolTipText   = "fill";
 			tsbFill.Click        += _mainViewUnderlay.OnFill;
 		}
