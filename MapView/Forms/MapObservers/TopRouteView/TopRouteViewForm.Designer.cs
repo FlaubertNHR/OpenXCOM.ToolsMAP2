@@ -14,7 +14,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -40,11 +40,11 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.TopViewControl = new MapView.Forms.MapObservers.TopViews.TopView();
 			this.RouteViewControl = new MapView.Forms.MapObservers.RouteViews.RouteView();
 			this.tabControl = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tp_Top = new System.Windows.Forms.TabPage();
+			this.tp_Route = new System.Windows.Forms.TabPage();
 			this.tabControl.SuspendLayout();
-			this.tabPage1.SuspendLayout();
-			this.tabPage2.SuspendLayout();
+			this.tp_Top.SuspendLayout();
+			this.tp_Route.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// TopViewControl
@@ -69,8 +69,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			// 
 			// tabControl
 			// 
-			this.tabControl.Controls.Add(this.tabPage1);
-			this.tabControl.Controls.Add(this.tabPage2);
+			this.tabControl.Controls.Add(this.tp_Top);
+			this.tabControl.Controls.Add(this.tp_Route);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabControl.Location = new System.Drawing.Point(0, 0);
@@ -79,25 +79,25 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.tabControl.Size = new System.Drawing.Size(632, 454);
 			this.tabControl.TabIndex = 1;
 			// 
-			// tabPage1
+			// tp_Top
 			// 
-			this.tabPage1.Controls.Add(this.TopViewControl);
-			this.tabPage1.Location = new System.Drawing.Point(4, 21);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(624, 429);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "TopView";
+			this.tp_Top.Controls.Add(this.TopViewControl);
+			this.tp_Top.Location = new System.Drawing.Point(4, 21);
+			this.tp_Top.Name = "tp_Top";
+			this.tp_Top.Padding = new System.Windows.Forms.Padding(3);
+			this.tp_Top.Size = new System.Drawing.Size(624, 429);
+			this.tp_Top.TabIndex = 0;
+			this.tp_Top.Text = "TopView";
 			// 
-			// tabPage2
+			// tp_Route
 			// 
-			this.tabPage2.Controls.Add(this.RouteViewControl);
-			this.tabPage2.Location = new System.Drawing.Point(4, 21);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(624, 429);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "RouteView";
+			this.tp_Route.Controls.Add(this.RouteViewControl);
+			this.tp_Route.Location = new System.Drawing.Point(4, 21);
+			this.tp_Route.Name = "tp_Route";
+			this.tp_Route.Padding = new System.Windows.Forms.Padding(3);
+			this.tp_Route.Size = new System.Drawing.Size(624, 429);
+			this.tp_Route.TabIndex = 1;
+			this.tp_Route.Text = "RouteView";
 			// 
 			// TopRouteViewForm
 			// 
@@ -111,8 +111,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.ShowInTaskbar = false;
 			this.Text = "Top/Route Views";
 			this.tabControl.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
-			this.tabPage2.ResumeLayout(false);
+			this.tp_Top.ResumeLayout(false);
+			this.tp_Route.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -122,7 +122,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		private RouteView RouteViewControl;
 
 		private System.Windows.Forms.TabControl tabControl;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage tp_Top;
+		private System.Windows.Forms.TabPage tp_Route;
 	}
 }

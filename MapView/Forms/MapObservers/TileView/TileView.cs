@@ -372,7 +372,12 @@ namespace MapView.Forms.MapObservers.TileViews
 		private Form _foptions;
 		private bool _closing; // wtf is this for like really
 
-		private void OnOptionsClick(object sender, EventArgs e)
+		/// <summary>
+		/// Handles a click on the Options button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnOptionsClick(object sender, EventArgs e)
 		{
 			var tsb = sender as ToolStripButton;
 			if (tsb.Checked = !tsb.Checked)
@@ -396,6 +401,16 @@ namespace MapView.Forms.MapObservers.TileViews
 				_foptions.Close();
 			}
 		}
+
+		/// <summary>
+		/// Gets the Options button on the toolstrip.
+		/// </summary>
+		/// <returns>the Options button</returns>
+		internal ToolStripButton GetOptionsButton()
+		{
+			return tsb_Options;
+		}
+
 
 		/// <summary>
 		/// Opens the MCD-info screen.

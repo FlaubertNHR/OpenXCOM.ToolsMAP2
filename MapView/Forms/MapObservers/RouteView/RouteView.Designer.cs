@@ -787,6 +787,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// label_RoutesChanged
 			// 
+			this.label_RoutesChanged.ForeColor = System.Drawing.Color.Firebrick;
 			this.label_RoutesChanged.Location = new System.Drawing.Point(555, 160);
 			this.label_RoutesChanged.Name = "label_RoutesChanged";
 			this.label_RoutesChanged.Size = new System.Drawing.Size(55, 30);

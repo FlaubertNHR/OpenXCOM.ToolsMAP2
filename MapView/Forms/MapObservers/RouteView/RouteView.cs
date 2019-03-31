@@ -331,7 +331,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#endregion
 
 
-		#region Eventcalls (mouse-events for RoutePanel)
+		#region Events (mouse-events for RoutePanel)
 		private void OnRoutePanelMouseMove(object sender, MouseEventArgs args)
 		{
 			int over;
@@ -909,7 +909,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 
-		#region Eventcalls (NodeData)
+		#region Events (NodeData)
 		private void OnUnitTypeSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (!_loadingInfo)
@@ -1001,7 +1001,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#endregion
 
 
-		#region Eventcalls (LinkData)
+		#region Events (LinkData)
 		/// <summary>
 		/// Changes a link's destination.
 		/// </summary>
@@ -1453,7 +1453,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#endregion
 
 
-		#region Eventcalls (Edit handlers)
+		#region Events (Edit handlers)
 		private void OnCutClick(object sender, EventArgs e)
 		{
 			OnCopyClick(null, null);
@@ -1618,7 +1618,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 
-		#region Eventcalls (menubar)
+		#region Events (menubar)
 		/// <summary>
 		/// Handler for closing the ConnectType combobox.
 		/// </summary>
@@ -1959,10 +1959,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Options
-		private static Form _foptions; // static to be used by both RouteViewOptions
+		private static Form _foptions; // is static so it will be used by both RouteViewOptions
 		private static bool _closing;  // and TopRouteView(Route)Options
 
-		private void OnOptionsClick(object sender, EventArgs e)
+		/// <summary>
+		/// Handles a click on the Options button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnOptionsClick(object sender, EventArgs e)
 		{
 			var tsb = sender as ToolStripButton;
 			if (!tsb.Checked)
@@ -1992,6 +1997,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 				_foptions.Close();
 			}
 		}
+
+		/// <summary>
+		/// Gets the Options button on the toolstrip.
+		/// </summary>
+		/// <returns>either the button in RouteView or TopRouteView(Route)
+		/// - doesn't matter as long as they are kept synched</returns>
+		internal ToolStripButton GetOptionsButton()
+		{
+			return tsb_Options;
+		}
+
 
 		// headers
 		private const string Links = "Links";

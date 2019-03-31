@@ -131,7 +131,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		#endregion
 
 
-		#region EventCalls
+		#region Events
 		/// <summary>
 		/// Handles a click on any of the quadrant-visibility menuitems.
 		/// </summary>
@@ -168,46 +168,6 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			ViewerFormsManager.TopView     .Control   .Refresh();
 			ViewerFormsManager.TopRouteView.ControlTop.Refresh();
-		}
-
-
-		private static Form _foptions; // static to be used by both TopViewOptions
-		private static bool _closing;  // and TopRouteView(Top)Options
-
-		/// <summary>
-		/// Handles a click on the Options menuitem.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnOptionsClick(object sender, EventArgs e)
-		{
-			var tsb = sender as ToolStripButton;
-			if (!tsb.Checked)
-			{
-				ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = true;
-
-				_foptions = new OptionsForm("TopViewOptions", Options);
-				_foptions.Text = "TopView Options";
-
-				_foptions.Show();
-
-				_foptions.FormClosing += (sender1, e1) => // a note describing why this is here could be helpful ...
-				{
-					if (!_closing)
-						OnOptionsClick(sender, e);
-
-					_closing = false;
-				};
-			}
-			else
-			{
-				ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = false;
-
-				_closing = true;
-				_foptions.Close();
-			}
 		}
 		#endregion
 
@@ -251,6 +211,56 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 		#region Options
+		private static Form _foptions; // is static so it will be used by both TopViewOptions
+		private static bool _closing;  // and TopRouteView(Top)Options
+
+		/// <summary>
+		/// Handles a click on the Options button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnOptionsClick(object sender, EventArgs e)
+		{
+			var tsb = sender as ToolStripButton;
+			if (!tsb.Checked)
+			{
+				ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = true;
+
+				_foptions = new OptionsForm("TopViewOptions", Options);
+				_foptions.Text = "TopView Options";
+
+				_foptions.Show();
+
+				_foptions.FormClosing += (sender1, e1) => // a note describing why this is here could be helpful ...
+				{
+					if (!_closing)
+						OnOptionsClick(sender, e);
+
+					_closing = false;
+				};
+			}
+			else
+			{
+				ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = false;
+
+				_closing = true;
+				_foptions.Close();
+			}
+		}
+
+		/// <summary>
+		/// Gets the Options button on the toolstrip.
+		/// </summary>
+		/// <returns>either the button in TopView or TopRouteView(Top)
+		/// - doesn't matter as long as they are kept synched</returns>
+		internal ToolStripButton GetOptionsButton()
+		{
+			return tsb_Options;
+		}
+
+
 		// headers
 		private const string Tile     = "Tile";
 		private const string Selector = "Selector";

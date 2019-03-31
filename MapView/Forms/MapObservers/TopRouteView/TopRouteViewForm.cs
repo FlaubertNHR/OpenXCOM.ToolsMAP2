@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 using DSShared.Windows;
 
@@ -34,18 +35,37 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 
 		#region Events (override)
 		/// <summary>
-		/// Closes/hides this viewer when the F8 key is pressed.
+		/// Handles KeyDown events at the form level.
+		/// - closes/hides this viewer on [F8] event.
+		/// - opens/closes Options on [Ctrl+o] event.
 		/// @note Requires 'KeyPreview' true.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.F8)
+			switch (e.KeyCode)
 			{
-				Close();
+				case Keys.F8:
+					Close();
+					break;
+
+				case Keys.O:
+					if ((e.Modifiers & Keys.Control) == Keys.Control)
+					{
+						switch (tabControl.SelectedIndex)
+						{
+							case 0: ControlTop  .OnOptionsClick(ControlTop  .GetOptionsButton(), EventArgs.Empty); break;
+							case 1: ControlRoute.OnOptionsClick(ControlRoute.GetOptionsButton(), EventArgs.Empty); break;
+						}
+					}
+					else
+						goto default;
+					break;
+
+				default:
+					base.OnKeyDown(e);
+					break;
 			}
-			else
-				base.OnKeyDown(e);
 		}
 		#endregion Events (override)
 	}

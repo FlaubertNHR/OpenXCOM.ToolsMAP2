@@ -51,18 +51,33 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		#region Events (override)
 		/// <summary>
-		/// Closes/hides this viewer when the F5 key is pressed.
+		/// Handles KeyDown events at the form level.
+		/// - closes/hides this viewer on [F5] event.
+		/// - opens/closes Options on [Ctrl+o] event.
 		/// @note Requires 'KeyPreview' true.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.F5)
+			switch (e.KeyCode)
 			{
-				Close();
+				case Keys.F5:
+					Close();
+					break;
+
+				case Keys.O:
+					if ((e.Modifiers & Keys.Control) == Keys.Control)
+					{
+						Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+					}
+					else
+						goto default;
+					break;
+
+				default:
+					base.OnKeyDown(e);
+					break;
 			}
-			else
-				base.OnKeyDown(e);
 		}
 		#endregion Events (override)
 

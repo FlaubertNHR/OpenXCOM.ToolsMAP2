@@ -222,6 +222,16 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
+		/// whee. Handles animations.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAnimationUpdate(object sender, EventArgs e)
+		{
+			Invalidate();
+		}
+
+		/// <summary>
 		/// Fires when anything changes the Value of the scroll-bar.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -234,8 +244,10 @@ namespace MapView.Forms.MapObservers.TileViews
 				Refresh();
 			}
 		}
+		#endregion Events
 
 
+		#region Events (override)
 		private bool _resetTrack;
 
 		/// <summary>
@@ -375,8 +387,6 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		private const string Door = "door";
-
-		private static bool Inited;
 		private static int TextWidth;
 
 		private const int TableOffset = 2;
@@ -403,10 +413,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				int top;
 				int left;
 
-				if (!Inited)
+				if (TextWidth == 0) // init.
 				{
-					Inited = true;
-
 //					TextWidth = TextRenderer.MeasureText(Door, Font).Width;		// =30
 					TextWidth = (int)graphics.MeasureString(Door, Font).Width;	// =24
 				}
@@ -512,17 +520,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			}
 		}
-
-		/// <summary>
-		/// whee. Handles animations.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnAnimationUpdate(object sender, EventArgs e)
-		{
-			Refresh();
-		}
-		#endregion
+		#endregion Events (override)
 
 
 		#region Methods
@@ -589,6 +587,6 @@ namespace MapView.Forms.MapObservers.TileViews
 				}
 			}
 		}
-		#endregion
+		#endregion Methods
 	}
 }

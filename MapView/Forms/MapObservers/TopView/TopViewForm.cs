@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 
 namespace MapView.Forms.MapObservers.TopViews
@@ -34,18 +35,33 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region Events (override)
 		/// <summary>
-		/// Closes/hides this viewer when the F6 key is pressed.
+		/// Handles KeyDown events at the form level.
+		/// - closes/hides this viewer on [F6] event.
+		/// - opens/closes Options on [Ctrl+o] event.
 		/// @note Requires 'KeyPreview' true.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.F6)
+			switch (e.KeyCode)
 			{
-				Close();
+				case Keys.F6:
+					Close();
+					break;
+
+				case Keys.O:
+					if ((e.Modifiers & Keys.Control) == Keys.Control)
+					{
+						Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+					}
+					else
+						goto default;
+					break;
+
+				default:
+					base.OnKeyDown(e);
+					break;
 			}
-			else
-				base.OnKeyDown(e);
 		}
 		#endregion Events (override)
 	}
