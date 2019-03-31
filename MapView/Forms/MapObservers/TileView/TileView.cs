@@ -155,6 +155,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			panel.Focus();
 
 			McdRecord record;
+			int id;
+			string label;
 
 			var f = FindForm();
 			if (SelectedTilepart != null)
@@ -164,15 +166,19 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				f.Text = BuildTitleString(SelectedTilepart.SetId, SelectedTilepart.TerId);
 				record = SelectedTilepart.Record;
+				id = SelectedTilepart.TerId;
+				label = GetTerrainLabel();
 			}
 			else
 			{
 				f.Text = "TileView";
 				record = null;
+				id = -1;
+				label = String.Empty;
 			}
 
 			if (_mcdInfoForm != null)
-				_mcdInfoForm.UpdateData(record);
+				_mcdInfoForm.UpdateData(record, id, label);
 		}
 
 		/// <summary>
@@ -184,18 +190,27 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			var f = FindForm();
 
-			McdRecord record = null;
+			McdRecord record;
+			int id;
+			string label;
 
 			if (part != null)
 			{
 				f.Text = BuildTitleString(part.SetId, part.TerId);
 				record = part.Record;
+				id = part.TerId;
+				label = GetTerrainLabel();
 			}
 			else
+			{
 				f.Text = "TileView";
+				record = null;
+				id = -1;
+				label = String.Empty;
+			}
 
 			if (_mcdInfoForm != null)
-				_mcdInfoForm.UpdateData(record);
+				_mcdInfoForm.UpdateData(record, id, label);
 
 			SelectQuadrant(part);
 		}
@@ -403,18 +418,27 @@ namespace MapView.Forms.MapObservers.TileViews
 
 					var f = FindForm();
 
-					McdRecord record = null;
+					McdRecord record;
+					int id;
+					string label;
 
 					var part = SelectedTilepart;
 					if (part != null)
 					{
 						f.Text = BuildTitleString(part.SetId, part.TerId);
 						record = part.Record;
+						id = part.TerId;
+						label = GetTerrainLabel();
 					}
 					else
+					{
 						f.Text = "TileView";
+						record = null;
+						id = -1;
+						label = String.Empty;
+					}
 
-					_mcdInfoForm.UpdateData(record);
+					_mcdInfoForm.UpdateData(record, id, label);
 				}
 				_mcdInfoForm.Show();
 			}
@@ -703,7 +727,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Gets the label of the terrain of the currently selected tilepart.
 		/// </summary>
 		/// <returns></returns>
-		private string GetTerrainLabel()
+		internal string GetTerrainLabel()
 		{
 			return (SelectedTilepart != null) ? ((MapFileChild)MapBase).GetTerrainLabel(SelectedTilepart)
 											  : "ERROR";

@@ -2585,10 +2585,14 @@ namespace MapView
 					var tileview = ViewerFormsManager.TileView.Control; // update MCD Info if open
 					if (tileview._mcdInfoForm != null)
 					{
-						if (tileview.SelectedTilepart != null)
-							tileview._mcdInfoForm.UpdateData(tileview.SelectedTilepart.Record);
+						TilepartBase part = tileview.SelectedTilepart;
+						if (part != null)
+							tileview._mcdInfoForm.UpdateData(
+															part.Record,
+															part.TerId,
+															tileview.GetTerrainLabel());
 						else
-							tileview._mcdInfoForm.UpdateData(null);
+							tileview._mcdInfoForm.UpdateData();
 					}
 				}
 			}

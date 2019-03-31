@@ -36,7 +36,7 @@ namespace XCom
 				base(id)
 		{
 			_spriteset = spriteset;
-			Record     = record;
+			Record = record;
 
 			Sprites = new XCImage[8]; // every tile-part contains refs to 8 sprites.
 			InitializeSprites();

@@ -127,6 +127,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			// 
 			// tsb_Options
 			// 
+			this.tsb_Options.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
 			this.tsb_Options.AutoToolTip = false;
 			this.tsb_Options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsb_Options.ImageTransparentColor = System.Drawing.Color.Magenta;

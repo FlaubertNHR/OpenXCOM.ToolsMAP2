@@ -12,6 +12,11 @@ namespace MapView.Forms.McdInfo
 		:
 			Form
 	{
+		#region Fields (constant)
+		private const string title = "MCD Info";
+		#endregion Fields (constant)
+
+
 		#region cTor
 		/// <summary>
 		/// cTor. Instantiates an MCD-info screen.
@@ -24,7 +29,7 @@ namespace MapView.Forms.McdInfo
 			rtbInfo.WordWrap = false;
 			rtbInfo.ReadOnly = true;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events
@@ -52,7 +57,7 @@ namespace MapView.Forms.McdInfo
 		}
 
 		/// <summary>
-		/// Closes the screen on an [Esc] or [i] keyup event.
+		/// Closes the screen on an [i] keyup event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -61,20 +66,28 @@ namespace MapView.Forms.McdInfo
 			if (e.KeyCode == Keys.I)
 				Close();
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
 		/// <summary>
 		/// Updates the displayed data whenever the selected tile changes.
 		/// </summary>
-		/// <param name="record"></param>
-		internal void UpdateData(McdRecord record)
+		/// <param name="record">null to blank the info</param>
+		/// <param name="id">terrain Id</param>
+		/// <param name="terrainlabel"></param>
+		internal void UpdateData(
+				McdRecord record = null,
+				int id = -1,
+				string terrainlabel = "")
 		{
+			Text = title;
 			rtbInfo.Text = String.Empty;
 
 			if ((bsInfo.DataSource = record) != null)
 			{
+				Text += " - " + terrainlabel + "  terId " + id;
+
 				rtbInfo.SelectionColor = Color.Black;
 				rtbInfo.AppendText(record.stSprites);
 				rtbInfo.AppendText(record.stLoFTs);
@@ -282,6 +295,6 @@ namespace MapView.Forms.McdInfo
 			rtbInfo.SelectionStart  =
 			rtbInfo.SelectionLength = 0;
 		}
-		#endregion
+		#endregion Methods
 	}
 }
