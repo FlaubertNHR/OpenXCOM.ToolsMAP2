@@ -46,9 +46,9 @@ namespace MapView.Forms.MainWindow
 		#endregion
 
 
-		#region Eventcalls (static)
+		#region Events (static)
 		/// <summary>
-		/// Handles clicking on a MenuItem to open/close a window.
+		/// Handles clicking on a MenuItem to open/close a subsidiary form.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -57,26 +57,34 @@ namespace MapView.Forms.MainWindow
 			var it = sender as MenuItem;
 			var f = it.Tag as Form;
 
-			if (it.Checked = !it.Checked)
+			if (it.Checked && f.WindowState == FormWindowState.Minimized)
+			{
+				f.WindowState = FormWindowState.Normal;
+			}
+			else if (it.Checked = !it.Checked)
 			{
 //				f.Owner = XCMainWindow.Instance;	// NOTE: If MainView is set as the owner of the
 													// viewers MainView can no longer be minimized
 													// while keeping the other viewers up. Etc.
 													// Policy #1008: let the viewers operate as independently as possible.
 													// See also: XCMainWindow.OnActivated()
-				f.Show();
+
 				f.WindowState = FormWindowState.Normal;
+				f.Show();
 
 				if (it.Tag is ColorHelp) // update colors that user might have set in TileView's Option-settings.
 					ViewerFormsManager.HelpScreen.UpdateColors();
 			}
 			else
+			{
+				f.WindowState = FormWindowState.Normal;
 				f.Close();
+			}
 		}
 		#endregion
 
 
-		#region Eventcalls
+		#region Events
 		/// <summary>
 		/// Shows the CHM helpfile.
 		/// </summary>

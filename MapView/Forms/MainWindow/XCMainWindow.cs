@@ -1044,7 +1044,7 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls
+		#region Events
 		private void OnAnimationUpdate(object sender, EventArgs e)
 		{
 			ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
