@@ -280,7 +280,7 @@ namespace MapView
 			LogFile.WriteLine("MainView menus populated.");
 
 
-			ViewerFormsManager.HideViewersManager = _mainMenusManager.CreateShowHideManager(); // subsidiary viewers hide when PckView is invoked from TileView.
+			ViewerFormsManager.HideViewersManager = _mainMenusManager.CreateShowHideManager(); // subsidiary viewers hide when Pck/McdView is invoked from TileView.
 			LogFile.WriteLine("HideViewersManager created.");
 
 

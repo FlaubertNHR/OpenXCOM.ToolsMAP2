@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using MapView.Forms.MainWindow;
+
 
 namespace MapView.Forms.MapObservers.TopViews
 {
@@ -43,11 +45,14 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
+			int it = -1;
+
 			switch (e.KeyCode)
 			{
-				case Keys.F6:
-					Close();
-					break;
+				case Keys.F5: it = 0; break;
+				case Keys.F6: it = 2; break;
+				case Keys.F7: it = 3; break;
+				case Keys.F8: it = 4; break;
 
 				case Keys.O:
 					if ((e.Modifiers & Keys.Control) == Keys.Control)
@@ -62,6 +67,19 @@ namespace MapView.Forms.MapObservers.TopViews
 					base.OnKeyDown(e);
 					break;
 			}
+
+			if (it != -1)
+			{
+				MainMenusManager.OnMenuItemClick(
+											MainMenusManager.ViewerIts.MenuItems[it],
+											EventArgs.Empty);
+			}
+		}
+
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			WindowState = FormWindowState.Normal; // else causes probls when opening a viewer that was closed while maximized.
+			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
 	}

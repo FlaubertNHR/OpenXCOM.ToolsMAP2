@@ -16,12 +16,11 @@ namespace MapView.Forms.MainWindow
 	{
 		#region Fields (static)
 		private const string Separator = "-";
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
-		private readonly MenuItem _menuViewers;
-		private readonly MenuItem _menuHelp;
+		private readonly MenuItem _itHelp;
 
 		private readonly List<MenuItem> _allItems = new List<MenuItem>();
 		private readonly List<Form>     _allForms = new List<Form>();
@@ -29,21 +28,31 @@ namespace MapView.Forms.MainWindow
 		private Options _options;
 
 		private bool _quit;
-		#endregion
+		#endregion Fields
+
+
+		#region Properties
+		private static MenuItem _itViewers;
+		internal static MenuItem ViewerIts
+		{
+			get { return _itViewers; }
+			private set { _itViewers = value; }
+		}
+		#endregion Properties
 
 
 		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="show"></param>
+		/// <param name="viewers"></param>
 		/// <param name="help"></param>
-		internal MainMenusManager(MenuItem show, MenuItem help)
+		internal MainMenusManager(MenuItem viewers, MenuItem help)
 		{
-			_menuViewers = show; // why are these MenuItems
-			_menuHelp    = help;
+			_itViewers = viewers;
+			_itHelp    = help;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events (static)
@@ -52,7 +61,7 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private static void OnMenuItemClick(object sender, EventArgs e)
+		internal static void OnMenuItemClick(object sender, EventArgs e)
 		{
 			var it = sender as MenuItem;
 			var f = it.Tag as Form;
@@ -69,8 +78,8 @@ namespace MapView.Forms.MainWindow
 													// Policy #1008: let the viewers operate as independently as possible.
 													// See also: XCMainWindow.OnActivated()
 
-				f.WindowState = FormWindowState.Normal;
 				f.Show();
+				f.WindowState = FormWindowState.Normal;
 
 				if (it.Tag is ColorHelp) // update colors that user might have set in TileView's Option-settings.
 					ViewerFormsManager.HelpScreen.UpdateColors();
@@ -81,7 +90,7 @@ namespace MapView.Forms.MainWindow
 				f.Close();
 			}
 		}
-		#endregion
+		#endregion Events (static)
 
 
 		#region Events
@@ -96,7 +105,7 @@ namespace MapView.Forms.MainWindow
 				   help = Path.Combine(help, "MapView.chm");
 			Help.ShowHelp(XCMainWindow.Instance, "file://" + help);
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -110,13 +119,13 @@ namespace MapView.Forms.MainWindow
 			_options = options;
 
 			// Viewers menuitems ->
-			CreateMenuItem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     _menuViewers, Shortcut.F5);
+			CreateMenuItem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     _itViewers, Shortcut.F5);	// id #0
 
-			_menuViewers.MenuItems.Add(new MenuItem(Separator));
+			_itViewers.MenuItems.Add(new MenuItem(Separator));														// id #1
 
-			CreateMenuItem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      _menuViewers, Shortcut.F6);
-			CreateMenuItem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    _menuViewers, Shortcut.F7);
-			CreateMenuItem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, _menuViewers, Shortcut.F8);
+			CreateMenuItem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      _itViewers, Shortcut.F6);	// id #2
+			CreateMenuItem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    _itViewers, Shortcut.F7);	// id #3
+			CreateMenuItem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, _itViewers, Shortcut.F8);	// id #4
 
 //			_menuViewers.MenuItems.Add(new MenuItem(Divider));
 //			CreateMenuItem(fconsole, RegistryInfo.Console, _menuViewers); // TODO: either use the Console or lose it.
@@ -124,10 +133,10 @@ namespace MapView.Forms.MainWindow
 			// Help menuitems ->
 			var miHelp = new MenuItem("Help");
 			miHelp.Click += OnHelpClick;
-			_menuHelp.MenuItems.Add(miHelp);
+			_itHelp.MenuItems.Add(miHelp);
 
-			CreateMenuItem(ViewerFormsManager.HelpScreen,  "Colors", _menuHelp);
-			CreateMenuItem(ViewerFormsManager.AboutScreen, "About",  _menuHelp);
+			CreateMenuItem(ViewerFormsManager.HelpScreen,  "Colors", _itHelp);
+			CreateMenuItem(ViewerFormsManager.AboutScreen, "About",  _itHelp);
 
 
 			AddViewersOptions();
@@ -172,7 +181,7 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		private void AddViewersOptions()
 		{
-			foreach (MenuItem it in _menuViewers.MenuItems)
+			foreach (MenuItem it in _itViewers.MenuItems)
 			{
 				string key = it.Text;
 				if (!key.Equals(Separator, StringComparison.Ordinal))
@@ -210,7 +219,7 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		internal void StartViewers()
 		{
-			foreach (MenuItem it in _menuViewers.MenuItems)
+			foreach (MenuItem it in _itViewers.MenuItems)
 			{
 				string key = it.Text;
 				if (!key.Equals(Separator, StringComparison.Ordinal)
@@ -219,7 +228,7 @@ namespace MapView.Forms.MainWindow
 					it.PerformClick();
 				}
 			}
-			_menuViewers.Enabled = true;
+			_itViewers.Enabled = true;
 		}
 
 		/// <summary>
@@ -240,6 +249,6 @@ namespace MapView.Forms.MainWindow
 		{
 			return new ShowHideManager(_allForms, _allItems);
 		}
-		#endregion
+		#endregion Methods
 	}
 }
