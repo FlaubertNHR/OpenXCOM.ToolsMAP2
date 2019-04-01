@@ -40,8 +40,8 @@ namespace MapView
 			{
 				_scale = value;
 
-				ViewerFormsManager.ToolFactory.ToggleZoomOutButton(Math.Abs(_scale - ScaleMinimum) > 0.001);
-				ViewerFormsManager.ToolFactory.ToggleZoomInButton( Math.Abs(_scale - ScaleMaximum) > 0.001);
+				ViewerFormsManager.ToolFactory.SetScaleOutButtonEnabled(Math.Abs(_scale - ScaleMinimum) > 0.001);
+				ViewerFormsManager.ToolFactory.SetScaleInButtonEnabled( Math.Abs(_scale - ScaleMaximum) > 0.001);
 			}
 		}
 

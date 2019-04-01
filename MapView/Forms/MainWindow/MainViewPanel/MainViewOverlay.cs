@@ -71,23 +71,25 @@ namespace MapView
 
 		private bool _firstClick;
 		/// <summary>
-		/// Flag that tells the viewers, including Main, that it's okay to draw
-		/// a lozenge for a selected tile; ie, that an initial tile has actually
-		/// been selected.
-		/// Can also happen on MainView when GraySelected is false.
+		/// A flag that indicates that the user has selected a tile(s).
+		/// @note The operation of the flag relies on the fact that once a
+		/// tile(s) has been selected on a Map there will always be a tile(s)
+		/// selected until either (a) the Map is resized or (b) user loads a
+		/// different Map.
 		/// </summary>
 		internal bool FirstClick
 		{
 			get { return _firstClick; }
 			set
 			{
-				_firstClick = value;
-
-				if (!_firstClick)
+				if (!(_firstClick = value))
 				{
-					_dragStart = new Point(-1, -1);
-					_dragEnd   = new Point(-1, -1);
+					_dragStart = new Point(-1,-1);
+					_dragEnd   = new Point(-1,-1);
 				}
+
+				ViewerFormsManager.ToolFactory.SetEditButtonsEnabled( _firstClick);
+				ViewerFormsManager.ToolFactory.SetPasteButtonsEnabled(_firstClick && _copied != null);
 			}
 		}
 
@@ -321,7 +323,7 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls and Methods for the edit-functions
+		#region Events and Methods for the edit-functions
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.Control)
@@ -375,9 +377,9 @@ namespace MapView
 				{
 					tile = (XCMapTile)MapBase[row, col];
 
-					tile.Floor   = null;
-					tile.West    = null;
-					tile.North   = null;
+					tile.Floor   =
+					tile.West    =
+					tile.North   =
 					tile.Content = null;
 
 					tile.Vacant = true;
@@ -396,7 +398,7 @@ namespace MapView
 		{
 			if (MapBase != null && FirstClick)
 			{
-				ToolstripFactory.Instance.EnablePasteButtons();
+				ToolstripFactory.Instance.SetPasteButtonsEnabled();
 
 				var start = GetAbsoluteDragStart();
 				var end   = GetAbsoluteDragEnd();
@@ -404,17 +406,17 @@ namespace MapView
 				_copied = new MapTileBase[end.Y - start.Y + 1,
 										  end.X - start.X + 1];
 
-				XCMapTile @base, copy;
+				XCMapTile tile, copy;
 
 				for (int col = start.X; col <= end.X; ++col)
 				for (int row = start.Y; row <= end.Y; ++row)
 				{
-					@base = (XCMapTile)MapBase[row, col];
+					tile = (XCMapTile)MapBase[row, col];
 					copy = new XCMapTile(
-									@base.Floor,
-									@base.West,
-									@base.North,
-									@base.Content);
+									tile.Floor,
+									tile.West,
+									tile.North,
+									tile.Content);
 
 					_copied[row - start.Y,
 							col - start.X] = copy;
@@ -424,11 +426,11 @@ namespace MapView
 
 		internal void Paste()
 		{
-			if (MapBase != null && _copied != null && FirstClick)
+			if (MapBase != null && FirstClick && _copied != null)
 			{
 				XCMainWindow.Instance.MapChanged = true;
 
-				XCMapTile tile, tileCopy;
+				XCMapTile tile, copy;
 				for (int
 						row = DragStart.Y;
 						row != MapBase.MapSize.Rows && (row - DragStart.Y) < _copied.GetLength(0);
@@ -441,13 +443,13 @@ namespace MapView
 					{
 						if ((tile = MapBase[row, col] as XCMapTile) != null)
 						{
-							if ((tileCopy = _copied[row - DragStart.Y,
-													col - DragStart.X] as XCMapTile) != null)
+							if ((copy = _copied[row - DragStart.Y,
+												col - DragStart.X] as XCMapTile) != null)
 							{
-								tile.Floor   = tileCopy.Floor;
-								tile.Content = tileCopy.Content;
-								tile.West    = tileCopy.West;
-								tile.North   = tileCopy.North;
+								tile.Floor   = copy.Floor;
+								tile.Content = copy.Content;
+								tile.West    = copy.West;
+								tile.North   = copy.North;
 
 								tile.Vacancy();
 							}
@@ -510,8 +512,8 @@ namespace MapView
 			if      (e.Delta < 0) MapBase.LevelUp();
 			else if (e.Delta > 0) MapBase.LevelDown();
 
-			ViewerFormsManager.ToolFactory.ToggleDownButtons(MapBase.Level != MapBase.MapSize.Levs - 1);
-			ViewerFormsManager.ToolFactory.ToggleUpButtons(  MapBase.Level != 0);
+			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(MapBase.Level != MapBase.MapSize.Levs - 1);
+			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  MapBase.Level != 0);
 		}
 
 
@@ -1536,8 +1538,8 @@ namespace MapView
 			x -= Origin.X;
 			y -= Origin.Y;
 
-			double halfWidth  = HalfWidth;
-			double halfHeight = HalfHeight;
+			double halfWidth  = (double)HalfWidth;
+			double halfHeight = (double)HalfHeight;
 
 			double verticalOffset = (MapBase.Level + 1) * 3;
 

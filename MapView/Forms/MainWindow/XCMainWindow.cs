@@ -302,9 +302,9 @@ namespace MapView
 			tscPanel.ContentPanel.Controls.Add(_mainViewUnderlay);
 
 			ViewerFormsManager.ToolFactory.CreateToolstripSearchObjects(tsTools);
-			ViewerFormsManager.ToolFactory.CreateToolstripZoomObjects(tsTools);
-			ViewerFormsManager.ToolFactory.CreateToolstripEditorObjects(tsTools, false);
-			ViewerFormsManager.ToolFactory.EnableToolStrip(false);
+			ViewerFormsManager.ToolFactory.CreateToolstripScaleObjects(tsTools);
+			ViewerFormsManager.ToolFactory.CreateToolstripEditorObjects(tsTools);
+			LogFile.WriteLine("MainView toolstrip created.");
 
 
 			// Read MapResources.yml to get the resources dir (for both UFO and TFTD).
@@ -426,8 +426,7 @@ namespace MapView
 			/****************************************/
 
 
-			LogFile.WriteLine("About to show MainView ...");
-			LogFile.WriteLine("");
+			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 			Show();
 		}
 		#endregion
@@ -1405,6 +1404,9 @@ namespace MapView
 
 						_mainViewUnderlay.MainViewOverlay.FirstClick = false;
 
+						ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
+						ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  @base.Level != 0);
+
 						tsslDimensions   .Text = @base.MapSize.ToString();
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
@@ -1491,7 +1493,7 @@ namespace MapView
 		}
 
 
-		internal void OnZoomInClick(object sender, EventArgs e)
+		internal void OnScaleInClick(object sender, EventArgs e)
 		{
 			if (Globals.Scale < Globals.ScaleMaximum)
 			{
@@ -1502,7 +1504,7 @@ namespace MapView
 			}
 		}
 
-		internal void OnZoomOutClick(object sender, EventArgs e)
+		internal void OnScaleOutClick(object sender, EventArgs e)
 		{
 			if (Globals.Scale > Globals.ScaleMinimum)
 			{
@@ -1515,7 +1517,7 @@ namespace MapView
 
 		private void Zoom()
 		{
-			ViewerFormsManager.ToolFactory.SetAutozoomChecked(false);
+			ViewerFormsManager.ToolFactory.DisableScaleChecked();
 			Globals.AutoScale = false;
 
 			_mainViewUnderlay.SetOverlaySize();
@@ -1524,9 +1526,9 @@ namespace MapView
 			Refresh();
 		}
 
-		internal void OnAutoScaleClick(object sender, EventArgs e)
+		internal void OnScaleClick(object sender, EventArgs e)
 		{
-			Globals.AutoScale = ViewerFormsManager.ToolFactory.ToggleAutozoomChecked();
+			Globals.AutoScale = ViewerFormsManager.ToolFactory.ToggleScaleChecked();
 			if (Globals.AutoScale)
 			{
 				_mainViewUnderlay.SetScale();
@@ -2540,9 +2542,9 @@ namespace MapView
 
 					_mainViewUnderlay.MapBase = @base;
 
-					ViewerFormsManager.ToolFactory.EnableToolStrip(true);
-					ViewerFormsManager.ToolFactory.ToggleDownButtons(@base.Level != @base.MapSize.Levs - 1);
-					ViewerFormsManager.ToolFactory.ToggleUpButtons(  @base.Level != 0);
+					ViewerFormsManager.ToolFactory.EnableScaleButton();
+					ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
+					ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  @base.Level != 0);
 
 					Text = title + " " + descriptor.Basepath;
 					if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.

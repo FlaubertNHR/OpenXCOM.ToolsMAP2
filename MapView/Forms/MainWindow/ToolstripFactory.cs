@@ -18,24 +18,31 @@ namespace MapView.Forms.MainWindow
 		#region Fields
 		private readonly MainViewUnderlay _mainViewUnderlay;
 
+		private readonly List<ToolStripButton> _editers = new List<ToolStripButton>(); // all edit-buttons except the pasters
 		private readonly List<ToolStripButton> _pasters = new List<ToolStripButton>();
 		private readonly List<ToolStripButton> _downers = new List<ToolStripButton>();
 		private readonly List<ToolStripButton> _uppers  = new List<ToolStripButton>();
 
+		// The instantiations of toolstrip-objects that are classvars are for
+		// MainView, while the toolstrip-objects for TopView and
+		// TopRouteView(Top) are instantiated in the classfuncts.
 
-		private readonly ToolStripTextBox _tstbSearch = new ToolStripTextBox();	// NOTE: These instantiations of toolstrip-objects that
-																				// are classvars are for MainView, while the toolstrip-
-		private ToolStripButton _tsbZoomAuto = new ToolStripButton();			// objects for TopView and TopRouteView(Top) are
-		private ToolStripButton _tsbZoomOut  = new ToolStripButton();			// instantiated in the functions below.
-		private ToolStripButton _tsbZoomIn   = new ToolStripButton();
+		private readonly ToolStripTextBox _tstbSearch     = new ToolStripTextBox();
+		private readonly ToolStripButton  _tsbSearchClear = new ToolStripButton();
 
-		private ToolStripButton _tsbDown     = new ToolStripButton();
-		private ToolStripButton _tsbUp       = new ToolStripButton();
-		private ToolStripButton _tsbCut      = new ToolStripButton();
-		private ToolStripButton _tsbCopy     = new ToolStripButton();
-		private ToolStripButton _tsbPaste    = new ToolStripButton();
-		private ToolStripButton _tsbDelete   = new ToolStripButton();
-		private ToolStripButton _tsbFill     = new ToolStripButton();
+		private readonly ToolStripButton _tsbScale    = new ToolStripButton();
+		private readonly ToolStripButton _tsbScaleOut = new ToolStripButton();
+		private readonly ToolStripButton _tsbScaleIn  = new ToolStripButton();
+
+		private readonly ToolStripButton _tsbDown     = new ToolStripButton();
+		private readonly ToolStripButton _tsbUp       = new ToolStripButton();
+
+		private readonly ToolStripButton _tsbCut      = new ToolStripButton();
+		private readonly ToolStripButton _tsbCopy     = new ToolStripButton();
+		private readonly ToolStripButton _tsbPaste    = new ToolStripButton();
+		private readonly ToolStripButton _tsbDelete   = new ToolStripButton();
+
+		private readonly ToolStripButton _tsbFill     = new ToolStripButton();
 		#endregion
 
 
@@ -60,12 +67,10 @@ namespace MapView.Forms.MainWindow
 		/// <param name="toolStrip"></param>
 		internal void CreateToolstripSearchObjects(ToolStrip toolStrip)
 		{
-			var tsbClearSearch = new ToolStripButton();
-
 			var tsItems = new ToolStripItem[]
 			{
 				_tstbSearch,
-				tsbClearSearch
+				_tsbSearchClear
 			};
 			toolStrip.Items.AddRange(tsItems);
 
@@ -74,12 +79,12 @@ namespace MapView.Forms.MainWindow
 			_tstbSearch.Text             = "search";
 			_tstbSearch.KeyPress        += OnSearchKeyPress;
 
-			// ClearSearch btn
-			tsbClearSearch.Name         = "tsbClearSearch";
-			tsbClearSearch.DisplayStyle = ToolStripItemDisplayStyle.Image;
-			tsbClearSearch.Image        = Resources.delete;
-			tsbClearSearch.ToolTipText  = "reset highlight";
-			tsbClearSearch.Click       += OnClearHighlightClick;
+			// SearchClear btn
+			_tsbSearchClear.Name         = "tsbSearchClear";
+			_tsbSearchClear.ToolTipText  = "reset hilight";
+			_tsbSearchClear.DisplayStyle = ToolStripItemDisplayStyle.Image;
+			_tsbSearchClear.Image        = Resources.delete;
+			_tsbSearchClear.Click       += OnClearHighlightClick;
 		}
 
 
@@ -88,237 +93,258 @@ namespace MapView.Forms.MainWindow
 		/// NOTE: Appears only in MainView.
 		/// </summary>
 		/// <param name="toolStrip"></param>
-		internal void CreateToolstripZoomObjects(ToolStrip toolStrip)
+		internal void CreateToolstripScaleObjects(ToolStrip toolStrip)
 		{
 			var tsItems = new ToolStripItem[]
 			{
 				new ToolStripSeparator(),
-				_tsbZoomAuto,
-				_tsbZoomOut,
-				_tsbZoomIn
+				_tsbScale,
+				_tsbScaleOut,
+				_tsbScaleIn
 			};
 			toolStrip.Items.AddRange(tsItems);
 
 			// AutoZoom btn
-			_tsbZoomAuto.Name         = "tsbZoomAuto";
-			_tsbZoomAuto.DisplayStyle = ToolStripItemDisplayStyle.Image;
-			_tsbZoomAuto.Image        = Resources.scale;
-			_tsbZoomAuto.Checked      = true;
-			_tsbZoomAuto.ToolTipText  = "autoscale";
-			_tsbZoomAuto.Click       += XCMainWindow.Instance.OnAutoScaleClick;
+			_tsbScale.Name            = "tsbScale";
+			_tsbScale.ToolTipText     = "autoscale";
+			_tsbScale.DisplayStyle    = ToolStripItemDisplayStyle.Image;
+			_tsbScale.Image           = Resources.scale;
+			_tsbScale.Click          += XCMainWindow.Instance.OnScaleClick;
+			_tsbScale.Checked         = true;
+			_tsbScale.Enabled         = false;
 
 			// ZoomOut btn
-			_tsbZoomOut.Name          = "tsbZoomOut";
-			_tsbZoomOut.DisplayStyle  = ToolStripItemDisplayStyle.Image;
-			_tsbZoomOut.Image         = Resources.scaleOut;
-			_tsbZoomOut.ToolTipText   = "scale Out";
-			_tsbZoomOut.Click        += XCMainWindow.Instance.OnZoomOutClick;
+			_tsbScaleOut.Name         = "tsbScaleOut";
+			_tsbScaleOut.ToolTipText  = "scale Out";
+			_tsbScaleOut.DisplayStyle = ToolStripItemDisplayStyle.Image;
+			_tsbScaleOut.Image        = Resources.scaleOut;
+			_tsbScaleOut.Click       += XCMainWindow.Instance.OnScaleOutClick;
+			_tsbScaleOut.Enabled      = false;
 
 			// ZoomIn btn
-			_tsbZoomIn.Name           = "tsbZoomIn";
-			_tsbZoomIn.DisplayStyle   = ToolStripItemDisplayStyle.Image;
-			_tsbZoomIn.Image          = Resources.scaleIn;
-			_tsbZoomIn.ToolTipText    = "scale In";
-			_tsbZoomIn.Click         += XCMainWindow.Instance.OnZoomInClick;
+			_tsbScaleIn.Name          = "tsbScaleIn";
+			_tsbScaleIn.ToolTipText   = "scale In";
+			_tsbScaleIn.DisplayStyle  = ToolStripItemDisplayStyle.Image;
+			_tsbScaleIn.Image         = Resources.scaleIn;
+			_tsbScaleIn.Click        += XCMainWindow.Instance.OnScaleInClick;
+			_tsbScaleIn.Enabled       = false;
+		}
+
+		/// <summary>
+		/// Disables the auto-scale button when user switches to glide.
+		/// </summary>
+		internal void DisableScaleChecked()
+		{
+			_tsbScale.Checked = false;
+		}
+
+		/// <summary>
+		/// Toggles the auto-scale button checked/unchecked.
+		/// </summary>
+		/// <returns>true if checked</returns>
+		internal bool ToggleScaleChecked()
+		{
+			return (_tsbScale.Checked = !_tsbScale.Checked);
+		}
+
+		/// <summary>
+		/// Enables MainView's auto-scale button.
+		/// </summary>
+		internal void EnableScaleButton()
+		{
+			_tsbScale.Enabled = true;
+		}
+
+		internal void SetScaleOutButtonEnabled(bool enabled)
+		{
+			_tsbScaleOut.Enabled = enabled;
+		}
+
+		internal void SetScaleInButtonEnabled(bool enabled)
+		{
+			_tsbScaleIn.Enabled = enabled;
 		}
 
 
 		/// <summary>
-		/// Adds buttons for Up,Down,Cut,Copy,Paste and Fill to the specified
-		/// toolstrip in MainView as well as TopView and TopRouteView(Top).
+		/// Adds buttons for Up,Down,Cut,Copy,Paste,Delete and Fill to the
+		/// specified toolstrip in MainView as well as TopView and
+		/// TopRouteView(Top).
 		/// </summary>
-		/// <param name="toolStrip"></param>
-		/// <param name="tertiary">false for MainView's toolstrip, true for TopView's and TopRouteView's</param>
-		internal void CreateToolstripEditorObjects(ToolStrip toolStrip, bool tertiary)
+		/// <param name="toolStrip">a toolstrip to put the buttons in</param>
+		/// <param name="tertiary">false for MainView's toolstrip, true for
+		/// TopView's and TopRouteView's toolstrips</param>
+		internal void CreateToolstripEditorObjects(
+				ToolStrip toolStrip,
+				bool tertiary = false)
 		{
-			ToolStripButton tsbDown;
-			ToolStripButton tsbUp;
+			ToolStripButton tsbDown;	// NOTE: Down/Up are not really editor-objects ...
+			ToolStripButton tsbUp;		// but they appear in TopView and TopRouteView(Top)
+										// as well as MainView, with the editor-objects.
 			ToolStripButton tsbCut;
 			ToolStripButton tsbCopy;
 			ToolStripButton tsbPaste;
 			ToolStripButton tsbDelete;
+
 			ToolStripButton tsbFill;
 
 			if (tertiary)
 			{
-				tsbDown   = new ToolStripButton(); // NOTE: MainView's toolstrip buttons are classvars because
-				tsbUp     = new ToolStripButton(); // they will be disabled when the app loads and will be enabled
-				tsbCut    = new ToolStripButton(); // when the user clicks and loads a Map. The tertiary viewers'
-				tsbCopy   = new ToolStripButton(); // toolstrip buttons don't need to be disabled because those
-				tsbPaste  = new ToolStripButton(); // viewers appear to the user after user clicks and loads a
-				tsbDelete = new ToolStripButton(); // Map (at which the buttons will already be enabled).
+				tsbDown   = new ToolStripButton();
+				tsbUp     = new ToolStripButton();
+
+				tsbCut    = new ToolStripButton();
+				tsbCopy   = new ToolStripButton();
+				tsbPaste  = new ToolStripButton();
+				tsbDelete = new ToolStripButton();
+
 				tsbFill   = new ToolStripButton();
 			}
 			else
 			{
 				tsbDown   = _tsbDown;
 				tsbUp     = _tsbUp;
+
 				tsbCut    = _tsbCut;
 				tsbCopy   = _tsbCopy;
 				tsbPaste  = _tsbPaste;
 				tsbDelete = _tsbDelete;
+
 				tsbFill   = _tsbFill;
 			}
 
 			var tsItems = new ToolStripItem[]
 			{
-				new ToolStripSeparator(), // NOTE: c# cant figure out how to use 1 separator 4 times.
+				new ToolStripSeparator(), // NOTE: c#/.NET cant figure out how to use 1 separator 4 times.
 				tsbDown,
 				tsbUp,
+
 				new ToolStripSeparator(),
 				tsbCut,
 				tsbCopy,
 				tsbPaste,
 				tsbDelete,
+
 				new ToolStripSeparator(),
 				tsbFill,
+
 				new ToolStripSeparator()
 			};
 			toolStrip.Items.AddRange(tsItems);
 
 			// LevelDown btn
 			tsbDown.Name          = "tsbDown";
+			tsbDown.ToolTipText   = "level down";
 			tsbDown.DisplayStyle  = ToolStripItemDisplayStyle.Image;
 			tsbDown.Image         = Resources.down;
-			tsbDown.ToolTipText   = "level down";
 			tsbDown.Click        += OnDownClick;
+			tsbDown.Enabled       = false;
 
 			_downers.Add(tsbDown);
 
 			// LevelUp btn
 			tsbUp.Name             = "tsbUp";
+			tsbUp.ToolTipText      = "level up";
 			tsbUp.DisplayStyle     = ToolStripItemDisplayStyle.Image;
 			tsbUp.Image            = Resources.up;
-			tsbUp.ToolTipText      = "level up";
 			tsbUp.Click           += OnUpClick;
+			tsbUp.Enabled          = false;
 
 			_uppers.Add(tsbUp);
 
 			// Cut btn
 			tsbCut.Name            = "tsbCut";
+			tsbCut.ToolTipText     = "cut";
 			tsbCut.DisplayStyle    = ToolStripItemDisplayStyle.Image;
 			tsbCut.Image           = Resources.cut;
-			tsbCut.ToolTipText     = "cut";
 			tsbCut.Click          += _mainViewUnderlay.OnCut;
+			tsbCut.Enabled         = false;
 //			tsbCut.Click          += (sender, e) => // -> example of ... lambda usage
 //									{
 //										EnablePasteButton();
 //										_mainViewUnderlay.OnCut(sender, e);
 //									};
 
+			_editers.Add(tsbCut);
+
 			// Copy btn
 			tsbCopy.Name           = "tsbCopy";
+			tsbCopy.ToolTipText    = "copy";
 			tsbCopy.DisplayStyle   = ToolStripItemDisplayStyle.Image;
 			tsbCopy.Image          = Resources.copy;
-			tsbCopy.ToolTipText    = "copy";
 			tsbCopy.Click         += _mainViewUnderlay.OnCopy;
+			tsbCopy.Enabled        = false;
 //			tsbCopy.Click         += (sender, e) => // -> example of ... lambda usage
 //									{
 //										EnablePasteButton();
 //										_mainViewUnderlay.OnCopy(sender, e);
 //									};
 
+			_editers.Add(tsbCopy);
+
 			// Paste btn
 			tsbPaste.Name          = "tsbPaste";
+			tsbPaste.ToolTipText   = "paste";
 			tsbPaste.DisplayStyle  = ToolStripItemDisplayStyle.Image;
 			tsbPaste.Image         = Resources.paste;
-			tsbPaste.ToolTipText   = "paste";
-			tsbPaste.Enabled       = false;
 			tsbPaste.Click        += _mainViewUnderlay.OnPaste;
+			tsbPaste.Enabled       = false;
 
 			_pasters.Add(tsbPaste);
 
 			// Delete btn
 			tsbDelete.Name         = "tsbDelete";
+			tsbDelete.ToolTipText  = "delete";
 			tsbDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			tsbDelete.Image        = Resources.delete;
-			tsbDelete.ToolTipText  = "delete";
 			tsbDelete.Click       += _mainViewUnderlay.OnDelete;
+			tsbDelete.Enabled      = false;
+
+			_editers.Add(tsbDelete);
 
 			// Fill btn
 			tsbFill.Name           = "tsbFill";
+			tsbFill.ToolTipText    = "fill";
 			tsbFill.DisplayStyle   = ToolStripItemDisplayStyle.Image;
 			tsbFill.Image          = Resources.fill;
-			tsbFill.ToolTipText    = "fill";
 			tsbFill.Click         += _mainViewUnderlay.OnFill;
+			tsbFill.Enabled        = false;
+
+			_editers.Add(tsbFill);
 		}
 
-
-		/// <summary>
-		/// Sets the Autozoom button checked/unchecked.
-		/// </summary>
-		internal void SetAutozoomChecked(bool check)
-		{
-			_tsbZoomAuto.Checked = check;
-		}
-
-		/// <summary>
-		/// Toggles the Autozoom button checked/unchecked.
-		/// </summary>
-		/// <returns>true if checked</returns>
-		internal bool ToggleAutozoomChecked()
-		{
-			return (_tsbZoomAuto.Checked = !_tsbZoomAuto.Checked);
-		}
-
-		/// <summary>
-		/// Enables the paste-button in any viewer after cut or copy is
-		/// clicked or Ctrl+X / Ctrl+C is pressed on the keyboard.
-		/// </summary>
-		internal void EnablePasteButtons()
-		{
-			foreach (var tsb in _pasters)
-				tsb.Enabled = true;
-		}
-
-		internal void ToggleDownButtons(bool enabled)
+		internal void SetLevelDownButtonsEnabled(bool enabled)
 		{
 			foreach (var tsb in _downers)
 				tsb.Enabled = enabled;
 		}
 
-		internal void ToggleUpButtons(bool enabled)
+		internal void SetLevelUpButtonsEnabled(bool enabled)
 		{
 			foreach (var tsb in _uppers)
 				tsb.Enabled = enabled;
 		}
 
-		internal void ToggleZoomOutButton(bool enabled)
+		internal void SetEditButtonsEnabled(bool enabled)
 		{
-			_tsbZoomOut.Enabled = enabled;
+			foreach (var tsb in _editers)
+				tsb.Enabled = enabled;
 		}
 
-		internal void ToggleZoomInButton(bool enabled)
+		internal void SetPasteButtonsEnabled(bool enabled = true)
 		{
-			_tsbZoomIn.Enabled = enabled;
-		}
-
-
-		/// <summary>
-		/// Enables or disables toolstrip objects. This disables all of MainView's
-		/// toolstrip (except search) when Mapview loads. These buttons are
-		/// subsequently enabled when a map is loaded.
-		/// NOTE: Subsidiary viewers don't need to bother with this - they do
-		/// not even show until a Map is loaded.
-		/// </summary>
-		/// <param name="enable"></param>
-		internal void EnableToolStrip(bool enable)
-		{
-			_tsbZoomAuto.Enabled =
-			_tsbZoomOut .Enabled =
-			_tsbZoomIn  .Enabled =
-			_tsbDown    .Enabled =
-			_tsbUp      .Enabled =
-			_tsbCut     .Enabled =
-			_tsbCopy    .Enabled =
-//			_tsbPaste   .Enabled = // do not enable Paste until a Cut or Copy has occured
-			_tsbDelete  .Enabled =
-			_tsbFill    .Enabled = enable;
+			foreach (var tsb in _pasters)
+				tsb.Enabled = enabled;
 		}
 		#endregion
 
 
-		#region Eventcalls (editstrip)
+		#region Events (level)
+		/// <summary>
+		/// Handles a level-down click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnDownClick(object sender, EventArgs e)
 		{
 			var @base = _mainViewUnderlay.MapBase;
@@ -326,11 +352,16 @@ namespace MapView.Forms.MainWindow
 			{
 				@base.LevelDown();
 
-				ToggleDownButtons(@base.Level != @base.MapSize.Levs - 1);
-				ToggleUpButtons(  @base.Level != 0);
+				SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
+				SetLevelUpButtonsEnabled(  @base.Level != 0);
 			}
 		}
 
+		/// <summary>
+		/// Handles a level-up click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnUpClick(object sender, EventArgs e)
 		{
 			var @base = _mainViewUnderlay.MapBase;
@@ -338,14 +369,14 @@ namespace MapView.Forms.MainWindow
 			{
 				@base.LevelUp();
 
-				ToggleDownButtons(@base.Level != @base.MapSize.Levs - 1);
-				ToggleUpButtons(  @base.Level != 0);
+				SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
+				SetLevelUpButtonsEnabled(  @base.Level != 0);
 			}
 		}
 		#endregion
 
 
-		#region Eventcalls (searchstrip)
+		#region Events (search)
 		/// <summary>
 		/// Handler for pressing the Enter-key when the search-textbox is focused.
 		/// </summary>

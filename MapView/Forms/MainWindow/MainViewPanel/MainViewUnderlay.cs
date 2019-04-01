@@ -130,7 +130,7 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
@@ -179,7 +179,7 @@ namespace MapView
 
 			base.OnResize(eventargs);
 
-			if (Globals.AutoScale)
+			if (MapBase != null && Globals.AutoScale)
 			{
 				SetScale();
 				SetOverlaySize();
@@ -193,7 +193,7 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls
+		#region Events
 		private void OnScrollVert(object sender, ScrollEventArgs e)
 		{
 			//XCom.LogFile.WriteLine("OnVerticalScroll overlay.Left= " + MainViewOverlay.Left);
