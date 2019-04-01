@@ -12,50 +12,33 @@ using MapView.Forms.MapObservers.TopViews;
 
 namespace MapView.Forms.MainWindow
 {
-	internal sealed class MainMenusManager
+	internal static class MainMenusManager
 	{
-		#region Fields (static)
+		#region Fields (constant)
 		private const string Separator = "-";
-		#endregion Fields (static)
+		#endregion Fields (constant)
 
 
 		#region Fields
-		private readonly MenuItem _itHelp;
+		private static readonly List<MenuItem> _allItems = new List<MenuItem>();
+		private static readonly List<Form>     _allForms = new List<Form>();
 
-		private readonly List<MenuItem> _allItems = new List<MenuItem>();
-		private readonly List<Form>     _allForms = new List<Form>();
+		private static Options _options;
 
-		private Options _options;
-
-		private bool _quit;
+		private static bool _quit;
 		#endregion Fields
 
 
 		#region Properties
-		private static MenuItem _itViewers;
-		internal static MenuItem ViewerIts
-		{
-			get { return _itViewers; }
-			private set { _itViewers = value; }
-		}
+		internal static MenuItem MenuViewers
+		{ get; private set; }
+
+		private static MenuItem MenuHelp
+		{ get; set; }
 		#endregion Properties
 
 
-		#region cTor
-		/// <summary>
-		/// cTor.
-		/// </summary>
-		/// <param name="viewers"></param>
-		/// <param name="help"></param>
-		internal MainMenusManager(MenuItem viewers, MenuItem help)
-		{
-			_itViewers = viewers;
-			_itHelp    = help;
-		}
-		#endregion cTor
-
-
-		#region Events (static)
+		#region Events
 		/// <summary>
 		/// Handles clicking on a MenuItem to open/close a subsidiary form.
 		/// </summary>
@@ -90,16 +73,14 @@ namespace MapView.Forms.MainWindow
 				f.Close();
 			}
 		}
-		#endregion Events (static)
 
 
-		#region Events
 		/// <summary>
 		/// Shows the CHM helpfile.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnHelpClick(object sender, EventArgs e)
+		private static void OnHelpClick(object sender, EventArgs e)
 		{
 			string help = Path.GetDirectoryName(Application.ExecutablePath);
 				   help = Path.Combine(help, "MapView.chm");
@@ -110,22 +91,33 @@ namespace MapView.Forms.MainWindow
 
 		#region Methods
 		/// <summary>
+		/// Sets the menus to manage.
+		/// </summary>
+		/// <param name="viewers"></param>
+		/// <param name="help"></param>
+		internal static void SetMenus(MenuItem viewers, MenuItem help)
+		{
+			MenuViewers = viewers;
+			MenuHelp    = help;
+		}
+
+		/// <summary>
 		/// Adds menuitems to MapView's dropdown list.
 		/// </summary>
 //		/// <param name="fconsole">pointer to the console-form</param>
 		/// <param name="options">pointer to MV_OptionsFile options</param>
-		internal void PopulateMenus(/*Form fconsole,*/ Options options)
+		internal static void PopulateMenus(/*Form fconsole,*/ Options options)
 		{
 			_options = options;
 
 			// Viewers menuitems ->
-			CreateMenuItem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     _itViewers, Shortcut.F5);	// id #0
+			CreateMenuItem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     MenuViewers, Shortcut.F5);	// id #0
 
-			_itViewers.MenuItems.Add(new MenuItem(Separator));														// id #1
+			MenuViewers.MenuItems.Add(new MenuItem(Separator));														// id #1
 
-			CreateMenuItem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      _itViewers, Shortcut.F6);	// id #2
-			CreateMenuItem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    _itViewers, Shortcut.F7);	// id #3
-			CreateMenuItem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, _itViewers, Shortcut.F8);	// id #4
+			CreateMenuItem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      MenuViewers, Shortcut.F6);	// id #2
+			CreateMenuItem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    MenuViewers, Shortcut.F7);	// id #3
+			CreateMenuItem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, MenuViewers, Shortcut.F8);	// id #4
 
 //			_menuViewers.MenuItems.Add(new MenuItem(Divider));
 //			CreateMenuItem(fconsole, RegistryInfo.Console, _menuViewers); // TODO: either use the Console or lose it.
@@ -133,10 +125,10 @@ namespace MapView.Forms.MainWindow
 			// Help menuitems ->
 			var miHelp = new MenuItem("Help");
 			miHelp.Click += OnHelpClick;
-			_itHelp.MenuItems.Add(miHelp);
+			MenuHelp.MenuItems.Add(miHelp);
 
-			CreateMenuItem(ViewerFormsManager.HelpScreen,  "Colors", _itHelp);
-			CreateMenuItem(ViewerFormsManager.AboutScreen, "About",  _itHelp);
+			CreateMenuItem(ViewerFormsManager.HelpScreen,  "Colors", MenuHelp);
+			CreateMenuItem(ViewerFormsManager.AboutScreen, "About",  MenuHelp);
 
 
 			AddViewersOptions();
@@ -149,7 +141,7 @@ namespace MapView.Forms.MainWindow
 		/// <param name="caption"></param>
 		/// <param name="parent"></param>
 		/// <param name="shortcut"></param>
-		private void CreateMenuItem(
+		private static void CreateMenuItem(
 				Form f,
 				string caption,
 				Menu parent,
@@ -179,9 +171,9 @@ namespace MapView.Forms.MainWindow
 		/// <summary>
 		/// Adds each viewer's opened/closed flag to user Options.
 		/// </summary>
-		private void AddViewersOptions()
+		private static void AddViewersOptions()
 		{
-			foreach (MenuItem it in _itViewers.MenuItems)
+			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
 				string key = it.Text;
 				if (!key.Equals(Separator, StringComparison.Ordinal))
@@ -217,9 +209,9 @@ namespace MapView.Forms.MainWindow
 		/// Opens the subsidiary viewers that are flagged to open when a Map
 		/// loads.
 		/// </summary>
-		internal void StartViewers()
+		internal static void StartViewers()
 		{
-			foreach (MenuItem it in _itViewers.MenuItems)
+			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
 				string key = it.Text;
 				if (!key.Equals(Separator, StringComparison.Ordinal)
@@ -228,14 +220,14 @@ namespace MapView.Forms.MainWindow
 					it.PerformClick();
 				}
 			}
-			_itViewers.Enabled = true;
+			MenuViewers.Enabled = true;
 		}
 
 		/// <summary>
 		/// Effectively disables the 'VisibleChanged' event for all subsidiary
 		/// viewers.
 		/// </summary>
-		internal void Quit()
+		internal static void Quit()
 		{
 			_quit = true;
 		}
@@ -245,7 +237,7 @@ namespace MapView.Forms.MainWindow
 		/// when PckView is opened via TileView.
 		/// </summary>
 		/// <returns></returns>
-		internal ShowHideManager CreateShowHideManager()
+		internal static ShowHideManager CreateShowHideManager()
 		{
 			return new ShowHideManager(_allForms, _allItems);
 		}

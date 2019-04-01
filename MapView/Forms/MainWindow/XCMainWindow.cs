@@ -39,8 +39,7 @@ namespace MapView
 		#region Fields
 		internal readonly MainViewUnderlay _mainViewUnderlay; // was private, see ScanGViewer
 
-		private readonly ViewersManager   _viewersManager;
-		private readonly MainMenusManager _mainMenusManager;
+		private readonly ViewersManager _viewersManager;
 
 //		private readonly ConsoleWarningHandler _warningHandler;
 
@@ -275,12 +274,12 @@ namespace MapView
 			_viewersManager = new ViewersManager(_optionsManager/*, shareConsole*/);
 			LogFile.WriteLine("Viewer managers instantiated.");
 
-			_mainMenusManager = new MainMenusManager(menuViewers, menuHelp);
-			_mainMenusManager.PopulateMenus(/*shareConsole.Console,*/ Options);
+			MainMenusManager.SetMenus(menuViewers, menuHelp);
+			MainMenusManager.PopulateMenus(/*shareConsole.Console,*/ Options);
 			LogFile.WriteLine("MainView menus populated.");
 
 
-			ViewerFormsManager.HideViewersManager = _mainMenusManager.CreateShowHideManager(); // subsidiary viewers hide when Pck/McdView is invoked from TileView.
+			ViewerFormsManager.HideViewersManager = MainMenusManager.CreateShowHideManager(); // subsidiary viewers hide when Pck/McdView is invoked from TileView.
 			LogFile.WriteLine("HideViewersManager created.");
 
 
@@ -928,7 +927,7 @@ namespace MapView
 
 			if (_quit)
 			{
-				_mainMenusManager.Quit();
+				MainMenusManager.Quit();
 
 				_optionsManager.SaveOptions(); // save MV_OptionsFile // TODO: Save settings when closing the Options form(s).
 
@@ -2567,7 +2566,7 @@ namespace MapView
 					ToggleDoorSprites(false);
 
 					if (!menuViewers.Enabled) // open/close the forms that appear in the Viewers menu.
-						_mainMenusManager.StartViewers();
+						MainMenusManager.StartViewers();
 
 					ViewerFormsManager.SetObservers(@base); // reset all observer events
 

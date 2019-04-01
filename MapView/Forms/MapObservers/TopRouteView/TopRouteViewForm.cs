@@ -74,7 +74,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 			if (it != -1)
 			{
 				MainMenusManager.OnMenuItemClick(
-											MainMenusManager.ViewerIts.MenuItems[it],
+											MainMenusManager.MenuViewers.MenuItems[it],
 											EventArgs.Empty);
 			}
 		}

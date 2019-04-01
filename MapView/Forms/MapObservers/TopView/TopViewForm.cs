@@ -71,7 +71,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (it != -1)
 			{
 				MainMenusManager.OnMenuItemClick(
-											MainMenusManager.ViewerIts.MenuItems[it],
+											MainMenusManager.MenuViewers.MenuItems[it],
 											EventArgs.Empty);
 			}
 		}
