@@ -57,7 +57,7 @@ namespace MapView
 
 		#region Properties (static)
 		internal static XCMainWindow Instance
-		{ get; set; }
+		{ get; private set; }
 
 		internal static ScanGViewer ScanG
 		{ get; set; }

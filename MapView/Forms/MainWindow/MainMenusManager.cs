@@ -74,7 +74,6 @@ namespace MapView.Forms.MainWindow
 			}
 		}
 
-
 		/// <summary>
 		/// Shows the CHM helpfile.
 		/// </summary>
@@ -102,7 +101,7 @@ namespace MapView.Forms.MainWindow
 		}
 
 		/// <summary>
-		/// Adds menuitems to MapView's dropdown list.
+		/// Adds menuitems to MapView's "Viewers" and "Help" dropdown lists.
 		/// </summary>
 //		/// <param name="fconsole">pointer to the console-form</param>
 		/// <param name="options">pointer to MV_OptionsFile options</param>

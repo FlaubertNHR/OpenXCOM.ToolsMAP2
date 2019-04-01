@@ -36,7 +36,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private int _row = -1;
 
 		private const int OffsetX = 2; // these are the offsets between the
-		private const int OffsetY = 2; // panel border and the lozenge-tip(s).
+		private const int OffsetY = 3; // panel border and the lozenge-tip(s).
 
 		private int _originX;	// since the lozenge is drawn with its Origin at 0,0 of the
 								// panel, the entire lozenge needs to be displaced to the right.
