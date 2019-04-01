@@ -28,7 +28,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Fields (static)
 		internal protected const int OffsetX = 2; // these track the offset between the panel border
-		internal protected const int OffsetY = 2; // and the lozenge-tip.
+		internal protected const int OffsetY = 3; // and the lozenge-tip.
 		#endregion
 
 
