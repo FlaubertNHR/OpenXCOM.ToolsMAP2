@@ -532,10 +532,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmiExport,
 			this.tsmiImport});
 			this.tsddbFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbFile.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsddbFile.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbFile.Name = "tsddbFile";
 			this.tsddbFile.Size = new System.Drawing.Size(37, 23);
 			this.tsddbFile.Text = "File";
+			this.tsddbFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiExport
 			// 
@@ -564,10 +565,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmi_LowerNode});
 			this.tsddbEdit.Font = new System.Drawing.Font("Verdana", 7F);
 			this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbEdit.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsddbEdit.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsddbEdit.Name = "tsddbEdit";
 			this.tsddbEdit.Size = new System.Drawing.Size(38, 23);
 			this.tsddbEdit.Text = "Edit";
+			this.tsddbEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.tsddbEdit.DropDownOpening += new System.EventHandler(this.OnEditOpening);
 			// 
 			// tsmiAllNodesRank0
@@ -618,10 +620,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmiCheckNodeRanks,
 			this.tsmiCheckOobNodes});
 			this.tsddbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbDebug.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsddbDebug.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsddbDebug.Name = "tsddbDebug";
 			this.tsddbDebug.Size = new System.Drawing.Size(54, 23);
 			this.tsddbDebug.Text = "Debug";
+			this.tsddbDebug.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiCheckNodeRanks
 			// 
@@ -659,10 +662,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsb_connect0.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsb_connect0.Image = global::MapView.Properties.Resources.connect_0;
 			this.tsb_connect0.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsb_connect0.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsb_connect0.Margin = new System.Windows.Forms.Padding(2, 1, 0, 1);
 			this.tsb_connect0.Name = "tsb_connect0";
 			this.tsb_connect0.Size = new System.Drawing.Size(23, 23);
-			this.tsb_connect0.Text = "0 connect";
+			this.tsb_connect0.Text = "dont link";
+			this.tsb_connect0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.tsb_connect0.ToolTipText = "dont link";
 			this.tsb_connect0.Click += new System.EventHandler(this.OnConnectTypeClicked);
 			// 
@@ -671,10 +675,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsb_connect1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsb_connect1.Image = global::MapView.Properties.Resources.connect_1;
 			this.tsb_connect1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsb_connect1.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsb_connect1.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsb_connect1.Name = "tsb_connect1";
 			this.tsb_connect1.Size = new System.Drawing.Size(23, 23);
-			this.tsb_connect1.Text = "1 connect";
+			this.tsb_connect1.Text = "1 way link";
+			this.tsb_connect1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.tsb_connect1.ToolTipText = "1 way link";
 			this.tsb_connect1.Click += new System.EventHandler(this.OnConnectTypeClicked);
 			// 
@@ -683,10 +688,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsb_connect2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsb_connect2.Image = global::MapView.Properties.Resources.connect_2;
 			this.tsb_connect2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsb_connect2.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsb_connect2.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsb_connect2.Name = "tsb_connect2";
 			this.tsb_connect2.Size = new System.Drawing.Size(23, 23);
-			this.tsb_connect2.Text = "2 connect";
+			this.tsb_connect2.Text = "2 way link";
+			this.tsb_connect2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.tsb_connect2.ToolTipText = "2 way link";
 			this.tsb_connect2.Click += new System.EventHandler(this.OnConnectTypeClicked);
 			// 

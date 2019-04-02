@@ -120,10 +120,11 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tsddbVisibleQuads.AutoToolTip = false;
 			this.tsddbVisibleQuads.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsddbVisibleQuads.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbVisibleQuads.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsddbVisibleQuads.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbVisibleQuads.Name = "tsddbVisibleQuads";
 			this.tsddbVisibleQuads.Size = new System.Drawing.Size(54, 23);
 			this.tsddbVisibleQuads.Text = "Visible";
+			this.tsddbVisibleQuads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsb_Options
 			// 

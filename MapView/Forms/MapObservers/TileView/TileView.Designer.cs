@@ -117,10 +117,11 @@
 			this.tsmiVolutarMcdEditor});
 			this.tsddbExternal.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tsddbExternal.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbExternal.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsddbExternal.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbExternal.Name = "tsddbExternal";
 			this.tsddbExternal.Size = new System.Drawing.Size(63, 23);
 			this.tsddbExternal.Text = "External";
+			this.tsddbExternal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiEditPck
 			// 
