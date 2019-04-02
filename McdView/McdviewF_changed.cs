@@ -20,18 +20,18 @@ namespace McdView
 		/// </summary>
 		private void TagLoftPanels()
 		{
-			pnl_Loft08.Tag = tb8_loft00;
-			pnl_Loft09.Tag = tb9_loft02;
-			pnl_Loft10.Tag = tb10_loft04;
-			pnl_Loft11.Tag = tb11_loft06;
-			pnl_Loft12.Tag = tb12_loft08;
-			pnl_Loft13.Tag = tb13_loft10;
-			pnl_Loft14.Tag = tb14_loft12;
-			pnl_Loft15.Tag = tb15_loft14;
-			pnl_Loft16.Tag = tb16_loft16;
-			pnl_Loft17.Tag = tb17_loft18;
-			pnl_Loft18.Tag = tb18_loft20;
-			pnl_Loft19.Tag = tb19_loft22;
+			pnl_Loft08.Tag = tb08_loft00;
+			pnl_Loft09.Tag = tb09_loft01;
+			pnl_Loft10.Tag = tb10_loft02;
+			pnl_Loft11.Tag = tb11_loft03;
+			pnl_Loft12.Tag = tb12_loft04;
+			pnl_Loft13.Tag = tb13_loft05;
+			pnl_Loft14.Tag = tb14_loft06;
+			pnl_Loft15.Tag = tb15_loft07;
+			pnl_Loft16.Tag = tb16_loft08;
+			pnl_Loft17.Tag = tb17_loft09;
+			pnl_Loft18.Tag = tb18_loft10;
+			pnl_Loft19.Tag = tb19_loft11;
 		}
 
 		/// <summary>
@@ -52,27 +52,27 @@ namespace McdView
 		/// </summary>
 		private void TagLabels()
 		{
-			lbl0.Tag = lbl0_phase0.Tag = tb0_phase0;
-			lbl1.Tag = lbl1_phase1.Tag = tb1_phase1;
-			lbl2.Tag = lbl2_phase2.Tag = tb2_phase2;
-			lbl3.Tag = lbl3_phase3.Tag = tb3_phase3;
-			lbl4.Tag = lbl4_phase4.Tag = tb4_phase4;
-			lbl5.Tag = lbl5_phase5.Tag = tb5_phase5;
-			lbl6.Tag = lbl6_phase6.Tag = tb6_phase6;
-			lbl7.Tag = lbl7_phase7.Tag = tb7_phase7;
+			lbl00.Tag = lbl00_phase0.Tag = tb00_phase0;
+			lbl01.Tag = lbl01_phase1.Tag = tb01_phase1;
+			lbl02.Tag = lbl02_phase2.Tag = tb02_phase2;
+			lbl03.Tag = lbl03_phase3.Tag = tb03_phase3;
+			lbl04.Tag = lbl04_phase4.Tag = tb04_phase4;
+			lbl05.Tag = lbl05_phase5.Tag = tb05_phase5;
+			lbl06.Tag = lbl06_phase6.Tag = tb06_phase6;
+			lbl07.Tag = lbl07_phase7.Tag = tb07_phase7;
 
-			lbl8 .Tag = lbl8_loft00 .Tag = tb8_loft00;
-			lbl9 .Tag = lbl9_loft02 .Tag = tb9_loft02;
-			lbl10.Tag = lbl10_loft04.Tag = tb10_loft04;
-			lbl11.Tag = lbl11_loft06.Tag = tb11_loft06;
-			lbl12.Tag = lbl12_loft08.Tag = tb12_loft08;
-			lbl13.Tag = lbl13_loft10.Tag = tb13_loft10;
-			lbl14.Tag = lbl14_loft12.Tag = tb14_loft12;
-			lbl15.Tag = lbl15_loft14.Tag = tb15_loft14;
-			lbl16.Tag = lbl16_loft16.Tag = tb16_loft16;
-			lbl17.Tag = lbl17_loft18.Tag = tb17_loft18;
-			lbl18.Tag = lbl18_loft20.Tag = tb18_loft20;
-			lbl19.Tag = lbl19_loft22.Tag = tb19_loft22;
+			lbl08.Tag = lbl08_loft00.Tag = tb08_loft00;
+			lbl09.Tag = lbl09_loft01.Tag = tb09_loft01;
+			lbl10.Tag = lbl10_loft02.Tag = tb10_loft02;
+			lbl11.Tag = lbl11_loft03.Tag = tb11_loft03;
+			lbl12.Tag = lbl12_loft04.Tag = tb12_loft04;
+			lbl13.Tag = lbl13_loft05.Tag = tb13_loft05;
+			lbl14.Tag = lbl14_loft06.Tag = tb14_loft06;
+			lbl15.Tag = lbl15_loft07.Tag = tb15_loft07;
+			lbl16.Tag = lbl16_loft08.Tag = tb16_loft08;
+			lbl17.Tag = lbl17_loft09.Tag = tb17_loft09;
+			lbl18.Tag = lbl18_loft10.Tag = tb18_loft10;
+			lbl19.Tag = lbl19_loft11.Tag = tb19_loft11;
 
 //			lbl20.Tag = lbl20_scang.Tag = tb20_scang1; //|| tb20_scang2; NOTE: ScanG requires special handling.
 
@@ -174,12 +174,12 @@ namespace McdView
 		/// <returns></returns>
 		private string GetPhaseDescription()
 		{
-			return " Terrain sprites typically cycle through eight phases ("
-				 + "sliding doors are static at phase 0 - see #30 isSlidingDoor).";
+			return " Terrain sprites typically cycle through eight phases"
+				 + " (sliding doors are static at phase 1 - see #30 isSlidingDoor).";
 		}
 
 		/// <summary>
-		/// #0 phase 0 (byte)
+		/// #0 phase 1 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -187,10 +187,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb0_phase0)) // else recurse
+				if (TryParseText(tb00_phase0)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb0_phase0.Text, out result)
+					if (Int32.TryParse(tb00_phase0.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -209,34 +209,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb0_phase0.Text = "0"; // recurse w/ default.
+						tb00_phase0.Text = "0"; // recurse w/ default.
 					else if (strict && Spriteset != null)
-						tb0_phase0.Text = (Spriteset.Count - 1).ToString();
+						tb00_phase0.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb0_phase0.Text = "255";
+						tb00_phase0.Text = "255";
 				}
 			}
 			else
-				tb0_phase0.Text = String.Empty; // recurse.
+				tb00_phase0.Text = String.Empty; // recurse.
 		}
 		private void OnEnter0(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 0 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 1 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox0(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb0_phase0.Text, out result))
+			if (Int32.TryParse(tb00_phase0.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 0: " + result;
+				tssl_Overvalue.Text = "phase 1: " + result;
 				OnEnter0(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #1 phase 1 (byte)
+		/// #1 phase 2 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -244,10 +244,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb1_phase1)) // else recurse
+				if (TryParseText(tb01_phase1)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb1_phase1.Text, out result)
+					if (Int32.TryParse(tb01_phase1.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -266,34 +266,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb1_phase1.Text = "0"; // recurse w/ default.
+						tb01_phase1.Text = "0"; // recurse w/ default.
 					else if (strict && Spriteset != null)
-						tb1_phase1.Text = (Spriteset.Count - 1).ToString();
+						tb01_phase1.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb1_phase1.Text = "255";
+						tb01_phase1.Text = "255";
 				}
 			}
 			else
-				tb1_phase1.Text = String.Empty; // recurse.
+				tb01_phase1.Text = String.Empty; // recurse.
 		}
 		private void OnEnter1(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 1 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 2 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox1(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb1_phase1.Text, out result))
+			if (Int32.TryParse(tb01_phase1.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 1: " + result;
+				tssl_Overvalue.Text = "phase 2: " + result;
 				OnEnter1(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #2 phase 2 (byte)
+		/// #2 phase 3 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -301,10 +301,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb2_phase2)) // else recurse
+				if (TryParseText(tb02_phase2)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb2_phase2.Text, out result)
+					if (Int32.TryParse(tb02_phase2.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -323,34 +323,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb2_phase2.Text = "0"; // recurse w/ default.
+						tb02_phase2.Text = "0"; // recurse w/ default.
 					else if (strict && Spriteset != null)
-						tb2_phase2.Text = (Spriteset.Count - 1).ToString();
+						tb02_phase2.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb2_phase2.Text = "255";
+						tb02_phase2.Text = "255";
 				}
 			}
 			else
-				tb2_phase2.Text = String.Empty; // recurse.
+				tb02_phase2.Text = String.Empty; // recurse.
 		}
 		private void OnEnter2(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 2 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 3 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox2(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb2_phase2.Text, out result))
+			if (Int32.TryParse(tb02_phase2.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 2: " + result;
+				tssl_Overvalue.Text = "phase 3: " + result;
 				OnEnter2(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #3 phase 3 (byte)
+		/// #3 phase 4 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -358,10 +358,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb3_phase3)) // else recurse
+				if (TryParseText(tb03_phase3)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb3_phase3.Text, out result)
+					if (Int32.TryParse(tb03_phase3.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -380,34 +380,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb3_phase3.Text = "0"; // recurse w/ default.
+						tb03_phase3.Text = "0"; // recurse w/ default.
 					else if (strict && Spriteset != null)
-						tb3_phase3.Text = (Spriteset.Count - 1).ToString();
+						tb03_phase3.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb3_phase3.Text = "255";
+						tb03_phase3.Text = "255";
 				}
 			}
 			else
-				tb3_phase3.Text = String.Empty; // recurse.
+				tb03_phase3.Text = String.Empty; // recurse.
 		}
 		private void OnEnter3(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 3 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 4 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox3(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb3_phase3.Text, out result))
+			if (Int32.TryParse(tb03_phase3.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 3: " + result;
+				tssl_Overvalue.Text = "phase 4: " + result;
 				OnEnter3(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #4 phase 4 (byte)
+		/// #4 phase 5 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -415,10 +415,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb4_phase4)) // else recurse
+				if (TryParseText(tb04_phase4)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb4_phase4.Text, out result)
+					if (Int32.TryParse(tb04_phase4.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -437,34 +437,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb4_phase4.Text = "0"; // recurse w/ default.
+						tb04_phase4.Text = "0"; // recurse w/ default.
 					else if (strict && Spriteset != null)
-						tb4_phase4.Text = (Spriteset.Count - 1).ToString();
+						tb04_phase4.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb4_phase4.Text = "255";
+						tb04_phase4.Text = "255";
 				}
 			}
 			else
-				tb4_phase4.Text = String.Empty; // recurse.
+				tb04_phase4.Text = String.Empty; // recurse.
 		}
 		private void OnEnter4(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 4 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 5 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox4(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb4_phase4.Text, out result))
+			if (Int32.TryParse(tb04_phase4.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 4: " + result;
+				tssl_Overvalue.Text = "phase 5: " + result;
 				OnEnter4(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #5 phase 5 (byte)
+		/// #5 phase 6 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -472,10 +472,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb5_phase5)) // else recurse
+				if (TryParseText(tb05_phase5)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb5_phase5.Text, out result)
+					if (Int32.TryParse(tb05_phase5.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -494,34 +494,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb5_phase5.Text = "0"; // recurse w/ default.
+						tb05_phase5.Text = "0"; // recurse w/ default.
 					else if (strict && Spriteset != null)
-						tb5_phase5.Text = (Spriteset.Count - 1).ToString();
+						tb05_phase5.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb5_phase5.Text = "255";
+						tb05_phase5.Text = "255";
 				}
 			}
 			else
-				tb5_phase5.Text = String.Empty; // recurse.
+				tb05_phase5.Text = String.Empty; // recurse.
 		}
 		private void OnEnter5(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 5 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 6 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox5(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb5_phase5.Text, out result))
+			if (Int32.TryParse(tb05_phase5.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 5: " + result;
+				tssl_Overvalue.Text = "phase 6: " + result;
 				OnEnter5(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #6 phase 6 (byte)
+		/// #6 phase 7 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -529,10 +529,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb6_phase6)) // else recurse
+				if (TryParseText(tb06_phase6)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb6_phase6.Text, out result)
+					if (Int32.TryParse(tb06_phase6.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -551,34 +551,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb6_phase6.Text = "0"; // recurse w/ default.
+						tb06_phase6.Text = "0"; // recurse w/ default.
 					else if (strict && Spriteset != null)
-						tb6_phase6.Text = (Spriteset.Count - 1).ToString();
+						tb06_phase6.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb6_phase6.Text = "255";
+						tb06_phase6.Text = "255";
 				}
 			}
 			else
-				tb6_phase6.Text = String.Empty; // recurse.
+				tb06_phase6.Text = String.Empty; // recurse.
 		}
 		private void OnEnter6(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 6 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 7 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox6(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb6_phase6.Text, out result))
+			if (Int32.TryParse(tb06_phase6.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 6: " + result;
+				tssl_Overvalue.Text = "phase 7: " + result;
 				OnEnter6(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #7 phase 7 (byte)
+		/// #7 phase 8 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -586,10 +586,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb7_phase7)) // else recurse
+				if (TryParseText(tb07_phase7)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb7_phase7.Text, out result)
+					if (Int32.TryParse(tb07_phase7.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -608,28 +608,28 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb7_phase7.Text = "0"; // recurse w/ default.
+						tb07_phase7.Text = "0"; // recurse w/ default.
 					else if (strict && Spriteset != null)
-						tb7_phase7.Text = (Spriteset.Count - 1).ToString();
+						tb07_phase7.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb7_phase7.Text = "255";
+						tb07_phase7.Text = "255";
 				}
 			}
 			else
-				tb7_phase7.Text = String.Empty; // recurse.
+				tb07_phase7.Text = String.Empty; // recurse.
 		}
 		private void OnEnter7(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 7 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 8 (ubyte)" + GetPhaseDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox7(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb7_phase7.Text, out result))
+			if (Int32.TryParse(tb07_phase7.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 7: " + result;
+				tssl_Overvalue.Text = "phase 8: " + result;
 				OnEnter7(null, EventArgs.Empty);
 			}
 		}
@@ -643,7 +643,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// #8 loft 00 (byte)
+		/// #8 loft 1 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -651,10 +651,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb8_loft00)) // else recurse
+				if (TryParseText(tb08_loft00)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb8_loft00.Text, out result)
+					if (Int32.TryParse(tb08_loft00.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -666,34 +666,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb8_loft00.Text = "0"; // recurse w/ default.
+						tb08_loft00.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb8_loft00.Text = (LoFT.Length / 256 - 1).ToString();
+						tb08_loft00.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb8_loft00.Text = "255";
+						tb08_loft00.Text = "255";
 				}
 			}
 			else
-				tb8_loft00.Text = String.Empty; // recurse.
+				tb08_loft00.Text = String.Empty; // recurse.
 		}
 		private void OnEnter8(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 00 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 1 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox8(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb8_loft00.Text, out result))
+			if (Int32.TryParse(tb08_loft00.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 00: " + result;
+				tssl_Overvalue.Text = "loft 1: " + result;
 				OnEnter8(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #9 loft 02 (byte)
+		/// #9 loft 2 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -701,10 +701,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb9_loft02)) // else recurse
+				if (TryParseText(tb09_loft01)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb9_loft02.Text, out result)
+					if (Int32.TryParse(tb09_loft01.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -716,34 +716,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb9_loft02.Text = "0"; // recurse w/ default.
+						tb09_loft01.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb9_loft02.Text = (LoFT.Length / 256 - 1).ToString();
+						tb09_loft01.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb9_loft02.Text = "255";
+						tb09_loft01.Text = "255";
 				}
 			}
 			else
-				tb9_loft02.Text = String.Empty; // recurse.
+				tb09_loft01.Text = String.Empty; // recurse.
 		}
 		private void OnEnter9(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 02 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 2 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox9(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb9_loft02.Text, out result))
+			if (Int32.TryParse(tb09_loft01.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 02: " + result;
+				tssl_Overvalue.Text = "loft 2: " + result;
 				OnEnter9(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #10 loft 04 (byte)
+		/// #10 loft 3 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -751,10 +751,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb10_loft04)) // else recurse
+				if (TryParseText(tb10_loft02)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb10_loft04.Text, out result)
+					if (Int32.TryParse(tb10_loft02.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -766,34 +766,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb10_loft04.Text = "0"; // recurse w/ default.
+						tb10_loft02.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb10_loft04.Text = (LoFT.Length / 256 - 1).ToString();
+						tb10_loft02.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb10_loft04.Text = "255";
+						tb10_loft02.Text = "255";
 				}
 			}
 			else
-				tb10_loft04.Text = String.Empty; // recurse.
+				tb10_loft02.Text = String.Empty; // recurse.
 		}
 		private void OnEnter10(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 04 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 3 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox10(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb10_loft04.Text, out result))
+			if (Int32.TryParse(tb10_loft02.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 04: " + result;
+				tssl_Overvalue.Text = "loft 3: " + result;
 				OnEnter10(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #11 loft 06 (byte)
+		/// #11 loft 4 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -801,10 +801,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb11_loft06)) // else recurse
+				if (TryParseText(tb11_loft03)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb11_loft06.Text, out result)
+					if (Int32.TryParse(tb11_loft03.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -816,34 +816,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb11_loft06.Text = "0"; // recurse w/ default.
+						tb11_loft03.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb11_loft06.Text = (LoFT.Length / 256 - 1).ToString();
+						tb11_loft03.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb11_loft06.Text = "255";
+						tb11_loft03.Text = "255";
 				}
 			}
 			else
-				tb11_loft06.Text = String.Empty; // recurse.
+				tb11_loft03.Text = String.Empty; // recurse.
 		}
 		private void OnEnter11(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 06 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 4 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox11(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb11_loft06.Text, out result))
+			if (Int32.TryParse(tb11_loft03.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 06: " + result;
+				tssl_Overvalue.Text = "loft 4: " + result;
 				OnEnter11(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #12 loft 08 (byte)
+		/// #12 loft 5 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -851,10 +851,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb12_loft08)) // else recurse
+				if (TryParseText(tb12_loft04)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb12_loft08.Text, out result)
+					if (Int32.TryParse(tb12_loft04.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -866,34 +866,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb12_loft08.Text = "0"; // recurse w/ default.
+						tb12_loft04.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb12_loft08.Text = (LoFT.Length / 256 - 1).ToString();
+						tb12_loft04.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb12_loft08.Text = "255";
+						tb12_loft04.Text = "255";
 				}
 			}
 			else
-				tb12_loft08.Text = String.Empty; // recurse.
+				tb12_loft04.Text = String.Empty; // recurse.
 		}
 		private void OnEnter12(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 08 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 5 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox12(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb12_loft08.Text, out result))
+			if (Int32.TryParse(tb12_loft04.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 08: " + result;
+				tssl_Overvalue.Text = "loft 5: " + result;
 				OnEnter12(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #13 loft 10 (byte)
+		/// #13 loft 6 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -901,10 +901,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb13_loft10)) // else recurse
+				if (TryParseText(tb13_loft05)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb13_loft10.Text, out result)
+					if (Int32.TryParse(tb13_loft05.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -916,34 +916,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb13_loft10.Text = "0"; // recurse w/ default.
+						tb13_loft05.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb13_loft10.Text = (LoFT.Length / 256 - 1).ToString();
+						tb13_loft05.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb13_loft10.Text = "255";
+						tb13_loft05.Text = "255";
 				}
 			}
 			else
-				tb13_loft10.Text = String.Empty; // recurse.
+				tb13_loft05.Text = String.Empty; // recurse.
 		}
 		private void OnEnter13(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 10 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 6 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox13(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb13_loft10.Text, out result))
+			if (Int32.TryParse(tb13_loft05.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 10: " + result;
+				tssl_Overvalue.Text = "loft 6: " + result;
 				OnEnter13(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #14 loft 12 (byte)
+		/// #14 loft 7 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -951,10 +951,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb14_loft12)) // else recurse
+				if (TryParseText(tb14_loft06)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb14_loft12.Text, out result)
+					if (Int32.TryParse(tb14_loft06.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -966,34 +966,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb14_loft12.Text = "0"; // recurse w/ default.
+						tb14_loft06.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb14_loft12.Text = (LoFT.Length / 256 - 1).ToString();
+						tb14_loft06.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb14_loft12.Text = "255";
+						tb14_loft06.Text = "255";
 				}
 			}
 			else
-				tb14_loft12.Text = String.Empty; // recurse.
+				tb14_loft06.Text = String.Empty; // recurse.
 		}
 		private void OnEnter14(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 12 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 7 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox14(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb14_loft12.Text, out result))
+			if (Int32.TryParse(tb14_loft06.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 12: " + result;
+				tssl_Overvalue.Text = "loft 7: " + result;
 				OnEnter14(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #15 loft 14 (byte)
+		/// #15 loft 8 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1001,10 +1001,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb15_loft14)) // else recurse
+				if (TryParseText(tb15_loft07)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb15_loft14.Text, out result)
+					if (Int32.TryParse(tb15_loft07.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -1016,34 +1016,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb15_loft14.Text = "0"; // recurse w/ default.
+						tb15_loft07.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb15_loft14.Text = (LoFT.Length / 256 - 1).ToString();
+						tb15_loft07.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb15_loft14.Text = "255";
+						tb15_loft07.Text = "255";
 				}
 			}
 			else
-				tb15_loft14.Text = String.Empty; // recurse.
+				tb15_loft07.Text = String.Empty; // recurse.
 		}
 		private void OnEnter15(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 14 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 8 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox15(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb15_loft14.Text, out result))
+			if (Int32.TryParse(tb15_loft07.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 14: " + result;
+				tssl_Overvalue.Text = "loft 8: " + result;
 				OnEnter15(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #16 loft 16 (byte)
+		/// #16 loft 9 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1051,10 +1051,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb16_loft16)) // else recurse
+				if (TryParseText(tb16_loft08)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb16_loft16.Text, out result)
+					if (Int32.TryParse(tb16_loft08.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -1066,34 +1066,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb16_loft16.Text = "0"; // recurse w/ default.
+						tb16_loft08.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb16_loft16.Text = (LoFT.Length / 256 - 1).ToString();
+						tb16_loft08.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb16_loft16.Text = "255";
+						tb16_loft08.Text = "255";
 				}
 			}
 			else
-				tb16_loft16.Text = String.Empty; // recurse.
+				tb16_loft08.Text = String.Empty; // recurse.
 		}
 		private void OnEnter16(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 16 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 9 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox16(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb16_loft16.Text, out result))
+			if (Int32.TryParse(tb16_loft08.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 16: " + result;
+				tssl_Overvalue.Text = "loft 9: " + result;
 				OnEnter16(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #17 loft 18 (byte)
+		/// #17 loft 10 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1101,10 +1101,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb17_loft18)) // else recurse
+				if (TryParseText(tb17_loft09)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb17_loft18.Text, out result)
+					if (Int32.TryParse(tb17_loft09.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -1116,34 +1116,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb17_loft18.Text = "0"; // recurse w/ default.
+						tb17_loft09.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb17_loft18.Text = (LoFT.Length / 256 - 1).ToString();
+						tb17_loft09.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb17_loft18.Text = "255";
+						tb17_loft09.Text = "255";
 				}
 			}
 			else
-				tb17_loft18.Text = String.Empty; // recurse.
+				tb17_loft09.Text = String.Empty; // recurse.
 		}
 		private void OnEnter17(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 18 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 10 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox17(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb17_loft18.Text, out result))
+			if (Int32.TryParse(tb17_loft09.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 18: " + result;
+				tssl_Overvalue.Text = "loft 10: " + result;
 				OnEnter17(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #18 loft 20 (byte)
+		/// #18 loft 11 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1151,10 +1151,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb18_loft20)) // else recurse
+				if (TryParseText(tb18_loft10)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb18_loft20.Text, out result)
+					if (Int32.TryParse(tb18_loft10.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -1166,34 +1166,34 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb18_loft20.Text = "0"; // recurse w/ default.
+						tb18_loft10.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb18_loft20.Text = (LoFT.Length / 256 - 1).ToString();
+						tb18_loft10.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb18_loft20.Text = "255";
+						tb18_loft10.Text = "255";
 				}
 			}
 			else
-				tb18_loft20.Text = String.Empty; // recurse.
+				tb18_loft10.Text = String.Empty; // recurse.
 		}
 		private void OnEnter18(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 20 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 11 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox18(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb18_loft20.Text, out result))
+			if (Int32.TryParse(tb18_loft10.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 20: " + result;
+				tssl_Overvalue.Text = "loft 11: " + result;
 				OnEnter18(null, EventArgs.Empty);
 			}
 		}
 
 		/// <summary>
-		/// #19 loft 22 (byte)
+		/// #19 loft 12 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1201,10 +1201,10 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				if (TryParseText(tb19_loft22)) // else recurse
+				if (TryParseText(tb19_loft11)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb19_loft22.Text, out result)
+					if (Int32.TryParse(tb19_loft11.Text, out result)
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
@@ -1216,28 +1216,28 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb19_loft22.Text = "0"; // recurse w/ default.
+						tb19_loft11.Text = "0"; // recurse w/ default.
 					else if (strict && LoFT != null)
-						tb19_loft22.Text = (LoFT.Length / 256 - 1).ToString();
+						tb19_loft11.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb19_loft22.Text = "255";
+						tb19_loft11.Text = "255";
 				}
 			}
 			else
-				tb19_loft22.Text = String.Empty; // recurse.
+				tb19_loft11.Text = String.Empty; // recurse.
 		}
 		private void OnEnter19(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "loft 22 (ubyte)" + GetLoftDescription()
+			lbl_Description.Text = "loft 12 (ubyte)" + GetLoftDescription()
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (LoFT != null ? (LoFT.Length / 256 - 1).ToString() : "255");
 		}
 		private void OnMouseEnterTextbox19(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb19_loft22.Text, out result))
+			if (Int32.TryParse(tb19_loft11.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 22: " + result;
+				tssl_Overvalue.Text = "loft 12: " + result;
 				OnEnter19(null, EventArgs.Empty);
 			}
 		}

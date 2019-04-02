@@ -12,11 +12,11 @@ namespace McdView
 			Form
 	{
 		#region Fields (constant)
-		private const int COLS          = 16;
-		private const int LOFT_WIDTH    = 32;
-		private const int LOFT_HEIGHT   = 32;
-		private const int VERT_TEXT_PAD = 16;
-		private const int HORI_PAD      =  1;
+		private const int COLS        = 16;
+		private const int LOFT_WIDTH  = 32;
+		private const int LOFT_HEIGHT = 32;
+		private const int TEXT_HEIGHT = 16;
+		private const int HORI_PAD    =  1;
 		#endregion Fields (constant)
 
 
@@ -54,8 +54,9 @@ namespace McdView
 			_f = f;
 			LoftId = loftid;
 
-			string z = (panelid * 2 + 1) + "/" + (panelid * 2 + 2);
-			Text = " LOFTEMPS.DAT - slots " + z; // TODO: + "ufo"/"tftd"
+//			string z = (panelid * 2 + 1) + "/" + (panelid * 2 + 2);
+//			Text = " LOFTEMPS.DAT - slots " + z;
+			Text = " LOFTEMPS.DAT - slot " + panelid * 2 + 1; // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
 
@@ -70,7 +71,7 @@ namespace McdView
 
 			w = (w * LOFT_WIDTH) + (w * HORI_PAD) - 1;
 
-			int h = (lofts + COLS - 1) / COLS * (LOFT_HEIGHT + VERT_TEXT_PAD);
+			int h = (lofts + COLS - 1) / COLS * (LOFT_HEIGHT + TEXT_HEIGHT);
 
 			ClientSize = new Size(w, h);
 		}
@@ -121,7 +122,7 @@ namespace McdView
 				loft.Palette = pal;
 
 				x = (i % COLS) * (LOFT_WIDTH  + HORI_PAD);
-				y = (i / COLS) * (LOFT_HEIGHT + VERT_TEXT_PAD);
+				y = (i / COLS) * (LOFT_HEIGHT + TEXT_HEIGHT);
 
 				graphics.DrawImage(
 								loft,
@@ -133,7 +134,7 @@ namespace McdView
 								x,
 								y + LOFT_HEIGHT,
 								LOFT_WIDTH,
-								VERT_TEXT_PAD);
+								TEXT_HEIGHT);
 
 				if (i == LoftId)
 					graphics.FillRectangle(
@@ -156,7 +157,7 @@ namespace McdView
 			if (   e.X > -1 && e.X < ClientSize.Width // NOTE: Bypass event if cursor moves off the clientarea before released.
 				&& e.Y > -1 && e.Y < ClientSize.Height)
 			{
-				int id = e.Y / (LOFT_HEIGHT + VERT_TEXT_PAD) * COLS
+				int id = e.Y / (LOFT_HEIGHT + TEXT_HEIGHT) * COLS
 					   + e.X / (LOFT_WIDTH  + HORI_PAD);
 
 				if (id < _f.LoFT.Length / 256)

@@ -1388,27 +1388,27 @@ namespace McdView
 
 			McdRecord record = Parts[SelId].Record;
 
-			tb0_phase0.Text = ((int)record.Sprite1).ToString();
-			tb1_phase1.Text = ((int)record.Sprite2).ToString();
-			tb2_phase2.Text = ((int)record.Sprite3).ToString();
-			tb3_phase3.Text = ((int)record.Sprite4).ToString();
-			tb4_phase4.Text = ((int)record.Sprite5).ToString();
-			tb5_phase5.Text = ((int)record.Sprite6).ToString();
-			tb6_phase6.Text = ((int)record.Sprite7).ToString();
-			tb7_phase7.Text = ((int)record.Sprite8).ToString();
+			tb00_phase0.Text = ((int)record.Sprite1).ToString();
+			tb01_phase1.Text = ((int)record.Sprite2).ToString();
+			tb02_phase2.Text = ((int)record.Sprite3).ToString();
+			tb03_phase3.Text = ((int)record.Sprite4).ToString();
+			tb04_phase4.Text = ((int)record.Sprite5).ToString();
+			tb05_phase5.Text = ((int)record.Sprite6).ToString();
+			tb06_phase6.Text = ((int)record.Sprite7).ToString();
+			tb07_phase7.Text = ((int)record.Sprite8).ToString();
 
-			tb8_loft00 .Text = ((int)record.Loft1) .ToString();
-			tb9_loft02 .Text = ((int)record.Loft2) .ToString();
-			tb10_loft04.Text = ((int)record.Loft3) .ToString();
-			tb11_loft06.Text = ((int)record.Loft4) .ToString();
-			tb12_loft08.Text = ((int)record.Loft5) .ToString();
-			tb13_loft10.Text = ((int)record.Loft6) .ToString();
-			tb14_loft12.Text = ((int)record.Loft7) .ToString();
-			tb15_loft14.Text = ((int)record.Loft8) .ToString();
-			tb16_loft16.Text = ((int)record.Loft9) .ToString();
-			tb17_loft18.Text = ((int)record.Loft10).ToString();
-			tb18_loft20.Text = ((int)record.Loft11).ToString();
-			tb19_loft22.Text = ((int)record.Loft12).ToString();
+			tb08_loft00.Text = ((int)record.Loft1) .ToString();
+			tb09_loft01.Text = ((int)record.Loft2) .ToString();
+			tb10_loft02.Text = ((int)record.Loft3) .ToString();
+			tb11_loft03.Text = ((int)record.Loft4) .ToString();
+			tb12_loft04.Text = ((int)record.Loft5) .ToString();
+			tb13_loft05.Text = ((int)record.Loft6) .ToString();
+			tb14_loft06.Text = ((int)record.Loft7) .ToString();
+			tb15_loft07.Text = ((int)record.Loft8) .ToString();
+			tb16_loft08.Text = ((int)record.Loft9) .ToString();
+			tb17_loft09.Text = ((int)record.Loft10).ToString();
+			tb18_loft10.Text = ((int)record.Loft11).ToString();
+			tb19_loft11.Text = ((int)record.Loft12).ToString();
 
 			string scanG         = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
 			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// else only god knows why the cast from ushort won't work right.
@@ -1435,14 +1435,14 @@ namespace McdView
 
 			tb38_.Text = ((int)record.LeftRightHalf).ToString();
 
-			tb39_tuwalk       .Text = ((int)record.TU_Walk)      .ToString();
-			tb40_tuslide      .Text = ((int)record.TU_Slide)     .ToString();
-			tb41_tufly        .Text = ((int)record.TU_Fly)       .ToString();
-			tb42_armor        .Text = ((int)record.Armor)        .ToString();
-			tb43_heblock      .Text = ((int)record.HE_Block)     .ToString();
-			tb44_deathid      .Text = ((int)record.DieTile)      .ToString();
-			tb45_fireresist   .Text = ((int)record.FireResist)   .ToString();
-			tb46_alternateid  .Text = ((int)record.Alt_MCD)      .ToString();
+			tb39_tuwalk       .Text = ((int)record.TU_Walk)   .ToString();
+			tb40_tuslide      .Text = ((int)record.TU_Slide)  .ToString();
+			tb41_tufly        .Text = ((int)record.TU_Fly)    .ToString();
+			tb42_armor        .Text = ((int)record.Armor)     .ToString();
+			tb43_heblock      .Text = ((int)record.HE_Block)  .ToString();
+			tb44_deathid      .Text = ((int)record.DieTile)   .ToString();
+			tb45_fireresist   .Text = ((int)record.FireResist).ToString();
+			tb46_alternateid  .Text = ((int)record.Alt_MCD)   .ToString();
 
 			tb47_.Text = ((int)record.Unknown47).ToString();
 
@@ -1480,27 +1480,27 @@ namespace McdView
 			else
 				text = String.Empty;
 
-			tb0_phase0.Text =
-			tb1_phase1.Text =
-			tb2_phase2.Text =
-			tb3_phase3.Text =
-			tb4_phase4.Text =
-			tb5_phase5.Text =
-			tb6_phase6.Text =
-			tb7_phase7.Text =
+			tb00_phase0.Text =
+			tb01_phase1.Text =
+			tb02_phase2.Text =
+			tb03_phase3.Text =
+			tb04_phase4.Text =
+			tb05_phase5.Text =
+			tb06_phase6.Text =
+			tb07_phase7.Text =
 
-			tb8_loft00 .Text =
-			tb9_loft02 .Text =
-			tb10_loft04.Text =
-			tb11_loft06.Text =
-			tb12_loft08.Text =
-			tb13_loft10.Text =
-			tb14_loft12.Text =
-			tb15_loft14.Text =
-			tb16_loft16.Text =
-			tb17_loft18.Text =
-			tb18_loft20.Text =
-			tb19_loft22.Text =
+			tb08_loft00.Text =
+			tb09_loft01.Text =
+			tb10_loft02.Text =
+			tb11_loft03.Text =
+			tb12_loft04.Text =
+			tb13_loft05.Text =
+			tb14_loft06.Text =
+			tb15_loft07.Text =
+			tb16_loft08.Text =
+			tb17_loft09.Text =
+			tb18_loft10.Text =
+			tb19_loft11.Text =
 
 			tb20_scang1.Text =
 			tb20_scang2.Text =
@@ -1525,14 +1525,14 @@ namespace McdView
 
 			tb38_.Text =
 
-			tb39_tuwalk       .Text =
-			tb40_tuslide      .Text =
-			tb41_tufly        .Text =
-			tb42_armor        .Text =
-			tb43_heblock      .Text =
-			tb44_deathid      .Text =
-			tb45_fireresist   .Text =
-			tb46_alternateid  .Text =
+			tb39_tuwalk     .Text =
+			tb40_tuslide    .Text =
+			tb41_tufly      .Text =
+			tb42_armor      .Text =
+			tb43_heblock    .Text =
+			tb44_deathid    .Text =
+			tb45_fireresist .Text =
+			tb46_alternateid.Text =
 
 			tb47_.Text =
 
@@ -1582,83 +1582,83 @@ namespace McdView
 				y = 255;
 
 			val = Parts[SelId].Record.Sprite1;
-			if (val != Int32.Parse(tb0_phase0.Text))
+			if (val != Int32.Parse(tb00_phase0.Text))
 			{
-				borks.Add("#0 phase0 (record) does not equal phase0 (text).");
+				borks.Add("#0 phase 1 (record) does not equal phase 1 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#0 phase0 id exceeds the terrain's spriteset count.");
+				borks.Add("#0 phase 1 id exceeds the terrain's spriteset count.");
 			}
 
 			val = Parts[SelId].Record.Sprite2;
-			if (val != Int32.Parse(tb1_phase1.Text))
+			if (val != Int32.Parse(tb01_phase1.Text))
 			{
-				borks.Add("#1 phase1 (record) does not equal phase1 (text).");
+				borks.Add("#1 phase 2 (record) does not equal phase 2 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#1 phase1 id exceeds the terrain's spriteset count.");
+				borks.Add("#1 phase 2 id exceeds the terrain's spriteset count.");
 			}
 
 			val = Parts[SelId].Record.Sprite3;
-			if (val != Int32.Parse(tb2_phase2.Text))
+			if (val != Int32.Parse(tb02_phase2.Text))
 			{
-				borks.Add("#2 phase2 (record) does not equal phase2 (text).");
+				borks.Add("#2 phase 3 (record) does not equal phase 3 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#2 phase2 id exceeds the terrain's spriteset count.");
+				borks.Add("#2 phase 3 id exceeds the terrain's spriteset count.");
 			}
 
 			val = Parts[SelId].Record.Sprite4;
-			if (val != Int32.Parse(tb3_phase3.Text))
+			if (val != Int32.Parse(tb03_phase3.Text))
 			{
-				borks.Add("#3 phase3 (record) does not equal phase3 (text).");
+				borks.Add("#3 phase 4 (record) does not equal phase 4 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#3 phase3 id exceeds the terrain's spriteset count.");
+				borks.Add("#3 phase 4 id exceeds the terrain's spriteset count.");
 			}
 
 			val = Parts[SelId].Record.Sprite5;
-			if (val != Int32.Parse(tb4_phase4.Text))
+			if (val != Int32.Parse(tb04_phase4.Text))
 			{
-				borks.Add("#4 phase4 (record) does not equal phase4 (text).");
+				borks.Add("#4 phase 5 (record) does not equal phase 5 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#4 phase4 id exceeds the terrain's spriteset count.");
+				borks.Add("#4 phase 5 id exceeds the terrain's spriteset count.");
 			}
 
 			val = Parts[SelId].Record.Sprite6;
-			if (val != Int32.Parse(tb5_phase5.Text))
+			if (val != Int32.Parse(tb05_phase5.Text))
 			{
-				borks.Add("#5 phase5 (record) does not equal phase5 (text).");
+				borks.Add("#5 phase 6 (record) does not equal phase 6 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#5 phase5 id exceeds the terrain's spriteset count.");
+				borks.Add("#5 phase 6 id exceeds the terrain's spriteset count.");
 			}
 
 			val = Parts[SelId].Record.Sprite7;
-			if (val != Int32.Parse(tb6_phase6.Text))
+			if (val != Int32.Parse(tb06_phase6.Text))
 			{
-				borks.Add("#6 phase6 (record) does not equal phase6 (text).");
+				borks.Add("#6 phase 7 (record) does not equal phase 7 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#6 phase6 id exceeds the terrain's spriteset count.");
+				borks.Add("#6 phase 7 id exceeds the terrain's spriteset count.");
 			}
 
 			val = Parts[SelId].Record.Sprite8;
-			if (val != Int32.Parse(tb7_phase7.Text))
+			if (val != Int32.Parse(tb07_phase7.Text))
 			{
-				borks.Add("#7 phase7 (record) does not equal phase7 (text).");
+				borks.Add("#7 phase 8 (record) does not equal phase 8 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#7 phase7 id exceeds the terrain's spriteset count.");
+				borks.Add("#7 phase 8 id exceeds the terrain's spriteset count.");
 			}
 
 
@@ -1676,123 +1676,123 @@ namespace McdView
 				y = 255;
 
 			val = Parts[SelId].Record.Loft1;
-			if (val != Int32.Parse(tb8_loft00.Text))
+			if (val != Int32.Parse(tb08_loft00.Text))
 			{
-				borks.Add("#8 loft00 (record) does not equal loft00 (text).");
+				borks.Add("#8 loft 1 (record) does not equal loft 1 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#8 loft00 id exceeds the LoFT count.");
+				borks.Add("#8 loft 1 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft2;
-			if (val != Int32.Parse(tb9_loft02.Text))
+			if (val != Int32.Parse(tb09_loft01.Text))
 			{
-				borks.Add("#9 loft02 (record) does not equal loft02 (text).");
+				borks.Add("#9 loft 2 (record) does not equal loft 2 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#9 loft02 id exceeds the LoFT count.");
+				borks.Add("#9 loft 2 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft3;
-			if (val != Int32.Parse(tb10_loft04.Text))
+			if (val != Int32.Parse(tb10_loft02.Text))
 			{
-				borks.Add("#10 loft04 (record) does not equal loft04 (text).");
+				borks.Add("#10 loft 3 (record) does not equal loft 3 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#10 loft04 id exceeds the LoFT count.");
+				borks.Add("#10 loft 3 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft4;
-			if (val != Int32.Parse(tb11_loft06.Text))
+			if (val != Int32.Parse(tb11_loft03.Text))
 			{
-				borks.Add("#11 loft06 (record) does not equal loft06 (text).");
+				borks.Add("#11 loft 4 (record) does not equal loft 4 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#11 loft06 id exceeds the LoFT count.");
+				borks.Add("#11 loft 4 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft5;
-			if (val != Int32.Parse(tb12_loft08.Text))
+			if (val != Int32.Parse(tb12_loft04.Text))
 			{
-				borks.Add("#12 loft08 (record) does not equal loft08 (text).");
+				borks.Add("#12 loft 5 (record) does not equal loft 5 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#12 loft08 id exceeds the LoFT count.");
+				borks.Add("#12 loft 5 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft6;
-			if (val != Int32.Parse(tb13_loft10.Text))
+			if (val != Int32.Parse(tb13_loft05.Text))
 			{
-				borks.Add("#13 loft10 (record) does not equal loft10 (text).");
+				borks.Add("#13 loft 6 (record) does not equal loft 6 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#13 loft10 id exceeds the LoFT count.");
+				borks.Add("#13 loft 6 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft7;
-			if (val != Int32.Parse(tb14_loft12.Text))
+			if (val != Int32.Parse(tb14_loft06.Text))
 			{
-				borks.Add("#14 loft12 (record) does not equal loft12 (text).");
+				borks.Add("#14 loft 7 (record) does not equal loft 7 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#14 loft12 id exceeds the LoFT count.");
+				borks.Add("#14 loft 7 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft8;
-			if (val != Int32.Parse(tb15_loft14.Text))
+			if (val != Int32.Parse(tb15_loft07.Text))
 			{
-				borks.Add("#15 loft14 (record) does not equal loft14 (text).");
+				borks.Add("#15 loft 8 (record) does not equal loft 8 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#15 loft14 id exceeds the LoFT count.");
+				borks.Add("#15 loft 8 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft9;
-			if (val != Int32.Parse(tb16_loft16.Text))
+			if (val != Int32.Parse(tb16_loft08.Text))
 			{
-				borks.Add("#16 loft16 (record) does not equal loft16 (text).");
+				borks.Add("#16 loft 9 (record) does not equal loft 9 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#16 loft16 id exceeds the LoFT count.");
+				borks.Add("#16 loft 9 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft10;
-			if (val != Int32.Parse(tb17_loft18.Text))
+			if (val != Int32.Parse(tb17_loft09.Text))
 			{
-				borks.Add("#17 loft18 (record) does not equal loft18 (text).");
+				borks.Add("#17 loft 10 (record) does not equal loft 10 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#17 loft18 id exceeds the LoFT count.");
+				borks.Add("#17 loft 10 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft11;
-			if (val != Int32.Parse(tb18_loft20.Text))
+			if (val != Int32.Parse(tb18_loft10.Text))
 			{
-				borks.Add("#18 loft20 (record) does not equal loft20 (text).");
+				borks.Add("#18 loft 11 (record) does not equal loft 11 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#18 loft20 id exceeds the LoFT count.");
+				borks.Add("#18 loft 11 id exceeds the LoFT count.");
 			}
 
 			val = Parts[SelId].Record.Loft12;
-			if (val != Int32.Parse(tb19_loft22.Text))
+			if (val != Int32.Parse(tb19_loft11.Text))
 			{
-				borks.Add("#19 loft22 (record) does not equal loft22 (text).");
+				borks.Add("#19 loft 12 (record) does not equal loft 12 (text).");
 			}
 			if (!Test(val, 0, y))
 			{
-				borks.Add("#19 loft22 id exceeds the LoFT count.");
+				borks.Add("#19 loft 12 id exceeds the LoFT count.");
 			}
 
 
