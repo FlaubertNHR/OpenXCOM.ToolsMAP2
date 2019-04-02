@@ -22,19 +22,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 			MapObserverControl0
 	{
 		#region Enums
-		private enum ConnectNodeType
+		private enum ConnectNodesType
 		{
-			ConnectNone,
-			ConnectOneWay,
-			ConnectTwoWays
+			None,
+			OneWay,
+			TwoWay
 		}
 		#endregion
 
 
 		#region Fields (static)
-		private const string DontConnect   = " DontConnect";	// NOTE: the space is 'cause ComboBox entries
-		private const string OneWayConnect = " OneWayConnect";	// don't get a Padding property.
-		private const string TwoWayConnect = " TwoWayConnect";
+		private static ConnectNodesType _conType = ConnectNodesType.None; // safety - shall be set by LoadControl0Options()
 
 		private const string NodeCopyPrefix  = "MVNode"; // TODO: use a struct to copy/paste the info.
 		private const char NodeCopySeparator = '|';
@@ -176,14 +174,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			RoutePanel.MouseLeave               += OnRoutePanelMouseLeave;
 			RoutePanel.KeyDown                  += OnRoutePanelKeyDown;
 			_pnlRoutes.Controls.Add(RoutePanel);
-
-			// setup the connect-type dropdown entries
-			tscbConnectType.Items.AddRange(new object[]
-			{
-				DontConnect,
-				OneWayConnect,
-				TwoWayConnect
-			});
 
 			// node data ->
 			var unitTypes = new object[]
@@ -564,8 +554,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// node to</param>
 		private void ConnectNode(RouteNode node)
 		{
-			var type = GetConnectorType();
-			if (type != ConnectNodeType.ConnectNone)
+			if (_conType != ConnectNodesType.None)
 			{
 				int slot = GetOpenLinkSlot(NodeSelected, node.Index);
 				if (slot > -1)
@@ -580,7 +569,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 								this,
 								"Source node could not be linked to the destination node."
 									+ " Its link-slots are full.",
-								"Warning",
+								" Warning",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Exclamation,
 								MessageBoxDefaultButton.Button1,
@@ -591,7 +580,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					// Fortunately a simple mouseover straightens things out for now.
 				}
 
-				if (type == ConnectNodeType.ConnectTwoWays)
+				if (_conType == ConnectNodesType.TwoWay)
 				{
 					slot = GetOpenLinkSlot(node, NodeSelected.Index);
 					if (slot > -1)
@@ -606,7 +595,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 									this,
 									"Destination node could not be linked to the source node."
 										+ " Its link-slots are full.",
-									"Warning",
+									" Warning",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Exclamation,
 									MessageBoxDefaultButton.Button1,
@@ -618,21 +607,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 					}
 				}
 			}
-		}
-
-		/// <summary>
-		/// Gets the user-selected Connector type.
-		/// </summary>
-		/// <returns></returns>
-		private ConnectNodeType GetConnectorType()
-		{
-			if (tscbConnectType.Text == OneWayConnect)
-				return ConnectNodeType.ConnectOneWay;
-
-			if (tscbConnectType.Text == TwoWayConnect)
-				return ConnectNodeType.ConnectTwoWays;
-
-			return ConnectNodeType.ConnectNone;
 		}
 
 		/// <summary>
@@ -1555,7 +1529,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			MessageBox.Show(
 						this,
 						asterisk,
-						"Err..",
+						" Err..",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Asterisk,
 						MessageBoxDefaultButton.Button1,
@@ -1618,21 +1592,84 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 
-		#region Events (menubar)
+		#region Events (toolstrip)
 		/// <summary>
-		/// Handler for closing the ConnectType combobox.
+		/// Handles clicking on any of the three ConnectType toolstrip buttons.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnConnectTypeClosed(object sender, EventArgs e)
+		private void OnConnectTypeClicked(object sender, EventArgs e)
 		{
-			if (Tag as String == "ROUTE")
-				ViewerFormsManager.TopRouteView.ControlRoute.tscbConnectType.SelectedIndex = tscbConnectType.SelectedIndex;
-			else
-				ViewerFormsManager.RouteView.Control.tscbConnectType.SelectedIndex = tscbConnectType.SelectedIndex;
+			var tsb = sender as ToolStripButton;
+			if (!tsb.Checked)
+			{
+				RouteView alt;
+				if (Tag as String == "ROUTE")
+				{
+					alt = ViewerFormsManager.TopRouteView.ControlRoute;
+				}
+				else //if (Tag as String == "TOPROUTE")
+				{
+					alt = ViewerFormsManager.RouteView.Control;
+				}
 
-			RoutePanel.Select();	// take focus off the stupid combobox. Tks. NOTE: It tends to
-		}							// stay "highlighted" but at least it's no longer "selected".
+				if (tsb == tsb_connect0)
+				{
+					_conType = ConnectNodesType.None;
+
+						tsb_connect0.Checked =
+					alt.tsb_connect0.Checked = true;
+						tsb_connect1.Checked =
+					alt.tsb_connect1.Checked =
+						tsb_connect2.Checked =
+					alt.tsb_connect2.Checked = false;
+
+						tsb_connect0.Image =
+					alt.tsb_connect0.Image = Properties.Resources.connect_0_red;
+						tsb_connect1.Image =
+					alt.tsb_connect1.Image = Properties.Resources.connect_1;
+						tsb_connect2.Image =
+					alt.tsb_connect2.Image = Properties.Resources.connect_2;
+				}
+				else if (tsb == tsb_connect1)
+				{
+					_conType = ConnectNodesType.OneWay;
+
+						tsb_connect1.Checked =
+					alt.tsb_connect1.Checked = true;
+						tsb_connect0.Checked =
+					alt.tsb_connect0.Checked =
+						tsb_connect2.Checked =
+					alt.tsb_connect2.Checked = false;
+
+						tsb_connect1.Image =
+					alt.tsb_connect1.Image = Properties.Resources.connect_1_blue;
+						tsb_connect0.Image =
+					alt.tsb_connect0.Image = Properties.Resources.connect_0;
+						tsb_connect2.Image =
+					alt.tsb_connect2.Image = Properties.Resources.connect_2;
+				}
+				else //if (tsb == tsb_connect2)
+				{
+					_conType = ConnectNodesType.TwoWay;
+
+						tsb_connect2.Checked =
+					alt.tsb_connect2.Checked = true;
+						tsb_connect0.Checked =
+					alt.tsb_connect0.Checked =
+						tsb_connect1.Checked =
+					alt.tsb_connect1.Checked = false;
+
+						tsb_connect2.Image =
+					alt.tsb_connect2.Image = Properties.Resources.connect_2_green;
+						tsb_connect0.Image =
+					alt.tsb_connect0.Image = Properties.Resources.connect_0;
+						tsb_connect1.Image =
+					alt.tsb_connect1.Image = Properties.Resources.connect_1;
+				}
+			}
+			RoutePanel.Select();
+		}
 
 
 		private void OnExportClick(object sender, EventArgs e)
@@ -1736,7 +1773,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							this,
 							"Are you sure you want to make all nodes spawn Rank"
 								+ " 0 Civ/Scout?",
-							"Warning",
+							" Warning",
 							MessageBoxButtons.YesNo,
 							MessageBoxIcon.Exclamation,
 							MessageBoxDefaultButton.Button2,
@@ -1759,7 +1796,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					MessageBox.Show(
 								changed + " nodes were changed.",
-								"All nodes spawn Rank 0",
+								" All nodes spawn Rank 0",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Information,
 								MessageBoxDefaultButton.Button1,
@@ -1768,7 +1805,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				else
 					MessageBox.Show(
 								"All nodes are already rank 0.",
-								"All nodes spawn Rank 0",
+								" All nodes spawn Rank 0",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Asterisk,
 								MessageBoxDefaultButton.Button1,
@@ -1789,7 +1826,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				if (MessageBox.Show(
 								this,
 								"Are you sure you want to clear the selected node's Link data?",
-								"Warning",
+								" Warning",
 								MessageBoxButtons.YesNo,
 								MessageBoxIcon.Exclamation,
 								MessageBoxDefaultButton.Button2,
@@ -1882,8 +1919,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			}
 
 			MessageBox.Show(
+						this,
 						info,
-						"Link distances updated",
+						" Link distances updated",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Information,
 						MessageBoxDefaultButton.Button1,
@@ -1912,7 +1950,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			if (invalids.Count != 0)
 			{
 				icon  = MessageBoxIcon.Warning;
-				title = "Warning";
+				title = " Warning";
 				info  = String.Format(
 									System.Globalization.CultureInfo.CurrentCulture,
 									"The following route-{0} an invalid NodeRank.{1}",
@@ -1926,11 +1964,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			else
 			{
 				icon  = MessageBoxIcon.Information;
-				title = "Good stuff, Magister Ludi";
+				title = " Good stuff, Magister Ludi";
 				info  = "There are no invalid NodeRanks detected.";
 			}
 
 			MessageBox.Show(
+						this,
 						info,
 						title,
 						MessageBoxButtons.OK,
@@ -2001,8 +2040,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Gets the Options button on the toolstrip.
 		/// </summary>
-		/// <returns>either the button in RouteView or TopRouteView(Route)
-		/// - doesn't matter as long as they are kept synched</returns>
+		/// <returns>either the button in RouteView or TopRouteView(Route) -
+		/// doesn't matter as long as they are kept in sync</returns>
 		internal ToolStripButton GetOptionsButton()
 		{
 			return tsb_Options;
@@ -2043,7 +2082,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		protected internal override void LoadControl0Options()
 		{
-			tscbConnectType.SelectedIndex = 0;
+			OnConnectTypeClicked(tsb_connect0, EventArgs.Empty); // TODO: add to Options
 
 			var pens    = RoutePanel.RoutePens;
 			var brushes = RoutePanel.RouteBrushes;

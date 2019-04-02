@@ -427,4 +427,50 @@
         AAA=
 </value>
   </data>
+  <data name="connect_2" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABmSURBVDhPYxj0IAyKyQLxQPwFikFskgBMszsUk2QIsmYYINoQbJphgKAhIUD8B4hPAnEfDnwK
+        iEFqQGoxAMUGgADMCx5gHioAiZEUDsiGEK0ZBpANIVkzDMAMIUszDFCUlOkBGBgA7wso8WyH+BUAAAAA
+        SUVORK5CYII=
+</value>
+  </data>
+  <data name="connect_0" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABlSURBVDhPzZLRCYAwDAWznQ4g/rr/vwO0kRwETDGpIB48UPQOKsrv2W1THH2nTa9LIC+2UsTL
+        kI5EMjxGtr6RDET03RsE1usuRp8NAwpHiCLI6e/gI2kZfKQsA5EpGV79yl8g0gAUnyAhrguH/wAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
+  <data name="connect_1" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABHSURBVDhPYxj0wA2IgyFM8oATEH8B4jgwj0zgAcRDxJBoIO4jgE8B8R8gxhqwFBtACHgCMdnh
+        MHCanYGYouijOCnTGjAwAAC+ZhvD8Qq5SgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="connect_2_green" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAACHSURBVDhPzZLRCYAwEEM7i8vUAYq/TuEagmPpPH76YQK56ofCXT/EQEBz9wK2pn+rW6aB1mtM
+        AEd4l0fFPt3gLPtLuCggK2LmK+GCFitsYqbZcwkGBT7gFZ5fvMHcKcIuMdSwrYDCwD6hV1TFTDP3OdQS
+        PisL3wTBGGwiIDAOmwC2/8ofKaUTJUl8MS35qVkAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="connect_0_red" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAACCSURBVDhPzZLRCYAwDEQ7THepAxR/3c0ZHcAcvFShfiR+iA8Cepc7sLX8m73WVcNrDgtuNgez
+        Ice4hRsTL9EigYYkLVaiBRZH2JGG91xiRmdhCjvy2OlIFxIxF6QJeezMBcIM/4SpRBpe+BxGiZ7R0jeh
+        YC7sKEAwH3Ys+P5X/ohSTrrUVvm0ljSPAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="connect_1_blue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAABUSURBVDhPYxjcQNF0lRsQB0O5pAOgZicg/gLEcVAh0gFQs8cQMQQoEQ3EfQTwKSD+A8SYAQsU
+        pMwAQgCoyROIyQuHAdXsTLZmEABqpCwp0wEwMAAAorlPw8tUwqQAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>
