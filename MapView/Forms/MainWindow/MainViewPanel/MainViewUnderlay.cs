@@ -417,7 +417,7 @@ namespace MapView
 				//XCom.LogFile.WriteLine(". height= " + height);
 
 				Globals.Scale = (double)halfWidth / MainViewOverlay.HalfWidthConst;
-				XCMainWindow.Instance.StatusBarPrintScale();
+				XCMainWindow.Instance.sb_PrintScale();
 				//XCom.LogFile.WriteLine(". set scale= " + Globals.Scale);
 
 				return new Size(

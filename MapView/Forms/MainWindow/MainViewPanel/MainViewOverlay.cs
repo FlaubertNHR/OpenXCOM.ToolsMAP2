@@ -84,8 +84,8 @@ namespace MapView
 			{
 				if (!(_firstClick = value))
 				{
-					_dragStart = new Point(-1,-1);
-					_dragEnd   = new Point(-1,-1);
+					_dragBeg = new Point(-1,-1);
+					_dragEnd = new Point(-1,-1);
 				}
 
 				ViewerFormsManager.ToolFactory.SetEditButtonsEnabled( _firstClick);
@@ -369,11 +369,11 @@ namespace MapView
 
 				XCMapTile tile;
 
-				var start = GetAbsoluteDragStart();
-				var end   = GetAbsoluteDragEnd();
+				var a = GetDragBeg_abs();
+				var b = GetDragEnd_abs();
 
-				for (int col = start.X; col <= end.X; ++col)
-				for (int row = start.Y; row <= end.Y; ++row)
+				for (int col = a.X; col <= b.X; ++col)
+				for (int row = a.Y; row <= b.Y; ++row)
 				{
 					tile = (XCMapTile)MapBase[row, col];
 
@@ -400,26 +400,26 @@ namespace MapView
 			{
 				ToolstripFactory.Instance.SetPasteButtonsEnabled();
 
-				var start = GetAbsoluteDragStart();
-				var end   = GetAbsoluteDragEnd();
+				var a = GetDragBeg_abs();
+				var b = GetDragEnd_abs();
 
-				_copied = new MapTileBase[end.Y - start.Y + 1,
-										  end.X - start.X + 1];
+				_copied = new MapTileBase[b.Y - a.Y + 1,
+										  b.X - a.X + 1];
 
 				XCMapTile tile, copy;
 
-				for (int col = start.X; col <= end.X; ++col)
-				for (int row = start.Y; row <= end.Y; ++row)
+				for (int col = a.X; col <= b.X; ++col)
+				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = (XCMapTile)MapBase[row, col];
+					tile = MapBase[row, col] as XCMapTile;
 					copy = new XCMapTile(
 									tile.Floor,
 									tile.West,
 									tile.North,
 									tile.Content);
 
-					_copied[row - start.Y,
-							col - start.X] = copy;
+					_copied[row - a.Y,
+							col - a.X] = copy;
 				}
 			}
 		}
@@ -432,19 +432,19 @@ namespace MapView
 
 				XCMapTile tile, copy;
 				for (int
-						row = DragStart.Y;
-						row != MapBase.MapSize.Rows && (row - DragStart.Y) < _copied.GetLength(0);
+						row = DragBeg.Y;
+						row != MapBase.MapSize.Rows && (row - DragBeg.Y) < _copied.GetLength(0);
 						++row)
 				{
 					for (int
-							col = DragStart.X;
-							col != MapBase.MapSize.Cols && (col - DragStart.X) < _copied.GetLength(1);
+							col = DragBeg.X;
+							col != MapBase.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(1);
 							++col)
 					{
 						if ((tile = MapBase[row, col] as XCMapTile) != null)
 						{
-							if ((copy = _copied[row - DragStart.Y,
-												col - DragStart.X] as XCMapTile) != null)
+							if ((copy = _copied[row - DragBeg.Y,
+												col - DragBeg.X] as XCMapTile) != null)
 							{
 								tile.Floor   = copy.Floor; // TODO: Clone these and update their sprites etc.
 								tile.Content = copy.Content;
@@ -469,14 +469,14 @@ namespace MapView
 			{
 				XCMainWindow.Instance.MapChanged = true;
 
-				var start = GetAbsoluteDragStart();
-				var end   = GetAbsoluteDragEnd();
+				var a = GetDragBeg_abs();
+				var b = GetDragEnd_abs();
 
 				var quad = ViewerFormsManager.TopView .Control.QuadrantsPanel.SelectedQuadrant;
 				var part = ViewerFormsManager.TileView.Control.SelectedTilepart;
 
-				for (int col = start.X; col <= end.X; ++col)
-				for (int row = start.Y; row <= end.Y; ++row)
+				for (int col = a.X; col <= b.X; ++col)
+				for (int row = a.Y; row <= b.Y; ++row)
 				{
 					((XCMapTile)MapBase[row, col])[quad] = part;
 				}
@@ -491,10 +491,10 @@ namespace MapView
 		{
 			Invalidate();
 
-			ViewerFormsManager.TopView     .Refresh();
+			ViewerFormsManager.TopView     .Refresh(); // TODO: Refresh the panels not the forms.
 			ViewerFormsManager.RouteView   .Refresh();
 			ViewerFormsManager.TopRouteView.Refresh();
-//			ViewerFormsManager.TopView     .Invalidate(); // -> subsidiary viewers won't refresh until mouseovered.
+//			ViewerFormsManager.TopView     .Invalidate(); // -> but subsidiary viewers won't refresh until mouseovered.
 //			ViewerFormsManager.RouteView   .Invalidate();
 //			ViewerFormsManager.TopRouteView.Invalidate();
 
@@ -541,7 +541,7 @@ namespace MapView
 													start.X,
 													MapBase.Level);
 					_isMouseDrag = true;
-					ProcessTileSelection(start, start);
+					ProcessSelection(start, start);
 				}
 			}
 		}
@@ -563,16 +563,16 @@ namespace MapView
 		{
 			if (MapBase != null)
 			{
-				var end = GetTileLocation(e.X, e.Y);
+				var loc = GetTileLocation(e.X, e.Y);
 
 				_suppressTargeter = false;
-				_colOver = end.X;
-				_rowOver = end.Y;
+				_colOver = loc.X;
+				_rowOver = loc.Y;
 
 				if (_isMouseDrag
-					&& (end.X != DragEnd.X || end.Y != DragEnd.Y))
+					&& (loc.X != DragEnd.X || loc.Y != DragEnd.Y))
 				{
-					ProcessTileSelection(DragStart, end);
+					ProcessSelection(DragBeg, loc);
 				}
 				else
 					Refresh(); // mouseover refresh for MainView.
@@ -594,14 +594,14 @@ namespace MapView
 		/// selected lozenge).
 		/// @note Fires OnMouseDown and OnMouseMove in Main,Top,Route viewers.
 		/// </summary>
-		/// <param name="start"></param>
+		/// <param name="beg"></param>
 		/// <param name="end"></param>
-		internal void ProcessTileSelection(Point start, Point end)
+		internal void ProcessSelection(Point beg, Point end)
 		{
-			if (DragStart != start || DragEnd != end)
+			if (DragBeg != beg || DragEnd != end)
 			{
-				DragStart = start;	// these ensure that the start and end points stay
-				DragEnd   = end;	// within the bounds of the currently loaded map.
+				DragBeg = beg; // these ensure that the start and end points stay
+				DragEnd = end; // within the bounds of the currently loaded map.
 	
 				if (MouseDragEvent != null) // path the selected-lozenge
 					MouseDragEvent();
@@ -609,12 +609,12 @@ namespace MapView
 				RefreshViewers();
 
 				// update SelectionSize on statusbar
-				var a = GetAbsoluteDragStart();
-				var b = GetAbsoluteDragEnd();
+				var a = GetDragBeg_abs();
+				var b = GetDragEnd_abs();
 
-				XCMainWindow.Instance.StatusBarPrintSelectionSize(
-																b.X - a.X + 1,
-																b.Y - a.Y + 1);
+				XCMainWindow.Instance.sb_PrintSelectionSize(
+														b.X - a.X + 1,
+														b.Y - a.Y + 1);
 			}
 		}
 
@@ -622,45 +622,45 @@ namespace MapView
 		/// Gets the drag-start point as a lesser value than the drag-end point.
 		/// See 'DragStart' for bounds.
 		/// </summary>
-		/// <returns></returns>
-		internal Point GetAbsoluteDragStart()
+		/// <returns>the lesser of two evils</returns>
+		internal Point GetDragBeg_abs()
 		{
 			return new Point(
-						Math.Min(DragStart.X, DragEnd.X),
-						Math.Min(DragStart.Y, DragEnd.Y));
+						Math.Min(DragBeg.X, DragEnd.X),
+						Math.Min(DragBeg.Y, DragEnd.Y));
 		}
 
 		/// <summary>
 		/// Gets the drag-end point as a greater value than the drag-start point.
 		/// See 'DragEnd' for bounds.
 		/// </summary>
-		/// <returns></returns>
-		internal Point GetAbsoluteDragEnd()
+		/// <returns>the greater of two evils</returns>
+		internal Point GetDragEnd_abs()
 		{
 			return new Point(
-						Math.Max(DragStart.X, DragEnd.X),
-						Math.Max(DragStart.Y, DragEnd.Y));
+						Math.Max(DragBeg.X, DragEnd.X),
+						Math.Max(DragBeg.Y, DragEnd.Y));
 		}
 
 
-		private Point _dragStart = new Point(-1, -1);
-		private Point _dragEnd   = new Point(-1, -1);
+		private Point _dragBeg = new Point(-1, -1);
+		private Point _dragEnd = new Point(-1, -1);
 
 		/// <summary>
-		/// Gets/Sets the drag-start point.
+		/// Gets/Sets the drag-begin point.
 		/// </summary>
-		internal Point DragStart
+		internal Point DragBeg
 		{
-			get { return _dragStart; }
+			get { return _dragBeg; }
 			private set
 			{
-				_dragStart = value;
+				_dragBeg = value;
 
-				if      (_dragStart.Y < 0) _dragStart.Y = 0;
-				else if (_dragStart.Y >= MapBase.MapSize.Rows) _dragStart.Y = MapBase.MapSize.Rows - 1;
+				if      (_dragBeg.Y < 0) _dragBeg.Y = 0;
+				else if (_dragBeg.Y >= MapBase.MapSize.Rows) _dragBeg.Y = MapBase.MapSize.Rows - 1;
 
-				if      (_dragStart.X < 0) _dragStart.X = 0;
-				else if (_dragStart.X >= MapBase.MapSize.Cols) _dragStart.X = MapBase.MapSize.Cols - 1;
+				if      (_dragBeg.X < 0) _dragBeg.X = 0;
+				else if (_dragBeg.X >= MapBase.MapSize.Cols) _dragBeg.X = MapBase.MapSize.Cols - 1;
 			}
 		}
 
@@ -702,7 +702,7 @@ namespace MapView
 			_lev = args.Location.Lev;
 			//LogFile.WriteLine(". " + _col + "," + _row + "," + _lev);
 
-			XCMainWindow.Instance.StatusBarPrintPosition(_col, _row, _lev);
+			XCMainWindow.Instance.sb_PrintPosition(_col, _row, _lev);
 		}
 
 		/// <summary>
@@ -719,7 +719,7 @@ namespace MapView
 			_lev = args.Level;
 			//LogFile.WriteLine(". " + _col + "," + _row + "," + _lev);
 
-			XCMainWindow.Instance.StatusBarPrintPosition(_col, _row, _lev);
+			XCMainWindow.Instance.sb_PrintPosition(_col, _row, _lev);
 			Refresh();
 		}
 		#endregion
@@ -801,16 +801,16 @@ namespace MapView
 		/// </summary>
 		private void DrawRembrandt()
 		{
-			var dragrect = new Rectangle(-1,-1, 0,0); // This is different between REMBRANDT and PICASSO ->
+			var rect = new Rectangle(-1,-1, 0,0); // This is different between REMBRANDT and PICASSO ->
 			if (FirstClick)
 			{
-				var start = GetAbsoluteDragStart();
-				var end   = GetAbsoluteDragEnd();
+				var a = GetDragBeg_abs();
+				var b   = GetDragEnd_abs();
 
-				dragrect.X = start.X;
-				dragrect.Y = start.Y;
-				dragrect.Width  = end.X - start.X + 1;
-				dragrect.Height = end.Y - start.Y + 1;
+				rect.X = a.X;
+				rect.Y = a.Y;
+				rect.Width  = b.X - a.X + 1;
+				rect.Height = b.Y - a.Y + 1;
 			}
 
 
@@ -847,8 +847,8 @@ namespace MapView
 								y += HalfHeight)
 					{
 						bool isClicked = FirstClick
-									  && (   (col == DragStart.X && row == DragStart.Y)
-										  || (col == DragEnd.X   && row == DragEnd.Y));
+									  && (   (col == DragBeg.X && row == DragBeg.Y)
+										  || (col == DragEnd.X && row == DragEnd.Y));
 
 						if (isClicked)
 						{
@@ -870,7 +870,7 @@ namespace MapView
 									x, y,
 									_graySelection
 										&& lev == MapBase.Level
-										&& dragrect.Contains(col, row));
+										&& rect.Contains(col, row));
 						}
 
 						if (isClicked)
@@ -898,10 +898,10 @@ namespace MapView
 				}
 			}
 
-			if (    dragrect.Width > 2 || dragrect.Height > 2 // This is different between REMBRANDT and PICASSO ->
-				|| (dragrect.Width > 1 && dragrect.Height > 1))
+			if (    rect.Width > 2 || rect.Height > 2 // This is different between REMBRANDT and PICASSO ->
+				|| (rect.Width > 1 && rect.Height > 1))
 			{
-				DrawSelectionBorder(dragrect);
+				DrawSelectionBorder(rect);
 			}
 		}
 
@@ -946,8 +946,8 @@ namespace MapView
 								y += HalfHeight)
 					{
 						bool isClicked = FirstClick
-									  && (   (col == DragStart.X && row == DragStart.Y)
-										  || (col == DragEnd.X   && row == DragEnd.Y));
+									  && (   (col == DragBeg.X && row == DragBeg.Y)
+										  || (col == DragEnd.X && row == DragEnd.Y));
 
 						if (isClicked)
 						{
@@ -994,19 +994,19 @@ namespace MapView
 
 			if (FirstClick) // This is different between REMBRANDT and PICASSO ->
 			{
-				var start = GetAbsoluteDragStart();
-				var end   = GetAbsoluteDragEnd();
+				var a = GetDragBeg_abs();
+				var b = GetDragEnd_abs();
 
-				int width  = end.X - start.X + 1;
-				int height = end.Y - start.Y + 1;
+				int width  = b.X - a.X + 1;
+				int height = b.Y - a.Y + 1;
 
 				if (    width > 2 || height > 2
 					|| (width > 1 && height > 1))
 				{
-					var dragrect = new Rectangle(
-											start.X, start.Y,
-											width, height);
-					DrawSelectionBorder(dragrect);
+					var rect = new Rectangle(
+										a.X, a.Y,
+										width, height);
+					DrawSelectionBorder(rect);
 				}
 			}
 		}

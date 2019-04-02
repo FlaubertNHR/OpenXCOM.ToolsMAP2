@@ -1297,7 +1297,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			var start = new Point(node.Col, node.Row);
 
-			MainViewUnderlay.Instance.MainViewOverlay.ProcessTileSelection(start, start);
+			MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(start, start);
 
 			var args = new RoutePanelEventArgs();
 			args.MouseButton = MouseButtons.Left;

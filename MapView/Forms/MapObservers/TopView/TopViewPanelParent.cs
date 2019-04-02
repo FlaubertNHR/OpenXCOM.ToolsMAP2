@@ -166,24 +166,24 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		internal protected void PathSelectedLozenge()
 		{
-			var start = MainViewUnderlay.Instance.MainViewOverlay.GetAbsoluteDragStart();
-			var end   = MainViewUnderlay.Instance.MainViewOverlay.GetAbsoluteDragEnd();
+			var a = MainViewUnderlay.Instance.MainViewOverlay.GetDragBeg_abs();
+			var b = MainViewUnderlay.Instance.MainViewOverlay.GetDragEnd_abs();
 
 			int halfWidth  = _blobService.HalfWidth;
 			int halfHeight = _blobService.HalfHeight;
 
 			var p0 = new Point(
-							_originX + (start.X - start.Y) * halfWidth,
-							OffsetY  + (start.X + start.Y) * halfHeight);
+							_originX + (a.X - a.Y) * halfWidth,
+							 OffsetY + (a.X + a.Y) * halfHeight);
 			var p1 = new Point(
-							_originX + (end.X   - start.Y) * halfWidth  + halfWidth,
-							OffsetY  + (end.X   + start.Y) * halfHeight + halfHeight);
+							_originX + (b.X - a.Y) * halfWidth  + halfWidth,
+							 OffsetY + (b.X + a.Y) * halfHeight + halfHeight);
 			var p2 = new Point(
-							_originX + (end.X   - end.Y)   * halfWidth,
-							OffsetY  + (end.X   + end.Y)   * halfHeight + halfHeight * 2);
+							_originX + (b.X - b.Y) * halfWidth,
+							 OffsetY + (b.X + b.Y) * halfHeight + halfHeight * 2);
 			var p3 = new Point(
-							_originX + (start.X - end.Y)   * halfWidth  - halfWidth,
-							OffsetY  + (start.X + end.Y)   * halfHeight + halfHeight);
+							_originX + (a.X - b.Y) * halfWidth  - halfWidth,
+							 OffsetY + (a.X + b.Y) * halfHeight + halfHeight);
 
 			_lozSelected.Reset();
 			_lozSelected.AddLine(p0, p1);
@@ -315,9 +315,9 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			if (MapBase != null)
 			{
-				var start = GetTileLocation(e.X, e.Y);
-				if (   start.Y > -1 && start.Y < MapBase.MapSize.Rows
-					&& start.X > -1 && start.X < MapBase.MapSize.Cols)
+				var loc = GetTileLocation(e.X, e.Y);
+				if (   loc.Y > -1 && loc.Y < MapBase.MapSize.Rows
+					&& loc.X > -1 && loc.X < MapBase.MapSize.Cols)
 				{
 					// as long as MainViewOverlay.OnLocationSelectedMain()
 					// fires before the subsidiary viewers' OnLocationSelectedObserver()
@@ -333,10 +333,10 @@ namespace MapView.Forms.MapObservers.TopViews
 //					MainViewUnderlay.Instance.MainViewOverlay.FirstClick = true;
 
 					MapBase.Location = new MapLocation(
-													start.Y, start.X,
+													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;
-					MainViewUnderlay.Instance.MainViewOverlay.ProcessTileSelection(start, start);
+					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
 				}
 			}
 		}
@@ -348,16 +348,16 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			var end = GetTileLocation(e.X, e.Y);
-			if (end.X != _col || end.Y != _row)
+			var loc = GetTileLocation(e.X, e.Y);
+			if (loc.X != _col || loc.Y != _row)
 			{
-				_col = end.X;
-				_row = end.Y;
+				_col = loc.X;
+				_row = loc.Y;
 
 				if (_isMouseDrag)
 				{
 					var overlay = MainViewUnderlay.Instance.MainViewOverlay;
-					overlay.ProcessTileSelection(overlay.DragStart, end);
+					overlay.ProcessSelection(overlay.DragBeg, loc);
 				}
 				else
 					Refresh(); // mouseover refresh for TopView.
@@ -373,7 +373,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private Point GetTileLocation(int x, int y)
 		{
 			x -= _originX;
-			y -= OffsetY;
+			y -=  OffsetY;
 
 			double halfWidth  = _blobService.HalfWidth;
 			double halfHeight = _blobService.HalfHeight;

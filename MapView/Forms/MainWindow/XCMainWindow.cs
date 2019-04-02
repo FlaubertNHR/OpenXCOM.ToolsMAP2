@@ -2729,7 +2729,7 @@ namespace MapView
 		/// <param name="col"></param>
 		/// <param name="row"></param>
 		/// <param name="lev"></param>
-		internal void StatusBarPrintPosition(int col, int row, int lev)
+		internal void sb_PrintPosition(int col, int row, int lev)
 		{
 			if (_mainViewUnderlay.MainViewOverlay.FirstClick)
 				tsslPosition.Text = String.Format(
@@ -2738,7 +2738,7 @@ namespace MapView
 												col + 1, row + 1, _mainViewUnderlay.MapBase.MapSize.Levs - lev); // 1-based count.
 		}
 
-		internal void StatusBarPrintScale()
+		internal void sb_PrintScale()
 		{
 			tsslScale.Text = String.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
@@ -2746,7 +2746,7 @@ namespace MapView
 										Globals.Scale);
 		}
 
-		internal void StatusBarPrintSelectionSize(int tx, int ty)
+		internal void sb_PrintSelectionSize(int tx, int ty)
 		{
 			tsslSelectionSize.Text = String.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
