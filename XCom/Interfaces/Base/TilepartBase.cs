@@ -39,7 +39,7 @@ namespace XCom.Interfaces.Base
 
 		/// <summary>
 		/// The ID of this tilepart that's unique to the Map across all
-		/// allocated terrains.
+		/// allocated terrains. The value is set in MapFileChild..cTor.
 		/// </summary>
 		public int SetId
 		{ get; set; }

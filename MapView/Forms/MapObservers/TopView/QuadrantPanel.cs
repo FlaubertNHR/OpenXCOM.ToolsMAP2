@@ -149,7 +149,7 @@ namespace MapView.Forms.MapObservers.TopViews
 						ViewerFormsManager.TopRouteView.Refresh();
 
 						if (XCMainWindow.ScanG != null)
-							XCMainWindow.ScanG.RefreshPanel();
+							XCMainWindow.ScanG.InvalidatePanel();
 					}
 					Refresh();
 					break;

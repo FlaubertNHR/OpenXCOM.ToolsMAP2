@@ -35,14 +35,14 @@ namespace XCom
 		/// cTor.
 		/// </summary>
 		/// <param name="descriptor"></param>
-		/// <param name="parts"></param>
+		/// <param name="partset">a list of parts in all allocated terrains</param>
 		/// <param name="routes"></param>
 		internal MapFileChild(
 				Descriptor descriptor,
-				List<TilepartBase> parts,
+				List<TilepartBase> partset,
 				RouteNodeCollection routes)
 			:
-				base(descriptor, parts)
+				base(descriptor, partset)
 		{
 			string dirMap = Path.Combine(Descriptor.Basepath, GlobalsXC.MapsDir);
 			Fullpath = Path.Combine(
@@ -55,10 +55,10 @@ namespace XCom
 
 			if (File.Exists(Fullpath))
 			{
-				for (int i = 0; i != parts.Count; ++i)
-					parts[i].SetId = i;
+				for (int i = 0; i != partset.Count; ++i)
+					partset[i].SetId = i;
 
-				ReadMapFile(parts);
+				ReadMapFile(partset);
 				SetupRouteNodes();
 				CalculateOccultations();
 			}

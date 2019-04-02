@@ -95,7 +95,7 @@ namespace XCom
 			{
 				//LogFile.WriteLine(". . Map file exists");
 
-				var tileparts = new List<TilepartBase>();
+				var partset = new List<TilepartBase>();
 
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{
@@ -103,12 +103,12 @@ namespace XCom
 
 					var MCD = descriptor.GetTerrainRecords(i); // NOTE: Calls ResourceInfo.LoadSpriteset() also.
 					foreach (Tilepart tilepart in MCD)
-						tileparts.Add(tilepart);
+						partset.Add(tilepart);
 				}
 
-				if (tileparts.Count != 0)
+				if (partset.Count != 0)
 				{
-					if (tileparts.Count > MAX_MCDRECORDS) // issue warning ->
+					if (partset.Count > MAX_MCDRECORDS) // issue warning ->
 					{
 						string text = String.Empty;
 
@@ -132,7 +132,7 @@ namespace XCom
 							int records = descriptor.GetRecordCount(i);
 							text += st + " - " + records + Environment.NewLine;
 						}
-						text += Environment.NewLine + "total - " + tileparts.Count;
+						text += Environment.NewLine + "total - " + partset.Count;
 
 						MapFileWarn.Instance.Show();
 						MapFileWarn.Instance.SetText(descriptor.Label, text);
@@ -141,7 +141,7 @@ namespace XCom
 					var RMP = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
 					var MAP = new MapFileChild(
 											descriptor,
-											tileparts,
+											partset,
 											RMP);
 					return MAP;
 				}

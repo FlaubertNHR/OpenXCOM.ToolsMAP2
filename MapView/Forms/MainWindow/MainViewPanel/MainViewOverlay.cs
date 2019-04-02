@@ -259,7 +259,7 @@ namespace MapView
 
 				// refresh ScanGViewer panel and TilePanel and QuadrantPanel
 				if (XCMainWindow.ScanG != null)
-					XCMainWindow.ScanG.RefreshPanel();
+					XCMainWindow.ScanG.InvalidatePanel();
 
 				ViewerFormsManager.TileView    .Control                  .Refresh();
 				ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
@@ -446,7 +446,7 @@ namespace MapView
 							if ((copy = _copied[row - DragStart.Y,
 												col - DragStart.X] as XCMapTile) != null)
 							{
-								tile.Floor   = copy.Floor;
+								tile.Floor   = copy.Floor; // TODO: Clone these and update their sprites etc.
 								tile.Content = copy.Content;
 								tile.West    = copy.West;
 								tile.North   = copy.North;
@@ -489,15 +489,18 @@ namespace MapView
 
 		private void RefreshViewers()
 		{
-			Refresh();
+			Invalidate();
 
 			ViewerFormsManager.TopView     .Refresh();
 			ViewerFormsManager.RouteView   .Refresh();
 			ViewerFormsManager.TopRouteView.Refresh();
+//			ViewerFormsManager.TopView     .Invalidate(); // -> subsidiary viewers won't refresh until mouseovered.
+//			ViewerFormsManager.RouteView   .Invalidate();
+//			ViewerFormsManager.TopRouteView.Invalidate();
 
 			if (XCMainWindow.ScanG != null)
-				XCMainWindow.ScanG.RefreshPanel();	// incl/ ProcessTileSelection() for selection rectangle
-		}											// not used by ScanG view at present
+				XCMainWindow.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
+		}												// not used by ScanG view at present
 		#endregion
 
 

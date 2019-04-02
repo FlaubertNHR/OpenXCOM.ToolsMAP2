@@ -137,15 +137,14 @@ namespace MapView
 
 			// indicate reserved space for scroll-bars.
 			var graphics = e.Graphics;
-			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
-			var pen = new Pen(SystemColors.ControlLight, 1);
 			graphics.DrawLine(
-							pen,
+							SystemPens.ControlLight,
 							Width - _scrollBarV.Width - OffsetX - 1, OffsetY,
 							Width - _scrollBarV.Width - OffsetX - 1, Height - _scrollBarH.Height - OffsetY - 1);
 			graphics.DrawLine(
-							pen,
+							SystemPens.ControlLight,
 							OffsetX,                                 Height - _scrollBarH.Height - OffsetY - 1,
 							Width - _scrollBarV.Width - OffsetX - 1, Height - _scrollBarH.Height - OffsetY - 1);
 		}
@@ -186,7 +185,7 @@ namespace MapView
 			}
 			UpdateScrollers();
 
-			Refresh(); // updates the reserved scroll indicators.
+			Invalidate(); // updates the reserved scroll indicators.
 
 //			XCom.LogFile.WriteLine("MainViewUnderlay.OnResize EXIT");
 		}
@@ -200,7 +199,7 @@ namespace MapView
 			MainViewOverlay.Location = new Point(
 												MainViewOverlay.Left,
 												-_scrollBarV.Value);
-			MainViewOverlay.Refresh();
+			MainViewOverlay.Invalidate();
 		}
 
 		private void OnScrollHori(object sender, ScrollEventArgs e)
@@ -209,12 +208,12 @@ namespace MapView
 			MainViewOverlay.Location = new Point(
 												-_scrollBarH.Value,
 												MainViewOverlay.Top);
-			MainViewOverlay.Refresh();
+			MainViewOverlay.Invalidate();
 		}
 
 		private void OnAnimationUpdate(object sender, EventArgs e)
 		{
-			MainViewOverlay.Refresh();
+			MainViewOverlay.Invalidate();
 		}
 
 

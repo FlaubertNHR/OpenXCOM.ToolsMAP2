@@ -105,12 +105,12 @@ namespace XCom
 
 		#region cTor
 		public XCMapTile(
-				TilepartBase ground,
+				TilepartBase floor,
 				TilepartBase west,
 				TilepartBase north,
 				TilepartBase content)
 		{
-			_floor   = ground; // NOTE: Don't even try ... don't even think about it.
+			_floor   = floor; // NOTE: Don't even try ... don't even think about it.
 			_west    = west;
 			_north   = north;
 			_content = content;

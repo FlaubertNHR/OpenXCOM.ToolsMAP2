@@ -373,7 +373,7 @@ namespace MapView
 			Invalidate();
 		}
 
-		internal void RefreshPanel()
+		internal void InvalidatePanel()
 		{
 			pnl_ScanG.Invalidate();
 		}
