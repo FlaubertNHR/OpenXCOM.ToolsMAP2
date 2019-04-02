@@ -56,7 +56,7 @@ namespace McdView
 
 //			string z = (panelid * 2 + 1) + "/" + (panelid * 2 + 2);
 //			Text = " LOFTEMPS.DAT - slots " + z;
-			Text = " LOFTEMPS.DAT - slot " + panelid * 2 + 1; // TODO: + "ufo"/"tftd"
+			Text = " LOFTEMPS.DAT - slot " + (panelid + 1); // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
 
