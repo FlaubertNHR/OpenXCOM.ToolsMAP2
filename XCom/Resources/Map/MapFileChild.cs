@@ -94,7 +94,7 @@ namespace XCom
 				int cols = bs.ReadByte();
 				int levs = bs.ReadByte();
 
-				MapTiles = new MapTileList(rows, cols, levs);
+				Tiles = new MapTileList(rows, cols, levs);
 				MapSize  = new MapSize(rows, cols, levs);
 
 				for (int lev = 0; lev != levs; ++lev)
@@ -247,19 +247,19 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the terrain-type given a tile-part.
+		/// Gets the terrain-label of a given tile-part.
 		/// </summary>
 		/// <param name="part"></param>
 		/// <returns></returns>
 		public string GetTerrainLabel(TilepartBase part)
 		{
 			int id = -1;
-			foreach (var part1 in Parts)
+			foreach (var part_ in Parts)
 			{
-				if (part1.TerId == 0)
+				if (part_.TerId == 0)
 					++id;
 
-				if (part1 == part)
+				if (part_ == part)
 					break;
 			}
 
@@ -269,6 +269,11 @@ namespace XCom
 			return null;
 		}
 
+		/// <summary>
+		/// Gets the terrain of a given tile-part.
+		/// </summary>
+		/// <param name="part"></param>
+		/// <returns></returns>
 		public Tuple<string,string> GetTerrain(TilepartBase part)
 		{
 			int id = -1;
@@ -436,7 +441,7 @@ namespace XCom
 			var tileList = MapResizeService.GetResizedTileList(
 															rows, cols, levs,
 															MapSize,
-															MapTiles,
+															Tiles,
 															zType);
 			if (tileList != null)
 			{
@@ -470,7 +475,7 @@ namespace XCom
 				}
 
 				MapSize = new MapSize(rows, cols, levs);
-				MapTiles = tileList;
+				Tiles = tileList;
 
 				if (RouteCheckService.CheckNodeBounds(this))
 					bit |= 0x2;

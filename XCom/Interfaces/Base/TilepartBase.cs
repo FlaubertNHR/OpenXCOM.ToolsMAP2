@@ -19,7 +19,7 @@ namespace XCom.Interfaces.Base
 		/// Gets the sprite-array used to animate this tile.
 		/// </summary>
 		public XCImage[] Sprites
-		{ get; set; }
+		{ get; protected set; }
 
 		/// <summary>
 		/// Gets a sprite at the specified animation frame.
@@ -40,6 +40,7 @@ namespace XCom.Interfaces.Base
 		/// <summary>
 		/// The ID of this tilepart that's unique to the Map across all
 		/// allocated terrains. The value is set in MapFileChild..cTor.
+		/// IMPORTANT: The 'SetId' is written to the Mapfile (as a byte).
 		/// </summary>
 		public int SetId
 		{ get; set; }
