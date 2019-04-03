@@ -361,6 +361,9 @@ namespace MapView
 //			base.OnKeyDown(e);
 		}
 
+		/// <summary>
+		/// Clears all tileparts from any currently selected tiles.
+		/// </summary>
 		internal void ClearSelection()
 		{
 			if (MapBase != null && FirstClick)
@@ -375,7 +378,7 @@ namespace MapView
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = (XCMapTile)MapBase[row, col];
+					tile = MapBase[row, col] as XCMapTile;
 
 					tile.Floor   =
 					tile.West    =
@@ -392,13 +395,19 @@ namespace MapView
 		}
 
 
+		private Dictionary<int, Tuple<string,string>> _copiedTerrains;
 		private MapTileBase[,] _copied;
 
+		/// <summary>
+		/// Copies any selected tiles to an internal buffer.
+		/// </summary>
 		internal void Copy()
 		{
 			if (MapBase != null && FirstClick)
 			{
 				ToolstripFactory.Instance.SetPasteButtonsEnabled();
+
+				_copiedTerrains = MapBase.Descriptor.Terrains;
 
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
@@ -424,45 +433,125 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Pastes any copied tiles to the currently selected location.
+		/// @note The terrainset of the current tileset needs to be identical to
+		/// the terrainset of the tileset from which parts were copied (or
+		/// nearly so).
+		/// </summary>
 		internal void Paste()
 		{
 			if (MapBase != null && FirstClick && _copied != null)
 			{
-				XCMainWindow.Instance.MapChanged = true;
-
-				XCMapTile tile, copy;
-				for (int
-						row = DragBeg.Y;
-						row != MapBase.MapSize.Rows && (row - DragBeg.Y) < _copied.GetLength(0);
-						++row)
+				if (AllowPaste(_copiedTerrains, MapBase.Descriptor.Terrains))
 				{
-					for (int
-							col = DragBeg.X;
-							col != MapBase.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(1);
-							++col)
-					{
-						if ((tile = MapBase[row, col] as XCMapTile) != null)
-						{
-							if ((copy = _copied[row - DragBeg.Y,
-												col - DragBeg.X] as XCMapTile) != null)
-							{
-								tile.Floor   = copy.Floor; // TODO: Clone these and update their sprites etc.
-								tile.Content = copy.Content;
-								tile.West    = copy.West;
-								tile.North   = copy.North;
+					XCMainWindow.Instance.MapChanged = true;
 
-								tile.Vacancy();
+					XCMapTile tile, copy;
+					for (int
+							row = DragBeg.Y;
+							row != MapBase.MapSize.Rows && (row - DragBeg.Y) < _copied.GetLength(0);
+							++row)
+					{
+						for (int
+								col = DragBeg.X;
+								col != MapBase.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(1);
+								++col)
+						{
+							if ((tile = MapBase[row, col] as XCMapTile) != null)
+							{
+								if ((copy = _copied[row - DragBeg.Y,
+													col - DragBeg.X] as XCMapTile) != null)
+								{
+									tile.Floor   = copy.Floor; // TODO: Clone these and update their sprites etc.
+									tile.Content = copy.Content;
+									tile.West    = copy.West;
+									tile.North   = copy.North;
+
+									tile.Vacancy();
+								}
 							}
 						}
 					}
+
+					((MapFileChild)MapBase).CalculateOccultations();
+
+					RefreshViewers();
 				}
+				else
+				{
+					string info = "copied:";
+					foreach (var key in _copiedTerrains)
+					{
+						info += Environment.NewLine + key.Value.Item1 + " - "
+							  + GetBasepathDescript(key.Value.Item2);
+					}
 
-				((MapFileChild)MapBase).CalculateOccultations();
+					info += Environment.NewLine + Environment.NewLine
+						  + "currently allocated:";
+					foreach (var key in MapBase.Descriptor.Terrains)
+					{
+						info += Environment.NewLine + key.Value.Item1 + " - "
+							  + GetBasepathDescript(key.Value.Item2);
+					}
 
-				RefreshViewers();
+					using (var f = new Infobox(
+											" Allocated terrains differ",
+											"The list of terrains that were copied are too different"
+												+ " from the terrains in the currently loaded Map.",
+											info))
+					{
+						f.ShowDialog();
+					}
+				}
 			}
 		}
 
+		/// <summary>
+		/// Checks if two terrain-definitions are or are nearly identical.
+		/// @note It's okay if 'dst' has more terrains allocated than 'src'.
+		/// </summary>
+		/// <param name="src">source terrain definition</param>
+		/// <param name="dst">destination terrain definition</param>
+		/// <returns></returns>
+		private bool AllowPaste(
+				IDictionary<int, Tuple<string, string>> src,
+				IDictionary<int, Tuple<string, string>> dst)
+		{
+			if (src.Keys.Count > dst.Keys.Count)
+				return false;
+
+			for (int i = 0; i != src.Keys.Count; ++i)
+			{
+				if (   src[i].Item1 != dst[i].Item1
+					|| src[i].Item2 != dst[i].Item2)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Gets a string descripting a specified basepath.
+		/// </summary>
+		/// <param name="basepath"></param>
+		/// <returns></returns>
+		private string GetBasepathDescript(string basepath)
+		{
+			if (String.IsNullOrEmpty(basepath))
+				return "config basepath";
+
+			if (basepath == GlobalsXC.BASEPATH)
+				return "tileset basepath";
+
+			return basepath;
+		}
+
+		/// <summary>
+		/// Fills the correct quadrant of the currently selected tiles with the
+		/// currently selected tilepart from TileView.
+		/// </summary>
 		internal void FillSelectedTiles()
 		{
 			if (MapBase != null && FirstClick)
@@ -487,6 +576,10 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Causes this panel to redraw along with the TopView, RouteView, and
+		/// TopRouteView forms - also invalidates the ScanG panel.
+		/// </summary>
 		private void RefreshViewers()
 		{
 			Invalidate();
