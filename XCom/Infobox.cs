@@ -130,6 +130,12 @@ namespace XCom
 			}
 			return width;
 		}
+
+
+		public void SetLabelColor(Color color)
+		{
+			lbl_Info.ForeColor = color;
+		}
 		#endregion
 
 

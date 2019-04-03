@@ -463,7 +463,7 @@ namespace MapView
 								if ((copy = _copied[row - DragBeg.Y,
 													col - DragBeg.X] as XCMapTile) != null)
 								{
-									tile.Floor   = copy.Floor; // TODO: Clone these and update their sprites etc.
+									tile.Floor   = copy.Floor;
 									tile.Content = copy.Content;
 									tile.West    = copy.West;
 									tile.North   = copy.North;
@@ -501,6 +501,7 @@ namespace MapView
 												+ " from the terrains in the currently loaded Map.",
 											info))
 					{
+						f.SetLabelColor(Color.Firebrick);
 						f.ShowDialog();
 					}
 				}
