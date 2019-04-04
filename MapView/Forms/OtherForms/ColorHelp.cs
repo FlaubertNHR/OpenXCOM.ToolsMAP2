@@ -232,7 +232,7 @@ namespace MapView
 				lblType11.ForeColor = GetTextColor(color);
 			}
 
-			specialType = Enum.GetName(typeof(SpecialType), 12);		// "DeadTile"
+			specialType = Enum.GetName(typeof(SpecialType), 12);		// "Destroyed"
 			if (brushesSpecial.ContainsKey(specialType))
 			{
 				color = ((SolidBrush)brushesSpecial[specialType]).Color;
@@ -363,6 +363,7 @@ namespace MapView
 		{
 			this.tabMain = new System.Windows.Forms.TabControl();
 			this.tpTopView = new System.Windows.Forms.TabPage();
+			this.label26 = new System.Windows.Forms.Label();
 			this.gbTopViewColors = new System.Windows.Forms.GroupBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
@@ -393,7 +394,6 @@ namespace MapView
 			this.lblType02 = new System.Windows.Forms.Label();
 			this.lblType01 = new System.Windows.Forms.Label();
 			this.lblType00 = new System.Windows.Forms.Label();
-			this.label26 = new System.Windows.Forms.Label();
 			this.tabMain.SuspendLayout();
 			this.tpTopView.SuspendLayout();
 			this.gbTopViewColors.SuspendLayout();
@@ -425,6 +425,15 @@ namespace MapView
 			this.tpTopView.TabIndex = 1;
 			this.tpTopView.Text = "TopView";
 			// 
+			// label26
+			// 
+			this.label26.Location = new System.Drawing.Point(10, 195);
+			this.label26.Name = "label26";
+			this.label26.Size = new System.Drawing.Size(425, 25);
+			this.label26.TabIndex = 1;
+			this.label26.Text = "The Colors viewer must be closed and re-opened to update any colors that may have" +
+	" changed in Options.";
+			// 
 			// gbTopViewColors
 			// 
 			this.gbTopViewColors.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -435,7 +444,7 @@ namespace MapView
 			this.gbTopViewColors.Location = new System.Drawing.Point(10, 10);
 			this.gbTopViewColors.Name = "gbTopViewColors";
 			this.gbTopViewColors.Size = new System.Drawing.Size(430, 55);
-			this.gbTopViewColors.TabIndex = 11;
+			this.gbTopViewColors.TabIndex = 0;
 			this.gbTopViewColors.TabStop = false;
 			this.gbTopViewColors.Text = "Blob Colors";
 			// 
@@ -448,7 +457,7 @@ namespace MapView
 			this.label7.Name = "label7";
 			this.label7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.label7.Size = new System.Drawing.Size(95, 25);
-			this.label7.TabIndex = 4;
+			this.label7.TabIndex = 0;
 			this.label7.Text = "floor";
 			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -461,7 +470,7 @@ namespace MapView
 			this.label9.Name = "label9";
 			this.label9.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.label9.Size = new System.Drawing.Size(95, 25);
-			this.label9.TabIndex = 10;
+			this.label9.TabIndex = 2;
 			this.label9.Text = "north";
 			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -474,7 +483,7 @@ namespace MapView
 			this.label10.Name = "label10";
 			this.label10.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.label10.Size = new System.Drawing.Size(95, 25);
-			this.label10.TabIndex = 5;
+			this.label10.TabIndex = 3;
 			this.label10.Text = "content";
 			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -487,7 +496,7 @@ namespace MapView
 			this.label8.Name = "label8";
 			this.label8.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.label8.Size = new System.Drawing.Size(95, 25);
-			this.label8.TabIndex = 6;
+			this.label8.TabIndex = 1;
 			this.label8.Text = "west";
 			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -509,7 +518,7 @@ namespace MapView
 			this.gbRouteViewColors.Location = new System.Drawing.Point(10, 10);
 			this.gbRouteViewColors.Name = "gbRouteViewColors";
 			this.gbRouteViewColors.Size = new System.Drawing.Size(325, 55);
-			this.gbRouteViewColors.TabIndex = 21;
+			this.gbRouteViewColors.TabIndex = 0;
 			this.gbRouteViewColors.TabStop = false;
 			this.gbRouteViewColors.Text = "Blob Colors";
 			// 
@@ -521,7 +530,7 @@ namespace MapView
 			this.label16.Name = "label16";
 			this.label16.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.label16.Size = new System.Drawing.Size(95, 25);
-			this.label16.TabIndex = 14;
+			this.label16.TabIndex = 2;
 			this.label16.Text = "content";
 			this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -533,7 +542,7 @@ namespace MapView
 			this.label15.Name = "label15";
 			this.label15.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.label15.Size = new System.Drawing.Size(95, 25);
-			this.label15.TabIndex = 20;
+			this.label15.TabIndex = 1;
 			this.label15.Text = "north";
 			this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -545,7 +554,7 @@ namespace MapView
 			this.label14.Name = "label14";
 			this.label14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.label14.Size = new System.Drawing.Size(95, 25);
-			this.label14.TabIndex = 15;
+			this.label14.TabIndex = 0;
 			this.label14.Text = "west";
 			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -566,7 +575,7 @@ namespace MapView
 			this.label25.Location = new System.Drawing.Point(10, 10);
 			this.label25.Name = "label25";
 			this.label25.Size = new System.Drawing.Size(335, 15);
-			this.label25.TabIndex = 14;
+			this.label25.TabIndex = 0;
 			this.label25.Text = "These are background colors for the special tile properties.";
 			// 
 			// rbTftd
@@ -574,7 +583,7 @@ namespace MapView
 			this.rbTftd.Location = new System.Drawing.Point(20, 50);
 			this.rbTftd.Name = "rbTftd";
 			this.rbTftd.Size = new System.Drawing.Size(55, 15);
-			this.rbTftd.TabIndex = 13;
+			this.rbTftd.TabIndex = 2;
 			this.rbTftd.Text = "TFTD";
 			this.rbTftd.UseVisualStyleBackColor = true;
 			this.rbTftd.CheckedChanged += new System.EventHandler(this.OnCheckChanged);
@@ -585,7 +594,7 @@ namespace MapView
 			this.rbUfo.Location = new System.Drawing.Point(20, 30);
 			this.rbUfo.Name = "rbUfo";
 			this.rbUfo.Size = new System.Drawing.Size(55, 15);
-			this.rbUfo.TabIndex = 12;
+			this.rbUfo.TabIndex = 1;
 			this.rbUfo.TabStop = true;
 			this.rbUfo.Text = "UFO";
 			this.rbUfo.UseVisualStyleBackColor = true;
@@ -612,7 +621,7 @@ namespace MapView
 			this.gbTileViewColors.Location = new System.Drawing.Point(10, 75);
 			this.gbTileViewColors.Name = "gbTileViewColors";
 			this.gbTileViewColors.Size = new System.Drawing.Size(430, 150);
-			this.gbTileViewColors.TabIndex = 11;
+			this.gbTileViewColors.TabIndex = 3;
 			this.gbTileViewColors.TabStop = false;
 			this.gbTileViewColors.Text = "Tile Colors";
 			// 
@@ -623,7 +632,7 @@ namespace MapView
 			this.lblType09.Name = "lblType09";
 			this.lblType09.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType09.Size = new System.Drawing.Size(130, 20);
-			this.lblType09.TabIndex = 26;
+			this.lblType09.TabIndex = 9;
 			this.lblType09.Text = "09";
 			this.lblType09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -634,7 +643,7 @@ namespace MapView
 			this.lblType14.Name = "lblType14";
 			this.lblType14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType14.Size = new System.Drawing.Size(130, 20);
-			this.lblType14.TabIndex = 25;
+			this.lblType14.TabIndex = 14;
 			this.lblType14.Text = "14";
 			this.lblType14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -645,7 +654,7 @@ namespace MapView
 			this.lblType13.Name = "lblType13";
 			this.lblType13.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType13.Size = new System.Drawing.Size(130, 20);
-			this.lblType13.TabIndex = 24;
+			this.lblType13.TabIndex = 13;
 			this.lblType13.Text = "13";
 			this.lblType13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -656,7 +665,7 @@ namespace MapView
 			this.lblType12.Name = "lblType12";
 			this.lblType12.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType12.Size = new System.Drawing.Size(130, 20);
-			this.lblType12.TabIndex = 23;
+			this.lblType12.TabIndex = 12;
 			this.lblType12.Text = "12";
 			this.lblType12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -667,7 +676,7 @@ namespace MapView
 			this.lblType11.Name = "lblType11";
 			this.lblType11.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType11.Size = new System.Drawing.Size(130, 20);
-			this.lblType11.TabIndex = 22;
+			this.lblType11.TabIndex = 11;
 			this.lblType11.Text = "11";
 			this.lblType11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -678,7 +687,7 @@ namespace MapView
 			this.lblType10.Name = "lblType10";
 			this.lblType10.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType10.Size = new System.Drawing.Size(130, 20);
-			this.lblType10.TabIndex = 21;
+			this.lblType10.TabIndex = 10;
 			this.lblType10.Text = "10";
 			this.lblType10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -689,7 +698,7 @@ namespace MapView
 			this.lblType08.Name = "lblType08";
 			this.lblType08.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType08.Size = new System.Drawing.Size(130, 20);
-			this.lblType08.TabIndex = 20;
+			this.lblType08.TabIndex = 8;
 			this.lblType08.Text = "08";
 			this.lblType08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -700,7 +709,7 @@ namespace MapView
 			this.lblType07.Name = "lblType07";
 			this.lblType07.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType07.Size = new System.Drawing.Size(130, 20);
-			this.lblType07.TabIndex = 19;
+			this.lblType07.TabIndex = 7;
 			this.lblType07.Text = "07";
 			this.lblType07.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -711,7 +720,7 @@ namespace MapView
 			this.lblType06.Name = "lblType06";
 			this.lblType06.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType06.Size = new System.Drawing.Size(130, 20);
-			this.lblType06.TabIndex = 18;
+			this.lblType06.TabIndex = 6;
 			this.lblType06.Text = "06";
 			this.lblType06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -722,7 +731,7 @@ namespace MapView
 			this.lblType05.Name = "lblType05";
 			this.lblType05.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType05.Size = new System.Drawing.Size(130, 20);
-			this.lblType05.TabIndex = 17;
+			this.lblType05.TabIndex = 5;
 			this.lblType05.Text = "05";
 			this.lblType05.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -733,7 +742,7 @@ namespace MapView
 			this.lblType04.Name = "lblType04";
 			this.lblType04.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType04.Size = new System.Drawing.Size(130, 20);
-			this.lblType04.TabIndex = 16;
+			this.lblType04.TabIndex = 4;
 			this.lblType04.Text = "04";
 			this.lblType04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -744,7 +753,7 @@ namespace MapView
 			this.lblType03.Name = "lblType03";
 			this.lblType03.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType03.Size = new System.Drawing.Size(130, 20);
-			this.lblType03.TabIndex = 15;
+			this.lblType03.TabIndex = 3;
 			this.lblType03.Text = "03";
 			this.lblType03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -755,7 +764,7 @@ namespace MapView
 			this.lblType02.Name = "lblType02";
 			this.lblType02.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType02.Size = new System.Drawing.Size(130, 20);
-			this.lblType02.TabIndex = 14;
+			this.lblType02.TabIndex = 2;
 			this.lblType02.Text = "02";
 			this.lblType02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -766,7 +775,7 @@ namespace MapView
 			this.lblType01.Name = "lblType01";
 			this.lblType01.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType01.Size = new System.Drawing.Size(130, 20);
-			this.lblType01.TabIndex = 13;
+			this.lblType01.TabIndex = 1;
 			this.lblType01.Text = "01";
 			this.lblType01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -778,20 +787,11 @@ namespace MapView
 			this.lblType00.Name = "lblType00";
 			this.lblType00.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lblType00.Size = new System.Drawing.Size(130, 20);
-			this.lblType00.TabIndex = 12;
+			this.lblType00.TabIndex = 0;
 			this.lblType00.Text = "00";
 			this.lblType00.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label26
-			// 
-			this.label26.Location = new System.Drawing.Point(10, 195);
-			this.label26.Name = "label26";
-			this.label26.Size = new System.Drawing.Size(425, 25);
-			this.label26.TabIndex = 16;
-			this.label26.Text = "The Colors viewer must be closed and re-opened to update any colors that may have" +
-	" changed in Options.";
-			// 
-			// Help
+			// ColorHelp
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(454, 256);
@@ -801,7 +801,7 @@ namespace MapView
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "Help";
+			this.Name = "ColorHelp";
 			this.ShowIcon = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

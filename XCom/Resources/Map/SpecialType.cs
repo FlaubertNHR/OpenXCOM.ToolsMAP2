@@ -22,7 +22,7 @@ namespace XCom
 		ExaminationRoom,	//  9
 		Alloys,				// 10
 		Habitat,			// 11
-		DeadTile,			// 12
+		Destroyed,			// 12
 		ExitPoint,			// 13
 		MustDestroy			// 14
 	};

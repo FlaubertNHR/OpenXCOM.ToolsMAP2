@@ -243,10 +243,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// These are the default colors for tileparts' Special Properties.
-		/// TileView will load these colors when the program loads, then any
-		/// Special Property colors that were customized will be set and
-		/// accessed by TilePanel and/or the Help screen later.
+		/// These are default colors for the SpecialType of a tilepart.
+		/// TileView will load these colors when the app loads, then any colors
+		/// of SpecialType that were customized will be set and accessed by
+		/// TilePanel and/or the Help|Colors screen later.
 		/// </summary>
 		internal static readonly Color[] TileColors =
 		{
@@ -254,18 +254,18 @@ namespace MapView.Forms.MapObservers.TileViews
 			Color.NavajoWhite,		//  0 - Standard
 			Color.Lavender,			//  1 - EntryPoint
 			Color.IndianRed,		//  2 - PowerSource		IonBeamAccel
-			Color.PaleTurquoise,	//  3 - Navigation		DestroyObjective
-			Color.Khaki,			//  4 - Construction	MagneticNav
-			Color.MistyRose,		//  5 - Food			AlienCryo
-			Color.Aquamarine,		//  6 - Reproduction	AlienClon
-			Color.LightSkyBlue,		//  7 - Entertainment	AlienLearn
-			Color.Thistle,			//  8 - Surgery			AlienImplant
-			Color.YellowGreen,		//  9 - ExaminationRoom	Unknown9
-			Color.MediumPurple,		// 10 - Alloys			AlienPlastics
-			Color.LightCoral,		// 11 - Habitat			ExamRoom
-			Color.LightCyan,		// 12 - DeadTile
+			Color.MediumTurquoise,	//  3 - Navigation
+			Color.Khaki,			//  4 - Construction
+			Color.MistyRose,		//  5 - Food			Cryo
+			Color.Aquamarine,		//  6 - Reproduction	Clon
+			Color.DeepSkyBlue,		//  7 - Entertainment	LearnArrays
+			Color.Thistle,			//  8 - Surgery			Implant
+			Color.YellowGreen,		//  9 - ExaminationRoom
+			Color.MediumOrchid,		// 10 - Alloys			Plastics
+			Color.LightSteelBlue,	// 11 - Habitat			Re-anim
+			Color.Cyan,				// 12 - Destroyed
 			Color.BurlyWood,		// 13 - ExitPoint
-			Color.Blue				// 14 - MustDestroy
+			Color.LightCoral		// 14 - MustDestroy
 		};
 
 		/// <summary>
@@ -275,55 +275,39 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			string desc = String.Empty;
 
-			foreach (string specialType in Enum.GetNames(typeof(SpecialType)))
+			foreach (string type in Enum.GetNames(typeof(SpecialType)))
 			{
-				int i = (int)Enum.Parse(typeof(SpecialType), specialType);
-				_brushesSpecial[specialType] = new SolidBrush(TileColors[i]);
+				int i = (int)Enum.Parse(typeof(SpecialType), type);
+				_brushesSpecial[type] = new SolidBrush(TileColors[i]);
 
 				switch (i)
 				{
-					case  0: desc = "Color of (standard tile)";
-						break;
-					case  1: desc = "Color of (entry point)";
-						break;
-					case  2: desc = "Color of UFO Power Source - UFO" + Environment.NewLine
-								  + "Color of Ion-beam Accelerators - TFTD";
-						break;
-					case  3: desc = "Color of UFO Navigation - UFO" + Environment.NewLine
-								  + "Color of (destroy objective) (alias of Magnetic Navigation) - TFTD";
-						break;
-					case  4: desc = "Color of UFO Construction - UFO" + Environment.NewLine
-								  + "Color of Magnetic Navigation (alias of Alien Sub Construction) - TFTD";
-						break;
-					case  5: desc = "Color of Alien Food - UFO" + Environment.NewLine
-								  + "Color of Alien Cryogenics - TFTD";
-						break;
-					case  6: desc = "Color of Alien Reproduction - UFO" + Environment.NewLine
-								  + "Color of Alien Cloning - TFTD";
-						break;
-					case  7: desc = "Color of Alien Entertainment - UFO" + Environment.NewLine
-								  + "Color of Alien Learning Arrays - TFTD";
-						break;
-					case  8: desc = "Color of Alien Surgery - UFO" + Environment.NewLine
-								  + "Color of Alien Implanter - TFTD";
-						break;
-					case  9: desc = "Color of Examination Room - UFO" + Environment.NewLine
-								  + "Color of (unknown) (alias of Examination Room) - TFTD";
-						break;
-					case 10: desc = "Color of Alien Alloys - UFO" + Environment.NewLine
-								  + "Color of Aqua Plastics - TFTD";
-						break;
-					case 11: desc = "Color of Alien Habitat - UFO" + Environment.NewLine
-								  + "Color of Examination Room (alias of Alien Re-animation Zone) - TFTD";
-						break;
-					case 12: desc = "Color of (dead tile)";
-						break;
-					case 13: desc = "Color of (exit point)";
-						break;
-					case 14: desc = "Color of (must destroy tile)" + Environment.NewLine
-								  + "Alien Brain - UFO" + Environment.NewLine
-								  + "T'leth Power Cylinders - TFTD";
-						break;
+					case  0: desc = "Color of Standard parts";                     break;
+					case  1: desc = "Color of Entry Point parts";                  break;
+					case  2: desc = "Color of UFO Power Source parts"            + Environment.NewLine
+								  + "Color of TFTD Ion-beam Accelerators parts";   break;
+					case  3: desc = "Color of UFO Navigation parts"              + Environment.NewLine
+								  + "Color of TFTD Magnetic Navigation parts";     break;
+					case  4: desc = "Color of UFO Construction parts"            + Environment.NewLine
+								  + "Color of TFTD Alien Sub Construction parts";  break;
+					case  5: desc = "Color of UFO Alien Food parts"              + Environment.NewLine
+								  + "Color of TFTD Alien Cryogenics parts";        break;
+					case  6: desc = "Color of UFO Alien Reproduction parts"      + Environment.NewLine
+								  + "Color of TFTD Alien Cloning parts";           break;
+					case  7: desc = "Color of UFO Alien Entertainment parts"     + Environment.NewLine
+								  + "Color of TFTD Alien Learning Arrays parts";   break;
+					case  8: desc = "Color of UFO Alien Surgery parts"           + Environment.NewLine
+								  + "Color of TFTD Alien Implanter parts";         break;
+					case  9: desc = "Color of Examination Room parts";             break;
+					case 10: desc = "Color of UFO Alien Alloys parts"            + Environment.NewLine
+								  + "Color of TFTD Aqua Plastics parts";           break;
+					case 11: desc = "Color of UFO Alien Habitat parts"           + Environment.NewLine
+								  + "Color of TFTD Alien Re-animation Zone parts"; break;
+					case 12: desc = "Color of Destroyed Alloys/Plastics parts";    break;
+					case 13: desc = "Color of Exit Point parts";                   break;
+					case 14: desc = "Color of Must Destroy parts"                + Environment.NewLine
+								  + "eg. UFO Alien Brain parts"                  + Environment.NewLine
+								  + "eg. TFTD T'leth Power Cylinders parts";       break;
 				}
 
 				// NOTE: The colors of these brushes get overwritten by the
@@ -335,8 +319,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				//
 				// See OnSpecialPropertyColorChanged() below_
 				Options.AddOption(
-								specialType,
-								((SolidBrush)_brushesSpecial[specialType]).Color,
+								type,
+								((SolidBrush)_brushesSpecial[type]).Color,
 								desc,					// appears as a tip at the bottom of the Options screen.
 								"TileBackgroundColors",	// this identifies what Option category the setting appears under.
 								OnSpecialPropertyColorChanged);
@@ -347,8 +331,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Loads a different brush/color for a tiletype's Special Property into
-		/// an already existing key.
+		/// Loads a different brush/color for a SpecialType into an already
+		/// existing key.
 		/// </summary>
 		/// <param name="key">a string representing the SpecialType</param>
 		/// <param name="val">the brush to insert</param>
@@ -359,8 +343,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Gets the brushes/colors for all tiletypes' Special Properties.
-		/// Used by the Help screen.
+		/// Gets the brushes/colors for all SpecialTypes.
+		/// Used by the Help|Colors screen.
 		/// </summary>
 		/// <returns>a hashtable of the brushes</returns>
 		internal Hashtable GetSpecialPropertyBrushes()
