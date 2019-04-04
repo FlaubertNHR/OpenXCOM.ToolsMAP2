@@ -415,20 +415,18 @@ namespace MapView
 				_copied = new MapTileBase[b.Y - a.Y + 1,
 										  b.X - a.X + 1];
 
-				XCMapTile tile, copy;
+				XCMapTile tile;
 
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
 					tile = MapBase[row, col] as XCMapTile;
-					copy = new XCMapTile(
-									tile.Floor,
-									tile.West,
-									tile.North,
-									tile.Content);
-
 					_copied[row - a.Y,
-							col - a.X] = copy;
+							col - a.X] = new XCMapTile(
+													tile.Floor,
+													tile.West,
+													tile.North,
+													tile.Content);
 				}
 			}
 		}
@@ -483,7 +481,7 @@ namespace MapView
 					string info = "copied:";
 					foreach (var key in _copiedTerrains)
 					{
-						info += Environment.NewLine + key.Value.Item1 + " - "
+						info += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
 							  + GetBasepathDescript(key.Value.Item2);
 					}
 
@@ -491,7 +489,7 @@ namespace MapView
 						  + "currently allocated:";
 					foreach (var key in MapBase.Descriptor.Terrains)
 					{
-						info += Environment.NewLine + key.Value.Item1 + " - "
+						info += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
 							  + GetBasepathDescript(key.Value.Item2);
 					}
 
@@ -525,7 +523,7 @@ namespace MapView
 			for (int i = 0; i != src.Keys.Count; ++i)
 			{
 				if (   src[i].Item1 != dst[i].Item1
-					|| src[i].Item2 != dst[i].Item2)
+					|| src[i].Item2 != dst[i].Item2) // TODO: Compare Item2 by expanding it.
 				{
 					return false;
 				}
