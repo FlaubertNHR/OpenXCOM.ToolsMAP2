@@ -272,6 +272,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(McdviewF));
 			this.mmMainMenu = new System.Windows.Forms.MainMenu(this.components);
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
 			this.miCreate = new System.Windows.Forms.MenuItem();
@@ -3488,7 +3489,7 @@
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Icon = global::McdView.Properties.Resources.icon;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
 			this.MaximumSize = new System.Drawing.Size(840, 820);
 			this.Menu = this.mmMainMenu;

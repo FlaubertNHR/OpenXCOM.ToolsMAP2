@@ -23,6 +23,7 @@
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <AssemblyOriginatorKeyFile>keyFile.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

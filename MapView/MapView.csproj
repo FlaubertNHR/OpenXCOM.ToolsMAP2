@@ -52,6 +52,7 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
