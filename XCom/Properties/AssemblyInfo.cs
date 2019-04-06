@@ -26,13 +26,13 @@ using System.Runtime.InteropServices;
 
 // Version information for an assembly consists of the following four values:
 //
-//	Major Version
-//	Minor Version
-//	Build Number
-//	Revision
+// Major Version
+// Minor Version
+// Build Number
+// Revision
 //
-[assembly: AssemblyVersion("2.14.0.1")]
-[assembly: AssemblyFileVersion("2.14.0.1")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]
