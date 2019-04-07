@@ -43,10 +43,10 @@ namespace XCom
 			if (!File.Exists(pfeMap)) // Open a folderbrowser for user to point to a basepath ->
 			{
 				if (MessageBox.Show(
-							"The Mapfile does not exist."
+							"a Mapfile was not found for : " + descriptor.Label
 								+ Environment.NewLine + Environment.NewLine
-								+ "Do you want to browse for a different basepath to the .MAP and .RMP files?",
-							"Warning",
+								+ "Browse for a basepath to the .MAP and .RMP files ...",
+							" Warning",
 							MessageBoxButtons.YesNo,
 							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button1,
@@ -81,7 +81,7 @@ namespace XCom
 								MessageBox.Show(
 											descriptor.Label + GlobalsXC.MapExt
 												+ " was not found in that basepath.",
-											"Error",
+											" Error",
 											MessageBoxButtons.OK,
 											MessageBoxIcon.Error,
 											MessageBoxDefaultButton.Button1,
@@ -95,7 +95,7 @@ namespace XCom
 			{
 				//LogFile.WriteLine(". . Map file exists");
 
-				var tileparts = new List<TilepartBase>();
+				var partset = new List<TilepartBase>();
 
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{
@@ -103,12 +103,12 @@ namespace XCom
 
 					var MCD = descriptor.GetTerrainRecords(i); // NOTE: Calls ResourceInfo.LoadSpriteset() also.
 					foreach (Tilepart tilepart in MCD)
-						tileparts.Add(tilepart);
+						partset.Add(tilepart);
 				}
 
-				if (tileparts.Count != 0)
+				if (partset.Count != 0)
 				{
-					if (tileparts.Count > MAX_MCDRECORDS) // issue warning ->
+					if (partset.Count > MAX_MCDRECORDS) // issue warning ->
 					{
 						string text = String.Empty;
 
@@ -132,7 +132,7 @@ namespace XCom
 							int records = descriptor.GetRecordCount(i);
 							text += st + " - " + records + Environment.NewLine;
 						}
-						text += Environment.NewLine + "total - " + tileparts.Count;
+						text += Environment.NewLine + "total - " + partset.Count;
 
 						MapFileWarn.Instance.Show();
 						MapFileWarn.Instance.SetText(descriptor.Label, text);
@@ -141,7 +141,7 @@ namespace XCom
 					var RMP = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
 					var MAP = new MapFileChild(
 											descriptor,
-											tileparts,
+											partset,
 											RMP);
 					return MAP;
 				}
@@ -149,7 +149,7 @@ namespace XCom
 				//LogFile.WriteLine(". . . descriptor has no terrains");
 				MessageBox.Show(
 							"There are no terrains allocated or they do not contain MCD records.",
-							"Warning",
+							" Warning",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button1,

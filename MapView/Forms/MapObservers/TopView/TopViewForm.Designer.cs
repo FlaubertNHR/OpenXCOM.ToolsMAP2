@@ -10,7 +10,7 @@
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -21,7 +21,7 @@
 
 		/* The #develop designer is going to delete this:
 
-			TopViewControl = new TopView();
+			TopViewControl = new MapView.Forms.MapObservers.TopViews.TopView();
 
 		- so copy it back into InitializeComponent() */
 
@@ -32,7 +32,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			TopViewControl = new TopView();
+			TopViewControl = new MapView.Forms.MapObservers.TopViews.TopView();
 			this.SuspendLayout();
 			// 
 			// TopViewControl
@@ -52,6 +52,7 @@
 			this.ClientSize = new System.Drawing.Size(632, 454);
 			this.Controls.Add(this.TopViewControl);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.KeyPreview = true;
 			this.Name = "TopViewForm";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

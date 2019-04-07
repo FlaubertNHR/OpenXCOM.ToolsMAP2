@@ -35,6 +35,8 @@ namespace DSShared.Windows
 		public const string SpriteEditor  = "SpriteEditor";
 		public const string PaletteViewer = "PaletteViewer";
 
+		public const string McdView       = "McdView";
+
 		// viewer property metrics
 		private const string PropLeft   = "Left";
 		private const string PropTop    = "Top";

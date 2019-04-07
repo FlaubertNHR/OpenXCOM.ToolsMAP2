@@ -143,7 +143,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			// fill the background of the selected quadrant type
 			switch (selectedQuadrant)
 			{
-				case QuadrantType.Ground:
+				case QuadrantType.Floor:
 					if (topView.GroundVisible)
 						graphics.FillPath(Brush, _pathFloor);
 					break;
@@ -183,26 +183,26 @@ namespace MapView.Forms.MapObservers.TopViews
 			int anistep = MainViewUnderlay.AniStep;
 
 			// Ground ->
-			if (tile != null && tile.Ground != null)
+			if (tile != null && tile.Floor != null)
 			{
 //				graphics.DrawImage(
 //								tile.Ground[anistep].Sprite,
 //								StartX,
 //								StartY - tile.Ground.Record.TileOffset);
-				sprite = tile.Ground[anistep].Sprite;
+				sprite = tile.Floor[anistep].Sprite;
 				graphics.DrawImage(
 								sprite,
 								new Rectangle(
 											StartX,
-											StartY - tile.Ground.Record.TileOffset,
+											StartY - tile.Floor.Record.TileOffset,
 											sprite.Width,
 											sprite.Height),
 								0, 0, sprite.Width, sprite.Height,
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
-				if (tile.Ground.Record.HumanDoor || tile.Ground.Record.UfoDoor)
-					DrawDoorString(graphics, QuadrantType.Ground);
+				if (tile.Floor.Record.HingedDoor || tile.Floor.Record.SlidingDoor)
+					DrawDoorString(graphics, QuadrantType.Floor);
 			}
 			else
 				graphics.DrawImage(
@@ -229,7 +229,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
-				if (tile.West.Record.HumanDoor || tile.West.Record.UfoDoor)
+				if (tile.West.Record.HingedDoor || tile.West.Record.SlidingDoor)
 					DrawDoorString(graphics, QuadrantType.West);
 			}
 			else
@@ -257,7 +257,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
-				if (tile.North.Record.HumanDoor || tile.North.Record.UfoDoor)
+				if (tile.North.Record.HingedDoor || tile.North.Record.SlidingDoor)
 					DrawDoorString(graphics, QuadrantType.North);
 			}
 			else
@@ -285,7 +285,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
-				if (tile.Content.Record.HumanDoor || tile.Content.Record.UfoDoor)
+				if (tile.Content.Record.HingedDoor || tile.Content.Record.SlidingDoor)
 					DrawDoorString(graphics, QuadrantType.Content);
 			}
 			else
@@ -303,7 +303,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 			// draw the quad-type label under each quadrant
-			DrawTypeString(graphics, QuadrantType.Ground);
+			DrawTypeString(graphics, QuadrantType.Floor);
 			DrawTypeString(graphics, QuadrantType.West);
 			DrawTypeString(graphics, QuadrantType.North);
 			DrawTypeString(graphics, QuadrantType.Content);
@@ -312,7 +312,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			// fill the color-swatch under each quadrant-label
 			if (Brushes != null && Pens != null)
 			{
-				FillSwatchColor(graphics, QuadrantType.Ground);
+				FillSwatchColor(graphics, QuadrantType.Floor);
 				FillSwatchColor(graphics, QuadrantType.West);
 				FillSwatchColor(graphics, QuadrantType.North);
 				FillSwatchColor(graphics, QuadrantType.Content);
@@ -344,7 +344,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			switch (quadType)
 			{
-				case QuadrantType.Ground:
+				case QuadrantType.Floor:
 					type  = Floor;
 					width = FloorWidth;
 					break;
@@ -380,7 +380,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			SolidBrush brush = null;
 			switch (quadType)
 			{
-				case QuadrantType.Ground:
+				case QuadrantType.Floor:
 					brush = Brushes[TopView.FloorColor];
 					break;
 				case QuadrantType.West:

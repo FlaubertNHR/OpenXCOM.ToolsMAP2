@@ -242,7 +242,7 @@ namespace XCom
 			if (_spriteset != null)
 				ret += _spriteset.ToString();
 
-			ret += TerrainId + Environment.NewLine;
+			ret += Id + Environment.NewLine;
 
 			for (int i = 0; i != Bindata.Length; ++i)
 			{

@@ -8,7 +8,7 @@ namespace XCom
 {
 	public enum QuadrantType
 	{
-		Ground,
+		Floor,
 		West,
 		North,
 		Content
@@ -20,11 +20,11 @@ namespace XCom
 			MapTileBase
 	{
 		#region Properties
-		private TilepartBase _ground;
-		public TilepartBase Ground
+		private TilepartBase _floor;
+		public TilepartBase Floor
 		{
-			get { return _ground; }
-			set { SetQuadrantPart(QuadrantType.Ground, value); }
+			get { return _floor; }
+			set { SetQuadrantPart(QuadrantType.Floor, value); }
 		}
 
 		private TilepartBase _west;
@@ -54,7 +54,7 @@ namespace XCom
 			{
 				switch (quad)
 				{
-					case QuadrantType.Ground:  return Ground;
+					case QuadrantType.Floor:   return Floor;
 					case QuadrantType.West:    return West;
 					case QuadrantType.North:   return North;
 					case QuadrantType.Content: return Content;
@@ -73,7 +73,7 @@ namespace XCom
 			{
 				var parts = new List<TilepartBase>();
 
-				if (Ground  != null) parts.Add(Ground);
+				if (Floor   != null) parts.Add(Floor);
 				if (West    != null) parts.Add(West);
 				if (North   != null) parts.Add(North);
 				if (Content != null) parts.Add(Content);
@@ -105,12 +105,12 @@ namespace XCom
 
 		#region cTor
 		public XCMapTile(
-				TilepartBase ground,
+				TilepartBase floor,
 				TilepartBase west,
 				TilepartBase north,
 				TilepartBase content)
 		{
-			_ground  = ground; // NOTE: Don't even try ... don't even think about it.
+			_floor   = floor; // NOTE: Don't even try ... don't even think about it.
 			_west    = west;
 			_north   = north;
 			_content = content;
@@ -125,7 +125,7 @@ namespace XCom
 		{
 			switch (quad)
 			{
-				case QuadrantType.Ground:  _ground  = part; break;
+				case QuadrantType.Floor:   _floor   = part; break;
 				case QuadrantType.West:    _west    = part; break;
 				case QuadrantType.North:   _north   = part; break;
 				case QuadrantType.Content: _content = part; break;
@@ -137,7 +137,7 @@ namespace XCom
 		/// </summary>
 		public void Vacancy()
 		{
-			Vacant = Ground  == null
+			Vacant = Floor   == null
 				  && West    == null
 				  && North   == null
 				  && Content == null;

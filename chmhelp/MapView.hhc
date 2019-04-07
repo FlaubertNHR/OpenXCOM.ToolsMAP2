@@ -2,62 +2,72 @@
 <HTML>
 <HEAD>
 <meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
-<!-- Sitemap 1.0 -->
-</HEAD><BODY>
+</HEAD>
+<BODY>
 <OBJECT type="text/site properties">
 	<param name="ExWindow Styles" value="0x100">
 	<param name="Window Styles" value="0x27">
 </OBJECT>
 <UL>
-	<LI> <OBJECT type="text/sitemap">
+	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="MapView help">
 		</OBJECT>
 	<UL>
-		<LI> <OBJECT type="text/sitemap">
+		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Raison d'etre">
 			<param name="Local" value="html\reason.htm">
 			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
+		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Overview">
 			<param name="Local" value="html\overview.htm">
 			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
+		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Requirements">
 			<param name="Local" value="html\requirements.htm">
 			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
+		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Configuration">
 			<param name="Local" value="html\configuration.htm">
 			</OBJECT>
 	</UL>
-	<LI> <OBJECT type="text/sitemap">
+	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="MainView">
 		<param name="Local" value="html\mainview.htm">
 		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
+	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="TileView">
 		<param name="Local" value="html\tileview.htm">
 		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
+	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="TopView">
 		<param name="Local" value="html\topview.htm">
 		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
+	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="RouteView">
 		<param name="Local" value="html\routeview.htm">
 		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
+	<LI><OBJECT type="text/sitemap">
 		<param name="Name" value="PckView help">
 		</OBJECT>
 	<UL>
-		<LI> <OBJECT type="text/sitemap">
+		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="PckView">
 			<param name="Local" value="html\pckview.htm">
 			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
+		<LI><OBJECT type="text/sitemap">
 			<param name="Name" value="Sprite Editor">
 			<param name="Local" value="html\spriteeditor.htm">
 			</OBJECT>
 	</UL>
+	<LI><OBJECT type="text/sitemap">
+		<param name="Name" value="McdView help">
+		</OBJECT>
+	<UL>
+		<LI><OBJECT type="text/sitemap">
+			<param name="Name" value="McdView">
+			<param name="Local" value="html\mcdview.htm">
+			</OBJECT>
+	</UL>
 </UL>
-</BODY></HTML>
+</BODY>
+</HTML>

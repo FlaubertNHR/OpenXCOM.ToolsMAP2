@@ -44,7 +44,6 @@ namespace XCom.Resources.Map.RouteData
 
 
 		#region Windows Form Designer generated code
-
 		private Container components = null;
 		private Label lbl_InfoBody;
 		private RichTextBox rtb_Text;
@@ -61,10 +60,10 @@ namespace XCom.Resources.Map.RouteData
 
 			base.Dispose(disposing);
 		}
-		
+
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{

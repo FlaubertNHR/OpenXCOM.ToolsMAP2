@@ -27,7 +27,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RouteView));
 			this.cbLink5Dest = new System.Windows.Forms.ComboBox();
 			this.cbLink4Dest = new System.Windows.Forms.ComboBox();
 			this.cbLink3Dest = new System.Windows.Forms.ComboBox();
@@ -65,13 +64,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.labelUnitInfo = new System.Windows.Forms.Label();
 			this._pnlRoutes = new System.Windows.Forms.Panel();
 			this.tsMain = new System.Windows.Forms.ToolStrip();
-			this.tscbConnectType = new System.Windows.Forms.ToolStripComboBox();
 			this.tsddbFile = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmiExport = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiImport = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsddbEdit = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsmiOptions = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmiAllNodesRank0 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiClearLinkData = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiUpdateAllLinkDistances = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +77,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbDebug = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmiCheckNodeRanks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiCheckOobNodes = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
+			this.tss_0 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsb_connect0 = new System.Windows.Forms.ToolStripButton();
+			this.tsb_connect1 = new System.Windows.Forms.ToolStripButton();
+			this.tsb_connect2 = new System.Windows.Forms.ToolStripButton();
 			this.gbLinkData = new System.Windows.Forms.GroupBox();
 			this.btnGoLink5 = new System.Windows.Forms.Button();
 			this.btnGoLink4 = new System.Windows.Forms.Button();
@@ -509,23 +510,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsMain.Font = new System.Drawing.Font("Verdana", 7F);
 			this.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tscbConnectType,
 			this.tsddbFile,
 			this.tsddbEdit,
-			this.tsddbDebug});
+			this.tsddbDebug,
+			this.tsb_Options,
+			this.tss_0,
+			this.tsb_connect0,
+			this.tsb_connect1,
+			this.tsb_connect2});
 			this.tsMain.Location = new System.Drawing.Point(0, 0);
 			this.tsMain.Name = "tsMain";
 			this.tsMain.Size = new System.Drawing.Size(640, 25);
 			this.tsMain.TabIndex = 0;
 			this.tsMain.Text = "tsMain";
-			// 
-			// tscbConnectType
-			// 
-			this.tscbConnectType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.tscbConnectType.Font = new System.Drawing.Font("Verdana", 7F);
-			this.tscbConnectType.Name = "tscbConnectType";
-			this.tscbConnectType.Size = new System.Drawing.Size(110, 25);
-			this.tscbConnectType.DropDownClosed += new System.EventHandler(this.OnConnectTypeClosed);
 			// 
 			// tsddbFile
 			// 
@@ -534,11 +531,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsmiExport,
 			this.tsmiImport});
-			this.tsddbFile.Image = ((System.Drawing.Image)(resources.GetObject("tsddbFile.Image")));
 			this.tsddbFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsddbFile.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbFile.Name = "tsddbFile";
-			this.tsddbFile.Size = new System.Drawing.Size(37, 22);
+			this.tsddbFile.Size = new System.Drawing.Size(37, 23);
 			this.tsddbFile.Text = "File";
+			this.tsddbFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiExport
 			// 
@@ -559,8 +557,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbEdit.AutoToolTip = false;
 			this.tsddbEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsddbEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiOptions,
-			this.toolStripSeparator2,
 			this.tsmiAllNodesRank0,
 			this.tsmiClearLinkData,
 			this.tsmiUpdateAllLinkDistances,
@@ -568,25 +564,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmi_RaiseNode,
 			this.tsmi_LowerNode});
 			this.tsddbEdit.Font = new System.Drawing.Font("Verdana", 7F);
-			this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
 			this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsddbEdit.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsddbEdit.Name = "tsddbEdit";
-			this.tsddbEdit.Size = new System.Drawing.Size(38, 22);
+			this.tsddbEdit.Size = new System.Drawing.Size(38, 23);
 			this.tsddbEdit.Text = "Edit";
+			this.tsddbEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.tsddbEdit.DropDownOpening += new System.EventHandler(this.OnEditOpening);
-			// 
-			// tsmiOptions
-			// 
-			this.tsmiOptions.Name = "tsmiOptions";
-			this.tsmiOptions.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.tsmiOptions.Size = new System.Drawing.Size(210, 22);
-			this.tsmiOptions.Text = "Options";
-			this.tsmiOptions.Click += new System.EventHandler(this.OnOptionsClick);
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(207, 6);
 			// 
 			// tsmiAllNodesRank0
 			// 
@@ -635,11 +619,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbDebug.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsmiCheckNodeRanks,
 			this.tsmiCheckOobNodes});
-			this.tsddbDebug.Image = ((System.Drawing.Image)(resources.GetObject("tsddbDebug.Image")));
 			this.tsddbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsddbDebug.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsddbDebug.Name = "tsddbDebug";
-			this.tsddbDebug.Size = new System.Drawing.Size(53, 22);
-			this.tsddbDebug.Text = "debug";
+			this.tsddbDebug.Size = new System.Drawing.Size(54, 23);
+			this.tsddbDebug.Text = "Debug";
+			this.tsddbDebug.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiCheckNodeRanks
 			// 
@@ -654,6 +639,62 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmiCheckOobNodes.Size = new System.Drawing.Size(226, 22);
 			this.tsmiCheckOobNodes.Text = "Check Out of Bounds nodes";
 			this.tsmiCheckOobNodes.Click += new System.EventHandler(this.OnCheckOobNodesClick);
+			// 
+			// tsb_Options
+			// 
+			this.tsb_Options.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.tsb_Options.AutoToolTip = false;
+			this.tsb_Options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsb_Options.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsb_Options.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsb_Options.Name = "tsb_Options";
+			this.tsb_Options.Size = new System.Drawing.Size(52, 23);
+			this.tsb_Options.Text = "Options";
+			this.tsb_Options.Click += new System.EventHandler(this.OnOptionsClick);
+			// 
+			// tss_0
+			// 
+			this.tss_0.Name = "tss_0";
+			this.tss_0.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsb_connect0
+			// 
+			this.tsb_connect0.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsb_connect0.Image = global::MapView.Properties.Resources.connect_0;
+			this.tsb_connect0.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsb_connect0.Margin = new System.Windows.Forms.Padding(2, 1, 0, 1);
+			this.tsb_connect0.Name = "tsb_connect0";
+			this.tsb_connect0.Size = new System.Drawing.Size(23, 23);
+			this.tsb_connect0.Text = "dont link";
+			this.tsb_connect0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.tsb_connect0.ToolTipText = "dont link";
+			this.tsb_connect0.Click += new System.EventHandler(this.OnConnectTypeClicked);
+			// 
+			// tsb_connect1
+			// 
+			this.tsb_connect1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsb_connect1.Image = global::MapView.Properties.Resources.connect_1;
+			this.tsb_connect1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsb_connect1.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
+			this.tsb_connect1.Name = "tsb_connect1";
+			this.tsb_connect1.Size = new System.Drawing.Size(23, 23);
+			this.tsb_connect1.Text = "1 way link";
+			this.tsb_connect1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.tsb_connect1.ToolTipText = "1 way link";
+			this.tsb_connect1.Click += new System.EventHandler(this.OnConnectTypeClicked);
+			// 
+			// tsb_connect2
+			// 
+			this.tsb_connect2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsb_connect2.Image = global::MapView.Properties.Resources.connect_2;
+			this.tsb_connect2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsb_connect2.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
+			this.tsb_connect2.Name = "tsb_connect2";
+			this.tsb_connect2.Size = new System.Drawing.Size(23, 23);
+			this.tsb_connect2.Text = "2 way link";
+			this.tsb_connect2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.tsb_connect2.ToolTipText = "2 way link";
+			this.tsb_connect2.Click += new System.EventHandler(this.OnConnectTypeClicked);
 			// 
 			// gbLinkData
 			// 
@@ -790,6 +831,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// label_RoutesChanged
 			// 
+			this.label_RoutesChanged.ForeColor = System.Drawing.Color.Firebrick;
 			this.label_RoutesChanged.Location = new System.Drawing.Point(555, 160);
 			this.label_RoutesChanged.Name = "label_RoutesChanged";
 			this.label_RoutesChanged.Size = new System.Drawing.Size(55, 30);
@@ -960,9 +1002,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private System.Windows.Forms.GroupBox gbNodeEditor;
 		private System.Windows.Forms.Button btnCut;
 		private System.Windows.Forms.ToolStrip tsMain;
-		private System.Windows.Forms.ToolStripComboBox tscbConnectType;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbEdit;
-		private System.Windows.Forms.ToolStripMenuItem tsmiOptions;
 		private System.Windows.Forms.ToolStripMenuItem tsmiAllNodesRank0;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.ToolStripMenuItem tsmiClearLinkData;
@@ -979,10 +1019,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem tsmi_LowerNode;
 		private System.Windows.Forms.ToolStripMenuItem tsmi_RaiseNode;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.Label label_RoutesChanged;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbFile;
 		private System.Windows.Forms.ToolStripMenuItem tsmiExport;
 		private System.Windows.Forms.ToolStripMenuItem tsmiImport;
+		private System.Windows.Forms.ToolStripButton tsb_Options;
+		private System.Windows.Forms.ToolStripButton tsb_connect0;
+		private System.Windows.Forms.ToolStripButton tsb_connect1;
+		private System.Windows.Forms.ToolStripButton tsb_connect2;
+		private System.Windows.Forms.ToolStripSeparator tss_0;
 	}
 }

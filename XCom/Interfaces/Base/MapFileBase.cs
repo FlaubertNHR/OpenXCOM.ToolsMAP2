@@ -73,7 +73,7 @@ namespace XCom.Interfaces.Base
 		public bool RoutesChanged
 		{ get; set; }
 
-		internal MapTileList MapTiles
+		internal MapTileList Tiles
 		{ get; set; }
 
 		public List<TilepartBase> Parts
@@ -119,8 +119,8 @@ namespace XCom.Interfaces.Base
 		/// <returns>the corresponding MapTileBase object</returns>
 		public MapTileBase this[int row, int col, int lev]
 		{
-			get { return (MapTiles != null) ? MapTiles[row, col, lev] : null; }
-			set { MapTiles[row, col, lev] = value; }
+			get { return (Tiles != null) ? Tiles[row, col, lev] : null; }
+			set { Tiles[row, col, lev] = value; }
 		}
 		/// <summary>
 		/// Gets/Sets a MapTile at the current level using row,col values. No
@@ -237,7 +237,7 @@ namespace XCom.Interfaces.Base
 								-(24 * Level));
 
 			int i = 0;
-			if (MapTiles != null)
+			if (Tiles != null)
 			{
 				for (int lev = MapSize.Levs - 1; lev >= Level; --lev)
 				{

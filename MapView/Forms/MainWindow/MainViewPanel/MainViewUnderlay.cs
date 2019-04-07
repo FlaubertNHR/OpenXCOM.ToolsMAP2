@@ -130,22 +130,21 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
 
 			// indicate reserved space for scroll-bars.
 			var graphics = e.Graphics;
-			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
-			var pen = new Pen(SystemColors.ControlLight, 1);
 			graphics.DrawLine(
-							pen,
+							SystemPens.ControlLight,
 							Width - _scrollBarV.Width - OffsetX - 1, OffsetY,
 							Width - _scrollBarV.Width - OffsetX - 1, Height - _scrollBarH.Height - OffsetY - 1);
 			graphics.DrawLine(
-							pen,
+							SystemPens.ControlLight,
 							OffsetX,                                 Height - _scrollBarH.Height - OffsetY - 1,
 							Width - _scrollBarV.Width - OffsetX - 1, Height - _scrollBarH.Height - OffsetY - 1);
 		}
@@ -179,28 +178,28 @@ namespace MapView
 
 			base.OnResize(eventargs);
 
-			if (Globals.AutoScale)
+			if (MapBase != null && Globals.AutoScale)
 			{
 				SetScale();
 				SetOverlaySize();
 			}
 			UpdateScrollers();
 
-			Refresh(); // updates the reserved scroll indicators.
+			Invalidate(); // updates the reserved scroll indicators.
 
 //			XCom.LogFile.WriteLine("MainViewUnderlay.OnResize EXIT");
 		}
 		#endregion
 
 
-		#region Eventcalls
+		#region Events
 		private void OnScrollVert(object sender, ScrollEventArgs e)
 		{
 			//XCom.LogFile.WriteLine("OnVerticalScroll overlay.Left= " + MainViewOverlay.Left);
 			MainViewOverlay.Location = new Point(
 												MainViewOverlay.Left,
 												-_scrollBarV.Value);
-			MainViewOverlay.Refresh();
+			MainViewOverlay.Invalidate();
 		}
 
 		private void OnScrollHori(object sender, ScrollEventArgs e)
@@ -209,12 +208,12 @@ namespace MapView
 			MainViewOverlay.Location = new Point(
 												-_scrollBarH.Value,
 												MainViewOverlay.Top);
-			MainViewOverlay.Refresh();
+			MainViewOverlay.Invalidate();
 		}
 
 		private void OnAnimationUpdate(object sender, EventArgs e)
 		{
-			MainViewOverlay.Refresh();
+			MainViewOverlay.Invalidate();
 		}
 
 
@@ -231,6 +230,10 @@ namespace MapView
 		internal void OnPaste(object sender, EventArgs e)
 		{
 			MainViewOverlay.Paste();
+		}
+		internal void OnDelete(object sender, EventArgs e)
+		{
+			MainViewOverlay.ClearSelection();
 		}
 		internal void OnFill(object sender, EventArgs e)
 		{
@@ -414,7 +417,7 @@ namespace MapView
 				//XCom.LogFile.WriteLine(". height= " + height);
 
 				Globals.Scale = (double)halfWidth / MainViewOverlay.HalfWidthConst;
-				XCMainWindow.Instance.StatusBarPrintScale();
+				XCMainWindow.Instance.sb_PrintScale();
 				//XCom.LogFile.WriteLine(". set scale= " + Globals.Scale);
 
 				return new Size(

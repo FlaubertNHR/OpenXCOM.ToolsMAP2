@@ -114,27 +114,27 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			switch (quad)
 			{
-				case QuadrantType.Ground:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Ground);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Ground);
+				case QuadrantType.Floor:
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Floor);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Floor);
 					break;
 				case QuadrantType.West:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.WestWall);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.WestWall);
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Westwall);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Westwall);
 					break;
 				case QuadrantType.North:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.NorthWall);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.NorthWall);
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Northwall);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Northwall);
 					break;
 				case QuadrantType.Content:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Object);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Object);
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Content);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Content);
 					break;
 			}
 
 			switch (quad)
 			{
-				case QuadrantType.Ground:
+				case QuadrantType.Floor:
 				case QuadrantType.West:
 				case QuadrantType.North:
 				case QuadrantType.Content:
@@ -149,7 +149,7 @@ namespace MapView.Forms.MapObservers.TopViews
 						ViewerFormsManager.TopRouteView.Refresh();
 
 						if (XCMainWindow.ScanG != null)
-							XCMainWindow.ScanG.RefreshPanel();
+							XCMainWindow.ScanG.InvalidatePanel();
 					}
 					Refresh();
 					break;

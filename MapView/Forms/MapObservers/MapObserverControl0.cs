@@ -118,8 +118,8 @@ namespace MapView
 			if      (e.Delta < 0) _mapBase.LevelUp();
 			else if (e.Delta > 0) _mapBase.LevelDown();
 
-			ViewerFormsManager.ToolFactory.ToggleDownButtons(_mapBase.Level != _mapBase.MapSize.Levs - 1);
-			ViewerFormsManager.ToolFactory.ToggleUpButtons(  _mapBase.Level != 0);
+			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(_mapBase.Level != _mapBase.MapSize.Levs - 1);
+			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  _mapBase.Level != 0);
 		}
 		#endregion
 	}

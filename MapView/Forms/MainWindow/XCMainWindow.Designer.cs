@@ -23,8 +23,8 @@ namespace MapView
 		#region Windows Form Designer generated code
 
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -52,8 +52,8 @@ namespace MapView
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.menuEdit = new System.Windows.Forms.MenuItem();
-			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
+			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.menuAnimation = new System.Windows.Forms.MenuItem();
 			this.miOn = new System.Windows.Forms.MenuItem();
 			this.miOff = new System.Windows.Forms.MenuItem();
@@ -154,7 +154,8 @@ namespace MapView
 			// 
 			this.miSaveAs.Enabled = false;
 			this.miSaveAs.Index = 5;
-			this.miSaveAs.Text = "Save As ...";
+			this.miSaveAs.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
+			this.miSaveAs.Text = "Sav&e As ...";
 			this.miSaveAs.Click += new System.EventHandler(this.OnSaveAsClick);
 			// 
 			// miSeparator2
@@ -252,22 +253,22 @@ namespace MapView
 			// 
 			this.menuEdit.Index = 1;
 			this.menuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miOptions,
-			this.miConfigurator});
+			this.miConfigurator,
+			this.miOptions});
 			this.menuEdit.Text = "&Edit";
-			// 
-			// miOptions
-			// 
-			this.miOptions.Index = 0;
-			this.miOptions.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
-			this.miOptions.Text = "&Options";
-			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// miConfigurator
 			// 
-			this.miConfigurator.Index = 1;
+			this.miConfigurator.Index = 0;
 			this.miConfigurator.Text = "&Configurator";
 			this.miConfigurator.Click += new System.EventHandler(this.OnConfiguratorClick);
+			// 
+			// miOptions
+			// 
+			this.miOptions.Index = 1;
+			this.miOptions.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
+			this.miOptions.Text = "&Options";
+			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// menuAnimation
 			// 
@@ -484,7 +485,7 @@ namespace MapView
 			this.MinimumSize = new System.Drawing.Size(640, 480);
 			this.Name = "XCMainWindow";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "Map Editor";
+			this.Text = "Map Editor ||";
 			this.ssMain.ResumeLayout(false);
 			this.ssMain.PerformLayout();
 			this.tscPanel.TopToolStripPanel.ResumeLayout(false);

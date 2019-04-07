@@ -10,7 +10,7 @@
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -18,6 +18,12 @@
 
 			base.Dispose(disposing);
 		}
+
+		/* This may get deleted:
+
+			this.RouteViewControl = new MapView.Forms.MapObservers.RouteViews.RouteView();
+
+		add it to the top of InitializeComponent() */
 
 		#region Windows Form Designer generated code
 		/// <summary>

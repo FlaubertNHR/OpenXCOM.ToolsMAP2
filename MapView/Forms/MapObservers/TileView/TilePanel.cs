@@ -40,10 +40,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		private const int _largeChange = SpriteHeight;	// apparently .NET won't return an accurate value
 														// for LargeChange unless the scrollbar is visible.
 
-		private Pen   _penBlack        = new Pen(Brushes.Black, 1);
-		private Pen   _penRed          = new Pen(Brushes.Red, 3);
-		private Pen   _penControlLight = new Pen(SystemColors.ControlLight, 1);
-		private Brush _brushBlack      = new SolidBrush(Color.Black);
+		private readonly Pen   _penBlack        = Pens.Black;
+		private readonly Pen   _penRed          = new Pen(Color.Red, 3);
+		private readonly Pen   _penControlLight = SystemPens.ControlLight;
+		private readonly Brush _brushBlack      = Brushes.Black;
 
 		private static Hashtable _specialTypeBrushes;
 
@@ -148,6 +148,8 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			Controls.Add(_scrollBar);
 
+			ContextMenu = CreateContext();
+
 			MainViewUnderlay.AnimationUpdateEvent += OnAnimationUpdate; // FIX: "Subscription to static events without unsubscription may cause memory leaks."
 
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
@@ -159,10 +161,41 @@ namespace MapView.Forms.MapObservers.TileViews
 			_t1.Interval = 250;	// because the mouse OnLeave event doesn't fire
 			_t1.Enabled = true;	// when the mouse moves out of the panel directly
 		}						// from a tilepart's part-icon.
+
+		/// <summary>
+		/// Builds a ContextMenu for RMB on this TilePanel.
+		/// </summary>
+		/// <returns>the ContextMenu</returns>
+		private ContextMenu CreateContext()
+		{
+			var context = new ContextMenu();
+
+			context.MenuItems.Add(new MenuItem("open in PckView", OnClick_OpenPckview, Shortcut.F9));
+			context.MenuItems.Add(new MenuItem("open in McdView", OnClick_OpenMcdview, Shortcut.F10));
+			context.MenuItems.Add(new MenuItem("-"));
+			context.MenuItems.Add(new MenuItem("Tilepart Info"  , OnClick_OpenMcdinfo));
+
+			return context;
+		}
 		#endregion
 
 
-		#region Event Calls
+		#region Events
+		private void OnClick_OpenPckview(object sender, EventArgs e)
+		{
+			ViewerFormsManager.TileView.Control.OnPckEditClick(sender, e);
+		}
+
+		private void OnClick_OpenMcdview(object sender, EventArgs e)
+		{
+			ViewerFormsManager.TileView.Control.OnMcdEditClick(sender, e);
+		}
+
+		private void OnClick_OpenMcdinfo(object sender, EventArgs e)
+		{
+			 ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
+		}
+
 		/// <summary>
 		/// Ensures that any Overinfo on the statusbar is cleared when the
 		/// mouse-cursor leaves this panel.
@@ -189,6 +222,16 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
+		/// whee. Handles animations.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAnimationUpdate(object sender, EventArgs e)
+		{
+			Invalidate();
+		}
+
+		/// <summary>
 		/// Fires when anything changes the Value of the scroll-bar.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -201,8 +244,10 @@ namespace MapView.Forms.MapObservers.TileViews
 				Refresh();
 			}
 		}
+		#endregion Events
 
 
+		#region Events (override)
 		private bool _resetTrack;
 
 		/// <summary>
@@ -282,7 +327,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Opens the MCD-info screen when a valid tile is double-clicked.
+		/// Opens PckView when a valid tile is double-left-clicked or the
+		/// MCD-info screen when a valid tile is double-right-clicked.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
@@ -293,14 +339,16 @@ namespace MapView.Forms.MapObservers.TileViews
 				switch (e.Button)
 				{
 					case MouseButtons.Left:
-						ViewerFormsManager.TileView.Control.OnPckEditorClick(null, EventArgs.Empty);
-						break;
-
-					case MouseButtons.Right:
 						ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
 						break;
 				}
 			}
+		}
+
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.I)
+				ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -339,8 +387,6 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		private const string Door = "door";
-
-		private static bool Inited;
 		private static int TextWidth;
 
 		private const int TableOffset = 2;
@@ -367,10 +413,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				int top;
 				int left;
 
-				if (!Inited)
+				if (TextWidth == 0) // init.
 				{
-					Inited = true;
-
 //					TextWidth = TextRenderer.MeasureText(Door, Font).Width;		// =30
 					TextWidth = (int)graphics.MeasureString(Door, Font).Width;	// =24
 				}
@@ -388,9 +432,9 @@ namespace MapView.Forms.MapObservers.TileViews
 
 					if (part != null) // draw tile-sprite ->
 					{
-						string specialType = part.Record.TargetType.ToString();	// first fill Special Property color
-						if (_specialTypeBrushes.ContainsKey(specialType))
-							graphics.FillRectangle((SolidBrush)_specialTypeBrushes[specialType], rect);
+						string special = part.Record.Special.ToString();		// first fill Special Property color
+						if (_specialTypeBrushes.ContainsKey(special))
+							graphics.FillRectangle((SolidBrush)_specialTypeBrushes[special], rect);
 
 						if ((sprite = part[MainViewUnderlay.AniStep]) != null)
 						{
@@ -412,7 +456,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 						// NOTE: keep the door-string and its placement consistent with
 						// QuadrantPanelDrawService.Draw().
-						if (part.Record.HumanDoor || part.Record.UfoDoor)		// finally print "door" if it's a door
+						if (part.Record.HingedDoor || part.Record.SlidingDoor)	// finally print "door" if it's a door
 							graphics.DrawString(
 											Door,
 											Font,
@@ -476,17 +520,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			}
 		}
-
-		/// <summary>
-		/// whee. Handles animations.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnAnimationUpdate(object sender, EventArgs e)
-		{
-			Refresh();
-		}
-		#endregion
+		#endregion Events (override)
 
 
 		#region Methods
@@ -553,6 +587,6 @@ namespace MapView.Forms.MapObservers.TileViews
 				}
 			}
 		}
-		#endregion
+		#endregion Methods
 	}
 }

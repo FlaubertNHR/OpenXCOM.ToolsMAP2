@@ -14,9 +14,9 @@ namespace XCom
 		private readonly SpriteCollection _spriteset;
 
 		public Tilepart Dead
-		{ get; internal set; }
+		{ get; set; }
 
-		internal Tilepart Alternate
+		public Tilepart Alternate
 		{ get; set; }
 		#endregion
 
@@ -28,7 +28,7 @@ namespace XCom
 		/// <param name="id"></param>
 		/// <param name="spriteset"></param>
 		/// <param name="record"></param>
-		internal Tilepart(
+		public Tilepart(
 				int id,
 				SpriteCollection spriteset,
 				McdRecord record)
@@ -36,9 +36,9 @@ namespace XCom
 				base(id)
 		{
 			_spriteset = spriteset;
-			Record     = record;
+			Record = record;
 
-			Anisprites = new XCImage[8]; // every tile-part contains refs to 8 sprites.
+			Sprites = new XCImage[8]; // every tile-part contains refs to 8 sprites.
 			InitializeSprites();
 		}
 		#endregion
@@ -68,21 +68,24 @@ namespace XCom
 		/// </summary>
 		private void InitializeSprites()
 		{
-			if (Record.UfoDoor || Record.HumanDoor)
+			if (_spriteset != null)
 			{
-				for (int i = 0; i != 8; ++i)
-					Anisprites[i] = _spriteset[Record.Sprite1];
-			}
-			else
-			{
-				Anisprites[0] = _spriteset[Record.Sprite1];
-				Anisprites[1] = _spriteset[Record.Sprite2];
-				Anisprites[2] = _spriteset[Record.Sprite3];
-				Anisprites[3] = _spriteset[Record.Sprite4];
-				Anisprites[4] = _spriteset[Record.Sprite5];
-				Anisprites[5] = _spriteset[Record.Sprite6];
-				Anisprites[6] = _spriteset[Record.Sprite7];
-				Anisprites[7] = _spriteset[Record.Sprite8];
+				if (Record.SlidingDoor || Record.HingedDoor)
+				{
+					for (int i = 0; i != 8; ++i)
+						Sprites[i] = _spriteset[Record.Sprite1];
+				}
+				else
+				{
+					Sprites[0] = _spriteset[Record.Sprite1];
+					Sprites[1] = _spriteset[Record.Sprite2];
+					Sprites[2] = _spriteset[Record.Sprite3];
+					Sprites[3] = _spriteset[Record.Sprite4];
+					Sprites[4] = _spriteset[Record.Sprite5];
+					Sprites[5] = _spriteset[Record.Sprite6];
+					Sprites[6] = _spriteset[Record.Sprite7];
+					Sprites[7] = _spriteset[Record.Sprite8];
+				}
 			}
 		}
 
@@ -93,44 +96,78 @@ namespace XCom
 		/// <param name="animate">true to animate</param>
 		public void SetDoorSprites(bool animate)
 		{
-			if (Record.UfoDoor || Record.HumanDoor)
+			if (_spriteset != null)
 			{
-				if (animate)
+				if (Record.SlidingDoor || Record.HingedDoor)
 				{
-					if (Record.UfoDoor || Alternate == null)
+					if (animate)
 					{
-						Anisprites[0] = _spriteset[Record.Sprite1];
-						Anisprites[1] = _spriteset[Record.Sprite2];
-						Anisprites[2] = _spriteset[Record.Sprite3];
-						Anisprites[3] = _spriteset[Record.Sprite4];
-						Anisprites[4] = _spriteset[Record.Sprite5];
-						Anisprites[5] = _spriteset[Record.Sprite6];
-						Anisprites[6] = _spriteset[Record.Sprite7];
-						Anisprites[7] = _spriteset[Record.Sprite8];
+						if (Record.SlidingDoor || Alternate == null)
+						{
+							Sprites[0] = _spriteset[Record.Sprite1];
+							Sprites[1] = _spriteset[Record.Sprite2];
+							Sprites[2] = _spriteset[Record.Sprite3];
+							Sprites[3] = _spriteset[Record.Sprite4];
+							Sprites[4] = _spriteset[Record.Sprite5];
+							Sprites[5] = _spriteset[Record.Sprite6];
+							Sprites[6] = _spriteset[Record.Sprite7];
+							Sprites[7] = _spriteset[Record.Sprite8];
+						}
+						else
+						{
+							byte alt = Alternate.Record.Sprite1;
+							for (int i = 4; i != 8; ++i)
+								Sprites[i] = _spriteset[alt];
+						}
 					}
 					else
 					{
-						byte alt = Alternate.Record.Sprite1;
-						for (int i = 4; i != 8; ++i)
-							Anisprites[i] = _spriteset[alt];
+						for (int i = 0; i != 8; ++i)
+							Sprites[i] = _spriteset[Record.Sprite1];
 					}
-				}
-				else
-				{
-					for (int i = 0; i != 8; ++i)
-						Anisprites[i] = _spriteset[Record.Sprite1];
 				}
 			}
 		}
 
 		public void SetDoorToAlternateSprite()
 		{
-			if (Record.UfoDoor || Record.HumanDoor)
+			if (_spriteset != null)
 			{
-				byte alt = Alternate.Record.Sprite1;
-				for (int i = 0; i != 8; ++i)
-					Anisprites[i] = _spriteset[alt];
+				if (Record.SlidingDoor || Record.HingedDoor)
+				{
+					byte alt = Alternate.Record.Sprite1;
+					for (int i = 0; i != 8; ++i)
+						Sprites[i] = _spriteset[alt];
+				}
 			}
+		}
+
+
+		/// <summary>
+		/// Returns a copy of this Tilepart with a deep-cloned Record.
+		/// But any referred to anisprites and dead/alternate tileparts maintain
+		/// their current objects.
+		/// - classvars:
+		///   Record
+		///   Sprites
+		///   TerId
+		///   SetId = -1
+		///
+		///   Dead
+		///   Alternate
+		///   _spriteset
+		/// </summary>
+		/// <returns></returns>
+		public Tilepart Clone()
+		{
+			var part = new Tilepart(
+								TerId,
+								_spriteset,
+								Record.Clone());
+			part.Dead      = Dead;
+			part.Alternate = Alternate;
+
+			return part;
 		}
 		#endregion
 	}

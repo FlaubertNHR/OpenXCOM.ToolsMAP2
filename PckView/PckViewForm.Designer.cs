@@ -24,6 +24,7 @@ namespace PckView
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckViewForm));
 			this.mmMainMenu = new System.Windows.Forms.MainMenu(this.components);
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
 			this.miCreate = new System.Windows.Forms.MenuItem();
@@ -358,6 +359,7 @@ namespace PckView
 			this.ClientSize = new System.Drawing.Size(472, 614);
 			this.Controls.Add(this.ss_Status);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
 			this.Location = new System.Drawing.Point(50, 50);
 			this.MaximumSize = new System.Drawing.Size(480, 640);

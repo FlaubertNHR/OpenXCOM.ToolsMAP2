@@ -29,7 +29,10 @@ namespace DSShared.Windows
 		/// <param name="notice">text that will be shown above the textbox</param>
 		/// <param name="caption">caption for the titlebar</param>
 		/// <param name="input">initial value of the textbox</param>
-		public FindFileForm(string notice, string caption, string input)
+		public FindFileForm(
+				string notice,
+				string caption,
+				string input)
 		{
 			InitializeComponent();
 			
@@ -37,24 +40,31 @@ namespace DSShared.Windows
 			lblNotice.Text = notice;
 
 			tbInput.Text = input;
-			tbInput.Select();
 		}
 		/// <summary>
-		/// Auxiliary constructor.
+		/// Auxiliary constructor. Because.
 		/// </summary>
 		/// <param name="notice"></param>
 		public FindFileForm(string notice)
 			:
-				this(notice, "Input Text", String.Empty)
+				this(
+					notice,
+					" Input",
+					String.Empty)
 		{}
 		#endregion
 
 
 		#region Eventcalls
+		private void OnLoad_form(object sender, EventArgs e)
+		{
+			ActiveControl = btnCancel;
+		}
+
 		private void btnFindFile_Click(object sender, EventArgs e)
 		{
-			using (var f = openFileDialog)	// TODO: Delete the OpenFileDialog class and use stock .NET forms.
-			{								// In fact delete this class also and use stock .NET forms.
+			using (var f = openFileDialog)
+			{
 				f.Title = "Find MCDEdit.exe";
 				if (f.ShowDialog() == DialogResult.OK)
 					tbInput.Text = f.FileName;

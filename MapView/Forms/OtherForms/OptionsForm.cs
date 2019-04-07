@@ -14,7 +14,7 @@ using DSShared.Windows;
 namespace MapView
 {
 	/// <summary>
-	/// The Options form. The same form is used for each viewer's Options.
+	/// The Options form.
 	/// </summary>
 	internal sealed class OptionsForm
 		:
@@ -40,10 +40,11 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (keyData == Keys.Escape)
+			if (keyData == Keys.Escape
+				|| keyData == (Keys.Control | Keys.O)) // foreign code-page users beware ...
 			{
 				string typeFocused = FindFocusedControl(this).GetType().ToString();
 				if (!typeFocused.Contains("GridViewEdit"))
@@ -212,7 +213,7 @@ namespace MapView
 				an.Name = "TempAssembly";
 
 				// Only save the custom-type dll while debugging
-#if SaveDLL && DEBUG
+#if DEBUG && SaveDLL
 				AssemblyBuilder assemblyBuilder = ad.DefineDynamicAssembly(
 																		an,
 																		AssemblyBuilderAccess.RunAndSave);
@@ -257,7 +258,7 @@ namespace MapView
 			foreach (string key in _options.Keys)
 				table[key] = _options[key].Value;
 
-#if SaveDLL && DEBUG
+#if DEBUG && SaveDLL
 			assemblyBuilder.Save("Test.dll");
 #endif
 			var type = (Type)_hashTypes[TypeLabel];

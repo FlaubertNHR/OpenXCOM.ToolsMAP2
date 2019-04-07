@@ -30,6 +30,8 @@ namespace MapView
 			Form
 	{
 		#region Fields (static)
+		private const string title = "Map Editor ||";
+
 		private const double ScaleDelta = 0.125;
 		#endregion
 
@@ -37,8 +39,7 @@ namespace MapView
 		#region Fields
 		internal readonly MainViewUnderlay _mainViewUnderlay; // was private, see ScanGViewer
 
-		private readonly ViewersManager   _viewersManager;
-		private readonly MainMenusManager _mainMenusManager;
+		private readonly ViewersManager _viewersManager;
 
 //		private readonly ConsoleWarningHandler _warningHandler;
 
@@ -56,7 +57,7 @@ namespace MapView
 
 		#region Properties (static)
 		internal static XCMainWindow Instance
-		{ get; set; }
+		{ get; private set; }
 
 		internal static ScanGViewer ScanG
 		{ get; set; }
@@ -115,9 +116,6 @@ namespace MapView
 			}
 		}
 
-//		internal bool RoutesChanged
-//		{ get; set; }
-
 		/// <summary>
 		/// The currently searched and found and highlighted Treenode on the MapTree.
 		/// </summary>
@@ -141,7 +139,6 @@ namespace MapView
 #endif
 
 			LogFile.WriteLine("Starting MAIN MapView window ...");
-
 
 			// TODO: further optimize this loading sequence ....
 
@@ -277,12 +274,12 @@ namespace MapView
 			_viewersManager = new ViewersManager(_optionsManager/*, shareConsole*/);
 			LogFile.WriteLine("Viewer managers instantiated.");
 
-			_mainMenusManager = new MainMenusManager(menuViewers, menuHelp);
-			_mainMenusManager.PopulateMenus(/*shareConsole.Console,*/ Options);
+			MainMenusManager.SetMenus(menuViewers, menuHelp);
+			MainMenusManager.PopulateMenus(/*shareConsole.Console,*/ Options);
 			LogFile.WriteLine("MainView menus populated.");
 
 
-			ViewerFormsManager.HideViewersManager = _mainMenusManager.CreateShowHideManager(); // subsidiary viewers hide when PckView is invoked from TileView.
+			ViewerFormsManager.HideViewersManager = MainMenusManager.CreateShowHideManager(); // subsidiary viewers hide when Pck/McdView is invoked from TileView.
 			LogFile.WriteLine("HideViewersManager created.");
 
 
@@ -304,9 +301,9 @@ namespace MapView
 			tscPanel.ContentPanel.Controls.Add(_mainViewUnderlay);
 
 			ViewerFormsManager.ToolFactory.CreateToolstripSearchObjects(tsTools);
-			ViewerFormsManager.ToolFactory.CreateToolstripZoomObjects(tsTools);
-			ViewerFormsManager.ToolFactory.CreateToolstripEditorObjects(tsTools, false);
-			ViewerFormsManager.ToolFactory.EnableToolStrip(false);
+			ViewerFormsManager.ToolFactory.CreateToolstripScaleObjects(tsTools);
+			ViewerFormsManager.ToolFactory.CreateToolstripEditorObjects(tsTools);
+			LogFile.WriteLine("MainView toolstrip created.");
 
 
 			// Read MapResources.yml to get the resources dir (for both UFO and TFTD).
@@ -428,8 +425,7 @@ namespace MapView
 			/****************************************/
 
 
-			LogFile.WriteLine("About to show MainView ...");
-			LogFile.WriteLine("");
+			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 			Show();
 		}
 		#endregion
@@ -816,6 +812,8 @@ namespace MapView
 					}
 					else if (miOn.Checked && miDoors.Checked) // doors need to animate if they were already toggled on.
 						ToggleDoorSprites(true);
+
+					_mainViewUnderlay.MainViewOverlay.Invalidate();
 					break;
 
 				case Doors: // NOTE: 'miDoors.Checked' is used by the F3 key to toggle door animations.
@@ -929,7 +927,7 @@ namespace MapView
 
 			if (_quit)
 			{
-				_mainMenusManager.IsQuitting();
+				MainMenusManager.Quit();
 
 				_optionsManager.SaveOptions(); // save MV_OptionsFile // TODO: Save settings when closing the Options form(s).
 
@@ -1045,7 +1043,7 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls
+		#region Events
 		private void OnAnimationUpdate(object sender, EventArgs e)
 		{
 			ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
@@ -1405,6 +1403,9 @@ namespace MapView
 
 						_mainViewUnderlay.MainViewOverlay.FirstClick = false;
 
+						ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
+						ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  @base.Level != 0);
+
 						tsslDimensions   .Text = @base.MapSize.ToString();
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
@@ -1491,7 +1492,7 @@ namespace MapView
 		}
 
 
-		internal void OnZoomInClick(object sender, EventArgs e)
+		internal void OnScaleInClick(object sender, EventArgs e)
 		{
 			if (Globals.Scale < Globals.ScaleMaximum)
 			{
@@ -1502,7 +1503,7 @@ namespace MapView
 			}
 		}
 
-		internal void OnZoomOutClick(object sender, EventArgs e)
+		internal void OnScaleOutClick(object sender, EventArgs e)
 		{
 			if (Globals.Scale > Globals.ScaleMinimum)
 			{
@@ -1515,7 +1516,7 @@ namespace MapView
 
 		private void Zoom()
 		{
-			ViewerFormsManager.ToolFactory.SetAutozoomChecked(false);
+			ViewerFormsManager.ToolFactory.DisableScaleChecked();
 			Globals.AutoScale = false;
 
 			_mainViewUnderlay.SetOverlaySize();
@@ -1524,9 +1525,9 @@ namespace MapView
 			Refresh();
 		}
 
-		internal void OnAutoScaleClick(object sender, EventArgs e)
+		internal void OnScaleClick(object sender, EventArgs e)
 		{
-			Globals.AutoScale = ViewerFormsManager.ToolFactory.ToggleAutozoomChecked();
+			Globals.AutoScale = ViewerFormsManager.ToolFactory.ToggleScaleChecked();
 			if (Globals.AutoScale)
 			{
 				_mainViewUnderlay.SetScale();
@@ -2540,11 +2541,11 @@ namespace MapView
 
 					_mainViewUnderlay.MapBase = @base;
 
-					ViewerFormsManager.ToolFactory.EnableToolStrip(true);
-					ViewerFormsManager.ToolFactory.ToggleDownButtons(@base.Level != @base.MapSize.Levs - 1);
-					ViewerFormsManager.ToolFactory.ToggleUpButtons(  @base.Level != 0);
+					ViewerFormsManager.ToolFactory.EnableScaleButton();
+					ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
+					ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  @base.Level != 0);
 
-					Text = "Map Editor - " + descriptor.Basepath;
+					Text = title + " " + descriptor.Basepath;
 					if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
 
 					tsslMapLabel     .Text = descriptor.Label;
@@ -2565,7 +2566,7 @@ namespace MapView
 					ToggleDoorSprites(false);
 
 					if (!menuViewers.Enabled) // open/close the forms that appear in the Viewers menu.
-						_mainMenusManager.StartViewers();
+						MainMenusManager.StartViewers();
 
 					ViewerFormsManager.SetObservers(@base); // reset all observer events
 
@@ -2583,10 +2584,14 @@ namespace MapView
 					var tileview = ViewerFormsManager.TileView.Control; // update MCD Info if open
 					if (tileview._mcdInfoForm != null)
 					{
-						if (tileview.SelectedTilepart != null)
-							tileview._mcdInfoForm.UpdateData(tileview.SelectedTilepart.Record);
+						TilepartBase part = tileview.SelectedTilepart;
+						if (part != null)
+							tileview._mcdInfoForm.UpdateData(
+															part.Record,
+															part.TerId,
+															tileview.GetTerrainLabel());
 						else
-							tileview._mcdInfoForm.UpdateData(null);
+							tileview._mcdInfoForm.UpdateData();
 					}
 				}
 			}
@@ -2724,7 +2729,7 @@ namespace MapView
 		/// <param name="col"></param>
 		/// <param name="row"></param>
 		/// <param name="lev"></param>
-		internal void StatusBarPrintPosition(int col, int row, int lev)
+		internal void sb_PrintPosition(int col, int row, int lev)
 		{
 			if (_mainViewUnderlay.MainViewOverlay.FirstClick)
 				tsslPosition.Text = String.Format(
@@ -2733,7 +2738,7 @@ namespace MapView
 												col + 1, row + 1, _mainViewUnderlay.MapBase.MapSize.Levs - lev); // 1-based count.
 		}
 
-		internal void StatusBarPrintScale()
+		internal void sb_PrintScale()
 		{
 			tsslScale.Text = String.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
@@ -2741,7 +2746,7 @@ namespace MapView
 										Globals.Scale);
 		}
 
-		internal void StatusBarPrintSelectionSize(int tx, int ty)
+		internal void sb_PrintSelectionSize(int tx, int ty)
 		{
 			tsslSelectionSize.Text = String.Format(
 										System.Globalization.CultureInfo.CurrentCulture,

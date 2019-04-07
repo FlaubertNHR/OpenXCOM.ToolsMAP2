@@ -10,7 +10,7 @@ namespace DSShared.Windows
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -44,10 +44,11 @@ namespace DSShared.Windows
 			this.btnOk.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOk.Location = new System.Drawing.Point(115, 0);
+			this.btnOk.Margin = new System.Windows.Forms.Padding(0);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(80, 25);
 			this.btnOk.TabIndex = 0;
-			this.btnOk.Text = "Ok";
+			this.btnOk.Text = "ok";
 			// 
 			// btnCancel
 			// 
@@ -57,15 +58,17 @@ namespace DSShared.Windows
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(80, 25);
 			this.btnCancel.TabIndex = 1;
-			this.btnCancel.Text = "Cancel";
+			this.btnCancel.Text = "cancel";
 			// 
 			// lblNotice
 			// 
 			this.lblNotice.Dock = System.Windows.Forms.DockStyle.Top;
 			this.lblNotice.Location = new System.Drawing.Point(0, 0);
+			this.lblNotice.Margin = new System.Windows.Forms.Padding(0);
 			this.lblNotice.Name = "lblNotice";
+			this.lblNotice.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
 			this.lblNotice.Size = new System.Drawing.Size(392, 25);
-			this.lblNotice.TabIndex = 2;
+			this.lblNotice.TabIndex = 0;
 			this.lblNotice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tbInput
@@ -73,19 +76,21 @@ namespace DSShared.Windows
 			this.tbInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tbInput.Location = new System.Drawing.Point(0, 25);
+			this.tbInput.Margin = new System.Windows.Forms.Padding(0);
 			this.tbInput.Name = "tbInput";
-			this.tbInput.Size = new System.Drawing.Size(360, 19);
-			this.tbInput.TabIndex = 3;
+			this.tbInput.Size = new System.Drawing.Size(361, 19);
+			this.tbInput.TabIndex = 1;
 			// 
 			// panelBottom
 			// 
 			this.panelBottom.Controls.Add(this.btnOk);
 			this.panelBottom.Controls.Add(this.btnCancel);
 			this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panelBottom.Location = new System.Drawing.Point(0, 45);
+			this.panelBottom.Location = new System.Drawing.Point(0, 50);
+			this.panelBottom.Margin = new System.Windows.Forms.Padding(0);
 			this.panelBottom.Name = "panelBottom";
 			this.panelBottom.Size = new System.Drawing.Size(392, 29);
-			this.panelBottom.TabIndex = 4;
+			this.panelBottom.TabIndex = 0;
 			// 
 			// panelTop
 			// 
@@ -95,16 +100,17 @@ namespace DSShared.Windows
 			this.panelTop.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelTop.Location = new System.Drawing.Point(0, 0);
 			this.panelTop.Name = "panelTop";
-			this.panelTop.Size = new System.Drawing.Size(392, 45);
+			this.panelTop.Size = new System.Drawing.Size(392, 50);
 			this.panelTop.TabIndex = 5;
 			// 
 			// btnFindFile
 			// 
 			this.btnFindFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFindFile.Location = new System.Drawing.Point(360, 25);
+			this.btnFindFile.Location = new System.Drawing.Point(361, 24);
+			this.btnFindFile.Margin = new System.Windows.Forms.Padding(0);
 			this.btnFindFile.Name = "btnFindFile";
 			this.btnFindFile.Size = new System.Drawing.Size(30, 20);
-			this.btnFindFile.TabIndex = 4;
+			this.btnFindFile.TabIndex = 2;
 			this.btnFindFile.Text = "...";
 			this.btnFindFile.UseVisualStyleBackColor = true;
 			this.btnFindFile.Click += new System.EventHandler(this.btnFindFile_Click);
@@ -118,7 +124,7 @@ namespace DSShared.Windows
 			this.AcceptButton = this.btnOk;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(392, 74);
+			this.ClientSize = new System.Drawing.Size(392, 79);
 			this.Controls.Add(this.panelTop);
 			this.Controls.Add(this.panelBottom);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -127,7 +133,9 @@ namespace DSShared.Windows
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(400, 100);
 			this.Name = "FindFileForm";
+			this.ShowIcon = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Load += new System.EventHandler(this.OnLoad_form);
 			this.panelBottom.ResumeLayout(false);
 			this.panelTop.ResumeLayout(false);
 			this.panelTop.PerformLayout();

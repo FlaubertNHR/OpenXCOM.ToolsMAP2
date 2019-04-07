@@ -127,7 +127,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			_toolNorth   = _toolNorth   ?? new ColorTools(TopPens[TopView.NorthColor]);
 			_toolContent = _toolContent ?? new ColorTools(TopBrushes[TopView.ContentColor], _toolNorth.Pen.Width);
 
-			if (Ground.Checked && mapTile.Ground != null)
+			if (Ground.Checked && mapTile.Floor != null)
 				BlobService.DrawFloor(
 									graphics,
 									TopBrushes[TopView.FloorColor],

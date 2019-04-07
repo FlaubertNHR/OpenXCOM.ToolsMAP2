@@ -117,6 +117,7 @@ namespace PckView
 		public PckViewForm()
 		{
 			// NOTE: Set the debug-logfile-path in PckViewPanel, since it instantiates first.
+			// uh ... changed.
 
 			InitializeComponent();
 
@@ -207,7 +208,7 @@ namespace PckView
 			string dirSettings = Path.Combine(
 											Path.GetDirectoryName(Application.ExecutablePath),
 											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers);
+			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
 			if (File.Exists(fileViewers))
 			{
 				using (var sr = new StreamReader(File.OpenRead(fileViewers)))
@@ -273,7 +274,7 @@ namespace PckView
 			string dirSettings = Path.Combine(
 											Path.GetDirectoryName(Application.ExecutablePath),
 											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers);
+			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
 
 			if (File.Exists(fileViewers))
 			{
@@ -289,12 +290,16 @@ namespace PckView
 				using (var fs = new FileStream(src, FileMode.Create)) // overwrite previous viewers-config.
 				using (var sw = new StreamWriter(fs))
 				{
+					bool found = false;
+
 					while (sr.Peek() != -1)
 					{
 						string line = sr.ReadLine().TrimEnd();
 
 						if (String.Equals(line, RegistryInfo.PckView + ":", StringComparison.Ordinal))
 						{
+							found = true;
+
 							sw.WriteLine(line);
 
 							line = sr.ReadLine();
@@ -309,6 +314,16 @@ namespace PckView
 						}
 						else
 							sw.WriteLine(line);
+					}
+
+					if (!found)
+					{
+						sw.WriteLine(RegistryInfo.PckView + ":");
+
+						sw.WriteLine("  left: "   + Math.Max(0, Location.X));
+						sw.WriteLine("  top: "    + Math.Max(0, Location.Y));
+						sw.WriteLine("  width: "  + ClientSize.Width);
+						sw.WriteLine("  height: " + ClientSize.Height);
 					}
 				}
 				File.Delete(dst);
@@ -732,7 +747,7 @@ namespace PckView
 
 			int length = files.Length;
 			for (int i = id; i != TilePanel.Spriteset.Count; ++i)
-				TilePanel.Spriteset[i].TerrainId = i + length;
+				TilePanel.Spriteset[i].Id = i + length;
 
 			foreach (var b in bs)
 			{
@@ -841,9 +856,9 @@ namespace PckView
 			TilePanel.Spriteset[TilePanel.SelectedId]       = TilePanel.Spriteset[TilePanel.SelectedId + dir];
 			TilePanel.Spriteset[TilePanel.SelectedId + dir] = sprite;
 
-			TilePanel.Spriteset[TilePanel.SelectedId].TerrainId = TilePanel.SelectedId;
+			TilePanel.Spriteset[TilePanel.SelectedId].Id = TilePanel.SelectedId;
 			TilePanel.SelectedId += dir;
-			TilePanel.Spriteset[TilePanel.SelectedId].TerrainId = TilePanel.SelectedId;
+			TilePanel.Spriteset[TilePanel.SelectedId].Id = TilePanel.SelectedId;
 
 			EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
@@ -864,7 +879,7 @@ namespace PckView
 			TilePanel.Spriteset.RemoveAt(TilePanel.SelectedId);
 
 			for (int i = TilePanel.SelectedId; i != TilePanel.Spriteset.Count; ++i)
-				TilePanel.Spriteset[i].TerrainId = i;
+				TilePanel.Spriteset[i].Id = i;
 
 			EditorPanel.Instance.Sprite = null;
 			TilePanel.SelectedId = -1;
@@ -1170,8 +1185,8 @@ namespace PckView
 								LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
 
 							SpritesChanged = true;	// NOTE: is used by MapView's TileView to flag the Map to reload.
-						}							// btw, reload MapView's Map in either case; the new terrain-label may also be in the Map's terrainset ...
-						else
+						}							// btw, reload MapView's Map in either case;
+						else						// the new (Save As...) terrain-label may also be in the Map's terrainset.
 						{
 							ShowSaveError();
 
@@ -1225,7 +1240,7 @@ namespace PckView
 							string suffix = String.Format(
 														CultureInfo.InvariantCulture,
 														"_{0:" + digits + "}",
-														sprite.TerrainId);
+														sprite.Id);
 							string fullpath = Path.Combine(path, file + suffix + PngExt);
 							BitmapService.ExportSprite(fullpath, sprite.Sprite);
 						}
@@ -1541,6 +1556,18 @@ namespace PckView
 		}
 
 		/// <summary>
+		/// Sets the currently selected id.
+		/// NOTE: Called only from TileView to set 'SelectedId' externally.
+		/// </summary>
+		/// <param name="id"></param>
+		public void SetSelectedId(int id)
+		{
+			TilePanel.SelectedId = id;
+			PrintSelectedId();
+		}
+
+
+		/// <summary>
 		/// Loads a PCK file.
 		/// NOTE: May be called from MapView.Forms.MapObservers.TileViews.TileView.OnPckEditorClick()
 		/// - with a string like that you'd think this was .NET itself.
@@ -1708,7 +1735,7 @@ namespace PckView
 			_pfePckOld =
 			_pfeTabOld = String.Empty;
 
-			string dirBackup = Path.Combine(SpritesetDirectory, "MV_Backup");
+			string dirBackup = Path.Combine(SpritesetDirectory, GlobalsXC.MV_Backup);
 
 			if (File.Exists(_pfePck))
 			{
@@ -1788,10 +1815,13 @@ namespace PckView
 			if (id != -1)
 			{
 				selected = id.ToString(CultureInfo.InvariantCulture);
-				if (id > 34)
-					selected += " [" + (id - 35).ToString(CultureInfo.InvariantCulture) + "]";
-				else
-					selected += " [0]";
+				if (IsScanG)
+				{
+					if (id > 34)
+						selected += " [" + (id - 35).ToString(CultureInfo.InvariantCulture) + "]";
+					else
+						selected += " [0]";
+				}
 			}
 			else
 				selected = None;

@@ -8,8 +8,10 @@ using System.IO;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
-using MapView.Forms.McdViewer;
+using MapView.Forms.McdInfo;
 using MapView.OptionsServices;
+
+using McdView;
 
 using PckView;
 
@@ -39,7 +41,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
 
-		internal McdViewerForm _mcdInfoForm;
+		internal McdInfoF _mcdInfoForm;
 
 		private Hashtable _brushesSpecial = new Hashtable();
 		#endregion
@@ -100,10 +102,10 @@ namespace MapView.Forms.MapObservers.TileViews
 			tcTileTypes.SelectedIndexChanged += OnSelectedIndexChanged;
 
 			_allTiles      = new TilePanel(PartType.All);
-			var floors     = new TilePanel(PartType.Ground);
-			var westwalls  = new TilePanel(PartType.WestWall);
-			var northwalls = new TilePanel(PartType.NorthWall);
-			var content    = new TilePanel(PartType.Object);
+			var floors     = new TilePanel(PartType.Floor);
+			var westwalls  = new TilePanel(PartType.Westwall);
+			var northwalls = new TilePanel(PartType.Northwall);
+			var content    = new TilePanel(PartType.Content);
 
 			_panels = new[]
 			{
@@ -143,7 +145,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		private void OnSelectedIndexChanged(object sender, EventArgs e)
 		{
-			var panel = GetSelectedPanel() as TilePanel;
+			var panel = GetSelectedPanel();
 
 			foreach (var panel_ in _panels)
 			{
@@ -153,6 +155,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			panel.Focus();
 
 			McdRecord record;
+			int id;
+			string label;
 
 			var f = FindForm();
 			if (SelectedTilepart != null)
@@ -162,15 +166,19 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				f.Text = BuildTitleString(SelectedTilepart.SetId, SelectedTilepart.TerId);
 				record = SelectedTilepart.Record;
+				id = SelectedTilepart.TerId;
+				label = GetTerrainLabel();
 			}
 			else
 			{
 				f.Text = "TileView";
 				record = null;
+				id = -1;
+				label = String.Empty;
 			}
 
 			if (_mcdInfoForm != null)
-				_mcdInfoForm.UpdateData(record);
+				_mcdInfoForm.UpdateData(record, id, label);
 		}
 
 		/// <summary>
@@ -182,18 +190,27 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			var f = FindForm();
 
-			McdRecord record = null;
+			McdRecord record;
+			int id;
+			string label;
 
 			if (part != null)
 			{
 				f.Text = BuildTitleString(part.SetId, part.TerId);
 				record = part.Record;
+				id = part.TerId;
+				label = GetTerrainLabel();
 			}
 			else
+			{
 				f.Text = "TileView";
+				record = null;
+				id = -1;
+				label = String.Empty;
+			}
 
 			if (_mcdInfoForm != null)
-				_mcdInfoForm.UpdateData(record);
+				_mcdInfoForm.UpdateData(record, id, label);
 
 			SelectQuadrant(part);
 		}
@@ -226,10 +243,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// These are the default colors for tileparts' Special Properties.
-		/// TileView will load these colors when the program loads, then any
-		/// Special Property colors that were customized will be set and
-		/// accessed by TilePanel and/or the Help screen later.
+		/// These are default colors for the SpecialType of a tilepart.
+		/// TileView will load these colors when the app loads, then any colors
+		/// of SpecialType that were customized will be set and accessed by
+		/// TilePanel and/or the Help|Colors screen later.
 		/// </summary>
 		internal static readonly Color[] TileColors =
 		{
@@ -237,18 +254,18 @@ namespace MapView.Forms.MapObservers.TileViews
 			Color.NavajoWhite,		//  0 - Standard
 			Color.Lavender,			//  1 - EntryPoint
 			Color.IndianRed,		//  2 - PowerSource		IonBeamAccel
-			Color.PaleTurquoise,	//  3 - Navigation		DestroyObjective
-			Color.Khaki,			//  4 - Construction	MagneticNav
-			Color.MistyRose,		//  5 - Food			AlienCryo
-			Color.Aquamarine,		//  6 - Reproduction	AlienClon
-			Color.LightSkyBlue,		//  7 - Entertainment	AlienLearn
-			Color.Thistle,			//  8 - Surgery			AlienImplant
-			Color.YellowGreen,		//  9 - ExaminationRoom	Unknown9
-			Color.MediumPurple,		// 10 - Alloys			AlienPlastics
-			Color.LightCoral,		// 11 - Habitat			ExamRoom
-			Color.LightCyan,		// 12 - DeadTile
+			Color.MediumTurquoise,	//  3 - Navigation
+			Color.Khaki,			//  4 - Construction
+			Color.MistyRose,		//  5 - Food			Cryo
+			Color.Aquamarine,		//  6 - Reproduction	Clon
+			Color.DeepSkyBlue,		//  7 - Entertainment	LearnArrays
+			Color.Thistle,			//  8 - Surgery			Implant
+			Color.YellowGreen,		//  9 - ExaminationRoom
+			Color.MediumOrchid,		// 10 - Alloys			Plastics
+			Color.LightSteelBlue,	// 11 - Habitat			Re-anim
+			Color.Cyan,				// 12 - Destroyed
 			Color.BurlyWood,		// 13 - ExitPoint
-			Color.Blue				// 14 - MustDestroy
+			Color.LightCoral		// 14 - MustDestroy
 		};
 
 		/// <summary>
@@ -258,55 +275,39 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			string desc = String.Empty;
 
-			foreach (string specialType in Enum.GetNames(typeof(SpecialType)))
+			foreach (string type in Enum.GetNames(typeof(SpecialType)))
 			{
-				int i = (int)Enum.Parse(typeof(SpecialType), specialType);
-				_brushesSpecial[specialType] = new SolidBrush(TileColors[i]);
+				int i = (int)Enum.Parse(typeof(SpecialType), type);
+				_brushesSpecial[type] = new SolidBrush(TileColors[i]);
 
 				switch (i)
 				{
-					case  0: desc = "Color of (standard tile)";
-						break;
-					case  1: desc = "Color of (entry point)";
-						break;
-					case  2: desc = "Color of UFO Power Source - UFO" + Environment.NewLine
-								  + "Color of Ion-beam Accelerators - TFTD";
-						break;
-					case  3: desc = "Color of UFO Navigation - UFO" + Environment.NewLine
-								  + "Color of (destroy objective) (alias of Magnetic Navigation) - TFTD";
-						break;
-					case  4: desc = "Color of UFO Construction - UFO" + Environment.NewLine
-								  + "Color of Magnetic Navigation (alias of Alien Sub Construction) - TFTD";
-						break;
-					case  5: desc = "Color of Alien Food - UFO" + Environment.NewLine
-								  + "Color of Alien Cryogenics - TFTD";
-						break;
-					case  6: desc = "Color of Alien Reproduction - UFO" + Environment.NewLine
-								  + "Color of Alien Cloning - TFTD";
-						break;
-					case  7: desc = "Color of Alien Entertainment - UFO" + Environment.NewLine
-								  + "Color of Alien Learning Arrays - TFTD";
-						break;
-					case  8: desc = "Color of Alien Surgery - UFO" + Environment.NewLine
-								  + "Color of Alien Implanter - TFTD";
-						break;
-					case  9: desc = "Color of Examination Room - UFO" + Environment.NewLine
-								  + "Color of (unknown) (alias of Examination Room) - TFTD";
-						break;
-					case 10: desc = "Color of Alien Alloys - UFO" + Environment.NewLine
-								  + "Color of Aqua Plastics - TFTD";
-						break;
-					case 11: desc = "Color of Alien Habitat - UFO" + Environment.NewLine
-								  + "Color of Examination Room (alias of Alien Re-animation Zone) - TFTD";
-						break;
-					case 12: desc = "Color of (dead tile)";
-						break;
-					case 13: desc = "Color of (exit point)";
-						break;
-					case 14: desc = "Color of (must destroy tile)" + Environment.NewLine
-								  + "Alien Brain - UFO" + Environment.NewLine
-								  + "T'leth Power Cylinders - TFTD";
-						break;
+					case  0: desc = "Color of Standard parts";                     break;
+					case  1: desc = "Color of Entry Point parts";                  break;
+					case  2: desc = "Color of UFO Power Source parts"            + Environment.NewLine
+								  + "Color of TFTD Ion-beam Accelerators parts";   break;
+					case  3: desc = "Color of UFO Navigation parts"              + Environment.NewLine
+								  + "Color of TFTD Magnetic Navigation parts";     break;
+					case  4: desc = "Color of UFO Construction parts"            + Environment.NewLine
+								  + "Color of TFTD Alien Sub Construction parts";  break;
+					case  5: desc = "Color of UFO Alien Food parts"              + Environment.NewLine
+								  + "Color of TFTD Alien Cryogenics parts";        break;
+					case  6: desc = "Color of UFO Alien Reproduction parts"      + Environment.NewLine
+								  + "Color of TFTD Alien Cloning parts";           break;
+					case  7: desc = "Color of UFO Alien Entertainment parts"     + Environment.NewLine
+								  + "Color of TFTD Alien Learning Arrays parts";   break;
+					case  8: desc = "Color of UFO Alien Surgery parts"           + Environment.NewLine
+								  + "Color of TFTD Alien Implanter parts";         break;
+					case  9: desc = "Color of Examination Room parts";             break;
+					case 10: desc = "Color of UFO Alien Alloys parts"            + Environment.NewLine
+								  + "Color of TFTD Aqua Plastics parts";           break;
+					case 11: desc = "Color of UFO Alien Habitat parts"           + Environment.NewLine
+								  + "Color of TFTD Alien Re-animation Zone parts"; break;
+					case 12: desc = "Color of Destroyed Alloys/Plastics parts";    break;
+					case 13: desc = "Color of Exit Point parts";                   break;
+					case 14: desc = "Color of Must Destroy parts"                + Environment.NewLine
+								  + "eg. UFO Alien Brain parts"                  + Environment.NewLine
+								  + "eg. TFTD T'leth Power Cylinders parts";       break;
 				}
 
 				// NOTE: The colors of these brushes get overwritten by the
@@ -318,8 +319,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				//
 				// See OnSpecialPropertyColorChanged() below_
 				Options.AddOption(
-								specialType,
-								((SolidBrush)_brushesSpecial[specialType]).Color,
+								type,
+								((SolidBrush)_brushesSpecial[type]).Color,
 								desc,					// appears as a tip at the bottom of the Options screen.
 								"TileBackgroundColors",	// this identifies what Option category the setting appears under.
 								OnSpecialPropertyColorChanged);
@@ -330,8 +331,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Loads a different brush/color for a tiletype's Special Property into
-		/// an already existing key.
+		/// Loads a different brush/color for a SpecialType into an already
+		/// existing key.
 		/// </summary>
 		/// <param name="key">a string representing the SpecialType</param>
 		/// <param name="val">the brush to insert</param>
@@ -342,8 +343,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Gets the brushes/colors for all tiletypes' Special Properties.
-		/// Used by the Help screen.
+		/// Gets the brushes/colors for all SpecialTypes.
+		/// Used by the Help|Colors screen.
 		/// </summary>
 		/// <returns>a hashtable of the brushes</returns>
 		internal Hashtable GetSpecialPropertyBrushes()
@@ -353,15 +354,18 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		private Form _foptions;
-		private bool _closing;
+		private bool _closing; // wtf is this for like really
 
-		private void OnOptionsClick(object sender, EventArgs e)
+		/// <summary>
+		/// Handles a click on the Options button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnOptionsClick(object sender, EventArgs e)
 		{
-			var it = (ToolStripMenuItem)sender;
-			if (!it.Checked)
+			var tsb = sender as ToolStripButton;
+			if (tsb.Checked = !tsb.Checked)
 			{
-				it.Checked = true;
-
 				_foptions = new OptionsForm("TileViewOptions", Options);
 				_foptions.Text = "TileView Options";
 
@@ -378,11 +382,19 @@ namespace MapView.Forms.MapObservers.TileViews
 			else
 			{
 				_closing = true;
-
-				it.Checked = false;
 				_foptions.Close();
 			}
 		}
+
+		/// <summary>
+		/// Gets the Options button on the toolstrip.
+		/// </summary>
+		/// <returns>the Options button</returns>
+		internal ToolStripButton GetOptionsButton()
+		{
+			return tsb_Options;
+		}
+
 
 		/// <summary>
 		/// Opens the MCD-info screen.
@@ -391,29 +403,41 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		internal void OnMcdInfoClick(object sender, EventArgs e)
 		{
-			if (!tsmiMcdInfo.Checked)
+			if (!GetSelectedPanel().ContextMenu.MenuItems[3].Checked)
 			{
-				tsmiMcdInfo.Checked = true;
+				foreach (var panel in _panels)
+				{
+					panel.ContextMenu.MenuItems[3].Checked = true;
+				}
 
 				if (_mcdInfoForm == null)
 				{
-					_mcdInfoForm = new McdViewerForm();
+					_mcdInfoForm = new McdInfoF();
 					_mcdInfoForm.FormClosing += OnMcdInfoFormClosing;
 
 					var f = FindForm();
 
-					McdRecord record = null;
+					McdRecord record;
+					int id;
+					string label;
 
 					var part = SelectedTilepart;
 					if (part != null)
 					{
 						f.Text = BuildTitleString(part.SetId, part.TerId);
 						record = part.Record;
+						id = part.TerId;
+						label = GetTerrainLabel();
 					}
 					else
+					{
 						f.Text = "TileView";
+						record = null;
+						id = -1;
+						label = String.Empty;
+					}
 
-					_mcdInfoForm.UpdateData(record);
+					_mcdInfoForm.UpdateData(record, id, label);
 				}
 				_mcdInfoForm.Show();
 			}
@@ -428,11 +452,14 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		private void OnMcdInfoFormClosing(object sender, CancelEventArgs e)
 		{
-			tsmiMcdInfo.Checked = false;
+			foreach (var panel in _panels)
+			{
+				panel.ContextMenu.MenuItems[3].Checked = false;
+			}
 
 			if (e != null)			// if (e==null) the form is hiding due to a menu-click, or a double-click on a tile
 				e.Cancel = true;	// if (e!=null) the form really was closed, so cancel that.
-
+									// NOTE: wtf - is way too complicated for what it is
 			_mcdInfoForm.Hide();
 		}
 
@@ -463,12 +490,12 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Opens PckView with the tileset of the currently selected tilepart
+		/// Opens PckView with the spriteset of the currently selected tilepart
 		/// loaded.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnPckEditorClick(object sender, EventArgs e)
+		internal void OnPckEditClick(object sender, EventArgs e)
 		{
 			if (SelectedTilepart != null)
 			{
@@ -484,29 +511,13 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				if (!File.Exists(pfePck))
 				{
-					MessageBox.Show(
-								this,
-								"File does not exist"
-									+ Environment.NewLine + Environment.NewLine
-									+ pfePck,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+					using (var f = new Infobox(" File not found", "File does not exist.", pfePck))
+						f.ShowDialog();
 				}
 				else if (!File.Exists(pfeTab))
 				{
-					MessageBox.Show(
-								this,
-								"File does not exist"
-									+ Environment.NewLine + Environment.NewLine
-									+ pfeTab,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+					using (var f = new Infobox(" File not found", "File does not exist.", pfeTab))
+						f.ShowDialog();
 				}
 				else
 				{
@@ -514,15 +525,16 @@ namespace MapView.Forms.MapObservers.TileViews
 					{
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapBase.Descriptor.Pal.Label);
+						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
 						_showHideManager.HideViewers();
-						fPckView.ShowDialog(FindForm());
+						fPckView.ShowDialog(FindForm()); // <- Pause until PckView is closed.
 						_showHideManager.RestoreViewers();
 
 						if (fPckView.SpritesChanged) // (re)load the selected Map.
 						{
 							string notice = "The Map needs to reload to show any"
-										  + " changes that were made to its terrainset.";
+										  + " changes that were made to the terrainset.";
 
 							string changed = String.Empty;
 							if (MapBase.MapChanged)
@@ -546,7 +558,7 @@ namespace MapView.Forms.MapObservers.TileViews
 							if (MessageBox.Show(
 											this,
 											notice,
-											"Reload Map",
+											" Reload Map",
 											MessageBoxButtons.OKCancel,
 											MessageBoxIcon.Information,
 											MessageBoxDefaultButton.Button1,
@@ -562,7 +574,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				MessageBox.Show(
 							this,
 							"Select a Tile.",
-							String.Empty,
+							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Asterisk,
 							MessageBoxDefaultButton.Button1,
@@ -576,6 +588,98 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if (PckSavedEvent != null)
 				PckSavedEvent();
+		}
+
+		/// <summary>
+		/// Opens McdView with the recordset of the currently selected tilepart
+		/// loaded.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnMcdEditClick(object sender, EventArgs e)
+		{
+			if (SelectedTilepart != null)
+			{
+				var terrain = ((MapFileChild)MapBase).GetTerrain(SelectedTilepart);
+
+				string terr = terrain.Item1;
+				string path = terrain.Item2;
+
+				path = MapBase.Descriptor.GetTerrainDirectory(path);
+
+				string pfeMcd = Path.Combine(path, terr + GlobalsXC.McdExt);
+
+				if (!File.Exists(pfeMcd))
+				{
+					using (var f = new Infobox(" File not found", "File does not exist.", pfeMcd))
+						f.ShowDialog();
+				}
+				else
+				{
+					using (var fMcdView = new McdviewF())
+					{
+						Palette.UfoBattle .SetTransparent(false);
+						Palette.TftdBattle.SetTransparent(false);
+						fMcdView.LoadRecords(
+										pfeMcd,
+										MapBase.Descriptor.Pal.Label,
+										SelectedTilepart.TerId);
+
+						_showHideManager.HideViewers();
+						fMcdView.ShowDialog(FindForm()); // <- Pause until McdView is closed.
+						_showHideManager.RestoreViewers();
+						Palette.UfoBattle .SetTransparent(true);
+						Palette.TftdBattle.SetTransparent(true);
+
+
+						if (fMcdView.RecordsChanged) // (re)load the selected Map.
+						{
+							string notice = "The Map needs to reload to show any"
+										  + " changes that were made to the terrainset.";
+
+							string changed = String.Empty;
+							if (MapBase.MapChanged)
+								changed = "Map";
+
+							if (MapBase.RoutesChanged)
+							{
+								if (!String.IsNullOrEmpty(changed))
+									changed += " and its ";
+
+								changed += "Routes";
+							}
+
+							if (!String.IsNullOrEmpty(changed))
+							{
+								notice += Environment.NewLine + Environment.NewLine
+										+ "You will be asked to save the current"
+										+ " changes to the " + changed + ".";
+							}
+
+							if (MessageBox.Show(
+											this,
+											notice,
+											" Reload Map",
+											MessageBoxButtons.OKCancel,
+											MessageBoxIcon.Information,
+											MessageBoxDefaultButton.Button1,
+											0) == DialogResult.OK)
+							{
+								TriggerPckSaved();
+							}
+						}
+					}
+				}
+			}
+			else
+				MessageBox.Show(
+							this,
+							"Select a Tile.",
+							" Error",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Asterisk,
+							MessageBoxDefaultButton.Button1,
+							0);
 		}
 
 
@@ -622,7 +726,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Gets the label of the terrain of the currently selected tilepart.
 		/// </summary>
 		/// <returns></returns>
-		private string GetTerrainLabel()
+		internal string GetTerrainLabel()
 		{
 			return (SelectedTilepart != null) ? ((MapFileChild)MapBase).GetTerrainLabel(SelectedTilepart)
 											  : "ERROR";
@@ -632,9 +736,9 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Gets the panel of the currently displayed tabpage.
 		/// </summary>
 		/// <returns></returns>
-		internal Panel GetSelectedPanel()
+		internal TilePanel GetSelectedPanel()
 		{
-			return _panels[tcTileTypes.SelectedIndex];
+			return _panels[tcTileTypes.SelectedIndex] as TilePanel;
 		}
 		#endregion
 	}

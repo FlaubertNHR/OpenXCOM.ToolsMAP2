@@ -217,7 +217,7 @@ namespace PckView
 
 					if ((SelectedId = id) != -1)
 					{
-//						SelectedId = Spriteset[SelectedId].TerrainId; // use the proper Id of the sprite itself. don't bother
+//						SelectedId = Spriteset[SelectedId].TerId; // use the proper Id of the sprite itself. don't bother
 						sprite = Spriteset[SelectedId];
 
 //						if (ModifierKeys == Keys.Control)

@@ -38,13 +38,18 @@ Options:
   top: 140
   width: 600
   height: 400
-PckView:
+TilesetEditor:
   left: 190
   top: 160
-  width: 480
-  height: 640
-TilesetEditor:
-  left: 210
-  top: 180
   width: 580
   height: 470
+PckView:
+  left: 210
+  top: 180
+  width: 480
+  height: 640
+McdView:
+  left: 230
+  top: 200
+  width: 820
+  height: 820

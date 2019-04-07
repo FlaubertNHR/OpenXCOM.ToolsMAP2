@@ -7,7 +7,6 @@
     <ProjectGuid>{AAB9EA5A-403E-488D-894F-6014B85D09CC}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>MapEdit.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>MapView</AssemblyName>
@@ -53,6 +52,7 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -82,6 +82,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\McdView\McdView.csproj">
+      <Project>{9020b77c-a186-4d85-82cd-0c4e65e738f2}</Project>
+      <Name>McdView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YamlDotNet\YamlDotNet.csproj">
       <Project>{bf32de1b-6276-4341-b212-f8862adbba7a}</Project>
       <Name>YamlDotNet</Name>
@@ -196,11 +200,11 @@
       <DependentUpon>TileView.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MapObservers\TopView\QuadrantPanelDrawService.cs" />
-    <Compile Include="Forms\McdViewer\McdViewerForm.cs">
+    <Compile Include="Forms\McdInfo\McdInfoF.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\McdViewer\McdViewerForm.Designer.cs">
-      <DependentUpon>McdViewerForm.cs</DependentUpon>
+    <Compile Include="Forms\McdInfo\McdInfoF.Designer.cs">
+      <DependentUpon>McdInfoF.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\OtherForms\ConfigurationForm.cs" />
     <Compile Include="Forms\OtherForms\ConfigurationForm.Designer.cs">
@@ -296,9 +300,6 @@
       <DependentUpon>XCMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Varidia.cs" />
-    <Content Include="_Embedded\11_Search-16.png" />
-    <Content Include="_Embedded\12_Zoom_in-16.png" />
-    <Content Include="_Embedded\13_Zoom_out-16.png" />
     <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -317,8 +318,8 @@
     <EmbeddedResource Include="Forms\MapObservers\TopView\TopViewForm.resx">
       <DependentUpon>TopViewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\McdViewer\McdViewerForm.resx">
-      <DependentUpon>McdViewerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\McdInfo\McdInfoF.resx">
+      <DependentUpon>McdInfoF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\ConfigurationForm.resx">
       <DependentUpon>ConfigurationForm.Designer.cs</DependentUpon>
@@ -361,18 +362,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="_Embedded\copy.gif" />
-    <EmbeddedResource Include="_Embedded\cut.gif" />
-    <EmbeddedResource Include="_Embedded\down.gif" />
     <EmbeddedResource Include="_Embedded\Extra.PCK" />
     <EmbeddedResource Include="_Embedded\Extra.TAB" />
-    <EmbeddedResource Include="_Embedded\paste.gif" />
-    <EmbeddedResource Include="_Embedded\up.gif" />
     <EmbeddedResource Include="Forms\MainWindow\XCMainWindow.resx">
       <SubType>Designer</SubType>
       <DependentUpon>XCMainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="MapEdit.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -424,6 +419,7 @@ copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\DSShared.dll C:\0xC_kL\editors
 copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\XCom.dll C:\0xC_kL\editors\MapView_kL\
 copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\YamlDotNet.dll C:\0xC_kL\editors\MapView_kL\
 copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\PckView.exe C:\0xC_kL\editors\MapView_kL\
+copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\McdView.exe C:\0xC_kL\editors\MapView_kL\
 </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

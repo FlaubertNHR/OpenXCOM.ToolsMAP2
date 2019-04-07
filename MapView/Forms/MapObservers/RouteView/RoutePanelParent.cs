@@ -28,7 +28,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Fields (static)
 		internal protected const int OffsetX = 2; // these track the offset between the panel border
-		internal protected const int OffsetY = 2; // and the lozenge-tip.
+		internal protected const int OffsetY = 3; // and the lozenge-tip.
 		#endregion
 
 
@@ -252,8 +252,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 													loc.X,
 													MapFile.Level);
 
-					MainViewUnderlay.Instance.MainViewOverlay.ProcessTileSelection(loc, loc);	// set selected location for other viewers.
-																								// NOTE: drag-selection is not allowed here.
+					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);	// set selected location for other viewers.
+																							// NOTE: drag-selection is not allowed here.
 					if (RoutePanelMouseDownEvent != null)
 					{
 						var args = new RoutePanelEventArgs();
@@ -338,24 +338,24 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		private void PathSelectedLozenge()
 		{
-			var start = MainViewUnderlay.Instance.MainViewOverlay.GetAbsoluteDragStart();
-			var end   = MainViewUnderlay.Instance.MainViewOverlay.GetAbsoluteDragEnd();
+			var a = MainViewUnderlay.Instance.MainViewOverlay.GetDragBeg_abs();
+			var b = MainViewUnderlay.Instance.MainViewOverlay.GetDragEnd_abs();
 
 			int halfWidth  = BlobService.HalfWidth;
 			int halfHeight = BlobService.HalfHeight;
 
 			var p0 = new Point(
-							Origin.X + (start.X - start.Y) * halfWidth,
-							Origin.Y + (start.X + start.Y) * halfHeight);
+							Origin.X + (a.X - a.Y) * halfWidth,
+							Origin.Y + (a.X + a.Y) * halfHeight);
 			var p1 = new Point(
-							Origin.X + (end.X   - start.Y) * halfWidth  + halfWidth,
-							Origin.Y + (end.X   + start.Y) * halfHeight + halfHeight);
+							Origin.X + (b.X - a.Y) * halfWidth  + halfWidth,
+							Origin.Y + (b.X + a.Y) * halfHeight + halfHeight);
 			var p2 = new Point(
-							Origin.X + (end.X   - end.Y)   * halfWidth,
-							Origin.Y + (end.X   + end.Y)   * halfHeight + halfHeight * 2);
+							Origin.X + (b.X - b.Y) * halfWidth,
+							Origin.Y + (b.X + b.Y) * halfHeight + halfHeight * 2);
 			var p3 = new Point(
-							Origin.X + (start.X - end.Y)   * halfWidth  - halfWidth,
-							Origin.Y + (start.X + end.Y)   * halfHeight + halfHeight);
+							Origin.X + (a.X - b.Y) * halfWidth  - halfWidth,
+							Origin.Y + (a.X + b.Y) * halfHeight + halfHeight);
 
 			LozSelected.Reset();
 			LozSelected.AddLine(p0, p1);

@@ -10,7 +10,7 @@ namespace XCom
 	// screen uses Enum.GetName() to evaluate special-property colors.
 	public enum SpecialType
 	{
-		Standard = 0,		//  0
+		Standard,			//  0
 		EntryPoint,			//  1
 		PowerSource,		//  2
 		Navigation,			//  3
@@ -22,7 +22,7 @@ namespace XCom
 		ExaminationRoom,	//  9
 		Alloys,				// 10
 		Habitat,			// 11
-		DeadTile,			// 12
+		Destroyed,			// 12
 		ExitPoint,			// 13
 		MustDestroy			// 14
 	};

@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Globalization;
+//using System.Windows.Forms;
 using System.IO;
 
 
@@ -8,7 +9,7 @@ namespace XCom.Resources.Map
 	public static class TilepartFactory
 	{
 		#region Fields (static)
-		private const int Length = 62; // there are 62 bytes in each MCD record.
+		public const int Length = 62; // there are 62 bytes in each MCD record.
 		#endregion
 
 
@@ -31,40 +32,40 @@ namespace XCom.Resources.Map
 
 				if (!File.Exists(pfeMcd))
 				{
-					MessageBox.Show(
-								"Can't find file for MCD data."
-									+ Environment.NewLine + Environment.NewLine
-									+ pfeMcd,
-								"Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+					using (var f = new Infobox(
+											" File not found",
+											"Can't find file with MCD records.",
+											pfeMcd))
+					{
+						f.ShowDialog();
+					}
 				}
 				else
 				{
 					using (var bs = new BufferedStream(File.OpenRead(pfeMcd)))
 					{
-						var tileparts = new Tilepart[(int)bs.Length / Length]; // TODO: Error if this don't work out right.
+						var parts = new Tilepart[(int)bs.Length / Length]; // TODO: Error if this don't work out right.
 
-						for (int id = 0; id != tileparts.Length; ++id)
+						for (int id = 0; id != parts.Length; ++id)
 						{
 							var bindata = new byte[Length];
 							bs.Read(bindata, 0, Length);
-							var record = McdRecordFactory.CreateRecord(bindata);
 
-							var part = new Tilepart(id, spriteset, record);
-
-							tileparts[id] = part;
+							parts[id] = new Tilepart(
+													id,
+													spriteset,
+													McdRecordFactory.CreateRecord(bindata));
 						}
 
-						for (int id = 0; id != tileparts.Length; ++id)
+						Tilepart part;
+						for (int id = 0; id != parts.Length; ++id)
 						{
-							tileparts[id].Dead      = GetDeadPart(     terrain, id, tileparts[id].Record, tileparts);
-							tileparts[id].Alternate = GetAlternatePart(terrain, id, tileparts[id].Record, tileparts);
+							part = parts[id];
+							part.Dead      = GetDeadPart(     terrain, id, part.Record, parts);
+							part.Alternate = GetAlternatePart(terrain, id, part.Record, parts);
 						}
 
-						return tileparts;
+						return parts;
 					}
 				}
 			}
@@ -99,15 +100,13 @@ namespace XCom.Resources.Map
 
 			if (!suppressError)
 			{
-				MessageBox.Show(
-							"Can't find file for MCD data."
-								+ Environment.NewLine + Environment.NewLine
-								+ pfeMcd,
-							"Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				using (var f = new Infobox(
+										" File not found",
+										"Can't find file with MCD records.",
+										pfeMcd))
+				{
+					f.ShowDialog();
+				}
 			}
 			return 0;
 		}
@@ -120,7 +119,7 @@ namespace XCom.Resources.Map
 		/// <param name="record"></param>
 		/// <param name="tileparts"></param>
 		/// <returns></returns>
-		private static Tilepart GetDeadPart(
+		public static Tilepart GetDeadPart(
 				string file,
 				int id,
 				McdRecord record,
@@ -132,19 +131,26 @@ namespace XCom.Resources.Map
 					return tileparts[record.DieTile];
 
 				string warn = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"In the MCD file {0}, the tile entry {1} has an invalid dead tile (id {2} of {3} records).",
+										CultureInfo.CurrentCulture,
+										"In the MCD file {0}, part #{1} has an invalid dead part (id #{2} of {3} records).",
 										file,
 										id,
 										record.DieTile,
 										tileparts.Length);
-				MessageBox.Show(
-							warn,
-							"Warning",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0);
+				using (var f = new Infobox(
+										" Invalid dead part",
+										warn,
+										null))
+				{
+					f.ShowDialog();
+				}
+//				MessageBox.Show(
+//							warn,
+//							"Warning",
+//							MessageBoxButtons.OK,
+//							MessageBoxIcon.Warning,
+//							MessageBoxDefaultButton.Button1,
+//							0);
 			}
 			return null;
 		}
@@ -157,7 +163,7 @@ namespace XCom.Resources.Map
 		/// <param name="record"></param>
 		/// <param name="tileparts"></param>
 		/// <returns></returns>
-		private static Tilepart GetAlternatePart(
+		public static Tilepart GetAlternatePart(
 				string file,
 				int id,
 				McdRecord record,
@@ -169,19 +175,26 @@ namespace XCom.Resources.Map
 					return tileparts[record.Alt_MCD];
 
 				string warn = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"In the MCD file {0}, the tile entry {1} has an invalid alternate tile (id {2} of {3} records).",
+										CultureInfo.CurrentCulture,
+										"In the MCD file {0}, part #{1} has an invalid alternate part (id #{2} of {3} records).",
 										file,
 										id,
 										record.Alt_MCD,
 										tileparts.Length);
-				MessageBox.Show(
-							warn,
-							"Warning",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0);
+				using (var f = new Infobox(
+										" Invalid alternate part",
+										warn,
+										null))
+				{
+					f.ShowDialog();
+				}
+//				MessageBox.Show(
+//							warn,
+//							"Warning",
+//							MessageBoxButtons.OK,
+//							MessageBoxIcon.Warning,
+//							MessageBoxDefaultButton.Button1,
+//							0);
 			}
 			return null;
 		}

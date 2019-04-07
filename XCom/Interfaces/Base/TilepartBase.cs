@@ -18,8 +18,8 @@ namespace XCom.Interfaces.Base
 		/// <summary>
 		/// Gets the sprite-array used to animate this tile.
 		/// </summary>
-		public XCImage[] Anisprites
-		{ get; set; }
+		public XCImage[] Sprites
+		{ get; protected set; }
 
 		/// <summary>
 		/// Gets a sprite at the specified animation frame.
@@ -28,18 +28,19 @@ namespace XCom.Interfaces.Base
 		/// <returns></returns>
 		public XCImage this[int id]
 		{
-			get { return Anisprites[id]; }
+			get { return Sprites[id]; }
 		}
 
 		/// <summary>
 		/// The ID of this tilepart that's unique to its terrain/MCD-record.
 		/// </summary>
 		public int TerId
-		{ get; private set; }
+		{ get; set; }
 
 		/// <summary>
 		/// The ID of this tilepart that's unique to the Map across all
-		/// allocated terrains.
+		/// allocated terrains. The value is set in MapFileChild..cTor.
+		/// IMPORTANT: The 'SetId' is written to the Mapfile (as a byte).
 		/// </summary>
 		public int SetId
 		{ get; set; }

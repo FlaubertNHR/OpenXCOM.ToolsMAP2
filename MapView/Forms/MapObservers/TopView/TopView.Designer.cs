@@ -17,7 +17,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		// The #develop designer is going to delete this. Copy it back in at the
 		// top of InitializeComponent().
 		/*
-			this.quadrants = new QuadrantPanel();
+			this.quadrants = new MapView.Forms.MapObservers.TopViews.QuadrantPanel();
 		*/
 
 		#region Windows Form Designer generated code
@@ -27,15 +27,13 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.quadrants = new QuadrantPanel();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TopView));
+			this.quadrants = new MapView.Forms.MapObservers.TopViews.QuadrantPanel();
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
 			this.pMain = new System.Windows.Forms.Panel();
 			this.tsTools = new System.Windows.Forms.ToolStrip();
 			this.tsMain = new System.Windows.Forms.ToolStrip();
 			this.tsddbVisibleQuads = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsddbEdit = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsmiOptions = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.tscPanel.ContentPanel.SuspendLayout();
 			this.tscPanel.LeftToolStripPanel.SuspendLayout();
 			this.tscPanel.SuspendLayout();
@@ -62,7 +60,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			// tscPanel.ContentPanel
 			// 
 			this.tscPanel.ContentPanel.Controls.Add(this.pMain);
-			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(609, 360);
+			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(615, 360);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tscPanel.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			// 
@@ -89,7 +87,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.pMain.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.pMain.Location = new System.Drawing.Point(0, 0);
 			this.pMain.Name = "pMain";
-			this.pMain.Size = new System.Drawing.Size(609, 360);
+			this.pMain.Size = new System.Drawing.Size(615, 360);
 			this.pMain.TabIndex = 2;
 			// 
 			// tsTools
@@ -100,7 +98,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tsTools.Name = "tsTools";
 			this.tsTools.Padding = new System.Windows.Forms.Padding(0);
 			this.tsTools.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.tsTools.Size = new System.Drawing.Size(31, 30);
+			this.tsTools.Size = new System.Drawing.Size(25, 111);
 			this.tsTools.TabIndex = 1;
 			this.tsTools.Text = "tsTools";
 			// 
@@ -110,7 +108,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsddbVisibleQuads,
-			this.tsddbEdit});
+			this.tsb_Options});
 			this.tsMain.Location = new System.Drawing.Point(0, 0);
 			this.tsMain.Name = "tsMain";
 			this.tsMain.Size = new System.Drawing.Size(640, 25);
@@ -121,31 +119,24 @@ namespace MapView.Forms.MapObservers.TopViews
 			// 
 			this.tsddbVisibleQuads.AutoToolTip = false;
 			this.tsddbVisibleQuads.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsddbVisibleQuads.Image = ((System.Drawing.Image)(resources.GetObject("tsddbVisibleQuads.Image")));
 			this.tsddbVisibleQuads.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsddbVisibleQuads.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbVisibleQuads.Name = "tsddbVisibleQuads";
-			this.tsddbVisibleQuads.Size = new System.Drawing.Size(54, 22);
+			this.tsddbVisibleQuads.Size = new System.Drawing.Size(54, 23);
 			this.tsddbVisibleQuads.Text = "Visible";
+			this.tsddbVisibleQuads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tsddbEdit
+			// tsb_Options
 			// 
-			this.tsddbEdit.AutoToolTip = false;
-			this.tsddbEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsddbEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiOptions});
-			this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
-			this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbEdit.Name = "tsddbEdit";
-			this.tsddbEdit.Size = new System.Drawing.Size(38, 22);
-			this.tsddbEdit.Text = "Edit";
-			// 
-			// tsmiOptions
-			// 
-			this.tsmiOptions.Name = "tsmiOptions";
-			this.tsmiOptions.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.tsmiOptions.Size = new System.Drawing.Size(154, 22);
-			this.tsmiOptions.Text = "Options";
-			this.tsmiOptions.Click += new System.EventHandler(this.OnOptionsClick);
+			this.tsb_Options.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.tsb_Options.AutoToolTip = false;
+			this.tsb_Options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsb_Options.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsb_Options.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsb_Options.Name = "tsb_Options";
+			this.tsb_Options.Size = new System.Drawing.Size(52, 23);
+			this.tsb_Options.Text = "Options";
+			this.tsb_Options.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// TopView
 			// 
@@ -176,7 +167,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		private System.Windows.Forms.ToolStripContainer tscPanel;
 		private System.Windows.Forms.ToolStrip tsMain;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbVisibleQuads;
-		private System.Windows.Forms.ToolStripDropDownButton tsddbEdit;
-		private System.Windows.Forms.ToolStripMenuItem tsmiOptions;
+		private System.Windows.Forms.ToolStripButton tsb_Options;
 	}
 }

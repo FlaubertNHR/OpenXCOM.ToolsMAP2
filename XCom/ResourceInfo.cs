@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -11,13 +12,16 @@ namespace XCom
 	public static class ResourceInfo
 	{
 		#region Fields (static)
-		private static readonly Dictionary<Palette, Dictionary<string, SpriteCollection>> _palSpritesets =
+		private static readonly Dictionary<Palette, Dictionary<string, SpriteCollection>> _spritesets_byPalette =
 							new Dictionary<Palette, Dictionary<string, SpriteCollection>>();
 
 		public static bool ReloadSprites;
 
 		public static int[,] ScanGufo;
 		public static int[,] ScanGtftd;
+
+		public static BitArray LoFTufo;
+		public static BitArray LoFTtftd;
 		#endregion
 
 
@@ -51,12 +55,14 @@ namespace XCom
 		/// <param name="dirTerrain">path to the directory of the terrain file</param>
 		/// <param name="offsetLength"></param>
 		/// <param name="pal"></param>
+		/// <param name="warnonly">true if called by McdView (warn-only if spriteset not found)</param>
 		/// <returns>a SpriteCollection containing all the sprites for a given Terrain</returns>
 		public static SpriteCollection LoadSpriteset(
 				string terrain,
 				string dirTerrain,
 				int offsetLength,
-				Palette pal)
+				Palette pal,
+				bool warnonly = false)
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("ResourceInfo.LoadSpriteset");
@@ -74,10 +80,10 @@ namespace XCom
 
 				if (File.Exists(pfePck) && File.Exists(pfeTab))
 				{
-					if (!_palSpritesets.ContainsKey(pal))
-						_palSpritesets.Add(pal, new Dictionary<string, SpriteCollection>());
+					if (!_spritesets_byPalette.ContainsKey(pal))
+						 _spritesets_byPalette.Add(pal, new Dictionary<string, SpriteCollection>());
 
-					var spritesets = _palSpritesets[pal];
+					var spritesets = _spritesets_byPalette[pal];
 
 					if (ReloadSprites) // used by XCMainWindow.OnPckSavedEvent <- TileView's pck-editor
 					{
@@ -101,39 +107,41 @@ namespace XCom
 																pal);
 							if (spriteset.Borked)
 							{
-								MessageBox.Show(
-											"The quantity of sprites in the PCK file does not match the"
-												+ " quantity of sprites expected by the TAB file."
-												+ Environment.NewLine + Environment.NewLine
-												+ pfePck + Environment.NewLine
-												+ pfeTab,
-											"Error",
-											MessageBoxButtons.OK,
-											MessageBoxIcon.Error,
-											MessageBoxDefaultButton.Button1,
-											0);
+								using (var f = new Infobox(
+														" Spriteset borked",
+														"The quantity of sprites in the PCK file does not match"
+															+ " the quantity of sprites expected by the TAB file.",
+														pfePck + Environment.NewLine + pfeTab))
+								{
+									f.ShowDialog();
+								}
 							}
 							spritesets.Add(pfSpriteset, spriteset); // NOTE: Add the spriteset even if it is Borked.
 						}
 					}
 					// else WARN: Spriteset already found in the collection.
 
-					return _palSpritesets[pal][pfSpriteset];
+					return _spritesets_byPalette[pal][pfSpriteset];
 				}
 
-				MessageBox.Show(
-							"Can't find files for the spriteset"
-								+ Environment.NewLine + Environment.NewLine
-								+ pfePck + Environment.NewLine
-								+ pfeTab
-								+ Environment.NewLine + Environment.NewLine
-								+ "Open the Map in the TilesetEditor and re-assign the basepath"
-								+ " for the TERRAIN folder of the .PCK and .TAB files.",
-							"Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				// error/warn ->
+				string info;
+				if (!warnonly)
+				{
+					info = Environment.NewLine + Environment.NewLine
+						 + "Open the Map in the TilesetEditor and re-assign the basepath"
+						 + " for the TERRAIN folder of the .PCK and .TAB files.";
+				}
+				else
+					info = String.Empty;
+
+				using (var f = new Infobox(
+										" Spriteset not found",
+										"Can't find files for the spriteset." + info,
+										pfePck + Environment.NewLine + pfeTab))
+				{
+					f.ShowDialog();
+				}
 			}
 			return null;
 		}
@@ -152,7 +160,7 @@ namespace XCom
 				Palette pal)
 		{
 			var pfSpriteset = Path.Combine(dirTerrain, terrain);
-			return _palSpritesets[pal][pfSpriteset].Count;
+			return _spritesets_byPalette[pal][pfSpriteset].Count;
 		}
 
 
@@ -198,6 +206,85 @@ namespace XCom
 				}
 			}
 			return false;
+		}
+
+
+		/// <summary>
+		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
+		/// </summary>
+		/// <param name="dirUfo"></param>
+		public static void LoadLoFTufo(string dirUfo)
+		{
+			if (!String.IsNullOrEmpty(dirUfo))
+			{
+				string pfe = Path.Combine(dirUfo, SharedSpace.LoftfileUfo);
+				if (File.Exists(pfe))
+				{
+					// 32 bytes in a loft
+					// 256 bits in a loft
+
+					byte[] bytes = File.ReadAllBytes(pfe);
+					int length = bytes.Length * 8;
+
+					LoFTufo = new BitArray(length); // init to Falses
+
+					// read the file as little-endian unsigned shorts
+					// eg. C0 01 -> 01 C0
+
+					int id = -1;
+					for (int i = 0; i != bytes.Length; i += 2)
+					{
+						for (int j = 0x80; j != 0x00; j >>= 1)
+						{
+							LoFTufo[++id] = ((bytes[i + 1] & j) != 0);
+						}
+
+						for (int j = 0x80; j != 0x00; j >>= 1)
+						{
+							LoFTufo[++id] = ((bytes[i] & j) != 0);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
+		/// </summary>
+		/// <param name="dirTftd"></param>
+		public static void LoadLoFTtftd(string dirTftd)
+		{
+			if (!String.IsNullOrEmpty(dirTftd))
+			{
+				string pfe = Path.Combine(dirTftd, SharedSpace.LoftfileTftd);
+				if (File.Exists(pfe))
+				{
+					// 32 bytes in a loft
+					// 256 bits in a loft
+
+					byte[] bytes = File.ReadAllBytes(pfe);
+					int length = bytes.Length * 8;
+
+					LoFTtftd = new BitArray(length); // init to Falses
+
+					// read the file as little-endian unsigned shorts
+					// eg. C0 01 -> 01 C0
+
+					int id = -1;
+					for (int i = 0; i != bytes.Length; i += 2)
+					{
+						for (int j = 0x80; j != 0x00; j >>= 1)
+						{
+							LoFTtftd[++id] = ((bytes[i + 1] & j) != 0);
+						}
+
+						for (int j = 0x80; j != 0x00; j >>= 1)
+						{
+							LoFTtftd[++id] = ((bytes[i] & j) != 0);
+						}
+					}
+				}
+			}
 		}
 		#endregion
 	}

@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YamlDotNet", "..\YamlDotNet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigConverter", "..\ConfigConverter\ConfigConverter.csproj", "{C11B825C-2B21-42AE-8FE3-088A547AD9A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McdView", "..\McdView\McdView.csproj", "{9020B77C-A186-4D85-82CD-0C4E65E738F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,18 @@ Global
 		{C11B825C-2B21-42AE-8FE3-088A547AD9A2}.Release|Mixed Platforms.Build.0 = Release|Mixed Platforms
 		{C11B825C-2B21-42AE-8FE3-088A547AD9A2}.Release|x86.ActiveCfg = Release|x86
 		{C11B825C-2B21-42AE-8FE3-088A547AD9A2}.Release|x86.Build.0 = Release|x86
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Debug|Mixed Platforms.ActiveCfg = Debug|Mixed Platforms
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Debug|Mixed Platforms.Build.0 = Debug|Mixed Platforms
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Debug|x86.ActiveCfg = Debug|x86
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Debug|x86.Build.0 = Debug|x86
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Release|Mixed Platforms.ActiveCfg = Release|Mixed Platforms
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Release|Mixed Platforms.Build.0 = Release|Mixed Platforms
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Release|x86.ActiveCfg = Release|x86
+		{9020B77C-A186-4D85-82CD-0C4E65E738F2}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -526,12 +526,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal static bool IsDoor(TilepartBase part)
 		{
 			var record = part.Record;
-			if (record != null
-				&& (record.HumanDoor || record.UfoDoor))
-			{
-				return true;
-			}
-			return false;
+			return (record != null
+				&& (record.HingedDoor || record.SlidingDoor));
 		}
 		#endregion
 	}

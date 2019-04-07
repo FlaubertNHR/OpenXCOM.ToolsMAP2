@@ -35,14 +35,14 @@ namespace XCom
 		/// cTor.
 		/// </summary>
 		/// <param name="descriptor"></param>
-		/// <param name="parts"></param>
+		/// <param name="partset">a list of parts in all allocated terrains</param>
 		/// <param name="routes"></param>
 		internal MapFileChild(
 				Descriptor descriptor,
-				List<TilepartBase> parts,
+				List<TilepartBase> partset,
 				RouteNodeCollection routes)
 			:
-				base(descriptor, parts)
+				base(descriptor, partset)
 		{
 			string dirMap = Path.Combine(Descriptor.Basepath, GlobalsXC.MapsDir);
 			Fullpath = Path.Combine(
@@ -55,10 +55,10 @@ namespace XCom
 
 			if (File.Exists(Fullpath))
 			{
-				for (int i = 0; i != parts.Count; ++i)
-					parts[i].SetId = i;
+				for (int i = 0; i != partset.Count; ++i)
+					partset[i].SetId = i;
 
-				ReadMapFile(parts);
+				ReadMapFile(partset);
 				SetupRouteNodes();
 				CalculateOccultations();
 			}
@@ -94,7 +94,7 @@ namespace XCom
 				int cols = bs.ReadByte();
 				int levs = bs.ReadByte();
 
-				MapTiles = new MapTileList(rows, cols, levs);
+				Tiles = new MapTileList(rows, cols, levs);
 				MapSize  = new MapSize(rows, cols, levs);
 
 				for (int lev = 0; lev != levs; ++lev)
@@ -224,18 +224,18 @@ namespace XCom
 					if ((tile = this[row, col, lev]) != null) // safety. The tile should always be valid.
 					{
 						if (!forceVis
-							&& ((XCMapTile)this[row,     col,     lev - 1]).Ground != null // above
+							&& ((XCMapTile)this[row,     col,     lev - 1]).Floor != null // above
 
-							&& ((XCMapTile)this[row + 1, col,     lev - 1]).Ground != null // south
-							&& ((XCMapTile)this[row + 2, col,     lev - 1]).Ground != null
+							&& ((XCMapTile)this[row + 1, col,     lev - 1]).Floor != null // south
+							&& ((XCMapTile)this[row + 2, col,     lev - 1]).Floor != null
 
-							&& ((XCMapTile)this[row,     col + 1, lev - 1]).Ground != null // east
-							&& ((XCMapTile)this[row,     col + 2, lev - 1]).Ground != null
+							&& ((XCMapTile)this[row,     col + 1, lev - 1]).Floor != null // east
+							&& ((XCMapTile)this[row,     col + 2, lev - 1]).Floor != null
 
-							&& ((XCMapTile)this[row + 1, col + 1, lev - 1]).Ground != null // southeast
-							&& ((XCMapTile)this[row + 1, col + 2, lev - 1]).Ground != null
-							&& ((XCMapTile)this[row + 2, col + 1, lev - 1]).Ground != null
-							&& ((XCMapTile)this[row + 2, col + 2, lev - 1]).Ground != null)
+							&& ((XCMapTile)this[row + 1, col + 1, lev - 1]).Floor != null // southeast
+							&& ((XCMapTile)this[row + 1, col + 2, lev - 1]).Floor != null
+							&& ((XCMapTile)this[row + 2, col + 1, lev - 1]).Floor != null
+							&& ((XCMapTile)this[row + 2, col + 2, lev - 1]).Floor != null)
 						{
 							tile.Occulted = true;
 						}
@@ -247,19 +247,19 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the terrain-type given a tile-part.
+		/// Gets the terrain-label of a given tile-part.
 		/// </summary>
 		/// <param name="part"></param>
 		/// <returns></returns>
 		public string GetTerrainLabel(TilepartBase part)
 		{
 			int id = -1;
-			foreach (var part1 in Parts)
+			foreach (var part_ in Parts)
 			{
-				if (part1.TerId == 0)
+				if (part_.TerId == 0)
 					++id;
 
-				if (part1 == part)
+				if (part_ == part)
 					break;
 			}
 
@@ -269,6 +269,11 @@ namespace XCom
 			return null;
 		}
 
+		/// <summary>
+		/// Gets the terrain of a given tile-part.
+		/// </summary>
+		/// <param name="part"></param>
+		/// <returns></returns>
 		public Tuple<string,string> GetTerrain(TilepartBase part)
 		{
 			int id = -1;
@@ -371,7 +376,7 @@ namespace XCom
 				{
 					var tile = this[row, col, lev] as XCMapTile;
 
-					if (tile.Ground == null || (id = tile.Ground.SetId + IdOffset) > (int)byte.MaxValue)
+					if (tile.Floor == null || (id = tile.Floor.SetId + IdOffset) > (int)byte.MaxValue)
 						fs.WriteByte(0);
 					else
 						fs.WriteByte((byte)id);
@@ -436,7 +441,7 @@ namespace XCom
 			var tileList = MapResizeService.GetResizedTileList(
 															rows, cols, levs,
 															MapSize,
-															MapTiles,
+															Tiles,
 															zType);
 			if (tileList != null)
 			{
@@ -470,7 +475,7 @@ namespace XCom
 				}
 
 				MapSize = new MapSize(rows, cols, levs);
-				MapTiles = tileList;
+				Tiles = tileList;
 
 				if (RouteCheckService.CheckNodeBounds(this))
 					bit |= 0x2;

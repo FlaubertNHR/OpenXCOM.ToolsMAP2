@@ -17,7 +17,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TileView));
 			this.tcTileTypes = new System.Windows.Forms.TabControl();
 			this.tpAll = new System.Windows.Forms.TabPage();
 			this.tpFloors = new System.Windows.Forms.TabPage();
@@ -25,13 +24,12 @@
 			this.tpNorthwalls = new System.Windows.Forms.TabPage();
 			this.tpObjects = new System.Windows.Forms.TabPage();
 			this.tsMain = new System.Windows.Forms.ToolStrip();
-			this.tsddbPck = new System.Windows.Forms.ToolStripDropDownButton();
+			this.tsddbExternal = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmiEditPck = new System.Windows.Forms.ToolStripMenuItem();
-			this.tsddbMcd = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsmiMcdInfo = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiEditMcd = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Sep0 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmiVolutarMcdEditor = new System.Windows.Forms.ToolStripMenuItem();
-			this.tsddbEdit = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsmiOptions = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.ssStatusbar = new System.Windows.Forms.StatusStrip();
 			this.tsslTotal = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsslOver = new System.Windows.Forms.ToolStripStatusLabel();
@@ -67,7 +65,7 @@
 			// 
 			this.tpFloors.Location = new System.Drawing.Point(4, 21);
 			this.tpFloors.Name = "tpFloors";
-			this.tpFloors.Size = new System.Drawing.Size(632, 430);
+			this.tpFloors.Size = new System.Drawing.Size(632, 408);
 			this.tpFloors.TabIndex = 1;
 			this.tpFloors.Text = "fLoOr";
 			// 
@@ -75,7 +73,7 @@
 			// 
 			this.tpWestwalls.Location = new System.Drawing.Point(4, 21);
 			this.tpWestwalls.Name = "tpWestwalls";
-			this.tpWestwalls.Size = new System.Drawing.Size(632, 430);
+			this.tpWestwalls.Size = new System.Drawing.Size(632, 408);
 			this.tpWestwalls.TabIndex = 2;
 			this.tpWestwalls.Text = "WEst";
 			// 
@@ -83,7 +81,7 @@
 			// 
 			this.tpNorthwalls.Location = new System.Drawing.Point(4, 21);
 			this.tpNorthwalls.Name = "tpNorthwalls";
-			this.tpNorthwalls.Size = new System.Drawing.Size(632, 430);
+			this.tpNorthwalls.Size = new System.Drawing.Size(632, 408);
 			this.tpNorthwalls.TabIndex = 3;
 			this.tpNorthwalls.Text = "noRtH";
 			// 
@@ -91,7 +89,7 @@
 			// 
 			this.tpObjects.Location = new System.Drawing.Point(4, 21);
 			this.tpObjects.Name = "tpObjects";
-			this.tpObjects.Size = new System.Drawing.Size(632, 430);
+			this.tpObjects.Size = new System.Drawing.Size(632, 408);
 			this.tpObjects.TabIndex = 4;
 			this.tpObjects.Text = "ConTeNt";
 			// 
@@ -100,83 +98,71 @@
 			this.tsMain.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsddbPck,
-			this.tsddbMcd,
-			this.tsddbEdit});
+			this.tsddbExternal,
+			this.tsb_Options});
 			this.tsMain.Location = new System.Drawing.Point(0, 0);
 			this.tsMain.Name = "tsMain";
 			this.tsMain.Size = new System.Drawing.Size(640, 25);
 			this.tsMain.TabIndex = 1;
 			this.tsMain.Text = "tsMain";
 			// 
-			// tsddbPck
+			// tsddbExternal
 			// 
-			this.tsddbPck.AutoToolTip = false;
-			this.tsddbPck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsddbPck.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiEditPck});
-			this.tsddbPck.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tsddbPck.Image = ((System.Drawing.Image)(resources.GetObject("tsddbPck.Image")));
-			this.tsddbPck.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbPck.Name = "tsddbPck";
-			this.tsddbPck.Size = new System.Drawing.Size(40, 22);
-			this.tsddbPck.Text = "PCK";
+			this.tsddbExternal.AutoToolTip = false;
+			this.tsddbExternal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsddbExternal.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tsmiEditPck,
+			this.tsmiEditMcd,
+			this.tsmi_Sep0,
+			this.tsmiVolutarMcdEditor});
+			this.tsddbExternal.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tsddbExternal.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsddbExternal.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
+			this.tsddbExternal.Name = "tsddbExternal";
+			this.tsddbExternal.Size = new System.Drawing.Size(63, 23);
+			this.tsddbExternal.Text = "External";
+			this.tsddbExternal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiEditPck
 			// 
+			this.tsmiEditPck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsmiEditPck.Name = "tsmiEditPck";
-			this.tsmiEditPck.Size = new System.Drawing.Size(213, 22);
-			this.tsmiEditPck.Text = "Open spriteset in PckView";
-			this.tsmiEditPck.Click += new System.EventHandler(this.OnPckEditorClick);
+			this.tsmiEditPck.Size = new System.Drawing.Size(173, 22);
+			this.tsmiEditPck.Text = "open in PckView";
+			this.tsmiEditPck.Click += new System.EventHandler(this.OnPckEditClick);
 			// 
-			// tsddbMcd
+			// tsmiEditMcd
 			// 
-			this.tsddbMcd.AutoToolTip = false;
-			this.tsddbMcd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsddbMcd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiMcdInfo,
-			this.tsmiVolutarMcdEditor});
-			this.tsddbMcd.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tsddbMcd.Image = ((System.Drawing.Image)(resources.GetObject("tsddbMcd.Image")));
-			this.tsddbMcd.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbMcd.Name = "tsddbMcd";
-			this.tsddbMcd.Size = new System.Drawing.Size(43, 22);
-			this.tsddbMcd.Text = "MCD";
+			this.tsmiEditMcd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsmiEditMcd.Name = "tsmiEditMcd";
+			this.tsmiEditMcd.Size = new System.Drawing.Size(173, 22);
+			this.tsmiEditMcd.Text = "open in McdView";
+			this.tsmiEditMcd.Click += new System.EventHandler(this.OnMcdEditClick);
 			// 
-			// tsmiMcdInfo
+			// tsmi_Sep0
 			// 
-			this.tsmiMcdInfo.Name = "tsmiMcdInfo";
-			this.tsmiMcdInfo.Size = new System.Drawing.Size(182, 22);
-			this.tsmiMcdInfo.Text = "Tilepart Information";
-			this.tsmiMcdInfo.Click += new System.EventHandler(this.OnMcdInfoClick);
+			this.tsmi_Sep0.Name = "tsmi_Sep0";
+			this.tsmi_Sep0.Size = new System.Drawing.Size(170, 6);
 			// 
 			// tsmiVolutarMcdEditor
 			// 
+			this.tsmiVolutarMcdEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsmiVolutarMcdEditor.Name = "tsmiVolutarMcdEditor";
-			this.tsmiVolutarMcdEditor.Size = new System.Drawing.Size(182, 22);
+			this.tsmiVolutarMcdEditor.Size = new System.Drawing.Size(173, 22);
 			this.tsmiVolutarMcdEditor.Text = "Volutar MCD Editor";
 			this.tsmiVolutarMcdEditor.Click += new System.EventHandler(this.OnVolutarMcdEditorClick);
 			// 
-			// tsddbEdit
+			// tsb_Options
 			// 
-			this.tsddbEdit.AutoToolTip = false;
-			this.tsddbEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsddbEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiOptions});
-			this.tsddbEdit.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tsddbEdit.Image = ((System.Drawing.Image)(resources.GetObject("tsddbEdit.Image")));
-			this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbEdit.Name = "tsddbEdit";
-			this.tsddbEdit.Size = new System.Drawing.Size(38, 22);
-			this.tsddbEdit.Text = "Edit";
-			// 
-			// tsmiOptions
-			// 
-			this.tsmiOptions.Name = "tsmiOptions";
-			this.tsmiOptions.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.tsmiOptions.Size = new System.Drawing.Size(154, 22);
-			this.tsmiOptions.Text = "Options";
-			this.tsmiOptions.Click += new System.EventHandler(this.OnOptionsClick);
+			this.tsb_Options.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.tsb_Options.AutoToolTip = false;
+			this.tsb_Options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsb_Options.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsb_Options.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
+			this.tsb_Options.Name = "tsb_Options";
+			this.tsb_Options.Size = new System.Drawing.Size(52, 23);
+			this.tsb_Options.Text = "Options";
+			this.tsb_Options.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// ssStatusbar
 			// 
@@ -203,7 +189,7 @@
 			this.tsslOver.AutoSize = false;
 			this.tsslOver.Margin = new System.Windows.Forms.Padding(0);
 			this.tsslOver.Name = "tsslOver";
-			this.tsslOver.Size = new System.Drawing.Size(524, 22);
+			this.tsslOver.Size = new System.Drawing.Size(555, 22);
 			this.tsslOver.Spring = true;
 			this.tsslOver.Text = "Over";
 			this.tsslOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -230,12 +216,8 @@
 		private System.ComponentModel.IContainer components = null;
 
 		private System.Windows.Forms.ToolStrip tsMain;
-		private System.Windows.Forms.ToolStripDropDownButton tsddbMcd;
-		private System.Windows.Forms.ToolStripMenuItem tsmiMcdInfo;
-		private System.Windows.Forms.ToolStripDropDownButton tsddbPck;
+		private System.Windows.Forms.ToolStripDropDownButton tsddbExternal;
 		private System.Windows.Forms.ToolStripMenuItem tsmiEditPck;
-		private System.Windows.Forms.ToolStripDropDownButton tsddbEdit;
-		private System.Windows.Forms.ToolStripMenuItem tsmiOptions;
 		private System.Windows.Forms.ToolStripMenuItem tsmiVolutarMcdEditor;
 		private System.Windows.Forms.TabControl tcTileTypes;
 		private System.Windows.Forms.TabPage tpAll;
@@ -246,5 +228,8 @@
 		private System.Windows.Forms.StatusStrip ssStatusbar;
 		private System.Windows.Forms.ToolStripStatusLabel tsslTotal;
 		private System.Windows.Forms.ToolStripStatusLabel tsslOver;
+		private System.Windows.Forms.ToolStripButton tsb_Options;
+		private System.Windows.Forms.ToolStripMenuItem tsmiEditMcd;
+		private System.Windows.Forms.ToolStripSeparator tsmi_Sep0;
 	}
 }

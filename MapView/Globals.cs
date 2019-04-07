@@ -40,8 +40,8 @@ namespace MapView
 			{
 				_scale = value;
 
-				ViewerFormsManager.ToolFactory.ToggleZoomOutButton(Math.Abs(_scale - ScaleMinimum) > 0.001);
-				ViewerFormsManager.ToolFactory.ToggleZoomInButton( Math.Abs(_scale - ScaleMaximum) > 0.001);
+				ViewerFormsManager.ToolFactory.SetScaleOutButtonEnabled(Math.Abs(_scale - ScaleMinimum) > 0.001);
+				ViewerFormsManager.ToolFactory.SetScaleInButtonEnabled( Math.Abs(_scale - ScaleMaximum) > 0.001);
 			}
 		}
 
@@ -60,6 +60,8 @@ namespace MapView
 		#region Methods (static)
 		/// <summary>
 		/// Loads the sprites for TopView's blank quads and TileView's eraser.
+		/// @note These sprites could be broken out and put in Resources but
+		/// it's kinda cute this way too.
 		/// </summary>
 		internal static void LoadExtraSprites()
 		{
