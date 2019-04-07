@@ -1,8 +1,12 @@
 MapView stores settings in a subfolder of itself. If you do not have user-permissions to write to that folder - eg. Program Files - you may have to either enable them or install MapView to a different hierarchy on your hardrive - eg. C:\\
 
-note for Mono users: MapView needs to run once and then be restarted for its window to resize properly.<br>
 Automated builds for Mono only: https://lxnt.wtf/oxem/#/MapView by Stoddard.<br>
-If nontransparent black boxes appear all over the place, go to MainView's Options and turn on "UseMono".
+notes for Mono/Linux/Mac users
+- MapView needs to run once and then be restarted for its window to resize properly.
+- if nontransparent black boxes appear all over the place, go to MainView's Options and turn on "UseMono".
+- .NET on Mono tends to layout and render differently than in Windows, so pls look for usability rather than perfection.
+- the Mono package does not contain the CHM helpfile. It's available in the Windows archive and is recommended since it describes functionality, shortcuts, etc.
+
 
 <br>
 Distribution builds for Windows 32/64 is hosted on Google Drive.
