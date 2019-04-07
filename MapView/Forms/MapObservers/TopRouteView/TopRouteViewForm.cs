@@ -37,9 +37,10 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		#region Events (override)
 		/// <summary>
 		/// Handles KeyDown events at the form level.
-		/// - closes/hides viewers on certain F-key events.
+		/// - shows/hides/minimizes/restores viewers on certain F-key events.
 		/// - opens/closes Options on [Ctrl+o] event.
 		/// @note Requires 'KeyPreview' true.
+		/// @note See also TileViewForm, TopViewForm, RouteViewForm
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
