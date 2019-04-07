@@ -10,7 +10,7 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 Built against .NET 4.5.1
 
 2019 April 7<br>
-[MapView2_190407.7z](https://drive.google.com/file/d/1rMii8mtQoYNUEATu07TJn_ZOlYSNbfcm/view?usp=sharing)
+[MapView2_190407b.7z](https://drive.google.com/file/d/1ZFZ2SmzzW1ZZ7QzWsqTPkLEEF9wD7j_V/view?usp=sharing)
 
 - McdView: initial release/beta!
 - several changes to MapView ...
