@@ -118,6 +118,13 @@ namespace MapView.Forms.MainWindow
 			CreateMenuItem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    MenuViewers, Shortcut.F7);	// id #3
 			CreateMenuItem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, MenuViewers, Shortcut.F8);	// id #4
 
+			MenuViewers.MenuItems.Add(new MenuItem(Separator));														// id #5
+
+			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);								// id #6
+			MenuViewers.MenuItems.Add(it6);
+			var it7 = new MenuItem("restore all", OnRestoreAllClick, Shortcut.F12);									// id #7
+			MenuViewers.MenuItems.Add(it7);
+
 //			_menuViewers.MenuItems.Add(new MenuItem(Divider));
 //			CreateMenuItem(fconsole, RegistryInfo.Console, _menuViewers); // TODO: either use the Console or lose it.
 
@@ -174,9 +181,10 @@ namespace MapView.Forms.MainWindow
 		{
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
-				string key = it.Text;
-				if (!key.Equals(Separator, StringComparison.Ordinal))
+				var f = it.Tag as Form;
+				if (f != null)
 				{
+					string key = it.Text;
 					_options.AddOption(
 									key,
 //									!(it.Tag is MapView.Forms.MapObservers.TileViews.TopRouteViewForm),	// q. why is TopRouteViewForm under 'TileViews'
@@ -187,19 +195,16 @@ namespace MapView.Forms.MainWindow
 									"Open on load - " + key,		// appears as a tip at the bottom of the Options screen.
 									"Windows");						// this identifies what Option category the setting appears under.
 																	// NOTE: the Console is not technically a viewer
-					var f = it.Tag as Form;							// but it appears under Options like the real viewers.
-					if (f != null)
+//																	// but it appears under Options like the real viewers.
+					f.VisibleChanged += (sender, e) =>
 					{
-						f.VisibleChanged += (sender, e) =>
+						if (!_quit)
 						{
-							if (!_quit)
-							{
-								var fsender = sender as Form;
-								if (fsender != null)
-									_options[key].Value = fsender.Visible;
-							}
-						};
-					}
+							var fsender = sender as Form;
+							if (fsender != null)
+								_options[key].Value = fsender.Visible;
+						}
+					};
 				}
 			}
 		}
@@ -212,12 +217,9 @@ namespace MapView.Forms.MainWindow
 		{
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
-				string key = it.Text;
-				if (!key.Equals(Separator, StringComparison.Ordinal)
-					&& _options[key].IsTrue)
-				{
+				var f = it.Tag as Form;
+				if (f != null && _options[it.Text].IsTrue) // NOTE: All viewers shall be keyed in Options w/ the item-text.
 					it.PerformClick();
-				}
 			}
 			MenuViewers.Enabled = true;
 		}
@@ -239,6 +241,54 @@ namespace MapView.Forms.MainWindow
 		internal static ShowHideManager CreateShowHideManager()
 		{
 			return new ShowHideManager(_allForms, _allItems);
+		}
+
+
+		/// <summary>
+		/// Handles clicks on the Viewers|MinimizeAll item. Also F11.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private static void OnMinimizeAllClick(object sender, EventArgs e)
+		{
+			foreach (MenuItem it in MenuViewers.MenuItems)
+			{
+				var f = it.Tag as Form;
+				if (f != null //&& _options[it.Text].IsTrue
+					&& (   f.WindowState == FormWindowState.Normal
+						|| f.WindowState == FormWindowState.Maximized))
+				{
+					f.WindowState = FormWindowState.Minimized;
+				}
+			}
+
+			if (   XCMainWindow.Instance.WindowState == FormWindowState.Normal
+				|| XCMainWindow.Instance.WindowState == FormWindowState.Maximized)
+			{
+				XCMainWindow.Instance.WindowState = FormWindowState.Minimized;
+			}
+		}
+
+		/// <summary>
+		/// Handles clicks on the Viewers|RestoreAll item. Also F12.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private static void OnRestoreAllClick(object sender, EventArgs e)
+		{
+			foreach (MenuItem it in MenuViewers.MenuItems)
+			{
+				var f = it.Tag as Form;
+				if (f != null //&& _options[it.Text].IsTrue
+					&& (   f.WindowState == FormWindowState.Minimized
+						|| f.WindowState == FormWindowState.Maximized))
+				{
+					f.WindowState = FormWindowState.Normal;
+				}
+			}
+
+			if (XCMainWindow.Instance.WindowState == FormWindowState.Maximized)
+				XCMainWindow.Instance.WindowState =  FormWindowState.Minimized;
 		}
 		#endregion Methods
 	}
