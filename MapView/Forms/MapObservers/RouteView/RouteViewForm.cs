@@ -38,7 +38,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#region Events (override)
 		/// <summary>
 		/// Handles KeyDown events at the form level.
-		/// - closes/hides this viewer on [F7] event.
+		/// - closes/hides viewers on certain F-key events.
 		/// - opens/closes Options on [Ctrl+o] event.
 		/// @note Requires 'KeyPreview' true.
 		/// </summary>
@@ -49,31 +49,35 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			switch (e.KeyCode)
 			{
-				case Keys.F5: it = 0; break;
-				case Keys.F6: it = 2; break;
-				case Keys.F7: it = 3; break;
-				case Keys.F8: it = 4; break;
+				case Keys.F5: it = 0; goto click; // show/hide viewers ->
+				case Keys.F6: it = 2; goto click;
+				case Keys.F7: it = 3; goto click;
+				case Keys.F8: it = 4; goto click; // wooooo goto
+
+				case Keys.F11:
+					MainMenusManager.OnMinimizeAllClick(null, EventArgs.Empty);
+					return;
+				case Keys.F12:
+					MainMenusManager.OnRestoreAllClick(null, EventArgs.Empty);
+					return;
 
 				case Keys.O:
 					if ((e.Modifiers & Keys.Control) == Keys.Control)
 					{
 						Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+						return;
 					}
-					else
-						goto default;
-					break;
+					goto default;
 
 				default:
 					base.OnKeyDown(e);
-					break;
+					return;
 			}
 
-			if (it != -1)
-			{
-				MainMenusManager.OnMenuItemClick(
-											MainMenusManager.MenuViewers.MenuItems[it],
-											EventArgs.Empty);
-			}
+			click:
+			MainMenusManager.OnMenuItemClick(
+										MainMenusManager.MenuViewers.MenuItems[it],
+										EventArgs.Empty);
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)

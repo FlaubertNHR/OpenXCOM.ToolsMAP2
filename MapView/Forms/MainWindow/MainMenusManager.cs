@@ -249,7 +249,7 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private static void OnMinimizeAllClick(object sender, EventArgs e)
+		internal static void OnMinimizeAllClick(object sender, EventArgs e)
 		{
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
@@ -274,7 +274,7 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private static void OnRestoreAllClick(object sender, EventArgs e)
+		internal static void OnRestoreAllClick(object sender, EventArgs e)
 		{
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
@@ -287,8 +287,11 @@ namespace MapView.Forms.MainWindow
 				}
 			}
 
-			if (XCMainWindow.Instance.WindowState == FormWindowState.Maximized)
-				XCMainWindow.Instance.WindowState =  FormWindowState.Minimized;
+			if (   XCMainWindow.Instance.WindowState == FormWindowState.Maximized
+				|| XCMainWindow.Instance.WindowState == FormWindowState.Minimized)
+			{
+				XCMainWindow.Instance.WindowState = FormWindowState.Normal;
+			}
 		}
 		#endregion Methods
 	}
