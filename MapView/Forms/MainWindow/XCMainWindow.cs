@@ -1040,6 +1040,36 @@ namespace MapView
 			else
 				base.OnActivated(e);
 		}
+
+		/// <summary>
+		/// Handles key-down event at the Form level.
+		/// Requires 'KeyPreview' true.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.Control && MainMenusManager.MenuViewers.Enabled)
+			{
+				int it = -1;
+				switch (e.KeyCode)
+				{
+					case Keys.F5: it = 0; break;
+					case Keys.F6: it = 2; break;
+					case Keys.F7: it = 3; break;
+					case Keys.F8: it = 4; break;
+				}
+
+				if (it != -1)
+				{
+					MainMenusManager.OnMenuItemClick(
+												MainMenusManager.MenuViewers.MenuItems[it],
+												EventArgs.Empty);
+					e.Handled = true;
+					return;
+				}
+			}
+			base.OnKeyDown(e);
+		}
 		#endregion
 
 

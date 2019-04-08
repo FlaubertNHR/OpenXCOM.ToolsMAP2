@@ -49,7 +49,15 @@ namespace MapView.Forms.MainWindow
 			var it = sender as MenuItem;
 			var f = it.Tag as Form;
 
-			if (it.Checked && f.WindowState == FormWindowState.Minimized)
+			if (it.Checked && Control.ModifierKeys == Keys.Control)
+			{
+				if (f.WindowState == FormWindowState.Minimized)
+				{
+					f.WindowState = FormWindowState.Normal;
+				}
+				f.Select();
+			}
+			else if (it.Checked && f.WindowState == FormWindowState.Minimized)
 			{
 				f.WindowState = FormWindowState.Normal;
 			}
@@ -73,6 +81,25 @@ namespace MapView.Forms.MainWindow
 				f.Close();
 			}
 		}
+
+/*		/// <summary>
+		/// Helper for OnMenuItemClick() above. It's called only on the
+		/// XCMainWindow menu-click, or a TileViewForm/ TopViewForm/
+		/// RouteViewForm/ TopRouteViewForm F-key press.
+		/// </summary>
+		/// <param name="control"></param>
+		/// <returns></returns>
+		private static Control FindFocusedControl(Control control)
+		{
+			var container = control as ContainerControl;
+			while (container != null)
+			{
+				control = container.ActiveControl;
+				container = control as ContainerControl;
+			}
+			return control;
+		} */
+
 
 		/// <summary>
 		/// Shows the CHM helpfile.
@@ -121,8 +148,8 @@ namespace MapView.Forms.MainWindow
 			MenuViewers.MenuItems.Add(new MenuItem(Separator));														// id #5
 
 			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);								// id #6
+			var it7 = new MenuItem("restore all",  OnRestoreAllClick,  Shortcut.F12);								// id #7
 			MenuViewers.MenuItems.Add(it6);
-			var it7 = new MenuItem("restore all", OnRestoreAllClick, Shortcut.F12);									// id #7
 			MenuViewers.MenuItems.Add(it7);
 
 //			_menuViewers.MenuItems.Add(new MenuItem(Divider));

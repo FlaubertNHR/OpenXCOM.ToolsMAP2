@@ -482,6 +482,7 @@ namespace MapView
 			this.Controls.Add(this.tvMaps);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.KeyPreview = true;
 			this.MaximumSize = new System.Drawing.Size(640, 480);
 			this.Menu = this.mmMain;
 			this.MinimumSize = new System.Drawing.Size(640, 480);
