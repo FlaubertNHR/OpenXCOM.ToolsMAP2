@@ -47,7 +47,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.quadrants.Location = new System.Drawing.Point(0, 410);
 			this.quadrants.Name = "quadrants";
 			this.quadrants.Size = new System.Drawing.Size(640, 70);
-			this.quadrants.TabIndex = 0;
+			this.quadrants.TabIndex = 2;
 			this.quadrants.Text = "bottom";
 			// 
 			// tscPanel
@@ -75,7 +75,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			// 
 			this.tscPanel.RightToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.Size = new System.Drawing.Size(640, 385);
-			this.tscPanel.TabIndex = 0;
+			this.tscPanel.TabIndex = 1;
 			// 
 			// tscPanel.TopToolStripPanel
 			// 
@@ -88,7 +88,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.pMain.Location = new System.Drawing.Point(0, 0);
 			this.pMain.Name = "pMain";
 			this.pMain.Size = new System.Drawing.Size(615, 360);
-			this.pMain.TabIndex = 2;
+			this.pMain.TabIndex = 0;
 			// 
 			// tsTools
 			// 
@@ -99,7 +99,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tsTools.Padding = new System.Windows.Forms.Padding(0);
 			this.tsTools.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tsTools.Size = new System.Drawing.Size(25, 111);
-			this.tsTools.TabIndex = 1;
+			this.tsTools.TabIndex = 0;
 			this.tsTools.Text = "tsTools";
 			// 
 			// tsMain

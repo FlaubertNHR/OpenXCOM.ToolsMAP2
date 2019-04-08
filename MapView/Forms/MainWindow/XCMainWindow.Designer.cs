@@ -351,7 +351,7 @@ namespace MapView
 			this.ssMain.Location = new System.Drawing.Point(248, 432);
 			this.ssMain.Name = "ssMain";
 			this.ssMain.Size = new System.Drawing.Size(384, 22);
-			this.ssMain.TabIndex = 2;
+			this.ssMain.TabIndex = 3;
 			this.ssMain.Text = "statusStrip1";
 			// 
 			// tsslScale
@@ -411,6 +411,7 @@ namespace MapView
 			// tscPanel.ContentPanel
 			// 
 			this.tscPanel.ContentPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			this.tscPanel.ContentPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(384, 407);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			// 
@@ -418,13 +419,14 @@ namespace MapView
 			// 
 			this.tscPanel.LeftToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.Location = new System.Drawing.Point(248, 0);
+			this.tscPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tscPanel.Name = "tscPanel";
 			// 
 			// tscPanel.RightToolStripPanel
 			// 
 			this.tscPanel.RightToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.Size = new System.Drawing.Size(384, 432);
-			this.tscPanel.TabIndex = 4;
+			this.tscPanel.TabIndex = 2;
 			// 
 			// tscPanel.TopToolStripPanel
 			// 
@@ -443,7 +445,7 @@ namespace MapView
 			this.tsTools.Padding = new System.Windows.Forms.Padding(0);
 			this.tsTools.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tsTools.Size = new System.Drawing.Size(107, 25);
-			this.tsTools.TabIndex = 3;
+			this.tsTools.TabIndex = 0;
 			// 
 			// tsbSelectionBox
 			// 
