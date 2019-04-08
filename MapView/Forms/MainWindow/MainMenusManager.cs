@@ -52,9 +52,8 @@ namespace MapView.Forms.MainWindow
 			if (it.Checked && Control.ModifierKeys == Keys.Control)
 			{
 				if (f.WindowState == FormWindowState.Minimized)
-				{
-					f.WindowState = FormWindowState.Normal;
-				}
+					f.WindowState =  FormWindowState.Normal;
+
 				f.Select();
 			}
 			else if (it.Checked && f.WindowState == FormWindowState.Minimized)

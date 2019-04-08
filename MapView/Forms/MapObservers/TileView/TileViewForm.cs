@@ -66,10 +66,10 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			switch (e.KeyCode)
 			{
-				case Keys.F5: it = 0; goto click; // show/hide viewers ->
-				case Keys.F6: it = 2; goto click;
-				case Keys.F7: it = 3; goto click;
-				case Keys.F8: it = 4; goto click; // wooooo goto
+				case Keys.F5: it = 0; break; // show/hide viewers ->
+				case Keys.F6: it = 2; break;
+				case Keys.F7: it = 3; break;
+				case Keys.F8: it = 4; break;
 
 				case Keys.F11:
 					MainMenusManager.OnMinimizeAllClick(null, EventArgs.Empty);
@@ -91,10 +91,17 @@ namespace MapView.Forms.MapObservers.TileViews
 					return;
 			}
 
-			click:
-			MainMenusManager.OnMenuItemClick(
-										MainMenusManager.MenuViewers.MenuItems[it],
-										EventArgs.Empty);
+			if (e.Shift)
+			{
+				if (XCMainWindow.Instance.WindowState == FormWindowState.Minimized)
+					XCMainWindow.Instance.WindowState =  FormWindowState.Normal;
+
+				XCMainWindow.Instance.Select();
+			}
+			else
+				MainMenusManager.OnMenuItemClick(
+											MainMenusManager.MenuViewers.MenuItems[it],
+											EventArgs.Empty);
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
