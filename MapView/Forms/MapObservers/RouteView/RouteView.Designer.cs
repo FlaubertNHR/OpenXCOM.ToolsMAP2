@@ -522,6 +522,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsMain.Name = "tsMain";
 			this.tsMain.Size = new System.Drawing.Size(640, 25);
 			this.tsMain.TabIndex = 0;
+			this.tsMain.TabStop = true;
 			this.tsMain.Text = "tsMain";
 			// 
 			// tsddbFile

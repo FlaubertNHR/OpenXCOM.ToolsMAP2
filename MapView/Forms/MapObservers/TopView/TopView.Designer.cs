@@ -48,6 +48,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.quadrants.Name = "quadrants";
 			this.quadrants.Size = new System.Drawing.Size(640, 70);
 			this.quadrants.TabIndex = 2;
+			this.quadrants.TabStop = false;
 			this.quadrants.Text = "bottom";
 			// 
 			// tscPanel
@@ -113,6 +114,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tsMain.Name = "tsMain";
 			this.tsMain.Size = new System.Drawing.Size(640, 25);
 			this.tsMain.TabIndex = 0;
+			this.tsMain.TabStop = true;
 			this.tsMain.Text = "tsMain";
 			// 
 			// tsddbVisibleQuads
