@@ -325,12 +325,16 @@ namespace MapView
 			// 
 			this.tvMaps.BackColor = System.Drawing.SystemColors.Control;
 			this.tvMaps.Dock = System.Windows.Forms.DockStyle.Left;
+			this.tvMaps.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
+			this.tvMaps.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.tvMaps.HideSelection = false;
 			this.tvMaps.Indent = 15;
 			this.tvMaps.Location = new System.Drawing.Point(0, 0);
+			this.tvMaps.Margin = new System.Windows.Forms.Padding(0);
 			this.tvMaps.Name = "tvMaps";
 			this.tvMaps.Size = new System.Drawing.Size(240, 454);
 			this.tvMaps.TabIndex = 0;
+			this.tvMaps.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tv_DrawNode);
 			this.tvMaps.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMapTreeMouseDown);
 			// 
 			// sfdSaveDialog

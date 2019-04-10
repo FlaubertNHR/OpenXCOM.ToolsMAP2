@@ -1044,6 +1044,11 @@ namespace MapView
 		/// <summary>
 		/// Handles key-down event at the Form level.
 		/// Requires 'KeyPreview' true.
+		/// @note This differs from the Viewers-menu item-click/key in that
+		/// [Ctrl] is used to focus a subsidiary viewer instead of doing
+		/// show/hide.
+		/// Cf OnKeyDown() in TileViewForm, TopViewForm, RouteViewForm, and
+		/// TopRouteViewForm -> ViewerKeyDown().
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
@@ -1064,8 +1069,7 @@ namespace MapView
 					MainMenusManager.OnMenuItemClick(
 												MainMenusManager.MenuViewers.MenuItems[it],
 												EventArgs.Empty);
-					e.Handled = true;
-					return;
+					e.SuppressKeyPress = true;
 				}
 			}
 			base.OnKeyDown(e);
@@ -1074,6 +1078,50 @@ namespace MapView
 
 
 		#region Events
+		private void tv_DrawNode(object sender, DrawTreeNodeEventArgs e)
+		{
+			if (e.Node != null)
+			{
+				var graphics = e.Graphics;
+
+				Brush brush;
+				Pen pen;
+
+				if ((e.State & TreeNodeStates.Focused) == TreeNodeStates.Focused) // WARNING: May require 'HideSelection' false.
+				{
+					brush = Brushes.BurlyWood;
+					pen   = Pens.SlateBlue;
+				}
+				else if ((e.State & TreeNodeStates.Selected) == TreeNodeStates.Selected) // WARNING: Requires 'HideSelection' false.
+				{
+					brush = Brushes.Wheat;
+					pen   = Pens.SlateBlue;
+				}
+				else
+				{
+//					e.DrawDefault = true;
+					brush = SystemBrushes.Control;
+					pen   = SystemPens.Control;
+				}
+
+				Rectangle rect = e.Bounds;
+				rect.Width += 4;							// conceal .NET glitch.
+				graphics.FillRectangle(brush, rect);
+				rect.Height -= 1;							// keep border inside bounds
+				graphics.DrawRectangle(pen, rect);
+
+				rect = e.Bounds;
+				rect.X += 2;								// re-align text due to .NET glitch.
+				TextRenderer.DrawText(
+									graphics,
+									e.Node.Text,
+									e.Node.TreeView.Font,	//e.Node.NodeFont ?? e.Node.TreeView.Font
+									rect,
+									SystemColors.ControlText);
+			}
+		}
+
+
 		private void OnAnimationUpdate(object sender, EventArgs e)
 		{
 			ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
@@ -1859,22 +1907,11 @@ namespace MapView
 			switch (e.Button)
 			{
 				case MouseButtons.Right:
-					var badnode = tvMaps.GetNodeAt(e.Location);		// The right-clicked node is NOT selected
-					if (badnode != null)
-					{
-						badnode.BackColor = SystemColors.Control;	// so quit highlighting it as if it were.
-						badnode.ForeColor = SystemColors.ControlText;
-					}
-
-//					var goodnode = tvMaps.SelectedNode;				// The truly selected node is going to stop being highlighted
-//					goodnode.BackColor = SystemColors.Highlight;	// even with this attempt to force it to stay highlighted.
-//					goodnode.ForeColor = SystemColors.HighlightText;
-
-
-					if (_mainViewUnderlay.MapBase == null														// prevents a bunch of problems, like looping dialogs when
-						|| (!_mainViewUnderlay.MapBase.MapChanged && !_mainViewUnderlay.MapBase.RoutesChanged))	// returning from the Tileset Editor and the Maptree-node
-					{																							// gets re-selected, causing this class-object to react as
-						cmMapTreeMenu.MenuItems.Clear();														// if a different Map is going to load ... cf, LoadSelectedMap()
+					if (_mainViewUnderlay.MapBase == null					// prevents a bunch of problems, like looping dialogs when
+						|| (   !_mainViewUnderlay.MapBase.MapChanged		// returning from the Tileset Editor and the Maptree-node
+							&& !_mainViewUnderlay.MapBase.RoutesChanged))	// gets re-selected, causing this class-object to react as
+					{														// if a different Map is going to load ... cf, LoadSelectedMap()
+						cmMapTreeMenu.MenuItems.Clear();
 
 						cmMapTreeMenu.MenuItems.Add("Add Group ...", new EventHandler(OnAddGroupClick));
 
