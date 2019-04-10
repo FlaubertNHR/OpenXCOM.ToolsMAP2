@@ -292,21 +292,6 @@ namespace MapView
 			get { return _interpolationLocal; }
 			set { _interpolationLocal = value; }
 		}
-
-		/// <summary>
-		/// If true draws a translucent red box around selected tiles
-		/// -> superceded by using GraySelection(false) property.
-		/// </summary>
-//		private bool _drawSelectionBox;
-//		public bool DrawSelectionBox
-//		{
-//			get { return _drawSelectionBox; }
-//			set
-//			{
-//				_drawSelectionBox = value;
-//				Refresh();
-//			}
-//		}
 		#endregion
 
 
@@ -594,6 +579,28 @@ namespace MapView
 				XCMainWindow.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
 		}												// not used by ScanG view at present
 		#endregion
+
+
+		#region Keyboard navigation
+		internal void Navigate(Keys keyData)
+		{
+			LogFile.WriteLine("MainViewOverlay.Navigate() " + keyData);
+
+			switch (keyData)
+			{
+				case Keys.Right:
+					if (!FirstClick) // select tile(0,0)
+					{
+						MapBase.Location = new MapLocation(0, 0, MapBase.Level);
+						Refresh();
+					}
+					else
+					{
+					}
+					break;
+			}
+		}
+		#endregion Keyboard navigation
 
 
 		#region Mouse & Drag-points

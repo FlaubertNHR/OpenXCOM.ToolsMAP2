@@ -1076,6 +1076,30 @@ namespace MapView
 			}
 			base.OnKeyDown(e);
 		}
+
+		/// <summary>
+		/// Stops keys that shall be used for navigating the tiles from doing
+		/// anything stupid instead.
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <param name="keyData"></param>
+		/// <returns></returns>
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			if (!tvMaps.Focused)	// ie. Don't focus the Maptree on the following keypresses
+			{						// unless it already has focus. Thanks.
+				switch (keyData)
+				{
+					case Keys.Left:
+					case Keys.Right:
+					case Keys.Up:
+					case Keys.Down:
+						_mainViewUnderlay.MainViewOverlay.Navigate(keyData);
+						return true;
+				}
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
 		#endregion
 
 
