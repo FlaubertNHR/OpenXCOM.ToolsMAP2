@@ -28,7 +28,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		private Dictionary<string, Pen> _topPens;
 		private Dictionary<string, SolidBrush> _topBrushes;
 
-//		private readonly Dictionary<ToolStripMenuItem, int> _visQuadsDictionary = new Dictionary<ToolStripMenuItem, int>();
+//		private readonly Dictionary<ToolStripMenuItem, int> _visQuadsDictionary =
+//					 new Dictionary<ToolStripMenuItem, int>();
 		#endregion
 
 
@@ -82,13 +83,13 @@ namespace MapView.Forms.MapObservers.TopViews
 			_topViewPanel = new TopViewPanel();
 
 			_topViewPanel.Dock = DockStyle.Fill;
-//			_topViewPanel.Width  = 100;//pMain.Width;
-//			_topViewPanel.Height = 100;//pMain.Height;
+//			_topViewPanel.Width  = 100;//pnlMain.Width;
+//			_topViewPanel.Height = 100;//pnlMain.Height;
 
-//			pMain.AutoScroll = true;
-			pMain.Controls.Add(_topViewPanel);
+//			pnlMain.AutoScroll = true;
+			pnlMain.Controls.Add(_topViewPanel);
 
-			pMain.Resize += (sender, e) => _topViewPanel.ResizeObserver(pMain.Width, pMain.Height);
+			pnlMain.Resize += (sender, e) => _topViewPanel.ResizeObserver(pnlMain.Width, pnlMain.Height);
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 

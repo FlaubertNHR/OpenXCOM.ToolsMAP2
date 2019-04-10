@@ -29,7 +29,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			this.quadrants = new MapView.Forms.MapObservers.TopViews.QuadrantPanel();
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
-			this.pMain = new System.Windows.Forms.Panel();
+			this.pnlMain = new System.Windows.Forms.Panel();
 			this.tsTools = new System.Windows.Forms.ToolStrip();
 			this.tsMain = new System.Windows.Forms.ToolStrip();
 			this.tsddbVisibleQuads = new System.Windows.Forms.ToolStripDropDownButton();
@@ -60,7 +60,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			// 
 			// tscPanel.ContentPanel
 			// 
-			this.tscPanel.ContentPanel.Controls.Add(this.pMain);
+			this.tscPanel.ContentPanel.Controls.Add(this.pnlMain);
 			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(615, 360);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tscPanel.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -82,14 +82,14 @@ namespace MapView.Forms.MapObservers.TopViews
 			// 
 			this.tscPanel.TopToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			// 
-			// pMain
+			// pnlMain
 			// 
-			this.pMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pMain.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.pMain.Location = new System.Drawing.Point(0, 0);
-			this.pMain.Name = "pMain";
-			this.pMain.Size = new System.Drawing.Size(615, 360);
-			this.pMain.TabIndex = 0;
+			this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlMain.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.pnlMain.Location = new System.Drawing.Point(0, 0);
+			this.pnlMain.Name = "pnlMain";
+			this.pnlMain.Size = new System.Drawing.Size(615, 360);
+			this.pnlMain.TabIndex = 0;
 			// 
 			// tsTools
 			// 
@@ -165,7 +165,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		private QuadrantPanel quadrants;
 		private System.Windows.Forms.ToolStrip tsTools;
-		private System.Windows.Forms.Panel pMain;
+		private System.Windows.Forms.Panel pnlMain;
 		private System.Windows.Forms.ToolStripContainer tscPanel;
 		private System.Windows.Forms.ToolStrip tsMain;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbVisibleQuads;
