@@ -1563,12 +1563,6 @@ namespace MapView
 		private void OnOpenClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE.
 		{}
 
-		private void OnSelectionBoxClick(object sender, EventArgs e) // NOTE: is disabled w/ Visible=FALSE in designer.
-		{
-//			_mainViewPanel.MapView.DrawSelectionBox = !_mainViewPanel.MapView.DrawSelectionBox;
-//			tsbSelectionBox.Checked = !tsbSelectionBox.Checked;
-		}
-
 
 		internal void OnScaleInClick(object sender, EventArgs e)
 		{
