@@ -275,7 +275,7 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal static void OnMinimizeAllClick(object sender, EventArgs e)
+		private static void OnMinimizeAllClick(object sender, EventArgs e)
 		{
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
@@ -300,7 +300,7 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal static void OnRestoreAllClick(object sender, EventArgs e)
+		private static void OnRestoreAllClick(object sender, EventArgs e)
 		{
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
@@ -318,6 +318,48 @@ namespace MapView.Forms.MainWindow
 			{
 				XCMainWindow.Instance.WindowState = FormWindowState.Normal;
 			}
+		}
+
+
+		/// <summary>
+		/// Processes keydown events that shall be captured and abused at the
+		/// Form level.
+		/// - shows/hides/minimizes/restores viewers on F-key events
+		/// - handles activity by TileViewForm, TopViewForm, RouteViewForm,
+		///   and TopRouteViewForm
+		/// </summary>
+		/// <param name="e"></param>
+		internal static void ViewerKeyDown(KeyEventArgs e)
+		{
+			int it = -1;
+			switch (e.KeyCode)
+			{
+				case Keys.F5: it = 0; break; // show/hide viewers ->
+				case Keys.F6: it = 2; break;
+				case Keys.F7: it = 3; break;
+				case Keys.F8: it = 4; break;
+
+				case Keys.F11: OnMinimizeAllClick(null, EventArgs.Empty); break; // min/rest ->
+				case Keys.F12: OnRestoreAllClick( null, EventArgs.Empty); break;
+
+				default: return; // else do not suppress key-event
+			}
+
+			if (it != -1)
+			{
+				if (e.Shift)
+				{
+					if (XCMainWindow.Instance.WindowState == FormWindowState.Minimized)
+						XCMainWindow.Instance.WindowState =  FormWindowState.Normal;
+
+					XCMainWindow.Instance.Select();
+				}
+				else
+					OnMenuItemClick(
+								MenuViewers.MenuItems[it],
+								EventArgs.Empty);
+			}
+			e.SuppressKeyPress = true;
 		}
 		#endregion Methods
 	}

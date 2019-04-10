@@ -83,10 +83,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			_topViewPanel = new TopViewPanel();
 
 			_topViewPanel.Dock = DockStyle.Fill;
-//			_topViewPanel.Width  = 100;//pnlMain.Width;
-//			_topViewPanel.Height = 100;//pnlMain.Height;
 
-//			pnlMain.AutoScroll = true;
 			pnlMain.Controls.Add(_topViewPanel);
 
 			pnlMain.Resize += (sender, e) => _topViewPanel.ResizeObserver(pnlMain.Width, pnlMain.Height);

@@ -78,7 +78,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiated only as the parent of TopViewPanel.
+		/// cTor. Instantiated only as the parent of TopViewPanel. Is NOT a panel.
 		/// </summary>
 		internal protected TopViewPanelParent()
 		{

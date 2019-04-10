@@ -43,7 +43,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region cTor
 		/// <summary>
-		/// TopViewPanel cTor.
+		/// TopViewPanel cTor. Is NOT a panel.
 		/// </summary>
 		internal TopViewPanel()
 		{

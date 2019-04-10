@@ -12,7 +12,8 @@ namespace MapView.Forms.MainWindow
 	internal sealed class ViewersManager
 	{
 		#region Fields
-		private readonly Dictionary<string, Form> _viewers = new Dictionary<string, Form>();
+		private readonly Dictionary<string, Form> _viewers =
+					 new Dictionary<string, Form>();
 
 		private readonly OptionsManager _optionsManager;
 //		private readonly ConsoleSharedSpace _consoleShare;
@@ -40,7 +41,6 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		internal void ManageViewers()
 		{
-			//LogFile.WriteLine("ManageViewers");
 			ViewerFormsManager.TopRouteView.ControlTop  .Options = ViewerFormsManager.TopView  .Control.Options;
 			ViewerFormsManager.TopRouteView.ControlRoute.Options = ViewerFormsManager.RouteView.Control.Options;
 
@@ -69,13 +69,11 @@ namespace MapView.Forms.MainWindow
 		/// <param name="f"></param>
 		private void SetAsObserver(string viewer, Form f)
 		{
-			//LogFile.WriteLine("SetAsObserver viewer= " + viewer);
 			_viewers.Add(viewer, f);
 
 			var fobserver = f as IMapObserverProvider; // TopViewForm, RouteViewForm, TileViewForm only.
 			if (fobserver != null)
 			{
-				//LogFile.WriteLine(". is IMapObserverProvider");
 				var fcontrol = fobserver.ObserverControl0; // ie. TopView, RouteView, TileView.
 				fcontrol.LoadControl0Options();
 
