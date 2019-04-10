@@ -10,7 +10,7 @@ namespace DSShared.Windows
 	/// Inherited by MapObserverControl1 (TopViewPanelParent, TopViewPanel,
 	/// QuadrantPanel).
 	/// </summary>
-	public class DoubleBufferControl
+	public class DoubleBufferedControl
 		:
 			Control
 	{
@@ -18,7 +18,7 @@ namespace DSShared.Windows
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		public DoubleBufferControl()
+		public DoubleBufferedControl()
 		{
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint

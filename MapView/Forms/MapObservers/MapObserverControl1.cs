@@ -14,12 +14,13 @@ namespace MapView
 	/// </summary>
 	internal class MapObserverControl1
 		:
-			DoubleBufferControl,
+			DoubleBufferedControl,
 			IMapObserver
 	{
 		#region IMapObserver requirements
 		// NOTE: This is not used.
-		private readonly Dictionary<string, IMapObserver> _panels = new Dictionary<string, IMapObserver>();
+		private readonly Dictionary<string, IMapObserver> _panels =
+					 new Dictionary<string, IMapObserver>();
 		[Browsable(false)]
 		public Dictionary<string, IMapObserver> Panels
 		{
@@ -44,9 +45,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
-		{
-//			Refresh();
-		}
+		{}
 
 		/// <summary>
 		/// Satisfies IMapObserver. Used by QuadrantPanel and does not exist in
@@ -54,9 +53,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnLevelChangedObserver(LevelChangedEventArgs args)
-		{
-//			Refresh();
-		}
+		{}
 
 //		/// <summary>
 //		/// This is here only to satisfy IMapObserver requirements.

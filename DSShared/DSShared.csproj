@@ -116,7 +116,7 @@
     <Compile Include="Windows\CollapsibleSplitter.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\DoubleBufferControl.cs">
+    <Compile Include="Windows\DoubleBufferedControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\FindFileForm.cs">
