@@ -444,7 +444,7 @@ namespace MapView
 			this.tsTools.Name = "tsTools";
 			this.tsTools.Padding = new System.Windows.Forms.Padding(0);
 			this.tsTools.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.tsTools.Size = new System.Drawing.Size(38, 25);
+			this.tsTools.Size = new System.Drawing.Size(107, 25);
 			this.tsTools.TabIndex = 0;
 			// 
 			// csSplitter
