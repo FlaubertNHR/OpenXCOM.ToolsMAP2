@@ -121,11 +121,11 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			if (!Globals.RT) return; // don't try to draw the QuadrantPanel in the designer.
 
-			var mainViewOverlay = XCMainWindow.Instance._mainViewUnderlay.MainViewOverlay;
+			var overlay = XCMainWindow.Instance.MainViewUnderlay.MainViewOverlay;
 
 			var spriteAttributes = new ImageAttributes();
-			if (mainViewOverlay._spriteShadeEnabled)
-				spriteAttributes.SetGamma(mainViewOverlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
+			if (overlay._spriteShadeEnabled)
+				spriteAttributes.SetGamma(overlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
 
 			if (!Inited)
 			{

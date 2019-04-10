@@ -37,8 +37,6 @@ namespace MapView
 
 
 		#region Fields
-		internal readonly MainViewUnderlay _mainViewUnderlay; // was private, see ScanGViewer
-
 		private readonly ViewersManager _viewersManager;
 
 //		private readonly ConsoleWarningHandler _warningHandler;
@@ -68,6 +66,9 @@ namespace MapView
 
 
 		#region Properties
+		internal MainViewUnderlay MainViewUnderlay
+		{ get; private set; }
+
 		private readonly OptionsManager _optionsManager;
 		private Options Options
 		{
@@ -104,7 +105,7 @@ namespace MapView
 			set
 			{
 				string text = tsslMapLabel.Text;
-				if (_mainViewUnderlay.MapBase.MapChanged = value) // shuffle the value down to MapFileBase.MapChanged ...
+				if (MainViewUnderlay.MapBase.MapChanged = value) // shuffle the value down to MapFileBase.MapChanged ...
 				{
 					if (!text.EndsWith("*", StringComparison.OrdinalIgnoreCase))
 						text += "*";
@@ -251,9 +252,9 @@ namespace MapView
 			LogFile.WriteLine("MainView Options loaded.");	// since managers might be re-instantiating needlessly
 															// when OnOptionsClick() runs ....
 
-			_mainViewUnderlay = MainViewUnderlay.Instance; // create MainViewUnderlay and MainViewOverlay. or so ...
-			_mainViewUnderlay.Dock = DockStyle.Fill;
-			_mainViewUnderlay.BorderStyle = BorderStyle.Fixed3D;
+			MainViewUnderlay = MainViewUnderlay.Instance; // create MainViewUnderlay and MainViewOverlay. or so ...
+			MainViewUnderlay.Dock = DockStyle.Fill;
+			MainViewUnderlay.BorderStyle = BorderStyle.Fixed3D;
 			LogFile.WriteLine("MainView panel instantiated.");
 
 
@@ -283,7 +284,7 @@ namespace MapView
 			LogFile.WriteLine("HideViewersManager created.");
 
 
-			ViewerFormsManager.ToolFactory = new ToolstripFactory(_mainViewUnderlay);
+			ViewerFormsManager.ToolFactory = new ToolstripFactory(MainViewUnderlay);
 			ViewerFormsManager.Initialize();
 			LogFile.WriteLine("ViewerFormsManager initialized.");
 
@@ -298,7 +299,7 @@ namespace MapView
 																		// live the lifetime of the app. And this class, XCMainWindow, never re-instantiates.
 			tvMaps.TreeViewNodeSorter = StringComparer.OrdinalIgnoreCase;
 
-			tscPanel.ContentPanel.Controls.Add(_mainViewUnderlay);
+			tscPanel.ContentPanel.Controls.Add(MainViewUnderlay);
 
 			tsTools.SuspendLayout();
 			ViewerFormsManager.ToolFactory.CreateToolstripSearchObjects(tsTools);
@@ -350,7 +351,7 @@ namespace MapView
 												Palette.UfoBattle);
 			if (cuboid != null)
 			{
-				_mainViewUnderlay.MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
+				MainViewUnderlay.MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
 				LogFile.WriteLine("UFO Cursor loaded.");
 			}
 			else
@@ -364,7 +365,7 @@ namespace MapView
 											Palette.TftdBattle);
 			if (cuboid != null)
 			{
-				_mainViewUnderlay.MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
+				MainViewUnderlay.MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
 				LogFile.WriteLine("TFTD Cursor loaded.");
 			}
 			else
@@ -815,7 +816,7 @@ namespace MapView
 					else if (miOn.Checked && miDoors.Checked) // doors need to animate if they were already toggled on.
 						ToggleDoorSprites(true);
 
-					_mainViewUnderlay.MainViewOverlay.Invalidate();
+					MainViewUnderlay.MainViewOverlay.Invalidate();
 					break;
 
 				case Doors: // NOTE: 'miDoors.Checked' is used by the F3 key to toggle door animations.
@@ -827,9 +828,9 @@ namespace MapView
 					}
 					else if (miDoors.Checked) // switch to the doors' alt-tile (whether ufo-door or hinge-door)
 					{
-						if (_mainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
+						if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
 						{
-							foreach (Tilepart part in _mainViewUnderlay.MapBase.Parts)
+							foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
 								part.SetDoorToAlternateSprite();
 
 							Refresh();
@@ -845,7 +846,7 @@ namespace MapView
 
 				case UseMono:
 					UseMonoDraw = (bool)value;
-					_mainViewUnderlay.MainViewOverlay.Refresh();
+					MainViewUnderlay.MainViewOverlay.Refresh();
 					break;
 
 				case SaveWindowPositions:
@@ -853,7 +854,7 @@ namespace MapView
 					break;
 
 				case ShowGrid: // NOTE: 'miGrid.Checked' is used by the F4 key to toggle the grid on/off.
-					_mainViewUnderlay.MainViewOverlay.ShowGrid = (miGrid.Checked = (bool)value);
+					MainViewUnderlay.MainViewOverlay.ShowGrid = (miGrid.Checked = (bool)value);
 
 //					MainViewUnderlay.Instance.MainViewOverlay.ShowGrid = (bool)value;
 					break;
@@ -1094,7 +1095,7 @@ namespace MapView
 					case Keys.Right:
 					case Keys.Up:
 					case Keys.Down:
-						_mainViewUnderlay.MainViewOverlay.Navigate(keyData);
+						MainViewUnderlay.MainViewOverlay.Navigate(keyData);
 						return true;
 				}
 			}
@@ -1197,10 +1198,10 @@ namespace MapView
 
 		private void OnSaveAllClick(object sender, EventArgs e)
 		{
-			if (_mainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null)
 			{
-				_mainViewUnderlay.MapBase.SaveMap();
-				_mainViewUnderlay.MapBase.SaveRoutes();
+				MainViewUnderlay.MapBase.SaveMap();
+				MainViewUnderlay.MapBase.SaveRoutes();
 
 				MapChanged =
 				ViewerFormsManager.RouteView   .Control     .RoutesChanged =
@@ -1211,18 +1212,18 @@ namespace MapView
 
 		internal void OnSaveMapClick(object sender, EventArgs e)
 		{
-			if (_mainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null)
 			{
-				_mainViewUnderlay.MapBase.SaveMap();
+				MainViewUnderlay.MapBase.SaveMap();
 				MapChanged = false;
 			}
 		}
 
 		internal void OnSaveRoutesClick(object sender, EventArgs e)
 		{
-			if (_mainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null)
 			{
-				_mainViewUnderlay.MapBase.SaveRoutes();
+				MainViewUnderlay.MapBase.SaveRoutes();
 
 				ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 				ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
@@ -1231,15 +1232,15 @@ namespace MapView
 
 		private void OnSaveAsClick(object sender, EventArgs e)
 		{
-			if (   _mainViewUnderlay.MapBase != null				// safety. Not sure if a 'MapBase' could be
-				&& _mainViewUnderlay.MapBase.Descriptor != null)	// instantiated without a 'Descriptor'.
+			if (   MainViewUnderlay.MapBase != null				// safety. Not sure if a 'MapBase' could be
+				&& MainViewUnderlay.MapBase.Descriptor != null)	// instantiated without a 'Descriptor'.
 			{
 				var sfd = new SaveFileDialog();
 
-				sfd.FileName = _mainViewUnderlay.MapBase.Descriptor.Label + GlobalsXC.MapExt;
+				sfd.FileName = MainViewUnderlay.MapBase.Descriptor.Label + GlobalsXC.MapExt;
 				sfd.Filter = "Map files (*.MAP)|*.MAP|All files (*.*)|*.*";
 				sfd.Title = "Save Map and subordinate Route file as ...";
-				sfd.InitialDirectory = Path.Combine(_mainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
+				sfd.InitialDirectory = Path.Combine(MainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
 
 				if (sfd.ShowDialog() == DialogResult.OK)
 				{
@@ -1269,8 +1270,8 @@ namespace MapView
 						//LogFile.WriteLine("pfMaps= " + pfMaps);
 						//LogFile.WriteLine("pfRoutes= " + pfRoutes);
 
-						_mainViewUnderlay.MapBase.SaveMap(pfMaps);
-						_mainViewUnderlay.MapBase.SaveRoutes(pfRoutes);
+						MainViewUnderlay.MapBase.SaveMap(pfMaps);
+						MainViewUnderlay.MapBase.SaveRoutes(pfRoutes);
 
 //						MapChanged = // ohreally - does this change the label in the statusbar etc. nope, this is effectively exporting the Map and Routes
 //						ViewerFormsManager.RouteView   .Control     .RoutesChanged =
@@ -1315,12 +1316,12 @@ namespace MapView
 		{
 			string changed = null;
 
-			if (_mainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null)
 			{
-				if (_mainViewUnderlay.MapBase.MapChanged)
+				if (MainViewUnderlay.MapBase.MapChanged)
 					changed = "Map";
 
-				if (_mainViewUnderlay.MapBase.RoutesChanged)
+				if (MainViewUnderlay.MapBase.RoutesChanged)
 				{
 					if (!String.IsNullOrEmpty(changed))
 						changed += " and ";
@@ -1360,17 +1361,17 @@ namespace MapView
 						break;
 
 					case DialogResult.Retry:
-						if (_mainViewUnderlay.MapBase != null)
+						if (MainViewUnderlay.MapBase != null)
 						{
-							if (_mainViewUnderlay.MapBase.MapChanged)
+							if (MainViewUnderlay.MapBase.MapChanged)
 							{
-								_mainViewUnderlay.MapBase.SaveMap();
+								MainViewUnderlay.MapBase.SaveMap();
 								MapChanged = false;
 							}
 
-							if (_mainViewUnderlay.MapBase.RoutesChanged)
+							if (MainViewUnderlay.MapBase.RoutesChanged)
 							{
-								_mainViewUnderlay.MapBase.SaveRoutes();
+								MainViewUnderlay.MapBase.SaveRoutes();
 
 								ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 								ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
@@ -1455,12 +1456,12 @@ namespace MapView
 
 		private void OnSaveImageClick(object sender, EventArgs e)
 		{
-			if (_mainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null)
 			{
-				sfdSaveDialog.FileName = _mainViewUnderlay.MapBase.Descriptor.Label;
+				sfdSaveDialog.FileName = MainViewUnderlay.MapBase.Descriptor.Label;
 				if (sfdSaveDialog.ShowDialog() == DialogResult.OK)
 				{
-					_mainViewUnderlay.MapBase.Screenshot(sfdSaveDialog.FileName);
+					MainViewUnderlay.MapBase.Screenshot(sfdSaveDialog.FileName);
 				}
 			}
 		}
@@ -1478,11 +1479,11 @@ namespace MapView
 
 		private void OnMapResizeClick(object sender, EventArgs e)
 		{
-			if (_mainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null)
 			{
 				using (var f = new MapResizeInputBox())
 				{
-					f.MapBase = _mainViewUnderlay.MapBase;
+					f.MapBase = MainViewUnderlay.MapBase;
 
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
@@ -1494,18 +1495,18 @@ namespace MapView
 												f.Levs,
 												f.ZType);
 
-						if (!_mainViewUnderlay.MapBase.MapChanged && ((bit & 0x1) != 0))
+						if (!MainViewUnderlay.MapBase.MapChanged && ((bit & 0x1) != 0))
 							MapChanged = true;
 
-						if (!_mainViewUnderlay.MapBase.RoutesChanged && (bit & 0x2) != 0)
+						if (!MainViewUnderlay.MapBase.RoutesChanged && (bit & 0x2) != 0)
 						{
 							ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 							ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = true;
 						}
 
-						_mainViewUnderlay.ForceResize();
+						MainViewUnderlay.ForceResize();
 
-						_mainViewUnderlay.MainViewOverlay.FirstClick = false;
+						MainViewUnderlay.MainViewOverlay.FirstClick = false;
 
 						ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
 						ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  @base.Level != 0);
@@ -1531,23 +1532,23 @@ namespace MapView
 
 		private void OnInfoClick(object sender, EventArgs e)
 		{
-			if (_mainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null)
 			{
 				var f = new MapInfoOutputBox();
 				f.Show();
-				f.Analyze(_mainViewUnderlay.MapBase as MapFileChild);
+				f.Analyze(MainViewUnderlay.MapBase as MapFileChild);
 			}
 		}
 
 		private void OnScanGClick(object sender, EventArgs e)
 		{
-			if (_mainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null)
 			{
 				if (!miScanG.Checked)
 				{
 					miScanG.Checked = true;
 
-					ScanG = new ScanGViewer(_mainViewUnderlay.MapBase);
+					ScanG = new ScanGViewer(MainViewUnderlay.MapBase);
 					ScanG.Show();
 				}
 				else
@@ -1617,8 +1618,8 @@ namespace MapView
 			ViewerFormsManager.ToolFactory.DisableScaleChecked();
 			Globals.AutoScale = false;
 
-			_mainViewUnderlay.SetOverlaySize();
-			_mainViewUnderlay.UpdateScrollers();
+			MainViewUnderlay.SetOverlaySize();
+			MainViewUnderlay.UpdateScrollers();
 
 			Refresh();
 		}
@@ -1628,10 +1629,10 @@ namespace MapView
 			Globals.AutoScale = ViewerFormsManager.ToolFactory.ToggleScaleChecked();
 			if (Globals.AutoScale)
 			{
-				_mainViewUnderlay.SetScale();
-				_mainViewUnderlay.SetOverlaySize();
+				MainViewUnderlay.SetScale();
+				MainViewUnderlay.SetOverlaySize();
 			}
-			_mainViewUnderlay.UpdateScrollers();
+			MainViewUnderlay.UpdateScrollers();
 		}
 
 
@@ -1927,9 +1928,9 @@ namespace MapView
 			switch (e.Button)
 			{
 				case MouseButtons.Right:
-					if (_mainViewUnderlay.MapBase == null					// prevents a bunch of problems, like looping dialogs when
-						|| (   !_mainViewUnderlay.MapBase.MapChanged		// returning from the Tileset Editor and the Maptree-node
-							&& !_mainViewUnderlay.MapBase.RoutesChanged))	// gets re-selected, causing this class-object to react as
+					if (MainViewUnderlay.MapBase == null					// prevents a bunch of problems, like looping dialogs when
+						|| (   !MainViewUnderlay.MapBase.MapChanged			// returning from the Tileset Editor and the Maptree-node
+							&& !MainViewUnderlay.MapBase.RoutesChanged))	// gets re-selected, causing this class-object to react as
 					{														// if a different Map is going to load ... cf, LoadSelectedMap()
 						cmMapTreeMenu.MenuItems.Clear();
 
@@ -1988,15 +1989,15 @@ namespace MapView
 								break;
 
 							case DialogResult.Retry:
-								if (_mainViewUnderlay.MapBase.MapChanged)
+								if (MainViewUnderlay.MapBase.MapChanged)
 								{
-									_mainViewUnderlay.MapBase.SaveMap();
+									MainViewUnderlay.MapBase.SaveMap();
 									MapChanged = false;
 								}
 
-								if (_mainViewUnderlay.MapBase.RoutesChanged)
+								if (MainViewUnderlay.MapBase.RoutesChanged)
 								{
-									_mainViewUnderlay.MapBase.SaveRoutes();
+									MainViewUnderlay.MapBase.SaveRoutes();
 
 									ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 									ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
@@ -2617,16 +2618,16 @@ namespace MapView
 //					miRegenOccult.Enabled = true; // disabled in designer w/ Visible=FALSE.
 //					miExport     .Enabled = true; // disabled in designer w/ Visible=FALSE.
 
-					_mainViewUnderlay.MainViewOverlay.FirstClick = false;
+					MainViewUnderlay.MainViewOverlay.FirstClick = false;
 
 					if (descriptor.Pal == Palette.TftdBattle) // used by Mono only ->
 					{
-						_mainViewUnderlay.MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle;
+						MainViewUnderlay.MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle;
 					}
 					else // default to ufo-battle palette
-						_mainViewUnderlay.MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle;
+						MainViewUnderlay.MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle;
 
-					_mainViewUnderlay.MapBase = @base;
+					MainViewUnderlay.MapBase = @base;
 
 					ViewerFormsManager.ToolFactory.EnableScaleButton();
 					ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
@@ -2691,9 +2692,9 @@ namespace MapView
 		/// <param name="animate">true to animate any doors</param>
 		private void ToggleDoorSprites(bool animate)
 		{
-			if (_mainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
+			if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
 			{
-				foreach (Tilepart part in _mainViewUnderlay.MapBase.Parts)
+				foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
 					part.SetDoorSprites(animate);
 
 				Refresh();
@@ -2709,7 +2710,7 @@ namespace MapView
 		/// <returns></returns>
 		private DialogResult SaveAlertMap()
 		{
-			if (_mainViewUnderlay.MapBase != null && _mainViewUnderlay.MapBase.MapChanged)
+			if (MainViewUnderlay.MapBase != null && MainViewUnderlay.MapBase.MapChanged)
 			{
 				switch (MessageBox.Show(
 									this,
@@ -2721,7 +2722,7 @@ namespace MapView
 									0))
 				{
 					case DialogResult.Yes:		// save & clear MapChanged flag
-						_mainViewUnderlay.MapBase.SaveMap();
+						MainViewUnderlay.MapBase.SaveMap();
 						goto case DialogResult.No;
 
 					case DialogResult.No:		// don't save & clear MapChanged flag
@@ -2744,7 +2745,7 @@ namespace MapView
 		/// <returns></returns>
 		private DialogResult SaveAlertRoutes()
 		{
-			if (_mainViewUnderlay.MapBase != null && _mainViewUnderlay.MapBase.RoutesChanged)
+			if (MainViewUnderlay.MapBase != null && MainViewUnderlay.MapBase.RoutesChanged)
 			{
 				switch (MessageBox.Show(
 									this,
@@ -2756,7 +2757,7 @@ namespace MapView
 									0))
 				{
 					case DialogResult.Yes:		// save & clear RoutesChanged flag
-						_mainViewUnderlay.MapBase.SaveRoutes();
+						MainViewUnderlay.MapBase.SaveRoutes();
 						goto case DialogResult.No;
 
 					case DialogResult.No:		// don't save & clear RoutesChanged flag
@@ -2818,11 +2819,11 @@ namespace MapView
 		/// <param name="lev"></param>
 		internal void sb_PrintPosition(int col, int row, int lev)
 		{
-			if (_mainViewUnderlay.MainViewOverlay.FirstClick)
+			if (MainViewUnderlay.MainViewOverlay.FirstClick)
 				tsslPosition.Text = String.Format(
 												System.Globalization.CultureInfo.CurrentCulture,
 												"c {0}  r {1}  L {2}",
-												col + 1, row + 1, _mainViewUnderlay.MapBase.MapSize.Levs - lev); // 1-based count.
+												col + 1, row + 1, MainViewUnderlay.MapBase.MapSize.Levs - lev); // 1-based count.
 		}
 
 		internal void sb_PrintScale()

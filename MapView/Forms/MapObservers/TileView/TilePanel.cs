@@ -402,11 +402,11 @@ namespace MapView.Forms.MapObservers.TileViews
 				var graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-				var mainViewOverlay = XCMainWindow.Instance._mainViewUnderlay.MainViewOverlay;
+				var overlay = XCMainWindow.Instance.MainViewUnderlay.MainViewOverlay;
 
 				var spriteAttributes = new ImageAttributes();
-				if (mainViewOverlay._spriteShadeEnabled)
-					spriteAttributes.SetGamma(mainViewOverlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
+				if (overlay._spriteShadeEnabled)
+					spriteAttributes.SetGamma(overlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
 
 				int x = 0;
 				int y = 0;

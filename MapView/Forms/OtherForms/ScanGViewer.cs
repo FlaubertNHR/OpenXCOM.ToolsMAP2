@@ -117,11 +117,11 @@ namespace MapView
 
 			var graphics = e.Graphics;
 
-			var mainViewOverlay = XCMainWindow.Instance._mainViewUnderlay.MainViewOverlay;
+			var overlay = XCMainWindow.Instance.MainViewUnderlay.MainViewOverlay;
 
 			var spriteAttributes = new ImageAttributes();
-			if (mainViewOverlay._spriteShadeEnabled)
-				spriteAttributes.SetGamma(mainViewOverlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
+			if (overlay._spriteShadeEnabled)
+				spriteAttributes.SetGamma(overlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
 
 
 			var pic = new Bitmap(
