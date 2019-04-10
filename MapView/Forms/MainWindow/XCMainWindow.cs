@@ -1075,6 +1075,21 @@ namespace MapView
 					e.SuppressKeyPress = true;
 				}
 			}
+			else
+			{
+				switch (e.KeyCode)
+				{
+					case Keys.Add:
+					case Keys.Subtract:
+					case Keys.PageDown:
+					case Keys.PageUp:
+					case Keys.Home:
+					case Keys.End:
+						MainViewUnderlay.MainViewOverlay.Navigate(e.KeyData);
+						e.SuppressKeyPress = true;
+						break;
+				}
+			}
 			base.OnKeyDown(e);
 		}
 
@@ -1096,6 +1111,15 @@ namespace MapView
 					case Keys.Up:
 					case Keys.Down:
 						MainViewUnderlay.MainViewOverlay.Navigate(keyData);
+						return true;
+				}
+			}
+			else
+			{
+				switch (keyData)
+				{
+					case Keys.Tab:
+						MainViewUnderlay.MainViewOverlay.Select();
 						return true;
 				}
 			}

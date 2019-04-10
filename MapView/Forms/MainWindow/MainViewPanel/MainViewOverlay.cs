@@ -584,20 +584,60 @@ namespace MapView
 		#region Keyboard navigation
 		internal void Navigate(Keys keyData)
 		{
-			LogFile.WriteLine("MainViewOverlay.Navigate() " + keyData);
-
-			switch (keyData)
+			if (MapBase != null)
 			{
-				case Keys.Right:
-					if (!FirstClick) // select tile(0,0)
+				if (!FirstClick)
+				{
+					MapBase.Location = new MapLocation(0, 0, MapBase.Level);
+
+					var pt = new Point(0,0);
+					ProcessSelection(pt, pt);
+				}
+				else
+				{
+					var pt = new Point(0,0);
+					switch (keyData)
 					{
-						MapBase.Location = new MapLocation(0, 0, MapBase.Level);
-						Refresh();
+						case Keys.Up:    pt.Y = -1; break;
+						case Keys.Right: pt.X = +1; break;
+						case Keys.Down:  pt.Y = +1; break;
+						case Keys.Left:  pt.X = -1; break;
+
+						case Keys.PageUp:   pt.X = +1; pt.Y = -1; break;
+						case Keys.PageDown: pt.X = +1; pt.Y = +1; break;
+						case Keys.End:      pt.X = -1; pt.Y = +1; break;
+						case Keys.Home:     pt.X = -1; pt.Y = -1; break;
+
+						case Keys.Add:
+						{
+							var args = new MouseEventArgs(
+														MouseButtons.None,
+														0, 0, 0, 1);
+							OnMouseWheel(args);
+							break;
+						}
+
+						case Keys.Subtract:
+						{
+							var args = new MouseEventArgs(
+														MouseButtons.None,
+														0, 0, 0, -1);
+							OnMouseWheel(args);
+							break;
+						}
 					}
-					else
+
+					if (pt.X != 0 || pt.Y != 0)
 					{
+						MapBase.Location = new MapLocation(
+														MapBase.Location.Row + pt.Y,
+														MapBase.Location.Col + pt.X,
+														MapBase.Level);
+						pt.X = MapBase.Location.Col;
+						pt.Y = MapBase.Location.Row;
+						ProcessSelection(pt, pt);
 					}
-					break;
+				}
 			}
 		}
 		#endregion Keyboard navigation
