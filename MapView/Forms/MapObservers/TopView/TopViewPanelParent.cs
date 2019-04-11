@@ -320,6 +320,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		#region Events (override)
 		/// <summary>
 		/// Performs edit-functions or saves the Mapfile via MainView.
+		/// @note Navigation keys are handled by 'KeyPreview' at the form level.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)

@@ -33,7 +33,7 @@ namespace MapView
 		private const string title = "Map Editor ||";
 
 		private const double ScaleDelta = 0.125;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -50,7 +50,7 @@ namespace MapView
 		private bool _allowBringToFront;
 
 		private Color _colorSearch;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (static)
@@ -62,7 +62,7 @@ namespace MapView
 
 		public static bool UseMonoDraw
 		{ get; private set; }
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -122,7 +122,7 @@ namespace MapView
 		/// </summary>
 		internal TreeNode Searched
 		{ private get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -431,7 +431,7 @@ namespace MapView
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 			Show();
 		}
-		#endregion
+		#endregion cTor
 
 
 		/// <summary>
@@ -996,10 +996,10 @@ namespace MapView
 //				}
 			}
 		}
-		#endregion
+		#endregion Options
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		/// <summary>
 		/// Overrides the OnActivated event. Brings any other open viewers to
 		/// the top of the desktop, along with this.
@@ -1129,7 +1129,7 @@ namespace MapView
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
-		#endregion
+		#endregion Events (override)
 
 
 		#region Events
@@ -2585,7 +2585,7 @@ namespace MapView
 			}
 			ResourceInfo.ReloadSprites = false;
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods (static)
@@ -2610,7 +2610,7 @@ namespace MapView
 					sw.WriteLine(sr.ReadLine());
 			}
 		}
-		#endregion
+		#endregion Methods (static)
 
 
 		#region Methods
@@ -2869,6 +2869,6 @@ namespace MapView
 										"{0} x {1}",
 										tx, ty);
 		}
-		#endregion
+		#endregion Methods
 	}
 }

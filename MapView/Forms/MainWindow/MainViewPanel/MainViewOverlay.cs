@@ -586,7 +586,7 @@ namespace MapView
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
-			Select();
+//			Select();
 
 			if (MapBase != null)
 			{
