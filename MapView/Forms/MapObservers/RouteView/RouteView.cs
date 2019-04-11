@@ -1286,28 +1286,26 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void SelectNode(int id)
 		{
 			var node = MapFile.Routes[id];
+			var loc = new Point(node.Col, node.Row);
 
 			if (node.Lev != MapFile.Level)
 				MapFile.Level = node.Lev;			// fire SelectLevelEvent.
 
 			MapFile.Location = new MapLocation(		// fire SelectLocationEvent.
-											node.Row,
-											node.Col,
+											loc.Y, loc.X,
 											MapFile.Level);
 
-			var start = new Point(node.Col, node.Row);
-
-			MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(start, start);
+			MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
 
 			var args = new RoutePanelEventArgs();
 			args.MouseButton = MouseButtons.Left;
-			args.Tile        = MapFile[node.Row, node.Col];
+			args.Tile        = MapFile[loc.Y, loc.X];
 			args.Location    = MapFile.Location;
 
 			OnRoutePanelMouseDown(null, args);
 
 
-			RoutePanelParent.SelectedPosition = start;
+			RoutePanelParent.SelectedPosition = loc;
 
 			ViewerFormsManager.RouteView   .Control     .Refresh();
 			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
@@ -1328,19 +1326,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void OnLinkMouseEnter(object sender, EventArgs e)
 		{
 			int slot;
-
-			string tag = (sender as Control).Tag as String;
-			if (tag == "L1")
-				slot = 0;
-			else if (tag == "L2")
-				slot = 1;
-			else if (tag == "L3")
-				slot = 2;
-			else if (tag == "L4")
-				slot = 3;
-			else //if (tag == "L5")
-				slot = 4;
-
+			switch ((sender as Control).Tag as String)
+			{
+				case "L1": slot = 0; break;
+				case "L2": slot = 1; break;
+				case "L3": slot = 2; break;
+				case "L4": slot = 3; break;
+				default:   slot = 4; break; // tag == "L5"
+			}
 			SpotGoDestination(slot); // TODO: RouteView/TopRouteView(Route)
 		}
 

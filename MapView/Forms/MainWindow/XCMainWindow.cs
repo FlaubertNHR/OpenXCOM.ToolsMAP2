@@ -1075,7 +1075,7 @@ namespace MapView
 					e.SuppressKeyPress = true;
 				}
 			}
-			else if (!ToolstripFactory.Instance.isSearchFocused())
+			else if (MainViewUnderlay.MainViewOverlay.Focused)
 			{
 				switch (e.KeyCode)
 				{
@@ -1102,7 +1102,7 @@ namespace MapView
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (!tvMaps.Focused && !ToolstripFactory.Instance.isSearchFocused())
+			if (MainViewUnderlay.MainViewOverlay.Focused)
 			{
 				switch (keyData)
 				{

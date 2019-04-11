@@ -54,7 +54,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			else
 				MainMenusManager.ViewerKeyDown(e); // note this can also suppress the key
 
-			if (!e.SuppressKeyPress)
+			if (!e.SuppressKeyPress && Control.TopViewPanel.Focused)
 			{
 				switch (e.KeyCode)
 				{

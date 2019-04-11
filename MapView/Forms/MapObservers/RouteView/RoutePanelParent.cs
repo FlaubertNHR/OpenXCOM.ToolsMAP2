@@ -295,8 +295,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					args.MouseButton = e.Button;
 					args.Tile        = MapFile[loc.Y, loc.X];
 					args.Location    = new MapLocation(
-													loc.Y,
-													loc.X,
+													loc.Y, loc.X,
 													MapFile.Level);
 
 					RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()

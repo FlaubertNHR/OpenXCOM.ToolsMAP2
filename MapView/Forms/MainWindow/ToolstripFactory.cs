@@ -60,11 +60,6 @@ namespace MapView.Forms.MainWindow
 
 
 		#region Methods
-		internal bool isSearchFocused()
-		{
-			return _tstbSearch.Focused;
-		}
-
 		/// <summary>
 		/// Adds a textfield for search to the specified toolstrip.
 		/// NOTE: Appears only in MainView.

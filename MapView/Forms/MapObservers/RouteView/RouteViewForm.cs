@@ -54,8 +54,45 @@ namespace MapView.Forms.MapObservers.RouteViews
 			else
 				MainMenusManager.ViewerKeyDown(e);
 
+			if (!e.SuppressKeyPress && Control.RoutePanel.Focused)
+			{
+				switch (e.KeyCode)
+				{
+					case Keys.Add:
+					case Keys.Subtract:
+					case Keys.PageDown:
+					case Keys.PageUp:
+					case Keys.Home:
+					case Keys.End:
+						MainViewUnderlay.Instance.MainViewOverlay.Navigate(e.KeyData);
+						e.SuppressKeyPress = true;
+						break;
+				}
+			}
 			base.OnKeyDown(e);
 		}
+
+		/// <summary>
+		/// Stops keys that shall be used for navigating the tiles from doing
+		/// anything stupid instead.
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <param name="keyData"></param>
+		/// <returns></returns>
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			switch (keyData)
+			{
+				case Keys.Left:
+				case Keys.Right:
+				case Keys.Up:
+				case Keys.Down:
+					MainViewUnderlay.Instance.MainViewOverlay.Navigate(keyData);
+					return true;
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
 
 		/// <summary>
 		/// Handles form closing event.
