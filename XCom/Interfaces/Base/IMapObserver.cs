@@ -21,8 +21,8 @@ namespace XCom.Interfaces.Base
 //		{ get; set; }
 
 
-		void OnLocationSelectedObserver(LocationSelectedEventArgs args);
-		void OnLevelChangedObserver(LevelChangedEventArgs args);
+		void OnSelectLocationObserver(SelectLocationEventArgs args);
+		void OnSelectLevelObserver(SelectLevelEventArgs args);
 	}
 
 
@@ -30,7 +30,7 @@ namespace XCom.Interfaces.Base
 	/// EventArgs with a MapLocation and MapTile for when a LocationSelected
 	/// event fires.
 	/// </summary>
-	public sealed class LocationSelectedEventArgs
+	public sealed class SelectLocationEventArgs
 		:
 			EventArgs
 	{
@@ -51,7 +51,7 @@ namespace XCom.Interfaces.Base
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="baseTile"></param>
-		internal LocationSelectedEventArgs(MapLocation location, MapTileBase baseTile)
+		internal SelectLocationEventArgs(MapLocation location, MapTileBase baseTile)
 		{
 			_location = location;
 			_baseTile = baseTile;
@@ -61,7 +61,7 @@ namespace XCom.Interfaces.Base
 	/// <summary>
 	/// EventArgs for when a LevelChanged event fires.
 	/// </summary>
-	public sealed class LevelChangedEventArgs
+	public sealed class SelectLevelEventArgs
 		:
 			EventArgs
 	{
@@ -75,7 +75,7 @@ namespace XCom.Interfaces.Base
 		/// cTor.
 		/// </summary>
 		/// <param name="level">the new level</param>
-		internal LevelChangedEventArgs(int level)
+		internal SelectLevelEventArgs(int level)
 		{
 			_level = level;
 		}

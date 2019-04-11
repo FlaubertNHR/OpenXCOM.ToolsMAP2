@@ -44,7 +44,7 @@ namespace MapView
 		/// TopViewPanelParent.
 		/// </summary>
 		/// <param name="args"></param>
-		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
+		public virtual void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{}
 
 		/// <summary>
@@ -52,7 +52,7 @@ namespace MapView
 		/// TopViewPanelParent.
 		/// </summary>
 		/// <param name="args"></param>
-		public virtual void OnLevelChangedObserver(LevelChangedEventArgs args)
+		public virtual void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{}
 
 //		/// <summary>

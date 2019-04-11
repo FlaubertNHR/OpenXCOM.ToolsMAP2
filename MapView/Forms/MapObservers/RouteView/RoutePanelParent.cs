@@ -247,7 +247,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				var loc = GetTileLocation(e.X, e.Y);
 				if (loc.X != -1)
 				{
-					MapFile.Location = new MapLocation( // fire LocationSelectedEvent
+					MapFile.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y,
 													loc.X,
 													MapFile.Level);

@@ -20,7 +20,8 @@ namespace MapView
 			IMapObserver
 	{
 		#region IMapObserver requirements
-		private readonly Dictionary<string, IMapObserver> _panels = new Dictionary<string, IMapObserver>();
+		private readonly Dictionary<string, IMapObserver> _panels =
+					 new Dictionary<string, IMapObserver>();
 		public Dictionary<string, IMapObserver> Panels
 		{
 			get { return _panels; }
@@ -55,7 +56,7 @@ namespace MapView
 		/// Satisfies IMapObserver.
 		/// </summary>
 		/// <param name="args"></param>
-		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
+		public virtual void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
 			Refresh();
 		}
@@ -64,7 +65,7 @@ namespace MapView
 		/// Satisfies IMapObserver.
 		/// </summary>
 		/// <param name="args"></param>
-		public virtual void OnLevelChangedObserver(LevelChangedEventArgs args)
+		public virtual void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{
 			Refresh();
 		}

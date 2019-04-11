@@ -9,8 +9,8 @@ using XCom.Services;
 namespace XCom.Interfaces.Base
 {
 	#region Delegates
-	public delegate void LocationSelectedEventHandler(LocationSelectedEventArgs e);
-	public delegate void LevelChangedEventHandler(LevelChangedEventArgs e);
+	public delegate void SelectLocationEventHandler(SelectLocationEventArgs e);
+	public delegate void SelectLevelEventHandler(SelectLevelEventArgs e);
 	#endregion
 
 
@@ -20,8 +20,8 @@ namespace XCom.Interfaces.Base
 	public class MapFileBase
 	{
 		#region Events
-		public event LocationSelectedEventHandler LocationSelectedEvent;
-		public event LevelChangedEventHandler LevelChangedEvent;
+		public event SelectLocationEventHandler SelectLocationEvent;
+		public event SelectLevelEventHandler SelectLevelEvent;
 		#endregion
 
 
@@ -50,8 +50,8 @@ namespace XCom.Interfaces.Base
 			{
 				_level = Math.Max(0, Math.Min(value, MapSize.Levs - 1));
 
-				if (LevelChangedEvent != null)
-					LevelChangedEvent(new LevelChangedEventArgs(_level));
+				if (SelectLevelEvent != null)
+					SelectLevelEvent(new SelectLevelEventArgs(_level));
 			}
 		}
 
@@ -82,7 +82,7 @@ namespace XCom.Interfaces.Base
 		private MapLocation _location;
 		/// <summary>
 		/// Gets/Sets the currently selected location. Setting the location will
-		/// fire LocationSelectedEvent.
+		/// fire SelectLocationEvent.
 		/// </summary>
 		public MapLocation Location
 		{
@@ -94,8 +94,8 @@ namespace XCom.Interfaces.Base
 				{
 					_location = value;
 
-					if (LocationSelectedEvent != null)
-						LocationSelectedEvent(new LocationSelectedEventArgs(
+					if (SelectLocationEvent != null)
+						SelectLocationEvent(new SelectLocationEventArgs(
 																		_location,
 																		this[_location.Row,
 																			 _location.Col]));

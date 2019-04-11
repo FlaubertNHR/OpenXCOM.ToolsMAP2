@@ -213,7 +213,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// Inherited from IMapObserver through MapObserverControl0.
 		/// </summary>
 		/// <param name="args"></param>
-		public override void OnLocationSelectedObserver(LocationSelectedEventArgs args)
+		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
 			_col = args.Location.Col;
 			_row = args.Location.Row;
@@ -226,7 +226,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// Inherited from IMapObserver through MapObserverControl0.
 		/// </summary>
 		/// <param name="args"></param>
-		public override void OnLevelChangedObserver(LevelChangedEventArgs args)
+		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{
 			_lev = args.Level;
 
@@ -1288,9 +1288,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			var node = MapFile.Routes[id];
 
 			if (node.Lev != MapFile.Level)
-				MapFile.Level = node.Lev;			// fire LevelChangedEvent.
+				MapFile.Level = node.Lev;			// fire SelectLevelEvent.
 
-			MapFile.Location = new MapLocation(		// fire LocationSelectedEvent.
+			MapFile.Location = new MapLocation(		// fire SelectLocationEvent.
 											node.Row,
 											node.Col,
 											MapFile.Level);
