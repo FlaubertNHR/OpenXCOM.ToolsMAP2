@@ -582,35 +582,35 @@ namespace MapView
 
 
 		#region Keyboard navigation
+		/// <summary>
+		/// Keyboard navigation called by XCMainWindow (form-level) key events
+		/// OnKeyDown() and ProcessCmdKey().
+		/// </summary>
+		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
 			if (MapBase != null)
 			{
 				if (!FirstClick)
 				{
+					_keyDeltaX =
+					_keyDeltaY = 0;
+
 					MapBase.Location = new MapLocation(0, 0, MapBase.Level);
 
 					var pt = new Point(0,0);
 					ProcessSelection(pt, pt);
 				}
-				else
+				else if (!keyData.HasFlag(Keys.Shift))
 				{
 					var pt = new Point(0,0);
 					switch (keyData)
 					{
-//						case Keys.Up:    pt.Y = -1; break;
-//						case Keys.Right: pt.X = +1; break;
-//						case Keys.Down:  pt.Y = +1; break;
-//						case Keys.Left:  pt.X = -1; break;
 						case Keys.Up:    pt.X = -1; pt.Y = -1; break;
 						case Keys.Right: pt.X = +1; pt.Y = -1; break;
 						case Keys.Down:  pt.X = +1; pt.Y = +1; break;
 						case Keys.Left:  pt.X = -1; pt.Y = +1; break;
 
-//						case Keys.PageUp:   pt.X = +1; pt.Y = -1; break;
-//						case Keys.PageDown: pt.X = +1; pt.Y = +1; break;
-//						case Keys.End:      pt.X = -1; pt.Y = +1; break;
-//						case Keys.Home:     pt.X = -1; pt.Y = -1; break;
 						case Keys.PageUp:   pt.Y = -1; break;
 						case Keys.PageDown: pt.X = +1; break;
 						case Keys.End:      pt.Y = +1; break;
@@ -618,27 +618,24 @@ namespace MapView
 
 //						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
 						case Keys.Add:
-						{
-							var args = new MouseEventArgs(
+							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
-														0, 0, 0, 1);
-							OnMouseWheel(args);
+														0, 0, 0, 1));
 							break;
-						}
 
 //						case Keys.Insert:
 						case Keys.Subtract:
-						{
-							var args = new MouseEventArgs(
+							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
-														0, 0, 0, -1);
-							OnMouseWheel(args);
+														0, 0, 0, -1));
 							break;
-						}
 					}
 
 					if (pt.X != 0 || pt.Y != 0)
 					{
+						_keyDeltaX =
+						_keyDeltaY = 0;
+
 						MapBase.Location = new MapLocation(
 														MapBase.Location.Row + pt.Y,
 														MapBase.Location.Col + pt.X,
@@ -648,8 +645,47 @@ namespace MapView
 						ProcessSelection(pt, pt);
 					}
 				}
+				else // [Shift] = drag select ->
+				{
+					var pt = new Point(0,0);
+					switch (keyData)
+					{
+						case (Keys.Shift | Keys.Up):    pt.X = -1; pt.Y = -1; break;
+						case (Keys.Shift | Keys.Right): pt.X = +1; pt.Y = -1; break;
+						case (Keys.Shift | Keys.Down):  pt.X = +1; pt.Y = +1; break;
+						case (Keys.Shift | Keys.Left):  pt.X = -1; pt.Y = +1; break;
+
+						case (Keys.Shift | Keys.PageUp):   pt.Y = -1; break;
+						case (Keys.Shift | Keys.PageDown): pt.X = +1; break;
+						case (Keys.Shift | Keys.End):      pt.Y = +1; break;
+						case (Keys.Shift | Keys.Home):     pt.X = -1; break;
+					}
+
+					if (pt.X != 0 || pt.Y != 0) // safety.
+					{
+						int pos = DragBeg.X + _keyDeltaX + pt.X;
+						if (pos > -1 && pos < MapBase.MapSize.Cols)
+							_keyDeltaX += pt.X;
+
+						pos = DragBeg.Y + _keyDeltaY + pt.Y;
+						if (pos > -1 && pos < MapBase.MapSize.Rows)
+							_keyDeltaY += pt.Y;
+
+						var loc = new Point(
+										MapBase.Location.Col + _keyDeltaX,
+										MapBase.Location.Row + _keyDeltaY);
+
+						_colOver = loc.X;
+						_rowOver = loc.Y;
+
+						ProcessSelection(DragBeg, loc);
+					}
+				}
 			}
 		}
+
+		int _keyDeltaX;
+		int _keyDeltaY;
 		#endregion Keyboard navigation
 
 
@@ -685,6 +721,9 @@ namespace MapView
 				if (   start.X > -1 && start.X < MapBase.MapSize.Cols
 					&& start.Y > -1 && start.Y < MapBase.MapSize.Rows)
 				{
+					_keyDeltaX =
+					_keyDeltaY = 0;
+
 					MapBase.Location = new MapLocation(
 													start.Y,
 													start.X,
