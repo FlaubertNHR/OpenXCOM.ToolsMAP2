@@ -608,6 +608,7 @@ namespace MapView
 						case Keys.End:      pt.X = -1; pt.Y = +1; break;
 						case Keys.Home:     pt.X = -1; pt.Y = -1; break;
 
+//						case Keys.Delete:
 						case Keys.Add:
 						{
 							var args = new MouseEventArgs(
@@ -617,6 +618,7 @@ namespace MapView
 							break;
 						}
 
+//						case Keys.Insert:
 						case Keys.Subtract:
 						{
 							var args = new MouseEventArgs(
@@ -758,8 +760,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets the drag-start point as a lesser value than the drag-end point.
-		/// See 'DragStart' for bounds.
+		/// Gets the drag-begin point as a lesser value than the drag-end point.
+		/// See 'DragBeg' for bounds.
 		/// </summary>
 		/// <returns>the lesser of two evils</returns>
 		internal Point GetDragBeg_abs()
@@ -782,8 +784,8 @@ namespace MapView
 		}
 
 
-		private Point _dragBeg = new Point(-1, -1);
-		private Point _dragEnd = new Point(-1, -1);
+		private Point _dragBeg = new Point(-1,-1);
+		private Point _dragEnd = new Point(-1,-1);
 
 		/// <summary>
 		/// Gets/Sets the drag-begin point.
@@ -795,10 +797,10 @@ namespace MapView
 			{
 				_dragBeg = value;
 
-				if      (_dragBeg.Y < 0) _dragBeg.Y = 0;
+				if      (_dragBeg.Y < 0)                     _dragBeg.Y = 0;
 				else if (_dragBeg.Y >= MapBase.MapSize.Rows) _dragBeg.Y = MapBase.MapSize.Rows - 1;
 
-				if      (_dragBeg.X < 0) _dragBeg.X = 0;
+				if      (_dragBeg.X < 0)                     _dragBeg.X = 0;
 				else if (_dragBeg.X >= MapBase.MapSize.Cols) _dragBeg.X = MapBase.MapSize.Cols - 1;
 			}
 		}
@@ -813,10 +815,10 @@ namespace MapView
 			{
 				_dragEnd = value;
 
-				if      (_dragEnd.Y < 0) _dragEnd.Y = 0;
+				if      (_dragEnd.Y < 0)                     _dragEnd.Y = 0;
 				else if (_dragEnd.Y >= MapBase.MapSize.Rows) _dragEnd.Y = MapBase.MapSize.Rows - 1;
 
-				if      (_dragEnd.X < 0) _dragEnd.X = 0;
+				if      (_dragEnd.X < 0)                     _dragEnd.X = 0;
 				else if (_dragEnd.X >= MapBase.MapSize.Cols) _dragEnd.X = MapBase.MapSize.Cols - 1;
 			}
 		}
