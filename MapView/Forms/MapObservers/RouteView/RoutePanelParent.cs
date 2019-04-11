@@ -248,8 +248,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				if (loc.X != -1)
 				{
 					MapFile.Location = new MapLocation( // fire SelectLocationEvent
-													loc.Y,
-													loc.X,
+													loc.Y, loc.X,
 													MapFile.Level);
 
 					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);	// set selected location for other viewers.

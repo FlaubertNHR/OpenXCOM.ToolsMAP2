@@ -1,9 +1,6 @@
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-
-using MapView.Forms.MainWindow;
 
 using XCom;
 using XCom.Interfaces.Base;
@@ -48,69 +45,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal TopViewPanel()
 		{
 			MainViewUnderlay.Instance.MainViewOverlay.MouseDragEvent += PathSelectedLozenge;
-
-			(this as Control).KeyDown += OnKeyDown;
-		}
-		#endregion
-
-
-		#region Eventcalls
-		private void OnKeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.Control)
-			{
-				switch (e.KeyCode)
-				{
-					case Keys.S:
-						XCMainWindow.Instance.OnSaveMapClick(null, EventArgs.Empty);
-						break;
-
-					case Keys.X:
-						MainViewUnderlay.Instance.MainViewOverlay.Copy();
-						MainViewUnderlay.Instance.MainViewOverlay.ClearSelection();
-						break;
-
-					case Keys.C:
-						MainViewUnderlay.Instance.MainViewOverlay.Copy();
-						break;
-
-					case Keys.V:
-						MainViewUnderlay.Instance.MainViewOverlay.Paste();
-						break;
-				}
-			}
-			else
-			{
-				switch (e.KeyCode)
-				{
-					case Keys.Delete:
-						MainViewUnderlay.Instance.MainViewOverlay.ClearSelection();
-						break;
-				}
-			}
-		}
-
-		protected override void OnMouseDown(MouseEventArgs e)
-		{
-			base.OnMouseDown(e); // fire the parent's OnMouseDown() handler also ...
-
-			Select();
-
-			if (e.Button == MouseButtons.Right)
-			{
-				ViewerFormsManager.TopView     .Control   .QuadrantsPanel.SetSelected(e.Button, 1);
-				ViewerFormsManager.TopRouteView.ControlTop.QuadrantsPanel.SetSelected(e.Button, 1);
-			}
-		}
-
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			base.OnPaint(e); // fire the DoubleBufferControl's OnPaint() handler also.
-
-			var graphics = e.Graphics;
-			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-			ControlPaint.DrawBorder3D(graphics, ClientRectangle, Border3DStyle.Etched);
 		}
 		#endregion
 

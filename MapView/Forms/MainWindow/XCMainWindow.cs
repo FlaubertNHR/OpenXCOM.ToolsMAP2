@@ -1075,7 +1075,7 @@ namespace MapView
 					e.SuppressKeyPress = true;
 				}
 			}
-			else
+			else if (!ToolstripFactory.Instance.isSearchFocused())
 			{
 				switch (e.KeyCode)
 				{
@@ -1102,8 +1102,8 @@ namespace MapView
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (!tvMaps.Focused)	// ie. Don't focus the Maptree on the following keypresses
-			{						// unless it already has focus. Thanks.
+			if (!tvMaps.Focused && !ToolstripFactory.Instance.isSearchFocused())
+			{
 				switch (keyData)
 				{
 					case Keys.Left:

@@ -420,6 +420,7 @@ namespace MapView
 			// tscPanel.LeftToolStripPanel
 			// 
 			this.tscPanel.LeftToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.tscPanel.LeftToolStripPanelVisible = false;
 			this.tscPanel.Location = new System.Drawing.Point(248, 0);
 			this.tscPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tscPanel.Name = "tscPanel";
@@ -427,6 +428,7 @@ namespace MapView
 			// tscPanel.RightToolStripPanel
 			// 
 			this.tscPanel.RightToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.tscPanel.RightToolStripPanelVisible = false;
 			this.tscPanel.Size = new System.Drawing.Size(384, 432);
 			this.tscPanel.TabIndex = 2;
 			this.tscPanel.TabStop = false;
@@ -445,7 +447,7 @@ namespace MapView
 			this.tsTools.Name = "tsTools";
 			this.tsTools.Padding = new System.Windows.Forms.Padding(0);
 			this.tsTools.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.tsTools.Size = new System.Drawing.Size(38, 25);
+			this.tsTools.Size = new System.Drawing.Size(107, 25);
 			this.tsTools.TabIndex = 0;
 			// 
 			// csSplitter

@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using MapView.Forms.MainWindow;
+
 using XCom;
 using XCom.Interfaces.Base;
 
@@ -90,6 +92,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		#endregion
 
 
+		#region Resize
 		/// <summary>
 		/// Called by TopView's resize event. Also fired by TileLozengeHeight
 		/// change, or by a straight MapBase change.
@@ -156,10 +159,12 @@ namespace MapView.Forms.MapObservers.TopViews
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
-
 			PathSelectedLozenge();
 		}
+		#endregion Resize
 
+
+		#region Draw
 		/// <summary>
 		/// Sets the graphics-path for a lozenge-border around all tiles that
 		/// are selected or being selected.
@@ -225,12 +230,14 @@ namespace MapView.Forms.MapObservers.TopViews
 		}
 
 		/// <summary>
-		/// Overrides DoubleBufferControl.RenderGraphics() - ie, OnPaint().
+		/// Overrides DoubleBufferedControl.RenderGraphics() - ie, OnPaint().
 		/// </summary>
 		/// <param name="graphics"></param>
 		protected override void RenderGraphics(Graphics graphics)
 		{
 			graphics.FillRectangle(SystemBrushes.Control, ClientRectangle);
+
+			ControlPaint.DrawBorder3D(graphics, ClientRectangle, Border3DStyle.Etched);
 
 			if (MapBase != null)
 			{
@@ -307,17 +314,36 @@ namespace MapView.Forms.MapObservers.TopViews
 					graphics.DrawPath(TopPens[TopView.SelectedColor], _lozSelected);
 			}
 		}
+		#endregion Draw
+
+
+		#region Events (override)
+		/// <summary>
+		/// Performs edit-functions or saves the Mapfile via MainView.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
+//			base.OnKeyDown(e);
+		}
 
 
 		private bool _isMouseDrag;
 
+		/// <summary>
+		/// Handles the MouseDown event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (MapBase != null)
+			Select();
+
+			if (MapBase != null) // safety.
 			{
 				var loc = GetTileLocation(e.X, e.Y);
-				if (   loc.Y > -1 && loc.Y < MapBase.MapSize.Rows
-					&& loc.X > -1 && loc.X < MapBase.MapSize.Cols)
+				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
+					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
 				{
 					// as long as MainViewOverlay.OnSelectLocationMain()
 					// fires before the subsidiary viewers' OnSelectLocationObserver()
@@ -339,13 +365,29 @@ namespace MapView.Forms.MapObservers.TopViews
 					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
 				}
 			}
+
+			if (e.Button == MouseButtons.Right)
+			{
+				ViewerFormsManager.TopView     .Control   .QuadrantsPanel.SetSelected(e.Button, 1);
+				ViewerFormsManager.TopRouteView.ControlTop.QuadrantsPanel.SetSelected(e.Button, 1);
+			}
+//			base.OnMouseDown(e);
 		}
 
+		/// <summary>
+		/// Handles the MouseUp event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			_isMouseDrag = false;
+//			base.OnMouseUp(e);
 		}
 
+		/// <summary>
+		/// Handles the MouseMove event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			var loc = GetTileLocation(e.X, e.Y);
@@ -362,8 +404,12 @@ namespace MapView.Forms.MapObservers.TopViews
 				else
 					Refresh(); // mouseover refresh for TopView.
 			}
+//			base.OnMouseMove(e);
 		}
+		#endregion Events (override)
 
+
+		#region Methods
 		/// <summary>
 		/// Converts a position from screen-coordinates to tile-location.
 		/// </summary>
@@ -375,8 +421,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			x -= _originX;
 			y -=  OffsetY;
 
-			double halfWidth  = _blobService.HalfWidth;
-			double halfHeight = _blobService.HalfHeight;
+			double halfWidth  = (double)_blobService.HalfWidth;
+			double halfHeight = (double)_blobService.HalfHeight;
 
 			double x1 = x / (halfWidth  * 2)
 					  + y / (halfHeight * 2);
@@ -386,6 +432,7 @@ namespace MapView.Forms.MapObservers.TopViews
 						(int)Math.Floor(x1),
 						(int)Math.Floor(x2));
 		}
+		#endregion Methods
 
 
 /*		/// <summary>

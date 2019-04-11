@@ -40,7 +40,7 @@ namespace XCom.Interfaces.Base
 		private int _level;
 		/// <summary>
 		/// Gets this MapBase's currently displayed level.
-		/// Changing level will fire a LevelChanged event.
+		/// Changing level will fire a SelectLevelEvent event.
 		/// WARNING: Level 0 is the top level of the displayed Map.
 		/// </summary>
 		public int Level

@@ -56,8 +56,6 @@ namespace MapView
 			get { return _mapBase; }
 			set
 			{
-				//XCom.LogFile.WriteLine("MainViewUnderlay.MapBase set");
-
 				MainViewOverlay.MapBase = value;
 
 				if (_mapBase != null)
@@ -72,9 +70,6 @@ namespace MapView
 					_mapBase.SelectLevelEvent    += MainViewOverlay.OnSelectLevelMain;
 
 					SetOverlaySize();
-
-//					DragStart = _dragStart;	// this might be how to give drags their legitimate
-//					DragEnd   = _dragEnd;	// values after initialization to Point(-1/-1).
 				}
 
 				OnResize(EventArgs.Empty);
@@ -96,14 +91,6 @@ namespace MapView
 
 			_scrollBarH.Dock = DockStyle.Bottom;
 			_scrollBarH.Scroll += OnScrollHori;
-
-//			var mainViewOverlay = new MainViewOverlay(); // what's this for. nothing.
-//			if (_mainViewOverlay != null)
-//			{
-//				mainViewOverlay.MapBase = _mainViewOverlay.MapBase;
-//				Controls.Remove(_mainViewOverlay);
-//			}
-//			_mainViewOverlay = mainViewOverlay;
 
 			Controls.AddRange(new Control[]
 			{

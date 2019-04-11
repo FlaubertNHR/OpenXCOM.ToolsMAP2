@@ -25,10 +25,10 @@ namespace DSShared.Windows
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region EventCalls
+		#region Events (override)
 		/// <summary>
 		/// Paints a surface.
 		/// </summary>
@@ -39,7 +39,7 @@ namespace DSShared.Windows
 
 			RenderGraphics(graphics);
 		}
-		#endregion
+		#endregion Events (override)
 
 
 		#region Methods
@@ -48,17 +48,17 @@ namespace DSShared.Windows
 		/// </summary>
 		protected virtual void RenderGraphics(Graphics graphics)
 		{}
-		#endregion
+		#endregion Methods
 	}
 
-/*	public class DoubleBufferControl
+/*	public class DoubleBufferedControl
 		:
 			Control
 	{
 		private BufferedGraphicsContext context;
 		private BufferedGraphics backBuffer;
 
-		public DoubleBufferControl()
+		public DoubleBufferedControl()
 		{
 			this.SuspendLayout();
 			this.BackColor = System.Drawing.Color.Black;

@@ -309,41 +309,38 @@ namespace MapView
 
 
 		#region Events and Methods for the edit-functions
+		/// <summary>
+		/// Handles keyboard-input for editing and saving the Mapfile.
+		/// @note Navigation keys are handled by 'KeyPreview' at the form level.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			Edit(e);
+//			base.OnKeyDown(e);
+		}
+
+		/// <summary>
+		/// Performs edit-functions by keyboard or saves the Mapfile.
+		/// </summary>
+		/// <param name="e"></param>
+		internal void Edit(KeyEventArgs e)
 		{
 			if (e.Control)
 			{
 				switch (e.KeyCode)
 				{
-					case Keys.S:
-						XCMainWindow.Instance.OnSaveMapClick(null, EventArgs.Empty);
-						break;
+					case Keys.S: XCMainWindow.Instance.OnSaveMapClick(null, EventArgs.Empty); break;
 
-					case Keys.X:
-						Copy();
-						ClearSelection();
-						break;
-
-					case Keys.C:
-						Copy();
-						break;
-
-					case Keys.V:
-						Paste();
-						break;
+					case Keys.X: Copy(); ClearSelection(); break;
+					case Keys.C: Copy();                   break;
+					case Keys.V: Paste();                  break;
 				}
 			}
-			else
+			else if (e.KeyCode == Keys.Delete)
 			{
-				switch (e.KeyCode)
-				{
-					case Keys.Delete:
-						ClearSelection();
-						break;
-				}
+				ClearSelection();
 			}
-
-//			base.OnKeyDown(e);
 		}
 
 		/// <summary>
@@ -589,6 +586,8 @@ namespace MapView
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
+			Select();
+
 			if (MapBase != null)
 			{
 				if (!FirstClick)
@@ -717,19 +716,18 @@ namespace MapView
 
 			if (MapBase != null)
 			{
-				var start = GetTileLocation(e.X, e.Y);
-				if (   start.X > -1 && start.X < MapBase.MapSize.Cols
-					&& start.Y > -1 && start.Y < MapBase.MapSize.Rows)
+				var loc = GetTileLocation(e.X, e.Y);
+				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
+					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
 				{
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
 					MapBase.Location = new MapLocation(
-													start.Y,
-													start.X,
+													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;
-					ProcessSelection(start, start);
+					ProcessSelection(loc, loc);
 				}
 			}
 		}
