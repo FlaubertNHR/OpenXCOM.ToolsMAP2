@@ -109,7 +109,7 @@ namespace MapView
 			{
 				_scrollBarV,
 				_scrollBarH,
-				_mainViewOverlay
+				MainViewOverlay
 			});
 
 
