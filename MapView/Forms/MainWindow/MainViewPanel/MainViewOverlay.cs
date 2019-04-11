@@ -598,17 +598,25 @@ namespace MapView
 					var pt = new Point(0,0);
 					switch (keyData)
 					{
-						case Keys.Up:    pt.Y = -1; break;
-						case Keys.Right: pt.X = +1; break;
-						case Keys.Down:  pt.Y = +1; break;
-						case Keys.Left:  pt.X = -1; break;
+//						case Keys.Up:    pt.Y = -1; break;
+//						case Keys.Right: pt.X = +1; break;
+//						case Keys.Down:  pt.Y = +1; break;
+//						case Keys.Left:  pt.X = -1; break;
+						case Keys.Up:    pt.X = -1; pt.Y = -1; break;
+						case Keys.Right: pt.X = +1; pt.Y = -1; break;
+						case Keys.Down:  pt.X = +1; pt.Y = +1; break;
+						case Keys.Left:  pt.X = -1; pt.Y = +1; break;
 
-						case Keys.PageUp:   pt.X = +1; pt.Y = -1; break;
-						case Keys.PageDown: pt.X = +1; pt.Y = +1; break;
-						case Keys.End:      pt.X = -1; pt.Y = +1; break;
-						case Keys.Home:     pt.X = -1; pt.Y = -1; break;
+//						case Keys.PageUp:   pt.X = +1; pt.Y = -1; break;
+//						case Keys.PageDown: pt.X = +1; pt.Y = +1; break;
+//						case Keys.End:      pt.X = -1; pt.Y = +1; break;
+//						case Keys.Home:     pt.X = -1; pt.Y = -1; break;
+						case Keys.PageUp:   pt.Y = -1; break;
+						case Keys.PageDown: pt.X = +1; break;
+						case Keys.End:      pt.Y = +1; break;
+						case Keys.Home:     pt.X = -1; break;
 
-//						case Keys.Delete:
+//						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
 						case Keys.Add:
 						{
 							var args = new MouseEventArgs(
