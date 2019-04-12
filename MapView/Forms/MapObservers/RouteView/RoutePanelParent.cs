@@ -339,6 +339,20 @@ namespace MapView.Forms.MapObservers.RouteViews
 					}
 					SelectedPosition = loc;
 				}
+				else if (keyData == Keys.Enter)
+				{
+					if (RoutePanelMouseDownEvent != null)
+					{
+						var args = new RoutePanelEventArgs();
+						args.MouseButton = MouseButtons.Right;
+						args.Tile        = MapChild[MapChild.Location.Row,
+													MapChild.Location.Col];
+						args.Location    = MapChild.Location;
+
+						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+						Invalidate();
+					}
+				}
 				else //if (!keyData.HasFlag(Keys.Shift)) // TODO: implement [Shift] for dragnode
 				{
 					var loc = new Point(0,0);

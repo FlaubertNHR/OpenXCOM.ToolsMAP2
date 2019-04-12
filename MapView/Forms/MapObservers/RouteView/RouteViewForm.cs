@@ -65,6 +65,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					case Keys.PageUp:
 					case Keys.Home:
 					case Keys.End:
+					case Keys.Enter:
 						Control.RoutePanel.Navigate(e.KeyData);
 						e.SuppressKeyPress = true;
 						break;
