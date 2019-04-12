@@ -680,14 +680,14 @@ namespace MapView
 			}
 		}
 
-		int _keyDeltaX;
-		int _keyDeltaY;
+		private int _keyDeltaX;
+		private int _keyDeltaY;
 		#endregion Keyboard navigation
 
 
 		#region Mouse & Drag-points
 		/// <summary>
-		/// Scrolls the z-axis for MainView.
+		/// Scrolls the z-axis for MainView (and TopView by keyboard).
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -867,7 +867,7 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls
+		#region Events
 		/// <summary>
 		/// Fires when a location is selected in MainView.
 		/// </summary>
@@ -988,7 +988,7 @@ namespace MapView
 			if (FirstClick)
 			{
 				var a = GetDragBeg_abs();
-				var b   = GetDragEnd_abs();
+				var b = GetDragEnd_abs();
 
 				rect.X = a.X;
 				rect.Y = a.Y;
@@ -1005,7 +1005,7 @@ namespace MapView
 
 			for (int
 				lev = MapBase.MapSize.Levs - 1;
-				lev >= MapBase.Level && lev != -1;
+				lev >= MapBase.Level;// && lev != -1;
 				--lev)
 			{
 				if (_showGrid && lev == MapBase.Level)
@@ -1029,11 +1029,18 @@ namespace MapView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-						bool isClicked = FirstClick
-									  && (   (col == DragBeg.X && row == DragBeg.Y)
-										  || (col == DragEnd.X && row == DragEnd.Y));
+//						bool isClicked = FirstClick
+//									  && (   (col == DragBeg.X && row == DragBeg.Y)
+//										  || (col == DragEnd.X && row == DragEnd.Y));
+						bool beg = FirstClick
+								&& col == DragBeg.X
+								&& row == DragBeg.Y;
+//						bool end = FirstClick
+//								&& col == DragEnd.X
+//								&& row == DragEnd.Y;
 
-						if (isClicked)
+//						if (isClicked)
+						if (beg)
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
@@ -1056,7 +1063,8 @@ namespace MapView
 										&& rect.Contains(col, row));
 						}
 
-						if (isClicked)
+//						if (isClicked)
+						if (beg)
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
@@ -1105,7 +1113,7 @@ namespace MapView
 
 			for (int
 				lev = MapBase.MapSize.Levs - 1;
-				lev >= MapBase.Level && lev != -1;
+				lev >= MapBase.Level;// && lev != -1;
 				--lev)
 			{
 				if (_showGrid && lev == MapBase.Level)
