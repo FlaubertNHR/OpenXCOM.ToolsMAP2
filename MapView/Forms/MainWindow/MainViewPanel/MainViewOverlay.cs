@@ -680,8 +680,8 @@ namespace MapView
 			}
 		}
 
-		private int _keyDeltaX;
-		private int _keyDeltaY;
+		internal int _keyDeltaX;
+		internal int _keyDeltaY;
 		#endregion Keyboard navigation
 
 
@@ -755,6 +755,9 @@ namespace MapView
 				if (_isMouseDrag
 					&& (loc.X != DragEnd.X || loc.Y != DragEnd.Y))
 				{
+					_keyDeltaX = loc.X - DragBeg.X; // these are in case user stops a mouse-drag
+					_keyDeltaY = loc.Y - DragBeg.Y; // and resumes selection using keyboard.
+
 					ProcessSelection(DragBeg, loc);
 				}
 				else

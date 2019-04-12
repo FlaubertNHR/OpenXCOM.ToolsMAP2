@@ -247,6 +247,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				var loc = GetTileLocation(e.X, e.Y);
 				if (loc.X != -1)
 				{
+					MainViewUnderlay.Instance.MainViewOverlay._keyDeltaX =
+					MainViewUnderlay.Instance.MainViewOverlay._keyDeltaY = 0;
+
 					MapChild.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapChild.Level);
@@ -315,6 +318,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			if (MapChild != null) // safety.
 			{
+				MainViewUnderlay.Instance.MainViewOverlay._keyDeltaX =
+				MainViewUnderlay.Instance.MainViewOverlay._keyDeltaY = 0;
+
 				if (!MainViewUnderlay.Instance.MainViewOverlay.FirstClick)
 				{
 					MapChild.Location = new MapLocation(0, 0, MapChild.Level); // fire SelectLocationEvent

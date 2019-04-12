@@ -346,6 +346,9 @@ namespace MapView.Forms.MapObservers.TopViews
 				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
 					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
 				{
+					MainViewUnderlay.Instance.MainViewOverlay._keyDeltaX =
+					MainViewUnderlay.Instance.MainViewOverlay._keyDeltaY = 0;
+
 					// as long as MainViewOverlay.OnSelectLocationMain()
 					// fires before the subsidiary viewers' OnSelectLocationObserver()
 					// functions fire, FirstClick is set okay by the former.
@@ -400,6 +403,10 @@ namespace MapView.Forms.MapObservers.TopViews
 				if (_isMouseDrag)
 				{
 					var overlay = MainViewUnderlay.Instance.MainViewOverlay;
+
+					overlay._keyDeltaX = loc.X - overlay.DragBeg.X; // these are in case user stops a mouse-drag
+					overlay._keyDeltaY = loc.Y - overlay.DragBeg.Y; // and resumes selection using keyboard.
+
 					overlay.ProcessSelection(overlay.DragBeg, loc);
 				}
 				else
