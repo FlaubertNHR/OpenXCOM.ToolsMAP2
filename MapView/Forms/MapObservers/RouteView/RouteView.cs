@@ -337,8 +337,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			RoutePanel.CursorPosition = new Point(args.X, args.Y);
 
-			ViewerFormsManager.RouteView   .Control     .RoutePanel.Refresh();
-			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
+			ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 		}						
 
 		/// <summary>

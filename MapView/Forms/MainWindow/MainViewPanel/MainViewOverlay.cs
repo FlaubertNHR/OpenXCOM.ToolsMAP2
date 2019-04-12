@@ -761,7 +761,7 @@ namespace MapView
 					ProcessSelection(DragBeg, loc);
 				}
 				else
-					Refresh(); // mouseover refresh for MainView.
+					Invalidate();
 			}
 		}
 

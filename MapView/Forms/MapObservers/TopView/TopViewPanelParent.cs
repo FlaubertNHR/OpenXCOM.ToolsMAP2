@@ -410,7 +410,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					overlay.ProcessSelection(overlay.DragBeg, loc);
 				}
 				else
-					Refresh(); // mouseover refresh for TopView.
+					Invalidate();
 			}
 //			base.OnMouseMove(e);
 		}
