@@ -1052,6 +1052,7 @@ namespace MapView
 		/// show/hide.
 		/// Cf OnKeyDown() in TileViewForm, TopViewForm, RouteViewForm, and
 		/// TopRouteViewForm -> ViewerKeyDown().
+		/// @note Edit/Save keys are handled by 'MainViewOverlay.OnKeyDown()'.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)

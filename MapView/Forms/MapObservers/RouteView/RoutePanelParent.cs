@@ -195,7 +195,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			t1_Tick(this, e);
 		}
 
-
 		protected override void OnResize(EventArgs e)
 		{
 			if (MapFile != null)

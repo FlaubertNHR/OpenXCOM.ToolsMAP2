@@ -55,11 +55,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private bool _loadingInfo;
 
 		/// <summary>
-		/// Prevents two error-dialogs from showing if a key-cut is underway.
-		/// </summary>
-		private bool _asterisk;
-
-		/// <summary>
 		/// Used by UpdateNodeInformation().
 		/// </summary>
 		private readonly object[] _linkTypes =
@@ -1281,6 +1276,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		/// <summary>
 		/// Deals with the ramifications of a Go or Og click.
+		/// IMPORTANT: Any changes that are done here regarding node-selection
+		/// should be reflected in RoutePanelParent.OnMouseDown() since that is
+		/// an alternate way to select a tile/node.
 		/// </summary>
 		/// <param name="id"></param>
 		private void SelectNode(int id)
@@ -1421,6 +1419,43 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Events (Edit handlers)
+		/// <summary>
+		/// Prevents two error-dialogs from showing if a key-cut is underway.
+		/// </summary>
+		private bool _asterisk;
+
+		/// <summary>
+		/// Handles keyboard input.
+		/// @note Navigation keys are handled by 'KeyPreview' at the form level.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnRoutePanelKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Control)
+			{
+				switch (e.KeyCode)
+				{
+					case Keys.S:
+						XCMainWindow.Instance.OnSaveRoutesClick(null, EventArgs.Empty);
+						break;
+
+					case Keys.X: _asterisk = true;
+								 OnCopyClick(  null, null);
+								 OnDeleteClick(null, null);
+								 _asterisk = false;
+								 break;
+
+					case Keys.C: OnCopyClick( null, null); break;
+					case Keys.V: OnPasteClick(null, null); break;
+				}
+			}
+			else if (e.KeyCode == Keys.Delete)
+			{
+				OnDeleteClick(null, null);
+			}
+		}
+
 		private void OnCutClick(object sender, EventArgs e)
 		{
 			OnCopyClick(null, null);
@@ -1456,7 +1491,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnPasteClick(object sender, EventArgs e)
 		{
-			if (NodeSelected != null)
+			if (NodeSelected != null) // TODO: auto-create a new node
 			{
 				var nodeData = Clipboard.GetText().Split(NodeCopySeparator);
 				if (nodeData[0] == NodeCopyPrefix)
@@ -1540,48 +1575,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			RoutePanelParent.SelectedPosition = new Point(-1, -1);
 
 			tsmiClearLinkData.Enabled = false; // TODO: RouteView/TopRouteView(Route)
-		}
-
-		/// <summary>
-		/// Handles keyboard input.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnRoutePanelKeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.Control)
-			{
-				switch (e.KeyCode)
-				{
-					case Keys.S:
-						XCMainWindow.Instance.OnSaveRoutesClick(null, EventArgs.Empty);
-						break;
-
-					case Keys.X:
-						_asterisk = true;
-						OnCopyClick(null, null);
-						OnDeleteClick(null, null);
-						_asterisk = false;
-						break;
-
-					case Keys.C:
-						OnCopyClick(null, null);
-						break;
-
-					case Keys.V:
-						OnPasteClick(null, null);
-						break;
-				}
-			}
-			else
-			{
-				switch (e.KeyCode)
-				{
-					case Keys.Delete:
-						OnDeleteClick(null, null);
-						break;
-				}
-			}
 		}
 
 

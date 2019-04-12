@@ -41,6 +41,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// - opens/closes Options on [Ctrl+o] event.
 		/// @note Requires 'KeyPreview' true.
 		/// @note See also TileViewForm, RouteViewForm, TopRouteViewForm
+		/// @note Edit/Save keys are handled by 'TopViewPanelParent.OnKeyDown()'.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
