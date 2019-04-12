@@ -313,7 +313,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.btnPaste.Size = new System.Drawing.Size(65, 30);
 			this.btnPaste.TabIndex = 2;
 			this.btnPaste.Text = "Paste";
-			this.toolTip1.SetToolTip(this.btnPaste, "pastes Patrol data and Spawn data to the selected node");
+			this.toolTip1.SetToolTip(this.btnPaste, "pastes copied Patrol and Spawn data to the selected node");
 			this.btnPaste.Click += new System.EventHandler(this.OnPasteClick);
 			// 
 			// lblOver
@@ -334,7 +334,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.btnCopy.Size = new System.Drawing.Size(65, 30);
 			this.btnCopy.TabIndex = 1;
 			this.btnCopy.Text = "Copy";
-			this.toolTip1.SetToolTip(this.btnCopy, "copies the selected node");
+			this.toolTip1.SetToolTip(this.btnCopy, "copies Patrol and Spawn data of the selected node");
 			this.btnCopy.Click += new System.EventHandler(this.OnCopyClick);
 			// 
 			// btnDelete
@@ -861,7 +861,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.btnCut.Size = new System.Drawing.Size(65, 30);
 			this.btnCut.TabIndex = 0;
 			this.btnCut.Text = "Cut";
-			this.toolTip1.SetToolTip(this.btnCut, "cuts the selected node");
+			this.toolTip1.SetToolTip(this.btnCut, "cuts the selected node with its Patrol and Spawn data (not Link data)");
 			this.btnCut.Click += new System.EventHandler(this.OnCutClick);
 			// 
 			// pnlDataFieldsLeft
