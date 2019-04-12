@@ -337,9 +337,13 @@ namespace MapView
 					case Keys.V: Paste();                  break;
 				}
 			}
-			else if (e.KeyCode == Keys.Delete)
+			else
 			{
-				ClearSelection();
+				switch (e.KeyCode)
+				{
+					case Keys.Delete: ClearSelection();                   break;
+					case Keys.Escape: ProcessSelection(DragBeg, DragBeg); break;
+				}
 			}
 		}
 
