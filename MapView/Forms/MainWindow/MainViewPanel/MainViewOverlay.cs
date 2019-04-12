@@ -600,18 +600,18 @@ namespace MapView
 				}
 				else if (!keyData.HasFlag(Keys.Shift))
 				{
-					var pt = new Point(0,0);
+					var loc = new Point(0,0);
 					switch (keyData)
 					{
-						case Keys.Up:    pt.X = -1; pt.Y = -1; break;
-						case Keys.Right: pt.X = +1; pt.Y = -1; break;
-						case Keys.Down:  pt.X = +1; pt.Y = +1; break;
-						case Keys.Left:  pt.X = -1; pt.Y = +1; break;
+						case Keys.Up:    loc.X = -1; loc.Y = -1; break;
+						case Keys.Right: loc.X = +1; loc.Y = -1; break;
+						case Keys.Down:  loc.X = +1; loc.Y = +1; break;
+						case Keys.Left:  loc.X = -1; loc.Y = +1; break;
 
-						case Keys.PageUp:   pt.Y = -1; break;
-						case Keys.PageDown: pt.X = +1; break;
-						case Keys.End:      pt.Y = +1; break;
-						case Keys.Home:     pt.X = -1; break;
+						case Keys.PageUp:   loc.Y = -1; break;
+						case Keys.PageDown: loc.X = +1; break;
+						case Keys.End:      loc.Y = +1; break;
+						case Keys.Home:     loc.X = -1; break;
 
 //						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
 						case Keys.Add:
@@ -628,53 +628,48 @@ namespace MapView
 							break;
 					}
 
-					if (pt.X != 0 || pt.Y != 0)
+					if (loc.X != 0 || loc.Y != 0)
 					{
 						_keyDeltaX =
 						_keyDeltaY = 0;
 
 						MapBase.Location = new MapLocation(
-														MapBase.Location.Row + pt.Y,
-														MapBase.Location.Col + pt.X,
+														MapBase.Location.Row + loc.Y,
+														MapBase.Location.Col + loc.X,
 														MapBase.Level);
-						pt.X = MapBase.Location.Col;
-						pt.Y = MapBase.Location.Row;
-						ProcessSelection(pt, pt);
+						loc.X = MapBase.Location.Col;
+						loc.Y = MapBase.Location.Row;
+						ProcessSelection(loc, loc);
 					}
 				}
 				else // [Shift] = drag select ->
 				{
-					var pt = new Point(0,0);
+					var loc = new Point(0,0);
 					switch (keyData)
 					{
-						case (Keys.Shift | Keys.Up):    pt.X = -1; pt.Y = -1; break;
-						case (Keys.Shift | Keys.Right): pt.X = +1; pt.Y = -1; break;
-						case (Keys.Shift | Keys.Down):  pt.X = +1; pt.Y = +1; break;
-						case (Keys.Shift | Keys.Left):  pt.X = -1; pt.Y = +1; break;
+						case (Keys.Shift | Keys.Up):    loc.X = -1; loc.Y = -1; break;
+						case (Keys.Shift | Keys.Right): loc.X = +1; loc.Y = -1; break;
+						case (Keys.Shift | Keys.Down):  loc.X = +1; loc.Y = +1; break;
+						case (Keys.Shift | Keys.Left):  loc.X = -1; loc.Y = +1; break;
 
-						case (Keys.Shift | Keys.PageUp):   pt.Y = -1; break;
-						case (Keys.Shift | Keys.PageDown): pt.X = +1; break;
-						case (Keys.Shift | Keys.End):      pt.Y = +1; break;
-						case (Keys.Shift | Keys.Home):     pt.X = -1; break;
+						case (Keys.Shift | Keys.PageUp):   loc.Y = -1; break;
+						case (Keys.Shift | Keys.PageDown): loc.X = +1; break;
+						case (Keys.Shift | Keys.End):      loc.Y = +1; break;
+						case (Keys.Shift | Keys.Home):     loc.X = -1; break;
 					}
 
-					if (pt.X != 0 || pt.Y != 0) // safety.
+					if (loc.X != 0 || loc.Y != 0) // safety.
 					{
-						int pos = DragBeg.X + _keyDeltaX + pt.X;
+						int pos = DragBeg.X + _keyDeltaX + loc.X;
 						if (pos > -1 && pos < MapBase.MapSize.Cols)
-							_keyDeltaX += pt.X;
+							_keyDeltaX += loc.X;
 
-						pos = DragBeg.Y + _keyDeltaY + pt.Y;
+						pos = DragBeg.Y + _keyDeltaY + loc.Y;
 						if (pos > -1 && pos < MapBase.MapSize.Rows)
-							_keyDeltaY += pt.Y;
+							_keyDeltaY += loc.Y;
 
-						var loc = new Point(
-										MapBase.Location.Col + _keyDeltaX,
-										MapBase.Location.Row + _keyDeltaY);
-
-						_colOver = loc.X;
-						_rowOver = loc.Y;
-
+						loc.X = _colOver = MapBase.Location.Col + _keyDeltaX;
+						loc.Y = _rowOver = MapBase.Location.Row + _keyDeltaY;
 						ProcessSelection(DragBeg, loc);
 					}
 				}

@@ -27,14 +27,14 @@ namespace MapView
 			get { return _panels; }
 		}
 
-		private MapFileBase _mapBase;
+		private MapFileBase _base;
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public virtual MapFileBase MapBase
 		{
-			get { return _mapBase; }
+			get { return _base; }
 			set
 			{
-				_mapBase = value;
+				_base = value;
 				Refresh();
 			}
 		}
@@ -97,11 +97,11 @@ namespace MapView
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);
-			if      (e.Delta < 0) _mapBase.LevelUp();
-			else if (e.Delta > 0) _mapBase.LevelDown();
+			if      (e.Delta < 0) MapBase.LevelUp();
+			else if (e.Delta > 0) MapBase.LevelDown();
 
-			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(_mapBase.Level != _mapBase.MapSize.Levs - 1);
-			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  _mapBase.Level != 0);
+			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(MapBase.Level != MapBase.MapSize.Levs - 1);
+			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  MapBase.Level != 0);
 		}
 		#endregion Events (override)
 

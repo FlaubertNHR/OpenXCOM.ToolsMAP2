@@ -1572,7 +1572,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void DeselectNode()
 		{
 			NodeSelected = null;
-			RoutePanelParent.SelectedPosition = new Point(-1, -1);
+			RoutePanelParent.SelectedPosition = new Point(-1,-1);
 
 			tsmiClearLinkData.Enabled = false; // TODO: RouteView/TopRouteView(Route)
 		}

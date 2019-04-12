@@ -274,12 +274,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			var end = GetTileLocation(e.X, e.Y);
-			if (end.X != _overCol || end.Y != _overRow)
+			var loc = GetTileLocation(e.X, e.Y);
+			if (loc.X != _overCol || loc.Y != _overRow)
 			{
-				_overCol = end.X;
-				_overRow = end.Y;
-			}				
+				_overCol = loc.X;
+				_overRow = loc.Y;
+			}
 			base.OnMouseMove(e); // required to fire RouteView.OnRoutePanelMouseMove()
 		}
 
@@ -335,54 +335,62 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else //if (!keyData.HasFlag(Keys.Shift)) // TODO: implement [Shift] for dragnode
 				{
-					var pt = new Point(0,0);
+					var loc = new Point(0,0);
+					int vert = 0;
 					switch (keyData)
 					{
-						case Keys.Up:    pt.X = -1; pt.Y = -1; break;
-						case Keys.Right: pt.X = +1; pt.Y = -1; break;
-						case Keys.Down:  pt.X = +1; pt.Y = +1; break;
-						case Keys.Left:  pt.X = -1; pt.Y = +1; break;
+						case Keys.Up:    loc.X = -1; loc.Y = -1; break;
+						case Keys.Right: loc.X = +1; loc.Y = -1; break;
+						case Keys.Down:  loc.X = +1; loc.Y = +1; break;
+						case Keys.Left:  loc.X = -1; loc.Y = +1; break;
 
-						case Keys.PageUp:   pt.Y = -1; break;
-						case Keys.PageDown: pt.X = +1; break;
-						case Keys.End:      pt.Y = +1; break;
-						case Keys.Home:     pt.X = -1; break;
+						case Keys.PageUp:   loc.Y = -1; break;
+						case Keys.PageDown: loc.X = +1; break;
+						case Keys.End:      loc.Y = +1; break;
+						case Keys.Home:     loc.X = -1; break;
 
 //						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
 						case Keys.Add:
 							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
 																								MouseButtons.None,
-																								0, 0, 0, 1));
+																								0, 0, 0, (vert = 1)));
 							break;
 
 //						case Keys.Insert:
 						case Keys.Subtract:
 							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
 																								MouseButtons.None,
-																								0, 0, 0, -1));
+																								0, 0, 0, (vert = -1)));
 							break;
 					}
 
-					if (pt.X != 0 || pt.Y != 0)
+					if (loc.X != 0 || loc.Y != 0)
 					{
-						MapChild.Location = new MapLocation(
-														MapChild.Location.Row + pt.Y,
-														MapChild.Location.Col + pt.X,
+						MapChild.Location = new MapLocation( // fire SelectLocationEvent
+														MapChild.Location.Row + loc.Y,
+														MapChild.Location.Col + loc.X,
 														MapChild.Level);
-						pt.X = MapChild.Location.Col;
-						pt.Y = MapChild.Location.Row;
-						MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(pt, pt);
+						loc.X = MapChild.Location.Col;
+						loc.Y = MapChild.Location.Row;
+						MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
 
 						if (RoutePanelMouseDownEvent != null)
 						{
 							var args = new RoutePanelEventArgs();
 							args.MouseButton = MouseButtons.Left;
-							args.Tile        = MapChild[pt.Y, pt.X];
+							args.Tile        = MapChild[loc.Y, loc.X];
 							args.Location    = MapChild.Location;
 
 							RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 						}
-						SelectedPosition = pt;
+						SelectedPosition = loc;
+					}
+					else if (vert != 0)
+					{
+						MapChild.Location = new MapLocation( // fire SelectLocationEvent
+														MapChild.Location.Row,
+														MapChild.Location.Col,
+														MapChild.Level);
 					}
 				}
 /*				else // [Shift] = drag select ->
