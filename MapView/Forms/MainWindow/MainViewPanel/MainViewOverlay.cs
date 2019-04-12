@@ -1081,8 +1081,9 @@ namespace MapView
 				}
 			}
 
-			if (    rect.Width > 2 || rect.Height > 2 // This is different between REMBRANDT and PICASSO ->
-				|| (rect.Width > 1 && rect.Height > 1))
+//			if (    rect.Width > 2 || rect.Height > 2 // This is different between REMBRANDT and PICASSO ->
+//				|| (rect.Width > 1 && rect.Height > 1))
+			if (rect.Width > 1 || rect.Height > 1)
 			{
 				DrawSelectionBorder(rect);
 			}
@@ -1183,8 +1184,9 @@ namespace MapView
 				int width  = b.X - a.X + 1;
 				int height = b.Y - a.Y + 1;
 
-				if (    width > 2 || height > 2
-					|| (width > 1 && height > 1))
+//				if (    width > 2 || height > 2
+//					|| (width > 1 && height > 1))
+				if (width > 1 || height > 1)
 				{
 					var rect = new Rectangle(
 										a.X, a.Y,
