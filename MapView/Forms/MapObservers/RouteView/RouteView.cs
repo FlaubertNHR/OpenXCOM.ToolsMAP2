@@ -1464,6 +1464,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnCopyClick(object sender, EventArgs e)
 		{
+			RoutePanel.Select();
+
 			if (NodeSelected != null)
 			{
 				ViewerFormsManager.RouteView   .Control     .btnPaste.Enabled =
@@ -1491,6 +1493,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnPasteClick(object sender, EventArgs e)
 		{
+			RoutePanel.Select();
+
 			if (NodeSelected != null) // TODO: auto-create a new node
 			{
 				var nodeData = Clipboard.GetText().Split(NodeCopySeparator);
@@ -1575,6 +1579,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			RoutePanelParent.SelectedPosition = new Point(-1,-1);
 
 			tsmiClearLinkData.Enabled = false; // TODO: RouteView/TopRouteView(Route)
+
+			RoutePanel.Select();
 		}
 
 
