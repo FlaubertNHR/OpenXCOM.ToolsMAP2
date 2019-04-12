@@ -65,7 +65,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					case Keys.PageUp:
 					case Keys.Home:
 					case Keys.End:
-						MainViewUnderlay.Instance.MainViewOverlay.Navigate(e.KeyData);
+						Control.RoutePanel.Navigate(e.KeyData);
 						e.SuppressKeyPress = true;
 						break;
 				}
@@ -82,14 +82,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			switch (keyData)
+			if (Control.RoutePanel.Focused)
 			{
-				case Keys.Left:
-				case Keys.Right:
-				case Keys.Up:
-				case Keys.Down:
-					MainViewUnderlay.Instance.MainViewOverlay.Navigate(keyData);
-					return true;
+				switch (keyData)
+				{
+					case Keys.Left:
+					case Keys.Right:
+					case Keys.Up:
+					case Keys.Down:
+						Control.RoutePanel.Navigate(keyData);
+						return true;
+				}
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}

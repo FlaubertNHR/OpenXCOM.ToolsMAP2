@@ -69,13 +69,13 @@ namespace MapView
 		{
 			Refresh();
 		}
-		#endregion
+		#endregion IMapObserver requirements
 
 
 		#region Properties
 		internal Options Options
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -86,7 +86,32 @@ namespace MapView
 		{
 			Options = new Options();
 		}
-		#endregion
+		#endregion cTor
+
+
+		#region Events (override)
+		/// <summary>
+		/// Scrolls the z-axis for TopView and RouteView.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			base.OnMouseWheel(e);
+			if      (e.Delta < 0) _mapBase.LevelUp();
+			else if (e.Delta > 0) _mapBase.LevelDown();
+
+			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(_mapBase.Level != _mapBase.MapSize.Levs - 1);
+			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  _mapBase.Level != 0);
+		}
+		#endregion Events (override)
+
+
+		#region Methods
+		internal void ForceMousewheel(MouseEventArgs e)
+		{
+			OnMouseWheel(e);
+		}
+		#endregion Methods
 
 
 		#region Methods (virtual)
@@ -105,23 +130,6 @@ namespace MapView
 //		/// <param name="e"></param>
 //		protected virtual void OnExtraRegistrySettingsSave(RegistryEventArgs e)
 //		{}
-		#endregion
-
-
-		#region Eventcalls (override)
-		/// <summary>
-		/// Scrolls the z-axis for TopView and RouteView.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnMouseWheel(MouseEventArgs e)
-		{
-			base.OnMouseWheel(e);
-			if      (e.Delta < 0) _mapBase.LevelUp();
-			else if (e.Delta > 0) _mapBase.LevelDown();
-
-			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(_mapBase.Level != _mapBase.MapSize.Levs - 1);
-			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  _mapBase.Level != 0);
-		}
-		#endregion
+		#endregion Methods (virtual)
 	}
 }

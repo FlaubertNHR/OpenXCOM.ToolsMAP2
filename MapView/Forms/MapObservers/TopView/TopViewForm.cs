@@ -82,18 +82,21 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			switch (keyData)
+			if (Control.TopViewPanel.Focused)
 			{
-				case Keys.Left:
-				case Keys.Right:
-				case Keys.Up:
-				case Keys.Down:
-				case (Keys.Shift | Keys.Left):
-				case (Keys.Shift | Keys.Right):
-				case (Keys.Shift | Keys.Up):
-				case (Keys.Shift | Keys.Down):
-					MainViewUnderlay.Instance.MainViewOverlay.Navigate(keyData);
-					return true;
+				switch (keyData)
+				{
+					case Keys.Left:
+					case Keys.Right:
+					case Keys.Up:
+					case Keys.Down:
+					case (Keys.Shift | Keys.Left):
+					case (Keys.Shift | Keys.Right):
+					case (Keys.Shift | Keys.Up):
+					case (Keys.Shift | Keys.Down):
+						MainViewUnderlay.Instance.MainViewOverlay.Navigate(keyData);
+						return true;
+				}
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}

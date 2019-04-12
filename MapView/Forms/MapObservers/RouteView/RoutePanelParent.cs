@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;
 
 using XCom;
@@ -306,25 +307,33 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Methods
 		/// <summary>
-		/// Keyboard navigation called by XCMainWindow (form-level) key events
+		/// Keyboard navigation called by RouteViewForm (form-level) key events
 		/// OnKeyDown() and ProcessCmdKey().
 		/// </summary>
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
-			if (MapChild != null)
+			if (MapChild != null) // safety.
 			{
-/*				if (!FirstClick)
+				if (!MainViewUnderlay.Instance.MainViewOverlay.FirstClick)
 				{
-					_keyDeltaX =
-					_keyDeltaY = 0;
+					MapChild.Location = new MapLocation(0, 0, MapChild.Level); // fire SelectLocationEvent
 
-					MapBase.Location = new MapLocation(0, 0, MapBase.Level);
+					var loc = new Point(0,0);
+					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc,loc);
 
-					var pt = new Point(0,0);
-					ProcessSelection(pt, pt);
+					if (RoutePanelMouseDownEvent != null)
+					{
+						var args = new RoutePanelEventArgs();
+						args.MouseButton = MouseButtons.Left;
+						args.Tile        = MapChild[0,0];
+						args.Location    = MapChild.Location;
+
+						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+					}
+					SelectedPosition = loc;
 				}
-				else if (!keyData.HasFlag(Keys.Shift))
+				else //if (!keyData.HasFlag(Keys.Shift)) // TODO: implement [Shift] for dragnode
 				{
 					var pt = new Point(0,0);
 					switch (keyData)
@@ -341,34 +350,42 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 //						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
 						case Keys.Add:
-							OnMouseWheel(new MouseEventArgs(
-														MouseButtons.None,
-														0, 0, 0, 1));
+							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
+																								MouseButtons.None,
+																								0, 0, 0, 1));
 							break;
 
 //						case Keys.Insert:
 						case Keys.Subtract:
-							OnMouseWheel(new MouseEventArgs(
-														MouseButtons.None,
-														0, 0, 0, -1));
+							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
+																								MouseButtons.None,
+																								0, 0, 0, -1));
 							break;
 					}
 
 					if (pt.X != 0 || pt.Y != 0)
 					{
-						_keyDeltaX =
-						_keyDeltaY = 0;
+						MapChild.Location = new MapLocation(
+														MapChild.Location.Row + pt.Y,
+														MapChild.Location.Col + pt.X,
+														MapChild.Level);
+						pt.X = MapChild.Location.Col;
+						pt.Y = MapChild.Location.Row;
+						MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(pt, pt);
 
-						MapBase.Location = new MapLocation(
-														MapBase.Location.Row + pt.Y,
-														MapBase.Location.Col + pt.X,
-														MapBase.Level);
-						pt.X = MapBase.Location.Col;
-						pt.Y = MapBase.Location.Row;
-						ProcessSelection(pt, pt);
+						if (RoutePanelMouseDownEvent != null)
+						{
+							var args = new RoutePanelEventArgs();
+							args.MouseButton = MouseButtons.Left;
+							args.Tile        = MapChild[pt.Y, pt.X];
+							args.Location    = MapChild.Location;
+
+							RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+						}
+						SelectedPosition = pt;
 					}
 				}
-				else // [Shift] = drag select ->
+/*				else // [Shift] = drag select ->
 				{
 					var pt = new Point(0,0);
 					switch (keyData)

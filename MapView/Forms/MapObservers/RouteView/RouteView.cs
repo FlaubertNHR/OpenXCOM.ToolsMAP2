@@ -525,6 +525,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			bool valid = (NodeSelected != null);
 
+			ViewerFormsManager.RouteView   .Control     .tsmiClearLinkData.Enabled =
+			ViewerFormsManager.TopRouteView.ControlRoute.tsmiClearLinkData.Enabled =
+
 			ViewerFormsManager.RouteView   .Control     .btnCut           .Enabled =
 			ViewerFormsManager.TopRouteView.ControlRoute.btnCut           .Enabled =
 
@@ -532,10 +535,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ViewerFormsManager.TopRouteView.ControlRoute.btnCopy          .Enabled =
 
 			ViewerFormsManager.RouteView   .Control     .btnDelete        .Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.btnDelete        .Enabled =
-
-			ViewerFormsManager.RouteView   .Control     .tsmiClearLinkData.Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.tsmiClearLinkData.Enabled = valid;
+			ViewerFormsManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
 
 			ViewerFormsManager.RouteView   .Control     .btnPaste         .Enabled =
 			ViewerFormsManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid

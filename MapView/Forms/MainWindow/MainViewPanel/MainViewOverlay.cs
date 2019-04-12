@@ -595,8 +595,8 @@ namespace MapView
 
 					MapBase.Location = new MapLocation(0, 0, MapBase.Level);
 
-					var pt = new Point(0,0);
-					ProcessSelection(pt, pt);
+					var loc = new Point(0,0);
+					ProcessSelection(loc, loc);
 				}
 				else if (!keyData.HasFlag(Keys.Shift))
 				{
