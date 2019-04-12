@@ -93,7 +93,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 //			try // TODO: i get the impression that many of the try/catch blocks can and should be replaced w/ standard code.
 //			{
-			if (MapFile != null)
+			if (MapChild != null)
 			{
 				BlobService.HalfWidth  = DrawAreaWidth;
 				BlobService.HalfHeight = DrawAreaHeight;
@@ -189,7 +189,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					r = 0,
 						startX = Origin.X,
 						startY = Origin.Y;
-					r != MapFile.MapSize.Rows;
+					r != MapChild.MapSize.Rows;
 					++r,
 						startX -= DrawAreaWidth,
 						startY += DrawAreaHeight)
@@ -198,14 +198,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 						c = 0,
 							x = startX,
 							y = startY;
-						c != MapFile.MapSize.Cols;
+						c != MapChild.MapSize.Cols;
 						++c,
 							x += DrawAreaWidth,
 							y += DrawAreaHeight)
 				{
-					if (MapFile[r, c] != null)
+					if (MapChild[r, c] != null)
 					{
-						tile = MapFile[r, c] as XCMapTile;
+						tile = MapChild[r, c] as XCMapTile;
 
 						if (tile.Content != null)
 							BlobService.DrawContent(_graphics, _toolContent, x, y, tile.Content);
@@ -230,7 +230,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					rSrc = 0,
 						x = Origin.X,
 						y = Origin.Y;
-					rSrc != MapFile.MapSize.Rows;
+					rSrc != MapChild.MapSize.Rows;
 					++rSrc,
 						x -= DrawAreaWidth,
 						y += DrawAreaHeight)
@@ -239,13 +239,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 						cSrc = 0,
 							xSrc = x,
 							ySrc = y;
-						cSrc != MapFile.MapSize.Cols;
+						cSrc != MapChild.MapSize.Cols;
 						++cSrc,
 							xSrc += DrawAreaWidth,
 							ySrc += DrawAreaHeight)
 				{
-					if (MapFile[rSrc, cSrc] != null
-						&& (node = ((XCMapTile)MapFile[rSrc, cSrc]).Node) != null
+					if (MapChild[rSrc, cSrc] != null
+						&& (node = ((XCMapTile)MapChild[rSrc, cSrc]).Node) != null
 						&& (NodeSelected == null || node != NodeSelected))
 					{
 						DrawLinkLines(xSrc, ySrc, node, false);
@@ -279,7 +279,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					switch (destId)
 					{
 						case Link.ExitWest:
-							if (node.Lev != MapFile.Level)
+							if (node.Lev != MapChild.Level)
 								continue;
 
 							xDst = OffsetX + 1;
@@ -288,7 +288,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							break;
 
 						case Link.ExitNorth:
-							if (node.Lev != MapFile.Level)
+							if (node.Lev != MapChild.Level)
 								continue;
 
 							xDst = Width - OffsetX * 2;
@@ -297,7 +297,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							break;
 
 						case Link.ExitEast:
-							if (node.Lev != MapFile.Level)
+							if (node.Lev != MapChild.Level)
 								continue;
 
 							xDst = Width  - OffsetX * 2;
@@ -306,7 +306,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							break;
 
 						case Link.ExitSouth:
-							if (node.Lev != MapFile.Level)
+							if (node.Lev != MapChild.Level)
 								continue;
 
 							xDst =          OffsetX + 1;
@@ -315,14 +315,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 							break;
 
 						default:
-							if ((dest = MapFile.Routes[destId]) == null
-								|| dest.Lev != MapFile.Level
+							if ((dest = MapChild.Routes[destId]) == null
+								|| dest.Lev != MapChild.Level
 								|| (NodeSelected != null && dest == NodeSelected)
 								|| RouteNodeCollection.IsNodeOutsideMapBounds(
 																			dest,
-																			MapFile.MapSize.Cols,
-																			MapFile.MapSize.Rows,
-																			MapFile.MapSize.Levs))
+																			MapChild.MapSize.Cols,
+																			MapChild.MapSize.Rows,
+																			MapChild.MapSize.Levs))
 							{
 								continue;
 							}
@@ -405,18 +405,18 @@ namespace MapView.Forms.MapObservers.RouteViews
 			int startX = Origin.X;
 			int startY = Origin.Y;
 
-			for (int row = 0; row != MapFile.MapSize.Rows; ++row)
+			for (int row = 0; row != MapChild.MapSize.Rows; ++row)
 			{
 				for (int
 						col = 0,
 							x = startX,
 							y = startY;
-						col != MapFile.MapSize.Cols;
+						col != MapChild.MapSize.Cols;
 						++col,
 							x += DrawAreaWidth,
 							y += DrawAreaHeight)
 				{
-					var tile = MapFile[row, col] as XCMapTile;	// NOTE: MapFileBase has the current level stored and uses
+					var tile = MapChild[row, col] as XCMapTile;	// NOTE: MapFileBase has the current level stored and uses
 					if (tile != null)							// it to return only tiles on the correct level here.
 					{
 						var node = tile.Node;
@@ -434,7 +434,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 											x - DrawAreaWidth, y + DrawAreaHeight);
 							_nodeFill.CloseFigure();
 
-							if (NodeSelected != null && MapFile.Level == NodeSelected.Lev
+							if (NodeSelected != null && MapChild.Level == NodeSelected.Lev
 								&& col == SelectedPosition.X
 								&& row == SelectedPosition.Y)
 							{
@@ -461,12 +461,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 										break;
 
 									default:
-										if (MapFile.Routes[link.Destination] != null)
+										if (MapChild.Routes[link.Destination] != null)
 										{
-											int levelDestination = MapFile.Routes[link.Destination].Lev;
-											if (levelDestination != MapFile.Level)
+											int level = MapChild.Routes[link.Destination].Lev;
+											if (level != MapChild.Level)
 											{
-												if (levelDestination < MapFile.Level) // draw arrow up.
+												if (level < MapChild.Level) // draw arrow up.
 												{
 													_graphics.DrawLine( // start w/ a vertical line in the tile-lozenge
 																	_penLinkUnselected,
@@ -481,7 +481,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 																	x - 2,                 y,
 																	x - 2 + DrawAreaWidth, y + DrawAreaHeight);
 												}
-												else //if (levelDestination > MapFile.Level) // draw arrow down.
+												else //if (levelDestination > MapChild.Level) // draw arrow down.
 												{
 													_graphics.DrawLine( // start w/ a horizontal line in the tile-lozenge
 																	_penLinkUnselected,
@@ -515,7 +515,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void DrawGridLines()
 		{
 			Pen pen;
-			for (int i = 0; i <= MapFile.MapSize.Rows; ++i)
+			for (int i = 0; i <= MapChild.MapSize.Rows; ++i)
 			{
 				if (i % 10 == 0) pen = RoutePens[RouteView.Grid10LineColor];
 				else             pen = RoutePens[RouteView.GridLineColor];
@@ -524,11 +524,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 								pen,
 								Origin.X - i * DrawAreaWidth,
 								Origin.Y + i * DrawAreaHeight,
-								Origin.X + ((MapFile.MapSize.Cols - i) * DrawAreaWidth),
-								Origin.Y + ((MapFile.MapSize.Cols + i) * DrawAreaHeight));
+								Origin.X + ((MapChild.MapSize.Cols - i) * DrawAreaWidth),
+								Origin.Y + ((MapChild.MapSize.Cols + i) * DrawAreaHeight));
 			}
 
-			for (int i = 0; i <= MapFile.MapSize.Cols; ++i)
+			for (int i = 0; i <= MapChild.MapSize.Cols; ++i)
 			{
 				if (i % 10 == 0) pen = RoutePens[RouteView.Grid10LineColor];
 				else             pen = RoutePens[RouteView.GridLineColor];
@@ -537,8 +537,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 								pen,
 								Origin.X + i * DrawAreaWidth,
 								Origin.Y + i * DrawAreaHeight,
-							   (Origin.X + i * DrawAreaWidth)  - MapFile.MapSize.Rows * DrawAreaWidth,
-							   (Origin.Y + i * DrawAreaHeight) + MapFile.MapSize.Rows * DrawAreaHeight);
+							   (Origin.X + i * DrawAreaWidth)  - MapChild.MapSize.Rows * DrawAreaWidth,
+							   (Origin.Y + i * DrawAreaHeight) + MapChild.MapSize.Rows * DrawAreaHeight);
 			}
 		}
 
@@ -550,18 +550,18 @@ namespace MapView.Forms.MapObservers.RouteViews
 			int startX = Origin.X;
 			int startY = Origin.Y;
 
-			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
+			for (int r = 0; r != MapChild.MapSize.Rows; ++r)
 			{
 				for (int
 						c = 0,
 							x = startX,
 							y = startY;
-						c != MapFile.MapSize.Cols;
+						c != MapChild.MapSize.Cols;
 						++c,
 							x += DrawAreaWidth,
 							y += DrawAreaHeight)
 				{
-					var tile = MapFile[r, c] as XCMapTile;
+					var tile = MapChild[r, c] as XCMapTile;
 					if (tile != null)
 					{
 						var node = tile.Node;
@@ -685,7 +685,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				string textTile2 =   "c " + (x + 1)
 								 + "  r " + (y + 1)
-								 + "  L " + (MapFile.MapSize.Levs - MapFile.Level); // 1-based count.
+								 + "  L " + (MapChild.MapSize.Levs - MapChild.Level); // 1-based count.
 
 				int textWidth1 = (int)_graphics.MeasureString(textTile1, _fontOverlay).Width;
 				int textWidth2 = (int)_graphics.MeasureString(textTile2, _fontOverlay).Width;
@@ -711,7 +711,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					textPatrol1 = Patrol;
 
 					textOver2   = (tile.Node.Index).ToString(System.Globalization.CultureInfo.CurrentCulture);
-					if (MapFile.Descriptor.Pal == Palette.UfoBattle)
+					if (MapChild.Descriptor.Pal == Palette.UfoBattle)
 						textRank2 = (RouteNodeCollection.NodeRankUfo[tile.Node.Rank]).ToString();
 					else
 						textRank2 = (RouteNodeCollection.NodeRankTftd[tile.Node.Rank]).ToString();

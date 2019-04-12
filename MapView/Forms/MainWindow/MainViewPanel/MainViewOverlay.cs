@@ -496,8 +496,8 @@ namespace MapView
 		/// <param name="dst">destination terrain definition</param>
 		/// <returns></returns>
 		private bool AllowPaste(
-				IDictionary<int, Tuple<string, string>> src,
-				IDictionary<int, Tuple<string, string>> dst)
+				IDictionary<int, Tuple<string,string>> src,
+				IDictionary<int, Tuple<string,string>> dst)
 		{
 			if (src.Keys.Count > dst.Keys.Count)
 				return false;

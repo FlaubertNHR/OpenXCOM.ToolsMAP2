@@ -180,7 +180,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Assigns route-nodes to tiles when this MapFile object is
+		/// Assigns route-nodes to tiles when this MapFileChild object is
 		/// instantiated or when importing a Routes file.
 		/// </summary>
 		public void SetupRouteNodes()

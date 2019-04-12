@@ -23,19 +23,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#region Events
 		public event EventHandler<RoutePanelEventArgs> RoutePanelMouseDownEvent;
 		public event EventHandler<RoutePanelEventArgs> RoutePanelMouseUpEvent;
-		#endregion
+		#endregion Events
 
 
 		#region Fields (static)
 		internal protected const int OffsetX = 2; // these track the offset between the panel border
 		internal protected const int OffsetY = 3; // and the lozenge-tip.
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
 		internal protected int _overCol = -1; // these track the location of the last mouse-overed tile
 		internal protected int _overRow = -1; // NOTE: could be subsumed into 'CursorPosition' except ...
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (static)
@@ -44,7 +44,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		internal protected static Point SelectedPosition
 		{ get; set; }
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -59,14 +59,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 			set { _pos = value; }
 		}
 
-		private MapFileChild _mapFile;
-		internal protected MapFileChild MapFile
+		private MapFileChild _child;
+		internal protected MapFileChild MapChild
 		{
-			get { return _mapFile; }
+			get { return _child; }
 			set
 			{
-				_mapFile = value;
-				OnResize(null);
+				_child = value;
+				OnResize(EventArgs.Empty);
 			}
 		}
 
@@ -151,7 +151,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			get { return _showPriorityBars; }
 			set { _showPriorityBars = value; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -174,10 +174,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			t1.Enabled = true;		// actually "leaving" this control.
 			t1.Tick += t1_Tick;		// btw, this is only to stop the overlay from drawing
 		}							// on both RouteView and TopRouteView(Route) simultaneously.
-		#endregion					// so uh yeah it's overkill
+		#endregion cTor				// so uh yeah it's overkill
 									// Good Lord it works.
 
-		#region Eventcalls
+		#region Events
 		private void t1_Tick(object sender, EventArgs e)
 		{
 			if (!Bounds.Contains(PointToClient(Cursor.Position)))
@@ -185,10 +185,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 										_overCol = -1,
 										_overRow = -1);
 		}
-		#endregion
+		#endregion Events
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
@@ -197,14 +197,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		protected override void OnResize(EventArgs e)
 		{
-			if (MapFile != null)
+			if (MapChild != null)
 			{
 				int width  = Width  - OffsetX * 2;
 				int height = Height - OffsetY * 2;
 
 				if (height > width / 2) // use width
 				{
-					DrawAreaWidth = width / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
+					DrawAreaWidth = width / (MapChild.MapSize.Rows + MapChild.MapSize.Cols);
 
 					if (DrawAreaWidth % 2 != 0)
 						--DrawAreaWidth;
@@ -213,12 +213,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else // use height
 				{
-					DrawAreaHeight = height / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
+					DrawAreaHeight = height / (MapChild.MapSize.Rows + MapChild.MapSize.Cols);
 					DrawAreaWidth  = DrawAreaHeight * 2;
 				}
 
 				Origin = new Point( // offset the left and top edges to account for the 3d panel border
-								OffsetX + MapFile.MapSize.Rows * DrawAreaWidth,
+								OffsetX + MapChild.MapSize.Rows * DrawAreaWidth,
 								OffsetY);
 
 				BlobService.HalfWidth  = DrawAreaWidth;
@@ -241,14 +241,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			Select();
 
-			if (MapFile != null) // safety.
+			if (MapChild != null) // safety.
 			{
 				var loc = GetTileLocation(e.X, e.Y);
 				if (loc.X != -1)
 				{
-					MapFile.Location = new MapLocation( // fire SelectLocationEvent
+					MapChild.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
-													MapFile.Level);
+													MapChild.Level);
 
 					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);	// set selected location for other viewers.
 																							// NOTE: drag-selection is not allowed here.
@@ -256,8 +256,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					{
 						var args = new RoutePanelEventArgs();
 						args.MouseButton = e.Button;
-						args.Tile        = MapFile[loc.Y, loc.X];
-						args.Location    = MapFile.Location;
+						args.Tile        = MapChild[loc.Y, loc.X];
+						args.Location    = MapChild.Location;
 
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 					}
@@ -284,7 +284,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if (MapFile != null // safety.
+			if (MapChild != null // safety.
 				&& RoutePanelMouseUpEvent != null)
 			{
 				var loc = GetTileLocation(e.X, e.Y);
@@ -292,19 +292,122 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					var args = new RoutePanelEventArgs();
 					args.MouseButton = e.Button;
-					args.Tile        = MapFile[loc.Y, loc.X];
+					args.Tile        = MapChild[loc.Y, loc.X];
 					args.Location    = new MapLocation(
 													loc.Y, loc.X,
-													MapFile.Level);
+													MapChild.Level);
 
 					RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 				}
 			}
 		}
-		#endregion
+		#endregion Events (override)
 
 
 		#region Methods
+		/// <summary>
+		/// Keyboard navigation called by XCMainWindow (form-level) key events
+		/// OnKeyDown() and ProcessCmdKey().
+		/// </summary>
+		/// <param name="keyData"></param>
+		internal void Navigate(Keys keyData)
+		{
+			if (MapChild != null)
+			{
+/*				if (!FirstClick)
+				{
+					_keyDeltaX =
+					_keyDeltaY = 0;
+
+					MapBase.Location = new MapLocation(0, 0, MapBase.Level);
+
+					var pt = new Point(0,0);
+					ProcessSelection(pt, pt);
+				}
+				else if (!keyData.HasFlag(Keys.Shift))
+				{
+					var pt = new Point(0,0);
+					switch (keyData)
+					{
+						case Keys.Up:    pt.X = -1; pt.Y = -1; break;
+						case Keys.Right: pt.X = +1; pt.Y = -1; break;
+						case Keys.Down:  pt.X = +1; pt.Y = +1; break;
+						case Keys.Left:  pt.X = -1; pt.Y = +1; break;
+
+						case Keys.PageUp:   pt.Y = -1; break;
+						case Keys.PageDown: pt.X = +1; break;
+						case Keys.End:      pt.Y = +1; break;
+						case Keys.Home:     pt.X = -1; break;
+
+//						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
+						case Keys.Add:
+							OnMouseWheel(new MouseEventArgs(
+														MouseButtons.None,
+														0, 0, 0, 1));
+							break;
+
+//						case Keys.Insert:
+						case Keys.Subtract:
+							OnMouseWheel(new MouseEventArgs(
+														MouseButtons.None,
+														0, 0, 0, -1));
+							break;
+					}
+
+					if (pt.X != 0 || pt.Y != 0)
+					{
+						_keyDeltaX =
+						_keyDeltaY = 0;
+
+						MapBase.Location = new MapLocation(
+														MapBase.Location.Row + pt.Y,
+														MapBase.Location.Col + pt.X,
+														MapBase.Level);
+						pt.X = MapBase.Location.Col;
+						pt.Y = MapBase.Location.Row;
+						ProcessSelection(pt, pt);
+					}
+				}
+				else // [Shift] = drag select ->
+				{
+					var pt = new Point(0,0);
+					switch (keyData)
+					{
+						case (Keys.Shift | Keys.Up):    pt.X = -1; pt.Y = -1; break;
+						case (Keys.Shift | Keys.Right): pt.X = +1; pt.Y = -1; break;
+						case (Keys.Shift | Keys.Down):  pt.X = +1; pt.Y = +1; break;
+						case (Keys.Shift | Keys.Left):  pt.X = -1; pt.Y = +1; break;
+
+						case (Keys.Shift | Keys.PageUp):   pt.Y = -1; break;
+						case (Keys.Shift | Keys.PageDown): pt.X = +1; break;
+						case (Keys.Shift | Keys.End):      pt.Y = +1; break;
+						case (Keys.Shift | Keys.Home):     pt.X = -1; break;
+					}
+
+					if (pt.X != 0 || pt.Y != 0) // safety.
+					{
+						int pos = DragBeg.X + _keyDeltaX + pt.X;
+						if (pos > -1 && pos < MapBase.MapSize.Cols)
+							_keyDeltaX += pt.X;
+
+						pos = DragBeg.Y + _keyDeltaY + pt.Y;
+						if (pos > -1 && pos < MapBase.MapSize.Rows)
+							_keyDeltaY += pt.Y;
+
+						var loc = new Point(
+										MapBase.Location.Col + _keyDeltaX,
+										MapBase.Location.Row + _keyDeltaY);
+
+						_colOver = loc.X;
+						_rowOver = loc.Y;
+
+						ProcessSelection(DragBeg, loc);
+					}
+				} */
+			}
+		}
+
+
 		/// <summary>
 		/// Sets the graphics-path for a lozenge-border around the tile that
 		/// is currently mouse-overed.
@@ -395,7 +498,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			var loc = GetTileLocation(x, y);
 			x = loc.X;
 			y = loc.Y;
-			return (x != -1) ? MapFile[y, x] as XCMapTile
+			return (x != -1) ? MapChild[y, x] as XCMapTile
 							 : null;
 		}
 
@@ -408,7 +511,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// is invalid</returns>
 		internal protected Point GetTileLocation(int x, int y)
 		{
-			if (MapFile != null)
+			if (MapChild != null)
 			{
 				x -= Origin.X;
 				y -= Origin.Y;
@@ -421,14 +524,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 									(int)Math.Floor(xd),
 									(int)Math.Floor(yd));
 
-				if (   point.Y > -1 && point.Y < MapFile.MapSize.Rows
-					&& point.X > -1 && point.X < MapFile.MapSize.Cols)
+				if (   point.Y > -1 && point.Y < MapChild.MapSize.Rows
+					&& point.X > -1 && point.X < MapChild.MapSize.Cols)
 				{
 					return point;
 				}
 			}
 			return new Point(-1, -1);
 		}
-		#endregion
+		#endregion Methods
 	}
 }
