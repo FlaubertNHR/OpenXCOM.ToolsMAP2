@@ -68,6 +68,23 @@ namespace MapView.Forms.MapObservers.TopViews
 						MainViewUnderlay.Instance.MainViewOverlay.Navigate(e.KeyData);
 						e.SuppressKeyPress = true; // I wonder if this suppresses only KeyDown or other keyed eventtypes also.
 						break;
+
+					case Keys.D1:
+
+						e.SuppressKeyPress = true;
+						break;
+					case Keys.D2:
+
+						e.SuppressKeyPress = true;
+						break;
+					case Keys.D3:
+
+						e.SuppressKeyPress = true;
+						break;
+					case Keys.D4:
+
+						e.SuppressKeyPress = true;
+						break;
 				}
 			}
 //			base.OnKeyDown(e);

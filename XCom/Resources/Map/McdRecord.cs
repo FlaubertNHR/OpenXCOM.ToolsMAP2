@@ -6,7 +6,7 @@ namespace XCom
 {
 	public enum PartType
 	{
-		All     = -1, // <- for TileView's ALL tabpage only.
+		All     = -1, // <- for TileView's ALL tabpage only. Also used by QuadrantPanel.OnMouseDown() as None.
 		Floor   =  0,
 		West    =  1,
 		North   =  2,

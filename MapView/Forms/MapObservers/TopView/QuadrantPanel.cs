@@ -61,7 +61,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				Refresh();
 			}
 		}
-		#endregion
+		#endregion Fields & Properties
 
 
 		#region cTor
@@ -76,10 +76,10 @@ namespace MapView.Forms.MapObservers.TopViews
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region EventCalls
+		#region Events
 		/// <summary>
 		/// Inherited from IMapObserver through MapObserverControl0.
 		/// </summary>
@@ -112,47 +112,32 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			var quad = (QuadrantType)((e.X - QuadrantPanelDrawService.StartX) / QuadrantPanelDrawService.QuadWidthTotal);
 
+			PartType type = PartType.All;
 			switch (quad)
 			{
-				case QuadrantType.Floor:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Floor);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Floor);
-					break;
-				case QuadrantType.West:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.West);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.West);
-					break;
-				case QuadrantType.North:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.North);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.North);
-					break;
-				case QuadrantType.Content:
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(PartType.Content);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(PartType.Content);
-					break;
+				case QuadrantType.Floor:   type = PartType.Floor;   break;
+				case QuadrantType.West:    type = PartType.West;    break;
+				case QuadrantType.North:   type = PartType.North;   break;
+				case QuadrantType.Content: type = PartType.Content; break;
 			}
 
-			switch (quad)
+			if (type != PartType.All)
 			{
-				case QuadrantType.Floor:
-				case QuadrantType.West:
-				case QuadrantType.North:
-				case QuadrantType.Content:
+				ViewerFormsManager.TopView     .Control   .SelectQuadrant(type);
+				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(type);
 
-					SetSelected(e.Button, e.Clicks);
-					if (e.Button == MouseButtons.Right) // see SetSelected()
-					{
-						MainViewUnderlay.Instance.MainViewOverlay.Refresh();
+				SetSelected(e.Button, e.Clicks);
+				if (e.Button == MouseButtons.Right) // see SetSelected()
+				{
+					MainViewUnderlay.Instance.MainViewOverlay.Refresh();
 
-						ViewerFormsManager.TopView     .Refresh();
-						ViewerFormsManager.RouteView   .Refresh();
-						ViewerFormsManager.TopRouteView.Refresh();
+					ViewerFormsManager.TopView     .Refresh();
+					ViewerFormsManager.RouteView   .Refresh();
+					ViewerFormsManager.TopRouteView.Refresh();
 
-						if (XCMainWindow.ScanG != null)
-							XCMainWindow.ScanG.InvalidatePanel();
-					}
-					Refresh();
-					break;
+					if (XCMainWindow.ScanG != null)
+						XCMainWindow.ScanG.InvalidatePanel();
+				}
 			}
 		}
 
@@ -165,7 +150,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			_drawService.Draw(graphics, _tile, SelectedQuadrant);
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -203,10 +188,10 @@ namespace MapView.Forms.MapObservers.TopViews
 									var tileView = ViewerFormsManager.TileView.Control;
 									_tile[SelectedQuadrant] = tileView.SelectedTilepart;
 
-									MainViewUnderlay.Instance.Refresh();
+//									MainViewUnderlay.Instance.Refresh(); // should have been the Overlay anyway.
 
-									ViewerFormsManager.RouteView   .Control     .Refresh();
-									ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+//									ViewerFormsManager.RouteView   .Control     .Refresh();
+//									ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
 									break;
 
 								case 2:
@@ -216,16 +201,16 @@ namespace MapView.Forms.MapObservers.TopViews
 
 							XCMainWindow.Instance.MapChanged = true;
 
-							Refresh();
+//							Refresh();
 
-							ViewerFormsManager.TopView     .Control   .TopViewPanel.Refresh();
-							ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.Refresh();
+//							ViewerFormsManager.TopView     .Control   .TopViewPanel.Refresh();
+//							ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.Refresh();
 						}
 						break;
 					}
 				}
 			}
 		}
-		#endregion
+		#endregion Methods
 	}
 }
