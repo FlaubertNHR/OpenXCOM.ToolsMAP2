@@ -188,10 +188,10 @@ namespace MapView.Forms.MapObservers.TopViews
 									var tileView = ViewerFormsManager.TileView.Control;
 									_tile[SelectedQuadrant] = tileView.SelectedTilepart;
 
-//									MainViewUnderlay.Instance.Refresh(); // should have been the Overlay anyway.
+									MainViewUnderlay.Instance.MainViewOverlay.Refresh();
 
-//									ViewerFormsManager.RouteView   .Control     .Refresh();
-//									ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+									ViewerFormsManager.RouteView   .Control     .Refresh();
+									ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
 									break;
 
 								case 2:
@@ -201,10 +201,10 @@ namespace MapView.Forms.MapObservers.TopViews
 
 							XCMainWindow.Instance.MapChanged = true;
 
-//							Refresh();
+							Refresh();
 
-//							ViewerFormsManager.TopView     .Control   .TopViewPanel.Refresh();
-//							ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.Refresh();
+							ViewerFormsManager.TopView     .Control   .TopViewPanel.Refresh();
+							ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.Refresh();
 						}
 						break;
 					}
