@@ -17,11 +17,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			IDisposable
 	{
 		#region Fields (static)
-		internal const string Floor   = "fLoOr";
-		internal const string West    = "WEst";
-		internal const string North   = "noRtH";
-		internal const string Content = "ConTeNt";
-
 		private const int MarginHori = 5;
 		private const int MarginVert = 3;
 
@@ -34,14 +29,19 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		// NOTE: keep the door-string and its placement consistent with
 		// TilePanel.OnPaint().
-		private const string Door = "door";
-		private static int DoorWidth;
 		private const int PrintOffsetY = 2;
 
-		private static int FloorWidth;
-		private static int WestWidth;
-		private static int NorthWidth;
-		private static int ContentWidth;
+		private  const string Door    = "door";
+		internal const string Floor   = "fLoOr";
+		internal const string West    = "WEst";
+		internal const string North   = "noRtH";
+		internal const string Content = "ConTeNt";
+
+		private static int TextWidth_door;
+		private static int TextWidth_floor;
+		private static int TextWidth_west;
+		private static int TextWidth_north;
+		private static int TextWidth_content;
 
 		private static bool Inited;
 		#endregion (static)
@@ -131,11 +131,11 @@ namespace MapView.Forms.MapObservers.TopViews
 			{
 				Inited = true;
 
-				DoorWidth    = (int)graphics.MeasureString(Door,    Font).Width;
-				FloorWidth   = (int)graphics.MeasureString(Floor,   Font).Width;
-				WestWidth    = (int)graphics.MeasureString(West,    Font).Width;
-				NorthWidth   = (int)graphics.MeasureString(North,   Font).Width;
-				ContentWidth = (int)graphics.MeasureString(Content, Font).Width;
+				TextWidth_door    = (int)graphics.MeasureString(Door,    Font).Width;
+				TextWidth_floor   = (int)graphics.MeasureString(Floor,   Font).Width;
+				TextWidth_west    = (int)graphics.MeasureString(West,    Font).Width;
+				TextWidth_north   = (int)graphics.MeasureString(North,   Font).Width;
+				TextWidth_content = (int)graphics.MeasureString(Content, Font).Width;
 			}
 
 			var topView = ViewerFormsManager.TopView.Control;
@@ -182,13 +182,9 @@ namespace MapView.Forms.MapObservers.TopViews
 			Bitmap sprite;
 			int anistep = MainViewUnderlay.AniStep;
 
-			// Ground ->
+			// Floor ->
 			if (tile != null && tile.Floor != null)
 			{
-//				graphics.DrawImage(
-//								tile.Ground[anistep].Sprite,
-//								StartX,
-//								StartY - tile.Ground.Record.TileOffset);
 				sprite = tile.Floor[anistep].Sprite;
 				graphics.DrawImage(
 								sprite,
@@ -210,13 +206,9 @@ namespace MapView.Forms.MapObservers.TopViews
 								StartX,
 								StartY);
 
-			// Westwall ->
+			// West ->
 			if (tile != null && tile.West != null)
 			{
-//				graphics.DrawImage(
-//								tile.West[anistep].Sprite,
-//								StartX + QuadWidthTotal,
-//								StartY - tile.West.Record.TileOffset);
 				sprite = tile.West[anistep].Sprite;
 				graphics.DrawImage(
 								sprite,
@@ -238,13 +230,9 @@ namespace MapView.Forms.MapObservers.TopViews
 								StartX + QuadWidthTotal,
 								StartY);
 
-			// Northwall ->
+			// North ->
 			if (tile != null && tile.North != null)
 			{
-//				graphics.DrawImage(
-//								tile.North[anistep].Sprite,
-//								StartX + QuadWidthTotal * 2,
-//								StartY - tile.North.Record.TileOffset);
 				sprite = tile.North[anistep].Sprite;
 				graphics.DrawImage(
 								sprite,
@@ -269,10 +257,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			// Content ->
 			if (tile != null && tile.Content != null)
 			{
-//				graphics.DrawImage(
-//								tile.Content[anistep].Sprite,
-//								StartX + QuadWidthTotal * 3,
-//								StartY - tile.Content.Record.TileOffset);
 				sprite = tile.Content[anistep].Sprite;
 				graphics.DrawImage(
 								sprite,
@@ -301,13 +285,11 @@ namespace MapView.Forms.MapObservers.TopViews
 			graphics.DrawPath(System.Drawing.Pens.Black, _pathNorth);
 			graphics.DrawPath(System.Drawing.Pens.Black, _pathContent);
 
-
 			// draw the quad-type label under each quadrant
 			DrawTypeString(graphics, QuadrantType.Floor);
 			DrawTypeString(graphics, QuadrantType.West);
 			DrawTypeString(graphics, QuadrantType.North);
 			DrawTypeString(graphics, QuadrantType.Content);
-
 
 			// fill the color-swatch under each quadrant-label
 			if (Brushes != null && Pens != null)
@@ -328,7 +310,7 @@ namespace MapView.Forms.MapObservers.TopViews
 							Door,
 							Font,
 							System.Drawing.Brushes.Black,
-							StartX + (XCImage.SpriteWidth32 - DoorWidth) / 2 + QuadWidthTotal * (int)quadType + 1,
+							StartX + (XCImage.SpriteWidth32 - TextWidth_door) / 2 + QuadWidthTotal * (int)quadType + 1,
 							StartY +  XCImage.SpriteHeight40 - Font.Height + PrintOffsetY);
 		}
 
@@ -346,19 +328,19 @@ namespace MapView.Forms.MapObservers.TopViews
 			{
 				case QuadrantType.Floor:
 					type  = Floor;
-					width = FloorWidth;
+					width = TextWidth_floor;
 					break;
 				case QuadrantType.West:
 					type  = West;
-					width = WestWidth;
+					width = TextWidth_west;
 					break;
 				case QuadrantType.North:
 					type  = North;
-					width = NorthWidth;
+					width = TextWidth_north;
 					break;
 				case QuadrantType.Content:
 					type  = Content;
-					width = ContentWidth;
+					width = TextWidth_content;
 					break;
 			}
 
