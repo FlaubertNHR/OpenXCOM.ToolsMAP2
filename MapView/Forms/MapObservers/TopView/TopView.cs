@@ -19,9 +19,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		#region Fields
 		private Dictionary<string, Pen> _topPens;
 		private Dictionary<string, SolidBrush> _topBrushes;
-
-//		private readonly Dictionary<ToolStripMenuItem, int> _visQuadsDictionary =
-//					 new Dictionary<ToolStripMenuItem, int>();
 		#endregion
 
 
@@ -94,19 +91,15 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			_topViewPanel.Ground.ShortcutKeys = Keys.F1;
 			_topViewPanel.Ground.Checked = true;
-//			_visQuadsDictionary[_topViewPanel.Ground] = 0;
 
 			_topViewPanel.West.ShortcutKeys = Keys.F2;
 			_topViewPanel.West.Checked = true;
-//			_visQuadsDictionary[_topViewPanel.West] = 1;
 
 			_topViewPanel.North.ShortcutKeys = Keys.F3;
 			_topViewPanel.North.Checked = true;
-//			_visQuadsDictionary[_topViewPanel.North] = 2;
 
 			_topViewPanel.Content.ShortcutKeys = Keys.F4;
 			_topViewPanel.Content.Checked = true;
-//			_visQuadsDictionary[_topViewPanel.Content] = 3;
 
 			foreach (ToolStripMenuItem it in visQuads)
 				it.Click += OnToggleQuadrantVisibilityClick;
@@ -277,8 +270,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal const string Grid10Color       = "Grid10Color";
 		private  const string Grid10Width       = "Grid10Width";
 
-//		internal const string TileMinHeight     = "TileMinHeight";
-
 
 		/// <summary>
 		/// Loads default options for TopView in TopRouteView screens.
@@ -319,7 +310,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			OptionChangedEventHandler bc = OnBrushChanged;
 			OptionChangedEventHandler pc = OnPenColorChanged;
 			OptionChangedEventHandler pw = OnPenWidthChanged;
-//			ValueChangedEventHandler  dh = OnDiamondHeight;
 
 			Options.AddOption(FloorColor,        Color.BurlyWood,                 "Color of the floor tile indicator",           Tile,     bc);
 			Options.AddOption(WestColor,         Color.Khaki,                     "Color of the west tile indicator",            Tile,     pc);
@@ -338,7 +328,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			Options.AddOption(GridWidth,         1,                               "Width of the grid lines in pixels",           Grid,     pw);
 			Options.AddOption(Grid10Color,       Color.Black,                     "Color of every tenth grid line",              Grid,     pc);
 			Options.AddOption(Grid10Width,       2,                               "Width of every tenth grid line in pixels",    Grid,     pw);
-//			Options.AddOption(TileMinHeight,     _topViewPanel.TileLozengeHeight, "Minimum height of the grid tiles in pixels",  Grid,     dh);
 
 			QuadrantsPanel.Pens   =
 			_topViewPanel.TopPens = _topPens;
@@ -405,58 +394,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			return _topPens;
 		}
-
-//		/// <summary>
-//		/// Fires when the minimum diamond-height changes in Options.
-//		/// </summary>
-//		/// <param name="sender"></param>
-//		/// <param name="keyword"></param>
-//		/// <param name="val"></param>
-//		private void OnDiamondHeight(object sender, string keyword, object val)
-//		{
-//			_topViewPanel.TileLozengeHeight = (int)val;
-//		}
 		#endregion
 	}
 }
-
-/*		/// <summary>
-		/// Loads the VisibleQuadrants flags for the MenuItem-toggles.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnExtraRegistrySettingsLoad(DSShared.Windows.RegistryEventArgs e)
-		{
-			switch (e.Key)
-			{
-				case "vis0":
-					_topViewPanel.Ground.Checked = e.Value;
-					break;
-				case "vis1":
-					_topViewPanel.West.Checked = e.Value;
-					break;
-				case "vis2":
-					_topViewPanel.North.Checked = e.Value;
-					break;
-				case "vis3":
-					_topViewPanel.Content.Checked = e.Value;
-					break;
-			}
-
-//			QuadrantsPanel.Height = 74;
-
-//			var regkey = e.OpenRegistryKey;
-//			foreach (var it in _visQuadsDictionary.Keys)
-//				it.Checked = Boolean.Parse((string)regkey.GetValue("vis" + _visQuadsDictionary[it], "true"));
-		} */
-
-/*		/// <summary>
-		/// Saves the VisibleQuadrants flags for the menu.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnExtraRegistrySettingsSave(DSShared.Windows.RegistryEventArgs e)
-		{
-//			var regkey = e.OpenRegistryKey;
-//
-//			foreach (var it in _visQuadsDictionary.Keys)
-//				regkey.SetValue("vis" + _visQuadsDictionary[it], it.Checked);
-		} */

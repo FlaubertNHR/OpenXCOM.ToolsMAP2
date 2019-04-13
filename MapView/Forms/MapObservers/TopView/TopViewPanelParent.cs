@@ -64,17 +64,6 @@ namespace MapView.Forms.MapObservers.TopViews
 				Refresh();
 			}
 		}
-
-//		private int _lozHeightMin = 4;
-//		internal protected int TileLozengeHeight
-//		{
-//			get { return _lozHeightMin; }
-//			set
-//			{
-//				_lozHeightMin = value;
-//				ResizeObserver(Width, Height);
-//			}
-//		}
 		#endregion
 
 
@@ -94,8 +83,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region Resize
 		/// <summary>
-		/// Called by TopView's resize event. Also fired by TileLozengeHeight
-		/// change, or by a straight MapBase change.
+		/// Called by TopView's resize event or by a straight MapBase change.
 		/// </summary>
 		/// <param name="width">the width to resize to</param>
 		/// <param name="height">the height to resize to</param>
