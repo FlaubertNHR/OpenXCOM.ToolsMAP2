@@ -53,7 +53,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				e.SuppressKeyPress = true;
 			}
 			else
-				MainMenusManager.ViewerKeyDown(e);
+				MainMenusManager.ViewerKeyDown(e); // NOTE: this can suppress the key
 
 			if (!e.SuppressKeyPress && Control.RoutePanel.Focused)
 			{

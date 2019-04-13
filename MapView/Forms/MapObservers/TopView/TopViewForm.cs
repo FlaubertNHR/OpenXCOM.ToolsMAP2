@@ -55,41 +55,40 @@ namespace MapView.Forms.MapObservers.TopViews
 				e.SuppressKeyPress = true;
 			}
 			else
-				MainMenusManager.ViewerKeyDown(e); // note this can also suppress the key
+				MainMenusManager.ViewerKeyDown(e); // NOTE: this can suppress the key
 
 			if (!e.SuppressKeyPress)
 			{
+				QuadrantType quadType = QuadrantType.None;
 				switch (e.KeyCode)
 				{
 					case Keys.D1:
-					{
 						e.SuppressKeyPress = true;
-						Control.QuadrantsPanel.ForceMouseDown(
-														new MouseEventArgs(MouseButtons.Left,1,0,0,0),
-														QuadrantType.Floor);
+						quadType = QuadrantType.Floor;
 						break;
-					}
+
 					case Keys.D2:
 						e.SuppressKeyPress = true;
-						Control.QuadrantsPanel.ForceMouseDown(
-														new MouseEventArgs(MouseButtons.Left,1,0,0,0),
-														QuadrantType.West);
+						quadType = QuadrantType.West;
 						break;
+
 					case Keys.D3:
 						e.SuppressKeyPress = true;
-						Control.QuadrantsPanel.ForceMouseDown(
-														new MouseEventArgs(MouseButtons.Left,1,0,0,0),
-														QuadrantType.North);
+						quadType = QuadrantType.North;
 						break;
+
 					case Keys.D4:
 						e.SuppressKeyPress = true;
-						Control.QuadrantsPanel.ForceMouseDown(
-														new MouseEventArgs(MouseButtons.Left,1,0,0,0),
-														QuadrantType.Content);
+						quadType = QuadrantType.Content;
 						break;
 				}
 
-				if (!e.SuppressKeyPress && Control.TopViewPanel.Focused)
+				if (e.SuppressKeyPress)
+				{
+					var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
+					Control.QuadrantsPanel.ForceMouseDown(args, quadType);
+				}
+				else if (Control.TopViewPanel.Focused)
 				{
 					switch (e.KeyCode)
 					{
