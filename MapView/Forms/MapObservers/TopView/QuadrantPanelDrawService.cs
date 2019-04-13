@@ -31,11 +31,11 @@ namespace MapView.Forms.MapObservers.TopViews
 		// TilePanel.OnPaint().
 		private const int PrintOffsetY = 2;
 
-		private  const string Door    = "door";
-		internal const string Floor   = "fLoOr";
-		internal const string West    = "WEst";
-		internal const string North   = "noRtH";
-		internal const string Content = "ConTeNt";
+		private  const  string Door    = "door";
+		internal static string Floor   = "floor";
+		internal static string West    = "west";
+		internal static string North   = "north";
+		internal static string Content = "content";
 
 		private static int TextWidth_door;
 		private static int TextWidth_floor;
@@ -113,7 +113,48 @@ namespace MapView.Forms.MapObservers.TopViews
 		#endregion cTor
 
 
+		#region punc
+		private static Random _rnd = new Random();
+
+		/// <summary>
+		/// Changes each letter of the four quadrant strings to uppercase or
+		/// lowercase randomly.
+		/// </summary>
+		internal static void Punkstrings()
+		{
+			Floor   = Punkstring(Floor);
+			West    = Punkstring(West);
+			North   = Punkstring(North);
+			Content = Punkstring(Content);
+		}
+
+		/// <summary>
+		/// Helper for Punkstrings().
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
+		private static string Punkstring(string input)
+		{
+			string output = String.Empty;
+			foreach (var letter in input)
+			{
+				if (_rnd.Next() % 2 != 0)
+					output += Char.ToUpper(Convert.ToChar(letter)).ToString();
+				else
+					output += letter;
+			}
+			return output;
+		}
+		#endregion punc
+
+
 		#region Methods
+		/// <summary>
+		/// Draws the QuadrantPanel incl/ sprites.
+		/// </summary>
+		/// <param name="graphics"></param>
+		/// <param name="tile"></param>
+		/// <param name="selectedQuadrant"></param>
 		internal void Draw(
 				Graphics graphics,
 				XCMapTile tile,

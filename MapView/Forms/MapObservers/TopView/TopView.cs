@@ -59,6 +59,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		#region cTor
 		/// <summary>
 		/// cTor. Instantiates the TopView viewer and its components/controls.
+		/// IMPORTANT: TopViewForm and TopRouteViewForm will each invoke and
+		/// maintain their own instantiations.
 		/// </summary>
 		internal TopView()
 		{
@@ -75,7 +77,9 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			pnlMain.Controls.Add(_topViewPanel);
 
-			pnlMain.Resize += (sender, e) => _topViewPanel.ResizeObserver(pnlMain.Width, pnlMain.Height);
+			pnlMain.Resize += (sender, e) => _topViewPanel.ResizeObserver(
+																		pnlMain.Width,
+																		pnlMain.Height);
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 

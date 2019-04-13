@@ -10,6 +10,7 @@ using DSShared;
 using DSShared.Windows;
 
 using MapView.Forms.MainWindow;
+using MapView.Forms.MapObservers.TopViews;
 //using MapView.Forms.XCError.WarningConsole;
 //using MapView.OptionsServices;
 
@@ -274,6 +275,8 @@ namespace MapView
 
 			_viewersManager = new ViewersManager(_optionsManager/*, shareConsole*/);
 			LogFile.WriteLine("Viewer managers instantiated.");
+
+			QuadrantPanelDrawService.Punkstrings();
 
 			MainMenusManager.SetMenus(menuViewers, menuHelp);
 			MainMenusManager.PopulateMenus(/*shareConsole.Console,*/ Options);

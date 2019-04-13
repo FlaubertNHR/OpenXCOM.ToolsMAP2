@@ -14,7 +14,7 @@ namespace MapView.Forms.MapObservers.TopViews
 {
 	/// <summary>
 	/// These are not actually "quadrants"; they are tile-part types. But that's
-	/// the way this rolls.
+	/// the way this trolls.
 	/// @note This is not a Panel. It is a Control.
 	/// </summary>
 	internal sealed class QuadrantPanel
