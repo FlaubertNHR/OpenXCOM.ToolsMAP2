@@ -8,10 +8,11 @@ namespace XCom
 {
 	public enum QuadrantType
 	{
-		Floor,
-		West,
-		North,
-		Content
+		None    = -1,
+		Floor   =  0,
+		West    =  1,
+		North   =  2,
+		Content =  3
 	};
 
 

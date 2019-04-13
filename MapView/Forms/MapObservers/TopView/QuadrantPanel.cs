@@ -79,7 +79,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		#endregion cTor
 
 
-		#region Events
+		#region Events (override)
 		/// <summary>
 		/// Inherited from IMapObserver through MapObserverControl0.
 		/// </summary>
@@ -108,23 +108,41 @@ namespace MapView.Forms.MapObservers.TopViews
 			Refresh();
 		}
 
+
+		private QuadrantType _keyQuadtype = QuadrantType.None;
+		internal void ForceMouseDown(MouseEventArgs e, QuadrantType quadType)
+		{
+			_keyQuadtype = quadType;
+			OnMouseDown(e);
+		}
+
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			var quad = (QuadrantType)((e.X - QuadrantPanelDrawService.StartX) / QuadrantPanelDrawService.QuadWidthTotal);
-
-			PartType type = PartType.All;
-			switch (quad)
+			QuadrantType quadType;
+			if (_keyQuadtype == QuadrantType.None) // ie. is *not* forced by keyboard-input
 			{
-				case QuadrantType.Floor:   type = PartType.Floor;   break;
-				case QuadrantType.West:    type = PartType.West;    break;
-				case QuadrantType.North:   type = PartType.North;   break;
-				case QuadrantType.Content: type = PartType.Content; break;
+				quadType = (QuadrantType)((e.X - QuadrantPanelDrawService.StartX)
+											   / QuadrantPanelDrawService.QuadWidthTotal);
+			}
+			else
+			{
+				quadType = _keyQuadtype;
+				_keyQuadtype = QuadrantType.None;
 			}
 
-			if (type != PartType.All)
+			PartType partType = PartType.All;
+			switch (quadType)
 			{
-				ViewerFormsManager.TopView     .Control   .SelectQuadrant(type);
-				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(type);
+				case QuadrantType.Floor:   partType = PartType.Floor;   break;
+				case QuadrantType.West:    partType = PartType.West;    break;
+				case QuadrantType.North:   partType = PartType.North;   break;
+				case QuadrantType.Content: partType = PartType.Content; break;
+			}
+
+			if (partType != PartType.All)
+			{
+				ViewerFormsManager.TopView     .Control   .SelectQuadrant(partType);
+				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(partType);
 
 				SetSelected(e.Button, e.Clicks);
 				if (e.Button == MouseButtons.Right) // see SetSelected()
@@ -150,7 +168,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			_drawService.Draw(graphics, _tile, SelectedQuadrant);
 		}
-		#endregion Events
+		#endregion Events (override)
 
 
 		#region Methods

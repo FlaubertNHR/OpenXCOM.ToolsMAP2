@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
 
+using XCom;
+
 
 namespace MapView.Forms.MapObservers.TopViews
 {
@@ -55,36 +57,52 @@ namespace MapView.Forms.MapObservers.TopViews
 			else
 				MainMenusManager.ViewerKeyDown(e); // note this can also suppress the key
 
-			if (!e.SuppressKeyPress && Control.TopViewPanel.Focused)
+			if (!e.SuppressKeyPress)
 			{
 				switch (e.KeyCode)
 				{
-					case Keys.Add:
-					case Keys.Subtract:
-					case Keys.PageDown:
-					case Keys.PageUp:
-					case Keys.Home:
-					case Keys.End:
-						MainViewUnderlay.Instance.MainViewOverlay.Navigate(e.KeyData);
-						e.SuppressKeyPress = true; // I wonder if this suppresses only KeyDown or other keyed eventtypes also.
-						break;
-
 					case Keys.D1:
-
+					{
 						e.SuppressKeyPress = true;
+						Control.QuadrantsPanel.ForceMouseDown(
+														new MouseEventArgs(MouseButtons.Left,1,0,0,0),
+														QuadrantType.Floor);
 						break;
+					}
 					case Keys.D2:
-
 						e.SuppressKeyPress = true;
+						Control.QuadrantsPanel.ForceMouseDown(
+														new MouseEventArgs(MouseButtons.Left,1,0,0,0),
+														QuadrantType.West);
 						break;
 					case Keys.D3:
-
 						e.SuppressKeyPress = true;
+						Control.QuadrantsPanel.ForceMouseDown(
+														new MouseEventArgs(MouseButtons.Left,1,0,0,0),
+														QuadrantType.North);
 						break;
 					case Keys.D4:
-
 						e.SuppressKeyPress = true;
+						Control.QuadrantsPanel.ForceMouseDown(
+														new MouseEventArgs(MouseButtons.Left,1,0,0,0),
+														QuadrantType.Content);
 						break;
+				}
+
+				if (!e.SuppressKeyPress && Control.TopViewPanel.Focused)
+				{
+					switch (e.KeyCode)
+					{
+						case Keys.Add:
+						case Keys.Subtract:
+						case Keys.PageDown:
+						case Keys.PageUp:
+						case Keys.Home:
+						case Keys.End:
+							MainViewUnderlay.Instance.MainViewOverlay.Navigate(e.KeyData);
+							e.SuppressKeyPress = true; // I wonder if this suppresses only KeyDown or other keyed eventtypes also.
+							break;
+					}
 				}
 			}
 //			base.OnKeyDown(e);
