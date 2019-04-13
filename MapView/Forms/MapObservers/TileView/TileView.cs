@@ -103,8 +103,8 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			_allTiles      = new TilePanel(PartType.All);
 			var floors     = new TilePanel(PartType.Floor);
-			var westwalls  = new TilePanel(PartType.Westwall);
-			var northwalls = new TilePanel(PartType.Northwall);
+			var westwalls  = new TilePanel(PartType.West);
+			var northwalls = new TilePanel(PartType.North);
 			var content    = new TilePanel(PartType.Content);
 
 			_panels = new[]

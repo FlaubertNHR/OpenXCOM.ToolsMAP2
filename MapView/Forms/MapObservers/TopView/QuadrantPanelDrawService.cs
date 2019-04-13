@@ -16,7 +16,12 @@ namespace MapView.Forms.MapObservers.TopViews
 		:
 			IDisposable
 	{
-		#region Fields
+		#region Fields (static)
+		internal const string Floor   = "fLoOr";
+		internal const string West    = "WEst";
+		internal const string North   = "noRtH";
+		internal const string Content = "ConTeNt";
+
 		private const int MarginHori = 5;
 		private const int MarginVert = 3;
 
@@ -33,18 +38,13 @@ namespace MapView.Forms.MapObservers.TopViews
 		private static int DoorWidth;
 		private const int PrintOffsetY = 2;
 
-		private const string Floor   = "fLoOr";
-		private const string West    = "WEst";
-		private const string North   = "noRtH";
-		private const string Content = "ConTeNt";
-
 		private static int FloorWidth;
 		private static int WestWidth;
 		private static int NorthWidth;
 		private static int ContentWidth;
 
 		private static bool Inited;
-		#endregion
+		#endregion (static)
 
 
 		#region Properties
@@ -59,7 +59,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		internal Font Font
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 		private readonly GraphicsPath _pathFloor   = new GraphicsPath();
 		private readonly GraphicsPath _pathWest    = new GraphicsPath();
@@ -110,7 +110,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				}
 			}
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -423,6 +423,6 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			GC.SuppressFinalize(this);
 		}
-		#endregion
+		#endregion Methods
 	}
 }

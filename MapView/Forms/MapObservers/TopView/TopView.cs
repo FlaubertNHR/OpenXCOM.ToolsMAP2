@@ -16,14 +16,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		:
 			MapObserverControl0
 	{
-		#region Fields (static)
-		private const string Floor   = "Floor";
-		private const string West    = "West";
-		private const string North   = "North";
-		private const string Content = "Content";
-		#endregion
-
-
 		#region Fields
 		private Dictionary<string, Pen> _topPens;
 		private Dictionary<string, SolidBrush> _topBrushes;
@@ -90,10 +82,10 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 
-			_topViewPanel.Ground  = new ToolStripMenuItem(Floor);
-			_topViewPanel.West    = new ToolStripMenuItem(West);
-			_topViewPanel.North   = new ToolStripMenuItem(North);
-			_topViewPanel.Content = new ToolStripMenuItem(Content);
+			_topViewPanel.Ground  = new ToolStripMenuItem(QuadrantPanelDrawService.Floor);
+			_topViewPanel.West    = new ToolStripMenuItem(QuadrantPanelDrawService.West);
+			_topViewPanel.North   = new ToolStripMenuItem(QuadrantPanelDrawService.North);
+			_topViewPanel.Content = new ToolStripMenuItem(QuadrantPanelDrawService.Content);
 
 			visQuads.Add(_topViewPanel.Ground);
 			visQuads.Add(_topViewPanel.West);
@@ -142,6 +134,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			{
 				ViewerFormsManager.TopView     .Control   ._topViewPanel.Ground.Checked =
 				ViewerFormsManager.TopRouteView.ControlTop._topViewPanel.Ground.Checked = !it.Checked;
+
+				((MapFileChild)MapBase).CalculateOccultations(!it.Checked);
 			}
 			else if (it == _topViewPanel.West)
 			{
@@ -158,9 +152,6 @@ namespace MapView.Forms.MapObservers.TopViews
 				ViewerFormsManager.TopView     .Control   ._topViewPanel.Content.Checked =
 				ViewerFormsManager.TopRouteView.ControlTop._topViewPanel.Content.Checked = !it.Checked;
 			}
-
-			if (it.Text == Floor)
-				((MapFileChild)MapBase).CalculateOccultations(!it.Checked);
 
 			MainViewUnderlay.Instance.Refresh();
 
@@ -192,11 +183,11 @@ namespace MapView.Forms.MapObservers.TopViews
 					QuadrantsPanel.SelectedQuadrant = QuadrantType.Floor;
 					break;
 
-				case PartType.Westwall:
+				case PartType.West:
 					QuadrantsPanel.SelectedQuadrant = QuadrantType.West;
 					break;
 
-				case PartType.Northwall:
+				case PartType.North:
 					QuadrantsPanel.SelectedQuadrant = QuadrantType.North;
 					break;
 
