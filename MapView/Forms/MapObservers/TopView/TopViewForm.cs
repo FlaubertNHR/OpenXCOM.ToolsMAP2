@@ -48,43 +48,37 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if ((e.Modifiers & Keys.Control) == Keys.Control
-				&& e.KeyCode == Keys.O)
+			if (e.KeyCode == Keys.Escape)
+			{
+				if (!Control.TopViewPanel.Focused)
+				{
+					Control.TopViewPanel.Select();
+					e.SuppressKeyPress = true;
+				}
+				else
+					MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
+			}
+			else if (e.KeyCode == Keys.O
+				&& (e.Modifiers & Keys.Control) == Keys.Control)
 			{
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 				e.SuppressKeyPress = true;
 			}
-			else
-				MainMenusManager.ViewerKeyDown(e); // NOTE: this can suppress the key
-
-			if (!e.SuppressKeyPress)
+			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
 				QuadrantType quadType = QuadrantType.None;
 				switch (e.KeyCode)
 				{
-					case Keys.D1:
-						e.SuppressKeyPress = true;
-						quadType = QuadrantType.Floor;
-						break;
-
-					case Keys.D2:
-						e.SuppressKeyPress = true;
-						quadType = QuadrantType.West;
-						break;
-
-					case Keys.D3:
-						e.SuppressKeyPress = true;
-						quadType = QuadrantType.North;
-						break;
-
-					case Keys.D4:
-						e.SuppressKeyPress = true;
-						quadType = QuadrantType.Content;
-						break;
+					case Keys.D1: quadType = QuadrantType.Floor;   break;
+					case Keys.D2: quadType = QuadrantType.West;    break;
+					case Keys.D3: quadType = QuadrantType.North;   break;
+					case Keys.D4: quadType = QuadrantType.Content; break;
 				}
 
-				if (e.SuppressKeyPress)
+				if (quadType != QuadrantType.None)
 				{
+					e.SuppressKeyPress = true;
+
 					var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
 					Control.QuadrantsPanel.ForceMouseDown(args, quadType);
 				}

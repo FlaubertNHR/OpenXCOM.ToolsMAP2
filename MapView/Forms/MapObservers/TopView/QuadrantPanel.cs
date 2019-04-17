@@ -118,6 +118,9 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
+			ViewerFormsManager.TopView     .Control   .TopViewPanel.Select();
+			ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.Select();
+
 			QuadrantType quadType;
 			if (_keyQuadtype == QuadrantType.None) // ie. is *not* forced by keyboard-input
 			{

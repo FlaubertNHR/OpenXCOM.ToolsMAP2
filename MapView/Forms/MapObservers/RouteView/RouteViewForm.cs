@@ -46,16 +46,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if ((e.Modifiers & Keys.Control) == Keys.Control
-				&& e.KeyCode == Keys.O)
+			if (e.KeyCode == Keys.Escape)
+			{
+				Control.RoutePanel.Select();
+				e.SuppressKeyPress = true;
+			}
+			else if (e.KeyCode == Keys.O
+				&& (e.Modifiers & Keys.Control) == Keys.Control)
 			{
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 				e.SuppressKeyPress = true;
 			}
-			else
-				MainMenusManager.ViewerKeyDown(e); // NOTE: this can suppress the key
-
-			if (!e.SuppressKeyPress && Control.RoutePanel.Focused)
+			else if (!MainMenusManager.ViewerKeyDown(e) // NOTE: this can suppress the key
+				&& Control.RoutePanel.Focused)
 			{
 				switch (e.KeyCode)
 				{

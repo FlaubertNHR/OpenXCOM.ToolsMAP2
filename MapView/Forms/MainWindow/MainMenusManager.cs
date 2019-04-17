@@ -329,7 +329,8 @@ namespace MapView.Forms.MainWindow
 		///   and TopRouteViewForm
 		/// </summary>
 		/// <param name="e"></param>
-		internal static void ViewerKeyDown(KeyEventArgs e)
+		/// <returns>true if key is suppressed</returns>
+		internal static bool ViewerKeyDown(KeyEventArgs e)
 		{
 			int it = -1;
 			switch (e.KeyCode)
@@ -342,7 +343,7 @@ namespace MapView.Forms.MainWindow
 				case Keys.F11: OnMinimizeAllClick(null, EventArgs.Empty); break; // min/rest ->
 				case Keys.F12: OnRestoreAllClick( null, EventArgs.Empty); break;
 
-				default: return; // else do not suppress key-event
+				default: return false; // else do not suppress key-event for any other key
 			}
 
 			if (it != -1)
@@ -360,6 +361,7 @@ namespace MapView.Forms.MainWindow
 								EventArgs.Empty);
 			}
 			e.SuppressKeyPress = true;
+			return true;
 		}
 		#endregion Methods
 	}

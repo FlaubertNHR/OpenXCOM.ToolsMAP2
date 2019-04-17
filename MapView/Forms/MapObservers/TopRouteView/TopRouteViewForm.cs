@@ -46,8 +46,17 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if ((e.Modifiers & Keys.Control) == Keys.Control
-				&& e.KeyCode == Keys.O)
+			if (e.KeyCode == Keys.Escape)
+			{
+				switch (tabControl.SelectedIndex)
+				{
+					case 0: ControlTop  .TopViewPanel.Select(); break;
+					case 1: ControlRoute.RoutePanel  .Select(); break;
+				}
+				e.SuppressKeyPress = true;
+			}
+			else if (e.KeyCode == Keys.O
+				&& (e.Modifiers & Keys.Control) == Keys.Control)
 			{
 				switch (tabControl.SelectedIndex)
 				{
@@ -56,10 +65,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 				}
 				e.SuppressKeyPress = true;
 			}
-			else
-				MainMenusManager.ViewerKeyDown(e); // NOTE: this can suppress the key
-
-			if (!e.SuppressKeyPress)
+			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
 				if (tabControl.SelectedIndex == 0) // Top
 				{
