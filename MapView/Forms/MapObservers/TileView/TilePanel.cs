@@ -139,6 +139,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			_quadType = quadType;
 
 			Dock = DockStyle.Fill;
+			SetStyle(ControlStyles.Selectable, true);
 
 			_scrollBar = new VScrollBar();
 			_scrollBar.Dock = DockStyle.Right;
@@ -302,7 +303,9 @@ namespace MapView.Forms.MapObservers.TileViews
 						_scrollBar.Value += _scrollBar.LargeChange;
 				}
 			}
-			OnMouseMove(e); // update Overinfo on the statusbar.
+
+			if (Bounds.Contains(PointToClient(MousePosition)))
+				OnMouseMove(e); // update Overinfo on the statusbar.
 		}
 
 		/// <summary>

@@ -99,6 +99,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			InitializeComponent();
 
+			tcTileTypes.MouseWheel           += OnMouseWheelTabs;
 			tcTileTypes.SelectedIndexChanged += OnSelectedIndexChanged;
 
 			_allTiles      = new TilePanel(PartType.All);
@@ -134,7 +135,40 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 
-		#region EventCalls
+		#region Events (override)
+		/// <summary>
+		/// Bypasses level-change in MapObserverControl0 and scrolls through the
+		/// tabpages instead.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+//			base.OnMouseWheel(e);
+		}
+		#endregion Events (override)
+
+
+		#region Events
+		private void OnMouseWheelTabs(object sender, MouseEventArgs e)
+		{
+			LogFile.WriteLine("OnMouseWheelTabs() delta= " + e.Delta);
+			int dir = 0;
+			if (e.Delta < 0)
+				dir = +1;
+			else if (e.Delta > 0)
+				dir = -1;
+
+			if (dir != 0)
+			{
+				int page = tcTileTypes.SelectedIndex + dir;
+				if (page > -1 && page < tcTileTypes.TabCount)
+				{
+					tcTileTypes.SelectedIndex = page;
+				}
+			}
+			//_panels[tcTileTypes.SelectedIndex] as TilePanel;
+		}
+
 		/// <summary>
 		/// Fires when a tab is clicked.
 		/// Focuses the selected page/panel, updates the quadrant and MCD-info
@@ -152,7 +186,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				panel_.SetTickerSubscription(panel_ == panel);
 			}
 
-			panel.Focus();
+//			panel.Focus();
 
 			McdRecord record;
 			int id;
@@ -739,6 +773,24 @@ namespace MapView.Forms.MapObservers.TileViews
 		internal TilePanel GetSelectedPanel()
 		{
 			return _panels[tcTileTypes.SelectedIndex] as TilePanel;
+		}
+
+		/// <summary>
+		/// Gets the toolstrip-menu.
+		/// </summary>
+		/// <returns></returns>
+		internal ToolStrip GetToolStrip()
+		{
+			return tsMain;
+		}
+
+		/// <summary>
+		/// Gets the tab-control.
+		/// </summary>
+		/// <returns></returns>
+		internal TabControl GetTabControl()
+		{
+			return tcTileTypes;
 		}
 		#endregion
 	}

@@ -61,8 +61,13 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if ((e.Modifiers & Keys.Control) == Keys.Control
-				&& e.KeyCode == Keys.O)
+			if (e.KeyCode == Keys.Escape)
+			{
+				Control.GetSelectedPanel().Focus();
+				e.SuppressKeyPress = true;
+			}
+			else if (e.KeyCode == Keys.O
+				&& (e.Modifiers & Keys.Control) == Keys.Control)
 			{
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 				e.SuppressKeyPress = true;
@@ -72,6 +77,34 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			base.OnKeyDown(e);
 		}
+
+		/// <summary>
+		/// Cycles through controls when the tab-key is pressed.
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <param name="keyData"></param>
+		/// <returns></returns>
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			switch (keyData)
+			{
+				case Keys.Tab:
+					if (Control.GetToolStrip().Focused)
+					{
+						Control.GetTabControl().Focus();
+					}
+					else if (Control.GetTabControl().Focused)
+					{
+						Control.GetSelectedPanel().Focus();
+					}
+					else
+						Control.GetToolStrip().Focus();
+
+					return true;
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
 
 		/// <summary>
 		/// Handles form closing event.

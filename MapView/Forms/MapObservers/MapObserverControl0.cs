@@ -80,7 +80,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// Invoked by TopView, TileView, RouteView.
+		/// Invoked by TileView, TopView, RouteView.
 		/// </summary>
 		public MapObserverControl0()
 		{
@@ -107,6 +107,11 @@ namespace MapView
 
 
 		#region Methods
+		/// <summary>
+		/// Simulates a mousewheel event for keyboard navigation by
+		/// RoutePanelParent.Navigate().
+		/// </summary>
+		/// <param name="e"></param>
 		internal void ForceMousewheel(MouseEventArgs e)
 		{
 			OnMouseWheel(e);
