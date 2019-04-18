@@ -203,9 +203,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#endregion
 
 
-		#region Eventcalls (override) inherited from IMapObserver/MapObserverControl0
+		#region Events (override) inherited from IMapObserver/MapObserverControl0
 		/// <summary>
 		/// Inherited from IMapObserver through MapObserverControl0.
+		/// @note The route-node at location will *not* be selected; only the
+		/// tile is selected. To select a node the route-panel needs to be
+		/// either clicked or keyboarded to. This is a design decision that
+		/// allows the selected node to stay selected while other tiles get
+		/// highlighted.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
@@ -219,6 +224,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		/// <summary>
 		/// Inherited from IMapObserver through MapObserverControl0.
+		/// @note The route-node at location will *not* be selected; only the
+		/// tile is selected. To select a node the route-panel needs to be
+		/// either clicked or keyboarded to. This is a design decision that
+		/// allows the selected node to stay selected while other tiles get
+		/// highlighted.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLevelObserver(SelectLevelEventArgs args)

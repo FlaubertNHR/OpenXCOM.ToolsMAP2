@@ -96,9 +96,9 @@ namespace XCom.Interfaces.Base
 
 					if (SelectLocationEvent != null)
 						SelectLocationEvent(new SelectLocationEventArgs(
-																		_location,
-																		this[_location.Row,
-																			 _location.Col]));
+																	_location,
+																	this[_location.Row,
+																		 _location.Col]));
 				}
 			}
 		}

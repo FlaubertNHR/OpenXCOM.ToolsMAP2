@@ -54,7 +54,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// Tracks the tile-position of the mouse cursor. Used to print
 		/// over-info, overlay-info, and to position the Overlay.
 		/// </summary>
-		public Point CursorPosition
+		internal Point CursorPosition
 		{
 			get { return _pos; }
 			set { _pos = value; }
