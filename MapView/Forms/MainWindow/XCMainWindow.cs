@@ -1551,8 +1551,8 @@ namespace MapView
 
 //						ViewerFormsManager.RouteView.Control.ClearSelectedLocation(); // ... why not
 
-						ViewerFormsManager.TopView     .Control   .TopViewPanel.ClearSelectorLozenge();
-						ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.ClearSelectorLozenge();
+						ViewerFormsManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
+						ViewerFormsManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
 
 						if (ScanG != null) // update ScanG viewer if open
 							ScanG.LoadMapfile(@base);

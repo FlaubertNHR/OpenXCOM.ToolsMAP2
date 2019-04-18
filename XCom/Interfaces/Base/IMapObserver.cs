@@ -13,7 +13,7 @@ namespace XCom.Interfaces.Base
 		{ set; get;}
 
 		// NOTE: This is not even used by MapObserverControl1 - only by
-		// MapObserverControl0 (for TopViewPanel and QuadrantsPanel).
+		// MapObserverControl0 (for TopPanel and QuadrantsPanel).
 		Dictionary<string, IMapObserver> Panels
 		{ get; }
 

@@ -118,8 +118,8 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			ViewerFormsManager.TopView     .Control   .TopViewPanel.Select();
-			ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.Select();
+			ViewerFormsManager.TopView     .Control   .TopPanel.Select();
+			ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Select();
 
 			QuadrantType quadType;
 			if (_keyQuadtype == QuadrantType.None) // ie. is *not* forced by keyboard-input
@@ -224,8 +224,8 @@ namespace MapView.Forms.MapObservers.TopViews
 
 							Refresh();
 
-							ViewerFormsManager.TopView     .Control   .TopViewPanel.Refresh();
-							ViewerFormsManager.TopRouteView.ControlTop.TopViewPanel.Refresh();
+							ViewerFormsManager.TopView     .Control   .TopPanel.Refresh();
+							ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Refresh();
 						}
 						break;
 					}

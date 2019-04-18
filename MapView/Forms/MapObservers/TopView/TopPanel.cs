@@ -9,12 +9,12 @@ using XCom.Interfaces.Base;
 namespace MapView.Forms.MapObservers.TopViews
 {
 	/// <summary>
-	/// The derived class for TopViewPanel.
+	/// The derived class for TopPanel.
 	/// @note This is not a Panel. It is a UserControl inside of a Panel.
 	/// </summary>
-	internal sealed class TopViewPanel
+	internal sealed class TopPanel
 		:
-			TopViewPanelParent
+			TopPanelParent
 	{
 		#region Fields & Properties
 		private ColorTools _toolWest;
@@ -40,9 +40,9 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region cTor
 		/// <summary>
-		/// TopViewPanel cTor. Is NOT a panel.
+		/// TopPanel cTor. Is NOT a panel.
 		/// </summary>
-		internal TopViewPanel()
+		internal TopPanel()
 		{
 			MainViewUnderlay.Instance.MainViewOverlay.MouseDragEvent += PathSelectedLozenge;
 		}

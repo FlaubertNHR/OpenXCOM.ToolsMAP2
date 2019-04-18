@@ -10,7 +10,7 @@ using XCom.Interfaces.Base;
 namespace MapView
 {
 	/// <summary>
-	/// Inherited by TopViewPanelParent, TopViewPanel, QuadrantPanel.
+	/// Inherited by TopPanelParent, TopPanel, QuadrantPanel.
 	/// </summary>
 	internal class MapObserverControl1
 		:
@@ -41,7 +41,7 @@ namespace MapView
 
 		/// <summary>
 		/// Satisfies IMapObserver. Used by QuadrantPanel but disabled in
-		/// TopViewPanelParent.
+		/// TopPanelParent.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnSelectLocationObserver(SelectLocationEventArgs args)
@@ -49,7 +49,7 @@ namespace MapView
 
 		/// <summary>
 		/// Satisfies IMapObserver. Used by QuadrantPanel and does not exist in
-		/// TopViewPanelParent.
+		/// TopPanelParent.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnSelectLevelObserver(SelectLevelEventArgs args)

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace DSShared.Windows
 {
 	/// <summary>
-	/// Inherited by MapObserverControl1 (TopViewPanelParent, TopViewPanel,
+	/// Inherited by MapObserverControl1 (TopPanelParent, TopPanel,
 	/// QuadrantPanel).
 	/// </summary>
 	public class DoubleBufferedControl
@@ -44,7 +44,7 @@ namespace DSShared.Windows
 
 		#region Methods
 		/// <summary>
-		/// Shunts rendering off to TopViewPanelParent and QuadrantPanel.
+		/// Shunts rendering off to TopPanelParent and QuadrantPanel.
 		/// </summary>
 		protected virtual void RenderGraphics(Graphics graphics)
 		{}

@@ -116,7 +116,7 @@ namespace MapView.Forms.MainWindow
 				observer.MapBase.SelectLevelEvent    += observer.OnSelectLevelObserver;
 			}
 
-			foreach (string key in observer.Panels.Keys) // ie. TopViewPanel and QuadrantsPanel
+			foreach (string key in observer.Panels.Keys) // ie. TopPanel and QuadrantsPanel
 				SetObserver(observer.MapBase, observer.Panels[key]);
 		}
 		#endregion

@@ -48,17 +48,17 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// - selects a quadrant
 		/// @note Requires 'KeyPreview' true.
 		/// @note See also TileViewForm, RouteViewForm, TopRouteViewForm
-		/// @note Edit/Save keys are handled by 'TopViewPanelParent.OnKeyDown()'.
+		/// @note Edit/Save keys are handled by 'TopPanelParent.OnKeyDown()'.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
-				if (!Control.TopViewPanel.Focused)
+				if (!Control.TopPanel.Focused)
 				{
 					e.SuppressKeyPress = true;
-					Control.TopViewPanel.Focus();
+					Control.TopPanel.Focus();
 				}
 				else
 					MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
@@ -86,7 +86,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
 					Control.QuadrantsPanel.ForceMouseDown(args, quadType);
 				}
-				else if (Control.TopViewPanel.Focused)
+				else if (Control.TopPanel.Focused)
 				{
 					switch (e.KeyCode)
 					{
@@ -117,7 +117,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (Control.TopViewPanel.Focused)
+			if (Control.TopPanel.Focused)
 			{
 				switch (keyData)
 				{

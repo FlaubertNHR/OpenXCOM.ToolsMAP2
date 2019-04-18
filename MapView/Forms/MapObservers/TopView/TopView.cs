@@ -17,17 +17,14 @@ namespace MapView.Forms.MapObservers.TopViews
 			MapObserverControl0
 	{
 		#region Fields
-		private Dictionary<string, Pen> _topPens;
+		private Dictionary<string, Pen>        _topPens;
 		private Dictionary<string, SolidBrush> _topBrushes;
 		#endregion
 
 
 		#region Properties
-		private readonly TopViewPanel _topViewPanel;
-		internal TopViewPanel TopViewPanel
-		{
-			get { return _topViewPanel; }
-		}
+		internal TopPanel TopPanel
+		{ get; private set; }
 
 		internal QuadrantPanel QuadrantsPanel
 		{
@@ -36,22 +33,22 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		public bool GroundVisible
 		{
-			get { return _topViewPanel.Ground.Checked; }
+			get { return TopPanel.Ground.Checked; }
 		}
 
 		public bool NorthVisible
 		{
-			get { return _topViewPanel.North.Checked; }
+			get { return TopPanel.North.Checked; }
 		}
 
 		public bool WestVisible
 		{
-			get { return _topViewPanel.West.Checked; }
+			get { return TopPanel.West.Checked; }
 		}
 
 		public bool ContentVisible
 		{
-			get { return _topViewPanel.Content.Checked; }
+			get { return TopPanel.Content.Checked; }
 		}
 		#endregion
 
@@ -71,47 +68,46 @@ namespace MapView.Forms.MapObservers.TopViews
 			quadrants.SelectedQuadrant = QuadrantType.Floor;
 
 
-			_topViewPanel = new TopViewPanel();
+			TopPanel = new TopPanel();
+			TopPanel.Dock = DockStyle.Fill;
 
-			_topViewPanel.Dock = DockStyle.Fill;
+			pnlMain.Controls.Add(TopPanel);
 
-			pnlMain.Controls.Add(_topViewPanel);
-
-			pnlMain.Resize += (sender, e) => _topViewPanel.ResizeObserver(
-																		pnlMain.Width,
-																		pnlMain.Height);
+			pnlMain.Resize += (sender, e) => TopPanel.ResizeObserver(
+																	pnlMain.Width,
+																	pnlMain.Height);
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 
-			_topViewPanel.Ground  = new ToolStripMenuItem(QuadrantPanelDrawService.Floor);
-			_topViewPanel.West    = new ToolStripMenuItem(QuadrantPanelDrawService.West);
-			_topViewPanel.North   = new ToolStripMenuItem(QuadrantPanelDrawService.North);
-			_topViewPanel.Content = new ToolStripMenuItem(QuadrantPanelDrawService.Content);
+			TopPanel.Ground  = new ToolStripMenuItem(QuadrantPanelDrawService.Floor);
+			TopPanel.West    = new ToolStripMenuItem(QuadrantPanelDrawService.West);
+			TopPanel.North   = new ToolStripMenuItem(QuadrantPanelDrawService.North);
+			TopPanel.Content = new ToolStripMenuItem(QuadrantPanelDrawService.Content);
 
-			visQuads.Add(_topViewPanel.Ground);
-			visQuads.Add(_topViewPanel.West);
-			visQuads.Add(_topViewPanel.North);
-			visQuads.Add(_topViewPanel.Content);
+			visQuads.Add(TopPanel.Ground);
+			visQuads.Add(TopPanel.West);
+			visQuads.Add(TopPanel.North);
+			visQuads.Add(TopPanel.Content);
 
-			_topViewPanel.Ground.ShortcutKeys = Keys.F1;
-			_topViewPanel.Ground.Checked = true;
+			TopPanel.Ground.ShortcutKeys = Keys.F1;
+			TopPanel.Ground.Checked = true;
 
-			_topViewPanel.West.ShortcutKeys = Keys.F2;
-			_topViewPanel.West.Checked = true;
+			TopPanel.West.ShortcutKeys = Keys.F2;
+			TopPanel.West.Checked = true;
 
-			_topViewPanel.North.ShortcutKeys = Keys.F3;
-			_topViewPanel.North.Checked = true;
+			TopPanel.North.ShortcutKeys = Keys.F3;
+			TopPanel.North.Checked = true;
 
-			_topViewPanel.Content.ShortcutKeys = Keys.F4;
-			_topViewPanel.Content.Checked = true;
+			TopPanel.Content.ShortcutKeys = Keys.F4;
+			TopPanel.Content.Checked = true;
 
 			foreach (ToolStripMenuItem it in visQuads)
 				it.Click += OnToggleQuadrantVisibilityClick;
 
-			_topViewPanel.QuadrantsPanel = QuadrantsPanel;
+			TopPanel.QuadrantsPanel = QuadrantsPanel;
 
 			Panels.Add("QuadrantsPanel", QuadrantsPanel);
-			Panels.Add("TopViewPanel", _topViewPanel);
+			Panels.Add("TopPanel",       TopPanel);
 
 			ResumeLayout();
 		}
@@ -127,27 +123,27 @@ namespace MapView.Forms.MapObservers.TopViews
 		private void OnToggleQuadrantVisibilityClick(object sender, EventArgs e)
 		{
 			var it = sender as ToolStripMenuItem;
-			if (it == _topViewPanel.Ground)
+			if (it == TopPanel.Ground)
 			{
-				ViewerFormsManager.TopView     .Control   ._topViewPanel.Ground.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop._topViewPanel.Ground.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .TopPanel.Ground.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Ground.Checked = !it.Checked;
 
 				((MapFileChild)MapBase).CalculateOccultations(!it.Checked);
 			}
-			else if (it == _topViewPanel.West)
+			else if (it == TopPanel.West)
 			{
-				ViewerFormsManager.TopView     .Control   ._topViewPanel.West.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop._topViewPanel.West.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .TopPanel.West.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.West.Checked = !it.Checked;
 			}
-			else if (it == _topViewPanel.North)
+			else if (it == TopPanel.North)
 			{
-				ViewerFormsManager.TopView     .Control   ._topViewPanel.North.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop._topViewPanel.North.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .TopPanel.North.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.North.Checked = !it.Checked;
 			}
-			else //if (it == _topViewPanel.Content)
+			else //if (it == TopPanel.Content)
 			{
-				ViewerFormsManager.TopView     .Control   ._topViewPanel.Content.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop._topViewPanel.Content.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .TopPanel.Content.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Content.Checked = !it.Checked;
 			}
 
 			MainViewUnderlay.Instance.Refresh();
@@ -333,11 +329,11 @@ namespace MapView.Forms.MapObservers.TopViews
 			Options.AddOption(Grid10Color,       Color.Black,                     "Color of every tenth grid line",              Grid,     pc);
 			Options.AddOption(Grid10Width,       2,                               "Width of every tenth grid line in pixels",    Grid,     pw);
 
-			QuadrantsPanel.Pens   =
-			_topViewPanel.TopPens = _topPens;
+			QuadrantsPanel.Pens =
+			TopPanel.TopPens    = _topPens;
 
-			QuadrantsPanel.Brushes   =
-			_topViewPanel.TopBrushes = _topBrushes;
+			QuadrantsPanel.Brushes =
+			TopPanel.TopBrushes    = _topBrushes;
 
 			Invalidate();
 		}

@@ -14,10 +14,10 @@ using XCom.Interfaces.Base;
 namespace MapView.Forms.MapObservers.TopViews
 {
 	/// <summary>
-	/// The base class for TopViewPanel.
+	/// The base class for TopPanel.
 	/// @note This is not a Panel. It is a UserControl inside of a Panel.
 	/// </summary>
-	internal class TopViewPanelParent
+	internal class TopPanelParent
 		:
 			MapObserverControl1
 	{
@@ -69,9 +69,9 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiated only as the parent of TopViewPanel. Is NOT a panel.
+		/// cTor. Instantiated only as the parent of TopPanel. Is NOT a panel.
 		/// </summary>
-		internal protected TopViewPanelParent()
+		internal protected TopPanelParent()
 		{
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint
@@ -253,7 +253,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					{
 						var mapTile = MapBase[r, c] as MapTileBase;
 						if (mapTile != null)
-							((TopViewPanel)this).DrawTileBlobs(mapTile, graphics, x, y);
+							((TopPanel)this).DrawTileBlobs(mapTile, graphics, x, y);
 					}
 				}
 
@@ -438,7 +438,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
 			LogFile.WriteLine("");
-			LogFile.WriteLine("TopViewPanelParent.OnSelectLocationObserver");
+			LogFile.WriteLine("TopPanelParent.OnSelectLocationObserver");
 
 			var pt = e.MapLocation;
 //			Text = "c " + pt.Col + "  r " + pt.Row; // I don't think this actually prints anywhere.
