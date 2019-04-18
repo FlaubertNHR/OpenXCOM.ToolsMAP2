@@ -54,7 +54,11 @@ namespace MapView.Forms.MapObservers.TileViews
 		#region Events (override)
 		/// <summary>
 		/// Handles KeyDown events at the form level.
-		/// - opens/closes Options on [Ctrl+o] event.
+		/// - [Esc] focuses the current panel
+		/// - opens/closes Options on [Ctrl+o] event
+		/// - checks for and if so processes a viewer F-key
+		/// - passes edit-keys to the TileView control's current panel's
+		///   Navigate() funct
 		/// @note Requires 'KeyPreview' true.
 		/// @note See also TopViewForm, RouteViewForm, TopRouteViewForm
 		/// </summary>
@@ -63,34 +67,39 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
-				Control.GetSelectedPanel().Focus();
 				e.SuppressKeyPress = true;
+				Control.GetSelectedPanel().Focus();
 			}
 			else if (e.KeyCode == Keys.O
 				&& (e.Modifiers & Keys.Control) == Keys.Control)
 			{
-				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 				e.SuppressKeyPress = true;
+				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 			}
-			else if (!MainMenusManager.ViewerKeyDown(e))
+			else if (!MainMenusManager.ViewerKeyDown(e)
+				&& Control.GetSelectedPanel().Focused)
 			{
 				switch (e.KeyCode)
 				{
-					case  Keys.Home:
-					case  Keys.End:
-					case  Keys.PageUp:
-					case  Keys.PageDown:
+					case Keys.Home:
+					case Keys.End:
+					case Keys.PageUp:
+					case Keys.PageDown:
 						e.SuppressKeyPress = true;
 						Control.GetSelectedPanel().Navigate(e.KeyData);
 						break;
 				}
 			}
-
 			base.OnKeyDown(e);
 		}
 
 		/// <summary>
-		/// Cycles through controls when the tab-key is pressed.
+		/// Handles a so-called command-key at the form level. Stops keys that
+		/// shall be used for navigating the tiles from doing anything stupid
+		/// instead.
+		/// - cycles through controls when the tab-key is pressed
+		/// - passes the arrow-keys to the TileView control's current panel's
+		///   Navigate() funct
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="keyData"></param>
@@ -100,17 +109,9 @@ namespace MapView.Forms.MapObservers.TileViews
 			switch (keyData)
 			{
 				case Keys.Tab:
-					if (Control.GetToolStrip().Focused)
-					{
-						Control.GetTabControl().Focus();
-					}
-					else if (Control.GetTabControl().Focused)
-					{
-						Control.GetSelectedPanel().Focus();
-					}
-					else
-						Control.GetToolStrip().Focus();
-
+					if      (Control.GetToolStrip() .Focused) Control.GetTabControl()   .Focus();
+					else if (Control.GetTabControl().Focused) Control.GetSelectedPanel().Focus();
+					else                                      Control.GetToolStrip()    .Focus(); // TODO: focus External dropdown
 					return true;
 
 				case Keys.Left:

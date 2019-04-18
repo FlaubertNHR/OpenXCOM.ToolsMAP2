@@ -39,7 +39,12 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		#region Events (override)
 		/// <summary>
 		/// Handles KeyDown events at the form level.
-		/// - opens/closes Options on [Ctrl+o] event.
+		/// - [Esc] focuses the appropriate panel
+		/// - opens/closes Options on [Ctrl+o] event
+		/// - checks for and if so processes a viewer F-key
+		/// - passes edit-keys to the appropriate viewer's control's panel's
+		///   Navigate() funct
+		/// - selects a quadrant if TopView is the current tabpage
 		/// @note Requires 'KeyPreview' true.
 		/// @note See also TileViewForm, TopViewForm, RouteViewForm
 		/// </summary>
@@ -48,22 +53,22 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
+				e.SuppressKeyPress = true;
 				switch (tabControl.SelectedIndex)
 				{
-					case 0: ControlTop  .TopViewPanel.Select(); break;
-					case 1: ControlRoute.RoutePanel  .Select(); break;
+					case 0: ControlTop  .TopViewPanel.Focus(); break;
+					case 1: ControlRoute.RoutePanel  .Focus(); break;
 				}
-				e.SuppressKeyPress = true;
 			}
 			else if (e.KeyCode == Keys.O
 				&& (e.Modifiers & Keys.Control) == Keys.Control)
 			{
+				e.SuppressKeyPress = true;
 				switch (tabControl.SelectedIndex)
 				{
 					case 0: ControlTop  .OnOptionsClick(ControlTop  .GetOptionsButton(), EventArgs.Empty); break;
 					case 1: ControlRoute.OnOptionsClick(ControlRoute.GetOptionsButton(), EventArgs.Empty); break;
 				}
-				e.SuppressKeyPress = true;
 			}
 			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
@@ -72,29 +77,15 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 					QuadrantType quadType = QuadrantType.None;
 					switch (e.KeyCode)
 					{
-						case Keys.D1:
-							e.SuppressKeyPress = true;
-							quadType = QuadrantType.Floor;
-							break;
-
-						case Keys.D2:
-							e.SuppressKeyPress = true;
-							quadType = QuadrantType.West;
-							break;
-
-						case Keys.D3:
-							e.SuppressKeyPress = true;
-							quadType = QuadrantType.North;
-							break;
-
-						case Keys.D4:
-							e.SuppressKeyPress = true;
-							quadType = QuadrantType.Content;
-							break;
+						case Keys.D1: quadType = QuadrantType.Floor;   break;
+						case Keys.D2: quadType = QuadrantType.West;    break;
+						case Keys.D3: quadType = QuadrantType.North;   break;
+						case Keys.D4: quadType = QuadrantType.Content; break;
 					}
 
-					if (e.SuppressKeyPress)
+					if (quadType != QuadrantType.None)
 					{
+						e.SuppressKeyPress = true;
 						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
 						ControlTop.QuadrantsPanel.ForceMouseDown(args, quadType);
 					}
@@ -108,8 +99,8 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 							case Keys.PageUp:
 							case Keys.Home:
 							case Keys.End:
+								e.SuppressKeyPress = true;
 								MainViewUnderlay.Instance.MainViewOverlay.Navigate(e.KeyData);
-								e.SuppressKeyPress = true; // I wonder if this suppresses only KeyDown or other keyed eventtypes also.
 								break;
 						}
 					}
@@ -125,8 +116,8 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 						case Keys.Home:
 						case Keys.End:
 						case Keys.Enter:
-							ControlRoute.RoutePanel.Navigate(e.KeyData);
 							e.SuppressKeyPress = true;
+							ControlRoute.RoutePanel.Navigate(e.KeyData);
 							break;
 					}
 				}
@@ -137,8 +128,11 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		}
 
 		/// <summary>
-		/// Stops keys that shall be used for navigating the tiles from doing
-		/// anything stupid instead.
+		/// Handles a so-called command-key at the form level. Stops keys that
+		/// shall be used for navigating the tiles from doing anything stupid
+		/// instead.
+		/// - passes the arrow-keys to the appropriate control's panel's
+		///   Navigate() funct
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="keyData"></param>
@@ -156,10 +150,10 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 							case Keys.Right:
 							case Keys.Up:
 							case Keys.Down:
-							case (Keys.Shift | Keys.Left):
-							case (Keys.Shift | Keys.Right):
-							case (Keys.Shift | Keys.Up):
-							case (Keys.Shift | Keys.Down):
+							case Keys.Shift | Keys.Left:
+							case Keys.Shift | Keys.Right:
+							case Keys.Shift | Keys.Up:
+							case Keys.Shift | Keys.Down:
 								MainViewUnderlay.Instance.MainViewOverlay.Navigate(keyData);
 								return true;
 						}

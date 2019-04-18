@@ -38,7 +38,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#region Events (override)
 		/// <summary>
 		/// Handles KeyDown events at the form level.
-		/// - opens/closes Options on [Ctrl+o] event.
+		/// - [Esc] focuses the panel
+		/// - opens/closes Options on [Ctrl+o] event
+		/// - checks for and if so processes a viewer F-key
+		/// - passes edit-keys to the RouteView control's panel's Navigate()
+		///   funct
 		/// @note Requires 'KeyPreview' true.
 		/// @note See also TileViewForm, TopViewForm, TopRouteViewForm
 		/// @note Edit/Save keys are handled by 'RouteView.OnRoutePanelKeyDown()'.
@@ -48,14 +52,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
-				Control.RoutePanel.Select();
 				e.SuppressKeyPress = true;
+				Control.RoutePanel.Focus();
 			}
 			else if (e.KeyCode == Keys.O
 				&& (e.Modifiers & Keys.Control) == Keys.Control)
 			{
-				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 				e.SuppressKeyPress = true;
+				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 			}
 			else if (!MainMenusManager.ViewerKeyDown(e) // NOTE: this can suppress the key
 				&& Control.RoutePanel.Focused)
@@ -69,8 +73,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					case Keys.Home:
 					case Keys.End:
 					case Keys.Enter:
-						Control.RoutePanel.Navigate(e.KeyData);
 						e.SuppressKeyPress = true;
+						Control.RoutePanel.Navigate(e.KeyData);
 						break;
 				}
 			}
@@ -78,8 +82,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 		/// <summary>
-		/// Stops keys that shall be used for navigating the tiles from doing
-		/// anything stupid instead.
+		/// Handles a so-called command-key at the form level. Stops keys that
+		/// shall be used for navigating the tiles from doing anything stupid
+		/// instead.
+		/// - passes the arrow-keys to the RouteView control's panel's
+		///   Navigate() funct
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="keyData"></param>

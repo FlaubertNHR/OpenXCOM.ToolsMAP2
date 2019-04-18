@@ -40,7 +40,12 @@ namespace MapView.Forms.MapObservers.TopViews
 		#region Events (override)
 		/// <summary>
 		/// Handles KeyDown events at the form level.
-		/// - opens/closes Options on [Ctrl+o] event.
+		/// - [Esc] focuses the panel else clears the current selection lozenge
+		/// - opens/closes Options on [Ctrl+o] event
+		/// - checks for and if so processes a viewer F-key
+		/// - passes edit-keys to the TopView control's panel's Navigate()
+		///   funct
+		/// - selects a quadrant
 		/// @note Requires 'KeyPreview' true.
 		/// @note See also TileViewForm, RouteViewForm, TopRouteViewForm
 		/// @note Edit/Save keys are handled by 'TopViewPanelParent.OnKeyDown()'.
@@ -52,8 +57,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			{
 				if (!Control.TopViewPanel.Focused)
 				{
-					Control.TopViewPanel.Select();
 					e.SuppressKeyPress = true;
+					Control.TopViewPanel.Focus();
 				}
 				else
 					MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
@@ -61,8 +66,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			else if (e.KeyCode == Keys.O
 				&& (e.Modifiers & Keys.Control) == Keys.Control)
 			{
-				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 				e.SuppressKeyPress = true;
+				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 			}
 			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
@@ -78,7 +83,6 @@ namespace MapView.Forms.MapObservers.TopViews
 				if (quadType != QuadrantType.None)
 				{
 					e.SuppressKeyPress = true;
-
 					var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
 					Control.QuadrantsPanel.ForceMouseDown(args, quadType);
 				}
@@ -92,8 +96,8 @@ namespace MapView.Forms.MapObservers.TopViews
 						case Keys.PageUp:
 						case Keys.Home:
 						case Keys.End:
+							e.SuppressKeyPress = true;
 							MainViewUnderlay.Instance.MainViewOverlay.Navigate(e.KeyData);
-							e.SuppressKeyPress = true; // I wonder if this suppresses only KeyDown or other keyed eventtypes also.
 							break;
 					}
 				}
@@ -102,8 +106,11 @@ namespace MapView.Forms.MapObservers.TopViews
 		}
 
 		/// <summary>
-		/// Stops keys that shall be used for navigating the tiles from doing
-		/// anything stupid instead.
+		/// Handles a so-called command-key at the form level. Stops keys that
+		/// shall be used for navigating the tiles from doing anything stupid
+		/// instead.
+		/// - passes the arrow-keys to the TopView control's panel's Navigate()
+		///   funct
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="keyData"></param>
@@ -118,10 +125,10 @@ namespace MapView.Forms.MapObservers.TopViews
 					case Keys.Right:
 					case Keys.Up:
 					case Keys.Down:
-					case (Keys.Shift | Keys.Left):
-					case (Keys.Shift | Keys.Right):
-					case (Keys.Shift | Keys.Up):
-					case (Keys.Shift | Keys.Down):
+					case Keys.Shift | Keys.Left:
+					case Keys.Shift | Keys.Right:
+					case Keys.Shift | Keys.Up:
+					case Keys.Shift | Keys.Down:
 						MainViewUnderlay.Instance.MainViewOverlay.Navigate(keyData);
 						return true;
 				}
