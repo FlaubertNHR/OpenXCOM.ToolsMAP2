@@ -253,7 +253,9 @@ namespace MapView.Forms.MapObservers.TileViews
 		private bool _resetTrack;
 
 		/// <summary>
-		/// Handles client resizing. Sets the scrollbar's Maximum value.
+		/// Handles client resizing. Sets the scrollbar's Maximum value. And
+		/// ensures that the bottom of the tile-table gets snuggled down against
+		/// the bottom of the panel's area if required.
 		/// </summary>
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
@@ -274,7 +276,13 @@ namespace MapView.Forms.MapObservers.TileViews
 					range = 0;
 			}
 			_scrollBar.Maximum = range;
-			_scrollBar.Visible = (range != 0);
+			_scrollBar.Visible = range != 0;
+
+			if (_scrollBar.Visible
+				&& TableHeight - _scrollBar.Value < Height)
+			{
+				_scrollBar.Value = _scrollBar.Maximum - _largeChange - 1 + TableOffset;
+			}
 		}
 
 		/// <summary>
