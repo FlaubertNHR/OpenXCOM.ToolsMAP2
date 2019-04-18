@@ -336,6 +336,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 						args.Location    = MapChild.Location;
 
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+						Invalidate();
 					}
 					SelectedPosition = loc;
 				}
