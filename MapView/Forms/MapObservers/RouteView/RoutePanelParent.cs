@@ -373,7 +373,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 						case Keys.Add:
 							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
 																								MouseButtons.None,
-																								0, 0, 0, (vert = 1)));
+																								0, 0, 0, (vert = +1)));
 							break;
 
 //						case Keys.Insert:
@@ -402,6 +402,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							args.Location    = MapChild.Location;
 
 							RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+							Invalidate();
 						}
 						SelectedPosition = loc;
 					}
