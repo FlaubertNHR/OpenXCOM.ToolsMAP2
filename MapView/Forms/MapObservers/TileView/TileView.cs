@@ -774,24 +774,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			return _panels[tcTileTypes.SelectedIndex] as TilePanel;
 		}
-
-		/// <summary>
-		/// Gets the toolstrip-menu.
-		/// </summary>
-		/// <returns></returns>
-		internal ToolStrip GetToolStrip()
-		{
-			return tsMain;
-		}
-
-		/// <summary>
-		/// Gets the tab-control.
-		/// </summary>
-		/// <returns></returns>
-		internal TabControl GetTabControl()
-		{
-			return tcTileTypes;
-		}
 		#endregion
 	}
 }

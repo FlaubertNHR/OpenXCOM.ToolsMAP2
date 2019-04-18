@@ -43,15 +43,16 @@ namespace MapView
 		#region Events (override)
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (keyData == Keys.Escape
-				|| keyData == (Keys.Control | Keys.O)) // foreign code-page users beware ...
+			switch (keyData)
 			{
-				string typeFocused = FindFocusedControl(this).GetType().ToString();
-				if (!typeFocused.Contains("GridViewEdit"))
-				{
-					Close();
-					return true;
-				}
+				case Keys.O | Keys.Control: // foreign code-page users beware ...
+				case Keys.Escape:
+					if (!FindFocusedControl(this).GetType().ToString().Contains("GridViewEdit"))
+					{
+						Close();
+						return true;
+					}
+					break;
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}

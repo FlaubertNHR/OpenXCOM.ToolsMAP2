@@ -97,7 +97,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Handles a so-called command-key at the form level. Stops keys that
 		/// shall be used for navigating the tiles from doing anything stupid
 		/// instead.
-		/// - cycles through controls when the tab-key is pressed
 		/// - passes the arrow-keys to the TileView control's current panel's
 		///   Navigate() funct
 		/// </summary>
@@ -108,12 +107,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			switch (keyData)
 			{
-				case Keys.Tab:
-					if      (Control.GetToolStrip() .Focused) Control.GetTabControl()   .Focus();
-					else if (Control.GetTabControl().Focused) Control.GetSelectedPanel().Focus();
-					else                                      Control.GetToolStrip()    .Focus(); // TODO: focus External dropdown
-					return true;
-
 				case Keys.Left:
 				case Keys.Right:
 				case Keys.Up:

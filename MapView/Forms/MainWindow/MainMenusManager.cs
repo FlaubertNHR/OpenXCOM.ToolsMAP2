@@ -81,25 +81,6 @@ namespace MapView.Forms.MainWindow
 			}
 		}
 
-/*		/// <summary>
-		/// Helper for OnMenuItemClick() above. It's called only on the
-		/// XCMainWindow menu-click, or a TileViewForm/ TopViewForm/
-		/// RouteViewForm/ TopRouteViewForm F-key press.
-		/// </summary>
-		/// <param name="control"></param>
-		/// <returns></returns>
-		private static Control FindFocusedControl(Control control)
-		{
-			var container = control as ContainerControl;
-			while (container != null)
-			{
-				control = container.ActiveControl;
-				container = control as ContainerControl;
-			}
-			return control;
-		} */
-
-
 		/// <summary>
 		/// Shows the CHM helpfile.
 		/// </summary>

@@ -140,6 +140,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			Dock = DockStyle.Fill;
 			SetStyle(ControlStyles.Selectable, true);
+			TabStop = true;
 
 			_scrollBar = new VScrollBar();
 			_scrollBar.Dock = DockStyle.Right;
