@@ -72,8 +72,19 @@ namespace MapView.Forms.MapObservers.TileViews
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 				e.SuppressKeyPress = true;
 			}
-			else
-				MainMenusManager.ViewerKeyDown(e);
+			else if (!MainMenusManager.ViewerKeyDown(e))
+			{
+				switch (e.KeyCode)
+				{
+					case  Keys.Home:
+					case  Keys.End:
+					case  Keys.PageUp:
+					case  Keys.PageDown:
+						e.SuppressKeyPress = true;
+						Control.GetSelectedPanel().Navigate(e.KeyData);
+						break;
+				}
+			}
 
 			base.OnKeyDown(e);
 		}
@@ -101,6 +112,17 @@ namespace MapView.Forms.MapObservers.TileViews
 						Control.GetToolStrip().Focus();
 
 					return true;
+
+				case Keys.Left:
+				case Keys.Right:
+				case Keys.Up:
+				case Keys.Down:
+					if (Control.GetSelectedPanel().Focused)
+					{
+						Control.GetSelectedPanel().Navigate(keyData);
+						return true;
+					}
+					break;
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}

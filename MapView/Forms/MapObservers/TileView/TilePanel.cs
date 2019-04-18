@@ -80,8 +80,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Gets the selected-tilepart-id.
-		/// Sets the selected-tilepart-id when a valid QuadrantPanel quad is
+		/// Gets the selected-tilepart.
+		/// Sets the selected-tilepart when a valid QuadrantPanel quad is
 		/// double-clicked.
 		/// </summary>
 		internal TilepartBase PartSelected
@@ -97,7 +97,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			{
 				if (value != null)
 				{
-					_id = value.SetId + 1; // +1 to account for the eraser - not sure.
+					_id = value.SetId + 1; // +1 to account for the eraser.
 
 					if (TileSelectedEvent != null)
 						TileSelectedEvent(PartSelected);
@@ -325,13 +325,109 @@ namespace MapView.Forms.MapObservers.TileViews
 					TileSelectedEvent(PartSelected);
 
 				ScrollToTile();
-				Refresh();
+				Invalidate();
 			}
 		}
 
 		/// <summary>
-		/// Opens PckView when a valid tile is double-left-clicked or the
-		/// MCD-info screen when a valid tile is double-right-clicked.
+		/// Navigates the tiles of this panel on keydown events at the Form
+		/// level.
+		/// </summary>
+		/// <param name="keyData"></param>
+		internal void Navigate(Keys keyData)
+		{
+			int id = -1, tileX, vert;
+
+			switch (keyData)
+			{
+				case Keys.Left:
+					id = _id - 1;
+					break;
+
+				case Keys.Right:
+					id = _id + 1;
+					break;
+
+				case Keys.Up:
+					id = _id - _tilesX;
+					if (id < 0)
+						id = 0;
+					break;
+
+				case Keys.Down:
+					id = _id + _tilesX;
+					if (id >= _parts.Length)
+						id = _parts.Length - 1;
+					break;
+
+				case Keys.Home:
+					id = (_id / _tilesX) * _tilesX;
+					if (id < 0)
+						id = 0;
+					break;
+
+				case (Keys.Home | Keys.Control):
+					id = 0;
+					break;
+
+				case Keys.End:
+					id = (_id / _tilesX) * _tilesX + _tilesX - 1;
+					if (id >= _parts.Length)
+						id = _parts.Length - 1;
+					break;
+
+				case (Keys.End | Keys.Control):
+					id = _parts.Length - 1;
+					break;
+
+				case Keys.PageUp:
+					if (_id >= _tilesX)
+					{
+						vert = Height / SpriteHeight * _tilesX;
+						if (vert < _tilesX)
+							vert = _tilesX;
+
+						tileX = _id % _tilesX;
+						id = _id / _tilesX * _tilesX + tileX - vert;
+
+						if (id < tileX)
+							id = tileX;
+					}
+					break;
+
+				case Keys.PageDown:
+					if (_id < _parts.Length / _tilesX * _tilesX)
+					{
+						vert = Height / SpriteHeight * _tilesX;
+						if (vert < _tilesX)
+							vert = _tilesX;
+
+						tileX = _id % _tilesX;
+						id = _id / _tilesX * _tilesX + tileX + vert;
+						if (id >= _parts.Length)
+						{
+							id = _parts.Length / _tilesX * _tilesX + tileX;
+							if (id >= _parts.Length)
+								id = (_parts.Length / _tilesX - 1) * _tilesX + tileX;
+						}
+					}
+					break;
+			}
+
+			if (id > -1 && id < _parts.Length)
+			{
+				_id = id;
+
+				if (TileSelectedEvent != null)
+					TileSelectedEvent(PartSelected);
+
+				ScrollToTile();
+				Invalidate();
+			}
+		}
+
+		/// <summary>
+		/// Opens the MCD-info screen when a valid tile is double-left-clicked.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
@@ -348,6 +444,10 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 		}
 
+		/// <summary>
+		/// Opens the MCD-info screen when [i] is key-upped.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.I)
