@@ -336,7 +336,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
-			int id = -1, tileX, vert;
+			int id = -1;
 
 			switch (keyData)
 			{
@@ -350,30 +350,24 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				case Keys.Up:
 					id = _id - _tilesX;
-					if (id < 0)
-						id = 0;
 					break;
 
 				case Keys.Down:
 					id = _id + _tilesX;
-					if (id >= _parts.Length)
-						id = _parts.Length - 1;
 					break;
 
 				case Keys.Home:
-					id = (_id / _tilesX) * _tilesX;
-					if (id < 0)
-						id = 0;
+					id = _id / _tilesX * _tilesX;
+					break;
+
+				case Keys.End:
+					id = _id / _tilesX * _tilesX + _tilesX - 1;
+					if (id >= _parts.Length)
+						id =  _parts.Length - 1;
 					break;
 
 				case (Keys.Home | Keys.Control):
 					id = 0;
-					break;
-
-				case Keys.End:
-					id = (_id / _tilesX) * _tilesX + _tilesX - 1;
-					if (id >= _parts.Length)
-						id = _parts.Length - 1;
 					break;
 
 				case (Keys.End | Keys.Control):
@@ -383,11 +377,11 @@ namespace MapView.Forms.MapObservers.TileViews
 				case Keys.PageUp:
 					if (_id >= _tilesX)
 					{
-						vert = Height / SpriteHeight * _tilesX;
+						int vert = Height / SpriteHeight * _tilesX;
 						if (vert < _tilesX)
 							vert = _tilesX;
 
-						tileX = _id % _tilesX;
+						int tileX = _id % _tilesX;
 						id = _id / _tilesX * _tilesX + tileX - vert;
 
 						if (id < tileX)
@@ -398,11 +392,11 @@ namespace MapView.Forms.MapObservers.TileViews
 				case Keys.PageDown:
 					if (_id < _parts.Length / _tilesX * _tilesX)
 					{
-						vert = Height / SpriteHeight * _tilesX;
+						int vert = Height / SpriteHeight * _tilesX;
 						if (vert < _tilesX)
 							vert = _tilesX;
 
-						tileX = _id % _tilesX;
+						int tileX = _id % _tilesX;
 						id = _id / _tilesX * _tilesX + tileX + vert;
 						if (id >= _parts.Length)
 						{
@@ -451,7 +445,9 @@ namespace MapView.Forms.MapObservers.TileViews
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.I)
+			{
 				ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
+			}
 		}
 
 		/// <summary>
