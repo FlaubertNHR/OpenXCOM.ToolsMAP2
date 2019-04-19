@@ -16,15 +16,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		:
 			Form
 	{
-		internal TopRouteViewForm()
-		{
-			InitializeComponent();
-
-			var regInfo = new RegistryInfo(RegistryInfo.TopRouteView, this); // subscribe to Load and Closing events.
-			regInfo.RegisterProperties();
-		}
-
-
+		#region Properties
 		internal TopView ControlTop
 		{
 			get { return TopViewControl; }
@@ -34,6 +26,35 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		{
 			get { return RouteViewControl; }
 		}
+		#endregion Properties
+
+
+		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		internal TopRouteViewForm()
+		{
+			InitializeComponent();
+
+			var regInfo = new RegistryInfo(RegistryInfo.TopRouteView, this); // subscribe to Load and Closing events.
+			regInfo.RegisterProperties();
+
+			Activated += OnActivated;
+		}
+		#endregion cTor
+
+
+		#region Events
+		/// <summary>
+		/// Fires when the form is activated.
+		/// </summary>
+		private void OnActivated(object sender, EventArgs e)
+		{
+			if (tabControl.SelectedIndex == 0)
+				TopViewControl.TopPanel.Focus();
+		}
+		#endregion
 
 
 		#region Events (override)
