@@ -654,15 +654,15 @@ namespace MapView
 					var loc = new Point(0,0);
 					switch (keyData)
 					{
-						case (Keys.Shift | Keys.Up):    loc.X = -1; loc.Y = -1; break;
-						case (Keys.Shift | Keys.Right): loc.X = +1; loc.Y = -1; break;
-						case (Keys.Shift | Keys.Down):  loc.X = +1; loc.Y = +1; break;
-						case (Keys.Shift | Keys.Left):  loc.X = -1; loc.Y = +1; break;
+						case Keys.Shift | Keys.Up:    loc.X = -1; loc.Y = -1; break;
+						case Keys.Shift | Keys.Right: loc.X = +1; loc.Y = -1; break;
+						case Keys.Shift | Keys.Down:  loc.X = +1; loc.Y = +1; break;
+						case Keys.Shift | Keys.Left:  loc.X = -1; loc.Y = +1; break;
 
-						case (Keys.Shift | Keys.PageUp):   loc.Y = -1; break;
-						case (Keys.Shift | Keys.PageDown): loc.X = +1; break;
-						case (Keys.Shift | Keys.End):      loc.Y = +1; break;
-						case (Keys.Shift | Keys.Home):     loc.X = -1; break;
+						case Keys.Shift | Keys.PageUp:   loc.Y = -1; break;
+						case Keys.Shift | Keys.PageDown: loc.X = +1; break;
+						case Keys.Shift | Keys.End:      loc.Y = +1; break;
+						case Keys.Shift | Keys.Home:     loc.X = -1; break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0) // safety.

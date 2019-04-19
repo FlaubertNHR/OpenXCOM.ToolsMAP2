@@ -78,7 +78,6 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(632, 454);
 			this.tabControl.TabIndex = 1;
-			this.tabControl.SelectedIndexChanged += new System.EventHandler(this.OnActivated);
 			// 
 			// tp_Top
 			// 
