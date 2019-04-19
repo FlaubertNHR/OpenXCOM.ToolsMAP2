@@ -33,6 +33,19 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal TopViewForm()
 		{
 			InitializeComponent();
+
+			Activated += OnActivated;
+		}
+		#endregion
+
+
+		#region Events
+		/// <summary>
+		/// Fires when the form is activated.
+		/// </summary>
+		private void OnActivated(object sender, EventArgs e)
+		{
+			TopViewControl.TopPanel.Focus();
 		}
 		#endregion
 

@@ -40,7 +40,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		#endregion
 
 
-		#region Eventcalls
+		#region Events
 		/// <summary>
 		/// Fires when the form is activated.
 		/// </summary>
