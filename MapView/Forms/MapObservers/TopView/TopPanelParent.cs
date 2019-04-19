@@ -315,7 +315,15 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			switch (e.KeyCode)
 			{
-				case Keys.T:
+				case Keys.Enter: // place TileView tile in slot
+				{
+					var args = new MouseEventArgs(MouseButtons.Right, 1, 0,0, 0);
+					QuadrantPanel panel = ((TopPanel)this).QuadrantsPanel;
+					panel.ForceMouseDown(args, panel.SelectedQuadrant);
+					break;
+				}
+
+				case Keys.T: // select tile in TileView
 				{
 					var args = new MouseEventArgs(MouseButtons.Left, 2, 0,0, 0);
 					QuadrantPanel panel = ((TopPanel)this).QuadrantsPanel;
