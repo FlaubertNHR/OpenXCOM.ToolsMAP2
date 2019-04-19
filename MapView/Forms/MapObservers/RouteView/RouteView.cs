@@ -385,7 +385,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					// Select the new location so the links draw and the selected node highlights
 					// properly but don't re-path the selected-lozenge. Let user see where the
 					// node-drag started until a click calls RoutePanelParent.PathSelectedLozenge().
-					RoutePanelParent.SelectedPosition = new Point(_nodeMoved.Col, _nodeMoved.Row);
+					RoutePanelParent.SelectedLocation = new Point(_nodeMoved.Col, _nodeMoved.Row);
 
 					ViewerFormsManager.RouteView   .Control     .UpdateLinkDistances();
 					ViewerFormsManager.TopRouteView.ControlRoute.UpdateLinkDistances();
@@ -1319,7 +1319,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			OnRoutePanelMouseDown(null, args);
 
 
-			RoutePanelParent.SelectedPosition = loc;
+			RoutePanelParent.SelectedLocation = loc;
 
 			ViewerFormsManager.RouteView   .Control     .Refresh();
 			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
@@ -1592,7 +1592,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void DeselectNode()
 		{
 			NodeSelected = null;
-			RoutePanelParent.SelectedPosition = new Point(-1,-1);
+			RoutePanelParent.SelectedLocation = new Point(-1,-1);
 
 			tsmiClearLinkData.Enabled = false; // TODO: RouteView/TopRouteView(Route)
 

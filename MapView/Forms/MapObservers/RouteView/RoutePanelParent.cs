@@ -43,13 +43,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Stores the x/y-position of the currently selected tile.
 		/// </summary>
-		internal protected static Point SelectedPosition
+		internal protected static Point SelectedLocation
 		{ get; set; }
 		#endregion Properties (static)
 
 
 		#region Properties
-		private Point _pos = new Point(-1, -1);
+		private Point _pos = new Point(-1,-1);
 		/// <summary>
 		/// Tracks the tile-position of the mouse cursor. Used to print
 		/// over-info, overlay-info, and to position the Overlay.
@@ -265,9 +265,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
 					}
 
-					SelectedPosition = loc;	// NOTE: if a new 'SelectedPosition' is set before firing the
+					SelectedLocation = loc;	// NOTE: if a new 'SelectedLocation' is set before firing the
 				}							// RoutePanelMouseDownEvent, OnPaint() will draw a frame with
-			}								// incorrectly selected-link lines. So set the 'SelectedPosition'
+			}								// incorrectly selected-link lines. So set the 'SelectedLocation'
 		}									// *after* the event happens.
 
 		/// <summary>
@@ -335,7 +335,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
 						Invalidate();
 					}
-					SelectedPosition = loc;
+					SelectedLocation = loc;
 				}
 				else if (keyData == Keys.Enter)
 				{
@@ -354,7 +354,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
 						Invalidate();
 					}
-					SelectedPosition = new Point(
+					SelectedLocation = new Point(
 											MapChild.Location.Col,
 											MapChild.Location.Row);
 				}
@@ -408,7 +408,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							RoutePanelMouseDownEvent(this, args);				// fire RouteView.OnRoutePanelMouseDown()
 							Invalidate();
 						}
-						SelectedPosition = loc;
+						SelectedLocation = loc;
 					}
 					else if (vert != 0)
 					{

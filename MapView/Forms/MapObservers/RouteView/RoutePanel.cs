@@ -107,8 +107,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (NodeSelected != null)
 					DrawLinkLines(
-							Origin.X + (SelectedPosition.X - SelectedPosition.Y)     * DrawAreaWidth,
-							Origin.Y + (SelectedPosition.X + SelectedPosition.Y + 1) * DrawAreaHeight,
+							Origin.X + (SelectedLocation.X - SelectedLocation.Y)     * DrawAreaWidth,
+							Origin.Y + (SelectedLocation.X + SelectedLocation.Y + 1) * DrawAreaHeight,
 							NodeSelected,
 							true);
 
@@ -435,8 +435,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 							_nodeFill.CloseFigure();
 
 							if (NodeSelected != null && MapChild.Level == NodeSelected.Lev
-								&& col == SelectedPosition.X
-								&& row == SelectedPosition.Y)
+								&& col == SelectedLocation.X
+								&& row == SelectedLocation.Y)
 							{
 								_graphics.FillPath(_brushSelected, _nodeFill);
 							}
