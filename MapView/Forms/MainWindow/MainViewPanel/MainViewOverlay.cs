@@ -301,7 +301,10 @@ namespace MapView
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint
 				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
+				   | ControlStyles.ResizeRedraw
+				   | ControlStyles.Selectable, true);
+			TabStop = true;
+			TabIndex = 4;
 
 			_brushLayer = new SolidBrush(Color.FromArgb(GridLayerOpacity, GridLayerColor));
 		}

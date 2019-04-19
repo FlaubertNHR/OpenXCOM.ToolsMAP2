@@ -1114,20 +1114,11 @@ namespace MapView
 					case Keys.Right:
 					case Keys.Up:
 					case Keys.Down:
-					case (Keys.Shift | Keys.Left):
-					case (Keys.Shift | Keys.Right):
-					case (Keys.Shift | Keys.Up):
-					case (Keys.Shift | Keys.Down):
+					case Keys.Shift | Keys.Left:
+					case Keys.Shift | Keys.Right:
+					case Keys.Shift | Keys.Up:
+					case Keys.Shift | Keys.Down:
 						MainViewUnderlay.MainViewOverlay.Navigate(keyData);
-						return true;
-				}
-			}
-			else
-			{
-				switch (keyData)
-				{
-					case Keys.Tab:
-						MainViewUnderlay.MainViewOverlay.Select();
 						return true;
 				}
 			}

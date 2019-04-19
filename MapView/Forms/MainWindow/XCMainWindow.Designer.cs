@@ -431,7 +431,6 @@ namespace MapView
 			this.tscPanel.RightToolStripPanelVisible = false;
 			this.tscPanel.Size = new System.Drawing.Size(384, 432);
 			this.tscPanel.TabIndex = 2;
-			this.tscPanel.TabStop = false;
 			// 
 			// tscPanel.TopToolStripPanel
 			// 
@@ -459,7 +458,6 @@ namespace MapView
 			this.csSplitter.Name = "cSplitList";
 			this.csSplitter.Size = new System.Drawing.Size(8, 454);
 			this.csSplitter.TabIndex = 1;
-			this.csSplitter.TabStop = false;
 			// 
 			// XCMainWindow
 			// 
