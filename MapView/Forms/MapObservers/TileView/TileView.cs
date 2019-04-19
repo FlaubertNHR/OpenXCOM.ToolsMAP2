@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
+using MapView.Forms.MapObservers.TopViews;
 using MapView.Forms.McdInfo;
 using MapView.OptionsServices;
 
@@ -17,7 +18,6 @@ using PckView;
 
 using XCom;
 using XCom.Interfaces.Base;
-
 
 namespace MapView.Forms.MapObservers.TileViews
 {
@@ -108,6 +108,11 @@ namespace MapView.Forms.MapObservers.TileViews
 			var northwalls = new TilePanel(PartType.North);
 			var content    = new TilePanel(PartType.Content);
 
+			tpFloors    .Text = QuadrantPanelDrawService.Floor;
+			tpWestwalls .Text = QuadrantPanelDrawService.West;
+			tpNorthwalls.Text = QuadrantPanelDrawService.North;
+			tpContents  .Text = QuadrantPanelDrawService.Content;
+
 			_panels = new[]
 			{
 				_allTiles,
@@ -121,7 +126,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			AddPanel(floors,     tpFloors);
 			AddPanel(westwalls,  tpWestwalls);
 			AddPanel(northwalls, tpNorthwalls);
-			AddPanel(content,    tpObjects);
+			AddPanel(content,    tpContents);
 
 			_allTiles.SetTickerSubscription(true);
 		}

@@ -277,6 +277,7 @@ namespace MapView
 			LogFile.WriteLine("Viewer managers instantiated.");
 
 			QuadrantPanelDrawService.Punkstrings();
+			LogFile.WriteLine("Quadrant strings punked.");
 
 			MainMenusManager.SetMenus(menuViewers, menuHelp);
 			MainMenusManager.PopulateMenus(/*shareConsole.Console,*/ Options);

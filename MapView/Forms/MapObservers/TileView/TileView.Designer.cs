@@ -22,7 +22,7 @@
 			this.tpFloors = new System.Windows.Forms.TabPage();
 			this.tpWestwalls = new System.Windows.Forms.TabPage();
 			this.tpNorthwalls = new System.Windows.Forms.TabPage();
-			this.tpObjects = new System.Windows.Forms.TabPage();
+			this.tpContents = new System.Windows.Forms.TabPage();
 			this.tsMain = new System.Windows.Forms.ToolStrip();
 			this.tsddbExternal = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmiEditPck = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +44,7 @@
 			this.tcTileTypes.Controls.Add(this.tpFloors);
 			this.tcTileTypes.Controls.Add(this.tpWestwalls);
 			this.tcTileTypes.Controls.Add(this.tpNorthwalls);
-			this.tcTileTypes.Controls.Add(this.tpObjects);
+			this.tcTileTypes.Controls.Add(this.tpContents);
 			this.tcTileTypes.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tcTileTypes.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tcTileTypes.Location = new System.Drawing.Point(0, 25);
@@ -67,7 +67,7 @@
 			this.tpFloors.Name = "tpFloors";
 			this.tpFloors.Size = new System.Drawing.Size(632, 408);
 			this.tpFloors.TabIndex = 1;
-			this.tpFloors.Text = "fLoOr";
+			this.tpFloors.Text = "floor";
 			// 
 			// tpWestwalls
 			// 
@@ -75,7 +75,7 @@
 			this.tpWestwalls.Name = "tpWestwalls";
 			this.tpWestwalls.Size = new System.Drawing.Size(632, 408);
 			this.tpWestwalls.TabIndex = 2;
-			this.tpWestwalls.Text = "WEst";
+			this.tpWestwalls.Text = "west";
 			// 
 			// tpNorthwalls
 			// 
@@ -83,15 +83,15 @@
 			this.tpNorthwalls.Name = "tpNorthwalls";
 			this.tpNorthwalls.Size = new System.Drawing.Size(632, 408);
 			this.tpNorthwalls.TabIndex = 3;
-			this.tpNorthwalls.Text = "noRtH";
+			this.tpNorthwalls.Text = "north";
 			// 
 			// tpObjects
 			// 
-			this.tpObjects.Location = new System.Drawing.Point(4, 21);
-			this.tpObjects.Name = "tpObjects";
-			this.tpObjects.Size = new System.Drawing.Size(632, 408);
-			this.tpObjects.TabIndex = 4;
-			this.tpObjects.Text = "ConTeNt";
+			this.tpContents.Location = new System.Drawing.Point(4, 21);
+			this.tpContents.Name = "tpObjects";
+			this.tpContents.Size = new System.Drawing.Size(632, 408);
+			this.tpContents.TabIndex = 4;
+			this.tpContents.Text = "content";
 			// 
 			// tsMain
 			// 
@@ -223,7 +223,7 @@
 		private System.Windows.Forms.TabControl tcTileTypes;
 		private System.Windows.Forms.TabPage tpAll;
 		private System.Windows.Forms.TabPage tpFloors;
-		private System.Windows.Forms.TabPage tpObjects;
+		private System.Windows.Forms.TabPage tpContents;
 		private System.Windows.Forms.TabPage tpNorthwalls;
 		private System.Windows.Forms.TabPage tpWestwalls;
 		private System.Windows.Forms.StatusStrip ssStatusbar;
