@@ -533,6 +533,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			_nodeMoved = NodeSelected;
 
+			EnableEditButtons();
+		}
+
+		private void EnableEditButtons()
+		{
 			bool valid = (NodeSelected != null);
 
 			ViewerFormsManager.RouteView   .Control     .tsmiClearLinkData.Enabled =
@@ -547,9 +552,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ViewerFormsManager.RouteView   .Control     .btnDelete        .Enabled =
 			ViewerFormsManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
 
+			valid = valid
+				&& (Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix);
+
 			ViewerFormsManager.RouteView   .Control     .btnPaste         .Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid
-																				  && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
+			ViewerFormsManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid;
 		}
 
 		/// <summary>
@@ -1305,11 +1312,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
 
-			var args = new RoutePanelEventArgs();
-			args.MouseButton = MouseButtons.Left;
-			args.Tile        = MapChild[loc.Y, loc.X];
-			args.Location    = MapChild.Location;
-
+			var args = new RoutePanelEventArgs(
+											MouseButtons.Left,
+											MapChild[loc.Y, loc.X],
+											MapChild.Location);
 			OnRoutePanelMouseDown(null, args);
 
 
@@ -1740,11 +1746,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			_nodeMoved = NodeSelected;
 
-			var args = new RoutePanelEventArgs();
-			args.MouseButton = MouseButtons.None;
-			args.Tile        = MapChild       [_nodeMoved.Row, _nodeMoved.Col, _nodeMoved.Lev - 1];
-			args.Location    = new MapLocation(_nodeMoved.Row, _nodeMoved.Col, _nodeMoved.Lev - 1);
-
+			var args = new RoutePanelEventArgs(
+											MouseButtons.None,
+											MapChild[_nodeMoved.Row,
+													 _nodeMoved.Col,
+													 _nodeMoved.Lev - 1],
+											new MapLocation(
+														_nodeMoved.Row,
+														_nodeMoved.Col,
+														_nodeMoved.Lev - 1));
 			OnRoutePanelMouseUp(null, args);
 
 			SelectNode(NodeSelected.Index);
@@ -1754,11 +1764,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			_nodeMoved = NodeSelected;
 
-			var args = new RoutePanelEventArgs();
-			args.MouseButton = MouseButtons.None;
-			args.Tile        = MapChild       [_nodeMoved.Row, _nodeMoved.Col, _nodeMoved.Lev + 1];
-			args.Location    = new MapLocation(_nodeMoved.Row, _nodeMoved.Col, _nodeMoved.Lev + 1);
-
+			var args = new RoutePanelEventArgs(
+											MouseButtons.None,
+											MapChild[_nodeMoved.Row,
+													 _nodeMoved.Col,
+													 _nodeMoved.Lev + 1],
+											new MapLocation(
+														_nodeMoved.Row,
+														_nodeMoved.Col,
+														_nodeMoved.Lev + 1));
 			OnRoutePanelMouseUp(null, args);
 
 			SelectNode(NodeSelected.Index);
@@ -2302,5 +2316,44 @@ namespace MapView.Forms.MapObservers.RouteViews
 			return RoutePanel.RouteBrushes;
 		}
 		#endregion
+	}
+
+
+	/// <summary>
+	/// Event args for RouteView.
+	/// </summary>
+	internal sealed class RoutePanelEventArgs
+		:
+			EventArgs
+	{
+		#region Properties
+		internal MouseButtons MouseButton
+		{ get; private set; }
+
+		internal MapTileBase Tile
+		{ get; private set; }
+
+		internal MapLocation Location
+		{ get; private set; }
+		#endregion Properties
+
+
+		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <param name="tile"></param>
+		/// <param name="location"></param>
+		internal RoutePanelEventArgs(
+				MouseButtons button,
+				MapTileBase tile,
+				MapLocation location)
+		{
+			MouseButton = button;
+			Tile        = tile;
+			Location    = location;
+		}
+		#endregion cTor
 	}
 }

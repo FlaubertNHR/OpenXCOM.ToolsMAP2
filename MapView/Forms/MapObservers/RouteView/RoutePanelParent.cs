@@ -258,11 +258,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 																							// NOTE: drag-selection is not allowed here.
 					if (RoutePanelMouseDownEvent != null)
 					{
-						var args = new RoutePanelEventArgs();
-						args.MouseButton = e.Button;
-						args.Tile        = MapChild[loc.Y, loc.X];
-						args.Location    = MapChild.Location;
-
+						var args = new RoutePanelEventArgs(
+														e.Button,
+														MapChild[loc.Y, loc.X],
+														MapChild.Location);
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 					}
 
@@ -294,13 +293,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 				var loc = GetTileLocation(e.X, e.Y);
 				if (loc.X != -1)
 				{
-					var args = new RoutePanelEventArgs();
-					args.MouseButton = e.Button;
-					args.Tile        = MapChild[loc.Y, loc.X];
-					args.Location    = new MapLocation(
-													loc.Y, loc.X,
-													MapChild.Level);
-
+					var args = new RoutePanelEventArgs(
+													e.Button,
+													MapChild[loc.Y, loc.X],
+													new MapLocation(
+																loc.Y, loc.X,
+																MapChild.Level));
 					RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 				}
 			}
@@ -330,11 +328,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					if (RoutePanelMouseDownEvent != null)
 					{
-						var args = new RoutePanelEventArgs();
-						args.MouseButton = MouseButtons.Left;
-						args.Tile        = MapChild[0,0];
-						args.Location    = MapChild.Location;
-
+						var args = new RoutePanelEventArgs(
+														MouseButtons.Left,
+														MapChild[0,0],
+														MapChild.Location);
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 						Invalidate();
 					}
@@ -344,12 +341,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					if (RoutePanelMouseDownEvent != null)
 					{
-						var args = new RoutePanelEventArgs();
-						args.MouseButton = MouseButtons.Right;
-						args.Tile        = MapChild[MapChild.Location.Row,
-													MapChild.Location.Col];
-						args.Location    = MapChild.Location;
-
+						var args = new RoutePanelEventArgs(
+														MouseButtons.Right,
+														MapChild[MapChild.Location.Row,
+																 MapChild.Location.Col],
+														MapChild.Location);
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 						Invalidate();
 					}
@@ -397,11 +393,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 						if (RoutePanelMouseDownEvent != null)
 						{
-							var args = new RoutePanelEventArgs();
-							args.MouseButton = MouseButtons.Left;
-							args.Tile        = MapChild[loc.Y, loc.X];
-							args.Location    = MapChild.Location;
-
+							var args = new RoutePanelEventArgs(
+															MouseButtons.Left,
+															MapChild[loc.Y, loc.X],
+															MapChild.Location);
 							RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 							Invalidate();
 						}
