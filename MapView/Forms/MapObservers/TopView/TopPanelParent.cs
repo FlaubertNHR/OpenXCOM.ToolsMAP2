@@ -313,7 +313,20 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
+			switch (e.KeyCode)
+			{
+				case Keys.T:
+				{
+					var args = new MouseEventArgs(MouseButtons.Left, 2, 0,0, 0);
+					QuadrantPanel panel = ((TopPanel)this).QuadrantsPanel;
+					panel.ForceMouseDown(args, panel.SelectedQuadrant);
+					break;
+				}
+
+				default:
+					MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
+					break;
+			}
 //			base.OnKeyDown(e);
 		}
 
