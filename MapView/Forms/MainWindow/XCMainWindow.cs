@@ -1073,10 +1073,10 @@ namespace MapView
 
 				if (it != -1)
 				{
+					e.SuppressKeyPress = true;
 					MainMenusManager.OnMenuItemClick(
 												MainMenusManager.MenuViewers.MenuItems[it],
 												EventArgs.Empty);
-					e.SuppressKeyPress = true;
 				}
 			}
 			else if (MainViewUnderlay.MainViewOverlay.Focused)
@@ -1089,8 +1089,9 @@ namespace MapView
 					case Keys.PageUp:
 					case Keys.Home:
 					case Keys.End:
-						MainViewUnderlay.MainViewOverlay.Navigate(e.KeyData);
 						e.SuppressKeyPress = true;
+						MainViewUnderlay.MainViewOverlay._step = true;
+						MainViewUnderlay.MainViewOverlay.Navigate(e.KeyData);
 						break;
 				}
 			}
@@ -1118,6 +1119,7 @@ namespace MapView
 					case Keys.Shift | Keys.Right:
 					case Keys.Shift | Keys.Up:
 					case Keys.Shift | Keys.Down:
+						MainViewUnderlay.MainViewOverlay._step = true;
 						MainViewUnderlay.MainViewOverlay.Navigate(keyData);
 						return true;
 				}

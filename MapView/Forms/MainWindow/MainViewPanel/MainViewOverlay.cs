@@ -681,8 +681,15 @@ namespace MapView
 					}
 				}
 			}
+
+			if (_step)
+			{
+				_step = false;
+				Refresh();
+			}
 		}
 
+		internal bool _step;
 		internal int _keyDeltaX;
 		internal int _keyDeltaY;
 		#endregion Keyboard navigation
