@@ -75,8 +75,19 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 				e.SuppressKeyPress = true;
 				switch (tabControl.SelectedIndex)
 				{
-					case 0: ControlTop  .TopPanel  .Focus(); break;
-					case 1: ControlRoute.RoutePanel.Focus(); break;
+					case 0: // Top
+						if (!ControlTop.TopPanel.Focused)
+						{
+							e.SuppressKeyPress = true;
+							ControlTop.TopPanel.Focus();
+						}
+						else
+							MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
+						break;
+
+					case 1: // Route
+						ControlRoute.RoutePanel.Focus();
+						break;
 				}
 			}
 			else if (e.KeyCode == Keys.O
@@ -85,8 +96,12 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 				e.SuppressKeyPress = true;
 				switch (tabControl.SelectedIndex)
 				{
-					case 0: ControlTop  .OnOptionsClick(ControlTop  .GetOptionsButton(), EventArgs.Empty); break;
-					case 1: ControlRoute.OnOptionsClick(ControlRoute.GetOptionsButton(), EventArgs.Empty); break;
+					case 0: // Top
+						ControlTop.OnOptionsClick(ControlTop.GetOptionsButton(), EventArgs.Empty);
+						break;
+					case 1: // Route
+						ControlRoute.OnOptionsClick(ControlRoute.GetOptionsButton(), EventArgs.Empty);
+						break;
 				}
 			}
 			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
