@@ -346,6 +346,8 @@ namespace MapView
 				{
 					case Keys.Delete: ClearSelection();                   break;
 					case Keys.Escape: ProcessSelection(DragBeg, DragBeg); break;
+
+					case Keys.F: FillSelectedTiles(); break;
 				}
 			}
 		}
