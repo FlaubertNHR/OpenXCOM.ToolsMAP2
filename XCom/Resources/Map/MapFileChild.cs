@@ -483,7 +483,7 @@ namespace XCom
 				ClearRouteNodes();
 				SetupRouteNodes();
 
-				Level = 0; // fires a SelectLevelEvent.
+				Level = 0;														// fire SelectLevelEvent.
 			}
 			return bit;
 		}

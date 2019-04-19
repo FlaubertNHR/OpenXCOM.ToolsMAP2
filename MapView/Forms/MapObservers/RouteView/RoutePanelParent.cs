@@ -250,7 +250,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					MainViewUnderlay.Instance.MainViewOverlay._keyDeltaX =
 					MainViewUnderlay.Instance.MainViewOverlay._keyDeltaY = 0;
 
-					MapChild.Location = new MapLocation( // fire SelectLocationEvent
+					MapChild.Location = new MapLocation(						// fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapChild.Level);
 
@@ -262,7 +262,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 														e.Button,
 														MapChild[loc.Y, loc.X],
 														MapChild.Location);
-						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
 					}
 
 					SelectedPosition = loc;	// NOTE: if a new 'SelectedPosition' is set before firing the
@@ -321,7 +321,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (!MainViewUnderlay.Instance.MainViewOverlay.FirstClick)
 				{
-					MapChild.Location = new MapLocation(0, 0, MapChild.Level); // fire SelectLocationEvent
+					MapChild.Location = new MapLocation(0, 0, MapChild.Level);	// fire SelectLocationEvent
 
 					var loc = new Point(0,0);
 					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc,loc);
@@ -332,13 +332,18 @@ namespace MapView.Forms.MapObservers.RouteViews
 														MouseButtons.Left,
 														MapChild[0,0],
 														MapChild.Location);
-						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
 						Invalidate();
 					}
 					SelectedPosition = loc;
 				}
 				else if (keyData == Keys.Enter)
 				{
+//					MapChild.Location = new MapLocation(						// fire SelectLocationEvent
+//													MapChild.Location.Row,
+//													MapChild.Location.Col,
+//													MapChild.Level);
+
 					if (RoutePanelMouseDownEvent != null)
 					{
 						var args = new RoutePanelEventArgs(
@@ -346,9 +351,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 														MapChild[MapChild.Location.Row,
 																 MapChild.Location.Col],
 														MapChild.Location);
-						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
 						Invalidate();
 					}
+					SelectedPosition = new Point(
+											MapChild.Location.Col,
+											MapChild.Location.Row);
 				}
 				else //if (!keyData.HasFlag(Keys.Shift)) // TODO: implement [Shift] for dragnode
 				{
@@ -383,7 +391,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						MapChild.Location = new MapLocation( // fire SelectLocationEvent
+						MapChild.Location = new MapLocation(					// fire SelectLocationEvent
 														MapChild.Location.Row + loc.Y,
 														MapChild.Location.Col + loc.X,
 														MapChild.Level);
@@ -397,14 +405,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 															MouseButtons.Left,
 															MapChild[loc.Y, loc.X],
 															MapChild.Location);
-							RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+							RoutePanelMouseDownEvent(this, args);				// fire RouteView.OnRoutePanelMouseDown()
 							Invalidate();
 						}
 						SelectedPosition = loc;
 					}
 					else if (vert != 0)
 					{
-						MapChild.Location = new MapLocation( // fire SelectLocationEvent
+						MapChild.Location = new MapLocation(					// fire SelectLocationEvent
 														MapChild.Location.Row,
 														MapChild.Location.Col,
 														MapChild.Level);

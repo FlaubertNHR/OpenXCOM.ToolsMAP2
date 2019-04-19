@@ -22,7 +22,7 @@ namespace XCom.Interfaces.Base
 
 
 		void OnSelectLocationObserver(SelectLocationEventArgs args);
-		void OnSelectLevelObserver(SelectLevelEventArgs args);
+		void OnSelectLevelObserver(   SelectLevelEventArgs    args);
 	}
 
 
@@ -40,21 +40,21 @@ namespace XCom.Interfaces.Base
 			get { return _location; }
 		}
 
-		private readonly MapTileBase _baseTile;
-		public MapTileBase SelectedTile
+		private readonly MapTileBase _tile;
+		public MapTileBase Tile
 		{
-			get { return _baseTile; }
+			get { return _tile; }
 		}
 
 		/// <summary>
 		/// cTor.
 		/// </summary>
 		/// <param name="location"></param>
-		/// <param name="baseTile"></param>
-		internal SelectLocationEventArgs(MapLocation location, MapTileBase baseTile)
+		/// <param name="tile"></param>
+		internal SelectLocationEventArgs(MapLocation location, MapTileBase tile)
 		{
 			_location = location;
-			_baseTile = baseTile;
+			_tile     = tile;
 		}
 	}
 

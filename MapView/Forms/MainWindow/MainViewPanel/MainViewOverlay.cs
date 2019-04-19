@@ -600,7 +600,7 @@ namespace MapView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					MapBase.Location = new MapLocation(0, 0, MapBase.Level);
+					MapBase.Location = new MapLocation(0, 0, MapBase.Level);	// fire SelectLocationEvent
 
 					var loc = new Point(0,0);
 					ProcessSelection(loc, loc);
@@ -640,7 +640,7 @@ namespace MapView
 						_keyDeltaX =
 						_keyDeltaY = 0;
 
-						MapBase.Location = new MapLocation(
+						MapBase.Location = new MapLocation(						// fire SelectLocationEvent
 														MapBase.Location.Row + loc.Y,
 														MapBase.Location.Col + loc.X,
 														MapBase.Level);
@@ -730,7 +730,7 @@ namespace MapView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					MapBase.Location = new MapLocation(
+					MapBase.Location = new MapLocation(							// fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;

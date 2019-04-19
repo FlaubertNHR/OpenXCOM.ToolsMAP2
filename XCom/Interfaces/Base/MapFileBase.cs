@@ -199,7 +199,7 @@ namespace XCom.Interfaces.Base
 		public void LevelUp()
 		{
 			if (Level > 0)
-				--Level;
+				--Level;														// fire SelectLevelEvent.
 		}
 
 		/// <summary>
@@ -208,7 +208,7 @@ namespace XCom.Interfaces.Base
 		public void LevelDown()
 		{
 			if (Level < MapSize.Levs - 1)
-				++Level;
+				++Level;														// fire SelectLevelEvent.
 		}
 
 		/// <summary>

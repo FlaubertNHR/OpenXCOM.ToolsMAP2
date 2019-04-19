@@ -89,7 +89,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("QuadrantPanel.OnSelectLocationObserver");
 
-			_tile = args.SelectedTile as XCMapTile;
+			_tile     = args.Tile as XCMapTile;
 			_location = args.Location;
 			Refresh();
 		}

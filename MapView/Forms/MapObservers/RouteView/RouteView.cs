@@ -358,7 +358,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="e"></param>
 		private void OnRoutePanelMouseLeave(object sender, EventArgs e)
 		{
-			RoutePanel.CursorPosition = new Point(-1, -1);
+			RoutePanel.CursorPosition = new Point(-1,-1);
 
 			ViewerFormsManager.RouteView   .Control     .RoutePanel.Refresh();
 			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
@@ -1304,9 +1304,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			var loc = new Point(node.Col, node.Row);
 
 			if (node.Lev != MapChild.Level)
-				MapChild.Level = node.Lev;			// fire SelectLevelEvent.
+				MapChild.Level = node.Lev;										// fire SelectLevelEvent.
 
-			MapChild.Location = new MapLocation(	// fire SelectLocationEvent.
+			MapChild.Location = new MapLocation(								// fire SelectLocationEvent.
 											loc.Y, loc.X,
 											MapChild.Level);
 
