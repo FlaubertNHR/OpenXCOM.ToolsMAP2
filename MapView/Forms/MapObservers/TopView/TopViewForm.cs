@@ -33,8 +33,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal TopViewForm()
 		{
 			InitializeComponent();
-
-			Activated += OnActivated;
 		}
 		#endregion
 

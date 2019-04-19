@@ -34,8 +34,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		internal TileViewForm()
 		{
 			InitializeComponent();
-
-			Activated += OnActivated;
 		}
 		#endregion
 
@@ -182,6 +180,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.Name = "TileViewForm";
 			this.ShowInTaskbar = false;
 			this.Text = "TileView";
+			this.Activated += new System.EventHandler(this.OnActivated);
 			this.ResumeLayout(false);
 
 		}

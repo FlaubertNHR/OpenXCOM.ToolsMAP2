@@ -39,8 +39,6 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 
 			var regInfo = new RegistryInfo(RegistryInfo.TopRouteView, this); // subscribe to Load and Closing events.
 			regInfo.RegisterProperties();
-
-			Activated += OnActivated;
 		}
 		#endregion cTor
 
