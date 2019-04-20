@@ -602,7 +602,7 @@ namespace MapView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					MapBase.Location = new MapLocation(0, 0, MapBase.Level);	// fire SelectLocationEvent
+					MapBase.Location = new MapLocation(0,0, MapBase.Level);		// fire SelectLocationEvent
 
 					var loc = new Point(0,0);
 					ProcessSelection(loc, loc);
@@ -626,29 +626,32 @@ namespace MapView
 						case Keys.Add:
 							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
-														0, 0, 0, 1));
+														0, 0,0, 1));
 							break;
 
 //						case Keys.Insert:
 						case Keys.Subtract:
 							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
-														0, 0, 0, -1));
+														0, 0,0, -1));
 							break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						_keyDeltaX =
-						_keyDeltaY = 0;
+						int r = MapBase.Location.Row + loc.Y;
+						int c = MapBase.Location.Col + loc.X;
+						if (   r > -1 && r < MapBase.MapSize.Rows
+							&& c > -1 && c < MapBase.MapSize.Cols)
+						{
+							_keyDeltaX =
+							_keyDeltaY = 0;
 
-						MapBase.Location = new MapLocation(						// fire SelectLocationEvent
-														MapBase.Location.Row + loc.Y,
-														MapBase.Location.Col + loc.X,
-														MapBase.Level);
-						loc.X = MapBase.Location.Col;
-						loc.Y = MapBase.Location.Row;
-						ProcessSelection(loc, loc);
+							MapBase.Location = new MapLocation(r,c, MapBase.Level); // fire SelectLocationEvent
+
+							loc.X = c; loc.Y = r;
+							ProcessSelection(loc, loc);
+						}
 					}
 				}
 				else // [Shift] = drag select ->
@@ -669,17 +672,23 @@ namespace MapView
 
 					if (loc.X != 0 || loc.Y != 0) // safety.
 					{
-						int pos = DragBeg.X + _keyDeltaX + loc.X;
-						if (pos > -1 && pos < MapBase.MapSize.Cols)
-							_keyDeltaX += loc.X;
+						int r = MapBase.Location.Row + loc.Y;
+						int c = MapBase.Location.Col + loc.X;
+						if (   r > -1 && r < MapBase.MapSize.Rows
+							&& c > -1 && c < MapBase.MapSize.Cols)
+						{
+							int pos = DragBeg.X + _keyDeltaX + loc.X;
+							if (pos > -1 && pos < MapBase.MapSize.Cols)
+								_keyDeltaX += loc.X;
 
-						pos = DragBeg.Y + _keyDeltaY + loc.Y;
-						if (pos > -1 && pos < MapBase.MapSize.Rows)
-							_keyDeltaY += loc.Y;
+							pos = DragBeg.Y + _keyDeltaY + loc.Y;
+							if (pos > -1 && pos < MapBase.MapSize.Rows)
+								_keyDeltaY += loc.Y;
 
-						loc.X = _colOver = MapBase.Location.Col + _keyDeltaX;
-						loc.Y = _rowOver = MapBase.Location.Row + _keyDeltaY;
-						ProcessSelection(DragBeg, loc);
+							loc.X = _colOver = MapBase.Location.Col + _keyDeltaX;
+							loc.Y = _rowOver = MapBase.Location.Row + _keyDeltaY;
+							ProcessSelection(DragBeg, loc);
+						}
 					}
 				}
 			}
