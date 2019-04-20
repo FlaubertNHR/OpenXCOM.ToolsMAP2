@@ -146,7 +146,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Content.Checked = !it.Checked;
 			}
 
-			MainViewUnderlay.Instance.Refresh();
+			MainViewUnderlay.that.Refresh();
 
 			ViewerFormsManager.TopView     .Control   .Refresh();
 			ViewerFormsManager.TopRouteView.ControlTop.Refresh();

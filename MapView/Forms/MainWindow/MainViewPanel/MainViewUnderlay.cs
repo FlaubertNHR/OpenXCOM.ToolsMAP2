@@ -29,15 +29,15 @@ namespace MapView
 
 
 		#region Properties (static)
-		private static MainViewUnderlay _instance;
-		internal static MainViewUnderlay Instance
+		private static MainViewUnderlay _that;
+		internal static MainViewUnderlay that
 		{
 			get
 			{
-				if (_instance == null)
-					_instance = new MainViewUnderlay();
+				if (_that == null)
+					_that = new MainViewUnderlay();
 
-				return _instance;
+				return _that;
 			}
 		}
 		#endregion
@@ -404,7 +404,7 @@ namespace MapView
 				//XCom.LogFile.WriteLine(". height= " + height);
 
 				Globals.Scale = (double)halfWidth / MainViewOverlay.HalfWidthConst;
-				XCMainWindow.Instance.sb_PrintScale();
+				XCMainWindow.that.sb_PrintScale();
 				//XCom.LogFile.WriteLine(". set scale= " + Globals.Scale);
 
 				return new Size(

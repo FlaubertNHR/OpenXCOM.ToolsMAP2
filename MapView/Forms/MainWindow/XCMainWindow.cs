@@ -55,7 +55,7 @@ namespace MapView
 
 
 		#region Properties (static)
-		internal static XCMainWindow Instance
+		internal static XCMainWindow that
 		{ get; private set; }
 
 		internal static ScanGViewer ScanG
@@ -240,7 +240,7 @@ namespace MapView
 			// welcome to your new home
 
 
-			Instance = this;
+			that = this;
 
 			FormClosing += OnSaveOptionsFormClosing;
 
@@ -253,7 +253,7 @@ namespace MapView
 			LogFile.WriteLine("MainView Options loaded.");	// since managers might be re-instantiating needlessly
 															// when OnOptionsClick() runs ....
 
-			MainViewUnderlay = MainViewUnderlay.Instance; // create MainViewUnderlay and MainViewOverlay. or so ...
+			MainViewUnderlay = MainViewUnderlay.that; // create MainViewUnderlay and MainViewOverlay. or so ...
 			MainViewUnderlay.Dock = DockStyle.Fill;
 			MainViewUnderlay.BorderStyle = BorderStyle.Fixed3D;
 			LogFile.WriteLine("MainView panel instantiated.");
@@ -697,75 +697,75 @@ namespace MapView
 
 			Options.AddOption(
 							ShowGrid,
-							MainViewUnderlay.Instance.MainViewOverlay.ShowGrid,
+							MainViewUnderlay.that.MainViewOverlay.ShowGrid,
 							"If true a grid will display at the current level of editing (F4 - On/Off)",
 							MapView,
 							handler);
 //							null, MainViewUnderlay.Instance.MainViewOverlay);
 			Options.AddOption(
 							GridLayerColor,
-							MainViewUnderlay.Instance.MainViewOverlay.GridLayerColor,
+							MainViewUnderlay.that.MainViewOverlay.GridLayerColor,
 							"Color of the grid",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							GridLayerOpacity,
-							MainViewUnderlay.Instance.MainViewOverlay.GridLayerOpacity,
+							MainViewUnderlay.that.MainViewOverlay.GridLayerOpacity,
 							"Opacity of the grid (0..255 default 200)",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							GridLineColor,
-							MainViewUnderlay.Instance.MainViewOverlay.GridLineColor,
+							MainViewUnderlay.that.MainViewOverlay.GridLineColor,
 							"Color of the lines that make up the grid",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							GridLineWidth,
-							MainViewUnderlay.Instance.MainViewOverlay.GridLineWidth,
+							MainViewUnderlay.that.MainViewOverlay.GridLineWidth,
 							"Width of the grid lines in pixels",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							Grid10LineColor,
-							MainViewUnderlay.Instance.MainViewOverlay.Grid10LineColor,
+							MainViewUnderlay.that.MainViewOverlay.Grid10LineColor,
 							"Color of every tenth line on the grid",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							Grid10LineWidth,
-							MainViewUnderlay.Instance.MainViewOverlay.Grid10LineWidth,
+							MainViewUnderlay.that.MainViewOverlay.Grid10LineWidth,
 							"Width of every tenth grid line in pixels",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							SelectionLineColor,
-							MainViewUnderlay.Instance.MainViewOverlay.SelectionLineColor,
+							MainViewUnderlay.that.MainViewOverlay.SelectionLineColor,
 							"Color of the border of selected tiles",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							SelectionLineWidth,
-							MainViewUnderlay.Instance.MainViewOverlay.SelectionLineWidth,
+							MainViewUnderlay.that.MainViewOverlay.SelectionLineWidth,
 							"Width of the border of selected tiles in pixels",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							GraySelection,
-							MainViewUnderlay.Instance.MainViewOverlay.GraySelection,
+							MainViewUnderlay.that.MainViewOverlay.GraySelection,
 							"If true the selection area will be drawn in grayscale"
 								+ " (only if UseMono is false)",
 							MapView,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 
 			Options.AddOption(
 							SpriteShade,
-							MainViewUnderlay.Instance.MainViewOverlay.SpriteShade,
+							MainViewUnderlay.that.MainViewOverlay.SpriteShade,
 							"The darkness of the tile sprites (10..100 default 0 off, unity is 33)"
 								+ " Values outside the range turn sprite shading off"
 								+ " (only if UseMono is false)",
 							Sprites,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 
 			string desc = "The technique used for resizing sprites (0..7)" + Environment.NewLine
 						+ "0 - default"                                    + Environment.NewLine
@@ -778,10 +778,10 @@ namespace MapView
 						+ "7 - high quality bicubic (best in a pig's eye)";
 			Options.AddOption(
 							Interpolation,
-							MainViewUnderlay.Instance.MainViewOverlay.Interpolation,
+							MainViewUnderlay.that.MainViewOverlay.Interpolation,
 							desc + Environment.NewLine + "(only if UseMono is false)",
 							Sprites,
-							null, MainViewUnderlay.Instance.MainViewOverlay);
+							null, MainViewUnderlay.that.MainViewOverlay);
 
 //			Options.AddOption(
 //							SaveOnExit,
@@ -864,35 +864,35 @@ namespace MapView
 					break;
 
 				case GridLayerColor:
-					MainViewUnderlay.Instance.MainViewOverlay.GridLayerColor = (Color)value;
+					MainViewUnderlay.that.MainViewOverlay.GridLayerColor = (Color)value;
 					break;
 
 				case GridLayerOpacity:
-					MainViewUnderlay.Instance.MainViewOverlay.GridLayerOpacity = (int)value;
+					MainViewUnderlay.that.MainViewOverlay.GridLayerOpacity = (int)value;
 					break;
 
 				case GridLineColor:
-					MainViewUnderlay.Instance.MainViewOverlay.GridLineColor = (Color)value;
+					MainViewUnderlay.that.MainViewOverlay.GridLineColor = (Color)value;
 					break;
 
 				case GridLineWidth:
-					MainViewUnderlay.Instance.MainViewOverlay.GridLineWidth = (int)value;
+					MainViewUnderlay.that.MainViewOverlay.GridLineWidth = (int)value;
 					break;
 
 				case Grid10LineColor:
-					MainViewUnderlay.Instance.MainViewOverlay.Grid10LineColor = (Color)value;
+					MainViewUnderlay.that.MainViewOverlay.Grid10LineColor = (Color)value;
 					break;
 
 				case Grid10LineWidth:
-					MainViewUnderlay.Instance.MainViewOverlay.Grid10LineWidth = (int)value;
+					MainViewUnderlay.that.MainViewOverlay.Grid10LineWidth = (int)value;
 					break;
 
 				case SpriteShade:
-					MainViewUnderlay.Instance.MainViewOverlay.SpriteShade = (int)value;
+					MainViewUnderlay.that.MainViewOverlay.SpriteShade = (int)value;
 					break;
 
 				case Interpolation:
-					MainViewUnderlay.Instance.MainViewOverlay.Interpolation = (int)value;
+					MainViewUnderlay.that.MainViewOverlay.Interpolation = (int)value;
 					break;
 
 				// NOTE: 'GraySelection' is handled. reasons ...

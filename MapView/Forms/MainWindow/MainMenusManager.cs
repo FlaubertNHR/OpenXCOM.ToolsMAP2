@@ -90,7 +90,7 @@ namespace MapView.Forms.MainWindow
 		{
 			string help = Path.GetDirectoryName(Application.ExecutablePath);
 				   help = Path.Combine(help, "MapView.chm");
-			Help.ShowHelp(XCMainWindow.Instance, "file://" + help);
+			Help.ShowHelp(XCMainWindow.that, "file://" + help);
 		}
 		#endregion Events
 
@@ -269,10 +269,10 @@ namespace MapView.Forms.MainWindow
 				}
 			}
 
-			if (   XCMainWindow.Instance.WindowState == FormWindowState.Normal
-				|| XCMainWindow.Instance.WindowState == FormWindowState.Maximized)
+			if (   XCMainWindow.that.WindowState == FormWindowState.Normal
+				|| XCMainWindow.that.WindowState == FormWindowState.Maximized)
 			{
-				XCMainWindow.Instance.WindowState = FormWindowState.Minimized;
+				XCMainWindow.that.WindowState = FormWindowState.Minimized;
 			}
 		}
 
@@ -294,10 +294,10 @@ namespace MapView.Forms.MainWindow
 				}
 			}
 
-			if (   XCMainWindow.Instance.WindowState == FormWindowState.Maximized
-				|| XCMainWindow.Instance.WindowState == FormWindowState.Minimized)
+			if (   XCMainWindow.that.WindowState == FormWindowState.Maximized
+				|| XCMainWindow.that.WindowState == FormWindowState.Minimized)
 			{
-				XCMainWindow.Instance.WindowState = FormWindowState.Normal;
+				XCMainWindow.that.WindowState = FormWindowState.Normal;
 			}
 		}
 
@@ -331,10 +331,10 @@ namespace MapView.Forms.MainWindow
 			{
 				if (e.Shift)
 				{
-					if (XCMainWindow.Instance.WindowState == FormWindowState.Minimized)
-						XCMainWindow.Instance.WindowState =  FormWindowState.Normal;
+					if (XCMainWindow.that.WindowState == FormWindowState.Minimized)
+						XCMainWindow.that.WindowState =  FormWindowState.Normal;
 
-					XCMainWindow.Instance.Select();
+					XCMainWindow.that.Select();
 				}
 				else
 					OnMenuItemClick(

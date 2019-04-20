@@ -857,8 +857,8 @@ namespace MapView
 
 		private void OnTerrainLeftClick(object sender, EventArgs e)
 		{
-			if (!XCMainWindow.Instance.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.Instance.MaptreeChanged = true;
+			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 XCMainWindow.that.MaptreeChanged = true;
 
 			int sel = lbTerrainsAvailable.SelectedIndex;
 
@@ -884,8 +884,8 @@ namespace MapView
 
 		private void OnTerrainRightClick(object sender, EventArgs e)
 		{
-			if (!XCMainWindow.Instance.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.Instance.MaptreeChanged = true;
+			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 XCMainWindow.that.MaptreeChanged = true;
 
 			int sel = lbTerrainsAvailable.SelectedIndex;
 
@@ -914,8 +914,8 @@ namespace MapView
 
 		private void StepTerrainEntry(int dir)
 		{
-			if (!XCMainWindow.Instance.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.Instance.MaptreeChanged = true;
+			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 XCMainWindow.that.MaptreeChanged = true;
 
 			var terrains = Descriptor.Terrains;
 
@@ -954,8 +954,8 @@ namespace MapView
 
 		private void OnTerrainPasteClick(object sender, EventArgs e)
 		{
-			if (!XCMainWindow.Instance.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.Instance.MaptreeChanged = true;
+			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 XCMainWindow.that.MaptreeChanged = true;
 
 			Descriptor.Terrains.Clear();
 
@@ -970,8 +970,8 @@ namespace MapView
 
 		private void OnTerrainClearClick(object sender, EventArgs e)
 		{
-			if (!XCMainWindow.Instance.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.Instance.MaptreeChanged = true;
+			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 XCMainWindow.that.MaptreeChanged = true;
 
 			Descriptor.Terrains.Clear();
 			ListTerrains();
@@ -1143,8 +1143,8 @@ namespace MapView
 				}
 			}
 
-			if (changed && !XCMainWindow.Instance.MaptreeChanged)
-				XCMainWindow.Instance.MaptreeChanged = true;
+			if (changed && !XCMainWindow.that.MaptreeChanged)
+				XCMainWindow.that.MaptreeChanged = true;
 		}
 
 		/// <summary>

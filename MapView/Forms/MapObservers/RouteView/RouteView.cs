@@ -270,7 +270,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		private void PrintSelectedInfo()
 		{
-			if (MainViewUnderlay.Instance.MainViewOverlay.FirstClick)
+			if (MainViewUnderlay.that.MainViewOverlay.FirstClick)
 			{
 				string selected;
 				int level;
@@ -1308,7 +1308,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 											loc.Y, loc.X,
 											MapChild.Level);
 
-			MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
+			MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.Left,
@@ -1451,7 +1451,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				switch (e.KeyCode)
 				{
 					case Keys.S:
-						XCMainWindow.Instance.OnSaveRoutesClick(null, EventArgs.Empty);
+						XCMainWindow.that.OnSaveRoutesClick(null, EventArgs.Empty);
 						break;
 
 					case Keys.X: _asterisk = true;

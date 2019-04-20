@@ -333,7 +333,7 @@ namespace MapView
 			{
 				switch (e.KeyCode)
 				{
-					case Keys.S: XCMainWindow.Instance.OnSaveMapClick(null, EventArgs.Empty); break;
+					case Keys.S: XCMainWindow.that.OnSaveMapClick(null, EventArgs.Empty); break;
 
 					case Keys.X: Copy(); ClearSelection(); break;
 					case Keys.C: Copy();                   break;
@@ -359,7 +359,7 @@ namespace MapView
 		{
 			if (MapBase != null && FirstClick)
 			{
-				XCMainWindow.Instance.MapChanged = true;
+				XCMainWindow.that.MapChanged = true;
 
 				XCMapTile tile;
 
@@ -434,7 +434,7 @@ namespace MapView
 			{
 				if (AllowPaste(_copiedTerrains, MapBase.Descriptor.Terrains))
 				{
-					XCMainWindow.Instance.MapChanged = true;
+					XCMainWindow.that.MapChanged = true;
 
 					XCMapTile tile, copy;
 					for (int
@@ -546,7 +546,7 @@ namespace MapView
 		{
 			if (MapBase != null && FirstClick)
 			{
-				XCMainWindow.Instance.MapChanged = true;
+				XCMainWindow.that.MapChanged = true;
 
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
@@ -821,9 +821,9 @@ namespace MapView
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
 
-				XCMainWindow.Instance.sb_PrintSelectionSize(
-														b.X - a.X + 1,
-														b.Y - a.Y + 1);
+				XCMainWindow.that.sb_PrintSelectionSize(
+													b.X - a.X + 1,
+													b.Y - a.Y + 1);
 			}
 		}
 
@@ -911,7 +911,7 @@ namespace MapView
 			_lev = args.Location.Lev;
 			//LogFile.WriteLine(". " + _col + "," + _row + "," + _lev);
 
-			XCMainWindow.Instance.sb_PrintPosition(_col, _row, _lev);
+			XCMainWindow.that.sb_PrintPosition(_col, _row, _lev);
 		}
 
 		/// <summary>
@@ -928,7 +928,7 @@ namespace MapView
 			_lev = args.Level;
 			//LogFile.WriteLine(". " + _col + "," + _row + "," + _lev);
 
-			XCMainWindow.Instance.sb_PrintPosition(_col, _row, _lev);
+			XCMainWindow.that.sb_PrintPosition(_col, _row, _lev);
 			Refresh();
 		}
 		#endregion

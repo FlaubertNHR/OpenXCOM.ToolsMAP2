@@ -150,7 +150,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				SetSelected(e.Button, e.Clicks);
 				if (e.Button == MouseButtons.Right) // see SetSelected()
 				{
-					MainViewUnderlay.Instance.MainViewOverlay.Refresh();
+					MainViewUnderlay.that.MainViewOverlay.Refresh();
 
 					ViewerFormsManager.TopView     .Refresh();
 					ViewerFormsManager.RouteView   .Refresh();
@@ -201,7 +201,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 					case MouseButtons.Right:
 					{
-						if (MainViewUnderlay.Instance.MainViewOverlay.FirstClick) // do not set a part in a quad unless a tile is selected.
+						if (MainViewUnderlay.that.MainViewOverlay.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
 							switch (clicks)
 							{
@@ -209,7 +209,7 @@ namespace MapView.Forms.MapObservers.TopViews
 									var tileView = ViewerFormsManager.TileView.Control;
 									_tile[SelectedQuadrant] = tileView.SelectedTilepart;
 
-									MainViewUnderlay.Instance.MainViewOverlay.Refresh();
+									MainViewUnderlay.that.MainViewOverlay.Refresh();
 
 									ViewerFormsManager.RouteView   .Control     .Refresh();
 									ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
@@ -220,7 +220,7 @@ namespace MapView.Forms.MapObservers.TopViews
 									break;
 							}
 
-							XCMainWindow.Instance.MapChanged = true;
+							XCMainWindow.that.MapChanged = true;
 
 							Refresh();
 

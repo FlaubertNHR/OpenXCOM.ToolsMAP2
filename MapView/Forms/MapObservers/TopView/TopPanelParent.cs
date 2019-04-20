@@ -159,8 +159,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		internal protected void PathSelectedLozenge()
 		{
-			var a = MainViewUnderlay.Instance.MainViewOverlay.GetDragBeg_abs();
-			var b = MainViewUnderlay.Instance.MainViewOverlay.GetDragEnd_abs();
+			var a = MainViewUnderlay.that.MainViewOverlay.GetDragBeg_abs();
+			var b = MainViewUnderlay.that.MainViewOverlay.GetDragEnd_abs();
 
 			int halfWidth  = _blobService.HalfWidth;
 			int halfHeight = _blobService.HalfHeight;
@@ -298,7 +298,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				}
 
 				// draw tiles-selected lozenge ->
-				if (MainViewUnderlay.Instance.MainViewOverlay.FirstClick)
+				if (MainViewUnderlay.that.MainViewOverlay.FirstClick)
 					graphics.DrawPath(TopPens[TopView.SelectedColor], _lozSelected);
 			}
 		}
@@ -343,7 +343,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					break;
 
 				default:
-					MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
+					MainViewUnderlay.that.MainViewOverlay.Edit(e);
 					break;
 			}
 //			base.OnKeyDown(e);
@@ -366,8 +366,8 @@ namespace MapView.Forms.MapObservers.TopViews
 				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
 					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
 				{
-					MainViewUnderlay.Instance.MainViewOverlay._keyDeltaX =
-					MainViewUnderlay.Instance.MainViewOverlay._keyDeltaY = 0;
+					MainViewUnderlay.that.MainViewOverlay._keyDeltaX =
+					MainViewUnderlay.that.MainViewOverlay._keyDeltaY = 0;
 
 					// as long as MainViewOverlay.OnSelectLocationMain()
 					// fires before the subsidiary viewers' OnSelectLocationObserver()
@@ -386,7 +386,7 @@ namespace MapView.Forms.MapObservers.TopViews
 													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;
-					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
+					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);
 				}
 			}
 
@@ -422,7 +422,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 				if (_isMouseDrag)
 				{
-					var overlay = MainViewUnderlay.Instance.MainViewOverlay;
+					var overlay = MainViewUnderlay.that.MainViewOverlay;
 
 					overlay._keyDeltaX = loc.X - overlay.DragBeg.X; // these are in case user stops a mouse-drag
 					overlay._keyDeltaY = loc.Y - overlay.DragBeg.Y; // and resumes selection using keyboard.

@@ -85,10 +85,10 @@ namespace MapView
 		#endregion
 
 
-		#region EventCalls
+		#region Events
 		private void OnFormClosed(object sender, FormClosedEventArgs e)
 		{
-			XCMainWindow.Instance.UncheckScanG();
+			XCMainWindow.that.UncheckScanG();
 			XCMainWindow.ScanG = null;
 
 			Dispose();
@@ -117,7 +117,7 @@ namespace MapView
 
 			var graphics = e.Graphics;
 
-			var overlay = XCMainWindow.Instance.MainViewUnderlay.MainViewOverlay;
+			var overlay = XCMainWindow.that.MainViewUnderlay.MainViewOverlay;
 
 			var spriteAttributes = new ImageAttributes();
 			if (overlay._spriteShadeEnabled)
@@ -259,7 +259,7 @@ namespace MapView
 		#endregion
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			int level = Level;

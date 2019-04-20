@@ -99,7 +99,7 @@ namespace MapView.Forms.MainWindow
 				if (f != null)
 					SetObserver(@base, f);
 
-			MainViewUnderlay.Instance.MainViewOverlay.Refresh();
+			MainViewUnderlay.that.MainViewOverlay.Refresh();
 		}
 
 		private static void SetObserver(MapFileBase @base, IMapObserver observer)

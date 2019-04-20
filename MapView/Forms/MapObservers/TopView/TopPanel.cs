@@ -44,7 +44,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		internal TopPanel()
 		{
-			MainViewUnderlay.Instance.MainViewOverlay.MouseDragEvent += PathSelectedLozenge;
+			MainViewUnderlay.that.MainViewOverlay.MouseDragEvent += PathSelectedLozenge;
 		}
 		#endregion
 
