@@ -279,7 +279,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			_topBrushes = new Dictionary<string, SolidBrush>();
 			_topPens    = new Dictionary<string, Pen>();
 
-			_topBrushes.Add(FloorColor, new SolidBrush(Color.BurlyWood));
+			_topBrushes.Add(FloorColor,   new SolidBrush(Color.BurlyWood));
 			_topBrushes.Add(ContentColor, new SolidBrush(Color.MediumSeaGreen));
 			_topBrushes.Add(SelectedTypeColor, QuadrantsPanel.SelectColor);
 

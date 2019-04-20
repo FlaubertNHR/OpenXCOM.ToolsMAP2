@@ -44,8 +44,8 @@ namespace MapView
 
 
 		#region Fields (static)
-		private const string AddTileset  = "Add Tileset";
-		private const string EditTileset = "Edit Tileset";
+		private const string AddTileset  = " Add Tileset";
+		private const string EditTileset = " Edit Tileset";
 		#endregion Fields (static)
 
 
@@ -293,7 +293,7 @@ namespace MapView
 		#endregion cTor
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
@@ -333,10 +333,10 @@ namespace MapView
 			}
 			base.OnFormClosing(e);
 		}
-		#endregion Eventcalls (override)
+		#endregion Events (override)
 
 
-		#region Eventcalls
+		#region Events
 		/// <summary>
 		/// Opens a find directory dialog.
 		/// </summary>
@@ -1208,7 +1208,7 @@ namespace MapView
 				TileGroup.DeleteTileset(TilesetOriginal, change.Item2);
 			}
 		}
-		#endregion Eventcalls
+		#endregion Events
 
 
 		#region Methods
