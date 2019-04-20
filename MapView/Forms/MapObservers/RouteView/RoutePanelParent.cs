@@ -282,7 +282,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				_overCol = loc.X;
 				_overRow = loc.Y;
 			}
-			base.OnMouseMove(e); // required to fire RouteView.OnRoutePanelMouseMove()
+			base.OnMouseMove(e);												// required to fire RouteView.OnRoutePanelMouseMove()
 		}
 
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -299,7 +299,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 													new MapLocation(
 																loc.Y, loc.X,
 																MapChild.Level));
-					RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+					RoutePanelMouseUpEvent(this, args);							// fire RouteView.OnRoutePanelMouseUp()
 				}
 			}
 		}
@@ -358,7 +358,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 											MapChild.Location.Col,
 											MapChild.Location.Row);
 				}
-				else //if (!keyData.HasFlag(Keys.Shift)) // TODO: implement [Shift] for dragnode
+				else if (!keyData.HasFlag(Keys.Shift))
 				{
 					var loc = new Point(0,0);
 					int vert = 0;
@@ -375,85 +375,144 @@ namespace MapView.Forms.MapObservers.RouteViews
 						case Keys.Home:     loc.X = -1; break;
 
 //						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
-						case Keys.Add:
-							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
-																								MouseButtons.None,
-																								0, 0, 0, (vert = +1)));
-							break;
-
+						case Keys.Add:      vert = +1; break;
 //						case Keys.Insert:
-						case Keys.Subtract:
-							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
-																								MouseButtons.None,
-																								0, 0, 0, (vert = -1)));
-							break;
+						case Keys.Subtract: vert = -1; break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						MapChild.Location = new MapLocation(					// fire SelectLocationEvent
-														MapChild.Location.Row + loc.Y,
-														MapChild.Location.Col + loc.X,
-														MapChild.Level);
-						loc.X = MapChild.Location.Col;
-						loc.Y = MapChild.Location.Row;
-						MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
-
-						if (RoutePanelMouseDownEvent != null)
+						int r = MapChild.Location.Row + loc.Y;
+						int c = MapChild.Location.Col + loc.X;
+						if (   r > -1 && r < MapChild.MapSize.Rows
+							&& c > -1 && c < MapChild.MapSize.Cols)
 						{
-							var args = new RoutePanelEventArgs(
-															MouseButtons.Left,
-															MapChild[loc.Y, loc.X],
-															MapChild.Location);
-							RoutePanelMouseDownEvent(this, args);				// fire RouteView.OnRoutePanelMouseDown()
-							Invalidate();
+							MapChild.Location = new MapLocation(r,c, MapChild.Level); // fire SelectLocationEvent
+
+							loc.X = c; loc.Y = r;
+							MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
+
+							if (RoutePanelMouseDownEvent != null)
+							{
+								var args = new RoutePanelEventArgs(
+																MouseButtons.Left,
+																MapChild[r,c],
+																MapChild.Location);
+								RoutePanelMouseDownEvent(this, args);			// fire RouteView.OnRoutePanelMouseDown()
+								Invalidate();
+							}
+							SelectedLocation = loc;
 						}
-						SelectedLocation = loc;
 					}
 					else if (vert != 0)
 					{
-						MapChild.Location = new MapLocation(					// fire SelectLocationEvent
-														MapChild.Location.Row,
-														MapChild.Location.Col,
-														MapChild.Level);
+						int level = MapChild.Level + vert;
+						if (level > -1 && level < MapChild.MapSize.Levs)
+						{
+							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
+																								MouseButtons.None,
+																								0, 0,0, vert));
+							MapChild.Location = new MapLocation(				// fire SelectLocationEvent
+															MapChild.Location.Row,
+															MapChild.Location.Col,
+															level);
+						}
 					}
 				}
-/*				else // [Shift] = drag select ->
+				else // [Shift] = drag node ->
 				{
-					var pt = new Point(0,0);
+					var loc = new Point(0,0);
+					int vert = 0;
 					switch (keyData)
 					{
-						case (Keys.Shift | Keys.Up):    pt.X = -1; pt.Y = -1; break;
-						case (Keys.Shift | Keys.Right): pt.X = +1; pt.Y = -1; break;
-						case (Keys.Shift | Keys.Down):  pt.X = +1; pt.Y = +1; break;
-						case (Keys.Shift | Keys.Left):  pt.X = -1; pt.Y = +1; break;
+						case Keys.Shift | Keys.Up:    loc.X = -1; loc.Y = -1; break;
+						case Keys.Shift | Keys.Right: loc.X = +1; loc.Y = -1; break;
+						case Keys.Shift | Keys.Down:  loc.X = +1; loc.Y = +1; break;
+						case Keys.Shift | Keys.Left:  loc.X = -1; loc.Y = +1; break;
 
-						case (Keys.Shift | Keys.PageUp):   pt.Y = -1; break;
-						case (Keys.Shift | Keys.PageDown): pt.X = +1; break;
-						case (Keys.Shift | Keys.End):      pt.Y = +1; break;
-						case (Keys.Shift | Keys.Home):     pt.X = -1; break;
+						case Keys.Shift | Keys.PageUp:   loc.Y = -1; break;
+						case Keys.Shift | Keys.PageDown: loc.X = +1; break;
+						case Keys.Shift | Keys.End:      loc.Y = +1; break;
+						case Keys.Shift | Keys.Home:     loc.X = -1; break;
+
+//						case Keys.Shift | Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
+						case Keys.Shift | Keys.Add:      vert = +1; break;
+//						case Keys.Shift | Keys.Insert:
+						case Keys.Shift | Keys.Subtract: vert = -1; break;
 					}
 
-					if (pt.X != 0 || pt.Y != 0) // safety.
+					if (loc.X != 0 || loc.Y != 0)
 					{
-						int pos = DragBeg.X + _keyDeltaX + pt.X;
-						if (pos > -1 && pos < MapBase.MapSize.Cols)
-							_keyDeltaX += pt.X;
+						int r = MapChild.Location.Row + loc.Y;
+						int c = MapChild.Location.Col + loc.X;
+						if (   r > -1 && r < MapChild.MapSize.Rows
+							&& c > -1 && c < MapChild.MapSize.Cols)
+						{
+							if (((XCMapTile)MapChild[r,c, MapChild.Level]).Node == null)
+							{
+								RouteNode node = ((XCMapTile)MapChild[MapChild.Location.Row,
+																	  MapChild.Location.Col,
+																	  MapChild.Level]).Node;
+								if (node != null)
+								{
+									RouteView.Dragnode = node;
 
-						pos = DragBeg.Y + _keyDeltaY + pt.Y;
-						if (pos > -1 && pos < MapBase.MapSize.Rows)
-							_keyDeltaY += pt.Y;
+									MapChild.Location = new MapLocation(r,c, MapChild.Level); // fire SelectLocationEvent
 
-						var loc = new Point(
-										MapBase.Location.Col + _keyDeltaX,
-										MapBase.Location.Row + _keyDeltaY);
+									loc.X = c; loc.Y = r;
+									MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc, loc);
 
-						_colOver = loc.X;
-						_rowOver = loc.Y;
-
-						ProcessSelection(DragBeg, loc);
+									if (RoutePanelMouseUpEvent != null)
+									{
+										var args = new RoutePanelEventArgs(
+																		MouseButtons.Left,
+																		MapChild[r,c],
+																		MapChild.Location);
+										RoutePanelMouseUpEvent(this, args);		// fire RouteView.OnRoutePanelMouseUp()
+										Invalidate();
+									}
+								}
+							}
+						}
 					}
-				} */
+					else if (vert != 0)
+					{
+						int level = MapChild.Level + vert;
+						if (level > -1 && level < MapChild.MapSize.Levs)
+						{
+							if (((XCMapTile)MapChild[MapChild.Location.Row,
+													 MapChild.Location.Col,
+													 level]).Node == null)
+							{
+								RouteNode node = ((XCMapTile)MapChild[MapChild.Location.Row,
+																	  MapChild.Location.Col,
+																	  MapChild.Level]).Node;
+								if (node != null)
+								{
+									RouteView.Dragnode = node;
+
+									ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
+																										MouseButtons.None,
+																										0, 0,0, vert));
+									MapChild.Location = new MapLocation(		// fire SelectLocationEvent
+																	MapChild.Location.Row,
+																	MapChild.Location.Col,
+																	level);
+
+									if (RoutePanelMouseUpEvent != null)
+									{
+										var args = new RoutePanelEventArgs(
+																		MouseButtons.Left,
+																		MapChild[MapChild.Location.Row, MapChild.Location.Col],
+																		MapChild.Location);
+										RoutePanelMouseUpEvent(this, args);		// fire RouteView.OnRoutePanelMouseUp()
+										Invalidate();
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 

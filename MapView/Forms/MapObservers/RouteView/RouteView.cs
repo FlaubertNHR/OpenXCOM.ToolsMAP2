@@ -39,7 +39,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private const string Go = "go";
 
-		private static RouteNode _nodeMoved;
+		internal static RouteNode Dragnode;
 		#endregion
 
 
@@ -366,33 +366,33 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnRoutePanelMouseUp(object sender, RoutePanelEventArgs args)
 		{
-			if (_nodeMoved != null)
+			if (Dragnode != null)
 			{
 				if (((XCMapTile)args.Tile).Node == null)
 				{
 					RouteChanged = true;
 
-					((XCMapTile)MapChild[_nodeMoved.Row, // clear the node from the previous tile
-										 _nodeMoved.Col,
-										 _nodeMoved.Lev]).Node = null;
+					((XCMapTile)MapChild[Dragnode.Row, // clear the node from the previous tile
+										 Dragnode.Col,
+										 Dragnode.Lev]).Node = null;
 
-					_nodeMoved.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
-					_nodeMoved.Row = (byte)args.Location.Row; // these get saved w/ Routes.
-					_nodeMoved.Lev = args.Location.Lev;
+					Dragnode.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
+					Dragnode.Row = (byte)args.Location.Row; // these get saved w/ Routes.
+					Dragnode.Lev =       args.Location.Lev;
 
-					((XCMapTile)args.Tile).Node = _nodeMoved; // assign the node to the tile at the mouse-up location.
+					((XCMapTile)args.Tile).Node = Dragnode; // assign the node to the tile at the mouse-up location.
 
 					// Select the new location so the links draw and the selected node highlights
 					// properly but don't re-path the selected-lozenge. Let user see where the
 					// node-drag started until a click calls RoutePanelParent.PathSelectedLozenge().
-					RoutePanelParent.SelectedLocation = new Point(_nodeMoved.Col, _nodeMoved.Row);
+					RoutePanelParent.SelectedLocation = new Point(Dragnode.Col, Dragnode.Row);
 
 					ViewerFormsManager.RouteView   .Control     .UpdateLinkDistances();
 					ViewerFormsManager.TopRouteView.ControlRoute.UpdateLinkDistances();
 				}
-				else if (args.Location.Col != _nodeMoved.Col
-					||   args.Location.Row != _nodeMoved.Row
-					||   args.Location.Lev != _nodeMoved.Lev)
+				else if (args.Location.Col != Dragnode.Col
+					||   args.Location.Row != Dragnode.Row
+					||   args.Location.Lev != Dragnode.Lev)
 				{
 					MessageBox.Show(
 								this,
@@ -403,7 +403,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 								MessageBoxDefaultButton.Button1,
 								0);
 				}
-				_nodeMoved = null;
+				Dragnode = null;
 			}
 		}
 
@@ -481,8 +481,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="args"></param>
 		private void OnRoutePanelMouseDown(object sender, RoutePanelEventArgs args)
 		{
-			//LogFile.WriteLine("OnRoutePanelMouseDown()");
-
 			bool update = false;
 
 			var node = ((XCMapTile)args.Tile).Node;
@@ -531,7 +529,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
 			}
 
-			_nodeMoved = NodeSelected;
+			Dragnode = NodeSelected;
 
 			EnableEditButtons();
 		}
@@ -1321,8 +1319,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			RoutePanelParent.SelectedLocation = loc;
 
-			ViewerFormsManager.RouteView   .Control     .Refresh();
-			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+			ViewerFormsManager.RouteView   .Control     .Invalidate();
+			ViewerFormsManager.TopRouteView.ControlRoute.Invalidate();
 		}
 
 		/// <summary>
@@ -1744,17 +1742,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnRaiseNode(object sender, EventArgs e)
 		{
-			_nodeMoved = NodeSelected;
+			Dragnode = NodeSelected;
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.None,
-											MapChild[_nodeMoved.Row,
-													 _nodeMoved.Col,
-													 _nodeMoved.Lev - 1],
+											MapChild[Dragnode.Row,
+													 Dragnode.Col,
+													 Dragnode.Lev - 1],
 											new MapLocation(
-														_nodeMoved.Row,
-														_nodeMoved.Col,
-														_nodeMoved.Lev - 1));
+														Dragnode.Row,
+														Dragnode.Col,
+														Dragnode.Lev - 1));
 			OnRoutePanelMouseUp(null, args);
 
 			SelectNode(NodeSelected.Index);
@@ -1762,17 +1760,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnLowerNode(object sender, EventArgs e)
 		{
-			_nodeMoved = NodeSelected;
+			Dragnode = NodeSelected;
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.None,
-											MapChild[_nodeMoved.Row,
-													 _nodeMoved.Col,
-													 _nodeMoved.Lev + 1],
+											MapChild[Dragnode.Row,
+													 Dragnode.Col,
+													 Dragnode.Lev + 1],
 											new MapLocation(
-														_nodeMoved.Row,
-														_nodeMoved.Col,
-														_nodeMoved.Lev + 1));
+														Dragnode.Row,
+														Dragnode.Col,
+														Dragnode.Lev + 1));
 			OnRoutePanelMouseUp(null, args);
 
 			SelectNode(NodeSelected.Index);
