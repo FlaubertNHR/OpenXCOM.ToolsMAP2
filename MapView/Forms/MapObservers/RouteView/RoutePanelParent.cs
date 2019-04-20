@@ -255,7 +255,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 													MapChild.Level);
 
 					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);	// set selected location for other viewers.
-																							// NOTE: drag-selection is not allowed here.
+																						// NOTE: drag-selection is not allowed here.
 					if (RoutePanelMouseDownEvent != null)
 					{
 						var args = new RoutePanelEventArgs(

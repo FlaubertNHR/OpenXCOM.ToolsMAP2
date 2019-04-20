@@ -382,10 +382,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					((XCMapTile)args.Tile).Node = Dragnode; // assign the node to the tile at the mouse-up location.
 
-					// Select the new location so the links draw and the selected node highlights
-					// properly but don't re-path the selected-lozenge. Let user see where the
-					// node-drag started until a click calls RoutePanelParent.PathSelectedLozenge().
-					RoutePanelParent.SelectedLocation = new Point(Dragnode.Col, Dragnode.Row);
+					var loc = new Point(Dragnode.Col, Dragnode.Row);
+					RoutePanelParent.SelectedLocation = loc;
+					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);
 
 					ViewerFormsManager.RouteView   .Control     .UpdateLinkDistances();
 					ViewerFormsManager.TopRouteView.ControlRoute.UpdateLinkDistances();
