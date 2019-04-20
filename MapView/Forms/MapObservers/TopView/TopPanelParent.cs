@@ -331,6 +331,17 @@ namespace MapView.Forms.MapObservers.TopViews
 					break;
 				}
 
+				case Keys.Delete:
+					if (e.Shift)
+					{
+						var args = new MouseEventArgs(MouseButtons.Right, 2, 0,0, 0);
+						QuadrantPanel panel = ((TopPanel)this).QuadrantsPanel;
+						panel.ForceMouseDown(args, panel.SelectedQuadrant);
+					}
+					else
+						goto default;
+					break;
+
 				default:
 					MainViewUnderlay.Instance.MainViewOverlay.Edit(e);
 					break;
