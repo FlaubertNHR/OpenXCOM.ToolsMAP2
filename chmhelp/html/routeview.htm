@@ -20,7 +20,7 @@
 
 		<p>An overlay appears with tile position and node data as the mouse moves over the Map. Also, two small vertical bars are shown at each node - the left bar (red) presents the spawn weight and the right bar (blue) presents the patrol priority. The info-overlay and importance-meters can be toggled on and off separately in Options.</p>
 
-		<p>The menubar along the top of the panel has a dropdown box with three connection-types.<br><br>
+		<p>The menubar along the top of the panel has buttons representing three connection-types.<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;DontConnect - no automatic node-linking is performed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OneWayConnect - when a node is selected and another node is then either created or right-clicked, a patrol-route is automatically linked from the first node to the second node, provided that a link-slot is available.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;TwoWayConnect - when a node is selected and another node is then either created or right-clicked, a patrol-route is automatically linked both ways between the nodes, provided that link-slots are available.</p>
@@ -81,7 +81,9 @@
 
 		<p>The numeric keypad - that is, the arrow keys and [Home], [End], [PageUp], [PageDown] - select the tile in the chosen direction. The add and subtract keys on the numeric keypad lower and raise the current level respectively.</p>
 
-		<p>[Enter] creates a node at the current location if a node doesn't exist on the tile, or if a node does exist at the current location it will be selected.</p>
+		<p>When a route-node is selected, holding [Shift] while navigating with the keyboard will drag the node to a new location.</p>
+
+		<p>[Enter] creates a node at the current location if a node doesn't exist on the tile, or if a node does exist at the current location it will be selected. Note that selecting a tile on the currently displayed level that has a node will select that node automatically; however, selecting a tile that has a node will not automatically select the node when navigating from a different level. This behavior also happens when changing levels with the mousewheel - the reason for this is to better see the x/y relation of nodes that link to different levels.</p>
 
 		<br>
 		<h3>File menu</h3>

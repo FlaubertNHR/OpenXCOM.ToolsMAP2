@@ -339,11 +339,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else if (keyData == Keys.Enter)
 				{
-//					MapChild.Location = new MapLocation(						// fire SelectLocationEvent
-//													MapChild.Location.Row,
-//													MapChild.Location.Col,
-//													MapChild.Level);
-
 					if (RoutePanelMouseDownEvent != null)
 					{
 						var args = new RoutePanelEventArgs(
