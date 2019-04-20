@@ -18,8 +18,8 @@ namespace MapView
 			Form
 	{
 		#region Fields
-		private PathInfo _pathResources = SharedSpace.Instance[PathInfo.ShareResources] as PathInfo;
-		private PathInfo _pathTilesets  = SharedSpace.Instance[PathInfo.ShareTilesets]  as PathInfo;
+		private PathInfo _pathResources = SharedSpace.that[PathInfo.ShareResources] as PathInfo;
+		private PathInfo _pathTilesets  = SharedSpace.that[PathInfo.ShareTilesets]  as PathInfo;
 
 		private bool _bork;
 		#endregion
@@ -83,11 +83,11 @@ namespace MapView
 				rbTilesetsTpl.Select();
 			}
 
-			string ufo = SharedSpace.Instance.GetShare(SharedSpace.ResourceDirectoryUfo);
+			string ufo = SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryUfo);
 			if (!String.IsNullOrEmpty(ufo))
 				Ufo = ufo;
 
-			string tftd = SharedSpace.Instance.GetShare(SharedSpace.ResourceDirectoryTftd);
+			string tftd = SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryTftd);
 			if (!String.IsNullOrEmpty(tftd))
 				Tftd = tftd;
 

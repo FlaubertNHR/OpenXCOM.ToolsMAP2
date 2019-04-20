@@ -144,7 +144,7 @@ namespace MapView
 
 			// TODO: further optimize this loading sequence ....
 
-			var shared = SharedSpace.Instance;
+			var shared = SharedSpace.that;
 
 			shared.SetShare(
 						SharedSpace.ApplicationDirectory,
@@ -583,7 +583,7 @@ namespace MapView
 		/// </summary>
 		private void LoadOptions()
 		{
-			string file = Path.Combine(SharedSpace.Instance.GetShare(SharedSpace.SettingsDirectory), PathInfo.ConfigViewers);
+			string file = Path.Combine(SharedSpace.that.GetShare(SharedSpace.SettingsDirectory), PathInfo.ConfigViewers);
 			using (var sr = new StreamReader(File.OpenRead(file)))
 			{
 				var str = new YamlStream();
@@ -701,7 +701,7 @@ namespace MapView
 							"If true a grid will display at the current level of editing (F4 - On/Off)",
 							MapView,
 							handler);
-//							null, MainViewUnderlay.Instance.MainViewOverlay);
+//							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							GridLayerColor,
 							MainViewUnderlay.that.MainViewOverlay.GridLayerColor,
@@ -860,7 +860,7 @@ namespace MapView
 				case ShowGrid: // NOTE: 'miGrid.Checked' is used by the F4 key to toggle the grid on/off.
 					MainViewUnderlay.MainViewOverlay.ShowGrid = (miGrid.Checked = (bool)value);
 
-//					MainViewUnderlay.Instance.MainViewOverlay.ShowGrid = (bool)value;
+//					MainViewUnderlay.that.MainViewOverlay.ShowGrid = (bool)value;
 					break;
 
 				case GridLayerColor:
@@ -943,7 +943,7 @@ namespace MapView
 					WindowState = FormWindowState.Normal;
 					_viewersManager.CloseSubsidiaryViewers();
 
-					string dirSettings = SharedSpace.Instance.GetShare(SharedSpace.SettingsDirectory);
+					string dirSettings = SharedSpace.that.GetShare(SharedSpace.SettingsDirectory);
 					string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);
 					string dst = Path.Combine(dirSettings, PathInfo.ConfigViewersOld);
 
@@ -1324,7 +1324,7 @@ namespace MapView
 
 		private void OnRegenOccultClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE
 		{
-/*			var mapFile = MainViewUnderlay.Instance.MapBase as MapFileChild;
+/*			var mapFile = MainViewUnderlay.that.MapBase as MapFileChild;
 			if (mapFile != null)
 			{
 				mapFile.CalculateOccultations();
@@ -2594,7 +2594,7 @@ namespace MapView
 		/// </summary>
 		private static void CreateViewersFile()
 		{
-			var info = SharedSpace.Instance[PathInfo.ShareViewers] as PathInfo;
+			var info = SharedSpace.that[PathInfo.ShareViewers] as PathInfo;
 			info.CreateDirectory();
 
 			string pfe = info.Fullpath;

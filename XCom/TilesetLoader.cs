@@ -45,7 +45,7 @@ namespace XCom
 			// TODO: if exists(fullpath)
 			// else error out.
 
-			var progress = ProgressBarForm.Instance;
+			var progress = ProgressBarForm.that;
 			progress.SetInfo("Parsing MapTilesets ...");
 
 			var typeCount = 0; // TODO: optimize the reading (here & below) into a buffer.
@@ -67,8 +67,8 @@ namespace XCom
 
 //			bool warned = false;
 
-//			bool isUfoConfigured  = !String.IsNullOrEmpty(SharedSpace.Instance.GetShare(SharedSpace.ResourceDirectoryUfo));
-//			bool isTftdConfigured = !String.IsNullOrEmpty(SharedSpace.Instance.GetShare(SharedSpace.ResourceDirectoryTftd));
+//			bool isUfoConfigured  = !String.IsNullOrEmpty(SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryUfo));
+//			bool isTftdConfigured = !String.IsNullOrEmpty(SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryTftd));
 
 			string nodeGroup, nodeCategory, nodeLabel, terr, path, nodeBasepath;
 

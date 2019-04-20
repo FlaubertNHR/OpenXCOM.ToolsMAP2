@@ -380,7 +380,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					//
 					// or better: Make a flag of it in MapFileBase where Location is actually
 					// set and all these OnLocationSelected events really fire out of !
-//					MainViewUnderlay.Instance.MainViewOverlay.FirstClick = true;
+//					MainViewUnderlay.that.MainViewOverlay.FirstClick = true;
 
 					MapBase.Location = new MapLocation(							// fire SelectLocationEvent
 													loc.Y, loc.X,

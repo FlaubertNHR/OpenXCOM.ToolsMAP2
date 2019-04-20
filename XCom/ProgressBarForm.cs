@@ -9,15 +9,15 @@ namespace XCom
 			Form
 	{
 		#region Fields & Properties
-		private static ProgressBarForm _instance;
-		internal static ProgressBarForm Instance
+		private static ProgressBarForm _that;
+		internal static ProgressBarForm that
 		{
 			get
 			{
-				if (_instance == null)
-					_instance = new ProgressBarForm();
+				if (_that == null)
+					_that = new ProgressBarForm();
 
-				return _instance;
+				return _that;
 			}
 		}
 		#endregion

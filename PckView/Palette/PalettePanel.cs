@@ -30,7 +30,7 @@ namespace PckView
 
 
 		#region Properties (static)
-		internal static PalettePanel Instance
+		internal static PalettePanel that
 		{ get; private set; }
 		#endregion
 
@@ -71,7 +71,7 @@ namespace PckView
 
 			PckViewForm.PaletteChangedEvent += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
 
-			Instance = this;
+			that = this;
 		}
 		#endregion
 

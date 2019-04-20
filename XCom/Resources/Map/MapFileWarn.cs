@@ -17,14 +17,14 @@ namespace XCom
 			Form
 	{
 		#region Fields & Properties
-		private static MapFileWarn _instance;
-		internal static MapFileWarn Instance
+		private static MapFileWarn _that;
+		internal static MapFileWarn that
 		{
 			get
 			{
-				if (_instance == null)
-					_instance = new MapFileWarn();
-				return _instance;
+				if (_that == null)
+					_that = new MapFileWarn();
+				return _that;
 			}
 		}
 		#endregion

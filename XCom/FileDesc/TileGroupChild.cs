@@ -24,7 +24,7 @@ namespace XCom
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("TileGroupChild cTor label= " + labelGroup);
 
-			var progress = ProgressBarForm.Instance;
+			var progress = ProgressBarForm.that;
 			progress.SetInfo("Sorting: " + labelGroup);
 			progress.SetTotal(tilesets.Count);
 			progress.ResetProgress();
@@ -52,10 +52,10 @@ namespace XCom
 						switch (GroupType)
 						{
 							case GameType.Ufo:
-								tileset.BasePath = SharedSpace.Instance.GetShare(SharedSpace.ResourceDirectoryUfo);
+								tileset.BasePath = SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryUfo);
 								break;
 							case GameType.Tftd:
-								tileset.BasePath = SharedSpace.Instance.GetShare(SharedSpace.ResourceDirectoryTftd);
+								tileset.BasePath = SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryTftd);
 								break;
 						}
 					}

@@ -116,7 +116,7 @@ namespace MapView
 						tbInput.Select();
 					}
 					else if (Label.StartsWith("ufo", StringComparison.OrdinalIgnoreCase)
-						&& String.IsNullOrEmpty(SharedSpace.Instance.GetShare(SharedSpace.ResourceDirectoryUfo)))
+						&& String.IsNullOrEmpty(SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryUfo)))
 					{
 						ShowErrorDialog("UFO has not been configured. If you have UFO resources"
 							+ " and want to set the configuration for UFO, run the Configurator"
@@ -124,7 +124,7 @@ namespace MapView
 						tbInput.Select();
 					}
 					else if (Label.StartsWith("tftd", StringComparison.OrdinalIgnoreCase)
-						&& String.IsNullOrEmpty(SharedSpace.Instance.GetShare(SharedSpace.ResourceDirectoryTftd)))
+						&& String.IsNullOrEmpty(SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryTftd)))
 					{
 						ShowErrorDialog("TFTD has not been configured. If you have TFTD resources"
 							+ " and want to set the configuration for TFTD, run the Configurator"

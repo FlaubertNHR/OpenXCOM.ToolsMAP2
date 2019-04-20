@@ -299,7 +299,7 @@ namespace MapView
 				string result, title;
 				MessageBoxIcon icon;
 
-				var shared = SharedSpace.Instance;
+				var shared = SharedSpace.that;
 
 				if (_base.Descriptor.Pal == Palette.TftdBattle)
 				{

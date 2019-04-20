@@ -59,7 +59,7 @@ namespace PckView
 		private MenuItem _miDelete;
 		private MenuItem _miExport;
 
-//		private SharedSpace _share = SharedSpace.Instance;
+//		private SharedSpace _share = SharedSpace.that;
 
 		private Dictionary<Palette, MenuItem> _paletteItems = new Dictionary<Palette, MenuItem>();
 
@@ -73,7 +73,7 @@ namespace PckView
 
 
 		#region Properties (static)
-		internal static PckViewForm Instance
+		internal static PckViewForm that
 		{ get; private set; }
 
 		internal static Palette Pal
@@ -126,7 +126,7 @@ namespace PckView
 
 			LoadWindowMetrics();
 
-			Instance = this;
+			that = this;
 
 
 /*			#region SharedSpace information
@@ -513,7 +513,7 @@ namespace PckView
 		{
 			if (TilePanel.Spriteset != null && TilePanel.SelectedId != -1)
 			{
-				EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
+				EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
 				if (!Editor.Visible)
 				{
@@ -675,7 +675,7 @@ namespace PckView
 					if (InsertSprites(TilePanel.SelectedId, ofd.FileNames))
 					{
 						TilePanel.SelectedId += ofd.FileNames.Length;
-						EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
+						EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
 						InsertSpritesFinish();
 					}
@@ -815,7 +815,7 @@ namespace PckView
 															XCImage.SpriteHeight,
 															IsScanG);
 						TilePanel.Spriteset[TilePanel.SelectedId] =
-						EditorPanel.Instance.Sprite = sprite;
+						EditorPanel.that.Sprite = sprite;
 
 						TilePanel.Refresh();
 					}
@@ -860,7 +860,7 @@ namespace PckView
 			TilePanel.SelectedId += dir;
 			TilePanel.Spriteset[TilePanel.SelectedId].Id = TilePanel.SelectedId;
 
-			EditorPanel.Instance.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
+			EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.SelectedId];
 
 			PrintSelectedId();
 
@@ -881,7 +881,7 @@ namespace PckView
 			for (int i = TilePanel.SelectedId; i != TilePanel.Spriteset.Count; ++i)
 				TilePanel.Spriteset[i].Id = i;
 
-			EditorPanel.Instance.Sprite = null;
+			EditorPanel.that.Sprite = null;
 			TilePanel.SelectedId = -1;
 
 			InsertSpritesFinish();
@@ -1421,8 +1421,8 @@ namespace PckView
 
 			TilePanel.Spriteset.Pal = Pal;
 
-			PalettePanel.Instance.PrintStatusPaletteId();	// update the palette-panel's statusbar
-															// in case palette-id #0 is currently selected.
+			PalettePanel.that.PrintStatusPaletteId();	// update the palette-panel's statusbar
+														// in case palette-id #0 is currently selected.
 			if (PaletteChangedEvent != null)
 				PaletteChangedEvent();
 		}

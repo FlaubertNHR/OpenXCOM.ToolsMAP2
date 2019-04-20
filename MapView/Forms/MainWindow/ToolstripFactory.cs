@@ -10,7 +10,7 @@ namespace MapView.Forms.MainWindow
 	internal sealed class ToolstripFactory
 	{
 		#region Properties (static)
-		internal static ToolstripFactory Instance
+		internal static ToolstripFactory that
 		{ get; set; }
 		#endregion
 
@@ -53,7 +53,7 @@ namespace MapView.Forms.MainWindow
 		/// <param name="panel"></param>
 		internal ToolstripFactory(MainViewUnderlay panel)
 		{
-			Instance = this;
+			that = this;
 			MainViewUnderlay = panel;
 		}
 		#endregion

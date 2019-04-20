@@ -62,11 +62,11 @@ namespace MapView.Forms.MainWindow
 			}
 			else if (it.Checked = !it.Checked)
 			{
-//				f.Owner = XCMainWindow.Instance;	// NOTE: If MainView is set as the owner of the
-													// viewers MainView can no longer be minimized
-													// while keeping the other viewers up. Etc.
-													// Policy #1008: let the viewers operate as independently as possible.
-													// See also: XCMainWindow.OnActivated()
+//				f.Owner = XCMainWindow.that;	// NOTE: If MainView is set as the owner of the
+												// viewers MainView can no longer be minimized
+												// while keeping the other viewers up. Etc.
+												// Policy #1008: let the viewers operate as independently as possible.
+												// See also: XCMainWindow.OnActivated()
 
 				f.Show();
 				f.WindowState = FormWindowState.Normal;

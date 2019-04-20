@@ -33,15 +33,15 @@ namespace XCom
 		/// <summary>
 		/// Gets the currently instantiated SharedSpace from anywhere.
 		/// </summary>
-		private static SharedSpace _instance;
-		public static SharedSpace Instance
+		private static SharedSpace _that;
+		public static SharedSpace that
 		{
 			get
 			{
-				if (_instance == null)
-					_instance = new SharedSpace();
+				if (_that == null)
+					_that = new SharedSpace();
 
-				return _instance;
+				return _that;
 			}
 		}
 		#endregion

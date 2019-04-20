@@ -94,7 +94,7 @@ namespace XCom
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("TileGroupManager.SaveTileGroups");
 
-			string dirSettings   = SharedSpace.Instance.GetShare(SharedSpace.SettingsDirectory);
+			string dirSettings   = SharedSpace.that.GetShare(SharedSpace.SettingsDirectory);
 			string pfeMapTree    = Path.Combine(dirSettings, PathInfo.ConfigTilesets);		// "MapTilesets.yml"
 			string pfeMapTreeOld = Path.Combine(dirSettings, PathInfo.ConfigTilesetsOld);	// "MapTilesets.old"
 
@@ -191,7 +191,7 @@ namespace XCom
 									break;
 							}
 							string basepath = descriptor.Basepath;
-							if (basepath != SharedSpace.Instance.GetShare(keyConfigPath)) // don't write basepath if it's the (default) Configurator's basepath
+							if (basepath != SharedSpace.that.GetShare(keyConfigPath)) // don't write basepath if it's the (default) Configurator's basepath
 								sw.WriteLine("    " + GlobalsXC.BASEPATH + ": " + basepath);
 						}
 					}

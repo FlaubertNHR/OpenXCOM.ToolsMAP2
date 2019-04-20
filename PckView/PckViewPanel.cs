@@ -54,8 +54,8 @@ namespace PckView
 
 
 		#region Properties (static)
-		internal static PckViewPanel Instance
-		{ get; set; }
+		internal static PckViewPanel that
+		{ get; private set; }
 		#endregion
 
 
@@ -87,7 +87,7 @@ namespace PckView
 
 				CalculateScrollRange(true);
 
-				EditorPanel.Instance.Sprite = null;
+				EditorPanel.that.Sprite = null;
 
 				_f.PrintSpritesetLabel();
 
@@ -139,7 +139,7 @@ namespace PckView
 
 			PckViewForm.PaletteChangedEvent += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
 
-			Instance = this;
+			that = this;
 		}
 		#endregion
 
@@ -235,7 +235,7 @@ namespace PckView
 //							Selected.Add(selected);
 					}
 
-					EditorPanel.Instance.Sprite = sprite;
+					EditorPanel.that.Sprite = sprite;
 
 					_f.PrintSelectedId();
 					Refresh();

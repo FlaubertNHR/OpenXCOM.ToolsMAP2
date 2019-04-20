@@ -34,8 +34,8 @@ namespace PckView
 
 
 		#region Properties (static)
-		internal static EditorPanel Instance
-		{ get; set; }
+		internal static EditorPanel that
+		{ get; private set; }
 		#endregion
 
 
@@ -105,7 +105,7 @@ namespace PckView
 		internal EditorPanel(EditorForm f)
 		{
 			_feditor = f;
-			Instance = this;
+			that = this;
 
 			// form level code to fix flicker
 //			protected override CreateParams CreateParams
@@ -180,10 +180,10 @@ namespace PckView
 						{
 							case EditorForm.EditMode.Enabled: // paint ->
 							{
-								int palid = PalettePanel.Instance.Palid;
+								int palid = PalettePanel.that.Palid;
 								if (palid > -1
-									&& (palid < PckImage.SpriteTransparencyByte					// NOTE: 0xFE and 0xFF are reserved for special stuff when
-										|| (/*palid < 256 &&*/ PckViewForm.Instance.IsScanG)))	// reading/writing a .PCK file but not a .DAT (ScanG) file.
+									&& (palid < PckImage.SpriteTransparencyByte				// NOTE: 0xFE and 0xFF are reserved for special stuff when
+										|| (/*palid < 256 &&*/ PckViewForm.that.IsScanG)))	// reading/writing a .PCK file but not a .DAT (ScanG) file.
 								{
 									Sprite.Bindata[bindataId] = (byte)palid;
 									Sprite.Sprite = BitmapService.CreateColorized(
@@ -192,7 +192,7 @@ namespace PckView
 																			Sprite.Bindata,
 																			PckViewForm.Pal.ColorTable);
 									Refresh();
-									PckViewPanel.Instance.Refresh();
+									PckViewPanel.that.Refresh();
 								}
 								else
 								{
@@ -220,7 +220,7 @@ namespace PckView
 							}
 
 							case EditorForm.EditMode.Locked: // eye-dropper ->
-								PalettePanel.Instance.SelectPaletteId((int)Sprite.Bindata[bindataId]);
+								PalettePanel.that.SelectPaletteId((int)Sprite.Bindata[bindataId]);
 								break;
 						}
 					}
@@ -376,7 +376,7 @@ namespace PckView
 
 				case 254: // transparency marker
 				case 255: // end of file marker
-					if (!PckViewForm.Instance.IsScanG)
+					if (!PckViewForm.that.IsScanG)
 					{
 						text += " [invalid]";
 					}

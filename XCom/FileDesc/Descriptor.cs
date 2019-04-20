@@ -72,7 +72,7 @@ namespace XCom
 
 			_dirTerr = (Pal == Palette.UfoBattle) ? SharedSpace.ResourceDirectoryUfo
 												  : SharedSpace.ResourceDirectoryTftd;
-			_dirTerr = SharedSpace.Instance.GetShare(_dirTerr);
+			_dirTerr = SharedSpace.that.GetShare(_dirTerr);
 			_dirTerr = (_dirTerr != null) ? _dirTerr = Path.Combine(_dirTerr, GlobalsXC.TerrainDir)
 										  : _dirTerr = String.Empty; // -> the Share can return null if resource-type is notconfigured.
 		}

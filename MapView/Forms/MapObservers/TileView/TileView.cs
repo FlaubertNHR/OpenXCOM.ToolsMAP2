@@ -523,7 +523,7 @@ namespace MapView.Forms.MapObservers.TileViews
 					Process.Start(new ProcessStartInfo(pfeService));
 
 					// change back to app dir
-					Directory.SetCurrentDirectory(SharedSpace.Instance.GetShare(SharedSpace.ApplicationDirectory));
+					Directory.SetCurrentDirectory(SharedSpace.that.GetShare(SharedSpace.ApplicationDirectory));
 				}
 			}
 		}

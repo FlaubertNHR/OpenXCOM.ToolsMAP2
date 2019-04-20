@@ -97,7 +97,7 @@ namespace XCom
 				BufferChanged(_zerg);
 		} */
 
-//		public static xConsole Instance
+//		public static xConsole that
 //		{
 //			get
 //			{
