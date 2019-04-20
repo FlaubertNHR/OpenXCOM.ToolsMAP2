@@ -61,7 +61,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// A node that is currently selected. Set its value via RouteView only.
 		/// </summary>
 		internal static RouteNode NodeSelected
-		{ private get; set; }
+		{ get; set; }
 		#endregion
 
 

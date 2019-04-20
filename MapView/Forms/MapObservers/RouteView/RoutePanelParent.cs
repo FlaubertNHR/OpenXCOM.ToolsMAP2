@@ -454,14 +454,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 								RouteNode node = ((XCMapTile)MapChild[MapChild.Location.Row,
 																	  MapChild.Location.Col,
 																	  MapChild.Level]).Node;
-								if (node != null)
+								if (node != null && node == RoutePanel.NodeSelected)
 								{
 									RouteView.Dragnode = node;
 
 									MapChild.Location = new MapLocation(r,c, MapChild.Level); // fire SelectLocationEvent
-
-									loc.X = c; loc.Y = r;
-									MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);
 
 									if (RoutePanelMouseUpEvent != null)
 									{
@@ -490,7 +487,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 								RouteNode node = ((XCMapTile)MapChild[MapChild.Location.Row,
 																	  MapChild.Location.Col,
 																	  MapChild.Level]).Node;
-								if (node != null)
+								if (node != null && node == RoutePanel.NodeSelected)
 								{
 									RouteView.Dragnode = node;
 

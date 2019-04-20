@@ -104,8 +104,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			private get { return _nodeSelected; }
 			set
 			{
-				_nodeSelected           =
-				RoutePanel.NodeSelected = value;
+				_nodeSelected = RoutePanel.NodeSelected = value;
 			}
 		}
 
@@ -349,7 +348,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
 			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-		}						
+		}
 
 		/// <summary>
 		/// Hides the info-overlay when the mouse leaves this control.
@@ -362,7 +361,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			ViewerFormsManager.RouteView   .Control     .RoutePanel.Refresh();
 			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
-		}							
+		}
 
 		private void OnRoutePanelMouseUp(object sender, RoutePanelEventArgs args)
 		{
