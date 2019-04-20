@@ -72,7 +72,6 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
-				e.SuppressKeyPress = true;
 				switch (tabControl.SelectedIndex)
 				{
 					case 0: // Top
@@ -86,7 +85,19 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 						break;
 
 					case 1: // Route
-						ControlRoute.RoutePanel.Focus();
+						e.SuppressKeyPress = true;
+						if (ControlRoute.RoutePanel.Focused)
+						{
+							RouteView.NodeSelected = null;
+
+							ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+							ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+
+							ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
+							ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+						}
+						else
+							ControlRoute.RoutePanel.Focus();
 						break;
 				}
 			}

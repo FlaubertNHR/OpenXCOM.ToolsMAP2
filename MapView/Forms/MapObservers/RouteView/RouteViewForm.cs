@@ -53,7 +53,18 @@ namespace MapView.Forms.MapObservers.RouteViews
 			if (e.KeyCode == Keys.Escape)
 			{
 				e.SuppressKeyPress = true;
-				Control.RoutePanel.Focus();
+				if (Control.RoutePanel.Focused)
+				{
+					RouteView.NodeSelected = null;
+
+					ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+					ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+
+					ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
+					ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+				}
+				else
+					Control.RoutePanel.Focus();
 			}
 			else if (e.KeyCode == Keys.O
 				&& (e.Modifiers & Keys.Control) == Keys.Control)

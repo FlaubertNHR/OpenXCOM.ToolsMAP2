@@ -333,7 +333,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 														MapChild[0,0],
 														MapChild.Location);
 						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
-						Invalidate();
+
+						ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+						ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 					}
 					SelectedLocation = loc;
 				}
@@ -347,7 +349,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 																 MapChild.Location.Col],
 														MapChild.Location);
 						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
-						Invalidate();
+
+						ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+						ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 					}
 					SelectedLocation = new Point(
 											MapChild.Location.Col,
@@ -394,7 +398,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 																MapChild[r,c],
 																MapChild.Location);
 								RoutePanelMouseDownEvent(this, args);			// fire RouteView.OnRoutePanelMouseDown()
-								Invalidate();
+
+								ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+								ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 							}
 							SelectedLocation = loc;
 						}
@@ -464,7 +470,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 																		MapChild[r,c],
 																		MapChild.Location);
 										RoutePanelMouseUpEvent(this, args);		// fire RouteView.OnRoutePanelMouseUp()
-										Invalidate();
+
+										ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+										ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 									}
 								}
 							}
@@ -501,7 +509,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 																		MapChild[MapChild.Location.Row, MapChild.Location.Col],
 																		MapChild.Location);
 										RoutePanelMouseUpEvent(this, args);		// fire RouteView.OnRoutePanelMouseUp()
-										Invalidate();
+
+										ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+										ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 									}
 								}
 							}

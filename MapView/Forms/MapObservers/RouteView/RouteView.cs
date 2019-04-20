@@ -99,9 +99,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Properties (static)
 		private static RouteNode _nodeSelected;
-		private static RouteNode NodeSelected
+		internal static RouteNode NodeSelected
 		{
-			get { return _nodeSelected; }
+			private get { return _nodeSelected; }
 			set
 			{
 				_nodeSelected           =
@@ -653,7 +653,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Updates node-info fields below the panel itself.
 		/// </summary>
-		private void UpdateNodeInformation()
+		internal void UpdateNodeInformation()
 		{
 			SuspendLayout();
 
