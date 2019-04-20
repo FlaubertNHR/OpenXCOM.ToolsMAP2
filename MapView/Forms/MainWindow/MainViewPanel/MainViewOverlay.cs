@@ -610,6 +610,7 @@ namespace MapView
 				else if (!keyData.HasFlag(Keys.Shift))
 				{
 					var loc = new Point(0,0);
+					int vert = 0;
 					switch (keyData)
 					{
 						case Keys.Up:    loc.X = -1; loc.Y = -1; break;
@@ -623,25 +624,16 @@ namespace MapView
 						case Keys.Home:     loc.X = -1; break;
 
 //						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
-						case Keys.Add:
-							OnMouseWheel(new MouseEventArgs(
-														MouseButtons.None,
-														0, 0,0, 1));
-							break;
-
+						case Keys.Add:      vert = +1; break;
 //						case Keys.Insert:
-						case Keys.Subtract:
-							OnMouseWheel(new MouseEventArgs(
-														MouseButtons.None,
-														0, 0,0, -1));
-							break;
+						case Keys.Subtract: vert = -1; break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
 						int r = MapBase.Location.Row + loc.Y;
 						int c = MapBase.Location.Col + loc.X;
-						if (   r > -1 && r < MapBase.MapSize.Rows
+						if (   r > -1 && r < MapBase.MapSize.Rows // safety.
 							&& c > -1 && c < MapBase.MapSize.Cols)
 						{
 							_keyDeltaX =
@@ -651,6 +643,16 @@ namespace MapView
 
 							loc.X = c; loc.Y = r;
 							ProcessSelection(loc, loc);
+						}
+					}
+					else if (vert != 0)
+					{
+						int level = MapBase.Location.Lev + vert;
+						if (level > -1 && level < MapBase.MapSize.Levs) // safety.
+						{
+							OnMouseWheel(new MouseEventArgs(
+														MouseButtons.None,
+														0, 0,0, vert));
 						}
 					}
 				}
@@ -670,7 +672,7 @@ namespace MapView
 						case Keys.Shift | Keys.Home:     loc.X = -1; break;
 					}
 
-					if (loc.X != 0 || loc.Y != 0) // safety.
+					if (loc.X != 0 || loc.Y != 0)
 					{
 						int r = MapBase.Location.Row + loc.Y;
 						int c = MapBase.Location.Col + loc.X;
@@ -693,8 +695,8 @@ namespace MapView
 				}
 			}
 
-			if (_step)
-			{
+			if (_step)	// force redraw on every step when MainView has focus
+			{			// else the selector-sprite stops then jumps to the end on key up.
 				_step = false;
 				Refresh();
 			}
@@ -706,7 +708,7 @@ namespace MapView
 		#endregion Keyboard navigation
 
 
-		#region Mouse & Drag-points
+		#region Mouse & drag-points
 		/// <summary>
 		/// Scrolls the z-axis for MainView (and TopView by keyboard).
 		/// </summary>

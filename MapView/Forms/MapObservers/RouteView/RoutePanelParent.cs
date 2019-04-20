@@ -321,7 +321,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (!MainViewUnderlay.Instance.MainViewOverlay.FirstClick)
 				{
-					MapChild.Location = new MapLocation(0, 0, MapChild.Level);	// fire SelectLocationEvent
+					MapChild.Location = new MapLocation(0,0, MapChild.Level);	// fire SelectLocationEvent
 
 					var loc = new Point(0,0);
 					MainViewUnderlay.Instance.MainViewOverlay.ProcessSelection(loc,loc);
