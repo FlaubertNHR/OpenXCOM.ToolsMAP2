@@ -1,0 +1,120 @@
+These are keyboard shortcuts for the Map Editor.
+
+GENERAL
+-------
+Tab - cycles controls
+Shift+Tab - cycles controls backwards
+
+F5 - show/hide TileView
+F6 - show/hide TopView
+F7 - show/hide RouteView
+F8 - show/hide TopRouteView
+
+note: If a viewer is minimized it will be restored instead of closed.
+
+Control with the F-keys focuses the respective viewer.
+Shift with any of the above F-keys focuses MainView.
+
+F11 - minimize all
+F12 - restore all
+
+Escape tries to focus the panel in a viewer.
+
+Control+o - open Options for the viewer
+
+
+MAINVIEW
+--------
+Control+a - save Map,Routes,and the tree
+Control+m - save the Map
+Control+r - save the Routes
+Control+e - save Map+Routes as
+Control+t - save the tree
+
+Control+i - screenshot
+Control+z - resize the map
+Control+f - show map info
+
+Control+g - show the ScanG viewer
+
+Control+n - reload terrains
+
+Control+q - quit
+
+numeric keypad - navigate the map
+Shift + numeric keypad - multi-tile selection
+Subtract - level up
+Add - level down
+
+Escape cancels a multi-tile selection.
+
+Control+x - cut tile(s)
+Control+c - copy tile(s)
+Control+v - paste tile(s)
+Delete - delete tile(s)
+
+f - fill selected tile(s)' selected quadrant with selected part'
+
+Control+s - save the Map if the panel has focus
+
+Enter - opens the Maptree's contextmenu if the tree has focus.
+
+
+TILEVIEW
+--------
+Arrow keys navigate the table.
+
+i - show MCD info (also, double-click a part)
+F9 - open selected part in PckView
+F10 - open selected part in McdView
+
+
+TOPVIEW
+-------
+numeric keypad - navigate the map
+Shift + numeric keypad - multi-tile selection
+Subtract - level up
+Add - level down
+
+Escape cancels a multi-tile selection.
+
+Control+x - cut tile(s)
+Control+c - copy tile(s)
+Control+v - paste tile(s)
+Delete - delete tile(s)
+
+f - fill selected tile(s)' selected quadrant with selected part
+
+1 - select Floor quadrant
+2 - select Westwall quadrant
+3 - select Northwall quadrant
+4 - select Content quadrant
+
+t - select part of selected quadrant in TileView (also, double-click quadrant)
+Shift + Delete - delete part (only) of selected quadrant of selected tile (only) (also, double-right-click quadrant)
+Enter - place selected part in selected quadrant of selected tile (right-click quadrant)
+
+F1 - toggle floor visibility
+F2 - toggle westwall visibility
+F3 - toggle northwall visibility
+F4 - toggle content visibility
+
+Control+s - save the Map if the panel has focus
+
+
+ROUTEVIEW
+---------
+numeric keypad - navigate the map
+Subtract - level up
+Add - level down
+Shift + numeric keypad (incl/ Subtract and Add) - drag selected node to a blank tile only
+
+Control+x - cut selected node
+Control+c - copy selected node
+Control+v - paste cut/copied node
+Delete - delete selected node
+
+Escape - deselect selected node
+Enter - select node on selected tile if one exists else create node there
+
+Control+s - save the Routes if the panel has focus
