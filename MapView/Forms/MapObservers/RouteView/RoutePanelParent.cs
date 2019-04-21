@@ -254,7 +254,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 													loc.Y, loc.X,
 													MapChild.Level);
 
-					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);	// set selected location for other viewers.
+					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);	// set selected location for other viewers.
 																						// NOTE: drag-selection is not allowed here.
 					if (RoutePanelMouseDownEvent != null)
 					{
@@ -389,7 +389,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							MapChild.Location = new MapLocation(r,c, MapChild.Level); // fire SelectLocationEvent
 
 							loc.X = c; loc.Y = r;
-							MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);
+							MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
 
 							if (RoutePanelMouseDownEvent != null)
 							{

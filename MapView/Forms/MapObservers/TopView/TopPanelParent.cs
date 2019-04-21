@@ -386,7 +386,7 @@ namespace MapView.Forms.MapObservers.TopViews
 													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;
-					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);
+					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
 				}
 			}
 

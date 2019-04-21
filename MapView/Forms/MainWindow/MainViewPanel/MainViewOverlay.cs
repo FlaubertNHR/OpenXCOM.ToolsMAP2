@@ -37,7 +37,8 @@ namespace MapView
 
 
 		#region Fields
-		internal bool _suppressTargeter;
+		private bool _targeterSuppressed;
+		private bool _targeterForced;
 
 		private int _col; // these are used to print the clicked location
 		private int _row;
@@ -55,7 +56,7 @@ namespace MapView
 		internal MapFileBase MapBase
 		{ get; set; }
 
-		private Point _origin = new Point(0, 0);
+		private Point _origin = new Point(0,0);
 		internal Point Origin
 		{
 			get { return _origin; }
@@ -307,8 +308,28 @@ namespace MapView
 			TabIndex = 4;
 
 			_brushLayer = new SolidBrush(Color.FromArgb(GridLayerOpacity, GridLayerColor));
+
+			var t1 = new Timer();
+			t1.Interval = 250;
+			t1.Enabled = true;
+			t1.Tick += t1_Tick;
 		}
 		#endregion cTor
+
+		/// <summary>
+		/// Hides the cuboid-targeter when the mouse leaves this control unless
+		/// the targeter was enabled by a keyboard tiles-selection.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void t1_Tick(object sender, EventArgs e)
+		{
+			if (!_targeterSuppressed && !_targeterForced
+				&& !Bounds.Contains(PointToClient(Cursor.Position)))
+			{
+				Invalidate();
+			}
+		}
 
 
 		#region Events and Methods for the edit-functions
@@ -606,7 +627,7 @@ namespace MapView
 					MapBase.Location = new MapLocation(0,0, MapBase.Level);		// fire SelectLocationEvent
 
 					var loc = new Point(0,0);
-					ProcessSelection(loc, loc);
+					ProcessSelection(loc,loc);
 				}
 				else if (!keyData.HasFlag(Keys.Shift))
 				{
@@ -642,8 +663,9 @@ namespace MapView
 
 							MapBase.Location = new MapLocation(r,c, MapBase.Level); // fire SelectLocationEvent
 
-							loc.X = c; loc.Y = r;
-							ProcessSelection(loc, loc);
+							loc.X = _colOver = c;
+							loc.Y = _rowOver = r;
+							ProcessSelection(loc,loc);
 						}
 					}
 					else if (vert != 0)
@@ -653,7 +675,7 @@ namespace MapView
 						{
 							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
-														0, 0,0, vert));
+														3, 0,0, vert));
 						}
 					}
 				}
@@ -680,6 +702,8 @@ namespace MapView
 						if (   r > -1 && r < MapBase.MapSize.Rows
 							&& c > -1 && c < MapBase.MapSize.Cols)
 						{
+							_targeterForced = true;
+
 							int pos = DragBeg.X + _keyDeltaX + loc.X;
 							if (pos > -1 && pos < MapBase.MapSize.Cols)
 								_keyDeltaX += loc.X;
@@ -713,8 +737,23 @@ namespace MapView
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);
+
 			if      (e.Delta < 0) MapBase.LevelUp();
 			else if (e.Delta > 0) MapBase.LevelDown();
+
+			if (e.Clicks == 3) // ie. is keyboard navigation
+			{
+				_targeterForced = true;
+				_colOver = DragEnd.X;// MapBase.Location.Col;
+				_rowOver = DragEnd.Y;// MapBase.Location.Row;
+			}
+			else
+			{
+				_targeterForced = false;
+				var loc = GetTileLocation(e.X, e.Y);
+				_colOver = loc.X;
+				_rowOver = loc.Y;
+			}
 
 			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(MapBase.Level != MapBase.MapSize.Levs - 1);
 			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  MapBase.Level != 0);
@@ -744,7 +783,7 @@ namespace MapView
 													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;
-					ProcessSelection(loc, loc);
+					ProcessSelection(loc,loc);
 				}
 			}
 		}
@@ -768,7 +807,7 @@ namespace MapView
 			{
 				var loc = GetTileLocation(e.X, e.Y);
 
-				_suppressTargeter = false;
+				_targeterForced = false;
 				_colOver = loc.X;
 				_rowOver = loc.Y;
 
@@ -785,15 +824,6 @@ namespace MapView
 			}
 		}
 
-//		/// <summary>
-//		/// Hides the cuboid-targeter when the mouse leaves this control.
-//		/// </summary>
-//		/// <param name="e"></param>
-//		protected override void OnMouseLeave(EventArgs e)
-//		{
-//			_suppressTargeter = true;
-//			Refresh();
-//		}
 
 		/// <summary>
 		/// Sets drag-start and drag-end and fires a MouseDragEvent (path
@@ -897,16 +927,13 @@ namespace MapView
 		/// <param name="args"></param>
 		internal void OnSelectLocationMain(SelectLocationEventArgs args)
 		{
-			//LogFile.WriteLine("");
 			//LogFile.WriteLine("MainViewOverlay.OnSelectLocationMain");
 
 			FirstClick = true;
-			_suppressTargeter = false;
 
 			_col = args.Location.Col;
 			_row = args.Location.Row;
 			_lev = args.Location.Lev;
-			//LogFile.WriteLine(". " + _col + "," + _row + "," + _lev);
 
 			XCMainWindow.that.sb_PrintPosition(_col, _row, _lev);
 		}
@@ -917,16 +944,12 @@ namespace MapView
 		/// <param name="args"></param>
 		internal void OnSelectLevelMain(SelectLevelEventArgs args)
 		{
-			//LogFile.WriteLine("");
 			//LogFile.WriteLine("MainViewOverlay.OnSelectLevelMain");
 
-			_suppressTargeter = true;
-
 			_lev = args.Level;
-			//LogFile.WriteLine(". " + _col + "," + _row + "," + _lev);
 
 			XCMainWindow.that.sb_PrintPosition(_col, _row, _lev);
-			Refresh();
+			Invalidate();
 		}
 		#endregion Events
 
@@ -953,6 +976,10 @@ namespace MapView
 
 			if (MapBase != null)
 			{
+				_targeterSuppressed = !_targeterForced
+								   && (!Focused || !ClientRectangle.Contains(PointToClient(Cursor.Position)));
+
+
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 #if !LOCKBITS
@@ -1022,13 +1049,9 @@ namespace MapView
 
 			MapTileBase tile;
 
-			bool isTargeted = Focused
-						   && !_suppressTargeter
-						   && ClientRectangle.Contains(PointToClient(Cursor.Position));
-
 			for (int
 				lev = MapBase.MapSize.Levs - 1;
-				lev >= MapBase.Level;// && lev != -1;
+				lev >= MapBase.Level;
 				--lev)
 			{
 				if (_showGrid && lev == MapBase.Level)
@@ -1052,17 +1075,10 @@ namespace MapView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-//						bool isClicked = FirstClick
-//									  && (   (col == DragBeg.X && row == DragBeg.Y)
-//										  || (col == DragEnd.X && row == DragEnd.Y));
 						bool beg = FirstClick
 								&& col == DragBeg.X
 								&& row == DragBeg.Y;
-//						bool end = FirstClick
-//								&& col == DragEnd.X
-//								&& row == DragEnd.Y;
 
-//						if (isClicked)
 						if (beg)
 						{
 							Cuboid.DrawCuboid(
@@ -1086,7 +1102,6 @@ namespace MapView
 										&& rect.Contains(col, row));
 						}
 
-//						if (isClicked)
 						if (beg)
 						{
 							Cuboid.DrawCuboid(
@@ -1097,7 +1112,7 @@ namespace MapView
 											true,
 											lev == MapBase.Level);
 						}
-						else if (isTargeted
+						else if (!_targeterSuppressed
 							&& col == _colOver
 							&& row == _rowOver
 							&& lev == MapBase.Level)
@@ -1112,9 +1127,7 @@ namespace MapView
 				}
 			}
 
-//			if (    rect.Width > 2 || rect.Height > 2 // This is different between REMBRANDT and PICASSO ->
-//				|| (rect.Width > 1 && rect.Height > 1))
-			if (rect.Width > 1 || rect.Height > 1)
+			if (rect.Width > 1 || rect.Height > 1) // This is different between REMBRANDT and PICASSO ->
 			{
 				DrawSelectionBorder(rect);
 			}
@@ -1130,13 +1143,9 @@ namespace MapView
 		{
 			MapTileBase tile;
 
-			bool isTargeted = Focused
-						   && !_suppressTargeter
-						   && ClientRectangle.Contains(PointToClient(Cursor.Position));
-
 			for (int
 				lev = MapBase.MapSize.Levs - 1;
-				lev >= MapBase.Level;// && lev != -1;
+				lev >= MapBase.Level;
 				--lev)
 			{
 				if (_showGrid && lev == MapBase.Level)
@@ -1192,7 +1201,7 @@ namespace MapView
 											true,
 											lev == MapBase.Level);
 						}
-						else if (isTargeted
+						else if (!_targeterSuppressed
 							&& col == _colOver
 							&& row == _rowOver
 							&& lev == MapBase.Level)
@@ -1215,8 +1224,6 @@ namespace MapView
 				int width  = b.X - a.X + 1;
 				int height = b.Y - a.Y + 1;
 
-//				if (    width > 2 || height > 2
-//					|| (width > 1 && height > 1))
 				if (width > 1 || height > 1)
 				{
 					var rect = new Rectangle(
@@ -1243,9 +1250,9 @@ namespace MapView
 
 			MapTileBase tile;
 
-			bool isTargeted = Focused
-						   && !_suppressTargeter
-						   && ClientRectangle.Contains(PointToClient(Cursor.Position));
+//			bool isTargeted = Focused
+//						   && !_suppressTargeter
+//						   && ClientRectangle.Contains(PointToClient(Cursor.Position));
 
 			for (int
 				lev = MapBase.MapSize.Levs - 1;

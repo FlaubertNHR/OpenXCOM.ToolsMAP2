@@ -1055,6 +1055,7 @@ namespace MapView
 				base.OnActivated(e);
 		}
 
+
 		/// <summary>
 		/// Stops keys that shall be used for navigating the tiles from doing
 		/// anything stupid. Does other stupid stuff instead.
@@ -1066,29 +1067,38 @@ namespace MapView
 		{
 			//LogFile.WriteLine("ProcessCmdKey() " + keyData);
 
-			bool search = false;
+			bool invalidate  = true;
+			bool focussearch = false;
 			switch (keyData)
 			{
 				case Keys.Tab:
-					if (MainViewUnderlay.MainViewOverlay.Focused)
-						goto case Keys.Shift | Keys.F3;
-					break;
-
-				case Keys.Shift | Keys.F3:
-					MainViewUnderlay.MainViewOverlay._suppressTargeter = true;
-					MainViewUnderlay.MainViewOverlay.Invalidate();
-					search = true;
+					focussearch = MainViewUnderlay.MainViewOverlay.Focused;
 					break;
 
 				case Keys.Shift | Keys.Tab:
-					search = tvMaps.Focused;
+					focussearch = tvMaps.Focused;
+					break;
+
+				case Keys.Shift | Keys.F3:
+					focussearch = true;
+					break;
+
+				default:
+					invalidate = false;
 					break;
 			}
-			if (search)
+
+			if (invalidate)
 			{
-				ViewerFormsManager.ToolFactory.FocusSearch();
-				return true;
+				MainViewUnderlay.MainViewOverlay.Invalidate();
+
+				if (focussearch)
+				{
+					ViewerFormsManager.ToolFactory.FocusSearch();
+					return true;
+				}
 			}
+
 
 			if (MainViewUnderlay.MainViewOverlay.Focused)
 			{
@@ -1116,6 +1126,7 @@ namespace MapView
 
 					case Keys.Escape:	// panel must *not* have focus (Escape also cancels multi-tile selection)
 						MainViewUnderlay.MainViewOverlay.Focus();
+						MainViewUnderlay.MainViewOverlay.Invalidate();
 						return true;
 				}
 			}

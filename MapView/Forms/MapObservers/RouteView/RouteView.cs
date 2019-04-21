@@ -383,7 +383,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					var loc = new Point(Dragnode.Col, Dragnode.Row);
 					RoutePanelParent.SelectedLocation = loc;
-					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);
+					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
 
 					ViewerFormsManager.RouteView   .Control     .UpdateLinkDistances();
 					ViewerFormsManager.TopRouteView.ControlRoute.UpdateLinkDistances();
@@ -1306,7 +1306,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 											loc.Y, loc.X,
 											MapChild.Level);
 
-			MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc, loc);
+			MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.Left,
