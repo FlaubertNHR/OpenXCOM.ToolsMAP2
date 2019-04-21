@@ -1105,8 +1105,7 @@ namespace MapView
 					case Keys.Home:
 					case Keys.End:
 						e.SuppressKeyPress = true;
-						MainViewUnderlay.MainViewOverlay._step = true;
-						MainViewUnderlay.MainViewOverlay.Navigate(e.KeyData);
+						MainViewUnderlay.MainViewOverlay.Navigate(e.KeyData, true);
 						break;
 				}
 			}
@@ -1134,8 +1133,7 @@ namespace MapView
 					case Keys.Shift | Keys.Right:
 					case Keys.Shift | Keys.Up:
 					case Keys.Shift | Keys.Down:
-						MainViewUnderlay.MainViewOverlay._step = true;
-						MainViewUnderlay.MainViewOverlay.Navigate(keyData);
+						MainViewUnderlay.MainViewOverlay.Navigate(keyData, true);
 						return true;
 				}
 			}

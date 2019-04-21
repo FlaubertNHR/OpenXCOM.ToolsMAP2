@@ -593,7 +593,8 @@ namespace MapView
 		/// OnKeyDown() and ProcessCmdKey().
 		/// </summary>
 		/// <param name="keyData"></param>
-		internal void Navigate(Keys keyData)
+		/// <param name="step">true to refresh every tick</param>
+		internal void Navigate(Keys keyData, bool step = false)
 		{
 			if (MapBase != null)
 			{
@@ -695,14 +696,10 @@ namespace MapView
 				}
 			}
 
-			if (_step)	// force redraw on every step when MainView has focus
-			{			// else the selector-sprite stops then jumps to the end on key up.
-				_step = false;
-				Refresh();
-			}
+			if (step)		// force redraw on every step when MainView is active
+				Refresh();	// else the selector-sprite stops then jumps to the end on key up.
 		}
 
-		internal bool _step;
 		internal int _keyDeltaX;
 		internal int _keyDeltaY;
 		#endregion Keyboard navigation
