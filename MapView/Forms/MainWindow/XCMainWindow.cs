@@ -438,6 +438,7 @@ namespace MapView
 
 			DontBeepEvent += FireContext;
 
+
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 			Show();
 		}
@@ -1055,6 +1056,73 @@ namespace MapView
 		}
 
 		/// <summary>
+		/// Stops keys that shall be used for navigating the tiles from doing
+		/// anything stupid. Does other stupid stuff instead.
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <param name="keyData"></param>
+		/// <returns></returns>
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			//LogFile.WriteLine("ProcessCmdKey() " + keyData);
+
+			bool search = false;
+			switch (keyData)
+			{
+				case Keys.Tab:
+					if (MainViewUnderlay.MainViewOverlay.Focused)
+						goto case Keys.Shift | Keys.F3;
+					break;
+
+				case Keys.Shift | Keys.F3:
+					MainViewUnderlay.MainViewOverlay._suppressTargeter = true;
+					MainViewUnderlay.MainViewOverlay.Invalidate();
+					search = true;
+					break;
+
+				case Keys.Shift | Keys.Tab:
+					search = tvMaps.Focused;
+					break;
+			}
+			if (search)
+			{
+				ViewerFormsManager.ToolFactory.FocusSearch();
+				return true;
+			}
+
+			if (MainViewUnderlay.MainViewOverlay.Focused)
+			{
+				switch (keyData)
+				{
+					case Keys.Left:
+					case Keys.Right:
+					case Keys.Up:
+					case Keys.Down:
+					case Keys.Shift | Keys.Left:
+					case Keys.Shift | Keys.Right:
+					case Keys.Shift | Keys.Up:
+					case Keys.Shift | Keys.Down:
+						MainViewUnderlay.MainViewOverlay.Navigate(keyData, true);
+						return true;
+				}
+			}
+			else
+			{
+				switch (keyData)
+				{
+					case Keys.F3:		// panel must *not* have focus (F3 also toggles doors)
+						Search(ViewerFormsManager.ToolFactory.GetSearchText());
+						return true;
+
+					case Keys.Escape:	// panel must *not* have focus (Escape also cancels multi-tile selection)
+						MainViewUnderlay.MainViewOverlay.Focus();
+						return true;
+				}
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
+		/// <summary>
 		/// Handles key-down event at the Form level.
 		/// Requires 'KeyPreview' true.
 		/// @note This differs from the Viewers-menu item-click/key in that
@@ -1112,45 +1180,6 @@ namespace MapView
 				}
 			}
 			base.OnKeyDown(e);
-		}
-
-		/// <summary>
-		/// Stops keys that shall be used for navigating the tiles from doing
-		/// anything stupid instead.
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="keyData"></param>
-		/// <returns></returns>
-		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-		{
-			//LogFile.WriteLine("ProcessCmdKey() " + keyData);
-
-			if (keyData == (Keys.Shift | Keys.F3))
-			{
-				ViewerFormsManager.ToolFactory.FocusSearch();
-			}
-			else if (MainViewUnderlay.MainViewOverlay.Focused)
-			{
-				switch (keyData)
-				{
-					case Keys.Left:
-					case Keys.Right:
-					case Keys.Up:
-					case Keys.Down:
-					case Keys.Shift | Keys.Left:
-					case Keys.Shift | Keys.Right:
-					case Keys.Shift | Keys.Up:
-					case Keys.Shift | Keys.Down:
-						MainViewUnderlay.MainViewOverlay.Navigate(keyData, true);
-						return true;
-				}
-			}
-			else if (keyData == Keys.F3) // panel must *not* have focus (F3 also toggles doors)
-			{
-				Search(ViewerFormsManager.ToolFactory.GetSearchText());
-				return true;
-			}
-			return base.ProcessCmdKey(ref msg, keyData);
 		}
 		#endregion Events (override)
 

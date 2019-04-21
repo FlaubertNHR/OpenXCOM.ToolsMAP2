@@ -18,7 +18,7 @@ namespace MapView
 {
 	#region Delegates
 	internal delegate void MouseDragEventHandler();
-	#endregion
+	#endregion Delegates
 
 
 	internal sealed class MainViewOverlay
@@ -27,17 +27,17 @@ namespace MapView
 	{
 		#region Events
 		internal event MouseDragEventHandler MouseDragEvent;
-		#endregion
+		#endregion Events
 
 
 		#region Fields (static)
 		internal const int HalfWidthConst  = 16;
 		internal const int HalfHeightConst =  8;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
-		private bool _suppressTargeter;// = true;
+		internal bool _suppressTargeter;
 
 		private int _col; // these are used to print the clicked location
 		private int _row;
@@ -45,7 +45,7 @@ namespace MapView
 
 		private int _colOver; // these are used to track the mouseover location
 		private int _rowOver;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -103,7 +103,7 @@ namespace MapView
 		/// </summary>
 		internal List<Brush> SpriteBrushes
 		{ private get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region Fields (graphics)
@@ -116,7 +116,7 @@ namespace MapView
 
 		private int _anistep;
 		private int _cols, _rows;
-		#endregion
+		#endregion Fields (graphics)
 
 
 		#region Properties (options)
@@ -292,7 +292,7 @@ namespace MapView
 			get { return _interpolationLocal; }
 			set { _interpolationLocal = value; }
 		}
-		#endregion
+		#endregion Properties (options)
 
 
 		#region cTor
@@ -308,7 +308,7 @@ namespace MapView
 
 			_brushLayer = new SolidBrush(Color.FromArgb(GridLayerOpacity, GridLayerColor));
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events and Methods for the edit-functions
@@ -584,7 +584,7 @@ namespace MapView
 			if (XCMainWindow.ScanG != null)
 				XCMainWindow.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
 		}												// not used by ScanG view at present
-		#endregion
+		#endregion Events and Methods for the edit-functions
 
 
 		#region Keyboard navigation
@@ -887,7 +887,7 @@ namespace MapView
 				else if (_dragEnd.X >= MapBase.MapSize.Cols) _dragEnd.X = MapBase.MapSize.Cols - 1;
 			}
 		}
-		#endregion
+		#endregion Mouse & drag-points
 
 
 		#region Events
@@ -928,7 +928,7 @@ namespace MapView
 			XCMainWindow.that.sb_PrintPosition(_col, _row, _lev);
 			Refresh();
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Draw
@@ -1729,7 +1729,7 @@ namespace MapView
 			graphics.DrawLine(_penSelect, l, t);
 		}
 #endif
-		#endregion
+		#endregion Draw
 
 
 		#region Coordinate conversion
@@ -1773,6 +1773,6 @@ namespace MapView
 						(int)Math.Floor(x1),
 						(int)Math.Floor(y1));
 		}
-		#endregion
+		#endregion Coordinate conversion
 	}
 }
