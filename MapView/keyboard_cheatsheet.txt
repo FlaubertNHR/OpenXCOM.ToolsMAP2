@@ -59,6 +59,13 @@ Control+s - save the Map if the panel has focus
 
 Enter - opens the Maptree's contextmenu if the tree has focus.
 
+F1 - start animations
+F2 - stop animations
+F3 - toggle door state (if the panel has focus)
+F4 - toggle grid visibility
+
+F3 - search only if the Maptree or Toolstrip has focus.
+
 
 TILEVIEW
 --------
