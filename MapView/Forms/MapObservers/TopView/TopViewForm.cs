@@ -50,6 +50,37 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region Events (override)
 		/// <summary>
+		/// Handles a so-called command-key at the form level. Stops keys that
+		/// shall be used for navigating the tiles from doing anything stupid
+		/// instead.
+		/// - passes the arrow-keys to the TopView control's panel's Navigate()
+		///   funct
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <param name="keyData"></param>
+		/// <returns></returns>
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			if (Control.TopPanel.Focused)
+			{
+				switch (keyData)
+				{
+					case Keys.Left:
+					case Keys.Right:
+					case Keys.Up:
+					case Keys.Down:
+					case Keys.Shift | Keys.Left:
+					case Keys.Shift | Keys.Right:
+					case Keys.Shift | Keys.Up:
+					case Keys.Shift | Keys.Down:
+						MainViewUnderlay.that.MainViewOverlay.Navigate(keyData);
+						return true;
+				}
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
+		/// <summary>
 		/// Handles KeyDown events at the form level.
 		/// - [Esc] focuses the panel else clears the current selection lozenge
 		/// - opens/closes Options on [Ctrl+o] event
@@ -114,37 +145,6 @@ namespace MapView.Forms.MapObservers.TopViews
 				}
 			}
 //			base.OnKeyDown(e);
-		}
-
-		/// <summary>
-		/// Handles a so-called command-key at the form level. Stops keys that
-		/// shall be used for navigating the tiles from doing anything stupid
-		/// instead.
-		/// - passes the arrow-keys to the TopView control's panel's Navigate()
-		///   funct
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="keyData"></param>
-		/// <returns></returns>
-		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-		{
-			if (Control.TopPanel.Focused)
-			{
-				switch (keyData)
-				{
-					case Keys.Left:
-					case Keys.Right:
-					case Keys.Up:
-					case Keys.Down:
-					case Keys.Shift | Keys.Left:
-					case Keys.Shift | Keys.Right:
-					case Keys.Shift | Keys.Up:
-					case Keys.Shift | Keys.Down:
-						MainViewUnderlay.that.MainViewOverlay.Navigate(keyData);
-						return true;
-				}
-			}
-			return base.ProcessCmdKey(ref msg, keyData);
 		}
 
 

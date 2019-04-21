@@ -57,6 +57,61 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 
 		#region Events (override)
 		/// <summary>
+		/// Handles a so-called command-key at the form level. Stops keys that
+		/// shall be used for navigating the tiles from doing anything stupid
+		/// instead.
+		/// - passes the arrow-keys to the appropriate control's panel's
+		///   Navigate() funct
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <param name="keyData"></param>
+		/// <returns></returns>
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			switch (tabControl.SelectedIndex)
+			{
+				case 0: // Top
+				if (ControlTop.TopPanel.Focused)
+				{
+						switch (keyData)
+						{
+							case Keys.Left:
+							case Keys.Right:
+							case Keys.Up:
+							case Keys.Down:
+							case Keys.Shift | Keys.Left:
+							case Keys.Shift | Keys.Right:
+							case Keys.Shift | Keys.Up:
+							case Keys.Shift | Keys.Down:
+								MainViewUnderlay.that.MainViewOverlay.Navigate(keyData);
+								return true;
+						}
+					}
+					break;
+
+				case 1: // Route
+					if (ControlRoute.RoutePanel.Focused)
+					{
+						switch (keyData)
+						{
+							case Keys.Left:
+							case Keys.Right:
+							case Keys.Up:
+							case Keys.Down:
+							case Keys.Shift | Keys.Left:
+							case Keys.Shift | Keys.Right:
+							case Keys.Shift | Keys.Up:
+							case Keys.Shift | Keys.Down:
+								ControlRoute.RoutePanel.Navigate(keyData);
+								return true;
+						}
+					}
+					break;
+			}
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
+		/// <summary>
 		/// Handles KeyDown events at the form level.
 		/// - [Esc] focuses the appropriate panel
 		/// - opens/closes Options on [Ctrl+o] event
@@ -170,61 +225,6 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 
 			if (tabControl.SelectedIndex == 1) // Route
 				base.OnKeyDown(e);
-		}
-
-		/// <summary>
-		/// Handles a so-called command-key at the form level. Stops keys that
-		/// shall be used for navigating the tiles from doing anything stupid
-		/// instead.
-		/// - passes the arrow-keys to the appropriate control's panel's
-		///   Navigate() funct
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="keyData"></param>
-		/// <returns></returns>
-		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-		{
-			switch (tabControl.SelectedIndex)
-			{
-				case 0: // Top
-				if (ControlTop.TopPanel.Focused)
-				{
-						switch (keyData)
-						{
-							case Keys.Left:
-							case Keys.Right:
-							case Keys.Up:
-							case Keys.Down:
-							case Keys.Shift | Keys.Left:
-							case Keys.Shift | Keys.Right:
-							case Keys.Shift | Keys.Up:
-							case Keys.Shift | Keys.Down:
-								MainViewUnderlay.that.MainViewOverlay.Navigate(keyData);
-								return true;
-						}
-					}
-					break;
-
-				case 1: // Route
-					if (ControlRoute.RoutePanel.Focused)
-					{
-						switch (keyData)
-						{
-							case Keys.Left:
-							case Keys.Right:
-							case Keys.Up:
-							case Keys.Down:
-							case Keys.Shift | Keys.Left:
-							case Keys.Shift | Keys.Right:
-							case Keys.Shift | Keys.Up:
-							case Keys.Shift | Keys.Down:
-								ControlRoute.RoutePanel.Navigate(keyData);
-								return true;
-						}
-					}
-					break;
-			}
-			return base.ProcessCmdKey(ref msg, keyData);
 		}
 
 
