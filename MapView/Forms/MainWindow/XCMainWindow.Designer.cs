@@ -458,6 +458,7 @@ namespace MapView
 			this.csSplitter.Name = "cSplitList";
 			this.csSplitter.Size = new System.Drawing.Size(8, 454);
 			this.csSplitter.TabIndex = 1;
+			this.csSplitter.TabStop = false;
 			// 
 			// XCMainWindow
 			// 

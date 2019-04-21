@@ -30,6 +30,11 @@ namespace MapView
 		:
 			Form
 	{
+		#region Events
+		internal event DontBeepEventHandler DontBeepEvent;
+		#endregion
+
+
 		#region Fields (static)
 		private const string title = "Map Editor ||";
 
@@ -431,6 +436,8 @@ namespace MapView
 //			}
 			/****************************************/
 
+
+			DontBeepEvent += FireContext;
 
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 			Show();
@@ -1061,7 +1068,15 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.Control && MainMenusManager.MenuViewers.Enabled)
+			if (e.KeyCode == Keys.Enter) // do this here to get rid of the beep.
+			{
+				if (tvMaps.Focused)
+				{
+					e.SuppressKeyPress = true;
+					BeginInvoke(DontBeepEvent);
+				}
+			}
+			else if (e.Control && MainMenusManager.MenuViewers.Enabled)
 			{
 				int it = -1;
 				switch (e.KeyCode)
@@ -1934,6 +1949,21 @@ namespace MapView
 			return null;
 		} */
 
+
+		/// <summary>
+		/// Opens the Maptree's contextmenu on keydown event [Enter] via a
+		/// circuitous pattern delegate called DontBeep. Does what it says here.
+		/// </summary>
+		private void FireContext()
+		{
+			var nodebounds = tvMaps.SelectedNode.Bounds;
+			var args = new MouseEventArgs(
+										MouseButtons.Right,
+										1,
+										nodebounds.X + 15, nodebounds.Y + 5,
+										0);
+			OnMapTreeMouseDown(null, args);
+		}
 
 		/// <summary>
 		/// Opens a context-menu on RMB-click.
@@ -2869,4 +2899,12 @@ namespace MapView
 		}
 		#endregion Methods
 	}
+
+
+	#region Delegates
+	/// <summary>
+	/// Good fuckin Lord I just wrote a "DontBeep" delegate.
+	/// </summary>
+	internal delegate void DontBeepEventHandler();
+	#endregion
 }
