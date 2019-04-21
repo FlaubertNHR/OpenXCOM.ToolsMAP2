@@ -396,7 +396,7 @@ namespace MapView
 		{
 			if (MapBase != null && FirstClick)
 			{
-				ToolstripFactory.that.SetPasteButtonsEnabled();
+				ViewerFormsManager.ToolFactory.SetPasteButtonsEnabled();
 
 				_copiedTerrains = MapBase.Descriptor.Terrains;
 

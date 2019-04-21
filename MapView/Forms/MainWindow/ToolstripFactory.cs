@@ -9,12 +9,6 @@ namespace MapView.Forms.MainWindow
 {
 	internal sealed class ToolstripFactory
 	{
-		#region Properties (static)
-		internal static ToolstripFactory that
-		{ get; set; }
-		#endregion
-
-
 		#region Fields
 		private readonly MainViewUnderlay MainViewUnderlay;
 
@@ -53,13 +47,17 @@ namespace MapView.Forms.MainWindow
 		/// <param name="panel"></param>
 		internal ToolstripFactory(MainViewUnderlay panel)
 		{
-			that = this;
 			MainViewUnderlay = panel;
 		}
 		#endregion
 
 
 		#region Methods
+		internal string GetSearchText()
+		{
+			return _tstbSearch.Text;
+		}
+
 		/// <summary>
 		/// Adds a textfield for search to the specified toolstrip.
 		/// NOTE: Appears only in MainView.
