@@ -54,8 +54,6 @@ namespace MapView
 
 		private bool _bypassActivatedEvent;
 		private bool _allowBringToFront;
-
-		private Color _colorSearch;
 		#endregion Fields
 
 
@@ -124,10 +122,11 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// The currently searched and found and highlighted Treenode on the MapTree.
+		/// The currently searched and found and highlighted Treenode on the
+		/// MapTree.
 		/// </summary>
-		internal TreeNode Searched
-		{ private get; set; }
+		private TreeNode Searched
+		{ get; set; }
 		#endregion Properties
 
 
@@ -1165,6 +1164,11 @@ namespace MapView
 					brush = Brushes.Wheat;
 					pen   = Pens.SlateBlue;
 				}
+				else if (e.Node == Searched)
+				{
+					brush = Brushes.SkyBlue;
+					pen   = Pens.SlateBlue;
+				}
 				else
 				{
 //					e.DrawDefault = true;
@@ -1732,14 +1736,9 @@ namespace MapView
 												start0);
 						if (node != null)
 						{
-							if (Searched != null)
-								Searched.ForeColor = _colorSearch;
-
 							Searched = node;
-
-							_colorSearch = Searched.ForeColor;
-							Searched.ForeColor = Color.BlueViolet;
 							Searched.EnsureVisible();
+							tvMaps.Invalidate();
 						}
 
 						_active   =
@@ -1793,8 +1792,8 @@ namespace MapView
 							return child;
 						}
 					}
-					else if (node.NextNode == null												// if no more nodes at the current level
-						&& (node.Parent == null        || node.Parent.NextNode == null)			// and no parent OR parent is last node at its level
+					else if (                             node              .NextNode == null	// if no more nodes at the current level
+						&& (node.Parent        == null || node.Parent       .NextNode == null)	// and no parent OR parent is last node at its level
 						&& (node.Parent.Parent == null || node.Parent.Parent.NextNode == null))	// and no parent-of-parent OR parent-of-parent is last node at its level
 					{
 						return SearchTreeview(text, tvMaps.Nodes, tvMaps.Nodes[0], start0);
@@ -1805,15 +1804,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Clears the searched, found, and highlighted Treenode.
+		/// Clears the searched/found/highlighted Treenode.
 		/// </summary>
 		internal void ClearSearched()
 		{
-			if (Searched != null)
-			{
-				Searched.ForeColor = _colorSearch;
-				Searched = null;
-			}
+			Searched = null;
+			tvMaps.Invalidate();
 		}
 
 		// debug versions of functions above^
@@ -1882,11 +1878,7 @@ namespace MapView
 						var node = SearchTreeview(text.ToLower(), tvMaps.Nodes, start, start0);
 						if (node != null)
 						{
-							if (Searched != null)
-								Searched.BackColor = DefaultBackColor;
-
 							Searched = node;
-							Searched.BackColor = Color.BlueViolet;
 							Searched.EnsureVisible();
 						}
 						_active   =
