@@ -1122,12 +1122,6 @@ namespace MapView
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (keyData == Keys.F3)
-			{
-				Search(ViewerFormsManager.ToolFactory.GetSearchText());
-				return true;
-			}
-
 			if (MainViewUnderlay.MainViewOverlay.Focused)
 			{
 				switch (keyData)
@@ -1144,6 +1138,11 @@ namespace MapView
 						MainViewUnderlay.MainViewOverlay.Navigate(keyData);
 						return true;
 				}
+			}
+			else if (keyData == Keys.F3)
+			{
+				Search(ViewerFormsManager.ToolFactory.GetSearchText());
+				return true;
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
