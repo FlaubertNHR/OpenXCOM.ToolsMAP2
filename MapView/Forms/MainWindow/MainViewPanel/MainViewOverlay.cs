@@ -354,21 +354,47 @@ namespace MapView
 			{
 				switch (e.KeyCode)
 				{
-					case Keys.S: XCMainWindow.that.OnSaveMapClick(null, EventArgs.Empty); break;
+					case Keys.S:
+						XCMainWindow.that.OnSaveMapClick(null, EventArgs.Empty);
+						break;
 
-					case Keys.X: Copy(); ClearSelection(); break;
-					case Keys.C: Copy();                   break;
-					case Keys.V: Paste();                  break;
+					case Keys.X:
+						Copy();
+						ClearSelection();
+						break;
+
+					case Keys.C:
+						Copy();
+						break;
+
+					case Keys.V:
+						Paste();
+						break;
 				}
 			}
 			else
 			{
 				switch (e.KeyCode)
 				{
-					case Keys.Delete: ClearSelection();                   break;
-					case Keys.Escape: ProcessSelection(DragBeg, DragBeg); break;
+					case Keys.Delete:
+						ClearSelection();
+						break;
 
-					case Keys.F: FillSelectedTiles(); break;
+					case Keys.Escape:
+						_targeterForced = false;
+
+						_colOver = DragBeg.X;
+						_rowOver = DragBeg.Y;
+
+						_keyDeltaX =
+						_keyDeltaY = 0;
+
+						ProcessSelection(DragBeg, DragBeg);
+						break;
+
+					case Keys.F:
+						FillSelectedTiles();
+						break;
 				}
 			}
 		}
