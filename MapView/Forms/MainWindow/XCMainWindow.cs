@@ -1067,6 +1067,8 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
+			//LogFile.WriteLine("OnKeyDown() " + e.KeyCode);
+
 			if (e.KeyCode == Keys.Enter) // do this here to get rid of the beep.
 			{
 				if (tvMaps.Focused)
@@ -1121,7 +1123,13 @@ namespace MapView
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (MainViewUnderlay.MainViewOverlay.Focused)
+			//LogFile.WriteLine("ProcessCmdKey() " + keyData);
+
+			if (keyData == (Keys.Shift | Keys.F3))
+			{
+				ViewerFormsManager.ToolFactory.FocusSearch();
+			}
+			else if (MainViewUnderlay.MainViewOverlay.Focused)
 			{
 				switch (keyData)
 				{
@@ -1137,7 +1145,7 @@ namespace MapView
 						return true;
 				}
 			}
-			else if (keyData == Keys.F3)
+			else if (keyData == Keys.F3) // panel must *not* have focus (F3 also toggles doors)
 			{
 				Search(ViewerFormsManager.ToolFactory.GetSearchText());
 				return true;

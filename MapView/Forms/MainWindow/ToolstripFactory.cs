@@ -37,7 +37,7 @@ namespace MapView.Forms.MainWindow
 		private readonly ToolStripButton _tsbDelete   = new ToolStripButton();
 
 		private readonly ToolStripButton _tsbFill     = new ToolStripButton();
-		#endregion
+		#endregion Fields
 
 
 		#region cTor
@@ -49,15 +49,10 @@ namespace MapView.Forms.MainWindow
 		{
 			MainViewUnderlay = panel;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
-		internal string GetSearchText()
-		{
-			return _tstbSearch.Text;
-		}
-
 		/// <summary>
 		/// Adds a textfield for search to the specified toolstrip.
 		/// NOTE: Appears only in MainView.
@@ -83,6 +78,23 @@ namespace MapView.Forms.MainWindow
 			_tsbSearchClear.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			_tsbSearchClear.Image        = Resources.delete;
 			_tsbSearchClear.Click       += OnClearHighlightClick;
+		}
+
+		/// <summary>
+		/// Focuses the Search textbox.
+		/// </summary>
+		internal void FocusSearch()
+		{
+			_tstbSearch.Focus();
+		}
+
+		/// <summary>
+		/// Gets the Search textbox's current text.
+		/// </summary>
+		/// <returns></returns>
+		internal string GetSearchText()
+		{
+			return _tstbSearch.Text;
 		}
 
 
@@ -334,7 +346,7 @@ namespace MapView.Forms.MainWindow
 			foreach (var tsb in _pasters)
 				tsb.Enabled = enabled;
 		}
-		#endregion
+		#endregion Methods
 
 
 		#region Events (level)
@@ -371,7 +383,7 @@ namespace MapView.Forms.MainWindow
 				SetLevelUpButtonsEnabled(  @base.Level != 0);
 			}
 		}
-		#endregion
+		#endregion Events (level)
 
 
 		#region Events (search)
@@ -399,6 +411,6 @@ namespace MapView.Forms.MainWindow
 			XCMainWindow.that.ClearSearched();
 			_tstbSearch.Focus();
 		}
-		#endregion
+		#endregion Events (search)
 	}
 }
