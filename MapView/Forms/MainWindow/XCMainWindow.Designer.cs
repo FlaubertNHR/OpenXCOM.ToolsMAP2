@@ -21,7 +21,6 @@ namespace MapView
 
 
 		#region Windows Form Designer generated code
-
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -61,7 +60,6 @@ namespace MapView
 			this.miGrid = new System.Windows.Forms.MenuItem();
 			this.menuViewers = new System.Windows.Forms.MenuItem();
 			this.menuHelp = new System.Windows.Forms.MenuItem();
-			this.tvMaps = new System.Windows.Forms.TreeView();
 			this.sfdSaveDialog = new System.Windows.Forms.SaveFileDialog();
 			this.ssMain = new System.Windows.Forms.StatusStrip();
 			this.tsslScale = new System.Windows.Forms.ToolStripStatusLabel();
@@ -489,7 +487,12 @@ namespace MapView
 
 		}
 
+#if !__MonoCS__
+		private MapView.BufferedTreeView tvMaps;
+#else
 		private System.Windows.Forms.TreeView tvMaps;
+#endif
+
 		private System.Windows.Forms.ContextMenu cmMapTreeMenu;
 
 		private System.Windows.Forms.ToolStripContainer tscPanel;

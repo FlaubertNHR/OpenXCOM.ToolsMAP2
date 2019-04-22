@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using DSShared;
@@ -207,8 +208,11 @@ namespace MapView
 			else
 				LogFile.WriteLine("Viewers file exists.");
 
-
-
+#if !__MonoCS__
+			tvMaps = new BufferedTreeView();
+#else
+			tvMaps = new TreeView();
+#endif
 			InitializeComponent();
 			LogFile.WriteLine("MainView initialized.");
 
@@ -243,6 +247,9 @@ namespace MapView
 			tvMaps.AfterSelect  += OnMapTreeAfterSelected;
 
 			tvMaps.NodeMouseClick += OnMapTreeNodeClick;
+
+			tvMaps.GotFocus  += OnMapTreeFocusChanged;
+			tvMaps.LostFocus += OnMapTreeFocusChanged;
 			// welcome to your new home
 
 
@@ -1040,9 +1047,11 @@ namespace MapView
 
 
 		#region Events (override)
+		private static bool Inited;
+
 		/// <summary>
 		/// Overrides the OnActivated event. Brings any other open viewers to
-		/// the top of the desktop, along with this.
+		/// the top of the desktop, along with this. And focuses the panel.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
@@ -1082,6 +1091,11 @@ namespace MapView
 			}
 			else
 				base.OnActivated(e);
+
+			if (Inited)
+				MainViewUnderlay.MainViewOverlay.Focus();
+			else
+				Inited = true;
 		}
 
 
@@ -1247,8 +1261,16 @@ namespace MapView
 				}
 				else if (e.Node == Searched)
 				{
-					brush = Brushes.SkyBlue;
-					pen   = Pens.SlateBlue;
+					if (tvMaps.Focused)
+					{
+						brush = Brushes.SkyBlue;
+						pen   = Pens.SlateBlue;
+					}
+					else
+					{
+						brush = Brushes.PowderBlue;
+						pen   = Pens.SlateBlue;
+					}
 				}
 				else
 				{
@@ -2641,6 +2663,19 @@ namespace MapView
 		}
 
 
+		/// <summary>
+		/// For an ungodly reason when the Maptree gains/loses focus
+		/// tv_DrawNode() re-colors selected and focused nodes correctly but
+		/// does not re-color a Searched node.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMapTreeFocusChanged(object sender, EventArgs e)
+		{
+			if (Searched != null)
+				tvMaps.Invalidate();
+		}
+
 //		private bool _bypassSaveAlert;	// when reloading the MapTree after making a tileset edit
 										// the treeview's BeforeSelect event fires. This needlessly
 										// asks to save the Map (if it had already changed) and
@@ -2832,6 +2867,9 @@ namespace MapView
 						else
 							tileview._mcdInfoForm.UpdateData();
 					}
+
+					Inited = false;
+					Activate();
 				}
 			}
 		}
@@ -2994,6 +3032,39 @@ namespace MapView
 		}
 		#endregion Methods
 	}
+
+
+// bool runningOnMono = Type.GetType("Mono.Runtime") != null;
+
+#if !__MonoCS__
+	/// <summary>
+	/// https://stackoverflow.com/questions/10362988/treeview-flickering#answer-10364283
+	/// using System.Runtime.InteropServices;
+	/// </summary>
+	class BufferedTreeView
+		:
+			TreeView
+	{
+		protected override void OnHandleCreated(EventArgs e)
+		{
+			SendMessage(
+					Handle,
+					TVM_SETEXTENDEDSTYLE,
+					(IntPtr)TVS_EX_DOUBLEBUFFER,
+					(IntPtr)TVS_EX_DOUBLEBUFFER);
+
+			base.OnHandleCreated(e);
+		}
+
+		// Pinvoke:
+		private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;
+		private const int TVM_GETEXTENDEDSTYLE = 0x1100 + 45;
+		private const int TVS_EX_DOUBLEBUFFER  = 0x0004;
+	
+		[DllImport("user32.dll")]
+		private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+	}
+#endif
 
 
 	#region Delegates
