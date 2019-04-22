@@ -40,7 +40,8 @@ namespace XCom
 			}
 			//LogFile.WriteLine(". pfeMap= " + pfeMap);
 
-			if (!File.Exists(pfeMap)) // Open a folderbrowser for user to point to a basepath ->
+			if (!File.Exists(pfeMap) // Open a folderbrowser for user to point to a basepath ->
+				&& (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to show warning box.
 			{
 				if (MessageBox.Show(
 							"a Mapfile was not found for : " + descriptor.Label
