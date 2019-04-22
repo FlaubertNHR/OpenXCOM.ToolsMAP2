@@ -241,6 +241,8 @@ namespace MapView
 			// jijack: These two events keep getting deleted in my designer:
 			tvMaps.BeforeSelect += OnMapTreeBeforeSelect;
 			tvMaps.AfterSelect  += OnMapTreeAfterSelected;
+
+			tvMaps.NodeMouseClick += OnMapTreeNodeClick;
 			// welcome to your new home
 
 
@@ -445,6 +447,32 @@ namespace MapView
 		#endregion cTor
 
 
+		#region Methods (static)
+		/// <summary>
+		/// Transposes all the default viewer positions and sizes from the
+		/// embedded MapViewers manifest to '/settings/MapViewers.yml'.
+		/// Based on InstallationForm.
+		/// </summary>
+		private static void CreateViewersFile()
+		{
+			var info = SharedSpace.that[PathInfo.ShareViewers] as PathInfo;
+			info.CreateDirectory();
+
+			string pfe = info.Fullpath;
+
+			using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
+													 .GetManifestResourceStream("MapView._Embedded.MapViewers.yml")))
+			using (var fs = new FileStream(pfe, FileMode.Create))
+			using (var sw = new StreamWriter(fs))
+			{
+				while (sr.Peek() != -1)
+					sw.WriteLine(sr.ReadLine());
+			}
+		}
+		#endregion Methods (static)
+
+
+		#region Create tree
 		/// <summary>
 		/// Creates the Map-tree on the left side of MainView.
 		/// </summary>
@@ -551,6 +579,7 @@ namespace MapView
 			}
 			tvMaps.Width = width;
 		}
+		#endregion Create tree
 
 
 		#region Options
@@ -2632,6 +2661,35 @@ namespace MapView
 
 			ClearSearched();
 			LoadSelectedMap();
+
+			_selected = e.Node;
+		}
+
+		/// <summary>
+		/// Caches the currently selected treenode.
+		/// </summary>
+		private TreeNode _selected;
+
+		/// <summary>
+		/// If user clicks on an already selected node, for which the Mapfile
+		/// has not been loaded, this handler offers to show a dialog for the
+		/// user to browse to the file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMapTreeNodeClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+			if (e.Node == _selected)
+			{
+				var descriptor = e.Node.Tag as Descriptor;
+				if (descriptor != null
+					&& (   MainViewUnderlay.MapBase == null
+						|| MainViewUnderlay.MapBase.Descriptor != descriptor))
+				{
+					ClearSearched();
+					LoadSelectedMap(true);
+				}
+			}
 		}
 
 		/// <summary>
@@ -2659,36 +2717,12 @@ namespace MapView
 		#endregion Events
 
 
-		#region Methods (static)
-		/// <summary>
-		/// Transposes all the default viewer positions and sizes from the
-		/// embedded MapViewers manifest to '/settings/MapViewers.yml'.
-		/// Based on InstallationForm.
-		/// </summary>
-		private static void CreateViewersFile()
-		{
-			var info = SharedSpace.that[PathInfo.ShareViewers] as PathInfo;
-			info.CreateDirectory();
-
-			string pfe = info.Fullpath;
-
-			using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
-													 .GetManifestResourceStream("MapView._Embedded.MapViewers.yml")))
-			using (var fs = new FileStream(pfe, FileMode.Create))
-			using (var sw = new StreamWriter(fs))
-			{
-				while (sr.Peek() != -1)
-					sw.WriteLine(sr.ReadLine());
-			}
-		}
-		#endregion Methods (static)
-
-
 		#region Methods
 		/// <summary>
 		/// Loads the Map that's selected in the Maptree.
+		/// <param name="basepathDialog">true to force the find file dialog</param>
 		/// </summary>
-		private void LoadSelectedMap()
+		private void LoadSelectedMap(bool basepathDialog = false)
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("XCMainWindow.LoadSelectedMap");
@@ -2699,7 +2733,10 @@ namespace MapView
 				//LogFile.WriteLine(". descriptor= " + descriptor);
 
 				bool treechanged = false;
-				var @base = MapFileService.LoadTileset(descriptor, ref treechanged); // NOTE: LoadTileset() instantiates a MapFileChild but whatver.
+				var @base = MapFileService.LoadTileset( // NOTE: LoadTileset() instantiates a MapFileChild but whatver.
+													descriptor,
+													ref treechanged,
+													basepathDialog);
 				if (treechanged) MaptreeChanged = true;
 
 				if (@base != null)

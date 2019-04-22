@@ -25,8 +25,12 @@ namespace XCom
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
+		/// <param name="basepathDialog">true to force the find file dialog</param>
 		/// <returns></returns>
-		public static MapFileBase LoadTileset(Descriptor descriptor, ref bool treechanged)
+		public static MapFileBase LoadTileset(
+				Descriptor descriptor,
+				ref bool treechanged,
+				bool basepathDialog = false)
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("MapFileService.LoadTileset descriptor= " + descriptor);
@@ -41,53 +45,51 @@ namespace XCom
 			//LogFile.WriteLine(". pfeMap= " + pfeMap);
 
 			if (!File.Exists(pfeMap) // Open a folderbrowser for user to point to a basepath ->
-				&& (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to show warning box.
+				&& (basepathDialog || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to show warning box.
+				&& MessageBox.Show(
+								"a Mapfile was not found for : " + descriptor.Label
+									+ Environment.NewLine + Environment.NewLine
+									+ "Browse for a basepath to the .MAP and .RMP files ...",
+								" Warning",
+								MessageBoxButtons.YesNo,
+								MessageBoxIcon.Warning,
+								MessageBoxDefaultButton.Button1,
+								0) == DialogResult.Yes)
 			{
-				if (MessageBox.Show(
-							"a Mapfile was not found for : " + descriptor.Label
-								+ Environment.NewLine + Environment.NewLine
-								+ "Browse for a basepath to the .MAP and .RMP files ...",
-							" Warning",
-							MessageBoxButtons.YesNo,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0) == DialogResult.Yes)
+				using (var fbd = new FolderBrowserDialog())
 				{
-					using (var fbd = new FolderBrowserDialog())
+					string basepath = descriptor.Basepath;
+					if (!String.IsNullOrEmpty(basepath)
+						&& Directory.Exists(basepath))
 					{
-						string basepath = descriptor.Basepath;
-						if (!String.IsNullOrEmpty(basepath)
-							&& Directory.Exists(basepath))
+						fbd.SelectedPath = basepath;
+					}
+					// TODO: Check descriptor's Palette and default to Ufo/Tftd Resource dir instead.
+
+					fbd.Description = String.Format(
+												System.Globalization.CultureInfo.CurrentCulture,
+												"Browse to a basepath folder. A valid basepath folder"
+													+ " has the subfolders MAPS and ROUTES.");
+
+					if (fbd.ShowDialog() == DialogResult.OK)
+					{
+						pfeMap = Path.Combine(fbd.SelectedPath, GlobalsXC.MapsDir);
+						pfeMap = Path.Combine(pfeMap, descriptor.Label + GlobalsXC.MapExt);
+
+						if (File.Exists(pfeMap))
 						{
-							fbd.SelectedPath = basepath;
+							descriptor.Basepath = fbd.SelectedPath;
+							treechanged = true;
 						}
-						// TODO: Check descriptor's Palette and default to Ufo/Tftd Resource dir instead.
-
-						fbd.Description = String.Format(
-													System.Globalization.CultureInfo.CurrentCulture,
-													"Browse to a basepath folder. A valid basepath folder"
-														+ " has the subfolders MAPS and ROUTES.");
-
-						if (fbd.ShowDialog() == DialogResult.OK)
-						{
-							pfeMap = Path.Combine(fbd.SelectedPath, GlobalsXC.MapsDir);
-							pfeMap = Path.Combine(pfeMap, descriptor.Label + GlobalsXC.MapExt);
-
-							if (File.Exists(pfeMap))
-							{
-								descriptor.Basepath = fbd.SelectedPath;
-								treechanged = true;
-							}
-							else
-								MessageBox.Show(
-											descriptor.Label + GlobalsXC.MapExt
-												+ " was not found in that basepath.",
-											" Error",
-											MessageBoxButtons.OK,
-											MessageBoxIcon.Error,
-											MessageBoxDefaultButton.Button1,
-											0);
-						}
+						else
+							MessageBox.Show(
+										descriptor.Label + GlobalsXC.MapExt
+											+ " was not found in that basepath.",
+										" Error",
+										MessageBoxButtons.OK,
+										MessageBoxIcon.Error,
+										MessageBoxDefaultButton.Button1,
+										0);
 					}
 				}
 			}
