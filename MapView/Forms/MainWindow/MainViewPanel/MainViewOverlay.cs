@@ -640,8 +640,8 @@ namespace MapView
 		/// OnKeyDown() and ProcessCmdKey().
 		/// </summary>
 		/// <param name="keyData"></param>
-		/// <param name="step">true to refresh every tick</param>
-		internal void Navigate(Keys keyData, bool step = false)
+		/// <param name="isTop">true if TopView is the active viewer</param>
+		internal void Navigate(Keys keyData, bool isTop = false)
 		{
 			if (MapBase != null)
 			{
@@ -699,9 +699,10 @@ namespace MapView
 						int level = MapBase.Location.Lev + vert;
 						if (level > -1 && level < MapBase.MapSize.Levs) // safety.
 						{
+							int type = (!isTop ? TARGETER_KEY_MAIN : TARGETER_KEY_TOP);
 							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
-														3, 0,0, vert));
+														type, 0,0, vert));
 						}
 					}
 				}
@@ -728,7 +729,7 @@ namespace MapView
 						if (   r > -1 && r < MapBase.MapSize.Rows
 							&& c > -1 && c < MapBase.MapSize.Cols)
 						{
-							_targeterForced = true;
+							_targeterForced = !isTop;
 
 							int pos = DragBeg.X + _keyDeltaX + loc.X;
 							if (pos > -1 && pos < MapBase.MapSize.Cols)
@@ -746,7 +747,7 @@ namespace MapView
 				}
 			}
 
-			if (step)		// force redraw on every step when MainView is active
+			if (!isTop)		// force redraw on every step when MainView is the active viewer
 				Refresh();	// else the selector-sprite stops then jumps to the end on key up.
 		}
 
@@ -756,6 +757,10 @@ namespace MapView
 
 
 		#region Mouse & drag-points
+		private const int TARGETER_MOUSE    = 0;
+		private const int TARGETER_KEY_MAIN = 1;
+		private const int TARGETER_KEY_TOP  = 2;
+
 		/// <summary>
 		/// Scrolls the z-axis for MainView (and TopView by keyboard).
 		/// </summary>
@@ -764,22 +769,24 @@ namespace MapView
 		{
 			base.OnMouseWheel(e);
 
-			if      (e.Delta < 0) MapBase.LevelUp();
-			else if (e.Delta > 0) MapBase.LevelDown();
-
-			if (e.Clicks == 3) // ie. is keyboard navigation
-			{
-				_targeterForced = true;
-				_colOver = DragEnd.X;// MapBase.Location.Col;
-				_rowOver = DragEnd.Y;// MapBase.Location.Row;
-			}
-			else
+			if (e.Clicks == TARGETER_MOUSE)
 			{
 				_targeterForced = false;
+
 				var loc = GetTileLocation(e.X, e.Y);
 				_colOver = loc.X;
 				_rowOver = loc.Y;
 			}
+			else // ie. is keyboard navigation
+			{
+				_targeterForced = (e.Clicks == TARGETER_KEY_MAIN);
+
+				_colOver = DragEnd.X;
+				_rowOver = DragEnd.Y;
+			}
+
+			if      (e.Delta < 0) MapBase.LevelUp();
+			else if (e.Delta > 0) MapBase.LevelDown();
 
 			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(MapBase.Level != MapBase.MapSize.Levs - 1);
 			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  MapBase.Level != 0);

@@ -73,7 +73,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					case Keys.Shift | Keys.Right:
 					case Keys.Shift | Keys.Up:
 					case Keys.Shift | Keys.Down:
-						MainViewUnderlay.that.MainViewOverlay.Navigate(keyData);
+						MainViewUnderlay.that.MainViewOverlay.Navigate(keyData, true);
 						return true;
 				}
 			}
@@ -139,7 +139,7 @@ namespace MapView.Forms.MapObservers.TopViews
 						case Keys.Home:
 						case Keys.End:
 							e.SuppressKeyPress = true;
-							MainViewUnderlay.that.MainViewOverlay.Navigate(e.KeyData);
+							MainViewUnderlay.that.MainViewOverlay.Navigate(e.KeyData, true);
 							break;
 					}
 				}
