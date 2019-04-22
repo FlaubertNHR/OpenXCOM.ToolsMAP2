@@ -1179,9 +1179,10 @@ namespace MapView
 
 			if (e.KeyCode == Keys.Enter) // do this here to get rid of the beep.
 			{
-				if (tvMaps.Focused)
+				if (tvMaps.Focused && _selected != null)
 				{
 					e.SuppressKeyPress = true;
+					_dontbeep1 = !e.Shift;
 					BeginInvoke(DontBeepEvent);
 				}
 			}
@@ -2022,19 +2023,33 @@ namespace MapView
 		} */
 
 
+		private bool _dontbeep1;
+
 		/// <summary>
 		/// Opens the Maptree's contextmenu on keydown event [Enter] via a
 		/// circuitous pattern delegate called DontBeep. Does what it says here.
+		/// Or if [Shift+Enter] then try to reload the Mapfile.
 		/// </summary>
 		private void FireContext()
 		{
-			var nodebounds = tvMaps.SelectedNode.Bounds;
-			var args = new MouseEventArgs(
-										MouseButtons.Right,
-										1,
-										nodebounds.X + 15, nodebounds.Y + 5,
-										0);
-			OnMapTreeMouseDown(null, args);
+			if (_dontbeep1)
+			{
+				var nodebounds = _selected.Bounds;
+				var args = new MouseEventArgs(
+											MouseButtons.Right,
+											1,
+											nodebounds.X + 15, nodebounds.Y + 5,
+											0);
+				OnMapTreeMouseDown(null, args);
+			}
+			else
+			{
+				var args = new TreeNodeMouseClickEventArgs(
+														_selected,
+														MouseButtons.None,
+														0, 0,0);
+				OnMapTreeNodeClick(null, args);
+			}
 		}
 
 		/// <summary>
