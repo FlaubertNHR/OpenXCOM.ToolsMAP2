@@ -18,8 +18,13 @@ namespace MapView
 
 			base.Dispose(disposing);
 		}
-
-
+/*
+#if !__MonoCS__
+			tvMaps = new BufferedTreeView();
+#else
+			tvMaps = new System.Windows.Forms.TreeView();
+#endif
+*/
 		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -29,6 +34,11 @@ namespace MapView
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XCMainWindow));
+#if !__MonoCS__
+			tvMaps = new BufferedTreeView();
+#else
+			tvMaps = new System.Windows.Forms.TreeView();
+#endif
 			this.mmMain = new System.Windows.Forms.MainMenu(this.components);
 			this.menuFile = new System.Windows.Forms.MenuItem();
 			this.miOpen = new System.Windows.Forms.MenuItem();
@@ -75,6 +85,22 @@ namespace MapView
 			this.tscPanel.TopToolStripPanel.SuspendLayout();
 			this.tscPanel.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// tvMaps
+			// 
+			this.tvMaps.BackColor = System.Drawing.SystemColors.Control;
+			this.tvMaps.Dock = System.Windows.Forms.DockStyle.Left;
+			this.tvMaps.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
+			this.tvMaps.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.tvMaps.HideSelection = false;
+			this.tvMaps.Indent = 15;
+			this.tvMaps.Location = new System.Drawing.Point(0, 0);
+			this.tvMaps.Margin = new System.Windows.Forms.Padding(0);
+			this.tvMaps.Name = "tvMaps";
+			this.tvMaps.Size = new System.Drawing.Size(240, 454);
+			this.tvMaps.TabIndex = 0;
+			this.tvMaps.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tv_DrawNode);
+			this.tvMaps.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMapTreeMouseDown);
 			// 
 			// mmMain
 			// 
@@ -316,22 +342,6 @@ namespace MapView
 			// 
 			this.menuHelp.Index = 4;
 			this.menuHelp.Text = "&Help";
-			// 
-			// tvMaps
-			// 
-			this.tvMaps.BackColor = System.Drawing.SystemColors.Control;
-			this.tvMaps.Dock = System.Windows.Forms.DockStyle.Left;
-			this.tvMaps.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
-			this.tvMaps.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.tvMaps.HideSelection = false;
-			this.tvMaps.Indent = 15;
-			this.tvMaps.Location = new System.Drawing.Point(0, 0);
-			this.tvMaps.Margin = new System.Windows.Forms.Padding(0);
-			this.tvMaps.Name = "tvMaps";
-			this.tvMaps.Size = new System.Drawing.Size(240, 454);
-			this.tvMaps.TabIndex = 0;
-			this.tvMaps.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tv_DrawNode);
-			this.tvMaps.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMapTreeMouseDown);
 			// 
 			// sfdSaveDialog
 			// 

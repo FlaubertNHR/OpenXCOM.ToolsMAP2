@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+#if !__MonoCS__
 using System.Runtime.InteropServices;
+#endif
 using System.Windows.Forms;
 
 using DSShared;
@@ -208,11 +210,7 @@ namespace MapView
 			else
 				LogFile.WriteLine("Viewers file exists.");
 
-#if !__MonoCS__
-			tvMaps = new BufferedTreeView();
-#else
-			tvMaps = new TreeView();
-#endif
+
 			InitializeComponent();
 			LogFile.WriteLine("MainView initialized.");
 
@@ -1096,6 +1094,13 @@ namespace MapView
 				MainViewUnderlay.MainViewOverlay.Focus();
 			else
 				Inited = true;
+		}
+
+		protected override void OnDeactivate(EventArgs e)
+		{
+			MainViewUnderlay.MainViewOverlay._targeterForced = false;
+			Invalidate();
+			base.OnDeactivate(e);
 		}
 
 

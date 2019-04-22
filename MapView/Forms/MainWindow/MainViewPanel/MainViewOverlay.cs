@@ -48,7 +48,7 @@ namespace MapView
 		/// Forces display of the targeter sprite at the DragEnd position when
 		/// tiles are selected by keyboard. This overrules '_targeterSuppressed'.
 		/// </summary>
-		private bool _targeterForced;
+		internal bool _targeterForced;
 
 		private int _col; // these are used to print the clicked location
 		private int _row;
@@ -1021,7 +1021,6 @@ namespace MapView
 			{
 				_targeterSuppressed = !_targeterForced
 								   && (!Focused || !ClientRectangle.Contains(PointToClient(Cursor.Position)));
-
 
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
