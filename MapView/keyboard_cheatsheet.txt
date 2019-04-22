@@ -68,6 +68,9 @@ F4 - toggle grid visibility
 F3 - search if the panel does *not* have focus.
 Shift + F3 - focuses the Search textbox.
 
+Shift + Maptree click or Shift + Enter - show a dialog to find the Mapfile if
+it's gone rogue.
+
 
 TILEVIEW
 --------
@@ -100,8 +103,10 @@ f - fill selected tile(s)' selected quadrant with selected part
 4 - select Content quadrant
 
 t - select part of selected quadrant in TileView (also, double-click quadrant)
-Shift + Delete - delete part (only) of selected quadrant of selected tile (only) (also, double-right-click quadrant)
-Enter - place selected part in selected quadrant of selected tile (right-click quadrant)
+Shift + Delete - delete part (only) of selected quadrant of selected tile (only)
+(also, double-right-click quadrant)
+Enter - place selected part in selected quadrant of selected tile (right-click
+quadrant)
 
 F1 - toggle floor visibility
 F2 - toggle westwall visibility
@@ -116,7 +121,8 @@ ROUTEVIEW
 numeric keypad - navigate the map
 Subtract - level up
 Add - level down
-Shift + numeric keypad (incl/ Subtract and Add) - drag selected node to a blank tile only
+Shift + numeric keypad (incl/ Subtract and Add) - drag selected node to a blank
+tile only
 
 Control+x - cut selected node
 Control+c - copy selected node
