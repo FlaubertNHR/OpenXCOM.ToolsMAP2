@@ -18,13 +18,24 @@ namespace MapView
 
 			base.Dispose(disposing);
 		}
-/*
+
+
+/*		These lines are going to be deleted when changes are made in the designer.
+
 #if !__MonoCS__
-			tvMaps = new BufferedTreeView();
+			tvMaps = new MapView.BufferedTreeView();
 #else
 			tvMaps = new System.Windows.Forms.TreeView();
 #endif
-*/
+
+		And this line will be inserted:
+			tvMaps = new System.Windows.Forms.TreeView();
+
+		Copy-paste things back to what it should be. NOTE: The instantiation
+		cannot be done in the cTor because the cTor isn't run by the designer;
+		but changing the code of the class to instantiate the tree in, say, the
+		OnLoad event is a bit involved.
+ */
 		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -35,7 +46,7 @@ namespace MapView
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XCMainWindow));
 #if !__MonoCS__
-			tvMaps = new BufferedTreeView();
+			tvMaps = new MapView.BufferedTreeView();
 #else
 			tvMaps = new System.Windows.Forms.TreeView();
 #endif

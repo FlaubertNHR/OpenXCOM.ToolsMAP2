@@ -323,6 +323,9 @@ namespace MapView
 			t1.Interval = 250;
 			t1.Enabled = true;
 			t1.Tick += t1_Tick;
+
+			GotFocus  += OnFocusGained;
+			LostFocus += OnFocusLost;
 		}
 		#endregion cTor
 
@@ -339,6 +342,20 @@ namespace MapView
 			{
 				Invalidate();
 			}
+		}
+
+		private void OnFocusGained(object sender, EventArgs e)
+		{
+			_targeterForced = true;
+			_colOver = DragEnd.X;
+			_rowOver = DragEnd.Y;
+			Refresh();
+		}
+
+		private void OnFocusLost(object sender, EventArgs e)
+		{
+			_targeterForced = false;
+			Invalidate();
 		}
 
 
@@ -840,14 +857,23 @@ namespace MapView
 			_isMouseDrag = false;
 		}
 
+		private int _x = -1;	// these keep track of whether the mouse-cursor
+		private int _y = -1;	// actually moves or if .NET is simply firing
+								// arbitrary MouseMove events.
 		/// <summary>
 		/// Updates the drag-selection process.
+		/// @note The MouseMove event appears to fire multiple times when the
+		/// form is activated but there is no actual mouse-movement; so good
+		/// luck with that. Workaround: '_x' and '_y'.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			if (MapBase != null)
+			if (MapBase != null
+				&& (e.X != _x || e.Y != _y))
 			{
+				_x = e.X; _y = e.Y;
+
 				var loc = GetTileLocation(e.X, e.Y);
 
 				_targeterForced = false;
@@ -855,10 +881,10 @@ namespace MapView
 				_rowOver = loc.Y;
 
 				if (_isMouseDrag
-					&& (loc.X != DragEnd.X || loc.Y != DragEnd.Y))
+					&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
 				{
-					_keyDeltaX = loc.X - DragBeg.X; // these are in case user stops a mouse-drag
-					_keyDeltaY = loc.Y - DragBeg.Y; // and resumes selection using keyboard.
+					_keyDeltaX = _colOver - DragBeg.X; // these are in case user stops a mouse-drag
+					_keyDeltaY = _rowOver - DragBeg.Y; // and resumes selection using keyboard.
 
 					ProcessSelection(DragBeg, loc);
 				}
