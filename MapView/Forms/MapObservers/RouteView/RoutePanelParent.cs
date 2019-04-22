@@ -250,7 +250,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					MainViewUnderlay.that.MainViewOverlay._keyDeltaX =
 					MainViewUnderlay.that.MainViewOverlay._keyDeltaY = 0;
 
-					MapChild.Location = new MapLocation(						// fire SelectLocationEvent
+					MapChild.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapChild.Level);
 
@@ -262,7 +262,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 														e.Button,
 														MapChild[loc.Y, loc.X],
 														MapChild.Location);
-						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
+						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 					}
 
 					SelectedLocation = loc;	// NOTE: if a new 'SelectedLocation' is set before firing the
@@ -282,7 +282,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				_overCol = loc.X;
 				_overRow = loc.Y;
 			}
-			base.OnMouseMove(e);												// required to fire RouteView.OnRoutePanelMouseMove()
+			base.OnMouseMove(e); // required to fire RouteView.OnRoutePanelMouseMove()
 		}
 
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -299,7 +299,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 													new MapLocation(
 																loc.Y, loc.X,
 																MapChild.Level));
-					RoutePanelMouseUpEvent(this, args);							// fire RouteView.OnRoutePanelMouseUp()
+					RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 				}
 			}
 		}
@@ -321,7 +321,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (!MainViewUnderlay.that.MainViewOverlay.FirstClick)
 				{
-					MapChild.Location = new MapLocation(0,0, MapChild.Level);	// fire SelectLocationEvent
+					MapChild.Location = new MapLocation(0,0, MapChild.Level); // fire SelectLocationEvent
 
 					var loc = new Point(0,0);
 					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
@@ -332,7 +332,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 														MouseButtons.Left,
 														MapChild[0,0],
 														MapChild.Location);
-						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
+						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
 						ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
 						ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
@@ -348,7 +348,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 														MapChild[MapChild.Location.Row,
 																 MapChild.Location.Col],
 														MapChild.Location);
-						RoutePanelMouseDownEvent(this, args);					// fire RouteView.OnRoutePanelMouseDown()
+						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
 						ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
 						ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
@@ -397,7 +397,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 																MouseButtons.Left,
 																MapChild[r,c],
 																MapChild.Location);
-								RoutePanelMouseDownEvent(this, args);			// fire RouteView.OnRoutePanelMouseDown()
+								RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
 								ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
 								ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
@@ -413,7 +413,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
 																								MouseButtons.None,
 																								0, 0,0, vert));
-							MapChild.Location = new MapLocation(				// fire SelectLocationEvent
+							MapChild.Location = new MapLocation( // fire SelectLocationEvent
 															MapChild.Location.Row,
 															MapChild.Location.Col,
 															level);
@@ -466,7 +466,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 																		MouseButtons.Left,
 																		MapChild[r,c],
 																		MapChild.Location);
-										RoutePanelMouseUpEvent(this, args);		// fire RouteView.OnRoutePanelMouseUp()
+										RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
 										ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
 										ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
@@ -494,7 +494,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 									ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
 																										MouseButtons.None,
 																										0, 0,0, vert));
-									MapChild.Location = new MapLocation(		// fire SelectLocationEvent
+									MapChild.Location = new MapLocation( // fire SelectLocationEvent
 																	MapChild.Location.Row,
 																	MapChild.Location.Col,
 																	level);
@@ -505,7 +505,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 																		MouseButtons.Left,
 																		MapChild[MapChild.Location.Row, MapChild.Location.Col],
 																		MapChild.Location);
-										RoutePanelMouseUpEvent(this, args);		// fire RouteView.OnRoutePanelMouseUp()
+										RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
 										ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
 										ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();

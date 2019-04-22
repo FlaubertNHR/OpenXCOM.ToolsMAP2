@@ -37,7 +37,17 @@ namespace MapView
 
 
 		#region Fields
+		/// <summary>
+		/// Suppresses display of the targeter sprite when the panel loses
+		/// focus or the mouse-cursor leaves the clientarea. This gets overruled
+		/// by '_targeterForced'.
+		/// </summary>
 		private bool _targeterSuppressed;
+
+		/// <summary>
+		/// Forces display of the targeter sprite at the DragEnd position when
+		/// tiles are selected by keyboard. This overrules '_targeterSuppressed'.
+		/// </summary>
 		private bool _targeterForced;
 
 		private int _col; // these are used to print the clicked location
@@ -650,7 +660,7 @@ namespace MapView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					MapBase.Location = new MapLocation(0,0, MapBase.Level);		// fire SelectLocationEvent
+					MapBase.Location = new MapLocation(0,0, MapBase.Level); // fire SelectLocationEvent
 
 					var loc = new Point(0,0);
 					ProcessSelection(loc,loc);
@@ -812,7 +822,7 @@ namespace MapView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					MapBase.Location = new MapLocation(							// fire SelectLocationEvent
+					MapBase.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;

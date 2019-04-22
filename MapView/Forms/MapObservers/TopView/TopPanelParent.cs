@@ -382,7 +382,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					// set and all these OnLocationSelected events really fire out of !
 //					MainViewUnderlay.that.MainViewOverlay.FirstClick = true;
 
-					MapBase.Location = new MapLocation(							// fire SelectLocationEvent
+					MapBase.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;
