@@ -839,8 +839,8 @@ namespace MapView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					_colOver = loc.X;
-					_rowOver = loc.Y;
+					_colOver = loc.X; // stop the targeter from persisting at its
+					_rowOver = loc.Y; // previous location when the form is activated.
 
 					MapBase.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
