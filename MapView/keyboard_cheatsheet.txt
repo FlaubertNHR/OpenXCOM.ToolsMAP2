@@ -53,7 +53,7 @@ Control+c - copy tile(s)
 Control+v - paste tile(s)
 Delete - delete tile(s)
 
-f - fill selected tile(s)' selected quadrant with selected part'
+f - fill selected tile(s)' selected quadrant with selected part
 
 Control+s - save the Map if the panel has focus
 
@@ -75,6 +75,12 @@ it's gone rogue.
 TILEVIEW
 --------
 Arrow keys navigate the table.
+Home - goto first tile on row
+End - goto last tile on row
+PageUp - goto tile 1 page up
+PageDown - goto tile 1 page down
+Control + Home - goto first tile in the table
+Control + End - goto last tile in the table
 
 i - show MCD info (also, double-click a part)
 F9 - open selected part in PckView
@@ -121,8 +127,8 @@ ROUTEVIEW
 numeric keypad - navigate the map
 Subtract - level up
 Add - level down
-Shift + numeric keypad (incl/ Subtract and Add) - drag selected node to a blank
-tile only
+Shift + numeric keypad (incl/ Subtract and Add) - drag selected node to an
+adjacent tile iff it doesn't already have a node
 
 Control+x - cut selected node
 Control+c - copy selected node
@@ -130,6 +136,6 @@ Control+v - paste cut/copied node
 Delete - delete selected node
 
 Escape - deselect selected node
-Enter - select node on selected tile if one exists else create node there
+Enter - select node on selected tile if one exists else create a node there
 
 Control+s - save the Routes if the panel has focus
