@@ -17,7 +17,8 @@ Built against .NET 4.5.1
 [MapView2_190422.7z](https://drive.google.com/file/d/1SPjj31nwhw_65A7ph86PjWQmjE0FNxi8/view?usp=sharing)
 
 - keyboard shortcuts: see keyboard_cheatsheet.txt or the CHM Helpfile
-- several UI changes, insubstantial but noticeable
+- several UI changes, insubstantial (mechanically) but noticeable
+- the Maptree gets double-buffered to stop flicker (non-Mono build only)
 
 2019 April 7<br>
 [MapView2_190407b.7z](https://drive.google.com/file/d/1ZFZ2SmzzW1ZZ7QzWsqTPkLEEF9wD7j_V/view?usp=sharing)
