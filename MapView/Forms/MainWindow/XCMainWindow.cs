@@ -1266,16 +1266,12 @@ namespace MapView
 				}
 				else if (e.Node == Searched)
 				{
+					pen = Pens.SlateBlue;
+
 					if (tvMaps.Focused)
-					{
 						brush = Brushes.SkyBlue;
-						pen   = Pens.SlateBlue;
-					}
 					else
-					{
 						brush = Brushes.PowderBlue;
-						pen   = Pens.SlateBlue;
-					}
 				}
 				else
 				{
