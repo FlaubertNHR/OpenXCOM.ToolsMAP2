@@ -839,6 +839,9 @@ namespace MapView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
+					_colOver = loc.X;
+					_rowOver = loc.Y;
+
 					MapBase.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapBase.Level);
