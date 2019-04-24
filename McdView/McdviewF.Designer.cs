@@ -23,6 +23,7 @@
 		private System.Windows.Forms.MenuItem miEditMenu;
 		private System.Windows.Forms.MenuItem miZeroVals;
 		private System.Windows.Forms.MenuItem miCheckVals;
+		private System.Windows.Forms.MenuItem miCopyPanel;
 		private System.Windows.Forms.MenuItem miHelpMenu;
 		private System.Windows.Forms.MenuItem miHelp;
 		private System.Windows.Forms.MenuItem miAbout;
@@ -289,6 +290,7 @@
 			this.miEditMenu = new System.Windows.Forms.MenuItem();
 			this.miZeroVals = new System.Windows.Forms.MenuItem();
 			this.miCheckVals = new System.Windows.Forms.MenuItem();
+			this.miCopyPanel = new System.Windows.Forms.MenuItem();
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miAbout = new System.Windows.Forms.MenuItem();
@@ -641,7 +643,8 @@
 			this.miEditMenu.Index = 2;
 			this.miEditMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miZeroVals,
-			this.miCheckVals});
+			this.miCheckVals,
+			this.miCopyPanel});
 			this.miEditMenu.Text = "&Edit";
 			// 
 			// miZeroVals
@@ -659,6 +662,13 @@
 			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
 			this.miCheckVals.Text = "Check STR&ICT values";
 			this.miCheckVals.Click += new System.EventHandler(this.OnClick_CheckVals);
+			// 
+			// miCopyPanel
+			// 
+			this.miCopyPanel.Index = 2;
+			this.miCopyPanel.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
+			this.miCopyPanel.Text = "Open Copy &panel ...";
+			this.miCopyPanel.Click += new System.EventHandler(this.OnClick_OpenCopyPanel);
 			// 
 			// miHelpMenu
 			// 

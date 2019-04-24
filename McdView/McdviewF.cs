@@ -172,28 +172,30 @@ namespace McdView
 			isRunT = true;
 			InitializeComponent();
 
-			gb_Overhead.Location = new Point(0, 0);
-			gb_General .Location = new Point(0, gb_Overhead.Bottom);
-			gb_Health  .Location = new Point(0, gb_General .Bottom);
-			gb_Door    .Location = new Point(0, gb_Health  .Bottom);
+			gb_Overhead    .Location = new Point(0,                                        0);
+			gb_General     .Location = new Point(0,                                        gb_Overhead.Bottom);
+			gb_Health      .Location = new Point(0,                                        gb_General .Bottom);
+			gb_Door        .Location = new Point(0,                                        gb_Health  .Bottom);
 
-			gb_Tu       .Location = new Point(gb_Overhead.Right, 0);
-			gb_Block    .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
-			gb_Step     .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
-			gb_Elevation.Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
+			gb_Tu          .Location = new Point(gb_Overhead.Right,                        0);
+			gb_Block       .Location = new Point(gb_Overhead.Right,                        gb_Tu   .Bottom);
+			gb_Step        .Location = new Point(gb_Overhead.Right,                        gb_Block.Bottom);
+			gb_Elevation   .Location = new Point(gb_Overhead.Right,                        gb_Step .Bottom);
 
-			gb_Explode.Location = new Point(gb_Tu.Right, 0);
-			gb_Unused .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
+			gb_Explode     .Location = new Point(gb_Tu.Right,                              0);
+			gb_Unused      .Location = new Point(gb_Tu.Right,                              gb_Explode.Bottom);
 
-			lbl_Strict.Location = new Point(5,                gb_Door.Bottom + 5);
-			cb_Strict .Location = new Point(lbl_Strict.Right, gb_Door.Bottom + 5);
+			int botDoor = gb_Door.Bottom + 5;
 
-			lbl_SpriteShade.Location = new Point(cb_Strict      .Right + 10, gb_Door.Bottom + 5);
-			tb_SpriteShade .Location = new Point(lbl_SpriteShade.Right,      gb_Door.Bottom + 5);
-			bar_SpriteShade.Location = new Point(tb_SpriteShade .Right,      gb_Door.Bottom + 5);
+			lbl_Strict     .Location = new Point(5,                                        botDoor);
+			cb_Strict      .Location = new Point(lbl_Strict.Right,                         botDoor);
 
-			pnl_IsoLoft.Location = new Point(gb_Loft    .Left - 5 - pnl_IsoLoft.Width, 15);
-			bar_IsoLoft.Location = new Point(pnl_IsoLoft.Left - 5 - bar_IsoLoft.Width, 10);
+			lbl_SpriteShade.Location = new Point(cb_Strict      .Right + 10,               botDoor);
+			tb_SpriteShade .Location = new Point(lbl_SpriteShade.Right,                    botDoor);
+			bar_SpriteShade.Location = new Point(tb_SpriteShade .Right,                    botDoor);
+
+			pnl_IsoLoft    .Location = new Point(gb_Loft    .Left - 5 - pnl_IsoLoft.Width, 15);
+			bar_IsoLoft    .Location = new Point(pnl_IsoLoft.Left - 5 - bar_IsoLoft.Width, 10);
 
 			ClientSize = new Size(
 								gb_Overhead      .Width
@@ -1083,6 +1085,32 @@ namespace McdView
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
+		}
+
+		CopyPanelF _copypanel;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_OpenCopyPanel(object sender, EventArgs e)
+		{
+			if (miCopyPanel.Checked = !miCopyPanel.Checked)
+			{
+				_copypanel = new CopyPanelF(this);
+				_copypanel.Show();
+			}
+			else
+				_copypanel.Dispose();
+		}
+
+		/// <summary>
+		/// Closes the copypanel from the CopyPanelF object itself.
+		/// </summary>
+		internal void CloseCopyPanel()
+		{
+			miCopyPanel.PerformClick();
 		}
 
 		/// <summary>
