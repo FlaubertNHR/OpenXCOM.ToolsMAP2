@@ -64,13 +64,24 @@ namespace McdView
 			}
 		}
 
+		private SpriteCollection _spriteset;
 		internal SpriteCollection Spriteset
-		{ get; private set; }
+		{
+			get { return _spriteset; }
+			private set
+			{
+				PartsPanel.Spriteset = (_spriteset = value);
+			}
+		}
 
 
 		internal bool _spriteShadeEnabled;
 
+#if !DEBUG
 		private int _spriteShadeInt = -1;
+#else
+		private int _spriteShadeInt = 10;
+#endif
 		/// <summary>
 		/// The inverse-gamma adjustment for sprites and icons.
 		/// </summary>
@@ -83,6 +94,9 @@ namespace McdView
 					SpriteShadeFloat = ((float)_spriteShadeInt * 0.03f); // NOTE: 33 is unity.
 
 				InvalidatePanels(false);
+
+				if (_copypanel != null)
+					_copypanel.PartsPanel.Invalidate();
 			}
 		}
 		internal float SpriteShadeFloat
@@ -300,7 +314,7 @@ namespace McdView
 		/// (Win7-64). Also stops flicker on the IsoLoft panel. etc.
 		/// </summary>
 		/// <param name="control">the Control on which to set DoubleBuffered to true</param>
-		private static void SetDoubleBuffered(object control)
+		internal static void SetDoubleBuffered(object control)
 		{
 			// if not remote desktop session then enable double-buffering optimization
 			if (!SystemInformation.TerminalServerSession)
@@ -537,7 +551,7 @@ namespace McdView
 						else
 							pal = Palette.TftdBattle;
 
-						// NOTE: The spriteset is also maintained by a pointer to it
+						// NOTE: The spriteset is also maintained by a pointer
 						// that's stored in each tilepart. Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
@@ -611,7 +625,7 @@ namespace McdView
 						else
 							pal = Palette.TftdBattle;
 
-						// NOTE: The spriteset is also maintained by a pointer to it
+						// NOTE: The spriteset is also maintained by a pointer
 						// that's stored in each tilepart. Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
@@ -677,7 +691,7 @@ namespace McdView
 					else
 						pal = Palette.TftdBattle;
 
-					// NOTE: The spriteset is also maintained by a pointer to it
+					// NOTE: The spriteset is also maintained by a pointer
 					// that's stored in each tilepart. Can be null.
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
@@ -745,7 +759,7 @@ namespace McdView
 				ResourceInfo.ReloadSprites = true;	// is needed here to change palette transparency.
 													// Ie, the palette is transparent in MapView but I want it non-transparent in McdView.
 
-				// NOTE: The spriteset is also maintained by a pointer to it
+				// NOTE: The spriteset is also maintained by a pointer
 				// that's stored in each tilepart. Can be null.
 				Spriteset = ResourceInfo.LoadSpriteset(
 													Label,
@@ -1098,11 +1112,70 @@ namespace McdView
 		{
 			if (miCopyPanel.Checked = !miCopyPanel.Checked)
 			{
-				_copypanel = new CopyPanelF(this);
-				_copypanel.Show();
+				using (var ofd = new OpenFileDialog())
+				{
+					ofd.Title      = "Open an MCD file";
+					ofd.DefaultExt = "MCD";
+					ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
+
+					if (ofd.ShowDialog() == DialogResult.OK)
+					{
+						_copypanel = new CopyPanelF(this);
+						_copypanel.SelId = -1;
+
+						_copypanel.Show();
+
+						ResourceInfo.ReloadSprites = true;
+
+						string pfeMcd = ofd.FileName;
+						string label = Path.GetFileNameWithoutExtension(pfeMcd);
+
+						using (var bs = new BufferedStream(File.OpenRead(pfeMcd)))
+						{
+							_copypanel.Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+
+							Palette pal;
+							if (miPaletteUfo.Checked)
+								pal = Palette.UfoBattle;
+							else
+								pal = Palette.TftdBattle;
+
+							// NOTE: The spriteset is also maintained by a pointer
+							// that's stored in each tilepart. Can be null.
+							_copypanel.Spriteset = ResourceInfo.LoadSpriteset(
+																			label,
+																			Path.GetDirectoryName(pfeMcd),
+																			2,
+																			pal,
+																			true);
+
+							for (int id = 0; id != _copypanel.Parts.Length; ++id)
+							{
+								var bindata = new byte[TilepartFactory.Length];
+								bs.Read(bindata, 0, TilepartFactory.Length);
+								McdRecord record = McdRecordFactory.CreateRecord(bindata);
+
+								_copypanel.Parts[id] = new Tilepart(id, _copypanel.Spriteset, record);
+							}
+
+							Tilepart part;
+							for (int id = 0; id != _copypanel.Parts.Length; ++id)
+							{
+								part = _copypanel.Parts[id];
+								part.Dead      = TilepartFactory.GetDeadPart(     label, id, part.Record, _copypanel.Parts);
+								part.Alternate = TilepartFactory.GetAlternatePart(label, id, part.Record, _copypanel.Parts);
+							}
+						}
+
+						ResourceInfo.ReloadSprites = false;
+					}
+				}
 			}
 			else
+			{
 				_copypanel.Dispose();
+				_copypanel = null;
+			}
 		}
 
 		/// <summary>

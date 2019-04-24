@@ -38,7 +38,7 @@ namespace XCom
 		/// <summary>
 		/// cTor[1]. Creates a quick and dirty blank spriteset for PckView.
 		/// </summary>
-		/// <param name="label"></param>
+		/// <param name="label">file w/out path or extension</param>
 		/// <param name="pal"></param>
 		/// <param name="tabOffset"></param>
 		public SpriteCollection(
@@ -75,16 +75,18 @@ namespace XCom
 		/// tab-record (ie. 2 for 2-byte UFO/TFTD records, 4 for 4-byte TFTD records)</param>
 		/// <param name="pal">the palette to use (typically Palette.UfoBattle
 		/// for UFO sprites or Palette.TftdBattle for TFTD sprites)</param>
+		/// <param name="label">file w/out extension or path</param>
 		public SpriteCollection(
 				Stream fsPck,
 				Stream fsTab,
 				int tabOffsetLength,
-				Palette pal)
+				Palette pal,
+				string label)
 		{
 			//LogFile.WriteLine("SpriteCollection..cTor");
 			TabOffset = tabOffsetLength;
-
-			Pal = pal;
+			Pal       = pal;
+			Label     = label;
 
 			int tabSprites = 0;
 			uint[] offsets;

@@ -74,7 +74,8 @@ namespace MapView
 												fsPck,
 												fsTab,
 												2,
-												Palette.UfoBattle);
+												Palette.UfoBattle,
+												"Extra");
 			}
 		}
 

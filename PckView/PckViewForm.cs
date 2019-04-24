@@ -1604,7 +1604,8 @@ namespace PckView
 												fsPck,
 												fsTab,
 												2,
-												Palette.UfoBattle);
+												Palette.UfoBattle,
+												SpritesetLabel);
 				}
 
 				if (!spriteset.BorkedBigobs && spriteset.Borked)
@@ -1617,7 +1618,8 @@ namespace PckView
 													fsPck,
 													fsTab,
 													4,
-													Palette.TftdBattle);
+													Palette.TftdBattle,
+													SpritesetLabel);
 					}
 				}
 

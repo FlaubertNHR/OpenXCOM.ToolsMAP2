@@ -24,6 +24,9 @@ namespace McdView
 		protected static McdviewF _f;
 
 		protected readonly static Brush BrushHilightsub = new SolidBrush(Color.FromArgb(36, SystemColors.MenuHighlight));
+
+		protected readonly static List<Tilepart> _copyparts = new List<Tilepart>();
+		protected static string _copylabel;
 		#endregion Fields (static)
 
 
@@ -40,21 +43,27 @@ namespace McdView
 		protected bool _bypassScrollZero;
 
 		internal protected readonly SortedSet<int> SubIds = new SortedSet<int>();
-		protected readonly List<Tilepart> _copyparts = new List<Tilepart>();
-		protected string _copylabel;
-
-		protected Tilepart[] _parts;
 		#endregion Fields
 
 
 		#region Properties
+		internal protected CopyPanelF _fcopy
+		{ get; private set; }
+
 		protected virtual int SelId
 		{ get; set; }
 
+		protected Tilepart[] _parts;
+		/// <summary>
+		/// An array of 'Tilepart'.
+		/// IMPORTANT: Only set 'Parts' via 'McdviewF.Parts' when instantiating
+		/// a 'TerrainPanel_main' object and via 'CopyPanelF.Parts' when
+		/// instantiating a 'TerrainPanel_copy' object.
+		/// </summary>
 		internal protected Tilepart[] Parts
 		{
 			get { return _parts; }
-			set // IMPORTANT: Set 'Parts' via McdviewF only or via OpenFileDialog for the copypanel.
+			set
 			{
 				_parts = value;
 
@@ -71,15 +80,23 @@ namespace McdView
 			}
 		}
 
+		internal protected SpriteCollection Spriteset
+		{ get; set; }
+
+
 		protected ContextMenu Context
 		{ get; set; }
 		#endregion Properties
 
 
 		#region cTor
-		internal TerrainPanel(McdviewF f)
+		internal TerrainPanel(McdviewF f, CopyPanelF fcopy = null)
 		{
-			_f = f;
+			_f     = f;
+			_fcopy = fcopy;	// prevent the CopyPanel from borking out during its initial
+							// OnResize events when it tries to get a 'SelId' from 'CopyPanelF'.
+							// That is, '_fcopy' is irrelevant to instantiations of
+							// 'TerrainPanel_main'; is used only by 'TerrainPanel_copy'.
 
 //			SetStyle(ControlStyles.OptimizedDoubleBuffer
 //				   | ControlStyles.AllPaintingInWmPaint
@@ -124,11 +141,11 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnCopyClick(object sender, EventArgs e)
+		protected void OnCopyClick(object sender, EventArgs e)
 		{
 			_copyparts.Clear();
 
-			_copylabel = _f.Label;
+			_copylabel = String.Empty;
 
 			var sels = new List<int>(SubIds);
 			sels.Add(SelId);
@@ -143,7 +160,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnSelectAllClick(object sender, EventArgs e)
+		protected void OnSelectAllClick(object sender, EventArgs e)
 		{
 			for (int i = 0; i != Parts.Length - 1; ++i)
 				SubIds.Add(i);
@@ -160,7 +177,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnDeselectAllClick(object sender, EventArgs e)
+		protected void OnDeselectAllClick(object sender, EventArgs e)
 		{
 			SubIds.Clear();
 			SelId = -1;
@@ -182,9 +199,6 @@ namespace McdView
 
 
 		#region Events (override)
-		private Graphics _graphics;
-		private ImageAttributes _attri;
-
 		// constants for vertical align ->
 		const int y1_sprite = 0;
 		const int y1_fill   = XCImage.SpriteHeight40;
@@ -192,6 +206,9 @@ namespace McdView
 		const int y2_sprite = y1_fill + y1_fill_h;
 		const int y2_line   = y2_sprite + XCImage.SpriteHeight40 + 1;
 		const int y3_sprite = y2_line;
+
+		private Graphics _graphics;
+		private ImageAttributes _attri;
 
 		/// <summary>
 		/// Paints this TerrainPanel.
@@ -223,11 +240,11 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset, 0,
 										i * XCImage.SpriteWidth32 + i + offset, Height);
 
-					if (_f.Spriteset != null)
+					if (Spriteset != null)
 					{
 						Tilepart part = Parts[i];
 						if (part != null // not sure why Tilepart entries are null that aren't null but they are
-							&& part.Record.Sprite1 < _f.Spriteset.Count
+							&& part.Record.Sprite1 < Spriteset.Count
 							&& part[0] != null
 							&& (sprite = part[0].Sprite) != null)
 						{
@@ -286,7 +303,7 @@ namespace McdView
 										McdviewF.FLAGS);
 				}
 
-				if (_f.Spriteset != null)
+				if (Spriteset != null)
 				{
 					for (i = 0; i != Parts.Length; ++i) // dead part ->
 					{
@@ -294,7 +311,7 @@ namespace McdView
 						if (part != null)
 						{
 							if (part.Dead != null
-								&& part.Dead.Record.Sprite1 < _f.Spriteset.Count
+								&& part.Dead.Record.Sprite1 < Spriteset.Count
 								&& part.Dead[0] != null
 								&& (sprite = part.Dead[0].Sprite) != null)
 							{
@@ -319,7 +336,7 @@ namespace McdView
 								0,     y2_line,
 								Width, y2_line);
 
-				if (_f.Spriteset != null)
+				if (Spriteset != null)
 				{
 					for (i = 0; i != Parts.Length; ++i) // alternate part ->
 					{
@@ -327,7 +344,7 @@ namespace McdView
 						if (part != null)
 						{
 							if (part.Alternate != null
-								&& part.Alternate.Record.Sprite1 < _f.Spriteset.Count
+								&& part.Alternate.Record.Sprite1 < Spriteset.Count
 								&& part.Alternate[0] != null
 								&& (sprite = part.Alternate[0].Sprite) != null)
 							{
@@ -565,241 +582,6 @@ namespace McdView
 				}
 			}
 		}
-
-/*		/// <summary>
-		/// Takes keyboard-input from the Form's KeyDown event to select a part
-		/// or parts.
-		/// </summary>
-		/// <param name="e"></param>
-		internal void KeyInput(KeyEventArgs e)
-		{
-			switch (e.KeyCode)
-			{
-				case Keys.Left:
-				case Keys.Up:
-				case Keys.Back:
-					if (SelId != -1)
-					{
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
-								SubIds.Clear();
-								if (SelId == 0)
-									Invalidate();
-							}
-							else if (SelId != 0)
-								SubIds.Remove(SelId);
-						}
-						else if (SelId != 0)
-							SubIds.Add(SelId);
-
-						if (SelId != 0)
-							SelId -= 1;
-					}
-					break;
-
-				case Keys.Right:
-				case Keys.Down:
-					if (SelId != -1)
-						goto case Keys.Space;
-					break;
-				case Keys.Space: // at present only the spacebar can change the selected id from #-1 to #0
-					if (!e.Control)
-					{
-						if (!e.Shift)
-						{
-							SubIds.Clear();
-							if (SelId == Parts.Length - 1)
-								Invalidate();
-						}
-						else if (SelId != Parts.Length - 1)
-							SubIds.Remove(SelId);
-					}
-					else if (SelId != Parts.Length - 1)
-						SubIds.Add(SelId);
-
-					if (SelId != Parts.Length - 1)
-						SelId += 1;
-					break;
-
-				case Keys.PageUp:
-					if (SelId != -1)
-					{
-						int id = SelId - (Width / (XCImage.SpriteWidth32 + 1));
-						if (id < 0) id = 0;
-	
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
-								SubIds.Clear();
-								if (SelId == 0)
-									Invalidate();
-							}
-							else if (SelId != 0)
-							{
-								for (int i = SelId; i != id; --i)
-									SubIds.Remove(i);
-							}
-						}
-						else if (SelId != 0)
-						{
-							for (int i = SelId; i != id; --i)
-								SubIds.Add(i);
-						}
-	
-						if (SelId != 0)
-							SelId = id;
-					}
-					break;
-
-				case Keys.PageDown:
-					if (SelId != -1)
-					{
-						int id = SelId + (Width / (XCImage.SpriteWidth32 + 1));
-						if (id > Parts.Length - 1) id = Parts.Length - 1;
-	
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
-								SubIds.Clear();
-								if (SelId == Parts.Length - 1)
-									Invalidate();
-							}
-							else if (SelId != Parts.Length - 1)
-							{
-								for (int i = SelId; i != id; ++i)
-									SubIds.Remove(i);
-							}
-						}
-						else if (SelId != Parts.Length - 1)
-						{
-							for (int i = SelId; i != id; ++i)
-								SubIds.Add(i);
-						}
-	
-						if (SelId != Parts.Length - 1)
-							SelId = id;
-					}
-					break;
-
-				case Keys.Home:
-					if (SelId != -1)
-					{
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
-								SubIds.Clear();
-								if (SelId == 0)
-									Invalidate();
-							}
-							else if (SelId != 0)
-							{
-								for (int i = SelId; i != 0; --i)
-									SubIds.Remove(i);
-							}
-						}
-						else if (SelId != 0)
-						{
-							for (int i = SelId; i != 0; --i)
-								SubIds.Add(i);
-						}
-
-						SelId = 0;
-					}
-					break;
-
-				case Keys.End:
-					if (SelId != -1)
-					{
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
-								SubIds.Clear();
-								if (SelId == Parts.Length - 1)
-									Invalidate();
-							}
-							else if (SelId != Parts.Length - 1)
-							{
-								for (int i = SelId; i != Parts.Length - 1; ++i)
-									SubIds.Remove(i);
-							}
-						}
-						else if (SelId != Parts.Length - 1)
-						{
-							for (int i = SelId; i != Parts.Length - 1; ++i)
-								SubIds.Add(i);
-						}
-
-						SelId = Parts.Length - 1;
-					}
-					break;
-
-
-				// Edit functions (keyboard) follow ...
-				// IMPORTANT: The conditions shall be synched w/ OnPopup_Context().
-				case Keys.D:
-					if (Parts != null)
-					{
-						if (!e.Control)											// add
-							OnAddClick(null, EventArgs.Empty);
-						else													// add range
-							OnAddRangeClick(null, EventArgs.Empty);
-					}
-					break;
-
-
-				case Keys.X:													// cut
-					if (e.Control && SelId != -1)
-						OnCutClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.C:													// copy
-					if (e.Control && SelId != -1)
-						OnCopyClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.V:													// insert
-					if (e.Control && Parts != null && _copyparts.Count != 0)
-						OnInsertClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.Delete:												// delete
-					if (SelId != -1)
-						OnDeleteClick(null, EventArgs.Empty);
-					break;
-
-
-				case Keys.OemMinus: // drugs ...
-				case Keys.Subtract:												// swap left
-					if (SelId > 0)
-						OnSwapLeftClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.Oemplus: // drugs ...
-				case Keys.Add:													// swap right
-					if (SelId != -1 && SelId != Parts.Length - 1)
-						OnSwapRightClick(null, EventArgs.Empty);
-					break;
-
-
-				case Keys.A:													// select all
-					if (e.Control && Parts != null && Parts.Length != 0)
-						OnSelectAllClick(null, EventArgs.Empty);
-					break;
-
-				// NOTE: Escape for deselect all is handled by the caller: McdviewF.OnKeyDown().
-
-				case Keys.F:													// append file
-					if (Parts != null)
-						OnFileClick(null, EventArgs.Empty);
-					break;
-			}
-		} */
 
 /*		/// <summary>
 		/// Gets the loc of the currently selected tile relative to the table.

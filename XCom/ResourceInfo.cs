@@ -77,6 +77,8 @@ namespace XCom
 
 				string pfePck = pfSpriteset + GlobalsXC.PckExt;
 				string pfeTab = pfSpriteset + GlobalsXC.TabExt;
+				//LogFile.WriteLine(". pfePck= " + pfePck);
+				//LogFile.WriteLine(". pfeTab= " + pfeTab);
 
 				if (File.Exists(pfePck) && File.Exists(pfeTab))
 				{
@@ -104,7 +106,8 @@ namespace XCom
 																fsPck,
 																fsTab,
 																offsetLength,
-																pal);
+																pal,
+																terrain);
 							if (spriteset.Borked)
 							{
 								using (var f = new Infobox(
@@ -119,7 +122,11 @@ namespace XCom
 							spritesets.Add(pfSpriteset, spriteset); // NOTE: Add the spriteset even if it is Borked.
 						}
 					}
-					// else WARN: Spriteset already found in the collection.
+					else LogFile.WriteLine("Spriteset already found in the collection.");
+
+					//LogFile.WriteLine(". pal= " + pal.Label + " / pfSpriteset= " + pfSpriteset);
+					//LogFile.WriteLine(". _spritesets_byPalette[pal][pfSpriteset]= " + (_spritesets_byPalette[pal][pfSpriteset] != null ? "found" : "NULL"));
+					//LogFile.WriteLine("");
 
 					return _spritesets_byPalette[pal][pfSpriteset];
 				}

@@ -145,7 +145,7 @@ namespace McdView
 
 			array[id] = new Tilepart(
 									id,
-									_f.Spriteset,
+									Spriteset,
 									record);
 			array[id].Dead      =
 			array[id].Alternate = null;
@@ -192,7 +192,7 @@ namespace McdView
 
 							array[i] = new Tilepart(
 												i,
-												_f.Spriteset,
+												Spriteset,
 												record);
 							array[i].Dead =
 							array[i].Alternate = null;
@@ -229,7 +229,7 @@ namespace McdView
 			OnDeleteClick(null, EventArgs.Empty);
 		}
 
-		/// <summary>
+/*		/// <summary>
 		/// Copies a currently selected part along with any sub-selected parts
 		/// to the copy-array.
 		/// </summary>
@@ -247,7 +247,7 @@ namespace McdView
 
 			foreach (int id in sels)
 				_copyparts.Add(Parts[id].Clone());
-		}
+		} */
 
 		/// <summary>
 		/// Inserts the copy-array into the parts-array after the currently
@@ -593,7 +593,7 @@ namespace McdView
 			}
 		}
 
-		/// <summary>
+/*		/// <summary>
 		/// Selects the last part and sub-selects all other parts.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -619,7 +619,7 @@ namespace McdView
 		{
 			SubIds.Clear();
 			SelId = -1;
-		}
+		} */
 		#endregion Events (context)
 
 /*
@@ -826,6 +826,7 @@ namespace McdView
 
 				// Edit functions (keyboard) follow ...
 				// IMPORTANT: The conditions shall be synched w/ OnPopup_Context().
+
 				case Keys.D:
 					if (Parts != null)
 					{
@@ -884,23 +885,6 @@ namespace McdView
 					break;
 			}
 		}
-
-/*		/// <summary>
-		/// Gets the loc of the currently selected tile relative to the table.
-		/// </summary>
-		/// <returns></returns>
-		private int GetTileLeft()
-		{
-			return SelId * (XCImage.SpriteWidth32 + 1);
-		}
-		/// <summary>
-		/// Gets the loc+width of the currently selected tile relative to the table.
-		/// </summary>
-		/// <returns></returns>
-		private int GetTileRight()
-		{
-			return SelId * (XCImage.SpriteWidth32 + 1) + XCImage.SpriteWidth32;
-		} */
 		#endregion Methods
 	}
 }

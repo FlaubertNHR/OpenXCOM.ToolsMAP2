@@ -15,10 +15,19 @@ namespace McdView
 		:
 			TerrainPanel
 	{
+		#region Properties
+		protected override int SelId
+		{
+			get { return _fcopy.SelId; }
+			set { _fcopy.SelId = value; }
+		}
+		#endregion Properties
+
+
 		#region cTor
-		internal TerrainPanel_copy(McdviewF f)
+		internal TerrainPanel_copy(McdviewF f, CopyPanelF fcopy)
 			:
-				base(f)
+				base(f, fcopy)
 		{
 			CreateContext();
 		}
@@ -28,52 +37,24 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-/*			var itAdd         = new MenuItem("add",             OnAddClick);			// d key
-			var itAddRange    = new MenuItem("add range ...",   OnAddRangeClick);		// Ctrl+d key
+			var itCopy        = new MenuItem("copy",         OnCopyClick);			// Ctrl+c key
 
 			var itSep0        = new MenuItem("-");
 
-			var itCut         = new MenuItem("cut",             OnCutClick);			// Ctrl+x key
-			var itCopy        = new MenuItem("copy",            OnCopyClick);			// Ctrl+c key
-			var itInsert      = new MenuItem("insert after",    OnInsertClick);			// Ctrl+v key
-			var itDelete      = new MenuItem("delete",          OnDeleteClick);			// Delete key
-
-			var itSep1        = new MenuItem("-");
-
-			var itFile        = new MenuItem("append file ...", OnFileClick);			// f key
-
-			var itSep2        = new MenuItem("-");
-
-			var itLeft        = new MenuItem("swap left",       OnSwapLeftClick);		// - key
-			var itRight       = new MenuItem("swap right",      OnSwapRightClick);		// + key
-
-			var itSep3        = new MenuItem("-");
-
-			var itSelect      = new MenuItem("select all",      OnSelectAllClick);		// Ctrl+a key
-			var itDeselect    = new MenuItem("deselect all",    OnDeselectAllClick);	// Esc
+			var itSelect      = new MenuItem("select all",   OnSelectAllClick);		// Ctrl+a key
+			var itDeselect    = new MenuItem("deselect all", OnDeselectAllClick);	// Esc
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
 										{
-											itAdd,			//  0
-											itAddRange,		//  1
-											itSep0,			//  2
-											itCut,			//  3
-											itCopy,			//  4
-											itInsert,		//  5
-											itDelete,		//  6
-											itSep1,			//  7
-											itFile,			//  8
-											itSep2,			//  9
-											itLeft,			// 10
-											itRight,		// 11
-											itSep3,			// 12
-											itSelect,		// 13
-											itDeselect		// 14
+											itCopy,		// 0
+											itSep0,		// 1
+											itSelect,	// 2
+											itDeselect	// 3
 										});
 			ContextMenu = Context;
 
-			Context.Popup += OnPopup_Context; */
+			Context.Popup += OnPopup_Context;
 		}
 		#endregion cTor
 
@@ -88,37 +69,15 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPopup_Context(object sender, EventArgs e)
 		{
-/*			bool parts = (Parts != null);
+			bool parts = (Parts != null);
 			bool selid = (SelId != -1);
 
-			Context.MenuItems[0].Enabled = parts;								// add
-			Context.MenuItems[1].Enabled = parts;								// add range
-
-			Context.MenuItems[3].Enabled = selid;								// cut
-			Context.MenuItems[4].Enabled = selid;								// copy
-			Context.MenuItems[5].Enabled = parts && _copyparts.Count != 0;		// insert
-			Context.MenuItems[6].Enabled = selid;								// delete
-
-			Context.MenuItems[8].Enabled = (parts && false);					// file
-
-			Context.MenuItems[10].Enabled =          SelId > 0;					// left
-			Context.MenuItems[11].Enabled = selid && SelId != Parts.Length - 1;	// right
-
-			Context.MenuItems[13].Enabled = parts && Parts.Length != 0;			// select
-			Context.MenuItems[14].Enabled = selid;								// deselect */
+			Context.MenuItems[0].Enabled = selid;						// copy
+			Context.MenuItems[2].Enabled = parts && Parts.Length != 0;	// select
+			Context.MenuItems[3].Enabled = selid;						// deselect
 		}
 
 /*		/// <summary>
-		/// Closes the contextmenu.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnIdClick(object sender, EventArgs e)
-		{
-			Context.Dispose();
-		} */
-
-		/// <summary>
 		/// Copies a currently selected part along with any sub-selected parts
 		/// to the copy-array.
 		/// </summary>
@@ -164,7 +123,7 @@ namespace McdView
 		{
 			SubIds.Clear();
 			SelId = -1;
-		}
+		} */
 		#endregion Events (context)
 
 /*
@@ -195,26 +154,6 @@ namespace McdView
 */
 
 		#region Methods
-/*		/// <summary>
-		/// Scrolls the panel to ensure that the currently selected part is
-		/// fully displayed.
-		/// </summary>
-		internal void ScrollToPart()
-		{
-			if (SelId != -1 && Scroller.Enabled)
-			{
-				int x = SelId * (XCImage.SpriteWidth32 + 1);
-				if (x < Scroller.Value)
-				{
-					Scroller.Value = x;
-				}
-				else if ((x += XCImage.SpriteWidth32) > Width + Scroller.Value)
-				{
-					Scroller.Value = x - Width;
-				}
-			}
-		} */
-
 		/// <summary>
 		/// Takes keyboard-input from the Form's KeyDown event to select a part
 		/// or parts.
@@ -391,11 +330,13 @@ namespace McdView
 
 				// Edit functions (keyboard) follow ...
 				// IMPORTANT: The conditions shall be synched w/ OnPopup_Context().
-				case Keys.C:													// copy
+
+				case Keys.C:												// copy
 					if (e.Control && SelId != -1)
 						OnCopyClick(null, EventArgs.Empty);
 					break;
-				case Keys.A:													// select all
+
+				case Keys.A:												// select all
 					if (e.Control && Parts != null && Parts.Length != 0)
 						OnSelectAllClick(null, EventArgs.Empty);
 					break;
@@ -403,23 +344,6 @@ namespace McdView
 				// NOTE: Escape for deselect all is handled by the caller: McdviewF.OnKeyDown().
 			}
 		}
-
-/*		/// <summary>
-		/// Gets the loc of the currently selected tile relative to the table.
-		/// </summary>
-		/// <returns></returns>
-		private int GetTileLeft()
-		{
-			return SelId * (XCImage.SpriteWidth32 + 1);
-		}
-		/// <summary>
-		/// Gets the loc+width of the currently selected tile relative to the table.
-		/// </summary>
-		/// <returns></returns>
-		private int GetTileRight()
-		{
-			return SelId * (XCImage.SpriteWidth32 + 1) + XCImage.SpriteWidth32;
-		} */
 		#endregion Methods
 	}
 }
