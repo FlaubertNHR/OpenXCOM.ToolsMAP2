@@ -21,6 +21,10 @@ namespace McdView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="f"></param>
 		internal CopyPanelF(McdviewF f)
 		{
 			InitializeComponent();
@@ -40,6 +44,10 @@ namespace McdView
 
 
 		#region Events (override)
+		/// <summary>
+		/// Closes (and disposes) this CopyPanelF object.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 //			base.OnFormClosing(e);

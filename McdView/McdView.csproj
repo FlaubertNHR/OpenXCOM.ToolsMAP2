@@ -91,9 +91,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordLabel.cs" />
     <Compile Include="RecordTextbox.cs" />
-    <Compile Include="TerrainPanel.cs" />
+    <Compile Include="TerrainPanel_copy.cs" />
+    <Compile Include="TerrainPanel_main.cs" />
     <Compile Include="ScanGiconF.cs" />
     <Compile Include="SpritesetF.cs" />
+    <Compile Include="TerrainPanel.cs" />
     <Compile Include="YamlMetrics.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

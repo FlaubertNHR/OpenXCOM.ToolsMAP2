@@ -47,7 +47,7 @@ namespace McdView
 
 
 		#region Properties
-		internal TerrainPanel PartsPanel
+		internal TerrainPanel_main PartsPanel
 		{ get; private set; }
 
 		private Tilepart[] _parts;
@@ -218,7 +218,7 @@ namespace McdView
 
 			YamlMetrics.LoadWindowMetrics(this);
 
-			PartsPanel = new TerrainPanel(this);
+			PartsPanel = new TerrainPanel_main(this);
 			gb_Collection.Controls.Add(PartsPanel);
 			PartsPanel.Width = gb_Collection.Width - 10;
 
