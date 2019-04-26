@@ -19,8 +19,8 @@ namespace McdView
 		#region Properties
 		protected override int SelId
 		{
-			get { /* LogFile.WriteLine("_main SelId get"); */ return _f.SelId; }
-			set { /* LogFile.WriteLine("_main SelId set"); */ _f.SelId = value; }
+			get { return _f.SelId; }
+			set { _f.SelId = value; }
 		}
 		#endregion Properties
 
@@ -38,48 +38,48 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itAdd         = new MenuItem("add",             OnAddClick);			// d key
-			var itAddRange    = new MenuItem("add range ...",   OnAddRangeClick);		// Ctrl+d key
+			var itAdd      = new MenuItem("add",             OnAddClick);			// d key
+			var itAddRange = new MenuItem("add range ...",   OnAddRangeClick);		// Ctrl+d key
 
-			var itSep0        = new MenuItem("-");
+			var itSep0     = new MenuItem("-");
 
-			var itCut         = new MenuItem("cut",             OnCutClick);			// Ctrl+x key
-			var itCopy        = new MenuItem("copy",            OnCopyClick);			// Ctrl+c key
-			var itInsert      = new MenuItem("insert after",    OnInsertClick);			// Ctrl+v key
-			var itDelete      = new MenuItem("delete",          OnDeleteClick);			// Delete key
+			var itCut      = new MenuItem("cut",             OnCutClick);			// Ctrl+x key
+			var itCopy     = new MenuItem("copy",            OnCopyClick);			// Ctrl+c key
+			var itInsert   = new MenuItem("insert after",    OnInsertClick);		// Ctrl+v key
+			var itDelete   = new MenuItem("delete",          OnDeleteClick);		// Delete key
 
-			var itSep1        = new MenuItem("-");
+			var itSep1     = new MenuItem("-");
 
-			var itFile        = new MenuItem("append file ...", OnFileClick);			// f key
+			var itFile     = new MenuItem("append file ...", OnFileClick);			// f key
 
-			var itSep2        = new MenuItem("-");
+			var itSep2     = new MenuItem("-");
 
-			var itLeft        = new MenuItem("swap left",       OnSwapLeftClick);		// - key
-			var itRight       = new MenuItem("swap right",      OnSwapRightClick);		// + key
+			var itLeft     = new MenuItem("swap left",       OnSwapLeftClick);		// - key
+			var itRight    = new MenuItem("swap right",      OnSwapRightClick);		// + key
 
-			var itSep3        = new MenuItem("-");
+			var itSep3     = new MenuItem("-");
 
-			var itSelect      = new MenuItem("select all",      OnSelectAllClick);		// Ctrl+a key
-			var itDeselect    = new MenuItem("deselect all",    OnDeselectAllClick);	// Esc
+			var itSelect   = new MenuItem("select all",      OnSelectAllClick);		// Ctrl+a key
+			var itDeselect = new MenuItem("deselect all",    OnDeselectAllClick);	// Esc
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
 										{
-											itAdd,			//  0
-											itAddRange,		//  1
-											itSep0,			//  2
-											itCut,			//  3
-											itCopy,			//  4
-											itInsert,		//  5
-											itDelete,		//  6
-											itSep1,			//  7
-											itFile,			//  8
-											itSep2,			//  9
-											itLeft,			// 10
-											itRight,		// 11
-											itSep3,			// 12
-											itSelect,		// 13
-											itDeselect		// 14
+											itAdd,		//  0
+											itAddRange,	//  1
+											itSep0,		//  2
+											itCut,		//  3
+											itCopy,		//  4
+											itInsert,	//  5
+											itDelete,	//  6
+											itSep1,		//  7
+											itFile,		//  8
+											itSep2,		//  9
+											itLeft,		// 10
+											itRight,	// 11
+											itSep3,		// 12
+											itSelect,	// 13
+											itDeselect	// 14
 										});
 			ContextMenu = Context;
 
@@ -228,26 +228,6 @@ namespace McdView
 			OnCopyClick(  null, EventArgs.Empty);
 			OnDeleteClick(null, EventArgs.Empty);
 		}
-
-/*		/// <summary>
-		/// Copies a currently selected part along with any sub-selected parts
-		/// to the copy-array.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnCopyClick(object sender, EventArgs e)
-		{
-			_copyparts.Clear();
-
-			_copylabel = _f.Label;
-
-			var sels = new List<int>(SubIds);
-			sels.Add(SelId);
-			sels.Sort();
-
-			foreach (int id in sels)
-				_copyparts.Add(Parts[id].Clone());
-		} */
 
 		/// <summary>
 		/// Inserts the copy-array into the parts-array after the currently
@@ -592,34 +572,6 @@ namespace McdView
 				}
 			}
 		}
-
-/*		/// <summary>
-		/// Selects the last part and sub-selects all other parts.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnSelectAllClick(object sender, EventArgs e)
-		{
-			for (int i = 0; i != Parts.Length - 1; ++i)
-				SubIds.Add(i);
-
-			if (SelId != Parts.Length - 1)
-				SelId  = Parts.Length - 1;
-			else
-				Invalidate();
-		}
-
-		/// <summary>
-		/// Deselects a currently selected part as well as any sub-selected
-		/// parts.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnDeselectAllClick(object sender, EventArgs e)
-		{
-			SubIds.Clear();
-			SelId = -1;
-		} */
 		#endregion Events (context)
 
 

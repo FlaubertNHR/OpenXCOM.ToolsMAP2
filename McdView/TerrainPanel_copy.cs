@@ -18,8 +18,8 @@ namespace McdView
 		#region Properties
 		protected override int SelId
 		{
-			get { /* XCom.LogFile.WriteLine("_copy SelId get"); */ return _fcopy.SelId; }
-			set { /* XCom.LogFile.WriteLine("_copy SelId get"); */ _fcopy.SelId = value; }
+			get { return _fcopy.SelId; }
+			set { _fcopy.SelId = value; }
 		}
 		#endregion Properties
 
@@ -76,62 +76,12 @@ namespace McdView
 			Context.MenuItems[2].Enabled = parts && Parts.Length != 0;	// select
 			Context.MenuItems[3].Enabled = selid;						// deselect
 		}
-
-/*		/// <summary>
-		/// Copies a currently selected part along with any sub-selected parts
-		/// to the copy-array.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnCopyClick(object sender, EventArgs e)
-		{
-			_copyparts.Clear();
-
-			_copylabel = _f.Label;
-
-			var sels = new List<int>(SubIds);
-			sels.Add(SelId);
-			sels.Sort();
-
-			foreach (int id in sels)
-				_copyparts.Add(Parts[id].Clone());
-		}
-
-		/// <summary>
-		/// Selects the last part and sub-selects all other parts.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnSelectAllClick(object sender, EventArgs e)
-		{
-			for (int i = 0; i != Parts.Length - 1; ++i)
-				SubIds.Add(i);
-
-			if (SelId != Parts.Length - 1)
-				SelId  = Parts.Length - 1;
-			else
-				Invalidate();
-		}
-
-		/// <summary>
-		/// Deselects a currently selected part as well as any sub-selected
-		/// parts.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnDeselectAllClick(object sender, EventArgs e)
-		{
-			SubIds.Clear();
-			SelId = -1;
-		} */
 		#endregion Events (context)
 
 
 		#region Events (override)
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//XCom.LogFile.WriteLine("OnKeyDown() " + e.KeyCode);
-
 			e.SuppressKeyPress = true;
 			KeyInput(e);
 
@@ -142,8 +92,8 @@ namespace McdView
 
 		#region Methods
 		/// <summary>
-		/// Takes keyboard-input from the Form's KeyDown event to select a part
-		/// or parts.
+		/// Takes keyboard-input from the KeyDown event to select a part or
+		/// parts.
 		/// </summary>
 		/// <param name="e"></param>
 		internal void KeyInput(KeyEventArgs e)
