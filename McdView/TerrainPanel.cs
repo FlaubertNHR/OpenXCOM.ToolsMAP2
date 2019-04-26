@@ -23,7 +23,7 @@ namespace McdView
 		#region Fields (static)
 		protected static McdviewF _f;
 
-		protected readonly static Brush BrushHilightsub = new SolidBrush(Color.FromArgb(36, SystemColors.MenuHighlight));
+		private readonly static Brush BrushHilightsubsel = new SolidBrush(Color.FromArgb(36, SystemColors.MenuHighlight));
 
 		protected readonly static List<Tilepart> _copyparts = new List<Tilepart>();
 		protected static string _copylabel;
@@ -31,14 +31,14 @@ namespace McdView
 
 
 		#region Fields
-		protected readonly HScrollBar Scroller = new HScrollBar();
+		private readonly HScrollBar Scroller = new HScrollBar();
 
-		protected const int _largeChange = XCImage.SpriteWidth32 + 1;
+		private const int _largeChange = XCImage.SpriteWidth32 + 1;
 
-		protected readonly Pen   _penControl   = new Pen(SystemColors.Control, 1);
-		protected readonly Brush _brushControl = new SolidBrush(SystemColors.Control);
+		private readonly Pen   _penControl   = new Pen(SystemColors.Control, 1);
+		private readonly Brush _brushControl = new SolidBrush(SystemColors.Control);
 
-		protected int TableWidth;
+		private int TableWidth;
 
 		protected bool _bypassScrollZero;
 
@@ -53,12 +53,12 @@ namespace McdView
 		protected virtual int SelId
 		{ get; set; }
 
-		protected Tilepart[] _parts;
+		private Tilepart[] _parts;
 		/// <summary>
 		/// An array of 'Tilepart'.
 		/// IMPORTANT: Only set 'Parts' via 'McdviewF.Parts' when instantiating
 		/// a 'TerrainPanel_main' object and via 'CopyPanelF.Parts' when
-		/// instantiating a 'TerrainPanel_copy' object.
+		/// instantiating a 'TerrainPanel_copy' object. IMPORTANT!!!
 		/// </summary>
 		internal protected Tilepart[] Parts
 		{
@@ -90,7 +90,7 @@ namespace McdView
 
 
 		#region cTor
-		internal TerrainPanel(McdviewF f, CopyPanelF fcopy = null)
+		internal protected TerrainPanel(McdviewF f, CopyPanelF fcopy = null)
 		{
 			_f     = f;
 			_fcopy = fcopy;	// prevent the CopyPanel from borking out during its initial
@@ -145,7 +145,10 @@ namespace McdView
 		{
 			_copyparts.Clear();
 
-			_copylabel = String.Empty;
+			if (_fcopy == null)
+				_copylabel = _f.Label;
+			else
+				_copylabel = _fcopy.Label;
 
 			var sels = new List<int>(SubIds);
 			sels.Add(SelId);
@@ -279,7 +282,7 @@ namespace McdView
 
 					foreach (int id in SubIds)
 						_graphics.FillRectangle(
-											BrushHilightsub,
+											BrushHilightsubsel,
 											id * (XCImage.SpriteWidth32 + 1) + offset,
 											y1_fill,
 											XCImage.SpriteWidth32,
@@ -538,7 +541,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// This is required in order to accept arrow-keyboard-input via
+		/// This is required in order to handle arrow-keyboard-input via
 		/// McdviewF.OnKeyDown().
 		/// </summary>
 		/// <param name="keyData"></param>

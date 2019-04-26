@@ -385,7 +385,7 @@ namespace McdView
 		/// @note Keys that need to be forwarded: Arrows Up/Down/Left/Right,
 		/// PageUp/Down, Home/End ... and Delete when editing an MCD.
 		/// @note Holy fuck. I make the PartsPanel selectable w/ TabStop and
-		/// - lo && behold - the arrow-keys no longer get forwarded. lovely
+		/// - lo & behold - the arrow-keys no longer get forwarded. lovely
 		/// So, set IsInputKey() for the arrow-keys in the PartsPanel. lovely
 		/// @ IMPORTANT: If any other (types of) controls that can accept focus
 		/// are added to this Form they need to be accounted for here.
@@ -647,8 +647,16 @@ namespace McdView
 						for (int id = 0; id != Parts.Length; ++id)
 						{
 							part = Parts[id];
-							part.Dead      = TilepartFactory.GetDeadPart(     Label, id, part.Record, Parts);
-							part.Alternate = TilepartFactory.GetAlternatePart(Label, id, part.Record, Parts);
+							part.Dead = TilepartFactory.GetDeadPart(
+																Label,
+																id,
+																part.Record,
+																Parts);
+							part.Alternate = TilepartFactory.GetAlternatePart(
+																			Label,
+																			id,
+																			part.Record,
+																			Parts);
 						}
 					}
 
@@ -713,8 +721,16 @@ namespace McdView
 					for (int id = 0; id != Parts.Length; ++id)
 					{
 						part = Parts[id];
-						part.Dead      = TilepartFactory.GetDeadPart(     Label, id, part.Record, Parts);
-						part.Alternate = TilepartFactory.GetAlternatePart(Label, id, part.Record, Parts);
+						part.Dead = TilepartFactory.GetDeadPart(
+															Label,
+															id,
+															part.Record,
+															Parts);
+						part.Alternate = TilepartFactory.GetAlternatePart(
+																		Label,
+																		id,
+																		part.Record,
+																		Parts);
 					}
 				}
 
@@ -781,8 +797,16 @@ namespace McdView
 				for (int id = 0; id != Parts.Length; ++id)
 				{
 					part = Parts[id];
-					part.Dead      = TilepartFactory.GetDeadPart(     Label, id, part.Record, Parts);
-					part.Alternate = TilepartFactory.GetAlternatePart(Label, id, part.Record, Parts);
+					part.Dead = TilepartFactory.GetDeadPart(
+														Label,
+														id,
+														part.Record,
+														Parts);
+					part.Alternate = TilepartFactory.GetAlternatePart(
+																	Label,
+																	id,
+																	part.Record,
+																	Parts);
 				}
 			}
 
@@ -1108,73 +1132,88 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnClick_OpenCopyPanel(object sender, EventArgs e)
+		internal void OnClick_OpenCopyPanel(object sender, EventArgs e)
 		{
 			if (miCopyPanel.Checked = !miCopyPanel.Checked)
 			{
-				using (var ofd = new OpenFileDialog())
-				{
-					ofd.Title      = "Open an MCD file";
-					ofd.DefaultExt = "MCD";
-					ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
-
-					if (ofd.ShowDialog() == DialogResult.OK)
-					{
-						_copypanel = new CopyPanelF(this);
-						_copypanel.SelId = -1;
-
-						_copypanel.Show();
-
-						ResourceInfo.ReloadSprites = true;
-
-						string pfeMcd = ofd.FileName;
-						string label = Path.GetFileNameWithoutExtension(pfeMcd);
-
-						using (var bs = new BufferedStream(File.OpenRead(pfeMcd)))
-						{
-							_copypanel.Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
-
-							Palette pal;
-							if (miPaletteUfo.Checked)
-								pal = Palette.UfoBattle;
-							else
-								pal = Palette.TftdBattle;
-
-							// NOTE: The spriteset is also maintained by a pointer
-							// that's stored in each tilepart. Can be null.
-							_copypanel.Spriteset = ResourceInfo.LoadSpriteset(
-																			label,
-																			Path.GetDirectoryName(pfeMcd),
-																			2,
-																			pal,
-																			true);
-
-							for (int id = 0; id != _copypanel.Parts.Length; ++id)
-							{
-								var bindata = new byte[TilepartFactory.Length];
-								bs.Read(bindata, 0, TilepartFactory.Length);
-								McdRecord record = McdRecordFactory.CreateRecord(bindata);
-
-								_copypanel.Parts[id] = new Tilepart(id, _copypanel.Spriteset, record);
-							}
-
-							Tilepart part;
-							for (int id = 0; id != _copypanel.Parts.Length; ++id)
-							{
-								part = _copypanel.Parts[id];
-								part.Dead      = TilepartFactory.GetDeadPart(     label, id, part.Record, _copypanel.Parts);
-								part.Alternate = TilepartFactory.GetAlternatePart(label, id, part.Record, _copypanel.Parts);
-							}
-						}
-
-						ResourceInfo.ReloadSprites = false;
-					}
-				}
+				OpenCopyPanel();
 			}
 			else
 			{
 				_copypanel.Dispose();
 				_copypanel = null;
+			}
+		}
+
+		internal void OpenCopyPanel()
+		{
+			using (var ofd = new OpenFileDialog())
+			{
+				ofd.Title      = "Open an MCD file";
+				ofd.DefaultExt = "MCD";
+				ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
+
+				if (ofd.ShowDialog() == DialogResult.OK)
+				{
+					if (_copypanel == null)
+					{
+						_copypanel = new CopyPanelF(this);
+						_copypanel.Show();
+					}
+					_copypanel.SelId = -1;
+
+					ResourceInfo.ReloadSprites = true;
+
+					string pfeMcd = ofd.FileName;
+					_copypanel.Label = Path.GetFileNameWithoutExtension(pfeMcd);
+
+					using (var bs = new BufferedStream(File.OpenRead(pfeMcd)))
+					{
+						_copypanel.Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+
+						Palette pal;
+						if (miPaletteUfo.Checked)
+							pal = Palette.UfoBattle;
+						else
+							pal = Palette.TftdBattle;
+
+						// NOTE: The spriteset is also maintained by a pointer
+						// that's stored in each tilepart. Can be null.
+						_copypanel.Spriteset = ResourceInfo.LoadSpriteset(
+																		_copypanel.Label,
+																		Path.GetDirectoryName(pfeMcd),
+																		2,
+																		pal,
+																		true);
+
+						for (int id = 0; id != _copypanel.Parts.Length; ++id)
+						{
+							var bindata = new byte[TilepartFactory.Length];
+							bs.Read(bindata, 0, TilepartFactory.Length);
+							McdRecord record = McdRecordFactory.CreateRecord(bindata);
+
+							_copypanel.Parts[id] = new Tilepart(id, _copypanel.Spriteset, record);
+						}
+
+						Tilepart part;
+						for (int id = 0; id != _copypanel.Parts.Length; ++id)
+						{
+							part = _copypanel.Parts[id];
+							part.Dead = TilepartFactory.GetDeadPart(
+																_copypanel.Label,
+																id,
+																part.Record,
+																_copypanel.Parts);
+							part.Alternate = TilepartFactory.GetAlternatePart(
+																		_copypanel.Label,
+																		id,
+																		part.Record,
+																		_copypanel.Parts);
+						}
+					}
+
+					ResourceInfo.ReloadSprites = false;
+				}
 			}
 		}
 

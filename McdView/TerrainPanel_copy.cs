@@ -18,8 +18,8 @@ namespace McdView
 		#region Properties
 		protected override int SelId
 		{
-			get { return _fcopy.SelId; }
-			set { _fcopy.SelId = value; }
+			get { /* XCom.LogFile.WriteLine("_copy SelId get"); */ return _fcopy.SelId; }
+			set { /* XCom.LogFile.WriteLine("_copy SelId get"); */ _fcopy.SelId = value; }
 		}
 		#endregion Properties
 
@@ -126,32 +126,19 @@ namespace McdView
 		} */
 		#endregion Events (context)
 
-/*
+
 		#region Events (override)
-		/// <summary>
-		/// This is required in order to accept arrow-keyboard-input via
-		/// McdviewF.OnKeyDown().
-		/// </summary>
-		/// <param name="keyData"></param>
-		/// <returns></returns>
-		protected override bool IsInputKey(Keys keyData)
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			switch (keyData)
-			{
-				case Keys.Left:
-				case Keys.Up:
-				case Keys.Right:
-				case Keys.Down:
-				case Keys.Shift | Keys.Left:
-				case Keys.Shift | Keys.Up:
-				case Keys.Shift | Keys.Right:
-				case Keys.Shift | Keys.Down:
-					return true;
-			}
-			return base.IsInputKey(keyData);
+			//XCom.LogFile.WriteLine("OnKeyDown() " + e.KeyCode);
+
+			e.SuppressKeyPress = true;
+			KeyInput(e);
+
+//			base.OnKeyDown(e);
 		}
 		#endregion Events (override)
-*/
+
 
 		#region Methods
 		/// <summary>
@@ -341,7 +328,9 @@ namespace McdView
 						OnSelectAllClick(null, EventArgs.Empty);
 					break;
 
-				// NOTE: Escape for deselect all is handled by the caller: McdviewF.OnKeyDown().
+				case Keys.Escape:
+					SelId = -1;
+					break;
 			}
 		}
 		#endregion Methods
