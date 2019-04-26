@@ -23,7 +23,7 @@ namespace McdView
 		internal static bool isRunT; // shut the designer up.
 
 		internal readonly static Brush BrushHilight       = new SolidBrush(Color.FromArgb(107, SystemColors.MenuHighlight));
-		internal readonly static Brush BrushSpriteInvalid = new SolidBrush(Color.Firebrick);
+		internal readonly static Brush BrushSpriteInvalid = Brushes.Firebrick;
 
 		internal const TextFormatFlags FLAGS = TextFormatFlags.HorizontalCenter
 											 | TextFormatFlags.VerticalCenter
