@@ -1770,12 +1770,12 @@ namespace McdView
 		{
 			lbl_Description.Text = "isSlidingDoor (bool) is a true/false value that is relevant only to"
 								 + " westwall and northwall parts. Such a part will iterate through the"
-								 + " phases of its animation sprites while opening (see #0..7 phase 0..7);"
+								 + " phases of its animation sprites while opening (see #0..7 phase 1..8);"
 								 + " only the first four phases are iterated if the part is designated"
 								 + " as an EntryPoint (see #59 SpecialType) otherwise all eight phases"
-								 + " are iterated. A sliding door displays its phase 7 sprite while open"
+								 + " are iterated. A sliding door displays its phase 8 sprite while open"
 								 + " (although it could be replaced by its #46 AlternateId depending on the XCOM build),"
-								 + " then at the end of the turn it closes and reverts to phase 0."
+								 + " then at the end of the turn it closes and reverts to phase 1."
 								 + " Note that specifying a part as both isSlidingDoor and #35 isHingedDoor"
 								 + " could have an unpredictable effect."
 								 + Environment.NewLine + Environment.NewLine

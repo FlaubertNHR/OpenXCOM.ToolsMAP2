@@ -69,12 +69,11 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPopup_Context(object sender, EventArgs e)
 		{
-			bool parts = (Parts != null);
 			bool selid = (SelId != -1);
 
-			Context.MenuItems[0].Enabled = selid;						// copy
-			Context.MenuItems[2].Enabled = parts && Parts.Length != 0;	// select
-			Context.MenuItems[3].Enabled = selid;						// deselect
+			Context.MenuItems[0].Enabled = selid;								// copy
+			Context.MenuItems[2].Enabled = Parts != null && Parts.Length != 0;	// select
+			Context.MenuItems[3].Enabled = selid;								// deselect
 		}
 		#endregion Events (context)
 
