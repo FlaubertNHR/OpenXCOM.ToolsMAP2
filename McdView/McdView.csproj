@@ -78,6 +78,9 @@
     <Compile Include="CacheLoad.cs" />
     <Compile Include="changedbox.cs" />
     <Compile Include="CopyPanelF.cs" />
+    <Compile Include="CopyPanelF.Designer.cs">
+      <DependentUpon>CopyPanelF.cs</DependentUpon>
+    </Compile>
     <Compile Include="isocube.cs" />
     <Compile Include="LoftF.cs" />
     <Compile Include="LoftPanel.cs" />
@@ -117,7 +120,7 @@
       <DependentUpon>CopyPanelF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="McdviewF.resx">
-      <DependentUpon>McdviewF.Designer.cs</DependentUpon>
+      <DependentUpon>McdviewF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>

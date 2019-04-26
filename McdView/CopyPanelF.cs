@@ -13,7 +13,7 @@ namespace McdView
 	/// internal copy-buffer of McdView for pasting into the currently loaded
 	/// MCD-set.
 	/// </summary>
-	internal sealed class CopyPanelF
+	internal partial class CopyPanelF
 		:
 			Form
 	{
@@ -178,100 +178,5 @@ namespace McdView
 			_f.OpenCopyPanel();
 		}
 		#endregion Events
-
-
-		#region Designer
-		/// <summary>
-		/// Designer variable used to keep track of non-visual components.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
-
-		private System.Windows.Forms.GroupBox gb_Collection;
-		private System.Windows.Forms.ToolStrip ts_CopyPanel;
-		private System.Windows.Forms.ToolStripButton tsb_Open;
-
-		/// <summary>
-		/// Disposes resources used by the form.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
-		/// <summary>
-		/// This method is required for Windows Forms designer support.
-		/// Do not change the method contents inside the source code editor. The
-		/// Forms designer might not be able to load this method if it was
-		/// changed manually.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.gb_Collection = new System.Windows.Forms.GroupBox();
-			this.ts_CopyPanel = new System.Windows.Forms.ToolStrip();
-			this.tsb_Open = new System.Windows.Forms.ToolStripButton();
-			this.ts_CopyPanel.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// gb_Collection
-			// 
-			this.gb_Collection.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gb_Collection.Location = new System.Drawing.Point(0, 25);
-			this.gb_Collection.Margin = new System.Windows.Forms.Padding(0);
-			this.gb_Collection.Name = "gb_Collection";
-			this.gb_Collection.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Collection.Size = new System.Drawing.Size(594, 175);
-			this.gb_Collection.TabIndex = 0;
-			this.gb_Collection.TabStop = false;
-			this.gb_Collection.Text = " RECORD COLLECTION ";
-			// 
-			// ts_CopyPanel
-			// 
-			this.ts_CopyPanel.CanOverflow = false;
-			this.ts_CopyPanel.Font = new System.Drawing.Font("Consolas", 7F);
-			this.ts_CopyPanel.GripMargin = new System.Windows.Forms.Padding(0);
-			this.ts_CopyPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.ts_CopyPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsb_Open});
-			this.ts_CopyPanel.Location = new System.Drawing.Point(0, 0);
-			this.ts_CopyPanel.Name = "ts_CopyPanel";
-			this.ts_CopyPanel.Padding = new System.Windows.Forms.Padding(0);
-			this.ts_CopyPanel.ShowItemToolTips = false;
-			this.ts_CopyPanel.Size = new System.Drawing.Size(594, 25);
-			this.ts_CopyPanel.TabIndex = 1;
-			// 
-			// tsb_Open
-			// 
-			this.tsb_Open.AutoToolTip = false;
-			this.tsb_Open.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsb_Open.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsb_Open.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
-			this.tsb_Open.Name = "tsb_Open";
-			this.tsb_Open.Size = new System.Drawing.Size(49, 23);
-			this.tsb_Open.Text = "Open ...";
-			this.tsb_Open.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.tsb_Open.Click += new System.EventHandler(this.OnClick_Open);
-			// 
-			// CopyPanelF
-			// 
-			this.ClientSize = new System.Drawing.Size(594, 776);
-			this.Controls.Add(this.gb_Collection);
-			this.Controls.Add(this.ts_CopyPanel);
-			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-			this.MaximizeBox = false;
-			this.Name = "CopyPanelF";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.ts_CopyPanel.ResumeLayout(false);
-			this.ts_CopyPanel.PerformLayout();
-			this.ResumeLayout(false);
-			this.PerformLayout();
-
-		}
-		#endregion Designer
 	}
 }
