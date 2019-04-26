@@ -130,9 +130,10 @@ namespace McdView
 								gb_Overhead     .Width
 									+ gb_Tu     .Width
 									+ gb_Explode.Width
-									+ gb_Loft   .Width
-									+ 15,
+									+ gb_Loft   .Width,
 								ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
+
+			btn_Open.Location = new Point(5, pnl_bg.Height - btn_Open.Height - 5);
 
 
 			PartsPanel = new TerrainPanel_copy(_f, this);

@@ -9,8 +9,6 @@
 		private System.ComponentModel.IContainer components = null;
 
 		private System.Windows.Forms.GroupBox gb_Collection;
-		private System.Windows.Forms.ToolStrip ts_CopyPanel;
-		private System.Windows.Forms.ToolStripButton tsb_Open;
 		private System.Windows.Forms.GroupBox gb_Sprites;
 		private System.Windows.Forms.Label lbl00;
 		private System.Windows.Forms.Label lbl07;
@@ -221,6 +219,7 @@
 		private System.Windows.Forms.Label lbl32_isdropthrou;
 		private System.Windows.Forms.TextBox tb32_isdropthrou;
 		private System.Windows.Forms.TextBox tb52_footsound;
+		private System.Windows.Forms.Button btn_Open;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -243,8 +242,6 @@
 		private void InitializeComponent()
 		{
 			this.gb_Collection = new System.Windows.Forms.GroupBox();
-			this.ts_CopyPanel = new System.Windows.Forms.ToolStrip();
-			this.tsb_Open = new System.Windows.Forms.ToolStripButton();
 			this.gb_Sprites = new System.Windows.Forms.GroupBox();
 			this.lbl00 = new System.Windows.Forms.Label();
 			this.lbl07 = new System.Windows.Forms.Label();
@@ -271,6 +268,7 @@
 			this.tb01_phase1 = new System.Windows.Forms.TextBox();
 			this.tb00_phase0 = new System.Windows.Forms.TextBox();
 			this.pnl_bg = new System.Windows.Forms.Panel();
+			this.btn_Open = new System.Windows.Forms.Button();
 			this.gb_Loft = new System.Windows.Forms.GroupBox();
 			this.lbl19 = new System.Windows.Forms.Label();
 			this.lbl18 = new System.Windows.Forms.Label();
@@ -455,7 +453,6 @@
 			this.lbl32_isdropthrou = new System.Windows.Forms.Label();
 			this.tb32_isdropthrou = new System.Windows.Forms.TextBox();
 			this.tb52_footsound = new System.Windows.Forms.TextBox();
-			this.ts_CopyPanel.SuspendLayout();
 			this.gb_Sprites.SuspendLayout();
 			this.pnl_bg.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
@@ -474,7 +471,7 @@
 			// gb_Collection
 			// 
 			this.gb_Collection.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gb_Collection.Location = new System.Drawing.Point(0, 25);
+			this.gb_Collection.Location = new System.Drawing.Point(0, 0);
 			this.gb_Collection.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Collection.Name = "gb_Collection";
 			this.gb_Collection.Padding = new System.Windows.Forms.Padding(0);
@@ -482,33 +479,6 @@
 			this.gb_Collection.TabIndex = 0;
 			this.gb_Collection.TabStop = false;
 			this.gb_Collection.Text = " RECORD COLLECTION ";
-			// 
-			// ts_CopyPanel
-			// 
-			this.ts_CopyPanel.CanOverflow = false;
-			this.ts_CopyPanel.Font = new System.Drawing.Font("Consolas", 7F);
-			this.ts_CopyPanel.GripMargin = new System.Windows.Forms.Padding(0);
-			this.ts_CopyPanel.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.ts_CopyPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsb_Open});
-			this.ts_CopyPanel.Location = new System.Drawing.Point(0, 0);
-			this.ts_CopyPanel.Name = "ts_CopyPanel";
-			this.ts_CopyPanel.Padding = new System.Windows.Forms.Padding(0);
-			this.ts_CopyPanel.ShowItemToolTips = false;
-			this.ts_CopyPanel.Size = new System.Drawing.Size(675, 25);
-			this.ts_CopyPanel.TabIndex = 1;
-			// 
-			// tsb_Open
-			// 
-			this.tsb_Open.AutoToolTip = false;
-			this.tsb_Open.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsb_Open.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsb_Open.Margin = new System.Windows.Forms.Padding(0, 0, 0, 2);
-			this.tsb_Open.Name = "tsb_Open";
-			this.tsb_Open.Size = new System.Drawing.Size(49, 23);
-			this.tsb_Open.Text = "Open ...";
-			this.tsb_Open.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.tsb_Open.Click += new System.EventHandler(this.OnClick_Open);
 			// 
 			// gb_Sprites
 			// 
@@ -537,7 +507,7 @@
 			this.gb_Sprites.Controls.Add(this.tb01_phase1);
 			this.gb_Sprites.Controls.Add(this.tb00_phase0);
 			this.gb_Sprites.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gb_Sprites.Location = new System.Drawing.Point(0, 200);
+			this.gb_Sprites.Location = new System.Drawing.Point(0, 175);
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Name = "gb_Sprites";
 			this.gb_Sprites.Padding = new System.Windows.Forms.Padding(0);
@@ -788,6 +758,7 @@
 			// 
 			// pnl_bg
 			// 
+			this.pnl_bg.Controls.Add(this.btn_Open);
 			this.pnl_bg.Controls.Add(this.gb_Loft);
 			this.pnl_bg.Controls.Add(this.gb_Overhead);
 			this.pnl_bg.Controls.Add(this.gb_Tu);
@@ -800,11 +771,23 @@
 			this.pnl_bg.Controls.Add(this.gb_Health);
 			this.pnl_bg.Controls.Add(this.gb_Step);
 			this.pnl_bg.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnl_bg.Location = new System.Drawing.Point(0, 260);
+			this.pnl_bg.Location = new System.Drawing.Point(0, 235);
 			this.pnl_bg.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_bg.Name = "pnl_bg";
 			this.pnl_bg.Size = new System.Drawing.Size(675, 436);
 			this.pnl_bg.TabIndex = 3;
+			// 
+			// btn_Open
+			// 
+			this.btn_Open.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btn_Open.Location = new System.Drawing.Point(10, 395);
+			this.btn_Open.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_Open.Name = "btn_Open";
+			this.btn_Open.Size = new System.Drawing.Size(80, 30);
+			this.btn_Open.TabIndex = 11;
+			this.btn_Open.Text = "Open ...";
+			this.btn_Open.UseVisualStyleBackColor = true;
+			this.btn_Open.Click += new System.EventHandler(this.OnClick_Open);
 			// 
 			// gb_Loft
 			// 
@@ -2819,18 +2802,15 @@
 			// 
 			// CopyPanelF
 			// 
-			this.ClientSize = new System.Drawing.Size(675, 696);
+			this.ClientSize = new System.Drawing.Size(675, 671);
 			this.Controls.Add(this.pnl_bg);
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
-			this.Controls.Add(this.ts_CopyPanel);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MaximizeBox = false;
 			this.Name = "CopyPanelF";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.ts_CopyPanel.ResumeLayout(false);
-			this.ts_CopyPanel.PerformLayout();
 			this.gb_Sprites.ResumeLayout(false);
 			this.gb_Sprites.PerformLayout();
 			this.pnl_bg.ResumeLayout(false);
@@ -2857,7 +2837,6 @@
 			this.gb_Step.ResumeLayout(false);
 			this.gb_Step.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 		#endregion Designer
