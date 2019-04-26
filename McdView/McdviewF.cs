@@ -1125,10 +1125,11 @@ namespace McdView
 			}
 		}
 
+
 		CopyPanelF _copypanel;
 
 		/// <summary>
-		/// 
+		/// Handles a click to open/close the CopyPanel on the menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1136,16 +1137,23 @@ namespace McdView
 		{
 			if (miCopyPanel.Checked = !miCopyPanel.Checked)
 			{
-				OpenCopyPanel();
+				OpenCopyPanel(true);
 			}
 			else
 			{
-				_copypanel.Dispose();
+				_copypanel.Close();
 				_copypanel = null;
 			}
 		}
 
-		internal void OpenCopyPanel()
+		/// <summary>
+		/// Handles an open/close of the CopyPanel on the menuitem or will open
+		/// a different MCD file from the CopyPanel itself (without closing the
+		/// CopyPanel).
+		/// </summary>
+		/// <param name="it">true if handling the menuitem click; ie. can close
+		/// the CopyPanel form</param>
+		internal void OpenCopyPanel(bool it = false)
 		{
 			using (var ofd = new OpenFileDialog())
 			{
@@ -1214,6 +1222,15 @@ namespace McdView
 
 					ResourceInfo.ReloadSprites = false;
 				}
+				else
+				{
+					if (it && _copypanel != null)
+					{
+						_copypanel.Close();
+						_copypanel = null;
+					}
+					miCopyPanel.Checked = (_copypanel != null);
+				}
 			}
 		}
 
@@ -1222,8 +1239,10 @@ namespace McdView
 		/// </summary>
 		internal void CloseCopyPanel()
 		{
-			miCopyPanel.PerformClick();
+			_copypanel = null;
+			miCopyPanel.Checked = false;
 		}
+
 
 		/// <summary>
 		/// Handles clicking the Help|Help menuitem.

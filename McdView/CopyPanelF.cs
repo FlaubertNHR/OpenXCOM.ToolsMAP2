@@ -137,7 +137,7 @@ namespace McdView
 			Loc = new Point(Location.X, Location.Y);
 			_f.CloseCopyPanel();
 
-//			base.OnFormClosing(e);
+			base.OnFormClosing(e);
 		}
 
 		/// <summary>
