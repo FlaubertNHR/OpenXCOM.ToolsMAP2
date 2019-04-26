@@ -186,27 +186,27 @@ namespace McdView
 			isRunT = true;
 			InitializeComponent();
 
-			gb_Overhead    .Location = new Point(0,                                        0);
-			gb_General     .Location = new Point(0,                                        gb_Overhead.Bottom);
-			gb_Health      .Location = new Point(0,                                        gb_General .Bottom);
-			gb_Door        .Location = new Point(0,                                        gb_Health  .Bottom);
+			gb_Overhead    .Location = new Point(0, 0);
+			gb_General     .Location = new Point(0, gb_Overhead.Bottom);
+			gb_Health      .Location = new Point(0, gb_General .Bottom);
+			gb_Door        .Location = new Point(0, gb_Health  .Bottom);
 
-			gb_Tu          .Location = new Point(gb_Overhead.Right,                        0);
-			gb_Block       .Location = new Point(gb_Overhead.Right,                        gb_Tu   .Bottom);
-			gb_Step        .Location = new Point(gb_Overhead.Right,                        gb_Block.Bottom);
-			gb_Elevation   .Location = new Point(gb_Overhead.Right,                        gb_Step .Bottom);
+			gb_Tu          .Location = new Point(gb_Overhead.Right, 0);
+			gb_Block       .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
+			gb_Step        .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
+			gb_Elevation   .Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
 
-			gb_Explode     .Location = new Point(gb_Tu.Right,                              0);
-			gb_Unused      .Location = new Point(gb_Tu.Right,                              gb_Explode.Bottom);
+			gb_Explode     .Location = new Point(gb_Tu.Right, 0);
+			gb_Unused      .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
 
 			int botDoor = gb_Door.Bottom + 5;
 
-			lbl_Strict     .Location = new Point(5,                                        botDoor);
-			cb_Strict      .Location = new Point(lbl_Strict.Right,                         botDoor);
+			lbl_Strict     .Location = new Point(5,                botDoor);
+			cb_Strict      .Location = new Point(lbl_Strict.Right, botDoor);
 
-			lbl_SpriteShade.Location = new Point(cb_Strict      .Right + 10,               botDoor);
-			tb_SpriteShade .Location = new Point(lbl_SpriteShade.Right,                    botDoor);
-			bar_SpriteShade.Location = new Point(tb_SpriteShade .Right,                    botDoor);
+			lbl_SpriteShade.Location = new Point(cb_Strict      .Right + 10, botDoor);
+			tb_SpriteShade .Location = new Point(lbl_SpriteShade.Right,      botDoor);
+			bar_SpriteShade.Location = new Point(tb_SpriteShade .Right,      botDoor);
 
 			pnl_IsoLoft    .Location = new Point(gb_Loft    .Left - 5 - pnl_IsoLoft.Width, 15);
 			bar_IsoLoft    .Location = new Point(pnl_IsoLoft.Left - 5 - bar_IsoLoft.Width, 10);
@@ -277,6 +277,7 @@ namespace McdView
 			CuboidBotAnglePath    = isocube.GetBotAngle(       pnl_IsoLoft.Width, pnl_IsoLoft.Height);
 			CuboidVertLineTopPath = isocube.GetVerticalLineTop(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
 			CuboidVertLineBotPath = isocube.GetVerticalLineBot(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
+
 
 			foreach (Control control in Controls)
 			{
