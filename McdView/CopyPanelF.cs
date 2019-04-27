@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 using XCom;
 
@@ -26,6 +28,9 @@ namespace McdView
 		private readonly McdviewF _f;
 
 		internal string Label;
+
+		private Graphics _graphics;
+		private ImageAttributes _attri;
 		#endregion Fields
 
 
@@ -83,7 +88,21 @@ namespace McdView
 					else
 						ClearTextFields();
 
-					PartsPanel.Invalidate();
+					PartsPanel .Invalidate();
+					pnl_ScanGic.Invalidate();
+
+					pnl_Loft08.Invalidate();
+					pnl_Loft09.Invalidate();
+					pnl_Loft10.Invalidate();
+					pnl_Loft11.Invalidate();
+					pnl_Loft12.Invalidate();
+					pnl_Loft13.Invalidate();
+					pnl_Loft14.Invalidate();
+					pnl_Loft15.Invalidate();
+					pnl_Loft16.Invalidate();
+					pnl_Loft17.Invalidate();
+					pnl_Loft18.Invalidate();
+					pnl_Loft19.Invalidate();
 				}
 
 				if (PartsPanel.SubIds.Remove(_selId)) // safety. The SelId shall never be in the SubIds.
@@ -140,7 +159,16 @@ namespace McdView
 			gb_Collection.Controls.Add(PartsPanel);
 			PartsPanel.Width = gb_Collection.Width - 10;
 
-			McdviewF.SetDoubleBuffered(PartsPanel);
+			var panels = new object[]
+			{
+				PartsPanel,
+				pnl_Loft08, pnl_Loft09, pnl_Loft10, pnl_Loft11, pnl_Loft12, pnl_Loft13,
+				pnl_Loft14, pnl_Loft15, pnl_Loft16, pnl_Loft17, pnl_Loft18, pnl_Loft19
+			};
+			McdviewF.SetDoubleBuffered(panels);
+
+			TagLoftPanels();
+			LoftPanel_copy.SetStaticVars(_f, this);
 
 			PartsPanel.Select();
 
@@ -410,5 +438,150 @@ namespace McdView
 			tb61_.Text = String.Empty;
 		}
 		#endregion Methods
+
+
+		#region ScanG icon
+		/// <summary>
+		/// Draws a square border around the ScanG icon.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_ScanG_group(object sender, PaintEventArgs e)
+		{
+			e.Graphics.DrawRectangle(
+								Colors.PenText,
+								pnl_ScanGic.Location.X - 1,
+								pnl_ScanGic.Location.Y - 1,
+								pnl_ScanGic.Width  + 1,
+								pnl_ScanGic.Height + 1);
+		}
+
+		/// <summary>
+		/// Draws a ScanG icon in the ScanG panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_ScanG_panel(object sender, PaintEventArgs e)
+		{
+			if (SelId != -1 && _f.ScanG != null)
+			{
+				int id = Int32.Parse(tb20_scang1.Text);
+				if (id > 35 && id < _f.ScanG.Length / 16)
+				{
+					_graphics = e.Graphics;
+					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
+					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+
+					_attri = new ImageAttributes();
+					if (_f._spriteShadeEnabled)
+						_attri.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
+
+					var icon = new Bitmap(
+										4,4,
+										PixelFormat.Format8bppIndexed);
+
+					var data = icon.LockBits(
+										new Rectangle(0,0, icon.Width, icon.Height),
+										ImageLockMode.WriteOnly,
+										PixelFormat.Format8bppIndexed);
+					var start = data.Scan0;
+
+					unsafe
+					{
+						var pos = (byte*)start.ToPointer();
+
+						int palid;
+						for (uint row = 0; row != icon.Height; ++row)
+						for (uint col = 0; col != icon.Width;  ++col)
+						{
+							byte* pixel = pos + col + row * data.Stride;
+
+							palid = _f.ScanG[id, (row * 4) + col];
+							*pixel = (byte)palid;
+						}
+					}
+					icon.UnlockBits(data);
+
+					if (_f.isTftd())
+						icon.Palette = Palette.TftdBattle.ColorTable;
+					else
+						icon.Palette = Palette.UfoBattle.ColorTable;
+
+					ColorPalette pal = icon.Palette; // palettes get copied not referenced ->
+					pal.Entries[Palette.TransparentId] = Color.Transparent;
+					icon.Palette = pal;
+
+					_graphics.DrawImage(
+									icon,
+									new Rectangle(
+												0,0,
+												((Panel)sender).Width,
+												((Panel)sender).Height),
+									0,0, icon.Width, icon.Height,
+									GraphicsUnit.Pixel,
+									_attri);
+				}
+			}
+		}
+		#endregion ScanG icon
+
+
+		#region LoFT
+		/// <summary>
+		/// Tags each LoftPanel with its corresponding TextBox.
+//		/// @note The tagged TextBoxes are tagged with (string)panelid in the
+//		/// designer. Thus the loft-panels, loft-textboxes, and panelids are all
+//		/// synched respectively.
+		/// </summary>
+		private void TagLoftPanels()
+		{
+			pnl_Loft08.Tag = tb08_loft00;
+			pnl_Loft09.Tag = tb09_loft01;
+			pnl_Loft10.Tag = tb10_loft02;
+			pnl_Loft11.Tag = tb11_loft03;
+			pnl_Loft12.Tag = tb12_loft04;
+			pnl_Loft13.Tag = tb13_loft05;
+			pnl_Loft14.Tag = tb14_loft06;
+			pnl_Loft15.Tag = tb15_loft07;
+			pnl_Loft16.Tag = tb16_loft08;
+			pnl_Loft17.Tag = tb17_loft09;
+			pnl_Loft18.Tag = tb18_loft10;
+			pnl_Loft19.Tag = tb19_loft11;
+		}
+
+		/// <summary>
+		/// Draws squares around the LoFT panels.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_LoFT_group(object sender, PaintEventArgs e)
+		{
+			LoftPanel_copy pnlLoFT;
+			for (int i = 0; i != 12; ++i)
+			{
+				switch (i)
+				{
+					default: pnlLoFT = pnl_Loft08; break; // case 0
+					case  1: pnlLoFT = pnl_Loft09; break;
+					case  2: pnlLoFT = pnl_Loft10; break;
+					case  3: pnlLoFT = pnl_Loft11; break;
+					case  4: pnlLoFT = pnl_Loft12; break;
+					case  5: pnlLoFT = pnl_Loft13; break;
+					case  6: pnlLoFT = pnl_Loft14; break;
+					case  7: pnlLoFT = pnl_Loft15; break;
+					case  8: pnlLoFT = pnl_Loft16; break;
+					case  9: pnlLoFT = pnl_Loft17; break;
+					case 10: pnlLoFT = pnl_Loft18; break;
+					case 11: pnlLoFT = pnl_Loft19; break;
+				}
+				e.Graphics.DrawRectangle(
+									Colors.PenText,
+									pnlLoFT.Location.X - 1,
+									pnlLoFT.Location.Y - 1,
+									pnlLoFT.Width  + 1,
+									pnlLoFT.Height + 1);
+			}
+		}
+		#endregion LoFT
 	}
 }

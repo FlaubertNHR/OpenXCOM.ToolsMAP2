@@ -214,7 +214,7 @@ namespace McdView
 
 				if (i == _id)
 					graphics.FillRectangle(
-										McdviewF.BrushHilight,
+										Colors.BrushHilight,
 										rect);
 
 				TextRenderer.DrawText(

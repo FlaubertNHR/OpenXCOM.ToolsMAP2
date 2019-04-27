@@ -19,8 +19,10 @@ namespace McdView
 {
 	public partial class McdviewF
 	{
+		#region Fields
 		private Graphics _graphics;
 		private ImageAttributes _attri;
+		#endregion Fields
 
 
 		#region Anisprites
@@ -87,7 +89,7 @@ namespace McdView
 
 			if (SelId != -1 && Spriteset != null)
 			{
-				_graphics.PixelOffsetMode = PixelOffsetMode.Half;
+				_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 				_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
 				_attri = new ImageAttributes();
@@ -137,7 +139,7 @@ namespace McdView
 								SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
 					else
 						_graphics.FillRectangle(
-											BrushSpriteInvalid,
+											Colors.BrushInvalid,
 											SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i,
 											SPRITE_ORIGIN_Y,
 											XCImage.SpriteWidth32  * 2,
@@ -155,7 +157,7 @@ namespace McdView
 				for (int i = 0; i != 8; ++i)
 				{
 					rect.X = SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i + 1;
-					_graphics.DrawRectangle(_penBlack, rect);
+					_graphics.DrawRectangle(Colors.PenText, rect);
 				}
 			}
 		}
@@ -291,7 +293,7 @@ namespace McdView
 		private void OnPaint_ScanG_group(object sender, PaintEventArgs e)
 		{
 			e.Graphics.DrawRectangle(
-								_penBlack,
+								Colors.PenText,
 								pnl_ScanGic.Location.X - 1,
 								pnl_ScanGic.Location.Y - 1,
 								pnl_ScanGic.Width  + 1,
@@ -430,7 +432,7 @@ namespace McdView
 					case 11: pnlLoFT = pnl_Loft19; break;
 				}
 				e.Graphics.DrawRectangle(
-									_penBlack,
+									Colors.PenText,
 									pnlLoFT.Location.X - 1,
 									pnlLoFT.Location.Y - 1,
 									pnlLoFT.Width  + 1,
@@ -480,7 +482,8 @@ namespace McdView
 		private Font fontRose = new Font("Courier New", 8);
 
 		/// <summary>
-		/// Paints a 3d LoFT representation in the IsoLoft panel.
+		/// Paints a 3d LoFT representation in the IsoLoft panel as well as the
+		/// LoFT panels.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -489,7 +492,7 @@ namespace McdView
 			_graphics = e.Graphics;
 
 			_graphics.DrawRectangle(
-								_penBlack,
+								Colors.PenText,
 								0,
 								0,
 								pnl_IsoLoft.Width  - 1,
@@ -534,9 +537,9 @@ namespace McdView
 
 				_graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-				_graphics.DrawPath(_penGray, CuboidOutlinePath);
-				_graphics.DrawPath(_penGray, CuboidBotAnglePath);
-				_graphics.DrawPath(_penGray, CuboidVertLineTopPath);
+				_graphics.DrawPath(Colors.PenLight, CuboidOutlinePath);
+				_graphics.DrawPath(Colors.PenLight, CuboidBotAnglePath);
+				_graphics.DrawPath(Colors.PenLight, CuboidVertLineTopPath);
 
 
 				int halfwidth  = Isocube.Width  / 2;
@@ -584,8 +587,8 @@ namespace McdView
 						}
 					}
 				}
-				_graphics.DrawPath(_penGray, CuboidTopAnglePath);
-				_graphics.DrawPath(_penGray, CuboidVertLineBotPath);
+				_graphics.DrawPath(Colors.PenLight, CuboidTopAnglePath);
+				_graphics.DrawPath(Colors.PenLight, CuboidVertLineBotPath);
 			}
 		}
 

@@ -22,9 +22,6 @@ namespace McdView
 		#region Fields (static)
 		internal static bool isRunT; // shut the designer up.
 
-		internal readonly static Brush BrushHilight       = new SolidBrush(Color.FromArgb(107, SystemColors.MenuHighlight));
-		internal readonly static Brush BrushSpriteInvalid = Brushes.Firebrick;
-
 		internal const TextFormatFlags FLAGS = TextFormatFlags.HorizontalCenter
 											 | TextFormatFlags.VerticalCenter
 											 | TextFormatFlags.NoPadding;
@@ -43,9 +40,6 @@ namespace McdView
 
 		internal int[,] ScanG;
 		internal BitArray LoFT;
-
-		private readonly Pen _penBlack = SystemPens.ControlText;	// new Pen(Color.Black, 1)
-		private readonly Pen _penGray  = SystemPens.ControlLight;	// new Pen(Color.LightGray, 1)
 
 		private bool strict = true;
 		private bool InitFields;
@@ -304,7 +298,7 @@ namespace McdView
 		/// Calls SetDoubleBuffered(object) on an array of objects.
 		/// </summary>
 		/// <param name="controls"></param>
-		private static void SetDoubleBuffered(object[] controls)
+		internal static void SetDoubleBuffered(object[] controls)
 		{
 			foreach (var control in controls)
 				SetDoubleBuffered(control);
@@ -321,7 +315,7 @@ namespace McdView
 		/// (Win7-64). Also stops flicker on the IsoLoft panel. etc.
 		/// </summary>
 		/// <param name="control">the Control on which to set DoubleBuffered to true</param>
-		internal static void SetDoubleBuffered(object control)
+		private static void SetDoubleBuffered(object control)
 		{
 			// if not remote desktop session then enable double-buffering optimization
 			if (!SystemInformation.TerminalServerSession)
@@ -1506,6 +1500,11 @@ namespace McdView
 
 
 		#region Methods
+		internal bool isTftd()
+		{
+			return miPaletteTftd.Checked;
+		}
+
 		/// <summary>
 		/// Gets the IsoLoFT's trackbar's current value.
 		/// </summary>

@@ -23,8 +23,6 @@ namespace McdView
 		#region Fields (static)
 		protected static McdviewF _f;
 
-		private readonly static Brush BrushHilightsubsel = new SolidBrush(Color.FromArgb(36, SystemColors.MenuHighlight));
-
 		protected readonly static List<Tilepart> _copyparts = new List<Tilepart>();
 		protected static string _copylabel;
 		#endregion Fields (static)
@@ -34,9 +32,6 @@ namespace McdView
 		private readonly HScrollBar Scroller = new HScrollBar();
 
 		private const int _largeChange = XCImage.SpriteWidth32 + 1;
-
-		private readonly Pen   _penControl   = new Pen(SystemColors.Control, 1);
-		private readonly Brush _brushControl = new SolidBrush(SystemColors.Control);
 
 		private int TableWidth;
 
@@ -239,7 +234,7 @@ namespace McdView
 				{
 					if (i != 0)
 						_graphics.DrawLine( // draw vertical line before each sprite except the first sprite
-										_penControl,
+										Colors.PenControl,
 										i * XCImage.SpriteWidth32 + i + offset, 0,
 										i * XCImage.SpriteWidth32 + i + offset, Height);
 
@@ -258,7 +253,7 @@ namespace McdView
 						}
 						else
 							_graphics.FillRectangle(
-												McdviewF.BrushSpriteInvalid,
+												Colors.BrushInvalid,
 												i * XCImage.SpriteWidth32 + i + offset,
 												y1_sprite,
 												XCImage.SpriteWidth32,
@@ -267,14 +262,14 @@ namespace McdView
 				}
 
 				_graphics.FillRectangle(
-									_brushControl,
+									Colors.BrushControl,
 									0,     y1_fill,
 									Width, y1_fill_h);
 
 				if (SelId != -1)
 				{
 					_graphics.FillRectangle(
-										McdviewF.BrushHilight,
+										Colors.BrushHilight,
 										SelId * (XCImage.SpriteWidth32 + 1) + offset,
 										y1_fill,
 										XCImage.SpriteWidth32,
@@ -282,7 +277,7 @@ namespace McdView
 
 					foreach (int id in SubIds)
 						_graphics.FillRectangle(
-											BrushHilightsubsel,
+											Colors.BrushHilightsubsel,
 											id * (XCImage.SpriteWidth32 + 1) + offset,
 											y1_fill,
 											XCImage.SpriteWidth32,
@@ -325,7 +320,7 @@ namespace McdView
 							}
 							else if (part.Record.DieTile != 0)
 								_graphics.FillRectangle(
-													McdviewF.BrushSpriteInvalid,
+													Colors.BrushInvalid,
 													i * XCImage.SpriteWidth32 + i + offset,
 													y2_sprite,
 													XCImage.SpriteWidth32,
@@ -335,7 +330,7 @@ namespace McdView
 				}
 
 				_graphics.DrawLine(
-								_penControl,
+								Colors.PenControl,
 								0,     y2_line,
 								Width, y2_line);
 
@@ -358,7 +353,7 @@ namespace McdView
 							}
 							else if (part.Record.Alt_MCD != 0)
 								_graphics.FillRectangle(
-													McdviewF.BrushSpriteInvalid,
+													Colors.BrushInvalid,
 													i * XCImage.SpriteWidth32 + i + offset,
 													y3_sprite,
 													XCImage.SpriteWidth32,

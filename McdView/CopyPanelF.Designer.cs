@@ -72,18 +72,18 @@
 		private System.Windows.Forms.TextBox tb10_loft02;
 		private System.Windows.Forms.TextBox tb09_loft01;
 		private System.Windows.Forms.TextBox tb08_loft00;
-		private McdView.LoftPanel pnl_Loft08;
-		private McdView.LoftPanel pnl_Loft09;
-		private McdView.LoftPanel pnl_Loft10;
-		private McdView.LoftPanel pnl_Loft11;
-		private McdView.LoftPanel pnl_Loft12;
-		private McdView.LoftPanel pnl_Loft13;
-		private McdView.LoftPanel pnl_Loft14;
-		private McdView.LoftPanel pnl_Loft15;
-		private McdView.LoftPanel pnl_Loft16;
-		private McdView.LoftPanel pnl_Loft17;
-		private McdView.LoftPanel pnl_Loft18;
-		private McdView.LoftPanel pnl_Loft19;
+		private McdView.LoftPanel_copy pnl_Loft08;
+		private McdView.LoftPanel_copy pnl_Loft09;
+		private McdView.LoftPanel_copy pnl_Loft10;
+		private McdView.LoftPanel_copy pnl_Loft11;
+		private McdView.LoftPanel_copy pnl_Loft12;
+		private McdView.LoftPanel_copy pnl_Loft13;
+		private McdView.LoftPanel_copy pnl_Loft14;
+		private McdView.LoftPanel_copy pnl_Loft15;
+		private McdView.LoftPanel_copy pnl_Loft16;
+		private McdView.LoftPanel_copy pnl_Loft17;
+		private McdView.LoftPanel_copy pnl_Loft18;
+		private McdView.LoftPanel_copy pnl_Loft19;
 		private System.Windows.Forms.GroupBox gb_Overhead;
 		private System.Windows.Forms.Label lbl20;
 		private System.Windows.Forms.Label lbl20_scang;
@@ -306,18 +306,18 @@
 			this.tb10_loft02 = new System.Windows.Forms.TextBox();
 			this.tb09_loft01 = new System.Windows.Forms.TextBox();
 			this.tb08_loft00 = new System.Windows.Forms.TextBox();
-			this.pnl_Loft08 = new McdView.LoftPanel();
-			this.pnl_Loft09 = new McdView.LoftPanel();
-			this.pnl_Loft10 = new McdView.LoftPanel();
-			this.pnl_Loft11 = new McdView.LoftPanel();
-			this.pnl_Loft12 = new McdView.LoftPanel();
-			this.pnl_Loft13 = new McdView.LoftPanel();
-			this.pnl_Loft14 = new McdView.LoftPanel();
-			this.pnl_Loft15 = new McdView.LoftPanel();
-			this.pnl_Loft16 = new McdView.LoftPanel();
-			this.pnl_Loft17 = new McdView.LoftPanel();
-			this.pnl_Loft18 = new McdView.LoftPanel();
-			this.pnl_Loft19 = new McdView.LoftPanel();
+			this.pnl_Loft08 = new McdView.LoftPanel_copy();
+			this.pnl_Loft09 = new McdView.LoftPanel_copy();
+			this.pnl_Loft10 = new McdView.LoftPanel_copy();
+			this.pnl_Loft11 = new McdView.LoftPanel_copy();
+			this.pnl_Loft12 = new McdView.LoftPanel_copy();
+			this.pnl_Loft13 = new McdView.LoftPanel_copy();
+			this.pnl_Loft14 = new McdView.LoftPanel_copy();
+			this.pnl_Loft15 = new McdView.LoftPanel_copy();
+			this.pnl_Loft16 = new McdView.LoftPanel_copy();
+			this.pnl_Loft17 = new McdView.LoftPanel_copy();
+			this.pnl_Loft18 = new McdView.LoftPanel_copy();
+			this.pnl_Loft19 = new McdView.LoftPanel_copy();
 			this.gb_Overhead = new System.Windows.Forms.GroupBox();
 			this.lbl20 = new System.Windows.Forms.Label();
 			this.lbl20_scang = new System.Windows.Forms.Label();
@@ -848,6 +848,7 @@
 			this.gb_Loft.TabIndex = 10;
 			this.gb_Loft.TabStop = false;
 			this.gb_Loft.Text = " LoFT ";
+			this.gb_Loft.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_LoFT_group);
 			// 
 			// lbl19
 			// 
@@ -1332,6 +1333,7 @@
 			this.gb_Overhead.TabIndex = 0;
 			this.gb_Overhead.TabStop = false;
 			this.gb_Overhead.Text = " Overhead ";
+			this.gb_Overhead.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_ScanG_group);
 			// 
 			// lbl20
 			// 
@@ -1380,6 +1382,7 @@
 			this.pnl_ScanGic.Name = "pnl_ScanGic";
 			this.pnl_ScanGic.Size = new System.Drawing.Size(32, 32);
 			this.pnl_ScanGic.TabIndex = 4;
+			this.pnl_ScanGic.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_ScanG_panel);
 			// 
 			// gb_Tu
 			// 

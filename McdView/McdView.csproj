@@ -77,6 +77,7 @@
     <Compile Include="addrangeinput.cs" />
     <Compile Include="CacheLoad.cs" />
     <Compile Include="changedbox.cs" />
+    <Compile Include="Colors.cs" />
     <Compile Include="CopyPanelF.cs" />
     <Compile Include="CopyPanelF.Designer.cs">
       <DependentUpon>CopyPanelF.cs</DependentUpon>
@@ -84,6 +85,7 @@
     <Compile Include="isocube.cs" />
     <Compile Include="LoftF.cs" />
     <Compile Include="LoftPanel.cs" />
+    <Compile Include="LoftPanel_copy.cs" />
     <Compile Include="McdviewF.cs" />
     <Compile Include="McdviewF.Designer.cs">
       <DependentUpon>McdviewF.cs</DependentUpon>
