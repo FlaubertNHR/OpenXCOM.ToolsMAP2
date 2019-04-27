@@ -74,8 +74,35 @@ namespace McdView
 			int h = (lofts + COLS - 1) / COLS * (LOFT_HEIGHT + TEXT_HEIGHT);
 
 			ClientSize = new Size(w, h);
+
+			blink();
 		}
 		#endregion cTor
+
+
+		#region Methods
+		private int _id;
+		/// <summary>
+		/// Blinks the current iconId text-bg.
+		/// </summary>
+		private async void blink()
+		{
+			_id = LoftId;
+
+			int tick = Int32.MinValue;
+			while (++tick != Int32.MaxValue)
+			{
+				await System.Threading.Tasks.Task.Delay(McdviewF.PERIOD);
+
+				if (tick % 2 != 0)
+					_id = -1;
+				else
+					_id = LoftId;
+
+				Invalidate();
+			}
+		}
+		#endregion Methods
 
 
 		#region Events (override)
@@ -136,7 +163,7 @@ namespace McdView
 								LOFT_WIDTH,
 								TEXT_HEIGHT);
 
-				if (i == LoftId)
+				if (i == _id)
 					graphics.FillRectangle(
 										McdviewF.BrushHilight,
 										rect);

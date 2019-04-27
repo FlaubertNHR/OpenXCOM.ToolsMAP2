@@ -28,6 +28,12 @@ namespace McdView
 		internal const TextFormatFlags FLAGS = TextFormatFlags.HorizontalCenter
 											 | TextFormatFlags.VerticalCenter
 											 | TextFormatFlags.NoPadding;
+
+		/// <summary>
+		/// Half the period of a current ID's text-bg blinker in 'SpritesetF',
+		/// 'ScanGiconF', and 'LoftF'.
+		/// </summary>
+		internal const int PERIOD = 456;
 		#endregion Fields (static)
 
 

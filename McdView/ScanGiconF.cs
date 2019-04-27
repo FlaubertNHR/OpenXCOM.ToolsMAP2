@@ -94,6 +94,8 @@ namespace McdView
 
 			MaxScrollVal = Scroller.Maximum - (Scroller.LargeChange - 1);
 			ScrollIcon();
+
+			blink();
 		}
 		#endregion cTor
 
@@ -106,9 +108,32 @@ namespace McdView
 			{
 				r -= ROWS_VISIBLE_Max - 1;
 				r *= ICON_HEIGHT + VERT_TEXT_PAD;
-				r = (r * MaxScrollVal + (TotalHeight - ClientSize.Height - 1)) / (TotalHeight - ClientSize.Height);
+				int h = TotalHeight - ClientSize.Height;
+				r = (r * MaxScrollVal + (h - 1)) / h;
 
 				Scroller.Value = r;
+			}
+		}
+
+		private int _id;
+		/// <summary>
+		/// Blinks the current iconId text-bg.
+		/// </summary>
+		private async void blink()
+		{
+			_id = IconId;
+
+			int tick = Int32.MinValue;
+			while (++tick != Int32.MaxValue)
+			{
+				await System.Threading.Tasks.Task.Delay(McdviewF.PERIOD);
+
+				if (tick % 2 != 0)
+					_id = -1;
+				else
+					_id = IconId;
+
+				Invalidate();
 			}
 		}
 		#endregion Methods
@@ -187,7 +212,7 @@ namespace McdView
 								ICON_WIDTH,
 								VERT_TEXT_PAD);
 
-				if (i == IconId)
+				if (i == _id)
 					graphics.FillRectangle(
 										McdviewF.BrushHilight,
 										rect);

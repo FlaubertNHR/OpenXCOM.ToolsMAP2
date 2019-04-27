@@ -71,8 +71,35 @@ namespace McdView
 			int h = (_f.Spriteset.Count + COLS - 1) / COLS * (XCImage.SpriteHeight40 + VERT_TEXT_PAD);
 
 			ClientSize = new Size(w, h);
+
+			blink();
 		}
 		#endregion cTor
+
+
+		#region Methods
+		private int _id;
+		/// <summary>
+		/// Blinks the current iconId text-bg.
+		/// </summary>
+		private async void blink()
+		{
+			_id = SpriteId;
+
+			int tick = Int32.MinValue;
+			while (++tick != Int32.MaxValue)
+			{
+				await System.Threading.Tasks.Task.Delay(McdviewF.PERIOD);
+
+				if (tick % 2 != 0)
+					_id = -1;
+				else
+					_id = SpriteId;
+
+				Invalidate();
+			}
+		}
+		#endregion Methods
 
 
 		#region Events (override)
@@ -109,7 +136,7 @@ namespace McdView
 								XCImage.SpriteWidth32,
 								VERT_TEXT_PAD);
 
-				if (i == SpriteId)
+				if (i == _id)
 					graphics.FillRectangle(
 										McdviewF.BrushHilight,
 										rect);
