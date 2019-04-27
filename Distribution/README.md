@@ -13,6 +13,11 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 April 27<br>
+[MapView2_190427.7z](https://drive.google.com/file/d/1xJv0KrPDdj8EDRxVG2lkmHxMAFLNII1t/view?usp=sharing)
+
+- add CopyPanel to McdView + tweaks. The CopyPanel is a subsidiary window that can open an MCDset, from which records may be copied for insertion into McdView proper.
+
 2019 April 22<br>
 [MapView2_190422.7z](https://drive.google.com/file/d/1SPjj31nwhw_65A7ph86PjWQmjE0FNxi8/view?usp=sharing)
 
