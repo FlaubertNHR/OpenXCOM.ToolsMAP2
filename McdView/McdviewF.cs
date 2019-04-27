@@ -42,6 +42,10 @@ namespace McdView
 		internal BitArray LoFT;
 
 		private bool strict = true;
+
+		/// <summary>
+		/// True to prevent the Changed flag when a part is being selected.
+		/// </summary>
 		private bool InitFields;
 		#endregion Fields
 

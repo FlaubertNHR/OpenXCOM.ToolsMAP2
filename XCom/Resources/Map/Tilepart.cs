@@ -157,12 +157,17 @@ namespace XCom
 		///   Alternate
 		///   _spriteset
 		/// </summary>
+		/// <param name="spriteset">the spriteset to ref for the cloned part; if
+		/// null use this part's spriteset</param>
 		/// <returns></returns>
-		public Tilepart Clone()
+		public Tilepart Clone(SpriteCollection spriteset = null)
 		{
+			if (spriteset == null)
+				spriteset = _spriteset;
+
 			var part = new Tilepart(
 								TerId,
-								_spriteset,
+								spriteset,
 								Record.Clone());
 			part.Dead      = Dead;
 			part.Alternate = Alternate;

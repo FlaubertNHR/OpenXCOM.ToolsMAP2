@@ -85,7 +85,9 @@ namespace McdView
 
 
 		#region cTor
-		internal protected TerrainPanel(McdviewF f, CopyPanelF fcopy = null)
+		protected TerrainPanel(
+				McdviewF f,
+				CopyPanelF fcopy = null)
 		{
 			_f     = f;
 			_fcopy = fcopy;	// prevent the CopyPanel from borking out during its initial

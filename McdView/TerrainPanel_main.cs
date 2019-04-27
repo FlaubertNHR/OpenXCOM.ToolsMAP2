@@ -256,7 +256,7 @@ namespace McdView
 				{
 					for (int pos = 0; pos != _copyparts.Count; ++pos, ++i)
 					{
-						array[i] = _copyparts[pos].Clone();
+						array[i] = _copyparts[pos].Clone(_f.Spriteset);
 						array[i].TerId = i;
 
 						if (!isTer)
