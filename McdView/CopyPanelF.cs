@@ -18,7 +18,7 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
-		internal static Point Loc = new Point(-1,-1);
+		internal static Rectangle Metric = new Rectangle(-1,0, 0,0);
 		#endregion Fields (static)
 
 
@@ -182,7 +182,11 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			Loc = new Point(Location.X, Location.Y);
+			Metric.X = Location.X;
+			Metric.Y = Location.Y;
+			Metric.Width  = ClientSize.Width;
+			Metric.Height = ClientSize.Height;
+
 			_f.CloseCopyPanel();
 
 			base.OnFormClosing(e);
@@ -194,11 +198,11 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnLoad(EventArgs e)
 		{
-			if (Loc.X == -1)
-				Location = new Point(_f.Location.X + 20, _f.Location.Y + 20);
-			else
-				Location = new Point(Loc.X, Loc.Y);
-
+			if (Metric.X != -1)
+			{
+				Location   = new Point(Metric.X, Metric.Y);
+				ClientSize = new Size(Metric.Width, Metric.Height);
+			}
 			base.OnLoad(e);
 		}
 
