@@ -79,7 +79,7 @@ namespace McdView
 		{ get; set; }
 
 
-		protected ContextMenu Context
+		protected ContextMenuStrip Context
 		{ get; set; }
 		#endregion Properties
 
@@ -140,19 +140,22 @@ namespace McdView
 		/// <param name="e"></param>
 		protected void OnCopyClick(object sender, EventArgs e)
 		{
-			_copyparts.Clear();
+			if (SelId != -1)
+			{
+				_copyparts.Clear();
 
-			if (_fcopy == null)
-				_copylabel = _f.Label;
-			else
-				_copylabel = _fcopy.Label;
+				if (_fcopy == null)
+					_copylabel = _f.Label;
+				else
+					_copylabel = _fcopy.Label;
 
-			var sels = new List<int>(SubIds);
-			sels.Add(SelId);
-			sels.Sort();
+				var sels = new List<int>(SubIds);
+				sels.Add(SelId);
+				sels.Sort();
 
-			foreach (int id in sels)
-				_copyparts.Add(Parts[id].Clone());
+				foreach (int id in sels)
+					_copyparts.Add(Parts[id].Clone());
+			}
 		}
 
 		/// <summary>
@@ -162,13 +165,16 @@ namespace McdView
 		/// <param name="e"></param>
 		protected void OnSelectAllClick(object sender, EventArgs e)
 		{
-			for (int i = 0; i != Parts.Length - 1; ++i)
-				SubIds.Add(i);
+			if (Parts != null && Parts.Length != 0)
+			{
+				for (int i = 0; i != Parts.Length - 1; ++i)
+					SubIds.Add(i);
 
-			if (SelId != Parts.Length - 1)
-				SelId  = Parts.Length - 1;
-			else
-				Invalidate();
+				if (SelId != Parts.Length - 1)
+					SelId  = Parts.Length - 1;
+				else
+					Invalidate();
+			}
 		}
 
 		/// <summary>

@@ -37,30 +37,29 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itInsert   = new MenuItem("insert after last",  OnInsertClick, Shortcut.CtrlI);	// Ctrl+i key
+			var itInsert   = new ToolStripMenuItem("insert after last", null, OnInsertClick, Keys.Control | Keys.I);
 
-			var itSep0     = new MenuItem("-");
+			var itSep0     = new ToolStripSeparator();
 
-			var itCopy     = new MenuItem("copy for insertion", OnCopyClick);	// Ctrl+c key
+			var itCopy     = new ToolStripMenuItem("copy for insertion", null, OnCopyClick, Keys.Control | Keys.C);
 
-			var itSep1     = new MenuItem("-");
+			var itSep1     = new ToolStripSeparator();
 
-			var itSelect   = new MenuItem("select all",   OnSelectAllClick);	// Ctrl+a key
-			var itDeselect = new MenuItem("deselect all", OnDeselectAllClick);	// Esc
+			var itSelect   = new ToolStripMenuItem("select all", null, OnSelectAllClick, Keys.Control | Keys.A);
+			var itDeselect = new ToolStripMenuItem("deselect all", null, OnDeselectAllClick); // Esc - not allowed, is handled by KeyDown event.
 
-			Context = new ContextMenu();
-			Context.MenuItems.AddRange(new []
-										{
-											itInsert,	// 0
-											itSep0,		// 1
-											itCopy,		// 2
-											itSep1,		// 3
-											itSelect,	// 4
-											itDeselect	// 5
-										});
-			ContextMenu = Context;
+			itDeselect.ShortcutKeyDisplayString = "Esc"; // ie. the "ShortcutKeyDisplayOnlyString"
 
-			Context.Popup += OnPopup_Context;
+			Context = new ContextMenuStrip();
+			Context.Items.Add(itInsert);	// 0
+			Context.Items.Add(itSep0);		// 1
+			Context.Items.Add(itCopy);		// 2
+			Context.Items.Add(itSep1);		// 3
+			Context.Items.Add(itSelect);	// 4
+			Context.Items.Add(itDeselect);	// 5
+			Context.Opening += OnOpening_Context;
+
+			ContextMenuStrip = Context;
 		}
 		#endregion cTor
 
@@ -69,18 +68,19 @@ namespace McdView
 		/// <summary>
 		/// Determines which contextmenu commands are enabled when the menu
 		/// is opened.
-		/// IMPORTANT: The conditions shall be synched w/ KeyInput().
+		/// IMPORTANT: The conditions shall be synched w/ KeyInput() and/or
+		/// their respective shortcut handlers.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnPopup_Context(object sender, EventArgs e)
+		private void OnOpening_Context(object sender, EventArgs e)
 		{
 			bool selid = (SelId != -1);
 
-			Context.MenuItems[0].Enabled = selid;								// insert after last
-			Context.MenuItems[2].Enabled = selid;								// copy
-			Context.MenuItems[4].Enabled = Parts != null && Parts.Length != 0;	// select
-			Context.MenuItems[5].Enabled = selid;								// deselect
+			Context.Items[0].Enabled = selid;								// insert after last
+			Context.Items[2].Enabled = selid;								// copy
+			Context.Items[4].Enabled = Parts != null && Parts.Length != 0;	// select
+			Context.Items[5].Enabled = selid;								// deselect
 		}
 
 		/// <summary>
@@ -90,24 +90,30 @@ namespace McdView
 		/// </summary>
 		private void OnInsertClick(object sender, EventArgs e)
 		{
-			OnCopyClick(sender, e);
-
-			if (_f.Parts != null)
+			if (SelId != -1)
 			{
-				_f.SelId = _f.Parts.Length - 1;
-				_f.PartsPanel.OnInsertClick(null, EventArgs.Empty);
+				OnCopyClick(sender, e);
+				if (_f.Parts != null)
+				{
+					_f.SelId = _f.Parts.Length - 1;
+					_f.PartsPanel.OnInsertClick(null, EventArgs.Empty);
+				}
 			}
 		}
 		#endregion Events (context)
 
 
 		#region Events (override)
+		/// <summary>
+		/// @note Shortcuts on the contextmenu items happen regardless of
+		/// key-suppression or call to base; neither do they need to call
+		/// KeyInput().
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			e.SuppressKeyPress = true;
 			KeyInput(e);
-
-//			base.OnKeyDown(e);
 		}
 		#endregion Events (override)
 
@@ -288,22 +294,7 @@ namespace McdView
 
 
 				// Edit functions (keyboard) follow ...
-				// IMPORTANT: The conditions shall be synched w/ OnPopup_Context().
-
-				case Keys.I:												// insert after last
-					if (e.Control && SelId != -1)
-						OnInsertClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.C:												// copy
-					if (e.Control && SelId != -1)
-						OnCopyClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.A:												// select all
-					if (e.Control && Parts != null && Parts.Length != 0)
-						OnSelectAllClick(null, EventArgs.Empty);
-					break;
+				// IMPORTANT: The conditions shall be synched w/ OnOpening_Context().
 
 				case Keys.Escape:
 					SelId = -1;

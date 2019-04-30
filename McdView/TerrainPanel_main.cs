@@ -38,52 +38,58 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itAdd      = new MenuItem("add",             OnAddClick);			// d key
-			var itAddRange = new MenuItem("add range ...",   OnAddRangeClick);		// Ctrl+d key
+			var itAdd      = new ToolStripMenuItem("add",             null, OnAddClick); // d key - not allowed, is handled by KeyDown event.
+			var itAddRange = new ToolStripMenuItem("add range ...",   null, OnAddRangeClick, Keys.Control | Keys.D);
 
-			var itSep0     = new MenuItem("-");
+			itAdd.ShortcutKeyDisplayString = "D";
 
-			var itCut      = new MenuItem("cut",             OnCutClick);			// Ctrl+x key
-			var itCopy     = new MenuItem("copy",            OnCopyClick);			// Ctrl+c key
-			var itInsert   = new MenuItem("insert after",    OnInsertClick);		// Ctrl+v key
-			var itDelete   = new MenuItem("delete",          OnDeleteClick);		// Delete key
+			var itSep0     = new ToolStripSeparator();
 
-			var itSep1     = new MenuItem("-");
+			var itCut      = new ToolStripMenuItem("cut",             null, OnCutClick,    Keys.Control | Keys.X);
+			var itCopy     = new ToolStripMenuItem("copy",            null, OnCopyClick,   Keys.Control | Keys.C);
+			var itInsert   = new ToolStripMenuItem("insert after",    null, OnInsertClick, Keys.Control | Keys.V);
+			var itDelete   = new ToolStripMenuItem("delete",          null, OnDeleteClick, Keys.Delete); // Delete key - wtf.
 
-			var itFile     = new MenuItem("append file ...", OnFileClick);			// f key
+			var itSep1     = new ToolStripSeparator();
 
-			var itSep2     = new MenuItem("-");
+			var itFile     = new ToolStripMenuItem("append file ...", null, OnFileClick); // f key - not allowed, is handled by KeyDown event.
 
-			var itLeft     = new MenuItem("swap left",       OnSwapLeftClick);		// - key
-			var itRight    = new MenuItem("swap right",      OnSwapRightClick);		// + key
+			itFile.ShortcutKeyDisplayString = "F";
 
-			var itSep3     = new MenuItem("-");
+			var itSep2     = new ToolStripSeparator();
 
-			var itSelect   = new MenuItem("select all",      OnSelectAllClick);		// Ctrl+a key
-			var itDeselect = new MenuItem("deselect all",    OnDeselectAllClick);	// Esc
+			var itLeft     = new ToolStripMenuItem("swap left",       null, OnSwapLeftClick);  // - key - not allowed, is handled by KeyDown event.
+			var itRight    = new ToolStripMenuItem("swap right",      null, OnSwapRightClick); // + key - not allowed, is handled by KeyDown event.
 
-			Context = new ContextMenu();
-			Context.MenuItems.AddRange(new []
-										{
-											itAdd,		//  0
-											itAddRange,	//  1
-											itSep0,		//  2
-											itCut,		//  3
-											itCopy,		//  4
-											itInsert,	//  5
-											itDelete,	//  6
-											itSep1,		//  7
-											itFile,		//  8
-											itSep2,		//  9
-											itLeft,		// 10
-											itRight,	// 11
-											itSep3,		// 12
-											itSelect,	// 13
-											itDeselect	// 14
-										});
-			ContextMenu = Context;
+			itLeft .ShortcutKeyDisplayString = "-";
+			itRight.ShortcutKeyDisplayString = "+";
 
-			Context.Popup += OnPopup_Context;
+			var itSep3     = new ToolStripSeparator();
+
+			var itSelect   = new ToolStripMenuItem("select all",      null, OnSelectAllClick, Keys.Control | Keys.A);
+			var itDeselect = new ToolStripMenuItem("deselect all",    null, OnDeselectAllClick); // Esc - not allowed, is handled by KeyDown event.
+
+			itDeselect.ShortcutKeyDisplayString = "Esc";
+
+			Context = new ContextMenuStrip();
+			Context.Items.Add(itAdd);		//  0
+			Context.Items.Add(itAddRange);	//  1
+			Context.Items.Add(itSep0);		//  2
+			Context.Items.Add(itCut);		//  3
+			Context.Items.Add(itCopy);		//  4
+			Context.Items.Add(itInsert);	//  5
+			Context.Items.Add(itDelete);	//  6
+			Context.Items.Add(itSep1);		//  7
+			Context.Items.Add(itFile);		//  8
+			Context.Items.Add(itSep2);		//  9
+			Context.Items.Add(itLeft);		// 10
+			Context.Items.Add(itRight);		// 11
+			Context.Items.Add(itSep3);		// 12
+			Context.Items.Add(itSelect);	// 13
+			Context.Items.Add(itDeselect);	// 14
+			Context.Opening += OnOpening_Context;
+
+			ContextMenuStrip = Context;
 		}
 		#endregion cTor
 
@@ -92,30 +98,31 @@ namespace McdView
 		/// <summary>
 		/// Determines which contextmenu commands are enabled when the menu
 		/// is opened.
-		/// IMPORTANT: The conditions shall be synched w/ KeyInput().
+		/// IMPORTANT: The conditions shall be synched w/ KeyInput() and/or
+		/// their respective shortcut handlers.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnPopup_Context(object sender, EventArgs e)
+		private void OnOpening_Context(object sender, EventArgs e)
 		{
 			bool parts = (Parts != null);
 			bool selid = (SelId != -1);
 
-			Context.MenuItems[0].Enabled = parts;								// add
-			Context.MenuItems[1].Enabled = parts;								// add range
+			Context.Items[0].Enabled = parts;								// add
+			Context.Items[1].Enabled = parts;								// add range
 
-			Context.MenuItems[3].Enabled = selid;								// cut
-			Context.MenuItems[4].Enabled = selid;								// copy
-			Context.MenuItems[5].Enabled = parts && _copyparts.Count != 0;		// insert
-			Context.MenuItems[6].Enabled = selid;								// delete
+			Context.Items[3].Enabled = selid;								// cut
+			Context.Items[4].Enabled = selid;								// copy
+			Context.Items[5].Enabled = parts && _copyparts.Count != 0;		// insert
+			Context.Items[6].Enabled = selid;								// delete
 
-			Context.MenuItems[8].Enabled = (parts && false);					// file
+			Context.Items[8].Enabled = (parts && false);					// file
 
-			Context.MenuItems[10].Enabled =          SelId > 0;					// left
-			Context.MenuItems[11].Enabled = selid && SelId != Parts.Length - 1;	// right
+			Context.Items[10].Enabled =          SelId > 0;					// left
+			Context.Items[11].Enabled = selid && SelId != Parts.Length - 1;	// right
 
-			Context.MenuItems[13].Enabled = parts && Parts.Length != 0;			// select
-			Context.MenuItems[14].Enabled = selid;								// deselect
+			Context.Items[13].Enabled = parts && Parts.Length != 0;			// select
+			Context.Items[14].Enabled = selid;								// deselect
 		}
 
 //		/// <summary>
@@ -135,84 +142,90 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnAddClick(object sender, EventArgs e)
 		{
-			var array = new Tilepart[Parts.Length + 1];
-
-			int id = SelId + 1;
-			for (int i = 0; i != id; ++i)
-				array[i] = Parts[i];
-
-			McdRecord record = McdRecordFactory.CreateRecord();
-
-			array[id] = new Tilepart(
-									id,
-									Spriteset,
-									record);
-			array[id].Dead      =
-			array[id].Alternate = null;
-
-			for (int i = id + 1; i != array.Length; ++i)
+			if (Parts != null)
 			{
-				array[i] = Parts[i - 1];
-				array[i].TerId = i; // not used in McdView but keep things consistent ....
+				var array = new Tilepart[Parts.Length + 1];
+
+				int id = SelId + 1;
+				for (int i = 0; i != id; ++i)
+					array[i] = Parts[i];
+
+				McdRecord record = McdRecordFactory.CreateRecord();
+
+				array[id] = new Tilepart(
+										id,
+										Spriteset,
+										record);
+				array[id].Dead      =
+				array[id].Alternate = null;
+
+				for (int i = id + 1; i != array.Length; ++i)
+				{
+					array[i] = Parts[i - 1];
+					array[i].TerId = i; // not used in McdView but keep things consistent ....
+				}
+
+				_bypassScrollZero = true;
+				_f.Parts = array; // assign back to 'Parts' via McdviewF
+
+				ShiftRefs(id, 1);
+
+				SubIds.Clear();
+				SelId = id;
+
+				_f.Changed = CacheLoad.Changed(_f.Parts);
 			}
-
-			_bypassScrollZero = true;
-			_f.Parts = array; // assign back to 'Parts' via McdviewF
-
-			ShiftRefs(id, 1);
-
-			SubIds.Clear();
-			SelId = id;
-
-			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		internal static int _add;
 		private void OnAddRangeClick(object sender, EventArgs e)
 		{
-			using (var ari = new AddRangeInput())
+			if (Parts != null)
 			{
-				if (ari.ShowDialog() == DialogResult.OK)
+				using (var ari = new AddRangeInput())
 				{
-					if (_add != 0) // input allows 0 but not neg
+					if (ari.ShowDialog() == DialogResult.OK)
 					{
-						int length = Parts.Length + _add;
-						var array = new Tilepart[length];
-
-						int id = SelId + 1;
-						int i;
-						for (i = 0; i != id; ++i)
-							array[i] = Parts[i];
-
-						McdRecord record;
-						int j = i + _add;
-						for (; i != j; ++i)
+						if (_add != 0) // input allows 0 but not neg
 						{
-							record = McdRecordFactory.CreateRecord();
+							int length = Parts.Length + _add;
+							var array = new Tilepart[length];
 
-							array[i] = new Tilepart(
-												i,
-												Spriteset,
-												record);
-							array[i].Dead =
-							array[i].Alternate = null;
+							int id = SelId + 1;
+							int i;
+							for (i = 0; i != id; ++i)
+								array[i] = Parts[i];
+
+							McdRecord record;
+							int j = i + _add;
+							for (; i != j; ++i)
+							{
+								record = McdRecordFactory.CreateRecord();
+
+								array[i] = new Tilepart(
+													i,
+													Spriteset,
+													record);
+								array[i].Dead =
+								array[i].Alternate = null;
+							}
+
+							for (; i != length; ++i)
+							{
+								array[i] = Parts[i - _add];
+								array[i].TerId = i;
+							}
+
+							_bypassScrollZero = true;
+							_f.Parts = array;
+
+							ShiftRefs(id, _add);
+
+							SubIds.Clear();
+							SelId = id;
+
+							_f.Changed = CacheLoad.Changed(_f.Parts);
 						}
-
-						for (; i != length; ++i)
-						{
-							array[i] = Parts[i - _add];
-							array[i].TerId = i;
-						}
-
-						_bypassScrollZero = true;
-						_f.Parts = array;
-
-						ShiftRefs(id, _add);
-
-						SubIds.Clear();
-						SelId = id;
-
-						_f.Changed = CacheLoad.Changed(_f.Parts);
 					}
 				}
 			}
@@ -225,8 +238,11 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnCutClick(object sender, EventArgs e)
 		{
-			OnCopyClick(  null, EventArgs.Empty);
-			OnDeleteClick(null, EventArgs.Empty);
+			if (SelId != -1)
+			{
+				OnCopyClick(  null, EventArgs.Empty);
+				OnDeleteClick(null, EventArgs.Empty);
+			}
 		}
 
 		/// <summary>
@@ -244,48 +260,51 @@ namespace McdView
 		/// <param name="e"></param>
 		internal void OnInsertClick(object sender, EventArgs e)
 		{
-			bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
-
-			int id = SelId + 1;
-
-			var array = new Tilepart[Parts.Length + _copyparts.Count];
-
-			for (int i = 0, j = 0; i != array.Length; ++i, ++j)
+			if (Parts != null && _copyparts.Count != 0)
 			{
-				if (i == id)
+				bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
+
+				int id = SelId + 1;
+
+				var array = new Tilepart[Parts.Length + _copyparts.Count];
+
+				for (int i = 0, j = 0; i != array.Length; ++i, ++j)
 				{
-					for (int pos = 0; pos != _copyparts.Count; ++pos, ++i)
+					if (i == id)
 					{
-						array[i] = _copyparts[pos].Clone(_f.Spriteset);
-						array[i].TerId = i;
-
-						if (!isTer)
+						for (int pos = 0; pos != _copyparts.Count; ++pos, ++i)
 						{
-							array[i].Record.DieTile = (byte)0;
-							array[i].Dead = null;
+							array[i] = _copyparts[pos].Clone(_f.Spriteset);
+							array[i].TerId = i;
 
-							array[i].Record.Alt_MCD = (byte)0;
-							array[i].Alternate = null;
+							if (!isTer)
+							{
+								array[i].Record.DieTile = (byte)0;
+								array[i].Dead = null;
+
+								array[i].Record.Alt_MCD = (byte)0;
+								array[i].Alternate = null;
+							}
 						}
 					}
+
+					if (i == array.Length)
+						break;
+
+					array[i] = Parts[j];
+					array[i].TerId = i;
 				}
 
-				if (i == array.Length)
-					break;
+				_bypassScrollZero = true;
+				_f.Parts = array;
 
-				array[i] = Parts[j];
-				array[i].TerId = i;
+				ShiftRefs(id, _copyparts.Count);
+
+				SubIds.Clear();
+				SelId = id;
+
+				_f.Changed = CacheLoad.Changed(_f.Parts);
 			}
-
-			_bypassScrollZero = true;
-			_f.Parts = array;
-
-			ShiftRefs(id, _copyparts.Count);
-
-			SubIds.Clear();
-			SelId = id;
-
-			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		/// <summary>
@@ -348,36 +367,39 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnDeleteClick(object sender, EventArgs e)
 		{
-			var array = new Tilepart[Parts.Length - (1 + SubIds.Count)]; // ie. SelId + SubIds
-
-			for (int i = 0, j = 0; i != Parts.Length; ++i)
+			if (SelId != -1)
 			{
-				if (i == SelId || SubIds.Contains(i))
+				var array = new Tilepart[Parts.Length - (1 + SubIds.Count)]; // ie. SelId + SubIds
+
+				for (int i = 0, j = 0; i != Parts.Length; ++i)
 				{
-					++j;
+					if (i == SelId || SubIds.Contains(i))
+					{
+						++j;
+					}
+					else
+					{
+						array[i - j] = Parts[i];
+						array[i - j].TerId = i - j;
+					}
 				}
-				else
-				{
-					array[i - j] = Parts[i];
-					array[i - j].TerId = i - j;
-				}
+
+				SubIds.Add(SelId);
+				var sels = new List<int>(SubIds);
+
+				SubIds.Clear();
+				SelId = -1;
+
+				_bypassScrollZero = true;
+				_f.Parts = array;
+
+				for (int i = 0; i != sels.Count; ++i)
+					ClearRefs(sels[i]);
+
+				UpdateRefs(sels);
+
+				_f.Changed = CacheLoad.Changed(_f.Parts);
 			}
-
-			SubIds.Add(SelId);
-			var sels = new List<int>(SubIds);
-
-			SubIds.Clear();
-			SelId = -1;
-
-			_bypassScrollZero = true;
-			_f.Parts = array;
-
-			for (int i = 0; i != sels.Count; ++i)
-				ClearRefs(sels[i]);
-
-			UpdateRefs(sels);
-
-			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		/// <summary>
@@ -459,6 +481,8 @@ namespace McdView
 
 		private void OnFileClick(object sender, EventArgs e)
 		{
+			if (Parts != null)
+			{}
 		}
 
 		/// <summary>
@@ -468,29 +492,32 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnSwapLeftClick(object sender, EventArgs e)
 		{
-			var array = new Tilepart[Parts.Length];
+			if (SelId > 0)
+			{
+				var array = new Tilepart[Parts.Length];
 
-			int id = SelId;
-			for (int i = 0; i != id - 1; ++i)
-				array[i] = Parts[i];
+				int id = SelId;
+				for (int i = 0; i != id - 1; ++i)
+					array[i] = Parts[i];
 
-			array[id - 1] = Parts[id];
-			array[id - 1].TerId = id - 1;
+				array[id - 1] = Parts[id];
+				array[id - 1].TerId = id - 1;
 
-			array[id] = Parts[id - 1];
-			array[id].TerId = id;
+				array[id] = Parts[id - 1];
+				array[id].TerId = id;
 
-			for (int i = id + 1; i != Parts.Length; ++i)
-				array[i] = Parts[i];
+				for (int i = id + 1; i != Parts.Length; ++i)
+					array[i] = Parts[i];
 
-			_bypassScrollZero = true;
-			_f.Parts = array;
+				_bypassScrollZero = true;
+				_f.Parts = array;
 
-			SwapRefs(id, id - 1);
+				SwapRefs(id, id - 1);
 
-			SelId = id - 1; // does refresh.
+				SelId = id - 1; // does refresh.
 
-			_f.Changed = CacheLoad.Changed(_f.Parts);
+				_f.Changed = CacheLoad.Changed(_f.Parts);
+			}
 		}
 
 		/// <summary>
@@ -500,29 +527,32 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnSwapRightClick(object sender, EventArgs e)
 		{
-			var array = new Tilepart[Parts.Length];
+			if (SelId != -1 && SelId != Parts.Length - 1)
+			{
+				var array = new Tilepart[Parts.Length];
 
-			int id = SelId;
-			for (int i = 0; i != id; ++i)
-				array[i] = Parts[i];
+				int id = SelId;
+				for (int i = 0; i != id; ++i)
+					array[i] = Parts[i];
 
-			array[id] = Parts[id + 1];
-			array[id].TerId = id;
+				array[id] = Parts[id + 1];
+				array[id].TerId = id;
 
-			array[id + 1] = Parts[id];
-			array[id + 1].TerId = id + 1;
+				array[id + 1] = Parts[id];
+				array[id + 1].TerId = id + 1;
 
-			for (int i = id + 2; i != Parts.Length; ++i)
-				array[i] = Parts[i];
+				for (int i = id + 2; i != Parts.Length; ++i)
+					array[i] = Parts[i];
 
-			_bypassScrollZero = true;
-			_f.Parts = array;
+				_bypassScrollZero = true;
+				_f.Parts = array;
 
-			SwapRefs(id, id + 1);
+				SwapRefs(id, id + 1);
 
-			SelId = id + 1; // does refresh.
+				SelId = id + 1; // does refresh.
 
-			_f.Changed = CacheLoad.Changed(_f.Parts);
+				_f.Changed = CacheLoad.Changed(_f.Parts);
+			}
 		}
 
 		/// <summary>
@@ -751,63 +781,27 @@ namespace McdView
 
 
 				// Edit functions (keyboard) follow ...
-				// IMPORTANT: The conditions shall be synched w/ OnPopup_Context().
+				// IMPORTANT: The conditions shall be synched w/ OnOpening_Context().
+				//
+				// NOTE: Escape for deselect all is handled by the caller: McdviewF.OnKeyDown().
 
 				case Keys.D:
-					if (Parts != null)
-					{
-						if (!e.Control)											// add
-							OnAddClick(null, EventArgs.Empty);
-						else													// add range
-							OnAddRangeClick(null, EventArgs.Empty);
-					}
+					if (!e.Control)								// add
+						OnAddClick(null, EventArgs.Empty);
 					break;
-
-
-				case Keys.X:													// cut
-					if (e.Control && SelId != -1)
-						OnCutClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.C:													// copy
-					if (e.Control && SelId != -1)
-						OnCopyClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.V:													// insert
-					if (e.Control && Parts != null && _copyparts.Count != 0)
-						OnInsertClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.Delete:												// delete
-					if (SelId != -1)
-						OnDeleteClick(null, EventArgs.Empty);
-					break;
-
 
 				case Keys.OemMinus: // drugs ...
-				case Keys.Subtract:												// swap left
-					if (SelId > 0)
-						OnSwapLeftClick(null, EventArgs.Empty);
+				case Keys.Subtract:								// swap left
+					OnSwapLeftClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.Oemplus: // drugs ...
-				case Keys.Add:													// swap right
-					if (SelId != -1 && SelId != Parts.Length - 1)
-						OnSwapRightClick(null, EventArgs.Empty);
+				case Keys.Add:									// swap right
+					OnSwapRightClick(null, EventArgs.Empty);
 					break;
 
-
-				case Keys.A:													// select all
-					if (e.Control && Parts != null && Parts.Length != 0)
-						OnSelectAllClick(null, EventArgs.Empty);
-					break;
-
-				// NOTE: Escape for deselect all is handled by the caller: McdviewF.OnKeyDown().
-
-				case Keys.F:													// append file
-					if (Parts != null)
-						OnFileClick(null, EventArgs.Empty);
+				case Keys.F:									// append file
+					OnFileClick(null, EventArgs.Empty);
 					break;
 			}
 		}
