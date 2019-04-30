@@ -242,7 +242,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnInsertClick(object sender, EventArgs e)
+		internal void OnInsertClick(object sender, EventArgs e)
 		{
 			bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
 

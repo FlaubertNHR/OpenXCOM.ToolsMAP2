@@ -37,20 +37,26 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itCopy        = new MenuItem("copy",         OnCopyClick);			// Ctrl+c key
+			var itInsert   = new MenuItem("insert after last",  OnInsertClick); // TODO: Ctrl+i key
 
-			var itSep0        = new MenuItem("-");
+			var itSep0     = new MenuItem("-");
 
-			var itSelect      = new MenuItem("select all",   OnSelectAllClick);		// Ctrl+a key
-			var itDeselect    = new MenuItem("deselect all", OnDeselectAllClick);	// Esc
+			var itCopy     = new MenuItem("copy for insertion", OnCopyClick);	// Ctrl+c key
+
+			var itSep1     = new MenuItem("-");
+
+			var itSelect   = new MenuItem("select all",   OnSelectAllClick);	// Ctrl+a key
+			var itDeselect = new MenuItem("deselect all", OnDeselectAllClick);	// Esc
 
 			Context = new ContextMenu();
 			Context.MenuItems.AddRange(new []
 										{
-											itCopy,		// 0
+											itInsert,	// 0
 											itSep0,		// 1
-											itSelect,	// 2
-											itDeselect	// 3
+											itCopy,		// 2
+											itSep1,		// 3
+											itSelect,	// 4
+											itDeselect	// 5
 										});
 			ContextMenu = Context;
 
@@ -71,9 +77,22 @@ namespace McdView
 		{
 			bool selid = (SelId != -1);
 
-			Context.MenuItems[0].Enabled = selid;								// copy
-			Context.MenuItems[2].Enabled = Parts != null && Parts.Length != 0;	// select
-			Context.MenuItems[3].Enabled = selid;								// deselect
+			Context.MenuItems[0].Enabled = selid;								// insert after last
+			Context.MenuItems[2].Enabled = selid;								// copy
+			Context.MenuItems[4].Enabled = Parts != null && Parts.Length != 0;	// select
+			Context.MenuItems[5].Enabled = selid;								// deselect
+		}
+
+		/// <summary>
+		/// Selects the last part in the Main window's parts-array and inserts
+		/// selected parts after that part.
+		/// @note This is for automatic insertion of parts via the CopyPanel.
+		/// </summary>
+		private void OnInsertClick(object sender, EventArgs e)
+		{
+			OnCopyClick(sender, e);
+			_f.SelId = _f.Parts.Length - 1;
+			_f.PartsPanel.OnInsertClick(null, EventArgs.Empty);
 		}
 		#endregion Events (context)
 
