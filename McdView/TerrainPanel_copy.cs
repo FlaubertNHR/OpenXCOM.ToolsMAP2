@@ -37,7 +37,7 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itInsert   = new MenuItem("insert after last",  OnInsertClick);	// Ctrl+i key
+			var itInsert   = new MenuItem("insert after last",  OnInsertClick, Shortcut.CtrlI);	// Ctrl+i key
 
 			var itSep0     = new MenuItem("-");
 
@@ -91,8 +91,12 @@ namespace McdView
 		private void OnInsertClick(object sender, EventArgs e)
 		{
 			OnCopyClick(sender, e);
-			_f.SelId = _f.Parts.Length - 1;
-			_f.PartsPanel.OnInsertClick(null, EventArgs.Empty);
+
+			if (_f.Parts != null)
+			{
+				_f.SelId = _f.Parts.Length - 1;
+				_f.PartsPanel.OnInsertClick(null, EventArgs.Empty);
+			}
 		}
 		#endregion Events (context)
 
