@@ -37,7 +37,7 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itInsert   = new MenuItem("insert after last",  OnInsertClick); // TODO: Ctrl+i key
+			var itInsert   = new MenuItem("insert after last",  OnInsertClick);	// Ctrl+i key
 
 			var itSep0     = new MenuItem("-");
 
@@ -285,6 +285,11 @@ namespace McdView
 
 				// Edit functions (keyboard) follow ...
 				// IMPORTANT: The conditions shall be synched w/ OnPopup_Context().
+
+				case Keys.I:												// insert after last
+					if (e.Control && SelId != -1)
+						OnInsertClick(null, EventArgs.Empty);
+					break;
 
 				case Keys.C:												// copy
 					if (e.Control && SelId != -1)
