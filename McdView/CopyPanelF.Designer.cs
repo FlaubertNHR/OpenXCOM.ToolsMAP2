@@ -810,69 +810,64 @@
 			// 
 			// cb_InsertAltsprites
 			// 
-			this.cb_InsertAltsprites.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
 			this.cb_InsertAltsprites.Checked = true;
 			this.cb_InsertAltsprites.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_InsertAltsprites.Location = new System.Drawing.Point(165, 60);
+			this.cb_InsertAltsprites.Location = new System.Drawing.Point(165, 55);
 			this.cb_InsertAltsprites.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_InsertAltsprites.Name = "cb_InsertAltsprites";
-			this.cb_InsertAltsprites.Size = new System.Drawing.Size(105, 15);
+			this.cb_InsertAltsprites.Size = new System.Drawing.Size(160, 20);
 			this.cb_InsertAltsprites.TabIndex = 18;
-			this.cb_InsertAltsprites.Text = "include sprites";
+			this.cb_InsertAltsprites.Text = "copy sprites";
 			this.cb_InsertAltsprites.UseVisualStyleBackColor = true;
 			// 
 			// cb_InsertAltpart
 			// 
-			this.cb_InsertAltpart.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
 			this.cb_InsertAltpart.Checked = true;
 			this.cb_InsertAltpart.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_InsertAltpart.Location = new System.Drawing.Point(145, 40);
+			this.cb_InsertAltpart.Location = new System.Drawing.Point(145, 35);
 			this.cb_InsertAltpart.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_InsertAltpart.Name = "cb_InsertAltpart";
-			this.cb_InsertAltpart.Size = new System.Drawing.Size(100, 15);
+			this.cb_InsertAltpart.Size = new System.Drawing.Size(180, 20);
 			this.cb_InsertAltpart.TabIndex = 14;
-			this.cb_InsertAltpart.Text = "Alternate part";
+			this.cb_InsertAltpart.Text = "copy Alternate part";
 			this.cb_InsertAltpart.UseVisualStyleBackColor = true;
 			this.cb_InsertAltpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_InsertAltpart);
 			// 
 			// cb_InsertDeadsprites
 			// 
-			this.cb_InsertDeadsprites.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
 			this.cb_InsertDeadsprites.Checked = true;
 			this.cb_InsertDeadsprites.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_InsertDeadsprites.Location = new System.Drawing.Point(35, 60);
+			this.cb_InsertDeadsprites.Location = new System.Drawing.Point(35, 55);
 			this.cb_InsertDeadsprites.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_InsertDeadsprites.Name = "cb_InsertDeadsprites";
-			this.cb_InsertDeadsprites.Size = new System.Drawing.Size(105, 15);
+			this.cb_InsertDeadsprites.Size = new System.Drawing.Size(125, 20);
 			this.cb_InsertDeadsprites.TabIndex = 17;
-			this.cb_InsertDeadsprites.Text = "include sprites";
+			this.cb_InsertDeadsprites.Text = "copy sprites";
 			this.cb_InsertDeadsprites.UseVisualStyleBackColor = true;
 			// 
 			// cb_InsertDeadpart
 			// 
-			this.cb_InsertDeadpart.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
 			this.cb_InsertDeadpart.Checked = true;
 			this.cb_InsertDeadpart.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_InsertDeadpart.Location = new System.Drawing.Point(15, 40);
+			this.cb_InsertDeadpart.Location = new System.Drawing.Point(15, 35);
 			this.cb_InsertDeadpart.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_InsertDeadpart.Name = "cb_InsertDeadpart";
-			this.cb_InsertDeadpart.Size = new System.Drawing.Size(80, 15);
+			this.cb_InsertDeadpart.Size = new System.Drawing.Size(125, 20);
 			this.cb_InsertDeadpart.TabIndex = 13;
-			this.cb_InsertDeadpart.Text = "Dead part";
+			this.cb_InsertDeadpart.Text = "copy Dead part";
 			this.cb_InsertDeadpart.UseVisualStyleBackColor = true;
 			this.cb_InsertDeadpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_InsertDeadpart);
 			// 
 			// cb_InsertSprites
 			// 
-			this.cb_InsertSprites.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
 			this.cb_InsertSprites.Checked = true;
 			this.cb_InsertSprites.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_InsertSprites.Location = new System.Drawing.Point(15, 20);
+			this.cb_InsertSprites.Location = new System.Drawing.Point(15, 15);
 			this.cb_InsertSprites.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_InsertSprites.Name = "cb_InsertSprites";
-			this.cb_InsertSprites.Size = new System.Drawing.Size(100, 15);
+			this.cb_InsertSprites.Size = new System.Drawing.Size(310, 20);
 			this.cb_InsertSprites.TabIndex = 12;
-			this.cb_InsertSprites.Text = "Sprite phases";
+			this.cb_InsertSprites.Text = "copy Sprite phases to";
 			this.cb_InsertSprites.UseVisualStyleBackColor = true;
 			// 
 			// btn_Open

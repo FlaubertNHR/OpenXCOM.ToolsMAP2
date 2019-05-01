@@ -35,9 +35,6 @@ namespace McdView
 
 
 		#region Fields
-		private string _pfeMcd;
-		internal string Label;
-
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
@@ -174,6 +171,31 @@ namespace McdView
 		/// </summary>
 		public bool RecordsChanged
 		{ get; private set; }
+
+
+		private string _label = String.Empty;
+		internal string Label
+		{
+			get { return _label; }
+			set
+			{
+				_label = value;
+				if (_copypanel != null)
+					_copypanel.cb_InsertSprites.Text = "copy Sprite phases to " + _label;
+			}
+		}
+
+		private string _pfeMcd = String.Empty;
+		internal string PfeMcd
+		{
+			get { return _pfeMcd; }
+			set
+			{
+				_pfeMcd = value;
+				if (_copypanel != null)
+					_copypanel.EnableInsertCheckboxes();
+			}
+		}
 		#endregion Properties
 
 
@@ -355,7 +377,7 @@ namespace McdView
 							return;
 
 						case DialogResult.Yes:
-							Save(_pfeMcd);
+							Save(PfeMcd);
 							break;
 
 						case DialogResult.No:
@@ -495,7 +517,7 @@ namespace McdView
 							return;
 
 						case DialogResult.Yes:
-							Save(_pfeMcd);
+							Save(PfeMcd);
 							break;
 
 						case DialogResult.No:
@@ -515,7 +537,7 @@ namespace McdView
 					// NOTE: Would need to close the currently loaded file to
 					// release its handle if trying to move or create that file.
 
-					if (sfd.FileName == _pfeMcd)
+					if (sfd.FileName == PfeMcd)
 					{
 						MessageBox.Show(
 									this,
@@ -530,20 +552,20 @@ namespace McdView
 					}
 					else
 					{
-						_pfeMcd = sfd.FileName;
-						Label = Path.GetFileNameWithoutExtension(_pfeMcd);
+						PfeMcd = sfd.FileName;
+						Label = Path.GetFileNameWithoutExtension(PfeMcd);
 
-						if (File.Exists(_pfeMcd))
+						if (File.Exists(PfeMcd))
 						{
-							string bak = Path.Combine(Path.GetDirectoryName(_pfeMcd), GlobalsXC.MV_Backup);
+							string bak = Path.Combine(Path.GetDirectoryName(PfeMcd), GlobalsXC.MV_Backup);
 							Directory.CreateDirectory(bak);
 
-							bak = Path.Combine(bak, Path.GetFileName(_pfeMcd));
+							bak = Path.Combine(bak, Path.GetFileName(PfeMcd));
 							File.Delete(bak);
-							File.Move(_pfeMcd, bak);
+							File.Move(PfeMcd, bak);
 						}
 
-						File.Create(_pfeMcd);
+						File.Create(PfeMcd);
 
 						SelId = -1;
 						ResourceInfo.ReloadSprites = true;
@@ -560,14 +582,14 @@ namespace McdView
 						// that's stored in each tilepart. Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
-															Path.GetDirectoryName(_pfeMcd),
+															Path.GetDirectoryName(PfeMcd),
 															2,
 															pal,
 															true);
 
 						ResourceInfo.ReloadSprites = false;
 
-						Text = "McdView - " + _pfeMcd;
+						Text = "McdView - " + PfeMcd;
 
 						miSave  .Enabled =
 						miSaveas.Enabled =
@@ -597,7 +619,7 @@ namespace McdView
 							return;
 
 						case DialogResult.Yes:
-							Save(_pfeMcd);
+							Save(PfeMcd);
 							break;
 
 						case DialogResult.No:
@@ -617,10 +639,10 @@ namespace McdView
 					SelId = -1;
 					ResourceInfo.ReloadSprites = true;
 
-					_pfeMcd = ofd.FileName;
-					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
+					PfeMcd = ofd.FileName;
+					Label = Path.GetFileNameWithoutExtension(PfeMcd);
 
-					using (var bs = new BufferedStream(File.OpenRead(_pfeMcd)))
+					using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 					{
 						Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
@@ -634,7 +656,7 @@ namespace McdView
 						// that's stored in each tilepart. Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
-															Path.GetDirectoryName(_pfeMcd),
+															Path.GetDirectoryName(PfeMcd),
 															2,
 															pal,
 															true);
@@ -669,7 +691,7 @@ namespace McdView
 
 					CacheLoad.SetCache(Parts);
 					Changed = false;
-					Text = "McdView - " + _pfeMcd;
+					Text = "McdView - " + PfeMcd;
 
 					miSave  .Enabled =
 					miSaveas.Enabled =
@@ -689,12 +711,12 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_Reload(object sender, EventArgs e)
 		{
-			if (File.Exists(_pfeMcd))
+			if (File.Exists(PfeMcd))
 			{
 				SelId = -1;
 				ResourceInfo.ReloadSprites = true;
 
-				using (var bs = new BufferedStream(File.OpenRead(_pfeMcd)))
+				using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 				{
 					Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
@@ -708,7 +730,7 @@ namespace McdView
 					// that's stored in each tilepart. Can be null.
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
-														Path.GetDirectoryName(_pfeMcd),
+														Path.GetDirectoryName(PfeMcd),
 														2,
 														pal,
 														true);
@@ -770,10 +792,10 @@ namespace McdView
 				string palette,
 				int terId)
 		{
-			_pfeMcd = pfeMcd;
-			Label = Path.GetFileNameWithoutExtension(_pfeMcd);
+			PfeMcd = pfeMcd;
+			Label = Path.GetFileNameWithoutExtension(PfeMcd);
 
-			using (var bs = new BufferedStream(File.OpenRead(_pfeMcd)))
+			using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 			{
 				Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
@@ -784,7 +806,7 @@ namespace McdView
 				// that's stored in each tilepart. Can be null.
 				Spriteset = ResourceInfo.LoadSpriteset(
 													Label,
-													Path.GetDirectoryName(_pfeMcd),
+													Path.GetDirectoryName(PfeMcd),
 													2,
 													Palette.UfoBattle,
 													true);
@@ -822,7 +844,7 @@ namespace McdView
 
 			CacheLoad.SetCache(Parts);
 			Changed = false;
-			Text = "McdView - " + _pfeMcd;
+			Text = "McdView - " + PfeMcd;
 
 			miSave  .Enabled =
 			miSaveas.Enabled =
@@ -840,7 +862,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_Save(object sender, EventArgs e)
 		{
-			Save(_pfeMcd);
+			Save(PfeMcd);
 		}
 
 		/// <summary>
@@ -859,12 +881,12 @@ namespace McdView
 
 				if (sfd.ShowDialog() == DialogResult.OK)
 				{
-					_pfeMcd = sfd.FileName;
-					Label = Path.GetFileNameWithoutExtension(_pfeMcd);
+					PfeMcd = sfd.FileName;
+					Label = Path.GetFileNameWithoutExtension(PfeMcd);
 
-					Save(_pfeMcd, true);
+					Save(PfeMcd, true);
 
-					Text = "McdView - " + _pfeMcd;
+					Text = "McdView - " + PfeMcd;
 				}
 			}
 		}
@@ -1177,10 +1199,10 @@ namespace McdView
 
 					ResourceInfo.ReloadSprites = true;
 
-					string pfeMcd = ofd.FileName;
-					_copypanel.Label = Path.GetFileNameWithoutExtension(pfeMcd);
+					_copypanel.PfeMcd = ofd.FileName;
+					_copypanel.Label = Path.GetFileNameWithoutExtension(_copypanel.PfeMcd);
 
-					using (var bs = new BufferedStream(File.OpenRead(pfeMcd)))
+					using (var bs = new BufferedStream(File.OpenRead(_copypanel.PfeMcd)))
 					{
 						_copypanel.Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
@@ -1194,7 +1216,7 @@ namespace McdView
 						// that's stored in each tilepart. Can be null.
 						_copypanel.Spriteset = ResourceInfo.LoadSpriteset(
 																		_copypanel.Label,
-																		Path.GetDirectoryName(pfeMcd),
+																		Path.GetDirectoryName(_copypanel.PfeMcd),
 																		2,
 																		pal,
 																		true);

@@ -109,6 +109,17 @@ namespace McdView
 					PartsPanel.Invalidate();
 			}
 		}
+
+		private string _pfeMcd;
+		internal string PfeMcd
+		{
+			get { return _pfeMcd; }
+			set
+			{
+				_pfeMcd = value;
+				EnableInsertCheckboxes();
+			}
+		}
 		#endregion Properties
 
 
@@ -156,6 +167,8 @@ namespace McdView
 
 			btn_Open.Location = new Point(gb_InsertOptions.Width, pnl_bg.ClientRectangle.Height - btn_Open.Height);
 			btn_Open.Width = gb_Loft.Location.X - gb_InsertOptions.Width;
+
+			cb_InsertSprites.Text = "copy Sprite phases to " + _f.Label;
 
 
 			PartsPanel = new TerrainPanel_copy(_f, this);
@@ -286,6 +299,14 @@ namespace McdView
 
 
 		#region Methods
+		internal void EnableInsertCheckboxes()
+		{
+			cb_InsertSprites .Checked =
+			cb_InsertDeadpart.Checked =
+			cb_InsertAltpart .Checked = (_f.PfeMcd != PfeMcd);
+		}
+
+
 		/// <summary>
 		/// Populates all textfields with values of the currently selected
 		/// record-id.
