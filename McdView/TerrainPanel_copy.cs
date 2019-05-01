@@ -45,7 +45,7 @@ namespace McdView
 
 			var itSep1     = new ToolStripSeparator();
 
-			var itSelect   = new ToolStripMenuItem("select all", null, OnSelectAllClick, Keys.Control | Keys.A);
+			var itSelect   = new ToolStripMenuItem("select all",   null, OnSelectAllClick, Keys.Control | Keys.A);
 			var itDeselect = new ToolStripMenuItem("deselect all", null, OnDeselectAllClick); // Esc - not allowed, is handled by KeyDown event.
 
 			itDeselect.ShortcutKeyDisplayString = "Esc"; // ie. the "ShortcutKeyDisplayOnlyString"
@@ -77,7 +77,7 @@ namespace McdView
 		{
 			bool selid = (SelId != -1);
 
-			Context.Items[0].Enabled = selid;								// insert after last
+			Context.Items[0].Enabled = selid && _f.Parts != null;			// insert after last
 			Context.Items[2].Enabled = selid;								// copy
 			Context.Items[4].Enabled = Parts != null && Parts.Length != 0;	// select
 			Context.Items[5].Enabled = selid;								// deselect
@@ -90,14 +90,31 @@ namespace McdView
 		/// </summary>
 		private void OnInsertClick(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (SelId != -1 && _f.Parts != null)
 			{
-				OnCopyClick(sender, e);
-				if (_f.Parts != null)
+				if (_fcopy.cb_InsertSprites.Checked)
 				{
-					_f.SelId = _f.Parts.Length - 1;
-					_f.PartsPanel.OnInsertClick(null, EventArgs.Empty);
 				}
+
+				if (_fcopy.cb_InsertDeadpart.Checked)
+				{
+
+					if (_fcopy.cb_InsertDeadsprites.Checked)
+					{
+					}
+				}
+
+				if (_fcopy.cb_InsertAltpart.Checked)
+				{
+
+					if (_fcopy.cb_InsertAltsprites.Checked)
+					{
+					}
+				}
+
+				OnCopyClick(sender, e);
+				_f.SelId = _f.Parts.Length - 1;
+				_f.PartsPanel.OnInsertClick(null, EventArgs.Empty);
 			}
 		}
 		#endregion Events (context)

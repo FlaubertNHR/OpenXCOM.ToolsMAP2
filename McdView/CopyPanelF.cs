@@ -132,18 +132,20 @@ namespace McdView
 							_f.Location.X + 20,
 							_f.Location.Y + 20);
 
-			gb_Overhead    .Location = new Point(0, 0);
-			gb_General     .Location = new Point(0, gb_Overhead.Bottom);
-			gb_Health      .Location = new Point(0, gb_General .Bottom);
-			gb_Door        .Location = new Point(0, gb_Health  .Bottom);
+			gb_Overhead     .Location = new Point(0, 0);
+			gb_General      .Location = new Point(0, gb_Overhead.Bottom);
+			gb_Health       .Location = new Point(0, gb_General .Bottom);
+			gb_Door         .Location = new Point(0, gb_Health  .Bottom);
 
-			gb_Tu          .Location = new Point(gb_Overhead.Right, 0);
-			gb_Block       .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
-			gb_Step        .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
-			gb_Elevation   .Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
+			gb_Tu           .Location = new Point(gb_Overhead.Right, 0);
+			gb_Block        .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
+			gb_Step         .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
+			gb_Elevation    .Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
 
-			gb_Explode     .Location = new Point(gb_Tu.Right, 0);
-			gb_Unused      .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
+			gb_Explode      .Location = new Point(gb_Tu.Right, 0);
+			gb_Unused       .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
+
+			gb_InsertOptions.Location = new Point(0, pnl_bg.ClientRectangle.Height - gb_InsertOptions.Height);
 
 			ClientSize = new Size(
 								gb_Overhead     .Width
@@ -152,7 +154,8 @@ namespace McdView
 									+ gb_Loft   .Width,
 								ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
 
-			btn_Open.Location = new Point(5, pnl_bg.Height - btn_Open.Height - 5);
+			btn_Open.Location = new Point(gb_InsertOptions.Width, pnl_bg.ClientRectangle.Height - btn_Open.Height);
+			btn_Open.Width = gb_Loft.Location.X - gb_InsertOptions.Width;
 
 
 			PartsPanel = new TerrainPanel_copy(_f, this);
@@ -267,6 +270,17 @@ namespace McdView
 		private void OnClick_FocusCollection(object sender, EventArgs e)
 		{
 			PartsPanel.Select();
+		}
+
+
+		private void OnCheckChanged_InsertDeadpart(object sender, EventArgs e)
+		{
+			cb_InsertDeadsprites.Enabled = cb_InsertDeadpart.Checked;
+		}
+
+		private void OnCheckChanged_InsertAltpart(object sender, EventArgs e)
+		{
+			cb_InsertAltsprites.Enabled = cb_InsertAltpart.Checked;
 		}
 		#endregion Events
 

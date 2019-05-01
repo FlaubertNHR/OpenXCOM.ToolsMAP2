@@ -220,6 +220,12 @@
 		private System.Windows.Forms.TextBox tb32_isdropthrou;
 		private System.Windows.Forms.TextBox tb52_footsound;
 		private System.Windows.Forms.Button btn_Open;
+		internal System.Windows.Forms.CheckBox cb_InsertAltsprites;
+		internal System.Windows.Forms.CheckBox cb_InsertDeadsprites;
+		internal System.Windows.Forms.CheckBox cb_InsertAltpart;
+		internal System.Windows.Forms.CheckBox cb_InsertDeadpart;
+		internal System.Windows.Forms.CheckBox cb_InsertSprites;
+		private System.Windows.Forms.GroupBox gb_InsertOptions;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -268,6 +274,12 @@
 			this.tb01_phase1 = new System.Windows.Forms.TextBox();
 			this.tb00_phase0 = new System.Windows.Forms.TextBox();
 			this.pnl_bg = new System.Windows.Forms.Panel();
+			this.gb_InsertOptions = new System.Windows.Forms.GroupBox();
+			this.cb_InsertAltsprites = new System.Windows.Forms.CheckBox();
+			this.cb_InsertAltpart = new System.Windows.Forms.CheckBox();
+			this.cb_InsertDeadsprites = new System.Windows.Forms.CheckBox();
+			this.cb_InsertDeadpart = new System.Windows.Forms.CheckBox();
+			this.cb_InsertSprites = new System.Windows.Forms.CheckBox();
 			this.btn_Open = new System.Windows.Forms.Button();
 			this.gb_Loft = new System.Windows.Forms.GroupBox();
 			this.lbl19 = new System.Windows.Forms.Label();
@@ -455,6 +467,7 @@
 			this.tb52_footsound = new System.Windows.Forms.TextBox();
 			this.gb_Sprites.SuspendLayout();
 			this.pnl_bg.SuspendLayout();
+			this.gb_InsertOptions.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
 			this.gb_Overhead.SuspendLayout();
 			this.gb_Tu.SuspendLayout();
@@ -758,6 +771,7 @@
 			// 
 			// pnl_bg
 			// 
+			this.pnl_bg.Controls.Add(this.gb_InsertOptions);
 			this.pnl_bg.Controls.Add(this.btn_Open);
 			this.pnl_bg.Controls.Add(this.gb_Loft);
 			this.pnl_bg.Controls.Add(this.gb_Overhead);
@@ -777,13 +791,98 @@
 			this.pnl_bg.Size = new System.Drawing.Size(675, 436);
 			this.pnl_bg.TabIndex = 3;
 			// 
+			// gb_InsertOptions
+			// 
+			this.gb_InsertOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.gb_InsertOptions.Controls.Add(this.cb_InsertAltsprites);
+			this.gb_InsertOptions.Controls.Add(this.cb_InsertAltpart);
+			this.gb_InsertOptions.Controls.Add(this.cb_InsertDeadsprites);
+			this.gb_InsertOptions.Controls.Add(this.cb_InsertDeadpart);
+			this.gb_InsertOptions.Controls.Add(this.cb_InsertSprites);
+			this.gb_InsertOptions.Location = new System.Drawing.Point(5, 350);
+			this.gb_InsertOptions.Margin = new System.Windows.Forms.Padding(0);
+			this.gb_InsertOptions.Name = "gb_InsertOptions";
+			this.gb_InsertOptions.Padding = new System.Windows.Forms.Padding(0);
+			this.gb_InsertOptions.Size = new System.Drawing.Size(330, 80);
+			this.gb_InsertOptions.TabIndex = 17;
+			this.gb_InsertOptions.TabStop = false;
+			this.gb_InsertOptions.Text = " Options - INSERT AFTER LAST ";
+			// 
+			// cb_InsertAltsprites
+			// 
+			this.cb_InsertAltsprites.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
+			this.cb_InsertAltsprites.Checked = true;
+			this.cb_InsertAltsprites.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_InsertAltsprites.Location = new System.Drawing.Point(165, 60);
+			this.cb_InsertAltsprites.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_InsertAltsprites.Name = "cb_InsertAltsprites";
+			this.cb_InsertAltsprites.Size = new System.Drawing.Size(105, 15);
+			this.cb_InsertAltsprites.TabIndex = 18;
+			this.cb_InsertAltsprites.Text = "include sprites";
+			this.cb_InsertAltsprites.UseVisualStyleBackColor = true;
+			// 
+			// cb_InsertAltpart
+			// 
+			this.cb_InsertAltpart.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
+			this.cb_InsertAltpart.Checked = true;
+			this.cb_InsertAltpart.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_InsertAltpart.Location = new System.Drawing.Point(145, 40);
+			this.cb_InsertAltpart.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_InsertAltpart.Name = "cb_InsertAltpart";
+			this.cb_InsertAltpart.Size = new System.Drawing.Size(100, 15);
+			this.cb_InsertAltpart.TabIndex = 14;
+			this.cb_InsertAltpart.Text = "Alternate part";
+			this.cb_InsertAltpart.UseVisualStyleBackColor = true;
+			this.cb_InsertAltpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_InsertAltpart);
+			// 
+			// cb_InsertDeadsprites
+			// 
+			this.cb_InsertDeadsprites.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
+			this.cb_InsertDeadsprites.Checked = true;
+			this.cb_InsertDeadsprites.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_InsertDeadsprites.Location = new System.Drawing.Point(35, 60);
+			this.cb_InsertDeadsprites.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_InsertDeadsprites.Name = "cb_InsertDeadsprites";
+			this.cb_InsertDeadsprites.Size = new System.Drawing.Size(105, 15);
+			this.cb_InsertDeadsprites.TabIndex = 17;
+			this.cb_InsertDeadsprites.Text = "include sprites";
+			this.cb_InsertDeadsprites.UseVisualStyleBackColor = true;
+			// 
+			// cb_InsertDeadpart
+			// 
+			this.cb_InsertDeadpart.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
+			this.cb_InsertDeadpart.Checked = true;
+			this.cb_InsertDeadpart.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_InsertDeadpart.Location = new System.Drawing.Point(15, 40);
+			this.cb_InsertDeadpart.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_InsertDeadpart.Name = "cb_InsertDeadpart";
+			this.cb_InsertDeadpart.Size = new System.Drawing.Size(80, 15);
+			this.cb_InsertDeadpart.TabIndex = 13;
+			this.cb_InsertDeadpart.Text = "Dead part";
+			this.cb_InsertDeadpart.UseVisualStyleBackColor = true;
+			this.cb_InsertDeadpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_InsertDeadpart);
+			// 
+			// cb_InsertSprites
+			// 
+			this.cb_InsertSprites.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
+			this.cb_InsertSprites.Checked = true;
+			this.cb_InsertSprites.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_InsertSprites.Location = new System.Drawing.Point(15, 20);
+			this.cb_InsertSprites.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_InsertSprites.Name = "cb_InsertSprites";
+			this.cb_InsertSprites.Size = new System.Drawing.Size(100, 15);
+			this.cb_InsertSprites.TabIndex = 12;
+			this.cb_InsertSprites.Text = "Sprite phases";
+			this.cb_InsertSprites.UseVisualStyleBackColor = true;
+			// 
 			// btn_Open
 			// 
-			this.btn_Open.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btn_Open.Location = new System.Drawing.Point(10, 395);
+			this.btn_Open.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_Open.Location = new System.Drawing.Point(345, 395);
 			this.btn_Open.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Open.Name = "btn_Open";
-			this.btn_Open.Size = new System.Drawing.Size(80, 30);
+			this.btn_Open.Size = new System.Drawing.Size(165, 35);
 			this.btn_Open.TabIndex = 11;
 			this.btn_Open.Text = "Open ...";
 			this.btn_Open.UseVisualStyleBackColor = true;
@@ -2817,6 +2916,7 @@
 			this.gb_Sprites.ResumeLayout(false);
 			this.gb_Sprites.PerformLayout();
 			this.pnl_bg.ResumeLayout(false);
+			this.gb_InsertOptions.ResumeLayout(false);
 			this.gb_Loft.ResumeLayout(false);
 			this.gb_Loft.PerformLayout();
 			this.gb_Overhead.ResumeLayout(false);
