@@ -574,7 +574,7 @@ namespace PckView
 
 			MessageBox.Show(
 						error,
-						"Error",
+						" Error",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,
@@ -1091,7 +1091,7 @@ namespace PckView
 											"An I/O error occurred.");
 					MessageBox.Show(
 								error,
-								"Error",
+								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
@@ -1153,7 +1153,7 @@ namespace PckView
 													"An I/O error occurred.");
 							MessageBox.Show(
 										error,
-										"Error",
+										" Error",
 										MessageBoxButtons.OK,
 										MessageBoxIcon.Error,
 										MessageBoxDefaultButton.Button1,
@@ -1281,7 +1281,7 @@ namespace PckView
 							MessageBox.Show(
 										this,
 										file + PngExt + " already exists.",
-										"Error",
+										" Error",
 										MessageBoxButtons.OK,
 										MessageBoxIcon.Error,
 										MessageBoxDefaultButton.Button1,
@@ -1628,7 +1628,7 @@ namespace PckView
 					MessageBox.Show(
 								"The quantity of sprites in the PCK file does not match the"
 									+ " quantity of sprites expected by the TAB file.",
-								"Error",
+								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
@@ -1650,7 +1650,7 @@ namespace PckView
 										"Cannot load Terrain or Units in a 32x48 spriteset.");
 					MessageBox.Show(
 								error,
-								"Error",
+								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
@@ -1678,7 +1678,7 @@ namespace PckView
 							"Tab file does not exist"
 								+ Environment.NewLine + Environment.NewLine
 								+ pfeTab,
-							Text,
+							" " + Text,
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
@@ -1783,7 +1783,7 @@ namespace PckView
 							+ " more transparency over all sprites."
 							+ Environment.NewLine + Environment.NewLine
 							+ "Files have *not* been saved.",
-						"Error - excessive pixel data (overflow condition)",
+						" Error - excessive pixel data (overflow condition)",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,

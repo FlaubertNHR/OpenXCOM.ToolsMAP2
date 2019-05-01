@@ -86,7 +86,8 @@ namespace McdView
 		/// <summary>
 		/// Selects the last part in the Main window's parts-array and inserts
 		/// selected parts after that part.
-		/// @note This is for automatic insertion of parts via the CopyPanel.
+		/// @note This is for instant insertion of parts via the CopyPanel to
+		/// the MainPanel.
 		/// </summary>
 		private void OnInsertClick(object sender, EventArgs e)
 		{
