@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 
 using XCom;
@@ -116,8 +117,8 @@ namespace McdView
 			get { return _pfeMcd; }
 			set
 			{
-				_pfeMcd = value;
-				EnableInsertCheckboxes();
+				Label = Path.GetFileNameWithoutExtension(_pfeMcd = value);
+				EnableInsertOptions();
 			}
 		}
 		#endregion Properties
@@ -299,11 +300,43 @@ namespace McdView
 
 
 		#region Methods
-		internal void EnableInsertCheckboxes()
+		internal void EnableInsertOptions()
 		{
-			cb_InsertSprites .Checked =
-			cb_InsertDeadpart.Checked =
-			cb_InsertAltpart .Checked = (_f.PfeMcd != PfeMcd);
+			cb_InsertSprites    .Checked =
+			cb_InsertDeadpart   .Checked =
+			cb_InsertDeadsprites.Checked =
+			cb_InsertAltpart    .Checked =
+			cb_InsertAltsprites .Checked = (_f.PfeMcd != PfeMcd);
+
+			if (!String.IsNullOrEmpty(_f.PfeMcd))
+			{
+				string pathTerr_main = Path.GetDirectoryName(_f.PfeMcd);
+				string pfePckMain = Path.Combine(pathTerr_main, _f.Label + GlobalsXC.PckExt);
+				string pfeTabMain = Path.Combine(pathTerr_main, _f.Label + GlobalsXC.TabExt);
+				//LogFile.WriteLine("pfePckMain= " + pfePckMain);
+				//LogFile.WriteLine("pfeTabMain= " + pfeTabMain);
+
+				string pathTerr_copy = Path.GetDirectoryName(PfeMcd);
+				string pfePckCopy = Path.Combine(pathTerr_copy, Label + GlobalsXC.PckExt);
+				string pfeTabCopy = Path.Combine(pathTerr_copy, Label + GlobalsXC.TabExt);
+				//LogFile.WriteLine("pfePckCopy= " + pfePckCopy);
+				//LogFile.WriteLine("pfeTabCopy= " + pfeTabCopy);
+
+				bool found = File.Exists(pfePckMain)
+						  && File.Exists(pfeTabMain)
+						  && File.Exists(pfePckCopy)
+						  && File.Exists(pfeTabCopy);
+				//LogFile.WriteLine("found= " + found);
+
+				gb_InsertOptions.Enabled = found;
+
+				if (found)
+				{
+					
+				}
+			}
+			else
+				gb_InsertOptions.Enabled = false;
 		}
 
 

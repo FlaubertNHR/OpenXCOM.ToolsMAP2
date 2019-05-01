@@ -191,9 +191,10 @@ namespace McdView
 			get { return _pfeMcd; }
 			set
 			{
-				_pfeMcd = value;
+				Label = Path.GetFileNameWithoutExtension(_pfeMcd = value);
+
 				if (_copypanel != null)
-					_copypanel.EnableInsertCheckboxes();
+					_copypanel.EnableInsertOptions();
 			}
 		}
 		#endregion Properties
@@ -553,7 +554,6 @@ namespace McdView
 					else
 					{
 						PfeMcd = sfd.FileName;
-						Label = Path.GetFileNameWithoutExtension(PfeMcd);
 
 						if (File.Exists(PfeMcd))
 						{
@@ -640,7 +640,6 @@ namespace McdView
 					ResourceInfo.ReloadSprites = true;
 
 					PfeMcd = ofd.FileName;
-					Label = Path.GetFileNameWithoutExtension(PfeMcd);
 
 					using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 					{
@@ -793,7 +792,6 @@ namespace McdView
 				int terId)
 		{
 			PfeMcd = pfeMcd;
-			Label = Path.GetFileNameWithoutExtension(PfeMcd);
 
 			using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 			{
@@ -882,7 +880,6 @@ namespace McdView
 				if (sfd.ShowDialog() == DialogResult.OK)
 				{
 					PfeMcd = sfd.FileName;
-					Label = Path.GetFileNameWithoutExtension(PfeMcd);
 
 					Save(PfeMcd, true);
 
@@ -1200,7 +1197,6 @@ namespace McdView
 					ResourceInfo.ReloadSprites = true;
 
 					_copypanel.PfeMcd = ofd.FileName;
-					_copypanel.Label = Path.GetFileNameWithoutExtension(_copypanel.PfeMcd);
 
 					using (var bs = new BufferedStream(File.OpenRead(_copypanel.PfeMcd)))
 					{

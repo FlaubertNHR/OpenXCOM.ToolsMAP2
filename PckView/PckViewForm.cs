@@ -122,7 +122,7 @@ namespace PckView
 			InitializeComponent();
 
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
-			MaximumSize = new Size(0, 0); // fu.net
+			MaximumSize = new Size(0,0); // fu.net
 
 			LoadWindowMetrics();
 
@@ -441,7 +441,7 @@ namespace PckView
 		}
 
 
-		#region Eventcalls
+		#region Events
 		/// <summary>
 		/// Focuses the viewer-panel after the app loads.
 		/// </summary>
