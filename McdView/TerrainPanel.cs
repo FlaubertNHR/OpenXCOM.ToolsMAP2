@@ -29,11 +29,16 @@ namespace McdView
 		/// <summary>
 		/// For CopyPanel's InsertAfterLast only.
 		/// </summary>
-		protected readonly static List<Tilepart> _copydeads = new List<Tilepart>();
+		protected readonly static List<Tilepart> _ialDeads = new List<Tilepart>();
 		/// <summary>
 		/// For CopyPanel's InsertAfterLast only.
 		/// </summary>
-		protected readonly static List<Tilepart> _copyaltrs = new List<Tilepart>();
+		protected readonly static List<Tilepart> _ialAltrs = new List<Tilepart>();
+
+		protected readonly static Dictionary<int,int> ialdictDeads0 = new Dictionary<int,int>();
+		protected readonly static Dictionary<int,int> ialdictDeads1 = new Dictionary<int,int>();
+		protected readonly static Dictionary<int,int> ialdictAltrs0 = new Dictionary<int,int>();
+		protected readonly static Dictionary<int,int> ialdictAltrs1 = new Dictionary<int,int>();
 		#endregion Fields (static)
 
 

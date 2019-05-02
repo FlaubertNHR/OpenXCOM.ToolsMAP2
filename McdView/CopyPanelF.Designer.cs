@@ -837,7 +837,7 @@
 			this.cb_IalAltpart.TabIndex = 14;
 			this.cb_IalAltpart.Text = "copy Alternate part";
 			this.cb_IalAltpart.UseVisualStyleBackColor = true;
-			this.cb_IalAltpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_InsertAltpart);
+			this.cb_IalAltpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_IalAltpart);
 			// 
 			// cb_InsertDeadsprites
 			// 
@@ -862,7 +862,7 @@
 			this.cb_IalDeadpart.TabIndex = 13;
 			this.cb_IalDeadpart.Text = "copy Dead part";
 			this.cb_IalDeadpart.UseVisualStyleBackColor = true;
-			this.cb_IalDeadpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_InsertDeadpart);
+			this.cb_IalDeadpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_IalDeadpart);
 			// 
 			// cb_InsertSprites
 			// 

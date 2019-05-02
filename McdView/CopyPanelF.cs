@@ -298,13 +298,13 @@ namespace McdView
 		}
 
 
-		private void OnCheckChanged_InsertDeadpart(object sender, EventArgs e)
+		private void OnCheckChanged_IalDeadpart(object sender, EventArgs e)
 		{
 			cb_IalDeadsubs   .Enabled =
 			cb_IalDeadsprites.Enabled = cb_IalDeadpart.Checked;
 		}
 
-		private void OnCheckChanged_InsertAltpart(object sender, EventArgs e)
+		private void OnCheckChanged_IalAltpart(object sender, EventArgs e)
 		{
 			cb_IalAltsubs   .Enabled =
 			cb_IalAltsprites.Enabled = cb_IalAltpart.Checked;

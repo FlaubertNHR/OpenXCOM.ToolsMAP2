@@ -367,11 +367,11 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// A special insert-operation via the CopyPanel. See OnInsertClick().
+		/// A special insert-operation via the CopyPanel. See OnInsertAfterLastClick().
 		/// </summary>
 		/// <param name="refsdead">true to insert refs to deadparts</param>
-		/// <param name="refsalt">true to insert refs to altparts</param>
-		internal void InsertAfterLast(bool refsdead, bool refsalt)
+		/// <param name="refsaltr">true to insert refs to altparts</param>
+		internal void InsertAfterLast(bool refsdead, bool refsaltr)
 		{
 			SelId = Parts.Length - 1;
 
@@ -380,96 +380,77 @@ namespace McdView
 			int id = SelId + 1;
 
 			var array = new Tilepart[Parts.Length + _copyparts.Count
-												  + _copydeads.Count
-												  + _copyaltrs.Count];
+												  + _ialDeads.Count
+												  + _ialAltrs.Count];
 
 			for (int i = 0, j = 0; i != array.Length; ++i, ++j)
 			{
 				if (i == id)
 				{
-					int pos;
+					int pos, var;
 					for (pos = 0; pos != _copyparts.Count; ++pos, ++i)
 					{
 						array[i] = _copyparts[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
 
-/*						if (!refsdead)
+						// IaL tileparts are injected in the following order:
+						// - copyparts
+						// - altrparts
+						// - deadparts
+
+						if ((var = array[i].Record.DieTile) != 0)
 						{
-							array[i].Record.DieTile = (byte)0;
-							array[i].Dead = null;
-						}
-						else
-						{
-							array[i].Record.DieTile += (byte)Parts.Length; // TODO: ... roughly
+							if (ialdictDeads0.ContainsKey(var))
+							{
+								array[i].Record.DieTile = (byte)(id + ialdictDeads0[var]);
+//								array[i].Dead = ;
+							}
+							else if (ialdictDeads1.ContainsKey(var))
+							{
+								array[i].Record.DieTile = (byte)(id + _copyparts.Count + _ialAltrs.Count + ialdictDeads1[var]);
+//								array[i].Dead = ;
+							}
+							else // uhh ... if !isTer/!refsdead
+							{
+								array[i].Record.DieTile = (byte)0;
+								array[i].Dead = null;
+							}
 						}
 
-						if (!refsalt)
+						if ((var = array[i].Record.Alt_MCD) != 0)
 						{
-							array[i].Record.Alt_MCD = (byte)0;
-							array[i].Alternate = null;
+							if (ialdictAltrs0.ContainsKey(var))
+							{
+								array[i].Record.Alt_MCD = (byte)(id + ialdictAltrs0[var]);
+//								array[i].Alternate = ;
+							}
+							else if (ialdictAltrs1.ContainsKey(var))
+							{
+								array[i].Record.Alt_MCD = (byte)(id + _copyparts.Count + ialdictAltrs1[var]);
+//								array[i].Alternate = ;
+							}
+							else // uhh ... if !isTer/!refsaltr
+							{
+								array[i].Record.Alt_MCD = (byte)0;
+								array[i].Alternate = null;
+							}
 						}
-						else
-						{
-							array[i].Record.Alt_MCD += (byte)Parts.Length; // TODO: ... roughly
-						} */
 					}
 
-					for (pos = 0; pos != _copyaltrs.Count; ++pos, ++i)
+
+					for (pos = 0; pos != _ialAltrs.Count; ++pos, ++i)
 					{
-						array[i] = _copyaltrs[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
+						array[i] = _ialAltrs[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
-
-/*						if (!refsdead)
-						{
-							array[i].Record.DieTile = (byte)0;
-							array[i].Dead = null;
-						}
-						else
-						{
-							array[i].Record.DieTile += (byte)Parts.Length; // TODO: ... roughly
-						}
-
-						if (!refsalt)
-						{
-							array[i].Record.Alt_MCD = (byte)0;
-							array[i].Alternate = null;
-						}
-						else
-						{
-							array[i].Record.Alt_MCD += (byte)Parts.Length; // TODO: ... roughly
-						} */
 					}
 
-					for (pos = 0; pos != _copydeads.Count; ++pos, ++i)
+					for (pos = 0; pos != _ialDeads.Count; ++pos, ++i)
 					{
-						array[i] = _copydeads[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
+						array[i] = _ialDeads[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
-
-/*						if (!refsdead)
-						{
-							array[i].Record.DieTile = (byte)0;
-							array[i].Dead = null;
-						}
-						else
-						{
-							array[i].Record.DieTile += (byte)Parts.Length; // TODO: ... roughly
-						}
-
-						if (!refsalt)
-						{
-							array[i].Record.Alt_MCD = (byte)0;
-							array[i].Alternate = null;
-						}
-						else
-						{
-							array[i].Record.Alt_MCD += (byte)Parts.Length; // TODO: ... roughly
-						} */
 					}
 					break;
 				}
-
-//				if (i == array.Length)
-//					break;
 
 				array[i] = Parts[j];
 				array[i].TerId = i;
@@ -477,8 +458,6 @@ namespace McdView
 
 			_bypassScrollZero = true;
 			_f.Parts = array;
-
-//			ShiftRefs(id, _copyparts.Count);
 
 
 			SubIds.Clear();

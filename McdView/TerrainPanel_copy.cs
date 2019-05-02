@@ -94,7 +94,7 @@ namespace McdView
 			if (SelId != -1 && _f.Parts != null)
 			{
 				bool refsdead = false;
-				bool refsalt  = false;
+				bool refsaltr = false;
 
 				if (_fcopy.gb_IalOptions.Enabled)
 				{
@@ -123,7 +123,7 @@ namespace McdView
 					if (   _fcopy.cb_IalAltpart.Enabled
 						&& _fcopy.cb_IalAltpart.Checked)
 					{
-						refsalt = true;
+						refsaltr = true;
 
 						if (   _fcopy.cb_IalAltsubs.Enabled
 							&& _fcopy.cb_IalAltsubs.Checked)
@@ -139,59 +139,152 @@ namespace McdView
 
 				OnCopyClick(sender, e);
 
-				if (refsdead || refsalt)
-				{
-					SegregateParts(refsdead, refsalt);
-					// TODO: get the Dead and Alt parts of the Dead and Alt parts ad nausea.
-				}
+				SegregateParts(refsdead, refsaltr);
+				// TODO: get the Dead and Alt parts of the Dead and Alt parts ad nausea.
 
-				_f.PartsPanel.InsertAfterLast(refsdead, refsalt);
+				_f.PartsPanel.InsertAfterLast(refsdead, refsaltr);
 			}
 		}
 
-		private void SegregateParts(bool refsdead, bool refsalt)
+		/// <summary>
+		/// This function does a crapload of mapping in an attempt to figure out
+		/// where the dead-refs and altr-refs end up as copyparts get inserted
+		/// to the Main parts-array.
+		/// AT PRESENT THE FOLLOWING ROUTINE ASSUMES THAT NO DEAD-REFS ARE ALTR-
+		/// REFS AND NO ALTR-REFS ARE DEAD-REFS. if they are the universe
+		/// explodes in t-.
+		/// </summary>
+		/// <param name="refsdead"></param>
+		/// <param name="refsaltr"></param>
+		private void SegregateParts(bool refsdead, bool refsaltr)
 		{
-			_copydeads.Clear();
-			_copyaltrs .Clear();
+			_ialDeads.Clear();
+			_ialAltrs.Clear();
 
-			var ids     = new HashSet<int>();
-			var idsDead = new HashSet<int>();
-			var idsAlt  = new HashSet<int>();
+			ialdictDeads0.Clear(); // dead-ref is in '_copyparts'
+			ialdictDeads1.Clear(); // dead-ref is not in '_copyparts' but shall be copy-inserted after selected parts
+			ialdictAltrs0.Clear(); // altr-ref is in '_copyparts'
+			ialdictAltrs1.Clear(); // altr-ref is not in '_copyparts' but shall be copy-inserted after selected parts
 
-			foreach (var part in _copyparts)
-				ids.Add(part.TerId);
+			var sels  = new HashSet<int>(); // terrain-ids of all selected parts
+			var deads = new HashSet<int>(); // terrain-ids of ref'd dead parts that are not in the selected parts
+			var altrs = new HashSet<int>(); // terrain-ids of ref'd altr parts that are not in the selected parts
 
-			if (refsdead)
+			int dead = -1; // incrementor for mapping dead parts that are not in selected parts
+			int altr = -1; // incrementor for mapping altr parts that are not in selected parts
+
+			int id; // just a var.
+
+			foreach (var part in _copyparts)	// list all terrain-ids of the selected parts; the list is
+				sels.Add(part.TerId);			// checked against to deter if a ref'd part needs to be copied
+												// over to Main separately (in '_ialDeads' or '_ialAltrs').
+
+			if (refsdead) // user has chosen to grope for dead-refs ->
 			{
 				foreach (var part in _copyparts)
 				{
-					if (part.Dead != null
-						&& !ids.Contains(part.Dead.TerId))
+					if ((id = part.Record.DieTile) != 0)
 					{
-						idsDead.Add(part.Dead.TerId);
+						if (sels.Contains(id))
+						{
+							if (!ialdictDeads0.ContainsKey(id))
+							{
+								for (int i = 0; i != _copyparts.Count; ++i)
+								{
+									if (_copyparts[i].TerId == id)
+									{
+										ialdictDeads0.Add(id, i);
+										break;
+									}
+								}
+							}
+						}
+						else if (!ialdictDeads1.ContainsKey(id))
+						{
+							ialdictDeads1.Add(id, ++dead);
+							deads.Add(id);
+						}
+					}
+				}
+			}
+			else // try to adjust the dead-refs in '_copyparts' for consistency ->
+			{
+				foreach (var part in _copyparts)
+				{
+					if ((id = part.Record.DieTile) != 0
+						&& sels.Contains(id))
+					{
+						if (!ialdictDeads0.ContainsKey(id))
+						{
+							for (int i = 0; i != _copyparts.Count; ++i)
+							{
+								if (_copyparts[i].TerId == id)
+								{
+									ialdictDeads0.Add(id, i);
+									break;
+								}
+							}
+						}
 					}
 				}
 			}
 
-			if (refsalt)
+			if (refsaltr) // user has chosen to grope for altr-refs ->
 			{
 				foreach (var part in _copyparts)
 				{
-					if (part.Alternate != null
-						&& !ids.Contains(part.Alternate.TerId))
+					if ((id = part.Record.Alt_MCD) != 0)
 					{
-						idsAlt.Add(part.Alternate.TerId);
+						if (sels.Contains(id))
+						{
+							if (!ialdictAltrs0.ContainsKey(id))
+							{
+								for (int i = 0; i != _copyparts.Count; ++i)
+								{
+									if (_copyparts[i].TerId == id)
+									{
+										ialdictAltrs0.Add(id, i);
+										break;
+									}
+								}
+							}
+						}
+						else if (!ialdictAltrs1.ContainsKey(id))
+						{
+							ialdictAltrs1.Add(id, ++altr);
+							altrs.Add(id);
+						}
 					}
 				}
-				idsAlt.ExceptWith(idsDead);
+			}
+			else // try to adjust the altr-refs in '_copyparts' for consistency ->
+			{
+				foreach (var part in _copyparts)
+				{
+					if ((id = part.Record.Alt_MCD) != 0
+						&& sels.Contains(id))
+					{
+						if (!ialdictAltrs0.ContainsKey(id))
+						{
+							for (int i = 0; i != _copyparts.Count; ++i)
+							{
+								if (_copyparts[i].TerId == id)
+								{
+									ialdictAltrs0.Add(id, i);
+									break;
+								}
+							}
+						}
+					}
+				}
 			}
 
 
-			foreach (var id in idsDead)
-				_copydeads.Add(Parts[id]);
+			foreach (var deadid in deads)
+				_ialDeads.Add(Parts[deadid]);
 
-			foreach (var id in idsAlt)
-				_copyaltrs.Add(Parts[id]);
+			foreach (var altrid in altrs)
+				_ialAltrs.Add(Parts[altrid]);
 		}
 		#endregion Events (context)
 
