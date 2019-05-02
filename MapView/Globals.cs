@@ -73,7 +73,7 @@ namespace MapView
 				ExtraSprites = new SpriteCollection(
 												fsPck,
 												fsTab,
-												2,
+												ResourceInfo.TAB_WORD_LENGTH_2,
 												Palette.UfoBattle,
 												"Extra");
 			}

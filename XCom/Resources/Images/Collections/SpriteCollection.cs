@@ -71,7 +71,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="fsPck">filestream of the PCK file</param>
 		/// <param name="fsTab">filestream of the TAB file</param>
-		/// <param name="tabOffsetLength">the length of a word in bytes of a single
+		/// <param name="tabwordLength">the length of a word in bytes of a single
 		/// tab-record (ie. 2 for 2-byte UFO/TFTD records, 4 for 4-byte TFTD records)</param>
 		/// <param name="pal">the palette to use (typically Palette.UfoBattle
 		/// for UFO sprites or Palette.TftdBattle for TFTD sprites)</param>
@@ -79,12 +79,12 @@ namespace XCom
 		public SpriteCollection(
 				Stream fsPck,
 				Stream fsTab,
-				int tabOffsetLength,
+				int tabwordLength,
 				Palette pal,
 				string label)
 		{
 			//LogFile.WriteLine("SpriteCollection..cTor");
-			TabOffset = tabOffsetLength;
+			TabOffset = tabwordLength;
 			Pal       = pal;
 			Label     = label;
 
@@ -93,9 +93,9 @@ namespace XCom
 
 			if (fsTab != null)
 			{
-				tabSprites = (int)fsTab.Length / tabOffsetLength;
+				tabSprites = (int)fsTab.Length / tabwordLength;
 				//LogFile.WriteLine(". fsTab.Length= " + fsTab.Length);
-				//LogFile.WriteLine(". tabOffsetLength= " + tabOffsetLength);
+				//LogFile.WriteLine(". tabwordLength= " + tabwordLength);
 				//LogFile.WriteLine(". tabSprites= " + tabSprites);
 
 				fsTab.Position = 0;
@@ -103,14 +103,14 @@ namespace XCom
 				offsets = new uint[tabSprites + 1]; // NOTE: the last entry will be set to the total length of the input-bindata.
 				using (var br = new BinaryReader(fsTab))
 				{
-					switch (tabOffsetLength)
+					switch (tabwordLength)
 					{
-						case 2:
+						case ResourceInfo.TAB_WORD_LENGTH_2:
 							for (int i = 0; i != tabSprites; ++i)
 								offsets[i] = br.ReadUInt16();
 							break;
 
-						case 4:
+						case ResourceInfo.TAB_WORD_LENGTH_4:
 							for (int i = 0; i != tabSprites; ++i)
 								offsets[i] = br.ReadUInt32();
 							break;
@@ -234,13 +234,13 @@ namespace XCom
 		/// <param name="dir">the directory to save to</param>
 		/// <param name="file">the filename without extension</param>
 		/// <param name="spriteset">pointer to the base spriteset</param>
-		/// <param name="tabOffsetLength">2 for terrains/bigobs/ufo-units, 4 for tftd-units</param>
+		/// <param name="tabwordLength">2 for terrains/bigobs/ufo-units, 4 for tftd-units</param>
 		/// <returns>true if mission was successful</returns>
 		public static bool SaveSpriteset(
 				string dir,
 				string file,
 				SpriteCollectionBase spriteset,
-				int tabOffsetLength)
+				int tabwordLength)
 		{
 			//LogFile.WriteLine("SpriteCollection.SaveSpriteset");
 			string pfePck = Path.Combine(dir, file + GlobalsXC.PckExt);
@@ -249,9 +249,9 @@ namespace XCom
 			using (var bwPck = new BinaryWriter(File.Create(pfePck)))
 			using (var bwTab = new BinaryWriter(File.Create(pfeTab)))
 			{
-				switch (tabOffsetLength)
+				switch (tabwordLength)
 				{
-					case 2:
+					case ResourceInfo.TAB_WORD_LENGTH_2:
 					{
 						int pos = 0;
 						foreach (XCImage sprite in spriteset)
@@ -270,7 +270,7 @@ namespace XCom
 						break;
 					}
 
-					case 4:
+					case ResourceInfo.TAB_WORD_LENGTH_4:
 					{
 						uint pos = 0;
 						foreach (XCImage sprite in spriteset)

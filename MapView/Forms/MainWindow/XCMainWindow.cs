@@ -362,7 +362,7 @@ namespace MapView
 			var cuboid = ResourceInfo.LoadSpriteset(
 												SharedSpace.CursorFilePrefix,
 												shared.GetShare(SharedSpace.ResourceDirectoryUfo),
-												2,
+												ResourceInfo.TAB_WORD_LENGTH_2,
 												Palette.UfoBattle);
 			if (cuboid != null)
 			{
@@ -376,7 +376,7 @@ namespace MapView
 			cuboid = ResourceInfo.LoadSpriteset(
 											SharedSpace.CursorFilePrefix,
 											shared.GetShare(SharedSpace.ResourceDirectoryTftd),
-											4,
+											ResourceInfo.TAB_WORD_LENGTH_4,
 											Palette.TftdBattle);
 			if (cuboid != null)
 			{

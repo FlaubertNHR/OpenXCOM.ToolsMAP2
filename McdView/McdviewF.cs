@@ -589,7 +589,7 @@ namespace McdView
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
-															2,
+															ResourceInfo.TAB_WORD_LENGTH_2,
 															pal,
 															true);
 
@@ -662,7 +662,7 @@ namespace McdView
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
-															2,
+															ResourceInfo.TAB_WORD_LENGTH_2,
 															pal,
 															true);
 
@@ -736,7 +736,7 @@ namespace McdView
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(PfeMcd),
-														2,
+														ResourceInfo.TAB_WORD_LENGTH_2,
 														pal,
 														true);
 
@@ -811,7 +811,7 @@ namespace McdView
 				Spriteset = ResourceInfo.LoadSpriteset(
 													Label,
 													Path.GetDirectoryName(PfeMcd),
-													2,
+													ResourceInfo.TAB_WORD_LENGTH_2,
 													Palette.UfoBattle,
 													true);
 
@@ -1219,7 +1219,7 @@ namespace McdView
 						_copypanel.Spriteset = ResourceInfo.LoadSpriteset(
 																		_copypanel.Label,
 																		Path.GetDirectoryName(_copypanel.PfeMcd),
-																		2,
+																		ResourceInfo.TAB_WORD_LENGTH_2,
 																		pal,
 																		true);
 

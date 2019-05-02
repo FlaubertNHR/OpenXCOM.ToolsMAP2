@@ -101,6 +101,7 @@ namespace McdView
 					if (   _fcopy.cb_IalSprites.Enabled
 						&& _fcopy.cb_IalSprites.Checked)
 					{
+						_fcopy.TransferIalSprites();
 					}
 
 					if (   _fcopy.cb_IalDeadpart.Enabled
@@ -119,18 +120,18 @@ namespace McdView
 						}
 					}
 
-					if (   _fcopy.cb_IalAltpart.Enabled
-						&& _fcopy.cb_IalAltpart.Checked)
+					if (   _fcopy.cb_IalAltrpart.Enabled
+						&& _fcopy.cb_IalAltrpart.Checked)
 					{
 						refsaltr = true;
 
-						if (   _fcopy.cb_IalAltsubs.Enabled
-							&& _fcopy.cb_IalAltsubs.Checked)
+						if (   _fcopy.cb_IalAltrsubs.Enabled
+							&& _fcopy.cb_IalAltrsubs.Checked)
 						{
 						}
 
-						if (   _fcopy.cb_IalAltsprites.Enabled
-							&& _fcopy.cb_IalAltsprites.Checked)
+						if (   _fcopy.cb_IalAltrsprites.Enabled
+							&& _fcopy.cb_IalAltrsprites.Checked)
 						{
 						}
 					}

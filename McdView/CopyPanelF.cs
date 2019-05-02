@@ -304,24 +304,28 @@ namespace McdView
 			cb_IalDeadsprites.Enabled = cb_IalDeadpart.Checked;
 		}
 
-		private void OnCheckChanged_IalAltpart(object sender, EventArgs e)
+		private void OnCheckChanged_IalAltrpart(object sender, EventArgs e)
 		{
-			cb_IalAltsubs   .Enabled =
-			cb_IalAltsprites.Enabled = cb_IalAltpart.Checked;
+			cb_IalAltrsubs   .Enabled =
+			cb_IalAltrsprites.Enabled = cb_IalAltrpart.Checked;
 		}
 		#endregion Events
 
 
 		#region Methods
+		/// <summary>
+		/// Determines if the InsertAfterLast options groupbox is enabled and/or
+		/// if its checkboxes are checked.
+		/// </summary>
 		internal void EnableInsertOptions()
 		{
 			cb_IalSprites    .Checked =
 			cb_IalDeadpart   .Checked =
 			cb_IalDeadsubs   .Checked =
 			cb_IalDeadsprites.Checked =
-			cb_IalAltpart    .Checked =
-			cb_IalAltsubs    .Checked =
-			cb_IalAltsprites .Checked = (_f.PfeMcd != PfeMcd);
+			cb_IalAltrpart   .Checked =
+			cb_IalAltrsubs   .Checked =
+			cb_IalAltrsprites.Checked = (_f.PfeMcd != PfeMcd);
 
 			if (!String.IsNullOrEmpty(_f.PfeMcd))
 			{
@@ -347,6 +351,16 @@ namespace McdView
 				}
 			}
 			gb_IalOptions.Enabled = false;
+		}
+
+		internal void TransferIalSprites()
+		{
+			if (   File.Exists(_pfePck)
+				&& File.Exists(_pfeTab)
+				&& File.Exists(_pfePckcopy)
+				&& File.Exists(_pfeTabcopy))
+			{
+			}
 		}
 
 

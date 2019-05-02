@@ -1603,7 +1603,7 @@ namespace PckView
 					spriteset = new SpriteCollection(
 												fsPck,
 												fsTab,
-												2,
+												ResourceInfo.TAB_WORD_LENGTH_2,
 												Palette.UfoBattle,
 												SpritesetLabel);
 				}
@@ -1617,7 +1617,7 @@ namespace PckView
 						spriteset = new SpriteCollection(
 													fsPck,
 													fsTab,
-													4,
+													ResourceInfo.TAB_WORD_LENGTH_4,
 													Palette.TftdBattle,
 													SpritesetLabel);
 					}

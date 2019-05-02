@@ -220,13 +220,13 @@
 		private System.Windows.Forms.TextBox tb32_isdropthrou;
 		private System.Windows.Forms.TextBox tb52_footsound;
 		private System.Windows.Forms.Button btn_Open;
-		internal System.Windows.Forms.CheckBox cb_IalAltsprites;
+		internal System.Windows.Forms.CheckBox cb_IalAltrsprites;
 		internal System.Windows.Forms.CheckBox cb_IalDeadsprites;
-		internal System.Windows.Forms.CheckBox cb_IalAltpart;
+		internal System.Windows.Forms.CheckBox cb_IalAltrpart;
 		internal System.Windows.Forms.CheckBox cb_IalDeadpart;
 		internal System.Windows.Forms.CheckBox cb_IalSprites;
 		internal System.Windows.Forms.GroupBox gb_IalOptions;
-		internal System.Windows.Forms.CheckBox cb_IalAltsubs;
+		internal System.Windows.Forms.CheckBox cb_IalAltrsubs;
 		internal System.Windows.Forms.CheckBox cb_IalDeadsubs;
 
 		/// <summary>
@@ -277,8 +277,8 @@
 			this.tb00_phase0 = new System.Windows.Forms.TextBox();
 			this.pnl_bg = new System.Windows.Forms.Panel();
 			this.gb_IalOptions = new System.Windows.Forms.GroupBox();
-			this.cb_IalAltsprites = new System.Windows.Forms.CheckBox();
-			this.cb_IalAltpart = new System.Windows.Forms.CheckBox();
+			this.cb_IalAltrsprites = new System.Windows.Forms.CheckBox();
+			this.cb_IalAltrpart = new System.Windows.Forms.CheckBox();
 			this.cb_IalDeadsprites = new System.Windows.Forms.CheckBox();
 			this.cb_IalDeadpart = new System.Windows.Forms.CheckBox();
 			this.cb_IalSprites = new System.Windows.Forms.CheckBox();
@@ -468,7 +468,7 @@
 			this.tb32_isdropthrou = new System.Windows.Forms.TextBox();
 			this.tb52_footsound = new System.Windows.Forms.TextBox();
 			this.cb_IalDeadsubs = new System.Windows.Forms.CheckBox();
-			this.cb_IalAltsubs = new System.Windows.Forms.CheckBox();
+			this.cb_IalAltrsubs = new System.Windows.Forms.CheckBox();
 			this.gb_Sprites.SuspendLayout();
 			this.pnl_bg.SuspendLayout();
 			this.gb_IalOptions.SuspendLayout();
@@ -798,10 +798,10 @@
 			// gb_InsertOptions
 			// 
 			this.gb_IalOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.gb_IalOptions.Controls.Add(this.cb_IalAltsubs);
+			this.gb_IalOptions.Controls.Add(this.cb_IalAltrsubs);
 			this.gb_IalOptions.Controls.Add(this.cb_IalDeadsubs);
-			this.gb_IalOptions.Controls.Add(this.cb_IalAltsprites);
-			this.gb_IalOptions.Controls.Add(this.cb_IalAltpart);
+			this.gb_IalOptions.Controls.Add(this.cb_IalAltrsprites);
+			this.gb_IalOptions.Controls.Add(this.cb_IalAltrpart);
 			this.gb_IalOptions.Controls.Add(this.cb_IalDeadsprites);
 			this.gb_IalOptions.Controls.Add(this.cb_IalDeadpart);
 			this.gb_IalOptions.Controls.Add(this.cb_IalSprites);
@@ -816,28 +816,28 @@
 			// 
 			// cb_InsertAltsprites
 			// 
-			this.cb_IalAltsprites.Checked = true;
-			this.cb_IalAltsprites.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalAltsprites.Location = new System.Drawing.Point(165, 55);
-			this.cb_IalAltsprites.Margin = new System.Windows.Forms.Padding(0);
-			this.cb_IalAltsprites.Name = "cb_InsertAltsprites";
-			this.cb_IalAltsprites.Size = new System.Drawing.Size(160, 20);
-			this.cb_IalAltsprites.TabIndex = 18;
-			this.cb_IalAltsprites.Text = "copy sprites";
-			this.cb_IalAltsprites.UseVisualStyleBackColor = true;
+			this.cb_IalAltrsprites.Checked = true;
+			this.cb_IalAltrsprites.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_IalAltrsprites.Location = new System.Drawing.Point(165, 55);
+			this.cb_IalAltrsprites.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_IalAltrsprites.Name = "cb_InsertAltsprites";
+			this.cb_IalAltrsprites.Size = new System.Drawing.Size(160, 20);
+			this.cb_IalAltrsprites.TabIndex = 18;
+			this.cb_IalAltrsprites.Text = "copy sprites";
+			this.cb_IalAltrsprites.UseVisualStyleBackColor = true;
 			// 
 			// cb_InsertAltpart
 			// 
-			this.cb_IalAltpart.Checked = true;
-			this.cb_IalAltpart.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalAltpart.Location = new System.Drawing.Point(145, 35);
-			this.cb_IalAltpart.Margin = new System.Windows.Forms.Padding(0);
-			this.cb_IalAltpart.Name = "cb_InsertAltpart";
-			this.cb_IalAltpart.Size = new System.Drawing.Size(180, 20);
-			this.cb_IalAltpart.TabIndex = 14;
-			this.cb_IalAltpart.Text = "copy Alternate part";
-			this.cb_IalAltpart.UseVisualStyleBackColor = true;
-			this.cb_IalAltpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_IalAltpart);
+			this.cb_IalAltrpart.Checked = true;
+			this.cb_IalAltrpart.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_IalAltrpart.Location = new System.Drawing.Point(145, 35);
+			this.cb_IalAltrpart.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_IalAltrpart.Name = "cb_InsertAltpart";
+			this.cb_IalAltrpart.Size = new System.Drawing.Size(180, 20);
+			this.cb_IalAltrpart.TabIndex = 14;
+			this.cb_IalAltrpart.Text = "copy Alternate part";
+			this.cb_IalAltrpart.UseVisualStyleBackColor = true;
+			this.cb_IalAltrpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_IalAltrpart);
 			// 
 			// cb_InsertDeadsprites
 			// 
@@ -2917,15 +2917,15 @@
 			// 
 			// cb_InsertAltsubs
 			// 
-			this.cb_IalAltsubs.Checked = true;
-			this.cb_IalAltsubs.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalAltsubs.Location = new System.Drawing.Point(165, 75);
-			this.cb_IalAltsubs.Margin = new System.Windows.Forms.Padding(0);
-			this.cb_IalAltsubs.Name = "cb_InsertAltsubs";
-			this.cb_IalAltsubs.Size = new System.Drawing.Size(160, 20);
-			this.cb_IalAltsubs.TabIndex = 20;
-			this.cb_IalAltsubs.Text = "copy subs";
-			this.cb_IalAltsubs.UseVisualStyleBackColor = true;
+			this.cb_IalAltrsubs.Checked = true;
+			this.cb_IalAltrsubs.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_IalAltrsubs.Location = new System.Drawing.Point(165, 75);
+			this.cb_IalAltrsubs.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_IalAltrsubs.Name = "cb_InsertAltsubs";
+			this.cb_IalAltrsubs.Size = new System.Drawing.Size(160, 20);
+			this.cb_IalAltrsubs.TabIndex = 20;
+			this.cb_IalAltrsubs.Text = "copy subs";
+			this.cb_IalAltrsubs.UseVisualStyleBackColor = true;
 			// 
 			// CopyPanelF
 			// 

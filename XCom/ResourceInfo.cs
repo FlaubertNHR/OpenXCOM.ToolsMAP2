@@ -22,6 +22,9 @@ namespace XCom
 
 		public static BitArray LoFTufo;
 		public static BitArray LoFTtftd;
+
+		public const int TAB_WORD_LENGTH_2 = 2;
+		public const int TAB_WORD_LENGTH_4 = 4;
 		#endregion
 
 
@@ -53,14 +56,14 @@ namespace XCom
 		/// </summary>
 		/// <param name="terrain">the terrain file w/out extension</param>
 		/// <param name="dirTerrain">path to the directory of the terrain file</param>
-		/// <param name="offsetLength"></param>
+		/// <param name="tabwordLength"></param>
 		/// <param name="pal"></param>
 		/// <param name="warnonly">true if called by McdView (warn-only if spriteset not found)</param>
 		/// <returns>a SpriteCollection containing all the sprites for a given Terrain</returns>
 		public static SpriteCollection LoadSpriteset(
 				string terrain,
 				string dirTerrain,
-				int offsetLength,
+				int tabwordLength,
 				Palette pal,
 				bool warnonly = false)
 		{
@@ -105,7 +108,7 @@ namespace XCom
 							var spriteset = new SpriteCollection(
 																fsPck,
 																fsTab,
-																offsetLength,
+																tabwordLength,
 																pal,
 																terrain);
 							if (spriteset.Borked)
