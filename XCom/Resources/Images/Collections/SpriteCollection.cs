@@ -232,7 +232,7 @@ namespace XCom
 		/// Saves the current spriteset to PCK+TAB.
 		/// </summary>
 		/// <param name="dir">the directory to save to</param>
-		/// <param name="file">the filename without extension</param>
+		/// <param name="file">the file without extension</param>
 		/// <param name="spriteset">pointer to the base spriteset</param>
 		/// <param name="tabwordLength">2 for terrains/bigobs/ufo-units, 4 for tftd-units</param>
 		/// <returns>true if mission was successful</returns>
@@ -289,7 +289,7 @@ namespace XCom
 		/// Saves the current iconset to SCANG.DAT.
 		/// </summary>
 		/// <param name="dir">the directory to save to</param>
-		/// <param name="file">the filename without extension</param>
+		/// <param name="file">the file without extension</param>
 		/// <param name="iconset">pointer to the base iconset</param>
 		/// <returns>true if mission was successful</returns>
 		public static bool SaveScanGiconset(

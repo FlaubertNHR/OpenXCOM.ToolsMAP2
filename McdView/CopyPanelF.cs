@@ -35,11 +35,6 @@ namespace McdView
 
 		private Graphics _graphics;
 		private ImageAttributes _attri;
-
-		/// <summary>
-		/// Fullpaths of associated sprite-files.
-		/// </summary>
-		string _pfePck, _pfeTab, _pfePckcopy, _pfeTabcopy;
 		#endregion Fields
 
 
@@ -129,7 +124,6 @@ namespace McdView
 			set
 			{
 				Label = Path.GetFileNameWithoutExtension(_pfeMcd = value);
-				EnableInsertOptions();
 			}
 		}
 		#endregion Properties
@@ -327,40 +321,15 @@ namespace McdView
 			cb_IalAltrsubs   .Checked =
 			cb_IalAltrsprites.Checked = (_f.PfeMcd != PfeMcd);
 
-			if (!String.IsNullOrEmpty(_f.PfeMcd))
-			{
-				string dir = Path.GetDirectoryName(_f.PfeMcd);
+			cb_IalSprites    .Enabled =
+			cb_IalDeadsprites.Enabled =
+			cb_IalAltrsprites.Enabled = (Spriteset != null);
 
-				_pfePck = Path.Combine(dir, _f.Label + GlobalsXC.PckExt);
-				if (File.Exists(_pfePck))
-				{
-					_pfeTab = Path.Combine(dir, _f.Label + GlobalsXC.TabExt);
-					if (File.Exists(_pfeTab))
-					{
-						dir = Path.GetDirectoryName(PfeMcd);
 
-						_pfePckcopy = Path.Combine(dir, Label + GlobalsXC.PckExt);
-						if (File.Exists(_pfePckcopy))
-						{
-							_pfeTabcopy = Path.Combine(dir, Label + GlobalsXC.TabExt);
-
-							gb_IalOptions.Enabled = File.Exists(_pfeTabcopy);
-							return;
-						}
-					}
-				}
-			}
-			gb_IalOptions.Enabled = false;
-		}
-
-		internal void TransferIalSprites()
-		{
-			if (   File.Exists(_pfePck)
-				&& File.Exists(_pfeTab)
-				&& File.Exists(_pfePckcopy)
-				&& File.Exists(_pfeTabcopy))
-			{
-			}
+			// TODO: Do not check for the Main files; allow creation
+			// of PCK/TAB-files after creation of a blank MCD-set.
+			// TODO: The spriteset is loaded so the files don't have to be checked;
+			// just check that 'Spriteset' and the required 'XCImage' objects are valid.
 		}
 
 

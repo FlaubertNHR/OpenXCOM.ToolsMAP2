@@ -29,8 +29,11 @@ namespace XCom
 
 		public new XCImage this[int id]
 		{
-			get { return (id > -1 && id < Count) ? base[id]
-												 : null; }
+			get
+			{
+				return (id > -1 && id < Count) ? base[id]
+											   : null;
+			}
 			set
 			{
 				if (id > -1 && id < Count)

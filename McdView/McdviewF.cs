@@ -44,6 +44,8 @@ namespace McdView
 		/// True to prevent the Changed flag when a part is being selected.
 		/// </summary>
 		private bool InitFields;
+
+		internal CopyPanelF CopyPanel;
 		#endregion Fields
 
 
@@ -96,8 +98,8 @@ namespace McdView
 
 				InvalidatePanels(false);
 
-				if (_copypanel != null)
-					_copypanel.PartsPanel.Invalidate();
+				if (CopyPanel != null)
+					CopyPanel.PartsPanel.Invalidate();
 			}
 		}
 		internal float SpriteShadeFloat
@@ -183,8 +185,8 @@ namespace McdView
 			set
 			{
 				_label = value;
-				if (_copypanel != null)
-					_copypanel.cb_IalSprites.Text = "copy Sprite phases to " + _label;
+				if (CopyPanel != null)
+					CopyPanel.cb_IalSprites.Text = "copy Sprite phases to " + _label;
 			}
 		}
 
@@ -198,9 +200,6 @@ namespace McdView
 			set
 			{
 				Label = Path.GetFileNameWithoutExtension(_pfeMcd = value);
-
-				if (_copypanel != null)
-					_copypanel.EnableInsertOptions();
 			}
 		}
 		#endregion Properties
@@ -595,6 +594,9 @@ namespace McdView
 
 						ResourceInfo.ReloadSprites = false;
 
+						if (CopyPanel != null)
+							CopyPanel.EnableInsertOptions();
+
 						Text = "McdView - " + PfeMcd;
 
 						miSave  .Enabled =
@@ -693,6 +695,9 @@ namespace McdView
 					}
 
 					ResourceInfo.ReloadSprites = false;
+
+					if (CopyPanel != null)
+						CopyPanel.EnableInsertOptions();
 
 					CacheLoad.SetCache(Parts);
 					Changed = false;
@@ -843,6 +848,9 @@ namespace McdView
 
 			ResourceInfo.ReloadSprites = false;
 
+			if (CopyPanel != null)
+				CopyPanel.EnableInsertOptions();
+
 			if (palette.Substring(0,4) == "tftd")
 				OnClick_PaletteTftd(null, EventArgs.Empty);
 
@@ -890,6 +898,11 @@ namespace McdView
 					Save(PfeMcd, true);
 
 					Text = "McdView - " + PfeMcd;
+
+					if (CopyPanel != null)
+						CopyPanel.EnableInsertOptions();
+
+					// TODO: Ask user if a copy of the PCK/TAB files should be created/overwritten.
 				}
 			}
 		}
@@ -1156,8 +1169,6 @@ namespace McdView
 		}
 
 
-		CopyPanelF _copypanel;
-
 		/// <summary>
 		/// Handles a click to open/close the CopyPanel on the menuitem.
 		/// </summary>
@@ -1171,8 +1182,8 @@ namespace McdView
 			}
 			else
 			{
-				_copypanel.Close();
-				_copypanel = null;
+				CopyPanel.Close();
+				CopyPanel = null;
 			}
 		}
 
@@ -1193,20 +1204,20 @@ namespace McdView
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (_copypanel == null)
+					if (CopyPanel == null)
 					{
-						_copypanel = new CopyPanelF(this);
-						_copypanel.Show();
+						CopyPanel = new CopyPanelF(this);
+						CopyPanel.Show();
 					}
-					_copypanel.SelId = -1;
+					CopyPanel.SelId = -1;
 
 					ResourceInfo.ReloadSprites = true;
 
-					_copypanel.PfeMcd = ofd.FileName;
+					CopyPanel.PfeMcd = ofd.FileName;
 
-					using (var bs = new BufferedStream(File.OpenRead(_copypanel.PfeMcd)))
+					using (var bs = new BufferedStream(File.OpenRead(CopyPanel.PfeMcd)))
 					{
-						_copypanel.Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+						CopyPanel.Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
 						Palette pal;
 						if (miPaletteUfo.Checked)
@@ -1216,49 +1227,51 @@ namespace McdView
 
 						// NOTE: The spriteset is also maintained by a pointer
 						// that's stored in each tilepart. Can be null.
-						_copypanel.Spriteset = ResourceInfo.LoadSpriteset(
-																		_copypanel.Label,
-																		Path.GetDirectoryName(_copypanel.PfeMcd),
-																		ResourceInfo.TAB_WORD_LENGTH_2,
-																		pal,
-																		true);
+						CopyPanel.Spriteset = ResourceInfo.LoadSpriteset(
+																	CopyPanel.Label,
+																	Path.GetDirectoryName(CopyPanel.PfeMcd),
+																	ResourceInfo.TAB_WORD_LENGTH_2,
+																	pal,
+																	true);
 
-						for (int id = 0; id != _copypanel.Parts.Length; ++id)
+						for (int id = 0; id != CopyPanel.Parts.Length; ++id)
 						{
 							var bindata = new byte[TilepartFactory.Length];
 							bs.Read(bindata, 0, TilepartFactory.Length);
 							McdRecord record = McdRecordFactory.CreateRecord(bindata);
 
-							_copypanel.Parts[id] = new Tilepart(id, _copypanel.Spriteset, record);
+							CopyPanel.Parts[id] = new Tilepart(id, CopyPanel.Spriteset, record);
 						}
 
 						Tilepart part;
-						for (int id = 0; id != _copypanel.Parts.Length; ++id)
+						for (int id = 0; id != CopyPanel.Parts.Length; ++id)
 						{
-							part = _copypanel.Parts[id];
+							part = CopyPanel.Parts[id];
 							part.Dead = TilepartFactory.GetDeadPart(
-																_copypanel.Label,
+																CopyPanel.Label,
 																id,
 																part.Record,
-																_copypanel.Parts);
+																CopyPanel.Parts);
 							part.Alternate = TilepartFactory.GetAlternatePart(
-																		_copypanel.Label,
+																		CopyPanel.Label,
 																		id,
 																		part.Record,
-																		_copypanel.Parts);
+																		CopyPanel.Parts);
 						}
 					}
 
 					ResourceInfo.ReloadSprites = false;
+
+					CopyPanel.EnableInsertOptions();
 				}
 				else
 				{
-					if (it && _copypanel != null)
+					if (it && CopyPanel != null)
 					{
-						_copypanel.Close();
-						_copypanel = null;
+						CopyPanel.Close();
+						CopyPanel = null;
 					}
-					miCopyPanel.Checked = (_copypanel != null);
+					miCopyPanel.Checked = (CopyPanel != null);
 				}
 			}
 		}
@@ -1268,7 +1281,7 @@ namespace McdView
 		/// </summary>
 		internal void CloseCopyPanel()
 		{
-			_copypanel = null;
+			CopyPanel = null;
 			miCopyPanel.Checked = false;
 		}
 

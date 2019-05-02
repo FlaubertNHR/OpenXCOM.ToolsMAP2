@@ -96,44 +96,35 @@ namespace McdView
 				bool refsdead = false;
 				bool refsaltr = false;
 
-				if (_fcopy.gb_IalOptions.Enabled)
+				if (   _fcopy.cb_IalDeadpart.Enabled
+					&& _fcopy.cb_IalDeadpart.Checked)
 				{
-					if (   _fcopy.cb_IalSprites.Enabled
-						&& _fcopy.cb_IalSprites.Checked)
+					refsdead = true;
+
+					if (   _fcopy.cb_IalDeadsubs.Enabled
+						&& _fcopy.cb_IalDeadsubs.Checked)
 					{
-						_fcopy.TransferIalSprites();
 					}
 
-					if (   _fcopy.cb_IalDeadpart.Enabled
-						&& _fcopy.cb_IalDeadpart.Checked)
+					if (   _fcopy.cb_IalDeadsprites.Enabled
+						&& _fcopy.cb_IalDeadsprites.Checked)
 					{
-						refsdead = true;
+					}
+				}
 
-						if (   _fcopy.cb_IalDeadsubs.Enabled
-							&& _fcopy.cb_IalDeadsubs.Checked)
-						{
-						}
+				if (   _fcopy.cb_IalAltrpart.Enabled
+					&& _fcopy.cb_IalAltrpart.Checked)
+				{
+					refsaltr = true;
 
-						if (   _fcopy.cb_IalDeadsprites.Enabled
-							&& _fcopy.cb_IalDeadsprites.Checked)
-						{
-						}
+					if (   _fcopy.cb_IalAltrsubs.Enabled
+						&& _fcopy.cb_IalAltrsubs.Checked)
+					{
 					}
 
-					if (   _fcopy.cb_IalAltrpart.Enabled
-						&& _fcopy.cb_IalAltrpart.Checked)
+					if (   _fcopy.cb_IalAltrsprites.Enabled
+						&& _fcopy.cb_IalAltrsprites.Checked)
 					{
-						refsaltr = true;
-
-						if (   _fcopy.cb_IalAltrsubs.Enabled
-							&& _fcopy.cb_IalAltrsubs.Checked)
-						{
-						}
-
-						if (   _fcopy.cb_IalAltrsprites.Enabled
-							&& _fcopy.cb_IalAltrsprites.Checked)
-						{
-						}
 					}
 				}
 

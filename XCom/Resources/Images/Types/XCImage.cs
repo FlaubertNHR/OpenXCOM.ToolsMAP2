@@ -45,8 +45,8 @@ namespace XCom.Interfaces
 
 		#region cTor
 		/// <summary>
-		/// Creates an XCImage.
-		/// NOTE: Entries must not be compressed.
+		/// cTor[1]. Creates an XCImage.
+		/// @note Binary data must not be compressed.
 		/// </summary>
 		/// <param name="bindata">the uncompressed source data</param>
 		/// <param name="width"></param>
@@ -74,6 +74,12 @@ namespace XCom.Interfaces
 													Bindata,			// BUT: the call by PckImage..cTor initializer needs to decode
 													Pal.ColorTable);	// the file-data first, then it creates its own 'Image'.
 		}																// that's why i prefer pizza.
+
+		/// <summary>
+		/// cTor[2]. For clone. See PckImage..cTor[2] and .Clone().
+		/// </summary>
+		protected XCImage()
+		{}
 		#endregion
 	}
 }

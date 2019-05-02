@@ -375,6 +375,8 @@ namespace McdView
 		/// <param name="refsaltr">true to insert refs to altparts</param>
 		internal void InsertAfterLast(bool refsdead, bool refsaltr) // TODO: args are not used.
 		{
+			bool spritesChanged = false;
+
 			SelId = Parts.Length - 1;
 
 //			bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
@@ -392,7 +394,21 @@ namespace McdView
 					int pos, var;
 					for (pos = 0; pos != _copyparts.Count; ++pos, ++i) // add directly selected parts first
 					{
-						array[i] = _copyparts[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
+						if (   _f.CopyPanel.cb_IalSprites.Enabled
+							&& _f.CopyPanel.cb_IalSprites.Checked)
+						{
+							spritesChanged = true;
+
+							var pckId = new List<int>();
+							for (int spriteId = 0; spriteId != 8; ++spriteId)
+							{
+								PckImage sprite = (_copyparts[pos][spriteId] as PckImage).Clone(Spriteset);
+								sprite.Id = Spriteset.Count;
+								Spriteset.Add(sprite);
+							}
+						}
+
+						array[i] = _copyparts[pos].Clone(_f.Spriteset);
 						array[i].TerId = i;
 
 						// IaL tileparts are injected in the following order:
