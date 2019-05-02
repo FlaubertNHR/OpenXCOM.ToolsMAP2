@@ -155,20 +155,20 @@ namespace McdView
 							_f.Location.X + 20,
 							_f.Location.Y + 20);
 
-			gb_Overhead     .Location = new Point(0, 0);
-			gb_General      .Location = new Point(0, gb_Overhead.Bottom);
-			gb_Health       .Location = new Point(0, gb_General .Bottom);
-			gb_Door         .Location = new Point(0, gb_Health  .Bottom);
+			gb_Overhead  .Location = new Point(0, 0);
+			gb_General   .Location = new Point(0, gb_Overhead.Bottom);
+			gb_Health    .Location = new Point(0, gb_General .Bottom);
+			gb_Door      .Location = new Point(0, gb_Health  .Bottom);
 
-			gb_Tu           .Location = new Point(gb_Overhead.Right, 0);
-			gb_Block        .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
-			gb_Step         .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
-			gb_Elevation    .Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
+			gb_Tu        .Location = new Point(gb_Overhead.Right, 0);
+			gb_Block     .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
+			gb_Step      .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
+			gb_Elevation .Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
 
-			gb_Explode      .Location = new Point(gb_Tu.Right, 0);
-			gb_Unused       .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
+			gb_Explode   .Location = new Point(gb_Tu.Right, 0);
+			gb_Unused    .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
 
-			gb_InsertOptions.Location = new Point(0, pnl_bg.ClientRectangle.Height - gb_InsertOptions.Height);
+			gb_IalOptions.Location = new Point(0, pnl_bg.ClientRectangle.Height - gb_IalOptions.Height);
 
 			ClientSize = new Size(
 								gb_Overhead     .Width
@@ -177,10 +177,10 @@ namespace McdView
 									+ gb_Loft   .Width,
 								ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
 
-			btn_Open.Location = new Point(gb_InsertOptions.Width, pnl_bg.ClientRectangle.Height - btn_Open.Height);
-			btn_Open.Width = gb_Loft.Location.X - gb_InsertOptions.Width;
+			btn_Open.Location = new Point(gb_IalOptions.Width, pnl_bg.ClientRectangle.Height - btn_Open.Height);
+			btn_Open.Width = gb_Loft.Location.X - gb_IalOptions.Width;
 
-			cb_InsertSprites.Text = "copy Sprite phases to " + _f.Label;
+			cb_IalSprites.Text = "copy Sprite phases to " + _f.Label;
 
 
 			PartsPanel = new TerrainPanel_copy(_f, this);
@@ -300,14 +300,14 @@ namespace McdView
 
 		private void OnCheckChanged_InsertDeadpart(object sender, EventArgs e)
 		{
-			cb_InsertDeadsubs   .Enabled =
-			cb_InsertDeadsprites.Enabled = cb_InsertDeadpart.Checked;
+			cb_IalDeadsubs   .Enabled =
+			cb_IalDeadsprites.Enabled = cb_IalDeadpart.Checked;
 		}
 
 		private void OnCheckChanged_InsertAltpart(object sender, EventArgs e)
 		{
-			cb_InsertAltsubs   .Enabled =
-			cb_InsertAltsprites.Enabled = cb_InsertAltpart.Checked;
+			cb_IalAltsubs   .Enabled =
+			cb_IalAltsprites.Enabled = cb_IalAltpart.Checked;
 		}
 		#endregion Events
 
@@ -315,13 +315,13 @@ namespace McdView
 		#region Methods
 		internal void EnableInsertOptions()
 		{
-			cb_InsertSprites    .Checked =
-			cb_InsertDeadpart   .Checked =
-			cb_InsertDeadsubs   .Checked =
-			cb_InsertDeadsprites.Checked =
-			cb_InsertAltpart    .Checked =
-			cb_InsertAltsubs    .Checked =
-			cb_InsertAltsprites .Checked = (_f.PfeMcd != PfeMcd);
+			cb_IalSprites    .Checked =
+			cb_IalDeadpart   .Checked =
+			cb_IalDeadsubs   .Checked =
+			cb_IalDeadsprites.Checked =
+			cb_IalAltpart    .Checked =
+			cb_IalAltsubs    .Checked =
+			cb_IalAltsprites .Checked = (_f.PfeMcd != PfeMcd);
 
 			if (!String.IsNullOrEmpty(_f.PfeMcd))
 			{
@@ -340,13 +340,13 @@ namespace McdView
 						{
 							_pfeTabcopy = Path.Combine(dir, Label + GlobalsXC.TabExt);
 
-							gb_InsertOptions.Enabled = File.Exists(_pfeTabcopy);
+							gb_IalOptions.Enabled = File.Exists(_pfeTabcopy);
 							return;
 						}
 					}
 				}
 			}
-			gb_InsertOptions.Enabled = false;
+			gb_IalOptions.Enabled = false;
 		}
 
 

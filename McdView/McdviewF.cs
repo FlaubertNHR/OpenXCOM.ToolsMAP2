@@ -184,7 +184,7 @@ namespace McdView
 			{
 				_label = value;
 				if (_copypanel != null)
-					_copypanel.cb_InsertSprites.Text = "copy Sprite phases to " + _label;
+					_copypanel.cb_IalSprites.Text = "copy Sprite phases to " + _label;
 			}
 		}
 

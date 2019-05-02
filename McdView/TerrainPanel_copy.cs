@@ -37,7 +37,7 @@ namespace McdView
 		/// </summary>
 		private void CreateContext()
 		{
-			var itInsert   = new ToolStripMenuItem("insert after last", null, OnInsertClick, Keys.Control | Keys.I);
+			var itInsert   = new ToolStripMenuItem("insert after last", null, OnInsertAfterLastClick, Keys.Control | Keys.I);
 
 			var itSep0     = new ToolStripSeparator();
 
@@ -89,49 +89,49 @@ namespace McdView
 		/// @note This is for instant insertion of parts via the CopyPanel to
 		/// the MainPanel.
 		/// </summary>
-		private void OnInsertClick(object sender, EventArgs e)
+		private void OnInsertAfterLastClick(object sender, EventArgs e)
 		{
 			if (SelId != -1 && _f.Parts != null)
 			{
 				bool refsdead = false;
 				bool refsalt  = false;
 
-				if (_fcopy.gb_InsertOptions.Enabled)
+				if (_fcopy.gb_IalOptions.Enabled)
 				{
-					if (   _fcopy.cb_InsertSprites.Enabled
-						&& _fcopy.cb_InsertSprites.Checked)
+					if (   _fcopy.cb_IalSprites.Enabled
+						&& _fcopy.cb_IalSprites.Checked)
 					{
 						
 					}
 
-					if (   _fcopy.cb_InsertDeadpart.Enabled
-						&& _fcopy.cb_InsertDeadpart.Checked)
+					if (   _fcopy.cb_IalDeadpart.Enabled
+						&& _fcopy.cb_IalDeadpart.Checked)
 					{
 						refsdead = true;
 
-						if (   _fcopy.cb_InsertDeadsubs.Enabled
-							&& _fcopy.cb_InsertDeadsubs.Checked)
+						if (   _fcopy.cb_IalDeadsubs.Enabled
+							&& _fcopy.cb_IalDeadsubs.Checked)
 						{
 						}
 
-						if (   _fcopy.cb_InsertDeadsprites.Enabled
-							&& _fcopy.cb_InsertDeadsprites.Checked)
+						if (   _fcopy.cb_IalDeadsprites.Enabled
+							&& _fcopy.cb_IalDeadsprites.Checked)
 						{
 						}
 					}
 
-					if (   _fcopy.cb_InsertAltpart.Enabled
-						&& _fcopy.cb_InsertAltpart.Checked)
+					if (   _fcopy.cb_IalAltpart.Enabled
+						&& _fcopy.cb_IalAltpart.Checked)
 					{
 						refsalt = true;
 
-						if (   _fcopy.cb_InsertAltsubs.Enabled
-							&& _fcopy.cb_InsertAltsubs.Checked)
+						if (   _fcopy.cb_IalAltsubs.Enabled
+							&& _fcopy.cb_IalAltsubs.Checked)
 						{
 						}
 
-						if (   _fcopy.cb_InsertAltsprites.Enabled
-							&& _fcopy.cb_InsertAltsprites.Checked)
+						if (   _fcopy.cb_IalAltsprites.Enabled
+							&& _fcopy.cb_IalAltsprites.Checked)
 						{
 						}
 					}
