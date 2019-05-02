@@ -14,7 +14,7 @@ namespace XCom
 			SpriteCollectionBase
 	{
 		#region Properties
-		public int TabOffset
+		public int TabwordLength
 		{ get; private set; }
 
 		/// <summary>
@@ -40,15 +40,15 @@ namespace XCom
 		/// </summary>
 		/// <param name="label">file w/out path or extension</param>
 		/// <param name="pal"></param>
-		/// <param name="tabOffset"></param>
+		/// <param name="tabwordLength"></param>
 		public SpriteCollection(
 				string label,
 				Palette pal,
-				int tabOffset)
+				int tabwordLength)
 		{
-			Label     = label;
-			Pal       = pal;
-			TabOffset = tabOffset;
+			Label         = label;
+			Pal           = pal;
+			TabwordLength = tabwordLength;
 		}
 
 		/// <summary>
@@ -84,9 +84,9 @@ namespace XCom
 				string label)
 		{
 			//LogFile.WriteLine("SpriteCollection..cTor");
-			TabOffset = tabwordLength;
-			Pal       = pal;
-			Label     = label;
+			TabwordLength = tabwordLength;
+			Pal           = pal;
+			Label         = label;
 
 			int tabSprites = 0;
 			uint[] offsets;
@@ -195,7 +195,7 @@ namespace XCom
 		/// <param name="fsScanG">filestream of the SCANG.DAT file</param>
 		public SpriteCollection(Stream fsScanG)
 		{
-			TabOffset = 0;
+			TabwordLength = 0;
 			Pal = null;
 
 			Borked       =

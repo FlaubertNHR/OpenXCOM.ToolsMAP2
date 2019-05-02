@@ -1106,7 +1106,7 @@ namespace PckView
 												SpritesetDirectory,
 												SpritesetLabel,
 												TilePanel.Spriteset,
-												((SpriteCollection)TilePanel.Spriteset).TabOffset))
+												((SpriteCollection)TilePanel.Spriteset).TabwordLength))
 				{
 					SpritesChanged = true; // NOTE: is used by MapView's TileView to flag the Map to reload.
 				}
@@ -1179,7 +1179,7 @@ namespace PckView
 														dir,
 														file,
 														TilePanel.Spriteset,
-														((SpriteCollection)TilePanel.Spriteset).TabOffset))
+														((SpriteCollection)TilePanel.Spriteset).TabwordLength))
 						{
 							if (!revertReady) // load the SavedAs files ->
 								LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
