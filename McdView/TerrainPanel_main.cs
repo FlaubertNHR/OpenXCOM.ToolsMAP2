@@ -162,7 +162,7 @@ namespace McdView
 				for (int i = id + 1; i != array.Length; ++i)
 				{
 					array[i] = Parts[i - 1];
-					array[i].TerId = i; // not used in McdView but keep things consistent ....
+					array[i].TerId = i;
 				}
 
 				_bypassScrollZero = true;
@@ -249,12 +249,15 @@ namespace McdView
 		/// Inserts the copy-array into the parts-array after the currently
 		/// selected part or at the start of the array if there is no selected
 		/// part.
-		/// NOTE: If inserted part(s)' refs are less than the insertion point
+		/// @note If inserted part(s)' refs are less than the insertion point
 		/// then the refs are okay; if the refs are equal to or greater than the
-		/// insertion point then the refs need to be advanced. But only if the
-		/// inserted parts are from the same recordset; if not then the refs
-		/// shall be deleted. This behavior is warranteed only on the first
-		/// insert of copied parts; the refs can still go wonky on 2+ inserts.
+		/// insertion point then the refs need to be advanced. This behavior is
+		/// warranteed only on the first insert of copied parts; the refs can
+		/// go wonky on 2+ inserts.
+		/// TODO: Alter the refs properly in '_copyparts' after each
+		/// insert-operation.
+		/// @note The refs shall be deleted if inserted parts are *not* in the
+		/// currently loaded recordset.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -300,8 +303,12 @@ namespace McdView
 
 				ShiftRefs(id, _copyparts.Count);
 
+
 				SubIds.Clear();
-				SelId = id;
+				for (int i = id; i != id + _copyparts.Count - 1; ++i)
+					SubIds.Add(i);
+
+				SelId = id + _copyparts.Count - 1;
 
 				_f.Changed = CacheLoad.Changed(_f.Parts);
 			}
@@ -357,6 +364,130 @@ namespace McdView
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// A special insert-operation via the CopyPanel. See OnInsertClick().
+		/// </summary>
+		/// <param name="refsdead">true to insert refs to deadparts</param>
+		/// <param name="refsalt">true to insert refs to altparts</param>
+		internal void InsertAfterLast(bool refsdead, bool refsalt)
+		{
+			SelId = Parts.Length - 1;
+
+//			bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
+
+			int id = SelId + 1;
+
+			var array = new Tilepart[Parts.Length + _copyparts.Count
+												  + _copydeads.Count
+												  + _copyaltrs.Count];
+
+			for (int i = 0, j = 0; i != array.Length; ++i, ++j)
+			{
+				if (i == id)
+				{
+					int pos;
+					for (pos = 0; pos != _copyparts.Count; ++pos, ++i)
+					{
+						array[i] = _copyparts[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
+						array[i].TerId = i;
+
+/*						if (!refsdead)
+						{
+							array[i].Record.DieTile = (byte)0;
+							array[i].Dead = null;
+						}
+						else
+						{
+							array[i].Record.DieTile += (byte)Parts.Length; // TODO: ... roughly
+						}
+
+						if (!refsalt)
+						{
+							array[i].Record.Alt_MCD = (byte)0;
+							array[i].Alternate = null;
+						}
+						else
+						{
+							array[i].Record.Alt_MCD += (byte)Parts.Length; // TODO: ... roughly
+						} */
+					}
+
+					for (pos = 0; pos != _copyaltrs.Count; ++pos, ++i)
+					{
+						array[i] = _copyaltrs[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
+						array[i].TerId = i;
+
+/*						if (!refsdead)
+						{
+							array[i].Record.DieTile = (byte)0;
+							array[i].Dead = null;
+						}
+						else
+						{
+							array[i].Record.DieTile += (byte)Parts.Length; // TODO: ... roughly
+						}
+
+						if (!refsalt)
+						{
+							array[i].Record.Alt_MCD = (byte)0;
+							array[i].Alternate = null;
+						}
+						else
+						{
+							array[i].Record.Alt_MCD += (byte)Parts.Length; // TODO: ... roughly
+						} */
+					}
+
+					for (pos = 0; pos != _copydeads.Count; ++pos, ++i)
+					{
+						array[i] = _copydeads[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
+						array[i].TerId = i;
+
+/*						if (!refsdead)
+						{
+							array[i].Record.DieTile = (byte)0;
+							array[i].Dead = null;
+						}
+						else
+						{
+							array[i].Record.DieTile += (byte)Parts.Length; // TODO: ... roughly
+						}
+
+						if (!refsalt)
+						{
+							array[i].Record.Alt_MCD = (byte)0;
+							array[i].Alternate = null;
+						}
+						else
+						{
+							array[i].Record.Alt_MCD += (byte)Parts.Length; // TODO: ... roughly
+						} */
+					}
+					break;
+				}
+
+//				if (i == array.Length)
+//					break;
+
+				array[i] = Parts[j];
+				array[i].TerId = i;
+			}
+
+			_bypassScrollZero = true;
+			_f.Parts = array;
+
+//			ShiftRefs(id, _copyparts.Count);
+
+
+			SubIds.Clear();
+			for (int i = id; i != Parts.Length - 1; ++i)
+				SubIds.Add(i);
+
+			SelId = Parts.Length - 1;
+
+			_f.Changed = CacheLoad.Changed(_f.Parts);
 		}
 
 		/// <summary>

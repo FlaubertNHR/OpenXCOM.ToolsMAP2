@@ -225,7 +225,9 @@
 		internal System.Windows.Forms.CheckBox cb_InsertAltpart;
 		internal System.Windows.Forms.CheckBox cb_InsertDeadpart;
 		internal System.Windows.Forms.CheckBox cb_InsertSprites;
-		private System.Windows.Forms.GroupBox gb_InsertOptions;
+		internal System.Windows.Forms.GroupBox gb_InsertOptions;
+		internal System.Windows.Forms.CheckBox cb_InsertAltsubs;
+		internal System.Windows.Forms.CheckBox cb_InsertDeadsubs;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -465,6 +467,8 @@
 			this.lbl32_isdropthrou = new System.Windows.Forms.Label();
 			this.tb32_isdropthrou = new System.Windows.Forms.TextBox();
 			this.tb52_footsound = new System.Windows.Forms.TextBox();
+			this.cb_InsertDeadsubs = new System.Windows.Forms.CheckBox();
+			this.cb_InsertAltsubs = new System.Windows.Forms.CheckBox();
 			this.gb_Sprites.SuspendLayout();
 			this.pnl_bg.SuspendLayout();
 			this.gb_InsertOptions.SuspendLayout();
@@ -794,16 +798,18 @@
 			// gb_InsertOptions
 			// 
 			this.gb_InsertOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.gb_InsertOptions.Controls.Add(this.cb_InsertAltsubs);
+			this.gb_InsertOptions.Controls.Add(this.cb_InsertDeadsubs);
 			this.gb_InsertOptions.Controls.Add(this.cb_InsertAltsprites);
 			this.gb_InsertOptions.Controls.Add(this.cb_InsertAltpart);
 			this.gb_InsertOptions.Controls.Add(this.cb_InsertDeadsprites);
 			this.gb_InsertOptions.Controls.Add(this.cb_InsertDeadpart);
 			this.gb_InsertOptions.Controls.Add(this.cb_InsertSprites);
-			this.gb_InsertOptions.Location = new System.Drawing.Point(5, 350);
+			this.gb_InsertOptions.Location = new System.Drawing.Point(5, 330);
 			this.gb_InsertOptions.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_InsertOptions.Name = "gb_InsertOptions";
 			this.gb_InsertOptions.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_InsertOptions.Size = new System.Drawing.Size(330, 80);
+			this.gb_InsertOptions.Size = new System.Drawing.Size(330, 100);
 			this.gb_InsertOptions.TabIndex = 17;
 			this.gb_InsertOptions.TabStop = false;
 			this.gb_InsertOptions.Text = " Options - INSERT AFTER LAST ";
@@ -1751,7 +1757,7 @@
 			this.gb_Block.Controls.Add(this.tb37_isblocksmoke);
 			this.gb_Block.Controls.Add(this.tb36_isblockfire);
 			this.gb_Block.Controls.Add(this.tb31_isblocklos);
-			this.gb_Block.Location = new System.Drawing.Point(175, 85);
+			this.gb_Block.Location = new System.Drawing.Point(175, 80);
 			this.gb_Block.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Block.Name = "gb_Block";
 			this.gb_Block.Padding = new System.Windows.Forms.Padding(0);
@@ -1960,7 +1966,7 @@
 			this.gb_General.Controls.Add(this.tb53_parttype);
 			this.gb_General.Controls.Add(this.tb34_isgravlift);
 			this.gb_General.Controls.Add(this.tb33_isbigwall);
-			this.gb_General.Location = new System.Drawing.Point(5, 65);
+			this.gb_General.Location = new System.Drawing.Point(5, 60);
 			this.gb_General.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_General.Name = "gb_General";
 			this.gb_General.Padding = new System.Windows.Forms.Padding(0);
@@ -2187,7 +2193,7 @@
 			this.gb_Unused.Controls.Add(this.tb24_);
 			this.gb_Unused.Controls.Add(this.tb23_);
 			this.gb_Unused.Controls.Add(this.tb22_);
-			this.gb_Unused.Location = new System.Drawing.Point(345, 105);
+			this.gb_Unused.Location = new System.Drawing.Point(345, 100);
 			this.gb_Unused.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Unused.Name = "gb_Unused";
 			this.gb_Unused.Padding = new System.Windows.Forms.Padding(0);
@@ -2564,7 +2570,7 @@
 			this.gb_Elevation.Controls.Add(this.lbl48_terrainoffset);
 			this.gb_Elevation.Controls.Add(this.tb49_spriteoffset);
 			this.gb_Elevation.Controls.Add(this.tb48_terrainoffset);
-			this.gb_Elevation.Location = new System.Drawing.Point(175, 285);
+			this.gb_Elevation.Location = new System.Drawing.Point(175, 270);
 			this.gb_Elevation.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Elevation.Name = "gb_Elevation";
 			this.gb_Elevation.Padding = new System.Windows.Forms.Padding(0);
@@ -2644,7 +2650,7 @@
 			this.gb_Door.Controls.Add(this.tb46_alternateid);
 			this.gb_Door.Controls.Add(this.tb35_ishingeddoor);
 			this.gb_Door.Controls.Add(this.tb30_isslidingdoor);
-			this.gb_Door.Location = new System.Drawing.Point(5, 265);
+			this.gb_Door.Location = new System.Drawing.Point(5, 250);
 			this.gb_Door.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Door.Name = "gb_Door";
 			this.gb_Door.Padding = new System.Windows.Forms.Padding(0);
@@ -2751,7 +2757,7 @@
 			this.gb_Health.Controls.Add(this.lbl44_deathid);
 			this.gb_Health.Controls.Add(this.tb44_deathid);
 			this.gb_Health.Controls.Add(this.tb42_armor);
-			this.gb_Health.Location = new System.Drawing.Point(5, 205);
+			this.gb_Health.Location = new System.Drawing.Point(5, 195);
 			this.gb_Health.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Health.Name = "gb_Health";
 			this.gb_Health.Padding = new System.Windows.Forms.Padding(0);
@@ -2828,7 +2834,7 @@
 			this.gb_Step.Controls.Add(this.lbl32_isdropthrou);
 			this.gb_Step.Controls.Add(this.tb32_isdropthrou);
 			this.gb_Step.Controls.Add(this.tb52_footsound);
-			this.gb_Step.Location = new System.Drawing.Point(175, 225);
+			this.gb_Step.Location = new System.Drawing.Point(175, 215);
 			this.gb_Step.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Step.Name = "gb_Step";
 			this.gb_Step.Padding = new System.Windows.Forms.Padding(0);
@@ -2896,6 +2902,30 @@
 			this.tb52_footsound.TabIndex = 2;
 			this.tb52_footsound.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb52_footsound.WordWrap = false;
+			// 
+			// cb_InsertDeadsubs
+			// 
+			this.cb_InsertDeadsubs.Checked = true;
+			this.cb_InsertDeadsubs.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_InsertDeadsubs.Location = new System.Drawing.Point(35, 75);
+			this.cb_InsertDeadsubs.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_InsertDeadsubs.Name = "cb_InsertDeadsubs";
+			this.cb_InsertDeadsubs.Size = new System.Drawing.Size(125, 20);
+			this.cb_InsertDeadsubs.TabIndex = 19;
+			this.cb_InsertDeadsubs.Text = "copy subs";
+			this.cb_InsertDeadsubs.UseVisualStyleBackColor = true;
+			// 
+			// cb_InsertAltsubs
+			// 
+			this.cb_InsertAltsubs.Checked = true;
+			this.cb_InsertAltsubs.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_InsertAltsubs.Location = new System.Drawing.Point(165, 75);
+			this.cb_InsertAltsubs.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_InsertAltsubs.Name = "cb_InsertAltsubs";
+			this.cb_InsertAltsubs.Size = new System.Drawing.Size(160, 20);
+			this.cb_InsertAltsubs.TabIndex = 20;
+			this.cb_InsertAltsubs.Text = "copy subs";
+			this.cb_InsertAltsubs.UseVisualStyleBackColor = true;
 			// 
 			// CopyPanelF
 			// 

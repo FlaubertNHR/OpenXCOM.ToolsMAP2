@@ -28,10 +28,18 @@ namespace McdView
 		#region Fields
 		private readonly McdviewF _f;
 
+		/// <summary>
+		/// The file w/out extension of the currently loaded terrain.
+		/// </summary>
 		internal string Label;
 
 		private Graphics _graphics;
 		private ImageAttributes _attri;
+
+		/// <summary>
+		/// Fullpaths of associated sprite-files.
+		/// </summary>
+		string _pfePck, _pfeTab, _pfePckcopy, _pfeTabcopy;
 		#endregion Fields
 
 
@@ -112,6 +120,9 @@ namespace McdView
 		}
 
 		private string _pfeMcd;
+		/// <summary>
+		/// The fullpath of the currently loaded MCD-file.
+		/// </summary>
 		internal string PfeMcd
 		{
 			get { return _pfeMcd; }
@@ -289,11 +300,13 @@ namespace McdView
 
 		private void OnCheckChanged_InsertDeadpart(object sender, EventArgs e)
 		{
+			cb_InsertDeadsubs   .Enabled =
 			cb_InsertDeadsprites.Enabled = cb_InsertDeadpart.Checked;
 		}
 
 		private void OnCheckChanged_InsertAltpart(object sender, EventArgs e)
 		{
+			cb_InsertAltsubs   .Enabled =
 			cb_InsertAltsprites.Enabled = cb_InsertAltpart.Checked;
 		}
 		#endregion Events
@@ -304,39 +317,36 @@ namespace McdView
 		{
 			cb_InsertSprites    .Checked =
 			cb_InsertDeadpart   .Checked =
+			cb_InsertDeadsubs   .Checked =
 			cb_InsertDeadsprites.Checked =
 			cb_InsertAltpart    .Checked =
+			cb_InsertAltsubs    .Checked =
 			cb_InsertAltsprites .Checked = (_f.PfeMcd != PfeMcd);
 
 			if (!String.IsNullOrEmpty(_f.PfeMcd))
 			{
-				string pathTerr_main = Path.GetDirectoryName(_f.PfeMcd);
-				string pfePckMain = Path.Combine(pathTerr_main, _f.Label + GlobalsXC.PckExt);
-				string pfeTabMain = Path.Combine(pathTerr_main, _f.Label + GlobalsXC.TabExt);
-				//LogFile.WriteLine("pfePckMain= " + pfePckMain);
-				//LogFile.WriteLine("pfeTabMain= " + pfeTabMain);
+				string dir = Path.GetDirectoryName(_f.PfeMcd);
 
-				string pathTerr_copy = Path.GetDirectoryName(PfeMcd);
-				string pfePckCopy = Path.Combine(pathTerr_copy, Label + GlobalsXC.PckExt);
-				string pfeTabCopy = Path.Combine(pathTerr_copy, Label + GlobalsXC.TabExt);
-				//LogFile.WriteLine("pfePckCopy= " + pfePckCopy);
-				//LogFile.WriteLine("pfeTabCopy= " + pfeTabCopy);
-
-				bool found = File.Exists(pfePckMain)
-						  && File.Exists(pfeTabMain)
-						  && File.Exists(pfePckCopy)
-						  && File.Exists(pfeTabCopy);
-				//LogFile.WriteLine("found= " + found);
-
-				gb_InsertOptions.Enabled = found;
-
-				if (found)
+				_pfePck = Path.Combine(dir, _f.Label + GlobalsXC.PckExt);
+				if (File.Exists(_pfePck))
 				{
-					
+					_pfeTab = Path.Combine(dir, _f.Label + GlobalsXC.TabExt);
+					if (File.Exists(_pfeTab))
+					{
+						dir = Path.GetDirectoryName(PfeMcd);
+
+						_pfePckcopy = Path.Combine(dir, Label + GlobalsXC.PckExt);
+						if (File.Exists(_pfePckcopy))
+						{
+							_pfeTabcopy = Path.Combine(dir, Label + GlobalsXC.TabExt);
+
+							gb_InsertOptions.Enabled = File.Exists(_pfeTabcopy);
+							return;
+						}
+					}
 				}
 			}
-			else
-				gb_InsertOptions.Enabled = false;
+			gb_InsertOptions.Enabled = false;
 		}
 
 

@@ -93,30 +93,105 @@ namespace McdView
 		{
 			if (SelId != -1 && _f.Parts != null)
 			{
-				if (_fcopy.cb_InsertSprites.Checked)
-				{
-				}
+				bool refsdead = false;
+				bool refsalt  = false;
 
-				if (_fcopy.cb_InsertDeadpart.Checked)
+				if (_fcopy.gb_InsertOptions.Enabled)
 				{
-
-					if (_fcopy.cb_InsertDeadsprites.Checked)
+					if (   _fcopy.cb_InsertSprites.Enabled
+						&& _fcopy.cb_InsertSprites.Checked)
 					{
+						
 					}
-				}
 
-				if (_fcopy.cb_InsertAltpart.Checked)
-				{
-
-					if (_fcopy.cb_InsertAltsprites.Checked)
+					if (   _fcopy.cb_InsertDeadpart.Enabled
+						&& _fcopy.cb_InsertDeadpart.Checked)
 					{
+						refsdead = true;
+
+						if (   _fcopy.cb_InsertDeadsubs.Enabled
+							&& _fcopy.cb_InsertDeadsubs.Checked)
+						{
+						}
+
+						if (   _fcopy.cb_InsertDeadsprites.Enabled
+							&& _fcopy.cb_InsertDeadsprites.Checked)
+						{
+						}
+					}
+
+					if (   _fcopy.cb_InsertAltpart.Enabled
+						&& _fcopy.cb_InsertAltpart.Checked)
+					{
+						refsalt = true;
+
+						if (   _fcopy.cb_InsertAltsubs.Enabled
+							&& _fcopy.cb_InsertAltsubs.Checked)
+						{
+						}
+
+						if (   _fcopy.cb_InsertAltsprites.Enabled
+							&& _fcopy.cb_InsertAltsprites.Checked)
+						{
+						}
 					}
 				}
 
 				OnCopyClick(sender, e);
-				_f.SelId = _f.Parts.Length - 1;
-				_f.PartsPanel.OnInsertClick(null, EventArgs.Empty);
+
+				if (refsdead || refsalt)
+				{
+					SegregateParts(refsdead, refsalt);
+					// TODO: get the Dead and Alt parts of the Dead and Alt parts ad nausea.
+				}
+
+				_f.PartsPanel.InsertAfterLast(refsdead, refsalt);
 			}
+		}
+
+		private void SegregateParts(bool refsdead, bool refsalt)
+		{
+			_copydeads.Clear();
+			_copyaltrs .Clear();
+
+			var ids     = new HashSet<int>();
+			var idsDead = new HashSet<int>();
+			var idsAlt  = new HashSet<int>();
+
+			foreach (var part in _copyparts)
+				ids.Add(part.TerId);
+
+			if (refsdead)
+			{
+				foreach (var part in _copyparts)
+				{
+					if (part.Dead != null
+						&& !ids.Contains(part.Dead.TerId))
+					{
+						idsDead.Add(part.Dead.TerId);
+					}
+				}
+			}
+
+			if (refsalt)
+			{
+				foreach (var part in _copyparts)
+				{
+					if (part.Alternate != null
+						&& !ids.Contains(part.Alternate.TerId))
+					{
+						idsAlt.Add(part.Alternate.TerId);
+					}
+				}
+				idsAlt.ExceptWith(idsDead);
+			}
+
+
+			foreach (var id in idsDead)
+				_copydeads.Add(Parts[id]);
+
+			foreach (var id in idsAlt)
+				_copyaltrs.Add(Parts[id]);
 		}
 		#endregion Events (context)
 

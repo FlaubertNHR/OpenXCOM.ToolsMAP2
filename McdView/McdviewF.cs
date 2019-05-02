@@ -174,6 +174,9 @@ namespace McdView
 
 
 		private string _label = String.Empty;
+		/// <summary>
+		/// The file w/out extension of the currently loaded terrain.
+		/// </summary>
 		internal string Label
 		{
 			get { return _label; }
@@ -186,6 +189,9 @@ namespace McdView
 		}
 
 		private string _pfeMcd = String.Empty;
+		/// <summary>
+		/// The fullpath of the currently loaded MCD-file.
+		/// </summary>
 		internal string PfeMcd
 		{
 			get { return _pfeMcd; }

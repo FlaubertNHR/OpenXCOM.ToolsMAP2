@@ -25,6 +25,15 @@ namespace McdView
 
 		protected readonly static List<Tilepart> _copyparts = new List<Tilepart>();
 		protected static string _copylabel;
+
+		/// <summary>
+		/// For CopyPanel's InsertAfterLast only.
+		/// </summary>
+		protected readonly static List<Tilepart> _copydeads = new List<Tilepart>();
+		/// <summary>
+		/// For CopyPanel's InsertAfterLast only.
+		/// </summary>
+		protected readonly static List<Tilepart> _copyaltrs = new List<Tilepart>();
 		#endregion Fields (static)
 
 
