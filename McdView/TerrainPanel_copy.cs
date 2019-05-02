@@ -84,8 +84,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Selects the last part in the Main window's parts-array and inserts
-		/// selected parts after that part.
+		/// A special insert-operation. Inserts selected parts after the last
+		/// tilepart in Main.
 		/// @note This is for instant insertion of parts via the CopyPanel to
 		/// the MainPanel.
 		/// </summary>
@@ -101,7 +101,6 @@ namespace McdView
 					if (   _fcopy.cb_IalSprites.Enabled
 						&& _fcopy.cb_IalSprites.Checked)
 					{
-						
 					}
 
 					if (   _fcopy.cb_IalDeadpart.Enabled
@@ -140,7 +139,8 @@ namespace McdView
 				OnCopyClick(sender, e);
 
 				SegregateParts(refsdead, refsaltr);
-				// TODO: get the Dead and Alt parts of the Dead and Alt parts ad nausea.
+				// TODO: get the Dead and Altr parts of the Dead and Altr parts
+				// in a cascading chaos of certain confusion.
 
 				_f.PartsPanel.InsertAfterLast(refsdead, refsaltr);
 			}
@@ -148,11 +148,14 @@ namespace McdView
 
 		/// <summary>
 		/// This function does a crapload of mapping in an attempt to figure out
-		/// where the dead-refs and altr-refs end up as copyparts get inserted
-		/// to the Main parts-array.
+		/// where the dead-refs and altr-refs should end up while copyparts are
+		/// being inserted to the Main parts-array.
 		/// AT PRESENT THE FOLLOWING ROUTINE ASSUMES THAT NO DEAD-REFS ARE ALTR-
 		/// REFS AND NO ALTR-REFS ARE DEAD-REFS. if they are the universe
 		/// explodes in t-.
+		/// @note CHILD-REFS OF THE DEAD-REFS AND ALTR-REFS ARE NOT BEING
+		/// HANDLED.
+		/// TODO: Handle at least the dead-refs of the altr-refs.
 		/// </summary>
 		/// <param name="refsdead"></param>
 		/// <param name="refsaltr"></param>

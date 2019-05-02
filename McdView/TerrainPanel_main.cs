@@ -367,11 +367,13 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// A special insert-operation via the CopyPanel. See OnInsertAfterLastClick().
+		/// A special insert-operation via the CopyPanel. Selects the last
+		/// tilepart and inserts the CopyPanel's selected tileparts.
+		/// See TerrainPanel_copy.OnInsertAfterLastClick().
 		/// </summary>
 		/// <param name="refsdead">true to insert refs to deadparts</param>
 		/// <param name="refsaltr">true to insert refs to altparts</param>
-		internal void InsertAfterLast(bool refsdead, bool refsaltr)
+		internal void InsertAfterLast(bool refsdead, bool refsaltr) // TODO: args are not used.
 		{
 			SelId = Parts.Length - 1;
 
@@ -380,15 +382,15 @@ namespace McdView
 			int id = SelId + 1;
 
 			var array = new Tilepart[Parts.Length + _copyparts.Count
-												  + _ialDeads.Count
-												  + _ialAltrs.Count];
+												  + _ialDeads .Count
+												  + _ialAltrs .Count];
 
 			for (int i = 0, j = 0; i != array.Length; ++i, ++j)
 			{
 				if (i == id)
 				{
 					int pos, var;
-					for (pos = 0; pos != _copyparts.Count; ++pos, ++i)
+					for (pos = 0; pos != _copyparts.Count; ++pos, ++i) // add directly selected parts first
 					{
 						array[i] = _copyparts[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
@@ -400,12 +402,12 @@ namespace McdView
 
 						if ((var = array[i].Record.DieTile) != 0)
 						{
-							if (ialdictDeads0.ContainsKey(var))
+							if (ialdictDeads0.ContainsKey(var)) // deadpart is in the directly selected parts
 							{
 								array[i].Record.DieTile = (byte)(id + ialdictDeads0[var]);
 //								array[i].Dead = ;
 							}
-							else if (ialdictDeads1.ContainsKey(var))
+							else if (ialdictDeads1.ContainsKey(var)) // deadpart is ref'd by a directly selected part but is added separately
 							{
 								array[i].Record.DieTile = (byte)(id + _copyparts.Count + _ialAltrs.Count + ialdictDeads1[var]);
 //								array[i].Dead = ;
@@ -419,12 +421,12 @@ namespace McdView
 
 						if ((var = array[i].Record.Alt_MCD) != 0)
 						{
-							if (ialdictAltrs0.ContainsKey(var))
+							if (ialdictAltrs0.ContainsKey(var)) // altrpart is in the directly selected parts
 							{
 								array[i].Record.Alt_MCD = (byte)(id + ialdictAltrs0[var]);
 //								array[i].Alternate = ;
 							}
-							else if (ialdictAltrs1.ContainsKey(var))
+							else if (ialdictAltrs1.ContainsKey(var)) // altrpart is ref'd by a directly selected part but is added separately
 							{
 								array[i].Record.Alt_MCD = (byte)(id + _copyparts.Count + ialdictAltrs1[var]);
 //								array[i].Alternate = ;
@@ -438,18 +440,34 @@ namespace McdView
 					}
 
 
-					for (pos = 0; pos != _ialAltrs.Count; ++pos, ++i)
+					for (pos = 0; pos != _ialAltrs.Count; ++pos, ++i) // add altrparts second
 					{
 						array[i] = _ialAltrs[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
+
+						// TODO: check for isTerrain and/or if user chose to insert subrefs
+						array[i].Record.DieTile = (byte)0;
+						array[i].Dead = null;
+
+						array[i].Record.Alt_MCD = (byte)0;
+						array[i].Alternate = null;
 					}
 
-					for (pos = 0; pos != _ialDeads.Count; ++pos, ++i)
+
+					for (pos = 0; pos != _ialDeads.Count; ++pos, ++i) // add deadparts third
 					{
 						array[i] = _ialDeads[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
+
+						// TODO: check for isTerrain and/or if user chose to insert subrefs
+						array[i].Record.DieTile = (byte)0;
+						array[i].Dead = null;
+
+						array[i].Record.Alt_MCD = (byte)0;
+						array[i].Alternate = null;
 					}
-					break;
+
+					break; // is the end of the array.
 				}
 
 				array[i] = Parts[j];
