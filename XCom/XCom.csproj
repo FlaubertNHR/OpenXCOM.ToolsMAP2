@@ -163,7 +163,6 @@
     <Compile Include="ResourceInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interfaces\Base\TilepartBase.cs" />
     <Compile Include="Interfaces\Base\TileGroupBase.cs">
       <SubType>Code</SubType>
     </Compile>

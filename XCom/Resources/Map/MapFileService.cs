@@ -98,7 +98,7 @@ namespace XCom
 			{
 				//LogFile.WriteLine(". . Map file exists");
 
-				var partset = new List<TilepartBase>();
+				var partset = new List<Tilepart>();
 
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{

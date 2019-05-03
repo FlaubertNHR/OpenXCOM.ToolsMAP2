@@ -1,21 +1,80 @@
 using System;
 
 using XCom.Interfaces;
-using XCom.Interfaces.Base;
 
 
 namespace XCom
 {
 	public sealed class Tilepart
-		:
-			TilepartBase
 	{
 		#region Properties
+		/// <summary>
+		/// The object that has information about the mechanics and appearance
+		/// of this tilepart.
+		/// </summary>
+		public McdRecord Record
+		{ get; private set; }
+
 		public Tilepart Dead
 		{ get; set; }
 
 		public Tilepart Alternate
 		{ get; set; }
+
+		// TODO: The fact that the spriteset points to a "sprite" and this
+		// tilepart points to a "sprite" causes a glitch when changing "that"
+		// sprite. They ought be kept consistent since there is an awkward
+		// sort of latency-effect happening on refresh.
+
+		private SpriteCollection Spriteset
+		{ get; set; }
+
+		/// <summary>
+		/// Gets the sprite-array used to animate this tile.
+		/// </summary>
+		public XCImage[] Sprites
+		{ get; set; }
+
+		/// <summary>
+		/// Gets a sprite at the specified animation frame.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public XCImage this[int id]
+		{
+			get { return Sprites[id]; }
+			set { Sprites[id] = value; }
+//			get { return Spriteset[getSpriteId(id)]; }
+//			set { Spriteset[getSpriteId(id)] = value; }
+		}
+/*		private int getSpriteId(int id)
+		{
+			switch (id)
+			{
+				default: return Record.Sprite1; //case 0
+				case 1:  return Record.Sprite2;
+				case 2:  return Record.Sprite3;
+				case 3:  return Record.Sprite4;
+				case 4:  return Record.Sprite5;
+				case 5:  return Record.Sprite6;
+				case 6:  return Record.Sprite7;
+				case 7:  return Record.Sprite8;
+			}
+		} */
+
+		/// <summary>
+		/// The ID of this tilepart that's unique to its terrain/MCD-record.
+		/// </summary>
+		public int TerId
+		{ get; set; }
+
+		/// <summary>
+		/// The ID of this tilepart that's unique to the Map across all
+		/// allocated terrains. The value is set in MapFileChild..cTor.
+		/// IMPORTANT: The 'SetId' is written to the Mapfile (as a byte).
+		/// </summary>
+		public int SetId
+		{ get; internal set; }
 		#endregion Properties
 
 
@@ -30,9 +89,12 @@ namespace XCom
 				int id,
 				SpriteCollection spriteset,
 				McdRecord record)
-			:
-				base(id, spriteset)
 		{
+			TerId = id;
+			SetId = -1;
+
+			Spriteset = spriteset;
+
 			Record = record;
 
 			Sprites = new XCImage[8]; // every tile-part contains refs to 8 sprites.

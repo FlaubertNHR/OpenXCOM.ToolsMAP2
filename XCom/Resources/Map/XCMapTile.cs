@@ -21,35 +21,35 @@ namespace XCom
 			MapTileBase
 	{
 		#region Properties
-		private TilepartBase _floor;
-		public TilepartBase Floor
+		private Tilepart _floor;
+		public Tilepart Floor
 		{
 			get { return _floor; }
 			set { SetQuadrantPart(QuadrantType.Floor, value); }
 		}
 
-		private TilepartBase _west;
-		public TilepartBase West
+		private Tilepart _west;
+		public Tilepart West
 		{
 			get { return _west; }
 			set { SetQuadrantPart(QuadrantType.West, value); }
 		}
 
-		private TilepartBase _north;
-		public TilepartBase North
+		private Tilepart _north;
+		public Tilepart North
 		{
 			get { return _north; }
 			set { SetQuadrantPart(QuadrantType.North, value); }
 		}
 
-		private TilepartBase _content;
-		public TilepartBase Content
+		private Tilepart _content;
+		public Tilepart Content
 		{
 			get { return _content; }
 			set { SetQuadrantPart(QuadrantType.Content, value); }
 		}
 
-		public TilepartBase this[QuadrantType quad]
+		public Tilepart this[QuadrantType quad]
 		{
 			get
 			{
@@ -68,11 +68,11 @@ namespace XCom
 		/// <summary>
 		/// @note This is used only by MapFileBase.SaveGifFile().
 		/// </summary>
-		public override TilepartBase[] UsedParts
+		public override Tilepart[] UsedParts
 		{
 			get
 			{
-				var parts = new List<TilepartBase>();
+				var parts = new List<Tilepart>();
 
 				if (Floor   != null) parts.Add(Floor);
 				if (West    != null) parts.Add(West);
@@ -106,10 +106,10 @@ namespace XCom
 
 		#region cTor
 		public XCMapTile(
-				TilepartBase floor,
-				TilepartBase west,
-				TilepartBase north,
-				TilepartBase content)
+				Tilepart floor,
+				Tilepart west,
+				Tilepart north,
+				Tilepart content)
 		{
 			_floor   = floor; // NOTE: Don't even try ... don't even think about it.
 			_west    = west;
@@ -122,7 +122,7 @@ namespace XCom
 
 
 		#region Methods
-		private void SetQuadrantPart(QuadrantType quad, TilepartBase part)
+		private void SetQuadrantPart(QuadrantType quad, Tilepart part)
 		{
 			switch (quad)
 			{

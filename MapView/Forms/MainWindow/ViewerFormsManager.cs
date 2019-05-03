@@ -2,6 +2,7 @@
 using MapView.Forms.MapObservers.TileViews;
 using MapView.Forms.MapObservers.TopViews;
 
+using XCom;
 using XCom.Interfaces.Base;
 
 
@@ -72,7 +73,7 @@ namespace MapView.Forms.MainWindow
 		/// is selected in TileView.
 		/// </summary>
 		/// <param name="part"></param>
-		private static void OnTileSelected_Observer0(TilepartBase part)
+		private static void OnTileSelected_Observer0(Tilepart part)
 		{
 			if (part != null && part.Record != null)
 			{

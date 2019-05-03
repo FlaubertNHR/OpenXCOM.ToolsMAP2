@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 
 using XCom;
-using XCom.Interfaces.Base;
 
 
 namespace MapView.Forms.MapObservers.TopViews
@@ -100,7 +99,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				Graphics g,
 				ColorTools tool,
 				int x, int y,
-				TilepartBase part)
+				Tilepart part)
 		{
 			var ptTop   = new Point(
 								x,
@@ -334,7 +333,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <remarks>http://www.ufopaedia.org/index.php/LOFTEMPS.DAT</remarks>
 		/// <param name="part"></param>
 		/// <returns></returns>
-		internal static BlobType GetBlobType(TilepartBase part)
+		internal static BlobType GetBlobType(Tilepart part)
 		{
 			var record = part.Record;
 			if (record != null)
@@ -523,7 +522,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		/// <param name="part"></param>
 		/// <returns></returns>
-		internal static bool IsDoor(TilepartBase part)
+		internal static bool IsDoor(Tilepart part)
 		{
 			var record = part.Record;
 			return (record != null

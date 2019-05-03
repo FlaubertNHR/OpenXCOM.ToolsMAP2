@@ -10,12 +10,11 @@ using MapView.Forms.MainWindow;
 
 using XCom;
 using XCom.Interfaces;
-using XCom.Interfaces.Base;
 
 
 namespace MapView.Forms.MapObservers.TileViews
 {
-	internal delegate void TileSelectedEventHandler(TilepartBase part);
+	internal delegate void TileSelectedEventHandler(Tilepart part);
 
 
 	/// <summary>
@@ -29,7 +28,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		#region Fields & Properties
-		private TilepartBase[] _parts;
+		private Tilepart[] _parts;
 
 		private readonly VScrollBar _scrollBar;
 
@@ -84,7 +83,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Sets the selected-tilepart when a valid QuadrantPanel quad is
 		/// double-clicked.
 		/// </summary>
-		internal TilepartBase PartSelected
+		internal Tilepart PartSelected
 		{
 			get
 			{
@@ -465,7 +464,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			TilepartBase part = null;
+			Tilepart part = null;
 
 			int id = GetOverId(e);
 			if (id != -1 && id < _parts.Length)
@@ -632,13 +631,13 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		#region Methods
-		internal void SetTiles(IList<TilepartBase> parts)
+		internal void SetTiles(IList<Tilepart> parts)
 		{
 			if (parts != null) //&& _tiles.Length != 0)	// NOTE: This check for Length should be enough
 			{											// to cover all other checks for Length==0.
 				if (_quadType == PartType.All)			// Except that the eraser needs to be added anyway ....
 				{
-					_parts = new TilepartBase[parts.Count + 1];
+					_parts = new Tilepart[parts.Count + 1];
 					_parts[0] = null;
 
 					for (int i = 0; i != parts.Count; ++i)
@@ -652,7 +651,7 @@ namespace MapView.Forms.MapObservers.TileViews
 						if (parts[i].Record.PartType == _quadType)
 							++qtyTiles;
 
-					_parts = new TilepartBase[qtyTiles + 1];
+					_parts = new Tilepart[qtyTiles + 1];
 					_parts[0] = null;
 
 					for (int i = 0, j = 1; i != parts.Count; ++i)

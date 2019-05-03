@@ -76,7 +76,7 @@ namespace XCom.Interfaces.Base
 		internal MapTileList Tiles
 		{ get; set; }
 
-		public List<TilepartBase> Parts
+		public List<Tilepart> Parts
 		{ get; internal set; }
 
 		private MapLocation _location;
@@ -151,7 +151,7 @@ namespace XCom.Interfaces.Base
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="parts"></param>
-		protected MapFileBase(Descriptor descriptor, List<TilepartBase> parts)
+		protected MapFileBase(Descriptor descriptor, List<Tilepart> parts)
 		{
 			Descriptor = descriptor;
 			Parts = parts;

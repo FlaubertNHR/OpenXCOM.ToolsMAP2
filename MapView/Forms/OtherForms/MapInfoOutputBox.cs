@@ -3,7 +3,6 @@ using System.Collections;
 using System.Windows.Forms;
 
 using XCom;
-using XCom.Interfaces.Base;
 
 
 namespace MapView
@@ -131,7 +130,7 @@ namespace MapView
 		}
 
 		private static void Count(
-				TilepartBase part,
+				Tilepart part,
 				IDictionary recordsTable,
 				IDictionary spritesTable)
 		{

@@ -1555,7 +1555,7 @@ namespace MapView
 			//   (int)(sprite.Height * Globals.Scale)
 			// with its attendent consequences.
 
-			TilepartBase part;
+			Tilepart part;
 
 			var topView = ViewerFormsManager.TopView.Control;
 			if (topView.GroundVisible
@@ -1610,7 +1610,7 @@ namespace MapView
 			//   (int)(sprite.Height * Globals.Scale)
 			// with its attendent consequences.
 
-			TilepartBase part;
+			Tilepart part;
 			var rect = new Rectangle(
 								x, y,
 								_halfwidth2, _halfheight5);

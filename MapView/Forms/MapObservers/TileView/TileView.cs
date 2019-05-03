@@ -19,6 +19,7 @@ using PckView;
 using XCom;
 using XCom.Interfaces.Base;
 
+
 namespace MapView.Forms.MapObservers.TileViews
 {
 	internal sealed partial class TileView
@@ -58,7 +59,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 		}
 
-		private IList<TilepartBase> TileParts
+		private IList<Tilepart> TileParts
 		{
 			set
 			{
@@ -76,7 +77,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		internal TilepartBase SelectedTilepart
+		internal Tilepart SelectedTilepart
 		{
 			get { return _panels[tcTileTypes.SelectedIndex].PartSelected; }
 			set
@@ -225,7 +226,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// 'TileSelectedEvent_Observer0'.
 		/// </summary>
 		/// <param name="part"></param>
-		private void OnTileSelected(TilepartBase part)
+		private void OnTileSelected(Tilepart part)
 		{
 			var f = FindForm();
 
@@ -264,7 +265,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// through 'TileSelectedEvent_Observer0'.
 		/// </summary>
 		/// <param name="part"></param>
-		private void SelectQuadrant(TilepartBase part)
+		private void SelectQuadrant(Tilepart part)
 		{
 			if (TileSelectedEvent_Observer0 != null)
 				TileSelectedEvent_Observer0(part);
@@ -744,7 +745,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Prints info for a mouseovered tilepart.
 		/// </summary>
 		/// <param name="part"></param>
-		internal void StatusbarOverInfo(TilepartBase part)
+		internal void StatusbarOverInfo(Tilepart part)
 		{
 			string info = String.Empty;
 

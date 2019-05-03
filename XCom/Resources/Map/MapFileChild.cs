@@ -39,7 +39,7 @@ namespace XCom
 		/// <param name="routes"></param>
 		internal MapFileChild(
 				Descriptor descriptor,
-				List<TilepartBase> partset,
+				List<Tilepart> partset,
 				RouteNodeCollection routes)
 			:
 				base(descriptor, partset)
@@ -86,7 +86,7 @@ namespace XCom
 		/// Reads a .MAP file.
 		/// </summary>
 		/// <param name="parts">a list of tileset-parts</param>
-		private void ReadMapFile(List<TilepartBase> parts)
+		private void ReadMapFile(List<Tilepart> parts)
 		{
 			using (var bs = new BufferedStream(File.OpenRead(Fullpath)))
 			{
@@ -126,7 +126,7 @@ namespace XCom
 		/// <param name="quad4">the content</param>
 		/// <returns></returns>
 		private XCMapTile CreateTile(
-				IList<TilepartBase> parts,
+				IList<Tilepart> parts,
 				int quad1,
 				int quad2,
 				int quad3,
@@ -251,7 +251,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="part"></param>
 		/// <returns></returns>
-		public string GetTerrainLabel(TilepartBase part)
+		public string GetTerrainLabel(Tilepart part)
 		{
 			int id = -1;
 			foreach (var part_ in Parts)
@@ -274,7 +274,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="part"></param>
 		/// <returns></returns>
-		public Tuple<string,string> GetTerrain(TilepartBase part)
+		public Tuple<string,string> GetTerrain(Tilepart part)
 		{
 			int id = -1;
 			foreach (var part_ in Parts)

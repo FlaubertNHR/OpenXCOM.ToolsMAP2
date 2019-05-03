@@ -18,8 +18,8 @@ using MapView.Forms.MapObservers.TopViews;
 //using MapView.OptionsServices;
 
 using XCom;
-using XCom.Resources.Map.RouteData;
 using XCom.Interfaces.Base;
+using XCom.Resources.Map.RouteData;
 
 using YamlDotNet.RepresentationModel; // read values (deserialization)
 
@@ -2859,7 +2859,7 @@ namespace MapView
 					var tileview = ViewerFormsManager.TileView.Control; // update MCD Info if open
 					if (tileview._mcdInfoForm != null)
 					{
-						TilepartBase part = tileview.SelectedTilepart;
+						Tilepart part = tileview.SelectedTilepart;
 						if (part != null)
 							tileview._mcdInfoForm.UpdateData(
 															part.Record,
