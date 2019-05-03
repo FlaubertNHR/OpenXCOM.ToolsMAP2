@@ -166,10 +166,10 @@ namespace XCom
 							bindataSprite[j] = bindata[offsets[i] + j];
 
 						var sprite = new PckImage(
-											bindataSprite,
-											Pal,
-											i,
-											this);
+												bindataSprite,
+												Pal,
+												i,
+												this);
 						if (!BorkedBigobs)
 						{
 							Add(sprite);

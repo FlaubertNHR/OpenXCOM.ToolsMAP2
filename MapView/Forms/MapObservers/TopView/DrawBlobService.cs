@@ -519,7 +519,7 @@ namespace MapView.Forms.MapObservers.TopViews
 //		}
 
 		/// <summary>
-		/// Checks if a tilepart is either a standard door or a ufo door.
+		/// Checks if a tilepart is either a hinged door or a sliding door.
 		/// </summary>
 		/// <param name="part"></param>
 		/// <returns></returns>

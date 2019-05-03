@@ -10,15 +10,13 @@ namespace XCom
 		:
 			TilepartBase
 	{
-		#region Fields & Properties
-		private readonly SpriteCollection _spriteset;
-
+		#region Properties
 		public Tilepart Dead
 		{ get; set; }
 
 		public Tilepart Alternate
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -33,15 +31,16 @@ namespace XCom
 				SpriteCollection spriteset,
 				McdRecord record)
 			:
-				base(id)
+				base(id, spriteset)
 		{
-			_spriteset = spriteset;
 			Record = record;
 
 			Sprites = new XCImage[8]; // every tile-part contains refs to 8 sprites.
-			InitializeSprites();
+
+			if (Spriteset != null)
+				InitSprites();
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -66,79 +65,88 @@ namespace XCom
 		/// <summary>
 		/// Initializes this tilepart's array of sprites.
 		/// </summary>
-		private void InitializeSprites()
+		private void InitSprites()
 		{
-			if (_spriteset != null)
+			if (!Record.SlidingDoor && !Record.HingedDoor)
 			{
-				if (Record.SlidingDoor || Record.HingedDoor)
+				SpritesToPhases();
+			}
+			else
+				SpritesToFirstPhase();
+		}
+
+		/// <summary>
+		/// Sets this tilepart's sprites in accord with its record's
+		/// sprite-phases.
+		/// </summary>
+		public void SpritesToPhases()
+		{
+			int spriteId;
+			for (int i = 0; i != 8; ++i)
+			{
+				switch (i)
 				{
-					for (int i = 0; i != 8; ++i)
-						Sprites[i] = _spriteset[Record.Sprite1];
+					default: spriteId = Record.Sprite1; break; //case 0
+					case 1:  spriteId = Record.Sprite2; break;
+					case 2:  spriteId = Record.Sprite3; break;
+					case 3:  spriteId = Record.Sprite4; break;
+					case 4:  spriteId = Record.Sprite5; break;
+					case 5:  spriteId = Record.Sprite6; break;
+					case 6:  spriteId = Record.Sprite7; break;
+					case 7:  spriteId = Record.Sprite8; break;
 				}
-				else
-				{
-					Sprites[0] = _spriteset[Record.Sprite1];
-					Sprites[1] = _spriteset[Record.Sprite2];
-					Sprites[2] = _spriteset[Record.Sprite3];
-					Sprites[3] = _spriteset[Record.Sprite4];
-					Sprites[4] = _spriteset[Record.Sprite5];
-					Sprites[5] = _spriteset[Record.Sprite6];
-					Sprites[6] = _spriteset[Record.Sprite7];
-					Sprites[7] = _spriteset[Record.Sprite8];
-				}
+				Sprites[i] = Spriteset[spriteId];
 			}
 		}
 
+		/// <summary>
+		/// Sets this tilepart's sprites to its record's first sprite-phase.
+		/// </summary>
+		private void SpritesToFirstPhase()
+		{
+			for (int i = 0; i != 8; ++i)
+				Sprites[i] = Spriteset[Record.Sprite1];
+		}
 
 		/// <summary>
 		/// Toggles this tilepart's array of sprites if it's a door-part.
 		/// </summary>
 		/// <param name="animate">true to animate</param>
-		public void SetDoorSprites(bool animate)
+		public void ToggleDoorSprites(bool animate)
 		{
-			if (_spriteset != null)
+			if (Spriteset != null
+				&& (Record.SlidingDoor || Record.HingedDoor))
 			{
-				if (Record.SlidingDoor || Record.HingedDoor)
+				if (animate)
 				{
-					if (animate)
+					if (Record.SlidingDoor || Alternate == null)
 					{
-						if (Record.SlidingDoor || Alternate == null)
-						{
-							Sprites[0] = _spriteset[Record.Sprite1];
-							Sprites[1] = _spriteset[Record.Sprite2];
-							Sprites[2] = _spriteset[Record.Sprite3];
-							Sprites[3] = _spriteset[Record.Sprite4];
-							Sprites[4] = _spriteset[Record.Sprite5];
-							Sprites[5] = _spriteset[Record.Sprite6];
-							Sprites[6] = _spriteset[Record.Sprite7];
-							Sprites[7] = _spriteset[Record.Sprite8];
-						}
-						else
-						{
-							byte alt = Alternate.Record.Sprite1;
-							for (int i = 4; i != 8; ++i)
-								Sprites[i] = _spriteset[alt];
-						}
+						SpritesToPhases();
 					}
 					else
 					{
-						for (int i = 0; i != 8; ++i)
-							Sprites[i] = _spriteset[Record.Sprite1];
+						byte altr = Alternate.Record.Sprite1;
+						for (int i = 4; i != 8; ++i)
+							Sprites[i] = Spriteset[altr];
 					}
 				}
+				else
+					SpritesToFirstPhase();
 			}
 		}
 
-		public void SetDoorToAlternateSprite()
+		/// <summary>
+		/// Sets this tilepart's sprites to the first phase of its Alternate
+		/// part. Is for doors only.
+		/// </summary>
+		public void SpritesToAlternate()
 		{
-			if (_spriteset != null)
+			if (Spriteset != null
+				&& (Record.SlidingDoor || Record.HingedDoor))
 			{
-				if (Record.SlidingDoor || Record.HingedDoor)
-				{
-					byte alt = Alternate.Record.Sprite1;
-					for (int i = 0; i != 8; ++i)
-						Sprites[i] = _spriteset[alt];
-				}
+				byte altr = Alternate.Record.Sprite1;
+				for (int i = 0; i != 8; ++i)
+					Sprites[i] = Spriteset[altr];
 			}
 		}
 
@@ -152,10 +160,10 @@ namespace XCom
 		///   Sprites
 		///   TerId
 		///   SetId = -1
+		///   Spriteset
 		///
 		///   Dead
 		///   Alternate
-		///   _spriteset
 		/// </summary>
 		/// <param name="spriteset">the spriteset to ref for the cloned part; if
 		/// null use this part's spriteset</param>
@@ -163,17 +171,19 @@ namespace XCom
 		public Tilepart Clone(SpriteCollection spriteset = null)
 		{
 			if (spriteset == null)
-				spriteset = _spriteset;
+				spriteset = Spriteset;
 
 			var part = new Tilepart(
 								TerId,
 								spriteset,
 								Record.Clone());
+			SpritesToPhases();
+
 			part.Dead      = Dead;
 			part.Alternate = Alternate;
 
 			return part;
 		}
-		#endregion
+		#endregion Methods
 	}
 }

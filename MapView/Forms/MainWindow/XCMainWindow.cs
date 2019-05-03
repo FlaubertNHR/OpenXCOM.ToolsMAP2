@@ -852,14 +852,14 @@ namespace MapView
 						if (miDoors.Checked) // toggle off doors if general animations stop.
 						{
 							miDoors.Checked = false;
-							ToggleDoorSprites(false);
+							AnimateDoorSprites(false);
 						}
 						ViewerFormsManager.TileView.Refresh();
 						ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
 						ViewerFormsManager.TopRouteView.ControlTop.QuadrantsPanel.Refresh();
 					}
 					else if (miOn.Checked && miDoors.Checked) // doors need to animate if they were already toggled on.
-						ToggleDoorSprites(true);
+						AnimateDoorSprites(true);
 
 					MainViewUnderlay.MainViewOverlay.Invalidate();
 					break;
@@ -869,20 +869,20 @@ namespace MapView
 
 					if (miOn.Checked)
 					{
-						ToggleDoorSprites(miDoors.Checked);
+						AnimateDoorSprites(miDoors.Checked);
 					}
 					else if (miDoors.Checked) // switch to the doors' alt-tile (whether ufo-door or hinge-door)
 					{
 						if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
 						{
 							foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
-								part.SetDoorToAlternateSprite();
+								part.SpritesToAlternate();
 
 							Refresh();
 						}
 					}
 					else // switch doors to Image1.
-						ToggleDoorSprites(false);
+						AnimateDoorSprites(false);
 					break;
 
 				case AllowBringToFront:
@@ -2838,7 +2838,7 @@ namespace MapView
 
 					Options[Doors].Value = false; // toggle off door-animations; not sure that this is necessary to do.
 					miDoors.Checked = false;
-					ToggleDoorSprites(false);
+					AnimateDoorSprites(false);
 
 					if (!menuViewers.Enabled) // open/close the forms that appear in the Viewers menu.
 						MainMenusManager.StartViewers();
@@ -2880,12 +2880,12 @@ namespace MapView
 		/// Toggles the door-sprites to animate or not.
 		/// </summary>
 		/// <param name="animate">true to animate any doors</param>
-		private void ToggleDoorSprites(bool animate)
+		private void AnimateDoorSprites(bool animate)
 		{
 			if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
 			{
 				foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
-					part.SetDoorSprites(animate);
+					part.ToggleDoorSprites(animate);
 
 				Refresh();
 			}

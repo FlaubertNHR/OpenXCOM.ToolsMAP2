@@ -89,8 +89,12 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// The spriteset. Use this var only for drawing; get the spriteset
+		/// directly in 'McdviewF' otherwise. (no reason, jic)
+		/// </summary>
 		internal protected SpriteCollection Spriteset
-		{ get; set; }
+		{ private get; set; }
 
 
 		protected ContextMenuStrip Context
@@ -236,6 +240,9 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			LogFile.WriteLine("");
+			LogFile.WriteLine("OnPaint()");
+
 			if (Parts != null && Parts.Length != 0)
 			{
 				_graphics = e.Graphics;
@@ -262,11 +269,13 @@ namespace McdView
 
 					if (Spriteset != null)
 					{
+						LogFile.WriteLine(i + " - sprite1= " + Parts[i].Record.Sprite1);
+
 						Tilepart part = Parts[i];
-						if (part != null // not sure why Tilepart entries are null that aren't null but they are
+						if (part != null // not sure why Tilepart entries are null that aren't null but here they are
 							&& part.Record.Sprite1 < Spriteset.Count
-							&& part[0] != null
-							&& (sprite = part[0].Sprite) != null)
+//							&& part[0] != null && (sprite = part[0].Sprite) != null)
+							&& (sprite = Spriteset[part.Record.Sprite1].Sprite) != null) // go to the source ffs.
 						{
 							DrawSprite(
 									sprite,
@@ -332,8 +341,8 @@ namespace McdView
 						{
 							if (part.Dead != null
 								&& part.Dead.Record.Sprite1 < Spriteset.Count
-								&& part.Dead[0] != null
-								&& (sprite = part.Dead[0].Sprite) != null)
+//								&& part.Dead[0] != null && (sprite = part.Dead[0].Sprite) != null)
+								&& (sprite = Spriteset[part.Dead.Record.Sprite1].Sprite) != null) // go to the source ffs.
 							{
 								DrawSprite(
 										sprite,
@@ -365,8 +374,9 @@ namespace McdView
 						{
 							if (part.Alternate != null
 								&& part.Alternate.Record.Sprite1 < Spriteset.Count
-								&& part.Alternate[0] != null
-								&& (sprite = part.Alternate[0].Sprite) != null)
+//								&& part.Alternate[0] != null
+//								&& (sprite = part.Alternate[0].Sprite) != null)
+								&& (sprite = Spriteset[part.Alternate.Record.Sprite1].Sprite) != null) // go to the source ffs.
 							{
 								DrawSprite(
 										sprite,

@@ -55,7 +55,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				Graphics graphics,
 				int x, int y)
 		{
-			var mapTile = (XCMapTile)tile;
+			var mapTile = tile as XCMapTile;
 
 			_toolWest    = _toolWest    ?? new ColorTools(TopPens[TopView.WestColor]);
 			_toolNorth   = _toolNorth   ?? new ColorTools(TopPens[TopView.NorthColor]);

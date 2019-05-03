@@ -62,12 +62,12 @@ namespace XCom
 		/// </summary>
 		/// <param name="bindata">the COMPRESSED source data</param>
 		/// <param name="pal"></param>
-		/// <param name="terrainId"></param>
+		/// <param name="pckId"></param>
 		/// <param name="spriteset"></param>
 		internal PckImage(
 				byte[] bindata,
 				Palette pal,
-				int terrainId,
+				int pckId,
 				SpriteCollection spriteset)
 			:
 				base(
@@ -75,7 +75,7 @@ namespace XCom
 					XCImage.SpriteWidth,									// 0
 					XCImage.SpriteHeight,									// 0
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
-					terrainId)
+					pckId)
 		{
 			//LogFile.WriteLine("PckImage..cTor");
 

@@ -63,8 +63,8 @@ namespace McdView
 			{
 				string text = "Copy panel - ";
 
-				if ((PartsPanel.Spriteset = (_spriteset = value)) != null)
-					text += _spriteset.Label;
+				if ((PartsPanel.Spriteset = (_spriteset = value)) != null)	// TODO: The copypanel's title should be the MCD label
+					text += _spriteset.Label;								// not the PCK label ...
 				else
 					text += "spriteset invalid";
 

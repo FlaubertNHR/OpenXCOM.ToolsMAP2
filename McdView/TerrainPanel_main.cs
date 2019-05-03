@@ -154,7 +154,7 @@ namespace McdView
 
 				array[id] = new Tilepart(
 										id,
-										Spriteset,
+										_f.Spriteset,
 										record);
 				array[id].Dead      =
 				array[id].Alternate = null;
@@ -204,7 +204,7 @@ namespace McdView
 
 								array[i] = new Tilepart(
 													i,
-													Spriteset,
+													_f.Spriteset,
 													record);
 								array[i].Dead =
 								array[i].Alternate = null;
@@ -315,9 +315,9 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Updates refs when parts are added.
-		/// Shifts references to death- and alternate-parts by a given amount
-		/// starting at references at or greater than a given ID.
+		/// Updates refs when parts are added or inserted.
+		/// Shifts references to dead- and altr-parts by a given amount starting
+		/// at references equal to or greater than a given ID.
 		/// </summary>
 		/// <param name="start"></param>
 		/// <param name="shift"></param>
@@ -391,30 +391,49 @@ namespace McdView
 			{
 				if (i == id)
 				{
+					var pckIds = new Dictionary<int,int>(); // Map the previous pckId to the new pckId
+
+					// IaL tileparts are injected in the following order:
+					// - copyparts
+					// - altrparts
+					// - deadparts
+
 					int pos, var;
-					for (pos = 0; pos != _copyparts.Count; ++pos, ++i) // add directly selected parts first
+					for (pos = 0; pos != _copyparts.Count; ++pos, ++i) // -> ADD DIRECTLY SELECTED PARTS FIRST ->
 					{
 						if (   _f.CopyPanel.cb_IalSprites.Enabled
 							&& _f.CopyPanel.cb_IalSprites.Checked)
 						{
 							spritesChanged = true;
 
-							var pckId = new List<int>();
-							for (int spriteId = 0; spriteId != 8; ++spriteId)
+							int pckId;
+							for (int phase = 0; phase != 8; ++phase)
 							{
-								PckImage sprite = (_copyparts[pos][spriteId] as PckImage).Clone(Spriteset);
-								sprite.Id = Spriteset.Count;
-								Spriteset.Add(sprite);
+								switch (phase)
+								{
+									default: pckId = _copyparts[pos].Record.Sprite1; break; //case 0
+									case 1:  pckId = _copyparts[pos].Record.Sprite1; break;
+									case 2:  pckId = _copyparts[pos].Record.Sprite1; break;
+									case 3:  pckId = _copyparts[pos].Record.Sprite1; break;
+									case 4:  pckId = _copyparts[pos].Record.Sprite1; break;
+									case 5:  pckId = _copyparts[pos].Record.Sprite1; break;
+									case 6:  pckId = _copyparts[pos].Record.Sprite1; break;
+									case 7:  pckId = _copyparts[pos].Record.Sprite1; break;
+								}
+
+								if (!pckIds.ContainsKey(pckId))
+								{
+									PckImage sprite = (_copyparts[pos][phase] as PckImage).Clone(_f.Spriteset);
+									sprite.Id = _f.Spriteset.Count;
+									_f.Spriteset.Add(sprite);
+
+									pckIds.Add(pckId, sprite.Id);
+								}
 							}
 						}
 
 						array[i] = _copyparts[pos].Clone(_f.Spriteset);
 						array[i].TerId = i;
-
-						// IaL tileparts are injected in the following order:
-						// - copyparts
-						// - altrparts
-						// - deadparts
 
 						if ((var = array[i].Record.DieTile) != 0)
 						{
@@ -456,7 +475,7 @@ namespace McdView
 					}
 
 
-					for (pos = 0; pos != _ialAltrs.Count; ++pos, ++i) // add altrparts second
+					for (pos = 0; pos != _ialAltrs.Count; ++pos, ++i) // -> ADD ALTRPARTS SECOND ->
 					{
 						array[i] = _ialAltrs[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
@@ -470,7 +489,7 @@ namespace McdView
 					}
 
 
-					for (pos = 0; pos != _ialDeads.Count; ++pos, ++i) // add deadparts third
+					for (pos = 0; pos != _ialDeads.Count; ++pos, ++i) // -> ADD DEADPARTS THIRD ->
 					{
 						array[i] = _ialDeads[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
@@ -481,6 +500,70 @@ namespace McdView
 
 						array[i].Record.Alt_MCD = (byte)0;
 						array[i].Alternate = null;
+					}
+
+
+
+					if (pckIds.Count != 0) // TODO: Break this out to a subfunct.
+					{
+						for (int terId = id; terId != array.Length; ++terId)
+						{
+							int pckId = array[terId].Record.Sprite1;
+							if (pckIds.ContainsKey(pckId))
+							{
+								array[terId].Record.Sprite1 = (byte)pckIds[pckId];
+								array[terId][0] = _f.Spriteset[pckId];
+							}
+
+							pckId = array[terId].Record.Sprite2;
+							if (pckIds.ContainsKey(pckId))
+							{
+								array[terId].Record.Sprite2 = (byte)pckIds[pckId];
+								array[terId][1] = _f.Spriteset[pckId];
+							}
+
+							pckId = array[terId].Record.Sprite3;
+							if (pckIds.ContainsKey(pckId))
+							{
+								array[terId].Record.Sprite3 = (byte)pckIds[pckId];
+								array[terId][2] = _f.Spriteset[pckId];
+							}
+
+							pckId = array[terId].Record.Sprite4;
+							if (pckIds.ContainsKey(pckId))
+							{
+								array[terId].Record.Sprite4 = (byte)pckIds[pckId];
+								array[terId][3] = _f.Spriteset[pckId];
+							}
+
+							pckId = array[terId].Record.Sprite5;
+							if (pckIds.ContainsKey(pckId))
+							{
+								array[terId].Record.Sprite5 = (byte)pckIds[pckId];
+								array[terId][4] = _f.Spriteset[pckId];
+							}
+
+							pckId = array[terId].Record.Sprite6;
+							if (pckIds.ContainsKey(pckId))
+							{
+								array[terId].Record.Sprite6 = (byte)pckIds[pckId];
+								array[terId][5] = _f.Spriteset[pckId];
+							}
+
+							pckId = array[terId].Record.Sprite7;
+							if (pckIds.ContainsKey(pckId))
+							{
+								array[terId].Record.Sprite7 = (byte)pckIds[pckId];
+								array[terId][6] = _f.Spriteset[pckId];
+							}
+
+							pckId = array[terId].Record.Sprite8;
+							if (pckIds.ContainsKey(pckId))
+							{
+								array[terId].Record.Sprite8 = (byte)pckIds[pckId];
+								array[terId][7] = _f.Spriteset[pckId];
+							}
+						}
 					}
 
 					break; // is the end of the array.
@@ -501,6 +584,9 @@ namespace McdView
 			SelId = Parts.Length - 1;
 
 			_f.Changed = CacheLoad.Changed(_f.Parts);
+
+			if (spritesChanged)
+			{}
 		}
 
 		/// <summary>
@@ -929,8 +1015,8 @@ namespace McdView
 				//
 				// NOTE: Escape for deselect all is handled by the caller: McdviewF.OnKeyDown().
 
-				case Keys.D:
-					if (!e.Control)								// add
+				case Keys.D:									// add
+					if (!e.Control)
 						OnAddClick(null, EventArgs.Empty);
 					break;
 
