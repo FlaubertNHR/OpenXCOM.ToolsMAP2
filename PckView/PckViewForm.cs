@@ -638,7 +638,7 @@ namespace PckView
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight,
 															IsScanG);
-						TilePanel.Spriteset.Add(sprite);
+						TilePanel.Spriteset.Sprites.Add(sprite);
 					}
 
 					InsertSpritesFinish();
@@ -758,7 +758,7 @@ namespace PckView
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,
 													IsScanG);
-				TilePanel.Spriteset.Insert(id++, sprite);
+				TilePanel.Spriteset.Sprites.Insert(id++, sprite);
 			}
 			return true;
 		}
@@ -876,7 +876,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnDeleteSpriteClick(object sender, EventArgs e)
 		{
-			TilePanel.Spriteset.RemoveAt(TilePanel.SelectedId);
+			TilePanel.Spriteset.Sprites.RemoveAt(TilePanel.SelectedId);
 
 			for (int i = TilePanel.SelectedId; i != TilePanel.Spriteset.Count; ++i)
 				TilePanel.Spriteset[i].Id = i;
@@ -1213,36 +1213,41 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnExportSpritesClick(object sender, EventArgs e)
 		{
-			if (TilePanel.Spriteset != null && TilePanel.Spriteset.Count != 0)
+			if (TilePanel.Spriteset != null)
 			{
-				using (var fbd = new FolderBrowserDialog())
+				int count = TilePanel.Spriteset.Count;
+				if (count != 0)
 				{
-					string file = TilePanel.Spriteset.Label.ToUpperInvariant();
-
-					fbd.Description = String.Format(
-												CultureInfo.CurrentCulture,
-												"Export spriteset to 8-bpp PNG files"
-													+ Environment.NewLine + Environment.NewLine
-													+ "\t" + file);
-
-					if (fbd.ShowDialog() == DialogResult.OK)
+					using (var fbd = new FolderBrowserDialog())
 					{
-						string path = fbd.SelectedPath;
+						string file = TilePanel.Spriteset.Label.ToUpperInvariant();
 
-						string digits = String.Empty;
-						int count = TilePanel.Spriteset.Count;
-						do
-						{ digits += "0"; }
-						while ((count /= 10) != 0);
+						fbd.Description = String.Format(
+													CultureInfo.CurrentCulture,
+													"Export spriteset to 8-bpp PNG files"
+														+ Environment.NewLine + Environment.NewLine
+														+ "\t" + file);
 
-						foreach (XCImage sprite in TilePanel.Spriteset)
+						if (fbd.ShowDialog() == DialogResult.OK)
 						{
-							string suffix = String.Format(
-														CultureInfo.InvariantCulture,
-														"_{0:" + digits + "}",
-														sprite.Id);
-							string fullpath = Path.Combine(path, file + suffix + PngExt);
-							BitmapService.ExportSprite(fullpath, sprite.Sprite);
+							string path = fbd.SelectedPath;
+
+							string digits = String.Empty;
+							do
+							{ digits += "0"; }
+							while ((count /= 10) != 0);
+
+							XCImage sprite;
+							for (int id = 0; id != count; ++id)
+							{
+								sprite = TilePanel.Spriteset[id];
+								string suffix = String.Format(
+															CultureInfo.InvariantCulture,
+															"_{0:" + digits + "}",
+															sprite.Id);
+								string fullpath = Path.Combine(path, file + suffix + PngExt);
+								BitmapService.ExportSprite(fullpath, sprite.Sprite);
+							}
 						}
 					}
 				}
@@ -1309,7 +1314,7 @@ namespace PckView
 
 					if (ofd.ShowDialog() == DialogResult.OK)
 					{
-						TilePanel.Spriteset.Clear();
+						TilePanel.Spriteset.Sprites.Clear();
 
 						byte[] bindata = File.ReadAllBytes(ofd.FileName);
 						Bitmap b = BitmapHandler.LoadBitmap(bindata);
@@ -1325,7 +1330,7 @@ namespace PckView
 																							XCImage.SpriteHeight,
 																							IsScanG);
 							for (int i = 0; i != spriteset.Count; ++i)
-								TilePanel.Spriteset.Add(spriteset[i]);
+								TilePanel.Spriteset.Sprites.Add(spriteset[i]);
 
 							InsertSpritesFinish();
 						}

@@ -156,10 +156,10 @@ namespace McdView
 			_ialDeads.Clear();
 			_ialAltrs.Clear();
 
-			ialdictDeads0.Clear(); // dead-ref is in '_copyparts'
-			ialdictDeads1.Clear(); // dead-ref is not in '_copyparts' but shall be copy-inserted after selected parts
-			ialdictAltrs0.Clear(); // altr-ref is in '_copyparts'
-			ialdictAltrs1.Clear(); // altr-ref is not in '_copyparts' but shall be copy-inserted after selected parts
+			ialdictDeads0.Clear(); // dead-ref is in '_partsCopied'
+			ialdictDeads1.Clear(); // dead-ref is not in '_partsCopied' but shall be copy-inserted after selected parts
+			ialdictAltrs0.Clear(); // altr-ref is in '_partsCopied'
+			ialdictAltrs1.Clear(); // altr-ref is not in '_partsCopied' but shall be copy-inserted after selected parts
 
 			var sels  = new HashSet<int>(); // terrain-ids of all selected parts
 			var deads = new HashSet<int>(); // terrain-ids of ref'd dead parts that are not in the selected parts
@@ -170,13 +170,13 @@ namespace McdView
 
 			int id; // just a var.
 
-			foreach (var part in _copyparts)	// list all terrain-ids of the selected parts; the list is
+			foreach (var part in _partsCopied)	// list all terrain-ids of the selected parts; the list is
 				sels.Add(part.TerId);			// checked against to deter if a ref'd part needs to be copied
 												// over to Main separately (in '_ialDeads' or '_ialAltrs').
 
 			if (refsdead) // user has chosen to grope for dead-refs ->
 			{
-				foreach (var part in _copyparts)
+				foreach (var part in _partsCopied)
 				{
 					if ((id = part.Record.DieTile) != 0)
 					{
@@ -184,9 +184,9 @@ namespace McdView
 						{
 							if (!ialdictDeads0.ContainsKey(id))
 							{
-								for (int i = 0; i != _copyparts.Count; ++i)
+								for (int i = 0; i != _partsCopied.Count; ++i)
 								{
-									if (_copyparts[i].TerId == id)
+									if (_partsCopied[i].TerId == id)
 									{
 										ialdictDeads0.Add(id, i);
 										break;
@@ -202,18 +202,18 @@ namespace McdView
 					}
 				}
 			}
-			else // try to adjust the dead-refs in '_copyparts' for consistency ->
+			else // try to adjust the dead-refs in '_partsCopied' for consistency ->
 			{
-				foreach (var part in _copyparts)
+				foreach (var part in _partsCopied)
 				{
 					if ((id = part.Record.DieTile) != 0
 						&& sels.Contains(id))
 					{
 						if (!ialdictDeads0.ContainsKey(id))
 						{
-							for (int i = 0; i != _copyparts.Count; ++i)
+							for (int i = 0; i != _partsCopied.Count; ++i)
 							{
-								if (_copyparts[i].TerId == id)
+								if (_partsCopied[i].TerId == id)
 								{
 									ialdictDeads0.Add(id, i);
 									break;
@@ -226,7 +226,7 @@ namespace McdView
 
 			if (refsaltr) // user has chosen to grope for altr-refs ->
 			{
-				foreach (var part in _copyparts)
+				foreach (var part in _partsCopied)
 				{
 					if ((id = part.Record.Alt_MCD) != 0)
 					{
@@ -234,9 +234,9 @@ namespace McdView
 						{
 							if (!ialdictAltrs0.ContainsKey(id))
 							{
-								for (int i = 0; i != _copyparts.Count; ++i)
+								for (int i = 0; i != _partsCopied.Count; ++i)
 								{
-									if (_copyparts[i].TerId == id)
+									if (_partsCopied[i].TerId == id)
 									{
 										ialdictAltrs0.Add(id, i);
 										break;
@@ -252,18 +252,18 @@ namespace McdView
 					}
 				}
 			}
-			else // try to adjust the altr-refs in '_copyparts' for consistency ->
+			else // try to adjust the altr-refs in '_partsCopied' for consistency ->
 			{
-				foreach (var part in _copyparts)
+				foreach (var part in _partsCopied)
 				{
 					if ((id = part.Record.Alt_MCD) != 0
 						&& sels.Contains(id))
 					{
 						if (!ialdictAltrs0.ContainsKey(id))
 						{
-							for (int i = 0; i != _copyparts.Count; ++i)
+							for (int i = 0; i != _partsCopied.Count; ++i)
 							{
-								if (_copyparts[i].TerId == id)
+								if (_partsCopied[i].TerId == id)
 								{
 									ialdictAltrs0.Add(id, i);
 									break;

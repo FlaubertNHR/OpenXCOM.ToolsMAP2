@@ -23,8 +23,8 @@ namespace McdView
 		#region Fields (static)
 		protected static McdviewF _f;
 
-		protected readonly static List<Tilepart> _copyparts = new List<Tilepart>();
-		protected static string _copylabel;
+		protected readonly static List<Tilepart> _partsCopied = new List<Tilepart>();
+		protected static string _partsCopiedLabel;
 
 		/// <summary>
 		/// For CopyPanel's InsertAfterLast only.
@@ -160,19 +160,19 @@ namespace McdView
 		{
 			if (SelId != -1)
 			{
-				_copyparts.Clear();
+				_partsCopied.Clear();
 
 				if (_fcopy == null)
-					_copylabel = _f.Label;
+					_partsCopiedLabel = _f.Label;
 				else
-					_copylabel = _fcopy.Label;
+					_partsCopiedLabel = _fcopy.Label;
 
 				var sels = new List<int>(SubIds);
 				sels.Add(SelId);
 				sels.Sort();
 
 				foreach (int sel in sels)
-					_copyparts.Add(Parts[sel].Clone());
+					_partsCopied.Add(Parts[sel].Clone());
 			}
 		}
 
@@ -240,9 +240,6 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			LogFile.WriteLine("");
-			LogFile.WriteLine("OnPaint()");
-
 			if (Parts != null && Parts.Length != 0)
 			{
 				_graphics = e.Graphics;
@@ -269,11 +266,9 @@ namespace McdView
 
 					if (Spriteset != null)
 					{
-						LogFile.WriteLine(i + " - sprite1= " + Parts[i].Record.Sprite1);
-
 						Tilepart part = Parts[i];
 						if (part != null // not sure why Tilepart entries are null that aren't null but here they are
-							&& part.Record.Sprite1 < Spriteset.Count
+//							&& part.Record.Sprite1 < Spriteset.Count
 //							&& part[0] != null && (sprite = part[0].Sprite) != null)
 							&& (sprite = Spriteset[part.Record.Sprite1].Sprite) != null) // go to the source ffs.
 						{
@@ -340,7 +335,7 @@ namespace McdView
 						if (part != null)
 						{
 							if (part.Dead != null
-								&& part.Dead.Record.Sprite1 < Spriteset.Count
+//								&& part.Dead.Record.Sprite1 < Spriteset.Count
 //								&& part.Dead[0] != null && (sprite = part.Dead[0].Sprite) != null)
 								&& (sprite = Spriteset[part.Dead.Record.Sprite1].Sprite) != null) // go to the source ffs.
 							{
@@ -373,7 +368,7 @@ namespace McdView
 						if (part != null)
 						{
 							if (part.Alternate != null
-								&& part.Alternate.Record.Sprite1 < Spriteset.Count
+//								&& part.Alternate.Record.Sprite1 < Spriteset.Count
 //								&& part.Alternate[0] != null
 //								&& (sprite = part.Alternate[0].Sprite) != null)
 								&& (sprite = Spriteset[part.Alternate.Record.Sprite1].Sprite) != null) // go to the source ffs.

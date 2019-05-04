@@ -113,7 +113,7 @@ namespace McdView
 
 			Context.Items[3].Enabled = selid;								// cut
 			Context.Items[4].Enabled = selid;								// copy
-			Context.Items[5].Enabled = parts && _copyparts.Count != 0;		// insert
+			Context.Items[5].Enabled = parts && _partsCopied.Count != 0;	// insert
 			Context.Items[6].Enabled = selid;								// delete
 
 			Context.Items[8].Enabled = (parts && false);					// file
@@ -254,7 +254,7 @@ namespace McdView
 		/// insertion point then the refs need to be advanced. This behavior is
 		/// warranteed only on the first insert of copied parts; the refs can
 		/// go wonky on 2+ inserts.
-		/// TODO: Alter the refs properly in '_copyparts' after each
+		/// TODO: Alter the refs properly in '_partsCopied' after each
 		/// insert-operation.
 		/// @note The refs shall be deleted if inserted parts are *not* in the
 		/// currently loaded recordset.
@@ -263,21 +263,21 @@ namespace McdView
 		/// <param name="e"></param>
 		internal void OnInsertClick(object sender, EventArgs e)
 		{
-			if (Parts != null && _copyparts.Count != 0)
+			if (Parts != null && _partsCopied.Count != 0)
 			{
-				bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
+				bool isTer = (_partsCopiedLabel == _f.Label); // null refs if the terrain-labels differ
 
 				int id = SelId + 1;
 
-				var array = new Tilepart[Parts.Length + _copyparts.Count];
+				var array = new Tilepart[Parts.Length + _partsCopied.Count];
 
 				for (int i = 0, j = 0; i != array.Length; ++i, ++j)
 				{
 					if (i == id)
 					{
-						for (int pos = 0; pos != _copyparts.Count; ++pos, ++i)
+						for (int pos = 0; pos != _partsCopied.Count; ++pos, ++i)
 						{
-							array[i] = _copyparts[pos].Clone(_f.Spriteset);
+							array[i] = _partsCopied[pos].Clone(_f.Spriteset);
 							array[i].TerId = i;
 
 							if (!isTer)
@@ -301,14 +301,14 @@ namespace McdView
 				_bypassScrollZero = true;
 				_f.Parts = array;
 
-				ShiftRefs(id, _copyparts.Count);
+				ShiftRefs(id, _partsCopied.Count);
 
 
 				SubIds.Clear();
-				for (int i = id; i != id + _copyparts.Count - 1; ++i)
+				for (int i = id; i != id + _partsCopied.Count - 1; ++i)
 					SubIds.Add(i);
 
-				SelId = id + _copyparts.Count - 1;
+				SelId = id + _partsCopied.Count - 1;
 
 				_f.Changed = CacheLoad.Changed(_f.Parts);
 			}
@@ -379,13 +379,13 @@ namespace McdView
 
 			SelId = Parts.Length - 1;
 
-//			bool isTer = (_copylabel == _f.Label); // null refs if the terrain-labels differ
+//			bool isTer = (_partsCopiedLabel == _f.Label); // null refs if the terrain-labels differ
 
 			int id = SelId + 1;
 
-			var array = new Tilepart[Parts.Length + _copyparts.Count
-												  + _ialDeads .Count
-												  + _ialAltrs .Count];
+			var array = new Tilepart[Parts.Length + _partsCopied.Count
+												  + _ialDeads   .Count
+												  + _ialAltrs   .Count];
 
 			for (int i = 0, j = 0; i != array.Length; ++i, ++j)
 			{
@@ -399,7 +399,7 @@ namespace McdView
 					// - deadparts
 
 					int pos, var;
-					for (pos = 0; pos != _copyparts.Count; ++pos, ++i) // -> ADD DIRECTLY SELECTED PARTS FIRST ->
+					for (pos = 0; pos != _partsCopied.Count; ++pos, ++i) // -> ADD DIRECTLY SELECTED PARTS FIRST ->
 					{
 						if (   _f.CopyPanel.cb_IalSprites.Enabled
 							&& _f.CopyPanel.cb_IalSprites.Checked)
@@ -411,28 +411,28 @@ namespace McdView
 							{
 								switch (phase)
 								{
-									default: pckId = _copyparts[pos].Record.Sprite1; break; //case 0
-									case 1:  pckId = _copyparts[pos].Record.Sprite1; break;
-									case 2:  pckId = _copyparts[pos].Record.Sprite1; break;
-									case 3:  pckId = _copyparts[pos].Record.Sprite1; break;
-									case 4:  pckId = _copyparts[pos].Record.Sprite1; break;
-									case 5:  pckId = _copyparts[pos].Record.Sprite1; break;
-									case 6:  pckId = _copyparts[pos].Record.Sprite1; break;
-									case 7:  pckId = _copyparts[pos].Record.Sprite1; break;
+									default: pckId = _partsCopied[pos].Record.Sprite1; break; //case 0
+									case 1:  pckId = _partsCopied[pos].Record.Sprite1; break;
+									case 2:  pckId = _partsCopied[pos].Record.Sprite1; break;
+									case 3:  pckId = _partsCopied[pos].Record.Sprite1; break;
+									case 4:  pckId = _partsCopied[pos].Record.Sprite1; break;
+									case 5:  pckId = _partsCopied[pos].Record.Sprite1; break;
+									case 6:  pckId = _partsCopied[pos].Record.Sprite1; break;
+									case 7:  pckId = _partsCopied[pos].Record.Sprite1; break;
 								}
 
 								if (!pckIds.ContainsKey(pckId))
 								{
-									PckImage sprite = (_copyparts[pos][phase] as PckImage).Clone(_f.Spriteset);
-									sprite.Id = _f.Spriteset.Count;
-									_f.Spriteset.Add(sprite);
+									PckImage sprite = (_partsCopied[pos][phase] as PckImage).Clone(_f.Spriteset);
+//									sprite.Id = _f.Spriteset.Count;
+									_f.Spriteset.Sprites.Add(sprite); // assigns 'Id'
 
 									pckIds.Add(pckId, sprite.Id);
 								}
 							}
 						}
 
-						array[i] = _copyparts[pos].Clone(_f.Spriteset);
+						array[i] = _partsCopied[pos].Clone(_f.Spriteset);
 						array[i].TerId = i;
 
 						if ((var = array[i].Record.DieTile) != 0)
@@ -444,7 +444,7 @@ namespace McdView
 							}
 							else if (ialdictDeads1.ContainsKey(var)) // deadpart is ref'd by a directly selected part but is added separately
 							{
-								array[i].Record.DieTile = (byte)(id + _copyparts.Count + _ialAltrs.Count + ialdictDeads1[var]);
+								array[i].Record.DieTile = (byte)(id + _partsCopied.Count + _ialAltrs.Count + ialdictDeads1[var]);
 //								array[i].Dead = ;
 							}
 							else // uhh ... if !isTer/!refsdead
@@ -463,7 +463,7 @@ namespace McdView
 							}
 							else if (ialdictAltrs1.ContainsKey(var)) // altrpart is ref'd by a directly selected part but is added separately
 							{
-								array[i].Record.Alt_MCD = (byte)(id + _copyparts.Count + ialdictAltrs1[var]);
+								array[i].Record.Alt_MCD = (byte)(id + _partsCopied.Count + ialdictAltrs1[var]);
 //								array[i].Alternate = ;
 							}
 							else // uhh ... if !isTer/!refsaltr

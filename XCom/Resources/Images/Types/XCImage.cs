@@ -4,6 +4,9 @@ using System.Drawing;
 
 namespace XCom.Interfaces
 {
+	/// <summary>
+	/// A container for storing data about an XCOM image.
+	/// </summary>
 	public class XCImage
 	{
 		#region Fields (static)

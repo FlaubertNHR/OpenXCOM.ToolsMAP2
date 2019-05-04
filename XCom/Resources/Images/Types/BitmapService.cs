@@ -126,13 +126,13 @@ namespace XCom
 			{
 				int x = (i % cols) * (width  + pad);
 				int y = (i / cols) * (height + pad);
-				spriteset.Add(CreateSprite(
-										b,
-										++id,
-										pal,
-										width, height,
-										isScanG,
-										x, y));
+				spriteset.Sprites.Add(CreateSprite(
+												b,
+												++id,
+												pal,
+												width, height,
+												isScanG,
+												x, y));
 			}
 			return spriteset;
 		}
@@ -203,7 +203,7 @@ namespace XCom
 							PixelFormat.Format8bppIndexed);
 
 			var locked = b.LockBits(
-								new Rectangle(0, 0, width, height),
+								new Rectangle(0,0, width, height),
 								ImageLockMode.WriteOnly,
 								PixelFormat.Format8bppIndexed);
 
@@ -266,7 +266,7 @@ namespace XCom
 							PixelFormat.Format8bppIndexed);
 
 			var locked = b.LockBits(
-								new Rectangle(0, 0, width, height),
+								new Rectangle(0,0, width, height),
 								ImageLockMode.WriteOnly,
 								PixelFormat.Format8bppIndexed);
 
@@ -324,12 +324,12 @@ namespace XCom
 				int y)
 		{
 			var dstLocked = dst.LockBits(
-									new Rectangle(0, 0, dst.Width, dst.Height),
+									new Rectangle(0,0, dst.Width, dst.Height),
 									ImageLockMode.WriteOnly,
 									PixelFormat.Format8bppIndexed);
 
 			var srcLocked = src.LockBits(
-									new Rectangle(0, 0, src.Width, src.Height),
+									new Rectangle(0,0, src.Width, src.Height),
 									ImageLockMode.ReadOnly,
 									PixelFormat.Format8bppIndexed);
 
@@ -377,7 +377,7 @@ namespace XCom
 		internal static Rectangle GetCloseRectangle(Bitmap b, int transparent)
 		{
 			var locked = b.LockBits(
-								new Rectangle(0, 0, b.Width, b.Height),
+								new Rectangle(0,0, b.Width, b.Height),
 								ImageLockMode.ReadOnly,
 								PixelFormat.Format8bppIndexed);
 
@@ -448,12 +448,12 @@ namespace XCom
 			var dst = CreateTransparent(rect.Width, rect.Height, src.Palette);
 
 			var dstLocked = dst.LockBits(
-									new Rectangle(0, 0, dst.Width, dst.Height),
+									new Rectangle(0,0, dst.Width, dst.Height),
 									ImageLockMode.WriteOnly,
 									PixelFormat.Format8bppIndexed);
 
 			var srcLocked = src.LockBits(
-									new Rectangle(0, 0, src.Width, src.Height),
+									new Rectangle(0,0, src.Width, src.Height),
 									ImageLockMode.ReadOnly,
 									PixelFormat.Format8bppIndexed);
 

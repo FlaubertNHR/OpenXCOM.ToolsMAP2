@@ -12,10 +12,19 @@ namespace XCom
 	/// terrain file data but can also be a ScanG iconset.
 	/// </summary>
 	public sealed class SpriteCollection
-		:
-			List<XCImage>
 	{
 		#region Properties
+		private List<XCImage> _sprites = new List<XCImage>();
+		public List<XCImage> Sprites
+		{
+			get { return _sprites; }
+		}
+
+		public int Count
+		{
+			get { return Sprites.Count; }
+		}
+
 		public string Label
 		{ get; set; }
 
@@ -46,7 +55,7 @@ namespace XCom
 			{
 				_pal = value;
 
-				foreach (XCImage sprite in this)
+				foreach (XCImage sprite in Sprites)
 					sprite.Sprite.Palette = _pal.ColorTable; // why is the dang palette in every god-dang XCImage.
 			}
 		}
@@ -55,21 +64,21 @@ namespace XCom
 		/// Gets/sets the 'XCImage' at a specified id. Adds a sprite to the end
 		/// of the set if the specified id falls outside the bounds of the List.
 		/// </summary>
-		public new XCImage this[int index] // NOTE: Hides base.List[] implementation.
+		public XCImage this[int id]
 		{
 			get
 			{
-				return (index > -1 && index < Count) ? this[index]
-													 : null;
+				return (id > -1 && id < Count) ? Sprites[id]
+											   : null;
 			}
 			set
 			{
-				if (index > -1 && index < Count)
-					this[index] = value;
+				if (id > -1 && id < Count)
+					Sprites[id] = value;
 				else
 				{
 					value.Id = Count;
-					Add(value);
+					Sprites.Add(value);
 				}
 			}
 		}
@@ -219,11 +228,11 @@ namespace XCom
 												this);
 						if (!BorkedBigobs)
 						{
-							Add(sprite);
+							Sprites.Add(sprite);
 						}
 						else
 						{
-							Clear();
+							Sprites.Clear();
 							break;
 						}
 					}
@@ -271,7 +280,7 @@ namespace XCom
 				for (int i = 0; i != 16; ++i)
 					icondata[i] = bindata[id * 16 + i];
 
-				Add(new ScanGicon(icondata, id));
+				Sprites.Add(new ScanGicon(icondata, id));
 			}
 		}
 		#endregion
@@ -303,8 +312,8 @@ namespace XCom
 				{
 					case ResourceInfo.TAB_WORD_LENGTH_2:
 					{
-						int pos = 0;
-						foreach (XCImage sprite in spriteset)
+						uint pos = 0;
+						for (int id = 0; id != spriteset.Count; ++id)
 						{
 							//LogFile.WriteLine(". pos[pre]= " + pos);
 							if (pos > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
@@ -313,8 +322,8 @@ namespace XCom
 								return false;
 							}
 
-							bwTab.Write((ushort)pos);
-							pos += PckImage.SaveSpritesetSprite(bwPck, sprite);
+							bwTab.Write((ushort)pos); // TODO: investigate le/be
+							pos += (uint)PckImage.SaveSpritesetSprite(bwPck, spriteset[id]);
 							//LogFile.WriteLine(". pos[pst]= " + pos);
 						}
 						break;
@@ -323,10 +332,10 @@ namespace XCom
 					case ResourceInfo.TAB_WORD_LENGTH_4:
 					{
 						uint pos = 0;
-						foreach (XCImage sprite in spriteset)
+						for (int id = 0; id != spriteset.Count; ++id)
 						{
-							bwTab.Write(pos);
-							pos += (uint)PckImage.SaveSpritesetSprite(bwPck, sprite);
+							bwTab.Write(pos); // TODO: investigate le/be
+							pos += (uint)PckImage.SaveSpritesetSprite(bwPck, spriteset[id]);
 						}
 						break;
 					}
@@ -353,8 +362,10 @@ namespace XCom
 			{
 				using (var bwDat = new BinaryWriter(File.Create(pfeScanG)))
 				{
-					foreach (XCImage icon in iconset)
+					XCImage icon;
+					for (int id = 0; id != iconset.Count; ++id)
 					{
+						icon = iconset[id];
 						for (int i = 0; i != icon.Bindata.Length; ++i)
 						{
 							bwDat.Write(icon.Bindata[i]);
