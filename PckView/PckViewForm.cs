@@ -1318,12 +1318,12 @@ namespace PckView
 							&& b.Height % XCImage.SpriteHeight == 0
 							&& b.PixelFormat == PixelFormat.Format8bppIndexed)
 						{
-							SpriteCollectionBase spriteset = BitmapService.CreateSpriteCollection(
-																								b,
-																								Pal,
-																								XCImage.SpriteWidth,
-																								XCImage.SpriteHeight,
-																								IsScanG);
+							SpriteCollection spriteset = BitmapService.CreateSpriteCollection(
+																							b,
+																							Pal,
+																							XCImage.SpriteWidth,
+																							XCImage.SpriteHeight,
+																							IsScanG);
 							for (int i = 0; i != spriteset.Count; ++i)
 								TilePanel.Spriteset.Add(spriteset[i]);
 
@@ -1697,10 +1697,7 @@ namespace PckView
 			SpriteCollection spriteset = null;
 
 			using (var fs = File.OpenRead(pfeScanG))
-				spriteset = new SpriteCollection(fs);
-
-			if (spriteset != null)
-				spriteset.Label = SpritesetLabel;
+				spriteset = new SpriteCollection(SpritesetLabel, fs);
 
 			OnPaletteClick(
 						_paletteItems[DefaultPalette],

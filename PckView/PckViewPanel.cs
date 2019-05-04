@@ -60,8 +60,8 @@ namespace PckView
 
 
 		#region Properties
-		private SpriteCollectionBase _spriteset;
-		internal SpriteCollectionBase Spriteset
+		private SpriteCollection _spriteset;
+		internal SpriteCollection Spriteset
 		{
 			get { return _spriteset; }
 			set

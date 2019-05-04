@@ -105,8 +105,9 @@ namespace XCom
 		/// <param name="height">the height of a sprite in the collection</param>
 		/// <param name="isScanG">true if creating a ScanG iconset</param>
 		/// <param name="pad">padding between sprites</param>
-		/// <returns></returns>
-		public static SpriteCollectionBase CreateSpriteCollection(
+		/// <returns>a spriteset, the entries of which will be repurposed to
+		/// another spriteset</returns>
+		public static SpriteCollection CreateSpriteCollection(
 				Bitmap b,
 				Palette pal,
 				int width,
@@ -114,7 +115,7 @@ namespace XCom
 				bool isScanG,
 				int pad = 0)
 		{
-			var spriteset = new SpriteCollectionBase();
+			var spriteset = new SpriteCollection(String.Empty, pal);
 
 			int cols = (b.Width  + pad) / (width  + pad);
 			int rows = (b.Height + pad) / (height + pad);
@@ -133,8 +134,6 @@ namespace XCom
 										isScanG,
 										x, y));
 			}
-			spriteset.Pal = pal;
-
 			return spriteset;
 		}
 

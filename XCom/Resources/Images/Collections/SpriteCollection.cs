@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 using XCom.Interfaces;
@@ -7,13 +8,17 @@ using XCom.Interfaces;
 namespace XCom
 {
 	/// <summary>
-	/// A spriteset: a collection of images taken from PCK/TAB file data.
+	/// a SPRITESET: A collection of images that is usually created of PCK/TAB
+	/// terrain file data but can also be a ScanG iconset.
 	/// </summary>
 	public sealed class SpriteCollection
 		:
-			SpriteCollectionBase
+			List<XCImage>
 	{
 		#region Properties
+		public string Label
+		{ get; set; }
+
 		public int TabwordLength
 		{ get; private set; }
 
@@ -31,12 +36,49 @@ namespace XCom
 		/// </summary>
 		public bool BorkedBigobs
 		{ get; internal set; }
+
+
+		private Palette _pal;
+		public Palette Pal
+		{
+			get { return _pal; }
+			set
+			{
+				_pal = value;
+
+				foreach (XCImage sprite in this)
+					sprite.Sprite.Palette = _pal.ColorTable;
+			}
+		}
+
+		/// <summary>
+		/// Gets/sets the 'XCImage' at a specified id. Adds a sprite to the end
+		/// of the set if the specified id falls outside the bounds of the List.
+		/// </summary>
+		public new XCImage this[int index] // NOTE: Hides base.List[] implementation.
+		{
+			get
+			{
+				return (index > -1 && index < Count) ? this[index]
+													 : null;
+			}
+			set
+			{
+				if (index > -1 && index < Count)
+					this[index] = value;
+				else
+				{
+					value.Id = Count;
+					Add(value);
+				}
+			}
+		}
 		#endregion
 
 
 		#region cTors
 		/// <summary>
-		/// cTor[1]. Creates a quick and dirty blank spriteset for PckView.
+		/// cTor[1]. Creates a quick and dirty blank spriteset.
 		/// </summary>
 		/// <param name="label">file w/out path or extension</param>
 		/// <param name="pal"></param>
@@ -44,11 +86,14 @@ namespace XCom
 		public SpriteCollection(
 				string label,
 				Palette pal,
-				int tabwordLength)
+				int tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2)
 		{
 			Label         = label;
 			Pal           = pal;
 			TabwordLength = tabwordLength;
+
+			Borked =
+			BorkedBigobs = false;
 		}
 
 		/// <summary>
@@ -87,6 +132,9 @@ namespace XCom
 			TabwordLength = tabwordLength;
 			Pal           = pal;
 			Label         = label;
+
+			Borked =
+			BorkedBigobs = false;
 
 			int tabSprites = 0;
 			uint[] offsets;
@@ -133,7 +181,6 @@ namespace XCom
 					bindata.Length);	// count
 
 
-			Borked = false;
 			if (bindata.Length > 1)
 			{
 				if (fsTab != null)
@@ -192,9 +239,12 @@ namespace XCom
 		/// <summary>
 		/// cTor[3]. Creates a spriteset of ScanG icons.
 		/// </summary>
+		/// <param name="label"></param>
 		/// <param name="fsScanG">filestream of the SCANG.DAT file</param>
-		public SpriteCollection(Stream fsScanG)
+		public SpriteCollection(string label, Stream fsScanG)
 		{
+			Label = label;
+
 			TabwordLength = 0;
 			Pal = null;
 
@@ -233,13 +283,13 @@ namespace XCom
 		/// </summary>
 		/// <param name="dir">the directory to save to</param>
 		/// <param name="file">the file without extension</param>
-		/// <param name="spriteset">pointer to the base spriteset</param>
+		/// <param name="spriteset">pointer to the spriteset</param>
 		/// <param name="tabwordLength">2 for terrains/bigobs/ufo-units, 4 for tftd-units</param>
 		/// <returns>true if mission was successful</returns>
 		public static bool SaveSpriteset(
 				string dir,
 				string file,
-				SpriteCollectionBase spriteset,
+				SpriteCollection spriteset,
 				int tabwordLength)
 		{
 			//LogFile.WriteLine("SpriteCollection.SaveSpriteset");
@@ -290,12 +340,12 @@ namespace XCom
 		/// </summary>
 		/// <param name="dir">the directory to save to</param>
 		/// <param name="file">the file without extension</param>
-		/// <param name="iconset">pointer to the base iconset</param>
+		/// <param name="iconset">pointer to the iconset</param>
 		/// <returns>true if mission was successful</returns>
 		public static bool SaveScanGiconset(
 				string dir,
 				string file,
-				SpriteCollectionBase iconset)
+				SpriteCollection iconset)
 		{
 			string pfeScanG = Path.Combine(dir, file + GlobalsXC.DatExt);
 
@@ -321,3 +371,11 @@ namespace XCom
 		#endregion
 	}
 }
+
+//		private int _scale = 1;
+//		public void HQ2X()
+//		{
+//			foreach (XCImage image in this)
+//				image.HQ2X();
+//			_scale *= 2;
+//		}

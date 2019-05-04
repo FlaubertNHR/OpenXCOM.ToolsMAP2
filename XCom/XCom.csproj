@@ -101,9 +101,6 @@
     <Compile Include="Resources\Images\Collections\SpriteCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Images\Collections\SpriteCollectionBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Resources\Images\Types\BitmapHandler.cs" />
     <Compile Include="Resources\Images\Types\PckImage.cs">
       <SubType>Code</SubType>
