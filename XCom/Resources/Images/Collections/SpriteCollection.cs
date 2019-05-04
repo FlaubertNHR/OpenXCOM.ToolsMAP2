@@ -47,7 +47,7 @@ namespace XCom
 				_pal = value;
 
 				foreach (XCImage sprite in this)
-					sprite.Sprite.Palette = _pal.ColorTable;
+					sprite.Sprite.Palette = _pal.ColorTable; // why is the dang palette in every god-dang XCImage.
 			}
 		}
 
@@ -342,7 +342,7 @@ namespace XCom
 		/// <param name="file">the file without extension</param>
 		/// <param name="iconset">pointer to the iconset</param>
 		/// <returns>true if mission was successful</returns>
-		public static bool SaveScanGiconset(
+		public static bool SaveScanG(
 				string dir,
 				string file,
 				SpriteCollection iconset)

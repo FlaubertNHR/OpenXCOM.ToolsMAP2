@@ -1081,10 +1081,10 @@ namespace PckView
 		{
 			if (IsScanG)
 			{
-				if (!SpriteCollection.SaveScanGiconset(
-													SpritesetDirectory,
-													SpritesetLabel,
-													TilePanel.Spriteset))
+				if (!SpriteCollection.SaveScanG(
+											SpritesetDirectory,
+											SpritesetLabel,
+											TilePanel.Spriteset))
 				{
 					string error = String.Format(
 											CultureInfo.CurrentCulture,
@@ -1143,10 +1143,10 @@ namespace PckView
 
 					if (IsScanG)
 					{
-						if (!SpriteCollection.SaveScanGiconset(
-															dir,
-															file,
-															TilePanel.Spriteset))
+						if (!SpriteCollection.SaveScanG(
+													dir,
+													file,
+													TilePanel.Spriteset))
 						{
 							string error = String.Format(
 													CultureInfo.CurrentCulture,
