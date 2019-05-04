@@ -38,12 +38,12 @@ namespace XCom
 		/// Tracks the id of an image across all loaded terrainsets. Used only
 		/// by 'MapInfoOutputBox'.
 		/// </summary>
-		private static int _id;
-		#endregion
+		private static int _setId;
+		#endregion Fields (static)
 
 
 		#region Fields
-		private readonly SpriteCollection _spriteset; // currently used only for ToString() override.
+		private readonly SpriteCollection Spriteset;
 		#endregion Fields
 
 
@@ -62,7 +62,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="bindata">the COMPRESSED source data</param>
 		/// <param name="pal"></param>
-		/// <param name="pckId"></param>
+		/// <param name="pckId">the id of this sprite in its spriteset</param>
 		/// <param name="spriteset"></param>
 		internal PckImage(
 				byte[] bindata,
@@ -79,12 +79,12 @@ namespace XCom
 		{
 			//LogFile.WriteLine("PckImage..cTor");
 
-			_spriteset = spriteset;	// only for ToString().
-			SetId = _id++;			// only for 'MapInfoOutputBox'.
+			Spriteset = spriteset;	// only for ToString().
+			SetId = _setId++;		// only for 'MapInfoOutputBox'.
 
 			Pal = pal;
 
-			_spriteset.BorkedBigobs = false;
+			Spriteset.BorkedBigobs = false;
 
 			for (int id = 0; id != Bindata.Length; ++id)
 				Bindata[id] = Palette.TransparentId; // Safety: byte arrays get initialized w/ "0" by default
@@ -111,7 +111,7 @@ namespace XCom
 
 						// probly trying to load a 32x48 Bigobs pck in a 32x40 spriteset.
 						// Note that this cannot be resolved absolutely.
-						_spriteset.BorkedBigobs = true;
+						Spriteset.BorkedBigobs = true;
 						return;
 
 					case SpriteTransparencyByte: // skip quantity of pixels
@@ -123,7 +123,7 @@ namespace XCom
 				}
 			}
 
-//			if (!_spriteset.BorkedBigobs) // check if trying to load a 32x40 Terrain/Unit pck in a 32x48 spriteset.
+//			if (!Spriteset.BorkedBigobs) // check if trying to load a 32x40 Terrain/Unit pck in a 32x48 spriteset.
 //			{
 //				// there's no way to determine this.
 //			}
@@ -149,7 +149,7 @@ namespace XCom
 		private PckImage(SpriteCollection spriteset)
 		{
 			// PckImage vars
-			_spriteset = spriteset;
+			Spriteset = spriteset;
 			SetId = -1;
 		}
 		#endregion cTor
@@ -253,8 +253,8 @@ namespace XCom
 		{
 			string ret = String.Empty;
 
-			if (_spriteset != null)
-				ret += _spriteset.ToString();
+			if (Spriteset != null)
+				ret += Spriteset.ToString();
 
 			ret += Id + Environment.NewLine;
 

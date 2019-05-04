@@ -633,7 +633,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Nulls all death- and alternate-references to a given part.
+		/// Nulls all dead- and altr-refs to a given part-id.
 		/// </summary>
 		/// <param name="id"></param>
 		private void ClearRefs(int id)
@@ -666,7 +666,7 @@ namespace McdView
 		/// <summary>
 		/// Updates refs when a part or parts get deleted.
 		/// </summary>
-		/// <param name ="sels">a list of IDs that got deleted</param>
+		/// <param name ="sels">a list of ids that got deleted</param>
 		private void UpdateRefs(IList<int> sels)
 		{
 			Tilepart part;

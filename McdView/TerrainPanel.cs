@@ -171,8 +171,8 @@ namespace McdView
 				sels.Add(SelId);
 				sels.Sort();
 
-				foreach (int id in sels)
-					_copyparts.Add(Parts[id].Clone());
+				foreach (int sel in sels)
+					_copyparts.Add(Parts[sel].Clone());
 			}
 		}
 

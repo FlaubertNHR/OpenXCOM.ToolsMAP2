@@ -31,9 +31,16 @@ namespace XCom
 
 		/// <summary>
 		/// Gets the sprite-array used to animate this tile.
+		/// TODO: This should never have happened; there should be no pointers
+		/// to sprites in a 'Tilepart'. The sprites need to be retrieved
+		/// directly from its 'SpriteCollection' by 'Record' (int)Phase*
+		/// on-the-fly.
+		/// 
+		/// But unfortunately that incorrect mentality is deeply ingrained in
+		/// the design of the code.
 		/// </summary>
 		public XCImage[] Sprites
-		{ get; set; }
+		{ get; private set; }
 
 		/// <summary>
 		/// Gets a sprite at the specified animation frame.
