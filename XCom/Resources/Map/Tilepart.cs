@@ -87,7 +87,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor.
+		/// cTor[1].
 		/// </summary>
 		/// <param name="id">the id of this part in its recordset</param>
 		/// <param name="spriteset">the spriteset from which to get this part's
@@ -111,6 +111,12 @@ namespace XCom
 					InitSprites();
 			}
 		}
+
+		/// <summary>
+		/// cTor[2]. Creates a blank part For CreateInsert().
+		/// </summary>
+		private Tilepart()
+		{}
 		#endregion cTor
 
 
@@ -223,36 +229,33 @@ namespace XCom
 
 
 		/// <summary>
-		/// Returns a copy of this Tilepart with a deep-cloned Record.
-		/// But any referred to anisprites and dead/alternate tileparts maintain
-		/// their current objects.
+		/// Returns a copy of this Tilepart with a deep-cloned Record for
+		/// McdView. But any referred to sprites and dead/altr tileparts
+		/// keep pointers to their current objects.
+		/// @note Sprites and the Spriteset shall be null.
 		/// - classvars:
-		///   Record
-		///   Sprites
-		///   TerId
-		///   SetId = -1
-		///   Spriteset
+		///   Record	(ptr)
+		///   Sprites	(ptr) -> not used in McdView
+		///   Spriteset	(ptr) -> not used in McdView
+		///   Dead		(ptr)
+		///   Altr		(ptr)
 		///
-		///   Dead
-		///   Alternate
+		///   TerId		(int)
+		///   SetId		(int)
 		/// </summary>
-		/// <param name="spriteset">the spriteset to ref for the cloned part; if
-		/// null use this part's spriteset</param>
 		/// <returns></returns>
-		public Tilepart Clone(SpriteCollection spriteset = null)
+		public Tilepart CreateInsert()
 		{
-			if (spriteset == null)
-				spriteset = Spriteset;
+			var part = new Tilepart();
 
-			var part = new Tilepart(
-								TerId,
-								spriteset,
-								Record.Clone());
-			SpritesToPhases();
+			part.TerId = TerId;
+			part.SetId = SetId;
 
-			part.Dead      = Dead;
-			part.Alternate = Alternate;
+			part.Record = Record.Duplicate();
 
+			part.Dead      = Dead;		// NOTE: keep these pointers and use their TerIds to
+			part.Alternate = Alternate;	// determine the part's 'DieTile' and 'Alt_MCD' fields
+										// after insertion. (aha!)
 			return part;
 		}
 		#endregion Methods

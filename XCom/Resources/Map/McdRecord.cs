@@ -211,7 +211,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor.
+		/// cTor[1].
 		/// </summary>
 		/// <param name="bindata">if null a blank byte-array gets created</param>
 		public McdRecord(IList<byte> bindata = null)
@@ -223,6 +223,12 @@ namespace XCom
 
 			CreateRecord(this, bindata);
 		}
+
+		/// <summary>
+		/// cTor[2]. Creates a blank record For Duplicate().
+		/// </summary>
+		private McdRecord()
+		{}
 		#endregion cTor
 
 
@@ -422,7 +428,11 @@ namespace XCom
 			return lofts;
 		}
 
-		public McdRecord Clone()
+		/// <summary>
+		/// Creates an independent copy of this McdRecord.
+		/// </summary>
+		/// <returns></returns>
+		public McdRecord Duplicate()
 		{
 			var record = new McdRecord();
 

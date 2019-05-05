@@ -266,7 +266,7 @@ namespace McdView
 					{
 						for (int pos = 0; pos != _partsCopied.Count; ++pos, ++i)
 						{
-							array[i] = _partsCopied[pos].Clone(_f.Spriteset);
+							array[i] = _partsCopied[pos].CreateInsert();
 							array[i].TerId = i;
 
 							if (!isTer)
@@ -421,7 +421,7 @@ namespace McdView
 							}
 						}
 
-						array[i] = _partsCopied[pos].Clone(_f.Spriteset);
+						array[i] = _partsCopied[pos].CreateInsert();
 						array[i].TerId = i;
 
 						if ((var = array[i].Record.DieTile) != 0)
@@ -466,7 +466,7 @@ namespace McdView
 
 					for (pos = 0; pos != _ialAltrs.Count; ++pos, ++i) // -> ADD ALTRPARTS SECOND ->
 					{
-						array[i] = _ialAltrs[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
+						array[i] = _ialAltrs[pos].CreateInsert(); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
 
 						// TODO: check for isTerrain and/or if user chose to insert subrefs
@@ -480,7 +480,7 @@ namespace McdView
 
 					for (pos = 0; pos != _ialDeads.Count; ++pos, ++i) // -> ADD DEADPARTS THIRD ->
 					{
-						array[i] = _ialDeads[pos].Clone(_f.Spriteset); // TODO: Add the sprites to the spriteset first.
+						array[i] = _ialDeads[pos].CreateInsert(); // TODO: Add the sprites to the spriteset first.
 						array[i].TerId = i;
 
 						// TODO: check for isTerrain and/or if user chose to insert subrefs
