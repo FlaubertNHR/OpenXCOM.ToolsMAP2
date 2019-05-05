@@ -146,9 +146,11 @@ namespace McdView
 //		/// <param name="sender"></param>
 //		/// <param name="e"></param>
 //		private void OnIdClick(object sender, EventArgs e)
-//		{
-//			Context.Dispose();
-//		}
+//		{ Context.Dispose(); }
+
+
+		// NOTE on the edit-operations: Do not clone on copy/cut.
+		// Clone only on insert.
 
 		/// <summary>
 		/// Copies a currently selected part along with any sub-selected parts
@@ -171,7 +173,7 @@ namespace McdView
 				sels.Add(SelId);
 
 				foreach (int sel in sels)
-					_partsCopied.Add(Parts[sel].Clone());
+					_partsCopied.Add(Parts[sel]);
 			}
 		}
 
