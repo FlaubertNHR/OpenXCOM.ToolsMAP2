@@ -2784,7 +2784,7 @@ namespace MapView
 				//LogFile.WriteLine(". descriptor= " + descriptor);
 
 				bool treechanged = false;
-				var @base = MapFileService.LoadTileset( // NOTE: LoadTileset() instantiates a MapFileChild but whatver.
+				var @base = MapFileService.LoadTerrains( // NOTE: LoadTerrains() instantiates a MapFileChild but whatver.
 													descriptor,
 													ref treechanged,
 													basepathDialog);

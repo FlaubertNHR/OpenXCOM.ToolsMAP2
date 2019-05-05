@@ -95,9 +95,10 @@ namespace XCom
 		/// Gets the MCD-records for a given terrain in this Descriptor.
 		/// @note The tab-word-length of terrains in UFO and TFTD are 2-bytes.
 		/// </summary>
-		/// <param name="id">the position of the terrain in this tileset's terrains-list</param>
+		/// <param name="id">the id of the terrain in this tileset's terrains-list</param>
 		/// <returns>an McdRecordCollection containing all the parts for the Terrain</returns>
-		public McdRecordCollection GetTerrainRecords(int id)
+//		public McdRecordCollection GetTerrainRecords(int id)
+		public Tilepart[] ManufactureTerrainParts(int id)
 		{
 			var terrain = Terrains[id];
 			string terr = terrain.Item1;
@@ -105,13 +106,12 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			var tileparts = TilepartFactory.CreateTileparts(									// NOTE: That that loads the sprites in addition to
-														terr, path,								// getting the MCD-records. here just because it can be
-														ResourceInfo.LoadSpriteset(				// concealed inside a function called GetTerrainRecords()
-																				terr, path,		// that returns an McdRecordCollection that's why.
-																				ResourceInfo.TAB_WORD_LENGTH_2,
-																				Pal));
-			return new McdRecordCollection(tileparts);
+			return TilepartFactory.CreateTileparts(									// NOTE: That that loads the sprites in addition to
+												terr, path,							// getting the MCD-records. here just because it can be
+												ResourceInfo.LoadSpriteset(			// concealed inside a function called GetTerrainRecords()
+																		terr, path,	// that returns an McdRecordCollection that's why.
+																		ResourceInfo.TAB_WORD_LENGTH_2,
+																		Pal));
 		}
 
 		/// <summary>

@@ -20,20 +20,20 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Loads a tileset. Called by XCMainWindow.LoadSelectedMap()
+		/// Loads all terrains for a Map. Called by XCMainWindow.LoadSelectedMap().
 		/// @note Check that 'descriptor' is not null before call.
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
 		/// <param name="basepathDialog">true to force the find file dialog</param>
 		/// <returns></returns>
-		public static MapFileBase LoadTileset(
+		public static MapFileBase LoadTerrains(
 				Descriptor descriptor,
 				ref bool treechanged,
 				bool basepathDialog = false)
 		{
 			//LogFile.WriteLine("");
-			//LogFile.WriteLine("MapFileService.LoadTileset descriptor= " + descriptor);
+			//LogFile.WriteLine("MapFileService.LoadTerrains descriptor= " + descriptor);
 
 			string pfeMap = descriptor.Basepath;
 			if (!String.IsNullOrEmpty(pfeMap)) // -> the BasePath can be null if resource-type is notconfigured.
@@ -104,9 +104,9 @@ namespace XCom
 				{
 					//LogFile.WriteLine(". . . terrain= " + descriptor.Terrains[i].Item1 + " : " + descriptor.Terrains[i].Item2);
 
-					var MCD = descriptor.GetTerrainRecords(i); // NOTE: Calls ResourceInfo.LoadSpriteset() also.
-					foreach (Tilepart tilepart in MCD)
-						partset.Add(tilepart);
+					Tilepart[] MCD = descriptor.ManufactureTerrainParts(i);	// NOTE: calls 
+					foreach (Tilepart part in MCD)							//      - TilepartFactory.CreateTileparts()
+						partset.Add(part);									//      - ResourceInfo.LoadSpriteset()
 				}
 
 				if (partset.Count != 0)

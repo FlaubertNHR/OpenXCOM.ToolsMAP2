@@ -11,11 +11,15 @@ namespace XCom
 		#region cTor
 		/// <summary>
 		/// Instantiates a read-only collection of MCD records.
+		/// @note This object will be used for approximately 100ns in
+		/// 'MapFileService'.
+		/// @note This is not an "McdRecordCollection"; it's a
+		/// "TilepartCollection".
 		/// </summary>
-		/// <param name="tileparts"></param>
-		internal McdRecordCollection(Tilepart[] tileparts)
+		/// <param name="parts"></param>
+		internal McdRecordCollection(Tilepart[] parts)
 			:
-				base(tileparts)
+				base(parts)
 		{}
 		#endregion
 	}

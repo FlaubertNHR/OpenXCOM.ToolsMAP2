@@ -149,10 +149,9 @@ namespace XCom.Resources.Map
 		/// <summary>
 		/// Gets the count of MCD-records in an MCD-file.
 		/// @note It's funky to read from disk just to get the count of records
-		/// but at present an McdRecordCollection is retained only by a
-		/// currently loaded Tileset .... That's to say there is no general
-		/// cache of all available terrains; even a Map's Descriptor retains
-		/// only the allocated terrains as tuples in a dictionary-object.
+		/// but at present there is no general cache of all available terrains;
+		/// even a Map's Descriptor retains only the allocated terrains as
+		/// tuples in a dictionary-object.
 		/// See ResourceInfo - where the *sprites* of a terrain *are* cached.
 		/// </summary>
 		/// <param name="terrain">the terrain file w/out extension</param>

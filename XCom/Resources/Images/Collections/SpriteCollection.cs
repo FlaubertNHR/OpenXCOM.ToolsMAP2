@@ -111,7 +111,7 @@ namespace XCom
 		/// NOTE: a spriteset is loaded by:
 		/// 1.
 		/// XCMainWindow.LoadSelectedMap() calls
-		/// MapFileService.LoadTileset() calls
+		/// MapFileService.LoadTerrains() calls
 		/// Descriptor.GetTerrainRecords() calls
 		/// Descriptor.GetTerrainSpriteset() calls
 		/// ResourceInfo.LoadSpriteset() calls
