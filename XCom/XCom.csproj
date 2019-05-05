@@ -139,9 +139,6 @@
     <Compile Include="Resources\Map\McdRecord.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Map\McdRecordCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Resources\Map\RouteData\RouteNodeCollection.cs">
       <SubType>Code</SubType>
     </Compile>
