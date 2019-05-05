@@ -213,12 +213,15 @@ namespace XCom
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal McdRecord()
+		/// <param name="bindata">if null a blank byte-array gets created</param>
+		public McdRecord(IList<byte> bindata = null)
 		{
 			if (IsTerrainSet)
 				SetId = _id++;
 			else
 				SetId = -1;
+
+			CreateRecord(this, bindata);
 		}
 		#endregion cTor
 
@@ -227,14 +230,15 @@ namespace XCom
 		/// <summary>
 		/// Instantiates an MCD record.
 		/// </summary>
-		/// <param name="bindata">if null a new byte-array gets created</param>
+		/// <param name="record"></param>
+		/// <param name="bindata">if null a blank byte-array gets created</param>
 		/// <returns></returns>
-		public static McdRecord CreateRecord(IList<byte> bindata = null)
+		private static McdRecord CreateRecord(
+				McdRecord record,
+				IList<byte> bindata = null)
 		{
 			if (bindata == null)
 				bindata = new byte[TilepartFactory.Length]; // all values in the byte-array default to "0"
-
-			var record = new McdRecord();
 
 			record.Sprite1 = bindata[0];
 			record.Sprite2 = bindata[1];
@@ -308,7 +312,7 @@ namespace XCom
 
 			#region Descript
 			// The following class-vars are used only by McdInfo in MapView
-			// itself so - like 'SetId' - are not required by the McdView app.
+			// only so - like 'SetId' - are not required by the McdView app.
 			if (McdRecord.IsTerrainSet)
 			{
 				record.stSprites = string.Format(
@@ -394,6 +398,10 @@ namespace XCom
 
 
 		#region Methods
+		/// <summary>
+		/// Used by MapView.DrawBlobService.
+		/// </summary>
+		/// <returns></returns>
 		public List<byte> GetLoftList()
 		{
 			var lofts = new List<byte>();

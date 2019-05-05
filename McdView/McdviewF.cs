@@ -674,9 +674,11 @@ namespace McdView
 						{
 							var bindata = new byte[TilepartFactory.Length];
 							bs.Read(bindata, 0, TilepartFactory.Length);
-							McdRecord record = McdRecord.CreateRecord(bindata);
 
-							Parts[id] = new Tilepart(id, Spriteset, record);
+							Parts[id] = new Tilepart(
+												id,
+												Spriteset,
+												new McdRecord(bindata));
 						}
 
 						Tilepart part;
@@ -751,9 +753,11 @@ namespace McdView
 					{
 						var bindata = new byte[TilepartFactory.Length];
 						bs.Read(bindata, 0, TilepartFactory.Length);
-						McdRecord record = McdRecord.CreateRecord(bindata);
 
-						Parts[id] = new Tilepart(id, Spriteset, record);
+						Parts[id] = new Tilepart(
+											id,
+											Spriteset,
+											new McdRecord(bindata));
 					}
 
 					Tilepart part;
@@ -826,9 +830,11 @@ namespace McdView
 				{
 					var bindata = new byte[TilepartFactory.Length];
 					bs.Read(bindata, 0, TilepartFactory.Length);
-					McdRecord record = McdRecord.CreateRecord(bindata);
 
-					Parts[id] = new Tilepart(id, Spriteset, record);
+					Parts[id] = new Tilepart(
+										id,
+										Spriteset,
+										new McdRecord(bindata));
 				}
 
 				Tilepart part;
@@ -1240,9 +1246,11 @@ namespace McdView
 						{
 							var bindata = new byte[TilepartFactory.Length];
 							bs.Read(bindata, 0, TilepartFactory.Length);
-							McdRecord record = McdRecord.CreateRecord(bindata);
 
-							CopyPanel.Parts[id] = new Tilepart(id, CopyPanel.Spriteset, record);
+							CopyPanel.Parts[id] = new Tilepart(
+															id,
+															CopyPanel.Spriteset,
+															new McdRecord(bindata));
 						}
 
 						Tilepart part;

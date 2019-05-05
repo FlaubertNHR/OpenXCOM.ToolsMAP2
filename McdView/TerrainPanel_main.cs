@@ -150,13 +150,12 @@ namespace McdView
 				for (int i = 0; i != id; ++i)
 					array[i] = Parts[i];
 
-				McdRecord record = McdRecord.CreateRecord();
-
 				array[id] = new Tilepart(
-										id,
-										_f.Spriteset,
-										record);
-				array[id].Dead      =
+									id,
+									_f.Spriteset,
+									new McdRecord());
+
+				array[id].Dead =
 				array[id].Alternate = null;
 
 				for (int i = id + 1; i != array.Length; ++i)
@@ -196,16 +195,13 @@ namespace McdView
 							for (i = 0; i != id; ++i)
 								array[i] = Parts[i];
 
-							McdRecord record;
 							int j = i + _add;
 							for (; i != j; ++i)
 							{
-								record = McdRecord.CreateRecord();
-
 								array[i] = new Tilepart(
 													i,
 													_f.Spriteset,
-													record);
+													new McdRecord());
 								array[i].Dead =
 								array[i].Alternate = null;
 							}
