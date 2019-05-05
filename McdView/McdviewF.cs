@@ -260,6 +260,8 @@ namespace McdView
 			RecordTextbox.SetStaticVars(tssl_Overvalue, lbl_Description);
 			LoftPanel    .SetStaticVars(this);
 
+			McdRecord.IsTerrainSet = false;
+
 			MaximumSize = new Size(0,0);
 
 			YamlMetrics.LoadWindowMetrics(this);
@@ -686,11 +688,11 @@ namespace McdView
 																id,
 																part.Record,
 																Parts);
-							part.Alternate = TilepartFactory.GetAlternatePart(
-																			Label,
-																			id,
-																			part.Record,
-																			Parts);
+							part.Alternate = TilepartFactory.GetAltrPart(
+																	Label,
+																	id,
+																	part.Record,
+																	Parts);
 						}
 					}
 
@@ -763,11 +765,11 @@ namespace McdView
 															id,
 															part.Record,
 															Parts);
-						part.Alternate = TilepartFactory.GetAlternatePart(
-																		Label,
-																		id,
-																		part.Record,
-																		Parts);
+						part.Alternate = TilepartFactory.GetAltrPart(
+																Label,
+																id,
+																part.Record,
+																Parts);
 					}
 				}
 
@@ -838,11 +840,11 @@ namespace McdView
 														id,
 														part.Record,
 														Parts);
-					part.Alternate = TilepartFactory.GetAlternatePart(
-																	Label,
-																	id,
-																	part.Record,
-																	Parts);
+					part.Alternate = TilepartFactory.GetAltrPart(
+															Label,
+															id,
+															part.Record,
+															Parts);
 				}
 			}
 
@@ -1252,11 +1254,11 @@ namespace McdView
 																id,
 																part.Record,
 																CopyPanel.Parts);
-							part.Alternate = TilepartFactory.GetAlternatePart(
-																		CopyPanel.Label,
-																		id,
-																		part.Record,
-																		CopyPanel.Parts);
+							part.Alternate = TilepartFactory.GetAltrPart(
+																	CopyPanel.Label,
+																	id,
+																	part.Record,
+																	CopyPanel.Parts);
 						}
 					}
 

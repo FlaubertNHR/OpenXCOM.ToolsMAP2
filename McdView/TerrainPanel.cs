@@ -167,9 +167,8 @@ namespace McdView
 				else
 					_partsCopiedLabel = _fcopy.Label;
 
-				var sels = new List<int>(SubIds);
+				var sels = new SortedSet<int>(SubIds);
 				sels.Add(SelId);
-				sels.Sort();
 
 				foreach (int sel in sels)
 					_partsCopied.Add(Parts[sel].Clone());
@@ -268,8 +267,6 @@ namespace McdView
 					{
 						Tilepart part = Parts[i];
 						if (part != null // not sure why Tilepart entries are null that aren't null but here they are
-//							&& part.Record.Sprite1 < Spriteset.Count
-//							&& part[0] != null && (sprite = part[0].Sprite) != null)
 							&& (sprite = Spriteset[part.Record.Sprite1].Sprite) != null) // go to the source ffs.
 						{
 							DrawSprite(
@@ -335,8 +332,6 @@ namespace McdView
 						if (part != null)
 						{
 							if (part.Dead != null
-//								&& part.Dead.Record.Sprite1 < Spriteset.Count
-//								&& part.Dead[0] != null && (sprite = part.Dead[0].Sprite) != null)
 								&& (sprite = Spriteset[part.Dead.Record.Sprite1].Sprite) != null) // go to the source ffs.
 							{
 								DrawSprite(
@@ -368,9 +363,6 @@ namespace McdView
 						if (part != null)
 						{
 							if (part.Alternate != null
-//								&& part.Alternate.Record.Sprite1 < Spriteset.Count
-//								&& part.Alternate[0] != null
-//								&& (sprite = part.Alternate[0].Sprite) != null)
 								&& (sprite = Spriteset[part.Alternate.Record.Sprite1].Sprite) != null) // go to the source ffs.
 							{
 								DrawSprite(

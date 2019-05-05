@@ -52,17 +52,17 @@ namespace XCom.Resources.Map
 							bs.Read(bindata, 0, Length);
 
 							parts[id] = new Tilepart(
-													id,
-													spriteset,
-													McdRecordFactory.CreateRecord(bindata));
+												id,
+												spriteset,
+												McdRecordFactory.CreateRecord(bindata));
 						}
 
 						Tilepart part;
 						for (int id = 0; id != parts.Length; ++id)
 						{
 							part = parts[id];
-							part.Dead      = GetDeadPart(     terrain, id, part.Record, parts);
-							part.Alternate = GetAlternatePart(terrain, id, part.Record, parts);
+							part.Dead      = GetDeadPart(terrain, id, part.Record, parts);
+							part.Alternate = GetAltrPart(terrain, id, part.Record, parts);
 						}
 
 						return parts;
@@ -70,6 +70,80 @@ namespace XCom.Resources.Map
 				}
 			}
 			return new Tilepart[0];
+		}
+
+		/// <summary>
+		/// Gets the dead-part of a given MCD-record.
+		/// </summary>
+		/// <param name="terrain"></param>
+		/// <param name="id"></param>
+		/// <param name="record"></param>
+		/// <param name="parts"></param>
+		/// <returns></returns>
+		public static Tilepart GetDeadPart(
+				string terrain,
+				int id,
+				McdRecord record,
+				Tilepart[] parts)
+		{
+			if (record.DieTile != 0)
+			{
+				if (record.DieTile < parts.Length)
+					return parts[record.DieTile];
+
+				string warn = String.Format(
+										CultureInfo.CurrentCulture,
+										"In the MCD file {0}, part #{1} has an invalid death part (id #{2} of {3} records).",
+										terrain,
+										id,
+										record.DieTile,
+										parts.Length);
+				using (var f = new Infobox(
+										" Invalid death part",
+										warn,
+										null))
+				{
+					f.ShowDialog();
+				}
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Gets the altr-part of a given MCD-record.
+		/// </summary>
+		/// <param name="terrain"></param>
+		/// <param name="id"></param>
+		/// <param name="record"></param>
+		/// <param name="parts"></param>
+		/// <returns></returns>
+		public static Tilepart GetAltrPart(
+				string terrain,
+				int id,
+				McdRecord record,
+				Tilepart[] parts)
+		{
+			if (record.Alt_MCD != 0) // || record.HumanDoor || record.UfoDoor
+			{
+				if (record.Alt_MCD < parts.Length)
+					return parts[record.Alt_MCD];
+
+				string warn = String.Format(
+										CultureInfo.CurrentCulture,
+										"In the MCD file {0}, part #{1} has an invalid alternate part (id #{2} of {3} records).",
+										terrain,
+										id,
+										record.Alt_MCD,
+										parts.Length);
+				using (var f = new Infobox(
+										" Invalid alternate part",
+										warn,
+										null))
+				{
+					f.ShowDialog();
+				}
+			}
+			return null;
 		}
 
 		/// <summary>
@@ -109,94 +183,6 @@ namespace XCom.Resources.Map
 				}
 			}
 			return 0;
-		}
-
-		/// <summary>
-		/// Gets the dead-tile of a given MCD-record.
-		/// </summary>
-		/// <param name="file"></param>
-		/// <param name="id"></param>
-		/// <param name="record"></param>
-		/// <param name="tileparts"></param>
-		/// <returns></returns>
-		public static Tilepart GetDeadPart(
-				string file,
-				int id,
-				McdRecord record,
-				Tilepart[] tileparts)
-		{
-			if (record.DieTile != 0)
-			{
-				if (record.DieTile < tileparts.Length)
-					return tileparts[record.DieTile];
-
-				string warn = String.Format(
-										CultureInfo.CurrentCulture,
-										"In the MCD file {0}, part #{1} has an invalid dead part (id #{2} of {3} records).",
-										file,
-										id,
-										record.DieTile,
-										tileparts.Length);
-				using (var f = new Infobox(
-										" Invalid dead part",
-										warn,
-										null))
-				{
-					f.ShowDialog();
-				}
-//				MessageBox.Show(
-//							warn,
-//							"Warning",
-//							MessageBoxButtons.OK,
-//							MessageBoxIcon.Warning,
-//							MessageBoxDefaultButton.Button1,
-//							0);
-			}
-			return null;
-		}
-
-		/// <summary>
-		/// Gets the alternate-tile of a given MCD-record.
-		/// </summary>
-		/// <param name="file"></param>
-		/// <param name="id"></param>
-		/// <param name="record"></param>
-		/// <param name="tileparts"></param>
-		/// <returns></returns>
-		public static Tilepart GetAlternatePart(
-				string file,
-				int id,
-				McdRecord record,
-				Tilepart[] tileparts)
-		{
-			if (record.Alt_MCD != 0) // || record.HumanDoor || record.UfoDoor
-			{
-				if (record.Alt_MCD < tileparts.Length)
-					return tileparts[record.Alt_MCD];
-
-				string warn = String.Format(
-										CultureInfo.CurrentCulture,
-										"In the MCD file {0}, part #{1} has an invalid alternate part (id #{2} of {3} records).",
-										file,
-										id,
-										record.Alt_MCD,
-										tileparts.Length);
-				using (var f = new Infobox(
-										" Invalid alternate part",
-										warn,
-										null))
-				{
-					f.ShowDialog();
-				}
-//				MessageBox.Show(
-//							warn,
-//							"Warning",
-//							MessageBoxButtons.OK,
-//							MessageBoxIcon.Warning,
-//							MessageBoxDefaultButton.Button1,
-//							0);
-			}
-			return null;
 		}
 		#endregion
 	}

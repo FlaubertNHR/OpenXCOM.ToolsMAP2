@@ -89,9 +89,10 @@ namespace XCom
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="spriteset"></param>
-		/// <param name="record"></param>
+		/// <param name="id">the id of this part in its recordset</param>
+		/// <param name="spriteset">the spriteset from which to get this part's
+		/// sprite-phases</param>
+		/// <param name="record">this part's MCD-record as an object</param>
 		public Tilepart(
 				int id,
 				SpriteCollection spriteset,
@@ -100,14 +101,15 @@ namespace XCom
 			TerId = id;
 			SetId = -1;
 
-			Spriteset = spriteset;
-
 			Record = record;
 
-			Sprites = new XCImage[8]; // every tile-part contains refs to 8 sprites.
+			if (McdRecord.IsTerrainSet) // in short: fuck off. 'Spriteset' and 'Sprites' shall be null for McdView.
+			{
+				Sprites = new XCImage[8]; // NOTE: a part contains its own pointers to 8 sprites.
 
-			if (Spriteset != null)
-				InitSprites();
+				if ((Spriteset = spriteset) != null)
+					InitSprites();
+			}
 		}
 		#endregion cTor
 

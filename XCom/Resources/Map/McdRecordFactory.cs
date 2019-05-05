@@ -91,47 +91,53 @@ namespace XCom
 
 
 			#region Descript
-			record.stSprites = string.Format(
-										System.Globalization.CultureInfo.InvariantCulture,
-										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
-										"images:",
-										record.Sprite1,
-										record.Sprite2,
-										record.Sprite3,
-										record.Sprite4,
-										record.Sprite5,
-										record.Sprite6,
-										record.Sprite7,
-										record.Sprite8);
+			// The following class-vars are used only by McdInfo in MapView
+			// itself so - like 'SetId' - are not required by the McdView app.
+			if (McdRecord.IsTerrainSet)
+			{
+				record.stSprites = string.Format(
+											System.Globalization.CultureInfo.InvariantCulture,
+											"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
+											"images:",
+											record.Sprite1,
+											record.Sprite2,
+											record.Sprite3,
+											record.Sprite4,
+											record.Sprite5,
+											record.Sprite6,
+											record.Sprite7,
+											record.Sprite8);
 
-			record.stScanG = string.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
-										"scang reference:",
-										bindata[20],
-										bindata[21],
-										record.ScanG,
-										record.ScanG_reduced);
+				record.stScanG = string.Format(
+											System.Globalization.CultureInfo.CurrentCulture,
+											"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
+											"scang reference:",
+											bindata[20],
+											bindata[21],
+											record.ScanG,
+											record.ScanG_reduced);
 
-			record.stLoFTs = string.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
-										"loft references:",
-										record.Loft1,
-										record.Loft2,
-										record.Loft3,
-										record.Loft4,
-										record.Loft5,
-										record.Loft6,
-										record.Loft7,
-										record.Loft8,
-										record.Loft9,
-										record.Loft10,
-										record.Loft11,
-										record.Loft12);
-			#endregion
+				record.stLoFTs = string.Format(
+											System.Globalization.CultureInfo.CurrentCulture,
+											"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
+											"loft references:",
+											record.Loft1,
+											record.Loft2,
+											record.Loft3,
+											record.Loft4,
+											record.Loft5,
+											record.Loft6,
+											record.Loft7,
+											record.Loft8,
+											record.Loft9,
+											record.Loft10,
+											record.Loft11,
+											record.Loft12);
 
-			record.ByteTable = BytesTable(bindata);
+				record.ByteTable = BytesTable(bindata);
+			}
+			#endregion Descript
+
 			return record;
 		}
 
