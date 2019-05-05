@@ -150,7 +150,7 @@ namespace McdView
 				for (int i = 0; i != id; ++i)
 					array[i] = Parts[i];
 
-				McdRecord record = McdRecordFactory.CreateRecord();
+				McdRecord record = McdRecord.CreateRecord();
 
 				array[id] = new Tilepart(
 										id,
@@ -200,7 +200,7 @@ namespace McdView
 							int j = i + _add;
 							for (; i != j; ++i)
 							{
-								record = McdRecordFactory.CreateRecord();
+								record = McdRecord.CreateRecord();
 
 								array[i] = new Tilepart(
 													i,

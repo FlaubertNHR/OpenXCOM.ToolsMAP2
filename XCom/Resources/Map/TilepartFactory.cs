@@ -54,7 +54,7 @@ namespace XCom.Resources.Map
 							parts[id] = new Tilepart(
 												id,
 												spriteset,
-												McdRecordFactory.CreateRecord(bindata));
+												McdRecord.CreateRecord(bindata));
 						}
 
 						Tilepart part;

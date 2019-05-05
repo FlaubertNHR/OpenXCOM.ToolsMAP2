@@ -113,7 +113,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resources\Map\MapFileWarn.cs" />
-    <Compile Include="Resources\Map\McdRecordFactory.cs" />
     <Compile Include="Resources\Map\RouteData\Link.cs" />
     <Compile Include="Resources\Map\RouteData\RouteCheckInfobox.cs" />
     <Compile Include="Resources\Map\RouteData\RouteNode.cs" />
