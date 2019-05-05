@@ -125,15 +125,8 @@ namespace McdView
 			Context.Items[14].Enabled = selid;								// deselect
 		}
 
-//		/// <summary>
-//		/// Closes the contextmenu.
-//		/// </summary>
-//		/// <param name="sender"></param>
-//		/// <param name="e"></param>
-//		private void OnIdClick(object sender, EventArgs e)
-//		{
-//			Context.Dispose();
-//		}
+		// NOTE on the edit-operations: Do not clone on copy/cut.
+		// Clone only on insert.
 
 		/// <summary>
 		/// Adds a blank part to the parts-array.
