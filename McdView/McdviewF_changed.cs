@@ -195,12 +195,6 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Sprite1 = (byte)result;
-//						if (Spriteset != null && result < Spriteset.Count)
-//						{
-//							Parts[SelId].Sprites[0] = Spriteset[result];
-//						}
-//						else
-//							Parts[SelId].Sprites[0] = null;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -252,12 +246,6 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Sprite2 = (byte)result;
-//						if (Spriteset != null && result < Spriteset.Count)
-//						{
-//							Parts[SelId].Sprites[1] = Spriteset[result];
-//						}
-//						else
-//							Parts[SelId].Sprites[1] = null;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -309,12 +297,6 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Sprite3 = (byte)result;
-//						if (Spriteset != null && result < Spriteset.Count)
-//						{
-//							Parts[SelId].Sprites[2] = Spriteset[result];
-//						}
-//						else
-//							Parts[SelId].Sprites[2] = null;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -366,12 +348,6 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Sprite4 = (byte)result;
-//						if (Spriteset != null && result < Spriteset.Count)
-//						{
-//							Parts[SelId].Sprites[3] = Spriteset[result];
-//						}
-//						else
-//							Parts[SelId].Sprites[3] = null;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -423,12 +399,6 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Sprite5 = (byte)result;
-//						if (Spriteset != null && result < Spriteset.Count)
-//						{
-//							Parts[SelId].Sprites[4] = Spriteset[result];
-//						}
-//						else
-//							Parts[SelId].Sprites[4] = null;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -480,12 +450,6 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Sprite6 = (byte)result;
-//						if (Spriteset != null && result < Spriteset.Count)
-//						{
-//							Parts[SelId].Sprites[5] = Spriteset[result];
-//						}
-//						else
-//							Parts[SelId].Sprites[5] = null;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -537,12 +501,6 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Sprite7 = (byte)result;
-//						if (Spriteset != null && result < Spriteset.Count)
-//						{
-//							Parts[SelId].Sprites[6] = Spriteset[result];
-//						}
-//						else
-//							Parts[SelId].Sprites[6] = null;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -594,12 +552,6 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Sprite8 = (byte)result;
-//						if (Spriteset != null && result < Spriteset.Count)
-//						{
-//							Parts[SelId].Sprites[7] = Spriteset[result];
-//						}
-//						else
-//							Parts[SelId].Sprites[7] = null;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -659,6 +611,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft1 = (byte)result;
+
 						pnl_Loft08 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -709,6 +662,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft2 = (byte)result;
+
 						pnl_Loft09 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -759,6 +713,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft3 = (byte)result;
+
 						pnl_Loft10 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -809,6 +764,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft4 = (byte)result;
+
 						pnl_Loft11 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -859,6 +815,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft5 = (byte)result;
+
 						pnl_Loft12 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -909,6 +866,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft6 = (byte)result;
+
 						pnl_Loft13 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -959,6 +917,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft7 = (byte)result;
+
 						pnl_Loft14 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -1009,6 +968,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft8 = (byte)result;
+
 						pnl_Loft15 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -1059,6 +1019,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft9 = (byte)result;
+
 						pnl_Loft16 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -1109,6 +1070,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft10 = (byte)result;
+
 						pnl_Loft17 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -1159,6 +1121,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft11 = (byte)result;
+
 						pnl_Loft18 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
@@ -1209,6 +1172,7 @@ namespace McdView
 							|| (!strict && result > -1 && result < 256)))
 					{
 						Parts[SelId].Record.Loft12 = (byte)result;
+
 						pnl_Loft19 .Invalidate();
 						pnl_IsoLoft.Invalidate();
 
