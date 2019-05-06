@@ -302,11 +302,15 @@ namespace McdView
 				{
 					Parts[i].Record.DieTile = (byte)Parts[i].Dead.TerId;
 				}
+				else
+					Parts[i].Record.DieTile = (byte)0;
 
 				if (Parts[i].Alternate != null)
 				{
 					Parts[i].Record.Alt_MCD = (byte)Parts[i].Alternate.TerId;
 				}
+				else
+					Parts[i].Record.Alt_MCD = (byte)0;
 			}
 		}
 
@@ -558,8 +562,8 @@ namespace McdView
 					}
 				}
 
-				SubIds.Add(SelId);
-				var sels = new List<int>(SubIds);
+				var sels = new HashSet<int>(SubIds);
+				sels.Add(SelId);
 
 				SubIds.Clear();
 				SelId = -1;
@@ -567,10 +571,13 @@ namespace McdView
 				_bypassScrollZero = true;
 				_f.Parts = array;
 
-				for (int i = 0; i != sels.Count; ++i)
-					ClearRefs(sels[i]);
+				foreach (var sel in sels)
+				{
+					if (sel != 0)
+						ClearRefs(sel);
+				}
 
-				UpdateRefs(sels);
+				ShiftRefs();
 
 				_f.Changed = CacheLoad.Changed(_f.Parts);
 			}
@@ -582,77 +589,27 @@ namespace McdView
 		/// <param name="id"></param>
 		private void ClearRefs(int id)
 		{
-			if (id != 0) // ie. DeathId or AlternateId is not already null-part.
-			{
-				Tilepart part;
-				McdRecord record;
-
-				for (int i = 0; i != Parts.Length; ++i)
-				{
-					part = Parts[i];
-					record = part.Record;
-
-					if (record.DieTile == id)
-					{
-						record.DieTile = (byte)0;
-						part.Dead = null;
-					}
-
-					if (record.Alt_MCD == id)
-					{
-						record.Alt_MCD = (byte)0;
-						part.Alternate = null;
-					}
-				}
-			}
-		}
-
-		/// <summary>
-		/// Updates refs when a part or parts get deleted.
-		/// </summary>
-		/// <param name ="sels">a list of ids that got deleted</param>
-		private void UpdateRefs(IList<int> sels)
-		{
 			Tilepart part;
 			McdRecord record;
-
-			int pos, id;
 
 			for (int i = 0; i != Parts.Length; ++i)
 			{
 				part = Parts[i];
 				record = part.Record;
 
-				pos = sels.Count - 1; // start with the last entry in 'sels'
+				if (record.DieTile == id)
+					part.Dead = null;
 
-				if ((id = record.DieTile) != 0)// && (pos = sels.FindIndex(val => val == @ref)) != -1)
-				{
-					while (pos != -1 && id > sels[pos--])
-						--id;
-
-					if (id != record.DieTile)
-					{
-						record.DieTile = (byte)id;
-						part.Dead = Parts[id];
-					}
-				}
-
-				pos = sels.Count - 1;
-
-				if ((id = record.Alt_MCD) != 0)// && (pos = sels.FindIndex(val => val == @ref)) != -1)
-				{
-					while (pos != -1 && id > sels[pos--])
-						--id;
-
-					if (id != record.Alt_MCD)
-					{
-						record.Alt_MCD = (byte)id;
-						part.Alternate = Parts[id];
-					}
-				}
+				if (record.Alt_MCD == id)
+					part.Alternate = null;
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnFileClick(object sender, EventArgs e)
 		{
 			if (Parts != null)

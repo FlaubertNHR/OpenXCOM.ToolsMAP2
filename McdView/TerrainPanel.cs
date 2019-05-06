@@ -331,21 +331,25 @@ namespace McdView
 					for (i = 0; i != Parts.Length; ++i) // dead part ->
 					{
 						Tilepart part = Parts[i];
-						if ((spriteId = part.Dead.Record.Sprite1) < Spriteset.Count
-							&& (sprite = Spriteset[spriteId].Sprite) != null)
+						if (part.Record.DieTile != 0)
 						{
-							DrawSprite(
-									sprite,
-									i * XCImage.SpriteWidth32 + i + offset,
-									y2_sprite - part.Dead.Record.TileOffset);
+							if (part.Dead != null
+								&& (spriteId = part.Dead.Record.Sprite1) < Spriteset.Count
+								&& (sprite = Spriteset[spriteId].Sprite) != null)
+							{
+								DrawSprite(
+										sprite,
+										i * XCImage.SpriteWidth32 + i + offset,
+										y2_sprite - part.Dead.Record.TileOffset);
+							}
+							else
+								_graphics.FillRectangle(
+													Colors.BrushInvalid,
+													i * XCImage.SpriteWidth32 + i + offset,
+													y2_sprite,
+													XCImage.SpriteWidth32,
+													XCImage.SpriteHeight40);
 						}
-						else if (part.Record.DieTile != 0)
-							_graphics.FillRectangle(
-												Colors.BrushInvalid,
-												i * XCImage.SpriteWidth32 + i + offset,
-												y2_sprite,
-												XCImage.SpriteWidth32,
-												XCImage.SpriteHeight40);
 					}
 				}
 
@@ -359,21 +363,25 @@ namespace McdView
 					for (i = 0; i != Parts.Length; ++i) // alternate part ->
 					{
 						Tilepart part = Parts[i];
-						if ((spriteId = part.Alternate.Record.Sprite1) < Spriteset.Count
-							&& (sprite = Spriteset[spriteId].Sprite) != null)
+						if (part.Record.Alt_MCD != 0)
 						{
-							DrawSprite(
-									sprite,
-									i * XCImage.SpriteWidth32 + i + offset,
-									y3_sprite - part.Alternate.Record.TileOffset);
+							if (part.Alternate != null
+								&& (spriteId = part.Alternate.Record.Sprite1) < Spriteset.Count
+								&& (sprite = Spriteset[spriteId].Sprite) != null)
+							{
+								DrawSprite(
+										sprite,
+										i * XCImage.SpriteWidth32 + i + offset,
+										y3_sprite - part.Alternate.Record.TileOffset);
+							}
+							else if (part.Record.Alt_MCD != 0)
+								_graphics.FillRectangle(
+													Colors.BrushInvalid,
+													i * XCImage.SpriteWidth32 + i + offset,
+													y3_sprite,
+													XCImage.SpriteWidth32,
+													XCImage.SpriteHeight40);
 						}
-						else if (part.Record.Alt_MCD != 0)
-							_graphics.FillRectangle(
-												Colors.BrushInvalid,
-												i * XCImage.SpriteWidth32 + i + offset,
-												y3_sprite,
-												XCImage.SpriteWidth32,
-												XCImage.SpriteHeight40);
 					}
 				}
 			}
