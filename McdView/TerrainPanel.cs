@@ -169,7 +169,7 @@ namespace McdView
 				else
 					_partsCopiedLabel = _fcopy.Label;
 
-				var sels = new SortedSet<int>(SubIds);
+				var sels = new HashSet<int>(SubIds);
 				sels.Add(SelId);
 
 				foreach (int sel in sels)

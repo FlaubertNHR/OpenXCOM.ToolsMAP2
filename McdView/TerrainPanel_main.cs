@@ -319,7 +319,171 @@ namespace McdView
 		/// tilepart and inserts the CopyPanel's selected tileparts.
 		/// See TerrainPanel_copy.OnInsertAfterLastClick().
 		/// </summary>
-		/// <param name="refsdead">true to insert refs to deadparts</param>
+		internal void InsertAfterLast()
+		{
+			SelId = Parts.Length - 1;
+
+			int id = SelId + 1;
+
+			var array = new Tilepart[Parts.Length + _partsCopied.Count];
+
+			for (int i = 0, j = 0; i != array.Length; ++i, ++j)
+			{
+				if (i == id)
+				{
+					var spriteIds = new Dictionary<int,int>(); // Map the copied spriteIds to the Main spriteIds w/out duplicates.
+
+					// IaL tileparts are injected in the following order:
+					// - copyparts
+					// - altrparts
+					// - deadparts
+
+					for (int pos = 0; pos != _partsCopied.Count; ++pos, ++i) // -> ADD DIRECTLY SELECTED PARTS FIRST ->
+					{
+						if (   _f.CopyPanel.cb_IalSprites.Enabled
+							&& _f.CopyPanel.cb_IalSprites.Checked)
+						{
+							McdRecord record = _partsCopied[pos].Record;
+
+							int spriteId;
+							for (int phase = 0; phase != 8; ++phase)
+							{
+								switch (phase)
+								{
+									default: spriteId = record.Sprite1; break; //case 0
+									case 1:  spriteId = record.Sprite2; break;
+									case 2:  spriteId = record.Sprite3; break;
+									case 3:  spriteId = record.Sprite4; break;
+									case 4:  spriteId = record.Sprite5; break;
+									case 5:  spriteId = record.Sprite6; break;
+									case 6:  spriteId = record.Sprite7; break;
+									case 7:  spriteId = record.Sprite8; break;
+								}
+
+								if (!spriteIds.ContainsKey(spriteId))
+								{
+//									spritesChanged = true;
+
+									var sprite0 = _f.CopyPanel.Spriteset[spriteId] as PckImage;
+									var sprite1 = sprite0.Duplicate(_f.Spriteset, _f.Spriteset.Count);
+									spriteIds.Add(spriteId, _f.Spriteset.Count);
+
+									_f.Spriteset.Sprites.Add(sprite1);
+								}
+							}
+						}
+
+						array[i] = _partsCopied[pos].CreateInsert();
+						array[i].TerId = i;
+
+						if (spriteIds.Count != 0)
+						{
+							McdRecord record = array[i].Record;
+
+							int spriteId;
+							for (int phase = 0; phase != 8; ++phase)
+							{
+								switch (phase)
+								{
+									default: spriteId = record.Sprite1; break; //case 0
+									case 1:  spriteId = record.Sprite2; break;
+									case 2:  spriteId = record.Sprite3; break;
+									case 3:  spriteId = record.Sprite4; break;
+									case 4:  spriteId = record.Sprite5; break;
+									case 5:  spriteId = record.Sprite6; break;
+									case 6:  spriteId = record.Sprite7; break;
+									case 7:  spriteId = record.Sprite8; break;
+								}
+
+//								if (spriteIds.ContainsKey(spriteId)) // ... shall be true
+//								{
+								switch (phase)
+								{
+									default: record.Sprite1 = (byte)spriteIds[record.Sprite1]; break; //case 0
+									case 1:  record.Sprite2 = (byte)spriteIds[record.Sprite2]; break;
+									case 2:  record.Sprite3 = (byte)spriteIds[record.Sprite3]; break;
+									case 3:  record.Sprite4 = (byte)spriteIds[record.Sprite4]; break;
+									case 4:  record.Sprite5 = (byte)spriteIds[record.Sprite5]; break;
+									case 5:  record.Sprite6 = (byte)spriteIds[record.Sprite6]; break;
+									case 6:  record.Sprite7 = (byte)spriteIds[record.Sprite7]; break;
+									case 7:  record.Sprite8 = (byte)spriteIds[record.Sprite8]; break;
+								}
+//								}
+								// else "0"/null
+							}
+						}
+
+//						if (!isTer)
+						{
+							array[i].Record.DieTile = (byte)0;
+							array[i].Dead = null;
+
+							array[i].Record.Alt_MCD = (byte)0;
+							array[i].Altr = null;
+						}
+					}
+//					int pos, var;
+/*					for (pos = 0; pos != _partsCopied.Count; ++pos, ++i) // -> ADD DIRECTLY SELECTED PARTS FIRST ->
+					{
+
+						if ((var = array[i].Record.DieTile) != 0)
+						{
+							if (ialdictDeads0.ContainsKey(var)) // deadpart is in the directly selected parts
+							{
+								array[i].Record.DieTile = (byte)(id + ialdictDeads0[var]);
+//								array[i].Dead = ;
+							}
+							else if (ialdictDeads1.ContainsKey(var)) // deadpart is ref'd by a directly selected part but is added separately
+							{
+								array[i].Record.DieTile = (byte)(id + _partsCopied.Count + _ialAltrs.Count + ialdictDeads1[var]);
+//								array[i].Dead = ;
+							}
+							else // uhh ... if !isTer/!refsdead
+							{
+								array[i].Record.DieTile = (byte)0;
+								array[i].Dead = null;
+							}
+						}
+
+						if ((var = array[i].Record.Alt_MCD) != 0)
+						{
+							if (ialdictAltrs0.ContainsKey(var)) // altrpart is in the directly selected parts
+							{
+								array[i].Record.Alt_MCD = (byte)(id + ialdictAltrs0[var]);
+//								array[i].Altr = ;
+							}
+							else if (ialdictAltrs1.ContainsKey(var)) // altrpart is ref'd by a directly selected part but is added separately
+							{
+								array[i].Record.Alt_MCD = (byte)(id + _partsCopied.Count + ialdictAltrs1[var]);
+//								array[i].Altr = ;
+							}
+							else // uhh ... if !isTer/!refsaltr
+							{
+								array[i].Record.Alt_MCD = (byte)0;
+								array[i].Altr = null;
+							}
+						}
+					} */
+
+					break; // is the end of the array.
+				}
+
+				array[i] = Parts[j];
+				array[i].TerId = i;
+			}
+
+			_bypassScrollZero = true;
+			_f.Parts = array;
+
+			SubIds.Clear();
+			for (int i = id; i != Parts.Length - 1; ++i)
+				SubIds.Add(i);
+
+			SelId = Parts.Length - 1;
+
+			_f.Changed = CacheLoad.Changed(_f.Parts);
+		}
+/*		/// <param name="refsdead">true to insert refs to deadparts</param>
 		/// <param name="refsaltr">true to insert refs to altparts</param>
 		internal void InsertAfterLast(bool refsdead, bool refsaltr) // TODO: args are not used.
 		{
@@ -524,7 +688,6 @@ namespace McdView
 			_bypassScrollZero = true;
 			_f.Parts = array;
 
-
 			SubIds.Clear();
 			for (int i = id; i != Parts.Length - 1; ++i)
 				SubIds.Add(i);
@@ -535,7 +698,7 @@ namespace McdView
 
 			if (spritesChanged)
 			{}
-		}
+		} */
 
 		/// <summary>
 		/// Deletes a currently selected part 'SelId' and any sub-selected parts

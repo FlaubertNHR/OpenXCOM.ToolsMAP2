@@ -43,13 +43,13 @@ namespace XCom
 
 
 		#region Fields
-		private readonly SpriteCollection Spriteset;
+		private SpriteCollection Spriteset;
 		#endregion Fields
 
 
 		#region Properties
 		/// <summary>
-		/// MapId is used only by 'MapInfoOutputBox'.
+		/// SetId is used only by 'MapInfoOutputBox'.
 		/// </summary>
 		public int SetId
 		{ get; private set; }
@@ -143,15 +143,10 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. For Clone().
+		/// cTor[2]. Creates a blank sprite for Duplicate().
 		/// </summary>
-		/// <param name="spriteset"></param>
-		private PckImage(SpriteCollection spriteset)
-		{
-			// PckImage vars
-			Spriteset = spriteset;
-			SetId = -1;
-		}
+		private PckImage()
+		{}
 		#endregion cTor
 
 
@@ -295,18 +290,28 @@ namespace XCom
 		/// <summary>
 		/// Returns a deep clone of this PckImage. Except 'Pal'.
 		/// </summary>
+		/// <param name="spriteset">the spriteset that the sprite will belong
+		/// to; note that the returned sprite has not been transfered to this
+		/// other spriteset yet</param>
+		/// <param name="id"></param>
 		/// <returns></returns>
-		public PckImage Clone(SpriteCollection spriteset)
+		public PckImage Duplicate(
+				SpriteCollection spriteset,
+				int id)
 		{
-			var sprite = new PckImage(spriteset);
+			var sprite = new PckImage();
+
+			// PckImage vars
+			sprite.Spriteset = spriteset;
+			sprite.SetId = -1;
 
 			// XCImage vars
 			sprite.Bindata  = Bindata.Clone() as byte[];
-			sprite.Sprite   = ObjectCopier.Clone<Bitmap>(Sprite);	// workaround Bitmap clone/copy/new shenanigans
-			sprite.SpriteGr = ObjectCopier.Clone<Bitmap>(SpriteGr);	// workaround Bitmap clone/copy/new shenanigans
+			sprite.Sprite   = ObjectCopier.Clone<Bitmap>(Sprite);	// workaround Bitmap's clone/copy/new shenanigans
+			sprite.SpriteGr = ObjectCopier.Clone<Bitmap>(SpriteGr);	// workaround Bitmap's clone/copy/new shenanigans
 			sprite.Pal      = Pal;
 
-			sprite.Id       = Id; // only this needs to be changed <- do that after the fact
+			sprite.Id = id;
 
 			return sprite;
 		}
@@ -416,10 +421,4 @@ namespace XCom
 //								Height,
 //								_expanded,
 //								Palette.Grayscale.Colors);
-//		}
-
-//		public int MapId
-//		{
-//			get { return _mapId; }
-//			set { _mapId = value; }
 //		}

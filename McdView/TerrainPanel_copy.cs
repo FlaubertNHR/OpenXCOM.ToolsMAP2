@@ -93,7 +93,12 @@ namespace McdView
 		{
 			if (SelId != -1 && _f.Parts != null)
 			{
-				bool refsdead = false;
+				OnCopyClick(sender, e);
+
+				_f.PartsPanel.InsertAfterLast();
+
+
+/*				bool refsdead = false;
 				bool refsaltr = false;
 
 				if (   _fcopy.cb_IalDeadpart.Enabled
@@ -134,7 +139,7 @@ namespace McdView
 				// TODO: get the Dead and Altr parts of the Dead and Altr parts
 				// in a cascading chaos of certain confusion.
 
-				_f.PartsPanel.InsertAfterLast(refsdead, refsaltr);
+				_f.PartsPanel.InsertAfterLast(refsdead, refsaltr); */
 			}
 		}
 
