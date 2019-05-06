@@ -61,8 +61,8 @@ namespace XCom.Resources.Map
 						for (int id = 0; id != parts.Length; ++id)
 						{
 							part = parts[id];
-							part.Dead      = GetDeadPart(terrain, id, part.Record, parts);
-							part.Alternate = GetAltrPart(terrain, id, part.Record, parts);
+							part.Dead = GetDeadPart(terrain, id, part.Record, parts);
+							part.Altr = GetAltrPart(terrain, id, part.Record, parts);
 						}
 
 						return parts;

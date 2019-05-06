@@ -365,14 +365,14 @@ namespace McdView
 						Tilepart part = Parts[i];
 						if (part.Record.Alt_MCD != 0)
 						{
-							if (part.Alternate != null
-								&& (spriteId = part.Alternate.Record.Sprite1) < Spriteset.Count
+							if (part.Altr != null
+								&& (spriteId = part.Altr.Record.Sprite1) < Spriteset.Count
 								&& (sprite = Spriteset[spriteId].Sprite) != null)
 							{
 								DrawSprite(
 										sprite,
 										i * XCImage.SpriteWidth32 + i + offset,
-										y3_sprite - part.Alternate.Record.TileOffset);
+										y3_sprite - part.Altr.Record.TileOffset);
 							}
 							else if (part.Record.Alt_MCD != 0)
 								_graphics.FillRectangle(

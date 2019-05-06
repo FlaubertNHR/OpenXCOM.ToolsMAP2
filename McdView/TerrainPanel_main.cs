@@ -264,7 +264,7 @@ namespace McdView
 								array[i].Dead = null;
 
 								array[i].Record.Alt_MCD = (byte)0;
-								array[i].Alternate = null;
+								array[i].Altr = null;
 							}
 						}
 					}
@@ -305,9 +305,9 @@ namespace McdView
 				else
 					Parts[i].Record.DieTile = (byte)0;
 
-				if (Parts[i].Alternate != null)
+				if (Parts[i].Altr != null)
 				{
-					Parts[i].Record.Alt_MCD = (byte)Parts[i].Alternate.TerId;
+					Parts[i].Record.Alt_MCD = (byte)Parts[i].Altr.TerId;
 				}
 				else
 					Parts[i].Record.Alt_MCD = (byte)0;
@@ -407,17 +407,17 @@ namespace McdView
 							if (ialdictAltrs0.ContainsKey(var)) // altrpart is in the directly selected parts
 							{
 								array[i].Record.Alt_MCD = (byte)(id + ialdictAltrs0[var]);
-//								array[i].Alternate = ;
+//								array[i].Altr = ;
 							}
 							else if (ialdictAltrs1.ContainsKey(var)) // altrpart is ref'd by a directly selected part but is added separately
 							{
 								array[i].Record.Alt_MCD = (byte)(id + _partsCopied.Count + ialdictAltrs1[var]);
-//								array[i].Alternate = ;
+//								array[i].Altr = ;
 							}
 							else // uhh ... if !isTer/!refsaltr
 							{
 								array[i].Record.Alt_MCD = (byte)0;
-								array[i].Alternate = null;
+								array[i].Altr = null;
 							}
 						}
 					}
@@ -433,7 +433,7 @@ namespace McdView
 						array[i].Dead = null;
 
 						array[i].Record.Alt_MCD = (byte)0;
-						array[i].Alternate = null;
+						array[i].Altr = null;
 					}
 
 
@@ -447,7 +447,7 @@ namespace McdView
 						array[i].Dead = null;
 
 						array[i].Record.Alt_MCD = (byte)0;
-						array[i].Alternate = null;
+						array[i].Altr = null;
 					}
 
 
@@ -601,7 +601,7 @@ namespace McdView
 					part.Dead = null;
 
 				if (record.Alt_MCD == id)
-					part.Alternate = null;
+					part.Altr = null;
 			}
 		}
 
@@ -723,12 +723,12 @@ namespace McdView
 					if (id == a)
 					{
 						record.Alt_MCD = (byte)b;
-						part.Alternate = Parts[b];
+						part.Altr = Parts[b];
 					}
 					else if (id == b)
 					{
 						record.Alt_MCD = (byte)a;
-						part.Alternate = Parts[a];
+						part.Altr = Parts[a];
 					}
 				}
 			}

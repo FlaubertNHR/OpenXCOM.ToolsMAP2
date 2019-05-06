@@ -2590,9 +2590,9 @@ namespace McdView
 						Parts[SelId].Record.Alt_MCD = (byte)result;
 
 						if (result != 0 && result < Parts.Length)
-							Parts[SelId].Alternate = Parts[result];
+							Parts[SelId].Altr = Parts[result];
 						else
-							Parts[SelId].Alternate = null;
+							Parts[SelId].Altr = null;
 
 						PartsPanel.Invalidate();
 

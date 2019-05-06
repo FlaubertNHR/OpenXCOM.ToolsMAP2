@@ -686,11 +686,11 @@ namespace McdView
 																id,
 																part.Record,
 																Parts);
-							part.Alternate = TilepartFactory.GetAltrPart(
-																	Label,
-																	id,
-																	part.Record,
-																	Parts);
+							part.Altr = TilepartFactory.GetAltrPart(
+																Label,
+																id,
+																part.Record,
+																Parts);
 						}
 					}
 
@@ -763,11 +763,11 @@ namespace McdView
 															id,
 															part.Record,
 															Parts);
-						part.Alternate = TilepartFactory.GetAltrPart(
-																Label,
-																id,
-																part.Record,
-																Parts);
+						part.Altr = TilepartFactory.GetAltrPart(
+															Label,
+															id,
+															part.Record,
+															Parts);
 					}
 				}
 
@@ -838,11 +838,11 @@ namespace McdView
 														id,
 														part.Record,
 														Parts);
-					part.Alternate = TilepartFactory.GetAltrPart(
-															Label,
-															id,
-															part.Record,
-															Parts);
+					part.Altr = TilepartFactory.GetAltrPart(
+														Label,
+														id,
+														part.Record,
+														Parts);
 				}
 			}
 
@@ -1252,11 +1252,11 @@ namespace McdView
 																id,
 																part.Record,
 																CopyPanel.Parts);
-							part.Alternate = TilepartFactory.GetAltrPart(
-																	CopyPanel.Label,
-																	id,
-																	part.Record,
-																	CopyPanel.Parts);
+							part.Altr = TilepartFactory.GetAltrPart(
+																CopyPanel.Label,
+																id,
+																part.Record,
+																CopyPanel.Parts);
 						}
 					}
 
@@ -2211,7 +2211,7 @@ namespace McdView
 			{
 				borks.Add("#46 AlternateId exceeds the count of the MCD.");
 			}
-			if (val != 0 && Parts[SelId].Alternate == null)
+			if (val != 0 && Parts[SelId].Altr == null)
 			{
 				borks.Add("#46 Alternate part is null.");
 			}

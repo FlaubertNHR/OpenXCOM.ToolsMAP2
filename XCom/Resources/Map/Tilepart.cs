@@ -18,7 +18,7 @@ namespace XCom
 		public Tilepart Dead
 		{ get; set; }
 
-		public Tilepart Alternate
+		public Tilepart Altr
 		{ get; set; }
 
 		// TODO: The fact that the spriteset points to a "sprite" and this
@@ -205,13 +205,13 @@ namespace XCom
 			{
 				if (animate)
 				{
-					if (Record.SlidingDoor || Alternate == null)
+					if (Record.SlidingDoor || Altr == null)
 					{
 						SpritesToPhases();
 					}
 					else
 					{
-						byte altr = Alternate.Record.Sprite1;
+						byte altr = Altr.Record.Sprite1;
 						for (int i = 4; i != 8; ++i)
 							Sprites[i] = Spriteset[altr];
 					}
@@ -222,15 +222,15 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Sets this tilepart's sprites to the first phase of its Alternate
-		/// part. Is for doors only.
+		/// Sets this tilepart's sprites to the first phase of its Altr part. Is
+		/// for doors only.
 		/// </summary>
 		public void SpritesToAlternate()
 		{
 			if (Spriteset != null
 				&& (Record.SlidingDoor || Record.HingedDoor))
 			{
-				byte altr = Alternate.Record.Sprite1;
+				byte altr = Altr.Record.Sprite1;
 				for (int i = 0; i != 8; ++i)
 					Sprites[i] = Spriteset[altr];
 			}
@@ -262,9 +262,9 @@ namespace XCom
 
 			part.Record = Record.Duplicate();
 
-			part.Dead      = Dead;		// NOTE: keep these pointers and use their TerIds to
-			part.Alternate = Alternate;	// determine the part's 'DieTile' and 'Alt_MCD' fields
-										// after insertion. (aha!)
+			part.Dead = Dead;	// NOTE: keep these pointers and use their TerIds to
+			part.Altr = Altr;	// determine the part's 'DieTile' and 'Alt_MCD' fields
+								// after insertion. (aha!)
 			return part;
 		}
 		#endregion Methods
