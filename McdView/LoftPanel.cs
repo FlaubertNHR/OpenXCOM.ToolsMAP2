@@ -109,38 +109,50 @@ namespace McdView
 		{
 			_f.PartsPanel.Select(); // NOTE: Workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
 
-			if (_f.SelId != -1 && _f.LoFT != null
+			if (_f.SelId != -1
 				&& e.X > -1 && e.X < Width // NOTE: Bypass event if cursor moves off the panel before released.
 				&& e.Y > -1 && e.Y < Height)
 			{
-				var tb = Tag as TextBox;
-				string id = tb.Text;
-
-				if (e.Button == MouseButtons.Left)
+				if (_f.LoFT != null)
 				{
-					using (var f = new LoftF(
-											_f,
-											Int32.Parse(tb.Tag.ToString()),
-											Int32.Parse(id)))
+					var tb = Tag as TextBox;
+					string id = tb.Text;
+
+					if (e.Button == MouseButtons.Left)
 					{
-						_f._pnlLoFT = this;
-						f.ShowDialog();
+						using (var f = new LoftF(
+												_f,
+												Int32.Parse(tb.Tag.ToString()),
+												Int32.Parse(id)))
+						{
+							_f._pnlLoFT = this;
+							f.ShowDialog();
+						}
 					}
-				}
-				else if (e.Button == MouseButtons.Right
-					&& MessageBox.Show(
-									this,
-									"Set all LoFTs to #" + id,
-									"Set all LoFTs",
-									MessageBoxButtons.YesNo,
-									MessageBoxIcon.Question,
-									MessageBoxDefaultButton.Button1,
-									0) == DialogResult.Yes)
-				{
-					_f.SetAllLofts(id);
-				}
+					else if (e.Button == MouseButtons.Right
+						&& MessageBox.Show(
+										this,
+										"Set all LoFTs to #" + id,
+										" Set all LoFTs",
+										MessageBoxButtons.YesNo,
+										MessageBoxIcon.Question,
+										MessageBoxDefaultButton.Button1,
+										0) == DialogResult.Yes)
+					{
+						_f.SetAllLofts(id);
+					}
 
-				_f.OnClick_IsoLoft(null, EventArgs.Empty); // select the IsoLoFT's trackbar
+					_f.OnClick_IsoLoft(null, EventArgs.Empty); // select the IsoLoFT's trackbar
+				}
+				else
+					MessageBox.Show(
+								this,
+								"LoFT icons not found.",
+								" Info",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Asterisk,
+								MessageBoxDefaultButton.Button1,
+								0);
 			}
 		}
 		#endregion Events (override)

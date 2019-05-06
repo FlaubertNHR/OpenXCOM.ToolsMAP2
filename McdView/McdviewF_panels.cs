@@ -194,54 +194,69 @@ namespace McdView
 		{
 			PartsPanel.Select();
 
-			if (Spriteset != null && SelId != -1
+			if (Parts != null && Parts.Length != 0 && SelId != -1
 				&& e.Y > -1 && e.Y < pnl_Sprites.Height) // NOTE: Bypass event if cursor moves off the panel before released.
 			{
-				int phase;
-				for (phase = 0; phase != 8; ++phase)
+				if (Spriteset != null && Spriteset.Count != 0)
 				{
-					if (   e.X > SPRITE_ORIGIN_X + (phase * SPRITE_OFFSET_X)
-						&& e.X < SPRITE_ORIGIN_X + (phase * SPRITE_OFFSET_X) + (XCImage.SpriteWidth32 * 2))
+					int phase;
+					for (phase = 0; phase != 8; ++phase)
 					{
-						break;
-					}
-				}
-
-				if (phase != 8)
-				{
-					string id;
-					switch (phase)
-					{
-						default: id = tb00_phase0.Text; break; // #0
-						case 1:  id = tb01_phase1.Text; break;
-						case 2:  id = tb02_phase2.Text; break;
-						case 3:  id = tb03_phase3.Text; break;
-						case 4:  id = tb04_phase4.Text; break;
-						case 5:  id = tb05_phase5.Text; break;
-						case 6:  id = tb06_phase6.Text; break;
-						case 7:  id = tb07_phase7.Text; break;
-					}
-
-					if (e.Button == MouseButtons.Left)
-					{
-						using (var f = new SpritesetF(this, phase, Int32.Parse(id)))
+						if (   e.X > SPRITE_ORIGIN_X + (phase * SPRITE_OFFSET_X)
+							&& e.X < SPRITE_ORIGIN_X + (phase * SPRITE_OFFSET_X) + (XCImage.SpriteWidth32 * 2))
 						{
-							f.ShowDialog();
+							break;
 						}
 					}
-					else if (e.Button == MouseButtons.Right
-						&& MessageBox.Show(
-										this,
-										"Set all sprite phases to #" + id,
-										"Set all sprite phases",
-										MessageBoxButtons.YesNo,
-										MessageBoxIcon.Question,
-										MessageBoxDefaultButton.Button1,
-										0) == DialogResult.Yes)
+
+					if (phase != 8)
 					{
-						SetAllSprites(id);
+						string id;
+						switch (phase)
+						{
+							default: id = tb00_phase0.Text; break; // #0
+							case 1:  id = tb01_phase1.Text; break;
+							case 2:  id = tb02_phase2.Text; break;
+							case 3:  id = tb03_phase3.Text; break;
+							case 4:  id = tb04_phase4.Text; break;
+							case 5:  id = tb05_phase5.Text; break;
+							case 6:  id = tb06_phase6.Text; break;
+							case 7:  id = tb07_phase7.Text; break;
+						}
+
+						if (e.Button == MouseButtons.Left)
+						{
+							using (var f = new SpritesetF(this, phase, Int32.Parse(id)))
+							{
+								f.ShowDialog();
+							}
+						}
+						else if (e.Button == MouseButtons.Right
+							&& MessageBox.Show(
+											this,
+											"Set all sprite phases to #" + id,
+											" Set all sprite phases",
+											MessageBoxButtons.YesNo,
+											MessageBoxIcon.Question,
+											MessageBoxDefaultButton.Button1,
+											0) == DialogResult.Yes)
+						{
+							SetAllSprites(id);
+						}
 					}
 				}
+				else
+					MessageBox.Show(
+								this,
+								"Sprites cannot be found for " + Label + "."
+									+ Environment.NewLine + Environment.NewLine
+									+ "A spriteset can be created with PckView or"
+									+ "by inserting records from the CopyPanel.",
+								" Info",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Asterisk,
+								MessageBoxDefaultButton.Button1,
+								0);
 			}
 		}
 
@@ -377,20 +392,32 @@ namespace McdView
 		{
 			PartsPanel.Select();
 
-			if (SelId != -1 && ScanG != null
+			if (Parts != null && Parts.Length != 0 && SelId != -1
 				&& e.X > -1 && e.X < pnl_ScanGic.Width // NOTE: Bypass event if cursor moves off the panel before released.
 				&& e.Y > -1 && e.Y < pnl_ScanGic.Height)
 			{
-				ColorPalette pal;
-				if (miPaletteTftd.Checked)
-					pal = Palette.TftdBattle.ColorTable;
-				else
-					pal = Palette.UfoBattle.ColorTable;
-
-				using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), pal))
+				if (ScanG != null)
 				{
-					f.ShowDialog();
+					ColorPalette pal;
+					if (miPaletteTftd.Checked)
+						pal = Palette.TftdBattle.ColorTable;
+					else
+						pal = Palette.UfoBattle.ColorTable;
+
+					using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), pal))
+					{
+						f.ShowDialog();
+					}
 				}
+				else
+					MessageBox.Show(
+								this,
+								"ScanG icons not found.",
+								" Info",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Asterisk,
+								MessageBoxDefaultButton.Button1,
+								0);
 			}
 		}
 
