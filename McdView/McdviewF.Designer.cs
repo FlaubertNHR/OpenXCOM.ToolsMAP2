@@ -976,7 +976,7 @@
 			this.lbl41_tufly.TabIndex = 7;
 			this.lbl41_tufly.Text = "TuFly";
 			this.lbl41_tufly.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl41_tufly.MouseEnter += new System.EventHandler(this.OnEnter40);
+			this.lbl41_tufly.MouseEnter += new System.EventHandler(this.OnEnter41);
 			// 
 			// lbl42
 			// 
