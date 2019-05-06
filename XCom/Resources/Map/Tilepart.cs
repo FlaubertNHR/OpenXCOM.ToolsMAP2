@@ -87,7 +87,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[1].
+		/// cTor[1]. Creates a standard Tilepart.
 		/// </summary>
 		/// <param name="id">the id of this part in its recordset</param>
 		/// <param name="spriteset">the spriteset from which to get this part's
@@ -113,7 +113,16 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a blank part For CreateInsert().
+		/// cTor[2]. Creates a blank part that's ready to go in McdView.
+		/// </summary>
+		public Tilepart(int id)
+		{
+			TerId = id;
+			Record = new McdRecord();
+		}
+
+		/// <summary>
+		/// cTor[3]. Creates a blank part for CreateInsert().
 		/// </summary>
 		private Tilepart()
 		{}

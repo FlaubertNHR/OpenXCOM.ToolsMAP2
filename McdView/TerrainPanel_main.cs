@@ -143,13 +143,7 @@ namespace McdView
 				for (int i = 0; i != id; ++i)
 					array[i] = Parts[i];
 
-				array[id] = new Tilepart(
-									id,
-									_f.Spriteset,
-									new McdRecord());
-
-				array[id].Dead =
-				array[id].Alternate = null;
+				array[id] = new Tilepart(id);
 
 				for (int i = id + 1; i != array.Length; ++i)
 				{
@@ -160,7 +154,7 @@ namespace McdView
 				_bypassScrollZero = true;
 				_f.Parts = array; // assign back to 'Parts' via McdviewF
 
-				ShiftRefs(id, 1);
+				ShiftRefs();
 
 				SubIds.Clear();
 				SelId = id;
@@ -191,12 +185,7 @@ namespace McdView
 							int j = i + _add;
 							for (; i != j; ++i)
 							{
-								array[i] = new Tilepart(
-													i,
-													_f.Spriteset,
-													new McdRecord());
-								array[i].Dead =
-								array[i].Alternate = null;
+								array[i] = new Tilepart(i);
 							}
 
 							for (; i != length; ++i)
@@ -208,10 +197,13 @@ namespace McdView
 							_bypassScrollZero = true;
 							_f.Parts = array;
 
-							ShiftRefs(id, _add);
+							ShiftRefs();
 
 							SubIds.Clear();
-							SelId = id;
+							for (i = id; i != id + _add - 1; ++i)
+								SubIds.Add(i);
+
+							SelId = id + _add - 1;
 
 							_f.Changed = CacheLoad.Changed(_f.Parts);
 						}
@@ -240,13 +232,10 @@ namespace McdView
 		/// part.
 		/// @note If inserted part(s)' refs are less than the insertion point
 		/// then the refs are okay; if the refs are equal to or greater than the
-		/// insertion point then the refs need to be advanced. This behavior is
-		/// warranteed only on the first insert of copied parts; the refs can
-		/// go wonky on 2+ inserts.
-		/// TODO: Alter the refs properly in '_partsCopied' after each
-		/// insert-operation.
-		/// @note The refs shall be deleted if inserted parts are *not* in the
-		/// currently loaded recordset.
+		/// insertion point then the refs need to be advanced.
+		/// @note The refs shall be deleted if inserted parts are from an
+		/// MCD-file that has a different label than the currently loaded
+		/// MCD-file.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -290,8 +279,7 @@ namespace McdView
 				_bypassScrollZero = true;
 				_f.Parts = array;
 
-				ShiftRefs(id, _partsCopied.Count);
-
+				ShiftRefs();
 
 				SubIds.Clear();
 				for (int i = id; i != id + _partsCopied.Count - 1; ++i)
@@ -305,52 +293,19 @@ namespace McdView
 
 		/// <summary>
 		/// Updates refs when parts are added or inserted.
-		/// Shifts references to dead- and altr-parts by a given amount starting
-		/// at references equal to or greater than a given ID.
 		/// </summary>
-		/// <param name="start"></param>
-		/// <param name="shift"></param>
-		private void ShiftRefs(int start, int shift)
+		private void ShiftRefs()
 		{
-			if (start + shift != Parts.Length) // don't bother shifting any refs if the parts are inserted at the end of the array
+			for (int i = 0; i != Parts.Length; ++i)
 			{
-				Tilepart part;
-				McdRecord record;
-
-				int id;
-
-				for (int i = 0; i != Parts.Length; ++i)
+				if (Parts[i].Dead != null)
 				{
-					part = Parts[i];
-					record = part.Record;
+					Parts[i].Record.DieTile = (byte)Parts[i].Dead.TerId;
+				}
 
-					if ((id = record.DieTile) != 0 && id >= start)
-					{
-						if ((id = record.DieTile + shift) < Parts.Length)
-						{
-							record.DieTile = (byte)id;
-							part.Dead = Parts[id];
-						}
-						else
-						{
-							record.DieTile = (byte)0;
-							part.Dead = null;
-						}
-					}
-
-					if ((id = record.Alt_MCD) != 0 && id >= start)
-					{
-						if ((id = record.Alt_MCD + shift) < Parts.Length)
-						{
-							record.Alt_MCD = (byte)id;
-							part.Alternate = Parts[id];
-						}
-						else
-						{
-							record.Alt_MCD = (byte)0;
-							part.Alternate = null;
-						}
-					}
+				if (Parts[i].Alternate != null)
+				{
+					Parts[i].Record.Alt_MCD = (byte)Parts[i].Alternate.TerId;
 				}
 			}
 		}

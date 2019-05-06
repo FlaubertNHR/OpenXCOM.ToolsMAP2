@@ -225,7 +225,10 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a blank record For Duplicate().
+		/// cTor[2]. Creates a blank record for Duplicate().
+		/// @note The compiler figures out the difference between
+		/// - private McdRecord()
+		/// - public  McdRecord(null)
 		/// </summary>
 		private McdRecord()
 		{}

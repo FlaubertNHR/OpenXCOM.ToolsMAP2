@@ -585,8 +585,6 @@ namespace McdView
 						else
 							pal = Palette.TftdBattle;
 
-						// NOTE: The spriteset is also maintained by a pointer
-						// that's stored in each tilepart. Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
@@ -661,8 +659,6 @@ namespace McdView
 						else
 							pal = Palette.TftdBattle;
 
-						// NOTE: The spriteset is also maintained by a pointer
-						// that's stored in each tilepart. Can be null.
 						Spriteset = ResourceInfo.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
@@ -740,8 +736,6 @@ namespace McdView
 					else
 						pal = Palette.TftdBattle;
 
-					// NOTE: The spriteset is also maintained by a pointer
-					// that's stored in each tilepart. Can be null.
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(PfeMcd),
@@ -817,8 +811,6 @@ namespace McdView
 				ResourceInfo.ReloadSprites = true;	// is needed here to change palette transparency.
 													// Ie, the palette is transparent in MapView but I want it non-transparent in McdView.
 
-				// NOTE: The spriteset is also maintained by a pointer
-				// that's stored in each tilepart. Can be null.
 				Spriteset = ResourceInfo.LoadSpriteset(
 													Label,
 													Path.GetDirectoryName(PfeMcd),
@@ -1233,8 +1225,6 @@ namespace McdView
 						else
 							pal = Palette.TftdBattle;
 
-						// NOTE: The spriteset is also maintained by a pointer
-						// that's stored in each tilepart. Can be null.
 						CopyPanel.Spriteset = ResourceInfo.LoadSpriteset(
 																	CopyPanel.Label,
 																	Path.GetDirectoryName(CopyPanel.PfeMcd),

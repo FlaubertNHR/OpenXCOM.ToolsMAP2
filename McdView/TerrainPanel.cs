@@ -256,7 +256,7 @@ namespace McdView
 
 				int offset = -Scroller.Value;
 
-				int i;
+				int i, spriteId;
 				for (i = 0; i != Parts.Length; ++i)
 				{
 					if (i != 0)
@@ -265,11 +265,11 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset, 0,
 										i * XCImage.SpriteWidth32 + i + offset, Height);
 
-					if (Spriteset != null)
+					if (Spriteset != null && Spriteset.Count != 0)
 					{
 						Tilepart part = Parts[i];
-						if (part != null // not sure why Tilepart entries are null that aren't null but here they are
-							&& (sprite = Spriteset[part.Record.Sprite1].Sprite) != null) // go to the source ffs.
+						if ((spriteId = part.Record.Sprite1) < Spriteset.Count
+							&& (sprite = Spriteset[spriteId].Sprite) != null)
 						{
 							DrawSprite(
 									sprite,
@@ -326,29 +326,26 @@ namespace McdView
 										McdviewF.FLAGS);
 				}
 
-				if (Spriteset != null)
+				if (Spriteset != null && Spriteset.Count != 0)
 				{
 					for (i = 0; i != Parts.Length; ++i) // dead part ->
 					{
 						Tilepart part = Parts[i];
-						if (part != null)
+						if ((spriteId = part.Dead.Record.Sprite1) < Spriteset.Count
+							&& (sprite = Spriteset[spriteId].Sprite) != null)
 						{
-							if (part.Dead != null
-								&& (sprite = Spriteset[part.Dead.Record.Sprite1].Sprite) != null) // go to the source ffs.
-							{
-								DrawSprite(
-										sprite,
-										i * XCImage.SpriteWidth32 + i + offset,
-										y2_sprite - part.Dead.Record.TileOffset);
-							}
-							else if (part.Record.DieTile != 0)
-								_graphics.FillRectangle(
-													Colors.BrushInvalid,
-													i * XCImage.SpriteWidth32 + i + offset,
-													y2_sprite,
-													XCImage.SpriteWidth32,
-													XCImage.SpriteHeight40);
+							DrawSprite(
+									sprite,
+									i * XCImage.SpriteWidth32 + i + offset,
+									y2_sprite - part.Dead.Record.TileOffset);
 						}
+						else if (part.Record.DieTile != 0)
+							_graphics.FillRectangle(
+												Colors.BrushInvalid,
+												i * XCImage.SpriteWidth32 + i + offset,
+												y2_sprite,
+												XCImage.SpriteWidth32,
+												XCImage.SpriteHeight40);
 					}
 				}
 
@@ -357,29 +354,26 @@ namespace McdView
 								0,     y2_line,
 								Width, y2_line);
 
-				if (Spriteset != null)
+				if (Spriteset != null && Spriteset.Count != 0)
 				{
 					for (i = 0; i != Parts.Length; ++i) // alternate part ->
 					{
 						Tilepart part = Parts[i];
-						if (part != null)
+						if ((spriteId = part.Alternate.Record.Sprite1) < Spriteset.Count
+							&& (sprite = Spriteset[spriteId].Sprite) != null)
 						{
-							if (part.Alternate != null
-								&& (sprite = Spriteset[part.Alternate.Record.Sprite1].Sprite) != null) // go to the source ffs.
-							{
-								DrawSprite(
-										sprite,
-										i * XCImage.SpriteWidth32 + i + offset,
-										y3_sprite - part.Alternate.Record.TileOffset);
-							}
-							else if (part.Record.Alt_MCD != 0)
-								_graphics.FillRectangle(
-													Colors.BrushInvalid,
-													i * XCImage.SpriteWidth32 + i + offset,
-													y3_sprite,
-													XCImage.SpriteWidth32,
-													XCImage.SpriteHeight40);
+							DrawSprite(
+									sprite,
+									i * XCImage.SpriteWidth32 + i + offset,
+									y3_sprite - part.Alternate.Record.TileOffset);
 						}
+						else if (part.Record.Alt_MCD != 0)
+							_graphics.FillRectangle(
+												Colors.BrushInvalid,
+												i * XCImage.SpriteWidth32 + i + offset,
+												y3_sprite,
+												XCImage.SpriteWidth32,
+												XCImage.SpriteHeight40);
 					}
 				}
 			}
