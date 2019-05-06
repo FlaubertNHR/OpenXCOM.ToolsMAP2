@@ -154,7 +154,7 @@ namespace McdView
 				_bypassScrollZero = true;
 				_f.Parts = array; // assign back to 'Parts' via McdviewF
 
-				ShiftRefs();
+				UpdateRefs();
 
 				SubIds.Clear();
 				SelId = id;
@@ -197,7 +197,7 @@ namespace McdView
 							_bypassScrollZero = true;
 							_f.Parts = array;
 
-							ShiftRefs();
+							UpdateRefs();
 
 							SubIds.Clear();
 							for (i = id; i != id + _add - 1; ++i)
@@ -279,7 +279,7 @@ namespace McdView
 				_bypassScrollZero = true;
 				_f.Parts = array;
 
-				ShiftRefs();
+				UpdateRefs();
 
 				SubIds.Clear();
 				for (int i = id; i != id + _partsCopied.Count - 1; ++i)
@@ -294,7 +294,7 @@ namespace McdView
 		/// <summary>
 		/// Updates refs when parts are added or inserted.
 		/// </summary>
-		private void ShiftRefs()
+		private void UpdateRefs()
 		{
 			for (int i = 0; i != Parts.Length; ++i)
 			{
@@ -574,10 +574,10 @@ namespace McdView
 				foreach (var sel in sels)
 				{
 					if (sel != 0)
-						ClearRefs(sel);
+						ClearRefs(sel); // TODO: figure out how to keep refs OnCut
 				}
 
-				ShiftRefs();
+				UpdateRefs();
 
 				_f.Changed = CacheLoad.Changed(_f.Parts);
 			}
@@ -594,8 +594,7 @@ namespace McdView
 
 			for (int i = 0; i != Parts.Length; ++i)
 			{
-				part = Parts[i];
-				record = part.Record;
+				record = (part = Parts[i]).Record;
 
 				if (record.DieTile == id)
 					part.Dead = null;
@@ -687,8 +686,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Swaps two death- and alternate-references. Any references that point
-		/// to 'a' point to 'b' and vice versa.
+		/// Swaps two dead- and altr-refs. Any refs that point to 'a' point to
+		/// 'b' and vice versa.
 		/// </summary>
 		/// <param name="a"></param>
 		/// <param name="b"></param>
@@ -701,8 +700,7 @@ namespace McdView
 
 			for (int i = 0; i != Parts.Length; ++i)
 			{
-				part   = Parts[i];
-				record = part.Record;
+				record = (part = Parts[i]).Record;
 
 				if ((id = record.DieTile) != 0)
 				{
