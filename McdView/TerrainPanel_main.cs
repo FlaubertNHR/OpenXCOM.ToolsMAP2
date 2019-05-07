@@ -324,7 +324,7 @@ namespace McdView
 		}
 
 
-		private bool _spritesetChanged;
+		internal bool SpritesetChanged;
 
 		/// <summary>
 		/// Clones a tilepart and its sprites from the CopyPanel's partset (and
@@ -358,7 +358,18 @@ namespace McdView
 
 					if (!_ial_SpriteIds.ContainsKey(spriteId))
 					{
-						_spritesetChanged = true;
+						SpritesetChanged = true;
+
+						if (_f.Spriteset == null)
+						{
+							Palette pal;
+							if (_f.isTftd())
+								pal = Palette.TftdBattle;
+							else
+								pal = Palette.UfoBattle;
+
+							_f.Spriteset = new SpriteCollection(_f.Label, pal);
+						}
 
 						var sprite_src = _f.CopyPanel.Spriteset[spriteId] as PckImage;
 						var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);

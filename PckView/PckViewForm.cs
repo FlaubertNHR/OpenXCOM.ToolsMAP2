@@ -952,12 +952,12 @@ namespace PckView
 		{
 			using (var sfd = new SaveFileDialog())
 			{
-				int tabOffsetLength;
+				int tabwordLength;
 				if (IsBigobs = (sender == miCreateBigobs)) // Bigobs support for XCImage/PckImage
 				{
 					sfd.Title = "Create a PCK (bigobs) file";
 					XCImage.SpriteHeight = 48;
-					tabOffsetLength = 2;
+					tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
 				}
 				else
 				{
@@ -966,11 +966,11 @@ namespace PckView
 					if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckImage
 					{
 						sfd.Title = "Create a PCK (tftd unit) file";
-						tabOffsetLength = 4;
+						tabwordLength = ResourceInfo.TAB_WORD_LENGTH_4;
 					}
 					else
 					{
-						tabOffsetLength = 2;
+						tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
 
 						if (sender == miCreateUnitUfo) // Ufo Unit support for XCImage/PckImage
 							sfd.Title = "Create a PCK (ufo unit) file";
@@ -999,7 +999,7 @@ namespace PckView
 					var spriteset = new SpriteCollection(
 													SpritesetLabel,
 													pal,
-													tabOffsetLength);
+													tabwordLength);
 
 					OnPaletteClick(_paletteItems[pal], EventArgs.Empty);
 
@@ -1106,10 +1106,10 @@ namespace PckView
 												SpritesetDirectory,
 												SpritesetLabel,
 												TilePanel.Spriteset,
-												((SpriteCollection)TilePanel.Spriteset).TabwordLength))
+												TilePanel.Spriteset.TabwordLength))
 				{
-					SpritesChanged = true; // NOTE: is used by MapView's TileView to flag the Map to reload.
-				}
+					SpritesChanged = true;	// NOTE: is used by MapView's TileView to flag the Map to reload.
+				}							// TODO: Replace w/ 'ResourceInfo.ReloadSprites'
 				else
 				{
 					ShowSaveError();
@@ -1179,7 +1179,7 @@ namespace PckView
 														dir,
 														file,
 														TilePanel.Spriteset,
-														((SpriteCollection)TilePanel.Spriteset).TabwordLength))
+														TilePanel.Spriteset.TabwordLength))
 						{
 							if (!revertReady) // load the SavedAs files ->
 								LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
@@ -1187,7 +1187,7 @@ namespace PckView
 							SpritesChanged = true;	// NOTE: is used by MapView's TileView to flag the Map to reload.
 						}							// btw, reload MapView's Map in either case;
 						else						// the new (Save As...) terrain-label may also be in the Map's terrainset.
-						{
+						{							// TODO: Replace w/ 'ResourceInfo.ReloadSprites'
 							ShowSaveError();
 
 							if (revertReady)
@@ -1280,7 +1280,7 @@ namespace PckView
 						string fullpath = Path.Combine(fbd.SelectedPath, file + PngExt);
 						if (!File.Exists(fullpath))
 						{
-							BitmapService.ExportSpritesheet(fullpath, (SpriteCollection)TilePanel.Spriteset, Pal, 8);
+							BitmapService.ExportSpritesheet(fullpath, TilePanel.Spriteset, Pal, 8);
 						}
 						else
 							MessageBox.Show(
@@ -1716,7 +1716,8 @@ namespace PckView
 
 		/// <summary>
 		/// Backs up the PCK+TAB files before trying a Save or SaveAs.
-		/// NOTE: A possible internal reason that a spriteset is invalid is that
+		/// @note See also McdView.McdViewF.OnClick_SaveSpriteset().
+		/// @note A possible internal reason that a spriteset is invalid is that
 		/// if the total length of its compressed PCK-data exceeds 2^16 bits
 		/// (roughly). That is, the TAB file tracks the offsets and needs to
 		/// know the total length of the PCK file, but UFO's TAB file stores the
@@ -1726,11 +1727,13 @@ namespace PckView
 		/// but the *start offset* for a sprite cannot -- at least that's how it
 		/// works in MapView I/II. Other apps like XCOM, OpenXcom, MCDEdit will
 		/// use their own routines.)
-		/// NOTE: It appears that TFTD's terrain files suffer this limitation
-		/// also.
+		/// @note It appears that TFTD's terrain files suffer this limitation
+		/// also (2-byte TabwordLength).
 		/// </summary>
 		private void BackupSpritesetFiles()
 		{
+			// TODO: Don't be such a nerd; see McdView's safety save routine.
+
 			Directory.CreateDirectory(SpritesetDirectory); // in case user deleted the dir.
 
 			_pfePck = Path.Combine(SpritesetDirectory, SpritesetLabel + GlobalsXC.PckExt);

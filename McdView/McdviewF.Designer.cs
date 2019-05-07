@@ -16,6 +16,8 @@
 		private System.Windows.Forms.MenuItem miSaveas;
 		private System.Windows.Forms.MenuItem miReload;
 		private System.Windows.Forms.MenuItem miSeparator1;
+		private System.Windows.Forms.MenuItem miSaveSpriteset;
+		private System.Windows.Forms.MenuItem miSeparator2;
 		private System.Windows.Forms.MenuItem miQuit;
 		private System.Windows.Forms.MenuItem miPaletteMenu;
 		private System.Windows.Forms.MenuItem miPaletteUfo;
@@ -283,6 +285,8 @@
 			this.miSaveas = new System.Windows.Forms.MenuItem();
 			this.miReload = new System.Windows.Forms.MenuItem();
 			this.miSeparator1 = new System.Windows.Forms.MenuItem();
+			this.miSaveSpriteset = new System.Windows.Forms.MenuItem();
+			this.miSeparator2 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
@@ -555,6 +559,8 @@
 			this.miSaveas,
 			this.miReload,
 			this.miSeparator1,
+			this.miSaveSpriteset,
+			this.miSeparator2,
 			this.miQuit});
 			this.miFileMenu.Text = "&File";
 			// 
@@ -606,9 +612,22 @@
 			this.miSeparator1.Index = 6;
 			this.miSeparator1.Text = "-";
 			// 
+			// miSaveSpriteset
+			// 
+			this.miSaveSpriteset.Enabled = false;
+			this.miSaveSpriteset.Index = 7;
+			this.miSaveSpriteset.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
+			this.miSaveSpriteset.Text = "S&ave spriteset";
+			this.miSaveSpriteset.Click += new System.EventHandler(this.OnClick_SaveSpriteset);
+			// 
+			// miSeparator2
+			// 
+			this.miSeparator2.Index = 8;
+			this.miSeparator2.Text = "-";
+			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 7;
+			this.miQuit.Index = 9;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnClick_Quit);

@@ -71,7 +71,7 @@ namespace McdView
 		internal SpriteCollection Spriteset
 		{
 			get { return _spriteset; }
-			private set
+			set
 			{
 				PartsPanel.Spriteset = (_spriteset = value);
 			}
@@ -599,9 +599,10 @@ namespace McdView
 
 						Text = "McdView - " + PfeMcd;
 
-						miSave  .Enabled =
-						miSaveas.Enabled =
-						miReload.Enabled = true;
+						miSave         .Enabled =
+						miSaveas       .Enabled =
+						miReload       .Enabled =
+						miSaveSpriteset.Enabled = true;
 
 						PartsPanel.Select();
 					}
@@ -703,9 +704,10 @@ namespace McdView
 					Changed = false;
 					Text = "McdView - " + PfeMcd;
 
-					miSave  .Enabled =
-					miSaveas.Enabled =
-					miReload.Enabled = true;
+					miSave         .Enabled =
+					miSaveas       .Enabled =
+					miReload       .Enabled =
+					miSaveSpriteset.Enabled = true;
 
 					PartsPanel.Select();
 				}
@@ -858,9 +860,10 @@ namespace McdView
 			Changed = false;
 			Text = "McdView - " + PfeMcd;
 
-			miSave  .Enabled =
-			miSaveas.Enabled =
-			miReload.Enabled = true;
+			miSave         .Enabled =
+			miSaveas       .Enabled =
+			miReload       .Enabled =
+			miSaveSpriteset.Enabled = true;
 
 			PartsPanel.Select();
 			SelId = terId;
@@ -1043,6 +1046,90 @@ namespace McdView
 					fs.WriteByte(Convert.ToByte(record.BaseObject));	// 60 (bool)
 					fs.WriteByte((byte)record.Unknown61);				// 61
 				}
+			}
+		}
+
+
+		/// <summary>
+		/// Handles clicking the File|Save spriteset menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_SaveSpriteset(object sender, EventArgs e)
+		{
+			PartsPanel.SpritesetChanged = false;
+
+			if (Spriteset != null)
+			{
+				string dir = Path.GetDirectoryName(_pfeMcd);
+
+				string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
+				string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
+
+				BackupSpritesetFiles(dir, Label);
+
+				if (!(ResourceInfo.ReloadSprites = SpriteCollection.SaveSpriteset(
+																			dir,
+																			Label,
+																			Spriteset,
+																			ResourceInfo.TAB_WORD_LENGTH_2)))
+				{
+					// bork - likely too many sprites.
+					string error = String.Format(
+											System.Globalization.CultureInfo.CurrentCulture,
+											"An I/O error occurred.");
+					MessageBox.Show(
+								error,
+								" Error",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error,
+								MessageBoxDefaultButton.Button1,
+								0);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Backs up the PCK+TAB files before trying to save the Spriteset.
+		/// @note See also PckView.PckViewForm.OnSaveClick() and OnSaveAsClick().
+		/// @note A possible internal reason that a spriteset is invalid is that
+		/// if the total length of its compressed PCK-data exceeds 2^16 bits
+		/// (roughly). That is, the TAB file tracks the offsets and needs to
+		/// know the total length of the PCK file, but UFO's TAB file stores the
+		/// offsets in only 2-byte format (2^16 bits) so the arithmetic explodes
+		/// with an overflow as soon as an offset for one of the sprites becomes
+		/// too large. (Technically, the total PCK data can exceed 2^16 bits;
+		/// but the *start offset* for a sprite cannot -- at least that's how it
+		/// works in MapView I/II. Other apps like XCOM, OpenXcom, MCDEdit will
+		/// use their own routines.)
+		/// @note It appears that TFTD's terrain files suffer this limitation
+		/// also (2-byte TabwordLength).
+		/// </summary>
+		private static void BackupSpritesetFiles(string dir, string fil)
+		{
+			// TODO: Don't be such a nerd; see McdView's safety save routine.
+
+			Directory.CreateDirectory(dir); // in case user deleted the dir.
+
+			string pfePck = Path.Combine(dir, fil + GlobalsXC.PckExt);
+			string pfeTab = Path.Combine(dir, fil + GlobalsXC.TabExt);
+
+			string dirB = Path.Combine(dir, GlobalsXC.MV_Backup);
+
+			if (File.Exists(pfePck))
+			{
+				Directory.CreateDirectory(dirB);
+
+				string pfePckB = Path.Combine(dirB, fil + GlobalsXC.PckExt);
+				File.Copy(pfePck, pfePckB, true);
+			}
+
+			if (File.Exists(pfeTab))
+			{
+				Directory.CreateDirectory(dirB);
+
+				string pfeTabB = Path.Combine(dirB, fil + GlobalsXC.TabExt);
+				File.Copy(pfeTab, pfeTabB, true);
 			}
 		}
 

@@ -48,6 +48,12 @@ namespace XCom
 
 
 		private Palette _pal;
+		/// <summary>
+		/// TODO: SpriteCollection should not have a pointer to the palette; the
+		/// palette should be applied only when drawing. Where palette is used
+		/// to determine game-type a game-type enum should be implemented and
+		/// checked.
+		/// </summary>
 		public Palette Pal
 		{
 			get { return _pal; }
@@ -56,9 +62,9 @@ namespace XCom
 				_pal = value;
 
 				foreach (XCImage sprite in Sprites)
-					sprite.Sprite.Palette = _pal.ColorTable; // why is the dang palette in every god-dang XCImage.
-			}
-		}
+					sprite.Sprite.Palette = _pal.ColorTable;	// why is the dang palette in every god-dang XCImage.
+			}													// why is 'Palette' EVERYWHERE: For indexed images
+		}														// the palette ought be merely a peripheral.
 
 		/// <summary>
 		/// Gets/sets the 'XCImage' at a specified id. Adds a sprite to the end
@@ -288,7 +294,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Saves the current spriteset to PCK+TAB.
+		/// Saves a specified spriteset to PCK+TAB.
 		/// </summary>
 		/// <param name="dir">the directory to save to</param>
 		/// <param name="file">the file without extension</param>
@@ -346,7 +352,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Saves the current iconset to SCANG.DAT.
+		/// Saves a specified iconset to SCANG.DAT.
 		/// </summary>
 		/// <param name="dir">the directory to save to</param>
 		/// <param name="file">the file without extension</param>

@@ -53,15 +53,15 @@ namespace XCom
 		/// (TFTD unitsprites use 4-byte Tab-offsetLengths although Bigobs 32x48 uses 2-byte)
 		/// (the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte)
 		/// </summary>
-		/// <param name="terrain">the terrain file w/out extension</param>
-		/// <param name="dirTerrain">path to the directory of the terrain file</param>
+		/// <param name="file">the file w/out extension</param>
+		/// <param name="dir">path to the directory of the file</param>
 		/// <param name="tabwordLength"></param>
 		/// <param name="pal"></param>
 		/// <param name="warnonly">true if called by McdView (warn-only if spriteset not found)</param>
 		/// <returns>a SpriteCollection containing all the sprites for a given Terrain</returns>
 		public static SpriteCollection LoadSpriteset(
-				string terrain,
-				string dirTerrain,
+				string file,
+				string dir,
 				int tabwordLength,
 				Palette pal,
 				bool warnonly = false)
@@ -69,12 +69,12 @@ namespace XCom
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("ResourceInfo.LoadSpriteset");
 
-			if (!String.IsNullOrEmpty(dirTerrain))
+			if (!String.IsNullOrEmpty(dir))
 			{
-				//LogFile.WriteLine(". dirTerrain= " + dirTerrain);
-				//LogFile.WriteLine(". terrain= " + terrain);
+				//LogFile.WriteLine(". dir= " + dir);
+				//LogFile.WriteLine(". file= " + file);
 
-				var pfSpriteset = Path.Combine(dirTerrain, terrain);
+				var pfSpriteset = Path.Combine(dir, file);
 				//LogFile.WriteLine(". pfSpriteset= " + pfSpriteset);
 
 				string pfePck = pfSpriteset + GlobalsXC.PckExt;
@@ -85,11 +85,11 @@ namespace XCom
 				if (File.Exists(pfePck) && File.Exists(pfeTab))
 				{
 					if (!_spritesets_byPalette.ContainsKey(pal))
-						 _spritesets_byPalette.Add(pal, new Dictionary<string, SpriteCollection>());
+						 _spritesets_byPalette.Add(pal, new Dictionary<string, SpriteCollection>());	// TODO: Don't do it that way; is overwrought.
+																										// just change a spriteset's palette-ptr on the fly.
+					var spritesets = _spritesets_byPalette[pal];										// instead of having umpteen bazillion spritesets loaded.
 
-					var spritesets = _spritesets_byPalette[pal];
-
-					if (ReloadSprites) // used by XCMainWindow.OnPckSavedEvent <- TileView's pck-editor
+					if (ReloadSprites) // used by XCMainWindow.OnPckSavedEvent <- TileView's pck-editor/mcd-editor
 					{
 						//LogFile.WriteLine(". ReloadSprites");
 
@@ -109,7 +109,7 @@ namespace XCom
 																fsTab,
 																tabwordLength,
 																pal,
-																terrain);
+																file);
 							if (spriteset.Borked)
 							{
 								using (var f = new Infobox(
@@ -124,7 +124,7 @@ namespace XCom
 							spritesets.Add(pfSpriteset, spriteset); // NOTE: Add the spriteset even if it is Borked.
 						}
 					}
-					else LogFile.WriteLine("Spriteset already found in the collection.");
+					//else LogFile.WriteLine("Spriteset already found in the collection.");
 
 					//LogFile.WriteLine(". pal= " + pal.Label + " / pfSpriteset= " + pfSpriteset);
 					//LogFile.WriteLine(". _spritesets_byPalette[pal][pfSpriteset]= " + (_spritesets_byPalette[pal][pfSpriteset] != null ? "found" : "NULL"));
