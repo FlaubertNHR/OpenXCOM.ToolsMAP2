@@ -324,6 +324,8 @@ namespace McdView
 		}
 
 
+		private bool _spritesetChanged;
+
 		/// <summary>
 		/// Clones a tilepart and its sprites from the CopyPanel's partset (and
 		/// spriteset) to the Main partset (and spriteset).
@@ -356,7 +358,7 @@ namespace McdView
 
 					if (!_ial_SpriteIds.ContainsKey(spriteId))
 					{
-//						spritesChanged = true;
+						_spritesetChanged = true;
 
 						var sprite_src = _f.CopyPanel.Spriteset[spriteId] as PckImage;
 						var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);

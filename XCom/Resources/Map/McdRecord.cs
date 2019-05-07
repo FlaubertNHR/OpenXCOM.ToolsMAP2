@@ -28,7 +28,7 @@ namespace XCom
 		/// being used in McdView which doesn't require as many variables,
 		/// sprite-pointers, etc etc as MapView does. In short 'IsTerrainSet' is
 		/// a master flag for MapView vs. McdView; MapView is assumed by default
-		/// while the flag is disabled in the constructor of 'McdviewF'.
+		/// while the flag is disabled by the constructor of 'McdviewF'.
 		/// </summary>
 		public static bool IsTerrainSet = true;
 
@@ -441,10 +441,6 @@ namespace XCom
 
 			// SetId is used only by 'MapInfoOutputBox'.
 			record.SetId = SetId;
-
-			// kL_note: All values in an MCD record are unsigned bytes except the
-			// ScanG ref (little endian unsigned short) and the TerrainOffset
-			// (signed byte).
 
 			record.Sprite1 = Sprite1;
 			record.Sprite2 = Sprite2;

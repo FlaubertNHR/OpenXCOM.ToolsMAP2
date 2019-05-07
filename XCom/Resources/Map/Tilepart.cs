@@ -134,15 +134,16 @@ namespace XCom
 		// Basically this is how animations operate. For *any* animations to
 		// happen the Animation option has to be turned on. Non-door sprites
 		// always keep their array of sprites and will cycle because turning on
-		// the Animation option starts a timer that does that (see
-		// 'MapView.MainViewPanel').
+		// the Animation option starts a timer that does that.
+		// 'MapView.MainViewUnderlay' for timer
+		// 'MapView.XCMainWindow'     for options
 		// 
-		// UfoDoor sprites will animate when the Animation option is on and the
-		// Doors option is turned on; but whether or not they animate is
+		// SlidingDoor sprites will animate when the Animation option is on and
+		// the Doors option is turned on; but whether or not they animate is
 		// controlled by setting their sprite-arrays to either the first image
 		// or an array of images, like non-door records do.
 		// 
-		// HumanDoors, which also need the Animation option on to animate as
+		// HingedDoors, which also need the Animation option on to animate as
 		// well as the Doors option on, will cycle by flipping their sprite
 		// back and forth between their first sprite and their Alt-tile's first
 		// sprite; they stop animating by setting the entire array to their

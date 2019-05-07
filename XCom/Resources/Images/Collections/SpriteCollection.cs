@@ -269,11 +269,11 @@ namespace XCom
 						bindata.Length);	// count
 
 			// chop bindata into 16-byte icons (4x4 256-color indexed)
-			int icons = bindata.Length / 16;
+			int iconCount = bindata.Length / 16;
 
 			// TODO: Test that ScanG.Dat is not corrupt (ie. is evenly divisible by 16).
 
-			for (int id = 0; id != icons; ++id)
+			for (int id = 0; id != iconCount; ++id)
 			{
 				var icondata = new byte[16];
 
@@ -302,6 +302,7 @@ namespace XCom
 				int tabwordLength)
 		{
 			//LogFile.WriteLine("SpriteCollection.SaveSpriteset");
+
 			string pfePck = Path.Combine(dir, file + GlobalsXC.PckExt);
 			string pfeTab = Path.Combine(dir, file + GlobalsXC.TabExt);
 
