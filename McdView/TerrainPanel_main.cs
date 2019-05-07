@@ -362,12 +362,7 @@ namespace McdView
 
 						if (_f.Spriteset == null)
 						{
-							Palette pal;
-							if (_f.isTftd())
-								pal = Palette.TftdBattle;
-							else
-								pal = Palette.UfoBattle;
-
+							Palette pal = _f.isTftd() ? Palette.TftdBattle : Palette.UfoBattle;
 							_f.Spriteset = new SpriteCollection(_f.Label, pal);
 						}
 
