@@ -16,9 +16,11 @@ namespace McdView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal ChangedBox()
+		internal ChangedBox(string info)
 		{
 			InitializeComponent();
+
+			lbl_info.Text = info;
 		}
 		#endregion cTor
 
@@ -73,13 +75,12 @@ namespace McdView
 			// 
 			// lbl_info
 			// 
-			this.lbl_info.Location = new System.Drawing.Point(70, 10);
+			this.lbl_info.Location = new System.Drawing.Point(5, 10);
 			this.lbl_info.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_info.Name = "lbl_info";
-			this.lbl_info.Size = new System.Drawing.Size(105, 15);
+			this.lbl_info.Size = new System.Drawing.Size(235, 15);
 			this.lbl_info.TabIndex = 0;
-			this.lbl_info.Text = "MCD has changed";
-			this.lbl_info.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_info.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// btn_Cancel
 			// 
