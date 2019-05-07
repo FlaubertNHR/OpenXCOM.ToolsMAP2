@@ -813,6 +813,7 @@
 			this.gb_IalOptions.TabIndex = 17;
 			this.gb_IalOptions.TabStop = false;
 			this.gb_IalOptions.Text = " Options - INSERT AFTER LAST ";
+			this.gb_IalOptions.Visible = false;
 			// 
 			// cb_IalAltrsubs
 			// 
