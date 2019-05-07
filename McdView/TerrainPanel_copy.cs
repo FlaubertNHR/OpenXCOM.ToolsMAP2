@@ -143,7 +143,7 @@ namespace McdView
 			}
 		}
 
-		/// <summary>
+/*		/// <summary>
 		/// This function does a crapload of mapping in an attempt to figure out
 		/// where the dead-refs and altr-refs should end up while copyparts are
 		/// being inserted to the Main parts-array.
@@ -285,7 +285,7 @@ namespace McdView
 
 			foreach (var altrid in altrs)
 				_ialAltrs.Add(Parts[altrid]);
-		}
+		} */
 		#endregion Events (context)
 
 

@@ -314,12 +314,197 @@ namespace McdView
 			}
 		}
 
+
+
+
+		List<Tilepart> _partsList = new List<Tilepart>();
+		Dictionary<int,int> _partIds = new Dictionary<int,int>();
+		Dictionary<int,int> _spriteIds = new Dictionary<int,int>();
+
+		private void addPart(int id0, int id1)
+		{
+			LogFile.WriteLine("addPart() id0= " + id0 + " id1= " + id1);
+
+			if (!_partIds.ContainsKey(id0))
+			{
+				LogFile.WriteLine(". id0 not in List - add");
+
+				_partIds.Add(id0, id1);
+
+				Tilepart part0 = _f.CopyPanel.Parts[id0];
+				McdRecord record0 = part0.Record;
+
+				int spriteId;
+				for (int phase = 0; phase != 8; ++phase)
+				{
+					switch (phase)
+					{
+						default: spriteId = record0.Sprite1; break; //case 0
+						case 1:  spriteId = record0.Sprite2; break;
+						case 2:  spriteId = record0.Sprite3; break;
+						case 3:  spriteId = record0.Sprite4; break;
+						case 4:  spriteId = record0.Sprite5; break;
+						case 5:  spriteId = record0.Sprite6; break;
+						case 6:  spriteId = record0.Sprite7; break;
+						case 7:  spriteId = record0.Sprite8; break;
+					}
+
+					if (!_spriteIds.ContainsKey(spriteId))
+					{
+//						spritesChanged = true;
+
+						var sprite0 = _f.CopyPanel.Spriteset[spriteId] as PckImage;
+						var sprite1 = sprite0.Duplicate(_f.Spriteset, _f.Spriteset.Count);
+						_spriteIds.Add(spriteId, _f.Spriteset.Count);
+
+						_f.Spriteset.Sprites.Add(sprite1);
+					}
+				}
+
+				Tilepart part1 = part0.CreateInsert();
+				part1.TerId = id1;
+				_partsList.Add(part1);
+
+				McdRecord record1 = _partsList[id1].Record;
+
+				for (int phase = 0; phase != 8; ++phase)
+				{
+//					switch (phase)
+//					{
+//						default: spriteId = record.Sprite1; break; //case 0
+//						case 1:  spriteId = record.Sprite2; break;
+//						case 2:  spriteId = record.Sprite3; break;
+//						case 3:  spriteId = record.Sprite4; break;
+//						case 4:  spriteId = record.Sprite5; break;
+//						case 5:  spriteId = record.Sprite6; break;
+//						case 6:  spriteId = record.Sprite7; break;
+//						case 7:  spriteId = record.Sprite8; break;
+//					}
+
+//					if (spriteIds.ContainsKey(spriteId)) // ... shall be true
+//					{
+					switch (phase)
+					{
+						default: record1.Sprite1 = (byte)_spriteIds[record1.Sprite1]; break; //case 0
+						case 1:  record1.Sprite2 = (byte)_spriteIds[record1.Sprite2]; break;
+						case 2:  record1.Sprite3 = (byte)_spriteIds[record1.Sprite3]; break;
+						case 3:  record1.Sprite4 = (byte)_spriteIds[record1.Sprite4]; break;
+						case 4:  record1.Sprite5 = (byte)_spriteIds[record1.Sprite5]; break;
+						case 5:  record1.Sprite6 = (byte)_spriteIds[record1.Sprite6]; break;
+						case 6:  record1.Sprite7 = (byte)_spriteIds[record1.Sprite7]; break;
+						case 7:  record1.Sprite8 = (byte)_spriteIds[record1.Sprite8]; break;
+					}
+//					}
+					// else "0"/null
+				}
+	
+				if (record1.DieTile != 0)
+				{
+					addPart(record1.DieTile, _partsList.Count);
+				}
+	
+				if (record1.Alt_MCD != 0)
+				{
+					addPart(record1.Alt_MCD, _partsList.Count);
+				}
+			}
+		}
+
+		private void ChangeRefs(int idStart)
+		{
+			LogFile.WriteLine("");
+			LogFile.WriteLine("ChangeRefs()");
+
+			int id0, id1;
+			for (int i = idStart; i != Parts.Length; ++i)
+			{
+				if ((id0 = Parts[i].Record.DieTile) != 0)
+				{
+					Parts[i].Record.DieTile = (byte)(id1 = _partIds[id0]);
+					Parts[i].Dead = Parts[id1];
+				}
+
+				if ((id0 = Parts[i].Record.Alt_MCD) != 0)
+				{
+					Parts[i].Record.Alt_MCD = (byte)(id1 = _partIds[id0]);
+					Parts[i].Altr = Parts[id1];
+				}
+			}
+		}
+
+
 		/// <summary>
 		/// A special insert-operation via the CopyPanel. Selects the last
 		/// tilepart and inserts the CopyPanel's selected tileparts.
 		/// See TerrainPanel_copy.OnInsertAfterLastClick().
 		/// </summary>
 		internal void InsertAfterLast()
+		{
+			_partsList.Clear();
+			_partIds  .Clear();
+			_spriteIds.Clear();
+
+			SelId = Parts.Length - 1;
+
+			int id = SelId + 1;
+
+			LogFile.WriteLine("IaL - Parts.Length= " + Parts.Length);
+			LogFile.WriteLine(". id= " + id);
+
+/*			for (int i = 0; i != Parts.Length; ++i)
+			{
+				if (i == id)
+				{
+					for (int pos = 0; pos != _partsCopied.Count; ++pos)
+					{
+						LogFile.WriteLine("");
+						LogFile.WriteLine("pos= " + pos);
+
+						addPart(_partsCopied[pos].TerId, _partsList.Count);
+					}
+					LogFile.WriteLine("BREAK");
+					break; // is the end of '_partsList'.
+				}
+
+				LogFile.WriteLine(". add Mainpart i= " + i);
+				_partsList.Add(Parts[i]);
+			} */
+			for (int i = 0; i != Parts.Length; ++i)
+			{
+				LogFile.WriteLine(". add Mainpart i= " + i);
+				_partsList.Add(Parts[i]);
+			}
+
+			for (int pos = 0; pos != _partsCopied.Count; ++pos)
+			{
+				LogFile.WriteLine("");
+				LogFile.WriteLine("pos= " + pos);
+
+				addPart(_partsCopied[pos].TerId, _partsList.Count);
+			}
+			LogFile.WriteLine("end of _partsList");
+
+
+			_bypassScrollZero = true;
+			_f.Parts = _partsList.ToArray();
+
+			ChangeRefs(id);
+
+			SubIds.Clear();
+			for (int i = id; i != Parts.Length - 1; ++i)
+				SubIds.Add(i);
+
+			SelId = Parts.Length - 1;
+
+			_f.Changed = CacheLoad.Changed(_f.Parts);
+		}
+
+		/// <summary>
+		/// A special insert-operation via the CopyPanel. Selects the last
+		/// tilepart and inserts the CopyPanel's selected tileparts.
+		/// See TerrainPanel_copy.OnInsertAfterLastClick().
+		/// </summary>
+		internal void InsertAfterLast_()
 		{
 			SelId = Parts.Length - 1;
 
@@ -331,17 +516,24 @@ namespace McdView
 			{
 				if (i == id)
 				{
-					var spriteIds = new Dictionary<int,int>(); // Map the copied spriteIds to the Main spriteIds w/out duplicates.
-
 					// IaL tileparts are injected in the following order:
 					// - copyparts
 					// - altrparts
 					// - deadparts
 
+					var spriteIds = new Dictionary<int,int>(); // Map the copied spriteIds to the Main spriteIds w/out duplicates.
+
+					bool copySprites = _f.CopyPanel.cb_IalSprites.Enabled
+									&& _f.CopyPanel.cb_IalSprites.Checked;
+
+					bool copyDeads = _fcopy.cb_IalDeadpart.Enabled
+								  && _fcopy.cb_IalDeadpart.Checked;
+					bool copyDeadSprites = _fcopy.cb_IalDeadsprites.Enabled
+										&& _fcopy.cb_IalDeadsprites.Checked;
+
 					for (int pos = 0; pos != _partsCopied.Count; ++pos, ++i) // -> ADD DIRECTLY SELECTED PARTS FIRST ->
 					{
-						if (   _f.CopyPanel.cb_IalSprites.Enabled
-							&& _f.CopyPanel.cb_IalSprites.Checked)
+						if (copySprites)
 						{
 							McdRecord record = _partsCopied[pos].Record;
 
@@ -376,24 +568,24 @@ namespace McdView
 						array[i] = _partsCopied[pos].CreateInsert();
 						array[i].TerId = i;
 
-						if (spriteIds.Count != 0)
+						if (copySprites) //spriteIds.Count != 0
 						{
 							McdRecord record = array[i].Record;
 
-							int spriteId;
+//							int spriteId;
 							for (int phase = 0; phase != 8; ++phase)
 							{
-								switch (phase)
-								{
-									default: spriteId = record.Sprite1; break; //case 0
-									case 1:  spriteId = record.Sprite2; break;
-									case 2:  spriteId = record.Sprite3; break;
-									case 3:  spriteId = record.Sprite4; break;
-									case 4:  spriteId = record.Sprite5; break;
-									case 5:  spriteId = record.Sprite6; break;
-									case 6:  spriteId = record.Sprite7; break;
-									case 7:  spriteId = record.Sprite8; break;
-								}
+//								switch (phase)
+//								{
+//									default: spriteId = record.Sprite1; break; //case 0
+//									case 1:  spriteId = record.Sprite2; break;
+//									case 2:  spriteId = record.Sprite3; break;
+//									case 3:  spriteId = record.Sprite4; break;
+//									case 4:  spriteId = record.Sprite5; break;
+//									case 5:  spriteId = record.Sprite6; break;
+//									case 6:  spriteId = record.Sprite7; break;
+//									case 7:  spriteId = record.Sprite8; break;
+//								}
 
 //								if (spriteIds.ContainsKey(spriteId)) // ... shall be true
 //								{
@@ -413,13 +605,66 @@ namespace McdView
 							}
 						}
 
-//						if (!isTer)
+						if (copyDeads) // || isTerr
+						{
+							if (copyDeadSprites)
+							{
+								McdRecord record = _partsCopied[pos].Dead.Record;
+
+								int spriteId;
+								for (int phase = 0; phase != 8; ++phase)
+								{
+									switch (phase)
+									{
+										default: spriteId = record.Sprite1; break; //case 0
+										case 1:  spriteId = record.Sprite2; break;
+										case 2:  spriteId = record.Sprite3; break;
+										case 3:  spriteId = record.Sprite4; break;
+										case 4:  spriteId = record.Sprite5; break;
+										case 5:  spriteId = record.Sprite6; break;
+										case 6:  spriteId = record.Sprite7; break;
+										case 7:  spriteId = record.Sprite8; break;
+									}
+
+									if (!spriteIds.ContainsKey(spriteId))
+									{
+//										spritesChanged = true;
+
+										var sprite0 = _f.CopyPanel.Spriteset[spriteId] as PckImage;
+										var sprite1 = sprite0.Duplicate(_f.Spriteset, _f.Spriteset.Count);
+										spriteIds.Add(spriteId, _f.Spriteset.Count);
+
+										_f.Spriteset.Sprites.Add(sprite1);
+									}
+								}
+							}
+
+							if (   _fcopy.cb_IalDeadsubs.Enabled
+								&& _fcopy.cb_IalDeadsubs.Checked)
+							{
+							}
+						}
+						else
 						{
 							array[i].Record.DieTile = (byte)0;
 							array[i].Dead = null;
 
 							array[i].Record.Alt_MCD = (byte)0;
 							array[i].Altr = null;
+						}
+
+						if (   _fcopy.cb_IalAltrpart.Enabled
+							&& _fcopy.cb_IalAltrpart.Checked)
+						{
+							if (   _fcopy.cb_IalAltrsubs.Enabled
+								&& _fcopy.cb_IalAltrsubs.Checked)
+							{
+							}
+
+							if (   _fcopy.cb_IalAltrsprites.Enabled
+								&& _fcopy.cb_IalAltrsprites.Checked)
+							{
+							}
 						}
 					}
 //					int pos, var;
