@@ -172,7 +172,7 @@ namespace McdView
 			btn_Open.Location = new Point(gb_IalOptions.Width, pnl_bg.ClientRectangle.Height - btn_Open.Height);
 			btn_Open.Width = gb_Loft.Location.X - gb_IalOptions.Width;
 
-			cb_IalSprites.Text = "copy Sprite phases to " + _f.Label;
+			cb_IalSprites.Text = "copy Sprites to " + _f.Label + GlobalsXC.PckExt;
 
 
 			PartsPanel = new TerrainPanel_copy(_f, this);
@@ -288,19 +288,6 @@ namespace McdView
 		{
 			PartsPanel.Select();
 		}
-
-
-		private void OnCheckChanged_IalDeadpart(object sender, EventArgs e)
-		{
-			cb_IalDeadsubs   .Enabled =
-			cb_IalDeadsprites.Enabled = cb_IalDeadpart.Checked;
-		}
-
-		private void OnCheckChanged_IalAltrpart(object sender, EventArgs e)
-		{
-			cb_IalAltrsubs   .Enabled =
-			cb_IalAltrsprites.Enabled = cb_IalAltrpart.Checked;
-		}
 		#endregion Events
 
 
@@ -311,23 +298,10 @@ namespace McdView
 		/// </summary>
 		internal void EnableInsertOptions()
 		{
-			cb_IalSprites    .Checked =
-			cb_IalDeadpart   .Checked =
-			cb_IalDeadsubs   .Checked =
-			cb_IalDeadsprites.Checked =
-			cb_IalAltrpart   .Checked =
-			cb_IalAltrsubs   .Checked =
-			cb_IalAltrsprites.Checked = (_f.PfeMcd != PfeMcd);
-
-			cb_IalSprites    .Enabled =
-			cb_IalDeadsprites.Enabled =
-			cb_IalAltrsprites.Enabled = (Spriteset != null);
-
-
-			// TODO: Do not check for the Main files; allow creation
-			// of PCK/TAB-files after creation of a blank MCD-set.
-			// TODO: The spriteset is loaded so the files don't have to be checked;
-			// just check that 'Spriteset' and the required 'XCImage' objects are valid.
+			cb_IalDeadpart.Checked =
+			cb_IalAltrpart.Checked =
+			cb_IalSprites .Checked = (_f.PfeMcd != PfeMcd);
+			cb_IalSprites .Enabled = (Spriteset != null);
 		}
 
 

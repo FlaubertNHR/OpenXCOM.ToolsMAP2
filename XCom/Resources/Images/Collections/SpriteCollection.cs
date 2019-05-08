@@ -367,6 +367,7 @@ namespace XCom
 			{
 				if (pos > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
 				{
+//					result = "Sprite offset is invalid.";
 					result = "Only " + id + " of " + spriteset.Count
 						   + " sprites can be indexed in the TAB file."
 						   + Environment.NewLine
@@ -376,7 +377,7 @@ namespace XCom
 				pos += (uint)PckImage.TestSprite(spriteset[id]);
 			}
 
-			result = "Tab length is valid.";
+			result = "Sprite offsets are valid.";
 			return true;
 		}
 

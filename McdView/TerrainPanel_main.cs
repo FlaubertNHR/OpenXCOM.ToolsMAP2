@@ -341,36 +341,39 @@ namespace McdView
 				Tilepart part_src = _f.CopyPanel.Parts[id_src];
 				McdRecord record_src = part_src.Record;
 
-				int spriteId;
-				for (int phase = 0; phase != 8; ++phase)
+				if (_f.CopyPanel.cb_IalSprites.Checked) // TODO: -> class-var
 				{
-					switch (phase)
+					int spriteId;
+					for (int phase = 0; phase != 8; ++phase)
 					{
-						default: spriteId = record_src.Sprite1; break; //case 0
-						case 1:  spriteId = record_src.Sprite2; break;
-						case 2:  spriteId = record_src.Sprite3; break;
-						case 3:  spriteId = record_src.Sprite4; break;
-						case 4:  spriteId = record_src.Sprite5; break;
-						case 5:  spriteId = record_src.Sprite6; break;
-						case 6:  spriteId = record_src.Sprite7; break;
-						case 7:  spriteId = record_src.Sprite8; break;
-					}
-
-					if (!_ial_SpriteIds.ContainsKey(spriteId))
-					{
-						SpritesChanged = true;
-
-						if (_f.Spriteset == null)
+						switch (phase)
 						{
-							Palette pal = _f.isTftd() ? Palette.TftdBattle : Palette.UfoBattle;
-							_f.Spriteset = new SpriteCollection(_f.Label, pal);
+							default: spriteId = record_src.Sprite1; break; //case 0
+							case 1:  spriteId = record_src.Sprite2; break;
+							case 2:  spriteId = record_src.Sprite3; break;
+							case 3:  spriteId = record_src.Sprite4; break;
+							case 4:  spriteId = record_src.Sprite5; break;
+							case 5:  spriteId = record_src.Sprite6; break;
+							case 6:  spriteId = record_src.Sprite7; break;
+							case 7:  spriteId = record_src.Sprite8; break;
 						}
 
-						var sprite_src = _f.CopyPanel.Spriteset[spriteId] as PckImage;
-						var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);
-						_ial_SpriteIds.Add(spriteId, _f.Spriteset.Count);
+						if (!_ial_SpriteIds.ContainsKey(spriteId))
+						{
+							SpritesChanged = true;
 
-						_f.Spriteset.Sprites.Add(sprite_dst);
+							if (_f.Spriteset == null)
+							{
+								Palette pal = _f.isTftd() ? Palette.TftdBattle : Palette.UfoBattle;
+								_f.Spriteset = new SpriteCollection(_f.Label, pal);
+							}
+
+							var sprite_src = _f.CopyPanel.Spriteset[spriteId] as PckImage;
+							var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);
+							_ial_SpriteIds.Add(spriteId, _f.Spriteset.Count);
+
+							_f.Spriteset.Sprites.Add(sprite_dst);
+						}
 					}
 				}
 
@@ -380,27 +383,41 @@ namespace McdView
 
 				McdRecord record_dst = _ial_PartsList[id_dst].Record;
 
-				for (int phase = 0; phase != 8; ++phase)
+				if (_f.CopyPanel.cb_IalSprites.Checked) // TODO: -> class-var
 				{
-					switch (phase)
+					record_dst.Sprite1 = (byte)_ial_SpriteIds[record_dst.Sprite1];
+					record_dst.Sprite2 = (byte)_ial_SpriteIds[record_dst.Sprite2];
+					record_dst.Sprite3 = (byte)_ial_SpriteIds[record_dst.Sprite3];
+					record_dst.Sprite4 = (byte)_ial_SpriteIds[record_dst.Sprite4];
+					record_dst.Sprite5 = (byte)_ial_SpriteIds[record_dst.Sprite5];
+					record_dst.Sprite6 = (byte)_ial_SpriteIds[record_dst.Sprite6];
+					record_dst.Sprite7 = (byte)_ial_SpriteIds[record_dst.Sprite7];
+					record_dst.Sprite8 = (byte)_ial_SpriteIds[record_dst.Sprite8];
+				}
+				else
+				{
+					bool isTer = (_partsCopiedLabel == _f.Label); // zero sprite-phases if the terrain-labels differ
+					if (!isTer)
 					{
-						default: record_dst.Sprite1 = (byte)_ial_SpriteIds[record_dst.Sprite1]; break; //case 0
-						case 1:  record_dst.Sprite2 = (byte)_ial_SpriteIds[record_dst.Sprite2]; break;
-						case 2:  record_dst.Sprite3 = (byte)_ial_SpriteIds[record_dst.Sprite3]; break;
-						case 3:  record_dst.Sprite4 = (byte)_ial_SpriteIds[record_dst.Sprite4]; break;
-						case 4:  record_dst.Sprite5 = (byte)_ial_SpriteIds[record_dst.Sprite5]; break;
-						case 5:  record_dst.Sprite6 = (byte)_ial_SpriteIds[record_dst.Sprite6]; break;
-						case 6:  record_dst.Sprite7 = (byte)_ial_SpriteIds[record_dst.Sprite7]; break;
-						case 7:  record_dst.Sprite8 = (byte)_ial_SpriteIds[record_dst.Sprite8]; break;
+						record_dst.Sprite1 =
+						record_dst.Sprite2 =
+						record_dst.Sprite3 =
+						record_dst.Sprite4 =
+						record_dst.Sprite5 =
+						record_dst.Sprite6 =
+						record_dst.Sprite7 =
+						record_dst.Sprite8 = (byte)0;
 					}
 				}
-	
-				if (record_dst.DieTile != 0)
+
+				if (_f.CopyPanel.cb_IalDeadpart.Checked // TODO: -> class-var
+					&& record_dst.DieTile != 0)
 				{
 					addPart(record_dst.DieTile, _ial_PartsList.Count);
 				}
-	
-				if (record_dst.Alt_MCD != 0)
+
+				if (_f.CopyPanel.cb_IalAltrpart.Checked // TODO: -> class-var
+					&& record_dst.Alt_MCD != 0)
 				{
 					addPart(record_dst.Alt_MCD, _ial_PartsList.Count);
 				}
@@ -414,20 +431,38 @@ namespace McdView
 		/// <param name="idStart"></param>
 		private void ChangeRefs(int idStart)
 		{
+			bool isTer = (_partsCopiedLabel == _f.Label); // null refs if the terrain-labels differ
+
 			int id_src, id_dst;
 
 			for (int i = idStart; i != Parts.Length; ++i)
 			{
 				if ((id_src = Parts[i].Record.DieTile) != 0)
 				{
-					Parts[i].Record.DieTile = (byte)(id_dst = _ial_PartIds[id_src]);
-					Parts[i].Dead = Parts[id_dst];
+					if (_ial_PartIds.ContainsKey(id_src)) // if dead-parts are not inserted the entry could be invalid
+					{
+						Parts[i].Record.DieTile = (byte)(id_dst = _ial_PartIds[id_src]);
+						Parts[i].Dead = Parts[id_dst];
+					}
+					else if (!isTer)
+					{
+						Parts[i].Record.DieTile = (byte)0;
+						Parts[i].Dead = null;
+					}
 				}
 
 				if ((id_src = Parts[i].Record.Alt_MCD) != 0)
 				{
-					Parts[i].Record.Alt_MCD = (byte)(id_dst = _ial_PartIds[id_src]);
-					Parts[i].Altr = Parts[id_dst];
+					if (_ial_PartIds.ContainsKey(id_src)) // if altr-parts are not inserted the entry could be invalid
+					{
+						Parts[i].Record.Alt_MCD = (byte)(id_dst = _ial_PartIds[id_src]);
+						Parts[i].Altr = Parts[id_dst];
+					}
+					else if (!isTer)
+					{
+						Parts[i].Record.Alt_MCD = (byte)0;
+						Parts[i].Altr = null;
+					}
 				}
 			}
 		}

@@ -220,14 +220,10 @@
 		private System.Windows.Forms.TextBox tb32_isdropthrou;
 		private System.Windows.Forms.TextBox tb52_footsound;
 		private System.Windows.Forms.Button btn_Open;
-		internal System.Windows.Forms.CheckBox cb_IalAltrsprites;
-		internal System.Windows.Forms.CheckBox cb_IalDeadsprites;
 		internal System.Windows.Forms.CheckBox cb_IalAltrpart;
 		internal System.Windows.Forms.CheckBox cb_IalDeadpart;
 		internal System.Windows.Forms.CheckBox cb_IalSprites;
 		internal System.Windows.Forms.GroupBox gb_IalOptions;
-		internal System.Windows.Forms.CheckBox cb_IalAltrsubs;
-		internal System.Windows.Forms.CheckBox cb_IalDeadsubs;
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -277,11 +273,7 @@
 			this.tb00_phase0 = new System.Windows.Forms.TextBox();
 			this.pnl_bg = new System.Windows.Forms.Panel();
 			this.gb_IalOptions = new System.Windows.Forms.GroupBox();
-			this.cb_IalAltrsubs = new System.Windows.Forms.CheckBox();
-			this.cb_IalDeadsubs = new System.Windows.Forms.CheckBox();
-			this.cb_IalAltrsprites = new System.Windows.Forms.CheckBox();
 			this.cb_IalAltrpart = new System.Windows.Forms.CheckBox();
-			this.cb_IalDeadsprites = new System.Windows.Forms.CheckBox();
 			this.cb_IalDeadpart = new System.Windows.Forms.CheckBox();
 			this.cb_IalSprites = new System.Windows.Forms.CheckBox();
 			this.btn_Open = new System.Windows.Forms.Button();
@@ -798,58 +790,17 @@
 			// gb_IalOptions
 			// 
 			this.gb_IalOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.gb_IalOptions.Controls.Add(this.cb_IalAltrsubs);
-			this.gb_IalOptions.Controls.Add(this.cb_IalDeadsubs);
-			this.gb_IalOptions.Controls.Add(this.cb_IalAltrsprites);
 			this.gb_IalOptions.Controls.Add(this.cb_IalAltrpart);
-			this.gb_IalOptions.Controls.Add(this.cb_IalDeadsprites);
 			this.gb_IalOptions.Controls.Add(this.cb_IalDeadpart);
 			this.gb_IalOptions.Controls.Add(this.cb_IalSprites);
-			this.gb_IalOptions.Location = new System.Drawing.Point(5, 330);
+			this.gb_IalOptions.Location = new System.Drawing.Point(5, 370);
 			this.gb_IalOptions.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_IalOptions.Name = "gb_IalOptions";
 			this.gb_IalOptions.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_IalOptions.Size = new System.Drawing.Size(330, 100);
+			this.gb_IalOptions.Size = new System.Drawing.Size(330, 60);
 			this.gb_IalOptions.TabIndex = 17;
 			this.gb_IalOptions.TabStop = false;
 			this.gb_IalOptions.Text = " Options - INSERT AFTER LAST ";
-			this.gb_IalOptions.Visible = false;
-			// 
-			// cb_IalAltrsubs
-			// 
-			this.cb_IalAltrsubs.Checked = true;
-			this.cb_IalAltrsubs.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalAltrsubs.Location = new System.Drawing.Point(165, 75);
-			this.cb_IalAltrsubs.Margin = new System.Windows.Forms.Padding(0);
-			this.cb_IalAltrsubs.Name = "cb_IalAltrsubs";
-			this.cb_IalAltrsubs.Size = new System.Drawing.Size(160, 20);
-			this.cb_IalAltrsubs.TabIndex = 20;
-			this.cb_IalAltrsubs.Text = "copy all subs";
-			this.cb_IalAltrsubs.UseVisualStyleBackColor = true;
-			// 
-			// cb_IalDeadsubs
-			// 
-			this.cb_IalDeadsubs.Checked = true;
-			this.cb_IalDeadsubs.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalDeadsubs.Location = new System.Drawing.Point(35, 75);
-			this.cb_IalDeadsubs.Margin = new System.Windows.Forms.Padding(0);
-			this.cb_IalDeadsubs.Name = "cb_IalDeadsubs";
-			this.cb_IalDeadsubs.Size = new System.Drawing.Size(125, 20);
-			this.cb_IalDeadsubs.TabIndex = 19;
-			this.cb_IalDeadsubs.Text = "copy all subs";
-			this.cb_IalDeadsubs.UseVisualStyleBackColor = true;
-			// 
-			// cb_IalAltrsprites
-			// 
-			this.cb_IalAltrsprites.Checked = true;
-			this.cb_IalAltrsprites.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalAltrsprites.Location = new System.Drawing.Point(165, 55);
-			this.cb_IalAltrsprites.Margin = new System.Windows.Forms.Padding(0);
-			this.cb_IalAltrsprites.Name = "cb_IalAltrsprites";
-			this.cb_IalAltrsprites.Size = new System.Drawing.Size(160, 20);
-			this.cb_IalAltrsprites.TabIndex = 18;
-			this.cb_IalAltrsprites.Text = "copy sprites";
-			this.cb_IalAltrsprites.UseVisualStyleBackColor = true;
 			// 
 			// cb_IalAltrpart
 			// 
@@ -860,21 +811,8 @@
 			this.cb_IalAltrpart.Name = "cb_IalAltrpart";
 			this.cb_IalAltrpart.Size = new System.Drawing.Size(180, 20);
 			this.cb_IalAltrpart.TabIndex = 14;
-			this.cb_IalAltrpart.Text = "copy Alternate part";
+			this.cb_IalAltrpart.Text = "copy Alternate parts";
 			this.cb_IalAltrpart.UseVisualStyleBackColor = true;
-			this.cb_IalAltrpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_IalAltrpart);
-			// 
-			// cb_IalDeadsprites
-			// 
-			this.cb_IalDeadsprites.Checked = true;
-			this.cb_IalDeadsprites.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalDeadsprites.Location = new System.Drawing.Point(35, 55);
-			this.cb_IalDeadsprites.Margin = new System.Windows.Forms.Padding(0);
-			this.cb_IalDeadsprites.Name = "cb_IalDeadsprites";
-			this.cb_IalDeadsprites.Size = new System.Drawing.Size(125, 20);
-			this.cb_IalDeadsprites.TabIndex = 17;
-			this.cb_IalDeadsprites.Text = "copy sprites";
-			this.cb_IalDeadsprites.UseVisualStyleBackColor = true;
 			// 
 			// cb_IalDeadpart
 			// 
@@ -885,9 +823,8 @@
 			this.cb_IalDeadpart.Name = "cb_IalDeadpart";
 			this.cb_IalDeadpart.Size = new System.Drawing.Size(125, 20);
 			this.cb_IalDeadpart.TabIndex = 13;
-			this.cb_IalDeadpart.Text = "copy Death part";
+			this.cb_IalDeadpart.Text = "copy Death parts";
 			this.cb_IalDeadpart.UseVisualStyleBackColor = true;
-			this.cb_IalDeadpart.CheckedChanged += new System.EventHandler(this.OnCheckChanged_IalDeadpart);
 			// 
 			// cb_IalSprites
 			// 
@@ -898,7 +835,7 @@
 			this.cb_IalSprites.Name = "cb_IalSprites";
 			this.cb_IalSprites.Size = new System.Drawing.Size(310, 20);
 			this.cb_IalSprites.TabIndex = 12;
-			this.cb_IalSprites.Text = "copy Sprite phases to";
+			this.cb_IalSprites.Text = "copy Sprites to";
 			this.cb_IalSprites.UseVisualStyleBackColor = true;
 			// 
 			// btn_Open

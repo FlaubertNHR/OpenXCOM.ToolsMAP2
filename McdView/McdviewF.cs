@@ -188,7 +188,7 @@ namespace McdView
 			{
 				_label = value;
 				if (CopyPanel != null)
-					CopyPanel.cb_IalSprites.Text = "copy Sprite phases to " + _label;
+					CopyPanel.cb_IalSprites.Text = "copy Sprites to " + _label + GlobalsXC.PckExt;
 			}
 		}
 
@@ -1270,7 +1270,7 @@ namespace McdView
 
 				using (var f = new Infobox(
 										" Strict test",
-										"Tab length is invalid.",
+										"Sprite offset is invalid.",
 										result))
 				{
 					f.Owner = this;
