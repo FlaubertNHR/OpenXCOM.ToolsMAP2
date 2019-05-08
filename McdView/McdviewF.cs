@@ -1224,10 +1224,13 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_CheckVals(object sender, EventArgs e)
 		{
-			List<string> borks = GetStrictBorks();
+			bool suppress = false;
 
+			List<string> borks = GetStrictBorks();
 			if (borks.Count != 0)
 			{
+				suppress = true;
+
 				string copyable = String.Empty;
 				foreach (var bork in borks)
 				{
@@ -1246,7 +1249,24 @@ namespace McdView
 					f.ShowDialog();
 				}
 			}
-			else
+
+			string result;
+			if (Spriteset != null
+				&& !SpriteCollection.Test2byteSpriteset(Spriteset, out result))
+			{
+				suppress = true;
+
+				using (var f = new Infobox(
+										" Strict test",
+										"Tab length is invalid.",
+										result))
+				{
+					f.Owner = this;
+					f.ShowDialog();
+				}
+			}
+
+			if (!suppress)
 			{
 				MessageBox.Show(
 							this,
@@ -1870,9 +1890,11 @@ namespace McdView
 			{
 				if ((y = Spriteset.Count - 1) > 255)
 				{
-					borks.Add("The terrain's spriteset count exceeds 256 but an MCD record"
-								+ " cannot deal with a sprite ref in excess of 256 because the"
-								+ " MCD values of sprite refs are stored in a single byte (0..255)");
+					borks.Add("#The terrain's spriteset count exceeds 256 but an MCD record"
+							+ Environment.NewLine
+							+ "cannot deal with a sprite ref in excess of 256 because the"
+							+ Environment.NewLine
+							+ "MCD values of sprite refs are stored in a single byte (0..255)");
 				}
 			}
 			else
@@ -1964,9 +1986,11 @@ namespace McdView
 			{
 				if ((y = LoFT.Length / 256 - 1) > 255)
 				{
-					borks.Add("The LoFTs count exceeds 256 but an MCD record"
-								+ " cannot deal with a LoFT ref in excess of 256 because the"
-								+ " MCD values of LoFT refs are stored in a single byte (0..255)");
+					borks.Add("#The LoFTs count exceeds 256 but an MCD record cannot deal"
+							+ Environment.NewLine
+							+ "with a LoFT ref in excess of 256 because the MCD values"
+							+ Environment.NewLine
+							+ "of LoFT refs are stored in a single byte (0..255)");
 				}
 			}
 			else
@@ -2098,9 +2122,11 @@ namespace McdView
 			{
 				if ((y = ScanG.Length / 16 - 1) > 65535)
 				{
-					borks.Add("The ScanG count exceeds 65536 but an MCD record"
-								+ " cannot deal with a ScanG ref in excess of 65536 because the"
-								+ " MCD values of ScanG refs are stored in an unsigned short (0..65535)"); // yeah, right.
+					borks.Add("#The ScanG count exceeds 65536 but an MCD record cannot deal"
+							+ Environment.NewLine
+							+ "with a ScanG ref in excess of 65536 because the MCD values"
+							+ Environment.NewLine
+							+ "of ScanG refs are stored in an unsigned short (0..65535)"); // yeah, right.
 				}
 			}
 			else
@@ -2237,10 +2263,10 @@ namespace McdView
 			{
 				borks.Add("#38 LeftRightHalf (record) does not equal LeftRightHalf (text).");
 			}
-			if (val != 3)
-			{
-				borks.Add("#38 LeftRightHalf is not \"3\".");
-			}
+//			if (val != 3)
+//			{
+//				borks.Add("#38 LeftRightHalf is not \"3\".");
+//			}
 
 			val = Parts[SelId].Record.TU_Walk;
 			if (val != Int32.Parse(tb39_tuwalk.Text))

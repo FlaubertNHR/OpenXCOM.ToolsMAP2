@@ -154,6 +154,12 @@ namespace XCom
 
 
 		#region Methods (static)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="bw"></param>
+		/// <param name="sprite"></param>
+		/// <returns></returns>
 		internal static int SaveSpritesetSprite(BinaryWriter bw, XCImage sprite)
 		{
 			var binlist = new List<byte>();
@@ -212,9 +218,8 @@ namespace XCom
 			// pixels at the end of an image, it gets 0xFE,0xFF tacked on before
 			// the final 0xFF (end of image) marker.
 			//
-			// Note that this algorithm can and will tack on multiple 0xFE,0xFF
+			// Obsolete: This algorithm can and will tack on multiple 0xFE,0xFF
 			// if there's more than 256 transparent pixels at the end of an image.
-
 
 //			bool appendStopByte = false;
 //			while (lenTransparent >= ByteMaximumValue)
@@ -241,6 +246,59 @@ namespace XCom
 
 			bw.Write(binlist.ToArray());
 
+			return binlist.Count;
+		}
+
+		/// <summary>
+		/// Creates a mockup of an RLE-encoded sprite and returns its length.
+		/// </summary>
+		/// <param name="sprite"></param>
+		/// <returns></returns>
+		internal static int TestSprite(XCImage sprite)
+		{
+			var binlist = new List<byte>();
+
+			int lenTransparent = 0;
+			bool first = true;
+
+			for (int id = 0; id != sprite.Bindata.Length; ++id)
+			{
+				byte b = sprite.Bindata[id];
+
+				if (b == Palette.TransparentId)
+					++lenTransparent;
+				else
+				{
+					if (lenTransparent != 0)
+					{
+						if (first)
+						{
+							first = false;
+
+							binlist     .Add((byte)(lenTransparent / sprite.Sprite.Width));	// qty of initial transparent rows
+							lenTransparent = (byte)(lenTransparent % sprite.Sprite.Width);	// qty of transparent pixels starting on the next row
+						}
+
+						while (lenTransparent >= ByteMaximumValue)
+						{
+							lenTransparent -= ByteMaximumValue;
+
+							binlist.Add(SpriteTransparencyByte);
+							binlist.Add(ByteMaximumValue);
+						}
+
+						if (lenTransparent != 0)
+						{
+							binlist.Add(SpriteTransparencyByte);
+							binlist.Add((byte)lenTransparent);
+						}
+						lenTransparent = 0;
+					}
+					binlist.Add(b);
+				}
+			}
+
+			binlist.Add(SpriteStopByte);
 			return binlist.Count;
 		}
 		#endregion Methods (static)

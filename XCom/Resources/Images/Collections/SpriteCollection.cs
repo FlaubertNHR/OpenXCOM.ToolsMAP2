@@ -88,7 +88,7 @@ namespace XCom
 				}
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTors
@@ -289,10 +289,10 @@ namespace XCom
 				Sprites.Add(new ScanGicon(icondata, id));
 			}
 		}
-		#endregion
+		#endregion cTors
 
 
-		#region Methods
+		#region Methods Methods (static)
 		/// <summary>
 		/// Saves a specified spriteset to PCK+TAB.
 		/// </summary>
@@ -352,6 +352,35 @@ namespace XCom
 		}
 
 		/// <summary>
+		/// Tests a specified 2-byte TabwordLength spriteset for validity of its
+		/// TAB-file.
+		/// </summary>
+		/// <param name="spriteset">the SpriteCollection to test</param>
+		/// <param name="result">a ref to hold the result as a string</param>
+		/// <returns>true if mission was successful</returns>
+		public static bool Test2byteSpriteset(
+				SpriteCollection spriteset,
+				out string result)
+		{
+			uint pos = 0;
+			for (int id = 0; id != spriteset.Count; ++id)
+			{
+				if (pos > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
+				{
+					result = "Only " + id + " of " + spriteset.Count
+						   + " sprites can be indexed in the TAB file."
+						   + Environment.NewLine
+						   + "Failed at position " + pos;
+					return false;
+				}
+				pos += (uint)PckImage.TestSprite(spriteset[id]);
+			}
+
+			result = "Tab length is valid.";
+			return true;
+		}
+
+		/// <summary>
 		/// Saves a specified iconset to SCANG.DAT.
 		/// </summary>
 		/// <param name="dir">the directory to save to</param>
@@ -386,7 +415,7 @@ namespace XCom
 				return false;
 			}
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }
 
