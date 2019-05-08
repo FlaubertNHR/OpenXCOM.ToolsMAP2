@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using XCom;
+using XCom.Interfaces;
 
 
 namespace McdView
@@ -160,7 +161,7 @@ namespace McdView
 			gb_Explode   .Location = new Point(gb_Tu.Right, 0);
 			gb_Unused    .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
 
-			gb_IalOptions.Location = new Point(0, pnl_bg.ClientRectangle.Height - gb_IalOptions.Height);
+			gb_IalOptions.Location = new Point(0, pnl_bg.ClientSize.Height - gb_IalOptions.Height);
 
 			ClientSize = new Size(
 								gb_Overhead     .Width
@@ -169,8 +170,9 @@ namespace McdView
 									+ gb_Loft   .Width,
 								ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
 
-			btn_Open.Location = new Point(gb_IalOptions.Width, pnl_bg.ClientRectangle.Height - btn_Open.Height);
-			btn_Open.Width = gb_Loft.Location.X - gb_IalOptions.Width;
+			btn_Open.Location = new Point(gb_Unused.Left, gb_Unused.Bottom);
+			btn_Open.Width  = gb_Loft.Location.X - gb_IalOptions.Width;
+			btn_Open.Height = pnl_bg.ClientSize.Height - gb_Unused.Bottom;
 
 			cb_IalSprites.Text = "copy Sprites to " + _f.Label + GlobalsXC.PckExt;
 
@@ -192,6 +194,7 @@ namespace McdView
 
 			PartsPanel.Select();
 
+//			LayoutSpritesGroup(); // <- is done in OnResize which happens OnLoad auto.
 
 			foreach (Control control in Controls) // TODO: Do this recursively.
 			{
@@ -238,6 +241,16 @@ namespace McdView
 			_f.CloseCopyPanel();
 
 			base.OnFormClosing(e);
+		}
+
+		/// <summary>
+		/// Handles the Form's Resize event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+			LayoutSpritesGroup();
 		}
 
 		/// <summary>
@@ -292,6 +305,55 @@ namespace McdView
 
 
 		#region Methods
+		private static int SPRITE_ORIGIN_X;
+
+		/// <summary>
+		/// Spaces the layout of the fields etc. of the labels and textboxes in
+		/// the sprite-group.
+		/// @note Based on McdviewF_panels.LayoutSpritesGroup().
+		/// </summary>
+		private void LayoutSpritesGroup()
+		{
+			SPRITE_ORIGIN_X = gb_Sprites.Width / 2 - McdviewF.SPRITE_OFFSET_X * 4;
+			if (SPRITE_ORIGIN_X < 0) SPRITE_ORIGIN_X = 0;
+
+			const int left = 5;
+			int offset = XCImage.SpriteWidth32 - (tb00_phase0.Width / 2);
+
+			tb00_phase0.Left = left + SPRITE_ORIGIN_X + offset;
+			tb01_phase1.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X;
+			tb02_phase2.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 2;
+			tb03_phase3.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 3;
+			tb04_phase4.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 4;
+			tb05_phase5.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 5;
+			tb06_phase6.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 6;
+			tb07_phase7.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 7;
+
+			lbl00.Left = tb00_phase0.Left + (tb00_phase0.Width / 2) - ((lbl00.Width + lbl00_phase0.Width) / 2);
+			lbl00_phase0.Left = lbl00.Right;
+
+			lbl01.Left = lbl00.Left + McdviewF.SPRITE_OFFSET_X;
+			lbl01_phase1.Left = lbl01.Right;
+
+			lbl02.Left = lbl01.Left + McdviewF.SPRITE_OFFSET_X;
+			lbl02_phase2.Left = lbl02.Right;
+
+			lbl03.Left = lbl02.Left + McdviewF.SPRITE_OFFSET_X;
+			lbl03_phase3.Left = lbl03.Right;
+
+			lbl04.Left = lbl03.Left + McdviewF.SPRITE_OFFSET_X;
+			lbl04_phase4.Left = lbl04.Right;
+
+			lbl05.Left = lbl04.Left + McdviewF.SPRITE_OFFSET_X;
+			lbl05_phase5.Left = lbl05.Right;
+
+			lbl06.Left = lbl05.Left + McdviewF.SPRITE_OFFSET_X;
+			lbl06_phase6.Left = lbl06.Right;
+
+			lbl07.Left = lbl06.Left + McdviewF.SPRITE_OFFSET_X;
+			lbl07_phase7.Left = lbl07.Right;
+		}
+
 		/// <summary>
 		/// Determines if the InsertAfterLast options groupbox is enabled and/or
 		/// if its checkboxes are checked.

@@ -520,14 +520,14 @@
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Name = "gb_Sprites";
 			this.gb_Sprites.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Sprites.Size = new System.Drawing.Size(675, 60);
+			this.gb_Sprites.Size = new System.Drawing.Size(675, 55);
 			this.gb_Sprites.TabIndex = 2;
 			this.gb_Sprites.TabStop = false;
 			this.gb_Sprites.Text = " Sprites ";
 			// 
 			// lbl00
 			// 
-			this.lbl00.Location = new System.Drawing.Point(15, 40);
+			this.lbl00.Location = new System.Drawing.Point(15, 35);
 			this.lbl00.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl00.Name = "lbl00";
 			this.lbl00.Size = new System.Drawing.Size(20, 15);
@@ -537,7 +537,7 @@
 			// 
 			// lbl07
 			// 
-			this.lbl07.Location = new System.Drawing.Point(505, 40);
+			this.lbl07.Location = new System.Drawing.Point(505, 35);
 			this.lbl07.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl07.Name = "lbl07";
 			this.lbl07.Size = new System.Drawing.Size(20, 15);
@@ -547,7 +547,7 @@
 			// 
 			// lbl01
 			// 
-			this.lbl01.Location = new System.Drawing.Point(85, 40);
+			this.lbl01.Location = new System.Drawing.Point(85, 35);
 			this.lbl01.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl01.Name = "lbl01";
 			this.lbl01.Size = new System.Drawing.Size(20, 15);
@@ -557,7 +557,7 @@
 			// 
 			// lbl06
 			// 
-			this.lbl06.Location = new System.Drawing.Point(435, 40);
+			this.lbl06.Location = new System.Drawing.Point(435, 35);
 			this.lbl06.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl06.Name = "lbl06";
 			this.lbl06.Size = new System.Drawing.Size(20, 15);
@@ -567,7 +567,7 @@
 			// 
 			// lbl02
 			// 
-			this.lbl02.Location = new System.Drawing.Point(155, 40);
+			this.lbl02.Location = new System.Drawing.Point(155, 35);
 			this.lbl02.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl02.Name = "lbl02";
 			this.lbl02.Size = new System.Drawing.Size(20, 15);
@@ -577,7 +577,7 @@
 			// 
 			// lbl03
 			// 
-			this.lbl03.Location = new System.Drawing.Point(225, 40);
+			this.lbl03.Location = new System.Drawing.Point(225, 35);
 			this.lbl03.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl03.Name = "lbl03";
 			this.lbl03.Size = new System.Drawing.Size(20, 15);
@@ -587,7 +587,7 @@
 			// 
 			// lbl05
 			// 
-			this.lbl05.Location = new System.Drawing.Point(365, 40);
+			this.lbl05.Location = new System.Drawing.Point(365, 35);
 			this.lbl05.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl05.Name = "lbl05";
 			this.lbl05.Size = new System.Drawing.Size(20, 15);
@@ -597,7 +597,7 @@
 			// 
 			// lbl04
 			// 
-			this.lbl04.Location = new System.Drawing.Point(295, 40);
+			this.lbl04.Location = new System.Drawing.Point(295, 35);
 			this.lbl04.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl04.Name = "lbl04";
 			this.lbl04.Size = new System.Drawing.Size(20, 15);
@@ -607,7 +607,7 @@
 			// 
 			// lbl03_phase3
 			// 
-			this.lbl03_phase3.Location = new System.Drawing.Point(245, 40);
+			this.lbl03_phase3.Location = new System.Drawing.Point(245, 35);
 			this.lbl03_phase3.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl03_phase3.Name = "lbl03_phase3";
 			this.lbl03_phase3.Size = new System.Drawing.Size(50, 15);
@@ -617,7 +617,7 @@
 			// 
 			// lbl00_phase0
 			// 
-			this.lbl00_phase0.Location = new System.Drawing.Point(35, 40);
+			this.lbl00_phase0.Location = new System.Drawing.Point(35, 35);
 			this.lbl00_phase0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl00_phase0.Name = "lbl00_phase0";
 			this.lbl00_phase0.Size = new System.Drawing.Size(50, 15);
@@ -627,7 +627,7 @@
 			// 
 			// lbl01_phase1
 			// 
-			this.lbl01_phase1.Location = new System.Drawing.Point(105, 40);
+			this.lbl01_phase1.Location = new System.Drawing.Point(105, 35);
 			this.lbl01_phase1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl01_phase1.Name = "lbl01_phase1";
 			this.lbl01_phase1.Size = new System.Drawing.Size(50, 15);
@@ -637,7 +637,7 @@
 			// 
 			// lbl07_phase7
 			// 
-			this.lbl07_phase7.Location = new System.Drawing.Point(525, 40);
+			this.lbl07_phase7.Location = new System.Drawing.Point(525, 35);
 			this.lbl07_phase7.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl07_phase7.Name = "lbl07_phase7";
 			this.lbl07_phase7.Size = new System.Drawing.Size(50, 15);
@@ -647,7 +647,7 @@
 			// 
 			// lbl02_phase2
 			// 
-			this.lbl02_phase2.Location = new System.Drawing.Point(175, 40);
+			this.lbl02_phase2.Location = new System.Drawing.Point(175, 35);
 			this.lbl02_phase2.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl02_phase2.Name = "lbl02_phase2";
 			this.lbl02_phase2.Size = new System.Drawing.Size(50, 15);
@@ -657,7 +657,7 @@
 			// 
 			// lbl06_phase6
 			// 
-			this.lbl06_phase6.Location = new System.Drawing.Point(455, 40);
+			this.lbl06_phase6.Location = new System.Drawing.Point(455, 35);
 			this.lbl06_phase6.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl06_phase6.Name = "lbl06_phase6";
 			this.lbl06_phase6.Size = new System.Drawing.Size(50, 15);
@@ -667,7 +667,7 @@
 			// 
 			// lbl04_phase4
 			// 
-			this.lbl04_phase4.Location = new System.Drawing.Point(315, 40);
+			this.lbl04_phase4.Location = new System.Drawing.Point(315, 35);
 			this.lbl04_phase4.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl04_phase4.Name = "lbl04_phase4";
 			this.lbl04_phase4.Size = new System.Drawing.Size(50, 15);
@@ -677,7 +677,7 @@
 			// 
 			// lbl05_phase5
 			// 
-			this.lbl05_phase5.Location = new System.Drawing.Point(385, 40);
+			this.lbl05_phase5.Location = new System.Drawing.Point(385, 35);
 			this.lbl05_phase5.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl05_phase5.Name = "lbl05_phase5";
 			this.lbl05_phase5.Size = new System.Drawing.Size(50, 15);
@@ -687,7 +687,7 @@
 			// 
 			// tb07_phase7
 			// 
-			this.tb07_phase7.Location = new System.Drawing.Point(525, 20);
+			this.tb07_phase7.Location = new System.Drawing.Point(525, 15);
 			this.tb07_phase7.Margin = new System.Windows.Forms.Padding(0);
 			this.tb07_phase7.Name = "tb07_phase7";
 			this.tb07_phase7.Size = new System.Drawing.Size(35, 19);
@@ -697,7 +697,7 @@
 			// 
 			// tb06_phase6
 			// 
-			this.tb06_phase6.Location = new System.Drawing.Point(455, 20);
+			this.tb06_phase6.Location = new System.Drawing.Point(455, 15);
 			this.tb06_phase6.Margin = new System.Windows.Forms.Padding(0);
 			this.tb06_phase6.Name = "tb06_phase6";
 			this.tb06_phase6.Size = new System.Drawing.Size(35, 19);
@@ -707,7 +707,7 @@
 			// 
 			// tb05_phase5
 			// 
-			this.tb05_phase5.Location = new System.Drawing.Point(385, 20);
+			this.tb05_phase5.Location = new System.Drawing.Point(385, 15);
 			this.tb05_phase5.Margin = new System.Windows.Forms.Padding(0);
 			this.tb05_phase5.Name = "tb05_phase5";
 			this.tb05_phase5.Size = new System.Drawing.Size(35, 19);
@@ -717,7 +717,7 @@
 			// 
 			// tb04_phase4
 			// 
-			this.tb04_phase4.Location = new System.Drawing.Point(315, 20);
+			this.tb04_phase4.Location = new System.Drawing.Point(315, 15);
 			this.tb04_phase4.Margin = new System.Windows.Forms.Padding(0);
 			this.tb04_phase4.Name = "tb04_phase4";
 			this.tb04_phase4.Size = new System.Drawing.Size(35, 19);
@@ -727,7 +727,7 @@
 			// 
 			// tb03_phase3
 			// 
-			this.tb03_phase3.Location = new System.Drawing.Point(245, 20);
+			this.tb03_phase3.Location = new System.Drawing.Point(245, 15);
 			this.tb03_phase3.Margin = new System.Windows.Forms.Padding(0);
 			this.tb03_phase3.Name = "tb03_phase3";
 			this.tb03_phase3.Size = new System.Drawing.Size(35, 19);
@@ -737,7 +737,7 @@
 			// 
 			// tb02_phase2
 			// 
-			this.tb02_phase2.Location = new System.Drawing.Point(175, 20);
+			this.tb02_phase2.Location = new System.Drawing.Point(175, 15);
 			this.tb02_phase2.Margin = new System.Windows.Forms.Padding(0);
 			this.tb02_phase2.Name = "tb02_phase2";
 			this.tb02_phase2.Size = new System.Drawing.Size(35, 19);
@@ -747,7 +747,7 @@
 			// 
 			// tb01_phase1
 			// 
-			this.tb01_phase1.Location = new System.Drawing.Point(105, 20);
+			this.tb01_phase1.Location = new System.Drawing.Point(105, 15);
 			this.tb01_phase1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb01_phase1.Name = "tb01_phase1";
 			this.tb01_phase1.Size = new System.Drawing.Size(35, 19);
@@ -757,7 +757,7 @@
 			// 
 			// tb00_phase0
 			// 
-			this.tb00_phase0.Location = new System.Drawing.Point(40, 20);
+			this.tb00_phase0.Location = new System.Drawing.Point(40, 15);
 			this.tb00_phase0.Margin = new System.Windows.Forms.Padding(0);
 			this.tb00_phase0.Name = "tb00_phase0";
 			this.tb00_phase0.Size = new System.Drawing.Size(35, 19);
@@ -781,7 +781,7 @@
 			this.pnl_bg.Controls.Add(this.gb_Health);
 			this.pnl_bg.Controls.Add(this.gb_Step);
 			this.pnl_bg.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnl_bg.Location = new System.Drawing.Point(0, 235);
+			this.pnl_bg.Location = new System.Drawing.Point(0, 230);
 			this.pnl_bg.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_bg.Name = "pnl_bg";
 			this.pnl_bg.Size = new System.Drawing.Size(675, 436);
@@ -793,7 +793,7 @@
 			this.gb_IalOptions.Controls.Add(this.cb_IalAltrpart);
 			this.gb_IalOptions.Controls.Add(this.cb_IalDeadpart);
 			this.gb_IalOptions.Controls.Add(this.cb_IalSprites);
-			this.gb_IalOptions.Location = new System.Drawing.Point(5, 375);
+			this.gb_IalOptions.Location = new System.Drawing.Point(5, 373);
 			this.gb_IalOptions.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_IalOptions.Name = "gb_IalOptions";
 			this.gb_IalOptions.Padding = new System.Windows.Forms.Padding(0);
@@ -840,9 +840,10 @@
 			// 
 			// btn_Open
 			// 
-			this.btn_Open.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.btn_Open.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_Open.Location = new System.Drawing.Point(345, 395);
+			this.btn_Open.Location = new System.Drawing.Point(345, 393);
 			this.btn_Open.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Open.Name = "btn_Open";
 			this.btn_Open.Size = new System.Drawing.Size(165, 35);
@@ -2867,7 +2868,7 @@
 			// 
 			// CopyPanelF
 			// 
-			this.ClientSize = new System.Drawing.Size(675, 671);
+			this.ClientSize = new System.Drawing.Size(675, 666);
 			this.Controls.Add(this.pnl_bg);
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);

@@ -26,13 +26,14 @@ namespace McdView
 
 
 		#region Anisprites
-		private static int SPRITE_ORIGIN_X;
-		private const  int SPRITE_ORIGIN_Y =  0;
-		private const  int SPRITE_OFFSET_X = 80;
+		private  static int SPRITE_ORIGIN_X;
+		private  const  int SPRITE_ORIGIN_Y =  0;
+		internal const  int SPRITE_OFFSET_X = 80;
 
 		/// <summary>
 		/// Spaces the layout of the fields etc. of the anisprites in the
 		/// sprite-group and -panel.
+		/// @note See also CopyPanelF.LayoutSpritesGroup().
 		/// </summary>
 		private void LayoutSpritesGroup()
 		{

@@ -284,7 +284,7 @@ namespace McdView
 
 			PartsPanel.Select();
 
-			LayoutSpritesGroup();
+//			LayoutSpritesGroup(); // <- is done in OnResize which happens OnLoad auto.
 
 			string pathufo, pathtftd;
 			YamlMetrics.GetResourcePaths(out pathufo, out pathtftd);
