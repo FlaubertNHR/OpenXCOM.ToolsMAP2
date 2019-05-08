@@ -809,7 +809,7 @@
 			this.cb_IalAltrpart.Location = new System.Drawing.Point(145, 35);
 			this.cb_IalAltrpart.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_IalAltrpart.Name = "cb_IalAltrpart";
-			this.cb_IalAltrpart.Size = new System.Drawing.Size(180, 20);
+			this.cb_IalAltrpart.Size = new System.Drawing.Size(135, 20);
 			this.cb_IalAltrpart.TabIndex = 14;
 			this.cb_IalAltrpart.Text = "copy Alternate parts";
 			this.cb_IalAltrpart.UseVisualStyleBackColor = true;
@@ -821,7 +821,7 @@
 			this.cb_IalDeadpart.Location = new System.Drawing.Point(10, 35);
 			this.cb_IalDeadpart.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_IalDeadpart.Name = "cb_IalDeadpart";
-			this.cb_IalDeadpart.Size = new System.Drawing.Size(130, 20);
+			this.cb_IalDeadpart.Size = new System.Drawing.Size(120, 20);
 			this.cb_IalDeadpart.TabIndex = 13;
 			this.cb_IalDeadpart.Text = "copy Death parts";
 			this.cb_IalDeadpart.UseVisualStyleBackColor = true;

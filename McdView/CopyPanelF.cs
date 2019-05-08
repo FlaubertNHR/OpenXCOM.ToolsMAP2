@@ -204,7 +204,9 @@ namespace McdView
 					for (int i = 0; i != control.Controls.Count; ++i)
 						if ((control.Controls[i] as TextBox) != null)
 							(control.Controls[i] as TextBox).ReadOnly = true;
-						else //if ((control.Controls[i] as Label) != null)
+						else if ((control.Controls[i] as Label) != null)
+							control.Controls[i].Click += OnClick_FocusCollection;
+						else if ((control.Controls[i] as Panel) != null)
 							control.Controls[i].Click += OnClick_FocusCollection;
 				}
 				else if ((control as Panel) != null)
@@ -217,7 +219,9 @@ namespace McdView
 							for (int j = 0; j != control.Controls[i].Controls.Count; ++j)
 								if ((control.Controls[i].Controls[j] as TextBox) != null)
 									(control.Controls[i].Controls[j] as TextBox).ReadOnly = true;
-								else //if ((control.Controls[i].Controls[j] as Label) != null)
+								else if ((control.Controls[i].Controls[j] as Label) != null)
+									control.Controls[i].Controls[j].Click += OnClick_FocusCollection;
+								else if ((control.Controls[i].Controls[j] as Panel) != null)
 									control.Controls[i].Controls[j].Click += OnClick_FocusCollection;
 						}
 				}
