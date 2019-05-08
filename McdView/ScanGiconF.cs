@@ -70,12 +70,12 @@ namespace McdView
 			Scroller.Scroll += OnScroll;
 			Controls.Add(Scroller);
 
-			int icons = _f.ScanG.Length / 16;
+			int iconCount = _f.ScanG.Length / 16;
 
 			int w;
-			if (icons < COLS)
+			if (iconCount < COLS)
 			{
-				w = icons;
+				w = iconCount;
 				if (w < 16) w = 16;
 			}
 			else
@@ -83,7 +83,7 @@ namespace McdView
 
 			w = (w * ICON_WIDTH) + (w * HORI_PAD) - 1 + Scroller.Width;
 
-			int h = (icons + COLS - 1) / COLS * (ICON_HEIGHT + VERT_TEXT_PAD);
+			int h = (iconCount + COLS - 1) / COLS * (ICON_HEIGHT + VERT_TEXT_PAD);
 
 			TotalHeight = h;
 
@@ -104,7 +104,7 @@ namespace McdView
 		private void ScrollIcon()
 		{
 			int r = IconId / COLS;
-			if (r > ROWS_VISIBLE_Max)
+			if (r > ROWS_VISIBLE_Max - 1)
 			{
 				r -= ROWS_VISIBLE_Max - 1;
 				r *= ICON_HEIGHT + VERT_TEXT_PAD;
