@@ -46,6 +46,8 @@ namespace McdView
 		private bool InitFields;
 
 		internal CopyPanelF CopyPanel;
+
+		private bool SpritesBorked;
 		#endregion Fields
 
 
@@ -403,7 +405,11 @@ namespace McdView
 							return false;
 
 						case DialogResult.Yes:
+							SpritesBorked = false;
 							OnClick_SaveSpriteset(null, EventArgs.Empty);
+
+							if (SpritesBorked)
+								return false;
 							break;
 
 						case DialogResult.No:
@@ -1059,10 +1065,10 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_SaveSpriteset(object sender, EventArgs e)
 		{
-			PartsPanel.SpritesChanged = false;
-
 			if (Spriteset != null)
 			{
+				ResourceInfo.ReloadSprites = true;
+
 				string dir = Path.GetDirectoryName(_pfeMcd);
 
 				string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
@@ -1070,13 +1076,19 @@ namespace McdView
 
 				BackupSpritesetFiles(dir, Label);
 
-				if (!(ResourceInfo.ReloadSprites = SpriteCollection.SaveSpriteset(
-																			dir,
-																			Label,
-																			Spriteset,
-																			ResourceInfo.TAB_WORD_LENGTH_2)))
+				if (SpriteCollection.SaveSpriteset(
+												dir,
+												Label,
+												Spriteset,
+												ResourceInfo.TAB_WORD_LENGTH_2))
 				{
-					// bork - likely too many sprites.
+					SpritesBorked =
+					PartsPanel.SpritesChanged = false;
+				}
+				else
+				{
+					// bork - likely too many sprites. run Edit|Checkvals ...
+					SpritesBorked = true;
 					string error = String.Format(
 											System.Globalization.CultureInfo.CurrentCulture,
 											"An I/O error occurred.");
