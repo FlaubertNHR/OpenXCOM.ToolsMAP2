@@ -67,6 +67,10 @@
 			<param name="Name" value="McdView">
 			<param name="Local" value="html\mcdview.htm">
 			</OBJECT>
+		<LI><OBJECT type="text/sitemap">
+			<param name="Name" value="CopyPanel">
+			<param name="Local" value="html\copypanel.htm">
+			</OBJECT>
 	</UL>
 </UL>
 </BODY>
