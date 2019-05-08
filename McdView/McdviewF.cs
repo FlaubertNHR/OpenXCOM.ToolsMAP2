@@ -393,7 +393,7 @@ namespace McdView
 				}
 			}
 
-			if (PartsPanel.SpritesetChanged)
+			if (PartsPanel.SpritesChanged)
 			{
 				using (var f = new ChangedBox("PCK + TAB has changed"))
 				{
@@ -1059,7 +1059,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_SaveSpriteset(object sender, EventArgs e)
 		{
-			PartsPanel.SpritesetChanged = false;
+			PartsPanel.SpritesChanged = false;
 
 			if (Spriteset != null)
 			{

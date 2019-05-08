@@ -616,8 +616,8 @@
 			// 
 			this.miSaveSpriteset.Enabled = false;
 			this.miSaveSpriteset.Index = 7;
-			this.miSaveSpriteset.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
-			this.miSaveSpriteset.Text = "S&ave spriteset";
+			this.miSaveSpriteset.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
+			this.miSaveSpriteset.Text = "Save spr&iteset";
 			this.miSaveSpriteset.Click += new System.EventHandler(this.OnClick_SaveSpriteset);
 			// 
 			// miSeparator2
@@ -678,8 +678,8 @@
 			// 
 			this.miCheckVals.Enabled = false;
 			this.miCheckVals.Index = 1;
-			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
-			this.miCheckVals.Text = "Check STR&ICT values";
+			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlK;
+			this.miCheckVals.Text = "Chec&k STRICT values";
 			this.miCheckVals.Click += new System.EventHandler(this.OnClick_CheckVals);
 			// 
 			// miCopyPanel

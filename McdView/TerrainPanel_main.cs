@@ -21,6 +21,8 @@ namespace McdView
 		private readonly List<Tilepart>      _ial_PartsList = new List<Tilepart>();
 		private readonly Dictionary<int,int> _ial_PartIds   = new Dictionary<int,int>();
 		private readonly Dictionary<int,int> _ial_SpriteIds = new Dictionary<int,int>();
+
+		internal bool SpritesChanged;
 		#endregion Fields
 
 
@@ -56,7 +58,7 @@ namespace McdView
 			var itCut      = new ToolStripMenuItem("cut",             null, OnCutClick,    Keys.Control | Keys.X);
 			var itCopy     = new ToolStripMenuItem("copy",            null, OnCopyClick,   Keys.Control | Keys.C);
 			var itInsert   = new ToolStripMenuItem("insert after",    null, OnInsertClick, Keys.Control | Keys.V);
-			var itDelete   = new ToolStripMenuItem("delete",          null, OnDeleteClick, Keys.Delete); // Delete key - wtf.
+			var itDelete   = new ToolStripMenuItem("delete",          null, OnDeleteClick, Keys.Delete); // Delete key - is allowed, wtf.
 
 			var itSep1     = new ToolStripSeparator();
 
@@ -324,8 +326,6 @@ namespace McdView
 		}
 
 
-		internal bool SpritesetChanged;
-
 		/// <summary>
 		/// Clones a tilepart and its sprites from the CopyPanel's partset (and
 		/// spriteset) to the Main partset (and spriteset).
@@ -358,7 +358,7 @@ namespace McdView
 
 					if (!_ial_SpriteIds.ContainsKey(spriteId))
 					{
-						SpritesetChanged = true;
+						SpritesChanged = true;
 
 						if (_f.Spriteset == null)
 						{
