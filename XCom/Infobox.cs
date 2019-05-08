@@ -76,10 +76,8 @@ namespace XCom
 				pnl_Info.Height = height + 20; // panel's pad top+bot + 5
 			}
 
-			LogFile.WriteLine("pnl_Info.Height= " + pnl_Info.Height);
-
 			ClientSize = new Size(
-								width + 30, // +30 for pad real and imagined.
+								width + 25, // +25 for pad real and imagined.
 								lbl_Info.Height + rtb_Info.Height + btn_Okay.Height + 20);
 
 			lbl_Info.Text = label;
