@@ -793,11 +793,11 @@
 			this.gb_IalOptions.Controls.Add(this.cb_IalAltrpart);
 			this.gb_IalOptions.Controls.Add(this.cb_IalDeadpart);
 			this.gb_IalOptions.Controls.Add(this.cb_IalSprites);
-			this.gb_IalOptions.Location = new System.Drawing.Point(5, 370);
+			this.gb_IalOptions.Location = new System.Drawing.Point(5, 375);
 			this.gb_IalOptions.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_IalOptions.Name = "gb_IalOptions";
 			this.gb_IalOptions.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_IalOptions.Size = new System.Drawing.Size(330, 60);
+			this.gb_IalOptions.Size = new System.Drawing.Size(330, 57);
 			this.gb_IalOptions.TabIndex = 17;
 			this.gb_IalOptions.TabStop = false;
 			this.gb_IalOptions.Text = " Options - INSERT AFTER LAST ";
@@ -818,10 +818,10 @@
 			// 
 			this.cb_IalDeadpart.Checked = true;
 			this.cb_IalDeadpart.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalDeadpart.Location = new System.Drawing.Point(15, 35);
+			this.cb_IalDeadpart.Location = new System.Drawing.Point(10, 35);
 			this.cb_IalDeadpart.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_IalDeadpart.Name = "cb_IalDeadpart";
-			this.cb_IalDeadpart.Size = new System.Drawing.Size(125, 20);
+			this.cb_IalDeadpart.Size = new System.Drawing.Size(130, 20);
 			this.cb_IalDeadpart.TabIndex = 13;
 			this.cb_IalDeadpart.Text = "copy Death parts";
 			this.cb_IalDeadpart.UseVisualStyleBackColor = true;
@@ -830,10 +830,10 @@
 			// 
 			this.cb_IalSprites.Checked = true;
 			this.cb_IalSprites.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_IalSprites.Location = new System.Drawing.Point(15, 15);
+			this.cb_IalSprites.Location = new System.Drawing.Point(10, 15);
 			this.cb_IalSprites.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_IalSprites.Name = "cb_IalSprites";
-			this.cb_IalSprites.Size = new System.Drawing.Size(310, 20);
+			this.cb_IalSprites.Size = new System.Drawing.Size(315, 20);
 			this.cb_IalSprites.TabIndex = 12;
 			this.cb_IalSprites.Text = "copy Sprites to";
 			this.cb_IalSprites.UseVisualStyleBackColor = true;

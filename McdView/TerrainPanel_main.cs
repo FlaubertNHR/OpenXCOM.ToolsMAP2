@@ -21,8 +21,6 @@ namespace McdView
 		private readonly List<Tilepart>      _ial_PartsList = new List<Tilepart>();
 		private readonly Dictionary<int,int> _ial_PartIds   = new Dictionary<int,int>();
 		private readonly Dictionary<int,int> _ial_SpriteIds = new Dictionary<int,int>();
-
-		internal bool SpritesChanged;
 		#endregion Fields
 
 
@@ -31,6 +29,26 @@ namespace McdView
 		{
 			get { return _f.SelId; }
 			set { _f.SelId = value; }
+		}
+
+		private bool _spritesChanged;
+		internal bool SpritesChanged
+		{
+			get { return _spritesChanged; }
+			set
+			{
+				if (!_spritesChanged)
+				{
+					if (value)
+						_f.gb_Sprites.Text = " Sprites * ";
+				}
+				else if (_spritesChanged)
+				{
+					if (!value)
+						_f.gb_Sprites.Text = " Sprites ";
+				}
+				_spritesChanged = value;
+			}
 		}
 		#endregion Properties
 

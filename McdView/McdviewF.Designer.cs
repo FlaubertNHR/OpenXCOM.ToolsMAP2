@@ -23,9 +23,10 @@
 		private System.Windows.Forms.MenuItem miPaletteUfo;
 		private System.Windows.Forms.MenuItem miPaletteTftd;
 		private System.Windows.Forms.MenuItem miEditMenu;
+		private System.Windows.Forms.MenuItem miCopyPanel;
+		private System.Windows.Forms.MenuItem miSeparator3;
 		private System.Windows.Forms.MenuItem miZeroVals;
 		private System.Windows.Forms.MenuItem miCheckVals;
-		private System.Windows.Forms.MenuItem miCopyPanel;
 		private System.Windows.Forms.MenuItem miHelpMenu;
 		private System.Windows.Forms.MenuItem miHelp;
 		private System.Windows.Forms.MenuItem miAbout;
@@ -155,7 +156,7 @@
 		private System.Windows.Forms.StatusStrip ss_Statusbar;
 		private System.Windows.Forms.GroupBox gb_Unused;
 		private System.Windows.Forms.GroupBox gb_Loft;
-		private System.Windows.Forms.GroupBox gb_Sprites;
+		internal System.Windows.Forms.GroupBox gb_Sprites;
 		private System.Windows.Forms.GroupBox gb_Collection;
 		private System.Windows.Forms.GroupBox gb_Overhead;
 		private System.Windows.Forms.GroupBox gb_Tu;
@@ -292,9 +293,10 @@
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.miEditMenu = new System.Windows.Forms.MenuItem();
+			this.miCopyPanel = new System.Windows.Forms.MenuItem();
+			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miZeroVals = new System.Windows.Forms.MenuItem();
 			this.miCheckVals = new System.Windows.Forms.MenuItem();
-			this.miCopyPanel = new System.Windows.Forms.MenuItem();
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miAbout = new System.Windows.Forms.MenuItem();
@@ -661,15 +663,28 @@
 			// 
 			this.miEditMenu.Index = 2;
 			this.miEditMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miCopyPanel,
+			this.miSeparator3,
 			this.miZeroVals,
-			this.miCheckVals,
-			this.miCopyPanel});
+			this.miCheckVals});
 			this.miEditMenu.Text = "&Edit";
+			// 
+			// miCopyPanel
+			// 
+			this.miCopyPanel.Index = 0;
+			this.miCopyPanel.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
+			this.miCopyPanel.Text = "Open Copy &panel ...";
+			this.miCopyPanel.Click += new System.EventHandler(this.OnClick_OpenCopyPanel);
+			// 
+			// miSeparator3
+			// 
+			this.miSeparator3.Index = 1;
+			this.miSeparator3.Text = "-";
 			// 
 			// miZeroVals
 			// 
 			this.miZeroVals.Enabled = false;
-			this.miZeroVals.Index = 0;
+			this.miZeroVals.Index = 2;
 			this.miZeroVals.Shortcut = System.Windows.Forms.Shortcut.Ctrl0;
 			this.miZeroVals.Text = "Zero this part\'s values";
 			this.miZeroVals.Click += new System.EventHandler(this.OnClick_ZeroVals);
@@ -677,17 +692,10 @@
 			// miCheckVals
 			// 
 			this.miCheckVals.Enabled = false;
-			this.miCheckVals.Index = 1;
+			this.miCheckVals.Index = 3;
 			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlK;
 			this.miCheckVals.Text = "Chec&k STRICT values";
 			this.miCheckVals.Click += new System.EventHandler(this.OnClick_CheckVals);
-			// 
-			// miCopyPanel
-			// 
-			this.miCopyPanel.Index = 2;
-			this.miCopyPanel.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
-			this.miCopyPanel.Text = "Open Copy &panel ...";
-			this.miCopyPanel.Click += new System.EventHandler(this.OnClick_OpenCopyPanel);
 			// 
 			// miHelpMenu
 			// 
