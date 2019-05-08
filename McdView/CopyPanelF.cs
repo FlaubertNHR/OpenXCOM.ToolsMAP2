@@ -282,6 +282,29 @@ namespace McdView
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Enter:
+					e.SuppressKeyPress = true;
+					PartsPanel.Select();
+					break;
+
+				case Keys.Escape:
+					e.SuppressKeyPress = true;
+					if ((ActiveControl as TextBox) == null)
+						SelId = -1;
+
+					PartsPanel.Select();
+					break;
+			}
+		}
 		#endregion Events (override)
 
 

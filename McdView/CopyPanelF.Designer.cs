@@ -2873,6 +2873,7 @@
 			this.Controls.Add(this.gb_Sprites);
 			this.Controls.Add(this.gb_Collection);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.Name = "CopyPanelF";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
