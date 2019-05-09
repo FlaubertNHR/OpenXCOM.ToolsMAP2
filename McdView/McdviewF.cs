@@ -658,7 +658,7 @@ namespace McdView
 
 						using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 						{
-							Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+							var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
 							Palette pal;
 							if (miPaletteUfo.Checked)
@@ -673,32 +673,33 @@ namespace McdView
 																pal,
 																true);
 
-							for (int id = 0; id != Parts.Length; ++id)
+							for (int id = 0; id != parts.Length; ++id)
 							{
 								var bindata = new byte[TilepartFactory.Length];
 								bs.Read(bindata, 0, TilepartFactory.Length);
 
-								Parts[id] = new Tilepart(
+								parts[id] = new Tilepart(
 													id,
-													Spriteset,
 													new McdRecord(bindata));
 							}
 
 							Tilepart part;
-							for (int id = 0; id != Parts.Length; ++id)
+							for (int id = 0; id != parts.Length; ++id)
 							{
-								part = Parts[id];
+								part = parts[id];
 								part.Dead = TilepartFactory.GetDeadPart(
 																	Label,
 																	id,
 																	part.Record,
-																	Parts);
+																	parts);
 								part.Altr = TilepartFactory.GetAltrPart(
 																	Label,
 																	id,
 																	part.Record,
-																	Parts);
+																	parts);
 							}
+
+							Parts = parts; // do not assign to 'Parts' until the array is gtg.
 						}
 
 						ResourceInfo.ReloadSprites = false;
@@ -734,7 +735,7 @@ namespace McdView
 
 				using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 				{
-					Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+					var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
 					Palette pal;
 					if (miPaletteUfo.Checked)
@@ -749,32 +750,33 @@ namespace McdView
 														pal,
 														true);
 
-					for (int id = 0; id != Parts.Length; ++id)
+					for (int id = 0; id != parts.Length; ++id)
 					{
 						var bindata = new byte[TilepartFactory.Length];
 						bs.Read(bindata, 0, TilepartFactory.Length);
 
-						Parts[id] = new Tilepart(
+						parts[id] = new Tilepart(
 											id,
-											Spriteset,
 											new McdRecord(bindata));
 					}
 
 					Tilepart part;
-					for (int id = 0; id != Parts.Length; ++id)
+					for (int id = 0; id != parts.Length; ++id)
 					{
-						part = Parts[id];
+						part = parts[id];
 						part.Dead = TilepartFactory.GetDeadPart(
 															Label,
 															id,
 															part.Record,
-															Parts);
+															parts);
 						part.Altr = TilepartFactory.GetAltrPart(
 															Label,
 															id,
 															part.Record,
-															Parts);
+															parts);
 					}
+
+					Parts = parts; // do not assign to 'Parts' until the array is gtg.
 				}
 
 				ResourceInfo.ReloadSprites = false;
@@ -812,7 +814,7 @@ namespace McdView
 
 			using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 			{
-				Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+				var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
 				ResourceInfo.ReloadSprites = true;	// is needed here to change palette transparency.
 													// Ie, the palette is transparent in MapView but I want it non-transparent in McdView.
@@ -824,32 +826,33 @@ namespace McdView
 													Palette.UfoBattle,
 													true);
 
-				for (int id = 0; id != Parts.Length; ++id)
+				for (int id = 0; id != parts.Length; ++id)
 				{
 					var bindata = new byte[TilepartFactory.Length];
 					bs.Read(bindata, 0, TilepartFactory.Length);
 
-					Parts[id] = new Tilepart(
+					parts[id] = new Tilepart(
 										id,
-										Spriteset,
 										new McdRecord(bindata));
 				}
 
 				Tilepart part;
-				for (int id = 0; id != Parts.Length; ++id)
+				for (int id = 0; id != parts.Length; ++id)
 				{
-					part = Parts[id];
+					part = parts[id];
 					part.Dead = TilepartFactory.GetDeadPart(
 														Label,
 														id,
 														part.Record,
-														Parts);
+														parts);
 					part.Altr = TilepartFactory.GetAltrPart(
 														Label,
 														id,
 														part.Record,
-														Parts);
+														parts);
 				}
+
+				Parts = parts; // do not assign to 'Parts' until the array is gtg.
 			}
 
 			ResourceInfo.ReloadSprites = false;
@@ -1375,7 +1378,7 @@ namespace McdView
 
 					using (var bs = new BufferedStream(File.OpenRead(CopyPanel.PfeMcd)))
 					{
-						CopyPanel.Parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+						var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
 						Palette pal;
 						if (miPaletteUfo.Checked)
@@ -1390,32 +1393,33 @@ namespace McdView
 																	pal,
 																	true);
 
-						for (int id = 0; id != CopyPanel.Parts.Length; ++id)
+						for (int id = 0; id != parts.Length; ++id)
 						{
 							var bindata = new byte[TilepartFactory.Length];
 							bs.Read(bindata, 0, TilepartFactory.Length);
 
-							CopyPanel.Parts[id] = new Tilepart(
-															id,
-															CopyPanel.Spriteset,
-															new McdRecord(bindata));
+							parts[id] = new Tilepart(
+												id,
+												new McdRecord(bindata));
 						}
 
 						Tilepart part;
-						for (int id = 0; id != CopyPanel.Parts.Length; ++id)
+						for (int id = 0; id != parts.Length; ++id)
 						{
-							part = CopyPanel.Parts[id];
+							part = parts[id];
 							part.Dead = TilepartFactory.GetDeadPart(
 																CopyPanel.Label,
 																id,
 																part.Record,
-																CopyPanel.Parts);
+																parts);
 							part.Altr = TilepartFactory.GetAltrPart(
 																CopyPanel.Label,
 																id,
 																part.Record,
-																CopyPanel.Parts);
+																parts);
 						}
+
+						CopyPanel.Parts = parts; // do not assign to 'Parts' until the array is gtg.
 					}
 
 					ResourceInfo.ReloadSprites = false;

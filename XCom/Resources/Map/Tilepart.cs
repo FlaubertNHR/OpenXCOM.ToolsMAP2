@@ -90,25 +90,25 @@ namespace XCom
 		/// cTor[1]. Creates a standard Tilepart.
 		/// </summary>
 		/// <param name="id">the id of this part in its recordset</param>
-		/// <param name="spriteset">the spriteset from which to get this part's
-		/// sprite-phases</param>
 		/// <param name="record">this part's MCD-record as an object</param>
+		/// <param name="spriteset">the spriteset from which to get this part's
+		/// sprite-phases; null for McdView - sprites shall be retrieved
+		/// directly from the spriteset itself</param>
 		public Tilepart(
 				int id,
-				SpriteCollection spriteset,
-				McdRecord record)
+				McdRecord record,
+				SpriteCollection spriteset = null)
 		{
+			Record = record;
+
 			TerId = id;
 			SetId = -1;
 
-			Record = record;
-
-			if (McdRecord.IsTerrainSet) // in short: fuck off. 'Spriteset' and 'Sprites' shall be null for McdView.
+			if ((Spriteset = spriteset) != null) // nota bene: 'Spriteset' and 'Sprites' shall be null for McdView.
 			{
-				Sprites = new XCImage[8]; // NOTE: a part contains its own pointers to 8 sprites.
-
-				if ((Spriteset = spriteset) != null)
-					InitSprites();
+				Sprites = new XCImage[8];	// for MapView a part contains its own pointers to 8 sprites.
+											// - animations and doors toggle basically
+				InitSprites();
 			}
 		}
 

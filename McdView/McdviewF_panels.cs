@@ -252,7 +252,7 @@ namespace McdView
 								"Sprites cannot be found for " + Label + "."
 									+ Environment.NewLine + Environment.NewLine
 									+ "A spriteset can be created with PckView or"
-									+ "by inserting records from the CopyPanel.",
+									+ " by inserting records from the CopyPanel.",
 								" Info",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Asterisk,

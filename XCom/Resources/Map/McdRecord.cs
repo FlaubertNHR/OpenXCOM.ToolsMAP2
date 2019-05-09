@@ -33,13 +33,25 @@ namespace XCom
 		public static bool IsTerrainSet = true;
 
 		/// <summary>
-		/// Tracks the 'SetId' of this record.
+		/// Tracks the 'SetId' of all records.
+		/// TODO: Investigate to ensure that only the currently loaded Map's
+		/// terrains are counted.
 		/// </summary>
-		private static int _id;
+		private static int _sid;
 		#endregion Fields (static)
 
 
 		#region Properties
+		private int _setId = -1;
+		/// <summary>
+		/// SetId is used only by 'MapInfoOutputBox'.
+		/// </summary>
+		public int SetId
+		{
+			get { return _setId; }
+			private set { _setId = value; }
+		}
+
 		// kL_note: All values in an MCD record are unsigned bytes except the
 		// ScanG ref (little endian unsigned short) and the TerrainOffset
 		// (signed byte).
@@ -200,12 +212,6 @@ namespace XCom
 				return 0;
 			}
 		}
-
-		/// <summary>
-		/// SetId is used only by 'MapInfoOutputBox'.
-		/// </summary>
-		public int SetId
-		{ get; private set; }
 		#endregion Properties
 
 
@@ -217,9 +223,7 @@ namespace XCom
 		public McdRecord(IList<byte> bindata = null)
 		{
 			if (IsTerrainSet)
-				SetId = _id++;
-			else
-				SetId = -1;
+				SetId = _sid++;
 
 			CreateRecord(this, bindata);
 		}

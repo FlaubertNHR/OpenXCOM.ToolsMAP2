@@ -229,6 +229,11 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			//LogFile.WriteLine("");
+			//LogFile.WriteLine("Label= " + _f.Label);
+			//LogFile.WriteLine("is Parts null= " + (Parts == null));
+			//if (Parts != null) LogFile.WriteLine("Parts.Length= " + Parts.Length);
+
 			if (Parts != null && Parts.Length != 0)
 			{
 				_graphics = e.Graphics;
@@ -253,9 +258,18 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset, 0,
 										i * XCImage.SpriteWidth32 + i + offset, Height);
 
+					//LogFile.WriteLine(". i= " + i);
+					//LogFile.WriteLine(". is Spriteset null= " + (Spriteset == null));
+					//if (Spriteset != null) LogFile.WriteLine(". Spriteset.Count= " + Spriteset.Count);
+
 					if (Spriteset != null && Spriteset.Count != 0)
 					{
 						Tilepart part = Parts[i];
+
+						//LogFile.WriteLine(". . is part null= " + (part == null));
+						//if (part != null) LogFile.WriteLine(". . is part.Record null= " + (part.Record == null));
+						//if (part != null && part.Record != null) LogFile.WriteLine(". . Sprite1 id= " + part.Record.Sprite1);
+
 						if ((spriteId = part.Record.Sprite1) < Spriteset.Count
 							&& (sprite = Spriteset[spriteId].Sprite) != null)
 						{
@@ -362,7 +376,7 @@ namespace McdView
 										i * XCImage.SpriteWidth32 + i + offset,
 										y3_sprite - part.Altr.Record.TileOffset);
 							}
-							else if (part.Record.Alt_MCD != 0)
+							else
 								_graphics.FillRectangle(
 													Colors.BrushInvalid,
 													i * XCImage.SpriteWidth32 + i + offset,
@@ -392,7 +406,7 @@ namespace McdView
 										x, y,
 										XCImage.SpriteWidth32,
 										XCImage.SpriteHeight40),
-							0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+							0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 							GraphicsUnit.Pixel,
 							_attri);
 		}
