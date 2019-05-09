@@ -346,6 +346,11 @@ namespace McdView
 		}
 
 
+		private bool _ialSprites;
+		private bool _ialDeads;
+		private bool _ialAltrs;
+		private bool _isTer;
+
 		/// <summary>
 		/// Clones a tilepart and its sprites from the CopyPanel's partset (and
 		/// spriteset) to the Main partset (and spriteset).
@@ -361,7 +366,7 @@ namespace McdView
 				Tilepart part_src = _f.CopyPanel.Parts[id_src];
 				McdRecord record_src = part_src.Record;
 
-				if (_f.CopyPanel.cb_IalSprites.Checked) // TODO: -> class-var
+				if (_ialSprites)
 				{
 					int spriteId;
 					for (int phase = 0; phase != 8; ++phase)
@@ -403,7 +408,7 @@ namespace McdView
 
 				McdRecord record_dst = _ial_PartsList[id_dst].Record;
 
-				if (_f.CopyPanel.cb_IalSprites.Checked) // TODO: -> class-var
+				if (_ialSprites)
 				{
 					record_dst.Sprite1 = (byte)_ial_SpriteIds[record_dst.Sprite1];
 					record_dst.Sprite2 = (byte)_ial_SpriteIds[record_dst.Sprite2];
@@ -414,30 +419,24 @@ namespace McdView
 					record_dst.Sprite7 = (byte)_ial_SpriteIds[record_dst.Sprite7];
 					record_dst.Sprite8 = (byte)_ial_SpriteIds[record_dst.Sprite8];
 				}
-				else
+				else if (!_isTer) // zero sprite-phases if the terrain-labels differ
 				{
-					bool isTer = (_partsCopiedLabel == _f.Label); // zero sprite-phases if the terrain-labels differ
-					if (!isTer)
-					{
-						record_dst.Sprite1 =
-						record_dst.Sprite2 =
-						record_dst.Sprite3 =
-						record_dst.Sprite4 =
-						record_dst.Sprite5 =
-						record_dst.Sprite6 =
-						record_dst.Sprite7 =
-						record_dst.Sprite8 = (byte)0;
-					}
+					record_dst.Sprite1 =
+					record_dst.Sprite2 =
+					record_dst.Sprite3 =
+					record_dst.Sprite4 =
+					record_dst.Sprite5 =
+					record_dst.Sprite6 =
+					record_dst.Sprite7 =
+					record_dst.Sprite8 = (byte)0;
 				}
 
-				if (_f.CopyPanel.cb_IalDeadpart.Checked // TODO: -> class-var
-					&& record_dst.DieTile != 0)
+				if (_ialDeads && record_dst.DieTile != 0)
 				{
 					addPart(record_dst.DieTile, _ial_PartsList.Count);
 				}
 
-				if (_f.CopyPanel.cb_IalAltrpart.Checked // TODO: -> class-var
-					&& record_dst.Alt_MCD != 0)
+				if (_ialAltrs && record_dst.Alt_MCD != 0)
 				{
 					addPart(record_dst.Alt_MCD, _ial_PartsList.Count);
 				}
@@ -451,8 +450,6 @@ namespace McdView
 		/// <param name="idStart"></param>
 		private void ChangeRefs(int idStart)
 		{
-			bool isTer = (_partsCopiedLabel == _f.Label); // null refs if the terrain-labels differ
-
 			int id_src, id_dst;
 
 			for (int i = idStart; i != Parts.Length; ++i)
@@ -464,7 +461,7 @@ namespace McdView
 						Parts[i].Record.DieTile = (byte)(id_dst = _ial_PartIds[id_src]);
 						Parts[i].Dead = Parts[id_dst];
 					}
-					else if (!isTer)
+					else if (!_isTer) // null refs if the terrain-labels differ
 					{
 						Parts[i].Record.DieTile = (byte)0;
 						Parts[i].Dead = null;
@@ -478,7 +475,7 @@ namespace McdView
 						Parts[i].Record.Alt_MCD = (byte)(id_dst = _ial_PartIds[id_src]);
 						Parts[i].Altr = Parts[id_dst];
 					}
-					else if (!isTer)
+					else if (!_isTer) // null refs if the terrain-labels differ
 					{
 						Parts[i].Record.Alt_MCD = (byte)0;
 						Parts[i].Altr = null;
@@ -499,6 +496,13 @@ namespace McdView
 			_ial_PartsList.Clear();
 			_ial_PartIds  .Clear();
 			_ial_SpriteIds.Clear();
+
+			_ialSprites = _f.CopyPanel.cb_IalSprites .Checked;
+			_ialDeads   = _f.CopyPanel.cb_IalDeadpart.Checked;
+			_ialAltrs   = _f.CopyPanel.cb_IalAltrpart.Checked;
+
+			_isTer = (_partsCopiedLabel == _f.Label);
+
 
 			SelId = Parts.Length - 1;
 
