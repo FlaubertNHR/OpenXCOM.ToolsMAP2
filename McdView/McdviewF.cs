@@ -468,6 +468,8 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
+			//LogFile.WriteLine("McdviewF.OnKeyDown() e.KeyCode= " + e.KeyCode);
+
 			switch (e.KeyCode)
 			{
 				case Keys.Enter:
@@ -901,7 +903,50 @@ namespace McdView
 
 					Text = "McdView - " + PfeMcd;
 
-					// TODO: Ask user if a copy of the PCK/TAB files should be created/overwritten.
+
+					if (Spriteset != null)
+					{
+						bool writeSpriteset = false;
+
+						string dir = Path.GetDirectoryName(PfeMcd);
+
+						string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
+						string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
+
+						if (File.Exists(pfePck) && File.Exists(pfeTab))
+						{
+							if (MessageBox.Show(
+											this,
+											"Sprite files for the terrain detected."
+												+ " Do you want to overwrite those PCK + TAB"
+												+ " files with the current spriteset?",
+											" Sprite files found",
+											MessageBoxButtons.YesNo,
+											MessageBoxIcon.Question,
+											MessageBoxDefaultButton.Button2,
+											0) == DialogResult.Yes)
+							{
+								writeSpriteset = true;
+							}
+						}
+						else if (MessageBox.Show(
+											this,
+											"Sprite files for the terrain were not found."
+												+ " Do you want to write PCK + TAB files"
+												+ " for this terrain?",
+											" Create sprite files",
+											MessageBoxButtons.YesNo,
+											MessageBoxIcon.Question,
+											MessageBoxDefaultButton.Button2,
+											0) == DialogResult.Yes)
+						{
+							writeSpriteset = true;
+						}
+
+						if (writeSpriteset)
+							OnClick_SaveSpriteset(null, EventArgs.Empty);
+					}
+					OnClick_Reload(null, EventArgs.Empty);
 				}
 			}
 		}
@@ -1057,7 +1102,7 @@ namespace McdView
 			{
 				ResourceInfo.ReloadSprites = true;
 
-				string dir = Path.GetDirectoryName(_pfeMcd);
+				string dir = Path.GetDirectoryName(PfeMcd);
 
 				string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
 				string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);

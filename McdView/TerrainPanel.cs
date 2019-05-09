@@ -554,6 +554,8 @@ namespace McdView
 		/// <returns></returns>
 		protected override bool IsInputKey(Keys keyData)
 		{
+			//LogFile.WriteLine("TerrainPanel.IsInputKey() keyData= " + keyData);
+
 			switch (keyData)
 			{
 				case Keys.Left:

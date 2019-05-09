@@ -196,7 +196,7 @@ namespace McdView
 						if (MessageBox.Show(
 										this,
 										"Set all LoFTs to #" + id,
-										"Set all LoFTs",
+										" Set all LoFTs",
 										MessageBoxButtons.YesNo,
 										MessageBoxIcon.Question,
 										MessageBoxDefaultButton.Button1,

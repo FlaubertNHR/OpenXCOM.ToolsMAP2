@@ -169,7 +169,7 @@ namespace McdView
 						if (MessageBox.Show(
 										this,
 										"Set all sprite phases to #" + id,
-										"Set all sprite phases",
+										" Set all sprite phases",
 										MessageBoxButtons.YesNo,
 										MessageBoxIcon.Question,
 										MessageBoxDefaultButton.Button1,

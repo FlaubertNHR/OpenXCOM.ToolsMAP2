@@ -76,8 +76,10 @@ namespace McdView
 			var itCut      = new ToolStripMenuItem("cut",             null, OnCutClick,    Keys.Control | Keys.X);
 			var itCopy     = new ToolStripMenuItem("copy",            null, OnCopyClick,   Keys.Control | Keys.C);
 			var itInsert   = new ToolStripMenuItem("insert after",    null, OnInsertClick, Keys.Control | Keys.V);
-			var itDelete   = new ToolStripMenuItem("delete",          null, OnDeleteClick, Keys.Delete); // Delete key - is allowed, wtf.
-
+			var itDelete   = new ToolStripMenuItem("delete",          null, OnDeleteClick); //Keys.Delete);	// Delete key - is allowed, wtf. OMG.
+																											// It's not allowed; it's just pretending.
+			itDelete.ShortcutKeyDisplayString = "Del";														// Even worse: it's pretending only SOMETIMES.
+																											// ergo -> not allowed, is handled by KeyDown event.
 			var itSep1     = new ToolStripSeparator();
 
 			var itFile     = new ToolStripMenuItem("append file ...", null, OnFileClick); // f key - not allowed, is handled by KeyDown event.
@@ -733,6 +735,8 @@ namespace McdView
 		/// <param name="e"></param>
 		internal void KeyInput(KeyEventArgs e)
 		{
+			//LogFile.WriteLine("TerrainPanel_main.KeyInput() e.KeyCode= " + e.KeyCode);
+
 			switch (e.KeyCode)
 			{
 				case Keys.Left:
@@ -922,6 +926,10 @@ namespace McdView
 
 				case Keys.F:									// append file
 					OnFileClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.Delete:								// delete
+					OnDeleteClick(null, EventArgs.Empty);
 					break;
 			}
 		}
