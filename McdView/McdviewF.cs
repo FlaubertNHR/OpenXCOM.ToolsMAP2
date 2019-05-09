@@ -58,24 +58,43 @@ namespace McdView
 		private Tilepart[] _parts;
 		/// <summary>
 		/// An array of 'Tileparts'. Each entry's record is referenced w/ 'Record'.
+		/// @note Printing the quantity of records on the statusbar relies on
+		/// reconstructing/assigning the Tilepart array on the fly (see the file
+		/// and panel-edit operations).
 		/// </summary>
 		internal Tilepart[] Parts
 		{
 			get { return _parts; }
 			set
 			{
-				miPaletteUfo .Enabled =
-				miPaletteTftd.Enabled = ((PartsPanel.Parts = (_parts = value)) != null); // perfect.
+				if (miPaletteUfo .Enabled =
+					miPaletteTftd.Enabled = ((PartsPanel.Parts = (_parts = value)) != null)) // perfect.
+				{
+					tssl_Records.Text = "Records: " + Parts.Length;
+				}
+				else
+					tssl_Records.Text = "Records: null";
 			}
 		}
 
 		private SpriteCollection _spriteset;
+		/// <summary>
+		/// The spriteset that will be used to display any/all sprites.
+		/// @note Printing the quantity of sprites on the statusbar is either
+		/// handled here or by the CopyPanel's InsertAfterLast operation (which
+		/// is the only other way to alter the spriteset).
+		/// </summary>
 		internal SpriteCollection Spriteset
 		{
 			get { return _spriteset; }
 			set
 			{
-				PartsPanel.Spriteset = (_spriteset = value);
+				if ((PartsPanel.Spriteset = (_spriteset = value)) != null)
+				{
+					tssl_Sprites.Text = "Sprites: " + _spriteset.Count;
+				}
+				else
+					tssl_Sprites.Text = "Sprites: null";
 			}
 		}
 
@@ -258,8 +277,8 @@ namespace McdView
 			TagLabels();
 			TagLoftPanels();
 
-			RecordLabel  .SetStaticVars(tssl_Overvalue, lbl_Description, this);
-			RecordTextbox.SetStaticVars(tssl_Overvalue, lbl_Description);
+			RecordLabel  .SetStaticVars(tssl_Overval, lbl_Description, this);
+			RecordTextbox.SetStaticVars(tssl_Overval, lbl_Description);
 			LoftPanel    .SetStaticVars(this);
 
 			McdRecord.IsTerrainSet = false;
@@ -328,6 +347,10 @@ namespace McdView
 					}
 				}
 			}
+
+			tssl_Overval.Text =
+			tssl_Records.Text =
+			tssl_Sprites.Text = String.Empty;
 		}
 
 		/// <summary>

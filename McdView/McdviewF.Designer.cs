@@ -249,11 +249,13 @@
 		private System.Windows.Forms.Label lbl_Description;
 		private System.Windows.Forms.CheckBox cb_Strict;
 		private System.Windows.Forms.Label lbl_Strict;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_Overvalue;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_Overval;
 		private System.Windows.Forms.TrackBar bar_SpriteShade;
 		private System.Windows.Forms.Panel pnl_IsoLoft;
 		private System.Windows.Forms.TrackBar bar_IsoLoft;
 		private System.Windows.Forms.Panel pnl_bg;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_Records;
+		internal System.Windows.Forms.ToolStripStatusLabel tssl_Sprites;
 
 		/// <summary>
 		/// Disposes resources used by the Form.
@@ -423,7 +425,9 @@
 			this.lbl29 = new McdView.RecordLabel();
 			this.lbl29_ = new McdView.RecordLabel();
 			this.ss_Statusbar = new System.Windows.Forms.StatusStrip();
-			this.tssl_Overvalue = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_Overval = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_Records = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_Sprites = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gb_Unused = new System.Windows.Forms.GroupBox();
 			this.tb38_ = new McdView.RecordTextbox();
 			this.tb61_ = new McdView.RecordTextbox();
@@ -2065,21 +2069,42 @@
 			// 
 			this.ss_Statusbar.Font = new System.Drawing.Font("Consolas", 7F);
 			this.ss_Statusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tssl_Overvalue});
+			this.tssl_Overval,
+			this.tssl_Records,
+			this.tssl_Sprites});
 			this.ss_Statusbar.Location = new System.Drawing.Point(0, 772);
 			this.ss_Statusbar.Name = "ss_Statusbar";
 			this.ss_Statusbar.Size = new System.Drawing.Size(832, 22);
 			this.ss_Statusbar.TabIndex = 3;
 			this.ss_Statusbar.Text = "ss_Statusbar";
 			// 
-			// tssl_Overvalue
+			// tssl_Overval
 			// 
-			this.tssl_Overvalue.AutoSize = false;
-			this.tssl_Overvalue.Font = new System.Drawing.Font("Consolas", 8F);
-			this.tssl_Overvalue.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
-			this.tssl_Overvalue.Name = "tssl_Overvalue";
-			this.tssl_Overvalue.Size = new System.Drawing.Size(280, 22);
-			this.tssl_Overvalue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.tssl_Overval.AutoSize = false;
+			this.tssl_Overval.Font = new System.Drawing.Font("Consolas", 8F);
+			this.tssl_Overval.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tssl_Overval.Name = "tssl_Overval";
+			this.tssl_Overval.Size = new System.Drawing.Size(280, 22);
+			this.tssl_Overval.Text = "over";
+			this.tssl_Overval.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tssl_Records
+			// 
+			this.tssl_Records.AutoSize = false;
+			this.tssl_Records.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tssl_Records.Name = "tssl_Records";
+			this.tssl_Records.Size = new System.Drawing.Size(100, 22);
+			this.tssl_Records.Text = "records";
+			this.tssl_Records.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tssl_Sprites
+			// 
+			this.tssl_Sprites.AutoSize = false;
+			this.tssl_Sprites.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tssl_Sprites.Name = "tssl_Sprites";
+			this.tssl_Sprites.Size = new System.Drawing.Size(100, 22);
+			this.tssl_Sprites.Text = "sprites";
+			this.tssl_Sprites.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// gb_Unused
 			// 

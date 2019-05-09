@@ -224,7 +224,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb00_phase0.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 1: " + result;
+				tssl_Overval.Text = "phase 1: " + result;
 				OnEnter0(null, EventArgs.Empty);
 			}
 		}
@@ -275,7 +275,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb01_phase1.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 2: " + result;
+				tssl_Overval.Text = "phase 2: " + result;
 				OnEnter1(null, EventArgs.Empty);
 			}
 		}
@@ -326,7 +326,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb02_phase2.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 3: " + result;
+				tssl_Overval.Text = "phase 3: " + result;
 				OnEnter2(null, EventArgs.Empty);
 			}
 		}
@@ -377,7 +377,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb03_phase3.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 4: " + result;
+				tssl_Overval.Text = "phase 4: " + result;
 				OnEnter3(null, EventArgs.Empty);
 			}
 		}
@@ -428,7 +428,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb04_phase4.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 5: " + result;
+				tssl_Overval.Text = "phase 5: " + result;
 				OnEnter4(null, EventArgs.Empty);
 			}
 		}
@@ -479,7 +479,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb05_phase5.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 6: " + result;
+				tssl_Overval.Text = "phase 6: " + result;
 				OnEnter5(null, EventArgs.Empty);
 			}
 		}
@@ -530,7 +530,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb06_phase6.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 7: " + result;
+				tssl_Overval.Text = "phase 7: " + result;
 				OnEnter6(null, EventArgs.Empty);
 			}
 		}
@@ -581,7 +581,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb07_phase7.Text, out result))
 			{
-				tssl_Overvalue.Text = "phase 8: " + result;
+				tssl_Overval.Text = "phase 8: " + result;
 				OnEnter7(null, EventArgs.Empty);
 			}
 		}
@@ -640,7 +640,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb08_loft00.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 1: " + result;
+				tssl_Overval.Text = "loft 1: " + result;
 				OnEnter8(null, EventArgs.Empty);
 			}
 		}
@@ -691,7 +691,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb09_loft01.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 2: " + result;
+				tssl_Overval.Text = "loft 2: " + result;
 				OnEnter9(null, EventArgs.Empty);
 			}
 		}
@@ -742,7 +742,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb10_loft02.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 3: " + result;
+				tssl_Overval.Text = "loft 3: " + result;
 				OnEnter10(null, EventArgs.Empty);
 			}
 		}
@@ -793,7 +793,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb11_loft03.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 4: " + result;
+				tssl_Overval.Text = "loft 4: " + result;
 				OnEnter11(null, EventArgs.Empty);
 			}
 		}
@@ -844,7 +844,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb12_loft04.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 5: " + result;
+				tssl_Overval.Text = "loft 5: " + result;
 				OnEnter12(null, EventArgs.Empty);
 			}
 		}
@@ -895,7 +895,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb13_loft05.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 6: " + result;
+				tssl_Overval.Text = "loft 6: " + result;
 				OnEnter13(null, EventArgs.Empty);
 			}
 		}
@@ -946,7 +946,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb14_loft06.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 7: " + result;
+				tssl_Overval.Text = "loft 7: " + result;
 				OnEnter14(null, EventArgs.Empty);
 			}
 		}
@@ -997,7 +997,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb15_loft07.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 8: " + result;
+				tssl_Overval.Text = "loft 8: " + result;
 				OnEnter15(null, EventArgs.Empty);
 			}
 		}
@@ -1048,7 +1048,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb16_loft08.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 9: " + result;
+				tssl_Overval.Text = "loft 9: " + result;
 				OnEnter16(null, EventArgs.Empty);
 			}
 		}
@@ -1099,7 +1099,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb17_loft09.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 10: " + result;
+				tssl_Overval.Text = "loft 10: " + result;
 				OnEnter17(null, EventArgs.Empty);
 			}
 		}
@@ -1150,7 +1150,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb18_loft10.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 11: " + result;
+				tssl_Overval.Text = "loft 11: " + result;
 				OnEnter18(null, EventArgs.Empty);
 			}
 		}
@@ -1201,7 +1201,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb19_loft11.Text, out result))
 			{
-				tssl_Overvalue.Text = "loft 12: " + result;
+				tssl_Overval.Text = "loft 12: " + result;
 				OnEnter19(null, EventArgs.Empty);
 			}
 		}
@@ -1267,7 +1267,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb20_scang1.Text, out result))
 			{
-				tssl_Overvalue.Text = "ScanG: " + result;
+				tssl_Overval.Text = "ScanG: " + result;
 				OnEnter20(null, EventArgs.Empty);
 			}
 		}
@@ -1320,7 +1320,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb20_scang2.Text, out result))
 			{
-				tssl_Overvalue.Text = "ScanG_reduced: " + result;
+				tssl_Overval.Text = "ScanG_reduced: " + result;
 				OnEnter20r(null, EventArgs.Empty);
 			}
 		}
@@ -1366,7 +1366,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb22_.Text, out result))
 			{
-				tssl_Overvalue.Text = "22: " + result;
+				tssl_Overval.Text = "22: " + result;
 				OnEnter22(null, EventArgs.Empty);
 			}
 		}
@@ -1412,7 +1412,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb23_.Text, out result))
 			{
-				tssl_Overvalue.Text = "23: " + result;
+				tssl_Overval.Text = "23: " + result;
 				OnEnter23(null, EventArgs.Empty);
 			}
 		}
@@ -1458,7 +1458,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb24_.Text, out result))
 			{
-				tssl_Overvalue.Text = "24: " + result;
+				tssl_Overval.Text = "24: " + result;
 				OnEnter24(null, EventArgs.Empty);
 			}
 		}
@@ -1504,7 +1504,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb25_.Text, out result))
 			{
-				tssl_Overvalue.Text = "25: " + result;
+				tssl_Overval.Text = "25: " + result;
 				OnEnter25(null, EventArgs.Empty);
 			}
 		}
@@ -1550,7 +1550,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb26_.Text, out result))
 			{
-				tssl_Overvalue.Text = "26: " + result;
+				tssl_Overval.Text = "26: " + result;
 				OnEnter26(null, EventArgs.Empty);
 			}
 		}
@@ -1596,7 +1596,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb27_.Text, out result))
 			{
-				tssl_Overvalue.Text = "27: " + result;
+				tssl_Overval.Text = "27: " + result;
 				OnEnter27(null, EventArgs.Empty);
 			}
 		}
@@ -1642,7 +1642,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb28_.Text, out result))
 			{
-				tssl_Overvalue.Text = "28: " + result;
+				tssl_Overval.Text = "28: " + result;
 				OnEnter28(null, EventArgs.Empty);
 			}
 		}
@@ -1688,7 +1688,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb29_.Text, out result))
 			{
-				tssl_Overvalue.Text = "29: " + result;
+				tssl_Overval.Text = "29: " + result;
 				OnEnter29(null, EventArgs.Empty);
 			}
 		}
@@ -1758,7 +1758,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isSlidingDoor: " + text;
+				tssl_Overval.Text = "isSlidingDoor: " + text;
 				OnEnter30(null, EventArgs.Empty);
 			}
 		}
@@ -1813,7 +1813,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isBlockLoS: " + text;
+				tssl_Overval.Text = "isBlockLoS: " + text;
 				OnEnter31(null, EventArgs.Empty);
 			}
 		}
@@ -1868,7 +1868,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isDropThrou: " + text;
+				tssl_Overval.Text = "isDropThrou: " + text;
 				OnEnter32(null, EventArgs.Empty);
 			}
 		}
@@ -1926,7 +1926,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isBigWall: " + text;
+				tssl_Overval.Text = "isBigWall: " + text;
 				OnEnter33(null, EventArgs.Empty);
 			}
 		}
@@ -1983,7 +1983,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isGravLift: " + text;
+				tssl_Overval.Text = "isGravLift: " + text;
 				OnEnter34(null, EventArgs.Empty);
 			}
 		}
@@ -2048,7 +2048,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isHingedDoor: " + text;
+				tssl_Overval.Text = "isHingedDoor: " + text;
 				OnEnter35(null, EventArgs.Empty);
 			}
 		}
@@ -2103,7 +2103,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isBlockFire: " + text;
+				tssl_Overval.Text = "isBlockFire: " + text;
 				OnEnter36(null, EventArgs.Empty);
 			}
 		}
@@ -2158,7 +2158,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isBlockSmoke: " + text;
+				tssl_Overval.Text = "isBlockSmoke: " + text;
 				OnEnter37(null, EventArgs.Empty);
 			}
 		}
@@ -2218,7 +2218,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "LeftRightHalf: " + text;
+				tssl_Overval.Text = "LeftRightHalf: " + text;
 				OnEnter38(null, EventArgs.Empty);
 			}
 		}
@@ -2265,7 +2265,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb39_tuwalk.Text, out result))
 			{
-				tssl_Overvalue.Text = "TuWalk: " + result + (result == 255 ? " impassable" : String.Empty);
+				tssl_Overval.Text = "TuWalk: " + result + (result == 255 ? " impassable" : String.Empty);
 				OnEnter39(null, EventArgs.Empty);
 			}
 		}
@@ -2312,7 +2312,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb40_tuslide.Text, out result))
 			{
-				tssl_Overvalue.Text = "TuSlide: " + result + (result == 255 ? " impassable" : String.Empty);
+				tssl_Overval.Text = "TuSlide: " + result + (result == 255 ? " impassable" : String.Empty);
 				OnEnter40(null, EventArgs.Empty);
 			}
 		}
@@ -2359,7 +2359,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb41_tufly.Text, out result))
 			{
-				tssl_Overvalue.Text = "TuFly: " + result + (result == 255 ? " impassable" : String.Empty);
+				tssl_Overval.Text = "TuFly: " + result + (result == 255 ? " impassable" : String.Empty);
 				OnEnter41(null, EventArgs.Empty);
 			}
 		}
@@ -2409,7 +2409,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb42_armor.Text, out result))
 			{
-				tssl_Overvalue.Text = "Armor: " + result + (result == 255 ? " indestructible" : String.Empty);
+				tssl_Overval.Text = "Armor: " + result + (result == 255 ? " indestructible" : String.Empty);
 				OnEnter42(null, EventArgs.Empty);
 			}
 		}
@@ -2456,7 +2456,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb43_heblock.Text, out result))
 			{
-				tssl_Overvalue.Text = "HeBlock: " + result;
+				tssl_Overval.Text = "HeBlock: " + result;
 				OnEnter43(null, EventArgs.Empty);
 			}
 		}
@@ -2516,7 +2516,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb44_deathid.Text, out result))
 			{
-				tssl_Overvalue.Text = "DeathId: " + result + (result == 0 ? " none" : String.Empty);
+				tssl_Overval.Text = "DeathId: " + result + (result == 0 ? " none" : String.Empty);
 				OnEnter44(null, EventArgs.Empty);
 			}
 		}
@@ -2566,7 +2566,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb45_fireresist.Text, out result))
 			{
-				tssl_Overvalue.Text = "FireResist: " + result + (result == 255 ? " impervious" : String.Empty);
+				tssl_Overval.Text = "FireResist: " + result + (result == 255 ? " impervious" : String.Empty);
 				OnEnter45(null, EventArgs.Empty);
 			}
 		}
@@ -2626,7 +2626,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb46_alternateid.Text, out result))
 			{
-				tssl_Overvalue.Text = "AlternateId: " + result + (result == 0 ? " none" : String.Empty);
+				tssl_Overval.Text = "AlternateId: " + result + (result == 0 ? " none" : String.Empty);
 				OnEnter46(null, EventArgs.Empty);
 			}
 		}
@@ -2675,7 +2675,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb47_.Text, out result))
 			{
-				tssl_Overvalue.Text = "CloseDoors: " + result;
+				tssl_Overval.Text = "CloseDoors: " + result;
 				OnEnter47(null, EventArgs.Empty);
 			}
 		}
@@ -2737,7 +2737,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb48_terrainoffset.Text, out result))
 			{
-				tssl_Overvalue.Text = "TerrainOffset: " + result;
+				tssl_Overval.Text = "TerrainOffset: " + result;
 				OnEnter48(null, EventArgs.Empty);
 			}
 		}
@@ -2791,7 +2791,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb49_spriteoffset.Text, out result))
 			{
-				tssl_Overvalue.Text = "SpriteOffset: " + result;
+				tssl_Overval.Text = "SpriteOffset: " + result;
 				OnEnter49(null, EventArgs.Empty);
 			}
 		}
@@ -2838,7 +2838,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb50_.Text, out result))
 			{
-				tssl_Overvalue.Text = "dTypeMod: " + result;
+				tssl_Overval.Text = "dTypeMod: " + result;
 				OnEnter50(null, EventArgs.Empty);
 			}
 		}
@@ -2886,7 +2886,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb51_lightblock.Text, out result))
 			{
-				tssl_Overvalue.Text = "LightBlock: " + result;
+				tssl_Overval.Text = "LightBlock: " + result;
 				OnEnter51(null, EventArgs.Empty);
 			}
 		}
@@ -2951,7 +2951,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "FootSound: " + text;
+				tssl_Overval.Text = "FootSound: " + text;
 				OnEnter52(null, EventArgs.Empty);
 			}
 		}
@@ -3010,7 +3010,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "PartType: " + text;
+				tssl_Overval.Text = "PartType: " + text;
 				OnEnter53(null, EventArgs.Empty);
 			}
 		}
@@ -3068,7 +3068,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "HeType: " + text;
+				tssl_Overval.Text = "HeType: " + text;
 				OnEnter54(null, EventArgs.Empty);
 			}
 		}
@@ -3116,7 +3116,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb55_hestrength.Text, out result))
 			{
-				tssl_Overvalue.Text = "HeStrength: " + result;
+				tssl_Overval.Text = "HeStrength: " + result;
 				OnEnter55(null, EventArgs.Empty);
 			}
 		}
@@ -3164,7 +3164,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb56_smokeblock.Text, out result))
 			{
-				tssl_Overvalue.Text = "SmokeBlock: " + result;
+				tssl_Overval.Text = "SmokeBlock: " + result;
 				OnEnter56(null, EventArgs.Empty);
 			}
 		}
@@ -3211,7 +3211,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb57_fuel.Text, out result))
 			{
-				tssl_Overvalue.Text = "Fuel: " + result;
+				tssl_Overval.Text = "Fuel: " + result;
 				OnEnter57(null, EventArgs.Empty);
 			}
 		}
@@ -3259,7 +3259,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb58_lightintensity.Text, out result))
 			{
-				tssl_Overvalue.Text = "LightIntensity: " + result + (result == 0 ? " none" : String.Empty);
+				tssl_Overval.Text = "LightIntensity: " + result + (result == 0 ? " none" : String.Empty);
 				OnEnter58(null, EventArgs.Empty);
 			}
 		}
@@ -3338,7 +3338,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "SpecialType: " + text;
+				tssl_Overval.Text = "SpecialType: " + text;
 				OnEnter59(null, EventArgs.Empty);
 			}
 		}
@@ -3394,7 +3394,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overvalue.Text = "isBaseObject: " + text;
+				tssl_Overval.Text = "isBaseObject: " + text;
 				OnEnter60(null, EventArgs.Empty);
 			}
 		}
@@ -3441,7 +3441,7 @@ namespace McdView
 			int result;
 			if (Int32.TryParse(tb61_.Text, out result))
 			{
-				tssl_Overvalue.Text = "VictoryPoints: " + result;
+				tssl_Overval.Text = "VictoryPoints: " + result;
 				OnEnter61(null, EventArgs.Empty);
 			}
 		}
