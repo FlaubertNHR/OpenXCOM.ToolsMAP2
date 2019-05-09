@@ -223,7 +223,7 @@
 		internal System.Windows.Forms.CheckBox cb_IalAltrpart;
 		internal System.Windows.Forms.CheckBox cb_IalDeadpart;
 		internal System.Windows.Forms.CheckBox cb_IalSprites;
-		internal System.Windows.Forms.GroupBox gb_IalOptions;
+		private System.Windows.Forms.GroupBox gb_IalOptions;
 
 		/// <summary>
 		/// Disposes resources used by the form.

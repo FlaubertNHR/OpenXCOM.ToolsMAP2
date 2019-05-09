@@ -617,9 +617,6 @@ namespace McdView
 
 							ResourceInfo.ReloadSprites = false;
 
-							if (CopyPanel != null)
-								CopyPanel.EnableInsertOptions();
-
 							Text = "McdView - " + PfeMcd;
 
 							miSave         .Enabled =
@@ -703,9 +700,6 @@ namespace McdView
 						}
 
 						ResourceInfo.ReloadSprites = false;
-
-						if (CopyPanel != null)
-							CopyPanel.EnableInsertOptions();
 
 						CacheLoad.SetCache(Parts);
 						Changed = false;
@@ -858,9 +852,6 @@ namespace McdView
 
 			ResourceInfo.ReloadSprites = false;
 
-			if (CopyPanel != null)
-				CopyPanel.EnableInsertOptions();
-
 			if (palette.Substring(0,4) == "tftd")
 				OnClick_PaletteTftd(null, EventArgs.Empty);
 
@@ -909,9 +900,6 @@ namespace McdView
 					Save(PfeMcd, true);
 
 					Text = "McdView - " + PfeMcd;
-
-					if (CopyPanel != null)
-						CopyPanel.EnableInsertOptions();
 
 					// TODO: Ask user if a copy of the PCK/TAB files should be created/overwritten.
 				}
@@ -1331,6 +1319,8 @@ namespace McdView
 					{
 						CopyPanel = new CopyPanelF(this);
 						CopyPanel.Show();
+
+						CopyPanel.LoadIalOptions();
 					}
 					CopyPanel.SelId = -1;
 
@@ -1384,8 +1374,7 @@ namespace McdView
 					}
 
 					ResourceInfo.ReloadSprites = false;
-
-					CopyPanel.EnableInsertOptions();
+					CopyPanel.cb_IalSprites.Enabled = (CopyPanel.Spriteset != null);
 				}
 				else
 				{

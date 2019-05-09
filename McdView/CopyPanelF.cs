@@ -23,6 +23,10 @@ namespace McdView
 	{
 		#region Fields (static)
 		internal static Rectangle Metric = new Rectangle(-1,0, 0,0);
+
+		private static bool ialDeadpartChecked = true;
+		private static bool ialAltrpartChecked = true;
+		private static bool ialSpritesChecked  = true;
 		#endregion Fields (static)
 
 
@@ -242,6 +246,10 @@ namespace McdView
 			Metric.Width  = ClientSize.Width;
 			Metric.Height = ClientSize.Height;
 
+			ialDeadpartChecked = cb_IalDeadpart.Checked;
+			ialAltrpartChecked = cb_IalAltrpart.Checked;
+			ialSpritesChecked  = cb_IalSprites .Checked;
+
 			_f.CloseCopyPanel();
 
 			base.OnFormClosing(e);
@@ -381,16 +389,15 @@ namespace McdView
 			lbl07_phase7.Left = lbl07.Right;
 		}
 
+
 		/// <summary>
-		/// Determines if the InsertAfterLast options groupbox is enabled and/or
-		/// if its checkboxes are checked.
+		/// Decides if the InsertAfterLast options are checked.
 		/// </summary>
-		internal void EnableInsertOptions()
+		internal void LoadIalOptions()
 		{
-			cb_IalDeadpart.Checked =
-			cb_IalAltrpart.Checked =
-			cb_IalSprites .Checked = (_f.PfeMcd != PfeMcd);
-			cb_IalSprites .Enabled = (Spriteset != null);
+			cb_IalDeadpart.Checked = ialDeadpartChecked;
+			cb_IalAltrpart.Checked = ialAltrpartChecked;
+			cb_IalSprites .Checked = ialSpritesChecked;
 		}
 
 
