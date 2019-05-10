@@ -144,6 +144,7 @@ namespace XCom
 				string label)
 		{
 			//LogFile.WriteLine("SpriteCollection..cTor");
+
 			TabwordLength = tabwordLength;
 			Pal           = pal;
 			Label         = label;

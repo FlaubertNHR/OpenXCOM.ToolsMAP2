@@ -631,6 +631,7 @@ namespace McdView
 							else
 								pal = Palette.TftdBattle;
 
+							ResourceInfo.Spritesets.Clear();
 							Spriteset = ResourceInfo.LoadSpriteset(
 																Label,
 																Path.GetDirectoryName(PfeMcd),
@@ -690,6 +691,7 @@ namespace McdView
 							else
 								pal = Palette.TftdBattle;
 
+							ResourceInfo.Spritesets.Clear();
 							Spriteset = ResourceInfo.LoadSpriteset(
 																Label,
 																Path.GetDirectoryName(PfeMcd),
@@ -768,6 +770,7 @@ namespace McdView
 					else
 						pal = Palette.TftdBattle;
 
+					ResourceInfo.Spritesets.Clear();
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(PfeMcd),
@@ -845,6 +848,7 @@ namespace McdView
 				ResourceInfo.ReloadSprites = true;	// is needed here to change palette transparency.
 													// Ie, the palette is transparent in MapView but I want it non-transparent in McdView.
 
+				ResourceInfo.Spritesets.Clear();
 				Spriteset = ResourceInfo.LoadSpriteset(
 													Label,
 													Path.GetDirectoryName(PfeMcd),
@@ -1414,6 +1418,7 @@ namespace McdView
 						else
 							pal = Palette.TftdBattle;
 
+						ResourceInfo.Spritesets.Clear();
 						CopyPanel.Spriteset = ResourceInfo.LoadSpriteset(
 																	CopyPanel.Label,
 																	Path.GetDirectoryName(CopyPanel.PfeMcd),

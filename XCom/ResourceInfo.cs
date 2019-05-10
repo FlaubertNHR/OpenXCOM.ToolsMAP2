@@ -11,8 +11,8 @@ namespace XCom
 	public static class ResourceInfo
 	{
 		#region Fields (static)
-		private static readonly Dictionary<Palette, Dictionary<string, SpriteCollection>> _spritesets_byPalette =
-							new Dictionary<Palette, Dictionary<string, SpriteCollection>>();
+		public static readonly List<SpriteCollection> Spritesets =
+						   new List<SpriteCollection>();
 
 		public static bool ReloadSprites;
 
@@ -48,17 +48,22 @@ namespace XCom
 		/// <summary>
 		/// Loads a given spriteset for UFO or TFTD. This could go in Descriptor
 		/// except the XCOM cursor-sprites load w/out a descriptor. As do the
-		/// 'ExtraSprites'.
-		/// @note Both UFO and TFTD use 2-byte Tab-offsetLengths for 32x40 terrain pcks
-		/// (TFTD unitsprites use 4-byte Tab-offsetLengths although Bigobs 32x48 uses 2-byte)
-		/// (the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte)
+		/// 'ExtraSprites' in 'Globals' - although that's done differently w/
+		/// Globals.LoadExtraSprites().
+		/// @note Both UFO and TFTD use 2-byte TabwordLengths for 32x40 terrain sprites
+		/// - TFTD unitsprites use 4-byte TabwordLengths although Bigobs 32x48 uses 2-byte
+		/// - the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte
+		/// TODO: Each effing tilepart gets a pointer to the SpriteCollection.
+		/// Effectively, at present, every tilepart maintains the
+		/// SpriteCollection; the SpriteCollection should rather be an
+		/// independent object maintained by a MapFile object eg.
 		/// </summary>
 		/// <param name="file">the file w/out extension</param>
 		/// <param name="dir">path to the directory of the file</param>
 		/// <param name="tabwordLength"></param>
 		/// <param name="pal"></param>
 		/// <param name="warnonly">true if called by McdView (warn-only if spriteset not found)</param>
-		/// <returns>a SpriteCollection containing all the sprites for a given Terrain</returns>
+		/// <returns>a SpriteCollection containing all the sprites</returns>
 		public static SpriteCollection LoadSpriteset(
 				string file,
 				string dir,
@@ -74,63 +79,40 @@ namespace XCom
 				//LogFile.WriteLine(". dir= " + dir);
 				//LogFile.WriteLine(". file= " + file);
 
-				var pfSpriteset = Path.Combine(dir, file);
-				//LogFile.WriteLine(". pfSpriteset= " + pfSpriteset);
+				var pf = Path.Combine(dir, file);
+				//LogFile.WriteLine(". pf= " + pf);
 
-				string pfePck = pfSpriteset + GlobalsXC.PckExt;
-				string pfeTab = pfSpriteset + GlobalsXC.TabExt;
+				string pfePck = pf + GlobalsXC.PckExt;
+				string pfeTab = pf + GlobalsXC.TabExt;
 				//LogFile.WriteLine(". pfePck= " + pfePck);
 				//LogFile.WriteLine(". pfeTab= " + pfeTab);
 
 				if (File.Exists(pfePck) && File.Exists(pfeTab))
 				{
-					if (!_spritesets_byPalette.ContainsKey(pal))
-						 _spritesets_byPalette.Add(pal, new Dictionary<string, SpriteCollection>());	// TODO: Don't do it that way; is overwrought.
-																										// just change a spriteset's palette-ptr on the fly.
-					var spritesets = _spritesets_byPalette[pal];										// instead of having umpteen bazillion spritesets loaded.
-
-					if (ReloadSprites) // used by XCMainWindow.OnPckSavedEvent <- TileView's pck-editor/mcd-editor
+					using (var fsPck = File.OpenRead(pfePck))
+					using (var fsTab = File.OpenRead(pfeTab))
 					{
-						//LogFile.WriteLine(". ReloadSprites");
-
-						if (spritesets.ContainsKey(pfSpriteset))
-							spritesets.Remove(pfSpriteset);
-					}
-
-					if (!spritesets.ContainsKey(pfSpriteset))
-					{
-						//LogFile.WriteLine(". . key not found in spriteset dictionary -> add new SpriteCollection");
-
-						using (var fsPck = File.OpenRead(pfePck))
-						using (var fsTab = File.OpenRead(pfeTab))
+						var spriteset = new SpriteCollection(
+															fsPck,
+															fsTab,
+															tabwordLength,
+															pal,
+															file);
+						if (spriteset.Borked)
 						{
-							var spriteset = new SpriteCollection(
-																fsPck,
-																fsTab,
-																tabwordLength,
-																pal,
-																file);
-							if (spriteset.Borked)
+							using (var f = new Infobox(
+													" Spriteset borked",
+													"The quantity of sprites in the PCK file does not match"
+														+ " the quantity of sprites expected by the TAB file.",
+													pfePck + Environment.NewLine + pfeTab))
 							{
-								using (var f = new Infobox(
-														" Spriteset borked",
-														"The quantity of sprites in the PCK file does not match"
-															+ " the quantity of sprites expected by the TAB file.",
-														pfePck + Environment.NewLine + pfeTab))
-								{
-									f.ShowDialog();
-								}
+								f.ShowDialog();
 							}
-							spritesets.Add(pfSpriteset, spriteset); // NOTE: Add the spriteset even if it is Borked.
 						}
+
+						Spritesets.Add(spriteset); // used only by 'MapInfoOutputBox'.
+						return spriteset;
 					}
-					//else LogFile.WriteLine("Spriteset already found in the collection.");
-
-					//LogFile.WriteLine(". pal= " + pal.Label + " / pfSpriteset= " + pfSpriteset);
-					//LogFile.WriteLine(". _spritesets_byPalette[pal][pfSpriteset]= " + (_spritesets_byPalette[pal][pfSpriteset] != null ? "found" : "NULL"));
-					//LogFile.WriteLine("");
-
-					return _spritesets_byPalette[pal][pfSpriteset];
 				}
 
 				// error/warn ->
@@ -156,20 +138,17 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the count of sprites in a sprite-collection.
+		/// Gets the total count of sprites in 'Spritesets'.
 		/// @note Used only by MapInfoOutputBox.Analyze()
 		/// </summary>
-		/// <param name="terrain">the terrain file w/out extension</param>
-		/// <param name="dirTerrain">path to the directory of the terrain file</param>
-		/// <param name="pal"></param>
 		/// <returns>count of sprites</returns>
-		internal static int GetSpritesetCount(
-				string terrain,
-				string dirTerrain,
-				Palette pal)
+		public static int GetTotalSpriteCount()
 		{
-			var pfSpriteset = Path.Combine(dirTerrain, terrain);
-			return _spritesets_byPalette[pal][pfSpriteset].Count;
+			int count = 0;
+			foreach (var spriteset in Spritesets)
+				count += spriteset.Count;
+
+			return count;
 		}
 
 

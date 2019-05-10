@@ -100,13 +100,15 @@ namespace XCom
 
 				var partset = new List<Tilepart>();
 
+				ResourceInfo.Spritesets.Clear();
+
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{
 					//LogFile.WriteLine(". . . terrain= " + descriptor.Terrains[i].Item1 + " : " + descriptor.Terrains[i].Item2);
 
-					Tilepart[] MCD = descriptor.ManufactureTerrainParts(i);	// NOTE: calls 
-					foreach (Tilepart part in MCD)							//      - TilepartFactory.CreateTileparts()
-						partset.Add(part);									//      - ResourceInfo.LoadSpriteset()
+					Tilepart[] MCD = descriptor.CreateTerrain(i);	// NOTE: calls
+					foreach (Tilepart part in MCD)					//      - TilepartFactory.CreateTileparts()
+						partset.Add(part);							//      - ResourceInfo.LoadSpriteset()
 				}
 
 				if (partset.Count != 0)

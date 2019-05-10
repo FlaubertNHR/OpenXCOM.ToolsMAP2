@@ -30,7 +30,7 @@ namespace MapView
 			lbl2Tilesets.Text = String.Empty;
 
 			int recordsTotal = 0;
-			int spritesTotal = 0;
+			int spritesTotal = ResourceInfo.GetTotalSpriteCount();
 
 			bool first = true;
 			for (int i = 0; i != file.Terrains.Count; ++i)
@@ -42,7 +42,6 @@ namespace MapView
 
 				lbl2Tilesets.Text += file.Terrains[i].Item1;
 
-				spritesTotal += file.Descriptor.GetSpriteCount(i);
 				recordsTotal += file.Descriptor.GetRecordCount(i);
 			}
 

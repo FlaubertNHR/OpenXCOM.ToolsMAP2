@@ -18,7 +18,7 @@ namespace XCom.Interfaces
 			TileGroupBase
 	{
 		#region Properties
-		public GameType GroupType // TODO: 'GroupType' can/should be superceded by 'Pal'
+		public GameType GroupType // TODO: 'GroupType' can/should be superceded by 'Pal' - or vice versa ...
 		{ get; private set; }
 
 		public Palette Pal
