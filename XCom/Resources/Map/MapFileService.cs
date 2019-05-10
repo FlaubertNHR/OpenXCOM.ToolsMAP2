@@ -20,20 +20,20 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Loads all terrains for a Map. Called by XCMainWindow.LoadSelectedMap().
+		/// Loads all terrains for a Map. Called by XCMainWindow.LoadSelectedDescriptor().
 		/// @note Check that 'descriptor' is not null before call.
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
 		/// <param name="basepathDialog">true to force the find file dialog</param>
 		/// <returns></returns>
-		public static MapFileBase LoadTerrains(
+		public static MapFileBase LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
 				bool basepathDialog = false)
 		{
 			//LogFile.WriteLine("");
-			//LogFile.WriteLine("MapFileService.LoadTerrains descriptor= " + descriptor);
+			//LogFile.WriteLine("MapFileService.LoadDescriptor descriptor= " + descriptor);
 
 			string pfeMap = descriptor.Basepath;
 			if (!String.IsNullOrEmpty(pfeMap)) // -> the BasePath can be null if resource-type is notconfigured.

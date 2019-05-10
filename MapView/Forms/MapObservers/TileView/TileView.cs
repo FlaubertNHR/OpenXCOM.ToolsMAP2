@@ -30,9 +30,9 @@ namespace MapView.Forms.MapObservers.TileViews
 		internal event TileSelectedEventHandler TileSelectedEvent_Observer0;
 
 		/// <summary>
-		/// Fires if a save was done in PckView (via TileView).
+		/// Fires if a save was done in PckView or McdView (via TileView).
 		/// </summary>
-		internal event MethodInvoker PckSavedEvent;
+		internal event MethodInvoker ReloadDescriptorEvent;
 		#endregion
 
 
@@ -568,10 +568,10 @@ namespace MapView.Forms.MapObservers.TileViews
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
 						_showHideManager.HideViewers();
-						fPckView.ShowDialog(FindForm()); // <- Pause until PckView is closed.
+						fPckView.ShowDialog(ViewerFormsManager.TileView); // <- Pause until PckView is closed.
 						_showHideManager.RestoreViewers();
 
-						if (fPckView.SpritesChanged) // (re)load the selected Map.
+						if (fPckView.FireMvReload) // reload the current Map.
 						{
 							string notice = "The Map needs to reload to show any"
 										  + " changes that were made to the terrainset.";
@@ -604,7 +604,8 @@ namespace MapView.Forms.MapObservers.TileViews
 											MessageBoxDefaultButton.Button1,
 											0) == DialogResult.OK)
 							{
-								TriggerPckSaved();
+								if (ReloadDescriptorEvent != null)
+									ReloadDescriptorEvent();
 							}
 						}
 					}
@@ -619,15 +620,6 @@ namespace MapView.Forms.MapObservers.TileViews
 							MessageBoxIcon.Asterisk,
 							MessageBoxDefaultButton.Button1,
 							0);
-		}
-
-		/// <summary>
-		/// Raised when a save is done in PckView.
-		/// </summary>
-		private void TriggerPckSaved()
-		{
-			if (PckSavedEvent != null)
-				PckSavedEvent();
 		}
 
 		/// <summary>
@@ -666,13 +658,13 @@ namespace MapView.Forms.MapObservers.TileViews
 										SelectedTilepart.TerId);
 
 						_showHideManager.HideViewers();
-						fMcdView.ShowDialog(FindForm()); // <- Pause until McdView is closed.
+						fMcdView.ShowDialog(ViewerFormsManager.TileView); // <- Pause until McdView is closed.
 						_showHideManager.RestoreViewers();
 						Palette.UfoBattle .SetTransparent(true);
 						Palette.TftdBattle.SetTransparent(true);
 
 
-						if (fMcdView.RecordsChanged) // (re)load the selected Map.
+						if (fMcdView.FireMvReload) // reload the current Map.
 						{
 							string notice = "The Map needs to reload to show any"
 										  + " changes that were made to the terrainset.";
@@ -705,7 +697,8 @@ namespace MapView.Forms.MapObservers.TileViews
 											MessageBoxDefaultButton.Button1,
 											0) == DialogResult.OK)
 							{
-								TriggerPckSaved();
+								if (ReloadDescriptorEvent != null)
+									ReloadDescriptorEvent();
 							}
 						}
 					}

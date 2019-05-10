@@ -307,7 +307,7 @@ namespace MapView
 			_viewersManager.ManageViewers();
 
 
-			ViewerFormsManager.TileView.Control.PckSavedEvent += OnReloadMapfile;
+			ViewerFormsManager.TileView.Control.ReloadDescriptorEvent += OnReloadDescriptor;
 
 			MainViewUnderlay.AnimationUpdateEvent += OnAnimationUpdate;	// FIX: "Subscription to static events without unsubscription may cause memory leaks."
 																		// NOTE: it's not really a problem, since both publisher and subscriber are expected to
@@ -1712,7 +1712,7 @@ namespace MapView
 
 		private void OnReloadTerrainsClick(object sender, EventArgs e)
 		{
-			OnReloadMapfile();
+			OnReloadDescriptor();
 		}
 
 
@@ -2097,7 +2097,7 @@ namespace MapView
 					if (MainViewUnderlay.MapBase == null					// prevents a bunch of problems, like looping dialogs when
 						|| (   !MainViewUnderlay.MapBase.MapChanged			// returning from the Tileset Editor and the Maptree-node
 							&& !MainViewUnderlay.MapBase.RoutesChanged))	// gets re-selected, causing this class-object to react as
-					{														// if a different Map is going to load ... cf, LoadSelectedMap()
+					{														// if a different Map is going to load ... cf, LoadSelectedDescriptor()
 						cmMapTreeMenu.MenuItems.Clear();
 
 						cmMapTreeMenu.MenuItems.Add("Add Group ...", new EventHandler(OnAddGroupClick));
@@ -2711,7 +2711,7 @@ namespace MapView
 			//if (tvMaps.SelectedNode != null) LogFile.WriteLine(". selected= " + tvMaps.SelectedNode.Text);
 
 			ClearSearched();
-			LoadSelectedMap();
+			LoadSelectedDescriptor();
 
 			_selected = e.Node;
 		}
@@ -2738,32 +2738,28 @@ namespace MapView
 						|| MainViewUnderlay.MapBase.Descriptor != descriptor))
 				{
 					ClearSearched();
-					LoadSelectedMap(true);
+					LoadSelectedDescriptor(true);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Reloads the Map/Routes/Terrains when a save is done in PckView (via
-		/// TileView).
+		/// Reloads the Map/Routes/Terrains when a save is done in PckView or
+		/// McdView (via TileView).
 		/// @note Is double-purposed to reload the Map/Routes/Terrains when user
-		/// chooses to reload current Map et al. on the File menu.
+		/// chooses to reload the current Map et al. on the File menu.
 		/// TODO: Neither event really needs to reload the Map/Routes (in fact
-		/// it would be better if it didn't so that the SaveAlerts would get
-		/// bypassed) - so this function should be reworked to reload only the
-		/// Terrains (MCDs/PCKs/TABs). But that's a headache and a half ....
+		/// it would be better if it didn't so that the SaveAlerts could be
+		/// bypassed) - so this function ought be reworked to reload only the
+		/// Terrains (MCDs/PCKs/TABs). But that's a headache and a half ...
 		/// </summary>
-		private void OnReloadMapfile()
+		private void OnReloadDescriptor()
 		{
 			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 
 			if (!cancel)
-			{
-				ResourceInfo.ReloadSprites = true;
-				LoadSelectedMap();
-			}
-			ResourceInfo.ReloadSprites = false;
+				LoadSelectedDescriptor();
 		}
 		#endregion Events
 
@@ -2773,10 +2769,10 @@ namespace MapView
 		/// Loads the Map that's selected in the Maptree.
 		/// <param name="basepathDialog">true to force the find file dialog</param>
 		/// </summary>
-		private void LoadSelectedMap(bool basepathDialog = false)
+		private void LoadSelectedDescriptor(bool basepathDialog = false)
 		{
 			//LogFile.WriteLine("");
-			//LogFile.WriteLine("XCMainWindow.LoadSelectedMap");
+			//LogFile.WriteLine("XCMainWindow.LoadSelectedDescriptor");
 
 			var descriptor = tvMaps.SelectedNode.Tag as Descriptor;
 			if (descriptor != null)
@@ -2784,10 +2780,10 @@ namespace MapView
 				//LogFile.WriteLine(". descriptor= " + descriptor);
 
 				bool treechanged = false;
-				var @base = MapFileService.LoadTerrains( // NOTE: LoadTerrains() instantiates a MapFileChild but whatver.
-													descriptor,
-													ref treechanged,
-													basepathDialog);
+				var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFileChild but whatver.
+														descriptor,
+														ref treechanged,
+														basepathDialog);
 				if (treechanged) MaptreeChanged = true;
 
 				if (@base != null)

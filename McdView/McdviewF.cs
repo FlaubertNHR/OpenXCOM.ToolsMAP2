@@ -182,13 +182,12 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// For reloading the Map when McdView is invoked via TileView. That is,
-		/// it's *not* a "do you want to save" alert. It is used by MapView's
-		/// TileView to flag the Map to reload. btw, reload MapView's Map even
-		/// if the MCD is saved as a different file; the new terrain-label might
-		/// also be in the Map's terrainset.
+		/// For reloading the Map when McdView is invoked via TileView.
+		/// @note Reload MapView's Map even if the MCD/PCK+TAB is saved as a
+		/// different file; the new terrain-label might also be in the Map's
+		/// terrainset.
 		/// </summary>
-		public bool RecordsChanged
+		public bool FireMvReload
 		{ get; private set; }
 
 
@@ -621,7 +620,6 @@ namespace McdView
 							File.Create(PfeMcd);
 
 							SelId = -1;
-							ResourceInfo.ReloadSprites = true;
 
 							Parts = new Tilepart[0];
 
@@ -638,8 +636,6 @@ namespace McdView
 																ResourceInfo.TAB_WORD_LENGTH_2,
 																pal,
 																true);
-
-							ResourceInfo.ReloadSprites = false;
 
 							CacheLoad.SetCache(Parts);
 							Changed =
@@ -677,7 +673,6 @@ namespace McdView
 					if (ofd.ShowDialog() == DialogResult.OK)
 					{
 						SelId = -1;
-						ResourceInfo.ReloadSprites = true;
 
 						PfeMcd = ofd.FileName;
 
@@ -728,8 +723,6 @@ namespace McdView
 							Parts = parts; // do not assign to 'Parts' until the array is gtg.
 						}
 
-						ResourceInfo.ReloadSprites = false;
-
 						CacheLoad.SetCache(Parts);
 						Changed =
 						PartsPanel.SpritesChanged = false;
@@ -758,7 +751,6 @@ namespace McdView
 			if (File.Exists(PfeMcd))
 			{
 				SelId = -1;
-				ResourceInfo.ReloadSprites = true;
 
 				using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 				{
@@ -807,8 +799,6 @@ namespace McdView
 					Parts = parts; // do not assign to 'Parts' until the array is gtg.
 				}
 
-				ResourceInfo.ReloadSprites = false;
-
 				CacheLoad.SetCache(Parts);
 				Changed =
 				PartsPanel.SpritesChanged = false;
@@ -844,9 +834,6 @@ namespace McdView
 			using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
 			{
 				var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
-
-				ResourceInfo.ReloadSprites = true;	// is needed here to change palette transparency.
-													// Ie, the palette is transparent in MapView but I want it non-transparent in McdView.
 
 				ResourceInfo.Spritesets.Clear();
 				Spriteset = ResourceInfo.LoadSpriteset(
@@ -884,8 +871,6 @@ namespace McdView
 
 				Parts = parts; // do not assign to 'Parts' until the array is gtg.
 			}
-
-			ResourceInfo.ReloadSprites = false;
 
 			if (palette.Substring(0,4) == "tftd")
 				OnClick_PaletteTftd(null, EventArgs.Empty);
@@ -1022,7 +1007,7 @@ namespace McdView
 				CacheLoad.SetCache(Parts);
 				Changed =
 				PartsPanel.SpritesChanged = false;
-				RecordsChanged = true;
+				FireMvReload = true;
 			}
 		}
 
@@ -1135,8 +1120,6 @@ namespace McdView
 		{
 			if (Spriteset != null)
 			{
-				ResourceInfo.ReloadSprites = true;
-
 				string dir = Path.GetDirectoryName(PfeMcd);
 
 				string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
@@ -1168,6 +1151,8 @@ namespace McdView
 								MessageBoxDefaultButton.Button1,
 								0);
 				}
+
+				FireMvReload = true;
 			}
 		}
 
@@ -1404,8 +1389,6 @@ namespace McdView
 					}
 					CopyPanel.SelId = -1;
 
-					ResourceInfo.ReloadSprites = true;
-
 					CopyPanel.PfeMcd = ofd.FileName;
 
 					using (var bs = new BufferedStream(File.OpenRead(CopyPanel.PfeMcd)))
@@ -1455,7 +1438,6 @@ namespace McdView
 						CopyPanel.Parts = parts; // do not assign to 'Parts' until the array is gtg.
 					}
 
-					ResourceInfo.ReloadSprites = false;
 					CopyPanel.cb_IalSprites.Enabled = (CopyPanel.Spriteset != null);
 				}
 				else

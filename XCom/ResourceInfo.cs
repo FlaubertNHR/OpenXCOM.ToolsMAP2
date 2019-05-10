@@ -14,8 +14,6 @@ namespace XCom
 		public static readonly List<SpriteCollection> Spritesets =
 						   new List<SpriteCollection>();
 
-		public static bool ReloadSprites;
-
 		public static int[,] ScanGufo;
 		public static int[,] ScanGtftd;
 

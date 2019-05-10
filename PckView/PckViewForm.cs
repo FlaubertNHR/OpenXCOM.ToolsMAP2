@@ -89,10 +89,12 @@ namespace PckView
 		{ get; set; }
 
 		/// <summary>
-		/// For reloading the Map when PckView is invoked via TileView. That is,
-		/// it's *not* a "do you want to save" alert.
+		/// For reloading the Map when PckView is invoked via TileView.
+		/// @note Reload MapView's Map even if the PCK+TAB is saved as a
+		/// different file; the new terrain-label might also be in the Map's
+		/// terrainset.
 		/// </summary>
-		public bool SpritesChanged
+		public bool FireMvReload
 		{ get; private set; }
 
 
@@ -1108,8 +1110,8 @@ namespace PckView
 												TilePanel.Spriteset,
 												TilePanel.Spriteset.TabwordLength))
 				{
-					SpritesChanged = true;	// NOTE: is used by MapView's TileView to flag the Map to reload.
-				}							// TODO: Replace w/ 'ResourceInfo.ReloadSprites'
+					FireMvReload = true;
+				}
 				else
 				{
 					ShowSaveError();
@@ -1184,21 +1186,19 @@ namespace PckView
 							if (!revertReady) // load the SavedAs files ->
 								LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
 
-							SpritesChanged = true;	// NOTE: is used by MapView's TileView to flag the Map to reload.
-						}							// btw, reload MapView's Map in either case;
-						else						// the new (Save As...) terrain-label may also be in the Map's terrainset.
-						{							// TODO: Replace w/ 'ResourceInfo.ReloadSprites'
+							FireMvReload = true;
+						}
+						else
+						{
 							ShowSaveError();
 
-							if (revertReady)
-							{
-								RevertFiles();
-							}
-							else
+							if (!revertReady)
 							{
 								File.Delete(Path.Combine(dir, file + GlobalsXC.PckExt));
 								File.Delete(Path.Combine(dir, file + GlobalsXC.TabExt));
 							}
+							else
+								RevertFiles();
 						}
 					}
 				}
