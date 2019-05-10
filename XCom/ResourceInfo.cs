@@ -11,9 +11,6 @@ namespace XCom
 	public static class ResourceInfo
 	{
 		#region Fields (static)
-		public static readonly List<SpriteCollection> Spritesets =
-						   new List<SpriteCollection>();
-
 		public static int[,] ScanGufo;
 		public static int[,] ScanGtftd;
 
@@ -28,6 +25,17 @@ namespace XCom
 		#region Properties (static)
 		public static TileGroupManager TileGroupManager
 		{ get; private set; }
+
+		private static readonly List<SpriteCollection> _spritesets =
+							new List<SpriteCollection>();
+		/// <summary>
+		/// A list of spritesets in the currently loaded tileset or so.
+		/// @note It has relevance only for 'MapInfoOutputBox'.
+		/// </summary>
+		public static List<SpriteCollection> Spritesets
+		{
+			get { return _spritesets; }
+		}
 		#endregion
 
 

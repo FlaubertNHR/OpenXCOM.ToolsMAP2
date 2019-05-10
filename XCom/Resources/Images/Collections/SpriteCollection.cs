@@ -143,7 +143,7 @@ namespace XCom
 				Palette pal,
 				string label)
 		{
-			//LogFile.WriteLine("SpriteCollection..cTor");
+			//LogFile.WriteLine("SpriteCollection..cTor[2]");
 
 			TabwordLength = tabwordLength;
 			Pal           = pal;
@@ -366,7 +366,7 @@ namespace XCom
 			uint pos = 0;
 			for (int id = 0; id != spriteset.Count; ++id)
 			{
-				if (pos > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
+				if (pos > UInt16.MaxValue)
 				{
 //					result = "Sprite offset is invalid.";
 					result = "Only " + id + " of " + spriteset.Count
@@ -383,7 +383,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the next 2-byte TabIndex for a specified spriteset.
+		/// Deters the last sprite's 2-byte TabIndex for a specified spriteset
+		/// as well as the TabIndex for the next sprite if it were added.
 		/// </summary>
 		/// <param name="spriteset">the SpriteCollection to test</param>
 		/// <param name="last"></param>
@@ -428,7 +429,7 @@ namespace XCom
 			uint pos = 0, postest = 0;
 			for (int id = 0; id != spriteset.Count; ++id)
 			{
-				if (postest += PckImage.TestSprite(spriteset[id]) > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
+				if (postest += PckImage.TestSprite(spriteset[id]) > UInt16.MaxValue)
 					return pos;
 
 				pos = postest;
