@@ -67,8 +67,8 @@ namespace PckView
 
 		private string _pfePck;
 		private string _pfeTab;
-		private string _pfePckOld;
-		private string _pfeTabOld;
+		private string _pfePck0;
+		private string _pfeTab0;
 		#endregion Fields
 
 
@@ -82,10 +82,10 @@ namespace PckView
 
 
 		#region Properties
-		private string SpritesetDirectory
+		private string Dir
 		{ get; set; }
 
-		private string SpritesetLabel
+		private string Fil
 		{ get; set; }
 
 		/// <summary>
@@ -1006,12 +1006,12 @@ namespace PckView
 					{}
 
 
-					SpritesetDirectory = Path.GetDirectoryName(pfePck);
-					SpritesetLabel     = Path.GetFileNameWithoutExtension(pfePck);
+					Dir = Path.GetDirectoryName(pfePck);
+					Fil = Path.GetFileNameWithoutExtension(pfePck);
 
 					var pal = DefaultPalette;
 					var spriteset = new SpriteCollection(
-													SpritesetLabel,
+													Fil,
 													pal,
 													tabwordLength);
 
@@ -1096,8 +1096,8 @@ namespace PckView
 			if (IsScanG)
 			{
 				if (!SpriteCollection.SaveScanG(
-											SpritesetDirectory,
-											SpritesetLabel,
+											Dir,
+											Fil,
 											TilePanel.Spriteset))
 				{
 					string error = String.Format(
@@ -1117,8 +1117,8 @@ namespace PckView
 				BackupSpritesetFiles();
 
 				if (SpriteCollection.SaveSpriteset(
-												SpritesetDirectory,
-												SpritesetLabel,
+												Dir,
+												Fil,
 												TilePanel.Spriteset,
 												TilePanel.Spriteset.TabwordLength))
 				{
@@ -1143,7 +1143,7 @@ namespace PckView
 			using (var sfd = new SaveFileDialog())
 			{
 				sfd.Title = "Save as";
-				sfd.FileName = SpritesetLabel;
+				sfd.FileName = Fil;
 
 				if (IsScanG)
 					sfd.Filter = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
@@ -1181,7 +1181,7 @@ namespace PckView
 						// TODO: rework the following conglomeration
 
 						bool revertReady; // user requested to save the files to the same filenames.
-						if (file.Equals(SpritesetLabel, StringComparison.OrdinalIgnoreCase))
+						if (file.Equals(Fil, StringComparison.OrdinalIgnoreCase))
 						{
 							BackupSpritesetFiles();
 							revertReady = true;
@@ -1596,8 +1596,8 @@ namespace PckView
 			//LogFile.WriteLine("PckViewForm.LoadSpriteset");
 			//LogFile.WriteLine(". " + pfePck);
 
-			SpritesetDirectory = Path.GetDirectoryName(pfePck);
-			SpritesetLabel     = Path.GetFileNameWithoutExtension(pfePck);
+			Dir = Path.GetDirectoryName(pfePck);
+			Fil = Path.GetFileNameWithoutExtension(pfePck);
 
 			string pfeTab = pfePck.Substring(0, pfePck.Length - 4) + GlobalsXC.TabExt;
 
@@ -1622,7 +1622,7 @@ namespace PckView
 												fsTab,
 												ResourceInfo.TAB_WORD_LENGTH_2,
 												Palette.UfoBattle,
-												SpritesetLabel);
+												Fil);
 				}
 
 				if (!spriteset.BorkedBigobs && spriteset.Borked)
@@ -1636,7 +1636,7 @@ namespace PckView
 													fsTab,
 													ResourceInfo.TAB_WORD_LENGTH_4,
 													Palette.TftdBattle,
-													SpritesetLabel);
+													Fil);
 					}
 				}
 
@@ -1676,7 +1676,7 @@ namespace PckView
 				else
 				{
 					if (spriteset != null)
-						spriteset.Label = SpritesetLabel;
+						spriteset.Label = Fil;
 
 					OnPaletteClick(
 								_paletteItems[DefaultPalette],
@@ -1705,8 +1705,8 @@ namespace PckView
 
 		private void LoadScanG(string pfeScanG)
 		{
-			SpritesetDirectory = Path.GetDirectoryName(pfeScanG);
-			SpritesetLabel     = Path.GetFileNameWithoutExtension(pfeScanG);
+			Dir = Path.GetDirectoryName(pfeScanG);
+			Fil = Path.GetFileNameWithoutExtension(pfeScanG);
 
 			XCImage.SpriteWidth  = 4;
 			XCImage.SpriteHeight = 4;
@@ -1714,7 +1714,7 @@ namespace PckView
 			SpriteCollection spriteset = null;
 
 			using (var fs = File.OpenRead(pfeScanG))
-				spriteset = new SpriteCollection(SpritesetLabel, fs);
+				spriteset = new SpriteCollection(Fil, fs);
 
 			OnPaletteClick(
 						_paletteItems[DefaultPalette],
@@ -1746,30 +1746,30 @@ namespace PckView
 		{
 			// TODO: Don't be such a nerd; see McdView's safety save routine.
 
-			Directory.CreateDirectory(SpritesetDirectory); // in case user deleted the dir.
+			Directory.CreateDirectory(Dir); // in case user deleted the dir.
 
-			_pfePck = Path.Combine(SpritesetDirectory, SpritesetLabel + GlobalsXC.PckExt);
-			_pfeTab = Path.Combine(SpritesetDirectory, SpritesetLabel + GlobalsXC.TabExt);
+			_pfePck = Path.Combine(Dir, Fil + GlobalsXC.PckExt);
+			_pfeTab = Path.Combine(Dir, Fil + GlobalsXC.TabExt);
 
-			_pfePckOld =
-			_pfeTabOld = String.Empty;
+			_pfePck0 =
+			_pfeTab0 = String.Empty;
 
-			string dirBackup = Path.Combine(SpritesetDirectory, GlobalsXC.MV_Backup);
+			string dirBackup = Path.Combine(Dir, GlobalsXC.MV_Backup);
 
 			if (File.Exists(_pfePck))
 			{
 				Directory.CreateDirectory(dirBackup);
 
-				_pfePckOld = Path.Combine(dirBackup, SpritesetLabel + GlobalsXC.PckExt);
-				File.Copy(_pfePck, _pfePckOld, true);
+				_pfePck0 = Path.Combine(dirBackup, Fil + GlobalsXC.PckExt);
+				File.Copy(_pfePck, _pfePck0, true);
 			}
 
 			if (File.Exists(_pfeTab))
 			{
 				Directory.CreateDirectory(dirBackup);
 
-				_pfeTabOld = Path.Combine(dirBackup, SpritesetLabel + GlobalsXC.TabExt);
-				File.Copy(_pfeTab, _pfeTabOld, true);
+				_pfeTab0 = Path.Combine(dirBackup, Fil + GlobalsXC.TabExt);
+				File.Copy(_pfeTab, _pfeTab0, true);
 			}
 		}
 
@@ -1779,11 +1779,11 @@ namespace PckView
 		/// </summary>
 		private void RevertFiles()
 		{
-			if (!String.IsNullOrEmpty(_pfePckOld))
-				File.Copy(_pfePckOld, _pfePck, true);
+			if (!String.IsNullOrEmpty(_pfePck0))
+				File.Copy(_pfePck0, _pfePck, true);
 
-			if (!String.IsNullOrEmpty(_pfeTabOld))
-				File.Copy(_pfeTabOld, _pfeTab, true);
+			if (!String.IsNullOrEmpty(_pfeTab0))
+				File.Copy(_pfeTab0, _pfeTab, true);
 		}
 
 		/// <summary>
