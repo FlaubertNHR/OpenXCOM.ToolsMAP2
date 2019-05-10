@@ -89,12 +89,8 @@ namespace McdView
 			get { return _spriteset; }
 			set
 			{
-				if ((PartsPanel.Spriteset = (_spriteset = value)) != null)
-				{
-					tssl_Sprites.Text = "Sprites: " + _spriteset.Count;
-				}
-				else
-					tssl_Sprites.Text = "Sprites: null";
+				PartsPanel.Spriteset = (_spriteset = value);
+				statusbar_PrintSpriteInfo();
 			}
 		}
 
@@ -348,9 +344,11 @@ namespace McdView
 				}
 			}
 
-			tssl_Overval.Text =
-			tssl_Records.Text =
-			tssl_Sprites.Text = String.Empty;
+			tssl_Overval    .Text =
+			tssl_Records    .Text =
+			tssl_Sprites    .Text =
+			tssl_OffsetLast .Text =
+			tssl_OffsetAfter.Text = String.Empty;
 		}
 
 		/// <summary>
@@ -642,6 +640,9 @@ namespace McdView
 
 							ResourceInfo.ReloadSprites = false;
 
+							CacheLoad.SetCache(Parts);
+							Changed =
+							PartsPanel.SpritesChanged = false;
 							Text = "McdView - " + PfeMcd;
 
 							miSave         .Enabled =
@@ -728,7 +729,8 @@ namespace McdView
 						ResourceInfo.ReloadSprites = false;
 
 						CacheLoad.SetCache(Parts);
-						Changed = false;
+						Changed =
+						PartsPanel.SpritesChanged = false;
 						Text = "McdView - " + PfeMcd;
 
 						miSave         .Enabled =
@@ -805,7 +807,8 @@ namespace McdView
 				ResourceInfo.ReloadSprites = false;
 
 				CacheLoad.SetCache(Parts);
-				Changed = false;
+				Changed =
+				PartsPanel.SpritesChanged = false;
 
 				PartsPanel.Select();
 			}
@@ -884,7 +887,8 @@ namespace McdView
 				OnClick_PaletteTftd(null, EventArgs.Empty);
 
 			CacheLoad.SetCache(Parts);
-			Changed = false;
+			Changed =
+			PartsPanel.SpritesChanged = false;
 			Text = "McdView - " + PfeMcd;
 
 			miSave         .Enabled =
@@ -1012,7 +1016,8 @@ namespace McdView
 					WriteMcdData(pfeMcd);
 
 				CacheLoad.SetCache(Parts);
-				Changed = false;
+				Changed =
+				PartsPanel.SpritesChanged = false;
 				RecordsChanged = true;
 			}
 		}
@@ -1725,6 +1730,29 @@ namespace McdView
 
 
 		#region Methods
+		internal void statusbar_PrintSpriteInfo()
+		{
+			if (Spriteset != null)
+			{
+				tssl_Sprites.Text = "Sprites: " + Spriteset.Count;
+
+				uint last, after;
+				SpriteCollection.Test2byteSpriteset(Spriteset, out last, out after);
+
+				tssl_OffsetLast .ForeColor = (last  > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+				tssl_OffsetAfter.ForeColor = (after > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+
+				tssl_OffsetLast .Text = "last: "  + last;
+				tssl_OffsetAfter.Text = "after: " + after;
+			}
+			else
+			{
+				tssl_Sprites.Text = "Sprites: null";
+				tssl_OffsetLast .Text =
+				tssl_OffsetAfter.Text = String.Empty;
+			}
+		}
+
 		internal bool isTftd()
 		{
 			return miPaletteTftd.Checked;

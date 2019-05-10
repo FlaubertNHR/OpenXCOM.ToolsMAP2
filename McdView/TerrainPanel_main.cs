@@ -532,7 +532,7 @@ namespace McdView
 
 			_f.Changed = CacheLoad.Changed(_f.Parts);
 
-			_f.tssl_Sprites.Text = "Sprites: " + _f.Spriteset.Count;
+			_f.statusbar_PrintSpriteInfo();
 		}
 
 

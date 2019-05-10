@@ -160,7 +160,7 @@ namespace XCom
 		/// <param name="bw"></param>
 		/// <param name="sprite"></param>
 		/// <returns></returns>
-		internal static int SaveSpritesetSprite(BinaryWriter bw, XCImage sprite)
+		internal static uint SaveSpritesetSprite(BinaryWriter bw, XCImage sprite)
 		{
 			var binlist = new List<byte>();
 
@@ -246,7 +246,7 @@ namespace XCom
 
 			bw.Write(binlist.ToArray());
 
-			return binlist.Count;
+			return (uint)binlist.Count;
 		}
 
 		/// <summary>
@@ -254,7 +254,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="sprite"></param>
 		/// <returns></returns>
-		internal static int TestSprite(XCImage sprite)
+		internal static uint TestSprite(XCImage sprite)
 		{
 			var binlist = new List<byte>();
 
@@ -299,7 +299,7 @@ namespace XCom
 			}
 
 			binlist.Add(SpriteStopByte);
-			return binlist.Count;
+			return (uint)binlist.Count;
 		}
 		#endregion Methods (static)
 

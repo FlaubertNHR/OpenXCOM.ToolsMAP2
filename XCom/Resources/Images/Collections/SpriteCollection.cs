@@ -330,7 +330,7 @@ namespace XCom
 							}
 
 							bwTab.Write((ushort)pos); // TODO: investigate le/be
-							pos += (uint)PckImage.SaveSpritesetSprite(bwPck, spriteset[id]);
+							pos += PckImage.SaveSpritesetSprite(bwPck, spriteset[id]);
 							//LogFile.WriteLine(". pos[pst]= " + pos);
 						}
 						break;
@@ -342,7 +342,7 @@ namespace XCom
 						for (int id = 0; id != spriteset.Count; ++id)
 						{
 							bwTab.Write(pos); // TODO: investigate le/be
-							pos += (uint)PckImage.SaveSpritesetSprite(bwPck, spriteset[id]);
+							pos += PckImage.SaveSpritesetSprite(bwPck, spriteset[id]);
 						}
 						break;
 					}
@@ -374,12 +374,66 @@ namespace XCom
 						   + "Failed at position " + pos;
 					return false;
 				}
-				pos += (uint)PckImage.TestSprite(spriteset[id]);
+				pos += PckImage.TestSprite(spriteset[id]);
 			}
 
 			result = "Sprite offsets are valid.";
 			return true;
 		}
+
+		/// <summary>
+		/// Gets the next 2-byte TabIndex for a specified spriteset.
+		/// </summary>
+		/// <param name="spriteset">the SpriteCollection to test</param>
+		/// <param name="last"></param>
+		/// <param name="after"></param>
+		public static void Test2byteSpriteset(
+				SpriteCollection spriteset,
+				out uint last,
+				out uint after)
+		{
+			last = after = 0;
+
+			uint len;
+			for (int id = 0; id != spriteset.Count; ++id)
+			{
+				len = PckImage.TestSprite(spriteset[id]);
+				if (id != spriteset.Count - 1)
+					last += len;
+				else
+					after = last + len;
+			}
+		}
+/*		/// <summary>
+		/// Gets the next 2-byte TabIndex for a specified spriteset.
+		/// </summary>
+		/// <param name="spriteset">the SpriteCollection to test</param>
+		/// <returns></returns>
+		public static uint Test2byteSpriteset(SpriteCollection spriteset)
+		{
+			uint pos = 0;
+			for (int id = 0; id != spriteset.Count; ++id)
+				pos += PckImage.TestSprite(spriteset[id]);
+
+			return pos;
+		} */
+/*		/// <summary>
+		/// Gets the lastknowngood 2-byte TabIndex for a specified spriteset.
+		/// </summary>
+		/// <param name="spriteset">the SpriteCollection to test</param>
+		/// <returns></returns>
+		public static uint Test2byteSpriteset(SpriteCollection spriteset)
+		{
+			uint pos = 0, postest = 0;
+			for (int id = 0; id != spriteset.Count; ++id)
+			{
+				if (postest += PckImage.TestSprite(spriteset[id]) > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
+					return pos;
+
+				pos = postest;
+			}
+			return 0;
+		} */
 
 		/// <summary>
 		/// Saves a specified iconset to SCANG.DAT.

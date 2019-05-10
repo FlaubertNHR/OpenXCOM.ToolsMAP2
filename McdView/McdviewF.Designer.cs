@@ -256,6 +256,9 @@
 		private System.Windows.Forms.Panel pnl_bg;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_Records;
 		internal System.Windows.Forms.ToolStripStatusLabel tssl_Sprites;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_Offset;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetLast;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetAfter;
 
 		/// <summary>
 		/// Disposes resources used by the Form.
@@ -428,6 +431,9 @@
 			this.tssl_Overval = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_Records = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_Sprites = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_Offset = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_OffsetLast = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_OffsetAfter = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gb_Unused = new System.Windows.Forms.GroupBox();
 			this.tb38_ = new McdView.RecordTextbox();
 			this.tb61_ = new McdView.RecordTextbox();
@@ -2071,7 +2077,10 @@
 			this.ss_Statusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tssl_Overval,
 			this.tssl_Records,
-			this.tssl_Sprites});
+			this.tssl_Sprites,
+			this.tssl_Offset,
+			this.tssl_OffsetLast,
+			this.tssl_OffsetAfter});
 			this.ss_Statusbar.Location = new System.Drawing.Point(0, 772);
 			this.ss_Statusbar.Name = "ss_Statusbar";
 			this.ss_Statusbar.Size = new System.Drawing.Size(832, 22);
@@ -2084,27 +2093,54 @@
 			this.tssl_Overval.Font = new System.Drawing.Font("Consolas", 8F);
 			this.tssl_Overval.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
 			this.tssl_Overval.Name = "tssl_Overval";
-			this.tssl_Overval.Size = new System.Drawing.Size(280, 22);
+			this.tssl_Overval.Size = new System.Drawing.Size(300, 22);
 			this.tssl_Overval.Text = "over";
 			this.tssl_Overval.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tssl_Records
 			// 
 			this.tssl_Records.AutoSize = false;
-			this.tssl_Records.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tssl_Records.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_Records.Name = "tssl_Records";
-			this.tssl_Records.Size = new System.Drawing.Size(100, 22);
+			this.tssl_Records.Size = new System.Drawing.Size(95, 22);
 			this.tssl_Records.Text = "records";
 			this.tssl_Records.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tssl_Sprites
 			// 
 			this.tssl_Sprites.AutoSize = false;
-			this.tssl_Sprites.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tssl_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_Sprites.Name = "tssl_Sprites";
-			this.tssl_Sprites.Size = new System.Drawing.Size(100, 22);
+			this.tssl_Sprites.Size = new System.Drawing.Size(95, 22);
 			this.tssl_Sprites.Text = "sprites";
 			this.tssl_Sprites.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tssl_Offset
+			// 
+			this.tssl_Offset.AutoSize = false;
+			this.tssl_Offset.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_Offset.Name = "tssl_Offset";
+			this.tssl_Offset.Size = new System.Drawing.Size(34, 22);
+			this.tssl_Offset.Text = "Offset";
+			this.tssl_Offset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tssl_OffsetLast
+			// 
+			this.tssl_OffsetLast.AutoSize = false;
+			this.tssl_OffsetLast.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_OffsetLast.Name = "tssl_OffsetLast";
+			this.tssl_OffsetLast.Size = new System.Drawing.Size(70, 22);
+			this.tssl_OffsetLast.Text = "last";
+			this.tssl_OffsetLast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tssl_OffsetAfter
+			// 
+			this.tssl_OffsetAfter.AutoSize = false;
+			this.tssl_OffsetAfter.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_OffsetAfter.Name = "tssl_OffsetAfter";
+			this.tssl_OffsetAfter.Size = new System.Drawing.Size(70, 22);
+			this.tssl_OffsetAfter.Text = "after";
+			this.tssl_OffsetAfter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// gb_Unused
 			// 
