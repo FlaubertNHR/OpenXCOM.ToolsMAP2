@@ -9,18 +9,10 @@ using XCom.Interfaces;
 
 namespace PckView
 {
-	internal delegate void SpritesetChangedEventHandler(bool valid);
-
-
 	internal sealed class PckViewPanel
 		:
 			Panel
 	{
-		#region Events
-		internal event SpritesetChangedEventHandler SpritesetChangedEvent;
-		#endregion
-
-
 		#region Fields (static)
 		private const int SpriteMargin = 2; // the pad between the tile's inner border and its contained sprite's edges
 
@@ -29,7 +21,7 @@ namespace PckView
 
 		private const int TableOffsetHori = 3; // the pad between the panel's inner border and the table's vertical borders
 		private const int TableOffsetVert = 2; // the pad between the panel's inner border and the table's horizontal borders
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -50,13 +42,13 @@ namespace PckView
 		/// actual LargeValue in order to calculate the panel's various dynamics.
 		/// </summary>
 		private int _largeChange;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (static)
 		internal static PckViewPanel that
 		{ get; private set; }
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -66,8 +58,8 @@ namespace PckView
 			get { return _spriteset; }
 			set
 			{
-				_spriteset = value;
-				_spriteset.Pal = PckViewForm.Pal;
+				if ((_spriteset = value) != null)
+					_spriteset.Pal = PckViewForm.Pal;
 
 				if (_f.IsScanG)
 				{
@@ -89,17 +81,13 @@ namespace PckView
 
 				EditorPanel.that.Sprite = null;
 
-				_f.PrintSpritesetLabel();
+				OverId     =
+				SelectedId = -1;
 
-				SelectedId =
-				OverId     = -1;
-				_f.PrintTotal();
-
-				if (SpritesetChangedEvent != null)
-					SpritesetChangedEvent(_spriteset != null);
+				_f.SpritesetChanged(_spriteset != null);
 
 				// TODO: update PaletteViewer if the spriteset's palette changes.
-				Refresh();
+				Invalidate();
 			}
 		}
 
@@ -107,8 +95,8 @@ namespace PckView
 		{ get; set; }
 
 		internal int OverId
-		{ get; set; }
-		#endregion
+		{ get; private set; }
+		#endregion Properties
 
 
 		#region cTor
@@ -134,22 +122,17 @@ namespace PckView
 			Controls.Add(_scrollBar);
 
 
-			SelectedId =
-			OverId     = -1;
+			OverId     =
+			SelectedId = -1;
 
 			PckViewForm.PaletteChangedEvent += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
 
 			that = this;
 		}
-		#endregion
+		#endregion cTor
 
 
-		internal void ForceResize()
-		{
-			OnResize(EventArgs.Empty);
-		}
-
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnResize(EventArgs eventargs)
 		{
 			base.OnResize(eventargs);
@@ -168,8 +151,15 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Scrolls the Overlay-panel with the mousewheel after OnSpriteClick
-		/// has given it focus (see).
+		/// Forces a call to OnResize().
+		/// </summary>
+		internal void ForceResize()
+		{
+			OnResize(EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// Scrolls this panel with the mousewheel.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -192,6 +182,12 @@ namespace PckView
 					else
 						_scrollBar.Value += _scrollBar.LargeChange;
 				}
+
+				// update the OverId and print info to the statusbar
+				var pt = PointToClient(Cursor.Position);
+				OnMouseMove(new MouseEventArgs(
+											MouseButtons.None,
+											0, pt.X,pt.Y, 0));
 			}
 		}
 
@@ -370,10 +366,10 @@ namespace PckView
 											TableOffsetVert + TileHeight * tileY - _scrollBar.Value));
 			}
 		}
-		#endregion
+		#endregion Events (override)
 
 
-		#region Eventcalls
+		#region Events
 		/// <summary>
 		/// Handler for PaletteChangedEvent.
 		/// </summary>
@@ -391,7 +387,7 @@ namespace PckView
 		{
 			Refresh();
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -475,7 +471,7 @@ namespace PckView
 			}
 			return -1;
 		}
-		#endregion
+		#endregion Methods
 	}
 }
 

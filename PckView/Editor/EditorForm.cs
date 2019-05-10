@@ -113,7 +113,7 @@ namespace PckView
 		#region Eventcalls
 		/// <summary>
 		/// Sets the *proper* ClientSize.
-		/// @note Also called by PckViewForm.OnSpritesetChanged()
+		/// @note Also called by PckViewForm.SpritesetChanged()
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

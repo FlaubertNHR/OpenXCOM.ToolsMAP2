@@ -16,6 +16,55 @@ namespace PckView
 
 
 		#region Windows Form Designer generated code
+		private System.ComponentModel.IContainer components = null;
+
+		private System.Windows.Forms.MainMenu mmMainMenu;
+
+		private System.Windows.Forms.MenuItem miCreate;
+		private System.Windows.Forms.MenuItem miCreateTerrain;
+		private System.Windows.Forms.MenuItem miCreateBigobs;
+		private System.Windows.Forms.MenuItem miCreateUnitUfo;
+		private System.Windows.Forms.MenuItem miCreateUnitTftd;
+		private System.Windows.Forms.MenuItem miFileMenu;
+		private System.Windows.Forms.MenuItem miOpen;
+		private System.Windows.Forms.MenuItem miOpenBigobs;
+		private System.Windows.Forms.MenuItem miOpenScanG;
+		private System.Windows.Forms.MenuItem miSeparator1;
+		private System.Windows.Forms.MenuItem miSave;
+		private System.Windows.Forms.MenuItem miSaveAs;
+		private System.Windows.Forms.MenuItem miSeparator2;
+		private System.Windows.Forms.MenuItem miExportSprites;
+		private System.Windows.Forms.MenuItem miExportSpritesheet;
+		private System.Windows.Forms.MenuItem miImportSpritesheet;
+		private System.Windows.Forms.MenuItem miSeparator3;
+		private System.Windows.Forms.MenuItem miQuit;
+		private System.Windows.Forms.MenuItem miCompare;
+		private System.Windows.Forms.MenuItem miHq2x;
+
+		private System.Windows.Forms.MenuItem miBytesMenu;
+		private System.Windows.Forms.MenuItem miBytes;
+
+		private System.Windows.Forms.MenuItem miPaletteMenu;
+
+		private System.Windows.Forms.MenuItem miTransparentMenu;
+		private System.Windows.Forms.MenuItem miTransparent;
+
+		private System.Windows.Forms.MenuItem miHelpMenu;
+		private System.Windows.Forms.MenuItem miHelp;
+		private System.Windows.Forms.MenuItem miAbout;
+		private System.Windows.Forms.MenuItem miConsole;
+
+		private System.Windows.Forms.StatusStrip ss_Status;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_TilesTotal;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_TileOver;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_TileSelected;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_SpritesetLabel;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_Offset;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetLast;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetAftr;
+		private System.Windows.Forms.ToolStripSeparator tss_Sep0;
+		private System.Windows.Forms.ToolStripSeparator tss_Sep1;
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -58,7 +107,9 @@ namespace PckView
 			this.tssl_TilesTotal = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_TileOver = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_TileSelected = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tss_Sep0 = new System.Windows.Forms.ToolStripSeparator();
 			this.tssl_SpritesetLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tss_Sep1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tssl_Offset = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_OffsetLast = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_OffsetAftr = new System.Windows.Forms.ToolStripStatusLabel();
@@ -304,13 +355,15 @@ namespace PckView
 			this.tssl_TilesTotal,
 			this.tssl_TileOver,
 			this.tssl_TileSelected,
+			this.tss_Sep0,
 			this.tssl_SpritesetLabel,
+			this.tss_Sep1,
 			this.tssl_Offset,
 			this.tssl_OffsetLast,
 			this.tssl_OffsetAftr});
-			this.ss_Status.Location = new System.Drawing.Point(0, 432);
+			this.ss_Status.Location = new System.Drawing.Point(0, 431);
 			this.ss_Status.Name = "ss_Status";
-			this.ss_Status.Size = new System.Drawing.Size(632, 22);
+			this.ss_Status.Size = new System.Drawing.Size(632, 23);
 			this.ss_Status.TabIndex = 0;
 			this.ss_Status.Text = "ss_Status";
 			// 
@@ -321,7 +374,7 @@ namespace PckView
 			this.tssl_TilesTotal.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_TilesTotal.Name = "tssl_TilesTotal";
 			this.tssl_TilesTotal.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-			this.tssl_TilesTotal.Size = new System.Drawing.Size(65, 22);
+			this.tssl_TilesTotal.Size = new System.Drawing.Size(70, 23);
 			this.tssl_TilesTotal.Text = "total";
 			this.tssl_TilesTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -331,7 +384,7 @@ namespace PckView
 			this.tssl_TileOver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tssl_TileOver.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_TileOver.Name = "tssl_TileOver";
-			this.tssl_TileOver.Size = new System.Drawing.Size(65, 22);
+			this.tssl_TileOver.Size = new System.Drawing.Size(65, 23);
 			this.tssl_TileOver.Text = "over";
 			this.tssl_TileOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -341,9 +394,14 @@ namespace PckView
 			this.tssl_TileSelected.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tssl_TileSelected.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_TileSelected.Name = "tssl_TileSelected";
-			this.tssl_TileSelected.Size = new System.Drawing.Size(75, 22);
+			this.tssl_TileSelected.Size = new System.Drawing.Size(85, 23);
 			this.tssl_TileSelected.Text = "select";
 			this.tssl_TileSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tss_Sep0
+			// 
+			this.tss_Sep0.Name = "tss_Sep0";
+			this.tss_Sep0.Size = new System.Drawing.Size(6, 23);
 			// 
 			// tssl_SpritesetLabel
 			// 
@@ -351,17 +409,22 @@ namespace PckView
 			this.tssl_SpritesetLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tssl_SpritesetLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_SpritesetLabel.Name = "tssl_SpritesetLabel";
-			this.tssl_SpritesetLabel.Size = new System.Drawing.Size(287, 22);
+			this.tssl_SpritesetLabel.Size = new System.Drawing.Size(239, 23);
 			this.tssl_SpritesetLabel.Spring = true;
 			this.tssl_SpritesetLabel.Text = "label";
+			// 
+			// tss_Sep1
+			// 
+			this.tss_Sep1.Name = "tss_Sep1";
+			this.tss_Sep1.Size = new System.Drawing.Size(6, 23);
 			// 
 			// tssl_Offset
 			// 
 			this.tssl_Offset.AutoSize = false;
 			this.tssl_Offset.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tssl_Offset.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_Offset.Margin = new System.Windows.Forms.Padding(1, 0, 0, 0);
 			this.tssl_Offset.Name = "tssl_Offset";
-			this.tssl_Offset.Size = new System.Drawing.Size(45, 22);
+			this.tssl_Offset.Size = new System.Drawing.Size(50, 23);
 			this.tssl_Offset.Text = "Offsets";
 			this.tssl_Offset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -371,7 +434,7 @@ namespace PckView
 			this.tssl_OffsetLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tssl_OffsetLast.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_OffsetLast.Name = "tssl_OffsetLast";
-			this.tssl_OffsetLast.Size = new System.Drawing.Size(40, 22);
+			this.tssl_OffsetLast.Size = new System.Drawing.Size(45, 23);
 			this.tssl_OffsetLast.Text = "last";
 			this.tssl_OffsetLast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -381,7 +444,7 @@ namespace PckView
 			this.tssl_OffsetAftr.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tssl_OffsetAftr.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_OffsetAftr.Name = "tssl_OffsetAftr";
-			this.tssl_OffsetAftr.Size = new System.Drawing.Size(40, 22);
+			this.tssl_OffsetAftr.Size = new System.Drawing.Size(50, 23);
 			this.tssl_OffsetAftr.Text = "after";
 			this.tssl_OffsetAftr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -396,6 +459,7 @@ namespace PckView
 			this.Location = new System.Drawing.Point(50, 50);
 			this.MaximumSize = new System.Drawing.Size(640, 480);
 			this.Menu = this.mmMainMenu;
+			this.MinimumSize = new System.Drawing.Size(399, 0);
 			this.Name = "PckViewForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "PckView";
@@ -409,52 +473,5 @@ namespace PckView
 
 		}
 		#endregion
-
-		private System.ComponentModel.IContainer components = null;
-
-		private System.Windows.Forms.MainMenu mmMainMenu;
-
-		private System.Windows.Forms.MenuItem miCreate;
-		private System.Windows.Forms.MenuItem miCreateTerrain;
-		private System.Windows.Forms.MenuItem miCreateBigobs;
-		private System.Windows.Forms.MenuItem miCreateUnitUfo;
-		private System.Windows.Forms.MenuItem miCreateUnitTftd;
-		private System.Windows.Forms.MenuItem miFileMenu;
-		private System.Windows.Forms.MenuItem miOpen;
-		private System.Windows.Forms.MenuItem miOpenBigobs;
-		private System.Windows.Forms.MenuItem miOpenScanG;
-		private System.Windows.Forms.MenuItem miSeparator1;
-		private System.Windows.Forms.MenuItem miSave;
-		private System.Windows.Forms.MenuItem miSaveAs;
-		private System.Windows.Forms.MenuItem miSeparator2;
-		private System.Windows.Forms.MenuItem miExportSprites;
-		private System.Windows.Forms.MenuItem miExportSpritesheet;
-		private System.Windows.Forms.MenuItem miImportSpritesheet;
-		private System.Windows.Forms.MenuItem miSeparator3;
-		private System.Windows.Forms.MenuItem miQuit;
-		private System.Windows.Forms.MenuItem miCompare;
-		private System.Windows.Forms.MenuItem miHq2x;
-
-		private System.Windows.Forms.MenuItem miBytesMenu;
-		private System.Windows.Forms.MenuItem miBytes;
-
-		private System.Windows.Forms.MenuItem miPaletteMenu;
-
-		private System.Windows.Forms.MenuItem miTransparentMenu;
-		private System.Windows.Forms.MenuItem miTransparent;
-
-		private System.Windows.Forms.MenuItem miHelpMenu;
-		private System.Windows.Forms.MenuItem miHelp;
-		private System.Windows.Forms.MenuItem miAbout;
-		private System.Windows.Forms.MenuItem miConsole;
-
-		private System.Windows.Forms.StatusStrip ss_Status;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_TilesTotal;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_TileOver;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_TileSelected;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_SpritesetLabel;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_Offset;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetLast;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetAftr;
 	}
 }

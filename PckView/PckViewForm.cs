@@ -27,7 +27,7 @@ namespace PckView
 	{
 		#region Events (static)
 		internal static event PaletteChangedEventHandler PaletteChangedEvent;
-		#endregion
+		#endregion Events (static)
 
 
 		#region Fields (static)
@@ -39,7 +39,7 @@ namespace PckView
 		private const string None     = "n/a";
 
 		private const string PngExt = ".PNG";
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -61,7 +61,7 @@ namespace PckView
 
 //		private SharedSpace _share = SharedSpace.that;
 
-		private Dictionary<Palette, MenuItem> _paletteItems = new Dictionary<Palette, MenuItem>();
+		private readonly Dictionary<Palette, MenuItem> _paletteItems = new Dictionary<Palette, MenuItem>();
 
 		private bool _editorInited;
 
@@ -69,7 +69,7 @@ namespace PckView
 		private string _pfeTab;
 		private string _pfePckOld;
 		private string _pfeTabOld;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (static)
@@ -78,7 +78,7 @@ namespace PckView
 
 		internal static Palette Pal
 		{ get; set; }
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -109,7 +109,7 @@ namespace PckView
 		/// </summary>
 		internal bool IsScanG
 		{ get; private set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -160,9 +160,8 @@ namespace PckView
 			TilePanel = new PckViewPanel(this);
 			TilePanel.Dock = DockStyle.Fill;
 			TilePanel.ContextMenu = ViewerContextMenu();
-			TilePanel.SpritesetChangedEvent += OnSpritesetChanged;
-			TilePanel.Click                 += OnSpriteClick;
-			TilePanel.DoubleClick           += OnSpriteEditorClick;
+			TilePanel.Click       += OnSpriteClick;
+			TilePanel.DoubleClick += OnSpriteEditorClick;
 
 			Controls.Add(TilePanel);
 			TilePanel.BringToFront();
@@ -201,7 +200,7 @@ namespace PckView
 			tssl_OffsetLast.Text =
 			tssl_OffsetAftr.Text = String.Empty;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Load/save 'registry' info
@@ -342,7 +341,7 @@ namespace PckView
 				File.Delete(dst);
 			}
 		}
-		#endregion
+		#endregion Load/save 'registry' info
 
 
 		/// <summary>
@@ -467,10 +466,9 @@ namespace PckView
 
 		/// <summary>
 		/// Enables (or disables) various menuitems.
-		/// Called when the SpritesetChangedEvent is raised.
 		/// </summary>
-		/// <param name="valid"></param>
-		private void OnSpritesetChanged(bool valid)
+		/// <param name="valid">true if the spriteset is valid</param>
+		internal void SpritesetChanged(bool valid)
 		{
 			// under File menu
 			miSave             .Enabled =
@@ -488,7 +486,10 @@ namespace PckView
 			_miAdd             .Enabled = valid;
 
 			Editor.OnLoad(null, EventArgs.Empty); // resize the Editor to the spriteset's sprite-size
-			OnSpriteClick(null, EventArgs.Empty); // disable items on the contextmenu
+			OnSpriteClick(null, EventArgs.Empty); // enable/disable items on the contextmenu
+
+			PrintSpritesetLabel(valid);
+			PrintTotal(valid);
 		}
 
 		/// <summary>
@@ -783,7 +784,7 @@ namespace PckView
 		{
 			OnSpriteClick(null, EventArgs.Empty);
 
-			PrintTotal();
+			PrintTotal(true);
 
 			TilePanel.ForceResize();
 			TilePanel.Refresh();
@@ -1550,7 +1551,7 @@ namespace PckView
 				// cool... watch this!" **sproing***
 			} */
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -1808,17 +1809,20 @@ namespace PckView
 
 
 		/// <summary>
-		/// Prints the quantity of sprites in the currently loaded spriteset to
-		/// the statusbar. Note that this will clear the sprite-over info.
+		/// Updates the status-information for the sprite that the cursor is
+		/// currently over.
 		/// </summary>
-		internal void PrintTotal()
+		internal void PrintOverId()
 		{
-			PrintSelectedId();
-			PrintOverId();
+			string over;
+			if (TilePanel.OverId != -1)
+				over = TilePanel.OverId.ToString(CultureInfo.InvariantCulture);
+			else
+				over = None;
 
-			tssl_TilesTotal.Text = String.Format(
-											CultureInfo.InvariantCulture,
-											Total + "{0}", TilePanel.Spriteset.Count);
+			tssl_TileOver.Text = String.Format(
+										CultureInfo.InvariantCulture,
+										Over + "{0}", over);
 		}
 
 		/// <summary>
@@ -1850,45 +1854,63 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Updates the status-information for the sprite that the cursor is
-		/// currently over.
+		/// Prints the quantity of sprites in the currently loaded spriteset to
+		/// the statusbar. Note that this will clear the sprite-over info.
 		/// </summary>
-		internal void PrintOverId()
+		/// <param name="valid">true if the spriteset is valid</param>
+		private void PrintTotal(bool valid)
 		{
-			string over;
-			if (TilePanel.OverId != -1)
-				over = TilePanel.OverId.ToString(CultureInfo.InvariantCulture);
-			else
-				over = None;
+			PrintOverId();
+			PrintSelectedId();
 
-			tssl_TileOver.Text = String.Format(
-										CultureInfo.InvariantCulture,
-										Over + "{0}", over);
+			if (valid)
+			{
+				tssl_TilesTotal.Text = String.Format(
+												CultureInfo.InvariantCulture,
+												Total + "{0}", TilePanel.Spriteset.Count);
+
+				uint last, aftr;
+				SpriteCollection.Test2byteSpriteset(TilePanel.Spriteset, out last, out aftr);
+
+				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+
+				tssl_OffsetLast.Text = last.ToString();
+				tssl_OffsetAftr.Text = aftr.ToString();
+			}
+			else
+			{
+				tssl_TilesTotal.Text =
+				tssl_OffsetLast.Text =
+				tssl_OffsetAftr.Text = String.Empty;
+			}
 		}
 
 		/// <summary>
 		/// Prints the label of the currently loaded spriteset to the statubar.
 		/// </summary>
-		internal void PrintSpritesetLabel()
+		/// <param name="valid">true if the spriteset is valid</param>
+		private void PrintSpritesetLabel(bool valid)
 		{
-			tssl_SpritesetLabel.Text = TilePanel.Spriteset.Label;
+			string text;
+			if (valid)
+			{
+				text = TilePanel.Spriteset.Label;
 
-			if (IsBigobs) // TODO: Use bitflags.
-			{
-				tssl_SpritesetLabel.Text += " (32x48)";
-			}
-			else if (IsScanG)
-			{
-				tssl_SpritesetLabel.Text += " (4x4)";
+				if      (IsBigobs) text += " (32x48)"; // TODO: Use bitflags.
+				else if (IsScanG)  text += " (4x4)";
+				else               text += " (32x40)";
 			}
 			else
-				tssl_SpritesetLabel.Text += " (32x40)";
+				text = String.Empty;
+
+			tssl_SpritesetLabel.Text = text;
 		}
-		#endregion
+		#endregion Methods
 	}
 
 
 	#region Delegates
 	internal delegate void PaletteChangedEventHandler();
-	#endregion
+	#endregion Delegates
 }
