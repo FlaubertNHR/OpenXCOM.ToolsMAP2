@@ -197,6 +197,9 @@ namespace PckView
 			tssl_TilesTotal.Text = String.Format(
 											CultureInfo.InvariantCulture,
 											Total + None);
+
+			tssl_OffsetLast.Text =
+			tssl_OffsetAftr.Text = String.Empty;
 		}
 		#endregion
 

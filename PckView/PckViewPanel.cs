@@ -40,9 +40,9 @@ namespace PckView
 		private int HoriCount = 1;
 		private int TableHeight;
 
-		private Pen   _penBlack        = new Pen(Brushes.Black, 1);
-		private Pen   _penControlLight = new Pen(SystemColors.ControlLight, 1);
-		private Brush _brushCrimson    = new SolidBrush(Color.Crimson);
+		private Pen   _penBlack        = Pens.Black;
+		private Pen   _penControlLight = SystemPens.ControlLight;
+		private Brush _brushCrimson    = Brushes.Crimson;
 
 		/// <summary>
 		/// The LargeChange value for the scrollbar will return "1" when the bar
