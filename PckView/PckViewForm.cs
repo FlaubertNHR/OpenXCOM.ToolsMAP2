@@ -114,7 +114,7 @@ namespace PckView
 
 		#region cTor
 		/// <summary>
-		/// Creates the PckView window.
+		/// cTor. Creates the PckView window.
 		/// </summary>
 		public PckViewForm()
 		{
@@ -266,6 +266,14 @@ namespace PckView
 					}
 				}
 			}
+#if DEBUG
+			else
+			{
+				var rect = Screen.GetWorkingArea(new Point(0,0));
+				Left = (rect.Width  - Width)  / 2;
+				Top  = (rect.Height - Height) / 2 - 25;
+			}
+#endif
 		}
 
 		/// <summary>
