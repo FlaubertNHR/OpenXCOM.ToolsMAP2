@@ -81,8 +81,8 @@ namespace PckView
 
 				EditorPanel.that.Sprite = null;
 
-				OverId     =
-				SelectedId = -1;
+				IdOver =
+				IdSel = -1;
 
 				_f.SpritesetChanged(_spriteset != null);
 
@@ -91,10 +91,10 @@ namespace PckView
 			}
 		}
 
-		internal int SelectedId
+		internal int IdSel
 		{ get; set; }
 
-		internal int OverId
+		internal int IdOver
 		{ get; private set; }
 		#endregion Properties
 
@@ -122,8 +122,8 @@ namespace PckView
 			Controls.Add(_scrollBar);
 
 
-			OverId     =
-			SelectedId = -1;
+			IdOver =
+			IdSel = -1;
 
 			PckViewForm.PaletteChangedEvent += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
 
@@ -140,7 +140,7 @@ namespace PckView
 			if (FindForm().WindowState != FormWindowState.Minimized)
 			{
 				CalculateScrollRange(false);
-				ScrollToTile(SelectedId);
+				ScrollToTile(IdSel);
 
 				if (_scrollBar.Visible
 					&& _scrollBar.Value + (_scrollBar.LargeChange - 1) + _scrollBar.LargeChange > _scrollBar.Maximum)
@@ -204,17 +204,16 @@ namespace PckView
 			if (e.Button == MouseButtons.Left
 				&& Spriteset != null && Spriteset.Count != 0)
 			{
-				// IMPORTANT: 'SelectedId' is currently allowed only 1 entry.
+				// IMPORTANT: 'IdSel' is currently allowed only 1 entry.
 
 				int id = GetTileId(e);
-				if (id != SelectedId)
+				if (id != IdSel)
 				{
 					XCImage sprite = null;
 
-					if ((SelectedId = id) != -1)
+					if ((IdSel = id) != -1)
 					{
-//						SelectedId = Spriteset[SelectedId].TerId; // use the proper Id of the sprite itself. don't bother
-						sprite = Spriteset[SelectedId];
+						sprite = Spriteset[IdSel];
 
 //						if (ModifierKeys == Keys.Control)
 //						{
@@ -236,7 +235,7 @@ namespace PckView
 					_f.PrintSelectedId();
 					Refresh();
 				}
-				ScrollToTile(SelectedId);
+				ScrollToTile(IdSel);
 			}
 		}
 
@@ -252,9 +251,9 @@ namespace PckView
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
 				int id = GetTileId(e);
-				if (id != OverId)
+				if (id != IdOver)
 				{
-					OverId = id;
+					IdOver = id;
 					_f.PrintOverId();
 				}
 			}
@@ -269,7 +268,7 @@ namespace PckView
 		{
 //			base.OnMouseLeave(e);
 
-			OverId = -1;
+			IdOver = -1;
 			_f.PrintOverId();
 		}
 
@@ -308,7 +307,7 @@ namespace PckView
 					int tileY = id / HoriCount;
 
 //					if (selectedIds.Contains(id))
-					if (id == SelectedId)
+					if (id == IdSel)
 						graphics.FillRectangle(
 											_brushCrimson,
 											TableOffsetHori + TileWidth  * tileX,

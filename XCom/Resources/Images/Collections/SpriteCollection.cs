@@ -382,6 +382,37 @@ namespace XCom
 		}
 
 		/// <summary>
+		/// Deters a specified spriteId's 2-byte TabIndex for a specified
+		/// spriteset as well as the TabIndex for the next sprite.
+		/// @note Ensure that 'spriteId' is less than the spriteset count before
+		/// call.
+		/// </summary>
+		/// <param name="spriteset">the SpriteCollection to test</param>
+		/// <param name="last">ref for the TabOffset of 'spriteId'</param>
+		/// <param name="after">ref for the TabOffset of the next sprite</param>
+		/// <param name="spriteId">default -1 to test the final sprite in the set</param>
+		public static void Test2byteSpriteset(
+				SpriteCollection spriteset,
+				out uint last,
+				out uint after,
+				int spriteId = -1)
+		{
+			if (spriteId == -1)
+				spriteId = spriteset.Count - 1;
+
+			last = after = 0;
+
+			uint len;
+			for (int id = 0; id <= spriteId; ++id)
+			{
+				len = PckImage.TestSprite(spriteset[id]);
+				if (id != spriteId)
+					last += len;
+				else
+					after = last + len;
+			}
+		}
+/*		/// <summary>
 		/// Deters the last sprite's 2-byte TabIndex for a specified spriteset
 		/// as well as the TabIndex for the next sprite if it were added.
 		/// </summary>
@@ -404,7 +435,7 @@ namespace XCom
 				else
 					after = last + len;
 			}
-		}
+		} */
 /*		/// <summary>
 		/// Gets the next 2-byte TabIndex for a specified spriteset.
 		/// </summary>

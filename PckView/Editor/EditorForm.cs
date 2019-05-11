@@ -20,7 +20,7 @@ namespace PckView
 			Locked,
 			Enabled
 		}
-		#endregion
+		#endregion Enums
 
 
 		#region Fields
@@ -30,19 +30,19 @@ namespace PckView
 
 		private readonly TrackBar _trackBar = new TrackBar();
 		private readonly Label _lblEditMode = new Label();
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (static)
 		internal static EditMode Mode
 		{ get; set; }
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
 		private bool Inited
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -78,7 +78,7 @@ namespace PckView
 			InitializeComponent();
 
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
-			MaximumSize = new Size(0, 0); // fu.net
+			MaximumSize = new Size(0,0); // fu.net
 
 			Controls.Add(_pnlEditor);
 			Controls.Add(_trackBar);
@@ -92,10 +92,10 @@ namespace PckView
 			var regInfo = new RegistryInfo(RegistryInfo.SpriteEditor, this); // subscribe to Load and Closing events.
 			regInfo.RegisterProperties();
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnResize(EventArgs e)
 		{
 //			base.OnResize(e);
@@ -107,10 +107,10 @@ namespace PckView
 								- _trackBar.Height
 								- _lblEditMode.Height;
 		}
-		#endregion
+		#endregion Events (override)
 
 
-		#region Eventcalls
+		#region Events
 		/// <summary>
 		/// Sets the *proper* ClientSize.
 		/// @note Also called by PckViewForm.SpritesetChanged()
@@ -185,7 +185,7 @@ namespace PckView
 		{
 			_pnlEditor.InvertGridColor(miGridInvert.Checked = !miGridInvert.Checked);
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -207,7 +207,7 @@ namespace PckView
 		{
 			_fpalette.Close();
 		}
-		#endregion
+		#endregion Methods
 
 
 		/// <summary>
@@ -220,6 +220,17 @@ namespace PckView
 
 			base.Dispose(disposing);
 		}
+
+		private IContainer components;
+
+		private MainMenu mmMainMenu;
+		private MenuItem miPaletteMenu;
+		private MenuItem miPalette;
+		private MenuItem miGridMenu;
+		private MenuItem miGrid;
+		private MenuItem miGridInvert;
+		private StatusStrip ss_Status;
+		private ToolStripStatusLabel tssl_ColorInfo;
 
 		#region Windows Form Designer generated code
 		/// <summary>
@@ -324,17 +335,6 @@ namespace PckView
 			this.PerformLayout();
 
 		}
-		#endregion
-
-		private IContainer components;
-
-		private MainMenu mmMainMenu;
-		private MenuItem miPaletteMenu;
-		private MenuItem miPalette;
-		private MenuItem miGridMenu;
-		private MenuItem miGrid;
-		private MenuItem miGridInvert;
-		private StatusStrip ss_Status;
-		private ToolStripStatusLabel tssl_ColorInfo;
+		#endregion Windows Form Designer generated code
 	}
 }

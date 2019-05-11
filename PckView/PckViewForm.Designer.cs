@@ -394,7 +394,7 @@ namespace PckView
 			this.tssl_TileSelected.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tssl_TileSelected.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_TileSelected.Name = "tssl_TileSelected";
-			this.tssl_TileSelected.Size = new System.Drawing.Size(85, 23);
+			this.tssl_TileSelected.Size = new System.Drawing.Size(120, 23);
 			this.tssl_TileSelected.Text = "select";
 			this.tssl_TileSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -409,7 +409,7 @@ namespace PckView
 			this.tssl_SpritesetLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tssl_SpritesetLabel.Margin = new System.Windows.Forms.Padding(0);
 			this.tssl_SpritesetLabel.Name = "tssl_SpritesetLabel";
-			this.tssl_SpritesetLabel.Size = new System.Drawing.Size(239, 23);
+			this.tssl_SpritesetLabel.Size = new System.Drawing.Size(204, 23);
 			this.tssl_SpritesetLabel.Spring = true;
 			this.tssl_SpritesetLabel.Text = "label";
 			// 
@@ -459,7 +459,7 @@ namespace PckView
 			this.Location = new System.Drawing.Point(50, 50);
 			this.MaximumSize = new System.Drawing.Size(640, 480);
 			this.Menu = this.mmMainMenu;
-			this.MinimumSize = new System.Drawing.Size(399, 0);
+			this.MinimumSize = new System.Drawing.Size(434, 0);
 			this.Name = "PckViewForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "PckView";
