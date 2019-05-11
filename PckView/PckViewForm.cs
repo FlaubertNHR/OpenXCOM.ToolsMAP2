@@ -966,6 +966,8 @@ namespace PckView
 		{
 			using (var sfd = new SaveFileDialog())
 			{
+				IsScanG = false;
+
 				int tabwordLength;
 				if (IsBigobs = (sender == miCreateBigobs)) // Bigobs support for XCImage/PckImage
 				{
@@ -1863,20 +1865,32 @@ namespace PckView
 			PrintOverId();
 			PrintSelectedId();
 
+			tssl_Offset    .Visible =
+			tssl_OffsetLast.Visible =
+			tssl_OffsetAftr.Visible = !IsScanG;
+
 			if (valid)
 			{
 				tssl_TilesTotal.Text = String.Format(
 												CultureInfo.InvariantCulture,
 												Total + "{0}", TilePanel.Spriteset.Count);
 
-				uint last, aftr;
-				SpriteCollection.Test2byteSpriteset(TilePanel.Spriteset, out last, out aftr);
+				if (!IsScanG)
+				{
+					uint last, aftr;
+					SpriteCollection.Test2byteSpriteset(TilePanel.Spriteset, out last, out aftr);
 
-				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
-				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+					tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+					tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
 
-				tssl_OffsetLast.Text = last.ToString();
-				tssl_OffsetAftr.Text = aftr.ToString();
+					tssl_OffsetLast.Text = last.ToString();
+					tssl_OffsetAftr.Text = aftr.ToString();
+				}
+				else
+				{
+					tssl_OffsetLast.Text =
+					tssl_OffsetAftr.Text = String.Empty;
+				}
 			}
 			else
 			{
