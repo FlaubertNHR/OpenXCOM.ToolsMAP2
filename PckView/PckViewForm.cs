@@ -88,6 +88,9 @@ namespace PckView
 		private string Fil
 		{ get; set; }
 
+		private string Title
+		{ get; set; }
+
 		/// <summary>
 		/// For reloading the Map when PckView is invoked via TileView.
 		/// @note Reload MapView's Map even if the PCK+TAB is saved as a
@@ -100,15 +103,39 @@ namespace PckView
 
 		/// <summary>
 		/// True if a Bigobs PCK+TAB set is currently loaded.
+		/// @note Bigobs are 32x48 w/ 2-byte Tabword.
 		/// </summary>
 		private bool IsBigobs
 		{ get; set; }
 
 		/// <summary>
 		/// True if a ScanG iconset is currently loaded.
+		/// @note ScanGs are 4x4 w/ 0-byte Tabword.
 		/// </summary>
 		internal bool IsScanG
 		{ get; private set; }
+
+		private bool _changed;
+		private bool Changed
+		{
+			get { return _changed; }
+			set
+			{
+				if (_changed = value)
+					Text = "PckView - " + Title + "*";
+				else
+					Text = "PckView - " + Title;
+
+//				if (value)
+//				{
+//					if (!_changed)
+//						Text = "PckView - " + Title + "*";
+//				}
+//				else if (_changed)
+//					Text = "PckView - " + Title;
+//				_changed = value;
+			}
+		}
 		#endregion Properties
 
 
@@ -788,6 +815,8 @@ namespace PckView
 
 			TilePanel.ForceResize();
 			TilePanel.Refresh();
+
+			Changed = true;
 		}
 
 		/// <summary>
@@ -832,6 +861,7 @@ namespace PckView
 						EditorPanel.that.Sprite = sprite;
 
 						TilePanel.Refresh();
+						Changed = true;
 					}
 					else
 						ShowBitmapError();
@@ -879,7 +909,9 @@ namespace PckView
 			PrintSelectedId();
 
 			OnSpriteClick(null, EventArgs.Empty);
+
 			TilePanel.Refresh();
+			Changed = true;
 		}
 
 		/// <summary>
@@ -1022,7 +1054,8 @@ namespace PckView
 					TilePanel.Spriteset = spriteset;
 					OnSpriteClick(null, EventArgs.Empty);
 
-					Text = "PckView - " + pfePck;
+					Title = pfePck;
+					Changed = false;
 				}
 			}
 		}
@@ -1095,41 +1128,50 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSaveClick(object sender, EventArgs e)
 		{
-			if (IsScanG)
+			if (TilePanel.Spriteset != null)
 			{
-				if (!SpriteCollection.SaveScanG(
-											Dir,
-											Fil,
-											TilePanel.Spriteset))
+				if (IsScanG)
 				{
-					string error = String.Format(
-											CultureInfo.CurrentCulture,
-											"An I/O error occurred.");
-					MessageBox.Show(
-								error,
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
-				}
-			}
-			else // save Pck+Tab terrain/unit/bigobs ->
-			{
-				BackupSpritesetFiles();
-
-				if (SpriteCollection.SaveSpriteset(
+					if (!SpriteCollection.SaveScanG(
 												Dir,
 												Fil,
-												TilePanel.Spriteset,
-												TilePanel.Spriteset.TabwordLength))
-				{
-					FireMvReload = true;
+												TilePanel.Spriteset))
+					{
+						string error = String.Format(
+												CultureInfo.CurrentCulture,
+												"An I/O error occurred.");
+						MessageBox.Show(
+									error,
+									" Error",
+									MessageBoxButtons.OK,
+									MessageBoxIcon.Error,
+									MessageBoxDefaultButton.Button1,
+									0);
+					}
+					else
+					{
+						Changed = false;
+						// TODO: FireMvReloadScanG file
+					}
 				}
-				else
+				else // save Pck+Tab terrain/unit/bigobs ->
 				{
-					ShowSaveError();
-					RevertFiles();
+					BackupSpritesetFiles();
+
+					if (SpriteCollection.SaveSpriteset(
+													Dir,
+													Fil,
+													TilePanel.Spriteset,
+													TilePanel.Spriteset.TabwordLength))
+					{
+						Changed = false;
+						FireMvReload = true;
+					}
+					else
+					{
+						ShowSaveError();
+						RevertFiles();
+					}
 				}
 			}
 		}
@@ -1142,77 +1184,82 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSaveAsClick(object sender, EventArgs e)
 		{
-			using (var sfd = new SaveFileDialog())
+			if (TilePanel.Spriteset != null)
 			{
-				sfd.Title = "Save as";
-				sfd.FileName = Fil;
-
-				if (IsScanG)
-					sfd.Filter = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
-				else
-					sfd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-
-				if (sfd.ShowDialog() == DialogResult.OK)
+				using (var sfd = new SaveFileDialog())
 				{
-					string dir  = Path.GetDirectoryName(sfd.FileName);
-					string file = Path.GetFileNameWithoutExtension(sfd.FileName);
+					sfd.Title = "Save as";
+					sfd.FileName = Fil;
 
 					if (IsScanG)
-					{
-						if (!SpriteCollection.SaveScanG(
-													dir,
-													file,
-													TilePanel.Spriteset))
-						{
-							string error = String.Format(
-													CultureInfo.CurrentCulture,
-													"An I/O error occurred.");
-							MessageBox.Show(
-										error,
-										" Error",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Error,
-										MessageBoxDefaultButton.Button1,
-										0);
-						}
-						else
-							LoadScanG(sfd.FileName); // TODO: Maintain current Palette.
-					}
+						sfd.Filter = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
 					else
+						sfd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+
+					if (sfd.ShowDialog() == DialogResult.OK)
 					{
-						// TODO: rework the following conglomeration
+						string dir = Path.GetDirectoryName(sfd.FileName);
+						string fil = Path.GetFileNameWithoutExtension(sfd.FileName);
 
-						bool revertReady; // user requested to save the files to the same filenames.
-						if (file.Equals(Fil, StringComparison.OrdinalIgnoreCase))
+						if (IsScanG)
 						{
-							BackupSpritesetFiles();
-							revertReady = true;
-						}
-						else
-							revertReady = false;
-
-						if (SpriteCollection.SaveSpriteset(
+							if (!SpriteCollection.SaveScanG(
 														dir,
-														file,
-														TilePanel.Spriteset,
-														TilePanel.Spriteset.TabwordLength))
-						{
-							if (!revertReady) // load the SavedAs files ->
-								LoadSpriteset(Path.Combine(dir, file + GlobalsXC.PckExt));
-
-							FireMvReload = true;
-						}
-						else
-						{
-							ShowSaveError();
-
-							if (!revertReady)
+														fil,
+														TilePanel.Spriteset))
 							{
-								File.Delete(Path.Combine(dir, file + GlobalsXC.PckExt));
-								File.Delete(Path.Combine(dir, file + GlobalsXC.TabExt));
+								string error = String.Format(
+														CultureInfo.CurrentCulture,
+														"An I/O error occurred.");
+								MessageBox.Show(
+											error,
+											" Error",
+											MessageBoxButtons.OK,
+											MessageBoxIcon.Error,
+											MessageBoxDefaultButton.Button1,
+											0);
 							}
 							else
-								RevertFiles();
+							{
+								LoadScanG(sfd.FileName); // TODO: Maintain current Palette.
+								// TODO: FireMvReloadScanG file
+							}
+						}
+						else
+						{
+							// TODO: rework the following conglomeration
+
+							bool overwrite;
+							if (   dir.Equals(Dir, StringComparison.OrdinalIgnoreCase)
+								&& fil.Equals(Fil, StringComparison.OrdinalIgnoreCase))
+							{
+								BackupSpritesetFiles();
+								overwrite = true;
+							}
+							else
+								overwrite = false;
+
+							if (SpriteCollection.SaveSpriteset(
+															dir,
+															fil,
+															TilePanel.Spriteset,
+															TilePanel.Spriteset.TabwordLength))
+							{
+								LoadSpriteset(Path.Combine(dir, fil + GlobalsXC.PckExt));
+								FireMvReload = true;
+							}
+							else
+							{
+								ShowSaveError();
+
+								if (!overwrite)
+								{
+									File.Delete(Path.Combine(dir, fil + GlobalsXC.PckExt));
+									File.Delete(Path.Combine(dir, fil + GlobalsXC.TabExt));
+								}
+								else
+									RevertFiles();
+							}
 						}
 					}
 				}
@@ -1598,6 +1645,8 @@ namespace PckView
 			//LogFile.WriteLine("PckViewForm.LoadSpriteset");
 			//LogFile.WriteLine(". " + pfePck);
 
+			SpriteCollection spriteset = null;
+
 			Dir = Path.GetDirectoryName(pfePck);
 			Fil = Path.GetFileNameWithoutExtension(pfePck);
 
@@ -1612,9 +1661,6 @@ namespace PckView
 				else
 					XCImage.SpriteHeight = 40;
 
-
-				SpriteCollection spriteset = null;
-
 				using (var fsPck = File.OpenRead(pfePck)) // try 2-byte tab-offsets in .TAB file
 				using (var fsTab = File.OpenRead(pfeTab)) // ie, UFO/TFTD terrain-sprites or Bigobs, UFO unit-sprites
 				{
@@ -1627,7 +1673,7 @@ namespace PckView
 												Fil);
 				}
 
-				if (!spriteset.BorkedBigobs && spriteset.Borked)
+				if (spriteset.Borked && !spriteset.BorkedBigobs)
 				{
 					using (var fsPck = File.OpenRead(pfePck)) // try 4-byte tab-offsets in .TAB file
 					using (var fsTab = File.OpenRead(pfeTab)) // ie, TFTD unit-sprites
@@ -1644,9 +1690,12 @@ namespace PckView
 
 				if (spriteset.Borked)
 				{
+					spriteset = null;
+
 					MessageBox.Show(
-								"The quantity of sprites in the PCK file does not match the"
-									+ " quantity of sprites expected by the TAB file.",
+								"The quantity of sprites in the PCK file"
+									+ " does not match the quantity of"
+									+ " sprites expected by the TAB file.",
 								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
@@ -1659,14 +1708,14 @@ namespace PckView
 					spriteset = null;
 
 					string error = String.Empty;
-					if (!IsBigobs)
-						error = String.Format(
-										CultureInfo.CurrentCulture,
-										"Cannot load Bigobs in a 32x40 spriteset.");
-					else
+					if (IsBigobs)
 						error = String.Format(
 										CultureInfo.CurrentCulture,
 										"Cannot load Terrain or Units in a 32x48 spriteset.");
+					else
+						error = String.Format(
+										CultureInfo.CurrentCulture,
+										"Cannot load Bigobs in a 32x40 spriteset.");
 					MessageBox.Show(
 								error,
 								" Error",
@@ -1683,10 +1732,6 @@ namespace PckView
 					OnPaletteClick(
 								_paletteItems[DefaultPalette],
 								EventArgs.Empty);
-
-					TilePanel.Spriteset = spriteset;
-
-					Text = "PckView - " + pfePck;
 				}
 			}
 			else
@@ -1697,12 +1742,24 @@ namespace PckView
 							"Tab file does not exist"
 								+ Environment.NewLine + Environment.NewLine
 								+ pfeTab,
-							" " + Text,
+							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
+
+			if ((TilePanel.Spriteset = spriteset) == null)
+			{
+				Title = String.Empty;
+
+				Dir =
+				Fil = null;
+			}
+			else
+				Title = pfePck;
+
+			Changed = false;
 		}
 
 		private void LoadScanG(string pfeScanG)
@@ -1724,7 +1781,8 @@ namespace PckView
 
 			TilePanel.Spriteset = spriteset;
 
-			Text = "PckView - " + pfeScanG;
+			Title = pfeScanG;
+			Changed = false;
 		}
 
 
