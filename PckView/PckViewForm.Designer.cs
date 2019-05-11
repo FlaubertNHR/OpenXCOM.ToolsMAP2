@@ -463,9 +463,6 @@ namespace PckView
 			this.Name = "PckViewForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "PckView";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnPckViewFormClosing);
-			this.Shown += new System.EventHandler(this.OnShown);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ss_Status.ResumeLayout(false);
 			this.ss_Status.PerformLayout();
 			this.ResumeLayout(false);

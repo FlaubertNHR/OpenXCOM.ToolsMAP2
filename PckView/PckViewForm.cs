@@ -480,17 +480,65 @@ namespace PckView
 		}
 
 
-		#region Events
+		#region Events (override)
 		/// <summary>
 		/// Focuses the viewer-panel after the app loads.
 		/// </summary>
-		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnShown(object sender, EventArgs e)
+		protected override void OnShown(EventArgs e)
 		{
 			TilePanel.Select();
+			base.OnShown(e);
 		}
 
+		/// <summary>
+		/// Closes the app after a .NET call to close (roughly).
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			SaveWindowMetrics();
+
+			Editor.ClosePalette();	// these are needed when PckView
+			Editor.Close();			// was opened via MapView.
+
+			if (miBytes.Checked)
+				SpriteBytesManager.HideBytesTable(true);
+
+			base.OnFormClosing(e);
+		}
+
+		/// <summary>
+		/// Deletes the currently selected sprite w/ a keydown event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Delete:
+					if (_miDelete.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnDeleteSpriteClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.Enter:
+					if (_miEdit.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnSpriteEditorClick(null, EventArgs.Empty);
+					}
+					break;
+			}
+
+			base.OnKeyDown(e);
+		}
+		#endregion Events (override)
+
+
+		#region Events
 		/// <summary>
 		/// Enables (or disables) various menuitems.
 		/// </summary>
@@ -966,27 +1014,6 @@ namespace PckView
 			}
 		}
 
-		/// <summary>
-		/// Deletes the currently selected sprite w/ a keydown event.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnKeyDown(object sender, KeyEventArgs e)
-		{
-			switch (e.KeyCode)
-			{
-				case Keys.Delete:
-					if (_miDelete.Enabled)
-						OnDeleteSpriteClick(null, EventArgs.Empty);
-					break;
-
-				case Keys.Enter:
-					if (_miEdit.Enabled)
-						OnSpriteEditorClick(null, EventArgs.Empty);
-					break;
-			}
-		}
-
 
 		/// <summary>
 		/// Creates a brand sparkling new (blank) PCK sprite collection.
@@ -1427,25 +1454,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnQuitClick(object sender, EventArgs e)
 		{
-			OnPckViewFormClosing(null, null);
 			Close();
-		}
-
-		/// <summary>
-		/// Closes the app after a .NET call to close (roughly).
-		/// also, Helper for OnQuitClick().
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnPckViewFormClosing(object sender, FormClosingEventArgs e)
-		{
-			SaveWindowMetrics();
-
-			Editor.ClosePalette();	// these are needed when PckView
-			Editor.Close();			// was opened via MapView.
-
-			if (miBytes.Checked)
-				SpriteBytesManager.HideBytesTable(true);
 		}
 
 		/// <summary>
