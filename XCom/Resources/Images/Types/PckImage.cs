@@ -21,22 +21,26 @@ namespace XCom
 			XCImage
 	{
 		#region Fields (static)
-		private const byte ByteMaximumValue = 0xFF; // ... trying to keep my head straight.
-
 		/// <summary>
-		/// A flag that is inserted into the file-data that indicates that an
+		/// A marker that is inserted into the file-data that indicates that an
 		/// image's data has ended.
 		/// </summary>
-		public const byte SpriteStopByte = 0xFF;
+		public const byte MarkerEos = 0xFF;
 
 		/// <summary>
-		/// A flag that is inserted into the file-data that indicates that the
+		/// A marker that is inserted into the file-data that indicates that the
 		/// next byte is a quantity of pixels that are transparent. This is part
 		/// of the RLE-compression.
 		/// </summary>
-		public const byte SpriteTransparencyByte = 0xFE;	// the PCK-file uses 0xFE to flag a succeeding quantity of pixels
-															// as transparent. That is, it is *not* a color-id entry; it's
-															// just a flag in the Pck-file. Stop using it as a color-id entry.
+		public const byte MarkerRle = 0xFE;	// the PCK-file uses 0xFE to flag a succeeding quantity of pixels
+											// as transparent. That is, it is *not* a color-id entry; it's
+											// just a marker in the Pck-file. Stop using it as a color-id entry.
+
+		/// <summary>
+		/// The maximum valid color-id in a pck-packaged sprite.
+		/// </summary>
+		public const byte MxId = 0xFD;
+
 		/// <summary>
 		/// Tracks the id of an image across all loaded terrainsets. Used only
 		/// by 'MapInfoOutputBox'.
@@ -95,7 +99,7 @@ namespace XCom
 			int posSrc = 0;
 			int posDst = 0;
 
-			if (bindata[0] != SpriteTransparencyByte)
+			if (bindata[0] != MarkerRle)
 				posDst = bindata[posSrc++] * XCImage.SpriteWidth;
 
 			for (; posSrc != bindata.Length; ++posSrc)
@@ -117,11 +121,11 @@ namespace XCom
 						Spriteset.BorkedBigobs = true;
 						return;
 
-					case SpriteTransparencyByte: // skip quantity of pixels
+					case MarkerRle: // skip quantity of pixels
 						posDst += bindata[++posSrc];
 						break;
 
-					case SpriteStopByte: // end of image
+					case MarkerEos: // end of image
 						break;
 				}
 			}
@@ -185,17 +189,17 @@ namespace XCom
 							lenTransparent = (byte)(lenTransparent % sprite.Sprite.Width);	// qty of transparent pixels starting on the next row
 						}
 
-						while (lenTransparent >= ByteMaximumValue)
+						while (lenTransparent >= Byte.MaxValue)
 						{
-							lenTransparent -= ByteMaximumValue;
+							lenTransparent -= Byte.MaxValue;
 
-							binlist.Add(SpriteTransparencyByte);
-							binlist.Add(ByteMaximumValue);
+							binlist.Add(MarkerRle);
+							binlist.Add(Byte.MaxValue);
 						}
 
 						if (lenTransparent != 0)
 						{
-							binlist.Add(SpriteTransparencyByte);
+							binlist.Add(MarkerRle);
 							binlist.Add((byte)lenTransparent);
 						}
 						lenTransparent = 0;
@@ -222,20 +226,20 @@ namespace XCom
 			// if there's more than 256 transparent pixels at the end of an image.
 
 //			bool appendStopByte = false;
-//			while (lenTransparent >= ByteMaximumValue)
+//			while (lenTransparent >= Byte.MaxValue)
 //			{
-//				lenTransparent -= ByteMaximumValue;
+//				lenTransparent -= Byte.MaxValue;
 //
-//				binlist.Add(SpriteTransparencyByte);
-//				binlist.Add(ByteMaximumValue);
+//				binlist.Add(MarkerRle);
+//				binlist.Add(Byte.MaxValue);
 //
 //				appendStopByte = true;
 //			}
 //
 //			if (appendStopByte
-//				|| (byte)binlist[binlist.Count - 1] != SpriteStopByte)
+//				|| (byte)binlist[binlist.Count - 1] != MarkerEos)
 //			{
-			binlist.Add(SpriteStopByte);
+			binlist.Add(MarkerEos);
 //			}
 
 			// Okay. That seems to be the algorithm that was used. Ie, no need
@@ -279,17 +283,17 @@ namespace XCom
 							lenTransparent = (byte)(lenTransparent % sprite.Sprite.Width);	// qty of transparent pixels starting on the next row
 						}
 
-						while (lenTransparent >= ByteMaximumValue)
+						while (lenTransparent >= Byte.MaxValue)
 						{
-							lenTransparent -= ByteMaximumValue;
+							lenTransparent -= Byte.MaxValue;
 
-							binlist.Add(SpriteTransparencyByte);
-							binlist.Add(ByteMaximumValue);
+							binlist.Add(MarkerRle);
+							binlist.Add(Byte.MaxValue);
 						}
 
 						if (lenTransparent != 0)
 						{
-							binlist.Add(SpriteTransparencyByte);
+							binlist.Add(MarkerRle);
 							binlist.Add((byte)lenTransparent);
 						}
 						lenTransparent = 0;
@@ -298,7 +302,7 @@ namespace XCom
 				}
 			}
 
-			binlist.Add(SpriteStopByte);
+			binlist.Add(MarkerEos);
 			return (uint)binlist.Count;
 		}
 		#endregion Methods (static)
@@ -320,7 +324,7 @@ namespace XCom
 
 				switch (Bindata[i])
 				{
-					case SpriteStopByte:
+					case MarkerEos:
 						ret += Environment.NewLine;
 						break;
 

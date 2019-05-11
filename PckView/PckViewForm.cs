@@ -529,7 +529,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSpriteClick(object sender, EventArgs e)
 		{
-			bool enabled = (TilePanel.IdSel != -1);
+			bool enabled = (TilePanel.idSel != -1);
 
 			// on Context menu
 			_miEdit        .Enabled =
@@ -539,8 +539,8 @@ namespace PckView
 			_miDelete      .Enabled =
 			_miExport      .Enabled = enabled;
 
-			_miMoveLeft    .Enabled = enabled && (TilePanel.IdSel != 0);
-			_miMoveRight   .Enabled = enabled && (TilePanel.IdSel != TilePanel.Spriteset.Count - 1);
+			_miMoveLeft    .Enabled = enabled && (TilePanel.idSel != 0);
+			_miMoveRight   .Enabled = enabled && (TilePanel.idSel != TilePanel.Spriteset.Count - 1);
 		}
 
 		/// <summary>
@@ -552,9 +552,9 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSpriteEditorClick(object sender, EventArgs e)
 		{
-			if (TilePanel.Spriteset != null && TilePanel.IdSel != -1)
+			if (TilePanel.Spriteset != null && TilePanel.idSel != -1)
 			{
-				EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.IdSel];
+				EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.idSel];
 
 				if (!Editor.Visible)
 				{
@@ -713,10 +713,10 @@ namespace PckView
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (InsertSprites(TilePanel.IdSel, ofd.FileNames))
+					if (InsertSprites(TilePanel.idSel, ofd.FileNames))
 					{
-						TilePanel.IdSel += ofd.FileNames.Length;
-						EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.IdSel];
+						TilePanel.idSel += ofd.FileNames.Length;
+						EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.idSel];
 
 						InsertSpritesFinish();
 					}
@@ -752,7 +752,7 @@ namespace PckView
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (InsertSprites(TilePanel.IdSel + 1, ofd.FileNames))
+					if (InsertSprites(TilePanel.idSel + 1, ofd.FileNames))
 						InsertSpritesFinish();
 					else
 						ShowBitmapError();
@@ -852,12 +852,12 @@ namespace PckView
 					{
 						var sprite = BitmapService.CreateSprite(
 															b,
-															TilePanel.IdSel,
+															TilePanel.idSel,
 															Pal,
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight,
 															IsScanG);
-						TilePanel.Spriteset[TilePanel.IdSel] =
+						TilePanel.Spriteset[TilePanel.idSel] =
 						EditorPanel.that.Sprite = sprite;
 
 						TilePanel.Refresh();
@@ -895,16 +895,16 @@ namespace PckView
 		/// <param name="dir">-1 to move left, +1 to move right</param>
 		private void MoveSprite(int dir)
 		{
-			var sprite = TilePanel.Spriteset[TilePanel.IdSel];
+			var sprite = TilePanel.Spriteset[TilePanel.idSel];
 
-			TilePanel.Spriteset[TilePanel.IdSel]       = TilePanel.Spriteset[TilePanel.IdSel + dir];
-			TilePanel.Spriteset[TilePanel.IdSel + dir] = sprite;
+			TilePanel.Spriteset[TilePanel.idSel]       = TilePanel.Spriteset[TilePanel.idSel + dir];
+			TilePanel.Spriteset[TilePanel.idSel + dir] = sprite;
 
-			TilePanel.Spriteset[TilePanel.IdSel].Id = TilePanel.IdSel;
-			TilePanel.IdSel += dir;
-			TilePanel.Spriteset[TilePanel.IdSel].Id = TilePanel.IdSel;
+			TilePanel.Spriteset[TilePanel.idSel].Id = TilePanel.idSel;
+			TilePanel.idSel += dir;
+			TilePanel.Spriteset[TilePanel.idSel].Id = TilePanel.idSel;
 
-			EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.IdSel];
+			EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.idSel];
 
 			PrintSelectedId();
 
@@ -922,13 +922,13 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnDeleteSpriteClick(object sender, EventArgs e)
 		{
-			TilePanel.Spriteset.Sprites.RemoveAt(TilePanel.IdSel);
+			TilePanel.Spriteset.Sprites.RemoveAt(TilePanel.idSel);
 
-			for (int i = TilePanel.IdSel; i != TilePanel.Spriteset.Count; ++i)
+			for (int i = TilePanel.idSel; i != TilePanel.Spriteset.Count; ++i)
 				TilePanel.Spriteset[i].Id = i;
 
 			EditorPanel.that.Sprite = null;
-			TilePanel.IdSel = -1;
+			TilePanel.idSel = -1;
 
 			InsertSpritesFinish();
 		}
@@ -948,11 +948,11 @@ namespace PckView
 			{ digits += "0"; }
 			while ((count /= 10) != 0);
 
-			var sprite = TilePanel.Spriteset[TilePanel.IdSel];
+			var sprite = TilePanel.Spriteset[TilePanel.idSel];
 			string suffix = String.Format(
 										CultureInfo.InvariantCulture,
 										"_{0:" + digits + "}",
-										TilePanel.IdSel);
+										TilePanel.idSel);
 
 			using (var sfd = new SaveFileDialog())
 			{
@@ -1504,11 +1504,11 @@ namespace PckView
 		{
 			if (!miBytes.Checked)
 			{
-				if (TilePanel.IdSel != -1)
+				if (TilePanel.idSel != -1)
 				{
 					miBytes.Checked = true;
 					SpriteBytesManager.LoadBytesTable(
-												TilePanel.Spriteset[TilePanel.IdSel],
+												TilePanel.Spriteset[TilePanel.idSel],
 												BytesClosingCallback);
 				}
 			}
@@ -1623,12 +1623,12 @@ namespace PckView
 
 		/// <summary>
 		/// Sets the currently selected id.
-		/// NOTE: Called only from TileView to set 'IdSel' externally.
+		/// NOTE: Called only from TileView to set 'idSel' externally.
 		/// </summary>
 		/// <param name="id"></param>
 		public void SetSelectedId(int id)
 		{
-			TilePanel.IdSel = id;
+			TilePanel.idSel = id;
 			PrintSelectedId();
 		}
 
@@ -1875,8 +1875,8 @@ namespace PckView
 		internal void PrintOverId()
 		{
 			string over;
-			if (TilePanel.IdOver != -1)
-				over = TilePanel.IdOver.ToString(CultureInfo.InvariantCulture);
+			if (TilePanel.idOver != -1)
+				over = TilePanel.idOver.ToString(CultureInfo.InvariantCulture);
 			else
 				over = None;
 
@@ -1894,7 +1894,7 @@ namespace PckView
 		{
 			string selected;
 
-			int id = TilePanel.IdSel;
+			int id = TilePanel.idSel;
 			if (id != -1)
 			{
 				selected = id.ToString(CultureInfo.InvariantCulture);
@@ -1960,8 +1960,8 @@ namespace PckView
 		private void PrintOffsets()
 		{
 			int spriteId;
-			if (TilePanel.IdSel != -1)
-				spriteId = TilePanel.IdSel;
+			if (TilePanel.idSel != -1)
+				spriteId = TilePanel.idSel;
 			else
 				spriteId = TilePanel.Spriteset.Count - 1;
 

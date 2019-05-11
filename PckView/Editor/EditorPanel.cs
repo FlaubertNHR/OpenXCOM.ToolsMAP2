@@ -21,7 +21,7 @@ namespace PckView
 		/// client area.
 		/// </summary>
 		internal const int Pad = 1;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -29,14 +29,14 @@ namespace PckView
 
 		private Pen _penGrid;
 		private readonly Pen _gridBlack = new Pen(Color.FromArgb(50,    0,   0,   0)); // black w/ 50  alpha
-		private readonly Pen _gridWhite = new Pen(Color.FromArgb(200, 255, 255, 255)); // white w/ 200 alpha
-		#endregion
+		private readonly Pen _gridWhite = new Pen(Color.FromArgb(180, 255, 255, 255)); // white w/ 180 alpha
+		#endregion Fields
 
 
 		#region Properties (static)
 		internal static EditorPanel that
 		{ get; private set; }
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -95,7 +95,7 @@ namespace PckView
 				Refresh();
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -141,10 +141,10 @@ namespace PckView
 
 			_penGrid = _gridBlack;
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnMouseLeave(EventArgs e)
 		{
 //			base.OnMouseLeave(e);
@@ -182,15 +182,15 @@ namespace PckView
 							{
 								int palid = PalettePanel.that.Palid;
 								if (palid > -1
-									&& (palid < PckImage.SpriteTransparencyByte				// NOTE: 0xFE and 0xFF are reserved for special stuff when
-										|| (/*palid < 256 &&*/ PckViewForm.that.IsScanG)))	// reading/writing a .PCK file but not a .DAT (ScanG) file.
+									&& (palid < PckImage.MarkerRle
+										|| PckViewPanel.that.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_0))
 								{
 									Sprite.Bindata[bindataId] = (byte)palid;
 									Sprite.Sprite = BitmapService.CreateColorized(
-																			XCImage.SpriteWidth,
-																			XCImage.SpriteHeight,
-																			Sprite.Bindata,
-																			PckViewForm.Pal.ColorTable);
+																				XCImage.SpriteWidth,
+																				XCImage.SpriteHeight,
+																				Sprite.Bindata,
+																				PckViewForm.Pal.ColorTable);
 									Refresh();
 									PckViewPanel.that.Refresh();
 								}
@@ -198,17 +198,17 @@ namespace PckView
 								{
 									switch (palid)
 									{
-										case PckImage.SpriteTransparencyByte:	// #254
-										case PckImage.SpriteStopByte:			// #255
+										case PckImage.MarkerRle: // #254
+										case PckImage.MarkerEos: // #255
 											MessageBox.Show(
 														this,
-														"The colortable indices #254 and #255 are reserved"
-															+ " for reading and writing the .PCK file."
+														"The colortable values #254 and #255 are reserved"
+															+ " as special markers in a .PCK file."
 															+ Environment.NewLine + Environment.NewLine
 															+ "#254 is used for RLE encoding"
 															+ Environment.NewLine
-															+ "#255 is the end-of-sprite marker",
-														"Error",
+															+ "#255 is the End-of-Sprite marker",
+														" Error",
 														MessageBoxButtons.OK,
 														MessageBoxIcon.Error,
 														MessageBoxDefaultButton.Button1,
@@ -331,15 +331,15 @@ namespace PckView
 
 			graphics.DrawPath(Pens.Black, path);
 		}
-		#endregion
+		#endregion Events (override)
 
 
-		#region Eventcalls
+		#region Events
 		private void OnPaletteChanged()
 		{
 			Refresh();
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods (static)
@@ -370,13 +370,13 @@ namespace PckView
 
 			switch (palid)
 			{
-				case 0:
+				case Palette.TransparentId: // #0
 					text += " [transparent]";
 					break;
 
-				case 254: // transparency marker
-				case 255: // end of file marker
-					if (!PckViewForm.that.IsScanG)
+				case PckImage.MarkerRle: // #254
+				case PckImage.MarkerEos: // #255
+					if (PckViewPanel.that.Spriteset.TabwordLength != ResourceInfo.TAB_WORD_LENGTH_0)
 					{
 						text += " [invalid]";
 					}
@@ -385,7 +385,7 @@ namespace PckView
 
 			return text;
 		}
-		#endregion
+		#endregion Methods (static)
 
 
 		#region Methods
@@ -395,6 +395,6 @@ namespace PckView
 								: _gridBlack;
 			Refresh();
 		}
-		#endregion
+		#endregion Methods
 	}
 }

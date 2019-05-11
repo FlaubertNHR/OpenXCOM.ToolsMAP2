@@ -60,7 +60,7 @@ namespace XCom
 								PixelFormat.Format8bppIndexed);
 			var start = locked.Scan0;
 
-			unsafe // change any palette-indices 0xFF or 0xFE to #253 if *not* a ScanG icon ->
+			unsafe // change any palette-indices 0xFF or 0xFE to 0xFD if *not* a ScanG icon ->
 			{
 				// kL_note: I suspect any of this negative-stride stuff is redundant.
 
@@ -82,9 +82,9 @@ namespace XCom
 					{
 						switch (palid)
 						{
-							case PckImage.SpriteStopByte:			// convert #255 transparency to #0. uh no ->
-							case PckImage.SpriteTransparencyByte:	// drop #254 transparency-marker down to #253.
-								palid = 253;
+							case PckImage.MarkerRle:	// #254
+							case PckImage.MarkerEos:	// #255
+								palid = PckImage.MxId;	// #253
 								break;
 						}
 					}

@@ -15,24 +15,24 @@ namespace PckView
 	{
 		#region Events
 		internal event PaletteIdChangedEventHandler PaletteIdChangedEvent;
-		#endregion
+		#endregion Events
 
 
 		#region Fields (static)
 		internal const int SwatchesPerSide = 16; // 16 swatches across the panel.
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
 		private int _swatchWidth;
 		private int _swatchHeight;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (static)
 		internal static PalettePanel that
 		{ get; private set; }
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -55,7 +55,7 @@ namespace PckView
 			get { return _clickY; }
 			set { _clickY = value; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -73,10 +73,10 @@ namespace PckView
 
 			that = this;
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Eventcalls (override)
+		#region Events (override)
 		protected override void OnResize(EventArgs eventargs)
 		{
 			_swatchWidth  = Width  / SwatchesPerSide;
@@ -158,10 +158,10 @@ namespace PckView
 				}
 			}
 		}
-		#endregion
+		#endregion Events (override)
 
 
-		#region Eventcalls
+		#region Events
 		private void OnPaletteChanged()
 		{
 			if (Palid > -1 && Palid < 256
@@ -171,7 +171,7 @@ namespace PckView
 			}
 			Refresh();
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -198,6 +198,6 @@ namespace PckView
 				Refresh();
 			}
 		}
-		#endregion
+		#endregion Methods
 	}
 }
