@@ -1865,9 +1865,12 @@ namespace PckView
 			PrintOverId();
 			PrintSelectedId();
 
+			bool offset = (TilePanel.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_2);
+
+			tss_Sep1       .Visible =
 			tssl_Offset    .Visible =
 			tssl_OffsetLast.Visible =
-			tssl_OffsetAftr.Visible = !IsScanG;
+			tssl_OffsetAftr.Visible = offset;
 
 			if (valid)
 			{
@@ -1875,7 +1878,7 @@ namespace PckView
 												CultureInfo.InvariantCulture,
 												Total + "{0}", TilePanel.Spriteset.Count);
 
-				if (!IsScanG)
+				if (offset)
 				{
 					uint last, aftr;
 					SpriteCollection.Test2byteSpriteset(TilePanel.Spriteset, out last, out aftr);

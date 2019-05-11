@@ -131,8 +131,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="fsPck">filestream of the PCK file</param>
 		/// <param name="fsTab">filestream of the TAB file</param>
-		/// <param name="tabwordLength">the length of a word in bytes of a single
-		/// tab-record (ie. 2 for 2-byte UFO/TFTD records, 4 for 4-byte TFTD records)</param>
+		/// <param name="tabwordLength">2 for terrains/bigobs/ufo-units, 4 for tftd-units</param>
 		/// <param name="pal">the palette to use (typically Palette.UfoBattle
 		/// for UFO sprites or Palette.TftdBattle for TFTD sprites)</param>
 		/// <param name="label">file w/out extension or path</param>
@@ -261,7 +260,7 @@ namespace XCom
 		{
 			Label = label;
 
-			TabwordLength = 0;
+			TabwordLength = ResourceInfo.TAB_WORD_LENGTH_0;
 			Pal = null;
 
 			Borked       =

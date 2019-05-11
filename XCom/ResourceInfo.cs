@@ -17,6 +17,7 @@ namespace XCom
 		public static BitArray LoFTufo;
 		public static BitArray LoFTtftd;
 
+		public const int TAB_WORD_LENGTH_0 = 0; // ie. no Tabfile
 		public const int TAB_WORD_LENGTH_2 = 2;
 		public const int TAB_WORD_LENGTH_4 = 4;
 		#endregion
