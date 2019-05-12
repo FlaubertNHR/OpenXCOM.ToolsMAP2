@@ -237,7 +237,7 @@ namespace PckView
 		//
 		// CONTEXT:
 		// Edit					Enter
-		// Add ...				
+		// Add ...				d
 		// InsertBefore ...		
 		// InsertAfter...		
 		// Replace ...			
@@ -252,26 +252,33 @@ namespace PckView
 		/// <returns></returns>
 		private ContextMenuStrip ViewerContextMenu()
 		{
-			_miEdit        = new ToolStripMenuItem("Edit",              null, OnSpriteEditorClick); // OnKeyDown
+			_miEdit        = new ToolStripMenuItem("Edit",              null, OnSpriteEditorClick);			// OnKeyDown Enter
 
 			_miEdit.ShortcutKeyDisplayString = "Enter";
 
-			_miAdd         = new ToolStripMenuItem("Add ...",           null, OnAddSpritesClick);
-			_miInsertBefor = new ToolStripMenuItem("Insert before ...", null, OnInsertSpritesBeforeClick);
-			_miInsertAfter = new ToolStripMenuItem("Insert after ...",  null, OnInsertSpritesAfterClick);
+			_miAdd         = new ToolStripMenuItem("Add ...",           null, OnAddSpritesClick);			// OnKeyDown d
+			_miInsertBefor = new ToolStripMenuItem("Insert before ...", null, OnInsertSpritesBeforeClick);	// OnKeyDown b
+			_miInsertAfter = new ToolStripMenuItem("Insert after ...",  null, OnInsertSpritesAfterClick);	// OnKeyDown a
 
-			_miReplace     = new ToolStripMenuItem("Replace ...",       null, OnReplaceSpriteClick);
-			_miMoveL       = new ToolStripMenuItem("Move left",         null, OnMoveLeftSpriteClick);
-			_miMoveR       = new ToolStripMenuItem("Move right",        null, OnMoveRightSpriteClick);
+			_miAdd        .ShortcutKeyDisplayString = "d";
+			_miInsertBefor.ShortcutKeyDisplayString = "b";
+			_miInsertAfter.ShortcutKeyDisplayString = "a";
 
-			_miMoveL.ShortcutKeyDisplayString = "-";
-			_miMoveR.ShortcutKeyDisplayString = "+";
+			_miReplace     = new ToolStripMenuItem("Replace ...",       null, OnReplaceSpriteClick);		// OnKeyDown r
+			_miMoveL       = new ToolStripMenuItem("Move left",         null, OnMoveLeftSpriteClick);		// OnKeyDown -
+			_miMoveR       = new ToolStripMenuItem("Move right",        null, OnMoveRightSpriteClick);		// OnKeyDown +
 
-			_miDelete      = new ToolStripMenuItem("Delete",            null, OnDeleteSpriteClick); //Delete
+			_miReplace.ShortcutKeyDisplayString = "r";
+			_miMoveL  .ShortcutKeyDisplayString = "-";
+			_miMoveR  .ShortcutKeyDisplayString = "+";
+
+			_miDelete      = new ToolStripMenuItem("Delete",            null, OnDeleteSpriteClick);			// OnKeyDown Delete
 
 			_miDelete.ShortcutKeyDisplayString = "Del";
 
-			_miExport      = new ToolStripMenuItem("Export sprite ...", null, OnExportSpriteClick);
+			_miExport      = new ToolStripMenuItem("Export sprite ...", null, OnExportSpriteClick);			// OnKeyDown p
+
+			_miExport.ShortcutKeyDisplayString = "p";
 
 
 			var contextmenu = new ContextMenuStrip();
@@ -393,7 +400,65 @@ namespace PckView
 
 			switch (e.KeyCode)
 			{
-				case Keys.Delete:
+				case Keys.Enter:												// edit
+					if (_miEdit.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnSpriteEditorClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.D:													// add
+					if (_miAdd.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnAddSpritesClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.B:													// insert before
+					if (_miInsertBefor.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnInsertSpritesBeforeClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.A:													// insert after
+					if (_miInsertAfter.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnInsertSpritesAfterClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.R:													// replace
+					if (_miReplace.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnReplaceSpriteClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.OemMinus: // drugs ...
+				case Keys.Subtract:												// move left
+					if (_miMoveL.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnMoveLeftSpriteClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.Oemplus: // drugs ...
+				case Keys.Add:													// move right
+					if (_miMoveR.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnMoveRightSpriteClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.Delete:												// delete
 					if (_miDelete.Enabled)
 					{
 						e.SuppressKeyPress = true;
@@ -401,11 +466,11 @@ namespace PckView
 					}
 					break;
 
-				case Keys.Enter:
-					if (_miEdit.Enabled)
+				case Keys.P:													// export
+					if (_miExport.Enabled)
 					{
 						e.SuppressKeyPress = true;
-						OnSpriteEditorClick(null, EventArgs.Empty);
+						OnExportSpriteClick(null, EventArgs.Empty);
 					}
 					break;
 			}
