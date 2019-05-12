@@ -525,8 +525,14 @@ namespace PckView
 					break;
 
 				case +1:
-					if (idSel < Spriteset.Count - HoriCount)
+					if (idSel == -1 && Spriteset.Count != 0)
+					{
+						idSel = Spriteset.Count - 1;
+					}
+					else if (idSel < Spriteset.Count - HoriCount)
+					{
 						idSel += HoriCount;
+					}
 					break;
 			}
 
