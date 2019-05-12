@@ -163,6 +163,7 @@
     <Compile Include="PckViewForm.Designer.cs">
       <DependentUpon>PckViewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Telemetric.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Editor\EditorForm.resx">

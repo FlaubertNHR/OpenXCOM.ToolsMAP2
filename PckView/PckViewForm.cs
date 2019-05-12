@@ -8,15 +8,10 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using DSShared;
-using DSShared.Windows;
-
 using PckView.Forms.SpriteBytes;
 
 using XCom;
 using XCom.Interfaces;
-
-using YamlDotNet.RepresentationModel; // read values (deserialization)
 
 
 namespace PckView
@@ -49,15 +44,15 @@ namespace PckView
 //		private ConsoleForm _fconsole;
 //		private TabControl _tcTabs; // for OnCompareClick()
 
-		private MenuItem _miEdit;
-		private MenuItem _miAdd;
-		private MenuItem _miInsertBefor;
-		private MenuItem _miInsertAfter;
-		private MenuItem _miReplace;
-		private MenuItem _miMoveL;
-		private MenuItem _miMoveR;
-		private MenuItem _miDelete;
-		private MenuItem _miExport;
+		private ToolStripMenuItem _miEdit;
+		private ToolStripMenuItem _miAdd;
+		private ToolStripMenuItem _miInsertBefor;
+		private ToolStripMenuItem _miInsertAfter;
+		private ToolStripMenuItem _miReplace;
+		private ToolStripMenuItem _miMoveL;
+		private ToolStripMenuItem _miMoveR;
+		private ToolStripMenuItem _miDelete;
+		private ToolStripMenuItem _miExport;
 
 //		private SharedSpace _share = SharedSpace.that;
 
@@ -125,15 +120,6 @@ namespace PckView
 					Text = "PckView - " + Title + "*";
 				else
 					Text = "PckView - " + Title;
-
-//				if (value)
-//				{
-//					if (!_changed)
-//						Text = "PckView - " + Title + "*";
-//				}
-//				else if (_changed)
-//					Text = "PckView - " + Title;
-//				_changed = value;
 			}
 		}
 		#endregion Properties
@@ -153,7 +139,7 @@ namespace PckView
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
 			MaximumSize = new Size(0,0); // fu.net
 
-			LoadTelemetric();
+			Telemetric.LoadTelemetric(this);
 
 			that = this;
 
@@ -186,7 +172,7 @@ namespace PckView
 
 			TilePanel = new PckViewPanel(this);
 
-			TilePanel.ContextMenu = ViewerContextMenu();
+			TilePanel.ContextMenuStrip = ViewerContextMenu();
 			TilePanel.Click       += OnSpriteClick;
 			TilePanel.DoubleClick += OnSpriteEditorClick;
 
@@ -229,67 +215,90 @@ namespace PckView
 		}
 
 
+		// PckView shortcut table:
+		// miCreateTerrain		CtrlC
+		// miCreateBigobs		CtrlI
+		// miCreateUnitUfo		CtrlU
+		// miCreateUnitTftd		CtrlF
+		// miOpen				CtrlO
+		// miOpenBigobs			CtrlG
+		// miOpenScanG			CtrlD
+		// miSave				CtrlS
+		// miSaveAs				CtrlA
+		// miExportSprites		CtrlE
+		// miExportSpritesheet	CtrlR
+		// miImportSpritesheet	CtrlP
+		// miQuit				CtrlQ
+		// miCompare			CtrlM
+		// miHq2x
+		// miTransparent		CtrlT
+		// miBytes				CtrlB
+		// miHelp				CtrlH
+		//
+		// CONTEXT:
+		// Edit					Enter
+		// Add ...				
+		// InsertBefore ...		
+		// InsertAfter...		
+		// Replace ...			
+		// MoveLeft				-
+		// MoveRight			+
+		// Delete				Delete
+		// ExportSprite ...		
+
 		/// <summary>
 		/// Builds the RMB contextmenu.
 		/// </summary>
 		/// <returns></returns>
-		private ContextMenu ViewerContextMenu()
+		private ContextMenuStrip ViewerContextMenu()
 		{
-			var contextmenu = new ContextMenu();
+			_miEdit        = new ToolStripMenuItem("Edit",              null, OnSpriteEditorClick); // OnKeyDown
 
-			_miEdit = new MenuItem("Edit");
-			_miEdit.Enabled = false;
-			_miEdit.Click += OnSpriteEditorClick;
-			contextmenu.MenuItems.Add(_miEdit);
+			_miEdit.ShortcutKeyDisplayString = "Enter";
 
-			contextmenu.MenuItems.Add(new MenuItem("-"));
+			_miAdd         = new ToolStripMenuItem("Add ...",           null, OnAddSpritesClick);
+			_miInsertBefor = new ToolStripMenuItem("Insert before ...", null, OnInsertSpritesBeforeClick);
+			_miInsertAfter = new ToolStripMenuItem("Insert after ...",  null, OnInsertSpritesAfterClick);
 
-			_miAdd = new MenuItem("Add ...");
-			_miAdd.Enabled = false;
-			_miAdd.Click += OnAddSpritesClick;
-			contextmenu.MenuItems.Add(_miAdd);
+			_miReplace     = new ToolStripMenuItem("Replace ...",       null, OnReplaceSpriteClick);
+			_miMoveL       = new ToolStripMenuItem("Move left",         null, OnMoveLeftSpriteClick);
+			_miMoveR       = new ToolStripMenuItem("Move right",        null, OnMoveRightSpriteClick);
 
-			_miInsertBefor = new MenuItem("Insert before ...");
-			_miInsertBefor.Enabled = false;
-			_miInsertBefor.Click += OnInsertSpritesBeforeClick;
-			contextmenu.MenuItems.Add(_miInsertBefor);
+			_miMoveL.ShortcutKeyDisplayString = "-";
+			_miMoveR.ShortcutKeyDisplayString = "+";
 
-			_miInsertAfter = new MenuItem("Insert after ...");
-			_miInsertAfter.Enabled = false;
-			_miInsertAfter.Click += OnInsertSpritesAfterClick;
-			contextmenu.MenuItems.Add(_miInsertAfter);
+			_miDelete      = new ToolStripMenuItem("Delete",            null, OnDeleteSpriteClick); //Delete
 
-			contextmenu.MenuItems.Add(new MenuItem("-"));
+			_miDelete.ShortcutKeyDisplayString = "Del";
 
-			_miReplace = new MenuItem("Replace ...");
-			_miReplace.Enabled = false;
-			_miReplace.Click += OnReplaceSpriteClick;
-			contextmenu.MenuItems.Add(_miReplace);
+			_miExport      = new ToolStripMenuItem("Export sprite ...", null, OnExportSpriteClick);
 
-			_miMoveL = new MenuItem("Move left");
-			_miMoveL.Enabled = false;
-			_miMoveL.Click += OnMoveLeftSpriteClick;
-			contextmenu.MenuItems.Add(_miMoveL);
 
-			_miMoveR = new MenuItem("Move right");
-			_miMoveR.Enabled = false;
-			_miMoveR.Click += OnMoveRightSpriteClick;
-			contextmenu.MenuItems.Add(_miMoveR);
+			var contextmenu = new ContextMenuStrip();
 
-			contextmenu.MenuItems.Add(new MenuItem("-"));
+			contextmenu.Items.Add(_miEdit);
+			contextmenu.Items.Add(new ToolStripSeparator());
+			contextmenu.Items.Add(_miAdd);
+			contextmenu.Items.Add(_miInsertBefor);
+			contextmenu.Items.Add(_miInsertAfter);
+			contextmenu.Items.Add(new ToolStripSeparator());
+			contextmenu.Items.Add(_miReplace);
+			contextmenu.Items.Add(_miMoveL);
+			contextmenu.Items.Add(_miMoveR);
+			contextmenu.Items.Add(new ToolStripSeparator());
+			contextmenu.Items.Add(_miDelete);
+			contextmenu.Items.Add(new ToolStripSeparator());
+			contextmenu.Items.Add(_miExport);
 
-//			_miDelete = new MenuItem("Delete\tDel");
-			_miDelete = new MenuItem("Delete");
-			_miDelete.Enabled = false;
-			_miDelete.Click += OnDeleteSpriteClick;
-			contextmenu.MenuItems.Add(_miDelete);
-
-			contextmenu.MenuItems.Add(new MenuItem("-"));
-
-			_miExport = new MenuItem("Export sprite ...");
-			_miExport.Enabled = false;
-			_miExport.Click += OnExportSpriteClick;
-			contextmenu.MenuItems.Add(_miExport);
+			_miEdit       .Enabled =
+			_miAdd        .Enabled =
+			_miInsertBefor.Enabled =
+			_miInsertAfter.Enabled =
+			_miReplace    .Enabled =
+			_miMoveL      .Enabled =
+			_miMoveR      .Enabled =
+			_miDelete     .Enabled =
+			_miExport     .Enabled = false;
 
 			return contextmenu;
 		}
@@ -339,147 +348,6 @@ namespace PckView
 		#endregion cTor
 
 
-		#region Load/save 'registry' info
-		/// <summary>
-		/// Positions the window at user-defined coordinates w/ size.
-		/// </summary>
-		private void LoadTelemetric()
-		{
-			string dirSettings = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
-			if (File.Exists(fileViewers))
-			{
-				using (var sr = new StreamReader(File.OpenRead(fileViewers)))
-				{
-					var str = new YamlStream();
-					str.Load(sr);
-
-					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
-					foreach (var node in nodeRoot.Children)
-					{
-						string viewer = ((YamlScalarNode)node.Key).Value;
-						if (String.Equals(viewer, RegistryInfo.PckView, StringComparison.Ordinal))
-						{
-							int x = 0;
-							int y = 0;
-							int w = 0;
-							int h = 0;
-
-							var invariant = CultureInfo.InvariantCulture;
-
-							var keyvals = nodeRoot.Children[new YamlScalarNode(viewer)] as YamlMappingNode;
-							foreach (var keyval in keyvals) // NOTE: There is a better way to do this. See TilesetLoader..cTor
-							{
-								switch (keyval.Key.ToString()) // TODO: Error handling. ->
-								{
-									case "left":
-										x = Int32.Parse(keyval.Value.ToString(), invariant);
-										break;
-									case "top":
-										y = Int32.Parse(keyval.Value.ToString(), invariant);
-										break;
-									case "width":
-										w = Int32.Parse(keyval.Value.ToString(), invariant);
-										break;
-									case "height":
-										h = Int32.Parse(keyval.Value.ToString(), invariant);
-										break;
-								}
-							}
-
-							var rectScreen = Screen.GetWorkingArea(new Point(x, y));
-							if (!rectScreen.Contains(x + 200, y + 100)) // check to ensure that PckView is at least partly onscreen.
-							{
-								x = 100;
-								y =  50;
-							}
-
-							Left = x;
-							Top  = y;
-
-							ClientSize = new Size(w, h);
-						}
-					}
-				}
-			}
-#if DEBUG
-			else
-			{
-				var rect = Screen.GetWorkingArea(new Point(0,0));
-				Left = (rect.Width  - Width)  / 2;
-				Top  = (rect.Height - Height) / 2 - 25;
-			}
-#endif
-		}
-
-		/// <summary>
-		/// Saves the window position and size to YAML.
-		/// </summary>
-		private void SaveTelemetric()
-		{
-			string dirSettings = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
-
-			if (File.Exists(fileViewers))
-			{
-				WindowState = FormWindowState.Normal;
-
-				string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);
-				string dst = Path.Combine(dirSettings, PathInfo.ConfigViewersOld);
-
-				File.Copy(src, dst, true);
-
-				using (var sr = new StreamReader(File.OpenRead(dst))) // but now use dst as src ->
-
-				using (var fs = new FileStream(src, FileMode.Create)) // overwrite previous viewers-config.
-				using (var sw = new StreamWriter(fs))
-				{
-					bool found = false;
-
-					while (sr.Peek() != -1)
-					{
-						string line = sr.ReadLine().TrimEnd();
-
-						if (String.Equals(line, RegistryInfo.PckView + ":", StringComparison.Ordinal))
-						{
-							found = true;
-
-							sw.WriteLine(line);
-
-							line = sr.ReadLine();
-							line = sr.ReadLine();
-							line = sr.ReadLine();
-							line = sr.ReadLine(); // heh
-
-							sw.WriteLine("  left: "   + Math.Max(0, Location.X));	// =Left
-							sw.WriteLine("  top: "    + Math.Max(0, Location.Y));	// =Top
-							sw.WriteLine("  width: "  + ClientSize.Width);			// <- use ClientSize, since Width and Height
-							sw.WriteLine("  height: " + ClientSize.Height);			// screw up due to the titlebar/menubar area.
-						}
-						else
-							sw.WriteLine(line);
-					}
-
-					if (!found)
-					{
-						sw.WriteLine(RegistryInfo.PckView + ":");
-
-						sw.WriteLine("  left: "   + Math.Max(0, Location.X));
-						sw.WriteLine("  top: "    + Math.Max(0, Location.Y));
-						sw.WriteLine("  width: "  + ClientSize.Width);
-						sw.WriteLine("  height: " + ClientSize.Height);
-					}
-				}
-				File.Delete(dst);
-			}
-		}
-		#endregion Load/save 'registry' info
-
-
 		#region Events (override)
 		/// <summary>
 		/// Focuses the viewer-panel after the app loads.
@@ -497,7 +365,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			SaveTelemetric();
+			Telemetric.SaveTelemetric(this);
 
 			Editor.ClosePalette();	// these are needed when PckView
 			Editor.Close();			// was opened via MapView.
