@@ -51,11 +51,11 @@ namespace PckView
 
 		private MenuItem _miEdit;
 		private MenuItem _miAdd;
-		private MenuItem _miInsertBefore;
+		private MenuItem _miInsertBefor;
 		private MenuItem _miInsertAfter;
 		private MenuItem _miReplace;
-		private MenuItem _miMoveLeft;
-		private MenuItem _miMoveRight;
+		private MenuItem _miMoveL;
+		private MenuItem _miMoveR;
 		private MenuItem _miDelete;
 		private MenuItem _miExport;
 
@@ -153,7 +153,7 @@ namespace PckView
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
 			MaximumSize = new Size(0,0); // fu.net
 
-			LoadWindowMetrics();
+			LoadTelemetric();
 
 			that = this;
 
@@ -185,7 +185,7 @@ namespace PckView
 
 
 			TilePanel = new PckViewPanel(this);
-			TilePanel.Dock = DockStyle.Fill;
+
 			TilePanel.ContextMenu = ViewerContextMenu();
 			TilePanel.Click       += OnSpriteClick;
 			TilePanel.DoubleClick += OnSpriteEditorClick;
@@ -234,7 +234,7 @@ namespace PckView
 		/// <summary>
 		/// Positions the window at user-defined coordinates w/ size.
 		/// </summary>
-		private void LoadWindowMetrics()
+		private void LoadTelemetric()
 		{
 			string dirSettings = Path.Combine(
 											Path.GetDirectoryName(Application.ExecutablePath),
@@ -308,7 +308,7 @@ namespace PckView
 		/// <summary>
 		/// Saves the window position and size to YAML.
 		/// </summary>
-		private void SaveWindowMetrics()
+		private void SaveTelemetric()
 		{
 			string dirSettings = Path.Combine(
 											Path.GetDirectoryName(Application.ExecutablePath),
@@ -391,10 +391,10 @@ namespace PckView
 			_miAdd.Click += OnAddSpritesClick;
 			contextmenu.MenuItems.Add(_miAdd);
 
-			_miInsertBefore = new MenuItem("Insert before ...");
-			_miInsertBefore.Enabled = false;
-			_miInsertBefore.Click += OnInsertSpritesBeforeClick;
-			contextmenu.MenuItems.Add(_miInsertBefore);
+			_miInsertBefor = new MenuItem("Insert before ...");
+			_miInsertBefor.Enabled = false;
+			_miInsertBefor.Click += OnInsertSpritesBeforeClick;
+			contextmenu.MenuItems.Add(_miInsertBefor);
 
 			_miInsertAfter = new MenuItem("Insert after ...");
 			_miInsertAfter.Enabled = false;
@@ -408,15 +408,15 @@ namespace PckView
 			_miReplace.Click += OnReplaceSpriteClick;
 			contextmenu.MenuItems.Add(_miReplace);
 
-			_miMoveLeft = new MenuItem("Move left");
-			_miMoveLeft.Enabled = false;
-			_miMoveLeft.Click += OnMoveLeftSpriteClick;
-			contextmenu.MenuItems.Add(_miMoveLeft);
+			_miMoveL = new MenuItem("Move left");
+			_miMoveL.Enabled = false;
+			_miMoveL.Click += OnMoveLeftSpriteClick;
+			contextmenu.MenuItems.Add(_miMoveL);
 
-			_miMoveRight = new MenuItem("Move right");
-			_miMoveRight.Enabled = false;
-			_miMoveRight.Click += OnMoveRightSpriteClick;
-			contextmenu.MenuItems.Add(_miMoveRight);
+			_miMoveR = new MenuItem("Move right");
+			_miMoveR.Enabled = false;
+			_miMoveR.Click += OnMoveRightSpriteClick;
+			contextmenu.MenuItems.Add(_miMoveR);
 
 			contextmenu.MenuItems.Add(new MenuItem("-"));
 
@@ -497,7 +497,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			SaveWindowMetrics();
+			SaveTelemetric();
 
 			Editor.ClosePalette();	// these are needed when PckView
 			Editor.Close();			// was opened via MapView.
@@ -508,12 +508,21 @@ namespace PckView
 			base.OnFormClosing(e);
 		}
 
+/*		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			LogFile.WriteLine("PckViewForm.ProcessCmdKey() " + keyData);
+
+			return base.ProcessCmdKey(ref msg, keyData);
+		} */
+
 		/// <summary>
 		/// Deletes the currently selected sprite w/ a keydown event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
+			//LogFile.WriteLine("PckViewForm.OnKeyDown() " + e.KeyCode);
+
 			switch (e.KeyCode)
 			{
 				case Keys.Delete:
@@ -580,15 +589,15 @@ namespace PckView
 			bool enabled = (TilePanel.idSel != -1);
 
 			// on Context menu
-			_miEdit        .Enabled =
-			_miInsertBefore.Enabled =
-			_miInsertAfter .Enabled =
-			_miReplace     .Enabled =
-			_miDelete      .Enabled =
-			_miExport      .Enabled = enabled;
+			_miEdit       .Enabled =
+			_miInsertBefor.Enabled =
+			_miInsertAfter.Enabled =
+			_miReplace    .Enabled =
+			_miDelete     .Enabled =
+			_miExport     .Enabled = enabled;
 
-			_miMoveLeft    .Enabled = enabled && (TilePanel.idSel != 0);
-			_miMoveRight   .Enabled = enabled && (TilePanel.idSel != TilePanel.Spriteset.Count - 1);
+			_miMoveL.Enabled = enabled && (TilePanel.idSel != 0);
+			_miMoveR.Enabled = enabled && (TilePanel.idSel != TilePanel.Spriteset.Count - 1);
 		}
 
 		/// <summary>
