@@ -833,7 +833,7 @@ namespace PckView
 			PrintTotal(true);
 
 			TilePanel.ForceResize();
-			TilePanel.Refresh();
+			TilePanel.Invalidate();
 
 			Changed = true;
 		}
@@ -946,9 +946,11 @@ namespace PckView
 			for (int i = TilePanel.idSel; i != TilePanel.Spriteset.Count; ++i)
 				TilePanel.Spriteset[i].Id = i;
 
-			EditorPanel.that.Sprite = null;
-			TilePanel.idSel = -1;
-
+			if (TilePanel.idSel == TilePanel.Spriteset.Count)
+			{
+				EditorPanel.that.Sprite = null;
+				TilePanel.idSel = -1;
+			}
 			InsertSpritesFinish();
 		}
 
