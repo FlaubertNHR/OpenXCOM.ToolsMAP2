@@ -227,6 +227,115 @@ namespace PckView
 			tssl_OffsetLast.Text =
 			tssl_OffsetAftr.Text = String.Empty;
 		}
+
+
+		/// <summary>
+		/// Builds the RMB contextmenu.
+		/// </summary>
+		/// <returns></returns>
+		private ContextMenu ViewerContextMenu()
+		{
+			var contextmenu = new ContextMenu();
+
+			_miEdit = new MenuItem("Edit");
+			_miEdit.Enabled = false;
+			_miEdit.Click += OnSpriteEditorClick;
+			contextmenu.MenuItems.Add(_miEdit);
+
+			contextmenu.MenuItems.Add(new MenuItem("-"));
+
+			_miAdd = new MenuItem("Add ...");
+			_miAdd.Enabled = false;
+			_miAdd.Click += OnAddSpritesClick;
+			contextmenu.MenuItems.Add(_miAdd);
+
+			_miInsertBefor = new MenuItem("Insert before ...");
+			_miInsertBefor.Enabled = false;
+			_miInsertBefor.Click += OnInsertSpritesBeforeClick;
+			contextmenu.MenuItems.Add(_miInsertBefor);
+
+			_miInsertAfter = new MenuItem("Insert after ...");
+			_miInsertAfter.Enabled = false;
+			_miInsertAfter.Click += OnInsertSpritesAfterClick;
+			contextmenu.MenuItems.Add(_miInsertAfter);
+
+			contextmenu.MenuItems.Add(new MenuItem("-"));
+
+			_miReplace = new MenuItem("Replace ...");
+			_miReplace.Enabled = false;
+			_miReplace.Click += OnReplaceSpriteClick;
+			contextmenu.MenuItems.Add(_miReplace);
+
+			_miMoveL = new MenuItem("Move left");
+			_miMoveL.Enabled = false;
+			_miMoveL.Click += OnMoveLeftSpriteClick;
+			contextmenu.MenuItems.Add(_miMoveL);
+
+			_miMoveR = new MenuItem("Move right");
+			_miMoveR.Enabled = false;
+			_miMoveR.Click += OnMoveRightSpriteClick;
+			contextmenu.MenuItems.Add(_miMoveR);
+
+			contextmenu.MenuItems.Add(new MenuItem("-"));
+
+//			_miDelete = new MenuItem("Delete\tDel");
+			_miDelete = new MenuItem("Delete");
+			_miDelete.Enabled = false;
+			_miDelete.Click += OnDeleteSpriteClick;
+			contextmenu.MenuItems.Add(_miDelete);
+
+			contextmenu.MenuItems.Add(new MenuItem("-"));
+
+			_miExport = new MenuItem("Export sprite ...");
+			_miExport.Enabled = false;
+			_miExport.Click += OnExportSpriteClick;
+			contextmenu.MenuItems.Add(_miExport);
+
+			return contextmenu;
+		}
+
+		/// <summary>
+		/// Adds the palettes as menuitems to the palettes menu on the main
+		/// menubar.
+		/// </summary>
+		private void PopulatePaletteMenu()
+		{
+			var pals = new List<Palette>();
+
+			pals.Add(Palette.UfoBattle);
+			pals.Add(Palette.UfoGeo);
+			pals.Add(Palette.UfoGraph);
+			pals.Add(Palette.UfoResearch);
+			pals.Add(Palette.TftdBattle);
+			pals.Add(Palette.TftdGeo);
+			pals.Add(Palette.TftdGraph);
+			pals.Add(Palette.TftdResearch);
+
+			for (int i = 0; i != pals.Count; ++i)
+			{
+				var pal = pals[i];
+
+				var itPal = new MenuItem(pal.Label);
+				itPal.Tag = pal;
+				miPaletteMenu.MenuItems.Add(itPal);
+
+				itPal.Click += OnPaletteClick;
+				_paletteItems[pal] = itPal;
+
+				switch (i)
+				{
+					case 0: itPal.Shortcut = Shortcut.Ctrl1; break;
+					case 1: itPal.Shortcut = Shortcut.Ctrl2; break;
+					case 2: itPal.Shortcut = Shortcut.Ctrl3; break;
+					case 3: itPal.Shortcut = Shortcut.Ctrl4; break;
+					case 4: itPal.Shortcut = Shortcut.Ctrl5; break;
+					case 5: itPal.Shortcut = Shortcut.Ctrl6; break;
+					case 6: itPal.Shortcut = Shortcut.Ctrl7; break;
+					case 7: itPal.Shortcut = Shortcut.Ctrl8; break;
+				}
+			}
+//			((Dictionary<string, Palette>)_share[SharedSpace.Palettes])[pal.Label] = pal;
+		}
 		#endregion cTor
 
 
@@ -369,115 +478,6 @@ namespace PckView
 			}
 		}
 		#endregion Load/save 'registry' info
-
-
-		/// <summary>
-		/// Builds the RMB contextmenu.
-		/// </summary>
-		/// <returns></returns>
-		private ContextMenu ViewerContextMenu()
-		{
-			var contextmenu = new ContextMenu();
-
-			_miEdit = new MenuItem("Edit");
-			_miEdit.Enabled = false;
-			_miEdit.Click += OnSpriteEditorClick;
-			contextmenu.MenuItems.Add(_miEdit);
-
-			contextmenu.MenuItems.Add(new MenuItem("-"));
-
-			_miAdd = new MenuItem("Add ...");
-			_miAdd.Enabled = false;
-			_miAdd.Click += OnAddSpritesClick;
-			contextmenu.MenuItems.Add(_miAdd);
-
-			_miInsertBefor = new MenuItem("Insert before ...");
-			_miInsertBefor.Enabled = false;
-			_miInsertBefor.Click += OnInsertSpritesBeforeClick;
-			contextmenu.MenuItems.Add(_miInsertBefor);
-
-			_miInsertAfter = new MenuItem("Insert after ...");
-			_miInsertAfter.Enabled = false;
-			_miInsertAfter.Click += OnInsertSpritesAfterClick;
-			contextmenu.MenuItems.Add(_miInsertAfter);
-
-			contextmenu.MenuItems.Add(new MenuItem("-"));
-
-			_miReplace = new MenuItem("Replace ...");
-			_miReplace.Enabled = false;
-			_miReplace.Click += OnReplaceSpriteClick;
-			contextmenu.MenuItems.Add(_miReplace);
-
-			_miMoveL = new MenuItem("Move left");
-			_miMoveL.Enabled = false;
-			_miMoveL.Click += OnMoveLeftSpriteClick;
-			contextmenu.MenuItems.Add(_miMoveL);
-
-			_miMoveR = new MenuItem("Move right");
-			_miMoveR.Enabled = false;
-			_miMoveR.Click += OnMoveRightSpriteClick;
-			contextmenu.MenuItems.Add(_miMoveR);
-
-			contextmenu.MenuItems.Add(new MenuItem("-"));
-
-//			_miDelete = new MenuItem("Delete\tDel");
-			_miDelete = new MenuItem("Delete");
-			_miDelete.Enabled = false;
-			_miDelete.Click += OnDeleteSpriteClick;
-			contextmenu.MenuItems.Add(_miDelete);
-
-			contextmenu.MenuItems.Add(new MenuItem("-"));
-
-			_miExport = new MenuItem("Export sprite ...");
-			_miExport.Enabled = false;
-			_miExport.Click += OnExportSpriteClick;
-			contextmenu.MenuItems.Add(_miExport);
-
-			return contextmenu;
-		}
-
-		/// <summary>
-		/// Adds the palettes as menuitems to the palettes menu on the main
-		/// menubar.
-		/// </summary>
-		private void PopulatePaletteMenu()
-		{
-			var pals = new List<Palette>();
-
-			pals.Add(Palette.UfoBattle);
-			pals.Add(Palette.UfoGeo);
-			pals.Add(Palette.UfoGraph);
-			pals.Add(Palette.UfoResearch);
-			pals.Add(Palette.TftdBattle);
-			pals.Add(Palette.TftdGeo);
-			pals.Add(Palette.TftdGraph);
-			pals.Add(Palette.TftdResearch);
-
-			for (int i = 0; i != pals.Count; ++i)
-			{
-				var pal = pals[i];
-
-				var itPal = new MenuItem(pal.Label);
-				itPal.Tag = pal;
-				miPaletteMenu.MenuItems.Add(itPal);
-
-				itPal.Click += OnPaletteClick;
-				_paletteItems[pal] = itPal;
-
-				switch (i)
-				{
-					case 0: itPal.Shortcut = Shortcut.Ctrl1; break;
-					case 1: itPal.Shortcut = Shortcut.Ctrl2; break;
-					case 2: itPal.Shortcut = Shortcut.Ctrl3; break;
-					case 3: itPal.Shortcut = Shortcut.Ctrl4; break;
-					case 4: itPal.Shortcut = Shortcut.Ctrl5; break;
-					case 5: itPal.Shortcut = Shortcut.Ctrl6; break;
-					case 6: itPal.Shortcut = Shortcut.Ctrl7; break;
-					case 7: itPal.Shortcut = Shortcut.Ctrl8; break;
-				}
-			}
-//			((Dictionary<string, Palette>)_share[SharedSpace.Palettes])[pal.Label] = pal;
-		}
 
 
 		#region Events (override)
