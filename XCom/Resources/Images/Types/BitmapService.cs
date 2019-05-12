@@ -141,7 +141,7 @@ namespace XCom
 		public static void ExportSprite(string fullpath, Bitmap b)
 		{
 			ColorPalette pal = b.Palette;
-			pal.Entries[Palette.TransparentId] = Color.Transparent;
+			pal.Entries[Palette.TranId] = Color.Transparent;
 			b.Palette = pal;
 
 			b.Save(fullpath, ImageFormat.Png);
@@ -300,7 +300,7 @@ namespace XCom
 					// The pointer to the color index byte of the destination;
 					// this real pointer causes this code to be considered unsafe.
 					byte* pixel = pos + row * stride + col;
-					*pixel = Palette.TransparentId;
+					*pixel = Palette.TranId;
 				}
 			}
 			b.UnlockBits(locked);
@@ -360,7 +360,7 @@ namespace XCom
 					byte* srcPixel = srcPos +  row      * srcStride +  col;
 					byte* dstPixel = dstPos + (row + y) * dstStride + (col + x);
 
-					if (*srcPixel != Palette.TransparentId && row + y < dst.Height)
+					if (*srcPixel != Palette.TranId && row + y < dst.Height)
 						*dstPixel = *srcPixel;
 				}
 			}

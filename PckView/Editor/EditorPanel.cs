@@ -370,7 +370,7 @@ namespace PckView
 
 			switch (palid)
 			{
-				case Palette.TransparentId: // #0
+				case Palette.TranId: // #0
 					text += " [transparent]";
 					break;
 

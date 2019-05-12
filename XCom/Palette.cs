@@ -16,7 +16,7 @@ namespace XCom
 	public sealed class Palette
 	{
 		#region Fields (static)
-		public const byte TransparentId = 0x00;
+		public const byte TranId = 0x00;
 
 		private static readonly Hashtable _palettes = new Hashtable();
 
@@ -205,7 +205,7 @@ namespace XCom
 //		/// NOTE: was used by 'CuboidSprite'.
 //		/// </summary>
 //		public Color Transparent
-//		{ get { return ColorTable.Entries[TransparentId]; } }
+//		{ get { return ColorTable.Entries[TranId]; } }
 		#endregion
 
 
@@ -245,7 +245,7 @@ namespace XCom
 		/// <param name="label"></param>
 		private Palette(string label)
 		{
-			using (var b = new Bitmap(1, 1, PixelFormat.Format8bppIndexed))
+			using (var b = new Bitmap(1,1, PixelFormat.Format8bppIndexed))
 				ColorTable = b.Palette;
 
 			Label = label;
@@ -255,15 +255,14 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Enables or disables transparency on the 'TransparentId'
-		/// palette-index.
+		/// Enables or disables transparency on the 'TranId' palette-index.
 		/// </summary>
-		/// <param name="transparent">true to enable transparency</param>
-		public void SetTransparent(bool transparent)
+		/// <param name="tran">true to enable transparency</param>
+		public void SetTransparent(bool tran)
 		{
-			ColorTable.Entries[TransparentId] = Color.FromArgb(
-															transparent ? 0 : 255,
-															ColorTable.Entries[TransparentId]);
+			ColorTable.Entries[TranId] = Color.FromArgb(
+													tran ? 0 : 255,
+													ColorTable.Entries[TranId]);
 		}
 		#endregion
 

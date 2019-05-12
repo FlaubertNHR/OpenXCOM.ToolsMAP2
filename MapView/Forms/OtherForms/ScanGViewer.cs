@@ -188,7 +188,7 @@ namespace MapView
 							j = ((i / 64) * 4) + ((i % 16) / 4);
 
 							palid = _icons[iconid, j];
-							if (palid != Palette.TransparentId)
+							if (palid != Palette.TranId)
 							{
 								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
 								*ptr = (byte)palid;
@@ -204,7 +204,7 @@ namespace MapView
 							j = ((i / 64) * 4) + ((i % 16) / 4);
 
 							palid = _icons[iconid, j];
-							if (palid != Palette.TransparentId)
+							if (palid != Palette.TranId)
 							{
 								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
 								*ptr = (byte)palid;
@@ -220,7 +220,7 @@ namespace MapView
 							j = ((i / 64) * 4) + ((i % 16) / 4);
 
 							palid = _icons[iconid, j];
-							if (palid != Palette.TransparentId)
+							if (palid != Palette.TranId)
 							{
 								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
 								*ptr = (byte)palid;
@@ -236,7 +236,7 @@ namespace MapView
 							j = ((i / 64) * 4) + ((i % 16) / 4);
 
 							palid = _icons[iconid, j];
-							if (palid != Palette.TransparentId)
+							if (palid != Palette.TranId)
 							{
 								ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
 								*ptr = (byte)palid;

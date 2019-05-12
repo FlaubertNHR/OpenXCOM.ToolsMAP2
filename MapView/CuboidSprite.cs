@@ -79,7 +79,7 @@ namespace MapView
 				for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 				{
 					palid = bindata[++i];
-					if (palid != Palette.TransparentId)
+					if (palid != Palette.TranId)
 					{
 						graphics.FillRectangle(
 											Palette.BrushesUfoBattle[palid],
@@ -116,7 +116,7 @@ namespace MapView
 				for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 				{
 					palid = bindata[++i];
-					if (palid != Palette.TransparentId)
+					if (palid != Palette.TranId)
 					{
 						graphics.FillRectangle(
 											Palette.BrushesUfoBattle[palid],

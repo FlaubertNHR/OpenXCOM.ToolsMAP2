@@ -637,7 +637,7 @@ namespace McdView
 						icon.Palette = Palette.UfoBattle.ColorTable;
 
 					ColorPalette pal = icon.Palette; // palettes get copied not referenced ->
-					pal.Entries[Palette.TransparentId] = Color.Transparent;
+					pal.Entries[Palette.TranId] = Color.Transparent;
 					icon.Palette = pal;
 
 					_graphics.DrawImage(

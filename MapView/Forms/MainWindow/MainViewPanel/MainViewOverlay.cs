@@ -1668,7 +1668,7 @@ namespace MapView
 			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 			{
 				palid = bindata[++i];
-				if (palid != Palette.TransparentId) // <- this is the fix for Mono.
+				if (palid != Palette.TranId) // <- this is the fix for Mono.
 				{
 					_graphics.FillRectangle(
 										SpriteBrushes[palid],
@@ -1739,7 +1739,7 @@ namespace MapView
 				{
 					palid = bindata[++i];
 
-					if (palid != Palette.TransparentId)
+					if (palid != Palette.TranId)
 					{
 						pos = start
 							+ (((uint)y0 + y) * stride)

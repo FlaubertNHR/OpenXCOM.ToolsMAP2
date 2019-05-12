@@ -94,7 +94,7 @@ namespace XCom
 			Spriteset.BorkedBigobs = false;
 
 			for (int id = 0; id != Bindata.Length; ++id)
-				Bindata[id] = Palette.TransparentId; // Safety: byte arrays get initialized w/ "0" by default
+				Bindata[id] = Palette.TranId; // Safety: byte arrays get initialized w/ "0" by default
 
 			int posSrc = 0;
 			int posDst = 0;
@@ -175,7 +175,7 @@ namespace XCom
 			{
 				byte b = sprite.Bindata[id];
 
-				if (b == Palette.TransparentId)
+				if (b == Palette.TranId)
 					++lenTransparent;
 				else
 				{
@@ -269,7 +269,7 @@ namespace XCom
 			{
 				byte b = sprite.Bindata[id];
 
-				if (b == Palette.TransparentId)
+				if (b == Palette.TranId)
 					++lenTransparent;
 				else
 				{

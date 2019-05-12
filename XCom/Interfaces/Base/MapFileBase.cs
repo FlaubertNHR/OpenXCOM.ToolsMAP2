@@ -277,11 +277,11 @@ namespace XCom.Interfaces.Base
 
 			try // TODO: what is this.
 			{
-				var rect = BitmapService.GetCloseRectangle(b, Palette.TransparentId);
+				var rect = BitmapService.GetCloseRectangle(b, Palette.TranId);
 				b = BitmapService.Crop(b, rect);
 
 				ColorPalette p = b.Palette;
-				p.Entries[Palette.TransparentId] = Color.Transparent;
+				p.Entries[Palette.TranId] = Color.Transparent;
 				b.Palette = p;
 
 				b.Save(fullpath, ImageFormat.Png);
@@ -289,7 +289,7 @@ namespace XCom.Interfaces.Base
 			catch // TODO: Deal with exceptions appropriately.
 			{
 				ColorPalette p = b.Palette;
-				p.Entries[Palette.TransparentId] = Color.Transparent;
+				p.Entries[Palette.TranId] = Color.Transparent;
 				b.Palette = p;
 
 				b.Save(fullpath, ImageFormat.Png);
