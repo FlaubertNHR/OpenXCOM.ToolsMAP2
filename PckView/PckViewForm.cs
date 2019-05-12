@@ -390,6 +390,8 @@ namespace PckView
 		{
 			//LogFile.WriteLine("PckViewForm.OnKeyDown() " + e.KeyCode);
 
+			// Context shortcuts ->
+
 			switch (e.KeyCode)
 			{
 				case Keys.Enter:												// edit
@@ -463,6 +465,41 @@ namespace PckView
 					{
 						e.SuppressKeyPress = true;
 						OnExportSpriteClick(null, EventArgs.Empty);
+					}
+					break;
+
+
+				// Navigation shortcuts ->
+
+				case Keys.Left:
+					if (TilePanel.Spriteset != null && TilePanel.idSel > 0)
+					{
+						TilePanel.SelectAdjacentHori(-1);
+						PrintSelectedId();
+					}
+					break;
+
+				case Keys.Right:
+					if (TilePanel.Spriteset != null && TilePanel.idSel != TilePanel.Spriteset.Count - 1)
+					{
+						TilePanel.SelectAdjacentHori(+1);
+						PrintSelectedId();
+					}
+					break;
+
+				case Keys.Up:
+					if (TilePanel.Spriteset != null)
+					{
+						TilePanel.SelectAdjacentVert(-1);
+						PrintSelectedId();
+					}
+					break;
+
+				case Keys.Down:
+					if (TilePanel.Spriteset != null)
+					{
+						TilePanel.SelectAdjacentVert(+1);
+						PrintSelectedId();
 					}
 					break;
 			}

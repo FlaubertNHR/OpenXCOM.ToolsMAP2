@@ -498,6 +498,42 @@ namespace PckView
 			}
 			return -1;
 		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dir">-1 left, +1 right</param>
+		internal void SelectAdjacentHori(int dir)
+		{
+			EditorPanel.that.Sprite = Spriteset[idSel += dir];
+			ScrollToTile(idSel);
+			Invalidate();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dir">-1 up, +1 down</param>
+		internal void SelectAdjacentVert(int dir)
+		{
+			switch (dir)
+			{
+				case -1:
+					if (idSel >= HoriCount)
+						idSel -= HoriCount;
+					break;
+
+				case +1:
+					if (idSel < Spriteset.Count - HoriCount)
+						idSel += HoriCount;
+					break;
+			}
+
+			EditorPanel.that.Sprite = Spriteset[idSel];
+			ScrollToTile(idSel);
+			Invalidate();
+		}
 		#endregion Methods
 	}
 }
