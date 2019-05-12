@@ -238,13 +238,13 @@ namespace PckView
 		// CONTEXT:
 		// Edit					Enter
 		// Add ...				d
-		// InsertBefore ...		
-		// InsertAfter...		
-		// Replace ...			
+		// InsertBefore ...		b
+		// InsertAfter ...		a
+		// Replace ...			r
 		// MoveLeft				-
 		// MoveRight			+
 		// Delete				Delete
-		// ExportSprite ...		
+		// ExportSprite ...		p
 
 		/// <summary>
 		/// Builds the RMB contextmenu.
@@ -253,32 +253,24 @@ namespace PckView
 		private ContextMenuStrip ViewerContextMenu()
 		{
 			_miEdit        = new ToolStripMenuItem("Edit",              null, OnSpriteEditorClick);			// OnKeyDown Enter
-
-			_miEdit.ShortcutKeyDisplayString = "Enter";
-
 			_miAdd         = new ToolStripMenuItem("Add ...",           null, OnAddSpritesClick);			// OnKeyDown d
 			_miInsertBefor = new ToolStripMenuItem("Insert before ...", null, OnInsertSpritesBeforeClick);	// OnKeyDown b
 			_miInsertAfter = new ToolStripMenuItem("Insert after ...",  null, OnInsertSpritesAfterClick);	// OnKeyDown a
-
-			_miAdd        .ShortcutKeyDisplayString = "d";
-			_miInsertBefor.ShortcutKeyDisplayString = "b";
-			_miInsertAfter.ShortcutKeyDisplayString = "a";
-
 			_miReplace     = new ToolStripMenuItem("Replace ...",       null, OnReplaceSpriteClick);		// OnKeyDown r
 			_miMoveL       = new ToolStripMenuItem("Move left",         null, OnMoveLeftSpriteClick);		// OnKeyDown -
 			_miMoveR       = new ToolStripMenuItem("Move right",        null, OnMoveRightSpriteClick);		// OnKeyDown +
-
-			_miReplace.ShortcutKeyDisplayString = "r";
-			_miMoveL  .ShortcutKeyDisplayString = "-";
-			_miMoveR  .ShortcutKeyDisplayString = "+";
-
 			_miDelete      = new ToolStripMenuItem("Delete",            null, OnDeleteSpriteClick);			// OnKeyDown Delete
-
-			_miDelete.ShortcutKeyDisplayString = "Del";
-
 			_miExport      = new ToolStripMenuItem("Export sprite ...", null, OnExportSpriteClick);			// OnKeyDown p
 
-			_miExport.ShortcutKeyDisplayString = "p";
+			_miEdit       .ShortcutKeyDisplayString = "Enter";
+			_miAdd        .ShortcutKeyDisplayString = "d";
+			_miInsertBefor.ShortcutKeyDisplayString = "b";
+			_miInsertAfter.ShortcutKeyDisplayString = "a";
+			_miReplace    .ShortcutKeyDisplayString = "r";
+			_miMoveL      .ShortcutKeyDisplayString = "-";
+			_miMoveR      .ShortcutKeyDisplayString = "+";
+			_miDelete     .ShortcutKeyDisplayString = "Del";
+			_miExport     .ShortcutKeyDisplayString = "p";
 
 
 			var contextmenu = new ContextMenuStrip();
