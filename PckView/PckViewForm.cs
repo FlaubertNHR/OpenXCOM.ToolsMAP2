@@ -364,23 +364,21 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			Telemetric.SaveTelemetric(this);
+			if (CheckQuit())
+			{
+				Telemetric.SaveTelemetric(this);
 
-			Editor.ClosePalette();	// these are needed when PckView
-			Editor.Close();			// was opened via MapView.
+				Editor.ClosePalette();	// these are needed when PckView is
+				Editor.Close();			// opened via TileView.
 
-			if (miBytes.Checked)
-				SpriteBytesManager.HideBytesTable(true);
+				if (miBytes.Checked)
+					SpriteBytesManager.HideBytesTable(true);
+			}
+			else
+				e.Cancel = true;
 
 			base.OnFormClosing(e);
 		}
-
-/*		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-		{
-			LogFile.WriteLine("PckViewForm.ProcessCmdKey() " + keyData);
-
-			return base.ProcessCmdKey(ref msg, keyData);
-		} */
 
 		/// <summary>
 		/// Deletes the currently selected sprite w/ a keydown event.
@@ -500,6 +498,16 @@ namespace PckView
 					{
 						TilePanel.SelectAdjacentVert(+1);
 						PrintSelectedId();
+					}
+					break;
+
+				case Keys.Escape:
+					if (TilePanel.Spriteset != null)
+					{
+						TilePanel.idSel = -1;
+						EditorPanel.that.Sprite = null;
+						PrintSelectedId();
+						TilePanel.Invalidate();
 					}
 					break;
 			}
@@ -996,66 +1004,69 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnCreateClick(object sender, EventArgs e)
 		{
-			using (var sfd = new SaveFileDialog())
+			if (CheckQuit())
 			{
-				IsScanG = false;
-
-				int tabwordLength;
-				if (IsBigobs = (sender == miCreateBigobs)) // Bigobs support for XCImage/PckImage
+				using (var sfd = new SaveFileDialog())
 				{
-					sfd.Title = "Create a PCK (bigobs) file";
-					XCImage.SpriteHeight = 48;
-					tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
-				}
-				else
-				{
-					XCImage.SpriteHeight = 40;
+					IsScanG = false;
 
-					if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckImage
+					int tabwordLength;
+					if (IsBigobs = (sender == miCreateBigobs)) // Bigobs support for XCImage/PckImage
 					{
-						sfd.Title = "Create a PCK (tftd unit) file";
-						tabwordLength = ResourceInfo.TAB_WORD_LENGTH_4;
+						sfd.Title = "Create a PCK (bigobs) file";
+						XCImage.SpriteHeight = 48;
+						tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
 					}
 					else
 					{
-						tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
+						XCImage.SpriteHeight = 40;
 
-						if (sender == miCreateUnitUfo) // Ufo Unit support for XCImage/PckImage
-							sfd.Title = "Create a PCK (ufo unit) file";
+						if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckImage
+						{
+							sfd.Title = "Create a PCK (tftd unit) file";
+							tabwordLength = ResourceInfo.TAB_WORD_LENGTH_4;
+						}
 						else
-							sfd.Title = "Create a PCK (terrain) file";
+						{
+							tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
+
+							if (sender == miCreateUnitUfo) // Ufo Unit support for XCImage/PckImage
+								sfd.Title = "Create a PCK (ufo unit) file";
+							else
+								sfd.Title = "Create a PCK (terrain) file";
+						}
 					}
-				}
 
-				sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-				sfd.DefaultExt = "PCK";
+					sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					sfd.DefaultExt = "PCK";
 
-				if (sfd.ShowDialog() == DialogResult.OK)
-				{
-					string pfePck = sfd.FileName;
-					string pfeTab = pfePck.Substring(0, pfePck.Length - 4) + GlobalsXC.TabExt;
+					if (sfd.ShowDialog() == DialogResult.OK)
+					{
+						string pfePck = sfd.FileName;
+						string pfeTab = pfePck.Substring(0, pfePck.Length - 4) + GlobalsXC.TabExt;
 
-					using (var bwPck = new BinaryWriter(File.Create(pfePck))) // blank files are ok.
-					using (var bwTab = new BinaryWriter(File.Create(pfeTab)))
-					{}
+						using (var bwPck = new BinaryWriter(File.Create(pfePck))) // blank files are ok.
+						using (var bwTab = new BinaryWriter(File.Create(pfeTab)))
+						{}
 
 
-					Dir = Path.GetDirectoryName(pfePck);
-					Fil = Path.GetFileNameWithoutExtension(pfePck);
+						Dir = Path.GetDirectoryName(pfePck);
+						Fil = Path.GetFileNameWithoutExtension(pfePck);
 
-					var pal = DefaultPalette;
-					var spriteset = new SpriteCollection(
-													Fil,
-													pal,
-													tabwordLength);
+						var pal = DefaultPalette;
+						var spriteset = new SpriteCollection(
+														Fil,
+														pal,
+														tabwordLength);
 
-					OnPaletteClick(_paletteItems[pal], EventArgs.Empty);
+						OnPaletteClick(_paletteItems[pal], EventArgs.Empty);
 
-					TilePanel.Spriteset = spriteset;
-					OnSpriteClick(null, EventArgs.Empty);
+						TilePanel.Spriteset = spriteset;
+						OnSpriteClick(null, EventArgs.Empty);
 
-					Title = pfePck;
-					Changed = false;
+						Title = pfePck;
+						Changed = false;
+					}
 				}
 			}
 		}
@@ -1068,16 +1079,19 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnOpenClick(object sender, EventArgs e)
 		{
-			using (var ofd = new OpenFileDialog())
+			if (CheckQuit())
 			{
-				ofd.Title  = "Select a PCK (terrain/unit) file";
-				ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-
-				if (ofd.ShowDialog() == DialogResult.OK)
+				using (var ofd = new OpenFileDialog())
 				{
-					IsBigobs =
-					IsScanG  = false;
-					LoadSpriteset(ofd.FileName);
+					ofd.Title  = "Select a PCK (terrain/unit) file";
+					ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+
+					if (ofd.ShowDialog() == DialogResult.OK)
+					{
+						IsBigobs =
+						IsScanG  = false;
+						LoadSpriteset(ofd.FileName);
+					}
 				}
 			}
 		}
@@ -1090,32 +1104,38 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnOpenBigobsClick(object sender, EventArgs e)
 		{
-			using (var ofd = new OpenFileDialog())
+			if (CheckQuit())
 			{
-				ofd.Title  = "Select a PCK (bigobs) file";
-				ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-
-				if (ofd.ShowDialog() == DialogResult.OK)
+				using (var ofd = new OpenFileDialog())
 				{
-					IsBigobs = true;
-					IsScanG  = false;
-					LoadSpriteset(ofd.FileName);
+					ofd.Title  = "Select a PCK (bigobs) file";
+					ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+
+					if (ofd.ShowDialog() == DialogResult.OK)
+					{
+						IsBigobs = true;
+						IsScanG  = false;
+						LoadSpriteset(ofd.FileName);
+					}
 				}
 			}
 		}
 
 		private void OnOpenScanGClick(object sender, EventArgs e)
 		{
-			using (var ofd = new OpenFileDialog())
+			if (CheckQuit())
 			{
-				ofd.Title  = "Select a ScanG file";
-				ofd.Filter = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
-
-				if (ofd.ShowDialog() == DialogResult.OK)
+				using (var ofd = new OpenFileDialog())
 				{
-					IsBigobs = false;
-					IsScanG  = true;
-					LoadScanG(ofd.FileName);
+					ofd.Title  = "Select a ScanG file";
+					ofd.Filter = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+
+					if (ofd.ShowDialog() == DialogResult.OK)
+					{
+						IsBigobs = false;
+						IsScanG  = true;
+						LoadScanG(ofd.FileName);
+					}
 				}
 			}
 		}
@@ -1976,6 +1996,25 @@ namespace PckView
 				text = String.Empty;
 
 			tssl_SpritesetLabel.Text = text;
+		}
+
+
+		/// <summary>
+		/// Checks state of the 'Changed' flag and/or asks user if the spriteset
+		/// ought be closed anyway.
+		/// </summary>
+		/// <returns></returns>
+		private bool CheckQuit()
+		{
+			return !Changed
+				|| MessageBox.Show(
+								this,
+								"The spriteset has changed. Do you really want to close it?",
+								" Spriteset changed",
+								MessageBoxButtons.YesNo,
+								MessageBoxIcon.Exclamation,
+								MessageBoxDefaultButton.Button2,
+								0) == DialogResult.Yes;
 		}
 		#endregion Methods
 	}

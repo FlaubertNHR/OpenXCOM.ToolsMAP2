@@ -161,31 +161,6 @@ namespace PckView
 		}
 
 
-/*		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="keyData"></param>
-		/// <returns></returns>
-		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-		{
-			LogFile.WriteLine("PckViewPanel.ProcessCmdKey() " + keyData);
-
-			return base.ProcessCmdKey(ref msg, keyData);
-		} */
-
-/*		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnKeyDown(KeyEventArgs e)
-		{
-			LogFile.WriteLine("PckViewPanel.OnKeyDown() " + e.KeyCode);
-
-			base.OnKeyDown(e);
-		} */
-
-
 		/// <summary>
 		/// Scrolls this panel with the mousewheel.
 		/// </summary>
@@ -237,7 +212,7 @@ namespace PckView
 				int id = GetTileId(e);
 				if (id != idSel)
 				{
-					XCImage sprite = null;
+					XCImage sprite;
 
 					if ((idSel = id) != -1)
 					{
@@ -257,11 +232,13 @@ namespace PckView
 //						else
 //							Selected.Add(selected);
 					}
+					else
+						sprite = null;
 
 					EditorPanel.that.Sprite = sprite;
 
 					_f.PrintSelectedId();
-					Refresh();
+					Invalidate();
 				}
 				ScrollToTile(idSel);
 			}
