@@ -20,12 +20,13 @@ namespace PckView
 
 		private System.Windows.Forms.MainMenu mmMainMenu;
 
+		private System.Windows.Forms.MenuItem miFileMenu;
 		private System.Windows.Forms.MenuItem miCreate;
 		private System.Windows.Forms.MenuItem miCreateTerrain;
 		private System.Windows.Forms.MenuItem miCreateBigobs;
 		private System.Windows.Forms.MenuItem miCreateUnitUfo;
 		private System.Windows.Forms.MenuItem miCreateUnitTftd;
-		private System.Windows.Forms.MenuItem miFileMenu;
+		private System.Windows.Forms.MenuItem miSeparator0;
 		private System.Windows.Forms.MenuItem miOpen;
 		private System.Windows.Forms.MenuItem miOpenBigobs;
 		private System.Windows.Forms.MenuItem miOpenScanG;
@@ -80,6 +81,7 @@ namespace PckView
 			this.miCreateBigobs = new System.Windows.Forms.MenuItem();
 			this.miCreateUnitUfo = new System.Windows.Forms.MenuItem();
 			this.miCreateUnitTftd = new System.Windows.Forms.MenuItem();
+			this.miSeparator0 = new System.Windows.Forms.MenuItem();
 			this.miOpen = new System.Windows.Forms.MenuItem();
 			this.miOpenBigobs = new System.Windows.Forms.MenuItem();
 			this.miOpenScanG = new System.Windows.Forms.MenuItem();
@@ -134,6 +136,7 @@ namespace PckView
 			this.miCreateBigobs,
 			this.miCreateUnitUfo,
 			this.miCreateUnitTftd,
+			this.miSeparator0,
 			this.miOpen,
 			this.miOpenBigobs,
 			this.miOpenScanG,
@@ -158,15 +161,15 @@ namespace PckView
 			// miCreateTerrain
 			// 
 			this.miCreateTerrain.Index = 1;
-			this.miCreateTerrain.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
-			this.miCreateTerrain.Text = "&Create terrain ...";
+			this.miCreateTerrain.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
+			this.miCreateTerrain.Text = "C&reate terrain ...";
 			this.miCreateTerrain.Click += new System.EventHandler(this.OnCreateClick);
 			// 
 			// miCreateBigobs
 			// 
 			this.miCreateBigobs.Index = 2;
-			this.miCreateBigobs.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
-			this.miCreateBigobs.Text = "Create b&igobs ...";
+			this.miCreateBigobs.Shortcut = System.Windows.Forms.Shortcut.CtrlB;
+			this.miCreateBigobs.Text = "Create &bigobs ...";
 			this.miCreateBigobs.Click += new System.EventHandler(this.OnCreateClick);
 			// 
 			// miCreateUnitUfo
@@ -179,40 +182,45 @@ namespace PckView
 			// miCreateUnitTftd
 			// 
 			this.miCreateUnitTftd.Index = 4;
-			this.miCreateUnitTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
-			this.miCreateUnitTftd.Text = "Create t&ftd unit ...";
+			this.miCreateUnitTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
+			this.miCreateUnitTftd.Text = "Create &tftd unit ...";
 			this.miCreateUnitTftd.Click += new System.EventHandler(this.OnCreateClick);
+			// 
+			// miSeparator0
+			// 
+			this.miSeparator0.Index = 5;
+			this.miSeparator0.Text = "-";
 			// 
 			// miOpen
 			// 
-			this.miOpen.Index = 5;
+			this.miOpen.Index = 6;
 			this.miOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOpen.Text = "&Open Pck (terrain/unit) file ...";
 			this.miOpen.Click += new System.EventHandler(this.OnOpenClick);
 			// 
 			// miOpenBigobs
 			// 
-			this.miOpenBigobs.Index = 6;
+			this.miOpenBigobs.Index = 7;
 			this.miOpenBigobs.Shortcut = System.Windows.Forms.Shortcut.CtrlG;
 			this.miOpenBigobs.Text = "Open Pck (bi&gobs) file ...";
 			this.miOpenBigobs.Click += new System.EventHandler(this.OnOpenBigobsClick);
 			// 
 			// miOpenScanG
 			// 
-			this.miOpenScanG.Index = 7;
+			this.miOpenScanG.Index = 8;
 			this.miOpenScanG.Shortcut = System.Windows.Forms.Shortcut.CtrlD;
 			this.miOpenScanG.Text = "Open ScanG.&Dat ...";
 			this.miOpenScanG.Click += new System.EventHandler(this.OnOpenScanGClick);
 			// 
 			// miSeparator1
 			// 
-			this.miSeparator1.Index = 8;
+			this.miSeparator1.Index = 9;
 			this.miSeparator1.Text = "-";
 			// 
 			// miSave
 			// 
 			this.miSave.Enabled = false;
-			this.miSave.Index = 9;
+			this.miSave.Index = 10;
 			this.miSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
 			this.miSave.Text = "&Save";
 			this.miSave.Click += new System.EventHandler(this.OnSaveClick);
@@ -220,64 +228,63 @@ namespace PckView
 			// miSaveAs
 			// 
 			this.miSaveAs.Enabled = false;
-			this.miSaveAs.Index = 10;
-			this.miSaveAs.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
-			this.miSaveAs.Text = "Save &As ...";
+			this.miSaveAs.Index = 11;
+			this.miSaveAs.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
+			this.miSaveAs.Text = "Sav&e As ...";
 			this.miSaveAs.Click += new System.EventHandler(this.OnSaveAsClick);
 			// 
 			// miSeparator2
 			// 
-			this.miSeparator2.Index = 11;
+			this.miSeparator2.Index = 12;
 			this.miSeparator2.Text = "-";
 			// 
 			// miExportSprites
 			// 
 			this.miExportSprites.Enabled = false;
-			this.miExportSprites.Index = 12;
-			this.miExportSprites.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
-			this.miExportSprites.Text = "&Export Sprites ...";
+			this.miExportSprites.Index = 13;
+			this.miExportSprites.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
+			this.miExportSprites.Text = "Ex&port Sprites ...";
 			this.miExportSprites.Click += new System.EventHandler(this.OnExportSpritesClick);
 			// 
 			// miExportSpritesheet
 			// 
 			this.miExportSpritesheet.Enabled = false;
-			this.miExportSpritesheet.Index = 13;
-			this.miExportSpritesheet.Shortcut = System.Windows.Forms.Shortcut.CtrlR;
-			this.miExportSpritesheet.Text = "Expo&rt Spritesheet ...";
+			this.miExportSpritesheet.Index = 14;
+			this.miExportSpritesheet.Shortcut = System.Windows.Forms.Shortcut.F5;
+			this.miExportSpritesheet.Text = "E&xport Spritesheet ...";
 			this.miExportSpritesheet.Click += new System.EventHandler(this.OnExportSpritesheetClick);
 			// 
 			// miImportSpritesheet
 			// 
 			this.miImportSpritesheet.Enabled = false;
-			this.miImportSpritesheet.Index = 14;
-			this.miImportSpritesheet.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
-			this.miImportSpritesheet.Text = "Im&port Spritesheet ...";
+			this.miImportSpritesheet.Index = 15;
+			this.miImportSpritesheet.Shortcut = System.Windows.Forms.Shortcut.F6;
+			this.miImportSpritesheet.Text = "I&mport Spritesheet ...";
 			this.miImportSpritesheet.Click += new System.EventHandler(this.OnImportSpritesheetClick);
 			// 
 			// miSeparator3
 			// 
-			this.miSeparator3.Index = 15;
+			this.miSeparator3.Index = 16;
 			this.miSeparator3.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 16;
+			this.miQuit.Index = 17;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
 			// 
 			// miCompare
 			// 
-			this.miCompare.Index = 17;
-			this.miCompare.Shortcut = System.Windows.Forms.Shortcut.CtrlM;
-			this.miCompare.Text = "Co&mpare";
+			this.miCompare.Index = 18;
+			this.miCompare.Text = "Compare";
 			this.miCompare.Visible = false;
 			this.miCompare.Click += new System.EventHandler(this.OnCompareClick);
 			// 
 			// miHq2x
 			// 
-			this.miHq2x.Index = 18;
-			this.miHq2x.Text = "Hq&2x";
+			this.miHq2x.Index = 19;
+			this.miHq2x.Text = "Hq2x";
 			this.miHq2x.Visible = false;
 			this.miHq2x.Click += new System.EventHandler(this.OnHq2xClick);
 			// 
@@ -299,7 +306,7 @@ namespace PckView
 			// 
 			this.miTransparent.Checked = true;
 			this.miTransparent.Index = 0;
-			this.miTransparent.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
+			this.miTransparent.Shortcut = System.Windows.Forms.Shortcut.F7;
 			this.miTransparent.Text = "&On/off";
 			this.miTransparent.Click += new System.EventHandler(this.OnTransparencyClick);
 			// 
@@ -314,7 +321,7 @@ namespace PckView
 			// miBytes
 			// 
 			this.miBytes.Index = 0;
-			this.miBytes.Shortcut = System.Windows.Forms.Shortcut.CtrlB;
+			this.miBytes.Shortcut = System.Windows.Forms.Shortcut.F8;
 			this.miBytes.Text = "Show/hide &byte table";
 			this.miBytes.Click += new System.EventHandler(this.OnBytesClick);
 			// 
@@ -330,7 +337,7 @@ namespace PckView
 			// miHelp
 			// 
 			this.miHelp.Index = 0;
-			this.miHelp.Shortcut = System.Windows.Forms.Shortcut.CtrlH;
+			this.miHelp.Shortcut = System.Windows.Forms.Shortcut.F1;
 			this.miHelp.Text = "&Help";
 			this.miHelp.Click += new System.EventHandler(this.OnHelpClick);
 			// 

@@ -197,8 +197,8 @@ namespace PckView
 			Editor.FormClosing += OnEditorFormClosing;
 
 
-			miCreate.MenuItems.Add(miCreateTerrain);
-			miCreate.MenuItems.Add(miCreateBigobs);
+			miCreate.MenuItems.Add(miCreateTerrain);	// NOTE: These items are added to the Filemenu first
+			miCreate.MenuItems.Add(miCreateBigobs);		// and get transfered to the Create submenu here.
 			miCreate.MenuItems.Add(miCreateUnitUfo);
 			miCreate.MenuItems.Add(miCreateUnitTftd);
 
@@ -216,24 +216,24 @@ namespace PckView
 
 
 		// PckView shortcut table:
-		// miCreateTerrain		CtrlC
-		// miCreateBigobs		CtrlI
+		// miCreateTerrain		CtrlR
+		// miCreateBigobs		CtrlB
 		// miCreateUnitUfo		CtrlU
-		// miCreateUnitTftd		CtrlF
+		// miCreateUnitTftd		CtrlT
 		// miOpen				CtrlO
 		// miOpenBigobs			CtrlG
 		// miOpenScanG			CtrlD
 		// miSave				CtrlS
-		// miSaveAs				CtrlA
-		// miExportSprites		CtrlE
-		// miExportSpritesheet	CtrlR
-		// miImportSpritesheet	CtrlP
+		// miSaveAs				CtrlE
+		// miExportSprites		CtrlP
+		// miExportSpritesheet	F5
+		// miImportSpritesheet	F6
 		// miQuit				CtrlQ
-		// miCompare			CtrlM
+		// miCompare
 		// miHq2x
-		// miTransparent		CtrlT
-		// miBytes				CtrlB
-		// miHelp				CtrlH
+		// miTransparent		F7
+		// miBytes				F8
+		// miHelp				F1
 		//
 		// CONTEXT:
 		// Edit					Enter
