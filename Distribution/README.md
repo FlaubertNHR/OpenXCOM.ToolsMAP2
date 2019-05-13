@@ -13,6 +13,11 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 May 12<br>
+[MapView2_190512.7z](https://drive.google.com/file/d/1sBuSBipnK-kaOxWKMIjh-rDo_38YHw8N/view?usp=sharing)
+
+- PckView upgrade. arrow-keys navigate sprites, [Delete] selects next sprite (allowing quick deletion of a range of sprites), shortcuts have been re-assigned, update CHM helpfile, confirmation on save if spriteset has changed, and the selected sprite's TabOffset is printed to the statusbar along with the offset of the 'next' sprite.
+
 2019 May 10<br>
 [MapView2_190510.7z](https://drive.google.com/file/d/1Ce3FK-DDHB8JpkQ1pRnoNG8sRR_1aVAh/view?usp=sharing)
 
