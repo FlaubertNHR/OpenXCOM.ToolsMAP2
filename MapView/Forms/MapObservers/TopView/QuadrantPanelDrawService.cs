@@ -185,7 +185,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			switch (selectedQuadrant)
 			{
 				case QuadrantType.Floor:
-					if (topView.GroundVisible)
+					if (topView.FloorVisible)
 						graphics.FillPath(Brush, _pathFloor);
 					break;
 
@@ -206,7 +206,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			}
 
 			// fill the background of !Visible quads incl/ the selected-quad
-			if (!topView.GroundVisible)
+			if (!topView.FloorVisible)
 				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathFloor);
 
 			if (!topView.WestVisible)

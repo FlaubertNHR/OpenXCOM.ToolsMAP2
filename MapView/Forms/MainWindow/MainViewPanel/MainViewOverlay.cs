@@ -1558,7 +1558,7 @@ namespace MapView
 			Tilepart part;
 
 			var topView = ViewerFormsManager.TopView.Control;
-			if (topView.GroundVisible
+			if (topView.FloorVisible
 				&& (part = tile.Floor) != null)
 			{
 				DrawSprite(
@@ -1616,7 +1616,7 @@ namespace MapView
 								_halfwidth2, _halfheight5);
 
 			var topView = ViewerFormsManager.TopView.Control;
-			if (topView.GroundVisible
+			if (topView.FloorVisible
 				&& (part = tile.Floor) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr

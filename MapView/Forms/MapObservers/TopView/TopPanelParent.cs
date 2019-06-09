@@ -251,9 +251,9 @@ namespace MapView.Forms.MapObservers.TopViews
 								x += halfWidth,
 								y += halfHeight)
 					{
-						var mapTile = MapBase[r, c] as MapTileBase;
-						if (mapTile != null)
-							((TopPanel)this).DrawTileBlobs(mapTile, graphics, x, y);
+						var tile = MapBase[r,c] as MapTileBase;
+						if (tile != null)
+							((TopPanel)this).DrawTileBlobs(tile, graphics, x,y);
 					}
 				}
 

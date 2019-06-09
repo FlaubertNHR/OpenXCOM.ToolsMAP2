@@ -31,19 +31,19 @@ namespace MapView.Forms.MapObservers.TopViews
 			get { return quadrants; }
 		}
 
-		public bool GroundVisible
+		public bool FloorVisible
 		{
-			get { return TopPanel.Ground.Checked; }
-		}
-
-		public bool NorthVisible
-		{
-			get { return TopPanel.North.Checked; }
+			get { return TopPanel.Floor.Checked; }
 		}
 
 		public bool WestVisible
 		{
 			get { return TopPanel.West.Checked; }
+		}
+
+		public bool NorthVisible
+		{
+			get { return TopPanel.North.Checked; }
 		}
 
 		public bool ContentVisible
@@ -79,18 +79,18 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 
-			TopPanel.Ground  = new ToolStripMenuItem(QuadrantPanelDrawService.Floor);
+			TopPanel.Floor   = new ToolStripMenuItem(QuadrantPanelDrawService.Floor);
 			TopPanel.West    = new ToolStripMenuItem(QuadrantPanelDrawService.West);
 			TopPanel.North   = new ToolStripMenuItem(QuadrantPanelDrawService.North);
 			TopPanel.Content = new ToolStripMenuItem(QuadrantPanelDrawService.Content);
 
-			visQuads.Add(TopPanel.Ground);
+			visQuads.Add(TopPanel.Floor);
 			visQuads.Add(TopPanel.West);
 			visQuads.Add(TopPanel.North);
 			visQuads.Add(TopPanel.Content);
 
-			TopPanel.Ground.ShortcutKeys = Keys.F1;
-			TopPanel.Ground.Checked = true;
+			TopPanel.Floor.ShortcutKeys = Keys.F1;
+			TopPanel.Floor.Checked = true;
 
 			TopPanel.West.ShortcutKeys = Keys.F2;
 			TopPanel.West.Checked = true;
@@ -123,10 +123,10 @@ namespace MapView.Forms.MapObservers.TopViews
 		private void OnToggleQuadrantVisibilityClick(object sender, EventArgs e)
 		{
 			var it = sender as ToolStripMenuItem;
-			if (it == TopPanel.Ground)
+			if (it == TopPanel.Floor)
 			{
-				ViewerFormsManager.TopView     .Control   .TopPanel.Ground.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Ground.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .TopPanel.Floor.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Floor.Checked = !it.Checked;
 
 				((MapFileChild)MapBase).CalculateOccultations(!it.Checked);
 			}

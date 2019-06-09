@@ -220,7 +220,7 @@ namespace XCom.Interfaces.Base
 		{
 			var pal = Descriptor.Pal;
 
-//			var pal = GetFirstGroundPalette();
+//			var pal = GetFirstFloorPalette();
 //			if (pal == null)
 //				throw new ArgumentNullException("fullpath", "MapFileBase: At least 1 ground tile is required.");
 			// TODO: I don't want to see 'ArgumentNullException'. Just say
@@ -300,15 +300,15 @@ namespace XCom.Interfaces.Base
 				b.Dispose();
 		}
 
-/*		private Palette GetFirstGroundPalette()
+/*		private Palette GetFirstFloorPalette()
 		{
 			for (int lev = 0; lev != MapSize.Levs; ++lev)
 			for (int row = 0; row != MapSize.Rows; ++row)
 			for (int col = 0; col != MapSize.Cols; ++col)
 			{
 				var tile = this[row, col, lev] as XCMapTile;
-				if (tile.Ground != null)
-					return tile.Ground[0].Pal;
+				if (tile.Floor != null)
+					return tile.Floor[0].Pal;
 			}
 			return null;
 		}*/
