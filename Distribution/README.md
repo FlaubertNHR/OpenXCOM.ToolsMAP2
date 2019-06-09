@@ -13,6 +13,11 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 June 9<br>
+[MapView2_190609.7z](https://drive.google.com/file/d/1DLcpMzsX0c1Y1y_ggod_yDYLlkOW9xB6/view?usp=sharing)
+
+- Cut/Paste/Delete respect TopView's Visible toggles
+
 2019 May 12<br>
 [MapView2_190512.7z](https://drive.google.com/file/d/1sBuSBipnK-kaOxWKMIjh-rDo_38YHw8N/view?usp=sharing)
 
