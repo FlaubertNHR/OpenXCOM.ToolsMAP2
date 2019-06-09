@@ -11,10 +11,10 @@
 		<p>Left of the viewer panel are buttons for<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;- level up [mousewheel up]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- level down [mousewheel down]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- cut a selected area [Ctrl+X]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- cut a selected area [Ctrl+X] (respects Visibility toggles)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- copy a selected area [Ctrl+C]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- paste area at a selected tile [Ctrl+V]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- delete a selected area [Delete]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- paste area at a selected tile [Ctrl+V] (respects Visibility toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- delete a selected area [Delete] (respects Visibility toggles)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- fill a selected area with the currently selected tilepart from TileView [F]</p>
 
 		<p>Please note that pasting copied parts from one Map to a different Map usually requires that the allocated terrains of both Maps be identical.</p>
@@ -66,7 +66,9 @@
 		<br>
 		<h3>Visible menu</h3>
 
-		<p>These four entries toggle the visibility of the four possible tilepart types for TopView and MainView. They can be used for quickly checking out the flooring behind a wall, for example. When a type is toggled off, the background color of its slot changes to dark gray - the tileparts are still modifiable however. The visibility settings have no effect when saving a Map file, all parts are saved whether they're currently visible or not. Note that the visibility of tileparts can also be toggled on and off with Function keys 1..4.</p>
+		<p>These four operations toggle the visibility of the four possible tilepart types for TopView and MainView. They can be used for checking out flooring that's concealed behind a wall, for example. When a type is toggled off, the background color of its slot changes to dark gray - the parts are still modifiable in the parttype slots below the panel, however Cut/Paste/Delete operations consider visible parttypes only. A Copy operation is unaffected by parttype visibility.</p>
+
+		<p>The visibility settings have no effect when saving a Map file, all parts are saved whether they're currently visible or not. Note that the visibility of tileparts can also be toggled on and off with Function keys 1..4.</p>
 
 		<br>
 		<p>Options [Ctrl+O] - opens and closes the Options for TopView. Descriptions for the entries appear at the bottom of that window.</p>
