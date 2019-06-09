@@ -185,37 +185,37 @@ namespace MapView.Forms.MapObservers.TopViews
 			switch (selectedQuadrant)
 			{
 				case QuadrantType.Floor:
-					if (topView.FloorVisible)
+					if (topView.VisibleFloor)
 						graphics.FillPath(Brush, _pathFloor);
 					break;
 
 				case QuadrantType.West:
-					if (topView.WestVisible)
+					if (topView.VisibleWest)
 						graphics.FillPath(Brush, _pathWest);
 					break;
 
 				case QuadrantType.North:
-					if (topView.NorthVisible)
+					if (topView.VisibleNorth)
 						graphics.FillPath(Brush, _pathNorth);
 					break;
 
 				case QuadrantType.Content:
-					if (topView.ContentVisible)
+					if (topView.VisibleContent)
 						graphics.FillPath(Brush, _pathContent);
 					break;
 			}
 
 			// fill the background of !Visible quads incl/ the selected-quad
-			if (!topView.FloorVisible)
+			if (!topView.VisibleFloor)
 				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathFloor);
 
-			if (!topView.WestVisible)
+			if (!topView.VisibleWest)
 				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathWest);
 
-			if (!topView.NorthVisible)
+			if (!topView.VisibleNorth)
 				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathNorth);
 
-			if (!topView.ContentVisible)
+			if (!topView.VisibleContent)
 				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathContent);
 
 

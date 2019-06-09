@@ -437,6 +437,13 @@ namespace MapView
 
 				XCMapTile tile;
 
+				var t = ViewerFormsManager.TopView.Control;
+				byte bits = 0;
+				if (t.VisibleFloor)   bits |= 1;
+				if (t.VisibleWest)    bits |= 2;
+				if (t.VisibleNorth)   bits |= 4;
+				if (t.VisibleContent) bits |= 8;
+
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
 
@@ -445,12 +452,12 @@ namespace MapView
 				{
 					tile = MapBase[row, col] as XCMapTile;
 
-					tile.Floor   =
-					tile.West    =
-					tile.North   =
-					tile.Content = null;
+					if ((bits & 1) != 0) tile.Floor   = null;
+					if ((bits & 2) != 0) tile.West    = null;
+					if ((bits & 4) != 0) tile.North   = null;
+					if ((bits & 8) != 0) tile.Content = null;
 
-					tile.Vacant = true;
+					tile.Vacancy();
 				}
 
 				((MapFileChild)MapBase).CalculateOccultations();
@@ -511,6 +518,14 @@ namespace MapView
 					XCMainWindow.that.MapChanged = true;
 
 					XCMapTile tile, copy;
+
+					var t = ViewerFormsManager.TopView.Control;
+					byte bits = 0;
+					if (t.VisibleFloor)   bits |= 1;
+					if (t.VisibleWest)    bits |= 2;
+					if (t.VisibleNorth)   bits |= 4;
+					if (t.VisibleContent) bits |= 8;
+
 					for (int
 							row = DragBeg.Y;
 							row != MapBase.MapSize.Rows && (row - DragBeg.Y) < _copied.GetLength(0);
@@ -521,18 +536,16 @@ namespace MapView
 								col != MapBase.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(1);
 								++col)
 						{
-							if ((tile = MapBase[row, col] as XCMapTile) != null)
+							if ((tile = MapBase[row, col] as XCMapTile) != null
+								&& (copy = _copied[row - DragBeg.Y,
+												   col - DragBeg.X] as XCMapTile) != null)
 							{
-								if ((copy = _copied[row - DragBeg.Y,
-													col - DragBeg.X] as XCMapTile) != null)
-								{
-									tile.Floor   = copy.Floor;
-									tile.Content = copy.Content;
-									tile.West    = copy.West;
-									tile.North   = copy.North;
+								if ((bits & 1) != 0) tile.Floor   = copy.Floor;
+								if ((bits & 2) != 0) tile.West    = copy.West;
+								if ((bits & 4) != 0) tile.North   = copy.North;
+								if ((bits & 8) != 0) tile.Content = copy.Content;
 
-									tile.Vacancy();
-								}
+								tile.Vacancy();
 							}
 						}
 					}
@@ -1558,7 +1571,7 @@ namespace MapView
 			Tilepart part;
 
 			var topView = ViewerFormsManager.TopView.Control;
-			if (topView.FloorVisible
+			if (topView.VisibleFloor
 				&& (part = tile.Floor) != null)
 			{
 				DrawSprite(
@@ -1566,7 +1579,7 @@ namespace MapView
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.WestVisible
+			if (topView.VisibleWest
 				&& (part = tile.West) != null)
 			{
 				DrawSprite(
@@ -1574,7 +1587,7 @@ namespace MapView
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.NorthVisible
+			if (topView.VisibleNorth
 				&& (part = tile.North) != null)
 			{
 				DrawSprite(
@@ -1582,7 +1595,7 @@ namespace MapView
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.ContentVisible
+			if (topView.VisibleContent
 				&& (part = tile.Content) != null)
 			{
 				DrawSprite(
@@ -1616,7 +1629,7 @@ namespace MapView
 								_halfwidth2, _halfheight5);
 
 			var topView = ViewerFormsManager.TopView.Control;
-			if (topView.FloorVisible
+			if (topView.VisibleFloor
 				&& (part = tile.Floor) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr
@@ -1625,7 +1638,7 @@ namespace MapView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.WestVisible
+			if (topView.VisibleWest
 				&& (part = tile.West) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr
@@ -1634,7 +1647,7 @@ namespace MapView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.NorthVisible
+			if (topView.VisibleNorth
 				&& (part = tile.North) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr
@@ -1643,7 +1656,7 @@ namespace MapView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.ContentVisible
+			if (topView.VisibleContent
 				&& (part = tile.Content) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr

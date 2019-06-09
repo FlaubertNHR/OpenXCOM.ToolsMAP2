@@ -31,22 +31,22 @@ namespace MapView.Forms.MapObservers.TopViews
 			get { return quadrants; }
 		}
 
-		public bool FloorVisible
+		internal bool VisibleFloor
 		{
 			get { return TopPanel.Floor.Checked; }
 		}
 
-		public bool WestVisible
+		internal bool VisibleWest
 		{
 			get { return TopPanel.West.Checked; }
 		}
 
-		public bool NorthVisible
+		internal bool VisibleNorth
 		{
 			get { return TopPanel.North.Checked; }
 		}
 
-		public bool ContentVisible
+		internal bool VisibleContent
 		{
 			get { return TopPanel.Content.Checked; }
 		}
