@@ -67,7 +67,7 @@ namespace MapView.Forms.MainWindow
 		#endregion
 
 
-		#region Eventcalls (static)
+		#region Events (static)
 		/// <summary>
 		/// Changes the selected quadrant in the QuadrantPanel when a tilepart
 		/// is selected in TileView.
