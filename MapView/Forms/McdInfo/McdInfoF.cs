@@ -32,6 +32,19 @@ namespace MapView.Forms.McdInfo
 		#endregion cTor
 
 
+		#region Events (override)
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Events (override)
+
+
 		#region Events
 		private void OnKeyDown_rtb(object sender, KeyEventArgs e)
 		{
