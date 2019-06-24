@@ -12,13 +12,13 @@ F8 - show/hide TopRouteView
 
 note: If a viewer is minimized it will be restored instead of closed.
 
-Control with the F-keys focuses the respective viewer.
+Control with the above F-keys focuses the respective viewer.
 Shift with any of the above F-keys focuses MainView.
 
 F11 - minimize all
 F12 - restore all
 
-Escape tries to focus the panel in a viewer.
+Escape tries to focus the panel in the active viewer.
 
 Control+o - open Options for the viewer
 
@@ -111,13 +111,15 @@ f - fill selected tile(s)' selected quadrant with selected part
 t - select part of selected quadrant in TileView (also, double-click quadrant)
 Shift + Delete - delete part (only) of selected quadrant of selected tile (only)
 (also, double-right-click quadrant)
-Enter - place selected part in selected quadrant of selected tile (right-click
-quadrant)
+Enter - place selected part in selected quadrant of selected tile (also,
+right-click quadrant)
 
 F1 - toggle floor visibility
 F2 - toggle westwall visibility
 F3 - toggle northwall visibility
 F4 - toggle content visibility
+
+Note: Visibility affects Cut/Paste/Delete operations.
 
 Control+s - save the Map if the panel has focus
 
@@ -127,8 +129,8 @@ ROUTEVIEW
 numeric keypad - navigate the map
 Subtract - level up
 Add - level down
-Shift + numeric keypad (incl/ Subtract and Add) - drag selected node to an
-adjacent tile iff it doesn't already have a node
+Shift + numeric keypad (incl/ Subtract and Add) - drag a selected node to an
+adjacent tile iff that tile doesn't already have a node
 
 Control+x - cut selected node
 Control+c - copy selected node
