@@ -13,7 +13,7 @@ namespace MapView.Forms.McdInfo
 			Form
 	{
 		#region Fields (constant)
-		private const string title = "MCD Info";
+		private const string TITLE = "MCD Info";
 		#endregion Fields (constant)
 
 
@@ -81,7 +81,7 @@ namespace MapView.Forms.McdInfo
 				int id = -1,
 				string terrainlabel = "")
 		{
-			Text = title;
+			Text = TITLE;
 			rtbInfo.Text = String.Empty;
 
 			if ((bsInfo.DataSource = record) != null)
