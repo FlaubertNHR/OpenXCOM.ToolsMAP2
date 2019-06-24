@@ -2853,16 +2853,16 @@ namespace MapView
 						ScanG.LoadMapfile(@base);
 
 					var tileview = ViewerFormsManager.TileView.Control; // update MCD Info if open
-					if (tileview._mcdInfoForm != null)
+					if (tileview.McdInfobox != null)
 					{
 						Tilepart part = tileview.SelectedTilepart;
 						if (part != null)
-							tileview._mcdInfoForm.UpdateData(
-															part.Record,
-															part.TerId,
-															tileview.GetTerrainLabel());
+							tileview.McdInfobox.UpdateData(
+														part.Record,
+														part.TerId,
+														tileview.GetTerrainLabel());
 						else
-							tileview._mcdInfoForm.UpdateData();
+							tileview.McdInfobox.UpdateData();
 					}
 
 					Inited = false;

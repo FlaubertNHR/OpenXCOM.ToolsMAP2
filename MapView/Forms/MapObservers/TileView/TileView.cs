@@ -42,8 +42,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
 
-		internal McdInfoF _mcdInfoForm;
-
 		private Hashtable _brushesSpecial = new Hashtable();
 		#endregion
 
@@ -88,6 +86,9 @@ namespace MapView.Forms.MapObservers.TileViews
 				Refresh();
 			}
 		}
+
+		internal McdInfoF McdInfobox
+		{ get; set; }
 		#endregion
 
 
@@ -217,8 +218,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				label = String.Empty;
 			}
 
-			if (_mcdInfoForm != null)
-				_mcdInfoForm.UpdateData(record, id, label);
+			if (McdInfobox != null)
+				McdInfobox.UpdateData(record, id, label);
 		}
 
 		/// <summary>
@@ -249,8 +250,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				label = String.Empty;
 			}
 
-			if (_mcdInfoForm != null)
-				_mcdInfoForm.UpdateData(record, id, label);
+			if (McdInfobox != null)
+				McdInfobox.UpdateData(record, id, label);
 
 			SelectQuadrant(part);
 		}
@@ -450,10 +451,10 @@ namespace MapView.Forms.MapObservers.TileViews
 					panel.ContextMenu.MenuItems[3].Checked = true;
 				}
 
-				if (_mcdInfoForm == null)
+				if (McdInfobox == null)
 				{
-					_mcdInfoForm = new McdInfoF();
-					_mcdInfoForm.FormClosing += OnMcdInfoFormClosing;
+					McdInfobox = new McdInfoF();
+					McdInfobox.FormClosing += OnMcdInfoFormClosing;
 
 					var f = FindForm();
 
@@ -477,9 +478,9 @@ namespace MapView.Forms.MapObservers.TileViews
 						label = String.Empty;
 					}
 
-					_mcdInfoForm.UpdateData(record, id, label);
+					McdInfobox.UpdateData(record, id, label);
 				}
-				_mcdInfoForm.Show();
+				McdInfobox.Show();
 			}
 			else
 				OnMcdInfoFormClosing(null, null);
@@ -500,7 +501,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			if (e != null)			// if (e==null) the form is hiding due to a menu-click, or a double-click on a tile
 				e.Cancel = true;	// if (e!=null) the form really was closed, so cancel that.
 									// NOTE: wtf - is way too complicated for what it is
-			_mcdInfoForm.Hide();
+			McdInfobox.Hide();
 		}
 
 		/// <summary>
