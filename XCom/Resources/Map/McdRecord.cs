@@ -29,8 +29,12 @@ namespace XCom
 		/// sprite-pointers, etc etc as MapView does. In short 'IsTerrainSet' is
 		/// a master flag for MapView vs. McdView; MapView is assumed by default
 		/// while the flag is disabled by the constructor of 'McdviewF'.
+		///
+		/// But since it appears that this record gets shared by opening
+		/// McdView from TileView, which appears to set the 'IsTerrainSet'
+		/// flag to FALSE ... assign valid values to these vars regardless.
 		/// </summary>
-		public static bool IsTerrainSet = true;
+//		public static bool IsTerrainSet = true;
 
 		/// <summary>
 		/// Tracks the 'SetId' of all records.
@@ -222,8 +226,8 @@ namespace XCom
 		/// <param name="bindata">if null a blank byte-array gets created</param>
 		public McdRecord(IList<byte> bindata = null)
 		{
-			if (IsTerrainSet)
-				SetId = _sid++;
+//			if (IsTerrainSet)
+			SetId = _sid++;
 
 			CreateRecord(this, bindata);
 		}
@@ -326,7 +330,11 @@ namespace XCom
 			#region Descript
 			// The following class-vars are used only by McdInfo in MapView
 			// only so - like 'SetId' - are not required by the McdView app.
-			if (McdRecord.IsTerrainSet)
+			//
+			// But since it appears that this record gets shared by opening
+			// McdView from TileView, which appears to set the 'IsTerrainSet'
+			// flag to FALSE ... assign valid values to these vars regardless.
+//			if (IsTerrainSet)
 			{
 				record.stSprites = string.Format(
 											System.Globalization.CultureInfo.InvariantCulture,

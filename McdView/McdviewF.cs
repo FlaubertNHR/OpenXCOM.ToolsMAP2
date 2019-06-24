@@ -276,7 +276,7 @@ namespace McdView
 			RecordTextbox.SetStaticVars(tssl_Overval, lbl_Description);
 			LoftPanel    .SetStaticVars(this);
 
-			McdRecord.IsTerrainSet = false;
+//			McdRecord.IsTerrainSet = false;
 
 			MaximumSize = new Size(0,0);
 
