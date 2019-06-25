@@ -498,7 +498,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				panel.ContextMenu.MenuItems[3].Checked = false;
 			}
 
-			if (e != null)			// if (e==null) the form is hiding due to a menu-click, or a double-click on a tile
+			if (e != null)			// if (e==null) the form is hiding due to a menu-click, or a double-click on a part
 				e.Cancel = true;	// if (e!=null) the form really was closed, so cancel that.
 									// NOTE: wtf - is way too complicated for what it is
 			McdInfobox.Hide();
@@ -569,58 +569,21 @@ namespace MapView.Forms.MapObservers.TileViews
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
 						_showHideManager.HideViewers();
-						fPckView.ShowDialog(ViewerFormsManager.TileView); // <- Pause until PckView is closed.
+						fPckView.ShowDialog(ViewerFormsManager.TileView); // <- Pause UI until PckView is closed.
 						_showHideManager.RestoreViewers();
 
-						if (fPckView.FireMvReload) // reload the current Map.
+
+						if (fPckView.FireMvReload					// the Descriptor needs to reload
+							&& CheckReload() == DialogResult.OK)	// so ask user if he/she wants to save the current Map+Routes (if changed)
 						{
-							string notice = "The Map needs to reload to show any"
-										  + " changes that were made to the terrainset.";
-
-							string changed = String.Empty;
-							if (MapBase.MapChanged)
-								changed = "Map";
-
-							if (MapBase.RoutesChanged)
-							{
-								if (!String.IsNullOrEmpty(changed))
-									changed += " and its ";
-
-								changed += "Routes";
-							}
-
-							if (!String.IsNullOrEmpty(changed))
-							{
-								notice += Environment.NewLine + Environment.NewLine
-										+ "You will be asked to save the current"
-										+ " changes to the " + changed + ".";
-							}
-
-							if (MessageBox.Show(
-											this,
-											notice,
-											" Reload Map",
-											MessageBoxButtons.OKCancel,
-											MessageBoxIcon.Information,
-											MessageBoxDefaultButton.Button1,
-											0) == DialogResult.OK)
-							{
-								if (ReloadDescriptorEvent != null)
-									ReloadDescriptorEvent();
-							}
+							if (ReloadDescriptorEvent != null)
+								ReloadDescriptorEvent();
 						}
 					}
 				}
 			}
 			else
-				MessageBox.Show(
-							this,
-							"Select a Tile.",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Asterisk,
-							MessageBoxDefaultButton.Button1,
-							0);
+				error_SelectTile();
 		}
 
 		/// <summary>
@@ -651,69 +614,79 @@ namespace MapView.Forms.MapObservers.TileViews
 				{
 					using (var fMcdView = new McdviewF())
 					{
-						Palette.UfoBattle .SetTransparent(false);
+						Palette.UfoBattle .SetTransparent(false); // NOTE: McdView wants non-transparent palettes.
 						Palette.TftdBattle.SetTransparent(false);
+
 						fMcdView.LoadRecords(
 										pfeMcd,
 										MapBase.Descriptor.Pal.Label,
 										SelectedTilepart.TerId);
 
 						_showHideManager.HideViewers();
-						fMcdView.ShowDialog(ViewerFormsManager.TileView); // <- Pause until McdView is closed.
+						fMcdView.ShowDialog(ViewerFormsManager.TileView); // <- Pause UI until McdView is closed.
 						_showHideManager.RestoreViewers();
+
 						Palette.UfoBattle .SetTransparent(true);
 						Palette.TftdBattle.SetTransparent(true);
 
 
-						if (fMcdView.FireMvReload) // reload the current Map.
+						if (fMcdView.FireMvReload					// the Descriptor needs to reload
+							&& CheckReload() == DialogResult.OK)	// so ask user if he/she wants to save the current Map+Routes (if changed)
 						{
-							string notice = "The Map needs to reload to show any"
-										  + " changes that were made to the terrainset.";
-
-							string changed = String.Empty;
-							if (MapBase.MapChanged)
-								changed = "Map";
-
-							if (MapBase.RoutesChanged)
-							{
-								if (!String.IsNullOrEmpty(changed))
-									changed += " and its ";
-
-								changed += "Routes";
-							}
-
-							if (!String.IsNullOrEmpty(changed))
-							{
-								notice += Environment.NewLine + Environment.NewLine
-										+ "You will be asked to save the current"
-										+ " changes to the " + changed + ".";
-							}
-
-							if (MessageBox.Show(
-											this,
-											notice,
-											" Reload Map",
-											MessageBoxButtons.OKCancel,
-											MessageBoxIcon.Information,
-											MessageBoxDefaultButton.Button1,
-											0) == DialogResult.OK)
-							{
-								if (ReloadDescriptorEvent != null)
-									ReloadDescriptorEvent();
-							}
+							if (ReloadDescriptorEvent != null)
+								ReloadDescriptorEvent();
 						}
 					}
 				}
 			}
 			else
-				MessageBox.Show(
-							this,
-							"Select a Tile.",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Asterisk,
-							MessageBoxDefaultButton.Button1,
-							0);
+				error_SelectTile();
+		}
+
+		DialogResult CheckReload()
+		{
+			string notice = "The Map needs to reload to show any"
+						  + " changes that were made to the terrainset.";
+
+			string changed = String.Empty;
+			if (MapBase.MapChanged)
+				changed = "Map";
+
+			if (MapBase.RoutesChanged)
+			{
+				if (!String.IsNullOrEmpty(changed))
+					changed += " and its ";
+
+				changed += "Routes";
+			}
+
+			if (!String.IsNullOrEmpty(changed))
+			{
+				notice += Environment.NewLine + Environment.NewLine
+						+ "You will be asked to save the current"
+						+ " changes to the " + changed + ".";
+			}
+
+			return MessageBox.Show(
+								this,
+								notice,
+								" Reload Map",
+								MessageBoxButtons.OKCancel,
+								MessageBoxIcon.Information,
+								MessageBoxDefaultButton.Button1,
+								0);
+		}
+
+		void error_SelectTile()
+		{
+			MessageBox.Show(
+						this,
+						"Select a Tile.",
+						" Error",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Asterisk,
+						MessageBoxDefaultButton.Button1,
+						0);
 		}
 
 

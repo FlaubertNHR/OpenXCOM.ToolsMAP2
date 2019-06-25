@@ -6,54 +6,48 @@ namespace MapView.Forms.MainWindow
 {
 	internal sealed class ShowHideManager
 	{
-		private readonly IEnumerable<Form> _allForms;
-		private readonly IEnumerable<MenuItem> _allItems;
+		#region Fields
+		private readonly IEnumerable<Form> _ffs;
+		private readonly List<Form> _visible = new List<Form>();
+		#endregion Fields
 
-		private List<Form> _forms;
-		private List<MenuItem> _items;
 
-
-		internal ShowHideManager(
-				IEnumerable<Form> allForms,
-				IEnumerable<MenuItem> allItems)
+		#region cTor
+		internal ShowHideManager(IEnumerable<Form> ffs)
 		{
-			_allForms = allForms;
-			_allItems = allItems;
+			_ffs = ffs;
 		}
+		#endregion cTor
 
 
+		#region Methods
 		/// <summary>
-		/// Hides the viewers when opening the PckView in TileView.
+		/// Hides visible viewers (except MainView) when opening PckView/McdView
+		/// via TileView.
 		/// </summary>
 		internal void HideViewers()
 		{
-			_items = new List<MenuItem>();
-			foreach (var it in _allItems)
-				if (it.Checked)
-					_items.Add(it);
-
-			_forms = new List<Form>();
-			foreach (var f in _allForms)
+			_visible.Clear();
+			foreach (var f in _ffs)
 				if (f.Visible)
 				{
-					f.Close(); // TODO: just use Hide()
-					_forms.Add(f);
+					f.Hide();
+					_visible.Add(f);
 				}
 		}
 
 		/// <summary>
-		/// Shows the viewers when closing the PckView in TileView.
+		/// Shows subsidiary viewers that were previously visible after closing
+		/// PckView/McdView via TileView.
 		/// </summary>
 		internal void RestoreViewers()
 		{
-			foreach (var f in _forms)
+			foreach (var f in _visible)
 			{
 				f.Show();
 				f.WindowState = FormWindowState.Normal;
 			}
-
-			foreach (var it in _items)
-				it.Checked = true;
 		}
+		#endregion Methods
 	}
 }

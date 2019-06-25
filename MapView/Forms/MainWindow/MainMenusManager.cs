@@ -20,8 +20,7 @@ namespace MapView.Forms.MainWindow
 
 
 		#region Fields
-		private static readonly List<MenuItem> _allItems = new List<MenuItem>();
-		private static readonly List<Form>     _allForms = new List<Form>();
+		private static readonly List<Form> _ffs = new List<Form>();
 
 		private static Options _options;
 
@@ -177,8 +176,7 @@ namespace MapView.Forms.MainWindow
 				f.Hide();
 			};
 
-			_allItems.Add(it);
-			_allForms.Add(f);
+			_ffs.Add(f);
 		}
 
 		/// <summary>
@@ -202,7 +200,7 @@ namespace MapView.Forms.MainWindow
 									"Open on load - " + key,		// appears as a tip at the bottom of the Options screen.
 									"Windows");						// this identifies what Option category the setting appears under.
 																	// NOTE: the Console is not technically a viewer
-//																	// but it appears under Options like the real viewers.
+																	// but it appears under Options like the real viewers.
 					f.VisibleChanged += (sender, e) =>
 					{
 						if (!_quit)
@@ -247,7 +245,7 @@ namespace MapView.Forms.MainWindow
 		/// <returns></returns>
 		internal static ShowHideManager CreateShowHideManager()
 		{
-			return new ShowHideManager(_allForms, _allItems);
+			return new ShowHideManager(_ffs);
 		}
 
 
