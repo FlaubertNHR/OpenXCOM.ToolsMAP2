@@ -40,10 +40,10 @@ namespace MapView.Forms.MainWindow
 			get { return _tileView ?? (_tileView = new TileViewForm()); }
 		}
 
-		private  static ColorHelp _helpScreen;
-		internal static ColorHelp  HelpScreen
+		private  static ColorHelp _colorsScreen;
+		internal static ColorHelp  ColorsScreen
 		{
-			get { return _helpScreen ?? (_helpScreen = new ColorHelp()); }
+			get { return _colorsScreen ?? (_colorsScreen = new ColorHelp()); }
 		}
 
 		private  static About _aboutWindow;

@@ -7,7 +7,7 @@ namespace MapView.Forms.MainWindow
 	internal static class ShowHideManager
 	{
 		#region Fields (static)
-		internal static List<Form> _fOrder = new List<Form>();
+		internal static List<Form> _zOrder = new List<Form>();
 		private static readonly List<Form> _visible = new List<Form>();
 		#endregion Fields (static)
 
@@ -21,7 +21,7 @@ namespace MapView.Forms.MainWindow
 		{
 			_visible.Clear();
 
-			foreach (var f in _fOrder) // don't screw with the iteration of '_fOrder'
+			foreach (var f in _zOrder) // don't screw with the iteration of '_fOrder'
 				if (f.Visible)
 					_visible.Add(f);
 
@@ -51,6 +51,22 @@ namespace MapView.Forms.MainWindow
 					((XCMainWindow)f)._bypassActivatedEvent = false;
 				}
 			}
+		}
+
+
+		/// <summary>
+		/// Gets the current z-order of visible Forms and returns it in a List.
+		/// @note Used by MinimizeAll, RestoreAll, and MainView activation.
+		/// </summary>
+		/// <returns></returns>
+		internal static List<Form> getZorderList()
+		{
+			var zOrder = new List<Form>();
+			foreach (var f in _zOrder) // don't screw with the iteration of '_fOrder'
+				if (f.Visible)
+					zOrder.Add(f);
+
+			return zOrder;
 		}
 		#endregion Methods (static)
 	}

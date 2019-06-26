@@ -12,8 +12,7 @@ namespace MapView.Forms.MainWindow
 	internal sealed class ViewersManager
 	{
 		#region Fields
-		private readonly Dictionary<string, Form> _viewers =
-					 new Dictionary<string, Form>();
+		private readonly List<Form> _viewers = new List<Form>();
 
 		private readonly OptionsManager _optionsManager;
 //		private readonly ConsoleSharedSpace _consoleShare;
@@ -37,9 +36,9 @@ namespace MapView.Forms.MainWindow
 
 		#region Methods
 		/// <summary>
-		/// Sets up all subsidiary viewers.
+		/// Registers all subsidiary viewers via this ViewersManager.
 		/// </summary>
-		internal void ManageViewers()
+		internal void InitializeViewersManager()
 		{
 			ViewerFormsManager.TopRouteView.ControlTop  .Options = ViewerFormsManager.TopView  .Control.Options;
 			ViewerFormsManager.TopRouteView.ControlRoute.Options = ViewerFormsManager.RouteView.Control.Options;
@@ -51,15 +50,12 @@ namespace MapView.Forms.MainWindow
 			SetAsObserver(RegistryInfo.RouteView, ViewerFormsManager.RouteView);
 			SetAsObserver(RegistryInfo.TileView,  ViewerFormsManager.TileView);
 
-			_viewers.Add(RegistryInfo.TopRouteView, ViewerFormsManager.TopRouteView);
+			_viewers.Add(ViewerFormsManager.TopRouteView);
 
-//			_viewersDictionary.Add(RegistryInfo.Console, _consoleShare.Console);
+//			_viewers.Add(RegistryInfo.Console, _consoleShare.Console);
 
-			_viewers.Add("Help",  ViewerFormsManager.HelpScreen);
-			_viewers.Add("About", ViewerFormsManager.AboutScreen);
-
-//			MainWindowsManager.TopRouteView.ControlTop  .RegistryInfo = MainWindowsManager.TopView  .Control.RegistryInfo;
-//			MainWindowsManager.TopRouteView.ControlRoute.RegistryInfo = MainWindowsManager.RouteView.Control.RegistryInfo;
+			_viewers.Add(ViewerFormsManager.ColorsScreen);
+			_viewers.Add(ViewerFormsManager.AboutScreen);
 		}
 
 		/// <summary>
@@ -69,7 +65,7 @@ namespace MapView.Forms.MainWindow
 		/// <param name="f"></param>
 		private void SetAsObserver(string viewer, Form f)
 		{
-			_viewers.Add(viewer, f);
+			_viewers.Add(f);
 
 			var fobserver = f as IMapObserverProvider; // TopViewForm, RouteViewForm, TileViewForm only.
 			if (fobserver != null)
@@ -86,16 +82,14 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Closes the following viewers: TopView, RouteView, TopRouteView,
-		/// TileView, Console, Help, About.
+		/// TileView, Console, Colors, About.
 		/// </summary>
-		internal void CloseSubsidiaryViewers()
+		internal void CloseViewers()
 		{
-			foreach (string key in _viewers.Keys)
+			foreach (var viewer in _viewers)
 			{
-				var f = _viewers[key];
-				f.WindowState = FormWindowState.Normal;
-
-				f.Close();
+				viewer.WindowState = FormWindowState.Normal;
+				viewer.Close();
 			}
 		}
 		#endregion

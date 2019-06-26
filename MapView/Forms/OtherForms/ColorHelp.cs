@@ -29,7 +29,7 @@ namespace MapView
 
 			OnCheckChanged(null, EventArgs.Empty);
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -268,10 +268,10 @@ namespace MapView
 			return ((int)color.R + color.G + color.B > 485) ? Color.DarkSlateBlue
 															: Color.Snow;
 		}
-		#endregion
+		#endregion Methods
 
 
-		#region Event Calls
+		#region Events
 		/// <summary>
 		/// Toggles the text descriptions between UFO and TFTD special property
 		/// types.
@@ -333,7 +333,7 @@ namespace MapView
 					break;
 			}
 		}
-		#endregion
+		#endregion Events
 
 
 		/// <summary>
@@ -354,7 +354,6 @@ namespace MapView
 
 
 		#region Windows Form Designer generated code
-
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.

@@ -300,7 +300,7 @@ namespace MapView
 			LogFile.WriteLine("ViewerFormsManager initialized.");
 
 
-			_viewersManager.ManageViewers();
+			_viewersManager.InitializeViewersManager();
 
 
 			ViewerFormsManager.TileView.Control.ReloadDescriptorEvent += OnReloadDescriptor;
@@ -978,7 +978,7 @@ namespace MapView
 //				if (PathsEditor.SaveRegistry) // TODO: re-implement.
 				{
 					WindowState = FormWindowState.Normal;
-					_viewersManager.CloseSubsidiaryViewers();
+					_viewersManager.CloseViewers();
 
 					string dirSettings = SharedSpace.that.GetShare(SharedSpace.SettingsDirectory);
 					string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);
@@ -1055,8 +1055,8 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
-			ShowHideManager._fOrder.Remove(this);
-			ShowHideManager._fOrder.Add(this);
+			ShowHideManager._zOrder.Remove(this);
+			ShowHideManager._zOrder.Add(this);
 
 			if (_allowBringToFront)
 			{
@@ -1065,12 +1065,8 @@ namespace MapView
 					_bypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
 													// NOTE: 'TopMost_set' won't, but other calls like BringToFront() or Select() can/will.
 
-					var forder = new List<Form>();
-					foreach (var f in ShowHideManager._fOrder) // don't screw with the iteration of '_fOrder'
-						if (f.Visible)
-							forder.Add(f);
-
-					foreach (var f in forder)
+					var zOrder = ShowHideManager.getZorderList();
+					foreach (var f in zOrder)
 					{
 						f.TopMost = true;
 						f.TopMost = false;

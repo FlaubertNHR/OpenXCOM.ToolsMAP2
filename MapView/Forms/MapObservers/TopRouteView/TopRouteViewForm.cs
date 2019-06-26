@@ -52,8 +52,8 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
-			ShowHideManager._fOrder.Remove(this);
-			ShowHideManager._fOrder.Add(this);
+			ShowHideManager._zOrder.Remove(this);
+			ShowHideManager._zOrder.Add(this);
 
 			if (tabControl.SelectedIndex == 0)
 				TopViewControl.TopPanel.Focus();

@@ -43,8 +43,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
-			ShowHideManager._fOrder.Remove(this);
-			ShowHideManager._fOrder.Add(this);
+			ShowHideManager._zOrder.Remove(this);
+			ShowHideManager._zOrder.Add(this);
 
 //			base.OnActivated(e);
 		}

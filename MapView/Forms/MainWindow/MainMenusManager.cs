@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -65,7 +66,7 @@ namespace MapView.Forms.MainWindow
 				f.WindowState = FormWindowState.Normal;
 
 				if (it.Tag is ColorHelp) // update colors that user might have set in TileView's Option-settings.
-					ViewerFormsManager.HelpScreen.UpdateColors();
+					ViewerFormsManager.ColorsScreen.UpdateColors();
 			}
 			else
 			{
@@ -85,6 +86,43 @@ namespace MapView.Forms.MainWindow
 				   help = Path.Combine(help, "MapView.chm");
 			Help.ShowHelp(XCMainWindow.that, "file://" + help);
 		}
+
+
+		/// <summary>
+		/// Handles clicks on the Viewers|MinimizeAll item. Also F11.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private static void OnMinimizeAllClick(object sender, EventArgs e)
+		{
+			var zOrder = ShowHideManager.getZorderList();
+			foreach (var f in zOrder)
+			{
+				if (   f.WindowState == FormWindowState.Normal
+					|| f.WindowState == FormWindowState.Maximized)
+				{
+					f.WindowState = FormWindowState.Minimized;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Handles clicks on the Viewers|RestoreAll item. Also F12.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private static void OnRestoreAllClick(object sender, EventArgs e)
+		{
+			var zOrder = ShowHideManager.getZorderList();
+			foreach (var f in zOrder)
+			{
+				if (   f.WindowState == FormWindowState.Minimized
+					|| f.WindowState == FormWindowState.Maximized)
+				{
+					f.WindowState = FormWindowState.Normal;
+				}
+			}
+		}
 		#endregion Events (static)
 
 
@@ -92,12 +130,12 @@ namespace MapView.Forms.MainWindow
 		/// <summary>
 		/// Sets the menus to manage.
 		/// </summary>
-		/// <param name="viewers"></param>
-		/// <param name="help"></param>
-		internal static void SetMenus(MenuItem viewers, MenuItem help)
+		/// <param name="itViewers"></param>
+		/// <param name="itHelp"></param>
+		internal static void SetMenus(MenuItem itViewers, MenuItem itHelp)
 		{
-			MenuViewers = viewers;
-			MenuHelp    = help;
+			MenuViewers = itViewers;
+			MenuHelp    = itHelp;
 		}
 
 		/// <summary>
@@ -133,15 +171,15 @@ namespace MapView.Forms.MainWindow
 			miHelp.Click += OnHelpClick;
 			MenuHelp.MenuItems.Add(miHelp);
 
-			CreateMenuItem(ViewerFormsManager.HelpScreen,  "Colors", MenuHelp);
-			CreateMenuItem(ViewerFormsManager.AboutScreen, "About",  MenuHelp);
+			CreateMenuItem(ViewerFormsManager.ColorsScreen, "Colors", MenuHelp);
+			CreateMenuItem(ViewerFormsManager.AboutScreen,  "About",  MenuHelp);
 
 
 			AddViewersOptions();
 		}
 
 		/// <summary>
-		/// Creates a menuitem for a specified viewer. See PopulateMenus() above^
+		/// Creates a menuitem for a specified viewer.
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="caption"></param>
@@ -215,8 +253,8 @@ namespace MapView.Forms.MainWindow
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
 				var f = it.Tag as Form;
-				if (f != null && _options[it.Text].IsTrue) // NOTE: All viewers shall be keyed in Options w/ the item-text.
-					it.PerformClick();
+				if (f != null && _options[it.Text].IsTrue)	// NOTE: All viewers shall be keyed in Options w/ the item-text.
+					it.PerformClick();						// TODO: uhhh ...
 			}
 			MenuViewers.Enabled = true;
 		}
@@ -229,57 +267,6 @@ namespace MapView.Forms.MainWindow
 		internal static void Quit()
 		{
 			_quit = true;
-		}
-
-
-		/// <summary>
-		/// Handles clicks on the Viewers|MinimizeAll item. Also F11.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private static void OnMinimizeAllClick(object sender, EventArgs e)
-		{
-			foreach (MenuItem it in MenuViewers.MenuItems)
-			{
-				var f = it.Tag as Form;
-				if (f != null //&& _options[it.Text].IsTrue
-					&& (   f.WindowState == FormWindowState.Normal
-						|| f.WindowState == FormWindowState.Maximized))
-				{
-					f.WindowState = FormWindowState.Minimized;
-				}
-			}
-
-			if (   XCMainWindow.that.WindowState == FormWindowState.Normal
-				|| XCMainWindow.that.WindowState == FormWindowState.Maximized)
-			{
-				XCMainWindow.that.WindowState = FormWindowState.Minimized;
-			}
-		}
-
-		/// <summary>
-		/// Handles clicks on the Viewers|RestoreAll item. Also F12.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private static void OnRestoreAllClick(object sender, EventArgs e)
-		{
-			foreach (MenuItem it in MenuViewers.MenuItems)
-			{
-				var f = it.Tag as Form;
-				if (f != null //&& _options[it.Text].IsTrue
-					&& (   f.WindowState == FormWindowState.Minimized
-						|| f.WindowState == FormWindowState.Maximized))
-				{
-					f.WindowState = FormWindowState.Normal;
-				}
-			}
-
-			if (   XCMainWindow.that.WindowState == FormWindowState.Maximized
-				|| XCMainWindow.that.WindowState == FormWindowState.Minimized)
-			{
-				XCMainWindow.that.WindowState = FormWindowState.Normal;
-			}
 		}
 
 
