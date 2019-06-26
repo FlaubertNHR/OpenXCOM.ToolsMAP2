@@ -4,6 +4,8 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
+using MapView.Forms.MainWindow;
+
 
 namespace MapView
 {
@@ -14,6 +16,14 @@ namespace MapView
 		:
 			Form
 	{
+		#region Fields
+		private Point _locBase;
+		private Point _loc;
+		private Size _size;
+		private double _lastPoint;
+		#endregion Fields
+
+
 		#region cTor
 		internal About()
 		{
@@ -40,18 +50,19 @@ namespace MapView
 										"{0:yyyy MMM d}  {0:HH}:{0:mm}:{0:ss} {0:zzz}",
 										dt);
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Fields
-		private Point _locBase;
-		private Point _loc;
-		private Size _size;
-		private double _lastPoint;
-		#endregion
+		#region Events (override)
+		protected override void OnActivated(EventArgs e)
+		{
+			ShowHideManager._zOrder.Remove(this);
+			ShowHideManager._zOrder.Add(this);
+		}
+		#endregion Events (override)
 
 
-		#region Eventcalls
+		#region Events
 		private void OnShown(object sender, EventArgs e)
 		{
 			string before = String.Format(
@@ -93,7 +104,7 @@ namespace MapView
 					break;
 			}
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -124,7 +135,7 @@ namespace MapView
 			loc.Y = (int)(_loc.Y + (Math.Cos(delta) * 50));
 			return loc;
 		}
-		#endregion
+		#endregion Methods
 	}
 
 
