@@ -11,9 +11,8 @@ namespace MapView.Forms.MainWindow
 	internal static class ViewerFormsManager
 	{
 		#region Fields (static)
-		internal static ShowHideManager HideViewersManager;
 		internal static ToolstripFactory ToolFactory;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties (static)
@@ -52,7 +51,7 @@ namespace MapView.Forms.MainWindow
 		{
 			get { return _aboutWindow ?? (_aboutWindow = new About()); }
 		}
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Methods (static)
@@ -61,10 +60,9 @@ namespace MapView.Forms.MainWindow
 			TopView     .Control   .InitializeToolstrip(ToolFactory);
 			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
 
-			TileView.Control.SetShowHideManager(HideViewersManager);
 			TileView.Control.TileSelectedEvent_Observer0 += OnTileSelected_Observer0;
 		}
-		#endregion
+		#endregion Methods (static)
 
 
 		#region Events (static)
@@ -81,10 +79,10 @@ namespace MapView.Forms.MainWindow
 				TopRouteView.ControlTop.SelectQuadrant(part.Record.PartType);
 			}
 		}
-		#endregion
+		#endregion Events (static)
 
 
-		#region Methods
+		#region Methods (static)
 		internal static void SetObservers(MapFileBase @base)
 		{
 			var observers = new IMapObserver[]
@@ -120,6 +118,6 @@ namespace MapView.Forms.MainWindow
 			foreach (string key in observer.Panels.Keys) // ie. TopPanel and QuadrantsPanel
 				SetObserver(observer.MapBase, observer.Panels[key]);
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

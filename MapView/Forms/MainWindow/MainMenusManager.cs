@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -14,30 +13,25 @@ namespace MapView.Forms.MainWindow
 {
 	internal static class MainMenusManager
 	{
-		#region Fields (constant)
-		private const string Separator = "-";
-		#endregion Fields (constant)
-
-
-		#region Fields
-		private static readonly List<Form> _ffs = new List<Form>();
-
+		#region Fields (static)
 		private static Options _options;
 
 		private static bool _quit;
-		#endregion Fields
+
+		private const string Separator = "-";
+		#endregion Fields (static)
 
 
-		#region Properties
+		#region Properties (static)
 		internal static MenuItem MenuViewers
 		{ get; private set; }
 
 		private static MenuItem MenuHelp
 		{ get; set; }
-		#endregion Properties
+		#endregion Properties (static)
 
 
-		#region Events
+		#region Events (static)
 		/// <summary>
 		/// Handles clicking on a MenuItem to open/close a subsidiary form.
 		/// </summary>
@@ -91,10 +85,10 @@ namespace MapView.Forms.MainWindow
 				   help = Path.Combine(help, "MapView.chm");
 			Help.ShowHelp(XCMainWindow.that, "file://" + help);
 		}
-		#endregion Events
+		#endregion Events (static)
 
 
-		#region Methods
+		#region Methods (static)
 		/// <summary>
 		/// Sets the menus to manage.
 		/// </summary>
@@ -175,8 +169,6 @@ namespace MapView.Forms.MainWindow
 				e.Cancel = true;
 				f.Hide();
 			};
-
-			_ffs.Add(f);
 		}
 
 		/// <summary>
@@ -229,6 +221,7 @@ namespace MapView.Forms.MainWindow
 			MenuViewers.Enabled = true;
 		}
 
+
 		/// <summary>
 		/// Effectively disables the 'VisibleChanged' event for all subsidiary
 		/// viewers.
@@ -236,16 +229,6 @@ namespace MapView.Forms.MainWindow
 		internal static void Quit()
 		{
 			_quit = true;
-		}
-
-		/// <summary>
-		/// Creates a device that minimizes and restores all subsidiary viewers
-		/// when PckView is opened via TileView.
-		/// </summary>
-		/// <returns></returns>
-		internal static ShowHideManager CreateShowHideManager()
-		{
-			return new ShowHideManager(_ffs);
 		}
 
 
@@ -342,6 +325,6 @@ namespace MapView.Forms.MainWindow
 			e.SuppressKeyPress = true;
 			return true;
 		}
-		#endregion Methods
+		#endregion Methods (static)
 	}
 }

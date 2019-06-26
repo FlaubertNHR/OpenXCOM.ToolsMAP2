@@ -22,7 +22,7 @@ namespace MapView
 		private PathInfo _pathTilesets  = SharedSpace.that[PathInfo.ShareTilesets]  as PathInfo;
 
 		private bool _bork;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -37,7 +37,7 @@ namespace MapView
 			get { return tbTftd.Text; }
 			set { tbTftd.Text = value; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -106,10 +106,10 @@ namespace MapView
 				}
 			} */
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Eventcalls
+		#region Events
 		private void OnResourcesCheckedChanged(object sender, EventArgs e)
 		{
 			gbResources.Visible = cbResources.Checked;
@@ -274,7 +274,7 @@ namespace MapView
 		{
 			Close();
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -310,6 +310,6 @@ namespace MapView
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
-		#endregion
+		#endregion Methods
 	}
 }

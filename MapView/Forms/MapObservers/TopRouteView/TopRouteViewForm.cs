@@ -43,19 +43,24 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		#endregion cTor
 
 
-		#region Events
+		#region Events (override)
 		/// <summary>
-		/// Fires when the form is activated.
+		/// Fires when the form is activated. Maintains the position of this
+		/// form in the z-order List and focuses the panel if the TopViewControl
+		/// is currently selected.
 		/// </summary>
-		private void OnActivated(object sender, EventArgs e)
+		/// <param name="e"></param>
+		protected override void OnActivated(EventArgs e)
 		{
+			ShowHideManager._fOrder.Remove(this);
+			ShowHideManager._fOrder.Add(this);
+
 			if (tabControl.SelectedIndex == 0)
 				TopViewControl.TopPanel.Focus();
+
+//			base.OnActivated(e);
 		}
-		#endregion
 
-
-		#region Events (override)
 		/// <summary>
 		/// Handles a so-called command-key at the form level. Stops keys that
 		/// shall be used for navigating the tiles from doing anything stupid

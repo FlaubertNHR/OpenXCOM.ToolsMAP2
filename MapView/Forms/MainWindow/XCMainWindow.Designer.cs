@@ -8,7 +8,7 @@ namespace MapView
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
@@ -34,7 +34,7 @@ namespace MapView
 		Copy-paste things back to what it should be. NOTE: The instantiation
 		cannot be done in the cTor because the cTor isn't run by the designer;
 		but changing the code of the class to instantiate the tree in, say, the
-		OnLoad event is a bit involved.
+		OnLoad event is a bit too involved.
  */
 		#region Windows Form Designer generated code
 		/// <summary>

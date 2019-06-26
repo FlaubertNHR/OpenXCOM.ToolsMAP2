@@ -1,8 +1,4 @@
-﻿using MapView.Forms.MapObservers.RouteViews;
-using MapView.Forms.MapObservers.TopViews;
-
-
-namespace MapView.Forms.MapObservers.TileViews
+﻿namespace MapView.Forms.MapObservers.TileViews
 {
 	partial class TopRouteViewForm
 	{
@@ -12,7 +8,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
@@ -110,7 +106,6 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.Name = "TopRouteViewForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Top/Route Views";
-			this.Activated += new System.EventHandler(this.OnActivated);
 			this.tabControl.ResumeLayout(false);
 			this.tp_Top.ResumeLayout(false);
 			this.tp_Route.ResumeLayout(false);
@@ -119,8 +114,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 		#endregion
 
-		private TopView TopViewControl;
-		private RouteView RouteViewControl;
+		private MapView.Forms.MapObservers.TopViews.TopView TopViewControl;
+		private MapView.Forms.MapObservers.RouteViews.RouteView RouteViewControl;
 
 		private System.Windows.Forms.TabControl tabControl;
 		private System.Windows.Forms.TabPage tp_Top;

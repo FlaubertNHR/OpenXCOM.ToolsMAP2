@@ -38,18 +38,21 @@ namespace MapView.Forms.MapObservers.TileViews
 		#endregion
 
 
-		#region Events
-		/// <summary>
-		/// Fires when the form is activated.
-		/// </summary>
-		private void OnActivated(object sender, EventArgs e)
-		{
-			TileViewControl.GetSelectedPanel().Focus();
-		}
-		#endregion
-
-
 		#region Events (override)
+		/// <summary>
+		/// Fires when the form is activated. Maintains the position of this
+		/// form in the z-order List and focuses the selected panel.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnActivated(EventArgs e)
+		{
+			ShowHideManager._fOrder.Remove(this);
+			ShowHideManager._fOrder.Add(this);
+
+			TileViewControl.GetSelectedPanel().Focus();
+
+//			base.OnActivated(e);
+		}
 		/// <summary>
 		/// Handles a so-called command-key at the form level. Stops keys that
 		/// shall be used for navigating the tiles from doing anything stupid
@@ -135,7 +138,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -180,7 +183,6 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.Name = "TileViewForm";
 			this.ShowInTaskbar = false;
 			this.Text = "TileView";
-			this.Activated += new System.EventHandler(this.OnActivated);
 			this.ResumeLayout(false);
 
 		}

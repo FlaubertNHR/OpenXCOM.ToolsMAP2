@@ -26,7 +26,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			get { return TopViewControl; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -34,21 +34,25 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			InitializeComponent();
 		}
-		#endregion
-
-
-		#region Events
-		/// <summary>
-		/// Fires when the form is activated.
-		/// </summary>
-		private void OnActivated(object sender, EventArgs e)
-		{
-			TopViewControl.TopPanel.Focus();
-		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events (override)
+		/// <summary>
+		/// Fires when the form is activated. Maintains the position of this
+		/// form in the z-order List and focuses the panel.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnActivated(EventArgs e)
+		{
+			ShowHideManager._fOrder.Remove(this);
+			ShowHideManager._fOrder.Add(this);
+
+			TopViewControl.TopPanel.Focus();
+
+//			base.OnActivated(e);
+		}
+
 		/// <summary>
 		/// Handles a so-called command-key at the form level. Stops keys that
 		/// shall be used for navigating the tiles from doing anything stupid

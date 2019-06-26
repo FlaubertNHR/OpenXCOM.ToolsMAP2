@@ -55,7 +55,7 @@ namespace MapView
 
 		private bool _quit;
 
-		private bool _bypassActivatedEvent;
+		internal bool _bypassActivatedEvent;
 		private bool _allowBringToFront;
 		#endregion Fields
 
@@ -295,10 +295,6 @@ namespace MapView
 			LogFile.WriteLine("MainView menus populated.");
 
 
-			ViewerFormsManager.HideViewersManager = MainMenusManager.CreateShowHideManager(); // subsidiary viewers hide when Pck/McdView is invoked from TileView.
-			LogFile.WriteLine("HideViewersManager created.");
-
-
 			ViewerFormsManager.ToolFactory = new ToolstripFactory(MainViewUnderlay);
 			ViewerFormsManager.Initialize();
 			LogFile.WriteLine("ViewerFormsManager initialized.");
@@ -455,8 +451,8 @@ namespace MapView
 		#region Methods (static)
 		/// <summary>
 		/// Transposes all the default viewer positions and sizes from the
-		/// embedded MapViewers manifest to '/settings/MapViewers.yml'.
-		/// Based on InstallationForm.
+		/// embedded MapViewers manifest to "/settings/MapViewers.yml".
+		/// Based on 'ConfigurationForm'.
 		/// </summary>
 		private static void CreateViewersFile()
 		{
@@ -1048,47 +1044,44 @@ namespace MapView
 		private static bool Inited;
 
 		/// <summary>
-		/// Overrides the OnActivated event. Brings any other open viewers to
-		/// the top of the desktop, along with this. And focuses the panel.
+		/// Overrides the Activated event. Brings any other open viewers to the
+		/// top of the desktop, along with this. And focuses the panel.
+		/// IMPORTANT: trying to bring this form to the top after the other
+		/// forms apparently fails in Windows 10 - which makes it impossible for
+		/// MainView to gain focus when clicked (if there are other viewers
+		/// open). Hence MainView's option "AllowBringToFront" is FALSE by
+		/// default.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
+			ShowHideManager._fOrder.Remove(this);
+			ShowHideManager._fOrder.Add(this);
+
 			if (_allowBringToFront)
 			{
-				if (!_bypassActivatedEvent)			// don't let 'TopMost_set' fire the OnActivated event.
+				if (!_bypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
 				{
 					_bypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
 													// NOTE: 'TopMost_set' won't, but other calls like BringToFront() or Select() can/will.
-					bool doit = false;
 
-					foreach (MenuItem it in menuViewers.MenuItems)
+					var forder = new List<Form>();
+					foreach (var f in ShowHideManager._fOrder) // don't screw with the iteration of '_fOrder'
+						if (f.Visible)
+							forder.Add(f);
+
+					foreach (var f in forder)
 					{
-						if (it.Checked)
-						{
-							doit = true;
-
-							var f = it.Tag as Form;
-							f.TopMost = true;
-							f.TopMost = false;
-						}
+						f.TopMost = true;
+						f.TopMost = false;
 					}
 
-					if (doit)
-					{
-						TopMost = true;		// NOTE: These are needed despite calling base.OnActivated() below_
-						TopMost = false;	// IMPORTANT: trying to bring this form to the top
-					}						// after the other forms apparently fails in Windows 10
-											// - which makes it impossible for MainView to gain focus
-											// when clicked (if there are other viewers open).
-
-					base.OnActivated(e);	// <--||
+//					base.OnActivated(e);
 
 					_bypassActivatedEvent = false;
 				}
 			}
-			else
-				base.OnActivated(e);
+//			else base.OnActivated(e);
 
 			if (Inited)
 				MainViewUnderlay.MainViewOverlay.Focus();
@@ -1096,11 +1089,16 @@ namespace MapView
 				Inited = true;
 		}
 
+		/// <summary>
+		/// Overrides the Deactivated event. Allows the targeter to go away.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnDeactivate(EventArgs e)
 		{
 			MainViewUnderlay.MainViewOverlay._targeterForced = false;
 			Invalidate();
-			base.OnDeactivate(e);
+
+//			base.OnDeactivate(e);
 		}
 
 

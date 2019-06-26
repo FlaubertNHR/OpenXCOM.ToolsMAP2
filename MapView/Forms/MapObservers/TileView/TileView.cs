@@ -37,8 +37,6 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		#region Fields
-		private ShowHideManager _hideShow;
-
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
 
@@ -274,15 +272,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 		#endregion
 
-
-		/// <summary>
-		/// Sets the ShowHideManager.
-		/// </summary>
-		/// <param name="hideShow"></param>
-		internal void SetShowHideManager(ShowHideManager hideShow)
-		{
-			_hideShow = hideShow;
-		}
 
 		/// <summary>
 		/// These are default colors for the SpecialType of a tilepart.
@@ -569,9 +558,9 @@ namespace MapView.Forms.MapObservers.TileViews
 						fPckView.SetPalette(MapBase.Descriptor.Pal.Label);
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
-						_hideShow.HideViewers();
+						ShowHideManager.HideViewers();
 						fPckView.ShowDialog(ViewerFormsManager.TileView); // <- Pause UI until PckView is closed.
-						_hideShow.RestoreViewers();
+						ShowHideManager.RestoreViewers();
 
 
 						if (fPckView.FireMvReload					// the Descriptor needs to reload
@@ -623,9 +612,9 @@ namespace MapView.Forms.MapObservers.TileViews
 										MapBase.Descriptor.Pal.Label,
 										SelectedTilepart.TerId);
 
-						_hideShow.HideViewers();
+						ShowHideManager.HideViewers();
 						fMcdView.ShowDialog(ViewerFormsManager.TileView); // <- Pause UI until McdView is closed.
-						_hideShow.RestoreViewers();
+						ShowHideManager.RestoreViewers();
 
 						Palette.UfoBattle .SetTransparent(true);
 						Palette.TftdBattle.SetTransparent(true);

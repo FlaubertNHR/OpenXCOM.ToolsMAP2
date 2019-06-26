@@ -4,57 +4,54 @@ using System.Windows.Forms;
 
 namespace MapView.Forms.MainWindow
 {
-	internal sealed class ShowHideManager
+	internal static class ShowHideManager
 	{
-		#region Fields
-		private readonly IEnumerable<Form> _ffs;
-		private readonly List<Form> _visible = new List<Form>();
-		#endregion Fields
+		#region Fields (static)
+		internal static List<Form> _fOrder = new List<Form>();
+		private static readonly List<Form> _visible = new List<Form>();
+		#endregion Fields (static)
 
 
-		#region cTor
-		internal ShowHideManager(IEnumerable<Form> ffs)
-		{
-			_ffs = ffs;
-		}
-		#endregion cTor
-
-
-		#region Methods
+		#region Methods (static)
 		/// <summary>
 		/// Hides visible viewers (except MainView) when opening PckView/McdView
 		/// via TileView.
 		/// </summary>
-		internal void HideViewers()
+		internal static void HideViewers()
 		{
 			_visible.Clear();
-			foreach (var f in _ffs)
+
+			foreach (var f in _fOrder) // don't screw with the iteration of '_fOrder'
 				if (f.Visible)
-				{
-					f.Hide();
 					_visible.Add(f);
-				}
+
+			foreach (var f in _visible)
+				if (f.Name != "XCMainWindow")
+					f.Hide();
 		}
 
 		/// <summary>
 		/// Shows subsidiary viewers that were previously visible after closing
 		/// PckView/McdView via TileView.
 		/// </summary>
-		internal void RestoreViewers()
+		internal static void RestoreViewers()
 		{
 			foreach (var f in _visible)
 			{
-				f.Show();
-				f.WindowState = FormWindowState.Normal;
+				if (f.Name != "XCMainWindow")
+				{
+					f.Show();
+					f.WindowState = FormWindowState.Normal;
+				}
+				else // bring MainView to its previous position in the z-order
+				{
+					((XCMainWindow)f)._bypassActivatedEvent = true;
+					f.TopMost = true;
+					f.TopMost = false;
+					((XCMainWindow)f)._bypassActivatedEvent = false;
+				}
 			}
-
-			// TODO: Restore viewers in the z-order they previously had.
-			// Unfortunately getting that z-order before minimizing the viewers
-			// requires a WinAPI call (no good for Mono).
-
-			ViewerFormsManager.TileView.TopMost = true;
-			ViewerFormsManager.TileView.TopMost = false;
 		}
-		#endregion Methods
+		#endregion Methods (static)
 	}
 }
