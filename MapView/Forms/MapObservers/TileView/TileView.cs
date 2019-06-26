@@ -104,6 +104,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			tcTileTypes.MouseWheel           += OnMouseWheelTabs;
 			tcTileTypes.SelectedIndexChanged += OnSelectedIndexChanged;
 
+			TilePanel.Chaparone = this;
+
 			_allTiles      = new TilePanel(PartType.All);
 			var floors     = new TilePanel(PartType.Floor);
 			var westwalls  = new TilePanel(PartType.West);

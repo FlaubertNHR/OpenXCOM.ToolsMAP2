@@ -28,6 +28,8 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		#region Fields (static)
+		internal static TileView Chaparone;
+
 		private const int SpriteMargin = 2;
 		private const int SpriteWidth  = XCImage.SpriteWidth32  + SpriteMargin * 2;
 		private const int SpriteHeight = XCImage.SpriteHeight40 + SpriteMargin * 2;
@@ -190,17 +192,17 @@ namespace MapView.Forms.MapObservers.TileViews
 		#region Events
 		private void OnClick_OpenPckview(object sender, EventArgs e)
 		{
-			ViewerFormsManager.TileView.Control.OnPckEditClick(sender, e);
+			Chaparone.OnPckEditClick(sender, e);
 		}
 
 		private void OnClick_OpenMcdview(object sender, EventArgs e)
 		{
-			ViewerFormsManager.TileView.Control.OnMcdEditClick(sender, e);
+			Chaparone.OnMcdEditClick(sender, e);
 		}
 
 		private void OnClick_OpenMcdinfo(object sender, EventArgs e)
 		{
-			 ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
+			 Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -213,7 +215,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if (!Bounds.Contains(PointToClient(Cursor.Position)))
 			{
-				ViewerFormsManager.TileView.Control.StatbarOverInfo(null);
+				Chaparone.StatbarOverInfo(null);
 			}
 		}
 
@@ -319,7 +321,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 
 			if (Bounds.Contains(PointToClient(MousePosition)))
-				OnMouseMove(e); // update Overinfo on the statusbar.
+				OnMouseMove(e); // update OverInfo on the statusbar.
 		}
 
 		/// <summary>
@@ -435,7 +437,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Opens the MCD-info screen when a valid tile is double-left-clicked.
+		/// Opens the MCD-info screen when a valid tilepart is
+		/// double-left-clicked.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
@@ -446,7 +449,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				switch (e.Button)
 				{
 					case MouseButtons.Left:
-						ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
+						Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
 						break;
 				}
 			}
@@ -460,7 +463,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if (e.KeyCode == Keys.I)
 			{
-				ViewerFormsManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
+				Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
 			}
 		}
 
@@ -476,7 +479,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			if (id != -1 && id < _parts.Length)
 				part = _parts[id];
 
-			ViewerFormsManager.TileView.Control.StatbarOverInfo(part);
+			Chaparone.StatbarOverInfo(part);
 		}
 
 
