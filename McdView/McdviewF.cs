@@ -444,13 +444,16 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles the Form's FormClosing event.
+		/// Handles this Form's FormClosing event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (CheckChanged())
 			{
+				if (CopyPanel != null)
+					CopyPanel.Close();
+
 				YamlMetrics.SaveWindowMetrics(this);
 				base.OnFormClosing(e);
 			}
@@ -459,7 +462,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles the Form's Resize event.
+		/// Handles this Form's Resize event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
