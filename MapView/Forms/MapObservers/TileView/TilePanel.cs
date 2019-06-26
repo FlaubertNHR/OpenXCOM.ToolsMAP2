@@ -27,11 +27,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		internal event TileSelectedEventHandler TileSelectedEvent;
 
 
-		#region Fields & Properties
-		private Tilepart[] _parts;
-
-		private readonly VScrollBar _scrollBar;
-
+		#region Fields (static)
 		private const int SpriteMargin = 2;
 		private const int SpriteWidth  = XCImage.SpriteWidth32  + SpriteMargin * 2;
 		private const int SpriteHeight = XCImage.SpriteHeight40 + SpriteMargin * 2;
@@ -39,21 +35,31 @@ namespace MapView.Forms.MapObservers.TileViews
 		private const int _largeChange = SpriteHeight;	// apparently .NET won't return an accurate value
 														// for LargeChange unless the scrollbar is visible.
 
+		private static Hashtable _specialTypeBrushes;
+
+		private static Timer _t1 = new Timer();
+		#endregion Fields (static)
+
+
+		#region Fields
+		private Tilepart[] _parts;
+
+		private readonly VScrollBar _scrollBar;
+
 		private readonly Pen   _penBlack        = Pens.Black;
 		private readonly Pen   _penRed          = new Pen(Color.Red, 3);
 		private readonly Pen   _penControlLight = SystemPens.ControlLight;
 		private readonly Brush _brushBlack      = Brushes.Black;
-
-		private static Hashtable _specialTypeBrushes;
-
-		private static Timer _t1 = new Timer();
 
 		private int _tilesX = 1;
 		private int _startY;
 		private int _id;
 
 		private PartType _quadType;
+		#endregion Fields
 
+
+		#region Properties
 		private int TableHeight
 		{
 			get // TODO: calculate and cache this value in the OnResize and loading events.
@@ -114,7 +120,7 @@ namespace MapView.Forms.MapObservers.TileViews
 //			get { return _extraFile; }
 //			set { _extraFile = value; }
 //		}
-		#endregion
+		#endregion Properties
 
 
 		/// <summary>
@@ -178,7 +184,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			return context;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events
