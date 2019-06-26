@@ -721,7 +721,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Prints info for a mouseovered tilepart.
 		/// </summary>
 		/// <param name="part"></param>
-		internal void StatusbarOverInfo(Tilepart part)
+		internal void StatbarOverInfo(Tilepart part)
 		{
 			string info = String.Empty;
 

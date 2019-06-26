@@ -207,7 +207,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if (!Bounds.Contains(PointToClient(Cursor.Position)))
 			{
-				ViewerFormsManager.TileView.Control.StatusbarOverInfo(null);
+				ViewerFormsManager.TileView.Control.StatbarOverInfo(null);
 			}
 		}
 
@@ -470,7 +470,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			if (id != -1 && id < _parts.Length)
 				part = _parts[id];
 
-			ViewerFormsManager.TileView.Control.StatusbarOverInfo(part);
+			ViewerFormsManager.TileView.Control.StatbarOverInfo(part);
 		}
 
 
