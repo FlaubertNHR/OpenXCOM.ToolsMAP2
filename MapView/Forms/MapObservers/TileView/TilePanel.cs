@@ -179,10 +179,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			var context = new ContextMenu();
 
-			context.MenuItems.Add(new MenuItem("open in PckView", OnClick_OpenPckview, Shortcut.F9));
-			context.MenuItems.Add(new MenuItem("open in McdView", OnClick_OpenMcdview, Shortcut.F10));
-			context.MenuItems.Add(new MenuItem("-"));
-			context.MenuItems.Add(new MenuItem("Tilepart Info"  , OnClick_OpenMcdinfo));
+			context.MenuItems.Add(new MenuItem("open in PckView", OnClick_OpenPckview, Shortcut.F9));	// 0
+			context.MenuItems.Add(new MenuItem("open in McdView", OnClick_OpenMcdview, Shortcut.F10));	// 1
+			context.MenuItems.Add(new MenuItem("-"));													// 2
+			context.MenuItems.Add(new MenuItem("Tilepart Info"  , OnClick_OpenMcdinfo));				// 3
 
 			return context;
 		}
@@ -202,11 +202,11 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		private void OnClick_OpenMcdinfo(object sender, EventArgs e)
 		{
-			 Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
+			Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
 		}
 
 		/// <summary>
-		/// Ensures that any Overinfo on the statusbar is cleared when the
+		/// Ensures that any OverInfo on the statusbar is cleared when the
 		/// mouse-cursor leaves this panel.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -325,7 +325,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Focuses this panel and selects a tile.
+		/// Focuses this panel and selects a tilepart.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -346,7 +346,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Navigates the tiles of this panel on keydown events at the Form
+		/// Navigates the tileparts of this panel on keydown events at the Form
 		/// level.
 		/// </summary>
 		/// <param name="keyData"></param>
@@ -682,7 +682,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Checks if a selected tile is fully visible in the view-panel and
+		/// Checks if a selected tilepart is fully visible in the view-panel and
 		/// scrolls the table to show it if not.
 		/// </summary>
 		private void ScrollToTile()
