@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -20,13 +21,16 @@ namespace MapView
 	{
 		#region Fields (static)
 		private static Dictionary<Type, ConvertObjectHandler> _converters;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
-		private readonly Dictionary<string, Property> _properties = new Dictionary<string, Property>();
-		private Dictionary<string, ViewerOption>      _options    = new Dictionary<string, ViewerOption>();
-		#endregion
+		private readonly Dictionary<string, Property> _properties =
+					 new Dictionary<string, Property>();
+
+		private Dictionary<string, ViewerOption> _options =
+			new Dictionary<string, ViewerOption>();
+		#endregion Fields
 
 
 		#region Properties
@@ -50,7 +54,7 @@ namespace MapView
 												   : null;
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -62,7 +66,7 @@ namespace MapView
 				_converters[typeof(Color)] = new ConvertObjectHandler(ConvertColor);
 			}
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods (static)
@@ -92,32 +96,24 @@ namespace MapView
 			}
 		}
 
-		private static string Convert(object obj)
+		private static string Convert(object o)
 		{
-			return (_converters.ContainsKey(obj.GetType())) ? _converters[obj.GetType()](obj)
-															: obj.ToString();
+			return (_converters.ContainsKey(o.GetType())) ? _converters[o.GetType()](o)
+														  : o.ToString();
 		}
 
-		private static string ConvertColor(object obj)
+		private static string ConvertColor(object o)
 		{
-			var color = (Color)obj;
+			var color = (Color)o;
 			if (!color.IsKnownColor && !color.IsNamedColor && !color.IsSystemColor)
 				return string.Format(
-								System.Globalization.CultureInfo.InvariantCulture,
+								CultureInfo.InvariantCulture,
 								"{0},{1},{2},{3}",
 								color.A, color.R, color.G, color.B);
 
 			return color.Name;
 		}
-
-//		public static void AddConverter(Type type, ConvertObjectHandler obj)
-//		{
-//			if (_converters == null)
-//				_converters = new Dictionary<Type, ConvertObjectHandler>();
-//
-//			_converters[type] = obj;
-//		}
-		#endregion
+		#endregion Methods (static)
 
 
 		#region Methods
@@ -125,7 +121,7 @@ namespace MapView
 		/// Adds an Option to a specified target.
 		/// </summary>
 		/// <param name="key">property key - any spaces will be removed</param>
-		/// <param name="value">start value of the property</param>
+		/// <param name="val">start value of the property</param>
 		/// <param name="desc">property description</param>
 		/// <param name="category">property category</param>
 		/// <param name="optionChangedEvent">event handler to receive the
@@ -136,7 +132,7 @@ namespace MapView
 		/// whatever that meant</param>
 		internal void AddOption(
 				string key,
-				object value,
+				object val,
 				string desc,
 				string category,
 				OptionChangedEventHandler optionChangedEvent = null,
@@ -147,13 +143,13 @@ namespace MapView
 			ViewerOption option;
 			if (!_options.ContainsKey(key))
 			{
-				option = new ViewerOption(value, desc, category);
+				option = new ViewerOption(val, desc, category);
 				_options[key] = option;
 			}
 			else
 			{
 				option = _options[key];
-				option.Value = value;
+				option.Value = val;
 				option.Description = desc;
 			}
 
@@ -173,14 +169,14 @@ namespace MapView
 		/// created with the value specified.
 		/// </summary>
 		/// <param name="key">the name of the Option object</param>
-		/// <param name="value">if there is no Option object tied to the
+		/// <param name="val">if there is no Option object tied to the
 		/// string, an Option will be created with this as its Value</param>
 		/// <returns>the Option object tied to the key</returns>
-		internal ViewerOption GetOption(string key, object value)
+		internal ViewerOption GetOption(string key, object val)
 		{
 			if (!_options.ContainsKey(key))
 			{
-				var option = new ViewerOption(value, null, null);
+				var option = new ViewerOption(val, null, null);
 				_options.Add(key, option);
 			}
 			return _options[key];
@@ -196,15 +192,15 @@ namespace MapView
 
 			sw.WriteLine("}");
 		}
-		#endregion
+		#endregion Methods
 
 
-		#region Eventcalls
+		#region Events
 		private void OnOptionChanged(string key, object val)
 		{
 			_properties[key].SetValue(val);
 		}
-		#endregion
+		#endregion Events
 	}
 
 
@@ -215,17 +211,17 @@ namespace MapView
 	{
 		#region Delegates
 		private delegate object ParseString(string st);
-		#endregion
+		#endregion Delegates
 
 
 		#region Events
 		internal event OptionChangedEventHandler OptionChangedEvent;
-		#endregion
+		#endregion Events
 
 
 		#region Fields (static)
 		private static Dictionary<Type, ParseString> _converters;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties
@@ -271,10 +267,7 @@ namespace MapView
 
 		internal string Category
 		{ get; set; }
-
-//		internal string Key
-//		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -302,7 +295,7 @@ namespace MapView
 				_converters[typeof(bool)]  = ParseStringBool;
 			}
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods (static)
@@ -313,7 +306,7 @@ namespace MapView
 
 		private static object ParseStringInt(string st)
 		{
-			return int.Parse(st, System.Globalization.CultureInfo.InvariantCulture);
+			return int.Parse(st, CultureInfo.InvariantCulture);
 		}
 
 		private static object ParseStringColor(string st)
@@ -326,27 +319,21 @@ namespace MapView
 					return Color.FromName(st);
 
 				case 3:
-				{
-					var invariant = System.Globalization.CultureInfo.InvariantCulture;
 					return Color.FromArgb(
-									int.Parse(vals[0], invariant),
-									int.Parse(vals[1], invariant),
-									int.Parse(vals[2], invariant));
-				}
+									int.Parse(vals[0], CultureInfo.InvariantCulture),
+									int.Parse(vals[1], CultureInfo.InvariantCulture),
+									int.Parse(vals[2], CultureInfo.InvariantCulture));
 
 				case 4:
-				{
-					var invariant = System.Globalization.CultureInfo.InvariantCulture;
 					return Color.FromArgb(
-										int.Parse(vals[0], invariant),
-										int.Parse(vals[1], invariant),
-										int.Parse(vals[2], invariant),
-										int.Parse(vals[3], invariant));
-				}
+									int.Parse(vals[0], CultureInfo.InvariantCulture),
+									int.Parse(vals[1], CultureInfo.InvariantCulture),
+									int.Parse(vals[2], CultureInfo.InvariantCulture),
+									int.Parse(vals[3], CultureInfo.InvariantCulture));
 			}
 			return null;
 		}
-		#endregion
+		#endregion (static)
 
 
 		#region Methods
@@ -363,7 +350,7 @@ namespace MapView
 			if (OptionChangedEvent != null)
 				OptionChangedEvent(key, _value);
 		}
-		#endregion
+		#endregion Methods
 	}
 
 
@@ -374,33 +361,32 @@ namespace MapView
 	{
 		#region Fields
 		private readonly PropertyInfo _info;
-		private readonly object _obj;
-		#endregion
+		private readonly object _o;
+		#endregion Fields
 
 
 		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="o"></param>
 		/// <param name="property"></param>
-		internal Property(object obj, string property)
+		internal Property(object o, string property)
 		{
-			_obj  = obj;
-			_info = obj.GetType().GetProperty(property);
+			_info = (_o = o).GetType().GetProperty(property);
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
 		/// <summary>
 		/// Sets the value of this Property to a specified object.
 		/// </summary>
-		/// <param name="obj"></param>
-		internal void SetValue(object obj)
+		/// <param name="o"></param>
+		internal void SetValue(object o)
 		{
-			_info.SetValue(_obj, obj, new object[]{});
+			_info.SetValue(_o, o, new object[]{});
 		}
-		#endregion
+		#endregion Methods
 	}
 }

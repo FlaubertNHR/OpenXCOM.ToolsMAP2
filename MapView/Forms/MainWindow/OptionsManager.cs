@@ -9,19 +9,14 @@ namespace MapView.Forms.MainWindow
 	internal sealed class OptionsManager
 	{
 		#region Properties
-		private readonly Dictionary<string, Options> _options = new Dictionary<string, Options>();
+		private readonly Dictionary<string, Options> _options =
+					 new Dictionary<string, Options>();
 		internal Options this[string key]
 		{
 			get { return _options[key]; }
 			set { _options[key] = value; }
 		}
-		#endregion
-
-
-//		#region cTor
-//		internal OptionsManager()
-//		{}
-//		#endregion
+		#endregion Properties
 
 
 		#region Methods
@@ -53,6 +48,6 @@ namespace MapView.Forms.MainWindow
 					Options.ReadOptions(vars, line, _options[line.Key]);
 			}
 		}
-		#endregion
+		#endregion Methods
 	}
 }

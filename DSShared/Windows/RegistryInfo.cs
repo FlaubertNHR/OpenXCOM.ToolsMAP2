@@ -36,13 +36,14 @@ namespace DSShared.Windows
 		public const string PaletteViewer = "PaletteViewer";
 
 		public const string McdView       = "McdView";
+//		public const string CopyPanel     = "CopyPanel"; // <- TODO
 
 		// viewer property metrics
 		private const string PropLeft   = "Left";
 		private const string PropTop    = "Top";
 		private const string PropWidth  = "Width";
 		private const string PropHeight = "Height";
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -52,7 +53,7 @@ namespace DSShared.Windows
 		private readonly Dictionary<string, PropertyInfo> _infoDictionary = new Dictionary<string, PropertyInfo>();
 
 //		private bool _saveOnClose = true;
-		#endregion
+		#endregion Fields
 
 
 		#region cTor
@@ -70,7 +71,7 @@ namespace DSShared.Windows
 			_f.Load         += OnLoad;
 			_f.FormClosing  += OnFormClosing;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -100,10 +101,10 @@ namespace DSShared.Windows
 				}
 			}
 		}
-		#endregion
+		#endregion Methods
 
 
-		#region Eventcalls
+		#region Events
 		/// <summary>
 		/// Loads values for the subsidiary viewers from "MapViewers.yml".
 		/// - TopView       (size and position, but not Quadrant visibilities)
@@ -273,6 +274,6 @@ namespace DSShared.Windows
 			}
 //			}
 		}
-		#endregion
+		#endregion Events
 	}
 }
