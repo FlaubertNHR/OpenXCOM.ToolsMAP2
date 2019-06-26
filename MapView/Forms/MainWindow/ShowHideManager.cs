@@ -47,6 +47,13 @@ namespace MapView.Forms.MainWindow
 				f.Show();
 				f.WindowState = FormWindowState.Normal;
 			}
+
+			// TODO: Restore viewers in the z-order they previously had.
+			// Unfortunately getting that z-order before minimizing the viewers
+			// requires a WinAPI call (no good for Mono).
+
+			ViewerFormsManager.TileView.TopMost = true;
+			ViewerFormsManager.TileView.TopMost = false;
 		}
 		#endregion Methods
 	}
