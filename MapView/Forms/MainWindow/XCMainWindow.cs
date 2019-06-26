@@ -42,6 +42,8 @@ namespace MapView
 		private const string title = "Map Editor ||";
 
 		private const double ScaleDelta = 0.125;
+
+		internal static bool BypassActivatedEvent;
 		#endregion Fields (static)
 
 
@@ -55,7 +57,6 @@ namespace MapView
 
 		private bool _quit;
 
-		internal bool _bypassActivatedEvent;
 		private bool _allowBringToFront;
 		#endregion Fields
 
@@ -1060,9 +1061,9 @@ namespace MapView
 
 			if (_allowBringToFront)
 			{
-				if (!_bypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
+				if (!BypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
 				{
-					_bypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
+					BypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
 													// NOTE: 'TopMost_set' won't, but other calls like BringToFront() or Select() can/will.
 
 					var zOrder = ShowHideManager.getZorderList();
@@ -1074,7 +1075,7 @@ namespace MapView
 
 //					base.OnActivated(e);
 
-					_bypassActivatedEvent = false;
+					BypassActivatedEvent = false;
 				}
 			}
 //			else base.OnActivated(e);

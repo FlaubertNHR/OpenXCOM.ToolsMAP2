@@ -90,11 +90,16 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Handles clicks on the Viewers|MinimizeAll item. Also F11.
+		/// @note Ironically this seems to bypass MainView's Activated event but
+		/// RestoreAll doesn't. So just bypass that event's handler for safety
+		/// regardless of .NET's shenanigans.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private static void OnMinimizeAllClick(object sender, EventArgs e)
 		{
+			XCMainWindow.BypassActivatedEvent = true;
+
 			var zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
 			{
@@ -104,15 +109,22 @@ namespace MapView.Forms.MainWindow
 					f.WindowState = FormWindowState.Minimized;
 				}
 			}
+
+			XCMainWindow.BypassActivatedEvent = false;
 		}
 
 		/// <summary>
 		/// Handles clicks on the Viewers|RestoreAll item. Also F12.
+		/// @note Ironically this seems to trigger MainView's Activated event
+		/// but MinimizeAll doesn't. So just bypass that event's handler for
+		/// safety regardless of .NET's shenanigans.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private static void OnRestoreAllClick(object sender, EventArgs e)
 		{
+			XCMainWindow.BypassActivatedEvent = true;
+
 			var zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
 			{
@@ -122,6 +134,8 @@ namespace MapView.Forms.MainWindow
 					f.WindowState = FormWindowState.Normal;
 				}
 			}
+
+			XCMainWindow.BypassActivatedEvent = false;
 		}
 		#endregion Events (static)
 

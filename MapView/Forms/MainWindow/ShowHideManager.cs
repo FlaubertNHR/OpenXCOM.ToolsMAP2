@@ -7,15 +7,32 @@ namespace MapView.Forms.MainWindow
 	internal static class ShowHideManager
 	{
 		#region Fields (static)
+		/// <summary>
+		/// A list of Forms that updates in various Activated events.
+		/// - MainView
+		/// - TileView
+		/// - TopView
+		/// - RouteView
+		/// - TopRouteView
+		/// - ColorsHelp
+		/// - About
+		/// @note The list is maintained in reverse order - the first entry is
+		/// the earliest form activated, the last entry is the latest. It works
+		/// well like that.
+		/// </summary>
 		internal static List<Form> _zOrder = new List<Form>();
+
+		/// <summary>
+		/// Exclusively for use when invoking McdView or PckView from TileView.
+		/// </summary>
 		private static readonly List<Form> _visible = new List<Form>();
 		#endregion Fields (static)
 
 
 		#region Methods (static)
 		/// <summary>
-		/// Hides visible viewers (except MainView) when opening PckView/McdView
-		/// via TileView.
+		/// Hides visible viewers (except MainView) when invoking PckView or
+		/// McdView via TileView.
 		/// </summary>
 		internal static void HideViewers()
 		{
@@ -32,7 +49,7 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Shows subsidiary viewers that were previously visible after closing
-		/// PckView/McdView via TileView.
+		/// PckView or McdView via TileView.
 		/// </summary>
 		internal static void RestoreViewers()
 		{
@@ -45,10 +62,10 @@ namespace MapView.Forms.MainWindow
 				}
 				else // bring MainView to its previous position in the z-order
 				{
-					((XCMainWindow)f)._bypassActivatedEvent = true;
+					XCMainWindow.BypassActivatedEvent = true;
 					f.TopMost = true;
 					f.TopMost = false;
-					((XCMainWindow)f)._bypassActivatedEvent = false;
+					XCMainWindow.BypassActivatedEvent = false;
 				}
 			}
 		}
