@@ -37,7 +37,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		#region Fields
-		private ShowHideManager _showHideManager;
+		private ShowHideManager _hideShow;
 
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
@@ -158,7 +158,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		#region Events
 		private void OnMouseWheelTabs(object sender, MouseEventArgs e)
 		{
-			LogFile.WriteLine("OnMouseWheelTabs() delta= " + e.Delta);
 			int dir = 0;
 			if (e.Delta < 0)
 				dir = +1;
@@ -277,10 +276,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <summary>
 		/// Sets the ShowHideManager.
 		/// </summary>
-		/// <param name="showHideManager"></param>
-		internal void SetShowHideManager(ShowHideManager showHideManager)
+		/// <param name="hideShow"></param>
+		internal void SetShowHideManager(ShowHideManager hideShow)
 		{
-			_showHideManager = showHideManager;
+			_hideShow = hideShow;
 		}
 
 		/// <summary>
@@ -568,9 +567,9 @@ namespace MapView.Forms.MapObservers.TileViews
 						fPckView.SetPalette(MapBase.Descriptor.Pal.Label);
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
-						_showHideManager.HideViewers();
+						_hideShow.HideViewers();
 						fPckView.ShowDialog(ViewerFormsManager.TileView); // <- Pause UI until PckView is closed.
-						_showHideManager.RestoreViewers();
+						_hideShow.RestoreViewers();
 
 
 						if (fPckView.FireMvReload					// the Descriptor needs to reload
@@ -622,9 +621,9 @@ namespace MapView.Forms.MapObservers.TileViews
 										MapBase.Descriptor.Pal.Label,
 										SelectedTilepart.TerId);
 
-						_showHideManager.HideViewers();
+						_hideShow.HideViewers();
 						fMcdView.ShowDialog(ViewerFormsManager.TileView); // <- Pause UI until McdView is closed.
-						_showHideManager.RestoreViewers();
+						_hideShow.RestoreViewers();
 
 						Palette.UfoBattle .SetTransparent(true);
 						Palette.TftdBattle.SetTransparent(true);
@@ -643,6 +642,12 @@ namespace MapView.Forms.MapObservers.TileViews
 				error_SelectTile();
 		}
 
+		/// <summary>
+		/// Warns user that they are about to be asked to save the Map+Routes
+		/// after any changes were saved in McdView/PckView. The warning makes
+		/// things a bit less jarring by stating the reason why.
+		/// </summary>
+		/// <returns></returns>
 		DialogResult CheckReload()
 		{
 			string notice = "The Map needs to reload to show any"
@@ -677,6 +682,10 @@ namespace MapView.Forms.MapObservers.TileViews
 								0);
 		}
 
+		/// <summary>
+		/// An errorbox telling the user that the operation they are attempting
+		/// is invalid because they haven't selected a tilepart.
+		/// </summary>
 		void error_SelectTile()
 		{
 			MessageBox.Show(
