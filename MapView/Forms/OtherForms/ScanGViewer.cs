@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 using XCom.Interfaces.Base;
 

@@ -4,38 +4,39 @@ using System.IO;
 using System.Windows.Forms;
 
 using DSShared;
-using DSShared.Windows;
 
 using YamlDotNet.RepresentationModel; // read values (deserialization)
 
 
-// TODO: Move this to XCom and implement in the other apps.
-namespace McdView
+namespace DSShared.Windows
 {
 	/// <summary>
-	/// A static class to Get/Set window positions and dimensions from the
-	/// /settings folder. Also gets UFO/TFTD resource paths.
+	/// A static class to Get/Set window locations and sizes from the
+	/// /settings subfolder. Also accesses the UFO/TFTD resource paths in the
+	/// Configurator.
 	/// </summary>
-	internal static class YamlMetrics
+	public static class YamlMetrics
 	{
 		#region Load/Save 'registry' info
 		/// <summary>
-		/// Positions the Form at user-defined coordinates w/ size.
-		/// @note Adapted from PckViewForm.
+		/// Reads a specified form's location and size from YAML.
 		/// </summary>
 		/// <param name="f"></param>
-		internal static void LoadWindowMetrics(Form f)
+		public static void Load(Form f)
 		{
-			string dirSettings = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string fileViewers = Path.Combine(dirSettings, PathInfo.ConfigViewers); // "MapViewers.yml"
-			if (File.Exists(fileViewers))
+			string pfe = Path.Combine(
+									Path.GetDirectoryName(Application.ExecutablePath),
+									PathInfo.SettingsDirectory);
+			pfe = Path.Combine(pfe, PathInfo.ConfigViewers); // "MapViewers.yml"
+
+			if (File.Exists(pfe))
 			{
-				using (var sr = new StreamReader(File.OpenRead(fileViewers)))
+				using (var sr = new StreamReader(File.OpenRead(pfe)))
 				{
 					var str = new YamlStream();
 					str.Load(sr);
+
+					string label = RegistryInfo.getRegistryLabel(f);
 
 					var invariant = System.Globalization.CultureInfo.InvariantCulture;
 
@@ -43,7 +44,7 @@ namespace McdView
 					foreach (var node in nodeRoot.Children)
 					{
 						string viewer = ((YamlScalarNode)node.Key).Value;
-						if (String.Equals(viewer, RegistryInfo.McdView, StringComparison.Ordinal))
+						if (String.Equals(viewer, label, StringComparison.Ordinal))
 						{
 							int x = 0;
 							int y = 0;
@@ -70,7 +71,7 @@ namespace McdView
 								}
 							}
 
-							var rectScreen = Screen.GetWorkingArea(new Point(x, y));
+							var rectScreen = Screen.GetWorkingArea(new Point(x,y));
 							if (!rectScreen.Contains(x + 200, y + 100)) // check to ensure that the form is at least partly onscreen.
 							{
 								x = 100;
@@ -80,7 +81,8 @@ namespace McdView
 							f.Left = x;
 							f.Top  = y;
 
-							f.ClientSize = new Size(w, h);
+							f.ClientSize = new Size(w,h);
+							break;
 						}
 					}
 				}
@@ -88,10 +90,10 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Saves the Form's position and size to YAML.
+		/// Saves a specified form's location and size to YAML.
 		/// </summary>
 		/// <param name="f"></param>
-		internal static void SaveWindowMetrics(Form f)
+		public static void Save(Form f)
 		{
 			string dirSettings = Path.Combine(
 											Path.GetDirectoryName(Application.ExecutablePath),
@@ -101,6 +103,8 @@ namespace McdView
 			if (File.Exists(fileViewers))
 			{
 				f.WindowState = FormWindowState.Normal;
+
+				string label = RegistryInfo.getRegistryLabel(f);
 
 				string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);
 				string dst = Path.Combine(dirSettings, PathInfo.ConfigViewersOld);
@@ -118,7 +122,7 @@ namespace McdView
 					{
 						string line = sr.ReadLine().TrimEnd();
 
-						if (String.Equals(line, RegistryInfo.McdView + ":", StringComparison.Ordinal))
+						if (String.Equals(line, label + ":", StringComparison.Ordinal))
 						{
 							found = true;
 
@@ -132,7 +136,7 @@ namespace McdView
 							sw.WriteLine("  left: "   + Math.Max(0, f.Location.X));	// =Left
 							sw.WriteLine("  top: "    + Math.Max(0, f.Location.Y));	// =Top
 							sw.WriteLine("  width: "  + f.ClientSize.Width);		// <- use ClientSize, since Width and Height
-							sw.WriteLine("  height: " + f.ClientSize.Height);		// screw up due to the titlebar/menubar area.
+							sw.WriteLine("  height: " + f.ClientSize.Height);		// screw up due to the titlebar/border area.
 						}
 						else
 							sw.WriteLine(line);
@@ -140,7 +144,7 @@ namespace McdView
 
 					if (!found)
 					{
-						sw.WriteLine(RegistryInfo.McdView + ":");
+						sw.WriteLine(label + ":");
 
 						sw.WriteLine("  left: "   + Math.Max(0, f.Location.X));
 						sw.WriteLine("  top: "    + Math.Max(0, f.Location.Y));
@@ -155,11 +159,12 @@ namespace McdView
 
 
 		/// <summary>
-		/// Assigns MapView's Configurator's basepath to 'pathufo' and 'pathtftd'.
+		/// Assigns MapView's Configurator's basepath(s) to 'pathufo' and
+		/// 'pathtftd'.
 		/// </summary>
 		/// <param name="pathufo"></param>
 		/// <param name="pathtftd"></param>
-		internal static void GetResourcePaths(out string pathufo, out string pathtftd)
+		public static void GetResourcePaths(out string pathufo, out string pathtftd)
 		{
 			pathufo = pathtftd = null;
 

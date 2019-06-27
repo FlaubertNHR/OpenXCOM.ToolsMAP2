@@ -14,8 +14,6 @@ using DSShared.Windows;
 
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;
-//using MapView.Forms.XCError.WarningConsole;
-//using MapView.OptionsServices;
 
 using XCom;
 using XCom.Interfaces.Base;
@@ -50,13 +48,11 @@ namespace MapView
 		#region Fields
 		private readonly ViewersManager _viewersManager;
 
-//		private readonly ConsoleWarningHandler _warningHandler;
-
+		private Options Options;
 		private Form _foptions;
+
 		private bool _closing;
-
 		private bool _quit;
-
 		private bool _allowBringToFront;
 		#endregion Fields
 
@@ -76,13 +72,6 @@ namespace MapView
 		#region Properties
 		internal MainViewUnderlay MainViewUnderlay
 		{ get; private set; }
-
-		private readonly OptionsManager _optionsManager;
-		private Options Options
-		{
-			get { return _optionsManager["MainWindow"]; }
-			set { _optionsManager["MainWindow"] = value; }
-		}
 
 		private bool _treeChanged;
 		/// <summary>
@@ -257,9 +246,8 @@ namespace MapView
 			FormClosing += OnSaveOptionsFormClosing;
 
 
-			_optionsManager = new OptionsManager(); // goes before LoadOptions()
-
 			Options = new Options();
+			OptionsManager.setOptionsType(OptionsManager.MainWindow, Options);
 
 			LoadOptions();									// TODO: check if this should go after the managers load
 			LogFile.WriteLine("MainView Options loaded.");	// since managers might be re-instantiating needlessly
@@ -281,11 +269,7 @@ namespace MapView
 										// NOTE: transparency of the 'UfoBattle' palette must be set first.
 
 
-//			var shareConsole = new ConsoleSharedSpace(share);
-//			_warningHandler  = new ConsoleWarningHandler(consoleShare);
-
-
-			_viewersManager = new ViewersManager(_optionsManager/*, shareConsole*/);
+			_viewersManager = new ViewersManager(/*shareConsole*/);
 			LogFile.WriteLine("Viewer managers instantiated.");
 
 			QuadrantPanelDrawService.Punkstrings();
@@ -407,7 +391,7 @@ namespace MapView
 
 			if (pathOptions.FileExists())
 			{
-				_optionsManager.LoadOptions(pathOptions.Fullpath);
+				OptionsManager.LoadOptions(pathOptions.Fullpath);
 				LogFile.WriteLine("User options loaded.");
 			}
 			else
@@ -974,7 +958,7 @@ namespace MapView
 			{
 				MainMenusManager.Quit();
 
-				_optionsManager.SaveOptions(); // save MV_OptionsFile // TODO: Save settings when closing the Options form(s).
+				OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: Save settings when closing the Options form(s).
 
 //				if (PathsEditor.SaveRegistry) // TODO: re-implement.
 				{
@@ -1563,8 +1547,7 @@ namespace MapView
 
 			OnSaveOptionsFormClosing(null, new CancelEventArgs()); // set '_quit' flag
 
-			if (_quit)
-				Environment.Exit(0); // god, that works so much better than Application.Exit()
+			if (_quit) Environment.Exit(0); // god, that works so much better than Application.Exit()
 		}
 
 
@@ -1581,12 +1564,12 @@ namespace MapView
 				_foptions.Show();
 
 				_foptions.FormClosing += (sender1, e1) =>
-										{
-											if (!_closing)
-												OnOptionsClick(sender, e);
+				{
+					if (!_closing)
+						OnOptionsClick(sender, e);
 
-											_closing = false;
-										};
+					_closing = false;
+				};
 			}
 			else
 			{

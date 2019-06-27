@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 
-namespace MapView.Forms.XCError
+namespace MapView.Forms.Error
 {
 	internal sealed partial class ErrorWindow
 		:
@@ -18,7 +18,7 @@ namespace MapView.Forms.XCError
 
 			InitializeComponent();
 		}
-		#endregion
+		#endregion cTor
 
 
 		private void OnLoad(object sender, EventArgs e)

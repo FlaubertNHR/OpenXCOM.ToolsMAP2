@@ -11,11 +11,11 @@ namespace DSShared
 	{
 		#region Fields (static)
 		// path-keys in SharedSpace
-		public const string ShareOptions   = "MV_OptionsFile";		// -> MapOptions.cfg
+		public const string ShareOptions      = "MV_OptionsFile";	// -> MapOptions.cfg
 
-		public const string ShareResources = "MV_ResourcesFile";	// -> MapResources.yml
-		public const string ShareTilesets  = "MV_TilesetsFile";		// -> MapTilesets.yml
-		public const string ShareViewers   = "MV_ViewersFile";		// -> MapViewers.yml
+		public const string ShareResources    = "MV_ResourcesFile";	// -> MapResources.yml
+		public const string ShareTilesets     = "MV_TilesetsFile";	// -> MapTilesets.yml
+		public const string ShareViewers      = "MV_ViewersFile";	// -> MapViewers.yml
 
 		// Configuration files
 		public const string ConfigOptions     = "MapOptions.cfg";	// stores user-settings for the viewers
@@ -30,7 +30,7 @@ namespace DSShared
 		public const string ConfigViewersOld  = "MapViewers.old";	// backup
 
 
-		public const string NotConfigured = "notconfigured"; // used in MapResources.yml in case UFO or TFTD installation is not configured.
+		public const string NotConfigured     = "notconfigured"; // used in MapResources.yml in case UFO or TFTD installation is not configured.
 
 		public const string SettingsDirectory = "settings";
 		#endregion

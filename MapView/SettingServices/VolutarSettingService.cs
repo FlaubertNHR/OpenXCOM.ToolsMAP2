@@ -14,12 +14,12 @@ namespace MapView.OptionsServices
 	{
 		#region Fields (static)
 		private const string VolutarMcdEditorPath = "VolutarMcdEditorPath";
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
 		private readonly Options _options;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -56,7 +56,7 @@ namespace MapView.OptionsServices
 				return _fullpath;
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -68,7 +68,7 @@ namespace MapView.OptionsServices
 		{
 			_options = options;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods (static)
@@ -83,6 +83,6 @@ namespace MapView.OptionsServices
 								+ "a specific file with its associated application.",
 							"McdViewer");
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

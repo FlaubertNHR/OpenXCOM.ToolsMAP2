@@ -14,8 +14,7 @@ namespace MapView
 
 
 	/// <summary>
-	/// A wrapper around a Hashtable for Options objects. Options objects are
-	/// for use with the OptionsPropertyGrid.
+	/// Options objects are for use with the OptionsPropertyGrid.
 	/// </summary>
 	public sealed class Options
 	{
@@ -35,7 +34,7 @@ namespace MapView
 
 		#region Properties
 		/// <summary>
-		/// Gets the dictionary for this Options.
+		/// Gets the key-collection for this Options dictionary.
 		/// </summary>
 		internal Dictionary<string, ViewerOption>.KeyCollection Keys
 		{
@@ -43,21 +42,24 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets/Sets the ViewerOption keyed by a given key.
+		/// Gets/Sets the ViewerOption keyed by a specified key.
 		/// </summary>
 		internal ViewerOption this[string key]
 		{
 			get
 			{
 				key = key.Replace(" ", String.Empty);
-				return (_options.ContainsKey(key)) ? _options[key]
-												   : null;
+				return (_options.ContainsKey(key)) ? _options[key] : null;
 			}
 		}
 		#endregion Properties
 
 
 		#region cTor
+		/// <summary>
+		/// cTor. An Option-object is created for each of MainView, TileView,
+		/// TopView, and RouteView.
+		/// </summary>
 		internal Options()
 		{
 			if (_converters == null)
@@ -70,26 +72,28 @@ namespace MapView
 
 
 		#region Methods (static)
-		internal static void ReadOptions(
-				Varidia vars,
-				KeyvalPair keyval,
-				Options options)
+		internal static void ReadOptions(TextReader sr, Options options)
 		{
-			while ((keyval = vars.ReadLine()) != null)
+			//XCom.LogFile.WriteLine("Options.ReadOptions()");
+
+			string key;
+
+			KeyvalPair keyval;
+			while ((keyval = Varidia.getKeyvalPair(sr)) != null)
 			{
+				//XCom.LogFile.WriteLine(". READ keyval= " + keyval);
+
 				switch (keyval.Key)
 				{
-					case "{": // starting out
-						break;
-
-					case "}": // all done
-						return;
+					case "{": break;  // starting out
+					case "}": return; // all done
 
 					default:
-						if (options[keyval.Key] != null)
+						key = keyval.Key;
+						if (options[key] != null)
 						{
-							options[keyval.Key].Value = keyval.Value;
-							options[keyval.Key].doUpdate(keyval.Key);
+							options[key].Value = keyval.Value;
+							options[key].doUpdate(key);
 						}
 						break;
 				}

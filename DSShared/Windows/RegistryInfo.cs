@@ -50,7 +50,8 @@ namespace DSShared.Windows
 		private readonly string _viewer;
 		private readonly Form _f;
 
-		private readonly Dictionary<string, PropertyInfo> _infoDictionary = new Dictionary<string, PropertyInfo>();
+		private readonly Dictionary<string, PropertyInfo> _info =
+					 new Dictionary<string, PropertyInfo>();
 
 //		private bool _saveOnClose = true;
 		#endregion Fields
@@ -58,7 +59,7 @@ namespace DSShared.Windows
 
 		#region cTor
 		/// <summary>
-		/// Main cTor. Uses the specified string as a key to its Form.
+		/// cTor. Uses the specified string as a key to its Form.
 		/// </summary>
 		/// <param name="viewer">the label of the viewer to save/load</param>
 		/// <param name="f">the form-object corresponding to the label</param>
@@ -74,6 +75,35 @@ namespace DSShared.Windows
 		#endregion cTor
 
 
+		#region Methods (static)
+		/// <summary>
+		/// All this would have been so much simpler/easier if you'd just used
+		/// each form's Name variable instead of arbitrary concoctions. Ditto
+		/// regarding all that 'PropertyInfo' Reflection jazz ... I mean, yes
+		/// it's a good way to learn it but it's really entirely unneeded in
+		/// this app. I mean, you often used 2 or 3 classes when 1 could and
+		/// would suffice just as  well. You put panels inside panels over and
+		/// over. You abused namespace-strings to no end. You even instantiated
+		/// an ordinary rectangle like this:
+		/// 
+		/// var r = new Rectangle(new Point(0,0), new Size(0,0));
+		/// 
+		/// It's like, whenever you wanted a 10, you put 1+9 or 2+3+5 or 1+6+7-4
+		/// ... just write "10". That's all you had to do, just ... "10".
+		/// </summary>
+		/// <param name="f"></param>
+		/// <returns></returns>
+		public static string getRegistryLabel(Form f)
+		{
+			switch (f.Name)
+			{
+				case "McdviewF": return McdView;
+			}
+			return null;
+		}
+		#endregion Methods (static)
+
+
 		#region Methods
 		/// <summary>
 		/// Adds properties to be saved/loaded.
@@ -81,7 +111,7 @@ namespace DSShared.Windows
 		public void RegisterProperties()
 		{
 			//DSLogFile.WriteLine("RegisterProperties");
-			PropertyInfo info;
+			PropertyInfo prop;
 
 			string[] keys =
 			{
@@ -94,11 +124,19 @@ namespace DSShared.Windows
 			foreach (string key in keys)
 			{
 				//DSLogFile.WriteLine(". . key= " + key);
-				if ((info = _f.GetType().GetProperty(key)) != null) // safety.
+				if ((prop = _f.GetType().GetProperty(key)) != null) // safety.
 				{
 					//DSLogFile.WriteLine(". . . info= " + info.Name);
-					_infoDictionary[info.Name] = info; // set a ref to each metric (x,y,w,h) via Reflection.
+					_info[prop.Name] = prop; // set a ref to each metric (x,y,w,h) via Reflection.
 				}
+				// this is so clever I want to barf all over the keyboard of the
+				// person who wrote it.
+				// JUST STORE THE x,y,w,h VALUES AND ASSIGN THEM TO THE FORM
+				// WHEN IT LOADS! ffs.
+				//
+				// no offense, Ben. In a way I know what you're doing but Christ.
+				// It makes me want to jump off a mountain and get speared a
+				// hundred times on the way down ...
 			}
 		}
 		#endregion Methods
@@ -167,25 +205,21 @@ namespace DSShared.Windows
 				val = Int32.Parse(keyval.Value.ToString(), cultureInfo);
 				//DSLogFile.WriteLine(". val= " + val);
 
+				var rectScreen = Screen.GetWorkingArea(new System.Drawing.Point(val, 0));
+
 				switch (key) // check to ensure that viewer is at least partly onscreen.
 				{
 					case PropLeft:
-					{
-						var rectScreen = Screen.GetWorkingArea(new System.Drawing.Point(val, 0));
 						if (!rectScreen.Contains(val + 200, 0))
 							val = 100;
 						break;
-					}
 
 					case PropTop:
-					{
-						var rectScreen = Screen.GetWorkingArea(new System.Drawing.Point(0, val));
 						if (!rectScreen.Contains(0, val + 100))
 							val = 50;
 						break;
-					}
 				}
-				_infoDictionary[key].SetValue(_f, val, null); // set each metric (x,y,w,h) via Reflection.
+				_info[key].SetValue(_f, val, null); // set each metric (x,y,w,h) via Reflection.
 			}
 		}
 
@@ -238,6 +272,7 @@ namespace DSShared.Windows
 						// At present, MainView and PckView are the only viewers that roll their own metrics.
 						// - see the XCMainWindow cTor & FormClosing eventcalls.
 						// - see the PckViewForm  cTor & FormClosing eventcalls.
+						// + McdView ...
 
 						if (String.Equals(line, _viewer + ":", StringComparison.Ordinal))
 						{

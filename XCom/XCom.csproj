@@ -181,16 +181,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SharedSpaceServices\ConsoleSharedSpace.cs" />
-    <Compile Include="SharedSpaceServices\SharedSpace.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ConsoleForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConsoleForm.Designer.cs">
-      <DependentUpon>ConsoleForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Tileset.cs" />
     <Compile Include="TilesetLoader.cs" />
     <Compile Include="XConsole.cs">
@@ -206,10 +196,6 @@
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ConsoleForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ConsoleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Map\MapFileWarn.resx">
       <DependentUpon>MapFileWarn.cs</DependentUpon>

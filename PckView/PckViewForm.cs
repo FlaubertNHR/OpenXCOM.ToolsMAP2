@@ -41,7 +41,6 @@ namespace PckView
 		private readonly PckViewPanel TilePanel;
 		private readonly EditorForm Editor;
 
-//		private ConsoleForm _fconsole;
 //		private TabControl _tcTabs; // for OnCompareClick()
 
 		private ToolStripMenuItem _miEdit;
@@ -54,9 +53,8 @@ namespace PckView
 		private ToolStripMenuItem _miDelete;
 		private ToolStripMenuItem _miExport;
 
-//		private SharedSpace _share = SharedSpace.that;
-
-		private readonly Dictionary<Palette, MenuItem> _paletteItems = new Dictionary<Palette, MenuItem>();
+		private readonly Dictionary<Palette, MenuItem> _paletteItems =
+					 new Dictionary<Palette, MenuItem>();
 
 		private bool _editorInited;
 
@@ -143,33 +141,6 @@ namespace PckView
 
 			that = this;
 
-
-/*			#region SharedSpace information
-			_fconsole = new ConsoleSharedSpace(new SharedSpace()).Console;
-			_fconsole.FormClosing += (sender, e) =>
-									{
-										e.Cancel = true;
-										_fconsole.Hide();
-									};
-			FormClosed += (sender, e) => _fconsole.Close();
-
-
-//			string dirApplication = Path.GetDirectoryName(Application.ExecutablePath);
-//			string dirSettings    = Path.Combine(dirApplication, DSShared.PathInfo.SettingsDirectory);
-//
-//			_share.SetShare(
-//						SharedSpace.ApplicationDirectory,
-//						dirApplication);
-//			_share.SetShare(
-//						SharedSpace.SettingsDirectory,
-//						dirSettings);
-
-//			XConsole.AdZerg("Application directory: " + _share[SharedSpace.ApplicationDirectory]);
-//			XConsole.AdZerg("Settings directory: "    + _share[SharedSpace.SettingsDirectory].ToString());
-//			XConsole.AdZerg("Custom directory: "      + _share[SharedSpace.CustomDirectory].ToString());
-			#endregion */
-
-
 			TilePanel = new PckViewPanel(this);
 
 			TilePanel.ContextMenuStrip = ViewerContextMenu();
@@ -183,8 +154,6 @@ namespace PckView
 			PrintOverId();
 
 			tssl_SpritesetLabel.Text = None;
-
-//			_share[SharedSpace.Palettes] = new Dictionary<string, Palette>();
 
 			PopulatePaletteMenu();
 
@@ -342,7 +311,6 @@ namespace PckView
 					case 7: itPal.Shortcut = Shortcut.Ctrl8; break;
 				}
 			}
-//			((Dictionary<string, Palette>)_share[SharedSpace.Palettes])[pal.Label] = pal;
 		}
 		#endregion cTor
 
@@ -369,7 +337,7 @@ namespace PckView
 				Telemetric.SaveTelemetric(this);
 
 				Editor.ClosePalette();	// these are needed when PckView is
-				Editor.Close();			// opened via TileView.
+				Editor.Close();			// invoked via TileView.
 
 				if (miBytes.Checked)
 					SpriteBytesManager.HideBytesTable(true);

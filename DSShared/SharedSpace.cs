@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 
-namespace XCom
+namespace DSShared
 {
 	public sealed class SharedSpace
 	{

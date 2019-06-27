@@ -32,7 +32,7 @@ namespace MapView.Forms.MainWindow
 		#region Methods (static)
 		/// <summary>
 		/// Hides visible viewers (except MainView) when invoking PckView or
-		/// McdView via TileView.
+		/// McdView via TileView. Is used in conjunction with RestoreViewers().
 		/// </summary>
 		internal static void HideViewers()
 		{
@@ -49,7 +49,8 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Shows subsidiary viewers that were previously visible after closing
-		/// PckView or McdView via TileView.
+		/// PckView or McdView via TileView. Is used in conjunction with
+		/// HideViewers().
 		/// </summary>
 		internal static void RestoreViewers()
 		{
@@ -73,7 +74,8 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Gets the current z-order of visible Forms and returns it in a List.
-		/// @note Used by MinimizeAll, RestoreAll, and MainView activation.
+		/// @note Used by MinimizeAll, RestoreAll, and MainView activation
+		/// (BringAllToFront).
 		/// </summary>
 		/// <returns></returns>
 		internal static List<Form> getZorderList()

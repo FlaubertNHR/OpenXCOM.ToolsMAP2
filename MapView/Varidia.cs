@@ -5,40 +5,26 @@ using System.IO;
 namespace MapView
 {
 	/// <summary>
-	/// Varidia is [still] used to read/write/parse/interpret user-settings/Options.
+	/// Varidia is [still] used to read/write/parse/interpret
+	/// user-settings/Options.
 	/// </summary>
-	internal sealed class Varidia
+	internal static class Varidia
 	{
-		#region Fields
-		private readonly StreamReader _sr;
-		#endregion
-
-
-		#region cTors
+		#region Methods (static)
 		/// <summary>
-		/// cTor. Called from OptionsManager.
+		/// Read a line from 'MVOptions' cfg.
 		/// </summary>
-		public Varidia(StreamReader sr)
-		{
-			_sr = sr;
-		}
-		#endregion
-
-
-		#region Methods
-		/// <summary>
-		/// Read a line from MVOptions.cfg
-		/// </summary>
-		/// <returns>KeyValPair</returns>
-		internal KeyvalPair ReadLine()
+		/// <param name="sr"></param>
+		/// <returns>KeyvalPair else null</returns>
+		internal static KeyvalPair getKeyvalPair(TextReader sr)
 		{
 			string line = String.Empty;
-			do // get a good line - not a comment or empty string
+			do // get a good line - not a comment (#) or blank-string
 			{
-				if (_sr.Peek() == -1) // zilch, exit.
+				if (sr.Peek() == -1) // zilch, exit.
 					return null;
 
-				line = _sr.ReadLine().Trim();
+				line = sr.ReadLine().Trim();
 			}
 			while (line.Length == 0 || line[0] == '#');
 
@@ -47,10 +33,19 @@ namespace MapView
 				int pos = line.IndexOf(':');
 				return (pos > 0) ? new KeyvalPair(line.Substring(0, pos), line.Substring(pos + 1))
 								 : new KeyvalPair(line, String.Empty);
+/*				if (pos > 0)
+				{
+					string key = line.Substring(0, pos);
+
+					if (pos + 1 < line.Length)
+						return new KeyvalPair(key, line.Substring(pos + 1));
+
+					return new KeyvalPair(key, String.Empty);
+				} */
 			}
 			return null;
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 
 
@@ -79,11 +74,11 @@ namespace MapView
 		/// cTor.
 		/// </summary>
 		/// <param name="key"></param>
-		/// <param name="value"></param>
-		internal KeyvalPair(string key, string value)
+		/// <param name="val"></param>
+		internal KeyvalPair(string key, string val)
 		{
 			_key = key;
-			_val = value;
+			_val = val;
 		}
 		#endregion
 

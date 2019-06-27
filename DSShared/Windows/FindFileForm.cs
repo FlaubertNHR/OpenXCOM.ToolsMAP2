@@ -19,12 +19,12 @@ namespace DSShared.Windows
 		{
 			get { return tbInput.Text; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTors
 		/// <summary>
-		/// Main constructor.
+		/// cTor[1]. Main constructor.
 		/// </summary>
 		/// <param name="notice">text that will be shown above the textbox</param>
 		/// <param name="caption">caption for the titlebar</param>
@@ -41,8 +41,9 @@ namespace DSShared.Windows
 
 			tbInput.Text = input;
 		}
+
 		/// <summary>
-		/// Auxiliary constructor. Because.
+		/// cTor[2]. Auxiliary constructor. Because.
 		/// </summary>
 		/// <param name="notice"></param>
 		public FindFileForm(string notice)
@@ -52,10 +53,10 @@ namespace DSShared.Windows
 					" Input",
 					String.Empty)
 		{}
-		#endregion
+		#endregion cTors
 
 
-		#region Eventcalls
+		#region Events
 		private void OnLoad_form(object sender, EventArgs e)
 		{
 			ActiveControl = btnCancel;
@@ -70,6 +71,6 @@ namespace DSShared.Windows
 					tbInput.Text = f.FileName;
 			}
 		}
-		#endregion
+		#endregion Events
 	}
 }

@@ -6,6 +6,8 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
+using DSShared.Windows;
+
 using XCom;
 using XCom.Resources.Map;
 
@@ -280,7 +282,7 @@ namespace McdView
 
 			MaximumSize = new Size(0,0);
 
-			YamlMetrics.LoadWindowMetrics(this);
+			YamlMetrics.Load(this);
 
 			PartsPanel = new TerrainPanel_main(this);
 			gb_Collection.Controls.Add(PartsPanel);
@@ -378,9 +380,9 @@ namespace McdView
 			{
 				// set instance non-public property with name "DoubleBuffered" to true
 				typeof(Control).InvokeMember("DoubleBuffered",
-											 System.Reflection.BindingFlags.SetProperty
-										   | System.Reflection.BindingFlags.Instance
-										   | System.Reflection.BindingFlags.NonPublic,
+											 BindingFlags.SetProperty
+										   | BindingFlags.Instance
+										   | BindingFlags.NonPublic,
 											 null,
 											 control,
 											 new object[] { true });
@@ -451,10 +453,10 @@ namespace McdView
 		{
 			if (CheckChanged())
 			{
-				if (CopyPanel != null)
-					CopyPanel.Close();
+				if (CopyPanel != null) // this is needed when McdView is
+					CopyPanel.Close(); // invoked via TileView
 
-				YamlMetrics.SaveWindowMetrics(this);
+				YamlMetrics.Save(this);
 				base.OnFormClosing(e);
 			}
 			else

@@ -7,6 +7,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;
 using MapView.Forms.McdInfo;

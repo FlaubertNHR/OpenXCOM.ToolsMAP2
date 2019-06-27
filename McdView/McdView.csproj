@@ -101,7 +101,6 @@
     <Compile Include="ScanGiconF.cs" />
     <Compile Include="SpritesetF.cs" />
     <Compile Include="TerrainPanel.cs" />
-    <Compile Include="YamlMetrics.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 
-using MapView.Forms.XCError;
+using MapView.Forms.Error;
 
 
 namespace MapView
@@ -33,9 +33,7 @@ namespace MapView
 			Application.ThreadException += Application_ThreadException; // FIX: "Subscription to static events without unsubscription may cause memory leaks."
 			try
 			{
-				var mainWindow = new XCMainWindow();
-
-				Application.Run(mainWindow);
+				Application.Run(new XCMainWindow());
 
 				// https://msdn.microsoft.com/en-us/library/system.appdomain.aspx
 				// Get this AppDomain's settings and display some of them.
@@ -53,6 +51,11 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Handler for thread exceptions.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
 		{
 			_errorHandler.HandleException(e.Exception);

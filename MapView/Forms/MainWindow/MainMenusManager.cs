@@ -194,6 +194,7 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Creates a menuitem for a specified viewer.
+		/// @note The forms never actually close until MainView closes.
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="caption"></param>

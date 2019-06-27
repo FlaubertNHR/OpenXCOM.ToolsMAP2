@@ -13,25 +13,7 @@ namespace MapView.Forms.MainWindow
 	{
 		#region Fields
 		private readonly List<Form> _viewers = new List<Form>();
-
-		private readonly OptionsManager _optionsManager;
-//		private readonly ConsoleSharedSpace _consoleShare;
-		#endregion
-
-
-		#region cTor
-		/// <summary>
-		/// cTor.
-		/// </summary>
-		/// <param name="optionsManager"></param>
-//		/// <param name="shareConsole"></param>
-		internal ViewersManager(OptionsManager optionsManager)
-//				ConsoleSharedSpace shareConsole)
-		{
-			_optionsManager = optionsManager;
-//			_consoleShare   = shareConsole;
-		}
-		#endregion
+		#endregion Fields
 
 
 		#region Methods
@@ -51,8 +33,6 @@ namespace MapView.Forms.MainWindow
 			SetAsObserver(RegistryInfo.TileView,  ViewerFormsManager.TileView);
 
 			_viewers.Add(ViewerFormsManager.TopRouteView);
-
-//			_viewers.Add(RegistryInfo.Console, _consoleShare.Console);
 
 			_viewers.Add(ViewerFormsManager.ColorsScreen);
 			_viewers.Add(ViewerFormsManager.AboutScreen);
@@ -76,7 +56,7 @@ namespace MapView.Forms.MainWindow
 				var regInfo = new RegistryInfo(viewer, f); // subscribe to Load and Closing events.
 				regInfo.RegisterProperties();
 
-				_optionsManager.Add(viewer, fcontrol.Options);
+				OptionsManager.Add(viewer, fcontrol.Options);
 			}
 		}
 
@@ -92,6 +72,6 @@ namespace MapView.Forms.MainWindow
 				viewer.Close();
 			}
 		}
-		#endregion
+		#endregion Methods
 	}
 }

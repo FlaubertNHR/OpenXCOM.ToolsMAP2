@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace MapView.Forms.XCError
+namespace MapView.Forms.Error
 {
 	internal sealed class ErrorWindowAdapter
 		:

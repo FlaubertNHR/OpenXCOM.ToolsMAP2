@@ -113,6 +113,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SharedSpace.cs" />
     <Compile Include="Windows\CollapsibleSplitter.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -128,6 +129,7 @@
     <Compile Include="Windows\RegistryInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Windows\YamlMetrics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="keyFile.snk" />
