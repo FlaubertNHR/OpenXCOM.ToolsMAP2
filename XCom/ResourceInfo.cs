@@ -47,8 +47,6 @@ namespace XCom
 		/// <param name="pathConfig"></param>
 		public static void InitializeResources(PathInfo pathConfig)
 		{
-//			XConsole.Init(20);
-
 			TileGroupManager = new TileGroupManager(new TilesetLoader(pathConfig.Fullpath));
 		}
 

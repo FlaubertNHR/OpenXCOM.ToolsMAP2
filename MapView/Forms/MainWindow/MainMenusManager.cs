@@ -235,15 +235,12 @@ namespace MapView.Forms.MainWindow
 					string key = it.Text;
 					_optionsMain.AddOption(
 									key,
-//									!(it.Tag is MapView.Forms.MapObservers.TileViews.TopRouteViewForm),	// q. why is TopRouteViewForm under 'TileViews'
-																										// a. why not.
 									(       it.Tag is TopViewForm)	// true to have the viewer open on 1st run.
 										|| (it.Tag is RouteViewForm)
 										|| (it.Tag is TileViewForm),
 									"Open on load - " + key,		// appears as a tip at the bottom of the Options screen.
 									"Windows");						// this identifies what Option category the setting appears under.
-																	// NOTE: the Console is not technically a viewer
-																	// but it appears under Options like the real viewers.
+
 					f.VisibleChanged += (sender, e) =>
 					{
 						if (!_quit)

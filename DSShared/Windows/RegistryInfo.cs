@@ -31,7 +31,6 @@ namespace DSShared.Windows
 		public const string TilesetEditor = "TilesetEditor";
 
 		public const string Options       = "Options";
-//		public const string Console       = "Console";
 
 		public const string PckView       = "PckView";
 		public const string SpriteEditor  = "SpriteEditor";
@@ -84,7 +83,7 @@ namespace DSShared.Windows
 		/// regarding all that 'PropertyInfo' Reflection jazz ... I mean, yes
 		/// it's a good way to learn it but it's really entirely unneeded in
 		/// this app. I mean, you often used 2 or 3 classes when 1 could and
-		/// would suffice just as  well. You put panels inside panels over and
+		/// would suffice just as well. You put panels inside panels over and
 		/// over. You abused namespace-strings to no end. You even instantiated
 		/// an ordinary rectangle like this:
 		/// 
@@ -146,15 +145,16 @@ namespace DSShared.Windows
 
 		#region Events
 		/// <summary>
-		/// Loads values for the subsidiary viewers from "MapViewers.yml".
-		/// - TopView       (size and position, but not Quadrant visibilities)
-		/// - RouteView     (size and position)
-		/// - TopRouteView  (size and position)
-		/// - TileView      (size and position)
-		/// - Console       (size and position)
-		/// - TilesetEditor (size and position)
-		/// - SpriteEditor  (size and position)
-		/// - PaletteViewer (size and position)
+		/// Loads location and size values for the subsidiary viewers to
+		/// "settings\MapViewers.yml".
+		/// - TileView
+		/// - TopView
+		/// - RouteView
+		/// - TopRouteView
+		/// - Options
+		/// - TilesetEditor
+		/// - SpriteEditor
+		/// - PaletteViewer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -226,15 +226,16 @@ namespace DSShared.Windows
 		}
 
 		/// <summary>
-		/// Saves values for the subsidiary viewers to "MapViewers.yml".
-		/// - TopView       (size and position, but does not save Quadrant visibilities)
-		/// - RouteView     (size and position)
-		/// - TopRouteView  (size and position)
-		/// - TileView      (size and position)
-		/// - Console       (size and position)
-		/// - TilesetEditor (size and position)
-		/// - SpriteEditor  (size and position)
-		/// - PaletteViewer (size and position)
+		/// Saves location and size values for the subsidiary viewers to
+		/// "settings\MapViewers.yml".
+		/// - TileView
+		/// - TopView
+		/// - RouteView
+		/// - TopRouteView
+		/// - Options
+		/// - TilesetEditor
+		/// - SpriteEditor
+		/// - PaletteViewer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

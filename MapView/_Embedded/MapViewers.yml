@@ -28,28 +28,23 @@ TopRouteView:
   top: 100
   width: 640
   height: 480
-Console:
+Options:
   left: 150
   top: 120
-  width: 500
-  height: 300
-Options:
-  left: 170
-  top: 140
   width: 600
   height: 400
 TilesetEditor:
-  left: 190
-  top: 160
+  left: 170
+  top: 140
   width: 580
   height: 470
 PckView:
-  left: 210
-  top: 180
+  left: 190
+  top: 160
   width: 480
   height: 640
 McdView:
-  left: 230
-  top: 200
+  left: 210
+  top: 180
   width: 820
   height: 820

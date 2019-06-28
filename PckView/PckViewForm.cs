@@ -129,9 +129,6 @@ namespace PckView
 		/// </summary>
 		public PckViewForm()
 		{
-			// NOTE: Set the debug-logfile-path in PckViewPanel, since it instantiates first.
-			// uh ... changed.
-
 			InitializeComponent();
 
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
@@ -1675,7 +1672,6 @@ namespace PckView
 			}
 			else
 			{
-//				XConsole.AdZerg("ERROR: tab file does not exist: " + pfeTab);
 				MessageBox.Show(
 							this,
 							"Tab file does not exist"

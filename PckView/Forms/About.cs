@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+#if !__MonoCS__
 using System.Runtime.InteropServices;
+#endif
 using System.Windows.Forms;
 
 
@@ -33,6 +35,7 @@ namespace PckView
 			// http://stackoverflow.com/questions/36945117/referenced-assemblies-returns-none-as-processorarchitecture
 
 			string arch = String.Empty;
+#if !__MonoCS__
 			switch (AssemblyName.GetAssemblyName(info.FileName).ProcessorArchitecture)
 			{
 				case ProcessorArchitecture.None:	// An unknown or unspecified combination of processor and bits-per-word.
@@ -57,6 +60,7 @@ namespace PckView
 					arch = " : Amd64";
 					break;
 			}
+#endif
 
 #if DEBUG
 			const string config = "Debug";
@@ -86,7 +90,7 @@ namespace PckView
 			}
 		}
 
-
+#if !__MonoCS__
 		// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net#answer-1840313
 		// dwhiteho -> end.
 		// w/ refactoring and tweaks to satisfy FxCop and docs. kL
@@ -156,5 +160,6 @@ namespace PckView
 			}
 			return null;
 		}
+#endif
 	}
 }

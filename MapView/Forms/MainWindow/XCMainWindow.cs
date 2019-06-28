@@ -392,32 +392,6 @@ namespace MapView
 				LogFile.WriteLine("User options NOT loaded - no options file to load.");
 
 
-			// I should rewrite the hq2x wrapper for .NET sometime -- not the code it's pretty insane
-//			if (!File.Exists("hq2xa.dll")) miHq.Visible = false;
-
-//			LogFile.WriteLine("Loading user-made plugins");
-
-			/****************************************/
-			// Copied from PckView
-//			loadedTypes = new LoadOfType<DescriptorBase>();
-//			sharedSpace["MapMods"] = loadedTypes.AllLoaded;
-
-			// There are no currently loadable maps in this assembly so this is more for future use
-//			loadedTypes.LoadFrom(Assembly.GetAssembly(typeof(XCom.Interfaces.Base.DescriptorBase)));
-
-//			if (Directory.Exists(sharedSpace[SharedSpace.CustomDirectory].ToString()))
-//			{
-//				xConsole.AddLine("Custom directory exists: " + sharedSpace[SharedSpace.CustomDirectory].ToString());
-//				foreach (string s in Directory.GetFiles(sharedSpace[SharedSpace.CustomDirectory].ToString()))
-//					if (s.EndsWith(".dll"))
-//					{
-//						xConsole.AddLine("Loading dll: " + s);
-//						loadedTypes.LoadFrom(Assembly.LoadFrom(s));
-//					}
-//			}
-			/****************************************/
-
-
 			DontBeepEvent += FireContext;
 
 

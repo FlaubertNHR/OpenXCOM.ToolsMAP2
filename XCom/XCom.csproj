@@ -183,7 +183,7 @@
     </Compile>
     <Compile Include="Tileset.cs" />
     <Compile Include="TilesetLoader.cs" />
-    <Compile Include="XConsole.cs">
+    <Compile Include="Console.cs">
       <SubType>Code</SubType>
     </Compile>
     <EmbeddedResource Include="Infobox.resx">

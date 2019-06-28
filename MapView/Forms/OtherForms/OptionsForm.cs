@@ -9,8 +9,6 @@ using System.Windows.Forms;
 using DSShared.Windows;
 
 
-//#define SaveDLL
-
 namespace MapView
 {
 	/// <summary>
@@ -213,20 +211,10 @@ namespace MapView
 				var an = new AssemblyName();
 				an.Name = "TempAssembly";
 
-				// Only save the custom-type dll while debugging
-#if DEBUG && SaveDLL
-				AssemblyBuilder assemblyBuilder = ad.DefineDynamicAssembly(
-																		an,
-																		AssemblyBuilderAccess.RunAndSave);
-				ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(
-																		"TempModule",
-																		"Test.dll");
-#else
 				AssemblyBuilder assemblyBuilder = ad.DefineDynamicAssembly(
 																		an,
 																		AssemblyBuilderAccess.Run);
 				ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule("TempModule");
-#endif
 
 				// create type
 				TypeBuilder typeBuilder = moduleBuilder.DefineType(TypeLabel, TypeAttributes.Public);
@@ -259,9 +247,6 @@ namespace MapView
 			foreach (string key in _options.Keys)
 				table[key] = _options[key].Value;
 
-#if DEBUG && SaveDLL
-			assemblyBuilder.Save("Test.dll");
-#endif
 			var type = (Type)_hashTypes[TypeLabel];
 			var ctorInfo = type.GetConstructor(new Type[]{});
 			object obj = ctorInfo.Invoke(new Object[]{});

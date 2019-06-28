@@ -61,8 +61,8 @@ namespace MapView.Forms.MainWindow
 		}
 
 		/// <summary>
-		/// Closes the following viewers: TopView, RouteView, TopRouteView,
-		/// TileView, Console, Colors, About.
+		/// Closes the following viewers: TileView, TopView, RouteView,
+		/// TopRouteView, Colors, About.
 		/// </summary>
 		internal static void CloseViewers()
 		{

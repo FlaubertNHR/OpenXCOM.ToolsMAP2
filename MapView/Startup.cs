@@ -34,15 +34,6 @@ namespace MapView
 			try
 			{
 				Application.Run(new XCMainWindow());
-
-				// https://msdn.microsoft.com/en-us/library/system.appdomain.aspx
-				// Get this AppDomain's settings and display some of them.
-//				var ads = AppDomain.CurrentDomain.SetupInformation;
-//				Console.WriteLine(
-//								"AppName={0}, AppBase={1}, ConfigFile={2}",
-//								ads.ApplicationName,
-//								ads.ApplicationBase,
-//								ads.ConfigurationFile);
 			}
 			catch (Exception ex)
 			{
