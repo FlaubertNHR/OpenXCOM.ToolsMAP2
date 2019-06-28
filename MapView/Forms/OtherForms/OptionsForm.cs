@@ -13,6 +13,8 @@ namespace MapView
 {
 	/// <summary>
 	/// The Options form.
+	/// @note I doubt that a person has to emit opcodes just to write a
+	/// PropertyGrid.
 	/// </summary>
 	internal sealed class OptionsForm
 		:
@@ -109,7 +111,7 @@ namespace MapView
 
 
 	/// <summary>
-	/// The grid in the Options form. This gets complicated.
+	/// The grid in the Options form. This gets needlessly complicated.
 	/// </summary>
 	internal sealed class OptionsPropertyGrid
 		:
@@ -117,13 +119,13 @@ namespace MapView
 	{
 		#region Fields (static)
 		private static Hashtable _hashTypes = new Hashtable();
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
 		private Options _options;
 		private Hashtable _typeHash;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -134,16 +136,7 @@ namespace MapView
 			get { return _typeLabel; }
 			set { _typeLabel = value; }
 		}
-
-//		private bool _instantUpdate = true;
-//		[DefaultValue(true)]
-//		[Description("If true the Option.Update() event will be called when a property changes.")]
-//		public bool InstantUpdate
-//		{
-//			get { return _instantUpdate; }
-//			set { _instantUpdate = value; }
-//		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -151,7 +144,7 @@ namespace MapView
 		{
 			InitTypes();
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods (override)
@@ -162,13 +155,11 @@ namespace MapView
 			base.OnPropertyValueChanged(e);
 
 			((Option)_options[e.ChangedItem.Label]).Value = e.ChangedItem.Value;
-
-//			if (InstantUpdate)
 			((Option)_options[e.ChangedItem.Label]).doUpdate(
 														e.ChangedItem.Label,
 														e.ChangedItem.Value);
 		}
-		#endregion
+		#endregion Methods (override)
 
 
 		#region Methods
@@ -393,6 +384,6 @@ namespace MapView
 				propertyBuilder.SetCustomAttribute(attributeBuilder);
 			}
 		}
-		#endregion
+		#endregion Methods
 	}
 }

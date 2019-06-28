@@ -12,7 +12,7 @@ using DSShared;
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;
 using MapView.Forms.McdInfo;
-using MapView.OptionsServices;
+using MapView.Volutar;
 
 using McdView;
 
@@ -360,7 +360,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 			TilePanel.SetSpecialPropertyBrushes(_brushesSpecial);
 
-			VolutarSettingService.LoadOptions(Options);
+			VolutarService.LoadOptions(Options);
 		}
 
 		/// <summary>
@@ -505,16 +505,15 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if ((MapBase as MapFileChild) != null)
 			{
-				var service = new VolutarSettingService(Options);
-				var pfeService = service.FullPath;	// this will invoke a box for the user to input the
-													// executable's path if it doesn't exist in Options.
-				if (File.Exists(pfeService))
+				var service = new VolutarService(Options);
+				var pfe = service.FullPath;	// this will invoke a box for the user to input the
+											// executable's path if it doesn't exist in Options.
+				if (File.Exists(pfe))
 				{
 					// change to MCDEdit dir so that accessing MCDEdit.txt doesn't cause probls.
-					string dirService = Path.GetDirectoryName(pfeService);
-					Directory.SetCurrentDirectory(dirService);
+					Directory.SetCurrentDirectory(Path.GetDirectoryName(pfe));
 
-					Process.Start(new ProcessStartInfo(pfeService));
+					Process.Start(new ProcessStartInfo(pfe));
 
 					// change back to app dir
 					Directory.SetCurrentDirectory(SharedSpace.GetShareString(SharedSpace.ApplicationDirectory));

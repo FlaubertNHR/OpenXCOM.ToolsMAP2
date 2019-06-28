@@ -5,12 +5,12 @@ using System.Windows.Forms;
 using DSShared.Windows;
 
 
-namespace MapView.OptionsServices
+namespace MapView.Volutar
 {
 	/// <summary>
 	/// Deals with Volutar's MCD Editor app. Or any app/file really.
 	/// </summary>
-	internal sealed class VolutarSettingService
+	internal sealed class VolutarService
 	{
 		#region Fields (static)
 		private const string VolutarMcdEditorPath = "VolutarMcdEditorPath";
@@ -18,7 +18,7 @@ namespace MapView.OptionsServices
 
 
 		#region Fields
-		private readonly Options _options;
+		private readonly Options Options;
 		#endregion Fields
 
 
@@ -28,7 +28,7 @@ namespace MapView.OptionsServices
 		{
 			get
 			{
-				var option = _options.GetOption(VolutarMcdEditorPath, String.Empty);
+				var option = Options.GetOption(VolutarMcdEditorPath, String.Empty);
 
 				_fullpath = option.Value as String;
 				if (!File.Exists(_fullpath))
@@ -39,8 +39,7 @@ namespace MapView.OptionsServices
 						{
 							if (File.Exists(f.InputString))
 							{
-								_fullpath = f.InputString;
-								option.Value = (object)f.InputString;
+								option.Value = (object)(_fullpath = f.InputString);
 							}
 							else
 								MessageBox.Show(
@@ -64,9 +63,9 @@ namespace MapView.OptionsServices
 		/// cTor.
 		/// </summary>
 		/// <param name="options"></param>
-		internal VolutarSettingService(Options options)
+		internal VolutarService(Options options)
 		{
-			_options = options;
+			Options = options;
 		}
 		#endregion cTor
 

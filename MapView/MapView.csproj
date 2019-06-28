@@ -223,7 +223,6 @@
     <Compile Include="Forms\MapObservers\RouteView\RoutePanelParent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SettingServices\VolutarSettingService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Forms\MapObservers\TopView\QuadrantPanel.cs">
       <SubType>Component</SubType>
@@ -297,6 +296,7 @@
       <DependentUpon>XCMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Varidia.cs" />
+    <Compile Include="Volutar\VolutarService.cs" />
     <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
