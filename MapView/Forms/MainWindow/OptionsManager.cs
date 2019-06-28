@@ -58,7 +58,7 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		internal static void SaveOptions()
 		{
-			using (var sw = new StreamWriter(((PathInfo)SharedSpace.that[PathInfo.ShareOptions]).Fullpath))
+			using (var sw = new StreamWriter(((PathInfo)SharedSpace.GetShareObject(PathInfo.ShareOptions)).Fullpath)) // gfl
 			{
 				foreach (string key in _optionsTypes.Keys)
 					_optionsTypes[key].SaveOptions(key, sw);

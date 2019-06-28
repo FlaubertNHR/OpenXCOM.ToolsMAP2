@@ -301,11 +301,9 @@ namespace MapView
 				string result, title;
 				MessageBoxIcon icon;
 
-				var shared = SharedSpace.that;
-
 				if (_base.Descriptor.Pal == Palette.TftdBattle)
 				{
-					if (ResourceInfo.LoadScanGtftd(shared.GetShare(SharedSpace.ResourceDirectoryTftd)))
+					if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 					{
 						_icons = ResourceInfo.ScanGtftd;
 
@@ -320,7 +318,7 @@ namespace MapView
 						icon   = MessageBoxIcon.Error;
 					}
 				}
-				else if (ResourceInfo.LoadScanGufo(shared.GetShare(SharedSpace.ResourceDirectoryUfo)))
+				else if (ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 				{
 					_icons = ResourceInfo.ScanGufo;
 

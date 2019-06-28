@@ -5,7 +5,7 @@ using System.IO;
 
 namespace DSShared
 {
-	public sealed class SharedSpace
+	public static class SharedSpace
 	{
 		#region Fields (static)
 		public const string ApplicationDirectory  = "ApplicationDirectory";
@@ -21,46 +21,12 @@ namespace DSShared
 
 		public static string LoftfileUfo          = "GEODATA" + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
 		public static string LoftfileTftd         = "TERRAIN" + Path.DirectorySeparatorChar + "LOFTEMPS.DAT"; // *snap*
-		#endregion
 
 
-		#region Fields
-		private readonly Dictionary<string, object> _share = new Dictionary<string, object>();
-		#endregion
+		private static readonly Dictionary<string, object> _shares =
+							new Dictionary<string, object>();
+		#endregion Fields (static)
 
-
-		#region Properties (static)
-		/// <summary>
-		/// Gets the currently instantiated SharedSpace from anywhere.
-		/// </summary>
-		private static SharedSpace _that;
-		public static SharedSpace that
-		{
-			get
-			{
-				if (_that == null)
-					_that = new SharedSpace();
-
-				return _that;
-			}
-		}
-		#endregion
-
-
-		#region Properties
-		/// <summary>
-		/// Gets/Sets the value as an object or null.
-		/// </summary>
-		public object this[string key]
-		{
-			get { return (_share.ContainsKey(key)) ? _share[key] : null; }
-			set { _share[key] = value; }
-		}
-		#endregion
-
-
-//		public SharedSpace()
-//		{}
 
 		// TODO: Since SharedSpace holds only string-values factor away the
 		// boxing and just use strings. Actually, Palettes is a dictionary ...
@@ -73,25 +39,38 @@ namespace DSShared
 		// NOTE: PathInfo objects are returned as objects also.
 
 
-		#region Methods
+		#region Methods (static)
 		/// <summary>
-		/// Allocates a key-val pair in the SharedSpace and returns the value
-		/// that is assigned. This does not change the value of an existing key
-		/// unless its value is null.
+		/// Allocates a key-val pair in the SharedSpace. This does not replace
+		/// the value of an existing key unless its value is null.
 		/// </summary>
 		/// <param name="key">the key to look for</param>
-		/// <param name="value">the object to add if the current value doesn't
-		/// exist or is null</param>
-		public void SetShare(string key, object value)
+		/// <param name="val">the object to add if the key doesn't exist or its
+		/// value is null</param>
+		public static void SetShare(string key, object val)
 		{
-			if (!_share.ContainsKey(key))
+			if (!_shares.ContainsKey(key))
 			{
-				_share.Add(key, value);
+				_shares.Add(key, val);
 			}
-			else if (_share[key] == null)
+			else if (_shares[key] == null)
 			{
-				_share[key] = value;
+				_shares[key] = val;
 			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public static object GetShareObject(string key)
+		{
+			object val;
+			if (!String.IsNullOrEmpty(key) && _shares.TryGetValue(key, out val))
+				return val;
+
+			return null;
 		}
 
 		/// <summary>
@@ -100,14 +79,14 @@ namespace DSShared
 		/// <param name="key"></param>
 		/// <returns>the value associated with the key; null if key is
 		/// invalid</returns>
-		public string GetShare(string key)
+		public static string GetShareString(string key)
 		{
 			object val;
-			if (!String.IsNullOrEmpty(key) && _share.TryGetValue(key, out val))
+			if (!String.IsNullOrEmpty(key) && _shares.TryGetValue(key, out val))
 				return val as String;
 
 			return null;
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

@@ -139,12 +139,10 @@ namespace MapView
 
 			// TODO: further optimize this loading sequence ....
 
-			var shared = SharedSpace.that;
-
-			shared.SetShare(
+			SharedSpace.SetShare(
 						SharedSpace.ApplicationDirectory,
 						dirApplication);
-			shared.SetShare(
+			SharedSpace.SetShare(
 						SharedSpace.SettingsDirectory,
 						dirSettings);
 
@@ -152,16 +150,16 @@ namespace MapView
 
 
 			var pathOptions = new PathInfo(dirSettings, PathInfo.ConfigOptions);
-			shared.SetShare(PathInfo.ShareOptions, pathOptions);
+			SharedSpace.SetShare(PathInfo.ShareOptions, pathOptions);
 
 			var pathResources = new PathInfo(dirSettings, PathInfo.ConfigResources);
-			shared.SetShare(PathInfo.ShareResources, pathResources);
+			SharedSpace.SetShare(PathInfo.ShareResources, pathResources);
 
 			var pathTilesets = new PathInfo(dirSettings, PathInfo.ConfigTilesets);
-			shared.SetShare(PathInfo.ShareTilesets, pathTilesets);
+			SharedSpace.SetShare(PathInfo.ShareTilesets, pathTilesets);
 
 			var pathViewers = new PathInfo(dirSettings, PathInfo.ConfigViewers);
-			shared.SetShare(PathInfo.ShareViewers, pathViewers);
+			SharedSpace.SetShare(PathInfo.ShareViewers, pathViewers);
 
 			LogFile.WriteLine("PathInfo cached.");
 
@@ -326,10 +324,9 @@ namespace MapView
 					}
 
 					val = node.Value.ToString();
-					val = (!val.Equals(PathInfo.NotConfigured)) ? val
-																: null;
+					val = (!val.Equals(PathInfo.NotConfigured)) ? val : null;
 
-					shared.SetShare(key, val);
+					SharedSpace.SetShare(key, val);
 				}
 			}
 
@@ -339,7 +336,7 @@ namespace MapView
 			// TODO: give user the option to choose which cursor-spriteset to use.
 			var cuboid = ResourceInfo.LoadSpriteset(
 												SharedSpace.CursorFilePrefix,
-												shared.GetShare(SharedSpace.ResourceDirectoryUfo),
+												SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo),
 												ResourceInfo.TAB_WORD_LENGTH_2,
 												Palette.UfoBattle);
 			if (cuboid != null)
@@ -353,7 +350,7 @@ namespace MapView
 			// NOTE: The TFTD cursorsprite takes precedence over the UFO cursorsprite.
 			cuboid = ResourceInfo.LoadSpriteset(
 											SharedSpace.CursorFilePrefix,
-											shared.GetShare(SharedSpace.ResourceDirectoryTftd),
+											SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd),
 											ResourceInfo.TAB_WORD_LENGTH_4,
 											Palette.TftdBattle);
 			if (cuboid != null)
@@ -365,12 +362,12 @@ namespace MapView
 				LogFile.WriteLine("TFTD Cursor not found.");
 
 
-			if (ResourceInfo.LoadScanGufo(shared.GetShare(SharedSpace.ResourceDirectoryUfo)))
+			if (ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 				LogFile.WriteLine("ScanG UFO loaded.");
 			else
 				LogFile.WriteLine("ScanG UFO not found.");
 
-			if (ResourceInfo.LoadScanGtftd(shared.GetShare(SharedSpace.ResourceDirectoryTftd)))
+			if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 				LogFile.WriteLine("ScanG TFTD loaded.");
 			else
 				LogFile.WriteLine("ScanG TFTD not found.");
@@ -438,7 +435,7 @@ namespace MapView
 		/// </summary>
 		private static void CreateViewersFile()
 		{
-			var info = SharedSpace.that[PathInfo.ShareViewers] as PathInfo;
+			var info = SharedSpace.GetShareObject(PathInfo.ShareViewers) as PathInfo;
 			info.CreateDirectory();
 
 			string pfe = info.Fullpath;
@@ -602,7 +599,7 @@ namespace MapView
 		/// </summary>
 		private void LoadOptions()
 		{
-			string file = Path.Combine(SharedSpace.that.GetShare(SharedSpace.SettingsDirectory), PathInfo.ConfigViewers);
+			string file = Path.Combine(SharedSpace.GetShareString(SharedSpace.SettingsDirectory), PathInfo.ConfigViewers);
 			using (var sr = new StreamReader(File.OpenRead(file)))
 			{
 				var str = new YamlStream();
@@ -962,7 +959,7 @@ namespace MapView
 					WindowState = FormWindowState.Normal;
 					ViewersManager.CloseViewers();
 
-					string dirSettings = SharedSpace.that.GetShare(SharedSpace.SettingsDirectory);
+					string dirSettings = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);
 					string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);
 					string dst = Path.Combine(dirSettings, PathInfo.ConfigViewersOld);
 

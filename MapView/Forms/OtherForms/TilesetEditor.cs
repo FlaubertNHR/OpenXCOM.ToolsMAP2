@@ -212,7 +212,7 @@ namespace MapView
 
 			string keydir = (TileGroup.Pal == Palette.UfoBattle) ? SharedSpace.ResourceDirectoryUfo
 																 : SharedSpace.ResourceDirectoryTftd;
-			BasepathConfigurator = SharedSpace.that.GetShare(keydir);
+			BasepathConfigurator = SharedSpace.GetShareString(keydir);
 			rb_ConfigBasepath.Checked = true;
 
 			switch (InputBoxType = boxType)
@@ -281,7 +281,7 @@ namespace MapView
 							keyBaseDir = SharedSpace.ResourceDirectoryTftd;
 							break;
 					}
-					TilesetBasepath = SharedSpace.that.GetShare(keyBaseDir);
+					TilesetBasepath = SharedSpace.GetShareString(keyBaseDir);
 					break;
 			}
 			FileAddType = AddType.MapNone;
