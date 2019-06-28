@@ -32,29 +32,30 @@ namespace MapView
 		private readonly Dictionary<string, Property> _properties =
 					 new Dictionary<string, Property>();
 
-		private Dictionary<string, Option> _options =
+		private Dictionary<string, Option> _dict =
 			new Dictionary<string, Option>();
 		#endregion Fields
 
 
 		#region Properties
 		/// <summary>
-		/// Gets the key-collection for this Options dictionary.
+		/// Gets the key-collection for this Options' dictionary.
 		/// </summary>
 		internal Dictionary<string, Option>.KeyCollection Keys
 		{
-			get { return _options.Keys; }
+			get { return _dict.Keys; }
 		}
 
 		/// <summary>
 		/// Gets or sets an Option keyed by a specified key.
+		/// @note Ensure that 'key' is non-null before call.
 		/// </summary>
 		internal Option this[string key]
 		{
 			get
 			{
 //				key = key.Replace(" ", String.Empty); // nobody be stupid ...
-				return (_options.ContainsKey(key)) ? _options[key] : null;
+				return (_dict.ContainsKey(key)) ? _dict[key] : null;
 			}
 		}
 		#endregion Properties
@@ -67,12 +68,12 @@ namespace MapView
 			_converters[typeof(Color)] = new ConvertObjectEvent(ConvertColor);
 		}
 
-		internal static void ReadOptions(TextReader sr, Options options)
+		internal static void ReadOptions(TextReader tr, Options options)
 		{
 			string key;
 
 			KeyvalPair keyval;
-			while ((keyval = Varidia.getKeyvalPair(sr)) != null)
+			while ((keyval = Varidia.getKeyvalPair(tr)) != null)
 			{
 				switch (keyval.Key)
 				{
@@ -135,14 +136,14 @@ namespace MapView
 //			key = key.Replace(" ", String.Empty); // nobody be stupid ...
 
 			Option option;
-			if (!_options.ContainsKey(key))
+			if (!_dict.ContainsKey(key))
 			{
 				option = new Option(val, desc, category);
-				_options[key] = option;
+				_dict[key] = option;
 			}
 			else
 			{
-				option = _options[key];
+				option = _dict[key];
 				option.Value = val;
 				option.Description = desc;
 			}
@@ -169,10 +170,10 @@ namespace MapView
 		/// <returns>the Option object tied to the key</returns>
 		internal Option GetOption(string key, object val)
 		{
-			if (!_options.ContainsKey(key))
-				_options.Add(key, new Option(val));
+			if (!_dict.ContainsKey(key))
+				_dict.Add(key, new Option(val));
 
-			return _options[key];
+			return _dict[key];
 		}
 
 		/// <summary>
@@ -181,12 +182,12 @@ namespace MapView
 		/// </summary>
 		/// <param name="line"></param>
 		/// <param name="tw"></param>
-		internal void SaveOptions(string line, TextWriter tw)
+		internal void WriteOptions(string line, TextWriter tw)
 		{
 			tw.WriteLine(line);
 			tw.WriteLine("{");
 
-			foreach (string key in _options.Keys)
+			foreach (string key in _dict.Keys)
 				tw.WriteLine("\t" + key + ":" + Convert(this[key].Value));
 
 			tw.WriteLine("}");

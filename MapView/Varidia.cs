@@ -14,17 +14,17 @@ namespace MapView
 		/// <summary>
 		/// Read a line from 'MVOptions' cfg.
 		/// </summary>
-		/// <param name="sr"></param>
+		/// <param name="tr"></param>
 		/// <returns>KeyvalPair else null</returns>
-		internal static KeyvalPair getKeyvalPair(TextReader sr)
+		internal static KeyvalPair getKeyvalPair(TextReader tr)
 		{
 			string line = null;
 			do // get a good line - not a comment (#) or blank-string
 			{
-				if (sr.Peek() == -1) // zilch, exit.
+				if (tr.Peek() == -1) // zilch, exit.
 					return null;
 
-				line = sr.ReadLine().Trim();
+				line = tr.ReadLine().Trim();
 			}
 			while (line.Length == 0 || line[0] == '#');
 
