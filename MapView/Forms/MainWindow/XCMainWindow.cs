@@ -243,7 +243,7 @@ namespace MapView
 
 
 			Options = new Options();
-			OptionsManager.setOptionsType(OptionsManager.MainWindow, Options);
+			OptionsManager.setOptionsType(RegistryInfo.MainWindow, Options);
 
 			LoadOptions();									// TODO: check if this should go after the managers load
 			LogFile.WriteLine("MainView Options loaded.");	// since managers might be re-instantiating needlessly
@@ -280,7 +280,7 @@ namespace MapView
 			LogFile.WriteLine("ViewerFormsManager initialized.");
 
 
-			ViewersManager.InitializeViewersManager();
+			ViewersManager.Initialize();
 
 
 			ViewerFormsManager.TileView.Control.ReloadDescriptorEvent += OnReloadDescriptor;

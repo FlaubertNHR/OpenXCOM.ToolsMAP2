@@ -9,8 +9,6 @@ namespace MapView.Forms.MainWindow
 	internal static class OptionsManager
 	{
 		#region Fields (static)
-		internal const string MainWindow = "MainWindow";
-
 		private static readonly Dictionary<string, Options> _optionsTypes =
 							new Dictionary<string, Options>();
 		#endregion Fields (static)

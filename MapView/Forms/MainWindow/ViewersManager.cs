@@ -20,7 +20,7 @@ namespace MapView.Forms.MainWindow
 		/// <summary>
 		/// Registers all subsidiary viewers via this ViewersManager.
 		/// </summary>
-		internal static void InitializeViewersManager()
+		internal static void Initialize()
 		{
 			ViewerFormsManager.TopRouteView.ControlTop  .Options = ViewerFormsManager.TopView  .Control.Options;
 			ViewerFormsManager.TopRouteView.ControlRoute.Options = ViewerFormsManager.RouteView.Control.Options;

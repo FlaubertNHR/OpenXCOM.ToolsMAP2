@@ -12,6 +12,8 @@ namespace MapView.Forms.MainWindow
 	{
 		#region Fields (static)
 		internal static ToolstripFactory ToolFactory;
+
+		private static IMapObserver[] _observers;
 		#endregion Fields (static)
 
 
@@ -54,17 +56,6 @@ namespace MapView.Forms.MainWindow
 		#endregion Properties (static)
 
 
-		#region Methods (static)
-		internal static void Initialize()
-		{
-			TopView     .Control   .InitializeToolstrip(ToolFactory);
-			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
-
-			TileView.Control.TileSelectedEvent_Observer0 += OnTileSelected_Observer0;
-		}
-		#endregion Methods (static)
-
-
 		#region Events (static)
 		/// <summary>
 		/// Changes the selected quadrant in the QuadrantPanel when a tilepart
@@ -83,9 +74,14 @@ namespace MapView.Forms.MainWindow
 
 
 		#region Methods (static)
-		internal static void SetObservers(MapFileBase @base)
+		internal static void Initialize()
 		{
-			var observers = new IMapObserver[]
+			TopView     .Control   .InitializeToolstrip(ToolFactory);
+			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
+
+			TileView.Control.TileSelectedEvent_Observer0 += OnTileSelected_Observer0;
+
+			_observers = new IMapObserver[]
 			{
 				TopRouteView.ControlTop,
 				TopRouteView.ControlRoute,
@@ -93,8 +89,11 @@ namespace MapView.Forms.MainWindow
 				RouteView   .Control,
 				TopView     .Control
 			};
+		}
 
-			foreach (var f in observers)
+		internal static void SetObservers(MapFileBase @base)
+		{
+			foreach (var f in _observers)
 				if (f != null)
 					SetObserver(@base, f);
 

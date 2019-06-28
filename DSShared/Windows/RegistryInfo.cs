@@ -20,16 +20,18 @@ namespace DSShared.Windows
 	{
 		#region Fields (static)
 		// viewer labels (keys)
+		public const string MainWindow    = "MainWindow"; // ... is for old parsing Options routine.
+
 		public const string MainView      = "MainView";
+		public const string TileView      = "TileView";
 		public const string TopView       = "TopView";
 		public const string RouteView     = "RouteView";
 		public const string TopRouteView  = "TopRouteView";
-		public const string TileView      = "TileView";
 
 		public const string TilesetEditor = "TilesetEditor";
 
 		public const string Options       = "Options";
-		public const string Console       = "Console";
+//		public const string Console       = "Console";
 
 		public const string PckView       = "PckView";
 		public const string SpriteEditor  = "SpriteEditor";
