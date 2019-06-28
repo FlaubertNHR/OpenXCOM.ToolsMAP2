@@ -76,7 +76,6 @@ namespace XCom
 			YamlScalarNode   nodetry1;
 			YamlMappingNode  nodetry2;
 
-			Tuple<string,string> terrain;
 			Dictionary<int, Tuple<string,string>> terrains;
 
 
@@ -156,8 +155,7 @@ namespace XCom
 							//LogFile.WriteLine(". terr= " + terr);
 							//LogFile.WriteLine(". path= " + path);
 
-							terrain = new Tuple<string,string>(terr, path);
-							terrains[i] = terrain;
+							terrains[i] = new Tuple<string,string>(terr, path);
 						}
 					}
 

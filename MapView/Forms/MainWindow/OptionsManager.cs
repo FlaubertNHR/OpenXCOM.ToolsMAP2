@@ -11,7 +11,7 @@ namespace MapView.Forms.MainWindow
 		#region Fields (static)
 		internal const string MainWindow = "MainWindow";
 
-		private static readonly Dictionary<string, Options> _options =
+		private static readonly Dictionary<string, Options> _optionsTypes =
 							new Dictionary<string, Options>();
 		#endregion Fields (static)
 
@@ -19,7 +19,7 @@ namespace MapView.Forms.MainWindow
 		#region Methods (static)
 		internal static void setOptionsType(string key, Options val)
 		{
-			_options[key] = val;
+			_optionsTypes[key] = val;
 		}
 
 		/// <summary>
@@ -29,7 +29,7 @@ namespace MapView.Forms.MainWindow
 		/// <param name="val">an Options object</param>
 		internal static void Add(string key, Options val)
 		{
-			_options.Add(key, val);
+			_optionsTypes.Add(key, val);
 		}
 
 
@@ -48,7 +48,7 @@ namespace MapView.Forms.MainWindow
 				while ((keyval = Varidia.getKeyvalPair(sr)) != null)
 				{
 					//XCom.LogFile.WriteLine(". LOAD keyval= " + keyval);
-					Options.ReadOptions(sr, _options[keyval.Key]);
+					Options.ReadOptions(sr, _optionsTypes[keyval.Key]);
 				}
 			}
 		}
@@ -60,11 +60,8 @@ namespace MapView.Forms.MainWindow
 		{
 			using (var sw = new StreamWriter(((PathInfo)SharedSpace.that[PathInfo.ShareOptions]).Fullpath))
 			{
-				foreach (string key in _options.Keys)
-				{
-//					if (_options.ContainsKey(key)) // of course it contains the dang key. If it doesn't you got bigger probls.
-					_options[key].SaveOptions(key, sw);
-				}
+				foreach (string key in _optionsTypes.Keys)
+					_optionsTypes[key].SaveOptions(key, sw);
 			}
 		}
 		#endregion Methods (static)

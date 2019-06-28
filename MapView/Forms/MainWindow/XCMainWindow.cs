@@ -46,8 +46,6 @@ namespace MapView
 
 
 		#region Fields
-		private readonly ViewersManager _viewersManager;
-
 		private Options Options;
 		private Form _foptions;
 
@@ -269,14 +267,13 @@ namespace MapView
 										// NOTE: transparency of the 'UfoBattle' palette must be set first.
 
 
-			_viewersManager = new ViewersManager(/*shareConsole*/);
 			LogFile.WriteLine("Viewer managers instantiated.");
 
 			QuadrantPanelDrawService.Punkstrings();
 			LogFile.WriteLine("Quadrant strings punked.");
 
 			MainMenusManager.SetMenus(menuViewers, menuHelp);
-			MainMenusManager.PopulateMenus(/*shareConsole.Console,*/ Options);
+			MainMenusManager.PopulateMenus(Options);
 			LogFile.WriteLine("MainView menus populated.");
 
 
@@ -285,7 +282,7 @@ namespace MapView
 			LogFile.WriteLine("ViewerFormsManager initialized.");
 
 
-			_viewersManager.InitializeViewersManager();
+			ViewersManager.InitializeViewersManager();
 
 
 			ViewerFormsManager.TileView.Control.ReloadDescriptorEvent += OnReloadDescriptor;
@@ -963,7 +960,7 @@ namespace MapView
 //				if (PathsEditor.SaveRegistry) // TODO: re-implement.
 				{
 					WindowState = FormWindowState.Normal;
-					_viewersManager.CloseViewers();
+					ViewersManager.CloseViewers();
 
 					string dirSettings = SharedSpace.that.GetShare(SharedSpace.SettingsDirectory);
 					string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);

@@ -33,7 +33,7 @@ namespace DSShared
 		public const string NotConfigured     = "notconfigured"; // used in MapResources.yml in case UFO or TFTD installation is not configured.
 
 		public const string SettingsDirectory = "settings";
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties
@@ -55,17 +55,9 @@ namespace DSShared
 		/// </summary>
 		public string Fullpath
 		{
-			get
-			{
-				return Path.Combine(_path, _file);
-
-//				string fullpath = Path.Combine(_path, _file);
-//				if (_extension.Length != 0)
-//					fullpath += "." + _extension;
-//				return fullpath;
-			}
+			get { return Path.Combine(_path, _file); }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -81,7 +73,7 @@ namespace DSShared
 			_path = path;
 			_file = file;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -101,68 +93,6 @@ namespace DSShared
 		{
 			Directory.CreateDirectory(_path);
 		}
-		#endregion
+		#endregion Methods
 	}
 }
-
-//		/// <summary>
-//		/// Initializes a new instance of the <see cref="T:DSShared.PathInfo"/> class.
-//		/// </summary>
-//		/// <param name="fullPath">the full path</param>
-//		public PathInfo(string fullPath)
-//			:
-//				this(fullPath, true)
-//		{}
-
-//		/// <summary>
-//		/// Initializes a new instance of the <see cref="T:DSShared.PathInfo"/> class.
-//		/// </summary>
-//		/// <param name="fullPath">the full path</param>
-//		/// <param name="parseFile">if set to <c>true</c> the path will be broken down into
-//		/// filename and extension parts. You should pass false if the path string does not
-//		/// describe a file location</param>
-//		public PathInfo(string fullPath, bool parseFile)
-//		{
-//			if (parseFile && fullPath.IndexOf(".", StringComparison.Ordinal) > 0)
-//			{
-//				_path = fullPath.Substring(0, fullPath.LastIndexOf(@"\", StringComparison.Ordinal));
-//				_file = fullPath.Substring(fullPath.LastIndexOf(@"\", StringComparison.Ordinal) + 1);
-//				_file = _file.Substring(0, _file.LastIndexOf(".", StringComparison.Ordinal));
-//				_ext  = fullPath.Substring(fullPath.LastIndexOf(".", StringComparison.Ordinal) + 1);
-//			}
-//			else
-//			{
-//				_path = fullPath;
-//				_file = String.Empty;
-//				_ext  = String.Empty;
-//			}
-//		}
-
-//		/// <summary>
-//		/// Extension part of the path.
-//		/// </summary>
-//		public string Ext
-//		{
-//			get { return _ext; }
-//			set { _ext = value; }
-//		}
-
-//		/// <summary>
-//		/// Filename part of the path without extension.
-//		/// </summary>
-//		public string File
-//		{
-//			get { return _file; }
-//			set { _file = value; }
-//		}
-
-//		/// <summary>
-//		/// String representation of this path with the supplied extension added
-//		/// on instead of the one the object was constructed with.
-//		/// </summary>
-//		/// <param name="ext">the extension that will replace the current one</param>
-//		/// <returns></returns>
-//		public string ToString(string ext)
-//		{
-//			return _path + @"\" + _file + "." + ext;
-//		}

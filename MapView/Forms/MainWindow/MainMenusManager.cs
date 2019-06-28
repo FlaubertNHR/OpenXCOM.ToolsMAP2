@@ -15,7 +15,7 @@ namespace MapView.Forms.MainWindow
 	internal static class MainMenusManager
 	{
 		#region Fields (static)
-		private static Options _options;
+		private static Options _optionsMain;
 
 		private static bool _quit;
 
@@ -155,13 +155,13 @@ namespace MapView.Forms.MainWindow
 		/// <summary>
 		/// Adds menuitems to MapView's "Viewers" and "Help" dropdown lists.
 		/// </summary>
-//		/// <param name="fconsole">pointer to the console-form</param>
-		/// <param name="options">pointer to MV_OptionsFile options</param>
-		internal static void PopulateMenus(/*Form fconsole,*/ Options options)
+		/// <param name="optionsMain">pointer to MainView's Options (for
+		/// subsidiary viewers' visibility only)</param>
+		internal static void PopulateMenus(Options optionsMain)
 		{
-			_options = options;
+			_optionsMain = optionsMain;
 
-			// Viewers menuitems ->
+			// "Viewers" menuitems ->
 			CreateMenuItem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     MenuViewers, Shortcut.F5);	// id #0
 
 			MenuViewers.MenuItems.Add(new MenuItem(Separator));														// id #1
@@ -177,10 +177,8 @@ namespace MapView.Forms.MainWindow
 			MenuViewers.MenuItems.Add(it6);
 			MenuViewers.MenuItems.Add(it7);
 
-//			_menuViewers.MenuItems.Add(new MenuItem(Divider));
-//			CreateMenuItem(fconsole, RegistryInfo.Console, _menuViewers); // TODO: either use the Console or lose it.
 
-			// Help menuitems ->
+			// "Help" menuitems ->
 			var miHelp = new MenuItem("Help");
 			miHelp.Click += OnHelpClick;
 			MenuHelp.MenuItems.Add(miHelp);
@@ -189,7 +187,7 @@ namespace MapView.Forms.MainWindow
 			CreateMenuItem(ViewerFormsManager.AboutScreen,  "About",  MenuHelp);
 
 
-			AddViewersOptions();
+			AddVisibilityOptions();
 		}
 
 		/// <summary>
@@ -225,9 +223,9 @@ namespace MapView.Forms.MainWindow
 		}
 
 		/// <summary>
-		/// Adds each viewer's opened/closed flag to user Options.
+		/// Adds each viewer's visibility flag to user Options.
 		/// </summary>
-		private static void AddViewersOptions()
+		private static void AddVisibilityOptions()
 		{
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
@@ -235,7 +233,7 @@ namespace MapView.Forms.MainWindow
 				if (f != null)
 				{
 					string key = it.Text;
-					_options.AddOption(
+					_optionsMain.AddOption(
 									key,
 //									!(it.Tag is MapView.Forms.MapObservers.TileViews.TopRouteViewForm),	// q. why is TopRouteViewForm under 'TileViews'
 																										// a. why not.
@@ -252,7 +250,7 @@ namespace MapView.Forms.MainWindow
 						{
 							var fsender = sender as Form;
 							if (fsender != null)
-								_options[key].Value = fsender.Visible;
+								_optionsMain[key].Value = fsender.Visible;
 						}
 					};
 				}
@@ -260,16 +258,15 @@ namespace MapView.Forms.MainWindow
 		}
 
 		/// <summary>
-		/// Opens the subsidiary viewers that are flagged to open when a Map
-		/// loads.
+		/// Visibles the subsidiary viewers that are flagged when a Map loads.
 		/// </summary>
 		internal static void StartViewers()
 		{
 			foreach (MenuItem it in MenuViewers.MenuItems)
 			{
 				var f = it.Tag as Form;
-				if (f != null && _options[it.Text].IsTrue)	// NOTE: All viewers shall be keyed in Options w/ the item-text.
-					it.PerformClick();						// TODO: uhhh ...
+				if (f != null && _optionsMain[it.Text].IsTrue)	// NOTE: All viewers shall be keyed in Options w/ the item-text.
+					it.PerformClick();							// TODO: uhhh ...
 			}
 			MenuViewers.Enabled = true;
 		}
