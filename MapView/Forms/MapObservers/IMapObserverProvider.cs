@@ -4,7 +4,8 @@
 namespace MapView.Forms.MapObservers
 {
 	/// <summary>
-	/// Interface for TopViewForm, TileViewForm, RouteViewForm.
+	/// Interface for TileViewForm, TopViewForm, RouteViewForm.
+	/// @note What the effing h*ll is this and why is there a file with 3 LoC.
 	/// </summary>
 	internal interface IMapObserverProvider
 	{

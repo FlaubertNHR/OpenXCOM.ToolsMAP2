@@ -70,7 +70,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Properties (override)
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl0.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
 		/// </summary>
 		public override MapFileBase MapBase
 		{
@@ -204,7 +204,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Events (override) inherited from IMapObserver/MapObserverControl0
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl0.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
 		/// @note The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to. This is a design decision that
@@ -222,7 +222,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl0.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
 		/// @note The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to. This is a design decision that
@@ -2099,12 +2099,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			var pens    = RoutePanel.RoutePens;
 			var brushes = RoutePanel.RouteBrushes;
 
-			var bc = new OptionChangedEventHandler(OnBrushColorChanged);
-			var pc = new OptionChangedEventHandler(OnPenColorChanged);
-			var pw = new OptionChangedEventHandler(OnPenWidthChanged);
-			var oc = new OptionChangedEventHandler(OnNodeOpacityChanged);
-			var sp = new OptionChangedEventHandler(OnShowPriorityChanged);
-			var so = new OptionChangedEventHandler(OnShowOverlayChanged);
+			var bc = new OptionChangedEvent(OnBrushColorChanged);
+			var pc = new OptionChangedEvent(OnPenColorChanged);
+			var pw = new OptionChangedEvent(OnPenWidthChanged);
+			var oc = new OptionChangedEvent(OnNodeOpacityChanged);
+			var sp = new OptionChangedEvent(OnShowPriorityChanged);
+			var so = new OptionChangedEvent(OnShowOverlayChanged);
 
 			var pen = new Pen(Color.OrangeRed, 2);
 			pens[UnselectedLinkColor] = pen;
@@ -2295,7 +2295,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Methods (for Help colors)
 		/// <summary>
-		/// Gets the wall-color for use by the Help screen.
+		/// Gets the wall-color for use by the Colors screen.
 		/// </summary>
 		/// <returns></returns>
 		internal Dictionary<string, Pen> GetWallPens()
@@ -2304,7 +2304,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 		/// <summary>
-		/// Gets the content-color for use by the Help screen.
+		/// Gets the content-color for use by the Colors screen.
 		/// </summary>
 		/// <returns></returns>
 		internal Dictionary<string, SolidBrush> GetContentBrushes()

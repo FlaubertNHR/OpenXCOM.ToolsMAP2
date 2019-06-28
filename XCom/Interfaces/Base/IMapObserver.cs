@@ -5,15 +5,15 @@ using System.Collections.Generic;
 namespace XCom.Interfaces.Base
 {
 	/// <summary>
-	/// Parent of MapObserverControl0 and MapObserverControl1.
+	/// Parent of 'MapObserverControl0' and 'MapObserverControl1'.
 	/// </summary>
 	public interface IMapObserver
 	{
 		MapFileBase MapBase
 		{ set; get;}
 
-		// NOTE: This is not even used by MapObserverControl1 - only by
-		// MapObserverControl0 (for TopPanel and QuadrantsPanel).
+		// NOTE: This is not even used by 'MapObserverControl1' - only by
+		// 'MapObserverControl0' (for TopPanel and QuadrantsPanel).
 		Dictionary<string, IMapObserver> Panels
 		{ get; }
 

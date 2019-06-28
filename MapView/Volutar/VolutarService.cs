@@ -13,7 +13,7 @@ namespace MapView.Volutar
 	internal sealed class VolutarService
 	{
 		#region Fields (static)
-		private const string VolutarMcdEditorPath = "VolutarMcdEditorPath";
+		private const string VOLUTAR = "VolutarMcdEditorPath";
 		#endregion Fields (static)
 
 
@@ -28,12 +28,12 @@ namespace MapView.Volutar
 		{
 			get
 			{
-				var option = Options.GetOption(VolutarMcdEditorPath, String.Empty);
+				var option = Options.GetOption(VOLUTAR, String.Empty);
 
 				_fullpath = option.Value as String;
 				if (!File.Exists(_fullpath))
 				{
-					using (var f = new FindFileForm("Enter the Volutar MCD Editor Path in full."))
+					using (var f = new FindFileForm("Enter the Volutar MCDEdit.exe path in full."))
 					{
 						if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 						{
@@ -71,15 +71,15 @@ namespace MapView.Volutar
 
 
 		#region Methods (static)
-		public static void LoadOptions(Options options)
+		internal static void LoadOptions(Options options)
 		{
 			options.AddOption(
-							VolutarMcdEditorPath,
+							VOLUTAR,
 							String.Empty,
-							"Path to Volutar MCD Editor" + Environment.NewLine
-								+ "note: The path specified can actually be "
-								+ "used to start any valid program or to open "
-								+ "a specific file with its associated application.",
+							"Path to Volutar MCD Edit" + Environment.NewLine
+								+ "The path specified can actually be used to start"
+								+ " any valid application or to open a specific file"
+								+ " with its associated application.",
 							"McdViewer");
 		}
 		#endregion Methods (static)

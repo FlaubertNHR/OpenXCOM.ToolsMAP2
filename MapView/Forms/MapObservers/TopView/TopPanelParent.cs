@@ -464,7 +464,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 /*		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl0.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)

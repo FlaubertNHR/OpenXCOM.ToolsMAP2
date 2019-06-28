@@ -14,13 +14,16 @@ namespace MapView.Forms.MapObservers.TopViews
 			IMapObserverProvider
 	{
 		#region Properties
+		/// <summary>
+		/// Gets 'TopViewControl' as a child of 'MapObserverControl0'.
+		/// </summary>
 		internal TopView Control
 		{
 			get { return TopViewControl; }
 		}
 
 		/// <summary>
-		/// Satisfies IMapObserverProvider.
+		/// Satisfies 'IMapObserverProvider'.
 		/// </summary>
 		public MapObserverControl0 ObserverControl0
 		{

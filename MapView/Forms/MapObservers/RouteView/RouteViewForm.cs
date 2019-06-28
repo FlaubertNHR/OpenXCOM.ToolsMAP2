@@ -12,13 +12,16 @@ namespace MapView.Forms.MapObservers.RouteViews
 			IMapObserverProvider
 	{
 		#region Properties
+		/// <summary>
+		/// Gets 'RouteViewControl' as a child of 'MapObserverControl0'.
+		/// </summary>
 		internal RouteView Control
 		{
 			get { return RouteViewControl; }
 		}
 
 		/// <summary>
-		/// Satisfies IMapObserverProvider.
+		/// Satisfies 'IMapObserverProvider'.
 		/// </summary>
 		public MapObserverControl0 ObserverControl0
 		{

@@ -13,7 +13,7 @@ namespace MapView.Forms.MapObservers.TileViews
 	{
 		#region Properties
 		/// <summary>
-		/// Gets TileView as a child of MapObserverControl0.
+		/// Gets 'TileViewControl' as a child of 'MapObserverControl0'.
 		/// </summary>
 		internal TileView Control
 		{
@@ -21,7 +21,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Satisfies IMapObserverProvider.
+		/// Satisfies 'IMapObserverProvider'.
 		/// </summary>
 		public MapObserverControl0 ObserverControl0
 		{

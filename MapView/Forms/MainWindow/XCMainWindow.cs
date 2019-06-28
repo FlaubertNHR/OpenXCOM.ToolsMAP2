@@ -242,6 +242,7 @@ namespace MapView
 			FormClosing += OnSaveOptionsFormClosing;
 
 
+			Options.InitializeOptionsConverters();
 			Options = new Options();
 			OptionsManager.setOptionsType(RegistryInfo.MainWindow, Options);
 
@@ -642,7 +643,7 @@ namespace MapView
 //				keySoftware.Close();
 //			}
 
-			var handler = new OptionChangedEventHandler(OnOptionChange);
+			var handler = new OptionChangedEvent(OnOptionChange);
 
 			Options.AddOption(
 							Animation,

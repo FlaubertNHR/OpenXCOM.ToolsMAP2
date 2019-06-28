@@ -576,9 +576,9 @@ namespace ConfigConverter
 
 
 		#region Methods
-		void ParsePaths(TextWriter sw)
+		void ParsePaths(TextWriter tw)
 		{
-			//sw.WriteLine("\nParsePaths");
+			//tw.WriteLine("\nParsePaths");
 			string key, val, l;
 
 			foreach (var line in _linesPaths)
@@ -597,15 +597,15 @@ namespace ConfigConverter
 						val = val.Substring(0, val.Length - 1);
 					}
 
-					//sw.WriteLine(". key= " + key + " val= " + val);
+					//tw.WriteLine(". key= " + key + " val= " + val);
 					Vars[key] = val;
 				}
 			}
 		}
 
-		void ParseImages(TextWriter sw)
+		void ParseImages(TextWriter tw)
 		{
-			//sw.WriteLine("\nParseImages");
+			//tw.WriteLine("\nParseImages");
 			string key, val, terr, path, l;
 
 			foreach (var line in _linesImages)
@@ -620,12 +620,12 @@ namespace ConfigConverter
 						int pos = l.IndexOf(':');
 						key = l.Substring(0, pos);
 						val = l.Substring(pos + 1);//, l.Length - pos - 1);
-						//sw.WriteLine(". key= " + key + " val= " + val);
+						//tw.WriteLine(". key= " + key + " val= " + val);
 
 						if (val.StartsWith("$", StringComparison.OrdinalIgnoreCase))
 						{
 							string key1 = val.Substring(0, val.IndexOf('}') + 1);
-							//sw.WriteLine(". . key1= " + key1);
+							//tw.WriteLine(". . key1= " + key1);
 							if (Vars.ContainsKey(key1))
 							{
 								val = val.Replace(key1, Vars[key1]); // var/val in Paths.pth
@@ -642,7 +642,7 @@ namespace ConfigConverter
 							val = val.Substring(0, val.Length - 1);
 						}
 
-						//sw.WriteLine(". key2= " + key + " val2= " + val);
+						//tw.WriteLine(". key2= " + key + " val2= " + val);
 						Vars[key] = val;
 					}
 					else
@@ -656,7 +656,7 @@ namespace ConfigConverter
 						if (path.StartsWith("$", StringComparison.OrdinalIgnoreCase))
 						{
 							string key1 = path.Substring(0, path.IndexOf('}') + 1);
-							//sw.WriteLine(". . key1= " + key1);
+							//tw.WriteLine(". . key1= " + key1);
 							if (Vars.ContainsKey(key1))
 							{
 								path = path.Replace(key1, Vars[key1]); // var/val in Images.dat
@@ -683,7 +683,7 @@ namespace ConfigConverter
 							path = path.Substring(0, path.Length - 1);
 						}
 
-						//sw.WriteLine(". terr= " + terr + " path= " + path);
+						//tw.WriteLine(". terr= " + terr + " path= " + path);
 						if (Terrains.ContainsKey(terr))
 						{
 							MessageBox.Show("WARNING / ERROR"

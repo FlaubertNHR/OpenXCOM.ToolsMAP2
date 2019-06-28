@@ -307,9 +307,9 @@ namespace MapView.Forms.MapObservers.TopViews
 			_topPens.Add(Grid10Color, pen10Grid);
 			_topPens.Add(Grid10Width, pen10Grid);
 
-			OptionChangedEventHandler bc = OnBrushChanged;
-			OptionChangedEventHandler pc = OnPenColorChanged;
-			OptionChangedEventHandler pw = OnPenWidthChanged;
+			OptionChangedEvent bc = OnBrushChanged;
+			OptionChangedEvent pc = OnPenColorChanged;
+			OptionChangedEvent pw = OnPenWidthChanged;
 
 			Options.AddOption(FloorColor,        Color.BurlyWood,                 "Color of the floor tile indicator",           Tile,     bc);
 			Options.AddOption(WestColor,         Color.Khaki,                     "Color of the west tile indicator",            Tile,     pc);
@@ -377,7 +377,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		/// <summary>
 		/// Gets the brushes/colors for the Floor and Content blobs.
-		/// Used by the Help screen.
+		/// Used by the Colors screen.
 		/// </summary>
 		/// <returns>a hashtable of the brushes</returns>
 		internal Dictionary<string, SolidBrush> GetFloorContentBrushes()
@@ -387,7 +387,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		/// <summary>
 		/// Gets the pens/colors for the Westwall and Northwall blobs.
-		/// Used by the Help screen.
+		/// Used by the Colors screen.
 		/// </summary>
 		/// <returns>a hashtable of the brushes</returns>
 		internal Dictionary<string, Pen> GetWallPens()

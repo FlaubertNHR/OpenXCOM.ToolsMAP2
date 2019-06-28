@@ -12,7 +12,7 @@ using XCom.Interfaces.Base;
 namespace MapView
 {
 	/// <summary>
-	/// Inherited by TopView, TileView, RouteView.
+	/// Inherited by TileView, TopView, RouteView.
 	/// </summary>
 	internal class MapObserverControl0
 		:
@@ -73,20 +73,13 @@ namespace MapView
 
 
 		#region Properties
+		private Options _options = new Options();
 		internal Options Options
-		{ get; set; }
-		#endregion Properties
-
-
-		#region cTor
-		/// <summary>
-		/// Invoked by TileView, TopView, RouteView.
-		/// </summary>
-		public MapObserverControl0()
 		{
-			Options = new Options();
+			get { return _options; }
+			set { _options = value; }
 		}
-		#endregion cTor
+		#endregion Properties
 
 
 		#region Events (override)

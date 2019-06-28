@@ -8,18 +8,23 @@ using System.Reflection;
 
 namespace MapView
 {
-	internal delegate void OptionChangedEventHandler(string key, object value);
-
-	internal delegate string ConvertObjectHandler(object value);
+	internal delegate void OptionChangedEvent(string key, object val);
 
 
 	/// <summary>
-	/// Options objects are for use with the OptionsPropertyGrid.
+	/// Options objects are for use with the OptionsPropertyGrid. An Options
+	/// object is created for each of MainView, TileView, TopView, and
+	/// RouteView.
 	/// </summary>
 	public sealed class Options
 	{
+		#region Delegates
+		private delegate string ConvertObjectEvent(object value);
+		#endregion Delegates
+
+
 		#region Fields (static)
-		private static Dictionary<Type, ConvertObjectHandler> _converters;
+		private static Dictionary<Type, ConvertObjectEvent> _converters;
 		#endregion Fields (static)
 
 
@@ -42,36 +47,26 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets/Sets the Option keyed by a specified key.
+		/// Gets or sets an Option keyed by a specified key.
 		/// </summary>
 		internal Option this[string key]
 		{
 			get
 			{
-				key = key.Replace(" ", String.Empty);
+//				key = key.Replace(" ", String.Empty); // nobody be stupid ...
 				return (_options.ContainsKey(key)) ? _options[key] : null;
 			}
 		}
 		#endregion Properties
 
 
-		#region cTor
-		/// <summary>
-		/// cTor. An Options-object is created for each of MainView, TileView,
-		/// TopView, and RouteView.
-		/// </summary>
-		internal Options()
-		{
-			if (_converters == null)
-			{
-				_converters = new Dictionary<Type, ConvertObjectHandler>();
-				_converters[typeof(Color)] = new ConvertObjectHandler(ConvertColor);
-			}
-		}
-		#endregion cTor
-
-
 		#region Methods (static)
+		internal static void InitializeOptionsConverters()
+		{
+			_converters = new Dictionary<Type, ConvertObjectEvent>();
+			_converters[typeof(Color)] = new ConvertObjectEvent(ConvertColor);
+		}
+
 		internal static void ReadOptions(TextReader sr, Options options)
 		{
 			string key;
@@ -124,8 +119,7 @@ namespace MapView
 		/// <param name="val">start value of the property</param>
 		/// <param name="desc">property description</param>
 		/// <param name="category">property category</param>
-		/// <param name="optionChangedEvent">event handler to receive the
-		/// PropertyValueChanged event</param>
+		/// <param name="changer">handler to receive the OptionChangedEvent</param>
 		/// <param name="target">the object that will receive the changed
 		/// property values: an internal event handler will be created and the
 		/// name must be the name of a property of the type that the target is
@@ -135,7 +129,7 @@ namespace MapView
 				object val,
 				string desc,
 				string category,
-				OptionChangedEventHandler optionChangedEvent = null,
+				OptionChangedEvent changer = null,
 				object target = null)
 		{
 //			key = key.Replace(" ", String.Empty); // nobody be stupid ...
@@ -153,20 +147,21 @@ namespace MapView
 				option.Description = desc;
 			}
 
-			if (optionChangedEvent != null)
+			if (changer != null)
 			{
-				option.OptionChangedEvent += optionChangedEvent;
+				option.OptionChanged += changer;
 			}
 			else if (target != null)
 			{
 				_properties[key] = new Property(target, key);
-				this[key].OptionChangedEvent += OnOptionChanged;
+				this[key].OptionChanged += OnOptionChanged;
 			}
 		}
 
 		/// <summary>
 		/// Gets the object tied to the key. If there is no object one will be
 		/// created with the value specified.
+		/// @note Is used only by 'VolutarService'.
 		/// </summary>
 		/// <param name="key">the name of the Option object</param>
 		/// <param name="val">if there is no Option object tied to the
@@ -180,15 +175,21 @@ namespace MapView
 			return _options[key];
 		}
 
-		internal void SaveOptions(string line, TextWriter sw)
+		/// <summary>
+		/// Writes this Options to 'ShareOptions' = "MV_OptionsFile" -> MapOptions.cfg
+		/// And you thought indirection was a bad thing.
+		/// </summary>
+		/// <param name="line"></param>
+		/// <param name="tw"></param>
+		internal void SaveOptions(string line, TextWriter tw)
 		{
-			sw.WriteLine(line);
-			sw.WriteLine("{");
+			tw.WriteLine(line);
+			tw.WriteLine("{");
 
 			foreach (string key in _options.Keys)
-				sw.WriteLine("\t" + key + ":" + Convert(this[key].Value));
+				tw.WriteLine("\t" + key + ":" + Convert(this[key].Value));
 
-			sw.WriteLine("}");
+			tw.WriteLine("}");
 		}
 		#endregion Methods
 
@@ -208,17 +209,17 @@ namespace MapView
 	public sealed class Option
 	{
 		#region Delegates
-		private delegate object ParseString(string st);
+		private delegate object ParseStringEvent(string st);
 		#endregion Delegates
 
 
 		#region Events
-		internal event OptionChangedEventHandler OptionChangedEvent;
+		internal event OptionChangedEvent OptionChanged;
 		#endregion Events
 
 
 		#region Fields (static)
-		private static Dictionary<Type, ParseString> _converters;
+		private static Dictionary<Type, ParseStringEvent> _converters;
 		#endregion Fields (static)
 
 
@@ -273,20 +274,20 @@ namespace MapView
 		/// cTor.
 		/// </summary>
 		/// <param name="value"></param>
-		/// <param name="desc"></param>
+		/// <param name="description"></param>
 		/// <param name="category"></param>
 		internal Option(
 				object value,
-				string desc     = null,
-				string category = null)
+				string description = null,
+				string category    = null)
 		{
 			_value      = value;
-			Description = desc;
+			Description = description;
 			Category    = category;
 
 			if (_converters == null)
 			{
-				_converters = new Dictionary<Type, ParseString>();
+				_converters = new Dictionary<Type, ParseStringEvent>();
 
 				_converters[typeof(int)]   = ParseStringInt;
 				_converters[typeof(Color)] = ParseStringColor;
@@ -331,22 +332,22 @@ namespace MapView
 			}
 			return null;
 		}
-		#endregion (static)
+		#endregion Methods (static)
 
 
 		#region Methods
 		// TODO: FxCop CA1030:UseEventsWhereAppropriate
-		internal void doUpdate(string key, object value)
+		internal void doUpdate(string key, object val)
 		{
-			if (OptionChangedEvent != null)
-				OptionChangedEvent(key, value);
+			if (OptionChanged != null)
+				OptionChanged(key, val);
 		}
 
 		// TODO: FxCop CA1030:UseEventsWhereAppropriate
 		internal void doUpdate(string key)
 		{
-			if (OptionChangedEvent != null)
-				OptionChangedEvent(key, _value);
+			if (OptionChanged != null)
+				OptionChanged(key, _value);
 		}
 		#endregion Methods
 	}
