@@ -18,7 +18,7 @@ namespace MapView
 		/// <returns>KeyvalPair else null</returns>
 		internal static KeyvalPair getKeyvalPair(TextReader sr)
 		{
-			string line = String.Empty;
+			string line = null;
 			do // get a good line - not a comment (#) or blank-string
 			{
 				if (sr.Peek() == -1) // zilch, exit.
@@ -31,17 +31,15 @@ namespace MapView
 			if (line != null)
 			{
 				int pos = line.IndexOf(':');
-				return (pos > 0) ? new KeyvalPair(line.Substring(0, pos), line.Substring(pos + 1))
-								 : new KeyvalPair(line, String.Empty);
-/*				if (pos > 0)
+				if (pos == -1) // is an option header
 				{
-					string key = line.Substring(0, pos);
+					return new KeyvalPair(line, String.Empty);
+				}
 
-					if (pos + 1 < line.Length)
-						return new KeyvalPair(key, line.Substring(pos + 1));
-
-					return new KeyvalPair(key, String.Empty);
-				} */
+				if (pos != 0) // is a keyval pair
+				{
+					return new KeyvalPair(line.Substring(0, pos), line.Substring(pos + 1));
+				}
 			}
 			return null;
 		}

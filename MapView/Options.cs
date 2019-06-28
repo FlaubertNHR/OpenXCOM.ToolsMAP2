@@ -27,8 +27,8 @@ namespace MapView
 		private readonly Dictionary<string, Property> _properties =
 					 new Dictionary<string, Property>();
 
-		private Dictionary<string, ViewerOption> _options =
-			new Dictionary<string, ViewerOption>();
+		private Dictionary<string, Option> _options =
+			new Dictionary<string, Option>();
 		#endregion Fields
 
 
@@ -36,15 +36,15 @@ namespace MapView
 		/// <summary>
 		/// Gets the key-collection for this Options dictionary.
 		/// </summary>
-		internal Dictionary<string, ViewerOption>.KeyCollection Keys
+		internal Dictionary<string, Option>.KeyCollection Keys
 		{
 			get { return _options.Keys; }
 		}
 
 		/// <summary>
-		/// Gets/Sets the ViewerOption keyed by a specified key.
+		/// Gets/Sets the Option keyed by a specified key.
 		/// </summary>
-		internal ViewerOption this[string key]
+		internal Option this[string key]
 		{
 			get
 			{
@@ -57,7 +57,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// cTor. An Option-object is created for each of MainView, TileView,
+		/// cTor. An Options-object is created for each of MainView, TileView,
 		/// TopView, and RouteView.
 		/// </summary>
 		internal Options()
@@ -74,15 +74,11 @@ namespace MapView
 		#region Methods (static)
 		internal static void ReadOptions(TextReader sr, Options options)
 		{
-			//XCom.LogFile.WriteLine("Options.ReadOptions()");
-
 			string key;
 
 			KeyvalPair keyval;
 			while ((keyval = Varidia.getKeyvalPair(sr)) != null)
 			{
-				//XCom.LogFile.WriteLine(". READ keyval= " + keyval);
-
 				switch (keyval.Key)
 				{
 					case "{": break;  // starting out
@@ -144,10 +140,10 @@ namespace MapView
 		{
 //			key = key.Replace(" ", String.Empty); // nobody be stupid ...
 
-			ViewerOption option;
+			Option option;
 			if (!_options.ContainsKey(key))
 			{
-				option = new ViewerOption(val, desc, category);
+				option = new Option(val, desc, category);
 				_options[key] = option;
 			}
 			else
@@ -176,13 +172,11 @@ namespace MapView
 		/// <param name="val">if there is no Option object tied to the
 		/// string, an Option will be created with this as its Value</param>
 		/// <returns>the Option object tied to the key</returns>
-		internal ViewerOption GetOption(string key, object val)
+		internal Option GetOption(string key, object val)
 		{
 			if (!_options.ContainsKey(key))
-			{
-				var option = new ViewerOption(val, null, null);
-				_options.Add(key, option);
-			}
+				_options.Add(key, new Option(val));
+
 			return _options[key];
 		}
 
@@ -211,7 +205,7 @@ namespace MapView
 	/// <summary>
 	/// Stores information to be used in the OptionsPropertyGrid.
 	/// </summary>
-	public sealed class ViewerOption
+	public sealed class Option
 	{
 		#region Delegates
 		private delegate object ParseString(string st);
@@ -281,10 +275,10 @@ namespace MapView
 		/// <param name="value"></param>
 		/// <param name="desc"></param>
 		/// <param name="category"></param>
-		internal ViewerOption(
+		internal Option(
 				object value,
-				string desc,
-				string category)
+				string desc     = null,
+				string category = null)
 		{
 			_value      = value;
 			Description = desc;

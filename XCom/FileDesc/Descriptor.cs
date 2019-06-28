@@ -76,7 +76,7 @@ namespace XCom
 												  : SharedSpace.ResourceDirectoryTftd;
 			_dirTerr = SharedSpace.GetShareString(_dirTerr);
 			_dirTerr = (_dirTerr != null) ? _dirTerr = Path.Combine(_dirTerr, GlobalsXC.TerrainDir)
-										  : _dirTerr = String.Empty; // -> the Share can return null if resource-type is notconfigured.
+										  : _dirTerr = String.Empty; // -> the Share can return null if the resource-type is notconfigured.
 		}
 		#endregion
 

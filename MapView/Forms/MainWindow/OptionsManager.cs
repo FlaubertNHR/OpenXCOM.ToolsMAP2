@@ -39,16 +39,12 @@ namespace MapView.Forms.MainWindow
 		/// <param name="fullpath"></param>
 		internal static void LoadOptions(string fullpath)
 		{
-			//XCom.LogFile.WriteLine("");
-			//XCom.LogFile.WriteLine("OptionsManager.LoadOptions() " + fullpath);
-
 			using (var sr = new StreamReader(fullpath))
 			{
 				KeyvalPair keyval;
-				while ((keyval = Varidia.getKeyvalPair(sr)) != null)
+				while ((keyval = Varidia.getKeyvalPair(sr)) != null) // NOTE: These are not keyvals; they are headers in the options file.
 				{
-					//XCom.LogFile.WriteLine(". LOAD keyval= " + keyval);
-					Options.ReadOptions(sr, _optionsTypes[keyval.Key]);
+					Options.ReadOptions(sr, _optionsTypes[keyval.Key]); // NOTE: This reads the options as keyvals.
 				}
 			}
 		}
