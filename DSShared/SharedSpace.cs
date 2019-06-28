@@ -13,14 +13,10 @@ namespace DSShared
 		public const string ResourceDirectoryUfo  = "ResourceDirectoryUfo";
 		public const string ResourceDirectoryTftd = "ResourceDirectoryTftd";
 
-		public const string Palettes              = "Palettes";
-
 		public static string CursorFilePrefix     = "UFOGRAPH" + Path.DirectorySeparatorChar + "CURSOR"; // the cursor is determined in XCMainWindow.cTor
-
-		public static string ScanGfile            = "GEODATA" + Path.DirectorySeparatorChar + "SCANG.DAT";
-
-		public static string LoftfileUfo          = "GEODATA" + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
-		public static string LoftfileTftd         = "TERRAIN" + Path.DirectorySeparatorChar + "LOFTEMPS.DAT"; // *snap*
+		public static string ScanGfile            = "GEODATA"  + Path.DirectorySeparatorChar + "SCANG.DAT";
+		public static string LoftfileUfo          = "GEODATA"  + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
+		public static string LoftfileTftd         = "TERRAIN"  + Path.DirectorySeparatorChar + "LOFTEMPS.DAT"; // *snap* TFTD's LoFTs could be in GEODATA also ... not sure.
 
 
 		private static readonly Dictionary<string, object> _shares =
@@ -60,7 +56,7 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// 
+		/// Gets the value of a specified key as an object.
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
