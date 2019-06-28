@@ -3,7 +3,7 @@ namespace PckView
 	partial class PckViewForm
 	{
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
@@ -40,7 +40,6 @@ namespace PckView
 		private System.Windows.Forms.MenuItem miSeparator3;
 		private System.Windows.Forms.MenuItem miQuit;
 		private System.Windows.Forms.MenuItem miCompare;
-		private System.Windows.Forms.MenuItem miHq2x;
 
 		private System.Windows.Forms.MenuItem miBytesMenu;
 		private System.Windows.Forms.MenuItem miBytes;
@@ -53,7 +52,6 @@ namespace PckView
 		private System.Windows.Forms.MenuItem miHelpMenu;
 		private System.Windows.Forms.MenuItem miHelp;
 		private System.Windows.Forms.MenuItem miAbout;
-		private System.Windows.Forms.MenuItem miConsole;
 
 		private System.Windows.Forms.StatusStrip ss_Status;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_TilesTotal;
@@ -95,7 +93,6 @@ namespace PckView
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.miCompare = new System.Windows.Forms.MenuItem();
-			this.miHq2x = new System.Windows.Forms.MenuItem();
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
 			this.miTransparentMenu = new System.Windows.Forms.MenuItem();
 			this.miTransparent = new System.Windows.Forms.MenuItem();
@@ -104,7 +101,6 @@ namespace PckView
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miAbout = new System.Windows.Forms.MenuItem();
-			this.miConsole = new System.Windows.Forms.MenuItem();
 			this.ss_Status = new System.Windows.Forms.StatusStrip();
 			this.tssl_TilesTotal = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_TileOver = new System.Windows.Forms.ToolStripStatusLabel();
@@ -149,8 +145,7 @@ namespace PckView
 			this.miImportSpritesheet,
 			this.miSeparator3,
 			this.miQuit,
-			this.miCompare,
-			this.miHq2x});
+			this.miCompare});
 			this.miFileMenu.Text = "&File";
 			// 
 			// miCreate
@@ -281,13 +276,6 @@ namespace PckView
 			this.miCompare.Visible = false;
 			this.miCompare.Click += new System.EventHandler(this.OnCompareClick);
 			// 
-			// miHq2x
-			// 
-			this.miHq2x.Index = 19;
-			this.miHq2x.Text = "Hq2x";
-			this.miHq2x.Visible = false;
-			this.miHq2x.Click += new System.EventHandler(this.OnHq2xClick);
-			// 
 			// miPaletteMenu
 			// 
 			this.miPaletteMenu.Enabled = false;
@@ -330,8 +318,7 @@ namespace PckView
 			this.miHelpMenu.Index = 4;
 			this.miHelpMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miHelp,
-			this.miAbout,
-			this.miConsole});
+			this.miAbout});
 			this.miHelpMenu.Text = "&Help";
 			// 
 			// miHelp
@@ -346,13 +333,6 @@ namespace PckView
 			this.miAbout.Index = 1;
 			this.miAbout.Text = "&About";
 			this.miAbout.Click += new System.EventHandler(this.OnAboutClick);
-			// 
-			// miConsole
-			// 
-			this.miConsole.Index = 2;
-			this.miConsole.Text = "Console";
-			this.miConsole.Visible = false;
-			this.miConsole.Click += new System.EventHandler(this.OnConsoleClick);
 			// 
 			// ss_Status
 			// 

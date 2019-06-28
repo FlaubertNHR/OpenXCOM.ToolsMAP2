@@ -1391,23 +1391,6 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// DISABLED. Uses an HQ2x algorithm to display the sprites.
-		/// Called when the mainmenu's file-menu Click event is raised.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnHq2xClick(object sender, EventArgs e) // disabled w/ Visible=FALSE in the designer.
-		{
-//			miPaletteMenu.Enabled = false;
-//			miBytesMenu.Enabled = false;
-//
-//			_totalViewPck.Hq2x();
-//
-//			OnResize(null);
-//			TileTable.Refresh();
-		}
-
-		/// <summary>
 		/// Closes the app.
 		/// Called when the mainmenu's file-menu Click event is raised.
 		/// </summary>
@@ -1516,20 +1499,6 @@ namespace PckView
 		private void OnAboutClick(object sender, EventArgs e)
 		{
 			new About().ShowDialog(this);
-		}
-
-		/// <summary>
-		/// Shows the console.
-		/// Called when the mainmenu's help-menu Click event is raised.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnConsoleClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE
-		{
-//			if (_fconsole.Visible)
-//				_fconsole.BringToFront();
-//			else
-//				_fconsole.Show();
 		}
 
 		private void OnCompareClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE
