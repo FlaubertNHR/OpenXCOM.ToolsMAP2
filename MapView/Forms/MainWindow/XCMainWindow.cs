@@ -139,27 +139,23 @@ namespace MapView
 
 			// TODO: further optimize this loading sequence ....
 
-			SharedSpace.SetShare(
-						SharedSpace.ApplicationDirectory,
-						dirApplication);
-			SharedSpace.SetShare(
-						SharedSpace.SettingsDirectory,
-						dirSettings);
+			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirApplication);
+			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSettings);
 
 			LogFile.WriteLine("App paths cached.");
 
 
-			var pathOptions = new PathInfo(dirSettings, PathInfo.ConfigOptions);
-			SharedSpace.SetShare(PathInfo.ShareOptions, pathOptions);
+			var pathOptions = new PathInfo(dirSettings,   PathInfo.ConfigOptions);
+			SharedSpace.SetShare(PathInfo.ShareOptions,   pathOptions);
 
 			var pathResources = new PathInfo(dirSettings, PathInfo.ConfigResources);
 			SharedSpace.SetShare(PathInfo.ShareResources, pathResources);
 
-			var pathTilesets = new PathInfo(dirSettings, PathInfo.ConfigTilesets);
-			SharedSpace.SetShare(PathInfo.ShareTilesets, pathTilesets);
+			var pathTilesets = new PathInfo(dirSettings,  PathInfo.ConfigTilesets);
+			SharedSpace.SetShare(PathInfo.ShareTilesets,  pathTilesets);
 
-			var pathViewers = new PathInfo(dirSettings, PathInfo.ConfigViewers);
-			SharedSpace.SetShare(PathInfo.ShareViewers, pathViewers);
+			var pathViewers = new PathInfo(dirSettings,   PathInfo.ConfigViewers);
+			SharedSpace.SetShare(PathInfo.ShareViewers,   pathViewers);
 
 			LogFile.WriteLine("PathInfo cached.");
 
@@ -243,6 +239,7 @@ namespace MapView
 
 
 			Options.InitializeOptionsConverters();
+
 			Options = new Options();
 			OptionsManager.setOptionsType(RegistryInfo.MainWindow, Options);
 
@@ -272,7 +269,7 @@ namespace MapView
 			LogFile.WriteLine("Quadrant strings punked.");
 
 			MainMenusManager.SetMenus(menuViewers, menuHelp);
-			MainMenusManager.PopulateMenus(Options);
+			MainMenusManager.PopulateMenus(Options); // needs MainView's 'Options' for subsidiary viewer visibilities.
 			LogFile.WriteLine("MainView menus populated.");
 
 
@@ -281,7 +278,7 @@ namespace MapView
 			LogFile.WriteLine("ViewerFormsManager initialized.");
 
 
-			ViewersManager.Initialize();
+			ViewersManager.Initialize(); // adds each subsidiary viewer's options and Options-type etc.
 
 
 			ViewerFormsManager.TileView.Control.ReloadDescriptorEvent += OnReloadDescriptor;

@@ -15,19 +15,18 @@ namespace MapView.Forms.MainWindow
 
 
 		#region Methods (static)
+		/// <summary>
+		/// Adds an Options-object by (viewer)key to the types-dictionary.
+		/// @note Is used by 'XCMainWindow..cTor' to assign MainView's
+		/// option-type and by 'ViewersManager.SetAsObserver()' to assign
+		/// TileView's, TopView's, and RouteView's option-types.
+		/// </summary>
+		/// <param name="key">a viewer by string - see 'RegistryInfo' constants</param>
+		/// <param name="val">an Options object</param>
 		internal static void setOptionsType(string key, Options val)
 		{
-			_optionsTypes[key] = val;
-		}
-
-		/// <summary>
-		/// Adds an Options-object by (viewer)key.
-		/// </summary>
-		/// <param name="key">a Viewer by string: TileView, TopView, RouteView</param>
-		/// <param name="val">an Options object</param>
-		internal static void Add(string key, Options val)
-		{
-			_optionsTypes.Add(key, val);
+//			_optionsTypes.Add(key, val); <- this would throw if a duplicate is found.
+			_optionsTypes[key] = val; // But since this all happens in MainView's cTor it's not a probl.
 		}
 
 

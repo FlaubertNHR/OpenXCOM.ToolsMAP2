@@ -47,16 +47,16 @@ namespace MapView.Forms.MainWindow
 		{
 			_viewers.Add(f);
 
-			var fobserver = f as IMapObserverProvider; // TopViewForm, RouteViewForm, TileViewForm only.
+			var fobserver = f as IMapObserverProvider; // TileViewForm, TopViewForm, RouteViewForm only.
 			if (fobserver != null)
 			{
-				var control = fobserver.ObserverControl0; // ie. TopView, RouteView, TileView.
+				var control = fobserver.ObserverControl0; // ie. TileView, TopView, RouteView.
 				control.LoadControl0Options();
 
 				var regInfo = new RegistryInfo(viewer, f); // subscribe to Load and Closing events.
 				regInfo.RegisterProperties();
 
-				OptionsManager.Add(viewer, control.Options);
+				OptionsManager.setOptionsType(viewer, control.Options);
 			}
 		}
 
