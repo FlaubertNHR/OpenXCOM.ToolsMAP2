@@ -14,7 +14,15 @@ namespace DSShared.Windows
 	/// A class to help facilitate the saving and loading of values into the
 	/// registry in a central location.
 	/// NOTE: MapViewII does not use the Windows Registry at all - this info is
-	/// rather for initialization/configuration files.
+	/// rather for the settings file "MapViewers.yml". That is, think of
+	/// "settings\MapViewers.yml" as MapViewII's registry.
+	/// 
+	/// TODO: Stop reading and writing "MapViewers.yml" per viewer. Instead,
+	/// load its data to a static class-object and maintain it there; doing this
+	/// requires instantiating said object when any of MapView, McdView, and/or
+	/// PckView load - and writing its data back to "MapViewers.yml" when the
+	/// app that instantited it closes. Special consideration is likely required
+	/// if McdView or PckView is invoked via TileView ....
 	/// </summary>
 	public sealed class RegistryInfo
 	{
@@ -62,7 +70,7 @@ namespace DSShared.Windows
 		/// <summary>
 		/// cTor. Uses the specified string as a key to its Form.
 		/// </summary>
-		/// <param name="viewer">the label of the viewer to save/load</param>
+		/// <param name="viewer">the type-label of the viewer to save/load</param>
 		/// <param name="f">the form-object corresponding to the label</param>
 		public RegistryInfo(string viewer, Form f)
 		{
@@ -272,10 +280,11 @@ namespace DSShared.Windows
 						string line = sr.ReadLine().TrimEnd();
 						//DSLogFile.WriteLine(". line= " + line);
 
-						// At present, MainView and PckView are the only viewers that roll their own metrics.
+						// At present, MainView and McdView and PckView are the
+						// only viewers that roll their own metrics.
 						// - see the XCMainWindow cTor & FormClosing eventcalls.
+						// - see the McdviewF     cTor & FormClosing eventcalls.
 						// - see the PckViewForm  cTor & FormClosing eventcalls.
-						// + McdView ...
 
 						if (String.Equals(line, _viewer + ":", StringComparison.Ordinal))
 						{

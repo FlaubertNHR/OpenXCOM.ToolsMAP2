@@ -474,7 +474,7 @@ namespace MapView
 			this.csSplitter.ControlToHide = this.tvMaps;
 			this.csSplitter.Location = new System.Drawing.Point(240, 0);
 			this.csSplitter.MinimumSize = new System.Drawing.Size(5, 5);
-			this.csSplitter.Name = "cSplitList";
+			this.csSplitter.Name = "csSplitter";
 			this.csSplitter.Size = new System.Drawing.Size(8, 454);
 			this.csSplitter.TabIndex = 1;
 			this.csSplitter.TabStop = false;

@@ -47,6 +47,8 @@ My Changes (well that was relevant..)
 */
 #endregion
 
+// TODO: Make this go away.
+
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -57,49 +59,32 @@ using System.Windows.Forms;
 namespace DSShared.Windows
 {
 	/// <summary>
-	/// Specifies how the outline of the collapsible splitter is drawn
+	/// Specifies how the outline of the collapsible splitter is drawn.
 	/// </summary>
 	public enum DotStyle
 	{
-		/// <summary>
-		/// </summary>
 		Mozilla,
-		/// <summary>
-		/// </summary>
 		XP,
-		/// <summary>
-		/// </summary>
 		Win9X,
-		/// <summary>
-		/// </summary>
 		DoubleDots,
-		/// <summary>
-		/// </summary>
 		Lines
 	}
 
 	/// <summary>
-	/// Splitter states
+	/// Splitter states.
 	/// </summary>
 	public enum SplitterState
 	{
-		/// <summary>
-		/// </summary>
 		Collapsed,
-		/// <summary>
-		/// </summary>
 		Expanding,
-		/// <summary>
-		/// </summary>
 		Expanded,
-		/// <summary>
-		/// </summary>
 		Collapsing
 	}
 
 
 	/// <summary>
-	/// A custom collapsible splitter that can resize, hide and show associated form controls.
+	/// A custom collapsible splitter that can resize, hide and show associated
+	/// form controls.
 	/// </summary>
 	[ToolboxBitmap(typeof(CollapsibleSplitter))]
 	[DesignerAttribute(typeof(CollapsibleSplitterDesigner))]
@@ -128,7 +113,7 @@ namespace DSShared.Windows
 		private const int TriHeight = 6;
 
 		private const int TriDotPad = 5;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -146,7 +131,7 @@ namespace DSShared.Windows
 
 //		private Brush _brushBack;
 		private Pen _penBack;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -220,7 +205,7 @@ namespace DSShared.Windows
 		{ get; set; }
 
 		/// <summary>
-		/// Determines if the collapse and expanding actions will be animated
+		/// Determines if the collapse and expanding actions will be animated.
 		/// </summary>
 		[Category("Collapsing Options"), DefaultValue(false),
 		Description("Determines if the collapse and expanding actions will be animated")]
@@ -229,7 +214,7 @@ namespace DSShared.Windows
 
 		private int _aniDelay = 20;
 		/// <summary>
-		/// The delay in millisenconds between animation steps
+		/// The delay in milliseconds between animation steps.
 		/// </summary>
 		[Category("Collapsing Options"), DefaultValue(20),
 		Description("The delay in millisenconds between animation steps")]
@@ -241,7 +226,7 @@ namespace DSShared.Windows
 
 		private int _aniStep = 20;
 		/// <summary>
-		/// The amount of pixels moved in each animation step
+		/// The amount of pixels moved in each animation step.
 		/// </summary>
 		[Category("Collapsing Options"), DefaultValue(20),
 		Description("The amount of pixels moved in each animation step")]
@@ -252,7 +237,8 @@ namespace DSShared.Windows
 		}
 
 		/// <summary>
-		/// When true the entire parent form will be expanded and collapsed, otherwise just the contol to expand will be changed
+		/// When true the entire parent form will be expanded and collapsed,
+		/// otherwise just the contol to expand will be changed.
 		/// </summary>
 		[Category("Collapsing Options"), DefaultValue(false),
 		Description("When true the entire parent form will be expanded and collapsed, otherwise just the contol to expand will be changed")]
@@ -262,7 +248,8 @@ namespace DSShared.Windows
 		// Border added in version 1.3
 		private Border3DStyle borderStyle = Border3DStyle.Flat;
 		/// <summary>
-		/// An optional border style to paint on the control. Set to Flat for no border
+		/// An optional border style to paint on the control. Set to Flat for no
+		/// border.
 		/// </summary>
 		[Category("Custom Appearance"),
 		DefaultValue(Border3DStyle.Adjust),
@@ -287,12 +274,23 @@ namespace DSShared.Windows
 		}
 
 		/// <summary>
-		/// Gets or sets which <see cref="T:System.Windows.Forms.Splitter"></see> borders are docked to its parent control and determines how a <see cref="T:System.Windows.Forms.Splitter"></see> is resized with its parent.
+		/// Gets or sets which <see cref="T:System.Windows.Forms.Splitter" />
+		/// borders are docked to its parent control and determines how a
+		/// <see cref="T:System.Windows.Forms.Splitter" /> is resized with its
+		/// parent.
 		/// </summary>
 		/// <value></value>
-		/// <returns>One of the <see cref="T:System.Windows.Forms.DockStyle"></see> values. The default is <see cref="F:System.Windows.Forms.DockStyle.Left"></see>.</returns>
-		/// <exception cref="T:System.ArgumentException"><see cref="P:System.Windows.Forms.Splitter.Dock"></see> is not set to one of the valid <see cref="T:System.Windows.Forms.DockStyle"></see> values.</exception>
-		/// <PermissionSet><IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/><IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/><IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true"/></PermissionSet>
+		/// <returns>One of the <see cref="T:System.Windows.Forms.DockStyle" />
+		/// values. The default is <see cref="F:System.Windows.Forms.DockStyle.Left" />.</returns>
+		/// <exception cref="T:System.ArgumentException"><see cref="P:System.Windows.Forms.Splitter.Dock" />
+		/// is not set to one of the valid <see cref="T:System.Windows.Forms.DockStyle" />
+		/// values.</exception>
+		/// <PermissionSet>
+		///     <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+		///     <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+		///     <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+		///     <IPermission class="System.Diagnostics.PerformanceCounterPermission, System, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+		/// </PermissionSet>
 		public new DockStyle Dock
 		{
 			get { return base.Dock; }
@@ -338,12 +336,13 @@ namespace DSShared.Windows
 				OnResize(EventArgs.Empty);
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:DSShared.Windows.CollapsibleSplitter"/> class.
+		/// Initializes a new instance of the
+		/// <see cref="T:DSShared.Windows.CollapsibleSplitter" /> class.
 		/// </summary>
 		public CollapsibleSplitter()
 		{
@@ -365,16 +364,16 @@ namespace DSShared.Windows
 
 			MinimumSize = new Size(5, 5);
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods (override)
 		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.HandleCreated"></see>
+		/// Raises the <see cref="E:System.Windows.Forms.Control.HandleCreated" />
 		/// event.
 		/// </summary>
-		/// <param name="e">An <see cref="T:System.EventArgs"></see> that
-		/// contains the event data.</param>
+		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains
+		/// the event data.</param>
 		protected override void OnHandleCreated(EventArgs e)
 		{
 			base.OnHandleCreated(e);
@@ -387,10 +386,10 @@ namespace DSShared.Windows
 		}
 
 		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseDown"></see>
+		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseDown" />
 		/// event.
 		/// </summary>
-		/// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"></see>
+		/// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" />
 		/// that contains the event data.</param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
@@ -399,10 +398,10 @@ namespace DSShared.Windows
 		}
 
 		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.Resize"></see> event.
+		/// Raises the <see cref="E:System.Windows.Forms.Control.Resize" /> event.
 		/// </summary>
-		/// <param name="e">An <see cref="T:System.EventArgs"></see> that
-		/// contains the event data.</param>
+		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains
+		/// the event data.</param>
 		protected override void OnResize(EventArgs e)
 		{
 			if (Dock == DockStyle.Left || Dock == DockStyle.Right)
@@ -420,10 +419,10 @@ namespace DSShared.Windows
 		// This method was updated in version 1.11 to fix a flickering problem
 		// discovered by John O'Byrne.
 		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove"></see>
+		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove" />
 		/// event.
 		/// </summary>
-		/// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"></see>
+		/// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs" />
 		/// that contains the event data.</param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
@@ -471,11 +470,11 @@ namespace DSShared.Windows
 		}
 
 		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseLeave"></see>
+		/// Raises the <see cref="E:System.Windows.Forms.Control.MouseLeave" />
 		/// event.
 		/// </summary>
-		/// <param name="e">An <see cref="T:System.EventArgs"></see> that
-		/// contains the event data.</param>
+		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains
+		/// the event data.</param>
 		protected override void OnMouseLeave(EventArgs e)
 		{
 			_hot = false; // ensure that the hot state is removed
@@ -483,11 +482,11 @@ namespace DSShared.Windows
 		}
 
 		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.Click"></see>
+		/// Raises the <see cref="E:System.Windows.Forms.Control.Click" />
 		/// event.
 		/// </summary>
-		/// <param name="e">An <see cref="T:System.EventArgs"></see> that
-		/// contains the event data.</param>
+		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains
+		/// the event data.</param>
 		protected override void OnClick(EventArgs e)
 		{
 			switch (CurrentState)
@@ -611,7 +610,7 @@ namespace DSShared.Windows
 			}
 			Refresh();
 		}
-		#endregion
+		#endregion Methods (override)
 
 
 		#region Implementation
@@ -736,14 +735,14 @@ namespace DSShared.Windows
 					break;
 			}
 		}
-		#endregion
+		#endregion Animation Timer Tick
 
 
 		// OnPaint is now an override rather than an event in version 1.1
 		/// <summary>
-		/// Raises the <see cref="E:System.Windows.Forms.Control.Paint"></see> event.
+		/// Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
 		/// </summary>
-		/// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs"></see>
+		/// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs" />
 		/// that contains the event data.</param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
@@ -1281,29 +1280,17 @@ namespace DSShared.Windows
 		private static Color CalculateColor(Color front, Color back, int alpha)
 		{
 			// solid color obtained as a result of alpha-blending
-			Color frontColor = Color.FromArgb(255, front);
-			Color backColor = Color.FromArgb(255, back);
+			Color colorf = Color.FromArgb(255, front);
+			Color colorb = Color.FromArgb(255, back);
 
-			float frontRed   = frontColor.R;
-			float frontGreen = frontColor.G;
-			float frontBlue  = frontColor.B;
+			float fRed   = colorf.R * alpha / 255 + colorb.R * ((float)(255 - alpha) / 255);
+			float fGreen = colorf.G * alpha / 255 + colorb.G * ((float)(255 - alpha) / 255);
+			float fBlue  = colorf.B * alpha / 255 + colorb.B * ((float)(255 - alpha) / 255);
 
-			float backRed   = backColor.R;
-			float backGreen = backColor.G;
-			float backBlue  = backColor.B;
-
-			float fRed   = frontRed   * alpha / 255 + backRed   * ((float)(255 - alpha) / 255);
-			float fGreen = frontGreen * alpha / 255 + backGreen * ((float)(255 - alpha) / 255);
-			float fBlue  = frontBlue  * alpha / 255 + backBlue  * ((float)(255 - alpha) / 255);
-
-			byte newRed   = (byte)fRed;
-			byte newGreen = (byte)fGreen;
-			byte newBlue  = (byte)fBlue;
-
-			return Color.FromArgb(newRed, newGreen, newBlue);
+			return Color.FromArgb((int)fRed, (int)fGreen, (int)fBlue);
 		}
 
-		#endregion
+		#endregion Implementation
 	}
 
 
@@ -1316,6 +1303,7 @@ namespace DSShared.Windows
 			System.Windows.Forms.Design.ControlDesigner
 	{
 		/// <summary>
+		/// 
 		/// </summary>
 		/// <param name="properties"></param>
 		protected override void PreFilterProperties(System.Collections.IDictionary properties)
