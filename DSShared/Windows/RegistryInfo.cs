@@ -53,9 +53,9 @@ namespace DSShared.Windows
 		private const string PropHeight = "Height";
 
 
-		private static string _dir;
 		private static string _pfe;
 		private static string _pfeT;
+		private static bool _inited;
 		#endregion Fields (static)
 
 
@@ -90,17 +90,22 @@ namespace DSShared.Windows
 
 
 		#region Methods (static)
-		public static void setStaticPaths()
+		public static void setStaticPaths(string dir)
 		{
-			_dir = Path.Combine(
-							Path.GetDirectoryName(Application.ExecutablePath),
-							PathInfo.SettingsDirectory);
-			_pfe = Path.Combine(
-							_dir,
-							PathInfo.ConfigViewers);
-			_pfeT = Path.Combine(
-							_dir,
-							PathInfo.ConfigViewersOld);
+			if (!_inited)	// ie. don't let McdView or PckView re-init
+			{				// these if they are invoked via TileView.
+				_inited = true;
+
+				dir = Path.Combine(
+								dir,
+								PathInfo.SettingsDirectory);
+				_pfe = Path.Combine(
+								dir,
+								PathInfo.ConfigViewers);
+				_pfeT = Path.Combine(
+								dir,
+								PathInfo.ConfigViewersOld);
+			}
 		}
 
 		/// <summary>

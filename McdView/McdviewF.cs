@@ -229,9 +229,12 @@ namespace McdView
 		/// </summary>
 		public McdviewF()
 		{
+			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 #if DEBUG
-			LogFile.SetLogFilePath(Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
+			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
 #endif
+
+			RegistryInfo.setStaticPaths(dirAppL);
 
 			isRunT = true;
 			InitializeComponent();

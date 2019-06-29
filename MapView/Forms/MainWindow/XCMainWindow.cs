@@ -129,32 +129,30 @@ namespace MapView
 		{
 			Globals.RT = true; // is RunTime (ie. not DesignMode)
 
-			string dirApplication = Path.GetDirectoryName(Application.ExecutablePath);
-			string dirSettings    = Path.Combine(dirApplication, PathInfo.SettingsDirectory);
+			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
+			string dirSetT = Path.Combine(dirAppL, PathInfo.SettingsDirectory);
 #if DEBUG
-			LogFile.SetLogFilePath(dirApplication); // creates a logfile/ wipes the old one.
+			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
 #endif
 
 			LogFile.WriteLine("Starting MAIN MapView window ...");
 
-			// TODO: further optimize this loading sequence ....
-
-			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirApplication);
-			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSettings);
+			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL);
+			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSetT);
 
 			LogFile.WriteLine("App paths cached.");
 
 
-			var pathOptions = new PathInfo(dirSettings,   PathInfo.ConfigOptions);
+			var pathOptions = new PathInfo(dirSetT,       PathInfo.ConfigOptions);
 			SharedSpace.SetShare(PathInfo.ShareOptions,   pathOptions);
 
-			var pathResources = new PathInfo(dirSettings, PathInfo.ConfigResources);
+			var pathResources = new PathInfo(dirSetT,     PathInfo.ConfigResources);
 			SharedSpace.SetShare(PathInfo.ShareResources, pathResources);
 
-			var pathTilesets = new PathInfo(dirSettings,  PathInfo.ConfigTilesets);
+			var pathTilesets = new PathInfo(dirSetT,      PathInfo.ConfigTilesets);
 			SharedSpace.SetShare(PathInfo.ShareTilesets,  pathTilesets);
 
-			var pathViewers = new PathInfo(dirSettings,   PathInfo.ConfigViewers);
+			var pathViewers = new PathInfo(dirSetT,       PathInfo.ConfigViewers);
 			SharedSpace.SetShare(PathInfo.ShareViewers,   pathViewers);
 
 			LogFile.WriteLine("PathInfo cached.");
@@ -162,7 +160,7 @@ namespace MapView
 
 			// Check if MapTilesets.yml and MapResources.yml exist yet, show the
 			// Configuration window if not.
-			// NOTE: MapResources.yml and MapTilesets.yml are created by ConfigurationForm
+			// NOTE: MapResources.yml and MapTilesets.yml are created by 'ConfigurationForm'
 			if (!pathResources.FileExists() || !pathTilesets.FileExists())
 			{
 				LogFile.WriteLine("Resources or Tilesets file does not exist: run configurator.");
@@ -191,6 +189,7 @@ namespace MapView
 			}
 			else
 				LogFile.WriteLine("Viewers file exists.");
+
 
 
 			InitializeComponent();
@@ -238,7 +237,12 @@ namespace MapView
 			FormClosing += OnSaveOptionsFormClosing;
 
 
+
+			RegistryInfo.setStaticPaths(dirAppL);
+			LogFile.WriteLine("Registry initialized.");
+
 			Options.InitializeOptionsConverters();
+			LogFile.WriteLine("OptionsConverters initialized.");
 
 			Options = new Options();
 			OptionsManager.setOptionsType(RegistryInfo.MainWindow, Options);
@@ -250,7 +254,7 @@ namespace MapView
 			MainViewUnderlay = MainViewUnderlay.that; // create MainViewUnderlay and MainViewOverlay. or so ...
 			MainViewUnderlay.Dock = DockStyle.Fill;
 			MainViewUnderlay.BorderStyle = BorderStyle.Fixed3D;
-			LogFile.WriteLine("MainView panel instantiated.");
+			LogFile.WriteLine("MainView panels instantiated.");
 
 
 			Palette.UfoBattle .SetTransparent(true);
@@ -566,7 +570,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Loads (a) MainView's screen-size and -position from YAML,
+		/// Loads (a) MainView's screen-location and -size from YAML,
 		///       (b) settings in MainView's Options screen.
 		/// </summary>
 		private void LoadOptions()

@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using DSShared.Windows;
+
 using PckView.Forms.SpriteBytes;
 
 using XCom;
@@ -129,6 +131,9 @@ namespace PckView
 		/// </summary>
 		public PckViewForm()
 		{
+			RegistryInfo.setStaticPaths(Path.GetDirectoryName(Application.ExecutablePath));
+
+
 			InitializeComponent();
 
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
