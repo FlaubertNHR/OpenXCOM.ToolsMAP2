@@ -1,7 +1,8 @@
-# delete this file if things go wrong with your window positions and/or sizes.
+# delete this file if things go wrong with your window locations and/or sizes.
 # It will be recreated from a hardcoded manifest the next time the program runs.
 #
-# NOTE: Do *not* add extra lines or anything to the format; it's not that robust.
+# NOTE: Do *not* add extra lines or anything to the format; it's not that
+# robust.
 #
 MainView:
   left: 110

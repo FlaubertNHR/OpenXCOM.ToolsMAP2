@@ -336,9 +336,6 @@
     <EmbeddedResource Include="Forms\OtherForms\ScanGViewer.resx">
       <DependentUpon>ScanGViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\TilesetEditor.resx">
-      <DependentUpon>TilesetEditor.Designer.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MapObservers\RouteView\RouteView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>RouteView.cs</DependentUpon>
@@ -353,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OtherForms\TilesetEditor.resx">
+      <DependentUpon>TilesetEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>

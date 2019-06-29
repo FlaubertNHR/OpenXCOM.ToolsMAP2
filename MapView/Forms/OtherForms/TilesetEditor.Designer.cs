@@ -633,7 +633,7 @@
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(600, 400);
 			this.Name = "TilesetEditor";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.pnlBottom.ResumeLayout(false);
 			this.pnlTop.ResumeLayout(false);
 			this.gbTerrains.ResumeLayout(false);

@@ -27,7 +27,6 @@ namespace DSShared.Windows
 	public sealed class RegistryInfo
 	{
 		#region Fields (static)
-		// viewer labels (keys)
 		public const string MainWindow    = "MainWindow"; // ... is for old parsing Options routine.
 
 		public const string MainView      = "MainView";
@@ -47,16 +46,21 @@ namespace DSShared.Windows
 		public const string McdView       = "McdView";
 //		public const string CopyPanel     = "CopyPanel"; // <- TODO
 
-		// viewer property metrics
+
 		private const string PropLeft   = "Left";
 		private const string PropTop    = "Top";
 		private const string PropWidth  = "Width";
 		private const string PropHeight = "Height";
+
+
+		private static string _dir;
+		private static string _pfe;
+		private static string _pfeT;
 		#endregion Fields (static)
 
 
 		#region Fields
-		private readonly string _viewer;
+		private readonly string _label;
 		private readonly Form _f;
 
 		private readonly Dictionary<string, PropertyInfo> _info =
@@ -68,23 +72,37 @@ namespace DSShared.Windows
 
 		#region cTor
 		/// <summary>
-		/// cTor. Uses the specified string as a key to its Form.
+		/// cTor. Uses a specified string as the key to its Form.
+		/// IMPORTANT: Ensure that affected Forms have a manual startposition
+		/// set in their designers.
 		/// </summary>
-		/// <param name="viewer">the type-label of the viewer to save/load</param>
+		/// <param name="label">the label of the Form to save/load</param>
 		/// <param name="f">the form-object corresponding to the label</param>
-		public RegistryInfo(string viewer, Form f)
+		public RegistryInfo(string label, Form f)
 		{
-			_viewer = viewer;
-
+			_label = label;
 			_f = f;
-			_f.StartPosition = FormStartPosition.Manual;
-			_f.Load         += OnLoad;
-			_f.FormClosing  += OnFormClosing;
+
+			_f.Load        += OnLoad;
+			_f.FormClosing += OnFormClosing;
 		}
 		#endregion cTor
 
 
 		#region Methods (static)
+		public static void setStaticPaths()
+		{
+			_dir = Path.Combine(
+							Path.GetDirectoryName(Application.ExecutablePath),
+							PathInfo.SettingsDirectory);
+			_pfe = Path.Combine(
+							_dir,
+							PathInfo.ConfigViewers);
+			_pfeT = Path.Combine(
+							_dir,
+							PathInfo.ConfigViewersOld);
+		}
+
 		/// <summary>
 		/// All this would have been so much simpler/easier if you'd just used
 		/// each form's Name variable instead of arbitrary concoctions. Ditto
@@ -168,26 +186,20 @@ namespace DSShared.Windows
 		/// <param name="e"></param>
 		private void OnLoad(object sender, EventArgs e)
 		{
-			string dirSettings = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string pfeViewers  = Path.Combine(
-											dirSettings,
-											PathInfo.ConfigViewers);
-			if (File.Exists(pfeViewers))
+			if (File.Exists(_pfe))
 			{
-				using (var sr = new StreamReader(File.OpenRead(pfeViewers)))
+				using (var sr = new StreamReader(File.OpenRead(_pfe)))
 				{
-					var fileViewers = new YamlStream();
-					fileViewers.Load(sr);
+					var file = new YamlStream();
+					file.Load(sr);
 
-					var nodeRoot = (YamlMappingNode)fileViewers.Documents[0].RootNode; // TODO: Error handling. ->
-					foreach (var node in nodeRoot.Children)
+					var root = (YamlMappingNode)file.Documents[0].RootNode; // TODO: Error handling. ->
+					foreach (var node in root.Children)
 					{
-						string viewer = ((YamlScalarNode)node.Key).Value;
-						if (String.Equals(viewer, _viewer, StringComparison.Ordinal))
+						string label = ((YamlScalarNode)node.Key).Value;
+						if (String.Equals(label, _label, StringComparison.Ordinal))
 						{
-							LoadWindowMetrics((YamlMappingNode)nodeRoot.Children[new YamlScalarNode(viewer)]);
+							LoadWindowMetrics((YamlMappingNode)root.Children[new YamlScalarNode(label)]);
 							break;
 						}
 					}
@@ -215,17 +227,17 @@ namespace DSShared.Windows
 				val = Int32.Parse(keyval.Value.ToString(), cultureInfo);
 				//DSLogFile.WriteLine(". val= " + val);
 
-				var rectScreen = Screen.GetWorkingArea(new System.Drawing.Point(val, 0));
+				var rect = Screen.GetWorkingArea(new System.Drawing.Point(val, 0));
 
 				switch (key) // check to ensure that viewer is at least partly onscreen.
 				{
 					case PropLeft:
-						if (!rectScreen.Contains(val + 200, 0))
+						if (!rect.Contains(val + 200, 0))
 							val = 100;
 						break;
 
 					case PropTop:
-						if (!rectScreen.Contains(0, val + 100))
+						if (!rect.Contains(0, val + 100))
 							val = 50;
 						break;
 				}
@@ -249,28 +261,18 @@ namespace DSShared.Windows
 		/// <param name="e"></param>
 		private void OnFormClosing(object sender, EventArgs e)
 		{
-			//DSLogFile.WriteLine("OnClose _viewer= " + _viewer);
+			//DSLogFile.WriteLine("OnClose _label= " + _label);
 
 			_f.WindowState = FormWindowState.Normal;
 
 //			if (_saveOnClose)
 //			{
-			string dirSettings   = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string pfeViewers    = Path.Combine(
-											dirSettings,
-											PathInfo.ConfigViewers);
-			string pfeViewersOld = Path.Combine(
-											dirSettings,
-											PathInfo.ConfigViewersOld);
-
-			if (File.Exists(pfeViewers))
+			if (File.Exists(_pfe))
 			{
-				File.Copy(pfeViewers, pfeViewersOld, true);
+				File.Copy(_pfe, _pfeT, true);
 
-				using (var sr = new StreamReader(File.OpenRead(pfeViewersOld)))	// but now use dst as src ->
-				using (var fs = new FileStream(pfeViewers, FileMode.Create))	// overwrite previous config.
+				using (var sr = new StreamReader(File.OpenRead(_pfeT)))	// but now use dst as src ->
+				using (var fs = new FileStream(_pfe, FileMode.Create))	// overwrite previous config.
 				using (var sw = new StreamWriter(fs))
 				{
 					bool found = false;
@@ -286,7 +288,7 @@ namespace DSShared.Windows
 						// - see the McdviewF     cTor & FormClosing eventcalls.
 						// - see the PckViewForm  cTor & FormClosing eventcalls.
 
-						if (String.Equals(line, _viewer + ":", StringComparison.Ordinal))
+						if (String.Equals(line, _label + ":", StringComparison.Ordinal))
 						{
 							found = true;
 
@@ -300,7 +302,7 @@ namespace DSShared.Windows
 
 							sw.WriteLine("  left: "   + Math.Max(0, _f.Location.X)); // =Left
 							sw.WriteLine("  top: "    + Math.Max(0, _f.Location.Y)); // =Top
-							sw.WriteLine("  width: "  + _f.Width);
+							sw.WriteLine("  width: "  + _f.Width); // TODO: Use ClientSize.Width/Height instead of form width/height
 							sw.WriteLine("  height: " + _f.Height);
 						}
 						else
@@ -309,15 +311,15 @@ namespace DSShared.Windows
 
 					if (!found)
 					{
-						sw.WriteLine(_viewer + ":");
+						sw.WriteLine(_label + ":");
 
 						sw.WriteLine("  left: "   + Math.Max(0, _f.Location.X)); // =Left
 						sw.WriteLine("  top: "    + Math.Max(0, _f.Location.Y)); // =Top
-						sw.WriteLine("  width: "  + _f.Width);
+						sw.WriteLine("  width: "  + _f.Width); // TODO: Use ClientSize.Width/Height instead of form width/height
 						sw.WriteLine("  height: " + _f.Height);
 					}
 				}
-				File.Delete(pfeViewersOld);
+				File.Delete(_pfeT);
 			}
 //			}
 		}

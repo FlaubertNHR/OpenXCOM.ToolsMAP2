@@ -28,8 +28,8 @@
 
 		#region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -105,6 +105,7 @@
 			this.KeyPreview = true;
 			this.Name = "TopRouteViewForm";
 			this.ShowInTaskbar = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Top/Route Views";
 			this.tabControl.ResumeLayout(false);
 			this.tp_Top.ResumeLayout(false);
