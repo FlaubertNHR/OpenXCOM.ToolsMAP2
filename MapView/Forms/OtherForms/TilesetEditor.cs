@@ -209,9 +209,17 @@ namespace MapView
 
 			TileGroup = ResourceInfo.TileGroupManager.TileGroups[Group] as TileGroup;
 
-			string keydir = (TileGroup.Pal == Palette.UfoBattle) ? SharedSpace.ResourceDirectoryUfo
-																 : SharedSpace.ResourceDirectoryTftd;
-			BasepathConfigurator = SharedSpace.GetShareString(keydir);
+			string key = null;
+			switch (TileGroup.GroupType)
+			{
+				case GameType.Ufo:
+					key = SharedSpace.ResourceDirectoryUfo;
+					break;
+				case GameType.Tftd:
+					key = SharedSpace.ResourceDirectoryTftd;
+					break;
+			}
+			BasepathConfigurator = SharedSpace.GetShareString(key);
 			rb_ConfigBasepath.Checked = true;
 
 			switch (InputBoxType = boxType)
@@ -270,17 +278,7 @@ namespace MapView
 
 					btn_GlobalTerrains.Enabled = false;
 
-					string keyBaseDir = null;
-					switch (TileGroup.GroupType)
-					{
-						case GameType.Ufo:
-							keyBaseDir = SharedSpace.ResourceDirectoryUfo;
-							break;
-						case GameType.Tftd:
-							keyBaseDir = SharedSpace.ResourceDirectoryTftd;
-							break;
-					}
-					TilesetBasepath = SharedSpace.GetShareString(keyBaseDir);
+					TilesetBasepath = BasepathConfigurator;
 					break;
 			}
 			FileAddType = AddType.MapNone;

@@ -288,7 +288,7 @@ namespace MapView
 			MessageBox.Show(
 						this,
 						error,
-						"Error",
+						" Error",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,
@@ -304,7 +304,7 @@ namespace MapView
 			MessageBox.Show(
 						this,
 						info,
-						"Notice",
+						" Notice",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Information,
 						MessageBoxDefaultButton.Button1,

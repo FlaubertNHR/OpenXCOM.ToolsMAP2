@@ -626,11 +626,11 @@
 			this.Controls.Add(this.pnlTop);
 			this.Controls.Add(this.pnlBottom);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(600, 400);
 			this.Name = "TilesetEditor";
+			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.pnlBottom.ResumeLayout(false);
 			this.pnlTop.ResumeLayout(false);

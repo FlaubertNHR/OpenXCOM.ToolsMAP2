@@ -16,6 +16,7 @@ using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;
 
 using XCom;
+using XCom.Interfaces;
 using XCom.Interfaces.Base;
 using XCom.Resources.Map.RouteData;
 
@@ -2258,24 +2259,27 @@ namespace MapView
 		{
 			//LogFile.WriteLine("XCMainWindow.OnAddTilesetClick");
 
-			string labelGroup    = tvMaps.SelectedNode.Parent.Text;
-			string labelCategory = tvMaps.SelectedNode.Text;
-			string labelTileset  = String.Empty;
-
-			using (var f = new TilesetEditor(
-										TilesetEditor.BoxType.AddTileset,
-										labelGroup,
-										labelCategory,
-										labelTileset))
+			string labelGroup = tvMaps.SelectedNode.Parent.Text;
+			if (isGrouptypeConfigured(labelGroup))
 			{
-				if (f.ShowDialog(this) == DialogResult.OK)
+				string labelCategory = tvMaps.SelectedNode.Text;
+				string labelTileset  = String.Empty;
+
+				using (var f = new TilesetEditor(
+											TilesetEditor.BoxType.AddTileset,
+											labelGroup,
+											labelCategory,
+											labelTileset))
 				{
-					//LogFile.WriteLine(". f.Tileset= " + f.Tileset);
+					if (f.ShowDialog(this) == DialogResult.OK)
+					{
+						//LogFile.WriteLine(". f.Tileset= " + f.Tileset);
 
-					MaptreeChanged = true;
+						MaptreeChanged = true;
 
-					CreateTree();
-					SelectTilesetNode(f.Tileset, labelCategory, labelGroup);
+						CreateTree();
+						SelectTilesetNode(f.Tileset, labelCategory, labelGroup);
+					}
 				}
 			}
 		}
@@ -2289,26 +2293,71 @@ namespace MapView
 		{
 			//LogFile.WriteLine("XCMainWindow.OnEditTilesetClick");
 
-			string labelGroup    = tvMaps.SelectedNode.Parent.Parent.Text;
-			string labelCategory = tvMaps.SelectedNode.Parent.Text;
-			string labelTileset  = tvMaps.SelectedNode.Text;
-
-			using (var f = new TilesetEditor(
-										TilesetEditor.BoxType.EditTileset,
-										labelGroup,
-										labelCategory,
-										labelTileset))
+			string labelGroup = tvMaps.SelectedNode.Parent.Parent.Text;
+			if (isGrouptypeConfigured(labelGroup))
 			{
-				if (f.ShowDialog(this) == DialogResult.OK)
+				string labelCategory = tvMaps.SelectedNode.Parent.Text;
+				string labelTileset  = tvMaps.SelectedNode.Text;
+
+				using (var f = new TilesetEditor(
+											TilesetEditor.BoxType.EditTileset,
+											labelGroup,
+											labelCategory,
+											labelTileset))
 				{
-					//LogFile.WriteLine(". f.Tileset= " + f.Tileset);
+					if (f.ShowDialog(this) == DialogResult.OK)
+					{
+						//LogFile.WriteLine(". f.Tileset= " + f.Tileset);
 
-					MaptreeChanged = true;
+						MaptreeChanged = true;
 
-					CreateTree();
-					SelectTilesetNode(f.Tileset, labelCategory, labelGroup);
+						CreateTree();
+						SelectTilesetNode(f.Tileset, labelCategory, labelGroup);
+					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// Checks that the group-type is configured so that the TilesetEditor
+		/// doesn't explode. Shows an error if not configured.
+		/// </summary>
+		/// <param name="labelGroup">the label of the group</param>
+		/// <returns>true if okay to proceed</returns>
+		private bool isGrouptypeConfigured(string labelGroup)
+		{
+			var TileGroup = ResourceInfo.TileGroupManager.TileGroups[labelGroup] as TileGroup;
+
+			string key = null;
+			switch (TileGroup.GroupType)
+			{
+				case GameType.Ufo:
+					key = SharedSpace.ResourceDirectoryUfo;
+					break;
+				case GameType.Tftd:
+					key = SharedSpace.ResourceDirectoryTftd;
+					break;
+			}
+
+			if (SharedSpace.GetShareString(key) == null)
+			{
+				switch (TileGroup.GroupType)
+				{
+					case GameType.Ufo:  key = "UFO";  break;
+					case GameType.Tftd: key = "TFTD"; break;
+				}
+
+				MessageBox.Show(
+							this,
+							key + " is not configured.",
+							" Error",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error,
+							MessageBoxDefaultButton.Button1,
+							0);
+				return false;
+			}
+			return true;
 		}
 
 		/// <summary>
