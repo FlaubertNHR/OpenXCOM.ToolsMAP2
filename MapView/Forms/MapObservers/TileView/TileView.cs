@@ -551,10 +551,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				}
 				else
 				{
-					using (var fPckView = new PckViewForm())
+					using (var fPckView = new PckViewForm(true))
 					{
-						fPckView.IsInvoked = true;
-
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapBase.Descriptor.Pal.Label);
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
@@ -603,10 +601,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				}
 				else
 				{
-					using (var fMcdView = new McdviewF())
+					using (var fMcdView = new McdviewF(true))
 					{
-						fMcdView.IsInvoked = true;
-
 						Palette.UfoBattle .SetTransparent(false); // NOTE: McdView wants non-transparent palettes.
 						Palette.TftdBattle.SetTransparent(false);
 

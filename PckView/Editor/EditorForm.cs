@@ -26,7 +26,7 @@ namespace PckView
 		#region Fields
 		private readonly EditorPanel _pnlEditor;
 
-		private readonly PaletteForm _fpalette = new PaletteForm();
+		private readonly PaletteForm _fpalette;
 
 		private readonly TrackBar _trackBar = new TrackBar();
 		private readonly Label _lblEditMode = new Label();
@@ -83,10 +83,10 @@ namespace PckView
 			Controls.Add(_trackBar);
 			Controls.Add(_lblEditMode);
 
-			_fpalette.FormClosing += OnPaletteFormClosing;
-
 			OnTrackScroll(null, EventArgs.Empty);
 
+			_fpalette = new PaletteForm();
+			_fpalette.FormClosing += OnPaletteFormClosing;
 
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
 			{											// let OnLoad() deter width and height.

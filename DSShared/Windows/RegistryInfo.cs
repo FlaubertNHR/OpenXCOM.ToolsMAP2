@@ -75,7 +75,7 @@ namespace DSShared.Windows
 			{
 				using (var sr = new StreamReader(File.OpenRead(_pfe)))
 				{
-					var invariant = System.Globalization.CultureInfo.InvariantCulture;
+					var invariant = CultureInfo.InvariantCulture;
 
 					var ys = new YamlStream();
 					ys.Load(sr);

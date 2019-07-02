@@ -43,7 +43,7 @@ namespace McdView
 		/// <summary>
 		/// True if McdView has been invoked via TileView.
 		/// </summary>
-		public bool IsInvoked;
+		private bool IsInvoked;
 
 		internal int[,] ScanG;
 		internal BitArray LoFT;
@@ -235,8 +235,11 @@ namespace McdView
 		/// <summary>
 		/// Instantiates the McdView app.
 		/// </summary>
-		public McdviewF()
+		/// <param name="isInvoked">true if invoked via TileView</param>
+		public McdviewF(bool isInvoked = false)
 		{
+			IsInvoked = isInvoked;
+
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.

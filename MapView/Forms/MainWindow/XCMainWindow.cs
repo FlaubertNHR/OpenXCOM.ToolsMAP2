@@ -400,9 +400,7 @@ namespace MapView
 
 			DontBeepEvent += FireContext;
 
-
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
-			Show();
 		}
 		#endregion cTor
 

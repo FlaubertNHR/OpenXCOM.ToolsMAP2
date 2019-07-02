@@ -45,7 +45,7 @@ namespace PckView
 		/// <summary>
 		/// True if PckView has been invoked via TileView.
 		/// </summary>
-		public bool IsInvoked;
+		private bool IsInvoked;
 
 		private readonly PckViewPanel TilePanel;
 		private readonly EditorForm Editor;
@@ -134,8 +134,11 @@ namespace PckView
 		/// <summary>
 		/// cTor. Creates the PckView window.
 		/// </summary>
-		public PckViewForm()
+		/// <param name="isInvoked"></param>
+		public PckViewForm(bool isInvoked = false)
 		{
+			IsInvoked = isInvoked;
+
 			InitializeComponent();
 
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
