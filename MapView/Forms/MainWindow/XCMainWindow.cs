@@ -153,16 +153,14 @@ namespace MapView
 			LogFile.WriteLine("App paths cached.");
 
 
-			var pathOptions = new PathInfo(dirSetT,       PathInfo.ConfigOptions);
+			var pathOptions   = new PathInfo(dirSetT, PathInfo.ConfigOptions);
+			var pathResources = new PathInfo(dirSetT, PathInfo.ConfigResources);
+			var pathTilesets  = new PathInfo(dirSetT, PathInfo.ConfigTilesets);
+			var pathViewers   = new PathInfo(dirSetT, PathInfo.ConfigViewers);
+
 			SharedSpace.SetShare(PathInfo.ShareOptions,   pathOptions);
-
-			var pathResources = new PathInfo(dirSetT,     PathInfo.ConfigResources);
 			SharedSpace.SetShare(PathInfo.ShareResources, pathResources);
-
-			var pathTilesets = new PathInfo(dirSetT,      PathInfo.ConfigTilesets);
 			SharedSpace.SetShare(PathInfo.ShareTilesets,  pathTilesets);
-
-			var pathViewers = new PathInfo(dirSetT,       PathInfo.ConfigViewers);
 			SharedSpace.SetShare(PathInfo.ShareViewers,   pathViewers);
 
 			LogFile.WriteLine("PathInfo cached.");
@@ -188,7 +186,6 @@ namespace MapView
 				LogFile.WriteLine("Resources or Tilesets file does not exist: quit MapView.");
 				Environment.Exit(0);
 			}
-
 
 
 			// Check if MapViewers.yml exists yet, if not create it
@@ -245,6 +242,11 @@ namespace MapView
 			that = this;
 
 
+			MainViewUnderlay = new MainViewUnderlay();
+			MainViewUnderlay.Dock = DockStyle.Fill;
+			MainViewUnderlay.BorderStyle = BorderStyle.Fixed3D;
+			LogFile.WriteLine("MainView panels instantiated.");
+
 			RegistryInfo.InitializeRegistry(dirAppL);
 			LogFile.WriteLine("Registry initialized.");
 			RegistryInfo.RegisterProperties(this);
@@ -262,11 +264,6 @@ namespace MapView
 			LogFile.WriteLine("MainView Options loaded.");	// since managers might be re-instantiating needlessly
 															// when OnOptionsClick() runs ....
 
-			MainViewUnderlay = MainViewUnderlay.that; // create MainViewUnderlay and MainViewOverlay. or so ...
-			MainViewUnderlay.Dock = DockStyle.Fill;
-			MainViewUnderlay.BorderStyle = BorderStyle.Fixed3D;
-			LogFile.WriteLine("MainView panels instantiated.");
-
 
 			Palette.UfoBattle .SetTransparent(true);
 			Palette.TftdBattle.SetTransparent(true);
@@ -278,23 +275,15 @@ namespace MapView
 										// NOTE: transparency of the 'UfoBattle' palette must be set first.
 
 
-			LogFile.WriteLine("Viewer managers instantiated.");
-
 			QuadrantPanelDrawService.Punkstrings();
 			LogFile.WriteLine("Quadrant strings punked.");
 
-			MainMenusManager.SetMenus(menuViewers, menuHelp);
-			MainMenusManager.PopulateMenus();
-			LogFile.WriteLine("MainView menus populated.");
 
-
-			ViewerFormsManager.ToolFactory = new ToolstripFactory(MainViewUnderlay);
 			ViewerFormsManager.Initialize();
 			LogFile.WriteLine("ViewerFormsManager initialized.");
 
-
 			ViewersManager.Initialize(); // adds each subsidiary viewer's options and Options-type etc.
-
+			LogFile.WriteLine("ViewersManager initialized.");
 
 			ViewerFormsManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
@@ -311,6 +300,10 @@ namespace MapView
 			ViewerFormsManager.ToolFactory.CreateToolstripEditorObjects(tsTools);
 			tsTools.ResumeLayout();
 			LogFile.WriteLine("MainView toolstrip created.");
+
+			MainMenusManager.SetMenus(menuViewers, menuHelp);
+			MainMenusManager.PopulateMenus();
+			LogFile.WriteLine("MainView menus populated.");
 
 
 			// Read MapResources.yml to get the resources dir (for both UFO and TFTD).

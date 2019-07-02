@@ -19,36 +19,24 @@ namespace MapView
 		// then their offsets would have to be separated.
 		private const int OffsetX = 2;
 		private const int OffsetY = 2;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
 		private readonly VScrollBar _scrollBarV = new VScrollBar();
 		private readonly HScrollBar _scrollBarH = new HScrollBar();
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (static)
-		private static MainViewUnderlay _that;
 		internal static MainViewUnderlay that
-		{
-			get
-			{
-				if (_that == null)
-					_that = new MainViewUnderlay();
-
-				return _that;
-			}
-		}
-		#endregion
+		{ get; private set; }
+		#endregion Properties (static)
 
 
 		#region Properties
-		private MainViewOverlay _mainViewOverlay = new MainViewOverlay();
 		internal MainViewOverlay MainViewOverlay
-		{
-			get { return _mainViewOverlay; }
-		}
+		{ get; private set; }
 
 		private MapFileBase _mapBase;
 		internal MapFileBase MapBase
@@ -75,15 +63,18 @@ namespace MapView
 				OnResize(EventArgs.Empty);
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		private MainViewUnderlay()
+		internal MainViewUnderlay()
 		{
+			that = this;
+			MainViewOverlay = new MainViewOverlay();
+
 			AnimationUpdateEvent += OnAnimationUpdate;
 
 			_scrollBarV.Dock = DockStyle.Right;
@@ -114,7 +105,7 @@ namespace MapView
 //			XCom.LogFile.WriteLine(". overlay client.Width= " + _mainViewOverlay.ClientSize.Width);
 //			XCom.LogFile.WriteLine(". overlay client.Height= " + _mainViewOverlay.ClientSize.Height);
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events (override)
@@ -176,7 +167,7 @@ namespace MapView
 
 //			XCom.LogFile.WriteLine("MainViewUnderlay.OnResize EXIT");
 		}
-		#endregion
+		#endregion Events (override)
 
 
 		#region Events
@@ -226,7 +217,7 @@ namespace MapView
 		{
 			MainViewOverlay.FillSelectedTiles();
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -415,7 +406,7 @@ namespace MapView
 			//XCom.LogFile.WriteLine(". RET size empty.");
 			return Size.Empty;
 		}
-		#endregion
+		#endregion Methods
 
 
 		#region Timer stuff for animations (static)
@@ -477,6 +468,6 @@ namespace MapView
 		{
 			get { return _anistep; }
 		}
-		#endregion
+		#endregion Timer stuff for animations (static)
 	}
 }

@@ -53,7 +53,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region cTors
 		/// <summary>
-		/// cTor[1].
+		/// cTor[1]. Instantiates a colortool from a Pen object.
 		/// </summary>
 		/// <param name="pen"></param>
 		internal ColorTool(Pen pen)
@@ -68,7 +68,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		}
 
 		/// <summary>
-		/// cTor[2].
+		/// cTor[2]. Instantiates a colortool from a Brush object.
 		/// </summary>
 		/// <param name="brush"></param>
 		/// <param name="width"></param>

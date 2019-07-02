@@ -18,42 +18,24 @@ namespace MapView.Forms.MainWindow
 
 
 		#region Properties (static)
-		private  static TileViewForm _tileView = new TileViewForm();
-		internal static TileViewForm  TileView
-		{
-			get { return _tileView; }
-		}
+		internal static TileViewForm TileView
+		{ get; private set; }
 
-		private  static TopViewForm _topView = new TopViewForm();
-		internal static TopViewForm  TopView
-		{
-			get { return _topView; }
-		}
+		internal static TopViewForm TopView
+		{ get; private set; }
 
-		private  static RouteViewForm _routeView = new RouteViewForm();
-		internal static RouteViewForm  RouteView
-		{
-			get { return _routeView; }
-		}
+		internal static RouteViewForm RouteView
+		{ get; private set; }
 
-		private  static TopRouteViewForm _topRouteView = new TopRouteViewForm();
-		internal static TopRouteViewForm  TopRouteView
-		{
-			get { return _topRouteView; }
-		}
+		internal static TopRouteViewForm TopRouteView
+		{ get; private set; }
 
 
-		private  static ColorHelp _colorsScreen = new ColorHelp();
-		internal static ColorHelp  ColorsScreen
-		{
-			get { return _colorsScreen; }
-		}
+		internal static ColorHelp ColorsScreen
+		{ get; private set; }
 
-		private  static About _aboutWindow = new About();
-		internal static About  AboutScreen
-		{
-			get { return _aboutWindow; }
-		}
+		internal static About AboutScreen
+		{ get; private set; }
 		#endregion Properties (static)
 
 
@@ -77,6 +59,17 @@ namespace MapView.Forms.MainWindow
 		#region Methods (static)
 		internal static void Initialize()
 		{
+			TileView     = new TileViewForm();
+			TopView      = new TopViewForm();
+			RouteView    = new RouteViewForm();
+			TopRouteView = new TopRouteViewForm();
+
+			ColorsScreen = new ColorHelp();
+			AboutScreen  = new About();
+
+
+			ToolFactory = new ToolstripFactory(MainViewUnderlay.that);
+
 			TopView     .Control   .InitializeToolstrip(ToolFactory);
 			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
 

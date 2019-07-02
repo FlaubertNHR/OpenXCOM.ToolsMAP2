@@ -81,10 +81,8 @@ namespace MapView
 
 			_size = new Size(Width, Height);
 
-			_locBase =
-			_loc     = Location;
-
-//			MoveWindow();
+			_locBase = Location;
+			MoveWindow();
 		}
 
 		private void OnTick(object sender, EventArgs e)
