@@ -18,45 +18,41 @@ namespace MapView.Forms.MainWindow
 
 
 		#region Properties (static)
-		// TODO: Just initialize the fucking forms, instead of doing umpteen ba-
-		// zillion checks during the running of the app. It's not that fucking
-		// hard. In fact it's harder to untangle the mess after the fact!
-
-		private  static TileViewForm _tileView;
+		private  static TileViewForm _tileView = new TileViewForm();
 		internal static TileViewForm  TileView
 		{
-			get { return _tileView ?? (_tileView = new TileViewForm()); }
+			get { return _tileView; }
 		}
 
-		private  static TopViewForm _topView;
+		private  static TopViewForm _topView = new TopViewForm();
 		internal static TopViewForm  TopView
 		{
-			get { return _topView ?? (_topView = new TopViewForm()); }
+			get { return _topView; }
 		}
 
-		private  static RouteViewForm _routeView;
+		private  static RouteViewForm _routeView = new RouteViewForm();
 		internal static RouteViewForm  RouteView
 		{
-			get { return _routeView ?? (_routeView = new RouteViewForm()); }
+			get { return _routeView; }
 		}
 
-		private  static TopRouteViewForm _topRouteView;
+		private  static TopRouteViewForm _topRouteView = new TopRouteViewForm();
 		internal static TopRouteViewForm  TopRouteView
 		{
-			get { return _topRouteView ?? (_topRouteView = new TopRouteViewForm()); }
+			get { return _topRouteView; }
 		}
 
 
-		private  static ColorHelp _colorsScreen;
+		private  static ColorHelp _colorsScreen = new ColorHelp();
 		internal static ColorHelp  ColorsScreen
 		{
-			get { return _colorsScreen ?? (_colorsScreen = new ColorHelp()); }
+			get { return _colorsScreen; }
 		}
 
-		private  static About _aboutWindow;
+		private  static About _aboutWindow = new About();
 		internal static About  AboutScreen
 		{
-			get { return _aboutWindow ?? (_aboutWindow = new About()); }
+			get { return _aboutWindow; }
 		}
 		#endregion Properties (static)
 
