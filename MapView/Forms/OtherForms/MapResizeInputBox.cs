@@ -48,7 +48,7 @@ namespace MapView
 			get { return _levs; }
 		}
 
-		internal MapResizeService.MapResizeZtype ZType
+		internal MapResizeService.MapResizeZtype zType
 		{
 			get
 			{

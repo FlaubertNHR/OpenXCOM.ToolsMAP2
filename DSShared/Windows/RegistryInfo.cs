@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
 
 using YamlDotNet.RepresentationModel; // read values (deserialization)
@@ -16,15 +16,8 @@ namespace DSShared.Windows
 	/// NOTE: MapViewII does not use the Windows Registry at all - this info is
 	/// rather for the settings file "MapViewers.yml". That is, think of
 	/// "settings\MapViewers.yml" as MapViewII's registry.
-	/// 
-	/// TODO: Stop reading and writing "MapViewers.yml" per viewer. Instead,
-	/// load its data to a static class-object and maintain it there; doing this
-	/// requires instantiating said object when any of MapView, McdView, and/or
-	/// PckView load - and writing its data back to "MapViewers.yml" when the
-	/// app that instantited it closes. Special consideration is likely required
-	/// if McdView or PckView is invoked via TileView ....
 	/// </summary>
-	public sealed class RegistryInfo
+	public static class RegistryInfo
 	{
 		#region Fields (static)
 		public const string MainWindow    = "MainWindow"; // ... is for old parsing Options routine.
@@ -44,290 +37,213 @@ namespace DSShared.Windows
 		public const string PaletteViewer = "PaletteViewer";
 
 		public const string McdView       = "McdView";
-//		public const string CopyPanel     = "CopyPanel"; // <- TODO
+		public const string CopyPanel     = "CopyPanel";
 
 
-		private const string PropLeft   = "Left";
-		private const string PropTop    = "Top";
-		private const string PropWidth  = "Width";
-		private const string PropHeight = "Height";
+		private const string LEFT   = "left";
+		private const string TOP    = "top";
+		private const string WIDTH  = "width";
+		private const string HEIGHT = "height";
 
 
 		private static string _pfe;
 		private static string _pfeT;
-		private static bool _inited;
+
+		private readonly static Dictionary<string, Metric> _dict =
+							new Dictionary<string, Metric>();
 		#endregion Fields (static)
 
 
-		#region Fields
-		private readonly string _label;
-		private readonly Form _f;
-
-		private readonly Dictionary<string, PropertyInfo> _info =
-					 new Dictionary<string, PropertyInfo>();
-
-//		private bool _saveOnClose = true;
-		#endregion Fields
-
-
-		#region cTor
-		/// <summary>
-		/// cTor. Uses a specified string as the key to its Form.
-		/// IMPORTANT: Ensure that affected Forms have a manual startposition
-		/// set in their designers.
-		/// </summary>
-		/// <param name="label">the label of the Form to save/load</param>
-		/// <param name="f">the form-object corresponding to the label</param>
-		public RegistryInfo(string label, Form f)
-		{
-			_label = label;
-			_f = f;
-
-			_f.Load        += OnLoad;
-			_f.FormClosing += OnFormClosing;
-		}
-		#endregion cTor
-
-
 		#region Methods (static)
-		public static void setStaticPaths(string dir)
+		public static void InitializeRegistry(string dir)
 		{
-			if (!_inited)	// ie. don't let McdView or PckView re-init
-			{				// these if they are invoked via TileView.
-				_inited = true;
+			dir   = Path.Combine(dir, PathInfo.SettingsDirectory);
 
-				dir = Path.Combine(
-								dir,
-								PathInfo.SettingsDirectory);
-				_pfe = Path.Combine(
-								dir,
-								PathInfo.ConfigViewers);
-				_pfeT = Path.Combine(
-								dir,
-								PathInfo.ConfigViewersOld);
-			}
+			_pfe  = Path.Combine(dir, PathInfo.ConfigViewers);
+			_pfeT = Path.Combine(dir, PathInfo.ConfigViewersT);
+
+			LoadMetrics();
 		}
 
 		/// <summary>
-		/// All this would have been so much simpler/easier if you'd just used
-		/// each form's Name variable instead of arbitrary concoctions. Ditto
-		/// regarding all that 'PropertyInfo' Reflection jazz ... I mean, yes
-		/// it's a good way to learn it but it's really entirely unneeded in
-		/// this app. I mean, you often used 2 or 3 classes when 1 could and
-		/// would suffice just as well. You put panels inside panels over and
-		/// over. You abused namespace-strings to no end. You even instantiated
-		/// an ordinary rectangle like this:
-		/// 
-		/// var r = new Rectangle(new Point(0,0), new Size(0,0));
-		/// 
-		/// It's like, whenever you wanted a 10, you put 1+9 or 2+3+5 or 1+6+7-4
-		/// ... just write "10". That's all you had to do, just ... "10".
+		/// @note Although there are 4 Options forms only 1 metric is saved or
+		/// loaded for all.
 		/// </summary>
-		/// <param name="f"></param>
-		/// <returns></returns>
-		public static string getRegistryLabel(Form f)
-		{
-			switch (f.Name)
-			{
-				case "McdviewF": return McdView;
-			}
-			return null;
-		}
-		#endregion Methods (static)
-
-
-		#region Methods
-		/// <summary>
-		/// Adds properties to be saved/loaded.
-		/// </summary>
-		public void RegisterProperties()
-		{
-			//DSLogFile.WriteLine("RegisterProperties");
-			PropertyInfo prop;
-
-			string[] keys =
-			{
-				PropLeft,
-				PropTop,
-				PropWidth,
-				PropHeight
-			};
-
-			foreach (string key in keys)
-			{
-				//DSLogFile.WriteLine(". . key= " + key);
-				if ((prop = _f.GetType().GetProperty(key)) != null) // safety.
-				{
-					//DSLogFile.WriteLine(". . . info= " + info.Name);
-					_info[prop.Name] = prop; // set a ref to each metric (x,y,w,h) via Reflection.
-				}
-				// this is so clever I want to barf all over the keyboard of the
-				// person who wrote it.
-				// JUST STORE THE x,y,w,h VALUES AND ASSIGN THEM TO THE FORM
-				// WHEN IT LOADS! ffs.
-				//
-				// no offense, Ben. In a way I know what you're doing but Christ.
-				// It makes me want to jump off a mountain and get speared a
-				// hundred times on the way down ...
-			}
-		}
-		#endregion Methods
-
-
-		#region Events
-		/// <summary>
-		/// Loads location and size values for the subsidiary viewers to
-		/// "settings\MapViewers.yml".
-		/// - TileView
-		/// - TopView
-		/// - RouteView
-		/// - TopRouteView
-		/// - Options
-		/// - TilesetEditor
-		/// - SpriteEditor
-		/// - PaletteViewer
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnLoad(object sender, EventArgs e)
+		private static void LoadMetrics()
 		{
 			if (File.Exists(_pfe))
 			{
 				using (var sr = new StreamReader(File.OpenRead(_pfe)))
 				{
-					var file = new YamlStream();
-					file.Load(sr);
+					var invariant = System.Globalization.CultureInfo.InvariantCulture;
 
-					var root = (YamlMappingNode)file.Documents[0].RootNode; // TODO: Error handling. ->
+					var ys = new YamlStream();
+					ys.Load(sr);
+
+					var root = ys.Documents[0].RootNode as YamlMappingNode;
 					foreach (var node in root.Children)
 					{
-						string label = ((YamlScalarNode)node.Key).Value;
-						if (String.Equals(label, _label, StringComparison.Ordinal))
+						string label = (node.Key as YamlScalarNode).Value;
+
+						var tric = new Metric();
+
+						var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
+						foreach (var keyval in keyvals) // Cf. TilesetLoader..cTor
 						{
-							LoadWindowMetrics((YamlMappingNode)root.Children[new YamlScalarNode(label)]);
-							break;
+							int val = Int32.Parse(keyval.Value.ToString(), invariant); // TODO: Error handling.
+							switch (keyval.Key.ToString())
+							{
+								case LEFT:   tric.left   = val; break;
+								case TOP:    tric.top    = val; break;
+								case WIDTH:  tric.width  = val; break;
+								case HEIGHT: tric.height = val; break;
+							}
 						}
+
+						// check to ensure that the form is at least partly onscreen ->
+						var rect = Screen.GetWorkingArea(new Point(tric.left, tric.top));
+						if (!rect.Contains(tric.left + 200, tric.top + 100))
+						{
+							tric.left = 100;
+							tric.top  =  50;
+						}
+
+						_dict.Add(label, tric);
 					}
 				}
+			}
+		}
+
+
+		/// <summary>
+		/// Gets the registry-label of a specified Form.
+		/// @note This function would be unnecessary if each form's Name
+		/// variable had been used as its registry-label. But since they weren't
+		/// this function maintains backward compatibility with the property-
+		/// headers in "MapViewers.yml".
+		/// TODO: ScanGview, MCDInfo, etc.
+		/// TODO: McdView's Spriteset, ScanGset, LoFTset viewers.
+		/// TODO: PckView's BytesViewer
+		/// </summary>
+		/// <param name="f">a form for which to get the registry-label</param>
+		/// <returns>the registry-label or null if not found</returns>
+		public static string getRegistryLabel(Control f)
+		{
+			switch (f.Name)
+			{
+				case "XCMainWindow":     return MainView;		// is in manifest
+				case "TileViewForm":     return TileView;		// is in manifest
+				case "TopViewForm":      return TopView;		// is in manifest
+				case "RouteViewForm":    return RouteView;		// is in manifest
+				case "TopRouteViewForm": return TopRouteView;	// is in manifest
+				case "OptionsForm":      return Options;		// is in manifest
+				case "TilesetEditor":    return TilesetEditor;	// is in manifest
+				case "McdviewF":         return McdView;		// is in manifest
+				case "CopyPanelF":       return CopyPanel;
+				case "PckViewForm":      return PckView;		// is in manifest
+				case "EditorForm":       return SpriteEditor;
+				case "PaletteForm":      return PaletteViewer;
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Properties to be assigned.
+		/// </summary>
+		/// <param name="f">a Form aka viewer</param>
+		/// <returns>true if form/viewer is found in the dictionary and its
+		/// properties get loaded</returns>
+		public static bool RegisterProperties(Form f)
+		{
+			string label = getRegistryLabel(f);
+			if (label != null && _dict.ContainsKey(label))
+			{
+				Metric tric = _dict[label];
+
+				f.Left = tric.left;
+				f.Top  = tric.top;
+				f.ClientSize = new Size(
+									tric.width,
+									tric.height);
+				return true;
+			}
+			return false;
+			// There. Now isn't that clever.
+		}
+
+
+		/// <summary>
+		/// Updates the dictionary's properties when a specified Form closes.
+		/// @note Most forms never actually close until the app exits; almost
+		/// all of them merely hide.
+		/// </summary>
+		/// <param name="f">a Form aka viewer</param>
+		public static void UpdateRegistry(Form f)
+		{
+			string label = getRegistryLabel(f);
+			if (label != null)
+			{
+				f.WindowState = FormWindowState.Normal;
+				Metric tric;
+
+				if (!_dict.ContainsKey(label))
+				{
+					tric = new Metric();
+				}
+				else
+					tric = _dict[label];
+
+				tric.left   = Math.Max(0, f.Left);
+				tric.top    = Math.Max(0, f.Top);
+				tric.width  = f.ClientSize.Width;
+				tric.height = f.ClientSize.Height;
+
+				_dict[label] = tric; // yeeahhhhhh riiiiighhthghttt
 			}
 		}
 
 		/// <summary>
-		/// Helper for OnLoad().
+		/// @note Although there are 4 Options forms only 1 metric is saved or
+		/// loaded for all.
 		/// </summary>
-		/// <param name="keyvals">yaml-mapped keyval pairs</param>
-		private void LoadWindowMetrics(YamlMappingNode keyvals)
+		public static void FinalizeRegistry()
 		{
-			//DSLogFile.WriteLine("ImportValues");
-			string key;
-			int val;
-
-			var cultureInfo = CultureInfo.InvariantCulture;
-
-			foreach (var keyval in keyvals)
+			using (var sw = new StreamWriter(_pfeT))
 			{
-				key = cultureInfo.TextInfo.ToTitleCase(keyval.Key.ToString());
-				//DSLogFile.WriteLine(". key= " + key);
+				sw.WriteLine("# delete this file if things go wrong with your window locations and/or sizes.");
+				sw.WriteLine("# It will be recreated from a hardcoded manifest the next time the program runs.");
+				sw.WriteLine("#");
+				sw.WriteLine("# NOTE: Do *not* add extra lines or anything to the format; it's not that");
+				sw.WriteLine("# robust.");
+				sw.WriteLine("#");
 
-				val = Int32.Parse(keyval.Value.ToString(), cultureInfo);
-				//DSLogFile.WriteLine(". val= " + val);
-
-				var rect = Screen.GetWorkingArea(new System.Drawing.Point(val, 0));
-
-				switch (key) // check to ensure that viewer is at least partly onscreen.
+				foreach (var key in _dict.Keys)
 				{
-					case PropLeft:
-						if (!rect.Contains(val + 200, 0))
-							val = 100;
-						break;
+					Metric tric = _dict[key];
 
-					case PropTop:
-						if (!rect.Contains(0, val + 100))
-							val = 50;
-						break;
+					sw.WriteLine(key + ":");
+					sw.WriteLine("  " + LEFT   + ": " + tric.left);
+					sw.WriteLine("  " + TOP    + ": " + tric.top);
+					sw.WriteLine("  " + WIDTH  + ": " + tric.width);
+					sw.WriteLine("  " + HEIGHT + ": " + tric.height);
 				}
-				_info[key].SetValue(_f, val, null); // set each metric (x,y,w,h) via Reflection.
 			}
-		}
 
-		/// <summary>
-		/// Saves location and size values for the subsidiary viewers to
-		/// "settings\MapViewers.yml".
-		/// - TileView
-		/// - TopView
-		/// - RouteView
-		/// - TopRouteView
-		/// - Options
-		/// - TilesetEditor
-		/// - SpriteEditor
-		/// - PaletteViewer
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnFormClosing(object sender, EventArgs e)
+			if (File.Exists(_pfeT))
+				File.Replace(_pfeT, _pfe, null);
+			// TODO: Else show error.
+		}
+		#endregion Methods (static)
+
+
+		#region Structs
+		private struct Metric
 		{
-			//DSLogFile.WriteLine("OnClose _label= " + _label);
-
-			_f.WindowState = FormWindowState.Normal;
-
-//			if (_saveOnClose)
-//			{
-			if (File.Exists(_pfe))
-			{
-				File.Copy(_pfe, _pfeT, true);
-
-				using (var sr = new StreamReader(File.OpenRead(_pfeT)))	// but now use dst as src ->
-				using (var fs = new FileStream(_pfe, FileMode.Create))	// overwrite previous config.
-				using (var sw = new StreamWriter(fs))
-				{
-					bool found = false;
-
-					while (sr.Peek() != -1)
-					{
-						string line = sr.ReadLine().TrimEnd();
-						//DSLogFile.WriteLine(". line= " + line);
-
-						// At present, MainView and McdView and PckView are the
-						// only viewers that roll their own metrics.
-						// - see the XCMainWindow cTor & FormClosing eventcalls.
-						// - see the McdviewF     cTor & FormClosing eventcalls.
-						// - see the PckViewForm  cTor & FormClosing eventcalls.
-
-						if (String.Equals(line, _label + ":", StringComparison.Ordinal))
-						{
-							found = true;
-
-							//DSLogFile.WriteLine(". . write= " + line);
-							sw.WriteLine(line);
-
-							line = sr.ReadLine();
-							line = sr.ReadLine();
-							line = sr.ReadLine();
-							line = sr.ReadLine(); // heh
-
-							sw.WriteLine("  left: "   + Math.Max(0, _f.Location.X)); // =Left
-							sw.WriteLine("  top: "    + Math.Max(0, _f.Location.Y)); // =Top
-							sw.WriteLine("  width: "  + _f.Width); // TODO: Use ClientSize.Width/Height instead of form width/height
-							sw.WriteLine("  height: " + _f.Height);
-						}
-						else
-							sw.WriteLine(line);
-					}
-
-					if (!found)
-					{
-						sw.WriteLine(_label + ":");
-
-						sw.WriteLine("  left: "   + Math.Max(0, _f.Location.X)); // =Left
-						sw.WriteLine("  top: "    + Math.Max(0, _f.Location.Y)); // =Top
-						sw.WriteLine("  width: "  + _f.Width); // TODO: Use ClientSize.Width/Height instead of form width/height
-						sw.WriteLine("  height: " + _f.Height);
-					}
-				}
-				File.Delete(_pfeT);
-			}
-//			}
+			internal int left;
+			internal int top;
+			internal int width;
+			internal int height;
 		}
-		#endregion Events
+		#endregion Structs
 	}
 }

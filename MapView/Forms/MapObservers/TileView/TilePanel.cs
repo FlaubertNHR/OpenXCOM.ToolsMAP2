@@ -6,15 +6,13 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-using MapView.Forms.MainWindow;
-
 using XCom;
 using XCom.Interfaces;
 
 
 namespace MapView.Forms.MapObservers.TileViews
 {
-	internal delegate void TileSelectedEventHandler(Tilepart part);
+	internal delegate void TileSelectedEvent(Tilepart part);
 
 
 	/// <summary>
@@ -24,7 +22,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		:
 			Panel
 	{
-		internal event TileSelectedEventHandler TileSelectedEvent;
+		internal event TileSelectedEvent TileSelected;
 
 
 		#region Fields (static)
@@ -106,8 +104,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				{
 					_id = value.SetId + 1; // +1 to account for the eraser.
 
-					if (TileSelectedEvent != null)
-						TileSelectedEvent(PartSelected);
+					if (TileSelected != null)
+						TileSelected(PartSelected);
 
 					ScrollToTile();
 				}
@@ -115,13 +113,6 @@ namespace MapView.Forms.MapObservers.TileViews
 					_id = 0;
 			}
 		}
-
-//		private static SpriteCollection _extraFile;
-//		public static SpriteCollection ExtraFile
-//		{
-//			get { return _extraFile; }
-//			set { _extraFile = value; }
-//		}
 		#endregion Properties
 
 
@@ -337,8 +328,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			{
 				_id = id;
 
-				if (TileSelectedEvent != null)
-					TileSelectedEvent(PartSelected);
+				if (TileSelected != null)
+					TileSelected(PartSelected);
 
 				ScrollToTile();
 				Invalidate();
@@ -428,8 +419,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			{
 				_id = id;
 
-				if (TileSelectedEvent != null)
-					TileSelectedEvent(PartSelected);
+				if (TileSelected != null)
+					TileSelected(PartSelected);
 
 				ScrollToTile();
 				Invalidate();

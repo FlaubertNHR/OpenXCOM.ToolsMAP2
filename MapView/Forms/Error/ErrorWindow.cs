@@ -8,23 +8,16 @@ namespace MapView.Forms.Error
 		:
 			Form
 	{
-		private readonly Exception _exception;
-
-
 		#region cTor
 		internal ErrorWindow(Exception exception)
 		{
-			_exception = exception;
-
 			InitializeComponent();
+
+			lblHead.Text = "Fuck !" + Environment.NewLine + "what did u do";
+			tbDetails.Text = exception.ToString();
+
+			btnClose.Select();
 		}
 		#endregion cTor
-
-
-		private void OnLoad(object sender, EventArgs e)
-		{
-			tbDetails.Text = _exception.ToString();
-			tbDetails.SelectionStart = 0;
-		}
 	}
 }

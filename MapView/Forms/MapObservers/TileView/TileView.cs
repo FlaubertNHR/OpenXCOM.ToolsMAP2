@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using DSShared;
+using DSShared.Windows;
 
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;
@@ -26,16 +27,16 @@ namespace MapView.Forms.MapObservers.TileViews
 {
 	internal sealed partial class TileView
 		:
-			MapObserverControl0
+			MapObserverControl
 	{
 		#region Events
-		internal event TileSelectedEventHandler TileSelectedEvent_Observer0;
+		internal event TileSelectedEvent TileSelected_SelectQuadrant;
 
 		/// <summary>
 		/// Fires if a save was done in PckView or McdView (via TileView).
 		/// </summary>
-		internal event MethodInvoker ReloadDescriptorEvent;
-		#endregion
+		internal event MethodInvoker ReloadDescriptor;
+		#endregion Events
 
 
 		#region Fields
@@ -43,7 +44,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		private TilePanel[] _panels;
 
 		private Hashtable _brushesSpecial = new Hashtable();
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -89,7 +90,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		internal McdInfoF McdInfobox
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 
@@ -134,19 +135,18 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			_allTiles.SetTickerSubscription(true);
 		}
-		#endregion
-
 
 		private void AddPanel(TilePanel panel, Control page)
 		{
-			panel.TileSelectedEvent += OnTileSelected;
+			panel.TileSelected += OnTileSelected;
 			page.Controls.Add(panel);
 		}
+		#endregion cTor
 
 
 		#region Events (override)
 		/// <summary>
-		/// Bypasses level-change in MapObserverControl0 and scrolls through the
+		/// Bypasses level-change in MapObserverControl and scrolls through the
 		/// tabpages instead.
 		/// </summary>
 		/// <param name="e"></param>
@@ -178,7 +178,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Fires when a tab is clicked.
+		/// Triggers when a tab-index changes.
 		/// Focuses the selected page/panel, updates the quadrant and MCD-info
 		/// if applicable. And subscribes/unsubscribes panels to the static
 		/// ticker's eventhandler.
@@ -188,11 +188,9 @@ namespace MapView.Forms.MapObservers.TileViews
 		private void OnSelectedIndexChanged(object sender, EventArgs e)
 		{
 			var panel = GetSelectedPanel();
-
 			foreach (var panel_ in _panels)
-			{
 				panel_.SetTickerSubscription(panel_ == panel);
-			}
+
 
 //			panel.Focus();
 
@@ -224,8 +222,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Fires when a tilepart is selected. Passes an event to
-		/// 'TileSelectedEvent_Observer0'.
+		/// Triggers on the 'TileSelected' event. Further triggers the
+		/// 'TileSelected_SelectQuadrant' event.
 		/// </summary>
 		/// <param name="part"></param>
 		private void OnTileSelected(Tilepart part)
@@ -254,27 +252,13 @@ namespace MapView.Forms.MapObservers.TileViews
 			if (McdInfobox != null)
 				McdInfobox.UpdateData(record, id, label);
 
-			SelectQuadrant(part);
+			if (TileSelected_SelectQuadrant != null)
+				TileSelected_SelectQuadrant(part);
 		}
-
-		/// <summary>
-		/// Changes the currently selected quadrant in the QuadrantPanel when
-		/// a tilepart is selected in TileView.
-		/// That is, fires
-		///   TopView.Control.SelectQuadrant()
-		/// and
-		///   TopRouteView.ControlTop.SelectQuadrant()
-		/// through 'TileSelectedEvent_Observer0'.
-		/// </summary>
-		/// <param name="part"></param>
-		private void SelectQuadrant(Tilepart part)
-		{
-			if (TileSelectedEvent_Observer0 != null)
-				TileSelectedEvent_Observer0(part);
-		}
-		#endregion
+		#endregion Events
 
 
+		#region Options
 		/// <summary>
 		/// These are default colors for the SpecialType of a tilepart.
 		/// TileView will load these colors when the app loads, then any colors
@@ -304,7 +288,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <summary>
 		/// Loads default options for TileView screen.
 		/// </summary>
-		protected internal override void LoadControl0Options()
+		protected internal override void LoadControlOptions()
 		{
 			string desc = String.Empty;
 
@@ -386,11 +370,13 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 
-		private Form _foptions;
-		private bool _closing; // wtf is this for like really
+		private static Form _foptions;	// is static for no special reason
 
 		/// <summary>
-		/// Handles a click on the Options button.
+		/// Handles a click on the Options button to show or hide an Options-
+		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
+		/// viewer. Also subscribes to a form-closing handler that will hide the
+		/// form unless MainView is closing.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -399,24 +385,34 @@ namespace MapView.Forms.MapObservers.TileViews
 			var tsb = sender as ToolStripButton;
 			if (tsb.Checked = !tsb.Checked)
 			{
-				_foptions = new OptionsForm("TileViewOptions", Options);
-				_foptions.Text = "TileView Options";
+				if (_foptions == null)
+				{
+					_foptions = new OptionsForm("TileViewOptions", Options);
+					_foptions.Text = " TileView Options";
+
+					OptionsManager.Screens.Add(_foptions);
+
+					_foptions.FormClosing += (sender1, e1) =>
+					{
+						if (!XCMainWindow.Quit)
+						{
+							tsb.Checked = false;
+
+							e1.Cancel = true;
+							_foptions.Hide();
+						}
+						else
+							RegistryInfo.UpdateRegistry(_foptions);
+					};
+				}
 
 				_foptions.Show();
 
-				_foptions.FormClosing += (sender1, e1) =>
-				{
-					if (!_closing)
-						OnOptionsClick(sender, e);
-
-					_closing = false;
-				};
+				if (_foptions.WindowState == FormWindowState.Minimized)
+					_foptions.WindowState  = FormWindowState.Normal;
 			}
 			else
-			{
-				_closing = true;
 				_foptions.Close();
-			}
 		}
 
 		/// <summary>
@@ -427,8 +423,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			return tsb_Options;
 		}
+		#endregion Options
 
 
+		#region Events (menu)
 		/// <summary>
 		/// Opens the MCD-info screen.
 		/// </summary>
@@ -555,6 +553,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				{
 					using (var fPckView = new PckViewForm())
 					{
+						fPckView.IsInvoked = true;
+
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapBase.Descriptor.Pal.Label);
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
@@ -567,8 +567,8 @@ namespace MapView.Forms.MapObservers.TileViews
 						if (fPckView.FireMvReload					// the Descriptor needs to reload
 							&& CheckReload() == DialogResult.OK)	// so ask user if he/she wants to save the current Map+Routes (if changed)
 						{
-							if (ReloadDescriptorEvent != null)
-								ReloadDescriptorEvent();
+							if (ReloadDescriptor != null)
+								ReloadDescriptor();
 						}
 					}
 				}
@@ -605,6 +605,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				{
 					using (var fMcdView = new McdviewF())
 					{
+						fMcdView.IsInvoked = true;
+
 						Palette.UfoBattle .SetTransparent(false); // NOTE: McdView wants non-transparent palettes.
 						Palette.TftdBattle.SetTransparent(false);
 
@@ -624,8 +626,8 @@ namespace MapView.Forms.MapObservers.TileViews
 						if (fMcdView.FireMvReload					// the Descriptor needs to reload
 							&& CheckReload() == DialogResult.OK)	// so ask user if he/she wants to save the current Map+Routes (if changed)
 						{
-							if (ReloadDescriptorEvent != null)
-								ReloadDescriptorEvent();
+							if (ReloadDescriptor != null)
+								ReloadDescriptor();
 						}
 					}
 				}
@@ -689,6 +691,7 @@ namespace MapView.Forms.MapObservers.TileViews
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
+		#endregion Events (menu)
 
 
 		#region Methods
@@ -748,6 +751,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			return _panels[tcTileTypes.SelectedIndex] as TilePanel;
 		}
-		#endregion
+		#endregion Methods
 	}
 }

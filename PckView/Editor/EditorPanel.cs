@@ -137,7 +137,7 @@ namespace PckView
 //			UpdateStyles();
 
 
-			PckViewForm.PaletteChangedEvent += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
+			PckViewForm.PaletteChanged += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
 
 			_penGrid = _gridBlack;
 		}

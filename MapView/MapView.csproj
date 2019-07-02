@@ -159,7 +159,7 @@
     <Compile Include="Forms\MapObservers\TileView\TileViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\ColorTools.cs" />
+    <Compile Include="Forms\MapObservers\TopView\ColorTool.cs" />
     <Compile Include="Forms\MapObservers\TopView\DrawBlobService.cs" />
     <Compile Include="Forms\MapObservers\TopView\TopViewForm.cs">
       <SubType>Form</SubType>
@@ -185,10 +185,10 @@
     <Compile Include="Forms\MainWindow\ViewerFormsManager.cs" />
     <Compile Include="Forms\MainWindow\ViewersManager.cs" />
     <Compile Include="Forms\MainWindow\ShowHideManager.cs" />
-    <Compile Include="Forms\MapObservers\MapObserverControl1.cs">
+    <Compile Include="Forms\MapObservers\MapObserverControl_TopPanels.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\MapObserverControl0.cs">
+    <Compile Include="Forms\MapObservers\MapObserverControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\MapObservers\TileView\TilePanel.cs">
@@ -319,7 +319,7 @@
       <DependentUpon>McdInfoF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\ConfigurationForm.resx">
-      <DependentUpon>ConfigurationForm.Designer.cs</DependentUpon>
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\MapResizeInputBox.resx">
       <DependentUpon>MapResizeInputBox.cs</DependentUpon>

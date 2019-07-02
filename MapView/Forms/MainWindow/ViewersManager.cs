@@ -22,15 +22,13 @@ namespace MapView.Forms.MainWindow
 		/// </summary>
 		internal static void Initialize()
 		{
+			// TODO: Make TopView's and RouteView's Options static.
 			ViewerFormsManager.TopRouteView.ControlTop  .Options = ViewerFormsManager.TopView  .Control.Options;
 			ViewerFormsManager.TopRouteView.ControlRoute.Options = ViewerFormsManager.RouteView.Control.Options;
 
-			ViewerFormsManager.TopRouteView.ControlTop  .LoadControl0Options();
-			ViewerFormsManager.TopRouteView.ControlRoute.LoadControl0Options();
-
+			SetAsObserver(RegistryInfo.TileView,  ViewerFormsManager.TileView);
 			SetAsObserver(RegistryInfo.TopView,   ViewerFormsManager.TopView);
 			SetAsObserver(RegistryInfo.RouteView, ViewerFormsManager.RouteView);
-			SetAsObserver(RegistryInfo.TileView,  ViewerFormsManager.TileView);
 
 			_viewers.Add(ViewerFormsManager.TopRouteView);
 
@@ -40,37 +38,36 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Sets a viewer as an Observer.
+		/// @note 'TileViewForm', 'TopViewForm', 'RouteViewForm' only.
 		/// </summary>
-		/// <param name="viewer"></param>
+		/// <param name="label"></param>
 		/// <param name="f"></param>
-		private static void SetAsObserver(string viewer, Form f)
+		private static void SetAsObserver(string label, Form f)
 		{
 			_viewers.Add(f);
 
-			var fobserver = f as IMapObserverProvider; // TileViewForm, TopViewForm, RouteViewForm only.
-			if (fobserver != null)
-			{
-				var control = fobserver.ObserverControl0; // ie. TileView, TopView, RouteView.
-				control.LoadControl0Options();
-
-				var regInfo = new RegistryInfo(viewer, f); // subscribe to Load and Closing events.
-				regInfo.RegisterProperties();
-
-				OptionsManager.setOptionsType(viewer, control.Options);
-			}
+			var control = (f as IMapObserverProvider).ObserverControl; // ie. 'TileView', 'TopView', 'RouteView'.
+			control.LoadControlOptions();
+			OptionsManager.setOptionsType(label, control.Options);
 		}
 
 		/// <summary>
-		/// Closes the following viewers: TileView, TopView, RouteView,
-		/// TopRouteView, Colors, About.
+		/// Closes the following viewers.
+		/// SECONDARY:
+		/// - TileView
+		/// - TopView
+		/// - RouteView
+		/// - TopRouteView
+		/// TERTIARY:
+		/// - ColorsHelp
+		/// - About
+		/// @note Called by XCMainWindow.OnFormClosing() so this really does
+		/// close -> update registry vals.
 		/// </summary>
 		internal static void CloseViewers()
 		{
-			foreach (var viewer in _viewers)
-			{
-				viewer.WindowState = FormWindowState.Normal;
-				viewer.Close();
-			}
+			foreach (var f in _viewers)
+				f.Close();
 		}
 		#endregion Methods (static)
 	}

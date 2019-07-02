@@ -5,13 +5,13 @@ using System.Drawing;
 namespace MapView.Forms.MapObservers.TopViews
 {
 	/// <summary>
-	/// ColorTools are used for drawing blobs on TopView and RouteView.
+	/// A ColorTool is used for drawing blobs on TopView and RouteView.
 	/// </summary>
-	internal sealed class ColorTools
+	internal sealed class ColorTool
 		:
 			IDisposable
 	{
-		#region Fields & Properties
+		#region Properties
 		private readonly Pen _pen;
 		/// <summary>
 		/// A pen for drawing walls.
@@ -48,15 +48,15 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			get { return _brushLight; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTors
 		/// <summary>
-		/// cTors.
+		/// cTor[1].
 		/// </summary>
 		/// <param name="pen"></param>
-		internal ColorTools(Pen pen)
+		internal ColorTool(Pen pen)
 		{
 			var colorLight = Color.FromArgb(80, pen.Color);
 
@@ -66,7 +66,13 @@ namespace MapView.Forms.MapObservers.TopViews
 			_brush      = new SolidBrush(pen.Color);
 			_brushLight = new SolidBrush(colorLight);
 		}
-		internal ColorTools(SolidBrush brush, float width)
+
+		/// <summary>
+		/// cTor[2].
+		/// </summary>
+		/// <param name="brush"></param>
+		/// <param name="width"></param>
+		internal ColorTool(SolidBrush brush, float width)
 		{
 			var colorLight = Color.FromArgb(50, brush.Color);
 
@@ -76,7 +82,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			_brush      = brush;
 			_brushLight = new SolidBrush(colorLight);
 		}
-		#endregion
+		#endregion cTors
 
 
 		/// <summary>

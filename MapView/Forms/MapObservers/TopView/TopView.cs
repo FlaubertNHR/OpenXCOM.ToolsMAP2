@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-//using Microsoft.Win32;
+using DSShared.Windows;
 
 using MapView.Forms.MainWindow;
 
@@ -14,12 +14,14 @@ namespace MapView.Forms.MapObservers.TopViews
 {
 	internal sealed partial class TopView
 		:
-			MapObserverControl0
+			MapObserverControl
 	{
-		#region Fields
-		private Dictionary<string, Pen>        _topPens;
-		private Dictionary<string, SolidBrush> _topBrushes;
-		#endregion
+		#region Fields (static)
+		private static Dictionary<string, Pen>        _topPens =
+				   new Dictionary<string, Pen>();
+		private static Dictionary<string, SolidBrush> _topBrushes =
+				   new Dictionary<string, SolidBrush>();
+		#endregion Fields
 
 
 		#region Properties
@@ -50,7 +52,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			get { return TopPanel.Content.Checked; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -74,8 +76,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			pnlMain.Controls.Add(TopPanel);
 
 			pnlMain.Resize += (sender, e) => TopPanel.ResizeObserver(
-																	pnlMain.Width,
-																	pnlMain.Height);
+																pnlMain.Width,
+																pnlMain.Height);
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 
@@ -111,7 +113,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			ResumeLayout();
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events
@@ -151,7 +153,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			ViewerFormsManager.TopView     .Control   .Refresh();
 			ViewerFormsManager.TopRouteView.ControlTop.Refresh();
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -189,15 +191,17 @@ namespace MapView.Forms.MapObservers.TopViews
 					break;
 			}
 		}
-		#endregion
+		#endregion Methods
 
 
 		#region Options
-		private static Form _foptions; // is static so it will be used by both TopViewOptions
-		private static bool _closing;  // and TopRouteView(Top)Options
-
+		private static Form _foptions;	// is static so that it will be used by both
+										// TopView and TopRouteView(Top)
 		/// <summary>
-		/// Handles a click on the Options button.
+		/// Handles a click on the Options button to show or hide an Options-
+		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
+		/// viewer. Also subscribes to a form-closing handler that will hide the
+		/// form unless MainView is closing.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -206,30 +210,42 @@ namespace MapView.Forms.MapObservers.TopViews
 			var tsb = sender as ToolStripButton;
 			if (!tsb.Checked)
 			{
-				ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = true;
+				setOptionsChecked(true);
 
-				_foptions = new OptionsForm("TopViewOptions", Options);
-				_foptions.Text = "TopView Options";
+				if (_foptions == null)
+				{
+					_foptions = new OptionsForm("TopViewOptions", Options);
+					_foptions.Text = " TopView Options";
+
+					OptionsManager.Screens.Add(_foptions);
+
+					_foptions.FormClosing += (sender1, e1) =>
+					{
+						if (!XCMainWindow.Quit)
+						{
+							setOptionsChecked(false);
+
+							e1.Cancel = true;
+							_foptions.Hide();
+						}
+						else
+							RegistryInfo.UpdateRegistry(_foptions);
+					};
+				}
 
 				_foptions.Show();
 
-				_foptions.FormClosing += (sender1, e1) => // a note describing why this is here could be helpful ...
-				{
-					if (!_closing)
-						OnOptionsClick(sender, e);
-
-					_closing = false;
-				};
+				if (_foptions.WindowState == FormWindowState.Minimized)
+					_foptions.WindowState  = FormWindowState.Normal;
 			}
 			else
-			{
-				ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = false;
-
-				_closing = true;
 				_foptions.Close();
-			}
+		}
+
+		private void setOptionsChecked(bool @checked)
+		{
+			ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
+			ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = @checked;
 		}
 
 		/// <summary>
@@ -271,17 +287,19 @@ namespace MapView.Forms.MapObservers.TopViews
 		private  const string Grid10Width       = "Grid10Width";
 
 
+		private bool _optionsLoaded;
 		/// <summary>
 		/// Loads default options for TopView in TopRouteView screens.
 		/// </summary>
-		protected internal override void LoadControl0Options()
+		protected internal override void LoadControlOptions()
 		{
-			_topBrushes = new Dictionary<string, SolidBrush>();
-			_topPens    = new Dictionary<string, Pen>();
+			if (_optionsLoaded) return;
+			_optionsLoaded = true;
 
 			_topBrushes.Add(FloorColor,   new SolidBrush(Color.BurlyWood));
 			_topBrushes.Add(ContentColor, new SolidBrush(Color.MediumSeaGreen));
-			_topBrushes.Add(SelectedTypeColor, QuadrantsPanel.SelectColor);
+
+			_topBrushes.Add(SelectedTypeColor, QuadrantPanel.SelectColor);
 
 			var penWest = new Pen(Color.Khaki, 4);
 			_topPens.Add(WestColor, penWest);
@@ -311,29 +329,29 @@ namespace MapView.Forms.MapObservers.TopViews
 			OptionChangedEvent pc = OnPenColorChanged;
 			OptionChangedEvent pw = OnPenWidthChanged;
 
-			Options.AddOption(FloorColor,        Color.BurlyWood,                 "Color of the floor tile indicator",           Tile,     bc);
-			Options.AddOption(WestColor,         Color.Khaki,                     "Color of the west tile indicator",            Tile,     pc);
-			Options.AddOption(NorthColor,        Color.Wheat,                     "Color of the north tile indicator",           Tile,     pc);
-			Options.AddOption(ContentColor,      Color.MediumSeaGreen,            "Color of the content tile indicator",         Tile,     bc);
-			Options.AddOption(WestWidth,         3,                               "Width of the west tile indicator in pixels",  Tile,     pw);
-			Options.AddOption(NorthWidth,        3,                               "Width of the north tile indicator in pixels", Tile,     pw);
+			Options.AddOption(FloorColor,        Color.BurlyWood,      "Color of the floor tile indicator",           Tile,     bc);
+			Options.AddOption(WestColor,         Color.Khaki,          "Color of the west tile indicator",            Tile,     pc);
+			Options.AddOption(NorthColor,        Color.Wheat,          "Color of the north tile indicator",           Tile,     pc);
+			Options.AddOption(ContentColor,      Color.MediumSeaGreen, "Color of the content tile indicator",         Tile,     bc);
+			Options.AddOption(WestWidth,         3,                    "Width of the west tile indicator in pixels",  Tile,     pw);
+			Options.AddOption(NorthWidth,        3,                    "Width of the north tile indicator in pixels", Tile,     pw);
 
-			Options.AddOption(SelectorColor,     Color.Black,                     "Color of the mouse-over indicator",           Selector, pc);
-			Options.AddOption(SelectorWidth,     2,                               "Width of the mouse-over indicator in pixels", Selector, pw);
-			Options.AddOption(SelectedColor,     Color.RoyalBlue,                 "Color of the selection line",                 Selector, pc);
-			Options.AddOption(SelectedWidth,     2,                               "Width of the selection line in pixels",       Selector, pw);
-			Options.AddOption(SelectedTypeColor, Color.LightBlue,                 "Background color of the selected tiletype",   Selector, bc);
+			Options.AddOption(SelectorColor,     Color.Black,          "Color of the mouse-over indicator",           Selector, pc);
+			Options.AddOption(SelectorWidth,     2,                    "Width of the mouse-over indicator in pixels", Selector, pw);
+			Options.AddOption(SelectedColor,     Color.RoyalBlue,      "Color of the selection line",                 Selector, pc);
+			Options.AddOption(SelectedWidth,     2,                    "Width of the selection line in pixels",       Selector, pw);
+			Options.AddOption(SelectedTypeColor, Color.LightBlue,      "Background color of the selected tiletype",   Selector, bc);
 
-			Options.AddOption(GridColor,         Color.Black,                     "Color of the grid lines",                     Grid,     pc);
-			Options.AddOption(GridWidth,         1,                               "Width of the grid lines in pixels",           Grid,     pw);
-			Options.AddOption(Grid10Color,       Color.Black,                     "Color of every tenth grid line",              Grid,     pc);
-			Options.AddOption(Grid10Width,       2,                               "Width of every tenth grid line in pixels",    Grid,     pw);
+			Options.AddOption(GridColor,         Color.Black,          "Color of the grid lines",                     Grid,     pc);
+			Options.AddOption(GridWidth,         1,                    "Width of the grid lines in pixels",           Grid,     pw);
+			Options.AddOption(Grid10Color,       Color.Black,          "Color of every tenth grid line",              Grid,     pc);
+			Options.AddOption(Grid10Width,       2,                    "Width of every tenth grid line in pixels",    Grid,     pw);
 
-			QuadrantsPanel.Pens =
-			TopPanel.TopPens    = _topPens;
+			QuadrantPanel.Pens =
+			TopPanel.TopPens   = _topPens;
 
-			QuadrantsPanel.Brushes =
-			TopPanel.TopBrushes    = _topBrushes;
+			QuadrantPanel.Brushes =
+			TopPanel.TopBrushes   = _topBrushes;
 
 			Invalidate();
 		}
@@ -348,9 +366,9 @@ namespace MapView.Forms.MapObservers.TopViews
 			_topBrushes[key].Color = (Color)val;
 
 			if (key == SelectedTypeColor)
-				QuadrantsPanel.SelectColor = _topBrushes[key];
+				QuadrantPanel.SelectColor = _topBrushes[key];
 
-			Refresh();
+			RefreshControls();
 		}
 
 		/// <summary>
@@ -361,7 +379,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private void OnPenColorChanged(string key, object val)
 		{
 			_topPens[key].Color = (Color)val;
-			Refresh();
+			RefreshControls();
 		}
 
 		/// <summary>
@@ -372,8 +390,15 @@ namespace MapView.Forms.MapObservers.TopViews
 		private void OnPenWidthChanged(string key, object val)
 		{
 			_topPens[key].Width = (int)val;
-			Refresh();
+			RefreshControls();
 		}
+
+		private void RefreshControls()
+		{
+			ViewerFormsManager.TopView     .Control   .Refresh();
+			ViewerFormsManager.TopRouteView.ControlTop.Refresh();
+		}
+
 
 		/// <summary>
 		/// Gets the brushes/colors for the Floor and Content blobs.
@@ -394,6 +419,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			return _topPens;
 		}
-		#endregion
+		#endregion Options
 	}
 }

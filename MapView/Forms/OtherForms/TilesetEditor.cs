@@ -159,7 +159,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// Creates the Tileset Editor.
+		/// Creates a Tileset Editor.
 		/// </summary>
 		/// <param name="boxType"></param>
 		/// <param name="labelGroup"></param>
@@ -179,8 +179,7 @@ namespace MapView
 
 			InitializeComponent();
 
-			var regInfo = new RegistryInfo(RegistryInfo.TilesetEditor, this); // subscribe to Load and Closing events.
-			regInfo.RegisterProperties();
+			RegistryInfo.RegisterProperties(this);
 
 			Group    = labelGroup;
 			Category = labelCategory;
@@ -314,7 +313,7 @@ namespace MapView
 		/// terrain verifications.
 		/// @note Terrains get changed on-the-fly and do not require an Accept
 		/// click. But the Map needs to be reloaded when things go back to
-		/// OnAdd/EditTilesetClick() in XCMainWindow.
+		/// OnAdd/EditTilesetClick() in 'XCMainWindow'.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -332,6 +331,10 @@ namespace MapView
 					DialogResult = DialogResult.OK; // force reload of the Tileset
 				}
 			}
+
+			if (!e.Cancel)
+				RegistryInfo.UpdateRegistry(this);
+
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)

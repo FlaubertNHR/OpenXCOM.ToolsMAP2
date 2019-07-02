@@ -15,19 +15,15 @@ namespace MapView.Forms.MainWindow
 	internal static class MainMenusManager
 	{
 		#region Fields (static)
-		private static Options _optionsMain;
-
-		private static bool _quit;
-
 		private const string Separator = "-";
 		#endregion Fields (static)
 
 
 		#region Properties (static)
-		internal static MenuItem MenuViewers
-		{ get; private set; }
+		private static MenuItem Viewers
+		{ get; set; }
 
-		private static MenuItem MenuHelp
+		private static MenuItem Helpers
 		{ get; set; }
 		#endregion Properties (static)
 
@@ -115,15 +111,19 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Handles clicks on the Viewers|RestoreAll item. Also F12.
-		/// @note Ironically this seems to trigger MainView's Activated event
-		/// but MinimizeAll doesn't. So just bypass that event's handler for
-		/// safety regardless of .NET's shenanigans.
+		/// @note Ironically this - setting the windowstate (to 'Normal') -
+		/// seems to trigger MainView's Activated event but MinimizeAll doesn't.
+		/// So just bypass that event's handler for safety regardless of .NET's
+		/// shenanigans.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private static void OnRestoreAllClick(object sender, EventArgs e)
 		{
 			XCMainWindow.BypassActivatedEvent = true;
+
+			bool bringtofront = !XCMainWindow.that.Focused
+							 || !XCMainWindow.that.BringAllToFront;
 
 			var zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
@@ -132,6 +132,12 @@ namespace MapView.Forms.MainWindow
 					|| f.WindowState == FormWindowState.Maximized)
 				{
 					f.WindowState = FormWindowState.Normal;
+				}
+
+				if (bringtofront) // tentative ->
+				{
+					f.TopMost = true;
+					f.TopMost = false;
 				}
 			}
 
@@ -144,61 +150,77 @@ namespace MapView.Forms.MainWindow
 		/// <summary>
 		/// Sets the menus to manage.
 		/// </summary>
-		/// <param name="itViewers"></param>
-		/// <param name="itHelp"></param>
-		internal static void SetMenus(MenuItem itViewers, MenuItem itHelp)
+		/// <param name="it0"></param>
+		/// <param name="it1"></param>
+		internal static void SetMenus(MenuItem it0, MenuItem it1)
 		{
-			MenuViewers = itViewers;
-			MenuHelp    = itHelp;
+			Viewers = it0;
+			Helpers = it1;
 		}
 
 		/// <summary>
 		/// Adds menuitems to MapView's "Viewers" and "Help" dropdown lists.
 		/// </summary>
-		/// <param name="optionsMain">pointer to MainView's Options (for
-		/// subsidiary viewers' visibility only)</param>
-		internal static void PopulateMenus(Options optionsMain)
+		internal static void PopulateMenus()
 		{
-			_optionsMain = optionsMain;
-
 			// "Viewers" menuitems ->
-			CreateMenuItem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     MenuViewers, Shortcut.F5);	// id #0
+			CreateMenuitem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     Viewers, Shortcut.F5);	// id #0
 
-			MenuViewers.MenuItems.Add(new MenuItem(Separator));														// id #1
+			Viewers.MenuItems.Add(new MenuItem(Separator));														// id #1
 
-			CreateMenuItem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      MenuViewers, Shortcut.F6);	// id #2
-			CreateMenuItem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    MenuViewers, Shortcut.F7);	// id #3
-			CreateMenuItem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, MenuViewers, Shortcut.F8);	// id #4
+			CreateMenuitem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      Viewers, Shortcut.F6);	// id #2
+			CreateMenuitem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    Viewers, Shortcut.F7);	// id #3
+			CreateMenuitem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, Viewers, Shortcut.F8);	// id #4
 
-			MenuViewers.MenuItems.Add(new MenuItem(Separator));														// id #5
+			Viewers.MenuItems.Add(new MenuItem(Separator));														// id #5
 
-			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);								// id #6
-			var it7 = new MenuItem("restore all",  OnRestoreAllClick,  Shortcut.F12);								// id #7
-			MenuViewers.MenuItems.Add(it6);
-			MenuViewers.MenuItems.Add(it7);
+			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);							// id #6
+			var it7 = new MenuItem("restore all",  OnRestoreAllClick,  Shortcut.F12);							// id #7
+			Viewers.MenuItems.Add(it6);
+			Viewers.MenuItems.Add(it7);
+
+
+			Options options = OptionsManager.getMainOptions();
+			foreach (MenuItem it in Viewers.MenuItems)
+			{
+				var f = it.Tag as Form;
+				if (f != null)
+				{
+					string key = RegistryInfo.getRegistryLabel(f);
+					options.AddOption(
+									key,
+									f is TileViewForm || f is TopViewForm		// true to have the viewer open on 1st run.
+													  || f is RouteViewForm,
+									"Open on load - " + key,					// appears as a tip at the bottom of the Options screen.
+									XCMainWindow.Windows);						// this identifies what Option category the setting appears under.
+
+					f.VisibleChanged += (sender, e) =>
+					{
+						options[key].Value = (sender as Form).Visible;
+					};
+				}
+			}
 
 
 			// "Help" menuitems ->
-			var miHelp = new MenuItem("Help");
-			miHelp.Click += OnHelpClick;
-			MenuHelp.MenuItems.Add(miHelp);
+			var help = new MenuItem("CHM Help");
+			help.Click += OnHelpClick;
+			Helpers.MenuItems.Add(help);
 
-			CreateMenuItem(ViewerFormsManager.ColorsScreen, "Colors", MenuHelp);
-			CreateMenuItem(ViewerFormsManager.AboutScreen,  "About",  MenuHelp);
-
-
-			AddVisibilityOptions();
+			CreateMenuitem(ViewerFormsManager.ColorsScreen, "Colors", Helpers);
+			CreateMenuitem(ViewerFormsManager.AboutScreen,  "About",  Helpers);
 		}
 
 		/// <summary>
-		/// Creates a menuitem for a specified viewer.
-		/// @note The forms never actually close until MainView closes.
+		/// Creates a menuitem for a specified viewer and tags the item with its
+		/// viewer's Form-object, etc.
+		/// @note These forms never actually close until MainView closes.
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="caption"></param>
 		/// <param name="parent"></param>
 		/// <param name="shortcut"></param>
-		private static void CreateMenuItem(
+		private static void CreateMenuitem(
 				Form f,
 				string caption,
 				Menu parent,
@@ -214,68 +236,71 @@ namespace MapView.Forms.MainWindow
 
 			it.Click += OnMenuItemClick;
 
-			f.FormClosing += (sender, e) =>
+			if (secondary(f))
 			{
-				it.Checked = false;
-				e.Cancel = true;
-				f.Hide();
-			};
+				RegistryInfo.RegisterProperties(f);
+
+				f.FormClosing += (sender, e) =>
+				{
+					if (!XCMainWindow.Quit)
+					{
+						it.Checked = false;
+						e.Cancel = true;
+						f.Hide();
+					}
+					else
+						RegistryInfo.UpdateRegistry(f);
+				};
+			}
+			else
+			{
+				f.FormClosing += (sender, e) =>
+				{
+					if (!XCMainWindow.Quit)
+					{
+						it.Checked = false;
+						e.Cancel = true;
+						f.Hide();
+					}
+				};
+			}
 		}
 
 		/// <summary>
-		/// Adds each viewer's visibility flag to user Options.
+		/// Checks if a specified form is a secondary viewer. Secondary forms
+		/// are instantiated on app-start and remain that way for the life of
+		/// the app (many tertiary forms do too, but secondary forms shall be
+		/// guaranteed).
 		/// </summary>
-		private static void AddVisibilityOptions()
+		/// <param name="f">a form to check against</param>
+		/// <returns></returns>
+		private static bool secondary(Form f)
 		{
-			foreach (MenuItem it in MenuViewers.MenuItems)
-			{
-				var f = it.Tag as Form;
-				if (f != null)
-				{
-					string key = it.Text;
-					_optionsMain.AddOption(
-									key,
-									(       it.Tag is TopViewForm)	// true to have the viewer open on 1st run.
-										|| (it.Tag is RouteViewForm)
-										|| (it.Tag is TileViewForm),
-									"Open on load - " + key,		// appears as a tip at the bottom of the Options screen.
-									"Windows");						// this identifies what Option category the setting appears under.
-
-					f.VisibleChanged += (sender, e) =>
-					{
-						if (!_quit)
-						{
-							var fsender = sender as Form;
-							if (fsender != null)
-								_optionsMain[key].Value = fsender.Visible;
-						}
-					};
-				}
-			}
+			return f is TileViewForm
+				|| f is TopViewForm
+				|| f is RouteViewForm
+				|| f is TopRouteViewForm;
 		}
 
 		/// <summary>
 		/// Visibles the subsidiary viewers that are flagged when a Map loads.
+		/// @note Called by 'XCMainWindow.LoadSelectedDescriptor()'.
 		/// </summary>
-		internal static void StartViewers()
+		internal static void StartSecondaryStage()
 		{
-			foreach (MenuItem it in MenuViewers.MenuItems)
+			Viewers.Enabled = true;
+
+			Options options = OptionsManager.getMainOptions();
+			for (int id = 0; id != 5; ++id)
 			{
-				var f = it.Tag as Form;
-				if (f != null && _optionsMain[it.Text].IsTrue)	// NOTE: All viewers shall be keyed in Options w/ the item-text.
-					it.PerformClick();							// TODO: uhhh ...
+				if (id == 1) ++id; // skip the separator
+
+				var it = Viewers.MenuItems[id];
+				if (options[RegistryInfo.getRegistryLabel(it.Tag as Form)].IsTrue)
+				{
+					OnMenuItemClick(it, EventArgs.Empty);
+				}
 			}
-			MenuViewers.Enabled = true;
-		}
-
-
-		/// <summary>
-		/// Effectively disables the 'VisibleChanged' event for all subsidiary
-		/// viewers.
-		/// </summary>
-		internal static void Quit()
-		{
-			_quit = true;
 		}
 
 
@@ -290,13 +315,13 @@ namespace MapView.Forms.MainWindow
 		/// <returns>true if key is suppressed</returns>
 		internal static bool ViewerKeyDown(KeyEventArgs e)
 		{
-			int it = -1;
+			int id = -1;
 			switch (e.KeyCode)
 			{
-				case Keys.F5: it = 0; break; // show/hide viewers ->
-				case Keys.F6: it = 2; break;
-				case Keys.F7: it = 3; break;
-				case Keys.F8: it = 4; break;
+				case Keys.F5: id = 0; break; // show/hide viewers ->
+				case Keys.F6: id = 2; break;
+				case Keys.F7: id = 3; break;
+				case Keys.F8: id = 4; break;
 
 				case Keys.F11: OnMinimizeAllClick(null, EventArgs.Empty); break; // min/rest ->
 				case Keys.F12: OnRestoreAllClick( null, EventArgs.Empty); break;
@@ -304,9 +329,9 @@ namespace MapView.Forms.MainWindow
 				default: return false; // else do not suppress key-event for any other key
 			}
 
-			if (it != -1)
+			if (id != -1)
 			{
-				if (e.Shift)
+				if (e.Shift) // focus MainView for any (valid) 'id'
 				{
 					if (XCMainWindow.that.WindowState == FormWindowState.Minimized)
 						XCMainWindow.that.WindowState =  FormWindowState.Normal;
@@ -315,7 +340,7 @@ namespace MapView.Forms.MainWindow
 				}
 				else
 					OnMenuItemClick(
-								MenuViewers.MenuItems[it],
+								Viewers.MenuItems[id],
 								EventArgs.Empty);
 			}
 			e.SuppressKeyPress = true;

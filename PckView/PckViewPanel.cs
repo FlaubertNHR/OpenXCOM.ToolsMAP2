@@ -107,6 +107,7 @@ namespace PckView
 		{
 #if DEBUG
 			LogFile.SetLogFilePath(System.IO.Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
+			DSShared.DSLogFile.CreateLogFile();
 #endif
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint
@@ -127,7 +128,7 @@ namespace PckView
 			idOver =
 			idSel = -1;
 
-			PckViewForm.PaletteChangedEvent += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
+			PckViewForm.PaletteChanged += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
 
 			that = this;
 		}
@@ -375,7 +376,7 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// Handler for PaletteChangedEvent.
+		/// Handler for PaletteChanged.
 		/// </summary>
 		private void OnPaletteChanged()
 		{

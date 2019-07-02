@@ -8,9 +8,9 @@
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -20,10 +20,9 @@
 		}
 
 		#region Windows Form Designer generated code
-
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -135,11 +134,10 @@
 			// 
 			// btn_GlobalTerrains
 			// 
-			this.btn_GlobalTerrains.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_GlobalTerrains.Location = new System.Drawing.Point(5, 0);
+			this.btn_GlobalTerrains.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btn_GlobalTerrains.Location = new System.Drawing.Point(0, 0);
 			this.btn_GlobalTerrains.Name = "btn_GlobalTerrains";
-			this.btn_GlobalTerrains.Size = new System.Drawing.Size(580, 25);
+			this.btn_GlobalTerrains.Size = new System.Drawing.Size(592, 27);
 			this.btn_GlobalTerrains.TabIndex = 0;
 			this.btn_GlobalTerrains.Text = "Apply allocated terrains to all tilesets that are defined by Path+Map";
 			this.btn_GlobalTerrains.UseVisualStyleBackColor = true;
@@ -646,7 +644,6 @@
 			this.ResumeLayout(false);
 
 		}
-
 		#endregion
 
 		private System.Windows.Forms.Button btnAccept;

@@ -16,11 +16,14 @@ namespace MapView.Forms.MapObservers.TopViews
 		:
 			TopPanelParent
 	{
-		#region Fields & Properties
-		private ColorTools _toolWest;
-		private ColorTools _toolNorth;
-		private ColorTools _toolContent;
+		#region Fields
+		private ColorTool _toolWest;
+		private ColorTool _toolNorth;
+		private ColorTool _toolContent;
+		#endregion Fields
 
+
+		#region Properties
 		internal ToolStripMenuItem Floor
 		{ get; set; }
 
@@ -35,7 +38,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		internal QuadrantPanel QuadrantsPanel
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -46,7 +49,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			MainViewUnderlay.that.MainViewOverlay.MouseDragEvent += PathSelectedLozenge;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -57,9 +60,9 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			var tile = tilebase as XCMapTile;
 
-			_toolWest    = _toolWest    ?? new ColorTools(TopPens   [TopView.WestColor]);
-			_toolNorth   = _toolNorth   ?? new ColorTools(TopPens   [TopView.NorthColor]);
-			_toolContent = _toolContent ?? new ColorTools(TopBrushes[TopView.ContentColor], _toolNorth.Pen.Width);
+			_toolWest    = _toolWest    ?? new ColorTool(TopPens   [TopView.WestColor]);
+			_toolNorth   = _toolNorth   ?? new ColorTool(TopPens   [TopView.NorthColor]);
+			_toolContent = _toolContent ?? new ColorTool(TopBrushes[TopView.ContentColor], _toolNorth.Pen.Width);
 
 			if (Floor.Checked && tile.Floor != null)
 				BlobService.DrawFloor(
@@ -88,6 +91,6 @@ namespace MapView.Forms.MapObservers.TopViews
 									x, y,
 									tile.North);
 		}
-		#endregion
+		#endregion Methods
 	}
 }

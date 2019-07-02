@@ -34,15 +34,12 @@ namespace PckView
 
 
 		#region Properties (static)
+		internal static EditorForm that
+		{ get; private set; }
+
 		internal static EditMode Mode
 		{ get; set; }
 		#endregion Properties (static)
-
-
-		#region Properties
-		private bool Inited
-		{ get; set; }
-		#endregion Properties
 
 
 		#region cTor
@@ -80,6 +77,8 @@ namespace PckView
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
 			MaximumSize = new Size(0,0); // fu.net
 
+			that = this;
+
 			Controls.Add(_pnlEditor);
 			Controls.Add(_trackBar);
 			Controls.Add(_lblEditMode);
@@ -89,8 +88,11 @@ namespace PckView
 			OnTrackScroll(null, EventArgs.Empty);
 
 
-			var regInfo = new RegistryInfo(RegistryInfo.SpriteEditor, this); // subscribe to Load and Closing events.
-			regInfo.RegisterProperties();
+			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
+			{											// let OnLoad() deter width and height.
+				Left = PckViewForm.that.Left + 20;
+				Top  = PckViewForm.that.Top  + 20;
+			}
 		}
 		#endregion cTor
 
@@ -106,6 +108,37 @@ namespace PckView
 			_pnlEditor  .Height = ClientSize.Height
 								- _trackBar.Height
 								- _lblEditMode.Height;
+		}
+
+		/// <summary>
+		/// @note Requires KeyPreview TRUE.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+			{
+				e.SuppressKeyPress = true;
+				Close();
+			}
+			base.OnKeyDown(e);
+		}
+
+		/// <summary>
+		/// Handles form closing event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (!PckViewForm.Quit)
+			{
+				e.Cancel = true;
+				Hide();
+			}
+			else
+				RegistryInfo.UpdateRegistry(this);
+
+			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
 
@@ -155,25 +188,20 @@ namespace PckView
 			if (!miPalette.Checked)
 			{
 				miPalette.Checked = true;
-
-				if (!Inited)
-				{
-					Inited = true;
-					_fpalette.Left = Left + 20;
-					_fpalette.Top  = Top  + 20;
-				}
 				_fpalette.Show();
 			}
 			else
-				_fpalette.Close(); // hide, not close -> see OnPaletteFormClosing()
+				_fpalette.BringToFront();
 		}
 
+		/// <summary>
+		/// @note This fires after the palette's FormClosing event.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnPaletteFormClosing(object sender, CancelEventArgs e)
 		{
 			miPalette.Checked = false;
-
-			e.Cancel = true;
-			_fpalette.Hide();
 		}
 
 		private void OnShowGridClick(object sender, EventArgs e)
@@ -211,7 +239,7 @@ namespace PckView
 
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
@@ -232,10 +260,11 @@ namespace PckView
 		private StatusStrip ss_Status;
 		private ToolStripStatusLabel tssl_ColorInfo;
 
+
 		#region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -308,7 +337,7 @@ namespace PckView
 			// 
 			this.tssl_ColorInfo.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
 			this.tssl_ColorInfo.Name = "tssl_ColorInfo";
-			this.tssl_ColorInfo.Size = new System.Drawing.Size(243, 22);
+			this.tssl_ColorInfo.Size = new System.Drawing.Size(274, 22);
 			this.tssl_ColorInfo.Spring = true;
 			this.tssl_ColorInfo.Text = "colorinfo";
 			this.tssl_ColorInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -320,6 +349,7 @@ namespace PckView
 			this.Controls.Add(this.ss_Status);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(300, 300);
 			this.Menu = this.mmMainMenu;

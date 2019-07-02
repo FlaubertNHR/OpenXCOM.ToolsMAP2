@@ -5,6 +5,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
+using DSShared.Windows;
+
 using XCom;
 using XCom.Interfaces;
 
@@ -22,8 +24,6 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
-		internal static Rectangle Metric = new Rectangle(-1,0, 0,0);
-
 		private static bool ialDeadpartChecked = true;
 		private static bool ialAltrpartChecked = true;
 		private static bool ialSpritesChecked  = true;
@@ -148,10 +148,6 @@ namespace McdView
 
 			_f = f;
 
-			Location = new Point(
-							_f.Location.X + 20,
-							_f.Location.Y + 20);
-
 			gb_Overhead  .Location = new Point(0, 0);
 			gb_General   .Location = new Point(0, gb_Overhead.Bottom);
 			gb_Health    .Location = new Point(0, gb_General .Bottom);
@@ -167,12 +163,18 @@ namespace McdView
 
 			gb_IalOptions.Location = new Point(0, pnl_bg.ClientSize.Height - gb_IalOptions.Height);
 
-			ClientSize = new Size(
-								gb_Overhead     .Width
-									+ gb_Tu     .Width
-									+ gb_Explode.Width
-									+ gb_Loft   .Width,
-								ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
+			if (!RegistryInfo.RegisterProperties(this))
+			{
+				Location = new Point(
+								_f.Location.X + 20,
+								_f.Location.Y + 20);
+				ClientSize = new Size(
+									gb_Overhead     .Width
+										+ gb_Tu     .Width
+										+ gb_Explode.Width
+										+ gb_Loft   .Width,
+									ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
+			}
 
 			btn_Open.Location = new Point(gb_Unused.Left, gb_Unused.Bottom);
 			btn_Open.Width  = gb_Loft.Location.X - gb_IalOptions.Width;
@@ -198,7 +200,6 @@ namespace McdView
 
 			PartsPanel.Select();
 
-//			LayoutSpritesGroup(); // <- is done in OnResize which happens OnLoad auto.
 
 			foreach (Control control in Controls) // TODO: Do this recursively.
 			{
@@ -241,10 +242,7 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			Metric.X = Location.X;
-			Metric.Y = Location.Y;
-			Metric.Width  = ClientSize.Width;
-			Metric.Height = ClientSize.Height;
+			RegistryInfo.UpdateRegistry(this);
 
 			ialDeadpartChecked = cb_IalDeadpart.Checked;
 			ialAltrpartChecked = cb_IalAltrpart.Checked;
@@ -263,20 +261,6 @@ namespace McdView
 		{
 			base.OnResize(e);
 			LayoutSpritesGroup();
-		}
-
-		/// <summary>
-		/// Positions this CopyPanelF wrt/ McdviewF.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnLoad(EventArgs e)
-		{
-			if (Metric.X != -1)
-			{
-				Location   = new Point(Metric.X, Metric.Y);
-				ClientSize = new Size(Metric.Width, Metric.Height);
-			}
-			base.OnLoad(e);
 		}
 
 		/// <summary>
@@ -658,9 +642,9 @@ namespace McdView
 		#region LoFT
 		/// <summary>
 		/// Tags each LoftPanel with its corresponding TextBox.
-//		/// @note The tagged TextBoxes are tagged with (string)panelid in the
-//		/// designer. Thus the loft-panels, loft-textboxes, and panelids are all
-//		/// synched respectively.
+		/// @note The tagged TextBoxes are tagged with (string)panelid in the
+		/// designer. Thus the loft-panels, loft-textboxes, and panelids are all
+		/// synched respectively.
 		/// </summary>
 		private void TagLoftPanels()
 		{

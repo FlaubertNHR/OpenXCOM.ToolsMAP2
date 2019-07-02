@@ -19,38 +19,28 @@ namespace MapView.Forms.MapObservers.TopViews
 	/// </summary>
 	internal class TopPanelParent
 		:
-			MapObserverControl1
+			MapObserverControl_TopPanels
 	{
-		#region Fields & Properties
+		#region Fields (static)
+		private const int OffsetX = 2; // these are the offsets between the
+		private const int OffsetY = 3; // panel border and the lozenge-tip(s).
+		#endregion Fields (static)
+
+
+		#region Fields
 		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over cursor lozenge
 		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // selected tile or tiles being drag-selected
-
-		[Browsable(false), DefaultValue(null)]
-		internal protected Dictionary<string, Pen> TopPens
-		{ get; set; }
-
-		[Browsable(false), DefaultValue(null)]
-		internal protected Dictionary<string, SolidBrush> TopBrushes
-		{ get; set; }
-
 
 		private int _col = -1; // these track the location of the mouse-cursor
 		private int _row = -1;
 
-		private const int OffsetX = 2; // these are the offsets between the
-		private const int OffsetY = 3; // panel border and the lozenge-tip(s).
-
 		private int _originX;	// since the lozenge is drawn with its Origin at 0,0 of the
 								// panel, the entire lozenge needs to be displaced to the right.
 //		private int _originY;	// But this isn't really used. It's set to 'OffsetY' and stays that way. -> done.
+		#endregion Fields
 
 
-		private readonly DrawBlobService _blobService = new DrawBlobService();
-		internal protected DrawBlobService BlobService
-		{
-			get { return _blobService; }
-		}
-
+		#region Properties (override)
 		[Browsable(false), DefaultValue(null)]
 		public override MapFileBase MapBase
 		{
@@ -64,7 +54,27 @@ namespace MapView.Forms.MapObservers.TopViews
 				Refresh();
 			}
 		}
-		#endregion
+		#endregion Properties (override)
+
+
+		#region Properties (static)
+		[Browsable(false), DefaultValue(null)]
+		internal static protected Dictionary<string, Pen> TopPens
+		{ get; set; }
+
+		[Browsable(false), DefaultValue(null)]
+		internal static protected Dictionary<string, SolidBrush> TopBrushes
+		{ get; set; }
+		#endregion Properties (static)
+
+
+		#region Properties
+		private readonly DrawBlobService _blobService = new DrawBlobService();
+		internal protected DrawBlobService BlobService
+		{
+			get { return _blobService; }
+		}
+		#endregion Properties
 
 
 		#region cTor
@@ -78,7 +88,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Resize
@@ -464,7 +474,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 /*		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
@@ -475,8 +485,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			var pt = e.MapLocation;
 //			Text = "c " + pt.Col + "  r " + pt.Row; // I don't think this actually prints anywhere.
 
-			var halfWidth  = _drawService.HalfWidth;
-			var halfHeight = _drawService.HalfHeight;
+			var halfWidth  = QuadrantPanelDrawService.HalfWidth;
+			var halfHeight = QuadrantPanelDrawService.HalfHeight;
 
 			int xc = (pt.Col - pt.Row) * halfWidth;
 			int yc = (pt.Col + pt.Row) * halfHeight;

@@ -10,7 +10,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -21,8 +21,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -503,7 +503,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this._pnlRoutes.Location = new System.Drawing.Point(0, 25);
 			this._pnlRoutes.Name = "_pnlRoutes";
 			this._pnlRoutes.Size = new System.Drawing.Size(640, 250);
-			this._pnlRoutes.TabIndex = 1;
+			this._pnlRoutes.TabIndex = 0;
 			// 
 			// tsMain
 			// 
@@ -604,14 +604,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmi_RaiseNode.Name = "tsmi_RaiseNode";
 			this.tsmi_RaiseNode.Size = new System.Drawing.Size(210, 22);
 			this.tsmi_RaiseNode.Text = "node up 1 level";
-			this.tsmi_RaiseNode.Click += new System.EventHandler(this.OnRaiseNode);
+			this.tsmi_RaiseNode.Click += new System.EventHandler(this.OnNodeRaise);
 			// 
 			// tsmi_LowerNode
 			// 
 			this.tsmi_LowerNode.Name = "tsmi_LowerNode";
 			this.tsmi_LowerNode.Size = new System.Drawing.Size(210, 22);
 			this.tsmi_LowerNode.Text = "node down 1 level";
-			this.tsmi_LowerNode.Click += new System.EventHandler(this.OnLowerNode);
+			this.tsmi_LowerNode.Click += new System.EventHandler(this.OnNodeLower);
 			// 
 			// tsddbDebug
 			// 
@@ -806,9 +806,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// btnOg
 			// 
-			this.btnOg.Location = new System.Drawing.Point(590, 10);
+			this.btnOg.Location = new System.Drawing.Point(590, 28);
+			this.btnOg.Margin = new System.Windows.Forms.Padding(0);
 			this.btnOg.Name = "btnOg";
-			this.btnOg.Size = new System.Drawing.Size(20, 140);
+			this.btnOg.Size = new System.Drawing.Size(20, 120);
 			this.btnOg.TabIndex = 2;
 			this.btnOg.Text = "o\r\ng";
 			this.btnOg.UseVisualStyleBackColor = true;
@@ -941,6 +942,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.Controls.Add(this.tsMain);
 			this.Controls.Add(this.pnlDataFields);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Margin = new System.Windows.Forms.Padding(0);
 			this.Name = "RouteView";
 			this.Size = new System.Drawing.Size(640, 480);
 			this.tsMain.ResumeLayout(false);

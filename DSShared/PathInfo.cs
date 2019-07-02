@@ -27,7 +27,7 @@ namespace DSShared
 		public const string ConfigTilesetsTpl = "MapTilesets.tpl";	// tilesets file template
 
 		public const string ConfigViewers     = "MapViewers.yml";	// various window positions and sizes
-		public const string ConfigViewersOld  = "MapViewers.old";	// backup
+		public const string ConfigViewersT    = "MapViewers.yml.t";	// tempfile to attempt write
 
 
 		public const string NotConfigured     = "notconfigured"; // used in MapResources.yml in case UFO or TFTD installation is not configured.
@@ -62,13 +62,11 @@ namespace DSShared
 
 		#region cTor
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:DSShared.PathInfo"/> class.
+		/// Initializes a new instance of the <see cref="T:DSShared.PathInfo" /> class.
 		/// </summary>
 		/// <param name="path">the path</param>
 		/// <param name="file">the file with any extension</param>
-		public PathInfo(
-				string path,
-				string file)
+		public PathInfo(string path, string file)
 		{
 			_path = path;
 			_file = file;

@@ -23,7 +23,7 @@ namespace PckView
 			Form
 	{
 		#region Events (static)
-		internal static event PaletteChangedEventHandler PaletteChangedEvent;
+		internal static event PaletteChangedEvent PaletteChanged;
 		#endregion Events (static)
 
 
@@ -36,10 +36,17 @@ namespace PckView
 		private const string None     = "n/a";
 
 		private const string PngExt = ".PNG";
+
+		internal static bool Quit;
 		#endregion Fields (static)
 
 
 		#region Fields
+		/// <summary>
+		/// True if PckView has been invoked via TileView.
+		/// </summary>
+		public bool IsInvoked;
+
 		private readonly PckViewPanel TilePanel;
 		private readonly EditorForm Editor;
 
@@ -57,8 +64,6 @@ namespace PckView
 
 		private readonly Dictionary<Palette, MenuItem> _paletteItems =
 					 new Dictionary<Palette, MenuItem>();
-
-		private bool _editorInited;
 
 		private string _pfePck;
 		private string _pfeTab;
@@ -131,15 +136,16 @@ namespace PckView
 		/// </summary>
 		public PckViewForm()
 		{
-			RegistryInfo.setStaticPaths(Path.GetDirectoryName(Application.ExecutablePath));
-
-
 			InitializeComponent();
 
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
 			MaximumSize = new Size(0,0); // fu.net
 
-			Telemetric.LoadTelemetric(this);
+			if (!IsInvoked)
+				RegistryInfo.InitializeRegistry(Path.GetDirectoryName(Application.ExecutablePath));
+
+			RegistryInfo.RegisterProperties(this);
+//			regInfo.AddProperty("SelectedPalette");
 
 			that = this;
 
@@ -172,10 +178,6 @@ namespace PckView
 			miCreate.MenuItems.Add(miCreateBigobs);		// and get transfered to the Create submenu here.
 			miCreate.MenuItems.Add(miCreateUnitUfo);
 			miCreate.MenuItems.Add(miCreateUnitTftd);
-
-//			var regInfo = new RegistryInfo(RegistryInfo.PckView, this); // subscribe to Load and Closing events.
-//			regInfo.RegisterProperties();
-//			regInfo.AddProperty("SelectedPalette");
 
 			tssl_TilesTotal.Text = String.Format(
 											CultureInfo.InvariantCulture,
@@ -336,13 +338,17 @@ namespace PckView
 		{
 			if (CheckQuit())
 			{
-				Telemetric.SaveTelemetric(this);
+				RegistryInfo.UpdateRegistry(this);
 
-				Editor.ClosePalette();	// these are needed when PckView is
-				Editor.Close();			// invoked via TileView.
+				Quit = true;
 
-				if (miBytes.Checked)
-					SpriteBytesManager.HideBytesTable(true);
+				Editor.ClosePalette();	// these are needed when PckView
+				Editor.Close();			// is invoked via TileView.
+
+				SpriteBytesManager.HideBytesTable();
+
+				if (!IsInvoked)
+					RegistryInfo.FinalizeRegistry();
 			}
 			else
 				e.Cancel = true;
@@ -542,7 +548,7 @@ namespace PckView
 
 		/// <summary>
 		/// Opens the currently selected sprite in the sprite-editor.
-		/// Called when the contextmenu's Click event or the viewer-panel's
+		/// Called when the context's Click event or the viewer-panel's
 		/// DoubleClick event is raised or [Enter] is pressed.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -553,16 +559,9 @@ namespace PckView
 			{
 				EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.idSel];
 
-				if (!Editor.Visible)
+				if (!_miEdit.Checked)
 				{
-					_miEdit.Checked = true;	// TODO: show as Checked only if the currently
-											// selected sprite is actually open in the editor.
-					if (!_editorInited)
-					{
-						_editorInited = true;
-						Editor.Left = Left + 20;
-						Editor.Top  = Top  + 20;
-					}
+					_miEdit.Checked = true;
 					Editor.Show();
 				}
 				else
@@ -572,15 +571,13 @@ namespace PckView
 
 		/// <summary>
 		/// Cancels closing the editor and hides it instead.
+		/// @note This fires after the editor's FormClosing event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnEditorFormClosing(object sender, CancelEventArgs e)
 		{
 			_miEdit.Checked = false;
-
-			e.Cancel = true;
-			Editor.Hide();
 		}
 
 
@@ -1424,8 +1421,8 @@ namespace PckView
 
 				TilePanel.Spriteset.Pal = Pal;
 
-				if (PaletteChangedEvent != null)
-					PaletteChangedEvent();
+				if (PaletteChanged != null)
+					PaletteChanged();
 			}
 		}
 
@@ -1444,8 +1441,8 @@ namespace PckView
 
 			PalettePanel.that.PrintStatusPaletteId();	// update the palette-panel's statusbar
 														// in case palette-id #0 is currently selected.
-			if (PaletteChangedEvent != null)
-				PaletteChangedEvent();
+			if (PaletteChanged != null)
+				PaletteChanged();
 		}
 
 		/// <summary>
@@ -1468,11 +1465,14 @@ namespace PckView
 				}
 			}
 			else
-				SpriteBytesManager.HideBytesTable(miBytes.Checked = false);
+			{
+				miBytes.Checked = false;
+				SpriteBytesManager.HideBytesTable();
+			}
 		}
 
 		/// <summary>
-		/// Callback for ShowBytes().
+		/// Callback for LoadBytesTable().
 		/// </summary>
 		private void BytesClosingCallback()
 		{
@@ -1941,7 +1941,7 @@ namespace PckView
 		/// Checks state of the 'Changed' flag and/or asks user if the spriteset
 		/// ought be closed anyway.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>true if state is NOT changed or 'DialogResult.Yes'</returns>
 		private bool CheckQuit()
 		{
 			return !Changed
@@ -1959,6 +1959,6 @@ namespace PckView
 
 
 	#region Delegates
-	internal delegate void PaletteChangedEventHandler();
+	internal delegate void PaletteChangedEvent();
 	#endregion Delegates
 }

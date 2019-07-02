@@ -18,6 +18,16 @@ namespace MapView.Forms.MainWindow
 
 
 		#region Properties (static)
+		// TODO: Just initialize the fucking forms, instead of doing umpteen ba-
+		// zillion checks during the running of the app. It's not that fucking
+		// hard. In fact it's harder to untangle the mess after the fact!
+
+		private  static TileViewForm _tileView;
+		internal static TileViewForm  TileView
+		{
+			get { return _tileView ?? (_tileView = new TileViewForm()); }
+		}
+
 		private  static TopViewForm _topView;
 		internal static TopViewForm  TopView
 		{
@@ -36,11 +46,6 @@ namespace MapView.Forms.MainWindow
 			get { return _topRouteView ?? (_topRouteView = new TopRouteViewForm()); }
 		}
 
-		private  static TileViewForm _tileView;
-		internal static TileViewForm  TileView
-		{
-			get { return _tileView ?? (_tileView = new TileViewForm()); }
-		}
 
 		private  static ColorHelp _colorsScreen;
 		internal static ColorHelp  ColorsScreen
@@ -62,7 +67,7 @@ namespace MapView.Forms.MainWindow
 		/// is selected in TileView.
 		/// </summary>
 		/// <param name="part"></param>
-		private static void OnTileSelected_Observer0(Tilepart part)
+		private static void OnTileSelected_SelectQuadrant(Tilepart part)
 		{
 			if (part != null && part.Record != null)
 			{
@@ -79,15 +84,15 @@ namespace MapView.Forms.MainWindow
 			TopView     .Control   .InitializeToolstrip(ToolFactory);
 			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
 
-			TileView.Control.TileSelectedEvent_Observer0 += OnTileSelected_Observer0;
+			TileView.Control.TileSelected_SelectQuadrant += OnTileSelected_SelectQuadrant;
 
 			_observers = new IMapObserver[]
 			{
-				TopRouteView.ControlTop,
-				TopRouteView.ControlRoute,
 				TileView    .Control,
+				TopView     .Control,
 				RouteView   .Control,
-				TopView     .Control
+				TopRouteView.ControlTop,
+				TopRouteView.ControlRoute
 			};
 		}
 
@@ -114,7 +119,7 @@ namespace MapView.Forms.MainWindow
 				observer.MapBase.SelectLevelEvent    += observer.OnSelectLevelObserver;
 			}
 
-			foreach (string key in observer.Panels.Keys) // ie. TopPanel and QuadrantsPanel
+			foreach (string key in observer.Panels.Keys) // ie. 'TopPanel' and 'QuadrantsPanel'
 				SetObserver(observer.MapBase, observer.Panels[key]);
 		}
 		#endregion Methods (static)

@@ -8,7 +8,7 @@ namespace MapView
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
@@ -21,8 +21,8 @@ namespace MapView
 
 		#region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -102,7 +102,7 @@ namespace MapView
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(305, 15);
 			this.label6.TabIndex = 6;
-			this.label6.Text = "ASSIST - luke83 / et mult al";
+			this.label6.Text = "ASSIST - luke83 / et alii multus";
 			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// About
@@ -126,7 +126,7 @@ namespace MapView
 			this.ShowIcon = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "About";
+			this.Text = " About";
 			this.Shown += new System.EventHandler(this.OnShown);
 			this.LocationChanged += new System.EventHandler(this.OnLocationChanged);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);

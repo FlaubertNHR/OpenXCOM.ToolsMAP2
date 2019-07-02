@@ -12,9 +12,9 @@ using XCom.Interfaces;
 
 namespace MapView.Forms.MapObservers.TopViews
 {
-	internal sealed class QuadrantPanelDrawService
-		:
-			IDisposable
+	internal static class QuadrantPanelDrawService
+//		:
+//			IDisposable
 	{
 		#region Fields (static)
 		private const int MarginHori = 5;
@@ -48,30 +48,30 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 		#region Properties
-		internal SolidBrush Brush
+		internal static SolidBrush Brush
 		{ get; set; }
 
-		internal Dictionary<string, SolidBrush> Brushes
+		internal static Dictionary<string, SolidBrush> Brushes
 		{ get; set; }
 
-		internal Dictionary<string, Pen> Pens
+		internal static Dictionary<string, Pen> Pens
 		{ get; set; }
 
-		internal Font Font
+		internal static Font Font
 		{ get; set; }
 		#endregion Properties
 
-		private readonly GraphicsPath _pathFloor   = new GraphicsPath();
-		private readonly GraphicsPath _pathWest    = new GraphicsPath();
-		private readonly GraphicsPath _pathNorth   = new GraphicsPath();
-		private readonly GraphicsPath _pathContent = new GraphicsPath();
+		private static readonly GraphicsPath _pathFloor   = new GraphicsPath();
+		private static readonly GraphicsPath _pathWest    = new GraphicsPath();
+		private static readonly GraphicsPath _pathNorth   = new GraphicsPath();
+		private static readonly GraphicsPath _pathContent = new GraphicsPath();
 
 
 		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal QuadrantPanelDrawService()
+		static QuadrantPanelDrawService()
 		{
 			Font  = new Font("Comic Sans MS", 7);
 			Brush = new SolidBrush(Color.LightBlue);
@@ -113,7 +113,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		#endregion cTor
 
 
-		#region punc
+		#region punc (static)
 		private static Random _rnd = new Random();
 
 		/// <summary>
@@ -145,7 +145,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			}
 			return output;
 		}
-		#endregion punc
+		#endregion punc (static)
 
 
 		#region Methods
@@ -155,7 +155,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="graphics"></param>
 		/// <param name="tile"></param>
 		/// <param name="selectedQuadrant"></param>
-		internal void Draw(
+		internal static void Draw(
 				Graphics graphics,
 				XCMapTile tile,
 				QuadrantType selectedQuadrant)
@@ -345,7 +345,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <summary>
 		/// Draws the "door" string if applicable.
 		/// </summary>
-		private void DrawDoorString(Graphics graphics, QuadrantType quadType)
+		private static void DrawDoorString(Graphics graphics, QuadrantType quadType)
 		{
 			graphics.DrawString(
 							Door,
@@ -360,7 +360,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="quadType"></param>
-		private void DrawTypeString(Graphics graphics, QuadrantType quadType)
+		private static void DrawTypeString(Graphics graphics, QuadrantType quadType)
 		{
 			string type = String.Empty;
 			int width = 0;
@@ -398,7 +398,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="quadType"></param>
-		private void FillSwatchColor(Graphics graphics, QuadrantType quadType)
+		private static void FillSwatchColor(Graphics graphics, QuadrantType quadType)
 		{
 			SolidBrush brush = null;
 			switch (quadType)
@@ -426,15 +426,15 @@ namespace MapView.Forms.MapObservers.TopViews
 											SwatchHeight));
 		}
 
-		/// <summary>
+/*		/// <summary>
 		/// This isn't really necessary since the GraphicsPath's last the
 		/// lifetime of the app. But FxCop gets antsy ....
-		/// NOTE: Dispose() is never called. cf ColorTools. cf DrawBlobService.
+		/// NOTE: Dispose() is never called. cf ColorTool. cf DrawBlobService.
 		/// WARNING: This is NOT a robust implementation perhaps. But it
 		/// satisifes the core of the matter and could likely be used for
 		/// further development if that's ever required.
 		/// </summary>
-		public void Dispose()
+		public static void Dispose()
 		{
 			if (_pathFloor   != null) _pathFloor  .Dispose();
 			if (_pathWest    != null) _pathWest   .Dispose();
@@ -445,7 +445,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (Brush != null) Brush.Dispose();
 
 			GC.SuppressFinalize(this);
-		}
+		} */
 		#endregion Methods
 	}
 }

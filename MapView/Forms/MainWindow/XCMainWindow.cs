@@ -40,23 +40,28 @@ namespace MapView
 		private const string title = "Map Editor ||";
 
 		private const double ScaleDelta = 0.125;
-
-		internal static bool BypassActivatedEvent;
 		#endregion Fields (static)
 
 
 		#region Fields
 		private Options Options;
-		private Form _foptions;
-
-		private bool _closing;
-		private bool _quit;
-		private bool _allowBringToFront;
 		#endregion Fields
 
 
 		#region Properties (static)
 		internal static XCMainWindow that
+		{ get; private set; }
+
+		/// <summary>
+		/// Allows MainView and all its subsidiary forms to close, otherwise
+		/// usually only hide. This boolean gets flagged true only by MainView's
+		/// FormClosing event-handler. But it shall be checked by the
+		/// FormClosing event-handlers of any subsidiary form that should only
+		/// hide unless MainView itself is closing and therefore flagged to
+		/// Quit. If the flag is still false, 'e.Cancel' any subsidiary form
+		/// from closing in its FormClosing event-handler.
+		/// </summary>
+		internal static bool Quit
 		{ get; private set; }
 
 		internal static ScanGViewer ScanG
@@ -118,6 +123,9 @@ namespace MapView
 		/// </summary>
 		private TreeNode Searched
 		{ get; set; }
+
+		internal bool BringAllToFront
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -133,6 +141,7 @@ namespace MapView
 			string dirSetT = Path.Combine(dirAppL, PathInfo.SettingsDirectory);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
+			DSLogFile.CreateLogFile();
 #endif
 
 			LogFile.WriteLine("Starting MAIN MapView window ...");
@@ -234,15 +243,16 @@ namespace MapView
 
 			that = this;
 
-			FormClosing += OnSaveOptionsFormClosing;
 
-
-
-			RegistryInfo.setStaticPaths(dirAppL);
+			RegistryInfo.InitializeRegistry(dirAppL);
 			LogFile.WriteLine("Registry initialized.");
+			RegistryInfo.RegisterProperties(this);
+			LogFile.WriteLine("MainView registered.");
 
-			Options.InitializeOptionsConverters();
+			Options.InitializeConverters();
 			LogFile.WriteLine("OptionsConverters initialized.");
+			Option.InitializeParsers();
+			LogFile.WriteLine("OptionParsers initialized.");
 
 			Options = new Options();
 			OptionsManager.setOptionsType(RegistryInfo.MainWindow, Options);
@@ -273,7 +283,7 @@ namespace MapView
 			LogFile.WriteLine("Quadrant strings punked.");
 
 			MainMenusManager.SetMenus(menuViewers, menuHelp);
-			MainMenusManager.PopulateMenus(Options); // needs MainView's 'Options' for subsidiary viewer visibilities.
+			MainMenusManager.PopulateMenus();
 			LogFile.WriteLine("MainView menus populated.");
 
 
@@ -285,7 +295,7 @@ namespace MapView
 			ViewersManager.Initialize(); // adds each subsidiary viewer's options and Options-type etc.
 
 
-			ViewerFormsManager.TileView.Control.ReloadDescriptorEvent += OnReloadDescriptor;
+			ViewerFormsManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
 			MainViewUnderlay.AnimationUpdateEvent += OnAnimationUpdate;	// FIX: "Subscription to static events without unsubscription may cause memory leaks."
 																		// NOTE: it's not really a problem, since both publisher and subscriber are expected to
@@ -540,9 +550,10 @@ namespace MapView
 
 		#region Options
 		// headers
-		private const string Global  = "Global";
-		private const string MapView = "MapView";
-		private const string Sprites = "Sprites";
+		private  const string Global  = "Global";
+		private  const string MapView = "MapView";
+		private  const string Sprites = "Sprites";
+		internal const string Windows = "Windows"; // used in MainMenusManager.PopulateMenus()
 
 		// options
 		private const string Animation           = "Animation";
@@ -570,69 +581,14 @@ namespace MapView
 
 
 		/// <summary>
-		/// Loads (a) MainView's screen-location and -size from YAML,
-		///       (b) settings in MainView's Options screen.
+		/// Loads user-settings into MainView's Options screen.
 		/// </summary>
 		private void LoadOptions()
 		{
-			string file = Path.Combine(SharedSpace.GetShareString(SharedSpace.SettingsDirectory), PathInfo.ConfigViewers);
-			using (var sr = new StreamReader(File.OpenRead(file)))
-			{
-				var str = new YamlStream();
-				str.Load(sr);
-
-				var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
-				foreach (var node in nodeRoot.Children)
-				{
-					string viewer = ((YamlScalarNode)node.Key).Value;
-					if (String.Equals(viewer, RegistryInfo.MainView, StringComparison.Ordinal))
-					{
-						int x = 0;
-						int y = 0;
-						int w = 0;
-						int h = 0;
-
-						var invariant = System.Globalization.CultureInfo.InvariantCulture;
-
-						var keyvals = nodeRoot.Children[new YamlScalarNode(viewer)] as YamlMappingNode;
-						foreach (var keyval in keyvals) // NOTE: There is a better way to do this. See TilesetLoader..cTor
-						{
-							switch (keyval.Key.ToString()) // TODO: Error handling. ->
-							{
-								case "left":
-									x = Int32.Parse(keyval.Value.ToString(), invariant);
-									break;
-								case "top":
-									y = Int32.Parse(keyval.Value.ToString(), invariant);
-									break;
-								case "width":
-									w = Int32.Parse(keyval.Value.ToString(), invariant);
-									break;
-								case "height":
-									h = Int32.Parse(keyval.Value.ToString(), invariant);
-									break;
-							}
-						}
-
-						var rectScreen = Screen.GetWorkingArea(new Point(x, y));
-						if (!rectScreen.Contains(x + 200, y + 100)) // check to ensure that MainView is at least partly onscreen.
-						{
-							x = 100;
-							y =  50;
-						}
-
-						Left = x;
-						Top  = y;
-
-						ClientSize = new Size(w, h);
-					}
-				}
-			}
-
-			// kL_note: This is for retrieving MainViewer size and position from
+			// kL_note: This is for retrieving MainView's location and size from
 			// the Windows Registry:
 //			using (var keySoftware = Registry.CurrentUser.CreateSubKey(DSShared.Windows.RegistryInfo.SoftwareRegistry))
-//			using (var keyMapView = keySoftware.CreateSubKey(DSShared.Windows.RegistryInfo.MapViewRegistry))
+//			using (var keyMapView  = keySoftware.CreateSubKey(DSShared.Windows.RegistryInfo.MapViewRegistry))
 //			using (var keyMainView = keyMapView.CreateSubKey("MainView"))
 //			{
 //				Left   = (int)keyMainView.GetValue("Left",   Left);
@@ -644,14 +600,14 @@ namespace MapView
 //				keySoftware.Close();
 //			}
 
-			var handler = new OptionChangedEvent(OnOptionChange);
+			var changer = new OptionChangedEvent(OnOptionChange);
 
 			Options.AddOption(
 							Animation,
 							MainViewUnderlay.IsAnimated,
 							"If true the sprites will animate (F1 - On, F2 - Off)",
 							Global,
-							handler);
+							changer);
 			Options.AddOption(
 							Doors,
 							false,
@@ -660,13 +616,13 @@ namespace MapView
 								+ " This setting may need to be re-toggled if Animation changes"
 								+ " (F3 - On/Off)",
 							Global,
-							handler);
+							changer);
 			Options.AddOption(
 							SaveWindowPositions,
 							true, //PathsEditor.SaveRegistry,
 							"If true the window positions and sizes will be saved (disabled, always true)",
 							Global,
-							handler);
+							changer);
 			Options.AddOption(
 							AllowBringToFront,
 							false,
@@ -676,7 +632,7 @@ namespace MapView
 								+ " Windows 7 OS, in which focus refuses to switch to MainView"
 								+ " unless the subsidiary viewers are closed (tentative)",
 							Global,
-							handler);
+							changer);
 			Options.AddOption(
 							UseMono,
 							false,
@@ -685,14 +641,14 @@ namespace MapView
 								+ " black boxes appear around sprites but it bypasses Interpolation"
 								+ " and SpriteShade routines. Selected tiles will not be grayed",
 							Global,
-							handler);
+							changer);
 
 			Options.AddOption(
 							ShowGrid,
 							MainViewUnderlay.that.MainViewOverlay.ShowGrid,
 							"If true a grid will display at the current level of editing (F4 - On/Off)",
 							MapView,
-							handler);
+							changer);
 //							null, MainViewUnderlay.that.MainViewOverlay);
 			Options.AddOption(
 							GridLayerColor,
@@ -837,7 +793,7 @@ namespace MapView
 					break;
 
 				case AllowBringToFront:
-					_allowBringToFront = (bool)value;
+					BringAllToFront = (bool)value;
 					break;
 
 				case UseMono:
@@ -890,88 +846,53 @@ namespace MapView
 				// NOTE: 'GraySelection' is handled. reasons ...
 			}
 		}
+		#endregion Options
 
+
+		#region Events (override)
 		/// <summary>
 		/// This has nothing to do with the Registry anymore, but it saves
-		/// MainView's Options as well as its screen-size and -position to YAML
+		/// MainView's Options as well as its screen-location and -size to YAML
 		/// when the app closes.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="args"></param>
-		private void OnSaveOptionsFormClosing(object sender, CancelEventArgs args)
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("XCMainWindow.OnSaveOptionsFormClosing");
-
-			_quit = true;
-			args.Cancel = false;
+			Quit = true;
+			e.Cancel = false;
 
 			if (SaveAlertMap() == DialogResult.Cancel) // NOTE: do not short-circuit these ->
 			{
-				_quit = false;
-				args.Cancel = true;
+				Quit = false;
+				e.Cancel = true;
 			}
 
 			if (SaveAlertRoutes() == DialogResult.Cancel)
 			{
-				_quit = false;
-				args.Cancel = true;
+				Quit = false;
+				e.Cancel = true;
 			}
 
 			if (SaveAlertMaptree() == DialogResult.Cancel)
 			{
-				_quit = false;
-				args.Cancel = true;
+				Quit = false;
+				e.Cancel = true;
 			}
 
-			if (_quit)
+			if (Quit)
 			{
-				MainMenusManager.Quit();
-
 				OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: Save settings when closing the Options form(s).
 
 //				if (PathsEditor.SaveRegistry) // TODO: re-implement.
-				{
-					WindowState = FormWindowState.Normal;
+//				{
 					ViewersManager.CloseViewers();
+					OptionsManager.CloseScreens();
 
-					string dirSettings = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);
-					string src = Path.Combine(dirSettings, PathInfo.ConfigViewers);
-					string dst = Path.Combine(dirSettings, PathInfo.ConfigViewersOld);
+					RegistryInfo.UpdateRegistry(this);
+					RegistryInfo.FinalizeRegistry();
+//				}
 
-					File.Copy(src, dst, true);
-
-					using (var sr = new StreamReader(File.OpenRead(dst))) // but now use dst as src ->
-
-					using (var fs = new FileStream(src, FileMode.Create)) // overwrite previous viewers-config.
-					using (var sw = new StreamWriter(fs))
-					{
-						while (sr.Peek() != -1)
-						{
-							string line = sr.ReadLine().TrimEnd();
-
-							if (String.Equals(line, RegistryInfo.MainView + ":", StringComparison.Ordinal))
-							{
-								sw.WriteLine(line);
-
-								line = sr.ReadLine();
-								line = sr.ReadLine();
-								line = sr.ReadLine();
-								line = sr.ReadLine(); // heh
-
-								sw.WriteLine("  left: "   + Math.Max(0, Location.X));	// =Left
-								sw.WriteLine("  top: "    + Math.Max(0, Location.Y));	// =Top
-								sw.WriteLine("  width: "  + ClientSize.Width);			// <- use ClientSize, since Width and Height
-								sw.WriteLine("  height: " + ClientSize.Height);			// screw up due to the titlebar/menubar area.
-							}
-							else
-								sw.WriteLine(line);
-						}
-					}
-					File.Delete(dst);
-				}
-
-				// kL_note: This is for storing MainViewer size and position in
+				// kL_note: This is for storing MainView's location and size in
 				// the Windows Registry:
 //				if (PathsEditor.SaveRegistry)
 //				{
@@ -984,19 +905,20 @@ namespace MapView
 //						keyMainView.SetValue("Left",   Left);
 //						keyMainView.SetValue("Top",    Top);
 //						keyMainView.SetValue("Width",  Width);
-//						keyMainView.SetValue("Height", Height - SystemInformation.CaptionButtonSize.Height);
+//						keyMainView.SetValue("Height", Height - SystemInformation.CaptionButtonSize.Height); ps. not
 //						keyMainView.Close();
 //						keyMapView.Close();
 //						keySoftware.Close();
 //					}
 //				}
 			}
+
+			base.OnFormClosing(e);
 		}
-		#endregion Options
 
 
-		#region Events (override)
-		private static bool Inited;
+		private static bool Inited; // on 1st Activated keep the tree focused, on 2+ focus the panel
+		internal static bool BypassActivatedEvent;
 
 		/// <summary>
 		/// Overrides the Activated event. Brings any other open viewers to the
@@ -1013,7 +935,7 @@ namespace MapView
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			if (_allowBringToFront)
+			if (BringAllToFront)
 			{
 				if (!BypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
 				{
@@ -1028,7 +950,6 @@ namespace MapView
 					}
 
 //					base.OnActivated(e);
-
 					BypassActivatedEvent = false;
 				}
 			}
@@ -1154,7 +1075,7 @@ namespace MapView
 					BeginInvoke(DontBeepEvent);
 				}
 			}
-			else if (e.Control && MainMenusManager.MenuViewers.Enabled)
+			else if (e.Control && menuViewers.Enabled)
 			{
 				int it = -1;
 				switch (e.KeyCode)
@@ -1169,7 +1090,7 @@ namespace MapView
 				{
 					e.SuppressKeyPress = true;
 					MainMenusManager.OnMenuItemClick(
-												MainMenusManager.MenuViewers.MenuItems[it],
+												menuViewers.MenuItems[it],
 												EventArgs.Empty);
 				}
 			}
@@ -1394,17 +1315,6 @@ namespace MapView
 		}
 
 
-		private void OnRegenOccultClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE
-		{
-/*			var mapFile = MainViewUnderlay.that.MapBase as MapFileChild;
-			if (mapFile != null)
-			{
-				mapFile.CalculateOccultations();
-				Refresh();
-			} */
-		}
-
-
 		/// <summary>
 		/// Opens the Configuration Editor.
 		/// </summary>
@@ -1512,42 +1422,53 @@ namespace MapView
 
 		private void OnQuitClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("XCMainWindow.OnQuitClick");
-
-			OnSaveOptionsFormClosing(null, new CancelEventArgs()); // set '_quit' flag
-
-			if (_quit) Environment.Exit(0); // god, that works so much better than Application.Exit()
+			Close();
 		}
 
 
-		private void OnOptionsClick(object sender, EventArgs e)
-		{
-			var it = (MenuItem)sender;
-			if (!it.Checked)
-			{
-				it.Checked = true;
+		private static Form _foptions;	// is static for no special reason
 
-				_foptions = new OptionsForm("MainViewOptions", Options);
-				_foptions.Text = "MainView Options";
+		/// <summary>
+		/// Handles a click on the Options button to show or hide an Options-
+		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
+		/// viewer. Also subscribes to a form-closing handler that will hide the
+		/// form unless MainView is closing.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnOptionsClick(object sender, EventArgs e)
+		{
+			var it = sender as MenuItem;
+			if (it.Checked = !it.Checked)
+			{
+				if (_foptions == null)
+				{
+					_foptions = new OptionsForm("MainViewOptions", Options);
+					_foptions.Text = " MainView Options";
+
+					OptionsManager.Screens.Add(_foptions);
+
+					_foptions.FormClosing += (sender1, e1) =>
+					{
+						if (!XCMainWindow.Quit)
+						{
+							it.Checked = false;
+
+							e1.Cancel = true;
+							_foptions.Hide();
+						}
+						else
+							RegistryInfo.UpdateRegistry(_foptions);
+					};
+				}
 
 				_foptions.Show();
 
-				_foptions.FormClosing += (sender1, e1) =>
-				{
-					if (!_closing)
-						OnOptionsClick(sender, e);
-
-					_closing = false;
-				};
+				if (_foptions.WindowState == FormWindowState.Minimized)
+					_foptions.WindowState  = FormWindowState.Normal;
 			}
 			else
-			{
-				_closing = true;
-
-				it.Checked = false;
 				_foptions.Close();
-			}
 		}
 
 
@@ -1561,16 +1482,6 @@ namespace MapView
 					MainViewUnderlay.MapBase.Screenshot(sfdSaveDialog.FileName);
 				}
 			}
-		}
-
-		private void OnHq2xClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE.
-		{
-//			var map = _mainViewPanel.MapBase as MapFileChild;
-//			if (map != null)
-//			{
-//				map.HQ2X();
-//				_mainViewPanel.OnResize();
-//			}
 		}
 
 
@@ -1590,7 +1501,7 @@ namespace MapView
 												f.Rows,
 												f.Cols,
 												f.Levs,
-												f.ZType);
+												f.zType);
 
 						if (!MainViewUnderlay.MapBase.MapChanged && ((bit & 0x1) != 0))
 							MapChanged = true;
@@ -2784,8 +2695,8 @@ namespace MapView
 					miDoors.Checked = false;
 					AnimateDoorSprites(false);
 
-					if (!menuViewers.Enabled) // open/close the forms that appear in the Viewers menu.
-						MainMenusManager.StartViewers();
+					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
+						MainMenusManager.StartSecondaryStage();
 
 					ViewerFormsManager.SetObservers(@base); // reset all observer events
 

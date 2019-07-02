@@ -9,8 +9,8 @@ using XCom.Interfaces;
 namespace PckView.Forms.SpriteBytes
 {
 	/// <summary>
-	/// Creates a form that shows all the bytes in a sprite.
-	/// TODO: allow this to be editable and saveable.
+	/// Creates a texttable (copyable) that shows all the bytes in a sprite.
+	/// TODO: Allow this to be also editable and saveable.
 	/// </summary>
 	internal static class SpriteBytesManager
 	{
@@ -19,7 +19,7 @@ namespace PckView.Forms.SpriteBytes
 		private static RichTextBox _rtbBytes;
 
 		private static XCImage _sprite;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Methods (static)
@@ -27,11 +27,11 @@ namespace PckView.Forms.SpriteBytes
 		/// Instantiates the bytes-table as a Form.
 		/// </summary>
 		/// <param name="sprite">the sprite whose bytes to display</param>
-		/// <param name="formClosedCallBack">function pointer that unchecks the
-		/// menuitem in PckViewForm</param>
+		/// <param name="callback">function pointer that unchecks the menuitem
+		/// in PckViewForm</param>
 		internal static void LoadBytesTable(
 				XCImage sprite,
-				MethodInvoker formClosedCallBack)
+				MethodInvoker callback)
 		{
 			_sprite = sprite;
 
@@ -41,8 +41,10 @@ namespace PckView.Forms.SpriteBytes
 				_fBytes.Size = new Size(960, 620);
 				_fBytes.Font = new Font("Verdana", 7);
 				_fBytes.Text = "Bytes Table";
-				_fBytes.FormClosing += (sender, e) => formClosedCallBack();
-				_fBytes.FormClosing += OnFormClosing;
+				_fBytes.KeyPreview = true;
+				_fBytes.KeyDown     += OnBytesKeyDown;
+				_fBytes.FormClosing += (sender, e) => callback();
+				_fBytes.FormClosing += OnBytesClosing;
 
 				_rtbBytes = new RichTextBox();
 				_rtbBytes.Dock = DockStyle.Fill;
@@ -107,23 +109,34 @@ namespace PckView.Forms.SpriteBytes
 		/// <summary>
 		/// Hides or closes the bytes-table.
 		/// </summary>
-		/// <param name="close">true to close, else hide</param>
-		internal static void HideBytesTable(bool close)
+		internal static void HideBytesTable()
 		{
-			if (close)
+			if (_fBytes != null)
+			{
+				if (PckViewForm.Quit)
+					_fBytes.Close();
+				else
+					_fBytes.Hide();
+			}
+		}
+		#endregion Methods (static)
+
+
+		#region Events (static)
+		private static void OnBytesKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+			{
+				e.SuppressKeyPress = true;
 				_fBytes.Close();
-			else
+			}
+		}
+
+		private static void OnBytesClosing(object sender, CancelEventArgs e)
+		{
+			if (e.Cancel = !PckViewForm.Quit)
 				_fBytes.Hide();
 		}
-		#endregion
-
-
-		#region Eventcalls (static)
-		private static void OnFormClosing(object sender, CancelEventArgs e)
-		{
-			e.Cancel = true;
-			_fBytes.Hide();
-		}
-		#endregion
+		#endregion Events (static)
 	}
 }

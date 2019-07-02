@@ -13,7 +13,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 	{
 		#region Properties
 		/// <summary>
-		/// Gets 'RouteViewControl' as a child of 'MapObserverControl0'.
+		/// Gets 'RouteViewControl' as a child of 'MapObserverControl'.
 		/// </summary>
 		internal RouteView Control
 		{
@@ -23,7 +23,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Satisfies 'IMapObserverProvider'.
 		/// </summary>
-		public MapObserverControl0 ObserverControl0
+		public MapObserverControl ObserverControl
 		{
 			get { return RouteViewControl; }
 		}
@@ -137,17 +137,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 			}
 			base.OnKeyDown(e);
-		}
-
-
-		/// <summary>
-		/// Handles form closing event.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnFormClosing(FormClosingEventArgs e)
-		{
-			WindowState = FormWindowState.Normal; // else causes probls when opening a viewer that was closed while maximized.
-			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
 	}

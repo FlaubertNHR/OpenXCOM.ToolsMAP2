@@ -10,9 +10,9 @@ using XCom.Interfaces.Base;
 namespace MapView
 {
 	/// <summary>
-	/// Inherited by TopPanelParent, TopPanel, QuadrantPanel.
+	/// Inherited by 'TopPanelParent'/'TopPanel', 'QuadrantPanel'.
 	/// </summary>
-	internal class MapObserverControl1
+	internal class MapObserverControl_TopPanels
 		:
 			DoubleBufferedControl,
 			IMapObserver
@@ -32,11 +32,7 @@ namespace MapView
 		public virtual MapFileBase MapBase
 		{
 			get { return _mapBase; }
-			set
-			{
-				_mapBase = value;
-				Refresh();
-			}
+			set { _mapBase = value; Refresh(); }
 		}
 
 		/// <summary>

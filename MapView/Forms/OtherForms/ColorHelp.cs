@@ -511,9 +511,9 @@ namespace MapView
 			// tpRouteView
 			// 
 			this.tpRouteView.Controls.Add(this.gbRouteViewColors);
-			this.tpRouteView.Location = new System.Drawing.Point(4, 21);
+			this.tpRouteView.Location = new System.Drawing.Point(4, 22);
 			this.tpRouteView.Name = "tpRouteView";
-			this.tpRouteView.Size = new System.Drawing.Size(446, 231);
+			this.tpRouteView.Size = new System.Drawing.Size(446, 230);
 			this.tpRouteView.TabIndex = 2;
 			this.tpRouteView.Text = "RouteView";
 			// 
@@ -572,9 +572,9 @@ namespace MapView
 			this.tpTileView.Controls.Add(this.rbTftd);
 			this.tpTileView.Controls.Add(this.rbUfo);
 			this.tpTileView.Controls.Add(this.gbTileViewColors);
-			this.tpTileView.Location = new System.Drawing.Point(4, 21);
+			this.tpTileView.Location = new System.Drawing.Point(4, 22);
 			this.tpTileView.Name = "tpTileView";
-			this.tpTileView.Size = new System.Drawing.Size(446, 231);
+			this.tpTileView.Size = new System.Drawing.Size(446, 230);
 			this.tpTileView.TabIndex = 3;
 			this.tpTileView.Text = "TileView";
 			// 
@@ -813,7 +813,7 @@ namespace MapView
 			this.ShowIcon = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Colors help";
+			this.Text = " Colors help";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.tabMain.ResumeLayout(false);
 			this.tpTopView.ResumeLayout(false);

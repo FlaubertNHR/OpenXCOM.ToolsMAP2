@@ -65,6 +65,8 @@ namespace MapView
 		#region Events
 		private void OnShown(object sender, EventArgs e)
 		{
+			string text = " About";
+
 			string before = String.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
 										"{0:n0}", GC.GetTotalMemory(false));
@@ -72,15 +74,17 @@ namespace MapView
 //										System.Globalization.CultureInfo.CurrentCulture,
 //										"{0:n0}", GC.GetTotalMemory(true));
 
-//			Text += " - " + before + " \u2192 " + after + " bytes"; // '\u2192' = right arrow.
-			Text += " - " + before + " bytes allocated";
+//			text += " - " + before + " \u2192 " + after + " bytes"; // '\u2192' = right arrow.
+			text += " - " + before + " bytes allocated";
+
+			Text = text;
 
 			_size = new Size(Width, Height);
 
 			_locBase =
 			_loc     = Location;
 
-			MoveWindow();
+//			MoveWindow();
 		}
 
 		private void OnTick(object sender, EventArgs e)

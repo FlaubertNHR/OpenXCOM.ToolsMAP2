@@ -13,7 +13,7 @@ namespace MapView.Forms.MapObservers.TileViews
 	{
 		#region Properties
 		/// <summary>
-		/// Gets 'TileViewControl' as a child of 'MapObserverControl0'.
+		/// Gets 'TileViewControl' as a child of 'MapObserverControl'.
 		/// </summary>
 		internal TileView Control
 		{
@@ -23,7 +23,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <summary>
 		/// Satisfies 'IMapObserverProvider'.
 		/// </summary>
-		public MapObserverControl0 ObserverControl0
+		public MapObserverControl ObserverControl
 		{
 			get { return TileViewControl; }
 		}
@@ -121,17 +121,6 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 			base.OnKeyDown(e);
 		}
-
-
-		/// <summary>
-		/// Handles form closing event.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnFormClosing(FormClosingEventArgs e)
-		{
-			WindowState = FormWindowState.Normal; // else causes probls when opening a viewer that was closed while maximized.
-			base.OnFormClosing(e);
-		}
 		#endregion Events (override)
 
 
@@ -187,7 +176,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.ResumeLayout(false);
 
 		}
-		#endregion
+		#endregion Windows Form Designer generated code
 
 		private System.ComponentModel.IContainer components = null;
 

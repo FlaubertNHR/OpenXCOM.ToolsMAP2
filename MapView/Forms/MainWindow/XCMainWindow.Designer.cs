@@ -43,13 +43,13 @@ namespace MapView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XCMainWindow));
 #if !__MonoCS__
 			tvMaps = new MapView.BufferedTreeView();
 #else
 			tvMaps = new System.Windows.Forms.TreeView();
 #endif
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XCMainWindow));
 			this.mmMain = new System.Windows.Forms.MainMenu(this.components);
 			this.menuFile = new System.Windows.Forms.MenuItem();
 			this.miOpen = new System.Windows.Forms.MenuItem();
@@ -67,8 +67,6 @@ namespace MapView
 			this.miInfo = new System.Windows.Forms.MenuItem();
 			this.miScanG = new System.Windows.Forms.MenuItem();
 			this.miReloadTerrains = new System.Windows.Forms.MenuItem();
-			this.miRegenOccult = new System.Windows.Forms.MenuItem();
-			this.miHq = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.menuEdit = new System.Windows.Forms.MenuItem();
@@ -141,8 +139,6 @@ namespace MapView
 			this.miInfo,
 			this.miScanG,
 			this.miReloadTerrains,
-			this.miRegenOccult,
-			this.miHq,
 			this.miSeparator4,
 			this.miQuit});
 			this.menuFile.Text = "&File";
@@ -255,29 +251,14 @@ namespace MapView
 			this.miReloadTerrains.Text = "Reload terrai&ns";
 			this.miReloadTerrains.Click += new System.EventHandler(this.OnReloadTerrainsClick);
 			// 
-			// miRegenOccult
-			// 
-			this.miRegenOccult.Enabled = false;
-			this.miRegenOccult.Index = 15;
-			this.miRegenOccult.Text = "Regen &Occult";
-			this.miRegenOccult.Visible = false;
-			this.miRegenOccult.Click += new System.EventHandler(this.OnRegenOccultClick);
-			// 
-			// miHq
-			// 
-			this.miHq.Index = 16;
-			this.miHq.Text = "Hq&2x";
-			this.miHq.Visible = false;
-			this.miHq.Click += new System.EventHandler(this.OnHq2xClick);
-			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 17;
+			this.miSeparator4.Index = 15;
 			this.miSeparator4.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 18;
+			this.miQuit.Index = 16;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
@@ -536,9 +517,7 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miInfo;
 		private System.Windows.Forms.MenuItem miScanG;
 		private System.Windows.Forms.MenuItem miReloadTerrains;
-		private System.Windows.Forms.MenuItem miRegenOccult;
 		private System.Windows.Forms.MenuItem miExport;
-		private System.Windows.Forms.MenuItem miHq;
 		private System.Windows.Forms.MenuItem miSeparator4;
 		private System.Windows.Forms.MenuItem miQuit;
 

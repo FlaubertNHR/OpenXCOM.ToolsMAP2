@@ -12,9 +12,9 @@ using XCom.Interfaces.Base;
 namespace MapView
 {
 	/// <summary>
-	/// Inherited by TileView, TopView, RouteView.
+	/// Inherited by 'TileView', 'TopView', 'RouteView'.
 	/// </summary>
-	internal class MapObserverControl0
+	internal class MapObserverControl
 		:
 			UserControl,
 			IMapObserver
@@ -113,21 +113,21 @@ namespace MapView
 
 
 		#region Methods (virtual)
-		internal protected virtual void LoadControl0Options()
+		internal protected virtual void LoadControlOptions()
 		{}
 
-//		/// <summary>
-//		/// Currently implemented only to load TopView's visible-quadrants menu.
-//		/// </summary>
-//		/// <param name="e"></param>
-//		protected virtual void OnExtraRegistrySettingsLoad(RegistryEventArgs e)
-//		{}
-//		/// <summary>
-//		/// Currently implemented only to save TopView's visible-quadrants menu.
-//		/// </summary>
-//		/// <param name="e"></param>
-//		protected virtual void OnExtraRegistrySettingsSave(RegistryEventArgs e)
-//		{}
+/*		/// <summary>
+		/// Currently implemented only to load TopView's visible-quadrants menu.
+		/// </summary>
+		/// <param name="e"></param>
+		protected virtual void OnExtraRegistrySettingsLoad(RegistryEventArgs e)
+		{}
+		/// <summary>
+		/// Currently implemented only to save TopView's visible-quadrants menu.
+		/// </summary>
+		/// <param name="e"></param>
+		protected virtual void OnExtraRegistrySettingsSave(RegistryEventArgs e)
+		{} */
 		#endregion Methods (virtual)
 	}
 }

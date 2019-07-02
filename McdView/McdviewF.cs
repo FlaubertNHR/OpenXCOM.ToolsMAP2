@@ -6,10 +6,13 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
+using DSShared;
 using DSShared.Windows;
 
 using XCom;
 using XCom.Resources.Map;
+
+using YamlDotNet.RepresentationModel; // read values (deserialization)
 
 
 namespace McdView
@@ -37,6 +40,11 @@ namespace McdView
 
 
 		#region Fields
+		/// <summary>
+		/// True if McdView has been invoked via TileView.
+		/// </summary>
+		public bool IsInvoked;
+
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
@@ -232,12 +240,13 @@ namespace McdView
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
+			DSShared.DSLogFile.CreateLogFile();
 #endif
-
-			RegistryInfo.setStaticPaths(dirAppL);
 
 			isRunT = true;
 			InitializeComponent();
+
+			MaximumSize = new Size(0,0);
 
 			gb_Overhead    .Location = new Point(0, 0);
 			gb_General     .Location = new Point(0, gb_Overhead.Bottom);
@@ -264,15 +273,21 @@ namespace McdView
 			pnl_IsoLoft    .Location = new Point(gb_Loft    .Left - 5 - pnl_IsoLoft.Width, 15);
 			bar_IsoLoft    .Location = new Point(pnl_IsoLoft.Left - 5 - bar_IsoLoft.Width, 10);
 
-			ClientSize = new Size(
-								gb_Overhead      .Width
-									+ gb_Tu      .Width
-									+ gb_Explode .Width
-									+ gb_Loft    .Width
-									+ pnl_IsoLoft.Width
-									+ bar_IsoLoft.Width
-									+ 15,
-								ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
+			if (!IsInvoked)
+				RegistryInfo.InitializeRegistry(dirAppL);
+
+			if (!RegistryInfo.RegisterProperties(this)) // ought never be true ... Location and ClientSize are in the YAML manifest.
+			{
+				ClientSize = new Size(
+									gb_Overhead      .Width
+										+ gb_Tu      .Width
+										+ gb_Explode .Width
+										+ gb_Loft    .Width
+										+ pnl_IsoLoft.Width
+										+ bar_IsoLoft.Width
+										+ 15,
+									ClientSize.Height); // <- that isn't respecting ClientSize.Height (!!surprise!!)
+			}
 
 			TagLabels();
 			TagLoftPanels();
@@ -280,12 +295,6 @@ namespace McdView
 			RecordLabel  .SetStaticVars(tssl_Overval, lbl_Description, this);
 			RecordTextbox.SetStaticVars(tssl_Overval, lbl_Description);
 			LoftPanel    .SetStaticVars(this);
-
-//			McdRecord.IsTerrainSet = false;
-
-			MaximumSize = new Size(0,0);
-
-			YamlMetrics.Load(this);
 
 			PartsPanel = new TerrainPanel_main(this);
 			gb_Collection.Controls.Add(PartsPanel);
@@ -303,10 +312,8 @@ namespace McdView
 
 			PartsPanel.Select();
 
-//			LayoutSpritesGroup(); // <- is done in OnResize which happens OnLoad auto.
-
 			string pathufo, pathtftd;
-			YamlMetrics.GetResourcePaths(out pathufo, out pathtftd);
+			GetResourcePaths(out pathufo, out pathtftd);
 
 			ResourceInfo.LoadScanGufo(pathufo);		// -> ResourceInfo.ScanGufo
 			ResourceInfo.LoadScanGtftd(pathtftd);	// -> ResourceInfo.ScanGtftd
@@ -391,6 +398,63 @@ namespace McdView
 											 new object[] { true });
 			}
 		}
+
+
+		/// <summary>
+		/// Assigns MapView's Configurator's basepath(s) to 'pathufo' and
+		/// 'pathtftd'.
+		/// </summary>
+		/// <param name="pathufo"></param>
+		/// <param name="pathtftd"></param>
+		public static void GetResourcePaths(out string pathufo, out string pathtftd)
+		{
+			pathufo = pathtftd = null;
+
+			// First check the current Terrain's basepath ...
+//			string path = Path.GetDirectoryName(_pfeMcd);
+//			if (path.EndsWith(GlobalsXC.TerrainDir, StringComparison.InvariantCulture))
+//			{
+//				path = path.Substring(0, path.Length - GlobalsXC.TerrainDir.Length + 1);
+//				return Path.Combine(path, SharedSpace.ScanGfile);
+//			}
+
+			// Second check the Configurator's basepath ...
+			string dirSettings = Path.Combine(
+											Path.GetDirectoryName(Application.ExecutablePath),
+											PathInfo.SettingsDirectory);
+			string fileResources = Path.Combine(dirSettings, PathInfo.ConfigResources);
+			if (File.Exists(fileResources))
+			{
+				using (var sr = new StreamReader(File.OpenRead(fileResources)))
+				{
+					var str = new YamlStream();
+					str.Load(sr);
+
+					string val;
+
+					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
+					foreach (var node in nodeRoot.Children)
+					{
+						switch (node.Key.ToString())
+						{
+							case "ufo":
+								if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
+									pathufo = val;
+
+								break;
+
+							case "tftd":
+								if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
+									pathtftd = val;
+
+								break;
+						}
+					}
+				}
+			}
+
+			// Third let the user load ScanG.Dat/LoFT.Dat files from menuitems.
+		}
 		#endregion cTor
 
 
@@ -456,10 +520,14 @@ namespace McdView
 		{
 			if (CheckChanged())
 			{
+				RegistryInfo.UpdateRegistry(this);
+
 				if (CopyPanel != null) // this is needed when McdView is
 					CopyPanel.Close(); // invoked via TileView
 
-				YamlMetrics.Save(this);
+				if (!IsInvoked)
+					RegistryInfo.FinalizeRegistry();
+
 				base.OnFormClosing(e);
 			}
 			else

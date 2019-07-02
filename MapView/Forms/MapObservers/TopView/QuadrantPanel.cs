@@ -19,55 +19,51 @@ namespace MapView.Forms.MapObservers.TopViews
 	/// </summary>
 	internal sealed class QuadrantPanel
 		:
-			MapObserverControl1
+			MapObserverControl_TopPanels
 	{
-		#region Fields & Properties
-		private readonly QuadrantPanelDrawService _drawService =
-					 new QuadrantPanelDrawService();
-
+		#region Fields
 		private XCMapTile _tile;
 		private MapLocation _location;
+		#endregion Fields
 
+
+		#region Properties
 		private QuadrantType _quadrant;
 		internal QuadrantType SelectedQuadrant
 		{
 			get { return _quadrant; }
-			set
-			{
-				_quadrant = value;
-				Refresh();
-			}
+			set { _quadrant = value; Refresh(); }
+		}
+		#endregion Properties
+
+
+		#region Properties (static)
+		[Browsable(false)]
+		internal static Dictionary<string, SolidBrush> Brushes
+		{
+			set { QuadrantPanelDrawService.Brushes = value; }
 		}
 
 		[Browsable(false)]
-		internal Dictionary<string, SolidBrush> Brushes
+		internal static Dictionary<string, Pen> Pens
 		{
-			set { _drawService.Brushes = value; }
+			set { QuadrantPanelDrawService.Pens = value; }
 		}
 
 		[Browsable(false)]
-		internal Dictionary<string, Pen> Pens
+		internal static SolidBrush SelectColor
 		{
-			set { _drawService.Pens = value; }
+			get { return QuadrantPanelDrawService.Brush; }
+			set { QuadrantPanelDrawService.Brush = value; }
 		}
-
-		[Browsable(false)]
-		internal SolidBrush SelectColor
-		{
-			get { return _drawService.Brush; }
-			set
-			{
-				_drawService.Brush = value;
-				Refresh();
-			}
-		}
-		#endregion Fields & Properties
+		#endregion Properties (static)
 
 
 		#region cTor
 		/// <summary>
 		/// cTor. There are 2 quadpanels: one in TopView and another in
 		/// TopRouteView(Top).
+		/// TODO: This should be a static class.
 		/// </summary>
 		internal QuadrantPanel()
 		{
@@ -81,21 +77,18 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region Events (override)
 		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("QuadrantPanel.OnSelectLocationObserver");
-
 			_tile     = args.Tile as XCMapTile;
 			_location = args.Location;
 			Refresh();
 		}
 
 		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
@@ -169,7 +162,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="graphics"></param>
 		protected override void RenderGraphics(Graphics graphics)
 		{
-			_drawService.Draw(graphics, _tile, SelectedQuadrant);
+			QuadrantPanelDrawService.Draw(graphics, _tile, SelectedQuadrant);
 		}
 		#endregion Events (override)
 

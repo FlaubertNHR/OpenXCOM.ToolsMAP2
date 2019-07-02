@@ -45,6 +45,43 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		internal protected static Point SelectedLocation
 		{ get; set; }
+
+		private static readonly Dictionary<string, Pen> _pens =
+							new Dictionary<string, Pen>();
+		internal static protected Dictionary<string, Pen> RoutePens
+		{
+			get { return _pens; }
+		}
+
+		private static readonly Dictionary<string, SolidBrush> _brushes =
+							new Dictionary<string, SolidBrush>();
+		internal static protected Dictionary<string, SolidBrush> RouteBrushes
+		{
+			get { return _brushes; }
+		}
+
+
+
+		private static int _opacity = 255; // cf. RouteView.LoadControlOptions()
+		internal static protected int Opacity
+		{
+			get { return _opacity; }
+			set { _opacity = value.Clamp(0, 255); }
+		}
+
+		private static bool _showOverlay = true; // cf. RouteView.LoadControlOptions()
+		internal static protected bool ShowOverlay
+		{
+			get { return _showOverlay; }
+			set { _showOverlay = value; }
+		}
+
+		private static bool _showPriorityBars = true; // cf. RouteView.LoadControlOptions()
+		internal static protected bool ShowPriorityBars
+		{
+			get { return _showPriorityBars; }
+			set { _showPriorityBars = value; }
+		}
 		#endregion Properties (static)
 
 
@@ -119,38 +156,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		internal protected DrawBlobService BlobService
 		{
 			get { return _blobService; }
-		}
-
-		private readonly Dictionary<string, Pen> _pens = new Dictionary<string, Pen>();
-		internal protected Dictionary<string, Pen> RoutePens
-		{
-			get { return _pens; }
-		}
-		private readonly Dictionary<string, SolidBrush> _brushes = new Dictionary<string, SolidBrush>();
-		internal protected Dictionary<string, SolidBrush> RouteBrushes
-		{
-			get { return _brushes; }
-		}
-
-		private int _opacity = 255; // cf. RouteView.LoadControl0Options()
-		internal protected int Opacity
-		{
-			get { return _opacity; }
-			set { _opacity = value.Clamp(0, 255); }
-		}
-
-		private bool _showOverlay = true; // cf. RouteView.LoadControl0Options()
-		internal protected bool ShowOverlay
-		{
-			get { return _showOverlay; }
-			set { _showOverlay = value; }
-		}
-
-		private bool _showPriorityBars = true; // cf. RouteView.LoadControl0Options()
-		internal protected bool ShowPriorityBars
-		{
-			get { return _showPriorityBars; }
-			set { _showPriorityBars = value; }
 		}
 		#endregion Properties
 

@@ -17,7 +17,7 @@ namespace PckView
 	{
 		#region Fields
 		private PalettePanel _pnlPalette = new PalettePanel();
-		#endregion
+		#endregion Fields
 
 
 		#region cTor
@@ -28,10 +28,6 @@ namespace PckView
 		{
 			InitializeComponent();
 
-			ClientSize = new Size(
-								PalettePanel.SwatchesPerSide * 20,
-								PalettePanel.SwatchesPerSide * 20 + lblStatus.Height);
-
 			_pnlPalette.Dock = DockStyle.Fill;
 			_pnlPalette.PaletteIdChangedEvent += OnPaletteIdChanged;
 
@@ -39,22 +35,64 @@ namespace PckView
 
 			lblStatus.SendToBack();
 
-			var regInfo = new RegistryInfo(RegistryInfo.PaletteViewer, this); // subscribe to Load and Closing events.
-			regInfo.RegisterProperties();
+			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
+			{											// let ClientSize deter width and height.
+				Left = EditorForm.that.Left + 20;
+				Top  = EditorForm.that.Top  + 20;
+			}
+
+			ClientSize = new Size(
+								PalettePanel.SwatchesPerSide * 20,
+								PalettePanel.SwatchesPerSide * 20 + lblStatus.Height);
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Eventcalls
+		#region Events (override)
+		/// <summary>
+		/// @note Does not require KeyPreview TRUE because there's not really a
+		/// child-control to pass the keydown to. But do KeyPreview TRUE anyway.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+			{
+				e.SuppressKeyPress = true;
+				Close();
+			}
+			base.OnKeyDown(e);
+		}
+
+		/// <summary>
+		/// Handles form closing event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (!PckViewForm.Quit)
+			{
+				e.Cancel = true;
+				Hide();
+			}
+			else
+				RegistryInfo.UpdateRegistry(this);
+
+			base.OnFormClosing(e);
+		}
+		#endregion Events (override)
+
+
+		#region Events
 		private void OnPaletteIdChanged(int palId)
 		{
 			lblStatus.Text = EditorPanel.GetColorInfo(palId);
 		}
-		#endregion
+		#endregion Events
 
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
@@ -66,8 +104,8 @@ namespace PckView
 
 		#region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -92,6 +130,7 @@ namespace PckView
 			this.Controls.Add(this.lblStatus);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "PaletteForm";
@@ -100,7 +139,7 @@ namespace PckView
 			this.ResumeLayout(false);
 
 		}
-		#endregion
+		#endregion Windows Form Designer generated code
 
 		private Container components = null;
 

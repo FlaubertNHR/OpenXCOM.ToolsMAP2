@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
+using DSShared.Windows;
+
 using MapView.Forms.MainWindow;
 
 using XCom;
@@ -19,20 +21,20 @@ namespace MapView.Forms.MapObservers.RouteViews
 	/// </summary>
 	internal sealed partial class RouteView
 		:
-			MapObserverControl0
+			MapObserverControl
 	{
-		#region Enums
+		#region Enumerators
 		private enum ConnectNodesType
 		{
 			None,
 			OneWay,
 			TwoWay
 		}
-		#endregion
+		#endregion Enumerators
 
 
 		#region Fields (static)
-		private static ConnectNodesType _conType = ConnectNodesType.None; // safety - shall be set by LoadControl0Options()
+		private static ConnectNodesType _conType = ConnectNodesType.None; // safety - shall be set by LoadControlOptions()
 
 		private const string NodeCopyPrefix  = "MVNode"; // TODO: use a struct to copy/paste the info.
 		private const char NodeCopySeparator = '|';
@@ -40,7 +42,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private const string Go = "go";
 
 		internal static RouteNode Dragnode;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -65,12 +67,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			LinkType.ExitWest,
 			LinkType.NotUsed
 		};
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (override)
 		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
 		/// </summary>
 		public override MapFileBase MapBase
 		{
@@ -94,7 +96,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 			}
 		}
-		#endregion
+		#endregion Properties (override)
 
 
 		#region Properties (static)
@@ -115,7 +117,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		private static int OgnodeId
 		{ get; set; }
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -133,7 +135,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			set
 			{
-				ViewerFormsManager.RouteView   .Control     .RoutesChanged = value;
+				ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 				ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = value;
 			}
 		}
@@ -147,7 +149,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			set { label_RoutesChanged.Visible = (MapChild.RoutesChanged = value); }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -199,12 +201,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			DeselectNode();
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Events (override) inherited from IMapObserver/MapObserverControl0
+		#region Events (override) inherited from IMapObserver/MapObserverControl
 		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
 		/// @note The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to. This is a design decision that
@@ -222,7 +224,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl0'.
+		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
 		/// @note The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to. This is a design decision that
@@ -248,10 +250,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ViewerFormsManager.RouteView   .Control     .PrintOverInfo(over, loc);
 			ViewerFormsManager.TopRouteView.ControlRoute.PrintOverInfo(over, loc);
 
-			ViewerFormsManager.RouteView   .Control     .Refresh();
-			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+			RefreshControls();
 		}
-		#endregion
+		#endregion Events (override) inherited from IMapObserver/MapObserverControl
 
 
 		#region Methods (print TileData)
@@ -322,7 +323,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			lblOver.Text = over;
 		}
-		#endregion
+		#endregion Methods (print TileData)
 
 
 		#region Events (mouse-events for RoutePanel)
@@ -346,8 +347,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			RoutePanel.CursorPosition = new Point(args.X, args.Y);
 
-			ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
-			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+			InvalidatePanels();
 		}
 
 		/// <summary>
@@ -358,9 +358,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void OnRoutePanelMouseLeave(object sender, EventArgs e)
 		{
 			RoutePanel.CursorPosition = new Point(-1,-1);
-
-			ViewerFormsManager.RouteView   .Control     .RoutePanel.Refresh();
-			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
+			RefreshPanels();
 		}
 
 		private void OnRoutePanelMouseUp(object sender, RoutePanelEventArgs args)
@@ -521,11 +519,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				// else the selected node is the node clicked.
 			}
 
-			if (update)
-			{
-				ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-				ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
-			}
+			if (update) UpdateNodeGroups();
 
 			Dragnode = NodeSelected;
 
@@ -645,7 +639,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			}
 			return -1;
 		}
-		#endregion
+		#endregion Events (mouse-events for RoutePanel)
 
 
 		/// <summary>
@@ -945,8 +939,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				else //if (Tag == "TOPROUTE")
 					ViewerFormsManager.RouteView.Control.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
 
-				ViewerFormsManager.RouteView   .Control     .Refresh(); // update the importance bar
-				ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+				RefreshControls(); // update the importance bar
 			}
 		}
 
@@ -962,8 +955,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				else //if (Tag == "TOPROUTE")
 					ViewerFormsManager.RouteView.Control.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
 
-				ViewerFormsManager.RouteView   .Control     .Refresh(); // update the importance bar
-				ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+				RefreshControls(); // update the importance bar
 			}
 		}
 
@@ -980,7 +972,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					ViewerFormsManager.RouteView.Control.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
 			}
 		}
-		#endregion
+		#endregion Events (NodeData)
 
 
 		#region Events (LinkData)
@@ -1075,7 +1067,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				btnGo.Enabled = enable;
 				btnGo.Text = text ? Go : String.Empty;
 
-				RoutePanel.SpotPosition = new Point(-1, -1);
+				RoutePanel.SpotPosition = new Point(-1,-1);
 
 				if (Tag as String == "ROUTE")
 				{
@@ -1096,8 +1088,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 																		btnGo.Text);
 				}
 
-				ViewerFormsManager.RouteView   .Control     .Refresh();
-				ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+				RefreshControls();
 			}
 		}
 
@@ -1279,10 +1270,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			else if (RouteCheckService.ShowInvalid(MapChild, node))
 			{
 				RouteChanged = true;
-
-				ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-				ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
-
+				UpdateNodeGroups();
 				// TODO: May need _pnlRoutes.Refresh()
 			}
 		}
@@ -1317,8 +1305,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			RoutePanelParent.SelectedLocation = loc;
 
-			ViewerFormsManager.RouteView   .Control     .Invalidate();
-			ViewerFormsManager.TopRouteView.ControlRoute.Invalidate();
+			InvalidateControls();
 		}
 
 		/// <summary>
@@ -1377,8 +1364,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					RoutePanel.SpotPosition = new Point(c, r); // TODO: static - RouteView/TopRouteView(Route)
 
 					RoutePanel.Refresh();
-//					ViewerFormsManager.RouteView   .Control     .Refresh();
-//					ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+//					RefreshControls();
 				}
 			}
 		}
@@ -1388,8 +1374,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			RoutePanel.SpotPosition = new Point(-1, -1);
 
 			RoutePanel.Refresh();
-//			ViewerFormsManager.RouteView   .Control     .Refresh();
-//			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+//			RefreshControls();
 		}
 
 		private void OnOgClick(object sender, EventArgs e)
@@ -1414,8 +1399,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				RoutePanel.SpotPosition = new Point(node.Col, node.Row);
 
 				RoutePanel.Refresh();
-//				ViewerFormsManager.RouteView   .Control     .Refresh();
-//				ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+//				RefreshControls();
 			}
 		}
 
@@ -1427,7 +1411,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ViewerFormsManager.RouteView   .Control     .btnOg.Enabled =
 			ViewerFormsManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
 		}
-		#endregion
+		#endregion Events (LinkData)
 
 
 		#region Events (node edit)
@@ -1552,8 +1536,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				ViewerFormsManager.RouteView   .Control     .DeselectNode();
 				ViewerFormsManager.TopRouteView.ControlRoute.DeselectNode();
 
-				ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-				ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+				UpdateNodeGroups();
 
 				gbTileData.Enabled =
 				gbNodeData.Enabled =
@@ -1561,8 +1544,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				// TODO: check if the Og-button should be disabled when a node gets deleted or cut.
 
-				ViewerFormsManager.RouteView   .Control     .Refresh();
-				ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+				RefreshControls();
 			}			
 			else if (!_asterisk)
 				ShowDialogAsterisk("A node must be selected.");
@@ -1579,7 +1561,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
-		#endregion
+		#endregion Events (node edit)
 
 
 		/// <summary>
@@ -1721,11 +1703,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 						RouteCheckService.CheckNodeBounds(MapChild);
 
-						ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation(); // not sure is necessary ...
-						ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
-
-						ViewerFormsManager.RouteView   .Control     .RoutePanel.Refresh();
-						ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
+						UpdateNodeGroups(); // not sure is necessary ...
+						RefreshPanels();
 					}
 				}
 			}
@@ -1738,7 +1717,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			tsmi_RaiseNode.Enabled = (NodeSelected != null && NodeSelected.Lev != 0);
 		}
 
-		private void OnRaiseNode(object sender, EventArgs e)
+		private void OnNodeRaise(object sender, EventArgs e)
 		{
 			Dragnode = NodeSelected;
 
@@ -1756,7 +1735,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			SelectNode(NodeSelected.Index);
 		}
 
-		private void OnLowerNode(object sender, EventArgs e)
+		private void OnNodeLower(object sender, EventArgs e)
 		{
 			Dragnode = NodeSelected;
 
@@ -1802,9 +1781,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				if (changed != 0)
 				{
 					RouteChanged = true;
-
-					ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-					ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+					UpdateNodeGroups();
 
 					MessageBox.Show(
 								changed + " nodes were changed.",
@@ -1854,11 +1831,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 						NodeSelected[slot].Type = UnitType.Any;
 					}
 
-					ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-					ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
-
-					ViewerFormsManager.RouteView   .Control     .Refresh();
-					ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+					UpdateNodeGroups();
+					RefreshControls();
 				}
 			}
 		}
@@ -1920,8 +1894,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 								changed,
 								(changed == 1) ? " has been" : "s have been");
 
-				ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-				ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+				UpdateNodeGroups();
 			}
 			else
 			{
@@ -2001,20 +1974,20 @@ namespace MapView.Forms.MapObservers.RouteViews
 			if (RouteCheckService.CheckNodeBounds(MapChild, true))
 			{
 				RouteChanged = true;
-
-				ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-				ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+				UpdateNodeGroups();
 			}
 		}
-		#endregion
+		#endregion Events (toolstrip)
 
 
 		#region Options
-		private static Form _foptions; // is static so it will be used by both RouteViewOptions
-		private static bool _closing;  // and TopRouteView(Route)Options
-
+		private static Form _foptions;	// is static so that it will be used by both
+										// RouteView and TopRouteView(Route)
 		/// <summary>
-		/// Handles a click on the Options button.
+		/// Handles a click on the Options button to show or hide an Options-
+		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
+		/// viewer. Also subscribes to a form-closing handler that will hide the
+		/// form unless MainView is closing.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2023,30 +1996,42 @@ namespace MapView.Forms.MapObservers.RouteViews
 			var tsb = sender as ToolStripButton;
 			if (!tsb.Checked)
 			{
-				ViewerFormsManager.RouteView   .Control     .tsb_Options.Checked =
-				ViewerFormsManager.TopRouteView.ControlRoute.tsb_Options.Checked = true;
+				setOptionsChecked(true);
 
-				_foptions = new OptionsForm("RouteViewOptions", Options);
-				_foptions.Text = "RouteView Options";
+				if (_foptions == null)
+				{
+					_foptions = new OptionsForm("RouteViewOptions", Options);
+					_foptions.Text = " RouteView Options";
+
+					OptionsManager.Screens.Add(_foptions);
+
+					_foptions.FormClosing += (sender1, e1) =>
+					{
+						if (!XCMainWindow.Quit)
+						{
+							setOptionsChecked(false);
+
+							e1.Cancel = true;
+							_foptions.Hide();
+						}
+						else
+							RegistryInfo.UpdateRegistry(_foptions);
+					};
+				}
 
 				_foptions.Show();
 
-				_foptions.FormClosing += (sender1, e1) => // a note describing why this is here could be helpful ...
-				{
-					if (!_closing)
-						OnOptionsClick(sender, e);
-
-					_closing = false;
-				};
+				if (_foptions.WindowState == FormWindowState.Minimized)
+					_foptions.WindowState  = FormWindowState.Normal;
 			}
 			else
-			{
-				ViewerFormsManager.RouteView   .Control     .tsb_Options.Checked =
-				ViewerFormsManager.TopRouteView.ControlRoute.tsb_Options.Checked = false;
-
-				_closing = true;
 				_foptions.Close();
-			}
+		}
+
+		private void setOptionsChecked(bool @checked)
+		{
+			ViewerFormsManager.RouteView   .Control     .tsb_Options.Checked =
+			ViewerFormsManager.TopRouteView.ControlRoute.tsb_Options.Checked = @checked;
 		}
 
 		/// <summary>
@@ -2092,12 +2077,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Loads default options for RouteView in TopRouteView screens.
 		/// </summary>
-		protected internal override void LoadControl0Options()
+		protected internal override void LoadControlOptions()
 		{
 			OnConnectTypeClicked(tsb_connect0, EventArgs.Empty); // TODO: add to Options
 
-			var pens    = RoutePanel.RoutePens;
-			var brushes = RoutePanel.RouteBrushes;
+			var pens    = RoutePanelParent.RoutePens;
+			var brushes = RoutePanelParent.RouteBrushes;
 
 			var bc = new OptionChangedEvent(OnBrushColorChanged);
 			var pc = new OptionChangedEvent(OnPenColorChanged);
@@ -2247,50 +2232,85 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void OnBrushColorChanged(string key, object val)
 		{
 			var color = (Color)val;
-			RoutePanel.RouteBrushes[key].Color = color;
+			RoutePanelParent.RouteBrushes[key].Color = color;
 
 			switch (key)
 			{
 				case SelectedNodeColor:
-					lblSelected.ForeColor = color;
+					ViewerFormsManager.RouteView   .Control     .lblSelected.ForeColor =
+					ViewerFormsManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;
 					break;
 				case UnselectedNodeColor:
-					lblOver.ForeColor = color;
+					ViewerFormsManager.RouteView   .Control     .lblOver.ForeColor =
+					ViewerFormsManager.TopRouteView.ControlRoute.lblOver.ForeColor = color;
 					break;
 			}
-			Refresh();
+			RefreshControls();
 		}
 
 		private void OnPenColorChanged(string key, object val)
 		{
-			RoutePanel.RoutePens[key].Color = (Color)val;
-			Refresh();
+			RoutePanelParent.RoutePens[key].Color = (Color)val;
+			RefreshControls();
 		}
 
 		private void OnPenWidthChanged(string key, object val)
 		{
-			RoutePanel.RoutePens[key].Width = (int)val;
-			Refresh();
+			RoutePanelParent.RoutePens[key].Width = (int)val;
+			RefreshControls();
 		}
 
 		private void OnNodeOpacityChanged(string key, object val)
 		{
-			RoutePanel.Opacity = (int)val;
-			Refresh();
+			RoutePanelParent.Opacity = (int)val;
+			RefreshControls();
 		}
 
 		private void OnShowPriorityChanged(string key, object val)
 		{
-			RoutePanel.ShowPriorityBars = (bool)val;
-			Refresh();
+			RoutePanelParent.ShowPriorityBars = (bool)val;
+			RefreshControls();
 		}
 
 		private void OnShowOverlayChanged(string key, object val)
 		{
-			RoutePanel.ShowOverlay = (bool)val;
-			Refresh();
+			RoutePanelParent.ShowOverlay = (bool)val;
+			RefreshControls();
 		}
-		#endregion
+		#endregion Options
+
+
+		#region Update UI
+		private void RefreshControls()
+		{
+			ViewerFormsManager.RouteView   .Control     .Refresh();
+			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+		}
+
+		private void InvalidateControls()
+		{
+			ViewerFormsManager.RouteView   .Control     .Invalidate();
+			ViewerFormsManager.TopRouteView.ControlRoute.Invalidate();
+		}
+
+		private void RefreshPanels()
+		{
+			ViewerFormsManager.RouteView   .Control     .RoutePanel.Refresh();
+			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
+		}
+
+		private void InvalidatePanels()
+		{
+			ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
+			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+		}
+
+		private void UpdateNodeGroups()
+		{
+			ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
+			ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+		}
+		#endregion Update UI
 
 
 		#region Methods (for Help colors)
@@ -2311,7 +2331,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			return RoutePanel.RouteBrushes;
 		}
-		#endregion
+		#endregion Methods (for Help colors)
 	}
 
 

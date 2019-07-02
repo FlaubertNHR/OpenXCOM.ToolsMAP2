@@ -15,7 +15,7 @@ namespace MapView.Forms.MapObservers.TopViews
 	{
 		#region Properties
 		/// <summary>
-		/// Gets 'TopViewControl' as a child of 'MapObserverControl0'.
+		/// Gets 'TopViewControl' as a child of 'MapObserverControl'.
 		/// </summary>
 		internal TopView Control
 		{
@@ -25,7 +25,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <summary>
 		/// Satisfies 'IMapObserverProvider'.
 		/// </summary>
-		public MapObserverControl0 ObserverControl0
+		public MapObserverControl ObserverControl
 		{
 			get { return TopViewControl; }
 		}
@@ -152,17 +152,6 @@ namespace MapView.Forms.MapObservers.TopViews
 				}
 			}
 //			base.OnKeyDown(e);
-		}
-
-
-		/// <summary>
-		/// Handles form closing event.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnFormClosing(FormClosingEventArgs e)
-		{
-			WindowState = FormWindowState.Normal; // else causes probls when opening a viewer that was closed while maximized.
-			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
 	}

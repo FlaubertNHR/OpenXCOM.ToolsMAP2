@@ -24,7 +24,8 @@ namespace MapView
 
 
 		#region Fields (static)
-		private static Dictionary<Type, ConvertObjectEvent> _converters;
+		private static Dictionary<Type, ConvertObjectEvent> _converters =
+				   new Dictionary<Type, ConvertObjectEvent>();
 		#endregion Fields (static)
 
 
@@ -52,19 +53,14 @@ namespace MapView
 		/// </summary>
 		internal Option this[string key]
 		{
-			get
-			{
-//				key = key.Replace(" ", String.Empty); // nobody be stupid ...
-				return (_dict.ContainsKey(key)) ? _dict[key] : null;
-			}
+			get { return (_dict.ContainsKey(key)) ? _dict[key] : null; }
 		}
 		#endregion Properties
 
 
 		#region Methods (static)
-		internal static void InitializeOptionsConverters()
+		internal static void InitializeConverters()
 		{
-			_converters = new Dictionary<Type, ConvertObjectEvent>();
 			_converters[typeof(Color)] = new ConvertObjectEvent(ConvertColor);
 		}
 
@@ -115,10 +111,13 @@ namespace MapView
 		#region Methods
 		/// <summary>
 		/// Adds an Option to a specified target.
+		/// @note There is no error-handling so don't foff it.
+		/// @note Only one of 'changer' or 'target' can be specified; 'changer'
+		/// takes precedence.
 		/// </summary>
-		/// <param name="key">property key - any spaces will be removed</param>
-		/// <param name="val">start value of the property</param>
-		/// <param name="desc">property description</param>
+		/// <param name="key">property key</param>
+		/// <param name="val">default value of the property</param>
+		/// <param name="description">property description</param>
 		/// <param name="category">property category</param>
 		/// <param name="changer">handler to receive the OptionChangedEvent</param>
 		/// <param name="target">the object that will receive the changed
@@ -128,25 +127,12 @@ namespace MapView
 		internal void AddOption(
 				string key,
 				object val,
-				string desc,
+				string description,
 				string category,
 				OptionChangedEvent changer = null,
 				object target = null)
 		{
-//			key = key.Replace(" ", String.Empty); // nobody be stupid ...
-
-			Option option;
-			if (!_dict.ContainsKey(key))
-			{
-				option = new Option(val, desc, category);
-				_dict[key] = option;
-			}
-			else
-			{
-				option = _dict[key];
-				option.Value = val;
-				option.Description = desc;
-			}
+			var option = new Option(val, description, category);
 
 			if (changer != null)
 			{
@@ -155,8 +141,10 @@ namespace MapView
 			else if (target != null)
 			{
 				_properties[key] = new Property(target, key);
-				this[key].OptionChanged += OnOptionChanged;
+				option.OptionChanged += OnOptionChanged;
 			}
+
+			_dict[key] = option;
 		}
 
 		/// <summary>
@@ -220,7 +208,8 @@ namespace MapView
 
 
 		#region Fields (static)
-		private static Dictionary<Type, ParseStringEvent> _converters;
+		private static Dictionary<Type, ParseStringEvent> _parsers =
+				   new Dictionary<Type, ParseStringEvent>();
 		#endregion Fields (static)
 
 
@@ -234,12 +223,12 @@ namespace MapView
 				if (_value != null)
 				{
 					var type = _value.GetType();
-					if (_converters.ContainsKey(type))
+					if (_parsers.ContainsKey(type))
 					{
 						string val = value as String;
 						if (val != null)
 						{
-							_value = _converters[type](val);
+							_value = _parsers[type](val);
 							return;
 						}
 					}
@@ -266,7 +255,7 @@ namespace MapView
 		{ get; set; }
 
 		internal string Category
-		{ get; set; }
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -274,31 +263,29 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="value"></param>
+		/// <param name="default"></param>
 		/// <param name="description"></param>
 		/// <param name="category"></param>
 		internal Option(
-				object value,
+				object @default,
 				string description = null,
 				string category    = null)
 		{
-			_value      = value;
+			_value      = @default; // TODO: Investigate whether that should run Value_set.
 			Description = description;
 			Category    = category;
-
-			if (_converters == null)
-			{
-				_converters = new Dictionary<Type, ParseStringEvent>();
-
-				_converters[typeof(int)]   = ParseStringInt;
-				_converters[typeof(Color)] = ParseStringColor;
-				_converters[typeof(bool)]  = ParseStringBool;
-			}
 		}
 		#endregion cTor
 
 
 		#region Methods (static)
+		internal static void InitializeParsers()
+		{
+			_parsers[typeof(int)]   = ParseStringInt;
+			_parsers[typeof(Color)] = ParseStringColor;
+			_parsers[typeof(bool)]  = ParseStringBool;
+		}
+
 		private static object ParseStringBool(string st)
 		{
 			return bool.Parse(st);
@@ -348,7 +335,7 @@ namespace MapView
 		internal void doUpdate(string key)
 		{
 			if (OptionChanged != null)
-				OptionChanged(key, _value);
+				OptionChanged(key, Value);
 		}
 		#endregion Methods
 	}

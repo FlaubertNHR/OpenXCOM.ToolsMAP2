@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using DSShared.Windows;
-
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TopViews;
@@ -36,9 +34,6 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		internal TopRouteViewForm()
 		{
 			InitializeComponent();
-
-			var regInfo = new RegistryInfo(RegistryInfo.TopRouteView, this); // subscribe to Load and Closing events.
-			regInfo.RegisterProperties();
 		}
 		#endregion cTor
 
@@ -230,17 +225,6 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 
 			if (tabControl.SelectedIndex == 1) // Route
 				base.OnKeyDown(e);
-		}
-
-
-		/// <summary>
-		/// Handles form closing event.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnFormClosing(FormClosingEventArgs e)
-		{
-			WindowState = FormWindowState.Normal; // else causes probls when opening a viewer that was closed while maximized.
-			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
 	}

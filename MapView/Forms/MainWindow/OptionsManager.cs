@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 
 using DSShared;
+using DSShared.Windows;
 
 
 namespace MapView.Forms.MainWindow
@@ -12,6 +15,15 @@ namespace MapView.Forms.MainWindow
 		private static readonly Dictionary<string, Options> _optionsTypes =
 							new Dictionary<string, Options>();
 		#endregion Fields (static)
+
+
+		#region Properties (static)
+		private static List<Form> _screens = new List<Form>();
+		internal static List<Form> Screens
+		{
+			get { return _screens; }
+		}
+		#endregion Properties (static)
 
 
 		#region Methods (static)
@@ -25,8 +37,17 @@ namespace MapView.Forms.MainWindow
 		/// <param name="val">an Options object</param>
 		internal static void setOptionsType(string key, Options val)
 		{
-//			_optionsTypes.Add(key, val); <- this would throw if a duplicate is found.
-			_optionsTypes[key] = val; // But since this all happens in MainView's cTor it's not a probl.
+			_optionsTypes[key] = val;
+		}
+
+		/// <summary>
+		/// Gets the Options-object for MainView.
+		/// @note Is used by 'MainMenusManager'.
+		/// </summary>
+		/// <returns></returns>
+		internal static Options getMainOptions()
+		{
+			return _optionsTypes[RegistryInfo.MainWindow];
 		}
 
 
@@ -56,6 +77,16 @@ namespace MapView.Forms.MainWindow
 				foreach (string key in _optionsTypes.Keys)
 					_optionsTypes[key].WriteOptions(key, sw);
 			}
+		}
+
+
+		/// <summary>
+		/// Closes all the Options screens.
+		/// </summary>
+		internal static void CloseScreens()
+		{
+			foreach (var screen in Screens)
+				screen.Close();
 		}
 		#endregion Methods (static)
 	}

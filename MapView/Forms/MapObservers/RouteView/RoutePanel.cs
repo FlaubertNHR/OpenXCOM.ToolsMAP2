@@ -39,8 +39,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private readonly Font _fontOverlay = new Font("Verdana", 7F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
 		private readonly Font _fontRose    = new Font("Courier New", 22, FontStyle.Bold);
 
-		private ColorTools _toolWall;
-		private ColorTools _toolContent;
+		private ColorTool _toolWall;
+		private ColorTool _toolContent;
 
 		private Graphics     _graphics;
 		private GraphicsPath _nodeFill = new GraphicsPath();
@@ -180,12 +180,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		private void DrawBlobs()
 		{
-			if (_toolWall == null)
-				_toolWall = new ColorTools(RoutePens[RouteView.WallColor]);
-
-			if (_toolContent == null)
-				_toolContent = new ColorTools(RouteBrushes[RouteView.ContentColor], _toolWall.Pen.Width);
-
+			_toolWall    = _toolWall    ?? new ColorTool(RoutePens   [RouteView.WallColor]);
+			_toolContent = _toolContent ?? new ColorTool(RouteBrushes[RouteView.ContentColor], _toolWall.Pen.Width);
 
 			XCMapTile tile = null;
 			for (int

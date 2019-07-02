@@ -23,20 +23,6 @@ namespace XCom
 
 		#region Fields (static)
 		/// <summary>
-		/// True if this record is in a recordset that is used in MapView where
-		/// it could be conflated with other terrains. False if this record is
-		/// being used in McdView which doesn't require as many variables,
-		/// sprite-pointers, etc etc as MapView does. In short 'IsTerrainSet' is
-		/// a master flag for MapView vs. McdView; MapView is assumed by default
-		/// while the flag is disabled by the constructor of 'McdviewF'.
-		///
-		/// But since it appears that this record gets shared by opening
-		/// McdView from TileView, which appears to set the 'IsTerrainSet'
-		/// flag to FALSE ... assign valid values to these vars regardless.
-		/// </summary>
-//		public static bool IsTerrainSet = true;
-
-		/// <summary>
 		/// Tracks the 'SetId' of all records.
 		/// TODO: Investigate to ensure that only the currently loaded Map's
 		/// terrains are counted.
@@ -226,9 +212,7 @@ namespace XCom
 		/// <param name="bindata">if null a blank byte-array gets created</param>
 		public McdRecord(IList<byte> bindata = null)
 		{
-//			if (IsTerrainSet)
 			SetId = _sid++;
-
 			CreateRecord(this, bindata);
 		}
 
@@ -328,55 +312,46 @@ namespace XCom
 
 
 			#region Descript
-			// The following class-vars are used only by McdInfo in MapView
-			// only so - like 'SetId' - are not required by the McdView app.
-			//
-			// But since it appears that this record gets shared by opening
-			// McdView from TileView, which appears to set the 'IsTerrainSet'
-			// flag to FALSE ... assign valid values to these vars regardless.
-//			if (IsTerrainSet)
-			{
-				record.stSprites = string.Format(
-											System.Globalization.CultureInfo.InvariantCulture,
-											"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
-											"images:",
-											record.Sprite1,
-											record.Sprite2,
-											record.Sprite3,
-											record.Sprite4,
-											record.Sprite5,
-											record.Sprite6,
-											record.Sprite7,
-											record.Sprite8);
+			record.stSprites = string.Format(
+										System.Globalization.CultureInfo.InvariantCulture,
+										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
+										"images:",
+										record.Sprite1,
+										record.Sprite2,
+										record.Sprite3,
+										record.Sprite4,
+										record.Sprite5,
+										record.Sprite6,
+										record.Sprite7,
+										record.Sprite8);
 
-				record.stScanG = string.Format(
-											System.Globalization.CultureInfo.CurrentCulture,
-											"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
-											"scang reference:",
-											bindata[20],
-											bindata[21],
-											record.ScanG,
-											record.ScanG_reduced);
+			record.stScanG = string.Format(
+										System.Globalization.CultureInfo.CurrentCulture,
+										"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
+										"scang reference:",
+										bindata[20],
+										bindata[21],
+										record.ScanG,
+										record.ScanG_reduced);
 
-				record.stLoFTs = string.Format(
-											System.Globalization.CultureInfo.CurrentCulture,
-											"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
-											"loft references:",
-											record.Loft1,
-											record.Loft2,
-											record.Loft3,
-											record.Loft4,
-											record.Loft5,
-											record.Loft6,
-											record.Loft7,
-											record.Loft8,
-											record.Loft9,
-											record.Loft10,
-											record.Loft11,
-											record.Loft12);
+			record.stLoFTs = string.Format(
+										System.Globalization.CultureInfo.CurrentCulture,
+										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
+										"loft references:",
+										record.Loft1,
+										record.Loft2,
+										record.Loft3,
+										record.Loft4,
+										record.Loft5,
+										record.Loft6,
+										record.Loft7,
+										record.Loft8,
+										record.Loft9,
+										record.Loft10,
+										record.Loft11,
+										record.Loft12);
 
-				record.ByteTable = BytesTable(bindata);
-			}
+			record.ByteTable = BytesTable(bindata);
 			#endregion Descript
 
 			return record;

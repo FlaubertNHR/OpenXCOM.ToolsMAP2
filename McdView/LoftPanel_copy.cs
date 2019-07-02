@@ -25,8 +25,7 @@ namespace McdView
 		/// <param name="fcopy"></param>
 		internal static void SetStaticVars(McdviewF f, CopyPanelF fcopy)
 		{
-			_f     = f;
-			_fcopy = fcopy;
+			_f = f; _fcopy = fcopy;
 		}
 		#endregion Methods (static)
 

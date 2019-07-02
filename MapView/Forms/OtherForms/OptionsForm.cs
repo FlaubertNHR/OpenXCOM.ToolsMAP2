@@ -20,11 +20,6 @@ namespace MapView
 		:
 			Form
 	{
-		#region Fields
-		private OptionsPropertyGrid propertyGrid;
-		#endregion
-
-
 		#region cTor
 		internal OptionsForm(string typeLabel, Options options)
 		{
@@ -33,11 +28,9 @@ namespace MapView
 			propertyGrid.TypeLabel = typeLabel;
 			propertyGrid.SetOptions(options);
 
-
-			var regInfo = new RegistryInfo(RegistryInfo.Options, this); // subscribe to Load and Closing events.
-			regInfo.RegisterProperties();
+			RegistryInfo.RegisterProperties(this);
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events (override)
@@ -45,7 +38,7 @@ namespace MapView
 		{
 			switch (keyData)
 			{
-				case Keys.O | Keys.Control: // foreign code-page users beware ...
+				case Keys.Control | Keys.O: // foreign code-page users beware ...
 				case Keys.Escape:
 					if (!FindFocusedControl(this).GetType().ToString().Contains("GridViewEdit"))
 					{
@@ -56,7 +49,23 @@ namespace MapView
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
-		#endregion
+		#endregion (override)
+
+
+		#region Events
+		/// <summary>
+		/// Handles this form's VisibleChanged event.
+		/// @note OptionsForms are weird - although there are 4 of them, one for
+		/// each viewer, there's only 1 entry in Options for all.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnVisibleChanged(object sender, EventArgs e)
+		{
+			if (!Visible)
+				RegistryInfo.UpdateRegistry(this);
+		}
+		#endregion Events
 
 
 		#region Methods (static)
@@ -70,18 +79,37 @@ namespace MapView
 			}
 			return control;
 		}
-		#endregion
+		#endregion Methods (static)
 
 
-		// The #develop designer is going to delete this, so add it back to the
-		// top of InitializeComponent().
-		/*
-			this.propertyGrid = new MapView.OptionsPropertyGrid();
-		*/
+		private IContainer components = null;
+
+		private OptionsPropertyGrid propertyGrid;
+
+		/// <summary>
+		/// Cleans up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && components != null)
+				components.Dispose();
+
+			base.Dispose(disposing);
+		}
+
+
+/*		The sharp develop designer is going to delete this:
+
+			propertyGrid = new OptionsPropertyGrid();
+
+		Add it back to the top of InitializeComponent().
+ */
+
 		#region Windows Form Designer generated code
 		private void InitializeComponent()
 		{
-			this.propertyGrid = new MapView.OptionsPropertyGrid();
+			propertyGrid = new OptionsPropertyGrid();
 			this.SuspendLayout();
 			// 
 			// propertyGrid
@@ -103,10 +131,11 @@ namespace MapView
 			this.Name = "OptionsForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Custom PropertyGrid";
+			this.VisibleChanged += new System.EventHandler(this.OnVisibleChanged);
 			this.ResumeLayout(false);
 
 		}
-		#endregion
+		#endregion Windows Form Designer generated code
 	}
 
 
