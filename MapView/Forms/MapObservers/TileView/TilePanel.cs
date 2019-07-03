@@ -509,11 +509,9 @@ namespace MapView.Forms.MapObservers.TileViews
 				var graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-				var overlay = XCMainWindow.MainViewUnderlay.MainViewOverlay;
-
 				var spriteAttributes = new ImageAttributes();
-				if (overlay._spriteShadeEnabled)
-					spriteAttributes.SetGamma(overlay.SpriteShadeLocal, ColorAdjustType.Bitmap);
+				if (MainViewOverlay.that._spriteShadeEnabled)
+					spriteAttributes.SetGamma(MainViewOverlay.that.SpriteShadeLocal, ColorAdjustType.Bitmap);
 
 				int x = 0;
 				int y = 0;
