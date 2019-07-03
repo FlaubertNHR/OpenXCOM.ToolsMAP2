@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using DSShared;
+using DSShared.Windows;
 
 using XCom;
 using XCom.Interfaces.Base;
@@ -80,6 +81,12 @@ namespace MapView
 				_pal   = Palette.UfoBattle;
 			}
 
+			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
+			{											// let ClientSize deter width and height.
+				Left = 200;
+				Top  = 100;
+			}
+
 			ClientSize = new Size(
 								_base.MapSize.Cols * 16 + 2,
 								_base.MapSize.Rows * 16 + 2);
@@ -90,10 +97,10 @@ namespace MapView
 		#region Events
 		private void OnFormClosed(object sender, FormClosedEventArgs e)
 		{
+			RegistryInfo.UpdateRegistry(this);
+
 			XCMainWindow.that.UncheckScanG();
 			XCMainWindow.ScanG = null;
-
-			Dispose();
 		}
 
 		/// <summary>
@@ -407,20 +414,22 @@ namespace MapView
 			this.pnl_ScanG.Location = new System.Drawing.Point(0, 0);
 			this.pnl_ScanG.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_ScanG.Name = "pnl_ScanG";
-			this.pnl_ScanG.Size = new System.Drawing.Size(292, 274);
+			this.pnl_ScanG.Size = new System.Drawing.Size(294, 276);
 			this.pnl_ScanG.TabIndex = 0;
 			this.pnl_ScanG.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
 			this.pnl_ScanG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseDoubleClick);
 			// 
 			// ScanGViewer
 			// 
-			this.ClientSize = new System.Drawing.Size(292, 274);
+			this.ClientSize = new System.Drawing.Size(294, 276);
 			this.Controls.Add(this.pnl_ScanG);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "ScanGViewer";
-			this.ShowIcon = false;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = " ScanG";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);

@@ -29,6 +29,7 @@ namespace DSShared.Windows
 		public const string TopRouteView  = "TopRouteView";
 
 		public const string TilesetEditor = "TilesetEditor";
+		public const string ScanG         = "ScanG";
 
 		public const string Options       = "Options";
 
@@ -121,7 +122,7 @@ namespace DSShared.Windows
 		/// variable had been used as its registry-label. But since they weren't
 		/// this function maintains backward compatibility with the property-
 		/// headers in "MapViewers.yml".
-		/// TODO: ScanGview, MCDInfo, etc.
+		/// TODO: MCDInfo, etc.
 		/// TODO: McdView's Spriteset, ScanGset, LoFTset viewers.
 		/// TODO: PckView's BytesViewer
 		/// </summary>
@@ -138,6 +139,7 @@ namespace DSShared.Windows
 				case "TopRouteViewForm": return TopRouteView;	// is in manifest
 				case "OptionsForm":      return Options;		// is in manifest
 				case "TilesetEditor":    return TilesetEditor;	// is in manifest
+				case "ScanGViewer":      return ScanG;
 				case "McdviewF":         return McdView;		// is in manifest
 				case "CopyPanelF":       return CopyPanel;
 				case "PckViewForm":      return PckView;		// is in manifest

@@ -165,15 +165,14 @@ namespace McdView
 
 			if (!RegistryInfo.RegisterProperties(this))
 			{
-				Location = new Point(
-								_f.Location.X + 20,
-								_f.Location.Y + 20);
+				Left = _f.Location.X + 20;
+				Top  = _f.Location.Y + 20;
 				ClientSize = new Size(
 									gb_Overhead     .Width
 										+ gb_Tu     .Width
 										+ gb_Explode.Width
 										+ gb_Loft   .Width,
-									ClientSize.Height); // <- that isn't respecting Clientsize.Height (!!surprise!!)
+									ClientSize.Height);
 			}
 
 			btn_Open.Location = new Point(gb_Unused.Left, gb_Unused.Bottom);

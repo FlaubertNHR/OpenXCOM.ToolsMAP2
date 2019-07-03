@@ -289,7 +289,7 @@ namespace McdView
 										+ pnl_IsoLoft.Width
 										+ bar_IsoLoft.Width
 										+ 15,
-									ClientSize.Height); // <- that isn't respecting ClientSize.Height (!!surprise!!)
+									ClientSize.Height);
 			}
 
 			TagLabels();
