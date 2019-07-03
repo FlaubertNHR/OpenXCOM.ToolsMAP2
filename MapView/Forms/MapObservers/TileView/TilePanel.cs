@@ -509,7 +509,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				var graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-				var overlay = XCMainWindow.that.MainViewUnderlay.MainViewOverlay;
+				var overlay = XCMainWindow.MainViewUnderlay.MainViewOverlay;
 
 				var spriteAttributes = new ImageAttributes();
 				if (overlay._spriteShadeEnabled)

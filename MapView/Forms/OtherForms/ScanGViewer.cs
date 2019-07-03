@@ -119,7 +119,7 @@ namespace MapView
 
 			var graphics = e.Graphics;
 
-			var overlay = XCMainWindow.that.MainViewUnderlay.MainViewOverlay;
+			var overlay = XCMainWindow.MainViewUnderlay.MainViewOverlay;
 
 			var spriteAttributes = new ImageAttributes();
 			if (overlay._spriteShadeEnabled)

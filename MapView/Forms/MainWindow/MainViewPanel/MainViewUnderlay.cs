@@ -315,8 +315,8 @@ namespace MapView
 
 			var required = GetRequiredOverlaySize(1.0);
 			Globals.Scale = Math.Min(
-									(double)(Width  - OffsetX) / required.Width,
-									(double)(Height - OffsetY) / required.Height);
+								(double)(Width  - OffsetX) / required.Width,
+								(double)(Height - OffsetY) / required.Height);
 			Globals.Scale = Globals.Scale.Clamp(
 											Globals.ScaleMinimum,
 											Globals.ScaleMaximum);
