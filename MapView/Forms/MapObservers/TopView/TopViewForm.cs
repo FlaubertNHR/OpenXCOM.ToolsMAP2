@@ -15,7 +15,7 @@ namespace MapView.Forms.MapObservers.TopViews
 	{
 		#region Properties
 		/// <summary>
-		/// Gets 'TopViewControl' as a child of 'MapObserverControl'.
+		/// Gets TopViewControl as a child of MapObserverControl.
 		/// </summary>
 		internal TopView Control
 		{
@@ -23,7 +23,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		}
 
 		/// <summary>
-		/// Satisfies 'IMapObserverProvider'.
+		/// Satisfies IMapObserverProvider.
 		/// </summary>
 		public MapObserverControl ObserverControl
 		{

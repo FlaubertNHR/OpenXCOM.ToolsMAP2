@@ -289,8 +289,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			_topBrushes.Add(FloorColor,   new SolidBrush(Color.BurlyWood));
 			_topBrushes.Add(ContentColor, new SolidBrush(Color.MediumSeaGreen));
 
-			_topBrushes.Add(SelectedTypeColor, QuadrantPanel.SelectColor);
-
 			var penWest = new Pen(Color.Khaki, 4);
 			_topPens.Add(WestColor, penWest);
 			_topPens.Add(WestWidth, penWest);
@@ -330,7 +328,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			Options.AddOption(SelectorWidth,     2,                    "Width of the mouse-over indicator in pixels", Selector, pw);
 			Options.AddOption(SelectedColor,     Color.RoyalBlue,      "Color of the selection line",                 Selector, pc);
 			Options.AddOption(SelectedWidth,     2,                    "Width of the selection line in pixels",       Selector, pw);
-			Options.AddOption(SelectedTypeColor, Color.LightBlue,      "Background color of the selected tiletype",   Selector, bc);
+			Options.AddOption(SelectedTypeColor, Color.LightBlue,      "Background color of the selected parttype",   Selector, bc);
 
 			Options.AddOption(GridColor,         Color.Black,          "Color of the grid lines",                     Grid,     pc);
 			Options.AddOption(GridWidth,         1,                    "Width of the grid lines in pixels",           Grid,     pw);
@@ -353,10 +351,13 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="val"></param>
 		private void OnBrushChanged(string key, object val)
 		{
-			_topBrushes[key].Color = (Color)val;
-
 			if (key == SelectedTypeColor)
-				QuadrantPanel.SelectColor = _topBrushes[key];
+			{
+				QuadrantPanelDrawService.Brush.Dispose();
+				QuadrantPanelDrawService.Brush = new SolidBrush((Color)val);
+			}
+			else
+				_topBrushes[key].Color = (Color)val;
 
 			RefreshControls();
 		}
@@ -383,6 +384,9 @@ namespace MapView.Forms.MapObservers.TopViews
 			RefreshControls();
 		}
 
+		/// <summary>
+		/// Refreshes TopView's and TopRouteView(Top)'s controls.
+		/// </summary>
 		private void RefreshControls()
 		{
 			ViewerFormsManager.TopView     .Control   .Refresh();
