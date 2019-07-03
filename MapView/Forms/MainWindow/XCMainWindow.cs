@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 #if !__MonoCS__
@@ -2115,7 +2116,7 @@ namespace MapView
 			string labelGroup = tvMaps.SelectedNode.Text;
 
 			string notice = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"Are you sure you want to remove this Map group?"
 											+ " This will also remove all its categories and tilesets,"
 											+ " but files on disk are unaffected.{0}{0}group\t{1}",
@@ -2217,7 +2218,7 @@ namespace MapView
 			string labelCategory = tvMaps.SelectedNode.Text;
 
 			string notice = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"Are you sure you want to remove this Map category?"
 											+ " This will also remove all its tilesets, but"
 											+ " files on disk are unaffected.{0}{0}"
@@ -2370,7 +2371,7 @@ namespace MapView
 			string labelTileset  = tvMaps.SelectedNode.Text;
 
 			string notice = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"Are you sure you want to remove this Map tileset?"
 											+ " Files on disk are unaffected.{0}{0}"
 											+ "group\t{1}{0}"
@@ -2909,7 +2910,7 @@ namespace MapView
 		{
 			if (MainViewOverlay.FirstClick)
 				tsslPosition.Text = String.Format(
-												System.Globalization.CultureInfo.CurrentCulture,
+												CultureInfo.CurrentCulture,
 												"c {0}  r {1}  L {2}",
 												col + 1, row + 1, MainViewUnderlay.MapBase.MapSize.Levs - lev); // 1-based count.
 		}
@@ -2917,7 +2918,7 @@ namespace MapView
 		internal void sb_PrintScale()
 		{
 			tsslScale.Text = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"scale {0:0.00}",
 										Globals.Scale);
 		}
@@ -2925,7 +2926,7 @@ namespace MapView
 		internal void sb_PrintSelectionSize(int tx, int ty)
 		{
 			tsslSelectionSize.Text = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"{0} x {1}",
 										tx, ty);
 		}
