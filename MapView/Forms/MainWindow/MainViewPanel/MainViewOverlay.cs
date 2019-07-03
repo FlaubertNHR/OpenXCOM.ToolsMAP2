@@ -16,17 +16,17 @@ using XCom.Interfaces.Base;
 
 namespace MapView
 {
-	#region Delegates
-	internal delegate void MouseDragEventHandler();
-	#endregion Delegates
-
-
 	internal sealed class MainViewOverlay
 		:
 			Panel // god I hate these double-panels!!!! cf. MainViewUnderlay
 	{
+		#region Delegates
+		internal delegate void MouseDragEvent();
+		#endregion Delegates
+
+
 		#region Events
-		internal event MouseDragEventHandler MouseDragEvent;
+		internal event MouseDragEvent MouseDrag;
 		#endregion Events
 
 
@@ -920,7 +920,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Sets drag-start and drag-end and fires a MouseDragEvent (path
+		/// Sets drag-start and drag-end and fires a MouseDrag (path
 		/// selected lozenge).
 		/// @note Fires OnMouseDown and OnMouseMove in Main,Top,Route viewers.
 		/// </summary>
@@ -933,8 +933,8 @@ namespace MapView
 				DragBeg = beg; // these ensure that the start and end points stay
 				DragEnd = end; // within the bounds of the currently loaded map.
 	
-				if (MouseDragEvent != null) // path the selected-lozenge
-					MouseDragEvent();
+				if (MouseDrag != null) // path the selected-lozenge
+					MouseDrag();
 
 				RefreshViewers();
 

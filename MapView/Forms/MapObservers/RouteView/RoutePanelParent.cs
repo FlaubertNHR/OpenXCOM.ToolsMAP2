@@ -172,7 +172,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
 
-			MainViewOverlay.that.MouseDragEvent += PathSelectedLozenge;
+			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;
 
 
 			var t1 = new Timer();	// because the mouse OnLeave event doesn't fire
