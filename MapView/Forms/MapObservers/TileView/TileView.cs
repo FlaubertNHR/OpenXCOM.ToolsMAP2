@@ -27,7 +27,7 @@ namespace MapView.Forms.MapObservers.TileViews
 {
 	internal sealed partial class TileView
 		:
-			MapObserverControl
+			MapObserverControl // UserControl, IMapObserver
 	{
 		#region Events
 		internal event TileSelectedEvent TileSelected_SelectQuadrant;

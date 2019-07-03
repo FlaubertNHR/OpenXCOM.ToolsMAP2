@@ -14,11 +14,12 @@ namespace MapView.Forms.MapObservers.TopViews
 {
 	internal sealed partial class TopView
 		:
-			MapObserverControl
+			MapObserverControl // UserControl, IMapObserver
 	{
 		#region Fields (static)
-		private static Dictionary<string, Pen>        _topPens =
+		private static Dictionary<string, Pen> _topPens =
 				   new Dictionary<string, Pen>();
+
 		private static Dictionary<string, SolidBrush> _topBrushes =
 				   new Dictionary<string, SolidBrush>();
 		#endregion Fields
@@ -33,25 +34,18 @@ namespace MapView.Forms.MapObservers.TopViews
 			get { return quadrants; }
 		}
 
-		internal bool VisibleFloor
-		{
-			get { return TopPanel.Floor.Checked; }
-		}
 
-		internal bool VisibleWest
-		{
-			get { return TopPanel.West.Checked; }
-		}
+		internal ToolStripMenuItem Floor
+		{ get; private set; }
 
-		internal bool VisibleNorth
-		{
-			get { return TopPanel.North.Checked; }
-		}
+		internal ToolStripMenuItem North
+		{ get; private set; }
 
-		internal bool VisibleContent
-		{
-			get { return TopPanel.Content.Checked; }
-		}
+		internal ToolStripMenuItem West
+		{ get; private set; }
+
+		internal ToolStripMenuItem Content
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -70,7 +64,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			quadrants.SelectedQuadrant = QuadrantType.Floor;
 
 
-			TopPanel = new TopPanel();
+			TopPanel = new TopPanel(this);
 			TopPanel.Dock = DockStyle.Fill;
 
 			pnlMain.Controls.Add(TopPanel);
@@ -81,32 +75,30 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 
-			TopPanel.Floor   = new ToolStripMenuItem(QuadrantPanelDrawService.Floor);
-			TopPanel.West    = new ToolStripMenuItem(QuadrantPanelDrawService.West);
-			TopPanel.North   = new ToolStripMenuItem(QuadrantPanelDrawService.North);
-			TopPanel.Content = new ToolStripMenuItem(QuadrantPanelDrawService.Content);
+			Floor   = new ToolStripMenuItem(QuadrantPanelDrawService.Floor);
+			West    = new ToolStripMenuItem(QuadrantPanelDrawService.West);
+			North   = new ToolStripMenuItem(QuadrantPanelDrawService.North);
+			Content = new ToolStripMenuItem(QuadrantPanelDrawService.Content);
 
-			visQuads.Add(TopPanel.Floor);
-			visQuads.Add(TopPanel.West);
-			visQuads.Add(TopPanel.North);
-			visQuads.Add(TopPanel.Content);
+			visQuads.Add(Floor);
+			visQuads.Add(West);
+			visQuads.Add(North);
+			visQuads.Add(Content);
 
-			TopPanel.Floor  .ShortcutKeys = Keys.F1;
-			TopPanel.West   .ShortcutKeys = Keys.F2;
-			TopPanel.North  .ShortcutKeys = Keys.F3;
-			TopPanel.Content.ShortcutKeys = Keys.F4;
+			Floor  .ShortcutKeys = Keys.F1;
+			West   .ShortcutKeys = Keys.F2;
+			North  .ShortcutKeys = Keys.F3;
+			Content.ShortcutKeys = Keys.F4;
 
-			TopPanel.Floor  .Checked =
-			TopPanel.West   .Checked =
-			TopPanel.North  .Checked =
-			TopPanel.Content.Checked = true;
+			Floor  .Checked =
+			West   .Checked =
+			North  .Checked =
+			Content.Checked = true;
 
 			foreach (ToolStripMenuItem it in visQuads)
 				it.Click += OnToggleQuadrantVisibilityClick;
 
-			TopPanel.QuadrantPanel = QuadrantPanel;
-
-			ObserverPanels.Add("TopPanel",       TopPanel);
+			ObserverPanels.Add("TopPanel",      TopPanel);
 			ObserverPanels.Add("QuadrantPanel", QuadrantPanel);
 
 			ResumeLayout();
@@ -123,27 +115,27 @@ namespace MapView.Forms.MapObservers.TopViews
 		private void OnToggleQuadrantVisibilityClick(object sender, EventArgs e)
 		{
 			var it = sender as ToolStripMenuItem;
-			if (it == TopPanel.Floor)
+			if (it == Floor)
 			{
-				ViewerFormsManager.TopView     .Control   .TopPanel.Floor.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Floor.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .Floor.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked;
 
 				((MapFileChild)MapBase).CalculateOccultations(!it.Checked);
 			}
-			else if (it == TopPanel.West)
+			else if (it == West)
 			{
-				ViewerFormsManager.TopView     .Control   .TopPanel.West.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.West.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .West.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.West.Checked = !it.Checked;
 			}
-			else if (it == TopPanel.North)
+			else if (it == North)
 			{
-				ViewerFormsManager.TopView     .Control   .TopPanel.North.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.North.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .North.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.North.Checked = !it.Checked;
 			}
-			else //if (it == TopPanel.Content)
+			else //if (it == Content)
 			{
-				ViewerFormsManager.TopView     .Control   .TopPanel.Content.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Content.Checked = !it.Checked;
+				ViewerFormsManager.TopView     .Control   .Content.Checked =
+				ViewerFormsManager.TopRouteView.ControlTop.Content.Checked = !it.Checked;
 			}
 
 			MainViewUnderlay.that.Refresh();
@@ -346,10 +338,10 @@ namespace MapView.Forms.MapObservers.TopViews
 			Options.AddOption(Grid10Width,       2,                    "Width of every tenth grid line in pixels",    Grid,     pw);
 
 			QuadrantPanel.Pens =
-			TopPanel.TopPens   = _topPens;
+			TopPanel     .TopPens = _topPens;
 
 			QuadrantPanel.Brushes =
-			TopPanel.TopBrushes   = _topBrushes;
+			TopPanel     .TopBrushes = _topBrushes;
 
 			Invalidate();
 		}

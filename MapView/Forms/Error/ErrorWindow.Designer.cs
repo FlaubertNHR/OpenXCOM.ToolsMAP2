@@ -117,7 +117,7 @@
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "ErrorWindow";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "oop Exception";
+			this.Text = " oop Exception";
 			this.pnl_Info.ResumeLayout(false);
 			this.gbDetails.ResumeLayout(false);
 			this.gbDetails.PerformLayout();

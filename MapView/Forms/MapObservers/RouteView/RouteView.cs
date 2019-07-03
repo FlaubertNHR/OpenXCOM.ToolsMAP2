@@ -21,7 +21,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 	/// </summary>
 	internal sealed partial class RouteView
 		:
-			MapObserverControl
+			MapObserverControl // UserControl, IMapObserver
 	{
 		#region Enumerators
 		private enum ConnectNodesType

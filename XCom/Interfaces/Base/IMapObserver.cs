@@ -20,6 +20,7 @@ namespace XCom.Interfaces.Base
 	}
 
 
+	#region Eventargs
 	/// <summary>
 	/// EventArgs with a MapLocation and MapTile for when a LocationSelected
 	/// event fires.
@@ -74,4 +75,5 @@ namespace XCom.Interfaces.Base
 			_level = level;
 		}
 	}
+	#endregion Eventargs
 }

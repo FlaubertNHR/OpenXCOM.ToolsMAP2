@@ -448,10 +448,10 @@ namespace MapView
 
 				var t = ViewerFormsManager.TopView.Control;
 				byte bits = 0;
-				if (t.VisibleFloor)   bits |= 1;
-				if (t.VisibleWest)    bits |= 2;
-				if (t.VisibleNorth)   bits |= 4;
-				if (t.VisibleContent) bits |= 8;
+				if (t.Floor  .Checked) bits |= 1;
+				if (t.West   .Checked) bits |= 2;
+				if (t.North  .Checked) bits |= 4;
+				if (t.Content.Checked) bits |= 8;
 
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
@@ -530,10 +530,10 @@ namespace MapView
 
 					var t = ViewerFormsManager.TopView.Control;
 					byte bits = 0;
-					if (t.VisibleFloor)   bits |= 1;
-					if (t.VisibleWest)    bits |= 2;
-					if (t.VisibleNorth)   bits |= 4;
-					if (t.VisibleContent) bits |= 8;
+					if (t.Floor  .Checked) bits |= 1;
+					if (t.West   .Checked) bits |= 2;
+					if (t.North  .Checked) bits |= 4;
+					if (t.Content.Checked) bits |= 8;
 
 					for (int
 							row = DragBeg.Y;
@@ -1580,7 +1580,7 @@ namespace MapView
 			Tilepart part;
 
 			var topView = ViewerFormsManager.TopView.Control;
-			if (topView.VisibleFloor
+			if (topView.Floor.Checked
 				&& (part = tile.Floor) != null)
 			{
 				DrawSprite(
@@ -1588,7 +1588,7 @@ namespace MapView
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.VisibleWest
+			if (topView.West.Checked
 				&& (part = tile.West) != null)
 			{
 				DrawSprite(
@@ -1596,7 +1596,7 @@ namespace MapView
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.VisibleNorth
+			if (topView.North.Checked
 				&& (part = tile.North) != null)
 			{
 				DrawSprite(
@@ -1604,7 +1604,7 @@ namespace MapView
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.VisibleContent
+			if (topView.Content.Checked
 				&& (part = tile.Content) != null)
 			{
 				DrawSprite(
@@ -1638,7 +1638,7 @@ namespace MapView
 								_halfwidth2, _halfheight5);
 
 			var topView = ViewerFormsManager.TopView.Control;
-			if (topView.VisibleFloor
+			if (topView.Floor.Checked
 				&& (part = tile.Floor) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr
@@ -1647,7 +1647,7 @@ namespace MapView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.VisibleWest
+			if (topView.West.Checked
 				&& (part = tile.West) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr
@@ -1656,7 +1656,7 @@ namespace MapView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.VisibleNorth
+			if (topView.North.Checked
 				&& (part = tile.North) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr
@@ -1665,7 +1665,7 @@ namespace MapView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.VisibleContent
+			if (topView.Content.Checked
 				&& (part = tile.Content) != null)
 			{
 				var sprite = (gray) ? part[_anistep].SpriteGr

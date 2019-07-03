@@ -274,7 +274,7 @@
     <Compile Include="Forms\MapObservers\TileView\TileView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\TopPanelParent.cs">
+    <Compile Include="Forms\MapObservers\TopView\TopPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\MapObservers\TopView\TopView.cs">
@@ -282,9 +282,6 @@
     </Compile>
     <Compile Include="Forms\MapObservers\TopView\TopView.Designer.cs">
       <DependentUpon>TopView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\MapObservers\TopView\TopPanel.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\MainWindow\MainViewPanel\MainViewOverlay.cs">
       <SubType>Component</SubType>

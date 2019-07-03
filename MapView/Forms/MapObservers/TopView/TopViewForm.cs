@@ -97,7 +97,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// - selects a quadrant
 		/// @note Requires 'KeyPreview' true.
 		/// @note See also TileViewForm, RouteViewForm, TopRouteViewForm
-		/// @note Edit/Save keys are handled by 'TopPanelParent.OnKeyDown()'.
+		/// @note Edit/Save keys are handled by 'TopPanel.OnKeyDown()'.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
@@ -120,20 +120,20 @@ namespace MapView.Forms.MapObservers.TopViews
 			}
 			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
-				QuadrantType quadType = QuadrantType.None;
+				QuadrantType type = QuadrantType.None;
 				switch (e.KeyCode)
 				{
-					case Keys.D1: quadType = QuadrantType.Floor;   break;
-					case Keys.D2: quadType = QuadrantType.West;    break;
-					case Keys.D3: quadType = QuadrantType.North;   break;
-					case Keys.D4: quadType = QuadrantType.Content; break;
+					case Keys.D1: type = QuadrantType.Floor;   break;
+					case Keys.D2: type = QuadrantType.West;    break;
+					case Keys.D3: type = QuadrantType.North;   break;
+					case Keys.D4: type = QuadrantType.Content; break;
 				}
 
-				if (quadType != QuadrantType.None)
+				if (type != QuadrantType.None)
 				{
 					e.SuppressKeyPress = true;
 					var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-					Control.QuadrantPanel.ForceMouseDown(args, quadType);
+					Control.QuadrantPanel.ForceMouseDown(args, type);
 				}
 				else if (Control.TopPanel.Focused)
 				{

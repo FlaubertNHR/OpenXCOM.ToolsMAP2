@@ -157,7 +157,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		/// <summary>
 		/// Overrides DoubleBufferedControl.RenderGraphics() - ie, OnPaint().
-		/// Passes the draw-function on to QuadrantPanelDrawService.
+		/// @note Calls the draw-function in QuadrantPanelDrawService.
 		/// </summary>
 		/// <param name="graphics"></param>
 		protected override void RenderGraphics(Graphics graphics)
