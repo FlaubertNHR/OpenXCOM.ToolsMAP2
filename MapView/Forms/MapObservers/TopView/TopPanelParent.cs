@@ -317,36 +317,37 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region Events (override)
 		/// <summary>
-		/// Performs edit-functions or saves the Mapfile via MainView.
+		/// Forwards edit-operations or a Mapfile-save to MainView. Can also
+		/// perform some Quad-panel operations.
 		/// @note Navigation keys are handled by 'KeyPreview' at the form level.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
+			MouseButtons button;
+			int clicks;
+
 			switch (e.KeyCode)
 			{
-				case Keys.Enter: // place TileView tile in slot
+				case Keys.Enter: // place selected TileView-part in selected quadrant
 				{
-					var args = new MouseEventArgs(MouseButtons.Right, 1, 0,0, 0);
-					QuadrantPanel panel = ((TopPanel)this).QuadrantsPanel;
-					panel.ForceMouseDown(args, panel.SelectedQuadrant);
+					button = MouseButtons.Right;
+					clicks = 1;
 					break;
 				}
 
-				case Keys.T: // select tile in TileView
+				case Keys.T: // select the TileView-part of the selected quadrant
 				{
-					var args = new MouseEventArgs(MouseButtons.Left, 2, 0,0, 0);
-					QuadrantPanel panel = ((TopPanel)this).QuadrantsPanel;
-					panel.ForceMouseDown(args, panel.SelectedQuadrant);
+					button = MouseButtons.Left;
+					clicks = 2;
 					break;
 				}
 
-				case Keys.Delete:
+				case Keys.Delete: // delete selected Quadrant-type from a selected tile
 					if (e.Shift)
 					{
-						var args = new MouseEventArgs(MouseButtons.Right, 2, 0,0, 0);
-						QuadrantPanel panel = ((TopPanel)this).QuadrantsPanel;
-						panel.ForceMouseDown(args, panel.SelectedQuadrant);
+						button = MouseButtons.Right;
+						clicks = 2;
 					}
 					else
 						goto default;
@@ -354,8 +355,14 @@ namespace MapView.Forms.MapObservers.TopViews
 
 				default:
 					MainViewOverlay.that.Edit(e);
-					break;
+					return;
 			}
+
+			QuadrantPanel quads = ((TopPanel)this).QuadrantsPanel;
+			quads.ForceMouseDown(
+							new MouseEventArgs(button, clicks, 0,0, 0),
+							quads.SelectedQuadrant);
+
 //			base.OnKeyDown(e);
 		}
 
