@@ -315,7 +315,8 @@ namespace MapView
 		#region cTor
 		internal MainViewOverlay()
 		{
-			that = this;
+			that =
+			XCMainWindow.that.MainViewOverlay = this;
 
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint

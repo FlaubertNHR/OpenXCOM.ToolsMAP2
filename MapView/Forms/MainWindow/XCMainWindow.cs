@@ -74,8 +74,11 @@ namespace MapView
 
 
 		#region Properties
-		internal MainViewUnderlay MainViewUnderlay
-		{ get; private set; }
+		private MainViewUnderlay MainViewUnderlay
+		{ get; set; }
+
+		internal MainViewOverlay MainViewOverlay
+		{ private get; set; }
 
 		private bool _treeChanged;
 		/// <summary>
@@ -347,7 +350,7 @@ namespace MapView
 												Palette.UfoBattle);
 			if (cuboid != null)
 			{
-				MainViewUnderlay.MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
+				MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
 				LogFile.WriteLine("UFO Cursor loaded.");
 			}
 			else
@@ -361,7 +364,7 @@ namespace MapView
 											Palette.TftdBattle);
 			if (cuboid != null)
 			{
-				MainViewUnderlay.MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
+				MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
 				LogFile.WriteLine("TFTD Cursor loaded.");
 			}
 			else
@@ -637,75 +640,75 @@ namespace MapView
 
 			Options.AddOption(
 							ShowGrid,
-							MainViewUnderlay.MainViewOverlay.ShowGrid,
+							MainViewOverlay.ShowGrid,
 							"If true a grid will display at the current level of editing (F4 - On/Off)",
 							MapView,
 							changer);
-//							null, MainViewUnderlay.MainViewOverlay);
+//							null, MainViewOverlay);
 			Options.AddOption(
 							GridLayerColor,
-							MainViewUnderlay.MainViewOverlay.GridLayerColor,
+							MainViewOverlay.GridLayerColor,
 							"Color of the grid",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 			Options.AddOption(
 							GridLayerOpacity,
-							MainViewUnderlay.MainViewOverlay.GridLayerOpacity,
+							MainViewOverlay.GridLayerOpacity,
 							"Opacity of the grid (0..255 default 200)",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 			Options.AddOption(
 							GridLineColor,
-							MainViewUnderlay.MainViewOverlay.GridLineColor,
+							MainViewOverlay.GridLineColor,
 							"Color of the lines that make up the grid",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 			Options.AddOption(
 							GridLineWidth,
-							MainViewUnderlay.MainViewOverlay.GridLineWidth,
+							MainViewOverlay.GridLineWidth,
 							"Width of the grid lines in pixels",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 			Options.AddOption(
 							Grid10LineColor,
-							MainViewUnderlay.MainViewOverlay.Grid10LineColor,
+							MainViewOverlay.Grid10LineColor,
 							"Color of every tenth line on the grid",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 			Options.AddOption(
 							Grid10LineWidth,
-							MainViewUnderlay.MainViewOverlay.Grid10LineWidth,
+							MainViewOverlay.Grid10LineWidth,
 							"Width of every tenth grid line in pixels",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 			Options.AddOption(
 							SelectionLineColor,
-							MainViewUnderlay.MainViewOverlay.SelectionLineColor,
+							MainViewOverlay.SelectionLineColor,
 							"Color of the border of selected tiles",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 			Options.AddOption(
 							SelectionLineWidth,
-							MainViewUnderlay.MainViewOverlay.SelectionLineWidth,
+							MainViewOverlay.SelectionLineWidth,
 							"Width of the border of selected tiles in pixels",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 			Options.AddOption(
 							GraySelection,
-							MainViewUnderlay.MainViewOverlay.GraySelection,
+							MainViewOverlay.GraySelection,
 							"If true the selection area will be drawn in grayscale"
 								+ " (only if UseMono is false)",
 							MapView,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 
 			Options.AddOption(
 							SpriteShade,
-							MainViewUnderlay.MainViewOverlay.SpriteShade,
+							MainViewOverlay.SpriteShade,
 							"The darkness of the tile sprites (10..100 default 0 off, unity is 33)"
 								+ " Values outside the range turn sprite shading off"
 								+ " (only if UseMono is false)",
 							Sprites,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 
 			string desc = "The technique used for resizing sprites (0..7)" + Environment.NewLine
 						+ "0 - default"                                    + Environment.NewLine
@@ -718,10 +721,10 @@ namespace MapView
 						+ "7 - high quality bicubic (best in a pig's eye)";
 			Options.AddOption(
 							Interpolation,
-							MainViewUnderlay.MainViewOverlay.Interpolation,
+							MainViewOverlay.Interpolation,
 							desc + Environment.NewLine + "(only if UseMono is false)",
 							Sprites,
-							null, MainViewUnderlay.MainViewOverlay);
+							null, MainViewOverlay);
 
 //			Options.AddOption(
 //							SaveOnExit,
@@ -760,7 +763,7 @@ namespace MapView
 					else if (miOn.Checked && miDoors.Checked) // doors need to animate if they were already toggled on.
 						AnimateDoorSprites(true);
 
-					MainViewUnderlay.MainViewOverlay.Invalidate();
+					MainViewOverlay.Invalidate();
 					break;
 
 				case Doors: // NOTE: 'miDoors.Checked' is used by the F3 key to toggle door animations.
@@ -790,7 +793,7 @@ namespace MapView
 
 				case UseMono:
 					UseMonoDraw = (bool)value;
-					MainViewUnderlay.MainViewOverlay.Refresh();
+					MainViewOverlay.Refresh();
 					break;
 
 				case SaveWindowPositions:
@@ -798,41 +801,41 @@ namespace MapView
 					break;
 
 				case ShowGrid: // NOTE: 'miGrid.Checked' is used by the F4 key to toggle the grid on/off.
-					MainViewUnderlay.MainViewOverlay.ShowGrid = (miGrid.Checked = (bool)value);
+					MainViewOverlay.ShowGrid = (miGrid.Checked = (bool)value);
 
-//					MainViewUnderlay.MainViewOverlay.ShowGrid = (bool)value;
+//					MainViewOverlay.ShowGrid = (bool)value;
 					break;
 
 				case GridLayerColor:
-					MainViewUnderlay.MainViewOverlay.GridLayerColor = (Color)value;
+					MainViewOverlay.GridLayerColor = (Color)value;
 					break;
 
 				case GridLayerOpacity:
-					MainViewUnderlay.MainViewOverlay.GridLayerOpacity = (int)value;
+					MainViewOverlay.GridLayerOpacity = (int)value;
 					break;
 
 				case GridLineColor:
-					MainViewUnderlay.MainViewOverlay.GridLineColor = (Color)value;
+					MainViewOverlay.GridLineColor = (Color)value;
 					break;
 
 				case GridLineWidth:
-					MainViewUnderlay.MainViewOverlay.GridLineWidth = (int)value;
+					MainViewOverlay.GridLineWidth = (int)value;
 					break;
 
 				case Grid10LineColor:
-					MainViewUnderlay.MainViewOverlay.Grid10LineColor = (Color)value;
+					MainViewOverlay.Grid10LineColor = (Color)value;
 					break;
 
 				case Grid10LineWidth:
-					MainViewUnderlay.MainViewOverlay.Grid10LineWidth = (int)value;
+					MainViewOverlay.Grid10LineWidth = (int)value;
 					break;
 
 				case SpriteShade:
-					MainViewUnderlay.MainViewOverlay.SpriteShade = (int)value;
+					MainViewOverlay.SpriteShade = (int)value;
 					break;
 
 				case Interpolation:
-					MainViewUnderlay.MainViewOverlay.Interpolation = (int)value;
+					MainViewOverlay.Interpolation = (int)value;
 					break;
 
 				// NOTE: 'GraySelection' is handled. reasons ...
@@ -946,7 +949,7 @@ namespace MapView
 			}
 
 			if (Inited)
-				MainViewUnderlay.MainViewOverlay.Focus();
+				MainViewOverlay.Focus();
 			else
 				Inited = true;
 
@@ -959,7 +962,7 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnDeactivate(EventArgs e)
 		{
-			MainViewUnderlay.MainViewOverlay._targeterForced = false;
+			MainViewOverlay._targeterForced = false;
 			Invalidate();
 
 //			base.OnDeactivate(e);
@@ -982,7 +985,7 @@ namespace MapView
 			switch (keyData)
 			{
 				case Keys.Tab:
-					focussearch = MainViewUnderlay.MainViewOverlay.Focused;
+					focussearch = MainViewOverlay.Focused;
 					break;
 
 				case Keys.Shift | Keys.Tab:
@@ -1000,7 +1003,7 @@ namespace MapView
 
 			if (invalidate)
 			{
-				MainViewUnderlay.MainViewOverlay.Invalidate();
+				MainViewOverlay.Invalidate();
 
 				if (focussearch)
 				{
@@ -1010,7 +1013,7 @@ namespace MapView
 			}
 
 
-			if (MainViewUnderlay.MainViewOverlay.Focused)
+			if (MainViewOverlay.Focused)
 			{
 				switch (keyData)
 				{
@@ -1022,7 +1025,7 @@ namespace MapView
 					case Keys.Shift | Keys.Right:
 					case Keys.Shift | Keys.Up:
 					case Keys.Shift | Keys.Down:
-						MainViewUnderlay.MainViewOverlay.Navigate(keyData);
+						MainViewOverlay.Navigate(keyData);
 						return true;
 				}
 			}
@@ -1035,8 +1038,8 @@ namespace MapView
 						return true;
 
 					case Keys.Escape:	// panel must *not* have focus (Escape also cancels multi-tile selection)
-						MainViewUnderlay.MainViewOverlay.Focus();
-						MainViewUnderlay.MainViewOverlay.Invalidate();
+						MainViewOverlay.Focus();
+						MainViewOverlay.Invalidate();
 						return true;
 				}
 			}
@@ -1086,7 +1089,7 @@ namespace MapView
 												EventArgs.Empty);
 				}
 			}
-			else if (MainViewUnderlay.MainViewOverlay.Focused)
+			else if (MainViewOverlay.Focused)
 			{
 				switch (e.KeyCode)
 				{
@@ -1097,7 +1100,7 @@ namespace MapView
 					case Keys.Home:
 					case Keys.End:
 						e.SuppressKeyPress = true;
-						MainViewUnderlay.MainViewOverlay.Navigate(e.KeyData);
+						MainViewOverlay.Navigate(e.KeyData);
 						break;
 				}
 			}
@@ -1506,7 +1509,7 @@ namespace MapView
 
 						MainViewUnderlay.ForceResize();
 
-						MainViewUnderlay.MainViewOverlay.FirstClick = false;
+						MainViewOverlay.FirstClick = false;
 
 						ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
 						ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  @base.Level != 0);
@@ -2700,14 +2703,14 @@ namespace MapView
 //					miRegenOccult.Enabled = true; // disabled in designer w/ Visible=FALSE.
 //					miExport     .Enabled = true; // disabled in designer w/ Visible=FALSE.
 
-					MainViewUnderlay.MainViewOverlay.FirstClick = false;
+					MainViewOverlay.FirstClick = false;
 
 					if (descriptor.Pal == Palette.TftdBattle) // used by Mono only ->
 					{
-						MainViewUnderlay.MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle;
+						MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle;
 					}
 					else // default to ufo-battle palette
-						MainViewUnderlay.MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle;
+						MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle;
 
 					MainViewUnderlay.MapBase = @base;
 
@@ -2904,7 +2907,7 @@ namespace MapView
 		/// <param name="lev"></param>
 		internal void sb_PrintPosition(int col, int row, int lev)
 		{
-			if (MainViewUnderlay.MainViewOverlay.FirstClick)
+			if (MainViewOverlay.FirstClick)
 				tsslPosition.Text = String.Format(
 												System.Globalization.CultureInfo.CurrentCulture,
 												"c {0}  r {1}  L {2}",
