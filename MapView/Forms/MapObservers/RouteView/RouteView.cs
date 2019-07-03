@@ -270,7 +270,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		private void PrintSelectedInfo()
 		{
-			if (MainViewUnderlay.that.MainViewOverlay.FirstClick)
+			if (MainViewOverlay.that.FirstClick)
 			{
 				string selected;
 				int level;
@@ -381,7 +381,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					var loc = new Point(Dragnode.Col, Dragnode.Row);
 					RoutePanelParent.SelectedLocation = loc;
-					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
+					MainViewOverlay.that.ProcessSelection(loc,loc);
 
 					ViewerFormsManager.RouteView   .Control     .UpdateLinkDistances();
 					ViewerFormsManager.TopRouteView.ControlRoute.UpdateLinkDistances();
@@ -1294,7 +1294,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 											loc.Y, loc.X,
 											MapChild.Level);
 
-			MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
+			MainViewOverlay.that.ProcessSelection(loc,loc);
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.Left,

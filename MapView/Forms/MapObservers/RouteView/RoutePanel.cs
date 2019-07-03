@@ -131,7 +131,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 									LozSelector);
 				}
 
-				if (MainViewUnderlay.that.MainViewOverlay.FirstClick)
+				if (MainViewOverlay.that.FirstClick)
 				{
 					_graphics.DrawPath(
 									new Pen( // TODO: make this a separate Option.

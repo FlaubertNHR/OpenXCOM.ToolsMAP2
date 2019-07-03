@@ -80,7 +80,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					case Keys.Shift | Keys.Right:
 					case Keys.Shift | Keys.Up:
 					case Keys.Shift | Keys.Down:
-						MainViewUnderlay.that.MainViewOverlay.Navigate(keyData, true);
+						MainViewOverlay.that.Navigate(keyData, true);
 						return true;
 				}
 			}
@@ -110,7 +110,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					Control.TopPanel.Focus();
 				}
 				else
-					MainViewUnderlay.that.MainViewOverlay.Edit(e);
+					MainViewOverlay.that.Edit(e);
 			}
 			else if (e.KeyCode == Keys.O
 				&& (e.Modifiers & Keys.Control) == Keys.Control)
@@ -146,7 +146,7 @@ namespace MapView.Forms.MapObservers.TopViews
 						case Keys.Home:
 						case Keys.End:
 							e.SuppressKeyPress = true;
-							MainViewUnderlay.that.MainViewOverlay.Navigate(e.KeyData, true);
+							MainViewOverlay.that.Navigate(e.KeyData, true);
 							break;
 					}
 				}

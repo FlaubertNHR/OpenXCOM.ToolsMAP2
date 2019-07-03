@@ -172,7 +172,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
 
-			MainViewUnderlay.that.MainViewOverlay.MouseDragEvent += PathSelectedLozenge;
+			MainViewOverlay.that.MouseDragEvent += PathSelectedLozenge;
 
 
 			var t1 = new Timer();	// because the mouse OnLeave event doesn't fire
@@ -252,15 +252,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 				var loc = GetTileLocation(e.X, e.Y);
 				if (loc.X != -1)
 				{
-					MainViewUnderlay.that.MainViewOverlay._keyDeltaX =
-					MainViewUnderlay.that.MainViewOverlay._keyDeltaY = 0;
+					MainViewOverlay.that._keyDeltaX =
+					MainViewOverlay.that._keyDeltaY = 0;
 
 					MapChild.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapChild.Level);
 
-					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);	// set selected location for other viewers.
-																						// NOTE: drag-selection is not allowed here.
+					MainViewOverlay.that.ProcessSelection(loc,loc);	// set selected location for other viewers.
+																	// NOTE: drag-selection is not allowed here.
 					if (RoutePanelMouseDownEvent != null)
 					{
 						var args = new RoutePanelEventArgs(
@@ -321,15 +321,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			if (MapChild != null) // safety.
 			{
-				MainViewUnderlay.that.MainViewOverlay._keyDeltaX =
-				MainViewUnderlay.that.MainViewOverlay._keyDeltaY = 0;
+				MainViewOverlay.that._keyDeltaX =
+				MainViewOverlay.that._keyDeltaY = 0;
 
-				if (!MainViewUnderlay.that.MainViewOverlay.FirstClick)
+				if (!MainViewOverlay.that.FirstClick)
 				{
 					MapChild.Location = new MapLocation(0,0, MapChild.Level); // fire SelectLocationEvent
 
 					var loc = new Point(0,0);
-					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
+					MainViewOverlay.that.ProcessSelection(loc,loc);
 
 					if (RoutePanelMouseDownEvent != null)
 					{
@@ -394,7 +394,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							MapChild.Location = new MapLocation(r,c, MapChild.Level); // fire SelectLocationEvent
 
 							loc.X = c; loc.Y = r;
-							MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
+							MainViewOverlay.that.ProcessSelection(loc,loc);
 
 							if (RoutePanelMouseDownEvent != null)
 							{
@@ -554,8 +554,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		private void PathSelectedLozenge()
 		{
-			var a = MainViewUnderlay.that.MainViewOverlay.GetDragBeg_abs();
-			var b = MainViewUnderlay.that.MainViewOverlay.GetDragEnd_abs();
+			var a = MainViewOverlay.that.GetDragBeg_abs();
+			var b = MainViewOverlay.that.GetDragEnd_abs();
 
 			int halfWidth  = BlobService.HalfWidth;
 			int halfHeight = BlobService.HalfHeight;

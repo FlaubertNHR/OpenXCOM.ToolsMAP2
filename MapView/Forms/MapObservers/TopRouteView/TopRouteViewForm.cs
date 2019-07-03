@@ -83,7 +83,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 							case Keys.Shift | Keys.Right:
 							case Keys.Shift | Keys.Up:
 							case Keys.Shift | Keys.Down:
-								MainViewUnderlay.that.MainViewOverlay.Navigate(keyData, true);
+								MainViewOverlay.that.Navigate(keyData, true);
 								return true;
 						}
 					}
@@ -136,7 +136,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 							ControlTop.TopPanel.Focus();
 						}
 						else
-							MainViewUnderlay.that.MainViewOverlay.Edit(e);
+							MainViewOverlay.that.Edit(e);
 						break;
 
 					case 1: // Route
@@ -200,7 +200,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 							case Keys.Home:
 							case Keys.End:
 								e.SuppressKeyPress = true;
-								MainViewUnderlay.that.MainViewOverlay.Navigate(e.KeyData, true);
+								MainViewOverlay.that.Navigate(e.KeyData, true);
 								break;
 						}
 					}

@@ -169,8 +169,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		internal protected void PathSelectedLozenge()
 		{
-			var a = MainViewUnderlay.that.MainViewOverlay.GetDragBeg_abs();
-			var b = MainViewUnderlay.that.MainViewOverlay.GetDragEnd_abs();
+			var a = MainViewOverlay.that.GetDragBeg_abs();
+			var b = MainViewOverlay.that.GetDragEnd_abs();
 
 			int halfWidth  = _blobService.HalfWidth;
 			int halfHeight = _blobService.HalfHeight;
@@ -308,7 +308,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				}
 
 				// draw tiles-selected lozenge ->
-				if (MainViewUnderlay.that.MainViewOverlay.FirstClick)
+				if (MainViewOverlay.that.FirstClick)
 					graphics.DrawPath(TopPens[TopView.SelectedColor], _lozSelected);
 			}
 		}
@@ -353,7 +353,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					break;
 
 				default:
-					MainViewUnderlay.that.MainViewOverlay.Edit(e);
+					MainViewOverlay.that.Edit(e);
 					break;
 			}
 //			base.OnKeyDown(e);
@@ -376,8 +376,8 @@ namespace MapView.Forms.MapObservers.TopViews
 				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
 					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
 				{
-					MainViewUnderlay.that.MainViewOverlay._keyDeltaX =
-					MainViewUnderlay.that.MainViewOverlay._keyDeltaY = 0;
+					MainViewOverlay.that._keyDeltaX =
+					MainViewOverlay.that._keyDeltaY = 0;
 
 					// as long as MainViewOverlay.OnSelectLocationMain()
 					// fires before the subsidiary viewers' OnSelectLocationObserver()
@@ -390,13 +390,13 @@ namespace MapView.Forms.MapObservers.TopViews
 					//
 					// or better: Make a flag of it in MapFileBase where Location is actually
 					// set and all these OnLocationSelected events really fire out of !
-//					MainViewUnderlay.that.MainViewOverlay.FirstClick = true;
+//					MainViewOverlay.that.FirstClick = true;
 
 					MapBase.Location = new MapLocation( // fire SelectLocationEvent
 													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;
-					MainViewUnderlay.that.MainViewOverlay.ProcessSelection(loc,loc);
+					MainViewOverlay.that.ProcessSelection(loc,loc);
 				}
 			}
 
@@ -432,7 +432,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 				if (_isMouseDrag)
 				{
-					var overlay = MainViewUnderlay.that.MainViewOverlay;
+					var overlay = MainViewOverlay.that;
 
 					overlay._keyDeltaX = loc.X - overlay.DragBeg.X; // these are in case user stops a mouse-drag
 					overlay._keyDeltaY = loc.Y - overlay.DragBeg.Y; // and resumes selection using keyboard.

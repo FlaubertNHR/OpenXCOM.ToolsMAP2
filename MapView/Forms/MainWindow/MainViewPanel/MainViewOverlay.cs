@@ -59,6 +59,12 @@ namespace MapView
 		#endregion Fields
 
 
+		#region Properties (static)
+		internal static MainViewOverlay that
+		{ get; private set; }
+		#endregion Properties (static)
+
+
 		#region Properties
 		/// <summary>
 		/// MapBase is set only by MainViewUnderlay.MapBase{set}.
@@ -309,6 +315,8 @@ namespace MapView
 		#region cTor
 		internal MainViewOverlay()
 		{
+			that = this;
+
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint
 				   | ControlStyles.UserPaint
