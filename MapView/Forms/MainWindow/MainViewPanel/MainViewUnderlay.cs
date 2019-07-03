@@ -35,8 +35,8 @@ namespace MapView
 
 
 		#region Properties
-		internal MainViewOverlay MainViewOverlay
-		{ get; private set; }
+		private MainViewOverlay MainViewOverlay
+		{ get; set; }
 
 		private MapFileBase _mapBase;
 		internal MapFileBase MapBase
