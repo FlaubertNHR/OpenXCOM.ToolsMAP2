@@ -14,7 +14,7 @@ namespace MapView.Forms.MapObservers.TopViews
 	/// </summary>
 	internal sealed class TopPanel
 		:
-			TopPanelParent
+			TopPanelParent // MapObserverControl_TopPanel, DoubleBufferedControl, IMapObserver
 	{
 		#region Fields
 		private ColorTool _toolWest;

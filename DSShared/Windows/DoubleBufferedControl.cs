@@ -7,8 +7,8 @@ using System.Windows.Forms;
 namespace DSShared.Windows
 {
 	/// <summary>
-	/// Inherited by 'MapObserverControl_TopPanels' ('TopPanelParent'/'TopPanel'
-	/// and 'QuadrantPanel').
+	/// Inherited by MapObserverControl_TopPanel (TopPanelParent/TopPanel
+	/// and QuadrantPanel).
 	/// </summary>
 	public class DoubleBufferedControl
 		:

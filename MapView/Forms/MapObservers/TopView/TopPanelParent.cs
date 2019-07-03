@@ -15,11 +15,11 @@ namespace MapView.Forms.MapObservers.TopViews
 {
 	/// <summary>
 	/// The base class for TopPanel.
-	/// @note This is not a Panel. It is a UserControl inside of a Panel.
+	/// @note This is not a Panel. It is a Control shown inside of a Panel.
 	/// </summary>
 	internal class TopPanelParent
 		:
-			MapObserverControl_TopPanels
+			MapObserverControl_TopPanel // DoubleBufferedControl, IMapObserver
 	{
 		#region Fields (static)
 		private const int OffsetX = 2; // these are the offsets between the

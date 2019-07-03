@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace XCom.Interfaces.Base
 {
 	/// <summary>
-	/// Interface for 'MapObserverControl' and 'MapObserverControl_TopPanels'.
+	/// Interface for MapObserverControl and MapObserverControl_TopPanel.
 	/// </summary>
 	public interface IMapObserver
 	{
