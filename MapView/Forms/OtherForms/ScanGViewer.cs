@@ -32,7 +32,7 @@ namespace MapView
 
 		private int  Level;
 		private bool SingleLevel;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties (override)
@@ -48,7 +48,7 @@ namespace MapView
 				return cp;
 			}
 		}
-		#endregion
+		#endregion Properties (override)
 
 
 		#region cTor
@@ -84,7 +84,7 @@ namespace MapView
 								_base.MapSize.Cols * 16 + 2,
 								_base.MapSize.Rows * 16 + 2);
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events
@@ -256,7 +256,7 @@ namespace MapView
 							GraphicsUnit.Pixel,
 							spriteAttributes);
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Events (override)
@@ -341,6 +341,7 @@ namespace MapView
 				MessageBoxIcon icon)
 		{
 			MessageBox.Show(
+						this,
 						result,
 						title,
 						MessageBoxButtons.OK,
@@ -348,7 +349,7 @@ namespace MapView
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
-		#endregion
+		#endregion Events (override)
 
 
 		#region Methods
@@ -375,12 +376,12 @@ namespace MapView
 		{
 			pnl_ScanG.Invalidate();
 		}
-		#endregion
+		#endregion Methods
 
 
 		#region Windows Form Designer generated code
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
@@ -391,8 +392,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -429,6 +430,7 @@ namespace MapView
 		#endregion
 
 		private System.ComponentModel.Container components = null;
-		private System.Windows.Forms.Panel pnl_ScanG;
+
+		private Panel pnl_ScanG;
 	}
 }
