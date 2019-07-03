@@ -941,16 +941,16 @@ namespace MapView
 						f.TopMost = false;
 					}
 
-//					base.OnActivated(e);
 					BypassActivatedEvent = false;
 				}
 			}
-//			else base.OnActivated(e);
 
 			if (Inited)
 				MainViewUnderlay.MainViewOverlay.Focus();
 			else
 				Inited = true;
+
+//			base.OnActivated(e);
 		}
 
 		/// <summary>

@@ -183,7 +183,9 @@ namespace DSShared.Windows
 			string label = getRegistryLabel(f);
 			if (label != null)
 			{
+				if (!f.Visible) f.Show(); // need this since restoring the WindowState of a non-visible form doesn't stick.
 				f.WindowState = FormWindowState.Normal;
+
 				Metric tric;
 
 				if (!_dict.ContainsKey(label))

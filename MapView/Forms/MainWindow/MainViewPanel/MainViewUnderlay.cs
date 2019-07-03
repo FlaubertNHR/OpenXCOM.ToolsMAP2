@@ -48,8 +48,8 @@ namespace MapView
 
 				if (_mapBase != null)
 				{
-					_mapBase.SelectLocationEvent -= MainViewOverlay.OnSelectLocationMain;	// WARNING: if the overlay ever gets removed from the Control
-					_mapBase.SelectLevelEvent    -= MainViewOverlay.OnSelectLevelMain;		// by the code in the cTor, this will likely go defunct. Or not.
+					_mapBase.SelectLocationEvent -= MainViewOverlay.OnSelectLocationMain;
+					_mapBase.SelectLevelEvent    -= MainViewOverlay.OnSelectLevelMain;
 				}
 
 				if ((_mapBase = value) != null)

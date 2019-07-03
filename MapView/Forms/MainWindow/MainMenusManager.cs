@@ -59,16 +59,14 @@ namespace MapView.Forms.MainWindow
 												// See also: XCMainWindow.OnActivated()
 
 				f.Show();
-				f.WindowState = FormWindowState.Normal;
+				if (f.WindowState == FormWindowState.Minimized)
+					f.WindowState  = FormWindowState.Normal;
 
-				if (it.Tag is ColorHelp) // update colors that user might have set in TileView's Option-settings.
+				if (it.Tag is ColorHelp) // update colors that user could have changed in TileView's Option-settings.
 					ViewerFormsManager.ColorsScreen.UpdateColors();
 			}
 			else
-			{
-				f.WindowState = FormWindowState.Normal;
 				f.Close();
-			}
 		}
 
 		/// <summary>
