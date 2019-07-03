@@ -133,7 +133,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				{
 					e.SuppressKeyPress = true;
 					var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-					Control.QuadrantsPanel.ForceMouseDown(args, quadType);
+					Control.QuadrantPanel.ForceMouseDown(args, quadType);
 				}
 				else if (Control.TopPanel.Focused)
 				{

@@ -5,21 +5,15 @@ using System.Collections.Generic;
 namespace XCom.Interfaces.Base
 {
 	/// <summary>
-	/// Parent of 'MapObserverControl' and 'MapObserverControl_TopPanels'.
+	/// Interface for 'MapObserverControl' and 'MapObserverControl_TopPanels'.
 	/// </summary>
 	public interface IMapObserver
 	{
 		MapFileBase MapBase
 		{ set; get;}
 
-		// NOTE: This is not even used by 'MapObserverControl_TopPanels' - only
-		// by 'MapObserverControl' (for 'TopPanel' and 'QuadrantsPanel').
-		Dictionary<string, IMapObserver> Panels
+		Dictionary<string, IMapObserver> ObserverPanels
 		{ get; }
-
-//		DSShared.Windows.RegistryInfo RegistryInfo
-//		{ get; set; }
-
 
 		void OnSelectLocationObserver(SelectLocationEventArgs args);
 		void OnSelectLevelObserver(   SelectLevelEventArgs    args);

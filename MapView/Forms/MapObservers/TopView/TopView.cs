@@ -28,7 +28,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal TopPanel TopPanel
 		{ get; private set; }
 
-		internal QuadrantPanel QuadrantsPanel
+		internal QuadrantPanel QuadrantPanel
 		{
 			get { return quadrants; }
 		}
@@ -91,25 +91,23 @@ namespace MapView.Forms.MapObservers.TopViews
 			visQuads.Add(TopPanel.North);
 			visQuads.Add(TopPanel.Content);
 
-			TopPanel.Floor.ShortcutKeys = Keys.F1;
-			TopPanel.Floor.Checked = true;
-
-			TopPanel.West.ShortcutKeys = Keys.F2;
-			TopPanel.West.Checked = true;
-
-			TopPanel.North.ShortcutKeys = Keys.F3;
-			TopPanel.North.Checked = true;
-
+			TopPanel.Floor  .ShortcutKeys = Keys.F1;
+			TopPanel.West   .ShortcutKeys = Keys.F2;
+			TopPanel.North  .ShortcutKeys = Keys.F3;
 			TopPanel.Content.ShortcutKeys = Keys.F4;
+
+			TopPanel.Floor  .Checked =
+			TopPanel.West   .Checked =
+			TopPanel.North  .Checked =
 			TopPanel.Content.Checked = true;
 
 			foreach (ToolStripMenuItem it in visQuads)
 				it.Click += OnToggleQuadrantVisibilityClick;
 
-			TopPanel.QuadrantsPanel = QuadrantsPanel;
+			TopPanel.QuadrantPanel = QuadrantPanel;
 
-			Panels.Add("QuadrantsPanel", QuadrantsPanel);
-			Panels.Add("TopPanel",       TopPanel);
+			ObserverPanels.Add("TopPanel",       TopPanel);
+			ObserverPanels.Add("QuadrantPanel", QuadrantPanel);
 
 			ResumeLayout();
 		}
@@ -167,7 +165,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		}
 
 		/// <summary>
-		/// Selects a quadrant in the QuadrantsPanel given a selected tiletype.
+		/// Selects a quadrant in the QuadrantPanel given a selected tiletype.
 		/// </summary>
 		/// <param name="parttype"></param>
 		internal void SelectQuadrant(PartType parttype)
@@ -175,19 +173,19 @@ namespace MapView.Forms.MapObservers.TopViews
 			switch (parttype)
 			{
 				case PartType.Floor:
-					QuadrantsPanel.SelectedQuadrant = QuadrantType.Floor;
+					QuadrantPanel.SelectedQuadrant = QuadrantType.Floor;
 					break;
 
 				case PartType.West:
-					QuadrantsPanel.SelectedQuadrant = QuadrantType.West;
+					QuadrantPanel.SelectedQuadrant = QuadrantType.West;
 					break;
 
 				case PartType.North:
-					QuadrantsPanel.SelectedQuadrant = QuadrantType.North;
+					QuadrantPanel.SelectedQuadrant = QuadrantType.North;
 					break;
 
 				case PartType.Content:
-					QuadrantsPanel.SelectedQuadrant = QuadrantType.Content;
+					QuadrantPanel.SelectedQuadrant = QuadrantType.Content;
 					break;
 			}
 		}

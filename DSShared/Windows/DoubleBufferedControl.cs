@@ -42,12 +42,12 @@ namespace DSShared.Windows
 		#endregion Events (override)
 
 
-		#region Methods
+		#region Methods (virtual)
 		/// <summary>
 		/// Shunts rendering off to 'TopPanelParent' and 'QuadrantPanel'.
 		/// </summary>
 		protected virtual void RenderGraphics(Graphics graphics)
 		{}
-		#endregion Methods
+		#endregion Methods (virtual)
 	}
 }

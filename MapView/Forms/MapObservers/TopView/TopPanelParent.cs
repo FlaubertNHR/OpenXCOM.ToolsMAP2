@@ -358,7 +358,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					return;
 			}
 
-			QuadrantPanel quads = ((TopPanel)this).QuadrantsPanel;
+			QuadrantPanel quads = ((TopPanel)this).QuadrantPanel;
 			quads.ForceMouseDown(
 							new MouseEventArgs(button, clicks, 0,0, 0),
 							quads.SelectedQuadrant);
@@ -409,8 +409,8 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			if (e.Button == MouseButtons.Right)
 			{
-				ViewerFormsManager.TopView     .Control   .QuadrantsPanel.SetSelected(e.Button, 1);
-				ViewerFormsManager.TopRouteView.ControlTop.QuadrantsPanel.SetSelected(e.Button, 1);
+				ViewerFormsManager.TopView     .Control   .QuadrantPanel.SetSelected(e.Button, 1);
+				ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.SetSelected(e.Button, 1);
 			}
 //			base.OnMouseDown(e);
 		}

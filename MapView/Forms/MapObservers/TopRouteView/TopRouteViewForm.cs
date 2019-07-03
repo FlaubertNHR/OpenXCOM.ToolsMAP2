@@ -187,7 +187,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 					{
 						e.SuppressKeyPress = true;
 						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-						ControlTop.QuadrantsPanel.ForceMouseDown(args, quadType);
+						ControlTop.QuadrantPanel.ForceMouseDown(args, quadType);
 					}
 					else if (ControlTop.TopPanel.Focused)
 					{

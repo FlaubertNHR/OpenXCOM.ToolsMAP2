@@ -278,9 +278,9 @@ namespace MapView
 				if (XCMainWindow.ScanG != null)
 					XCMainWindow.ScanG.InvalidatePanel();
 
-				ViewerFormsManager.TileView    .Control                  .Refresh();
-				ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
-				ViewerFormsManager.TopRouteView.ControlTop.QuadrantsPanel.Refresh();
+				ViewerFormsManager.TileView    .Control                 .Refresh();
+				ViewerFormsManager.TopView     .Control   .QuadrantPanel.Refresh();
+				ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Refresh();
 			}
 		}
 		private float _spriteShadeLocal = 1.0f;										// initial val for local sprite shade
@@ -647,7 +647,7 @@ namespace MapView
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
 
-				var quad = ViewerFormsManager.TopView .Control.QuadrantsPanel.SelectedQuadrant;
+				var quad = ViewerFormsManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
 				var part = ViewerFormsManager.TileView.Control.SelectedTilepart;
 
 				for (int col = a.X; col <= b.X; ++col)

@@ -758,8 +758,8 @@ namespace MapView
 							AnimateDoorSprites(false);
 						}
 						ViewerFormsManager.TileView.Refresh();
-						ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
-						ViewerFormsManager.TopRouteView.ControlTop.QuadrantsPanel.Refresh();
+						ViewerFormsManager.TopView     .Control   .QuadrantPanel.Refresh();
+						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Refresh();
 					}
 					else if (miOn.Checked && miDoors.Checked) // doors need to animate if they were already toggled on.
 						AnimateDoorSprites(true);
@@ -1166,8 +1166,8 @@ namespace MapView
 
 		private void OnAnimationUpdate(object sender, EventArgs e)
 		{
-			ViewerFormsManager.TopView     .Control   .QuadrantsPanel.Refresh();
-			ViewerFormsManager.TopRouteView.ControlTop.QuadrantsPanel.Refresh();
+			ViewerFormsManager.TopView     .Control   .QuadrantPanel.Refresh();
+			ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Refresh();
 		}
 
 		/// <summary>

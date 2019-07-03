@@ -36,7 +36,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal ToolStripMenuItem Content
 		{ get; set; }
 
-		internal QuadrantPanel QuadrantsPanel
+		internal QuadrantPanel QuadrantPanel
 		{ get; set; }
 		#endregion Properties
 
