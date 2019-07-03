@@ -63,7 +63,7 @@ namespace MapView
 		private void OnVisibleChanged(object sender, EventArgs e)
 		{
 			if (!Visible)
-				RegistryInfo.UpdateRegistry(this);
+				RegistryInfo.UpdateRegistry(this, true);
 		}
 		#endregion Events
 

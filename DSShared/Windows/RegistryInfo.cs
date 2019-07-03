@@ -178,13 +178,23 @@ namespace DSShared.Windows
 		/// all of them merely hide.
 		/// </summary>
 		/// <param name="f">a Form aka viewer</param>
-		public static void UpdateRegistry(Form f)
+		/// <param name="bypassShow">true for Options forms when they are merely
+		/// changing their visible state; false to force the form to show before
+		/// the registry gets finalized</param>
+		public static void UpdateRegistry(Form f, bool bypassShow = false)
 		{
 			string label = getRegistryLabel(f);
 			if (label != null)
 			{
-				if (!f.Visible) f.Show(); // need this since restoring the WindowState of a non-visible form doesn't stick.
-				f.WindowState = FormWindowState.Normal;
+				if (!bypassShow)
+				{
+					if (!f.Visible)
+						f.Show();	// need that since restoring the WindowState
+									// of a non-visible form doesn't stick.
+
+					f.WindowState = FormWindowState.Normal;
+				}
+
 
 				Metric tric;
 
