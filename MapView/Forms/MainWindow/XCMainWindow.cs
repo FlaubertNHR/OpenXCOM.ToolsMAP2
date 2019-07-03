@@ -53,9 +53,6 @@ namespace MapView
 		internal static XCMainWindow that
 		{ get; private set; }
 
-		internal static MainViewUnderlay MainViewUnderlay
-		{ get; private set; }
-
 		/// <summary>
 		/// Allows MainView and all its subsidiary forms to close, otherwise
 		/// usually only hide. This boolean gets flagged true only by MainView's
@@ -77,6 +74,9 @@ namespace MapView
 
 
 		#region Properties
+		internal MainViewUnderlay MainViewUnderlay
+		{ get; private set; }
+
 		private bool _treeChanged;
 		/// <summary>
 		/// Gets/Sets the MaptreeChanged flag.
