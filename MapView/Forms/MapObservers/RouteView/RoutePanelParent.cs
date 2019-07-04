@@ -41,10 +41,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Properties (static)
 		/// <summary>
+		/// A node that is currently selected. Set its value via RouteView only.
+		/// </summary>
+		internal static RouteNode NodeSelected
+		{ get; set; }
+
+		/// <summary>
 		/// Stores the x/y-position of the currently selected tile.
 		/// </summary>
 		internal protected static Point SelectedLocation
 		{ get; set; }
+
 
 		private static readonly Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();
@@ -59,7 +66,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			get { return _brushes; }
 		}
-
 
 
 		private static int _opacity = 255; // cf. RouteView.LoadControlOptions()
@@ -459,7 +465,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 								RouteNode node = ((XCMapTile)MapChild[MapChild.Location.Row,
 																	  MapChild.Location.Col,
 																	  MapChild.Level]).Node;
-								if (node != null && node == RoutePanel.NodeSelected)
+								if (node != null && node == NodeSelected)
 								{
 									RouteView.Dragnode = node;
 
@@ -492,7 +498,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 								RouteNode node = ((XCMapTile)MapChild[MapChild.Location.Row,
 																	  MapChild.Location.Col,
 																	  MapChild.Level]).Node;
-								if (node != null && node == RoutePanel.NodeSelected)
+								if (node != null && node == NodeSelected)
 								{
 									RouteView.Dragnode = node;
 

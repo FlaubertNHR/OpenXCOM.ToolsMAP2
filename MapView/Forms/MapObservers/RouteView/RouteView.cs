@@ -46,7 +46,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Fields
-		private Panel _pnlRoutes; // NOTE: needs to be here for MapObserver0 stuff.
+		private Panel _pnlRoutes; // NOTE: needs to be here for MapObserver stuff.
 
 		private readonly List<object> _linksList = new List<object>();
 
@@ -106,7 +106,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			private get { return _nodeSelected; }
 			set
 			{
-				_nodeSelected = RoutePanel.NodeSelected = value;
+				_nodeSelected = RoutePanelParent.NodeSelected = value;
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Properties
 		internal RoutePanel RoutePanel
-		{ get; set; }
+		{ get; private set; }
 
 		private MapFileChild MapChild
 		{ get; set; }
@@ -206,7 +206,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Events (override) inherited from IMapObserver/MapObserverControl
 		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
+		/// Inherited from IMapObserver through MapObserverControl.
 		/// @note The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to. This is a design decision that
@@ -224,7 +224,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
+		/// Inherited from IMapObserver through MapObserverControl.
 		/// @note The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to. This is a design decision that
@@ -291,7 +291,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				selected += String.Format(
 										System.Globalization.CultureInfo.InvariantCulture,
 										"c {0}  r {1}  L {2}",
-										_col + 1, _row + 1, MapChild.MapSize.Levs - level); // 1-based count.
+										_col + 1, _row + 1, MapChild.MapSize.Levs - level); // 1-based count, note that level is reversed.
 
 				lblSelected.Text = selected;
 			}
@@ -318,7 +318,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				over += String.Format(
 									System.Globalization.CultureInfo.InvariantCulture,
 									"c {0}  r {1}  L {2}",
-									loc.X + 1, loc.Y + 1, MapChild.MapSize.Levs - _lev); // 1-based count.
+									loc.X + 1, loc.Y + 1, MapChild.MapSize.Levs - _lev); // 1-based count, note that level is reversed.
 			}
 
 			lblOver.Text = over;
@@ -405,7 +405,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		/// <summary>
 		/// Updates distances to and from the currently selected node.
-		/// NOTE: 'NodeSelected' must be valid before call.
+		/// @note NodeSelected must be valid before call.
 		/// </summary>
 		private void UpdateLinkDistances()
 		{
@@ -543,7 +543,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ViewerFormsManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
 
 			valid = valid
-				&& (Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix);
+				 && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
 
 			ViewerFormsManager.RouteView   .Control     .btnPaste         .Enabled =
 			ViewerFormsManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid;
@@ -1245,7 +1245,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			else if (btn == btnGoLink2) slot = 1;
 			else if (btn == btnGoLink3) slot = 2;
 			else if (btn == btnGoLink4) slot = 3;
-			else                        slot = 4; //if (btn == btnGoLink5)
+			else                        slot = 4; // btn == btnGoLink5
 
 			var link   = NodeSelected[slot];
 			byte dest  = link.Destination;
@@ -2335,6 +2335,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 	}
 
 
+	#region Event args
 	/// <summary>
 	/// Event args for RouteView.
 	/// </summary>
@@ -2372,4 +2373,5 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 		#endregion cTor
 	}
+	#endregion Event args
 }

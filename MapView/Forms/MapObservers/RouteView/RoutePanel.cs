@@ -32,7 +32,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private const string Patrol = "patrol";
 
 		private const string textTile1 = ""; // "position" or "location" or ... "pos" or "loc" ... ie, undecided
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -53,16 +53,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private Pen _penLinkSelected;
 		private Pen _penLinkUnselected;
-		#endregion
-
-
-		#region Properties (static)
-		/// <summary>
-		/// A node that is currently selected. Set its value via RouteView only.
-		/// </summary>
-		internal static RouteNode NodeSelected
-		{ get; set; }
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -76,9 +67,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			private get { return _spot; }
 			set { _spot = value; }
 		}
-		#endregion
+		#endregion Properties
 
 
+		#region Events (override)
 		/// <summary>
 		/// You know the drill ... Paint it, Black
 		/// black as night
@@ -172,9 +164,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 //				throw;
 //			}
 		}
+		#endregion Events (override)
 
 
-		#region Draw Methods
+		#region Methods (draw)
 		/// <summary>
 		/// Draws any wall and/or content indicators.
 		/// </summary>
@@ -575,13 +568,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 												infoboxX,
 												infoboxY,
 												(int)node.Spawn,
-												Brushes.LightCoral); //IndianRed
+												Brushes.LightCoral);
 
 								DrawImportanceMeter(
 												infoboxX + 3,
 												infoboxY,
 												(int)node.Patrol,
-												Brushes.DeepSkyBlue); //CornflowerBlue
+												Brushes.DeepSkyBlue);
 //								}
 						}
 					}
@@ -843,6 +836,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 			}
 		}
-		#endregion
+		#endregion Methods (draw)
 	}
 }
