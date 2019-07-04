@@ -236,11 +236,10 @@ namespace MapView.Forms.MapObservers.TopViews
 		// options
 		internal const string FloorColor        = "FloorColor";
 		internal const string WestColor         = "WestColor";
-		internal const string NorthColor        = "NorthColor";
-		internal const string ContentColor      = "ContentColor";
-
 		private  const string WestWidth         = "WestWidth";
+		internal const string NorthColor        = "NorthColor";
 		private  const string NorthWidth        = "NorthWidth";
+		internal const string ContentColor      = "ContentColor";
 
 		internal const string SelectorColor     = "SelectorColor";
 		internal const string SelectorWidth     = "SelectorWidth";
@@ -266,37 +265,40 @@ namespace MapView.Forms.MapObservers.TopViews
 			TopPanel.Brushes.Add(FloorColor, new SolidBrush(Color.BurlyWood));
 
 			var brushContent = new SolidBrush(Color.MediumSeaGreen);
+
 			TopPanel.Brushes.Add(ContentColor, brushContent);
 			TopPanel.ToolContent = new ColorTool(brushContent, LINEWIDTH_CONTENT);
 
-			const int wallwidth = 3;
-			var penWest = new Pen(Color.Khaki, wallwidth);
+			const int widthwall     = 3;
+			const int widthselector = 2;
+			const int widthselected = 2;
+			const int widthgrid     = 1;
+			const int widthgrid10   = 2;
+
+			var penWest     = new Pen(Color.Khaki,     widthwall);
+			var penNorth    = new Pen(Color.Wheat,     widthwall);
+			var penSelector = new Pen(Color.Black,     widthselector);
+			var penSelected = new Pen(Color.RoyalBlue, widthselected);
+			var penGrid     = new Pen(Color.Black,     widthgrid);
+			var pen10Grid   = new Pen(Color.Black,     widthgrid10);
+
 			TopPanel.Pens.Add(WestColor, penWest);
 			TopPanel.Pens.Add(WestWidth, penWest);
 			TopPanel.ToolWest = new ColorTool(penWest);
 
-			var penNorth = new Pen(Color.Wheat, wallwidth);
 			TopPanel.Pens.Add(NorthColor, penNorth);
 			TopPanel.Pens.Add(NorthWidth, penNorth);
 			TopPanel.ToolNorth = new ColorTool(penNorth);
 
-			const int selectorwidth = 2;
-			var penSelector = new Pen(Color.Black, selectorwidth);
 			TopPanel.Pens.Add(SelectorColor, penSelector);
 			TopPanel.Pens.Add(SelectorWidth, penSelector);
 
-			const int selectedwidth = 2;
-			var penSelected = new Pen(Color.RoyalBlue, selectedwidth);
 			TopPanel.Pens.Add(SelectedColor, penSelected);
 			TopPanel.Pens.Add(SelectedWidth, penSelected);
 
-			const int gridwidth = 1;
-			var penGrid = new Pen(Color.Black, gridwidth);
 			TopPanel.Pens.Add(GridColor, penGrid);
 			TopPanel.Pens.Add(GridWidth, penGrid);
 
-			const int grid10width = 2;
-			var pen10Grid = new Pen(Color.Black, grid10width);
 			TopPanel.Pens.Add(Grid10Color, pen10Grid);
 			TopPanel.Pens.Add(Grid10Width, pen10Grid);
 
@@ -306,21 +308,21 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			Options.AddOption(FloorColor,        Color.BurlyWood,      "Color of the floor tile indicator",           Tile,     bc);
 			Options.AddOption(WestColor,         Color.Khaki,          "Color of the west tile indicator",            Tile,     pc);
-			Options.AddOption(WestWidth,         wallwidth,            "Width of the west tile indicator in pixels",  Tile,     pw);
+			Options.AddOption(WestWidth,         widthwall,            "Width of the west tile indicator in pixels",  Tile,     pw);
 			Options.AddOption(NorthColor,        Color.Wheat,          "Color of the north tile indicator",           Tile,     pc);
-			Options.AddOption(NorthWidth,        wallwidth,            "Width of the north tile indicator in pixels", Tile,     pw);
+			Options.AddOption(NorthWidth,        widthwall,            "Width of the north tile indicator in pixels", Tile,     pw);
 			Options.AddOption(ContentColor,      Color.MediumSeaGreen, "Color of the content tile indicator",         Tile,     bc);
 
 			Options.AddOption(SelectorColor,     Color.Black,          "Color of the mouse-over indicator",           Selector, pc);
-			Options.AddOption(SelectorWidth,     selectorwidth,        "Width of the mouse-over indicator in pixels", Selector, pw);
+			Options.AddOption(SelectorWidth,     widthselector,        "Width of the mouse-over indicator in pixels", Selector, pw);
 			Options.AddOption(SelectedColor,     Color.RoyalBlue,      "Color of the selection line",                 Selector, pc);
-			Options.AddOption(SelectedWidth,     selectedwidth,        "Width of the selection line in pixels",       Selector, pw);
+			Options.AddOption(SelectedWidth,     widthselected,        "Width of the selection line in pixels",       Selector, pw);
 			Options.AddOption(SelectedTypeColor, Color.LightBlue,      "Background color of the selected parttype",   Selector, bc);
 
 			Options.AddOption(GridColor,         Color.Black,          "Color of the grid lines",                     Grid,     pc);
-			Options.AddOption(GridWidth,         gridwidth,            "Width of the grid lines in pixels",           Grid,     pw);
+			Options.AddOption(GridWidth,         widthgrid,            "Width of the grid lines in pixels",           Grid,     pw);
 			Options.AddOption(Grid10Color,       Color.Black,          "Color of every tenth grid line",              Grid,     pc);
-			Options.AddOption(Grid10Width,       grid10width,          "Width of every tenth grid line in pixels",    Grid,     pw);
+			Options.AddOption(Grid10Width,       widthgrid10,          "Width of every tenth grid line in pixels",    Grid,     pw);
 
 			Invalidate();
 		}
