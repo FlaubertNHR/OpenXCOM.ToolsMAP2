@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -57,7 +58,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Properties
-		private Point _spot = new Point(-1, -1);
+		private Point _spot = new Point(-1,-1);
 		/// <summary>
 		/// The location of the tile that is highlighted by a mouse-overed Go
 		/// button.
@@ -68,6 +69,23 @@ namespace MapView.Forms.MapObservers.RouteViews
 			set { _spot = value; }
 		}
 		#endregion Properties
+
+
+		#region Properties (static)
+		private static readonly Dictionary<string, Pen> _pens =
+							new Dictionary<string, Pen>();
+		internal static Dictionary<string, Pen> RoutePens
+		{
+			get { return _pens; }
+		}
+
+		private static readonly Dictionary<string, SolidBrush> _brushes =
+							new Dictionary<string, SolidBrush>();
+		internal static Dictionary<string, SolidBrush> RouteBrushes
+		{
+			get { return _brushes; }
+		}
+		#endregion Properties (static)
 
 
 		#region Events (override)

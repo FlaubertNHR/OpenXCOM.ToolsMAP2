@@ -2081,8 +2081,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			OnConnectTypeClicked(tsb_connect0, EventArgs.Empty); // TODO: add to Options
 
-			var pens    = RoutePanelParent.RoutePens;
-			var brushes = RoutePanelParent.RouteBrushes;
+			var pens    = RoutePanel.RoutePens;
+			var brushes = RoutePanel.RouteBrushes;
 
 			var bc = new OptionChangedEvent(OnBrushColorChanged);
 			var pc = new OptionChangedEvent(OnPenColorChanged);
@@ -2232,7 +2232,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private void OnBrushColorChanged(string key, object val)
 		{
 			var color = (Color)val;
-			RoutePanelParent.RouteBrushes[key].Color = color;
+			RoutePanel.RouteBrushes[key].Color = color;
 
 			switch (key)
 			{
@@ -2250,13 +2250,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnPenColorChanged(string key, object val)
 		{
-			RoutePanelParent.RoutePens[key].Color = (Color)val;
+			RoutePanel.RoutePens[key].Color = (Color)val;
 			RefreshControls();
 		}
 
 		private void OnPenWidthChanged(string key, object val)
 		{
-			RoutePanelParent.RoutePens[key].Width = (int)val;
+			RoutePanel.RoutePens[key].Width = (int)val;
 			RefreshControls();
 		}
 

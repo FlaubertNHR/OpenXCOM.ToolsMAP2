@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -51,21 +50,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		internal protected static Point SelectedLocation
 		{ get; set; }
-
-
-		private static readonly Dictionary<string, Pen> _pens =
-							new Dictionary<string, Pen>();
-		internal static protected Dictionary<string, Pen> RoutePens
-		{
-			get { return _pens; }
-		}
-
-		private static readonly Dictionary<string, SolidBrush> _brushes =
-							new Dictionary<string, SolidBrush>();
-		internal static protected Dictionary<string, SolidBrush> RouteBrushes
-		{
-			get { return _brushes; }
-		}
 
 
 		private static int _opacity = 255; // cf. RouteView.LoadControlOptions()

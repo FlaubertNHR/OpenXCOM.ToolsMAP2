@@ -72,6 +72,7 @@ namespace MapView.Forms.MapObservers.TopViews
 							new Dictionary<string, Pen>();
 		/// <summary>
 		/// Pens for use in TopPanel.
+		/// @note The identifier 'Pens' could cause a clash w/ System.Drawing
 		/// </summary>
 		internal static Dictionary<string, Pen> Pens
 		{
@@ -82,6 +83,7 @@ namespace MapView.Forms.MapObservers.TopViews
 							new Dictionary<string, SolidBrush>();
 		/// <summary>
 		/// Brushes for use in TopPanel.
+		/// @note The identifier 'Brushes' could cause a clash w/ System.Drawing
 		/// </summary>
 		internal static Dictionary<string, SolidBrush> Brushes
 		{
