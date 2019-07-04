@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -44,30 +43,26 @@ namespace MapView.Forms.MapObservers.TopViews
 		private static int TextWidth_content;
 
 		private static bool Inited;
-		#endregion (static)
-
-
-		#region Properties
-		internal static SolidBrush Brush
-		{ get; set; }
-
-		internal static Dictionary<string, SolidBrush> Brushes
-		{ get; set; }
-
-		internal static Dictionary<string, Pen> Pens
-		{ get; set; }
-
-		internal static Font Font
-		{ get; set; }
-		#endregion Properties
 
 		private static readonly GraphicsPath _pathFloor   = new GraphicsPath();
 		private static readonly GraphicsPath _pathWest    = new GraphicsPath();
 		private static readonly GraphicsPath _pathNorth   = new GraphicsPath();
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
 
+		private const int QUADS = 4;
+		#endregion Fields (static)
 
-		#region cTor
+
+		#region Properties (static)
+		internal static SolidBrush Brush
+		{ get; set; }
+
+		internal static Font Font
+		{ get; set; }
+		#endregion Properties (static)
+
+
+		#region cTor (static)
 		/// <summary>
 		/// cTor.
 		/// </summary>
@@ -76,7 +71,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			Font  = new Font("Comic Sans MS", 7);
 			Brush = new SolidBrush(Color.LightBlue);
 
-			for (int quad = 0; quad != 4; ++quad) // cache each quadrant's rectangular bounding path
+			for (int quad = 0; quad != QUADS; ++quad) // cache each quadrant's rectangular bounding path
 			{
 				var p0 = new Point(
 								StartX + QuadWidthTotal * quad - 1,
@@ -110,7 +105,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				}
 			}
 		}
-		#endregion cTor
+		#endregion cTor (static)
 
 
 		#region punc (static)
@@ -148,7 +143,9 @@ namespace MapView.Forms.MapObservers.TopViews
 		#endregion punc (static)
 
 
-		#region Methods
+		#region Methods (static)
+		private static Graphics _graphics;
+
 		/// <summary>
 		/// Draws the QuadrantPanel incl/ sprites.
 		/// </summary>
@@ -162,6 +159,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			if (!Globals.RT) return; // don't try to draw the QuadrantPanel in the designer.
 
+			_graphics = graphics;
+
 			var spriteAttributes = new ImageAttributes();
 			if (MainViewOverlay.that._spriteShadeEnabled)
 				spriteAttributes.SetGamma(MainViewOverlay.that.SpriteShadeLocal, ColorAdjustType.Bitmap);
@@ -170,51 +169,51 @@ namespace MapView.Forms.MapObservers.TopViews
 			{
 				Inited = true;
 
-				TextWidth_door    = (int)graphics.MeasureString(Door,    Font).Width;
-				TextWidth_floor   = (int)graphics.MeasureString(Floor,   Font).Width;
-				TextWidth_west    = (int)graphics.MeasureString(West,    Font).Width;
-				TextWidth_north   = (int)graphics.MeasureString(North,   Font).Width;
-				TextWidth_content = (int)graphics.MeasureString(Content, Font).Width;
+				TextWidth_door    = (int)_graphics.MeasureString(Door,    Font).Width;
+				TextWidth_floor   = (int)_graphics.MeasureString(Floor,   Font).Width;
+				TextWidth_west    = (int)_graphics.MeasureString(West,    Font).Width;
+				TextWidth_north   = (int)_graphics.MeasureString(North,   Font).Width;
+				TextWidth_content = (int)_graphics.MeasureString(Content, Font).Width;
 			}
 
-			var topView = ViewerFormsManager.TopView.Control;
+			var control = ViewerFormsManager.TopView.Control;
 
 			// fill the background of the selected quadrant type
 			switch (selectedQuadrant)
 			{
 				case QuadrantType.Floor:
-					if (topView.Floor.Checked)
-						graphics.FillPath(Brush, _pathFloor);
+					if (control.Floor.Checked)
+						_graphics.FillPath(Brush, _pathFloor);
 					break;
 
 				case QuadrantType.West:
-					if (topView.West.Checked)
-						graphics.FillPath(Brush, _pathWest);
+					if (control.West.Checked)
+						_graphics.FillPath(Brush, _pathWest);
 					break;
 
 				case QuadrantType.North:
-					if (topView.North.Checked)
-						graphics.FillPath(Brush, _pathNorth);
+					if (control.North.Checked)
+						_graphics.FillPath(Brush, _pathNorth);
 					break;
 
 				case QuadrantType.Content:
-					if (topView.Content.Checked)
-						graphics.FillPath(Brush, _pathContent);
+					if (control.Content.Checked)
+						_graphics.FillPath(Brush, _pathContent);
 					break;
 			}
 
 			// fill the background of !Visible quads incl/ the selected-quad
-			if (!topView.Floor.Checked)
-				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathFloor);
+			if (!control.Floor.Checked)
+				_graphics.FillPath(Brushes.DarkGray, _pathFloor);
 
-			if (!topView.West.Checked)
-				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathWest);
+			if (!control.West.Checked)
+				_graphics.FillPath(Brushes.DarkGray, _pathWest);
 
-			if (!topView.North.Checked)
-				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathNorth);
+			if (!control.North.Checked)
+				_graphics.FillPath(Brushes.DarkGray, _pathNorth);
 
-			if (!topView.Content.Checked)
-				graphics.FillPath(System.Drawing.Brushes.DarkGray, _pathContent);
+			if (!control.Content.Checked)
+				_graphics.FillPath(Brushes.DarkGray, _pathContent);
 
 
 			// draw the Sprites
@@ -225,7 +224,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (tile != null && tile.Floor != null)
 			{
 				sprite = tile.Floor[anistep].Sprite;
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								sprite,
 								new Rectangle(
 											StartX,
@@ -237,10 +236,10 @@ namespace MapView.Forms.MapObservers.TopViews
 								spriteAttributes);
 
 				if (tile.Floor.Record.HingedDoor || tile.Floor.Record.SlidingDoor)
-					DrawDoorString(graphics, QuadrantType.Floor);
+					DrawDoorString((int)QuadrantType.Floor);
 			}
 			else
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								Globals.ExtraSprites[3].Sprite,
 								StartX,
 								StartY);
@@ -249,7 +248,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (tile != null && tile.West != null)
 			{
 				sprite = tile.West[anistep].Sprite;
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								sprite,
 								new Rectangle(
 											StartX + QuadWidthTotal,
@@ -261,10 +260,10 @@ namespace MapView.Forms.MapObservers.TopViews
 								spriteAttributes);
 
 				if (tile.West.Record.HingedDoor || tile.West.Record.SlidingDoor)
-					DrawDoorString(graphics, QuadrantType.West);
+					DrawDoorString((int)QuadrantType.West);
 			}
 			else
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								Globals.ExtraSprites[1].Sprite,
 								StartX + QuadWidthTotal,
 								StartY);
@@ -273,10 +272,10 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (tile != null && tile.North != null)
 			{
 				sprite = tile.North[anistep].Sprite;
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								sprite,
 								new Rectangle(
-											StartX + QuadWidthTotal * 2,
+											StartX + QuadWidthTotal * (int)QuadrantType.North,
 											StartY - tile.North.Record.TileOffset,
 											sprite.Width,
 											sprite.Height),
@@ -285,22 +284,22 @@ namespace MapView.Forms.MapObservers.TopViews
 								spriteAttributes);
 
 				if (tile.North.Record.HingedDoor || tile.North.Record.SlidingDoor)
-					DrawDoorString(graphics, QuadrantType.North);
+					DrawDoorString((int)QuadrantType.North);
 			}
 			else
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								Globals.ExtraSprites[2].Sprite,
-								StartX + QuadWidthTotal * 2,
+								StartX + QuadWidthTotal * (int)QuadrantType.North,
 								StartY);
 
 			// Content ->
 			if (tile != null && tile.Content != null)
 			{
 				sprite = tile.Content[anistep].Sprite;
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								sprite,
 								new Rectangle(
-											StartX + QuadWidthTotal * 3,
+											StartX + QuadWidthTotal * (int)QuadrantType.Content,
 											StartY - tile.Content.Record.TileOffset,
 											sprite.Width,
 											sprite.Height),
@@ -309,116 +308,75 @@ namespace MapView.Forms.MapObservers.TopViews
 								spriteAttributes);
 
 				if (tile.Content.Record.HingedDoor || tile.Content.Record.SlidingDoor)
-					DrawDoorString(graphics, QuadrantType.Content);
+					DrawDoorString((int)QuadrantType.Content);
 			}
 			else
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								Globals.ExtraSprites[4].Sprite,
-								StartX + QuadWidthTotal * 3,
+								StartX + QuadWidthTotal * (int)QuadrantType.Content,
 								StartY);
 
 
 			// draw each quadrant's bounding rectangle
-			graphics.DrawPath(System.Drawing.Pens.Black, _pathFloor);
-			graphics.DrawPath(System.Drawing.Pens.Black, _pathWest);
-			graphics.DrawPath(System.Drawing.Pens.Black, _pathNorth);
-			graphics.DrawPath(System.Drawing.Pens.Black, _pathContent);
+			_graphics.DrawPath(Pens.Black, _pathFloor);
+			_graphics.DrawPath(Pens.Black, _pathWest);
+			_graphics.DrawPath(Pens.Black, _pathNorth);
+			_graphics.DrawPath(Pens.Black, _pathContent);
 
 			// draw the quad-type label under each quadrant
-			DrawTypeString(graphics, QuadrantType.Floor);
-			DrawTypeString(graphics, QuadrantType.West);
-			DrawTypeString(graphics, QuadrantType.North);
-			DrawTypeString(graphics, QuadrantType.Content);
+			DrawTypeString(Floor,   TextWidth_floor,   (int)QuadrantType.Floor);
+			DrawTypeString(West,    TextWidth_west,    (int)QuadrantType.West);
+			DrawTypeString(North,   TextWidth_north,   (int)QuadrantType.North);
+			DrawTypeString(Content, TextWidth_content, (int)QuadrantType.Content);
 
 			// fill the color-swatch under each quadrant-label
-			if (Brushes != null && Pens != null)
-			{
-				FillSwatchColor(graphics, QuadrantType.Floor);
-				FillSwatchColor(graphics, QuadrantType.West);
-				FillSwatchColor(graphics, QuadrantType.North);
-				FillSwatchColor(graphics, QuadrantType.Content);
-			}
+			FillSwatchColor(               TopPanel.Brushes[TopView.FloorColor],        (int)QuadrantType.Floor);
+			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopView.WestColor] .Color), (int)QuadrantType.West);
+			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopView.NorthColor].Color), (int)QuadrantType.North);
+			FillSwatchColor(               TopPanel.Brushes[TopView.ContentColor],      (int)QuadrantType.Content);
 		}
 
 		/// <summary>
 		/// Draws the "door" string if applicable.
 		/// </summary>
-		private static void DrawDoorString(Graphics graphics, QuadrantType quadType)
+		/// <param name="quad"></param>
+		private static void DrawDoorString(int quad)
 		{
-			graphics.DrawString(
+			_graphics.DrawString(
 							Door,
 							Font,
-							System.Drawing.Brushes.Black,
-							StartX + (XCImage.SpriteWidth32 - TextWidth_door) / 2 + QuadWidthTotal * (int)quadType + 1,
+							Brushes.Black,
+							StartX + (XCImage.SpriteWidth32 - TextWidth_door) / 2 + QuadWidthTotal * quad + 1,
 							StartY +  XCImage.SpriteHeight40 - Font.Height + PrintOffsetY);
 		}
 
 		/// <summary>
 		/// Draws the type of quadrant under its rectangle.
 		/// </summary>
-		/// <param name="graphics"></param>
-		/// <param name="quadType"></param>
-		private static void DrawTypeString(Graphics graphics, QuadrantType quadType)
+		/// <param name="type"></param>
+		/// <param name="width"></param>
+		/// <param name="quad"></param>
+		private static void DrawTypeString(string type, int width, int quad)
 		{
-			string type = String.Empty;
-			int width = 0;
-
-			switch (quadType)
-			{
-				case QuadrantType.Floor:
-					type  = Floor;
-					width = TextWidth_floor;
-					break;
-				case QuadrantType.West:
-					type  = West;
-					width = TextWidth_west;
-					break;
-				case QuadrantType.North:
-					type  = North;
-					width = TextWidth_north;
-					break;
-				case QuadrantType.Content:
-					type  = Content;
-					width = TextWidth_content;
-					break;
-			}
-
-			graphics.DrawString(
+			_graphics.DrawString(
 							type,
 							Font,
 							System.Drawing.Brushes.Black,
-							StartX + (XCImage.SpriteWidth32 - width) / 2 + QuadWidthTotal * (int)quadType + 1,
+							StartX + (XCImage.SpriteWidth32 - width) / 2 + QuadWidthTotal * quad + 1,
 							StartY +  XCImage.SpriteHeight40 + MarginVert);
 		}
 
 		/// <summary>
 		/// Fills the swatch under a given quadrant.
 		/// </summary>
-		/// <param name="graphics"></param>
-		/// <param name="quadType"></param>
-		private static void FillSwatchColor(Graphics graphics, QuadrantType quadType)
+		/// <param name="brush"></param>
+		/// <param name="quad"></param>
+		private static void FillSwatchColor(Brush brush, int quad)
 		{
-			SolidBrush brush = null;
-			switch (quadType)
-			{
-				case QuadrantType.Floor:
-					brush = Brushes[TopView.FloorColor];
-					break;
-				case QuadrantType.West:
-					brush = new SolidBrush(Pens[TopView.WestColor].Color);
-					break;
-				case QuadrantType.North:
-					brush = new SolidBrush(Pens[TopView.NorthColor].Color);
-					break;
-				case QuadrantType.Content:
-					brush = Brushes[TopView.ContentColor];
-					break;
-			}
-
-			graphics.FillRectangle(
+			_graphics.FillRectangle(
 								brush,
 								new RectangleF(
-											StartX + QuadWidthTotal * (int)quadType,
+											StartX + QuadWidthTotal * quad,
 											StartY + XCImage.SpriteHeight40 + MarginVert + Font.Height + 1,
 											XCImage.SpriteWidth32,
 											SwatchHeight));
@@ -444,6 +402,6 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			GC.SuppressFinalize(this);
 		} */
-		#endregion Methods
+		#endregion Methods (static)
 	}
 }

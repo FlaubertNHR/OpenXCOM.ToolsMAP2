@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -16,15 +15,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		:
 			MapObserverControl // UserControl, IMapObserver
 	{
-		#region Fields (static)
-		private static Dictionary<string, Pen> _topPens =
-				   new Dictionary<string, Pen>();
-
-		private static Dictionary<string, SolidBrush> _topBrushes =
-				   new Dictionary<string, SolidBrush>();
-		#endregion Fields
-
-
 		#region Properties
 		internal TopPanel TopPanel
 		{ get; private set; }
@@ -164,21 +154,10 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			switch (parttype)
 			{
-				case PartType.Floor:
-					QuadrantPanel.SelectedQuadrant = QuadrantType.Floor;
-					break;
-
-				case PartType.West:
-					QuadrantPanel.SelectedQuadrant = QuadrantType.West;
-					break;
-
-				case PartType.North:
-					QuadrantPanel.SelectedQuadrant = QuadrantType.North;
-					break;
-
-				case PartType.Content:
-					QuadrantPanel.SelectedQuadrant = QuadrantType.Content;
-					break;
+				case PartType.Floor:   QuadrantPanel.SelectedQuadrant = QuadrantType.Floor;   break;
+				case PartType.West:    QuadrantPanel.SelectedQuadrant = QuadrantType.West;    break;
+				case PartType.North:   QuadrantPanel.SelectedQuadrant = QuadrantType.North;   break;
+				case PartType.Content: QuadrantPanel.SelectedQuadrant = QuadrantType.Content; break;
 			}
 		}
 		#endregion Methods
@@ -286,32 +265,32 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (_optionsLoaded) return;
 			_optionsLoaded = true;
 
-			_topBrushes.Add(FloorColor,   new SolidBrush(Color.BurlyWood));
-			_topBrushes.Add(ContentColor, new SolidBrush(Color.MediumSeaGreen));
+			TopPanel.Brushes.Add(FloorColor,   new SolidBrush(Color.BurlyWood));
+			TopPanel.Brushes.Add(ContentColor, new SolidBrush(Color.MediumSeaGreen));
 
 			var penWest = new Pen(Color.Khaki, 4);
-			_topPens.Add(WestColor, penWest);
-			_topPens.Add(WestWidth, penWest);
+			TopPanel.Pens.Add(WestColor, penWest);
+			TopPanel.Pens.Add(WestWidth, penWest);
 
 			var penNorth = new Pen(Color.Wheat, 4);
-			_topPens.Add(NorthColor, penNorth);
-			_topPens.Add(NorthWidth, penNorth);
+			TopPanel.Pens.Add(NorthColor, penNorth);
+			TopPanel.Pens.Add(NorthWidth, penNorth);
 
 			var penOver = new Pen(Color.Black, 2);
-			_topPens.Add(SelectorColor, penOver);
-			_topPens.Add(SelectorWidth, penOver);
+			TopPanel.Pens.Add(SelectorColor, penOver);
+			TopPanel.Pens.Add(SelectorWidth, penOver);
 
 			var penSelected = new Pen(Color.RoyalBlue, 2);
-			_topPens.Add(SelectedColor, penSelected);
-			_topPens.Add(SelectedWidth, penSelected);
+			TopPanel.Pens.Add(SelectedColor, penSelected);
+			TopPanel.Pens.Add(SelectedWidth, penSelected);
 
 			var penGrid = new Pen(Color.Black, 1);
-			_topPens.Add(GridColor, penGrid);
-			_topPens.Add(GridWidth, penGrid);
+			TopPanel.Pens.Add(GridColor, penGrid);
+			TopPanel.Pens.Add(GridWidth, penGrid);
 
 			var pen10Grid = new Pen(Color.Black, 2);
-			_topPens.Add(Grid10Color, pen10Grid);
-			_topPens.Add(Grid10Width, pen10Grid);
+			TopPanel.Pens.Add(Grid10Color, pen10Grid);
+			TopPanel.Pens.Add(Grid10Width, pen10Grid);
 
 			OptionChangedEvent bc = OnBrushChanged;
 			OptionChangedEvent pc = OnPenColorChanged;
@@ -335,12 +314,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			Options.AddOption(Grid10Color,       Color.Black,          "Color of every tenth grid line",              Grid,     pc);
 			Options.AddOption(Grid10Width,       2,                    "Width of every tenth grid line in pixels",    Grid,     pw);
 
-			QuadrantPanel.Pens =
-			TopPanel     .TopPens = _topPens;
-
-			QuadrantPanel.Brushes =
-			TopPanel     .TopBrushes = _topBrushes;
-
 			Invalidate();
 		}
 
@@ -357,7 +330,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				QuadrantPanelDrawService.Brush = new SolidBrush((Color)val);
 			}
 			else
-				_topBrushes[key].Color = (Color)val;
+				TopPanel.Brushes[key].Color = (Color)val;
 
 			RefreshControls();
 		}
@@ -369,7 +342,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="val"></param>
 		private void OnPenColorChanged(string key, object val)
 		{
-			_topPens[key].Color = (Color)val;
+			TopPanel.Pens[key].Color = (Color)val;
 			RefreshControls();
 		}
 
@@ -380,7 +353,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="val"></param>
 		private void OnPenWidthChanged(string key, object val)
 		{
-			_topPens[key].Width = (int)val;
+			TopPanel.Pens[key].Width = (int)val;
 			RefreshControls();
 		}
 
@@ -391,27 +364,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			ViewerFormsManager.TopView     .Control   .Refresh();
 			ViewerFormsManager.TopRouteView.ControlTop.Refresh();
-		}
-
-
-		/// <summary>
-		/// Gets the brushes/colors for the Floor and Content blobs.
-		/// Used by the Colors screen.
-		/// </summary>
-		/// <returns>a hashtable of the brushes</returns>
-		internal Dictionary<string, SolidBrush> GetFloorContentBrushes()
-		{
-			return _topBrushes;
-		}
-
-		/// <summary>
-		/// Gets the pens/colors for the Westwall and Northwall blobs.
-		/// Used by the Colors screen.
-		/// </summary>
-		/// <returns>a hashtable of the brushes</returns>
-		internal Dictionary<string, Pen> GetWallPens()
-		{
-			return _topPens;
 		}
 		#endregion Options
 	}

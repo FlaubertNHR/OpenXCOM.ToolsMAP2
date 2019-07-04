@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -35,21 +33,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			set { _quadrant = value; Refresh(); }
 		}
 		#endregion Properties
-
-
-		#region Properties (static)
-		[Browsable(false)]
-		internal static new Dictionary<string, SolidBrush> Brushes
-		{
-			set { QuadrantPanelDrawService.Brushes = value; }
-		}
-
-		[Browsable(false)]
-		internal static new Dictionary<string, Pen> Pens
-		{
-			set { QuadrantPanelDrawService.Pens = value; }
-		}
-		#endregion Properties (static)
 
 
 		#region cTor

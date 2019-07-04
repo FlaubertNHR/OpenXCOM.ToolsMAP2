@@ -40,10 +40,13 @@ namespace MapView.Forms.MapObservers.TopViews
 		:
 			IDisposable
 	{
-		#region Fields & Properties
+		#region Fields
 		private readonly GraphicsPath _floor   = new GraphicsPath();
 		private readonly GraphicsPath _content = new GraphicsPath();
+		#endregion Fields
 
+
+		#region Properties
 		private int _halfWidth = 8;
 		internal int HalfWidth
 		{
@@ -56,7 +59,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			get { return _halfHeight; }
 			set { _halfHeight = value; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region Methods
@@ -291,7 +294,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					pt,
 					end);
 		}
-		#endregion
+		#endregion Methods
 
 
 		/// <summary>
@@ -318,12 +321,12 @@ namespace MapView.Forms.MapObservers.TopViews
 	/// </summary>
 	internal static class BlobTypeService
 	{
-		#region Fields
+		#region Fields (static)
 		private static List<byte> _loftList;
-		#endregion
+		#endregion Fields (static)
 
 
-		#region Methods
+		#region Methods (static)
 		/// <summary>
 		/// Gets the BlobType of a given tile for drawing its blob in TopView
 		/// and/or RouteView.
@@ -528,6 +531,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			return (record != null
 				&& (record.HingedDoor || record.SlidingDoor));
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

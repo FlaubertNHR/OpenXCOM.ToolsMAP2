@@ -13,7 +13,7 @@ namespace MapView.Forms.Error
 		{
 			InitializeComponent();
 
-			lblHead.Text = "wtf" + Environment.NewLine + "did u do";
+			lblHead.Text = "_wtf_" + Environment.NewLine + "did u do";
 			tbDetails.Text = exception.ToString();
 
 			btnClose.Select();

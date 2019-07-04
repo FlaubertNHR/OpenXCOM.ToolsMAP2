@@ -58,8 +58,8 @@ namespace MapView
 		/// </summary>
 		private void UpdateTopViewBlobColors()
 		{
-			var pens    = ViewerFormsManager.TopView.Control.GetWallPens();
-			var brushes = ViewerFormsManager.TopView.Control.GetFloorContentBrushes();
+			var pens    = TopPanel.Pens;
+			var brushes = TopPanel.Brushes;
 
 			Color color = Color.Empty;
 

@@ -57,26 +57,36 @@ namespace MapView.Forms.MapObservers.TopViews
 		#endregion Properties (override)
 
 
-		#region Properties (static)
-		[Browsable(false), DefaultValue(null)]
-		internal static protected Dictionary<string, Pen> TopPens
-		{ get; set; }
-
-		[Browsable(false), DefaultValue(null)]
-		internal static protected Dictionary<string, SolidBrush> TopBrushes
-		{ get; set; }
-		#endregion Properties (static)
-
-
 		#region Properties
+		private TopView TopView
+		{ get; set; }
+
+
 		private readonly DrawBlobService _blobService = new DrawBlobService();
 		internal protected DrawBlobService BlobService
 		{
 			get { return _blobService; }
 		}
 
-		private TopView TopView
-		{ get; set; }
+		private readonly static Dictionary<string, SolidBrush> _brushes =
+							new Dictionary<string, SolidBrush>();
+		/// <summary>
+		/// Brushes for use in TopPanel.
+		/// </summary>
+		internal static Dictionary<string, SolidBrush> Brushes
+		{
+			get { return _brushes; }
+		}
+
+		private readonly static Dictionary<string, Pen> _pens =
+							new Dictionary<string, Pen>();
+		/// <summary>
+		/// Pens for use in TopPanel.
+		/// </summary>
+		internal static Dictionary<string, Pen> Pens
+		{
+			get { return _pens; }
+		}
 		#endregion Properties
 
 
@@ -278,8 +288,8 @@ namespace MapView.Forms.MapObservers.TopViews
 				Pen pen;
 				for (int i = 0; i <= MapBase.MapSize.Rows; ++i) // draw horizontal grid-lines (ie. upperleft to lowerright)
 				{
-					if (i % 10 == 0) pen = TopPens[TopView.Grid10Color];
-					else             pen = TopPens[TopView.GridColor];
+					if (i % 10 == 0) pen = TopPanel.Pens[TopView.Grid10Color];
+					else             pen = TopPanel.Pens[TopView.GridColor];
 
 					graphics.DrawLine(
 									pen,
@@ -291,8 +301,8 @@ namespace MapView.Forms.MapObservers.TopViews
 
 				for (int i = 0; i <= MapBase.MapSize.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
 				{
-					if (i % 10 == 0) pen = TopPens[TopView.Grid10Color];
-					else             pen = TopPens[TopView.GridColor];
+					if (i % 10 == 0) pen = TopPanel.Pens[TopView.Grid10Color];
+					else             pen = TopPanel.Pens[TopView.GridColor];
 
 					graphics.DrawLine(
 									pen,
@@ -311,12 +321,12 @@ namespace MapView.Forms.MapObservers.TopViews
 					PathSelectorLozenge(
 									_originX + (_col - _row) * halfWidth,
 									OffsetY  + (_col + _row) * halfHeight);
-					graphics.DrawPath(TopPens[TopView.SelectorColor], _lozSelector);
+					graphics.DrawPath(TopPanel.Pens[TopView.SelectorColor], _lozSelector);
 				}
 
 				// draw tiles-selected lozenge ->
 				if (MainViewOverlay.that.FirstClick)
-					graphics.DrawPath(TopPens[TopView.SelectedColor], _lozSelected);
+					graphics.DrawPath(TopPanel.Pens[TopView.SelectedColor], _lozSelected);
 			}
 		}
 
@@ -339,14 +349,14 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			var tile = tilebase as XCMapTile;
 
-			_toolWest    = _toolWest    ?? new ColorTool(TopPens   [TopView.WestColor]);
-			_toolNorth   = _toolNorth   ?? new ColorTool(TopPens   [TopView.NorthColor]);
-			_toolContent = _toolContent ?? new ColorTool(TopBrushes[TopView.ContentColor], _toolNorth.Pen.Width);
+			_toolWest    = _toolWest    ?? new ColorTool(TopPanel.Pens   [TopView.WestColor]);
+			_toolNorth   = _toolNorth   ?? new ColorTool(TopPanel.Pens   [TopView.NorthColor]);
+			_toolContent = _toolContent ?? new ColorTool(TopPanel.Brushes[TopView.ContentColor], _toolNorth.Pen.Width);
 
 			if (TopView.Floor.Checked && tile.Floor != null)
 				BlobService.DrawFloor(
 									graphics,
-									TopBrushes[TopView.FloorColor],
+									TopPanel.Brushes[TopView.FloorColor],
 									x, y);
 
 			if (TopView.Content.Checked && tile.Content != null)

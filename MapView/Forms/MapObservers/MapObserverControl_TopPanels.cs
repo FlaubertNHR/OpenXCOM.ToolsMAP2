@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 
 using DSShared.Windows;
 
@@ -51,18 +50,5 @@ namespace MapView
 		public virtual void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{}
 		#endregion IMapObserver requirements
-
-
-		/// <summary>
-		/// Brushes for use in TopPanel and QuadrantPanel.
-		/// </summary>
-		internal static Dictionary<string, SolidBrush> Brushes
-		{ get; set; }
-
-		/// <summary>
-		/// Pens for use in TopPanel and QuadrantPanel.
-		/// </summary>
-		internal static Dictionary<string, Pen> Pens
-		{ get; set; }
 	}
 }
