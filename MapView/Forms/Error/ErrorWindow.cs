@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 
@@ -13,10 +14,14 @@ namespace MapView.Forms.Error
 		{
 			InitializeComponent();
 
-			lblHead.Text = "_wtf_" + Environment.NewLine + "did u do";
+			lblHead.Text = "_ wtf _" + Environment.NewLine + "did u do";
 			tbDetails.Text = exception.ToString();
 
 			btnClose.Select();
+
+#if DEBUG
+			ClientSize = new Size(1200, 400);
+#endif
 		}
 		#endregion cTor
 	}

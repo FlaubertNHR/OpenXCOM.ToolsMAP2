@@ -44,8 +44,9 @@
 			this.lblHead.Location = new System.Drawing.Point(0, 0);
 			this.lblHead.Margin = new System.Windows.Forms.Padding(0);
 			this.lblHead.Name = "lblHead";
-			this.lblHead.Size = new System.Drawing.Size(992, 80);
+			this.lblHead.Size = new System.Drawing.Size(792, 80);
 			this.lblHead.TabIndex = 0;
+			this.lblHead.Text = "lblHead";
 			this.lblHead.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// pnl_Info
@@ -55,7 +56,7 @@
 			this.pnl_Info.Location = new System.Drawing.Point(0, 80);
 			this.pnl_Info.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Info.Name = "pnl_Info";
-			this.pnl_Info.Size = new System.Drawing.Size(992, 250);
+			this.pnl_Info.Size = new System.Drawing.Size(792, 250);
 			this.pnl_Info.TabIndex = 1;
 			// 
 			// gbDetails
@@ -66,7 +67,7 @@
 			this.gbDetails.Margin = new System.Windows.Forms.Padding(0);
 			this.gbDetails.Name = "gbDetails";
 			this.gbDetails.Padding = new System.Windows.Forms.Padding(2);
-			this.gbDetails.Size = new System.Drawing.Size(992, 250);
+			this.gbDetails.Size = new System.Drawing.Size(792, 250);
 			this.gbDetails.TabIndex = 0;
 			this.gbDetails.TabStop = false;
 			this.gbDetails.Text = " Error Details ";
@@ -79,7 +80,7 @@
 			this.tbDetails.Name = "tbDetails";
 			this.tbDetails.ReadOnly = true;
 			this.tbDetails.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.tbDetails.Size = new System.Drawing.Size(988, 234);
+			this.tbDetails.Size = new System.Drawing.Size(788, 234);
 			this.tbDetails.TabIndex = 1;
 			this.tbDetails.Text = "tbDetails";
 			// 
@@ -87,7 +88,7 @@
 			// 
 			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.btnClose.Location = new System.Drawing.Point(885, 5);
+			this.btnClose.Location = new System.Drawing.Point(685, 5);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(104, 35);
 			this.btnClose.TabIndex = 2;
@@ -101,7 +102,7 @@
 			this.pnl_Bot.Location = new System.Drawing.Point(0, 330);
 			this.pnl_Bot.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Bot.Name = "pnl_Bot";
-			this.pnl_Bot.Size = new System.Drawing.Size(992, 44);
+			this.pnl_Bot.Size = new System.Drawing.Size(792, 44);
 			this.pnl_Bot.TabIndex = 3;
 			// 
 			// ErrorWindow
@@ -110,7 +111,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnClose;
-			this.ClientSize = new System.Drawing.Size(992, 374);
+			this.ClientSize = new System.Drawing.Size(792, 374);
 			this.Controls.Add(this.pnl_Info);
 			this.Controls.Add(this.lblHead);
 			this.Controls.Add(this.pnl_Bot);
