@@ -52,9 +52,12 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			set
 			{
-				base.MapBase = value;
-				TileParts = (value != null) ? value.Parts
-											: null;
+				if ((base.MapBase = value) != null)
+				{
+					TileParts = value.Parts;
+				}
+				else
+					TileParts = null;
 			}
 		}
 
