@@ -2262,19 +2262,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnNodeOpacityChanged(string key, object val)
 		{
-			RoutePanelParent.Opacity = (int)val;
+			RoutePanel.Opacity = (int)val;
 			RefreshControls();
 		}
 
 		private void OnShowPriorityChanged(string key, object val)
 		{
-			RoutePanelParent.ShowPriorityBars = (bool)val;
+			RoutePanel.ShowPriorityBars = (bool)val;
 			RefreshControls();
 		}
 
 		private void OnShowOverlayChanged(string key, object val)
 		{
-			RoutePanelParent.ShowOverlay = (bool)val;
+			RoutePanel.ShowOverlay = (bool)val;
 			RefreshControls();
 		}
 		#endregion Options

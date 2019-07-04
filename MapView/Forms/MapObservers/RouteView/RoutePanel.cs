@@ -85,6 +85,28 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			get { return _brushes; }
 		}
+
+
+		private static int _opacity = 255; // cf. RouteView.LoadControlOptions()
+		internal static int Opacity
+		{
+			get { return _opacity; }
+			set { _opacity = value.Clamp(0, 255); }
+		}
+
+		private static bool _showOverlay = true; // cf. RouteView.LoadControlOptions()
+		internal static bool ShowOverlay
+		{
+			get { return _showOverlay; }
+			set { _showOverlay = value; }
+		}
+
+		private static bool _showPriorityBars = true; // cf. RouteView.LoadControlOptions()
+		internal static bool ShowPriorityBars
+		{
+			get { return _showPriorityBars; }
+			set { _showPriorityBars = value; }
+		}
 		#endregion Properties (static)
 
 
