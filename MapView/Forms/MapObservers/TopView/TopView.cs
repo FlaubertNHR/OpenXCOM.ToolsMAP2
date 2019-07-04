@@ -254,8 +254,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal const string Grid10Color       = "Grid10Color";
 		private  const string Grid10Width       = "Grid10Width";
 
-		private const int LINEWIDTH_CONTENT = 3;
-
 
 		/// <summary>
 		/// Loads default options for TopView in TopRouteView screens.
@@ -264,23 +262,20 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			TopPanel.Brushes.Add(FloorColor, new SolidBrush(Color.BurlyWood));
 
-			var brushContent = new SolidBrush(Color.MediumSeaGreen);
-
-			TopPanel.Brushes.Add(ContentColor, brushContent);
-			TopPanel.ToolContent = new ColorTool(brushContent, LINEWIDTH_CONTENT);
-
 			const int widthwall     = 3;
 			const int widthselector = 2;
 			const int widthselected = 2;
 			const int widthgrid     = 1;
 			const int widthgrid10   = 2;
 
-			var penWest     = new Pen(Color.Khaki,     widthwall);
-			var penNorth    = new Pen(Color.Wheat,     widthwall);
-			var penSelector = new Pen(Color.Black,     widthselector);
-			var penSelected = new Pen(Color.RoyalBlue, widthselected);
-			var penGrid     = new Pen(Color.Black,     widthgrid);
-			var pen10Grid   = new Pen(Color.Black,     widthgrid10);
+			var penWest      = new Pen(Color.Khaki,     widthwall);
+			var penNorth     = new Pen(Color.Wheat,     widthwall);
+			var penSelector  = new Pen(Color.Black,     widthselector);
+			var penSelected  = new Pen(Color.RoyalBlue, widthselected);
+			var penGrid      = new Pen(Color.Black,     widthgrid);
+			var pen10Grid    = new Pen(Color.Black,     widthgrid10);
+
+			var brushContent = new SolidBrush(Color.MediumSeaGreen);
 
 			TopPanel.Pens.Add(WestColor, penWest);
 			TopPanel.Pens.Add(WestWidth, penWest);
@@ -289,6 +284,11 @@ namespace MapView.Forms.MapObservers.TopViews
 			TopPanel.Pens.Add(NorthColor, penNorth);
 			TopPanel.Pens.Add(NorthWidth, penNorth);
 			TopPanel.ToolNorth = new ColorTool(penNorth);
+
+			TopPanel.Brushes.Add(ContentColor, brushContent);
+			TopPanel.ToolContent = new ColorTool(
+											brushContent,
+											DrawBlobService.LINEWIDTH_CONTENT);
 
 			TopPanel.Pens.Add(SelectorColor, penSelector);
 			TopPanel.Pens.Add(SelectorWidth, penSelector);
@@ -348,7 +348,9 @@ namespace MapView.Forms.MapObservers.TopViews
 					{
 						case ContentColor:
 							TopPanel.ToolContent.Dispose();
-							TopPanel.ToolContent = new ColorTool(TopPanel.Brushes[key], LINEWIDTH_CONTENT);
+							TopPanel.ToolContent = new ColorTool(
+															TopPanel.Brushes[key],
+															DrawBlobService.LINEWIDTH_CONTENT);
 							break;
 					}
 					break;

@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 
 
-namespace MapView.Forms.MapObservers.TopViews
+namespace MapView.Forms.MapObservers
 {
 	/// <summary>
 	/// A ColorTool is used for drawing blobs on TopView and RouteView.

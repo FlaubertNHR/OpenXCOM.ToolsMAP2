@@ -282,7 +282,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					{
 						var tile = MapBase[r,c] as MapTileBase;
 						if (tile != null)
-							DrawTileBlobs(tile, graphics, x,y);
+							DrawBlobs(tile, graphics, x,y);
 					}
 				}
 
@@ -344,7 +344,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		private void DrawTileBlobs(
+		private void DrawBlobs(
 				MapTileBase tilebase,
 				Graphics graphics,
 				int x, int y)

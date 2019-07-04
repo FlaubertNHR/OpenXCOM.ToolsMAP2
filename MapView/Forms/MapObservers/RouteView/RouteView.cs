@@ -2081,165 +2081,85 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			OnConnectTypeClicked(tsb_connect0, EventArgs.Empty); // TODO: add to Options
 
-			var pens    = RoutePanel.RoutePens;
-			var brushes = RoutePanel.RouteBrushes;
+			const int widthfin = 1;
+			const int width__2 = 2;
+			const int widthfat = 3;
 
-			var bc = new OptionChangedEvent(OnBrushColorChanged);
+			RoutePanel.RoutePens[UnselectedLinkColor]    =
+			RoutePanel.RoutePens[UnselectedLinkWidth]    = new Pen(Color.OrangeRed, width__2);
+			RoutePanel.RoutePens[SelectedLinkColor]      =
+			RoutePanel.RoutePens[SelectedLinkWidth]      = new Pen(Color.RoyalBlue, width__2);
+
+			RoutePanel.RoutePens[WallColor]              =
+			RoutePanel.RoutePens[WallWidth]              = new Pen(Color.BurlyWood, widthfat);
+			RoutePanel.RoutePens[GridLineColor]          =
+			RoutePanel.RoutePens[GridLineWidth]          = new Pen(Color.Black,     widthfin);
+			RoutePanel.RoutePens[Grid10LineColor]        =
+			RoutePanel.RoutePens[Grid10LineWidth]        = new Pen(Color.Black,     width__2);
+
+			RoutePanel.RouteBrushes[ContentColor]        = new SolidBrush(Color.DarkGoldenrod);
+
+			RoutePanel.RouteBrushes[UnselectedNodeColor] = new SolidBrush(Color.MediumSeaGreen);
+			RoutePanel.RouteBrushes[SelectedNodeColor]   = new SolidBrush(Color.RoyalBlue);
+			RoutePanel.RouteBrushes[SpawnNodeColor]      = new SolidBrush(Color.GreenYellow);
+
+			RoutePanel.ToolWall    = new ColorTool(RoutePanel.RoutePens[WallColor]);
+			RoutePanel.ToolContent = new ColorTool(RoutePanel.RouteBrushes[ContentColor], DrawBlobService.LINEWIDTH_CONTENT);
+
+			var bc = new OptionChangedEvent(OnBrushChanged);
 			var pc = new OptionChangedEvent(OnPenColorChanged);
 			var pw = new OptionChangedEvent(OnPenWidthChanged);
 			var oc = new OptionChangedEvent(OnNodeOpacityChanged);
 			var sp = new OptionChangedEvent(OnShowPriorityChanged);
 			var so = new OptionChangedEvent(OnShowOverlayChanged);
 
-			var pen = new Pen(Color.OrangeRed, 2);
-			pens[UnselectedLinkColor] = pen;
-			pens[UnselectedLinkWidth] = pen;
-			Options.AddOption(
-							UnselectedLinkColor,
-							pen.Color,
-							"Color of unselected link lines",
-							Links,
-							pc);
-			Options.AddOption(
-							UnselectedLinkWidth,
-							2,
-							"Width of unselected link lines",
-							Links,
-							pw);
+			Options.AddOption(UnselectedLinkColor, Color.OrangeRed,      "Color of unselected link lines",  Links, pc);
+			Options.AddOption(UnselectedLinkWidth, width__2,             "Width of unselected link lines",  Links, pw);
+			Options.AddOption(SelectedLinkColor,   Color.RoyalBlue,      "Color of selected link lines",    Links, pc);
+			Options.AddOption(SelectedLinkWidth,   width__2,             "Width of selected link lines",    Links, pw);
 
-			pen = new Pen(Color.RoyalBlue, 2);
-			pens[SelectedLinkColor] = pen;
-			pens[SelectedLinkWidth] = pen;
-			Options.AddOption(
-							SelectedLinkColor,
-							pen.Color,
-							"Color of selected link lines",
-							Links,
-							pc);
-			Options.AddOption(
-							SelectedLinkWidth,
-							2,
-							"Width of selected link lines",
-							Links,
-							pw);
+			Options.AddOption(WallColor,           Color.BurlyWood,      "Color of wall indicators",        View,  pc);
+			Options.AddOption(WallWidth,           widthfat,             "Width of wall indicators",        View,  pw);
+			Options.AddOption(ContentColor,        Color.DarkGoldenrod,  "Color of content indicators",     View,  bc);
+			Options.AddOption(GridLineColor,       Color.Black,          "Color of grid lines",             View,  pc);
+			Options.AddOption(GridLineWidth,       widthfin,             "Width of grid lines",             View,  pw);
+			Options.AddOption(Grid10LineColor,     Color.Black,          "Color of every tenth grid line",  View,  pc);
+			Options.AddOption(Grid10LineWidth,     width__2,             "Width of every tenth grid line",  View,  pw);
 
-			pen = new Pen(Color.BurlyWood, 3);
-			pens[WallColor] = pen;
-			pens[WallWidth] = pen;
-			Options.AddOption(
-							WallColor,
-							pen.Color,
-							"Color of wall indicators",
-							View,
-							pc);
-			Options.AddOption(
-							WallWidth,
-							3,
-							"Width of wall indicators",
-							View,
-							pw);
+			Options.AddOption(ShowOverlay,         true,                 "True to show mouse-over info",    View,  so);
 
-			var brush = new SolidBrush(Color.DarkGoldenrod);
-			brushes[ContentColor] = brush;
-			Options.AddOption(
-							ContentColor,
-							brush.Color,
-							"Color of content indicators",
-							View,
-							bc);
+			Options.AddOption(UnselectedNodeColor, Color.MediumSeaGreen, "Color of unselected nodes",       Nodes, bc);
+			Options.AddOption(SelectedNodeColor,   Color.RoyalBlue,      "Color of selected nodes",         Nodes, bc);
+			Options.AddOption(SpawnNodeColor,      Color.GreenYellow,    "Color of spawn nodes",            Nodes, bc);
 
-			pen = new Pen(Color.Black, 1);
-			pens[GridLineColor] = pen;
-			pens[GridLineWidth] = pen;
-			Options.AddOption(
-							GridLineColor,
-							pen.Color,
-							"Color of grid lines",
-							View,
-							pc);
-			Options.AddOption(
-							GridLineWidth,
-							1,
-							"Width of grid lines",
-							View,
-							pw);
-
-			pen = new Pen(Color.Black, 2);
-			pens[Grid10LineColor] = pen;
-			pens[Grid10LineWidth] = pen;
-			Options.AddOption(
-							Grid10LineColor,
-							pen.Color,
-							"Color of every tenth grid line",
-							View,
-							pc);
-			Options.AddOption(
-							Grid10LineWidth,
-							2,
-							"Width of every tenth grid line",
-							View,
-							pw);
-
-			brush = new SolidBrush(Color.MediumSeaGreen);
-			brushes[UnselectedNodeColor] = brush;
-			Options.AddOption(
-							UnselectedNodeColor,
-							brush.Color,
-							"Color of unselected nodes",
-							Nodes,
-							bc);
-
-			brush = new SolidBrush(Color.RoyalBlue);
-			brushes[SelectedNodeColor] = brush;
-			Options.AddOption(
-							SelectedNodeColor,
-							brush.Color,
-							"Color of selected nodes",
-							Nodes,
-							bc);
-
-			brush = new SolidBrush(Color.GreenYellow);
-			brushes[SpawnNodeColor] = brush;
-			Options.AddOption(
-							SpawnNodeColor,
-							brush.Color,
-							"Color of spawn nodes",
-							Nodes,
-							bc);
-
-			Options.AddOption(
-							NodeOpacity,
-							255,
-							"Opacity of node colors (0..255)",
-							Nodes,
-							oc);
-
-			Options.AddOption(
-							ShowPriorityBars,
-							true,
-							"True to show patrol-priority and spawn-weight bars",
-							Nodes,
-							sp);
-
-			Options.AddOption(
-							ShowOverlay,
-							true,
-							"True to show mouse-over information",
-							View,
-							so);
+			Options.AddOption(NodeOpacity,         255,                  "Opacity of node colors (0..255)", Nodes, oc);
+			Options.AddOption(ShowPriorityBars,    true,                 "True to show importance meters",  Nodes, sp);
 		}
 
-		private void OnBrushColorChanged(string key, object val)
+		/// <summary>
+		/// Fires when a brush-color changes in Options.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		private void OnBrushChanged(string key, object val)
 		{
 			var color = (Color)val;
 			RoutePanel.RouteBrushes[key].Color = color;
 
 			switch (key)
 			{
+				case ContentColor:
+					RoutePanel.ToolContent.Dispose();
+					RoutePanel.ToolContent = new ColorTool(
+														RoutePanel.RouteBrushes[key],
+														DrawBlobService.LINEWIDTH_CONTENT);
+					break;
+
 				case SelectedNodeColor:
 					ViewerFormsManager.RouteView   .Control     .lblSelected.ForeColor =
 					ViewerFormsManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;
 					break;
+
 				case UnselectedNodeColor:
 					ViewerFormsManager.RouteView   .Control     .lblOver.ForeColor =
 					ViewerFormsManager.TopRouteView.ControlRoute.lblOver.ForeColor = color;
@@ -2248,15 +2168,41 @@ namespace MapView.Forms.MapObservers.RouteViews
 			RefreshControls();
 		}
 
+		/// <summary>
+		/// Fires when a pen-color changes in Options.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
 		private void OnPenColorChanged(string key, object val)
 		{
 			RoutePanel.RoutePens[key].Color = (Color)val;
+
+			switch (key)
+			{
+				case WallColor:
+					RoutePanel.ToolWall.Dispose();
+					RoutePanel.ToolWall = new ColorTool(RoutePanel.RoutePens[key]);
+					break;
+			}
 			RefreshControls();
 		}
 
+		/// <summary>
+		/// Fires when a pen-width changes in Options.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
 		private void OnPenWidthChanged(string key, object val)
 		{
 			RoutePanel.RoutePens[key].Width = (int)val;
+
+			switch (key)
+			{
+				case WallWidth:
+					RoutePanel.ToolWall.Dispose();
+					RoutePanel.ToolWall = new ColorTool(RoutePanel.RoutePens[key]);
+					break;
+			}
 			RefreshControls();
 		}
 
@@ -2311,27 +2257,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
 		}
 		#endregion Update UI
-
-
-		#region Methods (for Help colors)
-		/// <summary>
-		/// Gets the wall-color for use by the Colors screen.
-		/// </summary>
-		/// <returns></returns>
-		internal Dictionary<string, Pen> GetWallPens()
-		{
-			return RoutePanel.RoutePens;
-		}
-
-		/// <summary>
-		/// Gets the content-color for use by the Colors screen.
-		/// </summary>
-		/// <returns></returns>
-		internal Dictionary<string, SolidBrush> GetContentBrushes()
-		{
-			return RoutePanel.RouteBrushes;
-		}
-		#endregion Methods (for Help colors)
 	}
 
 

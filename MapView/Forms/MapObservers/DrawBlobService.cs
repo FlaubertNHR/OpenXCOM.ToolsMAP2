@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 using XCom;
 
 
-namespace MapView.Forms.MapObservers.TopViews
+namespace MapView.Forms.MapObservers
 {
 	/// <summary>
 	/// The various wall- and content-types that will be used to determine how
@@ -40,6 +40,11 @@ namespace MapView.Forms.MapObservers.TopViews
 		:
 			IDisposable
 	{
+		#region Fields (static)
+		internal const int LINEWIDTH_CONTENT = 3;
+		#endregion Fields (static)
+
+
 		#region Fields
 		private readonly GraphicsPath _floor   = new GraphicsPath();
 		private readonly GraphicsPath _content = new GraphicsPath();

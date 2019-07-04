@@ -4,8 +4,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-using MapView.Forms.MapObservers.TopViews;
-
 using XCom;
 
 
@@ -37,13 +35,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Fields
-		private readonly Font _fontOverlay = new Font("Verdana", 7F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
-		private readonly Font _fontRose    = new Font("Courier New", 22, FontStyle.Bold);
+		private readonly Font _fontOverlay = new Font("Verdana",      7F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+		private readonly Font _fontRose    = new Font("Courier New", 22F, FontStyle.Bold);
 
-		private ColorTool _toolWall;
-		private ColorTool _toolContent;
-
-		private Graphics     _graphics;
+		private Graphics _graphics;
 		private GraphicsPath _nodeFill = new GraphicsPath();
 
 		private bool _brushesInited;
@@ -208,14 +203,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Methods (draw)
+		internal static ColorTool ToolWall;
+		internal static ColorTool ToolContent;
+
 		/// <summary>
 		/// Draws any wall and/or content indicators.
 		/// </summary>
 		private void DrawBlobs()
 		{
-			_toolWall    = _toolWall    ?? new ColorTool(RoutePens   [RouteView.WallColor]);
-			_toolContent = _toolContent ?? new ColorTool(RouteBrushes[RouteView.ContentColor], _toolWall.Pen.Width);
-
 			XCMapTile tile = null;
 			for (int
 					r = 0,
@@ -240,13 +235,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 						tile = MapChild[r, c] as XCMapTile;
 
 						if (tile.Content != null)
-							BlobService.DrawContent(_graphics, _toolContent, x, y, tile.Content);
+							BlobService.DrawContent(_graphics, ToolContent, x, y, tile.Content);
 
 						if (tile.West != null)
-							BlobService.DrawContent(_graphics, _toolWall, x, y, tile.West);
+							BlobService.DrawContent(_graphics, ToolWall, x, y, tile.West);
 
 						if (tile.North != null)
-							BlobService.DrawContent(_graphics, _toolWall, x, y, tile.North);
+							BlobService.DrawContent(_graphics, ToolWall, x, y, tile.North);
 					}
 				}
 			}

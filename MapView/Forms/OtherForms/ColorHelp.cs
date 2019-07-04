@@ -58,39 +58,36 @@ namespace MapView
 		/// </summary>
 		private void UpdateTopViewBlobColors()
 		{
-			var pens    = TopPanel.Pens;
-			var brushes = TopPanel.Brushes;
-
 			Color color;
 
 			string key = TopView.FloorColor;
-			if (brushes.ContainsKey(key))
+			if (TopPanel.Brushes.ContainsKey(key))
 			{
-				color = ((SolidBrush)brushes[key]).Color;
+				color = TopPanel.Brushes[key].Color;
 				label7.BackColor = color;
 				label7.ForeColor = GetTextColor(color);
 			}
 
 			key = TopView.WestColor;
-			if (pens.ContainsKey(key))
+			if (TopPanel.Pens.ContainsKey(key))
 			{
-				color = ((Pen)pens[key]).Color;
+				color = TopPanel.Pens[key].Color;
 				label8.BackColor = color;
 				label8.ForeColor = GetTextColor(color);
 			}
 
 			key = TopView.NorthColor;
-			if (pens.ContainsKey(key))
+			if (TopPanel.Pens.ContainsKey(key))
 			{
-				color = ((Pen)pens[key]).Color;
+				color = TopPanel.Pens[key].Color;
 				label9.BackColor = color;
 				label9.ForeColor = GetTextColor(color);
 			}
 
 			key = TopView.ContentColor;
-			if (brushes.ContainsKey(key))
+			if (TopPanel.Brushes.ContainsKey(key))
 			{
-				color = ((SolidBrush)brushes[key]).Color;
+				color = TopPanel.Brushes[key].Color;
 				label10.BackColor = color;
 				label10.ForeColor = GetTextColor(color);
 			}
@@ -102,15 +99,12 @@ namespace MapView
 		/// </summary>
 		private void UpdateRouteViewBlobColors()
 		{
-			var penWall      = ViewerFormsManager.RouteView.Control.GetWallPens();
-			var brushContent = ViewerFormsManager.RouteView.Control.GetContentBrushes();
-
 			Color color;
 
 			string key = RouteView.WallColor;
-			if (penWall.ContainsKey(key))
+			if (RoutePanel.RoutePens.ContainsKey(key))
 			{
-				color = ((Pen)penWall[key]).Color;
+				color = RoutePanel.RoutePens[key].Color;
 
 				label14.BackColor = color;
 				label15.BackColor = color;
@@ -120,9 +114,9 @@ namespace MapView
 			}
 
 			key = RouteView.ContentColor;
-			if (brushContent.ContainsKey(key))
+			if (RoutePanel.RouteBrushes.ContainsKey(key))
 			{
-				color = ((SolidBrush)brushContent[key]).Color;
+				color = RoutePanel.RouteBrushes[key].Color;
 				label16.BackColor = color;
 				label16.ForeColor = GetTextColor(color);
 			}

@@ -140,6 +140,8 @@
   <ItemGroup>
     <Compile Include="Forms\MainWindow\OptionsManager.cs" />
     <Compile Include="Forms\MainWindow\MainMenusManager.cs" />
+    <Compile Include="Forms\MapObservers\ColorTool.cs" />
+    <Compile Include="Forms\MapObservers\DrawBlobService.cs" />
     <Compile Include="Forms\MapObservers\IMapObserverProvider.cs" />
     <Compile Include="Forms\MapObservers\RouteView\RoutePanel.cs">
       <SubType>UserControl</SubType>
@@ -159,8 +161,6 @@
     <Compile Include="Forms\MapObservers\TileView\TileViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\ColorTool.cs" />
-    <Compile Include="Forms\MapObservers\TopView\DrawBlobService.cs" />
     <Compile Include="Forms\MapObservers\TopView\TopViewForm.cs">
       <SubType>Form</SubType>
     </Compile>

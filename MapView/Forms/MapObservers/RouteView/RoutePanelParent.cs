@@ -4,7 +4,6 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
-using MapView.Forms.MapObservers.TopViews;
 
 using XCom;
 
