@@ -68,16 +68,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			get { return _blobService; }
 		}
 
-		private readonly static Dictionary<string, SolidBrush> _brushes =
-							new Dictionary<string, SolidBrush>();
-		/// <summary>
-		/// Brushes for use in TopPanel.
-		/// </summary>
-		internal static Dictionary<string, SolidBrush> Brushes
-		{
-			get { return _brushes; }
-		}
-
 		private readonly static Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();
 		/// <summary>
@@ -86,6 +76,16 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal static Dictionary<string, Pen> Pens
 		{
 			get { return _pens; }
+		}
+
+		private readonly static Dictionary<string, SolidBrush> _brushes =
+							new Dictionary<string, SolidBrush>();
+		/// <summary>
+		/// Brushes for use in TopPanel.
+		/// </summary>
+		internal static Dictionary<string, SolidBrush> Brushes
+		{
+			get { return _brushes; }
 		}
 		#endregion Properties
 
