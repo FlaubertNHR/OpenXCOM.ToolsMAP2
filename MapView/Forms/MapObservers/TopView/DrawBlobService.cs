@@ -34,7 +34,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 	/// <summary>
-	/// Draws floor- and wall- and content- blobs for TopView and RouteView.
+	/// Draws floor- and wall- and content-blobs for TopView and RouteView.
 	/// </summary>
 	internal sealed class DrawBlobService
 		:
@@ -60,6 +60,32 @@ namespace MapView.Forms.MapObservers.TopViews
 			set { _halfHeight = value; }
 		}
 		#endregion Properties
+
+
+		#region Methods (static)
+		private static void DrawWindow(
+				Graphics g,
+				ColorTool tool,
+				Point start, Point end)
+		{
+			var pt = Point.Subtract(end, new Size(start));
+			var xy = new Size(pt.X / 3, pt.Y / 3);
+			pt     = Point.Add(start, Size.Add(xy, xy));
+
+			g.DrawLine(
+					tool.Pen,
+					start,
+					Point.Add(start, xy));
+			g.DrawLine(
+					tool.PenLight,
+					Point.Add(start, xy),
+					pt);
+			g.DrawLine(
+					tool.Pen,
+					pt,
+					end);
+		}
+		#endregion Methods (static)
 
 
 		#region Methods
@@ -91,7 +117,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private const int Offset = 4; // offset the blobs from the grid-lines a bit.
 
 		/// <summary>
-		/// Draws wall- and content- blobs for RouteView and TopView.
+		/// Draws wall- and content-blobs for RouteView and TopView.
 		/// </summary>
 		/// <param name="g"></param>
 		/// <param name="tool"></param>
@@ -270,29 +296,6 @@ namespace MapView.Forms.MapObservers.TopViews
 							x,     y + h * 2,
 							x - w, y + h);
 			_content.CloseFigure();
-		}
-
-		private static void DrawWindow(
-				Graphics g,
-				ColorTool tool,
-				Point start, Point end)
-		{
-			var pt = Point.Subtract(end, new Size(start));
-			var xy = new Size(pt.X / 3, pt.Y / 3);
-			pt     = Point.Add(start, Size.Add(xy, xy));
-
-			g.DrawLine(
-					tool.Pen,
-					start,
-					Point.Add(start, xy));
-			g.DrawLine(
-					tool.PenLight,
-					Point.Add(start, xy),
-					pt);
-			g.DrawLine(
-					tool.Pen,
-					pt,
-					end);
 		}
 		#endregion Methods
 

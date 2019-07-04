@@ -61,36 +61,36 @@ namespace MapView
 			var pens    = TopPanel.Pens;
 			var brushes = TopPanel.Brushes;
 
-			Color color = Color.Empty;
+			Color color;
 
-			string partType = TopView.FloorColor;
-			if (brushes.ContainsKey(partType))
+			string key = TopView.FloorColor;
+			if (brushes.ContainsKey(key))
 			{
-				color = ((SolidBrush)brushes[partType]).Color;
+				color = ((SolidBrush)brushes[key]).Color;
 				label7.BackColor = color;
 				label7.ForeColor = GetTextColor(color);
 			}
 
-			partType = TopView.WestColor;
-			if (pens.ContainsKey(partType))
+			key = TopView.WestColor;
+			if (pens.ContainsKey(key))
 			{
-				color = ((Pen)pens[partType]).Color;
+				color = ((Pen)pens[key]).Color;
 				label8.BackColor = color;
 				label8.ForeColor = GetTextColor(color);
 			}
 
-			partType = TopView.NorthColor;
-			if (pens.ContainsKey(partType))
+			key = TopView.NorthColor;
+			if (pens.ContainsKey(key))
 			{
-				color = ((Pen)pens[partType]).Color;
+				color = ((Pen)pens[key]).Color;
 				label9.BackColor = color;
 				label9.ForeColor = GetTextColor(color);
 			}
 
-			partType = TopView.ContentColor;
-			if (brushes.ContainsKey(partType))
+			key = TopView.ContentColor;
+			if (brushes.ContainsKey(key))
 			{
-				color = ((SolidBrush)brushes[partType]).Color;
+				color = ((SolidBrush)brushes[key]).Color;
 				label10.BackColor = color;
 				label10.ForeColor = GetTextColor(color);
 			}
@@ -105,12 +105,12 @@ namespace MapView
 			var penWall      = ViewerFormsManager.RouteView.Control.GetWallPens();
 			var brushContent = ViewerFormsManager.RouteView.Control.GetContentBrushes();
 
-			Color color = Color.Empty;
+			Color color;
 
-			string partType = RouteView.WallColor;
-			if (penWall.ContainsKey(partType))
+			string key = RouteView.WallColor;
+			if (penWall.ContainsKey(key))
 			{
-				color = ((Pen)penWall[partType]).Color;
+				color = ((Pen)penWall[key]).Color;
 
 				label14.BackColor = color;
 				label15.BackColor = color;
@@ -119,10 +119,10 @@ namespace MapView
 				label15.ForeColor = GetTextColor(color);
 			}
 
-			partType = RouteView.ContentColor;
-			if (brushContent.ContainsKey(partType))
+			key = RouteView.ContentColor;
+			if (brushContent.ContainsKey(key))
 			{
-				color = ((SolidBrush)brushContent[partType]).Color;
+				color = ((SolidBrush)brushContent[key]).Color;
 				label16.BackColor = color;
 				label16.ForeColor = GetTextColor(color);
 			}
@@ -140,7 +140,7 @@ namespace MapView
 			// user-forced effect.
 			var brushesSpecial = ViewerFormsManager.TileView.Control.GetSpecialPropertyBrushes();
 
-			Color color = Color.Empty;
+			Color color;
 
 			// TODO: iterate through the labels using a function-pointer/delegate
 			// if possible.

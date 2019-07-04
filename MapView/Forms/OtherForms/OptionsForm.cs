@@ -14,7 +14,15 @@ namespace MapView
 	/// <summary>
 	/// The Options form.
 	/// @note I doubt that a person has to emit opcodes just to write a
-	/// PropertyGrid.
+	/// PropertyGrid. But it's also doing a tricky conversion that alters a
+	/// pen when either of its color- or width-option changes (although that
+	/// could be being done in Options or Option ... cf). Unfortunately,
+	/// however, TopView apparently needs to maintain 2 pens for this (one for
+	/// color and one for width) yet only one is used in the actual draw-routine
+	/// ofc - viz. the "color" pen not the "width" pen.
+	/// - see TopView.LoadControlOptions() eg.
+	/// 
+	/// But even that could be done w/out emitting opcodes.
 	/// </summary>
 	internal sealed class OptionsForm
 		:
@@ -140,7 +148,7 @@ namespace MapView
 
 
 	/// <summary>
-	/// The grid in the Options form. This gets needlessly complicated.
+	/// The grid in the Options form. This gets complicated.
 	/// </summary>
 	internal sealed class OptionsPropertyGrid
 		:

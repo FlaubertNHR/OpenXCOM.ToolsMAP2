@@ -331,9 +331,9 @@ namespace MapView.Forms.MapObservers.TopViews
 		}
 
 
-		private ColorTool _toolWest;
-		private ColorTool _toolNorth;
-		private ColorTool _toolContent;
+		internal static ColorTool ToolWest;
+		internal static ColorTool ToolNorth;
+		internal static ColorTool ToolContent;
 
 		/// <summary>
 		/// 
@@ -342,16 +342,12 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		internal void DrawTileBlobs(
+		private void DrawTileBlobs(
 				MapTileBase tilebase,
 				Graphics graphics,
 				int x, int y)
 		{
 			var tile = tilebase as XCMapTile;
-
-			_toolWest    = _toolWest    ?? new ColorTool(TopPanel.Pens   [TopView.WestColor]);
-			_toolNorth   = _toolNorth   ?? new ColorTool(TopPanel.Pens   [TopView.NorthColor]);
-			_toolContent = _toolContent ?? new ColorTool(TopPanel.Brushes[TopView.ContentColor], _toolNorth.Pen.Width);
 
 			if (TopView.Floor.Checked && tile.Floor != null)
 				BlobService.DrawFloor(
@@ -362,21 +358,21 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (TopView.Content.Checked && tile.Content != null)
 				BlobService.DrawContent(
 									graphics,
-									_toolContent,
+									ToolContent,
 									x, y,
 									tile.Content);
 
 			if (TopView.West.Checked && tile.West != null)
 				BlobService.DrawContent(
 									graphics,
-									_toolWest,
+									ToolWest,
 									x, y,
 									tile.West);
 
 			if (TopView.North.Checked && tile.North != null)
 				BlobService.DrawContent(
 									graphics,
-									_toolNorth,
+									ToolNorth,
 									x, y,
 									tile.North);
 		}

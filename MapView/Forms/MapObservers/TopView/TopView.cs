@@ -248,47 +248,55 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal const string SelectedColor     = "SelectedColor";
 		private  const string SelectedWidth     = "SelectedWidth";
 
-		private  const string SelectedTypeColor = "SelectedTypeColor";
+		private  const string SelectedTypeColor = "SelectedTypeColor"; // ie. SelectedQuadColor
 
 		internal const string GridColor         = "GridColor";
 		private  const string GridWidth         = "GridWidth";
 		internal const string Grid10Color       = "Grid10Color";
 		private  const string Grid10Width       = "Grid10Width";
 
+		private const int LINEWIDTH_CONTENT = 3;
 
-		private bool _optionsLoaded;
+
 		/// <summary>
 		/// Loads default options for TopView in TopRouteView screens.
 		/// </summary>
 		protected internal override void LoadControlOptions()
 		{
-			if (_optionsLoaded) return;
-			_optionsLoaded = true;
+			TopPanel.Brushes.Add(FloorColor, new SolidBrush(Color.BurlyWood));
 
-			TopPanel.Brushes.Add(FloorColor,   new SolidBrush(Color.BurlyWood));
-			TopPanel.Brushes.Add(ContentColor, new SolidBrush(Color.MediumSeaGreen));
+			var brushContent = new SolidBrush(Color.MediumSeaGreen);
+			TopPanel.Brushes.Add(ContentColor, brushContent);
+			TopPanel.ToolContent = new ColorTool(brushContent, LINEWIDTH_CONTENT);
 
-			var penWest = new Pen(Color.Khaki, 4);
+			const int wallwidth = 3;
+			var penWest = new Pen(Color.Khaki, wallwidth);
 			TopPanel.Pens.Add(WestColor, penWest);
 			TopPanel.Pens.Add(WestWidth, penWest);
+			TopPanel.ToolWest = new ColorTool(penWest);
 
-			var penNorth = new Pen(Color.Wheat, 4);
+			var penNorth = new Pen(Color.Wheat, wallwidth);
 			TopPanel.Pens.Add(NorthColor, penNorth);
 			TopPanel.Pens.Add(NorthWidth, penNorth);
+			TopPanel.ToolNorth = new ColorTool(penNorth);
 
-			var penOver = new Pen(Color.Black, 2);
-			TopPanel.Pens.Add(SelectorColor, penOver);
-			TopPanel.Pens.Add(SelectorWidth, penOver);
+			const int selectorwidth = 2;
+			var penSelector = new Pen(Color.Black, selectorwidth);
+			TopPanel.Pens.Add(SelectorColor, penSelector);
+			TopPanel.Pens.Add(SelectorWidth, penSelector);
 
-			var penSelected = new Pen(Color.RoyalBlue, 2);
+			const int selectedwidth = 2;
+			var penSelected = new Pen(Color.RoyalBlue, selectedwidth);
 			TopPanel.Pens.Add(SelectedColor, penSelected);
 			TopPanel.Pens.Add(SelectedWidth, penSelected);
 
-			var penGrid = new Pen(Color.Black, 1);
+			const int gridwidth = 1;
+			var penGrid = new Pen(Color.Black, gridwidth);
 			TopPanel.Pens.Add(GridColor, penGrid);
 			TopPanel.Pens.Add(GridWidth, penGrid);
 
-			var pen10Grid = new Pen(Color.Black, 2);
+			const int grid10width = 2;
+			var pen10Grid = new Pen(Color.Black, grid10width);
 			TopPanel.Pens.Add(Grid10Color, pen10Grid);
 			TopPanel.Pens.Add(Grid10Width, pen10Grid);
 
@@ -298,21 +306,21 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			Options.AddOption(FloorColor,        Color.BurlyWood,      "Color of the floor tile indicator",           Tile,     bc);
 			Options.AddOption(WestColor,         Color.Khaki,          "Color of the west tile indicator",            Tile,     pc);
+			Options.AddOption(WestWidth,         wallwidth,            "Width of the west tile indicator in pixels",  Tile,     pw);
 			Options.AddOption(NorthColor,        Color.Wheat,          "Color of the north tile indicator",           Tile,     pc);
+			Options.AddOption(NorthWidth,        wallwidth,            "Width of the north tile indicator in pixels", Tile,     pw);
 			Options.AddOption(ContentColor,      Color.MediumSeaGreen, "Color of the content tile indicator",         Tile,     bc);
-			Options.AddOption(WestWidth,         3,                    "Width of the west tile indicator in pixels",  Tile,     pw);
-			Options.AddOption(NorthWidth,        3,                    "Width of the north tile indicator in pixels", Tile,     pw);
 
 			Options.AddOption(SelectorColor,     Color.Black,          "Color of the mouse-over indicator",           Selector, pc);
-			Options.AddOption(SelectorWidth,     2,                    "Width of the mouse-over indicator in pixels", Selector, pw);
+			Options.AddOption(SelectorWidth,     selectorwidth,        "Width of the mouse-over indicator in pixels", Selector, pw);
 			Options.AddOption(SelectedColor,     Color.RoyalBlue,      "Color of the selection line",                 Selector, pc);
-			Options.AddOption(SelectedWidth,     2,                    "Width of the selection line in pixels",       Selector, pw);
+			Options.AddOption(SelectedWidth,     selectedwidth,        "Width of the selection line in pixels",       Selector, pw);
 			Options.AddOption(SelectedTypeColor, Color.LightBlue,      "Background color of the selected parttype",   Selector, bc);
 
 			Options.AddOption(GridColor,         Color.Black,          "Color of the grid lines",                     Grid,     pc);
-			Options.AddOption(GridWidth,         1,                    "Width of the grid lines in pixels",           Grid,     pw);
+			Options.AddOption(GridWidth,         gridwidth,            "Width of the grid lines in pixels",           Grid,     pw);
 			Options.AddOption(Grid10Color,       Color.Black,          "Color of every tenth grid line",              Grid,     pc);
-			Options.AddOption(Grid10Width,       2,                    "Width of every tenth grid line in pixels",    Grid,     pw);
+			Options.AddOption(Grid10Width,       grid10width,          "Width of every tenth grid line in pixels",    Grid,     pw);
 
 			Invalidate();
 		}
@@ -324,14 +332,25 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="val"></param>
 		private void OnBrushChanged(string key, object val)
 		{
-			if (key == SelectedTypeColor)
+			switch (key)
 			{
-				QuadrantPanelDrawService.Brush.Dispose();
-				QuadrantPanelDrawService.Brush = new SolidBrush((Color)val);
-			}
-			else
-				TopPanel.Brushes[key].Color = (Color)val;
+				case SelectedTypeColor:
+					QuadrantPanelDrawService.Brush.Dispose();
+					QuadrantPanelDrawService.Brush = new SolidBrush((Color)val);
+					break;
 
+				default:
+					TopPanel.Brushes[key].Color = (Color)val;
+
+					switch (key)
+					{
+						case ContentColor:
+							TopPanel.ToolContent.Dispose();
+							TopPanel.ToolContent = new ColorTool(TopPanel.Brushes[key], LINEWIDTH_CONTENT);
+							break;
+					}
+					break;
+			}
 			RefreshControls();
 		}
 
@@ -343,6 +362,19 @@ namespace MapView.Forms.MapObservers.TopViews
 		private void OnPenColorChanged(string key, object val)
 		{
 			TopPanel.Pens[key].Color = (Color)val;
+
+			switch (key)
+			{
+				case WestColor:
+					TopPanel.ToolWest.Dispose();
+					TopPanel.ToolWest = new ColorTool(TopPanel.Pens[key]);
+					break;
+
+				case NorthColor:
+					TopPanel.ToolNorth.Dispose();
+					TopPanel.ToolNorth = new ColorTool(TopPanel.Pens[key]);
+					break;
+			}
 			RefreshControls();
 		}
 
@@ -354,6 +386,19 @@ namespace MapView.Forms.MapObservers.TopViews
 		private void OnPenWidthChanged(string key, object val)
 		{
 			TopPanel.Pens[key].Width = (int)val;
+
+			switch (key)
+			{
+				case WestWidth:
+					TopPanel.ToolWest.Dispose();
+					TopPanel.ToolWest = new ColorTool(TopPanel.Pens[key]);
+					break;
+
+				case NorthWidth:
+					TopPanel.ToolNorth.Dispose();
+					TopPanel.ToolNorth = new ColorTool(TopPanel.Pens[key]);
+					break;
+			}
 			RefreshControls();
 		}
 

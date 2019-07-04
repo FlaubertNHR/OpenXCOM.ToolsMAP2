@@ -60,7 +60,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			var colorLight = Color.FromArgb(80, pen.Color);
 
-			_pen        = pen;
+			_pen        = new Pen(pen.Color,  pen.Width);
 			_penLight   = new Pen(colorLight, pen.Width);
 
 			_brush      = new SolidBrush(pen.Color);
@@ -77,30 +77,28 @@ namespace MapView.Forms.MapObservers.TopViews
 			var colorLight = Color.FromArgb(50, brush.Color);
 
 			_pen        = new Pen(brush.Color, width);
-			_penLight   = new Pen(colorLight, width);
+			_penLight   = new Pen(colorLight,  width);
 
-			_brush      = brush;
+			_brush      = new SolidBrush(brush.Color);
 			_brushLight = new SolidBrush(colorLight);
 		}
 		#endregion cTors
 
 
 		/// <summary>
-		/// This isn't really necessary since the Pens and Brushes last the
-		/// lifetime of the app. But FxCop gets antsy ....
-		/// NOTE: Dispose() is never called. cf DrawBlobService. cf QuadrantPanelDrawService.
+		/// @note cf DrawBlobService. cf QuadrantPanelDrawService.
 		/// WARNING: This is NOT a robust implementation perhaps. But it
 		/// satisifes the core of the matter and could likely be used for
 		/// further development if that's ever required.
 		/// </summary>
 		public void Dispose()
 		{
-			if (_pen        != null) _pen       .Dispose();
-			if (_penLight   != null) _penLight  .Dispose();
-			if (_brush      != null) _brush     .Dispose();
-			if (_brushLight != null) _brushLight.Dispose();
+			_pen       .Dispose();
+			_penLight  .Dispose();
+			_brush     .Dispose();
+			_brushLight.Dispose();
 
-			GC.SuppressFinalize(this);
+//			GC.SuppressFinalize(this);
 		}
 	}
 }
