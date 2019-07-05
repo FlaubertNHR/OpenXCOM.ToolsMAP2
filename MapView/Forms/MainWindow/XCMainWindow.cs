@@ -1071,23 +1071,40 @@ namespace MapView
 					BeginInvoke(DontBeepEvent);
 				}
 			}
-			else if (e.Control && menuViewers.Enabled)
+			else if (e.Control)
 			{
-				int it = -1;
-				switch (e.KeyCode)
+				if (menuViewers.Enabled)
 				{
-					case Keys.F5: it = 0; break;
-					case Keys.F6: it = 2; break;
-					case Keys.F7: it = 3; break;
-					case Keys.F8: it = 4; break;
-				}
+					ToolStripMenuItem part = null;
+					int it = -1;
 
-				if (it != -1)
-				{
-					e.SuppressKeyPress = true;
-					MainMenusManager.OnMenuItemClick(
-												menuViewers.MenuItems[it],
-												EventArgs.Empty);
+					switch (e.KeyCode)
+					{
+						// toggle TopView tilepart visibilities ->
+						case Keys.F1: part = ViewerFormsManager.TopView.Control.Floor;   break;
+						case Keys.F2: part = ViewerFormsManager.TopView.Control.West;    break;
+						case Keys.F3: part = ViewerFormsManager.TopView.Control.North;   break;
+						case Keys.F4: part = ViewerFormsManager.TopView.Control.Content; break;
+
+						// show/hide viewer ->
+						case Keys.F5: it = 0; break;
+						case Keys.F6: it = 2; break;
+						case Keys.F7: it = 3; break;
+						case Keys.F8: it = 4; break;
+					}
+
+					if (it != -1)
+					{
+						e.SuppressKeyPress = true;
+						MainMenusManager.OnMenuItemClick(
+													menuViewers.MenuItems[it],
+													EventArgs.Empty);
+					}
+					else if (part != null)
+					{
+						e.SuppressKeyPress = true;
+						ViewerFormsManager.TopView.Control.OnToggleQuadrantVisibilityClick(part, EventArgs.Empty);
+					}
 				}
 			}
 			else if (MainViewOverlay.Focused)
