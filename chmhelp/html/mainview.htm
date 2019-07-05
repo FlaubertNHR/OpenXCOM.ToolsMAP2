@@ -16,7 +16,7 @@
 
 		<p>Left-click selects a branch, and a right-click opens a context menu that allows the selected branch to be edited. Groups and Categories can be created, re-labeled, or deleted. Tilesets can be created or modified with the Tileset Editor. They can also be deleted. Deleting a Tileset in the Map Tree does not affect files on your hardrive.</p>
 
-		<p>Also on the Map Tree, holding down Shift when clicking on a tileset for which the Mapfile cannot be found, or pressing Shift + Enter, will show a dialog to browse for the file's basepath. This is useful when you want to preserve a tileset's current data but the Mapfile has gone rogue on your hardrive for whatever reason. Note that the Tileset Editor doesn't allow re-pathing in this fashion; re-pathing to a Mapfile in the Editor would entail deleting and recreating the tileset.</p>
+		<p>Also on the Map Tree, holding down Shift when clicking on a tileset for which the Mapfile cannot be found, or pressing Shift+Enter, will show a dialog to browse for the file's basepath. This is useful when you want to preserve a tileset's current data but the Mapfile has gone rogue on your hardrive for whatever reason. Note that the Tileset Editor doesn't allow re-pathing in this fashion; re-pathing to a Mapfile in the Editor would entail deleting and recreating the tileset.</p>
 
 		<p>Above the viewer panel are buttons for<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;- zoomin<br>
@@ -32,12 +32,19 @@
 
 		<p>Please note that pasting copied parts from one Map to a different Map usually requires that the allocated terrains of both Maps be identical.</p>
 
+		<p>If a Map is zoomed in, it can be panned around with an RMB-drag motion.</p>
+
 		<p>The F1 key starts animating any tiles that animate. The F2 key stops the animations. The F3 key, if the panel has focus, toggles any doors open and closed when animations are not playing, and animates doors if animations are playing. Toggling animations off automatically closes all the doors. These settings are saved in MainView's Options.</p>
 <!--	Note that animations can be paused on any of their eight frames, and using the doors toggle will reset their state to normal. -->
 
 		<p>The F4 key toggles the grid on/off. This setting is saved in MainView's Options.</p>
 
 		<p>The F3 key will search the Maptree for the text in the search-box if the search-box or the Maptree has focus. Enter will also search but only if the search-box has focus. Shift+F3 focuses the search-box.</p>
+
+		<p>[Ctrl+F1] toggles floor visibility.</p>
+		<p>[Ctrl+F2] toggles westwall visibility.</p>
+		<p>[Ctrl+F3] toggles northwall visibility.</p>
+		<p>[Ctrl+F4] toggles content visibility.</p>
 
 		<p>The statusbar below the viewer panel shows<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;- the current scale factor of the tileset graphics<br>
@@ -84,7 +91,7 @@
 		<br>
 		<h3>Edit menu</h3>
 
-		<p>Configurator - opens the Configuration Editor. This is where to specify or modify the paths to your XCOM installation folder(s) for UFO and/or TFTD. It can also replace your Maptree file with a fresh one that comes hardcoded. WARNING: doing that would obliterate all customizations that have been done to the Maptree. Alternately, the Configurator can generate a file of the hardcoded, or default tileset-data to a template file. The template could be useful if MapView II had been configured for UFO (or TFTD) and subsequently requires the data for TFTD (or UFO) tilesets. The default data can then be copied from the template into your <b>MapTilesets.yml</b> file.</p>
+		<p>Configurator - opens the Configuration Editor. This is where to specify or modify the paths to your XCOM installation folder(s) for UFO and/or TFTD - or to your working folders if that's how you want to roll. It can also replace your Maptree file with a fresh one that comes hardcoded. WARNING: doing that would obliterate all customizations that have been done to the Maptree! Alternately, the Configurator can generate a file of the hardcoded, or default tileset-metadata to a template file. The template could be useful if MapView II had been configured for UFO (or TFTD), but you've deleted treenodes, and subsequently require the metadata for TFTD (or UFO) tilesets. The default metadata could then be copied directly from the template file into your <b>MapTilesets.yml</b> file.</p>
 <!--	Note that the tileset-data for both games will exist in your MapTilesets configuration until the first time that the Maptree is saved, at which point the data for either game that is not configured will be erased. Hint: force a save of the Maptree to get the application to initialize a fraction of a second faster. -->
 		<p>Options [Ctrl+O] - opens and closes the Options for MainView. Descriptions for the entries appear at the bottom of that window.</p>
 
