@@ -175,8 +175,8 @@ namespace MapView
 		{
 			//XCom.LogFile.WriteLine("OnVerticalScroll overlay.Left= " + MainViewOverlay.Left);
 			MainViewOverlay.Location = new Point(
-												MainViewOverlay.Left,
-												-_scrollBarV.Value);
+											MainViewOverlay.Left,
+											-_scrollBarV.Value);
 			MainViewOverlay.Invalidate();
 		}
 
@@ -184,8 +184,8 @@ namespace MapView
 		{
 			//XCom.LogFile.WriteLine("OnVerticalScroll overlay.Top= " + MainViewOverlay.Top);
 			MainViewOverlay.Location = new Point(
-												-_scrollBarH.Value,
-												MainViewOverlay.Top);
+											-_scrollBarH.Value,
+											MainViewOverlay.Top);
 			MainViewOverlay.Invalidate();
 		}
 
@@ -221,6 +221,44 @@ namespace MapView
 
 
 		#region Methods
+		/// <summary>
+		/// Mousegrab pan horizontal.
+		/// </summary>
+		/// <param name="delta"></param>
+		internal void ScrollHori(int delta)
+		{
+			if (_scrollBarH.Visible)
+			{
+				int val = _scrollBarH.Value + delta;
+				if (val < 0)
+					val = 0;
+				else if (val > _scrollBarH.Maximum - (_scrollBarH.LargeChange - 1))
+						 val = _scrollBarH.Maximum - (_scrollBarH.LargeChange - 1);
+
+				_scrollBarH.Value = val;
+				OnScrollHori(null, null);
+			}
+		}
+
+		/// <summary>
+		/// Mousegrab pan vertical.
+		/// </summary>
+		/// <param name="delta"></param>
+		internal void ScrollVert(int delta)
+		{
+			if (_scrollBarV.Visible)
+			{
+				int val = _scrollBarV.Value + delta;
+				if (val < 0)
+					val = 0;
+				else if (val > _scrollBarV.Maximum - (_scrollBarV.LargeChange - 1))
+						 val = _scrollBarV.Maximum - (_scrollBarV.LargeChange - 1);
+
+				_scrollBarV.Value = val;
+				OnScrollVert(null, null);
+			}
+		}
+
 //		/// <summary>
 //		/// A workaround for maximizing the parent-form. See notes at
 //		/// XCMainWindow.OnResize(). Note that this workaround pertains only to
@@ -256,7 +294,7 @@ namespace MapView
 				_scrollBarV.Value =
 				_scrollBarH.Value = 0;
 
-				MainViewOverlay.Location = new Point(0, 0);
+				MainViewOverlay.Location = new Point(0,0);
 			}
 			else
 			{

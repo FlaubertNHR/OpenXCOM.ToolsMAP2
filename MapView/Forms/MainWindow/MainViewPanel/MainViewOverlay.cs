@@ -842,7 +842,9 @@ namespace MapView
 		}
 
 
-		private bool _isMouseDrag;
+		private bool _isMouseDragL;
+		private bool _isMouseDragR;
+		private Point _preloc;
 
 		/// <summary>
 		/// Selects a tile and/or starts a drag-select procedure.
@@ -854,21 +856,30 @@ namespace MapView
 
 			if (MapBase != null)
 			{
-				var loc = GetTileLocation(e.X, e.Y);
-				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
-					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+				if (e.Button == MouseButtons.Left)
 				{
-					_keyDeltaX =
-					_keyDeltaY = 0;
+					var loc = GetTileLocation(e.X, e.Y);
+					if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
+						&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+					{
+						_keyDeltaX =
+						_keyDeltaY = 0;
 
-					_colOver = loc.X; // stop the targeter from persisting at its
-					_rowOver = loc.Y; // previous location when the form is activated.
+						_colOver = loc.X; // stop the targeter from persisting at its
+						_rowOver = loc.Y; // previous location when the form is activated.
 
-					MapBase.Location = new MapLocation( // fire SelectLocationEvent
-													loc.Y, loc.X,
-													MapBase.Level);
-					_isMouseDrag = true;
-					ProcessSelection(loc,loc);
+						MapBase.Location = new MapLocation( // fire SelectLocationEvent
+														loc.Y, loc.X,
+														MapBase.Level);
+						_isMouseDragL = true;
+						ProcessSelection(loc,loc);
+					}
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+					Cursor.Current = Cursors.SizeAll;
+					_isMouseDragR = true;
+					_preloc = e.Location;
 				}
 			}
 		}
@@ -879,7 +890,9 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			_isMouseDrag = false;
+			Cursor.Current = Cursors.Default;
+			_isMouseDragL =
+			_isMouseDragR = false;
 		}
 
 		private int _x = -1;	// these keep track of whether the mouse-cursor
@@ -894,27 +907,40 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			if (MapBase != null
-				&& (e.X != _x || e.Y != _y))
+			if (MapBase != null)
 			{
-				_x = e.X; _y = e.Y;
-
-				var loc = GetTileLocation(e.X, e.Y);
-
-				_targeterForced = false;
-				_colOver = loc.X;
-				_rowOver = loc.Y;
-
-				if (_isMouseDrag
-					&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
+				if (e.Button == MouseButtons.Left)
 				{
-					_keyDeltaX = _colOver - DragBeg.X; // these are in case user stops a mouse-drag
-					_keyDeltaY = _rowOver - DragBeg.Y; // and resumes selection using keyboard.
+					if (e.X != _x || e.Y != _y)
+					{
+						_x = e.X; _y = e.Y;
 
-					ProcessSelection(DragBeg, loc);
+						var loc = GetTileLocation(e.X, e.Y);
+
+						_targeterForced = false;
+						_colOver = loc.X;
+						_rowOver = loc.Y;
+
+						if (_isMouseDragL
+							&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
+						{
+							_keyDeltaX = _colOver - DragBeg.X; // these are in case user stops a mouse-drag
+							_keyDeltaY = _rowOver - DragBeg.Y; // and resumes selection using keyboard.
+
+							ProcessSelection(DragBeg, loc);
+						}
+						else
+							Invalidate();
+					}
 				}
-				else
-					Invalidate();
+				else if (e.Button == MouseButtons.Right
+					&& _isMouseDragR)
+				{
+					Point delta = _preloc - (Size)e.Location;
+
+					MainViewUnderlay.that.ScrollHori(delta.X);
+					MainViewUnderlay.that.ScrollVert(delta.Y);
+				}
 			}
 		}
 
