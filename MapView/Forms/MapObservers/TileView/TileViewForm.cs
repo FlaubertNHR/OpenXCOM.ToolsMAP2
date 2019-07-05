@@ -13,7 +13,7 @@ namespace MapView.Forms.MapObservers.TileViews
 	{
 		#region Properties
 		/// <summary>
-		/// Gets 'TileViewControl' as a child of 'MapObserverControl'.
+		/// Gets TileViewControl as a child of MapObserverControl.
 		/// </summary>
 		internal TileView Control
 		{
@@ -21,13 +21,13 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		/// <summary>
-		/// Satisfies 'IMapObserverProvider'.
+		/// Satisfies IMapObserverProvider.
 		/// </summary>
 		public MapObserverControl ObserverControl
 		{
 			get { return TileViewControl; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -35,7 +35,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			InitializeComponent();
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events (override)

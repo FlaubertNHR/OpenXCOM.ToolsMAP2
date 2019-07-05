@@ -23,7 +23,7 @@ namespace McdView
 		#region Fields (static)
 		protected static McdviewF _f;
 
-		protected readonly static List<Tilepart> _partsCopied = new List<Tilepart>();
+		protected static readonly List<Tilepart> _partsCopied = new List<Tilepart>();
 		protected static string _partsCopiedLabel;
 		#endregion Fields (static)
 

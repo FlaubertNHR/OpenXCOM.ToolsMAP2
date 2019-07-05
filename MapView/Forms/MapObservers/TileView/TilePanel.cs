@@ -35,7 +35,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		private const int _largeChange = SpriteHeight;	// apparently .NET won't return an accurate value
 														// for LargeChange unless the scrollbar is visible.
 
-		private static Hashtable _specialTypeBrushes;
+		internal static readonly Dictionary<string, SolidBrush> SpecialBrushes =
+							 new Dictionary<string, SolidBrush>();
 
 		private static Timer _t1 = new Timer();
 		#endregion Fields (static)
@@ -46,10 +47,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		private readonly VScrollBar _scrollBar;
 
-		private readonly Pen   _penBlack        = Pens.Black;
-		private readonly Pen   _penRed          = new Pen(Color.Red, 3);
-		private readonly Pen   _penControlLight = SystemPens.ControlLight;
-		private readonly Brush _brushBlack      = Brushes.Black;
+		private readonly Pen _penRed = new Pen(Color.Red, 3);
 
 		private int _tilesX = 1;
 		private int _startY;
@@ -114,17 +112,6 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 		}
 		#endregion Properties
-
-
-		/// <summary>
-		/// Sets a pointer to a hashtable of the special property brushes/colors.
-		/// The owner of the object is TileView.
-		/// </summary>
-		/// <param name="brushes"></param>
-		internal static void SetSpecialPropertyBrushes(Hashtable brushes)
-		{
-			_specialTypeBrushes = brushes;
-		}
 
 
 		#region cTor
@@ -537,9 +524,9 @@ namespace MapView.Forms.MapObservers.TileViews
 
 					if (part != null) // draw tile-sprite ->
 					{
-						string special = part.Record.Special.ToString();		// first fill Special Property color
-						if (_specialTypeBrushes.ContainsKey(special))
-							graphics.FillRectangle((SolidBrush)_specialTypeBrushes[special], rect);
+						string special = part.Record.Special.ToString();		// first fill w/ SpecialProperty color
+						if (SpecialBrushes.ContainsKey(special))
+							graphics.FillRectangle(SpecialBrushes[special], rect);
 
 						if ((sprite = part[MainViewUnderlay.AniStep]) != null)
 						{
@@ -565,7 +552,7 @@ namespace MapView.Forms.MapObservers.TileViews
 							graphics.DrawString(
 											Door,
 											Font,
-											_brushBlack,
+											Brushes.Black,
 											left + (SpriteWidth  - TextWidth) / 2,
 											top  +  SpriteHeight - Font.Height);
 					}
@@ -584,21 +571,14 @@ namespace MapView.Forms.MapObservers.TileViews
 						y++;
 				}
 
-//				graphics.DrawRectangle(
-//									_brush,
-//									(_sel % _across) * (_width + _space),
-//									_startY + (_sel / _across) * (_height + _space),
-//									_width  + _space,
-//									_height + _space)
-
 				if (!_scrollBar.Visible) // indicate the reserved width for scrollbar.
 					graphics.DrawLine(
-									_penControlLight,
+									SystemPens.ControlLight,
 									Width - _scrollBar.Width - 1, 0,
 									Width - _scrollBar.Width - 1, Height);
 
 				graphics.FillRectangle(
-									new SolidBrush(_penBlack.Color),
+									Brushes.Black,
 									TableOffset - 1,
 									TableOffset + _startY - 1,
 									1, 1); // so bite me.
@@ -607,13 +587,13 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				for (int i = 0; i <= _tilesX; ++i)							// draw vertical lines
 					graphics.DrawLine(
-									_penBlack,
+									Pens.Black,
 									TableOffset + SpriteWidth * i, TableOffset + _startY,
 									TableOffset + SpriteWidth * i, /*TableOffset +*/ _startY + height);
 
 				for (int i = 0; i <= height; i += SpriteHeight)				// draw horizontal lines
 					graphics.DrawLine(
-									_penBlack,
+									Pens.Black,
 									TableOffset,                         TableOffset + _startY + i,
 									TableOffset + SpriteWidth * _tilesX, TableOffset + _startY + i);
 
@@ -622,7 +602,6 @@ namespace MapView.Forms.MapObservers.TileViews
 									TableOffset + _id % _tilesX * SpriteWidth,
 									TableOffset + _id / _tilesX * SpriteHeight + _startY,
 									SpriteWidth, SpriteHeight);
-
 			}
 		}
 		#endregion Events (override)

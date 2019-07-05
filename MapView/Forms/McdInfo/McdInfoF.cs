@@ -13,7 +13,7 @@ namespace MapView.Forms.McdInfo
 			Form
 	{
 		#region Fields (constant)
-		private const string TITLE = "MCD Info";
+		private const string TITLE = " MCD Info";
 		#endregion Fields (constant)
 
 

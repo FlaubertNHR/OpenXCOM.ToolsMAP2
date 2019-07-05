@@ -42,8 +42,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		#region Fields
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
-
-		private Hashtable _brushesSpecial = new Hashtable();
 		#endregion Fields
 
 
@@ -105,7 +103,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			InitializeComponent();
 
-			tcTileTypes.MouseWheel           += OnMouseWheelTabs;
+			tcTileTypes.MouseWheel           += OnMouseWheel_Tabs;
 			tcTileTypes.SelectedIndexChanged += OnSelectedIndexChanged;
 
 			TilePanel.Chaparone = this;
@@ -161,7 +159,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		#region Events
-		private void OnMouseWheelTabs(object sender, MouseEventArgs e)
+		private void OnMouseWheel_Tabs(object sender, MouseEventArgs e)
 		{
 			int dir = 0;
 			if (e.Delta < 0)
@@ -263,12 +261,12 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		#region Options
 		/// <summary>
-		/// These are default colors for the SpecialType of a tilepart.
+		/// These are default colors for the SpecialProperty of a tilepart.
 		/// TileView will load these colors when the app loads, then any colors
 		/// of SpecialType that were customized will be set and accessed by
 		/// TilePanel and/or the Help|Colors screen later.
 		/// </summary>
-		internal static readonly Color[] TileColors =
+		internal static readonly Color[] SpecialColors =
 		{
 									//      UFO:			TFTD:
 			Color.NavajoWhite,		//  0 - Standard
@@ -293,15 +291,17 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// </summary>
 		protected internal override void LoadControlOptions()
 		{
-			string desc = String.Empty;
+			string desc;
 
-			foreach (string type in Enum.GetNames(typeof(SpecialType)))
+			int i = -1;
+			foreach (string key in Enum.GetNames(typeof(SpecialType)))
 			{
-				int i = (int)Enum.Parse(typeof(SpecialType), type);
-				_brushesSpecial[type] = new SolidBrush(TileColors[i]);
+//				int i = (int)Enum.Parse(typeof(SpecialType), key);
+				TilePanel.SpecialBrushes[key] = new SolidBrush(SpecialColors[++i]);
 
 				switch (i)
 				{
+					default:
 					case  0: desc = "Color of Standard parts";                     break;
 					case  1: desc = "Color of Entry Point parts";                  break;
 					case  2: desc = "Color of UFO Power Source parts"            + Environment.NewLine
@@ -339,37 +339,25 @@ namespace MapView.Forms.MapObservers.TileViews
 				//
 				// See OnSpecialPropertyColorChanged() below_
 				Options.AddOption(
-								type,
-								((SolidBrush)_brushesSpecial[type]).Color,
-								desc,					// appears as a tip at the bottom of the Options screen.
-								"TileBackgroundColors",	// this identifies what Option category the setting appears under.
+								key,
+								TilePanel.SpecialBrushes[key].Color,
+								desc,						// descriptive hint at the bottom of the Options screen.
+								"SpecialPropertyColors",	// Option category.
 								OnSpecialPropertyColorChanged);
 			}
-			TilePanel.SetSpecialPropertyBrushes(_brushesSpecial);
 
 			VolutarService.LoadOptions(Options);
 		}
 
 		/// <summary>
-		/// Loads a different brush/color for a SpecialType into an already
-		/// existing key.
+		/// Sets a different color for a SpecialBrush.
 		/// </summary>
-		/// <param name="key">a string representing the SpecialType</param>
-		/// <param name="val">the brush to insert</param>
+		/// <param name="key">a string representing the SpecialBrush</param>
+		/// <param name="val">its color</param>
 		private void OnSpecialPropertyColorChanged(string key, object val)
 		{
-			((SolidBrush)_brushesSpecial[key]).Color = (Color)val;
-			Refresh();
-		}
-
-		/// <summary>
-		/// Gets the brushes/colors for all SpecialTypes.
-		/// Used by the Help|Colors screen.
-		/// </summary>
-		/// <returns>a hashtable of the brushes</returns>
-		internal Hashtable GetSpecialPropertyBrushes()
-		{
-			return _brushesSpecial;
+			TilePanel.SpecialBrushes[key].Color = (Color)val;
+			Invalidate();
 		}
 
 

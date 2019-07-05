@@ -68,7 +68,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			get { return _blobService; }
 		}
 
-		private readonly static Dictionary<string, Pen> _pens =
+		private static readonly Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();
 		/// <summary>
 		/// Pens for use in TopPanel.
@@ -79,7 +79,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			get { return _pens; }
 		}
 
-		private readonly static Dictionary<string, SolidBrush> _brushes =
+		private static readonly Dictionary<string, SolidBrush> _brushes =
 							new Dictionary<string, SolidBrush>();
 		/// <summary>
 		/// Brushes for use in TopPanel.

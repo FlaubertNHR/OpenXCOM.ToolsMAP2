@@ -50,7 +50,7 @@ namespace DSShared.Windows
 		private static string _pfe;
 		private static string _pfeT;
 
-		private readonly static Dictionary<string, Metric> _dict =
+		private static readonly Dictionary<string, Metric> _dict =
 							new Dictionary<string, Metric>();
 		#endregion Fields (static)
 
