@@ -670,12 +670,10 @@ namespace MapView
 		{
 			Invalidate();
 
-			ViewerFormsManager.TopView     .Refresh(); // TODO: Refresh the panels not the forms.
-			ViewerFormsManager.RouteView   .Refresh();
-			ViewerFormsManager.TopRouteView.Refresh();
-//			ViewerFormsManager.TopView     .Invalidate(); // -> but subsidiary viewers won't refresh until mouseovered.
-//			ViewerFormsManager.RouteView   .Invalidate();
-//			ViewerFormsManager.TopRouteView.Invalidate();
+			ViewerFormsManager.TopView     .Control     .Refresh();
+			ViewerFormsManager.RouteView   .Control     .Refresh();
+			ViewerFormsManager.TopRouteView.ControlTop  .Refresh();
+			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
 
 			if (XCMainWindow.ScanG != null)
 				XCMainWindow.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
