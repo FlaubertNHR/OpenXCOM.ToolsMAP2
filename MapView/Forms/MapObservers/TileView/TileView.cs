@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -739,5 +738,23 @@ namespace MapView.Forms.MapObservers.TileViews
 			return _panels[tcTileTypes.SelectedIndex] as TilePanel;
 		}
 		#endregion Methods
+	}
+
+
+	internal class TileTabControl
+		:
+			TabControl
+	{
+		#region Events (override)
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Events (override)
 	}
 }

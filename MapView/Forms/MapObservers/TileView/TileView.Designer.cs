@@ -2,6 +2,7 @@
 {
 	partial class TileView
 	{
+		#region Designer
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -10,14 +11,19 @@
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+/*		The #develop designer might delete this
+
+			this.tcTileTypes = new MapView.Forms.MapObservers.TileViews.TileTabControl();
+
+		so copy it back into InitializeComponent(). */
+
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tcTileTypes = new System.Windows.Forms.TabControl();
+			this.tcTileTypes = new MapView.Forms.MapObservers.TileViews.TileTabControl();
 			this.tpAll = new System.Windows.Forms.TabPage();
 			this.tpFloors = new System.Windows.Forms.TabPage();
 			this.tpWestwalls = new System.Windows.Forms.TabPage();
@@ -46,7 +52,6 @@
 			this.tcTileTypes.Controls.Add(this.tpNorthwalls);
 			this.tcTileTypes.Controls.Add(this.tpContents);
 			this.tcTileTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tcTileTypes.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tcTileTypes.Location = new System.Drawing.Point(0, 25);
 			this.tcTileTypes.Name = "tcTileTypes";
 			this.tcTileTypes.SelectedIndex = 0;
@@ -85,10 +90,10 @@
 			this.tpNorthwalls.TabIndex = 3;
 			this.tpNorthwalls.Text = "north";
 			// 
-			// tpObjects
+			// tpContents
 			// 
 			this.tpContents.Location = new System.Drawing.Point(4, 21);
-			this.tpContents.Name = "tpObjects";
+			this.tpContents.Name = "tpContents";
 			this.tpContents.Size = new System.Drawing.Size(632, 408);
 			this.tpContents.TabIndex = 4;
 			this.tpContents.Text = "content";
@@ -116,7 +121,6 @@
 			this.tsmiEditMcd,
 			this.tsmi_Sep0,
 			this.tsmiVolutarMcdEditor});
-			this.tsddbExternal.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tsddbExternal.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbExternal.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbExternal.Name = "tsddbExternal";
@@ -170,6 +174,7 @@
 			this.ssStatusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsslTotal,
 			this.tsslOver});
+			this.ssStatusbar.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ssStatusbar.Location = new System.Drawing.Point(0, 458);
 			this.ssStatusbar.Name = "ssStatusbar";
 			this.ssStatusbar.Size = new System.Drawing.Size(640, 22);
@@ -201,6 +206,7 @@
 			this.Controls.Add(this.ssStatusbar);
 			this.Controls.Add(this.tsMain);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Margin = new System.Windows.Forms.Padding(0);
 			this.Name = "TileView";
 			this.Size = new System.Drawing.Size(640, 480);
 			this.tcTileTypes.ResumeLayout(false);
@@ -212,15 +218,15 @@
 			this.PerformLayout();
 
 		}
-		#endregion
 
 		private System.ComponentModel.IContainer components = null;
+
+		TileTabControl tcTileTypes;
 
 		private System.Windows.Forms.ToolStrip tsMain;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbExternal;
 		private System.Windows.Forms.ToolStripMenuItem tsmiEditPck;
 		private System.Windows.Forms.ToolStripMenuItem tsmiVolutarMcdEditor;
-		private System.Windows.Forms.TabControl tcTileTypes;
 		private System.Windows.Forms.TabPage tpAll;
 		private System.Windows.Forms.TabPage tpFloors;
 		private System.Windows.Forms.TabPage tpContents;
@@ -232,5 +238,6 @@
 		private System.Windows.Forms.ToolStripButton tsb_Options;
 		private System.Windows.Forms.ToolStripMenuItem tsmiEditMcd;
 		private System.Windows.Forms.ToolStripSeparator tsmi_Sep0;
+		#endregion Designer
 	}
 }

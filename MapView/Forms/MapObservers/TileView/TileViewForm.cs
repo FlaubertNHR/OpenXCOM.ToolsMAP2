@@ -124,6 +124,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		#endregion Events (override)
 
 
+		#region Designer
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -136,13 +137,13 @@ namespace MapView.Forms.MapObservers.TileViews
 			base.Dispose(disposing);
 		}
 
-		/* The #develop designer is going to delete this:
+
+/*		The #develop designer is going to delete this:
 
 			TileViewControl = new MapView.Forms.MapObservers.TileViews.TileView();
 
-		- so copy it back into InitializeComponent() */
+		so copy it back into InitializeComponent() */
 
-		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -176,10 +177,10 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.ResumeLayout(false);
 
 		}
-		#endregion Windows Form Designer generated code
 
 		private System.ComponentModel.IContainer components = null;
 
 		private TileView TileViewControl;
+		#endregion Designer
 	}
 }
