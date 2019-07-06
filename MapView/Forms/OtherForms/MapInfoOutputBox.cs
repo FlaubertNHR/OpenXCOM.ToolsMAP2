@@ -97,17 +97,17 @@ namespace MapView
 			}
 
 			double pct;;
-			pct = Math.Round(100.0 * (double)sprites.Count / (double)spritesTotal, 2);
-			lbl2_PckSprites.Text = sprites.Count + " of " + spritesTotal       + " - " + pct.ToString("N2") + "%";
+			pct = Math.Round(100.0 * (double)sprites.Count / spritesTotal, 2);
+			lbl2_PckSprites.Text = sprites.Count + " of " + spritesTotal + " - " + pct.ToString("N2") + "%";
 
-			pct = Math.Round(100.0 * (double)records.Count / (double)recordsTotal, 2);
-			lbl2_McdRecords.Text = records.Count + " of " + recordsTotal       + " - " + pct.ToString("N2") + "%";
+			pct = Math.Round(100.0 * (double)records.Count / recordsTotal, 2);
+			lbl2_McdRecords.Text = records.Count + " of " + recordsTotal + " - " + pct.ToString("N2") + "%";
 
-			pct = Math.Round(100.0 * (double)slots / (double)(pBar.Maximum * 4), 2);
-			lbl2_SlotsFilled.Text = slots        + " of " + (pBar.Maximum * 4) + " - " + pct.ToString("N2") + "%";
+			pct = Math.Round(100.0 * (double)slots / (pBar.Maximum * 4), 2);
+			lbl2_SlotsFilled.Text = slots + " of " + (pBar.Maximum * 4) + " - " + pct.ToString("N2") + "%";
 
-			pct = Math.Round(100.0 * (double)vacant / (double)pBar.Maximum, 2);
-			lbl2_TilesVacant.Text = vacant       + " of " + pBar.Maximum       + " - " + pct.ToString("N2") + "%";
+			pct = Math.Round(100.0 * (double)vacant / pBar.Maximum, 2);
+			lbl2_TilesVacant.Text = vacant + " of " + pBar.Maximum + " - " + pct.ToString("N2") + "%";
 
 			gbAnalyze.Visible = false;
 			btnDetail.Visible =
@@ -124,9 +124,8 @@ namespace MapView
 				foreach (PckImage sprite in part.Sprites)
 					sprites.Add(sprite.SetId);
 
-				Tilepart dead, altr;
-				Count((dead = part.Dead), sprites, records);
-				Count((altr = part.Altr), sprites, records);
+				Count(part.Dead, sprites, records);
+				Count(part.Altr, sprites, records);
 			}
 		}
 
