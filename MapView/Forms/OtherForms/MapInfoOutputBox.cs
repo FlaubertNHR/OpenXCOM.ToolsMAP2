@@ -96,22 +96,18 @@ namespace MapView
 				pBar.Refresh();
 			}
 
-			double pct; string pctf;
+			double pct;;
 			pct = Math.Round(100.0 * (double)sprites.Count / (double)spritesTotal, 2);
-			pctf = pct.ToString("N2");
-			lbl2_PckSprites.Text = sprites.Count + " of " + spritesTotal + " - " + pctf + "%";
+			lbl2_PckSprites.Text = sprites.Count + " of " + spritesTotal       + " - " + pct.ToString("N2") + "%";
 
 			pct = Math.Round(100.0 * (double)records.Count / (double)recordsTotal, 2);
-			pctf = pct.ToString("N2");
-			lbl2_McdRecords.Text = records.Count + " of " + recordsTotal + " - " + pctf + "%";
+			lbl2_McdRecords.Text = records.Count + " of " + recordsTotal       + " - " + pct.ToString("N2") + "%";
 
 			pct = Math.Round(100.0 * (double)slots / (double)(pBar.Maximum * 4), 2);
-			pctf = pct.ToString("N2");
-			lbl2_SlotsFilled.Text = slots + " of " + (pBar.Maximum * 4) + " - " + pctf + "%";
+			lbl2_SlotsFilled.Text = slots        + " of " + (pBar.Maximum * 4) + " - " + pct.ToString("N2") + "%";
 
 			pct = Math.Round(100.0 * (double)vacant / (double)pBar.Maximum, 2);
-			pctf = pct.ToString("N2");
-			lbl2_TilesVacant.Text = vacant + " of " + pBar.Maximum + " - " + pctf + "%";
+			lbl2_TilesVacant.Text = vacant       + " of " + pBar.Maximum       + " - " + pct.ToString("N2") + "%";
 
 			gbAnalyze.Visible = false;
 			btnDetail.Visible =
