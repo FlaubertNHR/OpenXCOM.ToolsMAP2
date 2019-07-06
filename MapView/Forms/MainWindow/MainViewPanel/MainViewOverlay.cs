@@ -587,7 +587,7 @@ namespace MapView
 											info))
 					{
 						f.SetLabelColor(Color.Firebrick);
-						f.ShowDialog();
+						f.ShowDialog(this);
 					}
 				}
 			}

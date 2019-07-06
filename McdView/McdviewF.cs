@@ -1389,29 +1389,27 @@ namespace McdView
 										"The following items exhibit anomalies.",
 										copyable))
 				{
-					f.Owner = this;
-					f.ShowDialog();
+					f.ShowDialog(this);
 				}
 			}
 
-			string result;
-			if (Spriteset != null
-				&& !SpriteCollection.Test2byteSpriteset(Spriteset, out result))
+			if (Spriteset != null)
 			{
-				suppress = true;
-
-				using (var f = new Infobox(
-										" Strict test",
-										"Sprite offset is invalid.",
-										result))
+				string result;
+				if (!SpriteCollection.Test2byteSpriteset(Spriteset, out result))
 				{
-					f.Owner = this;
-					f.ShowDialog();
+					suppress = true;
+					using (var f = new Infobox(
+											" Strict test",
+											"Sprite offset is invalid.",
+											result))
+					{
+						f.ShowDialog(this);
+					}
 				}
 			}
 
 			if (!suppress)
-			{
 				MessageBox.Show(
 							this,
 							"All values appear to be within accepted ranges.",
@@ -1420,7 +1418,6 @@ namespace McdView
 							MessageBoxIcon.Information,
 							MessageBoxDefaultButton.Button1,
 							0);
-			}
 		}
 
 
