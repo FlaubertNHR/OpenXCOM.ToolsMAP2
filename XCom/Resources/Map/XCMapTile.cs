@@ -99,7 +99,7 @@ namespace XCom
 		{
 			get
 			{
-				var tile = new XCMapTile(null, null, null, null);
+				var tile = new XCMapTile(null,null,null,null);
 				tile.Vacant = true;
 				return tile;
 			}
