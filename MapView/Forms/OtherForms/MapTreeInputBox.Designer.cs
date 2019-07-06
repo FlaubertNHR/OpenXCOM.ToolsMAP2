@@ -2,15 +2,16 @@
 {
 	partial class MapTreeInputBox
 	{
+		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -19,11 +20,9 @@
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
-
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -59,7 +58,6 @@
 			// 
 			// lblInfoTop
 			// 
-			this.lblInfoTop.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblInfoTop.Location = new System.Drawing.Point(5, 25);
 			this.lblInfoTop.Name = "lblInfoTop";
 			this.lblInfoTop.Padding = new System.Windows.Forms.Padding(10, 0, 8, 0);
@@ -128,20 +126,20 @@
 			this.Controls.Add(this.pnlTop);
 			this.Controls.Add(this.pnlBottom);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(400, 200);
 			this.Name = "MapTreeInputBox";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.ShowInTaskbar = false;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.pnlBottom.ResumeLayout(false);
 			this.pnlTop.ResumeLayout(false);
 			this.pnlTop.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
-
-		#endregion
 
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.Button btnCancel;
@@ -151,5 +149,6 @@
 		private System.Windows.Forms.Panel pnlTop;
 		private System.Windows.Forms.Label lblInfoBottom;
 		private System.Windows.Forms.Label lblParent;
+		#endregion
 	}
 }

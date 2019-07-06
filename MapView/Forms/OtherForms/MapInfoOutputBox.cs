@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 using XCom;
@@ -46,6 +47,8 @@ namespace MapView
 			var w = TextRenderer.MeasureText(text, lbl2_Terrains.Font).Width;
 			if (w > lbl2_Terrains.Width)
 				Width += w - lbl2_Terrains.Width;
+
+			MinimumSize = new Size(Width, Height);
 
 			Refresh();
 
@@ -131,6 +134,11 @@ namespace MapView
 
 		private void click_btnDetail(object sender, EventArgs e)
 		{
+			var f = new Infobox(
+							"title",
+							"label",
+							"copyable");
+			f.Show(this);
 		}
 
 		private void click_btnClose(object sender, EventArgs e)
@@ -266,19 +274,19 @@ namespace MapView
 			// pBar
 			// 
 			this.pBar.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pBar.Location = new System.Drawing.Point(5, 15);
+			this.pBar.Location = new System.Drawing.Point(5, 12);
 			this.pBar.Name = "pBar";
-			this.pBar.Size = new System.Drawing.Size(326, 25);
+			this.pBar.Size = new System.Drawing.Size(326, 27);
 			this.pBar.TabIndex = 0;
 			// 
 			// gbAnalyze
 			// 
 			this.gbAnalyze.Controls.Add(this.pBar);
 			this.gbAnalyze.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.gbAnalyze.Location = new System.Drawing.Point(3, 110);
+			this.gbAnalyze.Location = new System.Drawing.Point(3, 105);
 			this.gbAnalyze.Margin = new System.Windows.Forms.Padding(0);
 			this.gbAnalyze.Name = "gbAnalyze";
-			this.gbAnalyze.Padding = new System.Windows.Forms.Padding(5, 3, 5, 4);
+			this.gbAnalyze.Padding = new System.Windows.Forms.Padding(5, 0, 5, 5);
 			this.gbAnalyze.Size = new System.Drawing.Size(336, 44);
 			this.gbAnalyze.TabIndex = 12;
 			this.gbAnalyze.TabStop = false;
@@ -286,7 +294,7 @@ namespace MapView
 			// btnDetail
 			// 
 			this.btnDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDetail.Location = new System.Drawing.Point(160, 121);
+			this.btnDetail.Location = new System.Drawing.Point(160, 116);
 			this.btnDetail.Margin = new System.Windows.Forms.Padding(0);
 			this.btnDetail.Name = "btnDetail";
 			this.btnDetail.Size = new System.Drawing.Size(85, 30);
@@ -300,7 +308,7 @@ namespace MapView
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(250, 121);
+			this.btnCancel.Location = new System.Drawing.Point(250, 116);
 			this.btnCancel.Margin = new System.Windows.Forms.Padding(0);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(85, 30);
@@ -331,7 +339,7 @@ namespace MapView
 			this.gbInfo.Location = new System.Drawing.Point(0, 2);
 			this.gbInfo.Margin = new System.Windows.Forms.Padding(0);
 			this.gbInfo.Name = "gbInfo";
-			this.gbInfo.Size = new System.Drawing.Size(342, 157);
+			this.gbInfo.Size = new System.Drawing.Size(342, 152);
 			this.gbInfo.TabIndex = 0;
 			this.gbInfo.TabStop = false;
 			this.gbInfo.Text = " label ";
@@ -358,17 +366,13 @@ namespace MapView
 			this.AcceptButton = this.btnDetail;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(342, 159);
+			this.ClientSize = new System.Drawing.Size(342, 154);
 			this.Controls.Add(this.gbInfo);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(350, 170);
 			this.Name = "MapInfoOutputBox";
 			this.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-			this.ShowIcon = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = " MapInfo";

@@ -2017,7 +2017,7 @@ namespace MapView
 												+ "Retry\tsave changes and show the Maptree-menu"
 												+ Environment.NewLine
 												+ "Ignore\trisk losing changes and show the Maptree-menu",
-											"Changes detected",
+											" Changes detected",
 											MessageBoxButtons.AbortRetryIgnore,
 											MessageBoxIcon.Asterisk,
 											MessageBoxDefaultButton.Button1,
@@ -2142,7 +2142,7 @@ namespace MapView
 			if (MessageBox.Show(
 							this,
 							notice,
-							"Warning",
+							" Warning",
 							MessageBoxButtons.OKCancel,
 							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button1,
@@ -2246,7 +2246,7 @@ namespace MapView
 			if (MessageBox.Show(
 							this,
 							notice,
-							"Warning",
+							" Warning",
 							MessageBoxButtons.OKCancel,
 							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button1,
@@ -2399,7 +2399,7 @@ namespace MapView
 			if (MessageBox.Show(
 							this,
 							notice,
-							"Warning",
+							" Warning",
 							MessageBoxButtons.OKCancel,
 							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button1,

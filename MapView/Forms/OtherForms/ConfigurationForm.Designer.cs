@@ -2,6 +2,7 @@
 {
 	partial class ConfigurationForm
 	{
+		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -19,8 +20,6 @@
 			base.Dispose(disposing);
 		}
 
-
-		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -303,7 +302,6 @@
 			this.ResumeLayout(false);
 
 		}
-		#endregion
 
 		private System.Windows.Forms.Label labelUfo;
 		private System.Windows.Forms.Label labelTftd;
@@ -326,5 +324,6 @@
 		private System.Windows.Forms.Label lblTilesets;
 		private System.Windows.Forms.CheckBox cbTilesets;
 		private System.Windows.Forms.ToolTip toolTip1;
+		#endregion
 	}
 }

@@ -148,7 +148,7 @@ namespace XCom
 
 
 
-		#region Windows Form Designer generated code
+		#region Designer
 		private Container components = null;
 		private Button btn_Okay;
 		private Label lbl_Info;
@@ -156,7 +156,7 @@ namespace XCom
 		private Panel pnl_Info;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
@@ -239,11 +239,10 @@ namespace XCom
 			this.Controls.Add(this.btn_Okay);
 			this.Controls.Add(this.lbl_Info);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "Infobox";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -251,6 +250,6 @@ namespace XCom
 			this.ResumeLayout(false);
 
 		}
-		#endregion
+		#endregion Designer
 	}
 }

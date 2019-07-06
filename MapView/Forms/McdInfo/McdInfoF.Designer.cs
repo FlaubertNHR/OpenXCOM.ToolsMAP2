@@ -2,6 +2,7 @@
 {
 	partial class McdInfoF
 	{
+		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -19,11 +20,9 @@
 			base.Dispose(disposing);
 		}
 
-
-		#region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -61,16 +60,15 @@
 			this.Controls.Add(this.rtbInfo);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "McdInfoF";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "MCD Info";
+			this.Text = " MCD Info";
 			((System.ComponentModel.ISupportInitialize)(this.bsInfo)).EndInit();
 			this.ResumeLayout(false);
 
 		}
-		#endregion
 
 		private System.Windows.Forms.RichTextBox rtbInfo;
 		private System.Windows.Forms.BindingSource bsInfo;
+		#endregion Designer
 	}
 }

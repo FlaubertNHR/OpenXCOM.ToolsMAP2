@@ -25,11 +25,11 @@ namespace MapView
 
 
 		#region Fields (static)
-		private const string NewGroup    = "Add Group";
-		private const string NewCategory = "Add Category";
-		private const string RenGroup    = "Relabel Group";
-		private const string RenCategory = "Relabel Category";
-		#endregion
+		private const string NewGroup    = " Add Group";
+		private const string NewCategory = " Add Category";
+		private const string RenGroup    = " Relabel Group";
+		private const string RenCategory = " Relabel Category";
+		#endregion Fields (static)
 
 
 		#region Properties
@@ -47,7 +47,7 @@ namespace MapView
 			get { return tbInput.Text; }
 			set { tbInput.Text = value; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -94,10 +94,10 @@ namespace MapView
 
 			tbInput.Select();
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Eventcalls
+		#region Events
 		private void OnAcceptClick(object sender, EventArgs e)
 		{
 			Label = Label.Trim();
@@ -189,7 +189,7 @@ namespace MapView
 					break;
 			}
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -202,12 +202,12 @@ namespace MapView
 			MessageBox.Show(
 						this,
 						error,
-						"Error",
+						" Error",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
-		#endregion
+		#endregion Methods
 	}
 }

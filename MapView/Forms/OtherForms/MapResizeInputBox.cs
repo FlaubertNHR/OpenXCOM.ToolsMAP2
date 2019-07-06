@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 using XCom.Interfaces.Base;
@@ -11,7 +12,7 @@ namespace MapView
 		:
 			Form
 	{
-		#region Fields & Properties
+		#region Properties
 		private MapFileBase _mapBase;
 		internal MapFileBase MapBase
 		{
@@ -20,12 +21,12 @@ namespace MapView
 			{
 				if ((_mapBase = value) != null)
 				{
-					oldR.Text =
-					txtR.Text = _mapBase.MapSize.Rows.ToString(System.Globalization.CultureInfo.InvariantCulture);
-					oldC.Text =
-					txtC.Text = _mapBase.MapSize.Cols.ToString(System.Globalization.CultureInfo.InvariantCulture);
-					oldL.Text =
-					txtL.Text = _mapBase.MapSize.Levs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+					tb_Row0.Text =
+					tb_Row1.Text = _mapBase.MapSize.Rows.ToString(CultureInfo.InvariantCulture);
+					tb_Col0.Text =
+					tb_Col1.Text = _mapBase.MapSize.Cols.ToString(CultureInfo.InvariantCulture);
+					tb_Lev0.Text =
+					tb_Lev1.Text = _mapBase.MapSize.Levs.ToString(CultureInfo.InvariantCulture);
 				}
 			}
 		}
@@ -52,13 +53,13 @@ namespace MapView
 		{
 			get
 			{
-				if (cbCeiling.Enabled && cbCeiling.Checked)
+				if (cb_Ceil.Enabled && cb_Ceil.Checked)
 					return MapResizeService.MapResizeZtype.MRZT_TOP;
 
 				return MapResizeService.MapResizeZtype.MRZT_BOT;
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -69,36 +70,36 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			btnCancel.Select();
+			btn_Cancel.Select();
 			DialogResult = DialogResult.Cancel;
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region EventCalls
+		#region Events
 		private void OnOkClick(object sender, EventArgs e)
 		{
-			if (   String.IsNullOrEmpty(txtC.Text)
-				|| String.IsNullOrEmpty(txtR.Text)
-				|| String.IsNullOrEmpty(txtL.Text))
+			if (   String.IsNullOrEmpty(tb_Col1.Text)
+				|| String.IsNullOrEmpty(tb_Row1.Text)
+				|| String.IsNullOrEmpty(tb_Lev1.Text))
 			{
-				ShowErrorDialog("All fields must have a value.", "Error");
+				ShowErrorDialog("All fields must have a value.", " Error");
 			}
-			else if (!Int32.TryParse(txtC.Text, out _cols) || _cols < 1
-				||   !Int32.TryParse(txtR.Text, out _rows) || _rows < 1
-				||   !Int32.TryParse(txtL.Text, out _levs) || _levs < 1)
+			else if (!Int32.TryParse(tb_Col1.Text, out _cols) || _cols < 1
+				||   !Int32.TryParse(tb_Row1.Text, out _rows) || _rows < 1
+				||   !Int32.TryParse(tb_Lev1.Text, out _levs) || _levs < 1)
 			{
-				ShowErrorDialog("Values must be positive integers greater than 0.", "Error");
+				ShowErrorDialog("Values must be positive integers greater than 0.", " Error");
 			}
 			else if (_cols % 10 != 0 || _rows % 10 != 0)
 			{
-				ShowErrorDialog("Columns and Rows must be evenly divisible by 10.", "Error");
+				ShowErrorDialog("Columns and Rows must be evenly divisible by 10.", " Error");
 			}
-			else if (_cols == int.Parse(oldC.Text, System.Globalization.CultureInfo.InvariantCulture)
-				&&   _rows == int.Parse(oldR.Text, System.Globalization.CultureInfo.InvariantCulture)
-				&&   _levs == int.Parse(oldL.Text, System.Globalization.CultureInfo.InvariantCulture))
+			else if (_cols == int.Parse(tb_Col0.Text, CultureInfo.InvariantCulture)
+				&&   _rows == int.Parse(tb_Row0.Text, CultureInfo.InvariantCulture)
+				&&   _levs == int.Parse(tb_Lev0.Text, CultureInfo.InvariantCulture))
 			{
-				ShowErrorDialog("The new size is the same as the old size.", "uh ...");
+				ShowErrorDialog("The new size is the same as the old size.", " uh ...");
 			}
 			else // finally (sic) ->
 			{
@@ -124,32 +125,32 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnLevelTextChanged(object sender, EventArgs e)
 		{
-			if (!String.IsNullOrEmpty(txtL.Text)) // NOTE: btnOkClick will deal with a blank string.
+			if (!String.IsNullOrEmpty(tb_Lev1.Text)) // NOTE: btnOkClick will deal with a blank string.
 			{
 				int height;
-				if (Int32.TryParse(txtL.Text, out height))
+				if (Int32.TryParse(tb_Lev1.Text, out height))
 				{
 					if (height > 0)
 					{
 						int delta = (height - _mapBase.MapSize.Levs);
-						if (cbCeiling.Enabled = (delta != 0))
+						if (cb_Ceil.Enabled = (delta != 0))
 						{
 							if (delta > 0)
 							{
-								cbCeiling.Text = "add to top";
+								cb_Ceil.Text = "add to top";
 							}
 							else
-								cbCeiling.Text = "subtract from top";
+								cb_Ceil.Text = "subtract from top";
 						}
 					}
 					else
-						ShowErrorDialog("Height must be 1 or more.", "Error");
+						ShowErrorDialog("Height must be 1 or more.", " Error");
 				}
 				else
-					ShowErrorDialog("Height must a positive integer.", "Error");
+					ShowErrorDialog("Height must a positive integer.", " Error");
 			}
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -171,13 +172,13 @@ namespace MapView
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
-		#endregion
+		#endregion Methods
 
 
-		#region Windows Form Designer generated code
 
+		#region Designer
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
@@ -188,225 +189,228 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.oldC = new System.Windows.Forms.TextBox();
-			this.oldR = new System.Windows.Forms.TextBox();
-			this.oldL = new System.Windows.Forms.TextBox();
-			this.txtR = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.txtC = new System.Windows.Forms.TextBox();
-			this.txtL = new System.Windows.Forms.TextBox();
-			this.btnOk = new System.Windows.Forms.Button();
-			this.btnCancel = new System.Windows.Forms.Button();
-			this.cbCeiling = new System.Windows.Forms.CheckBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
+			this.tb_Col0 = new System.Windows.Forms.TextBox();
+			this.tb_Row0 = new System.Windows.Forms.TextBox();
+			this.tb_Lev0 = new System.Windows.Forms.TextBox();
+			this.tb_Row1 = new System.Windows.Forms.TextBox();
+			this.lbl_Col0 = new System.Windows.Forms.Label();
+			this.lbl_Row0 = new System.Windows.Forms.Label();
+			this.lbl_Lev0 = new System.Windows.Forms.Label();
+			this.tb_Col1 = new System.Windows.Forms.TextBox();
+			this.tb_Lev1 = new System.Windows.Forms.TextBox();
+			this.btn_Ok = new System.Windows.Forms.Button();
+			this.btn_Cancel = new System.Windows.Forms.Button();
+			this.cb_Ceil = new System.Windows.Forms.CheckBox();
+			this.lbl_Lev1 = new System.Windows.Forms.Label();
+			this.lbl_Row1 = new System.Windows.Forms.Label();
+			this.lbl_Col1 = new System.Windows.Forms.Label();
+			this.lbl_Head = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
-			// oldC
+			// tb_Col0
 			// 
-			this.oldC.Location = new System.Drawing.Point(20, 55);
-			this.oldC.Name = "oldC";
-			this.oldC.ReadOnly = true;
-			this.oldC.Size = new System.Drawing.Size(45, 19);
-			this.oldC.TabIndex = 4;
+			this.tb_Col0.Location = new System.Drawing.Point(20, 55);
+			this.tb_Col0.Name = "tb_Col0";
+			this.tb_Col0.ReadOnly = true;
+			this.tb_Col0.Size = new System.Drawing.Size(45, 19);
+			this.tb_Col0.TabIndex = 4;
 			// 
-			// oldR
+			// tb_Row0
 			// 
-			this.oldR.Location = new System.Drawing.Point(70, 55);
-			this.oldR.Name = "oldR";
-			this.oldR.ReadOnly = true;
-			this.oldR.Size = new System.Drawing.Size(45, 19);
-			this.oldR.TabIndex = 5;
+			this.tb_Row0.Location = new System.Drawing.Point(70, 55);
+			this.tb_Row0.Name = "tb_Row0";
+			this.tb_Row0.ReadOnly = true;
+			this.tb_Row0.Size = new System.Drawing.Size(45, 19);
+			this.tb_Row0.TabIndex = 5;
 			// 
-			// oldL
+			// tb_Lev0
 			// 
-			this.oldL.Location = new System.Drawing.Point(120, 55);
-			this.oldL.Name = "oldL";
-			this.oldL.ReadOnly = true;
-			this.oldL.Size = new System.Drawing.Size(45, 19);
-			this.oldL.TabIndex = 6;
+			this.tb_Lev0.Location = new System.Drawing.Point(120, 55);
+			this.tb_Lev0.Name = "tb_Lev0";
+			this.tb_Lev0.ReadOnly = true;
+			this.tb_Lev0.Size = new System.Drawing.Size(45, 19);
+			this.tb_Lev0.TabIndex = 6;
 			// 
-			// txtR
+			// tb_Row1
 			// 
-			this.txtR.Location = new System.Drawing.Point(70, 95);
-			this.txtR.Name = "txtR";
-			this.txtR.Size = new System.Drawing.Size(45, 19);
-			this.txtR.TabIndex = 11;
+			this.tb_Row1.Location = new System.Drawing.Point(70, 95);
+			this.tb_Row1.Name = "tb_Row1";
+			this.tb_Row1.Size = new System.Drawing.Size(45, 19);
+			this.tb_Row1.TabIndex = 11;
 			// 
-			// label3
+			// lbl_Col0
 			// 
-			this.label3.Location = new System.Drawing.Point(20, 40);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(45, 15);
-			this.label3.TabIndex = 1;
-			this.label3.Text = "c";
-			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lbl_Col0.Location = new System.Drawing.Point(20, 40);
+			this.lbl_Col0.Name = "lbl_Col0";
+			this.lbl_Col0.Size = new System.Drawing.Size(45, 15);
+			this.lbl_Col0.TabIndex = 1;
+			this.lbl_Col0.Text = "c";
+			this.lbl_Col0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label4
+			// lbl_Row0
 			// 
-			this.label4.Location = new System.Drawing.Point(70, 40);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(45, 15);
-			this.label4.TabIndex = 2;
-			this.label4.Text = "r";
-			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lbl_Row0.Location = new System.Drawing.Point(70, 40);
+			this.lbl_Row0.Name = "lbl_Row0";
+			this.lbl_Row0.Size = new System.Drawing.Size(45, 15);
+			this.lbl_Row0.TabIndex = 2;
+			this.lbl_Row0.Text = "r";
+			this.lbl_Row0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label5
+			// lbl_Lev0
 			// 
-			this.label5.Location = new System.Drawing.Point(120, 40);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(45, 15);
-			this.label5.TabIndex = 3;
-			this.label5.Text = "L";
-			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lbl_Lev0.Location = new System.Drawing.Point(120, 40);
+			this.lbl_Lev0.Name = "lbl_Lev0";
+			this.lbl_Lev0.Size = new System.Drawing.Size(45, 15);
+			this.lbl_Lev0.TabIndex = 3;
+			this.lbl_Lev0.Text = "L";
+			this.lbl_Lev0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// txtC
+			// tb_Col1
 			// 
-			this.txtC.Location = new System.Drawing.Point(20, 95);
-			this.txtC.Name = "txtC";
-			this.txtC.Size = new System.Drawing.Size(45, 19);
-			this.txtC.TabIndex = 10;
+			this.tb_Col1.Location = new System.Drawing.Point(20, 95);
+			this.tb_Col1.Name = "tb_Col1";
+			this.tb_Col1.Size = new System.Drawing.Size(45, 19);
+			this.tb_Col1.TabIndex = 10;
 			// 
-			// txtL
+			// tb_Lev1
 			// 
-			this.txtL.Location = new System.Drawing.Point(120, 95);
-			this.txtL.Name = "txtL";
-			this.txtL.Size = new System.Drawing.Size(45, 19);
-			this.txtL.TabIndex = 12;
-			this.txtL.TextChanged += new System.EventHandler(this.OnLevelTextChanged);
+			this.tb_Lev1.Location = new System.Drawing.Point(120, 95);
+			this.tb_Lev1.Name = "tb_Lev1";
+			this.tb_Lev1.Size = new System.Drawing.Size(45, 19);
+			this.tb_Lev1.TabIndex = 12;
+			this.tb_Lev1.TextChanged += new System.EventHandler(this.OnLevelTextChanged);
 			// 
-			// btnOk
+			// btn_Ok
 			// 
-			this.btnOk.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnOk.Location = new System.Drawing.Point(125, 130);
-			this.btnOk.Name = "btnOk";
-			this.btnOk.Size = new System.Drawing.Size(85, 40);
-			this.btnOk.TabIndex = 14;
-			this.btnOk.Text = "OK";
-			this.btnOk.Click += new System.EventHandler(this.OnOkClick);
+			this.btn_Ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_Ok.Location = new System.Drawing.Point(120, 125);
+			this.btn_Ok.Name = "btn_Ok";
+			this.btn_Ok.Size = new System.Drawing.Size(80, 30);
+			this.btn_Ok.TabIndex = 14;
+			this.btn_Ok.Text = "Ok";
+			this.btn_Ok.Click += new System.EventHandler(this.OnOkClick);
 			// 
-			// btnCancel
+			// btn_Cancel
 			// 
-			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnCancel.Location = new System.Drawing.Point(220, 130);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(85, 40);
-			this.btnCancel.TabIndex = 15;
-			this.btnCancel.Text = "Cancel";
-			this.btnCancel.Click += new System.EventHandler(this.OnCancelClick);
+			this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btn_Cancel.Location = new System.Drawing.Point(210, 125);
+			this.btn_Cancel.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_Cancel.Name = "btn_Cancel";
+			this.btn_Cancel.Size = new System.Drawing.Size(80, 30);
+			this.btn_Cancel.TabIndex = 15;
+			this.btn_Cancel.Text = "Cancel";
+			this.btn_Cancel.Click += new System.EventHandler(this.OnCancelClick);
 			// 
-			// cbCeiling
+			// cb_Ceil
 			// 
-			this.cbCeiling.Checked = true;
-			this.cbCeiling.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cbCeiling.Enabled = false;
-			this.cbCeiling.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cbCeiling.Location = new System.Drawing.Point(170, 95);
-			this.cbCeiling.Name = "cbCeiling";
-			this.cbCeiling.Size = new System.Drawing.Size(120, 21);
-			this.cbCeiling.TabIndex = 13;
-			this.cbCeiling.Text = "top";
-			this.cbCeiling.UseVisualStyleBackColor = true;
+			this.cb_Ceil.Checked = true;
+			this.cb_Ceil.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cb_Ceil.Enabled = false;
+			this.cb_Ceil.Location = new System.Drawing.Point(170, 95);
+			this.cb_Ceil.Name = "cb_Ceil";
+			this.cb_Ceil.Size = new System.Drawing.Size(120, 21);
+			this.cb_Ceil.TabIndex = 13;
+			this.cb_Ceil.Text = "top";
+			this.cb_Ceil.UseVisualStyleBackColor = true;
 			// 
-			// label1
+			// lbl_Lev1
 			// 
-			this.label1.Location = new System.Drawing.Point(120, 80);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(45, 15);
-			this.label1.TabIndex = 9;
-			this.label1.Text = "L";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lbl_Lev1.Location = new System.Drawing.Point(120, 80);
+			this.lbl_Lev1.Name = "lbl_Lev1";
+			this.lbl_Lev1.Size = new System.Drawing.Size(45, 15);
+			this.lbl_Lev1.TabIndex = 9;
+			this.lbl_Lev1.Text = "L";
+			this.lbl_Lev1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label6
+			// lbl_Row1
 			// 
-			this.label6.Location = new System.Drawing.Point(70, 80);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(45, 15);
-			this.label6.TabIndex = 8;
-			this.label6.Text = "r";
-			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lbl_Row1.Location = new System.Drawing.Point(70, 80);
+			this.lbl_Row1.Name = "lbl_Row1";
+			this.lbl_Row1.Size = new System.Drawing.Size(45, 15);
+			this.lbl_Row1.TabIndex = 8;
+			this.lbl_Row1.Text = "r";
+			this.lbl_Row1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label7
+			// lbl_Col1
 			// 
-			this.label7.Location = new System.Drawing.Point(20, 80);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(45, 15);
-			this.label7.TabIndex = 7;
-			this.label7.Text = "c";
-			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.lbl_Col1.Location = new System.Drawing.Point(20, 80);
+			this.lbl_Col1.Name = "lbl_Col1";
+			this.lbl_Col1.Size = new System.Drawing.Size(45, 15);
+			this.lbl_Col1.TabIndex = 7;
+			this.lbl_Col1.Text = "c";
+			this.lbl_Col1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label2
+			// lbl_Head
 			// 
-			this.label2.Location = new System.Drawing.Point(5, 5);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(305, 28);
-			this.label2.TabIndex = 0;
-			this.label2.Text = "Columns and Rows must be multiples of 10 (10, 20, 30, etc) and Levels must be 1 o" +
+			this.lbl_Head.Dock = System.Windows.Forms.DockStyle.Top;
+			this.lbl_Head.Location = new System.Drawing.Point(0, 0);
+			this.lbl_Head.Name = "lbl_Head";
+			this.lbl_Head.Padding = new System.Windows.Forms.Padding(3, 5, 0, 0);
+			this.lbl_Head.Size = new System.Drawing.Size(304, 35);
+			this.lbl_Head.TabIndex = 0;
+			this.lbl_Head.Text = "Columns and Rows must be multiples of 10 (10, 20, 30, etc) and Levels must be 1 o" +
 	"r more.";
 			// 
 			// MapResizeInputBox
 			// 
-			this.AcceptButton = this.btnOk;
+			this.AcceptButton = this.btn_Ok;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(314, 176);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.label6);
-			this.Controls.Add(this.label7);
-			this.Controls.Add(this.cbCeiling);
-			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.btnOk);
-			this.Controls.Add(this.txtL);
-			this.Controls.Add(this.txtC);
-			this.Controls.Add(this.label5);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.txtR);
-			this.Controls.Add(this.oldC);
-			this.Controls.Add(this.oldL);
-			this.Controls.Add(this.oldR);
+			this.CancelButton = this.btn_Cancel;
+			this.ClientSize = new System.Drawing.Size(304, 161);
+			this.Controls.Add(this.lbl_Head);
+			this.Controls.Add(this.lbl_Lev1);
+			this.Controls.Add(this.lbl_Row1);
+			this.Controls.Add(this.lbl_Col1);
+			this.Controls.Add(this.cb_Ceil);
+			this.Controls.Add(this.btn_Cancel);
+			this.Controls.Add(this.btn_Ok);
+			this.Controls.Add(this.tb_Lev1);
+			this.Controls.Add(this.tb_Col1);
+			this.Controls.Add(this.lbl_Lev0);
+			this.Controls.Add(this.lbl_Row0);
+			this.Controls.Add(this.lbl_Col0);
+			this.Controls.Add(this.tb_Row1);
+			this.Controls.Add(this.tb_Col0);
+			this.Controls.Add(this.tb_Lev0);
+			this.Controls.Add(this.tb_Row0);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MapResizeInputBox";
+			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Modify Map Size";
+			this.Text = " Modify Map Size";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
-		#endregion
 
 		private System.ComponentModel.Container components = null;
 
-		private Label label1;
-		private Label label3;
-		private Label label4;
-		private Label label5;
-		private TextBox txtC;
-		private TextBox txtR;
-		private TextBox txtL;
-		private Button btnOk;
-		private Button btnCancel;
-		private TextBox oldC;
-		private TextBox oldR;
-		private TextBox oldL;
-		private Label label6;
-		private Label label7;
-		private Label label2;
-		private CheckBox cbCeiling;
+		private Label lbl_Lev1;
+		private Label lbl_Col0;
+		private Label lbl_Row0;
+		private Label lbl_Lev0;
+		private TextBox tb_Col1;
+		private TextBox tb_Row1;
+		private TextBox tb_Lev1;
+		private Button btn_Ok;
+		private Button btn_Cancel;
+		private TextBox tb_Col0;
+		private TextBox tb_Row0;
+		private TextBox tb_Lev0;
+		private Label lbl_Row1;
+		private Label lbl_Col1;
+		private Label lbl_Head;
+		private CheckBox cb_Ceil;
+		#endregion Designer
 	}
 }
