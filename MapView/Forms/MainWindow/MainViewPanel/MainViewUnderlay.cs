@@ -48,14 +48,14 @@ namespace MapView
 
 				if (_mapBase != null)
 				{
-					_mapBase.SelectLocationEvent -= MainViewOverlay.OnSelectLocationMain;
-					_mapBase.SelectLevelEvent    -= MainViewOverlay.OnSelectLevelMain;
+					_mapBase.SelectLocation -= MainViewOverlay.OnSelectLocationMain;
+					_mapBase.SelectLevel    -= MainViewOverlay.OnSelectLevelMain;
 				}
 
 				if ((_mapBase = value) != null)
 				{
-					_mapBase.SelectLocationEvent += MainViewOverlay.OnSelectLocationMain;
-					_mapBase.SelectLevelEvent    += MainViewOverlay.OnSelectLevelMain;
+					_mapBase.SelectLocation += MainViewOverlay.OnSelectLocationMain;
+					_mapBase.SelectLevel    += MainViewOverlay.OnSelectLevelMain;
 
 					SetOverlaySize();
 				}

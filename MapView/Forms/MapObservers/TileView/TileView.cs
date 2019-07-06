@@ -491,7 +491,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		private void OnVolutarMcdEditorClick(object sender, EventArgs e)
 		{
-			if ((MapBase as MapFileChild) != null)
+			if ((MapBase as MapFile) != null)
 			{
 				var service = new VolutarService(Options);
 				var pfe = service.FullPath;	// this will invoke a box for the user to input the
@@ -519,7 +519,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if (SelectedTilepart != null)
 			{
-				var terrain = ((MapFileChild)MapBase).GetTerrain(SelectedTilepart);
+				var terrain = ((MapFile)MapBase).GetTerrain(SelectedTilepart);
 
 				string terr = terrain.Item1;
 				string path = terrain.Item2;
@@ -575,7 +575,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			if (SelectedTilepart != null)
 			{
-				var terrain = ((MapFileChild)MapBase).GetTerrain(SelectedTilepart);
+				var terrain = ((MapFile)MapBase).GetTerrain(SelectedTilepart);
 
 				string terr = terrain.Item1;
 				string path = terrain.Item2;
@@ -708,7 +708,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			if (part != null)
 			{
-				string label = ((MapFileChild)MapBase).GetTerrainLabel(part);
+				string label = ((MapFile)MapBase).GetTerrainLabel(part);
 				info = String.Format(
 								System.Globalization.CultureInfo.CurrentCulture,
 								"{2}  terId {1}  setId {0}",
@@ -725,7 +725,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <returns></returns>
 		internal string GetTerrainLabel()
 		{
-			return (SelectedTilepart != null) ? ((MapFileChild)MapBase).GetTerrainLabel(SelectedTilepart)
+			return (SelectedTilepart != null) ? ((MapFile)MapBase).GetTerrainLabel(SelectedTilepart)
 											  : "ERROR";
 		}
 

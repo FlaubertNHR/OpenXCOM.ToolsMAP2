@@ -464,7 +464,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					// set and all these OnLocationSelected events really fire out of !
 //					MainViewOverlay.that.FirstClick = true;
 
-					MapBase.Location = new MapLocation( // fire SelectLocationEvent
+					MapBase.Location = new MapLocation( // fire SelectLocation
 													loc.Y, loc.X,
 													MapBase.Level);
 					_isMouseDrag = true;
@@ -474,8 +474,8 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			if (e.Button == MouseButtons.Right)
 			{
-				ViewerFormsManager.TopView     .Control   .QuadrantPanel.SetSelected(e.Button, 1);
-				ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.SetSelected(e.Button, 1);
+				ViewerFormsManager.TopView     .Control   .QuadrantPanel.SetSelected(MouseButtons.Right, 1);
+				ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.SetSelected(MouseButtons.Right, 1);
 			}
 //			base.OnMouseDown(e);
 		}

@@ -469,7 +469,7 @@ namespace MapView
 					tile.Vacancy();
 				}
 
-				((MapFileChild)MapBase).CalculateOccultations();
+				((MapFile)MapBase).CalculateOccultations();
 
 				RefreshViewers();
 			}
@@ -559,7 +559,7 @@ namespace MapView
 						}
 					}
 
-					((MapFileChild)MapBase).CalculateOccultations();
+					((MapFile)MapBase).CalculateOccultations();
 
 					RefreshViewers();
 				}
@@ -650,13 +650,16 @@ namespace MapView
 				var quad = ViewerFormsManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
 				var part = ViewerFormsManager.TileView.Control.SelectedTilepart;
 
+				XCMapTile tile;
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					((XCMapTile)MapBase[row, col])[quad] = part;
+					tile = ((XCMapTile)MapBase[row, col]);
+					tile[quad] = part;
+					tile.Vacancy();
 				}
 
-				((MapFileChild)MapBase).CalculateOccultations();
+				((MapFile)MapBase).CalculateOccultations();
 
 				RefreshViewers();
 			}
@@ -697,7 +700,7 @@ namespace MapView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					MapBase.Location = new MapLocation(0,0, MapBase.Level); // fire SelectLocationEvent
+					MapBase.Location = new MapLocation(0,0, MapBase.Level); // fire SelectLocation
 
 					var loc = new Point(0,0);
 					ProcessSelection(loc,loc);
@@ -734,7 +737,7 @@ namespace MapView
 							_keyDeltaX =
 							_keyDeltaY = 0;
 
-							MapBase.Location = new MapLocation(r,c, MapBase.Level); // fire SelectLocationEvent
+							MapBase.Location = new MapLocation(r,c, MapBase.Level); // fire SelectLocation
 
 							loc.X = _colOver = c;
 							loc.Y = _rowOver = r;
@@ -854,30 +857,34 @@ namespace MapView
 
 			if (MapBase != null)
 			{
-				if (e.Button == MouseButtons.Left)
+				switch (e.Button)
 				{
-					var loc = GetTileLocation(e.X, e.Y);
-					if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
-						&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+					case MouseButtons.Left:
 					{
-						_keyDeltaX =
-						_keyDeltaY = 0;
+						var loc = GetTileLocation(e.X, e.Y);
+						if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
+							&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+						{
+							_keyDeltaX =
+							_keyDeltaY = 0;
 
-						_colOver = loc.X; // stop the targeter from persisting at its
-						_rowOver = loc.Y; // previous location when the form is activated.
+							_colOver = loc.X; // stop the targeter from persisting at its
+							_rowOver = loc.Y; // previous location when the form is activated.
 
-						MapBase.Location = new MapLocation( // fire SelectLocationEvent
-														loc.Y, loc.X,
-														MapBase.Level);
-						_isMouseDragL = true;
-						ProcessSelection(loc,loc);
+							MapBase.Location = new MapLocation( // fire SelectLocation
+															loc.Y, loc.X,
+															MapBase.Level);
+							_isMouseDragL = true;
+							ProcessSelection(loc,loc);
+						}
+						break;
 					}
-				}
-				else if (e.Button == MouseButtons.Right)
-				{
-					Cursor.Current = Cursors.SizeAll;
-					_isMouseDragR = true;
-					_preloc = e.Location;
+
+					case MouseButtons.Right:
+						Cursor.Current = Cursors.SizeAll;
+						_isMouseDragR = true;
+						_preloc = e.Location;
+						break;
 				}
 			}
 		}
@@ -907,37 +914,41 @@ namespace MapView
 		{
 			if (MapBase != null)
 			{
-				if (e.Button == MouseButtons.Left)
+				switch (e.Button)
 				{
-					if (e.X != _x || e.Y != _y)
-					{
-						_x = e.X; _y = e.Y;
-
-						var loc = GetTileLocation(e.X, e.Y);
-
-						_targeterForced = false;
-						_colOver = loc.X;
-						_rowOver = loc.Y;
-
-						if (_isMouseDragL
-							&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
+					case MouseButtons.Left:
+						if (e.X != _x || e.Y != _y)
 						{
-							_keyDeltaX = _colOver - DragBeg.X; // these are in case user stops a mouse-drag
-							_keyDeltaY = _rowOver - DragBeg.Y; // and resumes selection using keyboard.
+							_x = e.X; _y = e.Y;
 
-							ProcessSelection(DragBeg, loc);
+							var loc = GetTileLocation(e.X, e.Y);
+
+							_targeterForced = false;
+							_colOver = loc.X;
+							_rowOver = loc.Y;
+
+							if (_isMouseDragL
+								&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
+							{
+								_keyDeltaX = _colOver - DragBeg.X; // these are in case user stops a mouse-drag
+								_keyDeltaY = _rowOver - DragBeg.Y; // and resumes selection using keyboard.
+
+								ProcessSelection(DragBeg, loc);
+							}
+							else
+								Invalidate();
 						}
-						else
-							Invalidate();
-					}
-				}
-				else if (e.Button == MouseButtons.Right
-					&& _isMouseDragR)
-				{
-					Point delta = _preloc - (Size)e.Location;
+						break;
 
-					MainViewUnderlay.that.ScrollHori(delta.X);
-					MainViewUnderlay.that.ScrollVert(delta.Y);
+					case MouseButtons.Right:
+						if (_isMouseDragR)
+						{
+							Point delta = _preloc - (Size)e.Location;
+	
+							MainViewUnderlay.that.ScrollHori(delta.X);
+							MainViewUnderlay.that.ScrollVert(delta.Y);
+						}
+						break;
 				}
 			}
 		}

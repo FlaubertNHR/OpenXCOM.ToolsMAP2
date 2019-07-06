@@ -1557,7 +1557,7 @@ namespace MapView
 			{
 				var f = new MapInfoOutputBox();
 				f.Show();
-				f.Analyze(MainViewUnderlay.MapBase as MapFileChild);
+				f.Analyze(MainViewUnderlay.MapBase as MapFile);
 			}
 		}
 
@@ -2700,7 +2700,7 @@ namespace MapView
 				//LogFile.WriteLine(". descriptor= " + descriptor);
 
 				bool treechanged = false;
-				var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFileChild but whatver.
+				var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
 														descriptor,
 														ref treechanged,
 														basepathDialog);
@@ -2744,7 +2744,7 @@ namespace MapView
 					tsslPosition     .Text =
 					tsslSelectionSize.Text = String.Empty;
 
-					MapChanged = ((MapFileChild)@base).IsLoadChanged; // don't bother to reset IsLoadChanged.
+					MapChanged = ((MapFile)@base).IsLoadChanged; // don't bother to reset IsLoadChanged.
 
 					ViewerFormsManager.RouteView   .Control     .ClearSelectedInfo();
 					ViewerFormsManager.TopRouteView.ControlRoute.ClearSelectedInfo();
@@ -2761,7 +2761,7 @@ namespace MapView
 
 					ViewerFormsManager.SetObservers(@base); // reset all observer events
 
-					if (RouteCheckService.CheckNodeBounds(@base as MapFileChild))
+					if (RouteCheckService.CheckNodeBounds(@base as MapFile))
 					{
 						ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 						ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = true;

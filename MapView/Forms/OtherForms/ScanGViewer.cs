@@ -295,22 +295,39 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Left)
+			switch (e.Button)
 			{
-				SingleLevel = !SingleLevel;
-				Text = GetTitle();
-				pnl_ScanG.Invalidate();
-			}
-			else if (e.Button == MouseButtons.Right)
-			{
-				string result, title;
-				MessageBoxIcon icon;
+				case MouseButtons.Left:
+					SingleLevel = !SingleLevel;
+					Text = GetTitle();
+					pnl_ScanG.Invalidate();
+					break;
 
-				if (_base.Descriptor.Pal == Palette.TftdBattle)
+				case MouseButtons.Right:
 				{
-					if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+					string result, title;
+					MessageBoxIcon icon;
+
+					if (_base.Descriptor.Pal == Palette.TftdBattle)
 					{
-						_icons = ResourceInfo.ScanGtftd;
+						if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+						{
+							_icons = ResourceInfo.ScanGtftd;
+
+							result = "SCANG.DAT has reloaded.";
+							title  = "Info";
+							icon   = MessageBoxIcon.Information;
+						}
+						else
+						{
+							result = "SCANG.DAT failed to reload.";
+							title  = "Error";
+							icon   = MessageBoxIcon.Error;
+						}
+					}
+					else if (ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+					{
+						_icons = ResourceInfo.ScanGufo;
 
 						result = "SCANG.DAT has reloaded.";
 						title  = "Info";
@@ -322,23 +339,10 @@ namespace MapView
 						title  = "Error";
 						icon   = MessageBoxIcon.Error;
 					}
+					ShowReloadResult(result, title, icon);
+					// NOTE: invalidate/refresh is not needed apparently.
+					break;
 				}
-				else if (ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
-				{
-					_icons = ResourceInfo.ScanGufo;
-
-					result = "SCANG.DAT has reloaded.";
-					title  = "Info";
-					icon   = MessageBoxIcon.Information;
-				}
-				else
-				{
-					result = "SCANG.DAT failed to reload.";
-					title  = "Error";
-					icon   = MessageBoxIcon.Error;
-				}
-				ShowReloadResult(result, title, icon);
-				// NOTE: invalidate/refresh is not needed apparently.
 			}
 		}
 

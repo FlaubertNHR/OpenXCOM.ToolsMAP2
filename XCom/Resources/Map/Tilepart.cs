@@ -77,7 +77,7 @@ namespace XCom
 
 		/// <summary>
 		/// The ID of this tilepart that's unique to the Map across all
-		/// allocated terrains. The value is set in MapFileChild..cTor.
+		/// allocated terrains. The value is set in MapFile..cTor.
 		/// IMPORTANT: The 'SetId' is written to the Mapfile (as a byte).
 		/// </summary>
 		public int SetId

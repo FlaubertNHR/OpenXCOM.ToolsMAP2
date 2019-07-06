@@ -12,7 +12,10 @@ using XCom.Services;
 
 namespace XCom
 {
-	public sealed class MapFileChild
+	/// <summary>
+	/// This is the currently loaded Map.
+	/// </summary>
+	public sealed class MapFile
 		:
 			MapFileBase
 	{
@@ -37,7 +40,7 @@ namespace XCom
 		/// <param name="descriptor"></param>
 		/// <param name="partset">a list of parts in all allocated terrains</param>
 		/// <param name="routes"></param>
-		internal MapFileChild(
+		internal MapFile(
 				Descriptor descriptor,
 				List<Tilepart> partset,
 				RouteNodeCollection routes)
@@ -180,7 +183,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Assigns route-nodes to tiles when this MapFileChild object is
+		/// Assigns route-nodes to tiles when this MapFile object is
 		/// instantiated or when importing a Routes file.
 		/// </summary>
 		public void SetupRouteNodes()
@@ -483,7 +486,7 @@ namespace XCom
 				ClearRouteNodes();
 				SetupRouteNodes();
 
-				Level = 0; // fire SelectLevelEvent
+				Level = 0; // fire SelectLevel
 			}
 			return bit;
 		}

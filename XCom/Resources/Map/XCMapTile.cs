@@ -90,8 +90,11 @@ namespace XCom
 		/// Used only by 'MapInfoOutputBox'.
 		/// </summary>
 		public bool Vacant
-		{ get; set; }
+		{ get; private set; }
 
+		/// <summary>
+		/// Creates and returns a vacant tile.
+		/// </summary>
 		public static XCMapTile VacantTile
 		{
 			get
@@ -101,7 +104,7 @@ namespace XCom
 				return tile;
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -118,7 +121,7 @@ namespace XCom
 
 			Vacancy();
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -143,6 +146,6 @@ namespace XCom
 				  && North   == null
 				  && Content == null;
 		}
-		#endregion
+		#endregion Methods
 	}
 }

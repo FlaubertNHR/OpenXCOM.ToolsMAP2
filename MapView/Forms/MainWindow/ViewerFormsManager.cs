@@ -98,14 +98,14 @@ namespace MapView.Forms.MainWindow
 		{
 			if (observer.MapBase != null)
 			{
-				observer.MapBase.SelectLocationEvent -= observer.OnSelectLocationObserver;
-				observer.MapBase.SelectLevelEvent    -= observer.OnSelectLevelObserver;
+				observer.MapBase.SelectLocation -= observer.OnSelectLocationObserver;
+				observer.MapBase.SelectLevel    -= observer.OnSelectLevelObserver;
 			}
 
 			if ((observer.MapBase = @base) != null)
 			{
-				observer.MapBase.SelectLocationEvent += observer.OnSelectLocationObserver;
-				observer.MapBase.SelectLevelEvent    += observer.OnSelectLevelObserver;
+				observer.MapBase.SelectLocation += observer.OnSelectLocationObserver;
+				observer.MapBase.SelectLevel    += observer.OnSelectLevelObserver;
 			}
 
 			foreach (string key in observer.ObserverPanels.Keys) // ie. TopPanel and QuadrantPanel

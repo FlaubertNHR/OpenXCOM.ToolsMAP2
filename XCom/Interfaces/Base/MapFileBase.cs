@@ -8,21 +8,20 @@ using XCom.Services;
 
 namespace XCom.Interfaces.Base
 {
-	#region Delegates
-	public delegate void SelectLocationEventHandler(SelectLocationEventArgs e);
-	public delegate void SelectLevelEventHandler(SelectLevelEventArgs e);
-	#endregion
-
-
 	/// <summary>
 	/// This is basically the currently loaded Map.
 	/// </summary>
 	public class MapFileBase
 	{
+		#region Delegates
+		public delegate void SelectLocationEvent(SelectLocationEventArgs e);
+		public delegate void SelectLevelEvent(SelectLevelEventArgs e);
+		#endregion Delegates
+
 		#region Events
-		public event SelectLocationEventHandler SelectLocationEvent;
-		public event SelectLevelEventHandler SelectLevelEvent;
-		#endregion
+		public event SelectLocationEvent SelectLocation;
+		public event SelectLevelEvent SelectLevel;
+		#endregion Events
 
 
 		#region Fields (static)
@@ -30,7 +29,7 @@ namespace XCom.Interfaces.Base
 		private const int HalfHeightConst =  8;
 
 		public const int MaxTerrainId = 253;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties
@@ -40,7 +39,7 @@ namespace XCom.Interfaces.Base
 		private int _level;
 		/// <summary>
 		/// Gets this MapBase's currently displayed level.
-		/// Changing level will fire a SelectLevelEvent event.
+		/// Changing level will fire a SelectLevel event.
 		/// WARNING: Level 0 is the top level of the displayed Map.
 		/// </summary>
 		public int Level
@@ -50,8 +49,8 @@ namespace XCom.Interfaces.Base
 			{
 				_level = Math.Max(0, Math.Min(value, MapSize.Levs - 1));
 
-				if (SelectLevelEvent != null)
-					SelectLevelEvent(new SelectLevelEventArgs(_level));
+				if (SelectLevel != null)
+					SelectLevel(new SelectLevelEventArgs(_level));
 			}
 		}
 
@@ -82,7 +81,7 @@ namespace XCom.Interfaces.Base
 		private MapLocation _location;
 		/// <summary>
 		/// Gets/Sets the currently selected location. Setting the location will
-		/// fire SelectLocationEvent.
+		/// fire SelectLocation.
 		/// </summary>
 		public MapLocation Location
 		{
@@ -94,11 +93,11 @@ namespace XCom.Interfaces.Base
 				{
 					_location = value;
 
-					if (SelectLocationEvent != null)
-						SelectLocationEvent(new SelectLocationEventArgs(
-																	_location,
-																	this[_location.Row,
-																		 _location.Col]));
+					if (SelectLocation != null)
+						SelectLocation(new SelectLocationEventArgs(
+																_location,
+																this[_location.Row,
+																	 _location.Col]));
 				}
 			}
 		}
@@ -134,6 +133,7 @@ namespace XCom.Interfaces.Base
 			get { return this[row, col, Level]; }
 			set { this[row, col, Level] = value; }
 		}
+
 //		/// <summary>
 //		/// Gets/Sets a MapTile using a MapLocation.
 //		/// </summary>
@@ -142,12 +142,12 @@ namespace XCom.Interfaces.Base
 //			get { return this[loc.Row, loc.Col, loc.Lev]; }
 //			set { this[loc.Row, loc.Col, loc.Lev] = value; }
 //		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiated only as the parent of MapFileChild.
+		/// cTor. Instantiated only as the parent of MapFile.
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="parts"></param>
@@ -156,7 +156,7 @@ namespace XCom.Interfaces.Base
 			Descriptor = descriptor;
 			Parts = parts;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods (virtual)
@@ -171,7 +171,7 @@ namespace XCom.Interfaces.Base
 		{}
 
 		/// <summary>
-		/// Forwards the call to MapFileChild.
+		/// Forwards the call to MapFile.
 		/// </summary>
 		/// <param name="rows"></param>
 		/// <param name="cols"></param>
@@ -189,7 +189,7 @@ namespace XCom.Interfaces.Base
 		{
 			return 0x0;
 		}
-		#endregion
+		#endregion Methods (virtual)
 
 
 		#region Methods
@@ -199,7 +199,7 @@ namespace XCom.Interfaces.Base
 		public void LevelUp()
 		{
 			if (Level > 0)
-				--Level; // fire SelectLevelEvent
+				--Level; // fire SelectLevel
 		}
 
 		/// <summary>
@@ -208,29 +208,21 @@ namespace XCom.Interfaces.Base
 		public void LevelDown()
 		{
 			if (Level < MapSize.Levs - 1)
-				++Level; // fire SelectLevelEvent
+				++Level; // fire SelectLevel
 		}
 
 		/// <summary>
 		/// Not generic enough to call with custom derived classes other than
-		/// MapFileChild.
+		/// MapFile.
 		/// </summary>
 		/// <param name="fullpath"></param>
 		public void Screenshot(string fullpath)
 		{
-			var pal = Descriptor.Pal;
-
-//			var pal = GetFirstFloorPalette();
-//			if (pal == null)
-//				throw new ArgumentNullException("fullpath", "MapFileBase: At least 1 ground tile is required.");
-			// TODO: I don't want to see 'ArgumentNullException'. Just say
-			// what's wrong and save the technical details for the debugger.
-
 			var width = MapSize.Rows + MapSize.Cols;
 			var b = BitmapService.CreateTransparent(
 												width * (XCImage.SpriteWidth / 2),
 												(MapSize.Levs - Level) * 24 + width * 8,
-												pal.ColorTable);
+												Descriptor.Pal.ColorTable);
 
 			var start = new Point(
 								(MapSize.Rows - 1) * (XCImage.SpriteWidth / 2),
@@ -299,19 +291,6 @@ namespace XCom.Interfaces.Base
 			if (b != null)
 				b.Dispose();
 		}
-
-/*		private Palette GetFirstFloorPalette()
-		{
-			for (int lev = 0; lev != MapSize.Levs; ++lev)
-			for (int row = 0; row != MapSize.Rows; ++row)
-			for (int col = 0; col != MapSize.Cols; ++col)
-			{
-				var tile = this[row, col, lev] as XCMapTile;
-				if (tile.Floor != null)
-					return tile.Floor[0].Pal;
-			}
-			return null;
-		}*/
-		#endregion
+		#endregion Methods
 	}
 }

@@ -162,24 +162,26 @@ namespace McdView
 
 				if (id < _f.Spriteset.Count)
 				{
-					if (e.Button == MouseButtons.Left)
+					switch (e.Button)
 					{
-						_f.SetSprite(Phase, id);
-					}
-					else if (e.Button == MouseButtons.Right)
-					{
-						if (MessageBox.Show(
-										this,
-										"Set all sprite phases to #" + id,
-										" Set all sprite phases",
-										MessageBoxButtons.YesNo,
-										MessageBoxIcon.Question,
-										MessageBoxDefaultButton.Button1,
-										0) == DialogResult.No)
-						{
-							return; // do nothing if No.
-						}
-						_f.SetAllSprites(id.ToString());
+						case MouseButtons.Left:
+							_f.SetSprite(Phase, id);
+							break;
+
+						case MouseButtons.Right:
+							if (MessageBox.Show(
+											this,
+											"Set all sprite phases to #" + id,
+											" Set all sprite phases",
+											MessageBoxButtons.YesNo,
+											MessageBoxIcon.Question,
+											MessageBoxDefaultButton.Button1,
+											0) == DialogResult.No)
+							{
+								return; // do nothing if No.
+							}
+							_f.SetAllSprites(id.ToString());
+							break;
 					}
 					Close();
 				}

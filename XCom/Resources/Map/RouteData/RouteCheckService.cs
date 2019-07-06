@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-using XCom.Resources.Map.RouteData;
-
 
 namespace XCom.Resources.Map.RouteData
 {
 	public static class RouteCheckService
 	{
 		#region Fields
-		private static MapFileChild _file;
+		private static MapFile _file;
 
 		private static readonly List<RouteNode> _invalids = new List<RouteNode>();
 		private static int _count;
@@ -25,7 +23,7 @@ namespace XCom.Resources.Map.RouteData
 		/// <param name="file"></param>
 		/// <param name="ludi">true if user-invoked</param>
 		/// <returns>true if user opted to clear invalid nodes</returns>
-		public static bool CheckNodeBounds(MapFileChild file, bool ludi = false)
+		public static bool CheckNodeBounds(MapFile file, bool ludi = false)
 		{
 			if ((_file = file) != null)
 			{
@@ -54,7 +52,7 @@ namespace XCom.Resources.Map.RouteData
 		/// <param name="file"></param>
 		/// <param name="node">the node to delete</param>
 		/// <returns>true if user chooses to delete out-of-bounds node</returns>
-		public static bool ShowInvalid(MapFileChild file, RouteNode node)
+		public static bool ShowInvalid(MapFile file, RouteNode node)
 		{
 			using (var f = new RouteCheckInfobox())
 			{

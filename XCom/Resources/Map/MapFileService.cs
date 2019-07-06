@@ -144,10 +144,10 @@ namespace XCom
 					}
 
 					var RMP = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
-					var MAP = new MapFileChild(
-											descriptor,
-											partset,
-											RMP);
+					var MAP = new MapFile(
+										descriptor,
+										partset,
+										RMP);
 					return MAP;
 				}
 

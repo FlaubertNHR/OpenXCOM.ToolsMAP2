@@ -129,7 +129,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Map\MapFileChild.cs">
+    <Compile Include="Resources\Map\MapFile.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resources\Map\XCMapTile.cs">

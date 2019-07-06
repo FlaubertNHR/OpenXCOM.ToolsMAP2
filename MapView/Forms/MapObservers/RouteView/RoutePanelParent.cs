@@ -64,13 +64,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 			set { _pos = value; }
 		}
 
-		private MapFileChild _child;
-		internal protected MapFileChild MapChild
+		private MapFile _file;
+		internal protected MapFile MapFile
 		{
-			get { return _child; }
+			get { return _file; }
 			set
 			{
-				_child = value;
+				_file = value;
 				OnResize(EventArgs.Empty);
 			}
 		}
@@ -170,14 +170,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		protected override void OnResize(EventArgs e)
 		{
-			if (MapChild != null)
+			if (MapFile != null)
 			{
 				int width  = Width  - OffsetX * 2;
 				int height = Height - OffsetY * 2;
 
 				if (height > width / 2) // use width
 				{
-					DrawAreaWidth = width / (MapChild.MapSize.Rows + MapChild.MapSize.Cols);
+					DrawAreaWidth = width / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
 
 					if (DrawAreaWidth % 2 != 0)
 						--DrawAreaWidth;
@@ -186,12 +186,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else // use height
 				{
-					DrawAreaHeight = height / (MapChild.MapSize.Rows + MapChild.MapSize.Cols);
+					DrawAreaHeight = height / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
 					DrawAreaWidth  = DrawAreaHeight * 2;
 				}
 
 				Origin = new Point( // offset the left and top edges to account for the 3d panel border
-								OffsetX + MapChild.MapSize.Rows * DrawAreaWidth,
+								OffsetX + MapFile.MapSize.Rows * DrawAreaWidth,
 								OffsetY);
 
 				BlobService.HalfWidth  = DrawAreaWidth;
@@ -214,7 +214,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			Select();
 
-			if (MapChild != null) // safety.
+			if (MapFile != null) // safety.
 			{
 				var loc = GetTileLocation(e.X, e.Y);
 				if (loc.X != -1)
@@ -222,9 +222,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 					MainViewOverlay.that._keyDeltaX =
 					MainViewOverlay.that._keyDeltaY = 0;
 
-					MapChild.Location = new MapLocation( // fire SelectLocationEvent
+					MapFile.Location = new MapLocation( // fire SelectLocation
 													loc.Y, loc.X,
-													MapChild.Level);
+													MapFile.Level);
 
 					MainViewOverlay.that.ProcessSelection(loc,loc);	// set selected location for other viewers.
 																	// NOTE: drag-selection is not allowed here.
@@ -232,8 +232,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					{
 						var args = new RoutePanelEventArgs(
 														e.Button,
-														MapChild[loc.Y, loc.X],
-														MapChild.Location);
+														MapFile[loc.Y, loc.X],
+														MapFile.Location);
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 					}
 
@@ -259,7 +259,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if (MapChild != null // safety.
+			if (MapFile != null // safety.
 				&& RoutePanelMouseUpEvent != null)
 			{
 				var loc = GetTileLocation(e.X, e.Y);
@@ -267,10 +267,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					var args = new RoutePanelEventArgs(
 													e.Button,
-													MapChild[loc.Y, loc.X],
+													MapFile[loc.Y, loc.X],
 													new MapLocation(
 																loc.Y, loc.X,
-																MapChild.Level));
+																MapFile.Level));
 					RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 				}
 			}
@@ -286,14 +286,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
-			if (MapChild != null) // safety.
+			if (MapFile != null) // safety.
 			{
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
 
 				if (!MainViewOverlay.that.FirstClick)
 				{
-					MapChild.Location = new MapLocation(0,0, MapChild.Level); // fire SelectLocationEvent
+					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire SelectLocation
 
 					var loc = new Point(0,0);
 					MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -302,8 +302,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					{
 						var args = new RoutePanelEventArgs(
 														MouseButtons.Left,
-														MapChild[0,0],
-														MapChild.Location);
+														MapFile[0,0],
+														MapFile.Location);
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
 						ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
@@ -317,17 +317,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 					{
 						var args = new RoutePanelEventArgs(
 														MouseButtons.Right,
-														MapChild[MapChild.Location.Row,
-																 MapChild.Location.Col],
-														MapChild.Location);
+														MapFile[MapFile.Location.Row,
+																MapFile.Location.Col],
+														MapFile.Location);
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
 						ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
 						ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 					}
 					SelectedLocation = new Point(
-											MapChild.Location.Col,
-											MapChild.Location.Row);
+											MapFile.Location.Col,
+											MapFile.Location.Row);
 				}
 				else if (!keyData.HasFlag(Keys.Shift))
 				{
@@ -353,12 +353,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						int r = MapChild.Location.Row + loc.Y;
-						int c = MapChild.Location.Col + loc.X;
-						if (   r > -1 && r < MapChild.MapSize.Rows
-							&& c > -1 && c < MapChild.MapSize.Cols)
+						int r = MapFile.Location.Row + loc.Y;
+						int c = MapFile.Location.Col + loc.X;
+						if (   r > -1 && r < MapFile.MapSize.Rows
+							&& c > -1 && c < MapFile.MapSize.Cols)
 						{
-							MapChild.Location = new MapLocation(r,c, MapChild.Level); // fire SelectLocationEvent
+							MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation
 
 							loc.X = c; loc.Y = r;
 							MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -367,8 +367,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 							{
 								var args = new RoutePanelEventArgs(
 																MouseButtons.Left,
-																MapChild[r,c],
-																MapChild.Location);
+																MapFile[r,c],
+																MapFile.Location);
 								RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
 								ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
@@ -379,15 +379,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 					}
 					else if (vert != 0)
 					{
-						int level = MapChild.Level + vert;
-						if (level > -1 && level < MapChild.MapSize.Levs)
+						int level = MapFile.Level + vert;
+						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
 							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
 																								MouseButtons.None,
 																								0, 0,0, vert));
-							MapChild.Location = new MapLocation( // fire SelectLocationEvent
-															MapChild.Location.Row,
-															MapChild.Location.Col,
+							MapFile.Location = new MapLocation( // fire SelectLocation
+															MapFile.Location.Row,
+															MapFile.Location.Col,
 															level);
 						}
 					}
@@ -416,28 +416,28 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						int r = MapChild.Location.Row + loc.Y;
-						int c = MapChild.Location.Col + loc.X;
-						if (   r > -1 && r < MapChild.MapSize.Rows
-							&& c > -1 && c < MapChild.MapSize.Cols)
+						int r = MapFile.Location.Row + loc.Y;
+						int c = MapFile.Location.Col + loc.X;
+						if (   r > -1 && r < MapFile.MapSize.Rows
+							&& c > -1 && c < MapFile.MapSize.Cols)
 						{
-							if (((XCMapTile)MapChild[r,c, MapChild.Level]).Node == null)
+							if (((XCMapTile)MapFile[r,c, MapFile.Level]).Node == null)
 							{
-								RouteNode node = ((XCMapTile)MapChild[MapChild.Location.Row,
-																	  MapChild.Location.Col,
-																	  MapChild.Level]).Node;
+								RouteNode node = ((XCMapTile)MapFile[MapFile.Location.Row,
+																	 MapFile.Location.Col,
+																	 MapFile.Level]).Node;
 								if (node != null && node == NodeSelected)
 								{
 									RouteView.Dragnode = node;
 
-									MapChild.Location = new MapLocation(r,c, MapChild.Level); // fire SelectLocationEvent
+									MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation
 
 									if (RoutePanelMouseUpEvent != null)
 									{
 										var args = new RoutePanelEventArgs(
 																		MouseButtons.Left,
-																		MapChild[r,c],
-																		MapChild.Location);
+																		MapFile[r,c],
+																		MapFile.Location);
 										RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
 										ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
@@ -449,16 +449,16 @@ namespace MapView.Forms.MapObservers.RouteViews
 					}
 					else if (vert != 0)
 					{
-						int level = MapChild.Level + vert;
-						if (level > -1 && level < MapChild.MapSize.Levs)
+						int level = MapFile.Level + vert;
+						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
-							if (((XCMapTile)MapChild[MapChild.Location.Row,
-													 MapChild.Location.Col,
-													 level]).Node == null)
+							if (((XCMapTile)MapFile[MapFile.Location.Row,
+													MapFile.Location.Col,
+													level]).Node == null)
 							{
-								RouteNode node = ((XCMapTile)MapChild[MapChild.Location.Row,
-																	  MapChild.Location.Col,
-																	  MapChild.Level]).Node;
+								RouteNode node = ((XCMapTile)MapFile[MapFile.Location.Row,
+																	 MapFile.Location.Col,
+																	 MapFile.Level]).Node;
 								if (node != null && node == NodeSelected)
 								{
 									RouteView.Dragnode = node;
@@ -466,17 +466,18 @@ namespace MapView.Forms.MapObservers.RouteViews
 									ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
 																										MouseButtons.None,
 																										0, 0,0, vert));
-									MapChild.Location = new MapLocation( // fire SelectLocationEvent
-																	MapChild.Location.Row,
-																	MapChild.Location.Col,
+									MapFile.Location = new MapLocation( // fire SelectLocation
+																	MapFile.Location.Row,
+																	MapFile.Location.Col,
 																	level);
 
 									if (RoutePanelMouseUpEvent != null)
 									{
 										var args = new RoutePanelEventArgs(
 																		MouseButtons.Left,
-																		MapChild[MapChild.Location.Row, MapChild.Location.Col],
-																		MapChild.Location);
+																		MapFile[MapFile.Location.Row,
+																				MapFile.Location.Col],
+																		MapFile.Location);
 										RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
 										ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
@@ -578,10 +579,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// location for a tile</returns>
 		internal protected XCMapTile GetTile(ref int x, ref int y)
 		{
-			var loc = GetTileLocation(x, y);
+			var loc = GetTileLocation(x,y);
 			x = loc.X;
 			y = loc.Y;
-			return (x != -1) ? MapChild[y, x] as XCMapTile
+			return (x != -1) ? MapFile[y,x] as XCMapTile
 							 : null;
 		}
 
@@ -594,7 +595,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// is invalid</returns>
 		internal protected Point GetTileLocation(int x, int y)
 		{
-			if (MapChild != null)
+			if (MapFile != null)
 			{
 				x -= Origin.X;
 				y -= Origin.Y;
@@ -607,8 +608,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 									(int)Math.Floor(xd),
 									(int)Math.Floor(yd));
 
-				if (   point.Y > -1 && point.Y < MapChild.MapSize.Rows
-					&& point.X > -1 && point.X < MapChild.MapSize.Cols)
+				if (   point.Y > -1 && point.Y < MapFile.MapSize.Rows
+					&& point.X > -1 && point.X < MapFile.MapSize.Cols)
 				{
 					return point;
 				}

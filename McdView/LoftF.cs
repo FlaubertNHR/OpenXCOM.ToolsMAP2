@@ -189,22 +189,26 @@ namespace McdView
 
 				if (id < _f.LoFT.Length / 256)
 				{
-					if (e.Button == MouseButtons.Left)
-						_f.SetLoft(id);
-					else if (e.Button == MouseButtons.Right)
+					switch (e.Button)
 					{
-						if (MessageBox.Show(
-										this,
-										"Set all LoFTs to #" + id,
-										" Set all LoFTs",
-										MessageBoxButtons.YesNo,
-										MessageBoxIcon.Question,
-										MessageBoxDefaultButton.Button1,
-										0) == DialogResult.No)
-						{
-							return; // do nothing if No.
-						}
-						_f.SetAllLofts(id.ToString());
+						case MouseButtons.Left:
+							_f.SetLoft(id);
+							break;
+
+						case MouseButtons.Right:
+							if (MessageBox.Show(
+											this,
+											"Set all LoFTs to #" + id,
+											" Set all LoFTs",
+											MessageBoxButtons.YesNo,
+											MessageBoxIcon.Question,
+											MessageBoxDefaultButton.Button1,
+											0) == DialogResult.No)
+							{
+								return; // do nothing if No.
+							}
+							_f.SetAllLofts(id.ToString());
+							break;
 					}
 					Close();
 				}

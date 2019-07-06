@@ -118,28 +118,34 @@ namespace McdView
 					var tb = Tag as TextBox;
 					string id = tb.Text;
 
-					if (e.Button == MouseButtons.Left)
+					switch (e.Button)
 					{
-						using (var f = new LoftF(
-												_f,
-												Int32.Parse(tb.Tag.ToString()),
-												Int32.Parse(id)))
+						case MouseButtons.Left:
 						{
-							_f._pnlLoFT = this;
-							f.ShowDialog();
+							using (var f = new LoftF(
+													_f,
+													Int32.Parse(tb.Tag.ToString()),
+													Int32.Parse(id)))
+							{
+								_f._pnlLoFT = this;
+								f.ShowDialog();
+							}
+							break;
 						}
-					}
-					else if (e.Button == MouseButtons.Right
-						&& MessageBox.Show(
-										this,
-										"Set all LoFTs to #" + id,
-										" Set all LoFTs",
-										MessageBoxButtons.YesNo,
-										MessageBoxIcon.Question,
-										MessageBoxDefaultButton.Button1,
-										0) == DialogResult.Yes)
-					{
-						_f.SetAllLofts(id);
+
+						case MouseButtons.Right:
+							if (MessageBox.Show(
+											this,
+											"Set all LoFTs to #" + id,
+											" Set all LoFTs",
+											MessageBoxButtons.YesNo,
+											MessageBoxIcon.Question,
+											MessageBoxDefaultButton.Button1,
+											0) == DialogResult.Yes)
+							{
+								_f.SetAllLofts(id);
+							}
+							break;
 					}
 
 					_f.OnClick_IsoLoft(null, EventArgs.Empty); // select the IsoLoFT's trackbar

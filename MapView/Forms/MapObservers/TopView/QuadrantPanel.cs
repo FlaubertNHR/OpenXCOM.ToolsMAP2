@@ -177,6 +177,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								case 1:
 									var tileView = ViewerFormsManager.TileView.Control;
 									_tile[SelectedQuadrant] = tileView.SelectedTilepart;
+									_tile.Vacancy();
 
 									MainViewOverlay.that.Refresh();
 
@@ -185,7 +186,10 @@ namespace MapView.Forms.MapObservers.TopViews
 									break;
 
 								case 2:
+									// TODO: GENERAL - Bypass operations (and the MapChanged flag)
+									//       if user does an operation that results in identical state.
 									_tile[SelectedQuadrant] = null;
+									_tile.Vacancy();
 									break;
 							}
 

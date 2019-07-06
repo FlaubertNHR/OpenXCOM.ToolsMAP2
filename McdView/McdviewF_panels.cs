@@ -225,24 +225,30 @@ namespace McdView
 							case 7:  id = tb07_phase7.Text; break;
 						}
 
-						if (e.Button == MouseButtons.Left)
+						switch (e.Button)
 						{
-							using (var f = new SpritesetF(this, phase, Int32.Parse(id)))
+							case MouseButtons.Left:
 							{
-								f.ShowDialog();
+								using (var f = new SpritesetF(this, phase, Int32.Parse(id)))
+								{
+									f.ShowDialog();
+								}
+								break;
 							}
-						}
-						else if (e.Button == MouseButtons.Right
-							&& MessageBox.Show(
-											this,
-											"Set all sprite phases to #" + id,
-											" Set all sprite phases",
-											MessageBoxButtons.YesNo,
-											MessageBoxIcon.Question,
-											MessageBoxDefaultButton.Button1,
-											0) == DialogResult.Yes)
-						{
-							SetAllSprites(id);
+
+							case MouseButtons.Right:
+								if (MessageBox.Show(
+												this,
+												"Set all sprite phases to #" + id,
+												" Set all sprite phases",
+												MessageBoxButtons.YesNo,
+												MessageBoxIcon.Question,
+												MessageBoxDefaultButton.Button1,
+												0) == DialogResult.Yes)
+								{
+									SetAllSprites(id);
+								}
+								break;
 						}
 					}
 				}

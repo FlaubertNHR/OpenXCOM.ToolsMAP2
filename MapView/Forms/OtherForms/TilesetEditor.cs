@@ -371,7 +371,7 @@ namespace MapView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Filter = "Map Files (*.map)|*.map|All Files (*.*)|*.*";
+				ofd.Filter = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
 				ofd.Title  = "Select a Map file";
 				ofd.InitialDirectory = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
 				if (!Directory.Exists(ofd.InitialDirectory))
@@ -839,9 +839,9 @@ namespace MapView
 								Directory.CreateDirectory(Path.GetDirectoryName(pfeMap));
 								using (var fs = File.Create(pfeMap))	// create the Map-file and release its handle.
 								{										// NOTE: This has to happen now because once the MapTree node
-									MapFileChild.CreateMap(				// is selected it will try to load the .MAP file etc.
-														fs,
-														10,10,1); // <- default new Map size
+									MapFile.CreateMap(					// is selected it will try to load the .MAP file etc.
+													fs,
+													10,10,1); // <- default new Map size
 								}
 
 								if (File.Exists(pfeMap) && File.Exists(pfeRoutes)) // NOTE: The descriptor has already been created with the Create descriptor button.
@@ -1407,7 +1407,7 @@ namespace MapView
 			MessageBox.Show(
 						this,
 						error,
-						"Error",
+						" Error",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,
@@ -1423,7 +1423,7 @@ namespace MapView
 			MessageBox.Show(
 						this,
 						warn,
-						"Warning",
+						" Warning",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Warning,
 						MessageBoxDefaultButton.Button1,
@@ -1439,7 +1439,7 @@ namespace MapView
 			MessageBox.Show(
 						this,
 						info,
-						"Info",
+						" Info",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Information,
 						MessageBoxDefaultButton.Button1,
