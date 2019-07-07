@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,19 +13,102 @@ namespace MapView
 		:
 			Form
 	{
-		internal MapInfoOutputBox()
+		#region Fields
+		private readonly MapFile _file;
+
+		private readonly HashSet<int> _sprites = new HashSet<int>();
+		private readonly HashSet<int> _records = new HashSet<int>();
+
+		private readonly HashSet<Tuple<string, int>> _used =
+					 new HashSet<Tuple<string, int>>();
+
+		internal MapDetailForm _fdetail;
+		#endregion Fields
+
+
+		#region cTor
+		internal MapInfoOutputBox(MapFile file)
 		{
 			InitializeComponent();
+			_file = file;
+
+			Text = " MapInfo - " + _file.Descriptor.Label;
+		}
+		#endregion cTor
+
+
+/*		#region Events (override)
+		protected override void OnActivated(EventArgs e)
+		{
+			base.OnActivated(e);
+		}
+		#endregion Events (override) */
+
+
+		#region Events
+		// TODO:
+		// - MapDetail		(Terrains in the Tileset: label + count)
+		// - RouteDetail	(routenodes, spawnnodes + ranks, attacknodes in the Tileset or Category)
+		// - CategoryDetail	(Tilesets in the Category)
+		// - GroupDetail	(Categories + Tilesets in the Group)
+		// - TerrainDetail	(all Tilesets that use a Terrain or all Terrains used in the Maptree)
+		private void click_btnTerrainDetail(object sender, EventArgs e)
+		{
+			if (_fdetail == null)
+			{
+				_fdetail = new MapDetailForm(this, _file);
+
+				_fdetail.SetTitleText(" Detail - " + _file.Descriptor.Label);
+				_fdetail.SetHeaderText("MCD Record usage");
+				_fdetail.SetCopyableText(GetTerrainDetail());
+
+				_fdetail.Show(this);
+			}
+			else if (_fdetail.WindowState == FormWindowState.Minimized)
+			{
+				_fdetail.WindowState = FormWindowState.Normal;
+			}
+			else
+			{
+				_fdetail.TopMost = true;
+				_fdetail.TopMost = false;
+			}
 		}
 
-
-		internal void Analyze(MapFile file)
+		/// <summary>
+		/// Closes this dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void click_btnClose(object sender, EventArgs e)
 		{
-			gbInfo.Text = " " + file.Descriptor.Label + " ";
+			Close();
+		}
+		#endregion Events
 
-			int cols = file.MapSize.Cols;
-			int rows = file.MapSize.Rows;
-			int levs = file.MapSize.Levs;
+
+		#region Methods (static)
+		private static int GetLongestTerrainLabelLength(Dictionary<int, Tuple<string,string>> terrains)
+		{
+			int length = 0, lengthtest;
+			foreach (var terrain in terrains)
+			{
+				if ((lengthtest = terrain.Value.Item1.Length) > length)
+					length = lengthtest;
+			}
+			return length;
+		}
+		#endregion Methods (static)
+
+
+		#region Methods
+		internal void Analyze()
+		{
+			gbInfo.Text = " " + _file.Descriptor.Label + " ";
+
+			int cols = _file.MapSize.Cols;
+			int rows = _file.MapSize.Rows;
+			int levs = _file.MapSize.Levs;
 
 			lbl2_Dimensions.Text = cols + " x "
 								 + rows + " x "
@@ -34,13 +118,13 @@ namespace MapView
 			int recordsTotal = 0;
 
 			string text = String.Empty;
-			for (int i = 0; i != file.Terrains.Count; ++i)
+			for (int i = 0; i != _file.Terrains.Count; ++i)
 			{
 				if (!String.IsNullOrEmpty(text))
 					text += " | ";
 
-				text += file.Terrains[i].Item1;
-				recordsTotal += file.Descriptor.GetRecordCount(i);
+				text += _file.Terrains[i].Item1;
+				recordsTotal += _file.Descriptor.GetRecordCount(i);
 			}
 			lbl2_Terrains.Text = text;
 
@@ -55,41 +139,34 @@ namespace MapView
 			int slots  = 0;
 			int vacant = 0;
 
-			var sprites = new HashSet<int>();
-			var records = new HashSet<int>();
-
 			pBar.Maximum = cols * rows * levs;
 			pBar.Value = 0;
+
+			Tilepart part;
 
 			for (int col = 0; col != cols; ++col)
 			for (int row = 0; row != rows; ++row)
 			for (int lev = 0; lev != levs; ++lev)
 			{
-				var tile = file[row, col, lev] as XCMapTile;
+				var tile = _file[row, col, lev] as XCMapTile;
 				if (!tile.Vacant)
 				{
-					if (tile.Floor != null)
+					for (int i = 0; i != 4; ++i)
 					{
-						++slots;
-						Count(tile.Floor, sprites, records);
-					}
+						switch (i)
+						{
+							default:
+							case 0: part = tile.Floor;   break;
+							case 1: part = tile.West;    break;
+							case 2: part = tile.North;   break;
+							case 3: part = tile.Content; break;
+						}
 
-					if (tile.West != null)
-					{
-						++slots;
-						Count(tile.West, sprites, records);
-					}
-
-					if (tile.North != null)
-					{
-						++slots;
-						Count(tile.North, sprites, records);
-					}
-
-					if (tile.Content != null)
-					{
-						++slots;
-						Count(tile.Content, sprites, records);
+						if (part != null)
+						{
+							++slots;
+							tally(part);
+						}
 					}
 				}
 				else
@@ -100,11 +177,11 @@ namespace MapView
 			}
 
 			double pct;;
-			pct = Math.Round(100.0 * (double)sprites.Count / spritesTotal, 2);
-			lbl2_PckSprites.Text = sprites.Count + " of " + spritesTotal + " - " + pct.ToString("N2") + "%";
+			pct = Math.Round(100.0 * (double)_sprites.Count / spritesTotal, 2);
+			lbl2_PckSprites.Text = _sprites.Count + " of " + spritesTotal + " - " + pct.ToString("N2") + "%";
 
-			pct = Math.Round(100.0 * (double)records.Count / recordsTotal, 2);
-			lbl2_McdRecords.Text = records.Count + " of " + recordsTotal + " - " + pct.ToString("N2") + "%";
+			pct = Math.Round(100.0 * (double)_records.Count / recordsTotal, 2);
+			lbl2_McdRecords.Text = _records.Count + " of " + recordsTotal + " - " + pct.ToString("N2") + "%";
 
 			pct = Math.Round(100.0 * (double)slots / (pBar.Maximum * 4), 2);
 			lbl2_SlotsFilled.Text = slots + " of " + (pBar.Maximum * 4) + " - " + pct.ToString("N2") + "%";
@@ -117,34 +194,58 @@ namespace MapView
 			btnCancel.Visible = true;
 		}
 
-		private static void Count(
-				Tilepart part,
-				ISet<int> sprites,
-				ISet<int> records)
+		private void tally(Tilepart part)
 		{
-			if (part != null && records.Add(part.Record.SetId))
+			if (part != null && _records.Add(part.Record.SetId))
 			{
-				foreach (PckImage sprite in part.Sprites)
-					sprites.Add(sprite.SetId);
+				_used.Add(new Tuple<string, int>(_file.GetTerrainLabel(part), part.TerId));
 
-				Count(part.Dead, sprites, records);
-				Count(part.Altr, sprites, records);
+				foreach (var sprite in part.Sprites)
+					_sprites.Add((sprite as PckImage).SetId);
+
+				tally(part.Dead);
+				tally(part.Altr);
 			}
 		}
 
-		private void click_btnDetail(object sender, EventArgs e)
+		/// <summary>
+		/// Gets a batch of copyable text describing terrain-details.
+		/// </summary>
+		/// <returns></returns>
+		private string GetTerrainDetail()
 		{
-			var f = new Infobox(
-							"title",
-							"label",
-							"copyable");
-			f.Show(this);
-		}
+			string detail = String.Empty;
 
-		private void click_btnClose(object sender, EventArgs e)
-		{
-			Close();
+			int labelwidth = GetLongestTerrainLabelLength(_file.Terrains);
+			string label;
+
+			foreach (var terrain in _file.Terrains)
+			{
+				if (!String.IsNullOrEmpty(detail))
+					detail += Environment.NewLine;
+
+				label = terrain.Value.Item1;
+				detail += "[" + terrain.Key + "] " + label + " - " + _file.Descriptor.GetTerrainDirectory(terrain.Value.Item2);
+
+				int terraincount = _file.Descriptor.GetRecordCount(terrain.Key, true);
+
+				for (int i = 0; i != terraincount; ++i)
+				{
+					if (_used.Contains(new Tuple<string, int>(label, i)))
+						detail += Environment.NewLine + "    + " + i;
+				}
+
+				for (int i = 0; i != terraincount; ++i)
+				{
+					if (!_used.Contains(new Tuple<string, int>(label, i)))
+						detail += Environment.NewLine + "    - " + i;
+				}
+				detail += Environment.NewLine;
+			}
+			return detail;
 		}
+		#endregion Methods
+
 
 
 		#region Designer
@@ -302,7 +403,7 @@ namespace MapView
 			this.btnDetail.Text = "Detail";
 			this.btnDetail.UseVisualStyleBackColor = true;
 			this.btnDetail.Visible = false;
-			this.btnDetail.Click += new System.EventHandler(this.click_btnDetail);
+			this.btnDetail.Click += new System.EventHandler(this.click_btnTerrainDetail);
 			// 
 			// btnCancel
 			// 
@@ -382,7 +483,7 @@ namespace MapView
 
 		}
 
-		private System.ComponentModel.Container components = null;
+		private Container components = null;
 
 		private GroupBox gbInfo;
 		private Label lbl1_Dimensions;

@@ -1555,9 +1555,9 @@ namespace MapView
 		{
 			if (MainViewUnderlay.MapBase != null)
 			{
-				var f = new MapInfoOutputBox();
-				f.Show();
-				f.Analyze(MainViewUnderlay.MapBase as MapFile);
+				var f = new MapInfoOutputBox(MainViewUnderlay.MapBase as MapFile);
+				f.Show(); // no owner. TODO: perhaps MainView ...
+				f.Analyze();
 			}
 		}
 
@@ -1570,7 +1570,7 @@ namespace MapView
 					miScanG.Checked = true;
 
 					ScanG = new ScanGViewer(MainViewUnderlay.MapBase);
-					ScanG.Show();
+					ScanG.Show(); // no owner. TODO: perhaps MainView ... or add the ScanG dialog to MainMenusManager etc.
 				}
 				else
 					ScanG.BringToFront();

@@ -208,6 +208,7 @@
     <Compile Include="Forms\OtherForms\ConfigurationForm.Designer.cs">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OtherForms\MapDetailForm.cs" />
     <Compile Include="Forms\OtherForms\MapTreeInputBox.cs" />
     <Compile Include="Forms\OtherForms\MapTreeInputBox.Designer.cs">
       <DependentUpon>MapTreeInputBox.cs</DependentUpon>
@@ -314,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\ConfigurationForm.resx">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OtherForms\MapDetailForm.resx">
+      <DependentUpon>MapDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\MapResizeInputBox.resx">
       <DependentUpon>MapResizeInputBox.cs</DependentUpon>

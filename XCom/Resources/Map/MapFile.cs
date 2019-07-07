@@ -97,8 +97,8 @@ namespace XCom
 				int cols = bs.ReadByte();
 				int levs = bs.ReadByte();
 
-				Tiles = new MapTileList(rows, cols, levs);
-				MapSize  = new MapSize(rows, cols, levs);
+				Tiles   = new MapTileList(rows, cols, levs);
+				MapSize = new MapSize(rows, cols, levs);
 
 				for (int lev = 0; lev != levs; ++lev)
 				for (int row = 0; row != rows; ++row)
@@ -127,7 +127,7 @@ namespace XCom
 		/// <param name="quad2">the westwall</param>
 		/// <param name="quad3">the northwall</param>
 		/// <param name="quad4">the content</param>
-		/// <returns></returns>
+		/// <returns>the XCMapTile created</returns>
 		private XCMapTile CreateTile(
 				IList<Tilepart> parts,
 				int quad1,
@@ -218,7 +218,7 @@ namespace XCom
 		{
 			if (MapSize.Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
 			{
-				MapTileBase tile = null;
+				MapTileBase tile;
 
 				for (int lev = MapSize.Levs - 1; lev != 0; --lev)
 				for (int row = 0; row != MapSize.Rows - 2; ++row)
@@ -226,24 +226,19 @@ namespace XCom
 				{
 					if ((tile = this[row, col, lev]) != null) // safety. The tile should always be valid.
 					{
-						if (!forceVis
-							&& ((XCMapTile)this[row,     col,     lev - 1]).Floor != null // above
+						tile.Occulted = (!forceVis
+									 && ((XCMapTile)this[row,     col,     lev - 1]).Floor != null // above
 
-							&& ((XCMapTile)this[row + 1, col,     lev - 1]).Floor != null // south
-							&& ((XCMapTile)this[row + 2, col,     lev - 1]).Floor != null
+									 && ((XCMapTile)this[row + 1, col,     lev - 1]).Floor != null // south
+									 && ((XCMapTile)this[row + 2, col,     lev - 1]).Floor != null
 
-							&& ((XCMapTile)this[row,     col + 1, lev - 1]).Floor != null // east
-							&& ((XCMapTile)this[row,     col + 2, lev - 1]).Floor != null
+									 && ((XCMapTile)this[row,     col + 1, lev - 1]).Floor != null // east
+									 && ((XCMapTile)this[row,     col + 2, lev - 1]).Floor != null
 
-							&& ((XCMapTile)this[row + 1, col + 1, lev - 1]).Floor != null // southeast
-							&& ((XCMapTile)this[row + 1, col + 2, lev - 1]).Floor != null
-							&& ((XCMapTile)this[row + 2, col + 1, lev - 1]).Floor != null
-							&& ((XCMapTile)this[row + 2, col + 2, lev - 1]).Floor != null)
-						{
-							tile.Occulted = true;
-						}
-						else
-							tile.Occulted = false;
+									 && ((XCMapTile)this[row + 1, col + 1, lev - 1]).Floor != null // southeast
+									 && ((XCMapTile)this[row + 1, col + 2, lev - 1]).Floor != null
+									 && ((XCMapTile)this[row + 2, col + 1, lev - 1]).Floor != null
+									 && ((XCMapTile)this[row + 2, col + 2, lev - 1]).Floor != null);
 					}
 				}
 			}

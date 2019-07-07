@@ -94,12 +94,13 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the MCD-records for a given terrain in this Descriptor.
+		/// Creates the MCD-records and PCK-spriteset for a given terrain in
+		/// this Descriptor and returns an array of Tileparts.
 		/// @note The TabwordLength of terrains in UFO and TFTD is 2-bytes.
 		/// </summary>
 		/// <param name="id">the id of the terrain in this tileset's terrains-list</param>
 		/// <returns>an array containing the Tileparts for the terrain</returns>
-		public Tilepart[] CreateTerrain(int id)
+		internal Tilepart[] CreateTerrain(int id)
 		{
 			var terrain = Terrains[id];
 			string terr = terrain.Item1;
