@@ -23,19 +23,19 @@ namespace XCom.Resources.Map.RouteData
 
 			DialogResult = DialogResult.No;
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Methods (events)
+		#region Events
 		private void btn_AcceptClick(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.Yes;
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
-		internal void SetText(string label, string text)
+		internal void SetTexts(string label, string text)
 		{
 			lbl_InfoBody.Text = label;
 			rtb_Text    .Text = text;
@@ -43,7 +43,8 @@ namespace XCom.Resources.Map.RouteData
 		#endregion
 
 
-		#region Windows Form Designer generated code
+
+		#region Designer
 		private Container components = null;
 		private Label lbl_InfoBody;
 		private RichTextBox rtb_Text;
@@ -51,7 +52,7 @@ namespace XCom.Resources.Map.RouteData
 		private Button btn_No;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
@@ -60,6 +61,7 @@ namespace XCom.Resources.Map.RouteData
 
 			base.Dispose(disposing);
 		}
+
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -146,6 +148,6 @@ namespace XCom.Resources.Map.RouteData
 			this.ResumeLayout(false);
 
 		}
-		#endregion
+		#endregion Designer
 	}
 }

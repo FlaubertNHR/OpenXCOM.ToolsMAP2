@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace XCom
 {
-	#region Enums
+	#region Enumerators
 	// NOTE: Only 'NodeRankUfo' and 'NodeRankTftd' need to be enumerated as
 	// byte-type. Otherwise the Pterodactyl class goes snakey when
 	// RouteView.OnNodeRankSelectedIndexChanged() fires. For reasons, it cannot
@@ -119,7 +119,7 @@ namespace XCom
 		ExitSouth = 0xFC,
 		ExitWest  = 0xFB
 	};
-	#endregion
+	#endregion Enumerators
 
 
 	/// <summary>
@@ -130,11 +130,6 @@ namespace XCom
 		:
 			IEnumerable<RouteNode>
 	{
-		#region Fields
-		private readonly List<RouteNode> _nodes;
-		#endregion
-
-
 		#region Fields (static)
 		private const string RankInvalid = "INVALID";
 
@@ -180,17 +175,25 @@ namespace XCom
 			new Pterodactyl( "9 : Hi",   XCom.SpawnWeight.Spawn9),
 			new Pterodactyl("10 : Hi",   XCom.SpawnWeight.Spawn10)
 		};
-		#endregion
+		#endregion Fields (static)
 
 
-		#region Properties
+		#region Fields
+		private readonly List<RouteNode> _nodes = new List<RouteNode>();
+		#endregion Fields
+
+
+		#region Properties (static)
 		/// <summary>
 		/// The fullpath of the .RMP file.
 		/// Is static to maintain its value when importing a different .RMP file.
 		/// </summary>
 		private static string Fullpath
 		{ get; set; }
+		#endregion Properties (static)
 
+
+		#region Properties
 		/// <summary>
 		/// Returns the node at id.
 		/// </summary>
@@ -206,32 +209,29 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Returns the length of the collection.
+		/// Returns the count of RouteNodes in this collection.
 		/// </summary>
-		public int Length
+		public int Count
 		{
 			get { return _nodes.Count; }
 		}
-		#endregion
+		#endregion Properties
 
 
-		#region cTor
+		#region cTors
 		/// <summary>
-		/// cTor[1]. Reads the .RMP file and adds its data as RouteNodes to a List.
+		/// cTor[1]. Reads the .RMP file and adds its data as RouteNodes to a
+		/// List.
 		/// </summary>
 		/// <param name="label"></param>
 		/// <param name="basepath"></param>
 		internal RouteNodeCollection(string label, string basepath)
 		{
-			_nodes = new List<RouteNode>();
-
 			Fullpath = Path.Combine(basepath, GlobalsXC.RoutesDir);
 			Fullpath = Path.Combine(Fullpath, label + GlobalsXC.RouteExt);
 
 			if (File.Exists(Fullpath))
-			{
 				Instantiate(Fullpath);
-			}
 		}
 
 		/// <summary>
@@ -242,10 +242,13 @@ namespace XCom
 		/// <param name="pfe"></param>
 		public RouteNodeCollection(string pfe)
 		{
-			_nodes = new List<RouteNode>();
 			Instantiate(pfe);
 		}
 
+		/// <summary>
+		/// Helper for the cTors. Reads a file into this RouteNodeCollection.
+		/// </summary>
+		/// <param name="pfe">path-file-extension</param>
 		private void Instantiate(string pfe)
 		{
 			using (var bs = new BufferedStream(File.OpenRead(pfe)))
@@ -280,14 +283,14 @@ namespace XCom
 
 				MessageBox.Show(
 							info,
-							"Warning",
+							" Warning",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
 		}
-		#endregion
+		#endregion cTors
 
 
 		#region Interface requirements
@@ -308,7 +311,7 @@ namespace XCom
 		{
 			return _nodes.GetEnumerator();
 		}
-		#endregion
+		#endregion Interface requirements
 
 
 		#region Methods
@@ -415,6 +418,6 @@ namespace XCom
 				|| node.Row < 0 || node.Row >= rows
 				|| node.Lev < 0 || node.Lev >= levs;
 		}
-		#endregion
+		#endregion Methods
 	}
 }

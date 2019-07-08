@@ -62,7 +62,7 @@ namespace XCom.Resources.Map.RouteData
 											+ "{0}{0}Do you want it deleted?",
 										Environment.NewLine);
 				string text = "id " + node.Index + " : " + node.GetLocationString(file.MapSize.Levs);
-				f.SetText(label, text);
+				f.SetTexts(label, text);
 
 				if (f.ShowDialog() == DialogResult.Yes)
 				{
@@ -115,7 +115,7 @@ namespace XCom.Resources.Map.RouteData
 										Environment.NewLine);
 
 				string text = String.Empty;
-				int total = _file.Routes.Length;
+				int total = _file.Routes.Count;
 				byte loc;
 				foreach (var node in _invalids)
 				{
@@ -156,7 +156,7 @@ namespace XCom.Resources.Map.RouteData
 					text += loc + Environment.NewLine;
 				}
 
-				f.SetText(label, text);
+				f.SetTexts(label, text);
 
 				if (f.ShowDialog() == DialogResult.Yes)
 				{

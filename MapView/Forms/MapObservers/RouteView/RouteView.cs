@@ -440,7 +440,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				UpdateLinkText(slot, distance);
 			}
 
-			for (var id = 0; id != MapFile.Routes.Length; ++id) // update distances of any links to the selected node ->
+			for (var id = 0; id != MapFile.Routes.Count; ++id) // update distances of any links to the selected node ->
 			{
 				if (id != NodeSelected.Index) // NOTE: a node shall not link to itself.
 				{
@@ -739,7 +739,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				_linksList.Clear();
 
-				for (byte id = 0; id != MapFile.Routes.Length; ++id)
+				for (byte id = 0; id != MapFile.Routes.Count; ++id)
 				{
 					if (id != NodeSelected.Index)
 						_linksList.Add(id);			// <- add all linkable (ie. other) nodes
@@ -1379,7 +1379,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnOgClick(object sender, EventArgs e)
 		{
-			if (OgnodeId < MapFile.Routes.Length) // in case nodes were deleted.
+			if (OgnodeId < MapFile.Routes.Count) // in case nodes were deleted.
 			{
 				if (NodeSelected == null || OgnodeId != NodeSelected.Index)
 					SelectNode(OgnodeId);
@@ -1393,7 +1393,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void OnOgMouseEnter(object sender, EventArgs e)
 		{
-			if (OgnodeId < MapFile.Routes.Length) // in case nodes were deleted.
+			if (OgnodeId < MapFile.Routes.Count) // in case nodes were deleted.
 			{
 				var node = MapFile.Routes[OgnodeId];
 				RoutePanel.SpotPosition = new Point(node.Col, node.Row);
@@ -1849,7 +1849,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			byte dist;
 			int changed = 0;
 
-			for (var id = 0; id != MapFile.Routes.Length; ++id)
+			for (var id = 0; id != MapFile.Routes.Count; ++id)
 			{
 				node = MapFile.Routes[id];
 
