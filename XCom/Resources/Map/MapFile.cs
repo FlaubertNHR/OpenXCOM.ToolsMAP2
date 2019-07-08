@@ -28,7 +28,7 @@ namespace XCom
 
 		public RouteNodeCollection Routes
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 		public bool IsLoadChanged;
@@ -47,13 +47,11 @@ namespace XCom
 			:
 				base(descriptor, partset)
 		{
-			string dirMap = Path.Combine(Descriptor.Basepath, GlobalsXC.MapsDir);
 			Fullpath = Path.Combine(
-								dirMap,
+								Path.Combine(Descriptor.Basepath, GlobalsXC.MapsDir),
 								Descriptor.Label + GlobalsXC.MapExt);
 
 			Terrains = Descriptor.Terrains;
-
 			Routes = routes;
 
 			if (File.Exists(Fullpath))
@@ -74,14 +72,14 @@ namespace XCom
 										Fullpath);
 				MessageBox.Show(
 							error,
-							"Error",
+							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -153,7 +151,7 @@ namespace XCom
 									+ " outside the bounds of the Map's allocated MCDs."
 									+ " They will be cleared so that the Map can be"
 									+ " displayed.",
-								"Warning",
+								" Warning",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Asterisk,
 								MessageBoxDefaultButton.Button1,
@@ -487,16 +485,6 @@ namespace XCom
 			}
 			return bit;
 		}
-		#endregion
+		#endregion Methods
 	}
 }
-
-//		public void HQ2X()
-//		{
-//			foreach (string dep in _deps) // instead i would want to make an image of the whole map and run that through hq2x
-//				foreach (var image in GameInfo.GetPckPack(dep))
-//					image.HQ2X();
-//
-//			PckImage.Width  *= 2;
-//			PckImage.Height *= 2;
-//		}
