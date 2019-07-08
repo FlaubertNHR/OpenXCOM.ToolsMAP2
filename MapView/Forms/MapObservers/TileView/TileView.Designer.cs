@@ -13,7 +13,7 @@
 
 /*		The #develop designer might delete this
 
-			this.tcTileTypes = new DSShared.Windows.TileTabControl();
+			this.tcTileTypes = new DSShared.Windows.CompositedTabControl();
 
 		so copy it back into InitializeComponent(). */
 
@@ -222,7 +222,6 @@
 		private System.ComponentModel.IContainer components = null;
 
 		DSShared.Windows.CompositedTabControl tcTileTypes;
-		DSShared.Windows.TabPad tpTileTypes;
 
 		private System.Windows.Forms.ToolStrip tsMain;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbExternal;

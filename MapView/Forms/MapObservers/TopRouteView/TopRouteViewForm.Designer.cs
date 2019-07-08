@@ -26,7 +26,7 @@
 			this.TopViewControl = new MapView.Forms.MapObservers.TopViews.TopView();
 			this.RouteViewControl = new MapView.Forms.MapObservers.RouteViews.RouteView();
 
-			this.tabControl = new DSShared.Windows.TileTabControl();
+			this.tabControl = new DSShared.Windows.CompositedTabControl();
 
 		- so copy it back into InitializeComponent() */
 
@@ -118,7 +118,6 @@
 		private MapView.Forms.MapObservers.RouteViews.RouteView RouteViewControl;
 
 		DSShared.Windows.CompositedTabControl tabControl;
-		DSShared.Windows.TabPad tpTabControl;
 
 		private System.Windows.Forms.TabPage tp_Top;
 		private System.Windows.Forms.TabPage tp_Route;

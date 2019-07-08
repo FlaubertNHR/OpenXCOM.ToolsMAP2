@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using DSShared.Windows;
+
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TopViews;
@@ -34,7 +36,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		internal TopRouteViewForm()
 		{
 			InitializeComponent();
-			tpTabControl = new DSShared.Windows.TabPad(tabControl);
+			var tpTabControl = new TabPad(tabControl);
 		}
 		#endregion cTor
 
