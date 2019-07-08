@@ -20,7 +20,7 @@ namespace DSShared.Windows
 	public static class RegistryInfo
 	{
 		#region Fields (static)
-		public const string MainWindow    = "MainWindow"; // ... is for old parsing Options routine.
+		public const string MainWindow    = "MainWindow"; // DEPRECATED ... is for old parsing Options routine.
 
 		public const string MainView      = "MainView";
 		public const string TileView      = "TileView";
