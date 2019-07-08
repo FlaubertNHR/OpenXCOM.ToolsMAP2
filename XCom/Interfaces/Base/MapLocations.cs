@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace XCom.Interfaces.Base
+﻿namespace XCom.Interfaces.Base
 {
 	internal sealed class MapLocations // TODO: merge with MapLocation.
 	{
@@ -32,7 +29,7 @@ namespace XCom.Interfaces.Base
 		{
 			get { return _levs; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -48,7 +45,7 @@ namespace XCom.Interfaces.Base
 			_cols = cols;
 			_levs = levs;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -63,6 +60,6 @@ namespace XCom.Interfaces.Base
 		{
 			return col + (row * _cols) + (lev * _cols * _rows);
 		}
-		#endregion
+		#endregion Methods
 	}
 }

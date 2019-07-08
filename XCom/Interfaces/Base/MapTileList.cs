@@ -5,7 +5,7 @@
 		#region Fields
 		private readonly MapTileBase[] _tiles;
 		private readonly MapLocations  _locations;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -29,7 +29,7 @@
 				_tiles[_locations.GetLocationId(row, col, lev)] = value;
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -44,6 +44,6 @@
 			_tiles     = new MapTileBase[rows * cols * levs];
 			_locations = new MapLocations(rows, cols, levs);
 		}
-		#endregion
+		#endregion cTor
 	}
 }
