@@ -132,7 +132,7 @@
     <Compile Include="Resources\Map\MapFile.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Map\XCMapTile.cs">
+    <Compile Include="Resources\Map\MapTile.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resources\Map\McdRecord.cs">

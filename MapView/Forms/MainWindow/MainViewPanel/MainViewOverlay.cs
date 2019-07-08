@@ -444,7 +444,7 @@ namespace MapView
 			{
 				XCMainWindow.that.MapChanged = true;
 
-				XCMapTile tile;
+				MapTile tile;
 
 				var t = ViewerFormsManager.TopView.Control;
 				byte bits = 0;
@@ -459,7 +459,7 @@ namespace MapView
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapBase[row, col] as XCMapTile;
+					tile = MapBase[row, col] as MapTile;
 
 					if ((bits & 1) != 0) tile.Floor   = null;
 					if ((bits & 2) != 0) tile.West    = null;
@@ -496,18 +496,18 @@ namespace MapView
 				_copied = new MapTileBase[b.Y - a.Y + 1,
 										  b.X - a.X + 1];
 
-				XCMapTile tile;
+				MapTile tile;
 
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapBase[row, col] as XCMapTile;
+					tile = MapBase[row, col] as MapTile;
 					_copied[row - a.Y,
-							col - a.X] = new XCMapTile(
-													tile.Floor,
-													tile.West,
-													tile.North,
-													tile.Content);
+							col - a.X] = new MapTile(
+												tile.Floor,
+												tile.West,
+												tile.North,
+												tile.Content);
 				}
 			}
 		}
@@ -526,7 +526,7 @@ namespace MapView
 				{
 					XCMainWindow.that.MapChanged = true;
 
-					XCMapTile tile, copy;
+					MapTile tile, copy;
 
 					var t = ViewerFormsManager.TopView.Control;
 					byte bits = 0;
@@ -545,9 +545,9 @@ namespace MapView
 								col != MapBase.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(1);
 								++col)
 						{
-							if ((tile = MapBase[row, col] as XCMapTile) != null
+							if ((tile = MapBase[row, col] as MapTile) != null
 								&& (copy = _copied[row - DragBeg.Y,
-												   col - DragBeg.X] as XCMapTile) != null)
+												   col - DragBeg.X] as MapTile) != null)
 							{
 								if ((bits & 1) != 0) tile.Floor   = copy.Floor;
 								if ((bits & 2) != 0) tile.West    = copy.West;
@@ -650,11 +650,11 @@ namespace MapView
 				var quad = ViewerFormsManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
 				var part = ViewerFormsManager.TileView.Control.SelectedTilepart;
 
-				XCMapTile tile;
+				MapTile tile;
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = ((XCMapTile)MapBase[row, col]);
+					tile = ((MapTile)MapBase[row, col]);
 					tile[quad] = part;
 					tile.Vacancy();
 				}
@@ -1223,7 +1223,7 @@ namespace MapView
 						{
 							// This is different between REMBRANDT and PICASSO ->
 							DrawTile(
-									(XCMapTile)tile,
+									tile as MapTile,
 									x, y,
 									_graySelection
 										&& lev == MapBase.Level
@@ -1316,7 +1316,7 @@ namespace MapView
 							|| lev == MapBase.Level)
 						{
 							// This is different between REMBRANDT and PICASSO ->
-							DrawTile((XCMapTile)tile, x, y);
+							DrawTile(tile as MapTile, x, y);
 						}
 
 						if (isClicked)
@@ -1427,7 +1427,7 @@ namespace MapView
 						if (lev == MapBase.Level || !tile.Occulted)
 						{
 							DrawTile(
-									(XCMapTile)tile,
+									tile as MapTile,
 									x, y);
 						}
 
@@ -1603,7 +1603,7 @@ namespace MapView
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		private void DrawTile(
-				XCMapTile tile,
+				MapTile tile,
 				int x, int y)
 		{
 			// NOTE: The width and height args are based on a sprite that's 32x40.
@@ -1657,7 +1657,7 @@ namespace MapView
 		/// <param name="y"></param>
 		/// <param name="gray">true to draw the grayscale version of any tile-sprites</param>
 		private void DrawTile(
-				XCMapTile tile,
+				MapTile tile,
 				int x, int y,
 				bool gray)
 		{

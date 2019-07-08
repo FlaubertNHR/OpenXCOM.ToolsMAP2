@@ -242,7 +242,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			int over = -1;
 			if (loc.X != -1)
 			{
-				var node = ((XCMapTile)MapBase[loc.Y, loc.X, _lev]).Node;
+				RouteNode node = ((MapTile)MapBase[loc.Y, loc.X, _lev]).Node;
 				if (node != null)
 					over = node.Index;
 			}
@@ -365,19 +365,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			if (Dragnode != null)
 			{
-				if (((XCMapTile)args.Tile).Node == null)
+				if (((MapTile)args.Tile).Node == null)
 				{
 					RouteChanged = true;
 
-					((XCMapTile)MapFile[Dragnode.Row, // clear the node from the previous tile
-										Dragnode.Col,
-										Dragnode.Lev]).Node = null;
+					((MapTile)MapFile[Dragnode.Row, // clear the node from the previous tile
+									  Dragnode.Col,
+									  Dragnode.Lev]).Node = null;
 
 					Dragnode.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
 					Dragnode.Row = (byte)args.Location.Row; // these get saved w/ Routes.
 					Dragnode.Lev =       args.Location.Lev;
 
-					((XCMapTile)args.Tile).Node = Dragnode; // assign the node to the tile at the mouse-up location.
+					((MapTile)args.Tile).Node = Dragnode; // assign the node to the tile at the mouse-up location.
 
 					var loc = new Point(Dragnode.Col, Dragnode.Row);
 					RoutePanelParent.SelectedLocation = loc;
@@ -479,7 +479,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			bool update = false;
 
-			var node = ((XCMapTile)args.Tile).Node;
+			RouteNode node = ((MapTile)args.Tile).Node;
 
 			if (NodeSelected == null)
 			{
@@ -1528,9 +1528,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				RouteChanged = true;
 
-				((XCMapTile)MapFile[NodeSelected.Row,
-									NodeSelected.Col,
-									NodeSelected.Lev]).Node = null;
+				((MapTile)MapFile[NodeSelected.Row,
+								  NodeSelected.Col,
+								  NodeSelected.Lev]).Node = null;
 				MapFile.Routes.DeleteNode(NodeSelected);
 
 				ViewerFormsManager.RouteView   .Control     .DeselectNode();

@@ -109,8 +109,9 @@ namespace XCom.Interfaces.Base
 		{ get; protected set; }
 
 		/// <summary>
-		/// Gets/Sets a MapTile using row,col,level values. No error checking
-		/// is done to ensure that the given location is valid.
+		/// Gets/Sets a MapTileBase object using row,col,lev values.
+		/// @note No error checking is done to ensure that the given location is
+		/// valid.
 		/// </summary>
 		/// <param name="row"></param>
 		/// <param name="col"></param>
@@ -122,8 +123,10 @@ namespace XCom.Interfaces.Base
 			set { Tiles[row, col, lev] = value; }
 		}
 		/// <summary>
-		/// Gets/Sets a MapTile at the current level using row,col values. No
-		/// error checking is done to ensure that the given location is valid.
+		/// Gets/Sets a MapTileBase object at the current level using row,col
+		/// values.
+		/// @note No error checking is done to ensure that the given location is
+		/// valid.
 		/// </summary>
 		/// <param name="row"></param>
 		/// <param name="col"></param>
@@ -135,7 +138,9 @@ namespace XCom.Interfaces.Base
 		}
 
 //		/// <summary>
-//		/// Gets/Sets a MapTile using a MapLocation.
+//		/// Gets/Sets a MapTileBase object using a MapLocation.
+//		/// @note No error checking is done to ensure that the given location is
+//		/// valid.
 //		/// </summary>
 //		public MapTileBase this[MapLocation loc]
 //		{

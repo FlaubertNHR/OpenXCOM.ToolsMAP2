@@ -16,38 +16,18 @@ namespace XCom
 	};
 
 
-	public sealed class XCMapTile
+	/// <summary>
+	/// A tile in the Tileset consisting of four parts.
+	/// </summary>
+	public sealed class MapTile
 		:
 			MapTileBase
 	{
 		#region Properties
-		private Tilepart _floor;
-		public Tilepart Floor
-		{
-			get { return _floor; }
-			set { SetQuadrantPart(QuadrantType.Floor, value); }
-		}
-
-		private Tilepart _west;
-		public Tilepart West
-		{
-			get { return _west; }
-			set { SetQuadrantPart(QuadrantType.West, value); }
-		}
-
-		private Tilepart _north;
-		public Tilepart North
-		{
-			get { return _north; }
-			set { SetQuadrantPart(QuadrantType.North, value); }
-		}
-
-		private Tilepart _content;
-		public Tilepart Content
-		{
-			get { return _content; }
-			set { SetQuadrantPart(QuadrantType.Content, value); }
-		}
+		public Tilepart Floor   { get; set; }
+		public Tilepart West    { get; set; }
+		public Tilepart North   { get; set; }
+		public Tilepart Content { get; set; }
 
 		public Tilepart this[QuadrantType quad]
 		{
@@ -62,8 +42,18 @@ namespace XCom
 				}
 				return null;
 			}
-			set { SetQuadrantPart(quad, value); }
+			set
+			{
+				switch (quad)
+				{
+					case QuadrantType.Floor:   Floor   = value; break;
+					case QuadrantType.West:    West    = value; break;
+					case QuadrantType.North:   North   = value; break;
+					case QuadrantType.Content: Content = value; break;
+				}
+			}
 		}
+
 
 		/// <summary>
 		/// @note This is used only by MapFileBase.SaveGifFile().
@@ -95,11 +85,11 @@ namespace XCom
 		/// <summary>
 		/// Creates and returns a vacant tile.
 		/// </summary>
-		public static XCMapTile VacantTile
+		public static MapTile VacantTile
 		{
 			get
 			{
-				var tile = new XCMapTile(null,null,null,null);
+				var tile = new MapTile(null,null,null,null);
 				tile.Vacant = true;
 				return tile;
 			}
@@ -108,16 +98,16 @@ namespace XCom
 
 
 		#region cTor
-		public XCMapTile(
+		public MapTile(
 				Tilepart floor,
 				Tilepart west,
 				Tilepart north,
 				Tilepart content)
 		{
-			_floor   = floor; // NOTE: Don't even try ... don't even think about it.
-			_west    = west;
-			_north   = north;
-			_content = content;
+			Floor   = floor;
+			West    = west;
+			North   = north;
+			Content = content;
 
 			Vacancy();
 		}
@@ -125,17 +115,6 @@ namespace XCom
 
 
 		#region Methods
-		private void SetQuadrantPart(QuadrantType quad, Tilepart part)
-		{
-			switch (quad)
-			{
-				case QuadrantType.Floor:   _floor   = part; break;
-				case QuadrantType.West:    _west    = part; break;
-				case QuadrantType.North:   _north   = part; break;
-				case QuadrantType.Content: _content = part; break;
-			}
-		}
-
 		/// <summary>
 		/// Sets the tile as Vacant if it has no tileparts.
 		/// </summary>

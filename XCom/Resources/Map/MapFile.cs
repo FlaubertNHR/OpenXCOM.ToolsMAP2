@@ -127,8 +127,8 @@ namespace XCom
 		/// <param name="quad2">the westwall</param>
 		/// <param name="quad3">the northwall</param>
 		/// <param name="quad4">the content</param>
-		/// <returns>the XCMapTile created</returns>
-		private XCMapTile CreateTile(
+		/// <returns>the MapTile created</returns>
+		private MapTile CreateTile(
 				IList<Tilepart> parts,
 				int quad1,
 				int quad2,
@@ -175,11 +175,11 @@ namespace XCom
 			var content   = (quad4 > 1) ? (Tilepart)parts[quad4 - IdOffset]
 										: null;
 
-			return new XCMapTile(
-								floor,
-								westwall,
-								northwall,
-								content);
+			return new MapTile(
+							floor,
+							westwall,
+							northwall,
+							content);
 		}
 
 		/// <summary>
@@ -192,7 +192,7 @@ namespace XCom
 			foreach (RouteNode node in Routes)
 			{
 				if ((tile = this[node.Row, node.Col, node.Lev]) != null)
-					((XCMapTile)tile).Node = node;
+					((MapTile)tile).Node = node;
 			}
 		}
 
@@ -206,7 +206,7 @@ namespace XCom
 			for (int row = 0; row != MapSize.Rows; ++row)
 			for (int col = 0; col != MapSize.Cols; ++col)
 			{
-				((XCMapTile)this[row, col, lev]).Node = null;
+				((MapTile)this[row, col, lev]).Node = null;
 			}
 		}
 
@@ -227,18 +227,18 @@ namespace XCom
 					if ((tile = this[row, col, lev]) != null) // safety. The tile should always be valid.
 					{
 						tile.Occulted = (!forceVis
-									 && ((XCMapTile)this[row,     col,     lev - 1]).Floor != null // above
+									 && ((MapTile)this[row,     col,     lev - 1]).Floor != null // above
 
-									 && ((XCMapTile)this[row + 1, col,     lev - 1]).Floor != null // south
-									 && ((XCMapTile)this[row + 2, col,     lev - 1]).Floor != null
+									 && ((MapTile)this[row + 1, col,     lev - 1]).Floor != null // south
+									 && ((MapTile)this[row + 2, col,     lev - 1]).Floor != null
 
-									 && ((XCMapTile)this[row,     col + 1, lev - 1]).Floor != null // east
-									 && ((XCMapTile)this[row,     col + 2, lev - 1]).Floor != null
+									 && ((MapTile)this[row,     col + 1, lev - 1]).Floor != null // east
+									 && ((MapTile)this[row,     col + 2, lev - 1]).Floor != null
 
-									 && ((XCMapTile)this[row + 1, col + 1, lev - 1]).Floor != null // southeast
-									 && ((XCMapTile)this[row + 1, col + 2, lev - 1]).Floor != null
-									 && ((XCMapTile)this[row + 2, col + 1, lev - 1]).Floor != null
-									 && ((XCMapTile)this[row + 2, col + 2, lev - 1]).Floor != null);
+									 && ((MapTile)this[row + 1, col + 1, lev - 1]).Floor != null // southeast
+									 && ((MapTile)this[row + 1, col + 2, lev - 1]).Floor != null
+									 && ((MapTile)this[row + 2, col + 1, lev - 1]).Floor != null
+									 && ((MapTile)this[row + 2, col + 2, lev - 1]).Floor != null);
 					}
 				}
 			}
@@ -297,14 +297,14 @@ namespace XCom
 		/// <returns></returns>
 		public RouteNode AddRouteNode(MapLocation location)
 		{
-			var node = Routes.AddNode(
-									(byte)location.Row,
-									(byte)location.Col,
-									(byte)location.Lev);
+			RouteNode node = Routes.AddNode(
+										(byte)location.Row,
+										(byte)location.Col,
+										(byte)location.Lev);
 
-			return (((XCMapTile)this[(int)node.Row,
-									 (int)node.Col,
-									      node.Lev]).Node = node);
+			return (((MapTile)this[(int)node.Row,
+								   (int)node.Col,
+								        node.Lev]).Node = node);
 		}
 
 		/// <summary>
@@ -368,11 +368,13 @@ namespace XCom
 
 				int id;
 
+				MapTile tile;
+
 				for (int lev = 0; lev != MapSize.Levs; ++lev)
 				for (int row = 0; row != MapSize.Rows; ++row)
 				for (int col = 0; col != MapSize.Cols; ++col)
 				{
-					var tile = this[row, col, lev] as XCMapTile;
+					tile = this[row, col, lev] as MapTile;
 
 					if (tile.Floor == null || (id = tile.Floor.SetId + IdOffset) > (int)byte.MaxValue)
 						fs.WriteByte(0);

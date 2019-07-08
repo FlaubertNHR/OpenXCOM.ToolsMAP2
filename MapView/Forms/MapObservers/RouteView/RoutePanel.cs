@@ -211,7 +211,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		private void DrawBlobs()
 		{
-			XCMapTile tile = null;
+			MapTile tile;
 			for (int
 					r = 0,
 						startX = Origin.X,
@@ -232,7 +232,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					if (MapFile[r,c] != null)
 					{
-						tile = MapFile[r,c] as XCMapTile;
+						tile = MapFile[r,c] as MapTile;
 
 						if (tile.Content != null)
 							BlobService.DrawContent(_graphics, ToolContent, x, y, tile.Content);
@@ -272,7 +272,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 							ySrc += DrawAreaHeight)
 				{
 					if (MapFile[rSrc, cSrc] != null
-						&& (node = ((XCMapTile)MapFile[rSrc, cSrc]).Node) != null
+						&& (node = ((MapTile)MapFile[rSrc, cSrc]).Node) != null
 						&& (NodeSelected == null || node != NodeSelected))
 					{
 						DrawLinkLines(xSrc, ySrc, node, false);
@@ -432,6 +432,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			int startX = Origin.X;
 			int startY = Origin.Y;
 
+			MapTile tile;
+			RouteNode node;
+
 			for (int row = 0; row != MapFile.MapSize.Rows; ++row)
 			{
 				for (int
@@ -443,11 +446,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 							x += DrawAreaWidth,
 							y += DrawAreaHeight)
 				{
-					var tile = MapFile[row, col] as XCMapTile;	// NOTE: MapFileBase has the current level stored and uses
-					if (tile != null)							// it to return only tiles on the correct level here.
-					{
-						var node = tile.Node;
-						if (node != null)
+					if ((tile = MapFile[row, col] as MapTile) != null)	// NOTE: MapFileBase has the current level stored and uses
+					{													// it to return only tiles on the correct level here.
+						if ((node = tile.Node) != null)
 						{
 							_nodeFill.Reset();
 							_nodeFill.AddLine(
@@ -577,6 +578,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			int startX = Origin.X;
 			int startY = Origin.Y;
 
+			MapTile tile;
+			RouteNode node;
+
 			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
 			{
 				for (int
@@ -588,11 +592,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 							x += DrawAreaWidth,
 							y += DrawAreaHeight)
 				{
-					var tile = MapFile[r,c] as XCMapTile;
-					if (tile != null)
+					if ((tile = MapFile[r,c] as MapTile) != null)
 					{
-						var node = tile.Node;
-						if (node != null)
+						if ((node = tile.Node) != null)
 						{
 //								if (DrawAreaHeight >= NodeValMax)
 //								{

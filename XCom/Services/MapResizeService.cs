@@ -29,7 +29,7 @@ namespace XCom.Services
 				for (int lev = 0; lev != levs; ++lev)
 				for (int row = 0; row != rows; ++row)
 				for (int col = 0; col != cols; ++col)
-					tileListPost[row, col, lev] = XCMapTile.VacantTile;
+					tileListPost[row, col, lev] = MapTile.VacantTile;
 
 				switch (zType)
 				{

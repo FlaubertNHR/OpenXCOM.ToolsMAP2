@@ -154,7 +154,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="selectedQuadrant"></param>
 		internal static void Draw(
 				Graphics graphics,
-				XCMapTile tile,
+				MapTile tile,
 				QuadrantType selectedQuadrant)
 		{
 			if (!Globals.RT) return; // don't try to draw the QuadrantPanel in the designer.

@@ -142,13 +142,14 @@ namespace MapView
 			pBar.Maximum = cols * rows * levs;
 			pBar.Value = 0;
 
+			MapTile tile;
 			Tilepart part;
 
 			for (int col = 0; col != cols; ++col)
 			for (int row = 0; row != rows; ++row)
 			for (int lev = 0; lev != levs; ++lev)
 			{
-				var tile = _file[row, col, lev] as XCMapTile;
+				tile = _file[row, col, lev] as MapTile;
 				if (!tile.Vacant)
 				{
 					for (int i = 0; i != 4; ++i)

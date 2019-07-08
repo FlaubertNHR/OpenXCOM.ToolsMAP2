@@ -421,11 +421,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 						if (   r > -1 && r < MapFile.MapSize.Rows
 							&& c > -1 && c < MapFile.MapSize.Cols)
 						{
-							if (((XCMapTile)MapFile[r,c, MapFile.Level]).Node == null)
+							if (((MapTile)MapFile[r,c, MapFile.Level]).Node == null)
 							{
-								RouteNode node = ((XCMapTile)MapFile[MapFile.Location.Row,
-																	 MapFile.Location.Col,
-																	 MapFile.Level]).Node;
+								RouteNode node = ((MapTile)MapFile[MapFile.Location.Row,
+																   MapFile.Location.Col,
+																   MapFile.Level]).Node;
 								if (node != null && node == NodeSelected)
 								{
 									RouteView.Dragnode = node;
@@ -452,13 +452,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
-							if (((XCMapTile)MapFile[MapFile.Location.Row,
-													MapFile.Location.Col,
-													level]).Node == null)
+							if (((MapTile)MapFile[MapFile.Location.Row,
+												  MapFile.Location.Col,
+												  level]).Node == null)
 							{
-								RouteNode node = ((XCMapTile)MapFile[MapFile.Location.Row,
-																	 MapFile.Location.Col,
-																	 MapFile.Level]).Node;
+								RouteNode node = ((MapTile)MapFile[MapFile.Location.Row,
+																   MapFile.Location.Col,
+																   MapFile.Level]).Node;
 								if (node != null && node == NodeSelected)
 								{
 									RouteView.Dragnode = node;
@@ -575,14 +575,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// Client-area (refout is the tile-x location)</param>
 		/// <param name="y">ref to the y-position of the mouse-cursor wrt
 		/// Client-area (refout is the tile-y location)</param>
-		/// <returns>the corresponding XCMapTile or null if (x,y) is an invalid
+		/// <returns>the corresponding MapTile or null if (x,y) is an invalid
 		/// location for a tile</returns>
-		internal protected XCMapTile GetTile(ref int x, ref int y)
+		internal protected MapTile GetTile(ref int x, ref int y)
 		{
 			var loc = GetTileLocation(x,y);
 			x = loc.X;
 			y = loc.Y;
-			return (x != -1) ? MapFile[y,x] as XCMapTile
+			return (x != -1) ? MapFile[y,x] as MapTile
 							 : null;
 		}
 

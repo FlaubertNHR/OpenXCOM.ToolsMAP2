@@ -349,7 +349,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				Graphics graphics,
 				int x, int y)
 		{
-			var tile = tilebase as XCMapTile;
+			var tile = tilebase as MapTile;
 
 			if (TopView.Floor.Checked && tile.Floor != null)
 				BlobService.DrawFloor(

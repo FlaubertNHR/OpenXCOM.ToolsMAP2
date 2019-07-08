@@ -10,7 +10,7 @@
 
 		#region Properties
 		/// <summary>
-		/// Gets/Sets a MapTile according to a given location.
+		/// Gets/Sets a MapTileBase object according to a given location.
 		/// </summary>
 		public MapTileBase this[int row, int col, int lev]
 		{

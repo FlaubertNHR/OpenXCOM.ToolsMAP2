@@ -22,8 +22,8 @@ namespace XCom.Interfaces.Base
 
 	#region Eventargs
 	/// <summary>
-	/// EventArgs with a MapLocation and MapTile for when a LocationSelected
-	/// event fires.
+	/// EventArgs with a MapLocation and MapTileBase object for when a
+	/// LocationSelected event fires.
 	/// </summary>
 	public sealed class SelectLocationEventArgs
 		:

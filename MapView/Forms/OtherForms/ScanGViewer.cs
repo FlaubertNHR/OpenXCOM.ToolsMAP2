@@ -156,7 +156,7 @@ namespace MapView
 
 				byte* ptrPixel, ptr;
 
-				XCMapTile tile;
+				MapTile tile;
 				int iconid, palid, j;
 
 
@@ -172,7 +172,7 @@ namespace MapView
 				{
 					ptrPixel = pos + (x * 16) + (y * 16 * data.Stride);
 
-					tile = _base[y,x,z] as XCMapTile;
+					tile = _base[y,x,z] as MapTile;
 
 					if (tile.Floor != null
 						&& (iconid = tile.Floor.Record.ScanG) < iconsTotal)

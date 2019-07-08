@@ -20,7 +20,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			MapObserverControl_TopPanel // DoubleBufferedControl, IMapObserver
 	{
 		#region Fields
-		private XCMapTile _tile;
+		private MapTile _tile;
 		private MapLocation _location;
 		#endregion Fields
 
@@ -58,7 +58,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
-			_tile     = args.Tile as XCMapTile;
+			_tile     = args.Tile as MapTile;
 			_location = args.Location;
 			Refresh();
 		}
@@ -71,7 +71,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			if (_location != null)
 			{
-				_tile = MapBase[_location.Row, _location.Col] as XCMapTile;
+				_tile = MapBase[_location.Row, _location.Col] as MapTile;
 				_location.Lev = args.Level;
 			}
 			Refresh();
