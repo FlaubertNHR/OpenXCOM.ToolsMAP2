@@ -29,6 +29,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private const string Rank   = "rank";
 		private const string Spawn  = "spawn";
 		private const string Patrol = "patrol";
+		private const string Attack = "attack";
 
 		private const string textTile1 = ""; // "position" or "location" or ... "pos" or "loc" ... ie, undecided
 		#endregion Fields (static)
@@ -709,7 +710,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			int x = CursorPosition.X;
 			int y = CursorPosition.Y;
 
-			var tile = GetTile(ref x, ref y); // x/y -> tile-location
+			MapTile tile = GetTile(ref x, ref y); // x/y -> tile-location
 			if (tile != null)
 			{
 				string textTile2 =   "c " + (x + 1)
@@ -722,15 +723,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 //				int textWidth1 = TextRenderer.MeasureText(textTile1, font).Width;
 //				int textWidth2 = TextRenderer.MeasureText(textTile2, font).Width;
 
-				string textOver1   = String.Empty;
-				string textRank1   = String.Empty;
-				string textSpawn1  = String.Empty;
-				string textPatrol1 = String.Empty;
-
-				string textOver2   = String.Empty;
-				string textRank2   = String.Empty;
-				string textSpawn2  = String.Empty;
-				string textPatrol2 = String.Empty;
+				string textOver1, textRank1, textSpawn1, textPatrol1, textAttack1;
+				string textOver2, textRank2, textSpawn2, textPatrol2, textAttack2;
 
 				if (tile.Node != null)
 				{
@@ -741,11 +735,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					textOver2   = (tile.Node.Index).ToString(System.Globalization.CultureInfo.CurrentCulture);
 					if (MapFile.Descriptor.Pal == Palette.UfoBattle)
-						textRank2 = (RouteNodeCollection.NodeRankUfo[tile.Node.Rank]).ToString();
+						textRank2 = RouteNodeCollection.NodeRankUfo[tile.Node.Rank].ToString();
 					else
-						textRank2 = (RouteNodeCollection.NodeRankTftd[tile.Node.Rank]).ToString();
-					textSpawn2  = (tile.Node.Spawn).ToString();
-					textPatrol2 = (tile.Node.Patrol).ToString();
+						textRank2 = RouteNodeCollection.NodeRankTftd[tile.Node.Rank].ToString();
+					textSpawn2  = RouteNodeCollection.SpawnWeight[(byte)tile.Node.Spawn].ToString();
+					textPatrol2 = tile.Node.Patrol.ToString();
 
 					int width;
 					width = (int)_graphics.MeasureString(textOver1, _fontOverlay).Width;
@@ -766,6 +760,23 @@ namespace MapView.Forms.MapObservers.RouteViews
 					width = (int)_graphics.MeasureString(textPatrol2, _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
 
+					if (tile.Node.Attack != 0)
+					{
+						textAttack1 = Attack;
+						textAttack2 = tile.Node.Attack.ToString();
+
+						width = (int)_graphics.MeasureString(textAttack1, _fontOverlay).Width;
+						if (width > textWidth1) textWidth1 = width;
+
+						width = (int)_graphics.MeasureString(textAttack2, _fontOverlay).Width;
+						if (width > textWidth2) textWidth2 = width;
+					}
+					else
+					{
+						textAttack1 =
+						textAttack2 = null;
+					}
+
 					// time to move to a higher .NET framework.
 
 //					width = TextRenderer.MeasureText(textOver1, font).Width;
@@ -777,6 +788,20 @@ namespace MapView.Forms.MapObservers.RouteViews
 //					width = TextRenderer.MeasureText(textSpawn2, font).Width;
 //					width = TextRenderer.MeasureText(textWeight2, font).Width;
 				}
+				else
+				{
+					textOver1   =
+					textRank1   =
+					textSpawn1  =
+					textPatrol1 =
+					textAttack1 =
+
+					textOver2   =
+					textRank2   =
+					textSpawn2  =
+					textPatrol2 =
+					textAttack2 = null;
+				}
 
 //				int textHeight = TextRenderer.MeasureText("X", font).Height;
 				int textHeight = (int)_graphics.MeasureString("X", _fontOverlay).Height + 1; // pad +1
@@ -785,7 +810,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 										textWidth1 + Separator + textWidth2 + 5, textHeight + 7); // trim right & bottom (else +8 for both w/h)
 
 				if (tile.Node != null)
+				{
 					overlay.Height += textHeight * 4;
+
+					if (tile.Node.Attack != 0)
+						overlay.Height += textHeight;
+				}
 
 				if (overlay.X + overlay.Width > ClientRectangle.Width)
 					overlay.X = CursorPosition.X - overlay.Width - 8;
@@ -870,6 +900,22 @@ namespace MapView.Forms.MapObservers.RouteViews
 									Brushes.Yellow,
 									textLeft + textWidth1 + Separator,
 									textTop  + textHeight * 4);
+
+					if (tile.Node.Attack != 0)
+					{
+						_graphics.DrawString(
+										textAttack1,
+										_fontOverlay,
+										Brushes.Yellow,
+										textLeft,
+										textTop + textHeight * 5);
+						_graphics.DrawString(
+										textAttack2,
+										_fontOverlay,
+										Brushes.Yellow,
+										textLeft + textWidth1 + Separator,
+										textTop  + textHeight * 5);
+					}
 				}
 			}
 		}

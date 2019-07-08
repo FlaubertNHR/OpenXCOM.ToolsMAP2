@@ -227,8 +227,9 @@ namespace XCom
 		/// <param name="basepath"></param>
 		internal RouteNodeCollection(string label, string basepath)
 		{
-			Fullpath = Path.Combine(basepath, GlobalsXC.RoutesDir);
-			Fullpath = Path.Combine(Fullpath, label + GlobalsXC.RouteExt);
+			Fullpath = Path.Combine(
+								Path.Combine(basepath, GlobalsXC.RoutesDir),
+								label + GlobalsXC.RouteExt);
 
 			if (File.Exists(Fullpath))
 				Instantiate(Fullpath);
