@@ -2,6 +2,7 @@
 {
 	partial class TopRouteViewForm
 	{
+		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -19,14 +20,16 @@
 			base.Dispose(disposing);
 		}
 
+
 		/* The #develop designer is going to delete this:
 
 			this.TopViewControl = new MapView.Forms.MapObservers.TopViews.TopView();
 			this.RouteViewControl = new MapView.Forms.MapObservers.RouteViews.RouteView();
 
+			this.tabControl = new DSShared.Windows.TileTabControl();
+
 		- so copy it back into InitializeComponent() */
 
-		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -35,7 +38,7 @@
 		{
 			this.TopViewControl = new MapView.Forms.MapObservers.TopViews.TopView();
 			this.RouteViewControl = new MapView.Forms.MapObservers.RouteViews.RouteView();
-			this.tabControl = new System.Windows.Forms.TabControl();
+			this.tabControl = new DSShared.Windows.CompositedTabControl();
 			this.tp_Top = new System.Windows.Forms.TabPage();
 			this.tp_Route = new System.Windows.Forms.TabPage();
 			this.tabControl.SuspendLayout();
@@ -46,7 +49,6 @@
 			// TopViewControl
 			// 
 			this.TopViewControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TopViewControl.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.TopViewControl.Location = new System.Drawing.Point(3, 3);
 			this.TopViewControl.Name = "TopViewControl";
 			this.TopViewControl.Size = new System.Drawing.Size(618, 423);
@@ -56,7 +58,6 @@
 			// RouteViewControl
 			// 
 			this.RouteViewControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RouteViewControl.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.RouteViewControl.Location = new System.Drawing.Point(3, 3);
 			this.RouteViewControl.Name = "RouteViewControl";
 			this.RouteViewControl.Size = new System.Drawing.Size(618, 423);
@@ -68,7 +69,6 @@
 			this.tabControl.Controls.Add(this.tp_Top);
 			this.tabControl.Controls.Add(this.tp_Route);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabControl.Location = new System.Drawing.Point(0, 0);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
@@ -113,13 +113,15 @@
 			this.ResumeLayout(false);
 
 		}
-		#endregion
 
 		private MapView.Forms.MapObservers.TopViews.TopView TopViewControl;
 		private MapView.Forms.MapObservers.RouteViews.RouteView RouteViewControl;
 
-		private System.Windows.Forms.TabControl tabControl;
+		DSShared.Windows.CompositedTabControl tabControl;
+		DSShared.Windows.TabPad tpTabControl;
+
 		private System.Windows.Forms.TabPage tp_Top;
 		private System.Windows.Forms.TabPage tp_Route;
+		#endregion Designer
 	}
 }

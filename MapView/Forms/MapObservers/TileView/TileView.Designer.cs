@@ -13,7 +13,7 @@
 
 /*		The #develop designer might delete this
 
-			this.tcTileTypes = new MapView.Forms.MapObservers.TileViews.TileTabControl();
+			this.tcTileTypes = new DSShared.Windows.TileTabControl();
 
 		so copy it back into InitializeComponent(). */
 
@@ -23,7 +23,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tcTileTypes = new MapView.Forms.MapObservers.TileViews.TileTabControl();
+			this.tcTileTypes = new DSShared.Windows.CompositedTabControl();
 			this.tpAll = new System.Windows.Forms.TabPage();
 			this.tpFloors = new System.Windows.Forms.TabPage();
 			this.tpWestwalls = new System.Windows.Forms.TabPage();
@@ -221,7 +221,8 @@
 
 		private System.ComponentModel.IContainer components = null;
 
-		TileTabControl tcTileTypes;
+		DSShared.Windows.CompositedTabControl tcTileTypes;
+		DSShared.Windows.TabPad tpTileTypes;
 
 		private System.Windows.Forms.ToolStrip tsMain;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbExternal;

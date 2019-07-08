@@ -102,9 +102,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		internal TileView()
 		{
 			InitializeComponent();
+			tpTileTypes = new TabPad(tcTileTypes);
 
-			tcTileTypes.MouseWheel           += OnMouseWheel_Tabs;
-			tcTileTypes.SelectedIndexChanged += OnSelectedIndexChanged;
+//			tcTileTypes.MouseWheel           += tabs_OnMouseWheel;
+			tcTileTypes.SelectedIndexChanged += tabs_OnSelectedIndexChanged;
 
 			TilePanel.Chaparone = this;
 
@@ -139,7 +140,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		private void AddPanel(TilePanel panel, Control page)
 		{
-			panel.TileSelected += OnTileSelected;
+			panel.TileSelected += panel_OnTileSelected;
 			page.Controls.Add(panel);
 		}
 		#endregion cTor
@@ -148,7 +149,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		#region Events (override)
 		/// <summary>
 		/// Bypasses level-change in MapObserverControl and scrolls through the
-		/// tabpages instead.
+		/// tabpages instead. Actually it doesn't; it just prevents awkward
+		/// level-changes in the other viewers.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -159,13 +161,18 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		#region Events
-		private void OnMouseWheel_Tabs(object sender, MouseEventArgs e)
+/*		/// <summary>
+		/// Is supposed to flip through the tabs on mousewheel events when the
+		/// tabcontrol is focused, but focus switches to the page's panel ...
+		/// not sure why though.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void tabs_OnMouseWheel(object sender, MouseEventArgs e)
 		{
 			int dir = 0;
-			if (e.Delta < 0)
-				dir = +1;
-			else if (e.Delta > 0)
-				dir = -1;
+			if      (e.Delta < 0) dir = +1;
+			else if (e.Delta > 0) dir = -1;
 
 			if (dir != 0)
 			{
@@ -175,53 +182,22 @@ namespace MapView.Forms.MapObservers.TileViews
 					tcTileTypes.SelectedIndex = page;
 				}
 			}
-			//_panels[tcTileTypes.SelectedIndex] as TilePanel;
-		}
+		} */
 
 		/// <summary>
-		/// Triggers when a tab-index changes.
-		/// Focuses the selected page/panel, updates the quadrant and MCD-info
-		/// if applicable. And subscribes/unsubscribes panels to the static
-		/// ticker's event.
+		/// Triggers when a tab-index changes. Updates the titlebar-text,
+		/// quadrant, and MCD-info (if applicable). Also subscribes/unsubscribes
+		/// panels to the static ticker's event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnSelectedIndexChanged(object sender, EventArgs e)
+		private void tabs_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
 			var panel = GetSelectedPanel();
 			foreach (var panel_ in _panels)
 				panel_.SetTickerSubscription(panel_ == panel);
 
-
-//			panel.Focus();
-
-			if (McdInfobox != null)
-			{
-				McdRecord record;
-				int id;
-				string label;
-
-				var part = SelectedTilepart;
-				if (part != null)
-				{
-					ViewerFormsManager.TopView     .Control   .SelectQuadrant(part.Record.PartType);
-					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(part.Record.PartType);
-
-					ViewerFormsManager.TileView.Text = BuildTitleString(part.SetId, part.TerId);
-					record = part.Record;
-					id = part.TerId;
-					label = GetTerrainLabel();
-				}
-				else
-				{
-					ViewerFormsManager.TileView.Text = "TileView";
-					record = null;
-					id = -1;
-					label = String.Empty;
-				}
-
-				McdInfobox.UpdateData(record, id, label);
-			}
+			panel_OnTileSelected(SelectedTilepart);
 		}
 
 		/// <summary>
@@ -229,8 +205,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// 'TileSelected_SelectQuadrant' event.
 		/// </summary>
 		/// <param name="part"></param>
-		private void OnTileSelected(Tilepart part)
+		private void panel_OnTileSelected(Tilepart part)
 		{
+			SetTitleText(part);
+
 			if (McdInfobox != null)
 			{
 				McdRecord record;
@@ -239,14 +217,12 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				if (part != null)
 				{
-					ViewerFormsManager.TileView.Text = BuildTitleString(part.SetId, part.TerId);
 					record = part.Record;
 					id = part.TerId;
 					label = GetTerrainLabel();
 				}
 				else
 				{
-					ViewerFormsManager.TileView.Text = "TileView";
 					record = null;
 					id = -1;
 					label = String.Empty;
@@ -255,8 +231,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				McdInfobox.UpdateData(record, id, label);
 			}
 
-			if (TileSelected_SelectQuadrant != null)
-				TileSelected_SelectQuadrant(part);
+			TileSelected_SelectQuadrant(part);
 		}
 		#endregion Events
 
@@ -446,14 +421,12 @@ namespace MapView.Forms.MapObservers.TileViews
 					var part = SelectedTilepart;
 					if (part != null)
 					{
-						ViewerFormsManager.TileView.Text = BuildTitleString(part.SetId, part.TerId);
 						record = part.Record;
 						id = part.TerId;
 						label = GetTerrainLabel();
 					}
 					else
 					{
-						ViewerFormsManager.TileView.Text = "TileView";
 						record = null;
 						id = -1;
 						label = String.Empty;
@@ -683,20 +656,22 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		#region Methods
 		/// <summary>
-		/// Builds and returns a string that's appropriate for a currently
+		/// Sets the title-text to a string that's appropriate for the currently
 		/// selected tilepart.
 		/// </summary>
-		/// <param name="setId">the ID in total-terrains</param>
-		/// <param name="terId">the ID in a terrain</param>
-		/// <returns></returns>
-		private string BuildTitleString(int setId, int terId)
+		/// <param name="part">can be null</param>
+		private void SetTitleText(Tilepart part)
 		{
-			return String.Format(
-							CultureInfo.CurrentCulture,
-							"TileView - {2}  terId {1}  setId {0}",
-							setId,
-							terId,
-							GetTerrainLabel());
+			string title = "TileView";
+			if (part != null)
+				title += String.Format(
+									CultureInfo.CurrentCulture,
+									" - {2}  terId {1}  setId {0}",
+									part.SetId,
+									part.TerId,
+									GetTerrainLabel());
+
+			ViewerFormsManager.TileView.Text = title;
 		}
 
 		/// <summary>
@@ -741,27 +716,5 @@ namespace MapView.Forms.MapObservers.TileViews
 			return _panels[tcTileTypes.SelectedIndex] as TilePanel;
 		}
 		#endregion Methods
-	}
-
-
-
-	/// <summary>
-	/// Parent class for TabControl.
-	/// </summary>
-	internal sealed class TileTabControl
-		:
-			TabControl
-	{
-		#region Events (override)
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Events (override)
 	}
 }
