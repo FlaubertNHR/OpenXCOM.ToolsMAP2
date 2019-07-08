@@ -156,11 +156,10 @@ namespace MapView
 					{
 						switch (i)
 						{
-							default:
-							case 0: part = tile.Floor;   break;
-							case 1: part = tile.West;    break;
-							case 2: part = tile.North;   break;
-							case 3: part = tile.Content; break;
+							default: part = tile.Floor;   break; // case 0:
+							case  1: part = tile.West;    break;
+							case  2: part = tile.North;   break;
+							case  3: part = tile.Content; break;
 						}
 
 						if (part != null)
