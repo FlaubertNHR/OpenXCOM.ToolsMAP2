@@ -275,7 +275,7 @@ namespace MapView
 			// 
 			// pnl_Copyable
 			// 
-			this.pnl_Copyable.BackColor = System.Drawing.Color.Khaki;
+			this.pnl_Copyable.BackColor = System.Drawing.Color.Goldenrod;
 			this.pnl_Copyable.Controls.Add(this.rtb_Copyable);
 			this.pnl_Copyable.Dock = System.Windows.Forms.DockStyle.Top;
 			this.pnl_Copyable.Location = new System.Drawing.Point(0, 26);
