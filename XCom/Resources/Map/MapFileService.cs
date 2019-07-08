@@ -13,12 +13,12 @@ namespace XCom
 	/// </summary>
 	public static class MapFileService
 	{
-		#region Fields
+		#region Fields (static)
 		public const int MAX_MCDRECORDS = 254;
-		#endregion
+		#endregion Fields (static)
 
 
-		#region Methods
+		#region Methods (static)
 		/// <summary>
 		/// Loads all terrains for a Map. Called by XCMainWindow.LoadSelectedDescriptor().
 		/// @note Check that 'descriptor' is not null before call.
@@ -107,8 +107,8 @@ namespace XCom
 					//LogFile.WriteLine(". . . terrain= " + descriptor.Terrains[i].Item1 + " : " + descriptor.Terrains[i].Item2);
 
 					Tilepart[] MCD = descriptor.CreateTerrain(i);	// NOTE: calls
-					foreach (Tilepart part in MCD)					//      - TilepartFactory.CreateTileparts()
-						partset.Add(part);							//      - ResourceInfo.LoadSpriteset()
+					foreach (Tilepart part in MCD)					//     - TilepartFactory.CreateTileparts()
+						partset.Add(part);							//     - ResourceInfo.LoadSpriteset()
 				}
 
 				if (partset.Count != 0)
@@ -134,13 +134,14 @@ namespace XCom
 							while (length++ != lengthTotal)
 								st += " ";
 
-							int records = descriptor.GetRecordCount(i);
-							text += st + " - " + records + Environment.NewLine;
+							text += st + " - "
+								  + descriptor.GetRecordCount(i)
+								  + Environment.NewLine;
 						}
 						text += Environment.NewLine + "total - " + partset.Count;
 
 						MapFileWarn.that.Show();
-						MapFileWarn.that.SetText(descriptor.Label, text);
+						MapFileWarn.that.SetTexts(descriptor.Label, text);
 					}
 
 					var RMP = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
@@ -163,6 +164,6 @@ namespace XCom
 
 			return null;
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

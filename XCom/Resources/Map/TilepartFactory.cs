@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-//using System.Windows.Forms;
 using System.IO;
 
 
@@ -10,7 +9,7 @@ namespace XCom.Resources.Map
 	{
 		#region Fields (static)
 		public const int Length = 62; // there are 62 bytes in each MCD record.
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Methods (static)
@@ -183,6 +182,6 @@ namespace XCom.Resources.Map
 			}
 			return 0;
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

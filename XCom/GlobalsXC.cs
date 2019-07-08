@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace XCom
+﻿namespace XCom
 {
 	public static class GlobalsXC
 	{
@@ -30,6 +27,9 @@ namespace XCom
 		public const string TYPE     = "type";
 		public const string TERRAINS = "terrains";
 		public const string BASEPATH = "basepath";
+
+
+		public static string[] CRandorLF = { "\r\n", "\r", "\n" };
 		#endregion
 	}
 }

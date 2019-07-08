@@ -16,7 +16,7 @@ namespace XCom
 		:
 			Form
 	{
-		#region Fields & Properties
+		#region Properties (static)
 		private static MapFileWarn _that;
 		internal static MapFileWarn that
 		{
@@ -27,7 +27,7 @@ namespace XCom
 				return _that;
 			}
 		}
-		#endregion
+		#endregion Properties (static)
 
 
 		#region cTor
@@ -37,12 +37,11 @@ namespace XCom
 		private MapFileWarn()
 		{
 			InitializeComponent();
-//			Select(); // MainView will take focus.
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region Methods (override)
+		#region Events (override)
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			Hide();
@@ -50,28 +49,28 @@ namespace XCom
 			e.Cancel = true;
 //			base.OnClosing(e);
 		}
-		#endregion
+		#endregion Events (override)
 
 
-		#region Methods (events)
+		#region Events
 		private void btn_okClick(object sender, EventArgs e)
 		{
 			OnClosing(new CancelEventArgs());
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
-		internal void SetText(string label, string text)
+		internal void SetTexts(string label, string text)
 		{
 			Text = "Mapfile Warning - " + label;
 			rtb_Text.Text = text;
 		}
-		#endregion
+		#endregion Methods
 
 
-		#region Windows Form Designer generated code
 
+		#region Designer
 		private Container components = null;
 		private Label lbl_InfoHeader;
 		private Label lbl_InfoBody;
@@ -79,7 +78,7 @@ namespace XCom
 		private Button btn_Ok;
 
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
@@ -89,9 +88,10 @@ namespace XCom
 			base.Dispose(disposing);
 		}
 		
+
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -171,6 +171,6 @@ namespace XCom
 			this.ResumeLayout(false);
 
 		}
-		#endregion
+		#endregion Designer
 	}
 }

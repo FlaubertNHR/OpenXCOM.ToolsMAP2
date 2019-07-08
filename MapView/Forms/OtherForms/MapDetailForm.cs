@@ -33,8 +33,6 @@ namespace MapView
 
 
 		#region Fields
-		private string[] CRandorLF = { "\r\n", "\r", "\n" };
-
 		private MapInfoOutputBox _finfo;
 		#endregion Fields
 
@@ -157,14 +155,14 @@ namespace MapView
 			Close();
 		}
 
-		/// <summary>
+/*		/// <summary>
 		/// Draws a 1px border around the copyable-panel.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		void paint_CopyPanel(object sender, PaintEventArgs e)
 		{
-/*			int w = pnl_Copyable.Width  - 1;
+			int w = pnl_Copyable.Width  - 1;
 			int h = pnl_Copyable.Height - 1;
 
 			var tl = new Point(0, 0);
@@ -173,11 +171,11 @@ namespace MapView
 			var bl = new Point(0, h);
 
 			var graphics = e.Graphics;
-//			graphics.DrawLine(Pencils.DarkLine, tl, tr);
-//			graphics.DrawLine(Pencils.DarkLine, tr, br);
-//			graphics.DrawLine(Pencils.DarkLine, br, bl);
-//			graphics.DrawLine(Pencils.DarkLine, bl, tl); */
-		}
+			graphics.DrawLine(Pencils.DarkLine, tl, tr);
+			graphics.DrawLine(Pencils.DarkLine, tr, br);
+			graphics.DrawLine(Pencils.DarkLine, br, bl);
+			graphics.DrawLine(Pencils.DarkLine, bl, tl);
+		} */
 		#endregion Events
 
 
@@ -189,7 +187,7 @@ namespace MapView
 		/// <returns></returns>
 		int GetWidth(string text)
 		{
-			string[] lines = text.Split(CRandorLF, StringSplitOptions.RemoveEmptyEntries);
+			string[] lines = text.Split(GlobalsXC.CRandorLF, StringSplitOptions.RemoveEmptyEntries);
 
 			int width = 0, widthtest;
 			foreach (var line in lines)
@@ -207,7 +205,7 @@ namespace MapView
 		/// <returns></returns>
 		int GetHeight(string text)
 		{
-			string[] lines = text.Split(CRandorLF, StringSplitOptions.None);
+			string[] lines = text.Split(GlobalsXC.CRandorLF, StringSplitOptions.None);
 
 			return TextRenderer.MeasureText(HEIGHT_TEST, rtb_Copyable.Font).Height
 				 * lines.Length;
@@ -284,7 +282,6 @@ namespace MapView
 			this.pnl_Copyable.Padding = new System.Windows.Forms.Padding(6, 1, 1, 1);
 			this.pnl_Copyable.Size = new System.Drawing.Size(392, 109);
 			this.pnl_Copyable.TabIndex = 1;
-			this.pnl_Copyable.Paint += new System.Windows.Forms.PaintEventHandler(this.paint_CopyPanel);
 			// 
 			// rtb_Copyable
 			// 

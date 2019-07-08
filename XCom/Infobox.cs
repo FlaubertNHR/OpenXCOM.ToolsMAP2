@@ -88,9 +88,7 @@ namespace XCom
 
 		private int GetHeight(string text, Size size)
 		{
-			string[] lines = text.Split(
-									new[]{ "\r\n", "\r", "\n" },
-									StringSplitOptions.None);
+			string[] lines = text.Split(GlobalsXC.CRandorLF, StringSplitOptions.None);
 
 			float heightF;
 			int
@@ -116,9 +114,7 @@ namespace XCom
 
 		private int GetWidth(string text)
 		{
-			string[] lines = text.Split(
-									new[]{ "\r\n", "\r", "\n" },
-									StringSplitOptions.RemoveEmptyEntries);
+			string[] lines = text.Split(GlobalsXC.CRandorLF, StringSplitOptions.RemoveEmptyEntries);
 
 			int width = 0, test;
 			foreach (var line in lines)
@@ -134,7 +130,7 @@ namespace XCom
 		{
 			lbl_Info.ForeColor = color;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Events (override)
