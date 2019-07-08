@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -181,7 +182,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Triggers when a tab-index changes.
 		/// Focuses the selected page/panel, updates the quadrant and MCD-info
 		/// if applicable. And subscribes/unsubscribes panels to the static
-		/// ticker's eventhandler.
+		/// ticker's event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -194,31 +195,33 @@ namespace MapView.Forms.MapObservers.TileViews
 
 //			panel.Focus();
 
-			McdRecord record;
-			int id;
-			string label;
-
-			var f = FindForm();
-			if (SelectedTilepart != null)
-			{
-				ViewerFormsManager.TopView     .Control   .SelectQuadrant(SelectedTilepart.Record.PartType);
-				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(SelectedTilepart.Record.PartType);
-
-				f.Text = BuildTitleString(SelectedTilepart.SetId, SelectedTilepart.TerId);
-				record = SelectedTilepart.Record;
-				id = SelectedTilepart.TerId;
-				label = GetTerrainLabel();
-			}
-			else
-			{
-				f.Text = "TileView";
-				record = null;
-				id = -1;
-				label = String.Empty;
-			}
-
 			if (McdInfobox != null)
+			{
+				McdRecord record;
+				int id;
+				string label;
+
+				var part = SelectedTilepart;
+				if (part != null)
+				{
+					ViewerFormsManager.TopView     .Control   .SelectQuadrant(part.Record.PartType);
+					ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(part.Record.PartType);
+
+					ViewerFormsManager.TileView.Text = BuildTitleString(part.SetId, part.TerId);
+					record = part.Record;
+					id = part.TerId;
+					label = GetTerrainLabel();
+				}
+				else
+				{
+					ViewerFormsManager.TileView.Text = "TileView";
+					record = null;
+					id = -1;
+					label = String.Empty;
+				}
+
 				McdInfobox.UpdateData(record, id, label);
+			}
 		}
 
 		/// <summary>
@@ -228,29 +231,29 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="part"></param>
 		private void OnTileSelected(Tilepart part)
 		{
-			var f = FindForm();
-
-			McdRecord record;
-			int id;
-			string label;
-
-			if (part != null)
-			{
-				f.Text = BuildTitleString(part.SetId, part.TerId);
-				record = part.Record;
-				id = part.TerId;
-				label = GetTerrainLabel();
-			}
-			else
-			{
-				f.Text = "TileView";
-				record = null;
-				id = -1;
-				label = String.Empty;
-			}
-
 			if (McdInfobox != null)
+			{
+				McdRecord record;
+				int id;
+				string label;
+
+				if (part != null)
+				{
+					ViewerFormsManager.TileView.Text = BuildTitleString(part.SetId, part.TerId);
+					record = part.Record;
+					id = part.TerId;
+					label = GetTerrainLabel();
+				}
+				else
+				{
+					ViewerFormsManager.TileView.Text = "TileView";
+					record = null;
+					id = -1;
+					label = String.Empty;
+				}
+
 				McdInfobox.UpdateData(record, id, label);
+			}
 
 			if (TileSelected_SelectQuadrant != null)
 				TileSelected_SelectQuadrant(part);
@@ -436,8 +439,6 @@ namespace MapView.Forms.MapObservers.TileViews
 					McdInfobox = new McdInfoF();
 					McdInfobox.FormClosing += OnMcdInfoFormClosing;
 
-					var f = FindForm();
-
 					McdRecord record;
 					int id;
 					string label;
@@ -445,14 +446,14 @@ namespace MapView.Forms.MapObservers.TileViews
 					var part = SelectedTilepart;
 					if (part != null)
 					{
-						f.Text = BuildTitleString(part.SetId, part.TerId);
+						ViewerFormsManager.TileView.Text = BuildTitleString(part.SetId, part.TerId);
 						record = part.Record;
 						id = part.TerId;
 						label = GetTerrainLabel();
 					}
 					else
 					{
-						f.Text = "TileView";
+						ViewerFormsManager.TileView.Text = "TileView";
 						record = null;
 						id = -1;
 						label = String.Empty;
@@ -691,7 +692,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		private string BuildTitleString(int setId, int terId)
 		{
 			return String.Format(
-							System.Globalization.CultureInfo.CurrentCulture,
+							CultureInfo.CurrentCulture,
 							"TileView - {2}  terId {1}  setId {0}",
 							setId,
 							terId,
@@ -710,7 +711,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			{
 				string label = ((MapFile)MapBase).GetTerrainLabel(part);
 				info = String.Format(
-								System.Globalization.CultureInfo.CurrentCulture,
+								CultureInfo.CurrentCulture,
 								"{2}  terId {1}  setId {0}",
 								part.SetId,
 								part.TerId,
@@ -725,8 +726,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <returns></returns>
 		internal string GetTerrainLabel()
 		{
-			return (SelectedTilepart != null) ? ((MapFile)MapBase).GetTerrainLabel(SelectedTilepart)
-											  : "ERROR";
+			if (SelectedTilepart != null)
+				return ((MapFile)MapBase).GetTerrainLabel(SelectedTilepart);
+
+			return "ERROR";
 		}
 
 		/// <summary>
@@ -741,7 +744,11 @@ namespace MapView.Forms.MapObservers.TileViews
 	}
 
 
-	internal class TileTabControl
+
+	/// <summary>
+	/// Parent class for TabControl.
+	/// </summary>
+	internal sealed class TileTabControl
 		:
 			TabControl
 	{
