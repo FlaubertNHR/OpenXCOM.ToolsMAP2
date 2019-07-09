@@ -338,6 +338,7 @@ namespace MapView
 		}
 		#endregion cTor
 
+
 		/// <summary>
 		/// Hides the cuboid-targeter when the mouse leaves this control unless
 		/// the targeter was enabled by a keyboard tiles-selection.
@@ -914,45 +915,39 @@ namespace MapView
 		{
 			if (MapBase != null)
 			{
-				switch (e.Button)
+				if (e.Button == MouseButtons.Right)
 				{
-					case MouseButtons.Left:
-						if (e.X != _x || e.Y != _y)
-						{
-							_x = e.X; _y = e.Y;
+					if (_isMouseDragR)
+					{
+						Point delta = _preloc - (Size)e.Location;
 
-							var loc = GetTileLocation(e.X, e.Y);
+						MainViewUnderlay.that.ScrollHori(delta.X);
+						MainViewUnderlay.that.ScrollVert(delta.Y);
+					}
+				}
+				else if (e.X != _x || e.Y != _y)
+				{
+					_x = e.X; _y = e.Y;
 
-							_targeterForced = false;
-							_colOver = loc.X;
-							_rowOver = loc.Y;
+					var loc = GetTileLocation(e.X, e.Y);
 
-							if (_isMouseDragL
-								&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
-							{
-								_keyDeltaX = _colOver - DragBeg.X; // these are in case user stops a mouse-drag
-								_keyDeltaY = _rowOver - DragBeg.Y; // and resumes selection using keyboard.
+					_targeterForced = false;
+					_colOver = loc.X;
+					_rowOver = loc.Y;
 
-								ProcessSelection(DragBeg, loc);
-							}
-							else
-								Invalidate();
-						}
-						break;
-
-					case MouseButtons.Right:
-						if (_isMouseDragR)
-						{
-							Point delta = _preloc - (Size)e.Location;
-	
-							MainViewUnderlay.that.ScrollHori(delta.X);
-							MainViewUnderlay.that.ScrollVert(delta.Y);
-						}
-						break;
+					if (_isMouseDragL
+						&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
+					{
+						_keyDeltaX = _colOver - DragBeg.X;	// NOTE: These are in case a mousedrag-selection protocol stops
+						_keyDeltaY = _rowOver - DragBeg.Y;	// but the selection protocol is resumed using the keyboard.
+															// TODO: Implement [Ctrl+LMB] to instantly select an area based
+						ProcessSelection(DragBeg, loc);		// on the currently selected tile ofc.
+					}
+					else
+						Invalidate();
 				}
 			}
 		}
-
 
 		/// <summary>
 		/// Sets drag-start and drag-end and fires a MouseDrag (path

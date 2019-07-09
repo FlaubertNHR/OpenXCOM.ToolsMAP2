@@ -68,33 +68,33 @@
 			// 
 			// tpFloors
 			// 
-			this.tpFloors.Location = new System.Drawing.Point(4, 21);
+			this.tpFloors.Location = new System.Drawing.Point(4, 22);
 			this.tpFloors.Name = "tpFloors";
-			this.tpFloors.Size = new System.Drawing.Size(632, 408);
+			this.tpFloors.Size = new System.Drawing.Size(632, 407);
 			this.tpFloors.TabIndex = 1;
 			this.tpFloors.Text = "floor";
 			// 
 			// tpWestwalls
 			// 
-			this.tpWestwalls.Location = new System.Drawing.Point(4, 21);
+			this.tpWestwalls.Location = new System.Drawing.Point(4, 22);
 			this.tpWestwalls.Name = "tpWestwalls";
-			this.tpWestwalls.Size = new System.Drawing.Size(632, 408);
+			this.tpWestwalls.Size = new System.Drawing.Size(632, 407);
 			this.tpWestwalls.TabIndex = 2;
 			this.tpWestwalls.Text = "west";
 			// 
 			// tpNorthwalls
 			// 
-			this.tpNorthwalls.Location = new System.Drawing.Point(4, 21);
+			this.tpNorthwalls.Location = new System.Drawing.Point(4, 22);
 			this.tpNorthwalls.Name = "tpNorthwalls";
-			this.tpNorthwalls.Size = new System.Drawing.Size(632, 408);
+			this.tpNorthwalls.Size = new System.Drawing.Size(632, 407);
 			this.tpNorthwalls.TabIndex = 3;
 			this.tpNorthwalls.Text = "north";
 			// 
 			// tpContents
 			// 
-			this.tpContents.Location = new System.Drawing.Point(4, 21);
+			this.tpContents.Location = new System.Drawing.Point(4, 22);
 			this.tpContents.Name = "tpContents";
-			this.tpContents.Size = new System.Drawing.Size(632, 408);
+			this.tpContents.Size = new System.Drawing.Size(632, 407);
 			this.tpContents.TabIndex = 4;
 			this.tpContents.Text = "content";
 			// 
@@ -171,20 +171,20 @@
 			// 
 			// ssStatusbar
 			// 
+			this.ssStatusbar.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ssStatusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsslTotal,
 			this.tsslOver});
-			this.ssStatusbar.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ssStatusbar.Location = new System.Drawing.Point(0, 458);
 			this.ssStatusbar.Name = "ssStatusbar";
 			this.ssStatusbar.Size = new System.Drawing.Size(640, 22);
 			this.ssStatusbar.TabIndex = 2;
-			this.ssStatusbar.Text = "statusStrip1";
 			// 
 			// tsslTotal
 			// 
 			this.tsslTotal.AutoSize = false;
-			this.tsslTotal.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
+			this.tsslTotal.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+			this.tsslTotal.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
 			this.tsslTotal.Name = "tsslTotal";
 			this.tsslTotal.Size = new System.Drawing.Size(65, 22);
 			this.tsslTotal.Text = "Total";
@@ -193,9 +193,9 @@
 			// tsslOver
 			// 
 			this.tsslOver.AutoSize = false;
-			this.tsslOver.Margin = new System.Windows.Forms.Padding(0);
+			this.tsslOver.Margin = new System.Windows.Forms.Padding(6, 0, 2, 0);
 			this.tsslOver.Name = "tsslOver";
-			this.tsslOver.Size = new System.Drawing.Size(555, 22);
+			this.tsslOver.Size = new System.Drawing.Size(548, 22);
 			this.tsslOver.Spring = true;
 			this.tsslOver.Text = "Over";
 			this.tsslOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

@@ -404,6 +404,10 @@ namespace MapView
 
 			DontBeepEvent += FireContext;
 
+			var r = new CustomToolStripRenderer();
+			ssMain.Renderer = r;
+
+
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 		}
 		#endregion cTor

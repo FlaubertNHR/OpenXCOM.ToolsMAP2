@@ -136,4 +136,30 @@ namespace DSShared.Windows
 		} */
 		#endregion Events (override)
 	}
+
+
+
+	public class CustomToolStripRenderer
+		:
+			ToolStripProfessionalRenderer
+	{
+		protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
+		{
+			e.Graphics.FillRectangle(Brushes.Snow, e.AffectedBounds);
+
+//			using (var brush = new SolidBrush(e.BackColor))
+//				e.Graphics.FillRectangle(brush, e.AffectedBounds);
+
+//			using (var b = new LinearGradientBrush(
+//												e.AffectedBounds,
+//												ColorTable.MenuStripGradientBegin,
+//												ColorTable.MenuStripGradientEnd,
+//												LinearGradientMode.Horizontal))
+//			{
+//				e.Graphics.FillRectangle(b, e.AffectedBounds);
+//			}
+
+//			e.Graphics.DrawLine(Pens.Black, e.AffectedBounds.Left, e.AffectedBounds.Top + 1, e.AffectedBounds.Right, e.AffectedBounds.Top + 1);
+		}
+	}
 }

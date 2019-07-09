@@ -136,6 +136,9 @@ namespace MapView.Forms.MapObservers.TileViews
 			AddPanel(content,    tpContents);
 
 			_allTiles.SetTickerSubscription(true);
+
+			var r = new CustomToolStripRenderer();
+			ssStatusbar.Renderer = r;
 		}
 
 		private void AddPanel(TilePanel panel, Control page)
