@@ -33,10 +33,8 @@ namespace DSShared.Windows
 		/// </summary>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			var graphics = e.Graphics;
-			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-			RenderGraphics(graphics);
+			e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			RenderGraphics(e.Graphics);
 		}
 		#endregion Events (override)
 

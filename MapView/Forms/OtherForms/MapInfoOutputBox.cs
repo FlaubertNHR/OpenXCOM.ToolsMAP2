@@ -152,7 +152,7 @@ namespace MapView
 				tile = _file[row, col, lev] as MapTile;
 				if (!tile.Vacant)
 				{
-					for (int i = 0; i != 4; ++i)
+					for (int i = 0; i != MapTile.QUADS; ++i)
 					{
 						switch (i)
 						{

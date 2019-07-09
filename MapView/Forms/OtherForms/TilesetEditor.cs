@@ -311,7 +311,7 @@ namespace MapView
 		/// terrain verifications.
 		/// @note Terrains get changed on-the-fly and do not require an Accept
 		/// click. But the Map needs to be reloaded when things go back to
-		/// OnAdd/EditTilesetClick() in 'XCMainWindow'.
+		/// OnAdd/EditTilesetClick() in XCMainWindow.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)

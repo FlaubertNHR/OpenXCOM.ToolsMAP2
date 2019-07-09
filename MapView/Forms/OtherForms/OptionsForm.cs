@@ -90,6 +90,8 @@ namespace MapView
 		#endregion Methods (static)
 
 
+
+		#region Designer
 		private IContainer components = null;
 
 		private OptionsPropertyGrid propertyGrid;
@@ -107,17 +109,15 @@ namespace MapView
 		}
 
 
-/*		The sharp develop designer is going to delete this:
+/*		The #develop designer is going to delete this:
 
-			propertyGrid = new OptionsPropertyGrid();
+			this.propertyGrid = new OptionsPropertyGrid();
 
 		Add it back to the top of InitializeComponent().
  */
-
-		#region Windows Form Designer generated code
 		private void InitializeComponent()
 		{
-			propertyGrid = new OptionsPropertyGrid();
+			this.propertyGrid = new OptionsPropertyGrid();
 			this.SuspendLayout();
 			// 
 			// propertyGrid
@@ -143,8 +143,9 @@ namespace MapView
 			this.ResumeLayout(false);
 
 		}
-		#endregion Windows Form Designer generated code
+		#endregion Designer
 	}
+
 
 
 	/// <summary>

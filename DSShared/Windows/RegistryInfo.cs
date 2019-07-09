@@ -250,6 +250,7 @@ namespace DSShared.Windows
 		#endregion Methods (static)
 
 
+
 		#region Structs
 		private struct Metric
 		{

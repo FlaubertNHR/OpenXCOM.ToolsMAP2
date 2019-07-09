@@ -48,8 +48,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		private static readonly GraphicsPath _pathWest    = new GraphicsPath();
 		private static readonly GraphicsPath _pathNorth   = new GraphicsPath();
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
-
-		private const int QUADS = 4;
 		#endregion Fields (static)
 
 
@@ -71,7 +69,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			Font  = new Font("Comic Sans MS", 7);
 			Brush = new SolidBrush(Color.LightBlue);
 
-			for (int quad = 0; quad != QUADS; ++quad) // cache each quadrant's rectangular bounding path
+			for (int quad = 0; quad != MapTile.QUADS; ++quad) // cache each quadrant's rectangular bounding path
 			{
 				var p0 = new Point(
 								StartX + QuadWidthTotal * quad - 1,

@@ -1,3 +1,6 @@
+using System;
+
+
 namespace XCom
 {
 	internal delegate void BufferChangedEvent(Zerg zerg);
@@ -98,7 +101,7 @@ namespace XCom
 		/// </summary>
 		public Zerg()
 		{
-			Bullshit = "";
+			Bullshit = String.Empty;
 		}
 	}
 }

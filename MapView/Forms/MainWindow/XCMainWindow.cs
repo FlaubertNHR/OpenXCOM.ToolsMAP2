@@ -151,7 +151,7 @@ namespace MapView
 
 			LogFile.WriteLine("Starting MAIN MapView window ...");
 
-			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL);
+			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL); // why. -> use Application.ExecutablePath
 			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSetT);
 
 			LogFile.WriteLine("App paths cached.");
@@ -172,7 +172,7 @@ namespace MapView
 
 			// Check if MapTilesets.yml and MapResources.yml exist yet, show the
 			// Configuration window if not.
-			// NOTE: MapResources.yml and MapTilesets.yml are created by 'ConfigurationForm'
+			// NOTE: MapResources.yml and MapTilesets.yml are created by ConfigurationForm.
 			if (!pathResources.FileExists() || !pathTilesets.FileExists())
 			{
 				LogFile.WriteLine("Resources or Tilesets file does not exist: run configurator.");

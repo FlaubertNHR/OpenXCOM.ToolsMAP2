@@ -78,7 +78,7 @@ namespace MapView.Volutar
 							String.Empty,
 							"Path to Volutar MCD Edit" + Environment.NewLine
 								+ "The path specified can actually be used to start"
-								+ " any valid application or to open a specific file"
+								+ " any valid application or to open a specified file"
 								+ " with its associated application.",
 							"McdViewer");
 		}

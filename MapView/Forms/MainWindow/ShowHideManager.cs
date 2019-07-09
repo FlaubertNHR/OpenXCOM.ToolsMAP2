@@ -38,7 +38,7 @@ namespace MapView.Forms.MainWindow
 		{
 			_visible.Clear();
 
-			foreach (var f in _zOrder) // don't screw with the iteration of '_fOrder'
+			foreach (var f in _zOrder) // don't screw with the iteration of '_zOrder'
 				if (f.Visible)
 					_visible.Add(f);
 
@@ -81,7 +81,7 @@ namespace MapView.Forms.MainWindow
 		internal static List<Form> getZorderList()
 		{
 			var zOrder = new List<Form>();
-			foreach (var f in _zOrder) // don't screw with the iteration of '_fOrder'
+			foreach (var f in _zOrder) // don't screw with the iteration of '_zOrder'
 				if (f.Visible)
 					zOrder.Add(f);
 

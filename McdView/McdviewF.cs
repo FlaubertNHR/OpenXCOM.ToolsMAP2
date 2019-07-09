@@ -430,12 +430,12 @@ namespace McdView
 			{
 				using (var sr = new StreamReader(File.OpenRead(fileResources)))
 				{
-					var str = new YamlStream();
-					str.Load(sr);
+					var ys = new YamlStream();
+					ys.Load(sr);
 
 					string val;
 
-					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
+					var nodeRoot = ys.Documents[0].RootNode as YamlMappingNode;
 					foreach (var node in nodeRoot.Children)
 					{
 						switch (node.Key.ToString())

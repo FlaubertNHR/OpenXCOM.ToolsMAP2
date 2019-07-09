@@ -14,7 +14,6 @@ using XCom.Interfaces.Base;
 namespace MapView.Forms.MapObservers.TopViews
 {
 	/// <summary>
-	/// The base class for TopPanel.
 	/// @note This is not a Panel. It is a Control shown inside of a Panel.
 	/// </summary>
 	internal class TopPanel

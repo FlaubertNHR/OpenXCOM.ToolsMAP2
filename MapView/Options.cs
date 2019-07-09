@@ -150,7 +150,7 @@ namespace MapView
 		/// <summary>
 		/// Gets the object tied to the key. If there is no object one will be
 		/// created with the value specified.
-		/// @note Is used only by 'VolutarService'.
+		/// @note Is used only by VolutarService.
 		/// </summary>
 		/// <param name="key">the name of the Option object</param>
 		/// <param name="val">if there is no Option object tied to the
@@ -190,6 +190,7 @@ namespace MapView
 		}
 		#endregion Events
 	}
+
 
 
 	/// <summary>
@@ -238,7 +239,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Checks if 'Value' is a boolean and TRUE. else false.
+		/// Checks if Value is a boolean and TRUE. else false.
 		/// </summary>
 		internal bool IsTrue
 		{
@@ -339,6 +340,7 @@ namespace MapView
 		}
 		#endregion Methods
 	}
+
 
 
 	/// <summary>

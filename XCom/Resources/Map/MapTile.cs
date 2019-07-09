@@ -23,6 +23,11 @@ namespace XCom
 		:
 			MapTileBase
 	{
+		#region Fields (static)
+		public const int QUADS = 4;
+		#endregion Fields (static)
+
+
 		#region Properties
 		public Tilepart Floor   { get; set; }
 		public Tilepart West    { get; set; }
