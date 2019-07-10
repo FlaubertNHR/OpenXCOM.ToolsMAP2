@@ -16,7 +16,7 @@ namespace XCom.Interfaces.Base
 		{ get; }
 
 		void OnSelectLocationObserver(SelectLocationEventArgs args);
-		void OnSelectLevelObserver(   SelectLevelEventArgs    args);
+		void OnSelectLevelObserver(SelectLevelEventArgs args);
 	}
 
 

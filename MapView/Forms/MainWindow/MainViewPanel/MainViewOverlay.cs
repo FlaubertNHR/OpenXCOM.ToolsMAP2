@@ -836,8 +836,7 @@ namespace MapView
 			if      (e.Delta < 0) MapBase.LevelUp();
 			else if (e.Delta > 0) MapBase.LevelDown();
 
-			ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(MapBase.Level != MapBase.MapSize.Levs - 1);
-			ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  MapBase.Level != 0);
+			ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
 		}
 
 
@@ -936,7 +935,7 @@ namespace MapView
 						&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
 					{
 						_keyDeltaX = _colOver - DragBeg.X;	// NOTE: These are in case a mousedrag-selection protocol stops
-						_keyDeltaY = _rowOver - DragBeg.Y;	// but the selection protocol is resumed using the keyboard.
+						_keyDeltaY = _rowOver - DragBeg.Y;	// but the selection protocol is then continued using the keyboard.
 															// TODO: Implement [Ctrl+LMB] to instantly select an area based
 						ProcessSelection(DragBeg, loc);		// on the currently selected tile ofc.
 					}

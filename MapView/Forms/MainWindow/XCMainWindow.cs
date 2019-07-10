@@ -1534,8 +1534,7 @@ namespace MapView
 
 						MainViewOverlay.FirstClick = false;
 
-						ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
-						ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  @base.Level != 0);
+						ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 
 						tsslDimensions   .Text = @base.MapSize.ToString();
 						tsslPosition     .Text =
@@ -2737,9 +2736,8 @@ namespace MapView
 
 					MainViewUnderlay.MapBase = @base;
 
-					ViewerFormsManager.ToolFactory.EnableScaleButton();
-					ViewerFormsManager.ToolFactory.SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
-					ViewerFormsManager.ToolFactory.SetLevelUpButtonsEnabled(  @base.Level != 0);
+					ViewerFormsManager.ToolFactory.EnableScaleAutoButton();
+					ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 
 					Text = title + " " + descriptor.Basepath;
 					if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.

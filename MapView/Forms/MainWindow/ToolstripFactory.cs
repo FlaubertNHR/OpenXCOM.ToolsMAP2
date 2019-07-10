@@ -160,7 +160,7 @@ namespace MapView.Forms.MainWindow
 		/// <summary>
 		/// Enables MainView's auto-scale button.
 		/// </summary>
-		internal void EnableScaleButton()
+		internal void EnableScaleAutoButton()
 		{
 			_tsbScale.Enabled = true;
 		}
@@ -323,14 +323,14 @@ namespace MapView.Forms.MainWindow
 			_editers.Add(tsbFill);
 		}
 
-		internal void SetLevelDownButtonsEnabled(bool enabled)
+
+		internal void SetLevelButtonsEnabled(int level, int levels)
 		{
+			bool enabled = level != levels - 1;
 			foreach (var tsb in _downers)
 				tsb.Enabled = enabled;
-		}
 
-		internal void SetLevelUpButtonsEnabled(bool enabled)
-		{
+			enabled = level != 0;
 			foreach (var tsb in _uppers)
 				tsb.Enabled = enabled;
 		}
@@ -361,9 +361,7 @@ namespace MapView.Forms.MainWindow
 			if (@base != null)
 			{
 				@base.LevelDown();
-
-				SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
-				SetLevelUpButtonsEnabled(  @base.Level != 0);
+				SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 			}
 		}
 
@@ -378,9 +376,7 @@ namespace MapView.Forms.MainWindow
 			if (@base != null)
 			{
 				@base.LevelUp();
-
-				SetLevelDownButtonsEnabled(@base.Level != @base.MapSize.Levs - 1);
-				SetLevelUpButtonsEnabled(  @base.Level != 0);
+				SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 			}
 		}
 		#endregion Events (level)
