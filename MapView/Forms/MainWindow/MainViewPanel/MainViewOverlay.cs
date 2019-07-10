@@ -1172,8 +1172,6 @@ namespace MapView
 
 			MapTileBase tile;
 
-//			bool @select = true;
-
 			for (int
 				lev = MapBase.MapSize.Levs - 1;
 				lev >= MapBase.Level;
@@ -1226,13 +1224,6 @@ namespace MapView
 										&& lev == MapBase.Level
 										&& rect.Contains(col, row));
 						}
-
-//						if (@select && lev == MapBase.Level // tried to draw selection border behind the targeter
-//							&& (row == _rowOver || row == _rows - 1) && (col == _colOver || col == _cols - 1))
-//						{
-//							@select = false;
-//							DrawSelectionBorder(rect);
-//						}
 
 						if (cuboid)
 						{
