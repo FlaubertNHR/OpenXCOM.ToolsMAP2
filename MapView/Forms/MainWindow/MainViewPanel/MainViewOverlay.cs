@@ -112,7 +112,7 @@ namespace MapView
 
 		/// <summary>
 		/// List of SolidBrushes used to draw sprites from XCImage.Bindata (in
-		/// Linux). Can be either UfoBattle palette brushes or TftdBattle
+		/// Mono). Can be either UfoBattle palette brushes or TftdBattle
 		/// palette brushes.
 		/// </summary>
 		internal List<Brush> SpriteBrushes
@@ -1199,13 +1199,13 @@ namespace MapView
 					{
 						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
-							CuboidSprite.DrawCuboid(
-												_graphics,
-												x,y,
-												HalfWidth,
-												HalfHeight,
-												false,
-												lev == MapBase.Level);
+							CuboidSprite.DrawCuboid_Rembrandt(
+														_graphics,
+														x,y,
+														HalfWidth,
+														HalfHeight,
+														false,
+														lev == MapBase.Level);
 						}
 
 						if (!(tile = MapBase[row, col, lev]).Occulted
@@ -1222,13 +1222,13 @@ namespace MapView
 
 						if (cuboid)
 						{
-							CuboidSprite.DrawCuboid(
-												_graphics,
-												x,y,
-												HalfWidth,
-												HalfHeight,
-												true,
-												lev == MapBase.Level);
+							CuboidSprite.DrawCuboid_Rembrandt(
+														_graphics,
+														x,y,
+														HalfWidth,
+														HalfHeight,
+														true,
+														lev == MapBase.Level);
 						}
 					}
 				}
@@ -1243,12 +1243,12 @@ namespace MapView
 				&& _colOver > -1 && _colOver < MapBase.MapSize.Cols
 				&& _rowOver > -1 && _rowOver < MapBase.MapSize.Rows)
 			{
-				CuboidSprite.DrawTargeter(
-									_graphics,
-									_colOver * HalfWidth  + Origin.X - (_rowOver * HalfWidth),
-									_colOver * HalfHeight + Origin.Y + (_rowOver * HalfHeight) + (MapBase.Level * heightfactor),
-									HalfWidth,
-									HalfHeight);
+				CuboidSprite.DrawTargeter_Rembrandt(
+											_graphics,
+											_colOver * HalfWidth  + Origin.X - (_rowOver * HalfWidth),
+											_colOver * HalfHeight + Origin.Y + (_rowOver * HalfHeight) + (MapBase.Level * heightfactor),
+											HalfWidth,
+											HalfHeight);
 			}
 		}
 
@@ -1292,13 +1292,11 @@ namespace MapView
 					{
 						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
-							CuboidSprite.DrawCuboid(
-												_graphics,
-												x,y,
-												HalfWidth,
-												HalfHeight,
-												false,
-												lev == MapBase.Level);
+							CuboidSprite.DrawCuboid_Picasso(
+														_graphics,
+														x,y,
+														false,
+														lev == MapBase.Level);
 						}
 
 						if (!(tile = MapBase[row, col, lev]).Occulted
@@ -1310,13 +1308,11 @@ namespace MapView
 
 						if (cuboid)
 						{
-							CuboidSprite.DrawCuboid(
-												_graphics,
-												x,y,
-												HalfWidth,
-												HalfHeight,
-												true,
-												lev == MapBase.Level);
+							CuboidSprite.DrawCuboid_Picasso(
+														_graphics,
+														x,y,
+														true,
+														lev == MapBase.Level);
 						}
 					}
 				}
@@ -1343,12 +1339,10 @@ namespace MapView
 				&& _colOver > -1 && _colOver < MapBase.MapSize.Cols
 				&& _rowOver > -1 && _rowOver < MapBase.MapSize.Rows)
 			{
-				CuboidSprite.DrawTargeter(
-									_graphics,
-									_colOver * HalfWidth  + Origin.X - (_rowOver * HalfWidth),
-									_colOver * HalfHeight + Origin.Y + (_rowOver * HalfHeight) + (MapBase.Level * heightfactor),
-									HalfWidth,
-									HalfHeight);
+				CuboidSprite.DrawTargeter_Picasso(
+											_graphics,
+											_colOver * HalfWidth  + Origin.X - (_rowOver * HalfWidth),
+											_colOver * HalfHeight + Origin.Y + (_rowOver * HalfHeight) + (MapBase.Level * heightfactor));
 			}
 		}
 

@@ -352,7 +352,7 @@ namespace MapView
 												Palette.UfoBattle);
 			if (cuboid != null)
 			{
-				CuboidSprite.Spriteset = cuboid;
+				CuboidSprite.Cursorset = cuboid;
 				LogFile.WriteLine("UFO Cursor loaded.");
 			}
 			else
@@ -366,7 +366,7 @@ namespace MapView
 											Palette.TftdBattle);
 			if (cuboid != null)
 			{
-				CuboidSprite.Spriteset = cuboid;
+				CuboidSprite.Cursorset = cuboid;
 				LogFile.WriteLine("TFTD Cursor loaded.");
 			}
 			else

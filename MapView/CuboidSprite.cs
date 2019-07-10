@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 using XCom;
@@ -7,16 +8,33 @@ using XCom.Interfaces;
 
 namespace MapView
 {
+	/// <summary>
+	/// Draws sprites (the cuboid and targeter) from standard resource
+	/// UFOGRAPH/CURSOR.PCK+TAB.
+	/// </summary>
 	internal static class CuboidSprite
 	{
 		#region Fields (static)
-		internal static SpriteCollection Spriteset;
+		private const int RED_BACK   = 0; // sprite-ids in CURSOR.PCK ->
+		private const int RED_FRONT  = 3;
+		private const int BLUE_BACK  = 2;
+		private const int BLUE_FRONT = 5;
+		private const int TARGETER   = 7; // 1st yellow targeter sprite
+
+		private const int widthfactor  = 2; // the values for width and height
+		private const int heightfactor = 5; // are based on a sprite that's 32x40.
 		#endregion Fields (static)
+
+
+		#region Properties (static)
+		internal static SpriteCollection Cursorset
+		{ private get; set; }
+		#endregion Properties (static)
 
 
 		#region Methods (static)
 		/// <summary>
-		/// Draws the cuboid-cursor from resources.
+		/// Draws the cuboid-cursor.
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="x"></param>
@@ -24,95 +42,119 @@ namespace MapView
 		/// <param name="halfWidth"></param>
 		/// <param name="halfHeight"></param>
 		/// <param name="front">true to draw the front sprite, else back</param>
-		/// <param name="red">true to draw the red sprite, else blue</param>
-		internal static void DrawCuboid(
+		/// <param name="toplevel">true to draw the red sprite, else blue</param>
+		internal static void DrawCuboid_Rembrandt(
 				Graphics graphics,
 				int x, int y,
 				int halfWidth,
 				int halfHeight,
 				bool front,
-				bool red)
+				bool toplevel)
 		{
-			int id = 0;
-			if (front)
-				id = (red ? 3 : 5);
-			else
-				id = (red ? 0 : 2);
+			int id;
+			if (front) id = (toplevel ? RED_FRONT : BLUE_FRONT);
+			else       id = (toplevel ? RED_BACK  : BLUE_BACK);
 
-			if (XCMainWindow.UseMonoDraw)
-			{
-				var d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value.
-
-				var bindata = Spriteset[id].Bindata;
-
-				int palid;
-
-				int i = -1, h,w;
-				for (h = 0; h != XCImage.SpriteHeight40; ++h)
-				for (w = 0; w != XCImage.SpriteWidth32;  ++w)
-				{
-					palid = bindata[++i];
-					if (palid != Palette.TranId)
-					{
-						graphics.FillRectangle(
-											Palette.BrushesUfoBattle[palid],
-											x + (int)(w * Globals.Scale),
-											y + (int)(h * Globals.Scale),
-											d, d);
-					}
-				}
-			}
-			else
-				graphics.DrawImage(
-								Spriteset[id].Sprite,
-								x, y,
-								halfWidth  * 2,		// NOTE: the values for width and height
-								halfHeight * 5);	// are based on a sprite that's 32x40.
+			graphics.DrawImage(
+							Cursorset[id].Sprite,
+							x, y,
+							halfWidth  * widthfactor,
+							halfHeight * heightfactor);
 		}
 
 		/// <summary>
-		/// Draws the target-cursor from resources.
+		/// Draws the cuboid-cursor w/ Mono-style.
+		/// </summary>
+		/// <param name="graphics"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="front">true to draw the front sprite, else back</param>
+		/// <param name="toplevel">true to draw the red sprite, else blue</param>
+		internal static void DrawCuboid_Picasso(
+				Graphics graphics,
+				int x, int y,
+				bool front,
+				bool toplevel)
+		{
+			int id;
+			if (front) id = (toplevel ? RED_FRONT : BLUE_FRONT);
+			else       id = (toplevel ? RED_BACK  : BLUE_BACK);
+
+			int d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value here.
+
+			byte[] bindata = Cursorset[id].Bindata;
+
+			List<Brush> brushes = Palette.BrushesUfoBattle;
+			int palid;
+
+			int i = -1, h,w;
+			for (h = 0; h != XCImage.SpriteHeight40; ++h)
+			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
+			{
+				palid = bindata[++i];
+				if (palid != Palette.TranId)
+				{
+					graphics.FillRectangle(
+										brushes[palid],
+										x + (int)(w * Globals.Scale),
+										y + (int)(h * Globals.Scale),
+										d, d);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Draws the target-cursor.
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="halfWidth"></param>
 		/// <param name="halfHeight"></param>
-		internal static void DrawTargeter(
+		internal static void DrawTargeter_Rembrandt(
 				Graphics graphics,
 				int x, int y,
 				int halfWidth,
 				int halfHeight)
 		{
-			if (XCMainWindow.UseMonoDraw)
+			graphics.DrawImage(
+							Cursorset[TARGETER].Sprite,
+							x, y,
+							halfWidth  * widthfactor,
+							halfHeight * heightfactor);
+		}
+
+		/// <summary>
+		/// Draws the target-cursor w/ Mono.
+		/// </summary>
+		/// <param name="graphics"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		internal static void DrawTargeter_Picasso(
+				Graphics graphics,
+				int x, int y)
+		{
+			int d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value here.
+
+			byte[] bindata = Cursorset[7].Bindata;
+
+			List<Brush> brushes = Palette.BrushesUfoBattle;
+			int palid;
+
+			int i = -1, h,w;
+			for (h = 0; h != XCImage.SpriteHeight40; ++h)
+			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 			{
-				var d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value.
-
-				var bindata = Spriteset[7].Bindata;
-
-				int palid;
-
-				int i = -1, h,w;
-				for (h = 0; h != XCImage.SpriteHeight40; ++h)
-				for (w = 0; w != XCImage.SpriteWidth32;  ++w)
+				palid = bindata[++i];
+				if (palid != Palette.TranId)
 				{
-					palid = bindata[++i];
-					if (palid != Palette.TranId)
-					{
-						graphics.FillRectangle(
-											Palette.BrushesUfoBattle[palid],
-											x + (int)(w * Globals.Scale),
-											y + (int)(h * Globals.Scale),
-											d, d);
-					}
+					graphics.FillRectangle(
+										brushes[palid],
+										x + (int)(w * Globals.Scale),
+										y + (int)(h * Globals.Scale),
+										d, d);
 				}
 			}
-			else
-				graphics.DrawImage(
-								Spriteset[7].Sprite, // yellow targeter sprite
-								x, y,
-								halfWidth  * 2,		// NOTE: the values for width and height
-								halfHeight * 5);	// are based on a sprite that's 32x40.
 		}
 		#endregion Methods (static)
 	}

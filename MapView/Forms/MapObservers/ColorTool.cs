@@ -58,7 +58,7 @@ namespace MapView.Forms.MapObservers
 		/// <param name="pen"></param>
 		internal ColorTool(Pen pen)
 		{
-			var colorLight = Color.FromArgb(80, pen.Color);
+			var colorLight = Color.FromArgb(100, pen.Color);
 
 			_pen        = new Pen(pen.Color,  pen.Width);
 			_penLight   = new Pen(colorLight, pen.Width);
@@ -74,7 +74,7 @@ namespace MapView.Forms.MapObservers
 		/// <param name="width"></param>
 		internal ColorTool(SolidBrush brush, float width)
 		{
-			var colorLight = Color.FromArgb(50, brush.Color);
+			var colorLight = Color.FromArgb(80, brush.Color);
 
 			_pen        = new Pen(brush.Color, width);
 			_penLight   = new Pen(colorLight,  width);
