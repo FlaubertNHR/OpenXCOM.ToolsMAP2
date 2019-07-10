@@ -217,6 +217,40 @@ namespace XCom.Interfaces.Base
 		}
 
 		/// <summary>
+		/// Generates occultation data for all tiles in the Map.
+		/// </summary>
+		/// <param name="forceVis">true to force visibility</param>
+		public void CalculateOccultations(bool forceVis = false)
+		{
+			if (MapSize.Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
+			{
+				MapTileBase tile;
+
+				for (int lev = MapSize.Levs - 1; lev != 0; --lev)
+				for (int row = 0; row != MapSize.Rows - 2; ++row)
+				for (int col = 0; col != MapSize.Cols - 2; ++col)
+				{
+					if ((tile = this[row, col, lev]) != null) // safety. The tile should always be valid.
+					{
+						tile.Occulted = (!forceVis
+									 && ((MapTile)this[row,     col,     lev - 1]).Floor != null // above
+
+									 && ((MapTile)this[row + 1, col,     lev - 1]).Floor != null // south
+									 && ((MapTile)this[row + 2, col,     lev - 1]).Floor != null
+
+									 && ((MapTile)this[row,     col + 1, lev - 1]).Floor != null // east
+									 && ((MapTile)this[row,     col + 2, lev - 1]).Floor != null
+
+									 && ((MapTile)this[row + 1, col + 1, lev - 1]).Floor != null // southeast
+									 && ((MapTile)this[row + 1, col + 2, lev - 1]).Floor != null
+									 && ((MapTile)this[row + 2, col + 1, lev - 1]).Floor != null
+									 && ((MapTile)this[row + 2, col + 2, lev - 1]).Floor != null);
+					}
+				}
+			}
+		}
+
+		/// <summary>
 		/// Not generic enough to call with custom derived classes other than
 		/// MapFile.
 		/// </summary>

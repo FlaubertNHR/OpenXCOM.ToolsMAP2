@@ -110,7 +110,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				ViewerFormsManager.TopView     .Control   .Floor.Checked =
 				ViewerFormsManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked;
 
-				((MapFile)MapBase).CalculateOccultations(!it.Checked);
+				MapBase.CalculateOccultations(!it.Checked);
 			}
 			else if (it == West)
 			{

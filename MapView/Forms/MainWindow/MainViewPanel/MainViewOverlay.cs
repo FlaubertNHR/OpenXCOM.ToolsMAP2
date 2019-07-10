@@ -467,7 +467,7 @@ namespace MapView
 					tile.Vacancy();
 				}
 
-				((MapFile)MapBase).CalculateOccultations();
+				MapBase.CalculateOccultations();
 
 				RefreshViewers();
 			}
@@ -557,7 +557,7 @@ namespace MapView
 						}
 					}
 
-					((MapFile)MapBase).CalculateOccultations();
+					MapBase.CalculateOccultations();
 
 					RefreshViewers();
 				}
@@ -657,7 +657,7 @@ namespace MapView
 					tile.Vacancy();
 				}
 
-				((MapFile)MapBase).CalculateOccultations();
+				MapBase.CalculateOccultations();
 
 				RefreshViewers();
 			}

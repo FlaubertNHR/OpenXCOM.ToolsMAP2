@@ -94,7 +94,7 @@ namespace MapView
 //			XCom.LogFile.WriteLine("");
 //			XCom.LogFile.WriteLine("MainViewUnderlay cTor");
 //			XCom.LogFile.WriteLine(". underlay.Width= " + Width);
-//			XCom.LogFile.WriteLine(". underlayHeight= " + Height);
+//			XCom.LogFile.WriteLine(". underlay.Height= " + Height);
 //
 //			XCom.LogFile.WriteLine(". underlay client.Width= " + ClientSize.Width);
 //			XCom.LogFile.WriteLine(". underlay client.Height= " + ClientSize.Height);
@@ -500,7 +500,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets which sequential frame [0..7] of the sprite to display.
+		/// Gets which phase [0..7] of the sprite to display.
 		/// </summary>
 		internal static int AniStep
 		{
