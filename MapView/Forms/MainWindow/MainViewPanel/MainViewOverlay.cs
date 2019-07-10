@@ -1171,9 +1171,11 @@ namespace MapView
 
 
 			MapTileBase tile;
+			bool cuboid;
 
+			int heightfactor = HalfHeight * 3;
 			for (int
-				lev = MapBase.MapSize.Levs - 1;
+				lev  = MapBase.MapSize.Levs - 1;
 				lev >= MapBase.Level;
 				--lev)
 			{
@@ -1182,12 +1184,12 @@ namespace MapView
 
 				for (int
 						row = 0,
-							startY = Origin.Y + (HalfHeight * lev * 3),
-							startX = Origin.X;
+							startX = Origin.X,
+							startY = Origin.Y + (lev * heightfactor);
 						row != _rows;
 						++row,
-							startY += HalfHeight,
-							startX -= HalfWidth)
+							startX -= HalfWidth,
+							startY += HalfHeight)
 				{
 					for (int
 							col = 0,
@@ -1198,15 +1200,11 @@ namespace MapView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-						bool cuboid = FirstClick
-								   && col == DragBeg.X
-								   && row == DragBeg.Y;
-
-						if (cuboid)
+						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
-											x, y,
+											x,y,
 											HalfWidth,
 											HalfHeight,
 											false,
@@ -1219,7 +1217,7 @@ namespace MapView
 							// This is different between REMBRANDT and PICASSO ->
 							DrawTile(
 									tile as MapTile,
-									x, y,
+									x,y,
 									_graySelection
 										&& lev == MapBase.Level
 										&& rect.Contains(col, row));
@@ -1229,22 +1227,11 @@ namespace MapView
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
-											x, y,
+											x,y,
 											HalfWidth,
 											HalfHeight,
 											true,
 											lev == MapBase.Level);
-						}
-						else if (!_targeterSuppressed
-							&& col == _colOver
-							&& row == _rowOver
-							&& lev == MapBase.Level)
-						{
-							Cuboid.DrawTargeter(
-											_graphics,
-											x, y,
-											HalfWidth,
-											HalfHeight);
 						}
 					}
 				}
@@ -1253,6 +1240,18 @@ namespace MapView
 			if (rect.Width > 1 || rect.Height > 1) // This is different between REMBRANDT and PICASSO ->
 			{
 				DrawSelectionBorder(rect);
+			}
+
+			if (!_targeterSuppressed // draw Targeter after selection-border ->
+				&& _colOver > -1 && _colOver < MapBase.MapSize.Cols
+				&& _rowOver > -1 && _rowOver < MapBase.MapSize.Rows)
+			{
+				Cuboid.DrawTargeter(
+								_graphics,
+								_colOver * HalfWidth  + Origin.X - (_rowOver * HalfWidth),
+								_colOver * HalfHeight + Origin.Y + (_rowOver * HalfHeight) + (MapBase.Level * heightfactor),
+								HalfWidth,
+								HalfHeight);
 			}
 		}
 
@@ -1265,9 +1264,11 @@ namespace MapView
 		private void DrawPicasso()
 		{
 			MapTileBase tile;
+			bool cuboid;
 
+			int heightfactor = HalfHeight * 3;
 			for (int
-				lev = MapBase.MapSize.Levs - 1;
+				lev  = MapBase.MapSize.Levs - 1;
 				lev >= MapBase.Level;
 				--lev)
 			{
@@ -1276,12 +1277,12 @@ namespace MapView
 
 				for (int
 						row = 0,
-							startY = Origin.Y + (HalfHeight * lev * 3),
-							startX = Origin.X;
+							startX = Origin.X,
+							startY = Origin.Y + (lev * heightfactor);
 						row != _rows;
 						++row,
-							startY += HalfHeight,
-							startX -= HalfWidth)
+							startX -= HalfWidth,
+							startY += HalfHeight)
 				{
 					for (int
 							col = 0,
@@ -1292,15 +1293,11 @@ namespace MapView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-						bool cuboid = FirstClick
-								   && (   (col == DragBeg.X && row == DragBeg.Y)
-								       || (col == DragEnd.X && row == DragEnd.Y));
-
-						if (cuboid)
+						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
-											x, y,
+											x,y,
 											HalfWidth,
 											HalfHeight,
 											false,
@@ -1311,29 +1308,18 @@ namespace MapView
 							|| lev == MapBase.Level)
 						{
 							// This is different between REMBRANDT and PICASSO ->
-							DrawTile(tile as MapTile, x, y);
+							DrawTile(tile as MapTile, x,y);
 						}
 
 						if (cuboid)
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
-											x, y,
+											x,y,
 											HalfWidth,
 											HalfHeight,
 											true,
 											lev == MapBase.Level);
-						}
-						else if (!_targeterSuppressed
-							&& col == _colOver
-							&& row == _rowOver
-							&& lev == MapBase.Level)
-						{
-							Cuboid.DrawTargeter(
-											_graphics,
-											x, y,
-											HalfWidth,
-											HalfHeight);
 						}
 					}
 				}
@@ -1354,6 +1340,18 @@ namespace MapView
 										width, height);
 					DrawSelectionBorder(rect);
 				}
+			}
+
+			if (!_targeterSuppressed // draw Targeter after selection-border ->
+				&& _colOver > -1 && _colOver < MapBase.MapSize.Cols
+				&& _rowOver > -1 && _rowOver < MapBase.MapSize.Rows)
+			{
+				Cuboid.DrawTargeter(
+								_graphics,
+								_colOver * HalfWidth  + Origin.X - (_rowOver * HalfWidth),
+								_colOver * HalfHeight + Origin.Y + (_rowOver * HalfHeight) + (MapBase.Level * heightfactor),
+								HalfWidth,
+								HalfHeight);
 			}
 		}
 
