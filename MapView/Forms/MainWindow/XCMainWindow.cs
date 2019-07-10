@@ -340,6 +340,7 @@ namespace MapView
 				}
 			}
 
+
 			// Setup an XCOM cursor-sprite.
 			// NOTE: This is the only stock XCOM resource that is required for
 			// MapView to start. See ConfigurationForm ...
@@ -351,7 +352,7 @@ namespace MapView
 												Palette.UfoBattle);
 			if (cuboid != null)
 			{
-				MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
+				CuboidSprite.Spriteset = cuboid;
 				LogFile.WriteLine("UFO Cursor loaded.");
 			}
 			else
@@ -365,7 +366,7 @@ namespace MapView
 											Palette.TftdBattle);
 			if (cuboid != null)
 			{
-				MainViewOverlay.Cuboid = new CuboidSprite(cuboid);
+				CuboidSprite.Spriteset = cuboid;
 				LogFile.WriteLine("TFTD Cursor loaded.");
 			}
 			else
