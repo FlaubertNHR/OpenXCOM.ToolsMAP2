@@ -20,26 +20,19 @@ namespace XCom.Interfaces.Base
 	}
 
 
+
 	#region Eventargs
 	/// <summary>
 	/// EventArgs with a MapLocation and MapTileBase object for when a
-	/// LocationSelected event fires.
+	/// SelectLocation event fires.
 	/// </summary>
 	public sealed class SelectLocationEventArgs
-		:
-			EventArgs
 	{
-		private readonly MapLocation _location;
 		public MapLocation Location
-		{
-			get { return _location; }
-		}
+		{ get; private set; }
 
-		private readonly MapTileBase _tile;
 		public MapTileBase Tile
-		{
-			get { return _tile; }
-		}
+		{ get; private set; }
 
 		/// <summary>
 		/// cTor.
@@ -48,23 +41,18 @@ namespace XCom.Interfaces.Base
 		/// <param name="tile"></param>
 		internal SelectLocationEventArgs(MapLocation location, MapTileBase tile)
 		{
-			_location = location;
-			_tile     = tile;
+			Location = location;
+			Tile     = tile;
 		}
 	}
 
 	/// <summary>
-	/// EventArgs for when a LevelChanged event fires.
+	/// EventArgs for when a SelectLevel event fires.
 	/// </summary>
 	public sealed class SelectLevelEventArgs
-		:
-			EventArgs
 	{
-		private readonly int _level;
 		public int Level
-		{
-			get { return _level; }
-		}
+		{ get; private set; }
 
 		/// <summary>
 		/// cTor.
@@ -72,7 +60,7 @@ namespace XCom.Interfaces.Base
 		/// <param name="level">the new level</param>
 		internal SelectLevelEventArgs(int level)
 		{
-			_level = level;
+			Level = level;
 		}
 	}
 	#endregion Eventargs
