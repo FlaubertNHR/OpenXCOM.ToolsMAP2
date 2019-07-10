@@ -1172,6 +1172,8 @@ namespace MapView
 
 			MapTileBase tile;
 
+//			bool @select = true;
+
 			for (int
 				lev = MapBase.MapSize.Levs - 1;
 				lev >= MapBase.Level;
@@ -1198,11 +1200,11 @@ namespace MapView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-						bool beg = FirstClick
-								&& col == DragBeg.X
-								&& row == DragBeg.Y;
+						bool cuboid = FirstClick
+								   && col == DragBeg.X
+								   && row == DragBeg.Y;
 
-						if (beg)
+						if (cuboid)
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
@@ -1225,7 +1227,14 @@ namespace MapView
 										&& rect.Contains(col, row));
 						}
 
-						if (beg)
+//						if (@select && lev == MapBase.Level // tried to draw selection border behind the targeter
+//							&& (row == _rowOver || row == _rows - 1) && (col == _colOver || col == _cols - 1))
+//						{
+//							@select = false;
+//							DrawSelectionBorder(rect);
+//						}
+
+						if (cuboid)
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
@@ -1292,11 +1301,11 @@ namespace MapView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-						bool isClicked = FirstClick
-									  && (   (col == DragBeg.X && row == DragBeg.Y)
-										  || (col == DragEnd.X && row == DragEnd.Y));
+						bool cuboid = FirstClick
+								   && (   (col == DragBeg.X && row == DragBeg.Y)
+								       || (col == DragEnd.X && row == DragEnd.Y));
 
-						if (isClicked)
+						if (cuboid)
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
@@ -1314,7 +1323,7 @@ namespace MapView
 							DrawTile(tile as MapTile, x, y);
 						}
 
-						if (isClicked)
+						if (cuboid)
 						{
 							Cuboid.DrawCuboid(
 											_graphics,
