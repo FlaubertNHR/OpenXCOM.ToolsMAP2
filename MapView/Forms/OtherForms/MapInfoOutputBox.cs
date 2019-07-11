@@ -184,7 +184,7 @@ namespace MapView
 			lbl2_McdRecords.Text = _records.Count + " of " + recordsTotal + " - " + pct.ToString("N2") + "%";
 
 			pct = Math.Round(100.0 * (double)slots / (pBar.Maximum * 4), 2);
-			lbl2_SlotsFilled.Text = slots + " of " + (pBar.Maximum * 4) + " - " + pct.ToString("N2") + "%";
+			lbl2_QuadsFilled.Text = slots + " of " + (pBar.Maximum * 4) + " - " + pct.ToString("N2") + "%";
 
 			pct = Math.Round(100.0 * (double)vacant / pBar.Maximum, 2);
 			lbl2_TilesVacant.Text = vacant + " of " + pBar.Maximum + " - " + pct.ToString("N2") + "%";
@@ -260,6 +260,7 @@ namespace MapView
 			base.Dispose(disposing);
 		}
 
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -268,21 +269,21 @@ namespace MapView
 		{
 			this.lbl1_Dimensions = new System.Windows.Forms.Label();
 			this.lbl2_Dimensions = new System.Windows.Forms.Label();
-			this.lbl2_Terrains = new System.Windows.Forms.Label();
 			this.lbl1_Terrains = new System.Windows.Forms.Label();
-			this.lbl2_PckSprites = new System.Windows.Forms.Label();
+			this.lbl2_Terrains = new System.Windows.Forms.Label();
 			this.lbl1_PckSprites = new System.Windows.Forms.Label();
-			this.lbl2_McdRecords = new System.Windows.Forms.Label();
+			this.lbl2_PckSprites = new System.Windows.Forms.Label();
 			this.lbl1_McdRecords = new System.Windows.Forms.Label();
-			this.lbl2_SlotsFilled = new System.Windows.Forms.Label();
-			this.lbl1_SlotsUsed = new System.Windows.Forms.Label();
+			this.lbl2_McdRecords = new System.Windows.Forms.Label();
+			this.lbl1_QuadsUsed = new System.Windows.Forms.Label();
+			this.lbl2_QuadsFilled = new System.Windows.Forms.Label();
+			this.lbl1_TilesVacant = new System.Windows.Forms.Label();
+			this.lbl2_TilesVacant = new System.Windows.Forms.Label();
 			this.pBar = new System.Windows.Forms.ProgressBar();
 			this.gbAnalyze = new System.Windows.Forms.GroupBox();
 			this.btnDetail = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.gbInfo = new System.Windows.Forms.GroupBox();
-			this.lbl1_TilesVacant = new System.Windows.Forms.Label();
-			this.lbl2_TilesVacant = new System.Windows.Forms.Label();
 			this.gbAnalyze.SuspendLayout();
 			this.gbInfo.SuspendLayout();
 			this.SuspendLayout();
@@ -304,6 +305,14 @@ namespace MapView
 			this.lbl2_Dimensions.Size = new System.Drawing.Size(250, 15);
 			this.lbl2_Dimensions.TabIndex = 1;
 			// 
+			// lbl1_Terrains
+			// 
+			this.lbl1_Terrains.Location = new System.Drawing.Point(10, 30);
+			this.lbl1_Terrains.Name = "lbl1_Terrains";
+			this.lbl1_Terrains.Size = new System.Drawing.Size(75, 15);
+			this.lbl1_Terrains.TabIndex = 2;
+			this.lbl1_Terrains.Text = "terrains";
+			// 
 			// lbl2_Terrains
 			// 
 			this.lbl2_Terrains.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -313,13 +322,13 @@ namespace MapView
 			this.lbl2_Terrains.Size = new System.Drawing.Size(250, 15);
 			this.lbl2_Terrains.TabIndex = 3;
 			// 
-			// lbl1_Terrains
+			// lbl1_PckSprites
 			// 
-			this.lbl1_Terrains.Location = new System.Drawing.Point(10, 30);
-			this.lbl1_Terrains.Name = "lbl1_Terrains";
-			this.lbl1_Terrains.Size = new System.Drawing.Size(75, 15);
-			this.lbl1_Terrains.TabIndex = 2;
-			this.lbl1_Terrains.Text = "terrains";
+			this.lbl1_PckSprites.Location = new System.Drawing.Point(10, 45);
+			this.lbl1_PckSprites.Name = "lbl1_PckSprites";
+			this.lbl1_PckSprites.Size = new System.Drawing.Size(75, 15);
+			this.lbl1_PckSprites.TabIndex = 4;
+			this.lbl1_PckSprites.Text = "pck sprites";
 			// 
 			// lbl2_PckSprites
 			// 
@@ -330,13 +339,13 @@ namespace MapView
 			this.lbl2_PckSprites.Size = new System.Drawing.Size(250, 15);
 			this.lbl2_PckSprites.TabIndex = 5;
 			// 
-			// lbl1_PckSprites
+			// lbl1_McdRecords
 			// 
-			this.lbl1_PckSprites.Location = new System.Drawing.Point(10, 45);
-			this.lbl1_PckSprites.Name = "lbl1_PckSprites";
-			this.lbl1_PckSprites.Size = new System.Drawing.Size(75, 15);
-			this.lbl1_PckSprites.TabIndex = 4;
-			this.lbl1_PckSprites.Text = "pck sprites";
+			this.lbl1_McdRecords.Location = new System.Drawing.Point(10, 60);
+			this.lbl1_McdRecords.Name = "lbl1_McdRecords";
+			this.lbl1_McdRecords.Size = new System.Drawing.Size(75, 15);
+			this.lbl1_McdRecords.TabIndex = 6;
+			this.lbl1_McdRecords.Text = "mcd records";
 			// 
 			// lbl2_McdRecords
 			// 
@@ -347,30 +356,39 @@ namespace MapView
 			this.lbl2_McdRecords.Size = new System.Drawing.Size(250, 15);
 			this.lbl2_McdRecords.TabIndex = 7;
 			// 
-			// lbl1_McdRecords
+			// lbl1_QuadsUsed
 			// 
-			this.lbl1_McdRecords.Location = new System.Drawing.Point(10, 60);
-			this.lbl1_McdRecords.Name = "lbl1_McdRecords";
-			this.lbl1_McdRecords.Size = new System.Drawing.Size(75, 15);
-			this.lbl1_McdRecords.TabIndex = 6;
-			this.lbl1_McdRecords.Text = "mcd records";
+			this.lbl1_QuadsUsed.Location = new System.Drawing.Point(10, 75);
+			this.lbl1_QuadsUsed.Name = "lbl1_QuadsUsed";
+			this.lbl1_QuadsUsed.Size = new System.Drawing.Size(75, 15);
+			this.lbl1_QuadsUsed.TabIndex = 8;
+			this.lbl1_QuadsUsed.Text = "quads used";
 			// 
-			// lbl2_SlotsFilled
+			// lbl2_QuadsFilled
 			// 
-			this.lbl2_SlotsFilled.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.lbl2_QuadsFilled.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lbl2_SlotsFilled.Location = new System.Drawing.Point(85, 75);
-			this.lbl2_SlotsFilled.Name = "lbl2_SlotsFilled";
-			this.lbl2_SlotsFilled.Size = new System.Drawing.Size(250, 15);
-			this.lbl2_SlotsFilled.TabIndex = 9;
+			this.lbl2_QuadsFilled.Location = new System.Drawing.Point(85, 75);
+			this.lbl2_QuadsFilled.Name = "lbl2_QuadsFilled";
+			this.lbl2_QuadsFilled.Size = new System.Drawing.Size(250, 15);
+			this.lbl2_QuadsFilled.TabIndex = 9;
 			// 
-			// lbl1_SlotsUsed
+			// lbl1_TilesVacant
 			// 
-			this.lbl1_SlotsUsed.Location = new System.Drawing.Point(10, 75);
-			this.lbl1_SlotsUsed.Name = "lbl1_SlotsUsed";
-			this.lbl1_SlotsUsed.Size = new System.Drawing.Size(75, 15);
-			this.lbl1_SlotsUsed.TabIndex = 8;
-			this.lbl1_SlotsUsed.Text = "slots used";
+			this.lbl1_TilesVacant.Location = new System.Drawing.Point(10, 90);
+			this.lbl1_TilesVacant.Name = "lbl1_TilesVacant";
+			this.lbl1_TilesVacant.Size = new System.Drawing.Size(75, 15);
+			this.lbl1_TilesVacant.TabIndex = 10;
+			this.lbl1_TilesVacant.Text = "tiles vacant";
+			// 
+			// lbl2_TilesVacant
+			// 
+			this.lbl2_TilesVacant.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.lbl2_TilesVacant.Location = new System.Drawing.Point(85, 90);
+			this.lbl2_TilesVacant.Name = "lbl2_TilesVacant";
+			this.lbl2_TilesVacant.Size = new System.Drawing.Size(250, 15);
+			this.lbl2_TilesVacant.TabIndex = 11;
 			// 
 			// pBar
 			// 
@@ -421,8 +439,6 @@ namespace MapView
 			// 
 			// gbInfo
 			// 
-			this.gbInfo.Controls.Add(this.lbl1_TilesVacant);
-			this.gbInfo.Controls.Add(this.lbl2_TilesVacant);
 			this.gbInfo.Controls.Add(this.lbl1_Dimensions);
 			this.gbInfo.Controls.Add(this.lbl2_Dimensions);
 			this.gbInfo.Controls.Add(this.lbl1_Terrains);
@@ -431,8 +447,10 @@ namespace MapView
 			this.gbInfo.Controls.Add(this.lbl2_PckSprites);
 			this.gbInfo.Controls.Add(this.lbl1_McdRecords);
 			this.gbInfo.Controls.Add(this.lbl2_McdRecords);
-			this.gbInfo.Controls.Add(this.lbl1_SlotsUsed);
-			this.gbInfo.Controls.Add(this.lbl2_SlotsFilled);
+			this.gbInfo.Controls.Add(this.lbl1_QuadsUsed);
+			this.gbInfo.Controls.Add(this.lbl2_QuadsFilled);
+			this.gbInfo.Controls.Add(this.lbl1_TilesVacant);
+			this.gbInfo.Controls.Add(this.lbl2_TilesVacant);
 			this.gbInfo.Controls.Add(this.btnDetail);
 			this.gbInfo.Controls.Add(this.btnCancel);
 			this.gbInfo.Controls.Add(this.gbAnalyze);
@@ -444,23 +462,6 @@ namespace MapView
 			this.gbInfo.TabIndex = 0;
 			this.gbInfo.TabStop = false;
 			this.gbInfo.Text = " label ";
-			// 
-			// lbl1_TilesVacant
-			// 
-			this.lbl1_TilesVacant.Location = new System.Drawing.Point(10, 90);
-			this.lbl1_TilesVacant.Name = "lbl1_TilesVacant";
-			this.lbl1_TilesVacant.Size = new System.Drawing.Size(75, 15);
-			this.lbl1_TilesVacant.TabIndex = 10;
-			this.lbl1_TilesVacant.Text = "tiles vacant";
-			// 
-			// lbl2_TilesVacant
-			// 
-			this.lbl2_TilesVacant.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lbl2_TilesVacant.Location = new System.Drawing.Point(85, 90);
-			this.lbl2_TilesVacant.Name = "lbl2_TilesVacant";
-			this.lbl2_TilesVacant.Size = new System.Drawing.Size(250, 15);
-			this.lbl2_TilesVacant.TabIndex = 11;
 			// 
 			// MapInfoOutputBox
 			// 
@@ -494,14 +495,14 @@ namespace MapView
 		private Label lbl2_PckSprites;
 		private Label lbl1_McdRecords;
 		private Label lbl2_McdRecords;
-		private Label lbl1_SlotsUsed;
-		private Label lbl2_SlotsFilled;
+		private Label lbl1_QuadsUsed;
+		private Label lbl2_QuadsFilled;
+		private Label lbl1_TilesVacant;
+		private Label lbl2_TilesVacant;
 		private GroupBox gbAnalyze;
 		private ProgressBar pBar;
 		private Button btnCancel;
 		private Button btnDetail;
-		private Label lbl1_TilesVacant;
-		private Label lbl2_TilesVacant;
 		#endregion Designer
 	}
 }
