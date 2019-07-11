@@ -102,7 +102,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		internal TileView()
 		{
 			InitializeComponent();
-			var tpTileTypes = new TabPad(tcTileTypes);
+			var tpTileTypes = new TabPageBorder(tcTileTypes);
 
 //			tcTileTypes.MouseWheel           += tabs_OnMouseWheel;
 			tcTileTypes.SelectedIndexChanged += tabs_OnSelectedIndexChanged;

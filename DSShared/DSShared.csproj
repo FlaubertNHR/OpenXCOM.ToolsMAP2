@@ -129,7 +129,7 @@
     <Compile Include="Windows\RegistryInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Windows\TabPad.cs" />
+    <Compile Include="Windows\TabPageBorder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="keyFile.snk" />

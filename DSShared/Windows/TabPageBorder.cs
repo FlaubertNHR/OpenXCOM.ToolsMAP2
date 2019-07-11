@@ -12,10 +12,10 @@ namespace DSShared.Windows
 	/// public Form1()
 	/// {
 	/// 	InitializeComponent();
-	/// 	var tab = new TabPad(tabControl1);
+	/// 	var tab = new TabPageBorder(tabControl1);
 	/// }
 	/// </summary>
-	public sealed class TabPad
+	public sealed class TabPageBorder
 		:
 			NativeWindow
 	{
@@ -30,7 +30,7 @@ namespace DSShared.Windows
 
 
 		#region cTor
-		public TabPad(TabControl tc)
+		public TabPageBorder(TabControl tc)
 		{
 			tabControl = tc;
 			tabControl.Selected += tabControl_Selected;
@@ -110,30 +110,30 @@ namespace DSShared.Windows
 		}
 
 
-/*		// Can be SUPERCEDED BY DSShared.Windows.TabPad (NativeWindow) - do not
-		// implement both.
-		//
-		// The following removes white padding on the interior of the tabpages.
-		// This also effectively expands the control-area of each tabpage (to
-		// the left and top at least). It leaves the white border on the
-		// exterior to the right and below a page's 1px black border.
-		// https://stackoverflow.com/questions/7768555/tabcontrol-and-borders-visual-glitch/7785745#32055608
-		// - works fine on my w7 machine but who knows
-		private struct RECT { public int Left, Top, Right, Bottom; }
-
-		protected override void WndProc(ref Message m)
-		{
-			if (m.Msg == 0x1300 + 40)
-			{
-				var rc = (RECT)m.GetLParam(typeof(RECT));
-				rc.Left   -= 3;
-				rc.Top    -= 1;
-				rc.Right  += 1; // NOTE: There's still a white margin outside the page to the right.
-				rc.Bottom += 2; // NOTE: There's still a white margin outside the page to the bottom.
-				System.Runtime.InteropServices.Marshal.StructureToPtr(rc, m.LParam, true);
-			}
-			base.WndProc(ref m);
-		} */
+//		// Can be SUPERCEDED BY DSShared.Windows.TabPageBorder (NativeWindow) - do not
+//		// implement both.
+//		//
+//		// The following removes white padding on the interior of the tabpages.
+//		// This also effectively expands the control-area of each tabpage (to
+//		// the left and top at least). It leaves the white border on the
+//		// exterior to the right and below a page's 1px black border.
+//		// https://stackoverflow.com/questions/7768555/tabcontrol-and-borders-visual-glitch/7785745#32055608
+//		// - works fine on my w7 machine but who knows
+//		private struct RECT { public int Left, Top, Right, Bottom; }
+//
+//		protected override void WndProc(ref Message m)
+//		{
+//			if (m.Msg == 0x1300 + 40)
+//			{
+//				var rc = (RECT)m.GetLParam(typeof(RECT));
+//				rc.Left   -= 3;
+//				rc.Top    -= 1;
+//				rc.Right  += 1; // NOTE: There's still a white margin outside the page to the right.
+//				rc.Bottom += 2; // NOTE: There's still a white margin outside the page to the bottom.
+//				System.Runtime.InteropServices.Marshal.StructureToPtr(rc, m.LParam, true);
+//			}
+//			base.WndProc(ref m);
+//		}
 		#endregion Events (override)
 	}
 

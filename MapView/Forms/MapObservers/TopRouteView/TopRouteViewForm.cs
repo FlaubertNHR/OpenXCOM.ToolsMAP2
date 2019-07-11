@@ -36,7 +36,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		internal TopRouteViewForm()
 		{
 			InitializeComponent();
-			var tpTabControl = new TabPad(tabControl);
+			var tpTabControl = new TabPageBorder(tabControl);
 		}
 		#endregion cTor
 
