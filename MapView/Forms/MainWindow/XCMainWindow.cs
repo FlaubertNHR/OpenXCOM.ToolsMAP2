@@ -1433,8 +1433,8 @@ namespace MapView
 						OnConfiguratorClick(null, EventArgs.Empty); // recurse.
 						break;
 
-					case DialogResult.Ignore:
-						MapChanged =
+					case DialogResult.Ignore:	// TODO: A bypass-variable should be implemented to deal
+						MapChanged =			// with Changes so that the real Changed vals don't get wiped.
 						ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 						ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged =
 						MaptreeChanged = false;
@@ -1534,16 +1534,16 @@ namespace MapView
 					{
 						MapFileBase @base = f.MapBase;
 
-						int bit = @base.MapResize(
-												f.Rows,
-												f.Cols,
-												f.Levs,
-												f.zType);
+						int changes = @base.MapResize(
+													f.Rows,
+													f.Cols,
+													f.Levs,
+													f.zType);
 
-						if (!MainViewUnderlay.MapBase.MapChanged && ((bit & 0x1) != 0))
+						if (!MainViewUnderlay.MapBase.MapChanged && ((changes & MapFileBase.CHANGED_MAP) != 0))
 							MapChanged = true;
 
-						if (!MainViewUnderlay.MapBase.RoutesChanged && (bit & 0x2) != 0)
+						if (!MainViewUnderlay.MapBase.RoutesChanged && (changes & MapFileBase.CHANGED_NOD) != 0)
 						{
 							ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 							ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = true;

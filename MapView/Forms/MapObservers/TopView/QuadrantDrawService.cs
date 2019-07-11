@@ -110,7 +110,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private static Random _rnd = new Random();
 
 		/// <summary>
-		/// Changes each letter of the four quadrant strings to uppercase or
+		/// Changes each character of the four quadrant strings to uppercase or
 		/// lowercase randomly.
 		/// </summary>
 		internal static void Punkstrings()

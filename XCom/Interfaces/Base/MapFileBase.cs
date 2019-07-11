@@ -29,6 +29,16 @@ namespace XCom.Interfaces.Base
 		private const int HalfHeightConst =  8;
 
 		public const int MaxTerrainId = 253;
+
+		/// <summary>
+		/// A bitwise int of changes for MapResize:
+		/// 	0 - no changes
+		/// 	1 - Map changed
+		/// 	2 - Routes changed
+		/// </summary>
+		public const int CHANGED_NOT = 0;
+		public const int CHANGED_MAP = 1;
+		public const int CHANGED_NOD = 2;
 		#endregion Fields (static)
 
 
