@@ -1284,9 +1284,10 @@ namespace PckView
 							string path = fbd.SelectedPath;
 
 							string digits = String.Empty;
+							int digittest = count;
 							do
 							{ digits += "0"; }
-							while ((count /= 10) != 0);
+							while ((digittest /= 10) != 0);
 
 							XCImage sprite;
 							for (int id = 0; id != count; ++id)

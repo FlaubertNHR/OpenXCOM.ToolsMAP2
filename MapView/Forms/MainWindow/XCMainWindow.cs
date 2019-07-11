@@ -410,8 +410,27 @@ namespace MapView
 
 
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
+
+
+//			ExportExtraSprites(); // hey, just copy them out of the "_Embedded" folder on your hardrive buddy.
 		}
 		#endregion cTor
+
+
+/*		void ExportExtraSprites()
+		{
+			string pfe = Path.Combine(
+									Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "settings"),
+									"EXTRA.PCK");
+			using (var fs = new FileStream(pfe, FileMode.Create))
+				Assembly.GetExecutingAssembly().GetManifestResourceStream("MapView._Embedded.Extra.PCK").CopyTo(fs);
+
+			pfe = Path.Combine(
+							Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "settings"),
+							"EXTRA.TAB");
+			using (var fs = new FileStream(pfe, FileMode.Create))
+				Assembly.GetExecutingAssembly().GetManifestResourceStream("MapView._Embedded.Extra.TAB").CopyTo(fs);
+		} */
 
 
 		#region Methods (static)
