@@ -15,6 +15,14 @@ namespace MapView.Forms.MapObservers.TopViews
 		:
 			MapObserverControl // UserControl, IMapObserver
 	{
+		#region Fields (static)
+		internal const int FLOOR   = 1;
+		internal const int WEST    = 2;
+		internal const int NORTH   = 4;
+		internal const int CONTENT = 8;
+		#endregion Fields (static)
+
+
 		#region Properties
 		internal TopPanel TopPanel
 		{ get; private set; }
@@ -35,6 +43,12 @@ namespace MapView.Forms.MapObservers.TopViews
 		{ get; private set; }
 
 		internal ToolStripMenuItem Content
+		{ get; private set; }
+
+		/// <summary>
+		/// A bit-cache denoting which parttypes are currently visible or not.
+		/// </summary>
+		internal int VisibleParts
 		{ get; private set; }
 		#endregion Properties
 
@@ -85,6 +99,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			North  .Checked =
 			Content.Checked = true;
 
+			VisibleParts = FLOOR | WEST | NORTH | CONTENT;
+
 			foreach (ToolStripMenuItem it in visQuads)
 				it.Click += OnToggleQuadrantVisibilityClick;
 
@@ -107,25 +123,45 @@ namespace MapView.Forms.MapObservers.TopViews
 			var it = sender as ToolStripMenuItem;
 			if (it == Floor)
 			{
-				ViewerFormsManager.TopView     .Control   .Floor.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked;
+				if (ViewerFormsManager.TopView     .Control   .Floor.Checked =
+					ViewerFormsManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked)
+				{
+					VisibleParts |= FLOOR;
+				}
+				else
+					VisibleParts &= ~FLOOR;
 
 				MapBase.CalculateOccultations(!it.Checked);
 			}
 			else if (it == West)
 			{
-				ViewerFormsManager.TopView     .Control   .West.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.West.Checked = !it.Checked;
+				if (ViewerFormsManager.TopView     .Control   .West.Checked =
+					ViewerFormsManager.TopRouteView.ControlTop.West.Checked = !it.Checked)
+				{
+					VisibleParts |= WEST;
+				}
+				else
+					VisibleParts &= ~WEST;
 			}
 			else if (it == North)
 			{
-				ViewerFormsManager.TopView     .Control   .North.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.North.Checked = !it.Checked;
+				if (ViewerFormsManager.TopView     .Control   .North.Checked =
+					ViewerFormsManager.TopRouteView.ControlTop.North.Checked = !it.Checked)
+				{
+					VisibleParts |= NORTH;
+				}
+				else
+					VisibleParts &= ~NORTH;
 			}
 			else //if (it == Content)
 			{
-				ViewerFormsManager.TopView     .Control   .Content.Checked =
-				ViewerFormsManager.TopRouteView.ControlTop.Content.Checked = !it.Checked;
+				if (ViewerFormsManager.TopView     .Control   .Content.Checked =
+					ViewerFormsManager.TopRouteView.ControlTop.Content.Checked = !it.Checked)
+				{
+					VisibleParts |= CONTENT;
+				}
+				else
+					VisibleParts &= ~CONTENT;
 			}
 
 			MainViewUnderlay.that.Refresh();

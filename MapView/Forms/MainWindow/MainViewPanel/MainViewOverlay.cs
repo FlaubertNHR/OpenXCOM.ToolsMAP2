@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
+using MapView.Forms.MapObservers.TopViews;
 
 using XCom;
 using XCom.Interfaces;
@@ -451,12 +452,7 @@ namespace MapView
 
 				MapTile tile;
 
-				var t = ViewerFormsManager.TopView.Control;
-				byte bits = 0;
-				if (t.Floor  .Checked) bits |= 1;
-				if (t.West   .Checked) bits |= 2;
-				if (t.North  .Checked) bits |= 4;
-				if (t.Content.Checked) bits |= 8;
+				int visible = ViewerFormsManager.TopView.Control.VisibleParts;
 
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
@@ -466,10 +462,10 @@ namespace MapView
 				{
 					tile = MapBase[row, col] as MapTile;
 
-					if ((bits & 1) != 0) tile.Floor   = null;
-					if ((bits & 2) != 0) tile.West    = null;
-					if ((bits & 4) != 0) tile.North   = null;
-					if ((bits & 8) != 0) tile.Content = null;
+					if ((visible & TopView.FLOOR)   != 0) tile.Floor   = null;
+					if ((visible & TopView.WEST)    != 0) tile.West    = null;
+					if ((visible & TopView.NORTH)   != 0) tile.North   = null;
+					if ((visible & TopView.CONTENT) != 0) tile.Content = null;
 
 					tile.Vacancy();
 				}
@@ -533,12 +529,7 @@ namespace MapView
 
 					MapTile tile, copy;
 
-					var t = ViewerFormsManager.TopView.Control;
-					byte bits = 0;
-					if (t.Floor  .Checked) bits |= 1;
-					if (t.West   .Checked) bits |= 2;
-					if (t.North  .Checked) bits |= 4;
-					if (t.Content.Checked) bits |= 8;
+					int visible = ViewerFormsManager.TopView.Control.VisibleParts;
 
 					for (int
 							row = DragBeg.Y;
@@ -554,10 +545,10 @@ namespace MapView
 								&& (copy = _copied[row - DragBeg.Y,
 												   col - DragBeg.X] as MapTile) != null)
 							{
-								if ((bits & 1) != 0) tile.Floor   = copy.Floor;
-								if ((bits & 2) != 0) tile.West    = copy.West;
-								if ((bits & 4) != 0) tile.North   = copy.North;
-								if ((bits & 8) != 0) tile.Content = copy.Content;
+								if ((visible & TopView.FLOOR)   != 0) tile.Floor   = copy.Floor;
+								if ((visible & TopView.WEST)    != 0) tile.West    = copy.West;
+								if ((visible & TopView.NORTH)   != 0) tile.North   = copy.North;
+								if ((visible & TopView.CONTENT) != 0) tile.Content = copy.Content;
 
 								tile.Vacancy();
 							}
