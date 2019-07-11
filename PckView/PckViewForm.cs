@@ -1277,7 +1277,7 @@ namespace PckView
 													CultureInfo.CurrentCulture,
 													"Export spriteset to 8-bpp PNG files"
 														+ Environment.NewLine + Environment.NewLine
-														+ "\t" + file);
+														+ "\t\t" + file);
 
 						if (fbd.ShowDialog() == DialogResult.OK)
 						{
