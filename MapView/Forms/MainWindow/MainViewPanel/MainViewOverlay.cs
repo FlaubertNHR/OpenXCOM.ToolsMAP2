@@ -345,7 +345,7 @@ namespace MapView
 		private void t1_Tick(object sender, EventArgs e)
 		{
 			if (!_targeterSuppressed && !_targeterForced
-				&& !Bounds.Contains(PointToClient(Cursor.Position)))
+				&& !ClientRectangle.Contains(PointToClient(Cursor.Position)))
 			{
 				Invalidate();
 			}
@@ -353,10 +353,15 @@ namespace MapView
 
 		private void OnFocusGained(object sender, EventArgs e)
 		{
-			_targeterForced = true;
-			_colOver = DragEnd.X;
-			_rowOver = DragEnd.Y;
-			Refresh();
+//			_targeterForced = true;	// TODO: '_targeterForced' is becoming meaningless ...
+									// use only when actively navigating by keyboard only.
+
+			var pt = PointToClient(Cursor.Position);
+				pt = GetTileLocation(pt.X, pt.Y);
+			_colOver = pt.X;
+			_rowOver = pt.Y;
+
+			Invalidate();
 		}
 
 		private void OnFocusLost(object sender, EventArgs e)
@@ -417,8 +422,10 @@ namespace MapView
 					case Keys.Escape:
 						_targeterForced = false;
 
-						_colOver = DragBeg.X;
-						_rowOver = DragBeg.Y;
+						var pt = PointToClient(Cursor.Position);
+							pt = GetTileLocation(pt.X, pt.Y);
+						_colOver = pt.X;
+						_rowOver = pt.Y;
 
 						_keyDeltaX =
 						_keyDeltaY = 0;
@@ -1869,8 +1876,8 @@ namespace MapView
 		/// <summary>
 		/// Converts a position from client-coordinates to tile-location.
 		/// </summary>
-		/// <param name="x">the x-position of the mouse cursor</param>
-		/// <param name="y">the y-position of the mouse cursor</param>
+		/// <param name="x">the x-position of the mouse cursor in pixels wrt/ client-coords</param>
+		/// <param name="y">the y-position of the mouse cursor in pixels wrt/ client-coords</param>
 		/// <returns></returns>
 		private Point GetTileLocation(int x, int y)
 		{
