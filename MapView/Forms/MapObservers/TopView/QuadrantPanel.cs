@@ -93,8 +93,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			QuadrantType quadType;
 			if (_keyQuadtype == QuadrantType.None) // ie. is *not* forced by keyboard-input
 			{
-				quadType = (QuadrantType)((e.X - QuadrantPanelDrawService.StartX)
-											   / QuadrantPanelDrawService.QuadWidthTotal);
+				quadType = (QuadrantType)((e.X - QuadrantDrawService.StartX)
+											   / QuadrantDrawService.QuadWidthTotal);
 			}
 			else
 			{
@@ -133,12 +133,12 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		/// <summary>
 		/// Overrides DoubleBufferedControl.RenderGraphics() - ie, OnPaint().
-		/// @note Calls the draw-function in QuadrantPanelDrawService.
+		/// @note Calls the draw-function in QuadrantDrawService.
 		/// </summary>
 		/// <param name="graphics"></param>
 		protected override void RenderGraphics(Graphics graphics)
 		{
-			QuadrantPanelDrawService.Draw(graphics, _tile, SelectedQuadrant);
+			QuadrantDrawService.Draw(graphics, _tile, SelectedQuadrant);
 		}
 		#endregion Events (override)
 

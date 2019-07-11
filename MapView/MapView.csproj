@@ -197,7 +197,7 @@
     <Compile Include="Forms\MapObservers\TileView\TileView.Designer.cs">
       <DependentUpon>TileView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\QuadrantPanelDrawService.cs" />
+    <Compile Include="Forms\MapObservers\TopView\QuadrantDrawService.cs" />
     <Compile Include="Forms\McdInfo\McdInfoF.cs">
       <SubType>Form</SubType>
     </Compile>

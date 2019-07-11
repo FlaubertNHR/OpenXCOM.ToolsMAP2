@@ -556,8 +556,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			var pt = e.MapLocation;
 //			Text = "c " + pt.Col + "  r " + pt.Row; // I don't think this actually prints anywhere.
 
-			var halfWidth  = QuadrantPanelDrawService.HalfWidth;
-			var halfHeight = QuadrantPanelDrawService.HalfHeight;
+			var halfWidth  = QuadrantDrawService.HalfWidth;
+			var halfHeight = QuadrantDrawService.HalfHeight;
 
 			int xc = (pt.Col - pt.Row) * halfWidth;
 			int yc = (pt.Col + pt.Row) * halfHeight;

@@ -86,7 +86,7 @@ namespace MapView.Forms.MapObservers
 
 
 		/// <summary>
-		/// @note cf DrawBlobService. cf QuadrantPanelDrawService.
+		/// @note cf DrawBlobService. cf QuadrantDrawService.
 		/// WARNING: This is NOT a robust implementation perhaps. But it
 		/// satisifes the core of the matter and could likely be used for
 		/// further development if that's ever required.

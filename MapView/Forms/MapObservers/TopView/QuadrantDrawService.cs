@@ -11,7 +11,7 @@ using XCom.Interfaces;
 
 namespace MapView.Forms.MapObservers.TopViews
 {
-	internal static class QuadrantPanelDrawService
+	internal static class QuadrantDrawService
 //		:
 //			IDisposable
 	{
@@ -64,7 +64,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		static QuadrantPanelDrawService()
+		static QuadrantDrawService()
 		{
 			Font  = new Font("Comic Sans MS", 7);
 			Brush = new SolidBrush(Color.LightBlue);

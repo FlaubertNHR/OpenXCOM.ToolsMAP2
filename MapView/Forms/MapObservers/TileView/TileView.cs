@@ -115,10 +115,10 @@ namespace MapView.Forms.MapObservers.TileViews
 			var northwalls = new TilePanel(PartType.North);
 			var content    = new TilePanel(PartType.Content);
 
-			tpFloors    .Text = QuadrantPanelDrawService.Floor;
-			tpWestwalls .Text = QuadrantPanelDrawService.West;
-			tpNorthwalls.Text = QuadrantPanelDrawService.North;
-			tpContents  .Text = QuadrantPanelDrawService.Content;
+			tpFloors    .Text = QuadrantDrawService.Floor;
+			tpWestwalls .Text = QuadrantDrawService.West;
+			tpNorthwalls.Text = QuadrantDrawService.North;
+			tpContents  .Text = QuadrantDrawService.Content;
 
 			_panels = new[]
 			{

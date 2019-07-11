@@ -279,7 +279,7 @@ namespace MapView
 										// NOTE: transparency of the 'UfoBattle' palette must be set first.
 
 
-			QuadrantPanelDrawService.Punkstrings();
+			QuadrantDrawService.Punkstrings();
 			LogFile.WriteLine("Quadrant strings punked.");
 
 

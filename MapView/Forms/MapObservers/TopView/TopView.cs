@@ -79,10 +79,10 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 
-			Floor   = new ToolStripMenuItem(QuadrantPanelDrawService.Floor);
-			West    = new ToolStripMenuItem(QuadrantPanelDrawService.West);
-			North   = new ToolStripMenuItem(QuadrantPanelDrawService.North);
-			Content = new ToolStripMenuItem(QuadrantPanelDrawService.Content);
+			Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor);
+			West    = new ToolStripMenuItem(QuadrantDrawService.West);
+			North   = new ToolStripMenuItem(QuadrantDrawService.North);
+			Content = new ToolStripMenuItem(QuadrantDrawService.Content);
 
 			visQuads.Add(Floor);
 			visQuads.Add(West);
@@ -373,8 +373,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			switch (key)
 			{
 				case SelectedTypeColor:
-					QuadrantPanelDrawService.Brush.Dispose();
-					QuadrantPanelDrawService.Brush = new SolidBrush((Color)val);
+					QuadrantDrawService.Brush.Dispose();
+					QuadrantDrawService.Brush = new SolidBrush((Color)val);
 					break;
 
 				default:

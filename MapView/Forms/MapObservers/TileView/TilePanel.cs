@@ -546,7 +546,7 @@ namespace MapView.Forms.MapObservers.TileViews
 						}
 
 						// NOTE: keep the door-string and its placement consistent with
-						// QuadrantPanelDrawService.Draw().
+						// QuadrantDrawService.Draw().
 						if (part.Record.HingedDoor || part.Record.SlidingDoor)	// finally print "door" if it's a door
 							graphics.DrawString(
 											Door,
