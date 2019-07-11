@@ -12,7 +12,7 @@
 		/// <summary>
 		/// Gets/Sets a MapTileBase object according to a given location.
 		/// </summary>
-		public MapTileBase this[int row, int col, int lev]
+		internal MapTileBase this[int row, int col, int lev]
 		{
 			get
 			{

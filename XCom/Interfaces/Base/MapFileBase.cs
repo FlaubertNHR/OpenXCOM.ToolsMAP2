@@ -106,7 +106,7 @@ namespace XCom.Interfaces.Base
 		/// Gets the current size of the Map.
 		/// </summary>
 		public MapSize MapSize
-		{ get; protected set; }
+		{ get; internal protected set; }
 
 		/// <summary>
 		/// Gets/Sets a MapTileBase object using row,col,lev values.
@@ -156,7 +156,7 @@ namespace XCom.Interfaces.Base
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="parts"></param>
-		protected MapFileBase(Descriptor descriptor, List<Tilepart> parts)
+		internal protected MapFileBase(Descriptor descriptor, List<Tilepart> parts)
 		{
 			Descriptor = descriptor;
 			Parts = parts;

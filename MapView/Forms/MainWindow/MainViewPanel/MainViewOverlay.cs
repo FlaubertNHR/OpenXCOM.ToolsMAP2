@@ -747,10 +747,10 @@ namespace MapView
 						int level = MapBase.Location.Lev + vert;
 						if (level > -1 && level < MapBase.MapSize.Levs) // safety.
 						{
-							int type = (!isTop ? TARGETER_KEY_MAIN : TARGETER_KEY_TOP);
 							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
-														type, 0,0, vert));
+														isTop ? TARGETER_KEY_TOP : TARGETER_KEY_MAIN, // WARNING: this is a trick (sic)
+														0,0, vert));
 						}
 					}
 				}
@@ -805,17 +805,22 @@ namespace MapView
 
 
 		#region Mouse & drag-points
-		private const int TARGETER_MOUSE    = 0;
-		private const int TARGETER_KEY_MAIN = 1;
-		private const int TARGETER_KEY_TOP  = 2;
+		private const int TARGETER_MOUSE    = 0; // a regular mousewheel event
+		private const int TARGETER_KEY_MAIN = 1; // keyboard navigation in MainView
+		private const int TARGETER_KEY_TOP  = 2; // keyboard navigation in TopView
 
 		/// <summary>
 		/// Scrolls the z-axis for MainView (and TopView by keyboard).
+		/// @note 'e.Clicks' denotes where the call is coming from and how it's
+		/// to be handled. It is not mouseclicks.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);
+
+			if      (e.Delta < 0) MapBase.LevelUp();
+			else if (e.Delta > 0) MapBase.LevelDown();
 
 			if (e.Clicks == TARGETER_MOUSE)
 			{
@@ -832,9 +837,6 @@ namespace MapView
 				_colOver = DragEnd.X;
 				_rowOver = DragEnd.Y;
 			}
-
-			if      (e.Delta < 0) MapBase.LevelUp();
-			else if (e.Delta > 0) MapBase.LevelDown();
 
 			ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
 		}
