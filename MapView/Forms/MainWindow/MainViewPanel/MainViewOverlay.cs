@@ -326,10 +326,10 @@ namespace MapView
 
 			_brushLayer = new SolidBrush(Color.FromArgb(GridLayerOpacity, GridLayerColor));
 
-			var t1 = new Timer();
-			t1.Interval = 250;
-			t1.Enabled = true;
-			t1.Tick += t1_Tick;
+//			var t1 = new Timer();
+//			t1.Interval = 250;
+//			t1.Enabled = true;
+//			t1.Tick += t1_Tick;
 
 			GotFocus  += OnFocusGained;
 			LostFocus += OnFocusLost;
@@ -337,7 +337,7 @@ namespace MapView
 		#endregion cTor
 
 
-		/// <summary>
+/*		/// <summary>
 		/// Hides the cuboid-targeter when the mouse leaves this control unless
 		/// the targeter was enabled by a keyboard tiles-selection.
 		/// </summary>
@@ -345,18 +345,15 @@ namespace MapView
 		/// <param name="e"></param>
 		private void t1_Tick(object sender, EventArgs e)
 		{
-			if (!_targeterSuppressed && !_targeterForced
+			if (!_targeterForced
 				&& !ClientRectangle.Contains(PointToClient(Cursor.Position)))
 			{
 				Invalidate();
 			}
-		}
+		} */
 
 		private void OnFocusGained(object sender, EventArgs e)
 		{
-//			_targeterForced = true;	// TODO: '_targeterForced' is becoming meaningless ...
-									// use only when actively navigating by keyboard only.
-
 			var pt = PointToClient(Cursor.Position);
 				pt = GetTileLocation(pt.X, pt.Y);
 			_colOver = pt.X;
