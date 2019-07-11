@@ -1611,30 +1611,6 @@ namespace MapView
 		}
 
 
-		private void OnExportClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE.
-		{
-//			if (mapList.SelectedNode.Parent == null) // top level node - bad
-//				throw new Exception("miExport_Click: Should not be here");
-//
-//			ExportForm ef = new ExportForm();
-//			List<string> maps = new List<string>();
-//
-//			if (mapList.SelectedNode.Parent.Parent == null)//tileset
-//			{
-//				foreach (TreeNode tn in mapList.SelectedNode.Nodes)
-//					maps.Add(tn.Text);
-//			}
-//			else // map
-//				maps.Add(mapList.SelectedNode.Text);
-//
-//			ef.Maps = maps;
-//			ef.ShowDialog();
-		}
-
-		private void OnOpenClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE.
-		{}
-
-
 		internal void OnScaleInClick(object sender, EventArgs e)
 		{
 			if (Globals.Scale < Globals.ScaleMaximum)
@@ -1642,7 +1618,7 @@ namespace MapView
 				Globals.Scale += Math.Min(
 										Globals.ScaleMaximum - Globals.Scale,
 										ScaleDelta);
-				Zoom();
+				Scale();
 			}
 		}
 
@@ -1653,11 +1629,11 @@ namespace MapView
 				Globals.Scale -= Math.Min(
 										Globals.Scale - Globals.ScaleMinimum,
 										ScaleDelta);
-				Zoom();
+				Scale();
 			}
 		}
 
-		private void Zoom()
+		private void Scale()
 		{
 			ViewerFormsManager.ToolFactory.DisableScaleChecked();
 			Globals.AutoScale = false;
@@ -1665,7 +1641,7 @@ namespace MapView
 			MainViewUnderlay.SetOverlaySize();
 			MainViewUnderlay.UpdateScrollers();
 
-			Refresh();
+			Invalidate();
 		}
 
 		internal void OnScaleClick(object sender, EventArgs e)
