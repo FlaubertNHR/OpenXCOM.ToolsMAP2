@@ -19,16 +19,6 @@ namespace MapView
 
 
 		#region Properties (static)
-		/// <summary>
-		/// A boolean that says that code is running in user-runtime mode rather
-		/// than designer-mode. This is set true in MapView's XCMainWindow.cTor
-		/// and is currently used only to stop the designer from trying to
-		/// draw the QuadrantPanel in TopView and TopRouteView(Top). Because it
-		/// won't.
-		/// </summary>
-		internal static bool RT
-		{ get; set; }
-
 		private static double _scale = 1.0;
 		/// <summary>
 		/// The scale-factor for sprites and clicks (etc) in MainView only.

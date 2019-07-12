@@ -2,8 +2,9 @@ namespace MapView.Forms.MapObservers.TopViews
 {
 	partial class TopView
 	{
+		#region Designer
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		/// <param name="disposing">true if managed resources should be disposed</param>
 		protected override void Dispose(bool disposing)
@@ -14,20 +15,12 @@ namespace MapView.Forms.MapObservers.TopViews
 			base.Dispose(disposing);
 		}
 
-		// The #develop designer is going to delete this. Copy it back in at the
-		// top of InitializeComponent().
-		/*
-			this.quadrants = new MapView.Forms.MapObservers.TopViews.QuadrantPanel();
-		*/
-
-		#region Windows Form Designer generated code
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.quadrants = new MapView.Forms.MapObservers.TopViews.QuadrantPanel();
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
 			this.pnlMain = new System.Windows.Forms.Panel();
 			this.tsTools = new System.Windows.Forms.ToolStrip();
@@ -39,17 +32,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tscPanel.SuspendLayout();
 			this.tsMain.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// quadrants
-			// 
-			this.quadrants.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.quadrants.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.quadrants.Location = new System.Drawing.Point(0, 410);
-			this.quadrants.Name = "quadrants";
-			this.quadrants.Size = new System.Drawing.Size(640, 70);
-			this.quadrants.TabIndex = 2;
-			this.quadrants.TabStop = false;
-			this.quadrants.Text = "bottom";
 			// 
 			// tscPanel
 			// 
@@ -63,7 +45,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tscPanel.ContentPanel.Controls.Add(this.pnlMain);
 			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(615, 360);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tscPanel.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			// 
 			// tscPanel.LeftToolStripPanel
 			// 
@@ -85,7 +66,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			// pnlMain
 			// 
 			this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnlMain.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.pnlMain.Location = new System.Drawing.Point(0, 0);
 			this.pnlMain.Name = "pnlMain";
 			this.pnlMain.Size = new System.Drawing.Size(615, 360);
@@ -94,7 +74,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			// tsTools
 			// 
 			this.tsTools.Dock = System.Windows.Forms.DockStyle.None;
-			this.tsTools.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tsTools.Location = new System.Drawing.Point(0, 3);
 			this.tsTools.Name = "tsTools";
 			this.tsTools.Padding = new System.Windows.Forms.Padding(0);
@@ -143,7 +122,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			// TopView
 			// 
 			this.Controls.Add(this.tscPanel);
-			this.Controls.Add(this.quadrants);
 			this.Controls.Add(this.tsMain);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "TopView";
@@ -159,16 +137,15 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.PerformLayout();
 
 		}
-		#endregion
 
 		private System.ComponentModel.IContainer components = null;
 
-		private QuadrantPanel quadrants;
 		private System.Windows.Forms.ToolStrip tsTools;
 		private System.Windows.Forms.Panel pnlMain;
 		private System.Windows.Forms.ToolStripContainer tscPanel;
 		private System.Windows.Forms.ToolStrip tsMain;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbVisibleQuads;
 		private System.Windows.Forms.ToolStripButton tsb_Options;
+		#endregion
 	}
 }

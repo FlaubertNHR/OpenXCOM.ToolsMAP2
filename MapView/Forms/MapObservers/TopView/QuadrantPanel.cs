@@ -26,12 +26,13 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		/// <summary>
 		/// A timer that delays processing clicks until the user's double-click
-		/// duration has elapsed.
+		/// duration has elapsed. That is, don't do 1-click processing if
+		/// 2-clicks are inc.
 		/// w/ Thanks to Natxo
 		/// https://stackoverflow.com/questions/2086213/how-can-i-catch-both-single-click-and-double-click-events-on-wpf-frameworkelement/2087517#2087517
 		/// </summary>
 		private readonly System.Timers.Timer _t1;
-		private int _t1Count;
+		private int _t1Clicks;
 		#endregion Fields
 
 
@@ -61,7 +62,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
 
 			_t1 = new System.Timers.Timer(SystemInformation.DoubleClickTime);
-			_t1.Elapsed += Elapsed;
+			_t1.Elapsed += OnClicksElapsed;
 		}
 		#endregion cTor
 
@@ -111,11 +112,9 @@ namespace MapView.Forms.MapObservers.TopViews
 				quadType = (QuadrantType)((e.X - QuadrantDrawService.StartX)
 											   / QuadrantDrawService.QuadWidthTotal);
 			}
-			else
-			{
+			else // is keyboard-input
 				quadType = _keyQuadtype;
-				_keyQuadtype = QuadrantType.None;
-			}
+
 
 			PartType partType = PartType.All;
 			switch (quadType)
@@ -132,18 +131,8 @@ namespace MapView.Forms.MapObservers.TopViews
 				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(partType);
 
 				SetSelected(e.Button, e.Clicks);
-				if (e.Button == MouseButtons.Right) // see SetSelected()
-				{
-					MainViewOverlay.that.Refresh();
-
-					ViewerFormsManager.TopView     .Refresh();
-					ViewerFormsManager.RouteView   .Refresh();
-					ViewerFormsManager.TopRouteView.Refresh();
-
-					if (XCMainWindow.ScanG != null)
-						XCMainWindow.ScanG.InvalidatePanel();
-				}
 			}
+			_keyQuadtype = QuadrantType.None;
 		}
 
 		/// <summary>
@@ -164,15 +153,15 @@ namespace MapView.Forms.MapObservers.TopViews
 			Invalidate();
 		}
 
-		private void Elapsed(object source, ElapsedEventArgs e)
+		private void OnClicksElapsed(object source, ElapsedEventArgs e)
 		{
 			_t1.Stop();
-			switch (_t1Count)
+			switch (_t1Clicks)
 			{
 				case 1: MainViewOverlay.that.FillSelectedQuads();  break;
 				case 2: MainViewOverlay.that.ClearSelectedQuads(); break;
 			}
-			_t1Count = 0;
+			_t1Clicks = 0;
 		}
 		#endregion Events
 
@@ -192,21 +181,24 @@ namespace MapView.Forms.MapObservers.TopViews
 				switch (btn)
 				{
 					case MouseButtons.Left:
-						switch (clicks)
-						{
-//							case 1: break;
-							case 2:
-								ViewerFormsManager.TileView.Control.SelectedTilepart = _tile[SelectedQuadrant];
-								break;
-						}
+						if (clicks == 2)
+							ViewerFormsManager.TileView.Control.SelectedTilepart = _tile[SelectedQuadrant];
 						break;
 
 					case MouseButtons.Right:
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							_t1.Stop();
-							++_t1Count;
-							_t1.Start();
+							if (_keyQuadtype == QuadrantType.None) // ie. is *not* forced by keyboard-input
+							{
+								_t1.Stop();
+								++_t1Clicks;
+								_t1.Start();
+							}
+							else // is keyboard-input
+							{
+								_t1Clicks = clicks;
+								OnClicksElapsed(null,null);
+							}
 						}
 						break;
 				}

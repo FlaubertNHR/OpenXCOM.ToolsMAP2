@@ -28,9 +28,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{ get; private set; }
 
 		internal QuadrantPanel QuadrantPanel
-		{
-			get { return quadrants; }
-		}
+		{ get; private set; }
 
 
 		internal ToolStripMenuItem Floor
@@ -62,10 +60,11 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal TopView()
 		{
 			InitializeComponent();
+			InitializeQuadrantPanel();
 
 			SuspendLayout();
 
-			quadrants.SelectedQuadrant = QuadrantType.Floor;
+			QuadrantPanel.SelectedQuadrant = QuadrantType.Floor;
 
 
 			TopPanel = new TopPanel(this);
@@ -108,6 +107,20 @@ namespace MapView.Forms.MapObservers.TopViews
 			ObserverPanels.Add("QuadrantPanel", QuadrantPanel);
 
 			ResumeLayout();
+		}
+
+		private void InitializeQuadrantPanel()
+		{
+			QuadrantPanel = new QuadrantPanel();
+
+			QuadrantPanel.Name     = "QuadrantPanel";
+			QuadrantPanel.Location = new Point(0, 410);
+			QuadrantPanel.Size     = new Size(640, 70);
+			QuadrantPanel.Dock     = DockStyle.Bottom;
+			QuadrantPanel.TabIndex = 2;
+			QuadrantPanel.TabStop  = false;
+
+			Controls.Add(QuadrantPanel);
 		}
 		#endregion cTor
 

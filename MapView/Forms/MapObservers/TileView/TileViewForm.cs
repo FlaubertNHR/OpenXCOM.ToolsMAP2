@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
@@ -11,6 +12,14 @@ namespace MapView.Forms.MapObservers.TileViews
 			Form,
 			IMapObserverProvider
 	{
+		// TODO: There are three (3) variables all returning 'TileViewControl'.
+		// - one private, one internal, one public ... 42!
+
+		#region Fields
+		private TileView TileViewControl;
+		#endregion Fields
+
+
 		#region Properties
 		/// <summary>
 		/// Gets TileViewControl as a child of MapObserverControl.
@@ -34,6 +43,20 @@ namespace MapView.Forms.MapObservers.TileViews
 		internal TileViewForm()
 		{
 			InitializeComponent();
+			InitializeTileView();
+		}
+
+		private void InitializeTileView()
+		{
+			TileViewControl = new TileView();
+
+			TileViewControl.Name     = "TileViewControl";
+			TileViewControl.Location = new Point(0, 0);
+			TileViewControl.Size     = new Size(632, 454);
+			TileViewControl.Dock     = DockStyle.Fill;
+			TileViewControl.TabIndex = 0;
+
+			Controls.Add(TileViewControl);
 		}
 		#endregion cTor
 
@@ -137,37 +160,19 @@ namespace MapView.Forms.MapObservers.TileViews
 			base.Dispose(disposing);
 		}
 
-
-/*		The #develop designer is going to delete this:
-
-			TileViewControl = new MapView.Forms.MapObservers.TileViews.TileView();
-
-		so copy it back into InitializeComponent() */
-
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
-			TileViewControl = new MapView.Forms.MapObservers.TileViews.TileView();
 			this.SuspendLayout();
-			// 
-			// TileViewControl
-			// 
-			this.TileViewControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TileViewControl.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.TileViewControl.Location = new System.Drawing.Point(0, 0);
-			this.TileViewControl.Name = "TileViewControl";
-			this.TileViewControl.Size = new System.Drawing.Size(632, 454);
-			this.TileViewControl.TabIndex = 0;
 			// 
 			// TileViewForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(632, 454);
-			this.Controls.Add(this.TileViewControl);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.KeyPreview = true;
 			this.Name = "TileViewForm";
@@ -179,8 +184,6 @@ namespace MapView.Forms.MapObservers.TileViews
 		}
 
 		private System.ComponentModel.IContainer components = null;
-
-		private TileView TileViewControl;
 		#endregion Designer
 	}
 }

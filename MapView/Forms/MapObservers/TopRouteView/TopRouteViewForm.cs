@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 using DSShared.Windows;
@@ -10,12 +11,18 @@ using MapView.Forms.MapObservers.TopViews;
 using XCom;
 
 
-namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifing the concept of namespaces in the butt.
+namespace MapView.Forms.MapObservers.TileViews // y, "TileViews" thanks for knifing the concept of namespaces in the butt.
 {
 	internal sealed partial class TopRouteViewForm
 		:
 			Form
 	{
+		#region Fields
+		private TopView   TopViewControl;
+		private RouteView RouteViewControl;
+		#endregion Fields
+
+
 		#region Properties
 		internal TopView ControlTop
 		{
@@ -36,7 +43,32 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileView" thanks for knifi
 		internal TopRouteViewForm()
 		{
 			InitializeComponent();
+			InitializeTopRouteViews();
+
 			var tpTabControl = new TabPageBorder(tabControl);
+		}
+
+		private void InitializeTopRouteViews()
+		{
+			TopViewControl   = new TopView();
+			RouteViewControl = new RouteView();
+
+			TopViewControl.Name       = "TopViewControl";
+			TopViewControl.Location   = new Point(3, 3);
+			TopViewControl.Size       = new Size(618, 423);
+			TopViewControl.Dock       = DockStyle.Fill;
+			TopViewControl.TabIndex   = 0;
+			TopViewControl.Tag        = "TOPROUTE";
+
+			RouteViewControl.Name     = "RouteViewControl";
+			RouteViewControl.Location = new Point(3, 3);
+			RouteViewControl.Size     = new Size(618, 423);
+			RouteViewControl.Dock     = DockStyle.Fill;
+			RouteViewControl.TabIndex = 0;
+			RouteViewControl.Tag      = "TOPROUTE";
+
+			tp_Top  .Controls.Add(TopViewControl);
+			tp_Route.Controls.Add(RouteViewControl);
 		}
 		#endregion cTor
 

@@ -20,49 +20,17 @@
 			base.Dispose(disposing);
 		}
 
-
-		/* The #develop designer is going to delete this:
-
-			this.TopViewControl = new MapView.Forms.MapObservers.TopViews.TopView();
-			this.RouteViewControl = new MapView.Forms.MapObservers.RouteViews.RouteView();
-
-			this.tabControl = new DSShared.Windows.CompositedTabControl();
-
-		- so copy it back into InitializeComponent() */
-
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.TopViewControl = new MapView.Forms.MapObservers.TopViews.TopView();
-			this.RouteViewControl = new MapView.Forms.MapObservers.RouteViews.RouteView();
 			this.tabControl = new DSShared.Windows.CompositedTabControl();
 			this.tp_Top = new System.Windows.Forms.TabPage();
 			this.tp_Route = new System.Windows.Forms.TabPage();
 			this.tabControl.SuspendLayout();
-			this.tp_Top.SuspendLayout();
-			this.tp_Route.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// TopViewControl
-			// 
-			this.TopViewControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TopViewControl.Location = new System.Drawing.Point(3, 3);
-			this.TopViewControl.Name = "TopViewControl";
-			this.TopViewControl.Size = new System.Drawing.Size(618, 423);
-			this.TopViewControl.TabIndex = 0;
-			this.TopViewControl.Tag = "TOPROUTE";
-			// 
-			// RouteViewControl
-			// 
-			this.RouteViewControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RouteViewControl.Location = new System.Drawing.Point(3, 3);
-			this.RouteViewControl.Name = "RouteViewControl";
-			this.RouteViewControl.Size = new System.Drawing.Size(618, 423);
-			this.RouteViewControl.TabIndex = 0;
-			this.RouteViewControl.Tag = "TOPROUTE";
 			// 
 			// tabControl
 			// 
@@ -77,7 +45,6 @@
 			// 
 			// tp_Top
 			// 
-			this.tp_Top.Controls.Add(this.TopViewControl);
 			this.tp_Top.Location = new System.Drawing.Point(4, 21);
 			this.tp_Top.Name = "tp_Top";
 			this.tp_Top.Padding = new System.Windows.Forms.Padding(3);
@@ -87,7 +54,6 @@
 			// 
 			// tp_Route
 			// 
-			this.tp_Route.Controls.Add(this.RouteViewControl);
 			this.tp_Route.Location = new System.Drawing.Point(4, 21);
 			this.tp_Route.Name = "tp_Route";
 			this.tp_Route.Padding = new System.Windows.Forms.Padding(3);
@@ -108,14 +74,9 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Top/Route Views";
 			this.tabControl.ResumeLayout(false);
-			this.tp_Top.ResumeLayout(false);
-			this.tp_Route.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
-
-		private MapView.Forms.MapObservers.TopViews.TopView TopViewControl;
-		private MapView.Forms.MapObservers.RouteViews.RouteView RouteViewControl;
 
 		DSShared.Windows.CompositedTabControl tabControl;
 

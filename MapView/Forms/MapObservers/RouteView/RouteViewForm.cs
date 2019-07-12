@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
@@ -11,6 +12,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			Form,
 			IMapObserverProvider
 	{
+		#region Fields
+		private RouteView RouteViewControl;
+		#endregion Fields
+
+
 		#region Properties
 		/// <summary>
 		/// Gets 'RouteViewControl' as a child of 'MapObserverControl'.
@@ -34,6 +40,21 @@ namespace MapView.Forms.MapObservers.RouteViews
 		internal RouteViewForm()
 		{
 			InitializeComponent();
+			InitializeRouteView();
+		}
+
+		private void InitializeRouteView()
+		{
+			RouteViewControl = new RouteView();
+
+			RouteViewControl.Name     = "RouteViewControl";
+			RouteViewControl.Location = new Point(0, 0);
+			RouteViewControl.Size     = new Size(632, 454);
+			RouteViewControl.Dock     = DockStyle.Fill;
+			RouteViewControl.TabIndex = 0;
+			RouteViewControl.Tag      = "ROUTE";
+
+			Controls.Add(RouteViewControl);
 		}
 		#endregion cTor
 

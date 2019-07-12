@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
@@ -13,6 +14,11 @@ namespace MapView.Forms.MapObservers.TopViews
 			Form,
 			IMapObserverProvider
 	{
+		#region Fields
+		private TopView TopViewControl;
+		#endregion Fields
+
+
 		#region Properties
 		/// <summary>
 		/// Gets TopViewControl as a child of MapObserverControl.
@@ -36,6 +42,21 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal TopViewForm()
 		{
 			InitializeComponent();
+			InitializeTopView();
+		}
+
+		private void InitializeTopView()
+		{
+			TopViewControl = new TopView();
+
+			TopViewControl.Name     = "TopViewControl";
+			TopViewControl.Location = new Point(0, 0);
+			TopViewControl.Size     = new Size(632, 454);
+			TopViewControl.Dock     = DockStyle.Fill;
+			TopViewControl.TabIndex = 1;
+			TopViewControl.Tag      = "TOP";
+
+			Controls.Add(TopViewControl);
 		}
 		#endregion cTor
 

@@ -155,8 +155,6 @@ namespace MapView.Forms.MapObservers.TopViews
 				MapTile tile,
 				QuadrantType selectedQuadrant)
 		{
-			if (!Globals.RT) return; // don't try to draw the QuadrantPanel in the designer.
-
 			_graphics = graphics;
 
 			var spriteAttributes = new ImageAttributes();
