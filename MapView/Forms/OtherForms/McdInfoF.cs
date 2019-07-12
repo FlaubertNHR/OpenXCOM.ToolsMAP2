@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using XCom;
 
 
-namespace MapView.Forms.McdInfo
+namespace MapView
 {
 	internal sealed partial class McdInfoF
 		:

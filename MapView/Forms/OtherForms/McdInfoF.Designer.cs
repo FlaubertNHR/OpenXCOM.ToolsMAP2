@@ -1,4 +1,4 @@
-﻿namespace MapView.Forms.McdInfo
+﻿namespace MapView
 {
 	partial class McdInfoF
 	{

@@ -102,7 +102,7 @@ namespace MapView
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(305, 15);
 			this.label6.TabIndex = 6;
-			this.label6.Text = "ASSIST - luke83 / et alii multus";
+			this.label6.Text = "ASSIST - luke83 / et multus alii";
 			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// About
