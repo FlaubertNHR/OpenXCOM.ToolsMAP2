@@ -376,6 +376,30 @@ namespace MapView
 
 
 		#region Events and Methods for the edit-functions
+		// The following functs are for subscription to toolstrip Editor buttons.
+		internal void OnCut(object sender, EventArgs e)
+		{
+			Copy();
+			ClearSelection();
+		}
+		internal void OnCopy(object sender, EventArgs e)
+		{
+			Copy();
+		}
+		internal void OnPaste(object sender, EventArgs e)
+		{
+			Paste();
+		}
+		internal void OnDelete(object sender, EventArgs e)
+		{
+			ClearSelection();
+		}
+		internal void OnFill(object sender, EventArgs e)
+		{
+			FillSelectedTiles();
+		}
+
+
 		/// <summary>
 		/// Handles keyboard-input for editing and saving the Mapfile.
 		/// @note Navigation keys are handled by 'KeyPreview' at the form level.

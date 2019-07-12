@@ -10,7 +10,7 @@ namespace MapView.Forms.MainWindow
 	internal sealed class ToolstripFactory
 	{
 		#region Fields
-		private readonly MainViewUnderlay MainViewUnderlay;
+		private readonly MainViewOverlay MainViewOverlay;
 
 		private readonly List<ToolStripButton> _editers = new List<ToolStripButton>(); // all edit-buttons except the pasters
 		private readonly List<ToolStripButton> _pasters = new List<ToolStripButton>();
@@ -24,19 +24,19 @@ namespace MapView.Forms.MainWindow
 		private readonly ToolStripTextBox _tstbSearch     = new ToolStripTextBox();
 		private readonly ToolStripButton  _tsbSearchClear = new ToolStripButton();
 
-		private readonly ToolStripButton _tsbScale    = new ToolStripButton();
-		private readonly ToolStripButton _tsbScaleOut = new ToolStripButton();
-		private readonly ToolStripButton _tsbScaleIn  = new ToolStripButton();
+		private readonly ToolStripButton _tsbScale        = new ToolStripButton();
+		private readonly ToolStripButton _tsbScaleOut     = new ToolStripButton();
+		private readonly ToolStripButton _tsbScaleIn      = new ToolStripButton();
 
-		private readonly ToolStripButton _tsbDown     = new ToolStripButton();
-		private readonly ToolStripButton _tsbUp       = new ToolStripButton();
+		private readonly ToolStripButton _tsbDown         = new ToolStripButton();
+		private readonly ToolStripButton _tsbUp           = new ToolStripButton();
 
-		private readonly ToolStripButton _tsbCut      = new ToolStripButton();
-		private readonly ToolStripButton _tsbCopy     = new ToolStripButton();
-		private readonly ToolStripButton _tsbPaste    = new ToolStripButton();
-		private readonly ToolStripButton _tsbDelete   = new ToolStripButton();
+		private readonly ToolStripButton _tsbCut          = new ToolStripButton();
+		private readonly ToolStripButton _tsbCopy         = new ToolStripButton();
+		private readonly ToolStripButton _tsbPaste        = new ToolStripButton();
+		private readonly ToolStripButton _tsbDelete       = new ToolStripButton();
 
-		private readonly ToolStripButton _tsbFill     = new ToolStripButton();
+		private readonly ToolStripButton _tsbFill         = new ToolStripButton();
 		#endregion Fields
 
 
@@ -45,9 +45,9 @@ namespace MapView.Forms.MainWindow
 		/// cTor.
 		/// </summary>
 		/// <param name="panel"></param>
-		internal ToolstripFactory(MainViewUnderlay panel)
+		internal ToolstripFactory(MainViewOverlay panel)
 		{
-			MainViewUnderlay = panel;
+			MainViewOverlay = panel;
 		}
 		#endregion cTor
 
@@ -267,7 +267,7 @@ namespace MapView.Forms.MainWindow
 			tsbCut.ToolTipText     = "cut";
 			tsbCut.DisplayStyle    = ToolStripItemDisplayStyle.Image;
 			tsbCut.Image           = Resources.cut;
-			tsbCut.Click          += MainViewUnderlay.OnCut;
+			tsbCut.Click          += MainViewOverlay.OnCut;
 			tsbCut.Enabled         = false;
 //			tsbCut.Click          += (sender, e) => // -> example of ... lambda usage
 //									{
@@ -282,7 +282,7 @@ namespace MapView.Forms.MainWindow
 			tsbCopy.ToolTipText    = "copy";
 			tsbCopy.DisplayStyle   = ToolStripItemDisplayStyle.Image;
 			tsbCopy.Image          = Resources.copy;
-			tsbCopy.Click         += MainViewUnderlay.OnCopy;
+			tsbCopy.Click         += MainViewOverlay.OnCopy;
 			tsbCopy.Enabled        = false;
 //			tsbCopy.Click         += (sender, e) => // -> example of ... lambda usage
 //									{
@@ -297,7 +297,7 @@ namespace MapView.Forms.MainWindow
 			tsbPaste.ToolTipText   = "paste";
 			tsbPaste.DisplayStyle  = ToolStripItemDisplayStyle.Image;
 			tsbPaste.Image         = Resources.paste;
-			tsbPaste.Click        += MainViewUnderlay.OnPaste;
+			tsbPaste.Click        += MainViewOverlay.OnPaste;
 			tsbPaste.Enabled       = false;
 
 			_pasters.Add(tsbPaste);
@@ -307,7 +307,7 @@ namespace MapView.Forms.MainWindow
 			tsbDelete.ToolTipText  = "delete";
 			tsbDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			tsbDelete.Image        = Resources.delete;
-			tsbDelete.Click       += MainViewUnderlay.OnDelete;
+			tsbDelete.Click       += MainViewOverlay.OnDelete;
 			tsbDelete.Enabled      = false;
 
 			_editers.Add(tsbDelete);
@@ -317,7 +317,7 @@ namespace MapView.Forms.MainWindow
 			tsbFill.ToolTipText    = "fill";
 			tsbFill.DisplayStyle   = ToolStripItemDisplayStyle.Image;
 			tsbFill.Image          = Resources.fill;
-			tsbFill.Click         += MainViewUnderlay.OnFill;
+			tsbFill.Click         += MainViewOverlay.OnFill;
 			tsbFill.Enabled        = false;
 
 			_editers.Add(tsbFill);
@@ -357,7 +357,7 @@ namespace MapView.Forms.MainWindow
 		/// <param name="e"></param>
 		private void OnDownClick(object sender, EventArgs e)
 		{
-			var @base = MainViewUnderlay.MapBase;
+			var @base = MainViewOverlay.MapBase;
 			if (@base != null)
 			{
 				@base.LevelDown();
@@ -372,7 +372,7 @@ namespace MapView.Forms.MainWindow
 		/// <param name="e"></param>
 		private void OnUpClick(object sender, EventArgs e)
 		{
-			var @base = MainViewUnderlay.MapBase;
+			var @base = MainViewOverlay.MapBase;
 			if (@base != null)
 			{
 				@base.LevelUp();

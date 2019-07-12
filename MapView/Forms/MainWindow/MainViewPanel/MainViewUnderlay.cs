@@ -193,30 +193,6 @@ namespace MapView
 		{
 			MainViewOverlay.Invalidate();
 		}
-
-
-		// The following functs are for subscription to toolstrip Editor buttons.
-		internal void OnCut(object sender, EventArgs e)
-		{
-			MainViewOverlay.Copy();
-			MainViewOverlay.ClearSelection();
-		}
-		internal void OnCopy(object sender, EventArgs e)
-		{
-			MainViewOverlay.Copy();
-		}
-		internal void OnPaste(object sender, EventArgs e)
-		{
-			MainViewOverlay.Paste();
-		}
-		internal void OnDelete(object sender, EventArgs e)
-		{
-			MainViewOverlay.ClearSelection();
-		}
-		internal void OnFill(object sender, EventArgs e)
-		{
-			MainViewOverlay.FillSelectedTiles();
-		}
 		#endregion Events
 
 

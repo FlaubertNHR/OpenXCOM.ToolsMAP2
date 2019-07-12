@@ -68,7 +68,7 @@ namespace MapView.Forms.MainWindow
 			AboutScreen  = new About();
 
 
-			ToolFactory = new ToolstripFactory(MainViewUnderlay.that);
+			ToolFactory = new ToolstripFactory(MainViewOverlay.that);
 
 			TopView     .Control   .InitializeToolstrip(ToolFactory);
 			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
