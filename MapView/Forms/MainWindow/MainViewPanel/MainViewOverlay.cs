@@ -354,18 +354,24 @@ namespace MapView
 
 		private void OnFocusGained(object sender, EventArgs e)
 		{
-			var pt = PointToClient(Cursor.Position);
-				pt = GetTileLocation(pt.X, pt.Y);
-			_colOver = pt.X;
-			_rowOver = pt.Y;
+			if (MapBase != null)
+			{
+				var pt = PointToClient(Cursor.Position);
+					pt = GetTileLocation(pt.X, pt.Y);
+				_colOver = pt.X;
+				_rowOver = pt.Y;
 
-			Invalidate();
+				Invalidate();
+			}
 		}
 
 		private void OnFocusLost(object sender, EventArgs e)
 		{
-			_targeterForced = false;
-			Invalidate();
+			if (MapBase != null)
+			{
+				_targeterForced = false;
+				Invalidate();
+			}
 		}
 
 
@@ -418,17 +424,20 @@ namespace MapView
 						break;
 
 					case Keys.Escape:
-						_targeterForced = false;
+						if (MapBase != null)
+						{
+							_targeterForced = false;
 
-						var pt = PointToClient(Cursor.Position);
-							pt = GetTileLocation(pt.X, pt.Y);
-						_colOver = pt.X;
-						_rowOver = pt.Y;
+							var pt = PointToClient(Cursor.Position);
+								pt = GetTileLocation(pt.X, pt.Y);
+							_colOver = pt.X;
+							_rowOver = pt.Y;
 
-						_keyDeltaX =
-						_keyDeltaY = 0;
+							_keyDeltaX =
+							_keyDeltaY = 0;
 
-						ProcessSelection(DragBeg, DragBeg);
+							ProcessSelection(DragBeg, DragBeg);
+						}
 						break;
 
 					case Keys.F:
@@ -814,26 +823,29 @@ namespace MapView
 		{
 			base.OnMouseWheel(e);
 
-			if      (e.Delta < 0) MapBase.LevelUp();
-			else if (e.Delta > 0) MapBase.LevelDown();
-
-			if (e.Clicks == TARGETER_MOUSE)
+			if (MapBase != null)
 			{
-				_targeterForced = false;
+				if      (e.Delta < 0) MapBase.LevelUp();
+				else if (e.Delta > 0) MapBase.LevelDown();
 
-				var loc = GetTileLocation(e.X, e.Y);
-				_colOver = loc.X;
-				_rowOver = loc.Y;
+				if (e.Clicks == TARGETER_MOUSE)
+				{
+					_targeterForced = false;
+
+					var loc = GetTileLocation(e.X, e.Y);
+					_colOver = loc.X;
+					_rowOver = loc.Y;
+				}
+				else // ie. is keyboard navigation
+				{
+					_targeterForced = (e.Clicks == TARGETER_KEY_MAIN);
+
+					_colOver = DragEnd.X;
+					_rowOver = DragEnd.Y;
+				}
+
+				ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
 			}
-			else // ie. is keyboard navigation
-			{
-				_targeterForced = (e.Clicks == TARGETER_KEY_MAIN);
-
-				_colOver = DragEnd.X;
-				_rowOver = DragEnd.Y;
-			}
-
-			ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
 		}
 
 
