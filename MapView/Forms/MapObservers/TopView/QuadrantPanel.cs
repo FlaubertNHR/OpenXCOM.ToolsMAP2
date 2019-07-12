@@ -183,6 +183,9 @@ namespace MapView.Forms.MapObservers.TopViews
 					case MouseButtons.Left:
 						if (clicks == 2)
 							ViewerFormsManager.TileView.Control.SelectedTilepart = _tile[SelectedQuadrant];
+
+//((MapView.Forms.MapObservers.TileViews.TileView)ViewerFormsManager.TileView.ObserverControl).SelectedTilepart = _tile[SelectedQuadrant];
+// I just want to leave that there so you can ponder the significance of it.
 						break;
 
 					case MouseButtons.Right:
