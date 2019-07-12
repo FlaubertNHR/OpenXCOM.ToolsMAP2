@@ -201,8 +201,7 @@ namespace MapView.Forms.MainWindow
 
 
 			// "Help" menuitems ->
-			var help = new MenuItem("CHM Help");
-			help.Click += OnHelpClick;
+			var help = new MenuItem("CHM Help", OnHelpClick, Shortcut.F1);
 			Helpers.MenuItems.Add(help);
 
 			CreateMenuitem(ViewerFormsManager.ColorsScreen, "Colors", Helpers);

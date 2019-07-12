@@ -60,8 +60,8 @@ Ctrl+s - save the Map if the panel has focus
 Enter - opens the Maptree's contextmenu if the tree has focus.
 Enter - search if the Search textbox has focus.
 
-F1 - start animations
-F2 - stop animations
+F1 - CHM Helpfile
+F2 - toggle animations
 F3 - toggle door state (if the panel has focus)
 F4 - toggle grid visibility
 
