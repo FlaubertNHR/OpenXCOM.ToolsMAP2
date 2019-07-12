@@ -33,8 +33,8 @@ namespace MapView
 		private readonly Dictionary<string, Property> _properties =
 					 new Dictionary<string, Property>();
 
-		private Dictionary<string, Option> _dict =
-			new Dictionary<string, Option>();
+		private readonly Dictionary<string, Option> _options =
+					 new Dictionary<string, Option>();
 		#endregion Fields
 
 
@@ -44,7 +44,7 @@ namespace MapView
 		/// </summary>
 		internal Dictionary<string, Option>.KeyCollection Keys
 		{
-			get { return _dict.Keys; }
+			get { return _options.Keys; }
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace MapView
 		/// </summary>
 		internal Option this[string key]
 		{
-			get { return (_dict.ContainsKey(key)) ? _dict[key] : null; }
+			get { return (_options.ContainsKey(key)) ? _options[key] : null; }
 		}
 		#endregion Properties
 
@@ -132,19 +132,24 @@ namespace MapView
 				OptionChangedEvent changer = null,
 				object target = null)
 		{
+			//XCom.LogFile.WriteLine("AddOption() key= " + key);
+			//XCom.LogFile.WriteLine(". val= " + val);
+
 			var option = new Option(val, description, category);
 
 			if (changer != null)
 			{
+				//XCom.LogFile.WriteLine(". . has Changer");
 				option.OptionChanged += changer;
 			}
 			else if (target != null)
 			{
+				//XCom.LogFile.WriteLine(". . has Target - define Property");
 				_properties[key] = new Property(target, key);
 				option.OptionChanged += OnOptionChanged;
 			}
 
-			_dict[key] = option;
+			_options[key] = option;
 		}
 
 		/// <summary>
@@ -158,10 +163,10 @@ namespace MapView
 		/// <returns>the Option object tied to the key</returns>
 		internal Option GetOption(string key, object val)
 		{
-			if (!_dict.ContainsKey(key))
-				_dict.Add(key, new Option(val));
+			if (!_options.ContainsKey(key))
+				_options.Add(key, new Option(val));
 
-			return _dict[key];
+			return _options[key];
 		}
 
 		/// <summary>
@@ -175,7 +180,7 @@ namespace MapView
 			tw.WriteLine(line);
 			tw.WriteLine("{");
 
-			foreach (string key in _dict.Keys)
+			foreach (string key in _options.Keys)
 				tw.WriteLine("\t" + key + ":" + Convert(this[key].Value));
 
 			tw.WriteLine("}");
@@ -186,6 +191,7 @@ namespace MapView
 		#region Events
 		private void OnOptionChanged(string key, object val)
 		{
+			//XCom.LogFile.WriteLine("Options.OnOptionChanged() key= " + key + " val= " + val);
 			_properties[key].SetValue(val);
 		}
 		#endregion Events
@@ -282,22 +288,22 @@ namespace MapView
 		#region Methods (static)
 		internal static void InitializeParsers()
 		{
-			_parsers[typeof(int)]   = ParseStringInt;
-			_parsers[typeof(Color)] = ParseStringColor;
-			_parsers[typeof(bool)]  = ParseStringBool;
+			_parsers[typeof(Int32)]   = ParseInt32;
+			_parsers[typeof(Color)]   = ParseColor;
+			_parsers[typeof(Boolean)] = ParseBoolean;
 		}
 
-		private static object ParseStringBool(string st)
+		private static object ParseBoolean(string st)
 		{
-			return bool.Parse(st);
+			return Boolean.Parse(st);
 		}
 
-		private static object ParseStringInt(string st)
+		private static object ParseInt32(string st)
 		{
-			return int.Parse(st, CultureInfo.InvariantCulture);
+			return Int32.Parse(st, CultureInfo.InvariantCulture);
 		}
 
-		private static object ParseStringColor(string st)
+		private static object ParseColor(string st)
 		{
 			string[] vals = st.Split(',');
 
@@ -308,16 +314,16 @@ namespace MapView
 
 				case 3:
 					return Color.FromArgb(
-									int.Parse(vals[0], CultureInfo.InvariantCulture),
-									int.Parse(vals[1], CultureInfo.InvariantCulture),
-									int.Parse(vals[2], CultureInfo.InvariantCulture));
+									Int32.Parse(vals[0], CultureInfo.InvariantCulture),
+									Int32.Parse(vals[1], CultureInfo.InvariantCulture),
+									Int32.Parse(vals[2], CultureInfo.InvariantCulture));
 
 				case 4:
 					return Color.FromArgb(
-									int.Parse(vals[0], CultureInfo.InvariantCulture),
-									int.Parse(vals[1], CultureInfo.InvariantCulture),
-									int.Parse(vals[2], CultureInfo.InvariantCulture),
-									int.Parse(vals[3], CultureInfo.InvariantCulture));
+									Int32.Parse(vals[0], CultureInfo.InvariantCulture),
+									Int32.Parse(vals[1], CultureInfo.InvariantCulture),
+									Int32.Parse(vals[2], CultureInfo.InvariantCulture),
+									Int32.Parse(vals[3], CultureInfo.InvariantCulture));
 			}
 			return null;
 		}
@@ -350,7 +356,7 @@ namespace MapView
 	{
 		#region Fields
 		private readonly PropertyInfo _info;
-		private readonly object _o;
+		private readonly object _prop;
 		#endregion Fields
 
 
@@ -358,11 +364,11 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="o"></param>
+		/// <param name="prop"></param>
 		/// <param name="property"></param>
-		internal Property(object o, string property)
+		internal Property(object prop, string property)
 		{
-			_info = (_o = o).GetType().GetProperty(property);
+			_info = (_prop = prop).GetType().GetProperty(property);
 		}
 		#endregion cTor
 
@@ -371,10 +377,10 @@ namespace MapView
 		/// <summary>
 		/// Sets the value of this Property to a specified object.
 		/// </summary>
-		/// <param name="o"></param>
-		internal void SetValue(object o)
+		/// <param name="val"></param>
+		internal void SetValue(object val)
 		{
-			_info.SetValue(_o, o, new object[]{});
+			_info.SetValue(_prop, val);
 		}
 		#endregion Methods
 	}

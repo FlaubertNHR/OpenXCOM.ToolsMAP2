@@ -576,28 +576,26 @@ namespace MapView
 		internal const string Windows = "Windows"; // used in MainMenusManager.PopulateMenus()
 
 		// options
-		private const string Animation           = "Animation";
-		private const string Doors               = "Doors";
-		private const string SaveWindowPositions = "SaveWindowPositions"; // TODO: is not implemented; implement it or remove it.
-		private const string AllowBringToFront   = "AllowBringToFront";
-//		private const string SaveOnExit          = "SaveOnExit";
+		private const string Animation          = "Animation";
+		private const string Doors              = "Doors";
+		private const string AllowBringToFront  = "AllowBringToFront";
 
-		private const string ShowGrid            = "ShowGrid";
-		private const string GridLayerColor      = "GridLayerColor";
-		private const string GridLayerOpacity    = "GridLayerOpacity";
-		private const string GridLineColor       = "GridLineColor";
-		private const string GridLineWidth       = "GridLineWidth";
-		private const string Grid10LineColor     = "Grid10LineColor";
-		private const string Grid10LineWidth     = "Grid10LineWidth";
+		private const string ShowGrid           = "ShowGrid";
+		private const string GridLayerColor     = "GridLayerColor";
+		private const string GridLayerOpacity   = "GridLayerOpacity";
+		private const string GridLineColor      = "GridLineColor";
+		private const string GridLineWidth      = "GridLineWidth";
+		private const string Grid10LineColor    = "Grid10LineColor";
+		private const string Grid10LineWidth    = "Grid10LineWidth";
 
-		private const string SelectionLineColor  = "SelectionLineColor";
-		private const string SelectionLineWidth  = "SelectionLineWidth";
-		private const string GraySelection       = "GraySelection";
+		private const string SelectionLineColor = "SelectionLineColor";
+		private const string SelectionLineWidth = "SelectionLineWidth";
+		private const string GraySelection      = "GraySelection";
 
-		private const string SpriteShade         = "SpriteShade";
-		private const string Interpolation       = "Interpolation";
+		private const string SpriteShade        = "SpriteShade";
+		private const string Interpolation      = "Interpolation";
 
-		private const string UseMono             = "UseMono";
+		private const string UseMono            = "UseMono";
 
 
 		/// <summary>
@@ -620,7 +618,7 @@ namespace MapView
 //				keySoftware.Close();
 //			}
 
-			var changer = new OptionChangedEvent(OnOptionChange);
+			var changer = new OptionChangedEvent(OnOptionChanged);
 
 			Options.AddOption(
 							Animation,
@@ -635,12 +633,6 @@ namespace MapView
 								+ " Animation is false the doors will show their alternate tile."
 								+ " This setting may need to be re-toggled if Animation changes"
 								+ " (F3 - On/Off)",
-							Global,
-							changer);
-			Options.AddOption(
-							SaveWindowPositions,
-							true, //PathsEditor.SaveRegistry,
-							"If true the window positions and sizes will be saved (disabled, always true)",
 							Global,
 							changer);
 			Options.AddOption(
@@ -750,29 +742,25 @@ namespace MapView
 							desc + Environment.NewLine + "(only if UseMono is false)",
 							Sprites,
 							null, MainViewOverlay);
-
-//			Options.AddOption(
-//							SaveOnExit,
-//							true,
-//							"If true these settings will be saved on program exit", // hint: yes they will be.
-//							Main);
 		}
 
 		/// <summary>
 		/// Handles a MainView Options change by the user.
 		/// </summary>
 		/// <param name="key"></param>
-		/// <param name="value"></param>
-		private void OnOptionChange(
+		/// <param name="val"></param>
+		private void OnOptionChanged(
 				string key,
-				object value)
+				object val)
 		{
-			Options[key].Value = value;
+			//LogFile.WriteLine("XCMainWindow.OnOptionChanged() key= " + key + " val= " + val);
+
+			Options[key].Value = val;
 			switch (key)
 			{
-				case Animation: // NOTE: 'miOn.Checked' and 'miOff.Checked' are used by the F1 and F2 keys to switch animations on/off.
-					miOff.Checked = !(miOn.Checked = (bool)value);
-					MainViewUnderlay.Animate(miOn.Checked);
+				case Animation:										// NOTE: 'miOn.Checked' and 'miOff.Checked' are used by
+					miOff.Checked = !(miOn.Checked = (bool)val);	// the F1 and F2 keys to switch animations on/off.
+					MainViewUnderlay.Animate(miOn.Checked);			// TODO: Make ani's toggle on F2 and use F1 to open the CHM helpfile.
 
 					if (!miOn.Checked) // show the doorsprites closed in TileView and QuadrantPanel.
 					{
@@ -792,7 +780,7 @@ namespace MapView
 					break;
 
 				case Doors: // NOTE: 'miDoors.Checked' is used by the F3 key to toggle door animations.
-					miDoors.Checked = (bool)value;
+					miDoors.Checked = (bool)val;
 
 					if (miOn.Checked)
 					{
@@ -813,54 +801,48 @@ namespace MapView
 					break;
 
 				case AllowBringToFront:
-					BringAllToFront = (bool)value;
+					BringAllToFront = (bool)val;
 					break;
 
 				case UseMono:
-					UseMonoDraw = (bool)value;
+					UseMonoDraw = (bool)val;
 					MainViewOverlay.Refresh();
 					break;
 
-				case SaveWindowPositions:
-//					PathsEditor.SaveRegistry = (bool)value; // TODO: find a place to cache this value.
-					break;
-
 				case ShowGrid: // NOTE: 'miGrid.Checked' is used by the F4 key to toggle the grid on/off.
-					MainViewOverlay.ShowGrid = (miGrid.Checked = (bool)value);
-
-//					MainViewOverlay.ShowGrid = (bool)value;
+					MainViewOverlay.ShowGrid = (miGrid.Checked = (bool)val);
 					break;
 
 				case GridLayerColor:
-					MainViewOverlay.GridLayerColor = (Color)value;
+					MainViewOverlay.GridLayerColor = (Color)val;
 					break;
 
 				case GridLayerOpacity:
-					MainViewOverlay.GridLayerOpacity = (int)value;
+					MainViewOverlay.GridLayerOpacity = (int)val;
 					break;
 
 				case GridLineColor:
-					MainViewOverlay.GridLineColor = (Color)value;
+					MainViewOverlay.GridLineColor = (Color)val;
 					break;
 
 				case GridLineWidth:
-					MainViewOverlay.GridLineWidth = (int)value;
+					MainViewOverlay.GridLineWidth = (int)val;
 					break;
 
 				case Grid10LineColor:
-					MainViewOverlay.Grid10LineColor = (Color)value;
+					MainViewOverlay.Grid10LineColor = (Color)val;
 					break;
 
 				case Grid10LineWidth:
-					MainViewOverlay.Grid10LineWidth = (int)value;
+					MainViewOverlay.Grid10LineWidth = (int)val;
 					break;
 
 				case SpriteShade:
-					MainViewOverlay.SpriteShade = (int)value;
+					MainViewOverlay.SpriteShade = (int)val;
 					break;
 
 				case Interpolation:
-					MainViewOverlay.Interpolation = (int)value;
+					MainViewOverlay.Interpolation = (int)val;
 					break;
 
 				// NOTE: 'GraySelection' is handled. reasons ...
@@ -901,16 +883,13 @@ namespace MapView
 
 			if (Quit)
 			{
-				OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: Save settings when closing the Options form(s).
+				OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
 
-//				if (PathsEditor.SaveRegistry) // TODO: re-implement.
-//				{
-					ViewersManager.CloseViewers();
-					OptionsManager.CloseScreens();
+				ViewersManager.CloseViewers();
+				OptionsManager.CloseScreens();
 
-					RegistryInfo.UpdateRegistry(this);
-					RegistryInfo.FinalizeRegistry();
-//				}
+				RegistryInfo.UpdateRegistry(this);
+				RegistryInfo.FinalizeRegistry();
 
 				// kL_note: This is for storing MainView's location and size in
 				// the Windows Registry:
@@ -1218,7 +1197,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnOnClick(object sender, EventArgs e)
 		{
-			OnOptionChange(Animation, true);
+			OnOptionChanged(Animation, true);
 		}
 
 		/// <summary>
@@ -1228,7 +1207,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnOffClick(object sender, EventArgs e)
 		{
-			OnOptionChange(Animation, false);
+			OnOptionChanged(Animation, false);
 		}
 
 		/// <summary>
@@ -1238,7 +1217,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnToggleDoorsClick(object sender, EventArgs e)
 		{
-			OnOptionChange(Doors, !miDoors.Checked);
+			OnOptionChanged(Doors, !miDoors.Checked);
 		}
 
 		/// <summary>
@@ -1248,7 +1227,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnToggleGridClick(object sender, EventArgs e)
 		{
-			OnOptionChange(ShowGrid, !miGrid.Checked);
+			OnOptionChanged(ShowGrid, !miGrid.Checked);
 		}
 
 
@@ -1917,7 +1896,7 @@ namespace MapView
 		} */
 
 
-		private bool _dontbeep1;
+		private bool _dontbeep1; // aka. "just because you have billions of dollars don't mean you can beep"
 
 		/// <summary>
 		/// Opens the Maptree's contextmenu on keydown event [Enter] via a
