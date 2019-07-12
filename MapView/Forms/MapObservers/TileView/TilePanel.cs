@@ -136,7 +136,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 			ContextMenu = CreateContext();
 
-			MainViewUnderlay.AnimationUpdateEvent += OnAnimationUpdate; // FIX: "Subscription to static events without unsubscription may cause memory leaks."
+			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
 
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint
@@ -210,9 +210,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <summary>
 		/// whee. Handles animations.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnAnimationUpdate(object sender, EventArgs e)
+		private void OnAnimationUpdate()
 		{
 			Invalidate();
 		}

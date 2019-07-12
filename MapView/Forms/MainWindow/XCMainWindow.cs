@@ -291,9 +291,7 @@ namespace MapView
 
 			ViewerFormsManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
-			MainViewUnderlay.AnimationUpdateEvent += OnAnimationUpdate;	// FIX: "Subscription to static events without unsubscription may cause memory leaks."
-																		// NOTE: it's not really a problem, since both publisher and subscriber are expected to
-																		// live the lifetime of the app. And this class, XCMainWindow, never re-instantiates.
+
 			tvMaps.TreeViewNodeSorter = StringComparer.OrdinalIgnoreCase;
 
 			tscPanel.ContentPanel.Controls.Add(MainViewUnderlay);
@@ -622,8 +620,8 @@ namespace MapView
 
 			Options.AddOption(
 							Animation,
-							MainViewUnderlay.IsAnimated,
-							"If true the sprites will animate (F1 - On, F2 - Off)",
+							false, //MainViewUnderlay.IsAnimated
+							"If true the sprites will animate (F2 - On/Off)",
 							Global,
 							changer);
 			Options.AddOption(
@@ -758,11 +756,11 @@ namespace MapView
 			Options[key].Value = val;
 			switch (key)
 			{
-				case Animation:										// NOTE: 'miOn.Checked' and 'miOff.Checked' are used by
-					miOff.Checked = !(miOn.Checked = (bool)val);	// the F1 and F2 keys to switch animations on/off.
-					MainViewUnderlay.Animate(miOn.Checked);			// TODO: Make ani's toggle on F2 and use F1 to open the CHM helpfile.
+				case Animation:
+					miAnimate.Checked = (bool)val;
+					MainViewUnderlay.Animate(miAnimate.Checked);
 
-					if (!miOn.Checked) // show the doorsprites closed in TileView and QuadrantPanel.
+					if (!miAnimate.Checked) // show the doorsprites closed in TileView and QuadrantPanel.
 					{
 						if (miDoors.Checked) // toggle off doors if general animations stop.
 						{
@@ -773,7 +771,7 @@ namespace MapView
 						ViewerFormsManager.TopView     .Control   .QuadrantPanel.Refresh();
 						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Refresh();
 					}
-					else if (miOn.Checked && miDoors.Checked) // doors need to animate if they were already toggled on.
+					else if (miDoors.Checked) // doors need to animate if they were already toggled on.
 						AnimateDoorSprites(true);
 
 					MainViewOverlay.Invalidate();
@@ -782,7 +780,7 @@ namespace MapView
 				case Doors: // NOTE: 'miDoors.Checked' is used by the F3 key to toggle door animations.
 					miDoors.Checked = (bool)val;
 
-					if (miOn.Checked)
+					if (miAnimate.Checked)
 					{
 						AnimateDoorSprites(miDoors.Checked);
 					}
@@ -1184,34 +1182,18 @@ namespace MapView
 		}
 
 
-		private void OnAnimationUpdate(object sender, EventArgs e)
-		{
-			ViewerFormsManager.TopView     .Control   .QuadrantPanel.Refresh();
-			ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Refresh();
-		}
-
 		/// <summary>
-		/// Fired by the F1 key to turn animations On.
+		/// Fired by the F2 key to toggle sprite-phase cycling on/off.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnOnClick(object sender, EventArgs e)
+		private void OnAnimateClick(object sender, EventArgs e)
 		{
-			OnOptionChanged(Animation, true);
+			OnOptionChanged(Animation, !miAnimate.Checked);
 		}
 
 		/// <summary>
-		/// Fired by the F2 key to turn animations Off.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnOffClick(object sender, EventArgs e)
-		{
-			OnOptionChanged(Animation, false);
-		}
-
-		/// <summary>
-		/// Fired by the F3 key to toggle door animations.
+		/// Fired by the F3 key to toggle door states/animations.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

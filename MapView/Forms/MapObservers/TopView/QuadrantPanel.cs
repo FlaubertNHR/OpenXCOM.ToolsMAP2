@@ -47,6 +47,8 @@ namespace MapView.Forms.MapObservers.TopViews
 				   | ControlStyles.AllPaintingInWmPaint
 				   | ControlStyles.UserPaint
 				   | ControlStyles.ResizeRedraw, true);
+
+			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
 		}
 		#endregion cTor
 
@@ -141,6 +143,14 @@ namespace MapView.Forms.MapObservers.TopViews
 			QuadrantDrawService.Draw(graphics, _tile, SelectedQuadrant);
 		}
 		#endregion Events (override)
+
+
+		#region Events
+		private void OnAnimationUpdate()
+		{
+			Invalidate();
+		}
+		#endregion Events
 
 
 		#region Methods

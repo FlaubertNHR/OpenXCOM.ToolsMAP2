@@ -75,7 +75,7 @@ namespace MapView
 			that = this;
 			MainViewOverlay = new MainViewOverlay();
 
-			AnimationUpdateEvent += OnAnimationUpdate;
+			AnimationUpdate += OnAnimationUpdate;
 
 			_scrollBarV.Dock = DockStyle.Right;
 			_scrollBarV.Scroll += OnScrollVert;
@@ -189,7 +189,7 @@ namespace MapView
 			MainViewOverlay.Invalidate();
 		}
 
-		private void OnAnimationUpdate(object sender, EventArgs e)
+		private void OnAnimationUpdate()
 		{
 			MainViewOverlay.Invalidate();
 		}
@@ -448,15 +448,12 @@ namespace MapView
 
 
 		#region Timer stuff for animations (static)
-		internal static event EventHandler AnimationUpdateEvent;
-
+		internal delegate void AnimationEventHandler();
+		internal static AnimationEventHandler AnimationUpdate;	// NOTE: 'AnimationUpdate' uses the delegate directly;
+																// it is not an event per se.
 		private static Timer _timer;
 		private static int _anistep;
 
-		// NOTE: Remove suppression for Release cfg. .. not workie.
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Mobility",
-		"CA1601:DoNotUseTimersThatPreventPowerStateChanges",
-		Justification = "Because animations at or greater than 1 second ain't gonna cut it.")]
 		internal static void Animate(bool animate)
 		{
 			if (animate)
@@ -479,24 +476,14 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Advances to the next sprite-frame and raises AnimationUpdateEvent.
+		/// Advances to the next sprite-frame and raises AnimationUpdate.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private static void AnimateStep(object sender, EventArgs e)
 		{
 			_anistep = ++_anistep % 8;
-
-			if (AnimationUpdateEvent != null)
-				AnimationUpdateEvent(null, EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Checks if the sprites are currently animating.
-		/// </summary>
-		internal static bool IsAnimated
-		{
-			get { return (_timer != null && _timer.Enabled); }
+			AnimationUpdate();
 		}
 
 		/// <summary>

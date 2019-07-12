@@ -71,8 +71,7 @@ namespace MapView
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
 			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.menuAnimation = new System.Windows.Forms.MenuItem();
-			this.miOn = new System.Windows.Forms.MenuItem();
-			this.miOff = new System.Windows.Forms.MenuItem();
+			this.miAnimate = new System.Windows.Forms.MenuItem();
 			this.miDoors = new System.Windows.Forms.MenuItem();
 			this.miGrid = new System.Windows.Forms.MenuItem();
 			this.menuViewers = new System.Windows.Forms.MenuItem();
@@ -270,38 +269,29 @@ namespace MapView
 			// 
 			this.menuAnimation.Index = 2;
 			this.menuAnimation.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miOn,
-			this.miOff,
+			this.miAnimate,
 			this.miDoors,
 			this.miGrid});
 			this.menuAnimation.Text = "menuAnimation";
 			this.menuAnimation.Visible = false;
 			// 
-			// miOn
+			// miAnimate
 			// 
-			this.miOn.Checked = true;
-			this.miOn.Index = 0;
-			this.miOn.Shortcut = System.Windows.Forms.Shortcut.F1;
-			this.miOn.Text = "miOn";
-			this.miOn.Click += new System.EventHandler(this.OnOnClick);
-			// 
-			// miOff
-			// 
-			this.miOff.Index = 1;
-			this.miOff.Shortcut = System.Windows.Forms.Shortcut.F2;
-			this.miOff.Text = "miOff";
-			this.miOff.Click += new System.EventHandler(this.OnOffClick);
+			this.miAnimate.Index = 0;
+			this.miAnimate.Shortcut = System.Windows.Forms.Shortcut.F2;
+			this.miAnimate.Text = "miAnimate";
+			this.miAnimate.Click += new System.EventHandler(this.OnAnimateClick);
 			// 
 			// miDoors
 			// 
-			this.miDoors.Index = 2;
+			this.miDoors.Index = 1;
 			this.miDoors.Shortcut = System.Windows.Forms.Shortcut.F3;
 			this.miDoors.Text = "miDoors";
 			this.miDoors.Click += new System.EventHandler(this.OnToggleDoorsClick);
 			// 
 			// miGrid
 			// 
-			this.miGrid.Index = 3;
+			this.miGrid.Index = 2;
 			this.miGrid.Shortcut = System.Windows.Forms.Shortcut.F4;
 			this.miGrid.Text = "miGrid";
 			this.miGrid.Click += new System.EventHandler(this.OnToggleGridClick);
@@ -499,8 +489,7 @@ namespace MapView
 		private System.Windows.Forms.MenuItem menuHelp;
 
 		private System.Windows.Forms.MenuItem menuAnimation;
-		private System.Windows.Forms.MenuItem miOn;
-		private System.Windows.Forms.MenuItem miOff;
+		private System.Windows.Forms.MenuItem miAnimate;
 		private System.Windows.Forms.MenuItem miDoors;
 		private System.Windows.Forms.MenuItem miGrid; // for lack of a better place to put it.
 
