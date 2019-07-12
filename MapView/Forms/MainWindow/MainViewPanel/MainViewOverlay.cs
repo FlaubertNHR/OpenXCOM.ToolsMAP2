@@ -396,7 +396,7 @@ namespace MapView
 		}
 		internal void OnFill(object sender, EventArgs e)
 		{
-			FillSelectedTiles();
+			FillSelectedQuads();
 		}
 
 
@@ -465,7 +465,7 @@ namespace MapView
 						break;
 
 					case Keys.F:
-						FillSelectedTiles();
+						FillSelectedQuads();
 						break;
 				}
 			}
@@ -474,7 +474,7 @@ namespace MapView
 		/// <summary>
 		/// Clears all tileparts from any currently selected tiles.
 		/// </summary>
-		internal void ClearSelection()
+		private void ClearSelection()
 		{
 			if (MapBase != null && FirstClick)
 			{
@@ -513,7 +513,7 @@ namespace MapView
 		/// <summary>
 		/// Copies any selected tiles to an internal buffer.
 		/// </summary>
-		internal void Copy()
+		private void Copy()
 		{
 			if (MapBase != null && FirstClick)
 			{
@@ -549,7 +549,7 @@ namespace MapView
 		/// the terrainset of the tileset from which parts were copied (or
 		/// nearly so).
 		/// </summary>
-		internal void Paste()
+		private void Paste()
 		{
 			if (MapBase != null && FirstClick && _copied != null)
 			{
@@ -661,10 +661,11 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Fills the correct quadrant of the currently selected tiles with the
-		/// currently selected tilepart from TileView.
+		/// Fills the selected quadrant of the currently selected tile(s) with
+		/// the currently selected tilepart from TileView.
+		/// @note Unlike Paste() this ignores quadtype visibility.
 		/// </summary>
-		internal void FillSelectedTiles()
+		internal void FillSelectedQuads()
 		{
 			if (MapBase != null && FirstClick)
 			{
@@ -689,6 +690,33 @@ namespace MapView
 
 				RefreshViewers();
 			}
+		}
+
+		/// <summary>
+		/// Clears the selected quadrant of the currently selected tile(s).
+		/// @note Unlike ClearSelection() this ignores quadtype visibility.
+		/// </summary>
+		internal void ClearSelectedQuads()
+		{
+			XCMainWindow.that.MapChanged = true;
+
+			var a = GetDragBeg_abs();
+			var b = GetDragEnd_abs();
+
+			var quad = ViewerFormsManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
+
+			MapTile tile;
+			for (int col = a.X; col <= b.X; ++col)
+			for (int row = a.Y; row <= b.Y; ++row)
+			{
+				tile = ((MapTile)MapBase[row, col]);
+				tile[quad] = null;
+				tile.Vacancy();
+			}
+
+			MapBase.CalculateOccultations();
+
+			RefreshViewers();
 		}
 
 		/// <summary>

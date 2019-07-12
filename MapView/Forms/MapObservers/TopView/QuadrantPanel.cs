@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Timers;
 using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
@@ -22,6 +23,15 @@ namespace MapView.Forms.MapObservers.TopViews
 		#region Fields
 		private MapTile _tile;
 		private MapLocation _location;
+
+		/// <summary>
+		/// A timer that delays processing clicks until the user's double-click
+		/// duration has elapsed.
+		/// w/ Thanks to Natxo
+		/// https://stackoverflow.com/questions/2086213/how-can-i-catch-both-single-click-and-double-click-events-on-wpf-frameworkelement/2087517#2087517
+		/// </summary>
+		private readonly System.Timers.Timer _t1;
+		private int _t1Count;
 		#endregion Fields
 
 
@@ -49,6 +59,9 @@ namespace MapView.Forms.MapObservers.TopViews
 				   | ControlStyles.ResizeRedraw, true);
 
 			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
+
+			_t1 = new System.Timers.Timer(SystemInformation.DoubleClickTime);
+			_t1.Elapsed += Elapsed;
 		}
 		#endregion cTor
 
@@ -150,12 +163,25 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			Invalidate();
 		}
+
+		private void Elapsed(object source, ElapsedEventArgs e)
+		{
+			_t1.Stop();
+			switch (_t1Count)
+			{
+				case 1: MainViewOverlay.that.FillSelectedQuads();  break;
+				case 2: MainViewOverlay.that.ClearSelectedQuads(); break;
+			}
+			_t1Count = 0;
+		}
 		#endregion Events
 
 
 		#region Methods
 		/// <summary>
 		/// Handles the details of LMB and RMB wrt the QuadrantPanels.
+		/// TODO: GENERAL - Bypass operations (and the MapChanged flag)
+		///       if user does an operation that results in identical state.
 		/// </summary>
 		/// <param name="btn"></param>
 		/// <param name="clicks"></param>
@@ -168,50 +194,21 @@ namespace MapView.Forms.MapObservers.TopViews
 					case MouseButtons.Left:
 						switch (clicks)
 						{
-							case 1:
-								break;
-
+//							case 1: break;
 							case 2:
-								var tileView = ViewerFormsManager.TileView.Control;
-								tileView.SelectedTilepart = _tile[SelectedQuadrant];
+								ViewerFormsManager.TileView.Control.SelectedTilepart = _tile[SelectedQuadrant];
 								break;
 						}
 						break;
 
 					case MouseButtons.Right:
-					{
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							switch (clicks)
-							{
-								case 1:
-									var tileView = ViewerFormsManager.TileView.Control;
-									_tile[SelectedQuadrant] = tileView.SelectedTilepart;
-									_tile.Vacancy();
-
-									MainViewOverlay.that.Refresh();
-
-									ViewerFormsManager.RouteView   .Control     .Refresh();
-									ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
-									break;
-
-								case 2:
-									// TODO: GENERAL - Bypass operations (and the MapChanged flag)
-									//       if user does an operation that results in identical state.
-									_tile[SelectedQuadrant] = null;
-									_tile.Vacancy();
-									break;
-							}
-
-							XCMainWindow.that.MapChanged = true;
-
-							Refresh();
-
-							ViewerFormsManager.TopView     .Control   .TopPanel.Refresh();
-							ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Refresh();
+							_t1.Stop();
+							++_t1Count;
+							_t1.Start();
 						}
 						break;
-					}
 				}
 			}
 		}
