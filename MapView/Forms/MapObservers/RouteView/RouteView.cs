@@ -26,9 +26,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#region Enumerations
 		private enum ConnectNodesType
 		{
-			None,
-			OneWay,
-			TwoWay
+			None, OneWay, TwoWay
 		}
 		#endregion Enumerations
 
@@ -42,6 +40,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private const string Go = "go";
 
 		internal static RouteNode Dragnode;
+
+		internal static byte _curNoderank;
+		internal static SpawnWeight _curSpawnweight;
 		#endregion Fields (static)
 
 
@@ -107,6 +108,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			set
 			{
 				_nodeSelected = RoutePanelParent.NodeSelected = value;
+
+				if (_nodeSelected != null) // for RoutesInfo ->
+				{
+					_curNoderank    = _nodeSelected.Rank;
+					_curSpawnweight = _nodeSelected.Spawn;
+				}
 			}
 		}
 
@@ -488,6 +495,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					RouteChanged = true;
 					NodeSelected = MapFile.AddRouteNode(args.Location);
+
+					if (RouteView.RoutesInfo != null)
+						RouteView.RoutesInfo.AddNode(NodeSelected);
 				}
 				update = (NodeSelected != null);
 			}
@@ -500,6 +510,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 						RouteChanged = true;
 						node = MapFile.AddRouteNode(args.Location);
 						ConnectNode(node);
+
+						if (RouteView.RoutesInfo != null)
+							RouteView.RoutesInfo.AddNode(node);
 					}
 //					RoutePanel.Refresh(); don't work.
 
@@ -917,6 +930,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 					NodeSelected.Rank = (byte)cbRank.SelectedIndex;
 //					NodeSelected.Rank = (byte)((Pterodactyl)cbRank.SelectedItem).Case; // <- MapView1-type code.
 
+					if (NodeSelected.Spawn != SpawnWeight.None)
+					{
+						RoutesInfo.UpdateNoderank(_curNoderank, NodeSelected.Rank);
+						_curNoderank = NodeSelected.Rank;
+					}
+
 					NodeSelected.OobRank = (byte)0;
 
 					if (Tag as String == "ROUTE")
@@ -924,6 +943,25 @@ namespace MapView.Forms.MapObservers.RouteViews
 					else //if (Tag == "TOPROUTE")
 						ViewerFormsManager.RouteView.Control.cbRank.SelectedIndex = cbRank.SelectedIndex;
 				}
+			}
+		}
+
+		private void OnSpawnWeightSelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!_loadingInfo)
+			{
+				RouteChanged = true;
+				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)cbSpawn.SelectedItem).Case;
+
+				RoutesInfo.ChangedSpawnweight(_curSpawnweight, NodeSelected.Spawn, NodeSelected.Rank);
+				_curSpawnweight = NodeSelected.Spawn;
+
+				if (Tag as String == "ROUTE")
+					ViewerFormsManager.TopRouteView.ControlRoute.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
+				else //if (Tag == "TOPROUTE")
+					ViewerFormsManager.RouteView.Control.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
+
+				RefreshControls(); // update the importance bar
 			}
 		}
 
@@ -938,22 +976,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 					ViewerFormsManager.TopRouteView.ControlRoute.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
 					ViewerFormsManager.RouteView.Control.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
-
-				RefreshControls(); // update the importance bar
-			}
-		}
-
-		private void OnSpawnWeightSelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (!_loadingInfo)
-			{
-				RouteChanged = true;
-				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)cbSpawn.SelectedItem).Case;
-
-				if (Tag as String == "ROUTE")
-					ViewerFormsManager.TopRouteView.ControlRoute.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
-				else //if (Tag == "TOPROUTE")
-					ViewerFormsManager.RouteView.Control.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
 
 				RefreshControls(); // update the importance bar
 			}

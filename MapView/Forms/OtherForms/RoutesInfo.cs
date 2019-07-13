@@ -20,6 +20,27 @@ namespace MapView
 
 		private string _group    = String.Empty;
 		private string _category = String.Empty;
+
+		private int
+			_nodes,
+			_ranks_0,
+			_ranks_1,
+			_ranks_2,
+			_ranks_3,
+			_ranks_4,
+			_ranks_5,
+			_ranks_6,
+			_ranks_7,
+			_ranks_8,
+			_ranks_0_cat,
+			_ranks_1_cat,
+			_ranks_2_cat,
+			_ranks_3_cat,
+			_ranks_4_cat,
+			_ranks_5_cat,
+			_ranks_6_cat,
+			_ranks_7_cat,
+			_ranks_8_cat;
 		#endregion Fields
 
 
@@ -40,6 +61,16 @@ namespace MapView
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			base.OnFormClosing(e);
+			RouteView.RoutesInfo = null;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		protected override CreateParams CreateParams
 		{
 			get
@@ -48,16 +79,6 @@ namespace MapView
 				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
 				return cp;
 			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnFormClosing(FormClosingEventArgs e)
-		{
-			base.OnFormClosing(e);
-			RouteView.RoutesInfo = null;
 		}
 		#endregion Events (override)
 
@@ -102,68 +123,79 @@ namespace MapView
 			lbl_tsRanks7.Text = pters[7].ToString();
 			lbl_tsRanks8.Text = pters[8].ToString();
 
-			int nodes = InitRanks();
+			InitRanks();
 			InitRanksCategory();
 
 			lbl_Label        .Text = _file.Descriptor.Label;
-			lbl_NodesQuantity.Text = nodes.ToString();
+			lbl_NodesQuantity.Text = _nodes.ToString();
 			lbl_Group        .Text = _group;
 			lbl_Category     .Text = _category;
 
 			thisLayout();
 		}
 
+		private void ResetTallies()
+		{
+			_nodes       =
+			_ranks_0     =
+			_ranks_1     =
+			_ranks_2     =
+			_ranks_3     =
+			_ranks_4     =
+			_ranks_5     =
+			_ranks_6     =
+			_ranks_7     =
+			_ranks_8     =
+			_ranks_0_cat =
+			_ranks_1_cat =
+			_ranks_2_cat =
+			_ranks_3_cat =
+			_ranks_4_cat =
+			_ranks_5_cat =
+			_ranks_6_cat =
+			_ranks_7_cat =
+			_ranks_8_cat = 0;
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		private int InitRanks()
+		private void InitRanks()
 		{
-			int nodes = 0;
-
-			int ranks_0 = 0;
-			int ranks_1 = 0;
-			int ranks_2 = 0;
-			int ranks_3 = 0;
-			int ranks_4 = 0;
-			int ranks_5 = 0;
-			int ranks_6 = 0;
-			int ranks_7 = 0;
-			int ranks_8 = 0;
+			ResetTallies();
 
 			var routes = _file.Routes;
 			foreach (RouteNode node in routes)
 			{
 				if (node.Spawn != SpawnWeight.None)
 				{
-					++nodes;
+					++_nodes;
 
 					switch (node.Rank)
 					{
-						case 0: ++ranks_0; break;
-						case 1: ++ranks_1; break;
-						case 2: ++ranks_2; break;
-						case 3: ++ranks_3; break;
-						case 4: ++ranks_4; break;
-						case 5: ++ranks_5; break;
-						case 6: ++ranks_6; break;
-						case 7: ++ranks_7; break;
-						case 8: ++ranks_8; break;
+						case 0: ++_ranks_0; break;
+						case 1: ++_ranks_1; break;
+						case 2: ++_ranks_2; break;
+						case 3: ++_ranks_3; break;
+						case 4: ++_ranks_4; break;
+						case 5: ++_ranks_5; break;
+						case 6: ++_ranks_6; break;
+						case 7: ++_ranks_7; break;
+						case 8: ++_ranks_8; break;
 					}
 				}
 			}
 
-			lbl_tsRanks0_out.Text = ranks_0.ToString();
-			lbl_tsRanks1_out.Text = ranks_1.ToString();
-			lbl_tsRanks2_out.Text = ranks_2.ToString();
-			lbl_tsRanks3_out.Text = ranks_3.ToString();
-			lbl_tsRanks4_out.Text = ranks_4.ToString();
-			lbl_tsRanks5_out.Text = ranks_5.ToString();
-			lbl_tsRanks6_out.Text = ranks_6.ToString();
-			lbl_tsRanks7_out.Text = ranks_7.ToString();
-			lbl_tsRanks8_out.Text = ranks_8.ToString();
-
-			return nodes;
+			lbl_tsRanks0_out.Text = _ranks_0.ToString();
+			lbl_tsRanks1_out.Text = _ranks_1.ToString();
+			lbl_tsRanks2_out.Text = _ranks_2.ToString();
+			lbl_tsRanks3_out.Text = _ranks_3.ToString();
+			lbl_tsRanks4_out.Text = _ranks_4.ToString();
+			lbl_tsRanks5_out.Text = _ranks_5.ToString();
+			lbl_tsRanks6_out.Text = _ranks_6.ToString();
+			lbl_tsRanks7_out.Text = _ranks_7.ToString();
+			lbl_tsRanks8_out.Text = _ranks_8.ToString();
 		}
 
 		/// <summary>
@@ -174,16 +206,6 @@ namespace MapView
 			KeyValuePair<string, Dictionary<string, Descriptor>> cat = getCategory();
 			if (!cat.Equals(new KeyValuePair<string, Dictionary<string, Descriptor>>()))
 			{
-				int ranks_0 = 0;
-				int ranks_1 = 0;
-				int ranks_2 = 0;
-				int ranks_3 = 0;
-				int ranks_4 = 0;
-				int ranks_5 = 0;
-				int ranks_6 = 0;
-				int ranks_7 = 0;
-				int ranks_8 = 0;
-
 				RouteNodeCollection routes;
 				foreach (var descriptor in cat.Value)
 				{
@@ -200,29 +222,29 @@ namespace MapView
 						{
 							switch (node.Rank)
 							{
-								case 0: ++ranks_0; break;
-								case 1: ++ranks_1; break;
-								case 2: ++ranks_2; break;
-								case 3: ++ranks_3; break;
-								case 4: ++ranks_4; break;
-								case 5: ++ranks_5; break;
-								case 6: ++ranks_6; break;
-								case 7: ++ranks_7; break;
-								case 8: ++ranks_8; break;
+								case 0: ++_ranks_0_cat; break;
+								case 1: ++_ranks_1_cat; break;
+								case 2: ++_ranks_2_cat; break;
+								case 3: ++_ranks_3_cat; break;
+								case 4: ++_ranks_4_cat; break;
+								case 5: ++_ranks_5_cat; break;
+								case 6: ++_ranks_6_cat; break;
+								case 7: ++_ranks_7_cat; break;
+								case 8: ++_ranks_8_cat; break;
 							}
 						}
 					}
 				}
 
-				lbl_tsRanks0_outcat.Text = ranks_0.ToString();
-				lbl_tsRanks1_outcat.Text = ranks_1.ToString();
-				lbl_tsRanks2_outcat.Text = ranks_2.ToString();
-				lbl_tsRanks3_outcat.Text = ranks_3.ToString();
-				lbl_tsRanks4_outcat.Text = ranks_4.ToString();
-				lbl_tsRanks5_outcat.Text = ranks_5.ToString();
-				lbl_tsRanks6_outcat.Text = ranks_6.ToString();
-				lbl_tsRanks7_outcat.Text = ranks_7.ToString();
-				lbl_tsRanks8_outcat.Text = ranks_8.ToString();
+				lbl_tsRanks0_outcat.Text = _ranks_0_cat.ToString();
+				lbl_tsRanks1_outcat.Text = _ranks_1_cat.ToString();
+				lbl_tsRanks2_outcat.Text = _ranks_2_cat.ToString();
+				lbl_tsRanks3_outcat.Text = _ranks_3_cat.ToString();
+				lbl_tsRanks4_outcat.Text = _ranks_4_cat.ToString();
+				lbl_tsRanks5_outcat.Text = _ranks_5_cat.ToString();
+				lbl_tsRanks6_outcat.Text = _ranks_6_cat.ToString();
+				lbl_tsRanks7_outcat.Text = _ranks_7_cat.ToString();
+				lbl_tsRanks8_outcat.Text = _ranks_8_cat.ToString();
 			}
 		}
 
@@ -306,6 +328,131 @@ namespace MapView
 			MinimumSize = new Size(
 								ClientSize.Width  + border,
 								ClientSize.Height + border + titlebar);
+		}
+
+
+		/// <summary>
+		/// Tallies a node on its creation in RouteView.
+		/// </summary>
+		/// <param name="node"></param>
+		internal void AddNode(RouteNode node)
+		{
+			if (node.Spawn != SpawnWeight.None)
+			{
+				lbl_NodesQuantity.Text = (++_nodes).ToString();
+				UpdateNoderank(Byte.MaxValue, node.Rank);
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="weightPre"></param>
+		/// <param name="weightPos"></param>
+		/// <param name="rank"></param>
+		internal void ChangedSpawnweight(SpawnWeight weightPre, SpawnWeight weightPos, byte rank)
+		{
+			if (weightPre == SpawnWeight.None)
+			{
+				if (weightPos != SpawnWeight.None)
+				{
+					lbl_NodesQuantity.Text = (++_nodes).ToString();
+					UpdateNoderank(Byte.MaxValue, rank);
+				}
+			}
+			else if (weightPos == SpawnWeight.None)
+			{
+				lbl_NodesQuantity.Text = (--_nodes).ToString();
+				UpdateNoderank(rank, Byte.MaxValue);
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="rankPre"></param>
+		/// <param name="rankPos"></param>
+		internal void UpdateNoderank(byte rankPre, byte rankPos)
+		{
+			switch (rankPre)
+			{
+				case 0:
+					lbl_tsRanks0_out   .Text = (--_ranks_0)    .ToString();
+					lbl_tsRanks0_outcat.Text = (--_ranks_0_cat).ToString();
+					break;
+				case 1:
+					lbl_tsRanks1_out   .Text = (--_ranks_1)    .ToString();
+					lbl_tsRanks1_outcat.Text = (--_ranks_1_cat).ToString();
+					break;
+				case 2:
+					lbl_tsRanks2_out   .Text = (--_ranks_2)    .ToString();
+					lbl_tsRanks2_outcat.Text = (--_ranks_2_cat).ToString();
+					break;
+				case 3:
+					lbl_tsRanks3_out   .Text = (--_ranks_3)    .ToString();
+					lbl_tsRanks3_outcat.Text = (--_ranks_3_cat).ToString();
+					break;
+				case 4:
+					lbl_tsRanks4_out   .Text = (--_ranks_4)    .ToString();
+					lbl_tsRanks4_outcat.Text = (--_ranks_4_cat).ToString();
+					break;
+				case 5:
+					lbl_tsRanks5_out   .Text = (--_ranks_5)    .ToString();
+					lbl_tsRanks5_outcat.Text = (--_ranks_5_cat).ToString();
+					break;
+				case 6:
+					lbl_tsRanks6_out   .Text = (--_ranks_6)    .ToString();
+					lbl_tsRanks6_outcat.Text = (--_ranks_6_cat).ToString();
+					break;
+				case 7:
+					lbl_tsRanks7_out   .Text = (--_ranks_7)    .ToString();
+					lbl_tsRanks7_outcat.Text = (--_ranks_7_cat).ToString();
+					break;
+				case 8:
+					lbl_tsRanks8_out   .Text = (--_ranks_8)    .ToString();
+					lbl_tsRanks8_outcat.Text = (--_ranks_8_cat).ToString();
+					break;
+			}
+
+			switch (rankPos)
+			{
+				case 0:
+					lbl_tsRanks0_out   .Text = (++_ranks_0)    .ToString();
+					lbl_tsRanks0_outcat.Text = (++_ranks_0_cat).ToString();
+					break;
+				case 1:
+					lbl_tsRanks1_out   .Text = (++_ranks_1)    .ToString();
+					lbl_tsRanks1_outcat.Text = (++_ranks_1_cat).ToString();
+					break;
+				case 2:
+					lbl_tsRanks2_out   .Text = (++_ranks_2)    .ToString();
+					lbl_tsRanks2_outcat.Text = (++_ranks_2_cat).ToString();
+					break;
+				case 3:
+					lbl_tsRanks3_out   .Text = (++_ranks_3)    .ToString();
+					lbl_tsRanks3_outcat.Text = (++_ranks_3_cat).ToString();
+					break;
+				case 4:
+					lbl_tsRanks4_out   .Text = (++_ranks_4)    .ToString();
+					lbl_tsRanks4_outcat.Text = (++_ranks_4_cat).ToString();
+					break;
+				case 5:
+					lbl_tsRanks5_out   .Text = (++_ranks_5)    .ToString();
+					lbl_tsRanks5_outcat.Text = (++_ranks_5_cat).ToString();
+					break;
+				case 6:
+					lbl_tsRanks6_out   .Text = (++_ranks_6)    .ToString();
+					lbl_tsRanks6_outcat.Text = (++_ranks_6_cat).ToString();
+					break;
+				case 7:
+					lbl_tsRanks7_out   .Text = (++_ranks_7)    .ToString();
+					lbl_tsRanks7_outcat.Text = (++_ranks_7_cat).ToString();
+					break;
+				case 8:
+					lbl_tsRanks8_out   .Text = (++_ranks_8)    .ToString();
+					lbl_tsRanks8_outcat.Text = (++_ranks_8_cat).ToString();
+					break;
+			}
 		}
 		#endregion Methods
 	}
