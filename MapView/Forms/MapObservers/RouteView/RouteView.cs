@@ -1705,6 +1705,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 						UpdateNodeGroups(); // not sure is necessary ...
 						RefreshPanels();
+
+						if (RouteView.RoutesInfo != null)
+							RouteView.RoutesInfo.Initialize(MapFile);
 					}
 				}
 			}

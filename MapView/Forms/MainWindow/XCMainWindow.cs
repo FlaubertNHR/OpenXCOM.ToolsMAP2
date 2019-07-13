@@ -14,6 +14,7 @@ using DSShared;
 using DSShared.Windows;
 
 using MapView.Forms.MainWindow;
+using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TopViews;
 
 using XCom;
@@ -2697,7 +2698,7 @@ namespace MapView
 					tsslPosition     .Text =
 					tsslSelectionSize.Text = String.Empty;
 
-					MapChanged = ((MapFile)@base).IsLoadChanged; // don't bother to reset IsLoadChanged.
+					MapChanged = (@base as MapFile).IsLoadChanged; // don't bother to reset IsLoadChanged.
 
 					ViewerFormsManager.RouteView   .Control     .ClearSelectedInfo();
 					ViewerFormsManager.TopRouteView.ControlRoute.ClearSelectedInfo();
@@ -2737,6 +2738,9 @@ namespace MapView
 						else
 							tileview.McdInfobox.UpdateData();
 					}
+
+					if (RouteView.RoutesInfo != null)
+						RouteView.RoutesInfo.Initialize(@base as MapFile);
 
 					Inited = false;
 					Activate();

@@ -31,10 +31,7 @@ namespace MapView
 		internal RoutesInfo(MapFile file)
 		{
 			InitializeComponent();
-
-			_file = file;
-
-			Initialize();
+			Initialize(file);
 		}
 		#endregion cTor
 
@@ -84,8 +81,11 @@ namespace MapView
 		/// <summary>
 		/// 
 		/// </summary>
-		private void Initialize()
+		/// <param name="file"></param>
+		internal void Initialize(MapFile file)
 		{
+			_file = file;
+
 			object[] pters;
 			if (_file.Descriptor.Pal == Palette.TftdBattle)
 				pters = RouteNodeCollection.NodeRankTftd;
@@ -184,10 +184,16 @@ namespace MapView
 				int ranks_7 = 0;
 				int ranks_8 = 0;
 
+				RouteNodeCollection routes;
 				foreach (var descriptor in cat.Value)
 				{
 					Descriptor tileset = descriptor.Value;
-					var routes = new RouteNodeCollection(tileset.Label, tileset.Basepath);
+
+					if (tileset == _file.Descriptor)
+						routes = _file.Routes; // -> not only convenient, is req'd when importing Routes
+					else
+						routes = new RouteNodeCollection(tileset.Label, tileset.Basepath);
+
 					foreach (RouteNode node in routes)
 					{
 						if (node.Spawn != SpawnWeight.None)
