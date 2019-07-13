@@ -22,7 +22,7 @@ namespace MapView
 		:
 			Form
 	{
-		#region Enumerators
+		#region Enumerations
 		/// <summary>
 		/// The possible dialog-types.
 		/// </summary>
@@ -41,7 +41,7 @@ namespace MapView
 			MapExists,
 			MapCreate
 		}
-		#endregion Enumerators
+		#endregion Enumerations
 
 
 		#region Fields (static)

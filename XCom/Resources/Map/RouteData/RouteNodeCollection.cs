@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace XCom
 {
-	#region Enumerators
+	#region Enumerations
 	// NOTE: Only 'NodeRankUfo' and 'NodeRankTftd' need to be enumerated as
 	// byte-type. Otherwise the Pterodactyl class goes snakey when
 	// RouteView.OnNodeRankSelectedIndexChanged() fires. For reasons, it cannot
@@ -119,7 +119,7 @@ namespace XCom
 		ExitSouth = 0xFC,
 		ExitWest  = 0xFB
 	};
-	#endregion Enumerators
+	#endregion Enumerations
 
 
 	/// <summary>

@@ -23,14 +23,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		:
 			MapObserverControl // UserControl, IMapObserver
 	{
-		#region Enumerators
+		#region Enumerations
 		private enum ConnectNodesType
 		{
 			None,
 			OneWay,
 			TwoWay
 		}
-		#endregion Enumerators
+		#endregion Enumerations
 
 
 		#region Fields (static)
@@ -46,7 +46,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Fields
-		private Panel _pnlRoutes; // NOTE: needs to be here for MapObserver stuff.
+		private Panel _pnlRoutes; // NOTE: needs to be here for MapObserver vs Designer stuff.
 
 		private readonly List<object> _linksList = new List<object>();
 

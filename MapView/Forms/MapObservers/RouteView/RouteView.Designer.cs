@@ -2,6 +2,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 {
 	partial class RouteView
 	{
+		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -19,7 +20,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -64,6 +64,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.lblSelected = new System.Windows.Forms.Label();
 			this.lblOver = new System.Windows.Forms.Label();
 			this.gbLinkData = new System.Windows.Forms.GroupBox();
+			this.labelDest = new System.Windows.Forms.Label();
 			this.labelUnitInfo = new System.Windows.Forms.Label();
 			this.labelDist = new System.Windows.Forms.Label();
 			this.labelLink1 = new System.Windows.Forms.Label();
@@ -305,6 +306,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this._pnlRoutes.Dock = System.Windows.Forms.DockStyle.Fill;
 			this._pnlRoutes.Location = new System.Drawing.Point(0, 25);
+			this._pnlRoutes.Margin = new System.Windows.Forms.Padding(0);
 			this._pnlRoutes.Name = "_pnlRoutes";
 			this._pnlRoutes.Size = new System.Drawing.Size(640, 250);
 			this._pnlRoutes.TabIndex = 1;
@@ -319,6 +321,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.pnlDataFields.Controls.Add(this.btnTallyho);
 			this.pnlDataFields.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.pnlDataFields.Location = new System.Drawing.Point(0, 275);
+			this.pnlDataFields.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlDataFields.Name = "pnlDataFields";
 			this.pnlDataFields.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
 			this.pnlDataFields.Size = new System.Drawing.Size(640, 205);
@@ -330,8 +333,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.pnlDataFieldsLeft.Controls.Add(this.gbTileData);
 			this.pnlDataFieldsLeft.Dock = System.Windows.Forms.DockStyle.Left;
 			this.pnlDataFieldsLeft.Location = new System.Drawing.Point(0, 3);
+			this.pnlDataFieldsLeft.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlDataFieldsLeft.Name = "pnlDataFieldsLeft";
-			this.pnlDataFieldsLeft.Size = new System.Drawing.Size(265, 202);
+			this.pnlDataFieldsLeft.Size = new System.Drawing.Size(255, 202);
 			this.pnlDataFieldsLeft.TabIndex = 0;
 			// 
 			// gbNodeData
@@ -348,15 +352,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.gbNodeData.Controls.Add(this.cbAttack);
 			this.gbNodeData.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gbNodeData.Location = new System.Drawing.Point(0, 50);
+			this.gbNodeData.Margin = new System.Windows.Forms.Padding(0);
 			this.gbNodeData.Name = "gbNodeData";
-			this.gbNodeData.Size = new System.Drawing.Size(265, 152);
+			this.gbNodeData.Size = new System.Drawing.Size(255, 152);
 			this.gbNodeData.TabIndex = 1;
 			this.gbNodeData.TabStop = false;
 			this.gbNodeData.Text = "Node data";
 			// 
 			// labelUnitType
 			// 
-			this.labelUnitType.Location = new System.Drawing.Point(10, 25);
+			this.labelUnitType.Location = new System.Drawing.Point(10, 20);
+			this.labelUnitType.Margin = new System.Windows.Forms.Padding(0);
 			this.labelUnitType.Name = "labelUnitType";
 			this.labelUnitType.Size = new System.Drawing.Size(85, 15);
 			this.labelUnitType.TabIndex = 0;
@@ -366,7 +372,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// labelSpawnRank
 			// 
-			this.labelSpawnRank.Location = new System.Drawing.Point(10, 50);
+			this.labelSpawnRank.Location = new System.Drawing.Point(10, 45);
+			this.labelSpawnRank.Margin = new System.Windows.Forms.Padding(0);
 			this.labelSpawnRank.Name = "labelSpawnRank";
 			this.labelSpawnRank.Size = new System.Drawing.Size(85, 15);
 			this.labelSpawnRank.TabIndex = 2;
@@ -377,7 +384,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// labelSpawnWeight
 			// 
-			this.labelSpawnWeight.Location = new System.Drawing.Point(10, 75);
+			this.labelSpawnWeight.Location = new System.Drawing.Point(10, 70);
+			this.labelSpawnWeight.Margin = new System.Windows.Forms.Padding(0);
 			this.labelSpawnWeight.Name = "labelSpawnWeight";
 			this.labelSpawnWeight.Size = new System.Drawing.Size(85, 15);
 			this.labelSpawnWeight.TabIndex = 4;
@@ -387,7 +395,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// labelPriority
 			// 
-			this.labelPriority.Location = new System.Drawing.Point(10, 100);
+			this.labelPriority.Location = new System.Drawing.Point(10, 95);
+			this.labelPriority.Margin = new System.Windows.Forms.Padding(0);
 			this.labelPriority.Name = "labelPriority";
 			this.labelPriority.Size = new System.Drawing.Size(85, 15);
 			this.labelPriority.TabIndex = 6;
@@ -397,7 +406,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// labelAttack
 			// 
-			this.labelAttack.Location = new System.Drawing.Point(10, 125);
+			this.labelAttack.Location = new System.Drawing.Point(10, 120);
+			this.labelAttack.Margin = new System.Windows.Forms.Padding(0);
 			this.labelAttack.Name = "labelAttack";
 			this.labelAttack.Size = new System.Drawing.Size(85, 15);
 			this.labelAttack.TabIndex = 8;
@@ -408,7 +418,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// cbType
 			// 
 			this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbType.Location = new System.Drawing.Point(105, 20);
+			this.cbType.Location = new System.Drawing.Point(100, 15);
+			this.cbType.Margin = new System.Windows.Forms.Padding(0);
 			this.cbType.Name = "cbType";
 			this.cbType.Size = new System.Drawing.Size(145, 20);
 			this.cbType.TabIndex = 1;
@@ -418,7 +429,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// cbRank
 			// 
 			this.cbRank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbRank.Location = new System.Drawing.Point(105, 45);
+			this.cbRank.Location = new System.Drawing.Point(100, 40);
+			this.cbRank.Margin = new System.Windows.Forms.Padding(0);
 			this.cbRank.Name = "cbRank";
 			this.cbRank.Size = new System.Drawing.Size(145, 20);
 			this.cbRank.TabIndex = 3;
@@ -429,7 +441,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// cbSpawn
 			// 
 			this.cbSpawn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbSpawn.Location = new System.Drawing.Point(105, 70);
+			this.cbSpawn.Location = new System.Drawing.Point(100, 65);
+			this.cbSpawn.Margin = new System.Windows.Forms.Padding(0);
 			this.cbSpawn.Name = "cbSpawn";
 			this.cbSpawn.Size = new System.Drawing.Size(145, 20);
 			this.cbSpawn.TabIndex = 5;
@@ -439,7 +452,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// cbPatrol
 			// 
 			this.cbPatrol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbPatrol.Location = new System.Drawing.Point(105, 95);
+			this.cbPatrol.Location = new System.Drawing.Point(100, 90);
+			this.cbPatrol.Margin = new System.Windows.Forms.Padding(0);
 			this.cbPatrol.Name = "cbPatrol";
 			this.cbPatrol.Size = new System.Drawing.Size(145, 20);
 			this.cbPatrol.TabIndex = 7;
@@ -449,7 +463,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// cbAttack
 			// 
 			this.cbAttack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbAttack.Location = new System.Drawing.Point(105, 120);
+			this.cbAttack.Location = new System.Drawing.Point(100, 115);
+			this.cbAttack.Margin = new System.Windows.Forms.Padding(0);
 			this.cbAttack.Name = "cbAttack";
 			this.cbAttack.Size = new System.Drawing.Size(145, 20);
 			this.cbAttack.TabIndex = 9;
@@ -462,8 +477,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.gbTileData.Controls.Add(this.lblOver);
 			this.gbTileData.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbTileData.Location = new System.Drawing.Point(0, 0);
+			this.gbTileData.Margin = new System.Windows.Forms.Padding(0);
 			this.gbTileData.Name = "gbTileData";
-			this.gbTileData.Size = new System.Drawing.Size(265, 50);
+			this.gbTileData.Size = new System.Drawing.Size(255, 50);
 			this.gbTileData.TabIndex = 0;
 			this.gbTileData.TabStop = false;
 			this.gbTileData.Text = "Tile data";
@@ -472,7 +488,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.lblSelected.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblSelected.ForeColor = System.Drawing.Color.Orchid;
-			this.lblSelected.Location = new System.Drawing.Point(30, 15);
+			this.lblSelected.Location = new System.Drawing.Point(25, 15);
+			this.lblSelected.Margin = new System.Windows.Forms.Padding(0);
 			this.lblSelected.Name = "lblSelected";
 			this.lblSelected.Size = new System.Drawing.Size(110, 30);
 			this.lblSelected.TabIndex = 0;
@@ -482,7 +499,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.lblOver.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblOver.ForeColor = System.Drawing.Color.Sienna;
-			this.lblOver.Location = new System.Drawing.Point(145, 15);
+			this.lblOver.Location = new System.Drawing.Point(140, 15);
+			this.lblOver.Margin = new System.Windows.Forms.Padding(0);
 			this.lblOver.Name = "lblOver";
 			this.lblOver.Size = new System.Drawing.Size(110, 30);
 			this.lblOver.TabIndex = 1;
@@ -490,6 +508,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// gbLinkData
 			// 
+			this.gbLinkData.Controls.Add(this.labelDest);
 			this.gbLinkData.Controls.Add(this.labelUnitInfo);
 			this.gbLinkData.Controls.Add(this.labelDist);
 			this.gbLinkData.Controls.Add(this.labelLink1);
@@ -517,37 +536,50 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.gbLinkData.Controls.Add(this.btnGoLink3);
 			this.gbLinkData.Controls.Add(this.btnGoLink4);
 			this.gbLinkData.Controls.Add(this.btnGoLink5);
-			this.gbLinkData.Location = new System.Drawing.Point(265, 3);
+			this.gbLinkData.Location = new System.Drawing.Point(255, 3);
+			this.gbLinkData.Margin = new System.Windows.Forms.Padding(0);
 			this.gbLinkData.Name = "gbLinkData";
-			this.gbLinkData.Size = new System.Drawing.Size(320, 150);
+			this.gbLinkData.Size = new System.Drawing.Size(295, 150);
 			this.gbLinkData.TabIndex = 1;
 			this.gbLinkData.TabStop = false;
 			this.gbLinkData.Text = "Link data";
 			// 
+			// labelDest
+			// 
+			this.labelDest.Location = new System.Drawing.Point(85, 10);
+			this.labelDest.Margin = new System.Windows.Forms.Padding(0);
+			this.labelDest.Name = "labelDest";
+			this.labelDest.Size = new System.Drawing.Size(30, 15);
+			this.labelDest.TabIndex = 0;
+			this.labelDest.Text = "Dest";
+			// 
 			// labelUnitInfo
 			// 
-			this.labelUnitInfo.Location = new System.Drawing.Point(125, 10);
+			this.labelUnitInfo.Location = new System.Drawing.Point(175, 10);
+			this.labelUnitInfo.Margin = new System.Windows.Forms.Padding(0);
 			this.labelUnitInfo.Name = "labelUnitInfo";
 			this.labelUnitInfo.Size = new System.Drawing.Size(30, 15);
-			this.labelUnitInfo.TabIndex = 0;
+			this.labelUnitInfo.TabIndex = 1;
 			this.labelUnitInfo.Text = "Unit Type";
 			this.toolTip1.SetToolTip(this.labelUnitInfo, "not used in 0penXcom");
 			// 
 			// labelDist
 			// 
-			this.labelDist.Location = new System.Drawing.Point(230, 10);
+			this.labelDist.Location = new System.Drawing.Point(225, 10);
+			this.labelDist.Margin = new System.Windows.Forms.Padding(0);
 			this.labelDist.Name = "labelDist";
 			this.labelDist.Size = new System.Drawing.Size(30, 15);
-			this.labelDist.TabIndex = 1;
+			this.labelDist.TabIndex = 2;
 			this.labelDist.Text = "Dist";
 			this.toolTip1.SetToolTip(this.labelDist, "not used in 0penXcom");
 			// 
 			// labelLink1
 			// 
 			this.labelLink1.Location = new System.Drawing.Point(5, 30);
+			this.labelLink1.Margin = new System.Windows.Forms.Padding(0);
 			this.labelLink1.Name = "labelLink1";
 			this.labelLink1.Size = new System.Drawing.Size(35, 15);
-			this.labelLink1.TabIndex = 2;
+			this.labelLink1.TabIndex = 3;
 			this.labelLink1.Tag = "L1";
 			this.labelLink1.Text = "Link1";
 			this.labelLink1.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -556,9 +588,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// labelLink2
 			// 
 			this.labelLink2.Location = new System.Drawing.Point(5, 55);
+			this.labelLink2.Margin = new System.Windows.Forms.Padding(0);
 			this.labelLink2.Name = "labelLink2";
 			this.labelLink2.Size = new System.Drawing.Size(35, 15);
-			this.labelLink2.TabIndex = 7;
+			this.labelLink2.TabIndex = 8;
 			this.labelLink2.Tag = "L2";
 			this.labelLink2.Text = "Link2";
 			this.labelLink2.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -567,9 +600,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// labelLink3
 			// 
 			this.labelLink3.Location = new System.Drawing.Point(5, 80);
+			this.labelLink3.Margin = new System.Windows.Forms.Padding(0);
 			this.labelLink3.Name = "labelLink3";
 			this.labelLink3.Size = new System.Drawing.Size(35, 15);
-			this.labelLink3.TabIndex = 12;
+			this.labelLink3.TabIndex = 13;
 			this.labelLink3.Tag = "L3";
 			this.labelLink3.Text = "Link3";
 			this.labelLink3.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -578,9 +612,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// labelLink4
 			// 
 			this.labelLink4.Location = new System.Drawing.Point(5, 105);
+			this.labelLink4.Margin = new System.Windows.Forms.Padding(0);
 			this.labelLink4.Name = "labelLink4";
 			this.labelLink4.Size = new System.Drawing.Size(35, 15);
-			this.labelLink4.TabIndex = 17;
+			this.labelLink4.TabIndex = 18;
 			this.labelLink4.Tag = "L4";
 			this.labelLink4.Text = "Link4";
 			this.labelLink4.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -589,9 +624,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// labelLink5
 			// 
 			this.labelLink5.Location = new System.Drawing.Point(5, 130);
+			this.labelLink5.Margin = new System.Windows.Forms.Padding(0);
 			this.labelLink5.Name = "labelLink5";
 			this.labelLink5.Size = new System.Drawing.Size(35, 15);
-			this.labelLink5.TabIndex = 22;
+			this.labelLink5.TabIndex = 23;
 			this.labelLink5.Tag = "L5";
 			this.labelLink5.Text = "Link5";
 			this.labelLink5.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -599,11 +635,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// tbLink1Dist
 			// 
-			this.tbLink1Dist.Location = new System.Drawing.Point(230, 25);
+			this.tbLink1Dist.Location = new System.Drawing.Point(215, 25);
+			this.tbLink1Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.tbLink1Dist.Name = "tbLink1Dist";
 			this.tbLink1Dist.ReadOnly = true;
-			this.tbLink1Dist.Size = new System.Drawing.Size(50, 19);
-			this.tbLink1Dist.TabIndex = 5;
+			this.tbLink1Dist.Size = new System.Drawing.Size(40, 19);
+			this.tbLink1Dist.TabIndex = 6;
 			this.tbLink1Dist.Tag = "L1";
 			this.tbLink1Dist.WordWrap = false;
 			this.tbLink1Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -611,11 +648,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// tbLink2Dist
 			// 
-			this.tbLink2Dist.Location = new System.Drawing.Point(230, 50);
+			this.tbLink2Dist.Location = new System.Drawing.Point(215, 50);
+			this.tbLink2Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.tbLink2Dist.Name = "tbLink2Dist";
 			this.tbLink2Dist.ReadOnly = true;
-			this.tbLink2Dist.Size = new System.Drawing.Size(50, 19);
-			this.tbLink2Dist.TabIndex = 10;
+			this.tbLink2Dist.Size = new System.Drawing.Size(40, 19);
+			this.tbLink2Dist.TabIndex = 11;
 			this.tbLink2Dist.Tag = "L2";
 			this.tbLink2Dist.WordWrap = false;
 			this.tbLink2Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -623,11 +661,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// tbLink3Dist
 			// 
-			this.tbLink3Dist.Location = new System.Drawing.Point(230, 75);
+			this.tbLink3Dist.Location = new System.Drawing.Point(215, 75);
+			this.tbLink3Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.tbLink3Dist.Name = "tbLink3Dist";
 			this.tbLink3Dist.ReadOnly = true;
-			this.tbLink3Dist.Size = new System.Drawing.Size(50, 19);
-			this.tbLink3Dist.TabIndex = 15;
+			this.tbLink3Dist.Size = new System.Drawing.Size(40, 19);
+			this.tbLink3Dist.TabIndex = 16;
 			this.tbLink3Dist.Tag = "L3";
 			this.tbLink3Dist.WordWrap = false;
 			this.tbLink3Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -635,11 +674,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// tbLink4Dist
 			// 
-			this.tbLink4Dist.Location = new System.Drawing.Point(230, 100);
+			this.tbLink4Dist.Location = new System.Drawing.Point(215, 100);
+			this.tbLink4Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.tbLink4Dist.Name = "tbLink4Dist";
 			this.tbLink4Dist.ReadOnly = true;
-			this.tbLink4Dist.Size = new System.Drawing.Size(50, 19);
-			this.tbLink4Dist.TabIndex = 20;
+			this.tbLink4Dist.Size = new System.Drawing.Size(40, 19);
+			this.tbLink4Dist.TabIndex = 21;
 			this.tbLink4Dist.Tag = "L4";
 			this.tbLink4Dist.WordWrap = false;
 			this.tbLink4Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -647,11 +687,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// tbLink5Dist
 			// 
-			this.tbLink5Dist.Location = new System.Drawing.Point(230, 125);
+			this.tbLink5Dist.Location = new System.Drawing.Point(215, 125);
+			this.tbLink5Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.tbLink5Dist.Name = "tbLink5Dist";
 			this.tbLink5Dist.ReadOnly = true;
-			this.tbLink5Dist.Size = new System.Drawing.Size(50, 19);
-			this.tbLink5Dist.TabIndex = 25;
+			this.tbLink5Dist.Size = new System.Drawing.Size(40, 19);
+			this.tbLink5Dist.TabIndex = 26;
 			this.tbLink5Dist.Tag = "L5";
 			this.tbLink5Dist.WordWrap = false;
 			this.tbLink5Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
@@ -661,9 +702,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink1UnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink1UnitType.Location = new System.Drawing.Point(125, 25);
+			this.cbLink1UnitType.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink1UnitType.Name = "cbLink1UnitType";
-			this.cbLink1UnitType.Size = new System.Drawing.Size(100, 20);
-			this.cbLink1UnitType.TabIndex = 4;
+			this.cbLink1UnitType.Size = new System.Drawing.Size(85, 20);
+			this.cbLink1UnitType.TabIndex = 5;
 			this.cbLink1UnitType.Tag = "L1";
 			this.cbLink1UnitType.SelectedIndexChanged += new System.EventHandler(this.OnLinkUnitTypeSelectedIndexChanged);
 			this.cbLink1UnitType.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -673,9 +715,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink2UnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink2UnitType.Location = new System.Drawing.Point(125, 50);
+			this.cbLink2UnitType.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink2UnitType.Name = "cbLink2UnitType";
-			this.cbLink2UnitType.Size = new System.Drawing.Size(100, 20);
-			this.cbLink2UnitType.TabIndex = 9;
+			this.cbLink2UnitType.Size = new System.Drawing.Size(85, 20);
+			this.cbLink2UnitType.TabIndex = 10;
 			this.cbLink2UnitType.Tag = "L2";
 			this.cbLink2UnitType.SelectedIndexChanged += new System.EventHandler(this.OnLinkUnitTypeSelectedIndexChanged);
 			this.cbLink2UnitType.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -685,9 +728,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink3UnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink3UnitType.Location = new System.Drawing.Point(125, 75);
+			this.cbLink3UnitType.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink3UnitType.Name = "cbLink3UnitType";
-			this.cbLink3UnitType.Size = new System.Drawing.Size(100, 20);
-			this.cbLink3UnitType.TabIndex = 14;
+			this.cbLink3UnitType.Size = new System.Drawing.Size(85, 20);
+			this.cbLink3UnitType.TabIndex = 15;
 			this.cbLink3UnitType.Tag = "L3";
 			this.cbLink3UnitType.SelectedIndexChanged += new System.EventHandler(this.OnLinkUnitTypeSelectedIndexChanged);
 			this.cbLink3UnitType.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -697,9 +741,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink4UnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink4UnitType.Location = new System.Drawing.Point(125, 100);
+			this.cbLink4UnitType.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink4UnitType.Name = "cbLink4UnitType";
-			this.cbLink4UnitType.Size = new System.Drawing.Size(100, 20);
-			this.cbLink4UnitType.TabIndex = 19;
+			this.cbLink4UnitType.Size = new System.Drawing.Size(85, 20);
+			this.cbLink4UnitType.TabIndex = 20;
 			this.cbLink4UnitType.Tag = "L4";
 			this.cbLink4UnitType.SelectedIndexChanged += new System.EventHandler(this.OnLinkUnitTypeSelectedIndexChanged);
 			this.cbLink4UnitType.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -709,9 +754,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink5UnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink5UnitType.Location = new System.Drawing.Point(125, 125);
+			this.cbLink5UnitType.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink5UnitType.Name = "cbLink5UnitType";
-			this.cbLink5UnitType.Size = new System.Drawing.Size(100, 20);
-			this.cbLink5UnitType.TabIndex = 24;
+			this.cbLink5UnitType.Size = new System.Drawing.Size(85, 20);
+			this.cbLink5UnitType.TabIndex = 25;
 			this.cbLink5UnitType.Tag = "L5";
 			this.cbLink5UnitType.SelectedIndexChanged += new System.EventHandler(this.OnLinkUnitTypeSelectedIndexChanged);
 			this.cbLink5UnitType.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -721,9 +767,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink1Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink1Dest.Location = new System.Drawing.Point(45, 25);
+			this.cbLink1Dest.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink1Dest.Name = "cbLink1Dest";
 			this.cbLink1Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink1Dest.TabIndex = 3;
+			this.cbLink1Dest.TabIndex = 4;
 			this.cbLink1Dest.Tag = "L1";
 			this.cbLink1Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
 			this.cbLink1Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -733,9 +780,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink2Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink2Dest.Location = new System.Drawing.Point(45, 50);
+			this.cbLink2Dest.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink2Dest.Name = "cbLink2Dest";
 			this.cbLink2Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink2Dest.TabIndex = 8;
+			this.cbLink2Dest.TabIndex = 9;
 			this.cbLink2Dest.Tag = "L2";
 			this.cbLink2Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
 			this.cbLink2Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -745,9 +793,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink3Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink3Dest.Location = new System.Drawing.Point(45, 75);
+			this.cbLink3Dest.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink3Dest.Name = "cbLink3Dest";
 			this.cbLink3Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink3Dest.TabIndex = 13;
+			this.cbLink3Dest.TabIndex = 14;
 			this.cbLink3Dest.Tag = "L3";
 			this.cbLink3Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
 			this.cbLink3Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -757,9 +806,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink4Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink4Dest.Location = new System.Drawing.Point(45, 100);
+			this.cbLink4Dest.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink4Dest.Name = "cbLink4Dest";
 			this.cbLink4Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink4Dest.TabIndex = 18;
+			this.cbLink4Dest.TabIndex = 19;
 			this.cbLink4Dest.Tag = "L4";
 			this.cbLink4Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
 			this.cbLink4Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -769,9 +819,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.cbLink5Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbLink5Dest.Location = new System.Drawing.Point(45, 125);
+			this.cbLink5Dest.Margin = new System.Windows.Forms.Padding(0);
 			this.cbLink5Dest.Name = "cbLink5Dest";
 			this.cbLink5Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink5Dest.TabIndex = 23;
+			this.cbLink5Dest.TabIndex = 24;
 			this.cbLink5Dest.Tag = "L5";
 			this.cbLink5Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
 			this.cbLink5Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
@@ -780,10 +831,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// btnGoLink1
 			// 
 			this.btnGoLink1.Enabled = false;
-			this.btnGoLink1.Location = new System.Drawing.Point(285, 25);
+			this.btnGoLink1.Location = new System.Drawing.Point(260, 25);
+			this.btnGoLink1.Margin = new System.Windows.Forms.Padding(0);
 			this.btnGoLink1.Name = "btnGoLink1";
 			this.btnGoLink1.Size = new System.Drawing.Size(30, 20);
-			this.btnGoLink1.TabIndex = 6;
+			this.btnGoLink1.TabIndex = 7;
 			this.btnGoLink1.Tag = "L1";
 			this.btnGoLink1.Text = "go";
 			this.btnGoLink1.UseVisualStyleBackColor = true;
@@ -794,10 +846,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// btnGoLink2
 			// 
 			this.btnGoLink2.Enabled = false;
-			this.btnGoLink2.Location = new System.Drawing.Point(285, 50);
+			this.btnGoLink2.Location = new System.Drawing.Point(260, 50);
+			this.btnGoLink2.Margin = new System.Windows.Forms.Padding(0);
 			this.btnGoLink2.Name = "btnGoLink2";
 			this.btnGoLink2.Size = new System.Drawing.Size(30, 20);
-			this.btnGoLink2.TabIndex = 11;
+			this.btnGoLink2.TabIndex = 12;
 			this.btnGoLink2.Tag = "L2";
 			this.btnGoLink2.Text = "go";
 			this.btnGoLink2.UseVisualStyleBackColor = true;
@@ -808,10 +861,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// btnGoLink3
 			// 
 			this.btnGoLink3.Enabled = false;
-			this.btnGoLink3.Location = new System.Drawing.Point(285, 75);
+			this.btnGoLink3.Location = new System.Drawing.Point(260, 75);
+			this.btnGoLink3.Margin = new System.Windows.Forms.Padding(0);
 			this.btnGoLink3.Name = "btnGoLink3";
 			this.btnGoLink3.Size = new System.Drawing.Size(30, 20);
-			this.btnGoLink3.TabIndex = 16;
+			this.btnGoLink3.TabIndex = 17;
 			this.btnGoLink3.Tag = "L3";
 			this.btnGoLink3.Text = "go";
 			this.btnGoLink3.UseVisualStyleBackColor = true;
@@ -822,10 +876,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// btnGoLink4
 			// 
 			this.btnGoLink4.Enabled = false;
-			this.btnGoLink4.Location = new System.Drawing.Point(285, 100);
+			this.btnGoLink4.Location = new System.Drawing.Point(260, 100);
+			this.btnGoLink4.Margin = new System.Windows.Forms.Padding(0);
 			this.btnGoLink4.Name = "btnGoLink4";
 			this.btnGoLink4.Size = new System.Drawing.Size(30, 20);
-			this.btnGoLink4.TabIndex = 21;
+			this.btnGoLink4.TabIndex = 22;
 			this.btnGoLink4.Tag = "L4";
 			this.btnGoLink4.Text = "go";
 			this.btnGoLink4.UseVisualStyleBackColor = true;
@@ -836,10 +891,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// btnGoLink5
 			// 
 			this.btnGoLink5.Enabled = false;
-			this.btnGoLink5.Location = new System.Drawing.Point(285, 125);
+			this.btnGoLink5.Location = new System.Drawing.Point(260, 125);
+			this.btnGoLink5.Margin = new System.Windows.Forms.Padding(0);
 			this.btnGoLink5.Name = "btnGoLink5";
 			this.btnGoLink5.Size = new System.Drawing.Size(30, 20);
-			this.btnGoLink5.TabIndex = 26;
+			this.btnGoLink5.TabIndex = 27;
 			this.btnGoLink5.Tag = "L5";
 			this.btnGoLink5.Text = "go";
 			this.btnGoLink5.UseVisualStyleBackColor = true;
@@ -853,7 +909,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.gbNodeEditor.Controls.Add(this.btnCopy);
 			this.gbNodeEditor.Controls.Add(this.btnPaste);
 			this.gbNodeEditor.Controls.Add(this.btnDelete);
-			this.gbNodeEditor.Location = new System.Drawing.Point(265, 153);
+			this.gbNodeEditor.Location = new System.Drawing.Point(255, 153);
+			this.gbNodeEditor.Margin = new System.Windows.Forms.Padding(0);
 			this.gbNodeEditor.Name = "gbNodeEditor";
 			this.gbNodeEditor.Size = new System.Drawing.Size(285, 52);
 			this.gbNodeEditor.TabIndex = 1;
@@ -864,6 +921,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.btnCut.Enabled = false;
 			this.btnCut.Location = new System.Drawing.Point(5, 15);
+			this.btnCut.Margin = new System.Windows.Forms.Padding(0);
 			this.btnCut.Name = "btnCut";
 			this.btnCut.Size = new System.Drawing.Size(65, 30);
 			this.btnCut.TabIndex = 0;
@@ -875,6 +933,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.btnCopy.Enabled = false;
 			this.btnCopy.Location = new System.Drawing.Point(75, 15);
+			this.btnCopy.Margin = new System.Windows.Forms.Padding(0);
 			this.btnCopy.Name = "btnCopy";
 			this.btnCopy.Size = new System.Drawing.Size(65, 30);
 			this.btnCopy.TabIndex = 1;
@@ -886,6 +945,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.btnPaste.Enabled = false;
 			this.btnPaste.Location = new System.Drawing.Point(145, 15);
+			this.btnPaste.Margin = new System.Windows.Forms.Padding(0);
 			this.btnPaste.Name = "btnPaste";
 			this.btnPaste.Size = new System.Drawing.Size(65, 30);
 			this.btnPaste.TabIndex = 2;
@@ -897,6 +957,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.btnDelete.Enabled = false;
 			this.btnDelete.Location = new System.Drawing.Point(215, 15);
+			this.btnDelete.Margin = new System.Windows.Forms.Padding(0);
 			this.btnDelete.Name = "btnDelete";
 			this.btnDelete.Size = new System.Drawing.Size(65, 30);
 			this.btnDelete.TabIndex = 3;
@@ -907,7 +968,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// label_RoutesChanged
 			// 
 			this.label_RoutesChanged.ForeColor = System.Drawing.Color.Firebrick;
-			this.label_RoutesChanged.Location = new System.Drawing.Point(555, 160);
+			this.label_RoutesChanged.Location = new System.Drawing.Point(545, 160);
+			this.label_RoutesChanged.Margin = new System.Windows.Forms.Padding(0);
 			this.label_RoutesChanged.Name = "label_RoutesChanged";
 			this.label_RoutesChanged.Size = new System.Drawing.Size(55, 30);
 			this.label_RoutesChanged.TabIndex = 4;
@@ -916,7 +978,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// btnOg
 			// 
-			this.btnOg.Location = new System.Drawing.Point(590, 28);
+			this.btnOg.Location = new System.Drawing.Point(555, 28);
 			this.btnOg.Margin = new System.Windows.Forms.Padding(0);
 			this.btnOg.Name = "btnOg";
 			this.btnOg.Size = new System.Drawing.Size(20, 120);
@@ -929,7 +991,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			// btnTallyho
 			// 
-			this.btnTallyho.Location = new System.Drawing.Point(615, 28);
+			this.btnTallyho.Location = new System.Drawing.Point(580, 28);
 			this.btnTallyho.Margin = new System.Windows.Forms.Padding(0);
 			this.btnTallyho.Name = "btnTallyho";
 			this.btnTallyho.Size = new System.Drawing.Size(20, 120);
@@ -966,7 +1028,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.PerformLayout();
 
 		}
-		#endregion
 
 		private System.Windows.Forms.ToolStrip tsMain;
 
@@ -1015,6 +1076,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private System.Windows.Forms.ComboBox cbAttack;
 
 		private System.Windows.Forms.GroupBox gbLinkData;
+		private System.Windows.Forms.Label labelDest;
 		private System.Windows.Forms.Label labelUnitInfo;
 		private System.Windows.Forms.Label labelDist;
 		private System.Windows.Forms.Label labelLink1;
@@ -1055,5 +1117,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private System.Windows.Forms.Label label_RoutesChanged;
 
 		private System.Windows.Forms.ToolTip toolTip1;
+		#endregion
 	}
 }
