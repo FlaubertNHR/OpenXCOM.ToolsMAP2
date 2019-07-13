@@ -368,7 +368,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// 
+		/// @note Check that node is SpawnWeight.None before call.
 		/// </summary>
 		/// <param name="rankPre"></param>
 		/// <param name="rankPos"></param>

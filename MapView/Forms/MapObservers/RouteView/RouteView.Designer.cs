@@ -183,7 +183,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmiAllNodesRank0.Name = "tsmiAllNodesRank0";
 			this.tsmiAllNodesRank0.Size = new System.Drawing.Size(210, 22);
 			this.tsmiAllNodesRank0.Text = "All Nodes Rank 0";
-			this.tsmiAllNodesRank0.Click += new System.EventHandler(this.OnAllNodeRank0Click);
+			this.tsmiAllNodesRank0.Click += new System.EventHandler(this.OnAllNodesRank0Click);
 			// 
 			// tsmiClearLinkData
 			// 

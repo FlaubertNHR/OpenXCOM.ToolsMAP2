@@ -1779,16 +1779,23 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 
 		/// <summary>
-		/// Handler for menuitem that sets all NodeRanks to Civ/Scout.
+		/// Handler for menuitem that sets all NodeRanks to Civilian/Scout.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnAllNodeRank0Click(object sender, EventArgs e)
+		private void OnAllNodesRank0Click(object sender, EventArgs e)
 		{
+			string rank;
+			if (MapFile.Descriptor.Pal == Palette.TftdBattle)
+				rank = ((Pterodactyl)RouteNodeCollection.NodeRankTftd[0]).ToString();
+			else
+				rank = ((Pterodactyl)RouteNodeCollection.NodeRankUfo[0]).ToString();
+
 			if (MessageBox.Show(
 							this,
-							"Are you sure you want to make all nodes spawn Rank"
-								+ " 0 Civ/Scout?",
+							"Are you sure you want to change all node ranks to"
+								+ Environment.NewLine + Environment.NewLine
+								+ rank,
 							" Warning",
 							MessageBoxButtons.YesNo,
 							MessageBoxIcon.Exclamation,
@@ -1797,11 +1804,16 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				int changed = 0;
 				foreach (RouteNode node in MapFile.Routes)
+				{
 					if (node.Rank != 0)
 					{
+						if (node.Spawn != SpawnWeight.None)
+							RoutesInfo.UpdateNoderank(node.Rank, 0); // for RoutesInfo
+
 						++changed;
 						node.Rank = 0;
 					}
+				}
 
 				if (changed != 0)
 				{
@@ -1809,8 +1821,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 					UpdateNodeGroups();
 
 					MessageBox.Show(
+								this,
 								changed + " nodes were changed.",
-								" All nodes spawn Rank 0",
+								" All nodes rank 0",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Information,
 								MessageBoxDefaultButton.Button1,
@@ -1818,8 +1831,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else
 					MessageBox.Show(
+								this,
 								"All nodes are already rank 0.",
-								" All nodes spawn Rank 0",
+								" All nodes rank 0",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Asterisk,
 								MessageBoxDefaultButton.Button1,
@@ -1839,7 +1853,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				if (MessageBox.Show(
 								this,
-								"Are you sure you want to clear the selected node's Link data?",
+								"Are you sure you want to clear the selected node's Link data ...",
 								" Warning",
 								MessageBoxButtons.YesNo,
 								MessageBoxIcon.Exclamation,
