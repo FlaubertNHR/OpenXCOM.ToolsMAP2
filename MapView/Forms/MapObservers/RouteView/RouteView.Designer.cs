@@ -1003,9 +1003,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// toolTip1
 			// 
 			this.toolTip1.AutoPopDelay = 10000;
-			this.toolTip1.InitialDelay = 300;
+			this.toolTip1.InitialDelay = 500;
 			this.toolTip1.ReshowDelay = 100;
 			this.toolTip1.UseAnimation = false;
+			this.toolTip1.UseFading = false;
 			// 
 			// RouteView
 			// 

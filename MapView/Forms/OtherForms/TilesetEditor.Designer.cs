@@ -617,6 +617,7 @@
 			this.toolTip1.InitialDelay = 500;
 			this.toolTip1.ReshowDelay = 100;
 			this.toolTip1.UseAnimation = false;
+			this.toolTip1.UseFading = false;
 			// 
 			// TilesetEditor
 			// 

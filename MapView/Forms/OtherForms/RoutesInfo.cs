@@ -17,6 +17,9 @@ namespace MapView
 	{
 		#region Fields
 		private MapFile _file;
+
+		private string _group    = String.Empty;
+		private string _category = String.Empty;
 		#endregion Fields
 
 
@@ -31,6 +34,58 @@ namespace MapView
 
 			_file = file;
 
+			Initialize();
+		}
+		#endregion cTor
+
+
+		#region Events (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			base.OnFormClosing(e);
+			RouteView.RoutesInfo = null;
+		}
+		#endregion Events (override)
+
+
+		#region Events
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+				Close();
+
+//			base.OnKeyUp(e);
+		}
+		#endregion Events
+
+
+		#region Methods
+		/// <summary>
+		/// 
+		/// </summary>
+		private void Initialize()
+		{
 			object[] pters;
 			if (_file.Descriptor.Pal == Palette.TftdBattle)
 				pters = RouteNodeCollection.NodeRankTftd;
@@ -48,93 +103,20 @@ namespace MapView
 			lbl_tsRanks8.Text = pters[8].ToString();
 
 			int nodes = InitRanks();
-			InitRanksCat();
+			InitRanksCategory();
 
 			lbl_Label        .Text = _file.Descriptor.Label;
 			lbl_NodesQuantity.Text = nodes.ToString();
 			lbl_Group        .Text = _group;
 			lbl_Category     .Text = _category;
 
-
-			int widthtileset = lbl_Tileset.Left + lbl_Tileset.Width;
-			lbl_Label        .Left =
-			lbl_NodesQuantity.Left = widthtileset;
-
-			lbl_Label        .Width =
-			lbl_NodesQuantity.Width = TextRenderer.MeasureText(lbl_Label.Text, Font).Width + 5;
-
-			int widthLeft = widthtileset + lbl_Label.Width;
-
-
-			int widthRighttop = TextRenderer.MeasureText(lbl_Group.Text,    Font).Width + 5;
-			int widthRightbot = TextRenderer.MeasureText(lbl_Category.Text, Font).Width + 5;
-			int widthRight;
-			if (widthRighttop > widthRightbot) widthRight = widthRighttop;
-			else                               widthRight = widthRightbot;
-
-			lbl_Group   .Width =
-			lbl_Category.Width = widthRight;
-
-
-			int widthTop = widthLeft + widthRight;
-			int widthBot = lbl_tsCategoryTotals.Left + lbl_tsCategoryTotals.Width + 5;
-
-			int width;
-			if (widthTop > widthBot)
-			{
-				width = widthTop;
-				lbl_Group   .Left =
-				lbl_Category.Left = widthLeft - 5; // WARNING: Could overlap w/ 'lbl_Label'.
-			}
-			else
-			{
-				width = widthBot;
-				lbl_Group   .Left =
-				lbl_Category.Left = width - widthRight - 5; // WARNING: Could overlap w/ 'lbl_Label'.
-			}
-
-			ClientSize = new Size(width, gb_Info.Height + gb_Tileset.Height);
-
-			int border   = Width  - ClientSize.Width;
-			int titlebar = Height - ClientSize.Height - border;
-			MinimumSize = new Size(
-								ClientSize.Width  + border,
-								ClientSize.Height + border + titlebar);
-		}
-		#endregion cTor
-
-
-		#region Events (override)
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
+			thisLayout();
 		}
 
-		protected override void OnFormClosing(FormClosingEventArgs e)
-		{
-			base.OnFormClosing(e);
-			RouteView._routesinfo = null;
-		}
-		#endregion Events (override)
-
-
-		#region Events
-		protected override void OnKeyUp(KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Escape)
-				Close();
-
-//			base.OnKeyUp(e);
-		}
-		#endregion Events
-
-
-		#region Methods
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		private int InitRanks()
 		{
 			int nodes = 0;
@@ -184,7 +166,10 @@ namespace MapView
 			return nodes;
 		}
 
-		private void InitRanksCat()
+		/// <summary>
+		/// 
+		/// </summary>
+		private void InitRanksCategory()
 		{
 			KeyValuePair<string, Dictionary<string, Descriptor>> cat = getCategory();
 			if (!cat.Equals(new KeyValuePair<string, Dictionary<string, Descriptor>>()))
@@ -235,10 +220,10 @@ namespace MapView
 			}
 		}
 
-
-		private string _group    = String.Empty;
-		private string _category = String.Empty;
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		private KeyValuePair<string, Dictionary<string, Descriptor>> getCategory()
 		{
 			Dictionary<string, Dictionary<string, Descriptor>> categories;
@@ -264,6 +249,57 @@ namespace MapView
 				}
 			}
 			return new KeyValuePair<string, Dictionary<string, Descriptor>>();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void thisLayout()
+		{
+			int widthtileset = lbl_Tileset.Left + lbl_Tileset.Width;
+			lbl_Label        .Left =
+			lbl_NodesQuantity.Left = widthtileset;
+
+			lbl_Label        .Width =
+			lbl_NodesQuantity.Width = TextRenderer.MeasureText(lbl_Label.Text, Font).Width + 5;
+
+			int widthLeft = widthtileset + lbl_Label.Width;
+
+
+			int widthRighttop = TextRenderer.MeasureText(lbl_Category.Text, Font).Width + 5;
+			int widthRightbot = TextRenderer.MeasureText(lbl_Group.Text,    Font).Width + 5;
+			int widthRight;
+			if (widthRighttop > widthRightbot) widthRight = widthRighttop;
+			else                               widthRight = widthRightbot;
+
+			lbl_Category.Width =
+			lbl_Group   .Width = widthRight;
+
+
+			int widthTop = widthLeft + widthRight;
+			int widthBot = lbl_tsCategoryTotals.Left + lbl_tsCategoryTotals.Width + 5;
+
+			int width;
+			if (widthTop > widthBot)
+			{
+				width = widthTop;
+				lbl_Category.Left =
+				lbl_Group   .Left = widthLeft - 5; // WARNING: Could overlap w/ 'lbl_Label'.
+			}
+			else
+			{
+				width = widthBot;
+				lbl_Category.Left =
+				lbl_Group   .Left = width - widthRight - 5; // WARNING: Could overlap w/ 'lbl_Label'.
+			}
+
+			ClientSize = new Size(width, gb_Info.Height + gb_Tileset.Height);
+
+			int border   = Width  - ClientSize.Width;
+			int titlebar = Height - ClientSize.Height - border;
+			MinimumSize = new Size(
+								ClientSize.Width  + border,
+								ClientSize.Height + border + titlebar);
 		}
 		#endregion Methods
 	}

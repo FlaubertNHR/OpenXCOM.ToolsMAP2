@@ -1981,7 +1981,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Events
-		internal static RoutesInfo _routesinfo;
+		internal static RoutesInfo RoutesInfo
+		{ get; set; }
 
 		/// <summary>
 		/// Handler for clicking the Tallyho button. Opens a dialog that
@@ -1992,17 +1993,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="e"></param>
 		private void OnTallyhoClick(object sender, EventArgs e)
 		{
-			if (_routesinfo == null)
+			if (RoutesInfo == null)
 			{
-				_routesinfo = new RoutesInfo(MapFile);
-				_routesinfo.Show(this);
+				RoutesInfo = new RoutesInfo(MapFile);
+				RoutesInfo.Show(this);
 			}
 			else
 			{
-				if (_routesinfo.WindowState == FormWindowState.Minimized)
-					_routesinfo.WindowState  = FormWindowState.Normal;
+				if (RoutesInfo.WindowState == FormWindowState.Minimized)
+					RoutesInfo.WindowState  = FormWindowState.Normal;
 
-				_routesinfo.Activate(); // so what's the diff ->
+				RoutesInfo.Activate(); // so what's the diff ->
 //				_routesinfo.Focus();
 //				_routesinfo.Select();
 //				_routesinfo.BringToFront();
