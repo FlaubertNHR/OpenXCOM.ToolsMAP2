@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-//using System.Windows.Forms;
 
 using YamlDotNet.RepresentationModel;
 
@@ -16,7 +15,7 @@ namespace XCom
 	/// </summary>
 	public sealed class TilesetLoader
 	{
-		#region Fields & Properties
+		#region Properties
 		private List<Tileset> _tilesets = new List<Tileset>();
 		internal List<Tileset> Tilesets
 		{
@@ -28,7 +27,7 @@ namespace XCom
 		{
 			get { return _groups; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -208,6 +207,6 @@ namespace XCom
 			}
 			progress.Hide();
 		}
-		#endregion
+		#endregion cTor
 	}
 }

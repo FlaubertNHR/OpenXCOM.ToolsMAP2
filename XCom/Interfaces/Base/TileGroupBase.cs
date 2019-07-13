@@ -6,7 +6,7 @@ namespace XCom.Interfaces.Base
 {
 	public class TileGroupBase
 	{
-		#region Fields & Properties
+		#region Properties
 		public string Label
 		{ get; private set; }
 
@@ -21,7 +21,7 @@ namespace XCom.Interfaces.Base
 		{
 			get { return _categories; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -33,7 +33,7 @@ namespace XCom.Interfaces.Base
 		{
 			Label = labelGroup;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -99,6 +99,6 @@ namespace XCom.Interfaces.Base
 		{
 			Categories[labelCategory].Remove(labelTileset);
 		}
-		#endregion
+		#endregion Methods
 	}
 }

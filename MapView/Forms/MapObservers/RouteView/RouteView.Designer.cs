@@ -998,6 +998,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.btnTallyho.TabIndex = 3;
 			this.btnTallyho.Text = "tally\r\n\r\nho";
 			this.btnTallyho.UseVisualStyleBackColor = true;
+			this.btnTallyho.Click += new System.EventHandler(this.OnTallyhoClick);
 			// 
 			// toolTip1
 			// 

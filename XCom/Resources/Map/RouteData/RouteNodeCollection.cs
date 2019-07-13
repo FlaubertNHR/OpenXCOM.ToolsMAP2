@@ -135,7 +135,7 @@ namespace XCom
 
 		public static readonly object[] NodeRankUfo =
 		{
-			new Pterodactyl("0 : Civ/Scout",        XCom.NodeRankUfo.CivScout),
+			new Pterodactyl("0 : Civilian/Scout",   XCom.NodeRankUfo.CivScout),
 			new Pterodactyl("1 : XCOM",             XCom.NodeRankUfo.XCOM),
 			new Pterodactyl("2 : Soldier",          XCom.NodeRankUfo.Soldier),
 			new Pterodactyl("3 : Navigator",        XCom.NodeRankUfo.Navigator),
@@ -149,7 +149,7 @@ namespace XCom
 
 		public static readonly object[] NodeRankTftd =
 		{
-			new Pterodactyl("0 : Civ/Scout",        XCom.NodeRankTftd.CivScout),
+			new Pterodactyl("0 : Civilian/Scout",   XCom.NodeRankTftd.CivScout),
 			new Pterodactyl("1 : XCOM",             XCom.NodeRankTftd.XCOM),
 			new Pterodactyl("2 : Soldier",          XCom.NodeRankTftd.Soldier),
 			new Pterodactyl("3 : Squad Leader",     XCom.NodeRankTftd.SquadLeader),
@@ -225,7 +225,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="label"></param>
 		/// <param name="basepath"></param>
-		internal RouteNodeCollection(string label, string basepath)
+		public RouteNodeCollection(string label, string basepath)
 		{
 			Fullpath = Path.Combine(
 								Path.Combine(basepath, GlobalsXC.RoutesDir),

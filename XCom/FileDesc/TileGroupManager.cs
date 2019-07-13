@@ -15,10 +15,14 @@ namespace XCom
 	/// </summary>
 	public sealed class TileGroupManager
 	{
-		#region Fields
+		#region Fields (static)
 		private const string PrePad = "#----- ";
+		#endregion Fields (static)
+
+
+		#region Fields
 		private int PrePadLength = PrePad.Length;
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -28,7 +32,7 @@ namespace XCom
 		{
 			get { return _tilegroups; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -37,7 +41,7 @@ namespace XCom
 			foreach (string labelGroup in tilesetLoader.Groups)
 				TileGroups[labelGroup] = new TileGroupChild(labelGroup, tilesetLoader.Tilesets);
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -182,13 +186,8 @@ namespace XCom
 							string keyConfigPath = String.Empty;
 							switch (@group.GroupType)
 							{
-								case GameType.Ufo:
-									keyConfigPath = SharedSpace.ResourceDirectoryUfo;
-									break;
-
-								case GameType.Tftd:
-									keyConfigPath = SharedSpace.ResourceDirectoryTftd;
-									break;
+								case GameType.Ufo:  keyConfigPath = SharedSpace.ResourceDirectoryUfo;  break;
+								case GameType.Tftd: keyConfigPath = SharedSpace.ResourceDirectoryTftd; break;
 							}
 							string basepath = descriptor.Basepath;
 							if (basepath != SharedSpace.GetShareString(keyConfigPath)) // don't write basepath if it's the (default) Configurator's basepath
@@ -199,7 +198,10 @@ namespace XCom
 			}
 			return true;
 		}
+		#endregion Methods
 
+
+		#region Methods (static)
 		/// <summary>
 		/// Adds padding such as " ---#" out to 80 characters.
 		/// </summary>
@@ -216,6 +218,6 @@ namespace XCom
 			if (length < 79) pad += "#";
 			return pad;
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

@@ -85,6 +85,6 @@ namespace XCom
 			:
 				base(labelGroup)
 		{}
-		#endregion
+		#endregion cTors
 	}
 }

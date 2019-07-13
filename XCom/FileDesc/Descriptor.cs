@@ -21,7 +21,7 @@ namespace XCom
 	{
 		#region Fields
 		private readonly string _dirTerr; // the Configurator's terrain-path for UFO or TFTD - depends on Palette.
-		#endregion
+		#endregion Fields
 
 
 		#region Properties
@@ -47,7 +47,7 @@ namespace XCom
 
 		public Palette Pal // TODO: Defining the palette in both a Descriptor and its TileGroup is redundant.
 		{ get; private set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -78,7 +78,7 @@ namespace XCom
 			_dirTerr = (_dirTerr != null) ? _dirTerr = Path.Combine(_dirTerr, GlobalsXC.TerrainDir)
 										  : _dirTerr = String.Empty; // -> the Share can return null if the resource-type is notconfigured.
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -149,7 +149,7 @@ namespace XCom
 
 			return ResourceInfo.GetSpritesetCount(terr, path, Pal);
 		} */
-		#endregion
+		#endregion Methods
 
 
 		#region Methods (override)
@@ -161,6 +161,6 @@ namespace XCom
 		{
 			return Label;
 		}
-		#endregion
+		#endregion Methods (override)
 	}
 }

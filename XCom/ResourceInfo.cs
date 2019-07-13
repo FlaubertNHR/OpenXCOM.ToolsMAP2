@@ -20,7 +20,7 @@ namespace XCom
 		public const int TAB_WORD_LENGTH_0 = 0; // ie. no Tabfile
 		public const int TAB_WORD_LENGTH_2 = 2;
 		public const int TAB_WORD_LENGTH_4 = 4;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties (static)
@@ -37,7 +37,7 @@ namespace XCom
 		{
 			get { return _spritesets; }
 		}
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Methods (static)
@@ -279,6 +279,6 @@ namespace XCom
 				}
 			}
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

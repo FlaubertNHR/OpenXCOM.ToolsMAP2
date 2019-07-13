@@ -42,7 +42,6 @@
 			this.rtbInfo.ShowSelectionMargin = true;
 			this.rtbInfo.Size = new System.Drawing.Size(512, 609);
 			this.rtbInfo.TabIndex = 0;
-			this.rtbInfo.Text = "";
 			this.rtbInfo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown_rtb);
 			this.rtbInfo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUp_rtb);
 			// 

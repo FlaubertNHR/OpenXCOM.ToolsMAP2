@@ -209,6 +209,10 @@
     <Compile Include="Forms\OtherForms\McdInfoF.Designer.cs">
       <DependentUpon>McdInfoF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OtherForms\RoutesInfo.cs" />
+    <Compile Include="Forms\OtherForms\RoutesInfo.Designer.cs">
+      <DependentUpon>RoutesInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\OtherForms\ScanGViewer.cs" />
     <Compile Include="Forms\OtherForms\TilesetEditor.cs" />
     <Compile Include="Forms\OtherForms\TilesetEditor.Designer.cs">
@@ -326,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\McdInfoF.resx">
       <DependentUpon>McdInfoF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OtherForms\RoutesInfo.resx">
+      <DependentUpon>RoutesInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\ScanGViewer.resx">
       <DependentUpon>ScanGViewer.cs</DependentUpon>

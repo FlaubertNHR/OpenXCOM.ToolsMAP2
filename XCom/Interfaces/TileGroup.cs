@@ -5,12 +5,15 @@ using XCom.Interfaces.Base;
 
 namespace XCom.Interfaces
 {
+	#region Enumerations
 	public enum GameType
 	{
 		Ufo,
 		Tftd
 	}
 	// TODO: Replace all the if(Palette==Ufo.Palette) stuff with GameType.
+	#endregion Enumerations
+
 
 
 	public class TileGroup
@@ -23,10 +26,10 @@ namespace XCom.Interfaces
 
 		public Palette Pal
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
-		#region cTors
+		#region cTor
 		/// <summary>
 		/// cTor. Load from YAML.
 		/// </summary>
@@ -45,15 +48,11 @@ namespace XCom.Interfaces
 
 			switch (GroupType)
 			{
-				case GameType.Ufo:
-					Pal = Palette.UfoBattle;
-					break;
-				case GameType.Tftd:
-					Pal = Palette.TftdBattle;
-					break;
+				case GameType.Ufo:  Pal = Palette.UfoBattle;  break;
+				case GameType.Tftd: Pal = Palette.TftdBattle; break;
 			}
 			// custom Palette = Palette.GetPalette(val)
 		}
-		#endregion
+		#endregion cTor
 	}
 }

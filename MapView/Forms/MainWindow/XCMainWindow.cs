@@ -2301,12 +2301,8 @@ namespace MapView
 			string key = null;
 			switch (TileGroup.GroupType)
 			{
-				case GameType.Ufo:
-					key = SharedSpace.ResourceDirectoryUfo;
-					break;
-				case GameType.Tftd:
-					key = SharedSpace.ResourceDirectoryTftd;
-					break;
+				case GameType.Ufo:  key = SharedSpace.ResourceDirectoryUfo;  break;
+				case GameType.Tftd: key = SharedSpace.ResourceDirectoryTftd; break;
 			}
 
 			if (SharedSpace.GetShareString(key) == null)

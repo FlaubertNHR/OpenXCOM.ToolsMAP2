@@ -1094,7 +1094,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		/// <summary>
 		/// Transfers link-destination values from RouteView to
-		/// TopRouteView(Route) or vice versa. The fields are actually in the
+		/// TopRouteView(Route) or vice versa. The args are passed from the
 		/// other viewer.
 		/// </summary>
 		/// <param name="slot">the link-slot's id</param>
@@ -1980,6 +1980,39 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#endregion Events (toolstrip)
 
 
+		#region Events
+		internal static RoutesInfo _routesinfo;
+
+		/// <summary>
+		/// Handler for clicking the Tallyho button. Opens a dialog that
+		/// displays info tallied from current RouteNodes in the tileset as well
+		/// as totals across the tileset's Category.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnTallyhoClick(object sender, EventArgs e)
+		{
+			if (_routesinfo == null)
+			{
+				_routesinfo = new RoutesInfo(MapFile);
+				_routesinfo.Show(this);
+			}
+			else
+			{
+				if (_routesinfo.WindowState == FormWindowState.Minimized)
+					_routesinfo.WindowState  = FormWindowState.Normal;
+
+				_routesinfo.Activate(); // so what's the diff ->
+//				_routesinfo.Focus();
+//				_routesinfo.Select();
+//				_routesinfo.BringToFront();
+//				_routesinfo.TopMost = true;
+//				_routesinfo.TopMost = false;
+			}
+		}
+		#endregion Events
+
+
 		#region Options
 		private static Form _foptions;	// is static so that it will be used by both
 										// RouteView and TopRouteView(Route)
@@ -2258,6 +2291,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}
 		#endregion Update UI
 	}
+
 
 
 	#region Event args
