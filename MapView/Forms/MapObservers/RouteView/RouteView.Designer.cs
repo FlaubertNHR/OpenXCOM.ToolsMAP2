@@ -49,9 +49,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this._pnlRoutes = new System.Windows.Forms.Panel();
 			this.pnlDataFields = new System.Windows.Forms.Panel();
 			this.pnlDataFieldsLeft = new System.Windows.Forms.Panel();
-			this.gbTileData = new System.Windows.Forms.GroupBox();
-			this.lblSelected = new System.Windows.Forms.Label();
-			this.lblOver = new System.Windows.Forms.Label();
 			this.gbNodeData = new System.Windows.Forms.GroupBox();
 			this.labelUnitType = new System.Windows.Forms.Label();
 			this.labelSpawnRank = new System.Windows.Forms.Label();
@@ -63,6 +60,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.cbSpawn = new System.Windows.Forms.ComboBox();
 			this.cbPatrol = new System.Windows.Forms.ComboBox();
 			this.cbAttack = new System.Windows.Forms.ComboBox();
+			this.gbTileData = new System.Windows.Forms.GroupBox();
+			this.lblSelected = new System.Windows.Forms.Label();
+			this.lblOver = new System.Windows.Forms.Label();
 			this.gbLinkData = new System.Windows.Forms.GroupBox();
 			this.labelUnitInfo = new System.Windows.Forms.Label();
 			this.labelDist = new System.Windows.Forms.Label();
@@ -103,8 +103,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsMain.SuspendLayout();
 			this.pnlDataFields.SuspendLayout();
 			this.pnlDataFieldsLeft.SuspendLayout();
-			this.gbTileData.SuspendLayout();
 			this.gbNodeData.SuspendLayout();
+			this.gbTileData.SuspendLayout();
 			this.gbLinkData.SuspendLayout();
 			this.gbNodeEditor.SuspendLayout();
 			this.SuspendLayout();
@@ -334,38 +334,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.pnlDataFieldsLeft.Size = new System.Drawing.Size(265, 202);
 			this.pnlDataFieldsLeft.TabIndex = 0;
 			// 
-			// gbTileData
-			// 
-			this.gbTileData.Controls.Add(this.lblSelected);
-			this.gbTileData.Controls.Add(this.lblOver);
-			this.gbTileData.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTileData.Location = new System.Drawing.Point(0, 0);
-			this.gbTileData.Name = "gbTileData";
-			this.gbTileData.Size = new System.Drawing.Size(265, 50);
-			this.gbTileData.TabIndex = 0;
-			this.gbTileData.TabStop = false;
-			this.gbTileData.Text = "Tile data";
-			// 
-			// lblSelected
-			// 
-			this.lblSelected.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblSelected.ForeColor = System.Drawing.Color.Orchid;
-			this.lblSelected.Location = new System.Drawing.Point(30, 15);
-			this.lblSelected.Name = "lblSelected";
-			this.lblSelected.Size = new System.Drawing.Size(110, 30);
-			this.lblSelected.TabIndex = 0;
-			this.lblSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblOver
-			// 
-			this.lblOver.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblOver.ForeColor = System.Drawing.Color.Sienna;
-			this.lblOver.Location = new System.Drawing.Point(145, 15);
-			this.lblOver.Name = "lblOver";
-			this.lblOver.Size = new System.Drawing.Size(110, 30);
-			this.lblOver.TabIndex = 1;
-			this.lblOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
 			// gbNodeData
 			// 
 			this.gbNodeData.Controls.Add(this.labelUnitType);
@@ -379,9 +347,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.gbNodeData.Controls.Add(this.cbPatrol);
 			this.gbNodeData.Controls.Add(this.cbAttack);
 			this.gbNodeData.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gbNodeData.Location = new System.Drawing.Point(0, 0);
+			this.gbNodeData.Location = new System.Drawing.Point(0, 50);
 			this.gbNodeData.Name = "gbNodeData";
-			this.gbNodeData.Size = new System.Drawing.Size(265, 202);
+			this.gbNodeData.Size = new System.Drawing.Size(265, 152);
 			this.gbNodeData.TabIndex = 1;
 			this.gbNodeData.TabStop = false;
 			this.gbNodeData.Text = "Node data";
@@ -487,6 +455,38 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.cbAttack.TabIndex = 9;
 			this.toolTip1.SetToolTip(this.cbAttack, "attacts an aLien to shoot at XCom base tiles");
 			this.cbAttack.SelectedIndexChanged += new System.EventHandler(this.OnBaseAttackSelectedIndexChanged);
+			// 
+			// gbTileData
+			// 
+			this.gbTileData.Controls.Add(this.lblSelected);
+			this.gbTileData.Controls.Add(this.lblOver);
+			this.gbTileData.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbTileData.Location = new System.Drawing.Point(0, 0);
+			this.gbTileData.Name = "gbTileData";
+			this.gbTileData.Size = new System.Drawing.Size(265, 50);
+			this.gbTileData.TabIndex = 0;
+			this.gbTileData.TabStop = false;
+			this.gbTileData.Text = "Tile data";
+			// 
+			// lblSelected
+			// 
+			this.lblSelected.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblSelected.ForeColor = System.Drawing.Color.Orchid;
+			this.lblSelected.Location = new System.Drawing.Point(30, 15);
+			this.lblSelected.Name = "lblSelected";
+			this.lblSelected.Size = new System.Drawing.Size(110, 30);
+			this.lblSelected.TabIndex = 0;
+			this.lblSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// lblOver
+			// 
+			this.lblOver.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblOver.ForeColor = System.Drawing.Color.Sienna;
+			this.lblOver.Location = new System.Drawing.Point(145, 15);
+			this.lblOver.Name = "lblOver";
+			this.lblOver.Size = new System.Drawing.Size(110, 30);
+			this.lblOver.TabIndex = 1;
+			this.lblOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// gbLinkData
 			// 
@@ -957,8 +957,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsMain.PerformLayout();
 			this.pnlDataFields.ResumeLayout(false);
 			this.pnlDataFieldsLeft.ResumeLayout(false);
-			this.gbTileData.ResumeLayout(false);
 			this.gbNodeData.ResumeLayout(false);
+			this.gbTileData.ResumeLayout(false);
 			this.gbLinkData.ResumeLayout(false);
 			this.gbLinkData.PerformLayout();
 			this.gbNodeEditor.ResumeLayout(false);
