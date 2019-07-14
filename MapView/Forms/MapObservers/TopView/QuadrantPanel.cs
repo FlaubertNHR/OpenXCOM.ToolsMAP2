@@ -94,23 +94,36 @@ namespace MapView.Forms.MapObservers.TopViews
 		}
 
 
+		/// <summary>
+		/// For use by keyboard-input.
+		/// </summary>
 		private QuadrantType _keyQuadtype = QuadrantType.None;
+
+		/// <summary>
+		/// Wrapper for OnMouseDown() for use by keyboard-input.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <param name="quadType"></param>
 		internal void ForceMouseDown(MouseEventArgs e, QuadrantType quadType)
 		{
 			_keyQuadtype = quadType;
 			OnMouseDown(e);
 		}
 
+		/// <summary>
+		///  Handles mousedown events on this QuadrantPanel.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			ViewerFormsManager.TopView     .Control   .TopPanel.Select();
 			ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Select();
 
 			QuadrantType quadType;
-			if (_keyQuadtype == QuadrantType.None) // ie. is *not* forced by keyboard-input
+			if (_keyQuadtype == QuadrantType.None) // ie. is *not* keyboard-input
 			{
 				quadType = (QuadrantType)((e.X - QuadrantDrawService.StartX)
-											   / QuadrantDrawService.QuadWidthTotal);
+											   / QuadrantDrawService.Quadwidth);
 			}
 			else // is keyboard-input
 				quadType = _keyQuadtype;
@@ -191,7 +204,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					case MouseButtons.Right:
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							if (_keyQuadtype == QuadrantType.None) // ie. is *not* forced by keyboard-input
+							if (_keyQuadtype == QuadrantType.None) // ie. is *not* keyboard-input
 							{
 								_t1.Stop();
 								++_t1Clicks;

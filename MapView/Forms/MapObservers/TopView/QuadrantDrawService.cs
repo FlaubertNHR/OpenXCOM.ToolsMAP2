@@ -19,7 +19,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private const int MarginHori = 5;
 		private const int MarginVert = 3;
 
-		internal const int QuadWidthTotal = XCImage.SpriteWidth32 + MarginHori * 2;
+		internal const int Quadwidth = XCImage.SpriteWidth32 + MarginHori * 2;
 
 		internal const int StartX = 26;
 		private  const int StartY =  3;
@@ -35,19 +35,24 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal static string West    = "west";
 		internal static string North   = "north";
 		internal static string Content = "content";
+		private  static string Current = "current";
 
 		private static int TextWidth_door;
 		private static int TextWidth_floor;
 		private static int TextWidth_west;
 		private static int TextWidth_north;
 		private static int TextWidth_content;
-
-		private static bool Inited;
+		private static int TextWidth_current;
 
 		private static readonly GraphicsPath _pathFloor   = new GraphicsPath();
 		private static readonly GraphicsPath _pathWest    = new GraphicsPath();
 		private static readonly GraphicsPath _pathNorth   = new GraphicsPath();
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
+		private static readonly GraphicsPath _pathCurrent = new GraphicsPath();
+
+		private const int QuadrantTypeCurrent = 5;
+
+		private static TopView TopViewControl;
 		#endregion Fields (static)
 
 
@@ -57,6 +62,9 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		internal static Font Font
 		{ get; set; }
+
+		internal static Tilepart CurrentTilepart
+		{ private get; set; }
 		#endregion Properties (static)
 
 
@@ -69,39 +77,63 @@ namespace MapView.Forms.MapObservers.TopViews
 			Font  = new Font("Comic Sans MS", 7);
 			Brush = new SolidBrush(Color.LightBlue);
 
-			for (int quad = 0; quad != MapTile.QUADS; ++quad) // cache each quadrant's rectangular bounding path
-			{
-				var p0 = new Point(
-								StartX + QuadWidthTotal * quad - 1,
-								StartY);
-				var p1 = new Point(
-								StartX + QuadWidthTotal * quad + XCImage.SpriteWidth32 + 1,
-								StartY);
-				var p2 = new Point(
-								StartX + QuadWidthTotal * quad + XCImage.SpriteWidth32 + 1,
-								StartY + XCImage.SpriteHeight40 + 1);
-				var p3 = new Point(
-								StartX + QuadWidthTotal * quad,
-								StartY + XCImage.SpriteHeight40 + 1);
-				var p4 = new Point(
-								StartX + QuadWidthTotal * quad,
-								StartY);
+			GraphicsPath path;
+			Point p0, p1, p2, p3, p4;
 
-				var path = new GraphicsPath();
+			int quad = 0;
+			for (; quad != MapTile.QUADS; ++quad) // cache each quadrant's rectangular bounding path
+			{
+				p0 = new Point(
+							StartX + Quadwidth * quad - 1,
+							StartY);
+				p1 = new Point(
+							StartX + Quadwidth * quad + XCImage.SpriteWidth32 + 1,
+							StartY);
+				p2 = new Point(
+							StartX + Quadwidth * quad + XCImage.SpriteWidth32 + 1,
+							StartY + XCImage.SpriteHeight40 + 1);
+				p3 = new Point(
+							StartX + Quadwidth * quad,
+							StartY + XCImage.SpriteHeight40 + 1);
+				p4 = new Point(
+							StartX + Quadwidth * quad,
+							StartY);
+
+				switch (quad)
+				{
+					default: path = _pathFloor;   break; // case 0
+					case  1: path = _pathWest;    break;
+					case  2: path = _pathNorth;   break;
+					case  3: path = _pathContent; break;
+				}
 
 				path.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
 				path.AddLine(p1, p2); // does not get drawn.
 				path.AddLine(p2, p3);
 				path.AddLine(p3, p4); // NOTE: try DrawRectangle() it's even worse.
-
-				switch (quad)
-				{
-					case 0: _pathFloor   = path; break;
-					case 1: _pathWest    = path; break;
-					case 2: _pathNorth   = path; break;
-					case 3: _pathContent = path; break;
-				}
 			}
+
+			// skip a space between the Content quad and the Current quad
+			p0 = new Point(
+						StartX + Quadwidth * QuadrantTypeCurrent - 1,
+						StartY);
+			p1 = new Point(
+						StartX + Quadwidth * QuadrantTypeCurrent + XCImage.SpriteWidth32 + 1,
+						StartY);
+			p2 = new Point(
+						StartX + Quadwidth * QuadrantTypeCurrent + XCImage.SpriteWidth32 + 1,
+						StartY + XCImage.SpriteHeight40 + 1);
+			p3 = new Point(
+						StartX + Quadwidth * QuadrantTypeCurrent,
+						StartY + XCImage.SpriteHeight40 + 1);
+			p4 = new Point(
+						StartX + Quadwidth * QuadrantTypeCurrent,
+						StartY);
+
+			_pathCurrent.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
+			_pathCurrent.AddLine(p1, p2); // does not get drawn.
+			_pathCurrent.AddLine(p2, p3);
+			_pathCurrent.AddLine(p3, p4); // NOTE: try DrawRectangle() it's even worse.
 		}
 		#endregion cTor (static)
 
@@ -119,6 +151,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			West    = Punkstring(West);
 			North   = Punkstring(North);
 			Content = Punkstring(Content);
+
+			Current = Punkstring(Current);
 		}
 
 		/// <summary>
@@ -143,6 +177,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region Methods (static)
 		private static Graphics _graphics;
+		private static bool _inited;
 
 		/// <summary>
 		/// Draws the QuadrantPanel incl/ sprites.
@@ -161,54 +196,56 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (MainViewOverlay.that._spriteShadeEnabled)
 				spriteAttributes.SetGamma(MainViewOverlay.that.SpriteShadeLocal, ColorAdjustType.Bitmap);
 
-			if (!Inited)
+			if (!_inited) // TODO: break that out ->
 			{
-				Inited = true;
+				_inited = true;
+
+				TopViewControl = ViewerFormsManager.TopView.Control;
 
 				TextWidth_door    = (int)_graphics.MeasureString(Door,    Font).Width;
 				TextWidth_floor   = (int)_graphics.MeasureString(Floor,   Font).Width;
 				TextWidth_west    = (int)_graphics.MeasureString(West,    Font).Width;
 				TextWidth_north   = (int)_graphics.MeasureString(North,   Font).Width;
 				TextWidth_content = (int)_graphics.MeasureString(Content, Font).Width;
-			}
 
-			var control = ViewerFormsManager.TopView.Control;
+				TextWidth_current = (int)_graphics.MeasureString(Current, Font).Width;
+			}
 
 			// fill the background of the selected quadrant type
 			switch (selectedQuadrant)
 			{
 				case QuadrantType.Floor:
-					if (control.Floor.Checked)
+					if (TopViewControl.Floor.Checked)
 						_graphics.FillPath(Brush, _pathFloor);
 					break;
 
 				case QuadrantType.West:
-					if (control.West.Checked)
+					if (TopViewControl.West.Checked)
 						_graphics.FillPath(Brush, _pathWest);
 					break;
 
 				case QuadrantType.North:
-					if (control.North.Checked)
+					if (TopViewControl.North.Checked)
 						_graphics.FillPath(Brush, _pathNorth);
 					break;
 
 				case QuadrantType.Content:
-					if (control.Content.Checked)
+					if (TopViewControl.Content.Checked)
 						_graphics.FillPath(Brush, _pathContent);
 					break;
 			}
 
 			// fill the background of !Visible quads incl/ the selected-quad
-			if (!control.Floor.Checked)
+			if (!TopViewControl.Floor.Checked)
 				_graphics.FillPath(Brushes.DarkGray, _pathFloor);
 
-			if (!control.West.Checked)
+			if (!TopViewControl.West.Checked)
 				_graphics.FillPath(Brushes.DarkGray, _pathWest);
 
-			if (!control.North.Checked)
+			if (!TopViewControl.North.Checked)
 				_graphics.FillPath(Brushes.DarkGray, _pathNorth);
 
-			if (!control.Content.Checked)
+			if (!TopViewControl.Content.Checked)
 				_graphics.FillPath(Brushes.DarkGray, _pathContent);
 
 
@@ -227,7 +264,7 @@ namespace MapView.Forms.MapObservers.TopViews
 											StartY - tile.Floor.Record.TileOffset,
 											sprite.Width,
 											sprite.Height),
-								0, 0, sprite.Width, sprite.Height,
+								0,0, sprite.Width, sprite.Height,
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
@@ -247,11 +284,11 @@ namespace MapView.Forms.MapObservers.TopViews
 				_graphics.DrawImage(
 								sprite,
 								new Rectangle(
-											StartX + QuadWidthTotal,
+											StartX + Quadwidth,
 											StartY - tile.West.Record.TileOffset,
 											sprite.Width,
 											sprite.Height),
-								0, 0, sprite.Width, sprite.Height,
+								0,0, sprite.Width, sprite.Height,
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
@@ -261,7 +298,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			else
 				_graphics.DrawImage(
 								Globals.ExtraSprites[1].Sprite,
-								StartX + QuadWidthTotal,
+								StartX + Quadwidth,
 								StartY);
 
 			// North ->
@@ -271,11 +308,11 @@ namespace MapView.Forms.MapObservers.TopViews
 				_graphics.DrawImage(
 								sprite,
 								new Rectangle(
-											StartX + QuadWidthTotal * (int)QuadrantType.North,
+											StartX + Quadwidth * (int)QuadrantType.North,
 											StartY - tile.North.Record.TileOffset,
 											sprite.Width,
 											sprite.Height),
-								0, 0, sprite.Width, sprite.Height,
+								0,0, sprite.Width, sprite.Height,
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
@@ -285,7 +322,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			else
 				_graphics.DrawImage(
 								Globals.ExtraSprites[2].Sprite,
-								StartX + QuadWidthTotal * (int)QuadrantType.North,
+								StartX + Quadwidth * (int)QuadrantType.North,
 								StartY);
 
 			// Content ->
@@ -295,11 +332,11 @@ namespace MapView.Forms.MapObservers.TopViews
 				_graphics.DrawImage(
 								sprite,
 								new Rectangle(
-											StartX + QuadWidthTotal * (int)QuadrantType.Content,
+											StartX + Quadwidth * (int)QuadrantType.Content,
 											StartY - tile.Content.Record.TileOffset,
 											sprite.Width,
 											sprite.Height),
-								0, 0, sprite.Width, sprite.Height,
+								0,0, sprite.Width, sprite.Height,
 								GraphicsUnit.Pixel,
 								spriteAttributes);
 
@@ -309,7 +346,31 @@ namespace MapView.Forms.MapObservers.TopViews
 			else
 				_graphics.DrawImage(
 								Globals.ExtraSprites[4].Sprite,
-								StartX + QuadWidthTotal * (int)QuadrantType.Content,
+								StartX + Quadwidth * (int)QuadrantType.Content,
+								StartY);
+
+			// Current ->
+			if (CurrentTilepart != null)
+			{
+				sprite = CurrentTilepart[anistep].Sprite;
+				_graphics.DrawImage(
+								sprite,
+								new Rectangle(
+											StartX + Quadwidth * QuadrantTypeCurrent,
+											StartY - CurrentTilepart.Record.TileOffset,
+											sprite.Width,
+											sprite.Height),
+								0,0, sprite.Width, sprite.Height,
+								GraphicsUnit.Pixel,
+								spriteAttributes);
+
+				if (CurrentTilepart.Record.HingedDoor || CurrentTilepart.Record.SlidingDoor)
+					DrawDoorString(QuadrantTypeCurrent);
+			}
+			else
+				_graphics.DrawImage(
+								Globals.ExtraSprites[0].Sprite,
+								StartX + Quadwidth * QuadrantTypeCurrent,
 								StartY);
 
 
@@ -319,11 +380,15 @@ namespace MapView.Forms.MapObservers.TopViews
 			_graphics.DrawPath(Pens.Black, _pathNorth);
 			_graphics.DrawPath(Pens.Black, _pathContent);
 
+			_graphics.DrawPath(Pens.Black, _pathCurrent);
+
 			// draw the quad-type label under each quadrant
 			DrawTypeString(Floor,   TextWidth_floor,   (int)QuadrantType.Floor);
 			DrawTypeString(West,    TextWidth_west,    (int)QuadrantType.West);
 			DrawTypeString(North,   TextWidth_north,   (int)QuadrantType.North);
 			DrawTypeString(Content, TextWidth_content, (int)QuadrantType.Content);
+
+			DrawTypeString(Current, TextWidth_current, QuadrantTypeCurrent);
 
 			// fill the color-swatch under each quadrant-label
 			FillSwatchColor(               TopPanel.Brushes[TopView.FloorColor],        (int)QuadrantType.Floor);
@@ -342,7 +407,7 @@ namespace MapView.Forms.MapObservers.TopViews
 							Door,
 							Font,
 							Brushes.Black,
-							StartX + (XCImage.SpriteWidth32 - TextWidth_door) / 2 + QuadWidthTotal * quad + 1,
+							StartX + (XCImage.SpriteWidth32 - TextWidth_door) / 2 + Quadwidth * quad + 1,
 							StartY +  XCImage.SpriteHeight40 - Font.Height + PrintOffsetY);
 		}
 
@@ -357,8 +422,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			_graphics.DrawString(
 							type,
 							Font,
-							System.Drawing.Brushes.Black,
-							StartX + (XCImage.SpriteWidth32 - width) / 2 + QuadWidthTotal * quad + 1,
+							Brushes.Black,
+							StartX + (XCImage.SpriteWidth32 - width) / 2 + Quadwidth * quad + 1,
 							StartY +  XCImage.SpriteHeight40 + MarginVert);
 		}
 
@@ -372,14 +437,14 @@ namespace MapView.Forms.MapObservers.TopViews
 			_graphics.FillRectangle(
 								brush,
 								new RectangleF(
-											StartX + QuadWidthTotal * quad,
+											StartX + Quadwidth * quad,
 											StartY + XCImage.SpriteHeight40 + MarginVert + Font.Height + 1,
 											XCImage.SpriteWidth32,
 											SwatchHeight));
 		}
 
 /*		/// <summary>
-		/// This isn't really necessary since the GraphicsPath's last the
+		/// This isn't really necessary since the GraphicsPaths last the
 		/// lifetime of the app. But FxCop gets antsy ....
 		/// NOTE: Dispose() is never called. cf ColorTool. cf DrawBlobService.
 		/// WARNING: This is NOT a robust implementation perhaps. But it

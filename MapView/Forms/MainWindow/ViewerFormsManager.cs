@@ -45,13 +45,17 @@ namespace MapView.Forms.MainWindow
 		/// is selected in TileView.
 		/// </summary>
 		/// <param name="part"></param>
-		private static void OnTileSelected_SelectQuadrant(Tilepart part)
+		private static void OnTilepartSelected_SelectQuadrant(Tilepart part)
 		{
 			if (part != null && part.Record != null)
 			{
 				TopView     .Control   .SelectQuadrant(part.Record.PartType);
 				TopRouteView.ControlTop.SelectQuadrant(part.Record.PartType);
 			}
+
+			QuadrantDrawService.CurrentTilepart = part;
+			TopView     .Control   .QuadrantPanel.Invalidate();
+			TopRouteView.ControlTop.QuadrantPanel.Invalidate();
 		}
 		#endregion Events (static)
 
@@ -73,7 +77,7 @@ namespace MapView.Forms.MainWindow
 			TopView     .Control   .InitializeToolstrip(ToolFactory);
 			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
 
-			TileView.Control.TileSelected_SelectQuadrant += OnTileSelected_SelectQuadrant;
+			TileView.Control.TilepartSelected_SelectQuadrant += OnTilepartSelected_SelectQuadrant;
 
 			_observers = new IMapObserver[]
 			{

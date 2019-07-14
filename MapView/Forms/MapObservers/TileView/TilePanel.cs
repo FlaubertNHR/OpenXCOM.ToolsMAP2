@@ -11,7 +11,7 @@ using XCom.Interfaces;
 
 namespace MapView.Forms.MapObservers.TileViews
 {
-	internal delegate void TileSelectedEvent(Tilepart part);
+	internal delegate void TilepartSelectedEvent(Tilepart part);
 
 
 	/// <summary>
@@ -21,7 +21,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		:
 			Panel
 	{
-		internal event TileSelectedEvent TileSelected;
+		internal event TilepartSelectedEvent TilepartSelected;
 
 
 		#region Fields (static)
@@ -101,8 +101,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				{
 					_id = value.SetId + 1; // +1 to account for the eraser.
 
-					if (TileSelected != null)
-						TileSelected(PartSelected);
+					if (TilepartSelected != null)
+						TilepartSelected(PartSelected);
 
 					ScrollToTile();
 				}
@@ -312,8 +312,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			{
 				_id = id;
 
-				if (TileSelected != null)
-					TileSelected(PartSelected);
+				if (TilepartSelected != null)
+					TilepartSelected(PartSelected);
 
 				ScrollToTile();
 				Invalidate();
@@ -403,8 +403,8 @@ namespace MapView.Forms.MapObservers.TileViews
 			{
 				_id = id;
 
-				if (TileSelected != null)
-					TileSelected(PartSelected);
+				if (TilepartSelected != null)
+					TilepartSelected(PartSelected);
 
 				ScrollToTile();
 				Invalidate();
@@ -538,7 +538,7 @@ namespace MapView.Forms.MapObservers.TileViews
 														top  + SpriteMargin - part.Record.TileOffset,
 														sprite.Sprite.Width,
 														sprite.Sprite.Height),
-											0, 0, sprite.Sprite.Width, sprite.Sprite.Height,
+											0,0, sprite.Sprite.Width, sprite.Sprite.Height,
 											GraphicsUnit.Pixel,
 											spriteAttributes);
 						}
@@ -578,23 +578,23 @@ namespace MapView.Forms.MapObservers.TileViews
 									Brushes.Black,
 									TableOffset - 1,
 									TableOffset + _startY - 1,
-									1, 1); // so bite me.
+									1,1); // so bite me.
 
 				int height = TableHeight;
 
-				for (int i = 0; i <= _tilesX; ++i)							// draw vertical lines
+				for (int i = 0; i <= _tilesX; ++i)								// draw vertical lines
 					graphics.DrawLine(
 									Pens.Black,
 									TableOffset + SpriteWidth * i, TableOffset + _startY,
 									TableOffset + SpriteWidth * i, /*TableOffset +*/ _startY + height);
 
-				for (int i = 0; i <= height; i += SpriteHeight)				// draw horizontal lines
+				for (int i = 0; i <= height; i += SpriteHeight)					// draw horizontal lines
 					graphics.DrawLine(
 									Pens.Black,
 									TableOffset,                         TableOffset + _startY + i,
 									TableOffset + SpriteWidth * _tilesX, TableOffset + _startY + i);
 
-				graphics.DrawRectangle(										// draw selected rectangle
+				graphics.DrawRectangle(											// draw selected rectangle
 									_penRed,
 									TableOffset + _id % _tilesX * SpriteWidth,
 									TableOffset + _id / _tilesX * SpriteHeight + _startY,

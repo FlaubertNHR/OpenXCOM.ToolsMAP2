@@ -30,7 +30,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			MapObserverControl // UserControl, IMapObserver
 	{
 		#region Events
-		internal event TileSelectedEvent TileSelected_SelectQuadrant;
+		internal event TilepartSelectedEvent TilepartSelected_SelectQuadrant;
 
 		/// <summary>
 		/// Fires if a save was done in PckView or McdView (via TileView).
@@ -143,7 +143,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		private void AddPanel(TilePanel panel, Control page)
 		{
-			panel.TileSelected += panel_OnTileSelected;
+			panel.TilepartSelected += panel_OnTilepartSelected;
 			page.Controls.Add(panel);
 		}
 		#endregion cTor
@@ -200,15 +200,15 @@ namespace MapView.Forms.MapObservers.TileViews
 			foreach (var panel_ in _panels)
 				panel_.SetTickerSubscription(panel_ == panel);
 
-			panel_OnTileSelected(SelectedTilepart);
+			panel_OnTilepartSelected(SelectedTilepart);
 		}
 
 		/// <summary>
-		/// Triggers on the 'TileSelected' event. Further triggers the
-		/// 'TileSelected_SelectQuadrant' event.
+		/// Triggers on the 'TilepartSelected' event. Further triggers the
+		/// 'TilepartSelected_SelectQuadrant' event.
 		/// </summary>
 		/// <param name="part"></param>
-		private void panel_OnTileSelected(Tilepart part)
+		private void panel_OnTilepartSelected(Tilepart part)
 		{
 			SetTitleText(part);
 
@@ -234,9 +234,9 @@ namespace MapView.Forms.MapObservers.TileViews
 				McdInfobox.UpdateData(record, id, label);
 			}
 
-			TileSelected_SelectQuadrant(part);
-		}
-		#endregion Events
+			TilepartSelected_SelectQuadrant(part);	// good Lord, a handler firing another event.
+		}											// you know, you don't NEED to use events simply to fire functions, right
+		#endregion Events							// it would make the stack much easier to trace if you hadn't ...
 
 
 		#region Options
