@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Windows.Forms;
 
 using XCom;
@@ -23,9 +24,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private const int NodeValMax = 12;
 
-		private const int Separator = 0;
+		private const int OverlayColPad = 2;
 
 		private const string Over   = "id"; // these are for the translucent overlay box ->
+		private const string Type   = "type";
 		private const string Rank   = "rank";
 		private const string Spawn  = "spawn";
 		private const string Patrol = "patrol";
@@ -723,17 +725,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 //				int textWidth1 = TextRenderer.MeasureText(textTile1, font).Width;
 //				int textWidth2 = TextRenderer.MeasureText(textTile2, font).Width;
 
-				string textOver1, textRank1, textSpawn1, textPatrol1, textAttack1;
-				string textOver2, textRank2, textSpawn2, textPatrol2, textAttack2;
+				string textOver1, textType1, textRank1, textSpawn1, textPatrol1, textAttack1;
+				string textOver2, textType2, textRank2, textSpawn2, textPatrol2, textAttack2;
 
 				if (tile.Node != null)
 				{
 					textOver1   = Over;
+					textType1   = Type;
 					textRank1   = Rank;
 					textSpawn1  = Spawn;
 					textPatrol1 = Patrol;
 
-					textOver2 = (tile.Node.Index).ToString(System.Globalization.CultureInfo.CurrentCulture);
+					textOver2 = (tile.Node.Index).ToString(CultureInfo.CurrentCulture);
+					textType2 = Enum.GetName(typeof(UnitType), tile.Node.Type);
 
 					if (MapFile.Descriptor.Pal == Palette.UfoBattle)
 						textRank2 = RouteNodeCollection.RankUfo [tile.Node.Rank].ToString();
@@ -746,6 +750,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					int width;
 					width = (int)_graphics.MeasureString(textOver1, _fontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
+					width = (int)_graphics.MeasureString(textType1, _fontOverlay).Width;
+					if (width > textWidth1) textWidth1 = width;
 					width = (int)_graphics.MeasureString(textRank1, _fontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
 					width = (int)_graphics.MeasureString(textSpawn1, _fontOverlay).Width;
@@ -754,6 +760,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					if (width > textWidth1) textWidth1 = width;
 
 					width = (int)_graphics.MeasureString(textOver2, _fontOverlay).Width;
+					if (width > textWidth2) textWidth2 = width;
+					width = (int)_graphics.MeasureString(textType2, _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
 					width = (int)_graphics.MeasureString(textRank2, _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
@@ -793,12 +801,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 				else
 				{
 					textOver1   =
+					textType1   =
 					textRank1   =
 					textSpawn1  =
 					textPatrol1 =
 					textAttack1 =
 
 					textOver2   =
+					textType2   =
 					textRank2   =
 					textSpawn2  =
 					textPatrol2 =
@@ -807,34 +817,36 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 //				int textHeight = TextRenderer.MeasureText("X", font).Height;
 				int textHeight = (int)_graphics.MeasureString("X", _fontOverlay).Height + 1; // pad +1
-				var overlay = new Rectangle(
-										CursorPosition.X + 18, CursorPosition.Y,
-										textWidth1 + Separator + textWidth2 + 5, textHeight + 7); // trim right & bottom (else +8 for both w/h)
+				var rect = new Rectangle(
+									CursorPosition.X + 18, CursorPosition.Y,
+									textWidth1 + OverlayColPad + textWidth2 + 5, textHeight + 7); // trim right & bottom (else +8 for both w/h)
 
 				if (tile.Node != null)
 				{
-					overlay.Height += textHeight * 4;
+					rect.Height += textHeight * 5;
 
 					if (tile.Node.Attack != 0)
-						overlay.Height += textHeight;
+						rect.Height += textHeight;
 				}
 
-				if (overlay.X + overlay.Width > ClientRectangle.Width)
-					overlay.X = CursorPosition.X - overlay.Width - 8;
+				if (rect.X + rect.Width > ClientRectangle.Width)
+					rect.X = CursorPosition.X - rect.Width - 8;
 
-				if (overlay.Y + overlay.Height > ClientRectangle.Height)
-					overlay.Y = CursorPosition.Y - overlay.Height;
+				if (rect.Y + rect.Height > ClientRectangle.Height)
+					rect.Y = CursorPosition.Y - rect.Height;
 
-				_graphics.FillRectangle(new SolidBrush(Color.FromArgb(180, Color.DarkBlue)), overlay);
+				_graphics.FillRectangle(new SolidBrush(Color.FromArgb(205, Color.DarkSlateBlue)), rect);
 				_graphics.FillRectangle(
-									new SolidBrush(Color.FromArgb(120, Color.Linen)),
-									overlay.X + 2,
-									overlay.Y + 2,
-									overlay.Width  - 4,
-									overlay.Height - 4);
+									new SolidBrush(Color.FromArgb(90, Color.AntiqueWhite)),
+									rect.X + 2,
+									rect.Y + 2,
+									rect.Width  - 4,
+									rect.Height - 4);
 
-				int textLeft = overlay.X + 4;
-				int textTop  = overlay.Y + 3;
+				int textLeft = rect.X + 4;
+				int textTop  = rect.Y + 3;
+
+				int colRight = textLeft + textWidth1 + OverlayColPad;
 
 				_graphics.DrawString(
 								textTile1,
@@ -846,7 +858,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 								textTile2,
 								_fontOverlay,
 								Brushes.Yellow,
-								textLeft + textWidth1 + Separator,
+								colRight,
 								textTop);
 
 				if (tile.Node != null)
@@ -861,47 +873,60 @@ namespace MapView.Forms.MapObservers.RouteViews
 									textOver2,
 									_fontOverlay,
 									Brushes.Yellow,
-									textLeft + textWidth1 + Separator,
+									colRight,
 									textTop  + textHeight);
+
+					_graphics.DrawString(
+									textType1,
+									_fontOverlay,
+									Brushes.Yellow,
+									textLeft,
+									textTop + textHeight * 2);
+					_graphics.DrawString(
+									textType2,
+									_fontOverlay,
+									Brushes.Yellow,
+									colRight,
+									textTop  + textHeight * 2);
 
 					_graphics.DrawString(
 									textRank1,
 									_fontOverlay,
 									Brushes.Yellow,
 									textLeft,
-									textTop + textHeight * 2);
+									textTop + textHeight * 3);
 					_graphics.DrawString(
 									textRank2,
 									_fontOverlay,
 									Brushes.Yellow,
-									textLeft + textWidth1 + Separator,
-									textTop  + textHeight * 2);
+									colRight,
+									textTop  + textHeight * 3);
 
 					_graphics.DrawString(
 									textSpawn1,
 									_fontOverlay,
 									Brushes.Yellow,
 									textLeft,
-									textTop + textHeight * 3);
+									textTop + textHeight * 4);
 					_graphics.DrawString(
 									textSpawn2,
 									_fontOverlay,
 									Brushes.Yellow,
-									textLeft + textWidth1 + Separator,
-									textTop  + textHeight * 3);
+									colRight,
+									textTop  + textHeight * 4);
 
 					_graphics.DrawString(
 									textPatrol1,
 									_fontOverlay,
 									Brushes.Yellow,
 									textLeft,
-									textTop + textHeight * 4);
+									textTop + textHeight * 5);
 					_graphics.DrawString(
 									textPatrol2,
 									_fontOverlay,
 									Brushes.Yellow,
-									textLeft + textWidth1 + Separator,
-									textTop  + textHeight * 4);
+									colRight,
+									textTop  + textHeight * 5);
 
 					if (tile.Node.Attack != 0)
 					{
@@ -910,13 +935,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 										_fontOverlay,
 										Brushes.Yellow,
 										textLeft,
-										textTop + textHeight * 5);
+										textTop + textHeight * 6);
 						_graphics.DrawString(
 										textAttack2,
 										_fontOverlay,
 										Brushes.Yellow,
-										textLeft + textWidth1 + Separator,
-										textTop  + textHeight * 5);
+										colRight,
+										textTop  + textHeight * 6);
 					}
 				}
 			}
