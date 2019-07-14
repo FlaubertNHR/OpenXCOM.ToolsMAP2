@@ -12,100 +12,139 @@ namespace XCom
 	// byte-type. Otherwise the Pterodactyl class goes snakey when
 	// RouteView.OnNodeRankSelectedIndexChanged() fires. For reasons, it cannot
 	// handle the cast automatically like the other enumerated types here appear
-	// to. But I left the others as bytes also for safety.
+	// to. But I left the others as bytes also for consistency.
+
+	// Rules on nodes and node-links (OxC)
+	//
+	// - unittype is used for spawning and patrolling only; it is not used by
+	//   links
+	// - noderank affects both spawning and patrolling, but note that noderank
+	//   has a fallback mechanic for spawning such that if no node with an
+	//   aLien's rank is found, a succession of (all) other ranks will be
+	//   investigated (but not XCOM rank ofc)
+	// - re. unittypes: small units are allowed to use large nodes but not vice
+	//   versa and flying units are allowed to use non-flying nodes but not vice
+	//   versa. Thus 'Large' nodes are effectively identical to 'Any' nodes.
+	// - link distance is not used
+	// - spawnweight 0 disallows spawning at a node, but patrolpriority 0 is
+	//   valid for patrolling to a node if a unit is flagged, by OxC, to "scout"
+	//   (details tbd) else patrolpriority 0 disallows patrolling the node: the
+	//   OxC "scout" flag appears to be, at least in part, another fallback
+	//   mechanic - that is, an aLien will check for valid non-scout nodes first
+	//   but if none are found, the routine then checks for valid "scout" nodes.
+	//   But don't quote me on that; there's more going on between (a)
+	//   patrolpriority, (b) noderank, and (c) the "scout" flag ...
+	// - it appears that if the OxC "scout" flag is not set, then the aLien to
+	//   which it's being applied will not leave the block it's currently in.
+	//   More investigation req'd
+	//   - quote from the OxC code:
+	//       "scouts roam all over while all others shuffle around to adjacent
+	//        nodes at most"
+	//   I believe, at a guess, that this is designed to keep Commanders in the
+	//   command module, eg, or at least increase the chance of aLiens sticking
+	//   around non-CivScout patrol nodes. Long story short: OxC has hardcoded
+	//   patrolling behavior beyond what can be determined by the Route files.
+	//   (I didn't look at OxCe)
+	//
+	// 0 = Any, 1 = Flying, 2 = Flying Large, 3 = Large, 4 = Small <- UfoPaedia.Org BZZZT.
 
 	public enum UnitType
 		:
 			byte
 	{
-		Any         = 0,
-		FlyingSmall = 1,
-		Small       = 2,
-		FlyingLarge = 3,
-		Large       = 4
+		Any,			// 0
+		FlyingSmall,	// 1
+		Small,			// 2
+		FlyingLarge,	// 3
+		Large			// 4 - aka. 'Any'
+//		Any
+//		FlyingOnlySmallOnly
+//		SmallOnlyWalkOrFly
+//		FlyingOnlyLargeOrSmall
+//		LargeOrSmallWalkOrFly
 	};
 
 	public enum NodeRankUfo
 		:
 			byte
 	{
-		CivScout        = 0,
-		XCOM            = 1,
-		Soldier         = 2,
-		Navigator       = 3,
-		LeaderCommander = 4,
-		Engineer        = 5,
-		Misc1           = 6,
-		Medic           = 7,
-		Misc2           = 8,
-		invalid         = 9 // WORKAROUND.
+		CivScout,			// 0
+		XCOM,				// 1
+		Soldier,			// 2
+		Navigator,			// 3
+		LeaderCommander,	// 4
+		Engineer,			// 5
+		Misc1,				// 6
+		Medic,				// 7
+		Misc2,				// 8
+		invalid				// 9 - WORKAROUND.
 	};
 
 	public enum NodeRankTftd
 		:
 			byte
 	{
-		CivScout        = 0,
-		XCOM            = 1,
-		Soldier         = 2,
-		SquadLeader     = 3,
-		LeaderCommander = 4,
-		Medic           = 5,
-		Misc1           = 6,
-		Technician      = 7,
-		Misc2           = 8,
-		invalid         = 9 // WORKAROUND.
+		CivScout,			// 0
+		XCOM,				// 1
+		Soldier,			// 2
+		SquadLeader,		// 3
+		LeaderCommander,	// 4
+		Medic,				// 5
+		Misc1,				// 6
+		Technician,			// 7
+		Misc2,				// 8
+		invalid				// 9 - WORKAROUND.
 	};
 
 	public enum SpawnWeight
 		:
 			byte
 	{
-		None    = 0,
-		Spawn1  = 1,
-		Spawn2  = 2,
-		Spawn3  = 3,
-		Spawn4  = 4,
-		Spawn5  = 5,
-		Spawn6  = 6,
-		Spawn7  = 7,
-		Spawn8  = 8,
-		Spawn9  = 9,
-		Spawn10 = 10
+		None,	// 0
+		Spawn1,	// 1
+		Spawn2,	// 2
+		Spawn3,	// 3
+		Spawn4,	// 4
+		Spawn5,	// 5
+		Spawn6,	// 6
+		Spawn7,	// 7
+		Spawn8,	// 8
+		Spawn9,	// 9
+		Spawn10	// 10
 	};
 
 	public enum PatrolPriority
 		:
 			byte
 	{
-		Zero  = 0,
-		One   = 1,
-		Two   = 2,
-		Three = 3,
-		Four  = 4,
-		Five  = 5,
-		Six   = 6,
-		Seven = 7,
-		Eight = 8,
-		Nine  = 9,
-		Ten   = 10
+		Zero,	// 0
+		One,	// 1
+		Two,	// 2
+		Three,	// 3
+		Four,	// 4
+		Five,	// 5
+		Six,	// 6
+		Seven,	// 7
+		Eight,	// 8
+		Nine,	// 9
+		Ten		// 10
 	};
 
-	public enum BaseAttack
+	public enum AttackBase
 		:
 			byte
 	{
-		Zero  = 0,
-		One   = 1,
-		Two   = 2,
-		Three = 3,
-		Four  = 4,
-		Five  = 5,
-		Six   = 6,
-		Seven = 7,
-		Eight = 8,
-		Nine  = 9,
-		Ten   = 10
+		Zero,	// 0
+		One,	// 1
+		Two,	// 2
+		Three,	// 3
+		Four,	// 4
+		Five,	// 5
+		Six,	// 6
+		Seven,	// 7
+		Eight,	// 8
+		Nine,	// 9
+		Ten		// 10
 	};
 
 	public enum LinkType
@@ -133,47 +172,77 @@ namespace XCom
 		#region Fields (static)
 		private const string RankInvalid = "INVALID";
 
-		public static readonly object[] NodeRankUfo =
+		public static readonly object[] RankUfo =
 		{
-			new Pterodactyl("0 : Civilian/Scout",   XCom.NodeRankUfo.CivScout),
-			new Pterodactyl("1 : XCOM",             XCom.NodeRankUfo.XCOM),
-			new Pterodactyl("2 : Soldier",          XCom.NodeRankUfo.Soldier),
-			new Pterodactyl("3 : Navigator",        XCom.NodeRankUfo.Navigator),
-			new Pterodactyl("4 : Leader/Commander", XCom.NodeRankUfo.LeaderCommander),
-			new Pterodactyl("5 : Engineer",         XCom.NodeRankUfo.Engineer),
-			new Pterodactyl("6 : Terrorist1",       XCom.NodeRankUfo.Misc1),
-			new Pterodactyl("7 : Medic",            XCom.NodeRankUfo.Medic),
-			new Pterodactyl("8 : Terrorist2",       XCom.NodeRankUfo.Misc2),
-			new Pterodactyl(RankInvalid,            XCom.NodeRankUfo.invalid) // WORKAROUND.
+			new Pterodactyl("0 : Civilian/Scout",   NodeRankUfo.CivScout),
+			new Pterodactyl("1 : XCOM",             NodeRankUfo.XCOM),
+			new Pterodactyl("2 : Soldier",          NodeRankUfo.Soldier),
+			new Pterodactyl("3 : Navigator",        NodeRankUfo.Navigator),
+			new Pterodactyl("4 : Leader/Commander", NodeRankUfo.LeaderCommander),
+			new Pterodactyl("5 : Engineer",         NodeRankUfo.Engineer),
+			new Pterodactyl("6 : Terrorist1",       NodeRankUfo.Misc1),
+			new Pterodactyl("7 : Medic",            NodeRankUfo.Medic),
+			new Pterodactyl("8 : Terrorist2",       NodeRankUfo.Misc2),
+			new Pterodactyl(RankInvalid,            NodeRankUfo.invalid) // WORKAROUND.
 		};
 
-		public static readonly object[] NodeRankTftd =
+		public static readonly object[] RankTftd =
 		{
-			new Pterodactyl("0 : Civilian/Scout",   XCom.NodeRankTftd.CivScout),
-			new Pterodactyl("1 : XCOM",             XCom.NodeRankTftd.XCOM),
-			new Pterodactyl("2 : Soldier",          XCom.NodeRankTftd.Soldier),
-			new Pterodactyl("3 : Squad Leader",     XCom.NodeRankTftd.SquadLeader),
-			new Pterodactyl("4 : Leader/Commander", XCom.NodeRankTftd.LeaderCommander),
-			new Pterodactyl("5 : Medic",            XCom.NodeRankTftd.Medic),
-			new Pterodactyl("6 : Terrorist1",       XCom.NodeRankTftd.Misc1),
-			new Pterodactyl("7 : Technician",       XCom.NodeRankTftd.Technician),
-			new Pterodactyl("8 : Terrorist2",       XCom.NodeRankTftd.Misc2),
-			new Pterodactyl(RankInvalid,            XCom.NodeRankTftd.invalid) // WORKAROUND.
+			new Pterodactyl("0 : Civilian/Scout",   NodeRankTftd.CivScout),
+			new Pterodactyl("1 : XCOM",             NodeRankTftd.XCOM),
+			new Pterodactyl("2 : Soldier",          NodeRankTftd.Soldier),
+			new Pterodactyl("3 : Squad Leader",     NodeRankTftd.SquadLeader),
+			new Pterodactyl("4 : Leader/Commander", NodeRankTftd.LeaderCommander),
+			new Pterodactyl("5 : Medic",            NodeRankTftd.Medic),
+			new Pterodactyl("6 : Terrorist1",       NodeRankTftd.Misc1),
+			new Pterodactyl("7 : Technician",       NodeRankTftd.Technician),
+			new Pterodactyl("8 : Terrorist2",       NodeRankTftd.Misc2),
+			new Pterodactyl(RankInvalid,            NodeRankTftd.invalid) // WORKAROUND.
 		};
 
-		public static readonly object[] SpawnWeight =
+		public static readonly object[] Spawn =
 		{
-			new Pterodactyl( "0 : None", XCom.SpawnWeight.None),
-			new Pterodactyl( "1 : Lo",   XCom.SpawnWeight.Spawn1),
-			new Pterodactyl( "2 : Lo",   XCom.SpawnWeight.Spawn2),
-			new Pterodactyl( "3 : Lo",   XCom.SpawnWeight.Spawn3),
-			new Pterodactyl( "4 : Med",  XCom.SpawnWeight.Spawn4),
-			new Pterodactyl( "5 : Med",  XCom.SpawnWeight.Spawn5),
-			new Pterodactyl( "6 : Med",  XCom.SpawnWeight.Spawn6),
-			new Pterodactyl( "7 : Med",  XCom.SpawnWeight.Spawn7),
-			new Pterodactyl( "8 : Hi",   XCom.SpawnWeight.Spawn8),
-			new Pterodactyl( "9 : Hi",   XCom.SpawnWeight.Spawn9),
-			new Pterodactyl("10 : Hi",   XCom.SpawnWeight.Spawn10)
+			new Pterodactyl( "0 : None", SpawnWeight.None),
+			new Pterodactyl( "1 : Lo",   SpawnWeight.Spawn1),
+			new Pterodactyl( "2 : Lo",   SpawnWeight.Spawn2),
+			new Pterodactyl( "3 : Lo",   SpawnWeight.Spawn3),
+			new Pterodactyl( "4 : Med",  SpawnWeight.Spawn4),
+			new Pterodactyl( "5 : Med",  SpawnWeight.Spawn5),
+			new Pterodactyl( "6 : Med",  SpawnWeight.Spawn6),
+			new Pterodactyl( "7 : Med",  SpawnWeight.Spawn7),
+			new Pterodactyl( "8 : Hi",   SpawnWeight.Spawn8),
+			new Pterodactyl( "9 : Hi",   SpawnWeight.Spawn9),
+			new Pterodactyl("10 : Hi",   SpawnWeight.Spawn10)
+		};
+
+		public static readonly object[] Patrol =
+		{
+			new Pterodactyl( "0 : LoLo", PatrolPriority.Zero),
+			new Pterodactyl( "1 : Lo",   PatrolPriority.One),
+			new Pterodactyl( "2 : Lo",   PatrolPriority.Two),
+			new Pterodactyl( "3 : Lo",   PatrolPriority.Three),
+			new Pterodactyl( "4 : Med",  PatrolPriority.Four),
+			new Pterodactyl( "5 : Med",  PatrolPriority.Five),
+			new Pterodactyl( "6 : Med",  PatrolPriority.Six),
+			new Pterodactyl( "7 : Med",  PatrolPriority.Seven),
+			new Pterodactyl( "8 : Hi",   PatrolPriority.Eight),
+			new Pterodactyl( "9 : Hi",   PatrolPriority.Nine),
+			new Pterodactyl("10 : Hi",   PatrolPriority.Ten)
+		};
+
+		public static readonly object[] Attack =
+		{
+			new Pterodactyl( "0 : None", AttackBase.Zero),
+			new Pterodactyl( "1 : Lo",   AttackBase.One),
+			new Pterodactyl( "2 : Lo",   AttackBase.Two),
+			new Pterodactyl( "3 : Lo",   AttackBase.Three),
+			new Pterodactyl( "4 : Med",  AttackBase.Four),
+			new Pterodactyl( "5 : Med",  AttackBase.Five),
+			new Pterodactyl( "6 : Med",  AttackBase.Six),
+			new Pterodactyl( "7 : Med",  AttackBase.Seven),
+			new Pterodactyl( "8 : Hi",   AttackBase.Eight),
+			new Pterodactyl( "9 : Hi",   AttackBase.Nine),
+			new Pterodactyl("10 : Hi",   AttackBase.Ten)
 		};
 		#endregion Fields (static)
 

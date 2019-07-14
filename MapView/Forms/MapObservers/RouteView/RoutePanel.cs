@@ -733,13 +733,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 					textSpawn1  = Spawn;
 					textPatrol1 = Patrol;
 
-					textOver2   = (tile.Node.Index).ToString(System.Globalization.CultureInfo.CurrentCulture);
+					textOver2 = (tile.Node.Index).ToString(System.Globalization.CultureInfo.CurrentCulture);
+
 					if (MapFile.Descriptor.Pal == Palette.UfoBattle)
-						textRank2 = RouteNodeCollection.NodeRankUfo[tile.Node.Rank].ToString();
+						textRank2 = RouteNodeCollection.RankUfo [tile.Node.Rank].ToString();
 					else
-						textRank2 = RouteNodeCollection.NodeRankTftd[tile.Node.Rank].ToString();
-					textSpawn2  = RouteNodeCollection.SpawnWeight[(byte)tile.Node.Spawn].ToString();
-					textPatrol2 = tile.Node.Patrol.ToString();
+						textRank2 = RouteNodeCollection.RankTftd[tile.Node.Rank].ToString();
+
+					textSpawn2  = RouteNodeCollection.Spawn [(byte)tile.Node.Spawn] .ToString();
+					textPatrol2 = RouteNodeCollection.Patrol[(byte)tile.Node.Patrol].ToString();
 
 					int width;
 					width = (int)_graphics.MeasureString(textOver1, _fontOverlay).Width;
@@ -763,7 +765,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					if (tile.Node.Attack != 0)
 					{
 						textAttack1 = Attack;
-						textAttack2 = tile.Node.Attack.ToString();
+						textAttack2 = RouteNodeCollection.Attack[(byte)tile.Node.Attack].ToString();
 
 						width = (int)_graphics.MeasureString(textAttack1, _fontOverlay).Width;
 						if (width > textWidth1) textWidth1 = width;

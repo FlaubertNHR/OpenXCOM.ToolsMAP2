@@ -89,9 +89,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 					cbRank.Items.Clear();
 
 					if (MapFile.Descriptor.Pal == Palette.TftdBattle) // NOTE: Check TFTD else default to UFO.
-						cbRank.Items.AddRange(RouteNodeCollection.NodeRankTftd);
+						cbRank.Items.AddRange(RouteNodeCollection.RankTftd);
 					else
-						cbRank.Items.AddRange(RouteNodeCollection.NodeRankUfo);
+						cbRank.Items.AddRange(RouteNodeCollection.RankUfo);
 
 					UpdateNodeInformation();
 				}
@@ -186,16 +186,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 				UnitType.Large,
 				UnitType.FlyingSmall,
 				UnitType.FlyingLarge
+/*				UnitType.Any,
+				UnitType.SmallOnlyWalkOrFly,
+				UnitType.LargeOrSmallWalkOrFly,
+				UnitType.FlyingOnlySmallOnly,
+				UnitType.FlyingOnlyLargeOrSmall */
 			};
 			cbType.Items.AddRange(unitTypes);
 
-			cbSpawn.Items.AddRange(RouteNodeCollection.SpawnWeight);
-
-			foreach (var value in Enum.GetValues(typeof(PatrolPriority)))
-				cbPatrol.Items.Add(value);
-
-			foreach (var value in Enum.GetValues(typeof(BaseAttack)))
-				cbAttack.Items.Add(value);
+			cbSpawn .Items.AddRange(RouteNodeCollection.Spawn);
+			cbPatrol.Items.AddRange(RouteNodeCollection.Patrol);
+			cbAttack.Items.AddRange(RouteNodeCollection.Attack);
 
 			// link data ->
 			cbLink1UnitType.Items.AddRange(unitTypes);
@@ -691,16 +692,16 @@ namespace MapView.Forms.MapObservers.RouteViews
 				btnGoLink5.Text = String.Empty;
 
 
-				cbType  .SelectedItem = UnitType.Any;
-				cbPatrol.SelectedItem = PatrolPriority.Zero;
-				cbAttack.SelectedItem = BaseAttack.Zero;
+				cbType.SelectedItem = UnitType.Any;
 
 				if (MapFile.Descriptor.Pal == Palette.TftdBattle)
-					cbRank.SelectedItem = RouteNodeCollection.NodeRankTftd[(byte)NodeRankTftd.CivScout];
+					cbRank.SelectedItem = RouteNodeCollection.RankTftd[0];	//(byte)NodeRankTftd.CivScout
 				else
-					cbRank.SelectedItem = RouteNodeCollection.NodeRankUfo[(byte)NodeRankUfo.CivScout];
+					cbRank.SelectedItem = RouteNodeCollection.RankUfo [0];	//(byte)NodeRankUfo.CivScout
 
-				cbSpawn.SelectedItem = RouteNodeCollection.SpawnWeight[(byte)SpawnWeight.None];
+				cbSpawn .SelectedItem = RouteNodeCollection.Spawn [0];		//(byte)SpawnWeight.None
+				cbPatrol.SelectedItem = RouteNodeCollection.Patrol[0];		//(byte)PatrolPriority.Zero
+				cbAttack.SelectedItem = RouteNodeCollection.Attack[0];		//(byte)AttackBase.Zero
 
 				cbLink1Dest.SelectedItem = // TODO: figure out why these show blank and not "NotUsed"
 				cbLink2Dest.SelectedItem = // when the app loads its very first Map.
@@ -733,16 +734,16 @@ namespace MapView.Forms.MapObservers.RouteViews
 				gbLinkData  .Enabled =
 				gbNodeEditor.Enabled = true;
 
-				cbType  .SelectedItem = NodeSelected.Type;
-				cbPatrol.SelectedItem = NodeSelected.Patrol;
-				cbAttack.SelectedItem = NodeSelected.Attack;
+				cbType.SelectedItem = NodeSelected.Type;
 
 				if (MapFile.Descriptor.Pal == Palette.TftdBattle)
-					cbRank.SelectedItem = RouteNodeCollection.NodeRankTftd[NodeSelected.Rank];
+					cbRank.SelectedItem = RouteNodeCollection.RankTftd[NodeSelected.Rank];
 				else
-					cbRank.SelectedItem = RouteNodeCollection.NodeRankUfo[NodeSelected.Rank];
+					cbRank.SelectedItem = RouteNodeCollection.RankUfo [NodeSelected.Rank];
 
-				cbSpawn.SelectedItem = RouteNodeCollection.SpawnWeight[(byte)NodeSelected.Spawn];
+				cbSpawn .SelectedItem = RouteNodeCollection.Spawn [(byte)NodeSelected.Spawn];
+				cbPatrol.SelectedItem = RouteNodeCollection.Patrol[(byte)NodeSelected.Patrol];
+				cbAttack.SelectedItem = RouteNodeCollection.Attack[(byte)NodeSelected.Attack];
 
 				cbLink1Dest.Items.Clear();
 				cbLink2Dest.Items.Clear();
@@ -970,7 +971,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			if (!_loadingInfo)
 			{
 				RouteChanged = true;
-				NodeSelected.Patrol = (PatrolPriority)cbPatrol.SelectedItem;
+				NodeSelected.Patrol = (PatrolPriority)((Pterodactyl)cbPatrol.SelectedItem).Case;
 
 				if (Tag as String == "ROUTE")
 					ViewerFormsManager.TopRouteView.ControlRoute.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
@@ -986,7 +987,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			if (!_loadingInfo)
 			{
 				RouteChanged = true;
-				NodeSelected.Attack = (BaseAttack)cbAttack.SelectedItem;
+				NodeSelected.Attack = (AttackBase)((Pterodactyl)cbAttack.SelectedItem).Case;
 
 				if (Tag as String == "ROUTE")
 					ViewerFormsManager.TopRouteView.ControlRoute.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
@@ -1493,11 +1494,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 										System.Globalization.CultureInfo.InvariantCulture,
 										"{0}{6}{1}{6}{2}{6}{3}{6}{4}{6}{5}",
 										NodeCopyPrefix,
-										cbType.SelectedIndex,
+										cbType  .SelectedIndex,
 										cbPatrol.SelectedIndex,
 										cbAttack.SelectedIndex,
-										cbRank.SelectedIndex,
-										cbSpawn.SelectedIndex,
+										cbRank  .SelectedIndex,
+										cbSpawn .SelectedIndex,
 										NodeCopySeparator);
 
 				// TODO: include Link info ... perhaps.
@@ -1787,9 +1788,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			string rank;
 			if (MapFile.Descriptor.Pal == Palette.TftdBattle)
-				rank = ((Pterodactyl)RouteNodeCollection.NodeRankTftd[0]).ToString();
+				rank = ((Pterodactyl)RouteNodeCollection.RankTftd[0]).ToString();
 			else
-				rank = ((Pterodactyl)RouteNodeCollection.NodeRankUfo[0]).ToString();
+				rank = ((Pterodactyl)RouteNodeCollection.RankUfo [0]).ToString();
 
 			if (MessageBox.Show(
 							this,

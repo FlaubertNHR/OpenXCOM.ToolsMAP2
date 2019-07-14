@@ -39,7 +39,7 @@ namespace XCom
 		public PatrolPriority Patrol
 		{ get; set; }
 
-		public BaseAttack Attack
+		public AttackBase Attack
 		{ get; set; }
 
 		public SpawnWeight Spawn
@@ -92,7 +92,7 @@ namespace XCom
 			Type   = (UnitType)bindata[19];
 			Rank   = bindata[20];
 			Patrol = (PatrolPriority)bindata[21];
-			Attack = (BaseAttack)bindata[22];
+			Attack = (AttackBase)bindata[22];
 			Spawn  = (SpawnWeight)bindata[23];
 
 			if (Rank > (byte)8) // NodeRanks are 0..8 (if valid.)
@@ -126,7 +126,7 @@ namespace XCom
 			Type   = UnitType.Any;
 			Rank   = (byte)0;
 			Patrol = PatrolPriority.Zero;
-			Attack = BaseAttack.Zero;
+			Attack = AttackBase.Zero;
 			Spawn  = SpawnWeight.None;
 
 			OobRank = (byte)0;

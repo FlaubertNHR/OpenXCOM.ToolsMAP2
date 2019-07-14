@@ -109,9 +109,9 @@ namespace MapView
 
 			object[] pters;
 			if (_file.Descriptor.Pal == Palette.TftdBattle)
-				pters = RouteNodeCollection.NodeRankTftd;
+				pters = RouteNodeCollection.RankTftd;
 			else
-				pters = RouteNodeCollection.NodeRankUfo;
+				pters = RouteNodeCollection.RankUfo;
 
 			lbl_tsRanks0.Text = pters[0].ToString();
 			lbl_tsRanks1.Text = pters[1].ToString();
@@ -467,7 +467,7 @@ namespace MapView
 		public PatrolPriority Patrol
 		{ get; set; }
 
-		public BaseAttack Attack
+		public AttackBase Attack
 		{ get; set; }
 
 		public SpawnWeight Spawn
