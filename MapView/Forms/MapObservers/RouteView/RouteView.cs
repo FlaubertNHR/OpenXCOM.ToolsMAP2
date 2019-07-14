@@ -533,7 +533,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				// else the selected node is the node clicked.
 			}
 
-			if (update) UpdateNodeGroups();
+			if (update) UpdateNodeInfo();
 
 			Dragnode = NodeSelected;
 
@@ -1270,32 +1270,32 @@ namespace MapView.Forms.MapObservers.RouteViews
 			else if (btn == btnGoLink4) slot = 3;
 			else                        slot = 4; // btn == btnGoLink5
 
-			var link   = NodeSelected[slot];
-			byte dest  = link.Destination;
-			var node   = MapFile.Routes[dest];
-			int levels = MapFile.MapSize.Levs;
+			byte dest = NodeSelected[slot].Destination;
+			var node  = MapFile.Routes[dest];
 
 			if (!RouteNodeCollection.IsNodeOutsideMapBounds(
 														node,
 														MapFile.MapSize.Cols,
 														MapFile.MapSize.Rows,
-														levels))
+														MapFile.MapSize.Levs))
 			{
 				OgnodeId = NodeSelected.Index; // store the current nodeId for the og-button.
 
 				ViewerFormsManager.RouteView   .Control     .btnOg.Enabled =
 				ViewerFormsManager.TopRouteView.ControlRoute.btnOg.Enabled = true;
 
-				SelectNode(link.Destination);
+				SelectNode(dest);
 
 				SpotGoDestination(slot); // highlight back to the startnode.
 			}
 			else if (RouteCheckService.ShowInvalid(MapFile, node))
 			{
 				RouteChanged = true;
-				UpdateNodeGroups();
+				UpdateNodeInfo();
 				// TODO: May need _pnlRoutes.Refresh()
 			}
+
+			RoutePanel.Select();
 		}
 
 		/// <summary>
@@ -1412,6 +1412,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 				ViewerFormsManager.RouteView   .Control     .btnOg.Enabled =
 				ViewerFormsManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
 			}
+
+			RoutePanel.Select();
 		}
 
 		private void OnOgMouseEnter(object sender, EventArgs e)
@@ -1559,7 +1561,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				ViewerFormsManager.RouteView   .Control     .DeselectNode();
 				ViewerFormsManager.TopRouteView.ControlRoute.DeselectNode();
 
-				UpdateNodeGroups();
+				UpdateNodeInfo();
 
 				gbTileData.Enabled =
 				gbNodeData.Enabled =
@@ -1726,7 +1728,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 						RouteCheckService.CheckNodeBounds(MapFile);
 
-						UpdateNodeGroups(); // not sure is necessary ...
+						UpdateNodeInfo(); // not sure is necessary ...
 						RefreshPanels();
 
 						if (RouteView.RoutesInfo != null)
@@ -1819,7 +1821,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				if (changed != 0)
 				{
 					RouteChanged = true;
-					UpdateNodeGroups();
+					UpdateNodeInfo();
 
 					MessageBox.Show(
 								this,
@@ -1871,7 +1873,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 						NodeSelected[slot].Type = UnitType.Any;
 					}
 
-					UpdateNodeGroups();
+					UpdateNodeInfo();
 					RefreshControls();
 				}
 			}
@@ -1934,7 +1936,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 								changed,
 								(changed == 1) ? " has been" : "s have been");
 
-				UpdateNodeGroups();
+				UpdateNodeInfo();
 			}
 			else
 			{
@@ -2014,7 +2016,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			if (RouteCheckService.CheckNodeBounds(MapFile, true))
 			{
 				RouteChanged = true;
-				UpdateNodeGroups();
+				UpdateNodeInfo();
 			}
 		}
 		#endregion Events (toolstrip)
@@ -2325,7 +2327,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 		}
 
-		private void UpdateNodeGroups()
+		private void UpdateNodeInfo()
 		{
 			ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
 			ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
