@@ -42,9 +42,9 @@ namespace XCom
 	//        nodes at most"
 	//   I believe, at a guess, that this is designed to keep Commanders in the
 	//   command module, eg, or at least increase the chance of aLiens sticking
-	//   around non-CivScout patrol nodes. Long story short: OxC has hardcoded
-	//   patrolling behavior beyond what can be determined by the Route files.
-	//   (I didn't look at OxCe)
+	//   around their non-CivScout patrol nodes. Long story short: OxC has
+	//   hardcoded patrolling behavior beyond what can be determined by the
+	//   Route files. (I didn't look at OxCe)
 	//
 	// 0 = Any, 1 = Flying, 2 = Flying Large, 3 = Large, 4 = Small <- UfoPaedia.Org BZZZT.
 
@@ -170,79 +170,104 @@ namespace XCom
 			IEnumerable<RouteNode>
 	{
 		#region Fields (static)
-		private const string RankInvalid = "INVALID";
+		private const string civscout  = "0 : Civilian/Scout";
+		private const string xcom      = "1 : XCOM";
+		private const string soldier   = "2 : Soldier";
+		private const string navigator = "3 : Navigator";
+		private const string squadldr  = "3 : Squad Leader";
+		private const string lc        = "4 : Leader/Commander";
+		private const string engineer  = "5 : Engineer";
+		private const string ter1      = "6 : Terrorist1";
+		private const string medic     = "7 : Medic";
+		private const string techie    = "7 : Technician";
+		private const string ter2      = "8 : Terrorist2";
+
+		private const string RankInvalid = "INVALID"; // WORKAROUND for several bugged Route files in TftD.
+
+		private const string none0 =  "0 : None";
+		private const string lolo0 =  "0 : LoLo";
+		private const string lo1   =  "1 : Lo";
+		private const string lo2   =  "2 : Lo";
+		private const string lo3   =  "3 : Lo";
+		private const string med4  =  "4 : Med";
+		private const string med5  =  "5 : Med";
+		private const string med6  =  "6 : Med";
+		private const string med7  =  "7 : Med";
+		private const string hi8   =  "8 : Hi";
+		private const string hi9   =  "9 : Hi";
+		private const string hi10  = "10 : Hi";
 
 		public static readonly object[] RankUfo =
 		{
-			new Pterodactyl("0 : Civilian/Scout",   NodeRankUfo.CivScout),
-			new Pterodactyl("1 : XCOM",             NodeRankUfo.XCOM),
-			new Pterodactyl("2 : Soldier",          NodeRankUfo.Soldier),
-			new Pterodactyl("3 : Navigator",        NodeRankUfo.Navigator),
-			new Pterodactyl("4 : Leader/Commander", NodeRankUfo.LeaderCommander),
-			new Pterodactyl("5 : Engineer",         NodeRankUfo.Engineer),
-			new Pterodactyl("6 : Terrorist1",       NodeRankUfo.Misc1),
-			new Pterodactyl("7 : Medic",            NodeRankUfo.Medic),
-			new Pterodactyl("8 : Terrorist2",       NodeRankUfo.Misc2),
-			new Pterodactyl(RankInvalid,            NodeRankUfo.invalid) // WORKAROUND.
+			new Pterodactyl(civscout,    NodeRankUfo.CivScout),
+			new Pterodactyl(xcom,        NodeRankUfo.XCOM),
+			new Pterodactyl(soldier,     NodeRankUfo.Soldier),
+			new Pterodactyl(navigator,   NodeRankUfo.Navigator),
+			new Pterodactyl(lc,          NodeRankUfo.LeaderCommander),
+			new Pterodactyl(engineer,    NodeRankUfo.Engineer),
+			new Pterodactyl(ter1,        NodeRankUfo.Misc1),
+			new Pterodactyl(medic,       NodeRankUfo.Medic),
+			new Pterodactyl(ter2,        NodeRankUfo.Misc2),
+			new Pterodactyl(RankInvalid, NodeRankUfo.invalid) // WORKAROUND.
 		};
 
 		public static readonly object[] RankTftd =
 		{
-			new Pterodactyl("0 : Civilian/Scout",   NodeRankTftd.CivScout),
-			new Pterodactyl("1 : XCOM",             NodeRankTftd.XCOM),
-			new Pterodactyl("2 : Soldier",          NodeRankTftd.Soldier),
-			new Pterodactyl("3 : Squad Leader",     NodeRankTftd.SquadLeader),
-			new Pterodactyl("4 : Leader/Commander", NodeRankTftd.LeaderCommander),
-			new Pterodactyl("5 : Medic",            NodeRankTftd.Medic),
-			new Pterodactyl("6 : Terrorist1",       NodeRankTftd.Misc1),
-			new Pterodactyl("7 : Technician",       NodeRankTftd.Technician),
-			new Pterodactyl("8 : Terrorist2",       NodeRankTftd.Misc2),
-			new Pterodactyl(RankInvalid,            NodeRankTftd.invalid) // WORKAROUND.
+			new Pterodactyl(civscout,    NodeRankTftd.CivScout),
+			new Pterodactyl(xcom,        NodeRankTftd.XCOM),
+			new Pterodactyl(soldier,     NodeRankTftd.Soldier),
+			new Pterodactyl(squadldr,    NodeRankTftd.SquadLeader),
+			new Pterodactyl(lc,          NodeRankTftd.LeaderCommander),
+			new Pterodactyl(medic,       NodeRankTftd.Medic),
+			new Pterodactyl(ter1,        NodeRankTftd.Misc1),
+			new Pterodactyl(techie,      NodeRankTftd.Technician),
+			new Pterodactyl(ter2,        NodeRankTftd.Misc2),
+			new Pterodactyl(RankInvalid, NodeRankTftd.invalid) // WORKAROUND.
 		};
 
 		public static readonly object[] Spawn =
 		{
-			new Pterodactyl( "0 : None", SpawnWeight.None),
-			new Pterodactyl( "1 : Lo",   SpawnWeight.Spawn1),
-			new Pterodactyl( "2 : Lo",   SpawnWeight.Spawn2),
-			new Pterodactyl( "3 : Lo",   SpawnWeight.Spawn3),
-			new Pterodactyl( "4 : Med",  SpawnWeight.Spawn4),
-			new Pterodactyl( "5 : Med",  SpawnWeight.Spawn5),
-			new Pterodactyl( "6 : Med",  SpawnWeight.Spawn6),
-			new Pterodactyl( "7 : Med",  SpawnWeight.Spawn7),
-			new Pterodactyl( "8 : Hi",   SpawnWeight.Spawn8),
-			new Pterodactyl( "9 : Hi",   SpawnWeight.Spawn9),
-			new Pterodactyl("10 : Hi",   SpawnWeight.Spawn10)
+			new Pterodactyl(none0, SpawnWeight.None),
+			new Pterodactyl(lo1,   SpawnWeight.Spawn1),
+			new Pterodactyl(lo2,   SpawnWeight.Spawn2),
+			new Pterodactyl(lo3,   SpawnWeight.Spawn3),
+			new Pterodactyl(med4,  SpawnWeight.Spawn4),
+			new Pterodactyl(med5,  SpawnWeight.Spawn5),
+			new Pterodactyl(med6,  SpawnWeight.Spawn6),
+			new Pterodactyl(med7,  SpawnWeight.Spawn7),
+			new Pterodactyl(hi8,   SpawnWeight.Spawn8),
+			new Pterodactyl(hi9,   SpawnWeight.Spawn9),
+			new Pterodactyl(hi10,  SpawnWeight.Spawn10)
 		};
 
 		public static readonly object[] Patrol =
 		{
-			new Pterodactyl( "0 : LoLo", PatrolPriority.Zero),
-			new Pterodactyl( "1 : Lo",   PatrolPriority.One),
-			new Pterodactyl( "2 : Lo",   PatrolPriority.Two),
-			new Pterodactyl( "3 : Lo",   PatrolPriority.Three),
-			new Pterodactyl( "4 : Med",  PatrolPriority.Four),
-			new Pterodactyl( "5 : Med",  PatrolPriority.Five),
-			new Pterodactyl( "6 : Med",  PatrolPriority.Six),
-			new Pterodactyl( "7 : Med",  PatrolPriority.Seven),
-			new Pterodactyl( "8 : Hi",   PatrolPriority.Eight),
-			new Pterodactyl( "9 : Hi",   PatrolPriority.Nine),
-			new Pterodactyl("10 : Hi",   PatrolPriority.Ten)
+			new Pterodactyl(lolo0, PatrolPriority.Zero),
+			new Pterodactyl(lo1,   PatrolPriority.One),
+			new Pterodactyl(lo2,   PatrolPriority.Two),
+			new Pterodactyl(lo3,   PatrolPriority.Three),
+			new Pterodactyl(med4,  PatrolPriority.Four),
+			new Pterodactyl(med5,  PatrolPriority.Five),
+			new Pterodactyl(med6,  PatrolPriority.Six),
+			new Pterodactyl(med7,  PatrolPriority.Seven),
+			new Pterodactyl(hi8,   PatrolPriority.Eight),
+			new Pterodactyl(hi9,   PatrolPriority.Nine),
+			new Pterodactyl(hi10,  PatrolPriority.Ten)
 		};
 
 		public static readonly object[] Attack =
 		{
-			new Pterodactyl( "0 : None", AttackBase.Zero),
-			new Pterodactyl( "1 : Lo",   AttackBase.One),
-			new Pterodactyl( "2 : Lo",   AttackBase.Two),
-			new Pterodactyl( "3 : Lo",   AttackBase.Three),
-			new Pterodactyl( "4 : Med",  AttackBase.Four),
-			new Pterodactyl( "5 : Med",  AttackBase.Five),
-			new Pterodactyl( "6 : Med",  AttackBase.Six),
-			new Pterodactyl( "7 : Med",  AttackBase.Seven),
-			new Pterodactyl( "8 : Hi",   AttackBase.Eight),
-			new Pterodactyl( "9 : Hi",   AttackBase.Nine),
-			new Pterodactyl("10 : Hi",   AttackBase.Ten)
+			new Pterodactyl(none0, AttackBase.Zero),
+			new Pterodactyl(lo1,   AttackBase.One),
+			new Pterodactyl(lo2,   AttackBase.Two),
+			new Pterodactyl(lo3,   AttackBase.Three),
+			new Pterodactyl(med4,  AttackBase.Four),
+			new Pterodactyl(med5,  AttackBase.Five),
+			new Pterodactyl(med6,  AttackBase.Six),
+			new Pterodactyl(med7,  AttackBase.Seven),
+			new Pterodactyl(hi8,   AttackBase.Eight),
+			new Pterodactyl(hi9,   AttackBase.Nine),
+			new Pterodactyl(hi10,  AttackBase.Ten)
 		};
 		#endregion Fields (static)
 
