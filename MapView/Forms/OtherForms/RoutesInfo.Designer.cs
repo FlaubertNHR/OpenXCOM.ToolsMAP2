@@ -14,7 +14,6 @@
 		private System.Windows.Forms.Label lbl_Nodes;
 		private System.Windows.Forms.GroupBox gb_Info;
 		private System.Windows.Forms.GroupBox gb_Tileset;
-		private System.Windows.Forms.Label lbl_tsRanks;
 		private System.Windows.Forms.Label lbl_tsRanks0;
 		private System.Windows.Forms.Label lbl_tsRanks1;
 		private System.Windows.Forms.Label lbl_tsRanks8;
@@ -105,7 +104,6 @@
 			this.lbl_tsRanks2 = new System.Windows.Forms.Label();
 			this.lbl_tsRanks1 = new System.Windows.Forms.Label();
 			this.lbl_tsRanks0 = new System.Windows.Forms.Label();
-			this.lbl_tsRanks = new System.Windows.Forms.Label();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.gb_Info.SuspendLayout();
 			this.gb_Tileset.SuspendLayout();
@@ -127,7 +125,7 @@
 			this.lbl_Category.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Category.Name = "lbl_Category";
 			this.lbl_Category.Size = new System.Drawing.Size(185, 15);
-			this.lbl_Category.TabIndex = 5;
+			this.lbl_Category.TabIndex = 2;
 			this.lbl_Category.Text = "Category";
 			this.lbl_Category.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.toolTip1.SetToolTip(this.lbl_Category, "Category");
@@ -138,7 +136,7 @@
 			this.lbl_Group.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Group.Name = "lbl_Group";
 			this.lbl_Group.Size = new System.Drawing.Size(185, 15);
-			this.lbl_Group.TabIndex = 4;
+			this.lbl_Group.TabIndex = 5;
 			this.lbl_Group.Text = "Group";
 			this.lbl_Group.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.toolTip1.SetToolTip(this.lbl_Group, "Group");
@@ -149,7 +147,7 @@
 			this.lbl_Nodes.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Nodes.Name = "lbl_Nodes";
 			this.lbl_Nodes.Size = new System.Drawing.Size(45, 15);
-			this.lbl_Nodes.TabIndex = 2;
+			this.lbl_Nodes.TabIndex = 3;
 			this.lbl_Nodes.Text = "nodes";
 			this.lbl_Nodes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.lbl_Nodes, "count of nodes w/ non-zero spawnweight");
@@ -176,7 +174,7 @@
 			this.lbl_NodesQuantity.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_NodesQuantity.Name = "lbl_NodesQuantity";
 			this.lbl_NodesQuantity.Size = new System.Drawing.Size(165, 15);
-			this.lbl_NodesQuantity.TabIndex = 3;
+			this.lbl_NodesQuantity.TabIndex = 4;
 			this.lbl_NodesQuantity.Text = "q";
 			this.lbl_NodesQuantity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.lbl_NodesQuantity, "count of nodes w/ non-zero spawnweight");
@@ -222,7 +220,6 @@
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks2);
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks1);
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks0);
-			this.gb_Tileset.Controls.Add(this.lbl_tsRanks);
 			this.gb_Tileset.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gb_Tileset.Location = new System.Drawing.Point(0, 45);
 			this.gb_Tileset.Margin = new System.Windows.Forms.Padding(0);
@@ -230,6 +227,7 @@
 			this.gb_Tileset.Size = new System.Drawing.Size(412, 165);
 			this.gb_Tileset.TabIndex = 1;
 			this.gb_Tileset.TabStop = false;
+			this.gb_Tileset.Text = " totals ";
 			// 
 			// lbl_tsRanks8_outcat
 			// 
@@ -237,7 +235,7 @@
 			this.lbl_tsRanks8_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks8_outcat.Name = "lbl_tsRanks8_outcat";
 			this.lbl_tsRanks8_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks8_outcat.TabIndex = 29;
+			this.lbl_tsRanks8_outcat.TabIndex = 28;
 			this.lbl_tsRanks8_outcat.Text = "8";
 			this.lbl_tsRanks8_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -247,7 +245,7 @@
 			this.lbl_tsRanks7_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks7_outcat.Name = "lbl_tsRanks7_outcat";
 			this.lbl_tsRanks7_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks7_outcat.TabIndex = 26;
+			this.lbl_tsRanks7_outcat.TabIndex = 25;
 			this.lbl_tsRanks7_outcat.Text = "7";
 			this.lbl_tsRanks7_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -257,7 +255,7 @@
 			this.lbl_tsRanks6_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks6_outcat.Name = "lbl_tsRanks6_outcat";
 			this.lbl_tsRanks6_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks6_outcat.TabIndex = 23;
+			this.lbl_tsRanks6_outcat.TabIndex = 22;
 			this.lbl_tsRanks6_outcat.Text = "6";
 			this.lbl_tsRanks6_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -267,7 +265,7 @@
 			this.lbl_tsRanks5_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks5_outcat.Name = "lbl_tsRanks5_outcat";
 			this.lbl_tsRanks5_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks5_outcat.TabIndex = 20;
+			this.lbl_tsRanks5_outcat.TabIndex = 19;
 			this.lbl_tsRanks5_outcat.Text = "5";
 			this.lbl_tsRanks5_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -277,7 +275,7 @@
 			this.lbl_tsRanks4_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks4_outcat.Name = "lbl_tsRanks4_outcat";
 			this.lbl_tsRanks4_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks4_outcat.TabIndex = 17;
+			this.lbl_tsRanks4_outcat.TabIndex = 16;
 			this.lbl_tsRanks4_outcat.Text = "4";
 			this.lbl_tsRanks4_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -287,7 +285,7 @@
 			this.lbl_tsRanks3_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks3_outcat.Name = "lbl_tsRanks3_outcat";
 			this.lbl_tsRanks3_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks3_outcat.TabIndex = 14;
+			this.lbl_tsRanks3_outcat.TabIndex = 13;
 			this.lbl_tsRanks3_outcat.Text = "3";
 			this.lbl_tsRanks3_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -297,7 +295,7 @@
 			this.lbl_tsRanks2_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks2_outcat.Name = "lbl_tsRanks2_outcat";
 			this.lbl_tsRanks2_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks2_outcat.TabIndex = 11;
+			this.lbl_tsRanks2_outcat.TabIndex = 10;
 			this.lbl_tsRanks2_outcat.Text = "2";
 			this.lbl_tsRanks2_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -307,7 +305,7 @@
 			this.lbl_tsRanks1_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks1_outcat.Name = "lbl_tsRanks1_outcat";
 			this.lbl_tsRanks1_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks1_outcat.TabIndex = 8;
+			this.lbl_tsRanks1_outcat.TabIndex = 7;
 			this.lbl_tsRanks1_outcat.Text = "1";
 			this.lbl_tsRanks1_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -317,7 +315,7 @@
 			this.lbl_tsRanks0_outcat.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks0_outcat.Name = "lbl_tsRanks0_outcat";
 			this.lbl_tsRanks0_outcat.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks0_outcat.TabIndex = 5;
+			this.lbl_tsRanks0_outcat.TabIndex = 4;
 			this.lbl_tsRanks0_outcat.Text = "0";
 			this.lbl_tsRanks0_outcat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -327,7 +325,7 @@
 			this.lbl_tsCategoryTotals.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsCategoryTotals.Name = "lbl_tsCategoryTotals";
 			this.lbl_tsCategoryTotals.Size = new System.Drawing.Size(55, 15);
-			this.lbl_tsCategoryTotals.TabIndex = 2;
+			this.lbl_tsCategoryTotals.TabIndex = 1;
 			this.lbl_tsCategoryTotals.Text = "category";
 			this.lbl_tsCategoryTotals.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.lbl_tsCategoryTotals, "counts in tileset\'s Category");
@@ -338,7 +336,7 @@
 			this.lbl_tsTilesetTotals.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsTilesetTotals.Name = "lbl_tsTilesetTotals";
 			this.lbl_tsTilesetTotals.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsTilesetTotals.TabIndex = 1;
+			this.lbl_tsTilesetTotals.TabIndex = 0;
 			this.lbl_tsTilesetTotals.Text = "tileset";
 			this.lbl_tsTilesetTotals.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.lbl_tsTilesetTotals, "counts in tileset");
@@ -349,7 +347,7 @@
 			this.lbl_tsRanks8_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks8_out.Name = "lbl_tsRanks8_out";
 			this.lbl_tsRanks8_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks8_out.TabIndex = 28;
+			this.lbl_tsRanks8_out.TabIndex = 27;
 			this.lbl_tsRanks8_out.Text = "8";
 			this.lbl_tsRanks8_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -359,7 +357,7 @@
 			this.lbl_tsRanks7_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks7_out.Name = "lbl_tsRanks7_out";
 			this.lbl_tsRanks7_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks7_out.TabIndex = 25;
+			this.lbl_tsRanks7_out.TabIndex = 24;
 			this.lbl_tsRanks7_out.Text = "7";
 			this.lbl_tsRanks7_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -369,7 +367,7 @@
 			this.lbl_tsRanks6_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks6_out.Name = "lbl_tsRanks6_out";
 			this.lbl_tsRanks6_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks6_out.TabIndex = 22;
+			this.lbl_tsRanks6_out.TabIndex = 21;
 			this.lbl_tsRanks6_out.Text = "6";
 			this.lbl_tsRanks6_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -379,7 +377,7 @@
 			this.lbl_tsRanks5_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks5_out.Name = "lbl_tsRanks5_out";
 			this.lbl_tsRanks5_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks5_out.TabIndex = 19;
+			this.lbl_tsRanks5_out.TabIndex = 18;
 			this.lbl_tsRanks5_out.Text = "5";
 			this.lbl_tsRanks5_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -389,7 +387,7 @@
 			this.lbl_tsRanks4_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks4_out.Name = "lbl_tsRanks4_out";
 			this.lbl_tsRanks4_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks4_out.TabIndex = 16;
+			this.lbl_tsRanks4_out.TabIndex = 15;
 			this.lbl_tsRanks4_out.Text = "4";
 			this.lbl_tsRanks4_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -399,7 +397,7 @@
 			this.lbl_tsRanks3_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks3_out.Name = "lbl_tsRanks3_out";
 			this.lbl_tsRanks3_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks3_out.TabIndex = 13;
+			this.lbl_tsRanks3_out.TabIndex = 12;
 			this.lbl_tsRanks3_out.Text = "3";
 			this.lbl_tsRanks3_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -409,7 +407,7 @@
 			this.lbl_tsRanks2_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks2_out.Name = "lbl_tsRanks2_out";
 			this.lbl_tsRanks2_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks2_out.TabIndex = 10;
+			this.lbl_tsRanks2_out.TabIndex = 9;
 			this.lbl_tsRanks2_out.Text = "2";
 			this.lbl_tsRanks2_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -419,7 +417,7 @@
 			this.lbl_tsRanks1_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks1_out.Name = "lbl_tsRanks1_out";
 			this.lbl_tsRanks1_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks1_out.TabIndex = 7;
+			this.lbl_tsRanks1_out.TabIndex = 6;
 			this.lbl_tsRanks1_out.Text = "1";
 			this.lbl_tsRanks1_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -429,7 +427,7 @@
 			this.lbl_tsRanks0_out.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks0_out.Name = "lbl_tsRanks0_out";
 			this.lbl_tsRanks0_out.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks0_out.TabIndex = 4;
+			this.lbl_tsRanks0_out.TabIndex = 3;
 			this.lbl_tsRanks0_out.Text = "0";
 			this.lbl_tsRanks0_out.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -439,7 +437,7 @@
 			this.lbl_tsRanks8.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks8.Name = "lbl_tsRanks8";
 			this.lbl_tsRanks8.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks8.TabIndex = 27;
+			this.lbl_tsRanks8.TabIndex = 26;
 			this.lbl_tsRanks8.Text = "8";
 			this.lbl_tsRanks8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -449,7 +447,7 @@
 			this.lbl_tsRanks7.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks7.Name = "lbl_tsRanks7";
 			this.lbl_tsRanks7.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks7.TabIndex = 24;
+			this.lbl_tsRanks7.TabIndex = 23;
 			this.lbl_tsRanks7.Text = "7";
 			this.lbl_tsRanks7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -459,7 +457,7 @@
 			this.lbl_tsRanks6.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks6.Name = "lbl_tsRanks6";
 			this.lbl_tsRanks6.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks6.TabIndex = 21;
+			this.lbl_tsRanks6.TabIndex = 20;
 			this.lbl_tsRanks6.Text = "6";
 			this.lbl_tsRanks6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -469,7 +467,7 @@
 			this.lbl_tsRanks5.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks5.Name = "lbl_tsRanks5";
 			this.lbl_tsRanks5.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks5.TabIndex = 18;
+			this.lbl_tsRanks5.TabIndex = 17;
 			this.lbl_tsRanks5.Text = "5";
 			this.lbl_tsRanks5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -479,7 +477,7 @@
 			this.lbl_tsRanks4.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks4.Name = "lbl_tsRanks4";
 			this.lbl_tsRanks4.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks4.TabIndex = 15;
+			this.lbl_tsRanks4.TabIndex = 14;
 			this.lbl_tsRanks4.Text = "4";
 			this.lbl_tsRanks4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -489,7 +487,7 @@
 			this.lbl_tsRanks3.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks3.Name = "lbl_tsRanks3";
 			this.lbl_tsRanks3.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks3.TabIndex = 12;
+			this.lbl_tsRanks3.TabIndex = 11;
 			this.lbl_tsRanks3.Text = "3";
 			this.lbl_tsRanks3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -499,7 +497,7 @@
 			this.lbl_tsRanks2.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks2.Name = "lbl_tsRanks2";
 			this.lbl_tsRanks2.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks2.TabIndex = 9;
+			this.lbl_tsRanks2.TabIndex = 8;
 			this.lbl_tsRanks2.Text = "2";
 			this.lbl_tsRanks2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -509,7 +507,7 @@
 			this.lbl_tsRanks1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks1.Name = "lbl_tsRanks1";
 			this.lbl_tsRanks1.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks1.TabIndex = 6;
+			this.lbl_tsRanks1.TabIndex = 5;
 			this.lbl_tsRanks1.Text = "1";
 			this.lbl_tsRanks1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -519,20 +517,9 @@
 			this.lbl_tsRanks0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_tsRanks0.Name = "lbl_tsRanks0";
 			this.lbl_tsRanks0.Size = new System.Drawing.Size(145, 15);
-			this.lbl_tsRanks0.TabIndex = 3;
+			this.lbl_tsRanks0.TabIndex = 2;
 			this.lbl_tsRanks0.Text = "0";
 			this.lbl_tsRanks0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lbl_tsRanks
-			// 
-			this.lbl_tsRanks.Location = new System.Drawing.Point(5, 10);
-			this.lbl_tsRanks.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl_tsRanks.Name = "lbl_tsRanks";
-			this.lbl_tsRanks.Size = new System.Drawing.Size(40, 15);
-			this.lbl_tsRanks.TabIndex = 0;
-			this.lbl_tsRanks.Text = "Ranks";
-			this.lbl_tsRanks.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip1.SetToolTip(this.lbl_tsRanks, "table w/ non-zero spawnweight by rank");
 			// 
 			// toolTip1
 			// 
