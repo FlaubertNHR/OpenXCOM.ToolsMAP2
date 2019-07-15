@@ -85,6 +85,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// Gets the selected-tilepart.
 		/// Sets the selected-tilepart when a valid QuadrantPanel quad is
 		/// double-clicked.
+		/// @note The setter is invoked only by TileView.SelectedTilepart.
 		/// </summary>
 		internal Tilepart PartSelected
 		{
@@ -99,7 +100,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			{
 				if (value != null)
 				{
-					_id = value.SetId + 1; // +1 to account for the eraser.
+					_id = value.SetId + 1; // +1 to account for the nullpart.
 
 					if (TilepartSelected != null)
 						TilepartSelected(PartSelected);

@@ -93,7 +93,7 @@ namespace MapView
 		/// @note The operation of the flag relies on the fact that once a
 		/// tile(s) has been selected on a Map there will always be a tile(s)
 		/// selected until either (a) the Map is resized or (b) user loads a
-		/// different Map.
+		/// different Map or (c) the Map/terrains are reloaded.
 		/// </summary>
 		internal bool FirstClick
 		{

@@ -21,9 +21,6 @@ namespace MapView.Forms.MapObservers.TopViews
 			MapObserverControl_TopPanel // DoubleBufferedControl, IMapObserver
 	{
 		#region Fields
-		private MapTile _tile;
-		private MapLocation _location;
-
 		/// <summary>
 		/// A timer that delays processing clicks until the user's double-click
 		/// duration has elapsed. That is, don't do 1-click processing if
@@ -43,6 +40,12 @@ namespace MapView.Forms.MapObservers.TopViews
 			get { return _quadrant; }
 			set { _quadrant = value; Refresh(); }
 		}
+
+		internal MapTile Tile
+		{ private get; set; }
+
+		internal MapLocation Loc
+		{ private get; set; }
 		#endregion Properties
 
 
@@ -74,8 +77,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
-			_tile     = args.Tile as MapTile;
-			_location = args.Location;
+			Tile = args.Tile as MapTile;
+			Loc  = args.Location;
 			Refresh();
 		}
 
@@ -85,10 +88,10 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="args"></param>
 		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{
-			if (_location != null)
+			if (Loc != null)
 			{
-				_tile = MapBase[_location.Row, _location.Col] as MapTile;
-				_location.Lev = args.Level;
+				Tile = MapBase[Loc.Row, Loc.Col] as MapTile;
+				Loc.Lev = args.Level;
 			}
 			Refresh();
 		}
@@ -155,7 +158,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="graphics"></param>
 		protected override void RenderGraphics(Graphics graphics)
 		{
-			QuadrantDrawService.Draw(graphics, _tile, SelectedQuadrant);
+			QuadrantDrawService.Draw(graphics, Tile, SelectedQuadrant);
 		}
 		#endregion Events (override)
 
@@ -189,13 +192,13 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="clicks"></param>
 		internal void SetSelected(MouseButtons btn, int clicks)
 		{
-			if (_tile != null)
+			if (Tile != null)
 			{
 				switch (btn)
 				{
 					case MouseButtons.Left:
 						if (clicks == 2)
-							ViewerFormsManager.TileView.Control.SelectedTilepart = _tile[SelectedQuadrant];
+							ViewerFormsManager.TileView.Control.SelectedTilepart = Tile[SelectedQuadrant];
 
 //((MapView.Forms.MapObservers.TileViews.TileView)ViewerFormsManager.TileView.ObserverControl).SelectedTilepart = _tile[SelectedQuadrant];
 // I just want to leave that there so you can ponder the significance of it.

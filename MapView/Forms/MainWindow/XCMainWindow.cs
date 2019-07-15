@@ -1471,39 +1471,35 @@ namespace MapView
 
 		private void OnSaveImageClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.MapBase != null)
+			MapFileBase @base = MainViewUnderlay.MapBase;
+			if (@base != null)
 			{
-				sfdSaveDialog.FileName = MainViewUnderlay.MapBase.Descriptor.Label;
+				sfdSaveDialog.FileName = @base.Descriptor.Label;
 				if (sfdSaveDialog.ShowDialog() == DialogResult.OK)
-				{
-					MainViewUnderlay.MapBase.Screenshot(sfdSaveDialog.FileName);
-				}
+					@base.Screenshot(sfdSaveDialog.FileName);
 			}
 		}
 
 
 		private void OnMapResizeClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.MapBase != null)
+			MapFileBase @base = MainViewUnderlay.MapBase;
+			if (@base != null)
 			{
-				using (var f = new MapResizeInputBox())
+				using (var f = new MapResizeInputBox(@base))
 				{
-					f.MapBase = MainViewUnderlay.MapBase;
-
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						MapFileBase @base = f.MapBase;
-
 						int changes = @base.MapResize(
 													f.Rows,
 													f.Cols,
 													f.Levs,
 													f.zType);
 
-						if (!MainViewUnderlay.MapBase.MapChanged && ((changes & MapFileBase.CHANGED_MAP) != 0))
+						if (!@base.MapChanged && ((changes & MapFileBase.CHANGED_MAP) != 0))
 							MapChanged = true;
 
-						if (!MainViewUnderlay.MapBase.RoutesChanged && (changes & MapFileBase.CHANGED_NOD) != 0)
+						if (!@base.RoutesChanged && (changes & MapFileBase.CHANGED_NOD) != 0)
 						{
 							ViewerFormsManager.RouteView   .Control     .RoutesChanged =
 							ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = true;
@@ -1513,6 +1509,9 @@ namespace MapView
 
 						MainViewOverlay.FirstClick = false;
 
+						ViewerFormsManager.RouteView   .Control     .ClearSelectedInfo();
+						ViewerFormsManager.TopRouteView.ControlRoute.ClearSelectedInfo();
+
 						ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 
 						tsslDimensions   .Text = @base.MapSize.ToString();
@@ -1521,20 +1520,20 @@ namespace MapView
 
 						ViewerFormsManager.SetObservers(@base);
 
-//						ViewerFormsManager.RouteView.Control.ClearSelectedLocation(); // ... why not
-
 						ViewerFormsManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
 						ViewerFormsManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
 
 						if (ScanG != null) // update ScanG viewer if open
 							ScanG.LoadMapfile(@base);
+
+						ResetQuadrantPanel();
 					}
 				}
 			}
 		}
 
 
-		private void OnInfoClick(object sender, EventArgs e)
+		private void OnMapInfoClick(object sender, EventArgs e)
 		{
 			if (MainViewUnderlay.MapBase != null)
 			{
@@ -2673,9 +2672,6 @@ namespace MapView
 					miScanG         .Enabled =
 					miReloadTerrains.Enabled = true;
 
-//					miRegenOccult.Enabled = true; // disabled in designer w/ Visible=FALSE.
-//					miExport     .Enabled = true; // disabled in designer w/ Visible=FALSE.
-
 					MainViewOverlay.FirstClick = false;
 
 					if (descriptor.Pal == Palette.TftdBattle) // used by Mono only ->
@@ -2700,11 +2696,14 @@ namespace MapView
 
 					MapChanged = (@base as MapFile).IsLoadChanged; // don't bother to reset IsLoadChanged.
 
-					ViewerFormsManager.RouteView   .Control     .ClearSelectedInfo();
-					ViewerFormsManager.TopRouteView.ControlRoute.ClearSelectedInfo();
+					var routeview1 = ViewerFormsManager.RouteView.Control;
+					var routeview2 = ViewerFormsManager.TopRouteView.ControlRoute;
 
-					ViewerFormsManager.RouteView   .Control     .DisableOg();
-					ViewerFormsManager.TopRouteView.ControlRoute.DisableOg();
+					routeview1.ClearSelectedInfo();
+					routeview2.ClearSelectedInfo();
+
+					routeview1.DisableOg();
+					routeview2.DisableOg();
 
 					Options[Doors].Value = false; // toggle off door-animations; not sure that this is necessary to do.
 					miDoors.Checked = false;
@@ -2717,8 +2716,8 @@ namespace MapView
 
 					if (RouteCheckService.CheckNodeBounds(@base as MapFile))
 					{
-						ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-						ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = true;
+						routeview1.RoutesChanged =
+						routeview2.RoutesChanged = true;
 					}
 
 					Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
@@ -2742,10 +2741,32 @@ namespace MapView
 					if (RouteView.RoutesInfo != null)
 						RouteView.RoutesInfo.Initialize(@base as MapFile);
 
+					ResetQuadrantPanel();
+
 					Inited = false;
 					Activate();
 				}
 			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void ResetQuadrantPanel()
+		{
+			var quadrantpanel1 = ViewerFormsManager.TopView     .Control   .QuadrantPanel;
+			var quadrantpanel2 = ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel;
+
+			quadrantpanel1.Tile =
+			quadrantpanel2.Tile = null;
+
+			quadrantpanel1.Loc =
+			quadrantpanel2.Loc = null;
+
+			QuadrantDrawService.CurrentTilepart = ViewerFormsManager.TileView.Control.SelectedTilepart;
+
+			quadrantpanel1.Invalidate();
+			quadrantpanel2.Invalidate();
 		}
 
 

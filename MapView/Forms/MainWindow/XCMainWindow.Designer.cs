@@ -214,7 +214,7 @@ namespace MapView
 			this.miInfo.Index = 10;
 			this.miInfo.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
 			this.miInfo.Text = "Map In&fo";
-			this.miInfo.Click += new System.EventHandler(this.OnInfoClick);
+			this.miInfo.Click += new System.EventHandler(this.OnMapInfoClick);
 			// 
 			// miScanG
 			// 

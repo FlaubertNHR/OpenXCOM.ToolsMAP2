@@ -12,25 +12,12 @@ namespace MapView
 		:
 			Form
 	{
-		#region Properties
-		private MapFileBase _mapBase;
-		internal MapFileBase MapBase
-		{
-			get { return _mapBase; }
-			set
-			{
-				if ((_mapBase = value) != null)
-				{
-					tb_Row0.Text =
-					tb_Row1.Text = _mapBase.MapSize.Rows.ToString(CultureInfo.InvariantCulture);
-					tb_Col0.Text =
-					tb_Col1.Text = _mapBase.MapSize.Cols.ToString(CultureInfo.InvariantCulture);
-					tb_Lev0.Text =
-					tb_Lev1.Text = _mapBase.MapSize.Levs.ToString(CultureInfo.InvariantCulture);
-				}
-			}
-		}
+		#region Fields
+		private MapFileBase _base;
+		#endregion Fields
 
+
+		#region Properties
 		private int _rows;
 		internal int Rows
 		{
@@ -66,9 +53,19 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal MapResizeInputBox()
+		/// <param name="base"></param>
+		internal MapResizeInputBox(MapFileBase @base)
 		{
 			InitializeComponent();
+
+			_base = @base;
+
+			tb_Row0.Text =
+			tb_Row1.Text = @base.MapSize.Rows.ToString(CultureInfo.InvariantCulture);
+			tb_Col0.Text =
+			tb_Col1.Text = @base.MapSize.Cols.ToString(CultureInfo.InvariantCulture);
+			tb_Lev0.Text =
+			tb_Lev1.Text = @base.MapSize.Levs.ToString(CultureInfo.InvariantCulture);
 
 			btn_Cancel.Select();
 			DialogResult = DialogResult.Cancel;
@@ -132,7 +129,7 @@ namespace MapView
 				{
 					if (height > 0)
 					{
-						int delta = (height - _mapBase.MapSize.Levs);
+						int delta = (height - _base.MapSize.Levs);
 						if (cb_Ceil.Enabled = (delta != 0))
 						{
 							if (delta > 0)

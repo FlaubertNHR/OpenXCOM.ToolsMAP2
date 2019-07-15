@@ -76,16 +76,26 @@ namespace MapView.Forms.MapObservers.TileViews
 			}
 		}
 
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		/// <summary>
+		/// Gets the selected-tilepart.
+		/// Sets the selected-tilepart when a valid QuadrantPanel quad is
+		/// double-clicked.
+		/// @note TileView switches to the ALL tabpage and selects the
+		/// appropriate tilepart, w/ TilePanel.PartSelected, when a quad is
+		/// selected in the QuadrantPanel. The TilepartSelected event then
+		/// fires, and then the TilepartSelected_SelectQuadrant event fires.
+		/// Thought you'd like to know how good the pasta tastes.
+		/// </summary>
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] // w.t.f.
 		internal Tilepart SelectedTilepart
 		{
-			get { return _panels[tcTileTypes.SelectedIndex].PartSelected; }
+			get { return GetSelectedPanel().PartSelected; }
 			set
 			{
 				_allTiles.PartSelected = value;
 				tcTileTypes.SelectedIndex = 0;
 
-				Refresh();
+				Refresh(); // req'd.
 			}
 		}
 
@@ -716,7 +726,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <returns></returns>
 		internal TilePanel GetSelectedPanel()
 		{
-			return _panels[tcTileTypes.SelectedIndex] as TilePanel;
+			return _panels[tcTileTypes.SelectedIndex];
 		}
 		#endregion Methods
 	}
