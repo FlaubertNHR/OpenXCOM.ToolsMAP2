@@ -50,7 +50,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
 		private static readonly GraphicsPath _pathCurrent = new GraphicsPath();
 
-		private const int QuadrantTypeCurrent = 5;
+		internal const int QuadrantTypeCurrent = 5;
 
 		private static TopView TopViewControl;
 		#endregion Fields (static)

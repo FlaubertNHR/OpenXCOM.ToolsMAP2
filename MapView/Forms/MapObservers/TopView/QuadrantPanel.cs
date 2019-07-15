@@ -144,7 +144,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				case QuadrantType.North:   parttype = PartType.North;   break;
 				case QuadrantType.Content: parttype = PartType.Content; break;
 
-				case (QuadrantType)5: // not defined but ok - is QuadrantTypeCurrent
+				case (QuadrantType)QuadrantDrawService.QuadrantTypeCurrent:
 					if (QuadrantDrawService.CurrentTilepart != null)
 						parttype = QuadrantDrawService.CurrentTilepart.Record.PartType;
 					break;
@@ -155,7 +155,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				ViewerFormsManager.TopView     .Control   .SelectQuadrant(parttype);
 				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(parttype);
 
-				if (parttype != (PartType)5)
+				if (parttype != (PartType)QuadrantDrawService.QuadrantTypeCurrent)
 					SetSelected(e.Button, e.Clicks, keyboardInput);
 			}
 			_quadtype = QuadrantType.None;
@@ -179,6 +179,13 @@ namespace MapView.Forms.MapObservers.TopViews
 			Invalidate();
 		}
 
+		/// <summary>
+		/// Clever handling of RMB double-click event ...
+		/// WARNING: the interaction among this QuadrantPanel, the TopPanel, and
+		/// the TilePanel in TileView has become more than a little fragile.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="e"></param>
 		private void OnClicksElapsed(object source, ElapsedEventArgs e)
 		{
 			_t1.Stop();
@@ -198,16 +205,17 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// TODO: GENERAL - Bypass operations (and the MapChanged flag)
 		///       if user does an operation that results in identical state.
 		/// </summary>
-		/// <param name="btn"></param>
+		/// <param name="button"></param>
 		/// <param name="clicks"></param>
 		/// <param name= "keyboardInput"></param>
-		internal void SetSelected(MouseButtons btn, int clicks, bool keyboardInput = false)
+		internal void SetSelected(MouseButtons button, int clicks, bool keyboardInput = false)
 		{
 			if (Tile != null)
 			{
-				switch (btn)
+				switch (button)
 				{
 					case MouseButtons.Left:
+						// clicks=1 is done by caller.
 						if (clicks == 2)
 							ViewerFormsManager.TileView.Control.SelectedTilepart = Tile[SelectedQuadrant];
 

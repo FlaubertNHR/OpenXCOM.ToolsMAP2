@@ -101,14 +101,14 @@ namespace MapView.Forms.MapObservers.TileViews
 				if (value != null)
 				{
 					_id = value.SetId + 1; // +1 to account for the nullpart.
-
-					if (TilepartSelected != null)
-						TilepartSelected(PartSelected);
-
-					ScrollToTile();
 				}
 				else
 					_id = 0;
+
+				if (TilepartSelected != null)
+					TilepartSelected(PartSelected);
+
+				ScrollToTile();
 			}
 		}
 		#endregion Properties

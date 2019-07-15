@@ -47,7 +47,7 @@ namespace MapView.Forms.MainWindow
 		/// <param name="part"></param>
 		private static void OnTilepartSelected_SelectQuadrant(Tilepart part)
 		{
-			if (part != null && part.Record != null)
+			if (part != null)
 			{
 				TopView     .Control   .SelectQuadrant(part.Record.PartType);
 				TopRouteView.ControlTop.SelectQuadrant(part.Record.PartType);

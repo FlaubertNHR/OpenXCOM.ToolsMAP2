@@ -468,10 +468,19 @@ namespace MapView.Forms.MapObservers.TopViews
 				MainViewOverlay.that.ProcessSelection(loc,loc);
 			}
 
-			if (e.Button == MouseButtons.Right)
+			switch (e.Button)
 			{
-				ViewerFormsManager.TopView     .Control   .QuadrantPanel.SetSelected(MouseButtons.Right, 1);
-				ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.SetSelected(MouseButtons.Right, 1);
+				case MouseButtons.Left:
+					if (e.Clicks == 2)
+					{
+						ViewerFormsManager.TopView     .Control   .QuadrantPanel.SetSelected(MouseButtons.Left, 2);
+						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.SetSelected(MouseButtons.Left, 2);
+					}
+					break;
+				case MouseButtons.Right:
+					ViewerFormsManager.TopView     .Control   .QuadrantPanel.SetSelected(MouseButtons.Right, 1);
+					ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.SetSelected(MouseButtons.Right, 1);
+					break;
 			}
 //			base.OnMouseDown(e);
 		}
