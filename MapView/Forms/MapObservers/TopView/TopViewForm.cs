@@ -141,20 +141,20 @@ namespace MapView.Forms.MapObservers.TopViews
 			}
 			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
-				QuadrantType type = QuadrantType.None;
+				QuadrantType quadtype = QuadrantType.None;
 				switch (e.KeyCode)
 				{
-					case Keys.D1: type = QuadrantType.Floor;   break;
-					case Keys.D2: type = QuadrantType.West;    break;
-					case Keys.D3: type = QuadrantType.North;   break;
-					case Keys.D4: type = QuadrantType.Content; break;
+					case Keys.D1: quadtype = QuadrantType.Floor;   break;
+					case Keys.D2: quadtype = QuadrantType.West;    break;
+					case Keys.D3: quadtype = QuadrantType.North;   break;
+					case Keys.D4: quadtype = QuadrantType.Content; break;
 				}
 
-				if (type != QuadrantType.None)
+				if (quadtype != QuadrantType.None)
 				{
 					e.SuppressKeyPress = true;
 					var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-					Control.QuadrantPanel.ForceMouseDown(args, type);
+					Control.QuadrantPanel.doMouseDown(args, quadtype);
 				}
 				else if (Control.TopPanel.Focused)
 				{

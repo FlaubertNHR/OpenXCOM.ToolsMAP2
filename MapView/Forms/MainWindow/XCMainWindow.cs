@@ -1103,7 +1103,7 @@ namespace MapView
 					else if (part != null)
 					{
 						e.SuppressKeyPress = true;
-						ViewerFormsManager.TopView.Control.OnToggleQuadrantVisibilityClick(part, EventArgs.Empty);
+						ViewerFormsManager.TopView.Control.OnQuadrantVisibilityClick(part, EventArgs.Empty);
 					}
 				}
 			}

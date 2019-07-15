@@ -209,20 +209,20 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileViews" thanks for knif
 			{
 				if (tabControl.SelectedIndex == 0) // Top
 				{
-					QuadrantType quadType = QuadrantType.None;
+					QuadrantType quadtype = QuadrantType.None;
 					switch (e.KeyCode)
 					{
-						case Keys.D1: quadType = QuadrantType.Floor;   break;
-						case Keys.D2: quadType = QuadrantType.West;    break;
-						case Keys.D3: quadType = QuadrantType.North;   break;
-						case Keys.D4: quadType = QuadrantType.Content; break;
+						case Keys.D1: quadtype = QuadrantType.Floor;   break;
+						case Keys.D2: quadtype = QuadrantType.West;    break;
+						case Keys.D3: quadtype = QuadrantType.North;   break;
+						case Keys.D4: quadtype = QuadrantType.Content; break;
 					}
 
-					if (quadType != QuadrantType.None)
+					if (quadtype != QuadrantType.None)
 					{
 						e.SuppressKeyPress = true;
 						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-						ControlTop.QuadrantPanel.ForceMouseDown(args, quadType);
+						ControlTop.QuadrantPanel.doMouseDown(args, quadtype);
 					}
 					else if (ControlTop.TopPanel.Focused)
 					{

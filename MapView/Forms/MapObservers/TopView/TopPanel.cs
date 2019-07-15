@@ -423,9 +423,9 @@ namespace MapView.Forms.MapObservers.TopViews
 					return;
 			}
 
-			TopView.QuadrantPanel.ForceMouseDown(
+			TopView.QuadrantPanel.doMouseDown(
 											new MouseEventArgs(button, clicks, 0,0, 0),
-											TopView.QuadrantPanel.SelectedQuadrant);
+											QuadrantType.None); //TopView.QuadrantPanel.SelectedQuadrant
 
 //			base.OnKeyDown(e);
 		}
@@ -441,34 +441,31 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			Select();
 
-			if (MapBase != null) // safety.
+			var loc = GetTileLocation(e.X, e.Y);
+			if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
+				&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
 			{
-				var loc = GetTileLocation(e.X, e.Y);
-				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
-					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
-				{
-					MainViewOverlay.that._keyDeltaX =
-					MainViewOverlay.that._keyDeltaY = 0;
+				MainViewOverlay.that._keyDeltaX =
+				MainViewOverlay.that._keyDeltaY = 0;
 
-					// as long as MainViewOverlay.OnSelectLocationMain()
-					// fires before the subsidiary viewers' OnSelectLocationObserver()
-					// functions fire, FirstClick is set okay by the former.
-					//
-					// See also, RouteView.OnSelectLocationObserver()
-					// ps. The FirstClick flag for TopView should be set either in 
-					// this class's OnSelectLocationObserver() handler or even
-					// QuadrantPanel.OnSelectLocationObserver() ... anyway.
-					//
-					// or better: Make a flag of it in MapFileBase where Location is actually
-					// set and all these OnLocationSelected events really fire out of !
-//					MainViewOverlay.that.FirstClick = true;
+				// as long as MainViewOverlay.OnSelectLocationMain()
+				// fires before the secondary viewers' OnSelectLocationObserver()
+				// functions fire, FirstClick is set okay by the former.
+				//
+				// See also, RouteView.OnSelectLocationObserver()
+				// ps. The FirstClick flag for TopView should be set either in 
+				// this class's OnSelectLocationObserver() handler or even
+				// QuadrantPanel.OnSelectLocationObserver() ... anyway.
+				//
+				// or better: Make a flag of it in MapFileBase where Location is really
+				// set and all these OnLocationSelected events actually fire out of!
+//				MainViewOverlay.that.FirstClick = true;
 
-					MapBase.Location = new MapLocation( // fire SelectLocation
-													loc.Y, loc.X,
-													MapBase.Level);
-					_isMouseDrag = true;
-					MainViewOverlay.that.ProcessSelection(loc,loc);
-				}
+				MapBase.Location = new MapLocation( // fire SelectLocation
+												loc.Y, loc.X,
+												MapBase.Level);
+				_isMouseDrag = true;
+				MainViewOverlay.that.ProcessSelection(loc,loc);
 			}
 
 			if (e.Button == MouseButtons.Right)

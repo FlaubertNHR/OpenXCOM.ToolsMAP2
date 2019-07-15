@@ -108,9 +108,13 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		/// <param name="e"></param>
 		/// <param name="quadtype"></param>
-		internal void ForceMouseDown(MouseEventArgs e, QuadrantType quadtype)
+		internal void doMouseDown(MouseEventArgs e, QuadrantType quadtype)
 		{
-			_quadtype = quadtype;
+			if (quadtype != QuadrantType.None)
+				_quadtype = quadtype;
+			else
+				_quadtype = SelectedQuadrant;
+
 			OnMouseDown(e);
 		}
 

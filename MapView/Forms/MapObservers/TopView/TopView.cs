@@ -101,7 +101,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			VisibleParts = FLOOR | WEST | NORTH | CONTENT;
 
 			foreach (ToolStripMenuItem it in visQuads)
-				it.Click += OnToggleQuadrantVisibilityClick;
+				it.Click += OnQuadrantVisibilityClick;
 
 			ObserverPanels.Add("TopPanel",      TopPanel);
 			ObserverPanels.Add("QuadrantPanel", QuadrantPanel);
@@ -109,6 +109,9 @@ namespace MapView.Forms.MapObservers.TopViews
 			ResumeLayout();
 		}
 
+		/// <summary>
+		/// Instantiates and initializes the QuadrantPanel.
+		/// </summary>
 		private void InitializeQuadrantPanel()
 		{
 			QuadrantPanel = new QuadrantPanel();
@@ -131,7 +134,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnToggleQuadrantVisibilityClick(object sender, EventArgs e)
+		internal void OnQuadrantVisibilityClick(object sender, EventArgs e)
 		{
 			var it = sender as ToolStripMenuItem;
 			if (it == Floor)
