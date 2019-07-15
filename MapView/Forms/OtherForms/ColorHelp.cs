@@ -27,6 +27,29 @@ namespace MapView
 		{
 			InitializeComponent();
 
+			label7   .Font =
+			label8   .Font =
+			label9   .Font =
+			label10  .Font =
+			label14  .Font =
+			label15  .Font =
+			label16  .Font =
+			lblType00.Font =
+			lblType01.Font =
+			lblType02.Font =
+			lblType03.Font =
+			lblType04.Font =
+			lblType05.Font =
+			lblType06.Font =
+			lblType07.Font =
+			lblType08.Font =
+			lblType09.Font =
+			lblType10.Font =
+			lblType11.Font =
+			lblType12.Font =
+			lblType13.Font =
+			lblType14.Font = new Font(Font, FontStyle.Bold);
+
 			OnCheckChanged(null, EventArgs.Empty);
 		}
 		#endregion cTor
@@ -265,7 +288,7 @@ namespace MapView
 		/// <returns></returns>
 		private static Color GetTextColor(Color color)
 		{
-			return ((int)color.R + color.G + color.B > 500) ? Color.DarkSlateBlue
+			return ((int)color.R + color.G + color.B > 485) ? Color.DarkSlateBlue
 															: Color.Snow;
 		}
 		#endregion Methods
@@ -336,6 +359,8 @@ namespace MapView
 		#endregion Events
 
 
+
+		#region Designer
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -353,7 +378,6 @@ namespace MapView
 		private System.ComponentModel.Container components = null;
 
 
-		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -450,7 +474,6 @@ namespace MapView
 			// label7
 			// 
 			this.label7.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label7.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label7.Location = new System.Drawing.Point(10, 20);
 			this.label7.Name = "label7";
@@ -463,7 +486,6 @@ namespace MapView
 			// label9
 			// 
 			this.label9.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label9.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label9.Location = new System.Drawing.Point(220, 20);
 			this.label9.Name = "label9";
@@ -476,7 +498,6 @@ namespace MapView
 			// label10
 			// 
 			this.label10.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label10.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label10.Location = new System.Drawing.Point(325, 20);
 			this.label10.Name = "label10";
@@ -489,7 +510,6 @@ namespace MapView
 			// label8
 			// 
 			this.label8.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label8.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label8.Location = new System.Drawing.Point(115, 20);
 			this.label8.Name = "label8";
@@ -523,7 +543,6 @@ namespace MapView
 			// 
 			// label16
 			// 
-			this.label16.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label16.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label16.Location = new System.Drawing.Point(220, 20);
 			this.label16.Name = "label16";
@@ -535,7 +554,6 @@ namespace MapView
 			// 
 			// label15
 			// 
-			this.label15.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label15.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label15.Location = new System.Drawing.Point(115, 20);
 			this.label15.Name = "label15";
@@ -547,7 +565,6 @@ namespace MapView
 			// 
 			// label14
 			// 
-			this.label14.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label14.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.label14.Location = new System.Drawing.Point(10, 20);
 			this.label14.Name = "label14";
@@ -626,7 +643,6 @@ namespace MapView
 			// 
 			// lblType09
 			// 
-			this.lblType09.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType09.Location = new System.Drawing.Point(10, 95);
 			this.lblType09.Name = "lblType09";
 			this.lblType09.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -637,7 +653,6 @@ namespace MapView
 			// 
 			// lblType14
 			// 
-			this.lblType14.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType14.Location = new System.Drawing.Point(290, 120);
 			this.lblType14.Name = "lblType14";
 			this.lblType14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -648,7 +663,6 @@ namespace MapView
 			// 
 			// lblType13
 			// 
-			this.lblType13.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType13.Location = new System.Drawing.Point(150, 120);
 			this.lblType13.Name = "lblType13";
 			this.lblType13.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -659,7 +673,6 @@ namespace MapView
 			// 
 			// lblType12
 			// 
-			this.lblType12.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType12.Location = new System.Drawing.Point(10, 120);
 			this.lblType12.Name = "lblType12";
 			this.lblType12.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -670,7 +683,6 @@ namespace MapView
 			// 
 			// lblType11
 			// 
-			this.lblType11.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType11.Location = new System.Drawing.Point(290, 95);
 			this.lblType11.Name = "lblType11";
 			this.lblType11.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -681,7 +693,6 @@ namespace MapView
 			// 
 			// lblType10
 			// 
-			this.lblType10.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType10.Location = new System.Drawing.Point(150, 95);
 			this.lblType10.Name = "lblType10";
 			this.lblType10.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -692,7 +703,6 @@ namespace MapView
 			// 
 			// lblType08
 			// 
-			this.lblType08.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType08.Location = new System.Drawing.Point(290, 70);
 			this.lblType08.Name = "lblType08";
 			this.lblType08.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -703,7 +713,6 @@ namespace MapView
 			// 
 			// lblType07
 			// 
-			this.lblType07.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType07.Location = new System.Drawing.Point(150, 70);
 			this.lblType07.Name = "lblType07";
 			this.lblType07.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -714,7 +723,6 @@ namespace MapView
 			// 
 			// lblType06
 			// 
-			this.lblType06.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType06.Location = new System.Drawing.Point(10, 70);
 			this.lblType06.Name = "lblType06";
 			this.lblType06.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -725,7 +733,6 @@ namespace MapView
 			// 
 			// lblType05
 			// 
-			this.lblType05.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType05.Location = new System.Drawing.Point(290, 45);
 			this.lblType05.Name = "lblType05";
 			this.lblType05.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -736,7 +743,6 @@ namespace MapView
 			// 
 			// lblType04
 			// 
-			this.lblType04.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType04.Location = new System.Drawing.Point(150, 45);
 			this.lblType04.Name = "lblType04";
 			this.lblType04.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -747,7 +753,6 @@ namespace MapView
 			// 
 			// lblType03
 			// 
-			this.lblType03.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType03.Location = new System.Drawing.Point(10, 45);
 			this.lblType03.Name = "lblType03";
 			this.lblType03.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -758,7 +763,6 @@ namespace MapView
 			// 
 			// lblType02
 			// 
-			this.lblType02.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType02.Location = new System.Drawing.Point(290, 20);
 			this.lblType02.Name = "lblType02";
 			this.lblType02.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -769,7 +773,6 @@ namespace MapView
 			// 
 			// lblType01
 			// 
-			this.lblType01.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType01.Location = new System.Drawing.Point(150, 20);
 			this.lblType01.Name = "lblType01";
 			this.lblType01.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
@@ -780,7 +783,6 @@ namespace MapView
 			// 
 			// lblType00
 			// 
-			this.lblType00.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblType00.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.lblType00.Location = new System.Drawing.Point(10, 20);
 			this.lblType00.Name = "lblType00";
@@ -815,7 +817,6 @@ namespace MapView
 			this.ResumeLayout(false);
 
 		}
-		#endregion
 
 		private TabControl tabMain;
 		private TabPage tpTopView;
@@ -850,5 +851,6 @@ namespace MapView
 		private Label label26;
 		private GroupBox gbTopViewColors;
 		private GroupBox gbRouteViewColors;
+		#endregion
 	}
 }
