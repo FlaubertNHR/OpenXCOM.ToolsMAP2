@@ -118,14 +118,14 @@ f - fill selected tile(s)' selected quadrant with selected part
 4 - select Content quadrant
 
 Quadrant Panel
-t         - select the tilepart in TileView of the currently selected quadrant
+t         - select the tilepart, in TileView, of the currently selected quadrant
             (or double-click the quadrant itself)
-Shift+Del - delete the part(s) of the currently selected quadrant in the
-            currently selected tile(s) (or double-right-click the quadrant
-            itself)
 Enter     - place the currently selected part in TileView in the currently
             selected quadrant of the currently selected tile(s) (or right-click
             the quadrant itself)
+Shift+Del - delete the part(s) of the currently selected quadrant in the
+            currently selected tile(s) (or double-right-click the quadrant
+            itself)
 
 F1 - toggle floor visibility
 F2 - toggle westwall visibility
