@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MapView.Forms.MainWindow;
 
 using XCom;
+using XCom.Interfaces;
 using XCom.Interfaces.Base;
 
 
@@ -100,16 +101,16 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <summary>
 		/// For use by keyboard-input.
 		/// </summary>
-		private QuadrantType _keyQuadtype = QuadrantType.None;
+		private QuadrantType _quadtype = QuadrantType.None;
 
 		/// <summary>
 		/// Wrapper for OnMouseDown() for use by keyboard-input.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <param name="quadType"></param>
-		internal void ForceMouseDown(MouseEventArgs e, QuadrantType quadType)
+		/// <param name="quadtype"></param>
+		internal void ForceMouseDown(MouseEventArgs e, QuadrantType quadtype)
 		{
-			_keyQuadtype = quadType;
+			_quadtype = quadtype;
 			OnMouseDown(e);
 		}
 
@@ -122,33 +123,38 @@ namespace MapView.Forms.MapObservers.TopViews
 			ViewerFormsManager.TopView     .Control   .TopPanel.Select();
 			ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Select();
 
-			QuadrantType quadType;
-			if (_keyQuadtype == QuadrantType.None) // ie. is *not* keyboard-input
-			{
-				quadType = (QuadrantType)((e.X - QuadrantDrawService.StartX)
-											   / QuadrantDrawService.Quadwidth);
-			}
-			else // is keyboard-input
-				quadType = _keyQuadtype;
+			bool keyboardInput = (_quadtype != QuadrantType.None);
 
-
-			PartType partType = PartType.All;
-			switch (quadType)
+			if (_quadtype == QuadrantType.None) // ie. is mousedown (not keyboard-input)
 			{
-				case QuadrantType.Floor:   partType = PartType.Floor;   break;
-				case QuadrantType.West:    partType = PartType.West;    break;
-				case QuadrantType.North:   partType = PartType.North;   break;
-				case QuadrantType.Content: partType = PartType.Content; break;
+				int x = (e.X - QuadrantDrawService.StartX);
+				if (x > -1 && x % QuadrantDrawService.Quadwidth < XCImage.SpriteWidth32) // ignore spaces between sprites
+					_quadtype = (QuadrantType)(x / QuadrantDrawService.Quadwidth);
 			}
 
-			if (partType != PartType.All)
+			PartType parttype = PartType.All;
+			switch (_quadtype)
 			{
-				ViewerFormsManager.TopView     .Control   .SelectQuadrant(partType);
-				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(partType);
+				case QuadrantType.Floor:   parttype = PartType.Floor;   break;
+				case QuadrantType.West:    parttype = PartType.West;    break;
+				case QuadrantType.North:   parttype = PartType.North;   break;
+				case QuadrantType.Content: parttype = PartType.Content; break;
 
-				SetSelected(e.Button, e.Clicks);
+				case (QuadrantType)5: // not defined but ok - is QuadrantTypeCurrent
+					if (QuadrantDrawService.CurrentTilepart != null)
+						parttype = QuadrantDrawService.CurrentTilepart.Record.PartType;
+					break;
 			}
-			_keyQuadtype = QuadrantType.None;
+
+			if (parttype != PartType.All)
+			{
+				ViewerFormsManager.TopView     .Control   .SelectQuadrant(parttype);
+				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(parttype);
+
+				if (parttype != (PartType)5)
+					SetSelected(e.Button, e.Clicks, keyboardInput);
+			}
+			_quadtype = QuadrantType.None;
 		}
 
 		/// <summary>
@@ -190,7 +196,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		/// <param name="btn"></param>
 		/// <param name="clicks"></param>
-		internal void SetSelected(MouseButtons btn, int clicks)
+		/// <param name= "keyboardInput"></param>
+		internal void SetSelected(MouseButtons btn, int clicks, bool keyboardInput = false)
 		{
 			if (Tile != null)
 			{
@@ -207,16 +214,16 @@ namespace MapView.Forms.MapObservers.TopViews
 					case MouseButtons.Right:
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							if (_keyQuadtype == QuadrantType.None) // ie. is *not* keyboard-input
+							if (keyboardInput)
+							{
+								_t1Clicks = clicks;
+								OnClicksElapsed(null,null);
+							}
+							else
 							{
 								_t1.Stop();
 								++_t1Clicks;
 								_t1.Start();
-							}
-							else // is keyboard-input
-							{
-								_t1Clicks = clicks;
-								OnClicksElapsed(null,null);
 							}
 						}
 						break;

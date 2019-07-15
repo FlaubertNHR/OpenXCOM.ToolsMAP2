@@ -64,7 +64,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{ get; set; }
 
 		internal static Tilepart CurrentTilepart
-		{ private get; set; }
+		{ get; set; }
 		#endregion Properties (static)
 
 
