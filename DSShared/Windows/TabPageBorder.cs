@@ -95,7 +95,7 @@ namespace DSShared.Windows
 		:
 			TabControl
 	{
-		#region Events (override)
+		#region Properties (override)
 		/// <summary>
 		/// Prevents flicker.
 		/// </summary>
@@ -108,6 +108,7 @@ namespace DSShared.Windows
 				return cp;
 			}
 		}
+		#endregion Properties (override)
 
 
 //		// Can be SUPERCEDED BY DSShared.Windows.TabPageBorder (NativeWindow) - do not
@@ -134,7 +135,6 @@ namespace DSShared.Windows
 //			}
 //			base.WndProc(ref m);
 //		}
-		#endregion Events (override)
 	}
 
 

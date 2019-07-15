@@ -2,6 +2,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using DSShared.Windows;
+
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TileViews;
@@ -26,6 +28,8 @@ namespace MapView
 		internal ColorHelp()
 		{
 			InitializeComponent();
+
+			var tpTabControl = new TabPageBorder(tabMain);
 
 			label7   .Font =
 			label8   .Font =
@@ -362,6 +366,11 @@ namespace MapView
 
 		#region Designer
 		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.Container components = null;
+
+		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
@@ -372,11 +381,6 @@ namespace MapView
 			base.Dispose(disposing);
 		}
 
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
-
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -384,19 +388,7 @@ namespace MapView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabMain = new System.Windows.Forms.TabControl();
-			this.tpTopView = new System.Windows.Forms.TabPage();
-			this.label26 = new System.Windows.Forms.Label();
-			this.gbTopViewColors = new System.Windows.Forms.GroupBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.tpRouteView = new System.Windows.Forms.TabPage();
-			this.gbRouteViewColors = new System.Windows.Forms.GroupBox();
-			this.label16 = new System.Windows.Forms.Label();
-			this.label15 = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
+			this.tabMain = new DSShared.Windows.CompositedTabControl();
 			this.tpTileView = new System.Windows.Forms.TabPage();
 			this.label25 = new System.Windows.Forms.Label();
 			this.rbTftd = new System.Windows.Forms.RadioButton();
@@ -417,20 +409,33 @@ namespace MapView
 			this.lblType02 = new System.Windows.Forms.Label();
 			this.lblType01 = new System.Windows.Forms.Label();
 			this.lblType00 = new System.Windows.Forms.Label();
+			this.tpTopView = new System.Windows.Forms.TabPage();
+			this.label26 = new System.Windows.Forms.Label();
+			this.gbTopViewColors = new System.Windows.Forms.GroupBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.tpRouteView = new System.Windows.Forms.TabPage();
+			this.gbRouteViewColors = new System.Windows.Forms.GroupBox();
+			this.label16 = new System.Windows.Forms.Label();
+			this.label15 = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.tabMain.SuspendLayout();
+			this.tpTileView.SuspendLayout();
+			this.gbTileViewColors.SuspendLayout();
 			this.tpTopView.SuspendLayout();
 			this.gbTopViewColors.SuspendLayout();
 			this.tpRouteView.SuspendLayout();
 			this.gbRouteViewColors.SuspendLayout();
-			this.tpTileView.SuspendLayout();
-			this.gbTileViewColors.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabMain
 			// 
+			this.tabMain.Controls.Add(this.tpTileView);
 			this.tabMain.Controls.Add(this.tpTopView);
 			this.tabMain.Controls.Add(this.tpRouteView);
-			this.tabMain.Controls.Add(this.tpTileView);
 			this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabMain.Location = new System.Drawing.Point(0, 0);
 			this.tabMain.Name = "tabMain";
@@ -438,161 +443,26 @@ namespace MapView
 			this.tabMain.Size = new System.Drawing.Size(454, 256);
 			this.tabMain.TabIndex = 0;
 			// 
-			// tpTopView
-			// 
-			this.tpTopView.Controls.Add(this.label26);
-			this.tpTopView.Controls.Add(this.gbTopViewColors);
-			this.tpTopView.Location = new System.Drawing.Point(4, 21);
-			this.tpTopView.Name = "tpTopView";
-			this.tpTopView.Size = new System.Drawing.Size(446, 231);
-			this.tpTopView.TabIndex = 1;
-			this.tpTopView.Text = "TopView";
-			// 
-			// label26
-			// 
-			this.label26.Location = new System.Drawing.Point(10, 195);
-			this.label26.Name = "label26";
-			this.label26.Size = new System.Drawing.Size(425, 25);
-			this.label26.TabIndex = 1;
-			this.label26.Text = "The Colors viewer must be closed and re-opened to update any colors that may have" +
-	" changed in Options.";
-			// 
-			// gbTopViewColors
-			// 
-			this.gbTopViewColors.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.gbTopViewColors.Controls.Add(this.label7);
-			this.gbTopViewColors.Controls.Add(this.label9);
-			this.gbTopViewColors.Controls.Add(this.label10);
-			this.gbTopViewColors.Controls.Add(this.label8);
-			this.gbTopViewColors.Location = new System.Drawing.Point(10, 10);
-			this.gbTopViewColors.Name = "gbTopViewColors";
-			this.gbTopViewColors.Size = new System.Drawing.Size(430, 55);
-			this.gbTopViewColors.TabIndex = 0;
-			this.gbTopViewColors.TabStop = false;
-			this.gbTopViewColors.Text = "Blob Colors";
-			// 
-			// label7
-			// 
-			this.label7.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label7.Location = new System.Drawing.Point(10, 20);
-			this.label7.Name = "label7";
-			this.label7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label7.Size = new System.Drawing.Size(95, 25);
-			this.label7.TabIndex = 0;
-			this.label7.Text = "floor";
-			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// label9
-			// 
-			this.label9.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label9.Location = new System.Drawing.Point(220, 20);
-			this.label9.Name = "label9";
-			this.label9.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label9.Size = new System.Drawing.Size(95, 25);
-			this.label9.TabIndex = 2;
-			this.label9.Text = "north";
-			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// label10
-			// 
-			this.label10.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label10.Location = new System.Drawing.Point(325, 20);
-			this.label10.Name = "label10";
-			this.label10.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label10.Size = new System.Drawing.Size(95, 25);
-			this.label10.TabIndex = 3;
-			this.label10.Text = "content";
-			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// label8
-			// 
-			this.label8.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label8.Location = new System.Drawing.Point(115, 20);
-			this.label8.Name = "label8";
-			this.label8.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label8.Size = new System.Drawing.Size(95, 25);
-			this.label8.TabIndex = 1;
-			this.label8.Text = "west";
-			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// tpRouteView
-			// 
-			this.tpRouteView.Controls.Add(this.gbRouteViewColors);
-			this.tpRouteView.Location = new System.Drawing.Point(4, 22);
-			this.tpRouteView.Name = "tpRouteView";
-			this.tpRouteView.Size = new System.Drawing.Size(446, 230);
-			this.tpRouteView.TabIndex = 2;
-			this.tpRouteView.Text = "RouteView";
-			// 
-			// gbRouteViewColors
-			// 
-			this.gbRouteViewColors.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.gbRouteViewColors.Controls.Add(this.label16);
-			this.gbRouteViewColors.Controls.Add(this.label15);
-			this.gbRouteViewColors.Controls.Add(this.label14);
-			this.gbRouteViewColors.Location = new System.Drawing.Point(10, 10);
-			this.gbRouteViewColors.Name = "gbRouteViewColors";
-			this.gbRouteViewColors.Size = new System.Drawing.Size(325, 55);
-			this.gbRouteViewColors.TabIndex = 0;
-			this.gbRouteViewColors.TabStop = false;
-			this.gbRouteViewColors.Text = "Blob Colors";
-			// 
-			// label16
-			// 
-			this.label16.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label16.Location = new System.Drawing.Point(220, 20);
-			this.label16.Name = "label16";
-			this.label16.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label16.Size = new System.Drawing.Size(95, 25);
-			this.label16.TabIndex = 2;
-			this.label16.Text = "content";
-			this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// label15
-			// 
-			this.label15.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label15.Location = new System.Drawing.Point(115, 20);
-			this.label15.Name = "label15";
-			this.label15.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label15.Size = new System.Drawing.Size(95, 25);
-			this.label15.TabIndex = 1;
-			this.label15.Text = "north";
-			this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// label14
-			// 
-			this.label14.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label14.Location = new System.Drawing.Point(10, 20);
-			this.label14.Name = "label14";
-			this.label14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label14.Size = new System.Drawing.Size(95, 25);
-			this.label14.TabIndex = 0;
-			this.label14.Text = "west";
-			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
 			// tpTileView
 			// 
 			this.tpTileView.Controls.Add(this.label25);
 			this.tpTileView.Controls.Add(this.rbTftd);
 			this.tpTileView.Controls.Add(this.rbUfo);
 			this.tpTileView.Controls.Add(this.gbTileViewColors);
-			this.tpTileView.Location = new System.Drawing.Point(4, 22);
+			this.tpTileView.Location = new System.Drawing.Point(4, 21);
 			this.tpTileView.Name = "tpTileView";
-			this.tpTileView.Size = new System.Drawing.Size(446, 230);
+			this.tpTileView.Size = new System.Drawing.Size(446, 231);
 			this.tpTileView.TabIndex = 3;
 			this.tpTileView.Text = "TileView";
 			// 
 			// label25
 			// 
 			this.label25.Location = new System.Drawing.Point(10, 10);
+			this.label25.Margin = new System.Windows.Forms.Padding(0);
 			this.label25.Name = "label25";
-			this.label25.Size = new System.Drawing.Size(335, 15);
+			this.label25.Size = new System.Drawing.Size(315, 15);
 			this.label25.TabIndex = 0;
-			this.label25.Text = "These are background colors for the special tile properties.";
+			this.label25.Text = "These are the background colors for special properties.";
 			// 
 			// rbTftd
 			// 
@@ -639,7 +509,7 @@ namespace MapView
 			this.gbTileViewColors.Size = new System.Drawing.Size(430, 150);
 			this.gbTileViewColors.TabIndex = 3;
 			this.gbTileViewColors.TabStop = false;
-			this.gbTileViewColors.Text = "Tile Colors";
+			this.gbTileViewColors.Text = " Tilepart Colors ";
 			// 
 			// lblType09
 			// 
@@ -792,6 +662,154 @@ namespace MapView
 			this.lblType00.Text = "00";
 			this.lblType00.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
+			// tpTopView
+			// 
+			this.tpTopView.Controls.Add(this.label26);
+			this.tpTopView.Controls.Add(this.gbTopViewColors);
+			this.tpTopView.Location = new System.Drawing.Point(4, 21);
+			this.tpTopView.Name = "tpTopView";
+			this.tpTopView.Size = new System.Drawing.Size(446, 231);
+			this.tpTopView.TabIndex = 1;
+			this.tpTopView.Text = "TopView";
+			// 
+			// label26
+			// 
+			this.label26.Location = new System.Drawing.Point(10, 195);
+			this.label26.Margin = new System.Windows.Forms.Padding(0);
+			this.label26.Name = "label26";
+			this.label26.Size = new System.Drawing.Size(425, 25);
+			this.label26.TabIndex = 1;
+			this.label26.Text = "The Colors viewer must be closed and re-opened to update any colors that have bee" +
+	"n changed in Options.";
+			// 
+			// gbTopViewColors
+			// 
+			this.gbTopViewColors.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.gbTopViewColors.Controls.Add(this.label7);
+			this.gbTopViewColors.Controls.Add(this.label9);
+			this.gbTopViewColors.Controls.Add(this.label10);
+			this.gbTopViewColors.Controls.Add(this.label8);
+			this.gbTopViewColors.Location = new System.Drawing.Point(10, 10);
+			this.gbTopViewColors.Name = "gbTopViewColors";
+			this.gbTopViewColors.Size = new System.Drawing.Size(430, 55);
+			this.gbTopViewColors.TabIndex = 0;
+			this.gbTopViewColors.TabStop = false;
+			this.gbTopViewColors.Text = " Blob Colors ";
+			// 
+			// label7
+			// 
+			this.label7.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label7.Location = new System.Drawing.Point(10, 20);
+			this.label7.Name = "label7";
+			this.label7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.label7.Size = new System.Drawing.Size(95, 25);
+			this.label7.TabIndex = 0;
+			this.label7.Text = "floor";
+			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// label9
+			// 
+			this.label9.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label9.Location = new System.Drawing.Point(220, 20);
+			this.label9.Name = "label9";
+			this.label9.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.label9.Size = new System.Drawing.Size(95, 25);
+			this.label9.TabIndex = 2;
+			this.label9.Text = "north";
+			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// label10
+			// 
+			this.label10.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label10.Location = new System.Drawing.Point(325, 20);
+			this.label10.Name = "label10";
+			this.label10.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.label10.Size = new System.Drawing.Size(95, 25);
+			this.label10.TabIndex = 3;
+			this.label10.Text = "content";
+			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// label8
+			// 
+			this.label8.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label8.Location = new System.Drawing.Point(115, 20);
+			this.label8.Name = "label8";
+			this.label8.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.label8.Size = new System.Drawing.Size(95, 25);
+			this.label8.TabIndex = 1;
+			this.label8.Text = "west";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tpRouteView
+			// 
+			this.tpRouteView.Controls.Add(this.label1);
+			this.tpRouteView.Controls.Add(this.gbRouteViewColors);
+			this.tpRouteView.Location = new System.Drawing.Point(4, 21);
+			this.tpRouteView.Name = "tpRouteView";
+			this.tpRouteView.Size = new System.Drawing.Size(446, 231);
+			this.tpRouteView.TabIndex = 2;
+			this.tpRouteView.Text = "RouteView";
+			// 
+			// gbRouteViewColors
+			// 
+			this.gbRouteViewColors.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.gbRouteViewColors.Controls.Add(this.label16);
+			this.gbRouteViewColors.Controls.Add(this.label15);
+			this.gbRouteViewColors.Controls.Add(this.label14);
+			this.gbRouteViewColors.Location = new System.Drawing.Point(10, 10);
+			this.gbRouteViewColors.Name = "gbRouteViewColors";
+			this.gbRouteViewColors.Size = new System.Drawing.Size(325, 55);
+			this.gbRouteViewColors.TabIndex = 0;
+			this.gbRouteViewColors.TabStop = false;
+			this.gbRouteViewColors.Text = " Blob Colors ";
+			// 
+			// label16
+			// 
+			this.label16.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label16.Location = new System.Drawing.Point(220, 20);
+			this.label16.Name = "label16";
+			this.label16.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.label16.Size = new System.Drawing.Size(95, 25);
+			this.label16.TabIndex = 2;
+			this.label16.Text = "content";
+			this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// label15
+			// 
+			this.label15.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label15.Location = new System.Drawing.Point(115, 20);
+			this.label15.Name = "label15";
+			this.label15.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.label15.Size = new System.Drawing.Size(95, 25);
+			this.label15.TabIndex = 1;
+			this.label15.Text = "north";
+			this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// label14
+			// 
+			this.label14.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.label14.Location = new System.Drawing.Point(10, 20);
+			this.label14.Name = "label14";
+			this.label14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.label14.Size = new System.Drawing.Size(95, 25);
+			this.label14.TabIndex = 0;
+			this.label14.Text = "west";
+			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(10, 195);
+			this.label1.Margin = new System.Windows.Forms.Padding(0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(425, 25);
+			this.label1.TabIndex = 2;
+			this.label1.Text = "The Colors viewer must be closed and re-opened to update any colors that have bee" +
+	"n changed in Options.";
+			// 
 			// ColorHelp
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -808,17 +826,17 @@ namespace MapView
 			this.Text = " Colors help";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.tabMain.ResumeLayout(false);
+			this.tpTileView.ResumeLayout(false);
+			this.gbTileViewColors.ResumeLayout(false);
 			this.tpTopView.ResumeLayout(false);
 			this.gbTopViewColors.ResumeLayout(false);
 			this.tpRouteView.ResumeLayout(false);
 			this.gbRouteViewColors.ResumeLayout(false);
-			this.tpTileView.ResumeLayout(false);
-			this.gbTileViewColors.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
 
-		private TabControl tabMain;
+		private CompositedTabControl tabMain;
 		private TabPage tpTopView;
 		private TabPage tpRouteView;
 		private TabPage tpTileView;
@@ -851,6 +869,7 @@ namespace MapView
 		private Label label26;
 		private GroupBox gbTopViewColors;
 		private GroupBox gbRouteViewColors;
+		private System.Windows.Forms.Label label1;
 		#endregion
 	}
 }
