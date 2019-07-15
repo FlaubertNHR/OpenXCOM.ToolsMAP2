@@ -996,7 +996,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.btnTallyho.Name = "btnTallyho";
 			this.btnTallyho.Size = new System.Drawing.Size(20, 120);
 			this.btnTallyho.TabIndex = 3;
-			this.btnTallyho.Text = "tally\r\n\r\nho";
+			this.btnTallyho.Text = "tally";
 			this.btnTallyho.UseVisualStyleBackColor = true;
 			this.btnTallyho.Click += new System.EventHandler(this.OnTallyhoClick);
 			// 
