@@ -24,7 +24,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		#region Fields
 		/// <summary>
 		/// A timer that delays processing clicks until the user's double-click
-		/// duration has elapsed. That is, don't do 1-click processing if
+		/// duration has elapsed. That is, don't do 1-click RMB processing if
 		/// 2-clicks are inc.
 		/// w/ Thanks to Natxo
 		/// https://stackoverflow.com/questions/2086213/how-can-i-catch-both-single-click-and-double-click-events-on-wpf-frameworkelement/2087517#2087517
@@ -104,7 +104,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		private QuadrantType _quadtype = QuadrantType.None;
 
 		/// <summary>
-		/// Wrapper for OnMouseDown() for use by keyboard-input.
+		/// Wrapper for OnMouseDown() for use by keyboard-input only.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <param name="quadtype"></param>
@@ -129,12 +129,14 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			bool keyboardInput = (_quadtype != QuadrantType.None);
 
-			if (_quadtype == QuadrantType.None) // ie. is mousedown (not keyboard-input)
+			if (!keyboardInput)
 			{
 				int x = (e.X - QuadrantDrawService.StartX);
 				if (x > -1 && x % QuadrantDrawService.Quadwidth < XCImage.SpriteWidth32) // ignore spaces between sprites
 					_quadtype = (QuadrantType)(x / QuadrantDrawService.Quadwidth);
 			}
+
+			bool isTypeCurrent = false;
 
 			PartType parttype = PartType.All;
 			switch (_quadtype)
@@ -145,6 +147,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				case QuadrantType.Content: parttype = PartType.Content; break;
 
 				case (QuadrantType)QuadrantDrawService.QuadrantTypeCurrent:
+					isTypeCurrent = true;
 					if (QuadrantDrawService.CurrentTilepart != null)
 						parttype = QuadrantDrawService.CurrentTilepart.Record.PartType;
 					break;
@@ -155,10 +158,50 @@ namespace MapView.Forms.MapObservers.TopViews
 				ViewerFormsManager.TopView     .Control   .SelectQuadrant(parttype);
 				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(parttype);
 
-				if (parttype != (PartType)QuadrantDrawService.QuadrantTypeCurrent)
-					SetSelected(e.Button, e.Clicks, keyboardInput);
+				if (!isTypeCurrent)
+					Operate(e.Button, e.Clicks, keyboardInput);
 			}
 			_quadtype = QuadrantType.None;
+		}
+
+		/// <summary>
+		/// Handles the details of LMB and RMB wrt the QuadrantPanels.
+		/// TODO: GENERAL - Bypass operations (and the MapChanged flag)
+		///       if user does an operation that results in identical state.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <param name="clicks"></param>
+		/// <param name= "keyboardInput"></param>
+		internal void Operate(MouseButtons button, int clicks, bool keyboardInput = false)
+		{
+			if (Tile != null)
+			{
+				switch (button)
+				{
+					case MouseButtons.Left:
+						// clicks=1 is done by caller.
+						if (clicks == 2)
+							ViewerFormsManager.TileView.Control.SelectedTilepart = Tile[SelectedQuadrant];
+						break;
+
+					case MouseButtons.Right:
+						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
+						{
+							if (!keyboardInput)
+							{
+								_t1.Stop();
+								++_t1Clicks;
+								_t1.Start();
+							}
+							else
+							{
+								_t1Clicks = clicks;
+								OnClicksElapsed(null,null);
+							}
+						}
+						break;
+				}
+			}
 		}
 
 		/// <summary>
@@ -174,74 +217,29 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 		#region Events
-		private void OnAnimationUpdate()
-		{
-			Invalidate();
-		}
-
 		/// <summary>
 		/// Clever handling of RMB double-click event ...
-		/// WARNING: the interaction among this QuadrantPanel, the TopPanel, and
-		/// the TilePanel in TileView has become more than a little fragile.
+		/// WARNING: The interaction between this QuadrantPanel, its respective
+		/// TopPanel, and the TilePanel in TileView is a little bit fragile.
 		/// </summary>
 		/// <param name="source"></param>
 		/// <param name="e"></param>
 		private void OnClicksElapsed(object source, ElapsedEventArgs e)
 		{
 			_t1.Stop();
-			switch (_t1Clicks)
-			{
-				case 1: MainViewOverlay.that.FillSelectedQuads();  break;
-				case 2: MainViewOverlay.that.ClearSelectedQuads(); break;
-			}
+
+			if (_t1Clicks == 1)
+				MainViewOverlay.that.FillSelectedQuads();
+			else // 2+ clicks
+				MainViewOverlay.that.ClearSelectedQuads();
+
 			_t1Clicks = 0;
 		}
-		#endregion Events
 
-
-		#region Methods
-		/// <summary>
-		/// Handles the details of LMB and RMB wrt the QuadrantPanels.
-		/// TODO: GENERAL - Bypass operations (and the MapChanged flag)
-		///       if user does an operation that results in identical state.
-		/// </summary>
-		/// <param name="button"></param>
-		/// <param name="clicks"></param>
-		/// <param name= "keyboardInput"></param>
-		internal void SetSelected(MouseButtons button, int clicks, bool keyboardInput = false)
+		private void OnAnimationUpdate()
 		{
-			if (Tile != null)
-			{
-				switch (button)
-				{
-					case MouseButtons.Left:
-						// clicks=1 is done by caller.
-						if (clicks == 2)
-							ViewerFormsManager.TileView.Control.SelectedTilepart = Tile[SelectedQuadrant];
-
-//((MapView.Forms.MapObservers.TileViews.TileView)ViewerFormsManager.TileView.ObserverControl).SelectedTilepart = _tile[SelectedQuadrant];
-// I just want to leave that there so you can ponder the significance of it.
-						break;
-
-					case MouseButtons.Right:
-						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
-						{
-							if (keyboardInput)
-							{
-								_t1Clicks = clicks;
-								OnClicksElapsed(null,null);
-							}
-							else
-							{
-								_t1.Stop();
-								++_t1Clicks;
-								_t1.Start();
-							}
-						}
-						break;
-				}
-			}
+			Invalidate();
 		}
-		#endregion Methods
+		#endregion Events
 	}
 }

@@ -87,7 +87,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// double-clicked.
 		/// @note The setter is invoked only by TileView.SelectedTilepart.
 		/// </summary>
-		internal Tilepart PartSelected
+		internal Tilepart SelectedTilepart
 		{
 			get
 			{
@@ -106,7 +106,7 @@ namespace MapView.Forms.MapObservers.TileViews
 					_id = 0;
 
 				if (TilepartSelected != null)
-					TilepartSelected(PartSelected);
+					TilepartSelected(SelectedTilepart);
 
 				ScrollToTile();
 			}
@@ -306,7 +306,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			Focus();
+			Select();
 
 			int id = GetOverId(e);
 			if (id != -1 && id < _parts.Length)
@@ -314,7 +314,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				_id = id;
 
 				if (TilepartSelected != null)
-					TilepartSelected(PartSelected);
+					TilepartSelected(SelectedTilepart);
 
 				ScrollToTile();
 				Invalidate();
@@ -405,7 +405,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				_id = id;
 
 				if (TilepartSelected != null)
-					TilepartSelected(PartSelected);
+					TilepartSelected(SelectedTilepart);
 
 				ScrollToTile();
 				Invalidate();

@@ -73,8 +73,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			pnlMain.Controls.Add(TopPanel);
 
 			pnlMain.Resize += (sender, e) => TopPanel.ResizeObserver(
-																pnlMain.Width,
-																pnlMain.Height);
+																	pnlMain.Width,
+																	pnlMain.Height);
 
 			var visQuads = tsddbVisibleQuads.DropDown.Items;
 

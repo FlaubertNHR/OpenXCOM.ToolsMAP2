@@ -441,31 +441,29 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			Select();
 
-			var loc = GetTileLocation(e.X, e.Y);
-			if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
-				&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+			if (e.Button == MouseButtons.Left) // select tile on LMB only so that RMB can operate on multiple tiles.
 			{
-				MainViewOverlay.that._keyDeltaX =
-				MainViewOverlay.that._keyDeltaY = 0;
+				var loc = GetTileLocation(e.X, e.Y);
+				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
+					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+				{
+					MainViewOverlay.that._keyDeltaX =
+					MainViewOverlay.that._keyDeltaY = 0;
 
-				// as long as MainViewOverlay.OnSelectLocationMain()
-				// fires before the secondary viewers' OnSelectLocationObserver()
-				// functions fire, FirstClick is set okay by the former.
-				//
-				// See also, RouteView.OnSelectLocationObserver()
-				// ps. The FirstClick flag for TopView should be set either in 
-				// this class's OnSelectLocationObserver() handler or even
-				// QuadrantPanel.OnSelectLocationObserver() ... anyway.
-				//
-				// or better: Make a flag of it in MapFileBase where Location is really
-				// set and all these OnLocationSelected events actually fire out of!
-//				MainViewOverlay.that.FirstClick = true;
+					// as long as MainViewOverlay.OnSelectLocationMain()
+					// fires before the secondary viewers' OnSelectLocationObserver()
+					// functions fire, FirstClick is set okay by the former.
+					//
+					// TODO: Make a flag of FirstClick in MapFileBase where Location is really
+					// set, and where all these OnLocationSelected events actually fire out of!
+//					MainViewOverlay.that.FirstClick = true;
 
-				MapBase.Location = new MapLocation( // fire SelectLocation
-												loc.Y, loc.X,
-												MapBase.Level);
-				_isMouseDrag = true;
-				MainViewOverlay.that.ProcessSelection(loc,loc);
+					MapBase.Location = new MapLocation( // fire SelectLocation
+													loc.Y, loc.X,
+													MapBase.Level);
+					_isMouseDrag = true;
+					MainViewOverlay.that.ProcessSelection(loc,loc);
+				}
 			}
 
 			switch (e.Button)
@@ -473,13 +471,17 @@ namespace MapView.Forms.MapObservers.TopViews
 				case MouseButtons.Left:
 					if (e.Clicks == 2)
 					{
-						ViewerFormsManager.TopView     .Control   .QuadrantPanel.SetSelected(MouseButtons.Left, 2);
-						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.SetSelected(MouseButtons.Left, 2);
+						ViewerFormsManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Left, 2);
+						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Left, 2);
 					}
 					break;
+
 				case MouseButtons.Right:
-					ViewerFormsManager.TopView     .Control   .QuadrantPanel.SetSelected(MouseButtons.Right, 1);
-					ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.SetSelected(MouseButtons.Right, 1);
+					if (MainViewOverlay.that.FirstClick)
+					{
+						ViewerFormsManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Right, 1);
+						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Right, 1);
+					}
 					break;
 			}
 //			base.OnMouseDown(e);
@@ -528,8 +530,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <summary>
 		/// Converts a position from screen-coordinates to tile-location.
 		/// </summary>
-		/// <param name="x">the x-position of the mouse-cursor</param>
-		/// <param name="y">the y-position of the mouse-cursor</param>
+		/// <param name="x">the x-position of the mouse-cursor in pixels wrt/ this control's area</param>
+		/// <param name="y">the y-position of the mouse-cursor in pixels wrt/ this control's area</param>
 		/// <returns></returns>
 		private Point GetTileLocation(int x, int y)
 		{
@@ -541,62 +543,12 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			double x1 = x / (halfWidth  * 2)
 					  + y / (halfHeight * 2);
-			double x2 = (y * 2 - x) / (halfWidth * 2);
+			double y1 = (y * 2 - x) / (halfWidth * 2);
 
 			return new Point(
 						(int)Math.Floor(x1),
-						(int)Math.Floor(x2));
+						(int)Math.Floor(y1));
 		}
 		#endregion Methods
-
-
-/*		/// <summary>
-		/// Inherited from 'IMapObserver' through 'MapObserverControl'.
-		/// </summary>
-		/// <param name="args"></param>
-		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
-		{
-			LogFile.WriteLine("");
-			LogFile.WriteLine("TopPanel.OnSelectLocationObserver");
-
-			var pt = e.MapLocation;
-//			Text = "c " + pt.Col + "  r " + pt.Row; // I don't think this actually prints anywhere.
-
-			var halfWidth  = QuadrantDrawService.HalfWidth;
-			var halfHeight = QuadrantDrawService.HalfHeight;
-
-			int xc = (pt.Col - pt.Row) * halfWidth;
-			int yc = (pt.Col + pt.Row) * halfHeight;
-
-			_lozSel.Reset();
-			_lozSel.AddLine(
-					xc, yc,
-					xc + halfWidth, yc + halfHeight);
-			_lozSel.AddLine(
-					xc + halfWidth, yc + halfHeight,
-					xc, yc + 2 * halfHeight);
-			_lozSel.AddLine(
-					xc, yc + 2 * halfHeight,
-					xc - halfWidth, yc + halfHeight);
-			_lozSel.CloseFigure();
-
-			OnMouseDrag();
-
-			Refresh(); // I don't think this is needed.
-		} */
-
-		// NOTE: there is no OnSelectLevelObserver for TopView.
-
-
-//		/// <summary>
-//		/// Scrolls the z-axis for TopRouteView. Sort of .... no, well no it doesn't.
-//		/// </summary>
-//		/// <param name="e"></param>
-//		protected override void OnMouseWheel(MouseEventArgs e)
-//		{
-//			base.OnMouseWheel(e);
-//			if		(e.Delta < 0) base.Map.Up();
-//			else if	(e.Delta > 0) base.Map.Down();
-//		}
 	}
 }
