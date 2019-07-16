@@ -2,6 +2,7 @@
 {
 	partial class ErrorWindow
 	{
+		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -19,7 +20,7 @@
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -32,6 +33,7 @@
 			this.tbDetails = new System.Windows.Forms.TextBox();
 			this.btnClose = new System.Windows.Forms.Button();
 			this.pnl_Bot = new System.Windows.Forms.Panel();
+			this.btnTerminate = new System.Windows.Forms.Button();
 			this.pnl_Info.SuspendLayout();
 			this.gbDetails.SuspendLayout();
 			this.pnl_Bot.SuspendLayout();
@@ -87,8 +89,9 @@
 			// btnClose
 			// 
 			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Ignore;
 			this.btnClose.Location = new System.Drawing.Point(685, 5);
+			this.btnClose.Margin = new System.Windows.Forms.Padding(0);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(104, 35);
 			this.btnClose.TabIndex = 2;
@@ -97,6 +100,7 @@
 			// 
 			// pnl_Bot
 			// 
+			this.pnl_Bot.Controls.Add(this.btnTerminate);
 			this.pnl_Bot.Controls.Add(this.btnClose);
 			this.pnl_Bot.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.pnl_Bot.Location = new System.Drawing.Point(0, 330);
@@ -105,9 +109,22 @@
 			this.pnl_Bot.Size = new System.Drawing.Size(792, 44);
 			this.pnl_Bot.TabIndex = 3;
 			// 
+			// btnTerminate
+			// 
+			this.btnTerminate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnTerminate.DialogResult = System.Windows.Forms.DialogResult.Abort;
+			this.btnTerminate.Location = new System.Drawing.Point(575, 5);
+			this.btnTerminate.Margin = new System.Windows.Forms.Padding(0);
+			this.btnTerminate.Name = "btnTerminate";
+			this.btnTerminate.Size = new System.Drawing.Size(104, 35);
+			this.btnTerminate.TabIndex = 3;
+			this.btnTerminate.Text = "Terminate!";
+			this.btnTerminate.UseVisualStyleBackColor = true;
+			this.btnTerminate.Click += new System.EventHandler(this.click_Terminate);
+			// 
 			// ErrorWindow
 			// 
-			this.AcceptButton = this.btnClose;
+			this.AcceptButton = this.btnTerminate;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnClose;
@@ -126,7 +143,6 @@
 			this.ResumeLayout(false);
 
 		}
-		#endregion
 
 		private System.Windows.Forms.Label lblHead;
 		private System.Windows.Forms.Panel pnl_Info;
@@ -134,5 +150,7 @@
 		private System.Windows.Forms.TextBox tbDetails;
 		private System.Windows.Forms.Button btnClose;
 		private System.Windows.Forms.Panel pnl_Bot;
+		private System.Windows.Forms.Button btnTerminate;
+		#endregion Designer
 	}
 }

@@ -14,7 +14,7 @@ namespace MapView.Forms.Error
 		{
 			InitializeComponent();
 
-			lblHead.Text = "_ wtf _" + Environment.NewLine + "did u do";
+			lblHead.Text = "!! wtf !!"; // + Environment.NewLine + "did u do";
 			tbDetails.Text = exception.ToString();
 
 			btnClose.Select();
@@ -24,5 +24,13 @@ namespace MapView.Forms.Error
 #endif
 		}
 		#endregion cTor
+
+
+		#region Events
+		private void click_Terminate(object sender, EventArgs e)
+		{
+			Environment.Exit(0);
+		}
+		#endregion Events
 	}
 }
