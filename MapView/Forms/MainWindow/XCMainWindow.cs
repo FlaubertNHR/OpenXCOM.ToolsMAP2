@@ -47,12 +47,33 @@ namespace MapView
 
 
 		#region Fields
-		private Options Options;
+		internal Options Options;
 		#endregion Fields
 
 
 		#region Properties (static)
 		internal static XCMainWindow that
+		{ get; private set; }
+
+		/// <summary>
+		/// A class-object that holds MainView's optionable Properties.
+		/// @note C# doesn't allow inheritance of multiple class-objects, which
+		/// would have been a way to separate the optionable properties from all
+		/// the other properties that are not optionable; they need to be
+		/// separate or else all Properties would show up in the Options form's
+		/// PropertyGrid. An alternative would have been to give all those other
+		/// properties the Browsable(false) attribute but I didn't want to
+		/// clutter up the code and also because the Browsable(false) attribute
+		/// is used to hide Properties from the designer also - but whether or
+		/// not they are accessible in the designer is an entirely different
+		/// consideration than whether or not they are Optionable Properties. So
+		/// I created an independent class just to hold and handle MainView's
+		/// Optionable Properties ... and wired it up. It's a tedious shitfest
+		/// but better than the arcane MapViewI system or screwing around with
+		/// equally arcane TypeDescriptors. Both of which had been implemented
+		/// but then rejected.
+		/// </summary>
+		internal static MainViewOptionables Optionables
 		{ get; private set; }
 
 		/// <summary>
@@ -69,9 +90,6 @@ namespace MapView
 
 		internal static ScanGViewer ScanG
 		{ get; set; }
-
-		public static bool UseMonoDraw
-		{ get; private set; }
 		#endregion Properties (static)
 
 
@@ -129,11 +147,14 @@ namespace MapView
 		/// </summary>
 		private TreeNode Searched
 		{ get; set; }
-
-		internal bool BringAllToFront
-		{ get; private set; }
 		#endregion Properties
 
+
+#if !__MonoCS__ // re. highlight: God only knows - it compiles correctly.
+		private BufferedTreeView MapTree;
+#else
+		private TreeView MapTree;
+#endif
 
 		#region cTor
 		/// <summary>
@@ -205,6 +226,35 @@ namespace MapView
 			InitializeComponent();
 			LogFile.WriteLine("MainView initialized.");
 
+#if !__MonoCS__
+			MapTree = new BufferedTreeView();
+#else
+			MapTree = new TreeView();
+#endif
+			MapTree.Name          = "MapTree";
+			MapTree.Dock          = DockStyle.Left;
+			MapTree.DrawMode      = TreeViewDrawMode.OwnerDrawText;
+			MapTree.ForeColor     = SystemColors.ControlText;
+			MapTree.BackColor     = SystemColors.Control;
+			MapTree.Indent        = 15;
+			MapTree.Location      = new Point(0, 0);
+			MapTree.Size          = new Size(240, 454);
+			MapTree.Margin        = new Padding(0);
+			MapTree.TabIndex      = 0;
+			MapTree.HideSelection = false;
+
+			MapTree.DrawNode       += tv_DrawNode;
+			MapTree.GotFocus       += OnMapTreeFocusChanged;
+			MapTree.LostFocus      += OnMapTreeFocusChanged;
+			MapTree.MouseDown      += OnMapTreeMouseDown;
+			MapTree.BeforeSelect   += OnMapTreeBeforeSelect;
+			MapTree.AfterSelect    += OnMapTreeAfterSelected;
+			MapTree.NodeMouseClick += OnMapTreeNodeClick;
+//			MapTree.NodeMouseClick += (sender, args) => MapTree.SelectedNode = args.Node;
+
+			Controls.Add(this.MapTree);
+			csSplitter.ControlToHide = MapTree;
+
 
 			// WORKAROUND: The size of the form in the designer keeps increasing
 			// (for whatever reason) based on the
@@ -229,26 +279,13 @@ namespace MapView
 			MinimumSize = new Size(0,0); // fu.net
 
 
-//			tvMaps.NodeMouseClick += (sender, args) => tvMaps.SelectedNode = args.Node;
-
-			// jijack: These two events keep getting deleted in my designer:
-			tvMaps.BeforeSelect += OnMapTreeBeforeSelect;
-			tvMaps.AfterSelect  += OnMapTreeAfterSelected;
-
-			tvMaps.NodeMouseClick += OnMapTreeNodeClick;
-
-			tvMaps.GotFocus  += OnMapTreeFocusChanged;
-			tvMaps.LostFocus += OnMapTreeFocusChanged;
-			// welcome to your new home
-
-
 			that = this;
 
-
-			MainViewUnderlay = new MainViewUnderlay();
-			MainViewUnderlay.Dock = DockStyle.Fill;
-			MainViewUnderlay.BorderStyle = BorderStyle.Fixed3D;
+			MainViewUnderlay = new MainViewUnderlay(this);
 			LogFile.WriteLine("MainView panels instantiated.");
+
+			Optionables = new MainViewOptionables(MainViewOverlay);
+			LogFile.WriteLine("MainView optionables initialized.");
 
 			RegistryInfo.InitializeRegistry(dirAppL);
 			LogFile.WriteLine("Registry initialized.");
@@ -261,11 +298,11 @@ namespace MapView
 			LogFile.WriteLine("OptionParsers initialized.");
 
 			Options = new Options();
-			OptionsManager.setOptionsType(RegistryInfo.MainWindow, Options);
+			OptionsManager.setOptionsType(RegistryInfo.MainView, Options);
 
-			LoadOptions();									// TODO: check if this should go after the managers load
-			LogFile.WriteLine("MainView Options loaded.");	// since managers might be re-instantiating needlessly
-															// when OnOptionsClick() runs ....
+			LoadDefaultOptions();									// TODO: check if this should go after the managers load
+			LogFile.WriteLine("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
+																	// when OnOptionsClick() runs ....
 
 
 			Palette.UfoBattle .SetTransparent(true);
@@ -291,7 +328,7 @@ namespace MapView
 			ViewerFormsManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
 
-			tvMaps.TreeViewNodeSorter = StringComparer.OrdinalIgnoreCase;
+			MapTree.TreeViewNodeSorter = StringComparer.OrdinalIgnoreCase;
 
 			tscPanel.ContentPanel.Controls.Add(MainViewUnderlay);
 
@@ -385,19 +422,19 @@ namespace MapView
 			LogFile.WriteLine("ResourceInfo initialized.");
 
 
-			CreateTree();
-			LogFile.WriteLine("Tilesets created and loaded to tree panel.");
-
-			ShiftSplitter();
-
-
-			if (pathOptions.FileExists())
+			if (pathOptions.FileExists()) // load user-options before MainMenusManager.StartSecondaryStage()
 			{
-				OptionsManager.LoadOptions(pathOptions.Fullpath);
+				OptionsManager.LoadUserOptions(pathOptions.Fullpath);
 				LogFile.WriteLine("User options loaded.");
 			}
 			else
 				LogFile.WriteLine("User options NOT loaded - no options file to load.");
+
+
+			CreateTree();
+			LogFile.WriteLine("Tilesets created and loaded to tree panel.");
+
+			ShiftSplitter();
 
 
 			DontBeepEvent += FireContext;
@@ -407,27 +444,8 @@ namespace MapView
 
 
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
-
-
-//			ExportExtraSprites(); // hey, just copy them out of the "_Embedded" folder on your hardrive buddy.
 		}
 		#endregion cTor
-
-
-/*		void ExportExtraSprites()
-		{
-			string pfe = Path.Combine(
-									Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "settings"),
-									"EXTRA.PCK");
-			using (var fs = new FileStream(pfe, FileMode.Create))
-				Assembly.GetExecutingAssembly().GetManifestResourceStream("MapView._Embedded.Extra.PCK").CopyTo(fs);
-
-			pfe = Path.Combine(
-							Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "settings"),
-							"EXTRA.TAB");
-			using (var fs = new FileStream(pfe, FileMode.Create))
-				Assembly.GetExecutingAssembly().GetManifestResourceStream("MapView._Embedded.Extra.TAB").CopyTo(fs);
-		} */
 
 
 		#region Methods (static)
@@ -464,8 +482,8 @@ namespace MapView
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("XCMainWindow.CreateTree");
 
-			tvMaps.BeginUpdate();
-			tvMaps.Nodes.Clear();
+			MapTree.BeginUpdate();
+			MapTree.Nodes.Clear();
 
 			var groups = ResourceInfo.TileGroupManager.TileGroups;
 			//LogFile.WriteLine(". groups= " + groups);
@@ -487,7 +505,7 @@ namespace MapView
 
 				nodeGroup = new SortableTreeNode(tileGroup.Label);
 				nodeGroup.Tag = tileGroup;
-				tvMaps.Nodes.Add(nodeGroup);
+				MapTree.Nodes.Add(nodeGroup);
 
 				foreach (string keyCategory in tileGroup.Categories.Keys)
 				{
@@ -508,7 +526,7 @@ namespace MapView
 					}
 				}
 			}
-			tvMaps.EndUpdate();
+			MapTree.EndUpdate();
 		}
 
 		/// <summary>
@@ -538,67 +556,38 @@ namespace MapView
 		/// </summary>
 		private void ShiftSplitter()
 		{
-			int width = tvMaps.Width, widthTest;
+			int width = MapTree.Width, widthTest;
 
-			foreach (TreeNode node0 in tvMaps.Nodes)
+			foreach (TreeNode node0 in MapTree.Nodes)
 			{
-				widthTest = TextRenderer.MeasureText(node0.Text, tvMaps.Font).Width + 18;
+				widthTest = TextRenderer.MeasureText(node0.Text, MapTree.Font).Width + 18;
 				if (widthTest > width)
 					width = widthTest;
 
 				foreach (TreeNode node1 in node0.Nodes)
 				{
-					widthTest = TextRenderer.MeasureText(node1.Text, tvMaps.Font).Width + 36;
+					widthTest = TextRenderer.MeasureText(node1.Text, MapTree.Font).Width + 36;
 					if (widthTest > width)
 						width = widthTest;
 
 					foreach (TreeNode node2 in node1.Nodes)
 					{
-						widthTest = TextRenderer.MeasureText(node2.Text, tvMaps.Font).Width + 54;
+						widthTest = TextRenderer.MeasureText(node2.Text, MapTree.Font).Width + 54;
 						if (widthTest > width)
 							width = widthTest;
 					}
 				}
 			}
-			tvMaps.Width = width;
+			MapTree.Width = width;
 		}
 		#endregion Create tree
 
 
 		#region Options
-		// headers
-		private  const string Global  = "Global";
-		private  const string MapView = "MapView";
-		private  const string Sprites = "Sprites";
-		internal const string Windows = "Windows"; // used in MainMenusManager.PopulateMenus()
-
-		// options
-		private const string Animation          = "Animation";
-		private const string Doors              = "Doors";
-		private const string AllowBringToFront  = "AllowBringToFront";
-
-		private const string ShowGrid           = "ShowGrid";
-		private const string GridLayerColor     = "GridLayerColor";
-		private const string GridLayerOpacity   = "GridLayerOpacity";
-		private const string GridLineColor      = "GridLineColor";
-		private const string GridLineWidth      = "GridLineWidth";
-		private const string Grid10LineColor    = "Grid10LineColor";
-		private const string Grid10LineWidth    = "Grid10LineWidth";
-
-		private const string SelectionLineColor = "SelectionLineColor";
-		private const string SelectionLineWidth = "SelectionLineWidth";
-		private const string GraySelection      = "GraySelection";
-
-		private const string SpriteShade        = "SpriteShade";
-		private const string Interpolation      = "Interpolation";
-
-		private const string UseMono            = "UseMono";
-
-
 		/// <summary>
 		/// Loads user-settings into MainView's Options screen.
 		/// </summary>
-		private void LoadOptions()
+		private void LoadDefaultOptions()
 		{
 			// kL_note: This is for retrieving MainView's location and size from
 			// the Windows Registry:
@@ -615,235 +604,56 @@ namespace MapView
 //				keySoftware.Close();
 //			}
 
-			var changer = new OptionChangedEvent(OnOptionChanged);
-
-			Options.AddOption(
-							Animation,
-							false, //MainViewUnderlay.IsAnimated
-							"If true the sprites will animate (F2 - On/Off)",
-							Global,
-							changer);
-			Options.AddOption(
-							Doors,
-							false,
-							"If true the doors will animate if Animation is also on - if"
-								+ " Animation is false the doors will show their alternate tile."
-								+ " This setting may need to be re-toggled if Animation changes"
-								+ " (F3 - On/Off)",
-							Global,
-							changer);
-			Options.AddOption(
-							AllowBringToFront,
-							false,
-							"If true any open subsidiary viewers will be brought to the top of"
-								+ " the desktop whenever MainView takes focus - this implements"
-								+ " a workaround that might help circumvent an issue in post"
-								+ " Windows 7 OS, in which focus refuses to switch to MainView"
-								+ " unless the subsidiary viewers are closed (tentative)",
-							Global,
-							changer);
-			Options.AddOption(
-							UseMono,
-							false,
-							"If true use sprite-drawing algorithms that are designed for Mono."
-								+ " This fixes an issue on non-Windows systems where non-transparent"
-								+ " black boxes appear around sprites but it bypasses Interpolation"
-								+ " and SpriteShade routines. Selected tiles will not be grayed",
-							Global,
-							changer);
-
-			Options.AddOption(
-							ShowGrid,
-							MainViewOverlay.ShowGrid,
-							"If true a grid will display at the current level of editing (F4 - On/Off)",
-							MapView,
-							changer);
-//							null, MainViewOverlay);
-			Options.AddOption(
-							GridLayerColor,
-							MainViewOverlay.GridLayerColor,
-							"Color of the grid",
-							MapView,
-							null, MainViewOverlay);
-			Options.AddOption(
-							GridLayerOpacity,
-							MainViewOverlay.GridLayerOpacity,
-							"Opacity of the grid (0..255 default 200)",
-							MapView,
-							null, MainViewOverlay);
-			Options.AddOption(
-							GridLineColor,
-							MainViewOverlay.GridLineColor,
-							"Color of the lines that make up the grid",
-							MapView,
-							null, MainViewOverlay);
-			Options.AddOption(
-							GridLineWidth,
-							MainViewOverlay.GridLineWidth,
-							"Width of the grid lines in pixels",
-							MapView,
-							null, MainViewOverlay);
-			Options.AddOption(
-							Grid10LineColor,
-							MainViewOverlay.Grid10LineColor,
-							"Color of every tenth line on the grid",
-							MapView,
-							null, MainViewOverlay);
-			Options.AddOption(
-							Grid10LineWidth,
-							MainViewOverlay.Grid10LineWidth,
-							"Width of every tenth grid line in pixels",
-							MapView,
-							null, MainViewOverlay);
-			Options.AddOption(
-							SelectionLineColor,
-							MainViewOverlay.SelectionLineColor,
-							"Color of the border of selected tiles",
-							MapView,
-							null, MainViewOverlay);
-			Options.AddOption(
-							SelectionLineWidth,
-							MainViewOverlay.SelectionLineWidth,
-							"Width of the border of selected tiles in pixels",
-							MapView,
-							null, MainViewOverlay);
-			Options.AddOption(
-							GraySelection,
-							MainViewOverlay.GraySelection,
-							"If true the selection area will be drawn in grayscale"
-								+ " (only if UseMono is false)",
-							MapView,
-							null, MainViewOverlay);
-
-			Options.AddOption(
-							SpriteShade,
-							MainViewOverlay.SpriteShade,
-							"The darkness of the tile sprites (10..100 default 0 off, unity is 33)"
-								+ " Values outside the range turn sprite shading off"
-								+ " (only if UseMono is false)",
-							Sprites,
-							null, MainViewOverlay);
-
-			string desc = "The technique used for resizing sprites (0..7)" + Environment.NewLine
-						+ "0 - default"                                    + Environment.NewLine
-						+ "1 - low (default)"                              + Environment.NewLine
-						+ "2 - high (recommended)"                         + Environment.NewLine
-						+ "3 - bilinear (defaultiest)"                     + Environment.NewLine
-						+ "4 - bicubic (very slow fullscreen)"             + Environment.NewLine
-						+ "5 - nearest neighbor (fastest)"                 + Environment.NewLine
-						+ "6 - high quality bilinear (smoothest)"          + Environment.NewLine
-						+ "7 - high quality bicubic (best in a pig's eye)";
-			Options.AddOption(
-							Interpolation,
-							MainViewOverlay.Interpolation,
-							desc + Environment.NewLine + "(only if UseMono is false)",
-							Sprites,
-							null, MainViewOverlay);
+			Optionables.LoadDefaults(Options);
 		}
 
+
+		internal static Form _foptions; // is static for no special reason
+
 		/// <summary>
-		/// Handles a MainView Options change by the user.
+		/// Handles a click on the Options button to show or hide an Options-
+		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
+		/// viewer. Also subscribes to a form-closing handler that will hide the
+		/// form unless MainView is closing.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
-		private void OnOptionChanged(
-				string key,
-				object val)
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnOptionsClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnOptionChanged() key= " + key + " val= " + val);
-
-			Options[key].Value = val;
-			switch (key)
+			var it = sender as MenuItem;
+			if (it.Checked = !it.Checked)
 			{
-				case Animation:
-					miAnimate.Checked = (bool)val;
-					MainViewUnderlay.Animate(miAnimate.Checked);
+				if (_foptions == null)
+				{
+					_foptions = new OptionsForm(
+											Optionables,
+											Options,
+											OptionsForm.OptionableType.MainView);
+					_foptions.Text = " MainView Options";
 
-					if (!miAnimate.Checked) // show the doorsprites closed in TileView and QuadrantPanel.
+					OptionsManager.Screens.Add(_foptions);
+
+					_foptions.FormClosing += (sender1, e1) =>
 					{
-						if (miDoors.Checked) // toggle off doors if general animations stop.
+						if (!XCMainWindow.Quit)
 						{
-							miDoors.Checked = false;
-							AnimateDoorSprites(false);
+							it.Checked = false;
+
+							e1.Cancel = true;
+							_foptions.Hide();
 						}
-						ViewerFormsManager.TileView.Refresh();
-						ViewerFormsManager.TopView     .Control   .QuadrantPanel.Refresh();
-						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Refresh();
-					}
-					else if (miDoors.Checked) // doors need to animate if they were already toggled on.
-						AnimateDoorSprites(true);
+						else
+							RegistryInfo.UpdateRegistry(_foptions);
+					};
+				}
 
-					MainViewOverlay.Invalidate();
-					break;
+				_foptions.Show();
 
-				case Doors: // NOTE: 'miDoors.Checked' is used by the F3 key to toggle door animations.
-					miDoors.Checked = (bool)val;
-
-					if (miAnimate.Checked)
-					{
-						AnimateDoorSprites(miDoors.Checked);
-					}
-					else if (miDoors.Checked) // switch to the doors' alt-tile (whether ufo-door or hinge-door)
-					{
-						if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
-						{
-							foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
-								part.SpritesToAlternate();
-
-							Refresh();
-						}
-					}
-					else // switch doors to Image1.
-						AnimateDoorSprites(false);
-					break;
-
-				case AllowBringToFront:
-					BringAllToFront = (bool)val;
-					break;
-
-				case UseMono:
-					UseMonoDraw = (bool)val;
-					MainViewOverlay.Refresh();
-					break;
-
-				case ShowGrid: // NOTE: 'miGrid.Checked' is used by the F4 key to toggle the grid on/off.
-					MainViewOverlay.ShowGrid = (miGrid.Checked = (bool)val);
-					break;
-
-				case GridLayerColor:
-					MainViewOverlay.GridLayerColor = (Color)val;
-					break;
-
-				case GridLayerOpacity:
-					MainViewOverlay.GridLayerOpacity = (int)val;
-					break;
-
-				case GridLineColor:
-					MainViewOverlay.GridLineColor = (Color)val;
-					break;
-
-				case GridLineWidth:
-					MainViewOverlay.GridLineWidth = (int)val;
-					break;
-
-				case Grid10LineColor:
-					MainViewOverlay.Grid10LineColor = (Color)val;
-					break;
-
-				case Grid10LineWidth:
-					MainViewOverlay.Grid10LineWidth = (int)val;
-					break;
-
-				case SpriteShade:
-					MainViewOverlay.SpriteShade = (int)val;
-					break;
-
-				case Interpolation:
-					MainViewOverlay.Interpolation = (int)val;
-					break;
-
-				// NOTE: 'GraySelection' is handled. reasons ...
+				if (_foptions.WindowState == FormWindowState.Minimized)
+					_foptions.WindowState  = FormWindowState.Normal;
 			}
+			else
+				_foptions.Close();
 		}
 		#endregion Options
 
@@ -931,7 +741,7 @@ namespace MapView
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			if (BringAllToFront)
+			if (XCMainWindow.Optionables.BringAllToFront)
 			{
 				if (!BypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
 				{
@@ -990,7 +800,7 @@ namespace MapView
 					break;
 
 				case Keys.Shift | Keys.Tab:
-					focussearch = tvMaps.Focused;
+					focussearch = MapTree.Focused;
 					break;
 
 				case Keys.Shift | Keys.F3:
@@ -1062,66 +872,98 @@ namespace MapView
 		{
 			//LogFile.WriteLine("OnKeyDown() " + e.KeyCode);
 
-			if (e.KeyCode == Keys.Enter) // do this here to get rid of the beep.
+			string key; object val = null;
+
+			switch (e.KeyCode)
 			{
-				if (tvMaps.Focused && _selected != null)
-				{
-					e.SuppressKeyPress = true;
-					_dontbeep1 = !e.Shift;
-					BeginInvoke(DontBeepEvent);
-				}
-			}
-			else if (e.Control)
-			{
-				if (menuViewers.Enabled)
-				{
-					ToolStripMenuItem part = null;
-					int it = -1;
-
-					switch (e.KeyCode)
-					{
-						// toggle TopView tilepart visibilities ->
-						case Keys.F1: part = ViewerFormsManager.TopView.Control.Floor;   break;
-						case Keys.F2: part = ViewerFormsManager.TopView.Control.West;    break;
-						case Keys.F3: part = ViewerFormsManager.TopView.Control.North;   break;
-						case Keys.F4: part = ViewerFormsManager.TopView.Control.Content; break;
-
-						// show/hide viewer ->
-						case Keys.F5: it = 0; break;
-						case Keys.F6: it = 2; break;
-						case Keys.F7: it = 3; break;
-						case Keys.F8: it = 4; break;
-					}
-
-					if (it != -1)
+				case Keys.Enter: // do this here to get rid of the beep.
+					if (MapTree.Focused && _selected != null)
 					{
 						e.SuppressKeyPress = true;
-						MainMenusManager.OnMenuItemClick(
-													menuViewers.MenuItems[it],
-													EventArgs.Empty);
+						_dontbeep1 = !e.Shift;
+						BeginInvoke(DontBeepEvent);
 					}
-					else if (part != null)
+					break;
+
+				case Keys.F2:
+					key = MainViewOptionables.str_AnimateSprites;
+					val = !XCMainWindow.Optionables.AnimateSprites;
+					Options[key].Value = val;
+					Optionables.OnSpriteStateChanged(key,val);
+					break;
+
+				case Keys.F3:
+					key = MainViewOptionables.str_OpenDoors;
+					val = !XCMainWindow.Optionables.OpenDoors;
+					Options[key].Value = val;
+					Optionables.OnSpriteStateChanged(key,val);
+					break;
+
+				case Keys.F4:
+					key = MainViewOptionables.str_GridVisible;
+					val = !XCMainWindow.Optionables.GridVisible;
+					Options[key].Value = val;
+					Optionables.OnOptionChanged(key,val);
+					break;
+
+				default:
+					if (e.Control)
 					{
-						e.SuppressKeyPress = true;
-						ViewerFormsManager.TopView.Control.OnQuadrantVisibilityClick(part, EventArgs.Empty);
+						if (menuViewers.Enabled)
+						{
+							ToolStripMenuItem part = null;
+							int it = -1;
+
+							switch (e.KeyCode)
+							{
+								// toggle TopView tilepart visibilities ->
+								case Keys.F1: part = ViewerFormsManager.TopView.Control.Floor;   break;
+								case Keys.F2: part = ViewerFormsManager.TopView.Control.West;    break;
+								case Keys.F3: part = ViewerFormsManager.TopView.Control.North;   break;
+								case Keys.F4: part = ViewerFormsManager.TopView.Control.Content; break;
+
+								// show/hide viewer ->
+								case Keys.F5: it = 0; break;
+								case Keys.F6: it = 2; break;
+								case Keys.F7: it = 3; break;
+								case Keys.F8: it = 4; break;
+							}
+
+							if (it != -1)
+							{
+								e.SuppressKeyPress = true;
+								MainMenusManager.OnMenuItemClick(
+															menuViewers.MenuItems[it],
+															EventArgs.Empty);
+							}
+							else if (part != null)
+							{
+								e.SuppressKeyPress = true;
+								ViewerFormsManager.TopView.Control.OnQuadrantVisibilityClick(part, EventArgs.Empty);
+							}
+						}
 					}
-				}
+					else if (MainViewOverlay.Focused)
+					{
+						switch (e.KeyCode)
+						{
+							case Keys.Add:
+							case Keys.Subtract:
+							case Keys.PageDown:
+							case Keys.PageUp:
+							case Keys.Home:
+							case Keys.End:
+								e.SuppressKeyPress = true;
+								MainViewOverlay.Navigate(e.KeyData);
+								break;
+						}
+					}
+					break;
 			}
-			else if (MainViewOverlay.Focused)
-			{
-				switch (e.KeyCode)
-				{
-					case Keys.Add:
-					case Keys.Subtract:
-					case Keys.PageDown:
-					case Keys.PageUp:
-					case Keys.Home:
-					case Keys.End:
-						e.SuppressKeyPress = true;
-						MainViewOverlay.Navigate(e.KeyData);
-						break;
-				}
-			}
+
+			if (val != null && _foptions != null && _foptions.Visible)
+				(_foptions as OptionsForm).propertyGrid.Refresh();
+
 			base.OnKeyDown(e);
 		}
 		#endregion Events (override)
@@ -1151,7 +993,7 @@ namespace MapView
 				{
 					pen = Pens.SlateBlue;
 
-					if (tvMaps.Focused)
+					if (MapTree.Focused)
 						brush = Brushes.SkyBlue;
 					else
 						brush = Brushes.PowderBlue;
@@ -1178,37 +1020,6 @@ namespace MapView
 									rect,
 									SystemColors.ControlText);
 			}
-		}
-
-
-		/// <summary>
-		/// Fired by the F2 key to toggle sprite-phase cycling on/off.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnAnimateClick(object sender, EventArgs e)
-		{
-			OnOptionChanged(Animation, !miAnimate.Checked);
-		}
-
-		/// <summary>
-		/// Fired by the F3 key to toggle door states/animations.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnToggleDoorsClick(object sender, EventArgs e)
-		{
-			OnOptionChanged(Doors, !miDoors.Checked);
-		}
-
-		/// <summary>
-		/// Fired by the F4 key to toggle the grid on/off.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnToggleGridClick(object sender, EventArgs e)
-		{
-			OnOptionChanged(ShowGrid, !miGrid.Checked);
 		}
 
 
@@ -1423,52 +1234,6 @@ namespace MapView
 		}
 
 
-		private static Form _foptions;	// is static for no special reason
-
-		/// <summary>
-		/// Handles a click on the Options button to show or hide an Options-
-		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
-		/// viewer. Also subscribes to a form-closing handler that will hide the
-		/// form unless MainView is closing.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		internal void OnOptionsClick(object sender, EventArgs e)
-		{
-			var it = sender as MenuItem;
-			if (it.Checked = !it.Checked)
-			{
-				if (_foptions == null)
-				{
-					_foptions = new OptionsForm("MainViewOptions", Options);
-					_foptions.Text = " MainView Options";
-
-					OptionsManager.Screens.Add(_foptions);
-
-					_foptions.FormClosing += (sender1, e1) =>
-					{
-						if (!XCMainWindow.Quit)
-						{
-							it.Checked = false;
-
-							e1.Cancel = true;
-							_foptions.Hide();
-						}
-						else
-							RegistryInfo.UpdateRegistry(_foptions);
-					};
-				}
-
-				_foptions.Show();
-
-				if (_foptions.WindowState == FormWindowState.Minimized)
-					_foptions.WindowState  = FormWindowState.Normal;
-			}
-			else
-				_foptions.Close();
-		}
-
-
 		private void OnSaveImageClick(object sender, EventArgs e)
 		{
 			MapFileBase @base = MainViewUnderlay.MapBase;
@@ -1630,7 +1395,7 @@ namespace MapView
 				if (Searched != null)
 					start0 = Searched;
 				else
-					start0 = tvMaps.SelectedNode;
+					start0 = MapTree.SelectedNode;
 
 				if (start0 != null)
 				{
@@ -1656,23 +1421,23 @@ namespace MapView
 							start = start.Parent.Parent.NextNode;
 						}
 						else
-							start = tvMaps.Nodes[0];
+							start = MapTree.Nodes[0];
 					}
 					else
-						start = tvMaps.Nodes[0];
+						start = MapTree.Nodes[0];
 
 					if (start != null) // jic.
 					{
 						var node = SearchTreeview(
 												text.ToLower(),
-												tvMaps.Nodes,
+												MapTree.Nodes,
 												start,
 												start0);
 						if (node != null)
 						{
 							Searched = node;
 							Searched.EnsureVisible();
-							tvMaps.Invalidate();
+							MapTree.Invalidate();
 						}
 
 						_active   =
@@ -1730,7 +1495,7 @@ namespace MapView
 						&& (node.Parent        == null || node.Parent       .NextNode == null)	// and no parent OR parent is last node at its level
 						&& (node.Parent.Parent == null || node.Parent.Parent.NextNode == null))	// and no parent-of-parent OR parent-of-parent is last node at its level
 					{
-						return SearchTreeview(text, tvMaps.Nodes, tvMaps.Nodes[0], start0);
+						return SearchTreeview(text, MapTree.Nodes, MapTree.Nodes[0], start0);
 					}
 				}
 			}
@@ -1743,7 +1508,7 @@ namespace MapView
 		internal void ClearSearched()
 		{
 			Searched = null;
-			tvMaps.Invalidate();
+			MapTree.Invalidate();
 		}
 
 		// debug versions of functions above^
@@ -1757,7 +1522,7 @@ namespace MapView
 				if (Searched != null)
 					start0 = Searched;
 				else
-					start0 = tvMaps.SelectedNode;
+					start0 = MapTree.SelectedNode;
 
 				if (start0 != null)
 				{
@@ -1795,7 +1560,7 @@ namespace MapView
 						{
 //							LogFile.WriteLine(". . . start.Parent.Parent == null RETURN");
 //							return;
-							start = tvMaps.Nodes[0];
+							start = MapTree.Nodes[0];
 							LogFile.WriteLine(". . . start.Parent.Parent == null start= " + start.Text);
 						}
 					}
@@ -1803,13 +1568,13 @@ namespace MapView
 					{
 //						LogFile.WriteLine(". start.NextNode == null && start.Parent == null RETURN");
 //						return;
-						start = tvMaps.Nodes[0];
+						start = MapTree.Nodes[0];
 						LogFile.WriteLine(". start.NextNode == null && start.Parent == null start= " + start.Text);
 					}
 
 					if (start != null) // jic.
 					{
-						var node = SearchTreeview(text.ToLower(), tvMaps.Nodes, start, start0);
+						var node = SearchTreeview(text.ToLower(), MapTree.Nodes, start, start0);
 						if (node != null)
 						{
 							Searched = node;
@@ -1866,7 +1631,7 @@ namespace MapView
 						&& (node.Parent.Parent == null || node.Parent.Parent.NextNode == null))	// and no parent-of-parent OR parent-of-parent is last node at its level
 					{
 						LogFile.WriteLine(recurse + " search from Nodes[0]");
-						return SearchTreeview(text, tvMaps.Nodes, tvMaps.Nodes[0], start0);
+						return SearchTreeview(text, MapTree.Nodes, MapTree.Nodes[0], start0);
 					}
 				}
 			}
@@ -1919,7 +1684,7 @@ namespace MapView
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
 			//LogFile.WriteLine("XCMainWindow.OnMapTreeMouseDown");
-			//if (tvMaps.SelectedNode != null) LogFile.WriteLine(". selected= " + tvMaps.SelectedNode.Text);
+			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
 
 			switch (e.Button)
 			{
@@ -1932,9 +1697,9 @@ namespace MapView
 
 						cmMapTreeMenu.MenuItems.Add("Add Group ...", new EventHandler(OnAddGroupClick));
 
-						if (tvMaps.SelectedNode != null)
+						if (MapTree.SelectedNode != null)
 						{
-							switch (tvMaps.SelectedNode.Level)
+							switch (MapTree.SelectedNode.Level)
 							{
 								case 0: // group-node.
 									cmMapTreeMenu.MenuItems.Add("-");
@@ -1960,7 +1725,7 @@ namespace MapView
 							}
 						}
 
-						cmMapTreeMenu.Show(tvMaps, e.Location);
+						cmMapTreeMenu.Show(MapTree, e.Location);
 					}
 					else
 					{
@@ -2061,7 +1826,7 @@ namespace MapView
 											MapTreeInputBox.BoxType.EditGroup,
 											String.Empty))
 			{
-				string labelGroup = tvMaps.SelectedNode.Text;
+				string labelGroup = MapTree.SelectedNode.Text;
 
 				f.Label = labelGroup;
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -2088,7 +1853,7 @@ namespace MapView
 
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
-			string labelGroup = tvMaps.SelectedNode.Text;
+			string labelGroup = MapTree.SelectedNode.Text;
 
 			string notice = String.Format(
 										CultureInfo.CurrentCulture,
@@ -2124,7 +1889,7 @@ namespace MapView
 		{
 			//LogFile.WriteLine("XCMainWindow.OnAddCategoryClick");
 
-			string labelGroup = tvMaps.SelectedNode.Text;
+			string labelGroup = MapTree.SelectedNode.Text;
 
 			using (var f = new MapTreeInputBox(
 											"Enter the label for a new Map category.",
@@ -2154,7 +1919,7 @@ namespace MapView
 		{
 			//LogFile.WriteLine("XCMainWindow.OnEditCategoryClick");
 
-			string labelGroup = tvMaps.SelectedNode.Parent.Text;
+			string labelGroup = MapTree.SelectedNode.Parent.Text;
 
 			using (var f = new MapTreeInputBox(
 											"Enter a new label for the Map category.",
@@ -2162,7 +1927,7 @@ namespace MapView
 											MapTreeInputBox.BoxType.EditCategory,
 											labelGroup))
 			{
-				string labelCategory = tvMaps.SelectedNode.Text;
+				string labelCategory = MapTree.SelectedNode.Text;
 
 				f.Label = labelCategory;
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -2189,8 +1954,8 @@ namespace MapView
 
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
-			string labelGroup    = tvMaps.SelectedNode.Parent.Text;
-			string labelCategory = tvMaps.SelectedNode.Text;
+			string labelGroup    = MapTree.SelectedNode.Parent.Text;
+			string labelCategory = MapTree.SelectedNode.Text;
 
 			string notice = String.Format(
 										CultureInfo.CurrentCulture,
@@ -2229,10 +1994,10 @@ namespace MapView
 		{
 			//LogFile.WriteLine("XCMainWindow.OnAddTilesetClick");
 
-			string labelGroup = tvMaps.SelectedNode.Parent.Text;
+			string labelGroup = MapTree.SelectedNode.Parent.Text;
 			if (isGrouptypeConfigured(labelGroup))
 			{
-				string labelCategory = tvMaps.SelectedNode.Text;
+				string labelCategory = MapTree.SelectedNode.Text;
 				string labelTileset  = String.Empty;
 
 				using (var f = new TilesetEditor(
@@ -2263,11 +2028,11 @@ namespace MapView
 		{
 			//LogFile.WriteLine("XCMainWindow.OnEditTilesetClick");
 
-			string labelGroup = tvMaps.SelectedNode.Parent.Parent.Text;
+			string labelGroup = MapTree.SelectedNode.Parent.Parent.Text;
 			if (isGrouptypeConfigured(labelGroup))
 			{
-				string labelCategory = tvMaps.SelectedNode.Parent.Text;
-				string labelTileset  = tvMaps.SelectedNode.Text;
+				string labelCategory = MapTree.SelectedNode.Parent.Text;
+				string labelTileset  = MapTree.SelectedNode.Text;
 
 				using (var f = new TilesetEditor(
 											TilesetEditor.BoxType.EditTileset,
@@ -2337,9 +2102,9 @@ namespace MapView
 
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
-			string labelGroup    = tvMaps.SelectedNode.Parent.Parent.Text;
-			string labelCategory = tvMaps.SelectedNode.Parent.Text;
-			string labelTileset  = tvMaps.SelectedNode.Text;
+			string labelGroup    = MapTree.SelectedNode.Parent.Parent.Text;
+			string labelCategory = MapTree.SelectedNode.Parent.Text;
+			string labelTileset  = MapTree.SelectedNode.Text;
 
 			string notice = String.Format(
 										CultureInfo.CurrentCulture,
@@ -2380,8 +2145,8 @@ namespace MapView
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectGroupNodeTop");
 
-			if (tvMaps.Nodes.Count != 0)
-				tvMaps.SelectedNode = tvMaps.Nodes[0];
+			if (MapTree.Nodes.Count != 0)
+				MapTree.SelectedNode = MapTree.Nodes[0];
 		}
 
 		/// <summary>
@@ -2395,13 +2160,13 @@ namespace MapView
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectCategoryNodeTop");
 
-			foreach (TreeNode nodeGroup in tvMaps.Nodes)
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (nodeGroup.Text == labelGroup)
 				{
 					var groupCollection = nodeGroup.Nodes;
-					tvMaps.SelectedNode = (groupCollection.Count != 0) ? groupCollection[0]
-																	   : nodeGroup;
+					MapTree.SelectedNode = (groupCollection.Count != 0) ? groupCollection[0]
+																		: nodeGroup;
 				}
 			}
 		}
@@ -2418,7 +2183,7 @@ namespace MapView
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectTilesetNodeTop");
 
-			foreach (TreeNode nodeGroup in tvMaps.Nodes)
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				var groupCollection = nodeGroup.Nodes;
 				foreach (TreeNode nodeCategory in groupCollection)
@@ -2426,8 +2191,8 @@ namespace MapView
 					if (nodeCategory.Text == labelCategory)
 					{
 						var categoryCollection = nodeCategory.Nodes;
-						tvMaps.SelectedNode = (categoryCollection.Count != 0) ? categoryCollection[0]
-																			  : nodeCategory;
+						MapTree.SelectedNode = (categoryCollection.Count != 0) ? categoryCollection[0]
+																			   : nodeCategory;
 					}
 				}
 			}
@@ -2442,11 +2207,11 @@ namespace MapView
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectGroupNode");
 
-			foreach (TreeNode nodeGroup in tvMaps.Nodes)
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (nodeGroup.Text == labelGroup)
 				{
-					tvMaps.SelectedNode = nodeGroup;
+					MapTree.SelectedNode = nodeGroup;
 					nodeGroup.Expand();
 					break;
 				}
@@ -2465,7 +2230,7 @@ namespace MapView
 
 			bool found = false;
 
-			foreach (TreeNode nodeGroup in tvMaps.Nodes)
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (found) break;
 
@@ -2478,7 +2243,7 @@ namespace MapView
 						{
 							found = true;
 
-							tvMaps.SelectedNode = nodeCategory;
+							MapTree.SelectedNode = nodeCategory;
 							nodeCategory.Expand();
 							break;
 						}
@@ -2501,7 +2266,7 @@ namespace MapView
 
 			bool found = false;
 
-			foreach (TreeNode nodeGroup in tvMaps.Nodes)
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (found) break;
 
@@ -2527,7 +2292,7 @@ namespace MapView
 								{
 									found = true;
 
-									tvMaps.SelectedNode = nodeTileset;
+									MapTree.SelectedNode = nodeTileset;
 									break;
 								}
 							}
@@ -2548,7 +2313,7 @@ namespace MapView
 		private void OnMapTreeFocusChanged(object sender, EventArgs e)
 		{
 			if (Searched != null)
-				tvMaps.Invalidate();
+				MapTree.Invalidate();
 		}
 
 //		private bool _bypassSaveAlert;	// when reloading the MapTree after making a tileset edit
@@ -2568,7 +2333,7 @@ namespace MapView
 		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
 		{
 			//LogFile.WriteLine("XCMainWindow.OnMapTreeBeforeSelect");
-			//if (tvMaps.SelectedNode != null) LogFile.WriteLine(". selected= " + tvMaps.SelectedNode.Text);
+			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
 
 			e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 			e.Cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
@@ -2582,7 +2347,7 @@ namespace MapView
 		private void OnMapTreeAfterSelected(object sender, TreeViewEventArgs e)
 		{
 			//LogFile.WriteLine("XCMainWindow.OnMapTreeAfterSelected");
-			//if (tvMaps.SelectedNode != null) LogFile.WriteLine(". selected= " + tvMaps.SelectedNode.Text);
+			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
 
 			ClearSearched();
 			LoadSelectedDescriptor();
@@ -2648,7 +2413,7 @@ namespace MapView
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("XCMainWindow.LoadSelectedDescriptor");
 
-			var descriptor = tvMaps.SelectedNode.Tag as Descriptor;
+			var descriptor = MapTree.SelectedNode.Tag as Descriptor;
 			if (descriptor != null)
 			{
 				//LogFile.WriteLine(". descriptor= " + descriptor);
@@ -2705,9 +2470,11 @@ namespace MapView
 					routeview1.DisableOg();
 					routeview2.DisableOg();
 
-					Options[Doors].Value = false; // toggle off door-animations; not sure that this is necessary to do.
-					miDoors.Checked = false;
-					AnimateDoorSprites(false);
+					Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
+					Optionables.OpenDoors = false;
+					SetDoorSpritesFullPhase(false);
+					if (_foptions != null && _foptions.Visible)
+						(_foptions as OptionsForm).propertyGrid.Refresh();
 
 					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 						MainMenusManager.StartSecondaryStage();
@@ -2771,17 +2538,27 @@ namespace MapView
 
 
 		/// <summary>
-		/// Toggles the door-sprites to animate or not.
+		/// Sets door-sprites to fullphase or firstphase.
 		/// </summary>
-		/// <param name="animate">true to animate any doors</param>
-		private void AnimateDoorSprites(bool animate)
+		/// <param name="full">true to animate any doors</param>
+		internal void SetDoorSpritesFullPhase(bool full)
 		{
 			if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
 			{
 				foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
-					part.ToggleDoorSprites(animate);
+					part.ToggleDoorSprites(full);
+			}
+		}
 
-				Refresh();
+		/// <summary>
+		/// Sets door-sprites to their alternate sprite's firstphase.
+		/// </summary>
+		internal void SetDoorSpritesAlternate()
+		{
+			if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
+			{
+				foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
+					part.SpritesToAlternate();
 			}
 		}
 
@@ -2935,6 +2712,7 @@ namespace MapView
 	/// <summary>
 	/// https://stackoverflow.com/questions/10362988/treeview-flickering#answer-10364283
 	/// using System.Runtime.InteropServices;
+	/// TODO: Try replacing w/ a CompositedTreeView
 	/// </summary>
 	class BufferedTreeView
 		:

@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
 
 
 namespace MapView
@@ -19,20 +18,21 @@ namespace MapView
 	public sealed class Options
 	{
 		#region Delegates
-		private delegate string ConvertObjectEvent(object value);
+		private delegate string ConvertEvent(object value);
 		#endregion Delegates
 
 
 		#region Fields (static)
-		private static Dictionary<Type, ConvertObjectEvent> _converters =
-				   new Dictionary<Type, ConvertObjectEvent>();
+		/// <summary>
+		/// These converters are for taking a property as input and outputting
+		/// it as a string to MapOptions.Cfg.
+		/// </summary>
+		private static Dictionary<Type, ConvertEvent> _converters =
+				   new Dictionary<Type, ConvertEvent>();
 		#endregion Fields (static)
 
 
 		#region Fields
-		private readonly Dictionary<string, Property> _properties =
-					 new Dictionary<string, Property>();
-
 		private readonly Dictionary<string, Option> _options =
 					 new Dictionary<string, Option>();
 		#endregion Fields
@@ -40,20 +40,18 @@ namespace MapView
 
 		#region Properties
 		/// <summary>
-		/// Gets the key-collection for this Options' dictionary.
-		/// </summary>
-		internal Dictionary<string, Option>.KeyCollection Keys
-		{
-			get { return _options.Keys; }
-		}
-
-		/// <summary>
-		/// Gets or sets an Option keyed by a specified key.
+		/// Gets an Option keyed by a specified key.
 		/// @note Ensure that 'key' is non-null before call.
 		/// </summary>
 		internal Option this[string key]
 		{
-			get { return (_options.ContainsKey(key)) ? _options[key] : null; }
+			get
+			{
+				if (_options.ContainsKey(key))
+					return _options[key];
+
+				return null;
+			}
 		}
 		#endregion Properties
 
@@ -61,49 +59,43 @@ namespace MapView
 		#region Methods (static)
 		internal static void InitializeConverters()
 		{
-			_converters[typeof(Color)] = new ConvertObjectEvent(ConvertColor);
+			_converters[typeof(Color)] = new ConvertEvent(ConvertColor);
 		}
 
-		internal static void ReadOptions(TextReader tr, Options options)
-		{
-			string key;
-
-			KeyvalPair keyval;
-			while ((keyval = Varidia.getKeyvalPair(tr)) != null)
-			{
-				switch (keyval.Key)
-				{
-					case "{": break;  // starting out
-					case "}": return; // all done
-
-					default:
-						key = keyval.Key;
-						if (options[key] != null)
-						{
-							options[key].Value = keyval.Value;
-							options[key].doUpdate(key);
-						}
-						break;
-				}
-			}
-		}
-
+		/// <summary>
+		/// Converts an object to a string for output to MapOptions.Cfg.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
 		private static string Convert(object o)
 		{
-			return (_converters.ContainsKey(o.GetType())) ? _converters[o.GetType()](o)
-														  : o.ToString();
+			var type = o.GetType();
+			if (_converters.ContainsKey(type))
+				return _converters[type](o);
+
+			return o.ToString();
 		}
 
+		/// <summary>
+		/// Converts a color-object to a string for output to MapOptions.Cfg.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
 		private static string ConvertColor(object o)
 		{
 			var color = (Color)o;
-			if (!color.IsKnownColor && !color.IsNamedColor && !color.IsSystemColor)
-				return string.Format(
+			if (!isFamiliarColor(color))
+				return String.Format(
 								CultureInfo.InvariantCulture,
 								"{0},{1},{2},{3}",
 								color.A, color.R, color.G, color.B);
 
 			return color.Name;
+		}
+
+		private static bool isFamiliarColor(Color color)
+		{
+			return color.IsKnownColor || color.IsNamedColor || color.IsSystemColor;
 		}
 		#endregion Methods (static)
 
@@ -112,42 +104,22 @@ namespace MapView
 		/// <summary>
 		/// Adds an Option to a specified target.
 		/// @note There is no error-handling so don't foff it.
-		/// @note Only one of 'changer' or 'target' can be specified; 'changer'
-		/// takes precedence.
+		/// @note Only one of 'changer' or 'target' should be specified;
+		/// 'changer' takes precedence over 'target'.
 		/// </summary>
 		/// <param name="key">property key</param>
-		/// <param name="val">default value of the property</param>
-		/// <param name="description">property description</param>
-		/// <param name="category">property category</param>
-		/// <param name="changer">handler to receive the OptionChangedEvent</param>
-		/// <param name="target">the object that will receive the changed
-		/// property values: an internal event handler will be created and the
-		/// name must be the name of a property of the type that the target is
-		/// whatever that meant</param>
-		internal void AddOption(
+		/// <param name="default">default value of the property</param>
+		/// <param name="changer">pointer to a handler that subscribes to the
+		/// OptionChangedEvent</param>
+		internal void AddOptionDefault(
 				string key,
-				object val,
-				string description,
-				string category,
-				OptionChangedEvent changer = null,
-				object target = null)
+				object @default,
+				OptionChangedEvent changer)
 		{
-			//XCom.LogFile.WriteLine("AddOption() key= " + key);
-			//XCom.LogFile.WriteLine(". val= " + val);
-
-			var option = new Option(val, description, category);
+			var option = new Option(@default);
 
 			if (changer != null)
-			{
-				//XCom.LogFile.WriteLine(". . has Changer");
 				option.OptionChanged += changer;
-			}
-			else if (target != null)
-			{
-				//XCom.LogFile.WriteLine(". . has Target - define Property");
-				_properties[key] = new Property(target, key);
-				option.OptionChanged += OnOptionChanged;
-			}
 
 			_options[key] = option;
 		}
@@ -186,21 +158,12 @@ namespace MapView
 			tw.WriteLine("}");
 		}
 		#endregion Methods
-
-
-		#region Events
-		private void OnOptionChanged(string key, object val)
-		{
-			//XCom.LogFile.WriteLine("Options.OnOptionChanged() key= " + key + " val= " + val);
-			_properties[key].SetValue(val);
-		}
-		#endregion Events
 	}
 
 
 
 	/// <summary>
-	/// Stores information to be used in the OptionsPropertyGrid.
+	/// The option of an Optionable Property.
 	/// </summary>
 	public sealed class Option
 	{
@@ -217,6 +180,8 @@ namespace MapView
 		#region Fields (static)
 		private static Dictionary<Type, ParseStringEvent> _parsers =
 				   new Dictionary<Type, ParseStringEvent>();
+
+		private static string[] KnownColors = Enum.GetNames(typeof(KnownColor));
 		#endregion Fields (static)
 
 
@@ -227,7 +192,7 @@ namespace MapView
 			get { return _value; }
 			set
 			{
-				if (_value != null)
+				if (!_value.Equals(value)) // TODO: Investigate that: (true != true) sic.
 				{
 					var type = _value.GetType();
 					if (_parsers.ContainsKey(type))
@@ -239,48 +204,31 @@ namespace MapView
 							return;
 						}
 					}
+					_value = value;
 				}
-				_value = value;
 			}
 		}
 
 		/// <summary>
-		/// Checks if Value is a boolean and TRUE. else false.
+		/// Gets if Value is a boolean and TRUE. else false.
+		/// @note Is used only to determine which secondary viewers should be
+		/// displayed when MapView loads.
 		/// </summary>
 		internal bool IsTrue
 		{
-			get
-			{
-				if (Value is bool)
-					return (bool)Value;
-
-				return false;
-			}
+			get { return (bool)Value; }
 		}
-
-		internal string Description
-		{ get; set; }
-
-		internal string Category
-		{ get; private set; }
 		#endregion Properties
 
 
 		#region cTor
 		/// <summary>
-		/// cTor.
+		/// cTor. Instantiates an Option with its default value.
 		/// </summary>
 		/// <param name="default"></param>
-		/// <param name="description"></param>
-		/// <param name="category"></param>
-		internal Option(
-				object @default,
-				string description = null,
-				string category    = null)
+		internal Option(object @default)
 		{
-			_value      = @default; // TODO: Investigate whether that should run Value_set.
-			Description = description;
-			Category    = category;
+			_value = @default; // TODO: Investigate whether that should run set_Value. uh no ...
 		}
 		#endregion cTor
 
@@ -288,99 +236,151 @@ namespace MapView
 		#region Methods (static)
 		internal static void InitializeParsers()
 		{
+			_parsers[typeof(Boolean)] = ParseBoolean;
 			_parsers[typeof(Int32)]   = ParseInt32;
 			_parsers[typeof(Color)]   = ParseColor;
-			_parsers[typeof(Boolean)] = ParseBoolean;
 		}
 
+		/// <summary>
+		/// Parses out user-defined booleans output by MapOptions.Cfg.
+		/// </summary>
+		/// <param name="st"></param>
+		/// <returns></returns>
 		private static object ParseBoolean(string st)
 		{
-			return Boolean.Parse(st);
+			bool result;
+			if (Boolean.TryParse(st, out result))
+				return result;
+
+			return null;
 		}
 
+		/// <summary>
+		/// Parses out user-defined ints output by MapOptions.Cfg.
+		/// </summary>
+		/// <param name="st"></param>
+		/// <returns></returns>
 		private static object ParseInt32(string st)
 		{
-			return Int32.Parse(st, CultureInfo.InvariantCulture);
+			int result;
+			if (Int32.TryParse(st, out result))
+				return result;
+
+			return null;
 		}
 
+		/// <summary>
+		/// Parses out user-defined colors output by MapOptions.Cfg.
+		/// UD-colors can be one of three formats:
+		/// - "color"
+		/// - (int)r,(int)g,(int)b
+		/// - (int)a,(int)r,(int)g,(int)b
+		/// </summary>
+		/// <param name="st"></param>
+		/// <returns></returns>
 		private static object ParseColor(string st)
 		{
 			string[] vals = st.Split(',');
 
-			switch (vals.Length)
+			if (vals.Length == 1)
 			{
-				case 1:
-					return Color.FromName(st);
+				for (int i = 0; i != KnownColors.Length; ++i)
+				{
+					if (KnownColors[i] == st)
+						return Color.FromName(st);
+				}
+			}
+			else if (vals.Length == 3 || vals.Length == 4)
+			{
+				if (vals.Length == 3)
+				{
+					var valsT = new string[4] { "255", "0","0","0" };
+					for (int i = 1, j = 0; i != 4; ++i, ++j)
+						valsT[i] = vals[j];
 
-				case 3:
-					return Color.FromArgb(
-									Int32.Parse(vals[0], CultureInfo.InvariantCulture),
-									Int32.Parse(vals[1], CultureInfo.InvariantCulture),
-									Int32.Parse(vals[2], CultureInfo.InvariantCulture));
+					vals = valsT;
+				}
 
-				case 4:
-					return Color.FromArgb(
-									Int32.Parse(vals[0], CultureInfo.InvariantCulture),
-									Int32.Parse(vals[1], CultureInfo.InvariantCulture),
-									Int32.Parse(vals[2], CultureInfo.InvariantCulture),
-									Int32.Parse(vals[3], CultureInfo.InvariantCulture));
+				int a = 0, r = 0, g = 0, b = 0;
+				if (TryColorValues(vals, ref a, ref r, ref g, ref b))
+					return Color.FromArgb(a,r,g,b);
 			}
 			return null;
+		}
+
+		/// <summary>
+		/// Helper for ParseColor().
+		/// </summary>
+		/// <param name="vals"></param>
+		/// <param name="a"></param>
+		/// <param name="r"></param>
+		/// <param name="g"></param>
+		/// <param name="b"></param>
+		/// <returns></returns>
+		private static bool TryColorValues(
+				IReadOnlyList<string> vals,
+				ref int a,
+				ref int r,
+				ref int g,
+				ref int b) // idiots ought to have put alpha at last pos. But thanks anyway.
+		{
+			int result;
+			if (Int32.TryParse(vals[0], out result)
+				&& result > -1 && result < 256)
+			{
+				a = result;
+			}
+			else return false;
+
+			if (Int32.TryParse(vals[1], out result)
+				&& result > -1 && result < 256)
+			{
+				r = result;
+			}
+			else return false;
+
+			if (Int32.TryParse(vals[2], out result)
+				&& result > -1 && result < 256)
+			{
+				g = result;
+			}
+			else return false;
+
+			if (Int32.TryParse(vals[3], out result)
+				&& result > -1 && result < 256)
+			{
+				b = result;
+			}
+			else return false;
+
+			return true;
 		}
 		#endregion Methods (static)
 
 
 		#region Methods
 		// TODO: FxCop CA1030:UseEventsWhereAppropriate
-		internal void doUpdate(string key, object val)
-		{
-			if (OptionChanged != null)
-				OptionChanged(key, val);
-		}
-
-		// TODO: FxCop CA1030:UseEventsWhereAppropriate
+		/// <summary>
+		/// Called by OptionsForm.ReadOptions() when an OptionsForm loads.
+		/// </summary>
+		/// <param name="key"></param>
 		internal void doUpdate(string key)
 		{
 			if (OptionChanged != null)
 				OptionChanged(key, Value);
 		}
-		#endregion Methods
-	}
 
-
-
-	/// <summary>
-	/// Property struct.
-	/// </summary>
-	internal struct Property
-	{
-		#region Fields
-		private readonly PropertyInfo _info;
-		private readonly object _prop;
-		#endregion Fields
-
-
-		#region cTor
+		// TODO: FxCop CA1030:UseEventsWhereAppropriate
 		/// <summary>
-		/// cTor.
+		/// Called by OptionsForm.OnPropertyValueChanged() when user changes an
+		/// Option's val.
 		/// </summary>
-		/// <param name="prop"></param>
-		/// <param name="property"></param>
-		internal Property(object prop, string property)
-		{
-			_info = (_prop = prop).GetType().GetProperty(property);
-		}
-		#endregion cTor
-
-
-		#region Methods
-		/// <summary>
-		/// Sets the value of this Property to a specified object.
-		/// </summary>
+		/// <param name="key"></param>
 		/// <param name="val"></param>
-		internal void SetValue(object val)
+		internal void doUpdate(string key, object val)
 		{
-			_info.SetValue(_prop, val);
+			if (OptionChanged != null)
+				OptionChanged(key, val);
 		}
 		#endregion Methods
 	}

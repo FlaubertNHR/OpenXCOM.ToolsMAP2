@@ -382,9 +382,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
-							ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
-																								MouseButtons.None,
-																								0, 0,0, vert));
+							ViewerFormsManager.RouteView.Control.doMousewheel(new MouseEventArgs(
+																							MouseButtons.None,
+																							0, 0,0, vert));
 							MapFile.Location = new MapLocation( // fire SelectLocation
 															MapFile.Location.Row,
 															MapFile.Location.Col,
@@ -463,9 +463,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 								{
 									RouteView.Dragnode = node;
 
-									ViewerFormsManager.RouteView.Control.ForceMousewheel(new MouseEventArgs(
-																										MouseButtons.None,
-																										0, 0,0, vert));
+									ViewerFormsManager.RouteView.Control.doMousewheel(new MouseEventArgs(
+																									MouseButtons.None,
+																									0, 0,0, vert));
 									MapFile.Location = new MapLocation( // fire SelectLocation
 																	MapFile.Location.Row,
 																	MapFile.Location.Col,

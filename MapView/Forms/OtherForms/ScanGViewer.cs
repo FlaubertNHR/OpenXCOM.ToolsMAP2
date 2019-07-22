@@ -127,8 +127,8 @@ namespace MapView
 			var graphics = e.Graphics;
 
 			var spriteAttributes = new ImageAttributes();
-			if (MainViewOverlay.that._spriteShadeEnabled)
-				spriteAttributes.SetGamma(MainViewOverlay.that.SpriteShadeLocal, ColorAdjustType.Bitmap);
+			if (XCMainWindow.Optionables.SpriteShadeEnabled)
+				spriteAttributes.SetGamma(XCMainWindow.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 
 			var pic = new Bitmap(

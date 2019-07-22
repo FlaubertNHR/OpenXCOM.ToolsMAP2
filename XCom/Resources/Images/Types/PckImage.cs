@@ -84,8 +84,6 @@ namespace XCom
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
 					pckId)
 		{
-			//LogFile.WriteLine("PckImage..cTor");
-
 			Spriteset = spriteset;	// only for ToString().
 			SetId = _setId++;		// only for 'MapInfoOutputBox'.
 
@@ -99,34 +97,30 @@ namespace XCom
 			int posSrc = 0;
 			int posDst = 0;
 
-			if (bindata[0] != MarkerRle)
-				posDst = bindata[posSrc++] * XCImage.SpriteWidth;
+			posDst = bindata[posSrc] * XCImage.SpriteWidth; // first byte is always count of transparent rows
 
-			for (; posSrc != bindata.Length; ++posSrc)
+			for (posSrc = 1; posSrc != bindata.Length; ++posSrc)
 			{
 				switch (bindata[posSrc])
 				{
-					default:
-						//LogFile.WriteLine(". Bindata.Length= " + Bindata.Length + " dst= " + dst);
-						//LogFile.WriteLine(". bindata.Length= " + bindata.Length + " id= "  + id);
+					case MarkerEos: // end of image
+						break;
 
+					case MarkerRle: // skip quantity of pixels
+						posDst += bindata[++posSrc];
+						break;
+
+					default:
 						if (posDst < Bindata.Length)
 						{
 							Bindata[posDst++] = bindata[posSrc];
 							break;
 						}
 
-						// probly trying to load a 32x48 Bigobs pck in a 32x40 spriteset.
+						// could be trying to load a 32x48 Bigobs pck in a 32x40 spriteset.
 						// Note that this cannot be resolved absolutely.
 						Spriteset.BorkedBigobs = true;
 						return;
-
-					case MarkerRle: // skip quantity of pixels
-						posDst += bindata[++posSrc];
-						break;
-
-					case MarkerEos: // end of image
-						break;
 				}
 			}
 
@@ -168,7 +162,7 @@ namespace XCom
 		{
 			var binlist = new List<byte>();
 
-			int lenTransparent = 0;
+			int tran = 0;
 			bool first = true;
 
 			for (int id = 0; id != sprite.Bindata.Length; ++id)
@@ -176,34 +170,40 @@ namespace XCom
 				byte b = sprite.Bindata[id];
 
 				if (b == Palette.TranId)
-					++lenTransparent;
+				{
+					++tran;
+				}
 				else
 				{
-					if (lenTransparent != 0)
+					if (tran != 0)
 					{
 						if (first)
 						{
-							first = false;
-
-							binlist     .Add((byte)(lenTransparent / sprite.Sprite.Width));	// qty of initial transparent rows
-							lenTransparent = (byte)(lenTransparent % sprite.Sprite.Width);	// qty of transparent pixels starting on the next row
+							binlist.Add((byte)(tran / sprite.Sprite.Width));	// qty of initial transparent rows
+							tran      = (byte)(tran % sprite.Sprite.Width);		// qty of transparent pixels starting on the next row
 						}
 
-						while (lenTransparent >= Byte.MaxValue)
+						while (tran >= Byte.MaxValue)
 						{
-							lenTransparent -= Byte.MaxValue;
+							tran -= Byte.MaxValue;
 
 							binlist.Add(MarkerRle);
 							binlist.Add(Byte.MaxValue);
 						}
 
-						if (lenTransparent != 0)
+						if (tran != 0)
 						{
 							binlist.Add(MarkerRle);
-							binlist.Add((byte)lenTransparent);
+							binlist.Add((byte)tran);
 						}
-						lenTransparent = 0;
+						tran = 0;
 					}
+					else if (first)
+					{
+						binlist.Add((byte)0);
+					}
+
+					first = false;
 					binlist.Add(b);
 				}
 			}

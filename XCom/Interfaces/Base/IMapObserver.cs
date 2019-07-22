@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 
 namespace XCom.Interfaces.Base
@@ -9,9 +10,11 @@ namespace XCom.Interfaces.Base
 	/// </summary>
 	public interface IMapObserver
 	{
+		[Browsable(false)]
 		MapFileBase MapBase
 		{ set; get;}
 
+		[Browsable(false)]
 		Dictionary<string, IMapObserver> ObserverPanels
 		{ get; }
 

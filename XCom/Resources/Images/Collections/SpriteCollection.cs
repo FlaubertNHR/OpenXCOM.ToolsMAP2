@@ -47,6 +47,12 @@ namespace XCom
 		{ get; internal set; }
 
 
+//		public int CountPckSprites // TODO ->
+//		{ get; set; }
+//		public int CountTabOffsets
+//		{ get; set; }
+
+
 		private Palette _pal;
 		/// <summary>
 		/// TODO: SpriteCollection should not have a pointer to the palette; the
@@ -116,12 +122,12 @@ namespace XCom
 		/// its TAB-file.
 		/// NOTE: a spriteset is loaded by:
 		/// 1.
-		/// XCMainWindow.LoadSelectedDescriptor() calls
-		/// MapFileService.LoadDescriptor() calls
-		/// Descriptor.GetTerrainRecords() calls
-		/// Descriptor.GetTerrainSpriteset() calls
-		/// ResourceInfo.LoadSpriteset() calls
-		/// SpriteCollection..cTor.
+		/// XCMainWindow.LoadSelectedDescriptor()
+		/// calls MapFileService.LoadDescriptor()
+		/// calls Descriptor.GetTerrainRecords()
+		/// calls Descriptor.GetTerrainSpriteset()
+		/// calls ResourceInfo.LoadSpriteset()
+		/// calls SpriteCollection..cTor.
 		/// 2.
 		/// PckViewForm.LoadSpriteset()
 		/// 3.
@@ -129,15 +135,15 @@ namespace XCom
 		/// 4.
 		/// XCMainWindow..cTor also needs to load the CURSOR.
 		/// </summary>
-		/// <param name="fsPck">filestream of the PCK file</param>
-		/// <param name="fsTab">filestream of the TAB file</param>
+		/// <param name="bytesPck">byte array of the PCK file</param>
+		/// <param name="bytesTab">byte array of the TAB file</param>
 		/// <param name="tabwordLength">2 for terrains/bigobs/ufo-units, 4 for tftd-units</param>
 		/// <param name="pal">the palette to use (typically Palette.UfoBattle
 		/// for UFO sprites or Palette.TftdBattle for TFTD sprites)</param>
 		/// <param name="label">file w/out extension or path</param>
 		public SpriteCollection(
-				Stream fsPck,
-				Stream fsTab,
+				byte[] bytesPck,
+				byte[] bytesTab,
 				int tabwordLength,
 				Palette pal,
 				string label)
@@ -154,29 +160,42 @@ namespace XCom
 			int tabSprites = 0;
 			uint[] offsets;
 
-			if (fsTab != null)
+			if (bytesTab != null) // not used. Always valid.
 			{
-				tabSprites = (int)fsTab.Length / tabwordLength;
-				//LogFile.WriteLine(". fsTab.Length= " + fsTab.Length);
-				//LogFile.WriteLine(". tabwordLength= " + tabwordLength);
-				//LogFile.WriteLine(". tabSprites= " + tabSprites);
+				bool le = BitConverter.IsLittleEndian; // user's architecture.
 
-				fsTab.Position = 0;
+				tabSprites = (int)bytesTab.Length / TabwordLength;
 
 				offsets = new uint[tabSprites + 1]; // NOTE: the last entry will be set to the total length of the input-bindata.
-				using (var br = new BinaryReader(fsTab))
-				{
-					switch (tabwordLength)
-					{
-						case ResourceInfo.TAB_WORD_LENGTH_2:
-							for (int i = 0; i != tabSprites; ++i)
-								offsets[i] = br.ReadUInt16();
-							break;
 
-						case ResourceInfo.TAB_WORD_LENGTH_4:
-							for (int i = 0; i != tabSprites; ++i)
-								offsets[i] = br.ReadUInt32();
-							break;
+				var buffer = new byte[TabwordLength];
+				uint b;
+				int pos = 0;
+
+				if (TabwordLength == ResourceInfo.TAB_WORD_LENGTH_4)
+				{
+					while (pos != bytesTab.Length)
+					{
+						for (b = 0; b != TabwordLength; ++b)
+							buffer[b] = bytesTab[pos + b];
+
+						if (!le) Array.Reverse(buffer);
+						offsets[pos / TabwordLength] = BitConverter.ToUInt32(buffer, 0);
+
+						pos += TabwordLength;
+					}
+				}
+				else //if (TabwordLength == ResourceInfo.TAB_WORD_LENGTH_2)
+				{
+					while (pos != bytesTab.Length)
+					{
+						for (b = 0; b != TabwordLength; ++b)
+							buffer[b] = bytesTab[pos + b];
+
+						if (!le) Array.Reverse(buffer);
+						offsets[pos / TabwordLength] = BitConverter.ToUInt16(buffer, 0);
+
+						pos += TabwordLength;
 					}
 				}
 			}
@@ -187,32 +206,20 @@ namespace XCom
 			}
 
 
-			fsPck.Position = 0;
-
-			var bindata = new byte[(int)fsPck.Length];
-			fsPck.Read(
-					bindata,			// buffer
-					0,					// offset
-					bindata.Length);	// count
-
-
-			if (bindata.Length > 1)
+			if (bytesPck != null && bytesPck.Length > 1)
 			{
-				if (fsTab != null)
+				int pckSprites = 0; // qty of bytes in 'bytesPck' w/ value 0xFF (ie. qty of sprites)
+				for (int i = 1; i != bytesPck.Length; ++i)
 				{
-					int pckSprites = 0; // qty of bytes in 'bindata' w/ value 0xFF (ie. qty of sprites)
-					for (int i = 1; i != bindata.Length; ++i)
-					{
-						if (bindata[i] == 255 && bindata[i - 1] != 254)
-							++pckSprites;
-					}
-					Borked = (pckSprites != tabSprites);
-					//LogFile.WriteLine("pckSprites= " + pckSprites + " tabSprites= " + tabSprites);
+					if (bytesPck[i] == 255 && bytesPck[i - 1] != 254)
+						++pckSprites;
 				}
+				Borked = (pckSprites != tabSprites);
+				//LogFile.WriteLine("pckSprites= " + pckSprites + " tabSprites= " + tabSprites);
 
 				if (!Borked) // avoid throwing 1 or 15000 exceptions ...
 				{
-					offsets[offsets.Length - 1] = (uint)bindata.Length;
+					offsets[offsets.Length - 1] = (uint)bytesPck.Length;
 					//LogFile.WriteLine("");
 					//LogFile.WriteLine(". offsets.Length= " + offsets.Length);
 
@@ -225,7 +232,7 @@ namespace XCom
 						var bindataSprite = new byte[offsets[i + 1] - offsets[i]];
 
 						for (int j = 0; j != bindataSprite.Length; ++j)
-							bindataSprite[j] = bindata[offsets[i] + j];
+							bindataSprite[j] = bytesPck[offsets[i] + j];
 
 						var sprite = new PckImage(
 												bindataSprite,
@@ -292,7 +299,7 @@ namespace XCom
 		#endregion cTors
 
 
-		#region Methods Methods (static)
+		#region Methods (static)
 		/// <summary>
 		/// Saves a specified spriteset to PCK+TAB.
 		/// </summary>
@@ -307,8 +314,6 @@ namespace XCom
 				SpriteCollection spriteset,
 				int tabwordLength)
 		{
-			//LogFile.WriteLine("SpriteCollection.SaveSpriteset");
-
 			string pfePck = Path.Combine(dir, file + GlobalsXC.PckExt);
 			string pfeTab = Path.Combine(dir, file + GlobalsXC.TabExt);
 
@@ -322,16 +327,11 @@ namespace XCom
 						uint pos = 0;
 						for (int id = 0; id != spriteset.Count; ++id)
 						{
-							//LogFile.WriteLine(". pos[pre]= " + pos);
 							if (pos > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
-							{
-								//LogFile.WriteLine(". . UInt16 MaxValue exceeded - ret FALSE");
 								return false;
-							}
 
 							bwTab.Write((ushort)pos); // TODO: investigate le/be
 							pos += PckImage.SaveSpritesetSprite(bwPck, spriteset[id]);
-							//LogFile.WriteLine(". pos[pst]= " + pos);
 						}
 						break;
 					}
@@ -505,11 +505,3 @@ namespace XCom
 		#endregion Methods (static)
 	}
 }
-
-//		private int _scale = 1;
-//		public void HQ2X()
-//		{
-//			foreach (XCImage image in this)
-//				image.HQ2X();
-//			_scale *= 2;
-//		}

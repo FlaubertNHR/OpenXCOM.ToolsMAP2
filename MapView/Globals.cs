@@ -55,14 +55,19 @@ namespace MapView
 		/// </summary>
 		internal static void LoadExtraSprites()
 		{
-			using (var fsPck = Assembly.GetExecutingAssembly()
-							  .GetManifestResourceStream("MapView._Embedded.Extra.PCK"))
-			using (var fsTab = Assembly.GetExecutingAssembly()
-							  .GetManifestResourceStream("MapView._Embedded.Extra.TAB"))
+			var ass = Assembly.GetExecutingAssembly();
+			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.Extra.PCK"))
+			using (var fsTab = ass.GetManifestResourceStream("MapView._Embedded.Extra.TAB"))
 			{
+				var bytesPck = new byte[fsPck.Length];
+				var bytesTab = new byte[fsTab.Length];
+
+				fsPck.Read(bytesPck, 0, (int)fsPck.Length);
+				fsTab.Read(bytesTab, 0, (int)fsTab.Length);
+
 				ExtraSprites = new SpriteCollection(
-												fsPck,
-												fsTab,
+												bytesPck, //fsPck,
+												bytesTab, //fsTab,
 												ResourceInfo.TAB_WORD_LENGTH_2,
 												Palette.UfoBattle,
 												"Extra");

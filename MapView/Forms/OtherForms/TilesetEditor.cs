@@ -738,7 +738,7 @@ namespace MapView
 
 								try
 								{
-									File.Move(pfeMapPre, pfeMap);	// NOTE: This has to happen now because once the MapTree node
+									File.Move(pfeMapPre, pfeMap);	// NOTE: This has to happen now because once the Maptree node
 																	// is selected it will try to load the .MAP file etc.
 								}
 								catch
@@ -838,7 +838,7 @@ namespace MapView
 
 								Directory.CreateDirectory(Path.GetDirectoryName(pfeMap));
 								using (var fs = File.Create(pfeMap))	// create the Map-file and release its handle.
-								{										// NOTE: This has to happen now because once the MapTree node
+								{										// NOTE: This has to happen now because once the Maptree node
 									MapFile.CreateMap(					// is selected it will try to load the .MAP file etc.
 													fs,
 													10,10,1); // <- default new Map size

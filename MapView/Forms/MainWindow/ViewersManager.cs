@@ -47,7 +47,7 @@ namespace MapView.Forms.MainWindow
 			_viewers.Add(f);
 
 			var control = (f as IMapObserverProvider).ObserverControl; // ie. 'TileView', 'TopView', 'RouteView'.
-			control.LoadControlOptions();
+			control.LoadControlDefaultOptions();
 			OptionsManager.setOptionsType(label, control.Options);
 		}
 

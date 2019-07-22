@@ -26,7 +26,7 @@ namespace XCom
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
 		/// <param name="basepathDialog">true to force the find file dialog</param>
-		/// <returns></returns>
+		/// <returns>null if things go south</returns>
 		public static MapFileBase LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
@@ -107,8 +107,11 @@ namespace XCom
 					//LogFile.WriteLine(". . . terrain= " + descriptor.Terrains[i].Item1 + " : " + descriptor.Terrains[i].Item2);
 
 					Tilepart[] MCD = descriptor.CreateTerrain(i);	// NOTE: calls
-					foreach (Tilepart part in MCD)					//     - TilepartFactory.CreateTileparts()
-						partset.Add(part);							//     - ResourceInfo.LoadSpriteset()
+					if (MCD == null)								//     - TilepartFactory.CreateTileparts()
+						return null;								//     - ResourceInfo.LoadSpriteset()
+
+					foreach (Tilepart part in MCD)
+						partset.Add(part);
 				}
 
 				if (partset.Count != 0)

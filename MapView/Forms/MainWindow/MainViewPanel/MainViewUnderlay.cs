@@ -35,6 +35,8 @@ namespace MapView
 
 
 		#region Properties
+		private XCMainWindow MainView;
+
 		private MainViewOverlay MainViewOverlay
 		{ get; set; }
 
@@ -70,10 +72,15 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal MainViewUnderlay()
+		internal MainViewUnderlay(XCMainWindow main)
 		{
+			MainView = main;
+
 			that = this;
-			MainViewOverlay = new MainViewOverlay();
+			MainViewOverlay = new MainViewOverlay(MainView);
+
+			Dock = DockStyle.Fill;
+			BorderStyle = BorderStyle.Fixed3D;
 
 			AnimationUpdate += OnAnimationUpdate;
 
@@ -111,7 +118,7 @@ namespace MapView
 		#region Events (override)
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			base.OnPaint(e);
+//			base.OnPaint(e);
 
 			// indicate reserved space for scroll-bars.
 			var graphics = e.Graphics;
@@ -409,7 +416,7 @@ namespace MapView
 				//XCom.LogFile.WriteLine(". height= " + height);
 
 				Globals.Scale = (double)halfWidth / MainViewOverlay.HalfWidthConst;
-				XCMainWindow.that.sb_PrintScale();
+				MainView.sb_PrintScale();
 				//XCom.LogFile.WriteLine(". set scale= " + Globals.Scale);
 
 				return new Size(
@@ -437,7 +444,7 @@ namespace MapView
 				if (_timer == null)
 				{
 					_timer = new Timer();
-					_timer.Interval = 250;
+					_timer.Interval = 230;
 					_timer.Tick += AnimateStep;
 				}
 

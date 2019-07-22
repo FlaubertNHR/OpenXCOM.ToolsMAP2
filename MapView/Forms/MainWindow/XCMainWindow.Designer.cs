@@ -21,22 +21,6 @@ namespace MapView
 		}
 
 
-/*		These lines are going to be deleted when changes are made in the designer.
-
-#if !__MonoCS__
-			tvMaps = new MapView.BufferedTreeView();
-#else
-			tvMaps = new System.Windows.Forms.TreeView();
-#endif
-
-		And this line will be inserted:
-			tvMaps = new System.Windows.Forms.TreeView();
-
-		Copy-paste things back to what it should be. NOTE: The instantiation
-		cannot be done in the cTor because the cTor isn't run by the designer;
-		but changing the code of the class to instantiate the tree in, say, the
-		OnLoad event is a bit too involved.
- */
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -45,11 +29,6 @@ namespace MapView
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XCMainWindow));
-#if !__MonoCS__
-			tvMaps = new MapView.BufferedTreeView();
-#else
-			tvMaps = new System.Windows.Forms.TreeView();
-#endif
 			this.mmMain = new System.Windows.Forms.MainMenu(this.components);
 			this.menuFile = new System.Windows.Forms.MenuItem();
 			this.miSaveAll = new System.Windows.Forms.MenuItem();
@@ -70,10 +49,6 @@ namespace MapView
 			this.menuEdit = new System.Windows.Forms.MenuItem();
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
 			this.miOptions = new System.Windows.Forms.MenuItem();
-			this.menuAnimation = new System.Windows.Forms.MenuItem();
-			this.miAnimate = new System.Windows.Forms.MenuItem();
-			this.miDoors = new System.Windows.Forms.MenuItem();
-			this.miGrid = new System.Windows.Forms.MenuItem();
 			this.menuViewers = new System.Windows.Forms.MenuItem();
 			this.menuHelp = new System.Windows.Forms.MenuItem();
 			this.sfdSaveDialog = new System.Windows.Forms.SaveFileDialog();
@@ -92,28 +67,11 @@ namespace MapView
 			this.tscPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tvMaps
-			// 
-			this.tvMaps.BackColor = System.Drawing.SystemColors.Control;
-			this.tvMaps.Dock = System.Windows.Forms.DockStyle.Left;
-			this.tvMaps.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
-			this.tvMaps.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.tvMaps.HideSelection = false;
-			this.tvMaps.Indent = 15;
-			this.tvMaps.Location = new System.Drawing.Point(0, 0);
-			this.tvMaps.Margin = new System.Windows.Forms.Padding(0);
-			this.tvMaps.Name = "tvMaps";
-			this.tvMaps.Size = new System.Drawing.Size(240, 454);
-			this.tvMaps.TabIndex = 0;
-			this.tvMaps.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.tv_DrawNode);
-			this.tvMaps.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMapTreeMouseDown);
-			// 
 			// mmMain
 			// 
 			this.mmMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.menuFile,
 			this.menuEdit,
-			this.menuAnimation,
 			this.menuViewers,
 			this.menuHelp});
 			// 
@@ -265,46 +223,15 @@ namespace MapView
 			this.miOptions.Text = "&Options";
 			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
-			// menuAnimation
-			// 
-			this.menuAnimation.Index = 2;
-			this.menuAnimation.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miAnimate,
-			this.miDoors,
-			this.miGrid});
-			this.menuAnimation.Text = "menuAnimation";
-			this.menuAnimation.Visible = false;
-			// 
-			// miAnimate
-			// 
-			this.miAnimate.Index = 0;
-			this.miAnimate.Shortcut = System.Windows.Forms.Shortcut.F2;
-			this.miAnimate.Text = "miAnimate";
-			this.miAnimate.Click += new System.EventHandler(this.OnAnimateClick);
-			// 
-			// miDoors
-			// 
-			this.miDoors.Index = 1;
-			this.miDoors.Shortcut = System.Windows.Forms.Shortcut.F3;
-			this.miDoors.Text = "miDoors";
-			this.miDoors.Click += new System.EventHandler(this.OnToggleDoorsClick);
-			// 
-			// miGrid
-			// 
-			this.miGrid.Index = 2;
-			this.miGrid.Shortcut = System.Windows.Forms.Shortcut.F4;
-			this.miGrid.Text = "miGrid";
-			this.miGrid.Click += new System.EventHandler(this.OnToggleGridClick);
-			// 
 			// menuViewers
 			// 
 			this.menuViewers.Enabled = false;
-			this.menuViewers.Index = 3;
+			this.menuViewers.Index = 2;
 			this.menuViewers.Text = "&Viewers";
 			// 
 			// menuHelp
 			// 
-			this.menuHelp.Index = 4;
+			this.menuHelp.Index = 3;
 			this.menuHelp.Text = "&Help";
 			// 
 			// sfdSaveDialog
@@ -322,9 +249,9 @@ namespace MapView
 			this.tsslDimensions,
 			this.tsslPosition,
 			this.tsslSelectionSize});
-			this.ssMain.Location = new System.Drawing.Point(248, 432);
+			this.ssMain.Location = new System.Drawing.Point(8, 432);
 			this.ssMain.Name = "ssMain";
-			this.ssMain.Size = new System.Drawing.Size(544, 22);
+			this.ssMain.Size = new System.Drawing.Size(784, 22);
 			this.ssMain.TabIndex = 3;
 			// 
 			// tsslScale
@@ -340,7 +267,7 @@ namespace MapView
 			this.tsslMapLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
 			this.tsslMapLabel.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tsslMapLabel.Name = "tsslMapLabel";
-			this.tsslMapLabel.Size = new System.Drawing.Size(215, 17);
+			this.tsslMapLabel.Size = new System.Drawing.Size(455, 17);
 			this.tsslMapLabel.Spring = true;
 			// 
 			// tsslDimensions
@@ -375,14 +302,14 @@ namespace MapView
 			// 
 			this.tscPanel.ContentPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.tscPanel.ContentPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(544, 407);
+			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(784, 407);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			// 
 			// tscPanel.LeftToolStripPanel
 			// 
 			this.tscPanel.LeftToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.LeftToolStripPanelVisible = false;
-			this.tscPanel.Location = new System.Drawing.Point(248, 0);
+			this.tscPanel.Location = new System.Drawing.Point(8, 0);
 			this.tscPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tscPanel.Name = "tscPanel";
 			// 
@@ -390,7 +317,7 @@ namespace MapView
 			// 
 			this.tscPanel.RightToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.RightToolStripPanelVisible = false;
-			this.tscPanel.Size = new System.Drawing.Size(544, 432);
+			this.tscPanel.Size = new System.Drawing.Size(784, 432);
 			this.tscPanel.TabIndex = 2;
 			// 
 			// tscPanel.TopToolStripPanel
@@ -413,8 +340,9 @@ namespace MapView
 			// csSplitter
 			// 
 			this.csSplitter.BorderStyle3D = System.Windows.Forms.Border3DStyle.Flat;
-			this.csSplitter.ControlToHide = this.tvMaps;
-			this.csSplitter.Location = new System.Drawing.Point(240, 0);
+			this.csSplitter.ControlToHide = null;
+			this.csSplitter.IsCollapsed = true;
+			this.csSplitter.Location = new System.Drawing.Point(0, 0);
 			this.csSplitter.MinimumSize = new System.Drawing.Size(5, 5);
 			this.csSplitter.Name = "csSplitter";
 			this.csSplitter.Size = new System.Drawing.Size(8, 454);
@@ -429,7 +357,6 @@ namespace MapView
 			this.Controls.Add(this.tscPanel);
 			this.Controls.Add(this.ssMain);
 			this.Controls.Add(this.csSplitter);
-			this.Controls.Add(this.tvMaps);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
@@ -450,11 +377,6 @@ namespace MapView
 
 		}
 
-#if !__MonoCS__
-		private MapView.BufferedTreeView tvMaps;
-#else
-		private System.Windows.Forms.TreeView tvMaps;
-#endif
 
 		private System.Windows.Forms.ContextMenu cmMapTreeMenu;
 
@@ -487,11 +409,6 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miConfigurator;
 
 		private System.Windows.Forms.MenuItem menuHelp;
-
-		private System.Windows.Forms.MenuItem menuAnimation;
-		private System.Windows.Forms.MenuItem miAnimate;
-		private System.Windows.Forms.MenuItem miDoors;
-		private System.Windows.Forms.MenuItem miGrid; // for lack of a better place to put it.
 
 
 		private System.Windows.Forms.SaveFileDialog sfdSaveDialog;

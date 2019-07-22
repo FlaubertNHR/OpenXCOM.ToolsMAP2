@@ -1606,41 +1606,36 @@ namespace PckView
 				else
 					XCImage.SpriteHeight = 40;
 
-				using (var fsPck = File.OpenRead(pfePck)) // try 2-byte tab-offsets in .TAB file
-				using (var fsTab = File.OpenRead(pfeTab)) // ie, UFO/TFTD terrain-sprites or Bigobs, UFO unit-sprites
+
+				byte[] bytesPck = File.ReadAllBytes(pfePck);
+				byte[] bytesTab = File.ReadAllBytes(pfeTab);
+
+				int tabwordLength;
+				Palette pal;
+				if (bytesTab[2] == 0 && bytesTab[3] == 0) // if either of the 3rd or 4th bytes contains a nonzero val ... it's a UFO
 				{
-					//LogFile.WriteLine(". try 2-byte offsets");
-					spriteset = new SpriteCollection(
-												fsPck,
-												fsTab,
-												ResourceInfo.TAB_WORD_LENGTH_2,
-												Palette.UfoBattle,
-												Fil);
+					tabwordLength = ResourceInfo.TAB_WORD_LENGTH_4;
+					pal = Palette.TftdBattle;
+				}
+				else
+				{
+					tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
+					pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
 				}
 
-				if (spriteset.Borked && !spriteset.BorkedBigobs)
-				{
-					using (var fsPck = File.OpenRead(pfePck)) // try 4-byte tab-offsets in .TAB file
-					using (var fsTab = File.OpenRead(pfeTab)) // ie, TFTD unit-sprites
-					{
-						//LogFile.WriteLine(". try 4-byte offsets");
-						spriteset = new SpriteCollection(
-													fsPck,
-													fsTab,
-													ResourceInfo.TAB_WORD_LENGTH_4,
-													Palette.TftdBattle,
-													Fil);
-					}
-				}
-
+				spriteset = new SpriteCollection(
+											bytesPck,
+											bytesTab,
+											tabwordLength,
+											pal,
+											Fil);
 				if (spriteset.Borked)
 				{
 					spriteset = null;
 
 					MessageBox.Show(
-								"The quantity of sprites in the PCK file"
-									+ " does not match the quantity of"
-									+ " sprites expected by the TAB file.",
+								"The quantity of sprites in the PCK file does not match"
+									+ " the quantity of sprites expected by the TAB file.",
 								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
@@ -1648,7 +1643,7 @@ namespace PckView
 								0);
 				}
 
-				if (spriteset.BorkedBigobs)
+				if (spriteset != null && spriteset.BorkedBigobs)
 				{
 					spriteset = null;
 

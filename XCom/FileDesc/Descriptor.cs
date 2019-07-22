@@ -99,7 +99,8 @@ namespace XCom
 		/// @note The TabwordLength of terrains in UFO and TFTD is 2-bytes.
 		/// </summary>
 		/// <param name="id">the id of the terrain in this tileset's terrains-list</param>
-		/// <returns>an array containing the Tileparts for the terrain</returns>
+		/// <returns>an array containing the Tileparts for the terrain, or null
+		/// if spriteset creation borks</returns>
 		internal Tilepart[] CreateTerrain(int id)
 		{
 			var terrain = Terrains[id];
@@ -108,12 +109,14 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			return TilepartFactory.CreateTileparts(									// NOTE: That that loads the sprites in addition to
-												terr, path,							// getting the MCD-records. here just because it can be
-												ResourceInfo.LoadSpriteset(			// concealed inside a function called GetTerrainRecords()
-																		terr, path,	// that returns a Tilepart-array that's why.
-																		ResourceInfo.TAB_WORD_LENGTH_2,
-																		Pal));
+			var spriteset = ResourceInfo.LoadSpriteset(
+													terr, path,
+													ResourceInfo.TAB_WORD_LENGTH_2,
+													Pal);
+			if (spriteset != null)
+				return TilepartFactory.CreateTileparts(terr, path, spriteset);
+
+			return null;
 		}
 
 		/// <summary>

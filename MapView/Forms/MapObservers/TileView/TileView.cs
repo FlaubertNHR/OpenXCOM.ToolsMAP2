@@ -46,6 +46,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 
 		#region Properties
+		[Browsable(false)]
 		public override MapFileBase MapBase
 		{
 			set
@@ -84,7 +85,7 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// appropriate tilepart, w/ TilePanel.SelectedTilepart, when a quad is
 		/// selected in the QuadrantPanel. The TilepartSelected event then
 		/// fires, and then the TilepartSelected_SelectQuadrant event fires.
-		/// Thought you'd like to know how good the pasta tastes.
+		/// Thought you'd like to know how good the spaghetti tastes.
 		/// </summary>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] // w.t.f.
 		internal Tilepart SelectedTilepart
@@ -104,6 +105,29 @@ namespace MapView.Forms.MapObservers.TileViews
 		#endregion Properties
 
 
+		#region Properties (static)
+		/// <summary>
+		/// A class-object that holds TileView's optionable Properties.
+		/// @note C# doesn't allow inheritance of multiple class-objects, which
+		/// would have been a way to separate the optionable properties from all
+		/// the other properties that are not optionable; they need to be
+		/// separate or else all Properties would show up in the Options form's
+		/// PropertyGrid. An alternative would have been to give all those other
+		/// properties the Browsable(false) attribute but I didn't want to
+		/// clutter up the code and also because the Browsable(false) attribute
+		/// is used to hide Properties from the designer also - but whether or
+		/// not they are accessible in the designer is an entirely different
+		/// consideration than whether or not they are Optionable Properties. So
+		/// I created an independent class just to hold and handle TileView's
+		/// Optionable Properties ... and wired it up. It's a tedious shitfest
+		/// but better than the arcane MapViewI system or screwing around with
+		/// equally arcane TypeDescriptors. Both of which had been implemented
+		/// but then rejected.
+		/// </summary>
+		internal static TileViewOptionables Optionables
+		{ get; private set; }
+		#endregion Properties (static)
+
 
 		#region cTor
 		/// <summary>
@@ -111,6 +135,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		/// </summary>
 		internal TileView()
 		{
+			Optionables = new TileViewOptionables(this);
+
 			InitializeComponent();
 			var tpTileTypes = new TabPageBorder(tcTileTypes);
 
@@ -251,107 +277,15 @@ namespace MapView.Forms.MapObservers.TileViews
 
 		#region Options
 		/// <summary>
-		/// These are default colors for the SpecialProperty of a tilepart.
-		/// TileView will load these colors when the app loads, then any colors
-		/// of SpecialType that were customized will be set and accessed by
-		/// TilePanel and/or the Help|Colors screen later.
-		/// </summary>
-		internal static readonly Color[] SpecialColors =
-		{
-									//      UFO:			TFTD:
-			Color.NavajoWhite,		//  0 - Standard
-			Color.Lavender,			//  1 - EntryPoint
-			Color.IndianRed,		//  2 - PowerSource		IonBeamAccel
-			Color.MediumTurquoise,	//  3 - Navigation
-			Color.Khaki,			//  4 - Construction
-			Color.MistyRose,		//  5 - Food			Cryo
-			Color.Aquamarine,		//  6 - Reproduction	Clon
-			Color.DeepSkyBlue,		//  7 - Entertainment	LearnArrays
-			Color.Thistle,			//  8 - Surgery			Implant
-			Color.YellowGreen,		//  9 - ExaminationRoom
-			Color.MediumOrchid,		// 10 - Alloys			Plastics
-			Color.LightSteelBlue,	// 11 - Habitat			Re-anim
-			Color.Cyan,				// 12 - Destroyed
-			Color.BurlyWood,		// 13 - ExitPoint
-			Color.LightCoral		// 14 - MustDestroy
-		};
-
-		/// <summary>
 		/// Loads default options for TileView screen.
 		/// </summary>
-		protected internal override void LoadControlOptions()
+		protected internal override void LoadControlDefaultOptions()
 		{
-			string desc;
-
-			int i = -1;
-			foreach (string key in Enum.GetNames(typeof(SpecialType)))
-			{
-//				int i = (int)Enum.Parse(typeof(SpecialType), key);
-				TilePanel.SpecialBrushes[key] = new SolidBrush(SpecialColors[++i]);
-
-				switch (i)
-				{
-					default:
-					case  0: desc = "Color of Standard parts";                     break;
-					case  1: desc = "Color of Entry Point parts";                  break;
-					case  2: desc = "Color of UFO Power Source parts"            + Environment.NewLine
-								  + "Color of TFTD Ion-beam Accelerators parts";   break;
-					case  3: desc = "Color of UFO Navigation parts"              + Environment.NewLine
-								  + "Color of TFTD Magnetic Navigation parts";     break;
-					case  4: desc = "Color of UFO Construction parts"            + Environment.NewLine
-								  + "Color of TFTD Alien Sub Construction parts";  break;
-					case  5: desc = "Color of UFO Alien Food parts"              + Environment.NewLine
-								  + "Color of TFTD Alien Cryogenics parts";        break;
-					case  6: desc = "Color of UFO Alien Reproduction parts"      + Environment.NewLine
-								  + "Color of TFTD Alien Cloning parts";           break;
-					case  7: desc = "Color of UFO Alien Entertainment parts"     + Environment.NewLine
-								  + "Color of TFTD Alien Learning Arrays parts";   break;
-					case  8: desc = "Color of UFO Alien Surgery parts"           + Environment.NewLine
-								  + "Color of TFTD Alien Implanter parts";         break;
-					case  9: desc = "Color of Examination Room parts";             break;
-					case 10: desc = "Color of UFO Alien Alloys parts"            + Environment.NewLine
-								  + "Color of TFTD Aqua Plastics parts";           break;
-					case 11: desc = "Color of UFO Alien Habitat parts"           + Environment.NewLine
-								  + "Color of TFTD Alien Re-animation Zone parts"; break;
-					case 12: desc = "Color of Destroyed Alloys/Plastics parts";    break;
-					case 13: desc = "Color of Exit Point parts";                   break;
-					case 14: desc = "Color of Must Destroy parts"                + Environment.NewLine
-								  + "eg. UFO Alien Brain parts"                  + Environment.NewLine
-								  + "eg. TFTD T'leth Power Cylinders parts";       break;
-				}
-
-				// NOTE: The colors of these brushes get overwritten by the
-				// Option settings somewhere/how between here and their actual
-				// use in TilePanel.OnPaint(). That is, this only sets default
-				// colors and might not even be very useful other than as
-				// perhaps for placeholder-key(s) for the actual values that
-				// are later retrieved from Options ....
-				//
-				// See OnSpecialPropertyColorChanged() below_
-				Options.AddOption(
-								key,
-								TilePanel.SpecialBrushes[key].Color,
-								desc,						// descriptive hint at the bottom of the Options screen.
-								"SpecialPropertyColors",	// Option category.
-								OnSpecialPropertyColorChanged);
-			}
-
-			VolutarService.LoadOptions(Options);
-		}
-
-		/// <summary>
-		/// Sets a different color for a SpecialBrush.
-		/// </summary>
-		/// <param name="key">a string representing the SpecialBrush</param>
-		/// <param name="val">its color</param>
-		private void OnSpecialPropertyColorChanged(string key, object val)
-		{
-			TilePanel.SpecialBrushes[key].Color = (Color)val;
-			Invalidate();
+			Optionables.LoadDefaults(Options);
 		}
 
 
-		private static Form _foptions;	// is static for no special reason
+		internal static Form _foptions; // is static for no special reason
 
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an Options-
@@ -368,7 +302,10 @@ namespace MapView.Forms.MapObservers.TileViews
 			{
 				if (_foptions == null)
 				{
-					_foptions = new OptionsForm("TileViewOptions", Options);
+					_foptions = new OptionsForm(
+											Optionables,
+											Options,
+											OptionsForm.OptionableType.TileView);
 					_foptions.Text = " TileView Options";
 
 					OptionsManager.Screens.Add(_foptions);

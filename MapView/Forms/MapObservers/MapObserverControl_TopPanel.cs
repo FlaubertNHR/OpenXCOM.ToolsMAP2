@@ -19,7 +19,7 @@ namespace MapView
 	{
 		#region IMapObserver requirements
 		private MapFileBase _mapBase;
-		[Browsable(false), DefaultValue(null)]
+		[Browsable(false)]
 		public virtual MapFileBase MapBase
 		{
 			get { return _mapBase; }
@@ -35,16 +35,22 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Satisfies IMapObserver. Used by QuadrantPanel but disabled in
-		/// TopPanel.
+		/// Satisfies IMapObserver. Is overridden only by QuadrantPanel.
+		/// TODO: So either (a) it should not be a requirement in IMapObserver
+		/// or, (b) this should not inherit from IMapObserver or, (c) it should
+		/// not be a virtual function but instead it should be wired differently
+		/// for the QuadrantPanel.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{}
 
 		/// <summary>
-		/// Satisfies IMapObserver. Used by QuadrantPanel and does not exist in
-		/// TopPanel.
+		/// Satisfies IMapObserver. Is overridden only by QuadrantPanel.
+		/// TODO: So either (a) it should not be a requirement in IMapObserver
+		/// or, (b) this should not inherit from IMapObserver or, (c) it should
+		/// not be a virtual function but instead it should be wired differently
+		/// for the QuadrantPanel.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnSelectLevelObserver(SelectLevelEventArgs args)

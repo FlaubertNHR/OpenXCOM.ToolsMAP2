@@ -16,11 +16,35 @@ namespace MapView.Forms.MapObservers.TopViews
 			MapObserverControl // UserControl, IMapObserver
 	{
 		#region Fields (static)
-		internal const int FLOOR   = 1;
+		internal const int FLOOR   = 1; // flags for parttype visibility ->
 		internal const int WEST    = 2;
 		internal const int NORTH   = 4;
 		internal const int CONTENT = 8;
 		#endregion Fields (static)
+
+
+		#region Properties (static)
+		/// <summary>
+		/// A class-object that holds TopView's optionable Properties.
+		/// @note C# doesn't allow inheritance of multiple class-objects, which
+		/// would have been a way to separate the optionable properties from all
+		/// the other properties that are not optionable; they need to be
+		/// separate or else all Properties would show up in the Options form's
+		/// PropertyGrid. An alternative would have been to give all those other
+		/// properties the Browsable(false) attribute but I didn't want to
+		/// clutter up the code and also because the Browsable(false) attribute
+		/// is used to hide Properties from the designer also - but whether or
+		/// not they are accessible in the designer is an entirely different
+		/// consideration than whether or not they are Optionable Properties. So
+		/// I created an independent class just to hold and handle TopView's
+		/// Optionable Properties ... and wired it up. It's a tedious shitfest
+		/// but better than the arcane MapViewI system or screwing around with
+		/// equally arcane TypeDescriptors. Both of which had been implemented
+		/// but then rejected.
+		/// </summary>
+		internal static TopViewOptionables Optionables
+		{ get; set; }
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -46,7 +70,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <summary>
 		/// A bit-cache denoting which parttypes are currently visible or not.
 		/// </summary>
-		internal int VisibleParts
+		internal int VisibleQuadrants
 		{ get; private set; }
 		#endregion Properties
 
@@ -59,6 +83,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		internal TopView()
 		{
+			Optionables = new TopViewOptionables(this);
+
 			InitializeComponent();
 			InitializeQuadrantPanel();
 
@@ -98,7 +124,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			North  .Checked =
 			Content.Checked = true;
 
-			VisibleParts = FLOOR | WEST | NORTH | CONTENT;
+			VisibleQuadrants = FLOOR | WEST | NORTH | CONTENT;
 
 			foreach (ToolStripMenuItem it in visQuads)
 				it.Click += OnQuadrantVisibilityClick;
@@ -142,10 +168,10 @@ namespace MapView.Forms.MapObservers.TopViews
 				if (ViewerFormsManager.TopView     .Control   .Floor.Checked =
 					ViewerFormsManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked)
 				{
-					VisibleParts |= FLOOR;
+					VisibleQuadrants |= FLOOR;
 				}
 				else
-					VisibleParts &= ~FLOOR;
+					VisibleQuadrants &= ~FLOOR;
 
 				MapBase.CalculateOccultations(!it.Checked);
 			}
@@ -154,36 +180,38 @@ namespace MapView.Forms.MapObservers.TopViews
 				if (ViewerFormsManager.TopView     .Control   .West.Checked =
 					ViewerFormsManager.TopRouteView.ControlTop.West.Checked = !it.Checked)
 				{
-					VisibleParts |= WEST;
+					VisibleQuadrants |= WEST;
 				}
 				else
-					VisibleParts &= ~WEST;
+					VisibleQuadrants &= ~WEST;
 			}
 			else if (it == North)
 			{
 				if (ViewerFormsManager.TopView     .Control   .North.Checked =
 					ViewerFormsManager.TopRouteView.ControlTop.North.Checked = !it.Checked)
 				{
-					VisibleParts |= NORTH;
+					VisibleQuadrants |= NORTH;
 				}
 				else
-					VisibleParts &= ~NORTH;
+					VisibleQuadrants &= ~NORTH;
 			}
 			else //if (it == Content)
 			{
 				if (ViewerFormsManager.TopView     .Control   .Content.Checked =
 					ViewerFormsManager.TopRouteView.ControlTop.Content.Checked = !it.Checked)
 				{
-					VisibleParts |= CONTENT;
+					VisibleQuadrants |= CONTENT;
 				}
 				else
-					VisibleParts &= ~CONTENT;
+					VisibleQuadrants &= ~CONTENT;
 			}
 
-			MainViewUnderlay.that.Refresh();
+			MainViewOverlay.that.Invalidate();
 
-			ViewerFormsManager.TopView     .Control   .Refresh();
-			ViewerFormsManager.TopRouteView.ControlTop.Refresh();
+			ViewerFormsManager.TopView     .Control   .TopPanel     .Invalidate();
+			ViewerFormsManager.TopRouteView.ControlTop.TopPanel     .Invalidate();
+			ViewerFormsManager.TopView     .Control   .QuadrantPanel.Invalidate();
+			ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
 		}
 		#endregion Events
 
@@ -216,8 +244,17 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 		#region Options
-		private static Form _foptions;	// is static so that it will be used by both
-										// TopView and TopRouteView(Top)
+		/// <summary>
+		/// Loads default options for TopView in TopRouteView screens.
+		/// </summary>
+		protected internal override void LoadControlDefaultOptions()
+		{
+			Optionables.LoadDefaults(Options);
+		}
+
+
+		internal static Form _foptions;	// is static so that it will be used by
+										// both TopView and TopRouteView(Top)
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an Options-
 		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
@@ -235,7 +272,10 @@ namespace MapView.Forms.MapObservers.TopViews
 
 				if (_foptions == null)
 				{
-					_foptions = new OptionsForm("TopViewOptions", Options);
+					_foptions = new OptionsForm(
+											Optionables,
+											Options,
+											OptionsForm.OptionableType.TopView);
 					_foptions.Text = " TopView Options";
 
 					OptionsManager.Screens.Add(_foptions);
@@ -277,194 +317,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		internal ToolStripButton GetOptionsButton()
 		{
 			return tsb_Options;
-		}
-
-
-		// headers
-		private const string Tile     = "Tile";
-		private const string Selector = "Selector";
-		private const string Grid     = "Grid";
-
-		// options
-		internal const string FloorColor        = "FloorColor";
-		internal const string WestColor         = "WestColor";
-		private  const string WestWidth         = "WestWidth";
-		internal const string NorthColor        = "NorthColor";
-		private  const string NorthWidth        = "NorthWidth";
-		internal const string ContentColor      = "ContentColor";
-
-		internal const string SelectorColor     = "SelectorColor";
-		internal const string SelectorWidth     = "SelectorWidth";
-
-		internal const string SelectedColor     = "SelectedColor";
-		private  const string SelectedWidth     = "SelectedWidth";
-
-		private  const string SelectedTypeColor = "SelectedTypeColor"; // ie. SelectedQuadColor
-
-		internal const string GridColor         = "GridColor";
-		private  const string GridWidth         = "GridWidth";
-		internal const string Grid10Color       = "Grid10Color";
-		private  const string Grid10Width       = "Grid10Width";
-
-
-		/// <summary>
-		/// Loads default options for TopView in TopRouteView screens.
-		/// </summary>
-		protected internal override void LoadControlOptions()
-		{
-			TopPanel.Brushes.Add(FloorColor, new SolidBrush(Color.BurlyWood));
-
-			const int widthwall     = 3;
-			const int widthselector = 2;
-			const int widthselected = 2;
-			const int widthgrid     = 1;
-			const int widthgrid10   = 2;
-
-			var penWest      = new Pen(Color.Khaki,     widthwall);
-			var penNorth     = new Pen(Color.Wheat,     widthwall);
-			var penSelector  = new Pen(Color.Black,     widthselector);
-			var penSelected  = new Pen(Color.RoyalBlue, widthselected);
-			var penGrid      = new Pen(Color.Black,     widthgrid);
-			var pen10Grid    = new Pen(Color.Black,     widthgrid10);
-
-			var brushContent = new SolidBrush(Color.MediumSeaGreen);
-
-			TopPanel.Pens.Add(WestColor, penWest);
-			TopPanel.Pens.Add(WestWidth, penWest);
-			TopPanel.ToolWest = new ColorTool(penWest);
-
-			TopPanel.Pens.Add(NorthColor, penNorth);
-			TopPanel.Pens.Add(NorthWidth, penNorth);
-			TopPanel.ToolNorth = new ColorTool(penNorth);
-
-			TopPanel.Brushes.Add(ContentColor, brushContent);
-			TopPanel.ToolContent = new ColorTool(
-											brushContent,
-											DrawBlobService.LINEWIDTH_CONTENT);
-
-			TopPanel.Pens.Add(SelectorColor, penSelector);
-			TopPanel.Pens.Add(SelectorWidth, penSelector);
-
-			TopPanel.Pens.Add(SelectedColor, penSelected);
-			TopPanel.Pens.Add(SelectedWidth, penSelected);
-
-			TopPanel.Pens.Add(GridColor, penGrid);
-			TopPanel.Pens.Add(GridWidth, penGrid);
-
-			TopPanel.Pens.Add(Grid10Color, pen10Grid);
-			TopPanel.Pens.Add(Grid10Width, pen10Grid);
-
-			OptionChangedEvent bc = OnBrushChanged;
-			OptionChangedEvent pc = OnPenColorChanged;
-			OptionChangedEvent pw = OnPenWidthChanged;
-
-			Options.AddOption(FloorColor,        Color.BurlyWood,      "Color of the floor tile indicator",           Tile,     bc);
-			Options.AddOption(WestColor,         Color.Khaki,          "Color of the west tile indicator",            Tile,     pc);
-			Options.AddOption(WestWidth,         widthwall,            "Width of the west tile indicator in pixels",  Tile,     pw);
-			Options.AddOption(NorthColor,        Color.Wheat,          "Color of the north tile indicator",           Tile,     pc);
-			Options.AddOption(NorthWidth,        widthwall,            "Width of the north tile indicator in pixels", Tile,     pw);
-			Options.AddOption(ContentColor,      Color.MediumSeaGreen, "Color of the content tile indicator",         Tile,     bc);
-
-			Options.AddOption(SelectorColor,     Color.Black,          "Color of the mouse-over indicator",           Selector, pc);
-			Options.AddOption(SelectorWidth,     widthselector,        "Width of the mouse-over indicator in pixels", Selector, pw);
-			Options.AddOption(SelectedColor,     Color.RoyalBlue,      "Color of the selection line",                 Selector, pc);
-			Options.AddOption(SelectedWidth,     widthselected,        "Width of the selection line in pixels",       Selector, pw);
-			Options.AddOption(SelectedTypeColor, Color.LightBlue,      "Background color of the selected parttype",   Selector, bc);
-
-			Options.AddOption(GridColor,         Color.Black,          "Color of the grid lines",                     Grid,     pc);
-			Options.AddOption(GridWidth,         widthgrid,            "Width of the grid lines in pixels",           Grid,     pw);
-			Options.AddOption(Grid10Color,       Color.Black,          "Color of every tenth grid line",              Grid,     pc);
-			Options.AddOption(Grid10Width,       widthgrid10,          "Width of every tenth grid line in pixels",    Grid,     pw);
-
-			Invalidate();
-		}
-
-		/// <summary>
-		/// Fires when a brush-color changes in Options.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
-		private void OnBrushChanged(string key, object val)
-		{
-			switch (key)
-			{
-				case SelectedTypeColor:
-					QuadrantDrawService.Brush.Dispose();
-					QuadrantDrawService.Brush = new SolidBrush((Color)val);
-					break;
-
-				default:
-					TopPanel.Brushes[key].Color = (Color)val;
-
-					switch (key)
-					{
-						case ContentColor:
-							TopPanel.ToolContent.Dispose();
-							TopPanel.ToolContent = new ColorTool(
-															TopPanel.Brushes[key],
-															DrawBlobService.LINEWIDTH_CONTENT);
-							break;
-					}
-					break;
-			}
-			RefreshControls();
-		}
-
-		/// <summary>
-		/// Fires when a pen-color changes in Options.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
-		private void OnPenColorChanged(string key, object val)
-		{
-			TopPanel.Pens[key].Color = (Color)val;
-
-			switch (key)
-			{
-				case WestColor:
-					TopPanel.ToolWest.Dispose();
-					TopPanel.ToolWest = new ColorTool(TopPanel.Pens[key]);
-					break;
-
-				case NorthColor:
-					TopPanel.ToolNorth.Dispose();
-					TopPanel.ToolNorth = new ColorTool(TopPanel.Pens[key]);
-					break;
-			}
-			RefreshControls();
-		}
-
-		/// <summary>
-		/// Fires when a pen-width changes in Options.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
-		private void OnPenWidthChanged(string key, object val)
-		{
-			TopPanel.Pens[key].Width = (int)val;
-
-			switch (key)
-			{
-				case WestWidth:
-					TopPanel.ToolWest.Dispose();
-					TopPanel.ToolWest = new ColorTool(TopPanel.Pens[key]);
-					break;
-
-				case NorthWidth:
-					TopPanel.ToolNorth.Dispose();
-					TopPanel.ToolNorth = new ColorTool(TopPanel.Pens[key]);
-					break;
-			}
-			RefreshControls();
-		}
-
-		/// <summary>
-		/// Refreshes TopView's and TopRouteView(Top)'s controls.
-		/// </summary>
-		private void RefreshControls()
-		{
-			ViewerFormsManager.TopView     .Control   .Refresh();
-			ViewerFormsManager.TopRouteView.ControlTop.Refresh();
 		}
 		#endregion Options
 	}

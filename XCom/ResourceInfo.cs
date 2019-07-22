@@ -68,7 +68,8 @@ namespace XCom
 		/// <param name="tabwordLength"></param>
 		/// <param name="pal"></param>
 		/// <param name="warnonly">true if called by McdView (warn-only if spriteset not found)</param>
-		/// <returns>a SpriteCollection containing all the sprites</returns>
+		/// <returns>a SpriteCollection containing all the sprites, or null if
+		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		public static SpriteCollection LoadSpriteset(
 				string file,
 				string dir,
@@ -94,30 +95,27 @@ namespace XCom
 
 				if (File.Exists(pfePck) && File.Exists(pfeTab))
 				{
-					using (var fsPck = File.OpenRead(pfePck))
-					using (var fsTab = File.OpenRead(pfeTab))
+					var spriteset = new SpriteCollection(
+													File.ReadAllBytes(pfePck),
+													File.ReadAllBytes(pfeTab),
+													tabwordLength,
+													pal,
+													file);
+					if (spriteset.Borked)
 					{
-						var spriteset = new SpriteCollection(
-															fsPck,
-															fsTab,
-															tabwordLength,
-															pal,
-															file);
-						if (spriteset.Borked)
+						using (var f = new Infobox(
+												" Spriteset borked",
+												"The quantity of sprites in the PCK file does not match"
+													+ " the quantity of sprites expected by the TAB file.",
+												pfePck + Environment.NewLine + pfeTab))
 						{
-							using (var f = new Infobox(
-													" Spriteset borked",
-													"The quantity of sprites in the PCK file does not match"
-														+ " the quantity of sprites expected by the TAB file.",
-													pfePck + Environment.NewLine + pfeTab))
-							{
-								f.ShowDialog();
-							}
+							f.ShowDialog();
 						}
-
-						Spritesets.Add(spriteset); // used only by 'MapInfoOutputBox'.
-						return spriteset;
+						return null;
 					}
+
+					Spritesets.Add(spriteset); // used only by 'MapInfoOutputBox'.
+					return spriteset;
 				}
 
 				// error/warn ->

@@ -89,7 +89,7 @@ namespace DSShared.Windows
 
 
 	/// <summary>
-	/// Parent class for TabControl.
+	/// Derived class for TabControl.
 	/// </summary>
 	public sealed class CompositedTabControl
 		:

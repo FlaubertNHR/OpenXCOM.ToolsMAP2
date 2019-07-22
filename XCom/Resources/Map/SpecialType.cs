@@ -1,30 +1,24 @@
 namespace XCom
 {
-	// TODO: give these generic names (eg, 'Type00'..'Type14') and use the
-	// option-tip via Options to describe the special properties, ala UFO or
-	// TFTD.
-	// Note that the Help screen already uses a radio-button to switch the
-	// descriptions between the two.
-	//
-	// WARNING: Do not assign the same value to multiple enum-keys. The Help
-	// screen uses Enum.GetName() to evaluate special-property colors.
+	// WARNING: These identifiers are integral to the proper behavior of
+	// TileView's options, etc.
 	public enum SpecialType
 	{
-		Standard,			//  0
-		EntryPoint,			//  1
-		PowerSource,		//  2
-		Navigation,			//  3
-		Construction,		//  4
-		Food,				//  5
-		Reproduction,		//  6
-		Entertainment,		//  7
-		Surgery,			//  8
-		ExaminationRoom,	//  9
-		Alloys,				// 10
-		Habitat,			// 11
-		Destroyed,			// 12
-		ExitPoint,			// 13
-		MustDestroy			// 14
+		Standard,		//  0
+		EntryPoint,		//  1
+		PowerSource,	//  2
+		Navigation,		//  3
+		Construction,	//  4
+		Food,			//  5
+		Reproduction,	//  6
+		Entertainment,	//  7
+		Surgery,		//  8
+		Examination,	//  9
+		Alloys,			// 10
+		Habitat,		// 11
+		Destroyed,		// 12
+		ExitPoint,		// 13
+		MustDestroy		// 14
 	};
 }
 

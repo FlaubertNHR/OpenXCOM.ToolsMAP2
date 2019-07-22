@@ -34,8 +34,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		private const int _largeChange = SpriteHeight;	// apparently .NET won't return an accurate value
 														// for LargeChange unless the scrollbar is visible.
 
-		internal static readonly Dictionary<string, SolidBrush> SpecialBrushes =
-							 new Dictionary<string, SolidBrush>();
+		internal static readonly Dictionary<SpecialType, SolidBrush> SpecialBrushes =
+							 new Dictionary<SpecialType, SolidBrush>();
 
 		private static Timer _t1 = new Timer();
 		#endregion Fields (static)
@@ -495,8 +495,8 @@ namespace MapView.Forms.MapObservers.TileViews
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 				var spriteAttributes = new ImageAttributes();
-				if (MainViewOverlay.that._spriteShadeEnabled)
-					spriteAttributes.SetGamma(MainViewOverlay.that.SpriteShadeLocal, ColorAdjustType.Bitmap);
+				if (XCMainWindow.Optionables.SpriteShadeEnabled)
+					spriteAttributes.SetGamma(XCMainWindow.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 				int x = 0;
 				int y = 0;
@@ -510,36 +510,31 @@ namespace MapView.Forms.MapObservers.TileViews
 				}
 
 				XCImage sprite;
+				var rectOuter = new Rectangle(0,0,         SpriteWidth,           SpriteHeight);
+				var rectInner = new Rectangle(0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40);
 
 				foreach (var part in _parts)
 				{
 					left = SpriteWidth  * x + TableOffset;
 					top  = SpriteHeight * y + TableOffset + _startY;
 
-					var rect = new Rectangle(
-										left, top,
-										SpriteWidth, SpriteHeight);
+					rectOuter.X = left;
+					rectOuter.Y = top;
 
 					if (part != null) // draw tile-sprite ->
 					{
-						string special = part.Record.Special.ToString();		// first fill w/ SpecialProperty color
+						SpecialType special = part.Record.Special;				// first fill w/ SpecialProperty color
 						if (SpecialBrushes.ContainsKey(special))
-							graphics.FillRectangle(SpecialBrushes[special], rect);
+							graphics.FillRectangle(SpecialBrushes[special], rectOuter);
 
 						if ((sprite = part[MainViewUnderlay.AniStep]) != null)
 						{
-//							graphics.DrawImage(									// then draw the sprite itself
-//											sprite.Sprite,
-//											left + SpriteMargin,
-//											top  + SpriteMargin - part.Record.TileOffset);
-							graphics.DrawImage(
+							rectInner.X = left + SpriteMargin;
+							rectInner.Y = top  + SpriteMargin - part.Record.TileOffset;
+							graphics.DrawImage(									// then draw the sprite itself
 											sprite.Sprite,
-											new Rectangle(
-														left + SpriteMargin,
-														top  + SpriteMargin - part.Record.TileOffset,
-														sprite.Sprite.Width,
-														sprite.Sprite.Height),
-											0,0, sprite.Sprite.Width, sprite.Sprite.Height,
+											rectInner,
+											0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 											GraphicsUnit.Pixel,
 											spriteAttributes);
 						}
@@ -556,12 +551,10 @@ namespace MapView.Forms.MapObservers.TileViews
 					}
 					else // draw the eraser ->
 					{
-						graphics.FillRectangle(Brushes.AliceBlue, rect);
-
-						if (Globals.ExtraSprites != null)
-							graphics.DrawImage(
-											Globals.ExtraSprites[0].Sprite,
-											left, top);
+						graphics.FillRectangle(Brushes.AliceBlue, rectOuter);
+						graphics.DrawImage(
+										Globals.ExtraSprites[0].Sprite,
+										left, top);
 					}
 
 					x = (x + 1) % _tilesX;

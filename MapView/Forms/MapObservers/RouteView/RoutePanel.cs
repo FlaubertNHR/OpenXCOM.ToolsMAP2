@@ -44,14 +44,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private Graphics _graphics;
 		private GraphicsPath _nodeFill = new GraphicsPath();
 
-		private bool _brushesInited;
+		private SolidBrush _brushNode;
+		private SolidBrush _brushNodeSpawn;
+		private SolidBrush _brushNodeSelected;
 
-		private SolidBrush _brushSelected;
-		private SolidBrush _brushUnselected;
-		private SolidBrush _brushSpawn;
-
+		private Pen _penLink;
 		private Pen _penLinkSelected;
-		private Pen _penLinkUnselected;
 		#endregion Fields
 
 
@@ -83,28 +81,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			get { return _brushes; }
 		}
-
-
-		private static int _opacity = 255; // cf. RouteView.LoadControlOptions()
-		internal static int Opacity
-		{
-			get { return _opacity; }
-			set { _opacity = value.Clamp(0, 255); }
-		}
-
-		private static bool _showOverlay = true; // cf. RouteView.LoadControlOptions()
-		internal static bool ShowOverlay
-		{
-			get { return _showOverlay; }
-			set { _showOverlay = value; }
-		}
-
-		private static bool _showPriorityBars = true; // cf. RouteView.LoadControlOptions()
-		internal static bool ShowPriorityBars
-		{
-			get { return _showPriorityBars; }
-			set { _showPriorityBars = value; }
-		}
 		#endregion Properties (static)
 
 
@@ -123,16 +99,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 
-
-//			try // TODO: i get the impression that many of the try/catch blocks can and should be replaced w/ standard code.
-//			{
 			if (MapFile != null)
 			{
 				BlobService.HalfWidth  = DrawAreaWidth;
 				BlobService.HalfHeight = DrawAreaHeight;
 
-				_penLinkSelected   = RoutePens[RouteView.SelectedLinkColor];
-				_penLinkUnselected = RoutePens[RouteView.UnselectedLinkColor];
+				_penLink         = RoutePens[RouteViewOptionables.str_LinkColor];
+				_penLinkSelected = RoutePens[RouteViewOptionables.str_LinkSelectedColor];
 
 				DrawBlobs();
 
@@ -156,8 +129,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 									Origin.Y + (_overCol + _overRow) * DrawAreaHeight);
 					_graphics.DrawPath(
 									new Pen( // TODO: make this a separate Option.
-											RoutePens[RouteView.GridLineColor].Color,
-											RoutePens[RouteView.GridLineColor].Width + 1),
+											RouteView.Optionables.GridLineColor,
+											RouteView.Optionables.GridLineWidth + 1),
 									LozSelector);
 				}
 
@@ -165,8 +138,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					_graphics.DrawPath(
 									new Pen( // TODO: make this a separate Option.
-											RouteBrushes[RouteView.SelectedNodeColor].Color,
-											RoutePens[RouteView.GridLineColor].Width + 1),
+											RouteView.Optionables.NodeSelectedColor,
+											RouteView.Optionables.GridLineWidth + 1),
 									LozSelected);
 
 					if (SpotPosition.X > -1)
@@ -176,31 +149,20 @@ namespace MapView.Forms.MapObservers.RouteViews
 										Origin.Y + (SpotPosition.X + SpotPosition.Y) * DrawAreaHeight);
 						_graphics.DrawPath(
 										new Pen( // TODO: make this a separate Option.
-												RouteBrushes[RouteView.SelectedNodeColor].Color,
-												RoutePens[RouteView.GridLineColor].Width + 1),
+												RouteView.Optionables.NodeSelectedColor,
+												RouteView.Optionables.GridLineWidth + 1),
 										LozSpotted);
 					}
 				}
 
-				if (ShowPriorityBars)
+				if (RouteView.Optionables.ShowPriorityBars)
 					DrawNodeImportanceMeters();
 
 				DrawRose();
 
-				if (ShowOverlay && CursorPosition.X != -1)
+				if (RouteView.Optionables.ShowOverlay && CursorPosition.X != -1)
 					DrawInfoOverlay();
 			}
-//			}
-//			catch (Exception ex)
-//			{
-//				g.FillRectangle(new SolidBrush(Color.Black), g.ClipBounds);
-//				g.DrawString(
-//							ex.Message,
-//							Font,
-//							new SolidBrush(Color.White),
-//							8, 8);
-//				throw;
-//			}
 		}
 		#endregion Events (override)
 
@@ -373,28 +335,28 @@ namespace MapView.Forms.MapObservers.RouteViews
 								if (   SpotPosition.X != dest.Col
 									|| SpotPosition.Y != dest.Row)
 								{
-									pen = _penLinkUnselected;
+									pen = _penLink;
 								}
 							}
 							else
 							{
-								switch (destId)							// See RouteView.SpotGoDestination() for
-								{										// def'n of the following spot-positions ->
+								switch (destId)	// see RouteView.SpotGoDestination() for def'n of the following spot-positions
+								{
 									case Link.ExitNorth:
 										if (SpotPosition.X != -2)
-											pen = _penLinkUnselected;
+											pen = _penLink;
 										break;
 									case Link.ExitEast:
 										if (SpotPosition.X != -3)
-											pen = _penLinkUnselected;
+											pen = _penLink;
 										break;
 									case Link.ExitSouth:
 										if (SpotPosition.X != -4)
-											pen = _penLinkUnselected;
+											pen = _penLink;
 										break;
 									case Link.ExitWest:
 										if (SpotPosition.X != -5)
-											pen = _penLinkUnselected;
+											pen = _penLink;
 										break;
 								}
 							}
@@ -406,7 +368,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					}
 					else // draw link-lines for a non-selected node ->
 						_graphics.DrawLine(
-										_penLinkUnselected,
+										_penLink,
 										xSrc, ySrc + DrawAreaHeight, // unselected nodes need an offset
 										xDst, yDst);
 				}
@@ -418,18 +380,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		private void DrawNodes()
 		{
-			if (!_brushesInited)
-			{
-				_brushesInited = true;
-
-				_brushSelected   = RouteBrushes[RouteView.SelectedNodeColor];
-				_brushUnselected = RouteBrushes[RouteView.UnselectedNodeColor];
-				_brushSpawn      = RouteBrushes[RouteView.SpawnNodeColor];
-			}
-
-			_brushSelected.Color   = Color.FromArgb(Opacity, _brushSelected.Color); // NOTE: the opacity changes depending on Options.
-			_brushUnselected.Color = Color.FromArgb(Opacity, _brushUnselected.Color);
-			_brushSpawn.Color      = Color.FromArgb(Opacity, _brushSpawn.Color);
+			_brushNode         = RouteBrushes[RouteViewOptionables.str_NodeColor];
+			_brushNodeSpawn    = RouteBrushes[RouteViewOptionables.str_NodeSpawnColor];
+			_brushNodeSelected = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
 
 
 			int startX = Origin.X;
@@ -469,14 +422,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 								&& col == SelectedLocation.X
 								&& row == SelectedLocation.Y)
 							{
-								_graphics.FillPath(_brushSelected, _nodeFill);
+								_graphics.FillPath(_brushNodeSelected, _nodeFill);
 							}
 							else if (node.Spawn != SpawnWeight.None)
 							{
-								_graphics.FillPath(_brushSpawn, _nodeFill);
+								_graphics.FillPath(_brushNodeSpawn, _nodeFill);
 							}
 							else
-								_graphics.FillPath(_brushUnselected, _nodeFill);
+								_graphics.FillPath(_brushNode, _nodeFill);
 
 
 							for (int i = 0; i != RouteNode.LinkSlots; ++i) // check for and if applicable draw the up/down indicators.
@@ -500,30 +453,30 @@ namespace MapView.Forms.MapObservers.RouteViews
 												if (level < MapFile.Level) // draw arrow up.
 												{
 													_graphics.DrawLine( // start w/ a vertical line in the tile-lozenge
-																	_penLinkUnselected,
+																	_penLink,
 																	x, y,
 																	x, y + DrawAreaHeight * 2);
 													_graphics.DrawLine( // then lines on the two top edges of the tile
-																	_penLinkUnselected,
+																	_penLink,
 																	x + 2,                 y,
 																	x + 2 - DrawAreaWidth, y + DrawAreaHeight);
 													_graphics.DrawLine(
-																	_penLinkUnselected,
+																	_penLink,
 																	x - 2,                 y,
 																	x - 2 + DrawAreaWidth, y + DrawAreaHeight);
 												}
 												else //if (levelDestination > MapFile.Level) // draw arrow down.
 												{
 													_graphics.DrawLine( // start w/ a horizontal line in the tile-lozenge
-																	_penLinkUnselected,
+																	_penLink,
 																	x - DrawAreaWidth, y + DrawAreaHeight,
 																	x + DrawAreaWidth, y + DrawAreaHeight);
 													_graphics.DrawLine( // then lines on the two bottom edges of the tile
-																	_penLinkUnselected,
+																	_penLink,
 																	x + 2,                 y + DrawAreaHeight * 2,
 																	x + 2 - DrawAreaWidth, y + DrawAreaHeight);
 													_graphics.DrawLine(
-																	_penLinkUnselected,
+																	_penLink,
 																	x - 2,                 y + DrawAreaHeight * 2,
 																	x - 2 + DrawAreaWidth, y + DrawAreaHeight);
 												}
@@ -548,8 +501,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			Pen pen;
 			for (int i = 0; i <= MapFile.MapSize.Rows; ++i)
 			{
-				if (i % 10 == 0) pen = RoutePens[RouteView.Grid10LineColor];
-				else             pen = RoutePens[RouteView.GridLineColor];
+				if (i % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
+				else             pen = RoutePens[RouteViewOptionables.str_GridLine10Color];
 
 				_graphics.DrawLine(
 								pen,
@@ -561,8 +514,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			for (int i = 0; i <= MapFile.MapSize.Cols; ++i)
 			{
-				if (i % 10 == 0) pen = RoutePens[RouteView.Grid10LineColor];
-				else             pen = RoutePens[RouteView.GridLineColor];
+				if (i % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
+				else             pen = RoutePens[RouteViewOptionables.str_GridLine10Color];
 
 				_graphics.DrawLine(
 								pen,
@@ -599,23 +552,20 @@ namespace MapView.Forms.MapObservers.RouteViews
 					{
 						if ((node = tile.Node) != null)
 						{
-//								if (DrawAreaHeight >= NodeValMax)
-//								{
-								int infoboxX = x - DrawAreaWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up
-								int infoboxY = y + DrawAreaHeight - NodeValMax / 2;	//    vertical line indicator when panel is small sized.
+							int infoboxX = x - DrawAreaWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up
+							int infoboxY = y + DrawAreaHeight - NodeValMax / 2;	// vertical line indicator when panel is small sized.
 
-								DrawImportanceMeter(
-												infoboxX,
-												infoboxY,
-												(int)node.Spawn,
-												Brushes.LightCoral);
+							DrawImportanceMeter(
+											infoboxX,
+											infoboxY,
+											(int)node.Spawn,
+											Brushes.LightCoral);
 
-								DrawImportanceMeter(
-												infoboxX + 3,
-												infoboxY,
-												(int)node.Patrol,
-												Brushes.DeepSkyBlue);
-//								}
+							DrawImportanceMeter(
+											infoboxX + 3,
+											infoboxY,
+											(int)node.Patrol,
+											Brushes.DeepSkyBlue);
 						}
 					}
 				}

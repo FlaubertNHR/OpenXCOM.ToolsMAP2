@@ -1,4 +1,5 @@
-//#define LOCKBITS // toggle this to change OnPaint routine in standard build.
+//#define LOCKBITS	// toggle this to change OnPaint routine in standard build.
+					// Must be set in MainViewOptionables as well. Purely experimental.
 
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ using MapView.Forms.MapObservers.TopViews;
 using XCom;
 using XCom.Interfaces;
 using XCom.Interfaces.Base;
+
+using System.Linq;
 
 
 namespace MapView
@@ -67,6 +70,8 @@ namespace MapView
 
 
 		#region Properties
+		private XCMainWindow MainView;
+
 		/// <summary>
 		/// MapBase is set only by MainViewUnderlay.MapBase{set}.
 		/// </summary>
@@ -118,6 +123,18 @@ namespace MapView
 		/// </summary>
 		internal List<Brush> SpriteBrushes
 		{ private get; set; }
+
+		internal SolidBrush BrushLayer
+		{ get; set; }
+
+		internal Pen PenGrid
+		{ get; set; }
+
+		internal Pen PenGrid10
+		{ get; set; }
+
+		internal Pen PenSelect
+		{ get; set; }
 		#endregion Properties
 
 
@@ -127,194 +144,17 @@ namespace MapView
 		private Graphics _graphics;
 		private ImageAttributes _spriteAttributes = new ImageAttributes();
 
-		private Brush _brushLayer;
-
 		private int _anistep;
 		private int _cols, _rows;
 		#endregion Fields (graphics)
 
 
-		#region Properties (options)
-		private Color _colorLayer = Color.MediumVioletRed;							// initial color for the grid-layer Option
-		public Color GridLayerColor													// <- public for Reflection.
-		{
-			get { return _colorLayer; }
-			set
-			{
-				_colorLayer = value;
-				_brushLayer = new SolidBrush(Color.FromArgb(GridLayerOpacity, _colorLayer));
-				Refresh();
-			}
-		}
-
-		private int _opacity = 180;													// initial opacity for the grid-layer Option
-		public int GridLayerOpacity													// <- public for Reflection.
-		{
-			get { return _opacity; }
-			set
-			{
-				_opacity = value.Clamp(0, 255);
-				_brushLayer = new SolidBrush(Color.FromArgb(_opacity, ((SolidBrush)_brushLayer).Color));
-				Refresh();
-			}
-		}
-
-		private Pen _penGrid = new Pen(Color.Black, 1);								// initial pen for grid-lines Option
-		public Color GridLineColor													// <- public for Reflection.
-		{
-			get { return _penGrid.Color; }
-			set
-			{
-				_penGrid.Color = value;
-				Refresh();
-			}
-		}
-		public int GridLineWidth													// <- public for Reflection.
-		{
-			get { return (int)_penGrid.Width; }
-			set
-			{
-				_penGrid.Width = value;
-				Refresh();
-			}
-		}
-
-		private Pen _penGrid10 = new Pen(Color.Black, 2);							// initial pen for x10 grid-lines Option
-		public Color Grid10LineColor												// <- public for Reflection.
-		{
-			get { return _penGrid10.Color; }
-			set
-			{
-				_penGrid10.Color = value;
-				Refresh();
-			}
-		}
-		public int Grid10LineWidth													// <- public for Reflection.
-		{
-			get { return (int)_penGrid10.Width; }
-			set
-			{
-				_penGrid10.Width = value;
-				Refresh();
-			}
-		}
-
-		private bool _showGrid = true;												// initial val for show-grid Option
-		public bool ShowGrid														// <- public for Reflection.
-		{
-			get { return _showGrid; }
-			set
-			{
-				_showGrid = value;
-				Refresh();
-			}
-		}
-
-		private Pen _penSelect = new Pen(Color.Tomato, 2);							// initial pen for selection-border Option
-		public Color SelectionLineColor												// <- public for Reflection.
-		{
-			get { return _penSelect.Color; }
-			set
-			{
-				_penSelect.Color = value;
-				Refresh();
-			}
-		}
-		public int SelectionLineWidth												// <- public for Reflection.
-		{
-			get { return (int)_penSelect.Width; }
-			set
-			{
-				_penSelect.Width = value;
-				Refresh();
-			}
-		}
-
-		private bool _graySelection = true;											// initial val for gray-selection Option
-		// NOTE: Remove suppression for Release cfg. .. not workie.
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-		"CA1811:AvoidUncalledPrivateCode",
-		Justification = "Because the setter is called dynamically w/ Reflection" +
-		"or other: not only is it used it needs to be public.")]
-		public bool GraySelection													// <- public for Reflection.
-		{
-			get { return _graySelection; }
-			set
-			{
-				_graySelection = value;
-				Refresh();
-			}
-		}
-
-#if !LOCKBITS
-		internal bool _spriteShadeEnabled = true; // was private, see ScanGViewer and TilePanel and QuadrantPanel
-#endif
-		// NOTE: Options don't like floats afaict, hence this workaround w/
-		// 'SpriteShade' and 'SpriteShadeLocal' ->
-		private int _spriteShade;													// 0 = initial val for sprite shade Option
-		public int SpriteShade														// <- public for Reflection.
-		{
-			get { return _spriteShade; }
-			set
-			{
-				_spriteShade = value;
-
-				if (_spriteShade > 9 && _spriteShade < 101)
-				{
-#if !LOCKBITS
-					_spriteShadeEnabled = true;
-#endif
-					SpriteShadeLocal = _spriteShade * 0.03f;
-				}
-#if !LOCKBITS
-				else
-					_spriteShadeEnabled = false;
-#endif
-				Refresh();
-
-				// refresh ScanGViewer panel and TilePanel and QuadrantPanel
-				if (XCMainWindow.ScanG != null)
-					XCMainWindow.ScanG.InvalidatePanel();
-
-				ViewerFormsManager.TileView    .Control                 .Refresh();
-				ViewerFormsManager.TopView     .Control   .QuadrantPanel.Refresh();
-				ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Refresh();
-			}
-		}
-		private float _spriteShadeLocal = 1.0f;										// initial val for local sprite shade
-		internal float SpriteShadeLocal // was private, see ScanGViewer
-		{
-			get { return _spriteShadeLocal; }
-			set { _spriteShadeLocal = value; }
-		}
-
-		// NOTE: Options don't like enums afaict, hence this workaround w/
-		// 'Interpolation' and 'InterpolationLocal' ->
-		private int _interpolation;													// 0 = initial val for interpolation Option
-		public int Interpolation													// <- public for Reflection.
-		{
-			get { return _interpolation; }
-			set
-			{
-				_interpolation = value.Clamp(0, 7);
-				InterpolationLocal = (InterpolationMode)_interpolation;
-				Refresh();
-			}
-		}
-		private InterpolationMode _interpolationLocal = InterpolationMode.Default;	// initial val for local interpolation
-		private InterpolationMode InterpolationLocal
-		{
-			get { return _interpolationLocal; }
-			set { _interpolationLocal = value; }
-		}
-		#endregion Properties (options)
-
-
 		#region cTor
-		internal MainViewOverlay()
+		internal MainViewOverlay(XCMainWindow main)
 		{
-			that =
-			XCMainWindow.that.MainViewOverlay = this;
+			MainView = main;
+
+			that = MainView.MainViewOverlay = this;
 
 			SetStyle(ControlStyles.OptimizedDoubleBuffer
 				   | ControlStyles.AllPaintingInWmPaint
@@ -322,9 +162,7 @@ namespace MapView
 				   | ControlStyles.ResizeRedraw
 				   | ControlStyles.Selectable, true);
 			TabStop = true;
-			TabIndex = 4;
-
-			_brushLayer = new SolidBrush(Color.FromArgb(GridLayerOpacity, GridLayerColor));
+			TabIndex = 4; // TODO: Check that.
 
 //			var t1 = new Timer();
 //			t1.Interval = 250;
@@ -422,7 +260,7 @@ namespace MapView
 				switch (e.KeyCode)
 				{
 					case Keys.S:
-						XCMainWindow.that.OnSaveMapClick(null, EventArgs.Empty);
+						MainView.OnSaveMapClick(null, EventArgs.Empty);
 						break;
 
 					case Keys.X:
@@ -478,11 +316,11 @@ namespace MapView
 		{
 			if (MapBase != null && FirstClick)
 			{
-				XCMainWindow.that.MapChanged = true;
+				MainView.MapChanged = true;
 
 				MapTile tile;
 
-				int visible = ViewerFormsManager.TopView.Control.VisibleParts;
+				int visible = ViewerFormsManager.TopView.Control.VisibleQuadrants;
 
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
@@ -555,11 +393,11 @@ namespace MapView
 			{
 				if (AllowPaste(_copiedTerrains, MapBase.Descriptor.Terrains))
 				{
-					XCMainWindow.that.MapChanged = true;
+					MainView.MapChanged = true;
 
 					MapTile tile, copy;
 
-					int visible = ViewerFormsManager.TopView.Control.VisibleParts;
+					int visible = ViewerFormsManager.TopView.Control.VisibleQuadrants;
 
 					for (int
 							row = DragBeg.Y;
@@ -669,7 +507,7 @@ namespace MapView
 		{
 			if (MapBase != null && FirstClick)
 			{
-				XCMainWindow.that.MapChanged = true;
+				MainView.MapChanged = true;
 
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
@@ -698,7 +536,7 @@ namespace MapView
 		/// </summary>
 		internal void ClearSelectedQuads()
 		{
-			XCMainWindow.that.MapChanged = true;
+			MainView.MapChanged = true;
 
 			var a = GetDragBeg_abs();
 			var b = GetDragEnd_abs();
@@ -727,10 +565,12 @@ namespace MapView
 		{
 			Invalidate();
 
-			ViewerFormsManager.TopView     .Control     .Refresh();
-			ViewerFormsManager.RouteView   .Control     .Refresh();
-			ViewerFormsManager.TopRouteView.ControlTop  .Refresh();
-			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+			ViewerFormsManager.TopView     .Control     .TopPanel     .Invalidate();
+			ViewerFormsManager.TopRouteView.ControlTop  .TopPanel     .Invalidate();
+			ViewerFormsManager.TopView     .Control     .QuadrantPanel.Invalidate();
+			ViewerFormsManager.TopRouteView.ControlTop  .QuadrantPanel.Invalidate();
+			ViewerFormsManager.RouteView   .Control     .RoutePanel   .Invalidate();
+			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel   .Invalidate();
 
 			if (XCMainWindow.ScanG != null)
 				XCMainWindow.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
@@ -1029,9 +869,9 @@ namespace MapView
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
 
-				XCMainWindow.that.sb_PrintSelectionSize(
-													b.X - a.X + 1,
-													b.Y - a.Y + 1);
+				MainView.sb_PrintSelectionSize(
+											b.X - a.X + 1,
+											b.Y - a.Y + 1);
 			}
 		}
 
@@ -1116,7 +956,7 @@ namespace MapView
 			_row = args.Location.Row;
 			_lev = args.Location.Lev;
 
-			XCMainWindow.that.sb_PrintPosition(_col, _row, _lev);
+			MainView.sb_PrintPosition(_col, _row, _lev);
 		}
 
 		/// <summary>
@@ -1129,7 +969,7 @@ namespace MapView
 
 			_lev = args.Level;
 
-			XCMainWindow.that.sb_PrintPosition(_col, _row, _lev);
+			MainView.sb_PrintPosition(_col, _row, _lev);
 			Invalidate();
 		}
 		#endregion Events
@@ -1163,12 +1003,12 @@ namespace MapView
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 #if !LOCKBITS
-				if (!XCMainWindow.UseMonoDraw)
+				if (!XCMainWindow.Optionables.UseMonoDraw)
 				{
-					_graphics.InterpolationMode = InterpolationLocal;
+					_graphics.InterpolationMode = XCMainWindow.Optionables.InterpolationE;
 
-					if (_spriteShadeEnabled)
-						_spriteAttributes.SetGamma(SpriteShadeLocal, ColorAdjustType.Bitmap);
+					if (XCMainWindow.Optionables.SpriteShadeEnabled)
+						_spriteAttributes.SetGamma(XCMainWindow.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 				}
 #endif
 
@@ -1184,7 +1024,7 @@ namespace MapView
 				_rows = MapBase.MapSize.Rows;
 
 #if !LOCKBITS
-				if (XCMainWindow.UseMonoDraw)
+				if (XCMainWindow.Optionables.UseMonoDraw)
 				{
 					_d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value.
 					DrawPicasso();
@@ -1236,7 +1076,7 @@ namespace MapView
 				lev >= MapBase.Level;
 				--lev)
 			{
-				if (_showGrid && lev == MapBase.Level)
+				if (XCMainWindow.Optionables.GridVisible && lev == MapBase.Level)
 					DrawGrid();
 
 				for (int
@@ -1275,7 +1115,7 @@ namespace MapView
 							DrawTile(
 									tile as MapTile,
 									x,y,
-									_graySelection
+									XCMainWindow.Optionables.GraySelection
 										&& lev == MapBase.Level
 										&& rect.Contains(col, row));
 						}
@@ -1329,7 +1169,7 @@ namespace MapView
 				lev >= MapBase.Level;
 				--lev)
 			{
-				if (_showGrid && lev == MapBase.Level)
+				if (XCMainWindow.Optionables.GridVisible && lev == MapBase.Level)
 					DrawGrid();
 
 				for (int
@@ -1550,14 +1390,14 @@ namespace MapView
 			_layerFill.AddLine(pt2, pt3);
 			_layerFill.CloseFigure();
 
-			_graphics.FillPath(_brushLayer, _layerFill); // the grid-sheet
+			_graphics.FillPath(BrushLayer, _layerFill); // the grid-sheet
 
 			// draw the grid-lines ->
 			Pen pen;
 			for (int i = 0; i <= _rows; ++i)
 			{
-				if (i % 10 == 0) pen = _penGrid10;
-				else             pen = _penGrid;
+				if (i % 10 != 0) pen = PenGrid;
+				else             pen = PenGrid10;
 
 				_graphics.DrawLine(
 								pen,
@@ -1569,8 +1409,8 @@ namespace MapView
 
 			for (int i = 0; i <= _cols; ++i)
 			{
-				if (i % 10 == 0) pen = _penGrid10;
-				else             pen = _penGrid;
+				if (i % 10 != 0) pen = PenGrid;
+				else             pen = PenGrid10;
 
 				_graphics.DrawLine(
 								pen,
@@ -1608,7 +1448,7 @@ namespace MapView
 			_layerFill.AddLine(pt2, pt3);
 			_layerFill.CloseFigure();
 
-			graphics.FillPath(_brushLayer, _layerFill); // the grid-sheet
+			graphics.FillPath(BrushLayer, _layerFill); // the grid-sheet
 
 			// draw the grid-lines ->
 			Pen pen;
@@ -1787,7 +1627,7 @@ namespace MapView
 		/// <param name="rect">destination rectangle</param>
 		private void DrawSprite(Image sprite, Rectangle rect)
 		{
-			if (_spriteShadeEnabled)
+			if (XCMainWindow.Optionables.SpriteShadeEnabled)
 				_graphics.DrawImage(
 								sprite,
 								rect,
@@ -1879,10 +1719,10 @@ namespace MapView
 			b.X += HalfWidth;
 			l.X += HalfWidth;
 
-			_graphics.DrawLine(_penSelect, t, r);
-			_graphics.DrawLine(_penSelect, r, b);
-			_graphics.DrawLine(_penSelect, b, l);
-			_graphics.DrawLine(_penSelect, l, t);
+			_graphics.DrawLine(PenSelect, t, r);
+			_graphics.DrawLine(PenSelect, r, b);
+			_graphics.DrawLine(PenSelect, b, l);
+			_graphics.DrawLine(PenSelect, l, t);
 		}
 #else
 		/// <summary>

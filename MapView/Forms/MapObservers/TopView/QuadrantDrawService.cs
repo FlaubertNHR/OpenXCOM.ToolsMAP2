@@ -193,8 +193,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			_graphics = graphics;
 
 			var spriteAttributes = new ImageAttributes();
-			if (MainViewOverlay.that._spriteShadeEnabled)
-				spriteAttributes.SetGamma(MainViewOverlay.that.SpriteShadeLocal, ColorAdjustType.Bitmap);
+			if (XCMainWindow.Optionables.SpriteShadeEnabled)
+				spriteAttributes.SetGamma(XCMainWindow.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 			if (!_inited) // TODO: break that out ->
 			{
@@ -274,8 +274,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			else
 				_graphics.DrawImage(
 								Globals.ExtraSprites[3].Sprite,
-								StartX,
-								StartY);
+								StartX, StartY);
 
 			// West ->
 			if (tile != null && tile.West != null)
@@ -391,10 +390,10 @@ namespace MapView.Forms.MapObservers.TopViews
 			DrawTypeString(Current, TextWidth_current, QuadrantTypeCurrent);
 
 			// fill the color-swatch under each quadrant-label
-			FillSwatchColor(               TopPanel.Brushes[TopView.FloorColor],        (int)QuadrantType.Floor);
-			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopView.WestColor] .Color), (int)QuadrantType.West);
-			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopView.NorthColor].Color), (int)QuadrantType.North);
-			FillSwatchColor(               TopPanel.Brushes[TopView.ContentColor],      (int)QuadrantType.Content);
+			FillSwatchColor(               TopPanel.Brushes[TopViewOptionables.str_FloorColor],        (int)QuadrantType.Floor);
+			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopViewOptionables.str_WestColor] .Color), (int)QuadrantType.West);
+			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopViewOptionables.str_NorthColor].Color), (int)QuadrantType.North);
+			FillSwatchColor(               TopPanel.Brushes[TopViewOptionables.str_ContentColor],      (int)QuadrantType.Content);
 		}
 
 		/// <summary>

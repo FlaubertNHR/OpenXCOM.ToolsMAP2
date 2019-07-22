@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-//using DSShared.Windows;
-
 using MapView.Forms.MainWindow;
 
 using XCom.Interfaces.Base;
@@ -22,6 +20,7 @@ namespace MapView
 		#region IMapObserver requirements
 		private readonly Dictionary<string, IMapObserver> _panels =
 					 new Dictionary<string, IMapObserver>();
+		[Browsable(false)]
 		public Dictionary<string, IMapObserver> ObserverPanels
 		{
 			get { return _panels; }
@@ -29,6 +28,7 @@ namespace MapView
 
 		private MapFileBase _base;
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		[Browsable(false)]
 		public virtual MapFileBase MapBase
 		{
 			get { return _base; }
@@ -41,6 +41,8 @@ namespace MapView
 		/// <param name="args"></param>
 		public virtual void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
+			//XCom.LogFile.WriteLine("MapObserverControl.OnSelectLocationObserver() DOES THIS EVER DO ANYTHING.");
+			// TODO: YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
 			Refresh();
 		}
 
@@ -50,6 +52,8 @@ namespace MapView
 		/// <param name="args"></param>
 		public virtual void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{
+			//XCom.LogFile.WriteLine("MapObserverControl.OnSelectLevelObserver() DOES THIS EVER DO ANYTHING.");
+			// TODO: YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
 			Refresh();
 		}
 		#endregion IMapObserver requirements
@@ -87,7 +91,7 @@ namespace MapView
 		/// RoutePanelParent.Navigate().
 		/// </summary>
 		/// <param name="e"></param>
-		internal void ForceMousewheel(MouseEventArgs e)
+		internal void doMousewheel(MouseEventArgs e)
 		{
 			OnMouseWheel(e);
 		}
@@ -95,7 +99,7 @@ namespace MapView
 
 
 		#region Methods (virtual)
-		internal protected virtual void LoadControlOptions()
+		internal protected virtual void LoadControlDefaultOptions()
 		{}
 		#endregion Methods (virtual)
 	}

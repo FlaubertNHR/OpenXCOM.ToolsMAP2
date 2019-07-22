@@ -30,8 +30,8 @@ namespace MapView.Forms.MainWindow
 		/// <summary>
 		/// Adds an Options-object by (viewer)key to the types-dictionary.
 		/// @note Is used by 'XCMainWindow..cTor' to assign MainView's
-		/// option-type and by 'ViewersManager.SetAsObserver()' to assign
-		/// TileView's, TopView's, and RouteView's option-types.
+		/// options-type and by 'ViewersManager.SetAsObserver()' to assign
+		/// TileView's, TopView's, and RouteView's options-types.
 		/// </summary>
 		/// <param name="key">a viewer by string - see 'RegistryInfo' constants</param>
 		/// <param name="val">an Options object</param>
@@ -47,7 +47,7 @@ namespace MapView.Forms.MainWindow
 		/// <returns></returns>
 		internal static Options getMainOptions()
 		{
-			return _optionsTypes[RegistryInfo.MainWindow];
+			return _optionsTypes[RegistryInfo.MainView];
 		}
 
 
@@ -55,14 +55,39 @@ namespace MapView.Forms.MainWindow
 		/// Loads options specified by the user.
 		/// </summary>
 		/// <param name="fullpath"></param>
-		internal static void LoadOptions(string fullpath)
+		internal static void LoadUserOptions(string fullpath)
 		{
 			using (var sr = new StreamReader(fullpath))
 			{
 				KeyvalPair keyval;
 				while ((keyval = Varidia.getKeyvalPair(sr)) != null) // NOTE: These are not keyvals; they are headers in the options file.
 				{
-					Options.ReadOptions(sr, _optionsTypes[keyval.Key]); // NOTE: This reads the options as keyvals.
+					if (_optionsTypes.ContainsKey(keyval.Key))
+						ReadOptions(sr, _optionsTypes[keyval.Key]); // NOTE: This reads the options as keyvals.
+				}
+			}
+		}
+
+		internal static void ReadOptions(TextReader tr, Options options)
+		{
+			string key;
+
+			KeyvalPair keyval;
+			while ((keyval = Varidia.getKeyvalPair(tr)) != null)
+			{
+				switch (keyval.Key)
+				{
+					case "{": break;  // starting out
+					case "}": return; // all done
+
+					default:
+						key = keyval.Key;
+						if (options[key] != null)
+						{
+							options[key].Value = keyval.Value;
+							options[key].doUpdate(key);
+						}
+						break;
 				}
 			}
 		}

@@ -87,7 +87,7 @@ namespace MapView
 		{
 			Color color;
 
-			string key = TopView.FloorColor;
+			string key = TopViewOptionables.str_FloorColor;
 			if (TopPanel.Brushes.ContainsKey(key))
 			{
 				color = TopPanel.Brushes[key].Color;
@@ -95,7 +95,7 @@ namespace MapView
 				label7.ForeColor = GetTextColor(color);
 			}
 
-			key = TopView.WestColor;
+			key = TopViewOptionables.str_WestColor;
 			if (TopPanel.Pens.ContainsKey(key))
 			{
 				color = TopPanel.Pens[key].Color;
@@ -103,7 +103,7 @@ namespace MapView
 				label8.ForeColor = GetTextColor(color);
 			}
 
-			key = TopView.NorthColor;
+			key = TopViewOptionables.str_NorthColor;
 			if (TopPanel.Pens.ContainsKey(key))
 			{
 				color = TopPanel.Pens[key].Color;
@@ -111,7 +111,7 @@ namespace MapView
 				label9.ForeColor = GetTextColor(color);
 			}
 
-			key = TopView.ContentColor;
+			key = TopViewOptionables.str_ContentColor;
 			if (TopPanel.Brushes.ContainsKey(key))
 			{
 				color = TopPanel.Brushes[key].Color;
@@ -128,7 +128,7 @@ namespace MapView
 		{
 			Color color;
 
-			string key = RouteView.WallColor;
+			string key = RouteViewOptionables.str_WallColor;
 			if (RoutePanel.RoutePens.ContainsKey(key))
 			{
 				color = RoutePanel.RoutePens[key].Color;
@@ -140,7 +140,7 @@ namespace MapView
 				label15.ForeColor = GetTextColor(color);
 			}
 
-			key = RouteView.ContentColor;
+			key = RouteViewOptionables.str_ContentColor;
 			if (RoutePanel.RouteBrushes.ContainsKey(key))
 			{
 				color = RoutePanel.RouteBrushes[key].Color;
@@ -156,132 +156,72 @@ namespace MapView
 		private void UpdateSpecialPropertyColors()
 		{
 			// TODO: update special-property colors from Options without
-			// requiring that the Help screen be reloaded. Neither form
-			// (Options or Help) is modal, so the code can't rely on that
-			// user-forced effect.
+			// requiring that the Help screen be reloaded. Neither form (Options
+			// or Help) is modal, so the code can't rely on that user-forced
+			// effect. A pointer to this ColorHelp needs to be passed to
+			// TileViewOptionables.
+
 			Color color;
 
-			string key;
+			color = TilePanel.SpecialBrushes[SpecialType.Standard].Color;
+			lblType00.BackColor = color;
+			lblType00.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 0);		// "Standard"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType00.BackColor = color;
-				lblType00.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.EntryPoint].Color;
+			lblType01.BackColor = color;
+			lblType01.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 1);		// "EntryPoint"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType01.BackColor = color;
-				lblType01.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.PowerSource].Color;
+			lblType02.BackColor = color;
+			lblType02.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 2);		// "PowerSource"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType02.BackColor = color;
-				lblType02.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Navigation].Color;
+			lblType03.BackColor = color;
+			lblType03.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 3);		// "Navigation"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType03.BackColor = color;
-				lblType03.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Construction].Color;
+			lblType04.BackColor = color;
+			lblType04.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 4);		// "Construction"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType04.BackColor = color;
-				lblType04.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Food].Color;
+			lblType05.BackColor = color;
+			lblType05.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 5);		// "Food"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType05.BackColor = color;
-				lblType05.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Reproduction].Color;
+			lblType06.BackColor = color;
+			lblType06.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 6);		// "Reproduction"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType06.BackColor = color;
-				lblType06.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Entertainment].Color;
+			lblType07.BackColor = color;
+			lblType07.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 7);		// "Entertainment"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType07.BackColor = color;
-				lblType07.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Surgery].Color;
+			lblType08.BackColor = color;
+			lblType08.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 8);		// "Surgery"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType08.BackColor = color;
-				lblType08.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Examination].Color;
+			lblType09.BackColor = color;
+			lblType09.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 9);		// "ExaminationRoom"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType09.BackColor = color;
-				lblType09.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Alloys].Color;
+			lblType10.BackColor = color;
+			lblType10.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 10);	// "Alloys"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType10.BackColor = color;
-				lblType10.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Habitat].Color;
+			lblType11.BackColor = color;
+			lblType11.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 11);	// "Habitat"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType11.BackColor = color;
-				lblType11.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.Destroyed].Color;
+			lblType12.BackColor = color;
+			lblType12.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 12);	// "Destroyed"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType12.BackColor = color;
-				lblType12.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.ExitPoint].Color;
+			lblType13.BackColor = color;
+			lblType13.ForeColor = GetTextColor(color);
 
-			key = Enum.GetName(typeof(SpecialType), 13);	// "ExitPoint"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType13.BackColor = color;
-				lblType13.ForeColor = GetTextColor(color);
-			}
-
-			key = Enum.GetName(typeof(SpecialType), 14);	// "MustDestroy"
-			if (TilePanel.SpecialBrushes.ContainsKey(key))
-			{
-				color = TilePanel.SpecialBrushes[key].Color;
-				lblType14.BackColor = color;
-				lblType14.ForeColor = GetTextColor(color);
-			}
+			color = TilePanel.SpecialBrushes[SpecialType.MustDestroy].Color;
+			lblType14.BackColor = color;
+			lblType14.ForeColor = GetTextColor(color);
 		}
 
 		/// <summary>
@@ -840,14 +780,16 @@ namespace MapView
 		private TabPage tpTopView;
 		private TabPage tpRouteView;
 		private TabPage tpTileView;
+		private Label label1;
 		private Label label7;
-		private Label label10;
 		private Label label8;
-		private Label label14;
-		private Label label16;
 		private Label label9;
+		private Label label10;
+		private Label label14;
 		private Label label15;
+		private Label label16;
 		private Label label25;
+		private Label label26;
 		private GroupBox gbTileViewColors;
 		private Label lblType00;
 		private Label lblType01;
@@ -866,10 +808,8 @@ namespace MapView
 		private Label lblType14;
 		private RadioButton rbTftd;
 		private RadioButton rbUfo;
-		private Label label26;
 		private GroupBox gbTopViewColors;
 		private GroupBox gbRouteViewColors;
-		private System.Windows.Forms.Label label1;
-		#endregion
+		#endregion Designer
 	}
 }

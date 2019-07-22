@@ -15,6 +15,7 @@ namespace MapView.Forms.MainWindow
 	internal static class MainMenusManager
 	{
 		#region Fields (static)
+		private const string PropertyStartObserver = "Start";
 		private const string Separator = "-";
 		#endregion Fields (static)
 
@@ -121,7 +122,7 @@ namespace MapView.Forms.MainWindow
 			XCMainWindow.BypassActivatedEvent = true;
 
 			bool bringtofront = !XCMainWindow.that.Focused
-							 || !XCMainWindow.that.BringAllToFront;
+							 || !XCMainWindow.Optionables.BringAllToFront;
 
 			var zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
@@ -179,18 +180,18 @@ namespace MapView.Forms.MainWindow
 
 
 			Options options = OptionsManager.getMainOptions();
+			OptionChangedEvent changer = XCMainWindow.Optionables.OnFlagChanged;
 			foreach (MenuItem it in Viewers.MenuItems)
 			{
 				var f = it.Tag as Form;
 				if (f != null)
 				{
-					string key = RegistryInfo.getRegistryLabel(f);
-					options.AddOption(
-									key,
-									f is TileViewForm || f is TopViewForm		// true to have the viewer open on 1st run.
-													  || f is RouteViewForm,
-									"Open on load - " + key,					// appears as a tip at the bottom of the Options screen.
-									XCMainWindow.Windows);						// this identifies what Option category the setting appears under.
+					string key = PropertyStartObserver + RegistryInfo.getRegistryLabel(f);
+					options.AddOptionDefault(
+										key,
+										f is TileViewForm || f is TopViewForm // true to have the viewer open on 1st run.
+														  || f is RouteViewForm,
+										changer);
 
 					f.VisibleChanged += (sender, e) =>
 					{
@@ -293,7 +294,7 @@ namespace MapView.Forms.MainWindow
 				if (id == 1) ++id; // skip the separator
 
 				var it = Viewers.MenuItems[id];
-				if (options[RegistryInfo.getRegistryLabel(it.Tag as Form)].IsTrue)
+				if (options[PropertyStartObserver + RegistryInfo.getRegistryLabel(it.Tag as Form)].IsTrue)
 				{
 					OnMenuItemClick(it, EventArgs.Empty);
 				}

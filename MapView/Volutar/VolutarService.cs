@@ -4,6 +4,8 @@ using System.Windows.Forms;
 
 using DSShared.Windows;
 
+using MapView.Forms.MapObservers.TileViews;
+
 
 namespace MapView.Volutar
 {
@@ -13,7 +15,7 @@ namespace MapView.Volutar
 	internal sealed class VolutarService
 	{
 		#region Fields (static)
-		private const string VOLUTAR = "VolutarMcdEditorPath";
+		internal const string VOLUTAR = "VolutarMcdEditorPath";
 		#endregion Fields (static)
 
 
@@ -35,11 +37,16 @@ namespace MapView.Volutar
 				{
 					using (var f = new FindFileForm("Enter the Volutar MCDEdit.exe path in full."))
 					{
-						if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+						if (f.ShowDialog() == DialogResult.OK)
 						{
 							if (File.Exists(f.InputString))
 							{
-								option.Value = (object)(_fullpath = f.InputString);
+								_fullpath = f.InputString;
+								TileView.Optionables.VolutarMcdEditorPath = _fullpath;
+								option.Value = (object)_fullpath;
+
+								if (TileView._foptions != null && TileView._foptions.Visible)
+									(TileView._foptions as OptionsForm).propertyGrid.Refresh();
 							}
 							else
 								MessageBox.Show(
@@ -71,17 +78,30 @@ namespace MapView.Volutar
 
 
 		#region Methods (static)
-		internal static void LoadOptions(Options options)
+		/// <summary>
+		/// Adds the Volutar-option with default-value to TileView's options.
+		/// </summary>
+		/// <param name="options"></param>
+		internal static void LoadVolutarOptionDefault(Options options)
 		{
-			options.AddOption(
-							VOLUTAR,
-							String.Empty,
-							"Path to Volutar MCD Edit" + Environment.NewLine
-								+ "The path specified can actually be used to start"
-								+ " any valid application or to open a specified file"
-								+ " with its associated application.",
-							"McdViewer");
+			options.AddOptionDefault(
+								VOLUTAR,
+								String.Empty,
+								new OptionChangedEvent(OnVolutarChanged));
 		}
 		#endregion Methods (static)
+
+
+		#region Events (static)
+		/// <summary>
+		/// Volutar never changes.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		private static void OnVolutarChanged(string key, object val)
+		{
+			TileView.Optionables.VolutarMcdEditorPath = (String)val;
+		}
+		#endregion Events (static)
 	}
 }

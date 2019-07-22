@@ -40,7 +40,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 		#region Properties (override)
-		[Browsable(false), DefaultValue(null)]
+		[Browsable(false)]
 		public override MapFileBase MapBase
 		{
 			set
@@ -289,8 +289,8 @@ namespace MapView.Forms.MapObservers.TopViews
 				Pen pen;
 				for (int i = 0; i <= MapBase.MapSize.Rows; ++i) // draw horizontal grid-lines (ie. upperleft to lowerright)
 				{
-					if (i % 10 == 0) pen = TopPanel.Pens[TopView.Grid10Color];
-					else             pen = TopPanel.Pens[TopView.GridColor];
+					if (i % 10 != 0) pen = TopPanel.Pens[TopViewOptionables.str_GridLineColor];
+					else             pen = TopPanel.Pens[TopViewOptionables.str_GridLine10Color];
 
 					graphics.DrawLine(
 									pen,
@@ -302,8 +302,8 @@ namespace MapView.Forms.MapObservers.TopViews
 
 				for (int i = 0; i <= MapBase.MapSize.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
 				{
-					if (i % 10 == 0) pen = TopPanel.Pens[TopView.Grid10Color];
-					else             pen = TopPanel.Pens[TopView.GridColor];
+					if (i % 10 != 0) pen = TopPanel.Pens[TopViewOptionables.str_GridLineColor];
+					else             pen = TopPanel.Pens[TopViewOptionables.str_GridLine10Color];
 
 					graphics.DrawLine(
 									pen,
@@ -322,12 +322,12 @@ namespace MapView.Forms.MapObservers.TopViews
 					PathSelectorLozenge(
 									_originX + (_col - _row) * halfWidth,
 									OffsetY  + (_col + _row) * halfHeight);
-					graphics.DrawPath(TopPanel.Pens[TopView.SelectorColor], _lozSelector);
+					graphics.DrawPath(TopPanel.Pens[TopViewOptionables.str_SelectorColor], _lozSelector);
 				}
 
 				// draw tiles-selected lozenge ->
 				if (MainViewOverlay.that.FirstClick)
-					graphics.DrawPath(TopPanel.Pens[TopView.SelectedColor], _lozSelected);
+					graphics.DrawPath(TopPanel.Pens[TopViewOptionables.str_SelectedColor], _lozSelected);
 			}
 		}
 
@@ -353,7 +353,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			if (TopView.Floor.Checked && tile.Floor != null)
 				BlobService.DrawFloor(
 									graphics,
-									TopPanel.Brushes[TopView.FloorColor],
+									TopPanel.Brushes[TopViewOptionables.str_FloorColor],
 									x, y);
 
 			if (TopView.Content.Checked && tile.Content != null)
@@ -425,7 +425,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			TopView.QuadrantPanel.doMouseDown(
 											new MouseEventArgs(button, clicks, 0,0, 0),
-											QuadrantType.None); //TopView.QuadrantPanel.SelectedQuadrant
+											QuadrantType.None);
 
 //			base.OnKeyDown(e);
 		}
@@ -441,7 +441,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			Select();
 
-			if (e.Button == MouseButtons.Left) // select tile on LMB only so that RMB can operate on multiple tiles.
+			if (e.Button == MouseButtons.Left) // select tile on LMB only so that RMB can operate on multiple tiles. TODO: not.
 			{
 				var loc = GetTileLocation(e.X, e.Y);
 				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols

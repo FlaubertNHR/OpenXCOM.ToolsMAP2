@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -32,7 +33,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Fields (static)
-		private static ConnectNodesType _conType = ConnectNodesType.None; // safety - shall be set by LoadControlOptions()
+		private static ConnectNodesType _conType = ConnectNodesType.None; // safety - shall be set by LoadControlDefaultOptions()
 
 		private const string NodeCopyPrefix  = "MVNode"; // TODO: use a struct to copy/paste the info.
 		private const char NodeCopySeparator = '|';
@@ -75,6 +76,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Inherited from IMapObserver through MapObserverControl.
 		/// </summary>
+		[Browsable(false)]
 		public override MapFileBase MapBase
 		{
 			set // TODO: check RouteView/TopRouteView(Route)
@@ -88,7 +90,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					cbRank.Items.Clear();
 
-					if (MapFile.Descriptor.Pal == Palette.TftdBattle) // NOTE: Check TFTD else default to UFO.
+					if (MapFile.Descriptor.Pal == Palette.TftdBattle) // check TFTD else default to UFO
 						cbRank.Items.AddRange(RouteNodeCollection.RankTftd);
 					else
 						cbRank.Items.AddRange(RouteNodeCollection.RankUfo);
@@ -101,6 +103,27 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Properties (static)
+		/// <summary>
+		/// A class-object that holds RouteView's optionable Properties.
+		/// @note C# doesn't allow inheritance of multiple class-objects, which
+		/// would have been a way to separate the optionable properties from all
+		/// the other properties that are not optionable; they need to be
+		/// separate or else all Properties would show up in the Options form's
+		/// PropertyGrid. An alternative would have been to give all those other
+		/// properties the Browsable(false) attribute but I didn't want to
+		/// clutter up the code and also because the Browsable(false) attribute
+		/// is used to hide Properties from the designer also - but whether or
+		/// not they are accessible in the designer is an entirely different
+		/// consideration than whether or not they are Optionable Properties. So
+		/// I created an independent class just to hold and handle RouteView's
+		/// Optionable Properties ... and wired it up. It's a tedious shitfest
+		/// but better than the arcane MapViewI system or screwing around with
+		/// equally arcane TypeDescriptors. Both of which had been implemented
+		/// but then rejected.
+		/// </summary>
+		internal static RouteViewOptionables Optionables
+		{ get; private set; }
+
 		private static RouteNode _nodeSelected;
 		internal static RouteNode NodeSelected
 		{
@@ -167,6 +190,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		public RouteView()
 		{
+			Optionables = new RouteViewOptionables(this);
+
 			InitializeComponent();
 
 			RoutePanel = new RoutePanel();
@@ -497,8 +522,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					RouteChanged = true;
 					NodeSelected = MapFile.AddRouteNode(args.Location);
 
-					if (RouteView.RoutesInfo != null)
-						RouteView.RoutesInfo.AddNode(NodeSelected);
+					if (RoutesInfo != null)
+						RoutesInfo.AddNode(NodeSelected);
 				}
 				update = (NodeSelected != null);
 			}
@@ -512,8 +537,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 						node = MapFile.AddRouteNode(args.Location);
 						ConnectNode(node);
 
-						if (RouteView.RoutesInfo != null)
-							RouteView.RoutesInfo.AddNode(node);
+						if (RoutesInfo != null)
+							RoutesInfo.AddNode(node);
 					}
 //					RoutePanel.Refresh(); don't work.
 
@@ -933,7 +958,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 					if (NodeSelected.Spawn != SpawnWeight.None)
 					{
-						RoutesInfo.UpdateNoderank(_curNoderank, NodeSelected.Rank);
+						if (RoutesInfo != null)
+							RoutesInfo.UpdateNoderank(_curNoderank, NodeSelected.Rank);
+
 						_curNoderank = NodeSelected.Rank;
 					}
 
@@ -954,7 +981,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				RouteChanged = true;
 				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)cbSpawn.SelectedItem).Case;
 
-				RoutesInfo.ChangedSpawnweight(_curSpawnweight, NodeSelected.Spawn, NodeSelected.Rank);
+				if (RoutesInfo != null)
+					RoutesInfo.ChangedSpawnweight(_curSpawnweight, NodeSelected.Spawn, NodeSelected.Rank);
+
 				_curSpawnweight = NodeSelected.Spawn;
 
 				if (Tag as String == "ROUTE")
@@ -1731,8 +1760,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 						UpdateNodeInfo(); // not sure is necessary ...
 						RefreshPanels();
 
-						if (RouteView.RoutesInfo != null)
-							RouteView.RoutesInfo.Initialize(MapFile);
+						if (RoutesInfo != null)
+							RoutesInfo.Initialize(MapFile);
 					}
 				}
 			}
@@ -1810,8 +1839,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					if (node.Rank != 0)
 					{
-						if (node.Spawn != SpawnWeight.None)
-							RoutesInfo.UpdateNoderank(node.Rank, 0); // for RoutesInfo
+						if (RoutesInfo != null && node.Spawn != SpawnWeight.None)
+							RoutesInfo.UpdateNoderank(node.Rank, 0);
 
 						++changed;
 						node.Rank = 0;
@@ -2057,7 +2086,18 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Options
-		private static Form _foptions;	// is static so that it will be used by both
+		/// <summary>
+		/// Loads default options for RouteView in TopRouteView screens.
+		/// </summary>
+		protected internal override void LoadControlDefaultOptions()
+		{
+			OnConnectTypeClicked(tsb_connect0, EventArgs.Empty); // TODO: add to Options perhaps
+
+			Optionables.LoadDefaults(Options);
+		}
+
+
+		internal static Form _foptions;	// is static so that it will be used by both
 										// RouteView and TopRouteView(Route)
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an Options-
@@ -2076,7 +2116,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (_foptions == null)
 				{
-					_foptions = new OptionsForm("RouteViewOptions", Options);
+					_foptions = new OptionsForm(
+											Optionables,
+											Options,
+											OptionsForm.OptionableType.RouteView);
 					_foptions.Text = " RouteView Options";
 
 					OptionsManager.Screens.Add(_foptions);
@@ -2119,191 +2162,17 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			return tsb_Options;
 		}
-
-
-		// headers
-		private const string Links = "Links";
-		private const string View  = "View";
-		private const string Nodes = "Nodes";
-
-		// options
-		internal const string UnselectedLinkColor = "UnselectedLinkColor";
-		private  const string UnselectedLinkWidth = "UnselectedLinkWidth";
-		internal const string SelectedLinkColor   = "SelectedLinkColor";
-		private  const string SelectedLinkWidth   = "SelectedLinkWidth";
-
-		internal const string WallColor           = "WallColor";
-		private  const string WallWidth           = "WallWidth";
-		internal const string ContentColor        = "ContentColor";
-
-		internal const string GridLineColor       = "GridLineColor";
-		private  const string GridLineWidth       = "GridLineWidth";
-		internal const string Grid10LineColor     = "Grid10LineColor";
-		private  const string Grid10LineWidth     = "Grid10LineWidth";
-
-		internal const string UnselectedNodeColor = "UnselectedNodeColor";
-		internal const string SelectedNodeColor   = "SelectedNodeColor";
-		internal const string SpawnNodeColor      = "SpawnNodeColor";
-		private  const string NodeOpacity         = "NodeOpacity";
-
-		private  const string ShowOverlay         = "ShowOverlay";
-		private  const string ShowPriorityBars    = "ShowPriorityBars";
-
-
-		/// <summary>
-		/// Loads default options for RouteView in TopRouteView screens.
-		/// </summary>
-		protected internal override void LoadControlOptions()
-		{
-			OnConnectTypeClicked(tsb_connect0, EventArgs.Empty); // TODO: add to Options
-
-			const int widthfin = 1;
-			const int width__2 = 2;
-			const int widthfat = 3;
-
-			RoutePanel.RoutePens[UnselectedLinkColor]    =
-			RoutePanel.RoutePens[UnselectedLinkWidth]    = new Pen(Color.OrangeRed, width__2);
-			RoutePanel.RoutePens[SelectedLinkColor]      =
-			RoutePanel.RoutePens[SelectedLinkWidth]      = new Pen(Color.RoyalBlue, width__2);
-
-			RoutePanel.RoutePens[WallColor]              =
-			RoutePanel.RoutePens[WallWidth]              = new Pen(Color.BurlyWood, widthfat);
-			RoutePanel.RoutePens[GridLineColor]          =
-			RoutePanel.RoutePens[GridLineWidth]          = new Pen(Color.Black,     widthfin);
-			RoutePanel.RoutePens[Grid10LineColor]        =
-			RoutePanel.RoutePens[Grid10LineWidth]        = new Pen(Color.Black,     width__2);
-
-			RoutePanel.RouteBrushes[ContentColor]        = new SolidBrush(Color.DarkGoldenrod);
-
-			RoutePanel.RouteBrushes[UnselectedNodeColor] = new SolidBrush(Color.MediumSeaGreen);
-			RoutePanel.RouteBrushes[SelectedNodeColor]   = new SolidBrush(Color.RoyalBlue);
-			RoutePanel.RouteBrushes[SpawnNodeColor]      = new SolidBrush(Color.GreenYellow);
-
-			RoutePanel.ToolWall    = new ColorTool(RoutePanel.RoutePens[WallColor]);
-			RoutePanel.ToolContent = new ColorTool(RoutePanel.RouteBrushes[ContentColor], DrawBlobService.LINEWIDTH_CONTENT);
-
-			var bc = new OptionChangedEvent(OnBrushChanged);
-			var pc = new OptionChangedEvent(OnPenColorChanged);
-			var pw = new OptionChangedEvent(OnPenWidthChanged);
-			var oc = new OptionChangedEvent(OnNodeOpacityChanged);
-			var sp = new OptionChangedEvent(OnShowPriorityChanged);
-			var so = new OptionChangedEvent(OnShowOverlayChanged);
-
-			Options.AddOption(UnselectedLinkColor, Color.OrangeRed,      "Color of unselected link lines",  Links, pc);
-			Options.AddOption(UnselectedLinkWidth, width__2,             "Width of unselected link lines",  Links, pw);
-			Options.AddOption(SelectedLinkColor,   Color.RoyalBlue,      "Color of selected link lines",    Links, pc);
-			Options.AddOption(SelectedLinkWidth,   width__2,             "Width of selected link lines",    Links, pw);
-
-			Options.AddOption(WallColor,           Color.BurlyWood,      "Color of wall indicators",        View,  pc);
-			Options.AddOption(WallWidth,           widthfat,             "Width of wall indicators",        View,  pw);
-			Options.AddOption(ContentColor,        Color.DarkGoldenrod,  "Color of content indicators",     View,  bc);
-			Options.AddOption(GridLineColor,       Color.Black,          "Color of grid lines",             View,  pc);
-			Options.AddOption(GridLineWidth,       widthfin,             "Width of grid lines",             View,  pw);
-			Options.AddOption(Grid10LineColor,     Color.Black,          "Color of every tenth grid line",  View,  pc);
-			Options.AddOption(Grid10LineWidth,     width__2,             "Width of every tenth grid line",  View,  pw);
-
-			Options.AddOption(ShowOverlay,         true,                 "True to show mouse-over info",    View,  so);
-
-			Options.AddOption(UnselectedNodeColor, Color.MediumSeaGreen, "Color of unselected nodes",       Nodes, bc);
-			Options.AddOption(SelectedNodeColor,   Color.RoyalBlue,      "Color of selected nodes",         Nodes, bc);
-			Options.AddOption(SpawnNodeColor,      Color.GreenYellow,    "Color of spawn nodes",            Nodes, bc);
-
-			Options.AddOption(NodeOpacity,         255,                  "Opacity of node colors (0..255)", Nodes, oc);
-			Options.AddOption(ShowPriorityBars,    true,                 "True to show importance meters",  Nodes, sp);
-		}
-
-		/// <summary>
-		/// Fires when a brush-color changes in Options.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
-		private void OnBrushChanged(string key, object val)
-		{
-			var color = (Color)val;
-			RoutePanel.RouteBrushes[key].Color = color;
-
-			switch (key)
-			{
-				case ContentColor:
-					RoutePanel.ToolContent.Dispose();
-					RoutePanel.ToolContent = new ColorTool(
-														RoutePanel.RouteBrushes[key],
-														DrawBlobService.LINEWIDTH_CONTENT);
-					break;
-
-				case SelectedNodeColor:
-					ViewerFormsManager.RouteView   .Control     .lblSelected.ForeColor =
-					ViewerFormsManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;
-					break;
-
-				case UnselectedNodeColor:
-					ViewerFormsManager.RouteView   .Control     .lblOver.ForeColor =
-					ViewerFormsManager.TopRouteView.ControlRoute.lblOver.ForeColor = color;
-					break;
-			}
-			RefreshControls();
-		}
-
-		/// <summary>
-		/// Fires when a pen-color changes in Options.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
-		private void OnPenColorChanged(string key, object val)
-		{
-			RoutePanel.RoutePens[key].Color = (Color)val;
-
-			switch (key)
-			{
-				case WallColor:
-					RoutePanel.ToolWall.Dispose();
-					RoutePanel.ToolWall = new ColorTool(RoutePanel.RoutePens[key]);
-					break;
-			}
-			RefreshControls();
-		}
-
-		/// <summary>
-		/// Fires when a pen-width changes in Options.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
-		private void OnPenWidthChanged(string key, object val)
-		{
-			RoutePanel.RoutePens[key].Width = (int)val;
-
-			switch (key)
-			{
-				case WallWidth:
-					RoutePanel.ToolWall.Dispose();
-					RoutePanel.ToolWall = new ColorTool(RoutePanel.RoutePens[key]);
-					break;
-			}
-			RefreshControls();
-		}
-
-		private void OnNodeOpacityChanged(string key, object val)
-		{
-			RoutePanel.Opacity = (int)val;
-			RefreshControls();
-		}
-
-		private void OnShowPriorityChanged(string key, object val)
-		{
-			RoutePanel.ShowPriorityBars = (bool)val;
-			RefreshControls();
-		}
-
-		private void OnShowOverlayChanged(string key, object val)
-		{
-			RoutePanel.ShowOverlay = (bool)val;
-			RefreshControls();
-		}
 		#endregion Options
 
 
 		#region Update UI
-		private void RefreshControls()
+//		internal void InvalidateRoutePanels()
+//		{
+//			ViewerFormsManager.RouteView   .Control     ._pnlRoutes.Invalidate();
+//			ViewerFormsManager.TopRouteView.ControlRoute._pnlRoutes.Invalidate();
+//		}
+
+		internal void RefreshControls()
 		{
 			ViewerFormsManager.RouteView   .Control     .Refresh();
 			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();

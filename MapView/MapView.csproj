@@ -138,6 +138,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\MainWindow\MainViewOptionables.cs" />
     <Compile Include="Forms\MainWindow\OptionsManager.cs" />
     <Compile Include="Forms\MainWindow\MainMenusManager.cs" />
     <Compile Include="Forms\MapObservers\ColorTool.cs" />
@@ -152,6 +153,8 @@
     <Compile Include="Forms\MapObservers\RouteView\RouteViewForm.Designer.cs">
       <DependentUpon>RouteViewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MapObservers\RouteView\RouteViewOptionables.cs" />
+    <Compile Include="Forms\MapObservers\TileView\TileViewOptionables.cs" />
     <Compile Include="Forms\MapObservers\TopRouteView\TopRouteViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +195,7 @@
       <DependentUpon>TileView.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MapObservers\TopView\QuadrantDrawService.cs" />
+    <Compile Include="Forms\MapObservers\TopView\TopViewOptionables.cs" />
     <Compile Include="Forms\OtherForms\About.cs" />
     <Compile Include="Forms\OtherForms\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>

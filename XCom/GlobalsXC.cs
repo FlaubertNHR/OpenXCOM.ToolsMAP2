@@ -4,20 +4,20 @@
 	{
 		#region Fields (static)
 		public const string TerrainDir = "TERRAIN";
-		public const string PckExt = ".PCK";
-		public const string TabExt = ".TAB";
-		public const string McdExt = ".MCD";
+		public const string PckExt     = ".PCK";
+		public const string TabExt     = ".TAB";
+		public const string McdExt     = ".MCD";
 
-		public const string MapsDir = "MAPS";
-		public const string MapExt = ".MAP";
+		public const string MapsDir    = "MAPS";
+		public const string MapExt     = ".MAP";
 
-		public const string RoutesDir = "ROUTES";
-		public const string RouteExt = ".RMP";
+		public const string RoutesDir  = "ROUTES";
+		public const string RouteExt   = ".RMP";
 
 		public const string GeodataDir = "GEODATA";
-		public const string DatExt = ".DAT"; // for SCANG.DAT
+		public const string DatExt     = ".DAT"; // for SCANG.DAT
 
-		public const string MV_Backup = "MV_Backup";
+		public const string MV_Backup  = "MV_Backup";
 
 
 		// const-strings that appear in MapTilesets.yml

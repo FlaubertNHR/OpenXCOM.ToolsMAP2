@@ -1062,8 +1062,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		private System.Windows.Forms.Panel pnlDataFieldsLeft;
 
 		private System.Windows.Forms.GroupBox gbTileData;
-		private System.Windows.Forms.Label lblSelected;
-		private System.Windows.Forms.Label lblOver;
+		internal System.Windows.Forms.Label lblSelected;
+		internal System.Windows.Forms.Label lblOver;
 
 		private System.Windows.Forms.GroupBox gbNodeData;
 		private System.Windows.Forms.Label labelUnitType;
