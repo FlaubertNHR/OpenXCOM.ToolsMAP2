@@ -13,18 +13,20 @@ namespace DSShared.Windows
 		:
 			Control
 	{
-		#region cTor
+		#region Properties (override)
 		/// <summary>
-		/// cTor.
+		/// Prevents flicker.
 		/// </summary>
-		public DoubleBufferedControl()
+		protected override CreateParams CreateParams
 		{
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
 		}
-		#endregion cTor
+		#endregion Properties (override)
 
 
 		#region Events (override)
