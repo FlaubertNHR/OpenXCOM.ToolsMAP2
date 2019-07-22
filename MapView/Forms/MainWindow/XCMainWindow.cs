@@ -47,6 +47,8 @@ namespace MapView
 
 
 		#region Fields
+		private CompositedTreeView MapTree;
+
 		internal Options Options;
 		#endregion Fields
 
@@ -150,12 +152,6 @@ namespace MapView
 		#endregion Properties
 
 
-#if !__MonoCS__ // re. highlight: God only knows - it compiles correctly.
-		private BufferedTreeView MapTree;
-#else
-		private TreeView MapTree;
-#endif
-
 		#region cTor
 		/// <summary>
 		/// This is where the user-app end of things *really* starts.
@@ -226,11 +222,9 @@ namespace MapView
 			InitializeComponent();
 			LogFile.WriteLine("MainView initialized.");
 
-#if !__MonoCS__
-			MapTree = new BufferedTreeView();
-#else
-			MapTree = new TreeView();
-#endif
+
+			MapTree = new CompositedTreeView();
+
 			MapTree.Name          = "MapTree";
 			MapTree.Dock          = DockStyle.Left;
 			MapTree.DrawMode      = TreeViewDrawMode.OwnerDrawText;
@@ -2706,38 +2700,30 @@ namespace MapView
 	}
 
 
-// bool runningOnMono = Type.GetType("Mono.Runtime") != null;
 
-#if !__MonoCS__
 	/// <summary>
-	/// https://stackoverflow.com/questions/10362988/treeview-flickering#answer-10364283
-	/// using System.Runtime.InteropServices;
-	/// TODO: Try replacing w/ a CompositedTreeView
+	/// Derived class for TreeView.
 	/// </summary>
-	class BufferedTreeView
+	internal sealed class CompositedTreeView
 		:
 			TreeView
 	{
-		protected override void OnHandleCreated(EventArgs e)
+		#region Properties (override)
+		/// <summary>
+		/// Prevents flicker.
+		/// </summary>
+		protected override CreateParams CreateParams
 		{
-			SendMessage(
-					Handle,
-					TVM_SETEXTENDEDSTYLE,
-					(IntPtr)TVS_EX_DOUBLEBUFFER,
-					(IntPtr)TVS_EX_DOUBLEBUFFER);
-
-			base.OnHandleCreated(e);
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
 		}
-
-		// Pinvoke:
-		private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;
-		private const int TVM_GETEXTENDEDSTYLE = 0x1100 + 45;
-		private const int TVS_EX_DOUBLEBUFFER  = 0x0004;
-	
-		[DllImport("user32.dll")]
-		private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+		#endregion Properties (override)
 	}
-#endif
+
 
 
 	#region Delegates
