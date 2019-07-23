@@ -580,6 +580,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				color = Color.FromArgb(NodeOpacity, color);
 				RoutePanel.RouteBrushes[key].Color = color;
+
+				switch (key)
+				{
+					case str_NodeSelectedColor:
+						RouteView.SetInfotextColor_selected();
+						break;
+
+					case str_NodeColor:
+					case str_NodeSpawnColor:
+						ObserverManager.RouteView   .Control     .SetInfotextColor_over();
+						ObserverManager.TopRouteView.ControlRoute.SetInfotextColor_over();
+						break;
+				}
 			}
 		}
 

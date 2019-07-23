@@ -322,6 +322,48 @@ namespace MapView.Forms.MapObservers.RouteViews
 			lblSelected.Text = String.Empty;
 		}
 
+		internal void SetInfotextColor_selected()
+		{
+			Color color;
+			if (NodeSelected != null)
+			{
+				color = Optionables.NodeSelectedColor;
+			}
+			else
+				color = SystemColors.ControlText;
+
+			ObserverManager.RouteView   .Control     .lblSelected.ForeColor =
+			ObserverManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;
+		}
+
+		internal void SetInfotextColor_over()
+		{
+			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
+			{
+				var loc = RoutePanel.GetTileLocation(
+												RoutePanel.CursorPosition.X,
+												RoutePanel.CursorPosition.Y);
+				if (loc.X != -1)
+				{
+					RouteNode node = ((MapTile)MapBase[loc.Y, loc.X, _lev]).Node;
+					if (node != null)
+					{
+						if (node.Spawn == SpawnWeight.None)
+						{
+							lblOver.ForeColor = Optionables.NodeColor;
+						}
+						else
+							lblOver.ForeColor = Optionables.NodeSpawnColor;
+					}
+					else
+						lblOver.ForeColor = SystemColors.ControlText;
+
+					ObserverManager.RouteView   .Control     .gbTileData.Invalidate();
+					ObserverManager.TopRouteView.ControlRoute.gbTileData.Invalidate();
+				}
+			}
+		}
+
 		/// <summary>
 		/// Prints the currently selected tile-info to the TileData groupbox.
 		/// NOTE: The displayed level is inverted here.
