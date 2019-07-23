@@ -18,7 +18,7 @@ namespace MapView.Forms.MapObservers.TopViews
 	/// </summary>
 	internal class TopPanel
 		:
-			MapObserverControl_TopPanel // DoubleBufferedControl, IMapObserver
+			MapObserverControl_Top // DoubleBufferedControl, IMapObserver
 	{
 		#region Fields (static)
 		private const int OffsetX = 2; // these are the offsets between the

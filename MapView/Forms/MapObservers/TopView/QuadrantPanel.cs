@@ -19,7 +19,7 @@ namespace MapView.Forms.MapObservers.TopViews
 	/// </summary>
 	internal sealed class QuadrantPanel
 		:
-			MapObserverControl_TopPanel // DoubleBufferedControl, IMapObserver
+			MapObserverControl_Top // DoubleBufferedControl, IMapObserver
 	{
 		#region Fields
 		/// <summary>

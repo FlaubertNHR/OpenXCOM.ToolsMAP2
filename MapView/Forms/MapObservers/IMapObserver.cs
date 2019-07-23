@@ -9,7 +9,7 @@ using XCom.Interfaces.Base;
 namespace MapView.Forms.MapObservers
 {
 	/// <summary>
-	/// Interface for MapObserverControl and MapObserverControl_TopPanel.
+	/// Interface for MapObserverControl and MapObserverControl_Top.
 	/// </summary>
 	public interface IMapObserver
 	{

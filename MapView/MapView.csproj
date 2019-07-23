@@ -183,7 +183,7 @@
     <Compile Include="Forms\MainWindow\ViewerFormsManager.cs" />
     <Compile Include="Forms\MainWindow\ViewersManager.cs" />
     <Compile Include="Forms\MainWindow\ShowHideManager.cs" />
-    <Compile Include="Forms\MapObservers\MapObserverControl_TopPanel.cs">
+    <Compile Include="Forms\MapObservers\MapObserverControl_Top.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\MapObservers\MapObserverControl.cs">

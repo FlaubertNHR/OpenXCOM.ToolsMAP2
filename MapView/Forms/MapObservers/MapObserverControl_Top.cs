@@ -15,7 +15,7 @@ namespace MapView
 	/// <summary>
 	/// Inherited by TopPanel, QuadrantPanel.
 	/// </summary>
-	internal class MapObserverControl_TopPanel
+	internal class MapObserverControl_Top
 		:
 			DoubleBufferedControl,
 			IMapObserver
