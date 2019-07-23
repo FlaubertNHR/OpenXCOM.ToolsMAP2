@@ -30,8 +30,6 @@ namespace MapView.Forms.MapObservers.TileViews
 			MapObserverControl // UserControl, IMapObserver
 	{
 		#region Events
-		internal event TilepartSelectedEvent TilepartSelected_SelectQuadrant;
-
 		/// <summary>
 		/// Fires if a save was done in PckView or McdView (via TileView).
 		/// </summary>
@@ -270,9 +268,18 @@ namespace MapView.Forms.MapObservers.TileViews
 				McdInfobox.UpdateData(record, id, label);
 			}
 
-			TilepartSelected_SelectQuadrant(part);	// good Lord, a handler firing another event.
-		}											// you know, you don't NEED to use events simply to fire functions, right
-		#endregion Events							// it would make the stack much easier to trace if you hadn't ...
+			if (part != null)
+			{
+				PartType quadrant = part.Record.PartType;
+				ViewerFormsManager.TopView     .Control   .SelectQuadrant(quadrant);
+				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(quadrant);
+			}
+
+			QuadrantDrawService.CurrentTilepart = part;
+			ViewerFormsManager.TopView     .Control   .QuadrantPanel.Invalidate();
+			ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+		}
+		#endregion Events
 
 
 		#region Options

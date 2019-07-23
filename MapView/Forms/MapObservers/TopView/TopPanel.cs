@@ -97,11 +97,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		internal protected TopPanel(TopView control)
 		{
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
-
 			TopView = control; // beautiful. This pattern should be iterated throughout MapView.
 
 			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;

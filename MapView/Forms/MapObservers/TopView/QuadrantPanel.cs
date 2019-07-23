@@ -7,7 +7,6 @@ using MapView.Forms.MainWindow;
 
 using XCom;
 using XCom.Interfaces;
-using XCom.Interfaces.Base;
 
 
 namespace MapView.Forms.MapObservers.TopViews
@@ -58,11 +57,6 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		internal QuadrantPanel()
 		{
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
-
 			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
 
 			_t1 = new System.Timers.Timer(SystemInformation.DoubleClickTime);

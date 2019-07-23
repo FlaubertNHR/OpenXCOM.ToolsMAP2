@@ -3,7 +3,6 @@ using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TileViews;
 using MapView.Forms.MapObservers.TopViews;
 
-using XCom;
 using XCom.Interfaces.Base;
 
 
@@ -40,27 +39,6 @@ namespace MapView.Forms.MainWindow
 		#endregion Properties (static)
 
 
-		#region Events (static)
-		/// <summary>
-		/// Changes the selected quadrant in the QuadrantPanel when a tilepart
-		/// is selected in TileView.
-		/// </summary>
-		/// <param name="part"></param>
-		private static void OnTilepartSelected_SelectQuadrant(Tilepart part)
-		{
-			if (part != null)
-			{
-				TopView     .Control   .SelectQuadrant(part.Record.PartType);
-				TopRouteView.ControlTop.SelectQuadrant(part.Record.PartType);
-			}
-
-			QuadrantDrawService.CurrentTilepart = part;
-			TopView     .Control   .QuadrantPanel.Invalidate();
-			TopRouteView.ControlTop.QuadrantPanel.Invalidate();
-		}
-		#endregion Events (static)
-
-
 		#region Methods (static)
 		internal static void Initialize()
 		{
@@ -77,8 +55,6 @@ namespace MapView.Forms.MainWindow
 
 			TopView     .Control   .InitializeToolstrip(ToolFactory);
 			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
-
-			TileView.Control.TilepartSelected_SelectQuadrant += OnTilepartSelected_SelectQuadrant;
 
 			_observers = new IMapObserver[]
 			{

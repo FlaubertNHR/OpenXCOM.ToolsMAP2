@@ -11,9 +11,6 @@ using XCom.Interfaces;
 
 namespace MapView.Forms.MapObservers.TileViews
 {
-	internal delegate void TilepartSelectedEvent(Tilepart part);
-
-
 	/// <summary>
 	/// A separate panel is created for each tab-page in the Tileparts viewer.
 	/// </summary>
@@ -21,6 +18,8 @@ namespace MapView.Forms.MapObservers.TileViews
 		:
 			Panel
 	{
+		internal delegate void TilepartSelectedEvent(Tilepart part);
+
 		internal event TilepartSelectedEvent TilepartSelected;
 
 
