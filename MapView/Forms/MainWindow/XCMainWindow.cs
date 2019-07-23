@@ -313,11 +313,8 @@ namespace MapView
 			LogFile.WriteLine("Quadrant strings punked.");
 
 
-			ObserverManager.Initialize();
+			ObserverManager.Initialize(); // adds each subsidiary viewer's options and Options-type etc.
 			LogFile.WriteLine("ObserverManager initialized.");
-
-			ViewersManager.Initialize(); // adds each subsidiary viewer's options and Options-type etc.
-			LogFile.WriteLine("ViewersManager initialized.");
 
 			ObserverManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
@@ -625,7 +622,7 @@ namespace MapView
 											OptionsForm.OptionableType.MainView);
 					_foptions.Text = " MainView Options";
 
-					OptionsManager.Screens.Add(_foptions);
+					OptionsManager.Views.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{
@@ -686,8 +683,8 @@ namespace MapView
 			{
 				OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
 
-				ViewersManager.CloseViewers();
-				OptionsManager.CloseScreens();
+				ObserverManager.CloseViewers();
+				OptionsManager.CloseOptions();
 
 				RegistryInfo.UpdateRegistry(this);
 				RegistryInfo.FinalizeRegistry();

@@ -18,10 +18,10 @@ namespace MapView.Forms.MainWindow
 
 
 		#region Properties (static)
-		private static List<Form> _screens = new List<Form>();
-		internal static List<Form> Screens
+		private static List<Form> _views = new List<Form>();
+		internal static List<Form> Views
 		{
-			get { return _screens; }
+			get { return _views; }
 		}
 		#endregion Properties (static)
 
@@ -106,12 +106,12 @@ namespace MapView.Forms.MainWindow
 
 
 		/// <summary>
-		/// Closes all the Options screens.
+		/// Closes all the Options views.
 		/// </summary>
-		internal static void CloseScreens()
+		internal static void CloseOptions()
 		{
-			foreach (var screen in Screens)
-				screen.Close();
+			foreach (var view in Views)
+				view.Close();
 		}
 		#endregion Methods (static)
 	}

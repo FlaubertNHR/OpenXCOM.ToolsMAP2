@@ -288,22 +288,25 @@ namespace MapView.Forms.MapObservers.RouteViews
 				var loc = RoutePanel.GetTileLocation(
 												RoutePanel.CursorPosition.X,
 												RoutePanel.CursorPosition.Y);
-				RouteNode node = ((MapTile)MapBase[loc.Y, loc.X, _lev]).Node;
-				if (node != null)
+				if (loc.X != -1)
 				{
-					overId = node.Index;
-					if (node.Spawn == SpawnWeight.None)
+					RouteNode node = ((MapTile)MapBase[loc.Y, loc.X, _lev]).Node;
+					if (node != null)
 					{
-						lblOver.ForeColor = Optionables.NodeColor;
+						overId = node.Index;
+						if (node.Spawn == SpawnWeight.None)
+						{
+							lblOver.ForeColor = Optionables.NodeColor;
+						}
+						else
+							lblOver.ForeColor = Optionables.NodeSpawnColor;
 					}
 					else
-						lblOver.ForeColor = Optionables.NodeSpawnColor;
-				}
-				else
-					lblOver.ForeColor = SystemColors.ControlText;
+						lblOver.ForeColor = SystemColors.ControlText;
 
-				ObserverManager.RouteView   .Control     .PrintOverInfo(overId, loc);
-				ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
+					ObserverManager.RouteView   .Control     .PrintOverInfo(overId, loc);
+					ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
+				}
 			}
 			InvalidatePanels();
 		}
@@ -2151,7 +2154,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 											OptionsForm.OptionableType.RouteView);
 					_foptions.Text = " RouteView Options";
 
-					OptionsManager.Screens.Add(_foptions);
+					OptionsManager.Views.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{

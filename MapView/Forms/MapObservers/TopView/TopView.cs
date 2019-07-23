@@ -278,7 +278,7 @@ namespace MapView.Forms.MapObservers.TopViews
 											OptionsForm.OptionableType.TopView);
 					_foptions.Text = " TopView Options";
 
-					OptionsManager.Screens.Add(_foptions);
+					OptionsManager.Views.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{
