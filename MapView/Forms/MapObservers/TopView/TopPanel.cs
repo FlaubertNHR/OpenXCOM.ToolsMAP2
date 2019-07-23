@@ -441,28 +441,33 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			Select();
 
-			if (e.Button == MouseButtons.Left) // select tile on LMB only so that RMB can operate on multiple tiles. TODO: not.
+			switch (e.Button)
 			{
-				var loc = GetTileLocation(e.X, e.Y);
-				if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
-					&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+				case MouseButtons.Left:
+				case MouseButtons.Right:
 				{
-					MainViewOverlay.that._keyDeltaX =
-					MainViewOverlay.that._keyDeltaY = 0;
+					var loc = GetTileLocation(e.X, e.Y);
+					if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
+						&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+					{
+						MainViewOverlay.that._keyDeltaX =
+						MainViewOverlay.that._keyDeltaY = 0;
 
-					// as long as MainViewOverlay.OnSelectLocationMain()
-					// fires before the secondary viewers' OnSelectLocationObserver()
-					// functions fire, FirstClick is set okay by the former.
-					//
-					// TODO: Make a flag of FirstClick in MapFileBase where Location is really
-					// set, and where all these OnLocationSelected events actually fire out of!
-//					MainViewOverlay.that.FirstClick = true;
+						// as long as MainViewOverlay.OnSelectLocationMain()
+						// fires before the secondary viewers' OnSelectLocationObserver()
+						// functions fire, FirstClick is set okay by the former.
+						//
+						// TODO: Make a flag of FirstClick in MapFileBase where Location is really
+						// set, and where all these OnLocationSelected events actually fire out of!
+//						MainViewOverlay.that.FirstClick = true;
 
-					MapBase.Location = new MapLocation( // fire SelectLocation
-													loc.Y, loc.X,
-													MapBase.Level);
-					_isMouseDrag = true;
-					MainViewOverlay.that.ProcessSelection(loc,loc);
+						MapBase.Location = new MapLocation( // fire SelectLocation
+														loc.Y, loc.X,
+														MapBase.Level);
+						_isMouseDrag = true;
+						MainViewOverlay.that.ProcessSelection(loc,loc);
+					}
+					break;
 				}
 			}
 
