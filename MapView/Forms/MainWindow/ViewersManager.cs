@@ -23,17 +23,17 @@ namespace MapView.Forms.MainWindow
 		internal static void Initialize()
 		{
 			// TODO: Make TopView's and RouteView's Options static.
-			ViewerFormsManager.TopRouteView.ControlTop  .Options = ViewerFormsManager.TopView  .Control.Options;
-			ViewerFormsManager.TopRouteView.ControlRoute.Options = ViewerFormsManager.RouteView.Control.Options;
+			ObserverManager.TopRouteView.ControlTop  .Options = ObserverManager.TopView  .Control.Options;
+			ObserverManager.TopRouteView.ControlRoute.Options = ObserverManager.RouteView.Control.Options;
 
-			SetAsObserver(RegistryInfo.TileView,  ViewerFormsManager.TileView);
-			SetAsObserver(RegistryInfo.TopView,   ViewerFormsManager.TopView);
-			SetAsObserver(RegistryInfo.RouteView, ViewerFormsManager.RouteView);
+			SetAsObserver(RegistryInfo.TileView,  ObserverManager.TileView);
+			SetAsObserver(RegistryInfo.TopView,   ObserverManager.TopView);
+			SetAsObserver(RegistryInfo.RouteView, ObserverManager.RouteView);
 
-			_viewers.Add(ViewerFormsManager.TopRouteView);
+			_viewers.Add(ObserverManager.TopRouteView);
 
-			_viewers.Add(ViewerFormsManager.ColorsScreen);
-			_viewers.Add(ViewerFormsManager.AboutScreen);
+			_viewers.Add(ObserverManager.ColorsScreen);
+			_viewers.Add(ObserverManager.AboutScreen);
 		}
 
 		/// <summary>

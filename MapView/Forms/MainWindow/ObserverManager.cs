@@ -8,7 +8,7 @@ using XCom.Interfaces.Base;
 
 namespace MapView.Forms.MainWindow
 {
-	internal static class ViewerFormsManager
+	internal static class ObserverManager
 	{
 		#region Fields (static)
 		internal static ToolstripFactory ToolFactory;

@@ -165,8 +165,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			set
 			{
-				ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-				ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = value;
+				ObserverManager.RouteView   .Control     .RoutesChanged =
+				ObserverManager.TopRouteView.ControlRoute.RoutesChanged = value;
 			}
 		}
 
@@ -254,15 +254,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				_fired = true;
 
-				ViewerFormsManager.RouteView   .Control     ._col =
-				ViewerFormsManager.TopRouteView.ControlRoute._col = args.Location.Col;
-				ViewerFormsManager.RouteView   .Control     ._row =
-				ViewerFormsManager.TopRouteView.ControlRoute._row = args.Location.Row;
-				ViewerFormsManager.RouteView   .Control     ._lev =
-				ViewerFormsManager.TopRouteView.ControlRoute._lev = args.Location.Lev;
+				ObserverManager.RouteView   .Control     ._col =
+				ObserverManager.TopRouteView.ControlRoute._col = args.Location.Col;
+				ObserverManager.RouteView   .Control     ._row =
+				ObserverManager.TopRouteView.ControlRoute._row = args.Location.Row;
+				ObserverManager.RouteView   .Control     ._lev =
+				ObserverManager.TopRouteView.ControlRoute._lev = args.Location.Lev;
 
-				ViewerFormsManager.RouteView   .Control     .PrintSelectedInfo();
-				ViewerFormsManager.TopRouteView.ControlRoute.PrintSelectedInfo();
+				ObserverManager.RouteView   .Control     .PrintSelectedInfo();
+				ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
 			}
 			else
 				_fired = false;
@@ -281,8 +281,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
 			{
-				ViewerFormsManager.RouteView   .Control     ._lev =
-				ViewerFormsManager.TopRouteView.ControlRoute._lev = args.Level;
+				ObserverManager.RouteView   .Control     ._lev =
+				ObserverManager.TopRouteView.ControlRoute._lev = args.Level;
 
 				int overId = -1;
 				var loc = RoutePanel.GetTileLocation(
@@ -302,8 +302,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 				else
 					lblOver.ForeColor = SystemColors.ControlText;
 
-				ViewerFormsManager.RouteView   .Control     .PrintOverInfo(overId, loc);
-				ViewerFormsManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
+				ObserverManager.RouteView   .Control     .PrintOverInfo(overId, loc);
+				ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
 			}
 			InvalidatePanels();
 		}
@@ -406,8 +406,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			var loc = new Point(x,y);
 
-			ViewerFormsManager.RouteView   .Control     .PrintOverInfo(overId, loc);
-			ViewerFormsManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
+			ObserverManager.RouteView   .Control     .PrintOverInfo(overId, loc);
+			ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
 
 			InvalidatePanels();
 		}
@@ -445,8 +445,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					RoutePanelParent.SelectedLocation = loc;
 					MainViewOverlay.that.ProcessSelection(loc,loc);
 
-					ViewerFormsManager.RouteView   .Control     .UpdateLinkDistances();
-					ViewerFormsManager.TopRouteView.ControlRoute.UpdateLinkDistances();
+					ObserverManager.RouteView   .Control     .UpdateLinkDistances();
+					ObserverManager.TopRouteView.ControlRoute.UpdateLinkDistances();
 				}
 				else if (args.Location.Col != Dragnode.Col
 					||   args.Location.Row != Dragnode.Row
@@ -598,23 +598,23 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			bool valid = (NodeSelected != null);
 
-			ViewerFormsManager.RouteView   .Control     .tsmiClearLinkData.Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.tsmiClearLinkData.Enabled =
+			ObserverManager.RouteView   .Control     .tsmiClearLinkData.Enabled =
+			ObserverManager.TopRouteView.ControlRoute.tsmiClearLinkData.Enabled =
 
-			ViewerFormsManager.RouteView   .Control     .btnCut           .Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.btnCut           .Enabled =
+			ObserverManager.RouteView   .Control     .btnCut           .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnCut           .Enabled =
 
-			ViewerFormsManager.RouteView   .Control     .btnCopy          .Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.btnCopy          .Enabled =
+			ObserverManager.RouteView   .Control     .btnCopy          .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnCopy          .Enabled =
 
-			ViewerFormsManager.RouteView   .Control     .btnDelete        .Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
+			ObserverManager.RouteView   .Control     .btnDelete        .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
 
 			valid = valid
 				 && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
 
-			ViewerFormsManager.RouteView   .Control     .btnPaste         .Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid;
+			ObserverManager.RouteView   .Control     .btnPaste         .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid;
 		}
 
 		/// <summary>
@@ -962,9 +962,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				NodeSelected.Type = (UnitType)cbType.SelectedItem;
 
 				if (Tag as String == "ROUTE")
-					ViewerFormsManager.TopRouteView.ControlRoute.cbType.SelectedIndex = cbType.SelectedIndex;
+					ObserverManager.TopRouteView.ControlRoute.cbType.SelectedIndex = cbType.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
-					ViewerFormsManager.RouteView.Control.cbType.SelectedIndex = cbType.SelectedIndex;
+					ObserverManager.RouteView.Control.cbType.SelectedIndex = cbType.SelectedIndex;
 			}
 		}
 
@@ -996,9 +996,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 					NodeSelected.OobRank = (byte)0;
 
 					if (Tag as String == "ROUTE")
-						ViewerFormsManager.TopRouteView.ControlRoute.cbRank.SelectedIndex = cbRank.SelectedIndex;
+						ObserverManager.TopRouteView.ControlRoute.cbRank.SelectedIndex = cbRank.SelectedIndex;
 					else //if (Tag == "TOPROUTE")
-						ViewerFormsManager.RouteView.Control.cbRank.SelectedIndex = cbRank.SelectedIndex;
+						ObserverManager.RouteView.Control.cbRank.SelectedIndex = cbRank.SelectedIndex;
 				}
 			}
 		}
@@ -1016,9 +1016,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				_curSpawnweight = NodeSelected.Spawn;
 
 				if (Tag as String == "ROUTE")
-					ViewerFormsManager.TopRouteView.ControlRoute.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
+					ObserverManager.TopRouteView.ControlRoute.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
-					ViewerFormsManager.RouteView.Control.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
+					ObserverManager.RouteView.Control.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
 
 				RefreshControls(); // update the importance bar
 			}
@@ -1032,9 +1032,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				NodeSelected.Patrol = (PatrolPriority)((Pterodactyl)cbPatrol.SelectedItem).Case;
 
 				if (Tag as String == "ROUTE")
-					ViewerFormsManager.TopRouteView.ControlRoute.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
+					ObserverManager.TopRouteView.ControlRoute.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
-					ViewerFormsManager.RouteView.Control.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
+					ObserverManager.RouteView.Control.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
 
 				RefreshControls(); // update the importance bar
 			}
@@ -1048,9 +1048,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				NodeSelected.Attack = (AttackBase)((Pterodactyl)cbAttack.SelectedItem).Case;
 
 				if (Tag as String == "ROUTE")
-					ViewerFormsManager.TopRouteView.ControlRoute.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
+					ObserverManager.TopRouteView.ControlRoute.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
-					ViewerFormsManager.RouteView.Control.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
+					ObserverManager.RouteView.Control.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
 			}
 		}
 		#endregion Events (NodeData)
@@ -1152,7 +1152,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (Tag as String == "ROUTE")
 				{
-					ViewerFormsManager.TopRouteView.ControlRoute.TransferDestination(
+					ObserverManager.TopRouteView.ControlRoute.TransferDestination(
 																				slot,
 																				cb.SelectedIndex,
 																				tb.Text,
@@ -1161,7 +1161,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else //if (Tag == "TOPROUTE")
 				{
-					ViewerFormsManager.RouteView.Control.TransferDestination(
+					ObserverManager.RouteView.Control.TransferDestination(
 																		slot,
 																		cb.SelectedIndex,
 																		tb.Text,
@@ -1285,9 +1285,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				NodeSelected[slot].Type = (UnitType)cb.SelectedItem;
 
 				if (Tag as String == "ROUTE")
-					ViewerFormsManager.TopRouteView.ControlRoute.TransferUnitType(slot, cb.SelectedIndex);
+					ObserverManager.TopRouteView.ControlRoute.TransferUnitType(slot, cb.SelectedIndex);
 				else //if (Tag == "TOPROUTE")
-					ViewerFormsManager.RouteView.Control.TransferUnitType(slot, cb.SelectedIndex);
+					ObserverManager.RouteView.Control.TransferUnitType(slot, cb.SelectedIndex);
 			}
 		}
 
@@ -1339,8 +1339,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				OgnodeId = NodeSelected.Index; // store the current nodeId for the og-button.
 
-				ViewerFormsManager.RouteView   .Control     .btnOg.Enabled =
-				ViewerFormsManager.TopRouteView.ControlRoute.btnOg.Enabled = true;
+				ObserverManager.RouteView   .Control     .btnOg.Enabled =
+				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = true;
 
 				SelectNode(dest);
 
@@ -1467,8 +1467,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			}
 			else
 			{
-				ViewerFormsManager.RouteView   .Control     .btnOg.Enabled =
-				ViewerFormsManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
+				ObserverManager.RouteView   .Control     .btnOg.Enabled =
+				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
 			}
 
 			RoutePanel.Select();
@@ -1491,8 +1491,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		internal void DisableOg()
 		{
-			ViewerFormsManager.RouteView   .Control     .btnOg.Enabled =
-			ViewerFormsManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
+			ObserverManager.RouteView   .Control     .btnOg.Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
 		}
 		#endregion Events (LinkData)
 
@@ -1547,8 +1547,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			if (NodeSelected != null)
 			{
-				ViewerFormsManager.RouteView   .Control     .btnPaste.Enabled =
-				ViewerFormsManager.TopRouteView.ControlRoute.btnPaste.Enabled = true;
+				ObserverManager.RouteView   .Control     .btnPaste.Enabled =
+				ObserverManager.TopRouteView.ControlRoute.btnPaste.Enabled = true;
 
 				var nodeText = string.Format(
 										System.Globalization.CultureInfo.InvariantCulture,
@@ -1595,8 +1595,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else // non-node data is on the clipboard.
 				{
-					ViewerFormsManager.RouteView   .Control     .btnPaste.Enabled =
-					ViewerFormsManager.TopRouteView.ControlRoute.btnPaste.Enabled = false;
+					ObserverManager.RouteView   .Control     .btnPaste.Enabled =
+					ObserverManager.TopRouteView.ControlRoute.btnPaste.Enabled = false;
 
 					ShowDialogAsterisk("The data on the clipboard is not a node.");
 				}
@@ -1616,8 +1616,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 								  NodeSelected.Lev]).Node = null;
 				MapFile.Routes.DeleteNode(NodeSelected);
 
-				ViewerFormsManager.RouteView   .Control     .DeselectNode();
-				ViewerFormsManager.TopRouteView.ControlRoute.DeselectNode();
+				ObserverManager.RouteView   .Control     .DeselectNode();
+				ObserverManager.TopRouteView.ControlRoute.DeselectNode();
 
 				UpdateNodeInfo();
 
@@ -1675,11 +1675,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 				RouteView alt;
 				if (Tag as String == "ROUTE")
 				{
-					alt = ViewerFormsManager.TopRouteView.ControlRoute;
+					alt = ObserverManager.TopRouteView.ControlRoute;
 				}
 				else //if (Tag as String == "TOPROUTE")
 				{
-					alt = ViewerFormsManager.RouteView.Control;
+					alt = ObserverManager.RouteView.Control;
 				}
 
 				if (tsb == tsb_connect0)
@@ -1777,8 +1777,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					{
 						RouteChanged = true;
 
-						ViewerFormsManager.RouteView   .Control     .DeselectNode();
-						ViewerFormsManager.TopRouteView.ControlRoute.DeselectNode();
+						ObserverManager.RouteView   .Control     .DeselectNode();
+						ObserverManager.TopRouteView.ControlRoute.DeselectNode();
 
 						MapFile.ClearRouteNodes();
 						MapFile.Routes = new RouteNodeCollection(ofd.FileName);
@@ -2178,8 +2178,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private void setOptionsChecked(bool @checked)
 		{
-			ViewerFormsManager.RouteView   .Control     .tsb_Options.Checked =
-			ViewerFormsManager.TopRouteView.ControlRoute.tsb_Options.Checked = @checked;
+			ObserverManager.RouteView   .Control     .tsb_Options.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsb_Options.Checked = @checked;
 		}
 
 		/// <summary>
@@ -2197,38 +2197,38 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#region Update UI
 //		internal void InvalidateRoutePanels()
 //		{
-//			ViewerFormsManager.RouteView   .Control     ._pnlRoutes.Invalidate();
-//			ViewerFormsManager.TopRouteView.ControlRoute._pnlRoutes.Invalidate();
+//			ObserverManager.RouteView   .Control     ._pnlRoutes.Invalidate();
+//			ObserverManager.TopRouteView.ControlRoute._pnlRoutes.Invalidate();
 //		}
 
 		internal void RefreshControls()
 		{
-			ViewerFormsManager.RouteView   .Control     .Refresh();
-			ViewerFormsManager.TopRouteView.ControlRoute.Refresh();
+			ObserverManager.RouteView   .Control     .Refresh();
+			ObserverManager.TopRouteView.ControlRoute.Refresh();
 		}
 
 		private void InvalidateControls()
 		{
-			ViewerFormsManager.RouteView   .Control     .Invalidate();
-			ViewerFormsManager.TopRouteView.ControlRoute.Invalidate();
+			ObserverManager.RouteView   .Control     .Invalidate();
+			ObserverManager.TopRouteView.ControlRoute.Invalidate();
 		}
 
 		private void RefreshPanels()
 		{
-			ViewerFormsManager.RouteView   .Control     .RoutePanel.Refresh();
-			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
+			ObserverManager.RouteView   .Control     .RoutePanel.Refresh();
+			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
 		}
 
 		private void InvalidatePanels()
 		{
-			ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
-			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+			ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 		}
 
 		private void UpdateNodeInfo()
 		{
-			ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-			ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+			ObserverManager.RouteView   .Control     .UpdateNodeInformation();
+			ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
 		}
 		#endregion Update UI
 	}

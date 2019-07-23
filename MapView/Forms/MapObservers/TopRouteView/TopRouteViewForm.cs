@@ -180,11 +180,11 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileViews" thanks for knif
 						{
 							RouteView.NodeSelected = null;
 
-							ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
-							ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 
-							ViewerFormsManager.RouteView   .Control     .UpdateNodeInformation();
-							ViewerFormsManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+							ObserverManager.RouteView   .Control     .UpdateNodeInformation();
+							ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
 						}
 						else
 							ControlRoute.RoutePanel.Focus();

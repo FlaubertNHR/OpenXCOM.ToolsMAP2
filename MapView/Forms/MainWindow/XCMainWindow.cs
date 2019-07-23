@@ -313,13 +313,13 @@ namespace MapView
 			LogFile.WriteLine("Quadrant strings punked.");
 
 
-			ViewerFormsManager.Initialize();
-			LogFile.WriteLine("ViewerFormsManager initialized.");
+			ObserverManager.Initialize();
+			LogFile.WriteLine("ObserverManager initialized.");
 
 			ViewersManager.Initialize(); // adds each subsidiary viewer's options and Options-type etc.
 			LogFile.WriteLine("ViewersManager initialized.");
 
-			ViewerFormsManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
+			ObserverManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
 
 			MapTree.TreeViewNodeSorter = StringComparer.OrdinalIgnoreCase;
@@ -327,9 +327,9 @@ namespace MapView
 			tscPanel.ContentPanel.Controls.Add(MainViewUnderlay);
 
 			tsTools.SuspendLayout();
-			ViewerFormsManager.ToolFactory.CreateToolstripSearchObjects(tsTools);
-			ViewerFormsManager.ToolFactory.CreateToolstripScaleObjects(tsTools);
-			ViewerFormsManager.ToolFactory.CreateToolstripEditorObjects(tsTools);
+			ObserverManager.ToolFactory.CreateToolstripSearchObjects(tsTools);
+			ObserverManager.ToolFactory.CreateToolstripScaleObjects(tsTools);
+			ObserverManager.ToolFactory.CreateToolstripEditorObjects(tsTools);
 			tsTools.ResumeLayout();
 			LogFile.WriteLine("MainView toolstrip created.");
 
@@ -812,7 +812,7 @@ namespace MapView
 
 				if (focussearch)
 				{
-					ViewerFormsManager.ToolFactory.FocusSearch();
+					ObserverManager.ToolFactory.FocusSearch();
 					return true;
 				}
 			}
@@ -839,7 +839,7 @@ namespace MapView
 				switch (keyData)
 				{
 					case Keys.F3:		// panel must *not* have focus (F3 also toggles doors)
-						Search(ViewerFormsManager.ToolFactory.GetSearchText());
+						Search(ObserverManager.ToolFactory.GetSearchText());
 						return true;
 
 					case Keys.Escape:	// panel must *not* have focus (Escape also cancels multi-tile selection)
@@ -911,10 +911,10 @@ namespace MapView
 							switch (e.KeyCode)
 							{
 								// toggle TopView tilepart visibilities ->
-								case Keys.F1: part = ViewerFormsManager.TopView.Control.Floor;   break;
-								case Keys.F2: part = ViewerFormsManager.TopView.Control.West;    break;
-								case Keys.F3: part = ViewerFormsManager.TopView.Control.North;   break;
-								case Keys.F4: part = ViewerFormsManager.TopView.Control.Content; break;
+								case Keys.F1: part = ObserverManager.TopView.Control.Floor;   break;
+								case Keys.F2: part = ObserverManager.TopView.Control.West;    break;
+								case Keys.F3: part = ObserverManager.TopView.Control.North;   break;
+								case Keys.F4: part = ObserverManager.TopView.Control.Content; break;
 
 								// show/hide viewer ->
 								case Keys.F5: it = 0; break;
@@ -933,7 +933,7 @@ namespace MapView
 							else if (part != null)
 							{
 								e.SuppressKeyPress = true;
-								ViewerFormsManager.TopView.Control.OnQuadrantVisibilityClick(part, EventArgs.Empty);
+								ObserverManager.TopView.Control.OnQuadrantVisibilityClick(part, EventArgs.Empty);
 							}
 						}
 					}
@@ -1025,8 +1025,8 @@ namespace MapView
 				MainViewUnderlay.MapBase.SaveRoutes();
 
 				MapChanged =
-				ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-				ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
+				ObserverManager.RouteView   .Control     .RoutesChanged =
+				ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
 			}
 			MaptreeChanged = !ResourceInfo.TileGroupManager.SaveTileGroups();
 		}
@@ -1046,8 +1046,8 @@ namespace MapView
 			{
 				MainViewUnderlay.MapBase.SaveRoutes();
 
-				ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-				ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
+				ObserverManager.RouteView   .Control     .RoutesChanged =
+				ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
 			}
 		}
 
@@ -1093,10 +1093,6 @@ namespace MapView
 
 						MainViewUnderlay.MapBase.SaveMap(pfMaps);
 						MainViewUnderlay.MapBase.SaveRoutes(pfRoutes);
-
-//						MapChanged = // ohreally - does this change the label in the statusbar etc. nope, this is effectively exporting the Map and Routes
-//						ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-//						ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
 					}
 					else
 						MessageBox.Show(
@@ -1183,8 +1179,8 @@ namespace MapView
 							{
 								MainViewUnderlay.MapBase.SaveRoutes();
 
-								ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-								ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
+								ObserverManager.RouteView   .Control     .RoutesChanged =
+								ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
 							}
 						}
 
@@ -1200,8 +1196,8 @@ namespace MapView
 
 					case DialogResult.Ignore:	// TODO: A bypass-variable should be implemented to deal
 						MapChanged =			// with Changes so that the real Changed vals don't get wiped.
-						ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-						ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged =
+						ObserverManager.RouteView   .Control     .RoutesChanged =
+						ObserverManager.TopRouteView.ControlRoute.RoutesChanged =
 						MaptreeChanged = false;
 
 						OnConfiguratorClick(null, EventArgs.Empty); // recurse.
@@ -1260,27 +1256,27 @@ namespace MapView
 
 						if (!@base.RoutesChanged && (changes & MapFileBase.CHANGED_NOD) != 0)
 						{
-							ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-							ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = true;
+							ObserverManager.RouteView   .Control     .RoutesChanged =
+							ObserverManager.TopRouteView.ControlRoute.RoutesChanged = true;
 						}
 
 						MainViewUnderlay.ForceResize();
 
 						MainViewOverlay.FirstClick = false;
 
-						ViewerFormsManager.RouteView   .Control     .ClearSelectedInfo();
-						ViewerFormsManager.TopRouteView.ControlRoute.ClearSelectedInfo();
+						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
+						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
 
-						ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
+						ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 
 						tsslDimensions   .Text = @base.MapSize.ToString();
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						ViewerFormsManager.SetObservers(@base);
+						ObserverManager.SetObservers(@base);
 
-						ViewerFormsManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
-						ViewerFormsManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
+						ObserverManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
+						ObserverManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
 
 						if (ScanG != null) // update ScanG viewer if open
 							ScanG.LoadMapfile(@base);
@@ -1353,7 +1349,7 @@ namespace MapView
 
 		private void Scale()
 		{
-			ViewerFormsManager.ToolFactory.DisableScaleChecked();
+			ObserverManager.ToolFactory.DisableScaleChecked();
 			Globals.AutoScale = false;
 
 			MainViewUnderlay.SetOverlaySize();
@@ -1364,7 +1360,7 @@ namespace MapView
 
 		internal void OnScaleClick(object sender, EventArgs e)
 		{
-			Globals.AutoScale = ViewerFormsManager.ToolFactory.ToggleScaleChecked();
+			Globals.AutoScale = ObserverManager.ToolFactory.ToggleScaleChecked();
 			if (Globals.AutoScale)
 			{
 				MainViewUnderlay.SetScale();
@@ -1754,8 +1750,8 @@ namespace MapView
 								{
 									MainViewUnderlay.MapBase.SaveRoutes();
 
-									ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-									ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
+									ObserverManager.RouteView   .Control     .RoutesChanged =
+									ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
 								}
 
 								OnMapTreeMouseDown(null, e); // recurse.
@@ -1763,8 +1759,8 @@ namespace MapView
 
 							case DialogResult.Ignore:
 								MapChanged =
-								ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-								ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
+								ObserverManager.RouteView   .Control     .RoutesChanged =
+								ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
 
 								OnMapTreeMouseDown(null, e); // recurse.
 								break;
@@ -2442,8 +2438,8 @@ namespace MapView
 
 					MainViewUnderlay.MapBase = @base;
 
-					ViewerFormsManager.ToolFactory.EnableScaleAutoButton();
-					ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
+					ObserverManager.ToolFactory.EnableScaleAutoButton();
+					ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 
 					Text = title + " " + descriptor.Basepath;
 					if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
@@ -2455,8 +2451,8 @@ namespace MapView
 
 					MapChanged = (@base as MapFile).IsLoadChanged; // don't bother to reset IsLoadChanged.
 
-					var routeview1 = ViewerFormsManager.RouteView.Control;
-					var routeview2 = ViewerFormsManager.TopRouteView.ControlRoute;
+					var routeview1 = ObserverManager.RouteView.Control;
+					var routeview2 = ObserverManager.TopRouteView.ControlRoute;
 
 					routeview1.ClearSelectedInfo();
 					routeview2.ClearSelectedInfo();
@@ -2473,7 +2469,7 @@ namespace MapView
 					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 						MainMenusManager.StartSecondaryStage();
 
-					ViewerFormsManager.SetObservers(@base); // reset all observer events
+					ObserverManager.SetObservers(@base); // reset all observer events
 
 					if (RouteCheckService.CheckNodeBounds(@base as MapFile))
 					{
@@ -2486,7 +2482,7 @@ namespace MapView
 					if (ScanG != null) // update ScanG viewer if open
 						ScanG.LoadMapfile(@base);
 
-					var tileview = ViewerFormsManager.TileView.Control; // update MCD Info if open
+					var tileview = ObserverManager.TileView.Control; // update MCD Info if open
 					if (tileview.McdInfobox != null)
 					{
 						Tilepart part = tileview.SelectedTilepart;
@@ -2515,8 +2511,8 @@ namespace MapView
 		/// </summary>
 		private void ResetQuadrantPanel()
 		{
-			var quadrantpanel1 = ViewerFormsManager.TopView     .Control   .QuadrantPanel;
-			var quadrantpanel2 = ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel;
+			var quadrantpanel1 = ObserverManager.TopView     .Control   .QuadrantPanel;
+			var quadrantpanel2 = ObserverManager.TopRouteView.ControlTop.QuadrantPanel;
 
 			quadrantpanel1.Tile =
 			quadrantpanel2.Tile = null;
@@ -2524,7 +2520,7 @@ namespace MapView
 			quadrantpanel1.Loc =
 			quadrantpanel2.Loc = null;
 
-			QuadrantDrawService.CurrentTilepart = ViewerFormsManager.TileView.Control.SelectedTilepart;
+			QuadrantDrawService.CurrentTilepart = ObserverManager.TileView.Control.SelectedTilepart;
 
 			quadrantpanel1.Invalidate();
 			quadrantpanel2.Invalidate();
@@ -2616,8 +2612,8 @@ namespace MapView
 						goto case DialogResult.No;
 
 					case DialogResult.No:		// don't save & clear RoutesChanged flag
-						ViewerFormsManager.RouteView   .Control     .RoutesChanged =
-						ViewerFormsManager.TopRouteView.ControlRoute.RoutesChanged = false;
+						ObserverManager.RouteView   .Control     .RoutesChanged =
+						ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
 						break;
 
 					case DialogResult.Cancel:	// dismiss confirmation dialog & leave state unaffected

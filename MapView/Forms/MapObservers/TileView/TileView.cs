@@ -271,13 +271,13 @@ namespace MapView.Forms.MapObservers.TileViews
 			if (part != null)
 			{
 				PartType quadrant = part.Record.PartType;
-				ViewerFormsManager.TopView     .Control   .SelectQuadrant(quadrant);
-				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(quadrant);
+				ObserverManager.TopView     .Control   .SelectQuadrant(quadrant);
+				ObserverManager.TopRouteView.ControlTop.SelectQuadrant(quadrant);
 			}
 
 			QuadrantDrawService.CurrentTilepart = part;
-			ViewerFormsManager.TopView     .Control   .QuadrantPanel.Invalidate();
-			ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
+			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
 		}
 		#endregion Events
 
@@ -479,7 +479,7 @@ namespace MapView.Forms.MapObservers.TileViews
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
 						ShowHideManager.HideViewers();
-						fPckView.ShowDialog(ViewerFormsManager.TileView); // <- Pause UI until PckView is closed.
+						fPckView.ShowDialog(ObserverManager.TileView); // <- Pause UI until PckView is closed.
 						ShowHideManager.RestoreViewers();
 
 
@@ -533,7 +533,7 @@ namespace MapView.Forms.MapObservers.TileViews
 										SelectedTilepart.TerId);
 
 						ShowHideManager.HideViewers();
-						fMcdView.ShowDialog(ViewerFormsManager.TileView); // <- Pause UI until McdView is closed.
+						fMcdView.ShowDialog(ObserverManager.TileView); // <- Pause UI until McdView is closed.
 						ShowHideManager.RestoreViewers();
 
 						Palette.UfoBattle .SetTransparent(true);
@@ -628,7 +628,7 @@ namespace MapView.Forms.MapObservers.TileViews
 									part.TerId,
 									GetTerrainLabel());
 
-			ViewerFormsManager.TileView.Text = title;
+			ObserverManager.TileView.Text = title;
 		}
 
 		/// <summary>

@@ -82,7 +82,7 @@ namespace MapView
 			if      (e.Delta < 0) MapBase.LevelUp();
 			else if (e.Delta > 0) MapBase.LevelDown();
 
-			ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
+			ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
 		}
 		#endregion Events (override)
 

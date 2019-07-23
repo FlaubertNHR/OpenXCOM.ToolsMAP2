@@ -200,7 +200,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			{
 				_inited = true;
 
-				TopViewControl = ViewerFormsManager.TopView.Control;
+				TopViewControl = ObserverManager.TopView.Control;
 
 				TextWidth_door    = (int)_graphics.MeasureString(Door,    Font).Width;
 				TextWidth_floor   = (int)_graphics.MeasureString(Floor,   Font).Width;

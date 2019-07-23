@@ -118,8 +118,8 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			ViewerFormsManager.TopView     .Control   .TopPanel.Select();
-			ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Select();
+			ObserverManager.TopView     .Control   .TopPanel.Select();
+			ObserverManager.TopRouteView.ControlTop.TopPanel.Select();
 
 			bool keyboardInput = (_quadtype != QuadrantType.None);
 
@@ -149,8 +149,8 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			if (parttype != PartType.All)
 			{
-				ViewerFormsManager.TopView     .Control   .SelectQuadrant(parttype);
-				ViewerFormsManager.TopRouteView.ControlTop.SelectQuadrant(parttype);
+				ObserverManager.TopView     .Control   .SelectQuadrant(parttype);
+				ObserverManager.TopRouteView.ControlTop.SelectQuadrant(parttype);
 
 				if (!isTypeCurrent)
 					Operate(e.Button, e.Clicks, keyboardInput);
@@ -175,7 +175,7 @@ namespace MapView.Forms.MapObservers.TopViews
 					case MouseButtons.Left:
 						// clicks=1 is done by caller.
 						if (clicks == 2)
-							ViewerFormsManager.TileView.Control.SelectedTilepart = Tile[SelectedQuadrant];
+							ObserverManager.TileView.Control.SelectedTilepart = Tile[SelectedQuadrant];
 						break;
 
 					case MouseButtons.Right:

@@ -719,9 +719,9 @@ namespace MapView
 		/// </summary>
 		private void InvalidateSecondaryPanels()
 		{
-			ViewerFormsManager.TileView    .Control   .GetSelectedPanel().Invalidate();
-			ViewerFormsManager.TopView     .Control   .QuadrantPanel     .Invalidate();
-			ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel     .Invalidate();
+			ObserverManager.TileView    .Control   .GetSelectedPanel().Invalidate();
+			ObserverManager.TopView     .Control   .QuadrantPanel     .Invalidate();
+			ObserverManager.TopRouteView.ControlTop.QuadrantPanel     .Invalidate();
 		}
 		#endregion Events
 	}

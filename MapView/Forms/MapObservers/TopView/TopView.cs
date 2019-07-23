@@ -165,8 +165,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			var it = sender as ToolStripMenuItem;
 			if (it == Floor)
 			{
-				if (ViewerFormsManager.TopView     .Control   .Floor.Checked =
-					ViewerFormsManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked)
+				if (ObserverManager.TopView     .Control   .Floor.Checked =
+					ObserverManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked)
 				{
 					VisibleQuadrants |= FLOOR;
 				}
@@ -177,8 +177,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			}
 			else if (it == West)
 			{
-				if (ViewerFormsManager.TopView     .Control   .West.Checked =
-					ViewerFormsManager.TopRouteView.ControlTop.West.Checked = !it.Checked)
+				if (ObserverManager.TopView     .Control   .West.Checked =
+					ObserverManager.TopRouteView.ControlTop.West.Checked = !it.Checked)
 				{
 					VisibleQuadrants |= WEST;
 				}
@@ -187,8 +187,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			}
 			else if (it == North)
 			{
-				if (ViewerFormsManager.TopView     .Control   .North.Checked =
-					ViewerFormsManager.TopRouteView.ControlTop.North.Checked = !it.Checked)
+				if (ObserverManager.TopView     .Control   .North.Checked =
+					ObserverManager.TopRouteView.ControlTop.North.Checked = !it.Checked)
 				{
 					VisibleQuadrants |= NORTH;
 				}
@@ -197,8 +197,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			}
 			else //if (it == Content)
 			{
-				if (ViewerFormsManager.TopView     .Control   .Content.Checked =
-					ViewerFormsManager.TopRouteView.ControlTop.Content.Checked = !it.Checked)
+				if (ObserverManager.TopView     .Control   .Content.Checked =
+					ObserverManager.TopRouteView.ControlTop.Content.Checked = !it.Checked)
 				{
 					VisibleQuadrants |= CONTENT;
 				}
@@ -208,10 +208,10 @@ namespace MapView.Forms.MapObservers.TopViews
 
 			MainViewOverlay.that.Invalidate();
 
-			ViewerFormsManager.TopView     .Control   .TopPanel     .Invalidate();
-			ViewerFormsManager.TopRouteView.ControlTop.TopPanel     .Invalidate();
-			ViewerFormsManager.TopView     .Control   .QuadrantPanel.Invalidate();
-			ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+			ObserverManager.TopView     .Control   .TopPanel     .Invalidate();
+			ObserverManager.TopRouteView.ControlTop.TopPanel     .Invalidate();
+			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
+			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
 		}
 		#endregion Events
 
@@ -305,8 +305,8 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		private void setOptionsChecked(bool @checked)
 		{
-			ViewerFormsManager.TopView     .Control   .tsb_Options.Checked =
-			ViewerFormsManager.TopRouteView.ControlTop.tsb_Options.Checked = @checked;
+			ObserverManager.TopView     .Control   .tsb_Options.Checked =
+			ObserverManager.TopRouteView.ControlTop.tsb_Options.Checked = @checked;
 		}
 
 		/// <summary>

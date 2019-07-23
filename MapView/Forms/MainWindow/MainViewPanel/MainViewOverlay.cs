@@ -111,8 +111,8 @@ namespace MapView
 					_dragEnd = new Point(-1,-1);
 				}
 
-				ViewerFormsManager.ToolFactory.SetEditButtonsEnabled( _firstClick);
-				ViewerFormsManager.ToolFactory.SetPasteButtonsEnabled(_firstClick && _copied != null);
+				ObserverManager.ToolFactory.SetEditButtonsEnabled( _firstClick);
+				ObserverManager.ToolFactory.SetPasteButtonsEnabled(_firstClick && _copied != null);
 			}
 		}
 
@@ -320,7 +320,7 @@ namespace MapView
 
 				MapTile tile;
 
-				int visible = ViewerFormsManager.TopView.Control.VisibleQuadrants;
+				int visible = ObserverManager.TopView.Control.VisibleQuadrants;
 
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
@@ -355,7 +355,7 @@ namespace MapView
 		{
 			if (MapBase != null && FirstClick)
 			{
-				ViewerFormsManager.ToolFactory.SetPasteButtonsEnabled();
+				ObserverManager.ToolFactory.SetPasteButtonsEnabled();
 
 				_copiedTerrains = MapBase.Descriptor.Terrains;
 
@@ -397,7 +397,7 @@ namespace MapView
 
 					MapTile tile, copy;
 
-					int visible = ViewerFormsManager.TopView.Control.VisibleQuadrants;
+					int visible = ObserverManager.TopView.Control.VisibleQuadrants;
 
 					for (int
 							row = DragBeg.Y;
@@ -512,8 +512,8 @@ namespace MapView
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
 
-				var quad = ViewerFormsManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
-				var part = ViewerFormsManager.TileView.Control.SelectedTilepart;
+				var quad = ObserverManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
+				var part = ObserverManager.TileView.Control.SelectedTilepart;
 
 				MapTile tile;
 				for (int col = a.X; col <= b.X; ++col)
@@ -541,7 +541,7 @@ namespace MapView
 			var a = GetDragBeg_abs();
 			var b = GetDragEnd_abs();
 
-			var quad = ViewerFormsManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
+			var quad = ObserverManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
 
 			MapTile tile;
 			for (int col = a.X; col <= b.X; ++col)
@@ -565,12 +565,12 @@ namespace MapView
 		{
 			Invalidate();
 
-			ViewerFormsManager.TopView     .Control     .TopPanel     .Invalidate();
-			ViewerFormsManager.TopRouteView.ControlTop  .TopPanel     .Invalidate();
-			ViewerFormsManager.TopView     .Control     .QuadrantPanel.Invalidate();
-			ViewerFormsManager.TopRouteView.ControlTop  .QuadrantPanel.Invalidate();
-			ViewerFormsManager.RouteView   .Control     .RoutePanel   .Invalidate();
-			ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel   .Invalidate();
+			ObserverManager.TopView     .Control     .TopPanel     .Invalidate();
+			ObserverManager.TopRouteView.ControlTop  .TopPanel     .Invalidate();
+			ObserverManager.TopView     .Control     .QuadrantPanel.Invalidate();
+			ObserverManager.TopRouteView.ControlTop  .QuadrantPanel.Invalidate();
+			ObserverManager.RouteView   .Control     .RoutePanel   .Invalidate();
+			ObserverManager.TopRouteView.ControlRoute.RoutePanel   .Invalidate();
 
 			if (XCMainWindow.ScanG != null)
 				XCMainWindow.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
@@ -736,7 +736,7 @@ namespace MapView
 					_rowOver = DragEnd.Y;
 				}
 
-				ViewerFormsManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
+				ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
 			}
 		}
 
@@ -1498,7 +1498,7 @@ namespace MapView
 
 			Tilepart part;
 
-			var topView = ViewerFormsManager.TopView.Control;
+			var topView = ObserverManager.TopView.Control;
 			if (topView.Floor.Checked
 				&& (part = tile.Floor) != null)
 			{
@@ -1556,7 +1556,7 @@ namespace MapView
 								x, y,
 								_halfwidth2, _halfheight5);
 
-			var topView = ViewerFormsManager.TopView.Control;
+			var topView = ObserverManager.TopView.Control;
 			if (topView.Floor.Checked
 				&& (part = tile.Floor) != null)
 			{

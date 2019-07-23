@@ -418,8 +418,8 @@ namespace MapView.Forms.MapObservers.TopViews
 				case str_GridLine10Width: GridLine10Width =   (int)val; ChangePenWidth(key, val); break;
 			}
 
-			ViewerFormsManager.TopView     .Control   .TopPanel.Invalidate();
-			ViewerFormsManager.TopRouteView.ControlTop.TopPanel.Invalidate();
+			ObserverManager.TopView     .Control   .TopPanel.Invalidate();
+			ObserverManager.TopRouteView.ControlTop.TopPanel.Invalidate();
 		}
 
 		/// <summary>
@@ -433,8 +433,8 @@ namespace MapView.Forms.MapObservers.TopViews
 			SelectedQuadColor =
 			QuadrantDrawService.Brush.Color = (Color)val;
 
-			ViewerFormsManager.TopView     .Control   .QuadrantPanel.Invalidate();
-			ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
+			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
 		}
 		#endregion Events
 

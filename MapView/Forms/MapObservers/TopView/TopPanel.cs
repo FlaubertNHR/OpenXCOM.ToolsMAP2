@@ -471,16 +471,16 @@ namespace MapView.Forms.MapObservers.TopViews
 				case MouseButtons.Left:
 					if (e.Clicks == 2)
 					{
-						ViewerFormsManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Left, 2);
-						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Left, 2);
+						ObserverManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Left, 2);
+						ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Left, 2);
 					}
 					break;
 
 				case MouseButtons.Right:
 					if (MainViewOverlay.that.FirstClick)
 					{
-						ViewerFormsManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Right, 1);
-						ViewerFormsManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Right, 1);
+						ObserverManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Right, 1);
+						ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Right, 1);
 					}
 					break;
 			}

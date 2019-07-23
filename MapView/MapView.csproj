@@ -180,7 +180,7 @@
     <Compile Include="Forms\Error\ErrorWindowAdapter.cs" />
     <Compile Include="Forms\Error\IErrorHandler.cs" />
     <Compile Include="Forms\MainWindow\ToolstripFactory.cs" />
-    <Compile Include="Forms\MainWindow\ViewerFormsManager.cs" />
+    <Compile Include="Forms\MainWindow\ObserverManager.cs" />
     <Compile Include="Forms\MainWindow\ViewersManager.cs" />
     <Compile Include="Forms\MainWindow\ShowHideManager.cs" />
     <Compile Include="Forms\MapObservers\MapObserverControl_Top.cs">

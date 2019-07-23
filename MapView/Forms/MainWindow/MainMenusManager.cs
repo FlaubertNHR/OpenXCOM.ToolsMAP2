@@ -64,7 +64,7 @@ namespace MapView.Forms.MainWindow
 					f.WindowState  = FormWindowState.Normal;
 
 				if (it.Tag is ColorHelp) // update colors that user could have changed in TileView's Option-settings.
-					ViewerFormsManager.ColorsScreen.UpdateColors();
+					ObserverManager.ColorsScreen.UpdateColors();
 			}
 			else
 				f.Close();
@@ -163,18 +163,18 @@ namespace MapView.Forms.MainWindow
 		internal static void PopulateMenus()
 		{
 			// "Viewers" menuitems ->
-			CreateMenuitem(ViewerFormsManager.TileView,     RegistryInfo.TileView,     Viewers, Shortcut.F5);	// id #0
+			CreateMenuitem(ObserverManager.TileView,     RegistryInfo.TileView,     Viewers, Shortcut.F5);	// id #0
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));														// id #1
+			Viewers.MenuItems.Add(new MenuItem(Separator));													// id #1
 
-			CreateMenuitem(ViewerFormsManager.TopView,      RegistryInfo.TopView,      Viewers, Shortcut.F6);	// id #2
-			CreateMenuitem(ViewerFormsManager.RouteView,    RegistryInfo.RouteView,    Viewers, Shortcut.F7);	// id #3
-			CreateMenuitem(ViewerFormsManager.TopRouteView, RegistryInfo.TopRouteView, Viewers, Shortcut.F8);	// id #4
+			CreateMenuitem(ObserverManager.TopView,      RegistryInfo.TopView,      Viewers, Shortcut.F6);	// id #2
+			CreateMenuitem(ObserverManager.RouteView,    RegistryInfo.RouteView,    Viewers, Shortcut.F7);	// id #3
+			CreateMenuitem(ObserverManager.TopRouteView, RegistryInfo.TopRouteView, Viewers, Shortcut.F8);	// id #4
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));														// id #5
+			Viewers.MenuItems.Add(new MenuItem(Separator));													// id #5
 
-			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);							// id #6
-			var it7 = new MenuItem("restore all",  OnRestoreAllClick,  Shortcut.F12);							// id #7
+			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);						// id #6
+			var it7 = new MenuItem("restore all",  OnRestoreAllClick,  Shortcut.F12);						// id #7
 			Viewers.MenuItems.Add(it6);
 			Viewers.MenuItems.Add(it7);
 
@@ -205,8 +205,8 @@ namespace MapView.Forms.MainWindow
 			var help = new MenuItem("CHM Help", OnHelpClick, Shortcut.F1);
 			Helpers.MenuItems.Add(help);
 
-			CreateMenuitem(ViewerFormsManager.ColorsScreen, "Colors", Helpers);
-			CreateMenuitem(ViewerFormsManager.AboutScreen,  "About",  Helpers);
+			CreateMenuitem(ObserverManager.ColorsScreen, "Colors", Helpers);
+			CreateMenuitem(ObserverManager.AboutScreen,  "About",  Helpers);
 		}
 
 		/// <summary>

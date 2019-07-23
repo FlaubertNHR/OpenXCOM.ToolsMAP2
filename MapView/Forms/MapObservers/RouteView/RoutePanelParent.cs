@@ -306,8 +306,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 														MapFile.Location);
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
-						ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
-						ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+						ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+						ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 					}
 					SelectedLocation = loc;
 				}
@@ -322,8 +322,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 														MapFile.Location);
 						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
-						ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
-						ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+						ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+						ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 					}
 					SelectedLocation = new Point(
 											MapFile.Location.Col,
@@ -371,8 +371,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 																MapFile.Location);
 								RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
-								ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
-								ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 							}
 							SelectedLocation = loc;
 						}
@@ -382,7 +382,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
-							ViewerFormsManager.RouteView.Control.doMousewheel(new MouseEventArgs(
+							ObserverManager.RouteView.Control.doMousewheel(new MouseEventArgs(
 																							MouseButtons.None,
 																							0, 0,0, vert));
 							MapFile.Location = new MapLocation( // fire SelectLocation
@@ -440,8 +440,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 																		MapFile.Location);
 										RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
-										ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
-										ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+										ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+										ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 									}
 								}
 							}
@@ -463,9 +463,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 								{
 									RouteView.Dragnode = node;
 
-									ViewerFormsManager.RouteView.Control.doMousewheel(new MouseEventArgs(
-																									MouseButtons.None,
-																									0, 0,0, vert));
+									ObserverManager.RouteView.Control.doMousewheel(new MouseEventArgs(
+																								MouseButtons.None,
+																								0, 0,0, vert));
 									MapFile.Location = new MapLocation( // fire SelectLocation
 																	MapFile.Location.Row,
 																	MapFile.Location.Col,
@@ -480,8 +480,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 																		MapFile.Location);
 										RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
-										ViewerFormsManager.RouteView   .Control     .RoutePanel.Invalidate();
-										ViewerFormsManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+										ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+										ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 									}
 								}
 							}
