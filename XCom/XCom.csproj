@@ -122,10 +122,10 @@
     <Compile Include="Resources\Map\TilepartFactory.cs" />
     <Compile Include="Interfaces\Base\MapLocations.cs" />
     <Compile Include="Interfaces\Base\MapTileList.cs" />
+    <Compile Include="SelectEventArgs.cs" />
     <Compile Include="Services\MapResizeService.cs" />
     <Compile Include="Interfaces\Base\MapTileBase.cs" />
     <Compile Include="Interfaces\Base\MapFileBase.cs" />
-    <Compile Include="Interfaces\Base\IMapObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

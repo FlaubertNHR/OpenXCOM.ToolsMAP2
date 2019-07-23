@@ -1,30 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+
+using XCom.Interfaces.Base;
 
 
-namespace XCom.Interfaces.Base
+namespace XCom
 {
-	/// <summary>
-	/// Interface for MapObserverControl and MapObserverControl_TopPanel.
-	/// </summary>
-	public interface IMapObserver
-	{
-		[Browsable(false)]
-		MapFileBase MapBase
-		{ set; get;}
-
-		[Browsable(false)]
-		Dictionary<string, IMapObserver> ObserverPanels
-		{ get; }
-
-		void OnSelectLocationObserver(SelectLocationEventArgs args);
-		void OnSelectLevelObserver(SelectLevelEventArgs args);
-	}
-
-
-
-	#region Eventargs
 	/// <summary>
 	/// EventArgs with a MapLocation and MapTileBase object for when a
 	/// SelectLocation event fires.
@@ -49,6 +29,7 @@ namespace XCom.Interfaces.Base
 		}
 	}
 
+
 	/// <summary>
 	/// EventArgs for when a SelectLevel event fires.
 	/// </summary>
@@ -66,5 +47,4 @@ namespace XCom.Interfaces.Base
 			Level = level;
 		}
 	}
-	#endregion Eventargs
 }

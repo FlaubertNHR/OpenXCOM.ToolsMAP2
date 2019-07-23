@@ -143,6 +143,7 @@
     <Compile Include="Forms\MainWindow\MainMenusManager.cs" />
     <Compile Include="Forms\MapObservers\ColorTool.cs" />
     <Compile Include="Forms\MapObservers\DrawBlobService.cs" />
+    <Compile Include="Forms\MapObservers\IMapObserver.cs" />
     <Compile Include="Forms\MapObservers\IMapObserverProvider.cs" />
     <Compile Include="Forms\MapObservers\RouteView\RoutePanel.cs">
       <SubType>UserControl</SubType>

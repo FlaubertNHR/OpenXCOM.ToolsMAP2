@@ -1,4 +1,5 @@
-﻿using MapView.Forms.MapObservers.RouteViews;
+﻿using MapView.Forms.MapObservers;
+using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TileViews;
 using MapView.Forms.MapObservers.TopViews;
 

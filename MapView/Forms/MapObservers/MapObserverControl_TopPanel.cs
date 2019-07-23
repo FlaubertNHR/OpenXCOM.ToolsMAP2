@@ -4,6 +4,9 @@ using System.ComponentModel;
 
 using DSShared.Windows;
 
+using MapView.Forms.MapObservers;
+
+using XCom;
 using XCom.Interfaces.Base;
 
 
