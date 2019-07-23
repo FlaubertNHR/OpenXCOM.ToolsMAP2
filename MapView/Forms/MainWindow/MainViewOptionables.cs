@@ -42,8 +42,8 @@ namespace MapView
 //		[Editor(...)]
 
 		// NOTE: Observers are added to MainView's Options by
-		// MainMenusManager.PopulateMenus(). They are used by
-		// MainMenusManager.StartSecondaryStage().
+		// MenuManager.PopulateMenus(). They are used by
+		// MenuManager.StartSecondaryStage().
 		private const string cat_Observers = "Observers";
 
 		private const string str_StartTileView = "StartTileView";

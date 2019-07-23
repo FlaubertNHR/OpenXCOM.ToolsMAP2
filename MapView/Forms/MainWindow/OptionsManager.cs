@@ -42,7 +42,7 @@ namespace MapView.Forms.MainWindow
 
 		/// <summary>
 		/// Gets the Options-object for MainView.
-		/// @note Is used by 'MainMenusManager'.
+		/// @note Is used by 'MenuManager'.
 		/// </summary>
 		/// <returns></returns>
 		internal static Options getMainOptions()

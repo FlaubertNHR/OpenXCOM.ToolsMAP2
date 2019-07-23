@@ -333,8 +333,8 @@ namespace MapView
 			tsTools.ResumeLayout();
 			LogFile.WriteLine("MainView toolstrip created.");
 
-			MainMenusManager.SetMenus(menuViewers, menuHelp);
-			MainMenusManager.PopulateMenus();
+			MenuManager.SetMenus(menuViewers, menuHelp);
+			MenuManager.PopulateMenus();
 			LogFile.WriteLine("MainView menus populated.");
 
 
@@ -416,7 +416,7 @@ namespace MapView
 			LogFile.WriteLine("ResourceInfo initialized.");
 
 
-			if (pathOptions.FileExists()) // load user-options before MainMenusManager.StartSecondaryStage()
+			if (pathOptions.FileExists()) // load user-options before MenuManager.StartSecondaryStage()
 			{
 				OptionsManager.LoadUserOptions(pathOptions.Fullpath);
 				LogFile.WriteLine("User options loaded.");
@@ -926,9 +926,9 @@ namespace MapView
 							if (it != -1)
 							{
 								e.SuppressKeyPress = true;
-								MainMenusManager.OnMenuItemClick(
-															menuViewers.MenuItems[it],
-															EventArgs.Empty);
+								MenuManager.OnMenuItemClick(
+														menuViewers.MenuItems[it],
+														EventArgs.Empty);
 							}
 							else if (part != null)
 							{
@@ -1307,7 +1307,7 @@ namespace MapView
 					miScanG.Checked = true;
 
 					ScanG = new ScanGViewer(MainViewUnderlay.MapBase);
-					ScanG.Show(); // no owner. TODO: perhaps MainView ... or add the ScanG dialog to MainMenusManager etc.
+					ScanG.Show(); // no owner. TODO: perhaps MainView ... or add the ScanG dialog to MenuManager etc.
 				}
 				else
 					ScanG.BringToFront();
@@ -2467,7 +2467,7 @@ namespace MapView
 						(_foptions as OptionsForm).propertyGrid.Refresh();
 
 					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
-						MainMenusManager.StartSecondaryStage();
+						MenuManager.StartSecondaryStage();
 
 					ObserverManager.SetObservers(@base); // reset all observer events
 

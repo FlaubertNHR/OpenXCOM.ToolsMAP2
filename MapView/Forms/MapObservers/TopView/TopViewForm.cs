@@ -139,7 +139,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				e.SuppressKeyPress = true;
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 			}
-			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
+			else if (!MenuManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
 				QuadrantType quadtype = QuadrantType.None;
 				switch (e.KeyCode)

@@ -205,7 +205,7 @@ namespace MapView.Forms.MapObservers.TileViews // y, "TileViews" thanks for knif
 						break;
 				}
 			}
-			else if (!MainMenusManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
+			else if (!MenuManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
 				if (tabControl.SelectedIndex == 0) // Top
 				{

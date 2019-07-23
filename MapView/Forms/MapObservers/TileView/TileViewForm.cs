@@ -128,7 +128,7 @@ namespace MapView.Forms.MapObservers.TileViews
 				e.SuppressKeyPress = true;
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 			}
-			else if (!MainMenusManager.ViewerKeyDown(e)
+			else if (!MenuManager.ViewerKeyDown(e)
 				&& Control.GetSelectedPanel().Focused)
 			{
 				switch (e.KeyCode)

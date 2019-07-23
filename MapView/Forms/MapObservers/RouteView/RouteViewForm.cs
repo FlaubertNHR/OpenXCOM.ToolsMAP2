@@ -140,7 +140,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				e.SuppressKeyPress = true;
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 			}
-			else if (!MainMenusManager.ViewerKeyDown(e) // NOTE: this can suppress the key
+			else if (!MenuManager.ViewerKeyDown(e) // NOTE: this can suppress the key
 				&& Control.RoutePanel.Focused)
 			{
 				switch (e.KeyCode)

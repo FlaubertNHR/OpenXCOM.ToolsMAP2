@@ -12,7 +12,7 @@ using MapView.Forms.MapObservers.TopViews;
 
 namespace MapView.Forms.MainWindow
 {
-	internal static class MainMenusManager
+	internal static class MenuManager
 	{
 		#region Fields (static)
 		private const string PropertyStartObserver = "Start";

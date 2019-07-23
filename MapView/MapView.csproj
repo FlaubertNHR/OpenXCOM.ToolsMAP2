@@ -140,7 +140,7 @@
   <ItemGroup>
     <Compile Include="Forms\MainWindow\MainViewOptionables.cs" />
     <Compile Include="Forms\MainWindow\OptionsManager.cs" />
-    <Compile Include="Forms\MainWindow\MainMenusManager.cs" />
+    <Compile Include="Forms\MainWindow\MenuManager.cs" />
     <Compile Include="Forms\MapObservers\ColorTool.cs" />
     <Compile Include="Forms\MapObservers\DrawBlobService.cs" />
     <Compile Include="Forms\MapObservers\IMapObserver.cs" />
