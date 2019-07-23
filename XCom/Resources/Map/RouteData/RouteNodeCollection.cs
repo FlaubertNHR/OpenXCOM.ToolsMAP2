@@ -57,11 +57,6 @@ namespace XCom
 		Small,			// 2
 		FlyingLarge,	// 3
 		Large			// 4 - aka. 'Any'
-//		Any
-//		FlyingOnlySmallOnly
-//		SmallOnlyWalkOrFly
-//		FlyingOnlyLargeOrSmall
-//		LargeOrSmallWalkOrFly
 	};
 
 	public enum NodeRankUfo

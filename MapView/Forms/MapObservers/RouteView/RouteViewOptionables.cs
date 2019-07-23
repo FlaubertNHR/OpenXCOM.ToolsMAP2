@@ -568,11 +568,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			switch (key)
 			{
-				case str_NodeColor:
-					ViewerFormsManager.RouteView   .Control     .lblOver.ForeColor =
-					ViewerFormsManager.TopRouteView.ControlRoute.lblOver.ForeColor = color;
-					break;
-
 				case str_NodeSelectedColor:
 					ViewerFormsManager.RouteView   .Control     .lblSelected.ForeColor =
 					ViewerFormsManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;

@@ -667,7 +667,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				string textTile2 =   "c " + (x + 1)
 								 + "  r " + (y + 1)
-								 + "  L " + (MapFile.MapSize.Levs - MapFile.Level); // 1-based count, level is reversed.
+								 + "  L " + (MapFile.MapSize.Levs - MapFile.Level); // 1-based count, level is inverted.
 
 				int textWidth1 = (int)_graphics.MeasureString(textTile1, _fontOverlay).Width;
 				int textWidth2 = (int)_graphics.MeasureString(textTile2, _fontOverlay).Width;

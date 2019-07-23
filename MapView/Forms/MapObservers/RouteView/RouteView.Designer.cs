@@ -487,7 +487,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// lblSelected
 			// 
 			this.lblSelected.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblSelected.ForeColor = System.Drawing.Color.Orchid;
 			this.lblSelected.Location = new System.Drawing.Point(25, 15);
 			this.lblSelected.Margin = new System.Windows.Forms.Padding(0);
 			this.lblSelected.Name = "lblSelected";
@@ -498,7 +497,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// lblOver
 			// 
 			this.lblOver.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblOver.ForeColor = System.Drawing.Color.Sienna;
 			this.lblOver.Location = new System.Drawing.Point(140, 15);
 			this.lblOver.Margin = new System.Windows.Forms.Padding(0);
 			this.lblOver.Name = "lblOver";

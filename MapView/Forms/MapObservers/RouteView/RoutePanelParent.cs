@@ -55,8 +55,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#region Properties
 		private Point _pos = new Point(-1,-1);
 		/// <summary>
-		/// Tracks the tile-position of the mouse cursor. Used to print
-		/// over-info, overlay-info, and to position the Overlay.
+		/// Tracks the position of the mouse cursor. Used to print overinfo,
+		/// overlayinfo, and to position the Overlay.
 		/// </summary>
 		internal Point CursorPosition
 		{

@@ -211,11 +211,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 				UnitType.Large,
 				UnitType.FlyingSmall,
 				UnitType.FlyingLarge
-/*				UnitType.Any,
-				UnitType.SmallOnlyWalkOrFly,
-				UnitType.LargeOrSmallWalkOrFly,
-				UnitType.FlyingOnlySmallOnly,
-				UnitType.FlyingOnlyLargeOrSmall */
 			};
 			cbType.Items.AddRange(unitTypes);
 
@@ -239,6 +234,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		#region Events (override) inherited from IMapObserver/MapObserverControl
 		/// <summary>
+		/// A flag that prevents the SelectLocation event from firing in both
+		/// RouteView and TopRouteView(Route).
+		/// </summary>
+		private static bool _fired;
+
+		/// <summary>
 		/// Inherited from IMapObserver through MapObserverControl.
 		/// @note The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
@@ -249,11 +250,22 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
-			_col = args.Location.Col;
-			_row = args.Location.Row;
-			_lev = args.Location.Lev;
+			if (!_fired) // fire this funct only once (by either Control is sufficient).
+			{
+				_fired = true;
 
-			PrintSelectedInfo();
+				ViewerFormsManager.RouteView   .Control     ._col =
+				ViewerFormsManager.TopRouteView.ControlRoute._col = args.Location.Col;
+				ViewerFormsManager.RouteView   .Control     ._row =
+				ViewerFormsManager.TopRouteView.ControlRoute._row = args.Location.Row;
+				ViewerFormsManager.RouteView   .Control     ._lev =
+				ViewerFormsManager.TopRouteView.ControlRoute._lev = args.Location.Lev;
+
+				ViewerFormsManager.RouteView   .Control     .PrintSelectedInfo();
+				ViewerFormsManager.TopRouteView.ControlRoute.PrintSelectedInfo();
+			}
+			else
+				_fired = false;
 		}
 
 		/// <summary>
@@ -267,23 +279,33 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="args"></param>
 		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{
-			_lev = args.Level;
-
-			var loc = RoutePanel.GetTileLocation(
-											RoutePanel.CursorPosition.X,
-											RoutePanel.CursorPosition.Y);
-			int over = -1;
-			if (loc.X != -1)
+			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
 			{
+				ViewerFormsManager.RouteView   .Control     ._lev =
+				ViewerFormsManager.TopRouteView.ControlRoute._lev = args.Level;
+
+				int overId = -1;
+				var loc = RoutePanel.GetTileLocation(
+												RoutePanel.CursorPosition.X,
+												RoutePanel.CursorPosition.Y);
 				RouteNode node = ((MapTile)MapBase[loc.Y, loc.X, _lev]).Node;
 				if (node != null)
-					over = node.Index;
+				{
+					overId = node.Index;
+					if (node.Spawn == SpawnWeight.None)
+					{
+						lblOver.ForeColor = Optionables.NodeColor;
+					}
+					else
+						lblOver.ForeColor = Optionables.NodeSpawnColor;
+				}
+				else
+					lblOver.ForeColor = SystemColors.ControlText;
+
+				ViewerFormsManager.RouteView   .Control     .PrintOverInfo(overId, loc);
+				ViewerFormsManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
 			}
-
-			ViewerFormsManager.RouteView   .Control     .PrintOverInfo(over, loc);
-			ViewerFormsManager.TopRouteView.ControlRoute.PrintOverInfo(over, loc);
-
-			RefreshControls();
+			InvalidatePanels();
 		}
 		#endregion Events (override) inherited from IMapObserver/MapObserverControl
 
@@ -320,41 +342,39 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 
 				selected += Environment.NewLine;
-
 				selected += String.Format(
 										System.Globalization.CultureInfo.InvariantCulture,
 										"c {0}  r {1}  L {2}",
-										_col + 1, _row + 1, MapFile.MapSize.Levs - level); // 1-based count, level is reversed.
+										_col + 1, _row + 1, MapFile.MapSize.Levs - level); // 1-based count, level is inverted.
 
 				lblSelected.Text = selected;
 			}
 		}
 
 		/// <summary>
-		/// Prints the currently mouse-overed tile-info to the TileData groupbox.
+		/// Prints the currently mouseovered tile-info to the TileData groupbox.
 		/// </summary>
 		/// <param name="overId"></param>
 		/// <param name="loc"></param>
 		private void PrintOverInfo(int overId, Point loc)
 		{
-			string over;
+			string info;
 
 			if (overId != -1)
-				over = "Over " + overId;
+				info = "Over " + overId;
 			else
-				over = String.Empty;
-
-			over += Environment.NewLine;
+				info = String.Empty;
 
 			if (loc.X != -1)
 			{
-				over += String.Format(
+				info += Environment.NewLine;
+				info += String.Format(
 									System.Globalization.CultureInfo.InvariantCulture,
 									"c {0}  r {1}  L {2}",
-									loc.X + 1, loc.Y + 1, MapFile.MapSize.Levs - _lev); // 1-based count, level is reversed.
+									loc.X + 1, loc.Y + 1, MapFile.MapSize.Levs - _lev); // 1-based count, level is inverted.
 			}
 
-			lblOver.Text = over;
+			lblOver.Text = info;
 		}
 		#endregion Methods (print TileData)
 
@@ -362,23 +382,32 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#region Events (mouse-events for RoutePanel)
 		private void OnRoutePanelMouseMove(object sender, MouseEventArgs args)
 		{
-			int over;
+			RoutePanel.CursorPosition = new Point(args.X, args.Y);
 
-			int x = args.X;
-			int y = args.Y;
+			int overId;
+			int x = args.X; int y = args.Y;
 
 			var tile = RoutePanel.GetTile(ref x, ref y); // x/y -> tile-location
 			if (tile != null && tile.Node != null)
-				over = tile.Node.Index;
+			{
+				overId = tile.Node.Index;
+				if (tile.Node.Spawn == SpawnWeight.None)
+				{
+					lblOver.ForeColor = Optionables.NodeColor;
+				}
+				else
+					lblOver.ForeColor = Optionables.NodeSpawnColor;
+			}
 			else
-				over = -1;
+			{
+				overId = -1;
+				lblOver.ForeColor = SystemColors.ControlText;
+			}
 
-			var loc = new Point(x, y);
+			var loc = new Point(x,y);
 
-			ViewerFormsManager.RouteView   .Control     .PrintOverInfo(over, loc);
-			ViewerFormsManager.TopRouteView.ControlRoute.PrintOverInfo(over, loc);
-
-			RoutePanel.CursorPosition = new Point(args.X, args.Y);
+			ViewerFormsManager.RouteView   .Control     .PrintOverInfo(overId, loc);
+			ViewerFormsManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
 
 			InvalidatePanels();
 		}
