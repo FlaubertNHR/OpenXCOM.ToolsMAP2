@@ -81,23 +81,23 @@ namespace MapView.Forms.MapObservers.RouteViews
 		internal protected Point Origin
 		{ get; set; }
 
-		private int _drawAreaWidth = 8;
+		private int _halfwidth = 8;
 		/// <summary>
 		/// Half the horizontal width of a tile-lozenge.
 		/// </summary>
-		internal protected int DrawAreaWidth
+		internal protected int HalfWidth
 		{
-			get { return _drawAreaWidth; }
-			set { _drawAreaWidth = value; }
+			get { return _halfwidth; }
+			set { _halfwidth = value; }
 		}
-		private int _drawAreaHeight = 4;
+		private int _halfheight = 4;
 		/// <summary>
 		/// Half the vertical height of a tile-lozenge.
 		/// </summary>
-		internal protected int DrawAreaHeight
+		internal protected int HalfHeight
 		{
-			get { return _drawAreaHeight; }
-			set { _drawAreaHeight = value; }
+			get { return _halfheight; }
+			set { _halfheight = value; }
 		}
 
 
@@ -177,25 +177,25 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (height > width / 2) // use width
 				{
-					DrawAreaWidth = width / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
+					HalfWidth = width / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
 
-					if (DrawAreaWidth % 2 != 0)
-						--DrawAreaWidth;
+					if (HalfWidth % 2 != 0)
+						--HalfWidth;
 
-					DrawAreaHeight = DrawAreaWidth / 2;
+					HalfHeight = HalfWidth / 2;
 				}
 				else // use height
 				{
-					DrawAreaHeight = height / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
-					DrawAreaWidth  = DrawAreaHeight * 2;
+					HalfHeight = height / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
+					HalfWidth  = HalfHeight * 2;
 				}
 
 				Origin = new Point( // offset the left and top edges to account for the 3d panel border
-								OffsetX + MapFile.MapSize.Rows * DrawAreaWidth,
+								OffsetX + MapFile.MapSize.Rows * HalfWidth,
 								OffsetY);
 
-				BlobService.HalfWidth  = DrawAreaWidth;
-				BlobService.HalfHeight = DrawAreaHeight;
+				BlobService.HalfWidth  = HalfWidth;
+				BlobService.HalfHeight = HalfHeight;
 
 				PathSelectedLozenge();
 
@@ -600,9 +600,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 				x -= Origin.X;
 				y -= Origin.Y;
 
-				double xd = (double)x / (DrawAreaWidth  * 2)
-						  + (double)y / (DrawAreaHeight * 2);
-				double yd = ((double)y * 2 - x) / (DrawAreaWidth * 2);
+				double xd = (double)x / (HalfWidth  * 2)
+						  + (double)y / (HalfHeight * 2);
+				double yd = ((double)y * 2 - x) / (HalfWidth * 2);
 
 				var point = new Point(
 									(int)Math.Floor(xd),

@@ -731,7 +731,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 				btnPaste    .Enabled =
 				btnDelete   .Enabled =
 
-				gbTileData  .Enabled =
 				gbNodeData  .Enabled =
 				gbLinkData  .Enabled =
 				gbNodeEditor.Enabled =
@@ -786,7 +785,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			}
 			else // selected node is valid ->
 			{
-				gbTileData  .Enabled =
 				gbNodeData  .Enabled =
 				gbLinkData  .Enabled =
 				gbNodeEditor.Enabled = true;
@@ -1624,9 +1622,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				UpdateNodeInfo();
 
-				gbTileData.Enabled =
 				gbNodeData.Enabled =
-				gbLinkData.Enabled = false; // TODO: RouteView/TopRouteView(Route)
+				gbLinkData.Enabled = false;
 
 				// TODO: check if the Og-button should be disabled when a node gets deleted or cut.
 

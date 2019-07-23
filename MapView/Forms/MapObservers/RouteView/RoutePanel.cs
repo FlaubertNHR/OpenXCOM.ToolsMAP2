@@ -101,8 +101,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			if (MapFile != null)
 			{
-				BlobService.HalfWidth  = DrawAreaWidth;
-				BlobService.HalfHeight = DrawAreaHeight;
+				BlobService.HalfWidth  = HalfWidth;
+				BlobService.HalfHeight = HalfHeight;
 
 				_penLink         = RoutePens[RouteViewOptionables.str_LinkColor];
 				_penLinkSelected = RoutePens[RouteViewOptionables.str_LinkSelectedColor];
@@ -113,20 +113,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (NodeSelected != null)
 					DrawLinkLines(
-							Origin.X + (SelectedLocation.X - SelectedLocation.Y)     * DrawAreaWidth,
-							Origin.Y + (SelectedLocation.X + SelectedLocation.Y + 1) * DrawAreaHeight,
-							NodeSelected,
-							true);
-
-				DrawNodes();
+							Origin.X + (SelectedLocation.X - SelectedLocation.Y)     * HalfWidth,
+							Origin.Y + (SelectedLocation.X + SelectedLocation.Y + 1) * HalfHeight,
+							NodeSelected, true);
 
 				DrawGridLines();
+
+				DrawNodes();
 
 				if (Focused && _overCol != -1) // draw the selector lozenge
 				{
 					PathSelectorLozenge(
-									Origin.X + (_overCol - _overRow) * DrawAreaWidth,
-									Origin.Y + (_overCol + _overRow) * DrawAreaHeight);
+									Origin.X + (_overCol - _overRow) * HalfWidth,
+									Origin.Y + (_overCol + _overRow) * HalfHeight);
 					_graphics.DrawPath(
 									new Pen( // TODO: make this a separate Option.
 											RouteView.Optionables.GridLineColor,
@@ -145,8 +144,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 					if (SpotPosition.X > -1)
 					{
 						PathSpottedLozenge(
-										Origin.X + (SpotPosition.X - SpotPosition.Y) * DrawAreaWidth,
-										Origin.Y + (SpotPosition.X + SpotPosition.Y) * DrawAreaHeight);
+										Origin.X + (SpotPosition.X - SpotPosition.Y) * HalfWidth,
+										Origin.Y + (SpotPosition.X + SpotPosition.Y) * HalfHeight);
 						_graphics.DrawPath(
 										new Pen( // TODO: make this a separate Option.
 												RouteView.Optionables.NodeSelectedColor,
@@ -155,10 +154,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 					}
 				}
 
+				DrawRose();
+
 				if (RouteView.Optionables.ShowPriorityBars)
 					DrawNodeImportanceMeters();
-
-				DrawRose();
 
 				if (RouteView.Optionables.ShowOverlay && CursorPosition.X != -1)
 					DrawInfoOverlay();
@@ -183,8 +182,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 						startY = Origin.Y;
 					r != MapFile.MapSize.Rows;
 					++r,
-						startX -= DrawAreaWidth,
-						startY += DrawAreaHeight)
+						startX -= HalfWidth,
+						startY += HalfHeight)
 			{
 				for (int
 						c = 0,
@@ -192,8 +191,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 							y = startY;
 						c != MapFile.MapSize.Cols;
 						++c,
-							x += DrawAreaWidth,
-							y += DrawAreaHeight)
+							x += HalfWidth,
+							y += HalfHeight)
 				{
 					if (MapFile[r,c] != null)
 					{
@@ -224,8 +223,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 						y = Origin.Y;
 					rSrc != MapFile.MapSize.Rows;
 					++rSrc,
-						x -= DrawAreaWidth,
-						y += DrawAreaHeight)
+						x -= HalfWidth,
+						y += HalfHeight)
 			{
 				for (int
 						cSrc = 0,
@@ -233,14 +232,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 							ySrc = y;
 						cSrc != MapFile.MapSize.Cols;
 						++cSrc,
-							xSrc += DrawAreaWidth,
-							ySrc += DrawAreaHeight)
+							xSrc += HalfWidth,
+							ySrc += HalfHeight)
 				{
 					if (MapFile[rSrc, cSrc] != null
 						&& (node = ((MapTile)MapFile[rSrc, cSrc]).Node) != null
 						&& (NodeSelected == null || node != NodeSelected))
 					{
-						DrawLinkLines(xSrc, ySrc, node, false);
+						DrawLinkLines(xSrc, ySrc, node);
 					}
 				}
 			}
@@ -252,12 +251,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="xSrc"></param>
 		/// <param name="ySrc"></param>
 		/// <param name="node"></param>
-		/// <param name="selected">(default true)</param>
+		/// <param name="selected"></param>
 		private void DrawLinkLines(
 				int xSrc,
 				int ySrc,
 				RouteNode node,
-				bool selected = true)
+				bool selected = false)
 		{
 			int xDst, yDst;
 			RouteNode dest;
@@ -319,8 +318,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 								continue;
 							}
 
-							xDst = Origin.X + (dest.Col - dest.Row)     * DrawAreaWidth;
-							yDst = Origin.Y + (dest.Col + dest.Row + 1) * DrawAreaHeight;
+							xDst = Origin.X + (dest.Col - dest.Row)     * HalfWidth;
+							yDst = Origin.Y + (dest.Col + dest.Row + 1) * HalfHeight;
 							break;
 					}
 
@@ -369,7 +368,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					else // draw link-lines for a non-selected node ->
 						_graphics.DrawLine(
 										_penLink,
-										xSrc, ySrc + DrawAreaHeight, // unselected nodes need an offset
+										xSrc, ySrc + HalfHeight, // unselected nodes need an offset
 										xDst, yDst);
 				}
 			}
@@ -390,6 +389,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 			MapTile tile;
 			RouteNode node;
+			Link link;
 
 			for (int row = 0; row != MapFile.MapSize.Rows; ++row)
 			{
@@ -399,8 +399,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 							y = startY;
 						col != MapFile.MapSize.Cols;
 						++col,
-							x += DrawAreaWidth,
-							y += DrawAreaHeight)
+							x += HalfWidth,
+							y += HalfHeight)
 				{
 					if ((tile = MapFile[row, col] as MapTile) != null)	// NOTE: MapFileBase has the current level stored and uses
 					{													// it to return only tiles on the correct level here.
@@ -408,14 +408,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 						{
 							_nodeFill.Reset();
 							_nodeFill.AddLine(
-											x,                 y,
-											x + DrawAreaWidth, y + DrawAreaHeight);
+											x,             y,
+											x + HalfWidth, y + HalfHeight);
 							_nodeFill.AddLine(
-											x + DrawAreaWidth, y + DrawAreaHeight,
-											x,                 y + DrawAreaHeight * 2);
+											x + HalfWidth, y + HalfHeight,
+											x,             y + HalfHeight * 2);
 							_nodeFill.AddLine(
-											x,                 y + DrawAreaHeight * 2,
-											x - DrawAreaWidth, y + DrawAreaHeight);
+											x,             y + HalfHeight * 2,
+											x - HalfWidth, y + HalfHeight);
 							_nodeFill.CloseFigure();
 
 							if (NodeSelected != null && MapFile.Level == NodeSelected.Lev
@@ -434,12 +434,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 							for (int i = 0; i != RouteNode.LinkSlots; ++i) // check for and if applicable draw the up/down indicators.
 							{
-								var link = node[i] as Link;
+								link = node[i];// as Link;
 								switch (link.Destination)
 								{
 									case Link.NotUsed:
-									case Link.ExitEast:
 									case Link.ExitNorth:
+									case Link.ExitEast:
 									case Link.ExitSouth:
 									case Link.ExitWest:
 										break;
@@ -448,38 +448,39 @@ namespace MapView.Forms.MapObservers.RouteViews
 										if (MapFile.Routes[link.Destination] != null)
 										{
 											int level = MapFile.Routes[link.Destination].Lev;
-											if (level != MapFile.Level)
+											if (level < MapFile.Level) // draw arrow up.
 											{
-												if (level < MapFile.Level) // draw arrow up.
-												{
-													_graphics.DrawLine( // start w/ a vertical line in the tile-lozenge
-																	_penLink,
-																	x, y,
-																	x, y + DrawAreaHeight * 2);
-													_graphics.DrawLine( // then lines on the two top edges of the tile
-																	_penLink,
-																	x + 2,                 y,
-																	x + 2 - DrawAreaWidth, y + DrawAreaHeight);
-													_graphics.DrawLine(
-																	_penLink,
-																	x - 2,                 y,
-																	x - 2 + DrawAreaWidth, y + DrawAreaHeight);
-												}
-												else //if (levelDestination > MapFile.Level) // draw arrow down.
-												{
-													_graphics.DrawLine( // start w/ a horizontal line in the tile-lozenge
-																	_penLink,
-																	x - DrawAreaWidth, y + DrawAreaHeight,
-																	x + DrawAreaWidth, y + DrawAreaHeight);
-													_graphics.DrawLine( // then lines on the two bottom edges of the tile
-																	_penLink,
-																	x + 2,                 y + DrawAreaHeight * 2,
-																	x + 2 - DrawAreaWidth, y + DrawAreaHeight);
-													_graphics.DrawLine(
-																	_penLink,
-																	x - 2,                 y + DrawAreaHeight * 2,
-																	x - 2 + DrawAreaWidth, y + DrawAreaHeight);
-												}
+												_graphics.DrawLine( // start w/ a vertical line in the tile-lozenge
+																_penLink,
+																x, y + 1,
+																x, y - 1 + HalfHeight * 2);
+												_graphics.DrawLine( // then lines on the two top edges of the tile
+																_penLink,
+																x + 1,             y + 1,
+																x + 3 - HalfWidth, y + 0 + HalfHeight);
+//																x + 1 - HalfWidth, y + 1 + HalfHeight);
+												_graphics.DrawLine(
+																_penLink,
+																x - 1,             y + 1,
+																x - 3 + HalfWidth, y + 0 + HalfHeight);
+//																x - 1 + HalfWidth, y + 1 + HalfHeight);
+											}
+											else if (level > MapFile.Level) // draw arrow down.
+											{
+												_graphics.DrawLine( // start w/ a horizontal line in the tile-lozenge
+																_penLink,
+																x + 2 - HalfWidth, y + HalfHeight,
+																x - 2 + HalfWidth, y + HalfHeight);
+												_graphics.DrawLine( // then lines on the two bottom edges of the tile
+																_penLink,
+																x + 1,             y - 1 + HalfHeight * 2,
+																x + 3 - HalfWidth, y - 0 + HalfHeight);
+//																x + 1 - HalfWidth, y - 1 + HalfHeight);
+												_graphics.DrawLine(
+																_penLink,
+																x - 1,             y - 1 + HalfHeight * 2,
+																x - 3 + HalfWidth, y - 0 + HalfHeight);
+//																x - 1 + HalfWidth, y - 1 + HalfHeight);
 											}
 										}
 										break;
@@ -488,8 +489,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 						}
 					}
 				}
-				startX -= DrawAreaWidth;
-				startY += DrawAreaHeight;
+				startX -= HalfWidth;
+				startY += HalfHeight;
 			}
 		}
 
@@ -506,10 +507,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				_graphics.DrawLine(
 								pen,
-								Origin.X - i * DrawAreaWidth,
-								Origin.Y + i * DrawAreaHeight,
-								Origin.X + ((MapFile.MapSize.Cols - i) * DrawAreaWidth),
-								Origin.Y + ((MapFile.MapSize.Cols + i) * DrawAreaHeight));
+								Origin.X - i * HalfWidth,
+								Origin.Y + i * HalfHeight,
+								Origin.X + ((MapFile.MapSize.Cols - i) * HalfWidth),
+								Origin.Y + ((MapFile.MapSize.Cols + i) * HalfHeight));
 			}
 
 			for (int i = 0; i <= MapFile.MapSize.Cols; ++i)
@@ -519,10 +520,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				_graphics.DrawLine(
 								pen,
-								Origin.X + i * DrawAreaWidth,
-								Origin.Y + i * DrawAreaHeight,
-							   (Origin.X + i * DrawAreaWidth)  - MapFile.MapSize.Rows * DrawAreaWidth,
-							   (Origin.Y + i * DrawAreaHeight) + MapFile.MapSize.Rows * DrawAreaHeight);
+								Origin.X + i * HalfWidth,
+								Origin.Y + i * HalfHeight,
+							   (Origin.X + i * HalfWidth)  - MapFile.MapSize.Rows * HalfWidth,
+							   (Origin.Y + i * HalfHeight) + MapFile.MapSize.Rows * HalfHeight);
 			}
 		}
 
@@ -545,15 +546,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 							y = startY;
 						c != MapFile.MapSize.Cols;
 						++c,
-							x += DrawAreaWidth,
-							y += DrawAreaHeight)
+							x += HalfWidth,
+							y += HalfHeight)
 				{
 					if ((tile = MapFile[r,c] as MapTile) != null)
 					{
 						if ((node = tile.Node) != null)
 						{
-							int infoboxX = x - DrawAreaWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up
-							int infoboxY = y + DrawAreaHeight - NodeValMax / 2;	// vertical line indicator when panel is small sized.
+							int infoboxX = x - HalfWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up
+							int infoboxY = y + HalfHeight - NodeValMax / 2;	// vertical line indicator when panel is small sized.
 
 							DrawImportanceMeter(
 											infoboxX,
@@ -569,8 +570,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 						}
 					}
 				}
-				startX -= DrawAreaWidth;
-				startY += DrawAreaHeight;
+				startX -= HalfWidth;
+				startY += HalfHeight;
 			}
 		}
 
@@ -698,24 +699,24 @@ namespace MapView.Forms.MapObservers.RouteViews
 					textPatrol2 = RouteNodeCollection.Patrol[(byte)tile.Node.Patrol].ToString();
 
 					int width;
-					width = (int)_graphics.MeasureString(textOver1, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textOver1,   _fontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
-					width = (int)_graphics.MeasureString(textType1, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textType1,   _fontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
-					width = (int)_graphics.MeasureString(textRank1, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textRank1,   _fontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
-					width = (int)_graphics.MeasureString(textSpawn1, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textSpawn1,  _fontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
 					width = (int)_graphics.MeasureString(textPatrol1, _fontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
 
-					width = (int)_graphics.MeasureString(textOver2, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textOver2,   _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
-					width = (int)_graphics.MeasureString(textType2, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textType2,   _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
-					width = (int)_graphics.MeasureString(textRank2, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textRank2,   _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
-					width = (int)_graphics.MeasureString(textSpawn2, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textSpawn2,  _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
 					width = (int)_graphics.MeasureString(textPatrol2, _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
@@ -824,7 +825,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 									_fontOverlay,
 									Brushes.Yellow,
 									colRight,
-									textTop  + textHeight);
+									textTop + textHeight);
 
 					_graphics.DrawString(
 									textType1,
@@ -837,7 +838,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 									_fontOverlay,
 									Brushes.Yellow,
 									colRight,
-									textTop  + textHeight * 2);
+									textTop + textHeight * 2);
 
 					_graphics.DrawString(
 									textRank1,
@@ -850,7 +851,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 									_fontOverlay,
 									Brushes.Yellow,
 									colRight,
-									textTop  + textHeight * 3);
+									textTop + textHeight * 3);
 
 					_graphics.DrawString(
 									textSpawn1,
@@ -863,7 +864,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 									_fontOverlay,
 									Brushes.Yellow,
 									colRight,
-									textTop  + textHeight * 4);
+									textTop + textHeight * 4);
 
 					_graphics.DrawString(
 									textPatrol1,
@@ -876,7 +877,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 									_fontOverlay,
 									Brushes.Yellow,
 									colRight,
-									textTop  + textHeight * 5);
+									textTop + textHeight * 5);
 
 					if (tile.Node.Attack != 0)
 					{
@@ -891,7 +892,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 										_fontOverlay,
 										Brushes.Yellow,
 										colRight,
-										textTop  + textHeight * 6);
+										textTop + textHeight * 6);
 					}
 				}
 			}
