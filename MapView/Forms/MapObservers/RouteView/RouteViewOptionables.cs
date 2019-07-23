@@ -566,26 +566,21 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			var color = (Color)val;
 
-			switch (key)
+			if (key == str_ContentColor)
 			{
-				case str_NodeSelectedColor:
-					ObserverManager.RouteView   .Control     .lblSelected.ForeColor =
-					ObserverManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;
-					break;
+				// Do not apply alpha to ContentColor.
+				RoutePanel.RouteBrushes[str_ContentColor].Color = color;
 
-				case str_ContentColor:
-					RoutePanel.ToolContent.Dispose();
-					RoutePanel.ToolContent = new ColorTool(
-														RoutePanel.RouteBrushes[key],
-														DrawBlobService.LINEWIDTH_CONTENT);
-					break;
+				RoutePanel.ToolContent.Dispose();
+				RoutePanel.ToolContent = new ColorTool(
+													RoutePanel.RouteBrushes[str_ContentColor],
+													DrawBlobService.LINEWIDTH_CONTENT);
 			}
-
-			// Do not apply alpha to Over/Selected texts, nor to ContentColor.
-			if (key != str_ContentColor) // ie. is Node color
+			else // is Node color
+			{
 				color = Color.FromArgb(NodeOpacity, color);
-
-			RoutePanel.RouteBrushes[key].Color = color;
+				RoutePanel.RouteBrushes[key].Color = color;
+			}
 		}
 
 		/// <summary>

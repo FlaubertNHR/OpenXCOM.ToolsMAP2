@@ -337,11 +337,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 				{
 					selected = "Selected " + NodeSelected.Index;
 					level = NodeSelected.Lev;
+					lblSelected.ForeColor = Optionables.NodeSelectedColor;
 				}
 				else
 				{
 					selected = String.Empty;
 					level = _lev;
+					lblSelected.ForeColor = SystemColors.ControlText;
 				}
 
 				selected += Environment.NewLine;
