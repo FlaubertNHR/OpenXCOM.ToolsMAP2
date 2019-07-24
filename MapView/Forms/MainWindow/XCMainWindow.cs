@@ -1095,7 +1095,7 @@ namespace MapView
 						MessageBox.Show(
 									this,
 									"Saving to a root folder is not allowed. raesons.",
-									"Error",
+									" Error",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Error,
 									MessageBoxDefaultButton.Button1,
@@ -1154,7 +1154,7 @@ namespace MapView
 										+ "Retry\tsave changes and open the Configurator"
 										+ Environment.NewLine
 										+ "Ignore\trisk losing changes and open the Configurator",
-									"Changes detected",
+									" Changes detected",
 									MessageBoxButtons.AbortRetryIgnore,
 									MessageBoxIcon.Asterisk,
 									MessageBoxDefaultButton.Button1,

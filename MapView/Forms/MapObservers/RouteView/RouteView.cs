@@ -177,7 +177,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// </summary>
 		internal bool RoutesChanged
 		{
-			set { label_RoutesChanged.Visible = (MapFile.RoutesChanged = value); }
+			set { btnSave.Enabled = (MapFile.RoutesChanged = value); }
 		}
 		#endregion Properties
 
@@ -2154,6 +2154,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 //				_routesinfo.TopMost = true;
 //				_routesinfo.TopMost = false;
 			}
+		}
+
+		private void OnSaveClick(object sender, EventArgs e)
+		{
+			XCMainWindow.that.OnSaveRoutesClick(null, EventArgs.Empty);
+			RoutePanel.Select();
 		}
 		#endregion Events
 
