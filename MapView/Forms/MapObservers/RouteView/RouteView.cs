@@ -290,7 +290,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 												RoutePanel.CursorPosition.Y);
 				if (loc.X != -1)
 				{
-					RouteNode node = ((MapTile)MapBase[loc.Y, loc.X, _lev]).Node;
+					RouteNode node = MapBase[loc.Y, loc.X, _lev].Node;
 					if (node != null)
 					{
 						overId = node.Index;
@@ -345,7 +345,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 												RoutePanel.CursorPosition.Y);
 				if (loc.X != -1)
 				{
-					RouteNode node = ((MapTile)MapBase[loc.Y, loc.X, _lev]).Node;
+					RouteNode node = MapBase[loc.Y, loc.X, _lev].Node;
 					if (node != null)
 					{
 						if (node.Spawn == SpawnWeight.None)
@@ -474,19 +474,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			if (Dragnode != null)
 			{
-				if (((MapTile)args.Tile).Node == null)
+				if (args.Tile.Node == null)
 				{
 					RouteChanged = true;
 
-					((MapTile)MapFile[Dragnode.Row, // clear the node from the previous tile
-									  Dragnode.Col,
-									  Dragnode.Lev]).Node = null;
+					MapFile[Dragnode.Row, // clear the node from the previous tile
+							Dragnode.Col,
+							Dragnode.Lev].Node = null;
 
 					Dragnode.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
 					Dragnode.Row = (byte)args.Location.Row; // these get saved w/ Routes.
 					Dragnode.Lev =       args.Location.Lev;
 
-					((MapTile)args.Tile).Node = Dragnode; // assign the node to the tile at the mouse-up location.
+					args.Tile.Node = Dragnode; // assign the node to the tile at the mouse-up location.
 
 					var loc = new Point(Dragnode.Col, Dragnode.Row);
 					RoutePanelParent.SelectedLocation = loc;
@@ -588,7 +588,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			bool update = false;
 
-			RouteNode node = ((MapTile)args.Tile).Node;
+			RouteNode node = args.Tile.Node;
 
 			if (NodeSelected == null)
 			{
@@ -1656,9 +1656,9 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				RouteChanged = true;
 
-				((MapTile)MapFile[NodeSelected.Row,
-								  NodeSelected.Col,
-								  NodeSelected.Lev]).Node = null;
+				MapFile[NodeSelected.Row,
+						NodeSelected.Col,
+						NodeSelected.Lev].Node = null;
 				MapFile.Routes.DeleteNode(NodeSelected);
 
 				ObserverManager.RouteView   .Control     .DeselectNode();
@@ -2297,7 +2297,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		internal MouseButtons MouseButton
 		{ get; private set; }
 
-		internal MapTileBase Tile
+		internal MapTile Tile
 		{ get; private set; }
 
 		internal MapLocation Location
@@ -2314,7 +2314,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <param name="location"></param>
 		internal RoutePanelEventArgs(
 				MouseButtons button,
-				MapTileBase tile,
+				MapTile tile,
 				MapLocation location)
 		{
 			MouseButton = button;

@@ -421,11 +421,11 @@ namespace MapView.Forms.MapObservers.RouteViews
 						if (   r > -1 && r < MapFile.MapSize.Rows
 							&& c > -1 && c < MapFile.MapSize.Cols)
 						{
-							if (((MapTile)MapFile[r,c, MapFile.Level]).Node == null)
+							if (MapFile[r,c, MapFile.Level].Node == null)
 							{
-								RouteNode node = ((MapTile)MapFile[MapFile.Location.Row,
-																   MapFile.Location.Col,
-																   MapFile.Level]).Node;
+								RouteNode node = MapFile[MapFile.Location.Row,
+														 MapFile.Location.Col,
+														 MapFile.Level].Node;
 								if (node != null && node == NodeSelected)
 								{
 									RouteView.Dragnode = node;
@@ -452,13 +452,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
-							if (((MapTile)MapFile[MapFile.Location.Row,
-												  MapFile.Location.Col,
-												  level]).Node == null)
+							if (MapFile[MapFile.Location.Row,
+										MapFile.Location.Col,
+										level].Node == null)
 							{
-								RouteNode node = ((MapTile)MapFile[MapFile.Location.Row,
-																   MapFile.Location.Col,
-																   MapFile.Level]).Node;
+								RouteNode node = MapFile[MapFile.Location.Row,
+														 MapFile.Location.Col,
+														 MapFile.Level].Node;
 								if (node != null && node == NodeSelected)
 								{
 									RouteView.Dragnode = node;
@@ -582,7 +582,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			var loc = GetTileLocation(x,y);
 			x = loc.X;
 			y = loc.Y;
-			return (x != -1) ? MapFile[y,x] as MapTile
+			return (x != -1) ? MapFile[y,x]
 							 : null;
 		}
 

@@ -3,16 +3,16 @@
 	internal sealed class MapTileList
 	{
 		#region Fields
-		private readonly MapTileBase[] _tiles;
+		private readonly MapTile[] _tiles;
 		private readonly MapLocations  _locations;
 		#endregion Fields
 
 
 		#region Properties
 		/// <summary>
-		/// Gets/Sets a MapTileBase object according to a given location.
+		/// Gets/Sets a MapTile object according to a given location.
 		/// </summary>
-		internal MapTileBase this[int row, int col, int lev]
+		internal MapTile this[int row, int col, int lev]
 		{
 			get
 			{
@@ -41,7 +41,7 @@
 		/// <param name="levs"></param>
 		internal MapTileList(int rows, int cols, int levs)
 		{
-			_tiles     = new MapTileBase[rows * cols * levs];
+			_tiles     = new MapTile[rows * cols * levs];
 			_locations = new MapLocations(rows, cols, levs);
 		}
 		#endregion cTor

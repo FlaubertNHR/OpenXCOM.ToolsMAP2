@@ -328,7 +328,7 @@ namespace MapView
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapBase[row, col] as MapTile;
+					tile = MapBase[row, col];
 
 					if ((visible & TopView.FLOOR)   != 0) tile.Floor   = null;
 					if ((visible & TopView.WEST)    != 0) tile.West    = null;
@@ -346,7 +346,7 @@ namespace MapView
 
 
 		private Dictionary<int, Tuple<string,string>> _copiedTerrains;
-		private MapTileBase[,] _copied;
+		private MapTile[,] _copied;
 
 		/// <summary>
 		/// Copies any selected tiles to an internal buffer.
@@ -362,15 +362,15 @@ namespace MapView
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
 
-				_copied = new MapTileBase[b.Y - a.Y + 1,
-										  b.X - a.X + 1];
+				_copied = new MapTile[b.Y - a.Y + 1,
+									  b.X - a.X + 1];
 
 				MapTile tile;
 
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapBase[row, col] as MapTile;
+					tile = MapBase[row, col];
 					_copied[row - a.Y,
 							col - a.X] = new MapTile(
 												tile.Floor,
@@ -409,9 +409,9 @@ namespace MapView
 								col != MapBase.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(1);
 								++col)
 						{
-							if ((tile = MapBase[row, col] as MapTile) != null
+							if ((tile = MapBase[row, col]) != null
 								&& (copy = _copied[row - DragBeg.Y,
-												   col - DragBeg.X] as MapTile) != null)
+												   col - DragBeg.X]) != null)
 							{
 								if ((visible & TopView.FLOOR)   != 0) tile.Floor   = copy.Floor;
 								if ((visible & TopView.WEST)    != 0) tile.West    = copy.West;
@@ -519,7 +519,7 @@ namespace MapView
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = ((MapTile)MapBase[row, col]);
+					tile = MapBase[row, col];
 					tile[quad] = part;
 					tile.Vacancy();
 				}
@@ -547,7 +547,7 @@ namespace MapView
 			for (int col = a.X; col <= b.X; ++col)
 			for (int row = a.Y; row <= b.Y; ++row)
 			{
-				tile = ((MapTile)MapBase[row, col]);
+				tile = MapBase[row, col];
 				tile[quad] = null;
 				tile.Vacancy();
 			}
@@ -1067,7 +1067,7 @@ namespace MapView
 			}
 
 
-			MapTileBase tile;
+			MapTile tile;
 			bool cuboid;
 
 			int heightfactor = HalfHeight * 3;
@@ -1108,12 +1108,13 @@ namespace MapView
 														lev == MapBase.Level);
 						}
 
-						if (!(tile = MapBase[row, col, lev]).Occulted
-							|| lev == MapBase.Level)
+						if (!(tile = MapBase[row, col, lev]).Vacant
+							&& (!tile.Occulted
+								|| lev == MapBase.Level))
 						{
 							// This is different between REMBRANDT and PICASSO ->
 							DrawTile(
-									tile as MapTile,
+									tile,
 									x, y,
 									XCMainWindow.Optionables.GraySelection
 										&& lev == MapBase.Level
@@ -1160,7 +1161,7 @@ namespace MapView
 		/// </summary>
 		private void DrawPicasso()
 		{
-			MapTileBase tile;
+			MapTile tile;
 			bool cuboid;
 
 			int heightfactor = HalfHeight * 3;
@@ -1199,11 +1200,11 @@ namespace MapView
 														lev == MapBase.Level);
 						}
 
-						if (!(tile = MapBase[row, col, lev]).Occulted
-							|| lev == MapBase.Level)
+						if (!(tile = MapBase[row, col, lev]).Vacant
+							&& (!tile.Occulted || lev == MapBase.Level))
 						{
 							// This is different between REMBRANDT and PICASSO ->
-							DrawTile(tile as MapTile, x, y);
+							DrawTile(tile, x, y);
 						}
 
 						if (cuboid)
@@ -1260,7 +1261,7 @@ namespace MapView
 			_scan0 = _data.Scan0;
 
 
-			MapTileBase tile;
+			MapTile tile;
 
 //			bool isTargeted = Focused
 //						   && !_suppressTargeter
@@ -1310,9 +1311,7 @@ namespace MapView
 						tile = MapBase[row, col, lev];
 						if (lev == MapBase.Level || !tile.Occulted)
 						{
-							DrawTile(
-									tile as MapTile,
-									x, y);
+							DrawTile(tile, x, y);
 						}
 
 //						if (isClicked)

@@ -72,7 +72,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
-			Tile = args.Tile as MapTile;
+			Tile = args.Tile;
 			Loc  = args.Location;
 			Refresh();
 		}
@@ -85,7 +85,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		{
 			if (Loc != null)
 			{
-				Tile = MapBase[Loc.Row, Loc.Col] as MapTile;
+				Tile = MapBase[Loc.Row, Loc.Col];
 				Loc.Lev = args.Level;
 			}
 			Refresh();

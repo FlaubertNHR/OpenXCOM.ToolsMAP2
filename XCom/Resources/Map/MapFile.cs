@@ -186,11 +186,11 @@ namespace XCom
 		/// </summary>
 		public void SetupRouteNodes()
 		{
-			MapTileBase tile;
+			MapTile tile;
 			foreach (RouteNode node in Routes)
 			{
 				if ((tile = this[node.Row, node.Col, node.Lev]) != null)
-					((MapTile)tile).Node = node;
+					tile.Node = node;
 			}
 		}
 
@@ -204,7 +204,7 @@ namespace XCom
 			for (int row = 0; row != MapSize.Rows; ++row)
 			for (int col = 0; col != MapSize.Cols; ++col)
 			{
-				((MapTile)this[row, col, lev]).Node = null;
+				this[row, col, lev].Node = null;
 			}
 		}
 
@@ -266,9 +266,9 @@ namespace XCom
 										(byte)location.Col,
 										(byte)location.Lev);
 
-			return (((MapTile)this[(int)node.Row,
-								   (int)node.Col,
-								        node.Lev]).Node = node);
+			return (this[(int)node.Row,
+						 (int)node.Col,
+						      node.Lev].Node = node);
 		}
 
 		/// <summary>
@@ -338,7 +338,7 @@ namespace XCom
 				for (int row = 0; row != MapSize.Rows; ++row)
 				for (int col = 0; col != MapSize.Cols; ++col)
 				{
-					tile = this[row, col, lev] as MapTile;
+					tile = this[row, col, lev];
 
 					if (tile.Floor == null || (id = tile.Floor.SetId + IdOffset) > (int)byte.MaxValue)
 						fs.WriteByte(0);

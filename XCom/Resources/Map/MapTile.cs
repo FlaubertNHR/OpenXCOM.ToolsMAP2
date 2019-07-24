@@ -20,8 +20,6 @@ namespace XCom
 	/// A tile in the Tileset consisting of four parts.
 	/// </summary>
 	public sealed class MapTile
-		:
-			MapTileBase
 	{
 		#region Fields (static)
 		public const int QUADS = 4;
@@ -63,7 +61,8 @@ namespace XCom
 		/// <summary>
 		/// @note This is used only by MapFileBase.SaveGifFile().
 		/// </summary>
-		public override Tilepart[] UsedParts
+//		public override Tilepart[] UsedParts
+		public Tilepart[] UsedParts
 		{
 			get
 			{
@@ -79,6 +78,13 @@ namespace XCom
 		}
 
 		public RouteNode Node
+		{ get; set; }
+
+		/// <summary>
+		/// A tile is flagged as occulted if it has tiles with ground-parts
+		/// above and to the south and east.
+		/// </summary>
+		public bool Occulted
 		{ get; set; }
 
 		/// <summary>

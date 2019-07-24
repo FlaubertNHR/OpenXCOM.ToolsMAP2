@@ -149,7 +149,7 @@ namespace MapView
 			for (int row = 0; row != rows; ++row)
 			for (int lev = 0; lev != levs; ++lev)
 			{
-				tile = _file[row, col, lev] as MapTile;
+				tile = _file[row, col, lev];
 				if (!tile.Vacant)
 				{
 					for (int i = 0; i != MapTile.QUADS; ++i)

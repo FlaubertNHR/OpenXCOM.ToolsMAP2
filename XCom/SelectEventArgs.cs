@@ -6,7 +6,7 @@ using XCom.Interfaces.Base;
 namespace XCom
 {
 	/// <summary>
-	/// EventArgs with a MapLocation and MapTileBase object for when a
+	/// EventArgs with a MapLocation and MapTile object for when a
 	/// SelectLocation event fires.
 	/// </summary>
 	public sealed class SelectLocationEventArgs
@@ -14,7 +14,7 @@ namespace XCom
 		public MapLocation Location
 		{ get; private set; }
 
-		public MapTileBase Tile
+		public MapTile Tile
 		{ get; private set; }
 
 		/// <summary>
@@ -22,7 +22,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="tile"></param>
-		internal SelectLocationEventArgs(MapLocation location, MapTileBase tile)
+		internal SelectLocationEventArgs(MapLocation location, MapTile tile)
 		{
 			Location = location;
 			Tile     = tile;

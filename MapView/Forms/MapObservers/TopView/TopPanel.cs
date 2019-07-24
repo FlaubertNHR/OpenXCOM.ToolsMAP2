@@ -256,6 +256,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				int halfHeight = _blobService.HalfHeight;
 
 				// draw tile-blobs ->
+				MapTile tile;
 				for (int
 						r = 0,
 							startX = _originX,
@@ -274,8 +275,7 @@ namespace MapView.Forms.MapObservers.TopViews
 								x += halfWidth,
 								y += halfHeight)
 					{
-						var tile = MapBase[r,c] as MapTileBase;
-						if (tile != null)
+						if ((tile = MapBase[r,c]) != null)
 							DrawBlobs(tile, graphics, x,y);
 					}
 				}
@@ -334,17 +334,15 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="tilebase"></param>
+		/// <param name="tile"></param>
 		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		private void DrawBlobs(
-				MapTileBase tilebase,
+				MapTile tile,
 				Graphics graphics,
 				int x, int y)
 		{
-			var tile = tilebase as MapTile;
-
 			if (TopView.Floor.Checked && tile.Floor != null)
 				BlobService.DrawFloor(
 									graphics,
