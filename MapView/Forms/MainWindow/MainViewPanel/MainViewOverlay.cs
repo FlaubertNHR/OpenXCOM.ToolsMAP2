@@ -1101,7 +1101,7 @@ namespace MapView
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
 														_graphics,
-														x,y,
+														x, y,
 														HalfWidth,
 														HalfHeight,
 														false,
@@ -1114,7 +1114,7 @@ namespace MapView
 							// This is different between REMBRANDT and PICASSO ->
 							DrawTile(
 									tile as MapTile,
-									x,y,
+									x, y,
 									XCMainWindow.Optionables.GraySelection
 										&& lev == MapBase.Level
 										&& rect.Contains(col, row));
@@ -1124,7 +1124,7 @@ namespace MapView
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
 														_graphics,
-														x,y,
+														x, y,
 														HalfWidth,
 														HalfHeight,
 														true,
@@ -1194,7 +1194,7 @@ namespace MapView
 						{
 							CuboidSprite.DrawCuboid_Picasso(
 														_graphics,
-														x,y,
+														x, y,
 														false,
 														lev == MapBase.Level);
 						}
@@ -1203,14 +1203,14 @@ namespace MapView
 							|| lev == MapBase.Level)
 						{
 							// This is different between REMBRANDT and PICASSO ->
-							DrawTile(tile as MapTile, x,y);
+							DrawTile(tile as MapTile, x, y);
 						}
 
 						if (cuboid)
 						{
 							CuboidSprite.DrawCuboid_Picasso(
 														_graphics,
-														x,y,
+														x, y,
 														true,
 														lev == MapBase.Level);
 						}
@@ -1674,7 +1674,7 @@ namespace MapView
 //y + (int)(h * Globals.Scale),
 //_d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value.
 
-				uint x,y,offset;
+				uint x, y, offset;
 				for (y = 0; y != XCImage.SpriteHeight40; ++y)
 				for (x = 0; x != XCImage.SpriteWidth;    ++x)
 				{
