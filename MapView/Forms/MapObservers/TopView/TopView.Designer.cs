@@ -43,7 +43,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			// tscPanel.ContentPanel
 			// 
 			this.tscPanel.ContentPanel.Controls.Add(this.pnlMain);
-			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(615, 360);
+			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(615, 430);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			// 
 			// tscPanel.LeftToolStripPanel
@@ -56,7 +56,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			// tscPanel.RightToolStripPanel
 			// 
 			this.tscPanel.RightToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.tscPanel.Size = new System.Drawing.Size(640, 385);
+			this.tscPanel.Size = new System.Drawing.Size(640, 455);
 			this.tscPanel.TabIndex = 1;
 			// 
 			// tscPanel.TopToolStripPanel
@@ -68,7 +68,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnlMain.Location = new System.Drawing.Point(0, 0);
 			this.pnlMain.Name = "pnlMain";
-			this.pnlMain.Size = new System.Drawing.Size(615, 360);
+			this.pnlMain.Size = new System.Drawing.Size(615, 430);
 			this.pnlMain.TabIndex = 0;
 			// 
 			// tsTools
@@ -124,6 +124,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.Controls.Add(this.tscPanel);
 			this.Controls.Add(this.tsMain);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Margin = new System.Windows.Forms.Padding(0);
 			this.Name = "TopView";
 			this.Size = new System.Drawing.Size(640, 480);
 			this.tscPanel.ContentPanel.ResumeLayout(false);

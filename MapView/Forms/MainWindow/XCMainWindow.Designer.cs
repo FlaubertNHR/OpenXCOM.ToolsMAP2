@@ -267,7 +267,7 @@ namespace MapView
 			this.tsslMapLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
 			this.tsslMapLabel.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tsslMapLabel.Name = "tsslMapLabel";
-			this.tsslMapLabel.Size = new System.Drawing.Size(455, 17);
+			this.tsslMapLabel.Size = new System.Drawing.Size(457, 17);
 			this.tsslMapLabel.Spring = true;
 			// 
 			// tsslDimensions
@@ -287,7 +287,6 @@ namespace MapView
 			// tsslSelectionSize
 			// 
 			this.tsslSelectionSize.AutoSize = false;
-			this.tsslSelectionSize.Margin = new System.Windows.Forms.Padding(0, 3, 2, 2);
 			this.tsslSelectionSize.Name = "tsslSelectionSize";
 			this.tsslSelectionSize.Size = new System.Drawing.Size(62, 17);
 			// 

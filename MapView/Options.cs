@@ -367,7 +367,7 @@ namespace MapView
 		/// <param name="key"></param>
 		internal void doUpdate(string key)
 		{
-			XCom.LogFile.WriteLine("doUpdate() key= " + key);
+			//XCom.LogFile.WriteLine("doUpdate() key= " + key);
 //			if (OptionChanged != null)
 			OptionChanged(key, Value);
 		}
@@ -381,7 +381,7 @@ namespace MapView
 		/// <param name="val"></param>
 		internal void doUpdate(string key, object val)
 		{
-			XCom.LogFile.WriteLine("doUpdate() key= " + key + " val= " + val);
+			//XCom.LogFile.WriteLine("doUpdate() key= " + key + " val= " + val);
 //			if (OptionChanged != null)
 			OptionChanged(key, val);
 		}

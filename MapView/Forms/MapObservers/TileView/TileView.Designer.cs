@@ -184,18 +184,18 @@
 			// 
 			this.tsslTotal.AutoSize = false;
 			this.tsslTotal.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-			this.tsslTotal.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
+			this.tsslTotal.Margin = new System.Windows.Forms.Padding(4, 3, 0, 2);
 			this.tsslTotal.Name = "tsslTotal";
-			this.tsslTotal.Size = new System.Drawing.Size(65, 22);
+			this.tsslTotal.Size = new System.Drawing.Size(65, 17);
 			this.tsslTotal.Text = "Total";
 			this.tsslTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsslOver
 			// 
 			this.tsslOver.AutoSize = false;
-			this.tsslOver.Margin = new System.Windows.Forms.Padding(6, 0, 2, 0);
+			this.tsslOver.Margin = new System.Windows.Forms.Padding(5, 3, 0, 2);
 			this.tsslOver.Name = "tsslOver";
-			this.tsslOver.Size = new System.Drawing.Size(548, 22);
+			this.tsslOver.Size = new System.Drawing.Size(551, 17);
 			this.tsslOver.Spring = true;
 			this.tsslOver.Text = "Over";
 			this.tsslOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
