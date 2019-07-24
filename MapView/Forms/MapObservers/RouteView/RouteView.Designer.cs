@@ -33,15 +33,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmiExport = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiImport = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsddbEdit = new System.Windows.Forms.ToolStripDropDownButton();
+			this.tsmi_RaiseNode = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_LowerNode = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmiAllNodesRank0 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiClearLinkData = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiUpdateAllLinkDistances = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsmi_RaiseNode = new System.Windows.Forms.ToolStripMenuItem();
-			this.tsmi_LowerNode = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsddbDebug = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsmiCheckNodeRanks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiCheckOobNodes = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiCheckNodeRanks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.tss_0 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsb_connect0 = new System.Windows.Forms.ToolStripButton();
@@ -148,14 +148,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// tsmiExport
 			// 
 			this.tsmiExport.Name = "tsmiExport";
-			this.tsmiExport.Size = new System.Drawing.Size(152, 22);
+			this.tsmiExport.Size = new System.Drawing.Size(124, 22);
 			this.tsmiExport.Text = "&Export ...";
 			this.tsmiExport.Click += new System.EventHandler(this.OnExportClick);
 			// 
 			// tsmiImport
 			// 
 			this.tsmiImport.Name = "tsmiImport";
-			this.tsmiImport.Size = new System.Drawing.Size(152, 22);
+			this.tsmiImport.Size = new System.Drawing.Size(124, 22);
 			this.tsmiImport.Text = "&Import ...";
 			this.tsmiImport.Click += new System.EventHandler(this.OnImportClick);
 			// 
@@ -179,6 +179,25 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.tsddbEdit.DropDownOpening += new System.EventHandler(this.OnEditOpening);
 			// 
+			// tsmi_RaiseNode
+			// 
+			this.tsmi_RaiseNode.Name = "tsmi_RaiseNode";
+			this.tsmi_RaiseNode.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_RaiseNode.Text = "node &up 1 level";
+			this.tsmi_RaiseNode.Click += new System.EventHandler(this.OnNodeRaise);
+			// 
+			// tsmi_LowerNode
+			// 
+			this.tsmi_LowerNode.Name = "tsmi_LowerNode";
+			this.tsmi_LowerNode.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_LowerNode.Text = "node &down 1 level";
+			this.tsmi_LowerNode.Click += new System.EventHandler(this.OnNodeLower);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(210, 6);
+			// 
 			// tsmiAllNodesRank0
 			// 
 			this.tsmiAllNodesRank0.Name = "tsmiAllNodesRank0";
@@ -200,25 +219,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsmiUpdateAllLinkDistances.Text = "&Update all Link distances";
 			this.tsmiUpdateAllLinkDistances.Click += new System.EventHandler(this.OnUpdateAllLinkDistances);
 			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
-			// 
-			// tsmi_RaiseNode
-			// 
-			this.tsmi_RaiseNode.Name = "tsmi_RaiseNode";
-			this.tsmi_RaiseNode.Size = new System.Drawing.Size(210, 22);
-			this.tsmi_RaiseNode.Text = "node &up 1 level";
-			this.tsmi_RaiseNode.Click += new System.EventHandler(this.OnNodeRaise);
-			// 
-			// tsmi_LowerNode
-			// 
-			this.tsmi_LowerNode.Name = "tsmi_LowerNode";
-			this.tsmi_LowerNode.Size = new System.Drawing.Size(210, 22);
-			this.tsmi_LowerNode.Text = "node &down 1 level";
-			this.tsmi_LowerNode.Click += new System.EventHandler(this.OnNodeLower);
-			// 
 			// tsddbDebug
 			// 
 			this.tsddbDebug.AutoToolTip = false;
@@ -233,19 +233,19 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbDebug.Text = "&Test";
 			this.tsddbDebug.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tsmiCheckNodeRanks
-			// 
-			this.tsmiCheckNodeRanks.Name = "tsmiCheckNodeRanks";
-			this.tsmiCheckNodeRanks.Size = new System.Drawing.Size(157, 22);
-			this.tsmiCheckNodeRanks.Text = "Test node&ranks";
-			this.tsmiCheckNodeRanks.Click += new System.EventHandler(this.OnCheckNodeRanksClick);
-			// 
 			// tsmiCheckOobNodes
 			// 
 			this.tsmiCheckOobNodes.Name = "tsmiCheckOobNodes";
 			this.tsmiCheckOobNodes.Size = new System.Drawing.Size(157, 22);
 			this.tsmiCheckOobNodes.Text = "Test &positions";
 			this.tsmiCheckOobNodes.Click += new System.EventHandler(this.OnCheckOobNodesClick);
+			// 
+			// tsmiCheckNodeRanks
+			// 
+			this.tsmiCheckNodeRanks.Name = "tsmiCheckNodeRanks";
+			this.tsmiCheckNodeRanks.Size = new System.Drawing.Size(157, 22);
+			this.tsmiCheckNodeRanks.Text = "Test node&ranks";
+			this.tsmiCheckNodeRanks.Click += new System.EventHandler(this.OnCheckNodeRanksClick);
 			// 
 			// tsb_Options
 			// 
@@ -256,7 +256,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsb_Options.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
 			this.tsb_Options.Name = "tsb_Options";
 			this.tsb_Options.Size = new System.Drawing.Size(52, 23);
-			this.tsb_Options.Text = "Options";
+			this.tsb_Options.Text = "&Options";
 			this.tsb_Options.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// tss_0

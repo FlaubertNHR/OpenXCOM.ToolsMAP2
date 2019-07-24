@@ -105,7 +105,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tsddbVisibleQuads.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbVisibleQuads.Name = "tsddbVisibleQuads";
 			this.tsddbVisibleQuads.Size = new System.Drawing.Size(54, 23);
-			this.tsddbVisibleQuads.Text = "Visible";
+			this.tsddbVisibleQuads.Text = "&Visible";
 			this.tsddbVisibleQuads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsb_Options
@@ -117,7 +117,7 @@ namespace MapView.Forms.MapObservers.TopViews
 			this.tsb_Options.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
 			this.tsb_Options.Name = "tsb_Options";
 			this.tsb_Options.Size = new System.Drawing.Size(52, 23);
-			this.tsb_Options.Text = "Options";
+			this.tsb_Options.Text = "&Options";
 			this.tsb_Options.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// TopView

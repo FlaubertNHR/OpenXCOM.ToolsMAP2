@@ -120,7 +120,7 @@
 			this.tsddbExternal.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbExternal.Name = "tsddbExternal";
 			this.tsddbExternal.Size = new System.Drawing.Size(63, 23);
-			this.tsddbExternal.Text = "External";
+			this.tsddbExternal.Text = "&External";
 			this.tsddbExternal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiEditPck
@@ -128,7 +128,7 @@
 			this.tsmiEditPck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsmiEditPck.Name = "tsmiEditPck";
 			this.tsmiEditPck.Size = new System.Drawing.Size(173, 22);
-			this.tsmiEditPck.Text = "open in PckView";
+			this.tsmiEditPck.Text = "open in &PckView";
 			this.tsmiEditPck.Click += new System.EventHandler(this.OnPckEditClick);
 			// 
 			// tsmiEditMcd
@@ -136,7 +136,7 @@
 			this.tsmiEditMcd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsmiEditMcd.Name = "tsmiEditMcd";
 			this.tsmiEditMcd.Size = new System.Drawing.Size(173, 22);
-			this.tsmiEditMcd.Text = "open in McdView";
+			this.tsmiEditMcd.Text = "open in &McdView";
 			this.tsmiEditMcd.Click += new System.EventHandler(this.OnMcdEditClick);
 			// 
 			// tsmi_Sep0
@@ -149,7 +149,7 @@
 			this.tsmiVolutarMcdEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsmiVolutarMcdEditor.Name = "tsmiVolutarMcdEditor";
 			this.tsmiVolutarMcdEditor.Size = new System.Drawing.Size(173, 22);
-			this.tsmiVolutarMcdEditor.Text = "Volutar MCD Editor";
+			this.tsmiVolutarMcdEditor.Text = "&Volutar MCD Editor";
 			this.tsmiVolutarMcdEditor.Click += new System.EventHandler(this.OnVolutarMcdEditorClick);
 			// 
 			// tsb_Options
@@ -161,7 +161,7 @@
 			this.tsb_Options.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
 			this.tsb_Options.Name = "tsb_Options";
 			this.tsb_Options.Size = new System.Drawing.Size(52, 23);
-			this.tsb_Options.Text = "Options";
+			this.tsb_Options.Text = "&Options";
 			this.tsb_Options.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// ssStatusbar
