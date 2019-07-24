@@ -192,6 +192,7 @@ namespace MapView
 			get { return _value; }
 			set
 			{
+				//XCom.LogFile.WriteLine("Options set_Value");
 				if (!_value.Equals(value)) // TODO: Investigate that: (true != true) sic.
 				{
 					var type = _value.GetType();
@@ -366,8 +367,9 @@ namespace MapView
 		/// <param name="key"></param>
 		internal void doUpdate(string key)
 		{
-			if (OptionChanged != null)
-				OptionChanged(key, Value);
+			XCom.LogFile.WriteLine("doUpdate() key= " + key);
+//			if (OptionChanged != null)
+			OptionChanged(key, Value);
 		}
 
 		// TODO: FxCop CA1030:UseEventsWhereAppropriate
@@ -379,8 +381,9 @@ namespace MapView
 		/// <param name="val"></param>
 		internal void doUpdate(string key, object val)
 		{
-			if (OptionChanged != null)
-				OptionChanged(key, val);
+			XCom.LogFile.WriteLine("doUpdate() key= " + key + " val= " + val);
+//			if (OptionChanged != null)
+			OptionChanged(key, val);
 		}
 		#endregion Methods
 	}

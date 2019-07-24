@@ -87,7 +87,7 @@ namespace MapView.Volutar
 			options.AddOptionDefault(
 								VOLUTAR,
 								String.Empty,
-								new OptionChangedEvent(OnVolutarChanged));
+								OnVolutarChanged);
 		}
 		#endregion Methods (static)
 

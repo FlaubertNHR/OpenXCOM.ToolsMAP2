@@ -104,7 +104,6 @@ namespace MapView.Forms.MainWindow
 			}
 		}
 
-
 		/// <summary>
 		/// Closes all the Options views.
 		/// </summary>

@@ -34,7 +34,7 @@ namespace MapView
 
 
 		#region Methods
-		internal void setStartProperty(Form f, bool val)
+		internal void setStartPropertyValue(Form f, bool val)
 		{
 			if      ((f as TileViewForm)     != null) StartTileView     = val;
 			else if ((f as TopViewForm)      != null) StartTopView      = val;
@@ -165,7 +165,7 @@ namespace MapView
 				else if ((_gridLayerOpacity = value.Clamp(0,255)) != value) // on user-changed
 				{
 					XCMainWindow.that.Options[str_GridLayerOpacity].Value = _gridLayerOpacity;
-					foptions.propertyGrid.SetSelectedValue(_gridLayerOpacity);
+//					foptions.propertyGrid.SetSelectedValue(_gridLayerOpacity);
 				}
 			}
 		}
@@ -205,7 +205,7 @@ namespace MapView
 				else if ((_gridLineWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					XCMainWindow.that.Options[str_GridLineWidth].Value = _gridLineWidth;
-					foptions.propertyGrid.SetSelectedValue(_gridLineWidth);
+//					foptions.propertyGrid.SetSelectedValue(_gridLineWidth);
 				}
 			}
 		}
@@ -245,7 +245,7 @@ namespace MapView
 				else if ((_gridLine10Width = value.Clamp(1,6)) != value) // on user-changed
 				{
 					XCMainWindow.that.Options[str_GridLine10Width].Value = _gridLine10Width;
-					foptions.propertyGrid.SetSelectedValue(_gridLine10Width);
+//					foptions.propertyGrid.SetSelectedValue(_gridLine10Width);
 				}
 			}
 		}
@@ -288,7 +288,7 @@ namespace MapView
 				else if ((_selectionBorderOpacity = value.Clamp(0,255)) != value) // on user-changed
 				{
 					XCMainWindow.that.Options[str_SelectionBorderOpacity].Value = _selectionBorderOpacity;
-					foptions.propertyGrid.SetSelectedValue(_selectionBorderOpacity);
+//					foptions.propertyGrid.SetSelectedValue(_selectionBorderOpacity);
 				}
 			}
 		}
@@ -314,7 +314,7 @@ namespace MapView
 				else if ((_selectionBorderWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					XCMainWindow.that.Options[str_SelectionBorderWidth].Value = _selectionBorderWidth;
-					foptions.propertyGrid.SetSelectedValue(_selectionBorderWidth);
+//					foptions.propertyGrid.SetSelectedValue(_selectionBorderWidth);
 				}
 			}
 		}
@@ -371,7 +371,7 @@ namespace MapView
 				else if ((_spriteShade = value.Clamp(0,100)) != value) // on user-changed
 				{
 					XCMainWindow.that.Options[str_SpriteShade].Value = _spriteShade;
-					foptions.propertyGrid.SetSelectedValue(_spriteShade);
+//					foptions.propertyGrid.SetSelectedValue(_spriteShade);
 				}
 
 				if (_spriteShade != 0)
@@ -428,7 +428,7 @@ namespace MapView
 				else if ((_interpolation = value.Clamp(0,7)) != value) // on user-changed
 				{
 					XCMainWindow.that.Options[str_Interpolation].Value = _interpolation;
-					foptions.propertyGrid.SetSelectedValue(_interpolation);
+//					foptions.propertyGrid.SetSelectedValue(_interpolation);
 				}
 
 				InterpolationE = (InterpolationMode)_interpolation;
@@ -656,12 +656,37 @@ namespace MapView
 		{
 			switch (key)
 			{
-				case str_StartTileView:     StartTileView     = (bool)val; break;
-				case str_StartTopView:      StartTopView      = (bool)val; break;
-				case str_StartRouteView:    StartRouteView    = (bool)val; break;
-				case str_StartTopRouteView: StartTopRouteView = (bool)val; break;
+				case str_StartTileView:
+					MenuManager.setMenuChecked(
+											MenuManager.MI_TILE,
+											ObserverManager.TileView,
+											(StartTileView = (bool)val));
+					break;
 
-				case str_BringAllToFront:   BringAllToFront   = (bool)val; break;
+				case str_StartTopView:
+					MenuManager.setMenuChecked(
+											MenuManager.MI_TOP,
+											ObserverManager.TopView,
+											(StartTopView = (bool)val));
+					break;
+
+				case str_StartRouteView:
+					MenuManager.setMenuChecked(
+											MenuManager.MI_ROUTE,
+											ObserverManager.RouteView,
+											(StartRouteView = (bool)val));
+					break;
+
+				case str_StartTopRouteView:
+					MenuManager.setMenuChecked(
+											MenuManager.MI_TOPROUTE,
+											ObserverManager.TopRouteView,
+											(StartTopRouteView = (bool)val));
+					break;
+
+				case str_BringAllToFront:
+					BringAllToFront = (bool)val;
+					break;
 			}
 		}
 

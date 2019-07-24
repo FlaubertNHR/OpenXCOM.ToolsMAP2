@@ -211,21 +211,24 @@ namespace MapView
 		#region Events (override)
 		protected override void OnPropertyValueChanged(PropertyValueChangedEventArgs e)
 		{
+			//XCom.LogFile.WriteLine("OnPropertyValueChanged()");
 			base.OnPropertyValueChanged(e);
 
 			string key = e.ChangedItem.PropertyDescriptor.Name;
+			//XCom.LogFile.WriteLine(". key= " + key);
 			Option option = Options[key];
 			option.doUpdate(key, (option.Value = e.ChangedItem.Value));
 		}
 		#endregion Events (override)
 
 
-		#region Methods
+/*		#region Methods
 		internal void SetSelectedValue(object val)
 		{
+			//XCom.LogFile.WriteLine("SetSelectedValue() val= " + val);
 			if (SelectedGridItem != null && SelectedObject != null)
 				SelectedGridItem.PropertyDescriptor.SetValue(SelectedObject, val); // no fucking guff.
 		}
-		#endregion Methods
+		#endregion Methods */
 	}
 }

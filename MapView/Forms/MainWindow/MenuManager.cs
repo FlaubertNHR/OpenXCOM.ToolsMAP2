@@ -17,6 +17,11 @@ namespace MapView.Forms.MainWindow
 		#region Fields (static)
 		private const string PropertyStartObserver = "Start";
 		private const string Separator = "-";
+
+		internal const int MI_TILE     = 0;
+		internal const int MI_TOP      = 2;
+		internal const int MI_ROUTE    = 3;
+		internal const int MI_TOPROUTE = 4;
 		#endregion Fields (static)
 
 
@@ -68,6 +73,28 @@ namespace MapView.Forms.MainWindow
 			}
 			else
 				f.Close();
+		}
+
+		/// <summary>
+		/// Sets state when any of MainViewOptionables' start-viewer Properties
+		/// is user-changed.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="f"></param>
+		/// <param name="val"></param>
+		internal static void setMenuChecked(int id, Form f, bool val)
+		{
+			if (Viewers.Enabled)
+			{
+				if (Viewers.MenuItems[id].Checked = val)
+				{
+					f.Show();
+					if (f.WindowState == FormWindowState.Minimized)
+						f.WindowState  = FormWindowState.Normal;
+				}
+				else
+					f.Close();
+			}
 		}
 
 		/// <summary>
@@ -213,22 +240,22 @@ namespace MapView.Forms.MainWindow
 				{
 					var fobserver = sender as Form;
 					options[key].Value = fobserver.Visible;
-					XCMainWindow.Optionables.setStartProperty(fobserver, fobserver.Visible);
+					XCMainWindow.Optionables.setStartPropertyValue(fobserver, fobserver.Visible);
 
 					var foptions = XCMainWindow._foptions;
 					if (foptions != null && foptions.Visible)
 					{
 						var grid = (foptions as OptionsForm).propertyGrid;
-						grid.SetSelectedValue((object)fobserver.Visible);
+//						grid.SetSelectedValue((object)fobserver.Visible);
 						grid.Refresh();
 					}
 				};
 			}
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));													// id #5
+			Viewers.MenuItems.Add(new MenuItem(Separator));								// id #5
 
-			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);						// id #6
-			var it7 = new MenuItem("restore all",  OnRestoreAllClick,  Shortcut.F12);						// id #7
+			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);	// id #6
+			var it7 = new MenuItem("restore all",  OnRestoreAllClick,  Shortcut.F12);	// id #7
 			Viewers.MenuItems.Add(it6);
 			Viewers.MenuItems.Add(it7);
 
@@ -335,10 +362,10 @@ namespace MapView.Forms.MainWindow
 			int id = -1;
 			switch (e.KeyCode)
 			{
-				case Keys.F5: id = 0; break; // show/hide viewers ->
-				case Keys.F6: id = 2; break;
-				case Keys.F7: id = 3; break;
-				case Keys.F8: id = 4; break;
+				case Keys.F5: id = MI_TILE;     break; // show/hide viewers ->
+				case Keys.F6: id = MI_TOP;      break;
+				case Keys.F7: id = MI_ROUTE;    break;
+				case Keys.F8: id = MI_TOPROUTE; break;
 
 				case Keys.F11: OnMinimizeAllClick(null, EventArgs.Empty); break; // min/rest ->
 				case Keys.F12: OnRestoreAllClick( null, EventArgs.Empty); break;

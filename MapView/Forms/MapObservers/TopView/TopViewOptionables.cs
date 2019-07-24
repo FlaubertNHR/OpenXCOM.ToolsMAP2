@@ -73,7 +73,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				else if ((_gridLineWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					TopView.Options[str_GridLineWidth].Value = _gridLineWidth;
-					foptions.propertyGrid.SetSelectedValue(_gridLineWidth);
+//					foptions.propertyGrid.SetSelectedValue(_gridLineWidth);
 				}
 			}
 		}
@@ -113,7 +113,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				else if ((_gridLine10Width = value.Clamp(1,6)) != value) // on user-changed
 				{
 					TopView.Options[str_GridLine10Width].Value = _gridLine10Width;
-					foptions.propertyGrid.SetSelectedValue(_gridLine10Width);
+//					foptions.propertyGrid.SetSelectedValue(_gridLine10Width);
 				}
 			}
 		}
@@ -170,7 +170,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				else if ((_westWidth = value.Clamp(1,9)) != value) // on user-changed
 				{
 					TopView.Options[str_WestWidth].Value = _westWidth;
-					foptions.propertyGrid.SetSelectedValue(_westWidth);
+//					foptions.propertyGrid.SetSelectedValue(_westWidth);
 				}
 			}
 		}
@@ -210,7 +210,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				else if ((_northWidth = value.Clamp(1,9)) != value) // on user-changed
 				{
 					TopView.Options[str_NorthWidth].Value = _northWidth;
-					foptions.propertyGrid.SetSelectedValue(_northWidth);
+//					foptions.propertyGrid.SetSelectedValue(_northWidth);
 				}
 			}
 		}
@@ -267,7 +267,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				else if ((_selectorWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					TopView.Options[str_SelectorWidth].Value = _selectorWidth;
-					foptions.propertyGrid.SetSelectedValue(_selectorWidth);
+//					foptions.propertyGrid.SetSelectedValue(_selectorWidth);
 				}
 			}
 		}
@@ -307,7 +307,7 @@ namespace MapView.Forms.MapObservers.TopViews
 				else if ((_selectedWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					TopView.Options[str_SelectedWidth].Value = _selectedWidth;
-					foptions.propertyGrid.SetSelectedValue(_selectedWidth);
+//					foptions.propertyGrid.SetSelectedValue(_selectedWidth);
 				}
 			}
 		}
