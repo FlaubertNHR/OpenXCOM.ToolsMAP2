@@ -2461,7 +2461,10 @@ namespace MapView
 					Optionables.OpenDoors = false;
 					SetDoorSpritesFullPhase(false);
 					if (_foptions != null && _foptions.Visible)
+					{
+//						(_foptions as OptionsForm).propertyGrid.SetSelectedValue(false);
 						(_foptions as OptionsForm).propertyGrid.Refresh();
+					}
 
 					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 						MenuManager.StartSecondaryStage();

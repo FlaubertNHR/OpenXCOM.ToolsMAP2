@@ -223,7 +223,8 @@ namespace MapView
 		#region Methods
 		internal void SetSelectedValue(object val)
 		{
-			SelectedGridItem.PropertyDescriptor.SetValue(SelectedObject, val); // no fucking guff.
+			if (SelectedGridItem != null && SelectedObject != null)
+				SelectedGridItem.PropertyDescriptor.SetValue(SelectedObject, val); // no fucking guff.
 		}
 		#endregion Methods
 	}

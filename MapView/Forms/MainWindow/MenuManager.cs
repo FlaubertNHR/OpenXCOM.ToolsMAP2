@@ -38,7 +38,7 @@ namespace MapView.Forms.MainWindow
 		internal static void OnMenuItemClick(object sender, EventArgs e)
 		{
 			var it = sender as MenuItem;
-			var f = it.Tag as Form;
+			var f  = it.Tag as Form;
 
 			if (it.Checked && Control.ModifierKeys == Keys.Control)
 			{
@@ -171,34 +171,66 @@ namespace MapView.Forms.MainWindow
 			CreateMenuitem(ObserverManager.RouteView,    RegistryInfo.RouteView,    Viewers, Shortcut.F7);	// id #3
 			CreateMenuitem(ObserverManager.TopRouteView, RegistryInfo.TopRouteView, Viewers, Shortcut.F8);	// id #4
 
+			Options options = OptionsManager.getMainOptions();
+			OptionChangedEvent changer = XCMainWindow.Optionables.OnFlagChanged;
+
+			Form f; // initialize w/ default start option ->
+			bool @default;
+			for (int id = 0; id != 5; ++id)
+			{
+				switch (id)
+				{
+					default: //case 0
+						f = ObserverManager.TileView;
+						@default = MainViewOptionables.def_StartTileView;
+						break;
+
+					case 1: // separator
+						++id;
+						goto case 2;
+
+					case 2:
+						f = ObserverManager.TopView;
+						@default = MainViewOptionables.def_StartTopView;
+						break;
+					case 3:
+						f = ObserverManager.RouteView;
+						@default = MainViewOptionables.def_StartRouteView;
+						break;
+					case 4:
+						f = ObserverManager.TopRouteView;
+						@default = MainViewOptionables.def_StartTopRouteView;
+						break;
+				}
+
+				string key = PropertyStartObserver + RegistryInfo.getRegistryLabel(f);
+				options.AddOptionDefault(
+									key,
+									@default, // true to have the viewer open on 1st run.
+									changer);
+
+				f.VisibleChanged += (sender, e) =>
+				{
+					var fobserver = sender as Form;
+					options[key].Value = fobserver.Visible;
+					XCMainWindow.Optionables.setStartProperty(fobserver, fobserver.Visible);
+
+					var foptions = XCMainWindow._foptions;
+					if (foptions != null && foptions.Visible)
+					{
+						var grid = (foptions as OptionsForm).propertyGrid;
+						grid.SetSelectedValue((object)fobserver.Visible);
+						grid.Refresh();
+					}
+				};
+			}
+
 			Viewers.MenuItems.Add(new MenuItem(Separator));													// id #5
 
 			var it6 = new MenuItem("minimize all", OnMinimizeAllClick, Shortcut.F11);						// id #6
 			var it7 = new MenuItem("restore all",  OnRestoreAllClick,  Shortcut.F12);						// id #7
 			Viewers.MenuItems.Add(it6);
 			Viewers.MenuItems.Add(it7);
-
-
-			Options options = OptionsManager.getMainOptions();
-			OptionChangedEvent changer = XCMainWindow.Optionables.OnFlagChanged;
-			foreach (MenuItem it in Viewers.MenuItems)
-			{
-				var f = it.Tag as Form;
-				if (f != null)
-				{
-					string key = PropertyStartObserver + RegistryInfo.getRegistryLabel(f);
-					options.AddOptionDefault(
-										key,
-										f is TileViewForm || f is TopViewForm // true to have the viewer open on 1st run.
-														  || f is RouteViewForm,
-										changer);
-
-					f.VisibleChanged += (sender, e) =>
-					{
-						options[key].Value = (sender as Form).Visible;
-					};
-				}
-			}
 
 
 			// "Help" menuitems ->
@@ -234,7 +266,10 @@ namespace MapView.Forms.MainWindow
 
 			it.Click += OnMenuItemClick;
 
-			if (secondary(f))
+			if (   f is TileViewForm
+				|| f is TopViewForm
+				|| f is RouteViewForm
+				|| f is TopRouteViewForm)
 			{
 				RegistryInfo.RegisterProperties(f);
 
@@ -262,22 +297,6 @@ namespace MapView.Forms.MainWindow
 					}
 				};
 			}
-		}
-
-		/// <summary>
-		/// Checks if a specified form is a secondary viewer. Secondary forms
-		/// are instantiated on app-start and remain that way for the life of
-		/// the app (many tertiary forms do too, but secondary forms shall be
-		/// guaranteed).
-		/// </summary>
-		/// <param name="f">a form to check against</param>
-		/// <returns></returns>
-		private static bool secondary(Form f)
-		{
-			return f is TileViewForm
-				|| f is TopViewForm
-				|| f is RouteViewForm
-				|| f is TopRouteViewForm;
 		}
 
 		/// <summary>

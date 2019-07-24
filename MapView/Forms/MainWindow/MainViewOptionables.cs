@@ -5,8 +5,12 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 using MapView.Forms.MainWindow;
+using MapView.Forms.MapObservers.RouteViews;
+using MapView.Forms.MapObservers.TileViews;
+using MapView.Forms.MapObservers.TopViews;
 
 
 namespace MapView
@@ -29,6 +33,17 @@ namespace MapView
 		#endregion cTor
 
 
+		#region Methods
+		internal void setStartProperty(Form f, bool val)
+		{
+			if      ((f as TileViewForm)     != null) StartTileView     = val;
+			else if ((f as TopViewForm)      != null) StartTopView      = val;
+			else if ((f as RouteViewForm)    != null) StartRouteView    = val;
+			else if ((f as TopRouteViewForm) != null) StartTopRouteView = val;
+		}
+		#endregion Methods
+
+
 		#region Properties (optionable)
 		// NOTE: The Properties are public for Reflection.
 
@@ -46,8 +61,8 @@ namespace MapView
 		// MenuManager.StartSecondaryStage().
 		private const string cat_Observers = "Observers";
 
-		private const string str_StartTileView = "StartTileView";
-		private const bool   def_StartTileView = true;
+		private  const string str_StartTileView = "StartTileView";
+		internal const bool   def_StartTileView = true;
 
 		private bool _starttileview = def_StartTileView;
 		[Category(cat_Observers)]
@@ -59,8 +74,8 @@ namespace MapView
 			set { _starttileview = value; }
 		}
 
-		private const string str_StartTopView = "StartTopView";
-		private const bool   def_StartTopView = true;
+		private  const string str_StartTopView = "StartTopView";
+		internal const bool   def_StartTopView = true;
 
 		private bool _starttopview = def_StartTopView;
 		[Category(cat_Observers)]
@@ -72,8 +87,8 @@ namespace MapView
 			set { _starttopview = value; }
 		}
 
-		private const string str_StartRouteView = "StartRouteView";
-		private const bool   def_StartRouteView = true;
+		private  const string str_StartRouteView = "StartRouteView";
+		internal const bool   def_StartRouteView = true;
 
 		private bool _startrouteview = def_StartRouteView;
 		[Category(cat_Observers)]
@@ -85,8 +100,8 @@ namespace MapView
 			set { _startrouteview = value; }
 		}
 
-		private const string str_StartTopRouteView = "StartTopRouteView";
-		private const bool   def_StartTopRouteView = false;
+		private  const string str_StartTopRouteView = "StartTopRouteView";
+		internal const bool   def_StartTopRouteView = false;
 
 		private bool _starttoprouteview = def_StartTopRouteView;
 		[Category(cat_Observers)]
