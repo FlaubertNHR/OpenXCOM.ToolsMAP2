@@ -160,6 +160,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			base.Dispose(disposing);
 		}
 
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -178,7 +179,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.Name = "TileViewForm";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "TileView";
+			this.Text = " TileView";
 			this.ResumeLayout(false);
 
 		}

@@ -20,6 +20,7 @@
 			base.Dispose(disposing);
 		}
 
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -39,7 +40,7 @@
 			this.Name = "RouteViewForm";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "RouteView";
+			this.Text = " RouteView";
 			this.ResumeLayout(false);
 
 		}

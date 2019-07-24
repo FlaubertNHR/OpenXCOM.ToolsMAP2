@@ -20,6 +20,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			base.Dispose(disposing);
 		}
 
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -141,21 +142,21 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbFile.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbFile.Name = "tsddbFile";
 			this.tsddbFile.Size = new System.Drawing.Size(37, 23);
-			this.tsddbFile.Text = "File";
+			this.tsddbFile.Text = "&File";
 			this.tsddbFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiExport
 			// 
 			this.tsmiExport.Name = "tsmiExport";
-			this.tsmiExport.Size = new System.Drawing.Size(232, 22);
-			this.tsmiExport.Text = "export Routes to .RMP file";
+			this.tsmiExport.Size = new System.Drawing.Size(152, 22);
+			this.tsmiExport.Text = "&Export ...";
 			this.tsmiExport.Click += new System.EventHandler(this.OnExportClick);
 			// 
 			// tsmiImport
 			// 
 			this.tsmiImport.Name = "tsmiImport";
-			this.tsmiImport.Size = new System.Drawing.Size(232, 22);
-			this.tsmiImport.Text = "import Routes from .RMP file";
+			this.tsmiImport.Size = new System.Drawing.Size(152, 22);
+			this.tsmiImport.Text = "&Import ...";
 			this.tsmiImport.Click += new System.EventHandler(this.OnImportClick);
 			// 
 			// tsddbEdit
@@ -163,40 +164,40 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbEdit.AutoToolTip = false;
 			this.tsddbEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsddbEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tsmi_RaiseNode,
+			this.tsmi_LowerNode,
+			this.toolStripSeparator1,
 			this.tsmiAllNodesRank0,
 			this.tsmiClearLinkData,
-			this.tsmiUpdateAllLinkDistances,
-			this.toolStripSeparator1,
-			this.tsmi_RaiseNode,
-			this.tsmi_LowerNode});
+			this.tsmiUpdateAllLinkDistances});
 			this.tsddbEdit.Font = new System.Drawing.Font("Verdana", 7F);
 			this.tsddbEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbEdit.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsddbEdit.Name = "tsddbEdit";
 			this.tsddbEdit.Size = new System.Drawing.Size(38, 23);
-			this.tsddbEdit.Text = "Edit";
+			this.tsddbEdit.Text = "&Edit";
 			this.tsddbEdit.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.tsddbEdit.DropDownOpening += new System.EventHandler(this.OnEditOpening);
 			// 
 			// tsmiAllNodesRank0
 			// 
 			this.tsmiAllNodesRank0.Name = "tsmiAllNodesRank0";
-			this.tsmiAllNodesRank0.Size = new System.Drawing.Size(210, 22);
-			this.tsmiAllNodesRank0.Text = "All Nodes Rank 0";
+			this.tsmiAllNodesRank0.Size = new System.Drawing.Size(213, 22);
+			this.tsmiAllNodesRank0.Text = "&Zero all noderanks ...";
 			this.tsmiAllNodesRank0.Click += new System.EventHandler(this.OnAllNodesRank0Click);
 			// 
 			// tsmiClearLinkData
 			// 
 			this.tsmiClearLinkData.Name = "tsmiClearLinkData";
-			this.tsmiClearLinkData.Size = new System.Drawing.Size(210, 22);
-			this.tsmiClearLinkData.Text = "Clear Link data";
+			this.tsmiClearLinkData.Size = new System.Drawing.Size(213, 22);
+			this.tsmiClearLinkData.Text = "&Clear current Link data ...";
 			this.tsmiClearLinkData.Click += new System.EventHandler(this.OnClearLinkDataClick);
 			// 
 			// tsmiUpdateAllLinkDistances
 			// 
 			this.tsmiUpdateAllLinkDistances.Name = "tsmiUpdateAllLinkDistances";
-			this.tsmiUpdateAllLinkDistances.Size = new System.Drawing.Size(210, 22);
-			this.tsmiUpdateAllLinkDistances.Text = "Update all Link distances";
+			this.tsmiUpdateAllLinkDistances.Size = new System.Drawing.Size(213, 22);
+			this.tsmiUpdateAllLinkDistances.Text = "&Update all Link distances";
 			this.tsmiUpdateAllLinkDistances.Click += new System.EventHandler(this.OnUpdateAllLinkDistances);
 			// 
 			// toolStripSeparator1
@@ -208,14 +209,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 			// 
 			this.tsmi_RaiseNode.Name = "tsmi_RaiseNode";
 			this.tsmi_RaiseNode.Size = new System.Drawing.Size(210, 22);
-			this.tsmi_RaiseNode.Text = "node up 1 level";
+			this.tsmi_RaiseNode.Text = "node &up 1 level";
 			this.tsmi_RaiseNode.Click += new System.EventHandler(this.OnNodeRaise);
 			// 
 			// tsmi_LowerNode
 			// 
 			this.tsmi_LowerNode.Name = "tsmi_LowerNode";
 			this.tsmi_LowerNode.Size = new System.Drawing.Size(210, 22);
-			this.tsmi_LowerNode.Text = "node down 1 level";
+			this.tsmi_LowerNode.Text = "node &down 1 level";
 			this.tsmi_LowerNode.Click += new System.EventHandler(this.OnNodeLower);
 			// 
 			// tsddbDebug
@@ -223,27 +224,27 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsddbDebug.AutoToolTip = false;
 			this.tsddbDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsddbDebug.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiCheckNodeRanks,
-			this.tsmiCheckOobNodes});
+			this.tsmiCheckOobNodes,
+			this.tsmiCheckNodeRanks});
 			this.tsddbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbDebug.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsddbDebug.Name = "tsddbDebug";
-			this.tsddbDebug.Size = new System.Drawing.Size(54, 23);
-			this.tsddbDebug.Text = "Debug";
+			this.tsddbDebug.Size = new System.Drawing.Size(42, 23);
+			this.tsddbDebug.Text = "&Test";
 			this.tsddbDebug.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsmiCheckNodeRanks
 			// 
 			this.tsmiCheckNodeRanks.Name = "tsmiCheckNodeRanks";
-			this.tsmiCheckNodeRanks.Size = new System.Drawing.Size(226, 22);
-			this.tsmiCheckNodeRanks.Text = "Check Node ranks";
+			this.tsmiCheckNodeRanks.Size = new System.Drawing.Size(157, 22);
+			this.tsmiCheckNodeRanks.Text = "Test node&ranks";
 			this.tsmiCheckNodeRanks.Click += new System.EventHandler(this.OnCheckNodeRanksClick);
 			// 
 			// tsmiCheckOobNodes
 			// 
 			this.tsmiCheckOobNodes.Name = "tsmiCheckOobNodes";
-			this.tsmiCheckOobNodes.Size = new System.Drawing.Size(226, 22);
-			this.tsmiCheckOobNodes.Text = "Check Out of Bounds nodes";
+			this.tsmiCheckOobNodes.Size = new System.Drawing.Size(157, 22);
+			this.tsmiCheckOobNodes.Text = "Test &positions";
 			this.tsmiCheckOobNodes.Click += new System.EventHandler(this.OnCheckOobNodesClick);
 			// 
 			// tsb_Options

@@ -11,11 +11,6 @@
 			base.Dispose(disposing);
 		}
 
-/*		The #develop designer might delete this
-
-			this.tcTileTypes = new DSShared.Windows.CompositedTabControl();
-
-		so copy it back into InitializeComponent(). */
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
