@@ -2,6 +2,7 @@
 {
 	partial class TilesetEditor
 	{
+		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -19,7 +20,7 @@
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -645,7 +646,6 @@
 			this.ResumeLayout(false);
 
 		}
-		#endregion
 
 		private System.Windows.Forms.Button btnAccept;
 		private System.Windows.Forms.Button btnDecline;
@@ -695,5 +695,6 @@
 		private System.Windows.Forms.Label lblTilesetCount;
 		private System.Windows.Forms.Label lblTilesetCount_;
 		private System.Windows.Forms.Button btn_GlobalTerrains;
+		#endregion Designer
 	}
 }

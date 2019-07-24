@@ -340,7 +340,7 @@ namespace MapView
 
 				MapBase.CalculateOccultations();
 
-				RefreshViewers();
+				InvalidateObservers();
 			}
 		}
 
@@ -425,7 +425,7 @@ namespace MapView
 
 					MapBase.CalculateOccultations();
 
-					RefreshViewers();
+					InvalidateObservers();
 				}
 				else
 				{
@@ -526,7 +526,7 @@ namespace MapView
 
 				MapBase.CalculateOccultations();
 
-				RefreshViewers();
+				InvalidateObservers();
 			}
 		}
 
@@ -554,14 +554,14 @@ namespace MapView
 
 			MapBase.CalculateOccultations();
 
-			RefreshViewers();
+			InvalidateObservers();
 		}
 
 		/// <summary>
 		/// Causes this panel to redraw along with the TopView, RouteView, and
 		/// TopRouteView forms - also invalidates the ScanG panel.
 		/// </summary>
-		private void RefreshViewers()
+		private void InvalidateObservers()
 		{
 			Invalidate();
 
@@ -859,7 +859,7 @@ namespace MapView
 				if (MouseDrag != null) // path the selected-lozenge
 					MouseDrag();
 
-				RefreshViewers();
+				InvalidateObservers();
 
 				// update SelectionSize on statusbar
 				var a = GetDragBeg_abs();
