@@ -281,7 +281,7 @@ namespace MapView.Forms.MainWindow
 				Menu parent,
 				Shortcut shortcut = Shortcut.None)
 		{
-			var it = new MenuItem(f.Text);
+			var it = new MenuItem(f.Text.Trim());
 			it.Shortcut = shortcut;
 			it.Tag = f;
 
