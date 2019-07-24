@@ -190,13 +190,13 @@ namespace MapView.Forms.MainWindow
 		internal static void PopulateMenus()
 		{
 			// "Viewers" menuitems ->
-			CreateMenuitem(ObserverManager.TileView,     RegistryInfo.TileView,     Viewers, Shortcut.F5);	// id #0
+			CreateMenuitem(ObserverManager.TileView,     Viewers, Shortcut.F5);	// id #0
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));													// id #1
+			Viewers.MenuItems.Add(new MenuItem(Separator));						// id #1
 
-			CreateMenuitem(ObserverManager.TopView,      RegistryInfo.TopView,      Viewers, Shortcut.F6);	// id #2
-			CreateMenuitem(ObserverManager.RouteView,    RegistryInfo.RouteView,    Viewers, Shortcut.F7);	// id #3
-			CreateMenuitem(ObserverManager.TopRouteView, RegistryInfo.TopRouteView, Viewers, Shortcut.F8);	// id #4
+			CreateMenuitem(ObserverManager.TopView,      Viewers, Shortcut.F6);	// id #2
+			CreateMenuitem(ObserverManager.RouteView,    Viewers, Shortcut.F7);	// id #3
+			CreateMenuitem(ObserverManager.TopRouteView, Viewers, Shortcut.F8);	// id #4
 
 			Options options = OptionsManager.getMainOptions();
 			OptionChangedEvent changer = XCMainWindow.Optionables.OnFlagChanged;
@@ -264,8 +264,8 @@ namespace MapView.Forms.MainWindow
 			var help = new MenuItem("CHM Help", OnHelpClick, Shortcut.F1);
 			Helpers.MenuItems.Add(help);
 
-			CreateMenuitem(ObserverManager.ColorsScreen, "Colors", Helpers);
-			CreateMenuitem(ObserverManager.AboutScreen,  "About",  Helpers);
+			CreateMenuitem(ObserverManager.ColorsScreen, Helpers);
+			CreateMenuitem(ObserverManager.AboutScreen,  Helpers);
 		}
 
 		/// <summary>
@@ -274,18 +274,14 @@ namespace MapView.Forms.MainWindow
 		/// @note These forms never actually close until MainView closes.
 		/// </summary>
 		/// <param name="f"></param>
-		/// <param name="caption"></param>
 		/// <param name="parent"></param>
 		/// <param name="shortcut"></param>
 		private static void CreateMenuitem(
 				Form f,
-				string caption,
 				Menu parent,
 				Shortcut shortcut = Shortcut.None)
 		{
-			f.Text = caption; // set the titlebar text.
-
-			var it = new MenuItem(caption);
+			var it = new MenuItem(f.Text);
 			it.Shortcut = shortcut;
 			it.Tag = f;
 
