@@ -993,6 +993,9 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			//LogFile.WriteLine("");
+			//LogFile.WriteLine("OnPaint()");
+			//LogFile.WriteLine(Environment.StackTrace);
 //			base.OnPaint(e);
 
 			if (MapBase != null)

@@ -57,11 +57,9 @@ namespace XCom
 			}
 		}
 
-
 		/// <summary>
 		/// @note This is used only by MapFileBase.SaveGifFile().
 		/// </summary>
-//		public override Tilepart[] UsedParts
 		public Tilepart[] UsedParts
 		{
 			get
@@ -82,13 +80,14 @@ namespace XCom
 
 		/// <summary>
 		/// A tile is flagged as occulted if it has tiles with ground-parts
-		/// above and to the south and east.
+		/// above and to the south and east. Is used to optimize the draw-cycle.
 		/// </summary>
 		public bool Occulted
 		{ get; set; }
 
 		/// <summary>
-		/// Used only by 'MapInfoOutputBox'.
+		/// a tile is flagged as vacant if it has no tileparts. Is used to
+		/// optimize the draw-cycle as well as by MapInfoOutputBox.
 		/// </summary>
 		public bool Vacant
 		{ get; private set; }
