@@ -60,12 +60,6 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			SetStyle(ControlStyles.OptimizedDoubleBuffer	// perhaps this should be set on the Panel
-				   | ControlStyles.AllPaintingInWmPaint		// but it doesn't like that
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
-
-
 			_base = @base;
 			Level = _base.Level;
 			Text = GetTitle();
@@ -137,7 +131,7 @@ namespace MapView
 							PixelFormat.Format8bppIndexed);
 
 			var data = pic.LockBits(
-								new Rectangle(0, 0, pic.Width, pic.Height),
+								new Rectangle(0,0, pic.Width, pic.Height),
 								ImageLockMode.WriteOnly,
 								PixelFormat.Format8bppIndexed);
 			var start = data.Scan0;
@@ -175,7 +169,8 @@ namespace MapView
 					tile = _base[y,x,z];
 
 					if (tile.Floor != null
-						&& (iconid = tile.Floor.Record.ScanG) < iconsTotal)
+						&& (iconid = tile.Floor.Record.ScanG) < iconsTotal
+						&& iconid > 35)
 					{
 						for (int i = 0; i != 256; ++i)
 						{
@@ -204,7 +199,8 @@ namespace MapView
 					}
 
 					if (tile.West != null
-						&& (iconid = tile.West.Record.ScanG) < iconsTotal)
+						&& (iconid = tile.West.Record.ScanG) < iconsTotal
+						&& iconid > 35)
 					{
 						for (int i = 0; i != 256; ++i)
 						{
@@ -220,7 +216,8 @@ namespace MapView
 					}
 
 					if (tile.North != null
-						&& (iconid = tile.North.Record.ScanG) < iconsTotal)
+						&& (iconid = tile.North.Record.ScanG) < iconsTotal
+						&& iconid > 35)
 					{
 						for (int i = 0; i != 256; ++i)
 						{
@@ -236,7 +233,8 @@ namespace MapView
 					}
 
 					if (tile.Content != null
-						&& (iconid = tile.Content.Record.ScanG) < iconsTotal)
+						&& (iconid = tile.Content.Record.ScanG) < iconsTotal
+						&& iconid > 35)
 					{
 						for (int i = 0; i != 256; ++i)
 						{
@@ -258,8 +256,8 @@ namespace MapView
 
 			graphics.DrawImage(
 							pic,
-							new Rectangle(1, 1, pic.Width, pic.Height),
-							0, 0, pic.Width, pic.Height,
+							new Rectangle(1,1, pic.Width, pic.Height),
+							0,0, pic.Width, pic.Height,
 							GraphicsUnit.Pixel,
 							spriteAttributes);
 		}
@@ -315,13 +313,13 @@ namespace MapView
 							_icons = ResourceInfo.ScanGtftd;
 
 							result = "SCANG.DAT has reloaded.";
-							title  = "Info";
+							title  = " Info";
 							icon   = MessageBoxIcon.Information;
 						}
 						else
 						{
 							result = "SCANG.DAT failed to reload.";
-							title  = "Error";
+							title  = " Error";
 							icon   = MessageBoxIcon.Error;
 						}
 					}
@@ -330,13 +328,13 @@ namespace MapView
 						_icons = ResourceInfo.ScanGufo;
 
 						result = "SCANG.DAT has reloaded.";
-						title  = "Info";
+						title  = " Info";
 						icon   = MessageBoxIcon.Information;
 					}
 					else
 					{
 						result = "SCANG.DAT failed to reload.";
-						title  = "Error";
+						title  = " Error";
 						icon   = MessageBoxIcon.Error;
 					}
 					ShowReloadResult(result, title, icon);
@@ -367,8 +365,8 @@ namespace MapView
 		private string GetTitle()
 		{
 			return " ScanG - "
-				 + "L " + (_base.MapSize.Levs - Level)
-				 + (SingleLevel ? " - 1" : String.Empty);
+				 + "L" + (_base.MapSize.Levs - Level)
+				 + (SingleLevel ? " - 1 layer" : String.Empty);
 		}
 
 		internal void LoadMapfile(MapFileBase @base)
@@ -390,7 +388,7 @@ namespace MapView
 		#endregion Methods
 
 
-		#region Windows Form Designer generated code
+		#region Designer
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -401,6 +399,7 @@ namespace MapView
 
 			base.Dispose(disposing);
 		}
+
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -440,10 +439,10 @@ namespace MapView
 			this.ResumeLayout(false);
 
 		}
-		#endregion
 
 		private System.ComponentModel.Container components = null;
 
 		private Panel pnl_ScanG;
+		#endregion Designer
 	}
 }
