@@ -17,6 +17,19 @@ namespace MapView
 		#endregion Fields (static)
 
 
+		#region Properties (override)
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+
+
 		#region cTor
 		/// <summary>
 		/// cTor. Instantiates an MCD-info screen.
@@ -30,19 +43,6 @@ namespace MapView
 			rtbInfo.ReadOnly = true;
 		}
 		#endregion cTor
-
-
-		#region Events (override)
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Events (override)
 
 
 		#region Events
