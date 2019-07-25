@@ -40,24 +40,24 @@ namespace MapView
 		private MainViewOverlay MainViewOverlay
 		{ get; set; }
 
-		private MapFileBase _mapBase;
+		private MapFileBase _base;
 		internal MapFileBase MapBase
 		{
-			get { return _mapBase; }
+			get { return _base; }
 			set
 			{
 				MainViewOverlay.MapBase = value;
 
-				if (_mapBase != null)
+				if (_base != null)
 				{
-					_mapBase.SelectLocation -= MainViewOverlay.OnSelectLocationMain;
-					_mapBase.SelectLevel    -= MainViewOverlay.OnSelectLevelMain;
+					_base.SelectLocation -= MainViewOverlay.OnSelectLocationMain;
+					_base.SelectLevel    -= MainViewOverlay.OnSelectLevelMain;
 				}
 
-				if ((_mapBase = value) != null)
+				if ((_base = value) != null)
 				{
-					_mapBase.SelectLocation += MainViewOverlay.OnSelectLocationMain;
-					_mapBase.SelectLevel    += MainViewOverlay.OnSelectLevelMain;
+					_base.SelectLocation += MainViewOverlay.OnSelectLocationMain;
+					_base.SelectLevel    += MainViewOverlay.OnSelectLevelMain;
 
 					SetOverlaySize();
 				}

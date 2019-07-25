@@ -11,7 +11,7 @@ namespace MapView.Forms.MapObservers
 	/// <summary>
 	/// Interface for MapObserverControl and MapObserverControl_Top.
 	/// </summary>
-	public interface IMapObserver
+	internal interface IMapObserver
 	{
 		[Browsable(false)]
 		MapFileBase MapBase
