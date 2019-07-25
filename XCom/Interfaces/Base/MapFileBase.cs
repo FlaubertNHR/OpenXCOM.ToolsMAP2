@@ -305,12 +305,11 @@ namespace XCom.Interfaces.Base
 							var parts = this[row, col, lev].UsedParts;
 							foreach (var part in parts)
 							{
-								var tilepart = part as Tilepart;
 								BitmapService.Insert(
-												tilepart[0].Sprite,
+												part[0].Sprite,
 												b,
 												x,
-												y - tilepart.Record.TileOffset);
+												y - part.Record.TileOffset);
 							}
 						}
 					}
