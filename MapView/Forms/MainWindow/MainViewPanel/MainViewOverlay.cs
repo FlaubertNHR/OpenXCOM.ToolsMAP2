@@ -861,10 +861,8 @@ namespace MapView
 
 				InvalidateObservers();
 
-				// update SelectionSize on statusbar
-				var a = GetDragBeg_abs();
+				var a = GetDragBeg_abs(); // update SelectionSize on statusbar ->
 				var b = GetDragEnd_abs();
-
 				MainView.sb_PrintSelectionSize(
 											b.X - a.X + 1,
 											b.Y - a.Y + 1);

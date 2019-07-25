@@ -502,7 +502,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 					MessageBox.Show(
 								this,
 								"Cannot move node onto another node.",
-								"Err..",
+								" Err..",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,

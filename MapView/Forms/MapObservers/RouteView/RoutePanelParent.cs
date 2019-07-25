@@ -268,6 +268,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 			base.OnMouseMove(e); // required to fire RouteView.OnRoutePanelMouseMove()
 		}
 
+		/// <summary>
+		/// Calls RouteView.OnRoutePanelMouseUp().
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			if (MapFile != null // safety.
