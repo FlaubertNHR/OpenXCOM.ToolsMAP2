@@ -57,11 +57,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// A node that is currently selected. Set its value via RouteView only.
 		/// </summary>
-		internal static RouteNode NodeSelected
+		internal protected static RouteNode NodeSelected
 		{ get; set; }
 
 		/// <summary>
-		/// Stores the x/y-position of the currently selected tile.
+		/// Stores the x/y-position of the currently selected tile for drawing
+		/// the selected-lozenge in RoutePanel.
+		/// TODO: Replace w/ MapFileBase.Location ...
 		/// </summary>
 		internal protected static Point SelectedLocation
 		{ get; set; }
@@ -225,33 +227,48 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			Select();
 
-			if (MapFile != null) // safety.
+			var loc = GetTileLocation(e.X, e.Y);
+			if (loc.X != -1)
 			{
-				var loc = GetTileLocation(e.X, e.Y);
-				if (loc.X != -1)
-				{
-					MainViewOverlay.that._keyDeltaX =
-					MainViewOverlay.that._keyDeltaY = 0;
+				MainViewOverlay.that._keyDeltaX =
+				MainViewOverlay.that._keyDeltaY = 0;
 
-					MapFile.Location = new MapLocation( // fire SelectLocation
-													loc.Y, loc.X,
-													MapFile.Level);
+				MapFile.Location = new MapLocation( // fire SelectLocation
+												loc.Y, loc.X,
+												MapFile.Level);
 
-					MainViewOverlay.that.ProcessSelection(loc,loc);	// set selected location for other viewers.
-																	// NOTE: drag-selection is not allowed here.
-					if (RoutePanelMouseDownEvent != null)
-					{
-						var args = new RoutePanelEventArgs(
-														e.Button,
-														MapFile[loc.Y, loc.X],
-														MapFile.Location);
-						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
-					}
+				MainViewOverlay.that.ProcessSelection(loc,loc);	// set selected location for other viewers.
+																// NOTE: drag-selection is not allowed here.
+				var args = new RoutePanelEventArgs(
+												e.Button,
+												MapFile[loc.Y, loc.X],
+												MapFile.Location);
+				RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
-					SelectedLocation = loc;	// NOTE: if a new 'SelectedLocation' is set before firing the
-				}							// RoutePanelMouseDownEvent, OnPaint() will draw a frame with
-			}								// incorrectly selected-link lines. So set the 'SelectedLocation'
-		}									// *after* the event happens.
+				SelectedLocation = loc;	// NOTE: if a new 'SelectedLocation' is set before firing the RoutePanelMouseDownEvent,
+			}							// OnPaint() will draw a frame with incorrectly selected-link lines. So set the
+		}								// 'SelectedLocation' *after* the event happens.
+
+		/// <summary>
+		/// Calls RouteView.OnRoutePanelMouseUp().
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			var loc = GetTileLocation(e.X, e.Y);
+			if (loc.X != -1)
+			{
+				MapFile.Location = new MapLocation( // fire SelectLocation
+												loc.Y, loc.X,
+												MapFile.Level);
+
+				var args = new RoutePanelEventArgs(
+												e.Button,
+												MapFile[loc.Y, loc.X],
+												MapFile.Location);
+				RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+			}
+		}
 
 		/// <summary>
 		/// Tracks x/y location for the mouseover lozenge.
@@ -266,29 +283,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 				_overRow = loc.Y;
 			}
 			base.OnMouseMove(e); // required to fire RouteView.OnRoutePanelMouseMove()
-		}
-
-		/// <summary>
-		/// Calls RouteView.OnRoutePanelMouseUp().
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnMouseUp(MouseEventArgs e)
-		{
-			if (MapFile != null // safety.
-				&& RoutePanelMouseUpEvent != null)
-			{
-				var loc = GetTileLocation(e.X, e.Y);
-				if (loc.X != -1)
-				{
-					var args = new RoutePanelEventArgs(
-													e.Button,
-													MapFile[loc.Y, loc.X],
-													new MapLocation(
-																loc.Y, loc.X,
-																MapFile.Level));
-					RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
-				}
-			}
 		}
 		#endregion Events (override)
 
@@ -313,33 +307,29 @@ namespace MapView.Forms.MapObservers.RouteViews
 					var loc = new Point(0,0);
 					MainViewOverlay.that.ProcessSelection(loc,loc);
 
-					if (RoutePanelMouseDownEvent != null)
-					{
-						var args = new RoutePanelEventArgs(
-														MouseButtons.Left,
-														MapFile[0,0],
-														MapFile.Location);
-						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+					var args = new RoutePanelEventArgs(
+													MouseButtons.Left,
+													MapFile[0,0],
+													MapFile.Location);
+					RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
-						ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-						ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-					}
+					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+
 					SelectedLocation = loc;
 				}
 				else if (keyData == Keys.Enter)
 				{
-					if (RoutePanelMouseDownEvent != null)
-					{
-						var args = new RoutePanelEventArgs(
-														MouseButtons.Right,
-														MapFile[MapFile.Location.Row,
-																MapFile.Location.Col],
-														MapFile.Location);
-						RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+					var args = new RoutePanelEventArgs(
+													MouseButtons.Right,
+													MapFile[MapFile.Location.Row,
+															MapFile.Location.Col],
+													MapFile.Location);
+					RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
-						ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-						ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-					}
+					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+
 					SelectedLocation = new Point(
 											MapFile.Location.Col,
 											MapFile.Location.Row);
@@ -378,17 +368,15 @@ namespace MapView.Forms.MapObservers.RouteViews
 							loc.X = c; loc.Y = r;
 							MainViewOverlay.that.ProcessSelection(loc,loc);
 
-							if (RoutePanelMouseDownEvent != null)
-							{
-								var args = new RoutePanelEventArgs(
-																MouseButtons.Left,
-																MapFile[r,c],
-																MapFile.Location);
-								RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+							var args = new RoutePanelEventArgs(
+															MouseButtons.Left,
+															MapFile[r,c],
+															MapFile.Location);
+							RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 
-								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-							}
+							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+
 							SelectedLocation = loc;
 						}
 					}
@@ -409,96 +397,80 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else // [Shift] = drag node ->
 				{
-					var loc = new Point(0,0);
-					int vert = 0;
-					switch (keyData)
+					RouteNode node = MapFile[MapFile.Location.Row,
+											 MapFile.Location.Col,
+											 MapFile.Level].Node;
+					if (node != null && node == NodeSelected)
 					{
-						case Keys.Shift | Keys.Up:    loc.X = -1; loc.Y = -1; break;
-						case Keys.Shift | Keys.Right: loc.X = +1; loc.Y = -1; break;
-						case Keys.Shift | Keys.Down:  loc.X = +1; loc.Y = +1; break;
-						case Keys.Shift | Keys.Left:  loc.X = -1; loc.Y = +1; break;
-
-						case Keys.Shift | Keys.PageUp:   loc.Y = -1; break;
-						case Keys.Shift | Keys.PageDown: loc.X = +1; break;
-						case Keys.Shift | Keys.End:      loc.Y = +1; break;
-						case Keys.Shift | Keys.Home:     loc.X = -1; break;
-
-//						case Keys.Shift | Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
-						case Keys.Shift | Keys.Add:      vert = +1; break;
-//						case Keys.Shift | Keys.Insert:
-						case Keys.Shift | Keys.Subtract: vert = -1; break;
-					}
-
-					if (loc.X != 0 || loc.Y != 0)
-					{
-						int r = MapFile.Location.Row + loc.Y;
-						int c = MapFile.Location.Col + loc.X;
-						if (   r > -1 && r < MapFile.MapSize.Rows
-							&& c > -1 && c < MapFile.MapSize.Cols)
+						var loc = new Point(0,0);
+						int vert = 0;
+						switch (keyData)
 						{
-							if (MapFile[r,c, MapFile.Level].Node == null)
+							case Keys.Shift | Keys.Up:    loc.X = -1; loc.Y = -1; break;
+							case Keys.Shift | Keys.Right: loc.X = +1; loc.Y = -1; break;
+							case Keys.Shift | Keys.Down:  loc.X = +1; loc.Y = +1; break;
+							case Keys.Shift | Keys.Left:  loc.X = -1; loc.Y = +1; break;
+
+							case Keys.Shift | Keys.PageUp:   loc.Y = -1; break;
+							case Keys.Shift | Keys.PageDown: loc.X = +1; break;
+							case Keys.Shift | Keys.End:      loc.Y = +1; break;
+							case Keys.Shift | Keys.Home:     loc.X = -1; break;
+
+//							case Keys.Shift | Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
+							case Keys.Shift | Keys.Add:      vert = +1; break;
+//							case Keys.Shift | Keys.Insert:
+							case Keys.Shift | Keys.Subtract: vert = -1; break;
+						}
+
+						if (loc.X != 0 || loc.Y != 0)
+						{
+							int r = MapFile.Location.Row + loc.Y;
+							int c = MapFile.Location.Col + loc.X;
+							if (   r > -1 && r < MapFile.MapSize.Rows
+								&& c > -1 && c < MapFile.MapSize.Cols
+								&& MapFile[r,c, MapFile.Level].Node == null)
 							{
-								RouteNode node = MapFile[MapFile.Location.Row,
-														 MapFile.Location.Col,
-														 MapFile.Level].Node;
-								if (node != null && node == NodeSelected)
-								{
-									RouteView.Dragnode = node;
+								RouteView.Dragnode = node;
 
-									MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation
+								MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation
 
-									if (RoutePanelMouseUpEvent != null)
-									{
-										var args = new RoutePanelEventArgs(
-																		MouseButtons.Left,
-																		MapFile[r,c],
-																		MapFile.Location);
-										RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+								var args = new RoutePanelEventArgs(
+																MouseButtons.Left,
+																MapFile[r,c],
+																MapFile.Location);
+								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
-										ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-										ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-									}
-								}
+								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 							}
 						}
-					}
-					else if (vert != 0)
-					{
-						int level = MapFile.Level + vert;
-						if (level > -1 && level < MapFile.MapSize.Levs)
+						else if (vert != 0)
 						{
-							if (MapFile[MapFile.Location.Row,
-										MapFile.Location.Col,
-										level].Node == null)
+							int level = MapFile.Level + vert;
+							if (level > -1 && level < MapFile.MapSize.Levs
+								&& MapFile[MapFile.Location.Row,
+										   MapFile.Location.Col,
+										   level].Node == null)
 							{
-								RouteNode node = MapFile[MapFile.Location.Row,
-														 MapFile.Location.Col,
-														 MapFile.Level].Node;
-								if (node != null && node == NodeSelected)
-								{
-									RouteView.Dragnode = node;
+								RouteView.Dragnode = node;
 
-									ObserverManager.RouteView.Control.doMousewheel(new MouseEventArgs(
-																								MouseButtons.None,
-																								0, 0,0, vert));
-									MapFile.Location = new MapLocation( // fire SelectLocation
-																	MapFile.Location.Row,
-																	MapFile.Location.Col,
-																	level);
+								ObserverManager.RouteView.Control.doMousewheel(new MouseEventArgs(
+																							MouseButtons.None,
+																							0, 0,0, vert));
+								MapFile.Location = new MapLocation( // fire SelectLocation
+																MapFile.Location.Row,
+																MapFile.Location.Col,
+																level);
 
-									if (RoutePanelMouseUpEvent != null)
-									{
-										var args = new RoutePanelEventArgs(
-																		MouseButtons.Left,
-																		MapFile[MapFile.Location.Row,
-																				MapFile.Location.Col],
-																		MapFile.Location);
-										RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+								var args = new RoutePanelEventArgs(
+																MouseButtons.Left,
+																MapFile[MapFile.Location.Row,
+																		MapFile.Location.Col],
+																MapFile.Location);
+								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
-										ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-										ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-									}
-								}
+								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 							}
 						}
 					}
