@@ -33,6 +33,7 @@ namespace XCom
 		{ get; private set; }
 		#endregion Properties
 
+
 		#region cTor
 		/// <summary>
 		/// cTor.
@@ -82,7 +83,7 @@ namespace XCom
 		#endregion cTor
 
 
-		#region Methods
+		#region Methods (read/load)
 		/// <summary>
 		/// Reads a .MAP file.
 		/// </summary>
@@ -221,8 +222,10 @@ namespace XCom
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
+		#endregion Methods (read/load)
 
 
+		#region Methods (routenodes)
 		/// <summary>
 		/// Assigns route-nodes to tiles when this MapFile object is
 		/// instantiated or when importing a Routes file.
@@ -251,6 +254,26 @@ namespace XCom
 			}
 		}
 
+		/// <summary>
+		/// Adds a route-node to the map-tile at a given location.
+		/// </summary>
+		/// <param name="location"></param>
+		/// <returns></returns>
+		public RouteNode AddRouteNode(MapLocation location)
+		{
+			RouteNode node = Routes.AddNode(
+										(byte)location.Row,
+										(byte)location.Col,
+										(byte)location.Lev);
+
+			return (this[(int)node.Row,
+						 (int)node.Col,
+						      node.Lev].Node = node);
+		}
+		#endregion Methods (routenodes)
+
+
+		#region Methods (terrain)
 		/// <summary>
 		/// Gets the terrain-label of a given tile-part.
 		/// </summary>
@@ -296,52 +319,39 @@ namespace XCom
 
 			return null;
 		}
+		#endregion Methods (terrain)
 
+
+		#region Methods (static)
 		/// <summary>
-		/// Adds a route-node to the map-tile at a given location.
+		/// Writes default Map and blank Route files.
 		/// </summary>
-		/// <param name="location"></param>
-		/// <returns></returns>
-		public RouteNode AddRouteNode(MapLocation location)
+		/// <param name="pfeMap"></param>
+		/// <param name="pfeRoute"></param>
+		public static void CreateDefault(string pfeMap, string pfeRoute)
 		{
-			RouteNode node = Routes.AddNode(
-										(byte)location.Row,
-										(byte)location.Col,
-										(byte)location.Lev);
+			Directory.CreateDirectory(Path.GetDirectoryName(pfeRoute));
+			using (var fs = File.Create(pfeRoute)) // create a blank Route-file and release its handle.
+			{}
 
-			return (this[(int)node.Row,
-						 (int)node.Col,
-						      node.Lev].Node = node);
-		}
-
-		/// <summary>
-		/// Writes a blank Map to the stream provided.
-		/// </summary>
-		/// <param name="str"></param>
-		/// <param name="rows"></param>
-		/// <param name="cols"></param>
-		/// <param name="levs"></param>
-		public static void CreateMap(
-				Stream str,
-				byte rows,
-				byte cols,
-				byte levs)
-		{
-			using (var bw = new BinaryWriter(str))
+			Directory.CreateDirectory(Path.GetDirectoryName(pfeMap));
+			using (var fs = File.Create(pfeMap)) // create a default Map-file and release its handle.
 			{
-				bw.Write(rows);
-				bw.Write(cols);
-				bw.Write(levs);
+				fs.WriteByte((byte)10); // rows // default new Map size ->
+				fs.WriteByte((byte)10); // cols
+				fs.WriteByte((byte) 1); // levs
 
-				for (int lev = 0; lev != levs; ++lev)
-				for (int row = 0; row != rows; ++row)
-				for (int col = 0; col != cols; ++col)
+				for (int r = 0; r != 10; ++r)
+				for (int c = 0; c != 10; ++c)
 				{
-					bw.Write((int)0);
+					fs.WriteByte((byte)0);
 				}
 			}
 		}
+		#endregion Methods (static)
 
+
+		#region Methods (save/write)
 		/// <summary>
 		/// Saves the .MAP file.
 		/// </summary>
@@ -352,6 +362,8 @@ namespace XCom
 
 		/// <summary>
 		/// Saves the .MAP file as a different file.
+		/// @note SaveAs does not load the saved Map; the current MapFile
+		/// stays current.
 		/// </summary>
 		/// <param name="pf">the path+file to save as</param>
 		public override void SaveMap(string pf)
@@ -422,7 +434,10 @@ namespace XCom
 		{
 			Routes.SaveRoutes(pf);
 		}
+		#endregion Methods (save/write)
 
+
+		#region Methods (resize)
 		/// <summary>
 		/// Resizes the current Map.
 		/// </summary>
@@ -494,6 +509,6 @@ namespace XCom
 			}
 			return bit;
 		}
-		#endregion Methods
+		#endregion Methods (resize)
 	}
 }

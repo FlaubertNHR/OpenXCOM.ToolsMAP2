@@ -829,26 +829,18 @@ namespace MapView
 								break;
 
 							case AddType.MapCreate:
-								string pfeMap    = GetFullpathMapfile(Tileset);
-								string pfeRoutes = GetFullpathRoutefile(Tileset);
+								string pfeMap   = GetFullpathMapfile(Tileset);
+								string pfeRoute = GetFullpathRoutefile(Tileset);
 
-								Directory.CreateDirectory(Path.GetDirectoryName(pfeRoutes));
-								using (var fs = File.Create(pfeRoutes)) // create a blank Route-file and release its handle.
-								{}
+								MapFile.CreateDefault(pfeMap, pfeRoute);	// NOTE: This has to happen now because once the Maptree node
+																			// is selected it will try to read/load the .MAP file etc.
 
-								Directory.CreateDirectory(Path.GetDirectoryName(pfeMap));
-								using (var fs = File.Create(pfeMap))	// create the Map-file and release its handle.
-								{										// NOTE: This has to happen now because once the Maptree node
-									MapFile.CreateMap(					// is selected it will try to load the .MAP file etc.
-													fs,
-													10,10,1); // <- default new Map size
-								}
-
-								if (File.Exists(pfeMap) && File.Exists(pfeRoutes)) // NOTE: The descriptor has already been created with the Create descriptor button.
+								if (File.Exists(pfeMap) && File.Exists(pfeRoute)) // NOTE: The descriptor has already been created with the Create descriptor button.
 								{
 									TileGroup.AddTileset(Descriptor, Category);
 									DialogResult = DialogResult.OK; // load the Tileset in MainView.
 								}
+								// TODO: else error out
 								break;
 						}
 					}
