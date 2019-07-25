@@ -6,4 +6,4 @@ Compiled .exe(s) and .dll(s) and a CHM helpfile are in the Distribution folder. 
 
 .NET 4.5.1 is required.
 
-note for Mono users: MapView needs to run once and then be restarted for its window to resize properly.
+ps. I've made efforts toward Mono-compatibility (sic) but that's not under warranty.
