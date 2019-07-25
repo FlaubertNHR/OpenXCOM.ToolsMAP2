@@ -41,6 +41,22 @@ namespace McdView
 		#endregion Fields
 
 
+		#region Properties (override)
+		/// <summary>
+		/// This works great. Absolutely kills flicker on redraws.
+		/// </summary>
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000;
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+
+
 		#region Properties
 		internal protected CopyPanelF _fcopy
 		{ get; private set; }
@@ -101,11 +117,6 @@ namespace McdView
 							// That is, '_fcopy' is irrelevant to instantiations of
 							// 'TerrainPanel_main'; is used only by 'TerrainPanel_copy'.
 
-//			SetStyle(ControlStyles.OptimizedDoubleBuffer
-//				   | ControlStyles.AllPaintingInWmPaint
-//				   | ControlStyles.UserPaint
-//				   | ControlStyles.ResizeRedraw
-//				   | ControlStyles.Selectable, true);
 			SetStyle(ControlStyles.Selectable, true);
 
 			Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
