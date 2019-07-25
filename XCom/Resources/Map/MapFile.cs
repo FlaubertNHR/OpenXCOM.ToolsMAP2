@@ -28,10 +28,10 @@ namespace XCom
 
 		public RouteNodeCollection Routes
 		{ get; set; }
+
+		public bool IsLoadChanged
+		{ get; private set; }
 		#endregion Properties
-
-
-		public bool IsLoadChanged;
 
 		#region cTor
 		/// <summary>
@@ -91,9 +91,9 @@ namespace XCom
 		{
 			using (var bs = new BufferedStream(File.OpenRead(Fullpath)))
 			{
-				int rows = bs.ReadByte();
-				int cols = bs.ReadByte();
-				int levs = bs.ReadByte();
+				int rows = bs.ReadByte(); // http://www.ufopaedia.org/index.php/MAPS
+				int cols = bs.ReadByte(); // - says this header is "height, width and depth (in that order)"
+				int levs = bs.ReadByte(); //   ie. y/x/z
 
 				Tiles   = new MapTileList(rows, cols, levs);
 				MapSize = new MapSize(rows, cols, levs);
@@ -113,8 +113,6 @@ namespace XCom
 		}
 
 
-		private bool _bypass;
-
 		private const int IdOffset = 2; // #0 and #1 are reserved for the 2 BLANKS tiles.
 
 		/// <summary>
@@ -133,52 +131,97 @@ namespace XCom
 				int quad3,
 				int quad4)
 		{
-			if (!_bypass)
+			Tilepart floor, west, north, content;
+
+			// NOTE: quads will be "-1" if "read from the end of the stream".
+
+			if (quad1 < IdOffset)
 			{
-				int high = quad1;
-				if (quad2 > high) high = quad2;
-				if (quad3 > high) high = quad3;
-				if (quad4 > high) high = quad4;
-
-				if (high - IdOffset >= parts.Count)
-				{
-					_bypass = true;
-
-					IsLoadChanged = true;
-
-					MessageBox.Show(
-								"There are tileset parts being referenced that are"
-									+ " outside the bounds of the Map's allocated MCDs."
-									+ " They will be cleared so that the Map can be"
-									+ " displayed.",
-								" Warning",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Asterisk,
-								MessageBoxDefaultButton.Button1,
-								0);
-				}
+				floor = null;
+			}
+			else if ((quad1 -= IdOffset) < parts.Count)
+			{
+				floor = parts[quad1];
+			}
+			else
+			{
+				floor = null;
+				if (!IsLoadChanged) ShowWarning();
 			}
 
-			if (quad1 < 0 || quad1 - IdOffset >= parts.Count) quad1 = 0; // TODO: if any quads are < 0 MapChanged should be flagged.
-			if (quad2 < 0 || quad2 - IdOffset >= parts.Count) quad2 = 0;
-			if (quad3 < 0 || quad3 - IdOffset >= parts.Count) quad3 = 0;
-			if (quad4 < 0 || quad4 - IdOffset >= parts.Count) quad4 = 0;
+			if (quad2 < IdOffset)
+			{
+				west = null;
+			}
+			else if ((quad2 -= IdOffset) < parts.Count)
+			{
+				west = parts[quad2];
+			}
+			else
+			{
+				west = null;
+				if (!IsLoadChanged) ShowWarning();
+			}
 
-			var floor     = (quad1 > 1) ? (Tilepart)parts[quad1 - IdOffset]
-										: null;
-			var westwall  = (quad2 > 1) ? (Tilepart)parts[quad2 - IdOffset]
-										: null;
-			var northwall = (quad3 > 1) ? (Tilepart)parts[quad3 - IdOffset]
-										: null;
-			var content   = (quad4 > 1) ? (Tilepart)parts[quad4 - IdOffset]
-										: null;
+			if (quad3 < IdOffset)
+			{
+				north = null;
+			}
+			else if ((quad3 -= IdOffset) < parts.Count)
+			{
+				north = parts[quad3];
+			}
+			else
+			{
+				north = null;
+				if (!IsLoadChanged) ShowWarning();
+			}
+
+			if (quad4 < IdOffset)
+			{
+				content = null;
+			}
+			else if ((quad4 -= IdOffset) < parts.Count)
+			{
+				content = parts[quad4];
+			}
+			else
+			{
+				content = null;
+				if (!IsLoadChanged) ShowWarning();
+			}
 
 			return new MapTile(
 							floor,
-							westwall,
-							northwall,
+							west,
+							north,
 							content);
 		}
+
+		/// <summary>
+		/// Issues a warning if a tilepart's id overflows or underflows the
+		/// total tileparts-list.
+		/// </summary>
+		private void ShowWarning()
+		{
+			IsLoadChanged = true;
+			MessageBox.Show(
+						"There are tileparts that exceed the bounds of the"
+							+ " Map's currently allocated MCD records."
+							+ " They will be nulled so that the rest of the"
+							+ " tileset can be displayed."
+							+ Environment.NewLine + Environment.NewLine
+							+ "Saving the Map in its current state would lose"
+							+ " those tilepart references. Or, if you"
+							+ " know what terrain(s) are rogue they can be"
+							+ " added to the Map's terrainset.",
+						" Warning",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Warning,
+						MessageBoxDefaultButton.Button1,
+						0);
+		}
+
 
 		/// <summary>
 		/// Assigns route-nodes to tiles when this MapFile object is
@@ -328,7 +371,7 @@ namespace XCom
 			{
 				fs.WriteByte((byte)MapSize.Rows); // http://www.ufopaedia.org/index.php/MAPS
 				fs.WriteByte((byte)MapSize.Cols); // - says this header is "height, width and depth (in that order)"
-				fs.WriteByte((byte)MapSize.Levs);
+				fs.WriteByte((byte)MapSize.Levs); //   ie. y/x/z
 
 				int id;
 
@@ -447,7 +490,7 @@ namespace XCom
 				ClearRouteNodes();
 				SetupRouteNodes();
 
-				Level = 0; // fire SelectLevel
+				Level = 0; // fire SelectLevel event
 			}
 			return bit;
 		}
