@@ -127,7 +127,7 @@ namespace MapView
 
 		/// <summary>
 		/// Handles this dialog's closing event. Sets the static location and
-		/// nulls the differ in 'YataForm'.
+		/// nulls the dialog in MapInfoDialog.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -137,7 +137,6 @@ namespace MapView
 
 			_finfo._fdetail = null;
 
-//			this.Dispose(true); // <- probably unnecessary.
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
@@ -232,6 +231,7 @@ namespace MapView
 
 			base.Dispose(disposing);
 		}
+
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of

@@ -685,7 +685,8 @@ namespace MapView
 
 				ObserverManager.CloseViewers();
 				OptionsManager.CloseOptions();
-				if (ScanG != null) ScanG.Close();
+				if (ScanG  != null) ScanG .Close();
+				if (_finfo != null) _finfo.Close();
 
 				RegistryInfo.UpdateRegistry(this);
 				RegistryInfo.FinalizeRegistry();
@@ -1286,13 +1287,15 @@ namespace MapView
 		}
 
 
+		internal MapInfoDialog _finfo;
+
 		private void OnMapInfoClick(object sender, EventArgs e)
 		{
 			if (MainViewUnderlay.MapBase != null)
 			{
-				var f = new MapInfoDialog(MainViewUnderlay.MapBase as MapFile);
-				f.Show(); // no owner. TODO: perhaps MainView ...
-				f.Analyze();
+				_finfo = new MapInfoDialog(this, MainViewUnderlay.MapBase as MapFile);
+				_finfo.Show(); // no owner.
+				_finfo.Analyze();
 			}
 		}
 

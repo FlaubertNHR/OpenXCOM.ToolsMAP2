@@ -13,7 +13,14 @@ namespace MapView
 		:
 			Form
 	{
+		#region Fields (static)
+		private static int _x = -1;
+		private static int _y = -1;
+		#endregion Fields (static)
+
+
 		#region Fields
+		private readonly XCMainWindow _f;
 		private readonly MapFile _file;
 
 		private readonly HashSet<int> _sprites = new HashSet<int>();
@@ -27,22 +34,51 @@ namespace MapView
 
 
 		#region cTor
-		internal MapInfoDialog(MapFile file)
+		internal MapInfoDialog(XCMainWindow f, MapFile file)
 		{
 			InitializeComponent();
+
+			_f = f;
 			_file = file;
 
 			Text = " MapInfo - " + _file.Descriptor.Label;
+
+			if (_x == -1) _x = _f.Left + 200;
+			if (_y == -1) _y = _f.Top  + 100;
+
+			Left = _x;
+			Top  = _y;
+
 		}
 		#endregion cTor
 
 
-/*		#region Events (override)
-		protected override void OnActivated(EventArgs e)
+		#region Events (override)
+		/// <summary>
+		/// Handles this dialog's closing event. Sets the static location and
+		/// nulls the dialog in XCMainWindow.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			_x = Left;
+			_y = Top;
+
+			if (_fdetail != null)
+			{
+				_fdetail.Close();
+//				_fdetail = null; // safety.
+			}
+			_f._finfo = null;
+
+			base.OnFormClosing(e);
+		}
+
+/*		protected override void OnActivated(EventArgs e)
 		{
 			base.OnActivated(e);
-		}
-		#endregion Events (override) */
+		} */
+		#endregion Events (override)
 
 
 		#region Events
@@ -476,7 +512,7 @@ namespace MapView
 			this.Name = "MapInfoDialog";
 			this.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = " MapInfo";
 			this.gbAnalyze.ResumeLayout(false);
 			this.gbInfo.ResumeLayout(false);
