@@ -56,7 +56,7 @@ namespace MapView
 		{
 			if (_fdetail == null)
 			{
-				_fdetail = new MapInfoDetailDialog(this, _file);
+				_fdetail = new MapInfoDetailDialog(this);
 
 				_fdetail.SetTitleText(" Detail - " + _file.Descriptor.Label);
 				_fdetail.SetHeaderText("MCD Record usage");

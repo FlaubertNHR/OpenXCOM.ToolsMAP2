@@ -42,8 +42,7 @@ namespace MapView
 		/// cTor.
 		/// </summary>
 		/// <param name="finfo"></param>
-		/// <param name="file"></param>
-		internal MapInfoDetailDialog(MapInfoDialog finfo, MapFile file)
+		internal MapInfoDetailDialog(MapInfoDialog finfo)
 		{
 			InitializeComponent();
 			_finfo = finfo;
