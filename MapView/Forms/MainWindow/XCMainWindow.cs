@@ -1222,7 +1222,7 @@ namespace MapView
 		}
 
 
-		private void OnSaveImageClick(object sender, EventArgs e)
+		private void OnScreenshotClick(object sender, EventArgs e)
 		{
 			MapFileBase @base = MainViewUnderlay.MapBase;
 			if (@base != null)
@@ -1297,7 +1297,7 @@ namespace MapView
 		}
 
 
-		private void OnReloadTerrainsClick(object sender, EventArgs e)
+		private void OnReloadClick(object sender, EventArgs e)
 		{
 			OnReloadDescriptor();
 		}
@@ -2399,10 +2399,10 @@ namespace MapView
 					miSaveMap       .Enabled =
 					miSaveRoutes    .Enabled =
 					miSaveAs        .Enabled =
-					miSaveImage     .Enabled =
+					miScreenshot     .Enabled =
 					miModifySize    .Enabled =
 					miInfo          .Enabled =
-					miReloadTerrains.Enabled = true;
+					miReload.Enabled = true;
 
 					MainViewOverlay.FirstClick = false;
 

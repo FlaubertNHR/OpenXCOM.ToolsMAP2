@@ -39,9 +39,9 @@ namespace MapView
 			this.miSeparator2 = new System.Windows.Forms.MenuItem();
 			this.miSaveMaptree = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
-			this.miSaveImage = new System.Windows.Forms.MenuItem();
+			this.miScreenshot = new System.Windows.Forms.MenuItem();
 			this.miInfo = new System.Windows.Forms.MenuItem();
-			this.miReloadTerrains = new System.Windows.Forms.MenuItem();
+			this.miReload = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.menuEdit = new System.Windows.Forms.MenuItem();
@@ -87,9 +87,9 @@ namespace MapView
 			this.miSeparator2,
 			this.miSaveMaptree,
 			this.miSeparator3,
-			this.miSaveImage,
+			this.miScreenshot,
 			this.miInfo,
-			this.miReloadTerrains,
+			this.miReload,
 			this.miSeparator4,
 			this.miQuit});
 			this.menuFile.Text = "&File";
@@ -148,13 +148,13 @@ namespace MapView
 			this.miSeparator3.Index = 7;
 			this.miSeparator3.Text = "-";
 			// 
-			// miSaveImage
+			// miScreenshot
 			// 
-			this.miSaveImage.Enabled = false;
-			this.miSaveImage.Index = 8;
-			this.miSaveImage.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
-			this.miSaveImage.Text = "Save &Image ...";
-			this.miSaveImage.Click += new System.EventHandler(this.OnSaveImageClick);
+			this.miScreenshot.Enabled = false;
+			this.miScreenshot.Index = 8;
+			this.miScreenshot.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
+			this.miScreenshot.Text = "Scree&nshot ...";
+			this.miScreenshot.Click += new System.EventHandler(this.OnScreenshotClick);
 			// 
 			// miInfo
 			// 
@@ -164,13 +164,13 @@ namespace MapView
 			this.miInfo.Text = "Map In&fo";
 			this.miInfo.Click += new System.EventHandler(this.OnMapInfoClick);
 			// 
-			// miReloadTerrains
+			// miReload
 			// 
-			this.miReloadTerrains.Enabled = false;
-			this.miReloadTerrains.Index = 10;
-			this.miReloadTerrains.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
-			this.miReloadTerrains.Text = "Reload terrai&ns";
-			this.miReloadTerrains.Click += new System.EventHandler(this.OnReloadTerrainsClick);
+			this.miReload.Enabled = false;
+			this.miReload.Index = 10;
+			this.miReload.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
+			this.miReload.Text = "Re&load";
+			this.miReload.Click += new System.EventHandler(this.OnReloadClick);
 			// 
 			// miSeparator4
 			// 
@@ -390,9 +390,9 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miSeparator2;
 		private System.Windows.Forms.MenuItem miSaveMaptree;
 		private System.Windows.Forms.MenuItem miSeparator3;
-		private System.Windows.Forms.MenuItem miSaveImage;
+		private System.Windows.Forms.MenuItem miScreenshot;
 		private System.Windows.Forms.MenuItem miInfo;
-		private System.Windows.Forms.MenuItem miReloadTerrains;
+		private System.Windows.Forms.MenuItem miReload;
 		private System.Windows.Forms.MenuItem miSeparator4;
 		private System.Windows.Forms.MenuItem miQuit;
 

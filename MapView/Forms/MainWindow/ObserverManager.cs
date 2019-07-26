@@ -37,10 +37,10 @@ namespace MapView.Forms.MainWindow
 		{ get; private set; }
 
 
-		internal static ColorHelp ColorsScreen
+		internal static ColorHelp ColorsScreen // not an Observer.
 		{ get; private set; }
 
-		internal static About AboutScreen
+		internal static About AboutScreen // not an Observer.
 		{ get; private set; }
 		#endregion Properties (static)
 
