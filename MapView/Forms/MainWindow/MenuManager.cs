@@ -397,6 +397,11 @@ namespace MapView.Forms.MainWindow
 		}
 
 
+		/// <summary>
+		/// Handles clicks on the ScanG view item.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal static void OnScanGClick(object sender, EventArgs e)
 		{
 			if (MainViewUnderlay.that.MapBase != null)
@@ -413,6 +418,9 @@ namespace MapView.Forms.MainWindow
 			}
 		}
 
+		/// <summary>
+		/// Unchecks the ScanG view item when ScanG view closes.
+		/// </summary>
 		internal static void UncheckScanG()
 		{
 			Viewers.MenuItems[MI_SCANG].Checked = false;

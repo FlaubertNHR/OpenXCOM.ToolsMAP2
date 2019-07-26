@@ -40,7 +40,7 @@ namespace MapView
 
 
 		#region Fields (static)
-		private const string title = "Map Editor ||";
+		private const string title = " Map Editor ||";
 
 		private const double ScaleDelta = 0.125;
 		#endregion Fields (static)
@@ -2400,7 +2400,7 @@ namespace MapView
 					miSaveRoutes    .Enabled =
 					miSaveAs        .Enabled =
 					miSaveImage     .Enabled =
-					miResize        .Enabled =
+					miModifySize    .Enabled =
 					miInfo          .Enabled =
 					miReloadTerrains.Enabled = true;
 

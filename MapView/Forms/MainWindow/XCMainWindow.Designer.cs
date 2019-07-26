@@ -40,12 +40,13 @@ namespace MapView
 			this.miSaveMaptree = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miSaveImage = new System.Windows.Forms.MenuItem();
-			this.miResize = new System.Windows.Forms.MenuItem();
 			this.miInfo = new System.Windows.Forms.MenuItem();
 			this.miReloadTerrains = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.menuEdit = new System.Windows.Forms.MenuItem();
+			this.miModifySize = new System.Windows.Forms.MenuItem();
+			this.miSeparator5 = new System.Windows.Forms.MenuItem();
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
 			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.menuViewers = new System.Windows.Forms.MenuItem();
@@ -87,7 +88,6 @@ namespace MapView
 			this.miSaveMaptree,
 			this.miSeparator3,
 			this.miSaveImage,
-			this.miResize,
 			this.miInfo,
 			this.miReloadTerrains,
 			this.miSeparator4,
@@ -156,18 +156,10 @@ namespace MapView
 			this.miSaveImage.Text = "Save &Image ...";
 			this.miSaveImage.Click += new System.EventHandler(this.OnSaveImageClick);
 			// 
-			// miResize
-			// 
-			this.miResize.Enabled = false;
-			this.miResize.Index = 9;
-			this.miResize.Shortcut = System.Windows.Forms.Shortcut.CtrlZ;
-			this.miResize.Text = "Resi&ze Map";
-			this.miResize.Click += new System.EventHandler(this.OnMapResizeClick);
-			// 
 			// miInfo
 			// 
 			this.miInfo.Enabled = false;
-			this.miInfo.Index = 10;
+			this.miInfo.Index = 9;
 			this.miInfo.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
 			this.miInfo.Text = "Map In&fo";
 			this.miInfo.Click += new System.EventHandler(this.OnMapInfoClick);
@@ -175,19 +167,19 @@ namespace MapView
 			// miReloadTerrains
 			// 
 			this.miReloadTerrains.Enabled = false;
-			this.miReloadTerrains.Index = 11;
+			this.miReloadTerrains.Index = 10;
 			this.miReloadTerrains.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
 			this.miReloadTerrains.Text = "Reload terrai&ns";
 			this.miReloadTerrains.Click += new System.EventHandler(this.OnReloadTerrainsClick);
 			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 12;
+			this.miSeparator4.Index = 11;
 			this.miSeparator4.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 13;
+			this.miQuit.Index = 12;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
@@ -196,19 +188,34 @@ namespace MapView
 			// 
 			this.menuEdit.Index = 1;
 			this.menuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miModifySize,
+			this.miSeparator5,
 			this.miConfigurator,
 			this.miOptions});
 			this.menuEdit.Text = "&Edit";
 			// 
+			// miModifySize
+			// 
+			this.miModifySize.Enabled = false;
+			this.miModifySize.Index = 0;
+			this.miModifySize.Shortcut = System.Windows.Forms.Shortcut.CtrlZ;
+			this.miModifySize.Text = "Modify Map Si&ze";
+			this.miModifySize.Click += new System.EventHandler(this.OnMapResizeClick);
+			// 
+			// miSeparator5
+			// 
+			this.miSeparator5.Index = 1;
+			this.miSeparator5.Text = "-";
+			// 
 			// miConfigurator
 			// 
-			this.miConfigurator.Index = 0;
+			this.miConfigurator.Index = 2;
 			this.miConfigurator.Text = "&Configurator";
 			this.miConfigurator.Click += new System.EventHandler(this.OnConfiguratorClick);
 			// 
 			// miOptions
 			// 
-			this.miOptions.Index = 1;
+			this.miOptions.Index = 3;
 			this.miOptions.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOptions.Text = "&Options";
 			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
@@ -354,7 +361,7 @@ namespace MapView
 			this.MinimumSize = new System.Drawing.Size(800, 480);
 			this.Name = "XCMainWindow";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "Map Editor ||";
+			this.Text = " Map Editor ||";
 			this.ssMain.ResumeLayout(false);
 			this.ssMain.PerformLayout();
 			this.tscPanel.TopToolStripPanel.ResumeLayout(false);
@@ -384,7 +391,6 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miSaveMaptree;
 		private System.Windows.Forms.MenuItem miSeparator3;
 		private System.Windows.Forms.MenuItem miSaveImage;
-		private System.Windows.Forms.MenuItem miResize;
 		private System.Windows.Forms.MenuItem miInfo;
 		private System.Windows.Forms.MenuItem miReloadTerrains;
 		private System.Windows.Forms.MenuItem miSeparator4;
@@ -393,8 +399,10 @@ namespace MapView
 		private System.Windows.Forms.MenuItem menuViewers;
 
 		private System.Windows.Forms.MenuItem menuEdit;
-		private System.Windows.Forms.MenuItem miOptions;
+		private System.Windows.Forms.MenuItem miModifySize;
+		private System.Windows.Forms.MenuItem miSeparator5;
 		private System.Windows.Forms.MenuItem miConfigurator;
+		private System.Windows.Forms.MenuItem miOptions;
 
 		private System.Windows.Forms.MenuItem menuHelp;
 
