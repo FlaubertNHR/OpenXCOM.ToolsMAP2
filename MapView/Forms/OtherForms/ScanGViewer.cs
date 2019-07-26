@@ -90,6 +90,15 @@ namespace MapView
 		#endregion cTor
 
 
+		#region Events (override)
+		protected override void OnActivated(EventArgs e)
+		{
+			ShowHideManager._zOrder.Remove(this);
+			ShowHideManager._zOrder.Add(this);
+		}
+		#endregion Events (override)
+
+
 		#region Events
 		private void OnFormClosed(object sender, FormClosedEventArgs e)
 		{

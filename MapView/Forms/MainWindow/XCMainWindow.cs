@@ -685,6 +685,7 @@ namespace MapView
 
 				ObserverManager.CloseViewers();
 				OptionsManager.CloseOptions();
+				if (ScanG != null) ScanG.Close();
 
 				RegistryInfo.UpdateRegistry(this);
 				RegistryInfo.FinalizeRegistry();
