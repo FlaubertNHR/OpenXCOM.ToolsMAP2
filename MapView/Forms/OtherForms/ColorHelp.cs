@@ -249,7 +249,7 @@ namespace MapView
 		{
 			if (rbUfo.Checked)
 			{
-				lblType00.Text = "tile"; // switch to UFO ->
+				lblType00.Text = "standard"; // switch to UFO ->
 				lblType01.Text = "entry point";
 				lblType02.Text = "power source";
 				lblType03.Text = "navigation";
@@ -267,7 +267,7 @@ namespace MapView
 			}
 			else // rbTftd.Checked
 			{
-				lblType00.Text = "tile"; // switch to TFTD ->
+				lblType00.Text = "standard"; // switch to TFTD ->
 				lblType01.Text = "entry point";
 				lblType02.Text = "ion accelerator";
 				lblType03.Text = "navigation";
