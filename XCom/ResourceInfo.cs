@@ -31,7 +31,7 @@ namespace XCom
 							new List<SpriteCollection>();
 		/// <summary>
 		/// A list of spritesets in the currently loaded tileset or so.
-		/// @note It has relevance only for 'MapInfoOutputBox'.
+		/// @note It has relevance only for 'MapInfoDialog'.
 		/// </summary>
 		public static List<SpriteCollection> Spritesets
 		{
@@ -114,7 +114,7 @@ namespace XCom
 						return null;
 					}
 
-					Spritesets.Add(spriteset); // used only by 'MapInfoOutputBox'.
+					Spritesets.Add(spriteset); // used only by 'MapInfoDialog'.
 					return spriteset;
 				}
 
@@ -142,7 +142,7 @@ namespace XCom
 
 		/// <summary>
 		/// Gets the total count of sprites in 'Spritesets'.
-		/// @note Used only by MapInfoOutputBox.Analyze()
+		/// @note Used only by MapInfoDialog.Analyze()
 		/// </summary>
 		/// <returns>count of sprites</returns>
 		public static int GetTotalSpriteCount()

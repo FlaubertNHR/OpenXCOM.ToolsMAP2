@@ -204,7 +204,7 @@
     <Compile Include="Forms\OtherForms\ConfigurationForm.Designer.cs">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OtherForms\MapDetailForm.cs" />
+    <Compile Include="Forms\OtherForms\MapInfoDetailDialog.cs" />
     <Compile Include="Forms\OtherForms\MapTreeInputBox.cs" />
     <Compile Include="Forms\OtherForms\MapTreeInputBox.Designer.cs">
       <DependentUpon>MapTreeInputBox.cs</DependentUpon>
@@ -244,7 +244,7 @@
     <Compile Include="Forms\OtherForms\ColorHelp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\OtherForms\MapInfoOutputBox.cs">
+    <Compile Include="Forms\OtherForms\MapInfoDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainWindow\MainViewPanel\MainViewUnderlay.cs">
@@ -317,8 +317,8 @@
     <EmbeddedResource Include="Forms\OtherForms\ConfigurationForm.resx">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\MapDetailForm.resx">
-      <DependentUpon>MapDetailForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\OtherForms\MapInfoDetailDialog.resx">
+      <DependentUpon>MapInfoDetailDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\MapResizeInputBox.resx">
       <DependentUpon>MapResizeInputBox.cs</DependentUpon>
@@ -326,8 +326,8 @@
     <EmbeddedResource Include="Forms\OtherForms\ColorHelp.resx">
       <DependentUpon>ColorHelp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\MapInfoOutputBox.resx">
-      <DependentUpon>MapInfoOutputBox.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\OtherForms\MapInfoDialog.resx">
+      <DependentUpon>MapInfoDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\MapTreeInputBox.resx">
       <DependentUpon>MapTreeInputBox.Designer.cs</DependentUpon>

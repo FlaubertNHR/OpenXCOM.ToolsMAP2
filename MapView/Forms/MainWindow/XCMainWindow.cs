@@ -1290,7 +1290,7 @@ namespace MapView
 		{
 			if (MainViewUnderlay.MapBase != null)
 			{
-				var f = new MapInfoOutputBox(MainViewUnderlay.MapBase as MapFile);
+				var f = new MapInfoDialog(MainViewUnderlay.MapBase as MapFile);
 				f.Show(); // no owner. TODO: perhaps MainView ...
 				f.Analyze();
 			}

@@ -9,7 +9,7 @@ using XCom;
 
 namespace MapView
 {
-	internal sealed class MapInfoOutputBox
+	internal sealed class MapInfoDialog
 		:
 			Form
 	{
@@ -22,12 +22,12 @@ namespace MapView
 		private readonly HashSet<Tuple<string, int>> _used =
 					 new HashSet<Tuple<string, int>>();
 
-		internal MapDetailForm _fdetail;
+		internal MapInfoDetailDialog _fdetail;
 		#endregion Fields
 
 
 		#region cTor
-		internal MapInfoOutputBox(MapFile file)
+		internal MapInfoDialog(MapFile file)
 		{
 			InitializeComponent();
 			_file = file;
@@ -56,7 +56,7 @@ namespace MapView
 		{
 			if (_fdetail == null)
 			{
-				_fdetail = new MapDetailForm(this, _file);
+				_fdetail = new MapInfoDetailDialog(this, _file);
 
 				_fdetail.SetTitleText(" Detail - " + _file.Descriptor.Label);
 				_fdetail.SetHeaderText("MCD Record usage");
@@ -463,7 +463,7 @@ namespace MapView
 			this.gbInfo.TabStop = false;
 			this.gbInfo.Text = " label ";
 			// 
-			// MapInfoOutputBox
+			// MapInfoDialog
 			// 
 			this.AcceptButton = this.btnDetail;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -473,7 +473,7 @@ namespace MapView
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "MapInfoOutputBox";
+			this.Name = "MapInfoDialog";
 			this.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

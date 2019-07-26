@@ -12,7 +12,7 @@ namespace MapView
 	/// <summary>
 	/// 
 	/// </summary>
-	internal sealed class MapDetailForm
+	internal sealed class MapInfoDetailDialog
 		:
 			Form
 	{
@@ -33,7 +33,7 @@ namespace MapView
 
 
 		#region Fields
-		private MapInfoOutputBox _finfo;
+		private MapInfoDialog _finfo;
 		#endregion Fields
 
 
@@ -43,7 +43,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="finfo"></param>
 		/// <param name="file"></param>
-		internal MapDetailForm(MapInfoOutputBox finfo, MapFile file)
+		internal MapInfoDetailDialog(MapInfoDialog finfo, MapFile file)
 		{
 			InitializeComponent();
 			_finfo = finfo;
@@ -311,7 +311,7 @@ namespace MapView
 			this.btn_Cancel.UseVisualStyleBackColor = true;
 			this.btn_Cancel.Click += new System.EventHandler(this.click_btnCancel);
 			// 
-			// MapDetailForm
+			// MapInfoDetailDialog
 			// 
 			this.CancelButton = this.btn_Cancel;
 			this.ClientSize = new System.Drawing.Size(392, 274);
@@ -320,7 +320,7 @@ namespace MapView
 			this.Controls.Add(this.pnl_Head);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MaximizeBox = false;
-			this.Name = "MapDetailForm";
+			this.Name = "MapInfoDetailDialog";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = " MapDetail";

@@ -138,7 +138,7 @@ namespace XCom
 
 /*		/// <summary>
 		/// Gets the count of sprites in a given Terrain.
-		/// @note Used only by MapInfoOutputBox.Analyze()
+		/// @note Used only by MapInfoDialog.Analyze()
 		/// </summary>
 		/// <param name="id">the position of the terrain in this tileset's terrains-list</param>
 		/// <returns>count of sprites</returns>

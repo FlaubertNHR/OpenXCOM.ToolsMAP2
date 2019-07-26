@@ -34,7 +34,7 @@ namespace XCom
 		#region Properties
 		private int _setId = -1;
 		/// <summary>
-		/// SetId is used only by 'MapInfoOutputBox'.
+		/// SetId is used only by 'MapInfoDialog'.
 		/// </summary>
 		public int SetId
 		{
@@ -426,7 +426,7 @@ namespace XCom
 		{
 			var record = new McdRecord();
 
-			// SetId is used only by 'MapInfoOutputBox'.
+			// SetId is used only by 'MapInfoDialog'.
 			record.SetId = SetId;
 
 			record.Sprite1 = Sprite1;
