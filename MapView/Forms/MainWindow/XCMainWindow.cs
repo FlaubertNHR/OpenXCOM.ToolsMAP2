@@ -1289,7 +1289,7 @@ namespace MapView
 
 		internal MapInfoDialog _finfo;
 
-		private void OnMapInfoClick(object sender, EventArgs e)
+		internal void OnMapInfoClick(object sender, EventArgs e)
 		{
 			if (MainViewUnderlay.MapBase != null)
 			{
@@ -2398,14 +2398,14 @@ namespace MapView
 
 				if (@base != null)
 				{
-					miSaveAll       .Enabled =
-					miSaveMap       .Enabled =
-					miSaveRoutes    .Enabled =
-					miSaveAs        .Enabled =
-					miScreenshot     .Enabled =
-					miModifySize    .Enabled =
-					miInfo          .Enabled =
-					miReload.Enabled = true;
+					miSaveAll   .Enabled =
+					miSaveMap   .Enabled =
+					miSaveRoutes.Enabled =
+					miSaveAs    .Enabled =
+					miScreenshot.Enabled =
+					miModifySize.Enabled =
+					miReload    .Enabled = true;
+					MenuManager.EnableMapInfo();
 
 					MainViewOverlay.FirstClick = false;
 

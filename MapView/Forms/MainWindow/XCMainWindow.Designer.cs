@@ -8,6 +8,53 @@ namespace MapView
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
+
+		private System.Windows.Forms.ContextMenu cmMapTreeMenu;
+
+		private System.Windows.Forms.ToolStripContainer tscPanel;
+
+
+		private System.Windows.Forms.MainMenu mmMain;
+
+		private System.Windows.Forms.MenuItem menuFile;
+		private System.Windows.Forms.MenuItem miSaveAll;
+		private System.Windows.Forms.MenuItem miSeparator1;
+		private System.Windows.Forms.MenuItem miSaveMap;
+		private System.Windows.Forms.MenuItem miSaveRoutes;
+		private System.Windows.Forms.MenuItem miSaveAs;
+		private System.Windows.Forms.MenuItem miSeparator2;
+		private System.Windows.Forms.MenuItem miSaveMaptree;
+		private System.Windows.Forms.MenuItem miSeparator3;
+		private System.Windows.Forms.MenuItem miScreenshot;
+		private System.Windows.Forms.MenuItem miReload;
+		private System.Windows.Forms.MenuItem miSeparator4;
+		private System.Windows.Forms.MenuItem miQuit;
+
+		private System.Windows.Forms.MenuItem menuViewers;
+
+		private System.Windows.Forms.MenuItem menuEdit;
+		private System.Windows.Forms.MenuItem miModifySize;
+		private System.Windows.Forms.MenuItem miSeparator5;
+		private System.Windows.Forms.MenuItem miConfigurator;
+		private System.Windows.Forms.MenuItem miOptions;
+
+		private System.Windows.Forms.MenuItem menuHelp;
+
+
+		private System.Windows.Forms.SaveFileDialog sfdSaveDialog;
+		private DSShared.Windows.CollapsibleSplitter csSplitter;
+
+		private System.Windows.Forms.ToolStrip tsTools;
+
+		private System.Windows.Forms.StatusStrip ssMain;
+
+		private System.Windows.Forms.ToolStripStatusLabel tsslScale;
+		private System.Windows.Forms.ToolStripStatusLabel tsslMapLabel;
+		private System.Windows.Forms.ToolStripStatusLabel tsslDimensions;
+		private System.Windows.Forms.ToolStripStatusLabel tsslPosition;
+		private System.Windows.Forms.ToolStripStatusLabel tsslSelectionSize;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -40,7 +87,6 @@ namespace MapView
 			this.miSaveMaptree = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miScreenshot = new System.Windows.Forms.MenuItem();
-			this.miInfo = new System.Windows.Forms.MenuItem();
 			this.miReload = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
@@ -88,7 +134,6 @@ namespace MapView
 			this.miSaveMaptree,
 			this.miSeparator3,
 			this.miScreenshot,
-			this.miInfo,
 			this.miReload,
 			this.miSeparator4,
 			this.miQuit});
@@ -156,30 +201,22 @@ namespace MapView
 			this.miScreenshot.Text = "Scree&nshot ...";
 			this.miScreenshot.Click += new System.EventHandler(this.OnScreenshotClick);
 			// 
-			// miInfo
-			// 
-			this.miInfo.Enabled = false;
-			this.miInfo.Index = 9;
-			this.miInfo.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
-			this.miInfo.Text = "Map In&fo";
-			this.miInfo.Click += new System.EventHandler(this.OnMapInfoClick);
-			// 
 			// miReload
 			// 
 			this.miReload.Enabled = false;
-			this.miReload.Index = 10;
+			this.miReload.Index = 9;
 			this.miReload.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
 			this.miReload.Text = "Re&load";
 			this.miReload.Click += new System.EventHandler(this.OnReloadClick);
 			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 11;
+			this.miSeparator4.Index = 10;
 			this.miSeparator4.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 12;
+			this.miQuit.Index = 11;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
@@ -372,53 +409,6 @@ namespace MapView
 			this.PerformLayout();
 
 		}
-
-
-		private System.Windows.Forms.ContextMenu cmMapTreeMenu;
-
-		private System.Windows.Forms.ToolStripContainer tscPanel;
-
-
-		private System.Windows.Forms.MainMenu mmMain;
-
-		private System.Windows.Forms.MenuItem menuFile;
-		private System.Windows.Forms.MenuItem miSaveAll;
-		private System.Windows.Forms.MenuItem miSeparator1;
-		private System.Windows.Forms.MenuItem miSaveMap;
-		private System.Windows.Forms.MenuItem miSaveRoutes;
-		private System.Windows.Forms.MenuItem miSaveAs;
-		private System.Windows.Forms.MenuItem miSeparator2;
-		private System.Windows.Forms.MenuItem miSaveMaptree;
-		private System.Windows.Forms.MenuItem miSeparator3;
-		private System.Windows.Forms.MenuItem miScreenshot;
-		private System.Windows.Forms.MenuItem miInfo;
-		private System.Windows.Forms.MenuItem miReload;
-		private System.Windows.Forms.MenuItem miSeparator4;
-		private System.Windows.Forms.MenuItem miQuit;
-
-		private System.Windows.Forms.MenuItem menuViewers;
-
-		private System.Windows.Forms.MenuItem menuEdit;
-		private System.Windows.Forms.MenuItem miModifySize;
-		private System.Windows.Forms.MenuItem miSeparator5;
-		private System.Windows.Forms.MenuItem miConfigurator;
-		private System.Windows.Forms.MenuItem miOptions;
-
-		private System.Windows.Forms.MenuItem menuHelp;
-
-
-		private System.Windows.Forms.SaveFileDialog sfdSaveDialog;
-		private DSShared.Windows.CollapsibleSplitter csSplitter;
-
-		private System.Windows.Forms.ToolStrip tsTools;
-
-		private System.Windows.Forms.StatusStrip ssMain;
-
-		private System.Windows.Forms.ToolStripStatusLabel tsslScale;
-		private System.Windows.Forms.ToolStripStatusLabel tsslMapLabel;
-		private System.Windows.Forms.ToolStripStatusLabel tsslDimensions;
-		private System.Windows.Forms.ToolStripStatusLabel tsslPosition;
-		private System.Windows.Forms.ToolStripStatusLabel tsslSelectionSize;
 		#endregion Designer
 	}
 }

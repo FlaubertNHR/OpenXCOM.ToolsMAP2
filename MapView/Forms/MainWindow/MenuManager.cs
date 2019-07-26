@@ -132,11 +132,19 @@ namespace MapView.Forms.MainWindow
 
 
 			// "Help" menuitems ->
-			var help = new MenuItem("CHM &Help", OnHelpClick, Shortcut.F1);
+			// TODO: Don't build the Help menu this way; just do it the regular
+			// way from the XCMainWindow designer.
+			var help = new MenuItem("CHM &Help", OnHelpClick, Shortcut.F1);							// id #0
 			Helpers.MenuItems.Add(help);
 
-			CreateMenuitem(ObserverManager.ColorsScreen, Helpers);
-			CreateMenuitem(ObserverManager.AboutScreen,  Helpers);
+			CreateMenuitem(ObserverManager.ColorsScreen, Helpers);									// id #1
+			CreateMenuitem(ObserverManager.AboutScreen,  Helpers);									// id #2
+
+			Helpers.MenuItems.Add(new MenuItem(Separator));											// id #3
+
+			var info = new MenuItem("Map &Info", XCMainWindow.that.OnMapInfoClick, Shortcut.CtrlI);	// id #4
+			info.Enabled = false;
+			Helpers.MenuItems.Add(info);
 		}
 
 		/// <summary>
@@ -424,6 +432,14 @@ namespace MapView.Forms.MainWindow
 		internal static void UncheckScanG()
 		{
 			Viewers.MenuItems[MI_SCANG].Checked = false;
+		}
+
+		/// <summary>
+		/// Enables the MapInfo item once a descriptor loads.
+		/// </summary>
+		internal static void EnableMapInfo()
+		{
+			Helpers.MenuItems[4].Enabled = true;
 		}
 		#endregion Events (static)
 	}

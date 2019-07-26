@@ -65,19 +65,12 @@ namespace MapView
 			_y = Top;
 
 			if (_fdetail != null)
-			{
 				_fdetail.Close();
-//				_fdetail = null; // safety.
-			}
+
 			_f._finfo = null;
 
 			base.OnFormClosing(e);
 		}
-
-/*		protected override void OnActivated(EventArgs e)
-		{
-			base.OnActivated(e);
-		} */
 		#endregion Events (override)
 
 
