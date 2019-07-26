@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using DSShared;
 using DSShared.Windows;
 
+using MapView.Forms.MainWindow;
+
 using XCom;
 using XCom.Interfaces.Base;
 
@@ -93,7 +95,7 @@ namespace MapView
 		{
 			RegistryInfo.UpdateRegistry(this);
 
-			XCMainWindow.that.UncheckScanG();
+			MenuManager.UncheckScanG();
 			XCMainWindow.ScanG = null;
 		}
 

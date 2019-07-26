@@ -42,7 +42,6 @@ namespace MapView
 			this.miSaveImage = new System.Windows.Forms.MenuItem();
 			this.miResize = new System.Windows.Forms.MenuItem();
 			this.miInfo = new System.Windows.Forms.MenuItem();
-			this.miScanG = new System.Windows.Forms.MenuItem();
 			this.miReloadTerrains = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
@@ -90,7 +89,6 @@ namespace MapView
 			this.miSaveImage,
 			this.miResize,
 			this.miInfo,
-			this.miScanG,
 			this.miReloadTerrains,
 			this.miSeparator4,
 			this.miQuit});
@@ -174,30 +172,22 @@ namespace MapView
 			this.miInfo.Text = "Map In&fo";
 			this.miInfo.Click += new System.EventHandler(this.OnMapInfoClick);
 			// 
-			// miScanG
-			// 
-			this.miScanG.Enabled = false;
-			this.miScanG.Index = 11;
-			this.miScanG.Shortcut = System.Windows.Forms.Shortcut.CtrlG;
-			this.miScanG.Text = "Scan&G view";
-			this.miScanG.Click += new System.EventHandler(this.OnScanGClick);
-			// 
 			// miReloadTerrains
 			// 
 			this.miReloadTerrains.Enabled = false;
-			this.miReloadTerrains.Index = 12;
+			this.miReloadTerrains.Index = 11;
 			this.miReloadTerrains.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
 			this.miReloadTerrains.Text = "Reload terrai&ns";
 			this.miReloadTerrains.Click += new System.EventHandler(this.OnReloadTerrainsClick);
 			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 13;
+			this.miSeparator4.Index = 12;
 			this.miSeparator4.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 14;
+			this.miQuit.Index = 13;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
@@ -396,7 +386,6 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miSaveImage;
 		private System.Windows.Forms.MenuItem miResize;
 		private System.Windows.Forms.MenuItem miInfo;
-		private System.Windows.Forms.MenuItem miScanG;
 		private System.Windows.Forms.MenuItem miReloadTerrains;
 		private System.Windows.Forms.MenuItem miSeparator4;
 		private System.Windows.Forms.MenuItem miQuit;

@@ -1295,26 +1295,6 @@ namespace MapView
 			}
 		}
 
-		private void OnScanGClick(object sender, EventArgs e)
-		{
-			if (MainViewUnderlay.MapBase != null)
-			{
-				if (!miScanG.Checked)
-				{
-					miScanG.Checked = true;
-
-					ScanG = new ScanGViewer(MainViewUnderlay.MapBase);
-					ScanG.Show(); // no owner. TODO: perhaps MainView ... or add the ScanG dialog to MenuManager etc.
-				}
-				else
-					ScanG.BringToFront();
-			}
-		}
-
-		internal void UncheckScanG()
-		{
-			miScanG.Checked = false;
-		}
 
 		private void OnReloadTerrainsClick(object sender, EventArgs e)
 		{
@@ -2421,7 +2401,6 @@ namespace MapView
 					miSaveImage     .Enabled =
 					miResize        .Enabled =
 					miInfo          .Enabled =
-					miScanG         .Enabled =
 					miReloadTerrains.Enabled = true;
 
 					MainViewOverlay.FirstClick = false;
