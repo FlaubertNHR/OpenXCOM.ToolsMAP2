@@ -25,16 +25,17 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miSeparator2;
 		private System.Windows.Forms.MenuItem miSaveMaptree;
 		private System.Windows.Forms.MenuItem miSeparator3;
-		private System.Windows.Forms.MenuItem miScreenshot;
 		private System.Windows.Forms.MenuItem miReload;
 		private System.Windows.Forms.MenuItem miSeparator4;
+		private System.Windows.Forms.MenuItem miScreenshot;
+		private System.Windows.Forms.MenuItem miSeparator5;
 		private System.Windows.Forms.MenuItem miQuit;
 
 		private System.Windows.Forms.MenuItem menuViewers;
 
 		private System.Windows.Forms.MenuItem menuEdit;
 		private System.Windows.Forms.MenuItem miModifySize;
-		private System.Windows.Forms.MenuItem miSeparator5;
+		private System.Windows.Forms.MenuItem miSeparator6;
 		private System.Windows.Forms.MenuItem miConfigurator;
 		private System.Windows.Forms.MenuItem miOptions;
 
@@ -86,13 +87,14 @@ namespace MapView
 			this.miSeparator2 = new System.Windows.Forms.MenuItem();
 			this.miSaveMaptree = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
-			this.miScreenshot = new System.Windows.Forms.MenuItem();
 			this.miReload = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
+			this.miScreenshot = new System.Windows.Forms.MenuItem();
+			this.miSeparator5 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.menuEdit = new System.Windows.Forms.MenuItem();
 			this.miModifySize = new System.Windows.Forms.MenuItem();
-			this.miSeparator5 = new System.Windows.Forms.MenuItem();
+			this.miSeparator6 = new System.Windows.Forms.MenuItem();
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
 			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.menuViewers = new System.Windows.Forms.MenuItem();
@@ -133,9 +135,10 @@ namespace MapView
 			this.miSeparator2,
 			this.miSaveMaptree,
 			this.miSeparator3,
-			this.miScreenshot,
 			this.miReload,
 			this.miSeparator4,
+			this.miScreenshot,
+			this.miSeparator5,
 			this.miQuit});
 			this.menuFile.Text = "&File";
 			// 
@@ -193,30 +196,35 @@ namespace MapView
 			this.miSeparator3.Index = 7;
 			this.miSeparator3.Text = "-";
 			// 
-			// miScreenshot
-			// 
-			this.miScreenshot.Enabled = false;
-			this.miScreenshot.Index = 8;
-			this.miScreenshot.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
-			this.miScreenshot.Text = "Scree&nshot ...";
-			this.miScreenshot.Click += new System.EventHandler(this.OnScreenshotClick);
-			// 
 			// miReload
 			// 
 			this.miReload.Enabled = false;
-			this.miReload.Index = 9;
+			this.miReload.Index = 8;
 			this.miReload.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
 			this.miReload.Text = "Re&load";
 			this.miReload.Click += new System.EventHandler(this.OnReloadClick);
 			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 10;
+			this.miSeparator4.Index = 9;
 			this.miSeparator4.Text = "-";
+			// 
+			// miScreenshot
+			// 
+			this.miScreenshot.Enabled = false;
+			this.miScreenshot.Index = 10;
+			this.miScreenshot.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
+			this.miScreenshot.Text = "Scree&nshot ...";
+			this.miScreenshot.Click += new System.EventHandler(this.OnScreenshotClick);
+			// 
+			// miSeparator5
+			// 
+			this.miSeparator5.Index = 11;
+			this.miSeparator5.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 11;
+			this.miQuit.Index = 12;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
@@ -226,7 +234,7 @@ namespace MapView
 			this.menuEdit.Index = 1;
 			this.menuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miModifySize,
-			this.miSeparator5,
+			this.miSeparator6,
 			this.miConfigurator,
 			this.miOptions});
 			this.menuEdit.Text = "&Edit";
@@ -239,10 +247,10 @@ namespace MapView
 			this.miModifySize.Text = "Modify Map Si&ze";
 			this.miModifySize.Click += new System.EventHandler(this.OnMapResizeClick);
 			// 
-			// miSeparator5
+			// miSeparator6
 			// 
-			this.miSeparator5.Index = 1;
-			this.miSeparator5.Text = "-";
+			this.miSeparator6.Index = 1;
+			this.miSeparator6.Text = "-";
 			// 
 			// miConfigurator
 			// 
