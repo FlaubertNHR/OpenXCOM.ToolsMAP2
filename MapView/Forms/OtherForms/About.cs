@@ -17,10 +17,10 @@ namespace MapView
 			Form
 	{
 		#region Fields
-		private Point _locBase;
-		private Point _loc;
-		private Size _size;
-		private double _lastPoint;
+		private Point _lBase;
+		private Point _l;
+
+		private Random _rand = new Random();
 		#endregion Fields
 
 
@@ -28,6 +28,18 @@ namespace MapView
 		internal About()
 		{
 			InitializeComponent();
+
+			string text = " About";
+			string before = String.Format(
+										System.Globalization.CultureInfo.CurrentCulture,
+										"{0:n0}", GC.GetTotalMemory(false));
+//			string after  = String.Format(
+//										System.Globalization.CultureInfo.CurrentCulture,
+//										"{0:n0}", GC.GetTotalMemory(true));
+
+//			text += " - " + before + " \u2192 " + after + " bytes"; // '\u2192' = right arrow.
+			text += " - " + before + " bytes allocated";
+			Text = text;
 
 			var an = Assembly.GetExecutingAssembly().GetName();
 			string ver = an.Version.Major + "."
@@ -47,7 +59,7 @@ namespace MapView
 			lblVersion.Text += Environment.NewLine + Environment.NewLine
 							+ String.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
-										"{0:yyyy MMM d}  {0:HH}:{0:mm}:{0:ss} {0:zzz}",
+										"{0:yyyy MMM d}  {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
 										dt);
 		}
 		#endregion cTor
@@ -73,35 +85,30 @@ namespace MapView
 		#region Events
 		private void OnShown(object sender, EventArgs e)
 		{
-			string text = " About";
-
-			string before = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"{0:n0}", GC.GetTotalMemory(false));
-//			string after  = String.Format(
-//										System.Globalization.CultureInfo.CurrentCulture,
-//										"{0:n0}", GC.GetTotalMemory(true));
-
-//			text += " - " + before + " \u2192 " + after + " bytes"; // '\u2192' = right arrow.
-			text += " - " + before + " bytes allocated";
-
-			Text = text;
-
-			_size = new Size(Width, Height);
-
-			_locBase = Location;
-			MoveWindow();
+			_lBase = Location;
+//			t1.Enabled = true;
 		}
 
 		private void OnTick(object sender, EventArgs e)
 		{
-			MoveWindow();
-		}
+			_l = Location;
+			_l.X += _rand.Next() % 3 - 1;
+			_l.Y += _rand.Next() % 3 - 1;
 
-		private void OnLocationChanged(object sender, EventArgs e)
-		{
-			var locPre = new Size(GetLocationStep(_lastPoint));
-			_loc += new Size(Location - locPre);
+			bool IsInsideBounds = false;
+			foreach (var screen in Screen.AllScreens)
+			{
+				IsInsideBounds = screen.Bounds.Contains(_l)
+							  && screen.Bounds.Contains(_l + Size);
+
+				if (IsInsideBounds)
+					break;
+			}
+
+			if (!IsInsideBounds)
+				_l = _lBase;
+
+			Location = _l;
 		}
 
 		private void OnKeyDown(object sender, KeyEventArgs e)
@@ -109,43 +116,16 @@ namespace MapView
 			switch (e.KeyCode)
 			{
 				case Keys.Escape:
-				case Keys.Enter:
 					Close();
+					break;
+
+				case Keys.Enter:
+					if (t1.Enabled) t1.Enabled = false;
+					else            t1.Enabled = true;
 					break;
 			}
 		}
 		#endregion Events
-
-
-		#region Methods
-		private void MoveWindow()
-		{
-			_loc = GetLocationStep(_lastPoint += 0.035);
-
-			bool IsInsideBounds = false;
-			foreach (var screen in Screen.AllScreens)
-			{
-				IsInsideBounds = screen.Bounds.Contains(_loc)
-							  && screen.Bounds.Contains(_loc + _size);
-
-				if (IsInsideBounds)
-					break;
-			}
-
-			if (!IsInsideBounds)
-				_loc = _locBase;
-
-			Location = _loc;
-		}
-
-		private Point GetLocationStep(double delta)
-		{
-			var loc = Location;
-			loc.X = (int)(_loc.X + (Math.Sin(delta) * 50));
-			loc.Y = (int)(_loc.Y + (Math.Cos(delta) * 50));
-			return loc;
-		}
-		#endregion Methods
 	}
 
 
@@ -171,12 +151,13 @@ namespace MapView
 			var secondsSince1970 = BitConverter.ToInt32(buffer, offset + c_LinkerTimestampOffset);
 			var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-			var linkTimeUtc = epoch.AddSeconds(secondsSince1970);
+			return epoch.AddSeconds(secondsSince1970);
+//			var linkTimeUtc = epoch.AddSeconds(secondsSince1970);
 
-			var tz = target ?? TimeZoneInfo.Local;
-			var localTime = TimeZoneInfo.ConvertTimeFromUtc(linkTimeUtc, tz);
+//			var tz = target ?? TimeZoneInfo.Local;
+//			var localTime = TimeZoneInfo.ConvertTimeFromUtc(linkTimeUtc, tz);
 
-			return localTime;
+//			return localTime;
 		}
 	}
 }

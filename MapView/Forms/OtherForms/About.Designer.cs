@@ -13,7 +13,7 @@ namespace MapView
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Timer MoveTimer;
+		private System.Windows.Forms.Timer t1;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label6;
 
@@ -42,7 +42,7 @@ namespace MapView
 			this.label2 = new System.Windows.Forms.Label();
 			this.lblVersion = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
-			this.MoveTimer = new System.Windows.Forms.Timer(this.components);
+			this.t1 = new System.Windows.Forms.Timer(this.components);
 			this.label5 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
@@ -83,11 +83,10 @@ namespace MapView
 			this.label4.Text = "REVISION - TheBigSot";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// MoveTimer
+			// t1
 			// 
-			this.MoveTimer.Enabled = true;
-			this.MoveTimer.Interval = 1000;
-			this.MoveTimer.Tick += new System.EventHandler(this.OnTick);
+			this.t1.Interval = 15;
+			this.t1.Tick += new System.EventHandler(this.OnTick);
 			// 
 			// label5
 			// 
@@ -113,7 +112,7 @@ namespace MapView
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(305, 15);
 			this.label6.TabIndex = 6;
-			this.label6.Text = "ASSIST - luke83 / et multus alii";
+			this.label6.Text = "ASSIST - luke83 / et alii multus";
 			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// About
@@ -136,9 +135,7 @@ namespace MapView
 			this.Name = "About";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = " About";
 			this.Shown += new System.EventHandler(this.OnShown);
-			this.LocationChanged += new System.EventHandler(this.OnLocationChanged);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ResumeLayout(false);
 
