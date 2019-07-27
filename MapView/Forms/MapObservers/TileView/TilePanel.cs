@@ -123,7 +123,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			_quadType = quadType;
 
 			Dock = DockStyle.Fill;
-			SetStyle(ControlStyles.Selectable, true);
+			SetStyle(ControlStyles.Selectable | ControlStyles.ResizeRedraw, true);
 			TabStop = true;
 
 			_scrollBar = new VScrollBar();
@@ -137,12 +137,6 @@ namespace MapView.Forms.MapObservers.TileViews
 			ContextMenu = CreateContext();
 
 			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
-
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
-
 
 			_t1.Interval = 250;	// because the mouse OnLeave event doesn't fire
 			_t1.Enabled = true;	// when the mouse moves out of the panel directly
