@@ -40,6 +40,11 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miOptions;
 
 		private System.Windows.Forms.MenuItem menuHelp;
+		private System.Windows.Forms.MenuItem miHelp;
+		private System.Windows.Forms.MenuItem miColors;
+		private System.Windows.Forms.MenuItem miAbout;
+		private System.Windows.Forms.MenuItem miSeparator7;
+		private System.Windows.Forms.MenuItem miMapInfo;
 
 
 		private System.Windows.Forms.SaveFileDialog sfdSaveDialog;
@@ -99,6 +104,11 @@ namespace MapView
 			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.menuViewers = new System.Windows.Forms.MenuItem();
 			this.menuHelp = new System.Windows.Forms.MenuItem();
+			this.miHelp = new System.Windows.Forms.MenuItem();
+			this.miColors = new System.Windows.Forms.MenuItem();
+			this.miAbout = new System.Windows.Forms.MenuItem();
+			this.miSeparator7 = new System.Windows.Forms.MenuItem();
+			this.miMapInfo = new System.Windows.Forms.MenuItem();
 			this.sfdSaveDialog = new System.Windows.Forms.SaveFileDialog();
 			this.ssMain = new System.Windows.Forms.StatusStrip();
 			this.tsslScale = new System.Windows.Forms.ToolStripStatusLabel();
@@ -274,7 +284,45 @@ namespace MapView
 			// menuHelp
 			// 
 			this.menuHelp.Index = 3;
+			this.menuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miHelp,
+			this.miColors,
+			this.miAbout,
+			this.miSeparator7,
+			this.miMapInfo});
 			this.menuHelp.Text = "&Help";
+			// 
+			// miHelp
+			// 
+			this.miHelp.Index = 0;
+			this.miHelp.Shortcut = System.Windows.Forms.Shortcut.F1;
+			this.miHelp.Text = "CHM &Help";
+			this.miHelp.Click += new System.EventHandler(this.OnHelpClick);
+			// 
+			// miColors
+			// 
+			this.miColors.Index = 1;
+			this.miColors.Text = "Colors";
+			this.miColors.Click += new System.EventHandler(this.OnColorsClick);
+			// 
+			// miAbout
+			// 
+			this.miAbout.Index = 2;
+			this.miAbout.Text = "About";
+			this.miAbout.Click += new System.EventHandler(this.OnAboutClick);
+			// 
+			// miSeparator7
+			// 
+			this.miSeparator7.Index = 3;
+			this.miSeparator7.Text = "-";
+			// 
+			// miMapInfo
+			// 
+			this.miMapInfo.Enabled = false;
+			this.miMapInfo.Index = 4;
+			this.miMapInfo.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
+			this.miMapInfo.Text = "Map &Info";
+			this.miMapInfo.Click += new System.EventHandler(this.OnMapInfoClick);
 			// 
 			// sfdSaveDialog
 			// 

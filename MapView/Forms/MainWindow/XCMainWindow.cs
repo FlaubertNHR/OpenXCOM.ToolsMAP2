@@ -330,9 +330,9 @@ namespace MapView
 			tsTools.ResumeLayout();
 			LogFile.WriteLine("MainView toolstrip created.");
 
-			MenuManager.SetMenus(menuViewers, menuHelp);
-			MenuManager.PopulateMenus();
-			LogFile.WriteLine("MainView menus populated.");
+			MenuManager.Initialize(menuViewers);
+			MenuManager.PopulateMenu();
+			LogFile.WriteLine("Viewers menu populated.");
 
 
 			// Read MapResources.yml to get the resources dir (for both UFO and TFTD).
@@ -684,9 +684,11 @@ namespace MapView
 				OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
 
 				ObserverManager.CloseViewers();
-				OptionsManager.CloseOptions();
-				if (ScanG  != null) ScanG .Close();
-				if (_finfo != null) _finfo.Close();
+				OptionsManager .CloseOptions();
+				if (ScanG    != null) ScanG   .Close();
+				if (_fcolors != null) _fcolors.Close();
+				if (_fabout  != null) _fabout .Close();
+				if (_finfo   != null) _finfo  .Close();
 
 				RegistryInfo.UpdateRegistry(this);
 				RegistryInfo.FinalizeRegistry();
@@ -1111,6 +1113,93 @@ namespace MapView
 			MaptreeChanged = !ResourceInfo.TileGroupManager.SaveTileGroups();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnReloadClick(object sender, EventArgs e)
+		{
+			OnReloadDescriptor();
+		}
+
+		private void OnScreenshotClick(object sender, EventArgs e)
+		{
+			MapFileBase @base = MainViewUnderlay.MapBase;
+			if (@base != null)
+			{
+				sfdSaveDialog.FileName = @base.Descriptor.Label;
+				if (sfdSaveDialog.ShowDialog() == DialogResult.OK)
+					@base.Screenshot(sfdSaveDialog.FileName);
+			}
+		}
+
+		/// <summary>
+		/// Closes Everything.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnQuitClick(object sender, EventArgs e)
+		{
+			Close();
+		}
+
+
+		/// <summary>
+		/// Opens a dialog that allows user to resize the current Mapfile.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMapResizeClick(object sender, EventArgs e)
+		{
+			MapFileBase @base = MainViewUnderlay.MapBase;
+			if (@base != null)
+			{
+				using (var f = new MapResizeInputBox(@base))
+				{
+					if (f.ShowDialog(this) == DialogResult.OK)
+					{
+						int changes = @base.MapResize(
+													f.Rows,
+													f.Cols,
+													f.Levs,
+													f.zType);
+
+						if (!@base.MapChanged && ((changes & MapFileBase.CHANGED_MAP) != 0))
+							MapChanged = true;
+
+						if (!@base.RoutesChanged && (changes & MapFileBase.CHANGED_NOD) != 0)
+						{
+							ObserverManager.RouteView   .Control     .RoutesChanged =
+							ObserverManager.TopRouteView.ControlRoute.RoutesChanged = true;
+						}
+
+						MainViewUnderlay.ForceResize();
+
+						MainViewOverlay.FirstClick = false;
+
+						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
+						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
+
+						ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
+
+						tsslDimensions   .Text = @base.MapSize.ToString();
+						tsslPosition     .Text =
+						tsslSelectionSize.Text = String.Empty;
+
+						ObserverManager.SetObservers(@base);
+
+						ObserverManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
+						ObserverManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
+
+						if (ScanG != null) // update ScanG viewer if open
+							ScanG.LoadMapfile(@base);
+
+						ResetQuadrantPanel();
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// Opens the Configuration Editor.
@@ -1217,92 +1306,106 @@ namespace MapView
 		}
 
 
-		private void OnQuitClick(object sender, EventArgs e)
+		/// <summary>
+		/// Opens the CHM helpfile.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnHelpClick(object sender, EventArgs e)
 		{
-			Close();
+			string help = Path.GetDirectoryName(Application.ExecutablePath);
+				   help = Path.Combine(help, "MapView.chm");
+			Help.ShowHelp(XCMainWindow.that, "file://" + help);
 		}
 
-
-		private void OnScreenshotClick(object sender, EventArgs e)
+		internal ColorHelp _fcolors;
+		/// <summary>
+		/// Opens the ColorsHelp dialog.
+		/// @note This handler is not a toggle. The dialog will be focused if
+		/// already open.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnColorsClick(object sender, EventArgs e)
 		{
-			MapFileBase @base = MainViewUnderlay.MapBase;
-			if (@base != null)
+			if (!miColors.Checked)
 			{
-				sfdSaveDialog.FileName = @base.Descriptor.Label;
-				if (sfdSaveDialog.ShowDialog() == DialogResult.OK)
-					@base.Screenshot(sfdSaveDialog.FileName);
+				miColors.Checked = true;
+
+				_fcolors = new ColorHelp(this);
+				_fcolors.Show(); // no owner.
 			}
+			else
+				_fcolors.BringToFront();
 		}
 
-
-		private void OnMapResizeClick(object sender, EventArgs e)
+		/// <summary>
+		/// Dechecks the Colors item when the Colors dialog closes.
+		/// </summary>
+		internal void DecheckColors()
 		{
-			MapFileBase @base = MainViewUnderlay.MapBase;
-			if (@base != null)
-			{
-				using (var f = new MapResizeInputBox(@base))
-				{
-					if (f.ShowDialog(this) == DialogResult.OK)
-					{
-						int changes = @base.MapResize(
-													f.Rows,
-													f.Cols,
-													f.Levs,
-													f.zType);
-
-						if (!@base.MapChanged && ((changes & MapFileBase.CHANGED_MAP) != 0))
-							MapChanged = true;
-
-						if (!@base.RoutesChanged && (changes & MapFileBase.CHANGED_NOD) != 0)
-						{
-							ObserverManager.RouteView   .Control     .RoutesChanged =
-							ObserverManager.TopRouteView.ControlRoute.RoutesChanged = true;
-						}
-
-						MainViewUnderlay.ForceResize();
-
-						MainViewOverlay.FirstClick = false;
-
-						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
-						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
-
-						ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
-
-						tsslDimensions   .Text = @base.MapSize.ToString();
-						tsslPosition     .Text =
-						tsslSelectionSize.Text = String.Empty;
-
-						ObserverManager.SetObservers(@base);
-
-						ObserverManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
-						ObserverManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
-
-						if (ScanG != null) // update ScanG viewer if open
-							ScanG.LoadMapfile(@base);
-
-						ResetQuadrantPanel();
-					}
-				}
-			}
+			miColors.Checked = false;
 		}
 
+		internal About _fabout;
+		/// <summary>
+		/// Opens the About dialog
+		/// @note This handler is not a toggle. The dialog will be focused if
+		/// already open.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAboutClick(object sender, EventArgs e)
+		{
+			if (!miAbout.Checked)
+			{
+				miAbout.Checked = true;
+
+				_fabout = new About();
+				_fabout.Show(); // no owner.
+			}
+			else
+				_fabout.BringToFront();
+		}
+
+		/// <summary>
+		/// Dechecks the About item when the About dialog closes.
+		/// </summary>
+		internal void DecheckAbout()
+		{
+			miAbout.Checked = false;
+		}
 
 		internal MapInfoDialog _finfo;
-
-		internal void OnMapInfoClick(object sender, EventArgs e)
+		/// <summary>
+		/// Opens the MapInfo dialog.
+		/// @note This handler is a toggle. The dialog will be closed if it's
+		/// open.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMapInfoClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.MapBase != null)
+			if (!miMapInfo.Checked)
 			{
-				_finfo = new MapInfoDialog(this, MainViewUnderlay.MapBase as MapFile);
-				_finfo.Show(); // no owner.
-				_finfo.Analyze();
+				if (MainViewUnderlay.MapBase != null) // safety.
+				{
+					miMapInfo.Checked = true;
+					_finfo = new MapInfoDialog(this, MainViewUnderlay.MapBase as MapFile);
+					_finfo.Show(); // no owner.
+					_finfo.Analyze();
+				}
 			}
+			else
+				_finfo.Close(); // TODO: Close MapInfo when loading a different Mapfile. (etc)
 		}
 
-
-		private void OnReloadClick(object sender, EventArgs e)
+		/// <summary>
+		/// Dechecks the MapInfo item when the MapInfo dialog closes.
+		/// </summary>
+		internal void DecheckMapInfo()
 		{
-			OnReloadDescriptor();
+			miMapInfo.Checked = false;
 		}
 
 
@@ -2404,8 +2507,8 @@ namespace MapView
 					miSaveAs    .Enabled =
 					miScreenshot.Enabled =
 					miModifySize.Enabled =
-					miReload    .Enabled = true;
-					MenuManager.EnableMapInfo();
+					miReload    .Enabled =
+					miMapInfo   .Enabled = true;
 
 					MainViewOverlay.FirstClick = false;
 
@@ -2450,7 +2553,7 @@ namespace MapView
 					}
 
 					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
-						MenuManager.StartSecondaryStage();
+						MenuManager.StartSecondStageRockets();
 
 					ObserverManager.SetObservers(@base); // reset all observer events
 

@@ -8,6 +8,16 @@ namespace MapView
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
+		private System.Windows.Forms.Label lblVersion;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Timer MoveTimer;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label6;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -133,15 +143,6 @@ namespace MapView
 			this.ResumeLayout(false);
 
 		}
-
-		private System.Windows.Forms.Label lblVersion;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Timer MoveTimer;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label6;
 		#endregion Designer
 	}
 }

@@ -59,6 +59,14 @@ namespace MapView
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 		}
+
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			XCMainWindow.that._fabout = null;
+			XCMainWindow.that.DecheckAbout();
+
+			base.OnFormClosing(e);
+		}
 		#endregion Events (override)
 
 

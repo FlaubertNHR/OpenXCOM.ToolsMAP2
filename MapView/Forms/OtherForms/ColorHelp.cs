@@ -21,13 +21,26 @@ namespace MapView
 		:
 			Form
 	{
+		#region Fields (static)
+		private static int _x = -1;
+		private static int _y = -1;
+		#endregion Fields (static)
+
+
+		#region Fields
+		private readonly XCMainWindow _f;
+		#endregion Fields
+
+
 		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal ColorHelp()
+		internal ColorHelp(XCMainWindow f)
 		{
 			InitializeComponent();
+
+			_f = f;
 
 			var tpTabControl = new TabPageBorder(tabMain);
 
@@ -54,7 +67,14 @@ namespace MapView
 			lblType13.Font =
 			lblType14.Font = new Font(Font, FontStyle.Bold);
 
+			UpdateColors();
 			OnCheckChanged(null, EventArgs.Empty);
+
+			if (_x == -1) _x = _f.Left + _f.Width  / 2 - Width  / 2;
+			if (_y == -1) _y = _f.Top  + _f.Height / 2 - Height / 2 - 10;
+
+			Left = _x;
+			Top  = _y;
 		}
 		#endregion cTor
 
@@ -65,14 +85,26 @@ namespace MapView
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 		}
+
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			_x = Left;
+			_y = Top;
+
+			_f._fcolors = null;
+			_f.DecheckColors();
+
+			base.OnFormClosing(e);
+		}
 		#endregion Events (override)
 
 
 		#region Methods
 		/// <summary>
-		/// Wraps the several color-updates into one call.
+		/// Wraps the several color-updates into one call. Update colors that
+		/// user could have changed in TileView's Option-settings.
 		/// </summary>
-		internal void UpdateColors()
+		private void UpdateColors()
 		{
 			UpdateTopViewBlobColors();
 			UpdateRouteViewBlobColors();
@@ -310,6 +342,42 @@ namespace MapView
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
+		private CompositedTabControl tabMain;
+		private TabPage tpTopView;
+		private TabPage tpRouteView;
+		private TabPage tpTileView;
+		private Label label1;
+		private Label label7;
+		private Label label8;
+		private Label label9;
+		private Label label10;
+		private Label label14;
+		private Label label15;
+		private Label label16;
+		private Label label25;
+		private Label label26;
+		private GroupBox gbTileViewColors;
+		private Label lblType00;
+		private Label lblType01;
+		private Label lblType02;
+		private Label lblType03;
+		private Label lblType04;
+		private Label lblType05;
+		private Label lblType06;
+		private Label lblType07;
+		private Label lblType08;
+		private Label lblType09;
+		private Label lblType10;
+		private Label lblType11;
+		private Label lblType12;
+		private Label lblType13;
+		private Label lblType14;
+		private RadioButton rbTftd;
+		private RadioButton rbUfo;
+		private GroupBox gbTopViewColors;
+		private GroupBox gbRouteViewColors;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -357,11 +425,11 @@ namespace MapView
 			this.label10 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.tpRouteView = new System.Windows.Forms.TabPage();
+			this.label1 = new System.Windows.Forms.Label();
 			this.gbRouteViewColors = new System.Windows.Forms.GroupBox();
 			this.label16 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
 			this.tabMain.SuspendLayout();
 			this.tpTileView.SuspendLayout();
 			this.gbTileViewColors.SuspendLayout();
@@ -606,9 +674,9 @@ namespace MapView
 			// 
 			this.tpTopView.Controls.Add(this.label26);
 			this.tpTopView.Controls.Add(this.gbTopViewColors);
-			this.tpTopView.Location = new System.Drawing.Point(4, 21);
+			this.tpTopView.Location = new System.Drawing.Point(4, 22);
 			this.tpTopView.Name = "tpTopView";
-			this.tpTopView.Size = new System.Drawing.Size(446, 231);
+			this.tpTopView.Size = new System.Drawing.Size(446, 230);
 			this.tpTopView.TabIndex = 1;
 			this.tpTopView.Text = "TopView";
 			// 
@@ -688,11 +756,21 @@ namespace MapView
 			// 
 			this.tpRouteView.Controls.Add(this.label1);
 			this.tpRouteView.Controls.Add(this.gbRouteViewColors);
-			this.tpRouteView.Location = new System.Drawing.Point(4, 21);
+			this.tpRouteView.Location = new System.Drawing.Point(4, 22);
 			this.tpRouteView.Name = "tpRouteView";
-			this.tpRouteView.Size = new System.Drawing.Size(446, 231);
+			this.tpRouteView.Size = new System.Drawing.Size(446, 230);
 			this.tpRouteView.TabIndex = 2;
 			this.tpRouteView.Text = "RouteView";
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(10, 195);
+			this.label1.Margin = new System.Windows.Forms.Padding(0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(425, 25);
+			this.label1.TabIndex = 2;
+			this.label1.Text = "The Colors viewer must be closed and re-opened to update any colors that have bee" +
+	"n changed in Options.";
 			// 
 			// gbRouteViewColors
 			// 
@@ -740,16 +818,6 @@ namespace MapView
 			this.label14.Text = "west";
 			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(10, 195);
-			this.label1.Margin = new System.Windows.Forms.Padding(0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(425, 25);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "The Colors viewer must be closed and re-opened to update any colors that have bee" +
-	"n changed in Options.";
-			// 
 			// ColorHelp
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -762,7 +830,7 @@ namespace MapView
 			this.MinimizeBox = false;
 			this.Name = "ColorHelp";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = " Colors";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.tabMain.ResumeLayout(false);
@@ -775,41 +843,6 @@ namespace MapView
 			this.ResumeLayout(false);
 
 		}
-
-		private CompositedTabControl tabMain;
-		private TabPage tpTopView;
-		private TabPage tpRouteView;
-		private TabPage tpTileView;
-		private Label label1;
-		private Label label7;
-		private Label label8;
-		private Label label9;
-		private Label label10;
-		private Label label14;
-		private Label label15;
-		private Label label16;
-		private Label label25;
-		private Label label26;
-		private GroupBox gbTileViewColors;
-		private Label lblType00;
-		private Label lblType01;
-		private Label lblType02;
-		private Label lblType03;
-		private Label lblType04;
-		private Label lblType05;
-		private Label lblType06;
-		private Label lblType07;
-		private Label lblType08;
-		private Label lblType09;
-		private Label lblType10;
-		private Label lblType11;
-		private Label lblType12;
-		private Label lblType13;
-		private Label lblType14;
-		private RadioButton rbTftd;
-		private RadioButton rbUfo;
-		private GroupBox gbTopViewColors;
-		private GroupBox gbRouteViewColors;
 		#endregion Designer
 	}
 }

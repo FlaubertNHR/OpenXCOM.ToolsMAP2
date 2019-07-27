@@ -43,12 +43,11 @@ namespace MapView
 
 			Text = " MapInfo - " + _file.Descriptor.Label;
 
-			if (_x == -1) _x = _f.Left + 200;
-			if (_y == -1) _y = _f.Top  + 100;
+			if (_x == -1) _x = _f.Left + _f.Width  / 2 - Width  / 2;
+			if (_y == -1) _y = _f.Top  + _f.Height / 2 - Height / 2 - 10;
 
 			Left = _x;
 			Top  = _y;
-
 		}
 		#endregion cTor
 
@@ -68,6 +67,7 @@ namespace MapView
 				_fdetail.Close();
 
 			_f._finfo = null;
+			_f.DecheckMapInfo();
 
 			base.OnFormClosing(e);
 		}

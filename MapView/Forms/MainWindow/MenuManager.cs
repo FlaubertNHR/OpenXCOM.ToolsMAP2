@@ -12,6 +12,11 @@ using MapView.Forms.MapObservers.TopViews;
 
 namespace MapView.Forms.MainWindow
 {
+	/// <summary>
+	/// Instantiates and manages items on MainView's "Viewers" menu: TileView,
+	/// TopView, RouteView, TopRouteView, and the ScanG viewer.
+	/// @note See ObserverManager for instantiation of the viewers.
+	/// </summary>
 	internal static class MenuManager
 	{
 		#region Fields (static)
@@ -32,42 +37,36 @@ namespace MapView.Forms.MainWindow
 		#region Properties (static)
 		private static MenuItem Viewers
 		{ get; set; }
-
-		private static MenuItem Helpers
-		{ get; set; }
 		#endregion Properties (static)
 
 
 		#region Methods (static)
 		/// <summary>
-		/// Sets the menus to manage.
+		/// Initializes the menuitem "Viewers".
 		/// </summary>
-		/// <param name="it0"></param>
-		/// <param name="it1"></param>
-		internal static void SetMenus(MenuItem it0, MenuItem it1)
+		/// <param name="viewers"></param>
+		internal static void Initialize(MenuItem viewers)
 		{
-			Viewers = it0;
-			Helpers = it1;
+			Viewers = viewers;
 		}
 
 		/// <summary>
-		/// Adds menuitems to MapView's "Viewers" and "Help" dropdown lists.
+		/// Adds menuitems to MapView's "Viewers" dropdown list.
 		/// </summary>
-		internal static void PopulateMenus()
+		internal static void PopulateMenu()
 		{
-			// "Viewers" menuitems ->
-			CreateMenuitem(ObserverManager.TileView,     Viewers, Shortcut.F5);	// id #0
+			CreateMenuitem(ObserverManager.TileView,     Shortcut.F5);	// id #0
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));						// id #1
+			Viewers.MenuItems.Add(new MenuItem(Separator));				// id #1
 
-			CreateMenuitem(ObserverManager.TopView,      Viewers, Shortcut.F6);	// id #2
-			CreateMenuitem(ObserverManager.RouteView,    Viewers, Shortcut.F7);	// id #3
-			CreateMenuitem(ObserverManager.TopRouteView, Viewers, Shortcut.F8);	// id #4
+			CreateMenuitem(ObserverManager.TopView,      Shortcut.F6);	// id #2
+			CreateMenuitem(ObserverManager.RouteView,    Shortcut.F7);	// id #3
+			CreateMenuitem(ObserverManager.TopRouteView, Shortcut.F8);	// id #4
 
 			Options options = OptionsManager.getMainOptions();
 			OptionChangedEvent changer = XCMainWindow.Optionables.OnFlagChanged;
 
-			Form f; // initialize w/ default start option ->
+			Form f; // initialize MainView's Options w/ each viewer's default Start setting ->
 			bool @default;
 			for (int id = MI_TILE; id != MI_cutoff; ++id)
 			{
@@ -102,6 +101,7 @@ namespace MapView.Forms.MainWindow
 									@default, // true to have the viewer open on 1st run.
 									changer);
 
+
 				f.VisibleChanged += (sender, e) =>
 				{
 					var fobserver = sender as Form;
@@ -129,22 +129,6 @@ namespace MapView.Forms.MainWindow
 
 			var it9 = new MenuItem("Scan&G view", OnScanGClick, Shortcut.CtrlG);		// id #9
 			Viewers.MenuItems.Add(it9);
-
-
-			// "Help" menuitems ->
-			// TODO: Don't build the Help menu this way; just do it the regular
-			// way from the XCMainWindow designer.
-			var help = new MenuItem("CHM &Help", OnHelpClick, Shortcut.F1);							// id #0
-			Helpers.MenuItems.Add(help);
-
-			CreateMenuitem(ObserverManager.ColorsScreen, Helpers);									// id #1
-			CreateMenuitem(ObserverManager.AboutScreen,  Helpers);									// id #2
-
-			Helpers.MenuItems.Add(new MenuItem(Separator));											// id #3
-
-			var info = new MenuItem("Map &Info", XCMainWindow.that.OnMapInfoClick, Shortcut.CtrlI);	// id #4
-			info.Enabled = false;
-			Helpers.MenuItems.Add(info);
 		}
 
 		/// <summary>
@@ -153,59 +137,36 @@ namespace MapView.Forms.MainWindow
 		/// @note These forms never actually close until MainView closes.
 		/// </summary>
 		/// <param name="f"></param>
-		/// <param name="menu"></param>
 		/// <param name="shortcut"></param>
 		private static void CreateMenuitem(
 				Form f,
-				Menu menu,
-				Shortcut shortcut = Shortcut.None)
+				Shortcut shortcut)
 		{
-			var it = new MenuItem(f.Text.Trim());
-			it.Shortcut = shortcut;
+			var it = new MenuItem(f.Text.Trim(), OnMenuItemClick, shortcut);
 			it.Tag = f;
 
-			menu.MenuItems.Add(it);
+			Viewers.MenuItems.Add(it);
 
-			it.Click += OnMenuItemClick;
+			RegistryInfo.RegisterProperties(f);
 
-			if (   f is TileViewForm
-				|| f is TopViewForm
-				|| f is RouteViewForm
-				|| f is TopRouteViewForm)
+			f.FormClosing += (sender, e) =>
 			{
-				RegistryInfo.RegisterProperties(f);
-
-				f.FormClosing += (sender, e) =>
+				if (!XCMainWindow.Quit)
 				{
-					if (!XCMainWindow.Quit)
-					{
-						it.Checked = false;
-						e.Cancel = true;
-						f.Hide();
-					}
-					else
-						RegistryInfo.UpdateRegistry(f);
-				};
-			}
-			else
-			{
-				f.FormClosing += (sender, e) =>
-				{
-					if (!XCMainWindow.Quit)
-					{
-						it.Checked = false;
-						e.Cancel = true;
-						f.Hide();
-					}
-				};
-			}
+					it.Checked = false;
+					e.Cancel = true;
+					f.Hide();
+				}
+				else
+					RegistryInfo.UpdateRegistry(f);
+			};
 		}
 
 		/// <summary>
 		/// Visibles the subsidiary viewers that are flagged when a Map loads.
 		/// @note Called by 'XCMainWindow.LoadSelectedDescriptor()'.
 		/// </summary>
-		internal static void StartSecondaryStage()
+		internal static void StartSecondStageRockets()
 		{
 			Viewers.Enabled = true;
 
@@ -301,12 +262,9 @@ namespace MapView.Forms.MainWindow
 				f.Show();
 				if (f.WindowState == FormWindowState.Minimized)
 					f.WindowState  = FormWindowState.Normal;
-
-				if (it.Tag is ColorHelp) // update colors that user could have changed in TileView's Option-settings.
-					ObserverManager.ColorsScreen.UpdateColors();
 			}
 			else
-				f.Close();
+				f.Close(); // ie. Hide()
 		}
 
 		/// <summary>
@@ -327,20 +285,8 @@ namespace MapView.Forms.MainWindow
 						f.WindowState  = FormWindowState.Normal;
 				}
 				else
-					f.Close();
+					f.Close(); // ie. Hide()
 			}
-		}
-
-		/// <summary>
-		/// Shows the CHM helpfile.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private static void OnHelpClick(object sender, EventArgs e)
-		{
-			string help = Path.GetDirectoryName(Application.ExecutablePath);
-				   help = Path.Combine(help, "MapView.chm");
-			Help.ShowHelp(XCMainWindow.that, "file://" + help);
 		}
 
 
@@ -432,14 +378,6 @@ namespace MapView.Forms.MainWindow
 		internal static void UncheckScanG()
 		{
 			Viewers.MenuItems[MI_SCANG].Checked = false;
-		}
-
-		/// <summary>
-		/// Enables the MapInfo item once a descriptor loads.
-		/// </summary>
-		internal static void EnableMapInfo()
-		{
-			Helpers.MenuItems[4].Enabled = true;
 		}
 		#endregion Events (static)
 	}

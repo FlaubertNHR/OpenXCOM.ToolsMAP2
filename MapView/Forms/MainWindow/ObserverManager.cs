@@ -35,13 +35,6 @@ namespace MapView.Forms.MainWindow
 
 		internal static TopRouteViewForm TopRouteView
 		{ get; private set; }
-
-
-		internal static ColorHelp ColorsScreen // not an Observer.
-		{ get; private set; }
-
-		internal static About AboutScreen // not an Observer.
-		{ get; private set; }
 		#endregion Properties (static)
 
 
@@ -53,11 +46,7 @@ namespace MapView.Forms.MainWindow
 			RouteView    = new RouteViewForm();
 			TopRouteView = new TopRouteViewForm();
 
-			ColorsScreen = new ColorHelp(); // these two snuck in here ...
-			AboutScreen  = new About();
-
-
-			ToolFactory = new ToolstripFactory(MainViewOverlay.that);
+			ToolFactory  = new ToolstripFactory(MainViewOverlay.that);
 
 			TopView     .Control   .InitializeToolstrip(ToolFactory);
 			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
@@ -72,7 +61,7 @@ namespace MapView.Forms.MainWindow
 			};
 
 
-			// Register all subsidiary viewers via this ObserverManager.
+			// Register the subsidiary viewers via this ObserverManager.
 			// TODO: Make TopView's and RouteView's Options static.
 			TopRouteView.ControlTop  .Options = ObserverManager.TopView  .Control.Options;
 			TopRouteView.ControlRoute.Options = ObserverManager.RouteView.Control.Options;
@@ -82,9 +71,6 @@ namespace MapView.Forms.MainWindow
 			InitializeObserver(RegistryInfo.RouteView, RouteView);
 
 			_viewers.Add(TopRouteView);
-
-			_viewers.Add(ColorsScreen);
-			_viewers.Add(AboutScreen);
 		}
 
 		/// <summary>
@@ -97,7 +83,7 @@ namespace MapView.Forms.MainWindow
 		{
 			_viewers.Add(f);
 
-			var control = (f as IMapObserverProvider).ObserverControl; // ie. 'TileView', 'TopView', 'RouteView'.
+			var control = (f as IMapObserverProvider).ObserverControl; // ie. TileView, TopView, RouteView.
 			control.LoadControlDefaultOptions();
 			OptionsManager.setOptionsType(key, control.Options);
 		}
@@ -105,7 +91,7 @@ namespace MapView.Forms.MainWindow
 		internal static void SetObservers(MapFileBase @base)
 		{
 			foreach (var f in _observers)
-				if (f != null) SetObserver(@base, f);
+				SetObserver(@base, f);
 
 			MainViewOverlay.that.Refresh();
 		}
@@ -129,15 +115,11 @@ namespace MapView.Forms.MainWindow
 		}
 
 		/// <summary>
-		/// Closes the following viewers.
-		/// SECONDARY:
+		/// Closes the Observers.
 		/// - TileView
 		/// - TopView
 		/// - RouteView
 		/// - TopRouteView
-		/// TERTIARY:
-		/// - ColorsHelp
-		/// - About
 		/// @note Called by XCMainWindow.OnFormClosing() so this really does
 		/// close -> update registry vals.
 		/// </summary>
