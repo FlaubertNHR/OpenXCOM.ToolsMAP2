@@ -169,7 +169,7 @@
       <DependentUpon>EditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\About.resx">
-      <DependentUpon>About.Designer.cs</DependentUpon>
+      <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Palette\PaletteForm.resx">
       <DependentUpon>PaletteForm.cs</DependentUpon>

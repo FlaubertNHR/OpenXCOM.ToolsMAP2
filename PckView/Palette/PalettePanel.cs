@@ -29,6 +29,19 @@ namespace PckView
 		#endregion Fields
 
 
+		#region Properties (override)
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+
+
 		#region Properties (static)
 		internal static PalettePanel that
 		{ get; private set; }
@@ -64,14 +77,8 @@ namespace PckView
 		/// </summary>
 		internal PalettePanel()
 		{
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
-
-			PckViewForm.PaletteChanged += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
-
 			that = this;
+			PckViewForm.PaletteChanged += OnPaletteChanged;
 		}
 		#endregion cTor
 

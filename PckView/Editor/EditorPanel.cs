@@ -33,6 +33,19 @@ namespace PckView
 		#endregion Fields
 
 
+		#region Properties (override)
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+
+
 		#region Properties (static)
 		internal static EditorPanel that
 		{ get; private set; }
@@ -104,42 +117,12 @@ namespace PckView
 		/// </summary>
 		internal EditorPanel(EditorForm f)
 		{
-			_feditor = f;
 			that = this;
-
-			// form level code to fix flicker
-//			protected override CreateParams CreateParams
-//			{
-//				get
-//				{
-//					CreateParams cp = base.CreateParams;
-//					cp.ExStyle |= 0x02000000; // Turn on 'WS_EX_COMPOSITED'
-//					return cp;
-//				}
-//			}
-
-			// user control level code to fix flicker when there's a background image
-//			protected override CreateParams CreateParams
-//			{
-//				get
-//				{
-//					var parms = base.CreateParams;
-//					parms.Style &= ~0x02000000; // Turn off 'WS_CLIPCHILDREN'
-//					return parms;
-//				}
-//			}
-
-//			DoubleBuffered = true;
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
-//			UpdateStyles();
-
-
-			PckViewForm.PaletteChanged += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
+			_feditor = f;
 
 			_penGrid = _gridBlack;
+
+			PckViewForm.PaletteChanged += OnPaletteChanged;
 		}
 		#endregion cTor
 

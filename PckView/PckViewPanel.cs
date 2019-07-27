@@ -45,6 +45,19 @@ namespace PckView
 		#endregion Fields
 
 
+		#region Properties (override)
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+
+
 		#region Properties (static)
 		internal static PckViewPanel that
 		{ get; private set; }
@@ -109,10 +122,8 @@ namespace PckView
 			LogFile.SetLogFilePath(System.IO.Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
 			DSShared.DSLogFile.CreateLogFile();
 #endif
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
+
+			SetStyle(ControlStyles.ResizeRedraw, true);
 
 			_f = f;
 
