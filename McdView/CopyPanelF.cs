@@ -43,6 +43,19 @@ namespace McdView
 		#endregion Fields
 
 
+		#region Properties (override)
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+
+
 		#region Properties
 		internal TerrainPanel_copy PartsPanel
 		{ get; private set; }
@@ -140,11 +153,6 @@ namespace McdView
 		internal CopyPanelF(McdviewF f)
 		{
 			InitializeComponent();
-
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
 
 			_f = f;
 

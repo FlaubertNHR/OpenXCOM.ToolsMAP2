@@ -13,17 +13,14 @@ namespace McdView
 		:
 			Form
 	{
-		#region Fields (constant)
+		#region Fields (static)
 		private const int COLS             = 16;
 		private const int ROWS_VISIBLE_Max = 16;
 		private const int ICON_WIDTH       = 32;
 		private const int ICON_HEIGHT      = 32;
 		private const int VERT_TEXT_PAD    = 16;
 		private const int HORI_PAD         =  1;
-		#endregion Fields (constant)
 
-
-		#region Fields (static)
 		internal static Point Loc = new Point(-1,-1);
 		#endregion Fields (static)
 
@@ -41,6 +38,19 @@ namespace McdView
 		#endregion Fields
 
 
+		#region Properties (override)
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+
+
 		#region cTor
 		/// <summary>
 		/// Creates a ScanG icon viewer/chooser.
@@ -54,11 +64,6 @@ namespace McdView
 				ColorPalette pal)
 		{
 			InitializeComponent();
-
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw, true);
 
 			_f = f;
 			IconId = iconId;
