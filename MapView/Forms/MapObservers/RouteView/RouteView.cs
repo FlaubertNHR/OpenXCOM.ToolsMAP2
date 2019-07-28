@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
+using DSShared;
 using DSShared.Windows;
 
 using MapView.Forms.MainWindow;
@@ -48,7 +49,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 
 		#region Fields
-		private Panel _pnlRoutes; // NOTE: needs to be here for MapObserver vs Designer stuff.
+		private CompositedPanel _pnlRoutes; // NOTE: needs to be here for MapObserver vs Designer stuff.
 
 		private readonly List<object> _linksList = new List<object>();
 

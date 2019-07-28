@@ -3,6 +3,96 @@ namespace MapView.Forms.MapObservers.RouteViews
 	partial class RouteView
 	{
 		#region Designer
+		private System.Windows.Forms.ToolStrip tsMain;
+
+		private System.Windows.Forms.ToolStripDropDownButton tsddbFile;
+		private System.Windows.Forms.ToolStripMenuItem tsmiExport;
+		private System.Windows.Forms.ToolStripMenuItem tsmiImport;
+
+		private System.Windows.Forms.ToolStripDropDownButton tsddbEdit;
+		private System.Windows.Forms.ToolStripMenuItem tsmiAllNodesRank0;
+		private System.Windows.Forms.ToolStripMenuItem tsmiClearLinkData;
+		private System.Windows.Forms.ToolStripMenuItem tsmiUpdateAllLinkDistances;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripMenuItem tsmi_RaiseNode;
+		private System.Windows.Forms.ToolStripMenuItem tsmi_LowerNode;
+
+		private System.Windows.Forms.ToolStripDropDownButton tsddbDebug;
+		private System.Windows.Forms.ToolStripMenuItem tsmiCheckNodeRanks;
+		private System.Windows.Forms.ToolStripMenuItem tsmiCheckOobNodes;
+
+		private System.Windows.Forms.ToolStripButton tsb_Options;
+
+		private System.Windows.Forms.ToolStripSeparator tss_0;
+
+		private System.Windows.Forms.ToolStripButton tsb_connect0;
+		private System.Windows.Forms.ToolStripButton tsb_connect1;
+		private System.Windows.Forms.ToolStripButton tsb_connect2;
+
+		private System.Windows.Forms.Panel pnlDataFields;
+
+		private System.Windows.Forms.Panel pnlDataFieldsLeft;
+
+		private System.Windows.Forms.GroupBox gbTileData;
+		private System.Windows.Forms.Label lblSelected;
+		private System.Windows.Forms.Label lblOver;
+
+		private System.Windows.Forms.GroupBox gbNodeData;
+		private System.Windows.Forms.Label labelUnitType;
+		private System.Windows.Forms.Label labelSpawnRank;
+		private System.Windows.Forms.Label labelSpawnWeight;
+		private System.Windows.Forms.Label labelPriority;
+		private System.Windows.Forms.Label labelAttack;
+		private System.Windows.Forms.ComboBox cbType;
+		private System.Windows.Forms.ComboBox cbRank;
+		private System.Windows.Forms.ComboBox cbSpawn;
+		private System.Windows.Forms.ComboBox cbPatrol;
+		private System.Windows.Forms.ComboBox cbAttack;
+
+		private System.Windows.Forms.GroupBox gbLinkData;
+		private System.Windows.Forms.Label labelDest;
+		private System.Windows.Forms.Label labelUnitInfo;
+		private System.Windows.Forms.Label labelDist;
+		private System.Windows.Forms.Label labelLink1;
+		private System.Windows.Forms.Label labelLink2;
+		private System.Windows.Forms.Label labelLink3;
+		private System.Windows.Forms.Label labelLink4;
+		private System.Windows.Forms.Label labelLink5;
+		private System.Windows.Forms.ComboBox cbLink1Dest;
+		private System.Windows.Forms.ComboBox cbLink2Dest;
+		private System.Windows.Forms.ComboBox cbLink3Dest;
+		private System.Windows.Forms.ComboBox cbLink4Dest;
+		private System.Windows.Forms.ComboBox cbLink5Dest;
+		private System.Windows.Forms.ComboBox cbLink1UnitType;
+		private System.Windows.Forms.ComboBox cbLink2UnitType;
+		private System.Windows.Forms.ComboBox cbLink3UnitType;
+		private System.Windows.Forms.ComboBox cbLink4UnitType;
+		private System.Windows.Forms.ComboBox cbLink5UnitType;
+		private System.Windows.Forms.TextBox tbLink1Dist;
+		private System.Windows.Forms.TextBox tbLink2Dist;
+		private System.Windows.Forms.TextBox tbLink3Dist;
+		private System.Windows.Forms.TextBox tbLink4Dist;
+		private System.Windows.Forms.TextBox tbLink5Dist;
+		private System.Windows.Forms.Button btnGoLink1;
+		private System.Windows.Forms.Button btnGoLink2;
+		private System.Windows.Forms.Button btnGoLink3;
+		private System.Windows.Forms.Button btnGoLink4;
+		private System.Windows.Forms.Button btnGoLink5;
+
+		private System.Windows.Forms.GroupBox gbNodeEditor;
+		private System.Windows.Forms.Button btnCut;
+		private System.Windows.Forms.Button btnCopy;
+		private System.Windows.Forms.Button btnPaste;
+		private System.Windows.Forms.Button btnDelete;
+
+		private System.Windows.Forms.Button btnOg;
+		private System.Windows.Forms.Button btnTallyho;
+		private System.Windows.Forms.Button btnSave;
+
+
+		private System.Windows.Forms.ToolTip toolTip1;
+
+
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -47,7 +137,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsb_connect0 = new System.Windows.Forms.ToolStripButton();
 			this.tsb_connect1 = new System.Windows.Forms.ToolStripButton();
 			this.tsb_connect2 = new System.Windows.Forms.ToolStripButton();
-			this._pnlRoutes = new System.Windows.Forms.Panel();
+			this._pnlRoutes = new DSShared.CompositedPanel();
 			this.pnlDataFields = new System.Windows.Forms.Panel();
 			this.pnlDataFieldsLeft = new System.Windows.Forms.Panel();
 			this.gbNodeData = new System.Windows.Forms.GroupBox();
@@ -1031,95 +1121,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.PerformLayout();
 
 		}
-
-		private System.Windows.Forms.ToolStrip tsMain;
-
-		private System.Windows.Forms.ToolStripDropDownButton tsddbFile;
-		private System.Windows.Forms.ToolStripMenuItem tsmiExport;
-		private System.Windows.Forms.ToolStripMenuItem tsmiImport;
-
-		private System.Windows.Forms.ToolStripDropDownButton tsddbEdit;
-		private System.Windows.Forms.ToolStripMenuItem tsmiAllNodesRank0;
-		private System.Windows.Forms.ToolStripMenuItem tsmiClearLinkData;
-		private System.Windows.Forms.ToolStripMenuItem tsmiUpdateAllLinkDistances;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem tsmi_RaiseNode;
-		private System.Windows.Forms.ToolStripMenuItem tsmi_LowerNode;
-
-		private System.Windows.Forms.ToolStripDropDownButton tsddbDebug;
-		private System.Windows.Forms.ToolStripMenuItem tsmiCheckNodeRanks;
-		private System.Windows.Forms.ToolStripMenuItem tsmiCheckOobNodes;
-
-		private System.Windows.Forms.ToolStripButton tsb_Options;
-
-		private System.Windows.Forms.ToolStripSeparator tss_0;
-
-		private System.Windows.Forms.ToolStripButton tsb_connect0;
-		private System.Windows.Forms.ToolStripButton tsb_connect1;
-		private System.Windows.Forms.ToolStripButton tsb_connect2;
-
-		private System.Windows.Forms.Panel pnlDataFields;
-
-		private System.Windows.Forms.Panel pnlDataFieldsLeft;
-
-		private System.Windows.Forms.GroupBox gbTileData;
-		private System.Windows.Forms.Label lblSelected;
-		private System.Windows.Forms.Label lblOver;
-
-		private System.Windows.Forms.GroupBox gbNodeData;
-		private System.Windows.Forms.Label labelUnitType;
-		private System.Windows.Forms.Label labelSpawnRank;
-		private System.Windows.Forms.Label labelSpawnWeight;
-		private System.Windows.Forms.Label labelPriority;
-		private System.Windows.Forms.Label labelAttack;
-		private System.Windows.Forms.ComboBox cbType;
-		private System.Windows.Forms.ComboBox cbRank;
-		private System.Windows.Forms.ComboBox cbSpawn;
-		private System.Windows.Forms.ComboBox cbPatrol;
-		private System.Windows.Forms.ComboBox cbAttack;
-
-		private System.Windows.Forms.GroupBox gbLinkData;
-		private System.Windows.Forms.Label labelDest;
-		private System.Windows.Forms.Label labelUnitInfo;
-		private System.Windows.Forms.Label labelDist;
-		private System.Windows.Forms.Label labelLink1;
-		private System.Windows.Forms.Label labelLink2;
-		private System.Windows.Forms.Label labelLink3;
-		private System.Windows.Forms.Label labelLink4;
-		private System.Windows.Forms.Label labelLink5;
-		private System.Windows.Forms.ComboBox cbLink1Dest;
-		private System.Windows.Forms.ComboBox cbLink2Dest;
-		private System.Windows.Forms.ComboBox cbLink3Dest;
-		private System.Windows.Forms.ComboBox cbLink4Dest;
-		private System.Windows.Forms.ComboBox cbLink5Dest;
-		private System.Windows.Forms.ComboBox cbLink1UnitType;
-		private System.Windows.Forms.ComboBox cbLink2UnitType;
-		private System.Windows.Forms.ComboBox cbLink3UnitType;
-		private System.Windows.Forms.ComboBox cbLink4UnitType;
-		private System.Windows.Forms.ComboBox cbLink5UnitType;
-		private System.Windows.Forms.TextBox tbLink1Dist;
-		private System.Windows.Forms.TextBox tbLink2Dist;
-		private System.Windows.Forms.TextBox tbLink3Dist;
-		private System.Windows.Forms.TextBox tbLink4Dist;
-		private System.Windows.Forms.TextBox tbLink5Dist;
-		private System.Windows.Forms.Button btnGoLink1;
-		private System.Windows.Forms.Button btnGoLink2;
-		private System.Windows.Forms.Button btnGoLink3;
-		private System.Windows.Forms.Button btnGoLink4;
-		private System.Windows.Forms.Button btnGoLink5;
-
-		private System.Windows.Forms.GroupBox gbNodeEditor;
-		private System.Windows.Forms.Button btnCut;
-		private System.Windows.Forms.Button btnCopy;
-		private System.Windows.Forms.Button btnPaste;
-		private System.Windows.Forms.Button btnDelete;
-
-		private System.Windows.Forms.Button btnOg;
-		private System.Windows.Forms.Button btnTallyho;
-		private System.Windows.Forms.Button btnSave;
-
-
-		private System.Windows.Forms.ToolTip toolTip1;
 		#endregion
 	}
 }

@@ -16,7 +16,7 @@ namespace MapView.Forms.MapObservers.TopViews
 	/// <summary>
 	/// @note This is not a Panel. It is a Control shown inside of a Panel.
 	/// </summary>
-	internal class TopPanel
+	internal sealed class TopPanel
 		:
 			MapObserverControl_Top // DoubleBufferedControl, IMapObserver
 	{
@@ -62,7 +62,7 @@ namespace MapView.Forms.MapObservers.TopViews
 
 
 		private readonly DrawBlobService _blobService = new DrawBlobService();
-		internal protected DrawBlobService BlobService
+		internal DrawBlobService BlobService
 		{
 			get { return _blobService; }
 		}
@@ -93,9 +93,9 @@ namespace MapView.Forms.MapObservers.TopViews
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiated only as the parent of TopPanel. Is NOT a panel.
+		/// cTor. Is NOT a panel.
 		/// </summary>
-		internal protected TopPanel(TopView control)
+		internal TopPanel(TopView control)
 		{
 			TopView = control; // beautiful. This pattern should be iterated throughout MapView.
 
@@ -110,7 +110,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// </summary>
 		/// <param name="width">the width to resize to</param>
 		/// <param name="height">the height to resize to</param>
-		internal protected void ResizeObserver(int width, int height)
+		internal void ResizeObserver(int width, int height)
 		{
 			if (MapBase != null)
 			{
@@ -180,7 +180,7 @@ namespace MapView.Forms.MapObservers.TopViews
 		/// Sets the graphics-path for a lozenge-border around all tiles that
 		/// are selected or being selected.
 		/// </summary>
-		internal protected void PathSelectedLozenge()
+		internal void PathSelectedLozenge()
 		{
 			var a = MainViewOverlay.that.GetDragBeg_abs();
 			var b = MainViewOverlay.that.GetDragEnd_abs();

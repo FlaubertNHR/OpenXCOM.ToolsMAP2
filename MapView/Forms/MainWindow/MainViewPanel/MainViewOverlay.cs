@@ -8,6 +8,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;
 
@@ -22,7 +24,7 @@ namespace MapView
 {
 	internal sealed class MainViewOverlay
 		:
-			Panel // god I hate these double-panels!!!! cf. MainViewUnderlay
+			BufferedPanel // god I hate these double-panels!!!! cf. MainViewUnderlay
 	{
 		#region Delegates
 		internal delegate void MouseDragEvent();
@@ -55,7 +57,7 @@ namespace MapView
 		internal bool _targeterForced;
 
 		private int _col; // these are used to print the clicked location
-		private int _row;
+		private int _row; // TODO: just use MapFile.Location
 		private int _lev;
 
 		private int _colOver; // these are used to track the mouseover location
@@ -156,39 +158,15 @@ namespace MapView
 
 			that = MainView.MainViewOverlay = this;
 
-			SetStyle(ControlStyles.OptimizedDoubleBuffer
-				   | ControlStyles.AllPaintingInWmPaint
-				   | ControlStyles.UserPaint
-				   | ControlStyles.ResizeRedraw
-				   | ControlStyles.Selectable, true);
+			SetStyle(ControlStyles.Selectable, true);
 			TabStop = true;
 			TabIndex = 4; // TODO: Check that.
-
-//			var t1 = new Timer();
-//			t1.Interval = 250;
-//			t1.Enabled = true;
-//			t1.Tick += t1_Tick;
 
 			GotFocus  += OnFocusGained;
 			LostFocus += OnFocusLost;
 		}
 		#endregion cTor
 
-
-/*		/// <summary>
-		/// Hides the cuboid-targeter when the mouse leaves this control unless
-		/// the targeter was enabled by a keyboard tiles-selection.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void t1_Tick(object sender, EventArgs e)
-		{
-			if (!_targeterForced
-				&& !ClientRectangle.Contains(PointToClient(Cursor.Position)))
-			{
-				Invalidate();
-			}
-		} */
 
 		private void OnFocusGained(object sender, EventArgs e)
 		{

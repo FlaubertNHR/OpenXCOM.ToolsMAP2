@@ -5,6 +5,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 using XCom.Interfaces;
 
@@ -16,7 +18,7 @@ namespace MapView.Forms.MapObservers.TileViews
 	/// </summary>
 	internal sealed class TilePanel
 		:
-			Panel
+			BufferedPanel
 	{
 		internal delegate void TilepartSelectedEvent(Tilepart part);
 
@@ -122,9 +124,10 @@ namespace MapView.Forms.MapObservers.TileViews
 		{
 			_quadType = quadType;
 
-			Dock = DockStyle.Fill;
-			SetStyle(ControlStyles.Selectable | ControlStyles.ResizeRedraw, true);
+			SetStyle(ControlStyles.Selectable, true);
 			TabStop = true;
+
+			Dock = DockStyle.Fill;
 
 			_scrollBar = new VScrollBar();
 			_scrollBar.Dock = DockStyle.Right;

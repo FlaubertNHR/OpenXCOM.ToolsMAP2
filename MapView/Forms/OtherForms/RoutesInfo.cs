@@ -44,22 +44,6 @@ namespace MapView
 		#endregion Fields
 
 
-		#region Properties (override)
-		/// <summary>
-		/// 
-		/// </summary>
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
-
-
 		#region cTor
 		/// <summary>
 		/// cTor. Instantiates a RoutesInfo screen.

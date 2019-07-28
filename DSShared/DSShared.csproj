@@ -114,6 +114,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SharedSpace.cs" />
+    <Compile Include="Windows\BufferedPanel.cs" />
     <Compile Include="Windows\CollapsibleSplitter.cs">
       <SubType>Component</SubType>
     </Compile>

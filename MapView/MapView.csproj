@@ -330,7 +330,7 @@
       <DependentUpon>MapInfoDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\MapTreeInputBox.resx">
-      <DependentUpon>MapTreeInputBox.Designer.cs</DependentUpon>
+      <DependentUpon>MapTreeInputBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\McdInfoF.resx">
       <DependentUpon>McdInfoF.cs</DependentUpon>

@@ -14,7 +14,7 @@ namespace DSShared.Windows
 			Control
 	{
 		#region Properties (override)
-		/// <summary>
+/*		/// <summary>
 		/// Prevents flicker.
 		/// </summary>
 		protected override CreateParams CreateParams
@@ -25,8 +25,17 @@ namespace DSShared.Windows
 				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
 				return cp;
 			}
-		}
+		} */
 		#endregion Properties (override)
+
+
+		#region cTor
+		public DoubleBufferedControl()
+		{
+			DoubleBuffered = true;
+			ResizeRedraw = true;
+		}
+		#endregion cTor
 
 
 		#region Events (override)

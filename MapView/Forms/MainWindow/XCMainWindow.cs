@@ -685,10 +685,14 @@ namespace MapView
 
 				ObserverManager.CloseViewers();
 				OptionsManager .CloseOptions();
+
 				if (ScanG    != null) ScanG   .Close();
 				if (_fcolors != null) _fcolors.Close();
 				if (_fabout  != null) _fabout .Close();
 				if (_finfo   != null) _finfo  .Close();
+
+				if (ObserverManager.TileView.Control.McdInfobox != null)
+					ObserverManager.TileView.Control.McdInfobox.Close();
 
 				RegistryInfo.UpdateRegistry(this);
 				RegistryInfo.FinalizeRegistry();

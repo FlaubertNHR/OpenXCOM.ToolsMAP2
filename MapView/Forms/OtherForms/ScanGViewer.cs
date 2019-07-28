@@ -38,22 +38,6 @@ namespace MapView
 		#endregion Fields
 
 
-		#region Properties (override)
-		/// <summary>
-		/// This works great. Absolutely kills flicker on redraws.
-		/// </summary>
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000;
-				return cp;
-			}
-		}
-		#endregion Properties (override)
-
-
 		#region cTor
 		/// <summary>
 		/// cTor.
@@ -400,6 +384,11 @@ namespace MapView
 
 
 		#region Designer
+		private System.ComponentModel.Container components = null;
+
+		private BufferedPanel pnl_ScanG;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -418,7 +407,7 @@ namespace MapView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.pnl_ScanG = new System.Windows.Forms.Panel();
+			this.pnl_ScanG = new DSShared.BufferedPanel();
 			this.SuspendLayout();
 			// 
 			// pnl_ScanG
@@ -450,10 +439,6 @@ namespace MapView
 			this.ResumeLayout(false);
 
 		}
-
-		private System.ComponentModel.Container components = null;
-
-		private Panel pnl_ScanG;
 		#endregion Designer
 	}
 }

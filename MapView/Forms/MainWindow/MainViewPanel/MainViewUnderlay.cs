@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom.Interfaces.Base;
 
 
@@ -10,7 +12,7 @@ namespace MapView
 {
 	internal sealed class MainViewUnderlay
 		:
-			Panel // god I hate these double-panels!!!! cf. MainViewOverlay
+			BufferedPanel // god I hate these double-panels!!!! cf. MainViewOverlay
 	{
 		#region Fields (static)
 		// these track the offset between the panel border and the lozenge-tips.

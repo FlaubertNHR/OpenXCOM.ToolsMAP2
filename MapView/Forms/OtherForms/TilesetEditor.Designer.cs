@@ -8,6 +8,56 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
+		private System.Windows.Forms.Button btnAccept;
+		private System.Windows.Forms.Button btnDecline;
+		private System.Windows.Forms.Label lblHeaderGroup;
+		private System.Windows.Forms.TextBox tbTileset;
+		private System.Windows.Forms.Panel pnlBottom;
+		private System.Windows.Forms.Panel pnlTop;
+		private System.Windows.Forms.Label lblCategoryCurrent;
+		private System.Windows.Forms.Label lblGroupCurrent;
+		private System.Windows.Forms.Label lblHeaderCategory;
+		private System.Windows.Forms.Button btnFindTileset;
+		private System.Windows.Forms.Label lblTilesetMap;
+		private System.Windows.Forms.Label lblPathCurrent;
+		private System.Windows.Forms.Label lblTilesetPath;
+		private System.Windows.Forms.GroupBox gbTerrains;
+		private System.Windows.Forms.GroupBox gbHeader;
+		private System.Windows.Forms.GroupBox gbTileset;
+		private System.Windows.Forms.ListBox lbTerrainsAvailable;
+		private System.Windows.Forms.ListBox lbTerrainsAllocated;
+		private System.Windows.Forms.Button btnMoveDown;
+		private System.Windows.Forms.Button btnMoveUp;
+		private System.Windows.Forms.Button btnMoveRight;
+		private System.Windows.Forms.Button btnMoveLeft;
+		private System.Windows.Forms.Panel pnlSpacer;
+		private System.Windows.Forms.Button btnFindDirectory;
+		private System.Windows.Forms.Button btnCreateMap;
+		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.Label lblAvailable;
+		private System.Windows.Forms.Label lblAllocated;
+		private System.Windows.Forms.Panel pnlTerrainsHeader;
+		private System.Windows.Forms.Label lblTilesetCurrent;
+		private System.Windows.Forms.Label lblAddType;
+		private System.Windows.Forms.Label lblTerrainChanges;
+		private System.Windows.Forms.Button btnTerrainCopy;
+		private System.Windows.Forms.Button btnTerrainPaste;
+		private System.Windows.Forms.Label lblMcdRecords;
+		private System.Windows.Forms.TextBox tbTerrainPath;
+		private System.Windows.Forms.RadioButton rb_CustomBasepath;
+		private System.Windows.Forms.RadioButton rb_TilesetBasepath;
+		private System.Windows.Forms.RadioButton rb_ConfigBasepath;
+		private System.Windows.Forms.Button btnFindBasepath;
+		private System.Windows.Forms.Label lbl_PathAllocated;
+		private System.Windows.Forms.Label lbl_PathAllocated_;
+		private System.Windows.Forms.Label lbl_PathAvailable;
+		private System.Windows.Forms.Button btnTerrainClear;
+		private System.Windows.Forms.Label lbl_ListAvailable;
+		private System.Windows.Forms.Label lblTilesetCount;
+		private System.Windows.Forms.Label lblTilesetCount_;
+		private System.Windows.Forms.Button btn_GlobalTerrains;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -646,55 +696,6 @@
 			this.ResumeLayout(false);
 
 		}
-
-		private System.Windows.Forms.Button btnAccept;
-		private System.Windows.Forms.Button btnDecline;
-		private System.Windows.Forms.Label lblHeaderGroup;
-		private System.Windows.Forms.TextBox tbTileset;
-		private System.Windows.Forms.Panel pnlBottom;
-		private System.Windows.Forms.Panel pnlTop;
-		private System.Windows.Forms.Label lblCategoryCurrent;
-		private System.Windows.Forms.Label lblGroupCurrent;
-		private System.Windows.Forms.Label lblHeaderCategory;
-		private System.Windows.Forms.Button btnFindTileset;
-		private System.Windows.Forms.Label lblTilesetMap;
-		private System.Windows.Forms.Label lblPathCurrent;
-		private System.Windows.Forms.Label lblTilesetPath;
-		private System.Windows.Forms.GroupBox gbTerrains;
-		private System.Windows.Forms.GroupBox gbHeader;
-		private System.Windows.Forms.GroupBox gbTileset;
-		private System.Windows.Forms.ListBox lbTerrainsAvailable;
-		private System.Windows.Forms.ListBox lbTerrainsAllocated;
-		private System.Windows.Forms.Button btnMoveDown;
-		private System.Windows.Forms.Button btnMoveUp;
-		private System.Windows.Forms.Button btnMoveRight;
-		private System.Windows.Forms.Button btnMoveLeft;
-		private System.Windows.Forms.Panel pnlSpacer;
-		private System.Windows.Forms.Button btnFindDirectory;
-		private System.Windows.Forms.Button btnCreateMap;
-		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.Label lblAvailable;
-		private System.Windows.Forms.Label lblAllocated;
-		private System.Windows.Forms.Panel pnlTerrainsHeader;
-		private System.Windows.Forms.Label lblTilesetCurrent;
-		private System.Windows.Forms.Label lblAddType;
-		private System.Windows.Forms.Label lblTerrainChanges;
-		private System.Windows.Forms.Button btnTerrainCopy;
-		private System.Windows.Forms.Button btnTerrainPaste;
-		private System.Windows.Forms.Label lblMcdRecords;
-		private System.Windows.Forms.TextBox tbTerrainPath;
-		private System.Windows.Forms.RadioButton rb_CustomBasepath;
-		private System.Windows.Forms.RadioButton rb_TilesetBasepath;
-		private System.Windows.Forms.RadioButton rb_ConfigBasepath;
-		private System.Windows.Forms.Button btnFindBasepath;
-		private System.Windows.Forms.Label lbl_PathAllocated;
-		private System.Windows.Forms.Label lbl_PathAllocated_;
-		private System.Windows.Forms.Label lbl_PathAvailable;
-		private System.Windows.Forms.Button btnTerrainClear;
-		private System.Windows.Forms.Label lbl_ListAvailable;
-		private System.Windows.Forms.Label lblTilesetCount;
-		private System.Windows.Forms.Label lblTilesetCount_;
-		private System.Windows.Forms.Button btn_GlobalTerrains;
 		#endregion Designer
 	}
 }

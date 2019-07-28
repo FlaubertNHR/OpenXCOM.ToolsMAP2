@@ -37,22 +37,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 		#endregion Fields
 
 
-		#region Properties (override)
-		/// <summary>
-		/// This works great. Absolutely kills flicker on redraws.
-		/// </summary>
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000;
-				return cp;
-			}
-		}
-		#endregion Properties (override)
-
-
 		#region Properties (static)
 		/// <summary>
 		/// A node that is currently selected. Set its value via RouteView only.
