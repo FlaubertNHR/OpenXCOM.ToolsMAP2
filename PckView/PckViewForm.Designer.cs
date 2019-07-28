@@ -2,20 +2,7 @@ namespace PckView
 {
 	partial class PckViewForm
 	{
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
-
-		#region Windows Form Designer generated code
+		#region Designer
 		private System.ComponentModel.IContainer components = null;
 
 		private System.Windows.Forms.MainMenu mmMainMenu;
@@ -61,6 +48,20 @@ namespace PckView
 		private System.Windows.Forms.ToolStripStatusLabel tssl_Offset;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetLast;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetAftr;
+
+
+		/// <summary>
+		/// Cleans up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && components != null)
+				components.Dispose();
+
+			base.Dispose(disposing);
+		}
+
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -435,6 +436,6 @@ namespace PckView
 			this.PerformLayout();
 
 		}
-		#endregion
+		#endregion Designer
 	}
 }

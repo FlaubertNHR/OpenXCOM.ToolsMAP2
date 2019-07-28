@@ -255,7 +255,7 @@
 		private System.Windows.Forms.TrackBar bar_IsoLoft;
 		private System.Windows.Forms.Panel pnl_bg;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_Records;
-		internal System.Windows.Forms.ToolStripStatusLabel tssl_Sprites;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_Sprites;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_Offset;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetLast;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetAfter;

@@ -61,6 +61,7 @@ namespace McdView
 		private Button btn_Save;
 		private Button btn_Lose;
 
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -129,15 +130,14 @@ namespace McdView
 			this.Controls.Add(this.btn_Cancel);
 			this.Controls.Add(this.lbl_info);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ChangedBox";
-			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = " Changed";
-			this.TopMost = true;
+			this.Text = "Changed";
 			this.ResumeLayout(false);
 
 		}

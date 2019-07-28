@@ -57,6 +57,7 @@ namespace McdView
 		private TextBox tb_records;
 		private Button btn_accept;
 
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -73,14 +74,14 @@ namespace McdView
 			this.lbl_info.Location = new System.Drawing.Point(5, 5);
 			this.lbl_info.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_info.Name = "lbl_info";
-			this.lbl_info.Size = new System.Drawing.Size(85, 15);
+			this.lbl_info.Size = new System.Drawing.Size(85, 20);
 			this.lbl_info.TabIndex = 0;
-			this.lbl_info.Text = "records to add";
+			this.lbl_info.Text = "count";
 			this.lbl_info.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tb_records
 			// 
-			this.tb_records.Location = new System.Drawing.Point(5, 25);
+			this.tb_records.Location = new System.Drawing.Point(5, 30);
 			this.tb_records.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_records.Name = "tb_records";
 			this.tb_records.Size = new System.Drawing.Size(85, 19);
@@ -90,10 +91,10 @@ namespace McdView
 			// 
 			// btn_accept
 			// 
-			this.btn_accept.Location = new System.Drawing.Point(95, 5);
+			this.btn_accept.Location = new System.Drawing.Point(100, 5);
 			this.btn_accept.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_accept.Name = "btn_accept";
-			this.btn_accept.Size = new System.Drawing.Size(75, 40);
+			this.btn_accept.Size = new System.Drawing.Size(75, 45);
 			this.btn_accept.TabIndex = 2;
 			this.btn_accept.Text = "accept";
 			this.btn_accept.UseVisualStyleBackColor = true;
@@ -103,21 +104,20 @@ namespace McdView
 			// 
 			this.AcceptButton = this.btn_accept;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(174, 51);
+			this.ClientSize = new System.Drawing.Size(179, 56);
 			this.Controls.Add(this.btn_accept);
 			this.Controls.Add(this.tb_records);
 			this.Controls.Add(this.lbl_info);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "AddRangeInput";
-			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = " Add range";
-			this.TopMost = true;
+			this.Text = "Add range";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
