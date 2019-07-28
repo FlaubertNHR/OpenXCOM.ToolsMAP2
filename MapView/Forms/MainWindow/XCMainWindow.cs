@@ -223,6 +223,9 @@ namespace MapView
 			LogFile.WriteLine("MainView initialized.");
 
 
+			var splitter = new CollapsibleSplitter();
+			Controls.Add(splitter);
+
 			MapTree = new CompositedTreeView();
 
 			MapTree.Name          = "MapTree";
@@ -246,8 +249,8 @@ namespace MapView
 			MapTree.NodeMouseClick += OnMapTreeNodeClick;
 //			MapTree.NodeMouseClick += (sender, args) => MapTree.SelectedNode = args.Node;
 
-			Controls.Add(this.MapTree);
-			csSplitter.ControlToHide = MapTree;
+			Controls.Add(MapTree);
+			splitter.Collapsible = MapTree;
 
 
 			// WORKAROUND: The size of the form in the designer keeps increasing
@@ -425,6 +428,8 @@ namespace MapView
 			CreateTree();
 			LogFile.WriteLine("Tilesets created and loaded to tree panel.");
 
+
+			splitter.SetClickableRectangle();
 			ShiftSplitter();
 
 

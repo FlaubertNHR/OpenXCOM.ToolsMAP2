@@ -48,7 +48,6 @@ namespace MapView
 
 
 		private System.Windows.Forms.SaveFileDialog sfdSaveDialog;
-		private DSShared.Windows.CollapsibleSplitter csSplitter;
 
 		private System.Windows.Forms.ToolStrip tsTools;
 
@@ -119,7 +118,6 @@ namespace MapView
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
 			this.tsTools = new System.Windows.Forms.ToolStrip();
 			this.cmMapTreeMenu = new System.Windows.Forms.ContextMenu();
-			this.csSplitter = new DSShared.Windows.CollapsibleSplitter();
 			this.ssMain.SuspendLayout();
 			this.tscPanel.TopToolStripPanel.SuspendLayout();
 			this.tscPanel.SuspendLayout();
@@ -339,9 +337,9 @@ namespace MapView
 			this.tsslDimensions,
 			this.tsslPosition,
 			this.tsslSelectionSize});
-			this.ssMain.Location = new System.Drawing.Point(8, 432);
+			this.ssMain.Location = new System.Drawing.Point(18, 432);
 			this.ssMain.Name = "ssMain";
-			this.ssMain.Size = new System.Drawing.Size(784, 22);
+			this.ssMain.Size = new System.Drawing.Size(774, 22);
 			this.ssMain.TabIndex = 3;
 			// 
 			// tsslScale
@@ -357,7 +355,7 @@ namespace MapView
 			this.tsslMapLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
 			this.tsslMapLabel.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tsslMapLabel.Name = "tsslMapLabel";
-			this.tsslMapLabel.Size = new System.Drawing.Size(457, 17);
+			this.tsslMapLabel.Size = new System.Drawing.Size(447, 17);
 			this.tsslMapLabel.Spring = true;
 			// 
 			// tsslDimensions
@@ -391,14 +389,14 @@ namespace MapView
 			// 
 			this.tscPanel.ContentPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.tscPanel.ContentPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(784, 407);
+			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(774, 407);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			// 
 			// tscPanel.LeftToolStripPanel
 			// 
 			this.tscPanel.LeftToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.LeftToolStripPanelVisible = false;
-			this.tscPanel.Location = new System.Drawing.Point(8, 0);
+			this.tscPanel.Location = new System.Drawing.Point(18, 0);
 			this.tscPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tscPanel.Name = "tscPanel";
 			// 
@@ -406,7 +404,7 @@ namespace MapView
 			// 
 			this.tscPanel.RightToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.RightToolStripPanelVisible = false;
-			this.tscPanel.Size = new System.Drawing.Size(784, 432);
+			this.tscPanel.Size = new System.Drawing.Size(774, 432);
 			this.tscPanel.TabIndex = 2;
 			// 
 			// tscPanel.TopToolStripPanel
@@ -426,18 +424,6 @@ namespace MapView
 			this.tsTools.Size = new System.Drawing.Size(107, 25);
 			this.tsTools.TabIndex = 0;
 			// 
-			// csSplitter
-			// 
-			this.csSplitter.BorderStyle3D = System.Windows.Forms.Border3DStyle.Flat;
-			this.csSplitter.ControlToHide = null;
-			this.csSplitter.IsCollapsed = true;
-			this.csSplitter.Location = new System.Drawing.Point(0, 0);
-			this.csSplitter.MinimumSize = new System.Drawing.Size(5, 5);
-			this.csSplitter.Name = "csSplitter";
-			this.csSplitter.Size = new System.Drawing.Size(8, 454);
-			this.csSplitter.TabIndex = 1;
-			this.csSplitter.TabStop = false;
-			// 
 			// XCMainWindow
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -445,7 +431,6 @@ namespace MapView
 			this.ClientSize = new System.Drawing.Size(792, 454);
 			this.Controls.Add(this.tscPanel);
 			this.Controls.Add(this.ssMain);
-			this.Controls.Add(this.csSplitter);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
