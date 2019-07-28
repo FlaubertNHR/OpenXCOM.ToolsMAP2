@@ -3528,8 +3528,8 @@
 			this.pnl_IsoLoft.Name = "pnl_IsoLoft";
 			this.pnl_IsoLoft.Size = new System.Drawing.Size(130, 195);
 			this.pnl_IsoLoft.TabIndex = 11;
-			this.pnl_IsoLoft.Click += new System.EventHandler(this.OnClick_IsoLoft);
 			this.pnl_IsoLoft.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_IsoLoft);
+			this.pnl_IsoLoft.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClick_IsoLoft);
 			// 
 			// bar_IsoLoft
 			// 

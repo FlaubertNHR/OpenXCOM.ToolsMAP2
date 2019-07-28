@@ -148,7 +148,7 @@ namespace McdView
 							break;
 					}
 
-					_f.OnClick_IsoLoft(null, EventArgs.Empty); // select the IsoLoFT's trackbar
+					_f.OnMouseClick_IsoLoft(null,null); // select the IsoLoFT's trackbar
 				}
 				else
 					MessageBox.Show(

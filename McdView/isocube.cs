@@ -192,11 +192,11 @@ namespace McdView
 			//     p6
 
 			var p0 = new Point(width / 2, 0);
-			var p1 = new Point(0        , HEIGHT     / 4);
-			var p2 = new Point(width    , HEIGHT     / 4);
+			var p1 = new Point(0,         HEIGHT     / 4);
+			var p2 = new Point(width,     HEIGHT     / 4);
 			var p3 = new Point(width / 2, HEIGHT     / 2);
-			var p4 = new Point(0        , HEIGHT * 3 / 4);
-			var p5 = new Point(width    , HEIGHT * 3 / 4);
+			var p4 = new Point(0,         HEIGHT * 3 / 4);
+			var p5 = new Point(width,     HEIGHT * 3 / 4);
 			var p6 = new Point(width / 2, HEIGHT);
 
 			var path = new GraphicsPath();

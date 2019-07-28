@@ -631,9 +631,14 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnClick_IsoLoft(object sender, EventArgs e)
+		internal void OnMouseClick_IsoLoft(object sender, MouseEventArgs e)
 		{
 			bar_IsoLoft.Select();
+
+			if (sender != null && e.Button == MouseButtons.Right)
+			{
+				bar_IsoLoft.Value = 24;
+			}
 		}
 
 /*		// RotatingCube -->
