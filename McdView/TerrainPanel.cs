@@ -42,7 +42,7 @@ namespace McdView
 
 
 		#region Properties
-		internal protected CopyPanelF _fcopy
+		internal protected CopyF _fcopy
 		{ get; private set; }
 
 		protected virtual int SelId
@@ -52,7 +52,7 @@ namespace McdView
 		/// <summary>
 		/// An array of 'Tilepart'.
 		/// !!IMPORTANT: Only set 'Parts' via 'McdviewF.Parts' when
-		/// instantiating a 'TerrainPanel_main' object and via 'CopyPanelF.Parts'
+		/// instantiating a 'TerrainPanel_main' object and via 'CopyF.Parts'
 		/// when instantiating a 'TerrainPanel_copy' object. IMPORTANT!!
 		/// </summary>
 		internal protected Tilepart[] Parts
@@ -78,7 +78,7 @@ namespace McdView
 		/// <summary>
 		/// The spriteset. Use this var only for drawing; get the spriteset
 		/// directly in 'McdviewF' otherwise. (no reason, jic)
-		/// !!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopyPanelF' as
+		/// !!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopyF' as
 		/// appropriate. IMPORTANT!!
 		/// </summary>
 		internal protected SpriteCollection Spriteset
@@ -93,11 +93,11 @@ namespace McdView
 		#region cTor
 		protected TerrainPanel(
 				McdviewF f,
-				CopyPanelF fcopy = null)
+				CopyF fcopy = null)
 		{
 			_f     = f;
-			_fcopy = fcopy;	// prevent the CopyPanel from borking out during its initial
-							// OnResize events when it tries to get a 'SelId' from 'CopyPanelF'.
+			_fcopy = fcopy;	// prevent the Copier from borking out during its initial
+							// OnResize events when it tries to get a 'SelId' from 'CopyF'.
 							// That is, '_fcopy' is irrelevant to instantiations of
 							// 'TerrainPanel_main'; is used only by 'TerrainPanel_copy'.
 

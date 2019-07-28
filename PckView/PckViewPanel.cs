@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 using XCom.Interfaces;
 
@@ -11,7 +13,7 @@ namespace PckView
 {
 	internal sealed class PckViewPanel
 		:
-			Panel
+			BufferedPanel
 	{
 		#region Fields (static)
 		private const int SpriteMargin = 2; // the pad between the tile's inner border and its contained sprite's edges
@@ -43,19 +45,6 @@ namespace PckView
 		/// </summary>
 		private int _largeChange;
 		#endregion Fields
-
-
-		#region Properties (override)
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
 
 
 		#region Properties (static)
@@ -122,8 +111,6 @@ namespace PckView
 			LogFile.SetLogFilePath(System.IO.Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
 			DSShared.DSLogFile.CreateLogFile();
 #endif
-
-			SetStyle(ControlStyles.ResizeRedraw, true);
 
 			_f = f;
 

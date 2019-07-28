@@ -352,10 +352,10 @@ namespace McdView
 		private bool _isTer;
 
 		/// <summary>
-		/// Clones a tilepart and its sprites from the CopyPanel's partset (and
+		/// Clones a tilepart and its sprites from the Copier's partset (and
 		/// spriteset) to the Main partset (and spriteset).
 		/// </summary>
-		/// <param name="id_src">the id of the part in the CopyPanel partset</param>
+		/// <param name="id_src">the id of the part in the Copier partset</param>
 		/// <param name="id_dst">the id of the part in the Main partset</param>
 		private void addPart(int id_src, int id_dst)
 		{
@@ -363,7 +363,7 @@ namespace McdView
 			{
 				_ial_PartIds.Add(id_src, id_dst);
 
-				Tilepart part_src = _f.CopyPanel.Parts[id_src];
+				Tilepart part_src = _f.Copier.Parts[id_src];
 				McdRecord record_src = part_src.Record;
 
 				if (_ialSprites)
@@ -393,7 +393,7 @@ namespace McdView
 								_f.Spriteset = new SpriteCollection(_f.Label, pal);
 							}
 
-							var sprite_src = _f.CopyPanel.Spriteset[spriteId] as PckImage;
+							var sprite_src = _f.Copier.Spriteset[spriteId] as PckImage;
 							var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);
 							_ial_SpriteIds.Add(spriteId, _f.Spriteset.Count);
 
@@ -486,8 +486,8 @@ namespace McdView
 
 
 		/// <summary>
-		/// A special insert-operation via the CopyPanel. Selects the last
-		/// tilepart and inserts the CopyPanel's selected tileparts as well as
+		/// A special insert-operation via the Copier. Selects the last
+		/// tilepart and inserts the Copier's selected tileparts as well as
 		/// those parts' subparts.
 		/// Called by TerrainPanel_copy.OnInsertAfterLastClick().
 		/// </summary>
@@ -497,9 +497,9 @@ namespace McdView
 			_ial_PartIds  .Clear();
 			_ial_SpriteIds.Clear();
 
-			_ialSprites = _f.CopyPanel.cb_IalSprites .Checked;
-			_ialDeads   = _f.CopyPanel.cb_IalDeadpart.Checked;
-			_ialAltrs   = _f.CopyPanel.cb_IalAltrpart.Checked;
+			_ialSprites = _f.Copier.cb_IalSprites .Checked;
+			_ialDeads   = _f.Copier.cb_IalDeadpart.Checked;
+			_ialAltrs   = _f.Copier.cb_IalAltrpart.Checked;
 
 			_isTer = (_partsCopiedLabel == _f.Label);
 

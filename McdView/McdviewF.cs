@@ -55,7 +55,7 @@ namespace McdView
 		/// </summary>
 		private bool InitFields;
 
-		internal CopyPanelF CopyPanel;
+		internal CopyF Copier;
 
 		private bool SpritesBorked;
 		#endregion Fields
@@ -91,8 +91,8 @@ namespace McdView
 		/// <summary>
 		/// The spriteset that will be used to display any/all sprites.
 		/// @note Printing the quantity of sprites on the statusbar is either
-		/// handled here or by the CopyPanel's InsertAfterLast operation (which
-		/// is the only other way to alter the spriteset).
+		/// handled here or by the Copier's InsertAfterLast operation (which is
+		/// the only other way to alter the spriteset).
 		/// </summary>
 		internal SpriteCollection Spriteset
 		{
@@ -125,8 +125,8 @@ namespace McdView
 
 				InvalidatePanels(false);
 
-				if (CopyPanel != null)
-					CopyPanel.PartsPanel.Invalidate();
+				if (Copier != null)
+					Copier.PartsPanel.Invalidate();
 			}
 		}
 		internal float SpriteShadeFloat
@@ -211,8 +211,8 @@ namespace McdView
 			set
 			{
 				_label = value;
-				if (CopyPanel != null)
-					CopyPanel.cb_IalSprites.Text = "copy Sprites to " + _label + GlobalsXC.PckExt;
+				if (Copier != null)
+					Copier.cb_IalSprites.Text = "copy Sprites to " + _label + GlobalsXC.PckExt;
 			}
 		}
 
@@ -541,8 +541,8 @@ namespace McdView
 			{
 				RegistryInfo.UpdateRegistry(this);
 
-				if (CopyPanel != null) // this is needed when McdView is
-					CopyPanel.Close(); // invoked via TileView
+				if (Copier != null) // this is needed when McdView is
+					Copier.Close(); // invoked via TileView
 
 				if (!IsInvoked)
 					RegistryInfo.FinalizeRegistry();
@@ -1438,7 +1438,7 @@ namespace McdView
 
 
 		/// <summary>
-		/// Handles a click to open/close the CopyPanel on the menuitem.
+		/// Handles a click to open/close the Copier on the menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1450,18 +1450,18 @@ namespace McdView
 			}
 			else
 			{
-				CopyPanel.Close();
-				CopyPanel = null;
+				Copier.Close();
+				Copier = null;
 			}
 		}
 
 		/// <summary>
-		/// Handles an open/close of the CopyPanel on the menuitem or will open
-		/// a different MCD file from the CopyPanel itself (without closing the
-		/// CopyPanel).
+		/// Handles an open/close of the Copier on the menuitem or will open a
+		/// different MCD file from the Copier itself (without closing the
+		/// Copier).
 		/// </summary>
 		/// <param name="it">true if handling the menuitem click; ie. can close
-		/// the CopyPanel form</param>
+		/// the Copier form</param>
 		internal void OpenCopyPanel(bool it = false)
 		{
 			using (var ofd = new OpenFileDialog())
@@ -1472,18 +1472,18 @@ namespace McdView
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					if (CopyPanel == null)
+					if (Copier == null)
 					{
-						CopyPanel = new CopyPanelF(this);
-						CopyPanel.Show();
+						Copier = new CopyF(this);
+						Copier.Show();
 
-						CopyPanel.LoadIalOptions();
+						Copier.LoadIalOptions();
 					}
-					CopyPanel.SelId = -1;
+					Copier.SelId = -1;
 
-					CopyPanel.PfeMcd = ofd.FileName;
+					Copier.PfeMcd = ofd.FileName;
 
-					using (var bs = new BufferedStream(File.OpenRead(CopyPanel.PfeMcd)))
+					using (var bs = new BufferedStream(File.OpenRead(Copier.PfeMcd)))
 					{
 						var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
@@ -1494,9 +1494,9 @@ namespace McdView
 							pal = Palette.TftdBattle;
 
 						ResourceInfo.Spritesets.Clear();
-						CopyPanel.Spriteset = ResourceInfo.LoadSpriteset(
-																	CopyPanel.Label,
-																	Path.GetDirectoryName(CopyPanel.PfeMcd),
+						Copier.Spriteset = ResourceInfo.LoadSpriteset(
+																	Copier.Label,
+																	Path.GetDirectoryName(Copier.PfeMcd),
 																	ResourceInfo.TAB_WORD_LENGTH_2,
 																	pal,
 																	true);
@@ -1516,40 +1516,40 @@ namespace McdView
 						{
 							part = parts[id];
 							part.Dead = TilepartFactory.GetDeadPart(
-																CopyPanel.Label,
+																Copier.Label,
 																id,
 																part.Record,
 																parts);
 							part.Altr = TilepartFactory.GetAltrPart(
-																CopyPanel.Label,
+																Copier.Label,
 																id,
 																part.Record,
 																parts);
 						}
 
-						CopyPanel.Parts = parts; // do not assign to 'Parts' until the array is gtg.
+						Copier.Parts = parts; // do not assign to 'Parts' until the array is gtg.
 					}
 
-					CopyPanel.cb_IalSprites.Enabled = (CopyPanel.Spriteset != null);
+					Copier.cb_IalSprites.Enabled = (Copier.Spriteset != null);
 				}
 				else
 				{
-					if (it && CopyPanel != null)
+					if (it && Copier != null)
 					{
-						CopyPanel.Close();
-						CopyPanel = null;
+						Copier.Close();
+						Copier = null;
 					}
-					miCopyPanel.Checked = (CopyPanel != null);
+					miCopyPanel.Checked = (Copier != null);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Closes the copypanel from the CopyPanelF object itself.
+		/// Closes the copypanel from the CopyF object itself.
 		/// </summary>
 		internal void CloseCopyPanel()
 		{
-			CopyPanel = null;
+			Copier = null;
 			miCopyPanel.Checked = false;
 		}
 

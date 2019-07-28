@@ -33,7 +33,7 @@ namespace McdView
 		/// <summary>
 		/// Spaces the layout of the fields etc. of the anisprites in the
 		/// sprite-group and -panel.
-		/// @note See also CopyPanelF.LayoutSpritesGroup().
+		/// @note See also CopyF.LayoutSpritesGroup().
 		/// </summary>
 		private void LayoutSpritesGroup()
 		{
@@ -187,7 +187,7 @@ namespace McdView
 
 
 		/// <summary>
-		/// Opens the spriteset-viewer when an anisprite is clicked.
+		/// Opens the spriteset-viewer when a sprite-phase is clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

@@ -19,7 +19,7 @@ namespace McdView
 	/// internal copy-buffer of McdView for pasting into the currently loaded
 	/// MCD-set.
 	/// </summary>
-	internal partial class CopyPanelF
+	internal partial class CopyF
 		:
 			Form
 	{
@@ -150,7 +150,7 @@ namespace McdView
 		/// cTor.
 		/// </summary>
 		/// <param name="f"></param>
-		internal CopyPanelF(McdviewF f)
+		internal CopyF(McdviewF f)
 		{
 			InitializeComponent();
 
@@ -244,7 +244,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Closes (and disposes) this CopyPanelF object.
+		/// Closes (and disposes) this CopyF object.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)

@@ -24,7 +24,7 @@ namespace McdView
 
 
 		#region cTor
-		internal TerrainPanel_copy(McdviewF f, CopyPanelF fcopy)
+		internal TerrainPanel_copy(McdviewF f, CopyF fcopy)
 			:
 				base(f, fcopy)
 		{
@@ -85,7 +85,7 @@ namespace McdView
 		/// <summary>
 		/// A special insert-operation. Inserts selected parts after the last
 		/// tilepart in Main.
-		/// @note This is for instant insertion of parts via the CopyPanel to
+		/// @note This is for instant insertion of parts via the Copier to
 		/// the MainPanel.
 		/// </summary>
 		private void OnInsertAfterLastClick(object sender, EventArgs e)
