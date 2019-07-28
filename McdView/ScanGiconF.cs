@@ -38,19 +38,6 @@ namespace McdView
 		#endregion Fields
 
 
-		#region Properties (override)
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
-
-
 		#region cTor
 		/// <summary>
 		/// Creates a ScanG icon viewer/chooser.
@@ -64,6 +51,7 @@ namespace McdView
 				ColorPalette pal)
 		{
 			InitializeComponent();
+			DoubleBuffered = true;
 
 			_f = f;
 			IconId = iconId;

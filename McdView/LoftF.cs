@@ -29,19 +29,6 @@ namespace McdView
 		#endregion Fields
 
 
-		#region Properties (override)
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
-
-
 		#region cTor
 		/// <summary>
 		/// 
@@ -55,12 +42,11 @@ namespace McdView
 				int loftid)
 		{
 			InitializeComponent();
+			DoubleBuffered = true;
 
 			_f = f;
 			LoftId = loftid;
 
-//			string z = (panelid * 2 + 1) + "/" + (panelid * 2 + 2);
-//			Text = " LOFTEMPS.DAT - slots " + z;
 			Text = " LOFTEMPS.DAT - slot " + (panelid + 1); // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
