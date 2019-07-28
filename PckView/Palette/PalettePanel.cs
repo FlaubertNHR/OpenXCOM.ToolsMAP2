@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using DSShared;
+
 
 namespace PckView
 {
@@ -11,7 +13,7 @@ namespace PckView
 
 	internal sealed class PalettePanel
 		:
-			Panel
+			BufferedPanel
 	{
 		#region Events
 		internal event PaletteIdChangedEventHandler PaletteIdChangedEvent;
@@ -27,19 +29,6 @@ namespace PckView
 		private int _swatchWidth;
 		private int _swatchHeight;
 		#endregion Fields
-
-
-		#region Properties (override)
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
 
 
 		#region Properties (static)

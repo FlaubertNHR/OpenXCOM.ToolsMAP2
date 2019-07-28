@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using DSShared;
+
 using PckView.Forms.SpriteBytes;
 
 using XCom;
@@ -13,7 +15,7 @@ namespace PckView
 {
 	internal sealed class EditorPanel
 		:
-			Panel
+			BufferedPanel
 	{
 		#region Fields (static)
 		/// <summary>
@@ -31,19 +33,6 @@ namespace PckView
 		private readonly Pen _gridBlack = new Pen(Color.FromArgb(50,    0,   0,   0)); // black w/ 50  alpha
 		private readonly Pen _gridWhite = new Pen(Color.FromArgb(180, 255, 255, 255)); // white w/ 180 alpha
 		#endregion Fields
-
-
-		#region Properties (override)
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
 
 
 		#region Properties (static)
