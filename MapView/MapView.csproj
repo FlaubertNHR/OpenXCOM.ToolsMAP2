@@ -295,6 +295,10 @@
       <DependentUpon>XCMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Varidia.cs" />
+    <Compile Include="Volutar\FindVolutarF.cs" />
+    <Compile Include="Volutar\FindVolutarF.Designer.cs">
+      <DependentUpon>FindVolutarF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Volutar\VolutarService.cs" />
     <EmbeddedResource Include="Forms\Error\ErrorWindow.resx">
       <DependentUpon>ErrorWindow.cs</DependentUpon>
@@ -363,6 +367,9 @@
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Volutar\FindVolutarF.resx">
+      <DependentUpon>FindVolutarF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="_Embedded\Extra.PCK" />
     <EmbeddedResource Include="_Embedded\Extra.TAB" />

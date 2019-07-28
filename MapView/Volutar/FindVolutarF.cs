@@ -2,12 +2,12 @@ using System;
 using System.Windows.Forms;
 
 
-namespace DSShared.Windows
+namespace MapView.Volutar
 {
 	/// <summary>
 	/// A generic form providing a textbox for user-input.
 	/// </summary>
-	public sealed partial class FindFileForm
+	public sealed partial class FindVolutarF
 		:
 			Form
 	{
@@ -22,38 +22,15 @@ namespace DSShared.Windows
 		#endregion Properties
 
 
-		#region cTors
+		#region cTor
 		/// <summary>
-		/// cTor[1]. Main constructor.
+		/// cTor.
 		/// </summary>
-		/// <param name="notice">text that will be shown above the textbox</param>
-		/// <param name="caption">caption for the titlebar</param>
-		/// <param name="input">initial value of the textbox</param>
-		public FindFileForm(
-				string notice,
-				string caption,
-				string input)
+		public FindVolutarF()
 		{
 			InitializeComponent();
-			
-			Text = caption;
-			lblNotice.Text = notice;
-
-			tbInput.Text = input;
 		}
-
-		/// <summary>
-		/// cTor[2]. Auxiliary constructor. Because.
-		/// </summary>
-		/// <param name="notice"></param>
-		public FindFileForm(string notice)
-			:
-				this(
-					notice,
-					" Input",
-					String.Empty)
-		{}
-		#endregion cTors
+		#endregion cTor
 
 
 		#region Events

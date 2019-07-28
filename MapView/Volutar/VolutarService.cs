@@ -2,8 +2,6 @@
 using System.IO;
 using System.Windows.Forms;
 
-using DSShared.Windows;
-
 using MapView.Forms.MapObservers.TileViews;
 
 
@@ -35,7 +33,7 @@ namespace MapView.Volutar
 				_fullpath = option.Value as String;
 				if (!File.Exists(_fullpath))
 				{
-					using (var f = new FindFileForm("Enter the Volutar MCDEdit.exe path in full."))
+					using (var f = new FindVolutarF())
 					{
 						if (f.ShowDialog() == DialogResult.OK)
 						{
