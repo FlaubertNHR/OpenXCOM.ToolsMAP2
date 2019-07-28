@@ -78,23 +78,26 @@
 		<h3>File menu</h3>
 
 		<p>Save All [Ctrl+A] - forces a save of the current Map, Route, and Maptree files.</p>
+
 		<p>Save Map [Ctrl+M] - forces a save of the current Map file.</p>
 		<p>Save Routes [Ctrl+R] - forces a save of the current Route file.</p>
-		<p>Save As ... - saves/exports the current Map and Route files to a user-specified path and label. The path cannot be the root directory of a drive. The reason for this is that when you save the Map, the routine finds the parent folder of the chosen folder, then ensures that the Map gets saved in a subfolder called \MAPS and the Routes gets saved in a subfolder called \ROUTES. This allows the saved Map to be added to MainView's Maptree while maintaining consistency of code-design.</p>
+		<p>Save As ... [Ctrl+E] - saves/exports the current Map and Route files to a user-specified path and label. The path cannot be the root directory of a drive. The reason for this is that when you save the Map, the routine finds the parent folder of the chosen folder, then ensures that the Map gets saved in a subfolder called \MAPS and the Routes gets saved in a subfolder called \ROUTES. This allows the saved Map to be added to MainView's Maptree while maintaining consistency of code-design.</p>
+
 		<p>Save Maptree [Ctrl+T] - forces a save of the Maptree.</p>
-		<p>Save Image [Ctrl+I] - saves a PNG of the tileset that's currently displayed in the viewer panel to a specified path.</p>
-		<p>Resize Map [Ctrl+Z] - opens a dialog box for modifying the dimensions of the currently loaded Map.</p>
-		<p>Map Info [Ctrl+F] - displays a bit of information about the currently loaded Map.</p>
-		<p>ScanG view [Ctrl+G] - displays an overhead view of the currently loaded Map. Note that the graphics for this rely on ScanG.Dat in the GEODATA folder of the Configurator's basepath. The displayed level can be changed with the mousewheel. LMB double-click toggles the display between showing multiple levels and only a single level. RMB double-click reloads ScanG.Dat from disk.</p>
-		<p>Reload terrains [Ctrl+N] - reloads the Mapfile, Routefile, and any terrain MCDs/PCKs/TABs of the current tileset from disk. Someday this might reload <b>only</b> terrains but for now it's the whole shebang. It prompts to save Map and Routes if they've changed.</p>
-<!--	<p>Regen Occult [Ctrl+O] - to draw all the sprites in the viewer panel faster, any parts that are hidden beneath floors will be ignored, or occulted. But if you strip a floor off of a level above the ground floor this means you could be left looking into a big hole of what appears to be nothing. The tileparts are still there but they've been occulted for faster drawing. Use Regen Occult to make them appear as expected. Also mind that the reverse happens. If a floor is laid down above ground level, and MainView starts lagging, try issuing the Regen Occult command which will stop any sprites that have been hidden from drawing. Occulted tiles are re-calculated every time a Map loads.</p> -->
+
+		<p>Reload [Ctrl+L] - reloads the Mapfile, Routefile, and any terrain MCDs/PCKs/TABs of the current tileset from disk. Someday this might reload <b>only</b> terrains but for now it's the whole shebang. It prompts to save Map and Routes if they've changed.</p>
+
+		<p>Screenshot ... [Ctrl+N] - saves a PNG of the tileset that's currently displayed in the viewer panel to a specified path.</p>
+
 		<p>Quit [Ctrl+Q] - quits MapView II</p>
 
 		<br>
 		<h3>Edit menu</h3>
 
-		<p>Configurator - opens the Configuration Editor. This is where to specify or modify the paths to your XCOM installation folder(s) for UFO and/or TFTD - or to your working folders if that's how you want to roll. It can also replace your Maptree file with a fresh one that comes hardcoded. WARNING: doing that would obliterate all customizations that have been done to the Maptree! Alternately, the Configurator can generate a file of the hardcoded, or default tileset-metadata to a template file. The template could be useful if MapView II had been configured for UFO (or TFTD), but you've deleted treenodes, and subsequently require the metadata for TFTD (or UFO) tilesets. The default metadata could then be copied directly from the template file into your <b>MapTilesets.yml</b> file.</p>
-<!--	Note that the tileset-data for both games will exist in your MapTilesets configuration until the first time that the Maptree is saved, at which point the data for either game that is not configured will be erased. Hint: force a save of the Maptree to get the application to initialize a fraction of a second faster. -->
+		<p>Modify Map Size [Ctrl+Z] - opens a dialog box for modifying the dimensions of the currently loaded Map.</p>
+
+		<p>Configurator - opens the Configuration Editor. This is where to specify or modify the paths to your XCOM installation folder(s) for UFO and/or TFTD - or to your working folders if that's how you want to roll. It can also replace your Maptree file with a fresh one that comes hardcoded. WARNING: doing that would obliterate all customizations that have been done to the Maptree! Alternately, the Configurator can generate a file of the hardcoded, or default tileset-metadata to a template file. The template would be useful if MapView II had been configured for UFO (or TFTD), but you've deleted treenodes, and subsequently require the metadata for TFTD (or UFO) tilesets. The default metadata could then be copied directly from the template file into your <b>MapTilesets.yml</b> file.</p>
+		<p>Note that the tileset-data for both games will exist in your MapTilesets configuration unless/until the data that you don't want is deleted from the MapTree and the MapTree is saved.</p>
 		<p>Options [Ctrl+O] - opens and closes the Options for MainView. Descriptions for the entries appear at the bottom of that window.</p>
 
 		<br>
@@ -107,17 +110,21 @@
 
 		<p>F5 through F8 will open or close the respective viewers regardless of which viewer is currently active. Note that if a viewer is minimized and its F-key is pressed the viewer returns to its restored state instead of closing.</p>
 
-		<p>Ctrl+F5 through Ctrl+F8 focuses the respective viewer.</p>
+		<p>Ctrl+F5 through Ctrl+F8 focuses the respective viewer, while any of Shift+F5 through Shift+F8 returns focus to MainView if one of the other viewers is focused.</p>
 
 		<p>minimize all [F11] - minimizes all viewers.</p>
 		<p>restore all [F12] - restores all viewers.</p>
 
+		<p>ScanG view [Ctrl+G] - displays an overhead view of the currently loaded Map. Note that the graphics for this rely on ScanG.Dat in the GEODATA folder of the Configurator's basepath. The displayed level can be changed with the mousewheel. LMB double-click toggles the display between showing multiple levels and only a single level. RMB double-click reloads ScanG.Dat from disk.</p>
+
 		<br>
 		<h3>Help menu</h3>
 
-		<p>Help - shows this CHM helpfile.</p>
+		<p>Help [F1] - shows this CHM helpfile.</p>
 		<p>Colors - shows the colors that have been set in Options for TopView, RouteView, and TileView. Of particular interest is that, on the tab labelled TileView, background colors for all tileparts' special properties are tabled. Special properties are an XCOM mechanic, and are generally used to ferry stuff between the battlefield and an XCOM base or vice versa. They are beyond the purview of this document.</p>
 		<p>About - shows the version, the build date, you know the drill.</p>
+
+		<p>Map Info [Ctrl+I] - displays a bit of information about the currently loaded Map. The Detail button displays a list of terrains used by the Map: each terrain's MCD record is then preceeded by a plus sign if it is currently used in the Map and a minus sign if it is not used in the Map.</p>
 		<br>
 	</body>
 </html>
