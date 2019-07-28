@@ -376,6 +376,9 @@ namespace McdView
 			tssl_Sprites    .Text =
 			tssl_OffsetLast .Text =
 			tssl_OffsetAfter.Text = String.Empty;
+
+			var r = new CustomToolStripRenderer();
+			ss_Statusbar.Renderer = r;
 		}
 
 		/// <summary>

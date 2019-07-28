@@ -3,6 +3,27 @@
 	partial class TileView
 	{
 		#region Designer
+		private System.ComponentModel.IContainer components = null;
+
+		DSShared.Windows.CompositedTabControl tcTileTypes;
+
+		private System.Windows.Forms.ToolStrip tsMain;
+		private System.Windows.Forms.ToolStripDropDownButton tsddbExternal;
+		private System.Windows.Forms.ToolStripMenuItem tsmiEditPck;
+		private System.Windows.Forms.ToolStripMenuItem tsmiVolutarMcdEditor;
+		private System.Windows.Forms.TabPage tpAll;
+		private System.Windows.Forms.TabPage tpFloors;
+		private System.Windows.Forms.TabPage tpContents;
+		private System.Windows.Forms.TabPage tpNorthwalls;
+		private System.Windows.Forms.TabPage tpWestwalls;
+		private System.Windows.Forms.StatusStrip ssStatusbar;
+		private System.Windows.Forms.ToolStripStatusLabel tsslTotal;
+		private System.Windows.Forms.ToolStripStatusLabel tsslOver;
+		private System.Windows.Forms.ToolStripButton tsb_Options;
+		private System.Windows.Forms.ToolStripMenuItem tsmiEditMcd;
+		private System.Windows.Forms.ToolStripSeparator tsmi_Sep0;
+
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing && components != null)
@@ -213,26 +234,6 @@
 			this.PerformLayout();
 
 		}
-
-		private System.ComponentModel.IContainer components = null;
-
-		DSShared.Windows.CompositedTabControl tcTileTypes;
-
-		private System.Windows.Forms.ToolStrip tsMain;
-		private System.Windows.Forms.ToolStripDropDownButton tsddbExternal;
-		private System.Windows.Forms.ToolStripMenuItem tsmiEditPck;
-		private System.Windows.Forms.ToolStripMenuItem tsmiVolutarMcdEditor;
-		private System.Windows.Forms.TabPage tpAll;
-		private System.Windows.Forms.TabPage tpFloors;
-		private System.Windows.Forms.TabPage tpContents;
-		private System.Windows.Forms.TabPage tpNorthwalls;
-		private System.Windows.Forms.TabPage tpWestwalls;
-		private System.Windows.Forms.StatusStrip ssStatusbar;
-		private System.Windows.Forms.ToolStripStatusLabel tsslTotal;
-		private System.Windows.Forms.ToolStripStatusLabel tsslOver;
-		private System.Windows.Forms.ToolStripButton tsb_Options;
-		private System.Windows.Forms.ToolStripMenuItem tsmiEditMcd;
-		private System.Windows.Forms.ToolStripSeparator tsmi_Sep0;
 		#endregion Designer
 	}
 }

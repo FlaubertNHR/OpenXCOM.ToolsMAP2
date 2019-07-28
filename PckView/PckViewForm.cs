@@ -188,6 +188,9 @@ namespace PckView
 
 			tssl_OffsetLast.Text =
 			tssl_OffsetAftr.Text = String.Empty;
+
+			var r = new CustomToolStripRenderer();
+			ss_Status.Renderer = r;
 		}
 
 
@@ -1828,7 +1831,7 @@ namespace PckView
 		/// Updates the status-information for the sprite that is currently
 		/// selected.
 		/// </summary>
-		/// <param name="valid"></param>
+		/// <param name="valid">true if the spriteset is valid</param>
 		internal void PrintSelectedId(bool valid = true)
 		{
 			string selected;
@@ -1857,10 +1860,14 @@ namespace PckView
 				 && TilePanel.Spriteset != null
 				 && TilePanel.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_2;
 
-			tss_Sep1       .Visible =
-			tssl_Offset    .Visible =
-			tssl_OffsetLast.Visible =
-			tssl_OffsetAftr.Visible = valid;
+			if (tssl_Offset    .Visible =
+				tssl_OffsetLast.Visible =
+				tssl_OffsetAftr.Visible = valid)
+			{
+				tssl_SpritesetLabel.BorderSides = ToolStripStatusLabelBorderSides.Right;
+			}
+			else
+				tssl_SpritesetLabel.BorderSides = ToolStripStatusLabelBorderSides.None;
 
 			if (valid)
 			{
