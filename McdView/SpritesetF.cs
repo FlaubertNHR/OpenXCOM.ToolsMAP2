@@ -48,7 +48,7 @@ namespace McdView
 			Phase = phase;
 			SpriteId = spriteId;
 
-			Text = " " + _f.Label + ".PCK - phase " + (Phase + 1);
+			Text = "  " + _f.Label + ".PCK - phase " + (Phase + 1);
 
 			int w;
 			if (_f.Spriteset.Count < COLS)

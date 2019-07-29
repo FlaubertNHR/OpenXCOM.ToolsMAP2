@@ -47,7 +47,7 @@ namespace McdView
 			_f = f;
 			LoftId = loftid;
 
-			Text = " LOFTEMPS.DAT - slot " + (panelid + 1); // TODO: + "ufo"/"tftd"
+			Text = "  LOFTEMPS.DAT - slot " + (panelid + 1); // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
 

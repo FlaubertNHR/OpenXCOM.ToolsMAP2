@@ -57,7 +57,7 @@ namespace McdView
 			IconId = iconId;
 			Pal = pal;
 
-			Text = " SCANG.DAT"; // TODO: + "ufo"/"tftd"
+			Text = "  SCANG.DAT"; // TODO: + "ufo"/"tftd"
 
 			Scroller.Dock = DockStyle.Right;
 			Scroller.Scroll += OnScroll;
