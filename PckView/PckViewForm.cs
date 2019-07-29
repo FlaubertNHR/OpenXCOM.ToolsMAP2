@@ -208,8 +208,8 @@ namespace PckView
 		// miImportSpritesheet	F6
 		// miQuit				CtrlQ
 		// miCompare
-		// miHq2x
 		// miTransparent		F7
+		// palette items		Ctrl1..Ctrl8
 		// miBytes				F8
 		// miHelp				F1
 		//
@@ -303,9 +303,9 @@ namespace PckView
 
 				var itPal = new MenuItem(pal.Label);
 				itPal.Tag = pal;
+				itPal.Click += OnPaletteClick;
 				miPaletteMenu.MenuItems.Add(itPal);
 
-				itPal.Click += OnPaletteClick;
 				_paletteItems[pal] = itPal;
 
 				switch (i)
@@ -505,20 +505,16 @@ namespace PckView
 		/// <param name="valid">true if the spriteset is valid</param>
 		internal void SpritesetChanged(bool valid)
 		{
-			// under File menu
-			miSave             .Enabled =
+			miSave             .Enabled = // File ->
 			miSaveAs           .Enabled =
 			miExportSprites    .Enabled =
 			miExportSpritesheet.Enabled =
 			miImportSpritesheet.Enabled =
 
-			// on Main menu
-			miPaletteMenu      .Enabled =
-			miTransparentMenu  .Enabled =
+			miPaletteMenu      .Enabled = // Main ->
 			miBytesMenu        .Enabled =
 
-			// on Context menu
-			_miAdd             .Enabled = valid;
+			_miAdd             .Enabled = valid; // Context
 
 			SpriteEditor.OnLoad(null, EventArgs.Empty);	// resize the Editor to the spriteset's sprite-size
 			OnSpriteClick(null, EventArgs.Empty);		// enable/disable items on the contextmenu
@@ -539,8 +535,7 @@ namespace PckView
 		{
 			bool enabled = (TilePanel.idSel != -1);
 
-			// on Context menu
-			_miEdit       .Enabled =
+			_miEdit       .Enabled = // Context ->
 			_miInsertBefor.Enabled =
 			_miInsertAfter.Enabled =
 			_miReplace    .Enabled =

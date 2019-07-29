@@ -32,9 +32,8 @@ namespace PckView
 		private System.Windows.Forms.MenuItem miBytes;
 
 		private System.Windows.Forms.MenuItem miPaletteMenu;
-
-		private System.Windows.Forms.MenuItem miTransparentMenu;
 		private System.Windows.Forms.MenuItem miTransparent;
+		private System.Windows.Forms.MenuItem miSeparator4;
 
 		private System.Windows.Forms.MenuItem miHelpMenu;
 		private System.Windows.Forms.MenuItem miHelp;
@@ -93,8 +92,8 @@ namespace PckView
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.miCompare = new System.Windows.Forms.MenuItem();
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
-			this.miTransparentMenu = new System.Windows.Forms.MenuItem();
 			this.miTransparent = new System.Windows.Forms.MenuItem();
+			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miBytesMenu = new System.Windows.Forms.MenuItem();
 			this.miBytes = new System.Windows.Forms.MenuItem();
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
@@ -116,7 +115,6 @@ namespace PckView
 			this.mmMainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miFileMenu,
 			this.miPaletteMenu,
-			this.miTransparentMenu,
 			this.miBytesMenu,
 			this.miHelpMenu});
 			// 
@@ -277,28 +275,28 @@ namespace PckView
 			// 
 			this.miPaletteMenu.Enabled = false;
 			this.miPaletteMenu.Index = 1;
+			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miTransparent,
+			this.miSeparator4});
 			this.miPaletteMenu.Text = "&Palette";
-			// 
-			// miTransparentMenu
-			// 
-			this.miTransparentMenu.Enabled = false;
-			this.miTransparentMenu.Index = 2;
-			this.miTransparentMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miTransparent});
-			this.miTransparentMenu.Text = "&Transparency";
 			// 
 			// miTransparent
 			// 
 			this.miTransparent.Checked = true;
 			this.miTransparent.Index = 0;
 			this.miTransparent.Shortcut = System.Windows.Forms.Shortcut.F7;
-			this.miTransparent.Text = "&On/off";
+			this.miTransparent.Text = "&Transparent";
 			this.miTransparent.Click += new System.EventHandler(this.OnTransparencyClick);
+			// 
+			// miSeparator4
+			// 
+			this.miSeparator4.Index = 1;
+			this.miSeparator4.Text = "-";
 			// 
 			// miBytesMenu
 			// 
 			this.miBytesMenu.Enabled = false;
-			this.miBytesMenu.Index = 3;
+			this.miBytesMenu.Index = 2;
 			this.miBytesMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miBytes});
 			this.miBytesMenu.Text = "&Bytes";
@@ -312,7 +310,7 @@ namespace PckView
 			// 
 			// miHelpMenu
 			// 
-			this.miHelpMenu.Index = 4;
+			this.miHelpMenu.Index = 3;
 			this.miHelpMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miHelp,
 			this.miAbout});
