@@ -125,10 +125,13 @@ namespace PckView
 		#region Events (static)
 		private static void OnBytesKeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			switch (e.KeyCode)
 			{
-				e.SuppressKeyPress = true;
-				_fBytes.Close();
+				case Keys.Escape:
+				case Keys.F8:
+					e.SuppressKeyPress = true;
+					_fBytes.Close();
+					break;
 			}
 		}
 

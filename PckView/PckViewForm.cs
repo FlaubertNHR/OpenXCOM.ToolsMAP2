@@ -175,6 +175,8 @@ namespace PckView
 			SpriteEditor = new SpriteEditorF(this);
 			SpriteEditor.FormClosing += OnEditorFormClosing;
 
+			SpriteEditor._fpalette.Text = "Palette - " + Pal.Label;
+
 
 			miCreate.MenuItems.Add(miCreateTerrain);	// NOTE: These items are added to the Filemenu first
 			miCreate.MenuItems.Add(miCreateBigobs);		// and get transfered to the Create submenu here.
@@ -1422,6 +1424,8 @@ namespace PckView
 
 				TilePanel.Spriteset.Pal = Pal;
 				PaletteChanged();
+
+				SpriteEditor._fpalette.Text = "Palette - " + Pal.Label;
 			}
 		}
 
