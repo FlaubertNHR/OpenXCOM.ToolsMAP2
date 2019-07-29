@@ -123,28 +123,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\About.cs">
+    <Compile Include="About.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\About.Designer.cs">
+    <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SpriteBytes\SpriteBytesManager.cs" />
+    <Compile Include="PaletteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PalettePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PckViewPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Editor\SpriteEditorF.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editor\SpritePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Palette\PalettePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Palette\PaletteForm.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -163,15 +156,19 @@
     <Compile Include="PckViewForm.Designer.cs">
       <DependentUpon>PckViewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SpriteBytesManager.cs" />
+    <Compile Include="SpriteEditorF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpritePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Editor\SpriteEditorF.resx">
-      <DependentUpon>SpriteEditorF.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\About.resx">
+    <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Palette\PaletteForm.resx">
+    <EmbeddedResource Include="PaletteForm.resx">
       <DependentUpon>PaletteForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -182,6 +179,9 @@
     <EmbeddedResource Include="PckViewForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PckViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpriteEditorF.resx">
+      <DependentUpon>SpriteEditorF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

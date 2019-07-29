@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using XCom.Interfaces;
 
 
-namespace PckView.Forms.SpriteBytes
+namespace PckView
 {
 	/// <summary>
 	/// Creates a texttable (copyable) that shows all the bytes in a sprite.

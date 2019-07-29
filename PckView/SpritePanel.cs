@@ -5,8 +5,6 @@ using System.Windows.Forms;
 
 using DSShared;
 
-using PckView.Forms.SpriteBytes;
-
 using XCom;
 using XCom.Interfaces;
 

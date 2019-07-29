@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 #if !__MonoCS__
 using System.Runtime.InteropServices;
@@ -23,7 +24,7 @@ namespace PckView
 			var info = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
 
 			lblVersion.Text = String.Format(
-									System.Globalization.CultureInfo.InvariantCulture,
+									CultureInfo.InvariantCulture,
 									"{0}.{1}.{2}.{3}",
 									info.FileMajorPart,
 									info.FileMinorPart,
@@ -68,7 +69,7 @@ namespace PckView
 			const string config = "Release";
 #endif
 			lblBuildConfig.Text = String.Format(
-											System.Globalization.CultureInfo.InvariantCulture,
+											CultureInfo.InvariantCulture,
 											"{0}{1}",
 											config, arch);
 		}

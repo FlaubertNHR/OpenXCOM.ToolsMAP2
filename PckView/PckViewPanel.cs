@@ -47,12 +47,6 @@ namespace PckView
 		#endregion Fields
 
 
-		#region Properties (static)
-		internal static PckViewPanel that
-		{ get; private set; }
-		#endregion Properties (static)
-
-
 		#region Properties
 		private SpriteCollection _spriteset;
 		internal SpriteCollection Spriteset
@@ -109,7 +103,7 @@ namespace PckView
 		{
 #if DEBUG
 			LogFile.SetLogFilePath(System.IO.Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
-			DSShared.DSLogFile.CreateLogFile();
+			DSLogFile.CreateLogFile();
 #endif
 
 			_f = f;
@@ -127,8 +121,6 @@ namespace PckView
 			idSel = -1;
 
 			PckViewForm.PaletteChanged += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
-
-			that = this;
 		}
 		#endregion cTor
 
