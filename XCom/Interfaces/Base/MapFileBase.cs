@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 using XCom;
-using XCom.Services;
 
 
 namespace XCom.Interfaces.Base

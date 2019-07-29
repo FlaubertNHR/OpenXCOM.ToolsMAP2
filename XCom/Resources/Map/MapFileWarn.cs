@@ -77,6 +77,7 @@ namespace XCom
 		private RichTextBox rtb_Text;
 		private Button btn_Ok;
 
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -162,7 +163,6 @@ namespace XCom
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MapFileWarn";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

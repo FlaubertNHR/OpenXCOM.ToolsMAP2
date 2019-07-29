@@ -113,6 +113,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resources\Map\MapFileWarn.cs" />
+    <Compile Include="Resources\Map\MapResizeService.cs" />
     <Compile Include="Resources\Map\RouteData\Link.cs" />
     <Compile Include="Resources\Map\RouteData\RouteCheckInfobox.cs" />
     <Compile Include="Resources\Map\RouteData\RouteNode.cs" />
@@ -123,7 +124,6 @@
     <Compile Include="Interfaces\Base\MapLocations.cs" />
     <Compile Include="Interfaces\Base\MapTileList.cs" />
     <Compile Include="SelectEventArgs.cs" />
-    <Compile Include="Services\MapResizeService.cs" />
     <Compile Include="Interfaces\Base\MapFileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

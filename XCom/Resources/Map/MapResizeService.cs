@@ -1,7 +1,7 @@
 ﻿using XCom.Interfaces.Base;
 
 
-namespace XCom.Services
+namespace XCom
 {
 	public static class MapResizeService
 	{

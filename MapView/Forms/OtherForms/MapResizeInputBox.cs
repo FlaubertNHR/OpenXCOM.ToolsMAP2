@@ -2,8 +2,8 @@ using System;
 using System.Globalization;
 using System.Windows.Forms;
 
+using XCom;
 using XCom.Interfaces.Base;
-using XCom.Services;
 
 
 namespace MapView
@@ -174,6 +174,26 @@ namespace MapView
 
 
 		#region Designer
+		private System.ComponentModel.Container components = null;
+
+		private Label lbl_Lev1;
+		private Label lbl_Col0;
+		private Label lbl_Row0;
+		private Label lbl_Lev0;
+		private TextBox tb_Col1;
+		private TextBox tb_Row1;
+		private TextBox tb_Lev1;
+		private Button btn_Ok;
+		private Button btn_Cancel;
+		private TextBox tb_Col0;
+		private TextBox tb_Row0;
+		private TextBox tb_Lev0;
+		private Label lbl_Row1;
+		private Label lbl_Col1;
+		private Label lbl_Head;
+		private CheckBox cb_Ceil;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -384,30 +404,11 @@ namespace MapView
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = " Modify Map Size";
+			this.Text = "Modify Map Size";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
-
-		private System.ComponentModel.Container components = null;
-
-		private Label lbl_Lev1;
-		private Label lbl_Col0;
-		private Label lbl_Row0;
-		private Label lbl_Lev0;
-		private TextBox tb_Col1;
-		private TextBox tb_Row1;
-		private TextBox tb_Lev1;
-		private Button btn_Ok;
-		private Button btn_Cancel;
-		private TextBox tb_Col0;
-		private TextBox tb_Row0;
-		private TextBox tb_Lev0;
-		private Label lbl_Row1;
-		private Label lbl_Col1;
-		private Label lbl_Head;
-		private CheckBox cb_Ceil;
 		#endregion Designer
 	}
 }
