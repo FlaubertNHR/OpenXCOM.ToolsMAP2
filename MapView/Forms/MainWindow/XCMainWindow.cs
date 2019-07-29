@@ -2786,6 +2786,7 @@ namespace MapView
 										CultureInfo.CurrentCulture,
 										"{0} x {1}",
 										tx, ty);
+			ssMain.Refresh(); // fast update for selection-size.
 		}
 		#endregion Methods
 	}

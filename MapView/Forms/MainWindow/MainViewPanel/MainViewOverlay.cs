@@ -539,9 +539,13 @@ namespace MapView
 		/// Causes this panel to redraw along with the TopView, RouteView, and
 		/// TopRouteView forms - also invalidates the ScanG panel.
 		/// </summary>
-		private void InvalidateObservers()
+		/// <param name="refresh">true to Refresh MainView</param>
+		private void InvalidateObservers(bool refresh = false)
 		{
-			Invalidate();
+			if (refresh)
+				Refresh(); // fast update for drag-select
+			else
+				Invalidate();
 
 			ObserverManager.TopView     .Control     .TopPanel     .Invalidate();
 			ObserverManager.TopRouteView.ControlTop  .TopPanel     .Invalidate();
@@ -834,10 +838,9 @@ namespace MapView
 				DragBeg = beg; // these ensure that the start and end points stay
 				DragEnd = end; // within the bounds of the currently loaded map.
 	
-				if (MouseDrag != null) // path the selected-lozenge
-					MouseDrag();
+				MouseDrag(); // path the selected-lozenge
 
-				InvalidateObservers();
+				InvalidateObservers(true);
 
 				var a = GetDragBeg_abs(); // update SelectionSize on statusbar ->
 				var b = GetDragEnd_abs();

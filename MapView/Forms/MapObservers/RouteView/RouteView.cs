@@ -457,6 +457,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ObserverManager.RouteView   .Control     .PrintOverInfo(overId, loc);
 			ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
 
+			lblOver.Refresh(); // fast update.
 			InvalidatePanels();
 		}
 
