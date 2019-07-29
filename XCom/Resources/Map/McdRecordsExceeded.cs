@@ -63,7 +63,7 @@ namespace XCom
 		#region Methods
 		internal void SetTexts(string label, string text)
 		{
-			Text = "Mapfile Warning - " + label;
+			Text = "MCD Records exceeded - " + label;
 			rtb_Text.Text = text;
 		}
 		#endregion Methods
@@ -166,8 +166,6 @@ namespace XCom
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "MCD Records exceeded";
-			this.TopMost = true;
 			this.ResumeLayout(false);
 
 		}
