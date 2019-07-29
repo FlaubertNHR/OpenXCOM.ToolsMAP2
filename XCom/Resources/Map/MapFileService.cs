@@ -143,8 +143,8 @@ namespace XCom
 						}
 						text += Environment.NewLine + "total - " + partset.Count;
 
-						MapFileWarn.that.Show();
-						MapFileWarn.that.SetTexts(descriptor.Label, text);
+						McdRecordsExceeded.that.Show();
+						McdRecordsExceeded.that.SetTexts(descriptor.Label, text);
 					}
 
 					var RMP = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);

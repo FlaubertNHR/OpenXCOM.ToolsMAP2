@@ -120,7 +120,7 @@ namespace DSShared.Windows
 		/// variable had been used as its registry-label. But since they weren't
 		/// this function maintains backward compatibility with the property-
 		/// headers in "MapViewers.yml".
-		/// TODO: MCDInfo, ScanGview, MapInfo, MapFileWarn, etc etc. RouteCheckInfobox ...
+		/// TODO: MCDInfo, ScanGview, MapInfo, McdRecordsExceeded, etc etc. RouteCheckInfobox ...
 		/// TODO: McdView's Spriteset, ScanGset, LoFTset viewers.
 		/// TODO: PckView's BytesViewer
 		/// </summary>

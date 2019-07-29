@@ -12,18 +12,18 @@ namespace XCom
 	/// exceeded as long as no tileparts that exceed the limit have been placed
 	/// on the Map.
 	/// </summary>
-	internal sealed class MapFileWarn
+	internal sealed class McdRecordsExceeded
 		:
 			Form
 	{
 		#region Properties (static)
-		private static MapFileWarn _that;
-		internal static MapFileWarn that
+		private static McdRecordsExceeded _that;
+		internal static McdRecordsExceeded that
 		{
 			get
 			{
 				if (_that == null)
-					_that = new MapFileWarn();
+					_that = new McdRecordsExceeded();
 				return _that;
 			}
 		}
@@ -34,7 +34,7 @@ namespace XCom
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		private MapFileWarn()
+		private McdRecordsExceeded()
 		{
 			InitializeComponent();
 		}
@@ -96,7 +96,7 @@ namespace XCom
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapFileWarn));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(McdRecordsExceeded));
 			this.btn_Ok = new System.Windows.Forms.Button();
 			this.lbl_InfoHeader = new System.Windows.Forms.Label();
 			this.rtb_Text = new System.Windows.Forms.RichTextBox();
@@ -149,7 +149,7 @@ namespace XCom
 			this.lbl_InfoBody.TabIndex = 3;
 			this.lbl_InfoBody.Text = resources.GetString("lbl_InfoBody.Text");
 			// 
-			// MapFileWarn
+			// McdRecordsExceeded
 			// 
 			this.AcceptButton = this.btn_Ok;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -162,11 +162,11 @@ namespace XCom
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "MapFileWarn";
+			this.Name = "McdRecordsExceeded";
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Mapfile Warning";
+			this.Text = "MCD Records exceeded";
 			this.TopMost = true;
 			this.ResumeLayout(false);
 
