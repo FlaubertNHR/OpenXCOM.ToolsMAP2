@@ -141,7 +141,7 @@ namespace DSShared.Windows
 				case "McdviewF":         return McdView;		// is in manifest
 				case "CopyPanelF":       return CopyPanel;
 				case "PckViewForm":      return PckView;		// is in manifest
-				case "EditorForm":       return SpriteEditor;
+				case "SpriteEditorF":    return SpriteEditor;
 				case "PaletteForm":      return PaletteViewer;
 			}
 			return null;

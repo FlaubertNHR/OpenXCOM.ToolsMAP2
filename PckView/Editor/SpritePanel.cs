@@ -13,7 +13,7 @@ using XCom.Interfaces;
 
 namespace PckView
 {
-	internal sealed class EditorPanel
+	internal sealed class SpritePanel
 		:
 			BufferedPanel
 	{
@@ -27,18 +27,12 @@ namespace PckView
 
 
 		#region Fields
-		private EditorForm _feditor;
+		private SpriteEditorF _feditor;
 
 		private Pen _penGrid;
 		private readonly Pen _gridBlack = new Pen(Color.FromArgb(50,    0,   0,   0)); // black w/ 50  alpha
 		private readonly Pen _gridWhite = new Pen(Color.FromArgb(180, 255, 255, 255)); // white w/ 180 alpha
 		#endregion Fields
-
-
-		#region Properties (static)
-		internal static EditorPanel that
-		{ get; private set; }
-		#endregion Properties (static)
 
 
 		#region Properties
@@ -104,9 +98,8 @@ namespace PckView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal EditorPanel(EditorForm f)
+		internal SpritePanel(SpriteEditorF f)
 		{
-			that = this;
 			_feditor = f;
 
 			_penGrid = _gridBlack;
@@ -148,14 +141,14 @@ namespace PckView
 
 					if (bindataId > -1 && bindataId < Sprite.Bindata.Length) // safety.
 					{
-						switch (EditorForm.Mode)
+						switch (SpriteEditorF.Mode)
 						{
-							case EditorForm.EditMode.Enabled: // paint ->
+							case SpriteEditorF.EditMode.Enabled: // paint ->
 							{
 								int palid = PalettePanel.that.Palid;
 								if (palid > -1
 									&& (palid < PckImage.MarkerRle
-										|| PckViewPanel.that.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_0))
+										|| _feditor._f.TilePanel.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_0))
 								{
 									Sprite.Bindata[bindataId] = (byte)palid;
 									Sprite.Sprite = BitmapService.CreateColorized(
@@ -164,7 +157,7 @@ namespace PckView
 																				Sprite.Bindata,
 																				PckViewForm.Pal.ColorTable);
 									Refresh();
-									PckViewPanel.that.Refresh();
+									_feditor._f.TilePanel.Refresh();
 								}
 								else
 								{
@@ -191,7 +184,7 @@ namespace PckView
 								break;
 							}
 
-							case EditorForm.EditMode.Locked: // eye-dropper ->
+							case SpriteEditorF.EditMode.Locked: // eye-dropper ->
 								PalettePanel.that.SelectPaletteId((int)Sprite.Bindata[bindataId]);
 								break;
 						}
@@ -314,7 +307,7 @@ namespace PckView
 		#endregion Events
 
 
-		#region Methods (static)
+		#region Methods
 		/// <summary>
 		/// Gets a string of information that describes either a pixel's or a
 		/// palette-swatch's color.
@@ -324,7 +317,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="palid">a palette-id to get info about</param>
 		/// <returns>string of color-info</returns>
-		internal static string GetColorInfo(int palid)
+		internal string GetColorInfo(int palid)
 		{
 			string text = String.Format(
 									System.Globalization.CultureInfo.CurrentCulture,
@@ -348,7 +341,7 @@ namespace PckView
 
 				case PckImage.MarkerRle: // #254
 				case PckImage.MarkerEos: // #255
-					if (PckViewPanel.that.Spriteset.TabwordLength != ResourceInfo.TAB_WORD_LENGTH_0)
+					if (_feditor._f.TilePanel.Spriteset.TabwordLength != ResourceInfo.TAB_WORD_LENGTH_0)
 					{
 						text += " [invalid]";
 					}
@@ -357,10 +350,7 @@ namespace PckView
 
 			return text;
 		}
-		#endregion Methods (static)
 
-
-		#region Methods
 		internal void InvertGridColor(bool invert)
 		{
 			_penGrid = (invert) ? _gridWhite

@@ -134,10 +134,10 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Editor\EditorForm.cs">
+    <Compile Include="Editor\SpriteEditorF.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor\EditorPanel.cs">
+    <Compile Include="Editor\SpritePanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Palette\PalettePanel.cs">
@@ -165,8 +165,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Editor\EditorForm.resx">
-      <DependentUpon>EditorForm.cs</DependentUpon>
+    <EmbeddedResource Include="Editor\SpriteEditorF.resx">
+      <DependentUpon>SpriteEditorF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>

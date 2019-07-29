@@ -16,7 +16,8 @@ namespace PckView
 			Form
 	{
 		#region Fields
-		private PalettePanel _pnlPalette = new PalettePanel();
+		private readonly SpriteEditorF _feditor;
+		private readonly PalettePanel _pnlPalette = new PalettePanel();
 		#endregion Fields
 
 
@@ -24,9 +25,12 @@ namespace PckView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal PaletteForm()
+		/// <param name="f">caller</param>
+		internal PaletteForm(SpriteEditorF f)
 		{
 			InitializeComponent();
+
+			_feditor = f;
 
 			_pnlPalette.Dock = DockStyle.Fill;
 			_pnlPalette.PaletteIdChangedEvent += OnPaletteIdChanged;
@@ -37,8 +41,8 @@ namespace PckView
 
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
 			{											// let ClientSize deter width and height.
-				Left = EditorForm.that.Left + 20;
-				Top  = EditorForm.that.Top  + 20;
+				Left = f.Left + 20;
+				Top  = f.Top  + 20;
 			}
 
 			ClientSize = new Size(
@@ -86,9 +90,15 @@ namespace PckView
 		#region Events
 		private void OnPaletteIdChanged(int palId)
 		{
-			lblStatus.Text = EditorPanel.GetColorInfo(palId);
+			lblStatus.Text = _feditor.SpritePanel.GetColorInfo(palId);
 		}
 		#endregion Events
+
+
+		#region Designer
+		private Container components = null;
+
+		private Label lblStatus;
 
 
 		/// <summary>
@@ -102,7 +112,7 @@ namespace PckView
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -139,10 +149,6 @@ namespace PckView
 			this.ResumeLayout(false);
 
 		}
-		#endregion Windows Form Designer generated code
-
-		private Container components = null;
-
-		private Label lblStatus;
+		#endregion Designer
 	}
 }

@@ -10,7 +10,7 @@ using XCom.Interfaces;
 
 namespace PckView
 {
-	internal sealed class EditorForm
+	internal sealed class SpriteEditorF
 		:
 			Form
 	{
@@ -24,8 +24,7 @@ namespace PckView
 
 
 		#region Fields
-		private readonly EditorPanel _pnlEditor;
-
+		internal readonly PckViewForm _f;
 		private readonly PaletteForm _fpalette;
 
 		private readonly TrackBar _trackBar = new TrackBar();
@@ -34,20 +33,25 @@ namespace PckView
 
 
 		#region Properties (static)
-		internal static EditorForm that
-		{ get; private set; }
-
 		internal static EditMode Mode
 		{ get; set; }
 		#endregion Properties (static)
+
+
+		#region Properties
+		internal SpritePanel SpritePanel
+		{ get; private set; }
+		#endregion Properties
 
 
 		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal EditorForm()
+		internal SpriteEditorF(PckViewForm f)
 		{
+			_f = f;
+
 			_trackBar.AutoSize    = false;
 			_trackBar.Height      = 23;
 			_trackBar.Minimum     =  1;
@@ -68,8 +72,8 @@ namespace PckView
 			Mode = EditMode.Locked;
 
 
-			_pnlEditor = new EditorPanel(this);
-			_pnlEditor.Top = _trackBar.Height + _lblEditMode.Height;
+			SpritePanel = new SpritePanel(this);
+			SpritePanel.Top = _trackBar.Height + _lblEditMode.Height;
 
 
 			InitializeComponent();
@@ -77,21 +81,19 @@ namespace PckView
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
 			MaximumSize = new Size(0,0); // fu.net
 
-			that = this;
-
-			Controls.Add(_pnlEditor);
+			Controls.Add(SpritePanel);
 			Controls.Add(_trackBar);
 			Controls.Add(_lblEditMode);
 
 			OnTrackScroll(null, EventArgs.Empty);
 
-			_fpalette = new PaletteForm();
+			_fpalette = new PaletteForm(this);
 			_fpalette.FormClosing += OnPaletteFormClosing;
 
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
 			{											// let OnLoad() deter width and height.
-				Left = PckViewForm.that.Left + 20;
-				Top  = PckViewForm.that.Top  + 20;
+				Left = f.Left + 20;
+				Top  = f.Top  + 20;
 			}
 		}
 		#endregion cTor
@@ -104,8 +106,8 @@ namespace PckView
 
 			_trackBar   .Width  =
 			_lblEditMode.Width  =
-			_pnlEditor  .Width  = ClientSize.Width;
-			_pnlEditor  .Height = ClientSize.Height
+			SpritePanel .Width  = ClientSize.Width;
+			SpritePanel .Height = ClientSize.Height
 								- _trackBar.Height
 								- _lblEditMode.Height;
 		}
@@ -153,8 +155,8 @@ namespace PckView
 		internal void OnLoad(object sender, EventArgs e)
 		{
 			ClientSize = new Size(
-								XCImage.SpriteWidth32 * 10 + EditorPanel.Pad, // <- keep the statusbar at 32px width
-								XCImage.SpriteHeight  * 10 + EditorPanel.Pad
+								XCImage.SpriteWidth32 * 10 + SpritePanel.Pad, // <- keep the statusbar at 32px width
+								XCImage.SpriteHeight  * 10 + SpritePanel.Pad
 									+ _trackBar   .Height
 									+ _lblEditMode.Height
 									+ ss_Status   .Height);
@@ -162,7 +164,7 @@ namespace PckView
 
 		private void OnTrackScroll(object sender, EventArgs e)
 		{
-			_pnlEditor.ScaleFactor = _trackBar.Value;
+			SpritePanel.ScaleFactor = _trackBar.Value;
 		}
 
 		private void OnEditModeMouseClick(object sender, EventArgs e)
@@ -206,12 +208,12 @@ namespace PckView
 
 		private void OnShowGridClick(object sender, EventArgs e)
 		{
-			_pnlEditor.Grid = (miGrid.Checked = !miGrid.Checked);
+			SpritePanel.Grid = (miGrid.Checked = !miGrid.Checked);
 		}
 
 		private void OnInvertGridColorClick(object sender, EventArgs e)
 		{
-			_pnlEditor.InvertGridColor(miGridInvert.Checked = !miGridInvert.Checked);
+			SpritePanel.InvertGridColor(miGridInvert.Checked = !miGridInvert.Checked);
 		}
 		#endregion Events
 
@@ -342,7 +344,7 @@ namespace PckView
 			this.tssl_ColorInfo.Text = "colorinfo";
 			this.tssl_ColorInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// EditorForm
+			// SpriteEditorF
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(294, 276);
@@ -354,7 +356,7 @@ namespace PckView
 			this.MaximumSize = new System.Drawing.Size(300, 300);
 			this.Menu = this.mmMainMenu;
 			this.MinimizeBox = false;
-			this.Name = "EditorForm";
+			this.Name = "SpriteEditorF";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Sprite Editor";

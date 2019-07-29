@@ -47,9 +47,6 @@ namespace PckView
 		/// </summary>
 		private bool IsInvoked;
 
-		private readonly PckViewPanel TilePanel;
-		private readonly EditorForm Editor;
-
 //		private TabControl _tcTabs; // for OnCompareClick()
 
 		private ToolStripMenuItem _miEdit;
@@ -73,12 +70,18 @@ namespace PckView
 
 
 		#region Properties (static)
-		internal static PckViewForm that
-		{ get; private set; }
-
 		internal static Palette Pal
 		{ get; set; }
 		#endregion Properties (static)
+
+
+		#region Properties
+		internal SpriteEditorF SpriteEditor
+		{ get; private set; }
+
+		internal PckViewPanel TilePanel
+		{ get; private set; }
+		#endregion Properties
 
 
 		#region Properties
@@ -150,8 +153,6 @@ namespace PckView
 			RegistryInfo.RegisterProperties(this);
 //			regInfo.AddProperty("SelectedPalette");
 
-			that = this;
-
 			TilePanel = new PckViewPanel(this);
 
 			TilePanel.ContextMenuStrip = ViewerContextMenu();
@@ -173,8 +174,8 @@ namespace PckView
 
 			_paletteItems[Pal].Checked = true;
 
-			Editor = new EditorForm();
-			Editor.FormClosing += OnEditorFormClosing;
+			SpriteEditor = new SpriteEditorF(this);
+			SpriteEditor.FormClosing += OnEditorFormClosing;
 
 
 			miCreate.MenuItems.Add(miCreateTerrain);	// NOTE: These items are added to the Filemenu first
@@ -348,8 +349,8 @@ namespace PckView
 
 				Quit = true;
 
-				Editor.ClosePalette();	// these are needed when PckView
-				Editor.Close();			// is invoked via TileView.
+				SpriteEditor.ClosePalette();	// these are needed when PckView
+				SpriteEditor.Close();			// is invoked via TileView.
 
 				SpriteBytesManager.HideBytesTable();
 
@@ -487,7 +488,7 @@ namespace PckView
 					if (TilePanel.Spriteset != null)
 					{
 						TilePanel.idSel = -1;
-						EditorPanel.that.Sprite = null;
+						SpriteEditor.SpritePanel.Sprite = null;
 						PrintSelectedId();
 						TilePanel.Invalidate();
 					}
@@ -521,8 +522,8 @@ namespace PckView
 			// on Context menu
 			_miAdd             .Enabled = valid;
 
-			Editor.OnLoad(null, EventArgs.Empty); // resize the Editor to the spriteset's sprite-size
-			OnSpriteClick(null, EventArgs.Empty); // enable/disable items on the contextmenu
+			SpriteEditor.OnLoad(null, EventArgs.Empty);	// resize the Editor to the spriteset's sprite-size
+			OnSpriteClick(null, EventArgs.Empty);		// enable/disable items on the contextmenu
 
 			PrintSpritesetLabel(valid);
 			PrintTotal(valid);
@@ -563,15 +564,15 @@ namespace PckView
 		{
 			if (TilePanel.Spriteset != null && TilePanel.idSel != -1)
 			{
-				EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.idSel];
+				SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[TilePanel.idSel];
 
 				if (!_miEdit.Checked)
 				{
 					_miEdit.Checked = true;
-					Editor.Show();
+					SpriteEditor.Show();
 				}
 				else
-					Editor.BringToFront();
+					SpriteEditor.BringToFront();
 			}
 		}
 
@@ -716,7 +717,7 @@ namespace PckView
 					if (InsertSprites(TilePanel.idSel, ofd.FileNames))
 					{
 						TilePanel.idSel += ofd.FileNames.Length;
-						EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.idSel];
+						SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[TilePanel.idSel];
 
 						InsertSpritesFinish();
 					}
@@ -858,7 +859,7 @@ namespace PckView
 															XCImage.SpriteHeight,
 															IsScanG);
 						TilePanel.Spriteset[TilePanel.idSel] =
-						EditorPanel.that.Sprite = sprite;
+						SpriteEditor.SpritePanel.Sprite = sprite;
 
 						TilePanel.Refresh();
 						Changed = true;
@@ -904,7 +905,7 @@ namespace PckView
 			TilePanel.idSel += dir;
 			TilePanel.Spriteset[TilePanel.idSel].Id = TilePanel.idSel;
 
-			EditorPanel.that.Sprite = TilePanel.Spriteset[TilePanel.idSel];
+			SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[TilePanel.idSel];
 
 			PrintSelectedId();
 
@@ -929,7 +930,7 @@ namespace PckView
 
 			if (TilePanel.idSel == TilePanel.Spriteset.Count)
 			{
-				EditorPanel.that.Sprite = null;
+				SpriteEditor.SpritePanel.Sprite = null;
 				TilePanel.idSel = -1;
 			}
 			InsertSpritesFinish();

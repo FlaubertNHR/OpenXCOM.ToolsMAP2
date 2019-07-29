@@ -81,7 +81,7 @@ namespace PckView
 
 				CalculateScrollRange(true);
 
-				EditorPanel.that.Sprite = null;
+				_f.SpriteEditor.SpritePanel.Sprite = null;
 
 				idOver =
 				idSel = -1;
@@ -234,7 +234,7 @@ namespace PckView
 					else
 						sprite = null;
 
-					EditorPanel.that.Sprite = sprite;
+					_f.SpriteEditor.SpritePanel.Sprite = sprite;
 
 					_f.PrintSelectedId();
 					Invalidate();
@@ -482,7 +482,7 @@ namespace PckView
 		/// <param name="dir">-1 left, +1 right</param>
 		internal void SelectAdjacentHori(int dir)
 		{
-			EditorPanel.that.Sprite = Spriteset[idSel += dir];
+			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[idSel += dir];
 			ScrollToTile(idSel);
 			Invalidate();
 		}
@@ -512,7 +512,7 @@ namespace PckView
 					break;
 			}
 
-			EditorPanel.that.Sprite = Spriteset[idSel];
+			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[idSel];
 			ScrollToTile(idSel);
 			Invalidate();
 		}
