@@ -48,7 +48,7 @@ namespace McdView
 			Phase = phase;
 			SpriteId = spriteId;
 
-			Text = "  " + _f.Label + ".PCK - phase " + (Phase + 1);
+			Text = _f.Label + ".PCK - phase " + (Phase + 1);
 
 			int w;
 			if (_f.Spriteset.Count < COLS)
@@ -248,11 +248,10 @@ namespace McdView
 			// 
 			this.ClientSize = new System.Drawing.Size(494, 276);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "SpritesetF";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

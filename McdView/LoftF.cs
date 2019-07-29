@@ -47,7 +47,7 @@ namespace McdView
 			_f = f;
 			LoftId = loftid;
 
-			Text = "  LOFTEMPS.DAT - slot " + (panelid + 1); // TODO: + "ufo"/"tftd"
+			Text = "LOFTEMPS.DAT - slot " + (panelid + 1); // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
 
@@ -274,11 +274,10 @@ namespace McdView
 			// 
 			this.ClientSize = new System.Drawing.Size(494, 276);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "LoftF";
-			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

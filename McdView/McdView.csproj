@@ -120,6 +120,9 @@
     <EmbeddedResource Include="CopyF.resx">
       <DependentUpon>CopyF.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LoftF.resx">
+      <DependentUpon>LoftF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="McdviewF.resx">
       <DependentUpon>McdviewF.cs</DependentUpon>
     </EmbeddedResource>
