@@ -76,8 +76,9 @@ namespace ConfigConverter
 						}
 						else
 							MessageBox.Show(
+										this,
 										"Can't find Paths.pth ...",
-										"Error",
+										" Error",
 										MessageBoxButtons.OK,
 										MessageBoxIcon.Error,
 										MessageBoxDefaultButton.Button1,
@@ -85,8 +86,9 @@ namespace ConfigConverter
 					}
 					else
 						MessageBox.Show(
+									this,
 									"Can't find Images.dat ...",
-									"Error",
+									" Error",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Error,
 									MessageBoxDefaultButton.Button1,
@@ -94,8 +96,9 @@ namespace ConfigConverter
 				}
 				else
 					MessageBox.Show(
+								this,
 								"File is not recognized as MapEdit.dat",
-								"Error",
+								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
@@ -119,8 +122,9 @@ namespace ConfigConverter
 			if (!File.Exists(tbInput.Text))
 			{
 				MessageBox.Show(
+							this,
 							"Can't find MapEdit.dat ...",
-							"Error",
+							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
@@ -129,8 +133,9 @@ namespace ConfigConverter
 			else if (!File.Exists(pfeImages))
 			{
 				MessageBox.Show(
+							this,
 							"Can't find Images.dat ...",
-							"Error",
+							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
@@ -139,8 +144,9 @@ namespace ConfigConverter
 			else if (!File.Exists(pfePaths))
 			{
 				MessageBox.Show(
+							this,
 							"Can't find Paths.pth ...",
-							"Error",
+							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,

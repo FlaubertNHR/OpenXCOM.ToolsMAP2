@@ -37,7 +37,7 @@ namespace XCom.Resources.Map.RouteData
 				if (ludi)
 					MessageBox.Show(
 								"There are no Out of Bounds nodes detected.",
-								"Good stuff, Magister Ludi",
+								" Good stuff, Magister Ludi",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Information,
 								MessageBoxDefaultButton.Button1,

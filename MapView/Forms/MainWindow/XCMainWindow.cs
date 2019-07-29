@@ -2661,7 +2661,7 @@ namespace MapView
 				switch (MessageBox.Show(
 									this,
 									"Do you want to save changes to the Map?",
-									"Map Changed",
+									" Map Changed",
 									MessageBoxButtons.YesNoCancel,
 									MessageBoxIcon.Question,
 									MessageBoxDefaultButton.Button1,
@@ -2696,7 +2696,7 @@ namespace MapView
 				switch (MessageBox.Show(
 									this,
 									"Do you want to save changes to the Routes?",
-									"Routes Changed",
+									" Routes Changed",
 									MessageBoxButtons.YesNoCancel,
 									MessageBoxIcon.Question,
 									MessageBoxDefaultButton.Button1,
@@ -2735,7 +2735,7 @@ namespace MapView
 				switch (MessageBox.Show(
 									this,
 									"Do you want to save changes to the Map Tree?",
-									"Maptree Changed",
+									" Maptree Changed",
 									MessageBoxButtons.YesNoCancel,
 									MessageBoxIcon.Question,
 									MessageBoxDefaultButton.Button1,

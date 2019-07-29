@@ -197,7 +197,7 @@ namespace XCom
 										+ " TFTD tilesets and can be regenerated with the Configurator."
 										+ " But if you have any custom tilesets defined it's strongly advised"
 										+ " to close MapView and backup that file.",
-									"Warning",
+									" Warning",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Warning,
 									MessageBoxDefaultButton.Button1,

@@ -610,6 +610,7 @@ namespace PckView
 			}
 
 			MessageBox.Show(
+						this,
 						error,
 						" Error",
 						MessageBoxButtons.OK,
@@ -1130,6 +1131,7 @@ namespace PckView
 												CultureInfo.CurrentCulture,
 												"An I/O error occurred.");
 						MessageBox.Show(
+									this,
 									error,
 									" Error",
 									MessageBoxButtons.OK,
@@ -1201,6 +1203,7 @@ namespace PckView
 														CultureInfo.CurrentCulture,
 														"An I/O error occurred.");
 								MessageBox.Show(
+											this,
 											error,
 											" Error",
 											MessageBoxButtons.OK,
@@ -1631,6 +1634,7 @@ namespace PckView
 					spriteset = null;
 
 					MessageBox.Show(
+								this,
 								"The quantity of sprites in the PCK file does not match"
 									+ " the quantity of sprites expected by the TAB file.",
 								" Error",
@@ -1654,6 +1658,7 @@ namespace PckView
 										CultureInfo.CurrentCulture,
 										"Cannot load Bigobs in a 32x40 spriteset.");
 					MessageBox.Show(
+								this,
 								error,
 								" Error",
 								MessageBoxButtons.OK,
