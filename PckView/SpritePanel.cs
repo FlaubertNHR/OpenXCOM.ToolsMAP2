@@ -127,26 +127,27 @@ namespace PckView
 		{
 			base.OnMouseDown(e);
 
-			if (Sprite != null)
+			if (Sprite != null
+				&& e.X > 0 && e.X < XCImage.SpriteWidth  * _scale
+				&& e.Y > 0 && e.Y < XCImage.SpriteHeight * _scale)
 			{
-				if (   e.X > 0 && e.X < XCImage.SpriteWidth  * _scale
-					&& e.Y > 0 && e.Y < XCImage.SpriteHeight * _scale)
+				int pixelX = e.X / _scale;
+				int pixelY = e.Y / _scale;
+
+				int bindataId = pixelY * (Sprite.Bindata.Length / XCImage.SpriteHeight) + pixelX;
+
+				if (bindataId > -1 && bindataId < Sprite.Bindata.Length) // safety.
 				{
-					int pixelX = e.X / _scale;
-					int pixelY = e.Y / _scale;
-
-					int bindataId = pixelY * (Sprite.Bindata.Length / XCImage.SpriteHeight) + pixelX;
-
-					if (bindataId > -1 && bindataId < Sprite.Bindata.Length) // safety.
+					switch (SpriteEditorF.Mode)
 					{
-						switch (SpriteEditorF.Mode)
+						case SpriteEditorF.EditMode.Enabled: // paint ->
 						{
-							case SpriteEditorF.EditMode.Enabled: // paint ->
+							int palid = _feditor._fpalette._pnlPalette.Palid;
+							if (palid > -1
+								&& (palid < PckImage.MarkerRle
+									|| _feditor._f.TilePanel.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_0))
 							{
-								int palid = _feditor._fpalette._pnlPalette.Palid;
-								if (palid > -1
-									&& (palid < PckImage.MarkerRle
-										|| _feditor._f.TilePanel.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_0))
+								if (palid != (int)Sprite.Bindata[bindataId])
 								{
 									Sprite.Bindata[bindataId] = (byte)palid;
 									Sprite.Sprite = BitmapService.CreateColorized(
@@ -154,38 +155,40 @@ namespace PckView
 																				XCImage.SpriteHeight,
 																				Sprite.Bindata,
 																				PckViewForm.Pal.ColorTable);
-									Refresh();
-									_feditor._f.TilePanel.Refresh();
-								}
-								else
-								{
-									switch (palid)
-									{
-										case PckImage.MarkerRle: // #254
-										case PckImage.MarkerEos: // #255
-											MessageBox.Show(
-														this,
-														"The colortable values #254 and #255 are reserved"
-															+ " as special markers in a .PCK file."
-															+ Environment.NewLine + Environment.NewLine
-															+ "#254 is used for RLE encoding"
-															+ Environment.NewLine
-															+ "#255 is the End-of-Sprite marker",
-														" Error",
-														MessageBoxButtons.OK,
-														MessageBoxIcon.Error,
-														MessageBoxDefaultButton.Button1,
-														0);
-											break;
-									}
-								}
-								break;
-							}
+									Invalidate();
+									_feditor._f.TilePanel.Invalidate();
 
-							case SpriteEditorF.EditMode.Locked: // eye-dropper ->
-								_feditor._fpalette._pnlPalette.SelectPaletteId((int)Sprite.Bindata[bindataId]);
-								break;
+									_feditor._f.Changed = true;
+								}
+							}
+							else
+							{
+								switch (palid)
+								{
+									case PckImage.MarkerRle: // #254
+									case PckImage.MarkerEos: // #255
+										MessageBox.Show(
+													this,
+													"The colortable values #254 and #255 are reserved"
+														+ " as special markers in a .PCK file."
+														+ Environment.NewLine + Environment.NewLine
+														+ "#254 is used for RLE encoding"
+														+ Environment.NewLine
+														+ "#255 is the End-of-Sprite marker",
+													" Error",
+													MessageBoxButtons.OK,
+													MessageBoxIcon.Error,
+													MessageBoxDefaultButton.Button1,
+													0);
+										break;
+								}
+							}
+							break;
 						}
+
+						case SpriteEditorF.EditMode.Locked: // eye-dropper ->
+							_feditor._fpalette._pnlPalette.SelectPaletteId((int)Sprite.Bindata[bindataId]);
+							break;
 					}
 				}
 			}
