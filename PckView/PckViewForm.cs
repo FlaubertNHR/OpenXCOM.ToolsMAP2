@@ -1426,9 +1426,7 @@ namespace PckView
 				_paletteItems[Pal].Checked = true;
 
 				TilePanel.Spriteset.Pal = Pal;
-
-				if (PaletteChanged != null)
-					PaletteChanged();
+				PaletteChanged();
 			}
 		}
 
@@ -1444,11 +1442,9 @@ namespace PckView
 			Pal.SetTransparent(miTransparent.Checked = !miTransparent.Checked);
 
 			TilePanel.Spriteset.Pal = Pal;
-
-			PalettePanel.that.PrintStatusPaletteId();	// update the palette-panel's statusbar
-														// in case palette-id #0 is currently selected.
-			if (PaletteChanged != null)
-				PaletteChanged();
+			SpriteEditor._fpalette._pnlPalette.UpdatePalette();	// update the palette-panel's statusbar
+																// in case palette-id #0 is currently selected.
+			PaletteChanged();
 		}
 
 		/// <summary>

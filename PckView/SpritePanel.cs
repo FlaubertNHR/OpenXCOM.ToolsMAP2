@@ -143,7 +143,7 @@ namespace PckView
 						{
 							case SpriteEditorF.EditMode.Enabled: // paint ->
 							{
-								int palid = PalettePanel.that.Palid;
+								int palid = _feditor._fpalette._pnlPalette.Palid;
 								if (palid > -1
 									&& (palid < PckImage.MarkerRle
 										|| _feditor._f.TilePanel.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_0))
@@ -183,7 +183,7 @@ namespace PckView
 							}
 
 							case SpriteEditorF.EditMode.Locked: // eye-dropper ->
-								PalettePanel.that.SelectPaletteId((int)Sprite.Bindata[bindataId]);
+								_feditor._fpalette._pnlPalette.SelectPaletteId((int)Sprite.Bindata[bindataId]);
 								break;
 						}
 					}
@@ -317,36 +317,39 @@ namespace PckView
 		/// <returns>string of color-info</returns>
 		internal string GetColorInfo(int palid)
 		{
-			string text = String.Format(
-									System.Globalization.CultureInfo.CurrentCulture,
-									"id:{0} (0x{0:X2})",
-									palid);
-
-			var color = PckViewForm.Pal[palid];
-			text += String.Format(
-								System.Globalization.CultureInfo.CurrentCulture,
-								" r:{0} g:{1} b:{2} a:{3}",
-								color.R,
-								color.G,
-								color.B,
-								color.A);
-
-			switch (palid)
+			if (palid != -1)
 			{
-				case Palette.TranId: // #0
-					text += " [transparent]";
-					break;
+				string text = String.Format(
+										System.Globalization.CultureInfo.CurrentCulture,
+										"id:{0} (0x{0:X2})",
+										palid);
 
-				case PckImage.MarkerRle: // #254
-				case PckImage.MarkerEos: // #255
-					if (_feditor._f.TilePanel.Spriteset.TabwordLength != ResourceInfo.TAB_WORD_LENGTH_0)
-					{
-						text += " [invalid]";
-					}
-					break;
+				var color = PckViewForm.Pal[palid];
+				text += String.Format(
+									System.Globalization.CultureInfo.CurrentCulture,
+									" r:{0} g:{1} b:{2} a:{3}",
+									color.R,
+									color.G,
+									color.B,
+									color.A);
+
+				switch (palid)
+				{
+					case Palette.TranId: // #0
+						text += " [transparent]";
+						break;
+
+					case PckImage.MarkerRle: // #254
+					case PckImage.MarkerEos: // #255
+						if (_feditor._f.TilePanel.Spriteset.TabwordLength != ResourceInfo.TAB_WORD_LENGTH_0)
+						{
+							text += " [invalid]";
+						}
+						break;
+				}
+				return text;
 			}
-
-			return text;
+			return String.Empty;
 		}
 
 		internal void InvertGridColor(bool invert)

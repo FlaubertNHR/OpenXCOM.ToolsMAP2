@@ -120,7 +120,7 @@ namespace PckView
 			idOver =
 			idSel = -1;
 
-			PckViewForm.PaletteChanged += OnPaletteChanged; // NOTE: lives the life of the app, so no leak.
+			PckViewForm.PaletteChanged += OnPaletteChanged;
 		}
 		#endregion cTor
 

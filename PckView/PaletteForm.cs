@@ -17,7 +17,7 @@ namespace PckView
 	{
 		#region Fields
 		private readonly SpriteEditorF _feditor;
-		private readonly PalettePanel _pnlPalette = new PalettePanel();
+		internal readonly PalettePanel _pnlPalette;
 		#endregion Fields
 
 
@@ -31,9 +31,7 @@ namespace PckView
 			InitializeComponent();
 
 			_feditor = f;
-
-			_pnlPalette.Dock = DockStyle.Fill;
-			_pnlPalette.PaletteIdChangedEvent += OnPaletteIdChanged;
+			_pnlPalette = new PalettePanel(this);
 
 			Controls.Add(_pnlPalette);
 
@@ -41,8 +39,8 @@ namespace PckView
 
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
 			{											// let ClientSize deter width and height.
-				Left = f.Left + 20;
-				Top  = f.Top  + 20;
+				Left = _feditor.Left + 20;
+				Top  = _feditor.Top  + 20;
 			}
 
 			ClientSize = new Size(
@@ -87,12 +85,13 @@ namespace PckView
 		#endregion Events (override)
 
 
-		#region Events
-		private void OnPaletteIdChanged(int palId)
+		#region Methods
+		internal void PrintPaletteId(int palid)
 		{
-			lblStatus.Text = _feditor.SpritePanel.GetColorInfo(palId);
+			lblStatus.Text = _feditor.SpritePanel.GetColorInfo(palid);
 		}
-		#endregion Events
+		#endregion Methods
+
 
 
 		#region Designer
@@ -145,7 +144,6 @@ namespace PckView
 			this.MinimizeBox = false;
 			this.Name = "PaletteForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "Palette";
 			this.ResumeLayout(false);
 
 		}

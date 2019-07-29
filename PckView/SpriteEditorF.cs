@@ -25,7 +25,7 @@ namespace PckView
 
 		#region Fields
 		internal readonly PckViewForm _f;
-		private readonly PaletteForm _fpalette;
+		internal readonly PaletteForm _fpalette;
 
 		private readonly TrackBar _trackBar = new TrackBar();
 		private readonly Label _lblEditMode = new Label();
@@ -92,8 +92,8 @@ namespace PckView
 
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
 			{											// let OnLoad() deter width and height.
-				Left = f.Left + 20;
-				Top  = f.Top  + 20;
+				Left = _f.Left + 20;
+				Top  = _f.Top  + 20;
 			}
 		}
 		#endregion cTor
