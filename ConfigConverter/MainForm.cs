@@ -26,7 +26,7 @@ namespace ConfigConverter
 		static StringComparer ignorecase = StringComparer.OrdinalIgnoreCase;
 		Dictionary<string,string> Vars     = new Dictionary<string,string>(ignorecase);
 		Dictionary<string,string> Terrains = new Dictionary<string,string>(ignorecase);
-		#endregion
+		#endregion Fields
 
 
 		#region cTor
@@ -37,10 +37,10 @@ namespace ConfigConverter
 		{
 			InitializeComponent();
 		}
-		#endregion
+		#endregion cTor
 
 
-		#region EventCalls
+		#region Events
 		/// <summary>
 		/// Closes the converter when the Cancel button is clicked.
 		/// </summary>
@@ -572,7 +572,7 @@ namespace ConfigConverter
 				}
 			}
 		}
-		#endregion
+		#endregion Events
 
 
 		#region Methods
@@ -729,7 +729,10 @@ namespace ConfigConverter
 
 			return pad;
 		}
+		#endregion Methods
 
+
+		#region Structs
 		/// <summary>
 		/// The Tileset struct is the basic stuff of a tileset.
 		/// </summary>
@@ -764,6 +767,6 @@ namespace ConfigConverter
 				BasePath = basepath;
 			}
 		}
-		#endregion
+		#endregion Structs
 	}
 }

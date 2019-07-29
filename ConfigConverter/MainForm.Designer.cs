@@ -2,10 +2,12 @@
 {
 	partial class MainForm
 	{
+		#region Designer
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
+
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.Button btnConvert;
 		private System.Windows.Forms.TextBox tbInput;
@@ -14,6 +16,7 @@
 		private System.Windows.Forms.Label lblResult;
 		private System.Windows.Forms.Label lblInfo;
 		
+
 		/// <summary>
 		/// Disposes resources used by the form.
 		/// </summary>
@@ -25,7 +28,8 @@
 
 			base.Dispose(disposing);
 		}
-		
+
+
 		/// <summary>
 		/// This method is required for Windows Forms designer support.
 		/// Do not change the method contents inside the source code editor.
@@ -137,5 +141,6 @@
 			this.PerformLayout();
 
 		}
+		#endregion Designer
 	}
 }
