@@ -292,7 +292,7 @@
 			this.MinimumSize = new System.Drawing.Size(560, 300);
 			this.Name = "ConfigurationForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = " Configuration options";
+			this.Text = "Configuration options";
 			this.pUfo.ResumeLayout(false);
 			this.pUfo.PerformLayout();
 			this.pTftd.ResumeLayout(false);

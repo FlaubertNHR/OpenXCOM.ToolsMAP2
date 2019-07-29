@@ -29,7 +29,7 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			string text = " About";
+			string text = "About";
 			string before = String.Format(
 										System.Globalization.CultureInfo.CurrentCulture,
 										"{0:n0}", GC.GetTotalMemory(false));

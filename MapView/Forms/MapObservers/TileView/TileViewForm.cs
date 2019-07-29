@@ -179,7 +179,7 @@ namespace MapView.Forms.MapObservers.TileViews
 			this.Name = "TileViewForm";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = " TileView";
+			this.Text = "TileView";
 			this.ResumeLayout(false);
 
 		}

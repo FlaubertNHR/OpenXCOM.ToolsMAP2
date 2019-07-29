@@ -40,7 +40,7 @@
 			this.Name = "RouteViewForm";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = " RouteView";
+			this.Text = "RouteView";
 			this.ResumeLayout(false);
 
 		}

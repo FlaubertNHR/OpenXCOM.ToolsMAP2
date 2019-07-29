@@ -831,7 +831,7 @@ namespace MapView
 			this.Name = "ColorHelp";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = " Colors";
+			this.Text = "Colors";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.tabMain.ResumeLayout(false);
 			this.tpTileView.ResumeLayout(false);

@@ -45,8 +45,8 @@ namespace MapView
 
 
 		#region Fields (static)
-		private const string AddTileset  = " Add Tileset";
-		private const string EditTileset = " Edit Tileset";
+		private const string AddTileset  = "Add Tileset";
+		private const string EditTileset = "Edit Tileset";
 		#endregion Fields (static)
 
 

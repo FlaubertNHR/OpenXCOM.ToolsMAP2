@@ -40,7 +40,7 @@ namespace MapView
 
 
 		#region Fields (static)
-		private const string title = " Map Editor ||";
+		private const string TITLE = "Map Editor ||";
 
 		private const double ScaleDelta = 0.125;
 		#endregion Fields (static)
@@ -625,7 +625,7 @@ namespace MapView
 											Optionables,
 											Options,
 											OptionsForm.OptionableType.MainView);
-					_foptions.Text = " MainView Options";
+					_foptions.Text = "MainView Options";
 
 					OptionsManager.Views.Add(_foptions);
 
@@ -2533,7 +2533,7 @@ namespace MapView
 					ObserverManager.ToolFactory.EnableScaleAutoButton();
 					ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 
-					Text = title + " " + descriptor.Basepath;
+					Text = TITLE + " " + descriptor.Basepath;
 					if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
 
 					tsslMapLabel     .Text = descriptor.Label;

@@ -543,7 +543,7 @@
 			this.Name = "RoutesInfo";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = " Spawn Info";
+			this.Text = "Spawn Info";
 			this.gb_Info.ResumeLayout(false);
 			this.gb_Tileset.ResumeLayout(false);
 			this.ResumeLayout(false);

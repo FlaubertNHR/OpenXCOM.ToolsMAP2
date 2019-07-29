@@ -104,7 +104,7 @@ namespace XCom
 					if (spriteset.Borked)
 					{
 						using (var f = new Infobox(
-												" Spriteset borked",
+												"Spriteset borked",
 												"The quantity of sprites in the PCK file does not match"
 													+ " the quantity of sprites expected by the TAB file.",
 												pfePck + Environment.NewLine + pfeTab))
@@ -130,7 +130,7 @@ namespace XCom
 					info = String.Empty;
 
 				using (var f = new Infobox(
-										" Spriteset not found",
+										"Spriteset not found",
 										"Can't find files for the spriteset." + info,
 										pfePck + Environment.NewLine + pfeTab))
 				{

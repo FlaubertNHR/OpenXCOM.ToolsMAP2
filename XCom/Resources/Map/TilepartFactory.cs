@@ -32,7 +32,7 @@ namespace XCom.Resources.Map
 				if (!File.Exists(pfeMcd))
 				{
 					using (var f = new Infobox(
-											" File not found",
+											"File not found",
 											"Can't find file with MCD records.",
 											pfeMcd))
 					{
@@ -98,7 +98,7 @@ namespace XCom.Resources.Map
 										record.DieTile,
 										parts.Length);
 				using (var f = new Infobox(
-										" Invalid death part",
+										"Invalid death part",
 										warn,
 										null))
 				{
@@ -135,7 +135,7 @@ namespace XCom.Resources.Map
 										record.Alt_MCD,
 										parts.Length);
 				using (var f = new Infobox(
-										" Invalid alternate part",
+										"Invalid alternate part",
 										warn,
 										null))
 				{
@@ -173,7 +173,7 @@ namespace XCom.Resources.Map
 			if (!suppressError)
 			{
 				using (var f = new Infobox(
-										" File not found",
+										"File not found",
 										"Can't find file with MCD records.",
 										pfeMcd))
 				{

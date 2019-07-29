@@ -275,7 +275,7 @@ namespace MapView.Forms.MapObservers.TopViews
 											Optionables,
 											Options,
 											OptionsForm.OptionableType.TopView);
-					_foptions.Text = " TopView Options";
+					_foptions.Text = "TopView Options";
 
 					OptionsManager.Views.Add(_foptions);
 

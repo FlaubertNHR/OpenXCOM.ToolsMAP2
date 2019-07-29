@@ -133,6 +133,7 @@ namespace MapView
 
 		internal CompositedPropertyGrid propertyGrid;
 
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>

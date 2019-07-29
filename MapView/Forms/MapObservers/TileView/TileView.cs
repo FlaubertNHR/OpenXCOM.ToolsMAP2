@@ -313,7 +313,7 @@ namespace MapView.Forms.MapObservers.TileViews
 											Optionables,
 											Options,
 											OptionsForm.OptionableType.TileView);
-					_foptions.Text = " TileView Options";
+					_foptions.Text = "TileView Options";
 
 					OptionsManager.Views.Add(_foptions);
 
@@ -462,12 +462,12 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				if (!File.Exists(pfePck))
 				{
-					using (var f = new Infobox(" File not found", "File does not exist.", pfePck))
+					using (var f = new Infobox("File not found", "File does not exist.", pfePck))
 						f.ShowDialog(this);
 				}
 				else if (!File.Exists(pfeTab))
 				{
-					using (var f = new Infobox(" File not found", "File does not exist.", pfeTab))
+					using (var f = new Infobox("File not found", "File does not exist.", pfeTab))
 						f.ShowDialog(this);
 				}
 				else
@@ -517,7 +517,7 @@ namespace MapView.Forms.MapObservers.TileViews
 
 				if (!File.Exists(pfeMcd))
 				{
-					using (var f = new Infobox(" File not found", "File does not exist.", pfeMcd))
+					using (var f = new Infobox("File not found", "File does not exist.", pfeMcd))
 						f.ShowDialog(this);
 				}
 				else

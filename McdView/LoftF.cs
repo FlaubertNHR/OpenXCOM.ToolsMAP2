@@ -241,11 +241,13 @@ namespace McdView
 		#endregion Events (override)
 
 
+
 		#region Designer
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
+
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -281,7 +283,6 @@ namespace McdView
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "loftset";
 			this.ResumeLayout(false);
 
 		}

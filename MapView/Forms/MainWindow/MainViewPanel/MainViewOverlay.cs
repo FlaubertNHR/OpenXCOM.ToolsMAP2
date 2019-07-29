@@ -423,7 +423,7 @@ namespace MapView
 					}
 
 					using (var f = new Infobox(
-											" Allocated terrains differ",
+											"Allocated terrains differ",
 											"The list of terrains that were copied are too different"
 												+ " from the terrains in the currently loaded Map.",
 											info))

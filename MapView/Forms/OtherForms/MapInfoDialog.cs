@@ -41,7 +41,7 @@ namespace MapView
 			_f = f;
 			_file = file;
 
-			Text = " MapInfo - " + _file.Descriptor.Label;
+			Text = "MapInfo - " + _file.Descriptor.Label;
 
 			if (_x == -1) _x = _f.Left + _f.Width  / 2 - Width  / 2;
 			if (_y == -1) _y = _f.Top  + _f.Height / 2 - Height / 2 - 10;
@@ -87,7 +87,7 @@ namespace MapView
 			{
 				_fdetail = new MapInfoDetailDialog(this);
 
-				_fdetail.SetTitleText(" Detail - " + _file.Descriptor.Label);
+				_fdetail.SetTitleText("Detail - " + _file.Descriptor.Label);
 				_fdetail.SetHeaderText("MCD Record usage");
 				_fdetail.SetCopyableText(GetTerrainDetail());
 
@@ -278,6 +278,27 @@ namespace MapView
 
 
 		#region Designer
+		private Container components = null;
+
+		private GroupBox gbInfo;
+		private Label lbl1_Dimensions;
+		private Label lbl2_Dimensions;
+		private Label lbl1_Terrains;
+		private Label lbl2_Terrains;
+		private Label lbl1_PckSprites;
+		private Label lbl2_PckSprites;
+		private Label lbl1_McdRecords;
+		private Label lbl2_McdRecords;
+		private Label lbl1_QuadsUsed;
+		private Label lbl2_QuadsFilled;
+		private Label lbl1_TilesVacant;
+		private Label lbl2_TilesVacant;
+		private GroupBox gbAnalyze;
+		private ProgressBar pBar;
+		private Button btnCancel;
+		private Button btnDetail;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -506,32 +527,12 @@ namespace MapView
 			this.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = " MapInfo";
+			this.Text = "MapInfo";
 			this.gbAnalyze.ResumeLayout(false);
 			this.gbInfo.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
-
-		private Container components = null;
-
-		private GroupBox gbInfo;
-		private Label lbl1_Dimensions;
-		private Label lbl2_Dimensions;
-		private Label lbl1_Terrains;
-		private Label lbl2_Terrains;
-		private Label lbl1_PckSprites;
-		private Label lbl2_PckSprites;
-		private Label lbl1_McdRecords;
-		private Label lbl2_McdRecords;
-		private Label lbl1_QuadsUsed;
-		private Label lbl2_QuadsFilled;
-		private Label lbl1_TilesVacant;
-		private Label lbl2_TilesVacant;
-		private GroupBox gbAnalyze;
-		private ProgressBar pBar;
-		private Button btnCancel;
-		private Button btnDetail;
 		#endregion Designer
 	}
 }

@@ -13,7 +13,7 @@ namespace MapView
 			Form
 	{
 		#region Fields (static)
-		private const string TITLE = " MCD Info";
+		private const string TITLE = "MCD Info";
 		#endregion Fields (static)
 
 

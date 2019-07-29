@@ -25,10 +25,10 @@ namespace MapView
 
 
 		#region Fields (static)
-		private const string NewGroup    = " Add Group";
-		private const string NewCategory = " Add Category";
-		private const string RenGroup    = " Relabel Group";
-		private const string RenCategory = " Relabel Category";
+		private const string NewGroup    = "Add Group";
+		private const string NewCategory = "Add Category";
+		private const string RenGroup    = "Relabel Group";
+		private const string RenCategory = "Relabel Category";
 		#endregion Fields (static)
 
 

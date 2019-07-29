@@ -142,7 +142,7 @@ namespace MapView.Forms.MainWindow
 				Form f,
 				Shortcut shortcut)
 		{
-			var it = new MenuItem(f.Text.Trim(), OnMenuItemClick, shortcut);
+			var it = new MenuItem(f.Text, OnMenuItemClick, shortcut);
 			it.Tag = f;
 
 			Viewers.MenuItems.Add(it);

@@ -359,7 +359,7 @@ namespace MapView
 		#region Methods
 		private string GetTitle()
 		{
-			return " ScanG - "
+			return "ScanG - "
 				 + "L" + (_base.MapSize.Levs - Level)
 				 + (SingleLevel ? " - 1 layer" : String.Empty);
 		}
@@ -433,7 +433,7 @@ namespace MapView
 			this.Name = "ScanGViewer";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = " ScanG";
+			this.Text = "ScanG";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ResumeLayout(false);

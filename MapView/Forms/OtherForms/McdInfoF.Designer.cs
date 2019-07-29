@@ -65,7 +65,7 @@
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "McdInfoF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = " MCD Info";
+			this.Text = "MCD Info";
 			((System.ComponentModel.ISupportInitialize)(this.bsInfo)).EndInit();
 			this.ResumeLayout(false);
 

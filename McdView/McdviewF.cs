@@ -1388,7 +1388,7 @@ namespace McdView
 				}
 
 				using (var f = new Infobox(
-										" Strict test",
+										"Strict test",
 										"The following items exhibit anomalies.",
 										copyable))
 				{
@@ -1403,7 +1403,7 @@ namespace McdView
 				{
 					suppress = true;
 					using (var f = new Infobox(
-											" Strict test",
+											"Strict test",
 											"Sprite offset is invalid.",
 											result))
 					{
@@ -1574,7 +1574,7 @@ namespace McdView
 			ver += " - release";
 #endif
 			using (var f = new Infobox(
-									" Version info",
+									"Version info",
 									null,
 									ver))
 			{

@@ -2200,7 +2200,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 											Optionables,
 											Options,
 											OptionsForm.OptionableType.RouteView);
-					_foptions.Text = " RouteView Options";
+					_foptions.Text = "RouteView Options";
 
 					OptionsManager.Views.Add(_foptions);
 

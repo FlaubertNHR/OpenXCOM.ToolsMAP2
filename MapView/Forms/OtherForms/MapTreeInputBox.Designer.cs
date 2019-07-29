@@ -8,6 +8,16 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
+		private System.Windows.Forms.Button btnOk;
+		private System.Windows.Forms.Button btnCancel;
+		private System.Windows.Forms.Label lblInfoTop;
+		private System.Windows.Forms.TextBox tbInput;
+		private System.Windows.Forms.Panel pnlBottom;
+		private System.Windows.Forms.Panel pnlTop;
+		private System.Windows.Forms.Label lblInfoBottom;
+		private System.Windows.Forms.Label lblParent;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -19,6 +29,7 @@
 
 			base.Dispose(disposing);
 		}
+
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -140,15 +151,6 @@
 			this.ResumeLayout(false);
 
 		}
-
-		private System.Windows.Forms.Button btnOk;
-		private System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Label lblInfoTop;
-		private System.Windows.Forms.TextBox tbInput;
-		private System.Windows.Forms.Panel pnlBottom;
-		private System.Windows.Forms.Panel pnlTop;
-		private System.Windows.Forms.Label lblInfoBottom;
-		private System.Windows.Forms.Label lblParent;
-		#endregion
+		#endregion Designer
 	}
 }

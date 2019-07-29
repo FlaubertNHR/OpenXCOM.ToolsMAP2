@@ -322,7 +322,7 @@ namespace MapView
 			this.Name = "MapInfoDetailDialog";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = " MapDetail";
+			this.Text = "MapDetail";
 			this.pnl_Head.ResumeLayout(false);
 			this.pnl_Copyable.ResumeLayout(false);
 			this.ResumeLayout(false);
