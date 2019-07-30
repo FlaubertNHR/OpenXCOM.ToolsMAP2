@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 
 
-namespace XCom.Resources.Map
+namespace XCom
 {
 	public static class TilepartFactory
 	{

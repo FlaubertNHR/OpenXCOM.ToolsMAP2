@@ -10,7 +10,6 @@ using DSShared;
 using DSShared.Controls;
 
 using XCom;
-using XCom.Resources.Map;
 
 using YamlDotNet.RepresentationModel; // read values (deserialization)
 

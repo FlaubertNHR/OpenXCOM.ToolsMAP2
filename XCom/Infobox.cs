@@ -146,10 +146,12 @@ namespace XCom
 
 		#region Designer
 		private Container components = null;
+
 		private Button btn_Okay;
 		private Label lbl_Info;
 		private RichTextBox rtb_Info;
 		private Panel pnl_Info;
+
 
 		/// <summary>
 		/// Cleans up any resources being used.
@@ -161,6 +163,7 @@ namespace XCom
 
 			base.Dispose(disposing);
 		}
+
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of

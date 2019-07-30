@@ -1,7 +1,6 @@
 ﻿using System;
 
 using XCom;
-using XCom.Resources.Map;
 
 
 namespace McdView

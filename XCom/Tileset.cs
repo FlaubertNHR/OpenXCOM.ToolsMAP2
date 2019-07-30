@@ -15,7 +15,7 @@ namespace XCom
 	/// </summary>
 	internal sealed class Tileset
 	{
-		#region Fields
+		#region Properties
 		internal string Label
 		{ get; private set; }
 
@@ -30,7 +30,7 @@ namespace XCom
 
 		internal string BasePath
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -55,6 +55,6 @@ namespace XCom
 			Terrains = terrains;
 			BasePath = basepath;
 		}
-		#endregion
+		#endregion cTor
 	}
 }

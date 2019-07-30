@@ -42,7 +42,7 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes/ loads info about XCOM resources.
+		/// Initializes/loads info about XCOM resources.
 		/// </summary>
 		/// <param name="pathConfig"></param>
 		public static void InitializeResources(PathInfo pathConfig)

@@ -41,7 +41,7 @@ namespace XCom
 
 		public static List<Brush> BrushesUfoBattle  = new List<Brush>(); // used by Mono only
 		public static List<Brush> BrushesTftdBattle = new List<Brush>(); // used by Mono only
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties (static)
@@ -150,7 +150,7 @@ namespace XCom
 				return _palettes[tftdresearch] as Palette;
 			}
 		}
-		#endregion
+		#endregion Properties (static)
 
 
 		#region Properties
@@ -206,7 +206,7 @@ namespace XCom
 //		/// </summary>
 //		public Color Transparent
 //		{ get { return ColorTable.Entries[TranId]; } }
-		#endregion
+		#endregion Properties
 
 
 		#region cTors
@@ -250,7 +250,7 @@ namespace XCom
 
 			Label = label;
 		}
-		#endregion
+		#endregion cTors
 
 
 		#region Methods
@@ -264,7 +264,7 @@ namespace XCom
 													tran ? 0 : 255,
 													ColorTable.Entries[TranId]);
 		}
-		#endregion
+		#endregion Methods
 
 
 		#region Methods (static)
@@ -285,7 +285,7 @@ namespace XCom
 				BrushesTftdBattle.Add(new SolidBrush(color));
 			}
 		}
-		#endregion
+		#endregion Methods (static)
 
 
 		#region Methods (override)
@@ -301,76 +301,14 @@ namespace XCom
 		/// <returns>true if the palette names are the same</returns>
 		public override bool Equals(Object obj)
 		{
-			var pal2 = obj as Palette;
-			return (pal2 != null && ColorTable.Equals(pal2.ColorTable));
+			var pal = obj as Palette;
+			return (pal != null && ColorTable.Equals(pal.ColorTable));
 		}
 
 		public override int GetHashCode()
 		{
 			return ColorTable.GetHashCode(); // FIX: "Non-readonly field referenced in GetHashCode()."
 		}
-		#endregion
+		#endregion Methods (override)
 	}
 }
-
-//		internal static Palette GetPalette(string label)
-//		{
-//			if (_palHash[label] == null)
-//			{
-//				var ass = Assembly.GetExecutingAssembly();
-//				try
-//				{
-//					_palHash[label] = new Palette(ass.GetManifestResourceStream(EmbedPath + label + ".pal"));
-//				}
-//				catch
-//				{
-//					_palHash[label] = null;
-//					throw;
-//				}
-//			}
-//			return (Palette)_palHash[label];
-//		}
-
-//		private void checkPalette()
-//		{
-//			Bitmap b = new Bitmap(1, 1, PixelFormat.Format8bppIndexed);
-//			ColorPalette colors = b.Palette;
-//			b.Dispose();
-//
-//			ArrayList cpList = new ArrayList(_colorPalette.Entries);
-//			ArrayList colorList = new ArrayList();
-//
-//			for(int i = 0; i != cpList.Count; ++i)
-//			{
-//				if (!colorList.Contains(cpList[i]))
-//				{
-//					colorList.Add(cpList[i]);
-//					colors.Entries[i] = (Color)cpList[i];
-//				}
-//				else
-//				{
-//					Color c = (Color)cpList[i];
-//					int rc = c.R;
-//					int gc = c.G;
-//					int bc = c.B;
-//
-//					if (rc == 0)
-//						++rc;
-//					else
-//						--rc;
-//
-//					if (gc == 0)
-//						++gc;
-//					else
-//						--gc;
-//
-//					if (bc == 0)
-//						++bc;
-//					else
-//						--bc;
-//
-//					colorList.Add(Color.FromArgb(rc, gc, bc));
-//					colors.Entries[i] = Color.FromArgb(rc, gc, bc);
-//				}
-//			}
-//		}

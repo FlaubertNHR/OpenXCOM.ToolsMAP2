@@ -1,13 +1,7 @@
-using System;
-
-using XCom.Interfaces.Base;
-
-
 namespace XCom
 {
 	/// <summary>
-	/// EventArgs with a MapLocation and MapTile object for when a
-	/// SelectLocation event fires.
+	/// EventArgs for when a SelectLocation event fires.
 	/// </summary>
 	public sealed class SelectLocationEventArgs
 	{
@@ -28,6 +22,7 @@ namespace XCom
 			Tile     = tile;
 		}
 	}
+
 
 
 	/// <summary>

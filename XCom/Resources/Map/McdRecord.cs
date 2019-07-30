@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-using XCom.Resources.Map;
+using XCom;
 
 
 namespace XCom

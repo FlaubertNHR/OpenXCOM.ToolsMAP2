@@ -8,7 +8,7 @@ namespace XCom
 		:
 			Form
 	{
-		#region Fields & Properties
+		#region Properties (static)
 		private static ProgressBarForm _that;
 		internal static ProgressBarForm that
 		{
@@ -20,7 +20,7 @@ namespace XCom
 				return _that;
 			}
 		}
-		#endregion
+		#endregion Properties (static)
 
 
 		#region cTor
@@ -32,7 +32,7 @@ namespace XCom
 			InitializeComponent();
 			Show();
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -56,15 +56,19 @@ namespace XCom
 		{
 			pbProgress.Value = 0;
 		}
-		#endregion
+		#endregion Methods
 
 
-		#region Windows Form Designer generated code
 
+		#region Designer
 		private System.ComponentModel.Container components = null;
 
+		private ProgressBar pbProgress;
+		private Label lblInfo;
+
+
 		/// <summary>
-		/// Clean up any resources being used.
+		/// Cleans up any resources being used.
 		/// </summary>
 		protected override void Dispose(bool disposing)
 		{
@@ -73,10 +77,11 @@ namespace XCom
 
 			base.Dispose(disposing);
 		}
-		
+
+
 		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
+		/// Required method for Designer support - do not modify the contents of
+		/// this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -124,8 +129,5 @@ namespace XCom
 
 		}
 		#endregion
-
-		private ProgressBar pbProgress;
-		private Label lblInfo;
 	}
 }

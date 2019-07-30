@@ -4,7 +4,7 @@ using System.IO;
 
 using DSShared;
 
-using XCom.Resources.Map;
+using XCom;
 
 
 namespace XCom

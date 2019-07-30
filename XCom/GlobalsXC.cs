@@ -30,6 +30,6 @@
 
 
 		public static string[] CRandorLF = { "\r\n", "\r", "\n" };
-		#endregion
+		#endregion Fields (static)
 	}
 }

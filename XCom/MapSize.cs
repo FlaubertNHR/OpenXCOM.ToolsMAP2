@@ -23,7 +23,7 @@ namespace XCom
 		{
 			get { return _levs; }
 		}
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -33,7 +33,7 @@ namespace XCom
 			_cols = cols;
 			_levs = levs;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -43,7 +43,7 @@ namespace XCom
 				 && other._cols == _cols
 				 && other._levs == _levs);
 		}
-		#endregion
+		#endregion Methods
 
 
 		#region Methods (override)
@@ -59,7 +59,7 @@ namespace XCom
 							"{0}, {1}, {2}",
 							_cols, _rows, _levs);
 		}
-		#endregion
+		#endregion Methods (override)
 
 
 		#region Satisfy FxCop CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes
@@ -98,6 +98,6 @@ namespace XCom
 		{
 			return !size1.Equals(size2);
 		}
-		#endregion
+		#endregion Satisfy FxCop CA1815
 	}
 }
