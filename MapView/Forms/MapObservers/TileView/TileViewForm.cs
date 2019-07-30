@@ -2,7 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
+using MapView.Forms.MapObservers;
 
 
 namespace MapView.Forms.MapObservers.TileViews

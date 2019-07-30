@@ -138,9 +138,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\MainWindow\MainViewOptionables.cs" />
-    <Compile Include="Forms\MainWindow\OptionsManager.cs" />
-    <Compile Include="Forms\MainWindow\MenuManager.cs" />
+    <Compile Include="Forms\MainView\MainViewOptionables.cs" />
+    <Compile Include="Forms\MainView\MenuManager.cs" />
+    <Compile Include="Forms\MainView\ObserverManager.cs" />
+    <Compile Include="Forms\MainView\OptionsManager.cs" />
+    <Compile Include="Forms\MainView\ShowHideManager.cs" />
+    <Compile Include="Forms\MainView\ToolstripFactory.cs" />
+    <Compile Include="Forms\MainView\XCMainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainView\XCMainWindow.Designer.cs">
+      <DependentUpon>XCMainWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MapObservers\ColorTool.cs" />
     <Compile Include="Forms\MapObservers\DrawBlobService.cs" />
     <Compile Include="Forms\MapObservers\IMapObserver.cs" />
@@ -179,9 +188,6 @@
     </Compile>
     <Compile Include="Forms\Error\ErrorWindowAdapter.cs" />
     <Compile Include="Forms\Error\IErrorHandler.cs" />
-    <Compile Include="Forms\MainWindow\ToolstripFactory.cs" />
-    <Compile Include="Forms\MainWindow\ObserverManager.cs" />
-    <Compile Include="Forms\MainWindow\ShowHideManager.cs" />
     <Compile Include="Forms\MapObservers\MapObserverControl_Top.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -247,7 +253,7 @@
     <Compile Include="Forms\OtherForms\MapInfoDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainWindow\MainViewPanel\MainViewUnderlay.cs">
+    <Compile Include="Forms\MainView\MainViewPanel\MainViewUnderlay.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -285,14 +291,8 @@
     <Compile Include="Forms\MapObservers\TopView\TopView.Designer.cs">
       <DependentUpon>TopView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainWindow\MainViewPanel\MainViewOverlay.cs">
+    <Compile Include="Forms\MainView\MainViewPanel\MainViewOverlay.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MainWindow\XCMainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MainWindow\XCMainWindow.Designer.cs">
-      <DependentUpon>XCMainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Varidia.cs" />
     <Compile Include="Volutar\FindVolutarF.cs" />
@@ -302,6 +302,10 @@
     <Compile Include="Volutar\VolutarService.cs" />
     <EmbeddedResource Include="Forms\Error\ErrorWindow.resx">
       <DependentUpon>ErrorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainView\XCMainWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>XCMainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MapObservers\RouteView\RouteViewForm.resx">
       <DependentUpon>RouteViewForm.cs</DependentUpon>
@@ -373,10 +377,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="_Embedded\Extra.PCK" />
     <EmbeddedResource Include="_Embedded\Extra.TAB" />
-    <EmbeddedResource Include="Forms\MainWindow\XCMainWindow.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>XCMainWindow.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -415,7 +415,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Forms\MainView" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <StartAction>Project</StartAction>

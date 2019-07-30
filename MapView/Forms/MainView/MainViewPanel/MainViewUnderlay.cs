@@ -8,7 +8,7 @@ using DSShared.Controls;
 using XCom.Interfaces.Base;
 
 
-namespace MapView
+namespace MapView.Forms.MainView
 {
 	internal sealed class MainViewUnderlay
 		:

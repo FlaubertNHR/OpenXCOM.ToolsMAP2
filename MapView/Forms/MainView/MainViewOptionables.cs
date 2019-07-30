@@ -7,13 +7,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TileViews;
 using MapView.Forms.MapObservers.TopViews;
 
 
-namespace MapView
+namespace MapView.Forms.MainView
 {
 	/// <summary>
 	/// Properties for MainView that appear in MainView's Options.

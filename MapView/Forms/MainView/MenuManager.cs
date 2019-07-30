@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using DSShared;
 
 
-namespace MapView.Forms.MainWindow
+namespace MapView.Forms.MainView
 {
 	/// <summary>
 	/// Instantiates and manages items on MainView's "Viewers" menu: TileView,

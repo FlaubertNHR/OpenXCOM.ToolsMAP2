@@ -7,6 +7,8 @@ using System.Windows.Forms;
 
 using DSShared.Controls;
 
+using MapView.Forms.MainView;
+
 using XCom;
 using XCom.Interfaces;
 

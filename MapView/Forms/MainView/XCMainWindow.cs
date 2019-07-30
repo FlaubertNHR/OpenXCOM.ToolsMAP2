@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using DSShared;
 using DSShared.Controls;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
 using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TopViews;
 

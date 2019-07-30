@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
 
 
 namespace MapView

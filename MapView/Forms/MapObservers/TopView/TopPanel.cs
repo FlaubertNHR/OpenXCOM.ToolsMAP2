@@ -5,7 +5,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
+using MapView.Forms.MapObservers;
 
 using XCom;
 using XCom.Interfaces.Base;

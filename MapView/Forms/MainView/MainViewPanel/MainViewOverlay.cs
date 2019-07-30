@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 using DSShared.Controls;
 
-using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;
 
 using XCom;
@@ -20,7 +19,7 @@ using XCom.Interfaces.Base;
 using System.Linq;
 
 
-namespace MapView
+namespace MapView.Forms.MainView
 {
 	internal sealed class MainViewOverlay
 		:

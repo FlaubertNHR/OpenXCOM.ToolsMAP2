@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Windows.Forms;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
 
 using XCom;
 

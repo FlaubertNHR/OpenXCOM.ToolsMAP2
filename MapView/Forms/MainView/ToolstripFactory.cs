@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using MapView.Properties;
 
 
-namespace MapView.Forms.MainWindow
+namespace MapView.Forms.MainView
 {
 	internal sealed class ToolstripFactory
 	{

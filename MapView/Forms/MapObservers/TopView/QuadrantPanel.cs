@@ -3,7 +3,8 @@ using System.Drawing;
 using System.Timers;
 using System.Windows.Forms;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
+using MapView.Forms.MapObservers;
 
 using XCom;
 using XCom.Interfaces;

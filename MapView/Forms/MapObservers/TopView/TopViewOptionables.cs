@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
 
 
 namespace MapView.Forms.MapObservers.TopViews

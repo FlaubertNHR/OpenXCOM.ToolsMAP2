@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using DSShared;
 
+using MapView.Forms.MainView;
 using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TileViews;
 using MapView.Forms.MapObservers.TopViews;

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using DSShared;
 
 
-namespace MapView.Forms.MainWindow
+namespace MapView.Forms.MainView
 {
 	internal static class OptionsManager
 	{

@@ -11,7 +11,7 @@ using MapView.Forms.MapObservers.TopViews;
 using XCom.Interfaces.Base;
 
 
-namespace MapView.Forms.MainWindow
+namespace MapView.Forms.MainView
 {
 	internal static class ObserverManager
 	{

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-using MapView.Forms.MainWindow;
-using MapView.Forms.MapObservers;
+using MapView.Forms.MainView;
 
 using XCom;
 using XCom.Interfaces.Base;
 
 
-namespace MapView
+namespace MapView.Forms.MapObservers
 {
 	/// <summary>
 	/// Inherited by TileView, TopView, RouteView.

@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 
-namespace MapView.Forms.MainWindow
+namespace MapView.Forms.MainView
 {
 	internal static class ShowHideManager
 	{

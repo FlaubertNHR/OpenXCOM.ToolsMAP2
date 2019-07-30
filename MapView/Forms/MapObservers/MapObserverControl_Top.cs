@@ -4,13 +4,11 @@ using System.ComponentModel;
 
 using DSShared.Controls;
 
-using MapView.Forms.MapObservers;
-
 using XCom;
 using XCom.Interfaces.Base;
 
 
-namespace MapView
+namespace MapView.Forms.MapObservers
 {
 	/// <summary>
 	/// Inherited by TopPanel, QuadrantPanel.

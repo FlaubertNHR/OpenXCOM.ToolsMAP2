@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
 
 using XCom;
 using XCom.Interfaces;

@@ -11,7 +11,8 @@ using DSShared;
 using DSShared.Controls;
 
 using MapView;
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
+using MapView.Forms.MapObservers;
 using MapView.Forms.MapObservers.TopViews;
 using MapView.Volutar;
 

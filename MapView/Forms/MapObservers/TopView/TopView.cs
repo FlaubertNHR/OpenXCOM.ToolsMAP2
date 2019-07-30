@@ -4,7 +4,8 @@ using System.Windows.Forms;
 
 using DSShared;
 
-using MapView.Forms.MainWindow;
+using MapView.Forms.MainView;
+using MapView.Forms.MapObservers;
 
 using XCom;
 
