@@ -56,11 +56,7 @@ namespace MapView
 		/// </summary>
 		internal bool _targeterForced;
 
-		private int _col; // these are used to print the clicked location
-		private int _row; // TODO: just use MapFile.Location
-		private int _lev;
-
-		private int _colOver; // these are used to track the mouseover location
+		private int _colOver; // tracks the mouseover location ->
 		private int _rowOver;
 		#endregion Fields
 
@@ -926,12 +922,7 @@ namespace MapView
 			//LogFile.WriteLine("MainViewOverlay.OnSelectLocationMain");
 
 			FirstClick = true;
-
-			_col = args.Location.Col;
-			_row = args.Location.Row;
-			_lev = args.Location.Lev;
-
-			MainView.sb_PrintPosition(_col, _row, _lev);
+			MainView.sb_PrintPosition();
 		}
 
 		/// <summary>
@@ -942,9 +933,7 @@ namespace MapView
 		{
 			//LogFile.WriteLine("MainViewOverlay.OnSelectLevelMain");
 
-			_lev = args.Level;
-
-			MainView.sb_PrintPosition(_col, _row, _lev);
+			MainView.sb_PrintPosition();
 			Invalidate();
 		}
 		#endregion Events

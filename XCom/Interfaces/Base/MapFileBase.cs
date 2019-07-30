@@ -46,13 +46,19 @@ namespace XCom.Interfaces.Base
 		public Descriptor Descriptor
 		{ get; private set; }
 
+		internal MapTileList Tiles
+		{ get; set; }
+
+		public List<Tilepart> Parts
+		{ get; internal set; }
+
 		private int _level;
 		/// <summary>
-		/// Gets this MapBase's currently displayed level.
-		/// Changing level will fire a SelectLevel event.
+		/// Gets/Sets the currently selected level.
+		/// @note Setting the level will fire the SelectLevel event.
 		/// WARNING: Level 0 is the top level of the displayed Map.
 		/// </summary>
-		public int Level
+		public int Level // TODO: why is Level distinct from Location.Lev - why is Location.Lev not even set by Level
 		{
 			get { return _level; }
 			set
@@ -64,34 +70,10 @@ namespace XCom.Interfaces.Base
 			}
 		}
 
-		/// <summary>
-		/// User will be shown a dialog asking to save if the Map changed.
-		/// @note The setter must be mediated by XCMainWindow.MapChanged in
-		/// order to apply/remove an asterisk to/from the file-label in
-		/// MainView's statusbar.
-		/// </summary>
-		public bool MapChanged
-		{ get; set; }
-
-		/// <summary>
-		/// User will be shown a dialog asking to save if the Routes changed.
-		/// @note The setter must be mediated by RouteView.RoutesChanged in
-		/// order to show/hide a "routes changed" label to/from 'pnlDataFields'
-		/// in RouteView.
-		/// </summary>
-		public bool RoutesChanged
-		{ get; set; }
-
-		internal MapTileList Tiles
-		{ get; set; }
-
-		public List<Tilepart> Parts
-		{ get; internal set; }
-
 		private MapLocation _location;
 		/// <summary>
-		/// Gets/Sets the currently selected location. Setting the location will
-		/// fire SelectLocation.
+		/// Gets/Sets the currently selected location.
+		/// @note Setting the location will fire the SelectLocation event.
 		/// </summary>
 		public MapLocation Location
 		{
@@ -129,7 +111,12 @@ namespace XCom.Interfaces.Base
 		/// <returns>the corresponding MapTile object</returns>
 		public MapTile this[int row, int col, int lev]
 		{
-			get { return (Tiles != null) ? Tiles[row, col, lev] : null; }
+			get
+			{
+				if (Tiles != null)
+					return Tiles[row, col, lev];
+				return null;
+			}
 			set { Tiles[row, col, lev] = value; }
 		}
 		/// <summary>
@@ -157,6 +144,24 @@ namespace XCom.Interfaces.Base
 //			get { return this[loc.Row, loc.Col, loc.Lev]; }
 //			set { this[loc.Row, loc.Col, loc.Lev] = value; }
 //		}
+
+		/// <summary>
+		/// User will be shown a dialog asking to save if the Map changed.
+		/// @note The setter must be mediated by XCMainWindow.MapChanged in
+		/// order to apply/remove an asterisk to/from the file-label in
+		/// MainView's statusbar.
+		/// </summary>
+		public bool MapChanged
+		{ get; set; }
+
+		/// <summary>
+		/// User will be shown a dialog asking to save if the Routes changed.
+		/// @note The setter must be mediated by RouteView.RoutesChanged in
+		/// order to show/hide a "routes changed" label to/from 'pnlDataFields'
+		/// in RouteView.
+		/// </summary>
+		public bool RoutesChanged
+		{ get; set; }
 		#endregion Properties
 
 

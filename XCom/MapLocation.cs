@@ -10,10 +10,10 @@ namespace XCom
 	public class MapLocation
 	{
 		public int Row
-		{ get; set; }
+		{ get; private set; }
 
 		public int Col
-		{ get; set; }
+		{ get; private set; }
 
 		public int Lev
 		{ get; set; }

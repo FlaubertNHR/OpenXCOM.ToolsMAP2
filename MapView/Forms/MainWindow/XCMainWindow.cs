@@ -2760,16 +2760,18 @@ namespace MapView
 		/// Prints the currently selected location to the status bar.
 		/// NOTE: The 'lev' should be inverted before it's passed in.
 		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="row"></param>
-		/// <param name="lev"></param>
-		internal void sb_PrintPosition(int col, int row, int lev)
+		internal void sb_PrintPosition()
 		{
 			if (MainViewOverlay.FirstClick)
+			{
+				MapFileBase @base = MainViewUnderlay.MapBase;
+				MapLocation loc = @base.Location;
 				tsslPosition.Text = String.Format(
 												CultureInfo.CurrentCulture,
 												"c {0}  r {1}  L {2}",
-												col + 1, row + 1, MainViewUnderlay.MapBase.MapSize.Levs - lev); // 1-based count.
+												loc.Col + 1, loc.Row + 1,
+												@base.MapSize.Levs - @base.Level); // 1-based count.
+			}
 		}
 
 		internal void sb_PrintScale()
@@ -2783,9 +2785,9 @@ namespace MapView
 		internal void sb_PrintSelectionSize(int tx, int ty)
 		{
 			tsslSelectionSize.Text = String.Format(
-										CultureInfo.CurrentCulture,
-										"{0} x {1}",
-										tx, ty);
+												CultureInfo.CurrentCulture,
+												"{0} x {1}",
+												tx, ty);
 			ssMain.Refresh(); // fast update for selection-size.
 		}
 		#endregion Methods
