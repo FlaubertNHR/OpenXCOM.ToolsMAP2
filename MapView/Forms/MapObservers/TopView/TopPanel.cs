@@ -443,6 +443,9 @@ namespace MapView.Forms.MapObservers.TopViews
 					if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
 						&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
 					{
+						ObserverManager.RouteView   .Control     .DeselectNode(false);
+						ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+
 						MainViewOverlay.that._keyDeltaX =
 						MainViewOverlay.that._keyDeltaY = 0;
 
