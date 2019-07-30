@@ -3,14 +3,14 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-namespace MapView.Forms.Error
+namespace MapView.Error
 {
-	internal sealed partial class ErrorWindow
+	internal sealed partial class ErrorF
 		:
 			Form
 	{
 		#region cTor
-		internal ErrorWindow(Exception exception)
+		internal ErrorF(Exception exception)
 		{
 			InitializeComponent();
 
@@ -20,7 +20,7 @@ namespace MapView.Forms.Error
 			btnClose.Select();
 
 #if DEBUG
-			ClientSize = new Size(1200, 400);
+			ClientSize = new Size(1300, 400);
 #endif
 		}
 		#endregion cTor

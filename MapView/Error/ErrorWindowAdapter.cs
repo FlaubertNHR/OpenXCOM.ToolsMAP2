@@ -1,19 +1,19 @@
 ﻿using System;
 
 
-namespace MapView.Forms.Error
+namespace MapView.Error
 {
 	/// <summary>
 	/// nice ... an Adapter
 	/// with an Interface ... jic
 	/// </summary>
-	internal sealed class ErrorWindowAdapter
+	internal sealed class ErrorAdapter
 		:
 			IErrorHandler
 	{
 		public void HandleException(Exception exception)
 		{
-			using (var f = new ErrorWindow(exception))
+			using (var f = new ErrorF(exception))
 				f.ShowDialog();
 		}
 	}

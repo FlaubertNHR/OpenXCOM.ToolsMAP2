@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 
-using MapView.Forms.Error;
+using MapView.Error;
 
 
 namespace MapView
@@ -19,7 +19,7 @@ namespace MapView
 		/// </summary>
 		public Startup()
 		{
-			_errorHandler = new ErrorWindowAdapter();
+			_errorHandler = new ErrorAdapter();
 		}
 
 

@@ -176,14 +176,14 @@
     <Compile Include="Forms\Observers\TopView\TopViewForm.Designer.cs">
       <DependentUpon>TopViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Error\ErrorWindow.cs">
+    <Compile Include="Error\ErrorF.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Error\ErrorWindow.Designer.cs">
-      <DependentUpon>ErrorWindow.cs</DependentUpon>
+    <Compile Include="Error\ErrorF.Designer.cs">
+      <DependentUpon>ErrorF.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Error\ErrorWindowAdapter.cs" />
-    <Compile Include="Forms\Error\IErrorHandler.cs" />
+    <Compile Include="Error\ErrorWindowAdapter.cs" />
+    <Compile Include="Error\IErrorHandler.cs" />
     <Compile Include="Forms\Observers\TileView\TilePanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -300,8 +300,8 @@
       <DependentUpon>FindVolutarF.cs</DependentUpon>
     </Compile>
     <Compile Include="Volutar\VolutarService.cs" />
-    <EmbeddedResource Include="Forms\Error\ErrorWindow.resx">
-      <DependentUpon>ErrorWindow.cs</DependentUpon>
+    <EmbeddedResource Include="Error\ErrorF.resx">
+      <DependentUpon>ErrorF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainView\XCMainWindow.resx">
       <SubType>Designer</SubType>

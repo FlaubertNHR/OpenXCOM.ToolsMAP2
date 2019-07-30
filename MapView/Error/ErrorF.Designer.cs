@@ -1,6 +1,6 @@
-﻿namespace MapView.Forms.Error
+﻿namespace MapView.Error
 {
-	partial class ErrorWindow
+	partial class ErrorF
 	{
 		#region Designer
 		/// <summary>
@@ -122,7 +122,7 @@
 			this.btnTerminate.UseVisualStyleBackColor = true;
 			this.btnTerminate.Click += new System.EventHandler(this.click_Terminate);
 			// 
-			// ErrorWindow
+			// ErrorF
 			// 
 			this.AcceptButton = this.btnTerminate;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -133,7 +133,7 @@
 			this.Controls.Add(this.lblHead);
 			this.Controls.Add(this.pnl_Bot);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Name = "ErrorWindow";
+			this.Name = "ErrorF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "oop Exception";
 			this.pnl_Info.ResumeLayout(false);
