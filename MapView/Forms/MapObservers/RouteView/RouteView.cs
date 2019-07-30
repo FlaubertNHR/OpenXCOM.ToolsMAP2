@@ -53,10 +53,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 		private readonly List<object> _linksList = new List<object>();
 
-		private int _col; // these are used only to print the clicked location info.
-		private int _row;
-		private int _lev;
-
 		private bool _loadingInfo;
 
 		/// <summary>
@@ -255,13 +251,6 @@ namespace MapView.Forms.MapObservers.RouteViews
 			{
 				_fired = true;
 
-				ObserverManager.RouteView   .Control     ._col =
-				ObserverManager.TopRouteView.ControlRoute._col = args.Location.Col;
-				ObserverManager.RouteView   .Control     ._row =
-				ObserverManager.TopRouteView.ControlRoute._row = args.Location.Row;
-				ObserverManager.RouteView   .Control     ._lev =
-				ObserverManager.TopRouteView.ControlRoute._lev = args.Location.Lev;
-
 				ObserverManager.RouteView   .Control     .PrintSelectedInfo();
 				ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
 			}
@@ -282,16 +271,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 		{
 			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
 			{
-				ObserverManager.RouteView   .Control     ._lev =
-				ObserverManager.TopRouteView.ControlRoute._lev = args.Level;
-
 				int overId = -1;
 				var loc = RoutePanel.GetTileLocation(
 												RoutePanel.CursorPosition.X,
 												RoutePanel.CursorPosition.Y);
 				if (loc.X != -1)
 				{
-					RouteNode node = MapBase[loc.Y, loc.X, _lev].Node;
+					RouteNode node = MapBase[loc.Y, loc.X, MapBase.Level].Node;
 					if (node != null)
 					{
 						overId = node.Index;
@@ -309,6 +295,10 @@ namespace MapView.Forms.MapObservers.RouteViews
 					ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
 				}
 			}
+
+			ObserverManager.RouteView   .Control     .PrintSelectedInfo();
+			ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
+
 			InvalidatePanels();
 		}
 		#endregion Events (override) inherited from IMapObserver/MapObserverControl
@@ -346,7 +336,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 												RoutePanel.CursorPosition.Y);
 				if (loc.X != -1)
 				{
-					RouteNode node = MapBase[loc.Y, loc.X, _lev].Node;
+					RouteNode node = MapBase[loc.Y, loc.X, MapBase.Level].Node;
 					if (node != null)
 					{
 						if (node.Spawn == SpawnWeight.None)
@@ -369,7 +359,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// Prints the currently selected tile-info to the TileData groupbox.
 		/// NOTE: The displayed level is inverted here.
 		/// </summary>
-		private void PrintSelectedInfo()
+		internal void PrintSelectedInfo()
 		{
 			if (MainViewOverlay.that.FirstClick)
 			{
@@ -385,16 +375,18 @@ namespace MapView.Forms.MapObservers.RouteViews
 				else
 				{
 					selected = String.Empty;
-					level = _lev;
+					level = MapBase.Level;
 					lblSelected.ForeColor = SystemColors.ControlText;
 				}
 
 				selected += Environment.NewLine;
+
+				MapLocation loc = MapBase.Location;
 				selected += String.Format(
 										System.Globalization.CultureInfo.InvariantCulture,
 										"c {0}  r {1}  L {2}",
-										_col + 1, _row + 1, MapFile.MapSize.Levs - level); // 1-based count, level is inverted.
-
+										loc.Col + 1, loc.Row + 1,
+										MapFile.MapSize.Levs - level); // 1-based count, level is inverted.
 				lblSelected.Text = selected;
 			}
 		}
@@ -419,7 +411,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				info += String.Format(
 									System.Globalization.CultureInfo.InvariantCulture,
 									"c {0}  r {1}  L {2}",
-									loc.X + 1, loc.Y + 1, MapFile.MapSize.Levs - _lev); // 1-based count, level is inverted.
+									loc.X + 1, loc.Y + 1, MapFile.MapSize.Levs - MapBase.Level); // 1-based count, level is inverted.
 			}
 
 			lblOver.Text = info;

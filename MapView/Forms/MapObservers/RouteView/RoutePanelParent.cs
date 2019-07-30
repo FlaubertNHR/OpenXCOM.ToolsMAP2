@@ -381,10 +381,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 				}
 				else // [Shift] = drag node ->
 				{
-					RouteNode node = MapFile[MapFile.Location.Row,
-											 MapFile.Location.Col,
-											 MapFile.Level].Node;
-					if (node != null && node == NodeSelected)
+					if (NodeSelected != null)
 					{
 						var loc = new Point(0,0);
 						int vert = 0;
@@ -414,12 +411,12 @@ namespace MapView.Forms.MapObservers.RouteViews
 								&& c > -1 && c < MapFile.MapSize.Cols
 								&& MapFile[r,c, MapFile.Level].Node == null)
 							{
-								RouteView.Dragnode = node;
+								RouteView.Dragnode = NodeSelected;
 
 								MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation
 
 								var args = new RoutePanelEventArgs(
-																MouseButtons.Left,
+																MouseButtons.None,
 																MapFile[r,c],
 																MapFile.Location);
 								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
@@ -436,7 +433,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 										   MapFile.Location.Col,
 										   level].Node == null)
 							{
-								RouteView.Dragnode = node;
+								RouteView.Dragnode = NodeSelected;
 
 								ObserverManager.RouteView.Control.doMousewheel(new MouseEventArgs(
 																							MouseButtons.None,
@@ -447,11 +444,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 																level);
 
 								var args = new RoutePanelEventArgs(
-																MouseButtons.Left,
+																MouseButtons.None,
 																MapFile[MapFile.Location.Row,
 																		MapFile.Location.Col],
 																MapFile.Location);
 								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+
+								ObserverManager.RouteView   .Control     .PrintSelectedInfo();
+								ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
 
 								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
 								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
