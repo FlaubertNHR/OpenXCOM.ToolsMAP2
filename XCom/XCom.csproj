@@ -146,10 +146,10 @@
     <Compile Include="Resources\Map\Tilepart.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FileDesc\TileGroupManager.cs">
+    <Compile Include="Descriptor\TileGroupManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FileDesc\TileGroupChild.cs">
+    <Compile Include="Descriptor\TileGroupChild.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ResourceInfo.cs">
@@ -158,7 +158,7 @@
     <Compile Include="Interfaces\Base\TileGroupBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FileDesc\Descriptor.cs" />
+    <Compile Include="Descriptor\Descriptor.cs" />
     <Compile Include="Interfaces\TileGroup.cs" />
     <Compile Include="LogFile.cs">
       <SubType>Code</SubType>

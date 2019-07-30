@@ -1,5 +1,3 @@
-//#define hq2xWorks
-
 using System;
 //using System.Collections.Generic;
 using System.Drawing;
@@ -7,10 +5,6 @@ using System.Drawing.Imaging;
 //using System.IO;
 
 using XCom.Interfaces;
-
-//#if hq2xWorks
-//using hq2x;
-//#endif
 
 // now why did I just *know* that the nutcase who writes the low-level code for
 // image-handling was going to cram everything together ....
@@ -138,6 +132,11 @@ namespace XCom
 		}
 
 
+		/// <summary>
+		/// Saves a sprite after setting colorid #0 transparent.
+		/// </summary>
+		/// <param name="fullpath"></param>
+		/// <param name="b"></param>
 		public static void ExportSprite(string fullpath, Bitmap b)
 		{
 			ColorPalette pal = b.Palette;

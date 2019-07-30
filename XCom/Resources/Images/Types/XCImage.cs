@@ -15,7 +15,7 @@ namespace XCom.Interfaces
 
 		public static int SpriteWidth    = 32;
 		public static int SpriteHeight   = 40;	// terrain & units 40px / bigobs 48px / scang 4px
-		#endregion								// NOTE: Bigobs and ScanG shall be supported only by PckView.
+		#endregion Fields (static)				// NOTE: Bigobs and ScanG shall be supported only by PckView.
 
 
 		#region Properties
@@ -43,10 +43,10 @@ namespace XCom.Interfaces
 					Sprite.Palette = _palette.ColorTable;
 			}
 		}
-		#endregion
+		#endregion Properties
 
 
-		#region cTor
+		#region cTors
 		/// <summary>
 		/// cTor[1]. Creates an XCImage.
 		/// @note Binary data must not be compressed.
@@ -83,52 +83,6 @@ namespace XCom.Interfaces
 		/// </summary>
 		protected XCImage()
 		{}
-		#endregion
+		#endregion cTors
 	}
 }
-
-//		private XCImage(Bitmap image, int id)
-//		{
-//			Image = image;
-//			FileId = id;
-//		}
-//		public XCImage()
-//			:
-//				this(
-//					new byte[]{},
-//					0, 0,
-//					null,
-//					-1)
-//		{}
-
-//		#region Methods
-//		/// <summary>
-//		/// Clones this image for use by PckView.
-//		/// </summary>
-//		/// <returns>pointer to a new XCImage or null</returns>
-//		public XCImage Clone()
-//		{
-//			if (Bindata != null)
-//			{
-//				var bindata = new byte[Bindata.Length];
-//				for (int i = 0; i != bindata.Length; ++i)
-//					bindata[i] = Bindata[i];
-//
-//				return new XCImage(
-//								bindata,
-//								Image.Width,
-//								Image.Height,
-//								Pal,
-//								FileId);
-//			}
-//
-//			// TODO: this arbitrary Clone() method should probably be disallowed:
-//			return (Image != null) ? new XCImage(Image.Clone() as Bitmap, FileId)
-//								   : null;
-//		}
-
-//		internal void HQ2X()
-//		{
-//			Image = Bmp.HQ2X(/*Image*/);
-//		}
-//		#endregion
