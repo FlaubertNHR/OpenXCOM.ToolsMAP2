@@ -7,7 +7,6 @@ using System.Windows.Forms;
 
 using XCom;
 using XCom.Interfaces.Base;
-using XCom.Resources.Map.RouteData;
 
 
 namespace XCom

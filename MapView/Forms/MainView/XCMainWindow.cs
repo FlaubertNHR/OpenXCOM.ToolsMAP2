@@ -19,7 +19,6 @@ using MapView.Forms.Observers;
 using XCom;
 using XCom.Interfaces;
 using XCom.Interfaces.Base;
-using XCom.Resources.Map.RouteData;
 
 using YamlDotNet.RepresentationModel; // read values (deserialization)
 

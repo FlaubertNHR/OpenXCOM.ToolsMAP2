@@ -7,7 +7,7 @@ namespace XCom
 	{
 		#region Fields (static)
 		public const int LinkSlots = 5;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties
@@ -46,11 +46,10 @@ namespace XCom
 		{ get; set; }
 
 		/// <summary>
-		/// Gets the index of this RouteNode.
+		/// Gets/Sets the index of this RouteNode.
 		/// </summary>
 		public byte Index
 		{ get; set; }
-		#endregion
 
 
 		/// <summary>
@@ -59,6 +58,7 @@ namespace XCom
 		/// </summary>
 		public byte OobRank
 		{ get; set; }
+		#endregion Properties
 
 
 		#region cTors
@@ -131,7 +131,7 @@ namespace XCom
 
 			OobRank = (byte)0;
 		}
-		#endregion
+		#endregion cTors
 
 
 		#region Methods
@@ -178,7 +178,7 @@ namespace XCom
 		{
 			return ("c " + (Col + 1) + "  r " + (Row + 1) + "  L " + ((byte)(levels - Lev)));
 		}
-		#endregion
+		#endregion Methods
 
 
 		#region Methods (override)
@@ -197,6 +197,6 @@ namespace XCom
 		{
 			return ("c " + Col + "  r " + Row + "  L " + Lev);
 		}
-		#endregion
+		#endregion Methods (override)
 	}
 }

@@ -12,7 +12,6 @@ using MapView.Forms.MainView;
 
 using XCom;
 using XCom.Interfaces.Base;
-using XCom.Resources.Map.RouteData;
 
 
 namespace MapView.Forms.Observers

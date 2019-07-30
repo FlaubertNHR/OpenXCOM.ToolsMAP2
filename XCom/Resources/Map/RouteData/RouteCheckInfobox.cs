@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 
 
-namespace XCom.Resources.Map.RouteData
+namespace XCom
 {
 	/// <summary>
 	/// A form that outputs data about out-of-bounds route-nodes and allows user
@@ -20,7 +20,6 @@ namespace XCom.Resources.Map.RouteData
 		internal RouteCheckInfobox()
 		{
 			InitializeComponent();
-
 			DialogResult = DialogResult.No;
 		}
 		#endregion cTor
@@ -40,16 +39,18 @@ namespace XCom.Resources.Map.RouteData
 			lbl_InfoBody.Text = label;
 			rtb_Text    .Text = text;
 		}
-		#endregion
+		#endregion Methods
 
 
 
 		#region Designer
 		private Container components = null;
+
 		private Label lbl_InfoBody;
 		private RichTextBox rtb_Text;
 		private Button btn_Yes;
 		private Button btn_No;
+
 
 		/// <summary>
 		/// Cleans up any resources being used.

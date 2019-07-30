@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 
-namespace XCom.Resources.Map.RouteData
+namespace XCom
 {
 	public static class RouteCheckService
 	{
-		#region Fields
+		#region Fields (static)
 		private static MapFile _file;
 
 		private static readonly List<RouteNode> _invalids = new List<RouteNode>();
 		private static int _count;
-		#endregion
+		#endregion Fields (static)
 
 
-		#region Fields (public)
+		#region Methods (static)
 		/// <summary>
 		/// Checks for and if found gives user a choice to delete nodes that are
 		/// outside of a Map's x/y/z bounds.
@@ -72,10 +72,8 @@ namespace XCom.Resources.Map.RouteData
 			}
 			return false;
 		}
-		#endregion Fields (public)
 
 
-		#region Fields (private)
 		/// <summary>
 		/// Fills the list with any invalid nodes.
 		/// </summary>
@@ -168,6 +166,6 @@ namespace XCom.Resources.Map.RouteData
 			}
 			return false;
 		}
-		#endregion Fields (private)
+		#endregion Methods (static)
 	}
 }

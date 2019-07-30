@@ -8,7 +8,7 @@ namespace XCom
 		public const byte ExitEast  = 0xFD;
 		public const byte ExitSouth = 0xFC;
 		public const byte ExitWest  = 0xFB;
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties
@@ -29,7 +29,7 @@ namespace XCom
 		/// </summary>
 		public UnitType Type
 		{ get; set; }
-		#endregion
+		#endregion Properties
 
 
 		#region cTor
@@ -45,7 +45,7 @@ namespace XCom
 			Distance    = distance;
 			Type        = (UnitType)type;
 		}
-		#endregion
+		#endregion cTor
 
 
 		#region Methods
@@ -58,6 +58,6 @@ namespace XCom
 		{
 			return (Destination != NotUsed);
 		}
-		#endregion
+		#endregion Methods
 	}
 }
