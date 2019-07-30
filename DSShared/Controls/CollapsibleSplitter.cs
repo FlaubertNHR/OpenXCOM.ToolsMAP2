@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 
-namespace DSShared.Windows
+namespace DSShared.Controls
 {
 	/// <summary>
 	/// Based on code by NJF. But that was 1500 LoC.

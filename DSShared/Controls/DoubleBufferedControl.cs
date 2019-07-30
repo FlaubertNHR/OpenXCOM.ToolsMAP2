@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 
-namespace DSShared.Windows
+namespace DSShared.Controls
 {
 	/// <summary>
 	/// Inherited by MapObserverControl_Top (TopPanel and QuadrantPanel).

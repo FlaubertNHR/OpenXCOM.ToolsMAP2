@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Windows.Forms;
 
 using DSShared;
-using DSShared.Windows;
+using DSShared.Controls;
 
 using XCom;
 using XCom.Resources.Map;

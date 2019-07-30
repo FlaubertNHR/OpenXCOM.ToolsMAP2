@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using DSShared.Windows;
+using DSShared.Controls;
 
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.RouteViews;

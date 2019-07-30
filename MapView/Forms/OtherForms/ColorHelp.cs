@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using DSShared.Windows;
+using DSShared.Controls;
 
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.RouteViews;
@@ -396,7 +396,7 @@ namespace MapView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabMain = new DSShared.Windows.CompositedTabControl();
+			this.tabMain = new DSShared.Controls.CompositedTabControl();
 			this.tpTileView = new System.Windows.Forms.TabPage();
 			this.label25 = new System.Windows.Forms.Label();
 			this.rbTftd = new System.Windows.Forms.RadioButton();

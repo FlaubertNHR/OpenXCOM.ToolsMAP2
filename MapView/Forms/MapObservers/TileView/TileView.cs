@@ -8,7 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using DSShared;
-using DSShared.Windows;
+using DSShared.Controls;
 
 using MapView;
 using MapView.Forms.MainWindow;

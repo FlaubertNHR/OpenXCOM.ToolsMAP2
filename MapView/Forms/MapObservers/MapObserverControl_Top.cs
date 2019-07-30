@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-using DSShared.Windows;
+using DSShared.Controls;
 
 using MapView.Forms.MapObservers;
 

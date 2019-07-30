@@ -137,7 +137,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			this.tsb_connect0 = new System.Windows.Forms.ToolStripButton();
 			this.tsb_connect1 = new System.Windows.Forms.ToolStripButton();
 			this.tsb_connect2 = new System.Windows.Forms.ToolStripButton();
-			this._pnlRoutes = new DSShared.CompositedPanel();
+			this._pnlRoutes = new DSShared.Controls.CompositedPanel();
 			this.pnlDataFields = new System.Windows.Forms.Panel();
 			this.pnlDataFieldsLeft = new System.Windows.Forms.Panel();
 			this.gbNodeData = new System.Windows.Forms.GroupBox();

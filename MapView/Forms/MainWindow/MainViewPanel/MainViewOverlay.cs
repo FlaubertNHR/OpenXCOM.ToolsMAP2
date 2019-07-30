@@ -8,7 +8,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-using DSShared;
+using DSShared.Controls;
 
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.TopViews;

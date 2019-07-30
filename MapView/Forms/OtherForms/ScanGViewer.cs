@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using DSShared;
+using DSShared.Controls;
 
 using MapView.Forms.MainWindow;
 
@@ -406,7 +407,7 @@ namespace MapView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.pnl_ScanG = new DSShared.BufferedPanel();
+			this.pnl_ScanG = new DSShared.Controls.BufferedPanel();
 			this.SuspendLayout();
 			// 
 			// pnl_ScanG

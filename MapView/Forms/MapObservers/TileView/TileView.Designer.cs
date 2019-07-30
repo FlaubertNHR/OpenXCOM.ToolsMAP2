@@ -5,7 +5,7 @@
 		#region Designer
 		private System.ComponentModel.IContainer components = null;
 
-		DSShared.Windows.CompositedTabControl tcTileTypes;
+		DSShared.Controls.CompositedTabControl tcTileTypes;
 
 		private System.Windows.Forms.ToolStrip tsMain;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbExternal;
@@ -39,7 +39,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tcTileTypes = new DSShared.Windows.CompositedTabControl();
+			this.tcTileTypes = new DSShared.Controls.CompositedTabControl();
 			this.tpAll = new System.Windows.Forms.TabPage();
 			this.tpFloors = new System.Windows.Forms.TabPage();
 			this.tpWestwalls = new System.Windows.Forms.TabPage();

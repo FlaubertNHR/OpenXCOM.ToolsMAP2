@@ -117,14 +117,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SharedSpace.cs" />
-    <Compile Include="Windows\BufferedPanel.cs" />
-    <Compile Include="Windows\CollapsibleSplitter.cs">
+    <Compile Include="Controls\BufferedPanel.cs" />
+    <Compile Include="Controls\CollapsibleSplitter.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\DoubleBufferedControl.cs">
+    <Compile Include="Controls\DoubleBufferedControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\TabPageBorder.cs" />
+    <Compile Include="Controls\TabPageBorder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="keyFile.snk" />

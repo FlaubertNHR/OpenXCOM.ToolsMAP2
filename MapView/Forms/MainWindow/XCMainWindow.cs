@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using DSShared;
-using DSShared.Windows;
+using DSShared.Controls;
 
 using MapView.Forms.MainWindow;
 using MapView.Forms.MapObservers.RouteViews;

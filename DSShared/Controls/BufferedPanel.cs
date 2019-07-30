@@ -2,10 +2,10 @@
 using System.Windows.Forms;
 
 
-namespace DSShared
+namespace DSShared.Controls
 {
 	/// <summary>
-	/// 
+	/// A derived Panel that flags DoubleBuffered and ResizeRedraw.
 	/// </summary>
 	public class BufferedPanel
 		:
@@ -22,7 +22,7 @@ namespace DSShared
 
 
 	/// <summary>
-	/// 
+	/// A derived Panel that flags WS_EX_COMPOSITED.
 	/// </summary>
 	public class CompositedPanel
 		:

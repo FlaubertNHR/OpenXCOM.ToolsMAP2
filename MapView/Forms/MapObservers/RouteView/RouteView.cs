@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using DSShared;
+using DSShared.Controls;
 
 using MapView.Forms.MainWindow;
 

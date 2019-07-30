@@ -3,7 +3,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 
-namespace DSShared.Windows
+namespace DSShared.Controls
 {
 	// https://stackoverflow.com/questions/7768555/tabcontrol-and-borders-visual-glitch/7785745#7785745
 	/// <summary>
@@ -75,9 +75,9 @@ namespace DSShared.Windows
 						g.SetClip(r, CombineMode.Exclude);
 						using (var sb = new SolidBrush(tabControl.SelectedTab.BackColor))
 							g.FillRectangle(sb, new Rectangle(
-															r.Left - 3,
-															r.Top - 1,
-															r.Width + 4,
+															r.Left   - 3,
+															r.Top    - 1,
+															r.Width  + 4,
 															r.Height + 3));
 					}
 				}

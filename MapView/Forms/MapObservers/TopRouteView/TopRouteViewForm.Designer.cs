@@ -27,7 +27,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabControl = new DSShared.Windows.CompositedTabControl();
+			this.tabControl = new DSShared.Controls.CompositedTabControl();
 			this.tp_Top = new System.Windows.Forms.TabPage();
 			this.tp_Route = new System.Windows.Forms.TabPage();
 			this.tabControl.SuspendLayout();
@@ -79,7 +79,7 @@
 
 		}
 
-		DSShared.Windows.CompositedTabControl tabControl;
+		DSShared.Controls.CompositedTabControl tabControl;
 
 		private System.Windows.Forms.TabPage tp_Top;
 		private System.Windows.Forms.TabPage tp_Route;

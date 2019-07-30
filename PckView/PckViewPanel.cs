@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using DSShared;
+using DSShared.Controls;
 
 using XCom;
 using XCom.Interfaces;
