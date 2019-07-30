@@ -146,7 +146,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 		}							// on both RouteView and TopRouteView(Route) simultaneously.
 		#endregion cTor				// so uh yeah it's overkill
 									// Good Lord it works.
-
+									// ... and it clears the overed infotext tile-coordinates.
 		#region Events
 		private void t1_Tick(object sender, EventArgs e)
 		{

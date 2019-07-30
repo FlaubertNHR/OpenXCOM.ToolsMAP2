@@ -308,6 +308,14 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Clears the selected tile-info text when another Map loads.
 		/// </summary>
+		internal void ClearOveredInfo()
+		{
+			lblOver.Text = String.Empty;
+		}
+
+		/// <summary>
+		/// Clears the selected tile-info text when another Map loads.
+		/// </summary>
 		internal void ClearSelectedInfo()
 		{
 			lblSelected.Text = String.Empty;
@@ -449,7 +457,8 @@ namespace MapView.Forms.MapObservers.RouteViews
 			ObserverManager.RouteView   .Control     .PrintOverInfo(overId, loc);
 			ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
 
-			lblOver.Refresh(); // fast update.
+			ObserverManager.RouteView   .Control     .lblOver.Refresh(); // fast update.
+			ObserverManager.TopRouteView.ControlRoute.lblOver.Refresh(); // fast update.
 			InvalidatePanels();
 		}
 
@@ -1693,7 +1702,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 			NodeSelected = null;
 			RoutePanelParent.SelectedLocation = new Point(-1,-1);
 
-			tsmiClearLinkData.Enabled = false; // TODO: RouteView/TopRouteView(Route)
+			tsmiClearLinkData.Enabled = false;
 
 			RoutePanel.Select();
 		}

@@ -5,6 +5,8 @@ using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Windows.Forms;
 
+using MapView.Forms.MainWindow;
+
 using XCom;
 
 
@@ -161,6 +163,13 @@ namespace MapView.Forms.MapObservers.RouteViews
 
 				if (RouteView.Optionables.ShowOverlay && CursorPosition.X != -1)
 					DrawInfoOverlay();
+
+				if (   ObserverManager.RouteView   .Control     .RoutePanel.CursorPosition.X == -1
+					&& ObserverManager.TopRouteView.ControlRoute.RoutePanel.CursorPosition.X == -1)
+				{
+					ObserverManager.RouteView   .Control     .ClearOveredInfo();
+					ObserverManager.TopRouteView.ControlRoute.ClearOveredInfo();
+				}
 			}
 		}
 		#endregion Events (override)
