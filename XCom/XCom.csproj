@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\TileGroup.cs" />
     <Compile Include="GlobalsXC.cs" />
     <Compile Include="Infobox.cs" />
     <Compile Include="ProgressBarForm.cs" />
@@ -121,10 +122,10 @@
     <Compile Include="Resources\Map\SpecialType.cs" />
     <Compile Include="Resources\Map\MapFileService.cs" />
     <Compile Include="Resources\Map\TilepartFactory.cs" />
-    <Compile Include="Interfaces\Base\MapLocations.cs" />
-    <Compile Include="Interfaces\Base\MapTileList.cs" />
+    <Compile Include="Base\MapLocations.cs" />
+    <Compile Include="Base\MapTileList.cs" />
     <Compile Include="SelectEventArgs.cs" />
-    <Compile Include="Interfaces\Base\MapFileBase.cs" />
+    <Compile Include="Base\MapFileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -155,11 +156,10 @@
     <Compile Include="ResourceInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interfaces\Base\TileGroupBase.cs">
+    <Compile Include="Base\TileGroupBase.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Descriptor\Descriptor.cs" />
-    <Compile Include="Interfaces\TileGroup.cs" />
     <Compile Include="LogFile.cs">
       <SubType>Code</SubType>
     </Compile>

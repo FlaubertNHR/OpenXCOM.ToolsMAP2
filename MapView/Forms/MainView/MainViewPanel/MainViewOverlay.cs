@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Windows.Forms;
 
 using DSShared.Controls;
@@ -13,10 +14,8 @@ using DSShared.Controls;
 using MapView.Forms.Observers;
 
 using XCom;
-using XCom.Interfaces;
-using XCom.Interfaces.Base;
+using XCom.Base;
 
-using System.Linq;
 
 
 namespace MapView.Forms.MainView

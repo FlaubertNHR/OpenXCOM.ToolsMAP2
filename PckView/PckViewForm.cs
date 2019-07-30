@@ -12,7 +12,6 @@ using DSShared;
 using DSShared.Controls;
 
 using XCom;
-using XCom.Interfaces;
 
 
 namespace PckView

@@ -5,7 +5,6 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using XCom;
-using XCom.Interfaces;
 
 // RotatingCube ->
 //using System;

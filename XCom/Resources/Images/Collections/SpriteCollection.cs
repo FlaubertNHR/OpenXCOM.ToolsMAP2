@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-using XCom.Interfaces;
-
 
 namespace XCom
 {

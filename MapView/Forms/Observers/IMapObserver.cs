@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 using XCom;
-using XCom.Interfaces.Base;
+using XCom.Base;
 
 
 namespace MapView.Forms.Observers

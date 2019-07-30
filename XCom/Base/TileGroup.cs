@@ -1,9 +1,7 @@
 using System;
 
-using XCom.Interfaces.Base;
 
-
-namespace XCom.Interfaces
+namespace XCom.Base
 {
 	#region Enumerations
 	public enum GameType

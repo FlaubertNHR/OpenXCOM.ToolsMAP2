@@ -1,4 +1,4 @@
-﻿namespace XCom.Interfaces.Base
+﻿namespace XCom.Base
 {
 	internal sealed class MapTileList
 	{

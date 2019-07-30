@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
-using XCom.Interfaces.Base;
+using XCom.Base;
 
 
 namespace XCom

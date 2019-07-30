@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using DSShared;
 
 using XCom;
-using XCom.Interfaces;
 
 
 namespace McdView

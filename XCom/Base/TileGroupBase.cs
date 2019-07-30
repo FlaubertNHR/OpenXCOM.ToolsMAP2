@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace XCom.Interfaces.Base
+namespace XCom.Base
 {
 	public class TileGroupBase
 	{

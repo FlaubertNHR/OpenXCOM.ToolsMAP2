@@ -1,10 +1,6 @@
 using System;
-//using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-//using System.IO;
-
-using XCom.Interfaces;
 
 // now why did I just *know* that the nutcase who writes the low-level code for
 // image-handling was going to cram everything together ....

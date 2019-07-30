@@ -5,7 +5,7 @@ using System.ComponentModel;
 using DSShared.Controls;
 
 using XCom;
-using XCom.Interfaces.Base;
+using XCom.Base;
 
 
 namespace MapView.Forms.Observers

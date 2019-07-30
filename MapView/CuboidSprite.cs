@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 
 using XCom;
-using XCom.Interfaces;
 
 
 namespace MapView

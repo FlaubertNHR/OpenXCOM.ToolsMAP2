@@ -5,7 +5,7 @@ using DSShared;
 
 using MapView.Forms.Observers;
 
-using XCom.Interfaces.Base;
+using XCom.Base;
 
 
 namespace MapView.Forms.MainView

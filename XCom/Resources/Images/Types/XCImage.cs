@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 
 
-namespace XCom.Interfaces
+namespace XCom
 {
 	/// <summary>
 	/// A container for storing data about an XCOM image.

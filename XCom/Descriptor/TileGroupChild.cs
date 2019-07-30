@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using DSShared;
 
-using XCom.Interfaces;
+using XCom.Base;
 
 
 namespace XCom

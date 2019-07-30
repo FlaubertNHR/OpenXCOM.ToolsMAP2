@@ -19,7 +19,7 @@ using McdView;
 using PckView;
 
 using XCom;
-using XCom.Interfaces.Base;
+using XCom.Base;
 
 
 namespace MapView.Forms.Observers

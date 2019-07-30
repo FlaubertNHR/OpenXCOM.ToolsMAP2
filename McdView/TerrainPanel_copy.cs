@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using XCom.Interfaces;
+using XCom;
 
 
 namespace McdView

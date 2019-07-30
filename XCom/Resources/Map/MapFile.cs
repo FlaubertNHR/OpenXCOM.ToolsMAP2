@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using XCom;
-using XCom.Interfaces.Base;
+using XCom.Base;
 
 
 namespace XCom

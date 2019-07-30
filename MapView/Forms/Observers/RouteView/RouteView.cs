@@ -11,7 +11,7 @@ using DSShared.Controls;
 using MapView.Forms.MainView;
 
 using XCom;
-using XCom.Interfaces.Base;
+using XCom.Base;
 
 
 namespace MapView.Forms.Observers

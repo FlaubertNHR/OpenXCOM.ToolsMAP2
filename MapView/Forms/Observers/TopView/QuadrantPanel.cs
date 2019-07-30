@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using MapView.Forms.MainView;
 
 using XCom;
-using XCom.Interfaces;
 
 
 namespace MapView.Forms.Observers

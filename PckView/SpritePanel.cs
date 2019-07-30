@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using DSShared.Controls;
 
 using XCom;
-using XCom.Interfaces;
 
 
 namespace PckView

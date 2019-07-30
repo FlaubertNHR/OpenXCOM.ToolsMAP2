@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-using XCom.Interfaces;
+using XCom;
 
 
 namespace McdView

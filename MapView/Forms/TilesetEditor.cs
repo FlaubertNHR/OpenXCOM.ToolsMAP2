@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using DSShared;
 
 using XCom;
-using XCom.Interfaces;
+using XCom.Base;
 
 
 namespace MapView

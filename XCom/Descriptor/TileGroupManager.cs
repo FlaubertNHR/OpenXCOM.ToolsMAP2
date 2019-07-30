@@ -4,8 +4,7 @@ using System.IO;
 
 using DSShared;
 
-using XCom.Interfaces;
-using XCom.Interfaces.Base;
+using XCom.Base;
 
 
 namespace XCom

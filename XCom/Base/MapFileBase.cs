@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using XCom;
 
 
-namespace XCom.Interfaces.Base
+namespace XCom.Base
 {
 	/// <summary>
 	/// This is basically the currently loaded Map.
