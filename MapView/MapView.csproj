@@ -138,6 +138,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\About.cs" />
+    <Compile Include="Forms\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ColorHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConfigurationForm.cs" />
+    <Compile Include="Forms\ConfigurationForm.Designer.cs">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainView\MainViewOptionables.cs" />
     <Compile Include="Forms\MainView\MenuManager.cs" />
     <Compile Include="Forms\MainView\ObserverManager.cs" />
@@ -149,6 +160,21 @@
     </Compile>
     <Compile Include="Forms\MainView\XCMainWindow.Designer.cs">
       <DependentUpon>XCMainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MapInfoDetailDialog.cs" />
+    <Compile Include="Forms\MapInfoDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MapResizeInputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MapTreeInputBox.cs" />
+    <Compile Include="Forms\MapTreeInputBox.Designer.cs">
+      <DependentUpon>MapTreeInputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\McdInfoF.cs" />
+    <Compile Include="Forms\McdInfoF.Designer.cs">
+      <DependentUpon>McdInfoF.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Observers\RouteView\RoutePanel.cs">
       <SubType>UserControl</SubType>
@@ -202,30 +228,16 @@
     <Compile Include="Forms\Observers\MapObserverControl_Top.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\OtherForms\About.cs" />
-    <Compile Include="Forms\OtherForms\About.Designer.cs">
-      <DependentUpon>About.cs</DependentUpon>
+    <Compile Include="Forms\OptionsForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\OtherForms\ConfigurationForm.cs" />
-    <Compile Include="Forms\OtherForms\ConfigurationForm.Designer.cs">
-      <DependentUpon>ConfigurationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\OtherForms\MapInfoDetailDialog.cs" />
-    <Compile Include="Forms\OtherForms\MapTreeInputBox.cs" />
-    <Compile Include="Forms\OtherForms\MapTreeInputBox.Designer.cs">
-      <DependentUpon>MapTreeInputBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\OtherForms\McdInfoF.cs" />
-    <Compile Include="Forms\OtherForms\McdInfoF.Designer.cs">
-      <DependentUpon>McdInfoF.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\OtherForms\RoutesInfo.cs" />
-    <Compile Include="Forms\OtherForms\RoutesInfo.Designer.cs">
+    <Compile Include="Forms\RoutesInfo.cs" />
+    <Compile Include="Forms\RoutesInfo.Designer.cs">
       <DependentUpon>RoutesInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OtherForms\ScanGViewer.cs" />
-    <Compile Include="Forms\OtherForms\TilesetEditor.cs" />
-    <Compile Include="Forms\OtherForms\TilesetEditor.Designer.cs">
+    <Compile Include="Forms\ScanGViewer.cs" />
+    <Compile Include="Forms\TilesetEditor.cs" />
+    <Compile Include="Forms\TilesetEditor.Designer.cs">
       <DependentUpon>TilesetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -238,20 +250,11 @@
     <Compile Include="Forms\Observers\TopView\QuadrantPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\OtherForms\MapResizeInputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="CuboidSprite.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Globals.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Forms\OtherForms\ColorHelp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\OtherForms\MapInfoDialog.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainView\MainViewPanel\MainViewUnderlay.cs">
       <SubType>Component</SubType>
@@ -266,9 +269,6 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\OtherForms\OptionsForm.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Observers\RouteView\RouteView.cs">
       <SubType>UserControl</SubType>
@@ -303,9 +303,33 @@
     <EmbeddedResource Include="Error\ErrorF.resx">
       <DependentUpon>ErrorF.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ColorHelp.resx">
+      <DependentUpon>ColorHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConfigurationForm.resx">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainView\XCMainWindow.resx">
       <SubType>Designer</SubType>
       <DependentUpon>XCMainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MapInfoDetailDialog.resx">
+      <DependentUpon>MapInfoDetailDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MapInfoDialog.resx">
+      <DependentUpon>MapInfoDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MapResizeInputBox.resx">
+      <DependentUpon>MapResizeInputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MapTreeInputBox.resx">
+      <DependentUpon>MapTreeInputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\McdInfoF.resx">
+      <DependentUpon>McdInfoF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Observers\RouteView\RouteViewForm.resx">
       <DependentUpon>RouteViewForm.cs</DependentUpon>
@@ -319,35 +343,8 @@
     <EmbeddedResource Include="Forms\Observers\TopView\TopViewForm.resx">
       <DependentUpon>TopViewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\About.resx">
-      <DependentUpon>About.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\ConfigurationForm.resx">
-      <DependentUpon>ConfigurationForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\MapInfoDetailDialog.resx">
-      <DependentUpon>MapInfoDetailDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\MapResizeInputBox.resx">
-      <DependentUpon>MapResizeInputBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\ColorHelp.resx">
-      <DependentUpon>ColorHelp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\MapInfoDialog.resx">
-      <DependentUpon>MapInfoDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\MapTreeInputBox.resx">
-      <DependentUpon>MapTreeInputBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\McdInfoF.resx">
-      <DependentUpon>McdInfoF.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\RoutesInfo.resx">
-      <DependentUpon>RoutesInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\ScanGViewer.resx">
-      <DependentUpon>ScanGViewer.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Observers\RouteView\RouteView.resx">
       <SubType>Designer</SubType>
@@ -361,10 +358,13 @@
       <SubType>Designer</SubType>
       <DependentUpon>TopView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\OptionsForm.resx">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\RoutesInfo.resx">
+      <DependentUpon>RoutesInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForms\TilesetEditor.resx">
+    <EmbeddedResource Include="Forms\ScanGViewer.resx">
+      <DependentUpon>ScanGViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TilesetEditor.resx">
       <DependentUpon>TilesetEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

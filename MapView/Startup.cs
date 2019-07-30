@@ -30,7 +30,7 @@ namespace MapView
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.ThreadException += Application_ThreadException; // FIX: "Subscription to static events without unsubscription may cause memory leaks."
+			Application.ThreadException += Application_ThreadException;
 			try
 			{
 				Application.Run(new XCMainWindow());
