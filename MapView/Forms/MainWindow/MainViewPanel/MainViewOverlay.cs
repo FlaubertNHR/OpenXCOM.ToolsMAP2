@@ -607,6 +607,9 @@ namespace MapView
 							int r = MapBase.Location.Row + loc.Y;
 							if (r > -1 && r < MapBase.MapSize.Rows)
 							{
+								ObserverManager.RouteView   .Control     .DeselectNode(false);
+								ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+
 								_keyDeltaX =
 								_keyDeltaY = 0;
 
@@ -648,6 +651,9 @@ namespace MapView
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
+						ObserverManager.RouteView   .Control     .DeselectNode(false);
+						ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+
 						_targeterForced = !isTop;
 
 						int pos = DragBeg.X + _keyDeltaX + loc.X;
@@ -737,6 +743,9 @@ namespace MapView
 						if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
 							&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
 						{
+							ObserverManager.RouteView   .Control     .DeselectNode(false);
+							ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+
 							_keyDeltaX =
 							_keyDeltaY = 0;
 

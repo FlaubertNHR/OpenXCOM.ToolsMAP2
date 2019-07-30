@@ -1697,10 +1697,25 @@ namespace MapView.Forms.MapObservers.RouteViews
 		/// <summary>
 		/// Deselects any currently selected node.
 		/// </summary>
-		private void DeselectNode()
+		/// <param name="clearloc"></param>
+//		private void DeselectNode()
+		internal void DeselectNode(bool clearloc = true)
 		{
 			NodeSelected = null;
-			RoutePanelParent.SelectedLocation = new Point(-1,-1);
+
+			if (clearloc) // basically the node is deleted from RouteView itself
+			{
+				RoutePanelParent.SelectedLocation = new Point(-1,-1);
+			}
+			else // basically a location is selected in MainView or TopView (even if it's still the node's location)
+			{
+				UpdateNodeInfo();
+
+				gbNodeData.Enabled =
+				gbLinkData.Enabled = false;
+
+				RoutePanel.Invalidate();
+			}
 
 			tsmiClearLinkData.Enabled = false;
 
