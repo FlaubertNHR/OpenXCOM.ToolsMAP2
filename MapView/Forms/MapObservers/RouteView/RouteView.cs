@@ -396,6 +396,7 @@ namespace MapView.Forms.MapObservers.RouteViews
 										loc.Col + 1, loc.Row + 1,
 										MapFile.MapSize.Levs - level); // 1-based count, level is inverted.
 				lblSelected.Text = selected;
+				lblSelected.Refresh(); // fast update.
 			}
 		}
 
