@@ -270,7 +270,7 @@ namespace MapView.Forms.Observers
 		{
 			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
 			{
-				int overId = -1;
+				int overid = -1;
 				var loc = RoutePanel.GetTileLocation(
 												RoutePanel.CursorPosition.X,
 												RoutePanel.CursorPosition.Y);
@@ -279,7 +279,7 @@ namespace MapView.Forms.Observers
 					RouteNode node = MapBase[loc.Y, loc.X, MapBase.Level].Node;
 					if (node != null)
 					{
-						overId = node.Index;
+						overid = node.Index;
 						if (node.Spawn == SpawnWeight.None)
 						{
 							lblOver.ForeColor = Optionables.NodeColor;
@@ -290,8 +290,8 @@ namespace MapView.Forms.Observers
 					else
 						lblOver.ForeColor = SystemColors.ControlText;
 
-					ObserverManager.RouteView   .Control     .PrintOverInfo(overId, loc);
-					ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
+					ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
+					ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
 				}
 			}
 
@@ -402,14 +402,14 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Prints the currently mouseovered tile-info to the TileData groupbox.
 		/// </summary>
-		/// <param name="overId"></param>
+		/// <param name="overid"></param>
 		/// <param name="loc"></param>
-		private void PrintOverInfo(int overId, Point loc)
+		private void PrintOverInfo(int overid, Point loc)
 		{
 			string info;
 
-			if (overId != -1)
-				info = "Over " + overId;
+			if (overid != -1)
+				info = "Over " + overid;
 			else
 				info = String.Empty;
 
@@ -432,13 +432,13 @@ namespace MapView.Forms.Observers
 		{
 			RoutePanel.CursorPosition = new Point(args.X, args.Y);
 
-			int overId;
+			int overid;
 			int x = args.X; int y = args.Y;
 
 			var tile = RoutePanel.GetTile(ref x, ref y); // x/y -> tile-location
 			if (tile != null && tile.Node != null)
 			{
-				overId = tile.Node.Index;
+				overid = tile.Node.Index;
 				if (tile.Node.Spawn == SpawnWeight.None)
 				{
 					lblOver.ForeColor = Optionables.NodeColor;
@@ -448,18 +448,20 @@ namespace MapView.Forms.Observers
 			}
 			else
 			{
-				overId = -1;
+				overid = -1;
 				lblOver.ForeColor = SystemColors.ControlText;
 			}
 
 			var loc = new Point(x,y);
 
-			ObserverManager.RouteView   .Control     .PrintOverInfo(overId, loc);
-			ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overId, loc);
+			ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
+			ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
 
 			ObserverManager.RouteView   .Control     .lblOver.Refresh(); // fast update.
 			ObserverManager.TopRouteView.ControlRoute.lblOver.Refresh(); // fast update.
-			InvalidatePanels();
+
+//			InvalidatePanels();
+			RefreshPanels(); // fast update. (else the InfoOverlay on RouteView but not TopRouteView(Route) gets sticky - go figur)
 		}
 
 		/// <summary>
