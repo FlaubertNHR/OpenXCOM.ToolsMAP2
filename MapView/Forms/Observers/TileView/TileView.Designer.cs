@@ -1,4 +1,4 @@
-﻿namespace MapView.Forms.Observers.TileViews
+﻿namespace MapView.Forms.Observers
 {
 	partial class TileView
 	{

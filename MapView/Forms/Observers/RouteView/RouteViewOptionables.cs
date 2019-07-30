@@ -5,7 +5,7 @@ using System.Drawing;
 using MapView.Forms.MainView;
 
 
-namespace MapView.Forms.Observers.RouteViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// Properties for RouteView that appear in RouteView's Options.

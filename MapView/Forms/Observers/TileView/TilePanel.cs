@@ -13,7 +13,7 @@ using XCom;
 using XCom.Interfaces;
 
 
-namespace MapView.Forms.Observers.TileViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// A separate panel is created for each tab-page in the Tileparts viewer.

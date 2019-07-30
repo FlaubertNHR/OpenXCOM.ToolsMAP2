@@ -4,13 +4,12 @@ using System.Timers;
 using System.Windows.Forms;
 
 using MapView.Forms.MainView;
-using MapView.Forms.Observers;
 
 using XCom;
 using XCom.Interfaces;
 
 
-namespace MapView.Forms.Observers.TopViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// These are not actually "quadrants"; they are tile-part types. But that's

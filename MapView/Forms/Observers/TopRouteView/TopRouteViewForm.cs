@@ -5,13 +5,11 @@ using System.Windows.Forms;
 using DSShared.Controls;
 
 using MapView.Forms.MainView;
-using MapView.Forms.Observers.RouteViews;
-using MapView.Forms.Observers.TopViews;
 
 using XCom;
 
 
-namespace MapView.Forms.Observers.TileViews // y, "TileViews" thanks for knifing the concept of namespaces in the butt.
+namespace MapView.Forms.Observers
 {
 	internal sealed partial class TopRouteViewForm
 		:

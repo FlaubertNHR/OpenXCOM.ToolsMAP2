@@ -3,10 +3,9 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using MapView.Forms.MainView;
-using MapView.Forms.Observers;
 
 
-namespace MapView.Forms.Observers.RouteViews
+namespace MapView.Forms.Observers
 {
 	internal sealed partial class RouteViewForm
 		:

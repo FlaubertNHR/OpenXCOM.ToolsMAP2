@@ -5,7 +5,7 @@ using System.Drawing;
 using MapView.Forms.MainView;
 
 
-namespace MapView.Forms.Observers.TopViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// Properties for TopView that appear in TopView's Options.

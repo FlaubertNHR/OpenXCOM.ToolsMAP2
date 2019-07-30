@@ -5,12 +5,11 @@ using System.Windows.Forms;
 using DSShared;
 
 using MapView.Forms.MainView;
-using MapView.Forms.Observers;
 
 using XCom;
 
 
-namespace MapView.Forms.Observers.TopViews
+namespace MapView.Forms.Observers
 {
 	internal sealed partial class TopView
 		:

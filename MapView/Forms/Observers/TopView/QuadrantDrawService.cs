@@ -9,7 +9,7 @@ using XCom;
 using XCom.Interfaces;
 
 
-namespace MapView.Forms.Observers.TopViews
+namespace MapView.Forms.Observers
 {
 	internal static class QuadrantDrawService
 //		:

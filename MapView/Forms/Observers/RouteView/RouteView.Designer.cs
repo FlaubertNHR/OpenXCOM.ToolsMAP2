@@ -1,4 +1,4 @@
-namespace MapView.Forms.Observers.RouteViews
+namespace MapView.Forms.Observers
 {
 	partial class RouteView
 	{

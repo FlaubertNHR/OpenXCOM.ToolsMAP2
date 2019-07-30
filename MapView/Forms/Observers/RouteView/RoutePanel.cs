@@ -10,7 +10,7 @@ using MapView.Forms.MainView;
 using XCom;
 
 
-namespace MapView.Forms.Observers.RouteViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// The derived class for RoutePanel. Handles drawing/painting the panel.

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 using DSShared.Controls;
 
-using MapView.Forms.Observers.TopViews;
+using MapView.Forms.Observers;
 
 using XCom;
 using XCom.Interfaces;

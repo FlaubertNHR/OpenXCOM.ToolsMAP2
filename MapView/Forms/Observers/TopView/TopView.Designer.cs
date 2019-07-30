@@ -1,4 +1,4 @@
-namespace MapView.Forms.Observers.TopViews
+namespace MapView.Forms.Observers
 {
 	partial class TopView
 	{

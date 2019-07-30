@@ -6,13 +6,12 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using MapView.Forms.MainView;
-using MapView.Forms.Observers;
 
 using XCom;
 using XCom.Interfaces.Base;
 
 
-namespace MapView.Forms.Observers.TopViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// @note This is not a Panel. It is a Control shown inside of a Panel.

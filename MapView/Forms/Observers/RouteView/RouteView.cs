@@ -9,14 +9,13 @@ using DSShared;
 using DSShared.Controls;
 
 using MapView.Forms.MainView;
-using MapView.Forms.Observers;
 
 using XCom;
 using XCom.Interfaces.Base;
 using XCom.Resources.Map.RouteData;
 
 
-namespace MapView.Forms.Observers.RouteViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// Does all the heavy-lifting/node-manipulations in RouteView and

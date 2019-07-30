@@ -12,8 +12,6 @@ using DSShared.Controls;
 
 using MapView;
 using MapView.Forms.MainView;
-using MapView.Forms.Observers;
-using MapView.Forms.Observers.TopViews;
 using MapView.Volutar;
 
 using McdView;
@@ -24,7 +22,7 @@ using XCom;
 using XCom.Interfaces.Base;
 
 
-namespace MapView.Forms.Observers.TileViews
+namespace MapView.Forms.Observers
 {
 	internal sealed partial class TileView
 		:

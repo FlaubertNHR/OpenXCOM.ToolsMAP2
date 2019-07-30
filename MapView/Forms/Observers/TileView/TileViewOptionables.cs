@@ -7,7 +7,7 @@ using MapView.Volutar;
 using XCom;
 
 
-namespace MapView.Forms.Observers.TileViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// Properties for TileView that appear in TileView's Options.

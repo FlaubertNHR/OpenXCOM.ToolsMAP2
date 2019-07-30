@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-using MapView.Forms.Observers.TileViews;
+using MapView.Forms.Observers;
 
 
 namespace MapView.Volutar

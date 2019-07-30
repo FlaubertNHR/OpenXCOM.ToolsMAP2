@@ -5,9 +5,7 @@ using System.Windows.Forms;
 using DSShared.Controls;
 
 using MapView.Forms.MainView;
-using MapView.Forms.Observers.RouteViews;
-using MapView.Forms.Observers.TileViews;
-using MapView.Forms.Observers.TopViews;
+using MapView.Forms.Observers;
 
 using XCom;
 

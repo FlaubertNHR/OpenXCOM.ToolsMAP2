@@ -8,7 +8,7 @@ using MapView.Forms.MainView;
 using XCom;
 
 
-namespace MapView.Forms.Observers.RouteViews
+namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// The base class for RoutePanel. Generally handles mousey things and

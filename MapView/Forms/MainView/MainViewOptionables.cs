@@ -7,9 +7,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-using MapView.Forms.Observers.RouteViews;
-using MapView.Forms.Observers.TileViews;
-using MapView.Forms.Observers.TopViews;
+using MapView.Forms.Observers;
 
 
 namespace MapView.Forms.MainView
