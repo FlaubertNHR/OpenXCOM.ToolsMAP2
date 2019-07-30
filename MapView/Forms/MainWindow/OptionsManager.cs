@@ -4,7 +4,6 @@ using System.IO;
 using System.Windows.Forms;
 
 using DSShared;
-using DSShared.Windows;
 
 
 namespace MapView.Forms.MainWindow

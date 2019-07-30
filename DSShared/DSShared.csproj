@@ -113,6 +113,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RegistryInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SharedSpace.cs" />
     <Compile Include="Windows\BufferedPanel.cs" />
     <Compile Include="Windows\CollapsibleSplitter.cs">
@@ -120,9 +123,6 @@
     </Compile>
     <Compile Include="Windows\DoubleBufferedControl.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\RegistryInfo.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Windows\TabPageBorder.cs" />
   </ItemGroup>

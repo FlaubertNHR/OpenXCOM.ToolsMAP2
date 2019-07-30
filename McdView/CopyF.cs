@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
-using DSShared.Windows;
+using DSShared;
 
 using XCom;
 using XCom.Interfaces;

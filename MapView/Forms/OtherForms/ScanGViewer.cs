@@ -4,7 +4,6 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using DSShared;
-using DSShared.Windows;
 
 using MapView.Forms.MainWindow;
 

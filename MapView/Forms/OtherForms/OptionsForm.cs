@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-using DSShared.Windows;
+using DSShared;
 
 using MapView.Forms.MapObservers.RouteViews;
 using MapView.Forms.MapObservers.TileViews;

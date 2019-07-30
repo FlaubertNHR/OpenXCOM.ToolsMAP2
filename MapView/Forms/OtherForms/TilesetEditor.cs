@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 
 using DSShared;
-using DSShared.Windows;
 
 using XCom;
 using XCom.Interfaces;

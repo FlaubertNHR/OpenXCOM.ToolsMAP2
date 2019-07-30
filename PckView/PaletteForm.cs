@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-using DSShared.Windows;
+using DSShared;
 
 
 namespace PckView

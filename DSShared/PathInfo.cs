@@ -36,10 +36,12 @@ namespace DSShared
 		#endregion Fields (static)
 
 
-		#region Properties
+		#region Fields
 		private readonly string _file;
-//		private readonly string _extension;
+		#endregion Fields
 
+
+		#region Properties
 		private readonly string _path;
 		/// <summary>
 		/// Directory path.

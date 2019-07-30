@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 
-using DSShared.Windows;
-
-using MapView.Forms.MapObservers.RouteViews;
-using MapView.Forms.MapObservers.TileViews;
-using MapView.Forms.MapObservers.TopViews;
+using DSShared;
 
 
 namespace MapView.Forms.MainWindow

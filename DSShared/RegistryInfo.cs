@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using YamlDotNet.RepresentationModel; // read values (deserialization)
 
 
-namespace DSShared.Windows
+namespace DSShared
 {
 	/// <summary>
 	/// A class to help facilitate the saving and loading of values into the
@@ -120,7 +120,7 @@ namespace DSShared.Windows
 		/// variable had been used as its registry-label. But since they weren't
 		/// this function maintains backward compatibility with the property-
 		/// headers in "MapViewers.yml".
-		/// TODO: MCDInfo, ScanGview, MapInfo, McdRecordsExceeded, etc etc. RouteCheckInfobox ...
+		/// TODO: MCDInfo, MapInfo, McdRecordsExceeded, etc etc. RouteInfo, RouteCheckInfobox ...
 		/// TODO: McdView's Spriteset, ScanGset, LoFTset viewers.
 		/// TODO: PckView's BytesViewer
 		/// </summary>

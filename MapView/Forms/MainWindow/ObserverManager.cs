@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-using DSShared.Windows;
+using DSShared;
 
 using MapView.Forms.MapObservers;
 using MapView.Forms.MapObservers.RouteViews;
