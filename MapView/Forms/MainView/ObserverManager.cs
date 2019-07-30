@@ -3,10 +3,10 @@ using System.Windows.Forms;
 
 using DSShared;
 
-using MapView.Forms.MapObservers;
-using MapView.Forms.MapObservers.RouteViews;
-using MapView.Forms.MapObservers.TileViews;
-using MapView.Forms.MapObservers.TopViews;
+using MapView.Forms.Observers;
+using MapView.Forms.Observers.RouteViews;
+using MapView.Forms.Observers.TileViews;
+using MapView.Forms.Observers.TopViews;
 
 using XCom.Interfaces.Base;
 

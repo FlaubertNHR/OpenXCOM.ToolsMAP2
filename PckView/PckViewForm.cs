@@ -1581,7 +1581,7 @@ namespace PckView
 
 		/// <summary>
 		/// Loads a PCK file.
-		/// NOTE: May be called from MapView.Forms.MapObservers.TileViews.TileView.OnPckEditorClick()
+		/// NOTE: May be called from MapView.Forms.Observers.TileViews.TileView.OnPckEditorClick()
 		/// - with a string like that you'd think this was .NET itself.
 		/// </summary>
 		/// <param name="pfePck">fullpath of a PCK file; check existence of the

@@ -150,34 +150,30 @@
     <Compile Include="Forms\MainView\XCMainWindow.Designer.cs">
       <DependentUpon>XCMainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MapObservers\ColorTool.cs" />
-    <Compile Include="Forms\MapObservers\DrawBlobService.cs" />
-    <Compile Include="Forms\MapObservers\IMapObserver.cs" />
-    <Compile Include="Forms\MapObservers\IMapObserverProvider.cs" />
-    <Compile Include="Forms\MapObservers\RouteView\RoutePanel.cs">
+    <Compile Include="Forms\Observers\RouteView\RoutePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\RouteView\RouteViewForm.cs">
+    <Compile Include="Forms\Observers\RouteView\RouteViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\RouteView\RouteViewForm.Designer.cs">
+    <Compile Include="Forms\Observers\RouteView\RouteViewForm.Designer.cs">
       <DependentUpon>RouteViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MapObservers\RouteView\RouteViewOptionables.cs" />
-    <Compile Include="Forms\MapObservers\TileView\TileViewOptionables.cs" />
-    <Compile Include="Forms\MapObservers\TopRouteView\TopRouteViewForm.cs">
+    <Compile Include="Forms\Observers\RouteView\RouteViewOptionables.cs" />
+    <Compile Include="Forms\Observers\TileView\TileViewOptionables.cs" />
+    <Compile Include="Forms\Observers\TopRouteView\TopRouteViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopRouteView\TopRouteViewForm.Designer.cs">
+    <Compile Include="Forms\Observers\TopRouteView\TopRouteViewForm.Designer.cs">
       <DependentUpon>TopRouteViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MapObservers\TileView\TileViewForm.cs">
+    <Compile Include="Forms\Observers\TileView\TileViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\TopViewForm.cs">
+    <Compile Include="Forms\Observers\TopView\TopViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\TopViewForm.Designer.cs">
+    <Compile Include="Forms\Observers\TopView\TopViewForm.Designer.cs">
       <DependentUpon>TopViewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Error\ErrorWindow.cs">
@@ -188,20 +184,24 @@
     </Compile>
     <Compile Include="Forms\Error\ErrorWindowAdapter.cs" />
     <Compile Include="Forms\Error\IErrorHandler.cs" />
-    <Compile Include="Forms\MapObservers\MapObserverControl_Top.cs">
+    <Compile Include="Forms\Observers\TileView\TilePanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\MapObserverControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\MapObservers\TileView\TilePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MapObservers\TileView\TileView.Designer.cs">
+    <Compile Include="Forms\Observers\TileView\TileView.Designer.cs">
       <DependentUpon>TileView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\QuadrantDrawService.cs" />
-    <Compile Include="Forms\MapObservers\TopView\TopViewOptionables.cs" />
+    <Compile Include="Forms\Observers\TopView\QuadrantDrawService.cs" />
+    <Compile Include="Forms\Observers\TopView\TopViewOptionables.cs" />
+    <Compile Include="Forms\Observers\ColorTool.cs" />
+    <Compile Include="Forms\Observers\DrawBlobService.cs" />
+    <Compile Include="Forms\Observers\IMapObserver.cs" />
+    <Compile Include="Forms\Observers\IMapObserverProvider.cs" />
+    <Compile Include="Forms\Observers\MapObserverControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Observers\MapObserverControl_Top.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\OtherForms\About.cs" />
     <Compile Include="Forms\OtherForms\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
@@ -231,11 +231,11 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\RouteView\RoutePanelParent.cs">
+    <Compile Include="Forms\Observers\RouteView\RoutePanelParent.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Forms\MapObservers\TopView\QuadrantPanel.cs">
+    <Compile Include="Forms\Observers\TopView\QuadrantPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\OtherForms\MapResizeInputBox.cs">
@@ -270,25 +270,25 @@
     <Compile Include="Forms\OtherForms\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\RouteView\RouteView.cs">
+    <Compile Include="Forms\Observers\RouteView\RouteView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\RouteView\RouteView.Designer.cs">
+    <Compile Include="Forms\Observers\RouteView\RouteView.Designer.cs">
       <DependentUpon>RouteView.cs</DependentUpon>
     </Compile>
     <Compile Include="Options.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TileView\TileView.cs">
+    <Compile Include="Forms\Observers\TileView\TileView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\TopPanel.cs">
+    <Compile Include="Forms\Observers\TopView\TopPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\TopView.cs">
+    <Compile Include="Forms\Observers\TopView\TopView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\MapObservers\TopView\TopView.Designer.cs">
+    <Compile Include="Forms\Observers\TopView\TopView.Designer.cs">
       <DependentUpon>TopView.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MainView\MainViewPanel\MainViewOverlay.cs">
@@ -307,16 +307,16 @@
       <SubType>Designer</SubType>
       <DependentUpon>XCMainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MapObservers\RouteView\RouteViewForm.resx">
+    <EmbeddedResource Include="Forms\Observers\RouteView\RouteViewForm.resx">
       <DependentUpon>RouteViewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MapObservers\TopRouteView\TopRouteViewForm.resx">
+    <EmbeddedResource Include="Forms\Observers\TopRouteView\TopRouteViewForm.resx">
       <DependentUpon>TopRouteViewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MapObservers\TileView\TileViewForm.resx">
+    <EmbeddedResource Include="Forms\Observers\TileView\TileViewForm.resx">
       <DependentUpon>TileViewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MapObservers\TopView\TopViewForm.resx">
+    <EmbeddedResource Include="Forms\Observers\TopView\TopViewForm.resx">
       <DependentUpon>TopViewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OtherForms\About.resx">
@@ -349,15 +349,15 @@
     <EmbeddedResource Include="Forms\OtherForms\ScanGViewer.resx">
       <DependentUpon>ScanGViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MapObservers\RouteView\RouteView.resx">
+    <EmbeddedResource Include="Forms\Observers\RouteView\RouteView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>RouteView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MapObservers\TileView\TileView.resx">
+    <EmbeddedResource Include="Forms\Observers\TileView\TileView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>TileView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MapObservers\TopView\TopView.resx">
+    <EmbeddedResource Include="Forms\Observers\TopView\TopView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>TopView.cs</DependentUpon>
     </EmbeddedResource>
@@ -417,6 +417,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\MainView" />
+    <Folder Include="Forms\Observers" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

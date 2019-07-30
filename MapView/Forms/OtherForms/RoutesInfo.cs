@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-using MapView.Forms.MapObservers.RouteViews;
+using MapView.Forms.Observers.RouteViews;
 
 using XCom;
 using XCom.Interfaces.Base;
