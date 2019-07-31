@@ -115,8 +115,8 @@ namespace MapView.Forms.Observers
 
 				if (NodeSelected != null)
 					DrawLinkLines(
-							Origin.X + (SelectedLocation.X - SelectedLocation.Y)     * HalfWidth,
-							Origin.Y + (SelectedLocation.X + SelectedLocation.Y + 1) * HalfHeight,
+							Origin.X + (NodeSelected.Col - NodeSelected.Row)     * HalfWidth,
+							Origin.Y + (NodeSelected.Col + NodeSelected.Row + 1) * HalfHeight,
 							NodeSelected, true);
 
 				DrawGridLines();
@@ -428,8 +428,8 @@ namespace MapView.Forms.Observers
 							_nodeFill.CloseFigure();
 
 							if (NodeSelected != null && MapFile.Level == NodeSelected.Lev
-								&& col == SelectedLocation.X
-								&& row == SelectedLocation.Y)
+								&& col == NodeSelected.Col
+								&& row == NodeSelected.Row)
 							{
 								_graphics.FillPath(_brushNodeSelected, _nodeFill);
 							}
@@ -467,12 +467,10 @@ namespace MapView.Forms.Observers
 																_penLink,
 																x + 1,             y + 1,
 																x + 3 - HalfWidth, y + 0 + HalfHeight);
-//																x + 1 - HalfWidth, y + 1 + HalfHeight);
 												_graphics.DrawLine(
 																_penLink,
 																x - 1,             y + 1,
 																x - 3 + HalfWidth, y + 0 + HalfHeight);
-//																x - 1 + HalfWidth, y + 1 + HalfHeight);
 											}
 											else if (level > MapFile.Level) // draw arrow down.
 											{
@@ -484,12 +482,10 @@ namespace MapView.Forms.Observers
 																_penLink,
 																x + 1,             y - 1 + HalfHeight * 2,
 																x + 3 - HalfWidth, y - 0 + HalfHeight);
-//																x + 1 - HalfWidth, y - 1 + HalfHeight);
 												_graphics.DrawLine(
 																_penLink,
 																x - 1,             y - 1 + HalfHeight * 2,
 																x - 3 + HalfWidth, y - 0 + HalfHeight);
-//																x - 1 + HalfWidth, y - 1 + HalfHeight);
 											}
 										}
 										break;

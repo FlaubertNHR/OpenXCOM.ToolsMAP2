@@ -460,7 +460,6 @@ namespace MapView.Forms.Observers
 			ObserverManager.RouteView   .Control     .lblOver.Refresh(); // fast update.
 			ObserverManager.TopRouteView.ControlRoute.lblOver.Refresh(); // fast update.
 
-//			InvalidatePanels();
 			RefreshPanels(); // fast update. (else the InfoOverlay on RouteView but not TopRouteView(Route) gets sticky - go figur)
 		}
 
@@ -494,7 +493,6 @@ namespace MapView.Forms.Observers
 					args.Tile.Node = Dragnode; // assign the node to the tile at the mouse-up location.
 
 					var loc = new Point(Dragnode.Col, Dragnode.Row);
-					RoutePanelParent.SelectedLocation = loc;
 					MainViewOverlay.that.ProcessSelection(loc,loc);
 
 					ObserverManager.RouteView   .Control     .UpdateLinkDistances();
@@ -1433,9 +1431,6 @@ namespace MapView.Forms.Observers
 											MapFile.Location);
 			OnRoutePanelMouseDown(null, args);
 
-
-			RoutePanelParent.SelectedLocation = loc;
-
 			InvalidateControls();
 		}
 
@@ -1706,7 +1701,6 @@ namespace MapView.Forms.Observers
 
 			if (clearloc) // basically the node is deleted from RouteView itself
 			{
-				RoutePanelParent.SelectedLocation = new Point(-1,-1);
 				RoutePanel.Select();
 			}
 			else // basically a location is selected in MainView or TopView (even if it's still the node's location)

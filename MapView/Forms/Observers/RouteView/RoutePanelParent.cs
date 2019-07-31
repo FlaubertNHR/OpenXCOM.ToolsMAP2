@@ -43,14 +43,6 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal protected static RouteNode NodeSelected
 		{ get; set; }
-
-		/// <summary>
-		/// Stores the x/y-position of the currently selected tile for drawing
-		/// the selected-lozenge in RoutePanel.
-		/// TODO: Replace w/ MapFileBase.Location ...
-		/// </summary>
-		internal protected static Point SelectedLocation
-		{ get; set; }
 		#endregion Properties (static)
 
 
@@ -228,10 +220,8 @@ namespace MapView.Forms.Observers
 												MapFile[loc.Y, loc.X],
 												MapFile.Location);
 				RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
-
-				SelectedLocation = loc;	// NOTE: if a new 'SelectedLocation' is set before firing the RoutePanelMouseDownEvent,
-			}							// OnPaint() will draw a frame with incorrectly selected-link lines. So set the
-		}								// 'SelectedLocation' *after* the event happens.
+			}
+		}
 
 		/// <summary>
 		/// Calls RouteView.OnRoutePanelMouseUp().
@@ -299,8 +289,6 @@ namespace MapView.Forms.Observers
 
 					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
 					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-
-					SelectedLocation = loc;
 				}
 				else if (keyData == Keys.Enter)
 				{
@@ -313,10 +301,6 @@ namespace MapView.Forms.Observers
 
 					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
 					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-
-					SelectedLocation = new Point(
-											MapFile.Location.Col,
-											MapFile.Location.Row);
 				}
 				else if (!keyData.HasFlag(Keys.Shift))
 				{
@@ -360,8 +344,6 @@ namespace MapView.Forms.Observers
 
 							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
 							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-
-							SelectedLocation = loc;
 						}
 					}
 					else if (vert != 0)
