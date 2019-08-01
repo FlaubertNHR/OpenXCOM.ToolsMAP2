@@ -8,6 +8,29 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
+		private System.Windows.Forms.Label labelUfo;
+		private System.Windows.Forms.Label labelTftd;
+		private System.Windows.Forms.Button btnFindUfo;
+		private System.Windows.Forms.Button btnFindTftd;
+		private System.Windows.Forms.TextBox tbUfo;
+		private System.Windows.Forms.TextBox tbTftd;
+		private System.Windows.Forms.Button btnOk;
+		private System.Windows.Forms.Panel pUfo;
+		private System.Windows.Forms.Panel pTftd;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowser;
+		private System.Windows.Forms.Button btnCancel;
+		private System.Windows.Forms.Label lblInfo;
+		private System.Windows.Forms.CheckBox cbResources;
+		private System.Windows.Forms.GroupBox gbResources;
+		private System.Windows.Forms.GroupBox gbOptions;
+		private System.Windows.Forms.RadioButton rbTilesetsTpl;
+		private System.Windows.Forms.RadioButton rbTilesets;
+		private System.Windows.Forms.Label lblResources;
+		private System.Windows.Forms.Label lblTilesets;
+		private System.Windows.Forms.CheckBox cbTilesets;
+		private System.Windows.Forms.ToolTip toolTip1;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -19,6 +42,7 @@
 
 			base.Dispose(disposing);
 		}
+
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -302,28 +326,6 @@
 			this.ResumeLayout(false);
 
 		}
-
-		private System.Windows.Forms.Label labelUfo;
-		private System.Windows.Forms.Label labelTftd;
-		private System.Windows.Forms.Button btnFindUfo;
-		private System.Windows.Forms.Button btnFindTftd;
-		private System.Windows.Forms.TextBox tbUfo;
-		private System.Windows.Forms.TextBox tbTftd;
-		private System.Windows.Forms.Button btnOk;
-		private System.Windows.Forms.Panel pUfo;
-		private System.Windows.Forms.Panel pTftd;
-		private System.Windows.Forms.FolderBrowserDialog folderBrowser;
-		private System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Label lblInfo;
-		private System.Windows.Forms.CheckBox cbResources;
-		private System.Windows.Forms.GroupBox gbResources;
-		private System.Windows.Forms.GroupBox gbOptions;
-		private System.Windows.Forms.RadioButton rbTilesetsTpl;
-		private System.Windows.Forms.RadioButton rbTilesets;
-		private System.Windows.Forms.Label lblResources;
-		private System.Windows.Forms.Label lblTilesets;
-		private System.Windows.Forms.CheckBox cbTilesets;
-		private System.Windows.Forms.ToolTip toolTip1;
 		#endregion
 	}
 }

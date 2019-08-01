@@ -20,7 +20,7 @@ namespace MapView.Error
 			btnClose.Select();
 
 #if DEBUG
-			ClientSize = new Size(1300, 400);
+			ClientSize = new Size(1250, 400);
 #endif
 		}
 		#endregion cTor

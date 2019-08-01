@@ -683,21 +683,7 @@ namespace MapView
 
 			if (Quit)
 			{
-				OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
-
-				ObserverManager.CloseViewers();
-				OptionsManager .CloseOptions();
-
-				if (ScanG    != null) ScanG   .Close();
-				if (_fcolors != null) _fcolors.Close();
-				if (_fabout  != null) _fabout .Close();
-				if (_finfo   != null) _finfo  .Close();
-
-				if (ObserverManager.TileView.Control.McdInfobox != null)
-					ObserverManager.TileView.Control.McdInfobox.Close();
-
-				RegistryInfo.UpdateRegistry(this);
-				RegistryInfo.FinalizeRegistry();
+				SafeQuit();
 
 				// kL_note: This is for storing MainView's location and size in
 				// the Windows Registry:
@@ -721,6 +707,30 @@ namespace MapView
 			}
 
 			base.OnFormClosing(e);
+		}
+
+		/// <summary>
+		/// Saves out Options and Registry as well as closes any open viewers
+		/// and miscellany.
+		/// </summary>
+		private void SafeQuit()
+		{
+			OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
+
+			ObserverManager.CloseViewers();
+			OptionsManager .CloseOptions();
+
+			if (ScanG    != null) ScanG   .Close();
+			if (_fcolors != null) _fcolors.Close();
+			if (_fabout  != null) _fabout .Close();
+			if (_finfo   != null) _finfo  .Close();
+
+			if (ObserverManager.TileView.Control.McdInfobox != null)
+				ObserverManager.TileView.Control.McdInfobox.Close();
+
+			RegistryInfo.UpdateRegistry(this);
+			RegistryInfo.FinalizeRegistry();
+
 		}
 
 
@@ -1258,7 +1268,7 @@ namespace MapView
 									0))
 				{
 					case DialogResult.Abort:
-						break;
+						return;
 
 					case DialogResult.Retry:
 						if (MainViewUnderlay.MapBase != null)
@@ -1284,8 +1294,6 @@ namespace MapView
 							ResourceInfo.TileGroupManager.SaveTileGroups();
 							MaptreeChanged = false;
 						}
-
-						OnConfiguratorClick(null, EventArgs.Empty); // recurse.
 						break;
 
 					case DialogResult.Ignore:	// TODO: A bypass-variable should be implemented to deal
@@ -1294,19 +1302,28 @@ namespace MapView
 						ObserverManager.TopRouteView.ControlRoute.RoutesChanged =
 						MaptreeChanged = false;
 
-						OnConfiguratorClick(null, EventArgs.Empty); // recurse.
 						break;
 				}
 			}
-			else
+
+			Configurator();
+		}
+
+		/// <summary>
+		/// Opens the Configurator dialog.
+		/// </summary>
+		private void Configurator()
+		{
+			using (var f = new ConfigurationForm(true))
 			{
-				using (var f = new ConfigurationForm(true))
+				if (f.ShowDialog(this) == DialogResult.OK)
 				{
-					if (f.ShowDialog(this) == DialogResult.OK)
-					{
-						Application.Restart();
-						Environment.Exit(0);
-					}
+					SafeQuit();
+
+					System.Diagnostics.Process.Start(Application.ExecutablePath);
+					System.Diagnostics.Process.GetCurrentProcess().Kill(); // NOTE: That isn't going to save Registry or Options.
+
+					// TODO: store the current Map-label and open it after restart
 				}
 			}
 		}

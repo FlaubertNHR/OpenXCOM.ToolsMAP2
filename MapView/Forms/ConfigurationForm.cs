@@ -1,5 +1,4 @@
 ﻿using System;
-//using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -44,7 +43,7 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="restart">true if MapView needs to restart to affect
+		/// <param name="restart">true if MapView needs to restart to effect
 		/// changes (default false)</param>
 		internal ConfigurationForm(bool restart = false)
 		{
@@ -59,10 +58,7 @@ namespace MapView
 			}
 
 			// WORKAROUND: See note in 'XCMainWindow' cTor.
-			var size = new System.Drawing.Size();
-			size.Width  =
-			size.Height = 0;
-			MaximumSize = size; // fu.net
+			MaximumSize = new System.Drawing.Size(0,0); // fu.net
 
 			if (!_pathResources.FileExists())
 			{
@@ -90,21 +86,6 @@ namespace MapView
 			string tftd = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
 			if (!String.IsNullOrEmpty(tftd))
 				Tftd = tftd;
-
-
-			// NOTE: Add your own personal XCOM resources-dir here if desired:
-/*			var dirsUfo = new List<string>();
-			dirsUfo.Add(@"C:\0xC_kL\data");
-//			dirsUfo.Add(@"C:\MapView_test");
-
-			foreach (string dir in dirsUfo)
-			{
-				if (Directory.Exists(dir))
-				{
-					Ufo = dir;
-					break;
-				}
-			} */
 		}
 		#endregion cTor
 
@@ -164,7 +145,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Applies new configuration settings and closes the form.
+		/// Applies new configuration settings and closes this dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -174,7 +155,7 @@ namespace MapView
 
 			if (cbResources.Checked) // handle XCOM resource path(s) configuration ->
 			{
-				Ufo  = Ufo.Trim();
+				Ufo  = Ufo .Trim();
 				Tftd = Tftd.Trim();
 
 				if (Ufo.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal)) // NOTE: drive-root directories do funny things. Like append '\'
