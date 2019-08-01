@@ -592,25 +592,14 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((tile = MapFile[r,c]) != null)
+					if ((tile = MapFile[r,c]) != null
+						&& (node = tile.Node) != null)
 					{
-						if ((node = tile.Node) != null)
-						{
-							int infoboxX = x - HalfWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up
-							int infoboxY = y + HalfHeight - NodeValMax / 2;	// vertical line indicator when panel is small sized.
+						int infoboxX = x - HalfWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up
+						int infoboxY = y + HalfHeight - NodeValMax / 2;	// vertical line indicator when panel is small sized.
 
-							DrawImportanceMeter(
-											infoboxX,
-											infoboxY,
-											(int)node.Spawn,
-											Brushes.LightCoral);
-
-							DrawImportanceMeter(
-											infoboxX + 3,
-											infoboxY,
-											(int)node.Patrol,
-											Brushes.DeepSkyBlue);
-						}
+						DrawImportanceMeter(infoboxX,     infoboxY, (int)node.Spawn,  Brushes.LightCoral);
+						DrawImportanceMeter(infoboxX + 3, infoboxY, (int)node.Patrol, Brushes.DeepSkyBlue);
 					}
 				}
 				startX -= HalfWidth;
@@ -722,7 +711,8 @@ namespace MapView.Forms.Observers
 				string textOver1, textType1, textRank1, textSpawn1, textPatrol1, textAttack1;
 				string textOver2, textType2, textRank2, textSpawn2, textPatrol2, textAttack2;
 
-				if (tile.Node != null)
+				RouteNode node = tile.Node;
+				if (node != null)
 				{
 					textOver1   = Over;
 					textType1   = Type;
@@ -730,16 +720,16 @@ namespace MapView.Forms.Observers
 					textSpawn1  = Spawn;
 					textPatrol1 = Patrol;
 
-					textOver2 = (tile.Node.Index).ToString(CultureInfo.CurrentCulture);
-					textType2 = Enum.GetName(typeof(UnitType), tile.Node.Type);
+					textOver2 = (node.Index).ToString(CultureInfo.CurrentCulture);
+					textType2 = Enum.GetName(typeof(UnitType), node.Type);
 
 					if (MapFile.Descriptor.Pal == Palette.UfoBattle)
-						textRank2 = RouteNodeCollection.RankUfo [tile.Node.Rank].ToString();
+						textRank2 = RouteNodeCollection.RankUfo [node.Rank].ToString();
 					else
-						textRank2 = RouteNodeCollection.RankTftd[tile.Node.Rank].ToString();
+						textRank2 = RouteNodeCollection.RankTftd[node.Rank].ToString();
 
-					textSpawn2  = RouteNodeCollection.Spawn [(byte)tile.Node.Spawn] .ToString();
-					textPatrol2 = RouteNodeCollection.Patrol[(byte)tile.Node.Patrol].ToString();
+					textSpawn2  = RouteNodeCollection.Spawn [(byte)node.Spawn] .ToString();
+					textPatrol2 = RouteNodeCollection.Patrol[(byte)node.Patrol].ToString();
 
 					int width;
 					width = (int)_graphics.MeasureString(textOver1,   _fontOverlay).Width;
@@ -764,10 +754,10 @@ namespace MapView.Forms.Observers
 					width = (int)_graphics.MeasureString(textPatrol2, _fontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
 
-					if (tile.Node.Attack != 0)
+					if (node.Attack != 0)
 					{
 						textAttack1 = Attack;
-						textAttack2 = RouteNodeCollection.Attack[(byte)tile.Node.Attack].ToString();
+						textAttack2 = RouteNodeCollection.Attack[(byte)node.Attack].ToString();
 
 						width = (int)_graphics.MeasureString(textAttack1, _fontOverlay).Width;
 						if (width > textWidth1) textWidth1 = width;
@@ -794,19 +784,8 @@ namespace MapView.Forms.Observers
 				}
 				else
 				{
-					textOver1   =
-					textType1   =
-					textRank1   =
-					textSpawn1  =
-					textPatrol1 =
-					textAttack1 =
-
-					textOver2   =
-					textType2   =
-					textRank2   =
-					textSpawn2  =
-					textPatrol2 =
-					textAttack2 = null;
+					textOver1 = textType1 = textRank1 = textSpawn1 = textPatrol1 = textAttack1 =
+					textOver2 = textType2 = textRank2 = textSpawn2 = textPatrol2 = textAttack2 = null;
 				}
 
 //				int textHeight = TextRenderer.MeasureText("X", font).Height;
@@ -815,11 +794,11 @@ namespace MapView.Forms.Observers
 									CursorPosition.X + 18, CursorPosition.Y,
 									textWidth1 + OverlayColPad + textWidth2 + 5, textHeight + 7); // trim right & bottom (else +8 for both w/h)
 
-				if (tile.Node != null)
+				if (node != null)
 				{
 					rect.Height += textHeight * 5;
 
-					if (tile.Node.Attack != 0)
+					if (node.Attack != 0)
 						rect.Height += textHeight;
 				}
 
@@ -842,100 +821,30 @@ namespace MapView.Forms.Observers
 
 				int colRight = textLeft + textWidth1 + OverlayColPad;
 
-				_graphics.DrawString(
-								textTile1,
-								_fontOverlay,
-								Brushes.Yellow,
-								textLeft,
-								textTop);
-				_graphics.DrawString(
-								textTile2,
-								_fontOverlay,
-								Brushes.Yellow,
-								colRight,
-								textTop);
+				_graphics.DrawString(textTile1, _fontOverlay, Brushes.Yellow, textLeft, textTop);
+				_graphics.DrawString(textTile2, _fontOverlay, Brushes.Yellow, colRight, textTop);
 
-				if (tile.Node != null)
+				if (node != null)
 				{
-					_graphics.DrawString(
-									textOver1,
-									_fontOverlay,
-									Brushes.Yellow,
-									textLeft,
-									textTop + textHeight);
-					_graphics.DrawString(
-									textOver2,
-									_fontOverlay,
-									Brushes.Yellow,
-									colRight,
-									textTop + textHeight);
+					_graphics.DrawString(textOver1,   _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight);
+					_graphics.DrawString(textOver2,   _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight);
 
-					_graphics.DrawString(
-									textType1,
-									_fontOverlay,
-									Brushes.Yellow,
-									textLeft,
-									textTop + textHeight * 2);
-					_graphics.DrawString(
-									textType2,
-									_fontOverlay,
-									Brushes.Yellow,
-									colRight,
-									textTop + textHeight * 2);
+					_graphics.DrawString(textType1,   _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 2);
+					_graphics.DrawString(textType2,   _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 2);
 
-					_graphics.DrawString(
-									textRank1,
-									_fontOverlay,
-									Brushes.Yellow,
-									textLeft,
-									textTop + textHeight * 3);
-					_graphics.DrawString(
-									textRank2,
-									_fontOverlay,
-									Brushes.Yellow,
-									colRight,
-									textTop + textHeight * 3);
+					_graphics.DrawString(textRank1,   _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 3);
+					_graphics.DrawString(textRank2,   _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 3);
 
-					_graphics.DrawString(
-									textSpawn1,
-									_fontOverlay,
-									Brushes.Yellow,
-									textLeft,
-									textTop + textHeight * 4);
-					_graphics.DrawString(
-									textSpawn2,
-									_fontOverlay,
-									Brushes.Yellow,
-									colRight,
-									textTop + textHeight * 4);
+					_graphics.DrawString(textSpawn1,  _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 4);
+					_graphics.DrawString(textSpawn2,  _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 4);
 
-					_graphics.DrawString(
-									textPatrol1,
-									_fontOverlay,
-									Brushes.Yellow,
-									textLeft,
-									textTop + textHeight * 5);
-					_graphics.DrawString(
-									textPatrol2,
-									_fontOverlay,
-									Brushes.Yellow,
-									colRight,
-									textTop + textHeight * 5);
+					_graphics.DrawString(textPatrol1, _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 5);
+					_graphics.DrawString(textPatrol2, _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 5);
 
-					if (tile.Node.Attack != 0)
+					if (node.Attack != 0)
 					{
-						_graphics.DrawString(
-										textAttack1,
-										_fontOverlay,
-										Brushes.Yellow,
-										textLeft,
-										textTop + textHeight * 6);
-						_graphics.DrawString(
-										textAttack2,
-										_fontOverlay,
-										Brushes.Yellow,
-										colRight,
-										textTop + textHeight * 6);
+						_graphics.DrawString(textAttack1, _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 6);
+						_graphics.DrawString(textAttack2, _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 6);
 					}
 				}
 			}
