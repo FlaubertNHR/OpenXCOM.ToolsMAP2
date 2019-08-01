@@ -392,7 +392,7 @@ namespace MapView.Forms.Observers
 							int c = MapFile.Location.Col + loc.X;
 							if (   r > -1 && r < MapFile.MapSize.Rows
 								&& c > -1 && c < MapFile.MapSize.Cols
-								&& MapFile[r,c, MapFile.Level].Node == null)
+								&& MapFile[r,c].Node == null)
 							{
 								RouteView.Dragnode = NodeSelected;
 
@@ -403,6 +403,9 @@ namespace MapView.Forms.Observers
 																MapFile[r,c],
 																MapFile.Location);
 								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+
+								ObserverManager.RouteView   .Control     .SetInfotextOver();
+								ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
 
 								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
 								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
@@ -430,6 +433,9 @@ namespace MapView.Forms.Observers
 																		MapFile.Location.Col],
 																MapFile.Location);
 								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+
+								ObserverManager.RouteView   .Control     .SetInfotextOver();
+								ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
 
 								ObserverManager.RouteView   .Control     .PrintSelectedInfo();
 								ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
@@ -566,7 +572,7 @@ namespace MapView.Forms.Observers
 					return point;
 				}
 			}
-			return new Point(-1, -1);
+			return new Point(-1,-1);
 		}
 		#endregion Methods
 	}

@@ -270,12 +270,13 @@ namespace MapView.Forms.Observers
 		{
 			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
 			{
-				int overid = -1;
 				var loc = RoutePanel.GetTileLocation(
 												RoutePanel.CursorPosition.X,
 												RoutePanel.CursorPosition.Y);
 				if (loc.X != -1)
 				{
+					int overid;
+
 					RouteNode node = MapBase[loc.Y, loc.X, MapBase.Level].Node;
 					if (node != null)
 					{
@@ -288,7 +289,10 @@ namespace MapView.Forms.Observers
 							lblOver.ForeColor = Optionables.NodeSpawnColor;
 					}
 					else
+					{
+						overid = -1;
 						lblOver.ForeColor = SystemColors.ControlText;
+					}
 
 					ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
 					ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
@@ -320,6 +324,10 @@ namespace MapView.Forms.Observers
 			lblSelected.Text = String.Empty;
 		}
 
+		/// <summary>
+		/// Updates the selected-node color when the Option changes.
+		/// @note Called by Options only.
+		/// </summary>
 		internal void SetInfotextColor_selected()
 		{
 			Color color;
@@ -334,6 +342,10 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;
 		}
 
+		/// <summary>
+		/// Updates the node color when the Option changes.
+		/// @note Called by Options only.
+		/// </summary>
 		internal void SetInfotextColor_over()
 		{
 			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
@@ -358,6 +370,43 @@ namespace MapView.Forms.Observers
 
 					ObserverManager.RouteView   .Control     .gbTileData.Invalidate();
 					ObserverManager.TopRouteView.ControlRoute.gbTileData.Invalidate();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Updates the overed-node color and info when a node is key-dragged.
+		/// </summary>
+		internal void SetInfotextOver()
+		{
+			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
+			{
+				var loc = RoutePanel.GetTileLocation(
+												RoutePanel.CursorPosition.X,
+												RoutePanel.CursorPosition.Y);
+				if (loc.X != -1)
+				{
+					int overid;
+
+					RouteNode node = MapBase[loc.Y, loc.X, MapBase.Level].Node;
+					if (node != null)
+					{
+						overid = node.Index;
+						if (node.Spawn == SpawnWeight.None)
+						{
+							lblOver.ForeColor = Optionables.NodeColor;
+						}
+						else
+							lblOver.ForeColor = Optionables.NodeSpawnColor;
+					}
+					else
+					{
+						overid = -1;
+						lblOver.ForeColor = SystemColors.ControlText;
+					}
+
+					ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
+					ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
 				}
 			}
 		}
@@ -428,7 +477,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (mouse-events for RoutePanel)
-		private void OnRoutePanelMouseMove(object sender, MouseEventArgs args)
+		internal void OnRoutePanelMouseMove(object sender, MouseEventArgs args)
 		{
 			RoutePanel.CursorPosition = new Point(args.X, args.Y);
 
@@ -619,8 +668,6 @@ namespace MapView.Forms.Observers
 						if (RoutesInfo != null)
 							RoutesInfo.AddNode(node);
 					}
-//					RoutePanel.Refresh(); don't work.
-
 					NodeSelected = node;
 					update = true;
 				}
@@ -628,8 +675,6 @@ namespace MapView.Forms.Observers
 				{
 					if (args.MouseButton == MouseButtons.Right)
 						ConnectNode(node);
-
-//					RoutePanel.Refresh(); don't work.
 
 					NodeSelected = node;
 					update = true;
@@ -1859,6 +1904,26 @@ namespace MapView.Forms.Observers
 			tsmi_RaiseNode.Enabled = (NodeSelected != null && NodeSelected.Lev != 0);
 		}
 
+/*								RouteView.Dragnode = NodeSelected;
+
+								MapFile.ChangeLevel(dir);			// fire SelectLevel event
+								MapFile.Location = new MapLocation(	// fire SelectLocation event
+																MapFile.Location.Row,
+																MapFile.Location.Col,
+																level);
+
+								var args = new RoutePanelEventArgs(
+																MouseButtons.None,
+																MapFile[MapFile.Location.Row,
+																		MapFile.Location.Col],
+																MapFile.Location);
+								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+
+								ObserverManager.RouteView   .Control     .PrintSelectedInfo();
+								ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
+
+								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate(); */
 		private void OnNodeRaise(object sender, EventArgs e)
 		{
 			Dragnode = NodeSelected;
