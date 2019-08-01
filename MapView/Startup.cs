@@ -33,7 +33,7 @@ namespace MapView
 			Application.ThreadException += Application_ThreadException;
 			try
 			{
-				Application.Run(new XCMainWindow());
+				Application.Run(new XCMainWindow()); // fly like the wind.
 			}
 			catch (Exception ex)
 			{

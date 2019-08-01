@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -437,6 +438,35 @@ namespace MapView
 
 
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
+		}
+
+		/// <summary>
+		/// Handles CL-args after Configurator restart - selects a node in the
+		/// Maptree.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnShown(EventArgs e)
+		{
+			base.OnShown(e);
+
+			switch (Program.Args.Length)
+			{
+				case 0:
+					MapTree.SelectedNode.Collapse(false);
+					break;
+
+				case 1:
+					SelectGroupNode(Program.Args[0]);
+					break;
+
+				case 2:
+					SelectCategoryNode(Program.Args[1], Program.Args[0]);
+					break;
+
+				case 3:
+					SelectTilesetNode(Program.Args[2], Program.Args[1], Program.Args[0]);
+					break;
+			}
 		}
 		#endregion cTor
 
@@ -1309,8 +1339,9 @@ namespace MapView
 			Configurator();
 		}
 
+
 		/// <summary>
-		/// Opens the Configurator dialog.
+		/// Opens the Configurator dialog, then does a restart if necessary.
 		/// </summary>
 		private void Configurator()
 		{
@@ -1320,10 +1351,28 @@ namespace MapView
 				{
 					SafeQuit();
 
-					System.Diagnostics.Process.Start(Application.ExecutablePath);
-					System.Diagnostics.Process.GetCurrentProcess().Kill(); // NOTE: That isn't going to save Registry or Options.
+					string args = String.Empty;
 
-					// TODO: store the current Map-label and open it after restart
+					var node0 = MapTree.SelectedNode;
+					if (node0 != null)
+					{
+						var node1 = node0.Parent;
+						if (node1 != null)
+						{
+							var node2 = node1.Parent;
+							if (node2 != null)
+							{
+								args = node2.Text + " " + node1.Text + " " + node0.Text;
+							}
+							else
+								args = node1.Text + " " + node0.Text;
+						}
+						else
+							args = node0.Text;
+					}
+
+					Process.Start(new ProcessStartInfo(Application.ExecutablePath, args));
+					Process.GetCurrentProcess().Kill();
 				}
 			}
 		}
@@ -1341,7 +1390,9 @@ namespace MapView
 			Help.ShowHelp(XCMainWindow.that, "file://" + help);
 		}
 
+
 		internal ColorHelp _fcolors;
+
 		/// <summary>
 		/// Opens the ColorsHelp dialog.
 		/// @note This handler is not a toggle. The dialog will be focused if
@@ -1370,7 +1421,9 @@ namespace MapView
 			miColors.Checked = false;
 		}
 
+
 		internal About _fabout;
+
 		/// <summary>
 		/// Opens the About dialog
 		/// @note This handler is not a toggle. The dialog will be focused if
@@ -1399,7 +1452,9 @@ namespace MapView
 			miAbout.Checked = false;
 		}
 
+
 		internal MapInfoDialog _finfo;
+
 		/// <summary>
 		/// Opens the MapInfo dialog.
 		/// @note This handler is a toggle. The dialog will be closed if it's
