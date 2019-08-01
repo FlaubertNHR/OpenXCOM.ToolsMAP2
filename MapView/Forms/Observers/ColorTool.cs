@@ -11,6 +11,11 @@ namespace MapView.Forms.Observers
 		:
 			IDisposable
 	{
+		#region Fields (static)
+		private const int ALFALFA = 90;
+		#endregion Fields (static)
+
+
 		#region Properties
 		private readonly Pen _pen;
 		/// <summary>
@@ -31,6 +36,13 @@ namespace MapView.Forms.Observers
 			get { return _penLight; }
 		}
 
+		private readonly Pen _penLightPrep;
+		internal Pen PenLightPrep
+		{
+			get { return _penLightPrep; }
+		}
+
+
 		private readonly SolidBrush _brush;
 		/// <summary>
 		/// A brush for drawing content objects.
@@ -48,6 +60,12 @@ namespace MapView.Forms.Observers
 		{
 			get { return _brushLight; }
 		}
+
+		private readonly Brush _brushLightPrep;
+		internal Brush BrushLightPrep
+		{
+			get { return _brushLightPrep; }
+		}
 		#endregion Properties
 
 
@@ -58,13 +76,15 @@ namespace MapView.Forms.Observers
 		/// <param name="pen"></param>
 		internal ColorTool(Pen pen)
 		{
-			var colorLight = Color.FromArgb(100, pen.Color);
+			var colorLight = Color.FromArgb(ALFALFA, pen.Color);
 
-			_pen        = new Pen(pen.Color,  pen.Width);
-			_penLight   = new Pen(colorLight, pen.Width);
+			_pen          = new Pen(pen.Color,        pen.Width);
+			_penLight     = new Pen(colorLight,       pen.Width);
+			_penLightPrep = new Pen(Color.GhostWhite, pen.Width);
 
-			_brush      = new SolidBrush(pen.Color);
-			_brushLight = new SolidBrush(colorLight);
+			_brush          = new SolidBrush(pen.Color);
+			_brushLight     = new SolidBrush(colorLight);
+			_brushLightPrep = new SolidBrush(Color.GhostWhite);
 		}
 
 		/// <summary>
@@ -74,13 +94,15 @@ namespace MapView.Forms.Observers
 		/// <param name="width"></param>
 		internal ColorTool(SolidBrush brush, float width)
 		{
-			var colorLight = Color.FromArgb(100, brush.Color);
+			var colorLight = Color.FromArgb(ALFALFA, brush.Color);
 
-			_pen        = new Pen(brush.Color, width);
-			_penLight   = new Pen(colorLight,  width);
+			_pen          = new Pen(brush.Color,      width);
+			_penLight     = new Pen(colorLight,       width);
+			_penLightPrep = new Pen(Color.GhostWhite, width);
 
-			_brush      = new SolidBrush(brush.Color);
-			_brushLight = new SolidBrush(colorLight);
+			_brush          = new SolidBrush(brush.Color);
+			_brushLight     = new SolidBrush(colorLight);
+			_brushLightPrep = new SolidBrush(Color.GhostWhite);
 		}
 		#endregion cTors
 
@@ -93,12 +115,14 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		public void Dispose()
 		{
-			_pen       .Dispose();
-			_penLight  .Dispose();
-			_brush     .Dispose();
-			_brushLight.Dispose();
+			_pen           .Dispose();
+			_penLight      .Dispose();
+			_penLightPrep  .Dispose();
+			_brush         .Dispose();
+			_brushLight    .Dispose();
+			_brushLightPrep.Dispose();
 
-//			GC.SuppressFinalize(this);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

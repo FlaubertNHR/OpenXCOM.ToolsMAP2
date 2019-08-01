@@ -71,24 +71,18 @@ namespace MapView.Forms.Observers
 		private static void DrawWindow(
 				Graphics g,
 				ColorTool tool,
-				Point start, Point end)
+				Point beg, Point end)
 		{
-			var pt = Point.Subtract(end, new Size(start));
-			var xy = new Size(pt.X / 3, pt.Y / 3);
-			pt     = Point.Add(start, Size.Add(xy, xy));
+			g.DrawLine(tool.Pen, beg, end);
 
-			g.DrawLine(
-					tool.Pen,
-					start,
-					Point.Add(start, xy));
-			g.DrawLine(
-					tool.PenLight,
-					Point.Add(start, xy),
-					pt);
-			g.DrawLine(
-					tool.Pen,
-					pt,
-					end);
+			var delta = Point.Subtract(end, new Size(beg));
+			g.SetClip(new Rectangle(
+								beg.X + delta.X / 3, beg  .Y,
+								        delta.X / 3, delta.Y));
+			g.DrawLine(tool.PenLightPrep, beg, end);
+			g.DrawLine(tool.PenLight,     beg, end);
+
+			g.ResetClip();
 		}
 		#endregion Methods (static)
 
@@ -161,6 +155,9 @@ namespace MapView.Forms.Observers
 				// floor ->
 				case BlobType.Floor:
 					PathContent(x, y);
+					g.FillPath(
+							tool.BrushLightPrep,
+							_content);
 					g.FillPath(
 							tool.BrushLight,
 							_content);
