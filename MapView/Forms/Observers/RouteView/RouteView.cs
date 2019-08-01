@@ -477,160 +477,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (mouse-events for RoutePanel)
-		internal void OnRoutePanelMouseMove(object sender, MouseEventArgs args)
-		{
-			RoutePanel.CursorPosition = new Point(args.X, args.Y);
-
-			int overid;
-			int x = args.X; int y = args.Y;
-
-			var tile = RoutePanel.GetTile(ref x, ref y); // x/y -> tile-location
-			if (tile != null && tile.Node != null)
-			{
-				overid = tile.Node.Index;
-				if (tile.Node.Spawn == SpawnWeight.None)
-				{
-					lblOver.ForeColor = Optionables.NodeColor;
-				}
-				else
-					lblOver.ForeColor = Optionables.NodeSpawnColor;
-			}
-			else
-			{
-				overid = -1;
-				lblOver.ForeColor = SystemColors.ControlText;
-			}
-
-			var loc = new Point(x,y);
-
-			ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
-			ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
-
-			ObserverManager.RouteView   .Control     .lblOver.Refresh(); // fast update.
-			ObserverManager.TopRouteView.ControlRoute.lblOver.Refresh(); // fast update.
-
-			RefreshPanels(); // fast update. (else the InfoOverlay on RouteView but not TopRouteView(Route) gets sticky - go figur)
-		}
-
-		/// <summary>
-		/// Hides the info-overlay when the mouse leaves this control.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnRoutePanelMouseLeave(object sender, EventArgs e)
-		{
-			RoutePanel.CursorPosition = new Point(-1,-1);
-			RefreshPanels();
-		}
-
-		private void OnRoutePanelMouseUp(object sender, RoutePanelEventArgs args)
-		{
-			if (Dragnode != null)
-			{
-				if (args.Tile.Node == null)
-				{
-					RouteChanged = true;
-
-					MapFile[Dragnode.Row, // clear the node from the previous tile
-							Dragnode.Col,
-							Dragnode.Lev].Node = null;
-
-					Dragnode.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
-					Dragnode.Row = (byte)args.Location.Row; // these get saved w/ Routes.
-					Dragnode.Lev =       args.Location.Lev;
-
-					args.Tile.Node = Dragnode; // assign the node to the tile at the mouse-up location.
-
-					var loc = new Point(Dragnode.Col, Dragnode.Row);
-					MainViewOverlay.that.ProcessSelection(loc,loc);
-
-					ObserverManager.RouteView   .Control     .UpdateLinkDistances();
-					ObserverManager.TopRouteView.ControlRoute.UpdateLinkDistances();
-				}
-				else if (args.Location.Col != Dragnode.Col
-					||   args.Location.Row != Dragnode.Row
-					||   args.Location.Lev != Dragnode.Lev)
-				{
-					MessageBox.Show(
-								this,
-								"Cannot move node onto another node.",
-								" Err..",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
-				}
-				Dragnode = null;
-			}
-		}
-
-		/// <summary>
-		/// Updates distances to and from the currently selected node.
-		/// @note NodeSelected must be valid before call.
-		/// </summary>
-		private void UpdateLinkDistances()
-		{
-			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // update distances to selected node's linked nodes ->
-			{
-				string distance;
-
-				var link = NodeSelected[slot];
-				switch (link.Destination)
-				{
-					case Link.NotUsed: // NOTE: Should not change; is here to help keep distances consistent.
-						link.Distance = 0;
-						distance = String.Empty;
-						break;
-
-					case Link.ExitWest: // NOTE: Should not change; is here to help keep distances consistent.
-					case Link.ExitNorth:
-					case Link.ExitEast:
-					case Link.ExitSouth:
-						link.Distance = 0;
-						distance = "0";
-						break;
-
-					default:
-						link.Distance = CalculateLinkDistance(
-															NodeSelected,
-															MapFile.Routes[link.Destination]);
-						distance = link.Distance.ToString(System.Globalization.CultureInfo.InvariantCulture)
-								 + GetDistanceArrow(slot);
-						break;
-				}
-				UpdateLinkText(slot, distance);
-			}
-
-			for (var id = 0; id != MapFile.Routes.Count; ++id) // update distances of any links to the selected node ->
-			{
-				if (id != NodeSelected.Index) // NOTE: a node shall not link to itself.
-				{
-					var node = MapFile.Routes[id];
-
-					for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
-					{
-						var link = node[slot];
-						if (link.Destination == NodeSelected.Index)
-							link.Distance = CalculateLinkDistance(
-																node,
-																NodeSelected);
-					}
-				}
-			}
-		}
-
-		private void UpdateLinkText(int slot, string distance)
-		{
-			switch (slot)
-			{
-				case 0: tbLink1Dist.Text = distance; break;
-				case 1: tbLink2Dist.Text = distance; break;
-				case 2: tbLink3Dist.Text = distance; break;
-				case 3: tbLink4Dist.Text = distance; break;
-				case 4: tbLink5Dist.Text = distance; break;
-			}
-		}
-
 		/// <summary>
 		/// Selects a node on LMB, creates and/or connects nodes on RMB.
 		/// </summary>
@@ -689,29 +535,106 @@ namespace MapView.Forms.Observers
 			EnableEditButtons();
 		}
 
-		private void EnableEditButtons()
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		private void OnRoutePanelMouseUp(object sender, RoutePanelEventArgs args)
 		{
-			bool valid = (NodeSelected != null);
+			if (Dragnode != null)
+			{
+				if (args.Tile.Node == null)
+				{
+					RouteChanged = true;
 
-			ObserverManager.RouteView   .Control     .tsmiClearLinkData.Enabled =
-			ObserverManager.TopRouteView.ControlRoute.tsmiClearLinkData.Enabled =
+					MapFile[Dragnode.Row, // clear the node from the previous tile
+							Dragnode.Col,
+							Dragnode.Lev].Node = null;
 
-			ObserverManager.RouteView   .Control     .btnCut           .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnCut           .Enabled =
+					Dragnode.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
+					Dragnode.Row = (byte)args.Location.Row; // these get saved w/ Routes.
+					Dragnode.Lev =       args.Location.Lev;
 
-			ObserverManager.RouteView   .Control     .btnCopy          .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnCopy          .Enabled =
+					args.Tile.Node = Dragnode; // assign the node to the tile at the mouse-up location.
 
-			ObserverManager.RouteView   .Control     .btnDelete        .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
+					var loc = new Point(Dragnode.Col, Dragnode.Row);
+					MainViewOverlay.that.ProcessSelection(loc,loc);
 
-			valid = valid
-				 && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
-
-			ObserverManager.RouteView   .Control     .btnPaste         .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid;
+					ObserverManager.RouteView   .Control     .UpdateLinkDistances();
+					ObserverManager.TopRouteView.ControlRoute.UpdateLinkDistances();
+				}
+				else if (args.Location.Col != Dragnode.Col
+					||   args.Location.Row != Dragnode.Row
+					||   args.Location.Lev != Dragnode.Lev)
+				{
+					MessageBox.Show(
+								this,
+								"Cannot move node onto another node.",
+								" Err..",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error,
+								MessageBoxDefaultButton.Button1,
+								0);
+				}
+				Dragnode = null;
+			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		internal void OnRoutePanelMouseMove(object sender, MouseEventArgs args)
+		{
+			RoutePanel.CursorPosition = new Point(args.X, args.Y);
+
+			int overid;
+			int x = args.X; int y = args.Y;
+
+			var tile = RoutePanel.GetTile(ref x, ref y); // x/y -> tile-location
+			if (tile != null && tile.Node != null)
+			{
+				overid = tile.Node.Index;
+				if (tile.Node.Spawn == SpawnWeight.None)
+				{
+					lblOver.ForeColor = Optionables.NodeColor;
+				}
+				else
+					lblOver.ForeColor = Optionables.NodeSpawnColor;
+			}
+			else
+			{
+				overid = -1;
+				lblOver.ForeColor = SystemColors.ControlText;
+			}
+
+			var loc = new Point(x,y);
+
+			ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
+			ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
+
+			ObserverManager.RouteView   .Control     .lblOver.Refresh(); // fast update.
+			ObserverManager.TopRouteView.ControlRoute.lblOver.Refresh(); // fast update.
+
+			RefreshPanels(); // fast update. (else the InfoOverlay on RouteView but not TopRouteView(Route) gets sticky - go figur)
+		}
+
+		/// <summary>
+		/// Hides the info-overlay when the mouse leaves this control.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnRoutePanelMouseLeave(object sender, EventArgs e)
+		{
+			RoutePanel.CursorPosition = new Point(-1,-1);
+			RefreshPanels();
+		}
+		#endregion Events (mouse-events for RoutePanel)
+
+
+		#region Methods (mouse-event helpers)
 		/// <summary>
 		/// Checks connector and connects nodes if applicable.
 		/// </summary>
@@ -802,7 +725,95 @@ namespace MapView.Forms.Observers
 			}
 			return -1;
 		}
-		#endregion Events (mouse-events for RoutePanel)
+
+
+		private void EnableEditButtons()
+		{
+			bool valid = (NodeSelected != null);
+
+			ObserverManager.RouteView   .Control     .tsmiClearLinkData.Enabled =
+			ObserverManager.TopRouteView.ControlRoute.tsmiClearLinkData.Enabled =
+
+			ObserverManager.RouteView   .Control     .btnCut           .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnCut           .Enabled =
+
+			ObserverManager.RouteView   .Control     .btnCopy          .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnCopy          .Enabled =
+
+			ObserverManager.RouteView   .Control     .btnDelete        .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
+
+			valid = valid
+				 && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
+
+			ObserverManager.RouteView   .Control     .btnPaste         .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid;
+		}
+
+
+		/// <summary>
+		/// Updates distances to and from the currently selected node.
+		/// @note NodeSelected must be valid before call.
+		/// </summary>
+		private void UpdateLinkDistances()
+		{
+			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // update distances to selected node's linked nodes ->
+			{
+				string distance;
+
+				var link = NodeSelected[slot];
+				switch (link.Destination)
+				{
+					case Link.NotUsed: // NOTE: Should not change; is here to help keep distances consistent.
+						link.Distance = 0;
+						distance = String.Empty;
+						break;
+
+					case Link.ExitWest: // NOTE: Should not change; is here to help keep distances consistent.
+					case Link.ExitNorth:
+					case Link.ExitEast:
+					case Link.ExitSouth:
+						link.Distance = 0;
+						distance = "0";
+						break;
+
+					default:
+						link.Distance = CalculateLinkDistance(
+															NodeSelected,
+															MapFile.Routes[link.Destination]);
+						distance = link.Distance.ToString(System.Globalization.CultureInfo.InvariantCulture)
+								 + GetDistanceArrow(slot);
+						break;
+				}
+
+				switch (slot)
+				{
+					case 0: tbLink1Dist.Text = distance; break;
+					case 1: tbLink2Dist.Text = distance; break;
+					case 2: tbLink3Dist.Text = distance; break;
+					case 3: tbLink4Dist.Text = distance; break;
+					case 4: tbLink5Dist.Text = distance; break;
+				}
+			}
+
+			for (var id = 0; id != MapFile.Routes.Count; ++id) // update distances of any links to the selected node ->
+			{
+				if (id != NodeSelected.Index) // NOTE: a node shall not link to itself.
+				{
+					var node = MapFile.Routes[id];
+
+					for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
+					{
+						var link = node[slot];
+						if (link.Destination == NodeSelected.Index)
+							link.Distance = CalculateLinkDistance(
+																node,
+																NodeSelected);
+					}
+				}
+			}
+		}
+		#endregion Methods (mouse-event helpers)
 
 
 		/// <summary>
