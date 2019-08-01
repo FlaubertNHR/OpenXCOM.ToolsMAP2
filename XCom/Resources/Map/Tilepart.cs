@@ -134,7 +134,7 @@ namespace XCom
 		// always keep their array of sprites and will cycle because turning on
 		// the Animation option starts a timer that does that.
 		// 'MapView.MainViewUnderlay' for timer
-		// 'MapView.XCMainWindow'     for options
+		// 'MapView.MainViewF'        for options
 		// 
 		// SlidingDoor sprites will animate when the Animation option is on and
 		// the Doors option is turned on; but whether or not they animate is

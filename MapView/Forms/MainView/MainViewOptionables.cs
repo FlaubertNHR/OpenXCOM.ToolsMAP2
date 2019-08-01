@@ -153,15 +153,15 @@ namespace MapView.Forms.MainView
 			get { return _gridLayerOpacity; }
 			set
 			{
-				var foptions = XCMainWindow._foptions as OptionsForm;
+				var foptions = MainViewF._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					XCMainWindow.that.Options[str_GridLayerOpacity].Value =
+					MainViewF.that.Options[str_GridLayerOpacity].Value =
 					_gridLayerOpacity = value.Clamp(0,255);
 				}
 				else if ((_gridLayerOpacity = value.Clamp(0,255)) != value) // on user-changed
 				{
-					XCMainWindow.that.Options[str_GridLayerOpacity].Value = _gridLayerOpacity;
+					MainViewF.that.Options[str_GridLayerOpacity].Value = _gridLayerOpacity;
 //					foptions.propertyGrid.SetSelectedValue(_gridLayerOpacity);
 				}
 			}
@@ -193,15 +193,15 @@ namespace MapView.Forms.MainView
 			get { return _gridLineWidth; }
 			set
 			{
-				var foptions = XCMainWindow._foptions as OptionsForm;
+				var foptions = MainViewF._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					XCMainWindow.that.Options[str_GridLineWidth].Value =
+					MainViewF.that.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Clamp(1,6);
 				}
 				else if ((_gridLineWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
-					XCMainWindow.that.Options[str_GridLineWidth].Value = _gridLineWidth;
+					MainViewF.that.Options[str_GridLineWidth].Value = _gridLineWidth;
 //					foptions.propertyGrid.SetSelectedValue(_gridLineWidth);
 				}
 			}
@@ -233,15 +233,15 @@ namespace MapView.Forms.MainView
 			get { return _gridLine10Width; }
 			set
 			{
-				var foptions = XCMainWindow._foptions as OptionsForm;
+				var foptions = MainViewF._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					XCMainWindow.that.Options[str_GridLine10Width].Value =
+					MainViewF.that.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Clamp(1,6);
 				}
 				else if ((_gridLine10Width = value.Clamp(1,6)) != value) // on user-changed
 				{
-					XCMainWindow.that.Options[str_GridLine10Width].Value = _gridLine10Width;
+					MainViewF.that.Options[str_GridLine10Width].Value = _gridLine10Width;
 //					foptions.propertyGrid.SetSelectedValue(_gridLine10Width);
 				}
 			}
@@ -276,15 +276,15 @@ namespace MapView.Forms.MainView
 			get { return _selectionBorderOpacity; }
 			set
 			{
-				var foptions = XCMainWindow._foptions as OptionsForm;
+				var foptions = MainViewF._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					XCMainWindow.that.Options[str_SelectionBorderOpacity].Value =
+					MainViewF.that.Options[str_SelectionBorderOpacity].Value =
 					_selectionBorderOpacity = value.Clamp(0,255);
 				}
 				else if ((_selectionBorderOpacity = value.Clamp(0,255)) != value) // on user-changed
 				{
-					XCMainWindow.that.Options[str_SelectionBorderOpacity].Value = _selectionBorderOpacity;
+					MainViewF.that.Options[str_SelectionBorderOpacity].Value = _selectionBorderOpacity;
 //					foptions.propertyGrid.SetSelectedValue(_selectionBorderOpacity);
 				}
 			}
@@ -302,15 +302,15 @@ namespace MapView.Forms.MainView
 			get { return _selectionBorderWidth; }
 			set
 			{
-				var foptions = XCMainWindow._foptions as OptionsForm;
+				var foptions = MainViewF._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					XCMainWindow.that.Options[str_SelectionBorderWidth].Value =
+					MainViewF.that.Options[str_SelectionBorderWidth].Value =
 					_selectionBorderWidth = value.Clamp(1,6);
 				}
 				else if ((_selectionBorderWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
-					XCMainWindow.that.Options[str_SelectionBorderWidth].Value = _selectionBorderWidth;
+					MainViewF.that.Options[str_SelectionBorderWidth].Value = _selectionBorderWidth;
 //					foptions.propertyGrid.SetSelectedValue(_selectionBorderWidth);
 				}
 			}
@@ -359,15 +359,15 @@ namespace MapView.Forms.MainView
 			get { return _spriteShade; }
 			set
 			{
-				var foptions = XCMainWindow._foptions as OptionsForm;
+				var foptions = MainViewF._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					XCMainWindow.that.Options[str_SpriteShade].Value =
+					MainViewF.that.Options[str_SpriteShade].Value =
 					_spriteShade = value.Clamp(0,100);
 				}
 				else if ((_spriteShade = value.Clamp(0,100)) != value) // on user-changed
 				{
-					XCMainWindow.that.Options[str_SpriteShade].Value = _spriteShade;
+					MainViewF.that.Options[str_SpriteShade].Value = _spriteShade;
 //					foptions.propertyGrid.SetSelectedValue(_spriteShade);
 				}
 
@@ -416,15 +416,15 @@ namespace MapView.Forms.MainView
 			get { return _interpolation; }
 			set
 			{
-				var foptions = XCMainWindow._foptions as OptionsForm;
+				var foptions = MainViewF._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					XCMainWindow.that.Options[str_Interpolation].Value =
+					MainViewF.that.Options[str_Interpolation].Value =
 					_interpolation = value.Clamp(0,7);
 				}
 				else if ((_interpolation = value.Clamp(0,7)) != value) // on user-changed
 				{
-					XCMainWindow.that.Options[str_Interpolation].Value = _interpolation;
+					MainViewF.that.Options[str_Interpolation].Value = _interpolation;
 //					foptions.propertyGrid.SetSelectedValue(_interpolation);
 				}
 
@@ -704,25 +704,25 @@ namespace MapView.Forms.MainView
 						if (OpenDoors) // toggle off doors if general animations stop.
 						{
 							OpenDoors = false;
-							XCMainWindow.that.SetDoorSpritesFullPhase(false);
+							MainViewF.that.SetDoorSpritesFullPhase(false);
 						}
 					}
 					else if (OpenDoors) // doors need to animate if they were already toggled on.
-						XCMainWindow.that.SetDoorSpritesFullPhase(true);
+						MainViewF.that.SetDoorSpritesFullPhase(true);
 
 					break;
 
 				case str_OpenDoors: OpenDoors = (bool)val; // F3 toggle
 					if (AnimateSprites)
 					{
-						XCMainWindow.that.SetDoorSpritesFullPhase(OpenDoors);
+						MainViewF.that.SetDoorSpritesFullPhase(OpenDoors);
 					}
 					else if (OpenDoors) // switch to the doors' alt-tile (whether ufo-door or hinge-door)
 					{
-						XCMainWindow.that.SetDoorSpritesAlternate();
+						MainViewF.that.SetDoorSpritesAlternate();
 					}
 					else // switch doors to Sprite1 (closed)
-						XCMainWindow.that.SetDoorSpritesFullPhase(false);
+						MainViewF.that.SetDoorSpritesFullPhase(false);
 
 					break;
 			}
@@ -747,8 +747,8 @@ namespace MapView.Forms.MainView
 			InvalidateSecondaryPanels();
 
 			// refresh ScanGViewer panel and current TilePanel and QuadrantPanel(s)
-			if (XCMainWindow.ScanG != null)
-				XCMainWindow.ScanG.InvalidatePanel();
+			if (MainViewF.ScanG != null)
+				MainViewF.ScanG.InvalidatePanel();
 		}
 
 		/// <summary>

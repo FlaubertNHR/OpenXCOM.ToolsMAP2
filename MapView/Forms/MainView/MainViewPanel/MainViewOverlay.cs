@@ -66,7 +66,7 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties
-		private XCMainWindow MainView;
+		private MainViewF MainView;
 
 		/// <summary>
 		/// MapBase is set only by MainViewUnderlay.MapBase{set}.
@@ -146,7 +146,7 @@ namespace MapView.Forms.MainView
 
 
 		#region cTor
-		internal MainViewOverlay(XCMainWindow main)
+		internal MainViewOverlay(MainViewF main)
 		{
 			MainView = main;
 
@@ -548,15 +548,15 @@ namespace MapView.Forms.MainView
 			ObserverManager.RouteView   .Control     .RoutePanel   .Invalidate();
 			ObserverManager.TopRouteView.ControlRoute.RoutePanel   .Invalidate();
 
-			if (XCMainWindow.ScanG != null)
-				XCMainWindow.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
-		}												// not used by ScanG view at present
+			if (MainViewF.ScanG != null)
+				MainViewF.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
+		}											// not used by ScanG view at present
 		#endregion Events and Methods for the edit-functions
 
 
 		#region Keyboard navigation
 		/// <summary>
-		/// Keyboard navigation called by XCMainWindow (form-level) key events
+		/// Keyboard navigation called by MainViewF (form-level) key events
 		/// OnKeyDown() and ProcessCmdKey().
 		/// </summary>
 		/// <param name="keyData"></param>
@@ -977,12 +977,12 @@ namespace MapView.Forms.MainView
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 #if !LOCKBITS
-				if (!XCMainWindow.Optionables.UseMonoDraw)
+				if (!MainViewF.Optionables.UseMonoDraw)
 				{
-					_graphics.InterpolationMode = XCMainWindow.Optionables.InterpolationE;
+					_graphics.InterpolationMode = MainViewF.Optionables.InterpolationE;
 
-					if (XCMainWindow.Optionables.SpriteShadeEnabled)
-						_spriteAttributes.SetGamma(XCMainWindow.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+					if (MainViewF.Optionables.SpriteShadeEnabled)
+						_spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 				}
 #endif
 
@@ -998,7 +998,7 @@ namespace MapView.Forms.MainView
 				_rows = MapBase.MapSize.Rows;
 
 #if !LOCKBITS
-				if (XCMainWindow.Optionables.UseMonoDraw)
+				if (MainViewF.Optionables.UseMonoDraw)
 				{
 					_d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value.
 					DrawPicasso();
@@ -1050,7 +1050,7 @@ namespace MapView.Forms.MainView
 				lev >= MapBase.Level;
 				--lev)
 			{
-				if (XCMainWindow.Optionables.GridVisible && lev == MapBase.Level)
+				if (MainViewF.Optionables.GridVisible && lev == MapBase.Level)
 					DrawGrid();
 
 				for (int
@@ -1090,7 +1090,7 @@ namespace MapView.Forms.MainView
 							DrawTile(
 									tile,
 									x, y,
-									XCMainWindow.Optionables.GraySelection
+									MainViewF.Optionables.GraySelection
 										&& lev == MapBase.Level
 										&& rect.Contains(col, row));
 						}
@@ -1144,7 +1144,7 @@ namespace MapView.Forms.MainView
 				lev >= MapBase.Level;
 				--lev)
 			{
-				if (XCMainWindow.Optionables.GridVisible && lev == MapBase.Level)
+				if (MainViewF.Optionables.GridVisible && lev == MapBase.Level)
 					DrawGrid();
 
 				for (int
@@ -1600,7 +1600,7 @@ namespace MapView.Forms.MainView
 		/// <param name="rect">destination rectangle</param>
 		private void DrawSprite(Image sprite, Rectangle rect)
 		{
-			if (XCMainWindow.Optionables.SpriteShadeEnabled)
+			if (MainViewF.Optionables.SpriteShadeEnabled)
 				_graphics.DrawImage(
 								sprite,
 								rect,

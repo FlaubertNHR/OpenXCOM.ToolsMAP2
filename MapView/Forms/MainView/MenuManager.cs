@@ -59,7 +59,7 @@ namespace MapView.Forms.MainView
 			CreateMenuitem(ObserverManager.TopRouteView, Shortcut.F8);	// id #4
 
 			Options options = OptionsManager.getMainOptions();
-			OptionChangedEvent changer = XCMainWindow.Optionables.OnFlagChanged;
+			OptionChangedEvent changer = MainViewF.Optionables.OnFlagChanged;
 
 			Form f; // initialize MainView's Options w/ each viewer's default Start setting ->
 			bool @default;
@@ -101,9 +101,9 @@ namespace MapView.Forms.MainView
 				{
 					var fobserver = sender as Form;
 					options[key].Value = fobserver.Visible;
-					XCMainWindow.Optionables.setStartPropertyValue(fobserver, fobserver.Visible);
+					MainViewF.Optionables.setStartPropertyValue(fobserver, fobserver.Visible);
 
-					var foptions = XCMainWindow._foptions;
+					var foptions = MainViewF._foptions;
 					if (foptions != null && foptions.Visible)
 					{
 						var grid = (foptions as OptionsForm).propertyGrid;
@@ -146,7 +146,7 @@ namespace MapView.Forms.MainView
 
 			f.FormClosing += (sender, e) =>
 			{
-				if (!XCMainWindow.Quit)
+				if (!MainViewF.Quit)
 				{
 					it.Checked = false;
 					e.Cancel = true;
@@ -159,7 +159,7 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Visibles the subsidiary viewers that are flagged when a Map loads.
-		/// @note Called by 'XCMainWindow.LoadSelectedDescriptor()'.
+		/// @note Called by MainViewF.LoadSelectedDescriptor().
 		/// </summary>
 		internal static void StartSecondStageRockets()
 		{
@@ -208,10 +208,10 @@ namespace MapView.Forms.MainView
 			{
 				if (e.Shift) // focus MainView for any (valid) 'id'
 				{
-					if (XCMainWindow.that.WindowState == FormWindowState.Minimized)
-						XCMainWindow.that.WindowState =  FormWindowState.Normal;
+					if (MainViewF.that.WindowState == FormWindowState.Minimized)
+						MainViewF.that.WindowState =  FormWindowState.Normal;
 
-					XCMainWindow.that.Select();
+					MainViewF.that.Select();
 				}
 				else
 					OnMenuItemClick(
@@ -248,11 +248,11 @@ namespace MapView.Forms.MainView
 			}
 			else if (it.Checked = !it.Checked)
 			{
-//				f.Owner = XCMainWindow.that;	// NOTE: If MainView is set as the owner of the
-												// viewers MainView can no longer be minimized
-												// while keeping the other viewers up. Etc.
-												// Policy #1008: let the viewers operate as independently as possible.
-												// See also: XCMainWindow.OnActivated()
+//				f.Owner = MainViewF.that;	// NOTE: If MainView is set as the owner of the
+											// viewers MainView can no longer be minimized
+											// while keeping the other viewers up. Etc.
+											// Policy #1008: let the viewers operate as independently as possible.
+											// See also: MainViewF.OnActivated()
 
 				f.Show();
 				if (f.WindowState == FormWindowState.Minimized)
@@ -295,7 +295,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private static void OnMinimizeAllClick(object sender, EventArgs e)
 		{
-			XCMainWindow.BypassActivatedEvent = true;
+			MainViewF.BypassActivatedEvent = true;
 
 			var zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
@@ -307,7 +307,7 @@ namespace MapView.Forms.MainView
 				}
 			}
 
-			XCMainWindow.BypassActivatedEvent = false;
+			MainViewF.BypassActivatedEvent = false;
 		}
 
 		/// <summary>
@@ -321,10 +321,10 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private static void OnRestoreAllClick(object sender, EventArgs e)
 		{
-			XCMainWindow.BypassActivatedEvent = true;
+			MainViewF.BypassActivatedEvent = true;
 
-			bool bringtofront = !XCMainWindow.that.Focused
-							 || !XCMainWindow.Optionables.BringAllToFront;
+			bool bringtofront = !MainViewF.that.Focused
+							 || !MainViewF.Optionables.BringAllToFront;
 
 			var zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
@@ -342,7 +342,7 @@ namespace MapView.Forms.MainView
 				}
 			}
 
-			XCMainWindow.BypassActivatedEvent = false;
+			MainViewF.BypassActivatedEvent = false;
 		}
 
 
@@ -359,11 +359,11 @@ namespace MapView.Forms.MainView
 				{
 					Viewers.MenuItems[MI_SCANG].Checked = true;
 
-					XCMainWindow.ScanG = new ScanGViewer(MainViewUnderlay.that.MapBase);
-					XCMainWindow.ScanG.Show(); // no owner.
+					MainViewF.ScanG = new ScanGViewer(MainViewUnderlay.that.MapBase);
+					MainViewF.ScanG.Show(); // no owner.
 				}
 				else
-					XCMainWindow.ScanG.BringToFront();
+					MainViewF.ScanG.BringToFront();
 			}
 		}
 

@@ -28,13 +28,13 @@ namespace MapView
 	/// <summary>
 	/// Instantiates a MainView screen as the basis for all user-interaction.
 	/// </summary>
-	internal sealed partial class XCMainWindow
+	internal sealed partial class MainViewF
 		:
 			Form
 	{
 		#region Events
 		internal event DontBeepEventHandler DontBeepEvent;
-		#endregion
+		#endregion Events
 
 
 		#region Fields (static)
@@ -52,7 +52,7 @@ namespace MapView
 
 
 		#region Properties (static)
-		internal static XCMainWindow that
+		internal static MainViewF that
 		{ get; private set; }
 
 		/// <summary>
@@ -154,7 +154,7 @@ namespace MapView
 		/// <summary>
 		/// This is where the user-app end of things *really* starts.
 		/// </summary>
-		internal XCMainWindow()
+		internal MainViewF()
 		{
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 			string dirSetT = Path.Combine(dirAppL, PathInfo.SettingsDirectory);
@@ -503,7 +503,7 @@ namespace MapView
 		private void CreateTree()
 		{
 			//LogFile.WriteLine("");
-			//LogFile.WriteLine("XCMainWindow.CreateTree");
+			//LogFile.WriteLine("MainViewF.CreateTree");
 
 			MapTree.BeginUpdate();
 			MapTree.Nodes.Clear();
@@ -658,7 +658,7 @@ namespace MapView
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{
-						if (!XCMainWindow.Quit)
+						if (!MainViewF.Quit)
 						{
 							it.Checked = false;
 
@@ -782,7 +782,7 @@ namespace MapView
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			if (XCMainWindow.Optionables.BringAllToFront)
+			if (MainViewF.Optionables.BringAllToFront)
 			{
 				if (!BypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
 				{
@@ -928,21 +928,21 @@ namespace MapView
 
 				case Keys.F2:
 					key = MainViewOptionables.str_AnimateSprites;
-					val = !XCMainWindow.Optionables.AnimateSprites;
+					val = !MainViewF.Optionables.AnimateSprites;
 					Options[key].Value = val;
 					Optionables.OnSpriteStateChanged(key,val);
 					break;
 
 				case Keys.F3:
 					key = MainViewOptionables.str_OpenDoors;
-					val = !XCMainWindow.Optionables.OpenDoors;
+					val = !MainViewF.Optionables.OpenDoors;
 					Options[key].Value = val;
 					Optionables.OnSpriteStateChanged(key,val);
 					break;
 
 				case Keys.F4:
 					key = MainViewOptionables.str_GridVisible;
-					val = !XCMainWindow.Optionables.GridVisible;
+					val = !MainViewF.Optionables.GridVisible;
 					Options[key].Value = val;
 					Optionables.OnOptionChanged(key,val);
 					break;
@@ -1387,7 +1387,7 @@ namespace MapView
 		{
 			string help = Path.GetDirectoryName(Application.ExecutablePath);
 				   help = Path.Combine(help, "MapView.chm");
-			Help.ShowHelp(XCMainWindow.that, "file://" + help);
+			Help.ShowHelp(MainViewF.that, "file://" + help);
 		}
 
 
@@ -1835,7 +1835,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnMapTreeMouseDown");
+			//LogFile.WriteLine("MainViewF.OnMapTreeMouseDown");
 			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
 
 			switch (e.Button)
@@ -1939,7 +1939,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAddGroupClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnAddGroupClick");
+			//LogFile.WriteLine("MainViewF.OnAddGroupClick");
 
 			using (var f = new MapTreeInputBox(
 											"Enter the label for a new Map group."
@@ -1968,7 +1968,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnEditGroupClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnEditGroupClick");
+			//LogFile.WriteLine("MainViewF.OnEditGroupClick");
 
 			using (var f = new MapTreeInputBox(
 											"Enter a new label for the Map group."
@@ -2001,7 +2001,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnDeleteGroupClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnDeleteGroupClick");
+			//LogFile.WriteLine("MainViewF.OnDeleteGroupClick");
 
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
@@ -2039,7 +2039,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAddCategoryClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnAddCategoryClick");
+			//LogFile.WriteLine("MainViewF.OnAddCategoryClick");
 
 			string labelGroup = MapTree.SelectedNode.Text;
 
@@ -2069,7 +2069,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnEditCategoryClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnEditCategoryClick");
+			//LogFile.WriteLine("MainViewF.OnEditCategoryClick");
 
 			string labelGroup = MapTree.SelectedNode.Parent.Text;
 
@@ -2102,7 +2102,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnDeleteCategoryClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnDeleteCategoryClick");
+			//LogFile.WriteLine("MainViewF.OnDeleteCategoryClick");
 
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
@@ -2144,7 +2144,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAddTilesetClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnAddTilesetClick");
+			//LogFile.WriteLine("MainViewF.OnAddTilesetClick");
 
 			string labelGroup = MapTree.SelectedNode.Parent.Text;
 			if (isGrouptypeConfigured(labelGroup))
@@ -2178,7 +2178,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnEditTilesetClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnEditTilesetClick");
+			//LogFile.WriteLine("MainViewF.OnEditTilesetClick");
 
 			string labelGroup = MapTree.SelectedNode.Parent.Parent.Text;
 			if (isGrouptypeConfigured(labelGroup))
@@ -2250,7 +2250,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnDeleteTilesetClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnDeleteTilesetClick");
+			//LogFile.WriteLine("MainViewF.OnDeleteTilesetClick");
 
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
@@ -2484,7 +2484,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnMapTreeBeforeSelect");
+			//LogFile.WriteLine("MainViewF.OnMapTreeBeforeSelect");
 			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
 
 			e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
@@ -2498,7 +2498,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeAfterSelected(object sender, TreeViewEventArgs e)
 		{
-			//LogFile.WriteLine("XCMainWindow.OnMapTreeAfterSelected");
+			//LogFile.WriteLine("MainViewF.OnMapTreeAfterSelected");
 			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
 
 			ClearSearched();
@@ -2563,7 +2563,7 @@ namespace MapView
 		private void LoadSelectedDescriptor(bool basepathDialog = false)
 		{
 			//LogFile.WriteLine("");
-			//LogFile.WriteLine("XCMainWindow.LoadSelectedDescriptor");
+			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor");
 
 			var descriptor = MapTree.SelectedNode.Tag as Descriptor;
 			if (descriptor != null)

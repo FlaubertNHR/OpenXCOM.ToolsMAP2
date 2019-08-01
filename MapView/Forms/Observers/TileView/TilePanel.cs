@@ -492,8 +492,8 @@ namespace MapView.Forms.Observers
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 				var spriteAttributes = new ImageAttributes();
-				if (XCMainWindow.Optionables.SpriteShadeEnabled)
-					spriteAttributes.SetGamma(XCMainWindow.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+				if (MainViewF.Optionables.SpriteShadeEnabled)
+					spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 				int x = 0;
 				int y = 0;

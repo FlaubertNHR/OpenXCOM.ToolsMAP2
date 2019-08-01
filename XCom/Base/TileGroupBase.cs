@@ -38,7 +38,7 @@ namespace XCom.Base
 
 		#region Methods
 		/// <summary>
-		/// Adds a category. Called by XCMainWindow.OnAddCategoryClick()
+		/// Adds a category. Called by MainViewF.OnAddCategoryClick()
 		/// NOTE: Check if the category already exists first.
 		/// </summary>
 		/// <param name="labelCategory">the label of the category to add</param>
@@ -48,7 +48,7 @@ namespace XCom.Base
 		}
 
 		/// <summary>
-		/// Deletes a category. Called by XCMainWindow.OnDeleteCategoryClick()
+		/// Deletes a category. Called by MainViewF.OnDeleteCategoryClick()
 		/// </summary>
 		/// <param name="labelCategory">the label of the category to delete</param>
 		public void DeleteCategory(string labelCategory)
@@ -59,7 +59,7 @@ namespace XCom.Base
 		/// <summary>
 		/// Creates a new category and transfers ownership of all Descriptors
 		/// from their previous Category to the specified new Category. Called
-		/// by XCMainWindow.OnEditCategoryClick()
+		/// by MainViewF.OnEditCategoryClick()
 		/// NOTE: Check if the category already exists first.
 		/// </summary>
 		/// <param name="labelCategory">the new label for the category</param>
@@ -89,7 +89,7 @@ namespace XCom.Base
 
 		/// <summary>
 		/// Deletes a tileset-descriptor. Called by
-		/// - XCMainWindow.OnDeleteTilesetClick()
+		/// - MainViewF.OnDeleteTilesetClick()
 		/// - TilesetEditor.OnAcceptClick()
 		/// NOTE: Check that category and perhaps tileset exist first.
 		/// </summary>

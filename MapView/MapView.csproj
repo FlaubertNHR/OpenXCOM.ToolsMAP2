@@ -155,11 +155,11 @@
     <Compile Include="Forms\MainView\OptionsManager.cs" />
     <Compile Include="Forms\MainView\ShowHideManager.cs" />
     <Compile Include="Forms\MainView\ToolstripFactory.cs" />
-    <Compile Include="Forms\MainView\XCMainWindow.cs">
+    <Compile Include="Forms\MainView\MainViewF.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainView\XCMainWindow.Designer.cs">
-      <DependentUpon>XCMainWindow.cs</DependentUpon>
+    <Compile Include="Forms\MainView\MainViewF.Designer.cs">
+      <DependentUpon>MainViewF.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MapInfoDetailDialog.cs" />
     <Compile Include="Forms\MapInfoDialog.cs">
@@ -312,9 +312,9 @@
     <EmbeddedResource Include="Forms\ConfigurationForm.resx">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainView\XCMainWindow.resx">
+    <EmbeddedResource Include="Forms\MainView\MainViewF.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>XCMainWindow.cs</DependentUpon>
+      <DependentUpon>MainViewF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MapInfoDetailDialog.resx">
       <DependentUpon>MapInfoDetailDialog.cs</DependentUpon>

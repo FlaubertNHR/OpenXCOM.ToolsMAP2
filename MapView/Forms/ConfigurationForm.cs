@@ -57,7 +57,7 @@ namespace MapView
 									+ " replace any custom tileset configuration");
 			}
 
-			// WORKAROUND: See note in 'XCMainWindow' cTor.
+			// WORKAROUND: See note in MainViewF cTor.
 			MaximumSize = new System.Drawing.Size(0,0); // fu.net
 
 			if (!_pathResources.FileExists())

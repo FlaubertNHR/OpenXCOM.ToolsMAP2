@@ -119,7 +119,7 @@ namespace MapView.Forms.MainView
 			_tsbScale.ToolTipText     = "autoscale";
 			_tsbScale.DisplayStyle    = ToolStripItemDisplayStyle.Image;
 			_tsbScale.Image           = Resources.scale;
-			_tsbScale.Click          += XCMainWindow.that.OnScaleClick;
+			_tsbScale.Click          += MainViewF.that.OnScaleClick;
 			_tsbScale.Checked         = true;
 			_tsbScale.Enabled         = false;
 
@@ -128,7 +128,7 @@ namespace MapView.Forms.MainView
 			_tsbScaleOut.ToolTipText  = "scale Out";
 			_tsbScaleOut.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			_tsbScaleOut.Image        = Resources.scaleOut;
-			_tsbScaleOut.Click       += XCMainWindow.that.OnScaleOutClick;
+			_tsbScaleOut.Click       += MainViewF.that.OnScaleOutClick;
 			_tsbScaleOut.Enabled      = false;
 
 			// ZoomIn btn
@@ -136,7 +136,7 @@ namespace MapView.Forms.MainView
 			_tsbScaleIn.ToolTipText   = "scale In";
 			_tsbScaleIn.DisplayStyle  = ToolStripItemDisplayStyle.Image;
 			_tsbScaleIn.Image         = Resources.scaleIn;
-			_tsbScaleIn.Click        += XCMainWindow.that.OnScaleInClick;
+			_tsbScaleIn.Click        += MainViewF.that.OnScaleInClick;
 			_tsbScaleIn.Enabled       = false;
 		}
 
@@ -392,7 +392,7 @@ namespace MapView.Forms.MainView
 		{
 			if (e.KeyChar == (char)Keys.Enter)
 			{
-				XCMainWindow.that.Search(_tstbSearch.Text);
+				MainViewF.that.Search(_tstbSearch.Text);
 				e.Handled = true;
 			}
 		}
@@ -404,7 +404,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		internal void OnClearHighlightClick(object sender, EventArgs e)
 		{
-			XCMainWindow.that.ClearSearched();
+			MainViewF.that.ClearSearched();
 			_tstbSearch.Focus();
 		}
 		#endregion Events (search)

@@ -310,7 +310,7 @@ namespace MapView
 		/// terrain verifications.
 		/// @note Terrains get changed on-the-fly and do not require an Accept
 		/// click. But the Map needs to be reloaded when things go back to
-		/// OnAdd/EditTilesetClick() in XCMainWindow.
+		/// OnAdd/EditTilesetClick() in MainViewF.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -767,9 +767,9 @@ namespace MapView
 																		TileGroup.Categories[Category][TilesetOriginal].Terrains,
 																		TilesetBasepath,
 																		TileGroup.Pal);
-												TileGroup.AddTileset(Descriptor, Category);			// NOTE: This could be done on return to XCMainWindow.OnEditTilesetClick()
+												TileGroup.AddTileset(Descriptor, Category);			// NOTE: This could be done on return to MainViewF.OnEditTilesetClick()
 																									// but then 'Descriptor' would have to be internal.
-												TileGroup.DeleteTileset(TilesetOriginal, Category);	// NOTE: This could be done on return to XCMainWindow.OnEditTilesetClick()
+												TileGroup.DeleteTileset(TilesetOriginal, Category);	// NOTE: This could be done on return to MainViewF.OnEditTilesetClick()
 																									// but then 'TilesetOriginal' would have to be internal.
 
 												GlobalChangeLabels(); // TODO: figure out how to refresh the Maptree ... ie, the tileset labels don't change.
@@ -850,8 +850,8 @@ namespace MapView
 
 		private void OnTerrainLeftClick(object sender, EventArgs e)
 		{
-			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.that.MaptreeChanged = true;
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 MainViewF.that.MaptreeChanged = true;
 
 			int sel = lbTerrainsAvailable.SelectedIndex;
 
@@ -877,8 +877,8 @@ namespace MapView
 
 		private void OnTerrainRightClick(object sender, EventArgs e)
 		{
-			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.that.MaptreeChanged = true;
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 MainViewF.that.MaptreeChanged = true;
 
 			int sel = lbTerrainsAvailable.SelectedIndex;
 
@@ -907,8 +907,8 @@ namespace MapView
 
 		private void StepTerrainEntry(int dir)
 		{
-			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.that.MaptreeChanged = true;
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 MainViewF.that.MaptreeChanged = true;
 
 			var terrains = Descriptor.Terrains;
 
@@ -947,8 +947,8 @@ namespace MapView
 
 		private void OnTerrainPasteClick(object sender, EventArgs e)
 		{
-			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.that.MaptreeChanged = true;
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 MainViewF.that.MaptreeChanged = true;
 
 			Descriptor.Terrains.Clear();
 
@@ -963,8 +963,8 @@ namespace MapView
 
 		private void OnTerrainClearClick(object sender, EventArgs e)
 		{
-			if (!XCMainWindow.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
-				 XCMainWindow.that.MaptreeChanged = true;
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+				 MainViewF.that.MaptreeChanged = true;
 
 			Descriptor.Terrains.Clear();
 			ListTerrains();
@@ -1136,8 +1136,8 @@ namespace MapView
 				}
 			}
 
-			if (changed && !XCMainWindow.that.MaptreeChanged)
-				XCMainWindow.that.MaptreeChanged = true;
+			if (changed && !MainViewF.that.MaptreeChanged)
+				MainViewF.that.MaptreeChanged = true;
 		}
 
 		/// <summary>

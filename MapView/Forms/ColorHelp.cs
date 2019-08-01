@@ -26,7 +26,7 @@ namespace MapView
 
 
 		#region Fields
-		private readonly XCMainWindow _f;
+		private readonly MainViewF _f;
 		#endregion Fields
 
 
@@ -34,7 +34,7 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal ColorHelp(XCMainWindow f)
+		internal ColorHelp(MainViewF f)
 		{
 			InitializeComponent();
 

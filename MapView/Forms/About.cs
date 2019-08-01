@@ -74,8 +74,8 @@ namespace MapView
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			XCMainWindow.that._fabout = null;
-			XCMainWindow.that.DecheckAbout();
+			MainViewF.that._fabout = null;
+			MainViewF.that.DecheckAbout();
 
 			base.OnFormClosing(e);
 		}

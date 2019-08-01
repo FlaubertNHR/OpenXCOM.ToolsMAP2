@@ -192,8 +192,8 @@ namespace MapView.Forms.Observers
 			_graphics = graphics;
 
 			var spriteAttributes = new ImageAttributes();
-			if (XCMainWindow.Optionables.SpriteShadeEnabled)
-				spriteAttributes.SetGamma(XCMainWindow.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+			if (MainViewF.Optionables.SpriteShadeEnabled)
+				spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 			if (!_inited) // TODO: break that out ->
 			{

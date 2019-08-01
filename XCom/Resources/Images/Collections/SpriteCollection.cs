@@ -120,7 +120,7 @@ namespace XCom
 		/// its TAB-file.
 		/// NOTE: a spriteset is loaded by:
 		/// 1.
-		/// XCMainWindow.LoadSelectedDescriptor()
+		/// MainViewF.LoadSelectedDescriptor()
 		/// calls MapFileService.LoadDescriptor()
 		/// calls Descriptor.GetTerrainRecords()
 		/// calls Descriptor.GetTerrainSpriteset()
@@ -131,7 +131,7 @@ namespace XCom
 		/// 3.
 		/// Also instantiated by Globals.LoadExtraSprites()
 		/// 4.
-		/// XCMainWindow..cTor also needs to load the CURSOR.
+		/// MainViewF..cTor also needs to load the CURSOR.
 		/// </summary>
 		/// <param name="bytesPck">byte array of the PCK file</param>
 		/// <param name="bytesTab">byte array of the TAB file</param>

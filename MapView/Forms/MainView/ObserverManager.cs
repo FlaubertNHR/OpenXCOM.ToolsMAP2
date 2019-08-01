@@ -117,8 +117,8 @@ namespace MapView.Forms.MainView
 		/// - TopView
 		/// - RouteView
 		/// - TopRouteView
-		/// @note Called by XCMainWindow.OnFormClosing() so this really does
-		/// close -> update registry vals.
+		/// @note Called by MainViewF.OnFormClosing() so this really does close
+		/// -> update registry vals.
 		/// </summary>
 		internal static void CloseViewers()
 		{

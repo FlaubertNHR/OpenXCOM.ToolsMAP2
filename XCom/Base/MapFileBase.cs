@@ -147,9 +147,9 @@ namespace XCom.Base
 
 		/// <summary>
 		/// User will be shown a dialog asking to save if the Map changed.
-		/// @note The setter must be mediated by XCMainWindow.MapChanged in
-		/// order to apply/remove an asterisk to/from the file-label in
-		/// MainView's statusbar.
+		/// @note The setter must be mediated by MainViewF.MapChanged in order
+		/// to apply/remove an asterisk to/from the file-label in MainView's
+		/// statusbar.
 		/// </summary>
 		public bool MapChanged
 		{ get; set; }

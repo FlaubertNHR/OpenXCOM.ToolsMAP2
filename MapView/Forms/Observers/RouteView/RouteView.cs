@@ -1561,7 +1561,7 @@ namespace MapView.Forms.Observers
 				switch (e.KeyCode)
 				{
 					case Keys.S:
-						XCMainWindow.that.OnSaveRoutesClick(null, EventArgs.Empty);
+						MainViewF.that.OnSaveRoutesClick(null, EventArgs.Empty);
 						break;
 
 					case Keys.X: _asterisk = true;
@@ -2170,7 +2170,7 @@ namespace MapView.Forms.Observers
 
 		private void OnSaveClick(object sender, EventArgs e)
 		{
-			XCMainWindow.that.OnSaveRoutesClick(null, EventArgs.Empty);
+			MainViewF.that.OnSaveRoutesClick(null, EventArgs.Empty);
 			RoutePanel.Select();
 		}
 		#endregion Events
@@ -2217,7 +2217,7 @@ namespace MapView.Forms.Observers
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{
-						if (!XCMainWindow.Quit)
+						if (!MainViewF.Quit)
 						{
 							setOptionsChecked(false);
 

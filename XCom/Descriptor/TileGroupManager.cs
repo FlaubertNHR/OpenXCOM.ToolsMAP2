@@ -45,7 +45,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Adds a group. Called by XCMainWindow.OnAddGroupClick()
+		/// Adds a group. Called by MainViewF.OnAddGroupClick()
 		/// NOTE: Check if the group already exists first.
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to add</param>
@@ -55,7 +55,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Deletes a group. Called by XCMainWindow.OnDeleteGroupClick()
+		/// Deletes a group. Called by MainViewF.OnDeleteGroupClick()
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to delete</param>
 		public void DeleteTileGroup(string labelGroup)
@@ -66,7 +66,7 @@ namespace XCom
 		/// <summary>
 		/// Creates a new tilegroup and transfers ownership of all Categories
 		/// and Descriptors from their previous Group to the specified new
-		/// Group. Called by XCMainWindow.OnEditGroupClick()
+		/// Group. Called by MainViewF.OnEditGroupClick()
 		/// NOTE: Check if the group and category already exist first.
 		/// </summary>
 		/// <param name="labelGroup">the new label for the group</param>

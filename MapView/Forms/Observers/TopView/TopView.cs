@@ -281,7 +281,7 @@ namespace MapView.Forms.Observers
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{
-						if (!XCMainWindow.Quit)
+						if (!MainViewF.Quit)
 						{
 							setOptionsChecked(false);
 

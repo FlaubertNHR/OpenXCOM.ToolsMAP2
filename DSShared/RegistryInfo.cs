@@ -130,7 +130,7 @@ namespace DSShared
 		{
 			switch (f.Name)
 			{
-				case "XCMainWindow":     return MainView;		// is in manifest
+				case "MainViewF":        return MainView;		// is in manifest
 				case "TileViewForm":     return TileView;		// is in manifest
 				case "TopViewForm":      return TopView;		// is in manifest
 				case "RouteViewForm":    return RouteView;		// is in manifest

@@ -20,7 +20,7 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Loads all terrains for a Map. Called by XCMainWindow.LoadSelectedDescriptor().
+		/// Loads all terrains for a Map. Called by MainViewF.LoadSelectedDescriptor().
 		/// @note Check that 'descriptor' is not null before call.
 		/// </summary>
 		/// <param name="descriptor"></param>

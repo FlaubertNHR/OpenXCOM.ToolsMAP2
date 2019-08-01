@@ -89,7 +89,7 @@ namespace MapView
 			RegistryInfo.UpdateRegistry(this);
 
 			MenuManager.UncheckScanG();
-			XCMainWindow.ScanG = null;
+			MainViewF.ScanG = null;
 		}
 
 		/// <summary>
@@ -116,8 +116,8 @@ namespace MapView
 			var graphics = e.Graphics;
 
 			var spriteAttributes = new ImageAttributes();
-			if (XCMainWindow.Optionables.SpriteShadeEnabled)
-				spriteAttributes.SetGamma(XCMainWindow.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+			if (MainViewF.Optionables.SpriteShadeEnabled)
+				spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 
 			var pic = new Bitmap(

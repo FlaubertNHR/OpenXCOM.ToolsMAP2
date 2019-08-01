@@ -37,7 +37,7 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties
-		private XCMainWindow MainView;
+		private MainViewF MainView;
 
 		private MainViewOverlay MainViewOverlay
 		{ get; set; }
@@ -74,7 +74,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal MainViewUnderlay(XCMainWindow main)
+		internal MainViewUnderlay(MainViewF main)
 		{
 			MainView = main;
 
@@ -137,8 +137,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Forces an OnResize event for this Panel. Grants access for
-		/// XCMainWindow to place a call or two.
+		/// Forces an OnResize event for this Panel. Grants access for MainViewF
+		/// to place a call or two.
 		/// </summary>
 		internal void ForceResize()
 		{
@@ -246,7 +246,7 @@ namespace MapView.Forms.MainView
 
 //		/// <summary>
 //		/// A workaround for maximizing the parent-form. See notes at
-//		/// XCMainWindow.OnResize(). Note that this workaround pertains only to
+//		/// MainViewF.OnResize(). Note that this workaround pertains only to
 //		/// cases when AutoScale=FALSE.
 //		/// </summary>
 //		internal void ResetScrollers()

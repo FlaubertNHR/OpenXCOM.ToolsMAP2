@@ -142,7 +142,7 @@ namespace PckView
 
 			InitializeComponent();
 
-			// WORKAROUND: See note in 'XCMainWindow' cTor.
+			// WORKAROUND: See note in MainViewF cTor.
 			MaximumSize = new Size(0,0); // fu.net
 
 			if (!IsInvoked)

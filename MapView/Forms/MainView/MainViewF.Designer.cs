@@ -1,6 +1,6 @@
 namespace MapView
 {
-	partial class XCMainWindow
+	partial class MainViewF
 	{
 		#region Designer
 		/// <summary>
@@ -80,7 +80,7 @@ namespace MapView
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XCMainWindow));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainViewF));
 			this.mmMain = new System.Windows.Forms.MainMenu(this.components);
 			this.menuFile = new System.Windows.Forms.MenuItem();
 			this.miSaveAll = new System.Windows.Forms.MenuItem();
@@ -424,7 +424,7 @@ namespace MapView
 			this.tsTools.Size = new System.Drawing.Size(107, 25);
 			this.tsTools.TabIndex = 0;
 			// 
-			// XCMainWindow
+			// MainViewF
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.SystemColors.Control;
@@ -437,7 +437,7 @@ namespace MapView
 			this.MaximumSize = new System.Drawing.Size(800, 480);
 			this.Menu = this.mmMain;
 			this.MinimumSize = new System.Drawing.Size(800, 480);
-			this.Name = "XCMainWindow";
+			this.Name = "MainViewF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Map Editor ||";
 			this.ssMain.ResumeLayout(false);

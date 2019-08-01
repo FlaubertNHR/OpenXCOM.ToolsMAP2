@@ -20,7 +20,7 @@ namespace MapView
 
 
 		#region Fields
-		private readonly XCMainWindow _f;
+		private readonly MainViewF _f;
 		private readonly MapFile _file;
 
 		private readonly HashSet<int> _sprites = new HashSet<int>();
@@ -34,7 +34,7 @@ namespace MapView
 
 
 		#region cTor
-		internal MapInfoDialog(XCMainWindow f, MapFile file)
+		internal MapInfoDialog(MainViewF f, MapFile file)
 		{
 			InitializeComponent();
 
@@ -55,7 +55,7 @@ namespace MapView
 		#region Events (override)
 		/// <summary>
 		/// Handles this dialog's closing event. Sets the static location and
-		/// nulls the dialog in XCMainWindow.
+		/// nulls the dialog in MainViewF.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)

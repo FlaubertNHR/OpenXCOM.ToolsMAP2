@@ -28,9 +28,9 @@ namespace MapView.Forms.MainView
 		#region Methods (static)
 		/// <summary>
 		/// Adds an Options-object by (viewer)key to the types-dictionary.
-		/// @note Is used by 'XCMainWindow..cTor' to assign MainView's
-		/// options-type and by 'ViewersManager.SetAsObserver()' to assign
-		/// TileView's, TopView's, and RouteView's options-types.
+		/// @note Is used by 'MainViewF..cTor' to assign MainView's options-type
+		/// and by 'ViewersManager.SetAsObserver()' to assign TileView's,
+		/// TopView's, and RouteView's options-types.
 		/// </summary>
 		/// <param name="key">a viewer by string - see 'RegistryInfo' constants</param>
 		/// <param name="val">an Options object</param>

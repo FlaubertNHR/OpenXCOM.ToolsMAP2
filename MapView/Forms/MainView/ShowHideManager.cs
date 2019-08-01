@@ -43,7 +43,7 @@ namespace MapView.Forms.MainView
 					_visible.Add(f);
 
 			foreach (var f in _visible)
-				if (f.Name != "XCMainWindow")
+				if (f.Name != "MainViewF")
 					f.Hide();
 		}
 
@@ -56,17 +56,17 @@ namespace MapView.Forms.MainView
 		{
 			foreach (var f in _visible)
 			{
-				if (f.Name != "XCMainWindow")
+				if (f.Name != "MainViewF")
 				{
 					f.Show();
 					f.WindowState = FormWindowState.Normal;
 				}
 				else // bring MainView to its previous position in the z-order
 				{
-					XCMainWindow.BypassActivatedEvent = true;
+					MainViewF.BypassActivatedEvent = true;
 					f.TopMost = true;
 					f.TopMost = false;
-					XCMainWindow.BypassActivatedEvent = false;
+					MainViewF.BypassActivatedEvent = false;
 				}
 			}
 		}
