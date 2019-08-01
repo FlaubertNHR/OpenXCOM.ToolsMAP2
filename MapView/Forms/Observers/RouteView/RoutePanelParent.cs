@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MapView.Forms.MainView;
 
 using XCom;
+using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -276,7 +277,7 @@ namespace MapView.Forms.Observers
 
 				if (!MainViewOverlay.that.FirstClick)
 				{
-					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire SelectLocation
+					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire SelectLocation event
 
 					var loc = new Point(0,0);
 					MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -305,7 +306,8 @@ namespace MapView.Forms.Observers
 				else if (!keyData.HasFlag(Keys.Shift))
 				{
 					var loc = new Point(0,0);
-					int vert = 0;
+					int dir = MapFileBase.LEVEL_no;
+
 					switch (keyData)
 					{
 						case Keys.Up:    loc.X = -1; loc.Y = -1; break;
@@ -319,9 +321,9 @@ namespace MapView.Forms.Observers
 						case Keys.Home:     loc.X = -1; break;
 
 //						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
-						case Keys.Add:      vert = +1; break;
+						case Keys.Add:      dir = MapFileBase.LEVEL_Dn; break;
 //						case Keys.Insert:
-						case Keys.Subtract: vert = -1; break;
+						case Keys.Subtract: dir = MapFileBase.LEVEL_Up; break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0)
@@ -331,7 +333,7 @@ namespace MapView.Forms.Observers
 						if (   r > -1 && r < MapFile.MapSize.Rows
 							&& c > -1 && c < MapFile.MapSize.Cols)
 						{
-							MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation
+							MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation event
 
 							loc.X = c; loc.Y = r;
 							MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -346,15 +348,13 @@ namespace MapView.Forms.Observers
 							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 						}
 					}
-					else if (vert != 0)
+					else if (dir != MapFileBase.LEVEL_no)
 					{
-						int level = MapFile.Level + vert;
+						int level = MapFile.Level + dir;
 						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
-							ObserverManager.RouteView.Control.doMousewheel(new MouseEventArgs(
-																							MouseButtons.None,
-																							0, 0,0, vert));
-							MapFile.Location = new MapLocation( // fire SelectLocation
+							MapFile.ChangeLevel(dir);			// fire SelectLevel event
+							MapFile.Location = new MapLocation(	// fire SelectLocation event
 															MapFile.Location.Row,
 															MapFile.Location.Col,
 															level);
@@ -366,7 +366,8 @@ namespace MapView.Forms.Observers
 					if (NodeSelected != null)
 					{
 						var loc = new Point(0,0);
-						int vert = 0;
+						int dir = MapFileBase.LEVEL_no;
+
 						switch (keyData)
 						{
 							case Keys.Shift | Keys.Up:    loc.X = -1; loc.Y = -1; break;
@@ -380,9 +381,9 @@ namespace MapView.Forms.Observers
 							case Keys.Shift | Keys.Home:     loc.X = -1; break;
 
 //							case Keys.Shift | Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
-							case Keys.Shift | Keys.Add:      vert = +1; break;
+							case Keys.Shift | Keys.Add:      dir = MapFileBase.LEVEL_Dn; break;
 //							case Keys.Shift | Keys.Insert:
-							case Keys.Shift | Keys.Subtract: vert = -1; break;
+							case Keys.Shift | Keys.Subtract: dir = MapFileBase.LEVEL_Up; break;
 						}
 
 						if (loc.X != 0 || loc.Y != 0)
@@ -395,7 +396,7 @@ namespace MapView.Forms.Observers
 							{
 								RouteView.Dragnode = NodeSelected;
 
-								MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation
+								MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation event
 
 								var args = new RoutePanelEventArgs(
 																MouseButtons.None,
@@ -407,9 +408,9 @@ namespace MapView.Forms.Observers
 								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 							}
 						}
-						else if (vert != 0)
+						else if (dir != MapFileBase.LEVEL_no)
 						{
-							int level = MapFile.Level + vert;
+							int level = MapFile.Level + dir;
 							if (level > -1 && level < MapFile.MapSize.Levs
 								&& MapFile[MapFile.Location.Row,
 										   MapFile.Location.Col,
@@ -417,10 +418,8 @@ namespace MapView.Forms.Observers
 							{
 								RouteView.Dragnode = NodeSelected;
 
-								ObserverManager.RouteView.Control.doMousewheel(new MouseEventArgs(
-																							MouseButtons.None,
-																							0, 0,0, vert));
-								MapFile.Location = new MapLocation( // fire SelectLocation
+								MapFile.ChangeLevel(dir);			// fire SelectLevel event
+								MapFile.Location = new MapLocation(	// fire SelectLocation event
 																MapFile.Location.Row,
 																MapFile.Location.Col,
 																level);
