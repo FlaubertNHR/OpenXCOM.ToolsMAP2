@@ -691,25 +691,15 @@ namespace MapView
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			Quit = true;
-			e.Cancel = false;
 
 			if (SaveAlertMap() == DialogResult.Cancel) // NOTE: do not short-circuit these ->
-			{
 				Quit = false;
-				e.Cancel = true;
-			}
 
 			if (SaveAlertRoutes() == DialogResult.Cancel)
-			{
 				Quit = false;
-				e.Cancel = true;
-			}
 
 			if (SaveAlertMaptree() == DialogResult.Cancel)
-			{
 				Quit = false;
-				e.Cancel = true;
-			}
 
 			if (Quit)
 			{
@@ -723,8 +713,6 @@ namespace MapView
 //					using (var keyMapView = keySoftware.CreateSubKey(DSShared.Windows.RegistryInfo.MapViewRegistry))
 //					using (var keyMainView = keyMapView.CreateSubKey("MainView"))
 //					{
-//						_mainViewsManager.CloseAllViewers();
-//						WindowState = FormWindowState.Normal;
 //						keyMainView.SetValue("Left",   Left);
 //						keyMainView.SetValue("Top",    Top);
 //						keyMainView.SetValue("Width",  Width);
@@ -735,6 +723,8 @@ namespace MapView
 //					}
 //				}
 			}
+			else
+				e.Cancel = true;
 
 			base.OnFormClosing(e);
 		}
@@ -1247,6 +1237,7 @@ namespace MapView
 			}
 		}
 
+
 		/// <summary>
 		/// Opens the Configuration Editor.
 		/// </summary>
@@ -1326,11 +1317,11 @@ namespace MapView
 						}
 						break;
 
-					case DialogResult.Ignore:	// TODO: A bypass-variable should be implemented to deal
-						MapChanged =			// with Changes so that the real Changed vals don't get wiped.
-						ObserverManager.RouteView   .Control     .RoutesChanged =
-						ObserverManager.TopRouteView.ControlRoute.RoutesChanged =
-						MaptreeChanged = false;
+					case DialogResult.Ignore:
+//						MapChanged =
+//						ObserverManager.RouteView   .Control     .RoutesChanged =
+//						ObserverManager.TopRouteView.ControlRoute.RoutesChanged =
+//						MaptreeChanged = false;
 
 						break;
 				}
