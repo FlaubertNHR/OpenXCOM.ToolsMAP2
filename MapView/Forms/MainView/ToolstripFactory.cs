@@ -4,6 +4,8 @@ using System.Windows.Forms;
 
 using MapView.Properties;
 
+using XCom.Base;
+
 
 namespace MapView.Forms.MainView
 {
@@ -360,7 +362,7 @@ namespace MapView.Forms.MainView
 			var @base = MainViewOverlay.MapBase;
 			if (@base != null)
 			{
-				@base.LevelDown();
+				@base.ChangeLevel(MapFileBase.LEVEL_Dn);
 				SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 			}
 		}
@@ -375,7 +377,7 @@ namespace MapView.Forms.MainView
 			var @base = MainViewOverlay.MapBase;
 			if (@base != null)
 			{
-				@base.LevelUp();
+				@base.ChangeLevel(MapFileBase.LEVEL_Up);
 				SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
 			}
 		}

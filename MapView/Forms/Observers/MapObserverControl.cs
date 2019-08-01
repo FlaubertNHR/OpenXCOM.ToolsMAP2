@@ -79,8 +79,11 @@ namespace MapView.Forms.Observers
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);
-			if      (e.Delta < 0) MapBase.LevelUp();
-			else if (e.Delta > 0) MapBase.LevelDown();
+
+			int dir = MapFileBase.LEVEL_no;
+			if      (e.Delta < 0) dir = MapFileBase.LEVEL_Up;
+			else if (e.Delta > 0) dir = MapFileBase.LEVEL_Dn;
+			MapBase.ChangeLevel(dir);
 
 			ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
 		}

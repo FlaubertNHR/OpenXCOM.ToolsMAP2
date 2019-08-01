@@ -695,8 +695,10 @@ namespace MapView.Forms.MainView
 
 			if (MapBase != null)
 			{
-				if      (e.Delta < 0) MapBase.LevelUp();
-				else if (e.Delta > 0) MapBase.LevelDown();
+				int dir = MapFileBase.LEVEL_no;
+				if      (e.Delta < 0) dir = MapFileBase.LEVEL_Up;
+				else if (e.Delta > 0) dir = MapFileBase.LEVEL_Dn;
+				MapBase.ChangeLevel(dir);
 
 				if (e.Clicks == TARGETER_MOUSE)
 				{

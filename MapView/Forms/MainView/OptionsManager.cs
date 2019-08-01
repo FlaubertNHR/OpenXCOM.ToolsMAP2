@@ -28,11 +28,11 @@ namespace MapView.Forms.MainView
 		#region Methods (static)
 		/// <summary>
 		/// Adds an Options-object by (viewer)key to the types-dictionary.
-		/// @note Is used by 'MainViewF..cTor' to assign MainView's options-type
-		/// and by 'ViewersManager.SetAsObserver()' to assign TileView's,
+		/// @note Is used by MainViewF..cTor to assign MainView's options-type
+		/// and by ViewersManager.SetAsObserver() to assign TileView's,
 		/// TopView's, and RouteView's options-types.
 		/// </summary>
-		/// <param name="key">a viewer by string - see 'RegistryInfo' constants</param>
+		/// <param name="key">a viewer by string - see RegistryInfo constants</param>
 		/// <param name="val">an Options object</param>
 		internal static void setOptionsType(string key, Options val)
 		{
@@ -41,7 +41,7 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Gets the Options-object for MainView.
-		/// @note Is used by 'MenuManager'.
+		/// @note Is used by MenuManager.
 		/// </summary>
 		/// <returns></returns>
 		internal static Options getMainOptions()

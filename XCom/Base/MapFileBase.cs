@@ -18,6 +18,7 @@ namespace XCom.Base
 		public delegate void SelectLevelEvent(SelectLevelEventArgs e);
 		#endregion Delegates
 
+
 		#region Events
 		public event SelectLocationEvent SelectLocation;
 		public event SelectLevelEvent SelectLevel;
@@ -39,6 +40,10 @@ namespace XCom.Base
 		public const int CHANGED_NOT = 0;
 		public const int CHANGED_MAP = 1;
 		public const int CHANGED_NOD = 2;
+
+		public const int LEVEL_Dn = +1;
+		public const int LEVEL_no =  0;
+		public const int LEVEL_Up = -1;
 		#endregion Fields (static)
 
 
@@ -214,21 +219,23 @@ namespace XCom.Base
 
 		#region Methods
 		/// <summary>
-		/// Changes the 'Level' property.
+		/// Changes the view-level and fires the SelectLevel event.
 		/// </summary>
-		public void LevelUp()
+		/// <param name="dir">+1 is down, -1 is up</param>
+		public void ChangeLevel(int dir)
 		{
-			if (Level > 0)
-				--Level; // fire SelectLevel
-		}
+			switch (dir)
+			{
+				case LEVEL_Dn:
+					if (Level != MapSize.Levs - 1)
+						++Level;
+					break;
 
-		/// <summary>
-		/// Changes the 'Level' property.
-		/// </summary>
-		public void LevelDown()
-		{
-			if (Level < MapSize.Levs - 1)
-				++Level; // fire SelectLevel
+				case LEVEL_Up:
+					if (Level != 0)
+						--Level;
+					break;
+			}
 		}
 
 		/// <summary>
