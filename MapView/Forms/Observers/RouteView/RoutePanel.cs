@@ -56,6 +56,25 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
+		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over lozenge
+		private GraphicsPath LozSelector
+		{
+			get { return _lozSelector; }
+		}
+
+		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // click/drag lozenge
+		private GraphicsPath LozSelected
+		{
+			get { return _lozSelected; }
+		}
+
+		private readonly GraphicsPath _lozSpotted = new GraphicsPath(); // go-button lozenge
+		private GraphicsPath LozSpotted
+		{
+			get { return _lozSpotted; }
+		}
+
+
 		private Point _spot = new Point(-1,-1);
 		/// <summary>
 		/// The location of the tile that is highlighted by a mouse-overed Go
@@ -86,7 +105,26 @@ namespace MapView.Forms.Observers
 		#endregion Properties (static)
 
 
+		#region cTor
+		internal RoutePanel()
+		{
+			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;
+		}
+		#endregion cTor
+
+
 		#region Events (override)
+		protected override void OnResize(EventArgs e)
+		{
+			if (MapFile != null)
+			{
+				base.OnResize(e);
+				PathSelectedLozenge();
+			}
+		}
+
+
+
 		/// <summary>
 		/// You know the drill ... Paint it, Black
 		/// black as night
@@ -903,5 +941,89 @@ namespace MapView.Forms.Observers
 			}
 		}
 		#endregion Methods (draw)
+
+
+		#region Methods (path)
+		/// <summary>
+		/// Sets the graphics-path for a lozenge-border around the tile that
+		/// is currently mouse-overed.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		private void PathSelectorLozenge(int x, int y)
+		{
+			int halfWidth  = BlobService.HalfWidth;
+			int halfHeight = BlobService.HalfHeight;
+
+			var p0 = new Point(x,             y);
+			var p1 = new Point(x + halfWidth, y + halfHeight);
+			var p2 = new Point(x,             y + halfHeight * 2);
+			var p3 = new Point(x - halfWidth, y + halfHeight);
+
+			LozSelector.Reset();
+			LozSelector.AddLine(p0, p1);
+			LozSelector.AddLine(p1, p2);
+			LozSelector.AddLine(p2, p3);
+			LozSelector.CloseFigure();
+		}
+
+		/// <summary>
+		/// Sets the graphics-path for a lozenge-border around all tiles that
+		/// are selected or being selected.
+		/// </summary>
+		private void PathSelectedLozenge()
+		{
+			var a = MainViewOverlay.that.GetDragBeg_abs();
+			var b = MainViewOverlay.that.GetDragEnd_abs();
+
+			int halfWidth  = BlobService.HalfWidth;
+			int halfHeight = BlobService.HalfHeight;
+
+			var p0 = new Point(
+							Origin.X + (a.X - a.Y) * halfWidth,
+							Origin.Y + (a.X + a.Y) * halfHeight);
+			var p1 = new Point(
+							Origin.X + (b.X - a.Y) * halfWidth  + halfWidth,
+							Origin.Y + (b.X + a.Y) * halfHeight + halfHeight);
+			var p2 = new Point(
+							Origin.X + (b.X - b.Y) * halfWidth,
+							Origin.Y + (b.X + b.Y) * halfHeight + halfHeight * 2);
+			var p3 = new Point(
+							Origin.X + (a.X - b.Y) * halfWidth  - halfWidth,
+							Origin.Y + (a.X + b.Y) * halfHeight + halfHeight);
+
+			LozSelected.Reset();
+			LozSelected.AddLine(p0, p1);
+			LozSelected.AddLine(p1, p2);
+			LozSelected.AddLine(p2, p3);
+			LozSelected.CloseFigure();
+
+			Refresh(); // fast update.
+		}
+
+		/// <summary>
+		/// Sets the graphics-path for a lozenge-border around a "spotted" node
+		/// - a node the linkslot to which is currently overed.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		private void PathSpottedLozenge(int x, int y)
+		{
+			int halfWidth  = BlobService.HalfWidth;
+			int halfHeight = BlobService.HalfHeight;
+
+			var p0 = new Point(x,             y);
+			var p1 = new Point(x + halfWidth, y + halfHeight);
+			var p2 = new Point(x,             y + halfHeight * 2);
+			var p3 = new Point(x - halfWidth, y + halfHeight);
+
+			LozSpotted.Reset();
+			LozSpotted.AddLine(p0, p1);
+			LozSpotted.AddLine(p1, p2);
+			LozSpotted.AddLine(p2, p3);
+			LozSpotted.CloseFigure();
+		}
+		#endregion Methods (path)
 	}
 }

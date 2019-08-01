@@ -96,24 +96,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over lozenge
-		internal protected GraphicsPath LozSelector
-		{
-			get { return _lozSelector; }
-		}
-
-		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // click/drag lozenge
-		internal protected GraphicsPath LozSelected
-		{
-			get { return _lozSelected; }
-		}
-
-		private readonly GraphicsPath _lozSpotted = new GraphicsPath(); // go-button lozenge
-		internal protected GraphicsPath LozSpotted
-		{
-			get { return _lozSpotted; }
-		}
-
 		private readonly DrawBlobService _blobService = new DrawBlobService();
 		internal protected DrawBlobService BlobService
 		{
@@ -124,23 +106,24 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiated as the parent of RoutePanel which uses a default
-		/// cTor.
+		/// cTor. Instantiated only as the parent of RoutePanel.
 		/// </summary>
 		internal protected RoutePanelParent()
 		{
-			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;
+			var t1 = new Timer();	// because the mouse OnLeave event doesn't fire when the mouse
+			t1.Interval = 250;		// moves over a different form before actually "leaving" this
+			t1.Enabled = true;		// control. btw, this is only to stop the overlay from drawing
+			t1.Tick += t1_Tick;		// on both RouteView and TopRouteView(Route) simultaneously.
+		}							// so uh yeah it's overkill - Good Lord it works.
+		#endregion cTor				// Plus it clears the overed infotext tile-coordinates.
 
 
-			var t1 = new Timer();	// because the mouse OnLeave event doesn't fire
-			t1.Interval = 250;		// when the mouse moves over a different form before
-			t1.Enabled = true;		// actually "leaving" this control.
-			t1.Tick += t1_Tick;		// btw, this is only to stop the overlay from drawing
-		}							// on both RouteView and TopRouteView(Route) simultaneously.
-		#endregion cTor				// so uh yeah it's overkill
-									// Good Lord it works.
-									// ... and it clears the overed infotext tile-coordinates.
 		#region Events
+		/// <summary>
+		/// A ticker that checks if the mouse has left the building.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void t1_Tick(object sender, EventArgs e)
 		{
 			if (!Bounds.Contains(PointToClient(Cursor.Position)))
@@ -152,12 +135,20 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (override)
+		/// <summary>
+		/// Ensures that a ticker tick happens pronto.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
 			t1_Tick(this, e);
 		}
 
+		/// <summary>
+		/// Fires from (child)RoutePanel.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
 			if (MapFile != null)
@@ -186,10 +177,6 @@ namespace MapView.Forms.Observers
 
 				BlobService.HalfWidth  = HalfWidth;
 				BlobService.HalfHeight = HalfHeight;
-
-				PathSelectedLozenge();
-
-				Refresh();
 			}
 		}
 
@@ -449,81 +436,6 @@ namespace MapView.Forms.Observers
 			}
 		}
 
-
-		/// <summary>
-		/// Sets the graphics-path for a lozenge-border around the tile that
-		/// is currently mouse-overed.
-		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <returns></returns>
-		internal protected void PathSelectorLozenge(int x, int y)
-		{
-			int halfWidth  = BlobService.HalfWidth;
-			int halfHeight = BlobService.HalfHeight;
-
-			var p0 = new Point(x,             y);
-			var p1 = new Point(x + halfWidth, y + halfHeight);
-			var p2 = new Point(x,             y + halfHeight * 2);
-			var p3 = new Point(x - halfWidth, y + halfHeight);
-
-			LozSelector.Reset();
-			LozSelector.AddLine(p0, p1);
-			LozSelector.AddLine(p1, p2);
-			LozSelector.AddLine(p2, p3);
-			LozSelector.CloseFigure();
-		}
-
-		/// <summary>
-		/// Sets the graphics-path for a lozenge-border around all tiles that
-		/// are selected or being selected.
-		/// </summary>
-		private void PathSelectedLozenge()
-		{
-			var a = MainViewOverlay.that.GetDragBeg_abs();
-			var b = MainViewOverlay.that.GetDragEnd_abs();
-
-			int halfWidth  = BlobService.HalfWidth;
-			int halfHeight = BlobService.HalfHeight;
-
-			var p0 = new Point(
-							Origin.X + (a.X - a.Y) * halfWidth,
-							Origin.Y + (a.X + a.Y) * halfHeight);
-			var p1 = new Point(
-							Origin.X + (b.X - a.Y) * halfWidth  + halfWidth,
-							Origin.Y + (b.X + a.Y) * halfHeight + halfHeight);
-			var p2 = new Point(
-							Origin.X + (b.X - b.Y) * halfWidth,
-							Origin.Y + (b.X + b.Y) * halfHeight + halfHeight * 2);
-			var p3 = new Point(
-							Origin.X + (a.X - b.Y) * halfWidth  - halfWidth,
-							Origin.Y + (a.X + b.Y) * halfHeight + halfHeight);
-
-			LozSelected.Reset();
-			LozSelected.AddLine(p0, p1);
-			LozSelected.AddLine(p1, p2);
-			LozSelected.AddLine(p2, p3);
-			LozSelected.CloseFigure();
-
-			Refresh();
-		}
-
-		internal protected void PathSpottedLozenge(int x, int y)
-		{
-			int halfWidth  = BlobService.HalfWidth;
-			int halfHeight = BlobService.HalfHeight;
-
-			var p0 = new Point(x,             y);
-			var p1 = new Point(x + halfWidth, y + halfHeight);
-			var p2 = new Point(x,             y + halfHeight * 2);
-			var p3 = new Point(x - halfWidth, y + halfHeight);
-
-			LozSpotted.Reset();
-			LozSpotted.AddLine(p0, p1);
-			LozSpotted.AddLine(p1, p2);
-			LozSpotted.AddLine(p2, p3);
-			LozSpotted.CloseFigure();
-		}
 
 		/// <summary>
 		/// Gets the tile contained at (x,y) wrt client-area in local screen

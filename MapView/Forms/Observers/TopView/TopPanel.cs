@@ -180,7 +180,7 @@ namespace MapView.Forms.Observers
 		/// Sets the graphics-path for a lozenge-border around all tiles that
 		/// are selected or being selected.
 		/// </summary>
-		internal void PathSelectedLozenge()
+		private void PathSelectedLozenge()
 		{
 			var a = MainViewOverlay.that.GetDragBeg_abs();
 			var b = MainViewOverlay.that.GetDragEnd_abs();
@@ -207,7 +207,7 @@ namespace MapView.Forms.Observers
 			_lozSelected.AddLine(p2, p3);
 			_lozSelected.CloseFigure();
 
-			Refresh();
+			Refresh(); // fast update.
 		}
 
 		/// <summary>
