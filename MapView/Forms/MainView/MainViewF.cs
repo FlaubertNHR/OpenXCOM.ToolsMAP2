@@ -1185,7 +1185,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnQuitClick(object sender, EventArgs e)
+		internal void OnQuitClick(object sender, EventArgs e)
 		{
 			Close();
 		}

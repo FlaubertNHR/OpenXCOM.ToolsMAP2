@@ -203,6 +203,12 @@ namespace MapView.Forms.Observers
 						break;
 				}
 			}
+			else if (e.KeyCode == Keys.Q
+				&& (e.Modifiers & Keys.Control) == Keys.Control)
+			{
+				e.SuppressKeyPress = true;
+				MainViewF.that.OnQuitClick(null, EventArgs.Empty);
+			}
 			else if (!MenuManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
 				if (tabControl.SelectedIndex == 0) // Top

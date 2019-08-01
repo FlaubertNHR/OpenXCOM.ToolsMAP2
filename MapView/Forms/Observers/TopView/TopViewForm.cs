@@ -139,6 +139,12 @@ namespace MapView.Forms.Observers
 				e.SuppressKeyPress = true;
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 			}
+			else if (e.KeyCode == Keys.Q
+				&& (e.Modifiers & Keys.Control) == Keys.Control)
+			{
+				e.SuppressKeyPress = true;
+				MainViewF.that.OnQuitClick(null, EventArgs.Empty);
+			}
 			else if (!MenuManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
 			{
 				QuadrantType quadtype = QuadrantType.None;

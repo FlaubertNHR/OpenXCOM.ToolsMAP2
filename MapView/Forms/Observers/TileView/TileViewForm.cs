@@ -128,6 +128,12 @@ namespace MapView.Forms.Observers
 				e.SuppressKeyPress = true;
 				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 			}
+			else if (e.KeyCode == Keys.Q
+				&& (e.Modifiers & Keys.Control) == Keys.Control)
+			{
+				e.SuppressKeyPress = true;
+				MainViewF.that.OnQuitClick(null, EventArgs.Empty);
+			}
 			else if (!MenuManager.ViewerKeyDown(e) // NOTE: this can suppress the key
 				&& Control.GetSelectedPanel().Focused)
 			{
@@ -147,7 +153,11 @@ namespace MapView.Forms.Observers
 		#endregion Events (override)
 
 
+
 		#region Designer
+		private System.ComponentModel.IContainer components = null;
+
+
 		/// <summary>
 		/// Cleans up any resources being used.
 		/// </summary>
@@ -183,8 +193,6 @@ namespace MapView.Forms.Observers
 			this.ResumeLayout(false);
 
 		}
-
-		private System.ComponentModel.IContainer components = null;
 		#endregion Designer
 	}
 }
