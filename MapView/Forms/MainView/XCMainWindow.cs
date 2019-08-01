@@ -202,7 +202,7 @@ namespace MapView
 			if (!pathResources.FileExists() || !pathTilesets.FileExists()) // safety. The Configurator shall demand that both these files get created.
 			{
 				LogFile.WriteLine("Resources or Tilesets file does not exist: quit MapView.");
-				Environment.Exit(0);
+				Process.GetCurrentProcess().Kill();
 			}
 
 

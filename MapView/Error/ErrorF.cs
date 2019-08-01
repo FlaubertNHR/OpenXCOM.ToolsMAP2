@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -29,7 +30,7 @@ namespace MapView.Error
 		#region Events
 		private void click_Terminate(object sender, EventArgs e)
 		{
-			Environment.Exit(0);
+			Process.GetCurrentProcess().Kill();
 		}
 		#endregion Events
 	}

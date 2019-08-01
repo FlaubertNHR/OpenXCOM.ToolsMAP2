@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -241,7 +242,7 @@ namespace ConfigConverter
 									else
 									{
 										MessageBox.Show(terminate(key1));
-										Environment.Exit(0);
+										Process.GetCurrentProcess().Kill();
 									}
 								}
 
@@ -301,7 +302,7 @@ namespace ConfigConverter
 									else
 									{
 										MessageBox.Show(terminate(key1));
-										Environment.Exit(0);
+										Process.GetCurrentProcess().Kill();
 									}
 								}
 
@@ -361,7 +362,7 @@ namespace ConfigConverter
 									else
 									{
 										MessageBox.Show(terminate(terrains));
-										Environment.Exit(0);
+										Process.GetCurrentProcess().Kill();
 									}
 								}
 
@@ -639,7 +640,7 @@ namespace ConfigConverter
 							else
 							{
 								MessageBox.Show(terminate(key1));
-								Environment.Exit(0);
+								Process.GetCurrentProcess().Kill();
 							}
 						}
 
@@ -670,7 +671,7 @@ namespace ConfigConverter
 							else
 							{
 								MessageBox.Show(terminate(key1));
-								Environment.Exit(0);
+								Process.GetCurrentProcess().Kill();
 							}
 						}
 
