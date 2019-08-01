@@ -197,7 +197,7 @@ namespace MapView.Forms.Observers
 				DrawRose();
 
 				if (RouteView.Optionables.ShowPriorityBars)
-					DrawNodeImportanceMeters();
+					DrawNodeMeters();
 
 				if (RouteView.Optionables.ShowOverlay && CursorPosition.X != -1)
 					DrawInfoOverlay();
@@ -573,7 +573,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Draws the node importance bars.
 		/// </summary>
-		private void DrawNodeImportanceMeters()
+		private void DrawNodeMeters()
 		{
 			int startX = Origin.X;
 			int startY = Origin.Y;
@@ -598,8 +598,8 @@ namespace MapView.Forms.Observers
 						int infoboxX = x - HalfWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up
 						int infoboxY = y + HalfHeight - NodeValMax / 2;	// vertical line indicator when panel is small sized.
 
-						DrawImportanceMeter(infoboxX,     infoboxY, (int)node.Spawn,  Brushes.LightCoral);
-						DrawImportanceMeter(infoboxX + 3, infoboxY, (int)node.Patrol, Brushes.DeepSkyBlue);
+						DrawNodeMeter(infoboxX,     infoboxY, (int)node.Spawn,  Brushes.LightCoral);
+						DrawNodeMeter(infoboxX + 3, infoboxY, (int)node.Patrol, Brushes.DeepSkyBlue);
 					}
 				}
 				startX -= HalfWidth;
@@ -614,7 +614,7 @@ namespace MapView.Forms.Observers
 		/// <param name="infoboxY"></param>
 		/// <param name="value"></param>
 		/// <param name="color"></param>
-		private void DrawImportanceMeter(
+		private void DrawNodeMeter(
 				int infoboxX,
 				int infoboxY,
 				int value,
