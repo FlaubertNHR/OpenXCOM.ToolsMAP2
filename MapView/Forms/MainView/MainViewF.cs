@@ -757,9 +757,9 @@ namespace MapView
 				ObserverManager.TileView.Control.McdInfobox.Close(); // close TileView's McdInfo dialog
 
 			if (RouteView.RoutesInfo != null)
-				RouteView.RoutesInfo.Close(); // close RouteView's SpawnInfo dialog
+				RouteView.RoutesInfo.Close();	// close RouteView's SpawnInfo dialog
 
-			ObserverManager.CloseViewers(); // close secondary viewers (TileView, TopView, RouteView, TopRouteView)
+			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
 			RegistryInfo.FinalizeRegistry();	// write all registered windows' locations and sizes to file
