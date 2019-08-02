@@ -41,6 +41,10 @@ namespace MapView
 		private const string TITLE = "Map Editor ||";
 
 		private const double ScaleDelta = 0.125;
+
+		private const int TREELEVEL_GROUP    = 0;
+		private const int TREELEVEL_CATEGORY = 1;
+		private const int TREELEVEL_TILESET  = 2;
 		#endregion Fields (static)
 
 
@@ -456,15 +460,21 @@ namespace MapView
 					break;
 
 				case 1:
-					SelectGroupNode(Program.Args[0]);
+					SelectGroupNode(
+								Program.Args[TREELEVEL_GROUP]);
 					break;
 
 				case 2:
-					SelectCategoryNode(Program.Args[1], Program.Args[0]);
+					SelectCategoryNode(
+								Program.Args[TREELEVEL_CATEGORY],
+								Program.Args[TREELEVEL_GROUP]);
 					break;
 
 				case 3:
-					SelectTilesetNode(Program.Args[2], Program.Args[1], Program.Args[0]);
+					SelectTilesetNode(
+								Program.Args[TREELEVEL_TILESET],
+								Program.Args[TREELEVEL_CATEGORY],
+								Program.Args[TREELEVEL_GROUP]);
 					break;
 			}
 		}
@@ -1318,6 +1328,7 @@ namespace MapView
 						break;
 
 					case DialogResult.Ignore:
+						// The process will be killed or Canceled so don't change these
 //						MapChanged =
 //						ObserverManager.RouteView   .Control     .RoutesChanged =
 //						ObserverManager.TopRouteView.ControlRoute.RoutesChanged =
@@ -1329,7 +1340,6 @@ namespace MapView
 
 			Configurator();
 		}
-
 
 		/// <summary>
 		/// Opens the Configurator dialog, then does a restart if necessary.
@@ -1784,7 +1794,7 @@ namespace MapView
 		} */
 
 
-		private bool _dontbeep1; // aka. "just because you have billions of dollars don't mean you can beep"
+		private bool _dontbeep1; // aka. "just because you have billions of dollars don't mean you can arbitrarily beep"
 
 		/// <summary>
 		/// Opens the Maptree's contextmenu on keydown event [Enter] via a
@@ -1815,12 +1825,12 @@ namespace MapView
 
 		/// <summary>
 		/// Opens a context-menu on RMB-click.
-		/// NOTE: A MouseDown event occurs *before* the treeview's BeforeSelect
+		/// @note A MouseDown event occurs *before* the treeview's BeforeSelect
 		/// and AfterSelected events occur ....
-		/// NOTE: A MouseClick event occurs *after* the treeview's BeforeSelect
+		/// A MouseClick event occurs *after* the treeview's BeforeSelect
 		/// and AfterSelected events occur. So the selected Map will change
 		/// *before* a context-menu is shown, which is good.
-		/// NOTE: A MouseClick event won't work if the tree is blank. So use MouseDown.
+		/// A MouseClick event won't work if the tree is blank. So use MouseDown.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1829,97 +1839,94 @@ namespace MapView
 			//LogFile.WriteLine("MainViewF.OnMapTreeMouseDown");
 			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
 
-			switch (e.Button)
+			if (e.Button == MouseButtons.Right)
 			{
-				case MouseButtons.Right:
-					if (MainViewUnderlay.MapBase == null					// prevents a bunch of problems, like looping dialogs when
-						|| (   !MainViewUnderlay.MapBase.MapChanged			// returning from the Tileset Editor and the Maptree-node
-							&& !MainViewUnderlay.MapBase.RoutesChanged))	// gets re-selected, causing this class-object to react as
-					{														// if a different Map is going to load ... cf, LoadSelectedDescriptor()
-						cmMapTreeMenu.MenuItems.Clear();
+				if (MainViewUnderlay.MapBase == null					// prevent a bunch of problems, like looping dialogs when returning from
+					|| (   !MainViewUnderlay.MapBase.MapChanged			// the Tileset Editor and the Maptree-node gets re-selected, causing
+						&& !MainViewUnderlay.MapBase.RoutesChanged))	// this class-object to react as if a different Map is going to load ...
+				{														// vid. LoadSelectedDescriptor()
+					cmMapTreeMenu.MenuItems.Clear();
 
-						cmMapTreeMenu.MenuItems.Add("Add Group ...", new EventHandler(OnAddGroupClick));
+					cmMapTreeMenu.MenuItems.Add("Add Group ...", OnAddGroupClick);
 
-						if (MapTree.SelectedNode != null)
-						{
-							switch (MapTree.SelectedNode.Level)
-							{
-								case 0: // group-node.
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Edit Group ...", new EventHandler(OnEditGroupClick));
-									cmMapTreeMenu.MenuItems.Add("Delete Group",   new EventHandler(OnDeleteGroupClick));
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Add Category ...", new EventHandler(OnAddCategoryClick));
-									break;
-
-								case 1: // category-node.
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Edit Category ...", new EventHandler(OnEditCategoryClick));
-									cmMapTreeMenu.MenuItems.Add("Delete Category",   new EventHandler(OnDeleteCategoryClick));
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Add Tileset ...", new EventHandler(OnAddTilesetClick));
-									break;
-
-								case 2: // tileset-node.
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Edit Tileset ...", new EventHandler(OnEditTilesetClick));
-									cmMapTreeMenu.MenuItems.Add("Delete Tileset",   new EventHandler(OnDeleteTilesetClick));
-									break;
-							}
-						}
-
-						cmMapTreeMenu.Show(MapTree, e.Location);
-					}
-					else
+					if (MapTree.SelectedNode != null)
 					{
-						switch (MessageBox.Show(
-											this,
-											"Modifying the Maptree can cause the Tilesets to reload."
-												+ " The current Map and/or its Routes should be saved or else"
-												+ " any changes would be lost. How do you wish to proceed?"
-												+ Environment.NewLine + Environment.NewLine
-												+ "Abort\treturn to state"
-												+ Environment.NewLine
-												+ "Retry\tsave changes and show the Maptree-menu"
-												+ Environment.NewLine
-												+ "Ignore\trisk losing changes and show the Maptree-menu",
-											" Changes detected",
-											MessageBoxButtons.AbortRetryIgnore,
-											MessageBoxIcon.Asterisk,
-											MessageBoxDefaultButton.Button1,
-											0))
+						switch (MapTree.SelectedNode.Level)
 						{
-							case DialogResult.Abort:
+							case TREELEVEL_GROUP:
+								cmMapTreeMenu.MenuItems.Add("-");
+								cmMapTreeMenu.MenuItems.Add("Edit Group ...",   OnEditGroupClick);
+								cmMapTreeMenu.MenuItems.Add("Delete Group",     OnDeleteGroupClick);
+								cmMapTreeMenu.MenuItems.Add("-");
+								cmMapTreeMenu.MenuItems.Add("Add Category ...", OnAddCategoryClick);
 								break;
 
-							case DialogResult.Retry:
-								if (MainViewUnderlay.MapBase.MapChanged)
-								{
-									MainViewUnderlay.MapBase.SaveMap();
-									MapChanged = false;
-								}
-
-								if (MainViewUnderlay.MapBase.RoutesChanged)
-								{
-									MainViewUnderlay.MapBase.SaveRoutes();
-
-									ObserverManager.RouteView   .Control     .RoutesChanged =
-									ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
-								}
-
-								OnMapTreeMouseDown(null, e); // recurse.
+							case TREELEVEL_CATEGORY:
+								cmMapTreeMenu.MenuItems.Add("-");
+								cmMapTreeMenu.MenuItems.Add("Edit Category ...", OnEditCategoryClick);
+								cmMapTreeMenu.MenuItems.Add("Delete Category",   OnDeleteCategoryClick);
+								cmMapTreeMenu.MenuItems.Add("-");
+								cmMapTreeMenu.MenuItems.Add("Add Tileset ...",   OnAddTilesetClick);
 								break;
 
-							case DialogResult.Ignore:
-								MapChanged =
+							case TREELEVEL_TILESET:
+								cmMapTreeMenu.MenuItems.Add("-");
+								cmMapTreeMenu.MenuItems.Add("Edit Tileset ...",  OnEditTilesetClick);
+								cmMapTreeMenu.MenuItems.Add("Delete Tileset",    OnDeleteTilesetClick);
+								break;
+						}
+					}
+
+					cmMapTreeMenu.Show(MapTree, e.Location);
+				}
+				else
+				{
+					switch (MessageBox.Show(
+										this,
+										"Modifying the Maptree can cause the Tilesets to reload."
+											+ " The current Map and/or its Routes should be saved or else"
+											+ " any changes would be lost. How do you wish to proceed?"
+											+ Environment.NewLine + Environment.NewLine
+											+ "Abort\treturn to state"
+											+ Environment.NewLine
+											+ "Retry\tsave changes and show the Maptree-menu"
+											+ Environment.NewLine
+											+ "Ignore\trisk losing changes and show the Maptree-menu",
+										" Changes detected",
+										MessageBoxButtons.AbortRetryIgnore,
+										MessageBoxIcon.Asterisk,
+										MessageBoxDefaultButton.Button1,
+										0))
+					{
+						case DialogResult.Abort:
+							return;
+
+						case DialogResult.Retry:
+							if (MainViewUnderlay.MapBase.MapChanged)
+							{
+								MainViewUnderlay.MapBase.SaveMap();
+								MapChanged = false;
+							}
+
+							if (MainViewUnderlay.MapBase.RoutesChanged)
+							{
+								MainViewUnderlay.MapBase.SaveRoutes();
+
 								ObserverManager.RouteView   .Control     .RoutesChanged =
 								ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
+							}
+							break;
 
-								OnMapTreeMouseDown(null, e); // recurse.
-								break;
-						}
+						case DialogResult.Ignore:
+							MapChanged =
+							ObserverManager.RouteView   .Control     .RoutesChanged =
+							ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
+
+							break;
 					}
-					break;
+
+					OnMapTreeMouseDown(null, e); // recurse.
+				}
 			}
 		}
 
