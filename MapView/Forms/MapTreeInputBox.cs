@@ -53,7 +53,7 @@ namespace MapView
 		#region cTor
 		/// <summary>
 		/// cTor. Constructs an inputbox for adding/editing the group- or
-		/// category-labels of MainView's map-tree.
+		/// category-labels of MainView's Maptree.
 		/// </summary>
 		/// <param name="infoAbove">info about the add/edit</param>
 		/// <param name="infoBelow">more info about the add/edit</param>
@@ -76,14 +76,17 @@ namespace MapView
 					Text = NewGroup;
 					lblParent.Text = "@root";
 					break;
+
 				case BoxType.EditGroup:
 					Text = RenGroup;
 					lblParent.Text = "@root";
 					break;
+
 				case BoxType.AddCategory:
 					Text = NewCategory;
 					lblParent.Text = "@" + labelGroup;
 					break;
+
 				case BoxType.EditCategory:
 					Text = RenCategory;
 					lblParent.Text = "@" + labelGroup;

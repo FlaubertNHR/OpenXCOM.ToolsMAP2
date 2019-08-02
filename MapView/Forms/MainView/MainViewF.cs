@@ -1937,7 +1937,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Adds a group to the map-tree.
+		/// Adds a group to the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1966,7 +1966,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Edits the label of a group on the map-tree.
+		/// Edits the label of a group on the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1999,7 +1999,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Deletes a group from the map-tree.
+		/// Deletes a group from the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2037,7 +2037,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Adds a category to a group on the map-tree.
+		/// Adds a category to a group on the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2067,7 +2067,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Edits the label of a category on the map-tree.
+		/// Edits the label of a category on the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2100,7 +2100,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Deletes a category from the map-tree.
+		/// Deletes a category from the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2142,7 +2142,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Adds a tileset and its characteristics to the map-tree.
+		/// Adds a tileset and its characteristics to the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2177,7 +2177,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Edits the characteristics of a tileset on the map-tree.
+		/// Edits the characteristics of a tileset on the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2250,7 +2250,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Deletes a tileset from the map-tree.
+		/// Deletes a tileset from the Maptree.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

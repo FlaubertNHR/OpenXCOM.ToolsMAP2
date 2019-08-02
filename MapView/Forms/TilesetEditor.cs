@@ -282,8 +282,9 @@ namespace MapView
 			}
 			FileAddType = AddType.MapNone;
 
-			tbTileset.Select();
-			tbTileset.SelectionStart = tbTileset.TextLength;
+			btnCancel.Select();
+//			tbTileset.Select();
+//			tbTileset.SelectionStart = tbTileset.TextLength;
 
 			PrintTilesetCount();
 		}
@@ -865,9 +866,8 @@ namespace MapView
 
 			ListTerrains();
 
-			int count = lbTerrainsAvailable.Items.Count;
-			if (sel == count)
-				sel = count - 1;
+			if (sel == lbTerrainsAvailable.Items.Count)
+				--sel;
 
 			lbTerrainsAvailable.SelectedIndex = sel;
 			lbTerrainsAvailable.Select();
@@ -880,7 +880,15 @@ namespace MapView
 			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
 				 MainViewF.that.MaptreeChanged = true;
 
+			string itAvailable = null;
+			string itAllocated = null;
+
 			int sel = lbTerrainsAvailable.SelectedIndex;
+			if (sel != -1)
+			{
+				itAvailable = (lbTerrainsAvailable.SelectedItem as tle).ToString();
+				itAllocated = (lbTerrainsAllocated.SelectedItem as tle).ToString();
+			}
 
 			int id = lbTerrainsAllocated.SelectedIndex;
 			for (int i = id; i != Descriptor.Terrains.Count - 1; ++i)
@@ -891,8 +899,22 @@ namespace MapView
 
 			ListTerrains();
 
-			lbTerrainsAvailable.SelectedIndex = sel;
-			lbTerrainsAvailable.Select();
+			if (id == lbTerrainsAllocated.Items.Count)
+				--id;
+
+			lbTerrainsAllocated.SelectedIndex = id;
+			lbTerrainsAllocated.Select();
+
+			if (sel != -1)
+			{
+				if (String.Compare(itAllocated, itAvailable, StringComparison.CurrentCultureIgnoreCase) < 0)
+					++sel;
+
+				if (sel >= lbTerrainsAvailable.Items.Count) // jic
+					sel  = lbTerrainsAvailable.Items.Count - 1;
+
+				lbTerrainsAvailable.SelectedIndex = sel;
+			}
 		}
 
 		private void OnTerrainUpClick(object sender, EventArgs e)
@@ -1139,7 +1161,10 @@ namespace MapView
 			if (changed && !MainViewF.that.MaptreeChanged)
 				MainViewF.that.MaptreeChanged = true;
 		}
+		#endregion Events
 
+
+		#region Methods
 		/// <summary>
 		/// Changes the labels of all tilesets that have the original tileset's
 		/// label and basepath.
@@ -1201,10 +1226,8 @@ namespace MapView
 				TileGroup.DeleteTileset(TilesetOriginal, change.Item2);
 			}
 		}
-		#endregion Events
 
 
-		#region Methods
 		/// <summary>
 		/// Checks that a string can be a valid filename for Windows OS.
 		/// NOTE: Check that 'chars' is not null or blank before call.
@@ -1331,30 +1354,6 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Checks if two terrains-lists are (not) equivalent.
-		/// </summary>
-		/// <param name="a">first terrains-list</param>
-		/// <param name="b">second terrains-list</param>
-		/// <returns>true if the specified terrains-lists are different</returns>
-		private static bool IsTerrainsChanged(
-				IDictionary<int, Tuple<string,string>> a,
-				IDictionary<int, Tuple<string,string>> b)
-		{
-			if (a.Count != b.Count)
-				return true;
-
-			for (int i = 0; i != a.Count; ++i)
-			{
-				if (   a[i].Item1 != b[i].Item1
-					|| a[i].Item2 != b[i].Item2)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-
-		/// <summary>
 		/// Checks if a specified terrain is listed in the Allocated listbox and
 		/// therefore should be bypassed by the Available listbox.
 		/// </summary>
@@ -1437,6 +1436,33 @@ namespace MapView
 						0);
 		}
 		#endregion Methods
+
+
+		#region Methods (static)
+		/// <summary>
+		/// Checks if two terrains-lists are (not) equivalent.
+		/// </summary>
+		/// <param name="a">first terrains-list</param>
+		/// <param name="b">second terrains-list</param>
+		/// <returns>true if the specified terrains-lists are different</returns>
+		private static bool IsTerrainsChanged(
+				IDictionary<int, Tuple<string,string>> a,
+				IDictionary<int, Tuple<string,string>> b)
+		{
+			if (a.Count != b.Count)
+				return true;
+
+			for (int i = 0; i != a.Count; ++i)
+			{
+				if (   a[i].Item1 != b[i].Item1
+					|| a[i].Item2 != b[i].Item2)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		#endregion Methods (static)
 	}
 
 
