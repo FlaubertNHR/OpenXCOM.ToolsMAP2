@@ -8,10 +8,9 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		private System.Windows.Forms.Label lbl_Tileset;
+		private System.Windows.Forms.Label lbl_Tileset_;
 		private System.Windows.Forms.Label lbl_Category;
 		private System.Windows.Forms.Label lbl_Group;
-		private System.Windows.Forms.Label lbl_Nodes;
 		private System.Windows.Forms.GroupBox gb_Info;
 		private System.Windows.Forms.GroupBox gb_Tileset;
 		private System.Windows.Forms.Label lbl_tsRanks0;
@@ -43,9 +42,11 @@
 		private System.Windows.Forms.Label lbl_tsRanks2_outcat;
 		private System.Windows.Forms.Label lbl_tsRanks1_outcat;
 		private System.Windows.Forms.Label lbl_tsRanks0_outcat;
-		private System.Windows.Forms.Label lbl_NodesQuantity;
-		private System.Windows.Forms.Label lbl_Label;
+		private System.Windows.Forms.Label lbl_Tileset;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.Label lbl_TotalCategory;
+		private System.Windows.Forms.Label lbl_TotalTileset;
+
 
 		/// <summary>
 		/// Cleans up any resources being used.
@@ -67,14 +68,14 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.lbl_Tileset = new System.Windows.Forms.Label();
+			this.lbl_Tileset_ = new System.Windows.Forms.Label();
 			this.lbl_Category = new System.Windows.Forms.Label();
 			this.lbl_Group = new System.Windows.Forms.Label();
-			this.lbl_Nodes = new System.Windows.Forms.Label();
 			this.gb_Info = new System.Windows.Forms.GroupBox();
-			this.lbl_NodesQuantity = new System.Windows.Forms.Label();
-			this.lbl_Label = new System.Windows.Forms.Label();
+			this.lbl_Tileset = new System.Windows.Forms.Label();
 			this.gb_Tileset = new System.Windows.Forms.GroupBox();
+			this.lbl_TotalCategory = new System.Windows.Forms.Label();
+			this.lbl_TotalTileset = new System.Windows.Forms.Label();
 			this.lbl_tsRanks8_outcat = new System.Windows.Forms.Label();
 			this.lbl_tsRanks7_outcat = new System.Windows.Forms.Label();
 			this.lbl_tsRanks6_outcat = new System.Windows.Forms.Label();
@@ -109,22 +110,23 @@
 			this.gb_Tileset.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// lbl_Tileset
+			// lbl_Tileset_
 			// 
-			this.lbl_Tileset.Location = new System.Drawing.Point(5, 10);
-			this.lbl_Tileset.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl_Tileset.Name = "lbl_Tileset";
-			this.lbl_Tileset.Size = new System.Drawing.Size(45, 15);
-			this.lbl_Tileset.TabIndex = 0;
-			this.lbl_Tileset.Text = "Tileset";
-			this.lbl_Tileset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_Tileset_.Location = new System.Drawing.Point(5, 10);
+			this.lbl_Tileset_.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_Tileset_.Name = "lbl_Tileset_";
+			this.lbl_Tileset_.Size = new System.Drawing.Size(45, 15);
+			this.lbl_Tileset_.TabIndex = 0;
+			this.lbl_Tileset_.Text = "Tileset";
+			this.lbl_Tileset_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl_Category
 			// 
-			this.lbl_Category.Location = new System.Drawing.Point(220, 10);
+			this.lbl_Category.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lbl_Category.Location = new System.Drawing.Point(225, 10);
 			this.lbl_Category.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Category.Name = "lbl_Category";
-			this.lbl_Category.Size = new System.Drawing.Size(185, 15);
+			this.lbl_Category.Size = new System.Drawing.Size(180, 15);
 			this.lbl_Category.TabIndex = 2;
 			this.lbl_Category.Text = "Category";
 			this.lbl_Category.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -132,34 +134,22 @@
 			// 
 			// lbl_Group
 			// 
-			this.lbl_Group.Location = new System.Drawing.Point(220, 25);
+			this.lbl_Group.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lbl_Group.Location = new System.Drawing.Point(225, 25);
 			this.lbl_Group.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Group.Name = "lbl_Group";
-			this.lbl_Group.Size = new System.Drawing.Size(185, 15);
-			this.lbl_Group.TabIndex = 5;
+			this.lbl_Group.Size = new System.Drawing.Size(180, 15);
+			this.lbl_Group.TabIndex = 3;
 			this.lbl_Group.Text = "Group";
 			this.lbl_Group.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.toolTip1.SetToolTip(this.lbl_Group, "Group");
 			// 
-			// lbl_Nodes
-			// 
-			this.lbl_Nodes.Location = new System.Drawing.Point(5, 25);
-			this.lbl_Nodes.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl_Nodes.Name = "lbl_Nodes";
-			this.lbl_Nodes.Size = new System.Drawing.Size(45, 15);
-			this.lbl_Nodes.TabIndex = 3;
-			this.lbl_Nodes.Text = "nodes";
-			this.lbl_Nodes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip1.SetToolTip(this.lbl_Nodes, "count of nodes w/ non-zero spawnweight");
-			// 
 			// gb_Info
 			// 
-			this.gb_Info.Controls.Add(this.lbl_NodesQuantity);
-			this.gb_Info.Controls.Add(this.lbl_Label);
+			this.gb_Info.Controls.Add(this.lbl_Tileset);
 			this.gb_Info.Controls.Add(this.lbl_Group);
 			this.gb_Info.Controls.Add(this.lbl_Category);
-			this.gb_Info.Controls.Add(this.lbl_Nodes);
-			this.gb_Info.Controls.Add(this.lbl_Tileset);
+			this.gb_Info.Controls.Add(this.lbl_Tileset_);
 			this.gb_Info.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gb_Info.Location = new System.Drawing.Point(0, 0);
 			this.gb_Info.Margin = new System.Windows.Forms.Padding(0);
@@ -168,29 +158,20 @@
 			this.gb_Info.TabIndex = 0;
 			this.gb_Info.TabStop = false;
 			// 
-			// lbl_NodesQuantity
+			// lbl_Tileset
 			// 
-			this.lbl_NodesQuantity.Location = new System.Drawing.Point(55, 25);
-			this.lbl_NodesQuantity.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl_NodesQuantity.Name = "lbl_NodesQuantity";
-			this.lbl_NodesQuantity.Size = new System.Drawing.Size(165, 15);
-			this.lbl_NodesQuantity.TabIndex = 4;
-			this.lbl_NodesQuantity.Text = "q";
-			this.lbl_NodesQuantity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.toolTip1.SetToolTip(this.lbl_NodesQuantity, "count of nodes w/ non-zero spawnweight");
-			// 
-			// lbl_Label
-			// 
-			this.lbl_Label.Location = new System.Drawing.Point(55, 10);
-			this.lbl_Label.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl_Label.Name = "lbl_Label";
-			this.lbl_Label.Size = new System.Drawing.Size(165, 15);
-			this.lbl_Label.TabIndex = 1;
-			this.lbl_Label.Text = "label";
-			this.lbl_Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_Tileset.Location = new System.Drawing.Point(55, 10);
+			this.lbl_Tileset.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_Tileset.Name = "lbl_Tileset";
+			this.lbl_Tileset.Size = new System.Drawing.Size(165, 15);
+			this.lbl_Tileset.TabIndex = 1;
+			this.lbl_Tileset.Text = "label";
+			this.lbl_Tileset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// gb_Tileset
 			// 
+			this.gb_Tileset.Controls.Add(this.lbl_TotalCategory);
+			this.gb_Tileset.Controls.Add(this.lbl_TotalTileset);
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks8_outcat);
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks7_outcat);
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks6_outcat);
@@ -220,14 +201,34 @@
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks2);
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks1);
 			this.gb_Tileset.Controls.Add(this.lbl_tsRanks0);
-			this.gb_Tileset.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gb_Tileset.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gb_Tileset.Location = new System.Drawing.Point(0, 45);
 			this.gb_Tileset.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Tileset.Name = "gb_Tileset";
-			this.gb_Tileset.Size = new System.Drawing.Size(412, 165);
+			this.gb_Tileset.Size = new System.Drawing.Size(412, 189);
 			this.gb_Tileset.TabIndex = 1;
 			this.gb_Tileset.TabStop = false;
 			this.gb_Tileset.Text = " totals ";
+			// 
+			// lbl_TotalCategory
+			// 
+			this.lbl_TotalCategory.Location = new System.Drawing.Point(205, 165);
+			this.lbl_TotalCategory.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_TotalCategory.Name = "lbl_TotalCategory";
+			this.lbl_TotalCategory.Size = new System.Drawing.Size(40, 15);
+			this.lbl_TotalCategory.TabIndex = 30;
+			this.lbl_TotalCategory.Text = "tc";
+			this.lbl_TotalCategory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// lbl_TotalTileset
+			// 
+			this.lbl_TotalTileset.Location = new System.Drawing.Point(160, 165);
+			this.lbl_TotalTileset.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_TotalTileset.Name = "lbl_TotalTileset";
+			this.lbl_TotalTileset.Size = new System.Drawing.Size(40, 15);
+			this.lbl_TotalTileset.TabIndex = 29;
+			this.lbl_TotalTileset.Text = "tt";
+			this.lbl_TotalTileset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl_tsRanks8_outcat
 			// 
@@ -535,7 +536,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			this.ClientSize = new System.Drawing.Size(412, 214);
+			this.ClientSize = new System.Drawing.Size(412, 234);
 			this.Controls.Add(this.gb_Tileset);
 			this.Controls.Add(this.gb_Info);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
