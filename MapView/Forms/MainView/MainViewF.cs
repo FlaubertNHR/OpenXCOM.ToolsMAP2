@@ -1842,9 +1842,12 @@ namespace MapView
 			if (e.Button == MouseButtons.Right)
 			{
 				if (MainViewUnderlay.MapBase == null					// prevent a bunch of problems, like looping dialogs when returning from
-					|| (   !MainViewUnderlay.MapBase.MapChanged			// the Tileset Editor and the Maptree-node gets re-selected, causing
-						&& !MainViewUnderlay.MapBase.RoutesChanged))	// this class-object to react as if a different Map is going to load ...
-				{														// vid. LoadSelectedDescriptor()
+					|| BypassChanged									// the Tileset Editor and the Maptree-node gets re-selected, causing
+					|| (   !MainViewUnderlay.MapBase.MapChanged			// this class-object to react as if a different Map is going to load ...
+						&& !MainViewUnderlay.MapBase.RoutesChanged))	// vid. LoadSelectedDescriptor()
+				{
+					BypassChanged = false;
+
 					cmMapTreeMenu.MenuItems.Clear();
 
 					cmMapTreeMenu.MenuItems.Add("Add Group ...", OnAddGroupClick);
@@ -1918,9 +1921,10 @@ namespace MapView
 							break;
 
 						case DialogResult.Ignore:
-							MapChanged =
-							ObserverManager.RouteView   .Control     .RoutesChanged =
-							ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
+							BypassChanged = true;
+//							MapChanged =
+//							ObserverManager.RouteView   .Control     .RoutesChanged =
+//							ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
 
 							break;
 					}
@@ -1929,6 +1933,8 @@ namespace MapView
 				}
 			}
 		}
+		private bool BypassChanged;
+
 
 		/// <summary>
 		/// Adds a group to the map-tree.
@@ -2160,7 +2166,8 @@ namespace MapView
 					{
 						//LogFile.WriteLine(". f.Tileset= " + f.Tileset);
 
-						MaptreeChanged = true;
+						MaptreeChanged =
+						BypassChanged  = true;
 
 						CreateTree();
 						SelectTilesetNode(f.Tileset, labelCategory, labelGroup);
@@ -2194,7 +2201,8 @@ namespace MapView
 					{
 						//LogFile.WriteLine(". f.Tileset= " + f.Tileset);
 
-						MaptreeChanged = true;
+						MaptreeChanged =
+						BypassChanged  = true;
 
 						CreateTree();
 						SelectTilesetNode(f.Tileset, labelCategory, labelGroup);
@@ -2485,8 +2493,13 @@ namespace MapView
 			//LogFile.WriteLine("MainViewF.OnMapTreeBeforeSelect");
 			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
 
-			e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
-			e.Cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
+			if (!BypassChanged) // is true on TilesetEditor DialogResult.OK
+			{
+				e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
+				e.Cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
+			}
+			else
+				BypassChanged = false;
 		}
 
 		/// <summary>
@@ -2717,8 +2730,8 @@ namespace MapView
 		/// <summary>
 		/// Shows the user a dialog-box asking to Save if the currently
 		/// displayed Map has changed.
-		/// NOTE: Is called when either (a) MapView is closing (b) another Map
-		/// is about to load.
+		/// NOTE: Is called when either (a) MapView is closing (b) a Map is
+		/// about to load/reload.
 		/// </summary>
 		/// <returns></returns>
 		private DialogResult SaveAlertMap()
