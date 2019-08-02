@@ -1004,7 +1004,7 @@ namespace MapView.Forms.Observers
 																		MapFile.MapSize.Rows,
 																		MapFile.MapSize.Levs))
 							{
-								lblText.ForeColor = Color.MediumVioletRed;
+								lblText.ForeColor = Color.Chocolate;
 							}
 							else
 								lblText.ForeColor = SystemColors.ControlText;
