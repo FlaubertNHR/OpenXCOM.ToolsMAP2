@@ -745,26 +745,28 @@ namespace MapView
 		/// </summary>
 		private void SafeQuit()
 		{
-			OptionsManager.SaveOptions(); // save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
+			OptionsManager.SaveOptions();	// save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
+			OptionsManager.CloseOptions();	// close any open Options windows
 
-			ObserverManager.CloseViewers();
-			OptionsManager .CloseOptions();
-
-			if (ScanG    != null) ScanG   .Close();
-			if (_fcolors != null) _fcolors.Close();
-			if (_fabout  != null) _fabout .Close();
-			if (_finfo   != null) _finfo  .Close();
+			if ( ScanG   != null)  ScanG  .Close(); // close ScanG
+			if (_fcolors != null) _fcolors.Close(); // close ColorsHelp
+			if (_fabout  != null) _fabout .Close(); // close About
+			if (_finfo   != null) _finfo  .Close(); // close MapInfo and its Detail dialog
 
 			if (ObserverManager.TileView.Control.McdInfobox != null)
-				ObserverManager.TileView.Control.McdInfobox.Close();
+				ObserverManager.TileView.Control.McdInfobox.Close(); // close TileView's McdInfo dialog
 
-			RegistryInfo.UpdateRegistry(this);
-			RegistryInfo.FinalizeRegistry();
+			if (RouteView.RoutesInfo != null)
+				RouteView.RoutesInfo.Close(); // close RouteView's SpawnInfo dialog
 
+			ObserverManager.CloseViewers(); // close secondary viewers (TileView, TopView, RouteView, TopRouteView)
+
+			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
+			RegistryInfo.FinalizeRegistry();	// write all registered windows' locations and sizes to file
 		}
 
 
-		private static bool Inited; // on 1st Activated keep the tree focused, on 2+ focus the panel
+		private static bool FirstActivated; // on 1st Activated keep the tree focused, on 2+ focus the panel
 		internal static bool BypassActivatedEvent;
 
 		/// <summary>
@@ -800,10 +802,10 @@ namespace MapView
 				}
 			}
 
-			if (Inited)
+			if (FirstActivated)
 				MainViewOverlay.Focus();
 			else
-				Inited = true;
+				FirstActivated = true;
 
 //			base.OnActivated(e);
 		}
@@ -2675,7 +2677,7 @@ namespace MapView
 
 					ResetQuadrantPanel();
 
-					Inited = false;
+					FirstActivated = false;
 					Activate();
 				}
 			}
