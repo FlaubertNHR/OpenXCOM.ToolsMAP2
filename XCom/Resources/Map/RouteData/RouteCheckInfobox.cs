@@ -80,9 +80,10 @@ namespace XCom
 			// 
 			this.btn_Yes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btn_Yes.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Yes.Location = new System.Drawing.Point(220, 250);
+			this.btn_Yes.Location = new System.Drawing.Point(230, 250);
+			this.btn_Yes.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Yes.Name = "btn_Yes";
-			this.btn_Yes.Size = new System.Drawing.Size(75, 23);
+			this.btn_Yes.Size = new System.Drawing.Size(75, 25);
 			this.btn_Yes.TabIndex = 2;
 			this.btn_Yes.Text = "yep";
 			this.btn_Yes.UseVisualStyleBackColor = true;
@@ -119,9 +120,10 @@ namespace XCom
 			// 
 			this.btn_No.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btn_No.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_No.Location = new System.Drawing.Point(310, 250);
+			this.btn_No.Location = new System.Drawing.Point(315, 250);
+			this.btn_No.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_No.Name = "btn_No";
-			this.btn_No.Size = new System.Drawing.Size(75, 23);
+			this.btn_No.Size = new System.Drawing.Size(75, 25);
 			this.btn_No.TabIndex = 3;
 			this.btn_No.Text = "negatory";
 			this.btn_No.UseVisualStyleBackColor = true;
@@ -140,11 +142,9 @@ namespace XCom
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "RouteCheckInfobox";
-			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Node check";
-			this.TopMost = true;
 			this.ResumeLayout(false);
 
 		}

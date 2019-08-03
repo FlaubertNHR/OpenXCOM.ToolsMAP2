@@ -15,8 +15,11 @@ namespace XCom
 
 
 		#region Properties (static)
+		private static List<RouteNode> _invalids = new List<RouteNode>();
 		public static List<RouteNode> Invalids
-		{ get; private set; }
+		{
+			get { return _invalids; }
+		}
 		#endregion Properties (static)
 
 
