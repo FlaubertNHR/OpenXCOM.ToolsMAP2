@@ -21,6 +21,14 @@ namespace PckView
 		#endregion Fields
 
 
+		#region Properties (override)
+		protected override bool ShowWithoutActivation
+		{
+			get { return true; }
+		}
+		#endregion Properties (override)
+
+
 		#region cTor
 		/// <summary>
 		/// cTor.
@@ -143,6 +151,7 @@ namespace PckView
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "PaletteForm";
+			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.ResumeLayout(false);
 

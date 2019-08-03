@@ -20,6 +20,11 @@ namespace PckView
 		:
 			Form
 	{
+		#region Delegates
+		internal delegate void PaletteChangedEvent();
+		#endregion Delegates
+
+
 		#region Events (static)
 		internal static event PaletteChangedEvent PaletteChanged;
 		#endregion Events (static)
@@ -79,10 +84,7 @@ namespace PckView
 
 		internal PckViewPanel TilePanel
 		{ get; private set; }
-		#endregion Properties
 
-
-		#region Properties
 		private string Dir
 		{ get; set; }
 
@@ -327,6 +329,60 @@ namespace PckView
 
 
 		#region Events (override)
+		internal static bool BypassActivatedEvent;
+		protected override void OnActivated(EventArgs e)
+		{
+			if (!BypassActivatedEvent)
+			{
+				BypassActivatedEvent = true;
+
+				if (SpriteEditor._fpalette.Visible)
+				{
+					SpriteEditor._fpalette.TopMost = true;
+					SpriteEditor._fpalette.TopMost = false;
+				}
+
+				if (SpriteEditor.Visible)
+				{
+					SpriteEditor.TopMost = true;
+					SpriteEditor.TopMost = false;
+				}
+
+				TopMost = true;
+				TopMost = false;
+
+				BypassActivatedEvent = false;
+			}
+			base.OnActivated(e);
+		}
+
+		private bool IsMinimized;
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+
+			if (WindowState == FormWindowState.Minimized)
+			{
+				IsMinimized = true;
+
+				if (SpriteEditor.Visible)
+					SpriteEditor.WindowState = FormWindowState.Minimized;
+
+				if (SpriteEditor._fpalette.Visible)
+					SpriteEditor._fpalette.WindowState = FormWindowState.Minimized;
+			}
+			else if (IsMinimized)
+			{
+				IsMinimized = false;
+
+				if (SpriteEditor.Visible)
+					SpriteEditor.WindowState = FormWindowState.Normal;
+
+				if (SpriteEditor._fpalette.Visible)
+					SpriteEditor._fpalette.WindowState = FormWindowState.Normal;
+			}
+		}
+
 		/// <summary>
 		/// Focuses the viewer-panel after the app loads.
 		/// </summary>
@@ -1961,9 +2017,4 @@ namespace PckView
 		}
 		#endregion Methods
 	}
-
-
-	#region Delegates
-	internal delegate void PaletteChangedEvent();
-	#endregion Delegates
 }

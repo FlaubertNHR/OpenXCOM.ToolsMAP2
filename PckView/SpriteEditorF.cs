@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using DSShared;
+using DSShared.Controls;
 
 using XCom;
 
@@ -42,6 +43,14 @@ namespace PckView
 		internal SpritePanel SpritePanel
 		{ get; private set; }
 		#endregion Properties
+
+
+		#region Properties (override)
+		protected override bool ShowWithoutActivation
+		{
+			get { return true; }
+		}
+		#endregion Properties (override)
 
 
 		#region cTor
@@ -95,6 +104,9 @@ namespace PckView
 				Left = _f.Left + 20;
 				Top  = _f.Top  + 20;
 			}
+
+			var r = new CustomToolStripRenderer();
+			ss_Status.Renderer = r;
 		}
 		#endregion cTor
 
@@ -240,17 +252,8 @@ namespace PckView
 		#endregion Methods
 
 
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
 
-			base.Dispose(disposing);
-		}
-
+		#region Designer
 		private IContainer components;
 
 		private MainMenu mmMainMenu;
@@ -263,7 +266,18 @@ namespace PckView
 		private ToolStripStatusLabel tssl_ColorInfo;
 
 
-		#region Windows Form Designer generated code
+		/// <summary>
+		/// Cleans up any resources being used.
+		/// </summary>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && components != null)
+				components.Dispose();
+
+			base.Dispose(disposing);
+		}
+
+
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -299,7 +313,7 @@ namespace PckView
 			// 
 			this.miPalette.Index = 0;
 			this.miPalette.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
-			this.miPalette.Text = "Show/hide palette";
+			this.miPalette.Text = "Show palette";
 			this.miPalette.Click += new System.EventHandler(this.OnShowPaletteClick);
 			// 
 			// miGridMenu
@@ -314,7 +328,7 @@ namespace PckView
 			// 
 			this.miGrid.Index = 0;
 			this.miGrid.Shortcut = System.Windows.Forms.Shortcut.CtrlG;
-			this.miGrid.Text = "Show/hide grid";
+			this.miGrid.Text = "Show grid";
 			this.miGrid.Click += new System.EventHandler(this.OnShowGridClick);
 			// 
 			// miGridInvert
@@ -357,7 +371,7 @@ namespace PckView
 			this.Menu = this.mmMainMenu;
 			this.MinimizeBox = false;
 			this.Name = "SpriteEditorF";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Sprite Editor";
 			this.Load += new System.EventHandler(this.OnLoad);
@@ -367,6 +381,6 @@ namespace PckView
 			this.PerformLayout();
 
 		}
-		#endregion Windows Form Designer generated code
+		#endregion Designer
 	}
 }
