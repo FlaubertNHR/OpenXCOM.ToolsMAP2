@@ -408,7 +408,7 @@ namespace PckView
 				SpriteEditor.ClosePalette();	// these are needed when PckView
 				SpriteEditor.Close();			// is invoked via TileView.
 
-				SpriteBytesManager.HideBytesTable();
+				ByteTableManager.HideTable();
 
 				if (!IsInvoked)
 					RegistryInfo.FinalizeRegistry();
@@ -1519,15 +1519,15 @@ namespace PckView
 				if (TilePanel.idSel != -1)
 				{
 					miBytes.Checked = true;
-					SpriteBytesManager.LoadBytesTable(
-												TilePanel.Spriteset[TilePanel.idSel],
-												BytesClosingCallback);
+					ByteTableManager.LoadTable(
+											TilePanel.Spriteset[TilePanel.idSel],
+											BytesClosingCallback);
 				}
 			}
 			else
 			{
 				miBytes.Checked = false;
-				SpriteBytesManager.HideBytesTable();
+				ByteTableManager.HideTable();
 			}
 		}
 

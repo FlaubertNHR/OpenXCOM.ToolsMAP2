@@ -156,7 +156,7 @@
     <Compile Include="PckViewForm.Designer.cs">
       <DependentUpon>PckViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpriteBytesManager.cs" />
+    <Compile Include="ByteTableManager.cs" />
     <Compile Include="SpriteEditorF.cs">
       <SubType>Form</SubType>
     </Compile>

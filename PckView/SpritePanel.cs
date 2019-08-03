@@ -48,7 +48,7 @@ namespace PckView
 					caption += " - id " + _sprite.Id;
 				_feditor.Text = caption;
 
-				SpriteBytesManager.ReloadBytesTable(_sprite); // this will clear the show-bytes box if null.
+				ByteTableManager.ReloadTable(_sprite);
 
 				Refresh();
 			}
@@ -75,7 +75,7 @@ namespace PckView
 			set
 			{
 				_grid = value;
-				Refresh();
+				Invalidate();
 			}
 		}
 
@@ -85,7 +85,7 @@ namespace PckView
 			set
 			{
 				_scale = value;
-				Refresh();
+				Invalidate();
 			}
 		}
 		#endregion Properties
@@ -302,7 +302,7 @@ namespace PckView
 		#region Events
 		private void OnPaletteChanged()
 		{
-			Refresh();
+			Invalidate();
 		}
 		#endregion Events
 
@@ -358,7 +358,7 @@ namespace PckView
 		{
 			_penGrid = (invert) ? _gridWhite
 								: _gridBlack;
-			Refresh();
+			Invalidate();
 		}
 		#endregion Methods
 	}

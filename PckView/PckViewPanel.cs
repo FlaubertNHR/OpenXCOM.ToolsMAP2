@@ -370,7 +370,7 @@ namespace PckView
 		/// </summary>
 		private void OnPaletteChanged()
 		{
-			Refresh();
+			Invalidate();
 		}
 
 		/// <summary>
@@ -380,7 +380,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnScrollBarValueChanged(object sender, EventArgs e)
 		{
-			Refresh();
+			Invalidate();
 		}
 		#endregion Events
 
