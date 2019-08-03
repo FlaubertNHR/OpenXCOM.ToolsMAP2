@@ -525,7 +525,6 @@ namespace MapView
 			this.MinimizeBox = false;
 			this.Name = "MapInfoDialog";
 			this.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "MapInfo";
 			this.gbAnalyze.ResumeLayout(false);

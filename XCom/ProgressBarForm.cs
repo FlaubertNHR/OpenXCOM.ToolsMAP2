@@ -122,7 +122,6 @@ namespace XCom
 			this.Name = "ProgressBarForm";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.TopMost = true;
 			this.ResumeLayout(false);

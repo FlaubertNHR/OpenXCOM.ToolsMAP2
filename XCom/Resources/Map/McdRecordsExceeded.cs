@@ -164,7 +164,6 @@ namespace XCom
 			this.MinimizeBox = false;
 			this.Name = "McdRecordsExceeded";
 			this.ShowInTaskbar = false;
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.ResumeLayout(false);
 

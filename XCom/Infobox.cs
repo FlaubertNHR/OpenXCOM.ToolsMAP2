@@ -242,7 +242,6 @@ namespace XCom
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "Infobox";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.pnl_Info.ResumeLayout(false);
 			this.ResumeLayout(false);

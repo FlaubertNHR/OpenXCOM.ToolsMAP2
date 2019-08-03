@@ -347,7 +347,6 @@ namespace McdView
 			this.MinimizeBox = false;
 			this.Name = "ScanGiconF";
 			this.ShowInTaskbar = false;
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.ResumeLayout(false);
 

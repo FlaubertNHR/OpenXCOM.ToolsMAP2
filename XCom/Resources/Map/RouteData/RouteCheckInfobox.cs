@@ -142,7 +142,6 @@ namespace XCom
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "RouteCheckInfobox";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Node check";
 			this.ResumeLayout(false);

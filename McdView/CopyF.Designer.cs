@@ -2876,7 +2876,6 @@
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.Name = "CopyF";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.gb_Sprites.ResumeLayout(false);
 			this.gb_Sprites.PerformLayout();

@@ -827,7 +827,6 @@ namespace MapView
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ColorHelp";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Colors";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);

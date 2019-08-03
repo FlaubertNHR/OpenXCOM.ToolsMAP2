@@ -431,7 +431,6 @@ namespace MapView
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ScanGViewer";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "ScanG";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);

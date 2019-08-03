@@ -143,7 +143,6 @@
 			this.MinimumSize = new System.Drawing.Size(400, 200);
 			this.Name = "MapTreeInputBox";
 			this.ShowInTaskbar = false;
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.pnlBottom.ResumeLayout(false);
 			this.pnlTop.ResumeLayout(false);
