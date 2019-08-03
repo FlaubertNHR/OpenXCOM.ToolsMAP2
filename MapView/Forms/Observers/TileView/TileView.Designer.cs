@@ -16,7 +16,7 @@
 		private System.Windows.Forms.TabPage tpContents;
 		private System.Windows.Forms.TabPage tpNorthwalls;
 		private System.Windows.Forms.TabPage tpWestwalls;
-		private System.Windows.Forms.StatusStrip ssStatusbar;
+		private System.Windows.Forms.StatusStrip ssStatus;
 		private System.Windows.Forms.ToolStripStatusLabel tsslTotal;
 		private System.Windows.Forms.ToolStripStatusLabel tsslOver;
 		private System.Windows.Forms.ToolStripButton tsb_Options;
@@ -52,12 +52,12 @@
 			this.tsmi_Sep0 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmiVolutarMcdEditor = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
-			this.ssStatusbar = new System.Windows.Forms.StatusStrip();
+			this.ssStatus = new System.Windows.Forms.StatusStrip();
 			this.tsslTotal = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsslOver = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tcTileTypes.SuspendLayout();
 			this.tsMain.SuspendLayout();
-			this.ssStatusbar.SuspendLayout();
+			this.ssStatus.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tcTileTypes
@@ -185,16 +185,16 @@
 			this.tsb_Options.Text = "&Options";
 			this.tsb_Options.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
-			// ssStatusbar
+			// ssStatus
 			// 
-			this.ssStatusbar.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ssStatusbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.ssStatus.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ssStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsslTotal,
 			this.tsslOver});
-			this.ssStatusbar.Location = new System.Drawing.Point(0, 458);
-			this.ssStatusbar.Name = "ssStatusbar";
-			this.ssStatusbar.Size = new System.Drawing.Size(640, 22);
-			this.ssStatusbar.TabIndex = 2;
+			this.ssStatus.Location = new System.Drawing.Point(0, 458);
+			this.ssStatus.Name = "ssStatus";
+			this.ssStatus.Size = new System.Drawing.Size(640, 22);
+			this.ssStatus.TabIndex = 2;
 			// 
 			// tsslTotal
 			// 
@@ -219,7 +219,7 @@
 			// TileView
 			// 
 			this.Controls.Add(this.tcTileTypes);
-			this.Controls.Add(this.ssStatusbar);
+			this.Controls.Add(this.ssStatus);
 			this.Controls.Add(this.tsMain);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Margin = new System.Windows.Forms.Padding(0);
@@ -228,8 +228,8 @@
 			this.tcTileTypes.ResumeLayout(false);
 			this.tsMain.ResumeLayout(false);
 			this.tsMain.PerformLayout();
-			this.ssStatusbar.ResumeLayout(false);
-			this.ssStatusbar.PerformLayout();
+			this.ssStatus.ResumeLayout(false);
+			this.ssStatus.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
