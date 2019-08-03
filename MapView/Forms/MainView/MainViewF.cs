@@ -1074,8 +1074,7 @@ namespace MapView
 				MainViewUnderlay.MapBase.SaveRoutes();
 
 				MapChanged =
-				ObserverManager.RouteView   .Control     .RoutesChanged =
-				ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
+				ObserverManager.RouteView.Control.RouteChanged = false;
 			}
 			MaptreeChanged = !ResourceInfo.TileGroupManager.SaveTileGroups();
 		}
@@ -1094,9 +1093,7 @@ namespace MapView
 			if (MainViewUnderlay.MapBase != null)
 			{
 				MainViewUnderlay.MapBase.SaveRoutes();
-
-				ObserverManager.RouteView   .Control     .RoutesChanged =
-				ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
+				ObserverManager.RouteView.Control.RouteChanged = false;
 			}
 		}
 
@@ -1207,19 +1204,29 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
+						RouteCheckService.Invalids.Clear(); // safety.
+
 						int changes = @base.MapResize(
 													f.Rows,
 													f.Cols,
 													f.Levs,
 													f.zType);
 
-						if (!@base.MapChanged && ((changes & MapFileBase.CHANGED_MAP) != 0))
+						if ((changes & MapFileBase.CHANGED_MAP) != 0 && !@base.MapChanged)
 							MapChanged = true;
 
-						if (!@base.RoutesChanged && (changes & MapFileBase.CHANGED_NOD) != 0)
+						if ((changes & MapFileBase.CHANGED_NOD) != 0)
 						{
-							ObserverManager.RouteView   .Control     .RoutesChanged =
-							ObserverManager.TopRouteView.ControlRoute.RoutesChanged = true;
+							if (!@base.RoutesChanged)
+								ObserverManager.RouteView.Control.RouteChanged = true;
+
+							foreach (RouteNode node in RouteCheckService.Invalids)
+							{
+								if (RouteView.RoutesInfo != null)
+									RouteView.RoutesInfo.DeleteNode(node);
+
+								(@base as MapFile).Routes.DeleteNode(node);
+							}
 						}
 
 						MainViewUnderlay.ForceResize();
@@ -1315,9 +1322,7 @@ namespace MapView
 							if (MainViewUnderlay.MapBase.RoutesChanged)
 							{
 								MainViewUnderlay.MapBase.SaveRoutes();
-
-								ObserverManager.RouteView   .Control     .RoutesChanged =
-								ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
+								ObserverManager.RouteView.Control.RouteChanged = false;
 							}
 						}
 
@@ -1916,9 +1921,7 @@ namespace MapView
 							if (MainViewUnderlay.MapBase.RoutesChanged)
 							{
 								MainViewUnderlay.MapBase.SaveRoutes();
-
-								ObserverManager.RouteView   .Control     .RoutesChanged =
-								ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
+								ObserverManager.RouteView.Control.RouteChanged = false;
 							}
 							break;
 
@@ -2648,10 +2651,12 @@ namespace MapView
 
 					ObserverManager.SetObservers(@base); // reset all observer events
 
-					if (RouteCheckService.CheckNodeBounds(@base as MapFile))
+					if (RouteCheckService.CheckNodeBounds(@base as MapFile) == DialogResult.Yes)
 					{
-						routeview1.RoutesChanged =
-						routeview2.RoutesChanged = true;
+						routeview1.RouteChanged = true;
+
+						foreach (RouteNode node in RouteCheckService.Invalids)
+							(@base as MapFile).Routes.DeleteNode(node);
 					}
 
 					Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
@@ -2789,8 +2794,7 @@ namespace MapView
 						goto case DialogResult.No;
 
 					case DialogResult.No:		// don't save & clear RoutesChanged flag
-						ObserverManager.RouteView   .Control     .RoutesChanged =
-						ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
+						ObserverManager.RouteView.Control.RouteChanged = false;
 						break;
 
 					case DialogResult.Cancel:	// dismiss confirmation dialog & leave state unaffected

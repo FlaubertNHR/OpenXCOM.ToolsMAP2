@@ -78,7 +78,7 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// 
+		/// Initializes this RoutesInfo with a MapFile.
 		/// </summary>
 		/// <param name="file"></param>
 		internal void Initialize(MapFile file)
@@ -111,6 +111,9 @@ namespace MapView
 			thisLayout();
 		}
 
+		/// <summary>
+		/// Resets all tallies.
+		/// </summary>
 		private void ResetTallies()
 		{
 			_ranks_0     = _ranks_1     = _ranks_2     = _ranks_3     =
@@ -123,7 +126,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// 
+		/// Initializes the ranks for the Tileset.
 		/// </summary>
 		/// <returns></returns>
 		private void InitRanks()
@@ -166,7 +169,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// 
+		/// Initializes the ranks for the Category.
 		/// </summary>
 		private void InitRanksCategory()
 		{
@@ -303,17 +306,17 @@ namespace MapView
 
 
 		/// <summary>
-		/// Tallies a node on its creation in RouteView.
+		/// de-Tallies a node on its deletion in RouteView.
 		/// </summary>
 		/// <param name="node"></param>
-		internal void AddNode(RouteNode node)
+		internal void DeleteNode(RouteNode node)
 		{
 			if (node.Spawn != SpawnWeight.None)
 			{
-				lbl_TotalTileset .Text = (++_nodes)   .ToString();
-				lbl_TotalCategory.Text = (++_nodescat).ToString();
+				lbl_TotalTileset .Text = (--_nodes)   .ToString();
+				lbl_TotalCategory.Text = (--_nodescat).ToString();
 
-				UpdateNoderank(Byte.MaxValue, node.Rank);
+				UpdateNoderank(node.Rank, Byte.MaxValue);
 			}
 		}
 
@@ -331,6 +334,7 @@ namespace MapView
 				{
 					lbl_TotalTileset .Text = (++_nodes)   .ToString();
 					lbl_TotalCategory.Text = (++_nodescat).ToString();
+
 					UpdateNoderank(Byte.MaxValue, rank);
 				}
 			}

@@ -157,7 +157,7 @@ namespace MapView.Forms.Observers
 		/// Coordinates the 'RoutesChanged' flag between RouteView and
 		/// TopRouteView(Route).
 		/// </summary>
-		private bool RouteChanged
+		internal bool RouteChanged
 		{
 			set
 			{
@@ -495,9 +495,6 @@ namespace MapView.Forms.Observers
 				{
 					RouteChanged = true;
 					NodeSelected = MapFile.AddRouteNode(args.Location);
-
-					if (RoutesInfo != null)
-						RoutesInfo.AddNode(NodeSelected);
 				}
 				update = (NodeSelected != null);
 			}
@@ -510,9 +507,6 @@ namespace MapView.Forms.Observers
 						RouteChanged = true;
 						node = MapFile.AddRouteNode(args.Location);
 						ConnectNode(node);
-
-						if (RoutesInfo != null)
-							RoutesInfo.AddNode(node);
 					}
 					NodeSelected = node;
 					update = true;
@@ -1450,9 +1444,14 @@ namespace MapView.Forms.Observers
 
 				SpotGoDestination(slot); // highlight back to the startnode.
 			}
-			else if (RouteCheckService.ShowInvalid(MapFile, node))
+			else if (RouteCheckService.ShowInvalid(MapFile, node) == DialogResult.Yes)
 			{
 				RouteChanged = true;
+
+				if (RoutesInfo != null)
+					RoutesInfo.DeleteNode(node);
+
+				MapFile.Routes.DeleteNode(node);
 				UpdateNodeInfo();
 				// TODO: May need _pnlRoutes.Refresh()
 			}
@@ -1712,6 +1711,9 @@ namespace MapView.Forms.Observers
 			{
 				RouteChanged = true;
 
+				if (RoutesInfo != null)
+					RoutesInfo.DeleteNode(NodeSelected);
+
 				MapFile[NodeSelected.Row,
 						NodeSelected.Col,
 						NodeSelected.Lev].Node = null;
@@ -1896,7 +1898,11 @@ namespace MapView.Forms.Observers
 						MapFile.Routes = new RouteNodeCollection(ofd.FileName);
 						MapFile.SetupRouteNodes();
 
-						RouteCheckService.CheckNodeBounds(MapFile);
+						if (RouteCheckService.CheckNodeBounds(MapFile) == DialogResult.Yes)
+						{
+							foreach (RouteNode node in RouteCheckService.Invalids)
+								MapFile.Routes.DeleteNode(node);
+						}
 
 						UpdateNodeInfo(); // not sure is necessary ...
 						RefreshPanels();
@@ -2203,9 +2209,18 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnCheckOobNodesClick(object sender, EventArgs e)
 		{
-			if (RouteCheckService.CheckNodeBounds(MapFile, true))
+			if (RouteCheckService.CheckNodeBounds(MapFile, true) == DialogResult.Yes)
 			{
 				RouteChanged = true;
+
+				foreach (RouteNode node in RouteCheckService.Invalids)
+				{
+					if (RoutesInfo != null)
+						RoutesInfo.DeleteNode(node);
+
+					MapFile.Routes.DeleteNode(node);
+				}
+
 				UpdateNodeInfo();
 			}
 		}

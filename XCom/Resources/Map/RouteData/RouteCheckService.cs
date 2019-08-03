@@ -10,49 +10,24 @@ namespace XCom
 		#region Fields (static)
 		private static MapFile _file;
 
-		private static readonly List<RouteNode> _invalids = new List<RouteNode>();
 		private static int _count;
 		#endregion Fields (static)
 
 
+		#region Properties (static)
+		public static List<RouteNode> Invalids
+		{ get; private set; }
+		#endregion Properties (static)
+
+
 		#region Methods (static)
-		/// <summary>
-		/// Checks for and if found gives user a choice to delete nodes that are
-		/// outside of a Map's x/y/z bounds.
-		/// </summary>
-		/// <param name="file"></param>
-		/// <param name="ludi">true if user-invoked</param>
-		/// <returns>true if user opted to clear invalid nodes</returns>
-		public static bool CheckNodeBounds(MapFile file, bool ludi = false)
-		{
-			if ((_file = file) != null)
-			{
-				_invalids.Clear();
-
-				if ((_count = GetInvalidNodes()) != 0)
-				{
-					return ShowInvalids();
-				}
-
-				if (ludi)
-					MessageBox.Show(
-								"There are no Out of Bounds nodes detected.",
-								" Good stuff, Magister Ludi",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Information,
-								MessageBoxDefaultButton.Button1,
-								0);
-			}
-			return false;
-		}
-
 		/// <summary>
 		/// Opens a dialog to delete an invalid link-destination node.
 		/// </summary>
 		/// <param name="file"></param>
 		/// <param name="node">the node to delete</param>
 		/// <returns>true if user chooses to delete out-of-bounds node</returns>
-		public static bool ShowInvalid(MapFile file, RouteNode node)
+		public static DialogResult ShowInvalid(MapFile file, RouteNode node)
 		{
 			using (var f = new RouteCheckInfobox())
 			{
@@ -64,21 +39,44 @@ namespace XCom
 				string text = "id " + node.Index + " : " + node.GetLocationString(file.MapSize.Levs);
 				f.SetTexts(label, text);
 
-				if (f.ShowDialog() == DialogResult.Yes)
-				{
-					file.Routes.DeleteNode(node);
-					return true;
-				}
+				return f.ShowDialog();
 			}
-			return false;
 		}
 
+
+		/// <summary>
+		/// Checks for and if found gives user a choice to delete nodes that are
+		/// outside of a Map's x/y/z bounds.
+		/// </summary>
+		/// <param name="file"></param>
+		/// <param name="ludi">true if user-invoked</param>
+		/// <returns>DialogResult.Yes if user opts to clear invalid nodes</returns>
+		public static DialogResult CheckNodeBounds(MapFile file, bool ludi = false)
+		{
+			Invalids.Clear();
+
+			if ((_file = file) != null)
+			{
+				if ((_count = DeterInvalidNodes()) != 0)
+					return ShowInvalids();
+
+				if (ludi)
+					MessageBox.Show(
+								"There are no Out of Bounds nodes detected.",
+								" Good stuff, Magister Ludi",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Information,
+								MessageBoxDefaultButton.Button1,
+								0);
+			}
+			return DialogResult.No;
+		}
 
 		/// <summary>
 		/// Fills the list with any invalid nodes.
 		/// </summary>
 		/// <returns>count of invalid nodes</returns>
-		private static int GetInvalidNodes()
+		private static int DeterInvalidNodes()
 		{
 			foreach (RouteNode node in _file.Routes)
 			{
@@ -88,17 +86,17 @@ namespace XCom
 															_file.MapSize.Rows,
 															_file.MapSize.Levs))
 				{
-					_invalids.Add(node);
+					Invalids.Add(node);
 				}
 			}
-			return _invalids.Count;
+			return Invalids.Count;
 		}
 
 		/// <summary>
 		/// Opens a dialog to delete the invalid nodes.
 		/// </summary>
-		/// <returns>true if user chooses to delete out-of-bounds nodes</returns>
-		private static bool ShowInvalids()
+		/// <returns>DialogResult.Yes if user opts to clear invalid nodes</returns>
+		private static DialogResult ShowInvalids()
 		{
 			using (var f = new RouteCheckInfobox())
 			{
@@ -115,7 +113,7 @@ namespace XCom
 				string text = String.Empty;
 				int total = _file.Routes.Count;
 				byte loc;
-				foreach (var node in _invalids)
+				foreach (var node in Invalids)
 				{
 					text += "id ";
 
@@ -156,15 +154,8 @@ namespace XCom
 
 				f.SetTexts(label, text);
 
-				if (f.ShowDialog() == DialogResult.Yes)
-				{
-					foreach (var node in _invalids)
-						_file.Routes.DeleteNode(node);
-
-					return true;
-				}
+				return f.ShowDialog();
 			}
-			return false;
 		}
 		#endregion Methods (static)
 	}

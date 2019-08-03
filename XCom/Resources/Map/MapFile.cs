@@ -498,7 +498,7 @@ namespace XCom
 				MapSize = new MapSize(rows, cols, levs);
 				Tiles = tileList;
 
-				if (RouteCheckService.CheckNodeBounds(this))
+				if (RouteCheckService.CheckNodeBounds(this) == DialogResult.Yes)
 					bit |= CHANGED_NOD;
 
 				ClearRouteNodes();
