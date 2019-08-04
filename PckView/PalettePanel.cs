@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using DSShared.Controls;
@@ -19,15 +20,21 @@ namespace PckView
 		#region Fields
 		private readonly PaletteForm _fpalette;
 
-		private int _swatchWidth;
-		private int _swatchHeight;
-
 		private int _x = -1;
 		private int _y = -1;
+
+		private readonly GraphicsPath pathTran_hori = new GraphicsPath();
+		private readonly GraphicsPath pathTran_vert = new GraphicsPath();
 		#endregion Fields
 
 
 		#region Properties
+		private int SwatchWidth
+		{ get; set; }
+
+		private int SwatchHeight
+		{ get; set; }
+
 		private int _palid = -1;
 		internal int Palid
 		{
@@ -59,13 +66,26 @@ namespace PckView
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
 		{
-			_swatchWidth  = Width  / SwatchesPerSide;
-			_swatchHeight = Height / SwatchesPerSide;
+			SwatchWidth  = Width  / SwatchesPerSide;
+			SwatchHeight = Height / SwatchesPerSide;
+
+			pathTran_hori.Reset();
+			pathTran_vert.Reset();
+
+			int x0 = SwatchWidth  / 3;
+			int x1 = SwatchWidth  * 2 / 3;
+			int y0 = SwatchHeight / 3;
+			int y1 = SwatchHeight * 2 / 3;
+
+			pathTran_hori.AddLine(x0,y0, x1,y0); pathTran_hori.StartFigure();
+			pathTran_hori.AddLine(x0,y1, x1,y1);
+			pathTran_vert.AddLine(x0,y0, x0,y1); pathTran_vert.StartFigure();
+			pathTran_vert.AddLine(x1,y0, x1,y1);
 
 			if (Palid != -1)
 			{
-				_x = Palid % SwatchesPerSide * _swatchWidth  + 1;
-				_y = Palid / SwatchesPerSide * _swatchHeight + 1;
+				_x = Palid % SwatchesPerSide * SwatchWidth  + 1;
+				_y = Palid / SwatchesPerSide * SwatchHeight + 1;
 			}
 			Refresh();
 		}
@@ -78,11 +98,11 @@ namespace PckView
 		{
 			base.OnMouseDown(e);
 
-			int swatchX = e.X / _swatchWidth;
-			int swatchY = e.Y / _swatchHeight;
+			int swatchX = e.X / SwatchWidth;
+			int swatchY = e.Y / SwatchHeight;
 
-			_x = swatchX * _swatchWidth  + 1;
-			_y = swatchY * _swatchHeight + 1;
+			_x = swatchX * SwatchWidth  + 1;
+			_y = swatchY * SwatchHeight + 1;
 
 			Palid = swatchY * SwatchesPerSide + swatchX;
 
@@ -106,21 +126,21 @@ namespace PckView
 							y = 0;
 						i != SwatchesPerSide;
 						++i,
-							y += _swatchHeight)
+							y += SwatchHeight)
 				{
 					for (int
 							j = 0,
 								x = 0;
 							j != SwatchesPerSide;
 							++j,
-								x += _swatchWidth)
+								x += SwatchWidth)
 					{
 						using (var brush = new SolidBrush(SpritePanel.AdjustColor(PckViewForm.Pal[j + SwatchesPerSide * i])))
 						{
 							graphics.FillRectangle(
 												brush,
 												x, y,
-												_swatchWidth, _swatchHeight);
+												SwatchWidth, SwatchHeight);
 						}
 					}
 				}
@@ -132,32 +152,36 @@ namespace PckView
 							y = 0;
 						i != SwatchesPerSide;
 						++i,
-							y += _swatchHeight)
+							y += SwatchHeight)
 				{
 					for (int
 							j = 0,
 								x = 0;
 							j != SwatchesPerSide;
 							++j,
-								x += _swatchWidth)
+								x += SwatchWidth)
 					{
 						using (var brush = new SolidBrush(PckViewForm.Pal[j + SwatchesPerSide * i]))
 						{
 							graphics.FillRectangle(
 												brush,
 												x, y,
-												_swatchWidth, _swatchHeight);
+												SwatchWidth, SwatchHeight);
 						}
 					}
 				}
 			}
 
-			if (Palid != -1)
+			// draw a small square w/ light and dark lines in the transparent swatch.
+			graphics.DrawPath(Pens.LightGray, pathTran_hori);
+			graphics.DrawPath(Pens.     Gray, pathTran_vert);
+
+			if (Palid != -1) // highlight the selected id ->
 			{
 				graphics.DrawRectangle(
 									Pens.Red,
 									_x           - 1, _y            - 1,
-									_swatchWidth - 1, _swatchHeight - 1);
+									SwatchWidth - 1, SwatchHeight - 1);
 			}
 		}
 		#endregion Events (override)
@@ -180,8 +204,8 @@ namespace PckView
 		{
 			Palid = palid;
 
-			_x = palid % SwatchesPerSide * _swatchWidth  + 1;
-			_y = palid / SwatchesPerSide * _swatchHeight + 1;
+			_x = palid % SwatchesPerSide * SwatchWidth  + 1;
+			_y = palid / SwatchesPerSide * SwatchHeight + 1;
 
 			UpdatePalette();
 		}

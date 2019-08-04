@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using DSShared;
@@ -105,7 +106,7 @@ namespace PckView
 		#region Designer
 		private Container components = null;
 
-		private Label lblStatus;
+		private PckView.PaletteLabelbar lblStatus;
 
 
 		/// <summary>
@@ -126,12 +127,11 @@ namespace PckView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.lblStatus = new System.Windows.Forms.Label();
+			this.lblStatus = new PckView.PaletteLabelbar();
 			this.SuspendLayout();
 			// 
 			// lblStatus
 			// 
-			this.lblStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.lblStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.lblStatus.Location = new System.Drawing.Point(0, 254);
 			this.lblStatus.Name = "lblStatus";
@@ -157,5 +157,38 @@ namespace PckView
 
 		}
 		#endregion Designer
+	}
+
+
+
+	internal sealed class PaletteLabelbar
+		:
+			Label
+	{
+		private readonly GraphicsPath path3d = new GraphicsPath();
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+
+			path3d.Reset();
+
+			path3d.AddLine(Width, 0, 0,0);
+			path3d.AddLine(0,0, 0, Height);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			base.OnPaint(e);
+			e.Graphics.DrawPath(Pens.Gray, path3d);
+		}
 	}
 }
