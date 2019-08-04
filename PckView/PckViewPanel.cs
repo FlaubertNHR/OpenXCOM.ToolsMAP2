@@ -314,29 +314,29 @@ namespace PckView
 
 					if (!_f.IsScanG)
 					{
-//						graphics.DrawImage(
-//										Spriteset[id].Sprite,
-//										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-//										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
-						graphics.DrawImage(
-										Spriteset[id].Sprite,
-										new Rectangle(
-													TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-													TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-													XCImage.SpriteWidth32,
-													XCImage.SpriteHeight40),
-										0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
-										GraphicsUnit.Pixel,
-										_f.Attri);
+						if (_f.SpriteShade > -1)
+						{
+							graphics.DrawImage(
+											Spriteset[id].Sprite,
+											new Rectangle(
+														TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+														TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+														XCImage.SpriteWidth32,
+														XCImage.SpriteHeight40),
+											0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+											GraphicsUnit.Pixel,
+											_f.Attri);
+						}
+						else
+						{
+							graphics.DrawImage(
+											Spriteset[id].Sprite,
+											TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+											TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
+						}
 					}
-					else
+					else if (_f.SpriteShade > -1)
 					{
-//						graphics.DrawImage(
-//										Spriteset[id].Sprite,
-//										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-//										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-//										Spriteset[id].Sprite.Width  * 4,
-//										Spriteset[id].Sprite.Height * 4);
 						graphics.DrawImage(
 										Spriteset[id].Sprite,
 										new Rectangle(
@@ -347,6 +347,15 @@ namespace PckView
 										0,0, Spriteset[id].Sprite.Width, Spriteset[id].Sprite.Height,
 										GraphicsUnit.Pixel,
 										_f.Attri);
+					}
+					else
+					{
+						graphics.DrawImage(
+										Spriteset[id].Sprite,
+										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+										Spriteset[id].Sprite.Width  * 4,
+										Spriteset[id].Sprite.Height * 4);
 					}
 				}
 

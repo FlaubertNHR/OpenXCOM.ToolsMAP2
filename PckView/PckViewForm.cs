@@ -72,7 +72,7 @@ namespace PckView
 		private string _pfePck0;
 		private string _pfeTab0;
 
-		internal readonly int SpriteShade = -1;
+		internal int SpriteShade = -1;
 		internal readonly ImageAttributes Attri = new ImageAttributes();
 		#endregion Fields
 
@@ -213,6 +213,8 @@ namespace PckView
 				if (Int32.TryParse(val, out result)
 					&& result > -1)
 				{
+					miSpriteShade.Checked = true;
+
 					SpriteShade = result;
 					if (SpriteShade > 100) SpriteShade = 100;
 					SpriteShadeFloat = (float)SpriteShade * 0.03F;
@@ -262,8 +264,9 @@ namespace PckView
 		// miQuit				CtrlQ
 		// miCompare
 		// miTransparent		F7
+		// miSpriteShade		F8
 		// palette items		Ctrl1..Ctrl8
-		// miBytes				F8
+		// miBytes				F9
 		// miHelp				F1
 		//
 		// CONTEXT:
@@ -1553,6 +1556,29 @@ namespace PckView
 																// in case palette-id #0 is currently selected.
 			PaletteChanged();
 		}
+
+		/// <summary>
+		/// Toggles usage of the Spriteshade value of MapView's options.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSpriteshadeClick(object sender, EventArgs e)
+		{
+			if (SpriteShade != -1)
+			{
+				if (miSpriteShade.Checked = !miSpriteShade.Checked)
+				{
+					SpriteShade = 0;	// NOTE: That is not the spriteshade val; the val was used,
+				}						// if it was found in the cTor, and now simply means "enabled".
+				else
+					SpriteShade = -2;	// And this means, was found but has been user-disabled.
+
+				TilePanel.Invalidate();
+				SpriteEditor.SpritePanel.Invalidate();
+				SpriteEditor._fpalette._pnlPalette.Invalidate();
+			}
+		}
+
 
 		/// <summary>
 		/// Shows a richtextbox with all the bytes of the currently selected

@@ -33,6 +33,7 @@ namespace PckView
 
 		private System.Windows.Forms.MenuItem miPaletteMenu;
 		private System.Windows.Forms.MenuItem miTransparent;
+		private System.Windows.Forms.MenuItem miSpriteShade;
 		private System.Windows.Forms.MenuItem miSeparator4;
 
 		private System.Windows.Forms.MenuItem miHelpMenu;
@@ -93,6 +94,7 @@ namespace PckView
 			this.miCompare = new System.Windows.Forms.MenuItem();
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
 			this.miTransparent = new System.Windows.Forms.MenuItem();
+			this.miSpriteShade = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miBytesMenu = new System.Windows.Forms.MenuItem();
 			this.miBytes = new System.Windows.Forms.MenuItem();
@@ -277,6 +279,7 @@ namespace PckView
 			this.miPaletteMenu.Index = 1;
 			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miTransparent,
+			this.miSpriteShade,
 			this.miSeparator4});
 			this.miPaletteMenu.Text = "&Palette";
 			// 
@@ -288,9 +291,16 @@ namespace PckView
 			this.miTransparent.Text = "&Transparent";
 			this.miTransparent.Click += new System.EventHandler(this.OnTransparencyClick);
 			// 
+			// miSpriteShade
+			// 
+			this.miSpriteShade.Index = 1;
+			this.miSpriteShade.Shortcut = System.Windows.Forms.Shortcut.F8;
+			this.miSpriteShade.Text = "&SpriteShade";
+			this.miSpriteShade.Click += new System.EventHandler(this.OnSpriteshadeClick);
+			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 1;
+			this.miSeparator4.Index = 2;
 			this.miSeparator4.Text = "-";
 			// 
 			// miBytesMenu
@@ -304,7 +314,7 @@ namespace PckView
 			// miBytes
 			// 
 			this.miBytes.Index = 0;
-			this.miBytes.Shortcut = System.Windows.Forms.Shortcut.F8;
+			this.miBytes.Shortcut = System.Windows.Forms.Shortcut.F9;
 			this.miBytes.Text = "Show/hide &byte table";
 			this.miBytes.Click += new System.EventHandler(this.OnBytesClick);
 			// 

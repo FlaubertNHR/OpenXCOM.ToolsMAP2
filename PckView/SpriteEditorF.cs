@@ -307,13 +307,13 @@ namespace PckView
 			this.miPaletteMenu.Index = 0;
 			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miPalette});
-			this.miPaletteMenu.Text = "Palette";
+			this.miPaletteMenu.Text = "&Palette";
 			// 
 			// miPalette
 			// 
 			this.miPalette.Index = 0;
 			this.miPalette.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
-			this.miPalette.Text = "Show palette";
+			this.miPalette.Text = "Show &palette";
 			this.miPalette.Click += new System.EventHandler(this.OnShowPaletteClick);
 			// 
 			// miGridMenu
@@ -322,20 +322,20 @@ namespace PckView
 			this.miGridMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miGrid,
 			this.miGridInvert});
-			this.miGridMenu.Text = "Grid";
+			this.miGridMenu.Text = "&Grid";
 			// 
 			// miGrid
 			// 
 			this.miGrid.Index = 0;
 			this.miGrid.Shortcut = System.Windows.Forms.Shortcut.CtrlG;
-			this.miGrid.Text = "Show grid";
+			this.miGrid.Text = "Show &grid";
 			this.miGrid.Click += new System.EventHandler(this.OnShowGridClick);
 			// 
 			// miGridInvert
 			// 
 			this.miGridInvert.Index = 1;
 			this.miGridInvert.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
-			this.miGridInvert.Text = "Invert color";
+			this.miGridInvert.Text = "&Invert color";
 			this.miGridInvert.Click += new System.EventHandler(this.OnInvertGridColorClick);
 			// 
 			// ss_Status
