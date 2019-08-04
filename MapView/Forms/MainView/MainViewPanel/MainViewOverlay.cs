@@ -533,7 +533,7 @@ namespace MapView.Forms.MainView
 		/// Causes this panel to redraw along with the TopView, RouteView, and
 		/// TopRouteView forms - also invalidates the ScanG panel.
 		/// </summary>
-		/// <param name="refresh">true to Refresh MainView</param>
+		/// <param name="refresh">true to refresh MainView; false to invalidate</param>
 		private void InvalidateObservers(bool refresh = false)
 		{
 			if (refresh)

@@ -1168,6 +1168,25 @@ namespace MapView
 			OnReloadDescriptor();
 		}
 
+		/// <summary>
+		/// Reloads the Map/Routes/Terrains when a save is done in PckView or
+		/// McdView (via TileView).
+		/// @note Is double-purposed to reload the Map/Routes/Terrains when user
+		/// chooses to reload the current Map et al. on the File menu.
+		/// TODO: Neither event really needs to reload the Map/Routes (in fact
+		/// it would be better if it didn't so that the SaveAlerts could be
+		/// bypassed) - so this function ought be reworked to reload only the
+		/// Terrains (MCDs/PCKs/TABs). But that's a headache and a half ...
+		/// </summary>
+		private void OnReloadDescriptor()
+		{
+			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
+				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
+
+			if (!cancel)
+				LoadSelectedDescriptor();
+		}
+
 		private void OnScreenshotClick(object sender, EventArgs e)
 		{
 			MapFileBase @base = MainViewUnderlay.MapBase;
@@ -2548,25 +2567,6 @@ namespace MapView
 					LoadSelectedDescriptor(true);
 				}
 			}
-		}
-
-		/// <summary>
-		/// Reloads the Map/Routes/Terrains when a save is done in PckView or
-		/// McdView (via TileView).
-		/// @note Is double-purposed to reload the Map/Routes/Terrains when user
-		/// chooses to reload the current Map et al. on the File menu.
-		/// TODO: Neither event really needs to reload the Map/Routes (in fact
-		/// it would be better if it didn't so that the SaveAlerts could be
-		/// bypassed) - so this function ought be reworked to reload only the
-		/// Terrains (MCDs/PCKs/TABs). But that's a headache and a half ...
-		/// </summary>
-		private void OnReloadDescriptor()
-		{
-			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
-				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
-
-			if (!cancel)
-				LoadSelectedDescriptor();
 		}
 		#endregion Events
 

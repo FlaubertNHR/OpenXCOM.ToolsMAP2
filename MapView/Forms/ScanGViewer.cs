@@ -333,7 +333,8 @@ namespace MapView
 						icon   = MessageBoxIcon.Error;
 					}
 					ShowReloadResult(result, title, icon);
-					// NOTE: invalidate/refresh is not needed apparently.
+
+					// NOTE: Invalidate/refresh is not needed apparently.
 					break;
 				}
 			}
@@ -373,7 +374,7 @@ namespace MapView
 			Level = _base.Level;
 			Text = GetTitle();
 
-			Invalidate();
+			Refresh(); // req'd.
 		}
 
 		internal void InvalidatePanel()

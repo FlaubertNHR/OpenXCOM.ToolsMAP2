@@ -746,7 +746,6 @@ namespace MapView.Forms.MainView
 			MainViewOverlay.Invalidate();
 			InvalidateSecondaryPanels();
 
-			// refresh ScanGViewer panel and current TilePanel and QuadrantPanel(s)
 			if (MainViewF.ScanG != null)
 				MainViewF.ScanG.InvalidatePanel();
 		}
