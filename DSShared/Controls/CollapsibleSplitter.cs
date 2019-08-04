@@ -74,7 +74,7 @@ namespace DSShared.Controls
 			int y6 = y7 - (OffsetY + HeightTri / 2);
 
 			_pathTrisLeft.AddLine(x2,y1, x1,y2);
-			_pathTrisLeft.AddLine(x1,y2, x2, y5);
+			_pathTrisLeft.AddLine(x1,y2, x2,y5);
 			_pathTrisLeft.CloseFigure();
 
 			_pathTrisLeft.AddLine(x2,y3, x2,y4);
