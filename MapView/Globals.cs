@@ -15,6 +15,8 @@ namespace MapView
 		internal const double ScaleMaximum = 3.00;
 
 		internal const string ALLFILES = "*.*";
+
+		internal const int PERIOD = 235; // longest acceptable tic-delay for Timers
 		#endregion
 
 
@@ -42,7 +44,7 @@ namespace MapView
 			set { _autoScale = value; }
 		}
 
-		internal static SpriteCollection ExtraSprites
+		internal static SpriteCollection ExtraSprites // TODO: I thought somebody had all that IMapObserver stuff worked out for this kind of thing. oh wait,
 		{ get; private set; }
 		#endregion
 
@@ -53,7 +55,7 @@ namespace MapView
 		/// @note These sprites could be broken out and put in Resources but
 		/// it's kinda cute this way too.
 		/// </summary>
-		internal static void LoadExtraSprites()
+		internal static void LoadExtraSprites() // TODO: break out of Globals, put in the only place it's used: MainViewF. thanks
 		{
 			var ass = Assembly.GetExecutingAssembly();
 			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.Extra.PCK"))

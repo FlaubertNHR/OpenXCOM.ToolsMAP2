@@ -67,6 +67,19 @@ namespace MapView.Forms.MainView
 				OnResize(EventArgs.Empty);
 			}
 		}
+
+
+		internal bool IsVertbarVisible
+		{ get { return _scrollBarV.Visible; } }
+
+		internal bool IsHoribarVisible
+		{ get { return _scrollBarH.Visible; } }
+
+		internal int WidthVertbar
+		{ get { return _scrollBarV.Width; } }
+
+		internal int HeightHoribar
+		{ get { return _scrollBarH.Height; } }
 		#endregion Properties
 
 
@@ -436,26 +449,26 @@ namespace MapView.Forms.MainView
 		internal delegate void AnimationEventHandler();
 		internal static AnimationEventHandler AnimationUpdate;	// NOTE: 'AnimationUpdate' uses the delegate directly;
 																// it is not an event per se.
-		private static Timer _timer;
+		private static Timer _t1;
 		private static int _anistep;
 
 		internal static void Animate(bool animate)
 		{
 			if (animate)
 			{
-				if (_timer == null)
+				if (_t1 == null)
 				{
-					_timer = new Timer();
-					_timer.Interval = 230;
-					_timer.Tick += AnimateStep;
+					_t1 = new Timer();
+					_t1.Interval = Globals.PERIOD;
+					_t1.Tick += AnimateStep;
 				}
 
-				if (!_timer.Enabled)
-					_timer.Start();
+				if (!_t1.Enabled)
+					_t1.Start();
 			}
-			else if (_timer != null)
+			else if (_t1 != null)
 			{
-				_timer.Stop();
+				_t1.Stop();
 				_anistep = 0;
 			}
 		}

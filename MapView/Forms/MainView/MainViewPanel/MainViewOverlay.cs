@@ -54,7 +54,14 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal bool _targeterForced;
 
-		private int _colOver; // tracks the mouseover location ->
+		/// <summary>
+		/// Tracks the mouseover location col.
+		/// </summary>
+		private int _colOver;
+
+		/// <summary>
+		/// Tracks the mouseover location row.
+		/// </summary>
 		private int _rowOver;
 		#endregion Fields
 
@@ -158,10 +165,16 @@ namespace MapView.Forms.MainView
 
 			GotFocus  += OnFocusGained;
 			LostFocus += OnFocusLost;
+
+			var t1 = new Timer();
+			t1.Interval = Globals.PERIOD;
+			t1.Enabled = true;
+			t1.Tick += t1_Tick;
 		}
 		#endregion cTor
 
 
+		#region Events and Methods for targeter-suppression
 		private void OnFocusGained(object sender, EventArgs e)
 		{
 			if (MapBase != null)
@@ -183,6 +196,41 @@ namespace MapView.Forms.MainView
 				Invalidate();
 			}
 		}
+
+		/// <summary>
+		/// Hides the cuboid-targeter when the mouse leaves the center-panel
+		/// unless the targeter was enabled by a keyboard tile-selection.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void t1_Tick(object sender, EventArgs e)
+		{
+			if (Focused && MapBase != null && !_targeterForced && SuppressTargeter())
+				Invalidate();
+		}
+
+		/// <summary>
+		/// Checks if the cursor is *not* inside the ToolStripContainer's
+		/// center-panel and hence if the targeter ought be suppressed.
+		/// @note This funct ignores the '_targeterForced' var so that needs to
+		/// be checked before call.
+		/// </summary>
+		/// <returns></returns>
+		private bool SuppressTargeter()
+		{
+			MainViewUnderlay underlay = MainViewUnderlay.that;
+			var centerpanel = MainViewF.that.tscPanel.ContentPanel;
+
+			var allowablearea = centerpanel.ClientRectangle;
+			if (underlay.IsVertbarVisible)
+				allowablearea.Width -= underlay.WidthVertbar;
+
+			if (underlay.IsHoribarVisible)
+				allowablearea.Height -= underlay.HeightHoribar;
+
+			return !allowablearea.Contains(centerpanel.PointToClient(Control.MousePosition));
+		}
+		#endregion Events and Methods for targeter-suppression
 
 
 		#region Events and Methods for the edit-functions
@@ -973,8 +1021,7 @@ namespace MapView.Forms.MainView
 
 			if (MapBase != null)
 			{
-				_targeterSuppressed = !_targeterForced
-								   && (!Focused || !ClientRectangle.Contains(PointToClient(Cursor.Position)));
+				_targeterSuppressed = !_targeterForced && (!Focused || SuppressTargeter());
 
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;

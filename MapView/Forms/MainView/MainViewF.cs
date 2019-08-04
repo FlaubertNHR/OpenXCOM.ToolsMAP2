@@ -2677,10 +2677,10 @@ namespace MapView
 							tileview.McdInfobox.UpdateData();
 					}
 
-					if (RouteView.RoutesInfo != null)
+					if (RouteView.RoutesInfo != null) // update RoutesInfo if open
 						RouteView.RoutesInfo.Initialize(@base as MapFile);
 
-					ResetQuadrantPanel();
+					ResetQuadrantPanel(); // update the Quadrant panel
 
 					FirstActivated = false;
 					Activate();
@@ -2689,7 +2689,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// 
+		/// Resets the QuadrantPanel when either a Map loads or gets resized.
 		/// </summary>
 		private void ResetQuadrantPanel()
 		{

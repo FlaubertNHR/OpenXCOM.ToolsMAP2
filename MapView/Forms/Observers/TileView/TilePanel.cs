@@ -142,9 +142,9 @@ namespace MapView.Forms.Observers
 
 			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
 
-			_t1.Interval = 250;	// because the mouse OnLeave event doesn't fire
-			_t1.Enabled = true;	// when the mouse moves out of the panel directly
-		}						// from a tilepart's part-icon.
+			_t1.Interval = Globals.PERIOD;	// because the mouse OnLeave event doesn't fire
+			_t1.Enabled = true;				// when the mouse moves out of the panel directly
+		}									// from a tilepart's part-icon.
 
 		/// <summary>
 		/// Builds a ContextMenu for RMB on this TilePanel.

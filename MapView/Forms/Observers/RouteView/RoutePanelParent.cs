@@ -110,12 +110,12 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal protected RoutePanelParent()
 		{
-			var t1 = new Timer();	// because the mouse OnLeave event doesn't fire when the mouse
-			t1.Interval = 250;		// moves over a different form before actually "leaving" this
-			t1.Enabled = true;		// control. btw, this is only to stop the overlay from drawing
-			t1.Tick += t1_Tick;		// on both RouteView and TopRouteView(Route) simultaneously.
-		}							// so uh yeah it's overkill - Good Lord it works.
-		#endregion cTor				// Plus it clears the overed infotext tile-coordinates.
+			var t1 = new Timer();				// because the mouse OnLeave event doesn't fire when the mouse
+			t1.Interval = Globals.PERIOD;		// moves over a different form before actually "leaving" this
+			t1.Enabled = true;					// control. btw, this is only to stop the overlay from drawing
+			t1.Tick += t1_Tick;					// on both RouteView and TopRouteView(Route) simultaneously.
+		}										// so uh yeah it's overkill - Good Lord it works.
+		#endregion cTor							// Plus it clears the overed infotext tile-coordinates.
 
 
 		#region Events

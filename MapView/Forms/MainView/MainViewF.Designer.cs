@@ -11,7 +11,7 @@ namespace MapView
 
 		private System.Windows.Forms.ContextMenu cmMapTreeMenu;
 
-		private System.Windows.Forms.ToolStripContainer tscPanel;
+		internal System.Windows.Forms.ToolStripContainer tscPanel;
 
 
 		private System.Windows.Forms.MainMenu mmMain;
