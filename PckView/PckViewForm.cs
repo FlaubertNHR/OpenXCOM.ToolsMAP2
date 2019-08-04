@@ -41,6 +41,8 @@ namespace PckView
 		private const string PngExt = ".PNG";
 
 		internal static bool Quit;
+
+		internal static float SpriteShadeFloat;
 		#endregion Fields (static)
 
 
@@ -69,6 +71,9 @@ namespace PckView
 		private string _pfeTab;
 		private string _pfePck0;
 		private string _pfeTab0;
+
+		internal readonly int SpriteShade = -1;
+		internal readonly ImageAttributes Attri = new ImageAttributes();
 		#endregion Fields
 
 
@@ -194,6 +199,50 @@ namespace PckView
 
 			var r = new CustomToolStripRenderer();
 			ss_Status.Renderer = r;
+
+
+			// get SpriteShade from MapView's options ...
+			string pfeConfig = Path.Combine(
+										Path.GetDirectoryName(Application.ExecutablePath),
+										"settings" + Path.DirectorySeparatorChar + "MapOptions.cfg");
+			if (File.Exists(pfeConfig))
+			{
+				string val = GetSpriteShade(pfeConfig);
+
+				int result;
+				if (Int32.TryParse(val, out result)
+					&& result > -1)
+				{
+					SpriteShade = result;
+					if (SpriteShade > 100) SpriteShade = 100;
+					SpriteShadeFloat = (float)SpriteShade * 0.03F;
+
+					Attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+				}
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="pfeConfig"></param>
+		/// <returns></returns>
+		private string GetSpriteShade(string pfeConfig)
+		{
+			int count = File.ReadLines(pfeConfig).Count();
+			using (var sr = new StreamReader(pfeConfig))
+			{
+				string line;
+				for (int i = 0; i != count; ++i)
+				{
+					line = sr.ReadLine().Trim();
+					if (line.StartsWith("SpriteShade", StringComparison.InvariantCulture))
+					{
+						return line.Substring(12);
+					}
+				}
+			}
+			return null;
 		}
 
 

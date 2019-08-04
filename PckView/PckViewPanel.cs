@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using DSShared;
@@ -313,19 +314,39 @@ namespace PckView
 
 					if (!_f.IsScanG)
 					{
+//						graphics.DrawImage(
+//										Spriteset[id].Sprite,
+//										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+//										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
 						graphics.DrawImage(
 										Spriteset[id].Sprite,
-										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
+										new Rectangle(
+													TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+													TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+													XCImage.SpriteWidth32,
+													XCImage.SpriteHeight40),
+										0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+										GraphicsUnit.Pixel,
+										_f.Attri);
 					}
 					else
 					{
+//						graphics.DrawImage(
+//										Spriteset[id].Sprite,
+//										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+//										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+//										Spriteset[id].Sprite.Width  * 4,
+//										Spriteset[id].Sprite.Height * 4);
 						graphics.DrawImage(
 										Spriteset[id].Sprite,
-										TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-										TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-										Spriteset[id].Sprite.Width  * 4,
-										Spriteset[id].Sprite.Height * 4);
+										new Rectangle(
+													TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+													TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+													Spriteset[id].Sprite.Width  * 4,
+													Spriteset[id].Sprite.Height * 4),
+										0,0, Spriteset[id].Sprite.Width, Spriteset[id].Sprite.Height,
+										GraphicsUnit.Pixel,
+										_f.Attri);
 					}
 				}
 
@@ -334,7 +355,7 @@ namespace PckView
 									new SolidBrush(_penBlack.Color),
 									TableOffsetHori - 1,
 									TableOffsetVert - 1 - _scrollBar.Value,
-									1, 1); // so bite me.
+									1,1); // so bite me.
 
 				for (int tileX = 0; tileX <= HoriCount; ++tileX) // draw vertical lines
 					graphics.DrawLine(
@@ -551,13 +572,4 @@ namespace PckView
 //					Selected.Add(selected);
 //				}
 //			}
-//		}
-
-//		internal void Hq2x()
-//		{
-//			_collection.HQ2X();
-//		}
-//		internal void Hq2x()
-//		{
-//			_viewPanel.Hq2x();
 //		}

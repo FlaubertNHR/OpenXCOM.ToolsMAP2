@@ -25,10 +25,7 @@ namespace PckView
 
 		#region Fields
 		private SpriteEditorF _feditor;
-
 		private Pen _penGrid;
-		private readonly Pen _gridBlack = new Pen(Color.FromArgb(50,    0,   0,   0)); // black w/ 50  alpha
-		private readonly Pen _gridWhite = new Pen(Color.FromArgb(180, 255, 255, 255)); // white w/ 180 alpha
 		#endregion Fields
 
 
@@ -99,7 +96,7 @@ namespace PckView
 		{
 			_feditor = f;
 
-			_penGrid = _gridBlack;
+			_penGrid = Pens.Gray;
 
 			PckViewForm.PaletteChanged += OnPaletteChanged;
 		}
@@ -225,6 +222,11 @@ namespace PckView
 			}
 		}
 
+
+		/// <summary>
+		/// Handles the Paint event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
 //			base.OnPaint(e);
@@ -234,14 +236,38 @@ namespace PckView
 
 			if (Sprite != null)
 			{
-				for (int y = 0; y != XCImage.SpriteHeight; ++y)
-				for (int x = 0; x != XCImage.SpriteWidth;  ++x)
-					graphics.FillRectangle(
-										new SolidBrush(Sprite.Sprite.GetPixel(x, y)),
-										x * _scale,
-										y * _scale,
-											_scale,
-											_scale);
+				if (_feditor._f.SpriteShade != -1)
+				{
+					for (int y = 0; y != XCImage.SpriteHeight; ++y)
+					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
+					{
+						using (var brush = new SolidBrush(AdjustColor(Sprite.Sprite.GetPixel(x,y))))
+						{
+							graphics.FillRectangle(
+												brush,
+												x * _scale,
+												y * _scale,
+													_scale,
+													_scale);
+						}
+					}
+				}
+				else
+				{
+					for (int y = 0; y != XCImage.SpriteHeight; ++y)
+					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
+					{
+						using (var brush = new SolidBrush(Sprite.Sprite.GetPixel(x,y)))
+						{
+							graphics.FillRectangle(
+												brush,
+												x * _scale,
+												y * _scale,
+													_scale,
+													_scale);
+						}
+					}
+				}
 			}
 
 
@@ -307,6 +333,29 @@ namespace PckView
 		#endregion Events
 
 
+		#region Methods (static)
+		/// <summary>
+		/// Adjusts the gamma-value of each pixel in OnPaint().
+		/// </summary>
+		/// <param name="color"></param>
+		/// <returns></returns>
+		internal static Color AdjustColor(Color color)
+		{
+			double red   = (double)color.R / 255;
+			double green = (double)color.G / 255;
+			double blue  = (double)color.B / 255;
+
+			double factor = (double)PckViewForm.SpriteShadeFloat + 1.62;	// <- is arbitrary; it would help to know the actual
+																			// algorithm used by ImageAttributes.SetGamma() ...
+			return Color.FromArgb(
+							color.A,
+							(int)(Math.Pow(red,   1 / factor) * 255),
+							(int)(Math.Pow(green, 1 / factor) * 255),
+							(int)(Math.Pow(blue,  1 / factor) * 255));
+		}
+		#endregion Methods (static)
+
+
 		#region Methods
 		/// <summary>
 		/// Gets a string of information that describes either a pixel's or a
@@ -356,8 +405,8 @@ namespace PckView
 
 		internal void InvertGridColor(bool invert)
 		{
-			_penGrid = (invert) ? _gridWhite
-								: _gridBlack;
+			_penGrid = (invert) ? Pens.LightGray
+								: Pens.Gray;
 			Invalidate();
 		}
 		#endregion Methods

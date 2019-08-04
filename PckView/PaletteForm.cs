@@ -16,7 +16,7 @@ namespace PckView
 			Form
 	{
 		#region Fields
-		private readonly SpriteEditorF _feditor;
+		internal readonly SpriteEditorF _feditor;
 		internal readonly PalettePanel _pnlPalette;
 		#endregion Fields
 

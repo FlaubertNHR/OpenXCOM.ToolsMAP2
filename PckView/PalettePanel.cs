@@ -97,10 +97,10 @@ namespace PckView
 		{
 //			base.OnPaint(e);
 
-			if (!DesignMode) // otherwise PaletteForm has probls drawing a PalettePanel in the designer.
-			{
-				var graphics = e.Graphics;
+			var graphics = e.Graphics;
 
+			if (_fpalette._feditor._f.SpriteShade != -1)
+			{
 				for (int
 						i = 0,
 							y = 0;
@@ -115,20 +115,49 @@ namespace PckView
 							++j,
 								x += _swatchWidth)
 					{
-						graphics.FillRectangle(
-											new SolidBrush(PckViewForm.Pal[i * SwatchesPerSide + j]),
-											x, y,
-											_swatchWidth, _swatchHeight);
+						using (var brush = new SolidBrush(SpritePanel.AdjustColor(PckViewForm.Pal[j + SwatchesPerSide * i])))
+						{
+							graphics.FillRectangle(
+												brush,
+												x, y,
+												_swatchWidth, _swatchHeight);
+						}
 					}
 				}
-
-				if (Palid != -1)
+			}
+			else
+			{
+				for (int
+						i = 0,
+							y = 0;
+						i != SwatchesPerSide;
+						++i,
+							y += _swatchHeight)
 				{
-					graphics.DrawRectangle(
-										Pens.Red,
-										_x - 1, _y - 1,
-										_swatchWidth - 1, _swatchHeight - 1);
+					for (int
+							j = 0,
+								x = 0;
+							j != SwatchesPerSide;
+							++j,
+								x += _swatchWidth)
+					{
+						using (var brush = new SolidBrush(PckViewForm.Pal[j + SwatchesPerSide * i]))
+						{
+							graphics.FillRectangle(
+												brush,
+												x, y,
+												_swatchWidth, _swatchHeight);
+						}
+					}
 				}
+			}
+
+			if (Palid != -1)
+			{
+				graphics.DrawRectangle(
+									Pens.Red,
+									_x           - 1, _y            - 1,
+									_swatchWidth - 1, _swatchHeight - 1);
 			}
 		}
 		#endregion Events (override)
