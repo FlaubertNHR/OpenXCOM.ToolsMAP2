@@ -140,7 +140,7 @@ namespace DSShared.Controls
 
 
 	/// <summary>
-	/// Used by StatusStrips to get rid of white borders.
+	/// Used by StatusStrips to get rid of white borders and draw a 3d border.
 	/// </summary>
 	public class CustomToolStripRenderer
 		:
@@ -152,6 +152,14 @@ namespace DSShared.Controls
 		}
 
 		protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
-		{}
+		{
+			using (var path3d = new GraphicsPath())
+			{
+				path3d.AddLine(e.ToolStrip.Width, 0, 0,0);
+				path3d.AddLine(0,0, 0, e.ToolStrip.Height);
+
+				e.Graphics.DrawPath(Pens.DarkGray, path3d);
+			}
+		}
 	}
 }
