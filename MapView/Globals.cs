@@ -24,6 +24,7 @@ namespace MapView
 		private static double _scale = 1.0;
 		/// <summary>
 		/// The scale-factor for sprites and clicks (etc) in MainView only.
+		/// TODO: Then why isn't this in MainViewF.
 		/// </summary>
 		internal static double Scale
 		{
@@ -43,39 +44,10 @@ namespace MapView
 			get { return _autoScale; }
 			set { _autoScale = value; }
 		}
-
-		internal static SpriteCollection ExtraSprites // TODO: I thought somebody had all that IMapObserver stuff worked out for this kind of thing. oh wait,
-		{ get; private set; }
 		#endregion
 
 
 		#region Methods (static)
-		/// <summary>
-		/// Loads the sprites for TopView's blank quads and TileView's eraser.
-		/// @note These sprites could be broken out and put in Resources but
-		/// it's kinda cute this way too.
-		/// </summary>
-		internal static void LoadExtraSprites() // TODO: break out of Globals, put in the only place it's used: MainViewF. thanks
-		{
-			var ass = Assembly.GetExecutingAssembly();
-			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.Extra.PCK"))
-			using (var fsTab = ass.GetManifestResourceStream("MapView._Embedded.Extra.TAB"))
-			{
-				var bytesPck = new byte[fsPck.Length];
-				var bytesTab = new byte[fsTab.Length];
-
-				fsPck.Read(bytesPck, 0, (int)fsPck.Length);
-				fsTab.Read(bytesTab, 0, (int)fsTab.Length);
-
-				ExtraSprites = new SpriteCollection(
-												bytesPck, //fsPck,
-												bytesTab, //fsTab,
-												ResourceInfo.TAB_WORD_LENGTH_2,
-												Palette.UfoBattle,
-												"Extra");
-			}
-		}
-
 		/// <summary>
 		/// Clamps a value between min and max inclusively. Note that no check
 		/// is done to ensure that min is less than max.

@@ -272,7 +272,7 @@ namespace MapView.Forms.Observers
 			}
 			else
 				_graphics.DrawImage(
-								Globals.ExtraSprites[3].Sprite,
+								MainViewF.DuotoneSprites[3].Sprite,
 								StartX, StartY);
 
 			// West ->
@@ -295,7 +295,7 @@ namespace MapView.Forms.Observers
 			}
 			else
 				_graphics.DrawImage(
-								Globals.ExtraSprites[1].Sprite,
+								MainViewF.DuotoneSprites[1].Sprite,
 								StartX + Quadwidth,
 								StartY);
 
@@ -319,7 +319,7 @@ namespace MapView.Forms.Observers
 			}
 			else
 				_graphics.DrawImage(
-								Globals.ExtraSprites[2].Sprite,
+								MainViewF.DuotoneSprites[2].Sprite,
 								StartX + Quadwidth * (int)QuadrantType.North,
 								StartY);
 
@@ -343,7 +343,7 @@ namespace MapView.Forms.Observers
 			}
 			else
 				_graphics.DrawImage(
-								Globals.ExtraSprites[4].Sprite,
+								MainViewF.DuotoneSprites[4].Sprite,
 								StartX + Quadwidth * (int)QuadrantType.Content,
 								StartY);
 
@@ -367,7 +367,7 @@ namespace MapView.Forms.Observers
 			}
 			else
 				_graphics.DrawImage(
-								Globals.ExtraSprites[0].Sprite,
+								MainViewF.DuotoneSprites[0].Sprite,
 								StartX + Quadwidth * QuadrantTypeCurrent,
 								StartY);
 

@@ -94,6 +94,9 @@ namespace MapView
 
 		internal static ScanGViewer ScanG
 		{ get; set; }
+
+		internal static SpriteCollection DuotoneSprites
+		{ get; private set; }
 		#endregion Properties (static)
 
 
@@ -310,8 +313,8 @@ namespace MapView
 			Palette.TftdBattle.Grayscale.SetTransparent(true);
 			LogFile.WriteLine("Palette transparencies set.");
 
-			Globals.LoadExtraSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
-										// NOTE: transparency of the 'UfoBattle' palette must be set first.
+			LoadExtraSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
+								// NOTE: transparency of the 'UfoBattle' palette must be set first.
 
 
 			QuadrantDrawService.Punkstrings();
@@ -443,6 +446,34 @@ namespace MapView
 
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 		}
+
+
+		/// <summary>
+		/// Loads the sprites for TopView's blank quads and TileView's eraser.
+		/// @note These sprites could be broken out and put in Resources but
+		/// it's kinda cute this way too.
+		/// </summary>
+		internal static void LoadExtraSprites()
+		{
+			var ass = Assembly.GetExecutingAssembly();
+			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.Extra.PCK"))
+			using (var fsTab = ass.GetManifestResourceStream("MapView._Embedded.Extra.TAB"))
+			{
+				var bytesPck = new byte[fsPck.Length];
+				var bytesTab = new byte[fsTab.Length];
+
+				fsPck.Read(bytesPck, 0, (int)fsPck.Length);
+				fsTab.Read(bytesTab, 0, (int)fsTab.Length);
+
+				DuotoneSprites = new SpriteCollection(
+												bytesPck,
+												bytesTab,
+												ResourceInfo.TAB_WORD_LENGTH_2,
+												Palette.UfoBattle,
+												"Extra");
+			}
+		}
+
 
 		/// <summary>
 		/// Handles CL-args after Configurator restart - selects a node in the
