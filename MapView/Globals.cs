@@ -1,9 +1,7 @@
 using System;
-using System.Reflection;
 
 using MapView.Forms.MainView;
 
-using XCom;
 
 
 namespace MapView
