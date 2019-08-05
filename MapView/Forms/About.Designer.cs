@@ -134,8 +134,6 @@ namespace MapView
 			this.MinimumSize = new System.Drawing.Size(320, 210);
 			this.Name = "About";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Shown += new System.EventHandler(this.OnShown);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ResumeLayout(false);
 
 		}

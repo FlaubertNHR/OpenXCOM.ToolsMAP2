@@ -66,10 +66,30 @@ namespace MapView
 
 
 		#region Events (override)
+		protected override void OnShown(EventArgs e)
+		{
+			_lBase = Location;
+		}
+
 		protected override void OnActivated(EventArgs e)
 		{
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
+		}
+
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Escape:
+					Close();
+					break;
+
+				case Keys.Enter:
+					if (t1.Enabled) t1.Enabled = false;
+					else            t1.Enabled = true;
+					break;
+			}
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -83,12 +103,6 @@ namespace MapView
 
 
 		#region Events
-		private void OnShown(object sender, EventArgs e)
-		{
-			_lBase = Location;
-//			t1.Enabled = true;
-		}
-
 		private void OnTick(object sender, EventArgs e)
 		{
 			_l = Location;
@@ -109,21 +123,6 @@ namespace MapView
 				_l = _lBase;
 
 			Location = _l;
-		}
-
-		private void OnKeyDown(object sender, KeyEventArgs e)
-		{
-			switch (e.KeyCode)
-			{
-				case Keys.Escape:
-					Close();
-					break;
-
-				case Keys.Enter:
-					if (t1.Enabled) t1.Enabled = false;
-					else            t1.Enabled = true;
-					break;
-			}
 		}
 		#endregion Events
 	}
