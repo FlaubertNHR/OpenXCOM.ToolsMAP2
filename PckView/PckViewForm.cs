@@ -479,128 +479,131 @@ namespace PckView
 		{
 			//LogFile.WriteLine("PckViewForm.OnKeyDown() " + e.KeyCode);
 
-			// Context shortcuts ->
-
-			switch (e.KeyCode)
+			if (!e.Alt && !e.Control)
 			{
-				case Keys.Enter:												// edit
-					if (_miEdit.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnSpriteEditorClick(null, EventArgs.Empty);
-					}
-					break;
+				// Context shortcuts ->
 
-				case Keys.D:													// add
-					if (_miAdd.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnAddSpritesClick(null, EventArgs.Empty);
-					}
-					break;
+				switch (e.KeyCode)
+				{
+					case Keys.Enter:												// edit
+						if (_miEdit.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnSpriteEditorClick(null, EventArgs.Empty);
+						}
+						break;
 
-				case Keys.B:													// insert before
-					if (_miInsertBefor.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnInsertSpritesBeforeClick(null, EventArgs.Empty);
-					}
-					break;
+					case Keys.D:													// add
+						if (_miAdd.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnAddSpritesClick(null, EventArgs.Empty);
+						}
+						break;
 
-				case Keys.A:													// insert after
-					if (_miInsertAfter.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnInsertSpritesAfterClick(null, EventArgs.Empty);
-					}
-					break;
+					case Keys.B:													// insert before
+						if (_miInsertBefor.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnInsertSpritesBeforeClick(null, EventArgs.Empty);
+						}
+						break;
 
-				case Keys.R:													// replace
-					if (_miReplace.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnReplaceSpriteClick(null, EventArgs.Empty);
-					}
-					break;
+					case Keys.A:													// insert after
+						if (_miInsertAfter.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnInsertSpritesAfterClick(null, EventArgs.Empty);
+						}
+						break;
 
-				case Keys.OemMinus: // drugs ...
-				case Keys.Subtract:												// move left
-					if (_miMoveL.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnMoveLeftSpriteClick(null, EventArgs.Empty);
-					}
-					break;
+					case Keys.R:													// replace
+						if (_miReplace.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnReplaceSpriteClick(null, EventArgs.Empty);
+						}
+						break;
 
-				case Keys.Oemplus: // drugs ...
-				case Keys.Add:													// move right
-					if (_miMoveR.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnMoveRightSpriteClick(null, EventArgs.Empty);
-					}
-					break;
+					case Keys.OemMinus: // drugs ...
+					case Keys.Subtract:												// move left
+						if (_miMoveL.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnMoveLeftSpriteClick(null, EventArgs.Empty);
+						}
+						break;
 
-				case Keys.Delete:												// delete
-					if (_miDelete.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnDeleteSpriteClick(null, EventArgs.Empty);
-					}
-					break;
+					case Keys.Oemplus: // drugs ...
+					case Keys.Add:													// move right
+						if (_miMoveR.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnMoveRightSpriteClick(null, EventArgs.Empty);
+						}
+						break;
 
-				case Keys.P:													// export
-					if (_miExport.Enabled)
-					{
-						e.SuppressKeyPress = true;
-						OnExportSpriteClick(null, EventArgs.Empty);
-					}
-					break;
+					case Keys.Delete:												// delete
+						if (_miDelete.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnDeleteSpriteClick(null, EventArgs.Empty);
+						}
+						break;
+
+					case Keys.P:													// export
+						if (_miExport.Enabled)
+						{
+							e.SuppressKeyPress = true;
+							OnExportSpriteClick(null, EventArgs.Empty);
+						}
+						break;
 
 
-				// Navigation shortcuts ->
+					// Navigation shortcuts ->
 
-				case Keys.Left:
-					if (TilePanel.Spriteset != null && TilePanel.idSel > 0)
-					{
-						TilePanel.SelectAdjacentHori(-1);
-						PrintSelectedId();
-					}
-					break;
+					case Keys.Left:
+						if (TilePanel.Spriteset != null && TilePanel.idSel > 0)
+						{
+							TilePanel.SelectAdjacentHori(-1);
+							PrintSelectedId();
+						}
+						break;
 
-				case Keys.Right:
-					if (TilePanel.Spriteset != null && TilePanel.idSel != TilePanel.Spriteset.Count - 1)
-					{
-						TilePanel.SelectAdjacentHori(+1);
-						PrintSelectedId();
-					}
-					break;
+					case Keys.Right:
+						if (TilePanel.Spriteset != null && TilePanel.idSel != TilePanel.Spriteset.Count - 1)
+						{
+							TilePanel.SelectAdjacentHori(+1);
+							PrintSelectedId();
+						}
+						break;
 
-				case Keys.Up:
-					if (TilePanel.Spriteset != null)
-					{
-						TilePanel.SelectAdjacentVert(-1);
-						PrintSelectedId();
-					}
-					break;
+					case Keys.Up:
+						if (TilePanel.Spriteset != null)
+						{
+							TilePanel.SelectAdjacentVert(-1);
+							PrintSelectedId();
+						}
+						break;
 
-				case Keys.Down:
-					if (TilePanel.Spriteset != null)
-					{
-						TilePanel.SelectAdjacentVert(+1);
-						PrintSelectedId();
-					}
-					break;
+					case Keys.Down:
+						if (TilePanel.Spriteset != null)
+						{
+							TilePanel.SelectAdjacentVert(+1);
+							PrintSelectedId();
+						}
+						break;
 
-				case Keys.Escape:
-					if (TilePanel.Spriteset != null)
-					{
-						TilePanel.idSel = -1;
-						SpriteEditor.SpritePanel.Sprite = null;
-						PrintSelectedId();
-						TilePanel.Invalidate();
-					}
-					break;
+					case Keys.Escape:
+						if (TilePanel.Spriteset != null)
+						{
+							TilePanel.idSel = -1;
+							SpriteEditor.SpritePanel.Sprite = null;
+							PrintSelectedId();
+							TilePanel.Invalidate();
+						}
+						break;
+				}
 			}
 
 			base.OnKeyDown(e);
