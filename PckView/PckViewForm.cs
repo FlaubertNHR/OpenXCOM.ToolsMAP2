@@ -204,7 +204,7 @@ namespace PckView
 			// get SpriteShade from MapView's options ...
 			string pfeConfig = Path.Combine(
 										Path.GetDirectoryName(Application.ExecutablePath),
-										"settings" + Path.DirectorySeparatorChar + "MapOptions.cfg");
+										PathInfo.SettingsDirectory + Path.DirectorySeparatorChar + PathInfo.ConfigOptions);
 			if (File.Exists(pfeConfig))
 			{
 				string val = GetSpriteShade(pfeConfig);

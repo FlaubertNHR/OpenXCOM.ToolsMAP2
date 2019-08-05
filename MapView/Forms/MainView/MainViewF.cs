@@ -172,7 +172,7 @@ namespace MapView
 
 			LogFile.WriteLine("Starting MAIN MapView window ...");
 
-			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL); // why. -> use Application.ExecutablePath
+			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL);
 			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSetT);
 
 			LogFile.WriteLine("App paths cached.");
