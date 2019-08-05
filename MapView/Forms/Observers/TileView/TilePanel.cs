@@ -188,10 +188,8 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void t1_Tick(object sender, EventArgs e)
 		{
-			if (!Bounds.Contains(PointToClient(Cursor.Position)))
-			{
+			if (!Bounds.Contains(PointToClient(Control.MousePosition)))
 				Chaparone.StatbarOverInfo(null);
-			}
 		}
 
 		/// <summary>

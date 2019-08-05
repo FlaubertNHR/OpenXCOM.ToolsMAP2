@@ -179,7 +179,7 @@ namespace PckView
 				}
 
 				// update the OverId and print info to the statusbar
-				var pt = PointToClient(Cursor.Position);
+				var pt = PointToClient(Control.MousePosition);
 				OnMouseMove(new MouseEventArgs(
 											MouseButtons.None,
 											0, pt.X,pt.Y, 0));

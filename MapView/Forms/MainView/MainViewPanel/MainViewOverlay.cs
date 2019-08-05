@@ -57,12 +57,12 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Tracks the mouseover location col.
 		/// </summary>
-		private int _colOver;
+		private int _overCol;
 
 		/// <summary>
 		/// Tracks the mouseover location row.
 		/// </summary>
-		private int _rowOver;
+		private int _overRow;
 		#endregion Fields
 
 
@@ -179,11 +179,7 @@ namespace MapView.Forms.MainView
 		{
 			if (MapBase != null)
 			{
-				var pt = PointToClient(Cursor.Position);
-					pt = GetTileLocation(pt.X, pt.Y);
-				_colOver = pt.X;
-				_rowOver = pt.Y;
-
+				ResetOverValues();
 				Invalidate();
 			}
 		}
@@ -310,10 +306,7 @@ namespace MapView.Forms.MainView
 						{
 							_targeterForced = false;
 
-							var pt = PointToClient(Cursor.Position);
-								pt = GetTileLocation(pt.X, pt.Y);
-							_colOver = pt.X;
-							_rowOver = pt.Y;
+							ResetOverValues();
 
 							_keyDeltaX =
 							_keyDeltaY = 0;
@@ -327,6 +320,17 @@ namespace MapView.Forms.MainView
 						break;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Resets the values of '_overCol' and '_overRow'.
+		/// </summary>
+		private void ResetOverValues()
+		{
+			var pt = PointToClient(Control.MousePosition);
+				pt = GetTileLocation(pt.X, pt.Y);
+			_overCol = pt.X;
+			_overRow = pt.Y;
 		}
 
 		/// <summary>
@@ -661,8 +665,8 @@ namespace MapView.Forms.MainView
 
 								MapBase.Location = new MapLocation(r,c, MapBase.Level); // fire SelectLocation
 
-								loc.X = _colOver = c;
-								loc.Y = _rowOver = r;
+								loc.X = _overCol = c;
+								loc.Y = _overRow = r;
 								ProcessSelection(loc,loc);
 							}
 						}
@@ -710,8 +714,8 @@ namespace MapView.Forms.MainView
 						if (pos > -1 && pos < MapBase.MapSize.Rows)
 							_keyDeltaY += loc.Y;
 
-						loc.X = _colOver = MapBase.Location.Col + _keyDeltaX;
-						loc.Y = _rowOver = MapBase.Location.Row + _keyDeltaY;
+						loc.X = _overCol = MapBase.Location.Col + _keyDeltaX;
+						loc.Y = _overRow = MapBase.Location.Row + _keyDeltaY;
 						ProcessSelection(DragBeg, loc);
 					}
 				}
@@ -753,15 +757,15 @@ namespace MapView.Forms.MainView
 					_targeterForced = false;
 
 					var loc = GetTileLocation(e.X, e.Y);
-					_colOver = loc.X;
-					_rowOver = loc.Y;
+					_overCol = loc.X;
+					_overRow = loc.Y;
 				}
 				else // ie. is keyboard navigation
 				{
 					_targeterForced = (e.Clicks == TARGETER_KEY_MAIN);
 
-					_colOver = DragEnd.X;
-					_rowOver = DragEnd.Y;
+					_overCol = DragEnd.X;
+					_overRow = DragEnd.Y;
 				}
 
 				ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
@@ -797,8 +801,8 @@ namespace MapView.Forms.MainView
 							_keyDeltaX =
 							_keyDeltaY = 0;
 
-							_colOver = loc.X; // stop the targeter from persisting at its
-							_rowOver = loc.Y; // previous location when the form is activated.
+							_overCol = loc.X; // stop the targeter from persisting at its
+							_overRow = loc.Y; // previous location when the form is activated.
 
 							MapBase.Location = new MapLocation( // fire SelectLocation
 															loc.Y, loc.X,
@@ -860,14 +864,14 @@ namespace MapView.Forms.MainView
 					var loc = GetTileLocation(e.X, e.Y);
 
 					_targeterForced = false;
-					_colOver = loc.X;
-					_rowOver = loc.Y;
+					_overCol = loc.X;
+					_overRow = loc.Y;
 
 					if (_isMouseDragL
-						&& (_colOver != DragEnd.X || _rowOver != DragEnd.Y))
+						&& (_overCol != DragEnd.X || _overRow != DragEnd.Y))
 					{
-						_keyDeltaX = _colOver - DragBeg.X;	// NOTE: These are in case a mousedrag-selection protocol stops
-						_keyDeltaY = _rowOver - DragBeg.Y;	// but the selection protocol is then continued using the keyboard.
+						_keyDeltaX = _overCol - DragBeg.X;	// NOTE: These are in case a mousedrag-selection protocol stops
+						_keyDeltaY = _overRow - DragBeg.Y;	// but the selection protocol is then continued using the keyboard.
 															// TODO: Implement [Ctrl+LMB] to instantly select an area based
 						ProcessSelection(DragBeg, loc);		// on the currently selected tile ofc.
 					}
@@ -1164,13 +1168,13 @@ namespace MapView.Forms.MainView
 			}
 
 			if (!_targeterSuppressed // draw Targeter after selection-border ->
-				&& _colOver > -1 && _colOver < MapBase.MapSize.Cols
-				&& _rowOver > -1 && _rowOver < MapBase.MapSize.Rows)
+				&& _overCol > -1 && _overCol < MapBase.MapSize.Cols
+				&& _overRow > -1 && _overRow < MapBase.MapSize.Rows)
 			{
 				CuboidSprite.DrawTargeter_Rembrandt(
 											_graphics,
-											_colOver * HalfWidth  + Origin.X - (_rowOver * HalfWidth),
-											_colOver * HalfHeight + Origin.Y + (_rowOver * HalfHeight) + (MapBase.Level * heightfactor),
+											_overCol * HalfWidth  + Origin.X - (_overRow * HalfWidth),
+											_overCol * HalfHeight + Origin.Y + (_overRow * HalfHeight) + (MapBase.Level * heightfactor),
 											HalfWidth,
 											HalfHeight);
 			}
@@ -1260,13 +1264,13 @@ namespace MapView.Forms.MainView
 			}
 
 			if (!_targeterSuppressed // draw Targeter after selection-border ->
-				&& _colOver > -1 && _colOver < MapBase.MapSize.Cols
-				&& _rowOver > -1 && _rowOver < MapBase.MapSize.Rows)
+				&& _overCol > -1 && _overCol < MapBase.MapSize.Cols
+				&& _overRow > -1 && _overRow < MapBase.MapSize.Rows)
 			{
 				CuboidSprite.DrawTargeter_Picasso(
 											_graphics,
-											_colOver * HalfWidth  + Origin.X - (_rowOver * HalfWidth),
-											_colOver * HalfHeight + Origin.Y + (_rowOver * HalfHeight) + (MapBase.Level * heightfactor));
+											_overCol * HalfWidth  + Origin.X - (_overRow * HalfWidth),
+											_overCol * HalfHeight + Origin.Y + (_overRow * HalfHeight) + (MapBase.Level * heightfactor));
 			}
 		}
 
@@ -1288,7 +1292,7 @@ namespace MapView.Forms.MainView
 
 //			bool isTargeted = Focused
 //						   && !_suppressTargeter
-//						   && ClientRectangle.Contains(PointToClient(Cursor.Position));
+//						   && ClientRectangle.Contains(PointToClient(Control.MousePosition));
 
 			for (int
 				lev = MapBase.MapSize.Levs - 1;
@@ -1348,8 +1352,8 @@ namespace MapView.Forms.MainView
 //											lev == MapBase.Level);
 //						}
 //						else if (isTargeted
-//							&& col == _colOver
-//							&& row == _rowOver
+//							&& col == _overCol
+//							&& row == _overRow
 //							&& lev == MapBase.Level)
 //						{
 //							Cuboid.DrawTargeter(

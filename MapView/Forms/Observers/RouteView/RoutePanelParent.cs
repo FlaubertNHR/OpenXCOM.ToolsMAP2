@@ -126,7 +126,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void t1_Tick(object sender, EventArgs e)
 		{
-			if (!Bounds.Contains(PointToClient(Cursor.Position)))
+			if (!Bounds.Contains(PointToClient(Control.MousePosition)))
 				CursorPosition = new Point(
 										_overCol = -1,
 										_overRow = -1);
