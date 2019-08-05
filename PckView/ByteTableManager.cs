@@ -126,7 +126,7 @@ namespace PckView
 			switch (e.KeyCode)
 			{
 				case Keys.Escape:
-				case Keys.F8:
+				case Keys.F9:
 					e.SuppressKeyPress = true;
 					_fBytes.Close();
 					break;
