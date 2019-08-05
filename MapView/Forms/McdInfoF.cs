@@ -76,7 +76,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnKeyUp_rtb(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.I)
+			if (e.KeyCode == Keys.I && !e.Control && !e.Alt && !e.Shift)
 				Close();
 		}
 		#endregion Events
