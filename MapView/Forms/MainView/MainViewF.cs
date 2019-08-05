@@ -456,8 +456,8 @@ namespace MapView
 		internal static void LoadExtraSprites()
 		{
 			var ass = Assembly.GetExecutingAssembly();
-			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.Extra.PCK"))
-			using (var fsTab = ass.GetManifestResourceStream("MapView._Embedded.Extra.TAB"))
+			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.DUOTONE.PCK"))
+			using (var fsTab = ass.GetManifestResourceStream("MapView._Embedded.DUOTONE.TAB"))
 			{
 				var bytesPck = new byte[fsPck.Length];
 				var bytesTab = new byte[fsTab.Length];
@@ -466,11 +466,11 @@ namespace MapView
 				fsTab.Read(bytesTab, 0, (int)fsTab.Length);
 
 				DuotoneSprites = new SpriteCollection(
-												bytesPck,
-												bytesTab,
-												ResourceInfo.TAB_WORD_LENGTH_2,
-												Palette.UfoBattle,
-												"Extra");
+													bytesPck,
+													bytesTab,
+													ResourceInfo.TAB_WORD_LENGTH_2,
+													Palette.UfoBattle,
+													"Duotone");
 			}
 		}
 
