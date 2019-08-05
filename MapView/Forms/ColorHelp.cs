@@ -314,13 +314,15 @@ namespace MapView
 				lblType14.Text = "must destroy";
 			}
 		}
+		#endregion Events
 
+
+		#region Events (override)
 		/// <summary>
 		/// Closes the Help screen.
 		/// </summary>
-		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnKeyDown(object sender, KeyEventArgs e)
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyCode)
 			{
@@ -330,7 +332,7 @@ namespace MapView
 					break;
 			}
 		}
-		#endregion Events
+		#endregion Events (override)
 
 
 
@@ -829,7 +831,6 @@ namespace MapView
 			this.Name = "ColorHelp";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Colors";
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.tabMain.ResumeLayout(false);
 			this.tpTileView.ResumeLayout(false);
 			this.gbTileViewColors.ResumeLayout(false);
