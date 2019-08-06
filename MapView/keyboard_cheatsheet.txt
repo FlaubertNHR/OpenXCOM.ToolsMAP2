@@ -75,10 +75,15 @@ Ctrl+F4 - toggles content visibility
 
 Note: Visibility affects Cut/Paste/Delete operations.
 
-Shift+LMB on a Maptree node or Shift+Enter when a Maptree node has focus - show
-a dialog to find the Mapfile if it's gone rogue.
-
 RMB on the Map panel enables drag-panning when zoomed in on the Map.
+
+Enter on a selected Maptree node loads its tileset.
+
+Spacebar with any Maptree node selected opens the context-menu.
+
+LMB on a Maptree node that is already selected, or Shift+LMB on a node that is
+not selected, or Shift+Enter when a Maptree node has focus all show a dialog to
+find the Mapfile if it's gone rogue.
 
 
 TILEVIEW
