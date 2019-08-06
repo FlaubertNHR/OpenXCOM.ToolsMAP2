@@ -32,6 +32,14 @@ namespace MapView
 		:
 			Form
 	{
+		#region Delegates
+		/// <summary>
+		/// Good fuckin Lord I just wrote a "DontBeep" delegate.
+		/// </summary>
+		internal delegate void DontBeepEventHandler();
+		#endregion
+
+
 		#region Events
 		internal event DontBeepEventHandler DontBeepEvent;
 		#endregion Events
@@ -953,6 +961,7 @@ namespace MapView
 			switch (e.KeyData)
 			{
 				case Keys.Enter:
+				case Keys.Shift | Keys.Enter:
 					if (MapTree.Focused && _selected != null)
 					{
 						e.SuppressKeyPress = true;
@@ -2580,7 +2589,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Caches the currently selected treenode.
+		/// Cache of the currently selected treenode.
 		/// </summary>
 		private TreeNode _selected;
 
@@ -2940,13 +2949,4 @@ namespace MapView
 		}
 		#endregion Properties (override)
 	}
-
-
-
-	#region Delegates
-	/// <summary>
-	/// Good fuckin Lord I just wrote a "DontBeep" delegate.
-	/// </summary>
-	internal delegate void DontBeepEventHandler();
-	#endregion
 }
