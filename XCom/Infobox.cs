@@ -9,7 +9,7 @@ namespace XCom
 	/// <summary>
 	/// A generic outputbox for Errors/Warnings/Info.
 	/// The point is to stop wrapping long path-strings like the stock .NET
-	/// MessageBox does.
+	/// MessageBox does. And to stop beeps.
 	/// </summary>
 	public sealed class Infobox
 		:

@@ -184,10 +184,15 @@ namespace MapView
 					if (   (!File.Exists(Path.Combine(Ufo,  CursorPck)) || !File.Exists(Path.Combine(Ufo,  CursorTab)))
 						&& (!File.Exists(Path.Combine(Tftd, CursorPck)) || !File.Exists(Path.Combine(Tftd, CursorTab))))
 					{
-						ShowErrorDialog("A valid UFO or TFTD resource directory must exist with"
-											+ Environment.NewLine + Environment.NewLine
-											+ CursorPck + Environment.NewLine
-											+ CursorTab);
+						using (var f = new Infobox(
+												"Error",
+												"A valid UFO or TFTD resource directory must exist with the XCOM cursor files.",
+												@"<basepath>" + Path.DirectorySeparatorChar + CursorPck
+													+ Environment.NewLine +
+												@"<basepath>" + Path.DirectorySeparatorChar + CursorTab))
+						{
+							f.ShowDialog(this);
+						}
 					}
 					else
 					{
@@ -240,12 +245,13 @@ namespace MapView
 				}
 				else // rbTilesetsTpl.Checked
 				{
-					ShowInfoDialog("Tileset template has been created "
-									+ Environment.NewLine + Environment.NewLine
-									+ pfeTilesets);
-
-					if (!cbResources.Checked)
-						Close();
+					using (var f = new Infobox(
+											"Info",
+											"Tileset template has been created.",
+											pfeTilesets))
+					{
+						f.ShowDialog(this);
+					}
 				}
 			}
 		}
@@ -276,22 +282,6 @@ namespace MapView
 						" Error",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Error,
-						MessageBoxDefaultButton.Button1,
-						0);
-		}
-
-		/// <summary>
-		/// Wrapper for MessageBox.Show()
-		/// </summary>
-		/// <param name="info">the info-string to show</param>
-		private void ShowInfoDialog(string info)
-		{
-			MessageBox.Show(
-						this,
-						info,
-						" Info",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.None,
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
