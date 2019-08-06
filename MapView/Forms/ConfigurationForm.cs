@@ -289,9 +289,9 @@ namespace MapView
 			MessageBox.Show(
 						this,
 						info,
-						" Notice",
+						" Info",
 						MessageBoxButtons.OK,
-						MessageBoxIcon.Information,
+						MessageBoxIcon.None,
 						MessageBoxDefaultButton.Button1,
 						0);
 		}

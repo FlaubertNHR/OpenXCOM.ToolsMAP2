@@ -158,9 +158,9 @@ namespace XCom
 				//LogFile.WriteLine(". . . descriptor has no terrains");
 				MessageBox.Show(
 							"There are no terrains allocated or they do not contain MCD records.",
-							" Warning",
+							" Error",
 							MessageBoxButtons.OK,
-							MessageBoxIcon.Warning,
+							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
 							0);
 			}

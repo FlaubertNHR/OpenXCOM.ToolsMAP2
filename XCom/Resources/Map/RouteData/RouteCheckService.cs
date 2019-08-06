@@ -68,7 +68,7 @@ namespace XCom
 								"There are no Out of Bounds nodes detected.",
 								" Good stuff, Magister Ludi",
 								MessageBoxButtons.OK,
-								MessageBoxIcon.Information,
+								MessageBoxIcon.None,
 								MessageBoxDefaultButton.Button1,
 								0);
 			}

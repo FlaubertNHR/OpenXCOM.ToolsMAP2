@@ -590,7 +590,7 @@ namespace MapView.Forms.Observers
 								notice,
 								" Reload Map",
 								MessageBoxButtons.OKCancel,
-								MessageBoxIcon.Information,
+								MessageBoxIcon.Warning,
 								MessageBoxDefaultButton.Button1,
 								0);
 		}
@@ -606,7 +606,7 @@ namespace MapView.Forms.Observers
 						"Select a Tile.",
 						" Error",
 						MessageBoxButtons.OK,
-						MessageBoxIcon.Asterisk,
+						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,
 						0);
 		}

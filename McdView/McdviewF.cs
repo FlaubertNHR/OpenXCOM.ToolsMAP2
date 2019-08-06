@@ -680,7 +680,7 @@ namespace McdView
 											+ "Create a different file or delete all records in this file.",
 										" punt",
 										MessageBoxButtons.OK,
-										MessageBoxIcon.Stop,
+										MessageBoxIcon.Error,
 										MessageBoxDefaultButton.Button1,
 										0);
 						}
@@ -893,7 +893,7 @@ namespace McdView
 							"The file no longer exists.",
 							" File invalid",
 							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation,
+							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
@@ -1065,7 +1065,7 @@ namespace McdView
 									+ MapFileService.MAX_MCDRECORDS + ".",
 								" Records exceeded",
 								MessageBoxButtons.OKCancel,
-								MessageBoxIcon.Exclamation,
+								MessageBoxIcon.Warning,
 								MessageBoxDefaultButton.Button2,
 								0) == DialogResult.OK)
 			{
@@ -1352,7 +1352,7 @@ namespace McdView
 							"Zero the current record's values",
 							" Zero all values",
 							MessageBoxButtons.YesNo,
-							MessageBoxIcon.Exclamation,
+							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button2,
 							0) == DialogResult.Yes)
 			{
@@ -1417,7 +1417,7 @@ namespace McdView
 							"All values appear to be within accepted ranges.",
 							" Strict test",
 							MessageBoxButtons.OK,
-							MessageBoxIcon.Information,
+							MessageBoxIcon.None,
 							MessageBoxDefaultButton.Button1,
 							0);
 		}

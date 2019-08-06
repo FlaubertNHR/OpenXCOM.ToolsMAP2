@@ -479,7 +479,7 @@ namespace PckView
 		{
 			//LogFile.WriteLine("PckViewForm.OnKeyDown() " + e.KeyCode);
 
-			if (!e.Alt && !e.Control)
+			if (!e.Control && !e.Alt)
 			{
 				// Context shortcuts ->
 
@@ -2089,7 +2089,7 @@ namespace PckView
 								"The spriteset has changed. Do you really want to close it?",
 								" Spriteset changed",
 								MessageBoxButtons.YesNo,
-								MessageBoxIcon.Exclamation,
+								MessageBoxIcon.Question,
 								MessageBoxDefaultButton.Button2,
 								0) == DialogResult.Yes;
 		}

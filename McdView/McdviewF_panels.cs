@@ -260,7 +260,7 @@ namespace McdView
 									+ " by inserting records from the CopyPanel.",
 								" Info",
 								MessageBoxButtons.OK,
-								MessageBoxIcon.Asterisk,
+								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
 								0);
 			}
@@ -421,7 +421,7 @@ namespace McdView
 								"ScanG icons not found.",
 								" Info",
 								MessageBoxButtons.OK,
-								MessageBoxIcon.Asterisk,
+								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
 								0);
 			}

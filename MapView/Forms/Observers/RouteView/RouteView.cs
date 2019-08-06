@@ -653,7 +653,7 @@ namespace MapView.Forms.Observers
 									+ " Its link-slots are full.",
 								" Warning",
 								MessageBoxButtons.OK,
-								MessageBoxIcon.Exclamation,
+								MessageBoxIcon.Warning,
 								MessageBoxDefaultButton.Button1,
 								0);
 					// TODO: the message leaves the RoutePanel drawn in an awkward state
@@ -679,7 +679,7 @@ namespace MapView.Forms.Observers
 										+ " Its link-slots are full.",
 									" Warning",
 									MessageBoxButtons.OK,
-									MessageBoxIcon.Exclamation,
+									MessageBoxIcon.Warning,
 									MessageBoxDefaultButton.Button1,
 									0);
 						// TODO: the message leaves the RoutePanel drawn in an awkward state
@@ -1670,7 +1670,7 @@ namespace MapView.Forms.Observers
 				Clipboard.SetText(nodeText);
 			}
 			else
-				ShowDialogAsterisk("A node must be selected.");
+				ShowErrorDialog("A node must be selected.");
 		}
 
 		private void OnPasteClick(object sender, EventArgs e)
@@ -1701,11 +1701,11 @@ namespace MapView.Forms.Observers
 					ObserverManager.RouteView   .Control     .btnPaste.Enabled =
 					ObserverManager.TopRouteView.ControlRoute.btnPaste.Enabled = false;
 
-					ShowDialogAsterisk("The data on the clipboard is not a node.");
+					ShowErrorDialog("The data on the clipboard is not a node.");
 				}
 			}
 			else
-				ShowDialogAsterisk("A node must be selected.");
+				ShowErrorDialog("A node must be selected.");
 		}
 
 		private void OnDeleteClick(object sender, EventArgs e)
@@ -1735,17 +1735,17 @@ namespace MapView.Forms.Observers
 				RefreshControls();
 			}			
 			else if (!_asterisk)
-				ShowDialogAsterisk("A node must be selected.");
+				ShowErrorDialog("A node must be selected.");
 		}
 
-		private void ShowDialogAsterisk(string asterisk)
+		private void ShowErrorDialog(string error)
 		{
 			MessageBox.Show(
 						this,
-						asterisk,
+						error,
 						" Err..",
 						MessageBoxButtons.OK,
-						MessageBoxIcon.Asterisk,
+						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
@@ -2000,7 +2000,7 @@ namespace MapView.Forms.Observers
 								+ rank,
 							" Warning",
 							MessageBoxButtons.YesNo,
-							MessageBoxIcon.Exclamation,
+							MessageBoxIcon.Warning,
 							MessageBoxDefaultButton.Button2,
 							0) == DialogResult.Yes)
 			{
@@ -2027,7 +2027,7 @@ namespace MapView.Forms.Observers
 								changed + " nodes were changed.",
 								" All nodes rank 0",
 								MessageBoxButtons.OK,
-								MessageBoxIcon.Information,
+								MessageBoxIcon.None,
 								MessageBoxDefaultButton.Button1,
 								0);
 				}
@@ -2037,7 +2037,7 @@ namespace MapView.Forms.Observers
 								"All nodes are already rank 0.",
 								" All nodes rank 0",
 								MessageBoxButtons.OK,
-								MessageBoxIcon.Asterisk,
+								MessageBoxIcon.None,
 								MessageBoxDefaultButton.Button1,
 								0);
 			}
@@ -2058,7 +2058,7 @@ namespace MapView.Forms.Observers
 								"Are you sure you want to clear the selected node's Link data ...",
 								" Warning",
 								MessageBoxButtons.YesNo,
-								MessageBoxIcon.Exclamation,
+								MessageBoxIcon.Warning,
 								MessageBoxDefaultButton.Button2,
 								0) == DialogResult.Yes)
 				{
@@ -2149,7 +2149,7 @@ namespace MapView.Forms.Observers
 						info,
 						" Link distances updated",
 						MessageBoxButtons.OK,
-						MessageBoxIcon.Information,
+						MessageBoxIcon.None,
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
@@ -2189,7 +2189,7 @@ namespace MapView.Forms.Observers
 			}
 			else
 			{
-				icon  = MessageBoxIcon.Information;
+				icon  = MessageBoxIcon.None;
 				title = " Good stuff, Magister Ludi";
 				info  = "There are no invalid NodeRanks detected.";
 			}

@@ -154,9 +154,9 @@ namespace McdView
 					MessageBox.Show(
 								this,
 								"LoFT icons not found.",
-								" Info",
+								" Error",
 								MessageBoxButtons.OK,
-								MessageBoxIcon.Asterisk,
+								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
 								0);
 			}

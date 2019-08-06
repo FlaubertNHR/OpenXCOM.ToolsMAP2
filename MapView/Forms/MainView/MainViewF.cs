@@ -1368,7 +1368,7 @@ namespace MapView
 										+ "Ignore\trisk losing changes and open the Configurator",
 									" Changes detected",
 									MessageBoxButtons.AbortRetryIgnore,
-									MessageBoxIcon.Asterisk,
+									MessageBoxIcon.Warning,
 									MessageBoxDefaultButton.Button1,
 									0))
 				{
@@ -1969,7 +1969,7 @@ namespace MapView
 											+ "Ignore\trisk losing changes and show the Maptree-menu",
 										" Changes detected",
 										MessageBoxButtons.AbortRetryIgnore,
-										MessageBoxIcon.Asterisk,
+										MessageBoxIcon.Warning,
 										MessageBoxDefaultButton.Button1,
 										0))
 					{

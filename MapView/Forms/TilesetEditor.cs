@@ -1431,7 +1431,7 @@ namespace MapView
 						info,
 						" Info",
 						MessageBoxButtons.OK,
-						MessageBoxIcon.Information,
+						MessageBoxIcon.None,
 						MessageBoxDefaultButton.Button1,
 						0);
 		}
