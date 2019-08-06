@@ -47,7 +47,7 @@ namespace XCom
 			if (!File.Exists(pfeMap) // Open a folderbrowser for user to point to a basepath ->
 				&& (basepathDialog || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to show warning box.
 				&& MessageBox.Show(
-								"Mapfile was not found for : " + descriptor.Label
+								"Files were not found for : " + descriptor.Label
 									+ Environment.NewLine + Environment.NewLine
 									+ "Browse for a basepath to the .MAP and .RMP files ...",
 								" Warning",

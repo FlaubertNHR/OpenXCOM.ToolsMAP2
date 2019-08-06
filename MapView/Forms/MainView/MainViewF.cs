@@ -258,8 +258,8 @@ namespace MapView
 			MapTree.LostFocus      += OnMapTreeFocusChanged;
 			MapTree.MouseDown      += OnMapTreeMouseDown;
 			MapTree.BeforeSelect   += OnMapTreeBeforeSelect;
-			MapTree.AfterSelect    += OnMapTreeAfterSelected;
-			MapTree.NodeMouseClick += OnMapTreeNodeClick;
+			MapTree.AfterSelect    += OnMapTreeAfterSelect;
+			MapTree.NodeMouseClick += OnMapTreeNodeMouseClick;
 //			MapTree.NodeMouseClick += (sender, args) => MapTree.SelectedNode = args.Node;
 
 			Controls.Add(MapTree);
@@ -952,7 +952,7 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("OnKeyDown() " + e.KeyCode);
+			//LogFile.WriteLine("OnKeyDown() " + e.KeyData);
 
 			string key; object val = null;
 			ToolStripMenuItem it = null;
@@ -960,12 +960,37 @@ namespace MapView
 
 			switch (e.KeyData)
 			{
-				case Keys.Enter:
-				case Keys.Shift | Keys.Enter:
+				case Keys.Space: // open Context
+					e.SuppressKeyPress = true;
+
 					if (MapTree.Focused && _selected != null)
 					{
-						e.SuppressKeyPress = true;
-						_dontbeep1 = !e.Shift;
+						_dontbeeptype = DontBeepType.OpenContext;
+						BeginInvoke(DontBeepEvent);
+					}
+					break;
+
+				case Keys.Enter: // load Descriptor (do NOT reload)
+					e.SuppressKeyPress = true;
+
+					if (MapTree.Focused && _selected != null)
+					{
+						var descriptor = _selected.Tag as Descriptor; // descriptor better not be null here
+						if (   MainViewUnderlay.MapBase == null
+							|| MainViewUnderlay.MapBase.Descriptor != descriptor)
+						{
+							_dontbeeptype = DontBeepType.LoadDescriptor;
+							BeginInvoke(DontBeepEvent);
+						}
+					}
+					break;
+
+				case Keys.Shift | Keys.Enter: // open MapBrowserDialog
+					e.SuppressKeyPress = true;
+
+					if (MapTree.Focused && _selected != null)
+					{
+						_dontbeeptype = DontBeepType.MapBrowserDialog;
 						BeginInvoke(DontBeepEvent);
 					}
 					break;
@@ -1230,7 +1255,10 @@ namespace MapView
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 
 			if (!cancel)
+			{
+				_loadReady = LOADREADY_STAGE_2;
 				LoadSelectedDescriptor();
+			}
 		}
 
 		private void OnScreenshotClick(object sender, EventArgs e)
@@ -1864,36 +1892,98 @@ namespace MapView
 			LogFile.WriteLine("ret NULL");
 			return null;
 		} */
+		#endregion Events
 
 
-		private bool _dontbeep1; // aka. "just because you have billions of dollars don't mean you can arbitrarily beep"
+		#region Events (load)
+		// __Sequence of Events__
+		// MainViewF.OnMapTreeMouseDown()
+		// MainViewF.OnMapTreeNodeMouseClick()
+		// MainViewF.OnMapTreeBeforeSelect()
+		// MainViewF.OnMapTreeAfterSelect()
+		// MainViewF.LoadSelectedDescriptor()
 
 		/// <summary>
-		/// Opens the Maptree's contextmenu on keydown event [Enter] via a
-		/// circuitous pattern delegate called DontBeep. Does what it says here.
-		/// Or if [Shift+Enter] then try to reload the Mapfile.
+		/// Cache of the currently selected treenode. Is used to determine if
+		/// a MapBrowserDialog should popup on [Space] - iff the MAP+RMP files
+		/// are invalid.
+		/// </summary>
+		private TreeNode _selected;
+
+		/// <summary>
+		/// just because you have billions of dollars doesn't mean you can beep
+		/// </summary>
+		private DontBeepType _dontbeeptype;
+		private enum DontBeepType
+		{
+			OpenContext,
+			LoadDescriptor,
+			MapBrowserDialog
+		}
+
+		/// <summary>
+		/// This flag is used to bypass checks when accessing the TilesetEditor
+		/// while maintaining the current state of the actual changed-flags.
+		/// </summary>
+		private bool BypassChanged;
+
+		/// <summary>
+		/// By keeping this value below 2 until either (a) a leftclick is
+		/// confirmed on a treenode with a tileset or (b) keydown [Enter] the
+		/// Maptree can be navigated by keyboard without loading every darn Map
+		/// whose treenode gets selected during keyboard navigation.
+		/// </summary>
+		private int _loadReady;
+		const int LOADREADY_STAGE_0 = 0; // totally undecided
+		const int LOADREADY_STAGE_1 = 1; // definitely a leftclick, but still not sure if it's on a Tileset node
+		const int LOADREADY_STAGE_2 = 2; // a tileset node is currently selected in the Maptree - ok to load descriptor
+
+
+		/// <summary>
+		/// Bypasses ornery system-beeps that can happen on keydown events.
+		/// - [Space] opens the Context menu
+		/// - [Enter] loads a Descriptor
+		/// - [Shift+Enter] opens the MapBrowserDialog if a tileset's files are
+		///                 invalid; will also load a Descriptor if the files
+		///                 are valid.
 		/// </summary>
 		private void FireContext()
 		{
-			if (_dontbeep1)
+			//LogFile.WriteLine("MainViewF.FireContext()");
+
+			switch (_dontbeeptype)
 			{
-				var nodebounds = _selected.Bounds;
-				var args = new MouseEventArgs(
-											MouseButtons.Right,
-											1,
-											nodebounds.X + 15, nodebounds.Y + 5,
-											0);
-				OnMapTreeMouseDown(null, args);
-			}
-			else
-			{
-				var args = new TreeNodeMouseClickEventArgs(
-														_selected,
-														MouseButtons.None,
-														0, 0,0);
-				OnMapTreeNodeClick(null, args);
+				case DontBeepType.OpenContext:
+				{
+					var nodebounds = _selected.Bounds;
+					var args = new MouseEventArgs(
+												MouseButtons.Right,
+												1,
+												nodebounds.X + 15, nodebounds.Y + 5,
+												0);
+					OnMapTreeMouseDown(null, args);
+					break;
+				}
+
+				case DontBeepType.LoadDescriptor:
+				{
+					_loadReady = LOADREADY_STAGE_2;
+					OnMapTreeAfterSelect(null, new TreeViewEventArgs(_selected));
+					break;
+				}
+
+				case DontBeepType.MapBrowserDialog:
+				{
+					var args = new TreeNodeMouseClickEventArgs(
+															_selected,
+															MouseButtons.None,
+															0, 0,0);
+					OnMapTreeNodeMouseClick(null, args);
+					break;
+				}
 			}
 		}
+
 
 		/// <summary>
 		/// Opens a context-menu on RMB-click.
@@ -1908,8 +1998,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeMouseDown");
-			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
+			//LogFile.WriteLine("MainViewF.OnMapTreeMouseDown() node= " + MapTree.SelectedNode);
 
 			if (e.Button == MouseButtons.Right)
 			{
@@ -2002,8 +2091,9 @@ namespace MapView
 					OnMapTreeMouseDown(null, e); // recurse.
 				}
 			}
+			else // is leftclick
+				_loadReady = LOADREADY_STAGE_1;
 		}
-		private bool BypassChanged;
 
 
 		/// <summary>
@@ -2370,7 +2460,6 @@ namespace MapView
 		/// </summary>
 		private void SelectGroupNodeTop()
 		{
-			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectGroupNodeTop");
 
 			if (MapTree.Nodes.Count != 0)
@@ -2385,7 +2474,6 @@ namespace MapView
 		/// <param name="labelGroup"></param>
 		private void SelectCategoryNodeTop(string labelGroup)
 		{
-			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectCategoryNodeTop");
 
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -2408,7 +2496,6 @@ namespace MapView
 		/// <param name="labelCategory"></param>
 		private void SelectTilesetNodeTop(string labelCategory)
 		{
-			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectTilesetNodeTop");
 
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -2432,7 +2519,6 @@ namespace MapView
 		/// <param name="labelGroup"></param>
 		private void SelectGroupNode(string labelGroup)
 		{
-			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectGroupNode");
 
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -2453,7 +2539,6 @@ namespace MapView
 		/// <param name="labelGroup"></param>
 		private void SelectCategoryNode(string labelCategory, string labelGroup)
 		{
-			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectCategoryNode");
 
 			bool found = false;
@@ -2489,7 +2574,6 @@ namespace MapView
 		/// <param name="labelGroup"></param>
 		private void SelectTilesetNode(string labelTileset, string labelCategory, string labelGroup)
 		{
-			//LogFile.WriteLine("");
 			//LogFile.WriteLine("SelectTilesetNode");
 
 			bool found = false;
@@ -2540,19 +2624,40 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeFocusChanged(object sender, EventArgs e)
 		{
+			//LogFile.WriteLine("MainViewF.OnMapTreeFocusChanged()");
+
 			if (Searched != null)
 				MapTree.Invalidate();
 		}
 
-//		private bool _bypassSaveAlert;	// when reloading the MapTree after making a tileset edit
-										// the treeview's BeforeSelect event fires. This needlessly
-										// asks to save the Map (if it had already changed) and
-										// results in an endless cycle of confirmation dialogs ...
-										// so bypass all that.
-										//
-										// Congratulations. Another programming language/framework
-										// I've come to hate. The BeforeSelect event fires twice
-										// (at least) rendering the boolean entirely obsolete.
+		/// <summary>
+		/// If user clicks on an already selected node, for which the Mapfile
+		/// has not been loaded, this handler offers to show a dialog for the
+		/// user to browse to the file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnMapTreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+			//LogFile.WriteLine("MainViewF.OnMapTreeNodeMouseClick() node= " + MapTree.SelectedNode);
+
+			if (e.Node == _selected)
+			{
+				var descriptor = e.Node.Tag as Descriptor;
+				if (descriptor != null)
+				{
+					if (   MainViewUnderlay.MapBase == null
+						|| MainViewUnderlay.MapBase.Descriptor != descriptor)
+					{
+						ClearSearched();
+
+						_loadReady = LOADREADY_STAGE_2;
+						LoadSelectedDescriptor(true);
+					}
+				}
+			}
+		}
+
 		/// <summary>
 		/// Asks user to save before switching Maps if applicable.
 		/// </summary>
@@ -2560,8 +2665,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeBeforeSelect");
-			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
+			//LogFile.WriteLine("MainViewF.OnMapTreeBeforeSelect() node= " + MapTree.SelectedNode);
 
 			if (!BypassChanged) // is true on TilesetEditor DialogResult.OK
 			{
@@ -2577,44 +2681,20 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMapTreeAfterSelected(object sender, TreeViewEventArgs e)
+		private void OnMapTreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeAfterSelected");
-			//if (MapTree.SelectedNode != null) LogFile.WriteLine(". selected= " + MapTree.SelectedNode.Text);
+			//LogFile.WriteLine("MainViewF.OnMapTreeAfterSelect() node= " + MapTree.SelectedNode);
 
 			ClearSearched();
+
+			if (_loadReady == LOADREADY_STAGE_1)
+				_loadReady  = LOADREADY_STAGE_2;
+
 			LoadSelectedDescriptor();
 
 			_selected = e.Node;
 		}
-
-		/// <summary>
-		/// Cache of the currently selected treenode.
-		/// </summary>
-		private TreeNode _selected;
-
-		/// <summary>
-		/// If user clicks on an already selected node, for which the Mapfile
-		/// has not been loaded, this handler offers to show a dialog for the
-		/// user to browse to the file.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnMapTreeNodeClick(object sender, TreeNodeMouseClickEventArgs e)
-		{
-			if (e.Node == _selected)
-			{
-				var descriptor = e.Node.Tag as Descriptor;
-				if (descriptor != null
-					&& (   MainViewUnderlay.MapBase == null
-						|| MainViewUnderlay.MapBase.Descriptor != descriptor))
-				{
-					ClearSearched();
-					LoadSelectedDescriptor(true);
-				}
-			}
-		}
-		#endregion Events
+		#endregion Events (load)
 
 
 		#region Methods
@@ -2624,114 +2704,117 @@ namespace MapView
 		/// </summary>
 		private void LoadSelectedDescriptor(bool basepathDialog = false)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor");
+			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor() node= " + MapTree.SelectedNode);
 
-			var descriptor = MapTree.SelectedNode.Tag as Descriptor;
-			if (descriptor != null)
+			if (_loadReady == LOADREADY_STAGE_2)
 			{
-				//LogFile.WriteLine(". descriptor= " + descriptor);
-
-				bool treechanged = false;
-				var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
-														descriptor,
-														ref treechanged,
-														basepathDialog);
-				if (treechanged) MaptreeChanged = true;
-
-				if (@base != null)
+				var descriptor = MapTree.SelectedNode.Tag as Descriptor;
+				if (descriptor != null)
 				{
-					miSaveAll   .Enabled =
-					miSaveMap   .Enabled =
-					miSaveRoutes.Enabled =
-					miSaveAs    .Enabled =
-					miScreenshot.Enabled =
-					miModifySize.Enabled =
-					miReload    .Enabled =
-					miMapInfo   .Enabled = true;
+					//LogFile.WriteLine(". descriptor= " + descriptor);
 
-					MainViewOverlay.FirstClick = false;
+					bool treechanged = false;
+					var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
+															descriptor,
+															ref treechanged,
+															basepathDialog);
+					if (treechanged) MaptreeChanged = true;
 
-					if (descriptor.Pal == Palette.TftdBattle) // used by Mono only ->
+					if (@base != null)
 					{
-						MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle;
+						miSaveAll   .Enabled =
+						miSaveMap   .Enabled =
+						miSaveRoutes.Enabled =
+						miSaveAs    .Enabled =
+						miScreenshot.Enabled =
+						miModifySize.Enabled =
+						miReload    .Enabled =
+						miMapInfo   .Enabled = true;
+
+						MainViewOverlay.FirstClick = false;
+
+						if (descriptor.Pal == Palette.TftdBattle) // used by Mono only ->
+						{
+							MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle;
+						}
+						else // default to ufo-battle palette
+							MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle;
+
+						MainViewUnderlay.MapBase = @base;
+
+						ObserverManager.ToolFactory.EnableScaleAutoButton();
+						ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
+
+						Text = TITLE + " " + descriptor.Basepath;
+						if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
+
+						tsslMapLabel     .Text = descriptor.Label;
+						tsslDimensions   .Text = @base.MapSize.ToString();
+						tsslPosition     .Text =
+						tsslSelectionSize.Text = String.Empty;
+
+						MapChanged = (@base as MapFile).IsLoadChanged; // don't bother to reset IsLoadChanged.
+
+						var routeview1 = ObserverManager.RouteView.Control;
+						var routeview2 = ObserverManager.TopRouteView.ControlRoute;
+
+						routeview1.ClearSelectedInfo();
+						routeview2.ClearSelectedInfo();
+
+						routeview1.DisableOg();
+						routeview2.DisableOg();
+
+						Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
+						Optionables.OpenDoors = false;
+						SetDoorSpritesFullPhase(false);
+						if (_foptions != null && _foptions.Visible)
+						{
+//							(_foptions as OptionsForm).propertyGrid.SetSelectedValue(false);
+							(_foptions as OptionsForm).propertyGrid.Refresh();
+						}
+
+						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
+							MenuManager.StartSecondaryStageBoosters();
+
+						ObserverManager.SetObservers(@base); // reset all observer events
+
+						if (RouteCheckService.CheckNodeBounds(@base as MapFile) == DialogResult.Yes)
+						{
+							routeview1.RouteChanged = true;
+
+							foreach (RouteNode node in RouteCheckService.Invalids)
+								(@base as MapFile).Routes.DeleteNode(node);
+						}
+
+						Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
+
+						if (ScanG != null) // update ScanG viewer if open
+							ScanG.LoadMapfile(@base);
+
+						var tileview = ObserverManager.TileView.Control; // update MCD Info if open
+						if (tileview.McdInfobox != null)
+						{
+							Tilepart part = tileview.SelectedTilepart;
+							if (part != null)
+								tileview.McdInfobox.UpdateData(
+															part.Record,
+															part.TerId,
+															tileview.GetTerrainLabel());
+							else
+								tileview.McdInfobox.UpdateData();
+						}
+
+						if (RouteView.RoutesInfo != null) // update RoutesInfo if open
+							RouteView.RoutesInfo.Initialize(@base as MapFile);
+
+						ResetQuadrantPanel(); // update the Quadrant panel
+
+						FirstActivated = false;
+						Activate();
 					}
-					else // default to ufo-battle palette
-						MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle;
-
-					MainViewUnderlay.MapBase = @base;
-
-					ObserverManager.ToolFactory.EnableScaleAutoButton();
-					ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
-
-					Text = TITLE + " " + descriptor.Basepath;
-					if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
-
-					tsslMapLabel     .Text = descriptor.Label;
-					tsslDimensions   .Text = @base.MapSize.ToString();
-					tsslPosition     .Text =
-					tsslSelectionSize.Text = String.Empty;
-
-					MapChanged = (@base as MapFile).IsLoadChanged; // don't bother to reset IsLoadChanged.
-
-					var routeview1 = ObserverManager.RouteView.Control;
-					var routeview2 = ObserverManager.TopRouteView.ControlRoute;
-
-					routeview1.ClearSelectedInfo();
-					routeview2.ClearSelectedInfo();
-
-					routeview1.DisableOg();
-					routeview2.DisableOg();
-
-					Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
-					Optionables.OpenDoors = false;
-					SetDoorSpritesFullPhase(false);
-					if (_foptions != null && _foptions.Visible)
-					{
-//						(_foptions as OptionsForm).propertyGrid.SetSelectedValue(false);
-						(_foptions as OptionsForm).propertyGrid.Refresh();
-					}
-
-					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
-						MenuManager.StartSecondaryStageBoosters();
-
-					ObserverManager.SetObservers(@base); // reset all observer events
-
-					if (RouteCheckService.CheckNodeBounds(@base as MapFile) == DialogResult.Yes)
-					{
-						routeview1.RouteChanged = true;
-
-						foreach (RouteNode node in RouteCheckService.Invalids)
-							(@base as MapFile).Routes.DeleteNode(node);
-					}
-
-					Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
-
-					if (ScanG != null) // update ScanG viewer if open
-						ScanG.LoadMapfile(@base);
-
-					var tileview = ObserverManager.TileView.Control; // update MCD Info if open
-					if (tileview.McdInfobox != null)
-					{
-						Tilepart part = tileview.SelectedTilepart;
-						if (part != null)
-							tileview.McdInfobox.UpdateData(
-														part.Record,
-														part.TerId,
-														tileview.GetTerrainLabel());
-						else
-							tileview.McdInfobox.UpdateData();
-					}
-
-					if (RouteView.RoutesInfo != null) // update RoutesInfo if open
-						RouteView.RoutesInfo.Initialize(@base as MapFile);
-
-					ResetQuadrantPanel(); // update the Quadrant panel
-
-					FirstActivated = false;
-					Activate();
 				}
 			}
+			_loadReady = LOADREADY_STAGE_0;
 		}
 
 		/// <summary>
