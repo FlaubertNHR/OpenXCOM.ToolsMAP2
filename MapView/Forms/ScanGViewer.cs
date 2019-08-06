@@ -106,10 +106,116 @@ namespace MapView
 			if (e.KeyData == Keys.Escape)
 				Close();
 		}
+
+		/// <summary>
+		/// Overrides the MouseWheel eventhandler.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			int level = Level;
+
+			if (e.Delta < 0 && Level != 0)
+			{
+				--Level;
+			}
+			else if (e.Delta > 0 && Level != _base.MapSize.Levs - 1)
+			{
+				++Level;
+			}
+
+			if (level != Level)
+			{
+				Text = GetTitle();
+				pnl_ScanG.Invalidate();
+			}
+		}
 		#endregion Events (override)
 
 
-		#region Events
+		#region Events (panel)
+		/// <summary>
+		/// MouseDoubleClick handler for the panel. LMB toggles between
+		/// single-level view and multilevel view. RMB reloads ScanG.Dat file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void panel_OnMouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			switch (e.Button)
+			{
+				case MouseButtons.Left:
+					SingleLevel = !SingleLevel;
+					Text = GetTitle();
+					pnl_ScanG.Invalidate();
+					break;
+
+				case MouseButtons.Right:
+				{
+					string result, title;
+					MessageBoxIcon icon;
+
+					if (_base.Descriptor.Pal == Palette.TftdBattle)
+					{
+						if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+						{
+							_icons = ResourceInfo.ScanGtftd;
+
+							result = "SCANG.DAT reloaded.";
+							title  = " Info";
+							icon   = MessageBoxIcon.None;
+						}
+						else
+						{
+							result = "SCANG.DAT failed to reload. Take the red pill.";
+							title  = " Error";
+							icon   = MessageBoxIcon.Error;
+						}
+					}
+					else if (ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+					{
+						_icons = ResourceInfo.ScanGufo;
+
+						result = "SCANG.DAT reloaded.";
+						title  = " Info";
+						icon   = MessageBoxIcon.None;
+					}
+					else
+					{
+						result = "SCANG.DAT failed to reload. Take the red pill.";
+						title  = " Error";
+						icon   = MessageBoxIcon.Error;
+					}
+					ShowReloadResult(result, title, icon);
+
+					// NOTE: Invalidate/refresh is not needed apparently.
+					break;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Shows a messagebox with the reload-result.
+		/// </summary>
+		/// <param name="result"></param>
+		/// <param name="title"></param>
+		/// <param name="icon"></param>
+		private void ShowReloadResult(
+				string result,
+				string title,
+				MessageBoxIcon icon)
+		{
+			MessageBox.Show(
+						this,
+						result,
+						title,
+						MessageBoxButtons.OK,
+						icon,
+						MessageBoxDefaultButton.Button1,
+						0);
+		}
+
+
 		/// <summary>
 		/// Paint handler for the panel.
 		/// </summary>
@@ -263,108 +369,14 @@ namespace MapView
 							GraphicsUnit.Pixel,
 							spriteAttributes);
 		}
-		#endregion Events
-
-
-		#region Events (mouse)
-		protected override void OnMouseWheel(MouseEventArgs e)
-		{
-			int level = Level;
-
-			if (e.Delta < 0 && Level != 0)
-			{
-				--Level;
-			}
-			else if (e.Delta > 0 && Level != _base.MapSize.Levs - 1)
-			{
-				++Level;
-			}
-
-			if (level != Level)
-			{
-				Text = GetTitle();
-				pnl_ScanG.Invalidate();
-			}
-		}
-
-		/// <summary>
-		/// MouseDoubleClick handler for the panel. LMB toggles between
-		/// single-level view and multilevel view. RMB reloads ScanG.Dat file.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnMouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			switch (e.Button)
-			{
-				case MouseButtons.Left:
-					SingleLevel = !SingleLevel;
-					Text = GetTitle();
-					pnl_ScanG.Invalidate();
-					break;
-
-				case MouseButtons.Right:
-				{
-					string result, title;
-					MessageBoxIcon icon;
-
-					if (_base.Descriptor.Pal == Palette.TftdBattle)
-					{
-						if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
-						{
-							_icons = ResourceInfo.ScanGtftd;
-
-							result = "SCANG.DAT has reloaded.";
-							title  = " Info";
-							icon   = MessageBoxIcon.Information;
-						}
-						else
-						{
-							result = "SCANG.DAT failed to reload.";
-							title  = " Error";
-							icon   = MessageBoxIcon.Error;
-						}
-					}
-					else if (ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
-					{
-						_icons = ResourceInfo.ScanGufo;
-
-						result = "SCANG.DAT has reloaded.";
-						title  = " Info";
-						icon   = MessageBoxIcon.Information;
-					}
-					else
-					{
-						result = "SCANG.DAT failed to reload.";
-						title  = " Error";
-						icon   = MessageBoxIcon.Error;
-					}
-					ShowReloadResult(result, title, icon);
-
-					// NOTE: Invalidate/refresh is not needed apparently.
-					break;
-				}
-			}
-		}
-
-		private void ShowReloadResult(
-				string result,
-				string title,
-				MessageBoxIcon icon)
-		{
-			MessageBox.Show(
-						this,
-						result,
-						title,
-						MessageBoxButtons.OK,
-						icon,
-						MessageBoxDefaultButton.Button1,
-						0);
-		}
-		#endregion Events (override)
+		#endregion Events (panel)
 
 
 		#region Methods
+		/// <summary>
+		/// Gets a title-string.
+		/// </summary>
+		/// <returns></returns>
 		private string GetTitle()
 		{
 			return "ScanG - "
@@ -372,6 +384,18 @@ namespace MapView
 				 + (SingleLevel ? " - 1 layer" : String.Empty);
 		}
 
+		/// <summary>
+		/// Invalidates the panel.
+		/// </summary>
+		internal void InvalidatePanel()
+		{
+			pnl_ScanG.Invalidate();
+		}
+
+		/// <summary>
+		/// Loads a Mapfile.
+		/// </summary>
+		/// <param name="base"></param>
 		internal void LoadMapfile(MapFileBase @base)
 		{
 			_base = @base;
@@ -382,11 +406,6 @@ namespace MapView
 			Text = GetTitle();
 
 			Refresh(); // req'd.
-		}
-
-		internal void InvalidatePanel()
-		{
-			pnl_ScanG.Invalidate();
 		}
 		#endregion Methods
 
@@ -428,7 +447,7 @@ namespace MapView
 			this.pnl_ScanG.Size = new System.Drawing.Size(294, 276);
 			this.pnl_ScanG.TabIndex = 0;
 			this.pnl_ScanG.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_OnPaint);
-			this.pnl_ScanG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseDoubleClick);
+			this.pnl_ScanG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel_OnMouseDoubleClick);
 			// 
 			// ScanGViewer
 			// 
