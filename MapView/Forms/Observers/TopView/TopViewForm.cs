@@ -123,60 +123,62 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
-			{
-				if (!Control.TopPanel.Focused)
-				{
-					e.SuppressKeyPress = true;
-					Control.TopPanel.Focus();
-				}
-				else
-					MainViewOverlay.that.Edit(e);
-			}
-			else if (e.KeyCode == Keys.O
-				&& (e.Modifiers & Keys.Control) == Keys.Control)
-			{
-				e.SuppressKeyPress = true;
-				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
-			}
-			else if (e.KeyCode == Keys.Q
-				&& (e.Modifiers & Keys.Control) == Keys.Control)
-			{
-				e.SuppressKeyPress = true;
-				MainViewF.that.OnQuitClick(null, EventArgs.Empty);
-			}
-			else if (!MenuManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
-			{
-				QuadrantType quadtype = QuadrantType.None;
-				switch (e.KeyCode)
-				{
-					case Keys.D1: quadtype = QuadrantType.Floor;   break;
-					case Keys.D2: quadtype = QuadrantType.West;    break;
-					case Keys.D3: quadtype = QuadrantType.North;   break;
-					case Keys.D4: quadtype = QuadrantType.Content; break;
-				}
+			QuadrantType quad = QuadrantType.None;
 
-				if (quadtype != QuadrantType.None)
-				{
-					e.SuppressKeyPress = true;
-					var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-					Control.QuadrantPanel.doMouseDown(args, quadtype);
-				}
-				else if (Control.TopPanel.Focused)
-				{
-					switch (e.KeyCode)
+			switch (e.KeyData)
+			{
+				case Keys.Escape:
+					if (!Control.TopPanel.Focused)
 					{
-						case Keys.Add:
-						case Keys.Subtract:
-						case Keys.PageDown:
-						case Keys.PageUp:
-						case Keys.Home:
-						case Keys.End:
-							e.SuppressKeyPress = true;
-							MainViewOverlay.that.Navigate(e.KeyData, true);
-							break;
+						e.SuppressKeyPress = true;
+						Control.TopPanel.Focus();
 					}
-				}
+					else
+						MainViewOverlay.that.Edit(e);
+					break;
+
+				case Keys.Control | Keys.O:
+					e.SuppressKeyPress = true;
+					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+					break;
+
+				case Keys.Control | Keys.Q:
+					e.SuppressKeyPress = true;
+					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.Subtract:
+				case Keys.Add:
+				case Keys.Home:
+				case Keys.End:
+				case Keys.PageUp:
+				case Keys.PageDown:
+				case Keys.Shift | Keys.Home:
+				case Keys.Shift | Keys.End:
+				case Keys.Shift | Keys.PageUp:
+				case Keys.Shift | Keys.PageDown:
+					if (Control.TopPanel.Focused)
+					{
+						e.SuppressKeyPress = true;
+						MainViewOverlay.that.Navigate(e.KeyData, true);
+					}
+					break;
+
+				case Keys.D1: quad = QuadrantType.Floor;   break;
+				case Keys.D2: quad = QuadrantType.West;    break;
+				case Keys.D3: quad = QuadrantType.North;   break;
+				case Keys.D4: quad = QuadrantType.Content; break;
+
+				default:
+					MenuManager.ViewerKeyDown(e); // NOTE: this can suppress the key
+					break;
+			}
+
+			if (quad != QuadrantType.None)
+			{
+				e.SuppressKeyPress = true;
+				var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
+				Control.QuadrantPanel.doMouseDown(args, quad);
 			}
 //			base.OnKeyDown(e);
 		}

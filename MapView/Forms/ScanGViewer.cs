@@ -75,16 +75,21 @@ namespace MapView
 
 
 		#region Events (override)
+		/// <summary>
+		/// Overrides the Activated eventhandler.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 		}
-		#endregion Events (override)
 
-
-		#region Events
-		private void OnFormClosed(object sender, FormClosedEventArgs e)
+		/// <summary>
+		/// Overrides the FormClosed eventhandler.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
 			RegistryInfo.UpdateRegistry(this);
 
@@ -93,22 +98,24 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Closes the screen on an Escape keydown event.
+		/// Closes the screen on [Esc] keyup event.
 		/// </summary>
-		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnKeyDown(object sender, KeyEventArgs e)
+		protected override void OnKeyUp(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			if (e.KeyData == Keys.Escape)
 				Close();
 		}
+		#endregion Events (override)
 
+
+		#region Events
 		/// <summary>
 		/// Paint handler for the panel.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnPaint(object sender, PaintEventArgs e)
+		private void panel_OnPaint(object sender, PaintEventArgs e)
 		{
 			if (_icons == null || _pal == null)
 				return;
@@ -259,7 +266,7 @@ namespace MapView
 		#endregion Events
 
 
-		#region Events (override)
+		#region Events (mouse)
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			int level = Level;
@@ -420,7 +427,7 @@ namespace MapView
 			this.pnl_ScanG.Name = "pnl_ScanG";
 			this.pnl_ScanG.Size = new System.Drawing.Size(294, 276);
 			this.pnl_ScanG.TabIndex = 0;
-			this.pnl_ScanG.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
+			this.pnl_ScanG.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_OnPaint);
 			this.pnl_ScanG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseDoubleClick);
 			// 
 			// ScanGViewer
@@ -434,8 +441,6 @@ namespace MapView
 			this.Name = "ScanGViewer";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "ScanG";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ResumeLayout(false);
 
 		}

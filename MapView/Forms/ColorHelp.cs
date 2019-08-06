@@ -322,9 +322,9 @@ namespace MapView
 		/// Closes the Help screen.
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnKeyDown(KeyEventArgs e)
+		protected override void OnKeyUp(KeyEventArgs e)
 		{
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
 				case Keys.Escape:
 				case Keys.Enter:

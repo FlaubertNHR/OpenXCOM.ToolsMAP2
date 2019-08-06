@@ -262,7 +262,6 @@ namespace MapView.Forms.MainView
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			Edit(e);
-//			base.OnKeyDown(e);
 		}
 
 		/// <summary>
@@ -271,54 +270,46 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		internal void Edit(KeyEventArgs e)
 		{
-			if (e.Control)
+			switch (e.KeyData)
 			{
-				switch (e.KeyCode)
-				{
-					case Keys.S:
-						MainView.OnSaveMapClick(null, EventArgs.Empty);
-						break;
+				case Keys.Escape:
+					if (MapBase != null)
+					{
+						_targeterForced = false;
 
-					case Keys.X:
-						Copy();
-						ClearSelection();
-						break;
+						ResetOverValues();
 
-					case Keys.C:
-						Copy();
-						break;
+						_keyDeltaX =
+						_keyDeltaY = 0;
 
-					case Keys.V:
-						Paste();
-						break;
-				}
-			}
-			else
-			{
-				switch (e.KeyCode)
-				{
-					case Keys.Delete:
-						ClearSelection();
-						break;
+						ProcessSelection(DragBeg, DragBeg);
+					}
+					break;
 
-					case Keys.Escape:
-						if (MapBase != null)
-						{
-							_targeterForced = false;
+				case Keys.F:
+					FillSelectedQuads();
+					break;
 
-							ResetOverValues();
+				case Keys.Delete:
+					ClearSelection();
+					break;
 
-							_keyDeltaX =
-							_keyDeltaY = 0;
+				case Keys.Control | Keys.S:
+					MainView.OnSaveMapClick(null, EventArgs.Empty);
+					break;
 
-							ProcessSelection(DragBeg, DragBeg);
-						}
-						break;
+				case Keys.Control | Keys.X:
+					Copy();
+					ClearSelection();
+					break;
 
-					case Keys.F:
-						FillSelectedQuads();
-						break;
-				}
+				case Keys.Control | Keys.C:
+					Copy();
+					break;
+
+				case Keys.Control | Keys.V:
+					Paste();
+					break;
 			}
 		}
 
@@ -615,9 +606,9 @@ namespace MapView.Forms.MainView
 		/// <param name="isTop">true if TopView is the active viewer</param>
 		internal void Navigate(Keys keyData, bool isTop = false)
 		{
-			if (MapBase != null)
+			if (MapBase != null && (keyData & (Keys.Control | Keys.Alt)) == Keys.None)
 			{
-				if (!FirstClick)
+				if (!FirstClick) // allow Shift
 				{
 					_keyDeltaX =
 					_keyDeltaY = 0;
@@ -627,26 +618,25 @@ namespace MapView.Forms.MainView
 					var loc = new Point(0,0);
 					ProcessSelection(loc,loc);
 				}
-				else if (!keyData.HasFlag(Keys.Shift))
+				else if ((keyData & Keys.Shift) == Keys.None)
 				{
 					var loc = new Point(0,0);
-					int vert = 0;
+					int vert = MapFileBase.LEVEL_no;
+
 					switch (keyData)
 					{
-						case Keys.Up:    loc.X = -1; loc.Y = -1; break;
-						case Keys.Right: loc.X = +1; loc.Y = -1; break;
-						case Keys.Down:  loc.X = +1; loc.Y = +1; break;
-						case Keys.Left:  loc.X = -1; loc.Y = +1; break;
+						case Keys.Up:       loc.X = -1; loc.Y = -1; break;
+						case Keys.Right:    loc.X = +1; loc.Y = -1; break;
+						case Keys.Down:     loc.X = +1; loc.Y = +1; break;
+						case Keys.Left:     loc.X = -1; loc.Y = +1; break;
 
 						case Keys.PageUp:   loc.Y = -1; break;
 						case Keys.PageDown: loc.X = +1; break;
 						case Keys.End:      loc.Y = +1; break;
 						case Keys.Home:     loc.X = -1; break;
 
-//						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
-						case Keys.Add:      vert = +1; break;
-//						case Keys.Insert:
-						case Keys.Subtract: vert = -1; break;
+						case Keys.Add:      vert = MapFileBase.LEVEL_Dn; break;
+						case Keys.Subtract: vert = MapFileBase.LEVEL_Up; break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0)
@@ -671,7 +661,7 @@ namespace MapView.Forms.MainView
 							}
 						}
 					}
-					else if (vert != 0)
+					else if (vert != MapFileBase.LEVEL_no)
 					{
 						int level = MapBase.Location.Lev + vert;
 						if (level > -1 && level < MapBase.MapSize.Levs) // safety.
@@ -683,15 +673,16 @@ namespace MapView.Forms.MainView
 						}
 					}
 				}
-				else // [Shift] = drag select ->
+				else // Shift = drag select ->
 				{
 					var loc = new Point(0,0);
+
 					switch (keyData)
 					{
-						case Keys.Shift | Keys.Up:    loc.X = -1; loc.Y = -1; break;
-						case Keys.Shift | Keys.Right: loc.X = +1; loc.Y = -1; break;
-						case Keys.Shift | Keys.Down:  loc.X = +1; loc.Y = +1; break;
-						case Keys.Shift | Keys.Left:  loc.X = -1; loc.Y = +1; break;
+						case Keys.Shift | Keys.Up:       loc.X = -1; loc.Y = -1; break;
+						case Keys.Shift | Keys.Right:    loc.X = +1; loc.Y = -1; break;
+						case Keys.Shift | Keys.Down:     loc.X = +1; loc.Y = +1; break;
+						case Keys.Shift | Keys.Left:     loc.X = -1; loc.Y = +1; break;
 
 						case Keys.Shift | Keys.PageUp:   loc.Y = -1; break;
 						case Keys.Shift | Keys.PageDown: loc.X = +1; break;

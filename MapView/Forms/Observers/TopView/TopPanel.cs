@@ -385,30 +385,21 @@ namespace MapView.Forms.Observers
 			MouseButtons button;
 			int clicks;
 
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
 				case Keys.Enter: // place selected TileView-part in selected quadrant
-				{
 					button = MouseButtons.Right;
 					clicks = 1;
 					break;
-				}
 
 				case Keys.T: // select the TileView-part of the selected quadrant
-				{
 					button = MouseButtons.Left;
 					clicks = 2;
 					break;
-				}
 
-				case Keys.Delete: // delete selected Quadrant-type from a selected tile
-					if (e.Shift)
-					{
-						button = MouseButtons.Right;
-						clicks = 2;
-					}
-					else
-						goto default;
+				case Keys.Shift | Keys.Delete: // delete selected Quadrant-type from a selected tile
+					button = MouseButtons.Right;
+					clicks = 2;
 					break;
 
 				default:

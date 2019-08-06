@@ -87,7 +87,7 @@ namespace MapView.Forms.Observers
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] // w.t.f.
 		internal Tilepart SelectedTilepart
 		{
-			get { return GetSelectedPanel().SelectedTilepart; }
+			get { return GetVisiblePanel().SelectedTilepart; }
 			set
 			{
 				_allTiles.SelectedTilepart = value;
@@ -229,7 +229,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void tabs_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
-			var panel = GetSelectedPanel();
+			var panel = GetVisiblePanel();
 			foreach (var panel_ in _panels)
 				panel_.SetTickerSubscription(panel_ == panel);
 
@@ -358,7 +358,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		internal void OnMcdInfoClick(object sender, EventArgs e)
 		{
-			if (!GetSelectedPanel().ContextMenu.MenuItems[3].Checked)
+			if (!GetVisiblePanel().ContextMenu.MenuItems[3].Checked)
 			{
 				foreach (var panel in _panels)
 				{
@@ -391,6 +391,9 @@ namespace MapView.Forms.Observers
 					McdInfobox.UpdateData(record, id, label);
 				}
 				McdInfobox.Show();
+
+				if (McdInfobox.WindowState == FormWindowState.Minimized)
+					McdInfobox.WindowState  = FormWindowState.Normal;
 			}
 			else
 				OnMcdInfoFormClosing(null, null);
@@ -667,7 +670,7 @@ namespace MapView.Forms.Observers
 		/// Gets the panel of the currently displayed tabpage.
 		/// </summary>
 		/// <returns></returns>
-		internal TilePanel GetSelectedPanel()
+		internal TilePanel GetVisiblePanel()
 		{
 			return _panels[tcTileTypes.SelectedIndex];
 		}

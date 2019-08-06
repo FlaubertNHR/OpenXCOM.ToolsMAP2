@@ -865,24 +865,24 @@ namespace MapView
 		{
 			//LogFile.WriteLine("ProcessCmdKey() " + keyData);
 
-			bool invalidate  = true;
-			bool focussearch = false;
+			bool invalidate = false;
+			bool focusearch = false;
+
 			switch (keyData)
 			{
 				case Keys.Tab:
-					focussearch = MainViewOverlay.Focused;
+					invalidate = true;
+					focusearch = MainViewOverlay.Focused;
 					break;
 
 				case Keys.Shift | Keys.Tab:
-					focussearch = MapTree.Focused;
+					invalidate = true;
+					focusearch = MapTree.Focused;
 					break;
 
 				case Keys.Shift | Keys.F3:
-					focussearch = true;
-					break;
-
-				default:
-					invalidate = false;
+					invalidate = true;
+					focusearch = true;
 					break;
 			}
 
@@ -890,7 +890,7 @@ namespace MapView
 			{
 				MainViewOverlay.Invalidate();
 
-				if (focussearch)
+				if (focusearch)
 				{
 					ObserverManager.ToolFactory.FocusSearch();
 					return true;
@@ -947,10 +947,12 @@ namespace MapView
 			//LogFile.WriteLine("OnKeyDown() " + e.KeyCode);
 
 			string key; object val = null;
+			ToolStripMenuItem it = null;
+			int id = MenuManager.MI_non;
 
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
-				case Keys.Enter: // do this here to get rid of the beep.
+				case Keys.Enter:
 					if (MapTree.Focused && _selected != null)
 					{
 						e.SuppressKeyPress = true;
@@ -980,63 +982,67 @@ namespace MapView
 					Optionables.OnOptionChanged(key,val);
 					break;
 
-				default:
-					if (e.Control)
+				// toggle TopView tilepart visibilities ->
+				case Keys.Control | Keys.F1:
+					it = ObserverManager.TopView.Control.Floor;
+					break;
+
+				case Keys.Control | Keys.F2:
+					it = ObserverManager.TopView.Control.West;
+					break;
+
+				case Keys.Control | Keys.F3:
+					it = ObserverManager.TopView.Control.North;
+					break;
+
+				case Keys.Control | Keys.F4:
+					it = ObserverManager.TopView.Control.Content;
+					break;
+
+				// focus viewer (show/hide shortcuts are handled by menuitems directly) ->
+				case Keys.Control | Keys.F5: id = MenuManager.MI_TILE;     break;
+				case Keys.Control | Keys.F6: id = MenuManager.MI_TOP;      break;
+				case Keys.Control | Keys.F7: id = MenuManager.MI_ROUTE;    break;
+				case Keys.Control | Keys.F8: id = MenuManager.MI_TOPROUTE; break;
+
+				case Keys.Subtract:
+				case Keys.Add:
+				case Keys.Home:
+				case Keys.End:
+				case Keys.PageUp:
+				case Keys.PageDown:
+				case Keys.Shift | Keys.Home:
+				case Keys.Shift | Keys.End:
+				case Keys.Shift | Keys.PageUp:
+				case Keys.Shift | Keys.PageDown:
+					if (MainViewOverlay.Focused)
 					{
-						if (menuViewers.Enabled)
-						{
-							ToolStripMenuItem part = null;
-							int it = -1;
-
-							switch (e.KeyCode)
-							{
-								// toggle TopView tilepart visibilities ->
-								case Keys.F1: part = ObserverManager.TopView.Control.Floor;   break;
-								case Keys.F2: part = ObserverManager.TopView.Control.West;    break;
-								case Keys.F3: part = ObserverManager.TopView.Control.North;   break;
-								case Keys.F4: part = ObserverManager.TopView.Control.Content; break;
-
-								// show/hide viewer ->
-								case Keys.F5: it = 0; break;
-								case Keys.F6: it = 2; break;
-								case Keys.F7: it = 3; break;
-								case Keys.F8: it = 4; break;
-							}
-
-							if (it != -1)
-							{
-								e.SuppressKeyPress = true;
-								MenuManager.OnMenuItemClick(
-														menuViewers.MenuItems[it],
-														EventArgs.Empty);
-							}
-							else if (part != null)
-							{
-								e.SuppressKeyPress = true;
-								ObserverManager.TopView.Control.OnQuadrantVisibilityClick(part, EventArgs.Empty);
-							}
-						}
-					}
-					else if (MainViewOverlay.Focused)
-					{
-						switch (e.KeyCode)
-						{
-							case Keys.Add:
-							case Keys.Subtract:
-							case Keys.PageDown:
-							case Keys.PageUp:
-							case Keys.Home:
-							case Keys.End:
-								e.SuppressKeyPress = true;
-								MainViewOverlay.Navigate(e.KeyData);
-								break;
-						}
+						e.SuppressKeyPress = true;
+						MainViewOverlay.Navigate(e.KeyData);
 					}
 					break;
 			}
 
-			if (val != null && _foptions != null && _foptions.Visible)
-				(_foptions as OptionsForm).propertyGrid.Refresh();
+			if (val != null)
+			{
+				e.SuppressKeyPress = true;
+
+				if (_foptions != null && _foptions.Visible)
+					(_foptions as OptionsForm).propertyGrid.Refresh();
+			}
+			else if (menuViewers.Enabled)
+			{
+				if (it != null)
+				{
+					e.SuppressKeyPress = true;
+					ObserverManager.TopView.Control.OnQuadrantVisibilityClick(it, EventArgs.Empty);
+				}
+				else if (id != -1)
+				{
+					e.SuppressKeyPress = true;
+					MenuManager.OnMenuItemClick(menuViewers.MenuItems[id], EventArgs.Empty);
+				}
+			}
 
 			base.OnKeyDown(e);
 		}
@@ -2678,7 +2684,7 @@ namespace MapView
 					}
 
 					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
-						MenuManager.StartSecondStageRockets();
+						MenuManager.StartSecondaryStageBoosters();
 
 					ObserverManager.SetObservers(@base); // reset all observer events
 

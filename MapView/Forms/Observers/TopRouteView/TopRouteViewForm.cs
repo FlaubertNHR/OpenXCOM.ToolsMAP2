@@ -15,6 +15,11 @@ namespace MapView.Forms.Observers
 		:
 			Form
 	{
+		#region Fields (static)
+		private const int TAB_TOP = 0;
+		private const int TAB_ROT = 1;
+		#endregion Fields (static)
+
 		#region Fields
 		private TopView   TopViewControl;
 		private RouteView RouteViewControl;
@@ -83,7 +88,7 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			if (tabControl.SelectedIndex == 0)
+			if (tabControl.SelectedIndex == TAB_TOP)
 				TopViewControl.TopPanel.Focus();
 
 //			base.OnActivated(e);
@@ -103,9 +108,9 @@ namespace MapView.Forms.Observers
 		{
 			switch (tabControl.SelectedIndex)
 			{
-				case 0: // Top
-				if (ControlTop.TopPanel.Focused)
-				{
+				case TAB_TOP:
+					if (ControlTop.TopPanel.Focused)
+					{
 						switch (keyData)
 						{
 							case Keys.Left:
@@ -122,7 +127,7 @@ namespace MapView.Forms.Observers
 					}
 					break;
 
-				case 1: // Route
+				case TAB_ROT:
 					if (ControlRoute.RoutePanel.Focused)
 					{
 						switch (keyData)
@@ -158,111 +163,117 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
-			{
-				switch (tabControl.SelectedIndex)
-				{
-					case 0: // Top
-						if (!ControlTop.TopPanel.Focused)
-						{
-							e.SuppressKeyPress = true;
-							ControlTop.TopPanel.Focus();
-						}
-						else
-							MainViewOverlay.that.Edit(e);
-						break;
+			QuadrantType quad = QuadrantType.None;
 
-					case 1: // Route
-						e.SuppressKeyPress = true;
-						if (ControlRoute.RoutePanel.Focused)
-						{
-							RouteView.NodeSelected = null;
-
-							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-
-							ObserverManager.RouteView   .Control     .UpdateNodeInformation();
-							ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
-						}
-						else
-							ControlRoute.RoutePanel.Focus();
-						break;
-				}
-			}
-			else if (e.KeyCode == Keys.O
-				&& (e.Modifiers & Keys.Control) == Keys.Control)
+			switch (e.KeyData)
 			{
-				e.SuppressKeyPress = true;
-				switch (tabControl.SelectedIndex)
-				{
-					case 0: // Top
-						ControlTop.OnOptionsClick(ControlTop.GetOptionsButton(), EventArgs.Empty);
-						break;
-					case 1: // Route
-						ControlRoute.OnOptionsClick(ControlRoute.GetOptionsButton(), EventArgs.Empty);
-						break;
-				}
-			}
-			else if (e.KeyCode == Keys.Q
-				&& (e.Modifiers & Keys.Control) == Keys.Control)
-			{
-				e.SuppressKeyPress = true;
-				MainViewF.that.OnQuitClick(null, EventArgs.Empty);
-			}
-			else if (!MenuManager.ViewerKeyDown(e)) // NOTE: this can suppress the key
-			{
-				if (tabControl.SelectedIndex == 0) // Top
-				{
-					QuadrantType quadtype = QuadrantType.None;
-					switch (e.KeyCode)
+				case Keys.Escape:
+					switch (tabControl.SelectedIndex)
 					{
-						case Keys.D1: quadtype = QuadrantType.Floor;   break;
-						case Keys.D2: quadtype = QuadrantType.West;    break;
-						case Keys.D3: quadtype = QuadrantType.North;   break;
-						case Keys.D4: quadtype = QuadrantType.Content; break;
-					}
-
-					if (quadtype != QuadrantType.None)
-					{
-						e.SuppressKeyPress = true;
-						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-						ControlTop.QuadrantPanel.doMouseDown(args, quadtype);
-					}
-					else if (ControlTop.TopPanel.Focused)
-					{
-						switch (e.KeyCode)
-						{
-							case Keys.Add:
-							case Keys.Subtract:
-							case Keys.PageDown:
-							case Keys.PageUp:
-							case Keys.Home:
-							case Keys.End:
+						case TAB_TOP:
+							if (!ControlTop.TopPanel.Focused)
+							{
 								e.SuppressKeyPress = true;
-								MainViewOverlay.that.Navigate(e.KeyData, true);
-								break;
-						}
-					}
-				}
-				else if (ControlRoute.RoutePanel.Focused) // Route
-				{
-					switch (e.KeyCode)
-					{
-						case Keys.Add:
-						case Keys.Subtract:
-						case Keys.PageDown:
-						case Keys.PageUp:
-						case Keys.Home:
-						case Keys.End:
-						case Keys.Enter:
+								ControlTop.TopPanel.Focus();
+							}
+							else
+								MainViewOverlay.that.Edit(e);
+							break;
+	
+						case TAB_ROT:
 							e.SuppressKeyPress = true;
-							ControlRoute.RoutePanel.Navigate(e.KeyData);
+							if (ControlRoute.RoutePanel.Focused)
+							{
+								RouteView.NodeSelected = null;
+	
+								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+	
+								ObserverManager.RouteView   .Control     .UpdateNodeInformation();
+								ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+							}
+							else
+								ControlRoute.RoutePanel.Focus();
 							break;
 					}
-				}
+					break;
+
+				case Keys.Control | Keys.O:
+					e.SuppressKeyPress = true;
+					switch (tabControl.SelectedIndex)
+					{
+						case TAB_TOP:
+							ControlTop.OnOptionsClick(ControlTop.GetOptionsButton(), EventArgs.Empty);
+							break;
+						case TAB_ROT:
+							ControlRoute.OnOptionsClick(ControlRoute.GetOptionsButton(), EventArgs.Empty);
+							break;
+					}
+					break;
+
+				case Keys.Control | Keys.Q:
+					e.SuppressKeyPress = true;
+					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.D1: quad = QuadrantType.Floor;   break;
+				case Keys.D2: quad = QuadrantType.West;    break;
+				case Keys.D3: quad = QuadrantType.North;   break;
+				case Keys.D4: quad = QuadrantType.Content; break;
+
+				case Keys.Subtract:
+				case Keys.Add:
+				case Keys.Home:
+				case Keys.End:
+				case Keys.PageUp:
+				case Keys.PageDown:
+				case Keys.Shift | Keys.Home:
+				case Keys.Shift | Keys.End:
+				case Keys.Shift | Keys.PageUp:
+				case Keys.Shift | Keys.PageDown:
+					switch (tabControl.SelectedIndex)
+					{
+						case TAB_TOP:
+							if (ControlTop.TopPanel.Focused)
+							{
+								e.SuppressKeyPress = true;
+								MainViewOverlay.that.Navigate(e.KeyData, true);
+							}
+							break;
+
+						case TAB_ROT:
+							if (ControlRoute.RoutePanel.Focused) // is Route
+							{
+								e.SuppressKeyPress = true;
+								ControlRoute.RoutePanel.Navigate(e.KeyData);
+							}
+							break;
+					}
+					break;
+
+				case Keys.Shift | Keys.Subtract:
+				case Keys.Shift | Keys.Add:
+				case Keys.Enter:
+					if (tabControl.SelectedIndex == TAB_ROT && ControlRoute.RoutePanel.Focused)
+					{
+						e.SuppressKeyPress = true;
+						ControlRoute.RoutePanel.Navigate(e.KeyData);
+					}
+					break;
+
+				default:
+					MenuManager.ViewerKeyDown(e); // NOTE: this can suppress the key
+					break;
 			}
 
-			if (tabControl.SelectedIndex == 1) // Route
+			if (quad != QuadrantType.None && tabControl.SelectedIndex == TAB_TOP)
+			{
+				e.SuppressKeyPress = true;
+				var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
+				ControlTop.QuadrantPanel.doMouseDown(args, quad);
+			}
+
+			if (tabControl.SelectedIndex == TAB_ROT)
 				base.OnKeyDown(e);
 		}
 		#endregion Events (override)

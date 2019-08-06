@@ -161,7 +161,7 @@ namespace MapView.Forms.MainView
 		/// Visibles the subsidiary viewers that are flagged when a Map loads.
 		/// @note Called by MainViewF.LoadSelectedDescriptor().
 		/// </summary>
-		internal static void StartSecondStageRockets()
+		internal static void StartSecondaryStageBoosters()
 		{
 			Viewers.Enabled = true;
 
@@ -188,38 +188,60 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="e"></param>
 		/// <returns>true if key is suppressed</returns>
-		internal static bool ViewerKeyDown(KeyEventArgs e)
+		internal static void ViewerKeyDown(KeyEventArgs e)
 		{
 			int id = MI_non;
-			switch (e.KeyCode)
+
+			switch (e.KeyData)
 			{
-				case Keys.F5: id = MI_TILE;     break; // show/hide viewers ->
-				case Keys.F6: id = MI_TOP;      break;
-				case Keys.F7: id = MI_ROUTE;    break;
-				case Keys.F8: id = MI_TOPROUTE; break;
+				case Keys.F5:
+				case Keys.Control | Keys.F5:
+					id = MI_TILE;
+					break;
 
-				case Keys.F11: OnMinimizeAllClick(null, EventArgs.Empty); break; // min/rest ->
-				case Keys.F12: OnRestoreAllClick( null, EventArgs.Empty); break;
+				case Keys.F6:
+				case Keys.Control | Keys.F6:
+					id = MI_TOP;
+					break;
 
-				default: return false; // else do not suppress key-event for any other key
-			}
+				case Keys.F7:
+				case Keys.Control | Keys.F7:
+					id = MI_ROUTE;
+					break;
 
-			if (id != -1)
-			{
-				if (e.Shift) // focus MainView for any (valid) 'id'
-				{
+				case Keys.F8:
+				case Keys.Control | Keys.F8:
+					id = MI_TOPROUTE;
+					break;
+
+				case Keys.Shift | Keys.F5: // focus MainView
+				case Keys.Shift | Keys.F6:
+				case Keys.Shift | Keys.F7:
+				case Keys.Shift | Keys.F8:
+					e.SuppressKeyPress = true;
+
 					if (MainViewF.that.WindowState == FormWindowState.Minimized)
 						MainViewF.that.WindowState =  FormWindowState.Normal;
 
 					MainViewF.that.Select();
-				}
-				else
-					OnMenuItemClick(
-								Viewers.MenuItems[id],
-								EventArgs.Empty);
+					break;
+
+				case Keys.F11: // MinimizeAll ->
+					e.SuppressKeyPress = true;
+					OnMinimizeAllClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.F12: // RestoreAll ->
+					e.SuppressKeyPress = true;
+					OnRestoreAllClick(null, EventArgs.Empty);
+					break;
 			}
-			e.SuppressKeyPress = true;
-			return true;
+
+			if (id != MI_non)
+			{
+				e.SuppressKeyPress = true;
+				OnMenuItemClick(Viewers.MenuItems[id], EventArgs.Empty);
+			}
 		}
 		#endregion Methods (static)
 
@@ -233,7 +255,7 @@ namespace MapView.Forms.MainView
 		internal static void OnMenuItemClick(object sender, EventArgs e)
 		{
 			var it = sender as MenuItem;
-			var f  = it.Tag as Form;
+			var f = it.Tag as Form;
 
 			if (it.Checked && Control.ModifierKeys == Keys.Control)
 			{
@@ -267,13 +289,15 @@ namespace MapView.Forms.MainView
 		/// is user-changed.
 		/// </summary>
 		/// <param name="id"></param>
-		/// <param name="f"></param>
 		/// <param name="val"></param>
-		internal static void setMenuChecked(int id, Form f, bool val)
+		internal static void setMenuChecked(int id, bool val)
 		{
 			if (Viewers.Enabled)
 			{
-				if (Viewers.MenuItems[id].Checked = val)
+				var it = Viewers.MenuItems[id];
+				var f = it.Tag as Form;
+
+				if (it.Checked = val)
 				{
 					f.Show();
 					if (f.WindowState == FormWindowState.Minimized)
@@ -355,9 +379,10 @@ namespace MapView.Forms.MainView
 		{
 			if (MainViewUnderlay.that.MapBase != null)
 			{
-				if (!Viewers.MenuItems[MI_SCANG].Checked)
+				var it = Viewers.MenuItems[MI_SCANG];
+				if (!it.Checked)
 				{
-					Viewers.MenuItems[MI_SCANG].Checked = true;
+					it.Checked = true;
 
 					MainViewF.ScanG = new ScanGViewer(MainViewUnderlay.that.MapBase);
 					MainViewF.ScanG.Show(); // no owner.

@@ -118,50 +118,55 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			switch (e.KeyData)
 			{
-				e.SuppressKeyPress = true;
-				if (Control.RoutePanel.Focused)
-				{
-					RouteView.NodeSelected = null;
+				case Keys.Escape:
+					e.SuppressKeyPress = true;
+					if (Control.RoutePanel.Focused)
+					{
+						RouteView.NodeSelected = null;
+	
+						ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+						ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+	
+						ObserverManager.RouteView   .Control     .UpdateNodeInformation();
+						ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+					}
+					else
+						Control.RoutePanel.Focus();
+					break;
 
-					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+				case Keys.Control | Keys.O:
+					e.SuppressKeyPress = true;
+					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+					break;
 
-					ObserverManager.RouteView   .Control     .UpdateNodeInformation();
-					ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
-				}
-				else
-					Control.RoutePanel.Focus();
-			}
-			else if (e.KeyCode == Keys.O
-				&& (e.Modifiers & Keys.Control) == Keys.Control)
-			{
-				e.SuppressKeyPress = true;
-				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
-			}
-			else if (e.KeyCode == Keys.Q
-				&& (e.Modifiers & Keys.Control) == Keys.Control)
-			{
-				e.SuppressKeyPress = true;
-				MainViewF.that.OnQuitClick(null, EventArgs.Empty);
-			}
-			else if (!MenuManager.ViewerKeyDown(e) // NOTE: this can suppress the key
-				&& Control.RoutePanel.Focused)
-			{
-				switch (e.KeyCode)
-				{
-					case Keys.Add:
-					case Keys.Subtract:
-					case Keys.PageDown:
-					case Keys.PageUp:
-					case Keys.Home:
-					case Keys.End:
-					case Keys.Enter:
+				case Keys.Control | Keys.Q:
+					e.SuppressKeyPress = true;
+					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.Subtract:
+				case Keys.Add:
+				case Keys.Home:
+				case Keys.End:
+				case Keys.PageUp:
+				case Keys.PageDown:
+				case Keys.Shift | Keys.Home:
+				case Keys.Shift | Keys.End:
+				case Keys.Shift | Keys.PageUp:
+				case Keys.Shift | Keys.PageDown:
+				case Keys.Enter:
+					if (Control.RoutePanel.Focused)
+					{
 						e.SuppressKeyPress = true;
 						Control.RoutePanel.Navigate(e.KeyData);
-						break;
-				}
+					}
+					break;
+
+				default:
+					MenuManager.ViewerKeyDown(e); // NOTE: this can suppress the key
+					break;
 			}
 			base.OnKeyDown(e);
 		}

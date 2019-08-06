@@ -72,7 +72,7 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			TileViewControl.GetSelectedPanel().Focus();
+			TileViewControl.GetVisiblePanel().Focus();
 
 //			base.OnActivated(e);
 		}
@@ -88,18 +88,18 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			switch (keyData)
+			TilePanel panel = Control.GetVisiblePanel();
+			if (panel.Focused)
 			{
-				case Keys.Left:
-				case Keys.Right:
-				case Keys.Up:
-				case Keys.Down:
-					if (Control.GetSelectedPanel().Focused)
-					{
-						Control.GetSelectedPanel().Navigate(keyData);
+				switch (keyData)
+				{
+					case Keys.Left:
+					case Keys.Right:
+					case Keys.Up:
+					case Keys.Down:
+						panel.Navigate(keyData);
 						return true;
-					}
-					break;
+				}
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
@@ -117,36 +117,42 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			switch (e.KeyData)
 			{
-				e.SuppressKeyPress = true;
-				Control.GetSelectedPanel().Focus();
-			}
-			else if (e.KeyCode == Keys.O
-				&& (e.Modifiers & Keys.Control) == Keys.Control)
-			{
-				e.SuppressKeyPress = true;
-				Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
-			}
-			else if (e.KeyCode == Keys.Q
-				&& (e.Modifiers & Keys.Control) == Keys.Control)
-			{
-				e.SuppressKeyPress = true;
-				MainViewF.that.OnQuitClick(null, EventArgs.Empty);
-			}
-			else if (!MenuManager.ViewerKeyDown(e) // NOTE: this can suppress the key
-				&& Control.GetSelectedPanel().Focused)
-			{
-				switch (e.KeyCode)
+				case Keys.Escape:
+					e.SuppressKeyPress = true;
+					Control.GetVisiblePanel().Focus();
+					break;
+
+				case Keys.Control | Keys.O:
+					e.SuppressKeyPress = true;
+					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+					break;
+
+				case Keys.Control | Keys.Q:
+					e.SuppressKeyPress = true;
+					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
+					break;
+
+				case Keys.PageUp:
+				case Keys.PageDown:
+				case Keys.Home:
+				case Keys.End:
+				case Keys.Control | Keys.Home:
+				case Keys.Control | Keys.End:
 				{
-					case Keys.Home:
-					case Keys.End:
-					case Keys.PageUp:
-					case Keys.PageDown:
+					TilePanel panel = Control.GetVisiblePanel();
+					if (panel.Focused)
+					{
 						e.SuppressKeyPress = true;
-						Control.GetSelectedPanel().Navigate(e.KeyData);
-						break;
+						panel.Navigate(e.KeyData);
+					}
+					break;
 				}
+
+				default:
+					MenuManager.ViewerKeyDown(e); // NOTE: this can suppress the key
+					break;
 			}
 			base.OnKeyDown(e);
 		}

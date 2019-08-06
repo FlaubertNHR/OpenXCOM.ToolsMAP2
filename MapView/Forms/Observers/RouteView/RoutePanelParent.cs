@@ -151,7 +151,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
-			if (MapFile != null)
+			if (MapFile != null) // safety.
 			{
 				int width  = Width  - OffsetX * 2;
 				int height = Height - OffsetY * 2;
@@ -257,12 +257,12 @@ namespace MapView.Forms.Observers
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
-			if (MapFile != null) // safety.
+			if (MapFile != null && (keyData & (Keys.Control | Keys.Alt)) == Keys.None) // safety.
 			{
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
 
-				if (!MainViewOverlay.that.FirstClick)
+				if (!MainViewOverlay.that.FirstClick) // allow Shift
 				{
 					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire SelectLocation event
 
@@ -290,27 +290,25 @@ namespace MapView.Forms.Observers
 					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
 					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 				}
-				else if (!keyData.HasFlag(Keys.Shift))
+				else if ((keyData & Keys.Shift) == Keys.None)
 				{
 					var loc = new Point(0,0);
-					int dir = MapFileBase.LEVEL_no;
+					int vert = MapFileBase.LEVEL_no;
 
 					switch (keyData)
 					{
-						case Keys.Up:    loc.X = -1; loc.Y = -1; break;
-						case Keys.Right: loc.X = +1; loc.Y = -1; break;
-						case Keys.Down:  loc.X = +1; loc.Y = +1; break;
-						case Keys.Left:  loc.X = -1; loc.Y = +1; break;
+						case Keys.Up:       loc.X = -1; loc.Y = -1; break;
+						case Keys.Right:    loc.X = +1; loc.Y = -1; break;
+						case Keys.Down:     loc.X = +1; loc.Y = +1; break;
+						case Keys.Left:     loc.X = -1; loc.Y = +1; break;
 
 						case Keys.PageUp:   loc.Y = -1; break;
 						case Keys.PageDown: loc.X = +1; break;
 						case Keys.End:      loc.Y = +1; break;
 						case Keys.Home:     loc.X = -1; break;
 
-//						case Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
-						case Keys.Add:      dir = MapFileBase.LEVEL_Dn; break;
-//						case Keys.Insert:
-						case Keys.Subtract: dir = MapFileBase.LEVEL_Up; break;
+						case Keys.Add:      vert = MapFileBase.LEVEL_Dn; break;
+						case Keys.Subtract: vert = MapFileBase.LEVEL_Up; break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0)
@@ -335,12 +333,12 @@ namespace MapView.Forms.Observers
 							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 						}
 					}
-					else if (dir != MapFileBase.LEVEL_no)
+					else if (vert != MapFileBase.LEVEL_no)
 					{
-						int level = MapFile.Level + dir;
+						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
-							MapFile.ChangeLevel(dir);			// fire SelectLevel event
+							MapFile.ChangeLevel(vert);			// fire SelectLevel event
 							MapFile.Location = new MapLocation(	// fire SelectLocation event
 															MapFile.Location.Row,
 															MapFile.Location.Col,
@@ -348,88 +346,83 @@ namespace MapView.Forms.Observers
 						}
 					}
 				}
-				else // [Shift] = drag node ->
+				else if (NodeSelected != null) // Shift = drag node ->
 				{
-					if (NodeSelected != null)
+					var loc = new Point(0,0);
+					int vert = MapFileBase.LEVEL_no;
+
+					switch (keyData)
 					{
-						var loc = new Point(0,0);
-						int dir = MapFileBase.LEVEL_no;
+						case Keys.Shift | Keys.Up:       loc.X = -1; loc.Y = -1; break;
+						case Keys.Shift | Keys.Right:    loc.X = +1; loc.Y = -1; break;
+						case Keys.Shift | Keys.Down:     loc.X = +1; loc.Y = +1; break;
+						case Keys.Shift | Keys.Left:     loc.X = -1; loc.Y = +1; break;
 
-						switch (keyData)
+						case Keys.Shift | Keys.PageUp:   loc.Y = -1; break;
+						case Keys.Shift | Keys.PageDown: loc.X = +1; break;
+						case Keys.Shift | Keys.End:      loc.Y = +1; break;
+						case Keys.Shift | Keys.Home:     loc.X = -1; break;
+
+						case Keys.Shift | Keys.Add:      vert = MapFileBase.LEVEL_Dn; break;
+						case Keys.Shift | Keys.Subtract: vert = MapFileBase.LEVEL_Up; break;
+					}
+
+					if (loc.X != 0 || loc.Y != 0)
+					{
+						int r = MapFile.Location.Row + loc.Y;
+						int c = MapFile.Location.Col + loc.X;
+						if (   r > -1 && r < MapFile.MapSize.Rows
+							&& c > -1 && c < MapFile.MapSize.Cols
+							&& MapFile[r,c].Node == null)
 						{
-							case Keys.Shift | Keys.Up:    loc.X = -1; loc.Y = -1; break;
-							case Keys.Shift | Keys.Right: loc.X = +1; loc.Y = -1; break;
-							case Keys.Shift | Keys.Down:  loc.X = +1; loc.Y = +1; break;
-							case Keys.Shift | Keys.Left:  loc.X = -1; loc.Y = +1; break;
+							RouteView.Dragnode = NodeSelected;
 
-							case Keys.Shift | Keys.PageUp:   loc.Y = -1; break;
-							case Keys.Shift | Keys.PageDown: loc.X = +1; break;
-							case Keys.Shift | Keys.End:      loc.Y = +1; break;
-							case Keys.Shift | Keys.Home:     loc.X = -1; break;
+							MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation event
 
-//							case Keys.Shift | Keys.Delete: // oops Delete is delete tile - try [Shift+Insert]
-							case Keys.Shift | Keys.Add:      dir = MapFileBase.LEVEL_Dn; break;
-//							case Keys.Shift | Keys.Insert:
-							case Keys.Shift | Keys.Subtract: dir = MapFileBase.LEVEL_Up; break;
+							var args = new RoutePanelEventArgs(
+															MouseButtons.None,
+															MapFile[r,c],
+															MapFile.Location);
+							RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+
+							ObserverManager.RouteView   .Control     .SetInfotextOver();
+							ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
+
+							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 						}
-
-						if (loc.X != 0 || loc.Y != 0)
+					}
+					else if (vert != MapFileBase.LEVEL_no)
+					{
+						int level = MapFile.Level + vert;
+						if (level > -1 && level < MapFile.MapSize.Levs
+							&& MapFile[MapFile.Location.Row,
+									   MapFile.Location.Col,
+									   level].Node == null)
 						{
-							int r = MapFile.Location.Row + loc.Y;
-							int c = MapFile.Location.Col + loc.X;
-							if (   r > -1 && r < MapFile.MapSize.Rows
-								&& c > -1 && c < MapFile.MapSize.Cols
-								&& MapFile[r,c].Node == null)
-							{
-								RouteView.Dragnode = NodeSelected;
+							RouteView.Dragnode = NodeSelected;
 
-								MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation event
+							MapFile.ChangeLevel(vert);			// fire SelectLevel event
+							MapFile.Location = new MapLocation(	// fire SelectLocation event
+															MapFile.Location.Row,
+															MapFile.Location.Col,
+															level);
 
-								var args = new RoutePanelEventArgs(
-																MouseButtons.None,
-																MapFile[r,c],
-																MapFile.Location);
-								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+							var args = new RoutePanelEventArgs(
+															MouseButtons.None,
+															MapFile[MapFile.Location.Row,
+																	MapFile.Location.Col],
+															MapFile.Location);
+							RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 
-								ObserverManager.RouteView   .Control     .SetInfotextOver();
-								ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
+							ObserverManager.RouteView   .Control     .SetInfotextOver();
+							ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
 
-								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-							}
-						}
-						else if (dir != MapFileBase.LEVEL_no)
-						{
-							int level = MapFile.Level + dir;
-							if (level > -1 && level < MapFile.MapSize.Levs
-								&& MapFile[MapFile.Location.Row,
-										   MapFile.Location.Col,
-										   level].Node == null)
-							{
-								RouteView.Dragnode = NodeSelected;
+							ObserverManager.RouteView   .Control     .PrintSelectedInfo();
+							ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
 
-								MapFile.ChangeLevel(dir);			// fire SelectLevel event
-								MapFile.Location = new MapLocation(	// fire SelectLocation event
-																MapFile.Location.Row,
-																MapFile.Location.Col,
-																level);
-
-								var args = new RoutePanelEventArgs(
-																MouseButtons.None,
-																MapFile[MapFile.Location.Row,
-																		MapFile.Location.Col],
-																MapFile.Location);
-								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
-
-								ObserverManager.RouteView   .Control     .SetInfotextOver();
-								ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
-
-								ObserverManager.RouteView   .Control     .PrintSelectedInfo();
-								ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
-
-								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-							}
+							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 						}
 					}
 				}
@@ -465,7 +458,7 @@ namespace MapView.Forms.Observers
 		/// is invalid</returns>
 		internal protected Point GetTileLocation(int x, int y)
 		{
-			if (MapFile != null)
+			if (MapFile != null) // safety.
 			{
 				x -= Origin.X;
 				y -= Origin.Y;

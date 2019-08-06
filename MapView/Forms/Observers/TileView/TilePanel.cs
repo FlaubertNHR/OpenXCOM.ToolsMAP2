@@ -432,7 +432,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.I && !e.Control && !e.Alt && !e.Shift)
+			if (e.KeyData == Keys.I)
 				Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
 		}
 

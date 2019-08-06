@@ -68,10 +68,8 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			if (e.KeyData == Keys.Escape)
 				Close();
-
-//			base.OnKeyUp(e);
 		}
 		#endregion Events
 

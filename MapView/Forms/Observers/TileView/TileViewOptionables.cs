@@ -309,7 +309,7 @@ The path specified can actually be used to start any valid application"
 			}
 
 			TilePanel.SpecialBrushes[special].Color = color;
-			TileView.GetSelectedPanel().Invalidate();
+			TileView.GetVisiblePanel().Invalidate();
 		}
 		#endregion Events
 	}

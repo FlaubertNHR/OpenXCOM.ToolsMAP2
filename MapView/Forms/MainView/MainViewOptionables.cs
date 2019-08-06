@@ -656,28 +656,24 @@ namespace MapView.Forms.MainView
 				case str_StartTileView:
 					MenuManager.setMenuChecked(
 											MenuManager.MI_TILE,
-											ObserverManager.TileView,
 											(StartTileView = (bool)val));
 					break;
 
 				case str_StartTopView:
 					MenuManager.setMenuChecked(
 											MenuManager.MI_TOP,
-											ObserverManager.TopView,
 											(StartTopView = (bool)val));
 					break;
 
 				case str_StartRouteView:
 					MenuManager.setMenuChecked(
 											MenuManager.MI_ROUTE,
-											ObserverManager.RouteView,
 											(StartRouteView = (bool)val));
 					break;
 
 				case str_StartTopRouteView:
 					MenuManager.setMenuChecked(
 											MenuManager.MI_TOPROUTE,
-											ObserverManager.TopRouteView,
 											(StartTopRouteView = (bool)val));
 					break;
 
@@ -755,9 +751,9 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private void InvalidateSecondaryPanels()
 		{
-			ObserverManager.TileView    .Control   .GetSelectedPanel().Invalidate();
-			ObserverManager.TopView     .Control   .QuadrantPanel     .Invalidate();
-			ObserverManager.TopRouteView.ControlTop.QuadrantPanel     .Invalidate();
+			ObserverManager.TileView    .Control   .GetVisiblePanel().Invalidate();
+			ObserverManager.TopView     .Control   .QuadrantPanel    .Invalidate();
+			ObserverManager.TopRouteView.ControlTop.QuadrantPanel    .Invalidate();
 		}
 		#endregion Events
 	}

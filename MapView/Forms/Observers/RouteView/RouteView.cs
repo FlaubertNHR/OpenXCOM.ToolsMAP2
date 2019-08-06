@@ -1611,27 +1611,30 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnRoutePanelKeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Control)
+			switch (e.KeyData)
 			{
-				switch (e.KeyCode)
-				{
-					case Keys.S:
-						MainViewF.that.OnSaveRoutesClick(null, EventArgs.Empty);
-						break;
+				case Keys.Delete:
+					OnDeleteClick(null, null);
+					break;
 
-					case Keys.X: _asterisk = true;
-								 OnCopyClick(  null, EventArgs.Empty);
-								 OnDeleteClick(null, EventArgs.Empty);
-								 _asterisk = false;
-								 break;
+				case Keys.Control | Keys.S:
+					MainViewF.that.OnSaveRoutesClick(null, EventArgs.Empty);
+					break;
 
-					case Keys.C: OnCopyClick( null, EventArgs.Empty); break;
-					case Keys.V: OnPasteClick(null, EventArgs.Empty); break;
-				}
-			}
-			else if (e.KeyCode == Keys.Delete)
-			{
-				OnDeleteClick(null, null);
+				case Keys.Control | Keys.X:
+					_asterisk = true;
+					 OnCopyClick(  null, EventArgs.Empty);
+					 OnDeleteClick(null, EventArgs.Empty);
+					 _asterisk = false;
+					 break;
+
+				case Keys.Control | Keys.C:
+					 OnCopyClick( null, EventArgs.Empty);
+					 break;
+
+				 case Keys.Control | Keys.V:
+					 OnPasteClick(null, EventArgs.Empty);
+					 break;
 			}
 		}
 

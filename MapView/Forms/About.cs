@@ -77,9 +77,9 @@ namespace MapView
 			ShowHideManager._zOrder.Add(this);
 		}
 
-		protected override void OnKeyDown(KeyEventArgs e)
+		protected override void OnKeyUp(KeyEventArgs e)
 		{
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
 				case Keys.Escape:
 					Close();

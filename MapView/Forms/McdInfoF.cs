@@ -46,15 +46,16 @@ namespace MapView
 
 
 		#region Events
+		/// <summary>
+		/// Stops arbitrary beeps when trying to type in a readonly RichTextBox.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnKeyDown_rtb(object sender, KeyEventArgs e)
 		{
 			switch (e.KeyCode)
 			{
-				case Keys.Escape:
-					Close();
-					break;
-
-				case Keys.Up:
+				case Keys.Up: // these keys are allowed ->
 				case Keys.Down:
 				case Keys.PageUp:
 				case Keys.PageDown:
@@ -63,21 +64,27 @@ namespace MapView
 				case Keys.Left:
 				case Keys.Right:
 					return;
-			}
 
-			if (e.Modifiers == 0)
-				e.Handled = e.SuppressKeyPress = true;
+				default: // these are not ->
+					e.SuppressKeyPress = true;
+					break;
+			}
 		}
 
 		/// <summary>
-		/// Closes the screen on an [i] keyup event.
+		/// Closes the screen on [Esc] or [i] keyup event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnKeyUp_rtb(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.I && !e.Control && !e.Alt && !e.Shift)
-				Close();
+			switch (e.KeyData)
+			{
+				case Keys.Escape:
+				case Keys.I:
+					Close();
+					break;
+			}
 		}
 		#endregion Events
 
