@@ -123,6 +123,8 @@ f - fill selected tile(s)' selected quadrant with selected part
 4 - select Content quadrant
 
 Quadrant Panel
+q         - select the current tilepart's proper quadrant-type if a current
+            tilepart is valid
 t         - select the tilepart, in TileView, of the currently selected quadrant
             (or double-click the quadrant itself)
 Enter     - place the currently selected part in TileView in the currently
