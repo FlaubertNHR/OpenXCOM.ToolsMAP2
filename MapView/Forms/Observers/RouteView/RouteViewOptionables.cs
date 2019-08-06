@@ -73,7 +73,6 @@ namespace MapView.Forms.Observers
 				else if ((_gridLineWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_GridLineWidth].Value = _gridLineWidth;
-//					foptions.propertyGrid.SetSelectedValue(_gridLineWidth);
 				}
 			}
 		}
@@ -113,7 +112,6 @@ namespace MapView.Forms.Observers
 				else if ((_gridLine10Width = value.Clamp(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_GridLine10Width].Value = _gridLine10Width;
-//					foptions.propertyGrid.SetSelectedValue(_gridLine10Width);
 				}
 			}
 		}
@@ -156,7 +154,6 @@ namespace MapView.Forms.Observers
 				else if ((_wallWidth = value.Clamp(1,9)) != value) // on user-changed
 				{
 					RouteView.Options[str_WallWidth].Value = _wallWidth;
-//					foptions.propertyGrid.SetSelectedValue(_wallWidth);
 				}
 			}
 		}
@@ -242,7 +239,6 @@ namespace MapView.Forms.Observers
 				else if ((_nodeOpacity = value.Clamp(0,255)) != value) // on user-changed
 				{
 					RouteView.Options[str_NodeOpacity].Value = _nodeOpacity;
-//					foptions.propertyGrid.SetSelectedValue(_nodeOpacity);
 				}
 			}
 		}
@@ -285,7 +281,6 @@ namespace MapView.Forms.Observers
 				else if ((_linkWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_LinkWidth].Value = _linkWidth;
-//					foptions.propertyGrid.SetSelectedValue(_linkWidth);
 				}
 			}
 		}
@@ -325,7 +320,6 @@ namespace MapView.Forms.Observers
 				else if ((_linkSelectedWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_LinkSelectedWidth].Value = _linkSelectedWidth;
-//					foptions.propertyGrid.SetSelectedValue(_linkSelectedWidth);
 				}
 			}
 		}
@@ -399,7 +393,6 @@ namespace MapView.Forms.Observers
 				else if ((_selectorWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_SelectorWidth].Value = _selectorWidth;
-					foptions.propertyGrid.SetSelectedValue(_selectorWidth);
 				}
 			}
 		}
@@ -439,7 +432,6 @@ namespace MapView.Forms.Observers
 				else if ((_selectedWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_SelectedWidth].Value = _selectedWidth;
-					foptions.propertyGrid.SetSelectedValue(_selectedWidth);
 				}
 			}
 		} */

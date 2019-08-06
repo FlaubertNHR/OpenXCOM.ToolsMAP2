@@ -162,7 +162,6 @@ namespace MapView.Forms.MainView
 				else if ((_gridLayerOpacity = value.Clamp(0,255)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_GridLayerOpacity].Value = _gridLayerOpacity;
-//					foptions.propertyGrid.SetSelectedValue(_gridLayerOpacity);
 				}
 			}
 		}
@@ -202,7 +201,6 @@ namespace MapView.Forms.MainView
 				else if ((_gridLineWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_GridLineWidth].Value = _gridLineWidth;
-//					foptions.propertyGrid.SetSelectedValue(_gridLineWidth);
 				}
 			}
 		}
@@ -242,7 +240,6 @@ namespace MapView.Forms.MainView
 				else if ((_gridLine10Width = value.Clamp(1,6)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_GridLine10Width].Value = _gridLine10Width;
-//					foptions.propertyGrid.SetSelectedValue(_gridLine10Width);
 				}
 			}
 		}
@@ -285,7 +282,6 @@ namespace MapView.Forms.MainView
 				else if ((_selectionBorderOpacity = value.Clamp(0,255)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SelectionBorderOpacity].Value = _selectionBorderOpacity;
-//					foptions.propertyGrid.SetSelectedValue(_selectionBorderOpacity);
 				}
 			}
 		}
@@ -311,7 +307,6 @@ namespace MapView.Forms.MainView
 				else if ((_selectionBorderWidth = value.Clamp(1,6)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SelectionBorderWidth].Value = _selectionBorderWidth;
-//					foptions.propertyGrid.SetSelectedValue(_selectionBorderWidth);
 				}
 			}
 		}
@@ -368,7 +363,6 @@ namespace MapView.Forms.MainView
 				else if ((_spriteShade = value.Clamp(0,100)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SpriteShade].Value = _spriteShade;
-//					foptions.propertyGrid.SetSelectedValue(_spriteShade);
 				}
 
 				if (_spriteShade != 0)
@@ -425,7 +419,6 @@ namespace MapView.Forms.MainView
 				else if ((_interpolation = value.Clamp(0,7)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_Interpolation].Value = _interpolation;
-//					foptions.propertyGrid.SetSelectedValue(_interpolation);
 				}
 
 				InterpolationE = (InterpolationMode)_interpolation;

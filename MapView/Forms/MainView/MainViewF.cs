@@ -2769,7 +2769,6 @@ namespace MapView
 						SetDoorSpritesFullPhase(false);
 						if (_foptions != null && _foptions.Visible)
 						{
-//							(_foptions as OptionsForm).propertyGrid.SetSelectedValue(false);
 							(_foptions as OptionsForm).propertyGrid.Refresh();
 						}
 

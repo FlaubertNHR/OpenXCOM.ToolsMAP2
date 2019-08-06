@@ -107,7 +107,6 @@ namespace MapView.Forms.MainView
 					if (foptions != null && foptions.Visible)
 					{
 						var grid = (foptions as OptionsForm).propertyGrid;
-//						grid.SetSelectedValue((object)fobserver.Visible);
 						grid.Refresh();
 					}
 				};
