@@ -266,15 +266,21 @@ namespace MapView.Forms.Observers
 					break;
 			}
 
-			if (quad != QuadrantType.None && tabControl.SelectedIndex == TAB_TOP)
+			switch (tabControl.SelectedIndex)
 			{
-				e.SuppressKeyPress = true;
-				var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-				ControlTop.QuadrantPanel.doMouseDown(args, quad);
-			}
+				case TAB_TOP:
+					if (quad != QuadrantType.None)
+					{
+						e.SuppressKeyPress = true;
+						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
+						ControlTop.QuadrantPanel.doMouseDown(args, quad);
+					}
+					break;
 
-			if (tabControl.SelectedIndex == TAB_ROT)
-				base.OnKeyDown(e);
+				case TAB_ROT:
+					base.OnKeyDown(e);
+					break;
+			}
 		}
 		#endregion Events (override)
 	}

@@ -94,19 +94,19 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// For use by keyboard-input.
 		/// </summary>
-		private QuadrantType _quadtype = QuadrantType.None;
+		private QuadrantType _quad = QuadrantType.None;
 
 		/// <summary>
 		/// Wrapper for OnMouseDown() for use by keyboard-input only.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <param name="quadtype"></param>
-		internal void doMouseDown(MouseEventArgs e, QuadrantType quadtype)
+		/// <param name="quad"></param>
+		internal void doMouseDown(MouseEventArgs e, QuadrantType quad)
 		{
-			if (quadtype != QuadrantType.None)
-				_quadtype = quadtype;
+			if (quad != QuadrantType.None)
+				_quad = quad;
 			else
-				_quadtype = SelectedQuadrant;
+				_quad = SelectedQuadrant;
 
 			OnMouseDown(e);
 		}
@@ -120,41 +120,42 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopView     .Control   .TopPanel.Select();
 			ObserverManager.TopRouteView.ControlTop.TopPanel.Select();
 
-			bool keyboardInput = (_quadtype != QuadrantType.None);
+			bool keySelectQuadrant = _quad !=  QuadrantType.None
+								  && _quad != (QuadrantType)QuadrantDrawService.QuadrantTypeCurrent;
 
-			if (!keyboardInput)
+			if (!keySelectQuadrant)
 			{
 				int x = (e.X - QuadrantDrawService.StartX);
 				if (x > -1 && x % QuadrantDrawService.Quadwidth < XCImage.SpriteWidth32) // ignore spaces between sprites
-					_quadtype = (QuadrantType)(x / QuadrantDrawService.Quadwidth);
+					_quad = (QuadrantType)(x / QuadrantDrawService.Quadwidth);
 			}
 
-			bool isTypeCurrent = false;
+			bool isCurrentClick = false;
 
-			PartType parttype = PartType.All;
-			switch (_quadtype)
+			PartType part = PartType.All;
+			switch (_quad)
 			{
-				case QuadrantType.Floor:   parttype = PartType.Floor;   break;
-				case QuadrantType.West:    parttype = PartType.West;    break;
-				case QuadrantType.North:   parttype = PartType.North;   break;
-				case QuadrantType.Content: parttype = PartType.Content; break;
+				case QuadrantType.Floor:   part = PartType.Floor;   break;
+				case QuadrantType.West:    part = PartType.West;    break;
+				case QuadrantType.North:   part = PartType.North;   break;
+				case QuadrantType.Content: part = PartType.Content; break;
 
 				case (QuadrantType)QuadrantDrawService.QuadrantTypeCurrent:
-					isTypeCurrent = true;
+					isCurrentClick = true;
 					if (QuadrantDrawService.CurrentTilepart != null)
-						parttype = QuadrantDrawService.CurrentTilepart.Record.PartType;
+						part = QuadrantDrawService.CurrentTilepart.Record.PartType;
 					break;
 			}
 
-			if (parttype != PartType.All)
+			if (part != PartType.All)
 			{
-				ObserverManager.TopView     .Control   .SelectQuadrant(parttype);
-				ObserverManager.TopRouteView.ControlTop.SelectQuadrant(parttype);
+				ObserverManager.TopView     .Control   .SelectQuadrant(part);
+				ObserverManager.TopRouteView.ControlTop.SelectQuadrant(part);
 
-				if (!isTypeCurrent)
-					Operate(e.Button, e.Clicks, keyboardInput);
+				if (!isCurrentClick)
+					Operate(e.Button, e.Clicks, keySelectQuadrant);
 			}
-			_quadtype = QuadrantType.None;
+			_quad = QuadrantType.None;
 		}
 
 		/// <summary>
@@ -164,8 +165,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="button"></param>
 		/// <param name="clicks"></param>
-		/// <param name= "keyboardInput"></param>
-		internal void Operate(MouseButtons button, int clicks, bool keyboardInput = false)
+		/// <param name= "keySelectQuadrant"></param>
+		internal void Operate(MouseButtons button, int clicks, bool keySelectQuadrant = false)
 		{
 			if (Tile != null)
 			{
@@ -180,7 +181,7 @@ namespace MapView.Forms.Observers
 					case MouseButtons.Right:
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							if (!keyboardInput)
+							if (!keySelectQuadrant)
 							{
 								_t1.Stop();
 								++_t1Clicks;
