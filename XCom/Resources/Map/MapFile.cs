@@ -59,7 +59,7 @@ namespace XCom
 				for (int i = 0; i != partset.Count; ++i)
 					partset[i].SetId = i;
 
-				ReadMapFile(partset);
+				ReadMapfile(partset);
 				SetupRouteNodes();
 				CalculateOccultations();
 			}
@@ -87,7 +87,7 @@ namespace XCom
 		/// Reads a .MAP file.
 		/// </summary>
 		/// <param name="parts">a list of tileset-parts</param>
-		private void ReadMapFile(List<Tilepart> parts)
+		private void ReadMapfile(List<Tilepart> parts)
 		{
 			using (var bs = new BufferedStream(File.OpenRead(Fullpath)))
 			{

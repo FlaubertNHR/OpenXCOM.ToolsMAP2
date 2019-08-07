@@ -18,8 +18,8 @@ namespace MapView.Forms.Observers
 		private System.Windows.Forms.ToolStripMenuItem tsmi_LowerNode;
 
 		private System.Windows.Forms.ToolStripDropDownButton tsddbDebug;
-		private System.Windows.Forms.ToolStripMenuItem tsmiCheckNodeRanks;
-		private System.Windows.Forms.ToolStripMenuItem tsmiCheckOobNodes;
+		private System.Windows.Forms.ToolStripMenuItem tsmiTestNodeRanks;
+		private System.Windows.Forms.ToolStripMenuItem tsmiTestPositions;
 
 		private System.Windows.Forms.ToolStripButton tsb_Options;
 
@@ -130,8 +130,8 @@ namespace MapView.Forms.Observers
 			this.tsmiClearLinkData = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiUpdateAllLinkDistances = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsddbDebug = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsmiCheckOobNodes = new System.Windows.Forms.ToolStripMenuItem();
-			this.tsmiCheckNodeRanks = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiTestPositions = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiTestNodeRanks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.tss_0 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsb_connect0 = new System.Windows.Forms.ToolStripButton();
@@ -314,8 +314,8 @@ namespace MapView.Forms.Observers
 			this.tsddbDebug.AutoToolTip = false;
 			this.tsddbDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsddbDebug.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiCheckOobNodes,
-			this.tsmiCheckNodeRanks});
+			this.tsmiTestPositions,
+			this.tsmiTestNodeRanks});
 			this.tsddbDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbDebug.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsddbDebug.Name = "tsddbDebug";
@@ -323,19 +323,19 @@ namespace MapView.Forms.Observers
 			this.tsddbDebug.Text = "&Test";
 			this.tsddbDebug.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tsmiCheckOobNodes
+			// tsmiTestPositions
 			// 
-			this.tsmiCheckOobNodes.Name = "tsmiCheckOobNodes";
-			this.tsmiCheckOobNodes.Size = new System.Drawing.Size(157, 22);
-			this.tsmiCheckOobNodes.Text = "Test &positions";
-			this.tsmiCheckOobNodes.Click += new System.EventHandler(this.OnCheckOobNodesClick);
+			this.tsmiTestPositions.Name = "tsmiTestPositions";
+			this.tsmiTestPositions.Size = new System.Drawing.Size(157, 22);
+			this.tsmiTestPositions.Text = "Test &positions";
+			this.tsmiTestPositions.Click += new System.EventHandler(this.OnTestPositionsClick);
 			// 
-			// tsmiCheckNodeRanks
+			// tsmiTestNodeRanks
 			// 
-			this.tsmiCheckNodeRanks.Name = "tsmiCheckNodeRanks";
-			this.tsmiCheckNodeRanks.Size = new System.Drawing.Size(157, 22);
-			this.tsmiCheckNodeRanks.Text = "Test node&ranks";
-			this.tsmiCheckNodeRanks.Click += new System.EventHandler(this.OnCheckNodeRanksClick);
+			this.tsmiTestNodeRanks.Name = "tsmiTestNodeRanks";
+			this.tsmiTestNodeRanks.Size = new System.Drawing.Size(157, 22);
+			this.tsmiTestNodeRanks.Text = "Test node&ranks";
+			this.tsmiTestNodeRanks.Click += new System.EventHandler(this.OnTestNodeRanksClick);
 			// 
 			// tsb_Options
 			// 

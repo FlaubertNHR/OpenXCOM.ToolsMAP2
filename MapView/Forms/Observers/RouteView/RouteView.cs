@@ -2155,13 +2155,37 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
+		/// Handler for menuitem that checks if any node's location is outside
+		/// the dimensions of the Map.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnTestPositionsClick(object sender, EventArgs e)
+		{
+			if (RouteCheckService.CheckNodeBounds(MapFile, true) == DialogResult.Yes)
+			{
+				RouteChanged = true;
+
+				foreach (RouteNode node in RouteCheckService.Invalids)
+				{
+					if (RoutesInfo != null)
+						RoutesInfo.DeleteNode(node);
+
+					MapFile.Routes.DeleteNode(node);
+				}
+
+				UpdateNodeInfo();
+			}
+		}
+
+		/// <summary>
 		/// Handler for menuitem that checks if any node's rank is beyond the
 		/// array of the combobox. See also RouteNodeCollection.cTor
 		/// TODO: Consolidate these checks to RouteCheckService.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnCheckNodeRanksClick(object sender, EventArgs e)
+		private void OnTestNodeRanksClick(object sender, EventArgs e)
 		{
 			var invalids = new List<byte>();
 			foreach (RouteNode node in MapFile.Routes)
@@ -2202,30 +2226,6 @@ namespace MapView.Forms.Observers
 						icon,
 						MessageBoxDefaultButton.Button1,
 						0);
-		}
-
-		/// <summary>
-		/// Handler for menuitem that checks if any node's location is outside
-		/// the dimensions of the Map.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnCheckOobNodesClick(object sender, EventArgs e)
-		{
-			if (RouteCheckService.CheckNodeBounds(MapFile, true) == DialogResult.Yes)
-			{
-				RouteChanged = true;
-
-				foreach (RouteNode node in RouteCheckService.Invalids)
-				{
-					if (RoutesInfo != null)
-						RoutesInfo.DeleteNode(node);
-
-					MapFile.Routes.DeleteNode(node);
-				}
-
-				UpdateNodeInfo();
-			}
 		}
 		#endregion Events (toolstrip)
 

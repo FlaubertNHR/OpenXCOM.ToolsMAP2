@@ -118,7 +118,7 @@ namespace XCom.Base
 		{
 			get
 			{
-				if (Tiles != null)
+				if (Tiles != null) // TODO: Get rid of that.
 					return Tiles[row, col, lev];
 				return null;
 			}
