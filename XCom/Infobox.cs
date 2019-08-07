@@ -26,7 +26,7 @@ namespace XCom
 		public Infobox(
 				string title,
 				string label,
-				string copyable)
+				string copyable = null)
 		{
 			InitializeComponent();
 
@@ -82,8 +82,6 @@ namespace XCom
 
 			lbl_Info.Text = label;
 			rtb_Info.Text = copyable;
-
-			DialogResult = DialogResult.OK;
 		}
 
 		private int GetHeight(string text, Size size)
@@ -143,6 +141,14 @@ namespace XCom
 		#endregion Events (override)
 
 
+		#region Events
+		private void OnOkayClick(object sender, EventArgs e)
+		{
+			Close();
+		}
+		#endregion Events
+
+
 
 		#region Designer
 		private Container components = null;
@@ -189,6 +195,7 @@ namespace XCom
 			this.btn_Okay.TabIndex = 2;
 			this.btn_Okay.Text = "ok";
 			this.btn_Okay.UseVisualStyleBackColor = true;
+			this.btn_Okay.Click += new System.EventHandler(this.OnOkayClick);
 			// 
 			// lbl_Info
 			// 

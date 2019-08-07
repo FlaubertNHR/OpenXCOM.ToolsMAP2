@@ -27,6 +27,8 @@ namespace MapView.Forms.Observers
 			this.tsTools = new System.Windows.Forms.ToolStrip();
 			this.tsMain = new System.Windows.Forms.ToolStrip();
 			this.tsddbVisibleQuads = new System.Windows.Forms.ToolStripDropDownButton();
+			this.tsddbTest = new System.Windows.Forms.ToolStripDropDownButton();
+			this.tsddbTestPartslots = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.tscPanel.ContentPanel.SuspendLayout();
 			this.tscPanel.LeftToolStripPanel.SuspendLayout();
@@ -89,6 +91,7 @@ namespace MapView.Forms.Observers
 			this.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsddbVisibleQuads,
+			this.tsddbTest,
 			this.tsb_Options});
 			this.tsMain.Location = new System.Drawing.Point(0, 0);
 			this.tsMain.Name = "tsMain";
@@ -107,6 +110,25 @@ namespace MapView.Forms.Observers
 			this.tsddbVisibleQuads.Size = new System.Drawing.Size(54, 23);
 			this.tsddbVisibleQuads.Text = "&Visible";
 			this.tsddbVisibleQuads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tsddbTest
+			// 
+			this.tsddbTest.AutoToolTip = false;
+			this.tsddbTest.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsddbTest.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tsddbTestPartslots});
+			this.tsddbTest.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsddbTest.Name = "tsddbTest";
+			this.tsddbTest.Size = new System.Drawing.Size(42, 22);
+			this.tsddbTest.Text = "&Test";
+			this.tsddbTest.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tsddbTestPartslots
+			// 
+			this.tsddbTestPartslots.Name = "tsddbTestPartslots";
+			this.tsddbTestPartslots.Size = new System.Drawing.Size(187, 22);
+			this.tsddbTestPartslots.Text = "Test parts in tileslots";
+			this.tsddbTestPartslots.Click += new System.EventHandler(this.OnTestPartslotsClick);
 			// 
 			// tsb_Options
 			// 
@@ -148,6 +170,8 @@ namespace MapView.Forms.Observers
 		private System.Windows.Forms.ToolStrip tsMain;
 		private System.Windows.Forms.ToolStripDropDownButton tsddbVisibleQuads;
 		private System.Windows.Forms.ToolStripButton tsb_Options;
+		private System.Windows.Forms.ToolStripDropDownButton tsddbTest;
+		private System.Windows.Forms.ToolStripMenuItem tsddbTestPartslots;
 		#endregion
 	}
 }

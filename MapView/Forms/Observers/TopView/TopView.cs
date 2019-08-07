@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -101,22 +102,17 @@ namespace MapView.Forms.Observers
 																pnlMain.Width,
 																pnlMain.Height);
 
-			var visQuads = tsddbVisibleQuads.DropDown.Items;
+			Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantVisibilityClick, Keys.F1);
+			West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantVisibilityClick, Keys.F2);
+			North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantVisibilityClick, Keys.F3);
+			Content = new ToolStripMenuItem(QuadrantDrawService.Content, null, OnQuadrantVisibilityClick, Keys.F4);
 
-			Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor);
-			West    = new ToolStripMenuItem(QuadrantDrawService.West);
-			North   = new ToolStripMenuItem(QuadrantDrawService.North);
-			Content = new ToolStripMenuItem(QuadrantDrawService.Content);
+			var visQuads = tsddbVisibleQuads.DropDown.Items;
 
 			visQuads.Add(Floor);
 			visQuads.Add(West);
 			visQuads.Add(North);
 			visQuads.Add(Content);
-
-			Floor  .ShortcutKeys = Keys.F1;
-			West   .ShortcutKeys = Keys.F2;
-			North  .ShortcutKeys = Keys.F3;
-			Content.ShortcutKeys = Keys.F4;
 
 			Floor  .Checked =
 			West   .Checked =
@@ -124,9 +120,6 @@ namespace MapView.Forms.Observers
 			Content.Checked = true;
 
 			VisibleQuadrants = FLOOR | WEST | NORTH | CONTENT;
-
-			foreach (ToolStripMenuItem it in visQuads)
-				it.Click += OnQuadrantVisibilityClick;
 
 			ObserverPanels.Add("TopPanel",      TopPanel);
 			ObserverPanels.Add("QuadrantPanel", QuadrantPanel);
@@ -211,6 +204,71 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopRouteView.ControlTop.TopPanel     .Invalidate();
 			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
 			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+		}
+
+
+		/// <summary>
+		/// Handles a click on the TestPartslots menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnTestPartslotsClick(object sender, EventArgs e)
+		{
+			var list = new List<string>();
+
+			MapTile tile;
+
+			for (int l = 0; l != MapBase.MapSize.Levs; ++l)
+			for (int r = 0; r != MapBase.MapSize.Rows; ++r)
+			for (int c = 0; c != MapBase.MapSize.Cols; ++c)
+			{
+				tile = MapBase[r,c,l];
+				if (!tile.Vacant)
+				{
+					if (tile.Floor != null && (QuadrantType)tile.Floor.Record.PartType != QuadrantType.Floor)
+					{
+						list.Add("L" + (MapBase.MapSize.Levs - l) + " c" + (c + 1) + " r" + (r + 1) + "\t- Floor");
+					}
+
+					if (tile.West != null && (QuadrantType)tile.West.Record.PartType != QuadrantType.West)
+					{
+						list.Add("L" + (MapBase.MapSize.Levs - l) + " c" + (c + 1) + " r" + (r + 1) + "\t- West");
+					}
+
+					if (tile.North != null && (QuadrantType)tile.North.Record.PartType != QuadrantType.North)
+					{
+						list.Add("L" + (MapBase.MapSize.Levs - l) + " c" + (c + 1) + " r" + (r + 1) + "\t- North");
+					}
+
+					if (tile.Content != null && (QuadrantType)tile.Content.Record.PartType != QuadrantType.Content)
+					{
+						list.Add("L" + (MapBase.MapSize.Levs - l) + " c" + (c + 1) + " r" + (r + 1) + "\t- Content");
+					}
+				}
+			}
+
+			if (list.Count != 0)
+			{
+				string copyable = String.Empty;
+				foreach (var line in list)
+				{
+					if (!String.IsNullOrEmpty(copyable)) copyable += Environment.NewLine;
+					copyable += line;
+				}
+
+				var f = new Infobox(
+								"Part check",
+								"The following tileslots appear wonky.",
+								copyable);
+				f.Show();
+			}
+			else
+			{
+				using (var f = new Infobox(
+										"Part check",
+										"All assigned parts are in their correct slots."))
+					f.ShowDialog();
+			}
 		}
 		#endregion Events
 
