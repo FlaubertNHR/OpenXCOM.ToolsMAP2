@@ -227,22 +227,22 @@ namespace MapView.Forms.Observers
 				{
 					if (tile.Floor != null && (QuadrantType)tile.Floor.Record.PartType != QuadrantType.Floor)
 					{
-						list.Add("L" + (MapBase.MapSize.Levs - l) + " c" + (c + 1) + " r" + (r + 1) + "\t- Floor");
+						list.Add("L" + (MapBase.MapSize.Levs - l) + " r" + (r + 1) + " c" + (c + 1) + "\t- Floor");
 					}
 
 					if (tile.West != null && (QuadrantType)tile.West.Record.PartType != QuadrantType.West)
 					{
-						list.Add("L" + (MapBase.MapSize.Levs - l) + " c" + (c + 1) + " r" + (r + 1) + "\t- West");
+						list.Add("L" + (MapBase.MapSize.Levs - l) + " r" + (r + 1) + " c" + (c + 1) + "\t- West");
 					}
 
 					if (tile.North != null && (QuadrantType)tile.North.Record.PartType != QuadrantType.North)
 					{
-						list.Add("L" + (MapBase.MapSize.Levs - l) + " c" + (c + 1) + " r" + (r + 1) + "\t- North");
+						list.Add("L" + (MapBase.MapSize.Levs - l) + " r" + (r + 1) + " c" + (c + 1) + "\t- North");
 					}
 
 					if (tile.Content != null && (QuadrantType)tile.Content.Record.PartType != QuadrantType.Content)
 					{
-						list.Add("L" + (MapBase.MapSize.Levs - l) + " c" + (c + 1) + " r" + (r + 1) + "\t- Content");
+						list.Add("L" + (MapBase.MapSize.Levs - l) + " r" + (r + 1) + " c" + (c + 1) + "\t- Content");
 					}
 				}
 			}
