@@ -4,12 +4,14 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
+using DSShared.Controls;
+
 
 namespace McdView
 {
 	internal sealed class LoftPanel
 		:
-			Panel
+			BufferedPanel
 	{
 		#region Fields (static)
 		private static McdviewF _f;

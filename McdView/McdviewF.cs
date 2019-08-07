@@ -302,14 +302,6 @@ namespace McdView
 			gb_Collection.Controls.Add(PartsPanel);
 			PartsPanel.Width = gb_Collection.Width - 10;
 
-			var panels = new object[]
-			{
-				PartsPanel, pnl_Sprites, pnl_IsoLoft,
-				pnl_Loft08, pnl_Loft09, pnl_Loft10, pnl_Loft11, pnl_Loft12, pnl_Loft13,
-				pnl_Loft14, pnl_Loft15, pnl_Loft16, pnl_Loft17, pnl_Loft18, pnl_Loft19
-			};
-			SetDoubleBuffered(panels);
-
 			tb_SpriteShade.Text = SpriteShadeInt.ToString();
 
 			PartsPanel.Select();
@@ -365,43 +357,6 @@ namespace McdView
 
 			var r = new CustomToolStripRenderer();
 			ss_Statusbar.Renderer = r;
-		}
-
-		/// <summary>
-		/// Calls SetDoubleBuffered(object) on an array of objects.
-		/// </summary>
-		/// <param name="controls"></param>
-		internal static void SetDoubleBuffered(object[] controls)
-		{
-			foreach (var control in controls)
-				SetDoubleBuffered(control);
-		}
-
-		/// <summary>
-		/// Some controls, such as the DataGridView, do not allow setting the
-		/// DoubleBuffered property. It is set as a protected property. This
-		/// method is a work-around to allow setting it. Call this in the
-		/// constructor just after InitializeComponent().
-		/// https://stackoverflow.com/questions/118528/horrible-redraw-performance-of-the-datagridview-on-one-of-my-two-screens#answer-16625788
-		/// @note I wonder if this works on Mono. It stops the redraw-flick when
-		/// setting the anisprite on return from SpritesetviewF on my system
-		/// (Win7-64). Also stops flicker on the IsoLoft panel. etc.
-		/// </summary>
-		/// <param name="control">the Control on which to set DoubleBuffered to true</param>
-		private static void SetDoubleBuffered(object control)
-		{
-			// if not remote desktop session then enable double-buffering optimization
-			if (!SystemInformation.TerminalServerSession)
-			{
-				// set instance non-public property with name "DoubleBuffered" to true
-				typeof(Control).InvokeMember("DoubleBuffered",
-											 BindingFlags.SetProperty
-										   | BindingFlags.Instance
-										   | BindingFlags.NonPublic,
-											 null,
-											 control,
-											 new object[] { true });
-			}
 		}
 
 

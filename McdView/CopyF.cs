@@ -180,14 +180,6 @@ namespace McdView
 			gb_Collection.Controls.Add(PartsPanel);
 			PartsPanel.Width = gb_Collection.Width - 10;
 
-			var panels = new object[]
-			{
-				PartsPanel, pnl_ScanGic,
-				pnl_Loft08, pnl_Loft09, pnl_Loft10, pnl_Loft11, pnl_Loft12, pnl_Loft13,
-				pnl_Loft14, pnl_Loft15, pnl_Loft16, pnl_Loft17, pnl_Loft18, pnl_Loft19
-			};
-			McdviewF.SetDoubleBuffered(panels);
-
 			TagLoftPanels();
 			LoftPanel_copy.SetStaticVars(_f, this);
 

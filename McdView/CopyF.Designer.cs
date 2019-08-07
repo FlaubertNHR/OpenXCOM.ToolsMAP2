@@ -34,7 +34,7 @@
 		private System.Windows.Forms.TextBox tb02_phase2;
 		private System.Windows.Forms.TextBox tb01_phase1;
 		private System.Windows.Forms.TextBox tb00_phase0;
-		private System.Windows.Forms.Panel pnl_bg;
+		private DSShared.Controls.BufferedPanel pnl_bg;
 		private System.Windows.Forms.GroupBox gb_Loft;
 		private System.Windows.Forms.Label lbl19;
 		private System.Windows.Forms.Label lbl18;
@@ -89,7 +89,7 @@
 		private System.Windows.Forms.Label lbl20_scang;
 		private System.Windows.Forms.TextBox tb20_scang2;
 		private System.Windows.Forms.TextBox tb20_scang1;
-		private System.Windows.Forms.Panel pnl_ScanGic;
+		private DSShared.Controls.BufferedPanel pnl_ScanGic;
 		private System.Windows.Forms.GroupBox gb_Tu;
 		private System.Windows.Forms.Label lbl39;
 		private System.Windows.Forms.Label lbl40;
@@ -271,7 +271,7 @@
 			this.tb02_phase2 = new System.Windows.Forms.TextBox();
 			this.tb01_phase1 = new System.Windows.Forms.TextBox();
 			this.tb00_phase0 = new System.Windows.Forms.TextBox();
-			this.pnl_bg = new System.Windows.Forms.Panel();
+			this.pnl_bg = new DSShared.Controls.BufferedPanel();
 			this.gb_IalOptions = new System.Windows.Forms.GroupBox();
 			this.cb_IalAltrpart = new System.Windows.Forms.CheckBox();
 			this.cb_IalDeadpart = new System.Windows.Forms.CheckBox();
@@ -331,7 +331,7 @@
 			this.lbl20_scang = new System.Windows.Forms.Label();
 			this.tb20_scang2 = new System.Windows.Forms.TextBox();
 			this.tb20_scang1 = new System.Windows.Forms.TextBox();
-			this.pnl_ScanGic = new System.Windows.Forms.Panel();
+			this.pnl_ScanGic = new DSShared.Controls.BufferedPanel();
 			this.gb_Tu = new System.Windows.Forms.GroupBox();
 			this.lbl39 = new System.Windows.Forms.Label();
 			this.lbl40 = new System.Windows.Forms.Label();

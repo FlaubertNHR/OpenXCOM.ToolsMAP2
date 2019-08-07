@@ -5,6 +5,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
+using DSShared.Controls;
+
 using XCom;
 
 
@@ -17,7 +19,7 @@ namespace McdView
 	/// </summary>
 	internal class TerrainPanel
 		:
-			Panel
+			BufferedPanel
 	{
 		#region Fields (static)
 		protected static McdviewF _f;
