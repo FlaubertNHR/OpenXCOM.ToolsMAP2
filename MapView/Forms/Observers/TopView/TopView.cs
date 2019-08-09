@@ -258,7 +258,7 @@ namespace MapView.Forms.Observers
 
 				var f = new Infobox(
 								"Part check",
-								"The following tileslots appear wonky.",
+								"The following tileslots are occupied by mismatched parts.",
 								copyable);
 				f.Show();
 			}
