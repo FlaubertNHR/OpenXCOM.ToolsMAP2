@@ -89,7 +89,10 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Add(this);
 
 			if (tabControl.SelectedIndex == TAB_TOP)
+			{
+				TopViewControl.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
 				TopViewControl.TopPanel.Focus();
+			}
 
 //			base.OnActivated(e);
 		}
