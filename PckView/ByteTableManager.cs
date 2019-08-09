@@ -123,7 +123,7 @@ namespace PckView
 		#region Events (static)
 		private static void OnBytesKeyDown(object sender, KeyEventArgs e)
 		{
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
 				case Keys.Escape:
 				case Keys.F9:

@@ -41,11 +41,9 @@ namespace McdView
 					if (value)
 						_f.gb_Sprites.Text = " Sprites * ";
 				}
-				else if (_spritesChanged)
-				{
-					if (!value)
-						_f.gb_Sprites.Text = " Sprites ";
-				}
+				else if (!value)
+					_f.gb_Sprites.Text = " Sprites ";
+
 				_spritesChanged = value;
 			}
 		}
@@ -137,15 +135,15 @@ namespace McdView
 			bool parts = (Parts != null);
 			bool selid = (SelId != -1);
 
-			Context.Items[0].Enabled = parts;								// add
-			Context.Items[1].Enabled = parts;								// add range
+			Context.Items[ 0].Enabled = parts;								// add
+			Context.Items[ 1].Enabled = parts;								// add range
 
-			Context.Items[3].Enabled = selid;								// cut
-			Context.Items[4].Enabled = selid;								// copy
-			Context.Items[5].Enabled = parts && _partsCopied.Count != 0;	// insert
-			Context.Items[6].Enabled = selid;								// delete
+			Context.Items[ 3].Enabled = selid;								// cut
+			Context.Items[ 4].Enabled = selid;								// copy
+			Context.Items[ 5].Enabled = parts && _partsCopied.Count != 0;	// insert
+			Context.Items[ 6].Enabled = selid;								// delete
 
-			Context.Items[8].Enabled = (parts && false);					// file
+			Context.Items[ 8].Enabled = (parts && false);					// file
 
 			Context.Items[10].Enabled =          SelId > 0;					// left
 			Context.Items[11].Enabled = selid && SelId != Parts.Length - 1;	// right
@@ -603,7 +601,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// 
+		/// TODO. Appends an MCD-file's records to the currently loaded records.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -740,8 +738,6 @@ namespace McdView
 		/// <param name="e"></param>
 		internal void KeyInput(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("TerrainPanel_main.KeyInput() e.KeyCode= " + e.KeyCode);
-
 			switch (e.KeyCode)
 			{
 				case Keys.Left:
@@ -773,6 +769,7 @@ namespace McdView
 					if (SelId != -1)
 						goto case Keys.Space;
 					break;
+
 				case Keys.Space: // at present only the spacebar can change the selected id from #-1 to #0
 					if (!e.Control)
 					{

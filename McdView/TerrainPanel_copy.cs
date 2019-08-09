@@ -153,6 +153,7 @@ namespace McdView
 					if (SelId != -1)
 						goto case Keys.Space;
 					break;
+
 				case Keys.Space: // at present only the spacebar can change the selected id from #-1 to #0
 					if (!e.Control)
 					{

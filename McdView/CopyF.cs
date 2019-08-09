@@ -270,7 +270,7 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
 				case Keys.Enter:
 					e.SuppressKeyPress = true;

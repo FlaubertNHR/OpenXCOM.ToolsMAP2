@@ -526,7 +526,7 @@ namespace McdView
 		{
 			//LogFile.WriteLine("McdviewF.OnKeyDown() e.KeyCode= " + e.KeyCode);
 
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
 				case Keys.Enter:
 					e.SuppressKeyPress = true;
@@ -558,24 +558,21 @@ namespace McdView
 						e.SuppressKeyPress = true; // NOTE: all alphabetic codes can be suppressed ...
 						cb_Strict.Checked = !cb_Strict.Checked;
 					}
-
 					break;
 
 				default:
 				{
-					TextBox tb;
-					if ((tb = (ActiveControl as TextBox)) != null)
+					var tb = ActiveControl as TextBox;
+					if (tb != null)
 					{
-						//LogFile.WriteLine("tb Focused - KeyCode=" + e.KeyCode + " KeyData=" + e.KeyData + " KeyValue=" + e.KeyValue);
-
 						if (SelId != -1)
 						{
 							// keypad +/- to inc/dec focused val
 							int val;
-							switch (e.KeyCode)
+							switch (e.KeyData)
 							{
 //								case Keys.OemMinus: // on the numeric row -> don't do that; #48 TerrainOffset (sbyte) wants "-" key-input
-								case Keys.Subtract: // on the numeric keypad (regardless of NumLock)
+								case Keys.Subtract: // on the numeric keypad (regardless of NumLock state)
 									e.SuppressKeyPress = true;
 									val = Int32.Parse(tb.Text);
 									tb.Text = (--val).ToString();

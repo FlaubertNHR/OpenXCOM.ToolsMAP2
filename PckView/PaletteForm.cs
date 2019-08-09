@@ -67,7 +67,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Escape)
+			if (e.KeyData == Keys.Escape)
 			{
 				e.SuppressKeyPress = true;
 				Close();

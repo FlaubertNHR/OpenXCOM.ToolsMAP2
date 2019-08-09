@@ -75,14 +75,13 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Closes the form on a KeyDown event. Overrides core .NET implementation.
+		/// Closes the form on a KeyDown event. Overrides core .NET
+		/// implementation.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-//			base.OnKeyDown(e);
-
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
 				case Keys.Escape:
 				case Keys.Enter:
