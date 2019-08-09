@@ -21,6 +21,8 @@ namespace MapView.Forms.Observers
 		internal const int WEST    = 2;
 		internal const int NORTH   = 4;
 		internal const int CONTENT = 8;
+
+		private const int DIGITS = 3;
 		#endregion Fields (static)
 
 
@@ -226,24 +228,16 @@ namespace MapView.Forms.Observers
 				if (!tile.Vacant)
 				{
 					if (tile.Floor != null && (QuadrantType)tile.Floor.Record.PartType != QuadrantType.Floor)
-					{
-						list.Add("L" + (MapBase.MapSize.Levs - l) + " r" + (r + 1) + " c" + (c + 1) + "\t- Floor");
-					}
+						list.Add(FormatTilequad(c,r,l,QuadrantType.Floor));
 
 					if (tile.West != null && (QuadrantType)tile.West.Record.PartType != QuadrantType.West)
-					{
-						list.Add("L" + (MapBase.MapSize.Levs - l) + " r" + (r + 1) + " c" + (c + 1) + "\t- West");
-					}
+						list.Add(FormatTilequad(c,r,l,QuadrantType.West));
 
 					if (tile.North != null && (QuadrantType)tile.North.Record.PartType != QuadrantType.North)
-					{
-						list.Add("L" + (MapBase.MapSize.Levs - l) + " r" + (r + 1) + " c" + (c + 1) + "\t- North");
-					}
+						list.Add(FormatTilequad(c,r,l,QuadrantType.North));
 
 					if (tile.Content != null && (QuadrantType)tile.Content.Record.PartType != QuadrantType.Content)
-					{
-						list.Add("L" + (MapBase.MapSize.Levs - l) + " r" + (r + 1) + " c" + (c + 1) + "\t- Content");
-					}
+						list.Add(FormatTilequad(c,r,l,QuadrantType.Content));
 				}
 			}
 
@@ -252,20 +246,17 @@ namespace MapView.Forms.Observers
 
 			if (list.Count != 0)
 			{
-				string copyable = String.Empty;
+				string copyable = "  c   r   L - slot" + Environment.NewLine;
 				foreach (var line in list)
-				{
-					if (!String.IsNullOrEmpty(copyable)) copyable += Environment.NewLine;
-					copyable += line;
-				}
+					copyable += Environment.NewLine + line;
 
 				if (_finfobox != null && !_finfobox.IsDisposed) // close Infobox because it's easier than updating its controls.
-					_finfobox.Close(); // TODO: Store static location and size of the Infobox.
+					_finfobox.Close();
 
 				_finfobox = new Infobox( // not Modal.
 									title,
 									"The following tileslots are occupied by incorrect PartTypes."
-										+ " This could result in wonky battlescape behavior.",
+										+ " This could result in broken battlescape behavior.",
 									copyable);
 				_finfobox.Show();
 			}
@@ -311,6 +302,29 @@ namespace MapView.Forms.Observers
 				case PartType.North:   QuadrantPanel.SelectedQuadrant = QuadrantType.North;   break;
 				case PartType.Content: QuadrantPanel.SelectedQuadrant = QuadrantType.Content; break;
 			}
+		}
+
+		/// <summary>
+		/// Formats a string of x/y/z + quadtype for the TestPartslots dialog.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <param name="r"></param>
+		/// <param name="l"></param>
+		/// <param name="quad"></param>
+		/// <returns></returns>
+		private string FormatTilequad(int c, int r, int l, QuadrantType quad)
+		{
+			c += 1;							// 1-based count
+			r += 1;							// 1-based count
+			l = MapBase.MapSize.Levs - l;	// invert.
+
+			string c1 = c.ToString().PadLeft(DIGITS);
+			string r1 = r.ToString().PadLeft(DIGITS);
+			string l1 = l.ToString().PadLeft(DIGITS);
+
+			string quad1 = Enum.GetName(typeof(QuadrantType), quad);
+
+			return c1 + " " + r1 + " " + l1 + " - " + quad1;
 		}
 		#endregion Methods
 

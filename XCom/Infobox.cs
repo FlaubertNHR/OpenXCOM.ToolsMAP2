@@ -45,6 +45,7 @@ namespace XCom
 		/// <param name="label">info to be displayed with a proportional font</param>
 		/// <param name="copyable">info to be displayed in a fixed-width font as
 		/// readily copyable text</param>
+		/// TODO: Store static location and size of the Infobox (if shown non-modally).
 		public Infobox(
 				string title,
 				string label,
@@ -168,7 +169,7 @@ namespace XCom
 		/// <param name="e"></param>
 		void paint_CopyPanel(object sender, PaintEventArgs e)
 		{
-			var l = pnl_Copyable.Width     / 4; // top & bot spacers ->
+			var l = pnl_Copyable.Width     / 4; // top & bot half-borders ->
 			var r = pnl_Copyable.Width * 3 / 4;
 			var b = pnl_Copyable.Height - 1;
 			e.Graphics.DrawLine(Pens.Gray, l,0, r,0);
