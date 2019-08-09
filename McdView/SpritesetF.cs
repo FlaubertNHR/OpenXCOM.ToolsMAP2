@@ -42,7 +42,6 @@ namespace McdView
 				int spriteId)
 		{
 			InitializeComponent();
-			DoubleBuffered = true;
 
 			_f = f;
 			Phase = phase;
@@ -250,6 +249,7 @@ namespace McdView
 			// SpritesetF
 			// 
 			this.ClientSize = new System.Drawing.Size(494, 276);
+			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
