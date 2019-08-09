@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -15,6 +16,27 @@ namespace XCom
 		:
 			Form
 	{
+		#region Fields (static)
+		private const int w_MinCutoff = 345;
+		private const int h_MinCutoff = 515;
+
+		private const string HEIGHT_TEST = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|\\;:'\"<>,.?";
+		#endregion Fields (static)
+
+
+		#region Designer (fix)
+		/// <summary>
+		/// Since the programmers of .net couldn't figure out that when
+		/// you set a label's height to 0 and invisible it ought maintain a
+		/// height of 0, I need to *not* instantiate said label unless it is
+		/// required.
+		///
+		/// Don't forget to do null-checks.
+		/// </summary>
+		private Label lbl_Head;
+		#endregion Designer (fix)
+
+
 		#region cTor
 		/// <summary>
 		/// cTor.
@@ -22,7 +44,8 @@ namespace XCom
 		/// </summary>
 		/// <param name="title">a caption on the titlebar</param>
 		/// <param name="label">info to be displayed with a proportional font</param>
-		/// <param name="copyable">info to be displayed in a fixed/copyable font</param>
+		/// <param name="copyable">info to be displayed in a fixed-width font as
+		/// readily copyable text</param>
 		public Infobox(
 				string title,
 				string label,
@@ -30,103 +53,82 @@ namespace XCom
 		{
 			InitializeComponent();
 
+			SuspendLayout();
+
+			int widthborder = Width  - ClientSize.Width; // cache these before things go wonky
+			int heighttitle = Height - ClientSize.Height - widthborder;
+
 			Text = title;
 
-			bool
-				bLabel = !String.IsNullOrEmpty(label),
-				bCopya = !String.IsNullOrEmpty(copyable);
+			int width  = 0;
+			int height = 0;
 
-			int width = 0;
-			if (bCopya) // deter total width based on longest copyable line
+			if (!String.IsNullOrEmpty(copyable)) // deter total width based on longest copyable line
 			{
-				width = GetWidth(copyable);
-				width += 40; // panel's pad left+right + 5
-			}
-			else
-			{
-				pnl_Info.Visible =
-				rtb_Info.Visible = false;
+				string[] lines = copyable.Split(GlobalsXC.CRandorLF, StringSplitOptions.None);
 
-				pnl_Info.Height =
-				rtb_Info.Height = 0;
-			}
+				Size size;
 
-			if (width < 350) width = 350;
-			var size = new Size(width, Int32.MaxValue);
+				int test;
+				foreach (var line in lines)
+				{
+					size = TextRenderer.MeasureText(line, rtb_Copyable.Font);
+					if ((test = size.Width) > width)
+						width = test;
+				}
+				width += pnl_Copyable.Padding.Horizontal + 15; // +15 width of alleged scrollbar in the rtb.
 
+				height = TextRenderer.MeasureText(HEIGHT_TEST, rtb_Copyable.Font).Height;
+				pnl_Copyable.Height = height * (lines.Length + 1) + pnl_Copyable.Padding.Vertical;
 
-			if (bLabel)
-			{
-				int height = GetHeight(label, size);
-				lbl_Info.Height = height + 15; // label's pad top+bot +5
-			}
-			else
-			{
-				lbl_Info.Visible = false;
-				lbl_Info.Height = 0;
-			}
-
-			if (bCopya)
-			{
 				copyable += Environment.NewLine; // add a blank line to bot of the copyable text.
-				int height = TextRenderer.MeasureText(
-													copyable,
-													rtb_Info.Font,
-													size).Height;
-				pnl_Info.Height = height + 20; // panel's pad top+bot + 5
+				rtb_Copyable.Text = copyable;
 			}
-
-			ClientSize = new Size(
-								width + 25, // +25 for pad real and imagined.
-								lbl_Info.Height + rtb_Info.Height + btn_Okay.Height + 20);
-
-			lbl_Info.Text = label;
-			rtb_Info.Text = copyable;
-		}
-
-		private int GetHeight(string text, Size size)
-		{
-			string[] lines = text.Split(GlobalsXC.CRandorLF, StringSplitOptions.None);
-
-			float heightF;
-			int
-				height_ = 0,
-				height  = 0,
-				total   = 0;
-
-			Graphics graphics = CreateGraphics();
-			foreach (var line in lines)
+			else
 			{
-				heightF = graphics.MeasureString(line, lbl_Info.Font, size).Height; // NOTE: TextRenderer ain't workin right for that.
-				height = (int)Math.Ceiling(heightF);
+				pnl_Copyable.Height =
+				rtb_Copyable.Height = 0;
 
-				if (height_ == 0)
-					height_ = height;
-				else if (height == 0) // IMPORTANT: 1st line shall not be blank (unless all are blank).
-					height = height_;
-
-				total += height;
+				pnl_Copyable.Visible =
+				rtb_Copyable.Visible = false;
 			}
-			return total;
-		}
 
-		private int GetWidth(string text)
-		{
-			string[] lines = text.Split(GlobalsXC.CRandorLF, StringSplitOptions.RemoveEmptyEntries);
+			if (width < w_MinCutoff)
+				width = w_MinCutoff;
 
-			int width = 0, test;
-			foreach (var line in lines)
+
+			if (!String.IsNullOrEmpty(label))
 			{
-				if ((test = TextRenderer.MeasureText(line, rtb_Info.Font).Width) > width)
-					width = test;
+				lbl_Head          = new System.Windows.Forms.Label();
+				lbl_Head.Name     = "lbl_Head";
+				lbl_Head.Location = new System.Drawing.Point(0, 0);
+				lbl_Head.Size     = new System.Drawing.Size(20, 27);
+				lbl_Head.Margin   = new System.Windows.Forms.Padding(0);
+				lbl_Head.Padding  = new System.Windows.Forms.Padding(10, 10, 10, 5);
+				lbl_Head.Dock     = System.Windows.Forms.DockStyle.Top;
+				lbl_Head.AutoSize = true;
+				lbl_Head.TabIndex = 0;
+				Controls.Add(this.lbl_Head);
+
+				lbl_Head.MaximumSize = new Size(width, 0); // auto-calc 'lbl_Head.Height'
+				lbl_Head.Text = label;
 			}
-			return width;
-		}
 
 
-		public void SetLabelColor(Color color)
-		{
-			lbl_Info.ForeColor = color;
+			height = (lbl_Head != null ? lbl_Head.Height : 0)
+				   + pnl_Copyable.Height
+				   + btn_Okay    .Height
+				   + btn_Okay    .Margin.Vertical;
+
+			if (height > h_MinCutoff)
+				height = h_MinCutoff;
+
+			ClientSize = new Size(width, height);
+
+			MinimumSize = new Size(width  + widthborder,
+								   height + widthborder + heighttitle);
+
+			ResumeLayout();
 		}
 		#endregion cTor
 
@@ -134,9 +136,22 @@ namespace XCom
 		#region Events (override)
 		protected override void OnLoad(EventArgs e)
 		{
-			rtb_Info.AutoWordSelection = false; // <- needs to be here not in the designer to work right.
-			rtb_Info.Select();
-			rtb_Info.SelectionStart = rtb_Info.Text.Length;
+			rtb_Copyable.AutoWordSelection = false; // <- needs to be here not in the designer to work right.
+			rtb_Copyable.Select();
+		}
+
+		protected override void OnResize(EventArgs e)
+		{
+			if (lbl_Head != null)
+				lbl_Head.MaximumSize = new Size(ClientSize.Width, 0);
+
+			pnl_Copyable.Height = ClientSize.Height
+								- (lbl_Head != null ? lbl_Head.Height : 0)
+								- btn_Okay.Height
+								- btn_Okay.Margin.Vertical;
+			pnl_Copyable.Invalidate();
+
+			base.OnResize(e);
 		}
 		#endregion Events (override)
 
@@ -146,7 +161,42 @@ namespace XCom
 		{
 			Close();
 		}
+
+/*		/// <summary>
+		/// Draws a 1px border around the copyable-panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void paint_CopyPanel(object sender, PaintEventArgs e)
+		{
+			var l = pnl_Copyable.Width     / 4; // top & bot spacers ->
+			var r = pnl_Copyable.Width * 3 / 4;
+			var b = pnl_Copyable.Height - 1;
+			e.Graphics.DrawLine(Pens.Gray, l,0, r,0);
+			e.Graphics.DrawLine(Pens.Gray, l,b, r,b);
+
+//			int w = pnl_Copyable.Width  - 1; // 4-sided border ->
+//			int h = pnl_Copyable.Height - 1;
+//			var tl = new Point(0, 0);
+//			var tr = new Point(w, 0);
+//			var br = new Point(w, h);
+//			var bl = new Point(0, h);
+//			var graphics = e.Graphics;
+//			graphics.DrawLine(Pens.Black, tl, tr);
+//			graphics.DrawLine(Pens.Black, tr, br);
+//			graphics.DrawLine(Pens.Black, br, bl);
+//			graphics.DrawLine(Pens.Black, bl, tl);
+		} */
 		#endregion Events
+
+
+		#region Methods
+		public void SetLabelColor(Color color)
+		{
+			if (lbl_Head != null)
+				lbl_Head.ForeColor = color;
+		}
+		#endregion Methods
 
 
 
@@ -154,9 +204,8 @@ namespace XCom
 		private Container components = null;
 
 		private Button btn_Okay;
-		private Label lbl_Info;
-		private RichTextBox rtb_Info;
-		private Panel pnl_Info;
+		private RichTextBox rtb_Copyable;
+		private Panel pnl_Copyable;
 
 
 		/// <summary>
@@ -178,18 +227,17 @@ namespace XCom
 		private void InitializeComponent()
 		{
 			this.btn_Okay = new System.Windows.Forms.Button();
-			this.lbl_Info = new System.Windows.Forms.Label();
-			this.rtb_Info = new System.Windows.Forms.RichTextBox();
-			this.pnl_Info = new System.Windows.Forms.Panel();
-			this.pnl_Info.SuspendLayout();
+			this.rtb_Copyable = new System.Windows.Forms.RichTextBox();
+			this.pnl_Copyable = new System.Windows.Forms.Panel();
+			this.pnl_Copyable.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btn_Okay
 			// 
 			this.btn_Okay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_Okay.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Okay.Location = new System.Drawing.Point(405, 140);
-			this.btn_Okay.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_Okay.Location = new System.Drawing.Point(312, 144);
+			this.btn_Okay.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
 			this.btn_Okay.Name = "btn_Okay";
 			this.btn_Okay.Size = new System.Drawing.Size(80, 30);
 			this.btn_Okay.TabIndex = 2;
@@ -197,60 +245,47 @@ namespace XCom
 			this.btn_Okay.UseVisualStyleBackColor = true;
 			this.btn_Okay.Click += new System.EventHandler(this.OnOkayClick);
 			// 
-			// lbl_Info
+			// rtb_Copyable
 			// 
-			this.lbl_Info.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lbl_Info.Location = new System.Drawing.Point(0, 0);
-			this.lbl_Info.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl_Info.Name = "lbl_Info";
-			this.lbl_Info.Padding = new System.Windows.Forms.Padding(10, 10, 15, 0);
-			this.lbl_Info.Size = new System.Drawing.Size(494, 35);
-			this.lbl_Info.TabIndex = 0;
-			this.lbl_Info.Text = "lbl_Info";
+			this.rtb_Copyable.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.rtb_Copyable.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rtb_Copyable.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.rtb_Copyable.HideSelection = false;
+			this.rtb_Copyable.Location = new System.Drawing.Point(20, 10);
+			this.rtb_Copyable.Margin = new System.Windows.Forms.Padding(0);
+			this.rtb_Copyable.Name = "rtb_Copyable";
+			this.rtb_Copyable.ReadOnly = true;
+			this.rtb_Copyable.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+			this.rtb_Copyable.Size = new System.Drawing.Size(374, 98);
+			this.rtb_Copyable.TabIndex = 0;
+			this.rtb_Copyable.Text = "";
+			this.rtb_Copyable.WordWrap = false;
 			// 
-			// rtb_Info
+			// pnl_Copyable
 			// 
-			this.rtb_Info.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.rtb_Info.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rtb_Info.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.rtb_Info.HideSelection = false;
-			this.rtb_Info.Location = new System.Drawing.Point(20, 10);
-			this.rtb_Info.Margin = new System.Windows.Forms.Padding(0);
-			this.rtb_Info.Name = "rtb_Info";
-			this.rtb_Info.ReadOnly = true;
-			this.rtb_Info.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-			this.rtb_Info.Size = new System.Drawing.Size(459, 80);
-			this.rtb_Info.TabIndex = 0;
-			this.rtb_Info.Text = "rtb_Info";
-			this.rtb_Info.WordWrap = false;
-			// 
-			// pnl_Info
-			// 
-			this.pnl_Info.Controls.Add(this.rtb_Info);
-			this.pnl_Info.Dock = System.Windows.Forms.DockStyle.Top;
-			this.pnl_Info.Location = new System.Drawing.Point(0, 35);
-			this.pnl_Info.Margin = new System.Windows.Forms.Padding(0);
-			this.pnl_Info.Name = "pnl_Info";
-			this.pnl_Info.Padding = new System.Windows.Forms.Padding(20, 10, 15, 5);
-			this.pnl_Info.Size = new System.Drawing.Size(494, 95);
-			this.pnl_Info.TabIndex = 1;
+			this.pnl_Copyable.Controls.Add(this.rtb_Copyable);
+			this.pnl_Copyable.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pnl_Copyable.Location = new System.Drawing.Point(0, 0);
+			this.pnl_Copyable.Margin = new System.Windows.Forms.Padding(0);
+			this.pnl_Copyable.Name = "pnl_Copyable";
+			this.pnl_Copyable.Padding = new System.Windows.Forms.Padding(20, 10, 0, 5);
+			this.pnl_Copyable.Size = new System.Drawing.Size(394, 113);
+			this.pnl_Copyable.TabIndex = 1;
 			// 
 			// Infobox
 			// 
 			this.AcceptButton = this.btn_Okay;
-			this.AutoScroll = true;
 			this.CancelButton = this.btn_Okay;
-			this.ClientSize = new System.Drawing.Size(494, 176);
-			this.Controls.Add(this.pnl_Info);
+			this.ClientSize = new System.Drawing.Size(394, 176);
+			this.Controls.Add(this.pnl_Copyable);
 			this.Controls.Add(this.btn_Okay);
-			this.Controls.Add(this.lbl_Info);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "Infobox";
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.pnl_Info.ResumeLayout(false);
+			this.pnl_Copyable.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
