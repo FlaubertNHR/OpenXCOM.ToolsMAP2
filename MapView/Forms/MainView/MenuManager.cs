@@ -50,67 +50,16 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal static void PopulateMenu()
 		{
-			CreateMenuitem(ObserverManager.TileView,     Shortcut.F5);	// id #0
-
-			Viewers.MenuItems.Add(new MenuItem(Separator));				// id #1
-
-			CreateMenuitem(ObserverManager.TopView,      Shortcut.F6);	// id #2
-			CreateMenuitem(ObserverManager.RouteView,    Shortcut.F7);	// id #3
-			CreateMenuitem(ObserverManager.TopRouteView, Shortcut.F8);	// id #4
-
 			Options options = OptionsManager.getMainOptions();
 			OptionChangedEvent changer = MainViewF.Optionables.OnFlagChanged;
 
-			Form f; // initialize MainView's Options w/ each viewer's default Start setting ->
-			bool @default;
-			for (int id = MI_TILE; id != MI_cutoff; ++id)
-			{
-				switch (id)
-				{
-					default: // MI_TILE
-						f = ObserverManager.TileView;
-						@default = MainViewOptionables.def_StartTileView;
-						break;
+			CreateSecondaryViewerMenuitem(ObserverManager.TileView,     Shortcut.F5, options, MainViewOptionables.def_StartTileView,     changer);	// id #0
 
-					case MI_sep1:
-						++id;
-						goto case MI_TOP;
+			Viewers.MenuItems.Add(new MenuItem(Separator));																							// id #1
 
-					case MI_TOP:
-						f = ObserverManager.TopView;
-						@default = MainViewOptionables.def_StartTopView;
-						break;
-					case MI_ROUTE:
-						f = ObserverManager.RouteView;
-						@default = MainViewOptionables.def_StartRouteView;
-						break;
-					case MI_TOPROUTE:
-						f = ObserverManager.TopRouteView;
-						@default = MainViewOptionables.def_StartTopRouteView;
-						break;
-				}
-
-				string key = PropertyStartObserver + RegistryInfo.getRegistryLabel(f);
-				options.AddOptionDefault(
-									key,
-									@default, // true to have the viewer open on 1st run.
-									changer);
-
-
-				f.VisibleChanged += (sender, e) =>
-				{
-					var fobserver = sender as Form;
-					options[key].Value = fobserver.Visible;
-					MainViewF.Optionables.setStartPropertyValue(fobserver, fobserver.Visible);
-
-					var foptions = MainViewF._foptions;
-					if (foptions != null && foptions.Visible)
-					{
-						var grid = (foptions as OptionsForm).propertyGrid;
-						grid.Refresh();
-					}
-				};
-			}
+			CreateSecondaryViewerMenuitem(ObserverManager.TopView,      Shortcut.F6, options, MainViewOptionables.def_StartTopView,      changer);	// id #2
+			CreateSecondaryViewerMenuitem(ObserverManager.RouteView,    Shortcut.F7, options, MainViewOptionables.def_StartRouteView,    changer);	// id #3
+			CreateSecondaryViewerMenuitem(ObserverManager.TopRouteView, Shortcut.F8, options, MainViewOptionables.def_StartTopRouteView, changer);	// id #4
 
 			Viewers.MenuItems.Add(new MenuItem(Separator));								// id #5
 
@@ -132,9 +81,15 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="shortcut"></param>
-		private static void CreateMenuitem(
+		/// <param name="options"></param>
+		/// <param name="default"></param>
+		/// <param name="changer"></param>
+		private static void CreateSecondaryViewerMenuitem(
 				Form f,
-				Shortcut shortcut)
+				Shortcut shortcut,
+				Options options,
+				bool @default,
+				OptionChangedEvent changer)
 		{
 			var it = new MenuItem(f.Text, OnMenuItemClick, shortcut);
 			it.Tag = f;
@@ -153,6 +108,27 @@ namespace MapView.Forms.MainView
 				}
 				else
 					RegistryInfo.UpdateRegistry(f);
+			};
+
+			 // initialize MainView's Options w/ each viewer's default Start setting ->
+			string key = PropertyStartObserver + RegistryInfo.getRegistryLabel(f);
+			options.AddOptionDefault(
+								key,
+								@default, // true to have the viewer open on 1st run.
+								changer);
+
+			f.VisibleChanged += (sender, e) =>
+			{
+				var fobserver = sender as Form;
+				options[key].Value = fobserver.Visible;
+				MainViewF.Optionables.setStartPropertyValue(fobserver, fobserver.Visible);
+
+				var foptions = MainViewF._foptions;
+				if (foptions != null && foptions.Visible)
+				{
+					var grid = (foptions as OptionsForm).propertyGrid;
+					grid.Refresh();
+				}
 			};
 		}
 
