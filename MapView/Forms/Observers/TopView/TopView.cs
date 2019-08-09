@@ -247,6 +247,9 @@ namespace MapView.Forms.Observers
 				}
 			}
 
+
+			const string title = "Partslots test";
+
 			if (list.Count != 0)
 			{
 				string copyable = String.Empty;
@@ -256,20 +259,32 @@ namespace MapView.Forms.Observers
 					copyable += line;
 				}
 
-				var f = new Infobox(
-								"Part check",
-								"The following tileslots are occupied by mismatched parts.",
-								copyable);
-				f.Show();
+				if (_finfobox != null && !_finfobox.IsDisposed) // close Infobox because it's easier than updating its controls.
+					_finfobox.Close(); // TODO: Store static location and size of the Infobox.
+
+				_finfobox = new Infobox( // not Modal.
+									title,
+									"The following tileslots are occupied by incorrect PartTypes."
+										+ " This could result in wonky battlescape behavior.",
+									copyable);
+				_finfobox.Show();
 			}
 			else
 			{
 				using (var f = new Infobox(
-										"Part check",
+										title,
 										"All assigned parts are in their correct slots."))
 					f.ShowDialog();
 			}
 		}
+
+		/// <summary>
+		/// The TestPartslots dialog.
+		/// @note Be careful with this pointer because closing the dialog in the
+		/// dialog itself does *not* null this pointer. So check for both !null
+		/// and !IsDisposed if necessary.
+		/// </summary>
+		internal static Infobox _finfobox;
 		#endregion Events
 
 

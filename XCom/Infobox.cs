@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -18,7 +17,7 @@ namespace XCom
 	{
 		#region Fields (static)
 		private const int w_MinCutoff = 345;
-		private const int h_MinCutoff = 515;
+		private const int h_MinCutoff = 450;
 
 		private const string HEIGHT_TEST = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|\\;:'\"<>,.?";
 		#endregion Fields (static)
@@ -104,7 +103,7 @@ namespace XCom
 				lbl_Head.Location = new System.Drawing.Point(0, 0);
 				lbl_Head.Size     = new System.Drawing.Size(20, 27);
 				lbl_Head.Margin   = new System.Windows.Forms.Padding(0);
-				lbl_Head.Padding  = new System.Windows.Forms.Padding(10, 10, 10, 5);
+				lbl_Head.Padding  = new System.Windows.Forms.Padding(10, 10, 5, 5);
 				lbl_Head.Dock     = System.Windows.Forms.DockStyle.Top;
 				lbl_Head.AutoSize = true;
 				lbl_Head.TabIndex = 0;
@@ -258,7 +257,6 @@ namespace XCom
 			this.rtb_Copyable.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
 			this.rtb_Copyable.Size = new System.Drawing.Size(374, 98);
 			this.rtb_Copyable.TabIndex = 0;
-			this.rtb_Copyable.Text = "";
 			this.rtb_Copyable.WordWrap = false;
 			// 
 			// pnl_Copyable

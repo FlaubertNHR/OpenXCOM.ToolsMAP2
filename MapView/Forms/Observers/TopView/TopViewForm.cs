@@ -183,6 +183,21 @@ namespace MapView.Forms.Observers
 			}
 //			base.OnKeyDown(e);
 		}
+
+		/// <summary>
+		/// Handles the FormClosing event. Ensures that the TestPartslots dialog
+		/// gets closed.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed)
+			{
+				TopView._finfobox.Close();
+				TopView._finfobox = null;
+			}
+			base.OnFormClosing(e);
+		}
 		#endregion Events (override)
 	}
 }
