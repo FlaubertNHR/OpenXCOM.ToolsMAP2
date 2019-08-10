@@ -478,7 +478,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("PckViewForm.OnKeyDown() " + e.KeyCode);
+			//LogFile.WriteLine("PckViewForm.OnKeyDown() " + e.KeyData);
 
 			switch (e.KeyData)
 			{

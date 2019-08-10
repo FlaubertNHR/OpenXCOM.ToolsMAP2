@@ -524,7 +524,7 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("McdviewF.OnKeyDown() e.KeyCode= " + e.KeyCode);
+			//LogFile.WriteLine("McdviewF.OnKeyDown() e.KeyData= " + e.KeyData);
 
 			switch (e.KeyData)
 			{
