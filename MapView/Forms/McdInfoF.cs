@@ -55,7 +55,7 @@ namespace MapView
 		{
 			switch (e.KeyCode)
 			{
-				case Keys.Up: // these keys are allowed ->
+				case Keys.Up: // these keys are allowed w/ or w/out modifiers ->
 				case Keys.Down:
 				case Keys.PageUp:
 				case Keys.PageDown:
