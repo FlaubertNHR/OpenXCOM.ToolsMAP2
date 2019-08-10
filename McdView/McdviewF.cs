@@ -511,7 +511,7 @@ namespace McdView
 		/// <summary>
 		/// The joys of keyboard events in Winforms. Bypasses forwarding a
 		/// keyboard-event to the PartsPanel if a control that should use the
-		/// keyboard-input instead currently has focus already. blah blah blah
+		/// keyboard-input instead currently has focus already. blah blah
 		/// @note Requires 'KeyPreview' true.
 		/// @note Keys that need to be forwarded: Arrows Up/Down/Left/Right,
 		/// PageUp/Down, Home/End ... and Delete when editing an MCD.
@@ -553,11 +553,8 @@ namespace McdView
 					break;
 
 				case Keys.S:
-					if (e.Modifiers == 0)
-					{
-						e.SuppressKeyPress = true; // NOTE: all alphabetic codes can be suppressed ...
-						cb_Strict.Checked = !cb_Strict.Checked;
-					}
+					e.SuppressKeyPress = true; // NOTE: all alphabetic codes can be suppressed ...
+					cb_Strict.Checked = !cb_Strict.Checked;
 					break;
 
 				default:

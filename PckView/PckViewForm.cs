@@ -451,7 +451,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (CheckQuit())
+			if (ConfirmCloseSpriteset())
 			{
 				RegistryInfo.UpdateRegistry(this);
 
@@ -472,138 +472,136 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Deletes the currently selected sprite w/ a keydown event.
+		/// Handles keydown events at the form level - context and navigation
+		/// shortcuts.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			//LogFile.WriteLine("PckViewForm.OnKeyDown() " + e.KeyCode);
 
-			if (!e.Control && !e.Alt)
+			switch (e.KeyData)
 			{
 				// Context shortcuts ->
 
-				switch (e.KeyCode)
-				{
-					case Keys.Enter:												// edit
-						if (_miEdit.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnSpriteEditorClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.Enter:												// edit
+					if (_miEdit.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnSpriteEditorClick(null, EventArgs.Empty);
+					}
+					break;
 
-					case Keys.D:													// add
-						if (_miAdd.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnAddSpritesClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.D:													// add
+					if (_miAdd.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnAddSpritesClick(null, EventArgs.Empty);
+					}
+					break;
 
-					case Keys.B:													// insert before
-						if (_miInsertBefor.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnInsertSpritesBeforeClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.B:													// insert before
+					if (_miInsertBefor.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnInsertSpritesBeforeClick(null, EventArgs.Empty);
+					}
+					break;
 
-					case Keys.A:													// insert after
-						if (_miInsertAfter.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnInsertSpritesAfterClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.A:													// insert after
+					if (_miInsertAfter.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnInsertSpritesAfterClick(null, EventArgs.Empty);
+					}
+					break;
 
-					case Keys.R:													// replace
-						if (_miReplace.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnReplaceSpriteClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.R:													// replace
+					if (_miReplace.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnReplaceSpriteClick(null, EventArgs.Empty);
+					}
+					break;
 
-					case Keys.OemMinus: // drugs ...
-					case Keys.Subtract:												// move left
-						if (_miMoveL.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnMoveLeftSpriteClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.OemMinus: // drugs ...
+				case Keys.Subtract:												// move left
+					if (_miMoveL.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnMoveLeftSpriteClick(null, EventArgs.Empty);
+					}
+					break;
 
-					case Keys.Oemplus: // drugs ...
-					case Keys.Add:													// move right
-						if (_miMoveR.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnMoveRightSpriteClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.Oemplus: // drugs ...
+				case Keys.Add:													// move right
+					if (_miMoveR.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnMoveRightSpriteClick(null, EventArgs.Empty);
+					}
+					break;
 
-					case Keys.Delete:												// delete
-						if (_miDelete.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnDeleteSpriteClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.Delete:												// delete
+					if (_miDelete.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnDeleteSpriteClick(null, EventArgs.Empty);
+					}
+					break;
 
-					case Keys.P:													// export
-						if (_miExport.Enabled)
-						{
-							e.SuppressKeyPress = true;
-							OnExportSpriteClick(null, EventArgs.Empty);
-						}
-						break;
+				case Keys.P:													// export
+					if (_miExport.Enabled)
+					{
+						e.SuppressKeyPress = true;
+						OnExportSpriteClick(null, EventArgs.Empty);
+					}
+					break;
 
 
-					// Navigation shortcuts ->
+				// Navigation shortcuts ->
 
-					case Keys.Left:
-						if (TilePanel.Spriteset != null && TilePanel.idSel > 0)
-						{
-							TilePanel.SelectAdjacentHori(-1);
-							PrintSelectedId();
-						}
-						break;
+				case Keys.Left:
+					if (TilePanel.Spriteset != null && TilePanel.idSel > 0)
+					{
+						TilePanel.SelectAdjacentHori(-1);
+						PrintSelectedId();
+					}
+					break;
 
-					case Keys.Right:
-						if (TilePanel.Spriteset != null && TilePanel.idSel != TilePanel.Spriteset.Count - 1)
-						{
-							TilePanel.SelectAdjacentHori(+1);
-							PrintSelectedId();
-						}
-						break;
+				case Keys.Right:
+					if (TilePanel.Spriteset != null && TilePanel.idSel != TilePanel.Spriteset.Count - 1)
+					{
+						TilePanel.SelectAdjacentHori(+1);
+						PrintSelectedId();
+					}
+					break;
 
-					case Keys.Up:
-						if (TilePanel.Spriteset != null)
-						{
-							TilePanel.SelectAdjacentVert(-1);
-							PrintSelectedId();
-						}
-						break;
+				case Keys.Up:
+					if (TilePanel.Spriteset != null)
+					{
+						TilePanel.SelectAdjacentVert(-1);
+						PrintSelectedId();
+					}
+					break;
 
-					case Keys.Down:
-						if (TilePanel.Spriteset != null)
-						{
-							TilePanel.SelectAdjacentVert(+1);
-							PrintSelectedId();
-						}
-						break;
+				case Keys.Down:
+					if (TilePanel.Spriteset != null)
+					{
+						TilePanel.SelectAdjacentVert(+1);
+						PrintSelectedId();
+					}
+					break;
 
-					case Keys.Escape:
-						if (TilePanel.Spriteset != null)
-						{
-							TilePanel.idSel = -1;
-							SpriteEditor.SpritePanel.Sprite = null;
-							PrintSelectedId();
-							TilePanel.Invalidate();
-						}
-						break;
-				}
+				case Keys.Escape:
+					if (TilePanel.Spriteset != null)
+					{
+						TilePanel.idSel = -1;
+						SpriteEditor.SpritePanel.Sprite = null;
+						PrintSelectedId();
+						TilePanel.Invalidate();
+					}
+					break;
 			}
 
 			base.OnKeyDown(e);
@@ -1085,7 +1083,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnCreateClick(object sender, EventArgs e)
 		{
-			if (CheckQuit())
+			if (ConfirmCloseSpriteset())
 			{
 				using (var sfd = new SaveFileDialog())
 				{
@@ -1160,7 +1158,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnOpenClick(object sender, EventArgs e)
 		{
-			if (CheckQuit())
+			if (ConfirmCloseSpriteset())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1185,7 +1183,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnOpenBigobsClick(object sender, EventArgs e)
 		{
-			if (CheckQuit())
+			if (ConfirmCloseSpriteset())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1204,7 +1202,7 @@ namespace PckView
 
 		private void OnOpenScanGClick(object sender, EventArgs e)
 		{
-			if (CheckQuit())
+			if (ConfirmCloseSpriteset())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1561,7 +1559,13 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Toggles usage of the Spriteshade value of MapView's options.
+		/// Toggles usage of the sprite-shade value of MapView's options.
+		/// @note 'SpriteShade' is no longer the sprite-shade value.
+		/// 'SpriteShade' was converted to 'SpriteShadeFloat' in the cTor, hence
+		/// it can and does take a new definition here:
+		/// -2 user toggled sprite-shade off
+		/// -1 sprite-shade was not found by the cTor, thus it cannot be enabled
+		///  0 draw sprites/swatches w/ the 'SpriteShadeFloat' val.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1571,10 +1575,10 @@ namespace PckView
 			{
 				if (miSpriteShade.Checked = !miSpriteShade.Checked)
 				{
-					SpriteShade = 0;	// NOTE: That is not the spriteshade val; the val was used,
-				}						// if it was found in the cTor, and now simply means "enabled".
+					SpriteShade = 0;
+				}
 				else
-					SpriteShade = -2;	// And this means, was found but has been user-disabled.
+					SpriteShade = -2;
 
 				TilePanel.Invalidate();
 				SpriteEditor.SpritePanel.Invalidate();
@@ -1586,7 +1590,7 @@ namespace PckView
 		/// <summary>
 		/// Shows a richtextbox with all the bytes of the currently selected
 		/// sprite laid out in a fairly readable fashion.
-		/// Called when the mainmenu's bytes-menu Click event is raised.
+		/// @note Called when the mainmenu's bytes-menu Click event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2081,7 +2085,7 @@ namespace PckView
 		/// ought be closed anyway.
 		/// </summary>
 		/// <returns>true if state is NOT changed or 'DialogResult.Yes'</returns>
-		private bool CheckQuit()
+		private bool ConfirmCloseSpriteset()
 		{
 			return !Changed
 				|| MessageBox.Show(

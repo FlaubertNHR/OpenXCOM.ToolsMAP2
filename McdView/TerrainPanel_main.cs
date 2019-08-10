@@ -738,170 +738,220 @@ namespace McdView
 		/// <param name="e"></param>
 		internal void KeyInput(KeyEventArgs e)
 		{
-			switch (e.KeyCode)
+			switch (e.KeyData)
 			{
-				case Keys.Left:
-				case Keys.Up:
-				case Keys.Back:
-					if (SelId != -1)
+				default:
+					if (SelId != -1 || e.KeyData == Keys.Space) // only key [Space] can change the selected-id from -1 to 0.
 					{
-						if (!e.Control)
+						switch (e.KeyData)
 						{
-							if (!e.Shift)
-							{
+							case Keys.Left:
+							case Keys.Up:
+							case Keys.Back:
 								SubIds.Clear();
-								if (SelId == 0)
+								if (SelId != 0)
+								{
+									SelId -= 1;
+								}
+								else
 									Invalidate();
-							}
-							else if (SelId != 0)
-								SubIds.Remove(SelId);
-						}
-						else if (SelId != 0)
-							SubIds.Add(SelId);
+								break;
 
-						if (SelId != 0)
-							SelId -= 1;
-					}
-					break;
+							case Keys.Control | Keys.Left:
+							case Keys.Control | Keys.Up:
+							case Keys.Control | Keys.Back:
+								if (SelId != 0)
+								{
+									SubIds.Add(SelId);
+									SelId -= 1;
+								}
+								break;
 
-				case Keys.Right:
-				case Keys.Down:
-					if (SelId != -1)
-						goto case Keys.Space;
-					break;
+							case Keys.Shift | Keys.Left:
+							case Keys.Shift | Keys.Up:
+							case Keys.Shift | Keys.Back:
+								if (SelId != 0)
+								{
+									SubIds.Remove(SelId);
+									SelId -= 1;
+								}
+								break;
 
-				case Keys.Space: // at present only the spacebar can change the selected id from #-1 to #0
-					if (!e.Control)
-					{
-						if (!e.Shift)
-						{
-							SubIds.Clear();
-							if (SelId == Parts.Length - 1)
-								Invalidate();
-						}
-						else if (SelId != Parts.Length - 1)
-							SubIds.Remove(SelId);
-					}
-					else if (SelId != Parts.Length - 1)
-						SubIds.Add(SelId);
 
-					if (SelId != Parts.Length - 1)
-						SelId += 1;
-					break;
-
-				case Keys.PageUp:
-					if (SelId != -1)
-					{
-						int id = SelId - (Width / (XCImage.SpriteWidth32 + 1));
-						if (id < 0) id = 0;
-	
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
+							case Keys.Right:
+							case Keys.Down:
+							case Keys.Space:
 								SubIds.Clear();
-								if (SelId == 0)
+								if (SelId != Parts.Length - 1)
+								{
+									SelId += 1;
+								}
+								else
 									Invalidate();
-							}
-							else if (SelId != 0)
-							{
-								for (int i = SelId; i != id; --i)
-									SubIds.Remove(i);
-							}
-						}
-						else if (SelId != 0)
-						{
-							for (int i = SelId; i != id; --i)
-								SubIds.Add(i);
-						}
-	
-						if (SelId != 0)
-							SelId = id;
-					}
-					break;
+								break;
 
-				case Keys.PageDown:
-					if (SelId != -1)
-					{
-						int id = SelId + (Width / (XCImage.SpriteWidth32 + 1));
-						if (id > Parts.Length - 1) id = Parts.Length - 1;
-	
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
+							case Keys.Control | Keys.Right:
+							case Keys.Control | Keys.Down:
+							case Keys.Control | Keys.Space:
+								if (SelId != Parts.Length - 1)
+								{
+									SubIds.Add(SelId);
+									SelId += 1;
+								}
+								break;
+
+							case Keys.Shift | Keys.Right:
+							case Keys.Shift | Keys.Down:
+							case Keys.Shift | Keys.Space:
+								if (SelId != Parts.Length - 1)
+								{
+									SubIds.Remove(SelId);
+									SelId += 1;
+								}
+								break;
+
+
+							case Keys.PageUp:
 								SubIds.Clear();
-								if (SelId == Parts.Length - 1)
-									Invalidate();
-							}
-							else if (SelId != Parts.Length - 1)
-							{
-								for (int i = SelId; i != id; ++i)
-									SubIds.Remove(i);
-							}
-						}
-						else if (SelId != Parts.Length - 1)
-						{
-							for (int i = SelId; i != id; ++i)
-								SubIds.Add(i);
-						}
-	
-						if (SelId != Parts.Length - 1)
-							SelId = id;
-					}
-					break;
+								if (SelId != 0)
+								{
+									int id = SelId - (Width / (XCImage.SpriteWidth32 + 1));
+									if (id < 0) id = 0;
 
-				case Keys.Home:
-					if (SelId != -1)
-					{
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
+									SelId = id;
+								}
+								else
+									Invalidate();
+								break;
+
+							case Keys.Control | Keys.PageUp:
+								if (SelId != 0)
+								{
+									int id = SelId - (Width / (XCImage.SpriteWidth32 + 1));
+									if (id < 0) id = 0;
+
+									for (int i = SelId; i != id; --i)
+										SubIds.Add(i);
+
+									SelId = id;
+								}
+								break;
+
+							case Keys.Shift | Keys.PageUp:
+								if (SelId != 0)
+								{
+									int id = SelId - (Width / (XCImage.SpriteWidth32 + 1));
+									if (id < 0) id = 0;
+
+									for (int i = SelId; i != id; --i)
+										SubIds.Remove(i);
+
+									SelId = id;
+								}
+								break;
+
+
+							case Keys.PageDown:
 								SubIds.Clear();
-								if (SelId == 0)
+								if (SelId != Parts.Length - 1)
+								{
+									int id = SelId + (Width / (XCImage.SpriteWidth32 + 1));
+									if (id > Parts.Length - 1) id = Parts.Length - 1;
+
+									SelId = id;
+								}
+								else
 									Invalidate();
-							}
-							else if (SelId != 0)
-							{
-								for (int i = SelId; i != 0; --i)
-									SubIds.Remove(i);
-							}
-						}
-						else if (SelId != 0)
-						{
-							for (int i = SelId; i != 0; --i)
-								SubIds.Add(i);
-						}
+								break;
 
-						SelId = 0;
-					}
-					break;
+							case Keys.Control | Keys.PageDown:
+								if (SelId != Parts.Length - 1)
+								{
+									int id = SelId + (Width / (XCImage.SpriteWidth32 + 1));
+									if (id > Parts.Length - 1) id = Parts.Length - 1;
 
-				case Keys.End:
-					if (SelId != -1)
-					{
-						if (!e.Control)
-						{
-							if (!e.Shift)
-							{
+									for (int i = SelId; i != id; ++i)
+										SubIds.Add(i);
+
+									SelId = id;
+								}
+								break;
+
+							case Keys.Shift | Keys.PageDown:
+								if (SelId != Parts.Length - 1)
+								{
+									int id = SelId + (Width / (XCImage.SpriteWidth32 + 1));
+									if (id > Parts.Length - 1) id = Parts.Length - 1;
+
+									for (int i = SelId; i != id; ++i)
+										SubIds.Remove(i);
+
+									SelId = id;
+								}
+								break;
+
+
+							case Keys.Home:
 								SubIds.Clear();
-								if (SelId == Parts.Length - 1)
+								if (SelId != 0)
+								{
+									SelId = 0;
+								}
+								else
 									Invalidate();
-							}
-							else if (SelId != Parts.Length - 1)
-							{
-								for (int i = SelId; i != Parts.Length - 1; ++i)
-									SubIds.Remove(i);
-							}
-						}
-						else if (SelId != Parts.Length - 1)
-						{
-							for (int i = SelId; i != Parts.Length - 1; ++i)
-								SubIds.Add(i);
-						}
+								break;
 
-						SelId = Parts.Length - 1;
+							case Keys.Control | Keys.Home:
+								if (SelId != 0)
+								{
+									for (int i = SelId; i != 0; --i)
+										SubIds.Add(i);
+
+									SelId = 0;
+								}
+								break;
+
+							case Keys.Shift | Keys.Home:
+								if (SelId != 0)
+								{
+									for (int i = SelId; i != 0; --i)
+										SubIds.Remove(i);
+
+									SelId = 0;
+								}
+								break;
+
+
+							case Keys.End:
+								SubIds.Clear();
+								if (SelId != Parts.Length - 1)
+								{
+									SelId = Parts.Length - 1;
+								}
+								else
+									Invalidate();
+								break;
+
+							case Keys.Control | Keys.End:
+								if (SelId != Parts.Length - 1)
+								{
+									for (int i = SelId; i != Parts.Length - 1; ++i)
+										SubIds.Add(i);
+
+									SelId = Parts.Length - 1;
+								}
+								break;
+
+							case Keys.Shift | Keys.End:
+								if (SelId != Parts.Length - 1)
+								{
+									for (int i = SelId; i != Parts.Length - 1; ++i)
+										SubIds.Remove(i);
+
+									SelId = Parts.Length - 1;
+								}
+								break;
+						}
 					}
 					break;
 
@@ -912,8 +962,7 @@ namespace McdView
 				// NOTE: Escape for deselect all is handled by the caller: McdviewF.OnKeyDown().
 
 				case Keys.D:									// add
-					if (!e.Control)
-						OnAddClick(null, EventArgs.Empty);
+					OnAddClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.OemMinus: // drugs ...
