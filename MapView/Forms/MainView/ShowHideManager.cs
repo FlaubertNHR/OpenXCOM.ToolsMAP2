@@ -9,6 +9,8 @@ namespace MapView.Forms.MainView
 		#region Fields (static)
 		/// <summary>
 		/// A list of Forms that updates in various Activated events.
+		/// @note Only views that do not close are valid; they must only hide
+		/// instead.
 		/// - MainView
 		/// - TileView
 		/// - TopView

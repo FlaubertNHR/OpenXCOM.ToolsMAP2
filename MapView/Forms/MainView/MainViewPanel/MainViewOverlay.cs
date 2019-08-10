@@ -1139,6 +1139,18 @@ namespace MapView.Forms.MainView
 										&& rect.Contains(col, row));
 						}
 
+						if (!_targeterSuppressed
+							&& col == _overCol
+							&& row == _overRow
+							&& lev == MapBase.Level)
+						{
+							CuboidSprite.DrawTargeter_Rembrandt(
+														_graphics,
+														x, y,
+														HalfWidth,
+														HalfHeight);
+						}
+
 						if (cuboid)
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
@@ -1158,7 +1170,7 @@ namespace MapView.Forms.MainView
 				DrawSelectionBorder(rect);
 			}
 
-			if (!_targeterSuppressed // draw Targeter after selection-border ->
+/*			if (!_targeterSuppressed // draw Targeter after selection-border ->
 				&& _overCol > -1 && _overCol < MapBase.MapSize.Cols
 				&& _overRow > -1 && _overRow < MapBase.MapSize.Rows)
 			{
@@ -1168,7 +1180,7 @@ namespace MapView.Forms.MainView
 											_overCol * HalfHeight + Origin.Y + (_overRow * HalfHeight) + (MapBase.Level * heightfactor),
 											HalfWidth,
 											HalfHeight);
-			}
+			} */
 		}
 
 		/// <summary>
@@ -1225,6 +1237,16 @@ namespace MapView.Forms.MainView
 							DrawTile(tile, x, y);
 						}
 
+						if (!_targeterSuppressed
+							&& col == _overCol
+							&& row == _overRow
+							&& lev == MapBase.Level)
+						{
+							CuboidSprite.DrawTargeter_Picasso(
+														_graphics,
+														x, y);
+						}
+
 						if (cuboid)
 						{
 							CuboidSprite.DrawCuboid_Picasso(
@@ -1254,7 +1276,7 @@ namespace MapView.Forms.MainView
 				}
 			}
 
-			if (!_targeterSuppressed // draw Targeter after selection-border ->
+/*			if (!_targeterSuppressed // draw Targeter after selection-border ->
 				&& _overCol > -1 && _overCol < MapBase.MapSize.Cols
 				&& _overRow > -1 && _overRow < MapBase.MapSize.Rows)
 			{
@@ -1262,7 +1284,7 @@ namespace MapView.Forms.MainView
 											_graphics,
 											_overCol * HalfWidth  + Origin.X - (_overRow * HalfWidth),
 											_overCol * HalfHeight + Origin.Y + (_overRow * HalfHeight) + (MapBase.Level * heightfactor));
-			}
+			} */
 		}
 
 #else
