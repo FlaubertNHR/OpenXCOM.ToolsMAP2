@@ -973,9 +973,11 @@ namespace MapView
 				case Keys.Enter: // load Descriptor (do NOT reload)
 					e.SuppressKeyPress = true;
 
-					if (MapTree.Focused && _selected != null)
+					if (MapTree.Focused
+						&& _selected != null
+						&& _selected.Level == TREELEVEL_TILESET)
 					{
-						var descriptor = _selected.Tag as Descriptor; // descriptor better not be null here
+						var descriptor = _selected.Tag as Descriptor;
 						if (   MainViewUnderlay.MapBase == null
 							|| MainViewUnderlay.MapBase.Descriptor != descriptor)
 						{
@@ -988,10 +990,16 @@ namespace MapView
 				case Keys.Shift | Keys.Enter: // open MapBrowserDialog
 					e.SuppressKeyPress = true;
 
-					if (MapTree.Focused && _selected != null)
+					if (MapTree.Focused
+						&& _selected != null
+						&& _selected.Level == TREELEVEL_TILESET)
 					{
-						_dontbeeptype = DontBeepType.MapBrowserDialog;
-						BeginInvoke(DontBeepEvent);
+						var descriptor = _selected.Tag as Descriptor;
+						if (MapFileService.MapfileExists(descriptor) == null)
+						{
+							_dontbeeptype = DontBeepType.MapBrowserDialog;
+							BeginInvoke(DontBeepEvent);
+						}
 					}
 					break;
 
@@ -1905,8 +1913,8 @@ namespace MapView
 
 		/// <summary>
 		/// Cache of the currently selected treenode. Is used to determine if
-		/// a MapBrowserDialog should popup on [Space] - iff the MAP+RMP files
-		/// are invalid.
+		/// a MapBrowserDialog should popup on [Shift+Enter] - iff the MAP+RMP
+		/// files are invalid.
 		/// </summary>
 		private TreeNode _selected;
 
@@ -2700,7 +2708,7 @@ namespace MapView
 		#region Methods
 		/// <summary>
 		/// Loads the Map that's selected in the Maptree.
-		/// <param name="basepathDialog">true to force the find file dialog</param>
+		/// <param name="basepathDialog">true to force the find Mapfile dialog</param>
 		/// </summary>
 		private void LoadSelectedDescriptor(bool basepathDialog = false)
 		{

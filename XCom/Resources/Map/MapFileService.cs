@@ -20,8 +20,30 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Loads all terrains for a Map. Called by MainViewF.LoadSelectedDescriptor().
-		/// @note Check that 'descriptor' is not null before call.
+		/// Checks if the Mapfile for a specified Descriptor exists.
+		/// @note Check (or ensure) that 'descriptor' is valid before call.
+		/// </summary>
+		/// <param name="descriptor"></param>
+		/// <returns>the path to the Mapfile else null</returns>
+		public static string MapfileExists(Descriptor descriptor)
+		{
+			string pfeMap = descriptor.Basepath;
+			if (!String.IsNullOrEmpty(pfeMap)) // -> the BasePath can be null if resource-type is notconfigured.
+			{
+				pfeMap = Path.Combine(
+									Path.Combine(pfeMap, GlobalsXC.MapsDir),
+									descriptor.Label + GlobalsXC.MapExt);
+
+				if (File.Exists(pfeMap))
+					return pfeMap;
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Loads all routes and terrains for a Map.
+		/// @note Called by MainViewF.LoadSelectedDescriptor().
+		/// @note Check (or ensure) that 'descriptor' is valid before call.
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
@@ -35,16 +57,10 @@ namespace XCom
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("MapFileService.LoadDescriptor descriptor= " + descriptor);
 
-			string pfeMap = descriptor.Basepath;
-			if (!String.IsNullOrEmpty(pfeMap)) // -> the BasePath can be null if resource-type is notconfigured.
-			{
-				pfeMap = Path.Combine(
-									Path.Combine(descriptor.Basepath, GlobalsXC.MapsDir),
-									descriptor.Label + GlobalsXC.MapExt);
-			}
+			string pfeMap = MapfileExists(descriptor);
 			//LogFile.WriteLine(". pfeMap= " + pfeMap);
 
-			if (!File.Exists(pfeMap) // Open a folderbrowser for user to point to a basepath ->
+			if (pfeMap == null // Open a folderbrowser for user to point to a basepath ->
 				&& (basepathDialog || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to show warning box.
 				&& MessageBox.Show(
 								"Files were not found for : " + descriptor.Label
