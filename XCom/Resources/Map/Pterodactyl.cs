@@ -1,47 +1,56 @@
 namespace XCom
 {
 	/// <summary>
-	/// A struct that associates an enumerated case with a readable string.
+	/// A struct that associates any object with a readable label.
 	/// @note This could be deleted and done w/ Tuple or Dictionary or HashTable
 	/// or SortedSet or whatever. Hence 'Pterodactyl'. Because it should go the
 	/// way of the dinosaurs.
 	/// </summary>
 	public struct Pterodactyl
 	{
-		/// <summary>
-		/// An enumerated case. Actually, anything - it's boxed.
-		/// </summary>
-		private readonly object _case;
-		public object Case
-		{
-			get { return _case; }
-		}
-
+		#region Fields
 		/// <summary>
 		/// A string, preferably readable.
 		/// </summary>
-		private readonly string _st;
+		private readonly string _label;
+		#endregion Fields
 
 
+		#region Properties
+		/// <summary>
+		/// Anything - it's boxed.
+		/// </summary>
+		private readonly object _o;
+		public object O
+		{
+			get { return _o; }
+		}
+		#endregion Properties
+
+
+		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="st"></param>
-		/// <param name="case"></param>
-		internal Pterodactyl(string st, object @case)
+		/// <param name="label"></param>
+		/// <param name="o"></param>
+		internal Pterodactyl(string label, object o)
 		{
-			_st   = st;
-			_case = @case;
+			_label = label;
+			_o = o;
 		}
+		#endregion cTor
 
 
+		#region Methods (override)
 		/// <summary>
 		/// Returns the string-value of the boxed-value.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return _st;
+			return _label;
 		}
+		#endregion Methods (override)
 	}
 }

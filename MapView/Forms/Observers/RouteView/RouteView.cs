@@ -1106,7 +1106,7 @@ namespace MapView.Forms.Observers
 			if (!_loadingInfo)
 			{
 				RouteChanged = true;
-				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)cbSpawn.SelectedItem).Case;
+				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)cbSpawn.SelectedItem).O;
 
 				if (RoutesInfo != null)
 					RoutesInfo.ChangedSpawnweight(_curSpawnweight, NodeSelected.Spawn, NodeSelected.Rank);
@@ -1127,7 +1127,7 @@ namespace MapView.Forms.Observers
 			if (!_loadingInfo)
 			{
 				RouteChanged = true;
-				NodeSelected.Patrol = (PatrolPriority)((Pterodactyl)cbPatrol.SelectedItem).Case;
+				NodeSelected.Patrol = (PatrolPriority)((Pterodactyl)cbPatrol.SelectedItem).O;
 
 				if (Tag as String == "ROUTE")
 					ObserverManager.TopRouteView.ControlRoute.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
@@ -1143,7 +1143,7 @@ namespace MapView.Forms.Observers
 			if (!_loadingInfo)
 			{
 				RouteChanged = true;
-				NodeSelected.Attack = (AttackBase)((Pterodactyl)cbAttack.SelectedItem).Case;
+				NodeSelected.Attack = (AttackBase)((Pterodactyl)cbAttack.SelectedItem).O;
 
 				if (Tag as String == "ROUTE")
 					ObserverManager.TopRouteView.ControlRoute.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
