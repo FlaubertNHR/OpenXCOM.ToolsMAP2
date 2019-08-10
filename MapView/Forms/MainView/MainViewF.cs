@@ -974,16 +974,24 @@ namespace MapView
 					e.SuppressKeyPress = true;
 
 					if (MapTree.Focused
-						&& _selected != null
-						&& _selected.Level == TREELEVEL_TILESET)
+						&& _selected != null)
 					{
-						var descriptor = _selected.Tag as Descriptor;
-						if (   MainViewUnderlay.MapBase == null
-							|| MainViewUnderlay.MapBase.Descriptor != descriptor)
+						if (_selected.Level == TREELEVEL_TILESET)
 						{
-							_dontbeeptype = DontBeepType.LoadDescriptor;
-							BeginInvoke(DontBeepEvent);
+							var descriptor = _selected.Tag as Descriptor;
+							if (   MainViewUnderlay.MapBase == null
+								|| MainViewUnderlay.MapBase.Descriptor != descriptor)
+							{
+								_dontbeeptype = DontBeepType.LoadDescriptor;
+								BeginInvoke(DontBeepEvent);
+							}
 						}
+						else if (!_selected.IsExpanded)
+						{
+							_selected.Expand();
+						}
+						else
+							_selected.Collapse();
 					}
 					break;
 
