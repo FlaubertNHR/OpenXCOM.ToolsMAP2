@@ -258,7 +258,8 @@
 		private System.Windows.Forms.ToolStripStatusLabel tssl_Sprites;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_Offset;
 		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetLast;
-		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetAfter;
+		private System.Windows.Forms.ToolStripStatusLabel tssl_OffsetAftr;
+
 
 		/// <summary>
 		/// Disposes resources used by the Form.
@@ -433,7 +434,7 @@
 			this.tssl_Sprites = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_Offset = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssl_OffsetLast = new System.Windows.Forms.ToolStripStatusLabel();
-			this.tssl_OffsetAfter = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssl_OffsetAftr = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gb_Unused = new System.Windows.Forms.GroupBox();
 			this.tb38_ = new McdView.RecordTextbox();
 			this.tb61_ = new McdView.RecordTextbox();
@@ -2080,7 +2081,7 @@
 			this.tssl_Sprites,
 			this.tssl_Offset,
 			this.tssl_OffsetLast,
-			this.tssl_OffsetAfter});
+			this.tssl_OffsetAftr});
 			this.ss_Statusbar.Location = new System.Drawing.Point(0, 772);
 			this.ss_Statusbar.Name = "ss_Statusbar";
 			this.ss_Statusbar.Size = new System.Drawing.Size(832, 22);
@@ -2133,14 +2134,14 @@
 			this.tssl_OffsetLast.Text = "last";
 			this.tssl_OffsetLast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tssl_OffsetAfter
+			// tssl_OffsetAftr
 			// 
-			this.tssl_OffsetAfter.AutoSize = false;
-			this.tssl_OffsetAfter.Margin = new System.Windows.Forms.Padding(0);
-			this.tssl_OffsetAfter.Name = "tssl_OffsetAfter";
-			this.tssl_OffsetAfter.Size = new System.Drawing.Size(70, 22);
-			this.tssl_OffsetAfter.Text = "after";
-			this.tssl_OffsetAfter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.tssl_OffsetAftr.AutoSize = false;
+			this.tssl_OffsetAftr.Margin = new System.Windows.Forms.Padding(0);
+			this.tssl_OffsetAftr.Name = "tssl_OffsetAftr";
+			this.tssl_OffsetAftr.Size = new System.Drawing.Size(70, 22);
+			this.tssl_OffsetAftr.Text = "after";
+			this.tssl_OffsetAftr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// gb_Unused
 			// 

@@ -12,17 +12,23 @@ namespace MapView
 	/// </summary>
 	public class Startup
 	{
+		#region Fields
 		private readonly IErrorHandler _errorHandler;
+		#endregion Fields
 
+
+		#region cTor
 		/// <summary>
-		/// Initializes a handler for unhandled exceptions.
+		/// cTor. Initializes a handler for unhandled exceptions.
 		/// </summary>
 		public Startup()
 		{
 			_errorHandler = new ErrorAdapter();
 		}
+		#endregion cTor
 
 
+		#region Methods
 		/// <summary>
 		/// Let's run this puppy.
 		/// </summary>
@@ -41,7 +47,10 @@ namespace MapView
 				throw;
 			}
 		}
+		#endregion Methods
 
+
+		#region Events
 		/// <summary>
 		/// Handler for thread exceptions.
 		/// </summary>
@@ -51,5 +60,6 @@ namespace MapView
 		{
 			_errorHandler.HandleException(e.Exception);
 		}
+		#endregion Events
 	}
 }

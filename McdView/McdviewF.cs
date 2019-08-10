@@ -349,11 +349,11 @@ namespace McdView
 				}
 			}
 
-			tssl_Overval    .Text =
-			tssl_Records    .Text =
-			tssl_Sprites    .Text =
-			tssl_OffsetLast .Text =
-			tssl_OffsetAfter.Text = String.Empty;
+			tssl_Overval   .Text =
+			tssl_Records   .Text =
+			tssl_Sprites   .Text =
+			tssl_OffsetLast.Text =
+			tssl_OffsetAftr.Text = String.Empty;
 
 			var r = new CustomToolStripRenderer();
 			ss_Statusbar.Renderer = r;
@@ -556,6 +556,7 @@ namespace McdView
 					e.SuppressKeyPress = true; // NOTE: all alphabetic codes can be suppressed ...
 					cb_Strict.Checked = !cb_Strict.Checked;
 					break;
+
 
 				default:
 				{
@@ -1020,16 +1021,17 @@ namespace McdView
 			{
 				if (!@as)
 				{
-					WriteMcdData(pfeMcd + ".t");
+					string pfeMcdT = pfeMcd + GlobalsXC.TEMPExt;
+					WriteMcdData(pfeMcdT);
 
-					string bak = Path.Combine(Path.GetDirectoryName(pfeMcd), GlobalsXC.MV_Backup);
-					Directory.CreateDirectory(bak);
+					string dirBackup = Path.Combine(Path.GetDirectoryName(pfeMcd), GlobalsXC.MV_Backup);
+					Directory.CreateDirectory(dirBackup);
 
 					File.Replace(
-							pfeMcd + ".t",	// src
-							pfeMcd,			// dst
-							Path.Combine(bak, Path.GetFileName(pfeMcd)),
-							true);			// ignoreMetadataErrors
+							pfeMcdT,											// src
+							pfeMcd,												// dst
+							Path.Combine(dirBackup, Path.GetFileName(pfeMcd)),	// backup
+							true);												// ignoreMetadataErrors
 				}
 				else
 					WriteMcdData(pfeMcd);
@@ -1749,20 +1751,20 @@ namespace McdView
 			{
 				tssl_Sprites.Text = "Sprites: " + Spriteset.Count;
 
-				uint last, after;
-				SpriteCollection.Test2byteSpriteset(Spriteset, out last, out after);
+				uint last, aftr;
+				SpriteCollection.Test2byteSpriteset(Spriteset, out last, out aftr);
 
-				tssl_OffsetLast .ForeColor = (last  > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
-				tssl_OffsetAfter.ForeColor = (after > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
 
-				tssl_OffsetLast .Text = "last: "  + last;
-				tssl_OffsetAfter.Text = "after: " + after;
+				tssl_OffsetLast.Text = "last: "  + last;
+				tssl_OffsetAftr.Text = "after: " + aftr;
 			}
 			else
 			{
-				tssl_Sprites.Text = "Sprites: null";
-				tssl_OffsetLast .Text =
-				tssl_OffsetAfter.Text = String.Empty;
+				tssl_Sprites   .Text = "Sprites: null";
+				tssl_OffsetLast.Text =
+				tssl_OffsetAftr.Text = String.Empty;
 			}
 		}
 
