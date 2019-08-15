@@ -207,20 +207,133 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[1].
+		/// cTor[2].
 		/// </summary>
 		/// <param name="bindata">if null a blank byte-array gets created</param>
 		public McdRecord(IList<byte> bindata = null)
 		{
 			SetId = _sid++;
-			CreateRecord(this, bindata);
+
+			if (bindata == null)
+				bindata = new byte[TilepartFactory.Length]; // all values in the byte-array default to "0"
+
+			Sprite1 = bindata[0];
+			Sprite2 = bindata[1];
+			Sprite3 = bindata[2];
+			Sprite4 = bindata[3];
+			Sprite5 = bindata[4];
+			Sprite6 = bindata[5];
+			Sprite7 = bindata[6];
+			Sprite8 = bindata[7];
+
+			Loft1  = bindata[8];
+			Loft2  = bindata[9];
+			Loft3  = bindata[10];
+			Loft4  = bindata[11];
+			Loft5  = bindata[12];
+			Loft6  = bindata[13];
+			Loft7  = bindata[14];
+			Loft8  = bindata[15];
+			Loft9  = bindata[16];
+			Loft10 = bindata[17];
+			Loft11 = bindata[18];
+			Loft12 = bindata[19];
+
+			ScanG         = (ushort)(bindata[21] * 256 + bindata[20] + 35);
+			ScanG_reduced = (ushort)(bindata[21] * 256 + bindata[20]);
+
+			Unknown22 = bindata[22];
+			Unknown23 = bindata[23];
+			Unknown24 = bindata[24];
+			Unknown25 = bindata[25];
+			Unknown26 = bindata[26];
+			Unknown27 = bindata[27];
+			Unknown28 = bindata[28];
+			Unknown29 = bindata[29];
+
+			SlidingDoor = bindata[30] != 0;
+			StopLOS     = bindata[31] != 0;
+			NotFloored  = bindata[32] != 0;
+			BigWall     = bindata[33] != 0; // TODO: store as a byte
+			GravLift    = bindata[34] != 0;
+			HingedDoor  = bindata[35] != 0;
+			BlockFire   = bindata[36] != 0;
+			BlockSmoke  = bindata[37] != 0;
+
+			LeftRightHalf = bindata[38];
+			TU_Walk       = bindata[39];
+			TU_Slide      = bindata[40];
+			TU_Fly        = bindata[41];
+			Armor         = bindata[42];
+			HE_Block      = bindata[43];
+			DieTile       = bindata[44];
+			FireResist    = bindata[45];
+			Alt_MCD       = bindata[46];
+			Unknown47     = bindata[47];
+			StandOffset   = (sbyte)bindata[48];
+			TileOffset    = bindata[49];
+			Unknown50     = bindata[50];
+			LightBlock    = bindata[51];
+			Footstep      = bindata[52];
+
+			PartType      = (PartType)bindata[53];
+			HE_Type       = bindata[54];
+			HE_Strength   = bindata[55];
+			SmokeBlockage = bindata[56];
+			Fuel          = bindata[57];
+			LightSource   = bindata[58];
+			Special       = (SpecialType)bindata[59];
+			BaseObject    = bindata[60] != 0;
+			Unknown61     = bindata[61];
+
+
+			stSprites = string.Format(
+								System.Globalization.CultureInfo.InvariantCulture,
+								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
+								"images:",
+								Sprite1,
+								Sprite2,
+								Sprite3,
+								Sprite4,
+								Sprite5,
+								Sprite6,
+								Sprite7,
+								Sprite8);
+
+			stScanG = string.Format(
+								System.Globalization.CultureInfo.CurrentCulture,
+								"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
+								"scang reference:",
+								bindata[20],
+								bindata[21],
+								ScanG,
+								ScanG_reduced);
+
+			stLoFTs = string.Format(
+								System.Globalization.CultureInfo.CurrentCulture,
+								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
+								"loft references:",
+								Loft1,
+								Loft2,
+								Loft3,
+								Loft4,
+								Loft5,
+								Loft6,
+								Loft7,
+								Loft8,
+								Loft9,
+								Loft10,
+								Loft11,
+								Loft12);
+
+			ByteTable = BytesTable(bindata);
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a blank record for Duplicate().
+		/// cTor[1]. Creates a blank record for Duplicate().
 		/// @note The compiler figures out the difference between
-		/// - private McdRecord()
-		/// - public  McdRecord(null)
+		/// 1) private McdRecord()
+		/// 2) public  McdRecord(null)
 		/// </summary>
 		private McdRecord()
 		{}
@@ -228,135 +341,6 @@ namespace XCom
 
 
 		#region Methods (static)
-		/// <summary>
-		/// Instantiates an MCD record.
-		/// </summary>
-		/// <param name="record"></param>
-		/// <param name="bindata">if null a blank byte-array gets created</param>
-		/// <returns></returns>
-		private static McdRecord CreateRecord(
-				McdRecord record,
-				IList<byte> bindata = null)
-		{
-			if (bindata == null)
-				bindata = new byte[TilepartFactory.Length]; // all values in the byte-array default to "0"
-
-			record.Sprite1 = bindata[0];
-			record.Sprite2 = bindata[1];
-			record.Sprite3 = bindata[2];
-			record.Sprite4 = bindata[3];
-			record.Sprite5 = bindata[4];
-			record.Sprite6 = bindata[5];
-			record.Sprite7 = bindata[6];
-			record.Sprite8 = bindata[7];
-
-			record.Loft1  = bindata[8];
-			record.Loft2  = bindata[9];
-			record.Loft3  = bindata[10];
-			record.Loft4  = bindata[11];
-			record.Loft5  = bindata[12];
-			record.Loft6  = bindata[13];
-			record.Loft7  = bindata[14];
-			record.Loft8  = bindata[15];
-			record.Loft9  = bindata[16];
-			record.Loft10 = bindata[17];
-			record.Loft11 = bindata[18];
-			record.Loft12 = bindata[19];
-
-			record.ScanG         = (ushort)(bindata[21] * 256 + bindata[20] + 35);
-			record.ScanG_reduced = (ushort)(bindata[21] * 256 + bindata[20]);
-
-			record.Unknown22 = bindata[22];
-			record.Unknown23 = bindata[23];
-			record.Unknown24 = bindata[24];
-			record.Unknown25 = bindata[25];
-			record.Unknown26 = bindata[26];
-			record.Unknown27 = bindata[27];
-			record.Unknown28 = bindata[28];
-			record.Unknown29 = bindata[29];
-
-			record.SlidingDoor = bindata[30] != 0;
-			record.StopLOS     = bindata[31] != 0;
-			record.NotFloored  = bindata[32] != 0;
-			record.BigWall     = bindata[33] != 0; // TODO: store as a byte
-			record.GravLift    = bindata[34] != 0;
-			record.HingedDoor  = bindata[35] != 0;
-			record.BlockFire   = bindata[36] != 0;
-			record.BlockSmoke  = bindata[37] != 0;
-
-			record.LeftRightHalf = bindata[38];
-			record.TU_Walk       = bindata[39];
-			record.TU_Slide      = bindata[40];
-			record.TU_Fly        = bindata[41];
-			record.Armor         = bindata[42];
-			record.HE_Block      = bindata[43];
-			record.DieTile       = bindata[44];
-			record.FireResist    = bindata[45];
-			record.Alt_MCD       = bindata[46];
-			record.Unknown47     = bindata[47];
-			record.StandOffset   = (sbyte)bindata[48];
-			record.TileOffset    = bindata[49];
-			record.Unknown50     = bindata[50];
-			record.LightBlock    = bindata[51];
-			record.Footstep      = bindata[52];
-
-			record.PartType      = (PartType)bindata[53];
-			record.HE_Type       = bindata[54];
-			record.HE_Strength   = bindata[55];
-			record.SmokeBlockage = bindata[56];
-			record.Fuel          = bindata[57];
-			record.LightSource   = bindata[58];
-			record.Special       = (SpecialType)bindata[59];
-			record.BaseObject    = bindata[60] != 0;
-			record.Unknown61     = bindata[61];
-
-
-			#region Descript
-			record.stSprites = string.Format(
-										System.Globalization.CultureInfo.InvariantCulture,
-										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
-										"images:",
-										record.Sprite1,
-										record.Sprite2,
-										record.Sprite3,
-										record.Sprite4,
-										record.Sprite5,
-										record.Sprite6,
-										record.Sprite7,
-										record.Sprite8);
-
-			record.stScanG = string.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
-										"scang reference:",
-										bindata[20],
-										bindata[21],
-										record.ScanG,
-										record.ScanG_reduced);
-
-			record.stLoFTs = string.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
-										"loft references:",
-										record.Loft1,
-										record.Loft2,
-										record.Loft3,
-										record.Loft4,
-										record.Loft5,
-										record.Loft6,
-										record.Loft7,
-										record.Loft8,
-										record.Loft9,
-										record.Loft10,
-										record.Loft11,
-										record.Loft12);
-
-			record.ByteTable = BytesTable(bindata);
-			#endregion Descript
-
-			return record;
-		}
-
 		/// <summary>
 		/// Creates a table of the byte-data for the MCD-info screen.
 		/// </summary>
@@ -389,6 +373,99 @@ namespace XCom
 												  : " ";
 			}
 			return text;
+		}
+
+		/// <summary>
+		/// Writes/overwrites a specified MCD file.
+		/// </summary>
+		/// <param name="pfeMcd">path-file-extension to write to</param>
+		/// <param name="parts">an array of tileparts</param>
+		/// <returns>true if it looks like the file got written</returns>
+		public static bool WriteRecords(string pfeMcd, Tilepart[] parts)
+		{
+			using (var fs = FileService.CreateFile(pfeMcd))
+			if (fs != null)
+			{
+				McdRecord record;
+				ushort u;
+
+				foreach (Tilepart part in parts)
+				{
+					record = part.Record;
+
+					fs.WriteByte((byte)record.Sprite1);					//  0
+					fs.WriteByte((byte)record.Sprite2);					//  1
+					fs.WriteByte((byte)record.Sprite3);					//  2
+					fs.WriteByte((byte)record.Sprite4);					//  3
+					fs.WriteByte((byte)record.Sprite5);					//  4
+					fs.WriteByte((byte)record.Sprite6);					//  5
+					fs.WriteByte((byte)record.Sprite7);					//  6
+					fs.WriteByte((byte)record.Sprite8);					//  7
+
+					fs.WriteByte((byte)record.Loft1);					//  8
+					fs.WriteByte((byte)record.Loft2);					//  9
+					fs.WriteByte((byte)record.Loft3);					// 10
+					fs.WriteByte((byte)record.Loft4);					// 11
+					fs.WriteByte((byte)record.Loft5);					// 12
+					fs.WriteByte((byte)record.Loft6);					// 13
+					fs.WriteByte((byte)record.Loft7);					// 14
+					fs.WriteByte((byte)record.Loft8);					// 15
+					fs.WriteByte((byte)record.Loft9);					// 16
+					fs.WriteByte((byte)record.Loft10);					// 17
+					fs.WriteByte((byte)record.Loft11);					// 18
+					fs.WriteByte((byte)record.Loft12);					// 19
+
+					u = record.ScanG_reduced;
+					fs.WriteByte((byte)( u & 0x00FF));					// 20
+					fs.WriteByte((byte)((u & 0xFF00) >> 8));			// 21
+
+					fs.WriteByte((byte)record.Unknown22);				// 22
+					fs.WriteByte((byte)record.Unknown23);				// 23
+					fs.WriteByte((byte)record.Unknown24);				// 24
+					fs.WriteByte((byte)record.Unknown25);				// 25
+					fs.WriteByte((byte)record.Unknown26);				// 26
+					fs.WriteByte((byte)record.Unknown27);				// 27
+					fs.WriteByte((byte)record.Unknown28);				// 28
+					fs.WriteByte((byte)record.Unknown29);				// 29
+
+					fs.WriteByte(Convert.ToByte(record.SlidingDoor));	// 30 (bool)
+					fs.WriteByte(Convert.ToByte(record.StopLOS));		// 31 (bool)
+					fs.WriteByte(Convert.ToByte(record.NotFloored));	// 32 (bool)
+					fs.WriteByte(Convert.ToByte(record.BigWall));		// 33 (bool)
+					fs.WriteByte(Convert.ToByte(record.GravLift));		// 34 (bool)
+					fs.WriteByte(Convert.ToByte(record.HingedDoor));	// 35 (bool)
+					fs.WriteByte(Convert.ToByte(record.BlockFire));		// 36 (bool)
+					fs.WriteByte(Convert.ToByte(record.BlockSmoke));	// 37 (bool)
+
+					fs.WriteByte((byte)record.LeftRightHalf);			// 38
+					fs.WriteByte((byte)record.TU_Walk);					// 39
+					fs.WriteByte((byte)record.TU_Slide);				// 40
+					fs.WriteByte((byte)record.TU_Fly);					// 41
+					fs.WriteByte((byte)record.Armor);					// 42
+					fs.WriteByte((byte)record.HE_Block);				// 43
+					fs.WriteByte((byte)record.DieTile);					// 44
+					fs.WriteByte((byte)record.FireResist);				// 45
+					fs.WriteByte((byte)record.Alt_MCD);					// 46
+					fs.WriteByte((byte)record.Unknown47);				// 47
+					fs.WriteByte(unchecked((byte)record.StandOffset));	// 48 (sbyte)
+					fs.WriteByte((byte)record.TileOffset);				// 49
+					fs.WriteByte((byte)record.Unknown50);				// 50
+					fs.WriteByte((byte)record.LightBlock);				// 51
+					fs.WriteByte((byte)record.Footstep);				// 52
+
+					fs.WriteByte((byte)record.PartType);				// 53 (PartType)
+					fs.WriteByte((byte)record.HE_Type);					// 54
+					fs.WriteByte((byte)record.HE_Strength);				// 55
+					fs.WriteByte((byte)record.SmokeBlockage);			// 56
+					fs.WriteByte((byte)record.Fuel);					// 57
+					fs.WriteByte((byte)record.LightSource);				// 58
+					fs.WriteByte((byte)record.Special);					// 59 (SpecialType)
+					fs.WriteByte(Convert.ToByte(record.BaseObject));	// 60 (bool)
+					fs.WriteByte((byte)record.Unknown61);				// 61
+				}
+				return true;
+			}
+			return false;
 		}
 		#endregion Methods (static)
 

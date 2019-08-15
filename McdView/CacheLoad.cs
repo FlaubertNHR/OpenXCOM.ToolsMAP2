@@ -23,7 +23,7 @@ namespace McdView
 		/// Sets the Cached values.
 		/// </summary>
 		/// <param name="parts"></param>
-		internal static void SetCache(Tilepart[] parts)
+		internal static void SetCacheSaved(Tilepart[] parts)
 		{
 			Length = parts.Length;
 			Parts = new int[Length, TilepartFactory.Length];

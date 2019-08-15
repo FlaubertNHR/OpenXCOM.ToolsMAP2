@@ -5,10 +5,10 @@ using System.Windows.Forms;
 namespace McdView
 {
 	/// <summary>
-	/// A dialog that asks the user what to do when closing a file that has been
+	/// A dialog that asks the user what to do when closing a recordset that has
 	/// changed: Save, Lose changes, or Cancel.
 	/// </summary>
-	internal sealed class ChangedBox
+	internal sealed class CloseTerrainDialog
 		:
 			Form
 	{
@@ -16,10 +16,9 @@ namespace McdView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal ChangedBox(string info)
+		internal CloseTerrainDialog(string info)
 		{
 			InitializeComponent();
-
 			lbl_info.Text = info;
 		}
 		#endregion cTor
@@ -119,7 +118,7 @@ namespace McdView
 			this.btn_Lose.UseVisualStyleBackColor = true;
 			this.btn_Lose.Click += new System.EventHandler(this.OnClick_Lose);
 			// 
-			// ChangedBox
+			// CloseTerrainDialog
 			// 
 			this.AcceptButton = this.btn_Save;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -133,7 +132,7 @@ namespace McdView
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "ChangedBox";
+			this.Name = "CloseTerrainDialog";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Changed";

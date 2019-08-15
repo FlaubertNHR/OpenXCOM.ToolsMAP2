@@ -11,6 +11,8 @@
 		private System.Windows.Forms.MenuItem miFileMenu;
 		private System.Windows.Forms.MenuItem miCreate;
 		private System.Windows.Forms.MenuItem miSeparator0;
+		private System.Windows.Forms.MenuItem miSaveRecordsSprites;
+		private System.Windows.Forms.MenuItem miSeparator4;
 		private System.Windows.Forms.MenuItem miOpen;
 		private System.Windows.Forms.MenuItem miSave;
 		private System.Windows.Forms.MenuItem miSaveas;
@@ -273,6 +275,7 @@
 			base.Dispose(disposing);
 		}
 
+
 		/// <summary>
 		/// This method is required for Windows Forms designer support.
 		/// Do not change the method contents inside the source code editor. The
@@ -287,6 +290,8 @@
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
 			this.miCreate = new System.Windows.Forms.MenuItem();
 			this.miSeparator0 = new System.Windows.Forms.MenuItem();
+			this.miSaveRecordsSprites = new System.Windows.Forms.MenuItem();
+			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miOpen = new System.Windows.Forms.MenuItem();
 			this.miSave = new System.Windows.Forms.MenuItem();
 			this.miSaveas = new System.Windows.Forms.MenuItem();
@@ -567,6 +572,8 @@
 			this.miFileMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miCreate,
 			this.miSeparator0,
+			this.miSaveRecordsSprites,
+			this.miSeparator4,
 			this.miOpen,
 			this.miSave,
 			this.miSaveas,
@@ -589,9 +596,22 @@
 			this.miSeparator0.Index = 1;
 			this.miSeparator0.Text = "-";
 			// 
+			// miSaveRecordsSprites
+			// 
+			this.miSaveRecordsSprites.Enabled = false;
+			this.miSaveRecordsSprites.Index = 2;
+			this.miSaveRecordsSprites.Shortcut = System.Windows.Forms.Shortcut.CtrlM;
+			this.miSaveRecordsSprites.Text = "Save &MCD file and spriteset";
+			this.miSaveRecordsSprites.Click += new System.EventHandler(this.OnClick_SaveRecordsSprites);
+			// 
+			// miSeparator4
+			// 
+			this.miSeparator4.Index = 3;
+			this.miSeparator4.Text = "-";
+			// 
 			// miOpen
 			// 
-			this.miOpen.Index = 2;
+			this.miOpen.Index = 4;
 			this.miOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOpen.Text = "&Open MCD file ...";
 			this.miOpen.Click += new System.EventHandler(this.OnClick_Open);
@@ -599,48 +619,48 @@
 			// miSave
 			// 
 			this.miSave.Enabled = false;
-			this.miSave.Index = 3;
+			this.miSave.Index = 5;
 			this.miSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
 			this.miSave.Text = "&Save MCD file";
-			this.miSave.Click += new System.EventHandler(this.OnClick_Save);
+			this.miSave.Click += new System.EventHandler(this.OnClick_SaveRecords);
 			// 
 			// miSaveas
 			// 
 			this.miSaveas.Enabled = false;
-			this.miSaveas.Index = 4;
+			this.miSaveas.Index = 6;
 			this.miSaveas.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
 			this.miSaveas.Text = "Sav&e MCD file as ...";
-			this.miSaveas.Click += new System.EventHandler(this.OnClick_Saveas);
+			this.miSaveas.Click += new System.EventHandler(this.OnClick_SaveasTerrain);
 			// 
 			// miReload
 			// 
 			this.miReload.Enabled = false;
-			this.miReload.Index = 5;
+			this.miReload.Index = 7;
 			this.miReload.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
 			this.miReload.Text = "Re&load MCD file";
 			this.miReload.Click += new System.EventHandler(this.OnClick_Reload);
 			// 
 			// miSeparator1
 			// 
-			this.miSeparator1.Index = 6;
+			this.miSeparator1.Index = 8;
 			this.miSeparator1.Text = "-";
 			// 
 			// miSaveSpriteset
 			// 
 			this.miSaveSpriteset.Enabled = false;
-			this.miSaveSpriteset.Index = 7;
+			this.miSaveSpriteset.Index = 9;
 			this.miSaveSpriteset.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
 			this.miSaveSpriteset.Text = "Save spr&iteset";
 			this.miSaveSpriteset.Click += new System.EventHandler(this.OnClick_SaveSpriteset);
 			// 
 			// miSeparator2
 			// 
-			this.miSeparator2.Index = 8;
+			this.miSeparator2.Index = 10;
 			this.miSeparator2.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 9;
+			this.miQuit.Index = 11;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnClick_Quit);
@@ -697,7 +717,7 @@
 			this.miZeroVals.Enabled = false;
 			this.miZeroVals.Index = 2;
 			this.miZeroVals.Shortcut = System.Windows.Forms.Shortcut.Ctrl0;
-			this.miZeroVals.Text = "Zero this part\'s values";
+			this.miZeroVals.Text = "&Zero this part\'s values";
 			this.miZeroVals.Click += new System.EventHandler(this.OnClick_ZeroVals);
 			// 
 			// miCheckVals

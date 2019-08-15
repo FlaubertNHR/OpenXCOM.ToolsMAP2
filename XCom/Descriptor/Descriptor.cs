@@ -109,10 +109,10 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			var spriteset = ResourceInfo.LoadSpriteset(
-													terr, path,
-													ResourceInfo.TAB_WORD_LENGTH_2,
-													Pal);
+			SpriteCollection spriteset = ResourceInfo.LoadSpriteset(
+																terr, path,
+																ResourceInfo.TAB_WORD_LENGTH_2,
+																Pal);
 			if (spriteset != null)
 				return TilepartFactory.CreateTileparts(terr, path, spriteset);
 

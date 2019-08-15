@@ -31,6 +31,11 @@
 
 
 		public static string[] CRandorLF = { "\r\n","\r","\n" };
+
+		public const string PADDED_SEPARATOR = " - ";
+		public const string PADDED_ASTERISK  = " *";
+
+		public const string PckExt_lc = ".pck";
 		#endregion Fields (static)
 	}
 }

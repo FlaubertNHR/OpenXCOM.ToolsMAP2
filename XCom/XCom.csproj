@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\TileGroup.cs" />
+    <Compile Include="FileService.cs" />
     <Compile Include="GlobalsXC.cs" />
     <Compile Include="Infobox.cs" />
     <Compile Include="ProgressBarForm.cs" />

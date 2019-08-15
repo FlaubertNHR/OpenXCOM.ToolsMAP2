@@ -24,6 +24,8 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
+		private const string TITLE = "McdView";
+
 		internal static bool isRunT; // shut the designer up.
 
 		internal const TextFormatFlags FLAGS = TextFormatFlags.HorizontalCenter
@@ -56,7 +58,8 @@ namespace McdView
 
 		internal CopyF Copier;
 
-		private bool SpritesBorked;
+		private bool SaveRecordsetFailed;
+		private bool SaveSpritesetFailed;
 		#endregion Fields
 
 
@@ -100,6 +103,9 @@ namespace McdView
 			{
 				PartsPanel.Spriteset = (_spriteset = value);
 				statusbar_PrintSpriteInfo();
+
+				miSaveSpriteset     .Enabled =
+				miSaveRecordsSprites.Enabled = (_spriteset != null);
 			}
 		}
 
@@ -180,13 +186,12 @@ namespace McdView
 			private get { return _changed; }
 			set
 			{
-				if (_changed != value)
+				if (_changed = value)
 				{
-					if (_changed = value)
-						Text += "*";
-					else
-						Text = Text.Substring(0, Text.Length - 1);
+					Text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfeMcd + GlobalsXC.PADDED_ASTERISK;
 				}
+				else
+					Text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfeMcd;
 			}
 		}
 
@@ -422,12 +427,12 @@ namespace McdView
 		/// Checks if either or both 'Changed' and/or 'SpritesetChanged' has
 		/// been flagged.
 		/// </summary>
-		/// <returns>true if okay to proceed ( more or less ... )</returns>
-		private bool CheckChanged()
+		/// <returns>true if okay to proceed</returns>
+		private bool canCloseTerrain()
 		{
 			if (Changed)
 			{
-				using (var f = new ChangedBox("MCD has changed"))
+				using (var f = new CloseTerrainDialog("MCD has changed"))
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -435,7 +440,8 @@ namespace McdView
 							return false;
 
 						case DialogResult.Yes:
-							Save(PfeMcd);
+							OnClick_SaveRecords(null, EventArgs.Empty);
+							if (SaveRecordsetFailed) return false;
 							break;
 
 						case DialogResult.No:
@@ -446,7 +452,7 @@ namespace McdView
 
 			if (PartsPanel.SpritesChanged)
 			{
-				using (var f = new ChangedBox("PCK + TAB has changed"))
+				using (var f = new CloseTerrainDialog("PCK+TAB has changed"))
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -454,11 +460,8 @@ namespace McdView
 							return false;
 
 						case DialogResult.Yes:
-							SpritesBorked = false;
 							OnClick_SaveSpriteset(null, EventArgs.Empty);
-
-							if (SpritesBorked)
-								return false;
+							if (SaveSpritesetFailed) return false;
 							break;
 
 						case DialogResult.No:
@@ -473,12 +476,12 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles this Form's FormClosing event.
+		/// Handles this form's FormClosing event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (CheckChanged())
+			if (canCloseTerrain())
 			{
 				RegistryInfo.UpdateRegistry(this);
 
@@ -495,7 +498,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles this Form's Resize event.
+		/// Handles this form's Resize event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
@@ -599,7 +602,7 @@ namespace McdView
 		#endregion Events (override)
 
 
-		#region Menuitems
+		#region Events (menu)
 		/// <summary>
 		/// Handles clicking the File|Create menuitem.
 		/// Creates an MCD file. See also OnClick_Open() and OnClick_Reload().
@@ -608,7 +611,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_Create(object sender, EventArgs e)
 		{
-			if (CheckChanged())
+			if (canCloseTerrain())
 			{
 				using (var sfd = new SaveFileDialog())
 				{
@@ -616,67 +619,36 @@ namespace McdView
 					sfd.DefaultExt = "MCD";
 					sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
 
-					if (sfd.ShowDialog() == DialogResult.OK)
+					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
-						// NOTE: Would need to close the currently loaded file to
-						// release its handle if trying to move or create that file.
+						string pfe = sfd.FileName;
 
-						if (sfd.FileName == PfeMcd)
+						using (var fs = FileService.CreateFile(pfe))
+						if (fs != null)
 						{
-							MessageBox.Show(
-										this,
-										"Creating a file that is currently loaded is not allowed."
-											+ Environment.NewLine + Environment.NewLine
-											+ "Create a different file or delete all records in this file.",
-										" punt",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Error,
-										MessageBoxDefaultButton.Button1,
-										0);
-						}
-						else
-						{
-							PfeMcd = sfd.FileName;
-
-							if (File.Exists(PfeMcd))
-							{
-								string bak = Path.Combine(Path.GetDirectoryName(PfeMcd), GlobalsXC.MV_Backup);
-								Directory.CreateDirectory(bak);
-
-								bak = Path.Combine(bak, Path.GetFileName(PfeMcd));
-								File.Delete(bak);
-								File.Move(PfeMcd, bak);
-							}
-
-							File.Create(PfeMcd);
-
+							PfeMcd = pfe;
 							SelId = -1;
 
-							Parts = new Tilepart[0];
-
 							Palette pal;
-							if (miPaletteUfo.Checked)
-								pal = Palette.UfoBattle;
-							else
-								pal = Palette.TftdBattle;
+							if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
+							else                      pal = Palette.TftdBattle;
 
 							ResourceInfo.Spritesets.Clear();
 							Spriteset = ResourceInfo.LoadSpriteset(
 																Label,
 																Path.GetDirectoryName(PfeMcd),
 																ResourceInfo.TAB_WORD_LENGTH_2,
-																pal,
-																true);
+																pal);
 
-							CacheLoad.SetCache(Parts);
+							Parts = new Tilepart[0];
+							CacheLoad.SetCacheSaved(Parts);
+
 							Changed =
 							PartsPanel.SpritesChanged = false;
-							Text = "McdView - " + PfeMcd;
 
-							miSave         .Enabled =
-							miSaveas       .Enabled =
-							miReload       .Enabled =
-							miSaveSpriteset.Enabled = true;
+							miSave  .Enabled =
+							miSaveas.Enabled =
+							miReload.Enabled = true;
 
 							PartsPanel.Select();
 						}
@@ -693,7 +665,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_Open(object sender, EventArgs e)
 		{
-			if (CheckChanged())
+			if (canCloseTerrain())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -701,70 +673,81 @@ namespace McdView
 					ofd.DefaultExt = "MCD";
 					ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
 
-					if (ofd.ShowDialog() == DialogResult.OK)
+					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
-						SelId = -1;
+						string pfe = ofd.FileName;
 
-						PfeMcd = ofd.FileName;
-
-						using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
+						using (var fs = FileService.OpenFile(pfe))
+						if (fs != null)
 						{
-							var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
-
-							Palette pal;
-							if (miPaletteUfo.Checked)
-								pal = Palette.UfoBattle;
+							if (((int)fs.Length % TilepartFactory.Length) != 0)
+							{
+								using (var f = new Infobox(
+														"Error",
+														"The MCD file appears to be corrupted."
+													  + " The length of the file is not evenly divisible by the length of a record.",
+														pfe))
+								{
+									f.ShowDialog(this);
+								}
+							}
 							else
-								pal = Palette.TftdBattle;
-
-							ResourceInfo.Spritesets.Clear();
-							Spriteset = ResourceInfo.LoadSpriteset(
-																Label,
-																Path.GetDirectoryName(PfeMcd),
-																ResourceInfo.TAB_WORD_LENGTH_2,
-																pal,
-																true);
-
-							for (int id = 0; id != parts.Length; ++id)
 							{
-								var bindata = new byte[TilepartFactory.Length];
-								bs.Read(bindata, 0, TilepartFactory.Length);
+								PfeMcd = pfe;
+								SelId = -1;
 
-								parts[id] = new Tilepart(
-													id,
-													new McdRecord(bindata));
-							}
+								Palette pal;
+								if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
+								else                      pal = Palette.TftdBattle;
 
-							Tilepart part;
-							for (int id = 0; id != parts.Length; ++id)
-							{
-								part = parts[id];
-								part.Dead = TilepartFactory.GetDeadPart(
+								ResourceInfo.Spritesets.Clear();
+								Spriteset = ResourceInfo.LoadSpriteset(
 																	Label,
-																	id,
-																	part.Record,
-																	parts);
-								part.Altr = TilepartFactory.GetAltrPart(
-																	Label,
-																	id,
-																	part.Record,
-																	parts);
-							}
+																	Path.GetDirectoryName(PfeMcd),
+																	ResourceInfo.TAB_WORD_LENGTH_2,
+																	pal);
 
-							Parts = parts; // do not assign to 'Parts' until the array is gtg.
+								var parts = new Tilepart[(int)fs.Length / TilepartFactory.Length];
+
+								for (int id = 0; id != parts.Length; ++id)
+								{
+									var bindata = new byte[TilepartFactory.Length];
+									fs.Read(bindata, 0, TilepartFactory.Length);
+
+									parts[id] = new Tilepart(
+														id,
+														new McdRecord(bindata));
+								}
+
+								Tilepart part;
+								for (int id = 0; id != parts.Length; ++id)
+								{
+									part = parts[id];
+									part.Dead = TilepartFactory.GetDeadPart(
+																		Label,
+																		id,
+																		part.Record,
+																		parts);
+									part.Altr = TilepartFactory.GetAltrPart(
+																		Label,
+																		id,
+																		part.Record,
+																		parts);
+								}
+
+								Parts = parts; // do not assign to 'Parts' until the array is gtg.
+								CacheLoad.SetCacheSaved(Parts);
+
+								Changed =
+								PartsPanel.SpritesChanged = false;
+
+								miSave  .Enabled =
+								miSaveas.Enabled =
+								miReload.Enabled = true;
+
+								PartsPanel.Select();
+							}
 						}
-
-						CacheLoad.SetCache(Parts);
-						Changed =
-						PartsPanel.SpritesChanged = false;
-						Text = "McdView - " + PfeMcd;
-
-						miSave         .Enabled =
-						miSaveas       .Enabled =
-						miReload       .Enabled =
-						miSaveSpriteset.Enabled = true;
-
-						PartsPanel.Select();
 					}
 				}
 			}
@@ -779,32 +762,41 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_Reload(object sender, EventArgs e)
 		{
-			if (File.Exists(PfeMcd))
+			using (var fs = FileService.OpenFile(PfeMcd))
+			if (fs != null)
 			{
-				SelId = -1;
-
-				using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
+				if (((int)fs.Length % TilepartFactory.Length) != 0)
 				{
-					var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+					using (var f = new Infobox(
+											"Error",
+											"The MCD file appears to be corrupted."
+										  + " The length of the file is not evenly divisible by the length of a record.",
+											PfeMcd))
+					{
+						f.ShowDialog(this);
+					}
+				}
+				else
+				{
+					SelId = -1;
 
 					Palette pal;
-					if (miPaletteUfo.Checked)
-						pal = Palette.UfoBattle;
-					else
-						pal = Palette.TftdBattle;
+					if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
+					else                      pal = Palette.TftdBattle;
 
 					ResourceInfo.Spritesets.Clear();
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(PfeMcd),
 														ResourceInfo.TAB_WORD_LENGTH_2,
-														pal,
-														true);
+														pal);
+
+					var parts = new Tilepart[(int)fs.Length / TilepartFactory.Length];
 
 					for (int id = 0; id != parts.Length; ++id)
 					{
 						var bindata = new byte[TilepartFactory.Length];
-						bs.Read(bindata, 0, TilepartFactory.Length);
+						fs.Read(bindata, 0, TilepartFactory.Length);
 
 						parts[id] = new Tilepart(
 											id,
@@ -828,320 +820,150 @@ namespace McdView
 					}
 
 					Parts = parts; // do not assign to 'Parts' until the array is gtg.
+					CacheLoad.SetCacheSaved(Parts);
+
+					Changed =
+					PartsPanel.SpritesChanged = false;
+
+					PartsPanel.Select();
 				}
-
-				CacheLoad.SetCache(Parts);
-				Changed =
-				PartsPanel.SpritesChanged = false;
-
-				PartsPanel.Select();
-			}
-			else
-			{
-				MessageBox.Show(
-							this,
-							"The file no longer exists.",
-							" File invalid",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
 			}
 		}
 
 		/// <summary>
 		/// Loads a specified Mcdfile as called from TileView.
 		/// </summary>
-		/// <param name="pfeMcd"></param>
-		/// <param name="palette"></param>
-		/// <param name="terId"></param>
+		/// <param name="pfeMcd">path-file-extension of an MCD file</param>
+		/// <param name="palette">ufo or tftd battle-palette</param>
+		/// <param name="terId">the record to select</param>
 		public void LoadRecords(
 				string pfeMcd,
 				string palette,
 				int terId)
 		{
-			PfeMcd = pfeMcd;
-
-			using (var bs = new BufferedStream(File.OpenRead(PfeMcd)))
+			using (var fs = FileService.OpenFile(pfeMcd))
+			if (fs != null)
 			{
-				var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
-
-				ResourceInfo.Spritesets.Clear();
-				Spriteset = ResourceInfo.LoadSpriteset(
-													Label,
-													Path.GetDirectoryName(PfeMcd),
-													ResourceInfo.TAB_WORD_LENGTH_2,
-													Palette.UfoBattle,
-													true);
-
-				for (int id = 0; id != parts.Length; ++id)
+				if (((int)fs.Length % TilepartFactory.Length) != 0)
 				{
-					var bindata = new byte[TilepartFactory.Length];
-					bs.Read(bindata, 0, TilepartFactory.Length);
-
-					parts[id] = new Tilepart(
-										id,
-										new McdRecord(bindata));
+					using (var f = new Infobox(
+											"Error",
+											"The MCD file appears to be corrupted."
+										  + " The length of the file is not evenly divisible by the length of a record.",
+											PfeMcd))
+					{
+						f.ShowDialog(this);
+					}
 				}
-
-				Tilepart part;
-				for (int id = 0; id != parts.Length; ++id)
+				else
 				{
-					part = parts[id];
-					part.Dead = TilepartFactory.GetDeadPart(
-														Label,
-														id,
-														part.Record,
-														parts);
-					part.Altr = TilepartFactory.GetAltrPart(
-														Label,
-														id,
-														part.Record,
-														parts);
-				}
+					PfeMcd = pfeMcd;
 
-				Parts = parts; // do not assign to 'Parts' until the array is gtg.
+					Palette pal;
+					if (palette.Substring(0,4) == "tftd")
+					{
+						pal = Palette.TftdBattle;
+						OnClick_PaletteTftd(null, EventArgs.Empty);
+					}
+					else
+						pal = Palette.UfoBattle;
+
+					ResourceInfo.Spritesets.Clear();
+					Spriteset = ResourceInfo.LoadSpriteset(
+														Label,
+														Path.GetDirectoryName(PfeMcd),
+														ResourceInfo.TAB_WORD_LENGTH_2,
+														pal);
+
+					var parts = new Tilepart[(int)fs.Length / TilepartFactory.Length];
+
+					for (int id = 0; id != parts.Length; ++id)
+					{
+						var bindata = new byte[TilepartFactory.Length];
+						fs.Read(bindata, 0, TilepartFactory.Length);
+
+						parts[id] = new Tilepart(
+											id,
+											new McdRecord(bindata));
+					}
+
+					Tilepart part;
+					for (int id = 0; id != parts.Length; ++id)
+					{
+						part = parts[id];
+						part.Dead = TilepartFactory.GetDeadPart(
+															Label,
+															id,
+															part.Record,
+															parts);
+						part.Altr = TilepartFactory.GetAltrPart(
+															Label,
+															id,
+															part.Record,
+															parts);
+					}
+
+					Parts = parts; // do not assign to 'Parts' until the array is gtg.
+					CacheLoad.SetCacheSaved(Parts);
+
+					if (terId < Parts.Length) SelId = terId;
+					else                      SelId = -1;
+
+					Changed =
+					PartsPanel.SpritesChanged = false;
+
+					miSave  .Enabled =
+					miSaveas.Enabled =
+					miReload.Enabled = true;
+
+					PartsPanel.Select();
+				}
 			}
-
-			if (palette.Substring(0,4) == "tftd")
-				OnClick_PaletteTftd(null, EventArgs.Empty);
-
-			CacheLoad.SetCache(Parts);
-			Changed =
-			PartsPanel.SpritesChanged = false;
-			Text = "McdView - " + PfeMcd;
-
-			miSave         .Enabled =
-			miSaveas       .Enabled =
-			miReload       .Enabled =
-			miSaveSpriteset.Enabled = true;
-
-			PartsPanel.Select();
-			SelId = terId;
 		}
 
+
+		/// <summary>
+		/// Saves MCD records as well as PCK+TAB spriteset.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_SaveRecordsSprites(object sender, EventArgs e)
+		{
+			OnClick_SaveRecords(  null, EventArgs.Empty);
+			OnClick_SaveSpriteset(null, EventArgs.Empty);
+		}
 
 		/// <summary>
 		/// Handles clicking the File|Save menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnClick_Save(object sender, EventArgs e)
+		private void OnClick_SaveRecords(object sender, EventArgs e)
 		{
-			Save(PfeMcd);
-		}
+			SaveRecordsetFailed = true;
 
-		/// <summary>
-		/// Handles clicking the File|Saveas menuitem.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnClick_Saveas(object sender, EventArgs e)
-		{
-			using (var sfd = new SaveFileDialog())
-			{
-				sfd.Title      = "Save MCD file as ...";
-				sfd.DefaultExt = "MCD";
-				sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|(*.*)";
-				sfd.FileName   = Label + GlobalsXC.McdExt;
-
-				if (sfd.ShowDialog() == DialogResult.OK)
-				{
-					PfeMcd = sfd.FileName;
-
-					Save(PfeMcd, true);
-
-					Text = "McdView - " + PfeMcd;
-
-
-					if (Spriteset != null)
-					{
-						bool writeSpriteset = false;
-
-						string dir = Path.GetDirectoryName(PfeMcd);
-
-						string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
-						string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
-
-						if (File.Exists(pfePck) && File.Exists(pfeTab))
-						{
-							if (MessageBox.Show(
-											this,
-											"Sprite files for the terrain detected."
-												+ " Do you want to overwrite those PCK + TAB"
-												+ " files with the current spriteset?",
-											" Sprite files found",
-											MessageBoxButtons.YesNo,
-											MessageBoxIcon.Question,
-											MessageBoxDefaultButton.Button2,
-											0) == DialogResult.Yes)
-							{
-								writeSpriteset = true;
-							}
-						}
-						else if (MessageBox.Show(
-											this,
-											"Sprite files for the terrain were not found."
-												+ " Do you want to write PCK + TAB files"
-												+ " for this terrain?",
-											" Create sprite files",
-											MessageBoxButtons.YesNo,
-											MessageBoxIcon.Question,
-											MessageBoxDefaultButton.Button2,
-											0) == DialogResult.Yes)
-						{
-							writeSpriteset = true;
-						}
-
-						if (writeSpriteset)
-							OnClick_SaveSpriteset(null, EventArgs.Empty);
-					}
-					OnClick_Reload(null, EventArgs.Empty);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Conducts the save-procedure.
-		/// </summary>
-		/// <param name="pfeMcd">path-file-extension to save to</param>
-		/// <param name="as">true if doing a SaveAs operation</param>
-		private void Save(string pfeMcd, bool @as = false)
-		{
 			if (Parts.Length <= MapFileService.MAX_MCDRECORDS
-				|| MessageBox.Show(
-								this,
-								"Total MCD records in the terrain exceeds "
-									+ MapFileService.MAX_MCDRECORDS + ".",
-								" Records exceeded",
-								MessageBoxButtons.OKCancel,
-								MessageBoxIcon.Warning,
-								MessageBoxDefaultButton.Button2,
-								0) == DialogResult.OK)
+					|| MessageBox.Show(
+									this,
+									"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
+									" Warning",
+									MessageBoxButtons.OKCancel,
+									MessageBoxIcon.Warning,
+									MessageBoxDefaultButton.Button2,
+									0) == DialogResult.OK)
 			{
-				if (!@as)
+				if (McdRecord.WriteRecords(PfeMcd + GlobalsXC.TEMPExt, Parts)
+					&& FileService.ReplaceFile(PfeMcd))
 				{
-					string pfeMcdT = pfeMcd + GlobalsXC.TEMPExt;
-					WriteMcdData(pfeMcdT);
+					SaveRecordsetFailed = false;
 
-					string dirBackup = Path.Combine(Path.GetDirectoryName(pfeMcd), GlobalsXC.MV_Backup);
-					Directory.CreateDirectory(dirBackup);
+					CacheLoad.SetCacheSaved(Parts);
+					Changed = false;
 
-					File.Replace(
-							pfeMcdT,											// src
-							pfeMcd,												// dst
-							Path.Combine(dirBackup, Path.GetFileName(pfeMcd)),	// backup
-							true);												// ignoreMetadataErrors
-				}
-				else
-					WriteMcdData(pfeMcd);
-
-				CacheLoad.SetCache(Parts);
-				Changed =
-				PartsPanel.SpritesChanged = false;
-				FireMvReload = true;
-			}
-		}
-
-		/// <summary>
-		/// Writes/overwrites the specified MCD file.
-		/// </summary>
-		/// <param name="pfeMcd"></param>
-		private void WriteMcdData(string pfeMcd)
-		{
-			using (var fs = File.Create(pfeMcd))
-			{
-				McdRecord record;
-
-				foreach (Tilepart part in Parts)
-				{
-					record = part.Record;
-
-					fs.WriteByte((byte)record.Sprite1);					//  0
-					fs.WriteByte((byte)record.Sprite2);					//  1
-					fs.WriteByte((byte)record.Sprite3);					//  2
-					fs.WriteByte((byte)record.Sprite4);					//  3
-					fs.WriteByte((byte)record.Sprite5);					//  4
-					fs.WriteByte((byte)record.Sprite6);					//  5
-					fs.WriteByte((byte)record.Sprite7);					//  6
-					fs.WriteByte((byte)record.Sprite8);					//  7
-
-					fs.WriteByte((byte)record.Loft1);					//  8
-					fs.WriteByte((byte)record.Loft2);					//  9
-					fs.WriteByte((byte)record.Loft3);					// 10
-					fs.WriteByte((byte)record.Loft4);					// 11
-					fs.WriteByte((byte)record.Loft5);					// 12
-					fs.WriteByte((byte)record.Loft6);					// 13
-					fs.WriteByte((byte)record.Loft7);					// 14
-					fs.WriteByte((byte)record.Loft8);					// 15
-					fs.WriteByte((byte)record.Loft9);					// 16
-					fs.WriteByte((byte)record.Loft10);					// 17
-					fs.WriteByte((byte)record.Loft11);					// 18
-					fs.WriteByte((byte)record.Loft12);					// 19
-
-					ushort u = record.ScanG_reduced;
-					if (BitConverter.IsLittleEndian)
-					{
-						byte b = (byte)(u & 0x00FF);
-						fs.WriteByte(b);								// 20
-						b = (byte)((u & 0xFF00) >> 8);
-						fs.WriteByte(b);								// 21
-					}
-					else // swap bytes.
-					{
-						byte b = (byte)((u & 0xFF00) >> 8);
-						fs.WriteByte(b);								// 20
-						b = (byte)(u & 0x00FF);
-						fs.WriteByte(b);								// 21
-					}
-
-					fs.WriteByte((byte)record.Unknown22);				// 22
-					fs.WriteByte((byte)record.Unknown23);				// 23
-					fs.WriteByte((byte)record.Unknown24);				// 24
-					fs.WriteByte((byte)record.Unknown25);				// 25
-					fs.WriteByte((byte)record.Unknown26);				// 26
-					fs.WriteByte((byte)record.Unknown27);				// 27
-					fs.WriteByte((byte)record.Unknown28);				// 28
-					fs.WriteByte((byte)record.Unknown29);				// 29
-
-					fs.WriteByte(Convert.ToByte(record.SlidingDoor));	// 30 (bool)
-					fs.WriteByte(Convert.ToByte(record.StopLOS));		// 31 (bool)
-					fs.WriteByte(Convert.ToByte(record.NotFloored));	// 32 (bool)
-					fs.WriteByte(Convert.ToByte(record.BigWall));		// 33 (bool)
-					fs.WriteByte(Convert.ToByte(record.GravLift));		// 34 (bool)
-					fs.WriteByte(Convert.ToByte(record.HingedDoor));	// 35 (bool)
-					fs.WriteByte(Convert.ToByte(record.BlockFire));		// 36 (bool)
-					fs.WriteByte(Convert.ToByte(record.BlockSmoke));	// 37 (bool)
-
-					fs.WriteByte((byte)record.LeftRightHalf);			// 38
-					fs.WriteByte((byte)record.TU_Walk);					// 39
-					fs.WriteByte((byte)record.TU_Slide);				// 40
-					fs.WriteByte((byte)record.TU_Fly);					// 41
-					fs.WriteByte((byte)record.Armor);					// 42
-					fs.WriteByte((byte)record.HE_Block);				// 43
-					fs.WriteByte((byte)record.DieTile);					// 44
-					fs.WriteByte((byte)record.FireResist);				// 45
-					fs.WriteByte((byte)record.Alt_MCD);					// 46
-					fs.WriteByte((byte)record.Unknown47);				// 47
-					fs.WriteByte(unchecked((byte)record.StandOffset));	// 48 (sbyte)
-					fs.WriteByte((byte)record.TileOffset);				// 49
-					fs.WriteByte((byte)record.Unknown50);				// 50
-					fs.WriteByte((byte)record.LightBlock);				// 51
-					fs.WriteByte((byte)record.Footstep);				// 52
-
-					fs.WriteByte((byte)record.PartType);				// 53 (PartType)
-					fs.WriteByte((byte)record.HE_Type);					// 54
-					fs.WriteByte((byte)record.HE_Strength);				// 55
-					fs.WriteByte((byte)record.SmokeBlockage);			// 56
-					fs.WriteByte((byte)record.Fuel);					// 57
-					fs.WriteByte((byte)record.LightSource);				// 58
-					fs.WriteByte((byte)record.Special);					// 59 (SpecialType)
-					fs.WriteByte(Convert.ToByte(record.BaseObject));	// 60 (bool)
-					fs.WriteByte((byte)record.Unknown61);				// 61
+					FireMvReload = true;
 				}
 			}
 		}
-
 
 		/// <summary>
 		/// Handles clicking the File|Save spriteset menuitem.
@@ -1152,85 +974,109 @@ namespace McdView
 		{
 			if (Spriteset != null)
 			{
+				SaveSpritesetFailed = true;
+
 				string dir = Path.GetDirectoryName(PfeMcd);
+				string pf  = Path.Combine(dir, Label);
 
-				string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
-				string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
-
-				BackupSpritesetFiles(dir, Label);
-
-				if (SpriteCollection.SaveSpriteset(
-												dir,
-												Label,
-												Spriteset,
-												ResourceInfo.TAB_WORD_LENGTH_2))
+				if (SpriteCollection.WriteSpriteset(pf, Spriteset)
+					&& FileService.ReplaceFile(pf + GlobalsXC.PckExt)
+					&& FileService.ReplaceFile(pf + GlobalsXC.TabExt))
 				{
-					SpritesBorked =
+					SaveSpritesetFailed = false;
+
 					PartsPanel.SpritesChanged = false;
-				}
-				else
-				{
-					// bork - likely too many sprites. run Edit|Checkvals ...
-					SpritesBorked = true;
-					string error = String.Format(
-											System.Globalization.CultureInfo.CurrentCulture,
-											"An I/O error occurred.");
-					MessageBox.Show(
-								error,
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
-				}
 
-				FireMvReload = true;
+					FireMvReload = true;
+				}
 			}
 		}
 
 		/// <summary>
-		/// Backs up the PCK+TAB files before trying to save the Spriteset.
-		/// @note See also PckView.PckViewForm.OnSaveClick() and OnSaveAsClick().
-		/// @note A possible internal reason that a spriteset is invalid is that
-		/// if the total length of its compressed PCK-data exceeds 2^16 bits
-		/// (roughly). That is, the TAB file tracks the offsets and needs to
-		/// know the total length of the PCK file, but UFO's TAB file stores the
-		/// offsets in only 2-byte format (2^16 bits) so the arithmetic explodes
-		/// with an overflow as soon as an offset for one of the sprites becomes
-		/// too large. (Technically, the total PCK data can exceed 2^16 bits;
-		/// but the *start offset* for a sprite cannot -- at least that's how it
-		/// works in MapView I/II. Other apps like XCOM, OpenXcom, MCDEdit will
-		/// use their own routines.)
-		/// @note It appears that TFTD's terrain files suffer this limitation
-		/// also (2-byte TabwordLength).
+		/// Handles clicking the File|Saveas menuitem.
 		/// </summary>
-		/// <param name= "dir">the directory of the files to backup</param>
-		/// <param name= "fil">the file w/out path or extension</param>
-		private static void BackupSpritesetFiles(string dir, string fil)
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_SaveasTerrain(object sender, EventArgs e)
 		{
-			// TODO: Don't be such a nerd; see McdView's safety save routine.
-
-			Directory.CreateDirectory(dir); // in case user deleted the dir.
-
-			string pfePck = Path.Combine(dir, fil + GlobalsXC.PckExt);
-			string pfeTab = Path.Combine(dir, fil + GlobalsXC.TabExt);
-
-			string dirB = Path.Combine(dir, GlobalsXC.MV_Backup);
-
-			if (File.Exists(pfePck))
+			using (var sfd = new SaveFileDialog())
 			{
-				Directory.CreateDirectory(dirB);
+				sfd.Title      = "Save MCD file as ...";
+				sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|(*.*)";
+				sfd.FileName   = Label + GlobalsXC.McdExt;
+				sfd.DefaultExt = "MCD";
 
-				string pfePckB = Path.Combine(dirB, fil + GlobalsXC.PckExt);
-				File.Copy(pfePck, pfePckB, true);
-			}
+				if (sfd.ShowDialog(this) == DialogResult.OK
+					&& (Parts.Length <= MapFileService.MAX_MCDRECORDS
+						|| MessageBox.Show(
+										this,
+										"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
+										" Warning",
+										MessageBoxButtons.OKCancel,
+										MessageBoxIcon.Warning,
+										MessageBoxDefaultButton.Button2,
+										0) == DialogResult.OK))
+				{
+					string pfe = sfd.FileName;
 
-			if (File.Exists(pfeTab))
-			{
-				Directory.CreateDirectory(dirB);
+					if (McdRecord.WriteRecords(pfe + GlobalsXC.TEMPExt, Parts)
+						&& FileService.ReplaceFile(pfe))
+					{
+						PfeMcd = pfe;
 
-				string pfeTabB = Path.Combine(dirB, fil + GlobalsXC.TabExt);
-				File.Copy(pfeTab, pfeTabB, true);
+						CacheLoad.SetCacheSaved(Parts);
+
+						Changed = false;
+
+						FireMvReload = true;
+
+
+						if (Spriteset != null)
+						{
+							string info = String.Empty;
+
+							string dir    = Path.GetDirectoryName(PfeMcd);
+							string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
+							string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
+
+							if (File.Exists(pfePck))
+							{
+								info += "Pck file found." + Environment.NewLine;
+							}
+
+							if (File.Exists(pfeTab))
+							{
+								info += "Tab file found." + Environment.NewLine;
+							}
+
+							if (info != String.Empty)
+							{
+								info += Environment.NewLine;
+
+								info += "Sprites for the terrain detected. Do you want"
+									  + " to overwrite the spriteset ...";
+							}
+							else
+							{
+								info += "Sprites for the terrain were not found. Do you"
+									  + " want to write the spriteset ...";
+							}
+
+							if (MessageBox.Show(
+											this,
+											info,
+											" Write spriteset",
+											MessageBoxButtons.YesNo,
+											MessageBoxIcon.Question,
+											MessageBoxDefaultButton.Button1,
+											0) == DialogResult.Yes)
+							{
+								OnClick_SaveSpriteset(null, EventArgs.Empty);
+							}
+						}
+						OnClick_Reload(null, EventArgs.Empty);
+					}
+				}
 			}
 		}
 
@@ -1407,7 +1253,7 @@ namespace McdView
 				ofd.DefaultExt = "MCD";
 				ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
 
-				if (ofd.ShowDialog() == DialogResult.OK)
+				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
 					if (Copier == null)
 					{
@@ -1425,18 +1271,15 @@ namespace McdView
 						var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
 
 						Palette pal;
-						if (miPaletteUfo.Checked)
-							pal = Palette.UfoBattle;
-						else
-							pal = Palette.TftdBattle;
+						if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
+						else                      pal = Palette.TftdBattle;
 
 						ResourceInfo.Spritesets.Clear();
 						Copier.Spriteset = ResourceInfo.LoadSpriteset(
-																	Copier.Label,
-																	Path.GetDirectoryName(Copier.PfeMcd),
-																	ResourceInfo.TAB_WORD_LENGTH_2,
-																	pal,
-																	true);
+																Copier.Label,
+																Path.GetDirectoryName(Copier.PfeMcd),
+																ResourceInfo.TAB_WORD_LENGTH_2,
+																pal);
 
 						for (int id = 0; id != parts.Length; ++id)
 						{
@@ -1531,7 +1374,7 @@ namespace McdView
 				f.ShowDialog(this);
 			}
 		}
-		#endregion Menuitems
+		#endregion Events (menu)
 
 
 		#region Events

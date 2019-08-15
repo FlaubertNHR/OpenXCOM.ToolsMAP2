@@ -321,8 +321,8 @@ namespace MapView
 			Palette.TftdBattle.Grayscale.SetTransparent(true);
 			LogFile.WriteLine("Palette transparencies set.");
 
-			LoadExtraSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
-								// NOTE: transparency of the 'UfoBattle' palette must be set first.
+			LoadDuotoneSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
+									// NOTE: transparency of the 'UfoBattle' palette must be set first.
 
 
 			QuadrantDrawService.Punkstrings();
@@ -386,11 +386,12 @@ namespace MapView
 			// NOTE: This is the only stock XCOM resource that is required for
 			// MapView to start. See ConfigurationForm ...
 			// TODO: give user the option to choose which cursor-spriteset to use.
-			var cuboid = ResourceInfo.LoadSpriteset(
-												SharedSpace.CursorFilePrefix,
-												SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo),
-												ResourceInfo.TAB_WORD_LENGTH_2,
-												Palette.UfoBattle);
+			SpriteCollection cuboid;
+			cuboid = ResourceInfo.LoadSpriteset(
+											SharedSpace.CursorFilePrefix,
+											SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo),
+											ResourceInfo.TAB_WORD_LENGTH_2,
+											Palette.UfoBattle);
 			if (cuboid != null)
 			{
 				CuboidSprite.Cursorset = cuboid;
@@ -461,7 +462,7 @@ namespace MapView
 		/// @note These sprites could be broken out and put in Resources but
 		/// it's kinda cute this way too.
 		/// </summary>
-		internal static void LoadExtraSprites()
+		private static void LoadDuotoneSprites()
 		{
 			var ass = Assembly.GetExecutingAssembly();
 			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.DUOTONE.PCK"))
@@ -474,11 +475,11 @@ namespace MapView
 				fsTab.Read(bytesTab, 0, (int)fsTab.Length);
 
 				DuotoneSprites = new SpriteCollection(
-													bytesPck,
-													bytesTab,
-													ResourceInfo.TAB_WORD_LENGTH_2,
+													"Duotone",
 													Palette.UfoBattle,
-													"Duotone");
+													ResourceInfo.TAB_WORD_LENGTH_2,
+													bytesPck,
+													bytesTab);
 			}
 		}
 

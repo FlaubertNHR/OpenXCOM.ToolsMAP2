@@ -76,7 +76,7 @@
   <ItemGroup>
     <Compile Include="addrangeinput.cs" />
     <Compile Include="CacheLoad.cs" />
-    <Compile Include="changedbox.cs" />
+    <Compile Include="CloseTerrainDialog.cs" />
     <Compile Include="Colors.cs" />
     <Compile Include="CopyF.cs" />
     <Compile Include="CopyF.Designer.cs">
@@ -114,8 +114,8 @@
     <EmbeddedResource Include="addrangeinput.resx">
       <DependentUpon>addrangeinput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="changedbox.resx">
-      <DependentUpon>changedbox.cs</DependentUpon>
+    <EmbeddedResource Include="CloseTerrainDialog.resx">
+      <DependentUpon>CloseTerrainDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CopyF.resx">
       <DependentUpon>CopyF.cs</DependentUpon>
