@@ -1,10 +1,12 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 
 // now why did I just *know* that the nutcase who writes the low-level code for
-// image-handling was going to cram everything together ....
-// And I'm the nutcase who just went through the whole thing adding whitespace.
+// image-handling was going to cram everything together ...
+// because I'm the nutcase who just went through the whole thing adding
+// whitespace.
 
 
 namespace XCom
@@ -131,15 +133,16 @@ namespace XCom
 		/// <summary>
 		/// Saves a sprite after setting colorid #0 transparent.
 		/// </summary>
-		/// <param name="fullpath"></param>
+		/// <param name="pfe"></param>
 		/// <param name="b"></param>
-		public static void ExportSprite(string fullpath, Bitmap b)
+		public static void ExportSprite(string pfe, Bitmap b)
 		{
 			ColorPalette pal = b.Palette;
 			pal.Entries[Palette.TranId] = Color.Transparent;
 			b.Palette = pal;
 
-			b.Save(fullpath, ImageFormat.Png);
+			Directory.CreateDirectory(Path.GetDirectoryName(pfe));
+			b.Save(pfe, ImageFormat.Png);
 		}
 
 		/// <summary>

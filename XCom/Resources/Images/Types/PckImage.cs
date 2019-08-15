@@ -63,7 +63,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[1]. Instantiates a PckImage, based on an XCImage.
+		/// cTor[0]. Instantiates a PckImage, based on an XCImage.
 		/// </summary>
 		/// <param name="bindata">the COMPRESSED source data</param>
 		/// <param name="pal"></param>
@@ -87,17 +87,9 @@ namespace XCom
 
 			Pal = pal;
 
-			Spriteset.BorkedBigobs = false;
+			int posDst = bindata[0] * XCImage.SpriteWidth; // first byte is always count of transparent rows
 
-			for (int id = 0; id != Bindata.Length; ++id)
-				Bindata[id] = Palette.TranId; // Safety: byte arrays get initialized w/ "0" by default
-
-			int posSrc = 0;
-			int posDst = 0;
-
-			posDst = bindata[posSrc] * XCImage.SpriteWidth; // first byte is always count of transparent rows
-
-			for (posSrc = 1; posSrc != bindata.Length; ++posSrc)
+			for (int posSrc = 1; posSrc != bindata.Length; ++posSrc)
 			{
 				switch (bindata[posSrc])
 				{
@@ -109,26 +101,18 @@ namespace XCom
 						break;
 
 					default:
-						if (posDst < Bindata.Length)
+						if (posDst >= Bindata.Length)
 						{
-							Bindata[posDst++] = bindata[posSrc];
-							break;
+							Spriteset.Error_Overflo = true;
+							return;
 						}
 
-						// could be trying to load a 32x48 Bigobs pck in a 32x40 spriteset.
-						// Note that this cannot be resolved absolutely.
-						Spriteset.BorkedBigobs = true;
-						return;
+						Bindata[posDst++] = bindata[posSrc];
+						break;
 				}
 			}
 
-//			if (!Spriteset.BorkedBigobs) // check if trying to load a 32x40 Terrain/Unit pck in a 32x48 spriteset.
-//			{
-//				// there's no way to determine this.
-//			}
-//			else
-//			{
-			Sprite = BitmapService.CreateColorized(
+			Sprite   = BitmapService.CreateColorized(
 												XCImage.SpriteWidth,
 												XCImage.SpriteHeight,
 												Bindata,
@@ -138,11 +122,10 @@ namespace XCom
 												XCImage.SpriteHeight,
 												Bindata,
 												Pal.Grayscale.ColorTable);
-//			}
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a blank sprite for Duplicate().
+		/// cTor[1]. Creates a blank sprite for Duplicate().
 		/// </summary>
 		private PckImage()
 		{}
@@ -151,12 +134,13 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// 
+		/// Compresses and optionally writes a specified sprite to a specified
+		/// stream.
 		/// </summary>
-		/// <param name="bw"></param>
-		/// <param name="sprite"></param>
-		/// <returns></returns>
-		internal static uint SaveSpritesetSprite(BinaryWriter bw, XCImage sprite)
+		/// <param name="sprite">an XCImage sprite</param>
+		/// <param name="bw">null for test only</param>
+		/// <returns>the length of the sprite (in bytes) after compression</returns>
+		internal static uint Write(XCImage sprite, BinaryWriter bw = null)
 		{
 			var binlist = new List<byte>();
 
@@ -205,104 +189,25 @@ namespace XCom
 					binlist.Add(b);
 				}
 			}
-
-			// So, question. Is one obligated to account for transparent pixels
-			// to the end of an image, or can one just assume that the program
-			// that reads and decompresses the data will force them to transparent ...
-			//
-			// It looks like both OpenXcom and MapView will fill the sprite with
-			// all transparent pixels when each sprite is initialized. Therefore,
-			// it's not *required* to encode any pixels that are transparent to
-			// the end of the sprite.
-			//
-			// And when looking at some of the stock PCK's things look non-standardized.
-			// It's sorta like if there's at least one full row of transparent
-			// pixels at the end of an image, it gets 0xFE,0xFF tacked on before
-			// the final 0xFF (end of image) marker.
-			//
-			// Obsolete: This algorithm can and will tack on multiple 0xFE,0xFF
-			// if there's more than 256 transparent pixels at the end of an image.
-
-//			bool appendStopByte = false;
-//			while (lenTransparent >= Byte.MaxValue)
-//			{
-//				lenTransparent -= Byte.MaxValue;
-//
-//				binlist.Add(MarkerRle);
-//				binlist.Add(Byte.MaxValue);
-//
-//				appendStopByte = true;
-//			}
-//
-//			if (appendStopByte
-//				|| (byte)binlist[binlist.Count - 1] != MarkerEos)
-//			{
 			binlist.Add(MarkerEos);
-//			}
 
-			// Okay. That seems to be the algorithm that was used. Ie, no need
-			// to go through that final looping mechanism.
-			//
-			// In fact I'll bet it's even better than stock, since it no longer
-			// appends superfluous 0xFE,0xFF markers at all.
-
-			bw.Write(binlist.ToArray());
+			if (bw != null) bw.Write(binlist.ToArray());
 
 			return (uint)binlist.Count;
 		}
-
-		/// <summary>
-		/// Creates a mockup of an RLE-encoded sprite and returns its length.
-		/// </summary>
-		/// <param name="sprite"></param>
-		/// <returns></returns>
-		internal static uint TestSprite(XCImage sprite)
-		{
-			var binlist = new List<byte>();
-
-			int lenTransparent = 0;
-			bool first = true;
-
-			for (int id = 0; id != sprite.Bindata.Length; ++id)
-			{
-				byte b = sprite.Bindata[id];
-
-				if (b == Palette.TranId)
-					++lenTransparent;
-				else
-				{
-					if (lenTransparent != 0)
-					{
-						if (first)
-						{
-							first = false;
-
-							binlist     .Add((byte)(lenTransparent / sprite.Sprite.Width));	// qty of initial transparent rows
-							lenTransparent = (byte)(lenTransparent % sprite.Sprite.Width);	// qty of transparent pixels starting on the next row
-						}
-
-						while (lenTransparent >= Byte.MaxValue)
-						{
-							lenTransparent -= Byte.MaxValue;
-
-							binlist.Add(MarkerRle);
-							binlist.Add(Byte.MaxValue);
-						}
-
-						if (lenTransparent != 0)
-						{
-							binlist.Add(MarkerRle);
-							binlist.Add((byte)lenTransparent);
-						}
-						lenTransparent = 0;
-					}
-					binlist.Add(b);
-				}
-			}
-
-			binlist.Add(MarkerEos);
-			return (uint)binlist.Count;
-		}
+		// So, question. Is one obligated to account for transparent pixels
+		// to the end of an image, or can one just assume that the program
+		// that reads and decompresses the data will force them to transparent ...
+		//
+		// It looks like both OpenXcom and MapView will fill the sprite with
+		// all transparent pixels when each sprite is initialized. Therefore,
+		// it's not *required* to encode any pixels that are transparent to
+		// the end of the sprite.
+		//
+		// And when looking at some of the stock PCK's things look non-standardized.
+		// It's sorta like if there's at least one full row of transparent
+		// pixels at the end of an image, it gets 0xFE,0xFF tacked on before
+		// the final 0xFF (end of image) marker.
 		#endregion Methods (static)
 
 
@@ -421,69 +326,3 @@ namespace XCom
 		}
 	}
 }
-
-//		public override void Hq2x()
-//		{
-//			if (Width == 32) // hasn't been done yet
-//				base.Hq2x();
-//		}
-
-//		public static Type GetCollectionType()
-//		{
-//			return typeof(SpriteCollection);
-//		}
-
-//		public void ReImage()
-//		{
-//			_image = Bmp.MakeBitmap8(
-//								Width,
-//								Height,
-//								_expanded,
-//								Palette.Colors);
-//			_gray = Bmp.MakeBitmap8(
-//								Width,
-//								Height,
-//								_expanded,
-//								Palette.Grayscale.Colors);
-//		}
-
-//		public void MoveImage(byte offset)
-//		{
-//			_id[_moveId] = (byte)(_moveVal - offset);
-//			int ex = 0;
-//			int startIdx = 0;
-//			for (int i = 0; i != _expanded.Length; ++i)
-//				_expanded[i] = TransparentIndex;
-//
-//			if (_id[0] != FileTransparencyByte)
-//				ex = _id[startIdx++] * Width;
-//
-//			for (int i = startIdx; i < _id.Length; ++i)
-//			{
-//				switch (_id[i])
-//				{
-//					case FileTransparencyByte: // skip quantity of pixels
-//						ex += _id[i + 1];
-//						++i;
-//						break;
-//
-//					case FileStopByte: // end of image
-//						break;
-//
-//					default:
-//						_expanded[ex++] = _id[i];
-//						break;
-//				}
-//			}
-//		
-//			_image = Bmp.MakeBitmap8(
-//								Width,
-//								Height,
-//								_expanded,
-//								Palette.Colors);
-//			_gray = Bmp.MakeBitmap8(
-//								Width,
-//								Height,
-//								_expanded,
-//								Palette.Grayscale.Colors);
-//		}
