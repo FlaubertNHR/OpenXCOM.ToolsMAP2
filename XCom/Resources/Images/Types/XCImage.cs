@@ -19,6 +19,11 @@ namespace XCom
 
 
 		#region Properties
+		/// <summary>
+		/// A byte array containing the (uncompressed) sprite-pixels as
+		/// palette-indices.
+		/// @note Byte arrays get initialized w/ "0" by default.
+		/// </summary>
 		public byte[] Bindata
 		{ get; protected set; }
 
@@ -46,9 +51,9 @@ namespace XCom
 		#endregion Properties
 
 
-		#region cTors
+		#region cTor
 		/// <summary>
-		/// cTor[1]. Creates an XCImage.
+		/// cTor[0]. Creates an XCImage.
 		/// @note Binary data must not be compressed.
 		/// </summary>
 		/// <param name="bindata">the uncompressed source data</param>
@@ -79,10 +84,10 @@ namespace XCom
 		}																// that's why i prefer pizza.
 
 		/// <summary>
-		/// cTor[2]. For clone. See PckImage..cTor[2] and .Clone().
+		/// cTor[1]. For clone. See PckImage..cTor[1] and .Clone().
 		/// </summary>
 		protected XCImage()
 		{}
-		#endregion cTors
+		#endregion cTor
 	}
 }

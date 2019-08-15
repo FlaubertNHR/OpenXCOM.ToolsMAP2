@@ -258,7 +258,7 @@ namespace McdView
 									+ Environment.NewLine + Environment.NewLine
 									+ "A spriteset can be created with PckView or"
 									+ " by inserting records from the CopyPanel.",
-								" Info",
+								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
@@ -419,7 +419,7 @@ namespace McdView
 					MessageBox.Show(
 								this,
 								"ScanG icons not found.",
-								" Info",
+								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,

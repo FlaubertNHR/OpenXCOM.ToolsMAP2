@@ -85,7 +85,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[1]. Creates a standard Tilepart.
+		/// cTor[0]. Creates a standard Tilepart.
 		/// </summary>
 		/// <param name="id">the id of this part in its recordset</param>
 		/// <param name="record">this part's MCD-record as an object</param>
@@ -111,7 +111,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a blank part that's ready to go in McdView.
+		/// cTor[1]. Creates a blank part that's ready to go in McdView.
 		/// </summary>
 		public Tilepart(int id)
 		{
@@ -120,7 +120,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[3]. Creates a blank part for CreateInsert().
+		/// cTor[2]. Creates a blank part for CreateInsert().
 		/// </summary>
 		private Tilepart()
 		{}

@@ -209,9 +209,9 @@ namespace XCom
 		#endregion Properties
 
 
-		#region cTors
+		#region cTor
 		/// <summary>
-		/// cTor[1]. Instantiates a palette given a filestream of data.
+		/// cTor[0]. Instantiates a palette given a filestream of data.
 		/// </summary>
 		/// <param name="fs"></param>
 		private Palette(Stream fs)
@@ -240,7 +240,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Instantiates a grayscale-palette with a given label.
+		/// cTor[1]. Instantiates a grayscale-palette with a given label.
 		/// </summary>
 		/// <param name="label"></param>
 		private Palette(string label)
@@ -250,7 +250,7 @@ namespace XCom
 
 			Label = label;
 		}
-		#endregion cTors
+		#endregion cTor
 
 
 		#region Methods

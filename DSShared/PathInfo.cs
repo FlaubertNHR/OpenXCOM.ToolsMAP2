@@ -7,7 +7,7 @@ namespace DSShared
 	/// <summary>
 	/// Class to help pass around (/settings) file-paths.
 	/// </summary>
-	public class PathInfo
+	public sealed class PathInfo
 	{
 		#region Fields (static)
 		// path-keys in SharedSpace
@@ -42,22 +42,23 @@ namespace DSShared
 
 
 		#region Properties
-		private readonly string _path;
+		private readonly string _dir;
 		/// <summary>
 		/// Directory path.
 		/// </summary>
 		public string DirectoryPath
 		{
-			get { return _path; }
+			get { return _dir; }
 		}
 
 		/// <summary>
 		/// Gets the fullpath.
-		/// kL_question: Can a file or directory end with "." (no, disallowed by Windows OS)
+		/// kL_question: Can a file or directory end with "." (no, disallowed by
+		/// Windows OS)
 		/// </summary>
 		public string Fullpath
 		{
-			get { return Path.Combine(_path, _file); }
+			get { return Path.Combine(_dir, _file); }
 		}
 		#endregion Properties
 
@@ -66,11 +67,11 @@ namespace DSShared
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:DSShared.PathInfo" /> class.
 		/// </summary>
-		/// <param name="path">the path</param>
+		/// <param name="dir">a path to the directory</param>
 		/// <param name="file">the file with any extension</param>
-		public PathInfo(string path, string file)
+		public PathInfo(string dir, string file)
 		{
-			_path = path;
+			_dir  = dir;
 			_file = file;
 		}
 		#endregion cTor
@@ -91,7 +92,7 @@ namespace DSShared
 		/// </summary>
 		public void CreateDirectory()
 		{
-			Directory.CreateDirectory(_path);
+			Directory.CreateDirectory(_dir);
 		}
 		#endregion Methods
 	}

@@ -45,9 +45,7 @@ namespace XCom
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			Hide();
-
 			e.Cancel = true;
-//			base.OnClosing(e);
 		}
 		#endregion Events (override)
 
@@ -72,6 +70,7 @@ namespace XCom
 
 		#region Designer
 		private Container components = null;
+
 		private Label lbl_InfoHeader;
 		private Label lbl_InfoBody;
 		private RichTextBox rtb_Text;

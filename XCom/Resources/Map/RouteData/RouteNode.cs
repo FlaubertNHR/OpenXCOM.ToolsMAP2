@@ -61,9 +61,9 @@ namespace XCom
 		#endregion Properties
 
 
-		#region cTors
+		#region cTor
 		/// <summary>
-		/// cTor[1]. Creates a node from binary data.
+		/// cTor[0]. Creates a node from binary data.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="bindata"></param>
@@ -105,7 +105,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a node based on row/col/level.
+		/// cTor[1]. Creates a node based on row/col/level.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="row"></param>
@@ -131,7 +131,7 @@ namespace XCom
 
 			OobRank = (byte)0;
 		}
-		#endregion cTors
+		#endregion cTor
 
 
 		#region Methods

@@ -69,9 +69,9 @@ namespace MapView.Forms.Observers
 		#endregion Properties
 
 
-		#region cTors
+		#region cTor
 		/// <summary>
-		/// cTor[1]. Instantiates a colortool from a Pen object.
+		/// cTor[0]. Instantiates a colortool from a Pen object.
 		/// </summary>
 		/// <param name="pen"></param>
 		internal ColorTool(Pen pen)
@@ -88,7 +88,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// cTor[2]. Instantiates a colortool from a Brush object.
+		/// cTor[1]. Instantiates a colortool from a Brush object.
 		/// </summary>
 		/// <param name="brush"></param>
 		/// <param name="width"></param>
@@ -104,7 +104,7 @@ namespace MapView.Forms.Observers
 			_brushLight     = new SolidBrush(colorLight);
 			_brushLightPrep = new SolidBrush(Color.GhostWhite);
 		}
-		#endregion cTors
+		#endregion cTor
 
 
 		/// <summary>

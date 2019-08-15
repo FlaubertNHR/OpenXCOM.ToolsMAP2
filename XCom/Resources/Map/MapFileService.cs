@@ -75,8 +75,7 @@ namespace XCom
 				using (var fbd = new FolderBrowserDialog())
 				{
 					string basepath = descriptor.Basepath;
-					if (!String.IsNullOrEmpty(basepath)
-						&& Directory.Exists(basepath))
+					if (!String.IsNullOrEmpty(basepath) && Directory.Exists(basepath))
 					{
 						fbd.SelectedPath = basepath;
 					}
