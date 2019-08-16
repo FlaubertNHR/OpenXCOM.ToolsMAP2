@@ -136,10 +136,10 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Writes data to the FileStream provided by RouteNodeCollection.SaveNodes().
+		/// Writes data to a filestream provided by RouteNodeCollection.WriteNodes().
 		/// </summary>
 		/// <param name="fs"></param>
-		internal void SaveNode(Stream fs)
+		internal void WriteNode(Stream fs)
 		{
 			fs.WriteByte(Row);
 			fs.WriteByte(Col);

@@ -36,6 +36,7 @@
 		public const string PADDED_ASTERISK  = " *";
 
 		public const string PckExt_lc = ".pck";
+		public const string PngExt    = ".PNG";
 		#endregion Fields (static)
 	}
 }

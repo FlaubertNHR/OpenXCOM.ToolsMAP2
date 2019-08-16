@@ -348,13 +348,15 @@ namespace MapView
 		{
 			using (var fbd = new FolderBrowserDialog())
 			{
-				fbd.SelectedPath = TilesetBasepath;
 				fbd.Description = String.Format(
 											System.Globalization.CultureInfo.CurrentCulture,
 											"Browse to a basepath folder. A valid basepath folder"
 												+ " has the subfolders MAPS and ROUTES.");
 
-				if (fbd.ShowDialog() == DialogResult.OK)
+				if (Directory.Exists(TilesetBasepath))
+					fbd.SelectedPath = TilesetBasepath;
+
+				if (fbd.ShowDialog(this) == DialogResult.OK)
 				{
 					TilesetBasepath = fbd.SelectedPath;
 					OnTilesetTextboxChanged(null, EventArgs.Empty);
@@ -371,24 +373,42 @@ namespace MapView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Filter = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
 				ofd.Title  = "Select a Map file";
-				ofd.InitialDirectory = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
-				if (!Directory.Exists(ofd.InitialDirectory))
-					ofd.InitialDirectory = TilesetBasepath;
+				ofd.Filter = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
 
-				if (ofd.ShowDialog() == DialogResult.OK)
+				string path = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
+				if (!Directory.Exists(path))
 				{
-					string pfeMap = ofd.FileName;
+					if (Directory.Exists(TilesetBasepath))
+					{
+						path = TilesetBasepath;
+					}
+					else
+						path = String.Empty;
+				}
+				ofd.InitialDirectory = path;
 
-					string basepath = Path.GetDirectoryName(pfeMap);
-					int pos = basepath.LastIndexOf(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase);
-					TilesetBasepath = (pos != -1) ? basepath.Substring(0, pos)
-												  : basepath;
+				if (ofd.ShowDialog(this) == DialogResult.OK)
+				{
+					string pfe = ofd.FileName;
 
-					Tileset = Path.GetFileNameWithoutExtension(pfeMap);
-					OnTilesetTextboxChanged(null, EventArgs.Empty);	// NOTE: This will fire OnTilesetLabelChanged() twice usually but
-				}													// has to be here in case the basepath changed but the label didn't.
+					string dir = Path.GetDirectoryName(pfe);
+
+					// NOTE: Path.GetDirectoryName() on a root folder will return with
+					// a backslash a the end - eg. "C:\"
+//					if (dir.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase))
+//						dir = dir.Substring(0, dir.Length - 1);
+
+					if (dir.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
+					{
+						TilesetBasepath = dir;
+
+						Tileset = Path.GetFileNameWithoutExtension(pfe);
+						OnTilesetTextboxChanged(null, EventArgs.Empty);	// NOTE: This will fire OnTilesetLabelChanged() twice usually but
+					}													// has to be here in case the basepath changed but the label didn't.
+					else
+						ShowErrorDialog("Maps must be in a directory MAPS.");
+				}
 			}
 		}
 

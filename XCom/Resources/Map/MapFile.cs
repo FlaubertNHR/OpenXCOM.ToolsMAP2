@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -19,7 +18,7 @@ namespace XCom
 			MapFileBase
 	{
 		#region Properties
-		private string Fullpath
+		private string PfeMap
 		{ get; set; }
 
 		public Dictionary<int, Tuple<string,string>> Terrains
@@ -30,6 +29,9 @@ namespace XCom
 
 		public bool IsLoadChanged
 		{ get; private set; }
+
+		internal bool Fail
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -38,46 +40,34 @@ namespace XCom
 		/// cTor.
 		/// </summary>
 		/// <param name="descriptor"></param>
-		/// <param name="partset">a list of parts in all allocated terrains</param>
+		/// <param name="parts">a list of parts in all allocated terrains</param>
 		/// <param name="routes"></param>
 		internal MapFile(
 				Descriptor descriptor,
-				List<Tilepart> partset,
+				List<Tilepart> parts,
 				RouteNodeCollection routes)
 			:
-				base(descriptor, partset)
+				base(descriptor, parts)
 		{
-			Fullpath = Path.Combine(
+			string pfe = Path.Combine(
 								Path.Combine(Descriptor.Basepath, GlobalsXC.MapsDir),
 								Descriptor.Label + GlobalsXC.MapExt);
 
-			Terrains = Descriptor.Terrains;
-			Routes = routes;
-
-			if (File.Exists(Fullpath))
+			if (LoadMapfile(pfe, parts))
 			{
-				for (int i = 0; i != partset.Count; ++i)
-					partset[i].SetId = i;
+				PfeMap = pfe;
 
-				ReadMapfile(partset);
+				Terrains = Descriptor.Terrains;
+				Routes = routes;
+
+				for (int i = 0; i != parts.Count; ++i)
+					parts[i].SetId = i;
+
 				SetupRouteNodes();
 				CalculateOccultations();
 			}
 			else
-			{
-				string error = String.Format(
-										CultureInfo.CurrentCulture,
-										"The file does not exist{0}{0}{1}",
-										Environment.NewLine,
-										Fullpath);
-				MessageBox.Show(
-							error,
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
-			}
+				Fail = true;
 		}
 		#endregion cTor
 
@@ -86,30 +76,35 @@ namespace XCom
 		/// <summary>
 		/// Reads a .MAP file.
 		/// </summary>
+		/// <param name="pfe">path-file-extension of a Mapfile</param>
 		/// <param name="parts">a list of tileset-parts</param>
-		private void ReadMapfile(List<Tilepart> parts)
+		/// <returns>true if read okay</returns>
+		private bool LoadMapfile(string pfe, List<Tilepart> parts)
 		{
-			using (var bs = new BufferedStream(File.OpenRead(Fullpath)))
+			using (var fs = FileService.OpenFile(pfe))
+			if (fs != null)
 			{
-				int rows = bs.ReadByte(); // http://www.ufopaedia.org/index.php/MAPS
-				int cols = bs.ReadByte(); // - says this header is "height, width and depth (in that order)"
-				int levs = bs.ReadByte(); //   ie. y/x/z
+				int rows = fs.ReadByte(); // http://www.ufopaedia.org/index.php/MAPS
+				int cols = fs.ReadByte(); // - says this header is "height, width and depth (in that order)"
+				int levs = fs.ReadByte(); //   ie. y/x/z
 
 				Tiles   = new MapTileList(rows, cols, levs);
-				MapSize = new MapSize(rows, cols, levs);
+				MapSize = new MapSize(    rows, cols, levs);
 
-				for (int lev = 0; lev != levs; ++lev)
-				for (int row = 0; row != rows; ++row)
-				for (int col = 0; col != cols; ++col)
+				for (int lev = 0; lev != levs; ++lev) // z-axis (inverted)
+				for (int row = 0; row != rows; ++row) // y-axis
+				for (int col = 0; col != cols; ++col) // x-axis
 				{
 					this[row, col, lev] = CreateTile(
 												parts,
-												bs.ReadByte(),
-												bs.ReadByte(),
-												bs.ReadByte(),
-												bs.ReadByte());
+												fs.ReadByte(),
+												fs.ReadByte(),
+												fs.ReadByte(),
+												fs.ReadByte());
 				}
+				return true;
 			}
+			return false;
 		}
 
 
@@ -326,11 +321,11 @@ namespace XCom
 		/// Writes default Map and blank Route files.
 		/// </summary>
 		/// <param name="pfeMap"></param>
-		/// <param name="pfeRoute"></param>
-		public static void CreateDefault(string pfeMap, string pfeRoute)
+		/// <param name="pfeRoutes"></param>
+		public static void CreateDefault(string pfeMap, string pfeRoutes)
 		{
-			Directory.CreateDirectory(Path.GetDirectoryName(pfeRoute));
-			using (var fs = File.Create(pfeRoute)) // create a blank Route-file and release its handle.
+			Directory.CreateDirectory(Path.GetDirectoryName(pfeRoutes));
+			using (var fs = File.Create(pfeRoutes)) // create a blank Route-file and release its handle.
 			{}
 
 			Directory.CreateDirectory(Path.GetDirectoryName(pfeMap));
@@ -352,33 +347,38 @@ namespace XCom
 
 		#region Methods (save/write)
 		/// <summary>
-		/// Saves the .MAP file.
+		/// Saves the current Mapfile.
 		/// </summary>
-		public override void SaveMap()
+		/// <returns>true on success</returns>
+		public override bool SaveMap()
 		{
-			SaveMapData(Fullpath);
+			return WriteMapfile(PfeMap);
 		}
 
 		/// <summary>
-		/// Saves the .MAP file as a different file.
-		/// @note SaveAs does not load the saved Map; the current MapFile
-		/// stays current.
+		/// Exports the Map to a different file.
 		/// </summary>
-		/// <param name="pf">the path+file to save as</param>
-		public override void SaveMap(string pf)
+		/// <param name="pf">path-file w/out extension</param>
+		public override void ExportMap(string pf)
 		{
-			string pfe = pf + GlobalsXC.MapExt;
-			Directory.CreateDirectory(Path.GetDirectoryName(pfe));
-			SaveMapData(pfe);
+			WriteMapfile(pf + GlobalsXC.MapExt);
 		}
 
 		/// <summary>
-		/// Saves the current mapdata to a .MAP file.
+		/// Writes a Mapfile.
 		/// </summary>
-		/// <param name="pfe">path+file+extension</param>
-		private void SaveMapData(string pfe)
+		/// <param name="pfe">path-file-extension</param>
+		/// <returns>true on success</returns>
+		private bool WriteMapfile(string pfe)
 		{
-			using (var fs = File.Create(pfe))
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
+
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
 			{
 				fs.WriteByte((byte)MapSize.Rows); // http://www.ufopaedia.org/index.php/MAPS
 				fs.WriteByte((byte)MapSize.Cols); // - says this header is "height, width and depth (in that order)"
@@ -414,24 +414,31 @@ namespace XCom
 					else
 						fs.WriteByte((byte)id);
 				}
+
+				if (pfeT != pfe)
+					return FileService.ReplaceFile(pfe);
+
+				return true;
 			}
+			return false;
 		}
 
 		/// <summary>
-		/// Saves the .RMP file.
+		/// Saves the current Routefile.
 		/// </summary>
-		public override void SaveRoutes()
+		/// <returns>true on success</returns>
+		public override bool SaveRoutes()
 		{
-			Routes.SaveRoutes();
+			return Routes.SaveRoutes();
 		}
 
 		/// <summary>
-		/// Saves the .RMP file as a different file.
+		/// Exports the routes to a different file.
 		/// </summary>
-		/// <param name="pf">the path+file to save as</param>
-		public override void SaveRoutes(string pf)
+		/// <param name="pf">path-file w/out extension</param>
+		public override void ExportRoutes(string pf)
 		{
-			Routes.SaveRoutes(pf);
+			Routes.ExportRoutes(pf + GlobalsXC.RouteExt);
 		}
 		#endregion Methods (save/write)
 

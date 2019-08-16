@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
 
 namespace XCom
 {
-	#region Enumerations
+	#region Enums (node characteristics)
 	// NOTE: Only 'NodeRankUfo' and 'NodeRankTftd' need to be enumerated as
 	// byte-type. Otherwise the Pterodactyl class goes snakey when
 	// RouteView.OnNodeRankSelectedIndexChanged() fires. For reasons, it cannot
@@ -153,7 +154,7 @@ namespace XCom
 		ExitSouth = 0xFC,
 		ExitWest  = 0xFB
 	};
-	#endregion Enumerations
+	#endregion Enums (node characteristics)
 
 
 	/// <summary>
@@ -165,6 +166,8 @@ namespace XCom
 			IEnumerable<RouteNode>
 	{
 		#region Fields (static)
+		private const int Length_Routenode = 24; // each node has 24 bytes
+
 		private const string civscout  = "0 : Civilian/Scout";
 		private const string xcom      = "1 : XCOM";
 		private const string soldier   = "2 : Soldier";
@@ -277,7 +280,7 @@ namespace XCom
 		/// The fullpath of the .RMP file.
 		/// Is static to maintain its value when importing a different .RMP file.
 		/// </summary>
-		private static string Fullpath
+		private static string PfeRoutes
 		{ get; set; }
 		#endregion Properties (static)
 
@@ -304,83 +307,93 @@ namespace XCom
 		{
 			get { return _nodes.Count; }
 		}
+
+		public bool Fail
+		{ get; private set; }
 		#endregion Properties
 
 
-		#region cTors
+		#region cTor
 		/// <summary>
-		/// cTor[1]. Reads the .RMP file and adds its data as RouteNodes to a
+		/// cTor[0]. Reads the .RMP file and adds its data as RouteNodes to a
 		/// List.
 		/// </summary>
 		/// <param name="label"></param>
 		/// <param name="basepath"></param>
 		public RouteNodeCollection(string label, string basepath)
 		{
-			Fullpath = Path.Combine(
+			PfeRoutes = Path.Combine(
 								Path.Combine(basepath, GlobalsXC.RoutesDir),
 								label + GlobalsXC.RouteExt);
 
-			if (File.Exists(Fullpath))
-				Instantiate(Fullpath);
+			Fail = !LoadNodes(PfeRoutes);
 		}
 
 		/// <summary>
-		/// cTor[2]. Imports an .RMP file and replaces the RouteNodes-list with
+		/// cTor[1]. Imports an .RMP file and replaces the RouteNodes-list with
 		/// its data.
-		/// @note Do *not* replace 'Fullpath' on an import.
+		/// @note Do *not* replace 'PfeRoutes' on an import.
 		/// </summary>
 		/// <param name="pfe"></param>
 		public RouteNodeCollection(string pfe)
 		{
-			Instantiate(pfe);
+			Fail = !LoadNodes(pfe);
 		}
 
 		/// <summary>
 		/// Helper for the cTors. Reads a file into this RouteNodeCollection.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
-		private void Instantiate(string pfe)
+		/// <returns>true if situation normal</returns>
+		private bool LoadNodes(string pfe)
 		{
-			using (var bs = new BufferedStream(File.OpenRead(pfe)))
+			using (var fs = FileService.OpenFile(pfe))
+			if (fs != null)
 			{
-				for (byte id = 0; id < bs.Length / 24; ++id)
+				int length = (int)fs.Length / Length_Routenode;
+				for (byte id = 0; id < length; ++id)
 				{
-					var bindata = new byte[24];
-					bs.Read(bindata, 0, 24);
+					var bindata = new byte[Length_Routenode];
+					fs.Read(bindata, 0, Length_Routenode);
 
 					_nodes.Add(new RouteNode(id, bindata));
 				}
+
+				var invalids = new List<byte>();	// check for invalid Ranks ->
+				foreach (RouteNode node in _nodes)	// See also RouteView.OnCheckNodeRanksClick()
+				{
+					if (node.OobRank != (byte)0)
+						invalids.Add(node.Index);
+				}
+
+				if (invalids.Count != 0)
+				{
+					string info = String.Format(
+											CultureInfo.CurrentCulture,
+											"The following route-{0} an invalid NodeRank.",
+											(invalids.Count == 1) ? "node has"
+																  : "nodes have");
+
+					string copyable = String.Empty;
+					foreach (byte id in invalids)
+					{
+						if (!String.IsNullOrEmpty(copyable)) copyable += Environment.NewLine;
+						copyable += id.ToString();
+					}
+
+					using (var f = new Infobox(
+											"Invalid noderanks",
+											info,
+											copyable))
+					{
+						f.ShowDialog();
+					}
+				}
+				return true;
 			}
-
-			var invalids = new List<byte>();	// check for invalid Ranks ->
-			foreach (RouteNode node in _nodes)	// See also RouteView.OnCheckNodeRanksClick()
-			{
-				if (node.OobRank != (byte)0)
-					invalids.Add(node.Index);
-			}
-
-			if (invalids.Count != 0)
-			{
-				string info = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"The following route-{0} an invalid NodeRank.{1}",
-										(invalids.Count == 1) ? "node has"
-															  : "nodes have",
-										Environment.NewLine);
-
-				foreach (byte id in invalids)
-					info += Environment.NewLine + id;
-
-				MessageBox.Show(
-							info,
-							" Warning",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0);
-			}
+			return false;
 		}
-		#endregion cTors
+		#endregion cTor
 
 
 		#region Interface requirements
@@ -406,44 +419,48 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Saves the .RMP file.
+		/// Saves the current Routefile.
 		/// </summary>
-		internal void SaveRoutes()
+		/// <returns>true on success</returns>
+		internal bool SaveRoutes()
 		{
-			SaveNodes(Fullpath);
+			return WriteNodes(PfeRoutes);
 		}
 
 		/// <summary>
-		/// Saves the .RMP file as a different file.
+		/// Exports the routes to a different file.
 		/// </summary>
-		/// <param name="pf">the path+file to save as</param>
-		internal void SaveRoutes(string pf)
+		/// <param name="pfe">path-file-extension</param>
+		public void ExportRoutes(string pfe)
 		{
-			string pfe = pf + GlobalsXC.RouteExt;
-			Directory.CreateDirectory(Path.GetDirectoryName(pfe));
-			SaveNodes(pfe);
+			WriteNodes(pfe);
 		}
 
 		/// <summary>
-		/// Saves the .RMP file as a different file.
+		/// Saves the routes to a Routefile.
 		/// </summary>
-		/// <param name="pfe">the path+file to save as</param>
-		public void SaveRoutesExport(string pfe)
+		/// <param name="pfe">path-file-extension</param>
+		/// <returns>true on success</returns>
+		private bool WriteNodes(string pfe)
 		{
-			SaveNodes(pfe);
-		}
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
 
-		/// <summary>
-		/// Saves the route-nodes to a .RMP file.
-		/// </summary>
-		/// <param name="pfe">path+file+extension</param>
-		private void SaveNodes(string pfe)
-		{
-			using (var fs = File.Create(pfe))
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
 			{
 				for (int id = 0; id != _nodes.Count; ++id)
-					_nodes[id].SaveNode(fs); // -> RouteNode.SaveNode() writes each node-data
+					_nodes[id].WriteNode(fs); // -> writes a node's data to the filestream
+
+				if (pfeT != pfe)
+					return FileService.ReplaceFile(pfe);
+
+				return true;
 			}
+			return false;
 		}
 
 		/// <summary>

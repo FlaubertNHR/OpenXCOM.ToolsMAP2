@@ -21,7 +21,7 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miSeparator1;
 		private System.Windows.Forms.MenuItem miSaveMap;
 		private System.Windows.Forms.MenuItem miSaveRoutes;
-		private System.Windows.Forms.MenuItem miSaveAs;
+		private System.Windows.Forms.MenuItem miExport;
 		private System.Windows.Forms.MenuItem miSeparator2;
 		private System.Windows.Forms.MenuItem miSaveMaptree;
 		private System.Windows.Forms.MenuItem miSeparator3;
@@ -46,8 +46,6 @@ namespace MapView
 		private System.Windows.Forms.MenuItem miSeparator7;
 		private System.Windows.Forms.MenuItem miMapInfo;
 
-
-		private System.Windows.Forms.SaveFileDialog sfdSaveDialog;
 
 		private System.Windows.Forms.ToolStrip tsTools;
 
@@ -87,7 +85,7 @@ namespace MapView
 			this.miSeparator1 = new System.Windows.Forms.MenuItem();
 			this.miSaveMap = new System.Windows.Forms.MenuItem();
 			this.miSaveRoutes = new System.Windows.Forms.MenuItem();
-			this.miSaveAs = new System.Windows.Forms.MenuItem();
+			this.miExport = new System.Windows.Forms.MenuItem();
 			this.miSeparator2 = new System.Windows.Forms.MenuItem();
 			this.miSaveMaptree = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
@@ -108,7 +106,6 @@ namespace MapView
 			this.miAbout = new System.Windows.Forms.MenuItem();
 			this.miSeparator7 = new System.Windows.Forms.MenuItem();
 			this.miMapInfo = new System.Windows.Forms.MenuItem();
-			this.sfdSaveDialog = new System.Windows.Forms.SaveFileDialog();
 			this.ssMain = new System.Windows.Forms.StatusStrip();
 			this.tsslScale = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsslMapLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -139,7 +136,7 @@ namespace MapView
 			this.miSeparator1,
 			this.miSaveMap,
 			this.miSaveRoutes,
-			this.miSaveAs,
+			this.miExport,
 			this.miSeparator2,
 			this.miSaveMaptree,
 			this.miSeparator3,
@@ -179,13 +176,13 @@ namespace MapView
 			this.miSaveRoutes.Text = "Save &Routes";
 			this.miSaveRoutes.Click += new System.EventHandler(this.OnSaveRoutesClick);
 			// 
-			// miSaveAs
+			// miExport
 			// 
-			this.miSaveAs.Enabled = false;
-			this.miSaveAs.Index = 4;
-			this.miSaveAs.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
-			this.miSaveAs.Text = "Sav&e As ...";
-			this.miSaveAs.Click += new System.EventHandler(this.OnSaveAsClick);
+			this.miExport.Enabled = false;
+			this.miExport.Index = 4;
+			this.miExport.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
+			this.miExport.Text = "&Export Map and Routes ...";
+			this.miExport.Click += new System.EventHandler(this.OnExportMapRoutesClick);
 			// 
 			// miSeparator2
 			// 
@@ -321,12 +318,6 @@ namespace MapView
 			this.miMapInfo.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
 			this.miMapInfo.Text = "Map &Info";
 			this.miMapInfo.Click += new System.EventHandler(this.OnMapInfoClick);
-			// 
-			// sfdSaveDialog
-			// 
-			this.sfdSaveDialog.DefaultExt = "PNG";
-			this.sfdSaveDialog.Filter = "PNG files|*.PNG|All files (*.*)|*.*";
-			this.sfdSaveDialog.RestoreDirectory = true;
 			// 
 			// ssMain
 			// 

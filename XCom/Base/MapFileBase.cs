@@ -185,14 +185,14 @@ namespace XCom.Base
 
 
 		#region Methods (virtual)
-		public virtual void SaveMap()
-		{}
-		public virtual void SaveMap(string pf)
+		public virtual bool SaveMap()
+		{ return false; }
+		public virtual void ExportMap(string pf)
 		{}
 
-		public virtual void SaveRoutes()
-		{}
-		public virtual void SaveRoutes(string pf)
+		public virtual bool SaveRoutes()
+		{ return false; }
+		public virtual void ExportRoutes(string pf)
 		{}
 
 		/// <summary>

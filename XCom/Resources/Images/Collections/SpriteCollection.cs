@@ -280,8 +280,21 @@ namespace XCom
 				string pf,
 				SpriteCollection spriteset)
 		{
-			string pfePckT = pf + GlobalsXC.PckExt + GlobalsXC.TEMPExt;
-			string pfeTabT = pf + GlobalsXC.TabExt + GlobalsXC.TEMPExt;
+			string pfePck = pf + GlobalsXC.PckExt;
+			string pfeTab = pf + GlobalsXC.TabExt;
+
+			string pfePckT, pfeTabT;
+			if (File.Exists(pfePck) || File.Exists(pfeTab))
+			{
+				pfePckT = pfePck + GlobalsXC.TEMPExt;
+				pfeTabT = pfeTab + GlobalsXC.TEMPExt;
+			}
+			else
+			{
+				pfePckT = pfePck;
+				pfeTabT = pfeTab;
+			}
+
 
 			using (var fsPck = FileService.CreateFile(pfePckT))
 			if (fsPck != null)
@@ -324,6 +337,13 @@ namespace XCom
 						}
 					}
 				}
+
+				if (pfePckT != pfePck)
+				{
+					return FileService.ReplaceFile(pfePck)
+						&& FileService.ReplaceFile(pfeTab);
+				}
+
 				return true;
 			}
 			return false;
@@ -408,25 +428,33 @@ namespace XCom
 		/// <summary>
 		/// Saves a specified iconset to SCANG.DAT.
 		/// </summary>
-		/// <param name="pfeScanG">the directory to save to</param>
+		/// <param name="pfe">the directory to save to</param>
 		/// <param name="iconset">pointer to the iconset</param>
 		/// <returns>true if mission was successful</returns>
 		public static bool WriteScanG(
-				string pfeScanG,
+				string pfe,
 				SpriteCollection iconset)
 		{
-			using (var fs = FileService.CreateFile(pfeScanG + GlobalsXC.TEMPExt))
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
+
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
 			{
-				if (fs != null)
+				XCImage icon;
+				for (int id = 0; id != iconset.Count; ++id)
 				{
-					XCImage icon;
-					for (int id = 0; id != iconset.Count; ++id)
-					{
-						icon = iconset[id];
-						fs.Write(icon.Bindata, 0, icon.Bindata.Length);
-					}
-					return true;
+					icon = iconset[id];
+					fs.Write(icon.Bindata, 0, icon.Bindata.Length);
 				}
+
+				if (pfeT != pfe)
+					return FileService.ReplaceFile(pfe);
+
+				return true;
 			}
 			return false;
 		}

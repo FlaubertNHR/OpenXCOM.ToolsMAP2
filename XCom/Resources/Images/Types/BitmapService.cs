@@ -133,16 +133,16 @@ namespace XCom
 		/// <summary>
 		/// Saves a sprite after setting colorid #0 transparent.
 		/// </summary>
-		/// <param name="pfe"></param>
+		/// <param name="fullpath"></param>
 		/// <param name="b"></param>
-		public static void ExportSprite(string pfe, Bitmap b)
+		public static void ExportSprite(string fullpath, Bitmap b)
 		{
 			ColorPalette pal = b.Palette;
 			pal.Entries[Palette.TranId] = Color.Transparent;
 			b.Palette = pal;
 
-			Directory.CreateDirectory(Path.GetDirectoryName(pfe));
-			b.Save(pfe, ImageFormat.Png);
+			Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
+			b.Save(fullpath, ImageFormat.Png);
 		}
 
 		/// <summary>

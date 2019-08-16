@@ -1864,15 +1864,18 @@ namespace MapView.Forms.Observers
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					sfd.Title            = "Save Route file as ...";
-					sfd.DefaultExt       = GlobalsXC.RouteExt;
-					sfd.FileName         = MapFile.Descriptor.Label + GlobalsXC.RouteExt;
-					sfd.Filter           = "Route files (*.RMP)|*.RMP|All files (*.*)|*.*";
-					sfd.InitialDirectory = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.RoutesDir);
+					sfd.Title      = "Export Route file ...";
+					sfd.Filter     = "Route files (*.RMP)|*.RMP|All files (*.*)|*.*";
+					sfd.DefaultExt = GlobalsXC.RouteExt;
+					sfd.FileName   = MapFile.Descriptor.Label;
 
-					if (sfd.ShowDialog() == DialogResult.OK)
+					string path = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.RoutesDir);
+					if (Directory.Exists(path))
+						sfd.InitialDirectory = path;
+
+					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
-						MapFile.Routes.SaveRoutesExport(sfd.FileName);
+						MapFile.Routes.ExportRoutes(sfd.FileName);
 					}
 				}
 			}
@@ -1884,34 +1887,41 @@ namespace MapView.Forms.Observers
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title            = "Open a Route file ...";
-					ofd.DefaultExt       = GlobalsXC.RouteExt;
-					ofd.FileName         = MapFile.Descriptor.Label + GlobalsXC.RouteExt;
-					ofd.Filter           = "Route files (*.RMP)|*.RMP|All files (*.*)|*.*";
-					ofd.InitialDirectory = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.RoutesDir);
+					ofd.Title      = "Import Route file ...";
+					ofd.Filter     = "Route files (*.RMP)|*.RMP|All files (*.*)|*.*";
+					ofd.DefaultExt = "RMP";
+					ofd.FileName   = MapFile.Descriptor.Label + GlobalsXC.RouteExt;
 
-					if (ofd.ShowDialog() == DialogResult.OK)
+					string path = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.RoutesDir);
+					if (Directory.Exists(path))
+						ofd.InitialDirectory = path;
+
+					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
-						RouteChanged = true;
-
-						ObserverManager.RouteView   .Control     .DeselectNode();
-						ObserverManager.TopRouteView.ControlRoute.DeselectNode();
-
-						MapFile.ClearRouteNodes();
-						MapFile.Routes = new RouteNodeCollection(ofd.FileName);
-						MapFile.SetupRouteNodes();
-
-						if (RouteCheckService.CheckNodeBounds(MapFile) == DialogResult.Yes)
+						var routes = new RouteNodeCollection(ofd.FileName);
+						if (!routes.Fail)
 						{
-							foreach (RouteNode node in RouteCheckService.Invalids)
-								MapFile.Routes.DeleteNode(node);
+							RouteChanged = true;
+
+							ObserverManager.RouteView   .Control     .DeselectNode();
+							ObserverManager.TopRouteView.ControlRoute.DeselectNode();
+
+							MapFile.ClearRouteNodes();
+							MapFile.Routes = routes;
+							MapFile.SetupRouteNodes();
+
+							if (RouteCheckService.CheckNodeBounds(MapFile) == DialogResult.Yes)
+							{
+								foreach (RouteNode node in RouteCheckService.Invalids)
+									MapFile.Routes.DeleteNode(node);
+							}
+
+							UpdateNodeInfo(); // not sure is necessary ...
+							RefreshPanels();
+
+							if (RoutesInfo != null)
+								RoutesInfo.Initialize(MapFile);
 						}
-
-						UpdateNodeInfo(); // not sure is necessary ...
-						RefreshPanels();
-
-						if (RoutesInfo != null)
-							RoutesInfo.Initialize(MapFile);
 					}
 				}
 			}
@@ -1924,26 +1934,7 @@ namespace MapView.Forms.Observers
 			tsmi_RaiseNode.Enabled = (NodeSelected != null && NodeSelected.Lev != 0);
 		}
 
-/*								RouteView.Dragnode = NodeSelected;
 
-								MapFile.ChangeLevel(dir);			// fire SelectLevel event
-								MapFile.Location = new MapLocation(	// fire SelectLocation event
-																MapFile.Location.Row,
-																MapFile.Location.Col,
-																level);
-
-								var args = new RoutePanelEventArgs(
-																MouseButtons.None,
-																MapFile[MapFile.Location.Row,
-																		MapFile.Location.Col],
-																MapFile.Location);
-								RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
-
-								ObserverManager.RouteView   .Control     .PrintSelectedInfo();
-								ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
-
-								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate(); */
 		private void OnNodeRaise(object sender, EventArgs e)
 		{
 			Dragnode = NodeSelected;

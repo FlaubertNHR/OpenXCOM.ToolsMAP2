@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -27,15 +28,15 @@ namespace XCom
 		/// <returns>the path to the Mapfile else null</returns>
 		public static string MapfileExists(Descriptor descriptor)
 		{
-			string pfeMap = descriptor.Basepath;
-			if (!String.IsNullOrEmpty(pfeMap)) // -> the BasePath can be null if resource-type is notconfigured.
+			string path = descriptor.Basepath;
+			if (!String.IsNullOrEmpty(path)) // -> the BasePath can be null if resource-type is notconfigured.
 			{
-				pfeMap = Path.Combine(
-									Path.Combine(pfeMap, GlobalsXC.MapsDir),
-									descriptor.Label + GlobalsXC.MapExt);
+				path = Path.Combine(
+								Path.Combine(path, GlobalsXC.MapsDir),
+								descriptor.Label + GlobalsXC.MapExt);
 
-				if (File.Exists(pfeMap))
-					return pfeMap;
+				if (File.Exists(path))
+					return path;
 			}
 			return null;
 		}
@@ -61,11 +62,11 @@ namespace XCom
 			//LogFile.WriteLine(". pfeMap= " + pfeMap);
 
 			if (pfeMap == null // Open a folderbrowser for user to point to a basepath ->
-				&& (basepathDialog || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to show warning box.
+				&& (basepathDialog || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to ask for a MapBrowser dialog.
 				&& MessageBox.Show(
 								"Files were not found for : " + descriptor.Label
 									+ Environment.NewLine + Environment.NewLine
-									+ "Browse for a basepath to the .MAP and .RMP files ...",
+									+ "Browse for a basepath to the MAP and RMP files ...",
 								" Warning",
 								MessageBoxButtons.YesNo,
 								MessageBoxIcon.Warning,
@@ -82,7 +83,7 @@ namespace XCom
 					// TODO: Check descriptor's Palette and default to Ufo/Tftd Resource dir instead.
 
 					fbd.Description = String.Format(
-												System.Globalization.CultureInfo.CurrentCulture,
+												CultureInfo.CurrentCulture,
 												"Browse to a basepath folder. A valid basepath folder"
 													+ " has the subfolders MAPS and ROUTES.");
 
@@ -111,16 +112,12 @@ namespace XCom
 
 			if (File.Exists(pfeMap))
 			{
-				//LogFile.WriteLine(". . Map file exists");
-
 				var partset = new List<Tilepart>();
 
 				ResourceInfo.Spritesets.Clear();
 
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{
-					//LogFile.WriteLine(". . . terrain= " + descriptor.Terrains[i].Item1 + " : " + descriptor.Terrains[i].Item2);
-
 					Tilepart[] MCD = descriptor.CreateTerrain(i);	// NOTE: calls
 					if (MCD == null)								//     - TilepartFactory.CreateTileparts()
 						return null;								//     - ResourceInfo.LoadSpriteset()
@@ -167,6 +164,9 @@ namespace XCom
 										descriptor,
 										partset,
 										RMP);
+
+					if (MAP.Fail) return null;
+
 					return MAP;
 				}
 

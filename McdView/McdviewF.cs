@@ -428,7 +428,7 @@ namespace McdView
 		/// been flagged.
 		/// </summary>
 		/// <returns>true if okay to proceed</returns>
-		private bool canCloseTerrain()
+		private bool closeTerrain()
 		{
 			if (Changed)
 			{
@@ -481,7 +481,7 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (canCloseTerrain())
+			if (closeTerrain())
 			{
 				RegistryInfo.UpdateRegistry(this);
 
@@ -611,13 +611,13 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_Create(object sender, EventArgs e)
 		{
-			if (canCloseTerrain())
+			if (closeTerrain())
 			{
 				using (var sfd = new SaveFileDialog())
 				{
 					sfd.Title      = "Create MCD file as ...";
-					sfd.DefaultExt = "MCD";
 					sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
+					sfd.DefaultExt = GlobalsXC.McdExt;
 
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
@@ -665,7 +665,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_Open(object sender, EventArgs e)
 		{
-			if (canCloseTerrain())
+			if (closeTerrain())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -952,8 +952,7 @@ namespace McdView
 									MessageBoxDefaultButton.Button2,
 									0) == DialogResult.OK)
 			{
-				if (McdRecord.WriteRecords(PfeMcd + GlobalsXC.TEMPExt, Parts)
-					&& FileService.ReplaceFile(PfeMcd))
+				if (McdRecord.WriteRecords(PfeMcd, Parts))
 				{
 					SaveRecordsetFailed = false;
 
@@ -979,14 +978,10 @@ namespace McdView
 				string dir = Path.GetDirectoryName(PfeMcd);
 				string pf  = Path.Combine(dir, Label);
 
-				if (SpriteCollection.WriteSpriteset(pf, Spriteset)
-					&& FileService.ReplaceFile(pf + GlobalsXC.PckExt)
-					&& FileService.ReplaceFile(pf + GlobalsXC.TabExt))
+				if (SpriteCollection.WriteSpriteset(pf, Spriteset))
 				{
 					SaveSpritesetFailed = false;
-
 					PartsPanel.SpritesChanged = false;
-
 					FireMvReload = true;
 				}
 			}
@@ -997,14 +992,14 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnClick_SaveasTerrain(object sender, EventArgs e)
+		private void OnClick_SaveTerrainAs(object sender, EventArgs e)
 		{
 			using (var sfd = new SaveFileDialog())
 			{
 				sfd.Title      = "Save MCD file as ...";
 				sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|(*.*)";
-				sfd.FileName   = Label + GlobalsXC.McdExt;
-				sfd.DefaultExt = "MCD";
+				sfd.DefaultExt = GlobalsXC.McdExt;
+				sfd.FileName   = Label;
 
 				if (sfd.ShowDialog(this) == DialogResult.OK
 					&& (Parts.Length <= MapFileService.MAX_MCDRECORDS
@@ -1019,8 +1014,7 @@ namespace McdView
 				{
 					string pfe = sfd.FileName;
 
-					if (McdRecord.WriteRecords(pfe + GlobalsXC.TEMPExt, Parts)
-						&& FileService.ReplaceFile(pfe))
+					if (McdRecord.WriteRecords(pfe, Parts))
 					{
 						PfeMcd = pfe;
 

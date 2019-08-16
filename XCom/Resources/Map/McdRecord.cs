@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 using XCom;
 
@@ -378,12 +379,18 @@ namespace XCom
 		/// <summary>
 		/// Writes/overwrites a specified MCD file.
 		/// </summary>
-		/// <param name="pfeMcd">path-file-extension to write to</param>
+		/// <param name="pfe">path-file-extension</param>
 		/// <param name="parts">an array of tileparts</param>
 		/// <returns>true if it looks like the file got written</returns>
-		public static bool WriteRecords(string pfeMcd, Tilepart[] parts)
+		public static bool WriteRecords(string pfe, Tilepart[] parts)
 		{
-			using (var fs = FileService.CreateFile(pfeMcd))
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
+
+			using (var fs = FileService.CreateFile(pfeT))
 			if (fs != null)
 			{
 				McdRecord record;
@@ -463,6 +470,10 @@ namespace XCom
 					fs.WriteByte(Convert.ToByte(record.BaseObject));	// 60 (bool)
 					fs.WriteByte((byte)record.Unknown61);				// 61
 				}
+
+				if (pfeT != pfe)
+					return FileService.ReplaceFile(pfe);
+
 				return true;
 			}
 			return false;

@@ -630,7 +630,7 @@
 			this.miSaveas.Index = 6;
 			this.miSaveas.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
 			this.miSaveas.Text = "Sav&e MCD file as ...";
-			this.miSaveas.Click += new System.EventHandler(this.OnClick_SaveasTerrain);
+			this.miSaveas.Click += new System.EventHandler(this.OnClick_SaveTerrainAs);
 			// 
 			// miReload
 			// 

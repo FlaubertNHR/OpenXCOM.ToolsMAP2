@@ -1158,11 +1158,11 @@ namespace MapView
 		{
 			if (MainViewUnderlay.MapBase != null)
 			{
-				MainViewUnderlay.MapBase.SaveMap();
-				MainViewUnderlay.MapBase.SaveRoutes();
+				if (MainViewUnderlay.MapBase.SaveMap())
+					MapChanged = false;
 
-				MapChanged =
-				ObserverManager.RouteView.Control.RouteChanged = false;
+				if (MainViewUnderlay.MapBase.SaveRoutes())
+					ObserverManager.RouteView.Control.RouteChanged = false;
 			}
 			MaptreeChanged = !ResourceInfo.TileGroupManager.SaveTileGroups();
 		}
@@ -1171,72 +1171,76 @@ namespace MapView
 		{
 			if (MainViewUnderlay.MapBase != null)
 			{
-				MainViewUnderlay.MapBase.SaveMap();
-				MapChanged = false;
+				if (MainViewUnderlay.MapBase.SaveMap())
+					MapChanged = false;
 			}
 		}
 
 		internal void OnSaveRoutesClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.MapBase != null)
+			if (   MainViewUnderlay.MapBase != null
+				&& MainViewUnderlay.MapBase.SaveRoutes())
 			{
-				MainViewUnderlay.MapBase.SaveRoutes();
 				ObserverManager.RouteView.Control.RouteChanged = false;
 			}
 		}
 
-		private void OnSaveAsClick(object sender, EventArgs e)
+
+		private string _lastSaveasDirectory;
+
+		private void OnExportMapRoutesClick(object sender, EventArgs e)
 		{
-			if (   MainViewUnderlay.MapBase != null				// safety. Not sure if a 'MapBase' could be
-				&& MainViewUnderlay.MapBase.Descriptor != null)	// instantiated without a 'Descriptor'.
+			if (   MainViewUnderlay.MapBase != null
+				&& MainViewUnderlay.MapBase.Descriptor != null)
 			{
-				var sfd = new SaveFileDialog();
-
-				sfd.FileName = MainViewUnderlay.MapBase.Descriptor.Label + GlobalsXC.MapExt;
-				sfd.Filter = "Map files (*.MAP)|*.MAP|All files (*.*)|*.*";
-				sfd.Title = "Save Map and subordinate Route file as ...";
-				sfd.InitialDirectory = Path.Combine(MainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
-
-				if (sfd.ShowDialog() == DialogResult.OK)
+				using (var sfd = new SaveFileDialog())
 				{
-					string dir = Path.GetDirectoryName(sfd.FileName); // 'FileName' is fullpath.
-					//LogFile.WriteLine("dir= " + dir);
-					// NOTE: GetDirectoryName() will return a string ending with a
-					// path-separator if it's the root dir, and without one if it's
-					// not. But Path.Combine() doesn't figure out the difference.
+					sfd.Title      = "Export Map (and Routes) ...";
+					sfd.Filter     = "Map files (*.MAP)|*.MAP|All files (*.*)|*.*";
+					sfd.DefaultExt = GlobalsXC.MapExt;
+					sfd.FileName   = MainViewUnderlay.MapBase.Descriptor.Label;
 
-					//LogFile.WriteLine("pathroot= " + Path.GetPathRoot(dir));
-					if (dir != Path.GetPathRoot(dir))
+					if (_lastSaveasDirectory == null || !Directory.Exists(_lastSaveasDirectory))
 					{
-						string basepath = dir.Substring(0, dir.LastIndexOf(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal));
-						//LogFile.WriteLine("basepath= " + basepath);
-						if (basepath.IndexOf(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) == -1)	// check if root dir, again
-							basepath += Path.DirectorySeparatorChar.ToString();											// account for awkward path at the root dir.
-																														// NOTE: But that's probly not valid for
-																														// things like mounted or network drives.
-						string dirMaps   = Path.Combine(basepath, GlobalsXC.MapsDir);
-						string dirRoutes = Path.Combine(basepath, GlobalsXC.RoutesDir);
-						//LogFile.WriteLine("dirMaps= " + dirMaps);
-						//LogFile.WriteLine("dirRoutes= " + dirRoutes);
-
-						string file = Path.GetFileNameWithoutExtension(sfd.FileName);
-						string pfMaps   = Path.Combine(dirMaps, file);
-						string pfRoutes = Path.Combine(dirRoutes, file);
-						//LogFile.WriteLine("pfMaps= " + pfMaps);
-						//LogFile.WriteLine("pfRoutes= " + pfRoutes);
-
-						MainViewUnderlay.MapBase.SaveMap(pfMaps);
-						MainViewUnderlay.MapBase.SaveRoutes(pfRoutes);
+						string path = Path.Combine(MainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
+						if (Directory.Exists(path))
+							sfd.InitialDirectory = path;
 					}
 					else
-						MessageBox.Show(
-									this,
-									"Saving to a root folder is not allowed. raesons.",
-									" Error",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Error,
-									MessageBoxDefaultButton.Button1,
-									0);
+						sfd.InitialDirectory = _lastSaveasDirectory;
+
+					if (sfd.ShowDialog() == DialogResult.OK)
+					{
+						string pfe = sfd.FileName;
+						_lastSaveasDirectory = Path.GetDirectoryName(pfe);
+
+						// NOTE: GetDirectoryName() will return a string ending with a
+						// path-separator if it's the root dir, and without one if it's
+						// not. But Path.Combine() doesn't figure out the difference.
+						// woohoo ...
+
+						if (_lastSaveasDirectory.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
+						{
+							string dir       = _lastSaveasDirectory.Substring(0, _lastSaveasDirectory.Length - GlobalsXC.MapsDir.Length - 1);
+							string dirMaps   = Path.Combine(dir, GlobalsXC.MapsDir);
+							string dirRoutes = Path.Combine(dir, GlobalsXC.RoutesDir);
+							string label     = Path.GetFileNameWithoutExtension(pfe);
+
+							MainViewUnderlay.MapBase.ExportMap(   Path.Combine(dirMaps,   label));
+							MainViewUnderlay.MapBase.ExportRoutes(Path.Combine(dirRoutes, label));
+						}
+						else
+							MessageBox.Show(
+										this,
+										"Maps must be saved to a directory MAPS. Routes can and"
+											+ " will then be written to its sibling directory ROUTES,"
+											+ " which will be created if it doesn't exist.",
+										" Error",
+										MessageBoxButtons.OK,
+										MessageBoxIcon.Error,
+										MessageBoxDefaultButton.Button1,
+										0);
+					}
 				}
 			}
 		}
@@ -1278,14 +1282,38 @@ namespace MapView
 			}
 		}
 
+
+		private string _lastScreenshotDirectory;
+
 		private void OnScreenshotClick(object sender, EventArgs e)
 		{
 			MapFileBase @base = MainViewUnderlay.MapBase;
 			if (@base != null)
 			{
-				sfdSaveDialog.FileName = @base.Descriptor.Label;
-				if (sfdSaveDialog.ShowDialog() == DialogResult.OK)
-					@base.Screenshot(sfdSaveDialog.FileName);
+				using (var sfd = new SaveFileDialog())
+				{
+					sfd.Title      = "Save PNG Screenshot";
+					sfd.Filter     = "PNG files|*.PNG|All files (*.*)|*.*";
+					sfd.DefaultExt = GlobalsXC.PngExt;
+					sfd.FileName   = @base.Descriptor.Label;
+
+					if (_lastScreenshotDirectory == null || !Directory.Exists(_lastScreenshotDirectory))
+					{
+						string path = Path.Combine(MainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
+						if (Directory.Exists(path))
+							sfd.InitialDirectory = path;
+					}
+					else
+						sfd.InitialDirectory = _lastScreenshotDirectory;
+
+					sfd.RestoreDirectory = true;
+
+					if (sfd.ShowDialog(this) == DialogResult.OK)
+					{
+						_lastScreenshotDirectory = Path.GetDirectoryName(sfd.FileName);
+						@base.Screenshot(sfd.FileName);
+					}
+				}
 			}
 		}
 
@@ -1423,15 +1451,15 @@ namespace MapView
 					case DialogResult.Retry:
 						if (MainViewUnderlay.MapBase != null)
 						{
-							if (MainViewUnderlay.MapBase.MapChanged)
+							if (   MainViewUnderlay.MapBase.MapChanged
+								&& MainViewUnderlay.MapBase.SaveMap())
 							{
-								MainViewUnderlay.MapBase.SaveMap();
 								MapChanged = false;
 							}
 
-							if (MainViewUnderlay.MapBase.RoutesChanged)
+							if (   MainViewUnderlay.MapBase.RoutesChanged
+								&& MainViewUnderlay.MapBase.SaveRoutes())
 							{
-								MainViewUnderlay.MapBase.SaveRoutes();
 								ObserverManager.RouteView.Control.RouteChanged = false;
 							}
 						}
@@ -2083,15 +2111,15 @@ namespace MapView
 							return;
 
 						case DialogResult.Retry:
-							if (MainViewUnderlay.MapBase.MapChanged)
+							if (   MainViewUnderlay.MapBase.MapChanged
+								&& MainViewUnderlay.MapBase.SaveMap())
 							{
-								MainViewUnderlay.MapBase.SaveMap();
 								MapChanged = false;
 							}
 
-							if (MainViewUnderlay.MapBase.RoutesChanged)
+							if (   MainViewUnderlay.MapBase.RoutesChanged
+								&& MainViewUnderlay.MapBase.SaveRoutes())
 							{
-								MainViewUnderlay.MapBase.SaveRoutes();
 								ObserverManager.RouteView.Control.RouteChanged = false;
 							}
 							break;
@@ -2742,10 +2770,10 @@ namespace MapView
 						miSaveAll   .Enabled =
 						miSaveMap   .Enabled =
 						miSaveRoutes.Enabled =
-						miSaveAs    .Enabled =
+						miExport    .Enabled =
+						miReload    .Enabled =
 						miScreenshot.Enabled =
 						miModifySize.Enabled =
-						miReload    .Enabled =
 						miMapInfo   .Enabled = true;
 
 						MainViewOverlay.FirstClick = false;
@@ -2900,8 +2928,10 @@ namespace MapView
 									0))
 				{
 					case DialogResult.Yes:		// save & clear MapChanged flag
-						MainViewUnderlay.MapBase.SaveMap();
-						goto case DialogResult.No;
+						if (MainViewUnderlay.MapBase.SaveMap())
+							goto case DialogResult.No;
+
+						goto case DialogResult.Cancel;
 
 					case DialogResult.No:		// don't save & clear MapChanged flag
 						MapChanged = false;
@@ -2935,8 +2965,10 @@ namespace MapView
 									0))
 				{
 					case DialogResult.Yes:		// save & clear RoutesChanged flag
-						MainViewUnderlay.MapBase.SaveRoutes();
-						goto case DialogResult.No;
+						if (MainViewUnderlay.MapBase.SaveRoutes())
+							goto case DialogResult.No;
+
+						goto case DialogResult.Cancel;
 
 					case DialogResult.No:		// don't save & clear RoutesChanged flag
 						ObserverManager.RouteView.Control.RouteChanged = false;

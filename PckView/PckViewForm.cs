@@ -40,8 +40,6 @@ namespace PckView
 		private const string Over     = "Over ";
 		private const string None     = "n/a";
 
-		private const string PngExt = ".PNG";
-
 		internal static bool Quit;
 
 		internal static float SpriteShadeFloat;
@@ -455,7 +453,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (canSpritesetClose())
+			if (closeSpriteset())
 			{
 				RegistryInfo.UpdateRegistry(this);
 
@@ -1068,11 +1066,22 @@ namespace PckView
 			{
 				sfd.Title      = "Export sprite to 8-bpp PNG file";
 				sfd.Filter     = "PNG files (*.PNG)|*.PNG|All files (*.*)|*.*";
-				sfd.DefaultExt = "PNG";
+				sfd.DefaultExt = GlobalsXC.PngExt;
 				sfd.FileName   = TilePanel.Spriteset.Label.ToUpperInvariant() + suffix;
+
+				if (_lastFolderBrowserPath == null || !Directory.Exists(_lastFolderBrowserPath))
+				{
+					string path = Path.GetDirectoryName(PfSpriteset);
+					if (Directory.Exists(path))
+						sfd.InitialDirectory = path;
+				}
+				else
+					sfd.InitialDirectory = _lastFolderBrowserPath;
 
 				if (sfd.ShowDialog(this) == DialogResult.OK)
 				{
+					_lastFolderBrowserPath = Path.GetDirectoryName(sfd.FileName);
+
 					Bitmap b = TilePanel.Spriteset[TilePanel.idSel].Sprite;
 					// TODO: Ask to overwrite an existing file.
 					BitmapService.ExportSprite(sfd.FileName, b);
@@ -1089,7 +1098,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnCreateClick(object sender, EventArgs e)
 		{
-			if (canSpritesetClose())
+			if (closeSpriteset())
 			{
 				using (var sfd = new SaveFileDialog())
 				{
@@ -1123,7 +1132,7 @@ namespace PckView
 					}
 
 					sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-					sfd.DefaultExt = "PCK";
+					sfd.DefaultExt = GlobalsXC.PckExt;
 
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
@@ -1165,7 +1174,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnOpenClick(object sender, EventArgs e)
 		{
-			if (canSpritesetClose())
+			if (closeSpriteset())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1190,7 +1199,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnOpenBigobsClick(object sender, EventArgs e)
 		{
-			if (canSpritesetClose())
+			if (closeSpriteset())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1214,7 +1223,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnOpenScanGClick(object sender, EventArgs e)
 		{
-			if (canSpritesetClose())
+			if (closeSpriteset())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1244,8 +1253,7 @@ namespace PckView
 			{
 				if (IsScanG)
 				{
-					if (SpriteCollection.WriteScanG(PfSpriteset, TilePanel.Spriteset) // NOTE: 'PfSpriteset' contains extension .DAT for ScanG iconset.
-						&& FileService.ReplaceFile(PfSpriteset))
+					if (SpriteCollection.WriteScanG(PfSpriteset, TilePanel.Spriteset)) // NOTE: 'PfSpriteset' contains extension .DAT for ScanG iconset.
 					{
 						Changed = false;
 						// TODO: FireMvReloadScanG file
@@ -1253,9 +1261,7 @@ namespace PckView
 				}
 				else // save Pck+Tab terrain/unit/bigobs ->
 				{
-					if (SpriteCollection.WriteSpriteset(PfSpriteset, TilePanel.Spriteset)
-						&& FileService.ReplaceFile(PfSpriteset + GlobalsXC.PckExt)
-						&& FileService.ReplaceFile(PfSpriteset + GlobalsXC.TabExt))
+					if (SpriteCollection.WriteSpriteset(PfSpriteset, TilePanel.Spriteset))
 					{
 						Changed = false;
 						FireMvReload = true;
@@ -1277,34 +1283,28 @@ namespace PckView
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					sfd.Title = "Save as";
-
 					if (IsScanG)
 					{
-						sfd.FileName   = Path.GetFileName(PfSpriteset);
+						sfd.Title      = "Save ScanG.dat as ...";
 						sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
-						sfd.DefaultExt = "DAT";
+						sfd.DefaultExt = GlobalsXC.DatExt;
+						sfd.FileName   = Path.GetFileName(PfSpriteset);
 					}
 					else
 					{
-						sfd.FileName   = Path.GetFileName(PfSpriteset) + GlobalsXC.PckExt;
+						sfd.Title      = "Save Pck+Tab as ...";
 						sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-						sfd.DefaultExt = "PCK";
+						sfd.DefaultExt = GlobalsXC.PckExt;
+						sfd.FileName   = Path.GetFileName(PfSpriteset) + GlobalsXC.PckExt;
 					}
 
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
 						string pfe = sfd.FileName;
 
-						string dir   = Path.GetDirectoryName(pfe);
-						string label = Path.GetFileNameWithoutExtension(pfe);
-						string pf    = Path.Combine(dir, label);
-
 						if (IsScanG)
 						{
-							pfe = pf + GlobalsXC.DatExt;
-							if (SpriteCollection.WriteScanG(pfe, TilePanel.Spriteset)
-								&& FileService.ReplaceFile(pfe))
+							if (SpriteCollection.WriteScanG(pfe, TilePanel.Spriteset))
 							{
 								PfSpriteset = pfe; // 'PfSpriteset' for ScanG.dat has its extension.
 								Changed = false;
@@ -1313,9 +1313,11 @@ namespace PckView
 						}
 						else
 						{
-							if (SpriteCollection.WriteSpriteset(pf, TilePanel.Spriteset)
-								&& FileService.ReplaceFile(pf + GlobalsXC.PckExt)
-								&& FileService.ReplaceFile(pf + GlobalsXC.TabExt))
+							string dir   = Path.GetDirectoryName(pfe);
+							string label = Path.GetFileNameWithoutExtension(pfe);
+							string pf    = Path.Combine(dir, label);
+
+							if (SpriteCollection.WriteSpriteset(pf, TilePanel.Spriteset))
 							{
 								PfSpriteset = pf;
 								Changed = false;
@@ -1328,7 +1330,7 @@ namespace PckView
 		}
 
 
-		private string _lastFolderBrowserPath = String.Empty;
+		private string _lastFolderBrowserPath;
 
 		/// <summary>
 		/// Exports all sprites in the currently loaded spriteset to PNG files.
@@ -1357,10 +1359,10 @@ namespace PckView
 						{
 							string dir = Path.GetDirectoryName(PfSpriteset);
 							if (Directory.Exists(dir))
-								_lastFolderBrowserPath = dir;
+								fbd.SelectedPath = dir;
 						}
-
-						fbd.SelectedPath = _lastFolderBrowserPath;
+						else
+							fbd.SelectedPath = _lastFolderBrowserPath;
 
 						if (fbd.ShowDialog(this) == DialogResult.OK)
 						{
@@ -1380,7 +1382,7 @@ namespace PckView
 															CultureInfo.InvariantCulture,
 															"_{0:" + digits + "}",
 															sprite.Id);
-								string pfe = Path.Combine(_lastFolderBrowserPath, label + suffix + PngExt);
+								string pfe = Path.Combine(_lastFolderBrowserPath, label + suffix + GlobalsXC.PngExt);
 								// TODO: Ask to overwrite an existing file.
 								BitmapService.ExportSprite(pfe, sprite.Sprite);
 							}
@@ -1415,16 +1417,16 @@ namespace PckView
 					{
 						string dir = Path.GetDirectoryName(PfSpriteset);
 						if (Directory.Exists(dir))
-							_lastFolderBrowserPath = dir;
+							fbd.SelectedPath = dir;
 					}
-
-					fbd.SelectedPath = _lastFolderBrowserPath;
+					else
+						fbd.SelectedPath = _lastFolderBrowserPath;
 
 					if (fbd.ShowDialog(this) == DialogResult.OK)
 					{
 						_lastFolderBrowserPath = fbd.SelectedPath;
 
-						string pfe = Path.Combine(_lastFolderBrowserPath, label + PngExt);
+						string pfe = Path.Combine(_lastFolderBrowserPath, label + GlobalsXC.PngExt);
 /*						if (File.Exists(pfe)) // TODO: Ask to overwrite the existing file.
 							MessageBox.Show(
 										this,
@@ -1987,7 +1989,7 @@ namespace PckView
 		/// ought be closed anyway.
 		/// </summary>
 		/// <returns>true if state is NOT changed or 'DialogResult.Yes'</returns>
-		private bool canSpritesetClose()
+		private bool closeSpriteset()
 		{
 			return !Changed
 				|| MessageBox.Show(
