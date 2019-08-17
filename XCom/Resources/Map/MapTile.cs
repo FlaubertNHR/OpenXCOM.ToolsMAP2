@@ -56,7 +56,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// @note This is used only by MapFileBase.SaveGifFile().
+		/// @note This is used only by MapFileBase.Screenshot().
 		/// </summary>
 		public Tilepart[] UsedParts
 		{

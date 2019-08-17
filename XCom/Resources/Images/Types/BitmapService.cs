@@ -226,7 +226,7 @@ namespace XCom
 					// (Height-1) scanlines previous.
 					pos = (byte*)start.ToPointer() + locked.Stride * ((height > 0) ? height - 1 : 0); // satiate FxCop CA2233.
 				}
-				uint stride = (uint)Math.Abs(locked.Stride); // wtf.
+				uint stride = (uint)Math.Abs(locked.Stride);
 
 				int i = 0;
 				for (uint row = 0; row != height; ++row)
@@ -248,7 +248,7 @@ namespace XCom
 
 
 		/// <summary>
-		/// Used by ExportSpritesheet() and MapFileBase.SaveGifFile()
+		/// Used by ExportSpritesheet() and MapFileBase.Screenshot()
 		/// </summary>
 		/// <param name="width">width of final Bitmap</param>
 		/// <param name="height">height of final Bitmap</param>
@@ -289,7 +289,7 @@ namespace XCom
 					// (Height-1) scanlines previous.
 					pos = (byte*)start.ToPointer() + locked.Stride * ((height > 0) ? height - 1 : 0); // satiate FxCop CA2233.
 				}
-				uint stride = (uint)Math.Abs(locked.Stride); // wtf.
+				uint stride = (uint)Math.Abs(locked.Stride);
 
 				for (uint row = 0; row != height; ++row)
 				for (uint col = 0; col != width;  ++col)
@@ -309,7 +309,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Used by ExportSpritesheet() and MapFileBase.SaveGifFile()
+		/// Used by ExportSpritesheet() and MapFileBase.Screenshot()
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="dst"></param>
@@ -342,7 +342,7 @@ namespace XCom
 				else
 					srcPos = (byte*)srcStart.ToPointer() + srcLocked.Stride * (src.Height - 1);
 
-				uint srcStride = (uint)Math.Abs(srcLocked.Stride); // wtf.
+				uint srcStride = (uint)Math.Abs(srcLocked.Stride);
 
 				byte* dstPos;
 				if (dstLocked.Stride > 0)
@@ -350,7 +350,7 @@ namespace XCom
 				else
 					dstPos = (byte*)dstStart.ToPointer() + dstLocked.Stride * (dst.Height - 1);
 
-				uint dstStride = (uint)Math.Abs(dstLocked.Stride); // wtf.
+				uint dstStride = (uint)Math.Abs(dstLocked.Stride);
 
 				for (uint row = 0; row != src.Height; ++row)
 				for (uint col = 0; col != src.Width;  ++col)
@@ -367,12 +367,12 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Used by MapFileBase.SaveGifFile()
+		/// Chews off any transparent edges.
+		/// @note Called by MapFileBase.Screenshot().
 		/// </summary>
 		/// <param name="b"></param>
-		/// <param name="transparent"></param>
 		/// <returns></returns>
-		internal static Rectangle GetCloseRectangle(Bitmap b, int transparent)
+		internal static Rectangle CropTransparent(Bitmap b)
 		{
 			var locked = b.LockBits(
 								new Rectangle(0,0, b.Width, b.Height),
@@ -390,13 +390,13 @@ namespace XCom
 				else
 					pos = (byte*)start.ToPointer() + locked.Stride * (b.Height - 1);
 				
-				uint stride = (uint)Math.Abs(locked.Stride); // wtf.
+				uint stride = (uint)Math.Abs(locked.Stride);
 
 				for (rowMin = 0; rowMin != b.Height; ++rowMin)
 				for (int col = 0; col != b.Width; ++col)
 				{
 					byte id = *(pos + rowMin * stride + col);
-					if (id != transparent)
+					if (id != Palette.TranId)
 						goto outLoop1;
 				}
 
@@ -405,7 +405,7 @@ namespace XCom
 				for (int row = rowMin; row < b.Height; ++row)
 				{
 					byte id = *(pos + row * stride + colMin);
-					if (id != transparent)
+					if (id != Palette.TranId)
 						goto outLoop2;
 				}
 
@@ -414,7 +414,7 @@ namespace XCom
 				for (int col = colMin; col < b.Width; ++col)
 				{
 					byte id = *(pos + rowMax * stride + col);
-					if (id != transparent)
+					if (id != Palette.TranId)
 						goto outLoop3;
 				}
 
@@ -423,7 +423,7 @@ namespace XCom
 				for (int row = rowMin; row < rowMax; ++row)
 				{
 					byte id = *(pos + row * stride + colMax);
-					if (id != transparent)
+					if (id != Palette.TranId)
 						goto outLoop4;
 				}
 			}
@@ -436,7 +436,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Used by MapFileBase.SaveGifFile()
+		/// Used by MapFileBase.Screenshot()
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="rect"></param>
@@ -466,7 +466,7 @@ namespace XCom
 				else
 					srcPos = (byte*)srcStart.ToPointer() + srcLocked.Stride * (src.Height - 1);
 
-				uint srcStride = (uint)Math.Abs(srcLocked.Stride); // wtf.
+				uint srcStride = (uint)Math.Abs(srcLocked.Stride);
 
 				byte* dstPos;
 				if (dstLocked.Stride > 0)
@@ -474,10 +474,10 @@ namespace XCom
 				else
 					dstPos = (byte*)dstStart.ToPointer() + dstLocked.Stride * (dst.Height - 1);
 
-				uint dstStride = (uint)Math.Abs(dstLocked.Stride); // wtf.
+				uint dstStride = (uint)Math.Abs(dstLocked.Stride);
 
 				for (uint row = 0; row != rect.Height; ++row)
-				for (uint col = 0; col != rect.Width;  ++col) // why all these effin uints is there a point
+				for (uint col = 0; col != rect.Width;  ++col)
 				{
 					byte* srcPixel = srcPos + (row + rect.Y) * srcStride + (col + rect.X);
 					byte* dstPixel = dstPos +  row           * dstStride +  col;

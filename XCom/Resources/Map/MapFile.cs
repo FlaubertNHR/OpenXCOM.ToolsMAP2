@@ -46,9 +46,10 @@ namespace XCom
 				Descriptor descriptor,
 				List<Tilepart> parts,
 				RouteNodeCollection routes)
-			:
-				base(descriptor, parts)
 		{
+			Descriptor = descriptor;
+			Parts = parts;
+
 			string pfe = Path.Combine(
 								Path.Combine(Descriptor.Basepath, GlobalsXC.MapsDir),
 								Descriptor.Label + GlobalsXC.MapExt);

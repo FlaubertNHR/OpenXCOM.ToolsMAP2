@@ -11,7 +11,7 @@ namespace XCom.Base
 	/// <summary>
 	/// This is basically the currently loaded Map.
 	/// </summary>
-	public class MapFileBase
+	public abstract class MapFileBase
 	{
 		#region Delegates
 		public delegate void SelectLocationEvent(SelectLocationEventArgs e);
@@ -49,13 +49,14 @@ namespace XCom.Base
 
 		#region Properties
 		public Descriptor Descriptor
-		{ get; private set; }
+		{ get; internal protected set; }
+
+		public List<Tilepart> Parts
+		{ get; internal protected set; }
 
 		internal MapTileList Tiles
 		{ get; set; }
 
-		public List<Tilepart> Parts
-		{ get; internal set; }
 
 		private int _level;
 		/// <summary>
@@ -170,51 +171,19 @@ namespace XCom.Base
 		#endregion Properties
 
 
-		#region cTor
-		/// <summary>
-		/// cTor. Instantiated only as the parent of MapFile.
-		/// </summary>
-		/// <param name="descriptor"></param>
-		/// <param name="parts"></param>
-		internal protected MapFileBase(Descriptor descriptor, List<Tilepart> parts)
-		{
-			Descriptor = descriptor;
-			Parts = parts;
-		}
-		#endregion cTor
+		#region Methods (abstract)
+		public abstract bool SaveMap();
+		public abstract void ExportMap(string pf);
 
+		public abstract bool SaveRoutes();
+		public abstract void ExportRoutes(string pf);
 
-		#region Methods (virtual)
-		public virtual bool SaveMap()
-		{ return false; }
-		public virtual void ExportMap(string pf)
-		{}
-
-		public virtual bool SaveRoutes()
-		{ return false; }
-		public virtual void ExportRoutes(string pf)
-		{}
-
-		/// <summary>
-		/// Forwards the call to MapFile.
-		/// </summary>
-		/// <param name="rows"></param>
-		/// <param name="cols"></param>
-		/// <param name="levs"></param>
-		/// <param name="zType"></param>
-		/// <returns>a bitwise int of changes
-		///          0x0 - no changes
-		///          0x1 - Map changed
-		///          0x2 - Routes changed</returns>
-		public virtual int MapResize(
+		public abstract int MapResize(
 				int rows,
 				int cols,
 				int levs,
-				MapResizeService.MapResizeZtype zType)
-		{
-			return 0x0;
-		}
-		#endregion Methods (virtual)
+				MapResizeService.MapResizeZtype zType);
+		#endregion Methods (abstract)
 
 
 		#region Methods
@@ -273,8 +242,7 @@ namespace XCom.Base
 		}
 
 		/// <summary>
-		/// Not generic enough to call with custom derived classes other than
-		/// MapFile.
+		/// Takes a screenshot of the currently loaded Map.
 		/// </summary>
 		/// <param name="fullpath"></param>
 		public void Screenshot(string fullpath)
@@ -285,51 +253,51 @@ namespace XCom.Base
 												(MapSize.Levs - Level) * 24 + width * 8,
 												Descriptor.Pal.ColorTable);
 
-			var start = new Point(
-								(MapSize.Rows - 1) * (XCImage.SpriteWidth / 2),
-								-(24 * Level));
-
-			int i = 0;
-			if (Tiles != null)
+			if (b != null)
 			{
-				for (int lev = MapSize.Levs - 1; lev >= Level; --lev)
+				var start = new Point(
+									(MapSize.Rows - 1) * (XCImage.SpriteWidth / 2),
+									-(24 * Level));
+
+				int i = 0;
+				if (Tiles != null)
 				{
-					for (int
-							row = 0,
-								startX = start.X,
-								startY = start.Y + lev * 24;
-							row != MapSize.Rows;
-							++row,
-								startX -= HalfWidthConst,
-								startY += HalfHeightConst)
+					for (int lev = MapSize.Levs - 1; lev >= Level; --lev)
 					{
 						for (int
-								col = 0,
-									x = startX,
-									y = startY;
-								col != MapSize.Cols;
-								++col,
-									x += HalfWidthConst,
-									y += HalfHeightConst,
-									++i)
+								row = 0,
+									startX = start.X,
+									startY = start.Y + lev * 24;
+								row != MapSize.Rows;
+								++row,
+									startX -= HalfWidthConst,
+									startY += HalfHeightConst)
 						{
-							var parts = this[row, col, lev].UsedParts;
-							foreach (var part in parts)
+							for (int
+									col = 0,
+										x = startX,
+										y = startY;
+									col != MapSize.Cols;
+									++col,
+										x += HalfWidthConst,
+										y += HalfHeightConst,
+										++i)
 							{
-								BitmapService.Insert(
-												part[0].Sprite,
-												b,
-												x,
-												y - part.Record.TileOffset);
+								var parts = this[row, col, lev].UsedParts;
+								foreach (var part in parts)
+								{
+									BitmapService.Insert(
+													part[0].Sprite,
+													b,
+													x,
+													y - part.Record.TileOffset);
+								}
 							}
 						}
 					}
 				}
-			}
 
-			try // TODO: what is this.
-			{
-				var rect = BitmapService.GetCloseRectangle(b, Palette.TranId);
+				var rect = BitmapService.CropTransparent(b);
 				b = BitmapService.Crop(b, rect);
 
 				ColorPalette p = b.Palette;
@@ -337,19 +305,9 @@ namespace XCom.Base
 				b.Palette = p;
 
 				b.Save(fullpath, ImageFormat.Png);
-			}
-			catch // TODO: Deal with exceptions appropriately.
-			{
-				ColorPalette p = b.Palette;
-				p.Entries[Palette.TranId] = Color.Transparent;
-				b.Palette = p;
 
-				b.Save(fullpath, ImageFormat.Png);
-				throw;
-			}
-
-			if (b != null)
 				b.Dispose();
+			}
 		}
 		#endregion Methods
 	}
