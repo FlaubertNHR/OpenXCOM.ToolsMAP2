@@ -180,9 +180,12 @@ namespace MapView
 					Descriptor tileset = descriptor.Value;
 
 					if (tileset == _file.Descriptor)
-						routes = _file.Routes; // -> not only convenient, is req'd when importing Routes
-					else
-						routes = new RouteNodeCollection(tileset.Label, tileset.Basepath);
+						routes = _file.Routes; // -> not only efficient, is req'd when importing Routes
+					else if ((routes = new RouteNodeCollection(tileset.Label, tileset.Basepath)).Fail)
+					{
+//						routes.Fail = false; -> nobody cares, Marvin.
+						routes.Nodes.Clear();
+					}
 
 					foreach (RouteNode node in routes)
 					{

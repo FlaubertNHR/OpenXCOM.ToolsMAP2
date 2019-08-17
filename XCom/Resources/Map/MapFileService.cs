@@ -160,6 +160,13 @@ namespace XCom
 					}
 
 					var RMP = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
+					if (RMP.Fail)
+					{
+						RMP.Fail = false;
+						RMP.Nodes.Clear();
+					}
+					// if Routes fail try to load the Mapfile regardless ->
+
 					var MAP = new MapFile(
 										descriptor,
 										partset,

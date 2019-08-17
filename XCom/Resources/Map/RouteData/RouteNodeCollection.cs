@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Windows.Forms;
 
 
 namespace XCom
@@ -270,11 +269,6 @@ namespace XCom
 		#endregion Fields (static)
 
 
-		#region Fields
-		private readonly List<RouteNode> _nodes = new List<RouteNode>();
-		#endregion Fields
-
-
 		#region Properties (static)
 		/// <summary>
 		/// The fullpath of the .RMP file.
@@ -286,6 +280,13 @@ namespace XCom
 
 
 		#region Properties
+		private readonly List<RouteNode> _nodes = new List<RouteNode>();
+		public List<RouteNode> Nodes
+		{
+			get { return _nodes; }
+		}
+
+
 		/// <summary>
 		/// Returns the node at id.
 		/// </summary>
@@ -293,51 +294,43 @@ namespace XCom
 		{
 			get
 			{
-				if (id > -1 && id < _nodes.Count)
-					return _nodes[id];
+				if (id > -1 && id < Nodes.Count) // TODO: Get rid of that.
+					return Nodes[id];
 
 				return null;
 			}
 		}
 
-		/// <summary>
-		/// Returns the count of RouteNodes in this collection.
-		/// </summary>
-		public int Count
-		{
-			get { return _nodes.Count; }
-		}
-
 		public bool Fail
-		{ get; private set; }
+		{ get; internal set; }
 		#endregion Properties
 
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Reads the .RMP file and adds its data as RouteNodes to a
-		/// List.
+		/// cTor[0]. Reads a Routefile and adds its nodes to a list.
 		/// </summary>
 		/// <param name="label"></param>
 		/// <param name="basepath"></param>
 		public RouteNodeCollection(string label, string basepath)
 		{
-			PfeRoutes = Path.Combine(
-								Path.Combine(basepath, GlobalsXC.RoutesDir),
-								label + GlobalsXC.RouteExt);
+			string dir = Path.Combine(basepath, GlobalsXC.RoutesDir);
+			PfeRoutes  = Path.Combine(dir, label + GlobalsXC.RouteExt);
 
-			Fail = !LoadNodes(PfeRoutes);
+			if (!LoadNodes(PfeRoutes))
+				Fail = true;
 		}
 
 		/// <summary>
-		/// cTor[1]. Imports an .RMP file and replaces the RouteNodes-list with
-		/// its data.
+		/// cTor[1]. Imports a Routefile and replaces the current nodes-list
+		/// with its nodes.
 		/// @note Do *not* replace 'PfeRoutes' on an import.
 		/// </summary>
 		/// <param name="pfe"></param>
 		public RouteNodeCollection(string pfe)
 		{
-			Fail = !LoadNodes(pfe);
+			if (!LoadNodes(pfe))
+				Fail = true;
 		}
 
 		/// <summary>
@@ -356,11 +349,11 @@ namespace XCom
 					var bindata = new byte[Length_Routenode];
 					fs.Read(bindata, 0, Length_Routenode);
 
-					_nodes.Add(new RouteNode(id, bindata));
+					Nodes.Add(new RouteNode(id, bindata));
 				}
 
 				var invalids = new List<byte>();	// check for invalid Ranks ->
-				foreach (RouteNode node in _nodes)	// See also RouteView.OnCheckNodeRanksClick()
+				foreach (RouteNode node in Nodes)	// See also RouteView.OnCheckNodeRanksClick()
 				{
 					if (node.OobRank != (byte)0)
 						invalids.Add(node.Index);
@@ -403,7 +396,7 @@ namespace XCom
 		/// <returns></returns>
 		IEnumerator<RouteNode> IEnumerable<RouteNode>.GetEnumerator()
 		{
-			return _nodes.GetEnumerator();
+			return Nodes.GetEnumerator();
 		}
 
 		/// <summary>
@@ -412,7 +405,7 @@ namespace XCom
 		/// <returns></returns>
 		public IEnumerator GetEnumerator()
 		{
-			return _nodes.GetEnumerator();
+			return Nodes.GetEnumerator();
 		}
 		#endregion Interface requirements
 
@@ -452,8 +445,8 @@ namespace XCom
 			using (var fs = FileService.CreateFile(pfeT))
 			if (fs != null)
 			{
-				for (int id = 0; id != _nodes.Count; ++id)
-					_nodes[id].WriteNode(fs); // -> writes a node's data to the filestream
+				for (int id = 0; id != Nodes.Count; ++id)
+					Nodes[id].WriteNode(fs); // -> writes a node's data to the filestream
 
 				if (pfeT != pfe)
 					return FileService.ReplaceFile(pfe);
@@ -472,8 +465,8 @@ namespace XCom
 		/// <returns></returns>
 		internal RouteNode AddNode(byte row, byte col, byte lev)
 		{
-			var node = new RouteNode((byte)_nodes.Count, row, col, lev);
-			_nodes.Add(node);
+			var node = new RouteNode((byte)Nodes.Count, row, col, lev);
+			Nodes.Add(node);
 
 			return node;
 		}
@@ -486,9 +479,9 @@ namespace XCom
 		{
 			int id = node.Index;
 
-			_nodes.Remove(node);
+			Nodes.Remove(node);
 
-			foreach (var node0 in _nodes)
+			foreach (var node0 in Nodes)
 			{
 				if (node0.Index > id) // shuffle all higher-indexed nodes down 1
 					--node0.Index;

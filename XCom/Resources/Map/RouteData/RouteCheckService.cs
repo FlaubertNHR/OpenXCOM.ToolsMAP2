@@ -114,7 +114,7 @@ namespace XCom
 										Environment.NewLine);
 
 				string text = String.Empty;
-				int total = _file.Routes.Count;
+				int total = _file.Routes.Nodes.Count;
 				byte loc;
 				foreach (var node in Invalids)
 				{
