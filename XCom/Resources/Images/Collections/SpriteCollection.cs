@@ -38,13 +38,13 @@ namespace XCom
 		/// Flag to state that the quantity of sprites in a Pck file don't
 		/// jive with the quantity of offsets in its Tab file.
 		/// </summary>
-		public bool Error_PckTabCount
+		public bool Fail_PckTabCount
 		{ get; private set; }
 
 		/// <summary>
 		/// Flag to state that there was a sprite-buffer overflow in a PckImage.
 		/// </summary>
-		public bool Error_Overflo
+		public bool Fail_Overflo
 		{ get; internal set; }
 
 
@@ -224,14 +224,14 @@ namespace XCom
 												i,
 												this);
 
-						if (Error_Overflo)
+						if (Fail_Overflo)
 							return;
 
 						Sprites.Add(sprite);
 					}
 				}
 				else
-					Error_PckTabCount = true; // NOTE: Shall be handled by the caller; ie. set the spriteset to null.
+					Fail_PckTabCount = true; // NOTE: Shall be handled by the caller; ie. set the spriteset to null.
 			}
 			// else malformed pck file (a proper sprite needs at least 2 bytes:
 			// one for the count of transparent lines and another for the EoS

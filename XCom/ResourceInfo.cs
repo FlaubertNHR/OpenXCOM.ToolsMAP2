@@ -99,7 +99,7 @@ namespace XCom
 														bytesPck,
 														bytesTab);
 
-						if (spriteset.Error_PckTabCount) // pck vs tab mismatch
+						if (spriteset.Fail_PckTabCount) // pck vs tab mismatch
 						{
 							MessageBox.Show(
 										"The count of sprites in the PCK file does not match"
@@ -110,8 +110,7 @@ namespace XCom
 										MessageBoxDefaultButton.Button1,
 										0);
 						}
-//						else if (spriteset.Error_Overflo) // too many bytes for a nonbigob sprite - better not happen here.
-						else
+						else // if (spriteset.Error_Overflo) // too many bytes for a nonbigob sprite - better not happen here.
 						{
 							Spritesets.Add(spriteset); // used only by MapInfoDialog.
 							return spriteset;
@@ -137,6 +136,11 @@ namespace XCom
 		}
 
 
+		/// <summary>
+		/// Loads a ScanG.dat file for UFO.
+		/// </summary>
+		/// <param name="dirUfo"></param>
+		/// <returns></returns>
 		public static bool LoadScanGufo(string dirUfo)
 		{
 			if (!String.IsNullOrEmpty(dirUfo))
@@ -160,6 +164,11 @@ namespace XCom
 			return false;
 		}
 
+		/// <summary>
+		/// Loads a ScanG.dat file for TFTD.
+		/// </summary>
+		/// <param name="dirTftd"></param>
+		/// <returns></returns>
 		public static bool LoadScanGtftd(string dirTftd)
 		{
 			if (!String.IsNullOrEmpty(dirTftd))
@@ -186,6 +195,7 @@ namespace XCom
 
 		/// <summary>
 		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
+		/// Loads a LoFTemps.dat file for UFO.
 		/// </summary>
 		/// <param name="dirUfo"></param>
 		public static void LoadLoFTufo(string dirUfo)
@@ -224,6 +234,10 @@ namespace XCom
 			}
 		}
 
+		/// <summary>
+		/// Loads a LoFTemps.dat file for TFTD.
+		/// </summary>
+		/// <param name="dirTftd"></param>
 		public static void LoadLoFTtftd(string dirTftd)
 		{
 			if (!String.IsNullOrEmpty(dirTftd))

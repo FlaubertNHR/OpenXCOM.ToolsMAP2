@@ -103,7 +103,7 @@ namespace XCom
 					default:
 						if (posDst >= Bindata.Length)
 						{
-							Spriteset.Error_Overflo = true;
+							Spriteset.Fail_Overflo = true;
 							return;
 						}
 

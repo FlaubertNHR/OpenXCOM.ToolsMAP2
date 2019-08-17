@@ -28,15 +28,14 @@ namespace XCom
 		/// <returns>the path to the Mapfile else null</returns>
 		public static string MapfileExists(Descriptor descriptor)
 		{
-			string path = descriptor.Basepath;
-			if (!String.IsNullOrEmpty(path)) // -> the BasePath can be null if resource-type is notconfigured.
+			string dir = descriptor.Basepath;
+			if (!String.IsNullOrEmpty(dir)) // -> the BasePath can be null if resource-type is notconfigured.
 			{
-				path = Path.Combine(
-								Path.Combine(path, GlobalsXC.MapsDir),
-								descriptor.Label + GlobalsXC.MapExt);
+					   dir = Path.Combine(dir, GlobalsXC.MapsDir);
+				string pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
 
-				if (File.Exists(path))
-					return path;
+				if (File.Exists(pfe))
+					return pfe;
 			}
 			return null;
 		}
@@ -55,13 +54,9 @@ namespace XCom
 				ref bool treechanged,
 				bool basepathDialog = false)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("MapFileService.LoadDescriptor descriptor= " + descriptor);
+			string pfe = MapfileExists(descriptor);
 
-			string pfeMap = MapfileExists(descriptor);
-			//LogFile.WriteLine(". pfeMap= " + pfeMap);
-
-			if (pfeMap == null // Open a folderbrowser for user to point to a basepath ->
+			if (pfe == null // Open a folderbrowser for user to point to a basepath ->
 				&& (basepathDialog || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to ask for a MapBrowser dialog.
 				&& MessageBox.Show(
 								"Files were not found for : " + descriptor.Label
@@ -89,10 +84,10 @@ namespace XCom
 
 					if (fbd.ShowDialog() == DialogResult.OK)
 					{
-						pfeMap = Path.Combine(fbd.SelectedPath, GlobalsXC.MapsDir);
-						pfeMap = Path.Combine(pfeMap, descriptor.Label + GlobalsXC.MapExt);
+						string dir = Path.Combine(fbd.SelectedPath, GlobalsXC.MapsDir);
+							   pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
 
-						if (File.Exists(pfeMap))
+						if (File.Exists(pfe))
 						{
 							descriptor.Basepath = fbd.SelectedPath;
 							treechanged = true;
@@ -110,7 +105,7 @@ namespace XCom
 				}
 			}
 
-			if (File.Exists(pfeMap))
+			if (File.Exists(pfe))
 			{
 				var partset = new List<Tilepart>();
 

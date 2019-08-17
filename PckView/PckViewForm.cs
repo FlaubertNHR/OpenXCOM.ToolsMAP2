@@ -1759,7 +1759,7 @@ namespace PckView
 												bytesPck,
 												bytesTab);
 
-					if (spriteset.Error_PckTabCount) // pck vs tab mismatch
+					if (spriteset.Fail_PckTabCount) // pck vs tab mismatch
 					{
 						spriteset = null;
 
@@ -1773,7 +1773,7 @@ namespace PckView
 									MessageBoxDefaultButton.Button1,
 									0);
 					}
-					else if (spriteset.Error_Overflo) // too many bytes for a nonbigob sprite
+					else if (spriteset.Fail_Overflo) // too many bytes for a nonbigob sprite
 					{
 						spriteset = null;
 
