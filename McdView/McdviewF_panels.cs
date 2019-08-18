@@ -197,7 +197,37 @@ namespace McdView
 			if (Parts != null && Parts.Length != 0 && SelId != -1
 				&& e.Y > -1 && e.Y < pnl_Sprites.Height) // NOTE: Bypass event if cursor moves off the panel before released.
 			{
-				if (Spriteset != null && Spriteset.Count != 0)
+				if (Spriteset == null)
+				{
+					MessageBox.Show(
+								this,
+								"Sprites not found for " + Label + "."
+									+ Environment.NewLine + Environment.NewLine
+									+ "A spriteset can be instantiated by"
+									+ " inserting records with the CopyPanel"
+									+ " or one can be created externally"
+									+ " with PckView.",
+								" Spriteset null",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error,
+								MessageBoxDefaultButton.Button1,
+								0);
+				}
+				else if (Spriteset.Count == 0)
+				{
+					MessageBox.Show(
+								this,
+								"The spriteset has no sprites."
+									+ Environment.NewLine + Environment.NewLine
+									+ "Sprites can be added by inserting records with"
+									+ " the CopyPanel or externally with PckView.",
+								" Spriteset empty",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Warning,
+								MessageBoxDefaultButton.Button1,
+								0);
+				}
+				else
 				{
 					int phase;
 					for (phase = 0; phase != 8; ++phase)
@@ -251,18 +281,6 @@ namespace McdView
 						}
 					}
 				}
-				else
-					MessageBox.Show(
-								this,
-								"Sprites cannot be found for " + Label + "."
-									+ Environment.NewLine + Environment.NewLine
-									+ "A spriteset can be created with PckView or"
-									+ " by inserting records from the CopyPanel.",
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
 			}
 		}
 
