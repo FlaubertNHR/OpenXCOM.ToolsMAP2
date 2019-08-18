@@ -46,7 +46,6 @@ namespace DSShared
 
 
 		private static string _pfe;
-		private static string _pfeT;
 
 		private static readonly Dictionary<string, Metric> _dict =
 							new Dictionary<string, Metric>();
@@ -56,10 +55,8 @@ namespace DSShared
 		#region Methods (static)
 		public static void InitializeRegistry(string dir)
 		{
-			dir   = Path.Combine(dir, PathInfo.SettingsDirectory);
-
-			_pfe  = Path.Combine(dir, PathInfo.ConfigViewers);
-			_pfeT = Path.Combine(dir, PathInfo.ConfigViewersT);
+			 dir = Path.Combine(dir, PathInfo.DIR_Settings);
+			_pfe = Path.Combine(dir, PathInfo.YML_Viewers);
 
 			LoadMetrics();
 		}
@@ -70,45 +67,44 @@ namespace DSShared
 		/// </summary>
 		private static void LoadMetrics()
 		{
-			if (File.Exists(_pfe))
+			using (var fs = FileService.OpenFile(_pfe))
+			if (fs != null)
+			using (var sr = new StreamReader(fs))
 			{
-				using (var sr = new StreamReader(File.OpenRead(_pfe)))
+				var invariant = CultureInfo.InvariantCulture;
+
+				var ys = new YamlStream();
+				ys.Load(sr);
+
+				var root = ys.Documents[0].RootNode as YamlMappingNode;
+				foreach (var node in root.Children)
 				{
-					var invariant = CultureInfo.InvariantCulture;
+					string label = (node.Key as YamlScalarNode).Value;
 
-					var ys = new YamlStream();
-					ys.Load(sr);
+					var tric = new Metric();
 
-					var root = ys.Documents[0].RootNode as YamlMappingNode;
-					foreach (var node in root.Children)
+					var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
+					foreach (var keyval in keyvals) // Cf. TilesetLoader..cTor
 					{
-						string label = (node.Key as YamlScalarNode).Value;
-
-						var tric = new Metric();
-
-						var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
-						foreach (var keyval in keyvals) // Cf. TilesetLoader..cTor
+						int val = Int32.Parse(keyval.Value.ToString(), invariant); // TODO: Error handling.
+						switch (keyval.Key.ToString())
 						{
-							int val = Int32.Parse(keyval.Value.ToString(), invariant); // TODO: Error handling.
-							switch (keyval.Key.ToString())
-							{
-								case LEFT:   tric.left   = val; break;
-								case TOP:    tric.top    = val; break;
-								case WIDTH:  tric.width  = val; break;
-								case HEIGHT: tric.height = val; break;
-							}
+							case LEFT:   tric.left   = val; break;
+							case TOP:    tric.top    = val; break;
+							case WIDTH:  tric.width  = val; break;
+							case HEIGHT: tric.height = val; break;
 						}
-
-						// check to ensure that the form is at least partly onscreen ->
-						var rect = Screen.GetWorkingArea(new Point(tric.left, tric.top));
-						if (!rect.Contains(tric.left + 200, tric.top + 100))
-						{
-							tric.left = 100;
-							tric.top  =  50;
-						}
-
-						_dict.Add(label, tric);
 					}
+
+					// check to ensure that the form is at least partly onscreen ->
+					var rect = Screen.GetWorkingArea(new Point(tric.left, tric.top));
+					if (!rect.Contains(tric.left + 200, tric.top + 100))
+					{
+						tric.left = 100;
+						tric.top  =  50;
+					}
+
+					_dict.Add(label, tric);
 				}
 			}
 		}
@@ -218,32 +214,44 @@ namespace DSShared
 		/// @note Although there are 4 Options forms only 1 metric is saved or
 		/// loaded for all.
 		/// </summary>
-		public static void FinalizeRegistry()
+		public static void WriteRegistry()
 		{
-			using (var sw = new StreamWriter(_pfeT))
+			// create "settings/MapViewers.yml"
+			string pfeT;
+			if (File.Exists(_pfe))
+				pfeT = _pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = _pfe;
+
+			bool fail = true;
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
 			{
-				sw.WriteLine("# delete this file if things go wrong with your window locations and/or sizes.");
-				sw.WriteLine("# It will be recreated from a hardcoded manifest the next time the program runs.");
-				sw.WriteLine("#");
-				sw.WriteLine("# NOTE: Do *not* add extra lines or anything to the format; it's not that");
-				sw.WriteLine("# robust.");
-				sw.WriteLine("#");
+				fail = false;
 
-				foreach (var key in _dict.Keys)
+				using (var sw = new StreamWriter(fs))
 				{
-					Metric tric = _dict[key];
+					sw.WriteLine("# delete this file if things go wrong with your window locations and/or sizes.");
+					sw.WriteLine("# It will be recreated from a hardcoded manifest the next time the program runs.");
+					sw.WriteLine("#");
+					sw.WriteLine("# NOTE: Do *not* add extra lines or anything to the format; it's not that robust.");
+					sw.WriteLine("#");
 
-					sw.WriteLine(key + ":");
-					sw.WriteLine("  " + LEFT   + ": " + tric.left);
-					sw.WriteLine("  " + TOP    + ": " + tric.top);
-					sw.WriteLine("  " + WIDTH  + ": " + tric.width);
-					sw.WriteLine("  " + HEIGHT + ": " + tric.height);
+					foreach (var key in _dict.Keys)
+					{
+						Metric tric = _dict[key];
+
+						sw.WriteLine(key + ":");
+						sw.WriteLine("  " + LEFT   + ": " + tric.left);
+						sw.WriteLine("  " + TOP    + ": " + tric.top);
+						sw.WriteLine("  " + WIDTH  + ": " + tric.width);
+						sw.WriteLine("  " + HEIGHT + ": " + tric.height);
+					}
 				}
 			}
 
-			if (File.Exists(_pfeT))
-				File.Replace(_pfeT, _pfe, null);
-			// TODO: Else show error.
+			if (!fail && pfeT != _pfe)
+				FileService.ReplaceFile(_pfe);
 		}
 		#endregion Methods (static)
 

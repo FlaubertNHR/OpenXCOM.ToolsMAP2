@@ -171,14 +171,18 @@ namespace MapView
 		/// </summary>
 		internal MainViewF()
 		{
-			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
-			string dirSetT = Path.Combine(dirAppL, PathInfo.SettingsDirectory);
+			string dirAppL = PathInfo.GetDirectory(Application.ExecutablePath);
+			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
 			DSLogFile.CreateLogFile();
 #endif
 
-			LogFile.WriteLine("Starting MAIN MapView window ...");
+			LogFile.WriteLine("Instantiating MAIN MapView window ...");
+
+			// TODO: Either move all this SharedSpace stuff to DSShared so it
+			// can be implemented for Mcd/PckView also, or better get rid of it
+			// (or at least de-spaghettify it as much as possible).
 
 			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL);
 			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSetT);
@@ -186,10 +190,10 @@ namespace MapView
 			LogFile.WriteLine("App paths cached.");
 
 
-			var pathOptions   = new PathInfo(dirSetT, PathInfo.ConfigOptions);
-			var pathResources = new PathInfo(dirSetT, PathInfo.ConfigResources);
+			var pathOptions   = new PathInfo(dirSetT, PathInfo.CFG_Options);
+			var pathResources = new PathInfo(dirSetT, PathInfo.YML_Resources);
 			var pathTilesets  = new PathInfo(dirSetT, PathInfo.ConfigTilesets);
-			var pathViewers   = new PathInfo(dirSetT, PathInfo.ConfigViewers);
+			var pathViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);
 
 			SharedSpace.SetShare(PathInfo.ShareOptions,   pathOptions);
 			SharedSpace.SetShare(PathInfo.ShareResources, pathResources);
@@ -807,7 +811,7 @@ namespace MapView
 			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
-			RegistryInfo.FinalizeRegistry();	// write all registered windows' locations and sizes to file
+			RegistryInfo.WriteRegistry();		// write all registered windows' locations and sizes to file
 		}
 
 

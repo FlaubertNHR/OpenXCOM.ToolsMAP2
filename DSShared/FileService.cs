@@ -59,8 +59,8 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Opens a file and returns it as a filestream. The file will not be
-		/// closed.
+		/// Opens a file for reading and returns it as a filestream. The file
+		/// will not be closed.
 		/// IMPORTANT: Dispose the stream in the calling function.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of the file to be opened</param>

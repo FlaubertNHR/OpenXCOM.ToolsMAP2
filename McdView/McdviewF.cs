@@ -244,7 +244,7 @@ namespace McdView
 		{
 			IsInvoked = isInvoked;
 
-			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
+			string dirAppL = PathInfo.GetDirectory(Application.ExecutablePath);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
 			DSLogFile.CreateLogFile();
@@ -385,8 +385,8 @@ namespace McdView
 
 			// Second check the Configurator's basepath ...
 			string dir = PathInfo.GetDirectory(Application.ExecutablePath);
-				   dir = Path.Combine(dir, PathInfo.SettingsDirectory);
-			string pfe = Path.Combine(dir, PathInfo.ConfigResources);
+				   dir = Path.Combine(dir, PathInfo.DIR_Settings);
+			string pfe = Path.Combine(dir, PathInfo.YML_Resources);
 
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
@@ -488,7 +488,7 @@ namespace McdView
 					Copier.Close(); // invoked via TileView
 
 				if (!IsInvoked)
-					RegistryInfo.FinalizeRegistry();
+					RegistryInfo.WriteRegistry();
 
 				base.OnFormClosing(e);
 			}

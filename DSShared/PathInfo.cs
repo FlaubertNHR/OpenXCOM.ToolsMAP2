@@ -18,21 +18,20 @@ namespace DSShared
 		public const string ShareViewers      = "MV_ViewersFile";	// -> MapViewers.yml
 
 		// Configuration files
-		public const string ConfigOptions     = "MapOptions.cfg";	// stores user-settings for the viewers
+		public const string CFG_Options       = "MapOptions.cfg";	// stores user-settings for the viewers
 
-		public const string ConfigResources   = "MapResources.yml";	// stores the installation paths of UFO/TFTD
+		public const string YML_Resources     = "MapResources.yml";	// stores the installation paths of UFO/TFTD
 
 		public const string ConfigTilesets    = "MapTilesets.yml";	// tilesets file configuration
 		public const string ConfigTilesetsOld = "MapTilesets.old";	// tilesets file backup
 		public const string ConfigTilesetsTpl = "MapTilesets.tpl";	// tilesets file template
 
-		public const string ConfigViewers     = "MapViewers.yml";	// various window positions and sizes
-		public const string ConfigViewersT    = "MapViewers.yml.t";	// tempfile to attempt write
+		public const string YML_Viewers       = "MapViewers.yml";	// various window positions and sizes
 
 
-		public const string NotConfigured     = "notconfigured"; // used in MapResources.yml in case UFO or TFTD installation is not configured.
+		public const string NotConfigured     = "notconfigured";	// used in MapResources.yml in case UFO or TFTD installation is not configured.
 
-		public const string SettingsDirectory = "settings";
+		public const string DIR_Settings      = "settings";
 		#endregion Fields (static)
 
 

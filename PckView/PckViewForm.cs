@@ -155,7 +155,7 @@ namespace PckView
 			MaximumSize = new Size(0,0); // fu.net
 
 			if (!IsInvoked)
-				RegistryInfo.InitializeRegistry(Path.GetDirectoryName(Application.ExecutablePath));
+				RegistryInfo.InitializeRegistry(PathInfo.GetDirectory(Application.ExecutablePath));
 
 			RegistryInfo.RegisterProperties(this);
 //			regInfo.AddProperty("SelectedPalette");
@@ -204,13 +204,13 @@ namespace PckView
 
 
 			// get SpriteShade from MapView's options ...
-			string pfeConfig = Path.Combine(
-										Path.GetDirectoryName(Application.ExecutablePath),
-										PathInfo.SettingsDirectory + Path.DirectorySeparatorChar + PathInfo.ConfigOptions);
-			if (File.Exists(pfeConfig))
-			{
-				string val = GetSpriteShade(pfeConfig);
+			string dir = PathInfo.GetDirectory(Application.ExecutablePath);
+				   dir = Path.Combine(dir, PathInfo.DIR_Settings);	// "settings"
+			string pfe = Path.Combine(dir, PathInfo.CFG_Options);	// "MapOptions.cfg"
 
+			string val = GetSpriteShade(pfe);
+			if (val != null)
+			{
 				int result;
 				if (Int32.TryParse(val, out result)
 					&& result > -1)
@@ -227,23 +227,21 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Parses the sprite-shade value out of settings/MapOptions.Cfg.
 		/// </summary>
-		/// <param name="pfeConfig"></param>
+		/// <param name="pfe"></param>
 		/// <returns></returns>
-		private string GetSpriteShade(string pfeConfig)
+		private string GetSpriteShade(string pfe)
 		{
-			int count = File.ReadLines(pfeConfig).Count();
-			using (var sr = new StreamReader(pfeConfig))
+			using (var fs = FileService.OpenFile(pfe))
+			if (fs != null)
+			using (var sr = new StreamReader(fs))
 			{
 				string line;
-				for (int i = 0; i != count; ++i)
+				while ((line = sr.ReadLine()) != null)
 				{
-					line = sr.ReadLine().Trim();
 					if (line.StartsWith("SpriteShade", StringComparison.InvariantCulture))
-					{
-						return line.Substring(12);
-					}
+						return line.Substring(12).Trim();
 				}
 			}
 			return null;
@@ -465,7 +463,7 @@ namespace PckView
 				ByteTableManager.HideTable();
 
 				if (!IsInvoked)
-					RegistryInfo.FinalizeRegistry();
+					RegistryInfo.WriteRegistry();
 			}
 			else
 				e.Cancel = true;
