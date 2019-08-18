@@ -377,43 +377,42 @@ namespace McdView
 
 			// First check the current Terrain's basepath ...
 //			string path = Path.GetDirectoryName(_pfeMcd);
-//			if (path.EndsWith(GlobalsXC.TerrainDir, StringComparison.InvariantCulture))
+//			if (path.EndsWith(GlobalsXC.TerrainDir, StringComparison.OrdinalIgnoreCase))
 //			{
 //				path = path.Substring(0, path.Length - GlobalsXC.TerrainDir.Length + 1);
 //				return Path.Combine(path, SharedSpace.ScanGfile);
 //			}
 
 			// Second check the Configurator's basepath ...
-			string dirSettings = Path.Combine(
-											Path.GetDirectoryName(Application.ExecutablePath),
-											PathInfo.SettingsDirectory);
-			string fileResources = Path.Combine(dirSettings, PathInfo.ConfigResources);
-			if (File.Exists(fileResources))
+			string dir = PathInfo.GetDirectory(Application.ExecutablePath);
+				   dir = Path.Combine(dir, PathInfo.SettingsDirectory);
+			string pfe = Path.Combine(dir, PathInfo.ConfigResources);
+
+			using (var fs = FileService.OpenFile(pfe))
+			if (fs != null)
+			using (var sr = new StreamReader(fs))
 			{
-				using (var sr = new StreamReader(File.OpenRead(fileResources)))
+				var ys = new YamlStream();
+				ys.Load(sr);
+
+				string val;
+
+				var nodeRoot = ys.Documents[0].RootNode as YamlMappingNode;
+				foreach (var node in nodeRoot.Children)
 				{
-					var ys = new YamlStream();
-					ys.Load(sr);
-
-					string val;
-
-					var nodeRoot = ys.Documents[0].RootNode as YamlMappingNode;
-					foreach (var node in nodeRoot.Children)
+					switch (node.Key.ToString())
 					{
-						switch (node.Key.ToString())
-						{
-							case "ufo":
-								if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
-									pathufo = val;
+						case "ufo":
+							if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
+								pathufo = val;
 
-								break;
+							break;
 
-							case "tftd":
-								if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
-									pathtftd = val;
+						case "tftd":
+							if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
+								pathtftd = val;
 
-								break;
-						}
+							break;
 					}
 				}
 			}
@@ -619,26 +618,49 @@ namespace McdView
 					sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
 					sfd.DefaultExt = GlobalsXC.McdExt;
 
+//					sfd.InitialDirectory = ; // TODO <-
+
+
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
 						string pfe = sfd.FileName;
 
-						using (var fs = FileService.CreateFile(pfe))
+						string pfeT;
+						if (File.Exists(pfe))
+							pfeT = pfe + GlobalsXC.TEMPExt;
+						else
+							pfeT = pfe;
+
+						bool fail = true;
+						using (var fs = FileService.CreateFile(pfeT)) // create 0-byte file
 						if (fs != null)
+							fail = false;
+
+						if (!fail && pfeT != pfe)
+							fail = !FileService.ReplaceFile(pfe);
+
+						if (!fail)
 						{
-							PfeMcd = pfe;
+							PfeMcd = pfe; // sets 'Label' also.
 							SelId = -1;
 
-							Palette pal;
-							if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
-							else                      pal = Palette.TftdBattle;
-
 							ResourceInfo.Spritesets.Clear();
-							Spriteset = ResourceInfo.LoadSpriteset(
-																Label,
-																Path.GetDirectoryName(PfeMcd),
-																ResourceInfo.TAB_WORD_LENGTH_2,
-																pal);
+
+							string dir = PathInfo.GetDirectory(PfeMcd);
+							string pf  = Path.Combine(dir, Label);
+							if (   File.Exists(pf + GlobalsXC.PckExt)
+								&& File.Exists(pf + GlobalsXC.TabExt))
+							{
+								Palette pal;
+								if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
+								else                      pal = Palette.TftdBattle;
+
+								Spriteset = ResourceInfo.LoadSpriteset(
+																	Label,
+																	Path.GetDirectoryName(PfeMcd),
+																	ResourceInfo.TAB_WORD_LENGTH_2,
+																	pal);
+							}
 
 							Parts = new Tilepart[0];
 							CacheLoad.SetCacheSaved(Parts);
