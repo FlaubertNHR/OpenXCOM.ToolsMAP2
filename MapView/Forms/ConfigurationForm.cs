@@ -19,8 +19,6 @@ namespace MapView
 		#region Fields
 		private PathInfo _pathResources = SharedSpace.GetShareObject(PathInfo.ShareResources) as PathInfo;
 		private PathInfo _pathTilesets  = SharedSpace.GetShareObject(PathInfo.ShareTilesets)  as PathInfo;
-
-		private bool _bork;
 		#endregion Fields
 
 
@@ -109,17 +107,17 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Opens a dialog to find a UFO installation folder.
+		/// Opens a dialog to find a UFO installation/resource folder.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnFindUfoClick(object sender, EventArgs e)
 		{
-			using (var f = folderBrowser)
+			using (var f = new FolderBrowserDialog())
 			{
 				f.Description = "Select UFO Resources directory."
 							  + Environment.NewLine + Environment.NewLine
-							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (typically)";
+							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (usually)";
 
 				if (f.ShowDialog(this) == DialogResult.OK)
 					Ufo = f.SelectedPath;
@@ -127,17 +125,17 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Opens a dialog to find a TFTD installation folder.
+		/// Opens a dialog to find a TFTD installation/resource folder.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnFindTftdClick(object sender, EventArgs e)
 		{
-			using (var f = folderBrowser)
+			using (var f = new FolderBrowserDialog())
 			{
 				f.Description = "Select TFTD Resources directory"
 							  + Environment.NewLine + Environment.NewLine
-							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (typically)";
+							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (usually)";
 
 				if (f.ShowDialog(this) == DialogResult.OK)
 					Tftd = f.SelectedPath;
@@ -151,14 +149,12 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAcceptClick(object sender, EventArgs e)
 		{
-			_bork = false;
-
-			if (cbResources.Checked) // handle XCOM resource path(s) configuration ->
+			if (cbResources.Checked) // handle resource path(s) configuration ->
 			{
 				Ufo  = Ufo .Trim();
 				Tftd = Tftd.Trim();
 
-				if (Ufo.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal)) // NOTE: drive-root directories do funny things. Like append '\'
+				if (Ufo.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
 					Ufo = Ufo.Substring(0, Ufo.Length - 1);
 
 				if (Tftd.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
@@ -167,58 +163,74 @@ namespace MapView
 				if (String.IsNullOrEmpty(Ufo) && String.IsNullOrEmpty(Tftd))
 				{
 					ShowErrorDialog("Both folders cannot be blank.");
+					return;
 				}
-				else if (!String.IsNullOrEmpty(Ufo) && !Directory.Exists(Ufo))
+
+				if (!String.IsNullOrEmpty(Ufo) && !Directory.Exists(Ufo))
 				{
 					ShowErrorDialog("The UFO folder does not exist.");
+					return;
 				}
-				else if (!String.IsNullOrEmpty(Tftd) && !Directory.Exists(Tftd))
+
+				if (!String.IsNullOrEmpty(Tftd) && !Directory.Exists(Tftd))
 				{
 					ShowErrorDialog("The TFTD folder does not exist.");
+					return;
 				}
-				else // check for a valid XCOM CursorSprite and create MapResources.yml ->
+
+
+				// check for a valid CursorSprite
+				string CursorPck = SharedSpace.CursorFilePrefix + GlobalsXC.PckExt;
+				string CursorTab = SharedSpace.CursorFilePrefix + GlobalsXC.TabExt;
+
+				if (   (!File.Exists(Path.Combine(Ufo,  CursorPck)) || !File.Exists(Path.Combine(Ufo,  CursorTab)))
+					&& (!File.Exists(Path.Combine(Tftd, CursorPck)) || !File.Exists(Path.Combine(Tftd, CursorTab))))
 				{
-					string CursorPck = SharedSpace.CursorFilePrefix + GlobalsXC.PckExt;
-					string CursorTab = SharedSpace.CursorFilePrefix + GlobalsXC.TabExt;
-
-					if (   (!File.Exists(Path.Combine(Ufo,  CursorPck)) || !File.Exists(Path.Combine(Ufo,  CursorTab)))
-						&& (!File.Exists(Path.Combine(Tftd, CursorPck)) || !File.Exists(Path.Combine(Tftd, CursorTab))))
+					using (var f = new Infobox(
+											"Error",
+											"A valid UFO or TFTD resource directory must exist with the XCOM cursor files.",
+											@"<basepath>" + Path.DirectorySeparatorChar + CursorPck
+												+ Environment.NewLine +
+											@"<basepath>" + Path.DirectorySeparatorChar + CursorTab))
 					{
-						using (var f = new Infobox(
-												"Error",
-												"A valid UFO or TFTD resource directory must exist with the XCOM cursor files.",
-												@"<basepath>" + Path.DirectorySeparatorChar + CursorPck
-													+ Environment.NewLine +
-												@"<basepath>" + Path.DirectorySeparatorChar + CursorTab))
-						{
-							f.ShowDialog(this);
-						}
+						f.ShowDialog(this);
 					}
-					else
+					return;
+				}
+
+
+				// create "settings/MapResources.yml"
+				string pfeT;
+				if (File.Exists(_pathResources.Fullpath))
+					pfeT = _pathResources.Fullpath + GlobalsXC.TEMPExt;
+				else
+					pfeT = _pathResources.Fullpath;
+
+				bool fail = true;
+				using (var fs = FileService.CreateFile(pfeT))
+				if (fs != null)
+				{
+					fail = false;
+
+					using (var sw = new StreamWriter(fs))
 					{
-						_pathResources.CreateDirectory();
-
-						using (var fs = new FileStream(_pathResources.Fullpath, FileMode.Create))
-						using (var sw = new StreamWriter(fs))
+						object node = new
 						{
-							object node = new
-							{
-								ufo  = (!String.IsNullOrEmpty(Ufo)  ? Ufo
-																	: PathInfo.NotConfigured),
-								tftd = (!String.IsNullOrEmpty(Tftd) ? Tftd
-																	: PathInfo.NotConfigured)
-							};
-
-							var ser = new Serializer();
-							ser.Serialize(sw, node);
-						}
-
-						DialogResult = DialogResult.OK;
+							ufo  = (!String.IsNullOrEmpty(Ufo)  ? Ufo  : PathInfo.NotConfigured),
+							tftd = (!String.IsNullOrEmpty(Tftd) ? Tftd : PathInfo.NotConfigured)
+						};
+						var ser = new Serializer();
+						ser.Serialize(sw, node);
 					}
 				}
+
+				if (!fail && pfeT != _pathResources.Fullpath)
+					FileService.ReplaceFile(_pathResources.Fullpath);
+
+				DialogResult = DialogResult.OK;
 			}
 
-			if (!_bork && cbTilesets.Checked) // deal with MapTilesets.yml/.tpl ->
+			if (cbTilesets.Checked) // deal with MapTilesets.yml/.tpl ->
 			{
 				_pathTilesets.CreateDirectory();
 
@@ -270,20 +282,13 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Wrapper for MessageBox.Show()
+		/// Wrapper for Infobox.ShowDialog().
 		/// </summary>
-		/// <param name="error">the error-string to show</param>
+		/// <param name="error">an error-string to show</param>
 		private void ShowErrorDialog(string error)
 		{
-			_bork = true;
-			MessageBox.Show(
-						this,
-						error,
-						" Error",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox("Error", error))
+				f.ShowDialog(this);
 		}
 		#endregion Methods
 	}

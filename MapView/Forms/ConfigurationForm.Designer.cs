@@ -17,7 +17,6 @@
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.Panel pUfo;
 		private System.Windows.Forms.Panel pTftd;
-		private System.Windows.Forms.FolderBrowserDialog folderBrowser;
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.Label lblInfo;
 		private System.Windows.Forms.CheckBox cbResources;
@@ -60,7 +59,6 @@
 			this.btnOk = new System.Windows.Forms.Button();
 			this.pUfo = new System.Windows.Forms.Panel();
 			this.pTftd = new System.Windows.Forms.Panel();
-			this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.lblInfo = new System.Windows.Forms.Label();
 			this.cbResources = new System.Windows.Forms.CheckBox();
