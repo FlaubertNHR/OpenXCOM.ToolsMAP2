@@ -321,14 +321,14 @@ namespace XCom
 				int x,
 				int y)
 		{
-			var dstLocked = dst.LockBits(
-									new Rectangle(0,0, dst.Width, dst.Height),
-									ImageLockMode.WriteOnly,
-									PixelFormat.Format8bppIndexed);
-
 			var srcLocked = src.LockBits(
 									new Rectangle(0,0, src.Width, src.Height),
 									ImageLockMode.ReadOnly,
+									PixelFormat.Format8bppIndexed);
+
+			var dstLocked = dst.LockBits(
+									new Rectangle(0,0, dst.Width, dst.Height),
+									ImageLockMode.WriteOnly,
 									PixelFormat.Format8bppIndexed);
 
 			var srcStart = srcLocked.Scan0;
@@ -372,7 +372,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="b"></param>
 		/// <returns></returns>
-		internal static Rectangle CropTransparent(Bitmap b)
+		internal static Rectangle GetNontransparentRectangle(Bitmap b)
 		{
 			var locked = b.LockBits(
 								new Rectangle(0,0, b.Width, b.Height),
@@ -431,7 +431,8 @@ namespace XCom
 			b.UnlockBits(locked);
 
 			return new Rectangle(
-							colMin - 1, rowMin - 1,
+//							colMin - 1, rowMin - 1,
+							colMin, rowMin,
 							colMax - colMin + 3, rowMax - rowMin + 3);
 		}
 
@@ -441,7 +442,7 @@ namespace XCom
 		/// <param name="src"></param>
 		/// <param name="rect"></param>
 		/// <returns></returns>
-		internal static Bitmap Crop(Bitmap src, Rectangle rect)
+		internal static Bitmap CropToRectangle(Bitmap src, Rectangle rect)
 		{
 			var dst = CreateTransparent(rect.Width, rect.Height, src.Palette);
 
@@ -476,14 +477,17 @@ namespace XCom
 
 				uint dstStride = (uint)Math.Abs(dstLocked.Stride);
 
-				for (uint row = 0; row != rect.Height; ++row)
-				for (uint col = 0; col != rect.Width;  ++col)
+
+				for (uint row = 0; row + rect.Y < src.Height && row != dst.Height; ++row)
+				for (uint col = 0; col + rect.X < src.Width  && col != dst.Width;  ++col)
 				{
 					byte* srcPixel = srcPos + (row + rect.Y) * srcStride + (col + rect.X);
 					byte* dstPixel = dstPos +  row           * dstStride +  col;
 
-//					if (*srcPixel != PckImage.TransparentIndex && row + y < dst.Height)
-					*dstPixel = *srcPixel;
+					if (*srcPixel != Palette.TranId)
+						*dstPixel = *srcPixel;
+//					else
+//						*dstPixel = 200; // test
 				}
 			}
 			src.UnlockBits(srcLocked);
