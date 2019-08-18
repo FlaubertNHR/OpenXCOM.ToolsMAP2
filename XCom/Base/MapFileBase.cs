@@ -26,9 +26,6 @@ namespace XCom.Base
 
 
 		#region Fields (static)
-		private const int HalfWidthConst  = 16;
-		private const int HalfHeightConst =  8;
-
 		public const int MaxTerrainId = 253;
 
 		/// <summary>
@@ -247,17 +244,21 @@ namespace XCom.Base
 		/// <param name="fullpath"></param>
 		public void Screenshot(string fullpath)
 		{
+			const int ConstHalfWidth  = 16;
+			const int ConstHalfHeight =  8;
+			const int LAYERS          = 24;
+
 			var width = MapSize.Rows + MapSize.Cols;
 			var b = BitmapService.CreateTransparent(
-												width * (XCImage.SpriteWidth / 2),
-												(MapSize.Levs - Level) * 24 + width * 8,
+												width * ConstHalfWidth,
+												width * ConstHalfHeight + (MapSize.Levs - Level) * LAYERS,
 												Descriptor.Pal.ColorTable);
 
 			if (b != null)
 			{
 				var start = new Point(
-									(MapSize.Rows - 1) * (XCImage.SpriteWidth / 2),
-									-(24 * Level));
+									(MapSize.Rows - 1) * ConstHalfWidth,
+								   -(Level * LAYERS));
 
 				int i = 0;
 				if (Tiles != null)
@@ -267,11 +268,11 @@ namespace XCom.Base
 						for (int
 								row = 0,
 									startX = start.X,
-									startY = start.Y + lev * 24;
+									startY = start.Y + lev * LAYERS;
 								row != MapSize.Rows;
 								++row,
-									startX -= HalfWidthConst,
-									startY += HalfHeightConst)
+									startX -= ConstHalfWidth,
+									startY += ConstHalfHeight)
 						{
 							for (int
 									col = 0,
@@ -279,8 +280,8 @@ namespace XCom.Base
 										y = startY;
 									col != MapSize.Cols;
 									++col,
-										x += HalfWidthConst,
-										y += HalfHeightConst,
+										x += ConstHalfWidth,
+										y += ConstHalfHeight,
 										++i)
 							{
 								var parts = this[row, col, lev].UsedParts;
@@ -297,12 +298,15 @@ namespace XCom.Base
 					}
 				}
 
-				var rect = BitmapService.CropTransparent(b);
-				b = BitmapService.Crop(b, rect);
+				// TODO: Open custom dialog to choose background color,
+				// transparent or not, crop transparent borders, etc.
 
-				ColorPalette p = b.Palette;
-				p.Entries[Palette.TranId] = Color.Transparent;
-				b.Palette = p;
+//				var rect = BitmapService.GetNontransparentRectangle(b);
+//				b = BitmapService.CropToRectangle(b, rect);
+
+				ColorPalette pal = b.Palette;
+				pal.Entries[Palette.TranId] = Color.Transparent;
+				b.Palette = pal;
 
 				b.Save(fullpath, ImageFormat.Png);
 
