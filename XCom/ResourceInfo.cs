@@ -77,16 +77,14 @@ namespace XCom
 				int tabwordLength,
 				Palette pal)
 		{
-			if (!String.IsNullOrEmpty(dir))
+			if (Directory.Exists(dir))
 			{
-				string pf     = Path.Combine(dir, label);
-				string pfePck = pf + GlobalsXC.PckExt;
-				string pfeTab = pf + GlobalsXC.TabExt;
-
 				// TODO: If files not found provide hint to assign a basepath to
 				// TERRAIN with the TilesetEditor.
 
-				byte[] bytesPck = FileService.ReadFile(pfePck);
+				string pf = Path.Combine(dir, label);
+
+				byte[] bytesPck = FileService.ReadFile(pf + GlobalsXC.PckExt);
 				if (bytesPck != null)
 				{
 					byte[] bytesTab = FileService.ReadFile(pf + GlobalsXC.TabExt);
@@ -110,7 +108,8 @@ namespace XCom
 										MessageBoxDefaultButton.Button1,
 										0);
 						}
-						else // if (spriteset.Error_Overflo) // too many bytes for a nonbigob sprite - better not happen here.
+						// else if (spriteset.Error_Overflo) // too many bytes for a nonbigob sprite - better not happen here.
+						else
 						{
 							Spritesets.Add(spriteset); // used only by MapInfoDialog.
 							return spriteset;
