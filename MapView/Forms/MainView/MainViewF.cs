@@ -126,11 +126,11 @@ namespace MapView
 			{
 				if (_treeChanged = value)
 				{
-					if (!Text.EndsWith("*", StringComparison.OrdinalIgnoreCase))
-						Text += "*";
+					if (!Text.EndsWith(GlobalsXC.PADDED_ASTERISK, StringComparison.Ordinal))
+						Text += GlobalsXC.PADDED_ASTERISK;
 				}
-				else if (Text.EndsWith("*", StringComparison.OrdinalIgnoreCase))
-					Text = Text.Substring(0, Text.Length - 1);
+				else if (Text.EndsWith(GlobalsXC.PADDED_ASTERISK, StringComparison.Ordinal))
+					Text = Text.Substring(0, Text.Length - GlobalsXC.PADDED_ASTERISK.Length);
 			}
 		}
 
@@ -146,11 +146,11 @@ namespace MapView
 				string text = tsslMapLabel.Text;
 				if (MainViewUnderlay.MapBase.MapChanged = value) // shuffle the value down to MapFileBase.MapChanged ...
 				{
-					if (!text.EndsWith("*", StringComparison.OrdinalIgnoreCase))
-						text += "*";
+					if (!text.EndsWith(GlobalsXC.PADDED_ASTERISK, StringComparison.Ordinal))
+						text += GlobalsXC.PADDED_ASTERISK;
 				}
-				else if (text.EndsWith("*", StringComparison.OrdinalIgnoreCase))
-					text = text.Substring(0, text.Length - 1);
+				else if (text.EndsWith(GlobalsXC.PADDED_ASTERISK, StringComparison.Ordinal))
+					text = text.Substring(0, text.Length - GlobalsXC.PADDED_ASTERISK.Length);
 
 				tsslMapLabel.Text = text;
 			}
@@ -353,7 +353,9 @@ namespace MapView
 
 			// Read MapResources.yml to get the resources dir (for both UFO and TFTD).
 			// NOTE: MapResources.yml is created by ConfigurationForm
-			using (var sr = new StreamReader(File.OpenRead(pathResources.Fullpath)))
+			using (var fs = FileService.OpenFile(pathResources.Fullpath))
+			if (fs != null)
+			using (var sr = new StreamReader(fs))
 			{
 				var str = new YamlStream();
 				str.Load(sr);
@@ -517,6 +519,9 @@ namespace MapView
 								Program.Args[TREELEVEL_GROUP]);
 					break;
 			}
+
+			TopMost = true;		// NOTE: MapView could be hidden behind other
+			TopMost = false;	//       open windows after a forced reload.
 		}
 		#endregion cTor
 
@@ -1295,7 +1300,18 @@ namespace MapView
 					sfd.Title      = "Save PNG Screenshot";
 					sfd.Filter     = "PNG files|*.PNG|All files (*.*)|*.*";
 					sfd.DefaultExt = GlobalsXC.PngExt;
-					sfd.FileName   = @base.Descriptor.Label;
+
+					string digits = String.Empty;
+					int levs = @base.MapSize.Levs;
+					do
+					{ digits += "0"; }
+					while ((levs /= 10) != 0);
+
+					string suffix = String.Format(
+												CultureInfo.InvariantCulture,
+												"_L{0:" + digits + "}",
+												@base.MapSize.Levs - @base.Level);
+					sfd.FileName = @base.Descriptor.Label + suffix;
 
 					if (_lastScreenshotDirectory == null || !Directory.Exists(_lastScreenshotDirectory))
 					{
