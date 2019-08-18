@@ -375,9 +375,12 @@ namespace XCom
 			else
 				pfeT = pfe;
 
+			bool fail = true;
 			using (var fs = FileService.CreateFile(pfeT))
 			if (fs != null)
 			{
+				fail = false;
+
 				fs.WriteByte((byte)MapSize.Rows); // http://www.ufopaedia.org/index.php/MAPS
 				fs.WriteByte((byte)MapSize.Cols); // - says this header is "height, width and depth (in that order)"
 				fs.WriteByte((byte)MapSize.Levs); //   ie. y/x/z
@@ -412,13 +415,12 @@ namespace XCom
 					else
 						fs.WriteByte((byte)id);
 				}
-
-				if (pfeT != pfe)
-					return FileService.ReplaceFile(pfe);
-
-				return true;
 			}
-			return false;
+
+			if (!fail && pfeT != pfe)
+				return FileService.ReplaceFile(pfe);
+
+			return !fail;
 		}
 
 		/// <summary>

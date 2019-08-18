@@ -442,18 +442,20 @@ namespace XCom
 			else
 				pfeT = pfe;
 
+			bool fail = true;
 			using (var fs = FileService.CreateFile(pfeT))
 			if (fs != null)
 			{
+				fail = false;
+
 				for (int id = 0; id != Nodes.Count; ++id)
 					Nodes[id].WriteNode(fs); // -> writes a node's data to the filestream
-
-				if (pfeT != pfe)
-					return FileService.ReplaceFile(pfe);
-
-				return true;
 			}
-			return false;
+
+			if (!fail && pfeT != pfe)
+				return FileService.ReplaceFile(pfe);
+
+			return !fail;
 		}
 
 		/// <summary>

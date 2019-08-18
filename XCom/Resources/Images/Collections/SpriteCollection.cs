@@ -296,11 +296,14 @@ namespace XCom
 			}
 
 
+			bool fail = true;
 			using (var fsPck = FileService.CreateFile(pfePckT))
 			if (fsPck != null)
 			using (var fsTab = FileService.CreateFile(pfeTabT))
 			if (fsTab != null)
 			{
+				fail = false;
+
 				using (var bwPck = new BinaryWriter(fsPck))
 				using (var bwTab = new BinaryWriter(fsTab))
 				{
@@ -337,16 +340,15 @@ namespace XCom
 						}
 					}
 				}
-
-				if (pfePckT != pfePck)
-				{
-					return FileService.ReplaceFile(pfePck)
-						&& FileService.ReplaceFile(pfeTab);
-				}
-
-				return true;
 			}
-			return false;
+
+			if (!fail && pfePckT != pfePck)
+			{
+				return FileService.ReplaceFile(pfePck)
+					&& FileService.ReplaceFile(pfeTab);
+			}
+
+			return !fail;
 		}
 
 
@@ -441,22 +443,24 @@ namespace XCom
 			else
 				pfeT = pfe;
 
+			bool fail = true;
 			using (var fs = FileService.CreateFile(pfeT))
 			if (fs != null)
 			{
+				fail = false;
+
 				XCImage icon;
 				for (int id = 0; id != iconset.Count; ++id)
 				{
 					icon = iconset[id];
 					fs.Write(icon.Bindata, 0, icon.Bindata.Length);
 				}
-
-				if (pfeT != pfe)
-					return FileService.ReplaceFile(pfe);
-
-				return true;
 			}
-			return false;
+
+			if (!fail && pfeT != pfe)
+				return FileService.ReplaceFile(pfe);
+
+			return !fail;
 		}
 		#endregion Methods (static)
 	}

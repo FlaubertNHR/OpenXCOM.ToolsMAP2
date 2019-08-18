@@ -1092,7 +1092,7 @@ namespace PckView
 
 		/// <summary>
 		/// Creates a brand sparkling new (blank) sprite-collection.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// Called when the File menu's Click event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1134,32 +1134,63 @@ namespace PckView
 					sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
 					sfd.DefaultExt = GlobalsXC.PckExt;
 
+//					sfd.InitialDirectory = ; // TODO <-
+
+
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
-						string pfe   = sfd.FileName;
+						string pfe = sfd.FileName;
 
-						string dir   = Path.GetDirectoryName(pfe);
+						string dir   = PathInfo.GetDirectory(pfe);
 						string label = Path.GetFileNameWithoutExtension(pfe);
 						string pf    = Path.Combine(dir, label);
 
-						using (var fsPck = FileService.CreateFile(pf + GlobalsXC.PckExt))
+						string pfePck = pf + GlobalsXC.PckExt;
+						string pfeTab = pf + GlobalsXC.TabExt;
+
+						string pfePckT, pfeTabT;
+						if (File.Exists(pfePck))
+							pfePckT = pfePck + GlobalsXC.TEMPExt;
+						else
+							pfePckT = pfePck;
+
+						if (File.Exists(pfeTab))
+							pfeTabT = pfeTab + GlobalsXC.TEMPExt;
+						else
+							pfeTabT = pfeTab;
+
+
+						bool fail = true;
+						using (var fsPck = FileService.CreateFile(pfePckT))
 						if (fsPck != null)
-						using (var fsTab = FileService.CreateFile(pf + GlobalsXC.TabExt))
+						using (var fsTab = FileService.CreateFile(pfeTabT))
 						if (fsTab != null)
+							fail = false;
+
+						if (!fail)
 						{
-							var pal = DefaultPalette;
-							var spriteset = new SpriteCollection(
-															label,
-															pal,
-															tabwordLength);
+							if (pfePckT != pfePck && !FileService.ReplaceFile(pfePck))
+								fail = true;
 
-							OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+							if (pfeTabT != pfeTab && !FileService.ReplaceFile(pfeTab))
+								fail = true;
 
-							TilePanel.Spriteset = spriteset;
-							OnSpriteClick(null, EventArgs.Empty);
+							if (!fail)
+							{
+								var pal = DefaultPalette;
+								var spriteset = new SpriteCollection(
+																label,
+																pal,
+																tabwordLength);
 
-							PfSpriteset = pf;
-							Changed = false;
+								OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+
+								TilePanel.Spriteset = spriteset;
+								OnSpriteClick(null, EventArgs.Empty);
+
+								PfSpriteset = pf;
+								Changed = false;
+							}
 						}
 					}
 				}

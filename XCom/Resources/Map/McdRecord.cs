@@ -390,9 +390,12 @@ namespace XCom
 			else
 				pfeT = pfe;
 
+			bool fail = true;
 			using (var fs = FileService.CreateFile(pfeT))
 			if (fs != null)
 			{
+				fail = false;
+
 				McdRecord record;
 				ushort u;
 
@@ -470,13 +473,12 @@ namespace XCom
 					fs.WriteByte(Convert.ToByte(record.BaseObject));	// 60 (bool)
 					fs.WriteByte((byte)record.Unknown61);				// 61
 				}
-
-				if (pfeT != pfe)
-					return FileService.ReplaceFile(pfe);
-
-				return true;
 			}
-			return false;
+
+			if (!fail && pfeT != pfe)
+				return FileService.ReplaceFile(pfe);
+
+			return !fail;
 		}
 		#endregion Methods (static)
 
