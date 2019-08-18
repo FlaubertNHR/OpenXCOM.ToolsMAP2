@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 
-namespace XCom
+namespace DSShared
 {
 	/// <summary>
 	/// A generic outputbox for Errors/Warnings/Info.

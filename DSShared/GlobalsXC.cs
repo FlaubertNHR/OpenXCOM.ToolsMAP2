@@ -1,4 +1,4 @@
-﻿namespace XCom
+﻿namespace DSShared
 {
 	public static class GlobalsXC
 	{

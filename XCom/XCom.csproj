@@ -96,9 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\TileGroup.cs" />
-    <Compile Include="FileService.cs" />
-    <Compile Include="GlobalsXC.cs" />
-    <Compile Include="Infobox.cs" />
     <Compile Include="ProgressBarForm.cs" />
     <Compile Include="Resources\Images\Collections\SpriteCollection.cs">
       <SubType>Code</SubType>
@@ -186,9 +183,6 @@
     <Compile Include="Console.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="Infobox.resx">
-      <DependentUpon>Infobox.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ProgressBarForm.resx">
       <DependentUpon>ProgressBarForm.cs</DependentUpon>
     </EmbeddedResource>

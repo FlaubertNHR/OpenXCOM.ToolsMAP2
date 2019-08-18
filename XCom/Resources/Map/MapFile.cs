@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 using XCom.Base;
 

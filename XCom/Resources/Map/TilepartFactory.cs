@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.IO;
 
+using DSShared;
+
 
 namespace XCom
 {

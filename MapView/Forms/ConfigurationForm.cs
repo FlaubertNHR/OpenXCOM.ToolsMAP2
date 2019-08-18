@@ -5,8 +5,6 @@ using System.Windows.Forms;
 
 using DSShared;
 
-using XCom;
-
 using YamlDotNet.Serialization; // write values (serialization)
 
 

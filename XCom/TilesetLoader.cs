@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 
+using DSShared;
+
 using YamlDotNet.RepresentationModel;
 
 

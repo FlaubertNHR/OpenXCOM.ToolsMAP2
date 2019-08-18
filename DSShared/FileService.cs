@@ -2,7 +2,7 @@
 using System.IO;
 
 
-namespace XCom
+namespace DSShared
 {
 	/// <summary>
 	/// A class that handles file reading/writing with generic exception
