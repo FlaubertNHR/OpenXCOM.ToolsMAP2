@@ -64,8 +64,8 @@ namespace XCom
 
 					var descriptor = new Descriptor(
 												tileset.Label,
-												tileset.Terrains,
 												tileset.BasePath,
+												tileset.Terrains,
 												Pal);
 
 					Categories[tileset.Category][tileset.Label] = descriptor;

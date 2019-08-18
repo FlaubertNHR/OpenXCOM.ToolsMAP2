@@ -393,12 +393,6 @@ namespace MapView
 					string pfe = ofd.FileName;
 
 					string dir = Path.GetDirectoryName(pfe);
-
-					// NOTE: Path.GetDirectoryName() on a root folder will return with
-					// a backslash a the end - eg. "C:\"
-//					if (dir.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase))
-//						dir = dir.Substring(0, dir.Length - 1);
-
 					if (dir.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
 					{
 						TilesetBasepath = dir;
@@ -570,8 +564,6 @@ namespace MapView
 
 			// Get the text of 'tbBasepath' (to reflect the currently selected radio-button)
 			string dirTerrain = tbTerrainPath.Text;
-			//LogFile.WriteLine("dirTerrain= " + dirTerrain);
-
 			if (Directory.Exists(dirTerrain))
 			{
 				var terrains = Directory.GetFiles(
@@ -592,7 +584,7 @@ namespace MapView
 							dirTerrain = dirTerrain.Substring(0, dirTerrain.Length - 1);
 						}
 
-						if (dirTerrain.EndsWith(GlobalsXC.TerrainDir, StringComparison.Ordinal))
+						if (dirTerrain.EndsWith(GlobalsXC.TerrainDir, StringComparison.OrdinalIgnoreCase))
 						{
 							dirTerrain = dirTerrain.Substring(0, dirTerrain.Length - GlobalsXC.TerrainDir.Length - 1);
 						}
@@ -642,10 +634,10 @@ namespace MapView
 		{
 			if (!IsTilesetCategorized(Tileset))
 			{
-				Descriptor = new Descriptor(		// be careful with that; it isn't being deleted if user clicks Cancel
-										Tileset,	// or chooses instead to create yet another descriptor.
-										new Dictionary<int, Tuple<string,string>>(),
+				Descriptor = new Descriptor(
+										Tileset,
 										TilesetBasepath,
+										new Dictionary<int, Tuple<string,string>>(),
 										TileGroup.Pal);
 
 				if (MapfileExists(Tileset))
@@ -785,8 +777,8 @@ namespace MapView
 											{
 												Descriptor = new Descriptor(
 																		Tileset,
-																		TileGroup.Categories[Category][TilesetOriginal].Terrains,
 																		TilesetBasepath,
+																		TileGroup.Categories[Category][TilesetOriginal].Terrains,
 																		TileGroup.Pal);
 												TileGroup.AddTileset(Descriptor, Category);			// NOTE: This could be done on return to MainViewF.OnEditTilesetClick()
 																									// but then 'Descriptor' would have to be internal.
@@ -1204,8 +1196,8 @@ namespace MapView
 				{
 					d = new Descriptor(
 									Tileset,
-									descriptor.Terrains,
 									descriptor.Basepath,
+									descriptor.Terrains,
 									descriptor.Pal); // ((TileGroup)@group[@group.Key]).Pal);
 
 					var keyCategory = category.Key;

@@ -54,23 +54,20 @@ namespace XCom
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="tileset"></param>
-		/// <param name="terrains"></param>
+		/// <param name="label"></param>
 		/// <param name="basepath"></param>
-		/// <param name="palette"></param>
+		/// <param name="terrains"></param>
+		/// <param name="pal"></param>
 		public Descriptor(
-				string tileset,
-				Dictionary<int, Tuple<string,string>> terrains,
+				string label,
 				string basepath,
-				Palette palette)
+				Dictionary<int, Tuple<string,string>> terrains,
+				Palette pal)
 		{
-			//LogFile.WriteLine("Descriptor cTor tileset= " + tileset);
-			//LogFile.WriteLine("");
-
-			Label    = tileset;
-			Terrains = terrains;
+			Label    = label;
 			Basepath = basepath;
-			Pal      = palette;
+			Terrains = terrains;
+			Pal      = pal;
 
 			_dirTerr = (Pal == Palette.UfoBattle) ? SharedSpace.ResourceDirectoryUfo
 												  : SharedSpace.ResourceDirectoryTftd;
