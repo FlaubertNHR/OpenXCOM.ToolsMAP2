@@ -55,7 +55,7 @@ namespace XCom
 				if (_palettes[ufobattle] == null)
 				{
 					_palettes[ufobattle] = new Palette(Assembly.GetExecutingAssembly()
-											  .GetManifestResourceStream(Embedded + ufobattle + PalExt));
+															   .GetManifestResourceStream(Embedded + ufobattle + PalExt));
 					CreateUfoBrushes();
 				}
 				return _palettes[ufobattle] as Palette;
@@ -68,8 +68,7 @@ namespace XCom
 			{
 				if (_palettes[ufogeo] == null)
 					_palettes[ufogeo] = new Palette(Assembly.GetExecutingAssembly()
-										   .GetManifestResourceStream(Embedded + ufogeo + PalExt));
-
+															.GetManifestResourceStream(Embedded + ufogeo + PalExt));
 				return _palettes[ufogeo] as Palette;
 			}
 		}
@@ -80,8 +79,7 @@ namespace XCom
 			{
 				if (_palettes[ufograph] == null)
 					_palettes[ufograph] = new Palette(Assembly.GetExecutingAssembly()
-											 .GetManifestResourceStream(Embedded + ufograph + PalExt));
-
+															  .GetManifestResourceStream(Embedded + ufograph + PalExt));
 				return _palettes[ufograph] as Palette;
 			}
 		}
@@ -92,8 +90,7 @@ namespace XCom
 			{
 				if (_palettes[uforesearch] == null)
 					_palettes[uforesearch] = new Palette(Assembly.GetExecutingAssembly()
-												.GetManifestResourceStream(Embedded + uforesearch + PalExt));
-
+																 .GetManifestResourceStream(Embedded + uforesearch + PalExt));
 				return _palettes[uforesearch] as Palette;
 			}
 		}
@@ -108,7 +105,7 @@ namespace XCom
 				if (_palettes[tftdbattle] == null)
 				{
 					_palettes[tftdbattle] = new Palette(Assembly.GetExecutingAssembly()
-											   .GetManifestResourceStream(Embedded + tftdbattle + PalExt));
+																.GetManifestResourceStream(Embedded + tftdbattle + PalExt));
 					CreateTftdBrushes();
 				}
 				return _palettes[tftdbattle] as Palette;
@@ -121,8 +118,7 @@ namespace XCom
 			{
 				if (_palettes[tftdgeo] == null)
 					_palettes[tftdgeo] = new Palette(Assembly.GetExecutingAssembly()
-											.GetManifestResourceStream(Embedded + tftdgeo + PalExt));
-
+															 .GetManifestResourceStream(Embedded + tftdgeo + PalExt));
 				return _palettes[tftdgeo] as Palette;
 			}
 		}
@@ -133,8 +129,7 @@ namespace XCom
 			{
 				if (_palettes[tftdgraph] == null)
 					_palettes[tftdgraph] = new Palette(Assembly.GetExecutingAssembly()
-											  .GetManifestResourceStream(Embedded + tftdgraph + PalExt));
-
+															   .GetManifestResourceStream(Embedded + tftdgraph + PalExt));
 				return _palettes[tftdgraph] as Palette;
 			}
 		}
@@ -145,8 +140,7 @@ namespace XCom
 			{
 				if( _palettes[tftdresearch] == null)
 					_palettes[tftdresearch] = new Palette(Assembly.GetExecutingAssembly()
-												 .GetManifestResourceStream(Embedded + tftdresearch + PalExt));
-
+																  .GetManifestResourceStream(Embedded + tftdresearch + PalExt));
 				return _palettes[tftdresearch] as Palette;
 			}
 		}
@@ -216,7 +210,7 @@ namespace XCom
 		/// <param name="fs"></param>
 		private Palette(Stream fs)
 		{
-			using (var b = new Bitmap(1, 1, PixelFormat.Format8bppIndexed))
+			using (var b = new Bitmap(1,1, PixelFormat.Format8bppIndexed))
 				ColorTable = b.Palette;
 
 			using (var input = new StreamReader(fs))
@@ -236,7 +230,6 @@ namespace XCom
 														Int32.Parse(rgb[2], invariant));
 				}
 			}
-//			checkPalette();
 		}
 
 		/// <summary>

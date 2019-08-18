@@ -90,9 +90,8 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Creates a file and returns a FileStream for writing to it after
-		/// backing up a pre-existing file if it exists. The file will not be
-		/// closed.
+		/// Creates a file and returns a FileStream for writing after backing up
+		/// a pre-existing file if it exists. The file will not be closed.
 		/// IMPORTANT: Dispose the stream in the calling function.
 		/// @note If file exists call this only to create a file_ext_[t.ext]
 		/// file. Then call ReplaceFile() by passing in file_ext.

@@ -225,40 +225,55 @@ namespace MapView
 				if (!fail && pfeT != _pathResources.Fullpath)
 					FileService.ReplaceFile(_pathResources.Fullpath);
 
-				DialogResult = DialogResult.OK;
+				DialogResult = DialogResult.OK; // close Configurator and reload MapView
 			}
 
 			if (cbTilesets.Checked) // deal with MapTilesets.yml/.tpl ->
 			{
-				_pathTilesets.CreateDirectory();
-
-				string pfeTilesets = _pathTilesets.Fullpath;
-
-				if (rbTilesets.Checked) // make a backup of the user's MapTilesets.yml if it exists.
+				// create "settings/MapTilesets.[yml|tpl]"
+				string pfe, pfeT;
+				if (rbTilesets.Checked)
 				{
-					if (File.Exists(pfeTilesets))
-						File.Copy(pfeTilesets, Path.Combine(_pathTilesets.DirectoryPath, PathInfo.ConfigTilesetsOld), true);
+					if (File.Exists(pfe = _pathTilesets.Fullpath))
+						pfeT = pfe + GlobalsXC.TEMPExt;
+					else
+						pfeT = pfe;
 				}
 				else // rbTilesetsTpl.Checked
-					pfeTilesets = Path.Combine(_pathTilesets.DirectoryPath, PathInfo.ConfigTilesetsTpl);
+				{
+					pfe  =
+					pfeT = Path.Combine(_pathTilesets.DirectoryPath, PathInfo.TPL_Tilesets);
+				}
 
-				using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
-												.GetManifestResourceStream("MapView._Embedded.MapTilesets.yml")))
-				using (var fs = new FileStream(pfeTilesets, FileMode.Create))
-				using (var sw = new StreamWriter(fs))
-					while (sr.Peek() != -1)
-						sw.WriteLine(sr.ReadLine());
+				bool fail = true;
+				using (var fs = FileService.CreateFile(pfeT))
+				if (fs != null)
+				{
+					fail = false;
+
+					using (var sw = new StreamWriter(fs))
+					using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
+															 .GetManifestResourceStream(PathInfo.MAN_Tilesets)))
+					{
+						string line;
+						while ((line = sr.ReadLine()) != null)
+							sw.WriteLine(line);
+					}
+				}
+
+				if (!fail && pfeT != pfe)
+					FileService.ReplaceFile(pfe);
 
 				if (rbTilesets.Checked)
 				{
-					DialogResult = DialogResult.OK;
+					DialogResult = DialogResult.OK; // close Configurator and reload MapView
 				}
-				else // rbTilesetsTpl.Checked
+				else if (!fail) // rbTilesetsTpl.Checked
 				{
 					using (var f = new Infobox(
 											"Info",
 											"Tileset template has been created.",
-											pfeTilesets))
+											pfe))
 					{
 						f.ShowDialog(this);
 					}

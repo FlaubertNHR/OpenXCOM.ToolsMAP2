@@ -92,13 +92,13 @@ namespace XCom
 		/// to a YAML file.
 		/// </summary>
 		/// <returns>true if no exception was thrown</returns>
-		public bool SaveTileGroups()
+		public bool WriteTileGroups()
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("TileGroupManager.SaveTileGroups");
 
 			string dirSettings   = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);
-			string pfeMapTree    = Path.Combine(dirSettings, PathInfo.ConfigTilesets);		// "MapTilesets.yml"
+			string pfeMapTree    = Path.Combine(dirSettings, PathInfo.YML_Tilesets);		// "MapTilesets.yml"
 			string pfeMapTreeOld = Path.Combine(dirSettings, PathInfo.ConfigTilesetsOld);	// "MapTilesets.old"
 
 			if (File.Exists(pfeMapTree))

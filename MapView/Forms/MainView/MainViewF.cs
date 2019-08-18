@@ -192,7 +192,7 @@ namespace MapView
 
 			var pathOptions   = new PathInfo(dirSetT, PathInfo.CFG_Options);
 			var pathResources = new PathInfo(dirSetT, PathInfo.YML_Resources);
-			var pathTilesets  = new PathInfo(dirSetT, PathInfo.ConfigTilesets);
+			var pathTilesets  = new PathInfo(dirSetT, PathInfo.YML_Tilesets);
 			var pathViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);
 
 			SharedSpace.SetShare(PathInfo.ShareOptions,   pathOptions);
@@ -225,11 +225,13 @@ namespace MapView
 			}
 
 
-			// Check if MapViewers.yml exists yet, if not create it
+			// Check if settings/MapViewers.yml exists yet, if not create it
 			if (!pathViewers.FileExists())
 			{
-				CreateViewersFile();
-				LogFile.WriteLine("Viewers file created.");
+				if (CopyViewersFile())
+					LogFile.WriteLine("Viewers file created.");
+				else
+					LogFile.WriteLine("Viewers file could not be created.");
 			}
 			else
 				LogFile.WriteLine("Viewers file exists.");
@@ -533,24 +535,26 @@ namespace MapView
 		#region Methods (static)
 		/// <summary>
 		/// Transposes all the default viewer positions and sizes from the
-		/// embedded MapViewers manifest to "/settings/MapViewers.yml".
-		/// Based on 'ConfigurationForm'.
+		/// embedded MapViewers manifest to a file: settings/MapViewers.yml.
 		/// </summary>
-		private static void CreateViewersFile()
+		/// <returns>true on success</returns>
+		private static bool CopyViewersFile()
 		{
 			var info = SharedSpace.GetShareObject(PathInfo.ShareViewers) as PathInfo;
-			info.CreateDirectory();
 
-			string pfe = info.Fullpath;
-
-			using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
-													 .GetManifestResourceStream("MapView._Embedded.MapViewers.yml")))
-			using (var fs = new FileStream(pfe, FileMode.Create))
+			using (var fs = FileService.CreateFile(info.Fullpath))
+			if (fs != null)
 			using (var sw = new StreamWriter(fs))
+			using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
+													 .GetManifestResourceStream(PathInfo.MAN_Viewers)))
 			{
-				while (sr.Peek() != -1)
-					sw.WriteLine(sr.ReadLine());
+				string line;
+				while ((line = sr.ReadLine()) != null)
+					sw.WriteLine(line);
+
+				return true;
 			}
+			return false;
 		}
 		#endregion Methods (static)
 
@@ -1173,7 +1177,7 @@ namespace MapView
 				if (MainViewUnderlay.MapBase.SaveRoutes())
 					ObserverManager.RouteView.Control.RouteChanged = false;
 			}
-			MaptreeChanged = !ResourceInfo.TileGroupManager.SaveTileGroups();
+			MaptreeChanged = !ResourceInfo.TileGroupManager.WriteTileGroups();
 		}
 
 		internal void OnSaveMapClick(object sender, EventArgs e)
@@ -1256,7 +1260,7 @@ namespace MapView
 
 		private void OnSaveMaptreeClick(object sender, EventArgs e)
 		{
-			MaptreeChanged = !ResourceInfo.TileGroupManager.SaveTileGroups();
+			MaptreeChanged = !ResourceInfo.TileGroupManager.WriteTileGroups();
 		}
 
 		/// <summary>
@@ -1487,7 +1491,7 @@ namespace MapView
 						if (MaptreeChanged)
 						{
 //							MaptreeChanged = !ResourceInfo.TileGroupInfo.SaveTileGroups(); // <- that could cause endless recursion.
-							ResourceInfo.TileGroupManager.SaveTileGroups();
+							ResourceInfo.TileGroupManager.WriteTileGroups();
 							MaptreeChanged = false;
 						}
 						break;
