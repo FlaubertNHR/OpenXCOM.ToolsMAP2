@@ -11,30 +11,29 @@ namespace DSShared
 	{
 		#region Fields (static)
 		// path-keys in SharedSpace
-		public const string ShareOptions      = "MV_OptionsFile";	// -> MapOptions.cfg
+		public const string ShareOptions   = "MV_OptionsFile";		// -> MapOptions.cfg
 
-		public const string ShareResources    = "MV_ResourcesFile";	// -> MapResources.yml
-		public const string ShareTilesets     = "MV_TilesetsFile";	// -> MapTilesets.yml
-		public const string ShareViewers      = "MV_ViewersFile";	// -> MapViewers.yml
+		public const string ShareResources = "MV_ResourcesFile";	// -> MapResources.yml
+		public const string ShareTilesets  = "MV_TilesetsFile";		// -> MapTilesets.yml
+		public const string ShareViewers   = "MV_ViewersFile";		// -> MapViewers.yml
 
-		public const string MAN_Viewers       = "MapView._Embedded.MapViewers.yml";
-		public const string MAN_Tilesets      = "MapView._Embedded.MapTilesets.yml";
+		public const string MAN_Viewers    = "MapView._Embedded.MapViewers.yml";
+		public const string MAN_Tilesets   = "MapView._Embedded.MapTilesets.yml";
 
 		// Configuration files
-		public const string CFG_Options       = "MapOptions.cfg";	// stores user-settings for the viewers
+		public const string CFG_Options    = "MapOptions.cfg";		// stores user-settings for the viewers
 
-		public const string YML_Resources     = "MapResources.yml";	// stores the installation paths of UFO/TFTD
+		public const string YML_Resources  = "MapResources.yml";	// stores the installation paths of UFO/TFTD
 
-		public const string YML_Tilesets      = "MapTilesets.yml";	// tilesets file configuration
-		public const string ConfigTilesetsOld = "MapTilesets.old";	// tilesets file backup
-		public const string TPL_Tilesets      = "MapTilesets.tpl";	// tilesets file template
+		public const string YML_Tilesets   = "MapTilesets.yml";		// tilesets file configuration
+		public const string TPL_Tilesets   = "MapTilesets.tpl";		// tilesets file template
 
-		public const string YML_Viewers       = "MapViewers.yml";	// various window positions and sizes
+		public const string YML_Viewers    = "MapViewers.yml";		// various window positions and sizes
 
 
-		public const string NotConfigured     = "notconfigured";	// used in MapResources.yml in case UFO or TFTD installation is not configured.
+		public const string NotConfigured  = "notconfigured";		// used in MapResources.yml in case UFO or TFTD installation is not configured.
 
-		public const string DIR_Settings      = "settings";
+		public const string DIR_Settings   = "settings";
 		#endregion Fields (static)
 
 

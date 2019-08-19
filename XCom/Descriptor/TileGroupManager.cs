@@ -95,107 +95,143 @@ namespace XCom
 		public bool WriteTileGroups()
 		{
 			//LogFile.WriteLine("");
-			//LogFile.WriteLine("TileGroupManager.SaveTileGroups");
+			//LogFile.WriteLine("TileGroupManager.WriteTileGroups");
 
-			string dirSettings   = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);
-			string pfeMapTree    = Path.Combine(dirSettings, PathInfo.YML_Tilesets);		// "MapTilesets.yml"
-			string pfeMapTreeOld = Path.Combine(dirSettings, PathInfo.ConfigTilesetsOld);	// "MapTilesets.old"
+			string dir = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);	// settings
+			string pfe = Path.Combine(dir, PathInfo.YML_Tilesets);					// MapTilesets.yml
 
-			if (File.Exists(pfeMapTree))
-				File.Copy(pfeMapTree, pfeMapTreeOld, true); // backup MapTilesets.yml -> MapTilesets.old
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
 
-
-			using (var fs = new FileStream(pfeMapTree, FileMode.Create))
-			using (var sw = new StreamWriter(fs))
+			bool fail = true;
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
 			{
-				sw.WriteLine("# This is MapTilesets for MapViewII.");
-				sw.WriteLine("#");
-				sw.WriteLine("# 'tilesets' - a list that contains all the blocks.");
-				sw.WriteLine("# 'type'     - the label of MAP/RMP files for the block.");
-				sw.WriteLine("# 'terrains' - the label(s) of PCK/TAB/MCD files for the block. A terrain may be" + Environment.NewLine
-						   + "#              defined in one of three formats:"                                  + Environment.NewLine
-						   + "#              - LABEL"                                                           + Environment.NewLine
-						   + "#              - LABEL: basepath"                                                 + Environment.NewLine
-						   + "#              - LABEL: <basepath>"                                               + Environment.NewLine
-						   + "#              The first gets the terrain from the Configurator's basepath. The"  + Environment.NewLine
-						   + "#              second gets the terrain from the current Map's basepath. The"      + Environment.NewLine
-						   + "#              third gets the terrain from the specified basepath (don't use"     + Environment.NewLine
-						   + "#              quotes). A terrain must be in a subdirectory labeled TERRAIN.");
-				sw.WriteLine("# 'category' - a header for the tileset, is arbitrary here.");
-				sw.WriteLine("# 'group'    - a header for the categories, is arbitrary except that the first"   + Environment.NewLine
-						   + "#              letters designate the game-type and must be either 'ufo' or"       + Environment.NewLine
-						   + "#              'tftd' (case insensitive, with or without a following space).");
-				sw.WriteLine("# 'basepath' - the path to the parent directory of the tileset's Map and Route"   + Environment.NewLine
-						   + "#              files (default: the resource directory(s) that was/were specified" + Environment.NewLine
-						   + "#              when MapView was installed/configured). Note that Maps are"        + Environment.NewLine
-						   + "#              expected to be in a subdir called MAPS, Routes in a subdir called" + Environment.NewLine
-						   + "#              ROUTES, but that terrains - PCK/TAB/MCD files - are referenced by" + Environment.NewLine
-						   + "#              default in the basepath that is set by the Configurator and have"  + Environment.NewLine
-						   + "#              to be in a subdir labeled TERRAIN of that path. But see"           + Environment.NewLine
-						   + "#              'terrains' above.");
-				sw.WriteLine("");
-				sw.WriteLine(GlobalsXC.TILESETS + ":");
+				fail = false;
 
-
-				bool blankline;
-				foreach (string labelGroup in TileGroups.Keys)
+				using (var sw = new StreamWriter(fs))
 				{
-					//LogFile.WriteLine("");
-					//LogFile.WriteLine(". saving Group= " + labelGroup);
-
-					blankline = true;
+					sw.WriteLine("# This is MapTilesets for MapViewII.");
+					sw.WriteLine("#");
+					sw.WriteLine("# 'tilesets' - a list that contains all the blocks.");
+					sw.WriteLine("# 'type'     - the label of MAP/RMP files for the block.");
+					sw.WriteLine("# 'terrains' - the label(s) of PCK/TAB/MCD files for the block. A terrain may be" + Environment.NewLine
+							   + "#              defined in one of three formats:"                                  + Environment.NewLine
+							   + "#              - LABEL"                                                           + Environment.NewLine
+							   + "#              - LABEL: basepath"                                                 + Environment.NewLine
+							   + "#              - LABEL: <basepath>"                                               + Environment.NewLine
+							   + "#              The first gets the terrain from the Configurator's basepath. The"  + Environment.NewLine
+							   + "#              second gets the terrain from the current Map's basepath. The"      + Environment.NewLine
+							   + "#              third gets the terrain from the specified basepath (don't use"     + Environment.NewLine
+							   + "#              quotes). A terrain must be in a subdirectory labeled TERRAIN.");
+					sw.WriteLine("# 'category' - a header for the tileset, is arbitrary here.");
+					sw.WriteLine("# 'group'    - a header for the categories, is arbitrary except that the first"   + Environment.NewLine
+							   + "#              letters designate the game-type and must be either 'ufo' or"       + Environment.NewLine
+							   + "#              'tftd' (case insensitive, with or without a following space).");
+					sw.WriteLine("# 'basepath' - the path to the parent directory of the tileset's Map and Route"   + Environment.NewLine
+							   + "#              files (default: the resource directory(s) that was/were specified" + Environment.NewLine
+							   + "#              when MapView was installed/configured). Note that Maps are"        + Environment.NewLine
+							   + "#              expected to be in a subdir called MAPS, Routes in a subdir called" + Environment.NewLine
+							   + "#              ROUTES, but that terrains - PCK/TAB/MCD files - are referenced by" + Environment.NewLine
+							   + "#              default in the basepath that is set by the Configurator and have"  + Environment.NewLine
+							   + "#              to be in a subdir labeled TERRAIN of that path. But see"           + Environment.NewLine
+							   + "#              'terrains' above.");
 					sw.WriteLine("");
-					sw.WriteLine(PrePad + labelGroup + Padder(labelGroup.Length + PrePadLength));
 
-					var @group = TileGroups[labelGroup] as TileGroupChild;	// <- fuck inheritance btw. It's not being used properly and is
-					foreach (var labelCategory in @group.Categories.Keys)	// largely irrelevant and needlessly confusing in this codebase.
+
+					bool tilesets_written = false;
+
+					bool blankline;
+					foreach (string labelGroup in TileGroups.Keys)
 					{
-						//LogFile.WriteLine(". . saving Category= " + labelCategory);
-
-						if (!blankline)
-							sw.WriteLine("");
-
-						blankline = false;
-						sw.WriteLine(PrePad + labelCategory + Padder(labelCategory.Length + PrePadLength));
-
-						var category = @group.Categories[labelCategory];
-						foreach (var labelTileset in category.Keys)
+						var @group = TileGroups[labelGroup] as TileGroupChild;	// <- fuck inheritance btw. It's not being used properly and is
+						if (@group.Categories.Count != 0)						// largely irrelevant and needlessly confusing in this codebase.
 						{
-							//LogFile.WriteLine(". . saving Tileset= " + labelTileset);
+							//LogFile.WriteLine("");
+							//LogFile.WriteLine(". saving Group= " + labelGroup);
 
-							var descriptor = category[labelTileset];
-
-							sw.WriteLine("  - " + GlobalsXC.TYPE + ": " + descriptor.Label); // =labelTileset
-							sw.WriteLine("    " + GlobalsXC.TERRAINS + ":");
-
-							for (int i = 0; i != descriptor.Terrains.Count; ++i)
+							bool tileset_exists = false; // test if there's a category with a tileset ->
+							foreach (var labelCategory in @group.Categories.Keys)
 							{
-								var terrain = descriptor.Terrains[i]; // Dictionary<int id, Tuple<string terrain, string path>>
-								string terr = terrain.Item1;
-								string path = terrain.Item2;
-								if (!String.IsNullOrEmpty(path))
-									terr += ": " + path;
-
-								sw.WriteLine("      - " + terr);
+								if (@group.Categories[labelCategory].Keys.Count != 0)
+								{
+									tileset_exists = true;
+									break;
+								}
 							}
 
-							sw.WriteLine("    " + GlobalsXC.CATEGORY + ": " + labelCategory);
-							sw.WriteLine("    " + GlobalsXC.GROUP + ": " + labelGroup);
-
-							string keyConfigPath = String.Empty;
-							switch (@group.GroupType)
+							if (tileset_exists)
 							{
-								case GameType.Ufo:  keyConfigPath = SharedSpace.ResourceDirectoryUfo;  break;
-								case GameType.Tftd: keyConfigPath = SharedSpace.ResourceDirectoryTftd; break;
+								if (!tilesets_written)
+								{
+									tilesets_written = true;
+									sw.WriteLine(GlobalsXC.TILESETS + ":");
+								}
+
+								blankline = true;
+								sw.WriteLine("");
+								sw.WriteLine(PrePad + labelGroup + Padder(labelGroup.Length + PrePadLength));
+
+								foreach (var labelCategory in @group.Categories.Keys)
+								{
+									var category = @group.Categories[labelCategory];
+									if (category.Count != 0)
+									{
+										//LogFile.WriteLine(". . saving Category= " + labelCategory);
+
+										if (!blankline)
+											sw.WriteLine("");
+
+										blankline = false;
+										sw.WriteLine(PrePad + labelCategory + Padder(labelCategory.Length + PrePadLength));
+
+										foreach (var labelTileset in category.Keys)
+										{
+											//LogFile.WriteLine(". . saving Tileset= " + labelTileset);
+
+											var descriptor = category[labelTileset];
+
+											sw.WriteLine("  - " + GlobalsXC.TYPE + ": " + descriptor.Label); // =labelTileset
+											sw.WriteLine("    " + GlobalsXC.TERRAINS + ":");
+
+											for (int i = 0; i != descriptor.Terrains.Count; ++i)
+											{
+												var terrain = descriptor.Terrains[i]; // Dictionary<int id, Tuple<string terrain, string path>>
+												string terr = terrain.Item1;
+												string path = terrain.Item2;
+												if (!String.IsNullOrEmpty(path))
+													terr += ": " + path;
+
+												sw.WriteLine("      - " + terr);
+											}
+
+											sw.WriteLine("    " + GlobalsXC.CATEGORY + ": " + labelCategory);
+											sw.WriteLine("    " + GlobalsXC.GROUP + ": " + labelGroup);
+
+											string keyConfigPath = String.Empty;
+											switch (@group.GroupType)
+											{
+												case GameType.Ufo:  keyConfigPath = SharedSpace.ResourceDirectoryUfo;  break;
+												case GameType.Tftd: keyConfigPath = SharedSpace.ResourceDirectoryTftd; break;
+											}
+											string basepath = descriptor.Basepath;
+											if (basepath != SharedSpace.GetShareString(keyConfigPath)) // don't write basepath if it's the (default) Configurator's basepath
+												sw.WriteLine("    " + GlobalsXC.BASEPATH + ": " + basepath);
+										}
+									}
+								}
 							}
-							string basepath = descriptor.Basepath;
-							if (basepath != SharedSpace.GetShareString(keyConfigPath)) // don't write basepath if it's the (default) Configurator's basepath
-								sw.WriteLine("    " + GlobalsXC.BASEPATH + ": " + basepath);
 						}
 					}
 				}
+
+				if (!fail && pfeT != pfe)
+					return FileService.ReplaceFile(pfe);
 			}
-			return true;
+			return !fail;
 		}
 		#endregion Methods
 

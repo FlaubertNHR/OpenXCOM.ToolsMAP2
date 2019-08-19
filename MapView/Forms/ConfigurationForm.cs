@@ -241,6 +241,9 @@ namespace MapView
 				}
 				else // rbTilesetsTpl.Checked
 				{
+//					string dir = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);
+//					pfe = pfeT = Path.Combine(dir, PathInfo.TPL_Tilesets);
+
 					pfe  =
 					pfeT = Path.Combine(_pathTilesets.DirectoryPath, PathInfo.TPL_Tilesets);
 				}

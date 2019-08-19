@@ -181,8 +181,8 @@ namespace MapView
 			LogFile.WriteLine("Instantiating MAIN MapView window ...");
 
 			// TODO: Either move all this SharedSpace stuff to DSShared so it
-			// can be implemented for Mcd/PckView also, or better get rid of it
-			// (or at least de-spaghettify it as much as possible).
+			// can be implemented/instantiated for Mcd/PckView also, or better
+			// get rid of it (or at least de-spaghettify it as much as possible).
 
 			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL);
 			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSetT);
@@ -190,15 +190,19 @@ namespace MapView
 			LogFile.WriteLine("App paths cached.");
 
 
-			var pathOptions   = new PathInfo(dirSetT, PathInfo.CFG_Options);
-			var pathResources = new PathInfo(dirSetT, PathInfo.YML_Resources);
-			var pathTilesets  = new PathInfo(dirSetT, PathInfo.YML_Tilesets);
-			var pathViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);
+			// TODO: The .NET framework already has a class for "PathInfo":
+			// https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo?view=netframework-4.8
+			// ie. FileInfo.
 
-			SharedSpace.SetShare(PathInfo.ShareOptions,   pathOptions);
-			SharedSpace.SetShare(PathInfo.ShareResources, pathResources);
-			SharedSpace.SetShare(PathInfo.ShareTilesets,  pathTilesets);
-			SharedSpace.SetShare(PathInfo.ShareViewers,   pathViewers);
+			var pathOptions   = new PathInfo(dirSetT, PathInfo.CFG_Options);	// define a PathInfo for MapOptions.cfg
+			var pathResources = new PathInfo(dirSetT, PathInfo.YML_Resources);	// define a PathInfo for MapResources.yml
+			var pathTilesets  = new PathInfo(dirSetT, PathInfo.YML_Tilesets);	// define a PathInfo for MapTilesets.yml
+			var pathViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);	// define a PathInfo for MapViewers.yml
+
+			SharedSpace.SetShare(PathInfo.ShareOptions,   pathOptions);			// set share for MapOptions.cfg
+			SharedSpace.SetShare(PathInfo.ShareResources, pathResources);		// set share for MapResources.yml
+			SharedSpace.SetShare(PathInfo.ShareTilesets,  pathTilesets);		// set share for MapTilesets.yml
+			SharedSpace.SetShare(PathInfo.ShareViewers,   pathViewers);			// set share for MapViewers.yml
 
 			LogFile.WriteLine("PathInfo cached.");
 
@@ -228,7 +232,7 @@ namespace MapView
 			// Check if settings/MapViewers.yml exists yet, if not create it
 			if (!pathViewers.FileExists())
 			{
-				if (CopyViewersFile())
+				if (CopyViewersFile(pathViewers))
 					LogFile.WriteLine("Viewers file created.");
 				else
 					LogFile.WriteLine("Viewers file could not be created.");
@@ -504,7 +508,8 @@ namespace MapView
 			switch (Program.Args.Length)
 			{
 				case 0:
-					MapTree.SelectedNode.Collapse(false);
+					if (MapTree.SelectedNode != null)
+						MapTree.SelectedNode.Collapse(false);
 					break;
 
 				case 1:
@@ -538,9 +543,9 @@ namespace MapView
 		/// embedded MapViewers manifest to a file: settings/MapViewers.yml.
 		/// </summary>
 		/// <returns>true on success</returns>
-		private static bool CopyViewersFile()
+		private static bool CopyViewersFile(PathInfo info)
 		{
-			var info = SharedSpace.GetShareObject(PathInfo.ShareViewers) as PathInfo;
+//			var info = SharedSpace.GetShareObject(PathInfo.ShareViewers) as PathInfo;
 
 			using (var fs = FileService.CreateFile(info.Fullpath))
 			if (fs != null)
@@ -1490,7 +1495,7 @@ namespace MapView
 
 						if (MaptreeChanged)
 						{
-//							MaptreeChanged = !ResourceInfo.TileGroupInfo.SaveTileGroups(); // <- that could cause endless recursion.
+//							MaptreeChanged = !ResourceInfo.TileGroupInfo.WriteTileGroups(); // <- that could cause endless recursion.
 							ResourceInfo.TileGroupManager.WriteTileGroups();
 							MaptreeChanged = false;
 						}
