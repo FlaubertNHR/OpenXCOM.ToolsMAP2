@@ -275,6 +275,8 @@ namespace MapView
 			Controls.Add(MapTree);
 			splitter.Collapsible = MapTree;
 
+			MapTree.TreeViewNodeSorter = StringComparer.CurrentCultureIgnoreCase;
+
 
 			// WORKAROUND: The size of the form in the designer keeps increasing
 			// (for whatever reason) based on the
@@ -344,8 +346,6 @@ namespace MapView
 
 			ObserverManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
-
-			MapTree.TreeViewNodeSorter = StringComparer.OrdinalIgnoreCase;
 
 			tscPanel.ContentPanel.Controls.Add(MainViewUnderlay);
 
@@ -621,7 +621,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// A functor that sorts tree-nodes.
+		/// A TreeNode that can be sorted.
 		/// </summary>
 		private sealed class SortableTreeNode
 			:
@@ -633,11 +633,17 @@ namespace MapView
 					base(text)
 			{}
 
+			/// <summary>
+			/// Required by IComparable.
+			/// </summary>
+			/// <param name="other"></param>
+			/// <returns></returns>
 			public int CompareTo(object other)
 			{
-				var node = other as SortableTreeNode;
-				return (node != null) ? String.CompareOrdinal(Text, node.Text)
-									  : -1;
+				return String.Compare(
+									Text,
+									(other as SortableTreeNode).Text,
+									StringComparison.CurrentCultureIgnoreCase);
 			}
 		}
 
