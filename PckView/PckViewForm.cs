@@ -155,7 +155,7 @@ namespace PckView
 			MaximumSize = new Size(0,0); // fu.net
 
 			if (!IsInvoked)
-				RegistryInfo.InitializeRegistry(PathInfo.GetDirectory(Application.ExecutablePath));
+				RegistryInfo.InitializeRegistry(Path.GetDirectoryName(Application.ExecutablePath));
 
 			RegistryInfo.RegisterProperties(this);
 //			regInfo.AddProperty("SelectedPalette");
@@ -204,7 +204,7 @@ namespace PckView
 
 
 			// get SpriteShade from MapView's options ...
-			string dir = PathInfo.GetDirectory(Application.ExecutablePath);
+			string dir = Path.GetDirectoryName(Application.ExecutablePath);
 				   dir = Path.Combine(dir, PathInfo.DIR_Settings);	// "settings"
 			string pfe = Path.Combine(dir, PathInfo.CFG_Options);	// "MapOptions.cfg"
 
@@ -1139,7 +1139,7 @@ namespace PckView
 					{
 						string pfe = sfd.FileName;
 
-						string dir   = PathInfo.GetDirectory(pfe);
+						string dir   = Path.GetDirectoryName(pfe);
 						string label = Path.GetFileNameWithoutExtension(pfe);
 						string pf    = Path.Combine(dir, label);
 

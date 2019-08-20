@@ -96,24 +96,5 @@ namespace DSShared
 			Directory.CreateDirectory(_dir);
 		}
 		#endregion Methods
-
-
-		#region Methods (static)
-		/// <summary>
-		/// UPDATE: This could be obsolete ->
-		/// Drive-root directories do funny things. Like append '\'
-		/// But Path.Combine() doesn't check for that ... perhaps.
-		/// </summary>
-		/// <param name="fullpath"></param>
-		/// <returns></returns>
-		public static string GetDirectory(string fullpath)
-		{
-			string dir = Path.GetDirectoryName(fullpath);
-			if (dir.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
-				dir = dir.Substring(0, dir.Length - 1);
-
-			return dir;
-		}
-		#endregion Methods (static)
 	}
 }

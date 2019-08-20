@@ -244,7 +244,7 @@ namespace McdView
 		{
 			IsInvoked = isInvoked;
 
-			string dirAppL = PathInfo.GetDirectory(Application.ExecutablePath);
+			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
 			DSLogFile.CreateLogFile();
@@ -384,7 +384,7 @@ namespace McdView
 //			}
 
 			// Second check the Configurator's basepath ...
-			string dir = PathInfo.GetDirectory(Application.ExecutablePath);
+			string dir = Path.GetDirectoryName(Application.ExecutablePath);
 				   dir = Path.Combine(dir, PathInfo.DIR_Settings);
 			string pfe = Path.Combine(dir, PathInfo.YML_Resources);
 
@@ -646,7 +646,7 @@ namespace McdView
 
 							ResourceInfo.Spritesets.Clear();
 
-							string dir = PathInfo.GetDirectory(PfeMcd);
+							string dir = Path.GetDirectoryName(PfeMcd);
 							string pf  = Path.Combine(dir, Label);
 							if (   File.Exists(pf + GlobalsXC.PckExt)
 								&& File.Exists(pf + GlobalsXC.TabExt))
