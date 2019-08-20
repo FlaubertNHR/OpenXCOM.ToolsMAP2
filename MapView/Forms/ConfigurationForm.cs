@@ -15,8 +15,8 @@ namespace MapView
 			Form
 	{
 		#region Fields
-		private PathInfo _pathResources = SharedSpace.GetShareObject(PathInfo.ShareResources) as PathInfo;
-		private PathInfo _pathTilesets  = SharedSpace.GetShareObject(PathInfo.ShareTilesets)  as PathInfo;
+		private PathInfo _piResources = SharedSpace.GetShareObject(PathInfo.ShareResources) as PathInfo;
+		private PathInfo _piTilesets  = SharedSpace.GetShareObject(PathInfo.ShareTilesets)  as PathInfo;
 		#endregion Fields
 
 
@@ -56,14 +56,14 @@ namespace MapView
 			// WORKAROUND: See note in MainViewF cTor.
 			MaximumSize = new System.Drawing.Size(0,0); // fu.net
 
-			if (!_pathResources.FileExists())
+			if (!_piResources.FileExists())
 			{
 				cbResources.Enabled = false;
 			}
 			else
 				cbResources.Checked = false;
 
-			if (!_pathTilesets.FileExists())
+			if (!_piTilesets.FileExists())
 			{
 				cbTilesets   .Enabled =
 				rbTilesets   .Enabled =
@@ -199,10 +199,10 @@ namespace MapView
 
 				// create "settings/MapResources.yml"
 				string pfeT;
-				if (File.Exists(_pathResources.Fullpath))
-					pfeT = _pathResources.Fullpath + GlobalsXC.TEMPExt;
+				if (File.Exists(_piResources.Fullpath))
+					pfeT = _piResources.Fullpath + GlobalsXC.TEMPExt;
 				else
-					pfeT = _pathResources.Fullpath;
+					pfeT = _piResources.Fullpath;
 
 				bool fail = true;
 				using (var fs = FileService.CreateFile(pfeT))
@@ -222,8 +222,8 @@ namespace MapView
 					}
 				}
 
-				if (!fail && pfeT != _pathResources.Fullpath)
-					FileService.ReplaceFile(_pathResources.Fullpath);
+				if (!fail && pfeT != _piResources.Fullpath)
+					FileService.ReplaceFile(_piResources.Fullpath);
 
 				DialogResult = DialogResult.OK; // close Configurator and reload MapView
 			}
@@ -234,7 +234,7 @@ namespace MapView
 				string pfe, pfeT;
 				if (rbTilesets.Checked)
 				{
-					if (File.Exists(pfe = _pathTilesets.Fullpath))
+					if (File.Exists(pfe = _piTilesets.Fullpath))
 						pfeT = pfe + GlobalsXC.TEMPExt;
 					else
 						pfeT = pfe;
@@ -245,7 +245,7 @@ namespace MapView
 //					pfe = pfeT = Path.Combine(dir, PathInfo.TPL_Tilesets);
 
 					pfe  =
-					pfeT = Path.Combine(_pathTilesets.DirectoryPath, PathInfo.TPL_Tilesets);
+					pfeT = Path.Combine(_piTilesets.DirectoryPath, PathInfo.TPL_Tilesets);
 				}
 
 				bool fail = true;
