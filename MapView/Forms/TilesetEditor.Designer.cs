@@ -53,8 +53,8 @@
 		private System.Windows.Forms.Label lbl_PathAvailable;
 		private System.Windows.Forms.Button btnTerrainClear;
 		private System.Windows.Forms.Label lbl_ListAvailable;
-		private System.Windows.Forms.Label lblTilesetCount;
 		private System.Windows.Forms.Label lblTilesetCount_;
+		private System.Windows.Forms.Label lblTilesetCount;
 		private System.Windows.Forms.Button btn_GlobalTerrains;
 
 
@@ -111,8 +111,8 @@
 			this.tbTileset = new System.Windows.Forms.TextBox();
 			this.btnCreateDescriptor = new System.Windows.Forms.Button();
 			this.btnFindTileset = new System.Windows.Forms.Button();
-			this.lblTilesetCount_ = new System.Windows.Forms.Label();
 			this.lblTilesetCount = new System.Windows.Forms.Label();
+			this.lblTilesetCount_ = new System.Windows.Forms.Label();
 			this.lblAddType = new System.Windows.Forms.Label();
 			this.btnAccept = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
@@ -428,8 +428,8 @@
 			this.gbTileset.Controls.Add(this.tbTileset);
 			this.gbTileset.Controls.Add(this.btnCreateDescriptor);
 			this.gbTileset.Controls.Add(this.btnFindTileset);
-			this.gbTileset.Controls.Add(this.lblTilesetCount_);
 			this.gbTileset.Controls.Add(this.lblTilesetCount);
+			this.gbTileset.Controls.Add(this.lblTilesetCount_);
 			this.gbTileset.Controls.Add(this.lblAddType);
 			this.gbTileset.Controls.Add(this.btnAccept);
 			this.gbTileset.Controls.Add(this.btnCancel);
@@ -445,9 +445,9 @@
 			// 
 			this.lblTilesetPath.Location = new System.Drawing.Point(10, 15);
 			this.lblTilesetPath.Name = "lblTilesetPath";
-			this.lblTilesetPath.Size = new System.Drawing.Size(40, 15);
+			this.lblTilesetPath.Size = new System.Drawing.Size(60, 15);
 			this.lblTilesetPath.TabIndex = 0;
-			this.lblTilesetPath.Text = "Path";
+			this.lblTilesetPath.Text = "Basepath";
 			this.lblTilesetPath.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.lblTilesetPath, "path to the .MAP file");
 			// 
@@ -455,9 +455,9 @@
 			// 
 			this.lblPathCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lblPathCurrent.Location = new System.Drawing.Point(55, 15);
+			this.lblPathCurrent.Location = new System.Drawing.Point(75, 15);
 			this.lblPathCurrent.Name = "lblPathCurrent";
-			this.lblPathCurrent.Size = new System.Drawing.Size(505, 15);
+			this.lblPathCurrent.Size = new System.Drawing.Size(485, 15);
 			this.lblPathCurrent.TabIndex = 1;
 			this.lblPathCurrent.Text = "lblPathCurrent";
 			this.lblPathCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -477,9 +477,9 @@
 			// 
 			this.lblTilesetMap.Location = new System.Drawing.Point(10, 35);
 			this.lblTilesetMap.Name = "lblTilesetMap";
-			this.lblTilesetMap.Size = new System.Drawing.Size(40, 20);
+			this.lblTilesetMap.Size = new System.Drawing.Size(60, 20);
 			this.lblTilesetMap.TabIndex = 3;
-			this.lblTilesetMap.Text = "Map";
+			this.lblTilesetMap.Text = "MAPS";
 			this.lblTilesetMap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.lblTilesetMap, "label of the .MAP and .RMP files");
 			// 
@@ -488,9 +488,9 @@
 			this.tbTileset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tbTileset.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-			this.tbTileset.Location = new System.Drawing.Point(55, 35);
+			this.tbTileset.Location = new System.Drawing.Point(75, 35);
 			this.tbTileset.Name = "tbTileset";
-			this.tbTileset.Size = new System.Drawing.Size(445, 19);
+			this.tbTileset.Size = new System.Drawing.Size(425, 19);
 			this.tbTileset.TabIndex = 4;
 			this.tbTileset.TextChanged += new System.EventHandler(this.OnTilesetTextboxChanged);
 			// 
@@ -517,23 +517,23 @@
 			this.btnFindTileset.UseVisualStyleBackColor = true;
 			this.btnFindTileset.Click += new System.EventHandler(this.OnFindTilesetClick);
 			// 
-			// lblTilesetCount_
-			// 
-			this.lblTilesetCount_.Location = new System.Drawing.Point(280, 60);
-			this.lblTilesetCount_.Name = "lblTilesetCount_";
-			this.lblTilesetCount_.Size = new System.Drawing.Size(95, 15);
-			this.lblTilesetCount_.TabIndex = 7;
-			this.lblTilesetCount_.Text = "lblTilesetCount_";
-			this.lblTilesetCount_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
 			// lblTilesetCount
 			// 
-			this.lblTilesetCount.Location = new System.Drawing.Point(10, 60);
+			this.lblTilesetCount.Location = new System.Drawing.Point(280, 60);
 			this.lblTilesetCount.Name = "lblTilesetCount";
-			this.lblTilesetCount.Size = new System.Drawing.Size(270, 15);
-			this.lblTilesetCount.TabIndex = 8;
-			this.lblTilesetCount.Text = "Count of tilesets that are defined by Path+Map";
+			this.lblTilesetCount.Size = new System.Drawing.Size(95, 15);
+			this.lblTilesetCount.TabIndex = 7;
+			this.lblTilesetCount.Text = "lblTilesetCount";
 			this.lblTilesetCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// lblTilesetCount_
+			// 
+			this.lblTilesetCount_.Location = new System.Drawing.Point(10, 60);
+			this.lblTilesetCount_.Name = "lblTilesetCount_";
+			this.lblTilesetCount_.Size = new System.Drawing.Size(270, 15);
+			this.lblTilesetCount_.TabIndex = 8;
+			this.lblTilesetCount_.Text = "Count of tilesets that are defined by Path+Map";
+			this.lblTilesetCount_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lblAddType
 			// 

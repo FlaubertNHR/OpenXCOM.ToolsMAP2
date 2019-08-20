@@ -124,9 +124,7 @@ namespace MapView
 			get { return _basepath; }
 			set
 			{
-				_basepath = value;
-				lblPathCurrent.Text = Path.Combine(_basepath, GlobalsXC.MapsDir);
-
+				lblPathCurrent.Text = (_basepath = value);
 				ListTerrains();
 			}
 		}
@@ -386,7 +384,7 @@ namespace MapView
 					string dir = Path.GetDirectoryName(pfe);
 					if (dir.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
 					{
-						TilesetBasepath = dir;
+						TilesetBasepath = Path.GetDirectoryName(dir);
 
 						Tileset = Path.GetFileNameWithoutExtension(pfe);
 						OnTilesetTextboxChanged(null, EventArgs.Empty);	// NOTE: This will fire OnTilesetLabelChanged() twice usually but
@@ -517,16 +515,16 @@ namespace MapView
 			switch (InputBoxType)
 			{
 				case BoxType.AddTileset:
-					if (IsTilesetCategorized(Tileset))
+					if (IsTilesetCategorized())
 					{
 						Descriptor = null;
 					}
 					break;
 
 				case BoxType.EditTileset:
-					if (Tileset == TilesetOriginal										// use original Descriptor if label hasn't changed
-						|| (!IsTilesetCategorized(Tileset) && !MapfileExists(Tileset)))	// or if (label is not in Category AND its Mapfile doesn't exist in the current tileset's basepath on disk)
-					{																	// -> spellcast: ConfuseOpponent(OBJECT_SELF)
+					if (Tileset == TilesetOriginal									// use original Descriptor if label hasn't changed
+						|| (!IsTilesetCategorized() && !MapfileExists(Tileset)))	// or if (label is not in Category AND its Mapfile doesn't exist in the current tileset's basepath on disk)
+					{																// -> spellcast: ConfuseOpponent(OBJECT_SELF)
 						Descriptor = TileGroup.Categories[Category][TilesetOriginal];
 						IsOriginalDescriptor = true; // is Original or is Original w/ modified label
 					}
@@ -628,7 +626,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnCreateDescriptorClick(object sender, EventArgs e)
 		{
-			if (!IsTilesetCategorized(Tileset))
+			if (!IsTilesetCategorized())
 			{
 				Descriptor = new Descriptor(
 										Tileset,
@@ -666,8 +664,6 @@ namespace MapView
 				ShowErrorDialog("The label is already assigned to a different tileset.");
 		}
 
-
-		private bool _errored;
 
 		/// <summary>
 		/// If this inputbox is type AddTileset, the accept click must check to
@@ -733,122 +729,70 @@ namespace MapView
 					{
 						ShowErrorDialog("The Map must have at least one terrain allocated.");
 					}
-					else
+					else if (Tileset == TilesetOriginal) // label didn't change; check if terrains changed ->
 					{
-						if (Tileset == TilesetOriginal) // label didn't change; check if terrains changed ->
+						if (!IsTerrainsChanged(TerrainsOriginal, Descriptor.Terrains))
 						{
-							if (!IsTerrainsChanged(TerrainsOriginal, Descriptor.Terrains))
-							{
-								ShowErrorDialog("No changes were made.");
-							}
-							else
-								DialogResult = DialogResult.OK;
-
-							// NOTE: a Save of Map-file is *not* required here.
+							ShowErrorDialog("No changes were made.");
 						}
-						else // label changed; rewrite the descriptor ->
+						else
+							DialogResult = DialogResult.OK;
+
+						// NOTE: a Save of Map-file is *not* required here.
+					}
+					else if (IsTilesetCategorized())
+					{
+						ShowErrorDialog("The tileset already exists in the Category."
+									+ Environment.NewLine + Environment.NewLine
+									+ Tileset
+									+ Environment.NewLine + Environment.NewLine
+									+ "Options are to edit that one, delete that one,"
+									+ " or choose a different label for this one.");
+					}
+					else if (MapfileExists(Tileset))
+					{
+						// NOTE: user cannot edit a Map-label to be another already existing file.
+						// There are other ways to do that: either let the user delete the target-
+						// Map-file from his/her disk, or better click Edit on *that* tileset.
+						// NOTE: however, if while editing a tileset the user browses to another
+						// tileset and edits that tileset's terrains, the changes are effective.
+						//
+						// ... which is kind of awkward.
+
+						// TODO: Ask user if he/she wants to overwrite the Map-file.
+						ShowErrorDialog("The Map file already exists on disk. The Tileset Editor is"
+										+ " not sophisticated enough to deal with this eventuality."
+										+ " Either edit that Map directly if it's already in the Maptree,"
+										+ " or use Add Tileset to make it editable, or as a last"
+										+ " resort delete it from your disk."
+										+ Environment.NewLine + Environment.NewLine
+										+ GetFullpathMapfile(Tileset));
+					}
+					else // label changed; rewrite the descriptor ->
+					{
+						// NOTE: pfe -> path-file-extension
+
+						string src = GetFullpathMapfile(TilesetOriginal);
+						string dst = GetFullpathMapfile(Tileset);
+
+						if (FileService.MoveFile(src, dst))
 						{
-							// NOTE: user cannot edit a Map-label to be another already existing file.
-							// There are other ways to do that: either let the user delete the target-
-							// Map-file from his/her disk, or better click Edit on *that* tileset.
-							// NOTE: however, if while editing a tileset the user browses to another
-							// tileset and edits that tileset's terrains, the changes are effective.
+							src = GetFullpathRoutefile(TilesetOriginal);
+							dst = GetFullpathRoutefile(Tileset);
 
-							if (MapfileExists(Tileset))
+							if (FileService.MoveFile(src, dst))
 							{
-								// TODO: Ask user if he/she wants to overwrite the Map-file.
-								ShowErrorDialog("The Map file already exists on disk. The Tileset Editor is"
-												+ " not sophisticated enough to deal with this eventuality."
-												+ " Either edit that Map directly if it's already in the Maptree,"
-												+ " or use Add Tileset to make it editable, or as a last"
-												+ " resort delete it from your disk."
-												+ Environment.NewLine + Environment.NewLine
-												+ GetFullpathMapfile(Tileset));
-							}
-							else if (IsTilesetCategorized(Tileset))
-							{
-								ShowErrorDialog("The tileset already exists in the Category."
-											+ Environment.NewLine + Environment.NewLine
-											+ Tileset
-											+ Environment.NewLine + Environment.NewLine
-											+ "Options are to edit that one, delete that one,"
-											+ " or choose a different label for this one.");
-							}
-							else
-							{
-								// NOTE: pfe -> path_file_extension
+								Descriptor = new Descriptor(
+														Tileset,
+														TilesetBasepath,
+														TileGroup.Categories[Category][TilesetOriginal].Terrains,
+														TileGroup.Pal);
+								TileGroup.AddTileset(Descriptor, Category);
+								TileGroup.DeleteTileset(TilesetOriginal, Category);
 
-								string pfeMap    = GetFullpathMapfile(Tileset);
-								string pfeMapPre = GetFullpathMapfile(TilesetOriginal);
+								GlobalChangeLabels(); // TODO: figure out how to refresh the Maptree ... ie, the tileset labels don't change.
 
-								try
-								{
-									File.Move(pfeMapPre, pfeMap);	// NOTE: This has to happen now because once the Maptree node
-																	// is selected it will try to load the .MAP file etc.
-								}
-								catch
-								{
-									_errored = true;
-									string error = "Could not find the file"
-												 + Environment.NewLine + Environment.NewLine
-												 + pfeMapPre;
-									ShowErrorDialog(error);
-								}
-
-								if (!_errored)
-								{
-									if (File.Exists(pfeMap)) // NOTE: do *not* alter the descriptor if File.Move() went bork.
-									{
-										string pfeRoutes    = GetFullpathRoutefile(Tileset);
-										string pfeRoutesPre = GetFullpathRoutefile(TilesetOriginal);
-
-										try
-										{
-											File.Move(pfeRoutesPre, pfeRoutes);
-
-											if (File.Exists(pfeRoutes))
-											{
-												Descriptor = new Descriptor(
-																		Tileset,
-																		TilesetBasepath,
-																		TileGroup.Categories[Category][TilesetOriginal].Terrains,
-																		TileGroup.Pal);
-												TileGroup.AddTileset(Descriptor, Category);			// NOTE: This could be done on return to MainViewF.OnEditTilesetClick()
-																									// but then 'Descriptor' would have to be internal.
-												TileGroup.DeleteTileset(TilesetOriginal, Category);	// NOTE: This could be done on return to MainViewF.OnEditTilesetClick()
-																									// but then 'TilesetOriginal' would have to be internal.
-
-												GlobalChangeLabels(); // TODO: figure out how to refresh the Maptree ... ie, the tileset labels don't change.
-
-												DialogResult = DialogResult.OK; // reload the Tileset in MainView.
-											}
-											else
-											{
-												string error = "Could not write the file"
-															 + Environment.NewLine + Environment.NewLine
-															 + pfeRoutes;
-												ShowErrorDialog(error);
-											}
-										}
-										catch (Exception ex)
-										{
-											ShowErrorDialog(ex.Message);
-											ShowErrorDialog(ex.ToString());
-
-											string error = "Could not find the file"
-														 + Environment.NewLine + Environment.NewLine
-														 + pfeRoutesPre;
-											ShowErrorDialog(error);
-										}
-									}
-									else
-									{
-										string error = "Could not write the file"
-													 + Environment.NewLine + Environment.NewLine
-													 + pfeMap;
-										ShowErrorDialog(error);
-									}
-								}
+								DialogResult = DialogResult.OK; // reload the Tileset in MainView.
 							}
 						}
 					}
@@ -1120,8 +1064,8 @@ namespace MapView
 				fbd.SelectedPath = _lastTerrainFolder;
 				fbd.Description = String.Format(
 											CultureInfo.CurrentCulture,
-											"Browse to a basepath folder. A valid basepath folder"
-												+ " has the subfolder TERRAIN.");
+											"Browse to a basepath folder. A valid basepath"
+										  + " folder has the subfolder TERRAIN.");
 
 				if (fbd.ShowDialog() == DialogResult.OK)
 				{
@@ -1182,59 +1126,64 @@ namespace MapView
 		/// </summary>
 		private void GlobalChangeLabels()
 		{
-			var changes = new List<Tuple<Descriptor, string>>(); // ie. Don't screw up the iterator
-
 			Descriptor d;
 
+			var changes = new List<Tuple<Descriptor, string>>(); // ie. Don't screw up the iterator
 			foreach (var @group in ResourceInfo.TileGroupManager.TileGroups)
-			foreach (var category in @group.Value.Categories)
-			foreach (var descriptor in category.Value.Values)
 			{
-				if (   descriptor.Label    == TilesetOriginal
-					&& descriptor.Basepath == TilesetBasepath)
+				changes.Clear();
+
+				foreach (var category in @group.Value.Categories)
+				foreach (var descriptor in category.Value.Values)
 				{
-					d = new Descriptor(
-									Tileset,
-									descriptor.Basepath,
-									descriptor.Terrains,
-									descriptor.Pal); // ((TileGroup)@group[@group.Key]).Pal);
-
-					var keyCategory = category.Key;
-					if (IsTilesetCategorized(Tileset, keyCategory))
+					if (   descriptor.Label    == TilesetOriginal
+						&& descriptor.Basepath == TilesetBasepath)
 					{
-						// NOTE: In practice this will not fire; it gets superceded by
-						// "The Map file already exists on disk. The Tileset Editor is
-						// not sophisticated enough to deal with this eventuality. Either
-						// edit that Map directly if it's already in the Maptree, or use
-						// Add Tileset to make it editable, or as a last resort delete it
-						// from your disk."
-						//
-						// Although in reality I suppose it could/would fire if a user
-						// manually inserts a tileset into MapTilesets but there aren't
-						// corresponding .MAP/.RMP files for it. Or a user might delete
-						// the files from disk but keep the tileset(s) in MapTilesets.
-						//
-						// TODO: Ask the user if he/she wants to delete the tileset
-						// (not the files, there are no files).
-						//
-						// NOTE: If this happens both the old and new tilesets get left
-						// in the Category.
+						var keyCategory = category.Key;
+						if (IsTilesetCategorized(@group.Key, keyCategory))
+						{
+							// NOTE: In practice this will not fire; it gets superceded by
+							// "The Map file already exists on disk. The Tileset Editor is
+							// not sophisticated enough to deal with this eventuality. Either
+							// edit that Map directly if it's already in the Maptree, or use
+							// Add Tileset to make it editable, or as a last resort delete it
+							// from your disk."
+							//
+							// Although in reality I suppose it could/would fire if a user
+							// manually inserts a tileset into MapTilesets but there aren't
+							// corresponding .MAP/.RMP files for it. Or conversely a user
+							// might delete the files from disk but keep the tileset(s) in
+							// MapTilesets.
+							//
+							// TODO: Ask the user if he/she wants to delete the tileset
+							// (not the files, there are no files).
+							//
+							// NOTE: If this happens both the old and new tilesets get left
+							// in the Category.
 
-						ShowWarningDialog("The tileset already exists in category"
-										  + Environment.NewLine + Environment.NewLine
-										  + keyCategory
-										  + Environment.NewLine + Environment.NewLine
-										  + "That tileset will not be changed.");
+							ShowWarningDialog("The tileset already exists in category"
+											  + Environment.NewLine + Environment.NewLine
+											  + keyCategory
+											  + Environment.NewLine + Environment.NewLine
+											  + "That tileset will not be changed.");
+						}
+						else
+						{
+							d = new Descriptor(
+											Tileset,
+											descriptor.Basepath,
+											descriptor.Terrains,
+											descriptor.Pal); // ((TileGroup)@group[@group.Key]).Pal);
+							changes.Add(new Tuple<Descriptor, string>(d, keyCategory));
+						}
 					}
-					else
-						changes.Add(new Tuple<Descriptor, string>(d, keyCategory));
 				}
-			}
 
-			foreach (var change in changes)
-			{
-				TileGroup.AddTileset(change.Item1, change.Item2);
-				TileGroup.DeleteTileset(TilesetOriginal, change.Item2);
+				foreach (var change in changes)
+				{
+					@group.Value.AddTileset(change.Item1, change.Item2);
+					@group.Value.DeleteTileset(TilesetOriginal, change.Item2);
+				}
 			}
 		}
 
@@ -1267,23 +1216,23 @@ namespace MapView
 		/// <summary>
 		/// Gets the fullpath for a Map-file.
 		/// </summary>
-		/// <param name="labelMap"></param>
+		/// <param name="label"></param>
 		/// <returns></returns>
-		private string GetFullpathMapfile(string labelMap)
+		private string GetFullpathMapfile(string label)
 		{
-			string dirMaps = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
-			return Path.Combine(dirMaps, labelMap + GlobalsXC.MapExt);
+			string dir = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
+			return Path.Combine(dir, label + GlobalsXC.MapExt);
 		}
 
 		/// <summary>
 		/// Gets the fullpath for a Route-file.
 		/// </summary>
-		/// <param name="labelRoutes"></param>
+		/// <param name="label"></param>
 		/// <returns></returns>
-		private string GetFullpathRoutefile(string labelRoutes)
+		private string GetFullpathRoutefile(string label)
 		{
-			string dirRoutes = Path.Combine(TilesetBasepath, GlobalsXC.RoutesDir);
-			return Path.Combine(dirRoutes, labelRoutes + GlobalsXC.RouteExt);
+			string dir = Path.Combine(TilesetBasepath, GlobalsXC.RoutesDir);
+			return Path.Combine(dir, label + GlobalsXC.RouteExt);
 		}
 
 		/// <summary>
@@ -1294,12 +1243,10 @@ namespace MapView
 		/// <returns>true if the Map-file already exists on the hardrive</returns>
 		private bool MapfileExists(string labelMap)
 		{
-			string pfeMap = null;
 			if (!String.IsNullOrEmpty(labelMap))
-			{
-				pfeMap = GetFullpathMapfile(labelMap);
-			}
-			return (pfeMap != null && File.Exists(pfeMap));
+				return File.Exists(GetFullpathMapfile(labelMap));
+
+			return false;
 		}
 
 		/// <summary>
@@ -1339,12 +1286,12 @@ namespace MapView
 				++tilesets;
 			}
 
-			lblTilesetCount_.Text = tilesets.ToString();
+			lblTilesetCount.Text = tilesets.ToString();
 
 			if (tilesets != 0)
-				lblTilesetCount_.ForeColor = Color.MediumVioletRed;
+				lblTilesetCount.ForeColor = Color.MediumVioletRed;
 			else
-				lblTilesetCount_.ForeColor = SystemColors.ControlText;
+				lblTilesetCount.ForeColor = SystemColors.ControlText;
 		}
 
 		/// <summary>
@@ -1352,16 +1299,17 @@ namespace MapView
 		/// Category.
 		/// @note A label shall be unique in its Category.
 		/// </summary>
-		/// <param name="labelMap">the tileset-label to check</param>
+		/// <param name="labelGroup">the group-label of the category-label to check</param>
 		/// <param name="labelCategory">the category-label of the tileset-label to check</param>
-		/// <returns>true if the tileset-label already exists in the current
-		/// tileset's Category</returns>
-		private bool IsTilesetCategorized(string labelMap, string labelCategory = null)
+		/// <returns>true if the tileset-label already exists in the current or
+		/// specified Group and Category</returns>
+		private bool IsTilesetCategorized(string labelGroup = null, string labelCategory = null)
 		{
+			if (labelGroup    == null) labelGroup    = Group;
 			if (labelCategory == null) labelCategory = Category;
 
-			var category = ResourceInfo.TileGroupManager.TileGroups[Group].Categories[labelCategory];
-			return category.ContainsKey(labelMap);
+			var category = ResourceInfo.TileGroupManager.TileGroups[labelGroup].Categories[labelCategory];
+			return category.ContainsKey(Tileset);
 		}
 
 		/// <summary>
@@ -1551,6 +1499,7 @@ namespace MapView
 //
 //		Naming Files, Paths, and Namespaces
 //		https://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
+
 
 
 	/// <summary>
