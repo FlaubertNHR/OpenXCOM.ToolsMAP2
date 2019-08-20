@@ -170,18 +170,43 @@ namespace DSShared
 				}
 			}
 			else
+				MoveFile(pfe + GlobalsXC.TEMPExt, pfe);
+
+			return true;
+		}
+
+		/// <summary>
+		/// Moves a file by copying it to another location before deleting the
+		/// old file.
+		/// @note Ensure that the destination file doesn't already exist.
+		/// </summary>
+		/// <param name="src"></param>
+		/// <param name="dst"></param>
+		/// <returns></returns>
+		public static bool MoveFile(string src, string dst)
+		{
+			try
 			{
-				try
-				{
-					File.Move(pfe + GlobalsXC.TEMPExt, pfe);
-				}
-				catch (Exception ex)
-				{
-					ShowDialogError(
-								"File could not be moved.",
-								pfe + GlobalsXC.TEMPExt + Environment.NewLine + Environment.NewLine + ex);
-					return false;
-				}
+				File.Copy(src, dst);
+			}
+			catch (Exception ex)
+			{
+				ShowDialogError(
+							"File could not be copied.",
+							src + Environment.NewLine + Environment.NewLine + ex);
+				return false;
+			}
+
+			try
+			{
+				File.Delete(src);
+			}
+			catch (Exception ex)
+			{
+				ShowDialogError(
+							"File could not be deleted.",
+							src + Environment.NewLine + Environment.NewLine + ex);
+				return false;
 			}
 			return true;
 		}
