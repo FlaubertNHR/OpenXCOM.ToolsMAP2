@@ -580,7 +580,7 @@ namespace MapView
 			//LogFile.WriteLine(". groups= " + groups);
 
 			SortableTreeNode nodeGroup;
-			TileGroupBase tileGroup;
+			TileGroup tileGroup;
 
 			SortableTreeNode nodeCategory;
 

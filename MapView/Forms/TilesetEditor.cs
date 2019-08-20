@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using DSShared;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView
@@ -138,7 +137,7 @@ namespace MapView
 		private Descriptor Descriptor
 		{ get; set; }
 
-		private TileGroupBase TileGroup
+		private TileGroup TileGroup
 		{ get; set; }
 
 		private bool Inited

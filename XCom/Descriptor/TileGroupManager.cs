@@ -25,9 +25,9 @@ namespace XCom
 
 
 		#region Properties
-		private readonly Dictionary<string, TileGroupBase> _tilegroups =
-					 new Dictionary<string, TileGroupBase>();
-		public Dictionary<string, TileGroupBase> TileGroups
+		private readonly Dictionary<string, TileGroup> _tilegroups =
+					 new Dictionary<string, TileGroup>();
+		public Dictionary<string, TileGroup> TileGroups
 		{
 			get { return _tilegroups; }
 		}
@@ -37,13 +37,67 @@ namespace XCom
 		#region cTor
 		internal TileGroupManager(TilesetLoader tilesetLoader)
 		{
-			foreach (string labelGroup in tilesetLoader.Groups)
-				TileGroups[labelGroup] = new TileGroup(labelGroup, tilesetLoader.Tilesets);
+			LoadTilesets(tilesetLoader);
 		}
 		#endregion cTor
 
 
 		#region Methods
+		internal void LoadTilesets(TilesetLoader tilesetLoader)
+		{
+			var progress = ProgressBarForm.that;
+			progress.SetInfo("Loading Tilesets ...");
+			progress.SetTotal(tilesetLoader.Tilesets.Count);
+			progress.ResetProgress();
+			progress.Show();
+
+			foreach (var tileset in tilesetLoader.Tilesets)
+			{
+				TileGroup @group;
+
+				string labelGroup = tileset.Group;
+				if (!TileGroups.ContainsKey(labelGroup))
+				{
+					@group =
+					TileGroups[labelGroup] = new TileGroup(labelGroup);
+				}
+				else
+					@group = TileGroups[labelGroup];
+
+				string labelCategory = tileset.Category;
+				if (!@group.Categories.ContainsKey(labelCategory))
+				{
+					@group.AddCategory(labelCategory);
+				}
+
+				if (String.IsNullOrEmpty(tileset.BasePath)) // assign the Configurator's basepath to the tileset's Descriptor ->
+				{
+					switch (@group.GroupType)
+					{
+						case GameType.Ufo:
+							tileset.BasePath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
+							break;
+						case GameType.Tftd:
+							tileset.BasePath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
+							break;
+					}
+				}
+
+				var descriptor = new Descriptor(
+											tileset.Label,
+											tileset.BasePath,
+											tileset.Terrains,
+											@group.Pal);
+
+				@group.AddTileset(descriptor, labelCategory);
+				//or, TileGroups[labelGroup].Categories[tileset.Category][tileset.Label] = descriptor;
+
+				progress.UpdateProgress();
+			}
+			progress.Hide();
+		}
+
+
 		/// <summary>
 		/// Adds a group. Called by MainViewF.OnAddGroupClick()
 		/// NOTE: Check if the group already exists first.
@@ -51,7 +105,7 @@ namespace XCom
 		/// <param name="labelGroup">the label of the group to add</param>
 		public void AddTileGroup(string labelGroup)
 		{
-			TileGroups[labelGroup] = new TileGroup(labelGroup, new List<Tileset>());
+			TileGroups[labelGroup] = new TileGroup(labelGroup);
 		}
 
 		/// <summary>
@@ -74,6 +128,7 @@ namespace XCom
 		public void EditTileGroup(string labelGroup, string labelGroupPre)
 		{
 			TileGroups[labelGroup] = new TileGroup(labelGroup);
+			//or, AddTileGroup(labelGroup);
 
 			foreach (var labelCategory in TileGroups[labelGroupPre].Categories.Keys)
 			{

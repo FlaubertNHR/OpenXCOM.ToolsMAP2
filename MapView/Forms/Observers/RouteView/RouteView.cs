@@ -24,12 +24,12 @@ namespace MapView.Forms.Observers
 		:
 			MapObserverControl // UserControl, IMapObserver
 	{
-		#region Enumerations
+		#region Enums
 		private enum ConnectNodesType
 		{
 			None, OneWay, TwoWay
 		}
-		#endregion Enumerations
+		#endregion Enums
 
 
 		#region Fields (static)

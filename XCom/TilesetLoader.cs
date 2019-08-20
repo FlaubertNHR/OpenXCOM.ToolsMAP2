@@ -43,22 +43,25 @@ namespace XCom
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("TilesetLoader cTor");
 
-			// TODO: if exists(fullpath)
-			// else error out.
-
-			var progress = ProgressBarForm.that;
-			progress.SetInfo("Parsing MapTilesets ...");
-
-			var typeCount = 0; // TODO: optimize the reading (here & below) into a buffer.
-			using (var sr = File.OpenText(fullpath))
+			var typeCount = 0;
+			using (var fs = FileService.OpenFile(fullpath)) // TODO: optimize the filestream reading from here to below.
+			if (fs != null)
 			{
-				string line = String.Empty;
-				while ((line = sr.ReadLine()) != null)
+				using (var sr = new StreamReader(fs))
 				{
-					if (line.Contains("- type"))
-						++typeCount;
+					string line;
+					while ((line = sr.ReadLine()) != null)
+					{
+						if (line.Contains("- type"))
+							++typeCount;
+					}
 				}
 			}
+			else
+				return;
+
+			var progress = ProgressBarForm.that;
+			progress.SetInfo("Parsing YAML ...");
 			progress.SetTotal(typeCount);
 
 
