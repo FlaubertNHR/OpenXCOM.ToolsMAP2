@@ -1128,7 +1128,7 @@ namespace MapView
 		{
 			Descriptor d;
 
-			var changes = new List<Tuple<Descriptor, string>>(); // ie. Don't screw up the iterator
+			var changes = new List<Tuple<Descriptor, string>>(); // ie. Don't screw up the groups-iterator.
 			foreach (var @group in ResourceInfo.TileGroupManager.TileGroups)
 			{
 				changes.Clear();
