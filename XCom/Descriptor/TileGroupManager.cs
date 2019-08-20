@@ -38,7 +38,7 @@ namespace XCom
 		internal TileGroupManager(TilesetLoader tilesetLoader)
 		{
 			foreach (string labelGroup in tilesetLoader.Groups)
-				TileGroups[labelGroup] = new TileGroupChild(labelGroup, tilesetLoader.Tilesets);
+				TileGroups[labelGroup] = new TileGroup(labelGroup, tilesetLoader.Tilesets);
 		}
 		#endregion cTor
 
@@ -51,7 +51,7 @@ namespace XCom
 		/// <param name="labelGroup">the label of the group to add</param>
 		public void AddTileGroup(string labelGroup)
 		{
-			TileGroups[labelGroup] = new TileGroupChild(labelGroup, new List<Tileset>());
+			TileGroups[labelGroup] = new TileGroup(labelGroup, new List<Tileset>());
 		}
 
 		/// <summary>
@@ -73,7 +73,7 @@ namespace XCom
 		/// <param name="labelGroupPre">the old label of the group</param>
 		public void EditTileGroup(string labelGroup, string labelGroupPre)
 		{
-			TileGroups[labelGroup] = new TileGroupChild(labelGroup);
+			TileGroups[labelGroup] = new TileGroup(labelGroup);
 
 			foreach (var labelCategory in TileGroups[labelGroupPre].Categories.Keys)
 			{
@@ -147,7 +147,7 @@ namespace XCom
 					bool blankline;
 					foreach (string labelGroup in TileGroups.Keys)
 					{
-						var @group = TileGroups[labelGroup] as TileGroupChild;	// <- fuck inheritance btw. It's not being used properly and is
+						var @group = TileGroups[labelGroup] as TileGroup;	// <- fuck inheritance btw. It's not being used properly and is
 						if (@group.Categories.Count != 0)						// largely irrelevant and needlessly confusing in this codebase.
 						{
 							//LogFile.WriteLine("");

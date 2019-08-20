@@ -2431,7 +2431,7 @@ namespace MapView
 		/// <returns>true if okay to proceed</returns>
 		private bool isGrouptypeConfigured(string labelGroup)
 		{
-			var TileGroup = ResourceInfo.TileGroupManager.TileGroups[labelGroup] as TileGroup;
+			var TileGroup = ResourceInfo.TileGroupManager.TileGroups[labelGroup];
 
 			string key = null;
 			switch (TileGroup.GroupType)

@@ -95,7 +95,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\TileGroup.cs" />
     <Compile Include="ProgressBarForm.cs" />
     <Compile Include="Resources\Images\Collections\SpriteCollection.cs">
       <SubType>Code</SubType>
@@ -148,7 +147,7 @@
     <Compile Include="Descriptor\TileGroupManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Descriptor\TileGroupChild.cs">
+    <Compile Include="Descriptor\TileGroup.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ResourceInfo.cs">

@@ -138,7 +138,7 @@ namespace MapView
 		private Descriptor Descriptor
 		{ get; set; }
 
-		private TileGroup TileGroup
+		private TileGroupBase TileGroup
 		{ get; set; }
 
 		private bool Inited
@@ -202,7 +202,7 @@ namespace MapView
 			lbTerrainsAllocated.DisplayMember = "Terrain";
 			lbTerrainsAvailable.DisplayMember = "Terrain";
 
-			TileGroup = ResourceInfo.TileGroupManager.TileGroups[Group] as TileGroup;
+			TileGroup = ResourceInfo.TileGroupManager.TileGroups[Group];
 
 			string key = null;
 			switch (TileGroup.GroupType)

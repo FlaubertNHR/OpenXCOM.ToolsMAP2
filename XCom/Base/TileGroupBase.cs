@@ -4,11 +4,31 @@ using System.Collections.Generic;
 
 namespace XCom.Base
 {
+	#region Enumerations
+	public enum GameType
+	{
+		Ufo,
+		Tftd
+	}
+	// TODO: Replace all the if(Palette==Ufo.Palette) stuff with GameType.
+	#endregion Enumerations
+
+
+
+	/// <summary>
+	/// The base class for a TileGroup.
+	/// </summary>
 	public class TileGroupBase
 	{
 		#region Properties
 		public string Label
 		{ get; private set; }
+
+		public GameType GroupType // TODO: 'GroupType' can/should be superceded by 'Pal' - or vice versa ...
+		{ get; private set; }
+
+		public Palette Pal
+		{ get; set; }
 
 		private readonly Dictionary<string, Dictionary<string, Descriptor>> _categories
 				   = new Dictionary<string, Dictionary<string, Descriptor>>();
@@ -32,6 +52,16 @@ namespace XCom.Base
 		internal protected TileGroupBase(string labelGroup)
 		{
 			Label = labelGroup;
+
+			if (Label.StartsWith("tftd", StringComparison.OrdinalIgnoreCase))
+			{
+				GroupType = GameType.Tftd;
+				Pal = Palette.TftdBattle;
+			}
+			else //if (labelGroup.StartsWith("ufo", StringComparison.OrdinalIgnoreCase))
+			{
+				GroupType = GameType.Ufo;	// NOTE: if the prefix "tftd" is not found at the beginning of
+			}	Pal = Palette.UfoBattle;	// the group-label then default to UFO basepath and palette.
 		}
 		#endregion cTor
 

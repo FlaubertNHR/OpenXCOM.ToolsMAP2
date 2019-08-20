@@ -11,20 +11,20 @@ namespace XCom
 	/// <summary>
 	/// Instantiates descriptors for all tilesets in MapTilesets.
 	/// </summary>
-	internal sealed class TileGroupChild
+	internal sealed class TileGroup
 		:
-			TileGroup
+			TileGroupBase
 	{
 		#region cTor
 		/// <summary>
 		/// cTor[0]. Load from YAML.
 		/// </summary>
-		internal TileGroupChild(string labelGroup, List<Tileset> tilesets)
+		internal TileGroup(string labelGroup, List<Tileset> tilesets)
 			:
 				base(labelGroup)
 		{
 			//LogFile.WriteLine("");
-			//LogFile.WriteLine("TileGroupChild cTor label= " + labelGroup);
+			//LogFile.WriteLine("TileGroup cTor label= " + labelGroup);
 
 			var progress = ProgressBarForm.that;
 			progress.SetInfo("Sorting: " + labelGroup);
@@ -81,7 +81,7 @@ namespace XCom
 		/// cTor[1] for editing the label of the TileGroup.
 		/// </summary>
 		/// <param name="labelGroup"></param>
-		internal TileGroupChild(string labelGroup)
+		internal TileGroup(string labelGroup)
 			:
 				base(labelGroup)
 		{}
