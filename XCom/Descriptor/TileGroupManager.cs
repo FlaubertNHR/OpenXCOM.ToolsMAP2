@@ -12,38 +12,26 @@ namespace XCom
 	/// <summary>
 	/// Manages tileset-groups and writes MapTilesets.yml.
 	/// </summary>
-	public sealed class TileGroupManager
+	public static class TileGroupManager
 	{
 		#region Fields (static)
-		private const string PrePad = "#----- ";
+		private const string PrePad       = "#----- ";
+		private const int    PrePadLength = 7;
 		#endregion Fields (static)
 
 
-		#region Fields
-		private int PrePadLength = PrePad.Length;
-		#endregion Fields
-
-
-		#region Properties
-		private readonly Dictionary<string, TileGroup> _tilegroups =
-					 new Dictionary<string, TileGroup>();
-		public Dictionary<string, TileGroup> TileGroups
+		#region Properties (static)
+		private static readonly Dictionary<string, TileGroup> _tilegroups =
+							new Dictionary<string, TileGroup>();
+		public static Dictionary<string, TileGroup> TileGroups
 		{
 			get { return _tilegroups; }
 		}
-		#endregion Properties
+		#endregion Properties (static)
 
 
-		#region cTor
-		internal TileGroupManager(TilesetLoader tilesetLoader)
-		{
-			LoadTilesets(tilesetLoader);
-		}
-		#endregion cTor
-
-
-		#region Methods
-		internal void LoadTilesets(TilesetLoader tilesetLoader)
+		#region Methods (static)
+		internal static void LoadTilesets(TilesetLoader tilesetLoader)
 		{
 			var progress = ProgressBarForm.that;
 			progress.SetInfo("Loading Tilesets ...");
@@ -103,7 +91,7 @@ namespace XCom
 		/// NOTE: Check if the group already exists first.
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to add</param>
-		public void AddTileGroup(string labelGroup)
+		public static void AddTileGroup(string labelGroup)
 		{
 			TileGroups[labelGroup] = new TileGroup(labelGroup);
 		}
@@ -112,7 +100,7 @@ namespace XCom
 		/// Deletes a group. Called by MainViewF.OnDeleteGroupClick()
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to delete</param>
-		public void DeleteTileGroup(string labelGroup)
+		public static void DeleteTileGroup(string labelGroup)
 		{
 			TileGroups.Remove(labelGroup);
 		}
@@ -125,7 +113,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="labelGroup">the new label for the group</param>
 		/// <param name="labelGroupPre">the old label of the group</param>
-		public void EditTileGroup(string labelGroup, string labelGroupPre)
+		public static void EditTileGroup(string labelGroup, string labelGroupPre)
 		{
 			TileGroups[labelGroup] = new TileGroup(labelGroup);
 			//or, AddTileGroup(labelGroup);
@@ -147,7 +135,7 @@ namespace XCom
 		/// to a YAML file.
 		/// </summary>
 		/// <returns>true if no exception was thrown</returns>
-		public bool WriteTileGroups()
+		public static bool WriteTileGroups()
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("TileGroupManager.WriteTileGroups");
@@ -288,10 +276,8 @@ namespace XCom
 			}
 			return !fail;
 		}
-		#endregion Methods
 
 
-		#region Methods (static)
 		/// <summary>
 		/// Adds padding such as " ---#" out to 80 characters.
 		/// </summary>

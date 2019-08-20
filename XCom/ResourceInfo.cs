@@ -25,9 +25,6 @@ namespace XCom
 
 
 		#region Properties (static)
-		public static TileGroupManager TileGroupManager
-		{ get; private set; }
-
 		private static readonly List<SpriteCollection> _spritesets =
 							new List<SpriteCollection>();
 		/// <summary>
@@ -48,7 +45,7 @@ namespace XCom
 		/// <param name="pathConfig"></param>
 		public static void InitializeResources(PathInfo pathConfig)
 		{
-			TileGroupManager = new TileGroupManager(new TilesetLoader(pathConfig.Fullpath));
+			TileGroupManager.LoadTilesets(new TilesetLoader(pathConfig.Fullpath));
 		}
 
 		/// <summary>

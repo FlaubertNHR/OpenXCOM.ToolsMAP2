@@ -232,7 +232,7 @@ namespace MapView
 			Dictionary<string, Dictionary<string, Descriptor>> categories;
 			Dictionary<string, Descriptor> descriptors;
 
-			Dictionary<string, TileGroup> tileGroups = ResourceInfo.TileGroupManager.TileGroups;
+			Dictionary<string, TileGroup> tileGroups = TileGroupManager.TileGroups;
 			foreach (var @group in tileGroups)
 			{
 				categories = @group.Value.Categories;

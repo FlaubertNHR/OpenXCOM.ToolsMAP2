@@ -576,7 +576,7 @@ namespace MapView
 			MapTree.BeginUpdate();
 			MapTree.Nodes.Clear();
 
-			var groups = ResourceInfo.TileGroupManager.TileGroups;
+			var groups = TileGroupManager.TileGroups;
 			//LogFile.WriteLine(". groups= " + groups);
 
 			SortableTreeNode nodeGroup;
@@ -1188,7 +1188,7 @@ namespace MapView
 				if (MainViewUnderlay.MapBase.SaveRoutes())
 					ObserverManager.RouteView.Control.RouteChanged = false;
 			}
-			MaptreeChanged = !ResourceInfo.TileGroupManager.WriteTileGroups();
+			MaptreeChanged = !TileGroupManager.WriteTileGroups();
 		}
 
 		internal void OnSaveMapClick(object sender, EventArgs e)
@@ -1271,7 +1271,7 @@ namespace MapView
 
 		private void OnSaveMaptreeClick(object sender, EventArgs e)
 		{
-			MaptreeChanged = !ResourceInfo.TileGroupManager.WriteTileGroups();
+			MaptreeChanged = !TileGroupManager.WriteTileGroups();
 		}
 
 		/// <summary>
@@ -1501,8 +1501,8 @@ namespace MapView
 
 						if (MaptreeChanged)
 						{
-//							MaptreeChanged = !ResourceInfo.TileGroupInfo.WriteTileGroups(); // <- that could cause endless recursion.
-							ResourceInfo.TileGroupManager.WriteTileGroups();
+//							MaptreeChanged = !TileGroupInfo.WriteTileGroups(); // <- that could cause endless recursion.
+							TileGroupManager.WriteTileGroups();
 							MaptreeChanged = false;
 						}
 						break;
@@ -2187,7 +2187,7 @@ namespace MapView
 				{
 					MaptreeChanged = true;
 
-					ResourceInfo.TileGroupManager.AddTileGroup(f.Label);
+					TileGroupManager.AddTileGroup(f.Label);
 
 					CreateTree();
 					SelectGroupNode(f.Label);
@@ -2217,9 +2217,9 @@ namespace MapView
 				{
 					MaptreeChanged = true;
 
-					ResourceInfo.TileGroupManager.EditTileGroup(
-															f.Label,
-															labelGroup);
+					TileGroupManager.EditTileGroup(
+												f.Label,
+												labelGroup);
 					CreateTree();
 					SelectGroupNode(f.Label);
 				}
@@ -2255,7 +2255,7 @@ namespace MapView
 			{
 				MaptreeChanged = true;
 
-				ResourceInfo.TileGroupManager.DeleteTileGroup(labelGroup);
+				TileGroupManager.DeleteTileGroup(labelGroup);
 
 				CreateTree();
 				SelectGroupNodeTop();
@@ -2281,7 +2281,7 @@ namespace MapView
 				{
 					MaptreeChanged = true;
 
-					var @group = ResourceInfo.TileGroupManager.TileGroups[labelGroup];
+					var @group = TileGroupManager.TileGroups[labelGroup];
 					@group.AddCategory(f.Label);
 
 					CreateTree();
@@ -2312,7 +2312,7 @@ namespace MapView
 				{
 					MaptreeChanged = true;
 
-					var @group = ResourceInfo.TileGroupManager.TileGroups[labelGroup];
+					var @group = TileGroupManager.TileGroups[labelGroup];
 					@group.EditCategory(f.Label, labelCategory);
 
 					CreateTree();
@@ -2353,7 +2353,7 @@ namespace MapView
 			{
 				MaptreeChanged = true;
 
-				var @group = ResourceInfo.TileGroupManager.TileGroups[labelGroup];
+				var @group = TileGroupManager.TileGroups[labelGroup];
 				@group.DeleteCategory(labelCategory);
 
 				CreateTree();
@@ -2431,10 +2431,10 @@ namespace MapView
 		/// <returns>true if okay to proceed</returns>
 		private bool isGrouptypeConfigured(string labelGroup)
 		{
-			var TileGroup = ResourceInfo.TileGroupManager.TileGroups[labelGroup];
+			var @group = TileGroupManager.TileGroups[labelGroup];
 
 			string key = null;
-			switch (TileGroup.GroupType)
+			switch (@group.GroupType)
 			{
 				case GameType.Ufo:  key = SharedSpace.ResourceDirectoryUfo;  break;
 				case GameType.Tftd: key = SharedSpace.ResourceDirectoryTftd; break;
@@ -2442,7 +2442,7 @@ namespace MapView
 
 			if (SharedSpace.GetShareString(key) == null)
 			{
-				switch (TileGroup.GroupType)
+				switch (@group.GroupType)
 				{
 					case GameType.Ufo:  key = "UFO";  break;
 					case GameType.Tftd: key = "TFTD"; break;
@@ -2494,7 +2494,7 @@ namespace MapView
 			{
 				MaptreeChanged = true;
 
-				var @group = ResourceInfo.TileGroupManager.TileGroups[labelGroup];
+				var @group = TileGroupManager.TileGroups[labelGroup];
 				@group.DeleteTileset(labelTileset, labelCategory);
 
 				CreateTree();

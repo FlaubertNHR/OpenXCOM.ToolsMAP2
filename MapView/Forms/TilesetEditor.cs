@@ -201,7 +201,7 @@ namespace MapView
 			lbTerrainsAllocated.DisplayMember = "Terrain";
 			lbTerrainsAvailable.DisplayMember = "Terrain";
 
-			TileGroup = ResourceInfo.TileGroupManager.TileGroups[Group];
+			TileGroup = TileGroupManager.TileGroups[Group];
 
 			string key = null;
 			switch (TileGroup.GroupType)
@@ -1096,7 +1096,7 @@ namespace MapView
 
 			bool changed = false;
 
-			foreach (var @group in ResourceInfo.TileGroupManager.TileGroups)
+			foreach (var @group in TileGroupManager.TileGroups)
 			foreach (var category in @group.Value.Categories)
 			if (category.Key != Category)
 			{
@@ -1128,7 +1128,7 @@ namespace MapView
 			Descriptor d;
 
 			var changes = new List<Tuple<Descriptor, string>>(); // ie. Don't screw up the groups-iterator.
-			foreach (var @group in ResourceInfo.TileGroupManager.TileGroups)
+			foreach (var @group in TileGroupManager.TileGroups)
 			{
 				changes.Clear();
 
@@ -1257,7 +1257,7 @@ namespace MapView
 		{
 			int tilesets = 0;
 
-			foreach (var @group in ResourceInfo.TileGroupManager.TileGroups)
+			foreach (var @group in TileGroupManager.TileGroups)
 			foreach (var category in @group.Value.Categories)
 			foreach (var descriptor in category.Value.Values)
 			{
@@ -1307,7 +1307,7 @@ namespace MapView
 			if (labelGroup    == null) labelGroup    = Group;
 			if (labelCategory == null) labelCategory = Category;
 
-			var category = ResourceInfo.TileGroupManager.TileGroups[labelGroup].Categories[labelCategory];
+			var category = TileGroupManager.TileGroups[labelGroup].Categories[labelCategory];
 			return category.ContainsKey(Tileset);
 		}
 

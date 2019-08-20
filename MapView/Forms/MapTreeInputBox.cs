@@ -140,7 +140,7 @@ namespace MapView
 					{
 						bool bork = false;
 
-						var groups = ResourceInfo.TileGroupManager.TileGroups;
+						var groups = TileGroupManager.TileGroups;
 						foreach (var labelGroup in groups.Keys)
 						{
 							if (String.Equals(labelGroup, Label, StringComparison.OrdinalIgnoreCase))
@@ -171,7 +171,7 @@ namespace MapView
 					{
 						bool bork = false;
 
-						var tilegroup = ResourceInfo.TileGroupManager.TileGroups[GroupLabel];
+						var tilegroup = TileGroupManager.TileGroups[GroupLabel];
 						foreach (var labelCategory in tilegroup.Categories.Keys)
 						{
 							if (String.Equals(labelCategory, Label, StringComparison.OrdinalIgnoreCase))
