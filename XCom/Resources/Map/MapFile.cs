@@ -208,8 +208,8 @@ namespace XCom
 							+ Environment.NewLine + Environment.NewLine
 							+ "WARNING: Saving the Map in its current state would"
 							+ " lose those tilepart references. But if you know"
-							+ " what terrain(s) are rogue they can be added to"
-							+ " the Map's terrainset with the TilesetEditor.",
+							+ " what terrain(s) have gone rogue they can be added"
+							+ " to the Map's terrainset with the TilesetEditor.",
 						" Warning",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Warning,
@@ -319,17 +319,16 @@ namespace XCom
 		#region Methods (static)
 		/// <summary>
 		/// Writes default Map and blank Route files.
+		/// IMPORTANT: Call this funct only if the Mapfile does *not* exist.
+		/// This funct does *not* create backup files!
 		/// </summary>
 		/// <param name="pfeMap"></param>
 		/// <param name="pfeRoutes"></param>
-		public static void CreateDefault(string pfeMap, string pfeRoutes)
+		/// <returns>true on success</returns>
+		public static bool CreateDefault(string pfeMap, string pfeRoutes)
 		{
-			Directory.CreateDirectory(Path.GetDirectoryName(pfeRoutes));
-			using (var fs = File.Create(pfeRoutes)) // create a blank Route-file and release its handle.
-			{}
-
-			Directory.CreateDirectory(Path.GetDirectoryName(pfeMap));
-			using (var fs = File.Create(pfeMap)) // create a default Map-file and release its handle.
+			using (var fs = FileService.CreateFile(pfeMap)) // create a default Map-file and release its handle.
+			if (fs != null)
 			{
 				fs.WriteByte((byte)10); // rows // default new Map size ->
 				fs.WriteByte((byte)10); // cols
@@ -340,7 +339,13 @@ namespace XCom
 				{
 					fs.WriteByte((byte)0);
 				}
+
+				using (var fsRoutes = FileService.CreateFile(pfeRoutes)) // create a blank Route-file and release its handle.
+				{}
+
+				return true; // ie. don't worry too much about successful creation of the Routesfile.
 			}
+			return false;
 		}
 		#endregion Methods (static)
 
