@@ -32,7 +32,7 @@
 		private System.Windows.Forms.Button btnMoveLeft;
 		private System.Windows.Forms.Panel pnlSpacer;
 		private System.Windows.Forms.Button btnFindDirectory;
-		private System.Windows.Forms.Button btnCreateMap;
+		private System.Windows.Forms.Button btnCreateDescriptor;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.Label lblAvailable;
 		private System.Windows.Forms.Label lblAllocated;
@@ -109,7 +109,7 @@
 			this.btnFindDirectory = new System.Windows.Forms.Button();
 			this.lblTilesetMap = new System.Windows.Forms.Label();
 			this.tbTileset = new System.Windows.Forms.TextBox();
-			this.btnCreateMap = new System.Windows.Forms.Button();
+			this.btnCreateDescriptor = new System.Windows.Forms.Button();
 			this.btnFindTileset = new System.Windows.Forms.Button();
 			this.lblTilesetCount_ = new System.Windows.Forms.Label();
 			this.lblTilesetCount = new System.Windows.Forms.Label();
@@ -426,7 +426,7 @@
 			this.gbTileset.Controls.Add(this.btnFindDirectory);
 			this.gbTileset.Controls.Add(this.lblTilesetMap);
 			this.gbTileset.Controls.Add(this.tbTileset);
-			this.gbTileset.Controls.Add(this.btnCreateMap);
+			this.gbTileset.Controls.Add(this.btnCreateDescriptor);
 			this.gbTileset.Controls.Add(this.btnFindTileset);
 			this.gbTileset.Controls.Add(this.lblTilesetCount_);
 			this.gbTileset.Controls.Add(this.lblTilesetCount);
@@ -494,17 +494,17 @@
 			this.tbTileset.TabIndex = 4;
 			this.tbTileset.TextChanged += new System.EventHandler(this.OnTilesetTextboxChanged);
 			// 
-			// btnCreateMap
+			// btnCreateDescriptor
 			// 
-			this.btnCreateMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCreateMap.Location = new System.Drawing.Point(505, 30);
-			this.btnCreateMap.Name = "btnCreateMap";
-			this.btnCreateMap.Size = new System.Drawing.Size(50, 25);
-			this.btnCreateMap.TabIndex = 5;
-			this.btnCreateMap.Text = "create";
-			this.toolTip1.SetToolTip(this.btnCreateMap, "a Map descriptor must be created before terrains can be added");
-			this.btnCreateMap.UseVisualStyleBackColor = true;
-			this.btnCreateMap.Click += new System.EventHandler(this.OnCreateDescriptorClick);
+			this.btnCreateDescriptor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCreateDescriptor.Location = new System.Drawing.Point(505, 30);
+			this.btnCreateDescriptor.Name = "btnCreateDescriptor";
+			this.btnCreateDescriptor.Size = new System.Drawing.Size(50, 25);
+			this.btnCreateDescriptor.TabIndex = 5;
+			this.btnCreateDescriptor.Text = "create";
+			this.toolTip1.SetToolTip(this.btnCreateDescriptor, "a Map descriptor must be created before terrains can be added");
+			this.btnCreateDescriptor.UseVisualStyleBackColor = true;
+			this.btnCreateDescriptor.Click += new System.EventHandler(this.OnCreateDescriptorClick);
 			// 
 			// btnFindTileset
 			// 
@@ -549,6 +549,7 @@
 			// btnAccept
 			// 
 			this.btnAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnAccept.Enabled = false;
 			this.btnAccept.Location = new System.Drawing.Point(420, 60);
 			this.btnAccept.Name = "btnAccept";
 			this.btnAccept.Size = new System.Drawing.Size(80, 25);
