@@ -171,7 +171,7 @@ namespace MapView
 		/// </summary>
 		internal MainViewF()
 		{
-			string dirAppL = PathInfo.GetDirectory(Application.ExecutablePath);
+			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
@@ -275,7 +275,7 @@ namespace MapView
 			Controls.Add(MapTree);
 			splitter.Collapsible = MapTree;
 
-			MapTree.TreeViewNodeSorter = StringComparer.CurrentCultureIgnoreCase;
+			MapTree.TreeViewNodeSorter = StringComparer.Ordinal;
 
 
 			// WORKAROUND: The size of the form in the designer keeps increasing
@@ -643,7 +643,7 @@ namespace MapView
 				return String.Compare(
 									Text,
 									(other as SortableTreeNode).Text,
-									StringComparison.CurrentCultureIgnoreCase);
+									StringComparison.Ordinal);
 			}
 		}
 
@@ -2029,8 +2029,6 @@ namespace MapView
 		/// </summary>
 		private void FireContext()
 		{
-			//LogFile.WriteLine("MainViewF.FireContext()");
-
 			switch (_dontbeeptype)
 			{
 				case DontBeepType.OpenContext:
@@ -2078,8 +2076,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeMouseDown() node= " + MapTree.SelectedNode);
-
 			if (e.Button == MouseButtons.Right)
 			{
 				if (MainViewUnderlay.MapBase == null					// prevent a bunch of problems, like looping dialogs when returning from
@@ -2161,10 +2157,6 @@ namespace MapView
 
 						case DialogResult.Ignore:
 							BypassChanged = true;
-//							MapChanged =
-//							ObserverManager.RouteView   .Control     .RoutesChanged =
-//							ObserverManager.TopRouteView.ControlRoute.RoutesChanged = false;
-
 							break;
 					}
 
@@ -2183,8 +2175,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAddGroupClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnAddGroupClick");
-
 			using (var f = new MapTreeInputBox(
 											"Enter the label for a new Map group."
 												+ " It needs to start with UFO or TFTD (case insensitive) since"
@@ -2212,8 +2202,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnEditGroupClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnEditGroupClick");
-
 			using (var f = new MapTreeInputBox(
 											"Enter a new label for the Map group."
 												+ " It needs to start with UFO or TFTD (case insensitive) since"
@@ -2245,8 +2233,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnDeleteGroupClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnDeleteGroupClick");
-
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
 			string labelGroup = MapTree.SelectedNode.Text;
@@ -2283,8 +2269,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAddCategoryClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnAddCategoryClick");
-
 			string labelGroup = MapTree.SelectedNode.Text;
 
 			using (var f = new MapTreeInputBox(
@@ -2313,8 +2297,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnEditCategoryClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnEditCategoryClick");
-
 			string labelGroup = MapTree.SelectedNode.Parent.Text;
 
 			using (var f = new MapTreeInputBox(
@@ -2346,8 +2328,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnDeleteCategoryClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnDeleteCategoryClick");
-
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
 			string labelGroup    = MapTree.SelectedNode.Parent.Text;
@@ -2388,8 +2368,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAddTilesetClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnAddTilesetClick");
-
 			string labelGroup = MapTree.SelectedNode.Parent.Text;
 			if (isGrouptypeConfigured(labelGroup))
 			{
@@ -2404,8 +2382,6 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						//LogFile.WriteLine(". f.Tileset= " + f.Tileset);
-
 						MaptreeChanged =
 						BypassChanged  = true;
 
@@ -2423,8 +2399,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnEditTilesetClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnEditTilesetClick");
-
 			string labelGroup = MapTree.SelectedNode.Parent.Parent.Text;
 			if (isGrouptypeConfigured(labelGroup))
 			{
@@ -2439,8 +2413,6 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						//LogFile.WriteLine(". f.Tileset= " + f.Tileset);
-
 						MaptreeChanged =
 						BypassChanged  = true;
 
@@ -2496,8 +2468,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnDeleteTilesetClick(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnDeleteTilesetClick");
-
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
 			string labelGroup    = MapTree.SelectedNode.Parent.Parent.Text;
@@ -2540,8 +2510,6 @@ namespace MapView
 		/// </summary>
 		private void SelectGroupNodeTop()
 		{
-			//LogFile.WriteLine("SelectGroupNodeTop");
-
 			if (MapTree.Nodes.Count != 0)
 				MapTree.SelectedNode = MapTree.Nodes[0];
 		}
@@ -2549,13 +2517,11 @@ namespace MapView
 		/// <summary>
 		/// Selects the top category treenode in the Maps tree if one exists
 		/// under a given group treenode.
-		/// NOTE: Assumes that the parent-group node is valid.
+		/// @note Assumes that the parent-group node is valid.
 		/// </summary>
 		/// <param name="labelGroup"></param>
 		private void SelectCategoryNodeTop(string labelGroup)
 		{
-			//LogFile.WriteLine("SelectCategoryNodeTop");
-
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (nodeGroup.Text == labelGroup)
@@ -2570,14 +2536,12 @@ namespace MapView
 		/// <summary>
 		/// Selects the top tileset treenode in the Maps tree if one exists
 		/// under a given category treenode.
-		/// NOTE: Assumes that the parent-parent-group and parent-category nodes
+		/// @note Assumes that the parent-parent-group and parent-category nodes
 		/// are valid.
 		/// </summary>
 		/// <param name="labelCategory"></param>
 		private void SelectTilesetNodeTop(string labelCategory)
 		{
-			//LogFile.WriteLine("SelectTilesetNodeTop");
-
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				var groupCollection = nodeGroup.Nodes;
@@ -2599,8 +2563,6 @@ namespace MapView
 		/// <param name="labelGroup"></param>
 		private void SelectGroupNode(string labelGroup)
 		{
-			//LogFile.WriteLine("SelectGroupNode");
-
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (nodeGroup.Text == labelGroup)
@@ -2619,14 +2581,11 @@ namespace MapView
 		/// <param name="labelGroup"></param>
 		private void SelectCategoryNode(string labelCategory, string labelGroup)
 		{
-			//LogFile.WriteLine("SelectCategoryNode");
-
 			bool found = false;
 
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (found) break;
-
 				if (nodeGroup.Text == labelGroup)
 				{
 					var groupCollection = nodeGroup.Nodes;
@@ -2654,36 +2613,25 @@ namespace MapView
 		/// <param name="labelGroup"></param>
 		private void SelectTilesetNode(string labelTileset, string labelCategory, string labelGroup)
 		{
-			//LogFile.WriteLine("SelectTilesetNode");
-
 			bool found = false;
-
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (found) break;
-
-				//LogFile.WriteLine(". group= " + nodeGroup.Text);
-
 				if (nodeGroup.Text == labelGroup)
 				{
 					var groupCollection = nodeGroup.Nodes;
 					foreach (TreeNode nodeCategory in groupCollection)
 					{
 						if (found) break;
-
-						//LogFile.WriteLine(". . category= " + nodeCategory.Text);
-
 						if (nodeCategory.Text == labelCategory)
 						{
 							var categoryCollection = nodeCategory.Nodes;
 							foreach (TreeNode nodeTileset in categoryCollection)
 							{
-								//LogFile.WriteLine(". . . tileset= " + nodeTileset.Text);
-
 								if (nodeTileset.Text == labelTileset)
 								{
 									found = true;
-
+									_loadReady = LOADREADY_STAGE_2;
 									MapTree.SelectedNode = nodeTileset;
 									break;
 								}
@@ -2704,8 +2652,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeFocusChanged(object sender, EventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeFocusChanged()");
-
 			if (Searched != null)
 				MapTree.Invalidate();
 		}
@@ -2719,8 +2665,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeNodeMouseClick() node= " + MapTree.SelectedNode);
-
 			if (e.Node == _selected)
 			{
 				var descriptor = e.Node.Tag as Descriptor;
@@ -2745,8 +2689,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeBeforeSelect() node= " + MapTree.SelectedNode);
-
 			if (!BypassChanged) // is true on TilesetEditor DialogResult.OK
 			{
 				e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
@@ -2763,8 +2705,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeAfterSelect() node= " + MapTree.SelectedNode);
-
 			ClearSearched();
 
 			if (_loadReady == LOADREADY_STAGE_1)
@@ -2784,15 +2724,11 @@ namespace MapView
 		/// </summary>
 		private void LoadSelectedDescriptor(bool basepathDialog = false)
 		{
-			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor() node= " + MapTree.SelectedNode);
-
 			if (_loadReady == LOADREADY_STAGE_2)
 			{
 				var descriptor = MapTree.SelectedNode.Tag as Descriptor;
 				if (descriptor != null)
 				{
-					//LogFile.WriteLine(". descriptor= " + descriptor);
-
 					bool treechanged = false;
 					var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
 															descriptor,
@@ -2945,7 +2881,7 @@ namespace MapView
 		/// <summary>
 		/// Shows the user a dialog-box asking to Save if the currently
 		/// displayed Map has changed.
-		/// NOTE: Is called when either (a) MapView is closing (b) a Map is
+		/// @note Is called when either (a) MapView is closing (b) a Map is
 		/// about to load/reload.
 		/// </summary>
 		/// <returns></returns>
@@ -2982,7 +2918,7 @@ namespace MapView
 		/// <summary>
 		/// Shows the user a dialog-box asking to Save if the currently
 		/// displayed Routes has changed.
-		/// NOTE: Is called when either (a) MapView is closing (b) another Map
+		/// @note Is called when either (a) MapView is closing (b) another Map
 		/// is about to load.
 		/// </summary>
 		/// <returns></returns>
@@ -3019,7 +2955,7 @@ namespace MapView
 		/// <summary>
 		/// Shows the user a dialog-box asking to Save the Maptree if it has
 		/// changed.
-		/// NOTE: Is called when either (a) MapView is closing (b) MapView is
+		/// @note Is called when either (a) MapView is closing (b) MapView is
 		/// reloading due to a configuration change (ie. only if resource-paths
 		/// have been changed, since the only other relevant option - if the
 		/// tilesets-config file - is changed then saving the current one is
@@ -3056,7 +2992,7 @@ namespace MapView
 
 		/// <summary>
 		/// Prints the currently selected location to the status bar.
-		/// NOTE: The 'lev' should be inverted before it's passed in.
+		/// @note The 'lev' should be inverted before it's passed in.
 		/// </summary>
 		internal void sb_PrintPosition()
 		{
