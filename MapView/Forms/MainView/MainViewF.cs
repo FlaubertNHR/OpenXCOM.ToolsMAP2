@@ -1316,9 +1316,18 @@ namespace MapView
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					sfd.Title      = "Save PNG Screenshot";
-					sfd.Filter     = "PNG files|*.PNG|All files (*.*)|*.*";
-					sfd.DefaultExt = GlobalsXC.PngExt;
+					if (Optionables.PngOutput)
+					{
+						sfd.Title      = "Save PNG Screenshot";
+						sfd.Filter     = "PNG files|*.PNG|All files (*.*)|*.*";
+						sfd.DefaultExt = GlobalsXC.PngExt;
+					}
+					else
+					{
+						sfd.Title      = "Save GIF Screenshot";
+						sfd.Filter     = "GIF files|*.GIF|All files (*.*)|*.*";
+						sfd.DefaultExt = GlobalsXC.GifExt;
+					}
 
 					string digits = String.Empty;
 					int levs = @base.MapSize.Levs;
@@ -1428,7 +1437,10 @@ namespace MapView
 				pal.Entries[Palette.TranId] = Optionables.BackgroundColor;
 				b.Palette = pal;
 
-				b.Save(fullpath, ImageFormat.Png);
+				if (Optionables.PngOutput)
+					b.Save(fullpath, ImageFormat.Png);
+				else
+					b.Save(fullpath, ImageFormat.Gif);
 
 				b.Dispose();
 			}

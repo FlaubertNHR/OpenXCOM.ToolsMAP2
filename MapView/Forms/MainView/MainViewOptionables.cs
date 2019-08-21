@@ -529,6 +529,21 @@ namespace MapView.Forms.MainView
 			get { return _cropbackground; }
 			set { _cropbackground = value; }
 		}
+
+
+		private const string str_PngOutput = "PngOutput";
+		private const bool   def_PngOutput = true;
+
+		private bool _pngoutput = def_PngOutput;
+		[Category(cat_Screenshot)]
+		[Description("If true screenshots will be saved to PNG format - if false"
+			+ " they will be saved to GIF format")]
+		[DefaultValue(def_PngOutput)]
+		public bool PngOutput
+		{
+			get { return _pngoutput; }
+			set { _pngoutput = value; }
+		}
 		#endregion Properties (optionable)
 
 
@@ -586,6 +601,7 @@ namespace MapView.Forms.MainView
 
 			options.AddOptionDefault(str_BackgroundColor,        def_BackgroundColor,        changer1);
 			options.AddOptionDefault(str_CropBackground,         def_CropBackground,         changer1);
+			options.AddOptionDefault(str_PngOutput,              def_PngOutput,              changer1);
 		}
 		#endregion Methods
 
@@ -715,6 +731,10 @@ namespace MapView.Forms.MainView
 
 				case str_CropBackground:
 					CropBackground = (bool)val;
+					break;
+
+				case str_PngOutput:
+					PngOutput = (bool)val;
 					break;
 			}
 		}
