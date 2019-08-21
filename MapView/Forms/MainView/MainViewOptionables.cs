@@ -55,7 +55,7 @@ namespace MapView.Forms.MainView
 
 		// NOTE: Observers are added to MainView's Options by
 		// MenuManager.PopulateMenus(). They are used by
-		// MenuManager.StartSecondaryStage().
+		// MenuManager.StartSecondaryStageBoosters().
 		private const string cat_Observers = "Observers";
 
 		private  const string str_StartTileView = "StartTileView";
@@ -321,7 +321,7 @@ namespace MapView.Forms.MainView
 		private bool _graySelection = def_GraySelection;
 		[Category(cat_Sprites)]
 		[Description(@"If true the selection area will be drawn in grayscale
-(only if UseMonoDraw is false)")]
+(only if UseMono is false)")]
 		[DefaultValue(def_GraySelection)]
 		public bool GraySelection
 		{
@@ -345,9 +345,8 @@ namespace MapView.Forms.MainView
 
 		private int _spriteShade = def_SpriteShade;
 		[Category(cat_Sprites)]
-		[Description("The darkness of the tile sprites (0..100 default 0 off, unity is 33)"
-			+ @" Values outside the range turn sprite shading off
-(only if UseMonoDraw is false)")]
+		[Description(@"The darkness of the tile sprites (0..100 default 0 off, 33 is unity)
+(only if UseMono is false)")]
 		[DefaultValue(def_SpriteShade)]
 		public int SpriteShade
 		{
@@ -403,7 +402,7 @@ namespace MapView.Forms.MainView
 5 - nearest neighbor (fastest)
 6 - high quality bilinear (smoothest)
 7 - high quality bicubic (best in a pig's eye)
-(only if UseMonoDraw is false)")]
+(only if UseMono is false)")]
 		[DefaultValue(def_Interpolation)]
 		public int Interpolation
 		{
@@ -484,7 +483,7 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_UseMonoDraw = "UseMonoDraw";
+		private const string str_UseMonoDraw = "UseMono";
 		private const bool   def_UseMonoDraw = false;
 
 		private bool _usemonodraw = def_UseMonoDraw;

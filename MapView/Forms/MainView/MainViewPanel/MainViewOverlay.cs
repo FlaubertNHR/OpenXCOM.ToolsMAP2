@@ -1521,7 +1521,7 @@ namespace MapView.Forms.MainView
 #endif
 
 		/// <summary>
-		/// Draws the tileparts in the Tile if 'UseMono' or LOCKBITS.
+		/// Draws the tileparts in the Tile if 'UseMonoDraw' or LOCKBITS.
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="x"></param>
@@ -1574,7 +1574,7 @@ namespace MapView.Forms.MainView
 
 #if !LOCKBITS
 		/// <summary>
-		/// Draws the tileparts in the Tile if not 'UseMono'.
+		/// Draws the tileparts in the Tile if not 'UseMonoDraw'.
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="x"></param>

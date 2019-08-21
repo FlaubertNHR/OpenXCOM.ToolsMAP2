@@ -513,21 +513,20 @@ namespace MapView
 					break;
 
 				case 1:
-					SelectGroupNode(
-								Program.Args[TREELEVEL_GROUP]);
+					SelectGroupNode(Program.Args[TREELEVEL_GROUP]);
 					break;
 
 				case 2:
 					SelectCategoryNode(
-								Program.Args[TREELEVEL_CATEGORY],
-								Program.Args[TREELEVEL_GROUP]);
+									Program.Args[TREELEVEL_CATEGORY],
+									Program.Args[TREELEVEL_GROUP]);
 					break;
 
 				case 3:
 					SelectTilesetNode(
-								Program.Args[TREELEVEL_TILESET],
-								Program.Args[TREELEVEL_CATEGORY],
-								Program.Args[TREELEVEL_GROUP]);
+									Program.Args[TREELEVEL_TILESET],
+									Program.Args[TREELEVEL_CATEGORY],
+									Program.Args[TREELEVEL_GROUP]);
 					break;
 			}
 
@@ -2561,6 +2560,7 @@ namespace MapView
 		/// Selects a treenode in the Maps tree given a group-label.
 		/// </summary>
 		/// <param name="labelGroup"></param>
+		/// <returns>true if node is found</returns>
 		private void SelectGroupNode(string labelGroup)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -2569,7 +2569,7 @@ namespace MapView
 				{
 					MapTree.SelectedNode = nodeGroup;
 					nodeGroup.Expand();
-					break;
+					return;
 				}
 			}
 		}
@@ -2579,13 +2579,11 @@ namespace MapView
 		/// </summary>
 		/// <param name="labelCategory"></param>
 		/// <param name="labelGroup"></param>
+		/// <returns>true if node is found</returns>
 		private void SelectCategoryNode(string labelCategory, string labelGroup)
 		{
-			bool found = false;
-
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
-				if (found) break;
 				if (nodeGroup.Text == labelGroup)
 				{
 					var groupCollection = nodeGroup.Nodes;
@@ -2593,11 +2591,9 @@ namespace MapView
 					{
 						if (nodeCategory.Text == labelCategory)
 						{
-							found = true;
-
 							MapTree.SelectedNode = nodeCategory;
 							nodeCategory.Expand();
-							break;
+							return;
 						}
 					}
 				}
@@ -2611,18 +2607,16 @@ namespace MapView
 		/// <param name="labelTileset"></param>
 		/// <param name="labelCategory"></param>
 		/// <param name="labelGroup"></param>
+		/// <returns>true if node is found</returns>
 		private void SelectTilesetNode(string labelTileset, string labelCategory, string labelGroup)
 		{
-			bool found = false;
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
-				if (found) break;
 				if (nodeGroup.Text == labelGroup)
 				{
 					var groupCollection = nodeGroup.Nodes;
 					foreach (TreeNode nodeCategory in groupCollection)
 					{
-						if (found) break;
 						if (nodeCategory.Text == labelCategory)
 						{
 							var categoryCollection = nodeCategory.Nodes;
@@ -2630,10 +2624,9 @@ namespace MapView
 							{
 								if (nodeTileset.Text == labelTileset)
 								{
-									found = true;
 									_loadReady = LOADREADY_STAGE_2;
 									MapTree.SelectedNode = nodeTileset;
-									break;
+									return;
 								}
 							}
 						}

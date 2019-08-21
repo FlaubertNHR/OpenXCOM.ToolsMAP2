@@ -118,17 +118,17 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Replaces an original file with a temporary file after making a
-		/// backup of the original. If the original does not exist then the
-		/// temporary file will be renamed without a backup.
-		/// IMPORTANT: The replacement file must have the name and extension of
-		/// the file to be replaced plus the 'GlobalsXC.TEMPExt' extension. In
-		/// other words, the standard save-procedure is to write to its
-		/// file_ext_[t.ext] then call ReplaceFile() by passing in the original
-		/// file_ext.
+		/// Replaces a file with another file (that has a ".t" extension) after
+		/// making a backup of the destination file. If the destination file
+		/// does not exist, a copy-delete operation is performed instead of a
+		/// backup.
+		/// IMPORTANT: The source file must have the name and extension of the
+		/// destination file plus the 'GlobalsXC.TEMPExt' extension. In other
+		/// words, the standard save-procedure is to write to file_ext_[t.ext]
+		/// then call ReplaceFile() by passing in the original file_ext.
 		/// @note The backup will be in the 'GlobalsXC.MV_Backup' subdirectory.
 		/// </summary>
-		/// <param name="pfe">path-file-extension of the file to be replaced</param>
+		/// <param name="pfe">path-file-extension of the destination file</param>
 		/// <returns>true if everything goes according to plan</returns>
 		public static bool ReplaceFile(string pfe)
 		{
