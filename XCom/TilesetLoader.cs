@@ -37,62 +37,49 @@ namespace XCom
 		/// cTor. Reads MapTilesets.yml and imports all its data to a Tileset-
 		/// object.
 		/// </summary>
-		/// <param name="fullpath">path+file+extension of MapTilesets.yml</param>
+		/// <param name="fullpath">path-file-extension of settings/MapTilesets.yml</param>
 		public TilesetLoader(string fullpath)
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("TilesetLoader cTor");
 
 			var typeCount = 0;
-			using (var fs = FileService.OpenFile(fullpath)) // TODO: optimize the filestream reading from here to below.
-			if (fs != null)
-			{
-				using (var sr = new StreamReader(fs))
-				{
-					string line;
-					while ((line = sr.ReadLine()) != null)
-					{
-						if (line.Contains("- type"))
-							++typeCount;
-					}
-				}
-			}
-			else
-				return;
-
-			var progress = ProgressBarForm.that;
-			progress.SetInfo("Parsing YAML ...");
-			progress.SetTotal(typeCount);
-
-
-//mappings  will be deserialized as Dictionary<object,object>
-//sequences will be deserialized as List<object>
-//scalars   will be deserialized as string
-
-//			bool warned = false;
-
-//			bool isUfoConfigured  = !String.IsNullOrEmpty(SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryUfo));
-//			bool isTftdConfigured = !String.IsNullOrEmpty(SharedSpace.that.GetShare(SharedSpace.ResourceDirectoryTftd));
-
-			string nodeGroup, nodeCategory, nodeLabel, terr, path, nodeBasepath;
-
-			YamlSequenceNode nodeTerrains;
-			YamlScalarNode   nodetry1;
-			YamlMappingNode  nodetry2;
-
-			Dictionary<int, Tuple<string,string>> terrains;
-
-
 			using (var fs = FileService.OpenFile(fullpath))
 			if (fs != null)
 			using (var sr = new StreamReader(fs))
 			{
+				string line;
+				while ((line = sr.ReadLine()) != null)
+				{
+					if (line.StartsWith("  - type:", StringComparison.Ordinal))
+						++typeCount;
+				}
+				fs.Position = 0;
+				sr.DiscardBufferedData();
+
 				var str = new YamlStream();
 				str.Load(sr);
 
 				var docs = str.Documents;
 				if (docs != null && docs.Count != 0)
 				{
+					var progress = ProgressBarForm.that;
+					progress.SetInfo("Parsing YAML ...");
+					progress.SetTotal(typeCount);
+
+
+					// mappings  - will be deserialized as Dictionary<object,object>
+					// sequences - will be deserialized as List<object>
+					// scalars   - will be deserialized as string
+
+					string nodeGroup, nodeCategory, nodeLabel, terr, path, nodeBasepath;
+
+					YamlSequenceNode nodeTerrains;
+					YamlScalarNode   nodetry1;
+					YamlMappingNode  nodetry2;
+
+					Dictionary<int, Tuple<string,string>> terrains;
+
 					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
 //					foreach (var node in nodeRoot.Children) // parses YAML document divisions, ie "---"
 //					{
@@ -112,9 +99,6 @@ namespace XCom
 						nodeGroup = nodeTileset.Children[new YamlScalarNode(GlobalsXC.GROUP)].ToString();
 						//LogFile.WriteLine(". . group= " + nodeGroup); // eg. "ufoShips"
 
-//						if (   (isUfoConfigured  && nodeGroup.StartsWith("ufo",  StringComparison.OrdinalIgnoreCase))
-//							|| (isTftdConfigured && nodeGroup.StartsWith("tftd", StringComparison.OrdinalIgnoreCase)))
-//						{
 						if (!Groups.Contains(nodeGroup))
 							Groups.Add(nodeGroup);
 
@@ -189,34 +173,11 @@ namespace XCom
 						Tilesets.Add(tileset);
 
 						progress.UpdateProgress();
-//						}
-/*						else if (!warned)
-						{
-							warned = true;
-							MessageBox.Show(
-										"This warning can be ignored safely on your firstrun of MapView2"
-											+ " or if you are purposely regenerating the tileset configuration"
-											+ " file MapTilesets.yml."
-											+ Environment.NewLine + Environment.NewLine
-											+ "A group was found for which the Resource paths (UFO or TFTD) have not been"
-											+ " configured. SAVING THE MAPTREE WILL REMOVE SUCH GROUPS FROM MapTilesets.yml"
-											+ " - Proceed with caution. Perhaps backup your current MapTilesets.yml in the"
-											+ " /settings subfolder."
-											+ Environment.NewLine + Environment.NewLine
-											+ "The default MapTilesets.yml (tileset configs) defines both UFO and"
-											+ " TFTD tilesets and can be regenerated with the Configurator."
-											+ " But if you have any custom tilesets defined it's strongly advised"
-											+ " to close MapView and backup that file.",
-										" Warning",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Warning,
-										MessageBoxDefaultButton.Button1,
-										0);
-						} */
 					}
+//					}
+					progress.Hide();
 				}
 			}
-			progress.Hide();
 		}
 		#endregion cTor
 	}

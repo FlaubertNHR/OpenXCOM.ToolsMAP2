@@ -16,7 +16,8 @@ namespace XCom
 
 
 	/// <summary>
-	/// The class for a TileGroup.
+	/// The class for a TileGroup contains its Categories and through those
+	/// Categories all of its tilesets/Descriptors.
 	/// </summary>
 	public class TileGroup
 	{
@@ -61,7 +62,7 @@ namespace XCom
 			else //if (labelGroup.StartsWith("ufo", StringComparison.OrdinalIgnoreCase))
 			{
 				GroupType = GameType.Ufo;	// NOTE: if the prefix "tftd" is not found at the beginning of
-			}	Pal = Palette.UfoBattle;	// the group-label then default to UFO basepath and palette.
+			}	Pal = Palette.UfoBattle;	// the group-label then default to UFO grouptype and palette.
 		}
 		#endregion cTor
 
