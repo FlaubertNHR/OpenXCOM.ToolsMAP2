@@ -56,7 +56,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// @note This is used only by MapFileBase.Screenshot().
+		/// @note This is used only by MainViewF.Screenshot().
 		/// </summary>
 		public Tilepart[] UsedParts
 		{

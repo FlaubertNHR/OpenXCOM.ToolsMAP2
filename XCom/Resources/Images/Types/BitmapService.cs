@@ -64,6 +64,7 @@ namespace XCom
 
 				uint stride = (uint)Math.Abs(locked.Stride);
 
+
 				int i = -1;
 				for (uint row = 0; row != height; ++row)
 				for (uint col = 0; col != width;  ++col)
@@ -113,7 +114,6 @@ namespace XCom
 			int rows = (b.Height + pad) / (height + pad);
 
 			int id = -1;
-
 			for (int i = 0; i != cols * rows; ++i)
 			{
 				int x = (i % cols) * (width  + pad);
@@ -204,37 +204,27 @@ namespace XCom
 								new Rectangle(0,0, width, height),
 								ImageLockMode.WriteOnly,
 								PixelFormat.Format8bppIndexed);
-
-			// Write to the temporary buffer that is provided by LockBits().
-			// Copy the pixels from the source image in this loop.
-			// Because you want an index, convert RGB to the appropriate
-			// palette index here.
 			var start = locked.Scan0;
 
 			unsafe
 			{
 				byte* pos;
 				if (locked.Stride > 0)
-				{
 					pos = (byte*)start.ToPointer();
-				}
 				else
-				{
-					// If the stride is negative, Scan0 points to the last
-					// scanline in the buffer. To normalize the loop, obtain
-					// a pointer to the front of the buffer that is located
-					// (Height-1) scanlines previous.
-					pos = (byte*)start.ToPointer() + locked.Stride * ((height > 0) ? height - 1 : 0); // satiate FxCop CA2233.
-				}
+					pos = (byte*)start.ToPointer() + locked.Stride * (height - 1);
+
+				// if the stride is negative Scan0 points to the last scanline
+				// in the buffer; to normalize the loop obtain a pointer to the
+				// front of the buffer that is located Height-1 scanlines previous.
+
 				uint stride = (uint)Math.Abs(locked.Stride);
+
 
 				int i = 0;
 				for (uint row = 0; row != height; ++row)
 				for (uint col = 0; col != width && i != bindata.Length; ++col, ++i)
 				{
-					// The destination pixel.
-					// The pointer to the color index byte of the destination;
-					// this real pointer causes this code to be considered unsafe.
 					byte* pixel = pos + row * stride + col;
 					*pixel = bindata[i];
 				}
@@ -242,13 +232,12 @@ namespace XCom
 			b.UnlockBits(locked);
 
 			b.Palette = pal;
-
 			return b;
 		}
 
 
 		/// <summary>
-		/// Used by ExportSpritesheet() and MapFileBase.Screenshot()
+		/// @note Called by ExportSpritesheet() and MainViewF.Screenshot().
 		/// </summary>
 		/// <param name="width">width of final Bitmap</param>
 		/// <param name="height">height of final Bitmap</param>
@@ -267,36 +256,22 @@ namespace XCom
 								new Rectangle(0,0, width, height),
 								ImageLockMode.WriteOnly,
 								PixelFormat.Format8bppIndexed);
-
-			// Write to the temporary buffer that is provided by LockBits().
-			// Copy the pixels from the source image in this loop.
-			// Because you want an index, convert RGB to the appropriate
-			// palette index here.
 			var start = locked.Scan0;
 
 			unsafe
 			{
 				byte* pos;
 				if (locked.Stride > 0)
-				{
 					pos = (byte*)start.ToPointer();
-				}
 				else
-				{
-					// If the stride is negative, Scan0 points to the last
-					// scanline in the buffer. To normalize the loop, obtain
-					// a pointer to the front of the buffer that is located
-					// (Height-1) scanlines previous.
-					pos = (byte*)start.ToPointer() + locked.Stride * ((height > 0) ? height - 1 : 0); // satiate FxCop CA2233.
-				}
+					pos = (byte*)start.ToPointer() + locked.Stride * (height - 1);
+
 				uint stride = (uint)Math.Abs(locked.Stride);
+
 
 				for (uint row = 0; row != height; ++row)
 				for (uint col = 0; col != width;  ++col)
 				{
-					// The destination pixel.
-					// The pointer to the color index byte of the destination;
-					// this real pointer causes this code to be considered unsafe.
 					byte* pixel = pos + row * stride + col;
 					*pixel = Palette.TranId;
 				}
@@ -304,12 +279,11 @@ namespace XCom
 			b.UnlockBits(locked);
 
 			b.Palette = pal;
-
 			return b;
 		}
 
 		/// <summary>
-		/// Used by ExportSpritesheet() and MapFileBase.Screenshot()
+		/// @note Called by ExportSpritesheet() and MainViewF.Screenshot().
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="dst"></param>
@@ -325,13 +299,12 @@ namespace XCom
 									new Rectangle(0,0, src.Width, src.Height),
 									ImageLockMode.ReadOnly,
 									PixelFormat.Format8bppIndexed);
+			var srcStart = srcLocked.Scan0;
 
 			var dstLocked = dst.LockBits(
 									new Rectangle(0,0, dst.Width, dst.Height),
 									ImageLockMode.WriteOnly,
 									PixelFormat.Format8bppIndexed);
-
-			var srcStart = srcLocked.Scan0;
 			var dstStart = dstLocked.Scan0;
 
 			unsafe
@@ -352,13 +325,14 @@ namespace XCom
 
 				uint dstStride = (uint)Math.Abs(dstLocked.Stride);
 
-				for (uint row = 0; row != src.Height; ++row)
-				for (uint col = 0; col != src.Width;  ++col)
+
+				for (uint row = 0; row != src.Height && row + y < dst.Height; ++row)
+				for (uint col = 0; col != src.Width  && col + x < dst.Width;  ++col)
 				{
 					byte* srcPixel = srcPos +  row      * srcStride +  col;
 					byte* dstPixel = dstPos + (row + y) * dstStride + (col + x);
 
-					if (*srcPixel != Palette.TranId && row + y < dst.Height)
+					if (*srcPixel != Palette.TranId)
 						*dstPixel = *srcPixel;
 				}
 			}
@@ -368,7 +342,7 @@ namespace XCom
 
 		/// <summary>
 		/// Chews off any transparent edges.
-		/// @note Called by MapFileBase.Screenshot().
+		/// @note Called by MainViewF.Screenshot().
 		/// </summary>
 		/// <param name="b"></param>
 		/// <returns></returns>
@@ -378,10 +352,9 @@ namespace XCom
 								new Rectangle(0,0, b.Width, b.Height),
 								ImageLockMode.ReadOnly,
 								PixelFormat.Format8bppIndexed);
-
 			var start = locked.Scan0;
 
-			int rowMin, rowMax, colMin, colMax;
+			int r,c, rMin, rMax, cMin, cMax;
 			unsafe
 			{
 				byte* pos;
@@ -392,108 +365,115 @@ namespace XCom
 				
 				uint stride = (uint)Math.Abs(locked.Stride);
 
-				for (rowMin = 0; rowMin != b.Height; ++rowMin)
-				for (int col = 0; col != b.Width; ++col)
+
+				for (rMin = 0; rMin != b.Height; ++rMin)
+				for (   c = 0;    c != b.Width;  ++c)
 				{
-					byte id = *(pos + rowMin * stride + col);
-					if (id != Palette.TranId)
-						goto outLoop1;
+					if (*(pos + rMin * stride + c) != Palette.TranId)
+						goto outLoop1; // got 'rMin'
 				}
 
 			outLoop1:
-				for (colMin = 0; colMin != b.Width; ++colMin)
-				for (int row = rowMin; row < b.Height; ++row)
+				for (cMin = 0; cMin != b.Width;  ++cMin)
+				for (   r = rMin; r != b.Height; ++r)
 				{
-					byte id = *(pos + row * stride + colMin);
-					if (id != Palette.TranId)
-						goto outLoop2;
+					if (*(pos + r * stride + cMin) != Palette.TranId)
+						goto outLoop2; // got 'cMin'
 				}
 
 			outLoop2:
-				for (rowMax = b.Height - 1; rowMax > rowMin; --rowMax)
-				for (int col = colMin; col < b.Width; ++col)
+				for (rMax = b.Height - 1; rMax != rMin; --rMax)
+				for (   c = b.Width  - 1;    c != cMin; --c)
 				{
-					byte id = *(pos + rowMax * stride + col);
-					if (id != Palette.TranId)
-						goto outLoop3;
+					if (*(pos + rMax * stride + c) != Palette.TranId)
+						goto outLoop3; // got 'rMax'
 				}
 
 			outLoop3:
-				for (colMax = b.Width - 1; colMax > colMin; --colMax)
-				for (int row = rowMin; row < rowMax; ++row)
+				for (cMax = b.Width - 1; cMax != cMin; --cMax)
+				for (   r = rMax;           r != rMin; --r)
 				{
-					byte id = *(pos + row * stride + colMax);
-					if (id != Palette.TranId)
-						goto outLoop4;
+					if (*(pos + r * stride + cMax) != Palette.TranId)
+						goto outLoop4; // got 'cMax'
 				}
 			}
 			outLoop4:
 			b.UnlockBits(locked);
 
+
+			// NOTE: Setting a border can cause CropToRectangle() to return a
+			// source-image uncropped if and when the cropped-image becomes
+			// larger than the source (in either of the x- or y-axes).
+			const int border = 0;
+
 			return new Rectangle(
-//							colMin - 1, rowMin - 1,
-							colMin, rowMin,
-							colMax - colMin + 3, rowMax - rowMin + 3);
+							cMin - border, rMin - border,
+							cMax - cMin + 1 + border * 2, rMax - rMin + 1 + border * 2);
 		}
 
 		/// <summary>
-		/// Used by MapFileBase.Screenshot()
+		/// Crops a bitmap to a specified rectangle. The rectangular area must
+		/// fit inside the source's area; if not the source image is returned
+		/// unchanged.
+		/// @note Called by MainViewF.Screenshot().
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="rect"></param>
-		/// <returns></returns>
+		/// <returns>a cropped bitmap or the source image itself</returns>
 		public static Bitmap CropToRectangle(Bitmap src, Rectangle rect)
 		{
-			var dst = CreateTransparent(rect.Width, rect.Height, src.Palette);
-
-			var dstLocked = dst.LockBits(
-									new Rectangle(0,0, dst.Width, dst.Height),
-									ImageLockMode.WriteOnly,
-									PixelFormat.Format8bppIndexed);
-
-			var srcLocked = src.LockBits(
-									new Rectangle(0,0, src.Width, src.Height),
-									ImageLockMode.ReadOnly,
-									PixelFormat.Format8bppIndexed);
-
-			var srcStart = srcLocked.Scan0;
-			var dstStart = dstLocked.Scan0;
-
-			unsafe
+			if (   rect.X + rect.Width  <= src.Width
+				&& rect.Y + rect.Height <= src.Height)
 			{
-				byte* srcPos;
-				if (srcLocked.Stride > 0)
-					srcPos = (byte*)srcStart.ToPointer();
-				else
-					srcPos = (byte*)srcStart.ToPointer() + srcLocked.Stride * (src.Height - 1);
+				var dst = CreateTransparent(rect.Width, rect.Height, src.Palette);
 
-				uint srcStride = (uint)Math.Abs(srcLocked.Stride);
+				var srcLocked = src.LockBits(
+										new Rectangle(0,0, src.Width, src.Height),
+										ImageLockMode.ReadOnly,
+										PixelFormat.Format8bppIndexed);
+				var srcStart = srcLocked.Scan0;
 
-				byte* dstPos;
-				if (dstLocked.Stride > 0)
-					dstPos = (byte*)dstStart.ToPointer();
-				else
-					dstPos = (byte*)dstStart.ToPointer() + dstLocked.Stride * (dst.Height - 1);
+				var dstLocked = dst.LockBits(
+										new Rectangle(0,0, dst.Width, dst.Height),
+										ImageLockMode.WriteOnly,
+										PixelFormat.Format8bppIndexed);
+				var dstStart = dstLocked.Scan0;
 
-				uint dstStride = (uint)Math.Abs(dstLocked.Stride);
-
-
-				for (uint row = 0; row + rect.Y < src.Height && row != dst.Height; ++row)
-				for (uint col = 0; col + rect.X < src.Width  && col != dst.Width;  ++col)
+				unsafe
 				{
-					byte* srcPixel = srcPos + (row + rect.Y) * srcStride + (col + rect.X);
-					byte* dstPixel = dstPos +  row           * dstStride +  col;
+					byte* srcPos;
+					if (srcLocked.Stride > 0)
+						srcPos = (byte*)srcStart.ToPointer();
+					else
+						srcPos = (byte*)srcStart.ToPointer() + srcLocked.Stride * (src.Height - 1);
 
-					if (*srcPixel != Palette.TranId)
-						*dstPixel = *srcPixel;
-//					else
-//						*dstPixel = 200; // test
+					uint srcStride = (uint)Math.Abs(srcLocked.Stride);
+
+					byte* dstPos;
+					if (dstLocked.Stride > 0)
+						dstPos = (byte*)dstStart.ToPointer();
+					else
+						dstPos = (byte*)dstStart.ToPointer() + dstLocked.Stride * (dst.Height - 1);
+
+					uint dstStride = (uint)Math.Abs(dstLocked.Stride);
+
+
+					for (uint row = 0; row != dst.Height; ++row) // row + rect.Y < src.Height &&
+					for (uint col = 0; col != dst.Width;  ++col) // col + rect.X < src.Width  &&
+					{
+						byte* srcPixel = srcPos + (row + rect.Y) * srcStride + (col + rect.X);
+						byte* dstPixel = dstPos +  row           * dstStride +  col;
+
+						if (*srcPixel != Palette.TranId)
+							*dstPixel = *srcPixel;
+					}
 				}
-			}
-			src.UnlockBits(srcLocked);
-			dst.UnlockBits(dstLocked);
+				src.UnlockBits(srcLocked);
+				dst.UnlockBits(dstLocked);
 
-			return dst;
+				return dst;
+			}
+			return src;
 		}
 	}
 }
