@@ -1316,7 +1316,7 @@ namespace MapView
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					if (Optionables.PngOutput)
+					if (Optionables.Png_notGif)
 					{
 						sfd.Title      = "Save PNG Screenshot";
 						sfd.Filter     = "PNG files|*.PNG|All files (*.*)|*.*";
@@ -1377,72 +1377,78 @@ namespace MapView
 			int level = @base.Level;
 
 			var width = size.Rows + size.Cols;
-			var b = BitmapService.CreateTransparent(
+			using (var b = BitmapService.CreateTransparent(
 												width * ConstHalfWidth,
 												width * ConstHalfHeight + (size.Levs - level) * LAYERS,
-												@base.Descriptor.Pal.ColorTable);
-
-			if (b != null)
+												@base.Descriptor.Pal.ColorTable))
 			{
-				var start = new Point(
-									(size.Rows - 1) * ConstHalfWidth,
-								   -(level * LAYERS));
-
-				int i = 0;
-				if (@base.Tiles != null)
+				if (b != null)
 				{
-					for (int lev = size.Levs - 1; lev >= level; --lev)
+					var start = new Point(
+										(size.Rows - 1) * ConstHalfWidth,
+									   -(level * LAYERS));
+
+					int i = 0;
+					if (@base.Tiles != null)
 					{
-						for (int
-								row = 0,
-									startX = start.X,
-									startY = start.Y + lev * LAYERS;
-								row != size.Rows;
-								++row,
-									startX -= ConstHalfWidth,
-									startY += ConstHalfHeight)
+						for (int lev = size.Levs - 1; lev >= level; --lev)
 						{
 							for (int
-									col = 0,
-										x = startX,
-										y = startY;
-									col != size.Cols;
-									++col,
-										x += ConstHalfWidth,
-										y += ConstHalfHeight,
-										++i)
+									row = 0,
+										startX = start.X,
+										startY = start.Y + lev * LAYERS;
+									row != size.Rows;
+									++row,
+										startX -= ConstHalfWidth,
+										startY += ConstHalfHeight)
 							{
-								var parts = @base[row, col, lev].UsedParts;
-								foreach (var part in parts)
+								for (int
+										col = 0,
+											x = startX,
+											y = startY;
+										col != size.Cols;
+										++col,
+											x += ConstHalfWidth,
+											y += ConstHalfHeight,
+											++i)
 								{
-									BitmapService.Insert(
-													part[0].Sprite,
-													b,
-													x,
-													y - part.Record.TileOffset);
+									var parts = @base[row, col, lev].UsedParts;
+									foreach (var part in parts)
+									{
+										BitmapService.Insert(
+														part[0].Sprite,
+														b,
+														x,
+														y - part.Record.TileOffset);
+									}
 								}
 							}
 						}
 					}
+
+
+					Bitmap bout;
+					if (Optionables.CropBackground)
+					{
+						Rectangle rect = BitmapService.GetNontransparentRectangle(b);
+						bout           = BitmapService.CropToRectangle(b, rect);
+					}
+					else
+						bout = b;
+
+					using (bout) // -> workaround the inability to re-assign a using-variable inside a using-statement.
+					{
+						ColorPalette pal = bout.Palette;
+						pal.Entries[Palette.TranId] = Optionables.BackgroundColor;
+						bout.Palette = pal;
+
+						ImageFormat format;
+						if (Optionables.Png_notGif) format = ImageFormat.Png;
+						else                        format = ImageFormat.Gif;
+
+						bout.Save(fullpath, format);
+					}
 				}
-
-
-				if (Optionables.CropBackground)
-				{
-					var rect = BitmapService.GetNontransparentRectangle(b);
-					b = BitmapService.CropToRectangle(b, rect);
-				}
-
-				ColorPalette pal = b.Palette;
-				pal.Entries[Palette.TranId] = Optionables.BackgroundColor;
-				b.Palette = pal;
-
-				if (Optionables.PngOutput)
-					b.Save(fullpath, ImageFormat.Png);
-				else
-					b.Save(fullpath, ImageFormat.Gif);
-
-				b.Dispose();
 			}
 		}
 

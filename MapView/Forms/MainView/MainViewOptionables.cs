@@ -531,18 +531,18 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_PngOutput = "PngOutput";
-		private const bool   def_PngOutput = true;
+		private const string str_Png_notGif = "Png_notGif";
+		private const bool   def_Png_notGif = true;
 
-		private bool _pngoutput = def_PngOutput;
+		private bool _png_notGif = def_Png_notGif;
 		[Category(cat_Screenshot)]
-		[Description("If true screenshots will be saved to PNG format - if false"
+		[Description("If true screenshots will be saved to PNG format, if false"
 			+ " they will be saved to GIF format")]
-		[DefaultValue(def_PngOutput)]
-		public bool PngOutput
+		[DefaultValue(def_Png_notGif)]
+		public bool Png_notGif
 		{
-			get { return _pngoutput; }
-			set { _pngoutput = value; }
+			get { return _png_notGif; }
+			set { _png_notGif = value; }
 		}
 		#endregion Properties (optionable)
 
@@ -601,7 +601,7 @@ namespace MapView.Forms.MainView
 
 			options.AddOptionDefault(str_BackgroundColor,        def_BackgroundColor,        changer1);
 			options.AddOptionDefault(str_CropBackground,         def_CropBackground,         changer1);
-			options.AddOptionDefault(str_PngOutput,              def_PngOutput,              changer1);
+			options.AddOptionDefault(str_Png_notGif,             def_Png_notGif,             changer1);
 		}
 		#endregion Methods
 
@@ -733,8 +733,8 @@ namespace MapView.Forms.MainView
 					CropBackground = (bool)val;
 					break;
 
-				case str_PngOutput:
-					PngOutput = (bool)val;
+				case str_Png_notGif:
+					Png_notGif = (bool)val;
 					break;
 			}
 		}
