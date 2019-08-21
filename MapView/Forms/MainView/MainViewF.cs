@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -1345,11 +1346,94 @@ namespace MapView
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
 						_lastScreenshotDirectory = Path.GetDirectoryName(sfd.FileName);
-						@base.Screenshot(sfd.FileName);
+						Screenshot(sfd.FileName);
 					}
 				}
 			}
 		}
+
+		/// <summary>
+		/// Takes a screenshot of the currently loaded Map.
+		/// </summary>
+		/// <param name="fullpath"></param>
+		public void Screenshot(string fullpath)
+		{
+			const int ConstHalfWidth  = 16;
+			const int ConstHalfHeight =  8;
+			const int LAYERS          = 24;
+
+
+			MapFileBase @base = MainViewUnderlay.MapBase;
+			MapSize size = @base.MapSize;
+			int level = @base.Level;
+
+			var width = size.Rows + size.Cols;
+			var b = BitmapService.CreateTransparent(
+												width * ConstHalfWidth,
+												width * ConstHalfHeight + (size.Levs - level) * LAYERS,
+												@base.Descriptor.Pal.ColorTable);
+
+			if (b != null)
+			{
+				var start = new Point(
+									(size.Rows - 1) * ConstHalfWidth,
+								   -(level * LAYERS));
+
+				int i = 0;
+				if (@base.Tiles != null)
+				{
+					for (int lev = size.Levs - 1; lev >= level; --lev)
+					{
+						for (int
+								row = 0,
+									startX = start.X,
+									startY = start.Y + lev * LAYERS;
+								row != size.Rows;
+								++row,
+									startX -= ConstHalfWidth,
+									startY += ConstHalfHeight)
+						{
+							for (int
+									col = 0,
+										x = startX,
+										y = startY;
+									col != size.Cols;
+									++col,
+										x += ConstHalfWidth,
+										y += ConstHalfHeight,
+										++i)
+							{
+								var parts = @base[row, col, lev].UsedParts;
+								foreach (var part in parts)
+								{
+									BitmapService.Insert(
+													part[0].Sprite,
+													b,
+													x,
+													y - part.Record.TileOffset);
+								}
+							}
+						}
+					}
+				}
+
+
+				if (Optionables.CropBackground)
+				{
+					var rect = BitmapService.GetNontransparentRectangle(b);
+					b = BitmapService.CropToRectangle(b, rect);
+				}
+
+				ColorPalette pal = b.Palette;
+				pal.Entries[Palette.TranId] = Optionables.BackgroundColor;
+				b.Palette = pal;
+
+				b.Save(fullpath, ImageFormat.Png);
+
+				b.Dispose();
+			}
+		}
+
 
 		/// <summary>
 		/// Closes Everything.

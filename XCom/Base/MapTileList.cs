@@ -1,6 +1,6 @@
 ﻿namespace XCom.Base
 {
-	internal sealed class MapTileList
+	public sealed class MapTileList
 	{
 		#region Fields
 		private readonly MapTile[] _tiles;

@@ -1022,7 +1022,7 @@ namespace MapView.Forms.MainView
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 #if !LOCKBITS
-				if (!MainViewF.Optionables.UseMonoDraw)
+				if (!MainViewF.Optionables.UseMono)
 				{
 					_graphics.InterpolationMode = MainViewF.Optionables.InterpolationE;
 
@@ -1043,7 +1043,7 @@ namespace MapView.Forms.MainView
 				_rows = MapBase.MapSize.Rows;
 
 #if !LOCKBITS
-				if (MainViewF.Optionables.UseMonoDraw)
+				if (MainViewF.Optionables.UseMono)
 				{
 					_d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value.
 					DrawPicasso();
@@ -1069,7 +1069,7 @@ namespace MapView.Forms.MainView
 		/// Draws the panel using the standard algorithm.
 		/// @note This is nearly identical to DrawPicasso; they are separated
 		/// only because they'd cause multiple calls to DrawTile() conditioned
-		/// on the setting of 'UseMonoDraw' inside the lev/row/col loops.
+		/// on the setting of 'UseMono' inside the lev/row/col loops.
 		/// </summary>
 		private void DrawRembrandt()
 		{
@@ -1188,7 +1188,7 @@ namespace MapView.Forms.MainView
 		/// Draws the panel using the Mono algorithm.
 		/// @note This is nearly identical to DrawRembrandt; they are separated
 		/// only because they'd cause multiple calls to DrawTile() conditioned
-		/// on the setting of 'UseMonoDraw' inside the lev/row/col loops.
+		/// on the setting of 'UseMono' inside the lev/row/col loops.
 		/// </summary>
 		private void DrawPicasso()
 		{
@@ -1521,7 +1521,7 @@ namespace MapView.Forms.MainView
 #endif
 
 		/// <summary>
-		/// Draws the tileparts in the Tile if 'UseMonoDraw' or LOCKBITS.
+		/// Draws the tileparts in the Tile if 'UseMono' or LOCKBITS.
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="x"></param>
@@ -1574,7 +1574,7 @@ namespace MapView.Forms.MainView
 
 #if !LOCKBITS
 		/// <summary>
-		/// Draws the tileparts in the Tile if not 'UseMonoDraw'.
+		/// Draws the tileparts in the Tile if not 'UseMono'.
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="x"></param>

@@ -254,7 +254,7 @@ namespace XCom
 		/// <param name="height">height of final Bitmap</param>
 		/// <param name="pal">palette to color the image with</param>
 		/// <returns>pointer to Bitmap</returns>
-		internal static Bitmap CreateTransparent(
+		public static Bitmap CreateTransparent(
 				int width,
 				int height,
 				ColorPalette pal)
@@ -315,7 +315,7 @@ namespace XCom
 		/// <param name="dst"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		internal static void Insert(
+		public static void Insert(
 				Bitmap src,
 				Bitmap dst,
 				int x,
@@ -372,7 +372,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="b"></param>
 		/// <returns></returns>
-		internal static Rectangle GetNontransparentRectangle(Bitmap b)
+		public static Rectangle GetNontransparentRectangle(Bitmap b)
 		{
 			var locked = b.LockBits(
 								new Rectangle(0,0, b.Width, b.Height),
@@ -442,7 +442,7 @@ namespace XCom
 		/// <param name="src"></param>
 		/// <param name="rect"></param>
 		/// <returns></returns>
-		internal static Bitmap CropToRectangle(Bitmap src, Rectangle rect)
+		public static Bitmap CropToRectangle(Bitmap src, Rectangle rect)
 		{
 			var dst = CreateTransparent(rect.Width, rect.Height, src.Palette);
 

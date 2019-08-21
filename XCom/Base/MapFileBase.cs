@@ -51,7 +51,7 @@ namespace XCom.Base
 		public List<Tilepart> Parts
 		{ get; internal protected set; }
 
-		internal MapTileList Tiles
+		public MapTileList Tiles
 		{ get; set; }
 
 
@@ -235,82 +235,6 @@ namespace XCom.Base
 									 && this[row + 2, col + 2, lev - 1].Floor != null;
 					}
 				}
-			}
-		}
-
-		/// <summary>
-		/// Takes a screenshot of the currently loaded Map.
-		/// </summary>
-		/// <param name="fullpath"></param>
-		public void Screenshot(string fullpath)
-		{
-			const int ConstHalfWidth  = 16;
-			const int ConstHalfHeight =  8;
-			const int LAYERS          = 24;
-
-			var width = MapSize.Rows + MapSize.Cols;
-			var b = BitmapService.CreateTransparent(
-												width * ConstHalfWidth,
-												width * ConstHalfHeight + (MapSize.Levs - Level) * LAYERS,
-												Descriptor.Pal.ColorTable);
-
-			if (b != null)
-			{
-				var start = new Point(
-									(MapSize.Rows - 1) * ConstHalfWidth,
-								   -(Level * LAYERS));
-
-				int i = 0;
-				if (Tiles != null)
-				{
-					for (int lev = MapSize.Levs - 1; lev >= Level; --lev)
-					{
-						for (int
-								row = 0,
-									startX = start.X,
-									startY = start.Y + lev * LAYERS;
-								row != MapSize.Rows;
-								++row,
-									startX -= ConstHalfWidth,
-									startY += ConstHalfHeight)
-						{
-							for (int
-									col = 0,
-										x = startX,
-										y = startY;
-									col != MapSize.Cols;
-									++col,
-										x += ConstHalfWidth,
-										y += ConstHalfHeight,
-										++i)
-							{
-								var parts = this[row, col, lev].UsedParts;
-								foreach (var part in parts)
-								{
-									BitmapService.Insert(
-													part[0].Sprite,
-													b,
-													x,
-													y - part.Record.TileOffset);
-								}
-							}
-						}
-					}
-				}
-
-				// TODO: Open custom dialog to choose background color,
-				// transparent or not, crop transparent borders, etc.
-
-//				var rect = BitmapService.GetNontransparentRectangle(b);
-//				b = BitmapService.CropToRectangle(b, rect);
-
-				ColorPalette pal = b.Palette;
-				pal.Entries[Palette.TranId] = Color.Transparent;
-				b.Palette = pal;
-
-				b.Save(fullpath, ImageFormat.Png);
-
-				b.Dispose();
 			}
 		}
 		#endregion Methods

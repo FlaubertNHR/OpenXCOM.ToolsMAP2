@@ -483,20 +483,51 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_UseMonoDraw = "UseMono";
-		private const bool   def_UseMonoDraw = false;
+		private const string str_UseMono = "UseMono";
+		private const bool   def_UseMono = false;
 
-		private bool _usemonodraw = def_UseMonoDraw;
+		private bool _usemono = def_UseMono;
 		[Category(cat_General)]
 		[Description("If true use sprite-drawing algorithms that are designed for Mono."
 			+ " This fixes an issue on non-Windows systems where non-transparent"
 			+ " black boxes appear around sprites but it bypasses Interpolation"
 			+ " and SpriteShade routines. Selected tiles will not be grayed")]
-		[DefaultValue(def_UseMonoDraw)]
-		public bool UseMonoDraw
+		[DefaultValue(def_UseMono)]
+		public bool UseMono
 		{
-			get { return _usemonodraw; }
-			set { _usemonodraw = value; }
+			get { return _usemono; }
+			set { _usemono = value; }
+		}
+
+
+
+		private const string cat_Screenshot = "Screenshot";
+
+		private const string str_BackgroundColor = "BackgroundColor";
+		private static Color def_BackgroundColor = Color.Transparent;
+
+		private Color _backgroundcolor = def_BackgroundColor;
+		[Category(cat_Screenshot)]
+		[Description("The color for the background of a screenshot")]
+		[DefaultValue(typeof(Color), "Transparent")]
+		public Color BackgroundColor
+		{
+			get { return _backgroundcolor; }
+			set { _backgroundcolor = value; }
+		}
+
+
+		private const string str_CropBackground = "CropBackground";
+		private const bool   def_CropBackground = false;
+
+		private bool _cropbackground = def_CropBackground;
+		[Category(cat_Screenshot)]
+		[Description("If true a screenshot will be cropped to its foreground pixels")]
+		[DefaultValue(def_CropBackground)]
+		public bool CropBackground
+		{
+			get { return _cropbackground; }
+			set { _cropbackground = value; }
 		}
 		#endregion Properties (optionable)
 
@@ -551,7 +582,10 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_AnimateSprites,         def_AnimateSprites,         changer2);
 			options.AddOptionDefault(str_OpenDoors,              def_OpenDoors,              changer2);
 			options.AddOptionDefault(str_BringAllToFront,        def_BringAllToFront,        changer1);
-			options.AddOptionDefault(str_UseMonoDraw,            def_UseMonoDraw,            changer0);
+			options.AddOptionDefault(str_UseMono,                def_UseMono,                changer0);
+
+			options.AddOptionDefault(str_BackgroundColor,        def_BackgroundColor,        changer1);
+			options.AddOptionDefault(str_CropBackground,         def_CropBackground,         changer1);
 		}
 		#endregion Methods
 
@@ -627,8 +661,8 @@ namespace MapView.Forms.MainView
 					Interpolation = (int)val;
 					break;
 
-				case str_UseMonoDraw:
-					UseMonoDraw = (bool)val;
+				case str_UseMono:
+					UseMono = (bool)val;
 					break;
 			}
 
@@ -669,8 +703,18 @@ namespace MapView.Forms.MainView
 											(StartTopRouteView = (bool)val));
 					break;
 
+
 				case str_BringAllToFront:
 					BringAllToFront = (bool)val;
+					break;
+
+
+				case str_BackgroundColor:
+					BackgroundColor = (Color)val;
+					break;
+
+				case str_CropBackground:
+					CropBackground = (bool)val;
 					break;
 			}
 		}
@@ -686,7 +730,9 @@ namespace MapView.Forms.MainView
 		{
 			switch (key)
 			{
-				case str_AnimateSprites: MainViewUnderlay.Animate(AnimateSprites = (bool)val); // F2 toggle
+				case str_AnimateSprites:
+					MainViewUnderlay.Animate(AnimateSprites = (bool)val); // F2 toggle
+
 					if (!AnimateSprites) // show the doorsprites closed in TileView and QuadrantPanel.
 					{
 						if (OpenDoors) // toggle off doors if general animations stop.
@@ -700,7 +746,9 @@ namespace MapView.Forms.MainView
 
 					break;
 
-				case str_OpenDoors: OpenDoors = (bool)val; // F3 toggle
+				case str_OpenDoors:
+					OpenDoors = (bool)val; // F3 toggle
+
 					if (AnimateSprites)
 					{
 						MainViewF.that.SetDoorSpritesFullPhase(OpenDoors);
