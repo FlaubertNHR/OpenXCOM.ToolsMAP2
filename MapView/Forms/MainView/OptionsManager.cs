@@ -54,8 +54,11 @@ namespace MapView.Forms.MainView
 		/// Loads options specified by the user.
 		/// </summary>
 		/// <param name="fullpath"></param>
-		internal static void LoadUserOptions(string fullpath)
+		/// <returns></returns>
+		internal static bool LoadUserOptions(string fullpath)
 		{
+			using (var fs = FileService.OpenFile(fullpath))
+			if (fs != null)
 			using (var sr = new StreamReader(fullpath))
 			{
 				KeyvalPair keyval;
@@ -64,10 +67,17 @@ namespace MapView.Forms.MainView
 					if (_optionsTypes.ContainsKey(keyval.Key))
 						ReadOptions(sr, _optionsTypes[keyval.Key]); // NOTE: This reads the options as keyvals.
 				}
+				return true;
 			}
+			return false;
 		}
 
-		internal static void ReadOptions(TextReader tr, Options options)
+		/// <summary>
+		/// Helper for LoadUserOptions().
+		/// </summary>
+		/// <param name="tr"></param>
+		/// <param name="options"></param>
+		private static void ReadOptions(TextReader tr, Options options)
 		{
 			string key;
 
@@ -96,11 +106,24 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal static void SaveOptions()
 		{
-			using (var sw = new StreamWriter(((PathInfo)SharedSpace.GetShareObject(PathInfo.ShareOptions)).Fullpath)) // gfl
+			string pfe = ((PathInfo)SharedSpace.GetShareObject(PathInfo.ShareOptions)).Fullpath; // gfl
+
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
+
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
+			using (var sw = new StreamWriter(fs))
 			{
 				foreach (string key in _optionsTypes.Keys)
 					_optionsTypes[key].WriteOptions(key, sw);
 			}
+
+			if (pfeT != pfe)
+				FileService.ReplaceFile(pfe);
 		}
 
 		/// <summary>

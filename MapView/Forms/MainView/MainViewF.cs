@@ -175,7 +175,7 @@ namespace MapView
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);
 #if DEBUG
-			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
+			LogFile.SetLogFilePath(dirAppL); // creates a logfile/wipes the old one.
 			DSLogFile.CreateLogFile();
 #endif
 
@@ -195,15 +195,15 @@ namespace MapView
 			// https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo?view=netframework-4.8
 			// ie. FileInfo.
 
-			var pathOptions   = new PathInfo(dirSetT, PathInfo.CFG_Options);	// define a PathInfo for MapOptions.cfg
-			var pathResources = new PathInfo(dirSetT, PathInfo.YML_Resources);	// define a PathInfo for MapResources.yml
-			var pathTilesets  = new PathInfo(dirSetT, PathInfo.YML_Tilesets);	// define a PathInfo for MapTilesets.yml
-			var pathViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);	// define a PathInfo for MapViewers.yml
+			var piOptions   = new PathInfo(dirSetT, PathInfo.CFG_Options);		// define a PathInfo for MapOptions.cfg
+			var piResources = new PathInfo(dirSetT, PathInfo.YML_Resources);	// define a PathInfo for MapResources.yml
+			var piTilesets  = new PathInfo(dirSetT, PathInfo.YML_Tilesets);		// define a PathInfo for MapTilesets.yml
+			var piViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);		// define a PathInfo for MapViewers.yml
 
-			SharedSpace.SetShare(PathInfo.ShareOptions,   pathOptions);			// set share for MapOptions.cfg
-			SharedSpace.SetShare(PathInfo.ShareResources, pathResources);		// set share for MapResources.yml
-			SharedSpace.SetShare(PathInfo.ShareTilesets,  pathTilesets);		// set share for MapTilesets.yml
-			SharedSpace.SetShare(PathInfo.ShareViewers,   pathViewers);			// set share for MapViewers.yml
+			SharedSpace.SetShare(PathInfo.ShareOptions,   piOptions);			// set share for MapOptions.cfg
+			SharedSpace.SetShare(PathInfo.ShareResources, piResources);			// set share for MapResources.yml
+			SharedSpace.SetShare(PathInfo.ShareTilesets,  piTilesets);			// set share for MapTilesets.yml
+			SharedSpace.SetShare(PathInfo.ShareViewers,   piViewers);			// set share for MapViewers.yml
 
 			LogFile.WriteLine("PathInfo cached.");
 
@@ -211,7 +211,7 @@ namespace MapView
 			// Check if MapTilesets.yml and MapResources.yml exist yet, show the
 			// Configuration window if not.
 			// NOTE: MapResources.yml and MapTilesets.yml are created by ConfigurationForm.
-			if (!pathResources.FileExists() || !pathTilesets.FileExists())
+			if (!piResources.FileExists() || !piTilesets.FileExists())
 			{
 				LogFile.WriteLine("Resources or Tilesets file does not exist: run configurator.");
 
@@ -223,7 +223,7 @@ namespace MapView
 
 
 			// Exit app if either MapResources.yml or MapTilesets.yml doesn't exist
-			if (!pathResources.FileExists() || !pathTilesets.FileExists()) // safety. The Configurator shall demand that both these files get created.
+			if (!piResources.FileExists() || !piTilesets.FileExists()) // safety. The Configurator shall demand that both these files get created.
 			{
 				LogFile.WriteLine("Resources or Tilesets file does not exist: quit MapView.");
 				Process.GetCurrentProcess().Kill();
@@ -231,9 +231,9 @@ namespace MapView
 
 
 			// Check if settings/MapViewers.yml exists yet, if not create it
-			if (!pathViewers.FileExists())
+			if (!piViewers.FileExists())
 			{
-				if (CopyViewersFile(pathViewers))
+				if (CopyViewersFile(piViewers.Fullpath))
 					LogFile.WriteLine("Viewers file created.");
 				else
 					LogFile.WriteLine("Viewers file could not be created.");
@@ -364,7 +364,7 @@ namespace MapView
 
 			// Read MapResources.yml to get the resources dir (for both UFO and TFTD).
 			// NOTE: MapResources.yml is created by ConfigurationForm
-			using (var fs = FileService.OpenFile(pathResources.Fullpath))
+			using (var fs = FileService.OpenFile(piResources.Fullpath))
 			if (fs != null)
 			using (var sr = new StreamReader(fs))
 			{
@@ -439,14 +439,16 @@ namespace MapView
 				LogFile.WriteLine("ScanG TFTD not found.");
 
 
-			ResourceInfo.InitializeResources(pathTilesets); // load resources from YAML.
+			ResourceInfo.InitializeResources(piTilesets); // load resources from YAML.
 			LogFile.WriteLine("ResourceInfo initialized.");
 
 
-			if (pathOptions.FileExists()) // load user-options before MenuManager.StartSecondaryStage()
+			if (piOptions.FileExists()) // load user-options before MenuManager.StartSecondaryStageBoosters()
 			{
-				OptionsManager.LoadUserOptions(pathOptions.Fullpath);
-				LogFile.WriteLine("User options loaded.");
+				if (OptionsManager.LoadUserOptions(piOptions.Fullpath))
+					LogFile.WriteLine("User options loaded.");
+				else
+					LogFile.WriteLine("User options could not be opened.");
 			}
 			else
 				LogFile.WriteLine("User options NOT loaded - no options file to load.");
@@ -542,12 +544,11 @@ namespace MapView
 		/// Transposes all the default viewer positions and sizes from the
 		/// embedded MapViewers manifest to a file: settings/MapViewers.yml.
 		/// </summary>
+		/// <param name="fullpath"></param>
 		/// <returns>true on success</returns>
-		private static bool CopyViewersFile(PathInfo info)
+		private static bool CopyViewersFile(string fullpath)
 		{
-//			var info = SharedSpace.GetShareObject(PathInfo.ShareViewers) as PathInfo;
-
-			using (var fs = FileService.CreateFile(info.Fullpath))
+			using (var fs = FileService.CreateFile(fullpath))
 			if (fs != null)
 			using (var sw = new StreamWriter(fs))
 			using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
