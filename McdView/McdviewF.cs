@@ -41,6 +41,8 @@ namespace McdView
 
 
 		#region Fields
+		internal static string[] _args;
+
 		/// <summary>
 		/// True if McdView has been invoked via TileView.
 		/// </summary>
@@ -362,6 +364,9 @@ namespace McdView
 
 			var r = new CustomToolStripRenderer();
 			ss_Statusbar.Renderer = r;
+
+
+			if (_args.Length != 0) LoadTerrain(_args[0]);
 		}
 
 
@@ -697,83 +702,92 @@ namespace McdView
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
-						string pfe = ofd.FileName;
-
-						using (var fs = FileService.OpenFile(pfe))
-						if (fs != null)
-						{
-							if (((int)fs.Length % TilepartFactory.Length) != 0)
-							{
-								using (var f = new Infobox(
-														"Error",
-														"The MCD file appears to be corrupted."
-													  + " The length of the file is not evenly divisible by the length of a record.",
-														pfe))
-								{
-									f.ShowDialog(this);
-								}
-							}
-							else
-							{
-								PfeMcd = pfe;
-								SelId = -1;
-
-								Palette pal;
-								if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
-								else                      pal = Palette.TftdBattle;
-
-								ResourceInfo.Spritesets.Clear();
-								Spriteset = ResourceInfo.LoadSpriteset(
-																	Label,
-																	Path.GetDirectoryName(PfeMcd),
-																	ResourceInfo.TAB_WORD_LENGTH_2,
-																	pal);
-
-								var parts = new Tilepart[(int)fs.Length / TilepartFactory.Length];
-
-								for (int id = 0; id != parts.Length; ++id)
-								{
-									var bindata = new byte[TilepartFactory.Length];
-									fs.Read(bindata, 0, TilepartFactory.Length);
-
-									parts[id] = new Tilepart(
-														id,
-														new McdRecord(bindata));
-								}
-
-								Tilepart part;
-								for (int id = 0; id != parts.Length; ++id)
-								{
-									part = parts[id];
-									part.Dead = TilepartFactory.GetDeadPart(
-																		Label,
-																		id,
-																		part.Record,
-																		parts);
-									part.Altr = TilepartFactory.GetAltrPart(
-																		Label,
-																		id,
-																		part.Record,
-																		parts);
-								}
-
-								Parts = parts; // do not assign to 'Parts' until the array is gtg.
-								CacheLoad.SetCacheSaved(Parts);
-
-								Changed =
-								PartsPanel.SpritesChanged = false;
-
-								miSave  .Enabled =
-								miSaveas.Enabled =
-								miReload.Enabled = true;
-
-								PartsPanel.Select();
-							}
-						}
+						LoadTerrain(ofd.FileName);
 					}
 				}
 			}
 		}
+
+		/// <summary>
+		/// Loads a terrain from either the File|Open menu or by Explorer's
+		/// file-association.
+		/// </summary>
+		/// <param name="pfe">path-file-extension of a file to load</param>
+		private void LoadTerrain(string pfe)
+		{
+			using (var fs = FileService.OpenFile(pfe))
+			if (fs != null)
+			{
+				if (((int)fs.Length % TilepartFactory.Length) != 0)
+				{
+					using (var f = new Infobox(
+											"Error",
+											"The MCD file appears to be corrupted."
+										  + " The length of the file is not evenly divisible by the length of a record.",
+											pfe))
+					{
+						f.ShowDialog(this);
+					}
+				}
+				else
+				{
+					PfeMcd = pfe;
+					SelId = -1;
+
+					Palette pal;
+					if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
+					else                      pal = Palette.TftdBattle;
+
+					ResourceInfo.Spritesets.Clear();
+					Spriteset = ResourceInfo.LoadSpriteset(
+														Label,
+														Path.GetDirectoryName(PfeMcd),
+														ResourceInfo.TAB_WORD_LENGTH_2,
+														pal);
+
+					var parts = new Tilepart[(int)fs.Length / TilepartFactory.Length];
+
+					for (int id = 0; id != parts.Length; ++id)
+					{
+						var bindata = new byte[TilepartFactory.Length];
+						fs.Read(bindata, 0, TilepartFactory.Length);
+
+						parts[id] = new Tilepart(
+											id,
+											new McdRecord(bindata));
+					}
+
+					Tilepart part;
+					for (int id = 0; id != parts.Length; ++id)
+					{
+						part = parts[id];
+						part.Dead = TilepartFactory.GetDeadPart(
+															Label,
+															id,
+															part.Record,
+															parts);
+						part.Altr = TilepartFactory.GetAltrPart(
+															Label,
+															id,
+															part.Record,
+															parts);
+					}
+
+					Parts = parts; // do not assign to 'Parts' until the array is gtg.
+					CacheLoad.SetCacheSaved(Parts);
+
+					Changed =
+					PartsPanel.SpritesChanged = false;
+
+					miSave  .Enabled =
+					miSaveas.Enabled =
+					miReload.Enabled = true;
+
+					PartsPanel.Select();
+				}
+			}
+		}
+
 
 		/// <summary>
 		/// Handles clicking the File|Reload menuitem.

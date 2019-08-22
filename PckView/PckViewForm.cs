@@ -47,6 +47,8 @@ namespace PckView
 
 
 		#region Fields
+		internal static string[] _args;
+
 		/// <summary>
 		/// True if PckView has been invoked via TileView.
 		/// </summary>
@@ -223,6 +225,29 @@ namespace PckView
 
 					Attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 				}
+			}
+
+			if (_args.Length != 0)
+			{
+				string feLoad = Path.GetFileName(_args[0]).ToLower();
+				if (feLoad == "bigobs.pck")
+				{
+					IsBigobs = true;
+					IsScanG  = false;
+				}
+				else if (feLoad == "scang.dat")
+				{
+					IsBigobs = false;
+					IsScanG  = true;
+				}
+				else if (Path.GetExtension(feLoad) == ".pck")	// NOTE: LoadSpriteset() will check for a TAB file
+				{												// and issue an error to the user if not found.
+					IsBigobs =
+					IsScanG  = false;
+				}
+				else return;
+
+				LoadSpriteset(_args[0]);
 			}
 		}
 
