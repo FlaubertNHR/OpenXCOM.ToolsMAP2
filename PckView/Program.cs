@@ -12,7 +12,7 @@ namespace PckView
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			if (args.Length != 0)
+			if (args != null)
 				PckViewForm._args = args;
 
 			Application.EnableVisualStyles();

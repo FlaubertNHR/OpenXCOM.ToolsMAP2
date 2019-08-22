@@ -227,7 +227,7 @@ namespace PckView
 				}
 			}
 
-			if (_args.Length != 0)
+			if (_args != null && _args.Length != 0)
 			{
 				string feLoad = Path.GetFileName(_args[0]).ToLower();
 				if (feLoad == "bigobs.pck")

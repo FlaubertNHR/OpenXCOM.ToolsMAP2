@@ -3560,7 +3560,7 @@
 			this.bar_IsoLoft.Location = new System.Drawing.Point(520, 10);
 			this.bar_IsoLoft.Margin = new System.Windows.Forms.Padding(0);
 			this.bar_IsoLoft.Maximum = 24;
-			this.bar_IsoLoft.Minimum = 1;
+			this.bar_IsoLoft.Minimum = 0;
 			this.bar_IsoLoft.Name = "bar_IsoLoft";
 			this.bar_IsoLoft.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.bar_IsoLoft.Size = new System.Drawing.Size(16, 205);

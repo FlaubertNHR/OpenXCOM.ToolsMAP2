@@ -366,7 +366,8 @@ namespace McdView
 			ss_Statusbar.Renderer = r;
 
 
-			if (_args.Length != 0) LoadTerrain(_args[0]);
+			if (_args != null && _args.Length != 0)
+				LoadTerrain(_args[0]);
 		}
 
 

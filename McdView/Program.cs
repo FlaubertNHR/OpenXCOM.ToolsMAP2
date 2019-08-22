@@ -12,7 +12,7 @@ namespace McdView
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			if (args.Length != 0)
+			if (args != null)
 				McdviewF._args = args;
 
 			Application.EnableVisualStyles();
