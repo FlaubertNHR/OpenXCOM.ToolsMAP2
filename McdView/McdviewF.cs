@@ -1287,9 +1287,9 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnClick_OpenCopyPanel(object sender, EventArgs e)
+		internal void OnClick_OpenCopier(object sender, EventArgs e)
 		{
-			if (miCopyPanel.Checked = !miCopyPanel.Checked)
+			if (miCopier.Checked = !miCopier.Checked)
 			{
 				OpenCopier(true);
 			}
@@ -1305,8 +1305,8 @@ namespace McdView
 		/// different MCD file from the Copier itself (without closing the
 		/// Copier).
 		/// </summary>
-		/// <param name="it">true if handling the menuitem click; ie. can close
-		/// the Copier form</param>
+		/// <param name="it">true if handling the menuitem click; ie. can also
+		/// close the Copier form</param>
 		internal void OpenCopier(bool it = false)
 		{
 			using (var ofd = new OpenFileDialog())
@@ -1390,7 +1390,7 @@ namespace McdView
 						Copier.Close();
 						Copier = null;
 					}
-					miCopyPanel.Checked = (Copier != null);
+					miCopier.Checked = (Copier != null);
 				}
 			}
 		}
@@ -1401,7 +1401,7 @@ namespace McdView
 		internal void CloseCopyPanel()
 		{
 			Copier = null;
-			miCopyPanel.Checked = false;
+			miCopier.Checked = false;
 		}
 
 

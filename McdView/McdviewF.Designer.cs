@@ -2,6 +2,7 @@
 {
 	public partial class McdviewF
 	{
+		#region Designer
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
 		/// </summary>
@@ -25,7 +26,7 @@
 		private System.Windows.Forms.MenuItem miPaletteUfo;
 		private System.Windows.Forms.MenuItem miPaletteTftd;
 		private System.Windows.Forms.MenuItem miEditMenu;
-		private System.Windows.Forms.MenuItem miCopyPanel;
+		private System.Windows.Forms.MenuItem miCopier;
 		private System.Windows.Forms.MenuItem miSeparator3;
 		private System.Windows.Forms.MenuItem miZeroVals;
 		private System.Windows.Forms.MenuItem miCheckVals;
@@ -304,7 +305,7 @@
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.miEditMenu = new System.Windows.Forms.MenuItem();
-			this.miCopyPanel = new System.Windows.Forms.MenuItem();
+			this.miCopier = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miZeroVals = new System.Windows.Forms.MenuItem();
 			this.miCheckVals = new System.Windows.Forms.MenuItem();
@@ -694,18 +695,18 @@
 			// 
 			this.miEditMenu.Index = 2;
 			this.miEditMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miCopyPanel,
+			this.miCopier,
 			this.miSeparator3,
 			this.miZeroVals,
 			this.miCheckVals});
 			this.miEditMenu.Text = "&Edit";
 			// 
-			// miCopyPanel
+			// miCopier
 			// 
-			this.miCopyPanel.Index = 0;
-			this.miCopyPanel.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
-			this.miCopyPanel.Text = "Open Copy &panel ...";
-			this.miCopyPanel.Click += new System.EventHandler(this.OnClick_OpenCopyPanel);
+			this.miCopier.Index = 0;
+			this.miCopier.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
+			this.miCopier.Text = "Open Co&pier ...";
+			this.miCopier.Click += new System.EventHandler(this.OnClick_OpenCopier);
 			// 
 			// miSeparator3
 			// 
@@ -3650,5 +3651,6 @@
 			this.PerformLayout();
 
 		}
+		#endregion Designer
 	}
 }
