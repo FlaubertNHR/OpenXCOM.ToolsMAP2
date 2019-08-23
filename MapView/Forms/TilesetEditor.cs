@@ -363,7 +363,7 @@ namespace MapView
 			{
 				ofd.Title      = "Select a Map file";
 				ofd.Filter     = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
-				ofd.DefaultExt = GlobalsXC.MapExt;
+//				ofd.DefaultExt = GlobalsXC.MapExt;
 //				ofd.FileName   = ;
 
 				string dir = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);

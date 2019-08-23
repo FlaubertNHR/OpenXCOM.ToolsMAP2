@@ -1902,8 +1902,8 @@ namespace MapView.Forms.Observers
 				{
 					ofd.Title      = "Import Route file ...";
 					ofd.Filter     = "Route files (*.RMP)|*.RMP|All files (*.*)|*.*";
-					ofd.DefaultExt = GlobalsXC.RouteExt;
-					ofd.FileName   = MapFile.Descriptor.Label;
+//					ofd.DefaultExt = GlobalsXC.RouteExt;
+					ofd.FileName   = MapFile.Descriptor.Label + GlobalsXC.RouteExt;
 
 					if (!Directory.Exists(_lastImportDirectory))
 					{

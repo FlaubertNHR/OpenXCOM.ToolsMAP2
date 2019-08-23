@@ -63,8 +63,8 @@ namespace ConfigConverter
 			{
 				ofd.Title      = "Open MapEdit.dat ...";
 				ofd.Filter     = "MapView DAT files(*.dat)|*.dat|All files(*.*)|*.*";
-				ofd.DefaultExt = "dat";
-				ofd.FileName   = "MapEdit";
+//				ofd.DefaultExt = "dat";
+				ofd.FileName   = "MapEdit.dat";
 
 				ofd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
 

@@ -710,7 +710,7 @@ namespace McdView
 				{
 					ofd.Title      = "Open an MCD file";
 					ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
-					ofd.DefaultExt = GlobalsXC.McdExt;
+//					ofd.DefaultExt = GlobalsXC.McdExt;
 //					ofd.FileName   = ;
 
 					if (!String.IsNullOrEmpty(PfeMcd))
@@ -1313,7 +1313,7 @@ namespace McdView
 			{
 				ofd.Title      = "Open an MCD file";
 				ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
-				ofd.DefaultExt = GlobalsXC.McdExt;
+//				ofd.DefaultExt = GlobalsXC.McdExt;
 //				ofd.FileName   = ;
 
 				if (!String.IsNullOrEmpty(PfeMcd))

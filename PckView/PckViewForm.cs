@@ -1331,7 +1331,7 @@ namespace PckView
 				{
 					ofd.Title      = "Select a PCK (terrain/unit) file";
 					ofd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-					ofd.DefaultExt = GlobalsXC.PckExt;
+//					ofd.DefaultExt = GlobalsXC.PckExt;
 //					ofd.FileName   = ;
 
 					if (!String.IsNullOrEmpty(PfSpriteset))
@@ -1366,8 +1366,8 @@ namespace PckView
 				{
 					ofd.Title      = "Select a PCK (bigobs) file";
 					ofd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-					ofd.DefaultExt = GlobalsXC.PckExt;
-					ofd.FileName   = "BIGOBS";
+//					ofd.DefaultExt = GlobalsXC.PckExt;
+					ofd.FileName   = "BIGOBS.PCK";
 
 					if (!String.IsNullOrEmpty(PfSpriteset))
 					{
@@ -1401,8 +1401,8 @@ namespace PckView
 				{
 					ofd.Title      = "Select a ScanG file";
 					ofd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
-					ofd.DefaultExt = GlobalsXC.DatExt;
-					ofd.FileName   = "SCANG";
+//					ofd.DefaultExt = GlobalsXC.DatExt;
+					ofd.FileName   = "SCANG.DAT";
 
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)

@@ -45,7 +45,7 @@ namespace MapView.Volutar
 			{
 				ofd.Title      = "Find MCDEdit.exe";
 				ofd.Filter     = "Executable files|*.EXE|All files|*.*";
-				ofd.DefaultExt = "EXE";
+//				ofd.DefaultExt = "EXE";
 				ofd.FileName   = "MCDEdit.exe";
 
 				if (ofd.ShowDialog(this) == DialogResult.OK)
