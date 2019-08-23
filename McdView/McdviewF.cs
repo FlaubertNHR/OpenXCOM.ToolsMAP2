@@ -58,10 +58,13 @@ namespace McdView
 		/// </summary>
 		private bool InitFields;
 
-		internal CopyF Copier;
+		internal CopierF Copier;
 
 		private bool SaveRecordsetFailed;
 		private bool SaveSpritesetFailed;
+
+		private string _lastCreateDirectory;
+		private string _lastBrowserDirectory;
 		#endregion Fields
 
 
@@ -624,12 +627,20 @@ namespace McdView
 					sfd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
 					sfd.DefaultExt = GlobalsXC.McdExt;
 
-//					sfd.InitialDirectory = ; // TODO <-
+					if (Directory.Exists(_lastCreateDirectory))
+						sfd.InitialDirectory = _lastCreateDirectory;
+					else if (!String.IsNullOrEmpty(PfeMcd))
+					{
+						string dir = Path.GetDirectoryName(PfeMcd);
+						if (Directory.Exists(dir))
+							sfd.InitialDirectory = dir;
+					}
 
 
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
 						string pfe = sfd.FileName;
+						_lastCreateDirectory = Path.GetDirectoryName(pfe);
 
 						string pfeT;
 						if (File.Exists(pfe))
@@ -698,8 +709,17 @@ namespace McdView
 				using (var ofd = new OpenFileDialog())
 				{
 					ofd.Title      = "Open an MCD file";
-					ofd.DefaultExt = "MCD";
 					ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
+					ofd.DefaultExt = GlobalsXC.McdExt;
+//					ofd.FileName   = ;
+
+					if (!String.IsNullOrEmpty(PfeMcd))
+					{
+						string dir = Path.GetDirectoryName(PfeMcd);
+						if (Directory.Exists(dir))
+							ofd.InitialDirectory = dir;
+					}
+
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
@@ -1038,6 +1058,16 @@ namespace McdView
 				sfd.DefaultExt = GlobalsXC.McdExt;
 				sfd.FileName   = Label;
 
+				if (!Directory.Exists(_lastBrowserDirectory))
+				{
+					string dir = Path.GetDirectoryName(PfeMcd);
+					if (Directory.Exists(dir))
+						sfd.InitialDirectory = dir;
+				}
+				else
+					sfd.InitialDirectory = _lastBrowserDirectory;
+
+
 				if (sfd.ShowDialog(this) == DialogResult.OK
 					&& (Parts.Length <= MapFileService.MAX_MCDRECORDS
 						|| MessageBox.Show(
@@ -1050,6 +1080,7 @@ namespace McdView
 										0) == DialogResult.OK))
 				{
 					string pfe = sfd.FileName;
+					_lastBrowserDirectory = Path.GetDirectoryName(pfe);
 
 					if (McdRecord.WriteRecords(pfe, Parts))
 					{
@@ -1260,7 +1291,7 @@ namespace McdView
 		{
 			if (miCopyPanel.Checked = !miCopyPanel.Checked)
 			{
-				OpenCopyPanel(true);
+				OpenCopier(true);
 			}
 			else
 			{
@@ -1276,19 +1307,28 @@ namespace McdView
 		/// </summary>
 		/// <param name="it">true if handling the menuitem click; ie. can close
 		/// the Copier form</param>
-		internal void OpenCopyPanel(bool it = false)
+		internal void OpenCopier(bool it = false)
 		{
 			using (var ofd = new OpenFileDialog())
 			{
 				ofd.Title      = "Open an MCD file";
-				ofd.DefaultExt = "MCD";
 				ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
+				ofd.DefaultExt = GlobalsXC.McdExt;
+//				ofd.FileName   = ;
+
+				if (!String.IsNullOrEmpty(PfeMcd))
+				{
+					string dir = Path.GetDirectoryName(PfeMcd);
+					if (Directory.Exists(dir))
+						ofd.InitialDirectory = dir;
+				}
+
 
 				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
 					if (Copier == null)
 					{
-						Copier = new CopyF(this);
+						Copier = new CopierF(this);
 						Copier.Show();
 
 						Copier.LoadIalOptions();
@@ -1356,7 +1396,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Closes the copypanel from the CopyF object itself.
+		/// Closes the copypanel from the CopierF object itself.
 		/// </summary>
 		internal void CloseCopyPanel()
 		{

@@ -115,7 +115,7 @@ namespace MapView
 			{
 				f.Description = "Select UFO Resources directory."
 							  + Environment.NewLine + Environment.NewLine
-							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (usually)";
+							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (typically)";
 
 				if (f.ShowDialog(this) == DialogResult.OK)
 					Ufo = f.SelectedPath;
@@ -133,7 +133,7 @@ namespace MapView
 			{
 				f.Description = "Select TFTD Resources directory"
 							  + Environment.NewLine + Environment.NewLine
-							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (usually)";
+							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (typically)";
 
 				if (f.ShowDialog(this) == DialogResult.OK)
 					Tftd = f.SelectedPath;

@@ -41,11 +41,15 @@ namespace MapView.Volutar
 
 		private void btnFindFile_Click(object sender, EventArgs e)
 		{
-			using (var f = openFileDialog)
+			using (var ofd = new OpenFileDialog())
 			{
-				f.Title = "Find MCDEdit.exe";
-				if (f.ShowDialog() == DialogResult.OK)
-					tbInput.Text = f.FileName;
+				ofd.Title      = "Find MCDEdit.exe";
+				ofd.Filter     = "Executable files|*.EXE|All files|*.*";
+				ofd.DefaultExt = "EXE";
+				ofd.FileName   = "MCDEdit.exe";
+
+				if (ofd.ShowDialog(this) == DialogResult.OK)
+					tbInput.Text = ofd.FileName;
 			}
 		}
 		#endregion Events

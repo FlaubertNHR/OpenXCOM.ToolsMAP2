@@ -1211,7 +1211,7 @@ namespace MapView
 		}
 
 
-		private string _lastSaveasDirectory;
+		private string _lastExportDirectory;
 
 		private void OnExportMapRoutesClick(object sender, EventArgs e)
 		{
@@ -1225,28 +1225,29 @@ namespace MapView
 					sfd.DefaultExt = GlobalsXC.MapExt;
 					sfd.FileName   = MainViewUnderlay.MapBase.Descriptor.Label;
 
-					if (_lastSaveasDirectory == null || !Directory.Exists(_lastSaveasDirectory))
+					if (!Directory.Exists(_lastExportDirectory))
 					{
 						string path = Path.Combine(MainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
 						if (Directory.Exists(path))
 							sfd.InitialDirectory = path;
 					}
 					else
-						sfd.InitialDirectory = _lastSaveasDirectory;
+						sfd.InitialDirectory = _lastExportDirectory;
+
 
 					if (sfd.ShowDialog() == DialogResult.OK)
 					{
 						string pfe = sfd.FileName;
-						_lastSaveasDirectory = Path.GetDirectoryName(pfe);
+						_lastExportDirectory = Path.GetDirectoryName(pfe);
 
 						// NOTE: GetDirectoryName() will return a string ending with a
 						// path-separator if it's the root dir, and without one if it's
 						// not. But Path.Combine() doesn't figure out the difference.
 						// woohoo ...
 
-						if (_lastSaveasDirectory.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
+						if (_lastExportDirectory.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
 						{
-							string dir       = _lastSaveasDirectory.Substring(0, _lastSaveasDirectory.Length - GlobalsXC.MapsDir.Length - 1);
+							string dir       = _lastExportDirectory.Substring(0, _lastExportDirectory.Length - GlobalsXC.MapsDir.Length - 1);
 							string dirMaps   = Path.Combine(dir, GlobalsXC.MapsDir);
 							string dirRoutes = Path.Combine(dir, GlobalsXC.RoutesDir);
 							string label     = Path.GetFileNameWithoutExtension(pfe);
@@ -1257,9 +1258,8 @@ namespace MapView
 						else
 							MessageBox.Show(
 										this,
-										"Maps must be saved to a directory MAPS. Routes can and"
-											+ " will then be written to its sibling directory ROUTES,"
-											+ " which will be created if it doesn't exist.",
+										"Maps must be saved to a directory MAPS. Routes shall"
+											+ " then be saved to its sibling directory ROUTES.",
 										" Error",
 										MessageBoxButtons.OK,
 										MessageBoxIcon.Error,
@@ -1342,7 +1342,7 @@ namespace MapView
 												@base.MapSize.Levs - @base.Level);
 					sfd.FileName = @base.Descriptor.Label + suffix;
 
-					if (_lastScreenshotDirectory == null || !Directory.Exists(_lastScreenshotDirectory))
+					if (!Directory.Exists(_lastScreenshotDirectory))
 					{
 						string path = Path.Combine(MainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
 						if (Directory.Exists(path))
@@ -1352,6 +1352,7 @@ namespace MapView
 						sfd.InitialDirectory = _lastScreenshotDirectory;
 
 					sfd.RestoreDirectory = true;
+
 
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{

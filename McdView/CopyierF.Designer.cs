@@ -1,6 +1,6 @@
 ﻿namespace McdView
 {
-	internal partial class CopyF
+	internal partial class CopierF
 	{
 		#region Designer
 		/// <summary>
@@ -2866,7 +2866,7 @@
 			this.tb52_footsound.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb52_footsound.WordWrap = false;
 			// 
-			// CopyF
+			// CopierF
 			// 
 			this.ClientSize = new System.Drawing.Size(675, 666);
 			this.Controls.Add(this.pnl_bg);
@@ -2875,7 +2875,7 @@
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
-			this.Name = "CopyF";
+			this.Name = "CopierF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.gb_Sprites.ResumeLayout(false);
 			this.gb_Sprites.PerformLayout();

@@ -15,7 +15,7 @@ namespace McdView
 	/// <summary>
 	/// A panel that displays an entire MCD recordset with each record's Sprite1
 	/// sprite. This class is inherited by 'TerrainPanel_main' and
-	/// 'TerrainPanel_copy'.
+	/// 'TerrainPanel_copier'.
 	/// </summary>
 	internal class TerrainPanel
 		:
@@ -43,7 +43,7 @@ namespace McdView
 
 
 		#region Properties
-		internal protected CopyF _fcopy
+		internal protected CopierF _fcopier
 		{ get; private set; }
 
 		protected virtual int SelId
@@ -53,8 +53,8 @@ namespace McdView
 		/// <summary>
 		/// An array of 'Tilepart'.
 		/// !!IMPORTANT: Only set 'Parts' via 'McdviewF.Parts' when
-		/// instantiating a 'TerrainPanel_main' object and via 'CopyF.Parts'
-		/// when instantiating a 'TerrainPanel_copy' object. IMPORTANT!!
+		/// instantiating a 'TerrainPanel_main' object and via 'CopierF.Parts'
+		/// when instantiating a 'TerrainPanel_copier' object. IMPORTANT!!
 		/// </summary>
 		internal protected Tilepart[] Parts
 		{
@@ -79,7 +79,7 @@ namespace McdView
 		/// <summary>
 		/// The spriteset. Use this var only for drawing; get the spriteset
 		/// directly in 'McdviewF' otherwise. (no reason, jic)
-		/// !!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopyF' as
+		/// !!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopierF' as
 		/// appropriate. IMPORTANT!!
 		/// </summary>
 		internal protected SpriteCollection Spriteset
@@ -94,13 +94,13 @@ namespace McdView
 		#region cTor
 		protected TerrainPanel(
 				McdviewF f,
-				CopyF fcopy = null)
+				CopierF fcopier = null)
 		{
 			_f     = f;
-			_fcopy = fcopy;	// prevent the Copier from borking out during its initial
-							// OnResize events when it tries to get a 'SelId' from 'CopyF'.
-							// That is, '_fcopy' is irrelevant to instantiations of
-							// 'TerrainPanel_main'; is used only by 'TerrainPanel_copy'.
+			_fcopier = fcopier;	// prevent the Copier from borking out during its initial
+								// OnResize events when it tries to get a 'SelId' from 'CopierF'.
+								// That is, '_fcopy' is irrelevant to instantiations of
+								// 'TerrainPanel_main'; is used only by 'TerrainPanel_copier'.
 
 			SetStyle(ControlStyles.Selectable, true);
 
@@ -148,10 +148,10 @@ namespace McdView
 			{
 				_partsCopied.Clear();
 
-				if (_fcopy == null)
+				if (_fcopier == null)
 					_partsCopiedLabel = _f.Label;
 				else
-					_partsCopiedLabel = _fcopy.Label;
+					_partsCopiedLabel = _fcopier.Label;
 
 				var sels = new HashSet<int>(SubIds);
 				sels.Add(SelId);

@@ -15,7 +15,7 @@ namespace McdView
 	{
 		#region Fields (static)
 		private static McdviewF   _f;
-		private static CopyF _fcopy;
+		private static CopierF _fcopy;
 		#endregion Fields (static)
 
 
@@ -25,7 +25,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="fcopy"></param>
-		internal static void SetStaticVars(McdviewF f, CopyF fcopy)
+		internal static void SetStaticVars(McdviewF f, CopierF fcopy)
 		{
 			_f = f; _fcopy = fcopy;
 		}

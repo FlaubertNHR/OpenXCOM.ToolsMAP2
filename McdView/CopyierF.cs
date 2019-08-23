@@ -18,11 +18,13 @@ namespace McdView
 	/// internal copy-buffer of McdView for pasting into the currently loaded
 	/// MCD-set.
 	/// </summary>
-	internal partial class CopyF
+	internal partial class CopierF
 		:
 			Form
 	{
 		#region Fields (static)
+		private const string TITLE = "Copier";
+
 		private static bool ialDeadpartChecked = true;
 		private static bool ialAltrpartChecked = true;
 		private static bool ialSpritesChecked  = true;
@@ -43,7 +45,7 @@ namespace McdView
 
 
 		#region Properties
-		internal TerrainPanel_copy PartsPanel
+		internal TerrainPanel_copier PartsPanel
 		{ get; private set; }
 
 		private Tilepart[] _parts;
@@ -65,10 +67,13 @@ namespace McdView
 			get { return _spriteset; }
 			set
 			{
-				string text = "Copy panel - " + Label;
+				string text = TITLE;
+
+				if (!String.IsNullOrEmpty(Label))
+					text += GlobalsXC.PADDED_SEPARATOR + Label;
 
 				if ((PartsPanel.Spriteset = (_spriteset = value)) == null)
-					text += " - spriteset invalid";
+					text += GlobalsXC.PADDED_SEPARATOR + "spriteset invalid";
 
 				Text = text;
 				PartsPanel.Select();
@@ -136,7 +141,7 @@ namespace McdView
 		/// cTor.
 		/// </summary>
 		/// <param name="f"></param>
-		internal CopyF(McdviewF f)
+		internal CopierF(McdviewF f)
 		{
 			InitializeComponent();
 
@@ -176,7 +181,7 @@ namespace McdView
 			cb_IalSprites.Text = "copy Sprites to " + _f.Label + GlobalsXC.PckExt;
 
 
-			PartsPanel = new TerrainPanel_copy(_f, this);
+			PartsPanel = new TerrainPanel_copier(_f, this);
 			gb_Collection.Controls.Add(PartsPanel);
 			PartsPanel.Width = gb_Collection.Width - 10;
 
@@ -222,7 +227,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Closes (and disposes) this CopyF object.
+		/// Closes (and disposes) this CopierF object.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -258,7 +263,7 @@ namespace McdView
 		{
 			if (keyData == (Keys.Control | Keys.O))
 			{
-				_f.OpenCopyPanel();
+				_f.OpenCopier();
 				return true;
 			}
 			return base.ProcessCmdKey(ref msg, keyData);
@@ -292,7 +297,7 @@ namespace McdView
 		#region Events
 		private void OnClick_Open(object sender, EventArgs e)
 		{
-			_f.OpenCopyPanel();
+			_f.OpenCopier();
 		}
 
 		/// <summary>

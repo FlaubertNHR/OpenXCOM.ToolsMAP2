@@ -12,7 +12,7 @@ namespace ConfigConverter
 	/// @note The files Images.dat and Paths.pth are required in the directory
 	/// with MapEdit.dat.
 	/// </summary>
-	public partial class MainForm
+	public sealed partial class ConverterF
 		:
 			Form
 	{
@@ -34,7 +34,7 @@ namespace ConfigConverter
 		/// <summary>
 		/// Instantiates the ConfigConverter.
 		/// </summary>
-		public MainForm()
+		public ConverterF()
 		{
 			InitializeComponent();
 		}
@@ -59,26 +59,43 @@ namespace ConfigConverter
 		/// <param name="e"></param>
 		void OnFindInputClick(object sender, EventArgs e)
 		{
-			var input = new OpenFileDialog();
-			input.Filter = "MapView DAT files(*.dat)|*.dat|All files(*.*)|*.*";
-
-			if (input.ShowDialog() == DialogResult.OK)
+			using (var ofd = new OpenFileDialog())
 			{
-				tbInput.Text = input.FileName;
+				ofd.Title      = "Open MapEdit.dat ...";
+				ofd.Filter     = "MapView DAT files(*.dat)|*.dat|All files(*.*)|*.*";
+				ofd.DefaultExt = "dat";
+				ofd.FileName   = "MapEdit";
 
-				if (Path.GetFileName(tbInput.Text) == "MapEdit.dat")
+				ofd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+
+
+				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					_dir = Path.GetDirectoryName(tbInput.Text);
-					if (!String.IsNullOrEmpty(_dir) && File.Exists(Path.Combine(_dir, "Images.dat")))
+					tbInput.Text = ofd.FileName;
+
+					if (Path.GetFileName(tbInput.Text) == "MapEdit.dat")
 					{
-						if (File.Exists(Path.Combine(_dir, "Paths.pth")))
+						_dir = Path.GetDirectoryName(tbInput.Text);
+						if (!String.IsNullOrEmpty(_dir) && File.Exists(Path.Combine(_dir, "Images.dat")))
 						{
-							btnConvert.Enabled = true;
+							if (File.Exists(Path.Combine(_dir, "Paths.pth")))
+							{
+								btnConvert.Enabled = true;
+							}
+							else
+								MessageBox.Show(
+											this,
+											"Can't find Paths.pth",
+											" Error",
+											MessageBoxButtons.OK,
+											MessageBoxIcon.Error,
+											MessageBoxDefaultButton.Button1,
+											0);
 						}
 						else
 							MessageBox.Show(
 										this,
-										"Can't find Paths.pth ...",
+										"Can't find Images.dat",
 										" Error",
 										MessageBoxButtons.OK,
 										MessageBoxIcon.Error,
@@ -88,22 +105,13 @@ namespace ConfigConverter
 					else
 						MessageBox.Show(
 									this,
-									"Can't find Images.dat ...",
+									"Can't find MapEdit.dat",
 									" Error",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Error,
 									MessageBoxDefaultButton.Button1,
 									0);
 				}
-				else
-					MessageBox.Show(
-								this,
-								"File is not recognized as MapEdit.dat",
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
 			}
 		}
 
@@ -124,7 +132,7 @@ namespace ConfigConverter
 			{
 				MessageBox.Show(
 							this,
-							"Can't find MapEdit.dat ...",
+							"Can't find MapEdit.dat",
 							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
@@ -135,7 +143,7 @@ namespace ConfigConverter
 			{
 				MessageBox.Show(
 							this,
-							"Can't find Images.dat ...",
+							"Can't find Images.dat",
 							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
@@ -146,7 +154,7 @@ namespace ConfigConverter
 			{
 				MessageBox.Show(
 							this,
-							"Can't find Paths.pth ...",
+							"Can't find Paths.pth",
 							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
@@ -737,6 +745,7 @@ namespace ConfigConverter
 			return pad;
 		}
 		#endregion Methods
+
 
 
 		#region Structs

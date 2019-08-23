@@ -71,6 +71,11 @@ namespace PckView
 
 		internal int SpriteShade = -1;
 		internal readonly ImageAttributes Attri = new ImageAttributes();
+
+
+		private string _lastCreateDirectory;
+		private string _lastBrowserDirectory;
+		private string _lastSpriteDirectory;
 		#endregion Fields
 
 
@@ -660,8 +665,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Bring back the dinosaurs. Enables (or disables) several contextmenu
-		/// items. Called when the tile-panel's Click event is raised.
+		/// Bring back the dinosaurs. Enables (or disables) several Context
+		/// menuitems.
+		/// @note Called when the tile-panel's click-event is raised.
 		/// @note This fires after PckViewPanel.OnMouseDown(). Thought you'd
 		/// like to know.
 		/// </summary>
@@ -684,8 +690,8 @@ namespace PckView
 
 		/// <summary>
 		/// Opens the currently selected sprite in the sprite-editor.
-		/// Called when the context's Click event or the viewer-panel's
-		/// DoubleClick event is raised or [Enter] is pressed.
+		/// @note Called when the Context menu's click-event or the
+		/// viewer-panel's DoubleClick event is raised or [Enter] is pressed.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -724,7 +730,9 @@ namespace PckView
 		/// <param name="hint">true to suggest proper dimensions/format</param>
 		private void ShowBitmapError(bool hint = true)
 		{
-			string error = "Detected incorrect Dimensions and/or PixelFormat.";
+			string error = String.Format(
+									CultureInfo.CurrentCulture,
+									"Detected incorrect Dimensions and/or PixelFormat.");
 
 			if (hint)
 			{
@@ -755,7 +763,7 @@ namespace PckView
 
 		/// <summary>
 		/// Adds a sprite or sprites to the collection.
-		/// Called when the contextmenu's Click event is raised.
+		/// @note Called when the Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -763,8 +771,6 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Multiselect = true;
-
 				if (IsScanG)
 					ofd.Title = "Add 4x4 8-bpp Image file(s)";
 				else if (IsBigobs)
@@ -776,28 +782,50 @@ namespace PckView
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 						   + "All files (*.*)|*.*";
 
+//				ofd.DefaultExt = ;
+//				ofd.FileName = ;
+
+				if (Directory.Exists(_lastSpriteDirectory))
+					ofd.InitialDirectory = _lastSpriteDirectory;
+				else
+				{
+					string dir = Path.GetDirectoryName(PfSpriteset);
+					if (Directory.Exists(dir))
+						ofd.InitialDirectory = dir;
+				}
+
+				ofd.Multiselect =
+				ofd.RestoreDirectory = true;
+
+
 				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
+					_lastSpriteDirectory = Path.GetDirectoryName(ofd.FileName);
+
 					var bs = new Bitmap[ofd.FileNames.Length]; // first run a check against all sprites and if any are borked set error.
 					for (int i = 0; i != ofd.FileNames.Length; ++i)
 					{
 //						var b = new Bitmap(ofd.FileNames[i]);	// <- .net.bork. Creates a 32-bpp Argb image if source is
 																// 8-bpp PNG w/tranparency; GIF,BMP however retains 8-bpp format.
 
-						byte[] bindata = File.ReadAllBytes(ofd.FileNames[i]);
-						Bitmap b = BitmapHandler.LoadBitmap(bindata);
+						byte[] bindata = FileService.ReadFile(ofd.FileNames[i]);
+						if (bindata != null)
+						{
+							Bitmap b = BitmapHandler.LoadBitmap(bindata);
 
-						if (   b.Width  == XCImage.SpriteWidth
-							&& b.Height == XCImage.SpriteHeight
-							&& b.PixelFormat == PixelFormat.Format8bppIndexed)
-						{
-							bs[i] = b;
+							if (   b.Width  == XCImage.SpriteWidth
+								&& b.Height == XCImage.SpriteHeight
+								&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+							{
+								bs[i] = b;
+							}
+							else
+							{
+								ShowBitmapError();
+								return;
+							}
 						}
-						else
-						{
-							ShowBitmapError();
-							return;
-						}
+						else return;
 					}
 
 					int id = (TilePanel.Spriteset.Count - 1);
@@ -821,7 +849,7 @@ namespace PckView
 		/// <summary>
 		/// Inserts sprites into the currently loaded spriteset before the
 		/// currently selected sprite.
-		/// Called when the contextmenu's Click event is raised.
+		/// @note Called when the Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -829,8 +857,6 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Multiselect = true;
-
 				if (IsScanG)
 					ofd.Title = "Add 4x4 8-bpp Image file(s)";
 				else if (IsBigobs)
@@ -842,8 +868,26 @@ namespace PckView
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 						   + "All files (*.*)|*.*";
 
+//				ofd.DefaultExt = ;
+//				ofd.FileName = ;
+
+				if (Directory.Exists(_lastSpriteDirectory))
+					ofd.InitialDirectory = _lastSpriteDirectory;
+				else
+				{
+					string dir = Path.GetDirectoryName(PfSpriteset);
+					if (Directory.Exists(dir))
+						ofd.InitialDirectory = dir;
+				}
+
+				ofd.Multiselect =
+				ofd.RestoreDirectory = true;
+
+
 				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
+					_lastSpriteDirectory = Path.GetDirectoryName(ofd.FileName);
+
 					if (InsertSprites(TilePanel.idSel, ofd.FileNames))
 					{
 						TilePanel.idSel += ofd.FileNames.Length;
@@ -860,7 +904,7 @@ namespace PckView
 		/// <summary>
 		/// Inserts sprites into the currently loaded spriteset after the
 		/// currently selected sprite.
-		/// Called when the contextmenu's Click event is raised.
+		/// @note Called when the Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -868,8 +912,6 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Multiselect = true;
-
 				if (IsScanG)
 					ofd.Title = "Add 4x4 8-bpp Image file(s)";
 				else if (IsBigobs)
@@ -881,8 +923,26 @@ namespace PckView
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 						   + "All files (*.*)|*.*";
 
+//				ofd.DefaultExt = ;
+//				ofd.FileName = ;
+
+				if (Directory.Exists(_lastSpriteDirectory))
+					ofd.InitialDirectory = _lastSpriteDirectory;
+				else
+				{
+					string dir = Path.GetDirectoryName(PfSpriteset);
+					if (Directory.Exists(dir))
+						ofd.InitialDirectory = dir;
+				}
+
+				ofd.Multiselect =
+				ofd.RestoreDirectory = true;
+
+
 				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
+					_lastSpriteDirectory = Path.GetDirectoryName(ofd.FileName);
+
 					if (InsertSprites(TilePanel.idSel + 1, ofd.FileNames))
 						InsertSpritesFinish();
 					else
@@ -894,7 +954,9 @@ namespace PckView
 		/// <summary>
 		/// Inserts sprites into the currently loaded spriteset starting at a
 		/// given Id.
-		/// Helper for OnInsertSpriteBeforeClick() and OnInsertSpriteAfterClick().
+		/// @note Helper for
+		/// - OnInsertSpriteBeforeClick()
+		/// - OnInsertSpriteAfterClick()
 		/// </summary>
 		/// <param name="id">the terrain-id to start inserting at</param>
 		/// <param name="files">an array of filenames</param>
@@ -904,17 +966,20 @@ namespace PckView
 			var bs = new Bitmap[files.Length]; // first run a check against all sprites and if any are borked exit w/ false.
 			for (int i = 0; i != files.Length; ++i)
 			{
-				byte[] bindata = File.ReadAllBytes(files[i]);
-				Bitmap b = BitmapHandler.LoadBitmap(bindata);
-
-				if (   b.Width  == XCImage.SpriteWidth
-					&& b.Height == XCImage.SpriteHeight
-					&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+				byte[] bindata = FileService.ReadFile(files[i]);
+				if (bindata != null)
 				{
-					bs[i] = b;
+					Bitmap b = BitmapHandler.LoadBitmap(bindata);
+
+					if (   b.Width  == XCImage.SpriteWidth
+						&& b.Height == XCImage.SpriteHeight
+						&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+					{
+						bs[i] = b;
+					}
+					else return false;
 				}
-				else
-					return false;
+				else return false;
 			}
 
 			int length = files.Length;
@@ -953,7 +1018,7 @@ namespace PckView
 		/// <summary>
 		/// Replaces the selected sprite in the collection with a different
 		/// sprite.
-		/// Called when the contextmenu's Click event is raised.
+		/// @note Called when the Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -972,30 +1037,50 @@ namespace PckView
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 						   + "All files (*.*)|*.*";
 
+//				ofd.DefaultExt = ;
+//				ofd.FileName = ;
+
+				if (Directory.Exists(_lastSpriteDirectory))
+					ofd.InitialDirectory = _lastSpriteDirectory;
+				else
+				{
+					string dir = Path.GetDirectoryName(PfSpriteset);
+					if (Directory.Exists(dir))
+						ofd.InitialDirectory = dir;
+				}
+
+				ofd.RestoreDirectory = true;
+
+
 				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
-					byte[] bindata = File.ReadAllBytes(ofd.FileName);
-					Bitmap b = BitmapHandler.LoadBitmap(bindata);
+					_lastSpriteDirectory = Path.GetDirectoryName(ofd.FileName);
 
-					if (   b.Width  == XCImage.SpriteWidth
-						&& b.Height == XCImage.SpriteHeight
-						&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+					byte[] bindata = FileService.ReadFile(ofd.FileName);
+					if (bindata != null)
 					{
-						var sprite = BitmapService.CreateSprite(
-															b,
-															TilePanel.idSel,
-															Pal,
-															XCImage.SpriteWidth,
-															XCImage.SpriteHeight,
-															IsScanG);
-						TilePanel.Spriteset[TilePanel.idSel] =
-						SpriteEditor.SpritePanel.Sprite = sprite;
+						Bitmap b = BitmapHandler.LoadBitmap(bindata);
 
-						TilePanel.Refresh();
-						Changed = true;
+						if (   b.Width  == XCImage.SpriteWidth
+							&& b.Height == XCImage.SpriteHeight
+							&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+						{
+							var sprite = BitmapService.CreateSprite(
+																b,
+																TilePanel.idSel,
+																Pal,
+																XCImage.SpriteWidth,
+																XCImage.SpriteHeight,
+																IsScanG);
+							TilePanel.Spriteset[TilePanel.idSel] =
+							SpriteEditor.SpritePanel.Sprite = sprite;
+
+							TilePanel.Refresh();
+							Changed = true;
+						}
+						else
+							ShowBitmapError();
 					}
-					else
-						ShowBitmapError();
 				}
 			}
 		}
@@ -1047,7 +1132,7 @@ namespace PckView
 
 		/// <summary>
 		/// Deletes the selected sprite from the collection.
-		/// Called when the contextmenu's Click event is raised.
+		/// @note Called when the Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1068,7 +1153,7 @@ namespace PckView
 
 		/// <summary>
 		/// Exports the selected sprite in the collection to a PNG file.
-		/// Called when the contextmenu's Click event is raised.
+		/// @note Called when the Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1092,18 +1177,21 @@ namespace PckView
 				sfd.DefaultExt = GlobalsXC.PngExt;
 				sfd.FileName   = TilePanel.Spriteset.Label.ToUpperInvariant() + suffix;
 
-				if (_lastFolderBrowserPath == null || !Directory.Exists(_lastFolderBrowserPath))
+				if (!Directory.Exists(_lastSpriteDirectory))
 				{
-					string path = Path.GetDirectoryName(PfSpriteset);
-					if (Directory.Exists(path))
-						sfd.InitialDirectory = path;
+					string dir = Path.GetDirectoryName(PfSpriteset);
+					if (Directory.Exists(dir))
+						sfd.InitialDirectory = dir;
 				}
 				else
-					sfd.InitialDirectory = _lastFolderBrowserPath;
+					sfd.InitialDirectory = _lastSpriteDirectory;
+
+				sfd.RestoreDirectory = true;
+
 
 				if (sfd.ShowDialog(this) == DialogResult.OK)
 				{
-					_lastFolderBrowserPath = Path.GetDirectoryName(sfd.FileName);
+					_lastSpriteDirectory = Path.GetDirectoryName(sfd.FileName);
 
 					Bitmap b = TilePanel.Spriteset[TilePanel.idSel].Sprite;
 					// TODO: Ask to overwrite an existing file.
@@ -1115,7 +1203,8 @@ namespace PckView
 
 		/// <summary>
 		/// Creates a brand sparkling new (blank) sprite-collection.
-		/// Called when the File menu's Click event is raised.
+		/// @note Called when the File menu's click-event is raised.
+		/// @note ScanG.dat cannot be created.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1157,12 +1246,20 @@ namespace PckView
 					sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
 					sfd.DefaultExt = GlobalsXC.PckExt;
 
-//					sfd.InitialDirectory = ; // TODO <-
+					if (Directory.Exists(_lastCreateDirectory))
+						sfd.InitialDirectory = _lastCreateDirectory;
+					else if (!String.IsNullOrEmpty(PfSpriteset))
+					{
+						string dir = Path.GetDirectoryName(PfSpriteset);
+						if (Directory.Exists(dir))
+							sfd.InitialDirectory = dir;
+					}
 
 
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
 						string pfe = sfd.FileName;
+						_lastCreateDirectory = Path.GetDirectoryName(pfe);
 
 						string dir   = Path.GetDirectoryName(pfe);
 						string label = Path.GetFileNameWithoutExtension(pfe);
@@ -1222,7 +1319,7 @@ namespace PckView
 
 		/// <summary>
 		/// Opens a sprite-collection of a terrain or a unit.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1232,8 +1329,18 @@ namespace PckView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title  = "Select a PCK (terrain/unit) file";
-					ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					ofd.Title      = "Select a PCK (terrain/unit) file";
+					ofd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					ofd.DefaultExt = GlobalsXC.PckExt;
+//					ofd.FileName   = ;
+
+					if (!String.IsNullOrEmpty(PfSpriteset))
+					{
+						string dir = Path.GetDirectoryName(PfSpriteset);
+						if (Directory.Exists(dir))
+							ofd.InitialDirectory = dir;
+					}
+
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
@@ -1247,7 +1354,7 @@ namespace PckView
 
 		/// <summary>
 		/// Opens a sprite-collection of bigobs.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1257,8 +1364,18 @@ namespace PckView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title  = "Select a PCK (bigobs) file";
-					ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					ofd.Title      = "Select a PCK (bigobs) file";
+					ofd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					ofd.DefaultExt = GlobalsXC.PckExt;
+					ofd.FileName   = "BIGOBS";
+
+					if (!String.IsNullOrEmpty(PfSpriteset))
+					{
+						string dir = Path.GetDirectoryName(PfSpriteset);
+						if (Directory.Exists(dir))
+							ofd.InitialDirectory = dir;
+					}
+
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
@@ -1272,6 +1389,7 @@ namespace PckView
 
 		/// <summary>
 		/// Opens a sprite-collection of ScanG icons.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1281,8 +1399,11 @@ namespace PckView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title  = "Select a ScanG file";
-					ofd.Filter = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.Title      = "Select a ScanG file";
+					ofd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.DefaultExt = GlobalsXC.DatExt;
+					ofd.FileName   = "SCANG";
+
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
@@ -1297,7 +1418,7 @@ namespace PckView
 		/// <summary>
 		/// Saves all the sprites to the currently loaded PCK+TAB files if
 		/// terrain/unit/bigobs or to the currently loaded DAT file if ScanG.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1327,7 +1448,7 @@ namespace PckView
 		/// <summary>
 		/// Saves all the sprites to potentially different PCK+TAB files if
 		/// terrain/unit/bigobs or to a potentially different DAT file if ScanG.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1352,9 +1473,21 @@ namespace PckView
 						sfd.FileName   = Path.GetFileName(PfSpriteset) + GlobalsXC.PckExt;
 					}
 
+					if (!Directory.Exists(_lastBrowserDirectory))
+					{
+						string dir = Path.GetDirectoryName(PfSpriteset);
+						if (Directory.Exists(dir))
+							sfd.InitialDirectory = dir;
+					}
+					else
+						sfd.InitialDirectory = _lastBrowserDirectory;
+
+
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
 						string pfe = sfd.FileName;
+						string dir = Path.GetDirectoryName(pfe);
+						_lastBrowserDirectory = dir;
 
 						if (IsScanG)
 						{
@@ -1367,7 +1500,6 @@ namespace PckView
 						}
 						else
 						{
-							string dir   = Path.GetDirectoryName(pfe);
 							string label = Path.GetFileNameWithoutExtension(pfe);
 							string pf    = Path.Combine(dir, label);
 
@@ -1384,11 +1516,9 @@ namespace PckView
 		}
 
 
-		private string _lastFolderBrowserPath;
-
 		/// <summary>
 		/// Exports all sprites in the currently loaded spriteset to PNG files.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1409,18 +1539,19 @@ namespace PckView
 														+ Environment.NewLine + Environment.NewLine
 														+ "\t\t" + label);
 
-						if (String.IsNullOrEmpty(_lastFolderBrowserPath))
+						if (!Directory.Exists(_lastSpriteDirectory))
 						{
 							string dir = Path.GetDirectoryName(PfSpriteset);
 							if (Directory.Exists(dir))
 								fbd.SelectedPath = dir;
 						}
 						else
-							fbd.SelectedPath = _lastFolderBrowserPath;
+							fbd.SelectedPath = _lastSpriteDirectory;
+
 
 						if (fbd.ShowDialog(this) == DialogResult.OK)
 						{
-							_lastFolderBrowserPath = fbd.SelectedPath;
+							_lastSpriteDirectory = fbd.SelectedPath;
 
 							string digits = String.Empty;
 							int digittest = count;
@@ -1436,7 +1567,7 @@ namespace PckView
 															CultureInfo.InvariantCulture,
 															"_{0:" + digits + "}",
 															sprite.Id);
-								string pfe = Path.Combine(_lastFolderBrowserPath, label + suffix + GlobalsXC.PngExt);
+								string pfe = Path.Combine(_lastSpriteDirectory, label + suffix + GlobalsXC.PngExt);
 								// TODO: Ask to overwrite an existing file.
 								BitmapService.ExportSprite(pfe, sprite.Sprite);
 							}
@@ -1449,7 +1580,7 @@ namespace PckView
 		/// <summary>
 		/// Exports all sprites in the currently loaded spriteset to a PNG
 		/// spritesheet file.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1457,7 +1588,7 @@ namespace PckView
 		{
 			if (TilePanel.Spriteset != null && TilePanel.Spriteset.Count != 0)
 			{
-				using (var fbd = new FolderBrowserDialog())
+				using (var fbd = new FolderBrowserDialog()) // TODO: That should be a SaveFileDialog.
 				{
 					string label = TilePanel.Spriteset.Label.ToUpperInvariant();
 
@@ -1467,20 +1598,21 @@ namespace PckView
 													+ Environment.NewLine + Environment.NewLine
 													+ "\t" + label);
 
-					if (String.IsNullOrEmpty(_lastFolderBrowserPath))
+					if (!Directory.Exists(_lastSpriteDirectory))
 					{
 						string dir = Path.GetDirectoryName(PfSpriteset);
 						if (Directory.Exists(dir))
 							fbd.SelectedPath = dir;
 					}
 					else
-						fbd.SelectedPath = _lastFolderBrowserPath;
+						fbd.SelectedPath = _lastSpriteDirectory;
+
 
 					if (fbd.ShowDialog(this) == DialogResult.OK)
 					{
-						_lastFolderBrowserPath = fbd.SelectedPath;
+						_lastSpriteDirectory = fbd.SelectedPath;
 
-						string pfe = Path.Combine(_lastFolderBrowserPath, label + GlobalsXC.PngExt);
+						string pfe = Path.Combine(_lastSpriteDirectory, label + GlobalsXC.PngExt);
 /*						if (File.Exists(pfe)) // TODO: Ask to overwrite the existing file.
 							MessageBox.Show(
 										this,
@@ -1498,6 +1630,7 @@ namespace PckView
 
 		/// <summary>
 		/// Imports (and replaces) the current spriteset from a BMP spritesheet.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1511,6 +1644,19 @@ namespace PckView
 					ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
 							   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 							   + "All files (*.*)|*.*";
+
+//					ofd.DefaultExt = ;
+//					ofd.FileName = ;
+
+					if (!Directory.Exists(_lastSpriteDirectory))
+					{
+						string dir = Path.GetDirectoryName(PfSpriteset);
+						if (Directory.Exists(dir))
+							ofd.InitialDirectory = dir;
+					}
+					else
+						ofd.InitialDirectory = _lastSpriteDirectory;
+
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
@@ -1543,7 +1689,7 @@ namespace PckView
 
 		/// <summary>
 		/// Closes the app.
-		/// Called when the mainmenu's file-menu Click event is raised.
+		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1554,8 +1700,8 @@ namespace PckView
 
 		/// <summary>
 		/// Changes the current palette.
-		/// Called when the mainmenu's palette-menu Click event is raised by
-		/// mouseclick or hotkey.
+		/// @note Called when the Palette menu's click-event is raised whether
+		/// by mouse or keyboard.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1580,8 +1726,8 @@ namespace PckView
 
 		/// <summary>
 		/// Toggles transparency of the currently loaded palette.
-		/// Called when the mainmenu's transparency-menu Click event is raised
-		/// by mouseclick or hotkey.
+		/// @note Called when the Palette menu's click-event is raised whether
+		/// by mouse or keyboard.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1597,6 +1743,7 @@ namespace PckView
 
 		/// <summary>
 		/// Toggles usage of the sprite-shade value of MapView's options.
+		/// @note Called when the Palette menu's click-event is raised.
 		/// @note 'SpriteShade' is no longer the sprite-shade value.
 		/// 'SpriteShade' was converted to 'SpriteShadeFloat' in the cTor, hence
 		/// it can and does take a new definition here:
@@ -1627,7 +1774,7 @@ namespace PckView
 		/// <summary>
 		/// Shows a richtextbox with all the bytes of the currently selected
 		/// sprite laid out in a fairly readable fashion.
-		/// @note Called when the mainmenu's bytes-menu Click event is raised.
+		/// @note Called when the Bytes menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1651,7 +1798,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Callback for LoadBytesTable().
+		/// @note Callback for LoadBytesTable().
 		/// </summary>
 		private void BytesClosingCallback()
 		{
@@ -1660,7 +1807,7 @@ namespace PckView
 
 		/// <summary>
 		/// Shows the CHM helpfile.
-		/// Called when the mainmenu's help-menu Click event is raised.
+		/// @note Called when the Help menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1673,7 +1820,7 @@ namespace PckView
 
 		/// <summary>
 		/// Shows the about-box.
-		/// Called when the mainmenu's help-menu Click event is raised.
+		/// @note Called when the Help menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1682,6 +1829,11 @@ namespace PckView
 			new About().ShowDialog(this);
 		}
 
+		/// <summary>
+		/// is disabled.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnCompareClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE
 		{
 /*			var original = TileTable.Spriteset; // store original spriteset

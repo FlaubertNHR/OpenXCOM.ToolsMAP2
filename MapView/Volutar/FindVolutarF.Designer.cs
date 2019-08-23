@@ -14,7 +14,6 @@ namespace MapView.Volutar
 		private System.Windows.Forms.TextBox tbInput;
 		private System.Windows.Forms.Panel pnl_Buttons;
 		private System.Windows.Forms.Panel pnl_Head;
-		private System.Windows.Forms.OpenFileDialog openFileDialog;
 		private System.Windows.Forms.Button btnFindFile;
 
 
@@ -44,7 +43,6 @@ namespace MapView.Volutar
 			this.pnl_Buttons = new System.Windows.Forms.Panel();
 			this.pnl_Head = new System.Windows.Forms.Panel();
 			this.btnFindFile = new System.Windows.Forms.Button();
-			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.pnl_Buttons.SuspendLayout();
 			this.pnl_Head.SuspendLayout();
 			this.SuspendLayout();
@@ -125,10 +123,6 @@ namespace MapView.Volutar
 			this.btnFindFile.Text = "...";
 			this.btnFindFile.UseVisualStyleBackColor = true;
 			this.btnFindFile.Click += new System.EventHandler(this.btnFindFile_Click);
-			// 
-			// openFileDialog
-			// 
-			this.openFileDialog.Filter = "Executable files|*.exe|All files|*.*";
 			// 
 			// FindVolutarF
 			// 

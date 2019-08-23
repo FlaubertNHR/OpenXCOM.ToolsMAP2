@@ -78,9 +78,9 @@
     <Compile Include="CacheLoad.cs" />
     <Compile Include="CloseTerrainDialog.cs" />
     <Compile Include="Colors.cs" />
-    <Compile Include="CopyF.cs" />
-    <Compile Include="CopyF.Designer.cs">
-      <DependentUpon>CopyF.cs</DependentUpon>
+    <Compile Include="CopyierF.cs" />
+    <Compile Include="CopyierF.Designer.cs">
+      <DependentUpon>CopyierF.cs</DependentUpon>
     </Compile>
     <Compile Include="isocube.cs" />
     <Compile Include="LoftF.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordLabel.cs" />
     <Compile Include="RecordTextbox.cs" />
-    <Compile Include="TerrainPanel_copy.cs" />
+    <Compile Include="TerrainPanel_copier.cs" />
     <Compile Include="TerrainPanel_main.cs" />
     <Compile Include="ScanGiconF.cs" />
     <Compile Include="SpritesetF.cs" />
@@ -117,8 +117,8 @@
     <EmbeddedResource Include="CloseTerrainDialog.resx">
       <DependentUpon>CloseTerrainDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CopyF.resx">
-      <DependentUpon>CopyF.cs</DependentUpon>
+    <EmbeddedResource Include="CopyierF.resx">
+      <DependentUpon>CopyierF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoftF.resx">
       <DependentUpon>LoftF.cs</DependentUpon>

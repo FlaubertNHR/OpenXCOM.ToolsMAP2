@@ -1860,6 +1860,8 @@ namespace MapView.Forms.Observers
 		}
 
 
+		private string _lastExportDirectory;
+
 		private void OnExportClick(object sender, EventArgs e)
 		{
 			if (MapFile != null)
@@ -1871,17 +1873,26 @@ namespace MapView.Forms.Observers
 					sfd.DefaultExt = GlobalsXC.RouteExt;
 					sfd.FileName   = MapFile.Descriptor.Label;
 
-					string path = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.RoutesDir);
-					if (Directory.Exists(path))
-						sfd.InitialDirectory = path;
+					if (!Directory.Exists(_lastExportDirectory))
+					{
+						string path = Path.Combine(MapBase.Descriptor.Basepath, GlobalsXC.RoutesDir);
+						if (Directory.Exists(path))
+							sfd.InitialDirectory = path;
+					}
+					else
+						sfd.InitialDirectory = _lastExportDirectory;
+
 
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
+						_lastExportDirectory = Path.GetDirectoryName(sfd.FileName);
 						MapFile.Routes.ExportRoutes(sfd.FileName);
 					}
 				}
 			}
 		}
+
+		private string _lastImportDirectory;
 
 		private void OnImportClick(object sender, EventArgs e)
 		{
@@ -1891,15 +1902,23 @@ namespace MapView.Forms.Observers
 				{
 					ofd.Title      = "Import Route file ...";
 					ofd.Filter     = "Route files (*.RMP)|*.RMP|All files (*.*)|*.*";
-					ofd.DefaultExt = "RMP";
-					ofd.FileName   = MapFile.Descriptor.Label + GlobalsXC.RouteExt;
+					ofd.DefaultExt = GlobalsXC.RouteExt;
+					ofd.FileName   = MapFile.Descriptor.Label;
 
-					string path = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.RoutesDir);
-					if (Directory.Exists(path))
-						ofd.InitialDirectory = path;
+					if (!Directory.Exists(_lastImportDirectory))
+					{
+						string dir = Path.Combine(MapBase.Descriptor.Basepath, GlobalsXC.RoutesDir);
+						if (Directory.Exists(dir))
+							ofd.InitialDirectory = dir;
+					}
+					else
+						ofd.InitialDirectory = _lastImportDirectory;
+
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
+						_lastImportDirectory = Path.GetDirectoryName(ofd.FileName);
+
 						var routes = new RouteNodeCollection(ofd.FileName);
 						if (!routes.Fail)
 						{

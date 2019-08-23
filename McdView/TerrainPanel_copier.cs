@@ -10,23 +10,23 @@ namespace McdView
 	/// The panel that displays the entire MCD recordset with each record's
 	/// Sprite1 sprite.
 	/// </summary>
-	internal sealed class TerrainPanel_copy
+	internal sealed class TerrainPanel_copier
 		:
 			TerrainPanel
 	{
 		#region Properties
 		protected override int SelId
 		{
-			get { return _fcopy.SelId; }
-			set { _fcopy.SelId = value; }
+			get { return _fcopier.SelId; }
+			set { _fcopier.SelId = value; }
 		}
 		#endregion Properties
 
 
 		#region cTor
-		internal TerrainPanel_copy(McdviewF f, CopyF fcopy)
+		internal TerrainPanel_copier(McdviewF f, CopierF fcopier)
 			:
-				base(f, fcopy)
+				base(f, fcopier)
 		{
 			CreateContext();
 		}

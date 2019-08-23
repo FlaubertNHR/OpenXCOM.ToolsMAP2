@@ -488,7 +488,7 @@ namespace McdView
 		/// A special insert-operation via the Copier. Selects the last
 		/// tilepart and inserts the Copier's selected tileparts as well as
 		/// those parts' subparts.
-		/// Called by TerrainPanel_copy.OnInsertAfterLastClick().
+		/// Called by TerrainPanel_copier.OnInsertAfterLastClick().
 		/// </summary>
 		internal void InsertAfterLast()
 		{

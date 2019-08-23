@@ -361,26 +361,26 @@ namespace MapView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Title  = "Select a Map file";
-				ofd.Filter = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
+				ofd.Title      = "Select a Map file";
+				ofd.Filter     = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
+				ofd.DefaultExt = GlobalsXC.MapExt;
+//				ofd.FileName   = ;
 
-				string path = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
-				if (!Directory.Exists(path))
+				string dir = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
+				if (!Directory.Exists(dir))
 				{
 					if (Directory.Exists(TilesetBasepath))
-					{
-						path = TilesetBasepath;
-					}
-					else
-						path = String.Empty;
+						ofd.InitialDirectory = TilesetBasepath;
 				}
-				ofd.InitialDirectory = path;
+				else
+					ofd.InitialDirectory = dir;
+
 
 				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
 					string pfe = ofd.FileName;
 
-					string dir = Path.GetDirectoryName(pfe);
+					dir = Path.GetDirectoryName(pfe);
 					if (dir.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
 					{
 						TilesetBasepath = Path.GetDirectoryName(dir);

@@ -32,7 +32,7 @@ namespace McdView
 		/// <summary>
 		/// Spaces the layout of the fields etc. of the anisprites in the
 		/// sprite-group and -panel.
-		/// @note See also CopyF.LayoutSpritesGroup().
+		/// @note See also CopierF.LayoutSpritesGroup().
 		/// </summary>
 		private void LayoutSpritesGroup()
 		{
