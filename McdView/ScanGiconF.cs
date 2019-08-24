@@ -62,7 +62,7 @@ namespace McdView
 			Scroller.Scroll += OnScroll;
 			Controls.Add(Scroller);
 
-			int iconCount = _f.ScanG.Length / 16;
+			int iconCount = _f.ScanG.Length / ScanGicon.Length_ScanG;
 
 			int w;
 			if (iconCount < COLS)
@@ -147,7 +147,7 @@ namespace McdView
 			Rectangle rect;
 
 			int x, y;
-			for (int i = 0; i != _f.ScanG.Length / 16; ++i)
+			for (int i = 0; i != _f.ScanG.Length / ScanGicon.Length_ScanG; ++i)
 			{
 				x = (i % COLS) * (ICON_WIDTH  + HORI_PAD);
 				y = (i / COLS) * (ICON_HEIGHT + VERT_TEXT_PAD);
@@ -253,9 +253,9 @@ namespace McdView
 				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_TEXT_PAD) * COLS
 					   +  e.X / (ICON_WIDTH  + HORI_PAD);
 
-				if (id < _f.ScanG.Length / 16)
+				if (id < _f.ScanG.Length / ScanGicon.Length_ScanG)
 				{
-					if (id < 35) id = 35;
+					if (id < ScanGicon.UNITICON_Max) id = ScanGicon.UNITICON_Max;
 
 					_f.SetIcon(id);
 					Close();

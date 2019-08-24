@@ -13,11 +13,6 @@ namespace XCom
 	/// </summary>
 	public sealed class SpriteCollection
 	{
-		#region Fields (static)
-		public const int Length_ScanG = 16; // each ScanG icon is 16 bytes
-		#endregion Fields (static)
-
-
 		#region Properties
 		private List<XCImage> _sprites = new List<XCImage>();
 		public List<XCImage> Sprites
@@ -255,13 +250,13 @@ namespace XCom
 			var bindata = new byte[(int)fsScanG.Length];
 			fsScanG.Read(bindata, 0, bindata.Length);
 
-			int iconCount = bindata.Length / Length_ScanG;
+			int iconCount = bindata.Length / ScanGicon.Length_ScanG;
 			for (int i = 0; i != iconCount; ++i)
 			{
-				var icondata = new byte[Length_ScanG];
+				var icondata = new byte[ScanGicon.Length_ScanG];
 
-				for (int j = 0; j != Length_ScanG; ++j)
-					icondata[j] = bindata[i * Length_ScanG + j];
+				for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
+					icondata[j] = bindata[i * ScanGicon.Length_ScanG + j];
 
 				Sprites.Add(new ScanGicon(icondata, i));
 			}

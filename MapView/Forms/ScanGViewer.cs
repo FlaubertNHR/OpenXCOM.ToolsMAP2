@@ -252,7 +252,7 @@ namespace MapView
 						if (SingleLevel) zStart = Level;
 						else             zStart = _base.MapSize.Levs - 1;
 
-						int iconsTotal = _icons.Length / 16;
+						int iconsTotal = _icons.Length / ScanGicon.Length_ScanG;
 
 						for (int z = zStart; z >= Level; --z)
 						for (int y = 0; y != _base.MapSize.Rows; ++y)
@@ -264,7 +264,7 @@ namespace MapView
 
 							if (tile.Floor != null
 								&& (iconid = tile.Floor.Record.ScanG) < iconsTotal
-								&& iconid > 35)
+								&& iconid > ScanGicon.UNITICON_Max)
 							{
 								for (int i = 0; i != 256; ++i)
 								{
@@ -294,7 +294,7 @@ namespace MapView
 
 							if (tile.West != null
 								&& (iconid = tile.West.Record.ScanG) < iconsTotal
-								&& iconid > 35)
+								&& iconid > ScanGicon.UNITICON_Max)
 							{
 								for (int i = 0; i != 256; ++i)
 								{
@@ -311,7 +311,7 @@ namespace MapView
 
 							if (tile.North != null
 								&& (iconid = tile.North.Record.ScanG) < iconsTotal
-								&& iconid > 35)
+								&& iconid > ScanGicon.UNITICON_Max)
 							{
 								for (int i = 0; i != 256; ++i)
 								{
@@ -328,7 +328,7 @@ namespace MapView
 
 							if (tile.Content != null
 								&& (iconid = tile.Content.Record.ScanG) < iconsTotal
-								&& iconid > 35)
+								&& iconid > ScanGicon.UNITICON_Max)
 							{
 								for (int i = 0; i != 256; ++i)
 								{

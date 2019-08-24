@@ -2028,7 +2028,7 @@ namespace PckView
 			using (var fs = FileService.OpenFile(pfeScanG))
 			if (fs != null)
 			{
-				if (((int)fs.Length % SpriteCollection.Length_ScanG) != 0)
+				if (((int)fs.Length % ScanGicon.Length_ScanG) != 0)
 				{
 					using (var f = new Infobox(
 											"Error",

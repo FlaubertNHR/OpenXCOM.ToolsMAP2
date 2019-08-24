@@ -3,10 +3,17 @@
 
 namespace XCom
 {
-	internal sealed class ScanGicon
+	public sealed class ScanGicon
 		:
 			XCImage
 	{
+		#region Fields (static)
+		public const int Length_ScanG = 16; // each ScanG icon is 16 bytes
+
+		public const int UNITICON_Max = 35; // icons #0..35 are unit-icons (not terrain-icons)
+		#endregion Fields (static)
+
+
 		#region cTor
 		/// <summary>
 		/// Instantiates a ScanG icon, based on an XCImage.

@@ -146,13 +146,13 @@ namespace XCom
 				byte[] bytes = FileService.ReadFile(pfe);
 				if (bytes != null)
 				{
-					int d1 = bytes.Length / SpriteCollection.Length_ScanG;
-					ScanGufo = new int[d1, SpriteCollection.Length_ScanG];
+					int d1 = bytes.Length / ScanGicon.Length_ScanG;
+					ScanGufo = new int[d1, ScanGicon.Length_ScanG];
 
 					for (int i = 0; i != d1; ++i)
-					for (int j = 0; j != SpriteCollection.Length_ScanG; ++j)
+					for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
 					{
-						ScanGufo[i,j] = bytes[i * SpriteCollection.Length_ScanG + j];
+						ScanGufo[i,j] = bytes[i * ScanGicon.Length_ScanG + j];
 					}
 					return true;
 				}
@@ -174,13 +174,13 @@ namespace XCom
 				byte[] bytes = FileService.ReadFile(pfe);
 				if (bytes != null)
 				{
-					int d1 = bytes.Length / SpriteCollection.Length_ScanG;
-					ScanGtftd = new int[d1, SpriteCollection.Length_ScanG];
+					int d1 = bytes.Length / ScanGicon.Length_ScanG;
+					ScanGtftd = new int[d1, ScanGicon.Length_ScanG];
 
 					for (int i = 0; i != d1; ++i)
-					for (int j = 0; j != SpriteCollection.Length_ScanG; ++j)
+					for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
 					{
-						ScanGtftd[i,j] = bytes[i * SpriteCollection.Length_ScanG + j];
+						ScanGtftd[i,j] = bytes[i * ScanGicon.Length_ScanG + j];
 					}
 					return true;
 				}
