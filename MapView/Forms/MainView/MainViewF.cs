@@ -2868,12 +2868,16 @@ namespace MapView
 
 						MainViewOverlay.FirstClick = false;
 
-						if (descriptor.Pal == Palette.TftdBattle) // used by Mono only ->
+						if (descriptor.Pal == Palette.TftdBattle)
 						{
-							MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle;
+							MenuManager.EnableScanG(ResourceInfo.ScanGtftd != null);
+							MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle; // used by Mono only
 						}
 						else // default to ufo-battle palette
-							MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle;
+						{
+							MenuManager.EnableScanG(ResourceInfo.ScanGufo != null);
+							MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle; // used by Mono only
+						}
 
 						MainViewUnderlay.MapBase = @base;
 

@@ -46,20 +46,10 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			_base = @base;
-			Level = _base.Level;
+			Level = (_base = @base).Level;
 			Text = GetTitle();
 
-			if (_base.Descriptor.Pal == Palette.TftdBattle)
-			{
-				_icons = ResourceInfo.ScanGtftd;
-				_pal   = Palette.TftdBattle;
-			}
-			else
-			{
-				_icons = ResourceInfo.ScanGufo;
-				_pal   = Palette.UfoBattle;
-			}
+			SetResources();
 
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
 			{											// let ClientSize deter width and height.
@@ -396,14 +386,32 @@ namespace MapView
 		/// <param name="base"></param>
 		internal void LoadMapfile(MapFileBase @base)
 		{
-			_base = @base;
+			Level = (_base = @base).Level;
+			Text = GetTitle();
+
+			SetResources();
+
 			ClientSize = new Size(
 								_base.MapSize.Cols * 16 + 2,
 								_base.MapSize.Rows * 16 + 2);
-			Level = _base.Level;
-			Text = GetTitle();
-
 			Refresh(); // req'd.
+		}
+
+		/// <summary>
+		/// Sets the iconset and palette.
+		/// </summary>
+		private void SetResources()
+		{
+			if (_base.Descriptor.Pal == Palette.TftdBattle)
+			{
+				_icons = ResourceInfo.ScanGtftd;
+				_pal   = Palette.TftdBattle;
+			}
+			else
+			{
+				_icons = ResourceInfo.ScanGufo;
+				_pal   = Palette.UfoBattle;
+			}
 		}
 		#endregion Methods
 

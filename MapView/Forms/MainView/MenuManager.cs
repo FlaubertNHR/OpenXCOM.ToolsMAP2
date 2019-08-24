@@ -20,12 +20,12 @@ namespace MapView.Forms.MainView
 
 		internal const int MI_non      = -1;
 		internal const int MI_TILE     =  0;
-		internal const int MI_sep1     =  1;
+		private  const int MI_sep1     =  1;
 		internal const int MI_TOP      =  2;
 		internal const int MI_ROUTE    =  3;
 		internal const int MI_TOPROUTE =  4;
-		internal const int MI_cutoff   =  5;
-		internal const int MI_SCANG    =  9;
+		private  const int MI_cutoff   =  5;
+		private  const int MI_SCANG    =  9;
 		#endregion Fields (static)
 
 
@@ -71,6 +71,7 @@ namespace MapView.Forms.MainView
 			Viewers.MenuItems.Add(new MenuItem(Separator));								// id #8
 
 			var it9 = new MenuItem("Scan&G view", OnScanGClick, Shortcut.CtrlG);		// id #9
+			it9.Enabled = false;
 			Viewers.MenuItems.Add(it9);
 		}
 
@@ -344,6 +345,15 @@ namespace MapView.Forms.MainView
 			MainViewF.BypassActivatedEvent = false;
 		}
 
+
+		/// <summary>
+		/// Enables the ScanG menuitem.
+		/// </summary>
+		/// <param name="enabled"></param>
+		internal static void EnableScanG(bool enabled)
+		{
+			Viewers.MenuItems[MI_SCANG].Enabled = enabled;
+		}
 
 		/// <summary>
 		/// Handles clicks on the ScanG view item.
