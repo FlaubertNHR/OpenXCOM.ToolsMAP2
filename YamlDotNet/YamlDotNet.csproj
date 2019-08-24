@@ -170,7 +170,6 @@
     <Compile Include="Core\Tokens\VersionDirective.cs" />
     <Compile Include="Core\Version.cs" />
     <Compile Include="Core\YamlException.cs" />
-    <Compile Include="Properties\AssemblyInfo.Generated.cs" />
     <Compile Include="RepresentationModel\DocumentLoadingState.cs" />
     <Compile Include="RepresentationModel\EmitterState.cs" />
     <Compile Include="RepresentationModel\IYamlVisitor.cs" />
@@ -322,7 +321,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+<!-- // kL_edit
   <Target Name="BeforeBuild">
     <WriteLinesToFile File="$(MSBuildProjectDirectory)\Properties\AssemblyInfo.Generated.cs" Lines="[assembly: System.Reflection.AssemblyConfiguration(&quot;$(Configuration)&quot;)]" Overwrite="true" />
   </Target>
+  -->
 </Project>
