@@ -259,9 +259,7 @@ namespace McdView
 							case MouseButtons.Left:
 							{
 								using (var f = new SpritesetF(this, phase, Int32.Parse(id)))
-								{
-									f.ShowDialog();
-								}
+									f.ShowDialog(this);
 								break;
 							}
 
@@ -349,7 +347,7 @@ namespace McdView
 			if (SelId != -1 && ScanG != null)
 			{
 				int id = Int32.Parse(tb20_scang1.Text);
-				if (id > 35 && id < ScanG.Length / 16)
+				if (id > ScanGicon.UNITICON_Max && id < ScanG.Length / ScanGicon.Length_ScanG)
 				{
 					_graphics = e.Graphics;
 					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
@@ -429,9 +427,7 @@ namespace McdView
 						pal = Palette.UfoBattle.ColorTable;
 
 					using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), pal))
-					{
-						f.ShowDialog();
-					}
+						f.ShowDialog(this);
 				}
 				else
 					MessageBox.Show(

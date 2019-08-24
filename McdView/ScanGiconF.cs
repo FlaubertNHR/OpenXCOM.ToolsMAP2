@@ -14,11 +14,12 @@ namespace McdView
 			Form
 	{
 		#region Fields (static)
-		private const int COLS             = 16;
+		private const int COLS_Max         = 16;
+		private const int COLS_Min         = 16;
 		private const int ROWS_VISIBLE_Max = 16;
 		private const int ICON_WIDTH       = 32;
 		private const int ICON_HEIGHT      = 32;
-		private const int VERT_TEXT_PAD    = 16;
+		private const int VERT_PAD_TEXT    = 16;
 		private const int HORI_PAD         =  1;
 
 		internal static Point Loc = new Point(-1,-1);
@@ -65,22 +66,22 @@ namespace McdView
 			int iconCount = _f.ScanG.Length / ScanGicon.Length_ScanG;
 
 			int w;
-			if (iconCount < COLS)
+			if (iconCount < COLS_Max)
 			{
 				w = iconCount;
-				if (w < 16) w = 16;
+				if (w < COLS_Min) w = COLS_Min;
 			}
 			else
-				w = COLS;
+				w = COLS_Max;
 
 			w = (w * ICON_WIDTH) + (w * HORI_PAD) - 1 + Scroller.Width;
 
-			int h = (iconCount + COLS - 1) / COLS * (ICON_HEIGHT + VERT_TEXT_PAD);
+			int h = (iconCount + COLS_Max - 1) / COLS_Max * (ICON_HEIGHT + VERT_PAD_TEXT);
 
 			TotalHeight = h;
 
-			if (h > (ICON_HEIGHT + VERT_TEXT_PAD) * ROWS_VISIBLE_Max)
-				h = (ICON_HEIGHT + VERT_TEXT_PAD) * ROWS_VISIBLE_Max;
+			if (h > (ICON_HEIGHT + VERT_PAD_TEXT) * ROWS_VISIBLE_Max)
+				h = (ICON_HEIGHT + VERT_PAD_TEXT) * ROWS_VISIBLE_Max;
 
 			ClientSize = new Size(w, h);
 
@@ -95,11 +96,11 @@ namespace McdView
 		#region Methods
 		private void ScrollIcon()
 		{
-			int r = IconId / COLS;
+			int r = IconId / COLS_Max;
 			if (r > ROWS_VISIBLE_Max - 1)
 			{
 				r -= ROWS_VISIBLE_Max - 1;
-				r *= ICON_HEIGHT + VERT_TEXT_PAD;
+				r *= ICON_HEIGHT + VERT_PAD_TEXT;
 				int h = TotalHeight - ClientSize.Height;
 				r = (r * MaxScrollVal + (h - 1)) / h;
 
@@ -149,8 +150,8 @@ namespace McdView
 			int x, y;
 			for (int i = 0; i != _f.ScanG.Length / ScanGicon.Length_ScanG; ++i)
 			{
-				x = (i % COLS) * (ICON_WIDTH  + HORI_PAD);
-				y = (i / COLS) * (ICON_HEIGHT + VERT_TEXT_PAD);
+				x = (i % COLS_Max) * (ICON_WIDTH  + HORI_PAD);
+				y = (i / COLS_Max) * (ICON_HEIGHT + VERT_PAD_TEXT);
 
 				var icon = new Bitmap(
 									4,4,
@@ -202,7 +203,7 @@ namespace McdView
 								x,
 								y + ICON_HEIGHT + _scrolloffset,
 								ICON_WIDTH,
-								VERT_TEXT_PAD);
+								VERT_PAD_TEXT);
 
 				if (i == _id)
 					graphics.FillRectangle(
@@ -224,7 +225,7 @@ namespace McdView
 			if (e.Delta > 0)
 			{
 				int val0 = Scroller.Value;
-				int val = Scroller.Value - Scroller.LargeChange;
+				int val  = Scroller.Value - Scroller.LargeChange;
 				if (val < 0)
 					val = 0;
 				Scroller.Value = val;
@@ -235,7 +236,7 @@ namespace McdView
 			else if (e.Delta < 0)
 			{
 				int val0 = Scroller.Value;
-				int val = Scroller.Value + Scroller.LargeChange;
+				int val  = Scroller.Value + Scroller.LargeChange;
 				if (val > MaxScrollVal)
 					val = MaxScrollVal;
 				Scroller.Value = val;
@@ -250,12 +251,13 @@ namespace McdView
 			if (   e.X > -1 && e.X < ClientSize.Width
 				&& e.Y > -1 && e.Y < ClientSize.Height)
 			{
-				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_TEXT_PAD) * COLS
+				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_PAD_TEXT) * COLS_Max
 					   +  e.X / (ICON_WIDTH  + HORI_PAD);
 
 				if (id < _f.ScanG.Length / ScanGicon.Length_ScanG)
 				{
-					if (id < ScanGicon.UNITICON_Max) id = ScanGicon.UNITICON_Max;
+					if (id < ScanGicon.UNITICON_Max)
+						id = ScanGicon.UNITICON_Max;
 
 					_f.SetIcon(id);
 					Close();

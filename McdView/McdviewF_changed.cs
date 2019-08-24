@@ -1233,22 +1233,24 @@ namespace McdView
 				{
 					int result;
 					if (Int32.TryParse(tb20_scang1.Text, out result)
-						&&     ((strict && result > 34 && result < 65571 && (ScanG == null || result < ScanG.Length / 16))
-							|| (!strict && result > 34 && result < 65571)))
+						&& result > 34 && result < 65571
+						&& (ScanG == null
+							|| result == ScanGicon.UNITICON_Max // req'd after choosing an icon per ScanGiconF but the iconset has less than 35 icons
+							|| !strict || result < ScanG.Length / ScanGicon.Length_ScanG))
 					{
 						Parts[SelId].Record.ScanG         = (ushort)(result);
-						Parts[SelId].Record.ScanG_reduced = (ushort)(result - 35);
+						Parts[SelId].Record.ScanG_reduced = (ushort)(result - ScanGicon.UNITICON_Max);
 
-						tb20_scang2.Text = (result - 35).ToString();
+						tb20_scang2.Text = (result - ScanGicon.UNITICON_Max).ToString();
 						pnl_ScanGic.Invalidate(); // uh how does the IsoLoFT panel refresh - it seems to okay ...
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
 					}
-					else if (result < 35)
-						tb20_scang1.Text = "35"; // recurse w/ default.
+					else if (result < ScanGicon.UNITICON_Max)
+						tb20_scang1.Text = ScanGicon.UNITICON_Max.ToString(); // recurse w/ default.
 					else if (strict && ScanG != null)
-						tb20_scang1.Text = (ScanG.Length / 16 - 1).ToString();
+						tb20_scang1.Text = (ScanG.Length / ScanGicon.Length_ScanG - 1).ToString();
 					else
 						tb20_scang1.Text = "65570";
 				}
@@ -1258,9 +1260,19 @@ namespace McdView
 		}
 		private void OnEnter20(object sender, EventArgs e)
 		{
+			string top = String.Empty;
+			if (ScanG != null)
+			{
+				int id = ScanG.Length / ScanGicon.Length_ScanG - 1;
+				if (id > ScanGicon.UNITICON_Max)
+					top = ".." + id;
+			}
+			else
+				top = ".." + 65570;
+
 			lbl_Description.Text = "ScanG (unsigned short) + 35"
 								 + Environment.NewLine + Environment.NewLine
-								 + "35.." + (ScanG != null ? (ScanG.Length / 16 - 1).ToString() : "65570");
+								 + "35" + top;
 		}
 		private void OnMouseEnterTextbox20(object sender, EventArgs e)
 		{
@@ -1286,13 +1298,15 @@ namespace McdView
 				{
 					int result;
 					if (Int32.TryParse(tb20_scang2.Text, out result)
-						&&     ((strict && result > -1 && result < 65536 && (ScanG == null || result < ScanG.Length / 16 - 35))
-							|| (!strict && result > -1 && result < 65536)))
+						&& result > -1 && result < 65536
+						&& (ScanG == null
+							|| result == 0 // safety.
+							|| !strict || result < ScanG.Length / ScanGicon.Length_ScanG - ScanGicon.UNITICON_Max))
 					{
-						Parts[SelId].Record.ScanG         = (ushort)(result + 35);
+						Parts[SelId].Record.ScanG         = (ushort)(result + ScanGicon.UNITICON_Max);
 						Parts[SelId].Record.ScanG_reduced = (ushort)(result);
 
-						tb20_scang1.Text = (result + 35).ToString();
+						tb20_scang1.Text = (result + ScanGicon.UNITICON_Max).ToString();
 						pnl_ScanGic.Invalidate(); // uh how does the IsoLoFT panel refresh - it seems to okay ...
 
 						if (!InitFields)
@@ -1301,9 +1315,9 @@ namespace McdView
 					else if (result < 1)
 						tb20_scang2.Text = "0"; // recurse w/ default.
 					else if (strict && ScanG != null)
-						tb20_scang2.Text = (ScanG.Length / 16 - 36).ToString();
+						tb20_scang2.Text = (ScanG.Length / ScanGicon.Length_ScanG - 36).ToString();
 					else
-						tb20_scang2.Text = "65535";
+						tb20_scang2.Text = UInt16.MaxValue.ToString();
 				}
 			}
 			else
@@ -1311,9 +1325,19 @@ namespace McdView
 		}
 		private void OnEnter20r(object sender, EventArgs e)
 		{
+			string top = String.Empty;
+			if (ScanG != null)
+			{
+				int id = ScanG.Length / ScanGicon.Length_ScanG - 36;
+				if (id > 0)
+					top = ".." + id;
+			}
+			else
+				top = ".." + UInt16.MaxValue;
+
 			lbl_Description.Text = "ScanG_reduced (unsigned short)"
 								 + Environment.NewLine + Environment.NewLine
-								 + "0.." + (ScanG != null ? (ScanG.Length / 16 - 36).ToString() : "65535");
+								 + "0" + top;
 		}
 		private void OnMouseEnterTextbox20r(object sender, EventArgs e)
 		{

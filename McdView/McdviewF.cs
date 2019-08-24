@@ -1929,7 +1929,7 @@ namespace McdView
 			// Sprites
 			if (Spriteset != null)
 			{
-				if ((y = Spriteset.Count - 1) > 255)
+				if ((y = Spriteset.Count - 1) > Byte.MaxValue)
 				{
 					borks.Add("#The terrain's spriteset count exceeds 256 but an MCD record"
 							+ Environment.NewLine
@@ -1939,7 +1939,7 @@ namespace McdView
 				}
 			}
 			else
-				y = 255;
+				y = Byte.MaxValue;
 
 			val = Parts[SelId].Record.Sprite1;
 			if (val != Int32.Parse(tb00_phase0.Text))
@@ -2025,7 +2025,7 @@ namespace McdView
 			// LoFTs
 			if (LoFT != null)
 			{
-				if ((y = LoFT.Length / 256 - 1) > 255)
+				if ((y = LoFT.Length / 256 - 1) > Byte.MaxValue)
 				{
 					borks.Add("#The LoFTs count exceeds 256 but an MCD record cannot deal"
 							+ Environment.NewLine
@@ -2035,7 +2035,7 @@ namespace McdView
 				}
 			}
 			else
-				y = 255;
+				y = Byte.MaxValue;
 
 			val = Parts[SelId].Record.Loft1;
 			if (val != Int32.Parse(tb08_loft00.Text))
@@ -2161,7 +2161,7 @@ namespace McdView
 			// ScanG
 			if (ScanG != null)
 			{
-				if ((y = ScanG.Length / 16 - 1) > 65535)
+				if ((y = ScanG.Length / ScanGicon.Length_ScanG - 1) > UInt16.MaxValue)
 				{
 					borks.Add("#The ScanG count exceeds 65536 but an MCD record cannot deal"
 							+ Environment.NewLine
@@ -2171,14 +2171,14 @@ namespace McdView
 				}
 			}
 			else
-				y = 65535;
+				y = UInt16.MaxValue;
 
 			val = Parts[SelId].Record.ScanG;
 			if (val != Int32.Parse(tb20_scang1.Text))
 			{
 				borks.Add("#20 ScanG (record) does not equal ScanG (text).");
 			}
-			if (!Test(val, 35, y + 35))
+			if (!Test(val, ScanGicon.UNITICON_Max, y + ScanGicon.UNITICON_Max))
 			{
 				borks.Add("#20 ScanG id is outside the ScanG limits.");
 			}
@@ -2496,8 +2496,8 @@ namespace McdView
 		/// Checks if a specified value is within specified parameters.
 		/// </summary>
 		/// <param name="val">a value to test</param>
-		/// <param name="x">the minimum acceptable value</param>
-		/// <param name="y">the maximum acceptable value</param>
+		/// <param name="x">the minimum accepted value</param>
+		/// <param name="y">the maximum accepted value</param>
 		/// <returns></returns>
 		private bool Test(int val, int x, int y)
 		{
