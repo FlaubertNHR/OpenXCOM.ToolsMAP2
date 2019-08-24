@@ -48,9 +48,9 @@ namespace MapView
 			if (restart)
 			{
 				toolTip1.SetToolTip(cbResources, "auto restart! Create paths to"
-											+ " stock UFO/TFTD installations");
-				toolTip1.SetToolTip(rbTilesets, "auto restart! WARNING : This will"
-									+ " replace any custom tileset configuration");
+											   + " stock UFO/TFTD installations");
+				toolTip1.SetToolTip(rbTilesets, "auto restart! WARNING : This will replace"
+											  + " any custom tileset configuration");
 			}
 
 			// WORKAROUND: See note in MainViewF cTor.
@@ -111,14 +111,17 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnFindUfoClick(object sender, EventArgs e)
 		{
-			using (var f = new FolderBrowserDialog())
+			using (var fbd = new FolderBrowserDialog())
 			{
-				f.Description = "Select UFO Resources directory."
+				fbd.Description = "Select UFO Resources directory."
 							  + Environment.NewLine + Environment.NewLine
 							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (typically)";
 
-				if (f.ShowDialog(this) == DialogResult.OK)
-					Ufo = f.SelectedPath;
+				fbd.SelectedPath = Path.GetDirectoryName(Application.ExecutablePath);
+
+
+				if (fbd.ShowDialog(this) == DialogResult.OK)
+					Ufo = fbd.SelectedPath;
 			}
 		}
 
@@ -129,14 +132,17 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnFindTftdClick(object sender, EventArgs e)
 		{
-			using (var f = new FolderBrowserDialog())
+			using (var fbd = new FolderBrowserDialog())
 			{
-				f.Description = "Select TFTD Resources directory"
+				fbd.Description = "Select TFTD Resources directory"
 							  + Environment.NewLine + Environment.NewLine
 							  + "- the parent of MAPS, ROUTES, TERRAIN, and UFOGRAPH (typically)";
 
-				if (f.ShowDialog(this) == DialogResult.OK)
-					Tftd = f.SelectedPath;
+				fbd.SelectedPath = Path.GetDirectoryName(Application.ExecutablePath);
+
+
+				if (fbd.ShowDialog(this) == DialogResult.OK)
+					Tftd = fbd.SelectedPath;
 			}
 		}
 
