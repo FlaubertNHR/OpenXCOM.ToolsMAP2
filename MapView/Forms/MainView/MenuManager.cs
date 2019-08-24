@@ -124,10 +124,10 @@ namespace MapView.Forms.MainView
 				MainViewF.Optionables.setStartPropertyValue(fobserver, fobserver.Visible);
 
 				var foptions = MainViewF._foptions;
-				if (foptions != null && foptions.Visible)
+				if (foptions != null)
 				{
 					var grid = (foptions as OptionsForm).propertyGrid;
-					grid.Refresh();
+					grid.Refresh(); // yes refresh the grid even if it's hidden.
 				}
 			};
 		}
