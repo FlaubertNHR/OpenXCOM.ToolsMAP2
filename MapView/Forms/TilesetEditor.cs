@@ -344,6 +344,7 @@ namespace MapView
 				if (Directory.Exists(TilesetBasepath))
 					fbd.SelectedPath = TilesetBasepath;
 
+
 				if (fbd.ShowDialog(this) == DialogResult.OK)
 				{
 					TilesetBasepath = fbd.SelectedPath;
@@ -1060,11 +1061,12 @@ namespace MapView
 		{
 			using (var fbd = new FolderBrowserDialog())
 			{
-				fbd.SelectedPath = _lastTerrainFolder;
 				fbd.Description = String.Format(
 											CultureInfo.CurrentCulture,
 											"Browse to a basepath folder. A valid basepath"
 										  + " folder has the subfolder TERRAIN.");
+				fbd.SelectedPath = _lastTerrainFolder;
+
 
 				if (fbd.ShowDialog() == DialogResult.OK)
 				{
