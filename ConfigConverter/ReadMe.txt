@@ -1,5 +1,5 @@
-ConfigConverter v.2
-2019 jan 29
+ConfigConverter ver.2.2
+2019 aug 23
 
 
 ConfigConverter is a standalone utility that converts MapEdit.dat files to a YAML file. It's not perfect/robust but it might/should output the basics of a configuration file that can be used by MapView 2. It requires the additional files Images.dat and Paths.pth in the directory with MapEdit.dat.

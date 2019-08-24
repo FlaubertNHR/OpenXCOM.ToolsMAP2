@@ -1,6 +1,6 @@
 MapView ii
 
-2019 apr 7
+2019 aug 23
 
 major rewrite of the original MapView by Ben Ratzlaff aka DaiShiva (and others)
 
@@ -20,6 +20,7 @@ MAKE BACKUPS OF ALL YOUR STUFF. i mean it. Stuff being your MAPS and ROUTES, mos
 PckView is included as a spriteset editor and a very simple sprite editor - it can be used to create/edit/save PCK/TAB files.
 
 McdView is included as a partset editor - it can be used to create/edit/save MCD files.
+
 
 /enjoy
 
