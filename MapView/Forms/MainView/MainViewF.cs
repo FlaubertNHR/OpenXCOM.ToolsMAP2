@@ -243,7 +243,7 @@ namespace MapView
 
 
 
-			InitializeComponent();
+			InitializeComponent(); // ffs. This fires OnActivated but the Optionables aren't ready yet.
 			LogFile.WriteLine("MainView initialized.");
 
 
@@ -849,7 +849,8 @@ namespace MapView
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			if (MainViewF.Optionables.BringAllToFront)
+			if (   MainViewF.Optionables != null
+				&& MainViewF.Optionables.BringAllToFront)
 			{
 				if (!BypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
 				{
