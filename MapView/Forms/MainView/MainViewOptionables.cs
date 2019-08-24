@@ -54,7 +54,7 @@ namespace MapView.Forms.MainView
 //		[Editor(...)]
 
 		// NOTE: Observers are added to MainView's Options by
-		// MenuManager.PopulateMenus(). They are used by
+		// MenuManager.PopulateMenu(). They are used by
 		// MenuManager.StartSecondaryStageBoosters().
 		private const string cat_Observers = "Observers";
 
@@ -491,7 +491,7 @@ namespace MapView.Forms.MainView
 		[Description("If true use sprite-drawing algorithms that are designed for Mono."
 			+ " This fixes an issue on non-Windows systems where non-transparent"
 			+ " black boxes appear around sprites but it bypasses Interpolation"
-			+ " and SpriteShade routines. Selected tiles will not be grayed")]
+			+ " and SpriteShade routines. Also selected tiles will not be grayed")]
 		[DefaultValue(def_UseMono)]
 		public bool UseMono
 		{

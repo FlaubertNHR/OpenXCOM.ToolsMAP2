@@ -157,6 +157,8 @@ namespace MapView
 						}
 						else
 						{
+							_icons = null;
+
 							result = "SCANG.DAT failed to reload. Take the red pill.";
 							title  = " Error";
 							icon   = MessageBoxIcon.Error;
@@ -172,6 +174,8 @@ namespace MapView
 					}
 					else
 					{
+						_icons = null;
+
 						result = "SCANG.DAT failed to reload. Take the red pill.";
 						title  = " Error";
 						icon   = MessageBoxIcon.Error;
