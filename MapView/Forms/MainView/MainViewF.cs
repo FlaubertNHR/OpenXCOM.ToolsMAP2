@@ -362,6 +362,9 @@ namespace MapView
 			LogFile.WriteLine("Viewers menu populated.");
 
 
+			PathInfo piScanGufo  = null;
+			PathInfo piScanGtftd = null;
+
 			// Read MapResources.yml to get the resources dir (for both UFO and TFTD).
 			// NOTE: MapResources.yml is created by ConfigurationForm
 			using (var fs = FileService.OpenFile(piResources.Fullpath))
@@ -371,26 +374,37 @@ namespace MapView
 				var str = new YamlStream();
 				str.Load(sr);
 
-				string key = null;
-				string val = null;
+				string key, val;
 
 				var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
 				foreach (var node in nodeRoot.Children)
 				{
 					switch (node.Key.ToString())
 					{
+						// NOTE: These do not check if Directory.Exists().
+
 						case "ufo":
 							key = SharedSpace.ResourceDirectoryUfo;
+							val = node.Value.ToString();
+							if (val == PathInfo.NotConfigured)
+								val = null;
+							else
+								piScanGufo = new PathInfo(Path.Combine(val, SharedSpace.ScanGfile));
+
+							SharedSpace.SetShare(key, val);
 							break;
+
 						case "tftd":
 							key = SharedSpace.ResourceDirectoryTftd;
+							val = node.Value.ToString();
+							if (val == PathInfo.NotConfigured)
+								val = null;
+							else
+								piScanGtftd = new PathInfo(Path.Combine(val, SharedSpace.ScanGfile));
+
+							SharedSpace.SetShare(key, val);
 							break;
 					}
-
-					val = node.Value.ToString();
-					val = (!val.Equals(PathInfo.NotConfigured)) ? val : null;
-
-					SharedSpace.SetShare(key, val);
 				}
 			}
 
@@ -428,13 +442,20 @@ namespace MapView
 				LogFile.WriteLine("TFTD Cursor not found.");
 
 
-			if (ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+			// NOTE: ScanG's are conditional loads iff File exists.
+			if (piScanGufo != null && piScanGufo.FileExists()
+				&& ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+			{
 				LogFile.WriteLine("ScanG UFO loaded.");
+			}
 			else
 				LogFile.WriteLine("ScanG UFO not found.");
 
-			if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+			if (piScanGtftd != null && piScanGtftd.FileExists()
+				&& ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+			{
 				LogFile.WriteLine("ScanG TFTD loaded.");
+			}
 			else
 				LogFile.WriteLine("ScanG TFTD not found.");
 

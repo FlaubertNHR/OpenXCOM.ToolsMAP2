@@ -319,13 +319,26 @@ namespace McdView
 			string pathufo, pathtftd;
 			GetResourcePaths(out pathufo, out pathtftd);
 
-			ResourceInfo.LoadScanGufo(pathufo);		// -> ResourceInfo.ScanGufo
-			ResourceInfo.LoadScanGtftd(pathtftd);	// -> ResourceInfo.ScanGtftd
-			ScanG = ResourceInfo.ScanGufo;
+			if (pathufo != null)
+			{
+				if (File.Exists(Path.Combine(pathufo, SharedSpace.ScanGfile)))
+					ResourceInfo.LoadScanGufo(pathufo);		// -> ResourceInfo.ScanGufo
 
-			ResourceInfo.LoadLoFTufo(pathufo);		// -> ResourceInfo.LoFTufo
-			ResourceInfo.LoadLoFTtftd(pathtftd);	// -> ResourceInfo.LoFTtftd
-			LoFT = ResourceInfo.LoFTufo;
+				if (File.Exists(Path.Combine(pathufo, SharedSpace.LoftfileUfo)))
+					ResourceInfo.LoadLoFTufo(pathufo);		// -> ResourceInfo.LoFTufo
+			}
+
+			if (pathtftd != null)
+			{
+				if (File.Exists(Path.Combine(pathtftd, SharedSpace.ScanGfile)))
+					ResourceInfo.LoadScanGtftd(pathtftd);	// -> ResourceInfo.ScanGtftd
+
+				if (File.Exists(Path.Combine(pathtftd, SharedSpace.LoftfileTftd)))
+					ResourceInfo.LoadLoFTtftd(pathtftd);	// -> ResourceInfo.LoFTtftd
+			}
+
+			ScanG = ResourceInfo.ScanGufo; // default.
+			LoFT  = ResourceInfo.LoFTufo;  // default.
 
 
 /*			// RotatingCube ->
@@ -414,13 +427,11 @@ namespace McdView
 						case "ufo":
 							if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
 								pathufo = val;
-
 							break;
 
 						case "tftd":
 							if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
 								pathtftd = val;
-
 							break;
 					}
 				}

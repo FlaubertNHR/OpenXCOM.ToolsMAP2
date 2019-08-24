@@ -139,7 +139,7 @@ namespace XCom
 		/// <returns></returns>
 		public static bool LoadScanGufo(string dirUfo)
 		{
-			if (!String.IsNullOrEmpty(dirUfo))
+			if (Directory.Exists(dirUfo))
 			{
 				string pfe = Path.Combine(dirUfo, SharedSpace.ScanGfile);
 
@@ -167,7 +167,7 @@ namespace XCom
 		/// <returns></returns>
 		public static bool LoadScanGtftd(string dirTftd)
 		{
-			if (!String.IsNullOrEmpty(dirTftd))
+			if (Directory.Exists(dirTftd))
 			{
 				string pfe = Path.Combine(dirTftd, SharedSpace.ScanGfile);
 
@@ -196,7 +196,7 @@ namespace XCom
 		/// <param name="dirUfo"></param>
 		public static void LoadLoFTufo(string dirUfo)
 		{
-			if (!String.IsNullOrEmpty(dirUfo))
+			if (Directory.Exists(dirUfo))
 			{
 				string pfe = Path.Combine(dirUfo, SharedSpace.LoftfileUfo);
 
@@ -236,7 +236,7 @@ namespace XCom
 		/// <param name="dirTftd"></param>
 		public static void LoadLoFTtftd(string dirTftd)
 		{
-			if (!String.IsNullOrEmpty(dirTftd))
+			if (Directory.Exists(dirTftd))
 			{
 				string pfe = Path.Combine(dirTftd, SharedSpace.LoftfileTftd);
 

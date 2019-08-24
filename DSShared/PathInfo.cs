@@ -66,7 +66,7 @@ namespace DSShared
 
 		#region cTor
 		/// <summary>
-		/// Initializes a new instance of the <see cref="T:DSShared.PathInfo" /> class.
+		/// cTor[0]. Initializes a new instance of the <see cref="T:DSShared.PathInfo" /> class.
 		/// </summary>
 		/// <param name="dir">a path to the directory</param>
 		/// <param name="file">the file with any extension</param>
@@ -74,6 +74,16 @@ namespace DSShared
 		{
 			_dir  = dir;
 			_file = file;
+		}
+
+		/// <summary>
+		/// cTor[1].
+		/// </summary>
+		/// <param name="fullpath"></param>
+		public PathInfo(string fullpath)
+		{
+			_dir  = Path.GetDirectoryName(fullpath);
+			_file = Path.GetFileName(fullpath);
 		}
 		#endregion cTor
 
@@ -86,14 +96,6 @@ namespace DSShared
 		public bool FileExists()
 		{
 			return File.Exists(Fullpath);
-		}
-
-		/// <summary>
-		/// Creates the directory if it does not exist.
-		/// </summary>
-		public void CreateDirectory()
-		{
-			Directory.CreateDirectory(_dir);
 		}
 		#endregion Methods
 	}

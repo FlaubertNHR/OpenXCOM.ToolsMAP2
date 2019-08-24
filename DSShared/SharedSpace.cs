@@ -38,7 +38,8 @@ namespace DSShared
 		#region Methods (static)
 		/// <summary>
 		/// Allocates a key-val pair in the SharedSpace. This does not replace
-		/// the value of an existing key unless its value is null.
+		/// the value of an existing key unless its current value is null.
+		/// TODO: But that's just silly.
 		/// </summary>
 		/// <param name="key">the key to look for</param>
 		/// <param name="val">the object to add if the key doesn't exist or its
