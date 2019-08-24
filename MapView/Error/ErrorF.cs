@@ -15,11 +15,9 @@ namespace MapView.Error
 		{
 			InitializeComponent();
 
-			lblHead.Text = "!! wtf !!"; // + Environment.NewLine + "did u do";
 			tbDetails.Text = exception.ToString();
 
 			btnClose.Select();
-
 #if DEBUG
 			ClientSize = new Size(1250, 400);
 #endif
