@@ -72,17 +72,16 @@ namespace XCom
 			{
 				using (var fbd = new FolderBrowserDialog())
 				{
-					string basepath = descriptor.Basepath;
-					if (!String.IsNullOrEmpty(basepath) && Directory.Exists(basepath))
-					{
-						fbd.SelectedPath = basepath;
-					}
-					// TODO: Check descriptor's Palette and default to Ufo/Tftd Resource dir instead.
-
 					fbd.Description = String.Format(
 												CultureInfo.CurrentCulture,
 												"Browse to a basepath folder. A valid basepath folder"
 													+ " has the subfolders MAPS and ROUTES.");
+
+					if (Directory.Exists(descriptor.Basepath))
+						fbd.SelectedPath = descriptor.Basepath;
+
+					// TODO: Check descriptor's Palette and default to Ufo/Tftd Resource dir instead.
+
 
 					if (fbd.ShowDialog() == DialogResult.OK)
 					{
