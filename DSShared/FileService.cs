@@ -64,8 +64,9 @@ namespace DSShared
 		/// IMPORTANT: Dispose the stream in the calling function.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of the file to be opened</param>
+		/// <param name="disregard">true to disregard file-not-found error</param>
 		/// <returns>the filestream if valid else null</returns>
-		public static FileStream OpenFile(string pfe)
+		public static FileStream OpenFile(string pfe, bool disregard = false)
 		{
 			FileStream fs = null;
 
@@ -83,7 +84,7 @@ namespace DSShared
 					return null;
 				}
 			}
-			else
+			else if (!disregard)
 				ShowDialogError("File does not exist.", pfe);
 
 			return fs;

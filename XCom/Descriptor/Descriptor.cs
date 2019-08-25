@@ -118,11 +118,16 @@ namespace XCom
 
 		/// <summary>
 		/// Gets the count of MCD-records in an MCD-file.
+		/// @note It's funky to read from disk just to get the count of records
+		/// but at present there is no general cache of all available terrains;
+		/// even a Map's Descriptor retains only the allocated terrains as
+		/// tuples in a dictionary-object.
+		/// See ResourceInfo - where the *sprites* of a terrain *are* cached.
 		/// </summary>
 		/// <param name="id">the position of the terrain in this tileset's terrains-list</param>
-		/// <param name="suppressError">true to suppress any error</param>
+		/// <param name="disregard">true to disregard any error</param>
 		/// <returns>count of MCD-records or 0 on fail</returns>
-		public int GetRecordCount(int id, bool suppressError = false)
+		public int GetRecordCount(int id, bool disregard = false)
 		{
 			var terrain = Terrains[id];
 			string terr = terrain.Item1;
@@ -130,7 +135,13 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			return TilepartFactory.GetRecordCount(terr, path, suppressError);
+			using (var fs = FileService.OpenFile(
+											Path.Combine(path, terr + GlobalsXC.McdExt),
+											disregard))
+			if (fs != null)
+				return (int)fs.Length / McdRecord.Length; // TODO: Error if this don't work out right.
+
+			return 0;
 		}
 
 /*		/// <summary>

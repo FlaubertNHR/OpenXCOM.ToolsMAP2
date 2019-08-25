@@ -1662,26 +1662,29 @@ namespace PckView
 					{
 						TilePanel.Spriteset.Sprites.Clear();
 
-						byte[] bindata = File.ReadAllBytes(ofd.FileName);
-						Bitmap b = BitmapHandler.LoadBitmap(bindata);
-
-						if (   b.Width  % XCImage.SpriteWidth  == 0
-							&& b.Height % XCImage.SpriteHeight == 0
-							&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+						byte[] bindata = FileService.ReadFile(ofd.FileName);
+						if (bindata != null)
 						{
-							SpriteCollection spriteset = BitmapService.CreateSpriteCollection(
-																							b,
-																							Pal,
-																							XCImage.SpriteWidth,
-																							XCImage.SpriteHeight,
-																							IsScanG);
-							for (int i = 0; i != spriteset.Count; ++i)
-								TilePanel.Spriteset.Sprites.Add(spriteset[i]);
+							Bitmap b = BitmapHandler.LoadBitmap(bindata);
 
-							InsertSpritesFinish();
+							if (   b.Width  % XCImage.SpriteWidth  == 0
+								&& b.Height % XCImage.SpriteHeight == 0
+								&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+							{
+								SpriteCollection spriteset = BitmapService.CreateSpriteCollection(
+																								b,
+																								Pal,
+																								XCImage.SpriteWidth,
+																								XCImage.SpriteHeight,
+																								IsScanG);
+								for (int i = 0; i != spriteset.Count; ++i)
+									TilePanel.Spriteset.Sprites.Add(spriteset[i]);
+
+								InsertSpritesFinish();
+							}
+							else
+								ShowBitmapError(false);
 						}
-						else
-							ShowBitmapError(false);
 					}
 				}
 			}

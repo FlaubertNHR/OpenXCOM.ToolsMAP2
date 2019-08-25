@@ -750,7 +750,7 @@ namespace McdView
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
 			{
-				if (((int)fs.Length % TilepartFactory.Length) != 0)
+				if (((int)fs.Length % McdRecord.Length) != 0)
 				{
 					using (var f = new Infobox(
 											"Error",
@@ -777,12 +777,12 @@ namespace McdView
 														ResourceInfo.TAB_WORD_LENGTH_2,
 														pal);
 
-					var parts = new Tilepart[(int)fs.Length / TilepartFactory.Length];
+					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
 					for (int id = 0; id != parts.Length; ++id)
 					{
-						var bindata = new byte[TilepartFactory.Length];
-						fs.Read(bindata, 0, TilepartFactory.Length);
+						var bindata = new byte[McdRecord.Length];
+						fs.Read(bindata, 0, McdRecord.Length);
 
 						parts[id] = new Tilepart(
 											id,
@@ -833,7 +833,7 @@ namespace McdView
 			using (var fs = FileService.OpenFile(PfeMcd))
 			if (fs != null)
 			{
-				if (((int)fs.Length % TilepartFactory.Length) != 0)
+				if (((int)fs.Length % McdRecord.Length) != 0)
 				{
 					using (var f = new Infobox(
 											"Error",
@@ -859,12 +859,12 @@ namespace McdView
 														ResourceInfo.TAB_WORD_LENGTH_2,
 														pal);
 
-					var parts = new Tilepart[(int)fs.Length / TilepartFactory.Length];
+					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
 					for (int id = 0; id != parts.Length; ++id)
 					{
-						var bindata = new byte[TilepartFactory.Length];
-						fs.Read(bindata, 0, TilepartFactory.Length);
+						var bindata = new byte[McdRecord.Length];
+						fs.Read(bindata, 0, McdRecord.Length);
 
 						parts[id] = new Tilepart(
 											id,
@@ -912,7 +912,7 @@ namespace McdView
 			using (var fs = FileService.OpenFile(pfeMcd))
 			if (fs != null)
 			{
-				if (((int)fs.Length % TilepartFactory.Length) != 0)
+				if (((int)fs.Length % McdRecord.Length) != 0)
 				{
 					using (var f = new Infobox(
 											"Error",
@@ -943,12 +943,12 @@ namespace McdView
 														ResourceInfo.TAB_WORD_LENGTH_2,
 														pal);
 
-					var parts = new Tilepart[(int)fs.Length / TilepartFactory.Length];
+					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
 					for (int id = 0; id != parts.Length; ++id)
 					{
-						var bindata = new byte[TilepartFactory.Length];
-						fs.Read(bindata, 0, TilepartFactory.Length);
+						var bindata = new byte[McdRecord.Length];
+						fs.Read(bindata, 0, McdRecord.Length);
 
 						parts[id] = new Tilepart(
 											id,
@@ -1348,9 +1348,10 @@ namespace McdView
 
 					Copier.PfeMcd = ofd.FileName;
 
-					using (var bs = new BufferedStream(File.OpenRead(Copier.PfeMcd)))
+					using (var fs = FileService.OpenFile(Copier.PfeMcd))
+					if (fs != null)
 					{
-						var parts = new Tilepart[(int)bs.Length / TilepartFactory.Length]; // TODO: Error if this don't work out right.
+						var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
 
 						Palette pal;
 						if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
@@ -1365,8 +1366,8 @@ namespace McdView
 
 						for (int id = 0; id != parts.Length; ++id)
 						{
-							var bindata = new byte[TilepartFactory.Length];
-							bs.Read(bindata, 0, TilepartFactory.Length);
+							var bindata = new byte[McdRecord.Length];
+							fs.Read(bindata, 0, McdRecord.Length);
 
 							parts[id] = new Tilepart(
 												id,

@@ -26,7 +26,7 @@ namespace McdView
 		internal static void SetCacheSaved(Tilepart[] parts)
 		{
 			Length = parts.Length;
-			Parts = new int[Length, TilepartFactory.Length];
+			Parts = new int[Length, McdRecord.Length];
 
 			for (int i = 0; i != Length; ++i)
 			{
@@ -117,7 +117,7 @@ namespace McdView
 			for (int i = 0; i != Length; ++i)
 			{
 				record = parts[i].Record;
-				for (int j = 0; j != TilepartFactory.Length; ++j)
+				for (int j = 0; j != McdRecord.Length; ++j)
 				{
 					if (record[j] != Parts[i,j])
 						return true;

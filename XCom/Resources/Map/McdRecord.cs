@@ -25,6 +25,8 @@ namespace XCom
 		// https://www.ufopaedia.org/index.php/MCD
 
 		#region Fields (static)
+		public const int Length = 62; // there are 62 bytes in each MCD record.
+
 		/// <summary>
 		/// Tracks the 'SetId' of all records.
 		/// TODO: Investigate to ensure that only the currently loaded Map's
@@ -218,7 +220,7 @@ namespace XCom
 			SetId = _sid++;
 
 			if (bindata == null)
-				bindata = new byte[TilepartFactory.Length]; // all values in the byte-array default to "0"
+				bindata = new byte[McdRecord.Length]; // all values in the byte-array default to "0"
 
 			Sprite1 = bindata[0];
 			Sprite2 = bindata[1];

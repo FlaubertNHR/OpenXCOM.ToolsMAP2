@@ -9,11 +9,6 @@ namespace XCom
 {
 	public static class TilepartFactory
 	{
-		#region Fields (static)
-		public const int Length = 62; // there are 62 bytes in each MCD record.
-		#endregion Fields (static)
-
-
 		#region Methods (static)
 		/// <summary>
 		/// Creates an array of tileparts from a given terrain and spriteset.
@@ -29,45 +24,33 @@ namespace XCom
 		{
 			if (spriteset != null)
 			{
-				string pfeMcd = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
+				string pfe = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
 
-				if (!File.Exists(pfeMcd))
+				using (var fs = FileService.OpenFile(pfe))
+				if (fs != null)
 				{
-					using (var f = new Infobox(
-											"File not found",
-											"Can't find file with MCD records.",
-											pfeMcd))
+					var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
+
+					for (int id = 0; id != parts.Length; ++id)
 					{
-						f.ShowDialog();
+						var bindata = new byte[McdRecord.Length];
+						fs.Read(bindata, 0, McdRecord.Length);
+
+						parts[id] = new Tilepart(
+											id,
+											new McdRecord(bindata),
+											spriteset);
 					}
-				}
-				else
-				{
-					using (var bs = new BufferedStream(File.OpenRead(pfeMcd)))
+
+					Tilepart part;
+					for (int id = 0; id != parts.Length; ++id)
 					{
-						var parts = new Tilepart[(int)bs.Length / Length]; // TODO: Error if this don't work out right.
-
-						for (int id = 0; id != parts.Length; ++id)
-						{
-							var bindata = new byte[Length];
-							bs.Read(bindata, 0, Length);
-
-							parts[id] = new Tilepart(
-												id,
-												new McdRecord(bindata),
-												spriteset);
-						}
-
-						Tilepart part;
-						for (int id = 0; id != parts.Length; ++id)
-						{
-							part = parts[id];
-							part.Dead = GetDeadPart(terrain, id, part.Record, parts);
-							part.Altr = GetAltrPart(terrain, id, part.Record, parts);
-						}
-
-						return parts;
+						part = parts[id];
+						part.Dead = GetDeadPart(terrain, id, part.Record, parts);
+						part.Altr = GetAltrPart(terrain, id, part.Record, parts);
 					}
+
+					return parts;
 				}
 			}
 			return new Tilepart[0];
@@ -143,44 +126,6 @@ namespace XCom
 				}
 			}
 			return null;
-		}
-
-		/// <summary>
-		/// Gets the count of MCD-records in an MCD-file.
-		/// @note It's funky to read from disk just to get the count of records
-		/// but at present there is no general cache of all available terrains;
-		/// even a Map's Descriptor retains only the allocated terrains as
-		/// tuples in a dictionary-object.
-		/// See ResourceInfo - where the *sprites* of a terrain *are* cached.
-		/// </summary>
-		/// <param name="terrain">the terrain file w/out extension</param>
-		/// <param name="dirTerrain">path to the directory of the terrain file</param>
-		/// <param name="suppressError">true to suppress any error</param>
-		/// <returns>count of MCD-records or 0 on fail</returns>
-		internal static int GetRecordCount(
-				string terrain,
-				string dirTerrain,
-				bool suppressError)
-		{
-			string pfeMcd = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
-
-			if (File.Exists(pfeMcd))
-			{
-				using (var bs = new BufferedStream(File.OpenRead(pfeMcd)))
-					return (int)bs.Length / Length; // TODO: Error if this don't work out right.
-			}
-
-			if (!suppressError)
-			{
-				using (var f = new Infobox(
-										"File not found",
-										"Can't find file with MCD records.",
-										pfeMcd))
-				{
-					f.ShowDialog();
-				}
-			}
-			return 0;
 		}
 		#endregion Methods (static)
 	}
