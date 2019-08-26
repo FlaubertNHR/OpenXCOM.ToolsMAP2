@@ -18,6 +18,10 @@ namespace RulesetConverter
 		#region Fields
 		private const string PrePad = "#----- ";
 		private int PrePadLength = PrePad.Length;
+
+		private const string LabelBasepathDefault = "[using Configurator's basepath]";
+
+		private string _basepath = String.Empty;
 		#endregion Fields
 
 
@@ -37,6 +41,8 @@ namespace RulesetConverter
 		internal RulesetConverter()
 		{
 			InitializeComponent();
+
+			lbl_Basepath.Text = LabelBasepathDefault;
 		}
 		#endregion cTor
 
@@ -53,7 +59,7 @@ namespace RulesetConverter
 		}
 
 		/// <summary>
-		/// Opens a file browser when the find button is clicked.
+		/// Opens a file browser when the find Inputfile button is clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -72,6 +78,52 @@ namespace RulesetConverter
 					tb_Input.Text = ofd.FileName;
 					btn_Convert.Enabled = true;
 				}
+			}
+		}
+
+
+		/// <summary>
+		/// Handles the Basepath checkbox.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void OnBasepathCheckChanged(object sender, EventArgs e)
+		{
+			if (cb_Basepath.Checked)
+			{
+				btn_Basepath.Enabled = true;
+				lbl_Basepath.Text = _basepath;
+			}
+			else
+			{
+				btn_Basepath.Enabled = false;
+				lbl_Basepath.Text = "[using Configurator's basepath]";
+			}
+		}
+
+		/// <summary>
+		/// Opens a file browser when the find Basepath button is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void OnFindBasepathClick(object sender, EventArgs e)
+		{
+			using (var fbd = new FolderBrowserDialog())
+			{
+				fbd.Description = "Select a basepath. A valid basepath has the"
+								+ " folders MAPS, ROUTES, and preferably TERRAIN.";
+
+				if (!String.IsNullOrEmpty(tb_Input.Text))
+				{
+					string path = Path.GetDirectoryName(tb_Input.Text);
+					fbd.SelectedPath = Path.GetDirectoryName(path);
+				}
+				else
+					fbd.SelectedPath = Path.GetDirectoryName(Application.ExecutablePath);
+
+
+				if (fbd.ShowDialog() == DialogResult.OK)
+					lbl_Basepath.Text = (_basepath = fbd.SelectedPath);
 			}
 		}
 
@@ -94,8 +146,50 @@ namespace RulesetConverter
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
+			else if (cb_Basepath.Checked && !Directory.Exists(_basepath))
+			{
+				MessageBox.Show(
+							this,
+							"Selected basepath directory does not exist.",
+							" Error",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error,
+							MessageBoxDefaultButton.Button1,
+							0);
+			}
+			else if (cb_Basepath.Checked
+				&& (   !Directory.Exists(Path.Combine(_basepath, "MAPS"))
+					|| !Directory.Exists(Path.Combine(_basepath, "ROUTES")))) // NOTE: Allow nonexistent TERRAIN directory.
+			{
+				MessageBox.Show(
+							this,
+							"Selected basepath directory does not contain MAPS and ROUTES.",
+							" Error",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Error,
+							MessageBoxDefaultButton.Button1,
+							0);
+			}
 			else
 			{
+				if (cb_Basepath.Checked
+					&& !Directory.Exists(Path.Combine(_basepath, "TERRAIN")))
+				{
+					MessageBox.Show(
+								this,
+								"Selected basepath directory does not contain TERRAIN."
+								+ Environment.NewLine + Environment.NewLine
+								+ "While this is not invalid it means that the terrainsets"
+								+ " of the tilesets have to be assigned manually with the"
+								+ " TilesetEditor.",
+								" Warning",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Warning,
+								MessageBoxDefaultButton.Button1,
+								0);
+				}
+
+
 				string dirAppl = Path.GetDirectoryName(Application.ExecutablePath);
 
 //				using (var log = new StreamWriter(File.Open(
@@ -233,6 +327,9 @@ namespace RulesetConverter
 
 							sw.WriteLine("    category: " + tileset.Category);
 							sw.WriteLine("    group: " + tileset.Group);
+
+							if (cb_Basepath.Checked)
+								sw.WriteLine("    basepath: " + _basepath);
 						}
 						//  - type: UFO_110
 						//    terrains:
