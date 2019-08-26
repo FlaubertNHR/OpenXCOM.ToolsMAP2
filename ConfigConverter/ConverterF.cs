@@ -12,7 +12,7 @@ namespace ConfigConverter
 	/// @note The files Images.dat and Paths.pth are required in the directory
 	/// with MapEdit.dat.
 	/// </summary>
-	public sealed partial class ConverterF
+	internal sealed partial class ConverterF
 		:
 			Form
 	{
@@ -34,7 +34,7 @@ namespace ConfigConverter
 		/// <summary>
 		/// Instantiates the ConfigConverter.
 		/// </summary>
-		public ConverterF()
+		internal ConverterF()
 		{
 			InitializeComponent();
 		}
