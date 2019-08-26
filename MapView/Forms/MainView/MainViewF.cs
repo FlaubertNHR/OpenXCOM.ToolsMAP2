@@ -679,19 +679,19 @@ namespace MapView
 
 			foreach (TreeNode node0 in MapTree.Nodes)
 			{
-				widthTest = TextRenderer.MeasureText(node0.Text, MapTree.Font).Width + 18;
+				widthTest = TextRenderer.MeasureText(node0.Text, MapTree.Font).Width + 30;
 				if (widthTest > width)
 					width = widthTest;
 
 				foreach (TreeNode node1 in node0.Nodes)
 				{
-					widthTest = TextRenderer.MeasureText(node1.Text, MapTree.Font).Width + 36;
+					widthTest = TextRenderer.MeasureText(node1.Text, MapTree.Font).Width + 60;
 					if (widthTest > width)
 						width = widthTest;
 
 					foreach (TreeNode node2 in node1.Nodes)
 					{
-						widthTest = TextRenderer.MeasureText(node2.Text, MapTree.Font).Width + 54;
+						widthTest = TextRenderer.MeasureText(node2.Text, MapTree.Font).Width + 90;
 						if (widthTest > width)
 							width = widthTest;
 					}
@@ -1184,6 +1184,14 @@ namespace MapView
 				}
 
 				Rectangle rect = e.Bounds;
+
+				int width = TextRenderer.MeasureText(e.Node.Text, e.Node.TreeView.Font).Width;
+				while (width / 70 != 0)
+				{
+					width -= 70;
+					++rect.Width;
+				}
+
 				rect.Width += 4;							// conceal .NET glitch.
 				graphics.FillRectangle(brush, rect);
 				rect.Height -= 1;							// keep border inside bounds
