@@ -8,13 +8,13 @@
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		private System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Button btnConvert;
-		private System.Windows.Forms.TextBox tbInput;
-		private System.Windows.Forms.Button btnInput;
-		private System.Windows.Forms.Label lblInput;
-		private System.Windows.Forms.Label lblResult;
-		private System.Windows.Forms.Label lblInfo;
+		private System.Windows.Forms.Button btn_Cancel;
+		private System.Windows.Forms.Button btn_Convert;
+		private System.Windows.Forms.TextBox tb_Input;
+		private System.Windows.Forms.Button btn_Input;
+		private System.Windows.Forms.Label lbl_Input;
+		private System.Windows.Forms.Label lbl_Result;
+		private System.Windows.Forms.Label lbl_Info;
 		private System.Windows.Forms.RadioButton rb_Ufo;
 		private System.Windows.Forms.RadioButton rb_Tftd;
 		private System.Windows.Forms.Label lbl_GameType;
@@ -41,102 +41,102 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.btnCancel = new System.Windows.Forms.Button();
-			this.btnConvert = new System.Windows.Forms.Button();
-			this.tbInput = new System.Windows.Forms.TextBox();
-			this.btnInput = new System.Windows.Forms.Button();
-			this.lblInput = new System.Windows.Forms.Label();
-			this.lblResult = new System.Windows.Forms.Label();
-			this.lblInfo = new System.Windows.Forms.Label();
+			this.btn_Cancel = new System.Windows.Forms.Button();
+			this.btn_Convert = new System.Windows.Forms.Button();
+			this.tb_Input = new System.Windows.Forms.TextBox();
+			this.btn_Input = new System.Windows.Forms.Button();
+			this.lbl_Input = new System.Windows.Forms.Label();
+			this.lbl_Result = new System.Windows.Forms.Label();
+			this.lbl_Info = new System.Windows.Forms.Label();
 			this.rb_Ufo = new System.Windows.Forms.RadioButton();
 			this.rb_Tftd = new System.Windows.Forms.RadioButton();
 			this.lbl_GameType = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
-			// btnCancel
+			// btn_Cancel
 			// 
-			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(215, 137);
-			this.btnCancel.Margin = new System.Windows.Forms.Padding(0);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(85, 30);
-			this.btnCancel.TabIndex = 9;
-			this.btnCancel.Text = "Cancel";
-			this.btnCancel.UseVisualStyleBackColor = true;
-			this.btnCancel.Click += new System.EventHandler(this.OnCancelClick);
+			this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btn_Cancel.Location = new System.Drawing.Point(215, 137);
+			this.btn_Cancel.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_Cancel.Name = "btn_Cancel";
+			this.btn_Cancel.Size = new System.Drawing.Size(85, 30);
+			this.btn_Cancel.TabIndex = 9;
+			this.btn_Cancel.Text = "Cancel";
+			this.btn_Cancel.UseVisualStyleBackColor = true;
+			this.btn_Cancel.Click += new System.EventHandler(this.OnCancelClick);
 			// 
-			// btnConvert
+			// btn_Convert
 			// 
-			this.btnConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnConvert.Enabled = false;
-			this.btnConvert.Location = new System.Drawing.Point(95, 137);
-			this.btnConvert.Margin = new System.Windows.Forms.Padding(0);
-			this.btnConvert.Name = "btnConvert";
-			this.btnConvert.Size = new System.Drawing.Size(85, 30);
-			this.btnConvert.TabIndex = 8;
-			this.btnConvert.Text = "Convert";
-			this.btnConvert.UseVisualStyleBackColor = true;
-			this.btnConvert.Click += new System.EventHandler(this.OnConvertClick);
+			this.btn_Convert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btn_Convert.Enabled = false;
+			this.btn_Convert.Location = new System.Drawing.Point(95, 137);
+			this.btn_Convert.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_Convert.Name = "btn_Convert";
+			this.btn_Convert.Size = new System.Drawing.Size(85, 30);
+			this.btn_Convert.TabIndex = 8;
+			this.btn_Convert.Text = "Convert";
+			this.btn_Convert.UseVisualStyleBackColor = true;
+			this.btn_Convert.Click += new System.EventHandler(this.OnConvertClick);
 			// 
-			// tbInput
+			// tb_Input
 			// 
-			this.tbInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.tb_Input.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.tbInput.Location = new System.Drawing.Point(0, 70);
-			this.tbInput.Margin = new System.Windows.Forms.Padding(0);
-			this.tbInput.Name = "tbInput";
-			this.tbInput.ReadOnly = true;
-			this.tbInput.Size = new System.Drawing.Size(365, 19);
-			this.tbInput.TabIndex = 2;
+			this.tb_Input.Location = new System.Drawing.Point(0, 70);
+			this.tb_Input.Margin = new System.Windows.Forms.Padding(0);
+			this.tb_Input.Name = "tb_Input";
+			this.tb_Input.ReadOnly = true;
+			this.tb_Input.Size = new System.Drawing.Size(365, 19);
+			this.tb_Input.TabIndex = 2;
 			// 
-			// btnInput
+			// btn_Input
 			// 
-			this.btnInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnInput.Location = new System.Drawing.Point(365, 69);
-			this.btnInput.Margin = new System.Windows.Forms.Padding(0);
-			this.btnInput.Name = "btnInput";
-			this.btnInput.Size = new System.Drawing.Size(25, 21);
-			this.btnInput.TabIndex = 3;
-			this.btnInput.Text = "...";
-			this.btnInput.UseVisualStyleBackColor = true;
-			this.btnInput.Click += new System.EventHandler(this.OnFindInputClick);
+			this.btn_Input.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_Input.Location = new System.Drawing.Point(365, 69);
+			this.btn_Input.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_Input.Name = "btn_Input";
+			this.btn_Input.Size = new System.Drawing.Size(25, 21);
+			this.btn_Input.TabIndex = 3;
+			this.btn_Input.Text = "...";
+			this.btn_Input.UseVisualStyleBackColor = true;
+			this.btn_Input.Click += new System.EventHandler(this.OnFindInputClick);
 			// 
-			// lblInput
+			// lbl_Input
 			// 
-			this.lblInput.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lblInput.Location = new System.Drawing.Point(0, 45);
-			this.lblInput.Margin = new System.Windows.Forms.Padding(0);
-			this.lblInput.Name = "lblInput";
-			this.lblInput.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblInput.Size = new System.Drawing.Size(392, 25);
-			this.lblInput.TabIndex = 1;
-			this.lblInput.Text = "File to convert";
-			this.lblInput.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+			this.lbl_Input.Dock = System.Windows.Forms.DockStyle.Top;
+			this.lbl_Input.Location = new System.Drawing.Point(0, 45);
+			this.lbl_Input.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_Input.Name = "lbl_Input";
+			this.lbl_Input.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.lbl_Input.Size = new System.Drawing.Size(392, 25);
+			this.lbl_Input.TabIndex = 1;
+			this.lbl_Input.Text = "File to convert";
+			this.lbl_Input.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
 			// 
-			// lblResult
+			// lbl_Result
 			// 
-			this.lblResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.lbl_Result.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lblResult.Location = new System.Drawing.Point(5, 120);
-			this.lblResult.Margin = new System.Windows.Forms.Padding(0);
-			this.lblResult.Name = "lblResult";
-			this.lblResult.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblResult.Size = new System.Drawing.Size(385, 15);
-			this.lblResult.TabIndex = 7;
+			this.lbl_Result.Location = new System.Drawing.Point(5, 120);
+			this.lbl_Result.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_Result.Name = "lbl_Result";
+			this.lbl_Result.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.lbl_Result.Size = new System.Drawing.Size(385, 15);
+			this.lbl_Result.TabIndex = 7;
 			// 
-			// lblInfo
+			// lbl_Info
 			// 
-			this.lblInfo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lblInfo.Location = new System.Drawing.Point(0, 0);
-			this.lblInfo.Margin = new System.Windows.Forms.Padding(0);
-			this.lblInfo.Name = "lblInfo";
-			this.lblInfo.Padding = new System.Windows.Forms.Padding(3, 2, 0, 2);
-			this.lblInfo.Size = new System.Drawing.Size(392, 45);
-			this.lblInfo.TabIndex = 0;
-			this.lblInfo.Text = "This app inputs an OxC ruleset and converts any tilesets it has out to MapTileset" +
+			this.lbl_Info.Dock = System.Windows.Forms.DockStyle.Top;
+			this.lbl_Info.Location = new System.Drawing.Point(0, 0);
+			this.lbl_Info.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_Info.Name = "lbl_Info";
+			this.lbl_Info.Padding = new System.Windows.Forms.Padding(3, 2, 0, 2);
+			this.lbl_Info.Size = new System.Drawing.Size(392, 45);
+			this.lbl_Info.TabIndex = 0;
+			this.lbl_Info.Text = "This app inputs an OxC ruleset and converts any tilesets it has out to MapTileset" +
 	"s.tpl, which is a template for a YAML configuration file for MapView 2+";
-			this.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_Info.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// rb_Ufo
 			// 
@@ -171,21 +171,21 @@
 			// 
 			// RulesetConverter
 			// 
-			this.AcceptButton = this.btnConvert;
+			this.AcceptButton = this.btn_Convert;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.btnCancel;
+			this.CancelButton = this.btn_Cancel;
 			this.ClientSize = new System.Drawing.Size(392, 169);
 			this.Controls.Add(this.lbl_GameType);
 			this.Controls.Add(this.rb_Tftd);
 			this.Controls.Add(this.rb_Ufo);
-			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.btnConvert);
-			this.Controls.Add(this.tbInput);
-			this.Controls.Add(this.lblInput);
-			this.Controls.Add(this.lblResult);
-			this.Controls.Add(this.lblInfo);
-			this.Controls.Add(this.btnInput);
+			this.Controls.Add(this.btn_Cancel);
+			this.Controls.Add(this.btn_Convert);
+			this.Controls.Add(this.tb_Input);
+			this.Controls.Add(this.lbl_Input);
+			this.Controls.Add(this.lbl_Result);
+			this.Controls.Add(this.lbl_Info);
+			this.Controls.Add(this.btn_Input);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "RulesetConverter";
 			this.Text = "RulesetConverter";
