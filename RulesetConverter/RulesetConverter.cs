@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
-using YamlDotNet.RepresentationModel;
+using YamlDotNet.RepresentationModel; // deserialize
 
 
 namespace RulesetConverter
@@ -23,15 +23,6 @@ namespace RulesetConverter
 
 		private string _basepath = String.Empty;
 		#endregion Fields
-
-
-		#region Properties
-		private List<Tileset> _tilesets = new List<Tileset>();
-		private List<Tileset> Tilesets
-		{
-			get { return _tilesets; }
-		}
-		#endregion Properties
 
 
 		#region cTor
@@ -163,7 +154,7 @@ namespace RulesetConverter
 			{
 				MessageBox.Show(
 							this,
-							"Selected basepath directory does not contain MAPS and ROUTES.",
+							"Selected basepath directory does not contain MAPS and ROUTES folders.",
 							" Error",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Error,
@@ -177,10 +168,10 @@ namespace RulesetConverter
 				{
 					MessageBox.Show(
 								this,
-								"Selected basepath directory does not contain TERRAIN."
+								"Selected basepath directory does not contain TERRAIN folder."
 								+ Environment.NewLine + Environment.NewLine
 								+ "While this is not invalid it means that the terrainsets"
-								+ " of the tilesets have to be assigned manually with the"
+								+ " of each tileset has to be assigned manually with the"
 								+ " TilesetEditor.",
 								" Warning",
 								MessageBoxButtons.OK,
@@ -200,7 +191,7 @@ namespace RulesetConverter
 //				{
 				// Read ruleset to get the "terrains".
 
-				Tilesets.Clear();
+				var Tilesets = new List<Tileset>();
 
 				string @group = GetGroupLabel();
 
@@ -210,49 +201,62 @@ namespace RulesetConverter
 					var str = new YamlStream();
 					str.Load(sr);
 
-					YamlScalarNode node;
+					IDictionary<YamlNode, YamlNode> keyvals;
+					YamlScalarNode key, keylabel;
+					YamlSequenceNode terrainset, tilesets;
+					string category;
+					var terrains = new List<string>();
 
 					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
 
 					var battlesets = nodeRoot.Children[new YamlScalarNode("terrains")] as YamlSequenceNode;
 					foreach (YamlMappingNode battlefield in battlesets)
 					{
-						// get the category ->
-						string category = String.Empty;
-
-						node = new YamlScalarNode("name");
-						if (battlefield.Children.ContainsKey(node))
-							category = battlefield.Children[node].ToString();
-
-						// get the terrainset ->
-						var terrains = new List<string>();
-
-						node = new YamlScalarNode("mapDataSets");
-						if (battlefield.Children.ContainsKey(node))
+						keyvals = battlefield.Children;
+						if (keyvals != null && keyvals.Count != 0)
 						{
-							var terrainset = battlefield.Children[node] as YamlSequenceNode;
-							foreach (var terrain in terrainset)
+							// get the category ->
+							key = new YamlScalarNode("name");
+							if (keyvals.ContainsKey(key))
 							{
-								if (terrain.ToString().ToLowerInvariant() != "blanks")
-									terrains.Add(terrain.ToString());
-							}
-						}
+								category = keyvals[key].ToString();
 
-						// get the tilesets ->
-						node = new YamlScalarNode("mapBlocks");
-						if (battlefield.Children.ContainsKey(node))
-						{
-							var tilesets = battlefield.Children[node] as YamlSequenceNode;
-							foreach (var tileset in tilesets)
-							{
-								node = new YamlScalarNode("name");
-								var label = tileset[node].ToString();
+								if (!String.IsNullOrEmpty(category))
+								{
+									// get the terrainset ->
+									terrains.Clear();
 
-								Tilesets.Add(new Tileset(
-														label,
-														@group,
-														category,
-														terrains));
+									key = new YamlScalarNode("mapDataSets");
+									if (keyvals.ContainsKey(key))
+									{
+										terrainset = keyvals[key] as YamlSequenceNode;
+										foreach (var terrain in terrainset)
+										{
+											if (terrain.ToString().ToLowerInvariant() != "blanks")
+												terrains.Add(terrain.ToString());
+										}
+									}
+
+									if (terrains.Count != 0)
+									{
+										// get the tilesets ->
+										key = new YamlScalarNode("mapBlocks");
+										if (keyvals.ContainsKey(key))
+										{
+											keylabel = new YamlScalarNode("name");
+
+											tilesets = keyvals[key] as YamlSequenceNode;
+											foreach (var tileset in tilesets)
+											{
+												Tilesets.Add(new Tileset(
+																		tileset[keylabel].ToString(),
+																		@group,
+																		category,
+																		new List<string>(terrains))); // copy that, Roger.
+											}
+										}
+									}
+								}
 							}
 						}
 					}

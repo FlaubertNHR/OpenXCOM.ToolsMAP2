@@ -61,7 +61,7 @@
 			// 
 			this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Cancel.Location = new System.Drawing.Point(240, 147);
+			this.btn_Cancel.Location = new System.Drawing.Point(215, 147);
 			this.btn_Cancel.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Cancel.Name = "btn_Cancel";
 			this.btn_Cancel.Size = new System.Drawing.Size(85, 30);
@@ -91,13 +91,13 @@
 			this.tb_Input.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Input.Name = "tb_Input";
 			this.tb_Input.ReadOnly = true;
-			this.tb_Input.Size = new System.Drawing.Size(390, 19);
+			this.tb_Input.Size = new System.Drawing.Size(365, 19);
 			this.tb_Input.TabIndex = 2;
 			// 
 			// btn_Input
 			// 
 			this.btn_Input.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_Input.Location = new System.Drawing.Point(390, 64);
+			this.btn_Input.Location = new System.Drawing.Point(365, 64);
 			this.btn_Input.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Input.Name = "btn_Input";
 			this.btn_Input.Size = new System.Drawing.Size(25, 21);
@@ -113,7 +113,7 @@
 			this.lbl_Input.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Input.Name = "lbl_Input";
 			this.lbl_Input.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lbl_Input.Size = new System.Drawing.Size(417, 20);
+			this.lbl_Input.Size = new System.Drawing.Size(392, 20);
 			this.lbl_Input.TabIndex = 1;
 			this.lbl_Input.Text = "File to convert";
 			this.lbl_Input.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -124,11 +124,11 @@
 			this.lbl_Info.Location = new System.Drawing.Point(0, 0);
 			this.lbl_Info.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Info.Name = "lbl_Info";
-			this.lbl_Info.Padding = new System.Windows.Forms.Padding(3, 2, 0, 2);
-			this.lbl_Info.Size = new System.Drawing.Size(417, 45);
+			this.lbl_Info.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.lbl_Info.Size = new System.Drawing.Size(392, 45);
 			this.lbl_Info.TabIndex = 0;
 			this.lbl_Info.Text = "This app inputs an OxC ruleset and converts any tilesets it has out to MapTileset" +
-	"s.tpl, which is a template for a YAML configuration file for MapView 2+";
+	"s.tpl, which is a YAML configuration (template) file for MapView 2+";
 			this.lbl_Info.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// rb_Ufo
@@ -177,7 +177,7 @@
 			// 
 			this.btn_Basepath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_Basepath.Enabled = false;
-			this.btn_Basepath.Location = new System.Drawing.Point(390, 119);
+			this.btn_Basepath.Location = new System.Drawing.Point(365, 119);
 			this.btn_Basepath.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Basepath.Name = "btn_Basepath";
 			this.btn_Basepath.Size = new System.Drawing.Size(25, 21);
@@ -192,7 +192,7 @@
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lbl_Basepath.Location = new System.Drawing.Point(20, 125);
 			this.lbl_Basepath.Name = "lbl_Basepath";
-			this.lbl_Basepath.Size = new System.Drawing.Size(370, 15);
+			this.lbl_Basepath.Size = new System.Drawing.Size(345, 15);
 			this.lbl_Basepath.TabIndex = 8;
 			// 
 			// RulesetConverter
@@ -201,7 +201,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btn_Cancel;
-			this.ClientSize = new System.Drawing.Size(417, 179);
+			this.ClientSize = new System.Drawing.Size(392, 179);
 			this.Controls.Add(this.lbl_Basepath);
 			this.Controls.Add(this.btn_Basepath);
 			this.Controls.Add(this.cb_Basepath);
@@ -215,7 +215,10 @@
 			this.Controls.Add(this.lbl_Info);
 			this.Controls.Add(this.btn_Input);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MaximizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(400, 205);
 			this.Name = "RulesetConverter";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "RulesetConverter";
 			this.ResumeLayout(false);
 			this.PerformLayout();
