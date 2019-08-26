@@ -1,6 +1,6 @@
 ﻿namespace ConfigConverter
 {
-	partial class ConverterF
+	partial class ConfigConverter
 	{
 		#region Designer
 		/// <summary>
@@ -15,7 +15,7 @@
 		private System.Windows.Forms.Label lblInput;
 		private System.Windows.Forms.Label lblResult;
 		private System.Windows.Forms.Label lblInfo;
-		
+
 
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -133,7 +133,7 @@
 	" with MapEdit.dat";
 			this.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// ConverterF
+			// ConfigConverter
 			// 
 			this.AcceptButton = this.btnConvert;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -148,7 +148,10 @@
 			this.Controls.Add(this.lblInfo);
 			this.Controls.Add(this.btnInput);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Name = "ConverterF";
+			this.MaximizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(400, 185);
+			this.Name = "ConfigConverter";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "ConfigConverter2";
 			this.ResumeLayout(false);
 			this.PerformLayout();

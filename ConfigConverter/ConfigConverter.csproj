@@ -60,9 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConverterF.cs" />
-    <Compile Include="ConverterF.Designer.cs">
-      <DependentUpon>ConverterF.cs</DependentUpon>
+    <Compile Include="ConfigConverter.cs" />
+    <Compile Include="ConfigConverter.Designer.cs">
+      <DependentUpon>ConfigConverter.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,8 +71,8 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ConverterF.resx">
-      <DependentUpon>ConverterF.cs</DependentUpon>
+    <EmbeddedResource Include="ConfigConverter.resx">
+      <DependentUpon>ConfigConverter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

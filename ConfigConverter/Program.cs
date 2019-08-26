@@ -17,7 +17,7 @@ namespace ConfigConverter
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new ConverterF());
+			Application.Run(new ConfigConverter());
 		}
 	}
 }
