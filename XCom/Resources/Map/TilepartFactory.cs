@@ -84,6 +84,7 @@ namespace XCom
 										parts.Length);
 				using (var f = new Infobox(
 										"Invalid death part",
+										null,
 										warn))
 				{
 					f.ShowDialog();
@@ -120,6 +121,7 @@ namespace XCom
 										parts.Length);
 				using (var f = new Infobox(
 										"Invalid alternate part",
+										null,
 										warn))
 				{
 					f.ShowDialog();
