@@ -72,13 +72,21 @@ namespace XCom
 					// sequences - will be deserialized as List<object>
 					// scalars   - will be deserialized as string
 
-					string nodeGroup, nodeCategory, nodeLabel, terr, path, nodeBasepath;
+					string @group, category, label, terr, path, basepath;
+					bool bypassRe;
 
-					YamlSequenceNode nodeTerrains;
-					YamlScalarNode   nodetry1;
-					YamlMappingNode  nodetry2;
+					var keyGroup    = new YamlScalarNode(GlobalsXC.GROUP);
+					var keyCategory = new YamlScalarNode(GlobalsXC.CATEGORY);
+					var keyLabel    = new YamlScalarNode(GlobalsXC.TYPE);
+					var keyTerrains = new YamlScalarNode(GlobalsXC.TERRAINS);
+					var keyBasepath = new YamlScalarNode(GlobalsXC.BASEPATH);
+					var keyBypassRe = new YamlScalarNode(GlobalsXC.BYPASSRE);
 
-					Dictionary<int, Tuple<string,string>> terrains;
+					YamlSequenceNode terrains;
+					YamlScalarNode   terrainTry1;
+					YamlMappingNode  terrainTry2;
+
+					Dictionary<int, Tuple<string,string>> terrainset;
 
 					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
 //					foreach (var node in nodeRoot.Children) // parses YAML document divisions, ie "---"
@@ -86,61 +94,65 @@ namespace XCom
 					//LogFile.WriteLine(". node.Key(ScalarNode)= " + (YamlScalarNode)node.Key); // "tilesets"
 
 
+					IDictionary<YamlNode, YamlNode> keyvals;
+
 					var nodeTilesets = nodeRoot.Children[new YamlScalarNode(GlobalsXC.TILESETS)] as YamlSequenceNode;
 					foreach (YamlMappingNode nodeTileset in nodeTilesets) // iterate over all the tilesets
 					{
 						//LogFile.WriteLine(". . nodeTilesets= " + nodeTilesets); // lists all data in the tileset
+
+						keyvals = nodeTileset.Children;
 
 						// IMPORTANT: ensure that tileset-labels (ie, type) and terrain-labels
 						// (ie, terrains) are stored and used only as UpperCASE strings.
 
 
 						// get the Group of the tileset
-						nodeGroup = nodeTileset.Children[new YamlScalarNode(GlobalsXC.GROUP)].ToString();
-						//LogFile.WriteLine(". . group= " + nodeGroup); // eg. "ufoShips"
+						@group = keyvals[keyGroup].ToString();
+						//LogFile.WriteLine(". . group= " + @group); // eg. "ufoShips"
 
-						if (!Groups.Contains(nodeGroup))
-							Groups.Add(nodeGroup);
+						if (!Groups.Contains(@group))
+							Groups.Add(@group);
 
 
 						// get the Category of the tileset ->
-						nodeCategory = nodeTileset.Children[new YamlScalarNode(GlobalsXC.CATEGORY)].ToString();
-						//LogFile.WriteLine(". . category= " + nodeCategory); // eg. "Ufo"
+						category = keyvals[keyCategory].ToString();
+						//LogFile.WriteLine(". . category= " + category); // eg. "Ufo"
 
 
 						// get the Label of the tileset ->
-						nodeLabel = nodeTileset.Children[new YamlScalarNode(GlobalsXC.TYPE)].ToString();
-						nodeLabel = nodeLabel.ToUpperInvariant();
-						//LogFile.WriteLine("\n. . type= " + nodeLabel); // eg. "UFO_110"
+						label = keyvals[keyLabel].ToString();
+						label = label.ToUpperInvariant();
+						//LogFile.WriteLine("\n. . type= " + label); // eg. "UFO_110"
 
 
 						// get the Terrains of the tileset ->
-						terrains = new Dictionary<int, Tuple<string,string>>();
+						terrainset = new Dictionary<int, Tuple<string,string>>();
 
-						nodeTerrains = nodeTileset.Children[new YamlScalarNode(GlobalsXC.TERRAINS)] as YamlSequenceNode;
-						if (nodeTerrains != null)
+						terrains = keyvals[keyTerrains] as YamlSequenceNode;
+						if (terrains != null)
 						{
-							for (int i = 0; i != nodeTerrains.Children.Count; ++i)
+							for (int i = 0; i != terrains.Children.Count; ++i)
 							{
 								terr = null;
 								path = null; // NOTE: 'path' will *not* be appended w/ "TERRAIN" here.
 
-								nodetry1 = nodeTerrains[i] as YamlScalarNode;
-								//LogFile.WriteLine(". . . nodetry1= " + nodetry1); // eg. "U_EXT02"
+								terrainTry1 = terrains[i] as YamlScalarNode;
+								//LogFile.WriteLine(". . . terrainTry1= " + terrainTry1); // eg. "U_EXT02"
 
-								if (nodetry1 != null) // ie. ':' not found. Use Configurator basepath ...
+								if (terrainTry1 != null) // ie. ':' not found. Use Configurator basepath ...
 								{
-									terr = nodetry1.ToString();
+									terr = terrainTry1.ToString();
 									path = String.Empty;
 								}
 								else // has ':' + path
 								{
-									nodetry2 = nodeTerrains[i] as YamlMappingNode;
-									//LogFile.WriteLine(". . . nodetry2= " + nodetry2); // eg. "{ { U_EXT02, basepath } }"
+									terrainTry2 = terrains[i] as YamlMappingNode;
+									//LogFile.WriteLine(". . . terrainTry2= " + terrainTry2); // eg. "{ { U_EXT02, basepath } }"
 
-									foreach (var keyval in nodetry2.Children) // note: there's only one keyval in each terrain-node.
+									foreach (var keyval in terrainTry2.Children) // note: there's only one keyval in each terrain-node.
 									{
-										terr = keyval.Key.ToString();
+										terr = keyval.Key  .ToString();
 										path = keyval.Value.ToString();
 									}
 								}
@@ -148,28 +160,36 @@ namespace XCom
 								//LogFile.WriteLine(". terr= " + terr);
 								//LogFile.WriteLine(". path= " + path);
 
-								terrains[i] = new Tuple<string,string>(terr, path);
+								terrainset[i] = new Tuple<string,string>(terr, path);
 							}
 						}
 
 
 						// get the BasePath of the tileset ->
-						nodeBasepath = String.Empty;
-						var basepath = new YamlScalarNode(GlobalsXC.BASEPATH);
-						if (nodeTileset.Children.ContainsKey(basepath))
+						if (keyvals.ContainsKey(keyBasepath))
 						{
-							nodeBasepath = nodeTileset.Children[basepath].ToString();
-							//LogFile.WriteLine(". . basepath= " + nodeBasepath);
+							basepath = keyvals[keyBasepath].ToString();
+							//LogFile.WriteLine(". . basepath= " + basepath);
 						}
-						//else LogFile.WriteLine(". . basepath not found.");
+						else
+						{
+							basepath = String.Empty;
+							//LogFile.WriteLine(". . basepath not found.");
+						}
+
+
+						// get the BypassRecordsExceeded bool ->
+						bypassRe = keyvals.ContainsKey(keyBypassRe)
+								&& keyvals[keyBypassRe].ToString().ToLowerInvariant() == "true";
 
 
 						var tileset = new Tileset(
-												nodeLabel,
-												nodeGroup,
-												nodeCategory,
-												terrains,
-												nodeBasepath);
+												label,
+												@group,
+												category,
+												terrainset,
+												basepath,
+												bypassRe);
 						Tilesets.Add(tileset);
 
 						progress.UpdateProgress();

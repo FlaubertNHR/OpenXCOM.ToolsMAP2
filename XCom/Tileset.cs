@@ -30,6 +30,10 @@ namespace XCom
 
 		internal string BasePath
 		{ get; set; }
+
+
+		internal bool BypassRecordsExceeded
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -42,18 +46,22 @@ namespace XCom
 		/// <param name="category"></param>
 		/// <param name="terrains"></param>
 		/// <param name="basepath"></param>
+		/// <param name="bypassRecordsExceeded"></param>
 		internal Tileset(
 				string label,
 				string @group,
 				string category,
 				Dictionary<int, Tuple<string,string>> terrains,
-				string basepath)
+				string basepath,
+				bool bypassRecordsExceeded)
 		{
 			Label    = label;
 			Group    = @group;
 			Category = category;
 			Terrains = terrains;
 			BasePath = basepath;
+
+			BypassRecordsExceeded = bypassRecordsExceeded;
 		}
 		#endregion cTor
 	}

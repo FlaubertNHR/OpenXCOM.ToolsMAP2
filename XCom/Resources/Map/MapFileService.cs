@@ -124,7 +124,7 @@ namespace XCom
 
 				if (partset.Count != 0)
 				{
-					if (partset.Count > MAX_MCDRECORDS) // issue warning ->
+					if (!descriptor.BypassRecordsExceeded && partset.Count > MAX_MCDRECORDS) // issue warning ->
 					{
 						string text = String.Empty;
 

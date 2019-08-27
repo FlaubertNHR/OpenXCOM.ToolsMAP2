@@ -28,6 +28,7 @@
 		public const string TYPE     = "type";
 		public const string TERRAINS = "terrains";
 		public const string BASEPATH = "basepath";
+		public const string BYPASSRE = "bypassRecordsExceeded";
 
 
 		public static string[] CRandorLF = { "\r\n","\r","\n" };

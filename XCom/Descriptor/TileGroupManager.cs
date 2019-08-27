@@ -4,8 +4,6 @@ using System.IO;
 
 using DSShared;
 
-using XCom.Base;
-
 
 namespace XCom
 {
@@ -39,11 +37,12 @@ namespace XCom
 			progress.ResetProgress();
 			progress.Show();
 
+			TileGroup @group;
+			string labelGroup, labelCategory;
+
 			foreach (var tileset in tilesetLoader.Tilesets)
 			{
-				TileGroup @group;
-
-				string labelGroup = tileset.Group;
+				labelGroup = tileset.Group;
 				if (!TileGroups.ContainsKey(labelGroup))
 				{
 					@group =
@@ -52,7 +51,7 @@ namespace XCom
 				else
 					@group = TileGroups[labelGroup];
 
-				string labelCategory = tileset.Category;
+				labelCategory = tileset.Category;
 				if (!@group.Categories.ContainsKey(labelCategory))
 				{
 					@group.AddCategory(labelCategory);
@@ -75,7 +74,8 @@ namespace XCom
 											tileset.Label,
 											tileset.BasePath,
 											tileset.Terrains,
-											@group.Pal);
+											@group.Pal,
+											tileset.BypassRecordsExceeded);
 
 				@group.AddTileset(descriptor, labelCategory);
 				//or, TileGroups[labelGroup].Categories[tileset.Category][tileset.Label] = descriptor;
@@ -263,6 +263,10 @@ namespace XCom
 											string basepath = descriptor.Basepath;
 											if (basepath != SharedSpace.GetShareString(keyConfigPath)) // don't write basepath if it's the (default) Configurator's basepath
 												sw.WriteLine("    " + GlobalsXC.BASEPATH + ": " + basepath);
+
+
+											if (descriptor.BypassRecordsExceeded)
+												sw.WriteLine("    " + GlobalsXC.BYPASSRE + ": " + descriptor.BypassRecordsExceeded);
 										}
 									}
 								}

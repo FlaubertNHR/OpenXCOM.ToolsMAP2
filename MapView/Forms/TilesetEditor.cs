@@ -49,6 +49,12 @@ namespace MapView
 		#endregion Fields (static)
 
 
+		#region Fields
+		private bool _inited_TL;	// inited the TilesetLabel textbox
+		private bool _inited_BRE;	// inited the BypassRecordsExceeded checkbox
+		#endregion Fields
+
+
 		#region Properties (static)
 		private static Dictionary<int, Tuple<string,string>> _copiedTerrains
 				 = new Dictionary<int, Tuple<string,string>>();
@@ -143,9 +149,6 @@ namespace MapView
 		private bool IsOriginalDescriptor
 		{ get; set; }
 
-		private bool Inited
-		{ get; set; }
-
 		/// <summary>
 		/// Invalid characters in a file-label.
 		/// </summary>
@@ -182,8 +185,8 @@ namespace MapView
 			Category = labelCategory;
 			Tileset  = labelTileset;
 
-			Inited = true;	// don't let setting 'Tileset' run OnTilesetTextChanged() until
-							// after 'BasePath' is initialized. Else ListTerrains() will throwup.
+			_inited_TL = true;	// don't let setting 'Tileset' fire OnTilesetTextChanged() until
+								// after 'BasePath' is initialized. Else ListTerrains() will throwup.
 
 			var invalids = new List<char>();
 
@@ -268,6 +271,8 @@ namespace MapView
 						lbl_McdRecords.ForeColor = Color.Tan;
 
 					TilesetBasepath = descriptor.Basepath;
+
+					cb_BypassRecordsExceeded.Checked = descriptor.BypassRecordsExceeded;
 					break;
 				}
 			}
@@ -278,7 +283,9 @@ namespace MapView
 //			tbTileset.SelectionStart = tbTileset.TextLength;
 
 			PrintTilesetCount();
-		}
+
+			_inited_BRE = true;	// don't let initializing the BypassRecordsExceeded
+		}						// checkbox flag the Maptree changed.
 		#endregion cTor
 
 
@@ -410,7 +417,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTilesetTextboxChanged(object sender, EventArgs e)
 		{
-			if (Inited) // do not run until the textbox has been initialized.
+			if (_inited_TL) // do not run until the textbox has been initialized.
 			{
 				if (!ValidateCharacters(Tileset))
 				{
@@ -635,7 +642,8 @@ namespace MapView
 										Tileset,
 										TilesetBasepath,
 										new Dictionary<int, Tuple<string,string>>(),
-										TileGroup.Pal);
+										TileGroup.Pal,
+										cb_BypassRecordsExceeded.Checked);
 
 				if (MapfileExists(Tileset))
 				{
@@ -777,7 +785,8 @@ namespace MapView
 															Tileset,
 															TilesetBasepath,
 															TileGroup.Categories[Category][TilesetOriginal].Terrains,
-															TileGroup.Pal);
+															TileGroup.Pal,
+															cb_BypassRecordsExceeded.Checked);
 									TileGroup.AddTileset(Descriptor, Category);
 									TileGroup.DeleteTileset(TilesetOriginal, Category);
 
@@ -1123,6 +1132,22 @@ namespace MapView
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnBypassRecordsExceededCheckedChanged(object sender, EventArgs e)
+		{
+			if (_inited_BRE)
+			{
+				Descriptor.BypassRecordsExceeded = cb_BypassRecordsExceeded.Checked;
+
+				if (!MainViewF.that.MaptreeChanged)
+					 MainViewF.that.MaptreeChanged = true;
+			}
+		}
+
+		/// <summary>
 		/// Applies the current Allocated terrains-list to all tilesets that
 		/// have the current tileset's label and basepath.
 		/// </summary>
@@ -1210,7 +1235,8 @@ namespace MapView
 											Tileset,
 											descriptor.Basepath,
 											descriptor.Terrains,
-											descriptor.Pal); // ((TileGroup)@group[@group.Key]).Pal);
+											descriptor.Pal, // ((TileGroup)@group[@group.Key]).Pal);
+											descriptor.BypassRecordsExceeded);
 							changes.Add(new Tuple<Descriptor, string>(d, keyCategory));
 						}
 					}

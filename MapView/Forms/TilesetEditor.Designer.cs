@@ -55,6 +55,7 @@
 		private System.Windows.Forms.Label lbl_ListAvailable_;
 		private System.Windows.Forms.Label lbl_TilesetCount_;
 		private System.Windows.Forms.Label lbl_TilesetCount;
+		private System.Windows.Forms.CheckBox cb_BypassRecordsExceeded;
 		private System.Windows.Forms.Button btn_GlobalTerrains;
 
 
@@ -124,6 +125,7 @@
 			this.lbl_TilesetCurrent = new System.Windows.Forms.Label();
 			this.lbl_McdRecords = new System.Windows.Forms.Label();
 			this.pnl_Bottom = new System.Windows.Forms.Panel();
+			this.cb_BypassRecordsExceeded = new System.Windows.Forms.CheckBox();
 			this.btn_GlobalTerrains = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.pnl_Top.SuspendLayout();
@@ -686,21 +688,36 @@
 			// 
 			// pnl_Bottom
 			// 
+			this.pnl_Bottom.Controls.Add(this.cb_BypassRecordsExceeded);
 			this.pnl_Bottom.Controls.Add(this.btn_GlobalTerrains);
 			this.pnl_Bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.pnl_Bottom.Location = new System.Drawing.Point(0, 527);
+			this.pnl_Bottom.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Bottom.Name = "pnl_Bottom";
-			this.pnl_Bottom.Size = new System.Drawing.Size(592, 27);
+			this.pnl_Bottom.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
+			this.pnl_Bottom.Size = new System.Drawing.Size(592, 47);
 			this.pnl_Bottom.TabIndex = 1;
+			// 
+			// cb_BypassRecordsExceeded
+			// 
+			this.cb_BypassRecordsExceeded.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cb_BypassRecordsExceeded.Location = new System.Drawing.Point(6, 0);
+			this.cb_BypassRecordsExceeded.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_BypassRecordsExceeded.Name = "cb_BypassRecordsExceeded";
+			this.cb_BypassRecordsExceeded.Size = new System.Drawing.Size(580, 20);
+			this.cb_BypassRecordsExceeded.TabIndex = 0;
+			this.cb_BypassRecordsExceeded.Text = "bypass RecordsExceeded";
+			this.cb_BypassRecordsExceeded.UseVisualStyleBackColor = true;
+			this.cb_BypassRecordsExceeded.CheckedChanged += new System.EventHandler(this.OnBypassRecordsExceededCheckedChanged);
 			// 
 			// btn_GlobalTerrains
 			// 
-			this.btn_GlobalTerrains.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btn_GlobalTerrains.Location = new System.Drawing.Point(0, 0);
+			this.btn_GlobalTerrains.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.btn_GlobalTerrains.Location = new System.Drawing.Point(6, 20);
 			this.btn_GlobalTerrains.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_GlobalTerrains.Name = "btn_GlobalTerrains";
-			this.btn_GlobalTerrains.Size = new System.Drawing.Size(592, 27);
-			this.btn_GlobalTerrains.TabIndex = 0;
+			this.btn_GlobalTerrains.Size = new System.Drawing.Size(580, 27);
+			this.btn_GlobalTerrains.TabIndex = 1;
 			this.btn_GlobalTerrains.Text = "Apply allocated terrains to all tilesets that are defined by Path+Map";
 			this.btn_GlobalTerrains.UseVisualStyleBackColor = true;
 			this.btn_GlobalTerrains.Click += new System.EventHandler(this.OnGlobalTerrainsClick);
@@ -717,7 +734,7 @@
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.CancelButton = this.btn_Cancel;
-			this.ClientSize = new System.Drawing.Size(592, 554);
+			this.ClientSize = new System.Drawing.Size(592, 574);
 			this.Controls.Add(this.pnl_Top);
 			this.Controls.Add(this.pnl_Bottom);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

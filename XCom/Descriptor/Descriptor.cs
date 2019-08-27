@@ -47,6 +47,10 @@ namespace XCom
 
 		public Palette Pal // TODO: Defining the palette in both a Descriptor and its TileGroup is redundant.
 		{ get; private set; }
+
+
+		public bool BypassRecordsExceeded
+		{ get; set; }
 		#endregion Properties
 
 
@@ -58,16 +62,20 @@ namespace XCom
 		/// <param name="basepath"></param>
 		/// <param name="terrains"></param>
 		/// <param name="pal"></param>
+		/// <param name="bypassRecordsExceeded"></param>
 		public Descriptor(
 				string label,
 				string basepath,
 				Dictionary<int, Tuple<string,string>> terrains,
-				Palette pal)
+				Palette pal,
+				bool bypassRecordsExceeded)
 		{
 			Label    = label;
 			Basepath = basepath;
 			Terrains = terrains;
 			Pal      = pal;
+
+			BypassRecordsExceeded = bypassRecordsExceeded;
 
 			_dirTerr = (Pal == Palette.UfoBattle) ? SharedSpace.ResourceDirectoryUfo
 												  : SharedSpace.ResourceDirectoryTftd;
