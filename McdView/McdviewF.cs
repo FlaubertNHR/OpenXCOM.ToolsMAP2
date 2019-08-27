@@ -794,15 +794,15 @@ namespace McdView
 					{
 						part = parts[id];
 						part.Dead = TilepartFactory.GetDeadPart(
-															Label,
-															id,
 															part.Record,
-															parts);
+															parts,
+															Label,
+															id);
 						part.Altr = TilepartFactory.GetAltrPart(
-															Label,
-															id,
 															part.Record,
-															parts);
+															parts,
+															Label,
+															id);
 					}
 
 					Parts = parts; // do not assign to 'Parts' until the array is gtg.
@@ -876,15 +876,15 @@ namespace McdView
 					{
 						part = parts[id];
 						part.Dead = TilepartFactory.GetDeadPart(
-															Label,
-															id,
 															part.Record,
-															parts);
+															parts,
+															Label,
+															id);
 						part.Altr = TilepartFactory.GetAltrPart(
-															Label,
-															id,
 															part.Record,
-															parts);
+															parts,
+															Label,
+															id);
 					}
 
 					Parts = parts; // do not assign to 'Parts' until the array is gtg.
@@ -960,15 +960,15 @@ namespace McdView
 					{
 						part = parts[id];
 						part.Dead = TilepartFactory.GetDeadPart(
-															Label,
-															id,
 															part.Record,
-															parts);
+															parts,
+															Label,
+															id);
 						part.Altr = TilepartFactory.GetAltrPart(
-															Label,
-															id,
 															part.Record,
-															parts);
+															parts,
+															Label,
+															id);
 					}
 
 					Parts = parts; // do not assign to 'Parts' until the array is gtg.
@@ -1379,15 +1379,15 @@ namespace McdView
 						{
 							part = parts[id];
 							part.Dead = TilepartFactory.GetDeadPart(
-																Copier.Label,
-																id,
 																part.Record,
-																parts);
+																parts,
+																Copier.Label,
+																id);
 							part.Altr = TilepartFactory.GetAltrPart(
-																Copier.Label,
-																id,
 																part.Record,
-																parts);
+																parts,
+																Copier.Label,
+																id);
 						}
 
 						Copier.Parts = parts; // do not assign to 'Parts' until the array is gtg.

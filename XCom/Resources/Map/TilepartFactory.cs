@@ -46,8 +46,8 @@ namespace XCom
 					for (int id = 0; id != parts.Length; ++id)
 					{
 						part = parts[id];
-						part.Dead = GetDeadPart(terrain, id, part.Record, parts);
-						part.Altr = GetAltrPart(terrain, id, part.Record, parts);
+						part.Dead = GetDeadPart(part.Record, parts, terrain, id);
+						part.Altr = GetAltrPart(part.Record, parts, terrain, id);
 					}
 
 					return parts;
@@ -59,16 +59,16 @@ namespace XCom
 		/// <summary>
 		/// Gets the dead-part of a given MCD-record.
 		/// </summary>
-		/// <param name="terrain"></param>
-		/// <param name="id"></param>
 		/// <param name="record"></param>
 		/// <param name="parts"></param>
+		/// <param name="terrain"></param>
+		/// <param name="id"></param>
 		/// <returns></returns>
 		public static Tilepart GetDeadPart(
-				string terrain,
-				int id,
 				McdRecord record,
-				Tilepart[] parts)
+				Tilepart[] parts,
+				string terrain,
+				int id)
 		{
 			if (record.DieTile != 0)
 			{
@@ -96,16 +96,16 @@ namespace XCom
 		/// <summary>
 		/// Gets the altr-part of a given MCD-record.
 		/// </summary>
-		/// <param name="terrain"></param>
-		/// <param name="id"></param>
 		/// <param name="record"></param>
 		/// <param name="parts"></param>
+		/// <param name="terrain"></param>
+		/// <param name="id"></param>
 		/// <returns></returns>
 		public static Tilepart GetAltrPart(
-				string terrain,
-				int id,
 				McdRecord record,
-				Tilepart[] parts)
+				Tilepart[] parts,
+				string terrain,
+				int id)
 		{
 			if (record.Alt_MCD != 0) // || record.HumanDoor || record.UfoDoor
 			{
