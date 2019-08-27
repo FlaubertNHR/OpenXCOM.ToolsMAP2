@@ -202,57 +202,61 @@ namespace RulesetConverter
 					str.Load(sr);
 
 					IDictionary<YamlNode, YamlNode> keyvals;
-					YamlScalarNode key, keylabel;
+					YamlScalarNode keylabel;
 					YamlSequenceNode terrainset, tilesets;
 					string category;
 					var terrains = new List<string>();
 
 					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
 
-					var battlesets = nodeRoot.Children[new YamlScalarNode("terrains")] as YamlSequenceNode;
-					foreach (YamlMappingNode battlefield in battlesets)
+					var key = new YamlScalarNode("terrains");
+					if (nodeRoot.Children.ContainsKey(key))
 					{
-						keyvals = battlefield.Children;
-						if (keyvals != null && keyvals.Count != 0)
+						var battlesets = nodeRoot.Children[key] as YamlSequenceNode;
+						foreach (YamlMappingNode battlefield in battlesets)
 						{
-							// get the category ->
-							key = new YamlScalarNode("name");
-							if (keyvals.ContainsKey(key))
+							keyvals = battlefield.Children;
+							if (keyvals != null && keyvals.Count != 0)
 							{
-								category = keyvals[key].ToString();
-
-								if (!String.IsNullOrEmpty(category))
+								// get the category ->
+								key = new YamlScalarNode("name");
+								if (keyvals.ContainsKey(key))
 								{
-									// get the terrainset ->
-									terrains.Clear();
+									category = keyvals[key].ToString();
 
-									key = new YamlScalarNode("mapDataSets");
-									if (keyvals.ContainsKey(key))
+									if (!String.IsNullOrEmpty(category))
 									{
-										terrainset = keyvals[key] as YamlSequenceNode;
-										foreach (var terrain in terrainset)
-										{
-											if (terrain.ToString().ToLowerInvariant() != "blanks")
-												terrains.Add(terrain.ToString());
-										}
-									}
+										// get the terrainset ->
+										terrains.Clear();
 
-									if (terrains.Count != 0)
-									{
-										// get the tilesets ->
-										key = new YamlScalarNode("mapBlocks");
+										key = new YamlScalarNode("mapDataSets");
 										if (keyvals.ContainsKey(key))
 										{
-											keylabel = new YamlScalarNode("name");
-
-											tilesets = keyvals[key] as YamlSequenceNode;
-											foreach (var tileset in tilesets)
+											terrainset = keyvals[key] as YamlSequenceNode;
+											foreach (var terrain in terrainset)
 											{
-												Tilesets.Add(new Tileset(
-																		tileset[keylabel].ToString(),
-																		@group,
-																		category,
-																		new List<string>(terrains))); // copy that, Roger.
+												if (terrain.ToString().ToLowerInvariant() != "blanks")
+													terrains.Add(terrain.ToString());
+											}
+										}
+
+										if (terrains.Count != 0)
+										{
+											// get the tilesets ->
+											key = new YamlScalarNode("mapBlocks");
+											if (keyvals.ContainsKey(key))
+											{
+												keylabel = new YamlScalarNode("name");
+
+												tilesets = keyvals[key] as YamlSequenceNode;
+												foreach (var tileset in tilesets)
+												{
+													Tilesets.Add(new Tileset(
+																			tileset[keylabel].ToString(),
+																			@group,
+																			category,
+																			new List<string>(terrains))); // copy that, Roger.
+												}
 											}
 										}
 									}
@@ -263,39 +267,50 @@ namespace RulesetConverter
 				}
 
 
-				// YAML the tilesets ....
-				using (var fs = new FileStream(Path.Combine(dirAppl, "MapTilesets.tpl"), FileMode.Create))
-				using (var sw = new StreamWriter(fs))
+				if (Tilesets.Count == 0)
 				{
-					sw.WriteLine("# This is MapTilesets for MapViewII.");
-					sw.WriteLine("#");
-					sw.WriteLine("# 'tilesets' - a list that contains all the blocks.");
-					sw.WriteLine("# 'type'     - the label of MAP/RMP files for the block.");
-					sw.WriteLine("# 'terrains' - the label(s) of PCK/TAB/MCD files for the block. A terrain may be" + Environment.NewLine
-							   + "#              defined in one of three formats:"                                  + Environment.NewLine
-							   + "#              - LABEL"                                                           + Environment.NewLine
-							   + "#              - LABEL: basepath"                                                 + Environment.NewLine
-							   + "#              - LABEL: <basepath>"                                               + Environment.NewLine
-							   + "#              The first gets the terrain from the Configurator's basepath. The"  + Environment.NewLine
-							   + "#              second gets the terrain from the current Map's basepath. The"      + Environment.NewLine
-							   + "#              third gets the terrain from the specified basepath (don't use"     + Environment.NewLine
-							   + "#              quotes). A terrain must be in a subdirectory labeled TERRAIN.");
-					sw.WriteLine("# 'category' - a header for the tileset, is arbitrary here.");
-					sw.WriteLine("# 'group'    - a header for the categories, is arbitrary except that the first"   + Environment.NewLine
-							   + "#              letters designate the game-type and must be either 'ufo' or"       + Environment.NewLine
-							   + "#              'tftd' (case insensitive, with or without a following space).");
-					sw.WriteLine("# 'basepath' - the path to the parent directory of the tileset's Map and Route"   + Environment.NewLine
-							   + "#              files (default: the resource directory(s) that was/were specified" + Environment.NewLine
-							   + "#              when MapView was installed/configured). Note that Maps are"        + Environment.NewLine
-							   + "#              expected to be in a subdir called MAPS, Routes in a subdir called" + Environment.NewLine
-							   + "#              ROUTES, but that terrains - PCK/TAB/MCD files - are referenced by" + Environment.NewLine
-							   + "#              default in the basepath that is set by the Configurator and have"  + Environment.NewLine
-							   + "#              to be in a subdir labeled TERRAIN of that path. But see"           + Environment.NewLine
-							   + "#              'terrains' above.");
-					sw.WriteLine("");
-
-					if (Tilesets.Count != 0)
+					MessageBox.Show(
+								this,
+								"No tilesets were found in the ruleset.",
+								" Error",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error,
+								MessageBoxDefaultButton.Button1,
+								0);
+				}
+				else
+				{
+					// YAML the tilesets ....
+					using (var fs = new FileStream(Path.Combine(dirAppl, "MapTilesets.tpl"), FileMode.Create))
+					using (var sw = new StreamWriter(fs))
 					{
+						sw.WriteLine("# This is MapTilesets for MapViewII.");
+						sw.WriteLine("#");
+						sw.WriteLine("# 'tilesets' - a list that contains all the blocks.");
+						sw.WriteLine("# 'type'     - the label of MAP/RMP files for the block.");
+						sw.WriteLine("# 'terrains' - the label(s) of PCK/TAB/MCD files for the block. A terrain may be" + Environment.NewLine
+								   + "#              defined in one of three formats:"                                  + Environment.NewLine
+								   + "#              - LABEL"                                                           + Environment.NewLine
+								   + "#              - LABEL: basepath"                                                 + Environment.NewLine
+								   + "#              - LABEL: <basepath>"                                               + Environment.NewLine
+								   + "#              The first gets the terrain from the Configurator's basepath. The"  + Environment.NewLine
+								   + "#              second gets the terrain from the current Map's basepath. The"      + Environment.NewLine
+								   + "#              third gets the terrain from the specified basepath (don't use"     + Environment.NewLine
+								   + "#              quotes). A terrain must be in a subdirectory labeled TERRAIN.");
+						sw.WriteLine("# 'category' - a header for the tileset, is arbitrary here.");
+						sw.WriteLine("# 'group'    - a header for the categories, is arbitrary except that the first"   + Environment.NewLine
+								   + "#              letters designate the game-type and must be either 'ufo' or"       + Environment.NewLine
+								   + "#              'tftd' (case insensitive, with or without a following space).");
+						sw.WriteLine("# 'basepath' - the path to the parent directory of the tileset's Map and Route"   + Environment.NewLine
+								   + "#              files (default: the resource directory(s) that was/were specified" + Environment.NewLine
+								   + "#              when MapView was installed/configured). Note that Maps are"        + Environment.NewLine
+								   + "#              expected to be in a subdir called MAPS, Routes in a subdir called" + Environment.NewLine
+								   + "#              ROUTES, but that terrains - PCK/TAB/MCD files - are referenced by" + Environment.NewLine
+								   + "#              default in the basepath that is set by the Configurator and have"  + Environment.NewLine
+								   + "#              to be in a subdir labeled TERRAIN of that path. But see"           + Environment.NewLine
+								   + "#              'terrains' above.");
+						sw.WriteLine("");
+
 						sw.WriteLine("tilesets:");
 
 						string headerGroup    = String.Empty;
