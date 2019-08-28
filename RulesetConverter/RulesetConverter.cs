@@ -88,7 +88,7 @@ namespace RulesetConverter
 			else
 			{
 				btn_Basepath.Enabled = false;
-				lbl_Basepath.Text = "[using Configurator's basepath]";
+				lbl_Basepath.Text = LabelBasepathDefault;
 			}
 		}
 
@@ -147,6 +147,7 @@ namespace RulesetConverter
 							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
 							0);
+				OnFindBasepathClick(null, EventArgs.Empty);
 			}
 			else if (cb_Basepath.Checked
 				&& (   !Directory.Exists(Path.Combine(_basepath, "MAPS"))
@@ -160,6 +161,7 @@ namespace RulesetConverter
 							MessageBoxIcon.Error,
 							MessageBoxDefaultButton.Button1,
 							0);
+				OnFindBasepathClick(null, EventArgs.Empty);
 			}
 			else
 			{
@@ -342,7 +344,15 @@ namespace RulesetConverter
 							sw.WriteLine("    terrains:");
 
 							foreach (string terrain in tileset.Terrains)
-								sw.WriteLine("      - " + terrain);
+							{
+								string terr = "      - " + terrain;
+								if (cb_Basepath.Checked)
+									terr += ": basepath"; // + _basepath;
+
+								// NOTE: Does not handle a custom terrain basepath.
+
+								sw.WriteLine(terr);
+							}
 
 							sw.WriteLine("    category: " + tileset.Category);
 							sw.WriteLine("    group: " + tileset.Group);
