@@ -219,3 +219,6 @@ pip-log.txt
 
 # auto-generated file
 YamlDotNet/Properties/AssemblyInfo.Generated.cs
+
+# batchfile helper
+copyout.bat

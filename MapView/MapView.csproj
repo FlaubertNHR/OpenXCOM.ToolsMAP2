@@ -426,13 +426,6 @@
     <Optimize>True</Optimize>
     <DefineConstants>TRACE</DefineConstants>
     <OutputPath>bin\Release\</OutputPath>
-    <PostBuildEvent>copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\MapView.exe C:\0xC_kL\editors\MapView_kL\
-copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\DSShared.dll C:\0xC_kL\editors\MapView_kL\
-copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\XCom.dll C:\0xC_kL\editors\MapView_kL\
-copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\YamlDotNet.dll C:\0xC_kL\editors\MapView_kL\
-copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\PckView.exe C:\0xC_kL\editors\MapView_kL\
-copy /y C:\GIT\OpenXCOM.Tools\MapView\bin\Release\McdView.exe C:\0xC_kL\editors\MapView_kL\
-</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugType>Full</DebugType>
