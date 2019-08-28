@@ -128,7 +128,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// You know the drill ... Paint it, Black
 		/// black as night
-		/// NOTE: Pens and Brushes need to be refreshed each call to draw since
+		/// @note Pens and Brushes need to be refreshed each call to draw since
 		/// they can be changed in Options. Or not ....
 		/// </summary>
 		/// <param name="e"></param>
@@ -157,9 +157,9 @@ namespace MapView.Forms.Observers
 							Origin.Y + (NodeSelected.Col + NodeSelected.Row + 1) * HalfHeight,
 							NodeSelected, true);
 
-				DrawGridLines();
-
 				DrawNodes();
+
+				DrawGridLines();
 
 				if (Focused && _overCol != -1) // draw the selector lozenge
 				{
