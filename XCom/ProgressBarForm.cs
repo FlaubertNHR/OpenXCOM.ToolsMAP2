@@ -8,28 +8,15 @@ namespace XCom
 		:
 			Form
 	{
-		#region Properties (static)
-		private static ProgressBarForm _that;
-		internal static ProgressBarForm that
-		{
-			get
-			{
-				if (_that == null)
-					_that = new ProgressBarForm();
-
-				return _that;
-			}
-		}
-		#endregion Properties (static)
-
-
 		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal ProgressBarForm()
+		internal ProgressBarForm(string text)
 		{
 			InitializeComponent();
+			lblInfo.Text = text;
+
 			Show();
 		}
 		#endregion cTor
@@ -46,15 +33,10 @@ namespace XCom
 			pbProgress.Maximum = total;
 		}
 
-		internal void UpdateProgress()
+		internal void Step()
 		{
 			++pbProgress.Value;
 			Refresh();
-		}
-
-		internal void ResetProgress()
-		{
-			pbProgress.Value = 0;
 		}
 		#endregion Methods
 
@@ -97,8 +79,9 @@ namespace XCom
 			this.lblInfo.Name = "lblInfo";
 			this.lblInfo.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
 			this.lblInfo.Size = new System.Drawing.Size(314, 20);
-			this.lblInfo.TabIndex = 1;
+			this.lblInfo.TabIndex = 0;
 			this.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lblInfo.UseWaitCursor = true;
 			// 
 			// pbProgress
 			// 
@@ -107,11 +90,12 @@ namespace XCom
 			this.pbProgress.Margin = new System.Windows.Forms.Padding(0);
 			this.pbProgress.Name = "pbProgress";
 			this.pbProgress.Size = new System.Drawing.Size(314, 19);
-			this.pbProgress.TabIndex = 0;
+			this.pbProgress.TabIndex = 1;
+			this.pbProgress.UseWaitCursor = true;
 			// 
 			// ProgressBarForm
 			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
+			this.AutoScaleBaseSize = new System.Drawing.Size(6, 13);
 			this.ClientSize = new System.Drawing.Size(314, 39);
 			this.ControlBox = false;
 			this.Controls.Add(this.pbProgress);
@@ -127,6 +111,7 @@ namespace XCom
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.TopMost = true;
+			this.UseWaitCursor = true;
 			this.ResumeLayout(false);
 
 		}

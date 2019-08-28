@@ -172,6 +172,9 @@ namespace MapView
 		/// </summary>
 		internal MainViewF()
 		{
+			Cursor.Current = Cursors.AppStarting;
+
+
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);
 #if DEBUG
@@ -489,6 +492,7 @@ namespace MapView
 			ssMain.Renderer = r;
 
 
+			Cursor.Current = Cursors.Default;
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 		}
 

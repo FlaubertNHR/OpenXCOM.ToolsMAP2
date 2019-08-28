@@ -83,19 +83,26 @@ namespace XCom
 		/// <param name="fullpath">path-file-extension of settings/MapTilesets.yml</param>
 		public static void LoadTileGroups(string fullpath)
 		{
-			var typeCount = 0;
 			using (var fs = FileService.OpenFile(fullpath))
 			if (fs != null)
 			using (var sr = new StreamReader(fs))
 			{
-				string line;
+				var progress = new ProgressBarForm("parsing Tilesets ...");
+				progress.Refresh();
+				var typeCount = 0;
+
+				string line; // fuck this shit.
 				while ((line = sr.ReadLine()) != null)
 				{
 					if (line.StartsWith("  - type:", StringComparison.Ordinal))
 						++typeCount;
 				}
+				progress.SetTotal(typeCount);
+				progress.SetText("loading Tilesets ...");
+
 				fs.Position = 0;
 				sr.DiscardBufferedData();
+
 
 				var str = new YamlStream();
 				str.Load(sr);
@@ -103,11 +110,6 @@ namespace XCom
 				var docs = str.Documents;
 				if (docs != null && docs.Count != 0)
 				{
-					var progress = ProgressBarForm.that;
-					progress.SetText("Loading Tilesets ...");
-					progress.SetTotal(typeCount);
-
-
 					string terr, path, basepath;
 					bool bypassRe;
 
@@ -217,12 +219,11 @@ namespace XCom
 						@group.AddTileset(descriptor, labelCategory);
 						//or, TileGroups[labelGroup].Categories[labelCategory][keyvals[keyLabel].ToString().ToUpperInvariant()] = descriptor;
 
-
-						progress.UpdateProgress();
+						progress.Step();
 					}
 //					}
-					progress.Hide();
 				}
+				progress.Close();
 			}
 		}
 
