@@ -8,7 +8,8 @@ using DSShared;
 namespace XCom
 {
 	/// <summary>
-	/// Manages tileset-groups and writes MapTilesets.yml.
+	/// Manages tileset-groups, loads the Tilesets into Descriptors, and writes
+	/// MapTilesets.yml.
 	/// </summary>
 	public static class TileGroupManager
 	{
@@ -32,7 +33,7 @@ namespace XCom
 		internal static void LoadTilesets(TilesetLoader tilesetLoader)
 		{
 			var progress = ProgressBarForm.that;
-			progress.SetInfo("Loading Tilesets ...");
+			progress.SetText("Loading Tilesets ...");
 			progress.SetTotal(tilesetLoader.Tilesets.Count);
 			progress.ResetProgress();
 			progress.Show();
@@ -45,8 +46,8 @@ namespace XCom
 				labelGroup = tileset.Group;
 				if (!TileGroups.ContainsKey(labelGroup))
 				{
-					@group =
-					TileGroups[labelGroup] = new TileGroup(labelGroup);
+					TileGroups[labelGroup] =
+					@group = new TileGroup(labelGroup);
 				}
 				else
 					@group = TileGroups[labelGroup];
@@ -74,7 +75,7 @@ namespace XCom
 											tileset.Label,
 											tileset.BasePath,
 											tileset.Terrains,
-											@group.Pal,
+											@group.Pal, // <- ugh.
 											tileset.BypassRecordsExceeded);
 
 				@group.AddTileset(descriptor, labelCategory);
@@ -109,7 +110,7 @@ namespace XCom
 		/// Creates a new tilegroup and transfers ownership of all Categories
 		/// and Descriptors from their previous Group to the specified new
 		/// Group. Called by MainViewF.OnEditGroupClick()
-		/// NOTE: Check if the group and category already exist first.
+		/// @note Check if the group and category already exist first.
 		/// </summary>
 		/// <param name="labelGroup">the new label for the group</param>
 		/// <param name="labelGroupPre">the old label of the group</param>
@@ -137,9 +138,6 @@ namespace XCom
 		/// <returns>true if no exception was thrown</returns>
 		public static bool WriteTileGroups()
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("TileGroupManager.WriteTileGroups");
-
 			string dir = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);	// settings
 			string pfe = Path.Combine(dir, PathInfo.YML_Tilesets);					// MapTilesets.yml
 
@@ -182,7 +180,7 @@ namespace XCom
 							   + "#              default in the basepath that is set by the Configurator and have"  + Environment.NewLine
 							   + "#              to be in a subdir labeled TERRAIN of that path. But see"           + Environment.NewLine
 							   + "#              'terrains' above.");
-					sw.WriteLine("");
+					sw.WriteLine(String.Empty);
 
 
 					bool tilesets_written = false;
@@ -191,11 +189,8 @@ namespace XCom
 					foreach (string labelGroup in TileGroups.Keys)
 					{
 						var @group = TileGroups[labelGroup] as TileGroup;	// <- fuck inheritance btw. It's not being used properly and is
-						if (@group.Categories.Count != 0)						// largely irrelevant and needlessly confusing in this codebase.
+						if (@group.Categories.Count != 0)					// largely irrelevant and needlessly confusing in this codebase.
 						{
-							//LogFile.WriteLine("");
-							//LogFile.WriteLine(". saving Group= " + labelGroup);
-
 							bool tileset_exists = false; // test if there's a category with a tileset ->
 							foreach (var labelCategory in @group.Categories.Keys)
 							{
@@ -215,7 +210,7 @@ namespace XCom
 								}
 
 								blankline = true;
-								sw.WriteLine("");
+								sw.WriteLine(String.Empty);
 								sw.WriteLine(PrePad + labelGroup + Padder(labelGroup.Length + PrePadLength));
 
 								foreach (var labelCategory in @group.Categories.Keys)
@@ -223,18 +218,14 @@ namespace XCom
 									var category = @group.Categories[labelCategory];
 									if (category.Count != 0)
 									{
-										//LogFile.WriteLine(". . saving Category= " + labelCategory);
-
 										if (!blankline)
-											sw.WriteLine("");
+											sw.WriteLine(String.Empty);
 
 										blankline = false;
 										sw.WriteLine(PrePad + labelCategory + Padder(labelCategory.Length + PrePadLength));
 
 										foreach (var labelTileset in category.Keys)
 										{
-											//LogFile.WriteLine(". . saving Tileset= " + labelTileset);
-
 											var descriptor = category[labelTileset];
 
 											sw.WriteLine("  - " + GlobalsXC.TYPE + ": " + descriptor.Label); // =labelTileset

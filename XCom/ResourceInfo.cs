@@ -105,7 +105,7 @@ namespace XCom
 										MessageBoxDefaultButton.Button1,
 										0);
 						}
-						// else if (spriteset.Error_Overflo) // too many bytes for a nonbigob sprite - better not happen here.
+						// else if (spriteset.Error_Overflo) {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
 							Spritesets.Add(spriteset); // used only by MapInfoDialog.

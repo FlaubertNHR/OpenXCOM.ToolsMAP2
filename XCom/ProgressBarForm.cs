@@ -36,9 +36,9 @@ namespace XCom
 
 
 		#region Methods
-		internal void SetInfo(string info)
+		internal void SetText(string text)
 		{
-			lblInfo.Text = info;
+			lblInfo.Text = text;
 		}
 
 		internal void SetTotal(int total)
