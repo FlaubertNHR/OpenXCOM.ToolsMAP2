@@ -95,6 +95,7 @@ namespace XCom
 			this.lblInfo.Location = new System.Drawing.Point(0, 0);
 			this.lblInfo.Margin = new System.Windows.Forms.Padding(0);
 			this.lblInfo.Name = "lblInfo";
+			this.lblInfo.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
 			this.lblInfo.Size = new System.Drawing.Size(314, 20);
 			this.lblInfo.TabIndex = 1;
 			this.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -111,7 +112,7 @@ namespace XCom
 			// ProgressBarForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(312, 37);
+			this.ClientSize = new System.Drawing.Size(314, 39);
 			this.ControlBox = false;
 			this.Controls.Add(this.pbProgress);
 			this.Controls.Add(this.lblInfo);
