@@ -172,8 +172,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Tileset.cs" />
-    <Compile Include="TilesetLoader.cs" />
     <Compile Include="Console.cs">
       <SubType>Code</SubType>
     </Compile>

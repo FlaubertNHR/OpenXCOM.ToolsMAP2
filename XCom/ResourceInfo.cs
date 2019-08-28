@@ -40,15 +40,6 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes/loads info about XCOM resources.
-		/// </summary>
-		/// <param name="pathConfig"></param>
-		public static void InitializeResources(PathInfo pathConfig)
-		{
-			TileGroupManager.LoadTilesets(new TilesetLoader(pathConfig.Fullpath));
-		}
-
-		/// <summary>
 		/// Loads a given spriteset for UFO or TFTD. This could go in Descriptor
 		/// except the XCOM cursor-sprites load w/out a descriptor. As do the
 		/// duotone-sprites - although that's done differently w/

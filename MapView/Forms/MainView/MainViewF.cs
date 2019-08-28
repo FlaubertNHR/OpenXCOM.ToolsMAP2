@@ -460,8 +460,8 @@ namespace MapView
 				LogFile.WriteLine("ScanG TFTD not found.");
 
 
-			ResourceInfo.InitializeResources(piTilesets); // load resources from YAML.
-			LogFile.WriteLine("ResourceInfo initialized.");
+			TileGroupManager.LoadTileGroups(piTilesets.Fullpath); // load resources from YAML.
+			LogFile.WriteLine("Tilesets loaded/Descriptors created.");
 
 
 			if (piOptions.FileExists()) // load user-options before MenuManager.StartSecondaryStageBoosters()
@@ -476,7 +476,7 @@ namespace MapView
 
 
 			CreateTree();
-			LogFile.WriteLine("Tilesets created and loaded to tree panel.");
+			LogFile.WriteLine("Maptree instantiated.");
 
 
 			splitter.SetClickableRectangle();

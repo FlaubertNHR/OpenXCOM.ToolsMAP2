@@ -84,7 +84,7 @@ namespace DSShared
 					var tric = new Metric();
 
 					var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
-					foreach (var keyval in keyvals) // Cf. TilesetLoader..cTor
+					foreach (var keyval in keyvals)
 					{
 						int val = Int32.Parse(keyval.Value.ToString(), invariant); // TODO: Error handling.
 						switch (keyval.Key.ToString())
