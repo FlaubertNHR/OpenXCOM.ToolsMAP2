@@ -333,8 +333,6 @@ namespace MapView
 
 			Palette.UfoBattle .SetTransparent(true);
 			Palette.TftdBattle.SetTransparent(true);
-			Palette.UfoBattle .Grayscale.SetTransparent(true);
-			Palette.TftdBattle.Grayscale.SetTransparent(true);
 			LogFile.WriteLine("Palette transparencies set.");
 
 			LoadDuotoneSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
@@ -495,6 +493,32 @@ namespace MapView
 			Cursor.Current = Cursors.Default;
 			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
 		}
+		#endregion cTor
+
+
+		#region Methods (static)
+		/// <summary>
+		/// Transposes all the default viewer positions and sizes from the
+		/// embedded MapViewers manifest to a file: settings/MapViewers.yml.
+		/// </summary>
+		/// <param name="fullpath"></param>
+		/// <returns>true on success</returns>
+		private static bool CopyViewersFile(string fullpath)
+		{
+			using (var fs = FileService.CreateFile(fullpath))
+			if (fs != null)
+			using (var sw = new StreamWriter(fs))
+			using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
+													 .GetManifestResourceStream(PathInfo.MAN_Viewers)))
+			{
+				string line;
+				while ((line = sr.ReadLine()) != null)
+					sw.WriteLine(line);
+
+				return true;
+			}
+			return false;
+		}
 
 
 		/// <summary>
@@ -523,69 +547,44 @@ namespace MapView
 			}
 		}
 
-
 		/// <summary>
-		/// Handles CL-args after Configurator restart - selects a node in the
-		/// Maptree.
+		/// Sets the toner to be used for drawing the parts of selected tiles.
 		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnShown(EventArgs e)
+		internal static void SetTileToner()
 		{
-			base.OnShown(e);
-
-			switch (Program.Args.Length)
+			if (ResourceInfo.Spritesets.Count != 0)
 			{
-				case 0:
-					if (MapTree.SelectedNode != null)
-						MapTree.SelectedNode.Collapse(false);
-					break;
+				ColorPalette table;
+				switch (Optionables.SelectedTileToner)
+				{
+					case MainViewOptionables.TONER_STANDARD:
+						return;
 
-				case 1:
-					SelectGroupNode(Program.Args[TREELEVEL_GROUP]);
-					break;
+					default: // case TONER_GRAY
+						table = ResourceInfo.Spritesets[0].Pal.GrayScaled.ColorTable;	// NOTE: All loaded spritesets will have the same palette.
+						break;															// - this demonstrates how redundant palette-pointers are.
+																						//   palette this palette that, here have a palette ...
+					case MainViewOptionables.TONER_RED:									//   i know you want one
+						table = ResourceInfo.Spritesets[0].Pal.RedScaled.ColorTable;
+						break;
 
-				case 2:
-					SelectCategoryNode(
-									Program.Args[TREELEVEL_CATEGORY],
-									Program.Args[TREELEVEL_GROUP]);
-					break;
+					case MainViewOptionables.TONER_GREEN:
+						table = ResourceInfo.Spritesets[0].Pal.GreenScaled.ColorTable;
+						break;
 
-				case 3:
-					SelectTilesetNode(
-									Program.Args[TREELEVEL_TILESET],
-									Program.Args[TREELEVEL_CATEGORY],
-									Program.Args[TREELEVEL_GROUP]);
-					break;
+					case MainViewOptionables.TONER_BLUE:
+						table = ResourceInfo.Spritesets[0].Pal.BlueScaled.ColorTable;
+						break;
+				}
+
+				foreach (var spriteset in ResourceInfo.Spritesets)
+				{
+					for (int id = 0; id != spriteset.Count; ++id)
+					{
+						(spriteset[id] as PckImage).SpriteT.Palette = table; // lovely.
+					}
+				}
 			}
-
-			TopMost = true;		// NOTE: MapView could be hidden behind other
-			TopMost = false;	//       open windows after a forced reload.
-		}
-		#endregion cTor
-
-
-		#region Methods (static)
-		/// <summary>
-		/// Transposes all the default viewer positions and sizes from the
-		/// embedded MapViewers manifest to a file: settings/MapViewers.yml.
-		/// </summary>
-		/// <param name="fullpath"></param>
-		/// <returns>true on success</returns>
-		private static bool CopyViewersFile(string fullpath)
-		{
-			using (var fs = FileService.CreateFile(fullpath))
-			if (fs != null)
-			using (var sw = new StreamWriter(fs))
-			using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
-													 .GetManifestResourceStream(PathInfo.MAN_Viewers)))
-			{
-				string line;
-				while ((line = sr.ReadLine()) != null)
-					sw.WriteLine(line);
-
-				return true;
-			}
-			return false;
 		}
 		#endregion Methods (static)
 
@@ -783,6 +782,103 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
+		/// Handles CL-args after Configurator restart - selects a node in the
+		/// Maptree.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnShown(EventArgs e)
+		{
+			base.OnShown(e);
+
+			switch (Program.Args.Length)
+			{
+				case 0:
+					if (MapTree.SelectedNode != null)
+						MapTree.SelectedNode.Collapse(false);
+					break;
+
+				case 1:
+					SelectGroupNode(Program.Args[TREELEVEL_GROUP]);
+					break;
+
+				case 2:
+					SelectCategoryNode(
+									Program.Args[TREELEVEL_CATEGORY],
+									Program.Args[TREELEVEL_GROUP]);
+					break;
+
+				case 3:
+					SelectTilesetNode(
+									Program.Args[TREELEVEL_TILESET],
+									Program.Args[TREELEVEL_CATEGORY],
+									Program.Args[TREELEVEL_GROUP]);
+					break;
+			}
+
+			TopMost = true;		// NOTE: MapView could be hidden behind other
+			TopMost = false;	//       open windows after a forced reload.
+		}
+
+
+		private static bool FirstActivated; // on 1st Activated keep the tree focused, on 2+ focus the panel
+		internal static bool BypassActivatedEvent;
+
+		/// <summary>
+		/// Overrides the Activated event. Brings any other open viewers to the
+		/// top of the desktop, along with this. And focuses the panel.
+		/// IMPORTANT: trying to bring this form to the top after the other
+		/// forms apparently fails in Windows 10 - which makes it impossible for
+		/// MainView to gain focus when clicked (if there are other viewers
+		/// open). Hence MainView's option "AllowBringToFront" is FALSE by
+		/// default.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnActivated(EventArgs e)
+		{
+			ShowHideManager._zOrder.Remove(this);
+			ShowHideManager._zOrder.Add(this);
+
+			if (   MainViewF.Optionables != null
+				&& MainViewF.Optionables.BringAllToFront)
+			{
+				if (!BypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
+				{
+					BypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
+													// NOTE: 'TopMost_set' won't, but other calls like BringToFront() or Select() can/will.
+
+					var zOrder = ShowHideManager.getZorderList();
+					foreach (var f in zOrder)
+					{
+						f.TopMost = true;
+						f.TopMost = false;
+					}
+
+					BypassActivatedEvent = false;
+				}
+			}
+
+			if (FirstActivated)
+				MainViewOverlay.Focus();
+			else
+				FirstActivated = true;
+
+//			base.OnActivated(e);
+		}
+
+		/// <summary>
+		/// Overrides the Deactivated event. Allows the targeter to go away.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnDeactivate(EventArgs e)
+		{
+			MainViewOverlay._targeterForced = false;
+			Invalidate();
+
+//			base.OnDeactivate(e);
+		}
+
+
+		/// <summary>
 		/// This has nothing to do with the Registry anymore, but it saves
 		/// MainView's Options as well as its screen-location and -size to YAML
 		/// when the app closes.
@@ -853,64 +949,6 @@ namespace MapView
 
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
 			RegistryInfo.WriteRegistry();		// write all registered windows' locations and sizes to file
-		}
-
-
-		private static bool FirstActivated; // on 1st Activated keep the tree focused, on 2+ focus the panel
-		internal static bool BypassActivatedEvent;
-
-		/// <summary>
-		/// Overrides the Activated event. Brings any other open viewers to the
-		/// top of the desktop, along with this. And focuses the panel.
-		/// IMPORTANT: trying to bring this form to the top after the other
-		/// forms apparently fails in Windows 10 - which makes it impossible for
-		/// MainView to gain focus when clicked (if there are other viewers
-		/// open). Hence MainView's option "AllowBringToFront" is FALSE by
-		/// default.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnActivated(EventArgs e)
-		{
-			ShowHideManager._zOrder.Remove(this);
-			ShowHideManager._zOrder.Add(this);
-
-			if (   MainViewF.Optionables != null
-				&& MainViewF.Optionables.BringAllToFront)
-			{
-				if (!BypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
-				{
-					BypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
-													// NOTE: 'TopMost_set' won't, but other calls like BringToFront() or Select() can/will.
-
-					var zOrder = ShowHideManager.getZorderList();
-					foreach (var f in zOrder)
-					{
-						f.TopMost = true;
-						f.TopMost = false;
-					}
-
-					BypassActivatedEvent = false;
-				}
-			}
-
-			if (FirstActivated)
-				MainViewOverlay.Focus();
-			else
-				FirstActivated = true;
-
-//			base.OnActivated(e);
-		}
-
-		/// <summary>
-		/// Overrides the Deactivated event. Allows the targeter to go away.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnDeactivate(EventArgs e)
-		{
-			MainViewOverlay._targeterForced = false;
-			Invalidate();
-
-//			base.OnDeactivate(e);
 		}
 
 
@@ -2922,6 +2960,8 @@ namespace MapView
 						{
 							(_foptions as OptionsForm).propertyGrid.Refresh();
 						}
+
+						SetTileToner();
 
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 							MenuManager.StartSecondaryStageBoosters();

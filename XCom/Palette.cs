@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -18,7 +17,8 @@ namespace XCom
 		#region Fields (static)
 		public const byte TranId = 0x00;
 
-		private static readonly Hashtable _palettes = new Hashtable();
+		private static readonly Dictionary<string, Palette> _palettes =
+							new Dictionary<string, Palette>();
 
 		private const string Embedded     = "XCom._Embedded.";
 
@@ -32,12 +32,24 @@ namespace XCom
 		private const string tftdgraph    = "tftd-graph";
 		private const string tftdresearch = "tftd-research";
 
-		private const string PalExt       = ".pal";
+		private const string PalExt = ".pal";
 
 		/// <summary>
-		/// The suffix for the label (key) of the grayscale version of the palette.
+		/// The suffix for the (key)label of the grayscaled version of this palette.
 		/// </summary>
-		private const string Gray         = "#gray";
+		private const string GRAYSCALED  = "#gray";
+		/// <summary>
+		/// The suffix for the (key)label of the redscaled version of this palette.
+		/// </summary>
+		private const string REDSCALED   = "#red";
+		/// <summary>
+		/// The suffix for the (key)label of the greenscaled version of this palette.
+		/// </summary>
+		private const string GREENSCALED = "#green";
+		/// <summary>
+		/// The suffix for the (key)label of the bluescaled version of this palette.
+		/// </summary>
+		private const string BLUESCALED  = "#blue";
 
 		public static List<Brush> BrushesUfoBattle  = new List<Brush>(); // used by Mono only
 		public static List<Brush> BrushesTftdBattle = new List<Brush>(); // used by Mono only
@@ -52,7 +64,7 @@ namespace XCom
 		{
 			get
 			{
-				if (_palettes[ufobattle] == null)
+				if (!_palettes.ContainsKey(ufobattle))
 				{
 					_palettes[ufobattle] = new Palette(Assembly.GetExecutingAssembly()
 															   .GetManifestResourceStream(Embedded + ufobattle + PalExt));
@@ -66,7 +78,7 @@ namespace XCom
 		{
 			get
 			{
-				if (_palettes[ufogeo] == null)
+				if (!_palettes.ContainsKey(ufogeo))
 					_palettes[ufogeo] = new Palette(Assembly.GetExecutingAssembly()
 															.GetManifestResourceStream(Embedded + ufogeo + PalExt));
 				return _palettes[ufogeo] as Palette;
@@ -77,7 +89,7 @@ namespace XCom
 		{
 			get
 			{
-				if (_palettes[ufograph] == null)
+				if (!_palettes.ContainsKey(ufograph))
 					_palettes[ufograph] = new Palette(Assembly.GetExecutingAssembly()
 															  .GetManifestResourceStream(Embedded + ufograph + PalExt));
 				return _palettes[ufograph] as Palette;
@@ -88,7 +100,7 @@ namespace XCom
 		{
 			get
 			{
-				if (_palettes[uforesearch] == null)
+				if (!_palettes.ContainsKey(uforesearch))
 					_palettes[uforesearch] = new Palette(Assembly.GetExecutingAssembly()
 																 .GetManifestResourceStream(Embedded + uforesearch + PalExt));
 				return _palettes[uforesearch] as Palette;
@@ -102,7 +114,7 @@ namespace XCom
 		{
 			get
 			{
-				if (_palettes[tftdbattle] == null)
+				if (!_palettes.ContainsKey(tftdbattle))
 				{
 					_palettes[tftdbattle] = new Palette(Assembly.GetExecutingAssembly()
 																.GetManifestResourceStream(Embedded + tftdbattle + PalExt));
@@ -116,7 +128,7 @@ namespace XCom
 		{
 			get
 			{
-				if (_palettes[tftdgeo] == null)
+				if (!_palettes.ContainsKey(tftdgeo))
 					_palettes[tftdgeo] = new Palette(Assembly.GetExecutingAssembly()
 															 .GetManifestResourceStream(Embedded + tftdgeo + PalExt));
 				return _palettes[tftdgeo] as Palette;
@@ -127,7 +139,7 @@ namespace XCom
 		{
 			get
 			{
-				if (_palettes[tftdgraph] == null)
+				if (!_palettes.ContainsKey(tftdgraph))
 					_palettes[tftdgraph] = new Palette(Assembly.GetExecutingAssembly()
 															   .GetManifestResourceStream(Embedded + tftdgraph + PalExt));
 				return _palettes[tftdgraph] as Palette;
@@ -138,7 +150,7 @@ namespace XCom
 		{
 			get
 			{
-				if( _palettes[tftdresearch] == null)
+				if (!_palettes.ContainsKey(tftdresearch))
 					_palettes[tftdresearch] = new Palette(Assembly.GetExecutingAssembly()
 																  .GetManifestResourceStream(Embedded + tftdresearch + PalExt));
 				return _palettes[tftdresearch] as Palette;
@@ -149,19 +161,19 @@ namespace XCom
 
 		#region Properties
 		/// <summary>
-		/// Gets/Sets the label (key) of the palette.
+		/// Gets/Sets the (key)label of this palette.
 		/// </summary>
 		public string Label
 		{ get; set; }
 
 		/// <summary>
-		/// Gets/Sets the colors in the palette.
+		/// Gets/Sets the colortable of this palette.
 		/// </summary>
 		public ColorPalette ColorTable
 		{ get; private set; }
 
 		/// <summary>
-		/// Gets/Sets the color of a given index in the color-table.
+		/// Gets/Sets the color of a given index in this palette's color-table.
 		/// </summary>
 		public Color this[int id]
 		{
@@ -169,37 +181,23 @@ namespace XCom
 			private set { ColorTable.Entries[id] = value; }
 		}
 
-		/// <summary>
-		/// Gets a grayscale version of the palette.
-		/// </summary>
-		public Palette Grayscale
+
+		public Palette GrayScaled
 		{
-			get
-			{
-				if (_palettes[Label + Gray] == null)
-				{
-					var pal = new Palette(Label + Gray);
-
-					_palettes[pal.Label] = pal;
-
-					Color color; int val;
-					for (int id = 0; id != ColorTable.Entries.Length; ++id)
-					{
-						color = this[id];
-						val = (int)(color.R * 0.2 + color.G * 0.5 + color.B * 0.3);
-						pal[id] = Color.FromArgb(val, val, val);
-					}
-				}
-				return _palettes[Label + Gray] as Palette;
-			}
+			get { return _palettes[Label + GRAYSCALED]; }
 		}
-
-//		/// <summary>
-//		/// Gets the color that can be transparent.
-//		/// NOTE: was used by 'CuboidSprite'.
-//		/// </summary>
-//		public Color Transparent
-//		{ get { return ColorTable.Entries[TranId]; } }
+		public Palette RedScaled
+		{
+			get { return _palettes[Label + REDSCALED]; }
+		}
+		public Palette GreenScaled
+		{
+			get { return _palettes[Label + GREENSCALED]; }
+		}
+		public Palette BlueScaled
+		{
+			get { return _palettes[Label + BLUESCALED]; }
+		}
 		#endregion Properties
 
 
@@ -229,11 +227,12 @@ namespace XCom
 														Int32.Parse(rgb[1], invariant),
 														Int32.Parse(rgb[2], invariant));
 				}
+				CreateTonescaledPalettes(Label);
 			}
 		}
 
 		/// <summary>
-		/// cTor[1]. Instantiates a grayscale-palette with a given label.
+		/// cTor[1]. Instantiates a standard palette with a given label.
 		/// </summary>
 		/// <param name="label"></param>
 		private Palette(string label)
@@ -253,9 +252,50 @@ namespace XCom
 		/// <param name="tran">true to enable transparency</param>
 		public void SetTransparent(bool tran)
 		{
-			ColorTable.Entries[TranId] = Color.FromArgb(
-													tran ? 0 : 255,
-													ColorTable.Entries[TranId]);
+			if (tran)
+				ColorTable.Entries[TranId] = Color.Transparent;
+			else
+				ColorTable.Entries[TranId] = Color.Black;
+		}
+
+		/// <summary>
+		/// Creates the toner-palettes.
+		/// </summary>
+		/// <param name="baselabel">all your label are belong to us</param>
+		private void CreateTonescaledPalettes(string baselabel)
+		{
+			string label;
+			for (int i = 0; i != 4; ++i)
+			{
+				switch (i)
+				{
+					default: label = baselabel + GRAYSCALED;  break; // case 0
+					case 1:  label = baselabel + REDSCALED;   break;
+					case 2:  label = baselabel + GREENSCALED; break;
+					case 3:  label = baselabel + BLUESCALED;  break;
+				}
+
+				var pal = new Palette(label);
+				pal[0] = Color.Transparent;
+
+				Color color; int val;
+				for (int id = 1; id != ColorTable.Entries.Length; ++id)
+				{
+					color = this[id];
+					val = (int)(color.R * 0.30 + color.G * 0.59 + color.B * 0.11);
+
+					int val_2 = val / 2; //765
+
+					switch (i)
+					{
+						case 0: pal[id] = Color.FromArgb(val,val,val); break; // grayscale
+						case 1: pal[id] = Color.FromArgb(val,  0,  0); break; // redscale
+						case 2: pal[id] = Color.FromArgb(  0,val,  0); break; // greenscale
+						case 3: pal[id] = Color.FromArgb(  0,  0,val); break; // bluescale
+					}
+				}
+				_palettes[label] = pal;
+			}
 		}
 		#endregion Methods
 

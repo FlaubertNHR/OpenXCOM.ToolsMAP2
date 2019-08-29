@@ -68,9 +68,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					TopView.Options[str_GridLineWidth].Value =
-					_gridLineWidth = value.Clamp(1,6);
+					_gridLineWidth = value.Viceroy(1,6);
 				}
-				else if ((_gridLineWidth = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_gridLineWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					TopView.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
@@ -107,9 +107,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					TopView.Options[str_GridLine10Width].Value =
-					_gridLine10Width = value.Clamp(1,6);
+					_gridLine10Width = value.Viceroy(1,6);
 				}
-				else if ((_gridLine10Width = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_gridLine10Width = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					TopView.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
@@ -163,9 +163,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					TopView.Options[str_WestWidth].Value =
-					_westWidth = value.Clamp(1,9);
+					_westWidth = value.Viceroy(1,9);
 				}
-				else if ((_westWidth = value.Clamp(1,9)) != value) // on user-changed
+				else if ((_westWidth = value.Viceroy(1,9)) != value) // on user-changed
 				{
 					TopView.Options[str_WestWidth].Value = _westWidth;
 				}
@@ -202,9 +202,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					TopView.Options[str_NorthWidth].Value =
-					_northWidth = value.Clamp(1,9);
+					_northWidth = value.Viceroy(1,9);
 				}
-				else if ((_northWidth = value.Clamp(1,9)) != value) // on user-changed
+				else if ((_northWidth = value.Viceroy(1,9)) != value) // on user-changed
 				{
 					TopView.Options[str_NorthWidth].Value = _northWidth;
 				}
@@ -258,9 +258,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					TopView.Options[str_SelectorWidth].Value =
-					_selectorWidth = value.Clamp(1,6);
+					_selectorWidth = value.Viceroy(1,6);
 				}
-				else if ((_selectorWidth = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_selectorWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					TopView.Options[str_SelectorWidth].Value = _selectorWidth;
 				}
@@ -297,9 +297,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					TopView.Options[str_SelectedWidth].Value =
-					_selectedWidth = value.Clamp(1,6);
+					_selectedWidth = value.Viceroy(1,6);
 				}
-				else if ((_selectedWidth = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_selectedWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					TopView.Options[str_SelectedWidth].Value = _selectedWidth;
 				}

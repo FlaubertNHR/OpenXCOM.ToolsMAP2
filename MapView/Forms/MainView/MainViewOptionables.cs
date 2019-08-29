@@ -157,9 +157,9 @@ namespace MapView.Forms.MainView
 				if (foptions == null) // on load
 				{
 					MainViewF.that.Options[str_GridLayerOpacity].Value =
-					_gridLayerOpacity = value.Clamp(0,255);
+					_gridLayerOpacity = value.Viceroy(0,255);
 				}
-				else if ((_gridLayerOpacity = value.Clamp(0,255)) != value) // on user-changed
+				else if ((_gridLayerOpacity = value.Viceroy(0,255)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_GridLayerOpacity].Value = _gridLayerOpacity;
 				}
@@ -196,9 +196,9 @@ namespace MapView.Forms.MainView
 				if (foptions == null) // on load
 				{
 					MainViewF.that.Options[str_GridLineWidth].Value =
-					_gridLineWidth = value.Clamp(1,6);
+					_gridLineWidth = value.Viceroy(1,6);
 				}
-				else if ((_gridLineWidth = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_gridLineWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
@@ -235,9 +235,9 @@ namespace MapView.Forms.MainView
 				if (foptions == null) // on load
 				{
 					MainViewF.that.Options[str_GridLine10Width].Value =
-					_gridLine10Width = value.Clamp(1,6);
+					_gridLine10Width = value.Viceroy(1,6);
 				}
-				else if ((_gridLine10Width = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_gridLine10Width = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
@@ -246,13 +246,13 @@ namespace MapView.Forms.MainView
 
 
 
-		private const string cat_Selects = "Selects";
+		private const string cat_Selection = "Selection";
 
 		private const string str_SelectionBorderColor = "SelectionBorderColor";
 		private static Color def_SelectionBorderColor = Color.Tomato;
 
 		private Color _selectionBorderColor = def_SelectionBorderColor;
-		[Category(cat_Selects)]
+		[Category(cat_Selection)]
 		[Description("Color of the border of selected tiles")]
 		[DefaultValue(typeof(Color), "Tomato")]
 		public Color SelectionBorderColor
@@ -265,7 +265,7 @@ namespace MapView.Forms.MainView
 		private const int    def_SelectionBorderOpacity = 255;
 
 		private int _selectionBorderOpacity = def_SelectionBorderOpacity;
-		[Category(cat_Selects)]
+		[Category(cat_Selection)]
 		[Description("Opacity of the border of selected tiles (0..255 default 255)")]
 		[DefaultValue(def_SelectionBorderOpacity)]
 		public int SelectionBorderOpacity
@@ -277,9 +277,9 @@ namespace MapView.Forms.MainView
 				if (foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SelectionBorderOpacity].Value =
-					_selectionBorderOpacity = value.Clamp(0,255);
+					_selectionBorderOpacity = value.Viceroy(0,255);
 				}
-				else if ((_selectionBorderOpacity = value.Clamp(0,255)) != value) // on user-changed
+				else if ((_selectionBorderOpacity = value.Viceroy(0,255)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SelectionBorderOpacity].Value = _selectionBorderOpacity;
 				}
@@ -290,7 +290,7 @@ namespace MapView.Forms.MainView
 		private const int    def_SelectionBorderWidth = 2;
 
 		private int _selectionBorderWidth = def_SelectionBorderWidth;
-		[Category(cat_Selects)]
+		[Category(cat_Selection)]
 		[Description("Width of the border of selected tiles in pixels (1..6 default 2)")]
 		[DefaultValue(def_SelectionBorderWidth)]
 		public int SelectionBorderWidth
@@ -302,9 +302,9 @@ namespace MapView.Forms.MainView
 				if (foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SelectionBorderWidth].Value =
-					_selectionBorderWidth = value.Clamp(1,6);
+					_selectionBorderWidth = value.Viceroy(1,6);
 				}
-				else if ((_selectionBorderWidth = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_selectionBorderWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SelectionBorderWidth].Value = _selectionBorderWidth;
 				}
@@ -312,23 +312,46 @@ namespace MapView.Forms.MainView
 		}
 
 
+		public const int TONER_STANDARD = 0;
+		public const int TONER_GRAY     = 1;
+		public const int TONER_RED      = 2;
+		public const int TONER_GREEN    = 3;
+		public const int TONER_BLUE     = 4;
 
-		private const string cat_Sprites = "Sprites";
+		private const string str_SelectedTileToner = "SelectedTileToner";
+		private const int    def_SelectedTileToner = TONER_STANDARD;
 
-		private const string str_GraySelection = "GraySelection";
-		private const bool   def_GraySelection = true;
-
-		private bool _graySelection = def_GraySelection;
-		[Category(cat_Sprites)]
-		[Description(@"If true the selection area will be drawn in grayscale
+		private int _selectedTileToner = def_SelectedTileToner;
+		[Category(cat_Selection)]
+		[Description(@"The colortone of tiles that are selected (0..4 default 0)
+0 - standard
+1 - grayscale
+2 - redscale
+3 - greenscale
+4 - bluescale
 (only if UseMono is false)")]
-		[DefaultValue(def_GraySelection)]
-		public bool GraySelection
+		[DefaultValue(def_SelectedTileToner)]
+		public int SelectedTileToner
 		{
-			get { return _graySelection; }
-			set { _graySelection = value; }
+			get { return _selectedTileToner; }
+			set
+			{
+				var foptions = MainViewF._foptions as OptionsForm;
+				if (foptions == null) // on load
+				{
+					MainViewF.that.Options[str_SelectedTileToner].Value =
+					_selectedTileToner = value.Viceroy(TONER_STANDARD, TONER_BLUE);
+				}
+				else if ((_selectedTileToner = value.Viceroy(TONER_STANDARD, TONER_BLUE)) != value) // on user-changed
+				{
+					MainViewF.that.Options[str_SelectedTileToner].Value = _selectedTileToner;
+				}
+			}
 		}
 
+
+
+		private const string cat_Sprites = "Sprites";
 
 #if !LOCKBITS
 		private bool _spriteShadeEnabled = true;
@@ -357,9 +380,9 @@ namespace MapView.Forms.MainView
 				if (foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SpriteShade].Value =
-					_spriteShade = value.Clamp(0,100);
+					_spriteShade = value.Viceroy(0,100);
 				}
-				else if ((_spriteShade = value.Clamp(0,100)) != value) // on user-changed
+				else if ((_spriteShade = value.Viceroy(0,100)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SpriteShade].Value = _spriteShade;
 				}
@@ -413,9 +436,9 @@ namespace MapView.Forms.MainView
 				if (foptions == null) // on load
 				{
 					MainViewF.that.Options[str_Interpolation].Value =
-					_interpolation = value.Clamp(0,7);
+					_interpolation = value.Viceroy(0,7);
 				}
-				else if ((_interpolation = value.Clamp(0,7)) != value) // on user-changed
+				else if ((_interpolation = value.Viceroy(0,7)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_Interpolation].Value = _interpolation;
 				}
@@ -589,8 +612,8 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_SelectionBorderColor,   def_SelectionBorderColor,   changer0);
 			options.AddOptionDefault(str_SelectionBorderOpacity, def_SelectionBorderOpacity, changer0);
 			options.AddOptionDefault(str_SelectionBorderWidth,   def_SelectionBorderWidth,   changer0);
+			options.AddOptionDefault(str_SelectedTileToner,      def_SelectedTileToner,      changer0);
 
-			options.AddOptionDefault(str_GraySelection,          def_GraySelection,          changer0);
 			options.AddOptionDefault(str_SpriteShade,            def_SpriteShade,            changer3);
 			options.AddOptionDefault(str_Interpolation,          def_Interpolation,          changer0);
 
@@ -669,8 +692,9 @@ namespace MapView.Forms.MainView
 					MainViewOverlay.PenSelect.Width = (SelectionBorderWidth = (int)val);
 					break;
 
-				case str_GraySelection:
-					GraySelection = (bool)val;
+				case str_SelectedTileToner:
+					SelectedTileToner = (int)val;
+					MainViewF.SetTileToner();
 					break;
 
 				case str_Interpolation:

@@ -97,14 +97,12 @@
   <ItemGroup>
     <Compile Include="Descriptor\TileGroup.cs" />
     <Compile Include="ProgressBarForm.cs" />
-    <Compile Include="Resources\Images\Collections\SpriteCollection.cs">
+    <Compile Include="Resources\Images\BitmapHandler.cs" />
+    <Compile Include="Resources\Images\BitmapService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Images\Types\BitmapHandler.cs" />
+    <Compile Include="Resources\Images\SpriteCollection.cs" />
     <Compile Include="Resources\Images\Types\PckImage.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Resources\Images\Types\BitmapService.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resources\Images\Types\ScanGicon.cs" />
@@ -218,7 +216,6 @@
   <ItemGroup>
     <Folder Include="Resources" />
     <Folder Include="Resources\Images" />
-    <Folder Include="Resources\Images\Collections" />
     <Folder Include="Resources\Images\Types" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

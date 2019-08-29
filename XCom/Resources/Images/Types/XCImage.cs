@@ -33,9 +33,6 @@ namespace XCom
 		public Bitmap Sprite
 		{ get; set; }
 
-		public Bitmap SpriteGr
-		{ get; protected set; }
-
 		private Palette _palette;
 		public Palette Pal
 		{
@@ -76,7 +73,7 @@ namespace XCom
 			Pal     = pal;
 
 			if (Pal != null)											// NOTE: this is to check for a call by BitmapService.CreateSprite()
-				Sprite = BitmapService.CreateColorized(					// which is called by
+				Sprite = BitmapService.CreateColored(					// which is called by
 													width,				// BitmapService.CreateSpriteset() and
 													height,				// several PckViewForm contextmenu events
 													Bindata,			// BUT: the call by PckImage..cTor initializer needs to decode
@@ -84,7 +81,7 @@ namespace XCom
 		}																// that's why i prefer pizza.
 
 		/// <summary>
-		/// cTor[1]. For clone. See PckImage..cTor[1] and .Clone().
+		/// cTor[1]. For clone. See PckImage..cTor[1] and .Duplicate().
 		/// </summary>
 		protected XCImage()
 		{}

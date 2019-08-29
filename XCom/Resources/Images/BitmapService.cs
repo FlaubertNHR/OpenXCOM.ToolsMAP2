@@ -190,7 +190,7 @@ namespace XCom
 		/// <param name="bindata">image data</param>
 		/// <param name="pal">palette to color the image with</param>
 		/// <returns></returns>
-		public static Bitmap CreateColorized(
+		public static Bitmap CreateColored(
 				int width,
 				int height,
 				byte[] bindata,

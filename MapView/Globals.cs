@@ -55,7 +55,7 @@ namespace MapView
 		/// <param name="max"></param>
 		/// <returns>min if val is less than min; max if value is greater than
 		/// max; else the value itself</returns>
-		internal static T Clamp<T>(
+		internal static T Viceroy<T>(
 				this T val,
 				T min,
 				T max) where T

@@ -53,6 +53,9 @@ namespace XCom
 
 
 		#region Properties
+		public Bitmap SpriteT
+		{ get; private set; }
+
 		/// <summary>
 		/// SetId is used only by 'MapInfoDialog'.
 		/// </summary>
@@ -112,16 +115,17 @@ namespace XCom
 				}
 			}
 
-			Sprite   = BitmapService.CreateColorized(
-												XCImage.SpriteWidth,
-												XCImage.SpriteHeight,
-												Bindata,
-												Pal.ColorTable);
-			SpriteGr = BitmapService.CreateColorized(
-												XCImage.SpriteWidth,
-												XCImage.SpriteHeight,
-												Bindata,
-												Pal.Grayscale.ColorTable);
+			Sprite = BitmapService.CreateColored(
+											XCImage.SpriteWidth,
+											XCImage.SpriteHeight,
+											Bindata,
+											Pal.ColorTable);
+
+			SpriteT = BitmapService.CreateColored(
+											XCImage.SpriteWidth,
+											XCImage.SpriteHeight,
+											Bindata,
+											Pal.GrayScaled.ColorTable); // default to grayscale.
 		}
 
 		/// <summary>
@@ -256,6 +260,14 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
+		/// Sets the color-toned palette of the SpriteToned sprite.
+		/// </summary>
+		private void SetTonedPalette(Palette pal)
+		{
+			SpriteT.Palette = pal.ColorTable;
+		}
+
+		/// <summary>
 		/// Returns a deep clone of this PckImage. Except 'Pal'.
 		/// </summary>
 		/// <param name="spriteset">the spriteset that the sprite will belong
@@ -274,10 +286,10 @@ namespace XCom
 			sprite.SetId = -1;
 
 			// XCImage vars
-			sprite.Bindata  = Bindata.Clone() as byte[];
-			sprite.Sprite   = ObjectCopier.Clone<Bitmap>(Sprite);	// workaround for Bitmap's clone/copy/new shenanigans
-			sprite.SpriteGr = ObjectCopier.Clone<Bitmap>(SpriteGr);	// workaround for Bitmap's clone/copy/new shenanigans
-			sprite.Pal      = Pal;
+			sprite.Bindata = Bindata.Clone() as byte[];
+			sprite.Sprite  = ObjectCopier.Clone<Bitmap>(Sprite);	// workaround for Bitmap's clone/copy/new shenanigans
+			sprite.SpriteT = ObjectCopier.Clone<Bitmap>(SpriteT);	// workaround for Bitmap's clone/copy/new shenanigans
+			sprite.Pal     = Pal;
 
 			sprite.Id = id;
 

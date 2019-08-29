@@ -29,7 +29,8 @@ namespace XCom
 							new List<SpriteCollection>();
 		/// <summary>
 		/// A list of spritesets in the currently loaded tileset or so.
-		/// @note It has relevance only for 'MapInfoDialog'.
+		/// @note It has relevance only for MapInfoDialog and
+		/// MainViewOptionables.SelectedTileColor.
 		/// </summary>
 		public static List<SpriteCollection> Spritesets
 		{
@@ -99,7 +100,7 @@ namespace XCom
 						// else if (spriteset.Error_Overflo) {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
-							Spritesets.Add(spriteset); // used only by MapInfoDialog.
+							Spritesets.Add(spriteset); // used only by MapInfoDialog and MainViewOptionables.SelectedTileColor.
 							return spriteset;
 						}
 					}

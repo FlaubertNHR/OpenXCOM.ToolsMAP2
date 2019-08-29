@@ -353,9 +353,9 @@ namespace MapView.Forms.MainView
 			Globals.Scale = Math.Min(
 								(double)(Width  - OffsetX) / required.Width,
 								(double)(Height - OffsetY) / required.Height);
-			Globals.Scale = Globals.Scale.Clamp(
-											Globals.ScaleMinimum,
-											Globals.ScaleMaximum);
+			Globals.Scale = Globals.Scale.Viceroy(
+												Globals.ScaleMinimum,
+												Globals.ScaleMaximum);
 
 			//XCom.LogFile.WriteLine(". scale set to= " + Globals.Scale);
 		}

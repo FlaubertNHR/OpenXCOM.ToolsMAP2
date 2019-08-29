@@ -1135,7 +1135,7 @@ namespace MapView.Forms.MainView
 							DrawTile(
 									tile,
 									x, y,
-									MainViewF.Optionables.GraySelection
+									MainViewF.Optionables.SelectedTileToner != 0
 										&& lev == MapBase.Level
 										&& rect.Contains(col, row));
 						}
@@ -1579,11 +1579,12 @@ namespace MapView.Forms.MainView
 		/// <param name="tile"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		/// <param name="gray">true to draw the grayscale version of any tile-sprites</param>
+		/// <param name="toned">true to draw the monotone version of the
+		/// tile-sprites</param>
 		private void DrawTile(
 				MapTile tile,
 				int x, int y,
-				bool gray)
+				bool toned)
 		{
 			// NOTE: The width and height args are based on a sprite that's 32x40.
 			// Going back to a universal sprite-size would do this:
@@ -1600,8 +1601,8 @@ namespace MapView.Forms.MainView
 			if (topView.Floor.Checked
 				&& (part = tile.Floor) != null)
 			{
-				var sprite = (gray) ? part[_anistep].SpriteGr
-									: part[_anistep].Sprite;
+				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
+								   :  part[_anistep].Sprite;
 				rect.Y -= part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
@@ -1609,8 +1610,8 @@ namespace MapView.Forms.MainView
 			if (topView.West.Checked
 				&& (part = tile.West) != null)
 			{
-				var sprite = (gray) ? part[_anistep].SpriteGr
-									: part[_anistep].Sprite;
+				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
+								   :  part[_anistep].Sprite;
 				rect.Y -= part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
@@ -1618,8 +1619,8 @@ namespace MapView.Forms.MainView
 			if (topView.North.Checked
 				&& (part = tile.North) != null)
 			{
-				var sprite = (gray) ? part[_anistep].SpriteGr
-									: part[_anistep].Sprite;
+				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
+								   :  part[_anistep].Sprite;
 				rect.Y -= part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
@@ -1627,8 +1628,8 @@ namespace MapView.Forms.MainView
 			if (topView.Content.Checked
 				&& (part = tile.Content) != null)
 			{
-				var sprite = (gray) ? part[_anistep].SpriteGr
-									: part[_anistep].Sprite;
+				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
+								   :  part[_anistep].Sprite;
 				rect.Y -= part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}

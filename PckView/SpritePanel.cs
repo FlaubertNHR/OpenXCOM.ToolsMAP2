@@ -146,11 +146,11 @@ namespace PckView
 								if (palid != (int)Sprite.Bindata[bindataId])
 								{
 									Sprite.Bindata[bindataId] = (byte)palid;
-									Sprite.Sprite = BitmapService.CreateColorized(
-																				XCImage.SpriteWidth,
-																				XCImage.SpriteHeight,
-																				Sprite.Bindata,
-																				PckViewForm.Pal.ColorTable);
+									Sprite.Sprite = BitmapService.CreateColored(
+																			XCImage.SpriteWidth,
+																			XCImage.SpriteHeight,
+																			Sprite.Bindata,
+																			PckViewForm.Pal.ColorTable);
 									Invalidate();
 									_feditor._f.TilePanel.Invalidate();
 

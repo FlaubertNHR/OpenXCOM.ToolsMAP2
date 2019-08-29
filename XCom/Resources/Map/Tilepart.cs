@@ -5,6 +5,11 @@ namespace XCom
 {
 	public sealed class Tilepart
 	{
+		#region Fields (static)
+		private const int PHASECOUNT = 8;
+		#endregion Fields (static)
+
+
 		#region Properties
 		/// <summary>
 		/// The object that has information about the mechanics and appearance
@@ -24,6 +29,11 @@ namespace XCom
 		// sprite. They ought be kept consistent since there is an awkward
 		// sort of latency-effect happening on refresh.
 
+		/// <summary>
+		/// WHY THE FUCK DOES EVERY TILEPART STORE THE ENTIRE SPRITESET.
+		/// Yes, this is The spriteset. Each tilepart has a pointer to it ...
+		/// psst if you really want the spritesets get it in ResourceInfo.
+		/// </summary>
 		private SpriteCollection Spriteset
 		{ get; set; }
 
@@ -34,14 +44,14 @@ namespace XCom
 		/// directly from its 'SpriteCollection' by 'Record' (int)Phase*
 		/// on-the-fly.
 		/// 
-		/// But unfortunately that incorrect mentality is deeply ingrained in
+		/// But unfortunately that difficult perspective is deeply ingrained in
 		/// the design of the code.
 		/// </summary>
 		public XCImage[] Sprites
 		{ get; private set; }
 
 		/// <summary>
-		/// Gets a sprite at the specified animation frame.
+		/// Gets the sprite at a specified animation phase.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
@@ -49,23 +59,7 @@ namespace XCom
 		{
 			get { return Sprites[id]; }
 			set { Sprites[id] = value; }
-//			get { return Spriteset[getSpriteId(id)]; }
-//			set { Spriteset[getSpriteId(id)] = value; }
 		}
-/*		private int getSpriteId(int id)
-		{
-			switch (id)
-			{
-				default: return Record.Sprite1; //case 0
-				case 1:  return Record.Sprite2;
-				case 2:  return Record.Sprite3;
-				case 3:  return Record.Sprite4;
-				case 4:  return Record.Sprite5;
-				case 5:  return Record.Sprite6;
-				case 6:  return Record.Sprite7;
-				case 7:  return Record.Sprite8;
-			}
-		} */
 
 		/// <summary>
 		/// The ID of this tilepart that's unique to its terrain/MCD-record.
@@ -104,8 +98,8 @@ namespace XCom
 
 			if ((Spriteset = spriteset) != null) // nota bene: 'Spriteset' and 'Sprites' shall be null for McdView.
 			{
-				Sprites = new XCImage[8];	// for MapView a part contains its own pointers to 8 sprites.
-											// - animations and doors toggle basically
+				Sprites = new XCImage[PHASECOUNT];	// for MapView a part contains its own pointers to 8 sprites.
+													// - animations and doors toggle basically
 				InitSprites();
 			}
 		}
@@ -167,11 +161,11 @@ namespace XCom
 		public void SpritesToPhases()
 		{
 			int spriteId;
-			for (int i = 0; i != 8; ++i)
+			for (int i = 0; i != PHASECOUNT; ++i)
 			{
 				switch (i)
 				{
-					default: spriteId = Record.Sprite1; break; //case 0
+					default: spriteId = Record.Sprite1; break; // case 0
 					case 1:  spriteId = Record.Sprite2; break;
 					case 2:  spriteId = Record.Sprite3; break;
 					case 3:  spriteId = Record.Sprite4; break;
@@ -189,7 +183,7 @@ namespace XCom
 		/// </summary>
 		private void SpritesToFirstPhase()
 		{
-			for (int i = 0; i != 8; ++i)
+			for (int i = 0; i != PHASECOUNT; ++i)
 				Sprites[i] = Spriteset[Record.Sprite1];
 		}
 
@@ -211,7 +205,7 @@ namespace XCom
 					else
 					{
 						byte altr = Altr.Record.Sprite1;
-						for (int i = 4; i != 8; ++i)
+						for (int i = 4; i != PHASECOUNT; ++i) // ie. cycle between Sprite1 and Altr.Sprite1
 							Sprites[i] = Spriteset[altr];
 					}
 				}
@@ -230,7 +224,7 @@ namespace XCom
 				&& (Record.SlidingDoor || Record.HingedDoor))
 			{
 				byte altr = Altr.Record.Sprite1;
-				for (int i = 0; i != 8; ++i)
+				for (int i = 0; i != PHASECOUNT; ++i)
 					Sprites[i] = Spriteset[altr];
 			}
 		}

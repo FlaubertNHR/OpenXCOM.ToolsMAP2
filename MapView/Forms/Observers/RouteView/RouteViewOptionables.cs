@@ -68,9 +68,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					RouteView.Options[str_GridLineWidth].Value =
-					_gridLineWidth = value.Clamp(1,6);
+					_gridLineWidth = value.Viceroy(1,6);
 				}
-				else if ((_gridLineWidth = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_gridLineWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
@@ -107,9 +107,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					RouteView.Options[str_GridLine10Width].Value =
-					_gridLine10Width = value.Clamp(1,6);
+					_gridLine10Width = value.Viceroy(1,6);
 				}
-				else if ((_gridLine10Width = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_gridLine10Width = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
@@ -149,9 +149,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					RouteView.Options[str_WallWidth].Value =
-					_wallWidth = value.Clamp(1,9);
+					_wallWidth = value.Viceroy(1,9);
 				}
-				else if ((_wallWidth = value.Clamp(1,9)) != value) // on user-changed
+				else if ((_wallWidth = value.Viceroy(1,9)) != value) // on user-changed
 				{
 					RouteView.Options[str_WallWidth].Value = _wallWidth;
 				}
@@ -234,9 +234,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					RouteView.Options[str_NodeOpacity].Value =
-					_nodeOpacity = value.Clamp(0,255);
+					_nodeOpacity = value.Viceroy(0,255);
 				}
-				else if ((_nodeOpacity = value.Clamp(0,255)) != value) // on user-changed
+				else if ((_nodeOpacity = value.Viceroy(0,255)) != value) // on user-changed
 				{
 					RouteView.Options[str_NodeOpacity].Value = _nodeOpacity;
 				}
@@ -276,9 +276,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					RouteView.Options[str_LinkWidth].Value =
-					_linkWidth = value.Clamp(1,6);
+					_linkWidth = value.Viceroy(1,6);
 				}
-				else if ((_linkWidth = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_linkWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_LinkWidth].Value = _linkWidth;
 				}
@@ -315,9 +315,9 @@ namespace MapView.Forms.Observers
 				if (foptions == null) // on load
 				{
 					RouteView.Options[str_LinkSelectedWidth].Value =
-					_linkSelectedWidth = value.Clamp(1,6);
+					_linkSelectedWidth = value.Viceroy(1,6);
 				}
-				else if ((_linkSelectedWidth = value.Clamp(1,6)) != value) // on user-changed
+				else if ((_linkSelectedWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
 					RouteView.Options[str_LinkSelectedWidth].Value = _linkSelectedWidth;
 				}

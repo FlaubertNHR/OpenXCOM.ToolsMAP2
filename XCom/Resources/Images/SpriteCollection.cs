@@ -9,7 +9,7 @@ namespace XCom
 {
 	/// <summary>
 	/// a SPRITESET: A collection of images that is usually created of PCK/TAB
-	/// terrain file data but can also be a ScanG iconset.
+	/// terrain file data but can also be bigobs or a ScanG iconset.
 	/// </summary>
 	public sealed class SpriteCollection
 	{
@@ -78,7 +78,10 @@ namespace XCom
 		{
 			get
 			{
-				return (id > -1 && id < Count) ? Sprites[id] : null;
+				if (id > -1 && id < Count)
+					return Sprites[id];
+
+				return null;
 			}
 			set
 			{
