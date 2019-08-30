@@ -17,6 +17,15 @@ namespace MapView.Forms.MainView
 	/// </summary>
 	internal sealed class MainViewOptionables
 	{
+		#region Fields (static)
+		public const int TONER_STANDARD = 0;
+		public const int TONER_GRAY     = 1;
+		public const int TONER_RED      = 2;
+		public const int TONER_GREEN    = 3;
+		public const int TONER_BLUE     = 4;
+		#endregion Fields (static)
+
+
 		#region Fields
 		private readonly MainViewOverlay MainViewOverlay;
 		#endregion Fields
@@ -38,7 +47,12 @@ namespace MapView.Forms.MainView
 			else if ((f as RouteViewForm)    != null) StartRouteView    = val;
 			else if ((f as TopRouteViewForm) != null) StartTopRouteView = val;
 		}
-		#endregion Methods
+
+		internal int GetNextTileToner(int dir)
+		{
+			return (SelectedTileToner + dir + 5) % 5;
+		}
+		#endregion Methods (static)
 
 
 		#region Properties (optionable)
@@ -312,14 +326,8 @@ namespace MapView.Forms.MainView
 		}
 
 
-		public const int TONER_STANDARD = 0;
-		public const int TONER_GRAY     = 1;
-		public const int TONER_RED      = 2;
-		public const int TONER_GREEN    = 3;
-		public const int TONER_BLUE     = 4;
-
-		private const string str_SelectedTileToner = "SelectedTileToner";
-		private const int    def_SelectedTileToner = TONER_STANDARD;
+		internal const string str_SelectedTileToner = "SelectedTileToner";
+		private  const int    def_SelectedTileToner = TONER_STANDARD;
 
 		private int _selectedTileToner = def_SelectedTileToner;
 		[Category(cat_Selection)]

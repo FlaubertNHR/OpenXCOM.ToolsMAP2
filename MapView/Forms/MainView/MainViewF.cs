@@ -1101,6 +1101,20 @@ namespace MapView
 					}
 					break;
 
+				case Keys.F10:				// cycle tiletoner option forward
+					key = MainViewOptionables.str_SelectedTileToner;
+					val = Optionables.GetNextTileToner(+1);
+					Options[key].Value = val;
+					Optionables.OnOptionChanged(key,val);
+					break;
+
+				case Keys.Shift | Keys.F10:	// cycle tiletoner option reverse
+					key = MainViewOptionables.str_SelectedTileToner;
+					val = Optionables.GetNextTileToner(-1);
+					Options[key].Value = val;
+					Optionables.OnOptionChanged(key,val);
+					break;
+
 				case Keys.F2:
 					key = MainViewOptionables.str_AnimateSprites;
 					val = !MainViewF.Optionables.AnimateSprites;
