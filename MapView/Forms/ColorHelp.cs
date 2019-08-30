@@ -264,6 +264,16 @@ namespace MapView
 		{
 			return ((int)color.R + color.G + color.B > 485) ? Color.DarkSlateBlue
 															: Color.Snow;
+//			if ((int)Math.Sqrt(
+//							color.R * color.R * 0.241
+//						  + color.G * color.G * 0.691
+//						  + color.B * color.B * 0.068) > 170)
+//			if ((int)(color.R * 0.2990 + color.G * 0.5870 + color.B * 0.1140) > 150)
+/*			if ((int)(color.R * 0.2126 + color.G * 0.7152 + color.B * 0.0722) > 150)
+			{
+				return Color.DarkSlateBlue;
+			}
+			return Color.Snow; */ // My eyes are weird -> drop LSD.
 		}
 		#endregion Methods
 
