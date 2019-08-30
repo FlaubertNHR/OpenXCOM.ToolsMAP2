@@ -327,11 +327,11 @@ namespace MapView.Forms.MainView
 
 
 		internal const string str_SelectedTileToner = "SelectedTileToner";
-		private  const int    def_SelectedTileToner = TONER_STANDARD;
+		private  const int    def_SelectedTileToner = TONER_GRAY;
 
 		private int _selectedTileToner = def_SelectedTileToner;
 		[Category(cat_Selection)]
-		[Description(@"The colortone of tiles that are selected (0..4 default 0)
+		[Description(@"The colortone of tiles that are selected (0..4 default 1)
 0 - standard
 1 - grayscale
 2 - redscale
