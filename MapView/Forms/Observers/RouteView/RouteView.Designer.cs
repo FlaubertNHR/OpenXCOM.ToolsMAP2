@@ -1082,7 +1082,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.btnSave.Enabled = false;
 			this.btnSave.ForeColor = System.Drawing.Color.Chocolate;
-			this.btnSave.Location = new System.Drawing.Point(539, 158);
+			this.btnSave.Location = new System.Drawing.Point(539, 159);
 			this.btnSave.Margin = new System.Windows.Forms.Padding(0);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(46, 46);

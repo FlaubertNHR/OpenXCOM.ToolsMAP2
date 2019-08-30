@@ -299,6 +299,14 @@ namespace XCom
 			}
 		}
 
+		/// <summary>
+		/// Gets a luminance value (roughly).
+		/// See also ColorHelp.GetTextColor().
+		/// </summary>
+		/// <param name="red"></param>
+		/// <param name="green"></param>
+		/// <param name="blue"></param>
+		/// <returns></returns>
 		private int GetL(int red, int green, int blue)
 		{
 //			return (int)(red * 0.2126 + green * 0.7152 + blue * 0.0722);
