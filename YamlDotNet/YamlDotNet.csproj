@@ -90,10 +90,10 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AnchorNotFoundException.cs" />
@@ -321,7 +321,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-<!-- // kL_edit
+  <!-- // kL_edit
   <Target Name="BeforeBuild">
     <WriteLinesToFile File="$(MSBuildProjectDirectory)\Properties\AssemblyInfo.Generated.cs" Lines="[assembly: System.Reflection.AssemblyConfiguration(&quot;$(Configuration)&quot;)]" Overwrite="true" />
   </Target>
