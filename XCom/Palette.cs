@@ -277,15 +277,15 @@ namespace XCom
 				}
 
 				var pal = new Palette(label);
-				pal[0] = Color.Transparent;
 
-				Color color; int val;
+				Color color = this[0];
+				int val = GetL(color.R, color.G, color.B);
+				pal[0] = Color.FromArgb(0, val,val,val); // id#0 shall always be transparent grayscale
+
 				for (int id = 1; id != ColorTable.Entries.Length; ++id)
 				{
 					color = this[id];
-					val = (int)(color.R * 0.30 + color.G * 0.59 + color.B * 0.11);
-
-					int val_2 = val / 2; //765
+					val = GetL(color.R, color.G, color.B);
 
 					switch (i)
 					{
@@ -297,6 +297,12 @@ namespace XCom
 				}
 				_palettes[label] = pal;
 			}
+		}
+
+		private int GetL(int red, int green, int blue)
+		{
+//			return (int)(red * 0.2126 + green * 0.7152 + blue * 0.0722);
+			return (int)(red * 0.2990 + green * 0.5870 + blue * 0.1140);
 		}
 		#endregion Methods
 
