@@ -56,16 +56,16 @@ namespace MapView.Forms.MainView
 		// NOTE: Observers are added to MainView's Options by
 		// MenuManager.PopulateMenu(). They are used by
 		// MenuManager.StartSecondaryStageBoosters().
-		private const string cat_Observers = "Observers";
+		private const string cat_Observers = "Observers";			// category in the PropertyPanel
 
-		private  const string str_StartTileView = "StartTileView";
-		internal const bool   def_StartTileView = true;
+		private  const string str_StartTileView = "StartTileView";	// const string key of the Property
+		internal const bool   def_StartTileView = true;				// default value of the Property
 
 		private bool _starttileview = def_StartTileView;
 		[Category(cat_Observers)]
 		[Description("Open on load - TileView")]
 		[DefaultValue(def_StartTileView)]
-		public bool StartTileView
+		public bool StartTileView									// the Property.
 		{
 			get { return _starttileview; }
 			set { _starttileview = value; }
