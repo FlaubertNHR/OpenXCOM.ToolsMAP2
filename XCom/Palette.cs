@@ -252,10 +252,11 @@ namespace XCom
 		/// <param name="tran">true to enable transparency</param>
 		public void SetTransparent(bool tran)
 		{
-			if (tran)
-				ColorTable.Entries[TranId] = Color.Transparent;
-			else
-				ColorTable.Entries[TranId] = Color.Black;
+			int alpha;
+			if (tran) alpha =   0;
+			else      alpha = 255;
+
+			ColorTable.Entries[TranId] = Color.FromArgb(alpha, ColorTable.Entries[TranId]);
 		}
 
 		/// <summary>
