@@ -77,7 +77,7 @@ namespace XCom
 
 				string warn = String.Format(
 										CultureInfo.CurrentCulture,
-										"In the MCD file {0}, part #{1} has an invalid death part (id #{2} of {3} records).",
+										"In the MCD file {0} part #{1} has an invalid death part (id #{2} of {3} records).",
 										terrain,
 										id,
 										record.DieTile,
@@ -114,7 +114,7 @@ namespace XCom
 
 				string warn = String.Format(
 										CultureInfo.CurrentCulture,
-										"In the MCD file {0}, part #{1} has an invalid alternate part (id #{2} of {3} records).",
+										"In the MCD file {0} part #{1} has an invalid alternate part (id #{2} of {3} records).",
 										terrain,
 										id,
 										record.Alt_MCD,
