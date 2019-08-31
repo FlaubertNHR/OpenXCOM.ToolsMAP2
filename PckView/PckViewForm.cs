@@ -156,13 +156,18 @@ namespace PckView
 		{
 			IsInvoked = isInvoked;
 
+			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
+#if DEBUG
+			LogFile.SetLogFilePath(dirAppL, IsInvoked);
+#endif
+
 			InitializeComponent();
 
 			// WORKAROUND: See note in MainViewF cTor.
 			MaximumSize = new Size(0,0); // fu.net
 
 			if (!IsInvoked)
-				RegistryInfo.InitializeRegistry(Path.GetDirectoryName(Application.ExecutablePath));
+				RegistryInfo.InitializeRegistry(dirAppL);
 
 			RegistryInfo.RegisterProperties(this);
 //			regInfo.AddProperty("SelectedPalette");
@@ -211,9 +216,8 @@ namespace PckView
 
 
 			// get SpriteShade from MapView's options ...
-			string dir = Path.GetDirectoryName(Application.ExecutablePath);
-				   dir = Path.Combine(dir, PathInfo.DIR_Settings);	// "settings"
-			string pfe = Path.Combine(dir, PathInfo.CFG_Options);	// "MapOptions.cfg"
+			string dir = Path.Combine(dirAppL, PathInfo.DIR_Settings);	// "settings"
+			string pfe = Path.Combine(dir,     PathInfo.CFG_Options);	// "MapOptions.cfg"
 
 			string val = GetSpriteShade(pfe);
 			if (val != null)

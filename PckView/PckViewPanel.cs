@@ -102,10 +102,6 @@ namespace PckView
 		/// </summary>
 		internal PckViewPanel(PckViewForm f)
 		{
-#if DEBUG
-			LogFile.SetLogFilePath(Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
-#endif
-
 			_f = f;
 
 			Dock = DockStyle.Fill;
