@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 #if DEBUG
 using System.IO;
@@ -7,20 +7,30 @@ using System.IO;
 
 namespace DSShared
 {
-	public static class DSLogFile
+	public static class LogFile
 	{
 #if DEBUG
-		private const string DebugLogFile = "dsdebug.log";
+		private const string FILE = "debug.log";
+		private static string _full;
 #endif
 
-		/// <summary>
-		/// Creates a logfile or Cleans the old one.
-		/// </summary>
-		public static void CreateLogFile()
+		public static void SetLogFilePath(string path, bool append = false)
 		{
 #if DEBUG
-			using (var sw = new StreamWriter(File.Open( // clean the old logfile
-													DebugLogFile,
+			_full = Path.Combine(path, FILE);
+			if (!append) CreateLog();
+#endif
+		}
+
+		/// <summary>
+		/// Creates a logfile or cleans the old one. The logfile should be
+		/// created by calling SetLogFilePath() only.
+		/// </summary>
+		private static void CreateLog()
+		{
+#if DEBUG
+			using (var sw = new StreamWriter(File.Open(
+													_full,
 													FileMode.Create,
 													FileAccess.Write,
 													FileShare.None)))
@@ -36,7 +46,7 @@ namespace DSShared
 		{
 #if DEBUG
 			using (var sw = new StreamWriter(File.Open(
-													DebugLogFile,
+													_full,
 													FileMode.Append,
 													FileAccess.Write,
 													FileShare.None)))

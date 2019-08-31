@@ -173,7 +173,6 @@ namespace XCom
 					return MAP;
 				}
 
-				//LogFile.WriteLine(". . . descriptor has no terrains");
 				MessageBox.Show(
 							"There are no terrains allocated or they do not contain MCD records.",
 							" Error",

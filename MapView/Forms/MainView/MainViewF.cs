@@ -7,9 +7,6 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-#if !__MonoCS__
-using System.Runtime.InteropServices;
-#endif
 using System.Windows.Forms;
 
 using DSShared;
@@ -179,7 +176,6 @@ namespace MapView
 			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/wipes the old one.
-			DSLogFile.CreateLogFile();
 #endif
 
 			LogFile.WriteLine("Instantiating MAIN MapView window ...");

@@ -252,7 +252,6 @@ namespace McdView
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 #if DEBUG
 			LogFile.SetLogFilePath(dirAppL); // creates a logfile/ wipes the old one.
-			DSLogFile.CreateLogFile();
 #endif
 
 			isRunT = true;

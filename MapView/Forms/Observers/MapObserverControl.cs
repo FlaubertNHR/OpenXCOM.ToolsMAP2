@@ -43,7 +43,7 @@ namespace MapView.Forms.Observers
 		/// <param name="args"></param>
 		public virtual void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
-			//XCom.LogFile.WriteLine("MapObserverControl.OnSelectLocationObserver() DOES THIS EVER DO ANYTHING.");
+			//DSShared.LogFile.WriteLine("MapObserverControl.OnSelectLocationObserver() DOES THIS EVER DO ANYTHING.");
 			// TODO: YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
 			Refresh();
 		}
@@ -54,7 +54,7 @@ namespace MapView.Forms.Observers
 		/// <param name="args"></param>
 		public virtual void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{
-			//XCom.LogFile.WriteLine("MapObserverControl.OnSelectLevelObserver() DOES THIS EVER DO ANYTHING.");
+			//DSShared.LogFile.WriteLine("MapObserverControl.OnSelectLevelObserver() DOES THIS EVER DO ANYTHING.");
 			// TODO: YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
 			Refresh();
 		}

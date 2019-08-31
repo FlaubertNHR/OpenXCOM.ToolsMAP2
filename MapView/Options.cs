@@ -192,7 +192,7 @@ namespace MapView
 			get { return _value; }
 			set
 			{
-				//XCom.LogFile.WriteLine("Options set_Value");
+				//DSShared.LogFile.WriteLine("Options set_Value");
 				if (!_value.Equals(value)) // TODO: Investigate that: (true != true) sic.
 				{
 					var type = _value.GetType();
@@ -367,7 +367,7 @@ namespace MapView
 		/// <param name="key"></param>
 		internal void doUpdate(string key)
 		{
-			//XCom.LogFile.WriteLine("doUpdate() key= " + key);
+			//DSShared.LogFile.WriteLine("doUpdate() key= " + key);
 //			if (OptionChanged != null)
 			OptionChanged(key, Value);
 		}
@@ -381,7 +381,7 @@ namespace MapView
 		/// <param name="val"></param>
 		internal void doUpdate(string key, object val)
 		{
-			//XCom.LogFile.WriteLine("doUpdate() key= " + key + " val= " + val);
+			//DSShared.LogFile.WriteLine("doUpdate() key= " + key + " val= " + val);
 //			if (OptionChanged != null)
 			OptionChanged(key, val);
 		}

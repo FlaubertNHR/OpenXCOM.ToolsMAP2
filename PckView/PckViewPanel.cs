@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 
 using DSShared;
@@ -103,8 +103,7 @@ namespace PckView
 		internal PckViewPanel(PckViewForm f)
 		{
 #if DEBUG
-			LogFile.SetLogFilePath(System.IO.Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
-			DSLogFile.CreateLogFile();
+			LogFile.SetLogFilePath(Path.GetDirectoryName(Application.ExecutablePath)); // creates a logfile/ wipes the old one.
 #endif
 
 			_f = f;

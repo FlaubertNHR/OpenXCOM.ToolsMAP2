@@ -135,9 +135,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Descriptor\Descriptor.cs" />
-    <Compile Include="LogFile.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MapSize.cs" />
     <Compile Include="Palette.cs">
       <SubType>Code</SubType>
