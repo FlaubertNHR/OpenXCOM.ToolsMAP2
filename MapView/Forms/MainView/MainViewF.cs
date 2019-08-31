@@ -2903,9 +2903,9 @@ namespace MapView
 		#region Methods
 		/// <summary>
 		/// Loads the Map that's selected in the Maptree.
-		/// <param name="basepathDialog">true to force the find Mapfile dialog</param>
+		/// <param name="find">true to force the find Mapfile dialog</param>
 		/// </summary>
-		private void LoadSelectedDescriptor(bool basepathDialog = false)
+		private void LoadSelectedDescriptor(bool find = false)
 		{
 			if (_loadReady == LOADREADY_STAGE_2)
 			{
@@ -2916,7 +2916,7 @@ namespace MapView
 					var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
 															descriptor,
 															ref treechanged,
-															basepathDialog);
+															find);
 					if (treechanged) MaptreeChanged = true;
 
 					if (@base != null)

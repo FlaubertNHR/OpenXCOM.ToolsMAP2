@@ -49,24 +49,24 @@ namespace XCom
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
-		/// <param name="basepathDialog">true to force the find file dialog</param>
+		/// <param name="find">true to force the find file dialog</param>
 		/// <returns>null if things go south</returns>
 		public static MapFileBase LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
-				bool basepathDialog = false)
+				bool find = false)
 		{
 			string pfe = MapfileExists(descriptor);
 
 			if (pfe == null // Open a folderbrowser for user to point to a basepath ->
-				&& (basepathDialog || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to ask for a MapBrowser dialog.
+				&& (find || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to ask for a MapBrowser dialog.
 				&& MessageBox.Show(
-								"Files were not found for : " + descriptor.Label
+								"Files not found for : " + descriptor.Label
 									+ Environment.NewLine + Environment.NewLine
-									+ "Browse for a basepath to the MAP and RMP files ...",
-								" Warning",
+									+ "Browse to a basepath for the MAP and RMP files ...",
+								" Error",
 								MessageBoxButtons.YesNo,
-								MessageBoxIcon.Warning,
+								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
 								0) == DialogResult.Yes)
 			{
