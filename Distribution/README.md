@@ -154,7 +154,7 @@ IMPORTANT: This is a good time to backup your irreplaceable MAP, RMP, MCD, PCK, 
 
 Backing up your **\settings** folder is a good idea also. Especially **MapTilesets.yml** (... the other configuration files are easy to replace or regenerate) and, for the reasons given above, **MapOptions.Cfg**.
 
-in fact, _if i were you_ I'd simply rename my current MapView2 installation ( eg. MapView2_ ) and install this version alongside it. Run it once to create the /settings directory, quit and *copy* in your [b]MapTilesets.yml[/b] ... Then take it from there,
+in fact, _if i were you_ I'd simply rename my current MapView2 installation ( eg. MapView2_ ) and install this version alongside it. Run it once to create the /settings directory, quit and *copy* in your **MapTilesets.yml** ... Then take it from there,
 
 2019 June 24<br>
 [MapView2_190624.7z](https://drive.google.com/file/d/1CKwhDQAJEBJdQI9lqwlCLSwv3L_wlcmT/view?usp=sharing)
