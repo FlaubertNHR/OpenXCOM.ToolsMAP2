@@ -13,6 +13,149 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 August 31<br>
+[MapView2_190831.7z](https://drive.google.com/file/d/1PNaG4crWloakkeydy-XOPnIeGeNxSsp0/view?usp=sharing)
+
+This is a very large update.
+
+IMPORTANT: The MapOptions.Cfg file in your /settings folder will be changed. So back that file up if you like your current MapViewII customizations and want to transfer them to a/the new MapOptions config (i would strongly suggest using the Options dialogs instead of dicking about with the textfiles).
+
+IMPORTANT: The so-called backup mechanic for MapView, McdView, and PckView has also changed. This is not a comprehensive backup mechanic and was never intended to be that. It's intended only to give the user (including yours truly) that ONE (1) chance on a misclick to go "oh sh*t i shouldn't have done that" and have a chance of recovering the file you just overwrote*. The problem was that the routines were inconsistent; sometimes you got a .bak file, sometimes it wrote to an "MV_Backup" subdirectory, sometimes you got nothing at all, etc - so I've implemented a plan: any and every time a file on the hardrive** is changed by MapView, McdView, or PckView, it is first copied to an "MV_Backup" subdirectory of its original location, with its original filename.
+
+* note: This should also handle more hazardous failures like a power outage during file-write but let's not go there. Get yourself a UPS. (seriously.)
+
+** note: Does not include image-output; exporting images does *not* perform backups. But saving MAP, RMP, MCD, PCK, and TAB files as well as configuration files should/will get their instant backups.
+
+MainView
+- RMB-drag scrolls the Map when scrollbars are visible
+- Ctrl+F1..F4 toggles parttype visibility as per TopView F1..F4
+- F1 opens the CHM Helpfile (was start animations)
+- F2 toggles animations (was stop animations only)
+- always draw targeter-cursor during keyboard navigation
+- fixed multi-tile select by keyboard
+- fixed exception on [Esc] and/or MouseWheel when no Mapfile is loaded
+- moved ModifyMapSize from File menu to Edit menu
+- reworked statusbar aesthetic
+- allow keyboard navigation through the Maptree without loading any Maps until [Enter] is pressed
+- expand/collapse parent nodes on the Maptree w/ [Enter]
+- changed the hotkey for opening the Maptree's context menu from [Enter] to [Space]
+- refactored the MenuManager (handles viewer-open/close from the Viewers menu)
+- fixed CTD when taking full-level screenshots.
+- tightened up Maptree handling (loading/writing the Maptree; allow a blank MapTree; don't write group or category padding-text to MapTilesets.yml if there are no tilesets in the group/category anyway).
+- faster loading of Tilesets (much faster if you have many toplevel groups)
+- added to Options: screenshot background color (default Transparent) and crop background (default false) and choice of PNG or GIF output (default PNG)
+- added to Options: color toners for SelectedTiles (none,grayscale,redscale,greenscale,bluescale - default grayscale)
+- rewrote the CollapsibleSplitter (the divider between the Maptree and the main panel)
+
+TileView
+- changed the null-sprite aka. eraser-sprite
+- added mnemonics to menus
+- reworked statusbar aesthetic
+- prevent tab flicker
+
+TopView
+- tweaked the parttype null-sprites
+- double-leftclick on a tile selects the tilepart of the currently selected quadrant (also [t])
+- rightclick and double-rightclick (also [Enter] and [Shift+Del]) operate on either a tile or the quadrant-panel.
+- display the currently selected tilepart's sprite in the quadrant-panel; click (also [q]) selects its proper quadrant-slot
+- ignore the spaces between quadrant-types when clicking to select a type
+- reset the quadrant-panel's sprites after loading or resizing a Map
+- fixed multi-tile select by keyboard
+- added mnemonics to menus
+- added Test->Test parts in tileslots to check the types of all parts (floor, westwall, northwall, content) that are currently assigned to tiles against the type of tileslot they occupy. The result is shown in a dialog.
+
+RouteView
+- Tally button displays current spawn info for the tileset and its category
+- clear previously selected tile's coordinate info after resizing a Map
+- print mouseovered node's baseattack-weight in the overlay, iff non-zero
+- add a Save button to the data area (doubles as a "routes changed" indicator)
+- fixed: set MapLocation on LMB-dragnode so that keyboard-dragnode doesn't go dysfunctional.
+- added mnemonics to menus and arranged menuitems
+
+TopRouteView
+- prevent tab flicker
+
+TilesetEditor
+- fixed up Tab-order (ie. keyboard navigation around the dialog)
+- try to keep listboxes focused with a reasonable item selected when allocating/deallocating terrains
+- disable the ACCEPT button until a Descriptor is valid.
+- fixed the global descriptor changer (if a tileset with the same basepath exists in 2+ categories, both get their metadata changed)
+- handle terrain-not-found errors less annoyingly
+- added a checkbox to suppress the MCD RecordsExceeded warning (saved in MapTilesets.yml w/ each tileset)
+
+ScanG
+- fixed: don't draw the SE quadrant of large units (sic)
+- added viewer to the zOrder list
+- register its screen position on MainView quit
+- moved item from File to Viewers menu
+- switch icons and palette between UFO/TFTD resources when a Mapfile loads.
+- enable/disable the ScanG menuitem depending on tileset and available resources
+
+MapInfo
+- moved item from File to Help menu
+- added a Detail button that shows what MCD records are used/unused in the currently displayed Map's terrainset
+
+Configurator
+- use custom messagebox to display info/errors that need to print paths (prevents wrapping long paths)
+- don't close the configurator when simply generating a MapTilesets template
+
+General
+- reworked load/save Options (MapOptions.cfg) incl/ fixes to Content-type blob updates
+- rewrote Options interaction in toto (tighter integration w/ viewers' shortcuts, improved code refactorability, etc.)
+- reworked load/save viewer locations and sizes (MapViewers.yml)
+- try to maintain z-order on (1) open/close McdView or PckView (2) MinimizeAll/RestoreAll (3) option "AllowBringToFront" when MainView takes focus.
+- changes to spriteset loading (determine tabword-length based on the tab-file data instead of failure to instantiate a 2-byte wordlength spriteset) [idea lifted from OXC code]
+- rewrote tile-loading and the default-tileset creation routines
+- reworked double-buffering calls to what I believe are the most simple/efficient yet effective
+- re-select the current treenode on the Maptree if the Configurator forces a restart; plus use what seems to be a more stable restart routine.
+- rewrote the Infobox (a dialog that replaces .net's stock MessageBox here and there)
+- restrict keyboard shortcuts to exact key or key-combinations (eg. [Shift+Enter] no longer invokes an operation that's intended for [Enter] only)
+- tighter file handling, IO exception handling, one-time safety backup handling, to-load-or-not-to-load handling, file corruption handling, file IO error message handling, handling handling and file-fondling in general.
+
+McdView
+- ensure that the CopyPanel is closed on exit, else it can stick open when invoked via TileView
+- RMB-click on the IsoLoft panel reverts slider to show all layers
+- fixed: write the ScanG ushort as little-endian regardless of computer architecture.
+- allow loading of filetype via Explorer's file-associations
+- properly dispose temporary LoFT and ScanG bitmaps
+- allow the Isoloft viewer to track all the way down to 0 layers and use 3-step shading (instead of 2-step) while tracking layers.
+
+ScanG chooser
+- fixed: handle iconsets that have less than 35 icons (the first 35 icons are for units not terrains)
+
+PckView
+- fixed saving sprites that do not have a fully transparent top row(!)
+- fixed File|Export Sprites ...
+- reworked statusbar aesthetic
+- minimize/restore the Sprite and Palette windows when the main window's state minimizes/restores
+- bring Sprite and Palette windows to front when the main window takes focus
+- apply MapView's gamma adjustment to sprites and swatches (can be toggled from the Palette menu, default is On)
+- resolved conflict between contextmenu shortcut [p] (export sprite) and mnemonic [Alt+p] (open Palette menu)
+- allow loading of filetype via Explorer's file-associations
+
+SpriteEditor
+- flag Changed if pixels changed
+- reworked statusbar aesthetic
+- added mnemonics to menus
+
+Palette viewer
+- properly dispose created brushes
+- reworked statusbar aesthetic
+
+Updated CHM helpfile and keyboard_cheatsheet.
+
+ConfigConverter
+- properly dispose the openfile dialog
+
+RulesetConverter
+- add.
+
+IMPORTANT: This is a good time to backup your irreplaceable MAP, RMP, MCD, PCK, and TAB files(!)
+
+Backing up your **\settings** folder is a good idea also. Especially **MapTilesets.yml** (... the other configuration files are easy to replace or regenerate) and, for the reasons given above, **MapOptions.Cfg**.
+
+in fact, _if i were you_ I'd simply rename my current MapView2 installation ( eg. MapView2_ ) and install this version alongside it. Run it once to create the /settings directory, quit and *copy* in your [b]MapTilesets.yml[/b] ... Then take it from there,
+
 2019 June 24<br>
 [MapView2_190624.7z](https://drive.google.com/file/d/1CKwhDQAJEBJdQI9lqwlCLSwv3L_wlcmT/view?usp=sharing)
 
