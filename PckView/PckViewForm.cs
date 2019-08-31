@@ -270,8 +270,9 @@ namespace PckView
 				string line;
 				while ((line = sr.ReadLine()) != null)
 				{
+					line = line.Trim();
 					if (line.StartsWith("SpriteShade", StringComparison.InvariantCulture))
-						return line.Substring(12).Trim();
+						return line.Substring(12);
 				}
 			}
 			return null;

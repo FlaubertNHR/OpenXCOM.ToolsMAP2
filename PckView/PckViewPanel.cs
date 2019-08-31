@@ -321,9 +321,9 @@ namespace PckView
 											new Rectangle(
 														TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 														TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-														XCImage.SpriteWidth32,
-														XCImage.SpriteHeight40),
-											0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+														XCImage.SpriteWidth,
+														XCImage.SpriteHeight),
+											0,0, XCImage.SpriteWidth, XCImage.SpriteHeight,
 											GraphicsUnit.Pixel,
 											_f.Attri);
 						}

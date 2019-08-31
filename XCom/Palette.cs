@@ -316,6 +316,7 @@ namespace XCom
 								 + Math.Pow(blue,  2) * 0.1140));
 		}
 		// red= 62% blue, green= 127% blue, blue= 100% blue
+		//https://howlettstudios.com/articles/2017/5/6/the-problem-with-hsv
 		#endregion Methods
 
 
