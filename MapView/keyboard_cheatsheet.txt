@@ -75,7 +75,7 @@ Ctrl+F4 - toggles content visibility
 
 Note: Visibility affects Cut/Paste/Delete operations.
 
-F10 - cycle to the next colortone for selected tile(s)
+F10 - cycle to the next colortone for selected tile(s) [Shift] backwards
 
 RMB on the Map panel enables drag-panning when zoomed in on the Map.
 
