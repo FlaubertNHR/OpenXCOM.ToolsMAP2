@@ -310,8 +310,12 @@ namespace XCom
 		private int GetL(int red, int green, int blue)
 		{
 //			return (int)(red * 0.2126 + green * 0.7152 + blue * 0.0722);
-			return (int)(red * 0.2990 + green * 0.5870 + blue * 0.1140);
+//			return (int)(red * 0.2990 + green * 0.5870 + blue * 0.1140);
+			return (int)(Math.Sqrt(Math.Pow(red,   2) * 0.2990
+								 + Math.Pow(green, 2) * 0.5870
+								 + Math.Pow(blue,  2) * 0.1140));
 		}
+		// red= 62% blue, green= 127% blue, blue= 100% blue
 		#endregion Methods
 
 
