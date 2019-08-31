@@ -20,11 +20,11 @@ This is a very large update.
 
 IMPORTANT: The MapOptions.Cfg file in your /settings folder will be changed. So back that file up if you like your current MapViewII customizations and want to transfer them to a/the new MapOptions config (i would strongly suggest using the Options dialogs instead of dicking about with the textfiles).
 
-IMPORTANT: The so-called backup mechanic for MapView, McdView, and PckView has also changed. This is not a comprehensive backup mechanic and was never intended to be that. It's intended only to give the user (including yours truly) that ONE (1) chance on a misclick to go "oh sh*t i shouldn't have done that" and have a chance of recovering the file you just overwrote*. The problem was that the routines were inconsistent; sometimes you got a .bak file, sometimes it wrote to an "MV_Backup" subdirectory, sometimes you got nothing at all, etc - so I've implemented a plan: any and every time a file on the hardrive** is changed by MapView, McdView, or PckView, it is first copied to an "MV_Backup" subdirectory of its original location, with its original filename.
+IMPORTANT: The so-called backup mechanic for MapView, McdView, and PckView has also changed. This is not a comprehensive backup mechanic and was never intended to be that. It's intended only to give the user (including yours truly) that ONE chance on a misclick to go *oh shyte i shouldn't have done that* and have a chance of recovering the file you just overwrote(1). The problem was that the routines were inconsistent; sometimes you got a .bak file, sometimes it wrote to an MV_Backup subdirectory, sometimes you got nothing at all, etc - so I've implemented a plan: any and every time a file on the hardrive(2) is changed by MapView, McdView, or PckView, it is first copied to an MV_Backup subdirectory of its original location, with its original filename.
 
-* note: This should also handle more hazardous failures like a power outage during file-write but let's not go there. Get yourself a UPS. (seriously.)
+(1) note: This should also handle more hazardous failures like a power outage during file-write but let's not go there. Get yourself a UPS. (seriously.)
 
-** note: Does not include image-output; exporting images does *not* perform backups. But saving MAP, RMP, MCD, PCK, and TAB files as well as configuration files should/will get their instant backups.
+(2) note: Does not include image-output; exporting images does *not* perform backups. But saving MAP, RMP, MCD, PCK, and TAB files as well as configuration files should/will get their instant backups.
 
 MainView
 - RMB-drag scrolls the Map when scrollbars are visible
