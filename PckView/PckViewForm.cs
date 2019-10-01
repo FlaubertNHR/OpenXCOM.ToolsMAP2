@@ -134,14 +134,19 @@ namespace PckView
 			private get { return _changed; }
 			set
 			{
-				string ext;
-				if (IsScanG) ext = String.Empty;
-				else         ext = GlobalsXC.PckExt_lc;
+				if (!String.IsNullOrEmpty(PfSpriteset))
+				{
+					string ext;
+					if (IsScanG) ext = String.Empty;
+					else         ext = GlobalsXC.PckExt_lc;
 
-				if (_changed = value)
-					Text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + ext + GlobalsXC.PADDED_ASTERISK;
+					if (_changed = value)
+						Text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + ext + GlobalsXC.PADDED_ASTERISK;
+					else
+						Text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + ext;
+				}
 				else
-					Text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + ext;
+					Text = TITLE;
 			}
 		}
 		#endregion Properties
@@ -1973,33 +1978,32 @@ namespace PckView
 												bytesPck,
 												bytesTab);
 
-					if (spriteset.Fail_PckTabCount) // pck vs tab mismatch
+					if (spriteset.Fail_PckTabCount) // pck- vs tab-count mismatch
 					{
-						spriteset = null;
-
 						MessageBox.Show(
 									this,
-									"The count of sprites in the PCK file does not match"
-										+ " the count of sprites expected by the TAB file.",
+									"The count of sprites in the PCK file ["
+										+ spriteset.CountSprites + "] does not match"
+										+ " the count of sprites expected by the TAB file ["
+										+ spriteset.CountOffsets + "].",
 									" Error",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Error,
 									MessageBoxDefaultButton.Button1,
 									0);
+						spriteset = null;
 					}
-					else if (spriteset.Fail_Overflo) // too many bytes for a nonbigob sprite
+					else if (spriteset.Fail_Overflo) // too many bytes for a sprite
 					{
 						spriteset = null;
 
-						string error = String.Empty;
-						if (IsBigobs)
-							error = String.Format(
+						string error;
+						if (IsBigobs) error = "Bigobs : ";	// won't happen unless a file is corrupt.
+						else          error = String.Empty;	// possibly trying to load a Bigobs to 32x40 d
+
+						error += String.Format(
 											CultureInfo.CurrentCulture,
-											"Cannot load Terrain or Units in a 32x48 spriteset."); // won't happen unless a file is corrupt.
-						else
-							error = String.Format(
-											CultureInfo.CurrentCulture,
-											"Cannot load Bigobs in a 32x40 spriteset."); // actually an overflow ...
+											"File data overflowed the sprite's count of pixels.");
 						MessageBox.Show(
 									this,
 									error,

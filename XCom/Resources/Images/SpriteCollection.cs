@@ -39,6 +39,22 @@ namespace XCom
 		{ get; private set; }
 
 		/// <summary>
+		/// Count of sprites detected in a Pckfile. Is used only if the
+		/// spriteset fails to load due to a PCK/TAB mismatch error. It's
+		/// printed in the errorbox as an aid for debugging.
+		/// </summary>
+		public int CountSprites
+		{ get; private set; }
+
+		/// <summary>
+		/// Count of offsets detected in a Tabfile. Is used only if the
+		/// spriteset fails to load due to a PCK/TAB mismatch error. It's
+		/// printed in the errorbox as an aid for debugging.
+		/// </summary>
+		public int CountOffsets
+		{ get; private set; }
+
+		/// <summary>
 		/// Flag to state that there was a sprite-buffer overflow in a PckImage.
 		/// </summary>
 		public bool Fail_Overflo
@@ -153,9 +169,9 @@ namespace XCom
 
 			bool le = BitConverter.IsLittleEndian; // computer architecture
 
-			int tabSprites = (int)bytesTab.Length / TabwordLength;
-			var offsets = new uint[tabSprites + 1];	// NOTE: the last entry will be set to the total length of
-													// the input-bindata to deter the length of the final sprite.
+			CountOffsets = (int)bytesTab.Length / TabwordLength;
+			var offsets = new uint[CountOffsets + 1];	// NOTE: the last entry will be set to the total length of
+														// the input-bindata to deter the length of the final sprite.
 			var buffer = new byte[TabwordLength];
 			uint b;
 			int pos = 0;
@@ -189,7 +205,7 @@ namespace XCom
 
 
 			// TODO: Apparently MCDEdit can and will output a 1-byte Pck sprite
-			// w/ "255" only if a blank sprite is in its internal spriteset when
+			// w/ only "255" if a blank sprite is in its internal spriteset when
 			// a save happens.
 //			if (bytesPck.Length == 1)
 //			{}
@@ -197,17 +213,35 @@ namespace XCom
 
 			if (bytesPck.Length > 1)
 			{
-				int pckSprites = 0; // qty of bytes in 'bytesPck' w/ value 0xFF (ie. qty of sprites)
 				for (int i = 1; i != bytesPck.Length; ++i)
 				{
 					if (   bytesPck[i]     == PckImage.MarkerEos
 						&& bytesPck[i - 1] != PckImage.MarkerRle)
 					{
-						++pckSprites;
+						++CountSprites; // qty of bytes in 'bytesPck' w/ value 0xFF (ie. qty of sprites)
 					}
 				}
 
-				if (pckSprites == tabSprites) // avoid throwing 1 or 15000 exceptions ...
+				// NOTE: I'd just like to point out here that a Tabfile is
+				// utterly redundant if the Pckfile is wellformed. But if the
+				// Pckfile is *not* wellformed you might as well be screwing the
+				// dog anyway.
+				//
+				// At least under my conception of PCK-RLE-compression.
+				// Obviously there are others. Which is what makes PCKs so
+				// lovely to work with, although the RLE-compression itself is
+				// rather excellent.
+				//
+				// You just don't need Tabfiles if you follow a few rules ....
+				// a) a sprite is a minimum of 2 bytes
+				// b) the first byte in a sprite shall not be FE or FF
+				// c) the first byte shall always be a quantity of transparent fullrows
+				// c) the final byte of a sprite shall be FF
+				// d) FE shall be followed by a byte that is a quantity of transparent pixels (FF is allowed as a quantity)
+				// f) do not allow FE or FF to be used as a palette-color
+				// e) a decoding program shall initialize the entire buffer of a sprite with transparent pixels first.
+
+				if (CountSprites == CountOffsets) // avoid throwing 1 or 15000 exceptions ...
 				{
 					offsets[offsets.Length - 1] = (uint)bytesPck.Length;
 
@@ -218,20 +252,59 @@ namespace XCom
 						for (int j = 0; j != bindata.Length; ++j)
 							bindata[j] = bytesPck[offsets[i] + j];
 
-						var sprite = new PckImage(			// NOTE: Instantiating a PckImage can set the 'Error_Overflo' flag
-												bindata,	// which shall be handled by the caller; ie. set the spriteset to null.
+						//LogFile.WriteLine("sprite #" + i);
+						var sprite = new PckImage(
+												bindata,
 												Pal,
 												i,
 												this);
 
-						if (Fail_Overflo)
+						if (Fail_Overflo)	// NOTE: Instantiating the PckImage above can set the Fail_Overflo flag
+						{					// which shall be handled by the caller; ie. set the spriteset to null.
 							return;
+						}
 
 						Sprites.Add(sprite);
 					}
 				}
 				else
+				{
 					Fail_PckTabCount = true; // NOTE: Shall be handled by the caller; ie. set the spriteset to null.
+
+/*					if (true) // rewrite the Tabfile ->
+					{
+						string dir = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+						string pfe = Path.Combine(dir, "tabfile.TAB");
+
+						using (var fsTab = FileService.CreateFile(pfe))
+						if (fsTab != null)
+						{
+							using (var bwTab = new BinaryWriter(fsTab))
+							{
+								pos = 0;
+
+								uint u = 0;
+								for (int id = 0; id != CountSprites; ++id)
+								{
+									if (u > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
+									{
+										// "The size of the encoded sprite-data has grown too large to
+										// be stored correctly in a Tab file. Try deleting sprite(s)
+										// or (less effective) using more transparency in the sprites."
+										return;
+									}
+
+									bwTab.Write((ushort)u);
+
+									while (++pos != bytesPck.Length && bytesPck[pos - 1] != 0xFF) // note does not handle "FE FF"
+										++u;
+
+									++u;
+								}
+							}
+						}
+					} */
+				}
 			}
 			// else malformed pck file (a proper sprite needs at least 2 bytes:
 			// one for the count of transparent lines and another for the EoS

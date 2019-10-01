@@ -97,20 +97,24 @@ namespace XCom
 				switch (bindata[posSrc])
 				{
 					case MarkerEos: // end of image
+						//DSShared.LogFile.WriteLine(". EoS");
 						break;
 
 					case MarkerRle: // skip quantity of pixels
 						posDst += bindata[++posSrc];
+						//DSShared.LogFile.WriteLine(". posDst= " + posDst);
 						break;
 
 					default:
 						if (posDst >= Bindata.Length)
 						{
+							//DSShared.LogFile.WriteLine(". . FAIL posDst= " + posDst);
 							Spriteset.Fail_Overflo = true;
 							return;
 						}
 
 						Bindata[posDst++] = bindata[posSrc];
+						//DSShared.LogFile.WriteLine(". posDst= " + posDst);
 						break;
 				}
 			}
