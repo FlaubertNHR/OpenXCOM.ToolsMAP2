@@ -225,6 +225,7 @@ namespace MapView
 			if (!piResources.FileExists() || !piTilesets.FileExists()) // safety. The Configurator shall demand that both these files get created.
 			{
 				LogFile.WriteLine("Resources or Tilesets file does not exist: quit MapView.");
+				// TODO: Invoke an error w/ what went wrong.
 				Process.GetCurrentProcess().Kill();
 			}
 
@@ -410,33 +411,49 @@ namespace MapView
 			// NOTE: This is the only stock XCOM resource that is required for
 			// MapView to start. See ConfigurationForm ...
 			// TODO: give user the option to choose which cursor-spriteset to use.
-			SpriteCollection cuboid;
-			cuboid = ResourceInfo.LoadSpriteset(
-											SharedSpace.CursorFilePrefix,
-											SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo),
-											ResourceInfo.TAB_WORD_LENGTH_2,
-											Palette.UfoBattle);
-			if (cuboid != null)
+			SpriteCollection cuboid = null;
+			string label = SharedSpace.CursorFilePrefix;
+
+			string dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
+			if (Directory.Exists(dir))
 			{
-				CuboidSprite.Cursorset = cuboid;
-				LogFile.WriteLine("UFO Cursor loaded.");
+				cuboid = ResourceInfo.LoadSpriteset(
+												label,
+												dir,
+												ResourceInfo.TAB_WORD_LENGTH_2,
+												Palette.UfoBattle);
+
+				if (cuboid != null)
+					LogFile.WriteLine("UFO Cursor loaded.");
+				else
+					LogFile.WriteLine("UFO Cursor not found.");
 			}
-			else
-				LogFile.WriteLine("UFO Cursor not found.");
 
 			// NOTE: The TFTD cursorsprite takes precedence over the UFO cursorsprite.
-			cuboid = ResourceInfo.LoadSpriteset(
-											SharedSpace.CursorFilePrefix,
-											SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd),
-											ResourceInfo.TAB_WORD_LENGTH_4,
-											Palette.TftdBattle);
-			if (cuboid != null)
+			dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
+			if (Directory.Exists(dir))
 			{
-				CuboidSprite.Cursorset = cuboid;
-				LogFile.WriteLine("TFTD Cursor loaded.");
+				cuboid = ResourceInfo.LoadSpriteset(
+												label,
+												dir,
+												ResourceInfo.TAB_WORD_LENGTH_4,
+												Palette.TftdBattle);
+
+				if (cuboid != null)
+					LogFile.WriteLine("TFTD Cursor loaded.");
+				else
+					LogFile.WriteLine("TFTD Cursor not found.");
+			}
+
+			// Exit app if the cuboid-targeter did not get instantiated
+			if (cuboid == null)
+			{
+				LogFile.WriteLine("Targeter not instantiated: quit MapView.");
+				// TODO: Invoke an error w/ what went wrong.
+				Process.GetCurrentProcess().Kill();
 			}
 			else
-				LogFile.WriteLine("TFTD Cursor not found.");
+				CuboidSprite.Cursorset = cuboid;
 
 
 			// NOTE: ScanG's are conditional loads iff File exists.
