@@ -60,6 +60,13 @@ namespace XCom
 		public bool Fail_Overflo
 		{ get; internal set; }
 
+		/// <summary>
+		/// Flag to state that there was a tab-offset overflow when trying to
+		/// instantiate this spriteset.
+		/// </summary>
+		public bool Fail_Overflo_Tab
+		{ get; private set; }
+
 
 //		public int CountPckSprites // TODO ->
 //		{ get; set; }
@@ -181,7 +188,15 @@ namespace XCom
 				while (pos != bytesTab.Length)
 				{
 					for (b = 0; b != TabwordLength; ++b)
-						buffer[b] = bytesTab[pos + b];
+					{
+						if (bytesTab.Length > pos + b)
+							buffer[b] = bytesTab[pos + b];
+						else
+						{
+							Fail_Overflo_Tab = true;
+							return;
+						}
+					}
 
 					if (!le) Array.Reverse(buffer);
 					offsets[pos / TabwordLength] = BitConverter.ToUInt32(buffer, 0);
@@ -194,7 +209,15 @@ namespace XCom
 				while (pos != bytesTab.Length)
 				{
 					for (b = 0; b != TabwordLength; ++b)
-						buffer[b] = bytesTab[pos + b];
+					{
+						if (bytesTab.Length > pos + b)
+							buffer[b] = bytesTab[pos + b];
+						else
+						{
+							Fail_Overflo_Tab = true;
+							return;
+						}
+					}
 
 					if (!le) Array.Reverse(buffer);
 					offsets[pos / TabwordLength] = BitConverter.ToUInt16(buffer, 0);
