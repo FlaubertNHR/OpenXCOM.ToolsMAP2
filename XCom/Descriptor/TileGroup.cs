@@ -52,17 +52,24 @@ namespace XCom
 		/// <param name="labelGroup"></param>
 		internal protected TileGroup(string labelGroup)
 		{
+			//DSShared.LogFile.WriteLine("TileGroup..cTor labelGroup= " + labelGroup);
+
 			Label = labelGroup;
 
 			if (Label.StartsWith("tftd", StringComparison.OrdinalIgnoreCase))
 			{
+				//DSShared.LogFile.WriteLine(". . is TFTD");
 				GroupType = GameType.Tftd;
 				Pal = Palette.TftdBattle;
+				//DSShared.LogFile.WriteLine(". . Pal= " + Pal);
 			}
 			else //if (labelGroup.StartsWith("ufo", StringComparison.OrdinalIgnoreCase))
 			{
+				//DSShared.LogFile.WriteLine(". . is UFO");
 				GroupType = GameType.Ufo;	// NOTE: if the prefix "tftd" is not found at the beginning of
-			}	Pal = Palette.UfoBattle;	// the group-label then default to UFO grouptype and palette.
+				Pal = Palette.UfoBattle;	// the group-label then default to UFO grouptype and palette.
+				//DSShared.LogFile.WriteLine(". . Pal= " + Pal);
+			}
 		}
 		#endregion cTor
 
@@ -131,5 +138,17 @@ namespace XCom
 			Categories[labelCategory].Remove(labelTileset);
 		}
 		#endregion Methods
+
+
+		#region Methods (override)
+		/// <summary>
+		/// Overrides Object.ToString()
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return Label;
+		}
+		#endregion Methods (override)
 	}
 }

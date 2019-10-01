@@ -83,6 +83,8 @@ namespace XCom
 		/// <param name="fullpath">path-file-extension of settings/MapTilesets.yml</param>
 		public static void LoadTileGroups(string fullpath)
 		{
+			//LogFile.WriteLine("LoadTileGroups()");
+
 			using (var fs = FileService.OpenFile(fullpath))
 			if (fs != null)
 			using (var sr = new StreamReader(fs))
@@ -134,6 +136,8 @@ namespace XCom
 					var tilesets = nodeRoot.Children[new YamlScalarNode(GlobalsXC.TILESETS)] as YamlSequenceNode;
 					foreach (YamlMappingNode tileset in tilesets) // iterate over all the tilesets
 					{
+						//LogFile.WriteLine("");
+
 						keyvals = tileset.Children;
 
 						// get the Terrains of the tileset ->
@@ -162,14 +166,9 @@ namespace XCom
 									}
 								}
 								terrainset[i] = new Tuple<string,string>(terr, path);
+								//LogFile.WriteLine(". terrainset[" + i + "]= " + terrainset[i]);
 							}
 						}
-
-						// get the BasePath of the tileset
-						if (keyvals.ContainsKey(keyBasepath))
-							basepath = keyvals[keyBasepath].ToString();
-						else
-							basepath = String.Empty;
 
 						// get the BypassRecordsExceeded bool
 						bypassRe = keyvals.ContainsKey(keyBypassRe)
@@ -182,6 +181,7 @@ namespace XCom
 
 						TileGroup @group;
 						string labelGroup = keyvals[keyGroup].ToString();
+						//LogFile.WriteLine(". labelGroup= " + labelGroup);
 						if (!TileGroupManager.TileGroups.ContainsKey(labelGroup))
 						{
 							TileGroupManager.TileGroups[labelGroup] =
@@ -190,17 +190,26 @@ namespace XCom
 						else
 							@group = TileGroupManager.TileGroups[labelGroup];
 
+						//LogFile.WriteLine(". group= " + @group);
+
 						string labelCategory = keyvals[keyCategory].ToString();
+						//LogFile.WriteLine(". labelCategory= " + labelCategory);
 						if (!@group.Categories.ContainsKey(labelCategory))
 						{
 							@group.AddCategory(labelCategory);
 						}
 
-						if (String.IsNullOrEmpty(basepath)) // assign the Configurator's basepath to the tileset's Descriptor ->
+						// get the BasePath of the tileset
+						if (keyvals.ContainsKey(keyBasepath))
+						{
+							basepath = keyvals[keyBasepath].ToString();
+						}
+						else // assign the Configurator's basepath to the tileset's Descriptor ->
 						{
 							switch (@group.GroupType)
 							{
-								case GameType.Ufo:
+								default:
+//								case GameType.Ufo:
 									basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
 									break;
 								case GameType.Tftd:
@@ -208,6 +217,8 @@ namespace XCom
 									break;
 							}
 						}
+						//LogFile.WriteLine(". basepath= " + basepath);
+
 
 						var descriptor = new Descriptor(
 													keyvals[keyLabel].ToString().ToUpperInvariant(),
