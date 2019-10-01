@@ -35,7 +35,7 @@ namespace MapView
 		/// Good fuckin Lord I just wrote a "DontBeep" delegate.
 		/// </summary>
 		internal delegate void DontBeepEventHandler();
-		#endregion
+		#endregion Delegates
 
 
 		#region Events

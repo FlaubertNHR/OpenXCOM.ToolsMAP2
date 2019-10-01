@@ -15,7 +15,7 @@ namespace DSShared.Controls
 		public BufferedPanel()
 		{
 			DoubleBuffered = true;
-			ResizeRedraw = true;
+			ResizeRedraw   = true;
 		}
 		#endregion cTor
 	}
