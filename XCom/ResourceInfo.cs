@@ -66,6 +66,8 @@ namespace XCom
 				int tabwordLength,
 				Palette pal)
 		{
+			//LogFile.WriteLine("ResourceInfo.LoadSpriteSet()");
+
 			if (Directory.Exists(dir))
 			{
 				// TODO: If files not found provide hint to assign a basepath to

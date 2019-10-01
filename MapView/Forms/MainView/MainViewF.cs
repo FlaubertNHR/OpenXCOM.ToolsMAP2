@@ -225,7 +225,12 @@ namespace MapView
 			if (!piResources.FileExists() || !piTilesets.FileExists()) // safety. The Configurator shall demand that both these files get created.
 			{
 				LogFile.WriteLine("Resources or Tilesets file does not exist: quit MapView.");
-				// TODO: Invoke an error w/ what went wrong.
+				using (var dialog = new Infobox(
+											"Error",
+											"Cannot find configuration files. The application will exit."))
+				{
+					dialog.ShowDialog(this);
+				}
 				Process.GetCurrentProcess().Kill();
 			}
 
@@ -416,7 +421,7 @@ namespace MapView
 			string label = SharedSpace.CursorFilePrefix;
 
 			string dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
-			if (Directory.Exists(dir))
+			if (Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
 				cuboidufo = ResourceInfo.LoadSpriteset(
 													label,
@@ -424,18 +429,21 @@ namespace MapView
 													ResourceInfo.TAB_WORD_LENGTH_2,
 													Palette.UfoBattle);
 
-				if (cuboidufo.Fail_Overflo_Tab || cuboidufo.Fail_Overflo || cuboidufo.Fail_PckTabCount)
+				if (cuboidufo != null)
 				{
-					cuboidufo = null;
+					if (cuboidufo.Fail_Overflo_Tab || cuboidufo.Fail_Overflo || cuboidufo.Fail_PckTabCount)
+					{
+						cuboidufo = null;
+					}
+					else
+						LogFile.WriteLine("UFO Cursor loaded.");
 				}
-				else
-					LogFile.WriteLine("UFO Cursor loaded.");
 			}
 			else
 				LogFile.WriteLine("UFO Cursor directory not found.");
 
 			dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
-			if (Directory.Exists(dir))
+			if (Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
 				cuboidtftd = ResourceInfo.LoadSpriteset(
 													label,
@@ -443,12 +451,15 @@ namespace MapView
 													ResourceInfo.TAB_WORD_LENGTH_4,
 													Palette.TftdBattle);
 
-				if (cuboidtftd.Fail_Overflo_Tab || cuboidtftd.Fail_Overflo || cuboidtftd.Fail_PckTabCount)
+				if (cuboidtftd != null)
 				{
-					cuboidtftd = null;
+					if (cuboidtftd.Fail_Overflo_Tab || cuboidtftd.Fail_Overflo || cuboidtftd.Fail_PckTabCount)
+					{
+						cuboidtftd = null;
+					}
+					else
+						LogFile.WriteLine("TFTD Cursor loaded.");
 				}
-				else
-					LogFile.WriteLine("TFTD Cursor loaded.");
 			}
 			else
 				LogFile.WriteLine("TFTD Cursor directory not found.");
@@ -465,7 +476,18 @@ namespace MapView
 			else
 			{
 				LogFile.WriteLine("Targeter not instantiated: quit MapView.");
-				// TODO: Invoke an error w/ what went wrong.
+
+				string copyable = SharedSpace.CursorFilePrefix + GlobalsXC.PckExt
+								+ Environment.NewLine
+								+ SharedSpace.CursorFilePrefix + GlobalsXC.TabExt;
+
+				using (var dialog = new Infobox(
+											"Error",
+											"Cannot find CURSOR spriteset. The application will exit.",
+											copyable))
+				{
+					dialog.ShowDialog(this);
+				}
 				Process.GetCurrentProcess().Kill();
 			}
 
