@@ -642,7 +642,7 @@ namespace MapView
 										Tileset,
 										TilesetBasepath,
 										new Dictionary<int, Tuple<string,string>>(),
-										TileGroup.Pal,
+										TileGroup.GroupType,
 										cb_BypassRecordsExceeded.Checked);
 
 				if (MapfileExists(Tileset))
@@ -785,7 +785,7 @@ namespace MapView
 															Tileset,
 															TilesetBasepath,
 															TileGroup.Categories[Category][TilesetOriginal].Terrains,
-															TileGroup.Pal,
+															TileGroup.GroupType,
 															cb_BypassRecordsExceeded.Checked);
 									TileGroup.AddTileset(Descriptor, Category);
 									TileGroup.DeleteTileset(TilesetOriginal, Category);
@@ -1235,7 +1235,7 @@ namespace MapView
 											Tileset,
 											descriptor.Basepath,
 											descriptor.Terrains,
-											descriptor.Pal, // ((TileGroup)@group[@group.Key]).Pal);
+											descriptor.GroupType, // ((TileGroup)@group[@group.Key]).GroupType);
 											descriptor.BypassRecordsExceeded);
 							changes.Add(new Tuple<Descriptor, string>(d, keyCategory));
 						}

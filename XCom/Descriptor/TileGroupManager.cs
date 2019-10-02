@@ -224,7 +224,7 @@ namespace XCom
 													keyvals[keyLabel].ToString().ToUpperInvariant(),
 													basepath,
 													terrainset,
-													@group.Pal, // <- ugh.
+													@group.GroupType,
 													bypassRe);
 
 						@group.AddTileset(descriptor, labelCategory);

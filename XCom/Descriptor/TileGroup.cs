@@ -10,7 +10,6 @@ namespace XCom
 		Ufo,
 		Tftd
 	}
-	// TODO: Replace all of the if(Palette==Ufo.Palette) stuff with GameType.
 	#endregion Enums
 
 
@@ -25,11 +24,9 @@ namespace XCom
 		public string Label
 		{ get; private set; }
 
-		public GameType GroupType // TODO: 'GroupType' can/should be superceded by 'Pal' - or vice versa ...
+		public GameType GroupType
 		{ get; private set; }
 
-		public Palette Pal
-		{ get; set; }
 
 		private readonly Dictionary<string, Dictionary<string, Descriptor>> _categories
 				   = new Dictionary<string, Dictionary<string, Descriptor>>();
@@ -48,27 +45,21 @@ namespace XCom
 		#region cTor
 		/// <summary>
 		/// cTor.
+		/// @note If the prefix "tftd" is not found at the beginning of this
+		/// TileGroup's label then default to UFO grouptype.
 		/// </summary>
 		/// <param name="labelGroup"></param>
 		internal protected TileGroup(string labelGroup)
 		{
-			//DSShared.LogFile.WriteLine("TileGroup..cTor labelGroup= " + labelGroup);
-
 			Label = labelGroup;
 
 			if (Label.StartsWith("tftd", StringComparison.OrdinalIgnoreCase))
 			{
-				//DSShared.LogFile.WriteLine(". . is TFTD");
 				GroupType = GameType.Tftd;
-				Pal = Palette.TftdBattle;
-				//DSShared.LogFile.WriteLine(". . Pal= " + Pal);
 			}
 			else //if (labelGroup.StartsWith("ufo", StringComparison.OrdinalIgnoreCase))
 			{
-				//DSShared.LogFile.WriteLine(". . is UFO");
-				GroupType = GameType.Ufo;	// NOTE: if the prefix "tftd" is not found at the beginning of
-				Pal = Palette.UfoBattle;	// the group-label then default to UFO grouptype and palette.
-				//DSShared.LogFile.WriteLine(". . Pal= " + Pal);
+				GroupType = GameType.Ufo;
 			}
 		}
 		#endregion cTor

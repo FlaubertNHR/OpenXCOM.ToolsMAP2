@@ -20,7 +20,7 @@ namespace XCom
 	public sealed class Descriptor // *snap*
 	{
 		#region Fields
-		private readonly string _dirTerr; // the Configurator's terrain-path for UFO or TFTD - depends on Palette.
+		private readonly string _dirTerr; // the Configurator's terrain-path for UFO or TFTD - depends on GroupType.
 		#endregion Fields
 
 
@@ -45,7 +45,10 @@ namespace XCom
 			set { _terrains = value; }
 		}
 
-		public Palette Pal // TODO: Defining the palette in both a Descriptor and its TileGroup is redundant.
+		public GameType GroupType
+		{ get; private set; }
+
+		public Palette Pal
 		{ get; private set; }
 
 
@@ -61,27 +64,41 @@ namespace XCom
 		/// <param name="label"></param>
 		/// <param name="basepath"></param>
 		/// <param name="terrains"></param>
-		/// <param name="pal"></param>
+		/// <param name="groupType">UFO or TFTD</param>
 		/// <param name="bypassRecordsExceeded"></param>
 		public Descriptor(
 				string label,
 				string basepath,
 				Dictionary<int, Tuple<string,string>> terrains,
-				Palette pal,
+				GameType groupType,
 				bool bypassRecordsExceeded)
 		{
 			Label    = label;
 			Basepath = basepath;
 			Terrains = terrains;
-			Pal      = pal;
+
+			switch (GroupType = groupType)
+			{
+				default:
+//				case GameType.Ufo:
+					Pal = Palette.UfoBattle;
+					_dirTerr = SharedSpace.ResourceDirectoryUfo;
+					break;
+
+				case GameType.Tftd:
+					Pal = Palette.TftdBattle;
+					_dirTerr = SharedSpace.ResourceDirectoryTftd;
+					break;
+			}
+
+			if ((_dirTerr = SharedSpace.GetShareString(_dirTerr)) != null)
+			{
+				_dirTerr = Path.Combine(_dirTerr, GlobalsXC.TerrainDir);
+			}
+			else  // NOTE: the Share can return null if the resource-type is notconfigured
+				_dirTerr = String.Empty;
 
 			BypassRecordsExceeded = bypassRecordsExceeded;
-
-			_dirTerr = (Pal == Palette.UfoBattle) ? SharedSpace.ResourceDirectoryUfo
-												  : SharedSpace.ResourceDirectoryTftd;
-			_dirTerr = SharedSpace.GetShareString(_dirTerr);
-			_dirTerr = (_dirTerr != null) ? _dirTerr = Path.Combine(_dirTerr, GlobalsXC.TerrainDir)
-										  : _dirTerr = String.Empty; // -> the Share can return null if the resource-type is notconfigured.
 		}
 		#endregion cTor
 
