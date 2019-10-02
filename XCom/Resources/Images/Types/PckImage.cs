@@ -109,7 +109,7 @@ namespace XCom
 						if (posDst >= Bindata.Length)
 						{
 							//DSShared.LogFile.WriteLine(". . FAIL posDst= " + posDst);
-							Spriteset.Fail_Overflo = true;
+							Spriteset.Fail |= SpriteCollection.FAIL_OF_SPRITE;
 							return;
 						}
 

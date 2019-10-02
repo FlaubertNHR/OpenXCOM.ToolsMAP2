@@ -1978,7 +1978,7 @@ namespace PckView
 												bytesPck,
 												bytesTab);
 
-					if (spriteset.Fail_PckTabCount) // pck- vs tab-count mismatch
+					if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non) // pck vs tab mismatch counts
 					{
 						MessageBox.Show(
 									this,
@@ -1993,7 +1993,7 @@ namespace PckView
 									0);
 						spriteset = null;
 					}
-					else if (spriteset.Fail_Overflo) // too many bytes for a sprite
+					else if ((spriteset.Fail & SpriteCollection.FAIL_OF_SPRITE) != SpriteCollection.FAIL_non) // too many bytes for a sprite
 					{
 						spriteset = null;
 

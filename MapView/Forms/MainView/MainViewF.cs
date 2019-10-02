@@ -431,9 +431,10 @@ namespace MapView
 
 				if (cuboidufo != null)
 				{
-					if (cuboidufo.Fail_Overflo_Tab || cuboidufo.Fail_Overflo || cuboidufo.Fail_PckTabCount)
+					if (cuboidufo.Fail != SpriteCollection.FAIL_non)
 					{
 						cuboidufo = null;
+						LogFile.WriteLine("UFO Cursor failed to load.");
 					}
 					else
 						LogFile.WriteLine("UFO Cursor loaded.");
@@ -453,9 +454,10 @@ namespace MapView
 
 				if (cuboidtftd != null)
 				{
-					if (cuboidtftd.Fail_Overflo_Tab || cuboidtftd.Fail_Overflo || cuboidtftd.Fail_PckTabCount)
+					if (cuboidtftd.Fail != SpriteCollection.FAIL_non)
 					{
 						cuboidtftd = null;
+						LogFile.WriteLine("TFTD Cursor failed to load.");
 					}
 					else
 						LogFile.WriteLine("TFTD Cursor loaded.");

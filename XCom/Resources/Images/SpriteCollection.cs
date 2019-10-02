@@ -13,6 +13,14 @@ namespace XCom
 	/// </summary>
 	public sealed class SpriteCollection
 	{
+		#region Fields (static)
+		public const int FAIL_non            = 0x0; // bitflags for Fail states ->
+		public const int FAIL_OF_SPRITE      = 0x1; // overflow
+		public const int FAIL_OF_OFFSET      = 0x2; // overflow
+		public const int FAIL_COUNT_MISMATCH = 0x4; // Pck vs Tab counts mismatch error
+		#endregion Fields (static)
+
+
 		#region Properties
 		private List<XCImage> _sprites = new List<XCImage>();
 		public List<XCImage> Sprites
@@ -31,12 +39,14 @@ namespace XCom
 		public int TabwordLength
 		{ get; private set; }
 
+
 		/// <summary>
-		/// Flag to state that the quantity of sprites in a Pck file don't
-		/// jive with the quantity of offsets in its Tab file.
+		/// A bitflagged int containing Fail states - "0" on a successful load.
+		/// @note The caller shall set this spriteset to null if any bits are
+		/// flagged.
 		/// </summary>
-		public bool Fail_PckTabCount
-		{ get; private set; }
+		public int Fail
+		{ get; internal set; }
 
 		/// <summary>
 		/// Count of sprites detected in a Pckfile. Is used only if the
@@ -53,25 +63,6 @@ namespace XCom
 		/// </summary>
 		public int CountOffsets
 		{ get; private set; }
-
-		/// <summary>
-		/// Flag to state that there was a sprite-buffer overflow in a PckImage.
-		/// </summary>
-		public bool Fail_Overflo
-		{ get; internal set; }
-
-		/// <summary>
-		/// Flag to state that there was a tab-offset overflow when trying to
-		/// instantiate this spriteset.
-		/// </summary>
-		public bool Fail_Overflo_Tab
-		{ get; private set; }
-
-
-//		public int CountPckSprites // TODO ->
-//		{ get; set; }
-//		public int CountTabOffsets
-//		{ get; set; }
 
 
 		private Palette _pal;
@@ -195,7 +186,7 @@ namespace XCom
 							buffer[b] = bytesTab[pos + b];
 						else
 						{
-							Fail_Overflo_Tab = true;
+							Fail |= FAIL_OF_OFFSET;
 							return;
 						}
 					}
@@ -216,7 +207,7 @@ namespace XCom
 							buffer[b] = bytesTab[pos + b];
 						else
 						{
-							Fail_Overflo_Tab = true;
+							Fail |= FAIL_OF_OFFSET;
 							return;
 						}
 					}
@@ -284,8 +275,8 @@ namespace XCom
 												i,
 												this);
 
-						if (Fail_Overflo)	// NOTE: Instantiating the PckImage above can set the Fail_Overflo flag
-						{					// which shall be handled by the caller; ie. set the spriteset to null.
+						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckImage above can set the Fail_Overflo flag
+						{											// which shall be handled by the caller; ie. set the spriteset to null.
 							return;
 						}
 
@@ -294,7 +285,7 @@ namespace XCom
 				}
 				else
 				{
-					Fail_PckTabCount = true; // NOTE: Shall be handled by the caller; ie. set the spriteset to null.
+					Fail |= FAIL_COUNT_MISMATCH; // NOTE: Shall be handled by the caller; ie. set the spriteset to null.
 
 /*					if (true) // rewrite the Tabfile ->
 					{

@@ -88,7 +88,7 @@ namespace XCom
 														bytesPck,
 														bytesTab);
 
-						if (spriteset.Fail_PckTabCount) // pck vs tab mismatch
+						if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non)
 						{
 							MessageBox.Show(
 										"The count of sprites in the PCK file does not match"
@@ -99,7 +99,8 @@ namespace XCom
 										MessageBoxDefaultButton.Button1,
 										0);
 						}
-						// else if (spriteset.Error_Overflo) {} // too many bytes for a nonbigob sprite - better not happen here.
+						// else if ((spriteset.Fail & SpriteCollection.FAIL_OF_SPRITE) != SpriteCollection.FAIL_non)
+						// {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
 							Spritesets.Add(spriteset); // used only by MapInfoDialog and MainViewOptionables.SelectedTileColor.
