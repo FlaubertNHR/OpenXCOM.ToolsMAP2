@@ -79,8 +79,7 @@ namespace XCom
 
 			switch (GroupType = groupType)
 			{
-				default:
-//				case GameType.Ufo:
+				case GameType.Ufo:
 					Pal = Palette.UfoBattle;
 					_dirTerr = SharedSpace.ResourceDirectoryUfo;
 					break;

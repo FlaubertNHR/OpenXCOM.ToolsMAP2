@@ -9,6 +9,16 @@ using YamlDotNet.RepresentationModel;
 
 namespace XCom
 {
+	#region Enums
+	public enum GameType
+	{
+		Ufo,
+		Tftd
+	}
+	#endregion Enums
+
+
+
 	/// <summary>
 	/// Manages tileset-groups, loads the Tilesets into Descriptors, and writes
 	/// MapTilesets.yml.
@@ -209,7 +219,9 @@ namespace XCom
 							switch (@group.GroupType)
 							{
 								default:
-//								case GameType.Ufo:
+									goto case GameType.Ufo; // workaround for c#
+
+								case GameType.Ufo:
 									basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
 									break;
 								case GameType.Tftd:

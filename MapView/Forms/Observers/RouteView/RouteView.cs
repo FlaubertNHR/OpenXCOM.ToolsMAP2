@@ -86,7 +86,7 @@ namespace MapView.Forms.Observers
 				{
 					cbRank.Items.Clear();
 
-					if (MapFile.Descriptor.Pal == Palette.TftdBattle) // check TFTD else default to UFO
+					if (MapFile.Descriptor.GroupType == GameType.Tftd)
 						cbRank.Items.AddRange(RouteNodeCollection.RankTftd);
 					else
 						cbRank.Items.AddRange(RouteNodeCollection.RankUfo);
@@ -848,7 +848,7 @@ namespace MapView.Forms.Observers
 
 				cbType.SelectedItem = UnitType.Any;
 
-				if (MapFile.Descriptor.Pal == Palette.TftdBattle)
+				if (MapFile.Descriptor.GroupType == GameType.Tftd)
 					cbRank.SelectedItem = RouteNodeCollection.RankTftd[0];	//(byte)NodeRankTftd.CivScout
 				else
 					cbRank.SelectedItem = RouteNodeCollection.RankUfo [0];	//(byte)NodeRankUfo.CivScout
@@ -889,7 +889,7 @@ namespace MapView.Forms.Observers
 
 				cbType.SelectedItem = NodeSelected.Type;
 
-				if (MapFile.Descriptor.Pal == Palette.TftdBattle)
+				if (MapFile.Descriptor.GroupType == GameType.Tftd)
 					cbRank.SelectedItem = RouteNodeCollection.RankTftd[NodeSelected.Rank];
 				else
 					cbRank.SelectedItem = RouteNodeCollection.RankUfo [NodeSelected.Rank];
@@ -2000,7 +2000,7 @@ namespace MapView.Forms.Observers
 		private void OnAllNodesRank0Click(object sender, EventArgs e)
 		{
 			string rank;
-			if (MapFile.Descriptor.Pal == Palette.TftdBattle)
+			if (MapFile.Descriptor.GroupType == GameType.Tftd)
 				rank = ((Pterodactyl)RouteNodeCollection.RankTftd[0]).ToString();
 			else
 				rank = ((Pterodactyl)RouteNodeCollection.RankUfo [0]).ToString();

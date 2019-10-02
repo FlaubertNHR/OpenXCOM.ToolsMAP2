@@ -4,16 +4,6 @@ using System.Collections.Generic;
 
 namespace XCom
 {
-	#region Enums
-	public enum GameType
-	{
-		Ufo,
-		Tftd
-	}
-	#endregion Enums
-
-
-
 	/// <summary>
 	/// The class for a TileGroup contains its Categories and through those
 	/// Categories all of its tilesets/Descriptors.

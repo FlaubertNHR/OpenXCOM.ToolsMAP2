@@ -723,10 +723,10 @@ namespace MapView.Forms.Observers
 					textOver2 = (node.Index).ToString(CultureInfo.CurrentCulture);
 					textType2 = Enum.GetName(typeof(UnitType), node.Type);
 
-					if (MapFile.Descriptor.Pal == Palette.UfoBattle)
-						textRank2 = RouteNodeCollection.RankUfo [node.Rank].ToString();
-					else
+					if (MapFile.Descriptor.GroupType == GameType.Tftd)
 						textRank2 = RouteNodeCollection.RankTftd[node.Rank].ToString();
+					else
+						textRank2 = RouteNodeCollection.RankUfo [node.Rank].ToString();
 
 					textSpawn2  = RouteNodeCollection.Spawn [(byte)node.Spawn] .ToString();
 					textPatrol2 = RouteNodeCollection.Patrol[(byte)node.Patrol].ToString();

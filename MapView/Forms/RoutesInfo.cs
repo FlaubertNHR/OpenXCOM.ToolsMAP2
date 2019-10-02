@@ -83,7 +83,7 @@ namespace MapView
 			_file = file;
 
 			object[] pters;
-			if (_file.Descriptor.Pal == Palette.TftdBattle)
+			if (_file.Descriptor.GroupType == GameType.Tftd)
 				pters = RouteNodeCollection.RankTftd;
 			else
 				pters = RouteNodeCollection.RankUfo;

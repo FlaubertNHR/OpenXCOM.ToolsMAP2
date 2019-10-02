@@ -145,7 +145,7 @@ namespace MapView
 					string result, title;
 					MessageBoxIcon icon;
 
-					if (_base.Descriptor.Pal == Palette.TftdBattle)
+					if (_base.Descriptor.GroupType == GameType.Tftd)
 					{
 						if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 						{
@@ -406,7 +406,7 @@ namespace MapView
 		/// </summary>
 		private void SetResources()
 		{
-			if (_base.Descriptor.Pal == Palette.TftdBattle)
+			if (_base.Descriptor.GroupType == GameType.Tftd)
 			{
 				_icons = ResourceInfo.ScanGtftd;
 				_pal   = Palette.TftdBattle;

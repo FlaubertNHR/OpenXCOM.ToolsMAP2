@@ -2983,7 +2983,7 @@ namespace MapView
 
 						MainViewOverlay.FirstClick = false;
 
-						if (descriptor.Pal == Palette.TftdBattle)
+						if (descriptor.GroupType == GameType.Tftd)
 						{
 							MenuManager.EnableScanG(ResourceInfo.ScanGtftd != null);
 							MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle; // used by Mono only
