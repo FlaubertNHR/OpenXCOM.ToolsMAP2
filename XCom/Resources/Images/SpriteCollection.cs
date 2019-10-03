@@ -276,9 +276,7 @@ namespace XCom
 												this);
 
 						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckImage above can set the Fail_Overflo flag
-						{											// which shall be handled by the caller; ie. set the spriteset to null.
-							return;
-						}
+							return;									// which shall be handled by the caller; ie. set the spriteset to null.
 
 						Sprites.Add(sprite);
 					}
