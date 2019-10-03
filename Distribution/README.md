@@ -27,7 +27,7 @@ PckView
 - if a sprite-overflow happens don't assume that a Bigobs sprite was trying to load into a terrain/unit spriteset (just show a generic error).
 - reset titlebar text if a spriteset fails to load (that is, don't assume that a spriteset will load when setting the titlebar text).
 
-Xcom
+XCom
 - set the GroupType (aka. GameType: UFO/TFTD) in the Descriptor of each tileset.
 - fixed a bad typo that caused all tilesets to use the UFO battle-palette; this made editing TFTD tilesets problematic at best, since it also affected which terrains were trying to be accessed. Fixed ...
 - slight refactor of TileGroup loading (based on above fix).
