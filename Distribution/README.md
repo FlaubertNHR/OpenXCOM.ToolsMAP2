@@ -13,6 +13,27 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 October 2<br>
+[MapView2_191002.7z](https://drive.google.com/file/d/1gpcPF3i2BjYFcaSwPItVBxG9YG2xNioh/view?usp=sharing)
+
+MapView
+- show error if configuration files failed to create.
+- handle any errors while loading the UFO/TFTD targeters (CURSOR.PCK+TAB) better.
+- force-quit if a targeter-sprite does not get loaded.
+- use an explicit Descriptor.GroupType variable instead of current palette to determine whether a tileset is for UFO or TFTD.
+
+PckView
+- if a PCK vs TAB mismatched count error occurs print the counts in the error that pops.
+- if a sprite-overflow happens don't assume that a Bigobs sprite was trying to load into a terrain/unit spriteset (just show a generic error).
+- reset titlebar text if a spriteset fails to load (that is, don't assume that a spriteset will load when setting the titlebar text).
+
+Xcom
+- set the GroupType (aka. GameType: UFO/TFTD) in the Descriptor of each tileset.
+- fixed a bad typo that caused all tilesets to use the UFO battle-palette; this made editing TFTD tilesets problematic at best, since it also affected which terrains were trying to be accessed. Fixed ...
+- slight refactor of TileGroup loading (based on above fix).
+- use a bitwise int to store spritesets' failure-to-instantiate status, instead of three booleans.
+- add spriteset fail-state: Taboffset overflow condition.
+
 2019 August 31<br>
 [MapView2_190831.7z](https://drive.google.com/file/d/1PNaG4crWloakkeydy-XOPnIeGeNxSsp0/view?usp=sharing)
 
