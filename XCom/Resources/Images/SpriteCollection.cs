@@ -294,29 +294,27 @@ namespace XCom
 
 						using (var fsTab = FileService.CreateFile(pfe))
 						if (fsTab != null)
+						using (var bwTab = new BinaryWriter(fsTab))
 						{
-							using (var bwTab = new BinaryWriter(fsTab))
+							pos = 0;
+
+							uint u = 0;
+							for (int id = 0; id != CountSprites; ++id)
 							{
-								pos = 0;
-
-								uint u = 0;
-								for (int id = 0; id != CountSprites; ++id)
+								if (u > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
 								{
-									if (u > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
-									{
-										// "The size of the encoded sprite-data has grown too large to
-										// be stored correctly in a Tab file. Try deleting sprite(s)
-										// or (less effective) using more transparency in the sprites."
-										return;
-									}
-
-									bwTab.Write((ushort)u);
-
-									while (++pos != bytesPck.Length && bytesPck[pos - 1] != 0xFF) // note does not handle "FE FF"
-										++u;
-
-									++u;
+									// "The size of the encoded sprite-data has grown too large to
+									// be stored correctly in a Tab file. Try deleting sprite(s)
+									// or (less effective) using more transparency in the sprites."
+									return;
 								}
+
+								bwTab.Write((ushort)u);
+
+								while (++pos != bytesPck.Length && bytesPck[pos - 1] != 0xFF) // note does not handle "FE FF"
+									++u;
+
+								++u;
 							}
 						}
 					} */
