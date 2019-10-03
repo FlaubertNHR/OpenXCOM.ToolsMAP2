@@ -419,9 +419,10 @@ namespace MapView
 			SpriteCollection cuboidufo  = null;
 			SpriteCollection cuboidtftd = null;
 			string label = SharedSpace.CursorFilePrefix;
+			string dir;
 
-			string dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
-			if (Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
+			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo))
+				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
 				cuboidufo = ResourceInfo.LoadSpriteset(
 													label,
@@ -443,8 +444,8 @@ namespace MapView
 			else
 				LogFile.WriteLine("UFO Cursor directory not found.");
 
-			dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
-			if (Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
+			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd))
+				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
 				cuboidtftd = ResourceInfo.LoadSpriteset(
 													label,
