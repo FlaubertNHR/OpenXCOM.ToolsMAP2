@@ -481,8 +481,16 @@ namespace MapView.Forms.Observers
 				case MouseButtons.Right:
 					if (MainViewOverlay.that.FirstClick)
 					{
-						ObserverManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Right, 1);
-						ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Right, 1);
+						int clicks;
+						if (TopView.Optionables.EnableRightClickWaitTimer)
+						{
+							clicks = 1;
+						}
+						else
+							clicks = e.Clicks;
+
+						ObserverManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Right, clicks);
+						ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Right, clicks);
 					}
 					break;
 			}

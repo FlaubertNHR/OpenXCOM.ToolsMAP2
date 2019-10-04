@@ -319,6 +319,31 @@ namespace MapView.Forms.Observers
 			get { return _selectedQuadColor; }
 			set { _selectedQuadColor = value; }
 		}
+
+
+
+		private const string cat_General = "General";
+
+		private const string str_EnableRightClickWaitTimer = "EnableRightClickWaitTimer";
+		private const bool   def_EnableRightClickWaitTimer = false;
+
+		private bool _enablewait = def_EnableRightClickWaitTimer;
+		[Category(cat_General)]
+		[Description("If true then right-clicking or double right-clicking on"
+			+ " either a tile or a quadrant slot causes a very short delay"
+			+ " in order to detect whether a single or double click happened."
+			+ " This delay is used to bypass a single-click event [place"
+			+ " tilepart] if a double-click [clear tilepart] is detected"
+			+ " instead. If this option is false (default) then a double"
+			+ " right-click causes a tilepart to be placed and cleared in rapid"
+			+ " succession. WARNING: Enabling this option could cause TopView"
+			+ " to exhibit unstable behavior")]
+		[DefaultValue(def_EnableRightClickWaitTimer)]
+		public bool EnableRightClickWaitTimer
+		{
+			get { return _enablewait; }
+			set { _enablewait = value; }
+		}
 		#endregion Properties (optionable)
 
 
@@ -364,23 +389,25 @@ namespace MapView.Forms.Observers
 
 			OptionChangedEvent changer = OnOptionChanged;
 
-			options.AddOptionDefault(str_GridLineColor,     def_GridLineColor,     changer);
-			options.AddOptionDefault(str_GridLineWidth,     def_GridLineWidth,     changer);
-			options.AddOptionDefault(str_GridLine10Color,   def_GridLine10Color,   changer);
-			options.AddOptionDefault(str_GridLine10Width,   def_GridLine10Width,   changer);
+			options.AddOptionDefault(str_GridLineColor,             def_GridLineColor,             changer);
+			options.AddOptionDefault(str_GridLineWidth,             def_GridLineWidth,             changer);
+			options.AddOptionDefault(str_GridLine10Color,           def_GridLine10Color,           changer);
+			options.AddOptionDefault(str_GridLine10Width,           def_GridLine10Width,           changer);
 
-			options.AddOptionDefault(str_FloorColor,        def_FloorColor,        changer);
-			options.AddOptionDefault(str_WestColor,         def_WestColor,         changer);
-			options.AddOptionDefault(str_WestWidth,         def_WestWidth,         changer);
-			options.AddOptionDefault(str_NorthColor,        def_NorthColor,        changer);
-			options.AddOptionDefault(str_NorthWidth,        def_NorthWidth,        changer);
-			options.AddOptionDefault(str_ContentColor,      def_ContentColor,      changer);
+			options.AddOptionDefault(str_FloorColor,                def_FloorColor,                changer);
+			options.AddOptionDefault(str_WestColor,                 def_WestColor,                 changer);
+			options.AddOptionDefault(str_WestWidth,                 def_WestWidth,                 changer);
+			options.AddOptionDefault(str_NorthColor,                def_NorthColor,                changer);
+			options.AddOptionDefault(str_NorthWidth,                def_NorthWidth,                changer);
+			options.AddOptionDefault(str_ContentColor,              def_ContentColor,              changer);
 
-			options.AddOptionDefault(str_SelectorColor,     def_SelectorColor,     changer);
-			options.AddOptionDefault(str_SelectorWidth,     def_SelectorWidth,     changer);
-			options.AddOptionDefault(str_SelectedColor,     def_SelectedColor,     changer);
-			options.AddOptionDefault(str_SelectedWidth,     def_SelectedWidth,     changer);
-			options.AddOptionDefault(str_SelectedQuadColor, def_SelectedQuadColor, OnQuadColorChanged);
+			options.AddOptionDefault(str_SelectorColor,             def_SelectorColor,             changer);
+			options.AddOptionDefault(str_SelectorWidth,             def_SelectorWidth,             changer);
+			options.AddOptionDefault(str_SelectedColor,             def_SelectedColor,             changer);
+			options.AddOptionDefault(str_SelectedWidth,             def_SelectedWidth,             changer);
+			options.AddOptionDefault(str_SelectedQuadColor,         def_SelectedQuadColor,         OnQuadColorChanged);
+
+			options.AddOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, OnFlagChanged);
 		}
 		#endregion Methods
 
@@ -429,6 +456,22 @@ namespace MapView.Forms.Observers
 
 			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
 			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+		}
+
+		/// <summary>
+		/// Sets the value of an optionable property but doesn't invalidate
+		/// anything.
+		/// </summary>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
+		internal void OnFlagChanged(string key, object val)
+		{
+//			switch (key)
+//			{
+//				case str_EnableRightClickWaitTimer:
+			EnableRightClickWaitTimer = (bool)val;
+//					break;
+//			}
 		}
 		#endregion Events
 

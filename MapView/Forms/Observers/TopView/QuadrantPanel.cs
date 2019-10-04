@@ -165,15 +165,14 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="button"></param>
 		/// <param name="clicks"></param>
-		/// <param name= "keySelectQuadrant"></param>
+		/// <param name="keySelectQuadrant">true if invoked by keyboard-input</param>
 		internal void Operate(MouseButtons button, int clicks, bool keySelectQuadrant = false)
 		{
 			if (Tile != null)
 			{
 				switch (button)
 				{
-					case MouseButtons.Left:
-						// clicks=1 is done by caller.
+					case MouseButtons.Left: // NOTE: clicks=1 is handled by caller.
 						if (clicks == 2)
 							ObserverManager.TileView.Control.SelectedTilepart = Tile[SelectedQuadrant];
 						break;
@@ -181,7 +180,7 @@ namespace MapView.Forms.Observers
 					case MouseButtons.Right:
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							if (!keySelectQuadrant)
+							if (!keySelectQuadrant && TopView.Optionables.EnableRightClickWaitTimer)
 							{
 								_t1.Stop();
 								++_t1Clicks;
