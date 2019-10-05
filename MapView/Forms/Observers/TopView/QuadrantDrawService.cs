@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -49,7 +50,7 @@ namespace MapView.Forms.Observers
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
 		private static readonly GraphicsPath _pathCurrent = new GraphicsPath();
 
-		internal const int QuadrantTypeCurrent = 5;
+		internal const int CurrentQuadtype = 5;
 
 		private static TopView TopViewControl;
 		#endregion Fields (static)
@@ -114,19 +115,19 @@ namespace MapView.Forms.Observers
 
 			// skip a space between the Content quad and the Current quad
 			p0 = new Point(
-						StartX + Quadwidth * QuadrantTypeCurrent - 1,
+						StartX + Quadwidth * CurrentQuadtype - 1,
 						StartY);
 			p1 = new Point(
-						StartX + Quadwidth * QuadrantTypeCurrent + XCImage.SpriteWidth32 + 1,
+						StartX + Quadwidth * CurrentQuadtype + XCImage.SpriteWidth32 + 1,
 						StartY);
 			p2 = new Point(
-						StartX + Quadwidth * QuadrantTypeCurrent + XCImage.SpriteWidth32 + 1,
+						StartX + Quadwidth * CurrentQuadtype + XCImage.SpriteWidth32 + 1,
 						StartY + XCImage.SpriteHeight40 + 1);
 			p3 = new Point(
-						StartX + Quadwidth * QuadrantTypeCurrent,
+						StartX + Quadwidth * CurrentQuadtype,
 						StartY + XCImage.SpriteHeight40 + 1);
 			p4 = new Point(
-						StartX + Quadwidth * QuadrantTypeCurrent,
+						StartX + Quadwidth * CurrentQuadtype,
 						StartY);
 
 			_pathCurrent.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
@@ -178,6 +179,9 @@ namespace MapView.Forms.Observers
 		private static Graphics _graphics;
 		private static bool _inited;
 
+		private static ImageAttributes _attribs = new ImageAttributes();
+		private static List<Brush>     _brushes = new List<Brush>();
+
 		/// <summary>
 		/// Draws the QuadrantPanel incl/ sprites.
 		/// </summary>
@@ -191,9 +195,10 @@ namespace MapView.Forms.Observers
 		{
 			_graphics = graphics;
 
-			var spriteAttributes = new ImageAttributes();
-			if (MainViewF.Optionables.SpriteShadeEnabled)
-				spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+			if (!MainViewF.Optionables.UseMono && MainViewF.Optionables.SpriteShadeEnabled)
+			{
+				_attribs.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+			}
 
 			if (!_inited) // TODO: break that out ->
 			{
@@ -249,127 +254,80 @@ namespace MapView.Forms.Observers
 
 
 			// draw the Sprites
-			Bitmap sprite;
 			int anistep = MainViewUnderlay.AniStep;
+
+			if (MainViewF.Optionables.UseMono)
+			{
+				if (MainViewUnderlay.that.MapBase.Descriptor.GroupType == GameType.Tftd)
+					_brushes = Palette.BrushesTftdBattle;
+				else
+					_brushes = Palette.BrushesUfoBattle;
+			}
+
 
 			// Floor ->
 			if (tile != null && tile.Floor != null)
 			{
-				sprite = tile.Floor[anistep].Sprite;
-				_graphics.DrawImage(
-								sprite,
-								new Rectangle(
-											StartX,
-											StartY - tile.Floor.Record.TileOffset,
-											sprite.Width,
-											sprite.Height),
-								0,0, sprite.Width, sprite.Height,
-								GraphicsUnit.Pixel,
-								spriteAttributes);
+				McdRecord record = tile.Floor.Record;
+				DrawSprite(tile.Floor[anistep], 0, record.TileOffset);
 
-				if (tile.Floor.Record.HingedDoor || tile.Floor.Record.SlidingDoor)
+				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString((int)QuadrantType.Floor);
 			}
 			else
-				_graphics.DrawImage(
-								MainViewF.DuotoneSprites[3].Sprite,
-								StartX, StartY);
+				DrawSprite(MainViewF.DuotoneSprites[3], 0);
+
 
 			// West ->
 			if (tile != null && tile.West != null)
 			{
-				sprite = tile.West[anistep].Sprite;
-				_graphics.DrawImage(
-								sprite,
-								new Rectangle(
-											StartX + Quadwidth,
-											StartY - tile.West.Record.TileOffset,
-											sprite.Width,
-											sprite.Height),
-								0,0, sprite.Width, sprite.Height,
-								GraphicsUnit.Pixel,
-								spriteAttributes);
+				McdRecord record = tile.West.Record;
+				DrawSprite(tile.West[anistep], Quadwidth, record.TileOffset);
 
-				if (tile.West.Record.HingedDoor || tile.West.Record.SlidingDoor)
+				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString((int)QuadrantType.West);
 			}
 			else
-				_graphics.DrawImage(
-								MainViewF.DuotoneSprites[1].Sprite,
-								StartX + Quadwidth,
-								StartY);
+				DrawSprite(MainViewF.DuotoneSprites[1], Quadwidth);
+
 
 			// North ->
 			if (tile != null && tile.North != null)
 			{
-				sprite = tile.North[anistep].Sprite;
-				_graphics.DrawImage(
-								sprite,
-								new Rectangle(
-											StartX + Quadwidth * (int)QuadrantType.North,
-											StartY - tile.North.Record.TileOffset,
-											sprite.Width,
-											sprite.Height),
-								0,0, sprite.Width, sprite.Height,
-								GraphicsUnit.Pixel,
-								spriteAttributes);
+				McdRecord record = tile.North.Record;
+				DrawSprite(tile.North[anistep], Quadwidth * (int)QuadrantType.North, record.TileOffset);
 
-				if (tile.North.Record.HingedDoor || tile.North.Record.SlidingDoor)
+				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString((int)QuadrantType.North);
 			}
 			else
-				_graphics.DrawImage(
-								MainViewF.DuotoneSprites[2].Sprite,
-								StartX + Quadwidth * (int)QuadrantType.North,
-								StartY);
+				DrawSprite(MainViewF.DuotoneSprites[2], Quadwidth * (int)QuadrantType.North);
+
 
 			// Content ->
 			if (tile != null && tile.Content != null)
 			{
-				sprite = tile.Content[anistep].Sprite;
-				_graphics.DrawImage(
-								sprite,
-								new Rectangle(
-											StartX + Quadwidth * (int)QuadrantType.Content,
-											StartY - tile.Content.Record.TileOffset,
-											sprite.Width,
-											sprite.Height),
-								0,0, sprite.Width, sprite.Height,
-								GraphicsUnit.Pixel,
-								spriteAttributes);
+				McdRecord record = tile.Content.Record;
+				DrawSprite(tile.Content[anistep], Quadwidth * (int)QuadrantType.Content, record.TileOffset);
 
-				if (tile.Content.Record.HingedDoor || tile.Content.Record.SlidingDoor)
+				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString((int)QuadrantType.Content);
 			}
 			else
-				_graphics.DrawImage(
-								MainViewF.DuotoneSprites[4].Sprite,
-								StartX + Quadwidth * (int)QuadrantType.Content,
-								StartY);
+				DrawSprite(MainViewF.DuotoneSprites[4], Quadwidth * (int)QuadrantType.Content);
+
 
 			// Current ->
 			if (CurrentTilepart != null)
 			{
-				sprite = CurrentTilepart[anistep].Sprite;
-				_graphics.DrawImage(
-								sprite,
-								new Rectangle(
-											StartX + Quadwidth * QuadrantTypeCurrent,
-											StartY - CurrentTilepart.Record.TileOffset,
-											sprite.Width,
-											sprite.Height),
-								0,0, sprite.Width, sprite.Height,
-								GraphicsUnit.Pixel,
-								spriteAttributes);
+				McdRecord record = CurrentTilepart.Record;
+				DrawSprite(CurrentTilepart[anistep], Quadwidth * CurrentQuadtype, record.TileOffset);
 
-				if (CurrentTilepart.Record.HingedDoor || CurrentTilepart.Record.SlidingDoor)
-					DrawDoorString(QuadrantTypeCurrent);
+				if (record.HingedDoor || record.SlidingDoor)
+					DrawDoorString(CurrentQuadtype);
 			}
 			else
-				_graphics.DrawImage(
-								MainViewF.DuotoneSprites[0].Sprite,
-								StartX + Quadwidth * QuadrantTypeCurrent,
-								StartY);
+				DrawSprite(MainViewF.DuotoneSprites[0], Quadwidth * CurrentQuadtype);
 
 
 			// draw each quadrant's bounding rectangle
@@ -386,13 +344,89 @@ namespace MapView.Forms.Observers
 			DrawTypeString(North,   TextWidth_north,   (int)QuadrantType.North);
 			DrawTypeString(Content, TextWidth_content, (int)QuadrantType.Content);
 
-			DrawTypeString(Current, TextWidth_current, QuadrantTypeCurrent);
+			DrawTypeString(Current, TextWidth_current, CurrentQuadtype);
 
 			// fill the color-swatch under each quadrant-label
 			FillSwatchColor(               TopPanel.Brushes[TopViewOptionables.str_FloorColor],        (int)QuadrantType.Floor);
 			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopViewOptionables.str_WestColor] .Color), (int)QuadrantType.West);
 			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopViewOptionables.str_NorthColor].Color), (int)QuadrantType.North);
 			FillSwatchColor(               TopPanel.Brushes[TopViewOptionables.str_ContentColor],      (int)QuadrantType.Content);
+		}
+
+		/// <summary>
+		/// Draws a terrain-sprite with an x/y-offset.
+		/// </summary>
+		/// <param name="sprite"></param>
+		/// <param name="offset_x"></param>
+		/// <param name="offset_y"></param>
+		private static void DrawSprite(XCImage sprite, int offset_x, int offset_y)
+		{
+			if (MainViewF.Optionables.UseMono)
+			{
+				byte[] bindata = sprite.Bindata;
+
+				int palid;
+				int i = -1;
+				for (int y = 0; y != XCImage.SpriteHeight40; ++y)
+				for (int x = 0; x != XCImage.SpriteWidth32;  ++x)
+				{
+					if ((palid = bindata[++i]) != Palette.TranId)
+					{
+						_graphics.FillRectangle(
+											_brushes[palid],
+											x + StartX + offset_x,
+											y + StartY - offset_y,
+											1,1);
+					}
+				}
+			}
+			else
+			{
+				Bitmap b = sprite.Sprite;
+				_graphics.DrawImage(
+								b,
+								new Rectangle(
+											StartX + offset_x,
+											StartY - offset_y,
+											b.Width,
+											b.Height),
+								0,0, b.Width, b.Height,
+								GraphicsUnit.Pixel,
+								_attribs);
+			}
+		}
+
+		/// <summary>
+		/// Draws a duotone-sprite with an x-offset.
+		/// </summary>
+		/// <param name="sprite"></param>
+		/// <param name="offset_x"></param>
+		private static void DrawSprite(XCImage sprite, int offset_x)
+		{
+			if (MainViewF.Optionables.UseMono)
+			{
+				byte[] bindata = sprite.Bindata;
+
+				int palid;
+				int i = -1;
+				for (int y = 0; y != XCImage.SpriteHeight40; ++y)
+				for (int x = 0; x != XCImage.SpriteWidth32;  ++x)
+				{
+					if ((palid = bindata[++i]) != Palette.TranId)
+					{
+						_graphics.FillRectangle(
+											_brushes[palid],
+											x + StartX + offset_x,
+											y + StartY,
+											1,1);
+					}
+				}
+			}
+			else
+				_graphics.DrawImage(
+								sprite.Sprite,
+								StartX + offset_x,
+								StartY);
 		}
 
 		/// <summary>

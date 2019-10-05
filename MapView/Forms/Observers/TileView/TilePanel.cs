@@ -487,14 +487,25 @@ namespace MapView.Forms.Observers
 				var graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-				var spriteAttributes = new ImageAttributes();
-				if (MainViewF.Optionables.SpriteShadeEnabled)
-					spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+				var rectOuter = new Rectangle(0,0, SpriteWidth, SpriteHeight);
+				var rectInner = new Rectangle();
+
+				ImageAttributes attribs = null;
+				if (!MainViewF.Optionables.UseMono)
+				{
+					if (MainViewF.Optionables.SpriteShadeEnabled)
+					{
+						attribs = new ImageAttributes();
+						attribs.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+					}
+
+					rectInner.Width  = XCImage.SpriteWidth32;
+					rectInner.Height = XCImage.SpriteHeight40;
+				}
 
 				int x = 0;
 				int y = 0;
-				int top;
-				int left;
+				int L,T; // left,top
 
 				if (TextWidth == 0) // init.
 				{
@@ -502,17 +513,26 @@ namespace MapView.Forms.Observers
 					TextWidth = (int)graphics.MeasureString(Door, Font).Width;	// =24
 				}
 
+
 				XCImage sprite;
-				var rectOuter = new Rectangle(0,0,         SpriteWidth,           SpriteHeight);
-				var rectInner = new Rectangle(0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40);
+
+				byte[] bindata;
+				List<Brush> brushes;
+				if (MainViewF.Optionables.UseMono)
+				{
+					if (MainViewUnderlay.that.MapBase.Descriptor.GroupType == GameType.Tftd)
+						brushes = Palette.BrushesTftdBattle;
+					else
+						brushes = Palette.BrushesUfoBattle;
+				}
+				else
+					brushes = null;
+
 
 				foreach (var part in _parts)
 				{
-					left = SpriteWidth  * x + TableOffset;
-					top  = SpriteHeight * y + TableOffset + _startY;
-
-					rectOuter.X = left;
-					rectOuter.Y = top;
+					rectOuter.X = (L = SpriteWidth  * x + TableOffset);
+					rectOuter.Y = (T = SpriteHeight * y + TableOffset + _startY);
 
 					if (part != null) // draw tile-sprite ->
 					{
@@ -522,32 +542,54 @@ namespace MapView.Forms.Observers
 
 						if ((sprite = part[MainViewUnderlay.AniStep]) != null)
 						{
-							rectInner.X = left + SpriteMargin;
-							rectInner.Y = top  + SpriteMargin - part.Record.TileOffset;
-							graphics.DrawImage(									// then draw the sprite itself
-											sprite.Sprite,
-											rectInner,
-											0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
-											GraphicsUnit.Pixel,
-											spriteAttributes);
+							if (MainViewF.Optionables.UseMono)
+							{
+								bindata = sprite.Bindata;
+
+								int palid;
+								int i = -1;
+								for (int h = 0; h != XCImage.SpriteHeight40; ++h)
+								for (int w = 0; w != XCImage.SpriteWidth32;  ++w)
+								{
+									if ((palid = bindata[++i]) != Palette.TranId)
+									{
+										graphics.FillRectangle(
+															brushes[palid],
+															L + w + 2,
+															T + h + 2,
+															1,1);
+									}
+								}
+							}
+							else
+							{
+								rectInner.X = L + SpriteMargin;
+								rectInner.Y = T + SpriteMargin - part.Record.TileOffset;
+								graphics.DrawImage(									// then draw the sprite itself
+												sprite.Sprite,
+												rectInner,
+												0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+												GraphicsUnit.Pixel,
+												attribs);
+							}
 						}
 
 						// NOTE: keep the door-string and its placement consistent with
 						// QuadrantDrawService.Draw().
-						if (part.Record.HingedDoor || part.Record.SlidingDoor)	// finally print "door" if it's a door
+						if (part.Record.HingedDoor || part.Record.SlidingDoor)		// finally print "door" if it's a door
 							graphics.DrawString(
 											Door,
 											Font,
 											Brushes.Black,
-											left + (SpriteWidth  - TextWidth) / 2,
-											top  +  SpriteHeight - Font.Height);
+											L + (SpriteWidth  - TextWidth) / 2,
+											T +  SpriteHeight - Font.Height);
 					}
 					else // draw the eraser ->
 					{
 						graphics.FillRectangle(Brushes.AliceBlue, rectOuter);
 						graphics.DrawImage(
 										MainViewF.DuotoneSprites[0].Sprite,
-										left, top);
+										L,T);
 					}
 
 					x = (x + 1) % _tilesX;

@@ -391,7 +391,7 @@ namespace MapView.Forms.Observers
 				case Keys.Q:
 					button = MouseButtons.Left;
 					clicks = 1;
-					quad = (QuadrantType)QuadrantDrawService.QuadrantTypeCurrent;
+					quad = (QuadrantType)QuadrantDrawService.CurrentQuadtype;
 					break;
 
 				case Keys.T: // select the TileView-part of the selected quadrant

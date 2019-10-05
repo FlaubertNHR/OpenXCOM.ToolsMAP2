@@ -628,7 +628,7 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_AnimateSprites,         def_AnimateSprites,         changer2);
 			options.AddOptionDefault(str_OpenDoors,              def_OpenDoors,              changer2);
 			options.AddOptionDefault(str_BringAllToFront,        def_BringAllToFront,        changer1);
-			options.AddOptionDefault(str_UseMono,                def_UseMono,                changer0);
+			options.AddOptionDefault(str_UseMono,                def_UseMono,                changer2);
 
 			options.AddOptionDefault(str_BackgroundColor,        def_BackgroundColor,        changer1);
 			options.AddOptionDefault(str_CropBackground,         def_CropBackground,         changer1);
@@ -707,10 +707,6 @@ namespace MapView.Forms.MainView
 
 				case str_Interpolation:
 					Interpolation = (int)val;
-					break;
-
-				case str_UseMono:
-					UseMono = (bool)val;
 					break;
 			}
 
@@ -812,6 +808,10 @@ namespace MapView.Forms.MainView
 					else // switch doors to Sprite1 (closed)
 						MainViewF.that.SetDoorSpritesFullPhase(false);
 
+					break;
+
+				case str_UseMono:
+					UseMono = (bool)val;
 					break;
 			}
 
