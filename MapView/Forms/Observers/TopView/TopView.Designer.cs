@@ -31,7 +31,6 @@ namespace MapView.Forms.Observers
 			this.tsddbTestPartslots = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.tscPanel.ContentPanel.SuspendLayout();
-			this.tscPanel.LeftToolStripPanel.SuspendLayout();
 			this.tscPanel.SuspendLayout();
 			this.tsMain.SuspendLayout();
 			this.SuspendLayout();
@@ -51,7 +50,6 @@ namespace MapView.Forms.Observers
 			// 
 			// tscPanel.LeftToolStripPanel
 			// 
-			this.tscPanel.LeftToolStripPanel.Controls.Add(this.tsTools);
 			this.tscPanel.LeftToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.Location = new System.Drawing.Point(0, 25);
 			this.tscPanel.Name = "tscPanel";
@@ -151,8 +149,6 @@ namespace MapView.Forms.Observers
 			this.Name = "TopView";
 			this.Size = new System.Drawing.Size(640, 480);
 			this.tscPanel.ContentPanel.ResumeLayout(false);
-			this.tscPanel.LeftToolStripPanel.ResumeLayout(false);
-			this.tscPanel.LeftToolStripPanel.PerformLayout();
 			this.tscPanel.ResumeLayout(false);
 			this.tscPanel.PerformLayout();
 			this.tsMain.ResumeLayout(false);

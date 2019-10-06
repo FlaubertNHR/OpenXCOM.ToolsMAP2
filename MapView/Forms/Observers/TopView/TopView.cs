@@ -1,3 +1,5 @@
+#define __Mono__
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -89,6 +91,22 @@ namespace MapView.Forms.Observers
 			Optionables = new TopViewOptionables(this);
 
 			InitializeComponent();
+
+// "#define __Mono__" at the top of this page to position the toolstrip on a
+// different edge of the ToolStripContainer. This is a workaround for Mono,
+// since (a) the toolstrip looks really awkward on the left edge (but left edge
+// looks fine in .NET) and (b) the toolstrip can't be drag&dropped to a
+// different edge.
+//
+// NOTE: If there is a standard #define that Monodevelop or Mono-compilers use
+// to define building against Mono instead of .NET it should be used instead of
+// "__Mono__"
+#if __Mono__
+			tscPanel.BottomToolStripPanel.Controls.Add(tsTools);
+#else
+			tscPanel.LeftToolStripPanel.Controls.Add(tsTools);
+#endif
+
 			InitializeQuadrantPanel();
 
 			SuspendLayout();
