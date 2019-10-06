@@ -50,7 +50,7 @@ namespace MapView.Forms.Observers
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
 		private static readonly GraphicsPath _pathCurrent = new GraphicsPath();
 
-		internal const int CurrentQuadtype = 5;
+		internal const int QuadrantCurrent = 5;
 
 		private static TopView TopViewControl;
 		#endregion Fields (static)
@@ -115,19 +115,19 @@ namespace MapView.Forms.Observers
 
 			// skip a space between the Content quad and the Current quad
 			p0 = new Point(
-						StartX + Quadwidth * CurrentQuadtype - 1,
+						StartX + Quadwidth * QuadrantCurrent - 1,
 						StartY);
 			p1 = new Point(
-						StartX + Quadwidth * CurrentQuadtype + XCImage.SpriteWidth32 + 1,
+						StartX + Quadwidth * QuadrantCurrent + XCImage.SpriteWidth32 + 1,
 						StartY);
 			p2 = new Point(
-						StartX + Quadwidth * CurrentQuadtype + XCImage.SpriteWidth32 + 1,
+						StartX + Quadwidth * QuadrantCurrent + XCImage.SpriteWidth32 + 1,
 						StartY + XCImage.SpriteHeight40 + 1);
 			p3 = new Point(
-						StartX + Quadwidth * CurrentQuadtype,
+						StartX + Quadwidth * QuadrantCurrent,
 						StartY + XCImage.SpriteHeight40 + 1);
 			p4 = new Point(
-						StartX + Quadwidth * CurrentQuadtype,
+						StartX + Quadwidth * QuadrantCurrent,
 						StartY);
 
 			_pathCurrent.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
@@ -321,13 +321,13 @@ namespace MapView.Forms.Observers
 			if (CurrentTilepart != null)
 			{
 				McdRecord record = CurrentTilepart.Record;
-				DrawSprite(CurrentTilepart[anistep], Quadwidth * CurrentQuadtype, record.TileOffset);
+				DrawSprite(CurrentTilepart[anistep], Quadwidth * QuadrantCurrent, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString(CurrentQuadtype);
+					DrawDoorString(QuadrantCurrent);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[0], Quadwidth * CurrentQuadtype);
+				DrawSprite(MainViewF.DuotoneSprites[0], Quadwidth * QuadrantCurrent);
 
 
 			// draw each quadrant's bounding rectangle
@@ -344,7 +344,7 @@ namespace MapView.Forms.Observers
 			DrawTypeString(North,   TextWidth_north,   (int)QuadrantType.North);
 			DrawTypeString(Content, TextWidth_content, (int)QuadrantType.Content);
 
-			DrawTypeString(Current, TextWidth_current, CurrentQuadtype);
+			DrawTypeString(Current, TextWidth_current, QuadrantCurrent);
 
 			// fill the color-swatch under each quadrant-label
 			FillSwatchColor(               TopPanel.Brushes[TopViewOptionables.str_FloorColor],        (int)QuadrantType.Floor);

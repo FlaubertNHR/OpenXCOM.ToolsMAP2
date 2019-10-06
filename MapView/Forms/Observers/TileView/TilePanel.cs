@@ -565,7 +565,7 @@ namespace MapView.Forms.Observers
 							{
 								rectInner.X = L + SpriteMargin;
 								rectInner.Y = T + SpriteMargin - part.Record.TileOffset;
-								graphics.DrawImage(									// then draw the sprite itself
+								graphics.DrawImage(								// then draw the sprite itself
 												sprite.Sprite,
 												rectInner,
 												0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
@@ -576,7 +576,7 @@ namespace MapView.Forms.Observers
 
 						// NOTE: keep the door-string and its placement consistent with
 						// QuadrantDrawService.Draw().
-						if (part.Record.HingedDoor || part.Record.SlidingDoor)		// finally print "door" if it's a door
+						if (part.Record.HingedDoor || part.Record.SlidingDoor)	// finally print "door" if it's a door
 							graphics.DrawString(
 											Door,
 											Font,
