@@ -82,7 +82,8 @@ namespace MapView.Forms.Observers
 							new Dictionary<string, SolidBrush>();
 		/// <summary>
 		/// Brushes for use in TopPanel.
-		/// @note The identifier 'Brushes' could cause a clash w/ System.Drawing
+		/// @note The identifier 'Brushes' could cause a clash w/
+		/// System.Drawing.Brushes.
 		/// </summary>
 		internal static Dictionary<string, SolidBrush> Brushes
 		{
