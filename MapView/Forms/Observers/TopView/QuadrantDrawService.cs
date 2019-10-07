@@ -50,6 +50,11 @@ namespace MapView.Forms.Observers
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
 		private static readonly GraphicsPath _pathCurrent = new GraphicsPath();
 
+		internal const int DUOTONE_ERASER  = 0;
+		private  const int DUOTONE_WEST    = 1;
+		private  const int DUOTONE_NORTH   = 2;
+		private  const int DUOTONE_FLOOR   = 3;
+		private  const int DUOTONE_CONTENT = 4;
 		internal const int QuadrantCurrent = 5;
 
 		private static TopView TopViewControl;
@@ -113,7 +118,7 @@ namespace MapView.Forms.Observers
 				path.AddLine(p3, p4); // NOTE: try DrawRectangle() it's even worse.
 			}
 
-			// skip a space between the Content quad and the Current quad
+			// skip a space between the Content quadslot and the Current quadslot
 			p0 = new Point(
 						StartX + Quadwidth * QuadrantCurrent - 1,
 						StartY);
@@ -275,7 +280,7 @@ namespace MapView.Forms.Observers
 					DrawDoorString((int)QuadrantType.Floor);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[3], 0);
+				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_FLOOR], 0);
 
 
 			// West ->
@@ -288,7 +293,7 @@ namespace MapView.Forms.Observers
 					DrawDoorString((int)QuadrantType.West);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[1], Quadwidth);
+				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_WEST], Quadwidth);
 
 
 			// North ->
@@ -301,7 +306,7 @@ namespace MapView.Forms.Observers
 					DrawDoorString((int)QuadrantType.North);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[2], Quadwidth * (int)QuadrantType.North);
+				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_NORTH], Quadwidth * (int)QuadrantType.North);
 
 
 			// Content ->
@@ -314,7 +319,7 @@ namespace MapView.Forms.Observers
 					DrawDoorString((int)QuadrantType.Content);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[4], Quadwidth * (int)QuadrantType.Content);
+				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_CONTENT], Quadwidth * (int)QuadrantType.Content);
 
 
 			// Current ->
@@ -327,7 +332,7 @@ namespace MapView.Forms.Observers
 					DrawDoorString(QuadrantCurrent);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[0], Quadwidth * QuadrantCurrent);
+				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_ERASER], Quadwidth * QuadrantCurrent);
 
 
 			// draw each quadrant's bounding rectangle
