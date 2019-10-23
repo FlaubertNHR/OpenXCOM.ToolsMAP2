@@ -1,5 +1,5 @@
-RulesetConverter ver.1
-2019 aug 26
+RulesetConverter ver.1.0.1.0
+2019 oct 22
 
 
 RulesetConverter is a utility that converts data from an OxC ruleset file to a YAML configuration (template) file for MapViewII.
