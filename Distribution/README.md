@@ -13,6 +13,12 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 October 22<br>
+[MapView2_191022.7z](https://drive.google.com/file/d/13lcD0kEA94lTO7afgCxtd_J00zbP0dAR/view?usp=sharing)
+
+- rebuild (issues re. PckView not starting)
+- plus tweaks for Mono (if applicable). Thanks to osd_daedalus for reporting issues and testing changes.
+
 2019 October 2<br>
 [MapView2_191002.7z](https://drive.google.com/file/d/1gpcPF3i2BjYFcaSwPItVBxG9YG2xNioh/view?usp=sharing)
 
