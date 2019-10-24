@@ -229,7 +229,7 @@ namespace PckView
 			{
 				int result;
 				if (Int32.TryParse(val, out result)
-					&& result > -1)
+					&& result > 0)
 				{
 					miSpriteShade.Checked = true;
 
