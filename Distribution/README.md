@@ -2,7 +2,8 @@ MapView stores settings in a subfolder of itself. If you do not have user-permis
 
 Automated builds for Mono only: https://lxnt.wtf/oxem/#/MapView by Stoddard.<br>
 notes for Mono/Linux/Mac users
-- MapView needs to run once and then be restarted for its window to resize properly.
+- automated Mono builds might not be stable; the prefered tactic is to build against Mono on your own computer (natively).
+- MapView might need to run once and then be restarted for its window(s) to resize properly.
 - if nontransparent black boxes appear all over the place, go to MainView's Options and turn on "UseMono".
 - .NET on Mono tends to layout and render differently than in Windows, so pls look for usability rather than perfection.
 - the Mono package does not contain the CHM helpfile or the keyboard_cheatsheet. They're available in the Windows archive and are recommended since they describe shortcuts, functionality, etc.
