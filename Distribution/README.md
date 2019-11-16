@@ -14,6 +14,10 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2019 November 16<br>
+[MapView2_191116.7z](https://drive.google.com/file/d/1bM25j24XevtnMSjSe-_8YZlr6ms04O6a/view?usp=sharing)
+- Tileslot Substitution [Ctrl+U] - opens a dialog box for replacing tileparts of a given setId with tileparts of a different setId across the currently loaded Map. Tileparts of a given setId can optionally be cleared from a Map.
+
 2019 October 24<br>
 [MapView2_191024.7z](https://drive.google.com/file/d/1v5X7QLBXRuOXEjjvzNghnxh9PzFsSVKt/view?usp=sharing)
 
