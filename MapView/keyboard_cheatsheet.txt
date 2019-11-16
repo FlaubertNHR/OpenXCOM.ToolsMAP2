@@ -33,6 +33,7 @@ Ctrl+t - save the tree
 
 Ctrl+i - screenshot
 Ctrl+z - resize the map
+Ctrl+u - tileslot substitution
 Ctrl+f - show map info
 
 Ctrl+g - show the ScanG viewer
