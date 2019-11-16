@@ -50,27 +50,10 @@ namespace MapView.Forms.Observers
 			{
 				if ((base.MapBase = value) != null)
 				{
-					TileParts = value.Parts;
+					SetTileParts(value.Parts);
 				}
 				else
-					TileParts = null;
-			}
-		}
-
-		private IList<Tilepart> TileParts
-		{
-			set
-			{
-				for (int id = 0; id != _panels.Length; ++id)
-					_panels[id].SetTiles(value);
-
-				tsslTotal.Text = "Total " + value.Count;
-				if (value.Count > MapFileBase.MaxTerrainId)
-					tsslTotal.ForeColor = Color.MediumVioletRed;
-				else
-					tsslTotal.ForeColor = SystemColors.ControlText;
-
-				OnResize(null);
+					SetTileParts(null);
 			}
 		}
 
@@ -614,6 +597,21 @@ namespace MapView.Forms.Observers
 
 
 		#region Methods
+		private void SetTileParts(IList<Tilepart> parts)
+		{
+			for (int id = 0; id != _panels.Length; ++id)
+				_panels[id].SetTiles(parts);
+
+			tsslTotal.Text = "Total " + parts.Count;
+
+			if (parts.Count > MapFileBase.MaxTerrainId)
+				tsslTotal.ForeColor = Color.MediumVioletRed;
+			else
+				tsslTotal.ForeColor = SystemColors.ControlText;
+
+			OnResize(null);
+		}
+
 		/// <summary>
 		/// Sets the title-text to a string that's appropriate for the currently
 		/// selected tilepart.
