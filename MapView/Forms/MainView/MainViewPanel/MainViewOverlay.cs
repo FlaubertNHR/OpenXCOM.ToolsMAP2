@@ -574,6 +574,54 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="src">setId of tile to replace</param>
+		/// <param name="dst">setId of other tile</param>
+		internal void SubstituteTileparts(int src, int dst)
+		{
+			MainView.MapChanged = true;
+
+			Tilepart part;
+			MapTile tile;
+
+			for (int lev = 0; lev != MapBase.MapSize.Levs; ++lev)
+			for (int col = 0; col != MapBase.MapSize.Cols; ++col)
+			for (int row = 0; row != MapBase.MapSize.Rows; ++row)
+			{
+				tile = MapBase[row, col, lev];
+
+				if ((part = tile.Floor) != null
+					&& part.SetId == src)
+				{
+					tile.Floor = MapBase.Parts[dst];
+				}
+
+				if ((part = tile.West) != null
+					&& part.SetId == src)
+				{
+					tile.West = MapBase.Parts[dst];
+				}
+
+				if ((part = tile.North) != null
+					&& part.SetId == src)
+				{
+					tile.North = MapBase.Parts[dst];
+				}
+
+				if ((part = tile.Content) != null
+					&& part.SetId == src)
+				{
+					tile.Content = MapBase.Parts[dst];
+				}
+			}
+
+			MapBase.CalculateOccultations();
+
+			InvalidateObservers();
+		}
+
+		/// <summary>
 		/// Causes this panel to redraw along with the TopView, RouteView, and
 		/// TopRouteView forms - also invalidates the ScanG panel.
 		/// </summary>

@@ -1670,6 +1670,23 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Opens a dialog that allows user to replace a tilepart throughout the
+		/// Map with another tilepart.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnTileslotSubstitutionClick(object sender, EventArgs e)
+		{
+			using (var f = new TileslotSubstitutionDialog(MainViewUnderlay.MapBase))
+			{
+				if (f.ShowDialog() == DialogResult.OK)
+				{
+					MainViewOverlay.SubstituteTileparts(f.src, f.dst);
+				}
+			}
+		}
+
 
 		/// <summary>
 		/// Opens the Configuration Editor.
@@ -2973,14 +2990,15 @@ namespace MapView
 
 					if (@base != null)
 					{
-						miSaveAll   .Enabled =
-						miSaveMap   .Enabled =
-						miSaveRoutes.Enabled =
-						miExport    .Enabled =
-						miReload    .Enabled =
-						miScreenshot.Enabled =
-						miModifySize.Enabled =
-						miMapInfo   .Enabled = true;
+						miSaveAll             .Enabled =
+						miSaveMap             .Enabled =
+						miSaveRoutes          .Enabled =
+						miExport              .Enabled =
+						miReload              .Enabled =
+						miScreenshot          .Enabled =
+						miModifySize          .Enabled =
+						miTileslotSubstitution.Enabled =
+						miMapInfo             .Enabled = true;
 
 						MainViewOverlay.FirstClick = false;
 
