@@ -33,15 +33,14 @@ namespace MapView
 		{
 			if (DialogResult == DialogResult.OK)
 			{
-				e.Cancel = String.IsNullOrEmpty(tb_Src.Text)
-						|| String.IsNullOrEmpty(tb_Dst.Text)
-						|| !Int32.TryParse(tb_Src.Text, out src)
-						|| !Int32.TryParse(tb_Dst.Text, out dst)
-						|| src < 0 || src >= _base.Parts.Count
-						|| dst < 0 || dst >= _base.Parts.Count
-						|| src == dst;
-
-				if (e.Cancel)
+				if (e.Cancel =  String.IsNullOrEmpty(tb_Src.Text)
+							|| (String.IsNullOrEmpty(tb_Dst.Text) && !cb_Clear.Checked)
+							||  !Int32.TryParse(tb_Src.Text, out src)
+							|| (!Int32.TryParse(tb_Dst.Text, out dst) && !cb_Clear.Checked)
+							||   src < 0 || src >= _base.Parts.Count
+							|| ((dst < 0 || dst >= _base.Parts.Count) && !cb_Clear.Checked)
+							|| (src == dst && !cb_Clear.Checked))
+				{
 					MessageBox.Show(
 								this,
 								"Darth Vader lives.",
@@ -50,19 +49,30 @@ namespace MapView
 								MessageBoxIcon.Error,
 								MessageBoxDefaultButton.Button1,
 								0);
+				}
 			}
 		}
 		#endregion Events (override)
 
 
+		#region Events
+		private void OnClearChanged(object sender, EventArgs e)
+		{
+			tb_Dst.Enabled = !cb_Clear.Checked;
+		}
+		#endregion Events
+
+
 
 		#region Designer
 		private System.ComponentModel.Container components = null;
-		private System.Windows.Forms.Label la_Src;
-		private System.Windows.Forms.TextBox tb_Src;
-		private System.Windows.Forms.Label la_Dst;
-		private System.Windows.Forms.TextBox tb_Dst;
-		private System.Windows.Forms.Button bt_Ok;
+
+		private Label la_Src;
+		private TextBox tb_Src;
+		private Label la_Dst;
+		private TextBox tb_Dst;
+		private Button bt_Ok;
+		internal CheckBox cb_Clear;
 
 
 		/// <summary>
@@ -87,6 +97,7 @@ namespace MapView
 			this.la_Dst = new System.Windows.Forms.Label();
 			this.tb_Dst = new System.Windows.Forms.TextBox();
 			this.bt_Ok = new System.Windows.Forms.Button();
+			this.cb_Clear = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// la_Src
@@ -110,12 +121,12 @@ namespace MapView
 			// 
 			// la_Dst
 			// 
-			this.la_Dst.Location = new System.Drawing.Point(5, 55);
+			this.la_Dst.Location = new System.Drawing.Point(5, 57);
 			this.la_Dst.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Dst.Name = "la_Dst";
-			this.la_Dst.Size = new System.Drawing.Size(170, 20);
+			this.la_Dst.Size = new System.Drawing.Size(70, 15);
 			this.la_Dst.TabIndex = 2;
-			this.la_Dst.Text = "to setId";
+			this.la_Dst.Text = "to setId or";
 			this.la_Dst.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tb_Dst
@@ -134,14 +145,26 @@ namespace MapView
 			this.bt_Ok.Margin = new System.Windows.Forms.Padding(0);
 			this.bt_Ok.Name = "bt_Ok";
 			this.bt_Ok.Size = new System.Drawing.Size(65, 25);
-			this.bt_Ok.TabIndex = 4;
+			this.bt_Ok.TabIndex = 5;
 			this.bt_Ok.Text = "Ok";
 			this.bt_Ok.UseVisualStyleBackColor = true;
+			// 
+			// cb_Clear
+			// 
+			this.cb_Clear.Location = new System.Drawing.Point(85, 55);
+			this.cb_Clear.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_Clear.Name = "cb_Clear";
+			this.cb_Clear.Size = new System.Drawing.Size(55, 20);
+			this.cb_Clear.TabIndex = 4;
+			this.cb_Clear.Text = "clear";
+			this.cb_Clear.UseVisualStyleBackColor = true;
+			this.cb_Clear.CheckedChanged += new System.EventHandler(this.OnClearChanged);
 			// 
 			// TileslotSubstitutionDialog
 			// 
 			this.AcceptButton = this.bt_Ok;
 			this.ClientSize = new System.Drawing.Size(194, 106);
+			this.Controls.Add(this.cb_Clear);
 			this.Controls.Add(this.bt_Ok);
 			this.Controls.Add(this.tb_Dst);
 			this.Controls.Add(this.la_Dst);

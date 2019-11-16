@@ -1682,6 +1682,9 @@ namespace MapView
 			{
 				if (f.ShowDialog() == DialogResult.OK)
 				{
+					if (f.cb_Clear.Checked)
+						f.dst = -1;
+
 					MainViewOverlay.SubstituteTileparts(f.src, f.dst);
 				}
 			}

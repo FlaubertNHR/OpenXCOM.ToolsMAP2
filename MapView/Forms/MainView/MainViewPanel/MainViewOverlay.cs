@@ -574,10 +574,10 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// 
+		/// Replaces tileparts throughout the current Mapfile.
 		/// </summary>
-		/// <param name="src">setId of tile to replace</param>
-		/// <param name="dst">setId of other tile</param>
+		/// <param name="src">setId of part to replace</param>
+		/// <param name="dst">setId of other part (-1 to null the tileslots)</param>
 		internal void SubstituteTileparts(int src, int dst)
 		{
 			MainView.MapChanged = true;
@@ -594,25 +594,37 @@ namespace MapView.Forms.MainView
 				if ((part = tile.Floor) != null
 					&& part.SetId == src)
 				{
-					tile.Floor = MapBase.Parts[dst];
+					if (dst != -1)
+						tile.Floor = MapBase.Parts[dst];
+					else
+						tile.Floor = null;
 				}
 
 				if ((part = tile.West) != null
 					&& part.SetId == src)
 				{
-					tile.West = MapBase.Parts[dst];
+					if (dst != -1)
+						tile.West = MapBase.Parts[dst];
+					else
+						tile.West = null;
 				}
 
 				if ((part = tile.North) != null
 					&& part.SetId == src)
 				{
-					tile.North = MapBase.Parts[dst];
+					if (dst != -1)
+						tile.North = MapBase.Parts[dst];
+					else
+						tile.North = null;
 				}
 
 				if ((part = tile.Content) != null
 					&& part.SetId == src)
 				{
-					tile.Content = MapBase.Parts[dst];
+					if (dst != -1)
+						tile.Content = MapBase.Parts[dst];
+					else
+						tile.Content = null;
 				}
 			}
 
