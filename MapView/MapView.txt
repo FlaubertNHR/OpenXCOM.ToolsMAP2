@@ -1,6 +1,6 @@
 MapView ii
 
-2019 nov 16
+2019 dec 16
 
 major rewrite of the original MapView by Ben Ratzlaff aka DaiShiva (and others)
 

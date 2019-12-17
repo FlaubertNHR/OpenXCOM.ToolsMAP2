@@ -96,10 +96,10 @@ namespace McdView
 				McdviewF f,
 				CopierF fcopier = null)
 		{
-			_f     = f;
+			_f       = f;
 			_fcopier = fcopier;	// prevent the Copier from borking out during its initial
 								// OnResize events when it tries to get a 'SelId' from 'CopierF'.
-								// That is, '_fcopy' is irrelevant to instantiations of
+								// That is, '_fcopier' is irrelevant to instantiations of
 								// 'TerrainPanel_main'; is used only by 'TerrainPanel_copier'.
 
 			SetStyle(ControlStyles.Selectable, true);
@@ -240,14 +240,16 @@ namespace McdView
 
 				int offset = -Scroller.Value;
 
-				int i, spriteId;
+				int i, spriteId, x;
 				for (i = 0; i != Parts.Length; ++i)
 				{
+					x = i * XCImage.SpriteWidth32 + i + offset;
+
 					if (i != 0)
 						_graphics.DrawLine( // draw vertical line before each sprite except the first sprite
 										Colors.PenControl,
-										i * XCImage.SpriteWidth32 + i + offset, 0,
-										i * XCImage.SpriteWidth32 + i + offset, Height);
+										x, 0,
+										x, Height);
 
 					if (Spriteset != null && Spriteset.Count != 0)
 					{
@@ -258,13 +260,14 @@ namespace McdView
 						{
 							DrawSprite(
 									sprite,
-									i * XCImage.SpriteWidth32 + i + offset,
-									y1_sprite - part.Record.TileOffset);
+									x,
+									y1_sprite,
+									part.Record.TileOffset);
 						}
 						else
 							_graphics.FillRectangle(
 												Colors.BrushInvalid,
-												i * XCImage.SpriteWidth32 + i + offset,
+												x,
 												y1_sprite,
 												XCImage.SpriteWidth32,
 												XCImage.SpriteHeight40);
@@ -325,7 +328,8 @@ namespace McdView
 								DrawSprite(
 										sprite,
 										i * XCImage.SpriteWidth32 + i + offset,
-										y2_sprite - part.Dead.Record.TileOffset);
+										y2_sprite,
+										part.Dead.Record.TileOffset);
 							}
 							else
 								_graphics.FillRectangle(
@@ -357,7 +361,8 @@ namespace McdView
 								DrawSprite(
 										sprite,
 										i * XCImage.SpriteWidth32 + i + offset,
-										y3_sprite - part.Altr.Record.TileOffset);
+										y3_sprite,
+										part.Altr.Record.TileOffset);
 							}
 							else
 								_graphics.FillRectangle(
@@ -378,10 +383,12 @@ namespace McdView
 		/// <param name="sprite"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
+		/// <param name="topcrop"></param>
 		private void DrawSprite(
 				Image sprite,
 				int x,
-				int y)
+				int y,
+				int topcrop)
 		{
 			_graphics.DrawImage(
 							sprite,
@@ -389,7 +396,7 @@ namespace McdView
 										x, y,
 										XCImage.SpriteWidth32,
 										XCImage.SpriteHeight40),
-							0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+							0, topcrop, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 							GraphicsUnit.Pixel,
 							_attri);
 		}
@@ -414,8 +421,8 @@ namespace McdView
 					range = 0;
 			}
 
-			Scroller.Maximum =  range;
-			Scroller.Enabled = (range != 0);
+			Scroller.Maximum = range;
+			Scroller.Enabled = range != 0;
 
 			if (Scroller.Enabled
 				&& TableWidth < Width + Scroller.Value)
