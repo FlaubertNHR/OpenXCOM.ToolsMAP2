@@ -608,7 +608,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Helper for DrawNodeImportanceMeters().
+		/// Helper for DrawNodeMeters().
 		/// </summary>
 		/// <param name="infoboxX"></param>
 		/// <param name="infoboxY"></param>
