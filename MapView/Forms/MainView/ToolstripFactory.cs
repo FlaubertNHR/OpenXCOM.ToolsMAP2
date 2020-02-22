@@ -76,7 +76,7 @@ namespace MapView.Forms.MainView
 
 			// SearchClear btn
 			_tsbSearchClear.Name         = "tsbSearchClear";
-			_tsbSearchClear.ToolTipText  = "reset hilight";
+			_tsbSearchClear.ToolTipText  = "clear tree hilight";
 			_tsbSearchClear.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			_tsbSearchClear.Image        = Resources.delete;
 			_tsbSearchClear.Click       += OnClearHighlightClick;
