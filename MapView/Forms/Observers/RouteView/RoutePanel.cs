@@ -698,9 +698,20 @@ namespace MapView.Forms.Observers
 			MapTile tile = GetTile(ref x, ref y); // x/y -> tile-location
 			if (tile != null)
 			{
-				string textTile2 =   "c " + (x + 1)
-								 + "  r " + (y + 1)
-								 + "  L " + (MapFile.MapSize.Levs - MapFile.Level); // 1-based count, level is inverted.
+//				string textTile2 =   "c " + (x + 1)
+//								 + "  r " + (y + 1)
+//								 + "  L " + (MapFile.MapSize.Levs - MapFile.Level); // 1-based count, level is inverted.
+
+				int c = x;
+				int r = y;
+				int l = MapFile.MapSize.Levs - MapFile.Level;
+
+				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+				if (!MainViewF.Optionables.Base1_z) { --l; }
+
+				string textTile2 =   "c " + c
+								 + "  r " + r
+								 + "  L " + l;
 
 				int textWidth1 = (int)_graphics.MeasureString(textTile1, _fontOverlay).Width;
 				int textWidth2 = (int)_graphics.MeasureString(textTile2, _fontOverlay).Width;
