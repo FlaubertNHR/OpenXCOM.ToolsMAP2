@@ -1013,7 +1013,7 @@ namespace MapView
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			//LogFile.WriteLine("ProcessCmdKey() " + keyData);
+			//LogFile.WriteLine("MainViewF.ProcessCmdKey() " + keyData);
 
 			bool invalidate = false;
 			bool focusearch = false;
@@ -1094,7 +1094,7 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("OnKeyDown() " + e.KeyData);
+			//LogFile.WriteLine("MainViewF.OnKeyDown() " + e.KeyData);
 
 			string key; object val = null;
 			ToolStripMenuItem it = null;
@@ -1103,21 +1103,20 @@ namespace MapView
 			switch (e.KeyData)
 			{
 				case Keys.Space: // open Context
-					e.SuppressKeyPress = true;
-
 					if (MapTree.Focused && _selected != null)
 					{
+						e.SuppressKeyPress = true;
+
 						_dontbeeptype = DontBeepType.OpenContext;
 						BeginInvoke(DontBeepEvent);
 					}
 					break;
 
 				case Keys.Enter: // load Descriptor (do NOT reload)
-					e.SuppressKeyPress = true;
-
-					if (MapTree.Focused
-						&& _selected != null)
+					if (MapTree.Focused && _selected != null)
 					{
+						e.SuppressKeyPress = true;
+
 						if (_selected.Level == TREELEVEL_TILESET)
 						{
 							var descriptor = _selected.Tag as Descriptor;
@@ -1138,12 +1137,12 @@ namespace MapView
 					break;
 
 				case Keys.Shift | Keys.Enter: // open MapBrowserDialog
-					e.SuppressKeyPress = true;
-
 					if (MapTree.Focused
 						&& _selected != null
 						&& _selected.Level == TREELEVEL_TILESET)
 					{
+						e.SuppressKeyPress = true;
+
 						var descriptor = _selected.Tag as Descriptor;
 						if (MapFileService.MapfileExists(descriptor) == null)
 						{

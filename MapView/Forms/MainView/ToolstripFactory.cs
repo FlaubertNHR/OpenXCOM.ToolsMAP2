@@ -392,7 +392,9 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		void OnSearchKeyPress(object sender, KeyPressEventArgs e)
 		{
-			if (e.KeyChar == (char)Keys.Enter)
+			//DSShared.LogFile.WriteLine("ToolstripFactory.OnSearchKeyPress() " + e.KeyChar);
+			if (e.KeyChar == (char)Keys.Enter
+				&& Control.ModifierKeys == Keys.None)
 			{
 				MainViewF.that.Search(_tstbSearch.Text);
 				e.Handled = true;
