@@ -575,6 +575,39 @@ namespace MapView.Forms.MainView
 			get { return _png_notGif; }
 			set { _png_notGif = value; }
 		}
+
+
+
+		private const string cat_Global = "Global";
+
+		private const string str_Base1_xy = "Base1_xy";
+		private const bool   def_Base1_xy = false;
+
+		private bool _base1_xy = def_Base1_xy;
+		[Category(cat_Global)]
+		[Description("If true the printed position of rows and cols starts at 1"
+			+ " instead of 0")]
+		[DefaultValue(def_Base1_xy)]
+		public bool Base1_xy
+		{
+			get { return _base1_xy; }
+			set { _base1_xy = value; }
+		}
+
+
+		private const string str_Base1_z = "Base1_z";
+		private const bool   def_Base1_z = false;
+
+		private bool _base1_z = def_Base1_z;
+		[Category(cat_Global)]
+		[Description("If true the printed position of the level starts at 1"
+			+ " instead of 0")]
+		[DefaultValue(def_Base1_z)]
+		public bool Base1_z
+		{
+			get { return _base1_z; }
+			set { _base1_z = value; }
+		}
 		#endregion Properties (optionable)
 
 
@@ -603,6 +636,7 @@ namespace MapView.Forms.MainView
 			OptionChangedEvent changer1 = OnFlagChanged;
 			OptionChangedEvent changer2 = OnSpriteStateChanged;
 			OptionChangedEvent changer3 = OnSpriteShadeChanged;
+			OptionChangedEvent changer4 = OnPositionCountTypeChanged;
 
 			options.AddOptionDefault(str_StartTileView,          def_StartTileView,          changer1);
 			options.AddOptionDefault(str_StartTopView,           def_StartTopView,           changer1);
@@ -633,6 +667,9 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_BackgroundColor,        def_BackgroundColor,        changer1);
 			options.AddOptionDefault(str_CropBackground,         def_CropBackground,         changer1);
 			options.AddOptionDefault(str_Png_notGif,             def_Png_notGif,             changer1);
+
+			options.AddOptionDefault(str_Base1_xy,               def_Base1_xy,               changer4);
+			options.AddOptionDefault(str_Base1_z,                def_Base1_z,                changer4);
 		}
 		#endregion Methods
 
@@ -836,6 +873,23 @@ namespace MapView.Forms.MainView
 
 			if (MainViewF.ScanG != null)
 				MainViewF.ScanG.InvalidatePanel();
+		}
+
+		private void OnPositionCountTypeChanged(string key, object val)
+		{
+			switch (key)
+			{
+				case str_Base1_xy:
+					Base1_xy = (bool)val;
+					break;
+
+				case str_Base1_z:
+					Base1_z = (bool)val;
+					break;
+			}
+
+			// TODO: refesh all position prints ...
+			MainViewF.that.sb_PrintPosition();
 		}
 
 		/// <summary>

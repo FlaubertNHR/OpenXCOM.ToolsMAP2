@@ -102,10 +102,8 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Adds an Option to a specified target.
+		/// Adds an Option w/ a default value.
 		/// @note There is no error-handling so don't foff it.
-		/// @note Only one of 'changer' or 'target' should be specified;
-		/// 'changer' takes precedence over 'target'.
 		/// </summary>
 		/// <param name="key">property key</param>
 		/// <param name="default">default value of the property</param>
