@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the mutons")]
 [assembly: AssemblyProduct("RulesetConverter")]
-[assembly: AssemblyCopyright("2019")]
+[assembly: AssemblyCopyright("2019-2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
