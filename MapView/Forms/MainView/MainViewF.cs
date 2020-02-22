@@ -1689,6 +1689,39 @@ namespace MapView
 			}
 		}
 
+		private void OnClearRecordsExceededClick(object sender, EventArgs e)
+		{
+			int count = 0;
+
+			foreach (var @group in TileGroupManager.TileGroups)
+			foreach (var category in @group.Value.Categories)
+			foreach (var descriptor in category.Value.Values)
+			if (descriptor.BypassRecordsExceeded)
+			{
+				descriptor.BypassRecordsExceeded = false;
+				++count;
+			}
+
+			string info;
+			if (count != 0)
+			{
+				if (!MainViewF.that.MaptreeChanged)
+					MainViewF.that.MaptreeChanged = true;
+
+				if (count == 1) info = count + " flag cleared.";
+				else            info = count + " flags cleared.";
+			}
+			else
+				info = "There were no flags set.";
+
+			using (var dialog = new Infobox(
+										"flags cleared",
+										info))
+			{
+				dialog.ShowDialog(this);
+			}
+		}
+
 
 		/// <summary>
 		/// Opens the Configuration Editor.
