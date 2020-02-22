@@ -438,11 +438,24 @@ namespace MapView.Forms.Observers
 				selected += Environment.NewLine;
 
 				MapLocation loc = MapBase.Location;
+//				selected += String.Format(
+//										System.Globalization.CultureInfo.InvariantCulture,
+//										"c {0}  r {1}  L {2}",
+//										loc.Col + 1, loc.Row + 1,
+//										MapFile.MapSize.Levs - level); // 1-based count, level is inverted.
+
+				int c = loc.Col;
+				int r = loc.Row;
+				int l = MapFile.MapSize.Levs - level;
+
+				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+				if (!MainViewF.Optionables.Base1_z) { --l; }
+
 				selected += String.Format(
 										System.Globalization.CultureInfo.InvariantCulture,
 										"c {0}  r {1}  L {2}",
-										loc.Col + 1, loc.Row + 1,
-										MapFile.MapSize.Levs - level); // 1-based count, level is inverted.
+										c,r,l);
+
 				lblSelected.Text = selected;
 				lblSelected.Refresh(); // fast update.
 			}
@@ -465,10 +478,22 @@ namespace MapView.Forms.Observers
 			if (loc.X != -1)
 			{
 				info += Environment.NewLine;
+//				info += String.Format(
+//									System.Globalization.CultureInfo.InvariantCulture,
+//									"c {0}  r {1}  L {2}",
+//									loc.X + 1, loc.Y + 1, MapFile.MapSize.Levs - MapBase.Level); // 1-based count, level is inverted.
+
+				int c = loc.X;
+				int r = loc.Y;
+				int l = MapFile.MapSize.Levs - MapBase.Level;
+
+				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+				if (!MainViewF.Optionables.Base1_z) { --l; }
+
 				info += String.Format(
 									System.Globalization.CultureInfo.InvariantCulture,
 									"c {0}  r {1}  L {2}",
-									loc.X + 1, loc.Y + 1, MapFile.MapSize.Levs - MapBase.Level); // 1-based count, level is inverted.
+									c,r,l);
 			}
 
 			lblOver.Text = info;

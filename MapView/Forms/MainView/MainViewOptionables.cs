@@ -890,6 +890,8 @@ namespace MapView.Forms.MainView
 
 			// TODO: refesh all position prints ...
 			MainViewF.that.sb_PrintPosition();
+			ObserverManager.RouteView   .Control     .PrintSelectedInfo();
+			ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
 		}
 
 		/// <summary>
