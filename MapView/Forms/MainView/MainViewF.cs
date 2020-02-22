@@ -2987,7 +2987,8 @@ namespace MapView
 					var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
 															descriptor,
 															ref treechanged,
-															find);
+															find,
+															Optionables.IgnoreRecordsExceeded);
 					if (treechanged) MaptreeChanged = true;
 
 					if (@base != null)

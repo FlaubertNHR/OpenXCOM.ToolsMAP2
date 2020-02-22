@@ -50,11 +50,14 @@ namespace XCom
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
 		/// <param name="find">true to force the find file dialog</param>
+		/// <param name="ignoreRecordsExceeded">true to bypass a potential
+		/// RecordsExceeded warning dialog</param>
 		/// <returns>null if things go south</returns>
 		public static MapFileBase LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
-				bool find = false)
+				bool find,
+				bool ignoreRecordsExceeded)
 		{
 			string pfe = MapfileExists(descriptor);
 
@@ -124,7 +127,8 @@ namespace XCom
 
 				if (partset.Count != 0)
 				{
-					if (!descriptor.BypassRecordsExceeded && partset.Count > MAX_MCDRECORDS) // issue warning ->
+					if (!ignoreRecordsExceeded && !descriptor.BypassRecordsExceeded // issue warning ->
+						&& partset.Count > MAX_MCDRECORDS)
 					{
 						string text = String.Empty;
 
