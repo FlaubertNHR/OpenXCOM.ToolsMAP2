@@ -1074,7 +1074,7 @@ namespace MapView.Forms.Observers
 			this.btnTallyho.Name = "btnTallyho";
 			this.btnTallyho.Size = new System.Drawing.Size(20, 120);
 			this.btnTallyho.TabIndex = 4;
-			this.btnTallyho.Text = "tally";
+			this.btnTallyho.Text = "t\r\na\r\nll\r\ny";
 			this.btnTallyho.UseVisualStyleBackColor = true;
 			this.btnTallyho.Click += new System.EventHandler(this.OnTallyhoClick);
 			// 
