@@ -319,9 +319,10 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		private string FormatTilequad(int c, int r, int l, QuadrantType quad)
 		{
-			c += 1;							// 1-based count
-			r += 1;							// 1-based count
-			l = MapBase.MapSize.Levs - l;	// invert.
+			l = MapBase.MapSize.Levs - l; // invert.
+
+			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+			if (!MainViewF.Optionables.Base1_z) { --l; }
 
 			string c1 = c.ToString().PadLeft(DIGITS);
 			string r1 = r.ToString().PadLeft(DIGITS);
