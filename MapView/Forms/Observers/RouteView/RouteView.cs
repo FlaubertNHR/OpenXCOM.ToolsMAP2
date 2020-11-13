@@ -1471,16 +1471,22 @@ namespace MapView.Forms.Observers
 
 				SpotGoDestination(slot); // highlight back to the startnode.
 			}
-			else if (RouteCheckService.ShowInvalid(MapFile, node) == DialogResult.Yes)
+			else
 			{
-				RouteChanged = true;
+				RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
+				RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
-				if (RoutesInfo != null)
-					RoutesInfo.DeleteNode(node);
+				if (RouteCheckService.dialog_InvalidNode(MapFile, node) == DialogResult.Yes)
+				{
+					RouteChanged = true;
 
-				MapFile.Routes.DeleteNode(node);
-				UpdateNodeInfo();
-				// TODO: May need _pnlRoutes.Refresh()
+					if (RoutesInfo != null)
+						RoutesInfo.DeleteNode(node);
+
+					MapFile.Routes.DeleteNode(node);
+					UpdateNodeInfo();
+					// TODO: May need _pnlRoutes.Refresh()
+				}
 			}
 
 			RoutePanel.Select();
@@ -1956,6 +1962,9 @@ namespace MapView.Forms.Observers
 							MapFile.Routes = routes;
 							MapFile.SetupRouteNodes();
 
+							RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
+							RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
+
 							if (RouteCheckService.CheckNodeBounds(MapFile) == DialogResult.Yes)
 							{
 								foreach (RouteNode node in RouteCheckService.Invalids)
@@ -2200,6 +2209,9 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnTestPositionsClick(object sender, EventArgs e)
 		{
+			RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
+			RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
+
 			if (RouteCheckService.CheckNodeBounds(MapFile, true) == DialogResult.Yes)
 			{
 				RouteChanged = true;

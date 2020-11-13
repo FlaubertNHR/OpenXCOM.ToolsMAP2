@@ -20,6 +20,18 @@ namespace XCom
 		{
 			get { return _invalids; }
 		}
+
+		/// <summary>
+		/// Holds the MainView option "Base1_xy" for use here.
+		/// </summary>
+		public static bool Base1_xy
+		{ internal get; set; }
+
+		/// <summary>
+		/// Holds the MainView option "Base1_z" for use here.
+		/// </summary>
+		public static bool Base1_z
+		{ internal get; set; }
 		#endregion Properties (static)
 
 
@@ -30,7 +42,7 @@ namespace XCom
 		/// <param name="file"></param>
 		/// <param name="node">the node to delete</param>
 		/// <returns>true if user chooses to delete out-of-bounds node</returns>
-		public static DialogResult ShowInvalid(MapFile file, RouteNode node)
+		public static DialogResult dialog_InvalidNode(MapFile file, RouteNode node)
 		{
 			using (var f = new RouteCheckInfobox())
 			{
@@ -52,18 +64,16 @@ namespace XCom
 		/// outside of a Map's x/y/z bounds.
 		/// </summary>
 		/// <param name="file"></param>
-		/// <param name="ludi">true if user-invoked</param>
+		/// <param name="userinvoked">true if user-invoked</param>
 		/// <returns>DialogResult.Yes if user opts to clear invalid nodes</returns>
-		public static DialogResult CheckNodeBounds(MapFile file, bool ludi = false)
+		public static DialogResult CheckNodeBounds(MapFile file, bool userinvoked = false)
 		{
-			Invalids.Clear();
-
 			if ((_file = file) != null)
 			{
-				if ((_count = DeterInvalidNodes()) != 0)
-					return ShowInvalids();
+				if ((_count = ListInvalidNodes()) != 0)
+					return dialog_InvalidNodes();
 
-				if (ludi)
+				if (userinvoked)
 					MessageBox.Show(
 								"There are no Out of Bounds nodes detected.",
 								" Good stuff, Magister Ludi",
@@ -79,8 +89,10 @@ namespace XCom
 		/// Fills the list with any invalid nodes.
 		/// </summary>
 		/// <returns>count of invalid nodes</returns>
-		private static int DeterInvalidNodes()
+		private static int ListInvalidNodes()
 		{
+			Invalids.Clear();
+
 			foreach (RouteNode node in _file.Routes)
 			{
 				if (RouteNodeCollection.IsNodeOutsideMapBounds(
@@ -96,10 +108,12 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Opens a dialog to delete the invalid nodes.
+		/// Opens a dialog to delete the invalid nodes. NOTE: Always update
+		/// 'Base1_xy' and 'Base1_z' with user's current MainView options before
+		/// calling this funct.
 		/// </summary>
 		/// <returns>DialogResult.Yes if user opts to clear invalid nodes</returns>
-		private static DialogResult ShowInvalids()
+		private static DialogResult dialog_InvalidNodes()
 		{
 			using (var f = new RouteCheckInfobox())
 			{
@@ -134,19 +148,25 @@ namespace XCom
 					}
 					text += node.Index + " :  c ";
 
-					loc = (byte)(node.Col + 1);
+					loc = node.Col;
+					if (Base1_xy) ++loc;
+
 					if (loc < 10)
 						text += " ";
 
 					text += loc + "  r ";
 
-					loc = (byte)(node.Row + 1);
+					loc = node.Row;
+					if (Base1_z) ++loc;
+
 					if (loc < 10)
 						text += " ";
 
 					text += loc + "  L ";
 
 					loc = (byte)(_file.MapSize.Levs - node.Lev);
+					if (!Base1_z) --loc;
+
 					if (loc < 10)
 						text += "  ";
 					else if (loc < 100)

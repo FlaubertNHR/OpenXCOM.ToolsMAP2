@@ -1617,7 +1617,8 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						RouteCheckService.Invalids.Clear(); // safety.
+						RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
+						RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
 						int changes = @base.MapResize(
 													f.Rows,
@@ -3087,6 +3088,9 @@ namespace MapView
 							MenuManager.StartSecondaryStageBoosters();
 
 						ObserverManager.SetObservers(@base); // reset all observer events
+
+						RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
+						RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
 						if (RouteCheckService.CheckNodeBounds(@base as MapFile) == DialogResult.Yes)
 						{

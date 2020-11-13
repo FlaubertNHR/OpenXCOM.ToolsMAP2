@@ -170,13 +170,22 @@ namespace XCom
 
 		/// <summary>
 		/// Gets the location of this node as a string. This funct inverts the
-		/// z-level for readability (which is the policy in Mapview II).
+		/// z-level for readability (which is the policy in Mapview II). NOTE:
+		/// Always update 'Base1_xy' and 'Base1_z' with user's current MainView
+		/// options before calling this funct.
 		/// </summary>
 		/// <param name="levels">the quantity of z-levels of the Map</param>
-		/// <returns></returns>
+		/// <returns>the location of this node as a string</returns>
 		public string GetLocationString(int levels)
 		{
-			return ("c " + (Col + 1) + "  r " + (Row + 1) + "  L " + ((byte)(levels - Lev)));
+			byte c = Col;
+			byte r = Row;
+			byte l = (byte)(levels - Lev);
+
+			if (RouteCheckService.Base1_xy) { ++c; ++r; }
+			if (!RouteCheckService.Base1_z) { --l; }
+
+			return ("c " + c + "  r " + r + "  L " + l);
 		}
 		#endregion Methods
 
