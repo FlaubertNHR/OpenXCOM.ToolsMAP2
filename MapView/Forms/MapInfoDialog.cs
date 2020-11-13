@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using MapView.Forms.MainView;
+
 using XCom;
 
 
@@ -21,7 +23,6 @@ namespace MapView
 
 		#region Fields
 		private readonly MainViewF _f;
-		private readonly MapFile _file;
 
 		private readonly HashSet<int> _sprites = new HashSet<int>();
 		private readonly HashSet<int> _records = new HashSet<int>();
@@ -29,25 +30,29 @@ namespace MapView
 		private readonly HashSet<Tuple<string, int>> _used =
 					 new HashSet<Tuple<string, int>>();
 
+		private MapFile _file;
+
 		internal MapInfoDetailDialog _fdetail;
 		#endregion Fields
 
 
 		#region cTor
-		internal MapInfoDialog(MainViewF f, MapFile file)
+		internal MapInfoDialog(MainViewF f)
 		{
 			InitializeComponent();
 
 			_f = f;
-			_file = file;
-
-			Text = "MapInfo - " + _file.Descriptor.Label;
 
 			if (_x == -1) _x = _f.Left + _f.Width  / 2 - Width  / 2;
 			if (_y == -1) _y = _f.Top  + _f.Height / 2 - Height / 2 - 10;
 
 			Left = _x;
 			Top  = _y;
+
+			Visible = true;
+			Analyze();
+
+			btnCancel.Select();
 		}
 		#endregion cTor
 
@@ -75,6 +80,11 @@ namespace MapView
 
 
 		#region Events
+		private void click_btnRefresh(object sender, EventArgs e)
+		{
+			Analyze();
+		}
+
 		// TODO:
 		// - MapDetail		(Terrains in the Tileset: label + count)
 		// - RouteDetail	(routenodes, spawnnodes + ranks, attacknodes in the Tileset or Category)
@@ -131,8 +141,20 @@ namespace MapView
 
 
 		#region Methods
-		internal void Analyze()
+		private void Analyze()
 		{
+			if (_fdetail != null)
+				_fdetail.Close();
+
+			gbAnalyze .Visible = true;
+			btnRefresh.Visible =
+			btnDetail .Visible =
+			btnCancel .Visible = false;
+
+			_file = MainViewUnderlay.that.MapBase as MapFile;
+
+			Text = "MapInfo - " + _file.Descriptor.Label;
+
 			gbInfo.Text = " " + _file.Descriptor.Label + " ";
 
 			int cols = _file.MapSize.Cols;
@@ -218,9 +240,10 @@ namespace MapView
 			pct = Math.Round(100.0 * (double)vacant / pBar.Maximum, 2);
 			lbl2_TilesVacant.Text = vacant + " of " + pBar.Maximum + " - " + pct.ToString("N2") + "%";
 
-			gbAnalyze.Visible = false;
-			btnDetail.Visible =
-			btnCancel.Visible = true;
+			gbAnalyze .Visible = false;
+			btnRefresh.Visible =
+			btnDetail .Visible =
+			btnCancel .Visible = true;
 		}
 
 		private void tally(Tilepart part)
@@ -293,10 +316,12 @@ namespace MapView
 		private Label lbl2_QuadsFilled;
 		private Label lbl1_TilesVacant;
 		private Label lbl2_TilesVacant;
-		private GroupBox gbAnalyze;
-		private ProgressBar pBar;
-		private Button btnCancel;
+		private Button btnRefresh;
 		private Button btnDetail;
+		private Button btnCancel;
+
+		private ProgressBar pBar;
+		private GroupBox gbAnalyze;
 
 
 		/// <summary>
@@ -331,6 +356,7 @@ namespace MapView
 			this.lbl2_TilesVacant = new System.Windows.Forms.Label();
 			this.pBar = new System.Windows.Forms.ProgressBar();
 			this.gbAnalyze = new System.Windows.Forms.GroupBox();
+			this.btnRefresh = new System.Windows.Forms.Button();
 			this.btnDetail = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.gbInfo = new System.Windows.Forms.GroupBox();
@@ -457,8 +483,21 @@ namespace MapView
 			this.gbAnalyze.Name = "gbAnalyze";
 			this.gbAnalyze.Padding = new System.Windows.Forms.Padding(5, 0, 5, 5);
 			this.gbAnalyze.Size = new System.Drawing.Size(336, 44);
-			this.gbAnalyze.TabIndex = 12;
+			this.gbAnalyze.TabIndex = 1;
 			this.gbAnalyze.TabStop = false;
+			// 
+			// btnRefresh
+			// 
+			this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnRefresh.Location = new System.Drawing.Point(7, 126);
+			this.btnRefresh.Margin = new System.Windows.Forms.Padding(0);
+			this.btnRefresh.Name = "btnRefresh";
+			this.btnRefresh.Size = new System.Drawing.Size(85, 20);
+			this.btnRefresh.TabIndex = 12;
+			this.btnRefresh.Text = "refresh";
+			this.btnRefresh.UseVisualStyleBackColor = true;
+			this.btnRefresh.Visible = false;
+			this.btnRefresh.Click += new System.EventHandler(this.click_btnRefresh);
 			// 
 			// btnDetail
 			// 
@@ -501,6 +540,7 @@ namespace MapView
 			this.gbInfo.Controls.Add(this.lbl2_QuadsFilled);
 			this.gbInfo.Controls.Add(this.lbl1_TilesVacant);
 			this.gbInfo.Controls.Add(this.lbl2_TilesVacant);
+			this.gbInfo.Controls.Add(this.btnRefresh);
 			this.gbInfo.Controls.Add(this.btnDetail);
 			this.gbInfo.Controls.Add(this.btnCancel);
 			this.gbInfo.Controls.Add(this.gbAnalyze);

@@ -1944,9 +1944,7 @@ namespace MapView
 				if (MainViewUnderlay.MapBase != null) // safety.
 				{
 					miMapInfo.Checked = true;
-					_finfo = new MapInfoDialog(this, MainViewUnderlay.MapBase as MapFile);
-					_finfo.Show(); // no owner.
-					_finfo.Analyze();
+					_finfo = new MapInfoDialog(this);
 				}
 			}
 			else
