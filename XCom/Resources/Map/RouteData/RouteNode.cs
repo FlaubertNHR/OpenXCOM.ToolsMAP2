@@ -170,9 +170,9 @@ namespace XCom
 
 		/// <summary>
 		/// Gets the location of this node as a string. This funct inverts the
-		/// z-level for readability (which is the policy in Mapview II). NOTE:
-		/// Always update 'Base1_xy' and 'Base1_z' with user's current MainView
-		/// options before calling this funct.
+		/// z-level for readability (which is the policy in Mapview II).
+		/// @note Always update 'Base1_xy' and 'Base1_z' with user's current
+		/// MainView options before calling this funct.
 		/// </summary>
 		/// <param name="levels">the quantity of z-levels of the Map</param>
 		/// <returns>the location of this node as a string</returns>

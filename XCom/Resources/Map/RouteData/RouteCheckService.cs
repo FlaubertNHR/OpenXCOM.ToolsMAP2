@@ -108,9 +108,9 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Opens a dialog to delete the invalid nodes. NOTE: Always update
-		/// 'Base1_xy' and 'Base1_z' with user's current MainView options before
-		/// calling this funct.
+		/// Opens a dialog to delete the invalid nodes.
+		/// @note Always update 'Base1_xy' and 'Base1_z' with user's current
+		/// MainView options before calling this funct.
 		/// </summary>
 		/// <returns>DialogResult.Yes if user opts to clear invalid nodes</returns>
 		private static DialogResult dialog_InvalidNodes()
