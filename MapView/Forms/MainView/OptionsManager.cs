@@ -53,13 +53,13 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Loads options specified by the user.
 		/// </summary>
-		/// <param name="fullpath"></param>
+		/// <param name="pfe"></param>
 		/// <returns></returns>
-		internal static bool LoadUserOptions(string fullpath)
+		internal static bool LoadUserOptions(string pfe)
 		{
-			using (var fs = FileService.OpenFile(fullpath))
+			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
-			using (var sr = new StreamReader(fullpath))
+			using (var sr = new StreamReader(pfe))
 			{
 				KeyvalPair keyval;
 				while ((keyval = Varidia.getKeyvalPair(sr)) != null) // NOTE: These are not keyvals; they are headers in the options file.
