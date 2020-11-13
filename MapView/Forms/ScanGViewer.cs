@@ -83,7 +83,7 @@ namespace MapView
 		{
 			RegistryInfo.UpdateRegistry(this);
 
-			MenuManager.UncheckScanG();
+			MenuManager.DecheckScanG();
 			MainViewF.ScanG = null;
 		}
 

@@ -380,7 +380,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Unchecks the ScanG view item when ScanG view closes.
 		/// </summary>
-		internal static void UncheckScanG()
+		internal static void DecheckScanG()
 		{
 			Viewers.MenuItems[MI_SCANG].Checked = false;
 		}
