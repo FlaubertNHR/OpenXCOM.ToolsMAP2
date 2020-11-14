@@ -916,7 +916,10 @@ namespace MapView.Forms.MainView
 
 			// close the Partslot test dialog (its displayed data has changed)
 			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed)
+			{
 				TopView._finfobox.Close();
+				TopView._finfobox = null;
+			}
 		}
 
 		/// <summary>
