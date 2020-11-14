@@ -991,6 +991,8 @@ namespace MapView
 			if (_fabout  != null) _fabout .Close(); // close About
 			if (_finfo   != null) _finfo  .Close(); // close MapInfo and its Detail dialog
 
+			// NOTE: TopView's PartslotTest dialog is closed when TopView closes.
+
 			if (ObserverManager.TileView.Control.McdInfobox != null)
 				ObserverManager.TileView.Control.McdInfobox.Close(); // close TileView's McdInfo dialog
 
