@@ -37,27 +37,27 @@ namespace MapView.Forms.Observers
 		internal static string West    = "west";
 		internal static string North   = "north";
 		internal static string Content = "content";
-		private  static string Current = "current";
+		private  static string Part    = "part";
 
 		private static int TextWidth_door;
 		private static int TextWidth_floor;
 		private static int TextWidth_west;
 		private static int TextWidth_north;
 		private static int TextWidth_content;
-		private static int TextWidth_current;
+		private static int TextWidth_part;
 
 		private static readonly GraphicsPath _pathFloor   = new GraphicsPath();
 		private static readonly GraphicsPath _pathWest    = new GraphicsPath();
 		private static readonly GraphicsPath _pathNorth   = new GraphicsPath();
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
-		private static readonly GraphicsPath _pathCurrent = new GraphicsPath();
+		private static readonly GraphicsPath _pathPart    = new GraphicsPath();
 
-		internal const int DUOTONE_ERASER  = 0;
-		private  const int DUOTONE_WEST    = 1;
-		private  const int DUOTONE_NORTH   = 2;
-		private  const int DUOTONE_FLOOR   = 3;
-		private  const int DUOTONE_CONTENT = 4;
-		internal const int QuadrantCurrent = 5;
+		internal const int MonoTONE_ERASER  = 0;
+		private  const int MonoTONE_WEST    = 1;
+		private  const int MonoTONE_NORTH   = 2;
+		private  const int MonoTONE_FLOOR   = 3;
+		private  const int MonoTONE_CONTENT = 4;
+		internal const int QuadrantPart     = 5;
 
 		private static TopView TopViewControl;
 		#endregion Fields (static)
@@ -134,25 +134,25 @@ namespace MapView.Forms.Observers
 
 			// skip a space between the Content quadslot and the Current quadslot
 			p0 = new Point(
-						StartX + Quadwidth * QuadrantCurrent - 1,
+						StartX + Quadwidth * QuadrantPart - 1,
 						StartY);
 			p1 = new Point(
-						StartX + Quadwidth * QuadrantCurrent + XCImage.SpriteWidth32 + 1,
+						StartX + Quadwidth * QuadrantPart + XCImage.SpriteWidth32 + 1,
 						StartY);
 			p2 = new Point(
-						StartX + Quadwidth * QuadrantCurrent + XCImage.SpriteWidth32 + 1,
+						StartX + Quadwidth * QuadrantPart + XCImage.SpriteWidth32 + 1,
 						StartY + XCImage.SpriteHeight40 + 1);
 			p3 = new Point(
-						StartX + Quadwidth * QuadrantCurrent,
+						StartX + Quadwidth * QuadrantPart,
 						StartY + XCImage.SpriteHeight40 + 1);
 			p4 = new Point(
-						StartX + Quadwidth * QuadrantCurrent,
+						StartX + Quadwidth * QuadrantPart,
 						StartY);
 
-			_pathCurrent.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
-			_pathCurrent.AddLine(p1, p2); // does not get drawn.
-			_pathCurrent.AddLine(p2, p3);
-			_pathCurrent.AddLine(p3, p4); // NOTE: try DrawRectangle() it's even worse.
+			_pathPart.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
+			_pathPart.AddLine(p1, p2); // does not get drawn.
+			_pathPart.AddLine(p2, p3);
+			_pathPart.AddLine(p3, p4); // NOTE: try DrawRectangle() it's even worse.
 		}
 		#endregion cTor (static)
 
@@ -170,8 +170,7 @@ namespace MapView.Forms.Observers
 			West    = Punkstring(West);
 			North   = Punkstring(North);
 			Content = Punkstring(Content);
-
-			Current = Punkstring(Current);
+			Part    = Punkstring(Part);
 		}
 
 		/// <summary>
@@ -235,8 +234,7 @@ namespace MapView.Forms.Observers
 				TextWidth_west    = (int)_graphics.MeasureString(West,    Font).Width;
 				TextWidth_north   = (int)_graphics.MeasureString(North,   Font).Width;
 				TextWidth_content = (int)_graphics.MeasureString(Content, Font).Width;
-
-				TextWidth_current = (int)_graphics.MeasureString(Current, Font).Width;
+				TextWidth_part    = (int)_graphics.MeasureString(Part,    Font).Width;
 			}
 
 			// fill the background of the selected quadrant type
@@ -299,7 +297,7 @@ namespace MapView.Forms.Observers
 					DrawDoorString((int)QuadrantType.Floor);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_FLOOR], 0);
+				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_FLOOR], 0);
 
 
 			// West ->
@@ -312,7 +310,7 @@ namespace MapView.Forms.Observers
 					DrawDoorString((int)QuadrantType.West);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_WEST], Quadwidth);
+				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_WEST], Quadwidth);
 
 
 			// North ->
@@ -325,7 +323,7 @@ namespace MapView.Forms.Observers
 					DrawDoorString((int)QuadrantType.North);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_NORTH], Quadwidth * (int)QuadrantType.North);
+				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_NORTH], Quadwidth * (int)QuadrantType.North);
 
 
 			// Content ->
@@ -338,20 +336,20 @@ namespace MapView.Forms.Observers
 					DrawDoorString((int)QuadrantType.Content);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_CONTENT], Quadwidth * (int)QuadrantType.Content);
+				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_CONTENT], Quadwidth * (int)QuadrantType.Content);
 
 
 			// Current ->
 			if (CurrentTilepart != null)
 			{
 				McdRecord record = CurrentTilepart.Record;
-				DrawSprite(CurrentTilepart[anistep], Quadwidth * QuadrantCurrent, record.TileOffset);
+				DrawSprite(CurrentTilepart[anistep], Quadwidth * QuadrantPart, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString(QuadrantCurrent);
+					DrawDoorString(QuadrantPart);
 			}
 			else
-				DrawSprite(MainViewF.DuotoneSprites[DUOTONE_ERASER], Quadwidth * QuadrantCurrent);
+				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_ERASER], Quadwidth * QuadrantPart);
 
 
 			// draw each quadrant's bounding rectangle
@@ -359,16 +357,14 @@ namespace MapView.Forms.Observers
 			_graphics.DrawPath(Pens.Black, _pathWest);
 			_graphics.DrawPath(Pens.Black, _pathNorth);
 			_graphics.DrawPath(Pens.Black, _pathContent);
-
-			_graphics.DrawPath(Pens.Black, _pathCurrent);
+			_graphics.DrawPath(Pens.Black, _pathPart);
 
 			// draw the quad-type label under each quadrant
 			DrawTypeString(Floor,   TextWidth_floor,   (int)QuadrantType.Floor);
 			DrawTypeString(West,    TextWidth_west,    (int)QuadrantType.West);
 			DrawTypeString(North,   TextWidth_north,   (int)QuadrantType.North);
 			DrawTypeString(Content, TextWidth_content, (int)QuadrantType.Content);
-
-			DrawTypeString(Current, TextWidth_current, QuadrantCurrent);
+			DrawTypeString(Part,    TextWidth_part,    QuadrantPart);
 
 			// fill the color-swatch under each quadrant-label
 			FillSwatchColor(               TopPanel.Brushes[TopViewOptionables.str_FloorColor],        (int)QuadrantType.Floor);
@@ -421,7 +417,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Draws a duotone-sprite with an x-offset.
+		/// Draws a monotone-sprite with an x-offset.
 		/// </summary>
 		/// <param name="sprite"></param>
 		/// <param name="offset_x"></param>
@@ -521,7 +517,7 @@ namespace MapView.Forms.Observers
 										c,r,l);
 
 			int w = TextRenderer.MeasureText(location, FontLocation).Width;
-			if (StartX + Quadwidth * (QuadrantCurrent + 1) - MarginHori + w < panelwidth)
+			if (StartX + Quadwidth * (QuadrantPart + 1) - MarginHori + w < panelwidth)
 			{
 				_graphics.DrawString(
 								location,

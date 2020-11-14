@@ -43,8 +43,8 @@ namespace XCom
 		/// <summary>
 		/// Loads a given spriteset for UFO or TFTD. This could go in Descriptor
 		/// except the XCOM cursor-sprites load w/out a descriptor. As do the
-		/// duotone-sprites - although that's done differently w/
-		/// MainViewF.LoadDuotoneSprites().
+		/// monotone-sprites - although that's done differently w/
+		/// MainViewF.LoadMonotoneSprites().
 		/// @note Both UFO and TFTD use 2-byte TabwordLengths for
 		/// - 32x40 terrain-sprites and 32x48 bigobs-sprites
 		/// - TFTD unit-sprites use 4-byte TabwordLengths

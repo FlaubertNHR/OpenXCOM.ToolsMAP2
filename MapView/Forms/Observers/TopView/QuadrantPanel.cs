@@ -121,7 +121,7 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopRouteView.ControlTop.TopPanel.Select();
 
 			bool keySelectQuadrant = _quad !=  QuadrantType.None
-								  && _quad != (QuadrantType)QuadrantDrawService.QuadrantCurrent;
+								  && _quad != (QuadrantType)QuadrantDrawService.QuadrantPart;
 
 			if (!keySelectQuadrant)
 			{
@@ -140,7 +140,7 @@ namespace MapView.Forms.Observers
 				case QuadrantType.North:   part = PartType.North;   break;
 				case QuadrantType.Content: part = PartType.Content; break;
 
-				case (QuadrantType)QuadrantDrawService.QuadrantCurrent:
+				case (QuadrantType)QuadrantDrawService.QuadrantPart:
 					isCurrentClick = true;
 					if (QuadrantDrawService.CurrentTilepart != null)
 						part = QuadrantDrawService.CurrentTilepart.Record.PartType;

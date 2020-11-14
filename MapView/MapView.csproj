@@ -358,8 +358,8 @@
     <EmbeddedResource Include="Volutar\FindVolutarF.resx">
       <DependentUpon>FindVolutarF.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="_Embedded\DUOTONE.PCK" />
-    <EmbeddedResource Include="_Embedded\DUOTONE.TAB" />
+    <EmbeddedResource Include="_Embedded\MONOTONE.PCK" />
+    <EmbeddedResource Include="_Embedded\MONOTONE.TAB" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

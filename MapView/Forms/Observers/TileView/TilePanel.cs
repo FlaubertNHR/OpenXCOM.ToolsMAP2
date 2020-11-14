@@ -588,7 +588,7 @@ namespace MapView.Forms.Observers
 					{
 						graphics.FillRectangle(Brushes.AliceBlue, rectOuter);
 						graphics.DrawImage(
-										MainViewF.DuotoneSprites[QuadrantDrawService.DUOTONE_ERASER].Sprite,
+										MainViewF.MonotoneSprites[QuadrantDrawService.MonoTONE_ERASER].Sprite,
 										L,T);
 					}
 

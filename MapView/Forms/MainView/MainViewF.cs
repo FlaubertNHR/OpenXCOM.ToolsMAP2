@@ -101,7 +101,7 @@ namespace MapView
 		internal static ScanGViewer ScanG
 		{ get; set; }
 
-		internal static SpriteCollection DuotoneSprites
+		internal static SpriteCollection MonotoneSprites
 		{ get; private set; }
 		#endregion Properties (static)
 
@@ -337,7 +337,7 @@ namespace MapView
 			Palette.TftdBattle.SetTransparent(true);
 			LogFile.WriteLine("Palette transparencies set.");
 
-			LoadDuotoneSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
+			LoadMonotoneSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
 									// NOTE: transparency of the 'UfoBattle' palette must be set first.
 
 
@@ -538,8 +538,7 @@ namespace MapView
 
 			DontBeepEvent += FireContext;
 
-			var r = new CustomToolStripRenderer();
-			ssMain.Renderer = r;
+			ssMain.Renderer = new CustomToolStripRenderer();
 
 
 			Cursor.Current = Cursors.Default;
@@ -578,11 +577,11 @@ namespace MapView
 		/// @note These sprites could be broken out and put in Resources but
 		/// it's kinda cute this way too.
 		/// </summary>
-		private static void LoadDuotoneSprites()
+		private static void LoadMonotoneSprites()
 		{
 			var ass = Assembly.GetExecutingAssembly();
-			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.DUOTONE.PCK"))
-			using (var fsTab = ass.GetManifestResourceStream("MapView._Embedded.DUOTONE.TAB"))
+			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.MONOTONE.PCK"))
+			using (var fsTab = ass.GetManifestResourceStream("MapView._Embedded.MONOTONE.TAB"))
 			{
 				var bytesPck = new byte[fsPck.Length];
 				var bytesTab = new byte[fsTab.Length];
@@ -590,8 +589,8 @@ namespace MapView
 				fsPck.Read(bytesPck, 0, (int)fsPck.Length);
 				fsTab.Read(bytesTab, 0, (int)fsTab.Length);
 
-				DuotoneSprites = new SpriteCollection(
-													"Duotone",
+				MonotoneSprites = new SpriteCollection(
+													"Monotone",
 													Palette.UfoBattle,
 													ResourceInfo.TAB_WORD_LENGTH_2,
 													bytesPck,
