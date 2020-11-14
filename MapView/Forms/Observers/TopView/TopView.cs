@@ -23,6 +23,14 @@ namespace MapView.Forms.Observers
 		internal const int CONTENT = 8;
 
 		private const int DIGITS = 3;
+
+		/// <summary>
+		/// The TestPartslots dialog.
+		/// @note Be careful with this pointer because closing the dialog in the
+		/// dialog itself does *not* null this pointer. So check for both !null
+		/// and !IsDisposed if necessary.
+		/// </summary>
+		internal static Infobox _finfobox;
 		#endregion Fields (static)
 
 
@@ -273,14 +281,6 @@ namespace MapView.Forms.Observers
 					f.ShowDialog();
 			}
 		}
-
-		/// <summary>
-		/// The TestPartslots dialog.
-		/// @note Be careful with this pointer because closing the dialog in the
-		/// dialog itself does *not* null this pointer. So check for both !null
-		/// and !IsDisposed if necessary.
-		/// </summary>
-		internal static Infobox _finfobox;
 		#endregion Events
 
 
