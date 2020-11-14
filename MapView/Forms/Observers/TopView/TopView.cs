@@ -229,6 +229,12 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnTestPartslotsClick(object sender, EventArgs e)
 		{
+			if (_finfobox != null && !_finfobox.IsDisposed)
+			{
+				_finfobox.Close();
+				_finfobox = null;
+			}
+
 			var list = new List<string>();
 
 			MapTile tile;
@@ -240,13 +246,13 @@ namespace MapView.Forms.Observers
 				tile = MapBase[r,c,l];
 				if (!tile.Vacant)
 				{
-					if (tile.Floor != null && (QuadrantType)tile.Floor.Record.PartType != QuadrantType.Floor)
+					if (tile.Floor   != null && (QuadrantType)tile.Floor  .Record.PartType != QuadrantType.Floor)
 						list.Add(FormatTilequad(c,r,l,QuadrantType.Floor));
 
-					if (tile.West != null && (QuadrantType)tile.West.Record.PartType != QuadrantType.West)
+					if (tile.West    != null && (QuadrantType)tile.West   .Record.PartType != QuadrantType.West)
 						list.Add(FormatTilequad(c,r,l,QuadrantType.West));
 
-					if (tile.North != null && (QuadrantType)tile.North.Record.PartType != QuadrantType.North)
+					if (tile.North   != null && (QuadrantType)tile.North  .Record.PartType != QuadrantType.North)
 						list.Add(FormatTilequad(c,r,l,QuadrantType.North));
 
 					if (tile.Content != null && (QuadrantType)tile.Content.Record.PartType != QuadrantType.Content)
@@ -275,7 +281,7 @@ namespace MapView.Forms.Observers
 			}
 			else
 			{
-				using (var f = new Infobox(
+				using (var f = new Infobox( // is Modal.
 										title,
 										"All assigned parts are in their correct slots."))
 					f.ShowDialog();
