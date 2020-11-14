@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -438,11 +439,6 @@ namespace MapView.Forms.Observers
 				selected += Environment.NewLine;
 
 				MapLocation loc = MapBase.Location;
-//				selected += String.Format(
-//										System.Globalization.CultureInfo.InvariantCulture,
-//										"c {0}  r {1}  L {2}",
-//										loc.Col + 1, loc.Row + 1,
-//										MapFile.MapSize.Levs - level); // 1-based count, level is inverted.
 
 				int c = loc.Col;
 				int r = loc.Row;
@@ -452,7 +448,7 @@ namespace MapView.Forms.Observers
 				if (!MainViewF.Optionables.Base1_z) { --l; }
 
 				selected += String.Format(
-										System.Globalization.CultureInfo.InvariantCulture,
+										CultureInfo.InvariantCulture,
 										"c {0}  r {1}  L {2}",
 										c,r,l);
 
@@ -478,10 +474,6 @@ namespace MapView.Forms.Observers
 			if (loc.X != -1)
 			{
 				info += Environment.NewLine;
-//				info += String.Format(
-//									System.Globalization.CultureInfo.InvariantCulture,
-//									"c {0}  r {1}  L {2}",
-//									loc.X + 1, loc.Y + 1, MapFile.MapSize.Levs - MapBase.Level); // 1-based count, level is inverted.
 
 				int c = loc.X;
 				int r = loc.Y;
@@ -491,7 +483,7 @@ namespace MapView.Forms.Observers
 				if (!MainViewF.Optionables.Base1_z) { --l; }
 
 				info += String.Format(
-									System.Globalization.CultureInfo.InvariantCulture,
+									CultureInfo.InvariantCulture,
 									"c {0}  r {1}  L {2}",
 									c,r,l);
 			}
@@ -800,7 +792,7 @@ namespace MapView.Forms.Observers
 						link.Distance = CalculateLinkDistance(
 															NodeSelected,
 															MapFile.Routes[link.Destination]);
-						distance = link.Distance.ToString(System.Globalization.CultureInfo.InvariantCulture)
+						distance = link.Distance.ToString(CultureInfo.InvariantCulture)
 								 + GetDistanceArrow(slot);
 						break;
 				}
@@ -1012,7 +1004,7 @@ namespace MapView.Forms.Observers
 						btnGo.Text = Go;
 						tbDist.Text = Convert.ToString(
 													link.Distance,
-													System.Globalization.CultureInfo.InvariantCulture)
+													CultureInfo.InvariantCulture)
 									+ GetDistanceArrow(slot);
 
 						if (link.StandardNode())
@@ -1373,7 +1365,7 @@ namespace MapView.Forms.Observers
 									Math.Pow(nodeA.Row - nodeB.Row, 2) +
 									Math.Pow(nodeA.Lev - nodeB.Lev, 2));
 			if (textBox != null)
-				textBox.Text = dist.ToString(System.Globalization.CultureInfo.InvariantCulture)
+				textBox.Text = dist.ToString(CultureInfo.InvariantCulture)
 							 + GetDistanceArrow(slot);
 
 			return (byte)dist;
@@ -1687,7 +1679,7 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.btnPaste.Enabled = true;
 
 				var nodeText = string.Format(
-										System.Globalization.CultureInfo.InvariantCulture,
+										CultureInfo.InvariantCulture,
 										"{0}{6}{1}{6}{2}{6}{3}{6}{4}{6}{5}",
 										NodeCopyPrefix,
 										cbType  .SelectedIndex,
@@ -1717,7 +1709,7 @@ namespace MapView.Forms.Observers
 				{
 					RouteChanged = true;
 
-					var invariant = System.Globalization.CultureInfo.InvariantCulture;
+					var invariant = CultureInfo.InvariantCulture;
 
 					cbType  .SelectedIndex = Int32.Parse(nodeData[1], invariant);
 					cbPatrol.SelectedIndex = Int32.Parse(nodeData[2], invariant);
@@ -2177,7 +2169,7 @@ namespace MapView.Forms.Observers
 			{
 				RouteChanged = true;
 				info = String.Format(
-								System.Globalization.CultureInfo.CurrentCulture,
+								CultureInfo.CurrentCulture,
 								"{0} link{1} updated.",
 								changed,
 								(changed == 1) ? " has been" : "s have been");
@@ -2187,7 +2179,7 @@ namespace MapView.Forms.Observers
 			else
 			{
 				info = String.Format(
-								System.Globalization.CultureInfo.CurrentCulture,
+								CultureInfo.CurrentCulture,
 								"All link distances are already correct.");
 			}
 
@@ -2252,7 +2244,7 @@ namespace MapView.Forms.Observers
 				icon  = MessageBoxIcon.Warning;
 				title = " Warning";
 				info  = String.Format(
-									System.Globalization.CultureInfo.CurrentCulture,
+									CultureInfo.CurrentCulture,
 									"The following route-{0} an invalid NodeRank.{1}",
 									(invalids.Count == 1) ? "node has"
 														  : "nodes have",

@@ -179,7 +179,7 @@ namespace MapView
 			}
 			lbl2_Terrains.Text = text;
 
-			var w = TextRenderer.MeasureText(text, lbl2_Terrains.Font).Width;
+			int w = TextRenderer.MeasureText(text, lbl2_Terrains.Font).Width;
 			if (w > lbl2_Terrains.Width)
 				Width += w - lbl2_Terrains.Width;
 

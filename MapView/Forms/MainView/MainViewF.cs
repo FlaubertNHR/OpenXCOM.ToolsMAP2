@@ -3300,12 +3300,6 @@ namespace MapView
 				MapFileBase @base = MainViewUnderlay.MapBase;
 				MapLocation loc = @base.Location;
 
-//				tsslPosition.Text = String.Format(
-//												CultureInfo.CurrentCulture,
-//												"c {0}  r {1}  L {2}",
-//												loc.Col + 1, loc.Row + 1,
-//												@base.MapSize.Levs - @base.Level); // 1-based count.
-
 				int c = loc.Col;
 				int r = loc.Row;
 				int l = @base.MapSize.Levs - @base.Level;
