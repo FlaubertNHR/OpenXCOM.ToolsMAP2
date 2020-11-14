@@ -66,7 +66,7 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl.
+		/// Inherited from IMapObserver through MapObserverControl_Top.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
@@ -77,7 +77,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl.
+		/// Inherited from IMapObserver through MapObserverControl_Top.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
@@ -204,7 +204,11 @@ namespace MapView.Forms.Observers
 		/// <param name="graphics"></param>
 		protected override void RenderGraphics(Graphics graphics)
 		{
-			QuadrantDrawService.Draw(graphics, Tile, SelectedQuadrant);
+			QuadrantDrawService.SetGraphics(graphics);
+			QuadrantDrawService.Draw(Tile, SelectedQuadrant);
+
+			if (Loc != null)
+				QuadrantDrawService.PrintLocationString(Width, Loc);
 		}
 		#endregion Events (override)
 

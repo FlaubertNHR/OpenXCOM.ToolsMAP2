@@ -909,17 +909,24 @@ namespace MapView.Forms.MainView
 					break;
 			}
 
-			// TODO: refesh all position prints ...
+			// refesh position prints
 			MainViewF.that.sb_PrintPosition();
+
 			ObserverManager.RouteView   .Control     .PrintSelectedInfo();
 			ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
 
-			// close the Partslot test dialog (its displayed data has changed)
+			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate(); // NOTE: Trying to print only the string w/ QuadrantDrawService
+			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate(); // borks out w/ an obscure "Parameter is invalid" exception.
+
+			// close the PartslotTest dialog (its displayed data has changed)
 			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed)
 			{
 				TopView._finfobox.Close();
 				TopView._finfobox = null;
 			}
+
+			// NOTE: Routenode Checks don't need to be handled here because
+			// their dialogs are Modal.
 		}
 
 		/// <summary>

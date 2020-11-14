@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Globalization;
+using System.Windows.Forms;
 
 using MapView.Forms.MainView;
 
@@ -16,10 +18,10 @@ namespace MapView.Forms.Observers
 //			IDisposable
 	{
 		#region Fields (static)
-		private const int MarginHori = 5;
-		private const int MarginVert = 3;
+		private const int MarginHori = 10;
+		private const int MarginVert =  3;
 
-		internal const int Quadwidth = XCImage.SpriteWidth32 + MarginHori * 2;
+		internal const int Quadwidth = XCImage.SpriteWidth32 + MarginHori;
 
 		internal const int StartX = 26;
 		private  const int StartY =  3;
@@ -62,11 +64,18 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
+		private static Font Font
+		{ get; set; }
+
 		internal static SolidBrush Brush
 		{ get; set; }
 
-		internal static Font Font
+		private static Font FontLocation
 		{ get; set; }
+
+		private static SolidBrush BrushLocation
+		{ get; set; }
+
 
 		internal static Tilepart CurrentTilepart
 		{ get; set; }
@@ -79,8 +88,13 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		static QuadrantDrawService()
 		{
+			// NOTE: Fonts and Brushes are not disposed; they last the lifetime
+			// of the app.
 			Font  = new Font("Comic Sans MS", 7);
 			Brush = new SolidBrush(Color.LightBlue);
+
+			FontLocation  = new Font("Verdana", 7F, FontStyle.Bold);
+			BrushLocation = new SolidBrush(SystemColors.ControlText);
 
 			GraphicsPath path;
 			Point p0, p1, p2, p3, p4;
@@ -188,18 +202,23 @@ namespace MapView.Forms.Observers
 		private static List<Brush>     _brushes = new List<Brush>();
 
 		/// <summary>
-		/// Draws the QuadrantPanel incl/ sprites.
+		/// Sets the graphics object.
 		/// </summary>
 		/// <param name="graphics"></param>
+		internal static void SetGraphics(Graphics graphics)
+		{
+			_graphics = graphics;
+		}
+
+		/// <summary>
+		/// Draws the QuadrantPanel incl/ sprites.
+		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="selectedQuadrant"></param>
 		internal static void Draw(
-				Graphics graphics,
 				MapTile tile,
 				QuadrantType selectedQuadrant)
 		{
-			_graphics = graphics;
-
 			if (!MainViewF.Optionables.UseMono && MainViewF.Optionables.SpriteShadeEnabled)
 			{
 				_attribs.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
@@ -479,6 +498,39 @@ namespace MapView.Forms.Observers
 											XCImage.SpriteWidth32,
 											SwatchHeight));
 		}
+
+		/// <summary>
+		/// Prints the currently selected tile's location.
+		/// </summary>
+		/// <param name="panelwidth"></param>
+		/// <param name="loc"></param>
+		internal static void PrintLocationString(int panelwidth, MapLocation loc)
+		{
+			var file = ObserverManager.TopView.Control.TopPanel.MapBase as MapFile;
+
+			int c = loc.Col;
+			int r = loc.Row;
+			int l = file.MapSize.Levs - file.Level;
+
+			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+			if (!MainViewF.Optionables.Base1_z) { --l; }
+
+			string location = String.Format(
+										CultureInfo.InvariantCulture,
+										"c {0}  r {1}  L {2}",
+										c,r,l);
+
+			int w = TextRenderer.MeasureText(location, FontLocation).Width;
+			if (StartX + Quadwidth * (QuadrantCurrent + 1) - MarginHori + w < panelwidth)
+			{
+				_graphics.DrawString(
+								location,
+								FontLocation,
+								BrushLocation,
+								panelwidth - w, StartY);
+			}
+		}
+
 
 /*		/// <summary>
 		/// This isn't really necessary since the GraphicsPaths last the
