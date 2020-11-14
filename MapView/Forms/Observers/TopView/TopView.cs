@@ -269,9 +269,6 @@ namespace MapView.Forms.Observers
 				foreach (var line in list)
 					copyable += Environment.NewLine + line;
 
-				if (_finfobox != null && !_finfobox.IsDisposed) // close Infobox because it's easier than updating its controls.
-					_finfobox.Close();
-
 				_finfobox = new Infobox( // not Modal.
 									title,
 									"The following tileslots are occupied by incorrect PartTypes."
