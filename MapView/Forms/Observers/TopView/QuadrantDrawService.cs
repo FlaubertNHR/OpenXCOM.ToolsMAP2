@@ -367,11 +367,31 @@ namespace MapView.Forms.Observers
 			DrawTypeString(Part,    TextWidth_part,    QuadrantPart);
 
 			// fill the color-swatch under each quadrant-label
-			FillSwatchColor(               TopPanel.Brushes[TopViewOptionables.str_FloorColor],        (int)QuadrantType.Floor);
-			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopViewOptionables.str_WestColor] .Color), (int)QuadrantType.West);
-			FillSwatchColor(new SolidBrush(TopPanel.Pens   [TopViewOptionables.str_NorthColor].Color), (int)QuadrantType.North);
-			FillSwatchColor(               TopPanel.Brushes[TopViewOptionables.str_ContentColor],      (int)QuadrantType.Content);
+			if (_swatchbrushWest != null && _swatchbrushWest.Color != TopPanel.Pens[TopViewOptionables.str_WestColor].Color)
+			{
+				_swatchbrushWest.Dispose();
+				_swatchbrushWest = null;
+			}
+
+			if (_swatchbrushWest == null)
+				_swatchbrushWest = new SolidBrush(TopPanel.Pens[TopViewOptionables.str_WestColor].Color);
+
+			if (_swatchbrushNorth != null && _swatchbrushNorth.Color != TopPanel.Pens[TopViewOptionables.str_NorthColor].Color)
+			{
+				_swatchbrushNorth.Dispose();
+				_swatchbrushNorth = null;
+			}
+
+			if (_swatchbrushNorth == null)
+				_swatchbrushNorth = new SolidBrush(TopPanel.Pens[TopViewOptionables.str_NorthColor].Color);
+
+			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_FloorColor],   (int)QuadrantType.Floor);
+			FillSwatchColor(_swatchbrushWest,  (int)QuadrantType.West);
+			FillSwatchColor(_swatchbrushNorth, (int)QuadrantType.North);
+			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_ContentColor], (int)QuadrantType.Content);
 		}
+		private static SolidBrush _swatchbrushWest;
+		private static SolidBrush _swatchbrushNorth;
 
 		/// <summary>
 		/// Draws a terrain-sprite with an x/y-offset.
