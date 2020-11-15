@@ -23,6 +23,10 @@ namespace MapView.Forms.Observers
 		#region Fields (static)
 		private const int OffsetX = 2; // these are the offsets between the
 		private const int OffsetY = 3; // panel border and the lozenge-tip(s).
+
+		internal static ColorTool ToolWest;
+		internal static ColorTool ToolNorth;
+		internal static ColorTool ToolContent;
 		#endregion Fields (static)
 
 
@@ -319,6 +323,12 @@ namespace MapView.Forms.Observers
 									_originX + (_col - _row) * halfWidth,
 									OffsetY  + (_col + _row) * halfHeight);
 					graphics.DrawPath(TopPanel.Pens[TopViewOptionables.str_SelectorColor], _lozSelector);
+
+					// print mouseover location string
+				}
+				else
+				{
+					// clear mouseover location string
 				}
 
 				// draw tiles-selected lozenge ->
@@ -327,13 +337,8 @@ namespace MapView.Forms.Observers
 			}
 		}
 
-
-		internal static ColorTool ToolWest;
-		internal static ColorTool ToolNorth;
-		internal static ColorTool ToolContent;
-
 		/// <summary>
-		/// 
+		/// Draws the floor, westwall, northwall, and content indicator blobs.
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="graphics"></param>
