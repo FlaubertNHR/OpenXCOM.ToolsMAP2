@@ -20,16 +20,16 @@ namespace XCom
 				MapTileList tileListPre,
 				MapResizeZtype zType)
 		{
-			if (   rows > 0
-				&& cols > 0
+			if (   cols > 0
+				&& rows > 0
 				&& levs > 0)
 			{
-				var tileListPost = new MapTileList(rows, cols, levs);
+				var tileListPost = new MapTileList(cols, rows, levs);
 
 				for (int lev = 0; lev != levs; ++lev)
 				for (int row = 0; row != rows; ++row)
 				for (int col = 0; col != cols; ++col)
-					tileListPost[row, col, lev] = MapTile.VacantTile;
+					tileListPost[col, row, lev] = MapTile.VacantTile;
 
 				switch (zType)
 				{
@@ -39,7 +39,7 @@ namespace XCom
 						for (int row = 0; row != rows && row != sizePre.Rows; ++row)
 						for (int col = 0; col != cols && col != sizePre.Cols; ++col)
 						{
-							tileListPost[row, col, lev] = tileListPre[row, col, lev];
+							tileListPost[col, row, lev] = tileListPre[col, row, lev];
 						}
 						break;
 					}
@@ -53,8 +53,8 @@ namespace XCom
 						for (int row = 0; row != rows && row != sizePre.Rows; ++row)
 						for (int col = 0; col != cols && col != sizePre.Cols; ++col)
 						{
-							tileListPost[row, col, levelsPost - lev] = // copy tiles from bot to top.
-							tileListPre [row, col, levelsPre  - lev];
+							tileListPost[col, row, levelsPost - lev] = // copy tiles from bot to top.
+							tileListPre [col, row, levelsPre  - lev];
 						}
 						break;
 					}

@@ -50,7 +50,7 @@ namespace XCom.Base
 		{ get; internal protected set; }
 
 		public MapTileList Tiles
-		{ get; set; }
+		{ get; internal protected set; }
 
 
 		private int _level;
@@ -115,10 +115,10 @@ namespace XCom.Base
 			get
 			{
 				if (Tiles != null) // TODO: Get rid of that.
-					return Tiles[row, col, lev];
+					return Tiles[col, row, lev];
 				return null;
 			}
-			set { Tiles[row, col, lev] = value; }
+			set { Tiles[col, row, lev] = value; }
 		}
 		/// <summary>
 		/// Gets/Sets a MapTile object at the current level using row,col

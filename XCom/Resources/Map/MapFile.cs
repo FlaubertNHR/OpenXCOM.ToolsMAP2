@@ -88,7 +88,7 @@ namespace XCom
 				int cols = fs.ReadByte(); // - says this header is "height, width and depth (in that order)"
 				int levs = fs.ReadByte(); //   ie. y/x/z
 
-				Tiles   = new MapTileList(rows, cols, levs);
+				Tiles   = new MapTileList(cols, rows, levs);
 				MapSize = new MapSize(    rows, cols, levs);
 
 				for (int lev = 0; lev != levs; ++lev) // z-axis (inverted)

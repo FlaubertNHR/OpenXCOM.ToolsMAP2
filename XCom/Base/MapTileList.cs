@@ -12,7 +12,7 @@
 		/// <summary>
 		/// Gets/Sets a MapTile object according to a given location.
 		/// </summary>
-		internal MapTile this[int row, int col, int lev]
+		internal MapTile this[int col, int row, int lev]
 		{
 			get
 			{
@@ -20,13 +20,13 @@
 					&& row > -1 && row < _locations.MaxRows
 					&& lev > -1 && lev < _locations.MaxLevs)
 				{
-					return _tiles[_locations.GetLocationId(row, col, lev)];
+					return _tiles[_locations.GetLocationId(col, row, lev)];
 				}
 				return null;
 			}
 			set
 			{
-				_tiles[_locations.GetLocationId(row, col, lev)] = value;
+				_tiles[_locations.GetLocationId(col, row, lev)] = value;
 			}
 		}
 		#endregion Properties
@@ -36,13 +36,13 @@
 		/// <summary>
 		/// Instantiates a MapTileList object.
 		/// </summary>
-		/// <param name="rows"></param>
 		/// <param name="cols"></param>
+		/// <param name="rows"></param>
 		/// <param name="levs"></param>
-		internal MapTileList(int rows, int cols, int levs)
+		internal MapTileList(int cols, int rows, int levs)
 		{
-			_tiles     = new MapTile[rows * cols * levs];
-			_locations = new MapLocations(rows, cols, levs);
+			_tiles     = new MapTile[cols * rows * levs];
+			_locations = new MapLocations(cols, rows, levs);
 		}
 		#endregion cTor
 	}
