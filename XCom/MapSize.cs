@@ -6,16 +6,16 @@ namespace XCom
 	public struct MapSize
 	{
 		#region Properties
-		private readonly int _rows;
-		public int Rows
-		{
-			get { return _rows; }
-		}
-
 		private readonly int _cols;
 		public int Cols
 		{
 			get { return _cols; }
+		}
+
+		private readonly int _rows;
+		public int Rows
+		{
+			get { return _rows; }
 		}
 
 		private readonly int _levs;
@@ -27,20 +27,20 @@ namespace XCom
 
 
 		#region cTor
-		public MapSize(int rows, int cols, int levs)
+		internal MapSize(int cols, int rows, int levs)
 		{
-			_rows = rows;
 			_cols = cols;
+			_rows = rows;
 			_levs = levs;
 		}
 		#endregion cTor
 
 
 		#region Methods
-		public bool Equals(MapSize other)
+		private bool Equals(MapSize other)
 		{
-			return (other._rows == _rows
-				 && other._cols == _cols
+			return (other._cols == _cols
+				 && other._rows == _rows
 				 && other._levs == _levs);
 		}
 		#endregion Methods
@@ -75,8 +75,8 @@ namespace XCom
 			{
 				int hash = 17;
 				// Suitable nullity checks etc, of course :)
-				hash = hash * 29 + _rows.GetHashCode();
 				hash = hash * 29 + _cols.GetHashCode();
+				hash = hash * 29 + _rows.GetHashCode();
 				hash = hash * 29 + _levs.GetHashCode();
 				return hash;
 			}

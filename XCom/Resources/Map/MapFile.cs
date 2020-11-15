@@ -89,7 +89,7 @@ namespace XCom
 				int levs = fs.ReadByte(); //   ie. y/x/z
 
 				Tiles   = new MapTileList(cols, rows, levs);
-				MapSize = new MapSize(    rows, cols, levs);
+				MapSize = new MapSize(    cols, rows, levs);
 
 				for (int lev = 0; lev != levs; ++lev) // z-axis (inverted)
 				for (int row = 0; row != rows; ++row) // y-axis
@@ -454,8 +454,8 @@ namespace XCom
 		/// <summary>
 		/// Resizes the current Map.
 		/// </summary>
-		/// <param name="rows">total rows in the new Map</param>
 		/// <param name="cols">total columns in the new Map</param>
+		/// <param name="rows">total rows in the new Map</param>
 		/// <param name="levs">total levels in the new Map</param>
 		/// <param name="zType">MRZT_TOP to add or subtract delta-levels
 		/// starting at the top level, MRZT_BOT to add or subtract delta-levels
@@ -466,15 +466,15 @@ namespace XCom
 		///          0x1 - Map changed
 		///          0x2 - Routes changed</returns>
 		public override int MapResize(
-				int rows,
 				int cols,
+				int rows,
 				int levs,
 				MapResizeService.MapResizeZtype zType)
 		{
 			int bit = CHANGED_NOT;
 
 			var tileList = MapResizeService.GetResizedTileList(
-															rows, cols, levs,
+															cols, rows, levs,
 															MapSize,
 															Tiles,
 															zType);
@@ -509,7 +509,7 @@ namespace XCom
 					}
 				}
 
-				MapSize = new MapSize(rows, cols, levs);
+				MapSize = new MapSize(cols, rows, levs);
 				Tiles = tileList;
 
 				if (RouteCheckService.CheckNodeBounds(this) == DialogResult.Yes)

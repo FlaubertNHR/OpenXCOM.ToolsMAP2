@@ -13,8 +13,8 @@ namespace XCom
 
 
 		internal static MapTileList GetResizedTileList(
-				int rows,
 				int cols,
+				int rows,
 				int levs,
 				MapSize sizePre,
 				MapTileList tileListPre,

@@ -174,8 +174,8 @@ namespace XCom.Base
 		public abstract void ExportRoutes(string pf);
 
 		public abstract int MapResize(
-				int rows,
 				int cols,
+				int rows,
 				int levs,
 				MapResizeService.MapResizeZtype zType);
 		#endregion Methods (abstract)

@@ -1622,8 +1622,8 @@ namespace MapView
 						RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
 						int changes = @base.MapResize(
-													f.Rows,
 													f.Cols,
+													f.Rows,
 													f.Levs,
 													f.zType);
 
