@@ -348,27 +348,27 @@ namespace MapView.Forms.Observers
 				BlobService.DrawFloor(
 									graphics,
 									TopPanel.Brushes[TopViewOptionables.str_FloorColor],
-									x, y);
+									x,y);
 
 			if (TopView.Content.Checked && tile.Content != null)
 				BlobService.DrawContent(
 									graphics,
 									ToolContent,
-									x, y,
+									x,y,
 									tile.Content);
 
 			if (TopView.West.Checked && tile.West != null)
 				BlobService.DrawContent(
 									graphics,
 									ToolWest,
-									x, y,
+									x,y,
 									tile.West);
 
 			if (TopView.North.Checked && tile.North != null)
 				BlobService.DrawContent(
 									graphics,
 									ToolNorth,
-									x, y,
+									x,y,
 									tile.North);
 		}
 		#endregion Draw
