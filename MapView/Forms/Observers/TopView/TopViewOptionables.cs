@@ -387,27 +387,29 @@ namespace MapView.Forms.Observers
 			QuadrantDrawService.Brush = new SolidBrush(def_SelectedQuadColor);
 
 
-			OptionChangedEvent changer = OnOptionChanged;
+			OptionChangedEvent changer0 = OnOptionChanged;
+			OptionChangedEvent changer1 = OnQuadColorChanged;
+			OptionChangedEvent changer2 = OnFlagChanged;
 
-			options.AddOptionDefault(str_GridLineColor,             def_GridLineColor,             changer);
-			options.AddOptionDefault(str_GridLineWidth,             def_GridLineWidth,             changer);
-			options.AddOptionDefault(str_GridLine10Color,           def_GridLine10Color,           changer);
-			options.AddOptionDefault(str_GridLine10Width,           def_GridLine10Width,           changer);
+			options.AddOptionDefault(str_GridLineColor,             def_GridLineColor,             changer0);
+			options.AddOptionDefault(str_GridLineWidth,             def_GridLineWidth,             changer0);
+			options.AddOptionDefault(str_GridLine10Color,           def_GridLine10Color,           changer0);
+			options.AddOptionDefault(str_GridLine10Width,           def_GridLine10Width,           changer0);
 
-			options.AddOptionDefault(str_FloorColor,                def_FloorColor,                changer);
-			options.AddOptionDefault(str_WestColor,                 def_WestColor,                 changer);
-			options.AddOptionDefault(str_WestWidth,                 def_WestWidth,                 changer);
-			options.AddOptionDefault(str_NorthColor,                def_NorthColor,                changer);
-			options.AddOptionDefault(str_NorthWidth,                def_NorthWidth,                changer);
-			options.AddOptionDefault(str_ContentColor,              def_ContentColor,              changer);
+			options.AddOptionDefault(str_FloorColor,                def_FloorColor,                changer0);
+			options.AddOptionDefault(str_WestColor,                 def_WestColor,                 changer0);
+			options.AddOptionDefault(str_WestWidth,                 def_WestWidth,                 changer0);
+			options.AddOptionDefault(str_NorthColor,                def_NorthColor,                changer0);
+			options.AddOptionDefault(str_NorthWidth,                def_NorthWidth,                changer0);
+			options.AddOptionDefault(str_ContentColor,              def_ContentColor,              changer0);
 
-			options.AddOptionDefault(str_SelectorColor,             def_SelectorColor,             changer);
-			options.AddOptionDefault(str_SelectorWidth,             def_SelectorWidth,             changer);
-			options.AddOptionDefault(str_SelectedColor,             def_SelectedColor,             changer);
-			options.AddOptionDefault(str_SelectedWidth,             def_SelectedWidth,             changer);
-			options.AddOptionDefault(str_SelectedQuadColor,         def_SelectedQuadColor,         OnQuadColorChanged);
+			options.AddOptionDefault(str_SelectorColor,             def_SelectorColor,             changer0);
+			options.AddOptionDefault(str_SelectorWidth,             def_SelectorWidth,             changer0);
+			options.AddOptionDefault(str_SelectedColor,             def_SelectedColor,             changer0);
+			options.AddOptionDefault(str_SelectedWidth,             def_SelectedWidth,             changer0);
+			options.AddOptionDefault(str_SelectedQuadColor,         def_SelectedQuadColor,         changer1);
 
-			options.AddOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, OnFlagChanged);
+			options.AddOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, changer2);
 		}
 		#endregion Methods
 
@@ -421,14 +423,16 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnOptionChanged(string key, object val)
 		{
+			bool invalidatequadrantpanel = false;
+
 			switch (key)
 			{
-				case str_FloorColor:      FloorColor      = (Color)val; ChangeBruColor(key, val); break;
-				case str_WestColor:       WestColor       = (Color)val; ChangePenColor(key, val); break;
+				case str_FloorColor:      FloorColor      = (Color)val; ChangeBruColor(key, val); invalidatequadrantpanel = true; break;
+				case str_WestColor:       WestColor       = (Color)val; ChangePenColor(key, val); invalidatequadrantpanel = true; break;
 				case str_WestWidth:       WestWidth       =   (int)val; ChangePenWidth(key, val); break;
-				case str_NorthColor:      NorthColor      = (Color)val; ChangePenColor(key, val); break;
+				case str_NorthColor:      NorthColor      = (Color)val; ChangePenColor(key, val); invalidatequadrantpanel = true; break;
 				case str_NorthWidth:      NorthWidth      =   (int)val; ChangePenWidth(key, val); break;
-				case str_ContentColor:    ContentColor    = (Color)val; ChangeBruColor(key, val); break;
+				case str_ContentColor:    ContentColor    = (Color)val; ChangeBruColor(key, val); invalidatequadrantpanel = true; break;
 				case str_SelectorColor:   SelectorColor   = (Color)val; ChangePenColor(key, val); break;
 				case str_SelectorWidth:   SelectorWidth   =   (int)val; ChangePenWidth(key, val); break;
 				case str_SelectedColor:   SelectedColor   = (Color)val; ChangePenColor(key, val); break;
@@ -441,6 +445,12 @@ namespace MapView.Forms.Observers
 
 			ObserverManager.TopView     .Control   .TopPanel.Invalidate();
 			ObserverManager.TopRouteView.ControlTop.TopPanel.Invalidate();
+
+			if (invalidatequadrantpanel)
+			{
+				ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
+				ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+			}
 		}
 
 		/// <summary>
