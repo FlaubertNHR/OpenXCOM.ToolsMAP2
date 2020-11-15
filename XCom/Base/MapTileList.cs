@@ -4,7 +4,7 @@
 	{
 		#region Fields
 		private readonly MapTile[] _tiles;
-		private readonly MapLocations  _locations;
+		private readonly MapLocations _locations;
 		#endregion Fields
 
 
