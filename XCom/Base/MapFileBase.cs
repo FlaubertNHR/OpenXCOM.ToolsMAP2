@@ -81,16 +81,16 @@ namespace XCom.Base
 			get { return _location; }
 			set
 			{
-				if (   value.Row > -1 && value.Row < MapSize.Rows
-					&& value.Col > -1 && value.Col < MapSize.Cols)
+				if (   value.Col > -1 && value.Col < MapSize.Cols
+					&& value.Row > -1 && value.Row < MapSize.Rows)
 				{
 					_location = value;
 
 					if (SelectLocation != null)
 						SelectLocation(new SelectLocationEventArgs(
 																_location,
-																this[_location.Row,
-																	 _location.Col]));
+																this[_location.Col,
+																	 _location.Row]));
 				}
 			}
 		}
@@ -102,15 +102,15 @@ namespace XCom.Base
 		{ get; internal protected set; }
 
 		/// <summary>
-		/// Gets/Sets a MapTile object using row,col,lev values.
+		/// Gets/Sets a MapTile object using col,row,lev values.
 		/// @note No error checking is done to ensure that the given location is
 		/// valid.
 		/// </summary>
-		/// <param name="row"></param>
 		/// <param name="col"></param>
+		/// <param name="row"></param>
 		/// <param name="lev"></param>
 		/// <returns>the corresponding MapTile object</returns>
-		public MapTile this[int row, int col, int lev]
+		public MapTile this[int col, int row, int lev]
 		{
 			get
 			{
@@ -121,18 +121,18 @@ namespace XCom.Base
 			set { Tiles[col, row, lev] = value; }
 		}
 		/// <summary>
-		/// Gets/Sets a MapTile object at the current level using row,col
+		/// Gets/Sets a MapTile object at the current level using col,row
 		/// values.
 		/// @note No error checking is done to ensure that the given location is
 		/// valid.
 		/// </summary>
-		/// <param name="row"></param>
 		/// <param name="col"></param>
+		/// <param name="row"></param>
 		/// <returns>the corresponding MapTile object</returns>
-		public MapTile this[int row, int col]
+		public MapTile this[int col, int row]
 		{
-			get { return this[row, col, Level]; }
-			set { this[row, col, Level] = value; }
+			get { return this[col, row, Level]; }
+			set { this[col, row, Level] = value; }
 		}
 
 //		/// <summary>
@@ -216,21 +216,21 @@ namespace XCom.Base
 				for (int row = 0; row != MapSize.Rows - 2; ++row)
 				for (int col = 0; col != MapSize.Cols - 2; ++col)
 				{
-					if ((tile = this[row, col, lev]) != null) // safety. The tile should always be valid.
+					if ((tile = this[col, row, lev]) != null) // safety. The tile should always be valid.
 					{
 						tile.Occulted = !forceVis
-									 && this[row,     col,     lev - 1].Floor != null // above
+									 && this[col,     row,     lev - 1].Floor != null // above
 
-									 && this[row + 1, col,     lev - 1].Floor != null // south
-									 && this[row + 2, col,     lev - 1].Floor != null
+									 && this[col,     row + 1, lev - 1].Floor != null // south
+									 && this[col,     row + 2, lev - 1].Floor != null
 
-									 && this[row,     col + 1, lev - 1].Floor != null // east
-									 && this[row,     col + 2, lev - 1].Floor != null
+									 && this[col + 1, row,     lev - 1].Floor != null // east
+									 && this[col + 2, row,     lev - 1].Floor != null
 
-									 && this[row + 1, col + 1, lev - 1].Floor != null // southeast
-									 && this[row + 1, col + 2, lev - 1].Floor != null
-									 && this[row + 2, col + 1, lev - 1].Floor != null
-									 && this[row + 2, col + 2, lev - 1].Floor != null;
+									 && this[col + 1, row + 1, lev - 1].Floor != null // southeast
+									 && this[col + 2, row + 1, lev - 1].Floor != null
+									 && this[col + 1, row + 2, lev - 1].Floor != null
+									 && this[col + 2, row + 2, lev - 1].Floor != null;
 					}
 				}
 			}

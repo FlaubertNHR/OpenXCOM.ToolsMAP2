@@ -344,7 +344,7 @@ namespace MapView.Forms.MainView
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapBase[row, col];
+					tile = MapBase[col, row];
 
 					if ((visible & TopView.FLOOR)   != 0) tile.Floor   = null;
 					if ((visible & TopView.WEST)    != 0) tile.West    = null;
@@ -378,17 +378,17 @@ namespace MapView.Forms.MainView
 				var a = GetDragBeg_abs();
 				var b = GetDragEnd_abs();
 
-				_copied = new MapTile[b.Y - a.Y + 1,
-									  b.X - a.X + 1];
+				_copied = new MapTile[b.X - a.X + 1,
+									  b.Y - a.Y + 1];
 
 				MapTile tile;
 
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapBase[row, col];
-					_copied[row - a.Y,
-							col - a.X] = new MapTile(
+					tile = MapBase[col, row];
+					_copied[col - a.X,
+							row - a.Y] = new MapTile(
 												tile.Floor,
 												tile.West,
 												tile.North,
@@ -417,17 +417,17 @@ namespace MapView.Forms.MainView
 
 					for (int
 							row = DragBeg.Y;
-							row != MapBase.MapSize.Rows && (row - DragBeg.Y) < _copied.GetLength(0);
+							row != MapBase.MapSize.Rows && (row - DragBeg.Y) < _copied.GetLength(1);
 							++row)
 					{
 						for (int
 								col = DragBeg.X;
-								col != MapBase.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(1);
+								col != MapBase.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(0);
 								++col)
 						{
-							if ((tile = MapBase[row, col]) != null
-								&& (copy = _copied[row - DragBeg.Y,
-												   col - DragBeg.X]) != null)
+							if ((tile = MapBase[col, row]) != null
+								&& (copy = _copied[col - DragBeg.X,
+												   row - DragBeg.Y]) != null)
 							{
 								if ((visible & TopView.FLOOR)   != 0) tile.Floor   = copy.Floor;
 								if ((visible & TopView.WEST)    != 0) tile.West    = copy.West;
@@ -535,7 +535,7 @@ namespace MapView.Forms.MainView
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapBase[row, col];
+					tile = MapBase[col, row];
 					tile[quad] = part;
 					tile.Vacancy();
 				}
@@ -563,7 +563,7 @@ namespace MapView.Forms.MainView
 			for (int col = a.X; col <= b.X; ++col)
 			for (int row = a.Y; row <= b.Y; ++row)
 			{
-				tile = MapBase[row, col];
+				tile = MapBase[col, row];
 				tile[quad] = null;
 				tile.Vacancy();
 			}
@@ -586,10 +586,10 @@ namespace MapView.Forms.MainView
 			MapTile tile;
 
 			for (int lev = 0; lev != MapBase.MapSize.Levs; ++lev)
-			for (int col = 0; col != MapBase.MapSize.Cols; ++col)
 			for (int row = 0; row != MapBase.MapSize.Rows; ++row)
+			for (int col = 0; col != MapBase.MapSize.Cols; ++col)
 			{
-				tile = MapBase[row, col, lev];
+				tile = MapBase[col, row, lev];
 
 				if ((part = tile.Floor) != null
 					&& part.SetId == src)
@@ -1187,7 +1187,7 @@ namespace MapView.Forms.MainView
 														lev == MapBase.Level);
 						}
 
-						if (!(tile = MapBase[row, col, lev]).Vacant
+						if (!(tile = MapBase[col, row, lev]).Vacant
 							&& (!tile.Occulted
 								|| lev == MapBase.Level))
 						{
@@ -1291,7 +1291,7 @@ namespace MapView.Forms.MainView
 														lev == MapBase.Level);
 						}
 
-						if (!(tile = MapBase[row, col, lev]).Vacant
+						if (!(tile = MapBase[col, row, lev]).Vacant
 							&& (!tile.Occulted || lev == MapBase.Level))
 						{
 							// This is different between REMBRANDT and PICASSO ->

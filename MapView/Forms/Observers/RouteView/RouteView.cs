@@ -278,7 +278,7 @@ namespace MapView.Forms.Observers
 				{
 					int overid;
 
-					RouteNode node = MapBase[loc.Y, loc.X, MapBase.Level].Node;
+					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
 					if (node != null)
 					{
 						overid = node.Index;
@@ -356,7 +356,7 @@ namespace MapView.Forms.Observers
 												RoutePanel.CursorPosition.Y);
 				if (loc.X != -1)
 				{
-					RouteNode node = MapBase[loc.Y, loc.X, MapBase.Level].Node;
+					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
 					if (node != null)
 					{
 						if (node.Spawn == SpawnWeight.None)
@@ -389,7 +389,7 @@ namespace MapView.Forms.Observers
 				{
 					int overid;
 
-					RouteNode node = MapBase[loc.Y, loc.X, MapBase.Level].Node;
+					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
 					if (node != null)
 					{
 						overid = node.Index;
@@ -559,8 +559,8 @@ namespace MapView.Forms.Observers
 				{
 					RouteChanged = true;
 
-					MapFile[Dragnode.Row, // clear the node from the previous tile
-							Dragnode.Col,
+					MapFile[Dragnode.Col, // clear the node from the previous tile
+							Dragnode.Row,
 							Dragnode.Lev].Node = null;
 
 					Dragnode.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
@@ -1507,7 +1507,7 @@ namespace MapView.Forms.Observers
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.Left,
-											MapFile[loc.Y, loc.X],
+											MapFile[loc.X, loc.Y],
 											MapFile.Location);
 			OnRoutePanelMouseDown(null, args);
 
@@ -1742,8 +1742,8 @@ namespace MapView.Forms.Observers
 				if (RoutesInfo != null)
 					RoutesInfo.DeleteNode(NodeSelected);
 
-				MapFile[NodeSelected.Row,
-						NodeSelected.Col,
+				MapFile[NodeSelected.Col,
+						NodeSelected.Row,
 						NodeSelected.Lev].Node = null;
 				MapFile.Routes.DeleteNode(NodeSelected);
 
@@ -1988,8 +1988,8 @@ namespace MapView.Forms.Observers
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.None,
-											MapFile[Dragnode.Row,
-													Dragnode.Col,
+											MapFile[Dragnode.Col,
+													Dragnode.Row,
 													Dragnode.Lev - 1],
 											new MapLocation(
 														Dragnode.Col,
@@ -2006,8 +2006,8 @@ namespace MapView.Forms.Observers
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.None,
-											MapFile[Dragnode.Row,
-													Dragnode.Col,
+											MapFile[Dragnode.Col,
+													Dragnode.Row,
 													Dragnode.Lev + 1],
 											new MapLocation(
 														Dragnode.Col,

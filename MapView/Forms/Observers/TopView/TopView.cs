@@ -243,7 +243,7 @@ namespace MapView.Forms.Observers
 			for (int r = 0; r != MapBase.MapSize.Rows; ++r)
 			for (int c = 0; c != MapBase.MapSize.Cols; ++c)
 			{
-				tile = MapBase[r,c,l];
+				tile = MapBase[c,r,l];
 				if (!tile.Vacant)
 				{
 					if (tile.Floor   != null && (QuadrantType)tile.Floor  .Record.PartType != QuadrantType.Floor)

@@ -241,10 +241,8 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if (MapFile[r,c] != null)
+					if ((tile = MapFile[c,r]) != null)
 					{
-						tile = MapFile[r,c];
-
 						if (tile.Content != null)
 							BlobService.DrawContent(_graphics, ToolContent, x, y, tile.Content);
 
@@ -264,6 +262,8 @@ namespace MapView.Forms.Observers
 		private void DrawLinks()
 		{
 			RouteNode node;
+			MapTile tile;
+
 			for (int
 					rSrc = 0,
 						x = Origin.X,
@@ -282,8 +282,8 @@ namespace MapView.Forms.Observers
 							xSrc += HalfWidth,
 							ySrc += HalfHeight)
 				{
-					if (MapFile[rSrc, cSrc] != null
-						&& (node = MapFile[rSrc, cSrc].Node) != null
+					if ((tile = MapFile[cSrc, rSrc]) != null
+						&& (node = tile.Node) != null
 						&& (NodeSelected == null || node != NodeSelected))
 					{
 						DrawLinkLines(xSrc, ySrc, node);
@@ -449,7 +449,7 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((tile = MapFile[row, col]) != null)	// NOTE: MapFileBase has the current level stored and uses
+					if ((tile = MapFile[col, row]) != null)	// NOTE: MapFileBase has the current level stored and uses
 					{										// it to return only tiles on the correct level here.
 						if ((node = tile.Node) != null)
 						{
@@ -592,7 +592,7 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((tile = MapFile[r,c]) != null
+					if ((tile = MapFile[c,r]) != null
 						&& (node = tile.Node) != null)
 					{
 						int infoboxX = x - HalfWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up

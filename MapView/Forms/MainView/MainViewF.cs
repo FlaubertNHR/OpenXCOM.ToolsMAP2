@@ -1552,7 +1552,7 @@ namespace MapView
 											y += ConstHalfHeight,
 											++i)
 								{
-									var parts = @base[row, col, lev].UsedParts;
+									var parts = @base[col, row, lev].UsedParts;
 									foreach (var part in parts)
 									{
 										BitmapService.Insert(

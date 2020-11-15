@@ -282,7 +282,7 @@ namespace MapView.Forms.Observers
 								x += halfWidth,
 								y += halfHeight)
 					{
-						if ((tile = MapBase[r,c]) != null)
+						if ((tile = MapBase[c,r]) != null)
 							DrawBlobs(tile, graphics, x,y);
 					}
 				}

@@ -260,7 +260,7 @@ namespace MapView
 						{
 							ptrPixel = pos + (x * 16) + (y * 16 * data.Stride);
 
-							tile = _base[y,x,z];
+							tile = _base[x,y,z];
 
 							if (tile.Floor != null
 								&& (iconid = tile.Floor.Record.ScanG) < iconsTotal

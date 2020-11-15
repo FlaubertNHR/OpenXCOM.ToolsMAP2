@@ -95,7 +95,7 @@ namespace XCom
 				for (int row = 0; row != rows; ++row) // y-axis
 				for (int col = 0; col != cols; ++col) // x-axis
 				{
-					this[row, col, lev] = CreateTile(
+					this[col, row, lev] = CreateTile(
 												parts,
 												fs.ReadByte(),
 												fs.ReadByte(),
@@ -229,7 +229,7 @@ namespace XCom
 			MapTile tile;
 			foreach (RouteNode node in Routes)
 			{
-				if ((tile = this[node.Row, node.Col, node.Lev]) != null)
+				if ((tile = this[node.Col, node.Row, node.Lev]) != null)
 					tile.Node = node;
 			}
 		}
@@ -244,7 +244,7 @@ namespace XCom
 			for (int row = 0; row != MapSize.Rows; ++row)
 			for (int col = 0; col != MapSize.Cols; ++col)
 			{
-				this[row, col, lev].Node = null;
+				this[col, row, lev].Node = null;
 			}
 		}
 
@@ -260,8 +260,8 @@ namespace XCom
 										(byte)location.Col,
 										(byte)location.Lev);
 
-			return (this[(int)node.Row,
-						 (int)node.Col,
+			return (this[(int)node.Col,
+						 (int)node.Row,
 						      node.Lev].Node = node);
 		}
 		#endregion Methods (routenodes)
@@ -400,7 +400,7 @@ namespace XCom
 				for (int row = 0; row != MapSize.Rows; ++row)
 				for (int col = 0; col != MapSize.Cols; ++col)
 				{
-					tile = this[row, col, lev];
+					tile = this[col, row, lev];
 
 					if (tile.Floor == null || (id = tile.Floor.SetId + IdOffset) > (int)byte.MaxValue)
 						fs.WriteByte(0);

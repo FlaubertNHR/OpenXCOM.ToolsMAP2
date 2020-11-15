@@ -196,11 +196,11 @@ namespace MapView
 			MapTile tile;
 			Tilepart part;
 
-			for (int col = 0; col != cols; ++col)
-			for (int row = 0; row != rows; ++row)
 			for (int lev = 0; lev != levs; ++lev)
+			for (int row = 0; row != rows; ++row)
+			for (int col = 0; col != cols; ++col)
 			{
-				tile = _file[row, col, lev];
+				tile = _file[col, row, lev];
 				if (!tile.Vacant)
 				{
 					for (int i = 0; i != MapTile.QUADS; ++i)
