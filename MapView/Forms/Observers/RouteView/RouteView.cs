@@ -1500,7 +1500,7 @@ namespace MapView.Forms.Observers
 				MapFile.Level = node.Lev; // fire SelectLevel
 
 			MapFile.Location = new MapLocation( // fire SelectLocation
-											loc.Y, loc.X,
+											loc.X, loc.Y,
 											MapFile.Level);
 
 			MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -1992,8 +1992,8 @@ namespace MapView.Forms.Observers
 													Dragnode.Col,
 													Dragnode.Lev - 1],
 											new MapLocation(
-														Dragnode.Row,
 														Dragnode.Col,
+														Dragnode.Row,
 														Dragnode.Lev - 1));
 			OnRoutePanelMouseUp(null, args);
 
@@ -2010,8 +2010,8 @@ namespace MapView.Forms.Observers
 													Dragnode.Col,
 													Dragnode.Lev + 1],
 											new MapLocation(
-														Dragnode.Row,
 														Dragnode.Col,
+														Dragnode.Row,
 														Dragnode.Lev + 1));
 			OnRoutePanelMouseUp(null, args);
 

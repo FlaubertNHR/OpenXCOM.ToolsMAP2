@@ -714,7 +714,7 @@ namespace MapView.Forms.MainView
 								_keyDeltaX =
 								_keyDeltaY = 0;
 
-								MapBase.Location = new MapLocation(r,c, MapBase.Level); // fire SelectLocation
+								MapBase.Location = new MapLocation(c,r, MapBase.Level); // fire SelectLocation
 
 								loc.X = _overCol = c;
 								loc.Y = _overRow = r;
@@ -857,7 +857,7 @@ namespace MapView.Forms.MainView
 							_overRow = loc.Y; // previous location when the form is activated.
 
 							MapBase.Location = new MapLocation( // fire SelectLocation
-															loc.Y, loc.X,
+															loc.X, loc.Y,
 															MapBase.Level);
 							_isMouseDragL = true;
 							ProcessSelection(loc,loc);

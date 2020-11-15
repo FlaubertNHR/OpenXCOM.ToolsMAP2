@@ -197,7 +197,7 @@ namespace MapView.Forms.Observers
 				MainViewOverlay.that._keyDeltaY = 0;
 
 				MapFile.Location = new MapLocation( // fire SelectLocation
-												loc.Y, loc.X,
+												loc.X, loc.Y,
 												MapFile.Level);
 
 				MainViewOverlay.that.ProcessSelection(loc,loc);	// set selected location for other viewers.
@@ -220,7 +220,7 @@ namespace MapView.Forms.Observers
 			if (loc.X != -1)
 			{
 				MapFile.Location = new MapLocation( // fire SelectLocation
-												loc.Y, loc.X,
+												loc.X, loc.Y,
 												MapFile.Level);
 
 				var args = new RoutePanelEventArgs(
@@ -317,7 +317,7 @@ namespace MapView.Forms.Observers
 						if (   r > -1 && r < MapFile.MapSize.Rows
 							&& c > -1 && c < MapFile.MapSize.Cols)
 						{
-							MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation event
+							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire SelectLocation event
 
 							loc.X = c; loc.Y = r;
 							MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -339,8 +339,8 @@ namespace MapView.Forms.Observers
 						{
 							MapFile.ChangeLevel(vert);			// fire SelectLevel event
 							MapFile.Location = new MapLocation(	// fire SelectLocation event
-															MapFile.Location.Row,
 															MapFile.Location.Col,
+															MapFile.Location.Row,
 															level);
 						}
 					}
@@ -376,7 +376,7 @@ namespace MapView.Forms.Observers
 						{
 							RouteView.Dragnode = NodeSelected;
 
-							MapFile.Location = new MapLocation(r,c, MapFile.Level); // fire SelectLocation event
+							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire SelectLocation event
 
 							var args = new RoutePanelEventArgs(
 															MouseButtons.None,
@@ -403,8 +403,8 @@ namespace MapView.Forms.Observers
 
 							MapFile.ChangeLevel(vert);			// fire SelectLevel event
 							MapFile.Location = new MapLocation(	// fire SelectLocation event
-															MapFile.Location.Row,
 															MapFile.Location.Col,
+															MapFile.Location.Row,
 															level);
 
 							var args = new RoutePanelEventArgs(
