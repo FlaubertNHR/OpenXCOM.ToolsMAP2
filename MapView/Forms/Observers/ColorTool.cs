@@ -12,7 +12,7 @@ namespace MapView.Forms.Observers
 			IDisposable
 	{
 		#region Fields (static)
-		private const int ALFALFA = 90;
+		private const int ALFALFA = 100;
 		#endregion Fields (static)
 
 
