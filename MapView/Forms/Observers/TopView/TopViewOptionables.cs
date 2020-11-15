@@ -476,12 +476,7 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		internal void OnFlagChanged(string key, object val)
 		{
-//			switch (key)
-//			{
-//				case str_EnableRightClickWaitTimer:
 			EnableRightClickWaitTimer = (bool)val;
-//					break;
-//			}
 		}
 		#endregion Events
 
