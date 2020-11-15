@@ -3141,8 +3141,8 @@ namespace MapView
 			quadrantpanel1.Tile =
 			quadrantpanel2.Tile = null;
 
-			quadrantpanel1.Loc =
-			quadrantpanel2.Loc = null;
+			quadrantpanel1.SelectedLocation =
+			quadrantpanel2.SelectedLocation = null;
 
 			QuadrantDrawService.CurrentTilepart = ObserverManager.TileView.Control.SelectedTilepart;
 

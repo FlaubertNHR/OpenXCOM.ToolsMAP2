@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using MapView.Forms.MainView;
 
 using XCom;
+using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -517,34 +518,70 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Prints the currently selected tile's location.
+		/// @note This is called by QuadrantPanel.
 		/// </summary>
-		/// <param name="panelwidth"></param>
-		/// <param name="loc"></param>
-		internal static void PrintLocationString(int panelwidth, MapLocation loc)
+		/// <param name="location"></param>
+		/// <param name="panelwidth">the width of QuadrantPanel</param>
+		internal static void PrintSelectedLocation(MapLocation location, int panelwidth)
 		{
 			var file = ObserverManager.TopView.Control.TopPanel.MapBase as MapFile;
 
-			int c = loc.Col;
-			int r = loc.Row;
+			int c = location.Col;
+			int r = location.Row;
 			int l = file.MapSize.Levs - file.Level;
 
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (!MainViewF.Optionables.Base1_z) { --l; }
 
-			string location = String.Format(
-										CultureInfo.InvariantCulture,
-										"c {0}  r {1}  L {2}",
-										c,r,l);
+			string loc = String.Format(
+									CultureInfo.InvariantCulture,
+									"c {0}  r {1}  L {2}",
+									c,r,l);
 
-			int w = TextRenderer.MeasureText(location, FontLocation).Width;
+			int w = TextRenderer.MeasureText(loc, FontLocation).Width;
 			if (StartX + Quadwidth * (QuadrantPart + 1) - MarginHori + w < panelwidth)
 			{
 				_graphics.DrawString(
-								location,
+								loc,
 								FontLocation,
 								BrushLocation,
 								panelwidth - w, StartY);
 			}
+		}
+
+		/// <summary>
+		/// Prints the selector's current tile location.
+		/// @note This is called by TopPanel.
+		/// </summary>
+		/// <param name="location"></param>
+		/// <param name="panelwidth">the width of TopPanel</param>
+		/// <param name="panelheight">the width of TopPanel</param>
+		/// <param name="base"></param>
+		internal static void PrintSelectorLocation(
+				Point location,
+				int panelwidth,
+				int panelheight,
+				MapFileBase @base)
+		{
+			int c = location.X;
+			int r = location.Y;
+			int l = @base.MapSize.Levs - @base.Level;
+
+			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+			if (!MainViewF.Optionables.Base1_z) { --l; }
+
+			string loc = String.Format(
+									CultureInfo.InvariantCulture,
+									"c {0}  r {1}  L {2}",
+									c,r,l);
+
+			int x = panelwidth - TextRenderer.MeasureText(loc, FontLocation).Width;
+			int y = panelheight - 20;
+			_graphics.DrawString(
+							loc,
+							FontLocation,
+							BrushLocation,
+							x,y);
 		}
 
 

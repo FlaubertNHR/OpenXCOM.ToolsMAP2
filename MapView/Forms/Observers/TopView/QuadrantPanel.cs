@@ -43,7 +43,7 @@ namespace MapView.Forms.Observers
 		internal MapTile Tile
 		{ private get; set; }
 
-		internal MapLocation Loc
+		internal MapLocation SelectedLocation
 		{ private get; set; }
 		#endregion Properties
 
@@ -71,8 +71,9 @@ namespace MapView.Forms.Observers
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
-			Tile = args.Tile;
-			Loc  = args.Location;
+			Tile             = args.Tile;
+			SelectedLocation = args.Location;
+
 			Refresh();
 		}
 
@@ -82,10 +83,10 @@ namespace MapView.Forms.Observers
 		/// <param name="args"></param>
 		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{
-			if (Loc != null)
+			if (SelectedLocation != null)
 			{
-				Tile = MapBase[Loc.Row, Loc.Col];
-				Loc.Lev = args.Level;
+				Tile = MapBase[SelectedLocation.Row, SelectedLocation.Col];
+				SelectedLocation.Lev = args.Level;
 			}
 			Refresh();
 		}
@@ -207,8 +208,8 @@ namespace MapView.Forms.Observers
 			QuadrantDrawService.SetGraphics(graphics);
 			QuadrantDrawService.Draw(Tile, SelectedQuadrant);
 
-			if (Loc != null)
-				QuadrantDrawService.PrintLocationString(Width, Loc);
+			if (SelectedLocation != null)
+				QuadrantDrawService.PrintSelectedLocation(SelectedLocation, Width);
 		}
 		#endregion Events (override)
 

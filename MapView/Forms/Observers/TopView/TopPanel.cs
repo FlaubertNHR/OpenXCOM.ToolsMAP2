@@ -34,6 +34,8 @@ namespace MapView.Forms.Observers
 		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over cursor lozenge
 		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // selected tile or tiles being drag-selected
 
+		private Point _loc;
+
 		private int _col = -1; // these track the location of the mouse-cursor
 		private int _row = -1;
 
@@ -324,11 +326,9 @@ namespace MapView.Forms.Observers
 									OffsetY  + (_col + _row) * halfHeight);
 					graphics.DrawPath(TopPanel.Pens[TopViewOptionables.str_SelectorColor], _lozSelector);
 
-					// print mouseover location string
-				}
-				else
-				{
-					// clear mouseover location string
+					// print mouseover location ->
+					QuadrantDrawService.SetGraphics(graphics);
+					QuadrantDrawService.PrintSelectorLocation(_loc, Width, Height, MapBase);
 				}
 
 				// draw tiles-selected lozenge ->
@@ -446,9 +446,8 @@ namespace MapView.Forms.Observers
 				case MouseButtons.Left:
 				case MouseButtons.Right:
 				{
-					var loc = GetTileLocation(e.X, e.Y);
-					if (   loc.X > -1 && loc.X < MapBase.MapSize.Cols
-						&& loc.Y > -1 && loc.Y < MapBase.MapSize.Rows)
+					if (   _col > -1 && _col < MapBase.MapSize.Cols
+						&& _row > -1 && _row < MapBase.MapSize.Rows)
 					{
 						ObserverManager.RouteView   .Control     .DeselectNode(false);
 						ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
@@ -465,10 +464,10 @@ namespace MapView.Forms.Observers
 //						MainViewOverlay.that.FirstClick = true;
 
 						MapBase.Location = new MapLocation( // fire SelectLocation
-														loc.Y, loc.X,
+														_col, _row,
 														MapBase.Level);
 						_isMouseDrag = true;
-						MainViewOverlay.that.ProcessSelection(loc,loc);
+						MainViewOverlay.that.ProcessSelection(_loc, _loc);
 					}
 					break;
 				}
@@ -519,20 +518,20 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			var loc = GetTileLocation(e.X, e.Y);
-			if (loc.X != _col || loc.Y != _row)
+			SetTileLocation(e.X, e.Y);
+			if (_loc.X != _col || _loc.Y != _row)
 			{
-				_col = loc.X;
-				_row = loc.Y;
+				_col = _loc.X;
+				_row = _loc.Y;
 
 				if (_isMouseDrag)
 				{
 					var overlay = MainViewOverlay.that;
 
-					overlay._keyDeltaX = loc.X - overlay.DragBeg.X; // these are in case user stops a mouse-drag
-					overlay._keyDeltaY = loc.Y - overlay.DragBeg.Y; // and resumes selection using keyboard.
+					overlay._keyDeltaX = _loc.X - overlay.DragBeg.X; // these are in case user stops a mouse-drag
+					overlay._keyDeltaY = _loc.Y - overlay.DragBeg.Y; // and resumes selection using keyboard.
 
-					overlay.ProcessSelection(overlay.DragBeg, loc);
+					overlay.ProcessSelection(overlay.DragBeg, _loc);
 				}
 				else
 					Invalidate();
@@ -549,7 +548,7 @@ namespace MapView.Forms.Observers
 		/// <param name="x">the x-position of the mouse-cursor in pixels wrt/ this control's area</param>
 		/// <param name="y">the y-position of the mouse-cursor in pixels wrt/ this control's area</param>
 		/// <returns></returns>
-		private Point GetTileLocation(int x, int y)
+		private void SetTileLocation(int x, int y)
 		{
 			x -= _originX;
 			y -=  OffsetY;
@@ -561,7 +560,7 @@ namespace MapView.Forms.Observers
 					  + y / (halfHeight * 2);
 			double y1 = (y * 2 - x) / (halfWidth * 2);
 
-			return new Point(
+			_loc = new Point(
 						(int)Math.Floor(x1),
 						(int)Math.Floor(y1));
 		}
