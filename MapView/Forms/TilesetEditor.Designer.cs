@@ -509,7 +509,7 @@
 			this.lbl_Tileset_.Name = "lbl_Tileset_";
 			this.lbl_Tileset_.Size = new System.Drawing.Size(60, 20);
 			this.lbl_Tileset_.TabIndex = 3;
-			this.lbl_Tileset_.Text = "MAPS";
+			this.lbl_Tileset_.Text = "MAP";
 			this.lbl_Tileset_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.lbl_Tileset_, "label of the .MAP and .RMP files");
 			// 
