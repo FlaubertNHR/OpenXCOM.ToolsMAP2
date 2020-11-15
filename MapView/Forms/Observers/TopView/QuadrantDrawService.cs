@@ -386,8 +386,8 @@ namespace MapView.Forms.Observers
 				_swatchbrushNorth = new SolidBrush(TopPanel.Pens[TopViewOptionables.str_NorthColor].Color);
 
 			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_FloorColor],   (int)QuadrantType.Floor);
-			FillSwatchColor(_swatchbrushWest,  (int)QuadrantType.West);
-			FillSwatchColor(_swatchbrushNorth, (int)QuadrantType.North);
+			FillSwatchColor(_swatchbrushWest,                                      (int)QuadrantType.West);
+			FillSwatchColor(_swatchbrushNorth,                                     (int)QuadrantType.North);
 			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_ContentColor], (int)QuadrantType.Content);
 		}
 		private static SolidBrush _swatchbrushWest;
