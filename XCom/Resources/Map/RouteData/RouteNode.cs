@@ -121,7 +121,7 @@ namespace XCom
 
 			_links = new Link[LinkSlots];
 			for (int slotId = 0; slotId != LinkSlots; ++slotId)
-				_links[slotId] = new Link(Link.NotUsed, 0, 0);
+				_links[slotId] = new Link(Link.NotUsed, 0,0);
 
 			Type   = UnitType.Any;
 			Rank   = (byte)0;
@@ -141,15 +141,15 @@ namespace XCom
 		/// <param name="fs"></param>
 		internal void WriteNode(Stream fs)
 		{
-			fs.WriteByte(Row);
-			fs.WriteByte(Col);
+			fs.WriteByte(      Row); // NOTE: col and row are reversed in the file.
+			fs.WriteByte(      Col);
 			fs.WriteByte((byte)Lev);
 			fs.WriteByte((byte)0);
 
 			for (int slot = 0; slot != LinkSlots; ++slot)
 			{
-				fs.WriteByte(_links[slot].Destination);
-				fs.WriteByte(_links[slot].Distance);
+				fs.WriteByte(      _links[slot].Destination);
+				fs.WriteByte(      _links[slot].Distance);
 				fs.WriteByte((byte)_links[slot].Type);
 			}
 
