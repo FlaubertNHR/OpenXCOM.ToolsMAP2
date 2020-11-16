@@ -358,7 +358,7 @@ namespace XCom
 				foreach (RouteNode node in Nodes)	// See also RouteView.OnCheckNodeRanksClick()
 				{
 					if (node.OobRank != (byte)0)
-						invalids.Add(node.Index);
+						invalids.Add(node.Id);
 				}
 
 				if (invalids.Count != 0)
@@ -481,14 +481,14 @@ namespace XCom
 		/// <param name="node">the node to delete</param>
 		public void DeleteNode(RouteNode node)
 		{
-			int id = node.Index;
+			int id = node.Id;
 
 			Nodes.Remove(node);
 
 			foreach (var node0 in Nodes)
 			{
-				if (node0.Index > id) // shuffle all higher-indexed nodes down 1
-					--node0.Index;
+				if (node0.Id > id) // shuffle all higher-indexed nodes down 1
+					--node0.Id;
 
 				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 				{

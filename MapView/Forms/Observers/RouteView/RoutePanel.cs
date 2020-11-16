@@ -713,7 +713,7 @@ namespace MapView.Forms.Observers
 					textSpawn1  = Spawn;
 					textPatrol1 = Patrol;
 
-					textOver2 = (node.Index).ToString(CultureInfo.CurrentCulture);
+					textOver2 = (node.Id).ToString(CultureInfo.CurrentCulture);
 					textType2 = Enum.GetName(typeof(UnitType), node.Type);
 
 					if (MapFile.Descriptor.GroupType == GameType.Tftd)

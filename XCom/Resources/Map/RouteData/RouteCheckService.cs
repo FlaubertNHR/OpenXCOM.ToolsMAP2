@@ -51,7 +51,7 @@ namespace XCom
 										"Destination node is outside the Map's bounds."
 											+ "{0}{0}Do you want it deleted?",
 										Environment.NewLine);
-				string text = "id " + node.Index + " : " + node.GetLocationString(file.MapSize.Levs);
+				string text = "id " + node.Id + " : " + node.GetLocationString(file.MapSize.Levs);
 				f.SetTexts(label, text);
 
 				return f.ShowDialog();
@@ -136,17 +136,17 @@ namespace XCom
 
 					if (total > 99)
 					{
-						if (node.Index < 10)
+						if (node.Id < 10)
 							text += "  ";
-						else if (node.Index < 100)
+						else if (node.Id < 100)
 							text += " ";
 					}
 					else if (total > 9)
 					{
-						if (node.Index < 10)
+						if (node.Id < 10)
 							text += " ";
 					}
-					text += node.Index + " :  c ";
+					text += node.Id + " :  c ";
 
 					loc = node.Col;
 					if (Base1_xy) ++loc;

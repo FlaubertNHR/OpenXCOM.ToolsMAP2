@@ -48,7 +48,7 @@ namespace XCom
 		/// <summary>
 		/// Gets/Sets the index of this RouteNode.
 		/// </summary>
-		public byte Index
+		public byte Id
 		{ get; internal set; }
 
 
@@ -69,7 +69,7 @@ namespace XCom
 		/// <param name="bindata"></param>
 		internal RouteNode(byte id, byte[] bindata)
 		{
-			Index = id;
+			Id = id;
 
 			Row = bindata[0]; // NOTE: x & y are switched in the RMP-file.
 			Col = bindata[1];
@@ -113,7 +113,7 @@ namespace XCom
 		/// <param name="lev"></param>
 		internal RouteNode(byte id, byte col, byte row, byte lev)
 		{
-			Index = id;
+			Id = id;
 
 			Col =      col;
 			Row =      row;
@@ -194,12 +194,12 @@ namespace XCom
 		public override bool Equals(object obj)
 		{
 			var other = obj as RouteNode;
-			return (other != null && other.Index == Index);
+			return (other != null && other.Id == Id);
 		}
 
 		public override int GetHashCode()
 		{
-			return Index; // nice hashcode ...
+			return Id; // nice hashcode ...
 		}
 
 		public override string ToString()

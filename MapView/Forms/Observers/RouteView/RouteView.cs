@@ -281,7 +281,7 @@ namespace MapView.Forms.Observers
 					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
 					if (node != null)
 					{
-						overid = node.Index;
+						overid = node.Id;
 						if (node.Spawn == SpawnWeight.None)
 						{
 							lblOver.ForeColor = Optionables.NodeColor;
@@ -392,7 +392,7 @@ namespace MapView.Forms.Observers
 					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
 					if (node != null)
 					{
-						overid = node.Index;
+						overid = node.Id;
 						if (node.Spawn == SpawnWeight.None)
 						{
 							lblOver.ForeColor = Optionables.NodeColor;
@@ -425,7 +425,7 @@ namespace MapView.Forms.Observers
 
 				if (NodeSelected != null)
 				{
-					selected = "Selected " + NodeSelected.Index;
+					selected = "Selected " + NodeSelected.Id;
 					level = NodeSelected.Lev;
 					lblSelected.ForeColor = Optionables.NodeSelectedColor;
 				}
@@ -607,7 +607,7 @@ namespace MapView.Forms.Observers
 			var tile = RoutePanel.GetTile(ref x, ref y); // x/y -> tile-location
 			if (tile != null && tile.Node != null)
 			{
-				overid = tile.Node.Index;
+				overid = tile.Node.Id;
 				if (tile.Node.Spawn == SpawnWeight.None)
 				{
 					lblOver.ForeColor = Optionables.NodeColor;
@@ -655,11 +655,11 @@ namespace MapView.Forms.Observers
 		{
 			if (_conType != ConnectNodesType.None)
 			{
-				int slot = GetOpenLinkSlot(NodeSelected, node.Index);
+				int slot = GetOpenLinkSlot(NodeSelected, node.Id);
 				if (slot > -1)
 				{
 					RouteChanged = true;
-					NodeSelected[slot].Destination = node.Index;
+					NodeSelected[slot].Destination = node.Id;
 					NodeSelected[slot].Distance = CalculateLinkDistance(NodeSelected, node);
 				}
 				else if (slot == -3)
@@ -681,11 +681,11 @@ namespace MapView.Forms.Observers
 
 				if (_conType == ConnectNodesType.TwoWay)
 				{
-					slot = GetOpenLinkSlot(node, NodeSelected.Index);
+					slot = GetOpenLinkSlot(node, NodeSelected.Id);
 					if (slot > -1)
 					{
 						RouteChanged = true;
-						node[slot].Destination = NodeSelected.Index;
+						node[slot].Destination = NodeSelected.Id;
 						node[slot].Distance = CalculateLinkDistance(node, NodeSelected);
 					}
 					else if (slot == -3)
@@ -810,14 +810,14 @@ namespace MapView.Forms.Observers
 			int count = MapFile.Routes.Nodes.Count;
 			for (var id = 0; id != count; ++id) // update distances of any links to the selected node ->
 			{
-				if (id != NodeSelected.Index) // NOTE: a node shall not link to itself.
+				if (id != NodeSelected.Id) // NOTE: a node shall not link to itself.
 				{
 					var node = MapFile.Routes[id];
 
 					for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 					{
 						var link = node[slot];
-						if (link.Destination == NodeSelected.Index)
+						if (link.Destination == NodeSelected.Id)
 							link.Distance = CalculateLinkDistance(
 																node,
 																NodeSelected);
@@ -926,7 +926,7 @@ namespace MapView.Forms.Observers
 				int count = MapFile.Routes.Nodes.Count;
 				for (byte id = 0; id != count; ++id)
 				{
-					if (id != NodeSelected.Index)
+					if (id != NodeSelected.Id)
 						_linksList.Add(id);			// <- add all linkable (ie. other) nodes
 				}
 				_linksList.AddRange(_linkTypes);	// <- add the four compass-points + link-not-used.
@@ -1454,7 +1454,7 @@ namespace MapView.Forms.Observers
 														MapFile.MapSize.Rows,
 														MapFile.MapSize.Levs))
 			{
-				OgnodeId = NodeSelected.Index; // store the current nodeId for the og-button.
+				OgnodeId = NodeSelected.Id; // store the current nodeId for the og-button.
 
 				ObserverManager.RouteView   .Control     .btnOg.Enabled =
 				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = true;
@@ -1587,7 +1587,7 @@ namespace MapView.Forms.Observers
 		{
 			if (OgnodeId < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
 			{
-				if (NodeSelected == null || OgnodeId != NodeSelected.Index)
+				if (NodeSelected == null || OgnodeId != NodeSelected.Id)
 					SelectNode(OgnodeId);
 			}
 			else
@@ -1997,7 +1997,7 @@ namespace MapView.Forms.Observers
 														Dragnode.Lev - 1));
 			OnRoutePanelMouseUp(null, args);
 
-			SelectNode(NodeSelected.Index);
+			SelectNode(NodeSelected.Id);
 		}
 
 		private void OnNodeLower(object sender, EventArgs e)
@@ -2015,7 +2015,7 @@ namespace MapView.Forms.Observers
 														Dragnode.Lev + 1));
 			OnRoutePanelMouseUp(null, args);
 
-			SelectNode(NodeSelected.Index);
+			SelectNode(NodeSelected.Id);
 		}
 
 		/// <summary>
@@ -2233,7 +2233,7 @@ namespace MapView.Forms.Observers
 			foreach (RouteNode node in MapFile.Routes)
 			{
 				if (node.OobRank != (byte)0)
-					invalids.Add(node.Index);
+					invalids.Add(node.Id);
 			}
 
 			string info, title;
