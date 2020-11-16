@@ -463,13 +463,13 @@ namespace XCom
 		/// <summary>
 		/// Adds a node to the node-list.
 		/// </summary>
-		/// <param name="row"></param>
 		/// <param name="col"></param>
+		/// <param name="row"></param>
 		/// <param name="lev"></param>
 		/// <returns></returns>
-		internal RouteNode AddNode(byte row, byte col, byte lev)
+		internal RouteNode AddNode(byte col, byte row, byte lev)
 		{
-			var node = new RouteNode((byte)Nodes.Count, row, col, lev);
+			var node = new RouteNode((byte)Nodes.Count, col, row, lev);
 			Nodes.Add(node);
 
 			return node;

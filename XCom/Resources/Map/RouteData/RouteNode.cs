@@ -108,10 +108,10 @@ namespace XCom
 		/// cTor[1]. Creates a node based on row/col/level.
 		/// </summary>
 		/// <param name="id"></param>
-		/// <param name="row"></param>
 		/// <param name="col"></param>
+		/// <param name="row"></param>
 		/// <param name="lev"></param>
-		internal RouteNode(byte id, byte row, byte col, byte lev)
+		internal RouteNode(byte id, byte col, byte row, byte lev)
 		{
 			Index = id;
 

@@ -252,12 +252,12 @@ namespace XCom
 		/// Adds a route-node to the map-tile at a given location.
 		/// </summary>
 		/// <param name="location"></param>
-		/// <returns></returns>
+		/// <returns>the route-node</returns>
 		public RouteNode AddRouteNode(MapLocation location)
 		{
 			RouteNode node = Routes.AddNode(
-										(byte)location.Row,
 										(byte)location.Col,
+										(byte)location.Row,
 										(byte)location.Lev);
 
 			return (this[(int)node.Col,
