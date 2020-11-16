@@ -158,6 +158,7 @@
     <Compile Include="Forms\Observers\RouteView\RoutePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Forms\Observers\RouteView\RoutePanelEventArgs.cs" />
     <Compile Include="Forms\Observers\RouteView\RouteViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
