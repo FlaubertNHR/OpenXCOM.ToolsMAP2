@@ -454,9 +454,9 @@ namespace XCom
 		/// <summary>
 		/// Resizes the current Map.
 		/// </summary>
-		/// <param name="cols">total columns in the new Map</param>
-		/// <param name="rows">total rows in the new Map</param>
-		/// <param name="levs">total levels in the new Map</param>
+		/// <param name="cols">cols for the new Map</param>
+		/// <param name="rows">rows for the new Map</param>
+		/// <param name="levs">levs for the new Map</param>
 		/// <param name="zType">MRZT_TOP to add or subtract delta-levels
 		/// starting at the top level, MRZT_BOT to add or subtract delta-levels
 		/// starting at the ground level - but only if a height difference is

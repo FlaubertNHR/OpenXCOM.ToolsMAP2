@@ -36,9 +36,9 @@
 		/// <summary>
 		/// cTor. Constructs a MapLocations object.
 		/// </summary>
-		/// <param name="cols">the maximum columns of a Map</param>
-		/// <param name="rows">the maximum rows of a Map</param>
-		/// <param name="levs">the maximum levels of a Map</param>
+		/// <param name="cols">width</param>
+		/// <param name="rows">height</param>
+		/// <param name="levs">depth</param>
 		internal MapLocations(int cols, int rows, int levs)
 		{
 			_cols = cols;
@@ -52,9 +52,9 @@
 		/// <summary>
 		/// Gets the Id of a specified location.
 		/// </summary>
-		/// <param name="col">the current column</param>
-		/// <param name="row">the current row</param>
-		/// <param name="lev">the current level</param>
+		/// <param name="col">x-position</param>
+		/// <param name="row">y-position</param>
+		/// <param name="lev">z-position</param>
 		/// <returns></returns>
 		internal int GetLocationId(int col, int row, int lev)
 		{
