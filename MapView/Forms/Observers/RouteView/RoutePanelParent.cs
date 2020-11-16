@@ -258,6 +258,8 @@ namespace MapView.Forms.Observers
 		{
 			if (MapFile != null && (keyData & (Keys.Control | Keys.Alt)) == Keys.None) // safety.
 			{
+				bool invalidate = false;
+
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
 
@@ -273,9 +275,7 @@ namespace MapView.Forms.Observers
 													MapFile[0,0],
 													MapFile.Location);
 					RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
-
-					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+					invalidate = true;
 				}
 				else if (keyData == Keys.Enter)
 				{
@@ -285,9 +285,7 @@ namespace MapView.Forms.Observers
 															MapFile.Location.Row],
 													MapFile.Location);
 					RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
-
-					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+					invalidate = true;
 				}
 				else if ((keyData & Keys.Shift) == Keys.None)
 				{
@@ -327,9 +325,7 @@ namespace MapView.Forms.Observers
 															MapFile[c,r],
 															MapFile.Location);
 							RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
-
-							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+							invalidate = true;
 						}
 					}
 					else if (vert != MapFileBase.LEVEL_no)
@@ -383,12 +379,10 @@ namespace MapView.Forms.Observers
 															MapFile[c,r],
 															MapFile.Location);
 							RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+							invalidate = true;
 
 							ObserverManager.RouteView   .Control     .SetInfotextOver();
 							ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
-
-							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 						}
 					}
 					else if (vert != MapFileBase.LEVEL_no)
@@ -413,17 +407,21 @@ namespace MapView.Forms.Observers
 																	MapFile.Location.Row],
 															MapFile.Location);
 							RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+							invalidate = true;
 
 							ObserverManager.RouteView   .Control     .SetInfotextOver();
 							ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
 
 							ObserverManager.RouteView   .Control     .PrintSelectedInfo();
 							ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
-
-							ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-							ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 						}
 					}
+				}
+
+				if (invalidate)
+				{
+					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
 				}
 			}
 		}
