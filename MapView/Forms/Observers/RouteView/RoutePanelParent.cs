@@ -468,8 +468,8 @@ namespace MapView.Forms.Observers
 									(int)Math.Floor(xd),
 									(int)Math.Floor(yd));
 
-				if (   point.Y > -1 && point.Y < MapFile.MapSize.Rows
-					&& point.X > -1 && point.X < MapFile.MapSize.Cols)
+				if (   point.X > -1 && point.X < MapFile.MapSize.Cols
+					&& point.Y > -1 && point.Y < MapFile.MapSize.Rows)
 				{
 					return point;
 				}
