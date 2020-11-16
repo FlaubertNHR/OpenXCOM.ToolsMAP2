@@ -362,17 +362,16 @@ namespace MapView.Forms.Observers
 				if (loc.X != -1)
 				{
 					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
-					if (node != null)
+					if (node == null)
 					{
-						if (node.Spawn == SpawnWeight.None)
-						{
-							lblOver.ForeColor = Optionables.NodeColor;
-						}
-						else
-							lblOver.ForeColor = Optionables.NodeSpawnColor;
+						lblOver.ForeColor = SystemColors.ControlText;
+					}
+					else if (node.Spawn == SpawnWeight.None)
+					{
+						lblOver.ForeColor = Optionables.NodeColor;
 					}
 					else
-						lblOver.ForeColor = SystemColors.ControlText;
+						lblOver.ForeColor = Optionables.NodeSpawnColor;
 
 					ObserverManager.RouteView   .Control     .gbTileData.Invalidate();
 					ObserverManager.TopRouteView.ControlRoute.gbTileData.Invalidate();
@@ -395,20 +394,21 @@ namespace MapView.Forms.Observers
 					int overid;
 
 					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
-					if (node != null)
+					if (node == null)
+					{
+						overid = -1;
+						lblOver.ForeColor = SystemColors.ControlText;
+					}
+					else
 					{
 						overid = node.Id;
+
 						if (node.Spawn == SpawnWeight.None)
 						{
 							lblOver.ForeColor = Optionables.NodeColor;
 						}
 						else
 							lblOver.ForeColor = Optionables.NodeSpawnColor;
-					}
-					else
-					{
-						overid = -1;
-						lblOver.ForeColor = SystemColors.ControlText;
 					}
 
 					ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
@@ -662,9 +662,6 @@ namespace MapView.Forms.Observers
 
 			switch (_conType)
 			{
-//				case ConnectNodesType.None:
-//					break;
-
 				case ConnectNodesType.TwoWay:
 					result = GetOpenLinkSlot(node, NodeSelected.Id);
 					switch (result)
@@ -737,18 +734,19 @@ namespace MapView.Forms.Observers
 		/// <param name="node">the node to check the link-slots of</param>
 		/// <param name="dest">the id of the destination node</param>
 		/// <returns>id of an available link-slot, or
-		/// -1 if the source-node is null (not sure if this ever happens)
-		/// -2 if the link already exists
-		/// -3 if there are no free slots</returns>
+		/// -1 if the link already exists
+		/// -2 if there are no free slots</returns>
 		private static LinkSlotResult GetOpenLinkSlot(RouteNode node, int dest)
 		{
-			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // first check if destination-id already exists
+			// first check if a link to the destination-id already exists
+			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 			{
 				if (node[slot].Destination == dest)
 					return LinkSlotResult.LinkExists;
 			}
 
-			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // then check for an open slot
+			// then check for an open slot
+			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 			{
 				if (node[slot].Destination == (byte)LinkType.NotUsed)
 					return (LinkSlotResult)slot;
@@ -773,8 +771,7 @@ namespace MapView.Forms.Observers
 			ObserverManager.RouteView   .Control     .btnDelete        .Enabled =
 			ObserverManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
 
-			valid = valid
-				 && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
+			valid = valid && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
 
 			ObserverManager.RouteView   .Control     .btnPaste         .Enabled =
 			ObserverManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid;
