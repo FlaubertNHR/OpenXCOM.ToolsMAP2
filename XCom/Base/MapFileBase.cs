@@ -142,8 +142,8 @@ namespace XCom.Base
 //		/// </summary>
 //		public MapTile this[MapLocation loc]
 //		{
-//			get { return this[loc.Row, loc.Col, loc.Lev]; }
-//			set { this[loc.Row, loc.Col, loc.Lev] = value; }
+//			get { return this[loc.Col, loc.Row, loc.Lev]; }
+//			set { this[loc.Col, loc.Row, loc.Lev] = value; }
 //		}
 
 		/// <summary>
