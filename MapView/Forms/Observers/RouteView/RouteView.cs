@@ -57,6 +57,8 @@ namespace MapView.Forms.Observers
 		#region Fields
 		private CompositedPanel _pnlRoutes; // NOTE: needs to be here for MapObserver vs Designer stuff.
 
+		private MapFile _file;
+
 		private readonly List<object> _linksList = new List<object>();
 
 		private bool _loadingInfo;
@@ -85,15 +87,15 @@ namespace MapView.Forms.Observers
 			set // TODO: check RouteView/TopRouteView(Route)
 			{
 				base.MapBase = value;
-				MapFile      = value as MapFile;
+				_file        = value as MapFile;
 
 				DeselectNode();
 
-				if ((RoutePanel.MapFile = MapFile) != null)
+				if ((RoutePanel.MapFile = _file) != null)
 				{
 					cbRank.Items.Clear();
 
-					if (MapFile.Descriptor.GroupType == GameType.Tftd)
+					if (_file.Descriptor.GroupType == GameType.Tftd)
 						cbRank.Items.AddRange(RouteNodeCollection.RankTftd);
 					else
 						cbRank.Items.AddRange(RouteNodeCollection.RankUfo);
@@ -157,9 +159,6 @@ namespace MapView.Forms.Observers
 		internal RoutePanel RoutePanel
 		{ get; private set; }
 
-		private MapFile MapFile
-		{ get; set; }
-
 		/// <summary>
 		/// Coordinates the 'RoutesChanged' flag between RouteView and
 		/// TopRouteView(Route).
@@ -180,7 +179,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal bool RoutesChanged
 		{
-			set { btnSave.Enabled = (MapFile.RoutesChanged = value); }
+			set { btnSave.Enabled = (_file.RoutesChanged = value); }
 		}
 		#endregion Properties
 
@@ -448,7 +447,7 @@ namespace MapView.Forms.Observers
 
 				int c = loc.Col;
 				int r = loc.Row;
-				int l = MapFile.MapSize.Levs - level;
+				int l = _file.MapSize.Levs - level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }
@@ -483,7 +482,7 @@ namespace MapView.Forms.Observers
 
 				int c = loc.X;
 				int r = loc.Y;
-				int l = MapFile.MapSize.Levs - MapBase.Level;
+				int l = _file.MapSize.Levs - MapBase.Level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }
@@ -517,7 +516,7 @@ namespace MapView.Forms.Observers
 					&& args.MouseButton == MouseButtons.Right)
 				{
 					RouteChanged = true;
-					NodeSelected = MapFile.AddRouteNode(args.Location);
+					NodeSelected = _file.AddRouteNode(args.Location);
 				}
 				update = (NodeSelected != null);
 			}
@@ -528,7 +527,7 @@ namespace MapView.Forms.Observers
 					if (args.MouseButton == MouseButtons.Right)
 					{
 						RouteChanged = true;
-						node = MapFile.AddRouteNode(args.Location);
+						node = _file.AddRouteNode(args.Location);
 						ConnectNode(node);
 					}
 					NodeSelected = node;
@@ -565,9 +564,9 @@ namespace MapView.Forms.Observers
 				{
 					RouteChanged = true;
 
-					MapFile[Dragnode.Col, // clear the node from the previous tile
-							Dragnode.Row,
-							Dragnode.Lev].Node = null;
+					_file[Dragnode.Col, // clear the node from the previous tile
+						  Dragnode.Row,
+						  Dragnode.Lev].Node = null;
 
 					Dragnode.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
 					Dragnode.Row = (byte)args.Location.Row; // these get saved w/ Routes.
@@ -811,7 +810,7 @@ namespace MapView.Forms.Observers
 					default:
 						link.Distance = CalculateLinkDistance(
 															NodeSelected,
-															MapFile.Routes[link.Destination]);
+															_file.Routes[link.Destination]);
 						distance = link.Distance.ToString(CultureInfo.InvariantCulture)
 								 + GetDistanceArrow(slot);
 						break;
@@ -827,12 +826,12 @@ namespace MapView.Forms.Observers
 				}
 			}
 
-			int count = MapFile.Routes.Nodes.Count;
+			int count = _file.Routes.Nodes.Count;
 			for (var id = 0; id != count; ++id) // update distances of any links to the selected node ->
 			{
 				if (id != NodeSelected.Id) // NOTE: a node shall not link to itself.
 				{
-					var node = MapFile.Routes[id];
+					var node = _file.Routes[id];
 
 					for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 					{
@@ -885,7 +884,7 @@ namespace MapView.Forms.Observers
 
 				cbType.SelectedItem = UnitType.Any;
 
-				if (MapFile.Descriptor.GroupType == GameType.Tftd)
+				if (_file.Descriptor.GroupType == GameType.Tftd)
 					cbRank.SelectedItem = RouteNodeCollection.RankTftd[0];	//(byte)NodeRankTftd.CivScout
 				else
 					cbRank.SelectedItem = RouteNodeCollection.RankUfo [0];	//(byte)NodeRankUfo.CivScout
@@ -926,7 +925,7 @@ namespace MapView.Forms.Observers
 
 				cbType.SelectedItem = NodeSelected.Type;
 
-				if (MapFile.Descriptor.GroupType == GameType.Tftd)
+				if (_file.Descriptor.GroupType == GameType.Tftd)
 					cbRank.SelectedItem = RouteNodeCollection.RankTftd[NodeSelected.Rank];
 				else
 					cbRank.SelectedItem = RouteNodeCollection.RankUfo [NodeSelected.Rank];
@@ -943,7 +942,7 @@ namespace MapView.Forms.Observers
 
 				_linksList.Clear();
 
-				int count = MapFile.Routes.Nodes.Count;
+				int count = _file.Routes.Nodes.Count;
 				for (byte id = 0; id != count; ++id)
 				{
 					if (id != NodeSelected.Id)
@@ -1032,10 +1031,10 @@ namespace MapView.Forms.Observers
 							cbDest.SelectedItem = dest;
 
 							if (RouteNodeCollection.IsNodeOutsideMapBounds(
-																		MapFile.Routes[dest],
-																		MapFile.MapSize.Cols,
-																		MapFile.MapSize.Rows,
-																		MapFile.MapSize.Levs))
+																		_file.Routes[dest],
+																		_file.MapSize.Cols,
+																		_file.MapSize.Rows,
+																		_file.MapSize.Levs))
 							{
 								lblText.ForeColor = Color.Chocolate;
 							}
@@ -1076,7 +1075,7 @@ namespace MapView.Forms.Observers
 			var link = NodeSelected[slot];
 			if (link.StandardNode())
 			{
-				var dest = MapFile.Routes[link.Destination];
+				var dest = _file.Routes[link.Destination];
 				if (dest != null) // safety.
 				{
 					if (NodeSelected.Lev > dest.Lev)
@@ -1274,7 +1273,7 @@ namespace MapView.Forms.Observers
 					default:
 						link.Distance = CalculateLinkDistance(
 															NodeSelected,
-															MapFile.Routes[link.Destination],
+															_file.Routes[link.Destination],
 															tb,
 															slot);
 						enable =
@@ -1466,13 +1465,13 @@ namespace MapView.Forms.Observers
 			else                        slot = 4; // btn == btnGoLink5
 
 			byte dest = NodeSelected[slot].Destination;
-			var node  = MapFile.Routes[dest];
+			var node  = _file.Routes[dest];
 
 			if (!RouteNodeCollection.IsNodeOutsideMapBounds(
 														node,
-														MapFile.MapSize.Cols,
-														MapFile.MapSize.Rows,
-														MapFile.MapSize.Levs))
+														_file.MapSize.Cols,
+														_file.MapSize.Rows,
+														_file.MapSize.Levs))
 			{
 				OgnodeId = NodeSelected.Id; // store the current nodeId for the og-button.
 
@@ -1488,14 +1487,14 @@ namespace MapView.Forms.Observers
 				RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
 				RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
-				if (RouteCheckService.dialog_InvalidNode(MapFile, node) == DialogResult.Yes)
+				if (RouteCheckService.dialog_InvalidNode(_file, node) == DialogResult.Yes)
 				{
 					RouteChanged = true;
 
 					if (RoutesInfo != null)
 						RoutesInfo.DeleteNode(node);
 
-					MapFile.Routes.DeleteNode(node);
+					_file.Routes.DeleteNode(node);
 					UpdateNodeInfo();
 					// TODO: May need _pnlRoutes.Refresh()
 				}
@@ -1513,22 +1512,22 @@ namespace MapView.Forms.Observers
 		/// <param name="id"></param>
 		private void SelectNode(int id)
 		{
-			var node = MapFile.Routes[id];
+			var node = _file.Routes[id];
 			var loc = new Point(node.Col, node.Row);
 
-			if (node.Lev != MapFile.Level)
-				MapFile.Level = node.Lev; // fire SelectLevel
+			if (node.Lev != _file.Level)
+				_file.Level = node.Lev; // fire SelectLevel
 
-			MapFile.Location = new MapLocation( // fire SelectLocation
-											loc.X, loc.Y,
-											MapFile.Level);
+			_file.Location = new MapLocation( // fire SelectLocation
+										loc.X, loc.Y,
+										_file.Level);
 
 			MainViewOverlay.that.ProcessSelection(loc,loc);
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.Left,
-											MapFile[loc.X, loc.Y],
-											MapFile.Location);
+											_file[loc.X, loc.Y],
+											_file.Location);
 			OnRoutePanelMouseDown(null, args);
 
 			InvalidateControls();
@@ -1581,7 +1580,7 @@ namespace MapView.Forms.Observers
 						case Link.ExitWest:  c = r = -5; break;
 	
 						default:
-							var node = MapFile.Routes[dest];
+							var node = _file.Routes[dest];
 							c = (int)node.Col;
 							r = (int)node.Row;
 							break;
@@ -1605,7 +1604,7 @@ namespace MapView.Forms.Observers
 
 		private void OnOgClick(object sender, EventArgs e)
 		{
-			if (OgnodeId < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
+			if (OgnodeId < _file.Routes.Nodes.Count) // in case nodes were deleted.
 			{
 				if (NodeSelected == null || OgnodeId != NodeSelected.Id)
 					SelectNode(OgnodeId);
@@ -1621,9 +1620,9 @@ namespace MapView.Forms.Observers
 
 		private void OnOgMouseEnter(object sender, EventArgs e)
 		{
-			if (OgnodeId < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
+			if (OgnodeId < _file.Routes.Nodes.Count) // in case nodes were deleted.
 			{
-				var node = MapFile.Routes[OgnodeId];
+				var node = _file.Routes[OgnodeId];
 				RoutePanel.SpotPosition = new Point(node.Col, node.Row);
 
 				RoutePanel.Refresh();
@@ -1762,10 +1761,10 @@ namespace MapView.Forms.Observers
 				if (RoutesInfo != null)
 					RoutesInfo.DeleteNode(NodeSelected);
 
-				MapFile[NodeSelected.Col,
-						NodeSelected.Row,
-						NodeSelected.Lev].Node = null;
-				MapFile.Routes.DeleteNode(NodeSelected);
+				_file[NodeSelected.Col,
+					  NodeSelected.Row,
+					  NodeSelected.Lev].Node = null;
+				_file.Routes.DeleteNode(NodeSelected);
 
 				ObserverManager.RouteView   .Control     .DeselectNode();
 				ObserverManager.TopRouteView.ControlRoute.DeselectNode();
@@ -1907,14 +1906,14 @@ namespace MapView.Forms.Observers
 
 		private void OnExportClick(object sender, EventArgs e)
 		{
-			if (MapFile != null)
+			if (_file != null)
 			{
 				using (var sfd = new SaveFileDialog())
 				{
 					sfd.Title      = "Export Route file ...";
 					sfd.Filter     = "Route files (*.RMP)|*.RMP|All files (*.*)|*.*";
 					sfd.DefaultExt = GlobalsXC.RouteExt;
-					sfd.FileName   = MapFile.Descriptor.Label;
+					sfd.FileName   = _file.Descriptor.Label;
 
 					if (!Directory.Exists(_lastExportDirectory))
 					{
@@ -1929,7 +1928,7 @@ namespace MapView.Forms.Observers
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
 						_lastExportDirectory = Path.GetDirectoryName(sfd.FileName);
-						MapFile.Routes.ExportRoutes(sfd.FileName);
+						_file.Routes.ExportRoutes(sfd.FileName);
 					}
 				}
 			}
@@ -1939,14 +1938,14 @@ namespace MapView.Forms.Observers
 
 		private void OnImportClick(object sender, EventArgs e)
 		{
-			if (MapFile != null)
+			if (_file != null)
 			{
 				using (var ofd = new OpenFileDialog())
 				{
 					ofd.Title      = "Import Route file ...";
 					ofd.Filter     = "Route files (*.RMP)|*.RMP|All files (*.*)|*.*";
 //					ofd.DefaultExt = GlobalsXC.RouteExt;
-					ofd.FileName   = MapFile.Descriptor.Label + GlobalsXC.RouteExt;
+					ofd.FileName   = _file.Descriptor.Label + GlobalsXC.RouteExt;
 
 					if (!Directory.Exists(_lastImportDirectory))
 					{
@@ -1970,24 +1969,24 @@ namespace MapView.Forms.Observers
 							ObserverManager.RouteView   .Control     .DeselectNode();
 							ObserverManager.TopRouteView.ControlRoute.DeselectNode();
 
-							MapFile.ClearRouteNodes();
-							MapFile.Routes = routes;
-							MapFile.SetupRouteNodes();
+							_file.ClearRouteNodes();
+							_file.Routes = routes;
+							_file.SetupRouteNodes();
 
 							RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
 							RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
-							if (RouteCheckService.CheckNodeBounds(MapFile) == DialogResult.Yes)
+							if (RouteCheckService.CheckNodeBounds(_file) == DialogResult.Yes)
 							{
 								foreach (RouteNode node in RouteCheckService.Invalids)
-									MapFile.Routes.DeleteNode(node);
+									_file.Routes.DeleteNode(node);
 							}
 
 							UpdateNodeInfo(); // not sure is necessary ...
 							RefreshPanels();
 
 							if (RoutesInfo != null)
-								RoutesInfo.Initialize(MapFile);
+								RoutesInfo.Initialize(_file);
 						}
 					}
 				}
@@ -1997,7 +1996,7 @@ namespace MapView.Forms.Observers
 
 		private void OnEditOpening(object sender, EventArgs e)
 		{
-			tsmi_LowerNode.Enabled = (NodeSelected != null && NodeSelected.Lev != MapFile.MapSize.Levs - 1);
+			tsmi_LowerNode.Enabled = (NodeSelected != null && NodeSelected.Lev != _file.MapSize.Levs - 1);
 			tsmi_RaiseNode.Enabled = (NodeSelected != null && NodeSelected.Lev != 0);
 		}
 
@@ -2008,9 +2007,9 @@ namespace MapView.Forms.Observers
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.None,
-											MapFile[Dragnode.Col,
-													Dragnode.Row,
-													Dragnode.Lev - 1],
+											_file[Dragnode.Col,
+												  Dragnode.Row,
+												  Dragnode.Lev - 1],
 											new MapLocation(
 														Dragnode.Col,
 														Dragnode.Row,
@@ -2026,9 +2025,9 @@ namespace MapView.Forms.Observers
 
 			var args = new RoutePanelEventArgs(
 											MouseButtons.None,
-											MapFile[Dragnode.Col,
-													Dragnode.Row,
-													Dragnode.Lev + 1],
+											_file[Dragnode.Col,
+												  Dragnode.Row,
+												  Dragnode.Lev + 1],
 											new MapLocation(
 														Dragnode.Col,
 														Dragnode.Row,
@@ -2046,7 +2045,7 @@ namespace MapView.Forms.Observers
 		private void OnAllNodesRank0Click(object sender, EventArgs e)
 		{
 			string rank;
-			if (MapFile.Descriptor.GroupType == GameType.Tftd)
+			if (_file.Descriptor.GroupType == GameType.Tftd)
 				rank = ((Pterodactyl)RouteNodeCollection.RankTftd[0]).ToString();
 			else
 				rank = ((Pterodactyl)RouteNodeCollection.RankUfo [0]).ToString();
@@ -2063,7 +2062,7 @@ namespace MapView.Forms.Observers
 							0) == DialogResult.Yes)
 			{
 				int changed = 0;
-				foreach (RouteNode node in MapFile.Routes)
+				foreach (RouteNode node in _file.Routes)
 				{
 					if (node.Rank != 0)
 					{
@@ -2148,10 +2147,10 @@ namespace MapView.Forms.Observers
 			byte dist;
 			int changed = 0;
 
-			int count = MapFile.Routes.Nodes.Count;
+			int count = _file.Routes.Nodes.Count;
 			for (var id = 0; id != count; ++id)
 			{
-				node = MapFile.Routes[id];
+				node = _file.Routes[id];
 
 				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 				{
@@ -2173,7 +2172,7 @@ namespace MapView.Forms.Observers
 						default:
 							dist = CalculateLinkDistance(
 													node,
-													MapFile.Routes[link.Destination]);
+													_file.Routes[link.Destination]);
 							if (link.Distance != dist)
 							{
 								link.Distance = dist;
@@ -2224,7 +2223,7 @@ namespace MapView.Forms.Observers
 			RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
 			RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
-			if (RouteCheckService.CheckNodeBounds(MapFile, true) == DialogResult.Yes)
+			if (RouteCheckService.CheckNodeBounds(_file, true) == DialogResult.Yes)
 			{
 				RouteChanged = true;
 
@@ -2233,7 +2232,7 @@ namespace MapView.Forms.Observers
 					if (RoutesInfo != null)
 						RoutesInfo.DeleteNode(node);
 
-					MapFile.Routes.DeleteNode(node);
+					_file.Routes.DeleteNode(node);
 				}
 
 				UpdateNodeInfo();
@@ -2250,7 +2249,7 @@ namespace MapView.Forms.Observers
 		private void OnTestNodeRanksClick(object sender, EventArgs e)
 		{
 			var invalids = new List<byte>();
-			foreach (RouteNode node in MapFile.Routes)
+			foreach (RouteNode node in _file.Routes)
 			{
 				if (node.OobRank != (byte)0)
 					invalids.Add(node.Id);
@@ -2307,7 +2306,7 @@ namespace MapView.Forms.Observers
 		{
 			if (RoutesInfo == null)
 			{
-				RoutesInfo = new RoutesInfo(MapFile);
+				RoutesInfo = new RoutesInfo(_file);
 				RoutesInfo.Show(this);
 			}
 			else
