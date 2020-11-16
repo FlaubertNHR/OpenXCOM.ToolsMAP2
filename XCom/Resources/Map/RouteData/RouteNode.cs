@@ -71,8 +71,8 @@ namespace XCom
 		{
 			Index = id;
 
-			Col = bindata[1]; // note that x & y are switched in the RMP-file.
-			Row = bindata[0];
+			Row = bindata[0]; // NOTE: x & y are switched in the RMP-file.
+			Col = bindata[1];
 			Lev = bindata[2]; // NOTE: auto-converts to int-type.
 
 			// NOTE: 'bindata[3]' is not used.
@@ -80,12 +80,12 @@ namespace XCom
 			_links = new Link[LinkSlots];
 
 			int offset = 4;
-			for (int slotId = 0; slotId != LinkSlots; ++slotId)
+			for (int slot = 0; slot != LinkSlots; ++slot)
 			{
-				_links[slotId] = new Link(
-										bindata[offset],
-										bindata[offset + 1],
-										bindata[offset + 2]);
+				_links[slot] = new Link(
+									bindata[offset],
+									bindata[offset + 1],
+									bindata[offset + 2]);
 				offset += 3;
 			}
 
@@ -117,11 +117,11 @@ namespace XCom
 
 			Col =      col;
 			Row =      row;
-			Lev = (int)lev; // NOTE: auto-converts to int-type. Do it explicitly.
+			Lev = (int)lev; // NOTE: auto-converts to int-type. But do it explicitly.
 
 			_links = new Link[LinkSlots];
-			for (int slotId = 0; slotId != LinkSlots; ++slotId)
-				_links[slotId] = new Link(Link.NotUsed, 0,0);
+			for (int slot = 0; slot != LinkSlots; ++slot)
+				_links[slot] = new Link(Link.NotUsed, 0,0);
 
 			Type   = UnitType.Any;
 			Rank   = (byte)0;
