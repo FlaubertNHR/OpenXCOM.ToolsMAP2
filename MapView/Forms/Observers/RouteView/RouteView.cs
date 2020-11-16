@@ -33,9 +33,8 @@ namespace MapView.Forms.Observers
 
 		private enum LinkSlotResult
 		{
-			SourceInvalid = -1,
-			LinkExists    = -2,
-			AllSlotsUsed  = -3
+			LinkExists   = -1,
+			AllSlotsUsed = -2
 		}
 		#endregion Enums
 
@@ -688,7 +687,6 @@ namespace MapView.Forms.Observers
 							break;
 
 						case LinkSlotResult.LinkExists:
-						case LinkSlotResult.SourceInvalid:
 							// don't bother the user
 							break;
 
@@ -721,7 +719,6 @@ namespace MapView.Forms.Observers
 							break;
 
 						case LinkSlotResult.LinkExists:
-						case LinkSlotResult.SourceInvalid:
 							// don't bother the user
 							break;
 
@@ -746,22 +743,18 @@ namespace MapView.Forms.Observers
 		/// -3 if there are no free slots</returns>
 		private static LinkSlotResult GetOpenLinkSlot(RouteNode node, int dest)
 		{
-			if (node != null) // TODO: can 'node' ever be invalid
+			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // first check if destination-id already exists
 			{
-				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // first check if destination-id already exists
-				{
-					if (dest != -1 && node[slot].Destination == dest) // TODO: can 'dest' ever be -1
-						return LinkSlotResult.LinkExists;
-				}
-
-				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // then check for an open slot
-				{
-					if (node[slot].Destination == (byte)LinkType.NotUsed)
-						return (LinkSlotResult)slot;
-				}
-				return LinkSlotResult.AllSlotsUsed;
+				if (node[slot].Destination == dest)
+					return LinkSlotResult.LinkExists;
 			}
-			return LinkSlotResult.SourceInvalid;
+
+			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // then check for an open slot
+			{
+				if (node[slot].Destination == (byte)LinkType.NotUsed)
+					return (LinkSlotResult)slot;
+			}
+			return LinkSlotResult.AllSlotsUsed;
 		}
 
 
