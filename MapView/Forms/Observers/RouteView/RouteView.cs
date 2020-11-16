@@ -56,7 +56,7 @@ namespace MapView.Forms.Observers
 		private bool _loadingInfo;
 
 		/// <summary>
-		/// Used by UpdateNodeInformation().
+		/// Used by <see cref="UpdateNodeInformation"/>.
 		/// </summary>
 		private readonly object[] _linkTypes =
 		{
