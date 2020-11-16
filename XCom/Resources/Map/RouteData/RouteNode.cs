@@ -49,7 +49,7 @@ namespace XCom
 		/// Gets/Sets the index of this RouteNode.
 		/// </summary>
 		public byte Index
-		{ get; set; }
+		{ get; internal set; }
 
 
 		/// <summary>
