@@ -24,7 +24,7 @@ namespace MapView.Forms.Observers
 		private const int RoseMarginX = 25;
 		private const int RoseMarginY = 5;
 
-		private const int NodeValMax = 12;
+		private const int NodeValHeight = 12;
 
 		private const int OverlayColPad = 2;
 
@@ -40,7 +40,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
-		private readonly Font _fontOverlay = new Font("Verdana",      7F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+		private readonly Font _fontOverlay = new Font("Verdana",      7F, FontStyle.Bold);
 		private readonly Font _fontRose    = new Font("Courier New", 22F, FontStyle.Bold);
 
 		private Graphics _graphics;
@@ -386,24 +386,12 @@ namespace MapView.Forms.Observers
 							}
 							else
 							{
-								switch (destId)	// see RouteView.SpotGoDestination() for def'n of the following spot-positions
+								switch (destId) // see RouteView.SpotGoDestination() for def'n of the following spot-positions
 								{
-									case Link.ExitNorth:
-										if (SpotPosition.X != -2)
-											pen = _penLink;
-										break;
-									case Link.ExitEast:
-										if (SpotPosition.X != -3)
-											pen = _penLink;
-										break;
-									case Link.ExitSouth:
-										if (SpotPosition.X != -4)
-											pen = _penLink;
-										break;
-									case Link.ExitWest:
-										if (SpotPosition.X != -5)
-											pen = _penLink;
-										break;
+									case Link.ExitNorth: if (SpotPosition.X != -2) pen = _penLink; break;
+									case Link.ExitEast:  if (SpotPosition.X != -3) pen = _penLink; break;
+									case Link.ExitSouth: if (SpotPosition.X != -4) pen = _penLink; break;
+									case Link.ExitWest:  if (SpotPosition.X != -5) pen = _penLink; break;
 								}
 							}
 						}
@@ -449,10 +437,9 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((tile = MapFile[col, row]) != null)	// NOTE: MapFileBase has the current level stored and uses
-					{										// it to return only tiles on the correct level here.
-						if ((node = tile.Node) != null)
-						{
+					if ((tile = MapFile[col, row]) != null	// NOTE: MapFileBase has the current level stored and uses
+						&& (node = tile.Node) != null)		// it to return only tiles on the correct level here.
+					{
 							_nodeFill.Reset();
 							_nodeFill.AddLine(
 											x,             y,
@@ -529,7 +516,6 @@ namespace MapView.Forms.Observers
 										break;
 								}
 							}
-						}
 					}
 				}
 				startX -= HalfWidth;
@@ -552,8 +538,8 @@ namespace MapView.Forms.Observers
 								pen,
 								Origin.X - i * HalfWidth,
 								Origin.Y + i * HalfHeight,
-								Origin.X + ((MapFile.MapSize.Cols - i) * HalfWidth),
-								Origin.Y + ((MapFile.MapSize.Cols + i) * HalfHeight));
+								Origin.X + (MapFile.MapSize.Cols - i) * HalfWidth,
+								Origin.Y + (MapFile.MapSize.Cols + i) * HalfHeight);
 			}
 
 			for (int i = 0; i <= MapFile.MapSize.Cols; ++i)
@@ -595,8 +581,8 @@ namespace MapView.Forms.Observers
 					if ((tile = MapFile[c,r]) != null
 						&& (node = tile.Node) != null)
 					{
-						int infoboxX = x - HalfWidth / 2 - 2;			// -2 to prevent drawing over the link-going-up
-						int infoboxY = y + HalfHeight - NodeValMax / 2;	// vertical line indicator when panel is small sized.
+						int infoboxX = x - HalfWidth / 2 - 2;				// -2 to prevent drawing over the link-going-up
+						int infoboxY = y + HalfHeight - NodeValHeight / 2;	// vertical line indicator when panel is small sized.
 
 						DrawNodeMeter(infoboxX,     infoboxY, (int)node.Spawn,  Brushes.LightCoral);
 						DrawNodeMeter(infoboxX + 3, infoboxY, (int)node.Patrol, Brushes.DeepSkyBlue);
@@ -628,10 +614,10 @@ namespace MapView.Forms.Observers
 							infoboxY);
 			var p2 = new Point(
 							infoboxX + 3,
-							infoboxY + NodeValMax - 1);
+							infoboxY + NodeValHeight - 1);
 			var p3 = new Point(
 							infoboxX,
-							infoboxY + NodeValMax - 1);
+							infoboxY + NodeValHeight - 1);
 			var p4 = new Point(
 							infoboxX,
 							infoboxY);
@@ -648,7 +634,7 @@ namespace MapView.Forms.Observers
 			if (value > 0)
 				_graphics.FillRectangle(
 									color,
-									infoboxX, infoboxY + NodeValMax - value - 2,
+									infoboxX, infoboxY + NodeValHeight - value - 2,
 									2, value);
 
 			_graphics.DrawPath(Pens.Black, path); // draw borders.
@@ -698,10 +684,6 @@ namespace MapView.Forms.Observers
 			MapTile tile = GetTile(ref x, ref y); // x/y -> tile-location
 			if (tile != null)
 			{
-//				string textTile2 =   "c " + (x + 1)
-//								 + "  r " + (y + 1)
-//								 + "  L " + (MapFile.MapSize.Levs - MapFile.Level); // 1-based count, level is inverted.
-
 				int c = x;
 				int r = y;
 				int l = MapFile.MapSize.Levs - MapFile.Level;
@@ -919,7 +901,7 @@ namespace MapView.Forms.Observers
 			LozSelected.AddLine(p2, p3);
 			LozSelected.CloseFigure();
 
-			Refresh(); // fast update.
+			Refresh(); // fast update for drag-selection.
 		}
 
 		/// <summary>
