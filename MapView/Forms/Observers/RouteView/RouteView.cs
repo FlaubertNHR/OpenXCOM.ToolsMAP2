@@ -30,6 +30,13 @@ namespace MapView.Forms.Observers
 		{
 			None, OneWay, TwoWay
 		}
+
+		private enum LinkSlotResult
+		{
+			SourceInvalid = -1,
+			LinkExists    = -2,
+			AllSlotsUsed  = -3
+		}
 		#endregion Enums
 
 
@@ -649,62 +656,82 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Checks connector and connects nodes if applicable.
 		/// </summary>
-		/// <param name="node">the node to try to link the currently selected
-		/// node to</param>
+		/// <param name="node">the destination node to try to link the currently
+		/// selected node to</param>
 		private void ConnectNode(RouteNode node)
 		{
-			if (_conType != ConnectNodesType.None)
-			{
-				int slot = GetOpenLinkSlot(NodeSelected, node.Id);
-				if (slot > -1)
-				{
-					RouteChanged = true;
-					NodeSelected[slot].Destination = node.Id;
-					NodeSelected[slot].Distance = CalculateLinkDistance(NodeSelected, node);
-				}
-				else if (slot == -3)
-				{
-					MessageBox.Show(
-								this,
-								"Source node could not be linked to the destination node."
-									+ " Its link-slots are full.",
-								" Warning",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Warning,
-								MessageBoxDefaultButton.Button1,
-								0);
-					// TODO: the message leaves the RoutePanel drawn in an awkward state
-					// but discovering where to call Refresh() is not trivial.
-//					RoutePanel.Refresh(); // in case of a warning this needs to happen ...
-					// Fortunately a simple mouseover straightens things out for now.
-				}
+			LinkSlotResult result;
 
-				if (_conType == ConnectNodesType.TwoWay)
-				{
-					slot = GetOpenLinkSlot(node, NodeSelected.Id);
-					if (slot > -1)
+			switch (_conType)
+			{
+//				case ConnectNodesType.None:
+//					break;
+
+				case ConnectNodesType.TwoWay:
+					result = GetOpenLinkSlot(node, NodeSelected.Id);
+					switch (result)
 					{
-						RouteChanged = true;
-						node[slot].Destination = NodeSelected.Id;
-						node[slot].Distance = CalculateLinkDistance(node, NodeSelected);
+						case LinkSlotResult.AllSlotsUsed:
+							MessageBox.Show(
+										this,
+										"Destination node could not be linked to the source node."
+											+ " Its link-slots are full.",
+										" Warning",
+										MessageBoxButtons.OK,
+										MessageBoxIcon.Warning,
+										MessageBoxDefaultButton.Button1,
+										0);
+							// TODO: the message leaves the RoutePanel drawn in an awkward state
+							// but discovering where to call Refresh() is not trivial.
+							// Fortunately a simple mouseover straightens things out for now.
+//							RoutePanel.Refresh(); // in case of a warning this needs to happen ...
+							break;
+
+						case LinkSlotResult.LinkExists:
+						case LinkSlotResult.SourceInvalid:
+							// don't bother the user
+							break;
+
+						default:
+							RouteChanged = true;
+							node[(int)result].Destination = NodeSelected.Id;
+							node[(int)result].Distance = CalculateLinkDistance(node, NodeSelected);
+							break;
 					}
-					else if (slot == -3)
+					goto case ConnectNodesType.OneWay; // fallthrough
+
+				case ConnectNodesType.OneWay:
+					result = GetOpenLinkSlot(NodeSelected, node.Id);
+					switch (result)
 					{
-						MessageBox.Show(
-									this,
-									"Destination node could not be linked to the source node."
-										+ " Its link-slots are full.",
-									" Warning",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Warning,
-									MessageBoxDefaultButton.Button1,
-									0);
-						// TODO: the message leaves the RoutePanel drawn in an awkward state
-						// but discovering where to call Refresh() is not trivial.
-//						RoutePanel.Refresh(); // in case of a warning this needs to happen ...
-						// Fortunately a simple mouseover straightens things out for now.
+						case LinkSlotResult.AllSlotsUsed:
+							MessageBox.Show(
+										this,
+										"Source node could not be linked to the destination node."
+											+ " Its link-slots are full.",
+										" Warning",
+										MessageBoxButtons.OK,
+										MessageBoxIcon.Warning,
+										MessageBoxDefaultButton.Button1,
+										0);
+							// TODO: the message leaves the RoutePanel drawn in an awkward state
+							// but discovering where to call Refresh() is not trivial.
+							// Fortunately a simple mouseover straightens things out for now.
+//							RoutePanel.Refresh(); // in case of a warning this needs to happen ...
+							break;
+
+						case LinkSlotResult.LinkExists:
+						case LinkSlotResult.SourceInvalid:
+							// don't bother the user
+							break;
+
+						default:
+							RouteChanged = true;
+							NodeSelected[(int)result].Destination = node.Id;
+							NodeSelected[(int)result].Distance = CalculateLinkDistance(NodeSelected, node);
+							break;
 					}
-				}
+					break;
 			}
 		}
 
@@ -717,24 +744,24 @@ namespace MapView.Forms.Observers
 		/// -1 if the source-node is null (not sure if this ever happens)
 		/// -2 if the link already exists
 		/// -3 if there are no free slots</returns>
-		private static int GetOpenLinkSlot(RouteNode node, int dest)
+		private static LinkSlotResult GetOpenLinkSlot(RouteNode node, int dest)
 		{
-			if (node != null)
+			if (node != null) // TODO: can 'node' ever be invalid
 			{
 				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // first check if destination-id already exists
 				{
-					if (dest != -1 && node[slot].Destination == dest)
-						return -2;
+					if (dest != -1 && node[slot].Destination == dest) // TODO: can 'dest' ever be -1
+						return LinkSlotResult.LinkExists;
 				}
 
 				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // then check for an open slot
 				{
 					if (node[slot].Destination == (byte)LinkType.NotUsed)
-						return slot;
+						return (LinkSlotResult)slot;
 				}
-				return -3;
+				return LinkSlotResult.AllSlotsUsed;
 			}
-			return -1;
+			return LinkSlotResult.SourceInvalid;
 		}
 
 
