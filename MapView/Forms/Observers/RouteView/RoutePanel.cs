@@ -161,11 +161,11 @@ namespace MapView.Forms.Observers
 
 				DrawGridLines();
 
-				if (Focused && _overCol != -1) // draw the selector lozenge
+				if (Focused && _col != -1) // draw the selector lozenge
 				{
 					PathSelectorLozenge(
-									Origin.X + (_overCol - _overRow) * HalfWidth,
-									Origin.Y + (_overCol + _overRow) * HalfHeight);
+									Origin.X + (_col - _row) * HalfWidth,
+									Origin.Y + (_col + _row) * HalfHeight);
 					_graphics.DrawPath(
 									new Pen( // TODO: make this a separate Option.
 											RouteView.Optionables.GridLineColor,

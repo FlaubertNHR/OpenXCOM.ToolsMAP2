@@ -32,8 +32,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
-		internal protected int _overCol = -1; // these track the location of the last mouse-overed tile
-		internal protected int _overRow = -1; // NOTE: could be subsumed into 'CursorPosition' except ...
+		internal protected int _col = -1; // these track the location of the last mouse-overed tile
+		internal protected int _row = -1; // NOTE: could be subsumed into 'CursorPosition' except ...
 		#endregion Fields
 
 
@@ -127,8 +127,8 @@ namespace MapView.Forms.Observers
 		{
 			if (!Bounds.Contains(PointToClient(Control.MousePosition)))
 				CursorPosition = new Point(
-										_overCol = -1,
-										_overRow = -1);
+										_col = -1,
+										_row = -1);
 		}
 		#endregion Events
 
@@ -238,10 +238,10 @@ namespace MapView.Forms.Observers
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			var loc = GetTileLocation(e.X, e.Y);
-			if (loc.X != _overCol || loc.Y != _overRow)
+			if (loc.X != _col || loc.Y != _row)
 			{
-				_overCol = loc.X;
-				_overRow = loc.Y;
+				_col = loc.X;
+				_row = loc.Y;
 			}
 			base.OnMouseMove(e); // required to fire RouteView.OnRoutePanelMouseMove()
 		}
