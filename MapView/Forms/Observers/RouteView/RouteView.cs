@@ -338,12 +338,12 @@ namespace MapView.Forms.Observers
 		internal void SetInfotextColor_selected()
 		{
 			Color color;
-			if (NodeSelected != null)
+			if (NodeSelected == null)
 			{
-				color = Optionables.NodeSelectedColor;
+				color = SystemColors.ControlText;
 			}
 			else
-				color = SystemColors.ControlText;
+				color = Optionables.NodeSelectedColor;
 
 			ObserverManager.RouteView   .Control     .lblSelected.ForeColor =
 			ObserverManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;
@@ -429,17 +429,17 @@ namespace MapView.Forms.Observers
 				string selected;
 				int level;
 
-				if (NodeSelected != null)
-				{
-					selected = "Selected " + NodeSelected.Id;
-					level = NodeSelected.Lev;
-					lblSelected.ForeColor = Optionables.NodeSelectedColor;
-				}
-				else
+				if (NodeSelected == null)
 				{
 					selected = String.Empty;
 					level = MapBase.Level;
 					lblSelected.ForeColor = SystemColors.ControlText;
+				}
+				else
+				{
+					selected = "Selected " + NodeSelected.Id;
+					level = NodeSelected.Lev;
+					lblSelected.ForeColor = Optionables.NodeSelectedColor;
 				}
 
 				selected += Environment.NewLine;
