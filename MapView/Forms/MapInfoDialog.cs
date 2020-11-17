@@ -200,8 +200,7 @@ namespace MapView
 			for (int row = 0; row != rows; ++row)
 			for (int col = 0; col != cols; ++col)
 			{
-				tile = _file[col, row, lev];
-				if (!tile.Vacant)
+				if (!(tile = _file[col, row, lev]).Vacant)
 				{
 					for (int quad = 0; quad != MapTile.QUADS; ++quad)
 					{
