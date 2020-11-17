@@ -464,14 +464,14 @@ namespace MapView.Forms.Observers
 						  + (double)y / (HalfHeight * 2);
 				double yd = ((double)y * 2 - x) / (HalfWidth * 2);
 
-				var point = new Point(
-									(int)Math.Floor(xd),
-									(int)Math.Floor(yd));
+				var loc = new Point(
+								(int)Math.Floor(xd),
+								(int)Math.Floor(yd));
 
-				if (   point.X > -1 && point.X < MapFile.MapSize.Cols
-					&& point.Y > -1 && point.Y < MapFile.MapSize.Rows)
+				if (   loc.X > -1 && loc.X < MapFile.MapSize.Cols
+					&& loc.Y > -1 && loc.Y < MapFile.MapSize.Rows)
 				{
-					return point;
+					return loc;
 				}
 			}
 			return new Point(-1,-1);
