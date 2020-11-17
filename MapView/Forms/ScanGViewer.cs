@@ -28,7 +28,7 @@ namespace MapView
 			Form
 	{
 		#region Fields
-		internal MapFileBase _base;
+		private MapFileBase _base;
 
 		private int[,]  _icons;
 		private Palette _pal;
