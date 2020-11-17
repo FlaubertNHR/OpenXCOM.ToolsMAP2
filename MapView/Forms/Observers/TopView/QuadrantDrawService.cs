@@ -100,8 +100,7 @@ namespace MapView.Forms.Observers
 			GraphicsPath path;
 			Point p0, p1, p2, p3, p4;
 
-			int quad = 0;
-			for (; quad != MapTile.QUADS; ++quad) // cache each quadrant's rectangular bounding path
+			for (int quad = 0; quad != MapTile.QUADS; ++quad) // cache each quadrant's rectangular bounding path
 			{
 				p0 = new Point(
 							StartX + Quadwidth * quad - 1,
@@ -129,8 +128,8 @@ namespace MapView.Forms.Observers
 
 				path.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
 				path.AddLine(p1, p2); // does not get drawn.
-				path.AddLine(p2, p3);
-				path.AddLine(p3, p4); // NOTE: try DrawRectangle() it's even worse.
+				path.AddLine(p2, p3); // NOTE: try DrawRectangle() it's even worse.
+				path.AddLine(p3, p4); // NOTE: It's due to PixelOffsetMode ...
 			}
 
 			// skip a space between the Content quadslot and the Current quadslot
@@ -152,8 +151,8 @@ namespace MapView.Forms.Observers
 
 			_pathPart.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
 			_pathPart.AddLine(p1, p2); // does not get drawn.
-			_pathPart.AddLine(p2, p3);
-			_pathPart.AddLine(p3, p4); // NOTE: try DrawRectangle() it's even worse.
+			_pathPart.AddLine(p2, p3); // NOTE: try DrawRectangle() it's even worse.
+			_pathPart.AddLine(p3, p4); // NOTE: It's due to PixelOffsetMode ...
 		}
 		#endregion cTor (static)
 

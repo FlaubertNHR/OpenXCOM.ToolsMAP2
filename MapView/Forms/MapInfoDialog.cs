@@ -203,9 +203,9 @@ namespace MapView
 				tile = _file[col, row, lev];
 				if (!tile.Vacant)
 				{
-					for (int i = 0; i != MapTile.QUADS; ++i)
+					for (int quad = 0; quad != MapTile.QUADS; ++quad)
 					{
-						switch (i)
+						switch (quad)
 						{
 							default: part = tile.Floor;   break; // case 0:
 							case  1: part = tile.West;    break;
