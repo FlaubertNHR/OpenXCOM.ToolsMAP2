@@ -284,20 +284,21 @@ namespace MapView.Forms.Observers
 					int overid;
 
 					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
-					if (node != null)
+					if (node == null)
+					{
+						overid = -1;
+						lblOver.ForeColor = SystemColors.ControlText;
+					}
+					else
 					{
 						overid = node.Id;
+
 						if (node.Spawn == SpawnWeight.None)
 						{
 							lblOver.ForeColor = Optionables.NodeColor;
 						}
 						else
 							lblOver.ForeColor = Optionables.NodeSpawnColor;
-					}
-					else
-					{
-						overid = -1;
-						lblOver.ForeColor = SystemColors.ControlText;
 					}
 
 					ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
@@ -610,20 +611,21 @@ namespace MapView.Forms.Observers
 			int x = args.X; int y = args.Y;
 
 			var tile = RoutePanel.GetTile(ref x, ref y); // x/y -> tile-location
-			if (tile != null && tile.Node != null)
+			if (tile == null || tile.Node == null)
+			{
+				overid = -1;
+				lblOver.ForeColor = SystemColors.ControlText;
+			}
+			else
 			{
 				overid = tile.Node.Id;
+
 				if (tile.Node.Spawn == SpawnWeight.None)
 				{
 					lblOver.ForeColor = Optionables.NodeColor;
 				}
 				else
 					lblOver.ForeColor = Optionables.NodeSpawnColor;
-			}
-			else
-			{
-				overid = -1;
-				lblOver.ForeColor = SystemColors.ControlText;
 			}
 
 			var loc = new Point(x,y);
