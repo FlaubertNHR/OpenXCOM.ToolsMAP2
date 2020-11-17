@@ -111,24 +111,24 @@ namespace XCom
 
 			if (File.Exists(pfe))
 			{
-				var partset = new List<Tilepart>();
+				var parts = new List<Tilepart>();
 
 				ResourceInfo.Spritesets.Clear();
 
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{
-					Tilepart[] MCD = descriptor.CreateTerrain(i);	// NOTE: calls
-					if (MCD == null)								//     - TilepartFactory.CreateTileparts()
-						return null;								//     - ResourceInfo.LoadSpriteset()
+					Tilepart[] records = descriptor.CreateTerrain(i);	// NOTE: calls
+					if (records == null)								//     - TilepartFactory.CreateTileparts()
+						return null;									//     - ResourceInfo.LoadSpriteset()
 
-					foreach (Tilepart part in MCD)
-						partset.Add(part);
+					foreach (Tilepart record in records)
+						parts.Add(record);
 				}
 
-				if (partset.Count != 0)
+				if (parts.Count != 0)
 				{
 					if (!ignoreRecordsExceeded && !descriptor.BypassRecordsExceeded // issue warning ->
-						&& partset.Count > MAX_MCDRECORDS)
+						&& parts.Count > MAX_MCDRECORDS)
 					{
 						string text = String.Empty;
 
@@ -153,28 +153,28 @@ namespace XCom
 								  + descriptor.GetRecordCount(i)
 								  + Environment.NewLine;
 						}
-						text += Environment.NewLine + "total - " + partset.Count;
+						text += Environment.NewLine + "total - " + parts.Count;
 
 						McdRecordsExceeded.that.SetTexts(descriptor.Label, text);
 						McdRecordsExceeded.that.ShowDialog();
 					}
 
-					var RMP = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
-					if (RMP.Fail)
+					var nodes = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
+					if (nodes.Fail)
 					{
-						RMP.Fail = false;
-						RMP.Nodes.Clear();
+						nodes.Fail = false;
+						nodes.Nodes.Clear();
 					}
 					// if Routes fail try to load the Mapfile regardless ->
 
-					var MAP = new MapFile(
+					var file = new MapFile(
 										descriptor,
-										partset,
-										RMP);
+										parts,
+										nodes);
 
-					if (MAP.Fail) return null;
+					if (file.Fail) return null;
 
-					return MAP;
+					return file;
 				}
 
 				MessageBox.Show(
