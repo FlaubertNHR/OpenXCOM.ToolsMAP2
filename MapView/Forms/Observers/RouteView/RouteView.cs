@@ -59,12 +59,15 @@ namespace MapView.Forms.Observers
 
 		private MapFile _file;
 
-		private readonly List<object> _linksList = new List<object>();
-
 		private bool _loadingInfo;
 
 		/// <summary>
-		/// Used by <see cref="UpdateNodeInformation"/>.
+		/// Used by <see cref="UpdateNodeInformation" />.
+		/// </summary>
+		private readonly List<object> _linksList = new List<object>();
+
+		/// <summary>
+		/// Used by <see cref="UpdateNodeInformation" />.
 		/// </summary>
 		private readonly object[] _linkTypes =
 		{
