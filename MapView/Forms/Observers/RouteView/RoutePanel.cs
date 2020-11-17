@@ -678,14 +678,12 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawInfoOverlay()
 		{
-			int x = CursorPosition.X;
-			int y = CursorPosition.Y;
+			int c = CursorPosition.X;
+			int r = CursorPosition.Y;
 
-			MapTile tile = GetTile(ref x, ref y); // x/y -> tile-location
+			MapTile tile = GetTile(ref c, ref r); // x/y -> tile-location
 			if (tile != null)
 			{
-				int c = x;
-				int r = y;
 				int l = MapFile.MapSize.Levs - MapFile.Level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }

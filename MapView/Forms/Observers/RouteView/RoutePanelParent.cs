@@ -440,10 +440,10 @@ namespace MapView.Forms.Observers
 		internal protected MapTile GetTile(ref int x, ref int y)
 		{
 			var loc = GetTileLocation(x,y);
-			x = loc.X;
-			y = loc.Y;
-			return (x != -1) ? MapFile[x,y]
-							 : null;
+			if ((x = loc.X) != -1)
+				return MapFile[x, (y = loc.Y)];
+
+			return null;
 		}
 
 		/// <summary>
