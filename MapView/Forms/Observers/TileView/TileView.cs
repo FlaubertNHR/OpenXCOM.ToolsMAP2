@@ -48,12 +48,13 @@ namespace MapView.Forms.Observers
 		{
 			set
 			{
+				IList<Tilepart> parts;
 				if ((base.MapBase = value) != null)
-				{
-					SetTileParts(value.Parts);
-				}
+					parts = value.Parts;
 				else
-					SetTileParts(null);
+					parts = null;
+
+				SetTileParts(parts);
 			}
 		}
 
