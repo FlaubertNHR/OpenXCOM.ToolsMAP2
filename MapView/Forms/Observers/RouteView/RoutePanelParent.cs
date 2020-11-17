@@ -54,7 +54,7 @@ namespace MapView.Forms.Observers
 		/// Tracks the position of the mouse cursor. Used to print overinfo,
 		/// overlayinfo, and to position the Overlay.
 		/// </summary>
-		internal Point CursorPosition
+		internal protected Point CursorPosition
 		{
 			get { return _pos; }
 			set { _pos = value; }
