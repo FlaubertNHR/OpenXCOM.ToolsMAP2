@@ -32,6 +32,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
+		private Point _loc; // tracks tile-location for move/up/down mouse events
+
 		internal protected int _col = -1; // these track the location of the last mouse-overed tile
 		internal protected int _row = -1; // NOTE: could be subsumed into 'CursorPosition' except ...
 		#endregion Fields
@@ -190,21 +192,20 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			var loc = GetTileLocation(e.X, e.Y);
-			if (loc.X != -1)
+			if (_loc.X != -1)
 			{
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
 
 				MapFile.Location = new MapLocation( // fire SelectLocation
-												loc.X, loc.Y,
+												_loc.X, _loc.Y,
 												MapFile.Level);
 
-				MainViewOverlay.that.ProcessSelection(loc,loc);	// set selected location for other viewers.
-																// NOTE: drag-selection is not allowed here.
+				MainViewOverlay.that.ProcessSelection(_loc, _loc);	// set selected location for other viewers.
+																	// NOTE: drag-selection is not allowed here.
 				var args = new RoutePanelEventArgs(
 												e.Button,
-												MapFile[loc.X, loc.Y],
+												MapFile[_loc.X, _loc.Y],
 												MapFile.Location);
 				RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 			}
@@ -216,16 +217,15 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			var loc = GetTileLocation(e.X, e.Y);
-			if (loc.X != -1)
+			if (_loc.X != -1)
 			{
 				MapFile.Location = new MapLocation( // fire SelectLocation
-												loc.X, loc.Y,
+												_loc.X, _loc.Y,
 												MapFile.Level);
 
 				var args = new RoutePanelEventArgs(
 												e.Button,
-												MapFile[loc.X, loc.Y],
+												MapFile[_loc.X, _loc.Y],
 												MapFile.Location);
 				RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 			}
@@ -237,11 +237,11 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			var loc = GetTileLocation(e.X, e.Y);
-			if (loc.X != _col || loc.Y != _row)
+			_loc = GetTileLocation(e.X, e.Y);
+			if (_loc.X != _col || _loc.Y != _row)
 			{
-				_col = loc.X;
-				_row = loc.Y;
+				_col = _loc.X;
+				_row = _loc.Y;
 			}
 			base.OnMouseMove(e); // required to fire RouteView.OnRoutePanelMouseMove()
 		}
