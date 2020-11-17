@@ -49,6 +49,13 @@ namespace MapView.Forms.Observers
 
 		internal static RouteNode Dragnode;
 
+		/// <summary>
+		/// Stores the node-id from which a "Go" button is clicked. Used to
+		/// re-select the original node - which might not be equivalent to
+		/// "Back" (if there were a Back button).
+		/// </summary>
+		private static int _ogId;
+
 		internal static byte _curNoderank;
 		internal static SpawnWeight _curSpawnweight;
 		#endregion Fields (static)
@@ -147,14 +154,6 @@ namespace MapView.Forms.Observers
 				}
 			}
 		}
-
-		/// <summary>
-		/// Stores the node-id from which a "Go" button is clicked. Used to
-		/// re-select the original node - which might not be equivalent to
-		/// "Back" (if there were a Back button).
-		/// </summary>
-		private static int OgnodeId
-		{ get; set; }
 		#endregion Properties (static)
 
 
@@ -1475,7 +1474,7 @@ namespace MapView.Forms.Observers
 														_file.MapSize.Rows,
 														_file.MapSize.Levs))
 			{
-				OgnodeId = NodeSelected.Id; // store the current nodeId for the og-button.
+				_ogId = NodeSelected.Id; // store the current nodeId for the og-button.
 
 				ObserverManager.RouteView   .Control     .btnOg.Enabled =
 				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = true;
@@ -1606,10 +1605,10 @@ namespace MapView.Forms.Observers
 
 		private void OnOgClick(object sender, EventArgs e)
 		{
-			if (OgnodeId < _file.Routes.Nodes.Count) // in case nodes were deleted.
+			if (_ogId < _file.Routes.Nodes.Count) // in case nodes were deleted.
 			{
-				if (NodeSelected == null || OgnodeId != NodeSelected.Id)
-					SelectNode(OgnodeId);
+				if (NodeSelected == null || _ogId != NodeSelected.Id)
+					SelectNode(_ogId);
 			}
 			else
 			{
@@ -1622,9 +1621,9 @@ namespace MapView.Forms.Observers
 
 		private void OnOgMouseEnter(object sender, EventArgs e)
 		{
-			if (OgnodeId < _file.Routes.Nodes.Count) // in case nodes were deleted.
+			if (_ogId < _file.Routes.Nodes.Count) // in case nodes were deleted.
 			{
-				var node = _file.Routes[OgnodeId];
+				var node = _file.Routes[_ogId];
 				RoutePanel.SpotPosition = new Point(node.Col, node.Row);
 
 				RoutePanel.Refresh();
