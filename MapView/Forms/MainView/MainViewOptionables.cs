@@ -900,13 +900,8 @@ namespace MapView.Forms.MainView
 		{
 			switch (key)
 			{
-				case str_Base1_xy:
-					Base1_xy = (bool)val;
-					break;
-
-				case str_Base1_z:
-					Base1_z = (bool)val;
-					break;
+				case str_Base1_xy: Base1_xy = (bool)val; break;
+				case str_Base1_z:  Base1_z  = (bool)val; break;
 			}
 
 			// refesh position prints
