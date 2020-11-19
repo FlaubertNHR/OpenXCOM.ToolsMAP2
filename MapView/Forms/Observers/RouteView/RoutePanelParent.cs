@@ -254,8 +254,13 @@ namespace MapView.Forms.Observers
 				_col = _loc.X;
 				_row = _loc.Y;
 
-				base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()
+				// this fires panel refreshes only when the cursor moves to another tile
+				// The InfoOverlay goes sticky but the panel feels tighter.
+//				base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()
 			}
+			// this fires panel refreshes whenever the mouse moves a single pixel
+			// The InfoOverlay moves freely.
+			base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()
 		}
 		#endregion Events (override)
 
