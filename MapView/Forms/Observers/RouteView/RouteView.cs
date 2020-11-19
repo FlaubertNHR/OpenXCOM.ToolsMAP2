@@ -457,23 +457,24 @@ namespace MapView.Forms.Observers
 
 			if (MainViewOverlay.that.FirstClick)
 			{
-				string selected;
+				string info;
 				int level;
+				Color color;
 
 				if (NodeSelected == null)
 				{
-					selected = String.Empty;
+					info = String.Empty;
 					level = MapBase.Level;
-					lblSelected.ForeColor = SystemColors.ControlText;
+					color = SystemColors.ControlText;
 				}
 				else
 				{
-					selected = "Selected " + NodeSelected.Id;
+					info = "Selected " + NodeSelected.Id;
 					level = NodeSelected.Lev;
-					lblSelected.ForeColor = Optionables.NodeSelectedColor;
+					color = Optionables.NodeSelectedColor;
 				}
 
-				selected += Environment.NewLine;
+				info += Environment.NewLine;
 
 				int c = MapBase.Location.Col;
 				int r = MapBase.Location.Row;
@@ -482,12 +483,13 @@ namespace MapView.Forms.Observers
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }
 
-				selected += String.Format(
-										CultureInfo.InvariantCulture,
-										"c {0}  r {1}  L {2}",
-										c,r,l);
+				info += String.Format(
+									CultureInfo.InvariantCulture,
+									"c {0}  r {1}  L {2}",
+									c,r,l);
 
-				lblSelected.Text = selected;
+				lblSelected.ForeColor = color;
+				lblSelected.Text = info;
 				lblSelected.Refresh(); // fast update.
 			}
 		}
