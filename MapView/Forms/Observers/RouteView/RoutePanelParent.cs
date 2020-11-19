@@ -11,8 +11,10 @@ using XCom.Base;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The base class for RoutePanel. Generally handles mousey things and
-	/// calculating lozenges.
+	/// The base class for <see cref="T:MapView.Forms.Observers.RoutePanel"/>.
+	/// Generally handles mousey things and keyboard navigation.
+	/// @note <see cref="T:MapView.Forms.Observers.RouteView"/> also handles
+	/// mouse events.
 	/// @note This is not a Panel. It is a UserControl inside of a Panel.
 	/// </summary>
 	internal class RoutePanelParent
@@ -32,10 +34,26 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
-		private Point _loc; // tracks tile-location for move/up/down mouse events
+		/// <summary>
+		/// '_col' and '_row' track the location of the last mouse-overed tile;
+		/// '_col' needs to be set to "-1" when the mouse is not over a tile.
+		/// Their values need to be updated only when the mouseovered
+		/// tile-location changes via <see cref="OnMouseMove"/>.
+		/// </summary>
+		internal protected int _col = -1;
+		/// <summary>
+		/// '_col' and '_row' track the location of the last mouse-overed tile;
+		/// '_col' needs to be set to "-1" when the mouse is not over a tile.
+		/// Their values need to be updated only when the mouseovered
+		/// tile-location changes via <see cref="OnMouseMove"/>.
+		/// </summary>
+		internal protected int _row = -1;
 
-		internal protected int _col = -1; // these track the location of the last mouse-overed tile
-		internal protected int _row = -1; // NOTE: could be subsumed into 'CursorPosition' except ...
+		/// <summary>
+		/// Tracks tile-location for move/up/down mouse events: '_col' and
+		/// '_row' in a convenient Point object.
+		/// </summary>
+		internal protected Point _loc;
 		#endregion Fields
 
 
@@ -49,17 +67,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		private Point _pos = new Point(-1,-1);
-		/// <summary>
-		/// Tracks the position of the mouse cursor. Used to print overinfo,
-		/// overlayinfo, and to position the Overlay.
-		/// </summary>
-		internal protected Point CursorPosition
-		{
-			get { return _pos; }
-			set { _pos = value; }
-		}
-
 		private MapFile _file;
 		internal protected MapFile MapFile
 		{
@@ -121,16 +128,18 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
-		/// A ticker that checks if the mouse has left the building.
+		/// A ticker that checks if the mouse has left the building. See also
+		/// RouteView.OnRoutePanelMouseLeave().
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void t1_Tick(object sender, EventArgs e)
 		{
 			if (!Bounds.Contains(PointToClient(Control.MousePosition)))
-				CursorPosition = new Point(
-										_col = -1,
-										_row = -1);
+			{
+				_col = -1;
+				// TODO: perhaps fire OnMouseMove()
+			}
 		}
 		#endregion Events
 
@@ -192,20 +201,20 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			if (_loc.X != -1)
+			if (_col != -1)
 			{
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
 
 				MapFile.Location = new MapLocation( // fire SelectLocation
-												_loc.X, _loc.Y,
+												_col, _row,
 												MapFile.Level);
 
 				MainViewOverlay.that.ProcessSelection(_loc, _loc);	// set selected location for other viewers.
 																	// NOTE: drag-selection is not allowed here.
 				var args = new RoutePanelEventArgs(
 												e.Button,
-												MapFile[_loc.X, _loc.Y],
+												MapFile[_col, _row],
 												MapFile.Location);
 				RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
 			}
@@ -217,33 +226,36 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if (_loc.X != -1)
+			if (_col != -1)
 			{
 				MapFile.Location = new MapLocation( // fire SelectLocation
-												_loc.X, _loc.Y,
+												_col, _row,
 												MapFile.Level);
 
 				var args = new RoutePanelEventArgs(
 												e.Button,
-												MapFile[_loc.X, _loc.Y],
+												MapFile[_col, _row],
 												MapFile.Location);
 				RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 			}
 		}
 
 		/// <summary>
-		/// Tracks x/y location for the mouseover lozenge.
+		/// Tracks col/row location for the mouseover lozenge and mouseover info.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
+			//DSShared.LogFile.WriteLine("RoutePanelParent.OnMouseMove()");
+
 			_loc = GetTileLocation(e.X, e.Y);
 			if (_loc.X != _col || _loc.Y != _row)
 			{
 				_col = _loc.X;
 				_row = _loc.Y;
+
+				base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()
 			}
-			base.OnMouseMove(e); // required to fire RouteView.OnRoutePanelMouseMove()
 		}
 		#endregion Events (override)
 
@@ -381,8 +393,7 @@ namespace MapView.Forms.Observers
 							RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 							invalidate = true;
 
-							ObserverManager.RouteView   .Control     .SetInfotextOver();
-							ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
+							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
 						}
 					}
 					else if (vert != MapFileBase.LEVEL_no)
@@ -409,8 +420,7 @@ namespace MapView.Forms.Observers
 							RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
 							invalidate = true;
 
-							ObserverManager.RouteView   .Control     .SetInfotextOver();
-							ObserverManager.TopRouteView.ControlRoute.SetInfotextOver();
+							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
 
 							ObserverManager.RouteView   .Control     .PrintSelectedInfo();
 							ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
@@ -427,7 +437,7 @@ namespace MapView.Forms.Observers
 		}
 
 
-		/// <summary>
+/*		/// <summary>
 		/// Gets the tile contained at (x,y) wrt client-area in local screen
 		/// coordinates.
 		/// </summary>
@@ -444,7 +454,7 @@ namespace MapView.Forms.Observers
 				return MapFile[x, (y = loc.Y)];
 
 			return null;
-		}
+		} */
 
 		/// <summary>
 		/// Converts a position from client-coordinates to a tile-location.

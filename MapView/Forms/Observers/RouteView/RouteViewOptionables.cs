@@ -576,13 +576,13 @@ namespace MapView.Forms.Observers
 				switch (key)
 				{
 					case str_NodeSelectedColor:
-						RouteView.SetInfotextColor_selected();
+						RouteView.SetInfoSelectedColor();
 						break;
 
 					case str_NodeColor:
 					case str_NodeSpawnColor:
-						ObserverManager.RouteView   .Control     .SetInfotextColor_over();
-						ObserverManager.TopRouteView.ControlRoute.SetInfotextColor_over();
+						ObserverManager.RouteView   .Control     .SetInfoOverColor();
+						ObserverManager.TopRouteView.ControlRoute.SetInfoOverColor();
 						break;
 				}
 			}

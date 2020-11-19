@@ -20,10 +20,13 @@ namespace MapView.Forms.Observers
 	/// <summary>
 	/// Does all the heavy-lifting/node-manipulations in RouteView and
 	/// TopRouteView(Route).
+	/// @note Static objects in this class are shared between the two viewers -
+	/// otherwise RouteView and TopRouteView(Route) instantiate separately.
+	/// @note <see cref="RoutePanelParent"/> also handles mouse events.
 	/// </summary>
 	internal sealed partial class RouteView
 		:
-			MapObserverControl // UserControl, IMapObserver
+			MapObserverControl // UserControl, IMapObserver/MapObserverControl
 	{
 		#region Enums
 		private enum ConnectNodesType
@@ -69,12 +72,12 @@ namespace MapView.Forms.Observers
 		private bool _loadingInfo;
 
 		/// <summary>
-		/// Used by <see cref="UpdateNodeInformation" />.
+		/// Used by <see cref="UpdateNodeInformation"/>.
 		/// </summary>
 		private readonly List<object> _linksList = new List<object>();
 
 		/// <summary>
-		/// Used by <see cref="UpdateNodeInformation" />.
+		/// Used by <see cref="UpdateNodeInformation"/>.
 		/// </summary>
 		private readonly object[] _linkTypes =
 		{
@@ -89,15 +92,14 @@ namespace MapView.Forms.Observers
 
 		#region Properties (override)
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl.
+		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
 		/// </summary>
 		[Browsable(false)]
 		public override MapFileBase MapBase
 		{
 			set // TODO: check RouteView/TopRouteView(Route)
 			{
-				base.MapBase = value;
-				_file        = value as MapFile;
+				_file = (base.MapBase = value) as MapFile;
 
 				DeselectNode();
 
@@ -162,8 +164,8 @@ namespace MapView.Forms.Observers
 		{ get; private set; }
 
 		/// <summary>
-		/// Coordinates the 'RoutesChanged' flag between RouteView and
-		/// TopRouteView(Route).
+		/// Coordinates the <see cref="RoutesChanged"/> flag between RouteView
+		/// and TopRouteView(Route).
 		/// </summary>
 		internal bool RouteChanged
 		{
@@ -175,9 +177,10 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets the 'RoutesChanged' flag. This is only an intermediary that
-		/// shows "routes changed" in RouteView; the real 'RoutesChanged' flag
-		/// is stored in XCom..MapFileBase. reasons.
+		/// Sets the 'MapFileBase.RoutesChanged' flag. This is only an
+		/// intermediary that shows "routes changed" in RouteView; the real
+		/// 'RoutesChanged' flag is stored in <see cref="T:XCom.Base.MapFileBase"/>.
+		/// reasons.
 		/// </summary>
 		internal bool RoutesChanged
 		{
@@ -238,80 +241,75 @@ namespace MapView.Forms.Observers
 
 		#region Events (override) inherited from IMapObserver/MapObserverControl
 		/// <summary>
-		/// A flag that prevents the SelectLocation event from firing in both
-		/// RouteView and TopRouteView(Route).
-		/// </summary>
-		private static bool _fired;
-
-		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl.
-		/// @note The route-node at location will *not* be selected; only the
+		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
+		/// @note This will fire twice whenever the location changes: once by
+		/// RouteView and again by TopRouteView(Route). This is desired behavior
+		/// since it updates the selected-location in both viewers.
+		/// @note A route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
-		/// either clicked or keyboarded to. This is a design decision that
-		/// allows the selected node to stay selected while other tiles get
-		/// highlighted.
+		/// either clicked or keyboarded to (or press [Enter] when the tile is
+		/// selected). This is a design decision that allows the selected node
+		/// to stay selected while other tiles get highlighted.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
 		{
-			if (!_fired) // fire this funct only once (by either Control is sufficient).
-			{
-				_fired = true;
-
-				ObserverManager.RouteView   .Control     .PrintSelectedInfo();
-				ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
-			}
-			else
-				_fired = false;
+			PrintSelectedInfo();
 		}
 
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl.
+		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
+		/// @note This will fire twice whenever the location changes: once by
+		/// RouteView and again by TopRouteView(Route). However only the viewer
+		/// that the mousecursor is currently in should have the
+		/// location-string's color updated; the condition to allow that update
+		/// is (RoutePanel._col != -1).
 		/// @note The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
-		/// either clicked or keyboarded to. This is a design decision that
-		/// allows the selected node to stay selected while other tiles get
-		/// highlighted.
+		/// either clicked or keyboarded to (or press [Enter] when the tile is
+		/// selected). This is a design decision that allows the selected node
+		/// to stay selected while other tiles get highlighted.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
 		{
-			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
-			{
-				var loc = RoutePanel.GetTileLocation(
-												RoutePanel.CursorPosition.X,
-												RoutePanel.CursorPosition.Y);
-				if (loc.X != -1)
-				{
-					int overid;
+			//LogFile.WriteLine("RouteView.OnSelectLevelObserver() " + Tag);
 
-					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
-					if (node == null)
+			if (RoutePanel._col != -1) // find the Control that the mousecursor is in (if either)
+			{
+				//LogFile.WriteLine(". do overinfo");
+
+				Color color; int id;
+
+				RouteNode node = MapBase[RoutePanel._col,
+										 RoutePanel._row,
+										 MapBase.Level].Node;
+				if (node == null)
+				{
+					id = -1;
+					color = SystemColors.ControlText;
+				}
+				else
+				{
+					id = node.Id;
+
+					if (node.Spawn == SpawnWeight.None)
 					{
-						overid = -1;
-						lblOver.ForeColor = SystemColors.ControlText;
+						color = Optionables.NodeColor;
 					}
 					else
-					{
-						overid = node.Id;
-
-						if (node.Spawn == SpawnWeight.None)
-						{
-							lblOver.ForeColor = Optionables.NodeColor;
-						}
-						else
-							lblOver.ForeColor = Optionables.NodeSpawnColor;
-					}
-
-					ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
-					ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
+						color = Optionables.NodeSpawnColor;
 				}
+
+				lblOver.ForeColor = color;
+
+				PrintOverInfo(id);
 			}
 
-			ObserverManager.RouteView   .Control     .PrintSelectedInfo();
-			ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
+			PrintSelectedInfo();
 
-			InvalidatePanels();
+			Refresh(); // required to force the other RouteView panel to redraw.
+//			InvalidatePanels();
 		}
 		#endregion Events (override) inherited from IMapObserver/MapObserverControl
 
@@ -334,10 +332,10 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Updates the selected-node color when the Option changes.
+		/// Updates the selected node's textcolor when the Option changes.
 		/// @note Called by Options only.
 		/// </summary>
-		internal void SetInfotextColor_selected()
+		internal void SetInfoSelectedColor()
 		{
 			Color color;
 			if (NodeSelected == null)
@@ -352,72 +350,101 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Updates the node color when the Option changes.
+		/// Updates the overed node's textcolor when the Option changes.
 		/// @note Called by Options only.
 		/// </summary>
-		internal void SetInfotextColor_over()
+		internal void SetInfoOverColor()
 		{
-			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
+			if (RoutePanel._col != -1) // find the Control that the mousecursor is in (if either)
 			{
-				var loc = RoutePanel.GetTileLocation(
-												RoutePanel.CursorPosition.X,
-												RoutePanel.CursorPosition.Y);
-				if (loc.X != -1)
-				{
-					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
-					if (node == null)
-					{
-						lblOver.ForeColor = SystemColors.ControlText;
-					}
-					else if (node.Spawn == SpawnWeight.None)
-					{
-						lblOver.ForeColor = Optionables.NodeColor;
-					}
-					else
-						lblOver.ForeColor = Optionables.NodeSpawnColor;
+				Color color;
 
-					ObserverManager.RouteView   .Control     .gbTileData.Invalidate();
-					ObserverManager.TopRouteView.ControlRoute.gbTileData.Invalidate();
+				RouteNode node = MapBase[RoutePanel._col,
+										 RoutePanel._row,
+										 MapBase.Level].Node;
+				if (node == null)
+				{
+					color = SystemColors.ControlText;
 				}
+				else if (node.Spawn == SpawnWeight.None)
+				{
+					color = Optionables.NodeColor;
+				}
+				else
+					color = Optionables.NodeSpawnColor;
+
+				lblOver.ForeColor = color; // set color in the overed viewer only.
 			}
 		}
 
 		/// <summary>
-		/// Updates the overed-node color and info when a node is key-dragged.
+		/// Updates the overed node's info and textcolor when a node is dragged.
 		/// </summary>
-		internal void SetInfotextOver()
+		internal void SetInfoOverText()
 		{
-			if (RoutePanel.CursorPosition.X != -1) // find the Control that the mousecursor is in (if either)
+			if (RoutePanel._col != -1) // find the Control that the mousecursor is in (if either)
 			{
-				var loc = RoutePanel.GetTileLocation(
-												RoutePanel.CursorPosition.X,
-												RoutePanel.CursorPosition.Y);
-				if (loc.X != -1)
-				{
-					int overid;
+				Color color; int id;
 
-					RouteNode node = MapBase[loc.X, loc.Y, MapBase.Level].Node;
-					if (node == null)
+				RouteNode node = MapBase[RoutePanel._col,
+										 RoutePanel._row,
+										 MapBase.Level].Node;
+				if (node == null)
+				{
+					id = -1;
+					color = SystemColors.ControlText;
+				}
+				else
+				{
+					id = node.Id;
+
+					if (node.Spawn == SpawnWeight.None)
 					{
-						overid = -1;
-						lblOver.ForeColor = SystemColors.ControlText;
+						color = Optionables.NodeColor;
 					}
 					else
-					{
-						overid = node.Id;
-
-						if (node.Spawn == SpawnWeight.None)
-						{
-							lblOver.ForeColor = Optionables.NodeColor;
-						}
-						else
-							lblOver.ForeColor = Optionables.NodeSpawnColor;
-					}
-
-					ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
-					ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
+						color = Optionables.NodeSpawnColor;
 				}
+
+				lblOver.ForeColor = color;
+
+				PrintOverInfo(id);
 			}
+		}
+
+		/// <summary>
+		/// Prints the currently mouseovered tile-id and -location to the
+		/// TileData groupbox.
+		/// </summary>
+		/// <param name="id"></param>
+		private void PrintOverInfo(int id)
+		{
+			string info;
+
+			if (id != -1)
+				info = "Over " + id;
+			else
+				info = String.Empty;
+
+			if (RoutePanel._col != -1)
+			{
+				info += Environment.NewLine;
+
+				int c = RoutePanel._col;
+				int r = RoutePanel._row;
+				int l = _file.MapSize.Levs - MapBase.Level;
+
+				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+				if (!MainViewF.Optionables.Base1_z) { --l; }
+
+				info += String.Format(
+									CultureInfo.InvariantCulture,
+									"c {0}  r {1}  L {2}",
+									c,r,l);
+			}
+
+			ObserverManager.RouteView   .Control     .lblOver.Text =
+			ObserverManager.TopRouteView.ControlRoute.lblOver.Text = info;
 		}
 
 		/// <summary>
@@ -426,6 +453,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void PrintSelectedInfo()
 		{
+			//LogFile.WriteLine("RouteView.PrintSelectedInfo()" + Tag);
+
 			if (MainViewOverlay.that.FirstClick)
 			{
 				string selected;
@@ -446,10 +475,8 @@ namespace MapView.Forms.Observers
 
 				selected += Environment.NewLine;
 
-				MapLocation loc = MapBase.Location;
-
-				int c = loc.Col;
-				int r = loc.Row;
+				int c = MapBase.Location.Col;
+				int r = MapBase.Location.Row;
 				int l = _file.MapSize.Levs - level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
@@ -464,46 +491,13 @@ namespace MapView.Forms.Observers
 				lblSelected.Refresh(); // fast update.
 			}
 		}
-
-		/// <summary>
-		/// Prints the currently mouseovered tile-info to the TileData groupbox.
-		/// </summary>
-		/// <param name="overid"></param>
-		/// <param name="loc"></param>
-		private void PrintOverInfo(int overid, Point loc)
-		{
-			string info;
-
-			if (overid != -1)
-				info = "Over " + overid;
-			else
-				info = String.Empty;
-
-			if (loc.X != -1)
-			{
-				info += Environment.NewLine;
-
-				int c = loc.X;
-				int r = loc.Y;
-				int l = _file.MapSize.Levs - MapBase.Level;
-
-				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-				if (!MainViewF.Optionables.Base1_z) { --l; }
-
-				info += String.Format(
-									CultureInfo.InvariantCulture,
-									"c {0}  r {1}  L {2}",
-									c,r,l);
-			}
-
-			lblOver.Text = info;
-		}
 		#endregion Methods (print TileData)
 
 
 		#region Events (mouse-events for RoutePanel)
 		/// <summary>
-		/// Selects a node on LMB, creates and/or connects nodes on RMB.
+		/// Handler that selects a node on LMB, creates and/or connects nodes on
+		/// RMB.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
@@ -555,7 +549,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Handler that completes a dragnode operation.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
@@ -582,6 +576,8 @@ namespace MapView.Forms.Observers
 
 					ObserverManager.RouteView   .Control     .UpdateLinkDistances();
 					ObserverManager.TopRouteView.ControlRoute.UpdateLinkDistances();
+
+					SetInfoOverText();
 				}
 				else if (args.Location.Col != Dragnode.Col
 					||   args.Location.Row != Dragnode.Row
@@ -601,54 +597,36 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Handler that updates the overed node's info and textcolor. Also sets
+		/// the position for the InfoOverlay and refreshes panels.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
 		internal void OnRoutePanelMouseMove(object sender, MouseEventArgs args)
 		{
-			RoutePanel.CursorPosition = new Point(args.X, args.Y);
+			//LogFile.WriteLine("RouteView.OnRoutePanelMouseMove()");
 
-			int overid;
-			int x = args.X; int y = args.Y;
+			RoutePanel._pos = new Point(args.X, args.Y);
 
-			var tile = RoutePanel.GetTile(ref x, ref y); // x/y -> tile-location
-			if (tile == null || tile.Node == null)
-			{
-				overid = -1;
-				lblOver.ForeColor = SystemColors.ControlText;
-			}
-			else
-			{
-				overid = tile.Node.Id;
+			SetInfoOverText();
 
-				if (tile.Node.Spawn == SpawnWeight.None)
-				{
-					lblOver.ForeColor = Optionables.NodeColor;
-				}
-				else
-					lblOver.ForeColor = Optionables.NodeSpawnColor;
-			}
+			ObserverManager.RouteView   .Control     .lblOver.Refresh(); // fast update. // NOTE: Only RouteView not TopRouteView(Route)
+			ObserverManager.TopRouteView.ControlRoute.lblOver.Refresh(); // fast update. // wants fast update. go figure
 
-			var loc = new Point(x,y);
-
-			ObserverManager.RouteView   .Control     .PrintOverInfo(overid, loc);
-			ObserverManager.TopRouteView.ControlRoute.PrintOverInfo(overid, loc);
-
-			ObserverManager.RouteView   .Control     .lblOver.Refresh(); // fast update.
-			ObserverManager.TopRouteView.ControlRoute.lblOver.Refresh(); // fast update.
-
+			// TODO: if (MainView.Optionables.ShowOverlay)
 			RefreshPanels(); // fast update. (else the InfoOverlay on RouteView but not TopRouteView(Route) gets sticky - go figur)
 		}
 
 		/// <summary>
-		/// Hides the info-overlay when the mouse leaves this control.
+		/// Handler that hides the info-overlay when the mouse leaves this
+		/// control. See also RoutePanelParent.t1_Tick().
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnRoutePanelMouseLeave(object sender, EventArgs e)
 		{
-			RoutePanel.CursorPosition = new Point(-1,-1);
+			// TODO: perhaps fire RoutePanelParent.OnMouseMove()
+			RoutePanel._col = -1;
 			RefreshPanels();
 		}
 		#endregion Events (mouse-events for RoutePanel)
@@ -667,8 +645,7 @@ namespace MapView.Forms.Observers
 			switch (_conType)
 			{
 				case ConnectNodesType.TwoWay:
-					result = GetOpenLinkSlot(node, NodeSelected.Id);
-					switch (result)
+					switch (result = GetOpenLinkSlot(node, NodeSelected.Id))
 					{
 						case LinkSlotResult.AllSlotsUsed:
 							MessageBox.Show(
@@ -699,8 +676,7 @@ namespace MapView.Forms.Observers
 					goto case ConnectNodesType.OneWay; // fallthrough
 
 				case ConnectNodesType.OneWay:
-					result = GetOpenLinkSlot(NodeSelected, node.Id);
-					switch (result)
+					switch (result = GetOpenLinkSlot(NodeSelected, node.Id))
 					{
 						case LinkSlotResult.AllSlotsUsed:
 							MessageBox.Show(
@@ -2437,11 +2413,11 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
 		}
 
-		private void InvalidatePanels()
-		{
-			ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-		}
+//		private void InvalidatePanels()
+//		{
+//			ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+//			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+//		}
 
 		private void UpdateNodeInfo()
 		{

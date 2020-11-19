@@ -52,6 +52,12 @@ namespace MapView.Forms.Observers
 
 		private Pen _penLink;
 		private Pen _penLinkSelected;
+
+		/// <summary>
+		/// Tracks the position of the mouse-cursor. Used to position the
+		/// InfoOverlay.
+		/// </summary>
+		internal Point _pos = new Point(-1,-1);
 		#endregion Fields
 
 
@@ -166,31 +172,29 @@ namespace MapView.Forms.Observers
 					PathSelectorLozenge(
 									Origin.X + (_col - _row) * HalfWidth,
 									Origin.Y + (_col + _row) * HalfHeight);
-					_graphics.DrawPath(
-									new Pen( // TODO: make this a separate Option.
+					using (var pen = new Pen( // TODO: Make selector-pen a separate Option.
 											RouteView.Optionables.GridLineColor,
-											RouteView.Optionables.GridLineWidth + 1),
-									LozSelector);
+											RouteView.Optionables.GridLineWidth + 1))
+					{
+						_graphics.DrawPath(pen, LozSelector);
+					}
 				}
 
 				if (MainViewOverlay.that.FirstClick)
 				{
-					_graphics.DrawPath(
-									new Pen( // TODO: make this a separate Option.
+					using (var pen = new Pen( // TODO: Make selected-pen a separate Option.
 											RouteView.Optionables.NodeSelectedColor,
-											RouteView.Optionables.GridLineWidth + 1),
-									LozSelected);
-
-					if (SpotPosition.X > -1)
+											RouteView.Optionables.GridLineWidth + 1))
 					{
-						PathSpottedLozenge(
-										Origin.X + (SpotPosition.X - SpotPosition.Y) * HalfWidth,
-										Origin.Y + (SpotPosition.X + SpotPosition.Y) * HalfHeight);
-						_graphics.DrawPath(
-										new Pen( // TODO: make this a separate Option.
-												RouteView.Optionables.NodeSelectedColor,
-												RouteView.Optionables.GridLineWidth + 1),
-										LozSpotted);
+						_graphics.DrawPath(pen, LozSelected);
+
+						if (SpotPosition.X > -1)
+						{
+							PathSpottedLozenge(
+											Origin.X + (SpotPosition.X - SpotPosition.Y) * HalfWidth,
+											Origin.Y + (SpotPosition.X + SpotPosition.Y) * HalfHeight);
+							_graphics.DrawPath(pen, LozSpotted); // TODO: Make spotted-pen a separate Option.
+						}
 					}
 				}
 
@@ -199,11 +203,11 @@ namespace MapView.Forms.Observers
 				if (RouteView.Optionables.ShowPriorityBars)
 					DrawNodeMeters();
 
-				if (RouteView.Optionables.ShowOverlay && CursorPosition.X != -1)
+				if (RouteView.Optionables.ShowOverlay && _col != -1)
 					DrawInfoOverlay();
 
-				if (   ObserverManager.RouteView   .Control     .RoutePanel.CursorPosition.X == -1
-					&& ObserverManager.TopRouteView.ControlRoute.RoutePanel.CursorPosition.X == -1)
+				if (   ObserverManager.RouteView   .Control     .RoutePanel._col == -1
+					&& ObserverManager.TopRouteView.ControlRoute.RoutePanel._col == -1)
 				{
 					ObserverManager.RouteView   .Control     .ClearOveredInfo();
 					ObserverManager.TopRouteView.ControlRoute.ClearOveredInfo();
@@ -678,12 +682,11 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawInfoOverlay()
 		{
-			int c = CursorPosition.X;
-			int r = CursorPosition.Y;
-
-			MapTile tile = GetTile(ref c, ref r); // x/y -> tile-location
-			if (tile != null)
+			MapTile tile = MapFile[_col, _row, MapFile.Level];
+			if (tile != null) // safety.
 			{
+				int c = _col;
+				int r = _row;
 				int l = MapFile.MapSize.Levs - MapFile.Level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
@@ -782,7 +785,7 @@ namespace MapView.Forms.Observers
 //				int textHeight = TextRenderer.MeasureText("X", font).Height;
 				int textHeight = (int)_graphics.MeasureString("X", _fontOverlay).Height + 1; // pad +1
 				var rect = new Rectangle(
-									CursorPosition.X + 18, CursorPosition.Y,
+									_pos.X + 18, _pos.Y,
 									textWidth1 + OverlayColPad + textWidth2 + 5, textHeight + 7); // trim right & bottom (else +8 for both w/h)
 
 				if (node != null)
@@ -794,10 +797,10 @@ namespace MapView.Forms.Observers
 				}
 
 				if (rect.X + rect.Width > ClientRectangle.Width)
-					rect.X = CursorPosition.X - rect.Width - 8;
+					rect.X = _pos.X - rect.Width - 8;
 
 				if (rect.Y + rect.Height > ClientRectangle.Height)
-					rect.Y = CursorPosition.Y - rect.Height;
+					rect.Y = _pos.Y - rect.Height;
 
 				_graphics.FillRectangle(new SolidBrush(Color.FromArgb(205, Color.DarkSlateBlue)), rect);
 				_graphics.FillRectangle(
