@@ -269,7 +269,7 @@ namespace MapView
 			// miClearRecordsExceeded
 			// 
 			this.miClearRecordsExceeded.Index = 2;
-			this.miClearRecordsExceeded.Text = "Clear BypassRecordsExceeded flags";
+			this.miClearRecordsExceeded.Text = "Clear all BypassRecordsExceeded flags";
 			this.miClearRecordsExceeded.Click += new System.EventHandler(this.OnClearRecordsExceededClick);
 			// 
 			// miSeparator6
