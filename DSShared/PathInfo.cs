@@ -66,7 +66,7 @@ namespace DSShared
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Initializes a new instance of the <see cref="T:DSShared.PathInfo" /> class.
+		/// cTor[0]. Initializes a new instance of the PathInfo class.
 		/// </summary>
 		/// <param name="dir">a path to the directory</param>
 		/// <param name="file">the file with any extension</param>
