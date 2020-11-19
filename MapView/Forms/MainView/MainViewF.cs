@@ -3297,10 +3297,9 @@ namespace MapView
 			if (MainViewOverlay.FirstClick)
 			{
 				MapFileBase @base = MainViewUnderlay.MapBase;
-				MapLocation loc = @base.Location;
 
-				int c = loc.Col;
-				int r = loc.Row;
+				int c = @base.Location.Col;
+				int r = @base.Location.Row;
 				int l = @base.MapSize.Levs - @base.Level;
 
 				if (Optionables.Base1_xy) { ++c; ++r; }
