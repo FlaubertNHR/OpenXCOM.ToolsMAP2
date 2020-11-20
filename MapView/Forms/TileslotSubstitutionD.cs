@@ -53,6 +53,11 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Handles the [Esc] key to close this dialog. Requires form's
+		/// KeyPreview true.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyData == Keys.Escape)
@@ -71,8 +76,6 @@ namespace MapView
 
 
 		#region Designer
-		private System.ComponentModel.Container components = null;
-
 		private Label la_Src;
 		private TextBox tb_Src;
 		private Label la_Dst;
@@ -80,17 +83,6 @@ namespace MapView
 		private Button bt_Ok;
 		internal CheckBox cb_Clear;
 
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
