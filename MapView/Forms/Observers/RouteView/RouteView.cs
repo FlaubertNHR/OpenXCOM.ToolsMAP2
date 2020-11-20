@@ -581,9 +581,9 @@ namespace MapView.Forms.Observers
 
 					SetInfoOverText();
 				}
-				else if (args.Location.Col != Dragnode.Col
-					||   args.Location.Row != Dragnode.Row
-					||   args.Location.Lev != Dragnode.Lev)
+				else if (args.Location.Col != (int)Dragnode.Col
+					||   args.Location.Row != (int)Dragnode.Row
+					||   args.Location.Lev !=      Dragnode.Lev)
 				{
 					MessageBox.Show(
 								this,
