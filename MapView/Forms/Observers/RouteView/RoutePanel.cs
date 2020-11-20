@@ -585,8 +585,8 @@ namespace MapView.Forms.Observers
 					if ((tile = MapFile[c,r]) != null
 						&& (node = tile.Node) != null)
 					{
-						int infoboxX = x - HalfWidth / 2 - 2;				// -2 to prevent drawing over the link-going-up
-						int infoboxY = y + HalfHeight - NodeValHeight / 2;	// vertical line indicator when panel is small sized.
+						int infoboxX = x - HalfWidth / 2 - 2;				// -2 to prevent drawing over the link-going-up vertical
+						int infoboxY = y + HalfHeight - NodeValHeight / 2;	//    line indicator when panel-size is fairly small.
 
 						DrawNodeMeter(infoboxX,     infoboxY, (int)node.Spawn,  Brushes.LightCoral);
 						DrawNodeMeter(infoboxX + 3, infoboxY, (int)node.Patrol, Brushes.DeepSkyBlue);
@@ -796,11 +796,27 @@ namespace MapView.Forms.Observers
 						rect.Height += textHeight;
 				}
 
-				if (rect.X + rect.Width > ClientRectangle.Width)
-					rect.X = _pos.X - rect.Width - 8;
+				if (RouteView.Optionables.ReduceDraws)
+				{
+					rect.X = Origin.X + (_col * HalfWidth)  - (_row * HalfHeight * 2); // heh nailed it.
+					rect.Y = Origin.Y + (_row * HalfHeight) + (_col * HalfWidth  / 2);
 
-				if (rect.Y + rect.Height > ClientRectangle.Height)
-					rect.Y = _pos.Y - rect.Height;
+					rect.Y += HalfHeight / 2;
+
+					if (rect.X + rect.Width > ClientRectangle.Width)
+						rect.X -= rect.Width + HalfWidth;
+	
+					if (rect.Y + rect.Height > ClientRectangle.Height)
+						rect.Y -= rect.Height;
+				}
+				else
+				{
+					if (rect.X + rect.Width > ClientRectangle.Width)
+						rect.X = _pos.X - rect.Width - 8;
+	
+					if (rect.Y + rect.Height > ClientRectangle.Height)
+						rect.Y = _pos.Y - rect.Height;
+				}
 
 				_graphics.FillRectangle(new SolidBrush(Color.FromArgb(205, Color.DarkSlateBlue)), rect);
 				_graphics.FillRectangle(

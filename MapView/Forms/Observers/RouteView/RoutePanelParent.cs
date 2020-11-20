@@ -256,8 +256,13 @@ namespace MapView.Forms.Observers
 
 				// this fires panel refreshes only when the cursor moves to another tile
 				// The InfoOverlay goes sticky but the panel feels tighter.
-//				base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()
+				base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()
+				return;
 			}
+
+			if (RouteView.Optionables.ReduceDraws)
+				return;
+
 			// this fires panel refreshes whenever the mouse moves a single pixel
 			// The InfoOverlay moves freely.
 			base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()

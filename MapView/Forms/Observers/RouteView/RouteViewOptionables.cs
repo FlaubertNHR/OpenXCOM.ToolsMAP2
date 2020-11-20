@@ -356,6 +356,22 @@ namespace MapView.Forms.Observers
 		}
 
 
+		private const string str_ReduceDraws = "ReduceDraws";
+		private const bool   def_ReduceDraws = false;
+
+		private bool _reduceDraws = def_ReduceDraws;
+		[Category(cat_Panel)]
+		[Description("True to reduce the frequency of draw-calls to the panel."
+					+ " If so the InfoOverlay doesn't track exactly with the"
+					+ " cursor but the panel feels solid.")]
+		[DefaultValue(false)]
+		public bool ReduceDraws
+		{
+			get { return _reduceDraws; }
+			set { _reduceDraws = value; }
+		}
+
+
 
 /*		private const string cat_Selects = "Selects";
 
@@ -505,6 +521,7 @@ namespace MapView.Forms.Observers
 
 			options.AddOptionDefault(str_ShowOverlay,       def_ShowOverlay,       changer);
 			options.AddOptionDefault(str_ShowPriorityBars,  def_ShowPriorityBars,  changer);
+			options.AddOptionDefault(str_ReduceDraws,       def_ReduceDraws,       changer);
 		}
 		#endregion Methods
 
@@ -541,6 +558,7 @@ namespace MapView.Forms.Observers
 
 				case str_ShowOverlay:       ShowOverlay       =  (bool)val;                           break;
 				case str_ShowPriorityBars:  ShowPriorityBars  =  (bool)val;                           break;
+				case str_ReduceDraws:       ReduceDraws       =  (bool)val;                           break;
 			}
 
 			RouteView.RefreshControls();
