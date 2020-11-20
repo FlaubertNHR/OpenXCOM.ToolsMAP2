@@ -363,7 +363,8 @@ namespace MapView.Forms.Observers
 		[Category(cat_Panel)]
 		[Description("True to reduce the frequency of draw-calls to the panel."
 					+ " If so the InfoOverlay doesn't track exactly with the"
-					+ " cursor but the panel feels solid.")]
+					+ " cursor but the panel feels solid. Note that when option "
+					+ str_ShowOverlay + " is false draws will be reduced regardless.")]
 		[DefaultValue(false)]
 		public bool ReduceDraws
 		{

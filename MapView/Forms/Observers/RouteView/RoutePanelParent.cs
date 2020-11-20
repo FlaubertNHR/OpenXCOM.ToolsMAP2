@@ -260,7 +260,7 @@ namespace MapView.Forms.Observers
 				return;
 			}
 
-			if (RouteView.Optionables.ReduceDraws)
+			if (RouteView.Optionables.ReduceDraws || !RouteView.Optionables.ShowOverlay)
 				return;
 
 			// this fires panel refreshes whenever the mouse moves a single pixel
