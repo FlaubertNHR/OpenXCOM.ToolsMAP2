@@ -10,6 +10,11 @@ using XCom;
 
 namespace MapView
 {
+	/// <summary>
+	/// A dialog that displays the total quantities of spawn-nodes in the
+	/// currently loaded tileset as well as that tileset's Category. Quantities
+	/// are shown in a table by spawn-rank.
+	/// </summary>
 	internal sealed partial class RoutesInfo
 		:
 			Form
