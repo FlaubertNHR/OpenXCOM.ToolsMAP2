@@ -52,6 +52,12 @@ namespace MapView
 				}
 			}
 		}
+
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyData == Keys.Escape)
+				Close();
+		}
 		#endregion Events (override)
 
 
@@ -172,6 +178,7 @@ namespace MapView
 			this.Controls.Add(this.la_Src);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "TileslotSubstitutionD";
