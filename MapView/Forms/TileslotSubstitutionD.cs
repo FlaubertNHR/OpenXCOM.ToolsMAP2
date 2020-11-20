@@ -6,7 +6,7 @@ using XCom.Base;
 
 namespace MapView
 {
-	internal sealed class TileslotSubstitutionDialog
+	internal sealed class TileslotSubstitutionD
 		:
 			Form
 	{
@@ -19,7 +19,7 @@ namespace MapView
 
 
 		#region cTor
-		internal TileslotSubstitutionDialog(MapFileBase @base)
+		internal TileslotSubstitutionD(MapFileBase @base)
 		{
 			InitializeComponent();
 
@@ -160,7 +160,7 @@ namespace MapView
 			this.cb_Clear.UseVisualStyleBackColor = true;
 			this.cb_Clear.CheckedChanged += new System.EventHandler(this.OnClearChanged);
 			// 
-			// TileslotSubstitutionDialog
+			// TileslotSubstitutionD
 			// 
 			this.AcceptButton = this.bt_Ok;
 			this.ClientSize = new System.Drawing.Size(194, 106);
@@ -174,7 +174,7 @@ namespace MapView
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "TileslotSubstitutionDialog";
+			this.Name = "TileslotSubstitutionD";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Tileslot Substitution";

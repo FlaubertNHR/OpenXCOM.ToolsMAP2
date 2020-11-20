@@ -1679,7 +1679,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTileslotSubstitutionClick(object sender, EventArgs e)
 		{
-			using (var f = new TileslotSubstitutionDialog(MainViewUnderlay.MapBase))
+			using (var f = new TileslotSubstitutionD(MainViewUnderlay.MapBase))
 			{
 				if (f.ShowDialog() == DialogResult.OK)
 				{

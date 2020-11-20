@@ -220,7 +220,7 @@
     <Compile Include="Forms\TilesetEditor.Designer.cs">
       <DependentUpon>TilesetEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TileslotSubstitutionDialog.cs" />
+    <Compile Include="Forms\TileslotSubstitutionD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -348,8 +348,8 @@
     <EmbeddedResource Include="Forms\TilesetEditor.resx">
       <DependentUpon>TilesetEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TileslotSubstitutionDialog.resx">
-      <DependentUpon>TileslotSubstitutionDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\TileslotSubstitutionD.resx">
+      <DependentUpon>TileslotSubstitutionD.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
