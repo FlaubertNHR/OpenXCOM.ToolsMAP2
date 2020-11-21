@@ -1677,16 +1677,13 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnTileslotSubstitutionClick(object sender, EventArgs e)
+		private void OnTilepartSubstitutionClick(object sender, EventArgs e)
 		{
-			using (var f = new TileslotSubstitutionD(MainViewUnderlay.MapBase))
+			using (var f = new TilepartSubstitutionDialog(MainViewUnderlay.MapBase))
 			{
 				if (f.ShowDialog() == DialogResult.OK)
 				{
-					if (f.cb_Clear.Checked)
-						f.dst = -1;
-
-					MainViewOverlay.SubstituteTileparts(f.src, f.dst);
+//					MainViewOverlay.SubstituteTileparts(f._src, f._dst);
 				}
 			}
 		}
@@ -3033,7 +3030,7 @@ namespace MapView
 						miReload              .Enabled =
 						miScreenshot          .Enabled =
 						miModifySize          .Enabled =
-						miTileslotSubstitution.Enabled =
+						miTilepartSubstitution.Enabled =
 						miMapInfo             .Enabled = true;
 
 						MainViewOverlay.FirstClick = false;
@@ -3062,7 +3059,7 @@ namespace MapView
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						MapChanged = (@base as MapFile).IsLoadChanged; // don't bother to reset IsLoadChanged.
+						MapChanged = @base.FunkyPartidsDetected; // don't bother to reset 'FunkyPartidsDetected'.
 
 						var routeview1 = ObserverManager.RouteView.Control;
 						var routeview2 = ObserverManager.TopRouteView.ControlRoute;

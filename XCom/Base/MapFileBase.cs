@@ -163,6 +163,16 @@ namespace XCom.Base
 		/// </summary>
 		public bool RoutesChanged
 		{ get; set; }
+
+		public bool FunkyPartidsDetected
+		{ get; internal protected set; }
+
+		/// <summary>
+		/// Stores the highest Tilepart id in the Mapfile for display in the
+		/// Mapview.TilepartSubstitutionD dialog.
+		/// </summary>
+		public int HighestTilepartId
+		{ get; internal protected set; }
 		#endregion Properties
 
 

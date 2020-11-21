@@ -19,6 +19,23 @@ namespace XCom
 		:
 			MapFileBase
 	{
+		#region Fields (static)
+		/// <summary>
+		/// The tilepart-id that's stored in a .MAP file's array of tilepart-ids
+		/// accounts for the fact that ids #0 and #1 will be assigned the
+		/// so-called Blank MCD records (the scorched earth parts that are
+		/// instantiated when x-com itself loads). MapView, however, subtracts
+		/// the count of blanks-records to assign the id-values in the
+		/// <see cref="MapFileBase.Parts">MapFileBase.Parts</see> list; terrain-
+		/// and terrainset-ids are easier to cope with that way. The part-ids
+		/// will then be incremented again by the blanks-count when a .MAP file
+		/// gets saved. Put another way #0 and #1 are reserved, by x-com but not
+		/// by MapView, for the 2 BLANKS tiles.
+		/// </summary>
+		private const int BlanksReservedCount = 2;
+		#endregion Fields (static)
+
+
 		#region Properties
 		private string PfeMap
 		{ get; set; }
@@ -28,9 +45,6 @@ namespace XCom
 
 		public RouteNodeCollection Routes
 		{ get; set; }
-
-		public bool IsLoadChanged
-		{ get; private set; }
 
 		internal bool Fail
 		{ get; private set; }
@@ -42,7 +56,7 @@ namespace XCom
 		/// cTor.
 		/// </summary>
 		/// <param name="descriptor"></param>
-		/// <param name="parts">a list of parts in all allocated terrains</param>
+		/// <param name="parts">the list of parts in all allocated terrains (the terrainset)</param>
 		/// <param name="routes"></param>
 		internal MapFile(
 				Descriptor descriptor,
@@ -77,7 +91,7 @@ namespace XCom
 		/// Reads a .MAP file.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of a Mapfile</param>
-		/// <param name="parts">a list of tileset-parts</param>
+		/// <param name="parts">a list of tileparts</param>
 		/// <returns>true if read okay</returns>
 		private bool LoadMapfile(string pfe, List<Tilepart> parts)
 		{
@@ -107,9 +121,6 @@ namespace XCom
 			return false;
 		}
 
-
-		private const int IdOffset = 2; // #0 and #1 are reserved for the 2 BLANKS tiles.
-
 		/// <summary>
 		/// Creates a tile with its four parts.
 		/// </summary>
@@ -126,64 +137,77 @@ namespace XCom
 				int quad3,
 				int quad4)
 		{
+			if (quad1 > HighestTilepartId)
+				HighestTilepartId = quad1;
+
+			if (quad2 > HighestTilepartId)
+				HighestTilepartId = quad2;
+
+			if (quad3 > HighestTilepartId)
+				HighestTilepartId = quad3;
+
+			if (quad4 > HighestTilepartId)
+				HighestTilepartId = quad4;
+
+
 			Tilepart floor, west, north, content;
 
 			// NOTE: quads will be "-1" if "read from the end of the stream".
 
-			if (quad1 < IdOffset)
+			if (quad1 < BlanksReservedCount)
 			{
 				floor = null;
 			}
-			else if ((quad1 -= IdOffset) < parts.Count)
+			else if ((quad1 -= BlanksReservedCount) < parts.Count)
 			{
 				floor = parts[quad1];
 			}
 			else
 			{
 				floor = null;
-				if (!IsLoadChanged) ShowWarning();
+				if (!FunkyPartidsDetected) ShowWarning();
 			}
 
-			if (quad2 < IdOffset)
+			if (quad2 < BlanksReservedCount)
 			{
 				west = null;
 			}
-			else if ((quad2 -= IdOffset) < parts.Count)
+			else if ((quad2 -= BlanksReservedCount) < parts.Count)
 			{
 				west = parts[quad2];
 			}
 			else
 			{
 				west = null;
-				if (!IsLoadChanged) ShowWarning();
+				if (!FunkyPartidsDetected) ShowWarning();
 			}
 
-			if (quad3 < IdOffset)
+			if (quad3 < BlanksReservedCount)
 			{
 				north = null;
 			}
-			else if ((quad3 -= IdOffset) < parts.Count)
+			else if ((quad3 -= BlanksReservedCount) < parts.Count)
 			{
 				north = parts[quad3];
 			}
 			else
 			{
 				north = null;
-				if (!IsLoadChanged) ShowWarning();
+				if (!FunkyPartidsDetected) ShowWarning();
 			}
 
-			if (quad4 < IdOffset)
+			if (quad4 < BlanksReservedCount)
 			{
 				content = null;
 			}
-			else if ((quad4 -= IdOffset) < parts.Count)
+			else if ((quad4 -= BlanksReservedCount) < parts.Count)
 			{
 				content = parts[quad4];
 			}
 			else
 			{
 				content = null;
-				if (!IsLoadChanged) ShowWarning();
+				if (!FunkyPartidsDetected) ShowWarning();
 			}
 
 			return new MapTile(
@@ -199,7 +223,7 @@ namespace XCom
 		/// </summary>
 		private void ShowWarning()
 		{
-			IsLoadChanged = true;
+			FunkyPartidsDetected = true;
 			MessageBox.Show(
 						"There are tileparts that exceed the bounds of the Map's"
 							+ " currently allocated MCD records. They will be"
@@ -402,22 +426,22 @@ namespace XCom
 				{
 					tile = this[col, row, lev];
 
-					if (tile.Floor == null || (id = tile.Floor.SetId + IdOffset) > (int)byte.MaxValue)
+					if (tile.Floor   == null || (id = tile.Floor  .SetId + BlanksReservedCount) > (int)Byte.MaxValue)
 						fs.WriteByte(0);
 					else
 						fs.WriteByte((byte)id);
 
-					if (tile.West == null || (id = tile.West.SetId + IdOffset) > (int)byte.MaxValue)
+					if (tile.West    == null || (id = tile.West   .SetId + BlanksReservedCount) > (int)Byte.MaxValue)
 						fs.WriteByte(0);
 					else
 						fs.WriteByte((byte)id);
 
-					if (tile.North == null || (id = tile.North.SetId + IdOffset) > (int)byte.MaxValue)
+					if (tile.North   == null || (id = tile.North  .SetId + BlanksReservedCount) > (int)Byte.MaxValue)
 						fs.WriteByte(0);
 					else
 						fs.WriteByte((byte)id);
 
-					if (tile.Content == null || (id = tile.Content.SetId + IdOffset) > (int)byte.MaxValue)
+					if (tile.Content == null || (id = tile.Content.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
 						fs.WriteByte(0);
 					else
 						fs.WriteByte((byte)id);

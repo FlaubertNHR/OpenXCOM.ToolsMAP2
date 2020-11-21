@@ -35,7 +35,7 @@ namespace MapView
 
 		private System.Windows.Forms.MenuItem menuEdit;
 		private System.Windows.Forms.MenuItem miModifySize;
-		private System.Windows.Forms.MenuItem miTileslotSubstitution;
+		private System.Windows.Forms.MenuItem miTilepartSubstitution;
 		private System.Windows.Forms.MenuItem miClearRecordsExceeded;
 		private System.Windows.Forms.MenuItem miSeparator6;
 		private System.Windows.Forms.MenuItem miConfigurator;
@@ -98,7 +98,7 @@ namespace MapView
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.menuEdit = new System.Windows.Forms.MenuItem();
 			this.miModifySize = new System.Windows.Forms.MenuItem();
-			this.miTileslotSubstitution = new System.Windows.Forms.MenuItem();
+			this.miTilepartSubstitution = new System.Windows.Forms.MenuItem();
 			this.miClearRecordsExceeded = new System.Windows.Forms.MenuItem();
 			this.miSeparator6 = new System.Windows.Forms.MenuItem();
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
@@ -243,7 +243,7 @@ namespace MapView
 			this.menuEdit.Index = 1;
 			this.menuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miModifySize,
-			this.miTileslotSubstitution,
+			this.miTilepartSubstitution,
 			this.miClearRecordsExceeded,
 			this.miSeparator6,
 			this.miConfigurator,
@@ -258,13 +258,13 @@ namespace MapView
 			this.miModifySize.Text = "Modify Map Si&ze";
 			this.miModifySize.Click += new System.EventHandler(this.OnMapResizeClick);
 			// 
-			// miTileslotSubstitution
+			// miTilepartSubstitution
 			// 
-			this.miTileslotSubstitution.Enabled = false;
-			this.miTileslotSubstitution.Index = 1;
-			this.miTileslotSubstitution.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
-			this.miTileslotSubstitution.Text = "Tileslot S&ubstitution";
-			this.miTileslotSubstitution.Click += new System.EventHandler(this.OnTileslotSubstitutionClick);
+			this.miTilepartSubstitution.Enabled = false;
+			this.miTilepartSubstitution.Index = 1;
+			this.miTilepartSubstitution.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
+			this.miTilepartSubstitution.Text = "Tilepart S&ubstitution";
+			this.miTilepartSubstitution.Click += new System.EventHandler(this.OnTilepartSubstitutionClick);
 			// 
 			// miClearRecordsExceeded
 			// 
