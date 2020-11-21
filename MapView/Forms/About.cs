@@ -109,17 +109,17 @@ namespace MapView
 			_l.X += _rand.Next() % 3 - 1;
 			_l.Y += _rand.Next() % 3 - 1;
 
-			bool IsInsideBounds = false;
+			bool isInsideBounds = false;
 			foreach (var screen in Screen.AllScreens)
 			{
-				IsInsideBounds = screen.Bounds.Contains(_l)
-							  && screen.Bounds.Contains(_l + Size);
-
-				if (IsInsideBounds)
+				if (isInsideBounds = screen.Bounds.Contains(_l)
+								  && screen.Bounds.Contains(_l + Size))
+				{
 					break;
+				}
 			}
 
-			if (!IsInsideBounds)
+			if (!isInsideBounds)
 				_l = _lBase;
 
 			Location = _l;
