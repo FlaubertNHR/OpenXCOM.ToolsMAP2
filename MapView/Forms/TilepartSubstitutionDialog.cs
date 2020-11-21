@@ -87,13 +87,6 @@ namespace MapView
 			rb_shift.Select(); // and yes the '_init' thing is req'd.
 			_init = false;
 
-			switch (rb_selected) // fire rb_CheckedChanged()
-			{
-				case RadioSelected.Clear: rb_clear.Checked = true; break;
-				case RadioSelected.Desti: rb_dst  .Checked = true; break;
-				case RadioSelected.Shift: rb_shift.Checked = true; break;
-			}
-
 			_init = true;
 			if (src0  != Int32.MaxValue) tb_Src0 .Text = src0 .ToString();
 			if (src1  != Int32.MaxValue) tb_Src1 .Text = src1 .ToString();
@@ -104,6 +97,13 @@ namespace MapView
 			tb_Src0.Select(); // set '_text'
 			tb_Src0.SelectionStart = tb_Src0.Text.Length;
 			tb_Src0.SelectionLength = 0;
+
+			switch (rb_selected) // fire rb_CheckedChanged()
+			{
+				case RadioSelected.Clear: rb_clear.Checked = true; break;
+				case RadioSelected.Desti: rb_dst  .Checked = true; break;
+				case RadioSelected.Shift: rb_shift.Checked = true; break;
+			}
 		}
 		#endregion cTor
 
@@ -211,6 +211,7 @@ namespace MapView
 					tb_dst  .BackColor = SystemColors.Control;
 					tb_shift.BackColor = Color.LightGreen;
 				}
+
 				Enable();
 			}
 		}
@@ -231,29 +232,23 @@ namespace MapView
 
 				if (!String.IsNullOrEmpty(text))
 				{
-					if (!rb_shift.Checked || text != "-") // allow shift to be a "-"
+					if (!rb_shift.Checked || text != "-")			// allow shift to be a "-"
 					{
 						bool fail = false;
 
-						if (!Int32.TryParse(text, out result)) // shall be an integer
+						if (!Int32.TryParse(text, out result))		// shall be an integer
 						{
 							fail = true;
 						}
-						else if (tb == tb_Src0 || tb == tb_Src1) // shall be a positive integer
+						else if (tb == tb_Src0 || tb == tb_Src1)	// shall be a positive integer
 						{
 							fail = result < 0;
 						}
-						else if (tb == tb_dst) // shall be a positive integer less than partcount
+						else if (tb == tb_dst)						// shall be a positive integer less than partcount
 						{
 							fail = result < 0
 								|| result >= _base.Parts.Count;
 						}
-						else //if (tb == tb_shift) // shall be bounded after adding src0/src1
-						{
-							fail = (!String.IsNullOrEmpty(tb_Src0.Text) && result + Int32.Parse(tb_Src0.Text) < 0)
-								|| (!String.IsNullOrEmpty(tb_Src1.Text) && result + Int32.Parse(tb_Src1.Text) >= _base.Parts.Count);
-						}
-
 
 						if (fail)
 						{
@@ -261,20 +256,28 @@ namespace MapView
 							tb.SelectionStart = _text.Length;
 							tb.SelectionLength = 0;
 
-							return; // ie. do not set '_text' or statics
+							return;									// ie. do not set '_text' or statics
 						}
 					}
 				}
 				_text = text;
 
 				SetStatics(tb, result);
+
+				Enable();
 			}
-			Enable();
 		}
 		#endregion Events
 
 
 		#region Methods
+		/// <summary>
+		/// Sets the values of static variables that are used both for
+		/// re-insantiation and for MapView to deal with on return w/
+		/// 'DialogResult.OK'.
+		/// </summary>
+		/// <param name="tb"></param>
+		/// <param name="result"></param>
 		private void SetStatics(object tb, int result)
 		{
 			if      (tb == tb_Src0) src0  = result;
@@ -283,13 +286,21 @@ namespace MapView
 			else                    shift = result; // (tb == tb_shift)
 		}
 
+		/// <summary>
+		/// Dis/enables the Ok button.
+		/// @note The input values src0/src1 are allowed to exceed the MaxId in
+		/// the current terrainset but the output shall not be allowed to exceed
+		/// the MaxId.
+		/// </summary>
 		private void Enable()
 		{
 			bu_ok.Enabled =  src0 != Int32.MaxValue
 						 && (src1 == Int32.MaxValue || src1 >= src0)
 						 && (    rb_clear.Checked
 							 || (rb_dst  .Checked && dst   != Int32.MaxValue && (dst != src0 || (src1 != Int32.MaxValue && src1 != src0)))
-							 || (rb_shift.Checked && shift != Int32.MaxValue && shift != 0));
+							 || (rb_shift.Checked && shift != Int32.MaxValue && shift != 0
+								 && shift + src0 > -1 && ((src1 == Int32.MaxValue && shift + src0 < _base.Parts.Count)
+													   || (src1 != Int32.MaxValue && shift + src1 < _base.Parts.Count))));
 		}
 		#endregion Methods
 
@@ -307,8 +318,8 @@ namespace MapView
 		private TextBox tb_shift;
 		private Button bu_cancel;
 		private Button bu_ok;
-		private System.Windows.Forms.Label la_start;
-		private System.Windows.Forms.Label label1;
+		private Label la_start;
+		private Label la_stop;
 
 
 		/// <summary>
@@ -329,7 +340,7 @@ namespace MapView
 			this.rb_shift = new System.Windows.Forms.RadioButton();
 			this.bu_cancel = new System.Windows.Forms.Button();
 			this.la_start = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
+			this.la_stop = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// la_head
@@ -344,11 +355,12 @@ namespace MapView
 			// 
 			// tb_Src0
 			// 
+			this.tb_Src0.HideSelection = false;
 			this.tb_Src0.Location = new System.Drawing.Point(50, 65);
 			this.tb_Src0.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Src0.Name = "tb_Src0";
 			this.tb_Src0.Size = new System.Drawing.Size(50, 19);
-			this.tb_Src0.TabIndex = 1;
+			this.tb_Src0.TabIndex = 2;
 			this.tb_Src0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb_Src0.WordWrap = false;
 			this.tb_Src0.TextChanged += new System.EventHandler(this.tb_TextChanged);
@@ -356,11 +368,12 @@ namespace MapView
 			// 
 			// tb_dst
 			// 
+			this.tb_dst.HideSelection = false;
 			this.tb_dst.Location = new System.Drawing.Point(110, 115);
 			this.tb_dst.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_dst.Name = "tb_dst";
 			this.tb_dst.Size = new System.Drawing.Size(50, 19);
-			this.tb_dst.TabIndex = 6;
+			this.tb_dst.TabIndex = 8;
 			this.tb_dst.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb_dst.WordWrap = false;
 			this.tb_dst.TextChanged += new System.EventHandler(this.tb_TextChanged);
@@ -374,7 +387,7 @@ namespace MapView
 			this.bu_ok.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_ok.Name = "bu_ok";
 			this.bu_ok.Size = new System.Drawing.Size(90, 25);
-			this.bu_ok.TabIndex = 10;
+			this.bu_ok.TabIndex = 12;
 			this.bu_ok.Text = "Ok";
 			this.bu_ok.UseVisualStyleBackColor = true;
 			// 
@@ -384,17 +397,18 @@ namespace MapView
 			this.la_dotdot.Margin = new System.Windows.Forms.Padding(0);
 			this.la_dotdot.Name = "la_dotdot";
 			this.la_dotdot.Size = new System.Drawing.Size(15, 15);
-			this.la_dotdot.TabIndex = 2;
+			this.la_dotdot.TabIndex = 3;
 			this.la_dotdot.Text = "..";
 			this.la_dotdot.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tb_Src1
 			// 
+			this.tb_Src1.HideSelection = false;
 			this.tb_Src1.Location = new System.Drawing.Point(160, 65);
 			this.tb_Src1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Src1.Name = "tb_Src1";
 			this.tb_Src1.Size = new System.Drawing.Size(50, 19);
-			this.tb_Src1.TabIndex = 3;
+			this.tb_Src1.TabIndex = 5;
 			this.tb_Src1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb_Src1.WordWrap = false;
 			this.tb_Src1.TextChanged += new System.EventHandler(this.tb_TextChanged);
@@ -402,11 +416,12 @@ namespace MapView
 			// 
 			// tb_shift
 			// 
+			this.tb_shift.HideSelection = false;
 			this.tb_shift.Location = new System.Drawing.Point(110, 135);
 			this.tb_shift.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_shift.Name = "tb_shift";
 			this.tb_shift.Size = new System.Drawing.Size(50, 19);
-			this.tb_shift.TabIndex = 8;
+			this.tb_shift.TabIndex = 10;
 			this.tb_shift.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb_shift.WordWrap = false;
 			this.tb_shift.TextChanged += new System.EventHandler(this.tb_TextChanged);
@@ -418,7 +433,7 @@ namespace MapView
 			this.rb_clear.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_clear.Name = "rb_clear";
 			this.rb_clear.Size = new System.Drawing.Size(85, 20);
-			this.rb_clear.TabIndex = 4;
+			this.rb_clear.TabIndex = 6;
 			this.rb_clear.Text = "clear parts";
 			this.rb_clear.UseVisualStyleBackColor = true;
 			this.rb_clear.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
@@ -430,7 +445,7 @@ namespace MapView
 			this.rb_dst.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_dst.Name = "rb_dst";
 			this.rb_dst.Size = new System.Drawing.Size(95, 20);
-			this.rb_dst.TabIndex = 5;
+			this.rb_dst.TabIndex = 7;
 			this.rb_dst.Text = "assign setId";
 			this.rb_dst.UseVisualStyleBackColor = true;
 			this.rb_dst.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
@@ -442,7 +457,7 @@ namespace MapView
 			this.rb_shift.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_shift.Name = "rb_shift";
 			this.rb_shift.Size = new System.Drawing.Size(85, 20);
-			this.rb_shift.TabIndex = 7;
+			this.rb_shift.TabIndex = 9;
 			this.rb_shift.Text = "shift +/-";
 			this.rb_shift.UseVisualStyleBackColor = true;
 			this.rb_shift.CheckedChanged += new System.EventHandler(this.rb_CheckedChanged);
@@ -456,7 +471,7 @@ namespace MapView
 			this.bu_cancel.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_cancel.Name = "bu_cancel";
 			this.bu_cancel.Size = new System.Drawing.Size(80, 20);
-			this.bu_cancel.TabIndex = 9;
+			this.bu_cancel.TabIndex = 11;
 			this.bu_cancel.Text = "Cancel";
 			this.bu_cancel.UseVisualStyleBackColor = true;
 			// 
@@ -466,26 +481,26 @@ namespace MapView
 			this.la_start.Margin = new System.Windows.Forms.Padding(0);
 			this.la_start.Name = "la_start";
 			this.la_start.Size = new System.Drawing.Size(35, 15);
-			this.la_start.TabIndex = 11;
+			this.la_start.TabIndex = 1;
 			this.la_start.Text = "start";
 			this.la_start.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label1
+			// la_stop
 			// 
-			this.label1.Location = new System.Drawing.Point(125, 70);
-			this.label1.Margin = new System.Windows.Forms.Padding(0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(30, 15);
-			this.label1.TabIndex = 12;
-			this.label1.Text = "stop";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_stop.Location = new System.Drawing.Point(125, 70);
+			this.la_stop.Margin = new System.Windows.Forms.Padding(0);
+			this.la_stop.Name = "la_stop";
+			this.la_stop.Size = new System.Drawing.Size(30, 15);
+			this.la_stop.TabIndex = 4;
+			this.la_stop.Text = "stop";
+			this.la_stop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// TilepartSubstitutionDialog
 			// 
 			this.AcceptButton = this.bu_ok;
 			this.CancelButton = this.bu_cancel;
 			this.ClientSize = new System.Drawing.Size(274, 191);
-			this.Controls.Add(this.label1);
+			this.Controls.Add(this.la_stop);
 			this.Controls.Add(this.la_start);
 			this.Controls.Add(this.bu_ok);
 			this.Controls.Add(this.bu_cancel);
