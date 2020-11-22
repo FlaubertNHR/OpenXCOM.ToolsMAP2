@@ -39,10 +39,10 @@ namespace DSShared
 		public const string CopyPanel     = "CopyPanel";
 
 
-		private const string LEFT   = "left";
-		private const string TOP    = "top";
-		private const string WIDTH  = "width";
-		private const string HEIGHT = "height";
+		private const string Left   = "left";
+		private const string Top    = "top";
+		private const string Width  = "width";
+		private const string Height = "height";
 
 
 		private static string _pfe;
@@ -89,16 +89,27 @@ namespace DSShared
 						int val = Int32.Parse(keyval.Value.ToString(), invariant); // TODO: Error handling.
 						switch (keyval.Key.ToString())
 						{
-							case LEFT:   tric.left   = val; break;
-							case TOP:    tric.top    = val; break;
-							case WIDTH:  tric.width  = val; break;
-							case HEIGHT: tric.height = val; break;
+							case Left:   tric.left   = val; break;
+							case Top:    tric.top    = val; break;
+							case Width:  tric.width  = val; break;
+							case Height: tric.height = val; break;
 						}
 					}
 
 					// check to ensure that the form is at least partly onscreen ->
-					var rect = Screen.GetWorkingArea(new Point(tric.left, tric.top));
-					if (!rect.Contains(tric.left + 200, tric.top + 100))
+					// NOTE: Windows will instantiate forms that try to open to
+					// the left or top of the screen on the screen; so this is
+					// really only valid if a form tries to instantiate too far
+					// to the right or bottom of a screen.
+					var loc = new Point(tric.left + 200, tric.top + 100);
+					bool isInsideBounds = false;
+					foreach (var screen in Screen.AllScreens)
+					{
+						if (isInsideBounds = screen.Bounds.Contains(loc))
+							break;
+					}
+
+					if (!isInsideBounds)
 					{
 						tric.left = 100;
 						tric.top  =  50;
@@ -242,10 +253,10 @@ namespace DSShared
 						Metric tric = _dict[key];
 
 						sw.WriteLine(key + ":");
-						sw.WriteLine("  " + LEFT   + ": " + tric.left);
-						sw.WriteLine("  " + TOP    + ": " + tric.top);
-						sw.WriteLine("  " + WIDTH  + ": " + tric.width);
-						sw.WriteLine("  " + HEIGHT + ": " + tric.height);
+						sw.WriteLine("  " + Left   + ": " + tric.left);
+						sw.WriteLine("  " + Top    + ": " + tric.top);
+						sw.WriteLine("  " + Width  + ": " + tric.width);
+						sw.WriteLine("  " + Height + ": " + tric.height);
 					}
 				}
 			}
