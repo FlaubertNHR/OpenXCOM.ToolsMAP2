@@ -262,6 +262,8 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
+			//LogFile.WriteLine("MainViewOverlay.OnKeyDown()");
+
 			Edit(e);
 		}
 
@@ -402,6 +404,7 @@ namespace MapView.Forms.MainView
 		/// @note The terrainset of the current tileset needs to be identical to
 		/// the terrainset of the tileset from which parts were copied (or
 		/// nearly so).
+		/// @note Unlike FillSelectedQuads() this respects quadtype visibility.
 		/// </summary>
 		private void Paste()
 		{
@@ -523,26 +526,39 @@ namespace MapView.Forms.MainView
 		{
 			if (MapBase != null && FirstClick)
 			{
-				MainView.MapChanged = true;
-
-				var a = GetDragBeg_abs();
-				var b = GetDragEnd_abs();
-
-				var quad = ObserverManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
 				var part = ObserverManager.TileView.Control.SelectedTilepart;
-
-				MapTile tile;
-				for (int col = a.X; col <= b.X; ++col)
-				for (int row = a.Y; row <= b.Y; ++row)
+				if (part.SetId <= MapFileBase.MaxTerrainId)
 				{
-					tile = MapBase[col, row];
-					tile[quad] = part;
-					tile.Vacancy();
+					MainView.MapChanged = true;
+
+					var a = GetDragBeg_abs();
+					var b = GetDragEnd_abs();
+
+					var quad = ObserverManager.TopView.Control.QuadrantPanel.SelectedQuadrant;
+
+					MapTile tile;
+					for (int col = a.X; col <= b.X; ++col)
+					for (int row = a.Y; row <= b.Y; ++row)
+					{
+						(tile = MapBase[col, row])[quad] = part;
+						tile.Vacancy();
+					}
+
+					MapBase.CalculateOccultations();
+
+					InvalidateObservers();
 				}
-
-				MapBase.CalculateOccultations();
-
-				InvalidateObservers();
+				else
+					MessageBox.Show(
+								this,
+								"Cannot place a tilepart that has setId greater than " + MapFileBase.MaxTerrainId + "."
+									+ Environment.NewLine + Environment.NewLine
+									+ "The value cannot be written to a Mapfile due to the 1-byte restriction.",
+								" Error",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Error,
+								MessageBoxDefaultButton.Button1,
+								0);
 			}
 		}
 
