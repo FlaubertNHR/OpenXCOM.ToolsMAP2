@@ -1683,7 +1683,36 @@ namespace MapView
 			{
 				if (f.ShowDialog() == DialogResult.OK)
 				{
-//					MainViewOverlay.SubstituteTileparts(f._src, f._dst);
+					int src0, src1, dst, shift;
+
+					src0 = TilepartSubstitutionDialog.src0;
+
+					if (TilepartSubstitutionDialog.src1 == Int32.MaxValue)
+					{
+						src1 = TilepartSubstitutionDialog.src0;
+					}
+					else
+						src1 = TilepartSubstitutionDialog.src1;
+
+					switch (TilepartSubstitutionDialog.rb_selected)
+					{
+						default: // ie. TilepartSubstitutionDialog.RadioSelected.Clear
+							dst   =
+							shift = Int32.MaxValue;
+							break;
+
+						case TilepartSubstitutionDialog.RadioSelected.Desti:
+							dst   = TilepartSubstitutionDialog.dst;
+							shift = Int32.MaxValue;
+							break;
+
+						case TilepartSubstitutionDialog.RadioSelected.Shift:
+							dst   = Int32.MaxValue;
+							shift = TilepartSubstitutionDialog.shift;
+							break;
+					}
+
+					MainViewOverlay.SubstituteTileparts(src0, src1, dst, shift);
 				}
 			}
 		}

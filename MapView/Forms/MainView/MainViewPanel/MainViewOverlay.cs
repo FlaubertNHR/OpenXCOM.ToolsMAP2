@@ -574,55 +574,88 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Replaces tileparts throughout the current Mapfile.
+		/// Replaces tileparts throughout the currently loaded Mapfile.
 		/// </summary>
-		/// <param name="src">setId of part to replace</param>
-		/// <param name="dst">setId of other part (-1 to null the tileslots)</param>
-		internal void SubstituteTileparts(int src, int dst)
+		/// <param name="src0">start setId of parts to replace</param>
+		/// <param name="src1">stop  setId of parts to replace</param>
+		/// <param name="dst">setId of part to replace with</param>
+		/// <param name="shift">shift parts' current id +/-</param>
+		internal void SubstituteTileparts(
+				int src0,
+				int src1,
+				int dst,
+				int shift)
 		{
 			MainView.MapChanged = true;
 
-			Tilepart part;
 			MapTile tile;
+			Tilepart part;
+			int id;
 
-			for (int lev = 0; lev != MapBase.MapSize.Levs; ++lev)
-			for (int row = 0; row != MapBase.MapSize.Rows; ++row)
-			for (int col = 0; col != MapBase.MapSize.Cols; ++col)
+			MapSize size = MapBase.MapSize;
+
+			for (int lev = 0; lev != size.Levs; ++lev)
+			for (int row = 0; row != size.Rows; ++row)
+			for (int col = 0; col != size.Cols; ++col)
 			{
 				tile = MapBase[col, row, lev];
 
 				if ((part = tile.Floor) != null
-					&& part.SetId == src)
+					&& (id = part.SetId) >= src0 && id <= src1)
 				{
-					if (dst != -1)
+					if (dst != Int32.MaxValue)
+					{
 						tile.Floor = MapBase.Parts[dst];
+					}
+					else if (shift != Int32.MaxValue)
+					{
+						tile.Floor = MapBase.Parts[id + shift];
+					}
 					else
 						tile.Floor = null;
 				}
 
 				if ((part = tile.West) != null
-					&& part.SetId == src)
+					&& (id = part.SetId) >= src0 && id <= src1)
 				{
-					if (dst != -1)
+					if (dst != Int32.MaxValue)
+					{
 						tile.West = MapBase.Parts[dst];
+					}
+					else if (shift != Int32.MaxValue)
+					{
+						tile.West = MapBase.Parts[id + shift];
+					}
 					else
 						tile.West = null;
 				}
 
 				if ((part = tile.North) != null
-					&& part.SetId == src)
+					&& (id = part.SetId) >= src0 && id <= src1)
 				{
-					if (dst != -1)
+					if (dst != Int32.MaxValue)
+					{
 						tile.North = MapBase.Parts[dst];
+					}
+					else if (shift != Int32.MaxValue)
+					{
+						tile.North = MapBase.Parts[id + shift];
+					}
 					else
 						tile.North = null;
 				}
 
 				if ((part = tile.Content) != null
-					&& part.SetId == src)
+					&& (id = part.SetId) >= src0 && id <= src1)
 				{
-					if (dst != -1)
+					if (dst != Int32.MaxValue)
+					{
 						tile.Content = MapBase.Parts[dst];
+					}
+					else if (shift != Int32.MaxValue)
+					{
+						tile.Content = MapBase.Parts[id + shift];
+					}
 					else
 						tile.Content = null;
 				}

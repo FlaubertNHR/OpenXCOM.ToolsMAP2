@@ -11,7 +11,7 @@ namespace MapView
 		:
 			Form
 	{
-		private enum RadioSelected
+		internal enum RadioSelected
 		{ Clear, Desti, Shift }
 
 
@@ -19,20 +19,30 @@ namespace MapView
 		private static int x = -1;
 		private static int y;
 
-		private static int src0  = Int32.MaxValue;
-		private static int src1  = Int32.MaxValue;
-		private static int dst   = Int32.MaxValue;
-		private static int shift = Int32.MaxValue;
+		internal static int src0  = Int32.MaxValue;
+		internal static int src1  = Int32.MaxValue;
+		internal static int dst   = Int32.MaxValue;
+		internal static int shift = Int32.MaxValue;
 
-		private static RadioSelected rb_selected = RadioSelected.Clear;
+		internal static RadioSelected rb_selected = RadioSelected.Clear;
 		#endregion Fields (static)
 
 
 		#region Fields
-		MapFileBase _base;
+		/// <summary>
+		/// The currently loaded Mapfile.
+		/// </summary>
+		private MapFileBase _base;
 
+		/// <summary>
+		/// Holds the value of the currently active textbox. The value in the
+		/// textbox will revert to '_text' on user-input error(s).
+		/// </summary>
 		private string _text;
 
+		/// <summary>
+		/// Bypasses eventhandler code when the dialog starts.
+		/// </summary>
 		private bool _init;
 		#endregion Fields
 
@@ -56,14 +66,14 @@ namespace MapView
 						 + Environment.NewLine
 						 + "if stop is blank use start id"
 						 + Environment.NewLine
-						 + "Highest detected id in the Mapfile = " + _base.HighestTilepartId;
+						 + "Highest detected id in the Mapfile = " + _base.HighestTilepartId; // TODO: adjust 'HighestTilepartId' as the tileset is edited.
 
 			tb_Src0.BackColor =
 			tb_Src1.BackColor = Color.Wheat;
 
 			var loc = new Point(x,y);
 			bool isInsideBounds = false;
-			if (x != -1)
+			if (x > -1)
 			{
 				foreach (var screen in Screen.AllScreens)
 				{
@@ -85,9 +95,7 @@ namespace MapView
 			rb_clear.Select(); // prep radiobutton controls for Tab switching ->
 			rb_dst  .Select(); // do this before applying 'rb_selected'
 			rb_shift.Select(); // and yes the '_init' thing is req'd.
-			_init = false;
 
-			_init = true;
 			if (src0  != Int32.MaxValue) tb_Src0 .Text = src0 .ToString();
 			if (src1  != Int32.MaxValue) tb_Src1 .Text = src1 .ToString();
 			if (dst   != Int32.MaxValue) tb_dst  .Text = dst  .ToString();
@@ -113,57 +121,6 @@ namespace MapView
 		{
 			x = Location.X;
 			y = Location.Y;
-
-			if (DialogResult == DialogResult.OK)
-			{
-/*				_src0 = Int32.Parse(tb_Src0.Text);
-
-				if (String.IsNullOrEmpty(tb_Src1.Text))
-					_src1 = _src0;
-				else
-					_src1 = Int32.Parse(tb_Src0.Text);
-
-				switch (rb_selected)
-				{
-					case RadioSelected.Clear:
-						_dst = -1;
-						break;
-
-					case RadioSelected.Desti:
-						_dst = Int32.Parse(tb_dst.Text);
-						break;
-
-					case RadioSelected.Shift:
-						_shift = Int32.Parse(tb_shift.Text);
-						break;
-				} */
-
-/*				if (e.Cancel =  String.IsNullOrEmpty(tb_Src0.Text)
-							|| (String.IsNullOrEmpty(tb_dst.Text) && !rb_clear.Checked)
-							||  !Int32.TryParse(tb_Src0.Text, out _src)
-							|| (!Int32.TryParse(tb_dst.Text, out _dst) && !rb_clear.Checked)
-							||   _src < 0 || _src >= _base.Parts.Count
-							|| ((_dst < 0 || _dst >= _base.Parts.Count) && !rb_clear.Checked)
-							|| (_src == _dst && !rb_clear.Checked))
-				{
-					MessageBox.Show(
-								this,
-								"I can't do that, Dave.",
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
-				}
-				else
-				{
-					if (String.IsNullOrEmpty(tb_Src1.Text))
-						tb_Src1.Text = tb_Src0.Text;
-
-					if (rb_clear.Checked)
-						_dst = -1;
-				} */
-			}
 		}
 		#endregion Events (override)
 
@@ -225,46 +182,48 @@ namespace MapView
 		{
 			if (!_init)
 			{
+				bool fail = false;
+
 				var tb = sender as TextBox;
 				string text = tb.Text;
 
 				int result = Int32.MaxValue;
 
-				if (!String.IsNullOrEmpty(text))
+				if (!String.IsNullOrEmpty(text)
+					&& (!rb_shift.Checked || text != "-"))		// allow shift to be a "-"
 				{
-					if (!rb_shift.Checked || text != "-")			// allow shift to be a "-"
+					if (!Int32.TryParse(text, out result))		// shall be an integer
 					{
-						bool fail = false;
+						fail = true;
+					}
+					else if (tb == tb_Src0 || tb == tb_Src1)	// shall be a positive integer
+					{
+						fail = result < 0;
+					}
+					else if (tb == tb_dst)						// shall be a positive integer less than partcount
+					{
+						fail = result < 0
+							|| result >= _base.Parts.Count;
+					}
 
-						if (!Int32.TryParse(text, out result))		// shall be an integer
-						{
-							fail = true;
-						}
-						else if (tb == tb_Src0 || tb == tb_Src1)	// shall be a positive integer
-						{
-							fail = result < 0;
-						}
-						else if (tb == tb_dst)						// shall be a positive integer less than partcount
-						{
-							fail = result < 0
-								|| result >= _base.Parts.Count;
-						}
+					if (fail)
+					{
+						_init = true;
+						tb.Text = _text;
+						_init = false;
 
-						if (fail)
-						{
-							tb.Text = _text;
-							tb.SelectionStart = _text.Length;
-							tb.SelectionLength = 0;
-
-							return;									// ie. do not set '_text' or statics
-						}
+						tb.SelectionStart = _text.Length;
+						tb.SelectionLength = 0;
 					}
 				}
-				_text = text;
 
-				SetStatics(tb, result);
+				if (!fail)
+				{
+					_text = text;
+					SetStatics(tb, result);
 
-				Enable();
+					Enable();
+				}
 			}
 		}
 		#endregion Events
@@ -291,6 +250,7 @@ namespace MapView
 		/// @note The input values src0/src1 are allowed to exceed the MaxId in
 		/// the current terrainset but the output shall not be allowed to exceed
 		/// the MaxId.
+		/// TODO: Or 253 ...
 		/// </summary>
 		private void Enable()
 		{
