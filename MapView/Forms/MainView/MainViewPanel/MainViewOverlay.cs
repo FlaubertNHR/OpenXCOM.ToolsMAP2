@@ -592,6 +592,10 @@ namespace MapView.Forms.MainView
 			Tilepart part;
 			int id;
 
+			int records = MapBase.Parts.Count;
+			if (records > MapFileBase.MaxTerrainId)
+				records = MapFileBase.MaxTerrainId;
+
 			MapSize size = MapBase.MapSize;
 
 			for (int lev = 0; lev != size.Levs; ++lev)
@@ -605,11 +609,13 @@ namespace MapView.Forms.MainView
 				{
 					if (dst != Int32.MaxValue)
 					{
-						tile.Floor = MapBase.Parts[dst];
+						if (dst < records) // safety. i hope
+							tile.Floor = MapBase.Parts[dst];
 					}
 					else if (shift != Int32.MaxValue)
 					{
-						tile.Floor = MapBase.Parts[id + shift];
+						if ((id += shift) > -1 && id < records) // safety. i hope
+							tile.Floor = MapBase.Parts[id];
 					}
 					else
 						tile.Floor = null;
@@ -620,11 +626,13 @@ namespace MapView.Forms.MainView
 				{
 					if (dst != Int32.MaxValue)
 					{
-						tile.West = MapBase.Parts[dst];
+						if (dst < records) // safety. i hope
+							tile.West = MapBase.Parts[dst];
 					}
 					else if (shift != Int32.MaxValue)
 					{
-						tile.West = MapBase.Parts[id + shift];
+						if ((id += shift) > -1 && id < records) // safety. i hope
+							tile.West = MapBase.Parts[id];
 					}
 					else
 						tile.West = null;
@@ -635,11 +643,13 @@ namespace MapView.Forms.MainView
 				{
 					if (dst != Int32.MaxValue)
 					{
-						tile.North = MapBase.Parts[dst];
+						if (dst < records) // safety. i hope
+							tile.North = MapBase.Parts[dst];
 					}
 					else if (shift != Int32.MaxValue)
 					{
-						tile.North = MapBase.Parts[id + shift];
+						if ((id += shift) > -1 && id < records) // safety. i hope
+							tile.North = MapBase.Parts[id];
 					}
 					else
 						tile.North = null;
@@ -650,11 +660,13 @@ namespace MapView.Forms.MainView
 				{
 					if (dst != Int32.MaxValue)
 					{
-						tile.Content = MapBase.Parts[dst];
+						if (dst < records) // safety. i hope
+							tile.Content = MapBase.Parts[dst];
 					}
 					else if (shift != Int32.MaxValue)
 					{
-						tile.Content = MapBase.Parts[id + shift];
+						if ((id += shift) > -1 && id < records) // safety. i hope
+							tile.Content = MapBase.Parts[id];
 					}
 					else
 						tile.Content = null;
