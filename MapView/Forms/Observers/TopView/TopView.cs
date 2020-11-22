@@ -17,10 +17,10 @@ namespace MapView.Forms.Observers
 			MapObserverControl // UserControl, IMapObserver
 	{
 		#region Fields (static)
-		internal const int FLOOR   = 1; // flags for parttype visibility ->
-		internal const int WEST    = 2;
-		internal const int NORTH   = 4;
-		internal const int CONTENT = 8;
+		internal const int FLOOR   = 0x1; // flags for parttype visibility ->
+		internal const int WEST    = 0x2;
+		internal const int NORTH   = 0x4;
+		internal const int CONTENT = 0x8;
 
 		private const int DIGITS = 3;
 
