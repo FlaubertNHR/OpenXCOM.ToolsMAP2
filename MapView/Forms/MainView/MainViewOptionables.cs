@@ -332,6 +332,7 @@ namespace MapView.Forms.MainView
 		private int _selectedTileToner = def_SelectedTileToner;
 		[Category(cat_Selection)]
 		[Description(@"The colortone of tiles that are selected (0..4 default 1)
+(F10 - cycle; Shift+F10 - reverse cycle)
 0 - standard
 1 - grayscale
 2 - redscale
