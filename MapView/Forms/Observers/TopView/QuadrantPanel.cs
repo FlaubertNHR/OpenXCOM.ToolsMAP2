@@ -19,7 +19,7 @@ namespace MapView.Forms.Observers
 		:
 			MapObserverControl_Top // DoubleBufferedControl, IMapObserver
 	{
-		#region Fields
+		#region Fields (static)
 		/// <summary>
 		/// A timer that delays processing clicks until the user's double-click
 		/// duration has elapsed. That is, don't do 1-click RMB processing if
@@ -27,10 +27,14 @@ namespace MapView.Forms.Observers
 		/// w/ Thanks to Natxo
 		/// https://stackoverflow.com/questions/2086213/how-can-i-catch-both-single-click-and-double-click-events-on-wpf-frameworkelement/2087517#2087517
 		/// </summary>
-		private readonly System.Timers.Timer _t1;
-		private int _t1Clicks;
-		#endregion Fields
+		private static readonly System.Timers.Timer _t1 = new System.Timers.Timer(SystemInformation.DoubleClickTime);
 
+		private static int _t1Clicks;
+		private static bool _t1subscribed;
+		#endregion Fields (static)
+
+
+		// TODO: Figure out what else can be made static here ->
 
 		#region Properties
 		private QuadrantType _quadrant;
@@ -58,8 +62,11 @@ namespace MapView.Forms.Observers
 		{
 			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
 
-			_t1 = new System.Timers.Timer(SystemInformation.DoubleClickTime);
-			_t1.Elapsed += OnClicksElapsed;
+			if (!_t1subscribed) // only once (for both QuadrantPanels)
+			{
+				_t1subscribed = true;
+				_t1.Elapsed += OnClicksElapsed;
+			}
 		}
 		#endregion cTor
 
@@ -118,6 +125,8 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
+			//DSShared.LogFile.WriteLine("QuadrantPanel.OnMouseDown()");
+
 			ObserverManager.TopView     .Control   .TopPanel.Select();
 			ObserverManager.TopRouteView.ControlTop.TopPanel.Select();
 
@@ -154,7 +163,7 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlTop.SelectQuadrant(part);
 
 				if (!isCurrentClick)
-					Operate(e.Button, e.Clicks, keySelectQuadrant);
+					Clicker(e.Button, e.Clicks, keySelectQuadrant);
 			}
 			_quad = QuadrantType.None;
 		}
@@ -167,7 +176,7 @@ namespace MapView.Forms.Observers
 		/// <param name="button"></param>
 		/// <param name="clicks"></param>
 		/// <param name="keySelectQuadrant">true if invoked by keyboard-input</param>
-		internal void Operate(MouseButtons button, int clicks, bool keySelectQuadrant = false)
+		internal void Clicker(MouseButtons button, int clicks, bool keySelectQuadrant = false)
 		{
 			if (Tile != null)
 			{
@@ -181,22 +190,25 @@ namespace MapView.Forms.Observers
 					case MouseButtons.Right:
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							if (!keySelectQuadrant && TopView.Optionables.EnableRightClickWaitTimer)
+							//DSShared.LogFile.WriteLine("QuadrantPanel.Clicker()");
+
+							if (keySelectQuadrant || !TopView.Optionables.EnableRightClickWaitTimer)
+							{
+								_t1Clicks = clicks;
+								OnClicksElapsed(null,null);
+							}
+							else
 							{
 								_t1.Stop();
 								++_t1Clicks;
 								_t1.Start();
-							}
-							else
-							{
-								_t1Clicks = clicks;
-								OnClicksElapsed(null,null);
 							}
 						}
 						break;
 				}
 			}
 		}
+
 
 		/// <summary>
 		/// Overrides DoubleBufferedControl.RenderGraphics() - ie, OnPaint().
@@ -224,6 +236,8 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnClicksElapsed(object source, ElapsedEventArgs e)
 		{
+			//DSShared.LogFile.WriteLine("QuadrantPanel.OnClicksElapsed() _t1Clicks= " + _t1Clicks);
+
 			_t1.Stop();
 
 			if (_t1Clicks == 1)

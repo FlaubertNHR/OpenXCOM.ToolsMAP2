@@ -394,7 +394,7 @@ namespace MapView.Forms.Observers
 
 			switch (e.KeyData)
 			{
-				case Keys.Q:
+				case Keys.Q: // select the proper quadrant of the currently selected Tileview-part
 					button = MouseButtons.Left;
 					clicks = 1;
 					quad = (QuadrantType)QuadrantDrawService.QuadrantPart;
@@ -412,7 +412,7 @@ namespace MapView.Forms.Observers
 					quad = QuadrantType.None;
 					break;
 
-				case Keys.Shift | Keys.Delete: // delete selected Quadrant-type from a selected tile
+				case Keys.Shift | Keys.Delete: // delete part of selected Quadrant-type from a selected tile
 					button = MouseButtons.Right;
 					clicks = 2;
 					quad = QuadrantType.None;
@@ -477,10 +477,7 @@ namespace MapView.Forms.Observers
 			{
 				case MouseButtons.Left:
 					if (e.Clicks == 2)
-					{
-						ObserverManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Left, 2);
-						ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Left, 2);
-					}
+						TopView.QuadrantPanel.Clicker(MouseButtons.Left, 2);
 					break;
 
 				case MouseButtons.Right:
@@ -494,8 +491,9 @@ namespace MapView.Forms.Observers
 						else
 							clicks = e.Clicks;
 
-						ObserverManager.TopView     .Control   .QuadrantPanel.Operate(MouseButtons.Right, clicks);
-						ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Operate(MouseButtons.Right, clicks);
+						//DSShared.LogFile.WriteLine("TopPanel.OnMouseDown() fire Clicker() clicks= " + clicks);
+
+						TopView.QuadrantPanel.Clicker(MouseButtons.Right, clicks);
 					}
 					break;
 			}
