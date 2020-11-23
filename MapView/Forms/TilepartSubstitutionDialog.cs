@@ -7,7 +7,7 @@ using XCom.Base;
 
 namespace MapView
 {
-	internal sealed class TilepartSubstitutionDialog
+	internal sealed class TilepartSubstitution
 		:
 			Form
 	{
@@ -56,7 +56,7 @@ namespace MapView
 
 
 		#region cTor
-		internal TilepartSubstitutionDialog(MapFileBase @base)
+		internal TilepartSubstitution(MapFileBase @base)
 		{
 			InitializeComponent();
 
@@ -468,7 +468,7 @@ namespace MapView
 			this.la_note.Text = "REMINDER: there is no Undo function";
 			this.la_note.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// TilepartSubstitutionDialog
+			// TilepartSubstitution
 			// 
 			this.AcceptButton = this.bu_ok;
 			this.CancelButton = this.bu_cancel;
@@ -491,7 +491,7 @@ namespace MapView
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "TilepartSubstitutionDialog";
+			this.Name = "TilepartSubstitution";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Tilepart Substitution";

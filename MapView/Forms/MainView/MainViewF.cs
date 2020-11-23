@@ -1679,36 +1679,36 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTilepartSubstitutionClick(object sender, EventArgs e)
 		{
-			using (var f = new TilepartSubstitutionDialog(MainViewUnderlay.MapBase))
+			using (var f = new TilepartSubstitution(MainViewUnderlay.MapBase))
 			{
 				if (f.ShowDialog() == DialogResult.OK)
 				{
 					int src0, src1, dst, shift;
 
-					src0 = TilepartSubstitutionDialog.src0;
+					src0 = TilepartSubstitution.src0;
 
-					if (TilepartSubstitutionDialog.src1 == Int32.MaxValue)
+					if (TilepartSubstitution.src1 == Int32.MaxValue)
 					{
-						src1 = TilepartSubstitutionDialog.src0;
+						src1 = TilepartSubstitution.src0;
 					}
 					else
-						src1 = TilepartSubstitutionDialog.src1;
+						src1 = TilepartSubstitution.src1;
 
-					switch (TilepartSubstitutionDialog.rb_selected)
+					switch (TilepartSubstitution.rb_selected)
 					{
-						default: // ie. TilepartSubstitutionDialog.RadioSelected.Clear
+						default: // ie. TilepartSubstitution.RadioSelected.Clear
 							dst   =
 							shift = Int32.MaxValue;
 							break;
 
-						case TilepartSubstitutionDialog.RadioSelected.Desti:
-							dst   = TilepartSubstitutionDialog.dst;
+						case TilepartSubstitution.RadioSelected.Desti:
+							dst   = TilepartSubstitution.dst;
 							shift = Int32.MaxValue;
 							break;
 
-						case TilepartSubstitutionDialog.RadioSelected.Shift:
+						case TilepartSubstitution.RadioSelected.Shift:
 							dst   = Int32.MaxValue;
-							shift = TilepartSubstitutionDialog.shift;
+							shift = TilepartSubstitution.shift;
 							break;
 					}
 
