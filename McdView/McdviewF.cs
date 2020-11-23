@@ -1010,14 +1010,14 @@ namespace McdView
 			SaveRecordsetFailed = true;
 
 			if (Parts.Length <= MapFileService.MAX_MCDRECORDS
-					|| MessageBox.Show(
-									this,
-									"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
-									" Warning",
-									MessageBoxButtons.OKCancel,
-									MessageBoxIcon.Warning,
-									MessageBoxDefaultButton.Button2,
-									0) == DialogResult.OK)
+				|| MessageBox.Show(
+								this,
+								"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
+								" Warning",
+								MessageBoxButtons.OKCancel,
+								MessageBoxIcon.Warning,
+								MessageBoxDefaultButton.Button2,
+								0) == DialogResult.OK)
 			{
 				if (McdRecord.WriteRecords(PfeMcd, Parts))
 				{
