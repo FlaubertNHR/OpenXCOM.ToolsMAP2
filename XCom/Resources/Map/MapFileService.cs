@@ -17,7 +17,7 @@ namespace XCom
 	public static class MapFileService
 	{
 		#region Fields (static)
-		public const int MAX_MCDRECORDS = 254;
+		public const int MAX_MCDRECORDS = 254; // cf. MapFileBase.MaxTerrainId=253
 		#endregion Fields (static)
 
 

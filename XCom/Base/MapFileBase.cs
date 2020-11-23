@@ -24,7 +24,7 @@ namespace XCom.Base
 
 
 		#region Fields (static)
-		public const int MaxTerrainId = 253;
+		public const int MaxTerrainId = 253; // cf. MapFileService.MAX_MCDRECORDS=254
 
 		/// <summary>
 		/// A bitwise int of changes for MapResize:
