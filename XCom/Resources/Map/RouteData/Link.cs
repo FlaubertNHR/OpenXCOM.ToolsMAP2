@@ -49,12 +49,12 @@ namespace XCom
 
 
 		#region Methods
-		public bool StandardNode()
+		public bool isNodelink()
 		{
 			return (Destination < ExitWest);
 		}
 
-		public bool Used()
+		public bool isUsed()
 		{
 			return (Destination != NotUsed);
 		}

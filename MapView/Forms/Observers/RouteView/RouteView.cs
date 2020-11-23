@@ -61,6 +61,8 @@ namespace MapView.Forms.Observers
 
 		internal static byte _curNoderank;
 		internal static SpawnWeight _curSpawnweight;
+
+		private static bool _connectoractivated;
 		#endregion Fields (static)
 
 
@@ -994,10 +996,10 @@ namespace MapView.Forms.Observers
 					link = NodeSelected[slot];
 
 					cbTypL.SelectedItem = link.Type;
-					btnGo.Enabled = link.StandardNode();
+					btnGo.Enabled = link.isNodelink();
 
 					dest = link.Destination;
-					if (link.Used())
+					if (link.isUsed())
 					{
 						btnGo.Text = Go;
 						tbDist.Text = Convert.ToString(
@@ -1005,7 +1007,7 @@ namespace MapView.Forms.Observers
 													CultureInfo.InvariantCulture)
 									+ GetDistanceArrow(slot);
 
-						if (link.StandardNode())
+						if (link.isNodelink())
 						{
 							cbDest.SelectedItem = dest;
 
@@ -1052,7 +1054,7 @@ namespace MapView.Forms.Observers
 		private string GetDistanceArrow(int slot)
 		{
 			var link = NodeSelected[slot];
-			if (link.StandardNode())
+			if (link.isNodelink())
 			{
 				var dest = _file.Routes[link.Destination];
 				if (dest != null) // safety.
@@ -2312,12 +2314,33 @@ namespace MapView.Forms.Observers
 
 		#region Options
 		/// <summary>
+		/// Selects one of the connector-buttons when either the RouteView or
+		/// the TopRouteView toplevel form(s) is first shown. The connector-type
+		/// is determined by user-options.
+		/// </summary>
+		internal void ActivateConnector()
+		{
+			if (!_connectoractivated)
+			{
+				_connectoractivated = true;
+
+				ToolStripButton tsb;
+				switch (Optionables.StartConnector)
+				{
+					default: tsb = tsb_connect0; break; // case 0:
+					case  1: tsb = tsb_connect1; break;
+					case  2: tsb = tsb_connect2; break;
+				}
+				OnConnectTypeClicked(tsb, EventArgs.Empty); // that handles both RouteViews.
+			}
+		}
+
+
+		/// <summary>
 		/// Loads default options for RouteView in TopRouteView screens.
 		/// </summary>
-		protected internal override void LoadControlDefaultOptions()
+		internal protected override void LoadControlDefaultOptions()
 		{
-			OnConnectTypeClicked(tsb_connect0, EventArgs.Empty); // TODO: add to Options perhaps
-
 			Optionables.LoadDefaults(Options);
 		}
 

@@ -20,18 +20,15 @@ namespace MapView.Forms.Observers
 		private const int TAB_ROT = 1;
 		#endregion Fields (static)
 
-		#region Fields
-		private TopView   TopViewControl;
-		private RouteView RouteViewControl;
-		#endregion Fields
-
 
 		#region Properties
+		private TopView TopViewControl;
 		internal TopView ControlTop
 		{
 			get { return TopViewControl; }
 		}
 
+		private RouteView RouteViewControl;
 		internal RouteView ControlRoute
 		{
 			get { return RouteViewControl; }
@@ -53,9 +50,7 @@ namespace MapView.Forms.Observers
 
 		private void InitializeTopRouteViews()
 		{
-			TopViewControl   = new TopView();
-			RouteViewControl = new RouteView();
-
+			TopViewControl = new TopView();
 			TopViewControl.Name       = "TopViewControl";
 			TopViewControl.Location   = new Point(3, 3);
 			TopViewControl.Size       = new Size(618, 423);
@@ -63,6 +58,7 @@ namespace MapView.Forms.Observers
 			TopViewControl.TabIndex   = 0;
 			TopViewControl.Tag        = "TOPROUTE";
 
+			RouteViewControl = new RouteView();
 			RouteViewControl.Name     = "RouteViewControl";
 			RouteViewControl.Location = new Point(3, 3);
 			RouteViewControl.Size     = new Size(618, 423);
@@ -77,6 +73,13 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (override)
+		protected override void OnShown(EventArgs e)
+		{
+			RouteViewControl.ActivateConnector();
+
+//			base.OnShown(e);
+		}
+
 		/// <summary>
 		/// Fires when the form is activated. Maintains the position of this
 		/// form in the z-order List and focuses the panel if the TopViewControl

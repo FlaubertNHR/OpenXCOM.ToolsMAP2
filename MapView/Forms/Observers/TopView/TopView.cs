@@ -342,7 +342,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Loads default options for TopView in TopRouteView screens.
 		/// </summary>
-		protected internal override void LoadControlDefaultOptions()
+		internal protected override void LoadControlDefaultOptions()
 		{
 			Optionables.LoadDefaults(Options);
 		}

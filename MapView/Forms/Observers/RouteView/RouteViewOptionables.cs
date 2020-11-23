@@ -374,6 +374,29 @@ namespace MapView.Forms.Observers
 
 
 
+		private const string cat_Connector = "Connector";
+
+		const int LinkDont   = 0;
+		const int LinkOneway = 1;
+		const int LinkTwoway = 2;
+
+		private const string str_StartConnector = "StartConnector";
+		private const int    def_StartConnector = 0;
+
+		private int _startConnector = def_StartConnector;
+		[Category(cat_Connector)]
+		[Description(@"The selected connector button when Mapview starts.
+0 - don't link
+1 - link one way
+2 - link two ways")]
+		[DefaultValue(0)]
+		public int StartConnector
+		{
+			get { return _startConnector; }
+			set { _startConnector = value; }
+		}
+
+
 /*		private const string cat_Selects = "Selects";
 
 		internal const string str_SelectorColor = "SelectorColor";
@@ -523,6 +546,8 @@ namespace MapView.Forms.Observers
 			options.AddOptionDefault(str_ShowOverlay,       def_ShowOverlay,       changer);
 			options.AddOptionDefault(str_ShowPriorityBars,  def_ShowPriorityBars,  changer);
 			options.AddOptionDefault(str_ReduceDraws,       def_ReduceDraws,       changer);
+
+			options.AddOptionDefault(str_StartConnector,    def_StartConnector,    changer);
 		}
 		#endregion Methods
 
@@ -559,7 +584,9 @@ namespace MapView.Forms.Observers
 
 				case str_ShowOverlay:       ShowOverlay       =  (bool)val;                           break;
 				case str_ShowPriorityBars:  ShowPriorityBars  =  (bool)val;                           break;
-				case str_ReduceDraws:       ReduceDraws       =  (bool)val;                           break;
+				case str_ReduceDraws:       ReduceDraws       =  (bool)val;                           return;
+
+				case str_StartConnector:    StartConnector    =   (int)val;                           return;
 			}
 
 			RouteView.RefreshControls();

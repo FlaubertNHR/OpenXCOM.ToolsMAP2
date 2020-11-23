@@ -60,6 +60,13 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (override)
+		protected override void OnShown(EventArgs e)
+		{
+			RouteViewControl.ActivateConnector();
+
+//			base.OnShown(e);
+		}
+
 		/// <summary>
 		/// Fires when the form is activated. Maintains the position of this
 		/// form in the z-order List.
