@@ -1,4 +1,9 @@
-﻿namespace MapView
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Forms;
+
+
+namespace MapView
 {
 	partial class TilesetEditor
 	{
@@ -6,57 +11,57 @@
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
-		private System.Windows.Forms.Panel pnl_Top;
-		private System.Windows.Forms.GroupBox gb_Maptree;
-		private System.Windows.Forms.GroupBox gb_Tileset;
-		private System.Windows.Forms.GroupBox gb_Terrains;
-		private System.Windows.Forms.Panel pnl_Bottom;
-		private System.Windows.Forms.Button btn_Accept;
-		private System.Windows.Forms.Button btn_Cancel;
-		private System.Windows.Forms.Label lbl_Group_;
-		private System.Windows.Forms.TextBox tb_TilesetCurrent;
-		private System.Windows.Forms.Label lbl_CategoryCurrent;
-		private System.Windows.Forms.Label lbl_GroupCurrent;
-		private System.Windows.Forms.Label lbl_Category_;
-		private System.Windows.Forms.Button btn_FindTileset;
-		private System.Windows.Forms.Label lbl_Tileset_;
-		private System.Windows.Forms.Label lbl_TilesetBasepath;
-		private System.Windows.Forms.Label lbl_TilesetBasepath_;
-		private System.Windows.Forms.ListBox lb_TerrainsAvailable;
-		private System.Windows.Forms.ListBox lb_TerrainsAllocated;
-		private System.Windows.Forms.Button btn_MoveDown;
-		private System.Windows.Forms.Button btn_MoveUp;
-		private System.Windows.Forms.Button btn_MoveRight;
-		private System.Windows.Forms.Button btn_MoveLeft;
-		private System.Windows.Forms.Panel pnl_Spacer;
-		private System.Windows.Forms.Button btn_FindDirectory;
-		private System.Windows.Forms.Button btn_CreateDescriptor;
-		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.Label lbl_Available;
-		private System.Windows.Forms.Label lbl_Allocated;
-		private System.Windows.Forms.Panel pnl_TerrainsHeader;
-		private System.Windows.Forms.Label lbl_TilesetCurrent;
-		private System.Windows.Forms.Label lbl_AddType;
-		private System.Windows.Forms.Label lbl_TerrainChanges;
-		private System.Windows.Forms.Button btn_TerrainCopy;
-		private System.Windows.Forms.Button btn_TerrainPaste;
-		private System.Windows.Forms.Label lbl_McdRecords;
-		private System.Windows.Forms.TextBox tb_PathAvailable;
-		private System.Windows.Forms.RadioButton rb_CustomBasepath;
-		private System.Windows.Forms.RadioButton rb_TilesetBasepath;
-		private System.Windows.Forms.RadioButton rb_ConfigBasepath;
-		private System.Windows.Forms.Button btn_FindBasepath;
-		private System.Windows.Forms.Label lbl_PathAllocated_;
-		private System.Windows.Forms.Label lbl_PathAllocated;
-		private System.Windows.Forms.Label lbl_PathAvailable_;
-		private System.Windows.Forms.Button btn_TerrainClear;
-		private System.Windows.Forms.Label lbl_ListAvailable_;
-		private System.Windows.Forms.Label lbl_TilesetCount_;
-		private System.Windows.Forms.Label lbl_TilesetCount;
-		private System.Windows.Forms.CheckBox cb_BypassRecordsExceeded;
-		private System.Windows.Forms.Button btn_GlobalTerrains;
+		private Panel pnl_Top;
+		private GroupBox gb_Maptree;
+		private GroupBox gb_Tileset;
+		private GroupBox gb_Terrains;
+		private Panel pnl_Bottom;
+		private Button btn_Accept;
+		private Button btn_Cancel;
+		private Label lbl_Group_;
+		private TextBox tb_TilesetCurrent;
+		private Label lbl_CategoryCurrent;
+		private Label lbl_GroupCurrent;
+		private Label lbl_Category_;
+		private Button btn_FindTileset;
+		private Label lbl_Tileset_;
+		private Label lbl_TilesetBasepath;
+		private Label lbl_TilesetBasepath_;
+		private ListBox lb_TerrainsAvailable;
+		private ListBox lb_TerrainsAllocated;
+		private Button btn_MoveDown;
+		private Button btn_MoveUp;
+		private Button btn_MoveRight;
+		private Button btn_MoveLeft;
+		private Panel pnl_Spacer;
+		private Button btn_FindDirectory;
+		private Button btn_CreateDescriptor;
+		private ToolTip toolTip1;
+		private Label lbl_Available;
+		private Label lbl_Allocated;
+		private Panel pnl_TerrainsHeader;
+		private Label lbl_TilesetCurrent;
+		private Label lbl_AddType;
+		private Label lbl_TerrainChanges;
+		private Button btn_TerrainCopy;
+		private Button btn_TerrainPaste;
+		private Label lbl_McdRecords;
+		private TextBox tb_PathAvailable;
+		private RadioButton rb_CustomBasepath;
+		private RadioButton rb_TilesetBasepath;
+		private RadioButton rb_ConfigBasepath;
+		private Button btn_FindBasepath;
+		private Label lbl_PathAllocated_;
+		private Label lbl_PathAllocated;
+		private Label lbl_PathAvailable_;
+		private Button btn_TerrainClear;
+		private Label lbl_ListAvailable_;
+		private Label lbl_TilesetCount_;
+		private Label lbl_TilesetCount;
+		private CheckBox cb_BypassRecordsExceeded;
+		private Button btn_GlobalTerrains;
 
 
 		/// <summary>
@@ -82,6 +87,15 @@
 			this.pnl_Top = new System.Windows.Forms.Panel();
 			this.gb_Terrains = new System.Windows.Forms.GroupBox();
 			this.lb_TerrainsAllocated = new System.Windows.Forms.ListBox();
+			this.pnl_Spacer = new System.Windows.Forms.Panel();
+			this.btn_TerrainCopy = new System.Windows.Forms.Button();
+			this.btn_TerrainPaste = new System.Windows.Forms.Button();
+			this.btn_TerrainClear = new System.Windows.Forms.Button();
+			this.btn_MoveLeft = new System.Windows.Forms.Button();
+			this.btn_MoveRight = new System.Windows.Forms.Button();
+			this.btn_MoveUp = new System.Windows.Forms.Button();
+			this.btn_MoveDown = new System.Windows.Forms.Button();
+			this.cb_BypassRecordsExceeded = new System.Windows.Forms.CheckBox();
 			this.lb_TerrainsAvailable = new System.Windows.Forms.ListBox();
 			this.pnl_TerrainsHeader = new System.Windows.Forms.Panel();
 			this.lbl_TerrainChanges = new System.Windows.Forms.Label();
@@ -96,14 +110,6 @@
 			this.lbl_PathAllocated_ = new System.Windows.Forms.Label();
 			this.lbl_Allocated = new System.Windows.Forms.Label();
 			this.lbl_Available = new System.Windows.Forms.Label();
-			this.pnl_Spacer = new System.Windows.Forms.Panel();
-			this.btn_TerrainCopy = new System.Windows.Forms.Button();
-			this.btn_TerrainPaste = new System.Windows.Forms.Button();
-			this.btn_TerrainClear = new System.Windows.Forms.Button();
-			this.btn_MoveLeft = new System.Windows.Forms.Button();
-			this.btn_MoveRight = new System.Windows.Forms.Button();
-			this.btn_MoveUp = new System.Windows.Forms.Button();
-			this.btn_MoveDown = new System.Windows.Forms.Button();
 			this.gb_Tileset = new System.Windows.Forms.GroupBox();
 			this.lbl_TilesetBasepath_ = new System.Windows.Forms.Label();
 			this.lbl_TilesetBasepath = new System.Windows.Forms.Label();
@@ -125,13 +131,12 @@
 			this.lbl_TilesetCurrent = new System.Windows.Forms.Label();
 			this.lbl_McdRecords = new System.Windows.Forms.Label();
 			this.pnl_Bottom = new System.Windows.Forms.Panel();
-			this.cb_BypassRecordsExceeded = new System.Windows.Forms.CheckBox();
 			this.btn_GlobalTerrains = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.pnl_Top.SuspendLayout();
 			this.gb_Terrains.SuspendLayout();
-			this.pnl_TerrainsHeader.SuspendLayout();
 			this.pnl_Spacer.SuspendLayout();
+			this.pnl_TerrainsHeader.SuspendLayout();
 			this.gb_Tileset.SuspendLayout();
 			this.gb_Maptree.SuspendLayout();
 			this.pnl_Bottom.SuspendLayout();
@@ -145,23 +150,24 @@
 			this.pnl_Top.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnl_Top.Location = new System.Drawing.Point(0, 0);
 			this.pnl_Top.Name = "pnl_Top";
-			this.pnl_Top.Size = new System.Drawing.Size(592, 527);
+			this.pnl_Top.Size = new System.Drawing.Size(592, 545);
 			this.pnl_Top.TabIndex = 0;
 			// 
 			// gb_Terrains
 			// 
 			this.gb_Terrains.Controls.Add(this.lb_TerrainsAllocated);
+			this.gb_Terrains.Controls.Add(this.pnl_Spacer);
+			this.gb_Terrains.Controls.Add(this.cb_BypassRecordsExceeded);
 			this.gb_Terrains.Controls.Add(this.lb_TerrainsAvailable);
 			this.gb_Terrains.Controls.Add(this.pnl_TerrainsHeader);
-			this.gb_Terrains.Controls.Add(this.pnl_Spacer);
 			this.gb_Terrains.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gb_Terrains.Location = new System.Drawing.Point(0, 145);
 			this.gb_Terrains.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Terrains.Name = "gb_Terrains";
-			this.gb_Terrains.Size = new System.Drawing.Size(592, 382);
+			this.gb_Terrains.Size = new System.Drawing.Size(592, 400);
 			this.gb_Terrains.TabIndex = 2;
 			this.gb_Terrains.TabStop = false;
-			this.gb_Terrains.Text = "Terrains";
+			this.gb_Terrains.Text = " Terrainset ";
 			// 
 			// lb_TerrainsAllocated
 			// 
@@ -171,9 +177,126 @@
 			this.lb_TerrainsAllocated.Location = new System.Drawing.Point(3, 110);
 			this.lb_TerrainsAllocated.Margin = new System.Windows.Forms.Padding(0);
 			this.lb_TerrainsAllocated.Name = "lb_TerrainsAllocated";
-			this.lb_TerrainsAllocated.Size = new System.Drawing.Size(267, 269);
+			this.lb_TerrainsAllocated.Size = new System.Drawing.Size(267, 265);
 			this.lb_TerrainsAllocated.TabIndex = 1;
 			this.lb_TerrainsAllocated.SelectedIndexChanged += new System.EventHandler(this.OnAllocatedIndexChanged);
+			// 
+			// pnl_Spacer
+			// 
+			this.pnl_Spacer.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.pnl_Spacer.Controls.Add(this.btn_TerrainCopy);
+			this.pnl_Spacer.Controls.Add(this.btn_TerrainPaste);
+			this.pnl_Spacer.Controls.Add(this.btn_TerrainClear);
+			this.pnl_Spacer.Controls.Add(this.btn_MoveLeft);
+			this.pnl_Spacer.Controls.Add(this.btn_MoveRight);
+			this.pnl_Spacer.Controls.Add(this.btn_MoveUp);
+			this.pnl_Spacer.Controls.Add(this.btn_MoveDown);
+			this.pnl_Spacer.Location = new System.Drawing.Point(270, 110);
+			this.pnl_Spacer.Margin = new System.Windows.Forms.Padding(0);
+			this.pnl_Spacer.Name = "pnl_Spacer";
+			this.pnl_Spacer.Size = new System.Drawing.Size(55, 190);
+			this.pnl_Spacer.TabIndex = 3;
+			// 
+			// btn_TerrainCopy
+			// 
+			this.btn_TerrainCopy.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btn_TerrainCopy.Location = new System.Drawing.Point(5, 110);
+			this.btn_TerrainCopy.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_TerrainCopy.Name = "btn_TerrainCopy";
+			this.btn_TerrainCopy.Size = new System.Drawing.Size(45, 25);
+			this.btn_TerrainCopy.TabIndex = 4;
+			this.btn_TerrainCopy.Text = "Copy";
+			this.btn_TerrainCopy.UseVisualStyleBackColor = true;
+			this.btn_TerrainCopy.Click += new System.EventHandler(this.OnTerrainCopyClick);
+			// 
+			// btn_TerrainPaste
+			// 
+			this.btn_TerrainPaste.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btn_TerrainPaste.Location = new System.Drawing.Point(5, 135);
+			this.btn_TerrainPaste.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_TerrainPaste.Name = "btn_TerrainPaste";
+			this.btn_TerrainPaste.Size = new System.Drawing.Size(45, 25);
+			this.btn_TerrainPaste.TabIndex = 5;
+			this.btn_TerrainPaste.Text = "Paste";
+			this.btn_TerrainPaste.UseVisualStyleBackColor = true;
+			this.btn_TerrainPaste.Click += new System.EventHandler(this.OnTerrainPasteClick);
+			// 
+			// btn_TerrainClear
+			// 
+			this.btn_TerrainClear.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btn_TerrainClear.Location = new System.Drawing.Point(5, 160);
+			this.btn_TerrainClear.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_TerrainClear.Name = "btn_TerrainClear";
+			this.btn_TerrainClear.Size = new System.Drawing.Size(45, 25);
+			this.btn_TerrainClear.TabIndex = 6;
+			this.btn_TerrainClear.Text = "Clear";
+			this.btn_TerrainClear.UseVisualStyleBackColor = true;
+			this.btn_TerrainClear.Click += new System.EventHandler(this.OnTerrainClearClick);
+			// 
+			// btn_MoveLeft
+			// 
+			this.btn_MoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btn_MoveLeft.Enabled = false;
+			this.btn_MoveLeft.Location = new System.Drawing.Point(5, 0);
+			this.btn_MoveLeft.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_MoveLeft.Name = "btn_MoveLeft";
+			this.btn_MoveLeft.Size = new System.Drawing.Size(45, 25);
+			this.btn_MoveLeft.TabIndex = 0;
+			this.btn_MoveLeft.Text = "Left";
+			this.btn_MoveLeft.UseVisualStyleBackColor = true;
+			this.btn_MoveLeft.Click += new System.EventHandler(this.OnTerrainLeftClick);
+			// 
+			// btn_MoveRight
+			// 
+			this.btn_MoveRight.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btn_MoveRight.Enabled = false;
+			this.btn_MoveRight.Location = new System.Drawing.Point(5, 25);
+			this.btn_MoveRight.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_MoveRight.Name = "btn_MoveRight";
+			this.btn_MoveRight.Size = new System.Drawing.Size(45, 25);
+			this.btn_MoveRight.TabIndex = 1;
+			this.btn_MoveRight.Text = "Right";
+			this.btn_MoveRight.UseVisualStyleBackColor = true;
+			this.btn_MoveRight.Click += new System.EventHandler(this.OnTerrainRightClick);
+			// 
+			// btn_MoveUp
+			// 
+			this.btn_MoveUp.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btn_MoveUp.Enabled = false;
+			this.btn_MoveUp.Location = new System.Drawing.Point(5, 55);
+			this.btn_MoveUp.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_MoveUp.Name = "btn_MoveUp";
+			this.btn_MoveUp.Size = new System.Drawing.Size(45, 25);
+			this.btn_MoveUp.TabIndex = 2;
+			this.btn_MoveUp.Text = "Up";
+			this.btn_MoveUp.UseVisualStyleBackColor = true;
+			this.btn_MoveUp.Click += new System.EventHandler(this.OnTerrainUpClick);
+			// 
+			// btn_MoveDown
+			// 
+			this.btn_MoveDown.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.btn_MoveDown.Enabled = false;
+			this.btn_MoveDown.Location = new System.Drawing.Point(5, 80);
+			this.btn_MoveDown.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_MoveDown.Name = "btn_MoveDown";
+			this.btn_MoveDown.Size = new System.Drawing.Size(45, 25);
+			this.btn_MoveDown.TabIndex = 3;
+			this.btn_MoveDown.Text = "Down";
+			this.btn_MoveDown.UseVisualStyleBackColor = true;
+			this.btn_MoveDown.Click += new System.EventHandler(this.OnTerrainDownClick);
+			// 
+			// cb_BypassRecordsExceeded
+			// 
+			this.cb_BypassRecordsExceeded.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.cb_BypassRecordsExceeded.Location = new System.Drawing.Point(3, 375);
+			this.cb_BypassRecordsExceeded.Margin = new System.Windows.Forms.Padding(0);
+			this.cb_BypassRecordsExceeded.Name = "cb_BypassRecordsExceeded";
+			this.cb_BypassRecordsExceeded.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+			this.cb_BypassRecordsExceeded.Size = new System.Drawing.Size(322, 22);
+			this.cb_BypassRecordsExceeded.TabIndex = 0;
+			this.cb_BypassRecordsExceeded.Text = "bypass RecordsExceeded";
+			this.cb_BypassRecordsExceeded.UseVisualStyleBackColor = true;
+			this.cb_BypassRecordsExceeded.CheckedChanged += new System.EventHandler(this.OnBypassRecordsExceededCheckedChanged);
 			// 
 			// lb_TerrainsAvailable
 			// 
@@ -183,7 +306,7 @@
 			this.lb_TerrainsAvailable.Location = new System.Drawing.Point(325, 110);
 			this.lb_TerrainsAvailable.Margin = new System.Windows.Forms.Padding(0);
 			this.lb_TerrainsAvailable.Name = "lb_TerrainsAvailable";
-			this.lb_TerrainsAvailable.Size = new System.Drawing.Size(264, 269);
+			this.lb_TerrainsAvailable.Size = new System.Drawing.Size(264, 287);
 			this.lb_TerrainsAvailable.TabIndex = 2;
 			this.lb_TerrainsAvailable.SelectedIndexChanged += new System.EventHandler(this.OnAvailableIndexChanged);
 			// 
@@ -216,7 +339,7 @@
 			this.lbl_TerrainChanges.Name = "lbl_TerrainChanges";
 			this.lbl_TerrainChanges.Size = new System.Drawing.Size(586, 15);
 			this.lbl_TerrainChanges.TabIndex = 0;
-			this.lbl_TerrainChanges.Text = "Changes to terrains take effect immediately.";
+			this.lbl_TerrainChanges.Text = "Changes to the terrainset take effect immediately.";
 			this.lbl_TerrainChanges.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// lbl_ListAvailable_
@@ -340,110 +463,6 @@
 			this.lbl_Available.TabIndex = 11;
 			this.lbl_Available.Text = "available";
 			// 
-			// pnl_Spacer
-			// 
-			this.pnl_Spacer.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.pnl_Spacer.Controls.Add(this.btn_TerrainCopy);
-			this.pnl_Spacer.Controls.Add(this.btn_TerrainPaste);
-			this.pnl_Spacer.Controls.Add(this.btn_TerrainClear);
-			this.pnl_Spacer.Controls.Add(this.btn_MoveLeft);
-			this.pnl_Spacer.Controls.Add(this.btn_MoveRight);
-			this.pnl_Spacer.Controls.Add(this.btn_MoveUp);
-			this.pnl_Spacer.Controls.Add(this.btn_MoveDown);
-			this.pnl_Spacer.Location = new System.Drawing.Point(270, 110);
-			this.pnl_Spacer.Margin = new System.Windows.Forms.Padding(0);
-			this.pnl_Spacer.Name = "pnl_Spacer";
-			this.pnl_Spacer.Size = new System.Drawing.Size(55, 190);
-			this.pnl_Spacer.TabIndex = 3;
-			// 
-			// btn_TerrainCopy
-			// 
-			this.btn_TerrainCopy.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btn_TerrainCopy.Location = new System.Drawing.Point(5, 110);
-			this.btn_TerrainCopy.Margin = new System.Windows.Forms.Padding(0);
-			this.btn_TerrainCopy.Name = "btn_TerrainCopy";
-			this.btn_TerrainCopy.Size = new System.Drawing.Size(45, 25);
-			this.btn_TerrainCopy.TabIndex = 4;
-			this.btn_TerrainCopy.Text = "Copy";
-			this.btn_TerrainCopy.UseVisualStyleBackColor = true;
-			this.btn_TerrainCopy.Click += new System.EventHandler(this.OnTerrainCopyClick);
-			// 
-			// btn_TerrainPaste
-			// 
-			this.btn_TerrainPaste.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btn_TerrainPaste.Location = new System.Drawing.Point(5, 135);
-			this.btn_TerrainPaste.Margin = new System.Windows.Forms.Padding(0);
-			this.btn_TerrainPaste.Name = "btn_TerrainPaste";
-			this.btn_TerrainPaste.Size = new System.Drawing.Size(45, 25);
-			this.btn_TerrainPaste.TabIndex = 5;
-			this.btn_TerrainPaste.Text = "Paste";
-			this.btn_TerrainPaste.UseVisualStyleBackColor = true;
-			this.btn_TerrainPaste.Click += new System.EventHandler(this.OnTerrainPasteClick);
-			// 
-			// btn_TerrainClear
-			// 
-			this.btn_TerrainClear.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btn_TerrainClear.Location = new System.Drawing.Point(5, 160);
-			this.btn_TerrainClear.Margin = new System.Windows.Forms.Padding(0);
-			this.btn_TerrainClear.Name = "btn_TerrainClear";
-			this.btn_TerrainClear.Size = new System.Drawing.Size(45, 25);
-			this.btn_TerrainClear.TabIndex = 6;
-			this.btn_TerrainClear.Text = "Clear";
-			this.btn_TerrainClear.UseVisualStyleBackColor = true;
-			this.btn_TerrainClear.Click += new System.EventHandler(this.OnTerrainClearClick);
-			// 
-			// btn_MoveLeft
-			// 
-			this.btn_MoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btn_MoveLeft.Enabled = false;
-			this.btn_MoveLeft.Location = new System.Drawing.Point(5, 0);
-			this.btn_MoveLeft.Margin = new System.Windows.Forms.Padding(0);
-			this.btn_MoveLeft.Name = "btn_MoveLeft";
-			this.btn_MoveLeft.Size = new System.Drawing.Size(45, 25);
-			this.btn_MoveLeft.TabIndex = 0;
-			this.btn_MoveLeft.Text = "Left";
-			this.btn_MoveLeft.UseVisualStyleBackColor = true;
-			this.btn_MoveLeft.Click += new System.EventHandler(this.OnTerrainLeftClick);
-			// 
-			// btn_MoveRight
-			// 
-			this.btn_MoveRight.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btn_MoveRight.Enabled = false;
-			this.btn_MoveRight.Location = new System.Drawing.Point(5, 25);
-			this.btn_MoveRight.Margin = new System.Windows.Forms.Padding(0);
-			this.btn_MoveRight.Name = "btn_MoveRight";
-			this.btn_MoveRight.Size = new System.Drawing.Size(45, 25);
-			this.btn_MoveRight.TabIndex = 1;
-			this.btn_MoveRight.Text = "Right";
-			this.btn_MoveRight.UseVisualStyleBackColor = true;
-			this.btn_MoveRight.Click += new System.EventHandler(this.OnTerrainRightClick);
-			// 
-			// btn_MoveUp
-			// 
-			this.btn_MoveUp.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btn_MoveUp.Enabled = false;
-			this.btn_MoveUp.Location = new System.Drawing.Point(5, 55);
-			this.btn_MoveUp.Margin = new System.Windows.Forms.Padding(0);
-			this.btn_MoveUp.Name = "btn_MoveUp";
-			this.btn_MoveUp.Size = new System.Drawing.Size(45, 25);
-			this.btn_MoveUp.TabIndex = 2;
-			this.btn_MoveUp.Text = "Up";
-			this.btn_MoveUp.UseVisualStyleBackColor = true;
-			this.btn_MoveUp.Click += new System.EventHandler(this.OnTerrainUpClick);
-			// 
-			// btn_MoveDown
-			// 
-			this.btn_MoveDown.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btn_MoveDown.Enabled = false;
-			this.btn_MoveDown.Location = new System.Drawing.Point(5, 80);
-			this.btn_MoveDown.Margin = new System.Windows.Forms.Padding(0);
-			this.btn_MoveDown.Name = "btn_MoveDown";
-			this.btn_MoveDown.Size = new System.Drawing.Size(45, 25);
-			this.btn_MoveDown.TabIndex = 3;
-			this.btn_MoveDown.Text = "Down";
-			this.btn_MoveDown.UseVisualStyleBackColor = true;
-			this.btn_MoveDown.Click += new System.EventHandler(this.OnTerrainDownClick);
-			// 
 			// gb_Tileset
 			// 
 			this.gb_Tileset.Controls.Add(this.lbl_TilesetBasepath_);
@@ -465,7 +484,7 @@
 			this.gb_Tileset.Size = new System.Drawing.Size(592, 95);
 			this.gb_Tileset.TabIndex = 1;
 			this.gb_Tileset.TabStop = false;
-			this.gb_Tileset.Text = "Tileset";
+			this.gb_Tileset.Text = " Tileset ";
 			// 
 			// lbl_TilesetBasepath_
 			// 
@@ -688,32 +707,19 @@
 			// 
 			// pnl_Bottom
 			// 
-			this.pnl_Bottom.Controls.Add(this.cb_BypassRecordsExceeded);
 			this.pnl_Bottom.Controls.Add(this.btn_GlobalTerrains);
 			this.pnl_Bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.pnl_Bottom.Location = new System.Drawing.Point(0, 527);
+			this.pnl_Bottom.Location = new System.Drawing.Point(0, 545);
 			this.pnl_Bottom.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Bottom.Name = "pnl_Bottom";
 			this.pnl_Bottom.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
-			this.pnl_Bottom.Size = new System.Drawing.Size(592, 47);
+			this.pnl_Bottom.Size = new System.Drawing.Size(592, 29);
 			this.pnl_Bottom.TabIndex = 1;
-			// 
-			// cb_BypassRecordsExceeded
-			// 
-			this.cb_BypassRecordsExceeded.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.cb_BypassRecordsExceeded.Location = new System.Drawing.Point(6, 0);
-			this.cb_BypassRecordsExceeded.Margin = new System.Windows.Forms.Padding(0);
-			this.cb_BypassRecordsExceeded.Name = "cb_BypassRecordsExceeded";
-			this.cb_BypassRecordsExceeded.Size = new System.Drawing.Size(580, 20);
-			this.cb_BypassRecordsExceeded.TabIndex = 0;
-			this.cb_BypassRecordsExceeded.Text = "bypass RecordsExceeded";
-			this.cb_BypassRecordsExceeded.UseVisualStyleBackColor = true;
-			this.cb_BypassRecordsExceeded.CheckedChanged += new System.EventHandler(this.OnBypassRecordsExceededCheckedChanged);
 			// 
 			// btn_GlobalTerrains
 			// 
 			this.btn_GlobalTerrains.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.btn_GlobalTerrains.Location = new System.Drawing.Point(6, 20);
+			this.btn_GlobalTerrains.Location = new System.Drawing.Point(6, 2);
 			this.btn_GlobalTerrains.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_GlobalTerrains.Name = "btn_GlobalTerrains";
 			this.btn_GlobalTerrains.Size = new System.Drawing.Size(580, 27);
@@ -746,9 +752,9 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.pnl_Top.ResumeLayout(false);
 			this.gb_Terrains.ResumeLayout(false);
+			this.pnl_Spacer.ResumeLayout(false);
 			this.pnl_TerrainsHeader.ResumeLayout(false);
 			this.pnl_TerrainsHeader.PerformLayout();
-			this.pnl_Spacer.ResumeLayout(false);
 			this.gb_Tileset.ResumeLayout(false);
 			this.gb_Tileset.PerformLayout();
 			this.gb_Maptree.ResumeLayout(false);
