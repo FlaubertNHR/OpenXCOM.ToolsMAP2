@@ -551,9 +551,11 @@ namespace MapView.Forms.MainView
 				else
 					MessageBox.Show(
 								this,
-								"Cannot place a tilepart that has setId greater than " + MapFileBase.MaxTerrainId + "."
+								"Cannot place a tilepart that has setId greater than "
+									+ MapFileBase.MaxTerrainId + "."
 									+ Environment.NewLine + Environment.NewLine
-									+ "The value cannot be written to a Mapfile due to the 1-byte restriction.",
+									+ "The value cannot be written to a Mapfile due"
+									+ " to the 1-byte restriction on Tilepart ids.",
 								" Error",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Error,
