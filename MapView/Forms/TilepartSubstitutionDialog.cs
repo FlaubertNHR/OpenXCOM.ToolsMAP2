@@ -280,6 +280,7 @@ namespace MapView
 		private Button bu_ok;
 		private Label la_start;
 		private Label la_stop;
+		private Label la_note;
 
 
 		/// <summary>
@@ -301,6 +302,7 @@ namespace MapView
 			this.bu_cancel = new System.Windows.Forms.Button();
 			this.la_start = new System.Windows.Forms.Label();
 			this.la_stop = new System.Windows.Forms.Label();
+			this.la_note = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// la_head
@@ -343,10 +345,10 @@ namespace MapView
 			// 
 			this.bu_ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.bu_ok.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.bu_ok.Location = new System.Drawing.Point(170, 163);
+			this.bu_ok.Location = new System.Drawing.Point(172, 178);
 			this.bu_ok.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_ok.Name = "bu_ok";
-			this.bu_ok.Size = new System.Drawing.Size(90, 25);
+			this.bu_ok.Size = new System.Drawing.Size(95, 25);
 			this.bu_ok.TabIndex = 12;
 			this.bu_ok.Text = "Ok";
 			this.bu_ok.UseVisualStyleBackColor = true;
@@ -427,10 +429,10 @@ namespace MapView
 			// 
 			this.bu_cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.bu_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.bu_cancel.Location = new System.Drawing.Point(10, 168);
+			this.bu_cancel.Location = new System.Drawing.Point(7, 183);
 			this.bu_cancel.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_cancel.Name = "bu_cancel";
-			this.bu_cancel.Size = new System.Drawing.Size(80, 20);
+			this.bu_cancel.Size = new System.Drawing.Size(85, 20);
 			this.bu_cancel.TabIndex = 11;
 			this.bu_cancel.Text = "Cancel";
 			this.bu_cancel.UseVisualStyleBackColor = true;
@@ -455,11 +457,22 @@ namespace MapView
 			this.la_stop.Text = "stop";
 			this.la_stop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
+			// la_note
+			// 
+			this.la_note.ForeColor = System.Drawing.Color.PaleVioletRed;
+			this.la_note.Location = new System.Drawing.Point(58, 162);
+			this.la_note.Margin = new System.Windows.Forms.Padding(0);
+			this.la_note.Name = "la_note";
+			this.la_note.Size = new System.Drawing.Size(214, 15);
+			this.la_note.TabIndex = 13;
+			this.la_note.Text = "REMINDER: there is no Undo function";
+			this.la_note.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// TilepartSubstitutionDialog
 			// 
 			this.AcceptButton = this.bu_ok;
 			this.CancelButton = this.bu_cancel;
-			this.ClientSize = new System.Drawing.Size(274, 191);
+			this.ClientSize = new System.Drawing.Size(274, 206);
 			this.Controls.Add(this.la_stop);
 			this.Controls.Add(this.la_start);
 			this.Controls.Add(this.bu_ok);
@@ -473,6 +486,7 @@ namespace MapView
 			this.Controls.Add(this.la_dotdot);
 			this.Controls.Add(this.tb_Src0);
 			this.Controls.Add(this.la_head);
+			this.Controls.Add(this.la_note);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
