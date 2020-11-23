@@ -490,13 +490,18 @@ namespace XCom
 				if (node0.Id > id) // shuffle all higher-indexed nodes down 1
 					--node0.Id;
 
+				Link link;
+
 				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 				{
-					var link = node0[slot];
-					if (link.StandardNode())
+					if ((link = node0[slot]).isNodelink())
 					{
 						if (link.Destination == id)
+						{
 							link.Destination = Link.NotUsed;
+							link.Distance    = (byte)0;
+							link.Type        = UnitType.Any;
+						}
 						else if (link.Destination > id)
 							--link.Destination;
 					}
