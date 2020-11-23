@@ -1,3 +1,8 @@
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
+
+
 namespace MapView
 {
 	partial class MainViewF
@@ -6,58 +11,66 @@ namespace MapView
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
 
-		private System.Windows.Forms.ContextMenu cmMapTreeMenu;
+		private ContextMenu cmMapTreeMenu;
 
-		internal System.Windows.Forms.ToolStripContainer tscPanel;
-
-
-		private System.Windows.Forms.MainMenu mmMain;
-
-		private System.Windows.Forms.MenuItem menuFile;
-		private System.Windows.Forms.MenuItem miSaveAll;
-		private System.Windows.Forms.MenuItem miSeparator1;
-		private System.Windows.Forms.MenuItem miSaveMap;
-		private System.Windows.Forms.MenuItem miSaveRoutes;
-		private System.Windows.Forms.MenuItem miExport;
-		private System.Windows.Forms.MenuItem miSeparator2;
-		private System.Windows.Forms.MenuItem miSaveMaptree;
-		private System.Windows.Forms.MenuItem miSeparator3;
-		private System.Windows.Forms.MenuItem miReload;
-		private System.Windows.Forms.MenuItem miSeparator4;
-		private System.Windows.Forms.MenuItem miScreenshot;
-		private System.Windows.Forms.MenuItem miSeparator5;
-		private System.Windows.Forms.MenuItem miQuit;
-
-		private System.Windows.Forms.MenuItem menuViewers;
-
-		private System.Windows.Forms.MenuItem menuEdit;
-		private System.Windows.Forms.MenuItem miModifySize;
-		private System.Windows.Forms.MenuItem miTilepartSubstitution;
-		private System.Windows.Forms.MenuItem miClearRecordsExceeded;
-		private System.Windows.Forms.MenuItem miSeparator6;
-		private System.Windows.Forms.MenuItem miConfigurator;
-		private System.Windows.Forms.MenuItem miOptions;
-
-		private System.Windows.Forms.MenuItem menuHelp;
-		private System.Windows.Forms.MenuItem miHelp;
-		private System.Windows.Forms.MenuItem miColors;
-		private System.Windows.Forms.MenuItem miAbout;
-		private System.Windows.Forms.MenuItem miSeparator7;
-		private System.Windows.Forms.MenuItem miMapInfo;
+		internal ToolStripContainer tscPanel;
 
 
-		private System.Windows.Forms.ToolStrip tsTools;
+		private MainMenu mmMain;
 
-		private System.Windows.Forms.StatusStrip ssMain;
+		private MenuItem menuFile;
+		private MenuItem miSaveAll;
+		private MenuItem miSeparator1;
+		private MenuItem miSaveMap;
+		private MenuItem miSaveRoutes;
+		private MenuItem miExport;
+		private MenuItem miSeparator2;
+		private MenuItem miSaveMaptree;
+		private MenuItem miSeparator3;
+		private MenuItem miReload;
+		private MenuItem miSeparator4;
+		private MenuItem miScreenshot;
+		private MenuItem miSeparator5;
+		private MenuItem miQuit;
 
-		private System.Windows.Forms.ToolStripStatusLabel tsslScale;
-		private System.Windows.Forms.ToolStripStatusLabel tsslMapLabel;
-		private System.Windows.Forms.ToolStripStatusLabel tsslDimensions;
-		private System.Windows.Forms.ToolStripStatusLabel tsslPosition;
-		private System.Windows.Forms.ToolStripStatusLabel tsslSelectionSize;
+		private MenuItem menuEdit;
+		private MenuItem miModifySize;
+		private MenuItem miTilepartSubstitution;
+		private MenuItem miClearRecordsExceeded;
+		private MenuItem miSeparator6;
+		private MenuItem miConfigurator;
+		private MenuItem miOptions;
+
+		private MenuItem menuViewers;
+
+		private MenuItem menuToner;
+		private MenuItem miNone;
+		private MenuItem miGray;
+		private MenuItem miRed;
+		private MenuItem miGreen;
+		private MenuItem miBlue;
+
+
+		private MenuItem menuHelp;
+		private MenuItem miHelp;
+		private MenuItem miColors;
+		private MenuItem miAbout;
+		private MenuItem miSeparator7;
+		private MenuItem miMapInfo;
+
+
+		private ToolStrip tsTools;
+
+		private StatusStrip ssMain;
+
+		private ToolStripStatusLabel tsslScale;
+		private ToolStripStatusLabel tsslMapLabel;
+		private ToolStripStatusLabel tsslDimensions;
+		private ToolStripStatusLabel tsslPosition;
+		private ToolStripStatusLabel tsslSelectionSize;
 
 
 		/// <summary>
@@ -104,6 +117,12 @@ namespace MapView
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
 			this.miOptions = new System.Windows.Forms.MenuItem();
 			this.menuViewers = new System.Windows.Forms.MenuItem();
+			this.menuToner = new System.Windows.Forms.MenuItem();
+			this.miNone = new System.Windows.Forms.MenuItem();
+			this.miGray = new System.Windows.Forms.MenuItem();
+			this.miRed = new System.Windows.Forms.MenuItem();
+			this.miGreen = new System.Windows.Forms.MenuItem();
+			this.miBlue = new System.Windows.Forms.MenuItem();
 			this.menuHelp = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miColors = new System.Windows.Forms.MenuItem();
@@ -130,6 +149,7 @@ namespace MapView
 			this.menuFile,
 			this.menuEdit,
 			this.menuViewers,
+			this.menuToner,
 			this.menuHelp});
 			// 
 			// menuFile
@@ -296,9 +316,50 @@ namespace MapView
 			this.menuViewers.Index = 2;
 			this.menuViewers.Text = "&Viewers";
 			// 
+			// menuToner
+			// 
+			this.menuToner.Index = 3;
+			this.menuToner.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miNone,
+			this.miGray,
+			this.miRed,
+			this.miGreen,
+			this.miBlue});
+			this.menuToner.Text = "Toner";
+			// 
+			// miNone
+			// 
+			this.miNone.Index = 0;
+			this.miNone.Text = "None";
+			this.miNone.Click += new System.EventHandler(this.OnTonerClick);
+			// 
+			// miGray
+			// 
+			this.miGray.Index = 1;
+			this.miGray.Text = "Gray";
+			this.miGray.Click += new System.EventHandler(this.OnTonerClick);
+			// 
+			// miRed
+			// 
+			this.miRed.Index = 2;
+			this.miRed.Text = "Red";
+			this.miRed.Click += new System.EventHandler(this.OnTonerClick);
+			// 
+			// miGreen
+			// 
+			this.miGreen.Index = 3;
+			this.miGreen.Text = "Green";
+			this.miGreen.Click += new System.EventHandler(this.OnTonerClick);
+			// 
+			// miBlue
+			// 
+			this.miBlue.Index = 4;
+			this.miBlue.Text = "Blue";
+			this.miBlue.Click += new System.EventHandler(this.OnTonerClick);
+			// 
 			// menuHelp
 			// 
-			this.menuHelp.Index = 3;
+			this.menuHelp.Index = 4;
 			this.menuHelp.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miHelp,
 			this.miColors,

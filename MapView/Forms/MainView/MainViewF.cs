@@ -1881,6 +1881,31 @@ namespace MapView
 
 
 		/// <summary>
+		/// Selects a selected-tile toner color.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnTonerClick(object sender, EventArgs e)
+		{
+			object val;
+
+			var it = sender as MenuItem;
+
+			if      (it == miNone)  val = 0;
+			else if (it == miGray)  val = 1;
+			else if (it == miRed)   val = 2;
+			else if (it == miGreen) val = 3;
+			else                    val = 4; // (it == miBlue)
+
+			Options[MainViewOptionables.str_SelectedTileToner].Value = val;
+			Optionables.OnOptionChanged(MainViewOptionables.str_SelectedTileToner, val);
+
+			if (_foptions != null && _foptions.Visible)
+				(_foptions as OptionsForm).propertyGrid.Refresh();
+		}
+
+
+		/// <summary>
 		/// Opens the CHM helpfile.
 		/// </summary>
 		/// <param name="sender"></param>
