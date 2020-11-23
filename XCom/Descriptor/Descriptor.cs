@@ -34,9 +34,9 @@ namespace XCom
 		private Dictionary<int, Tuple<string,string>> _terrains =
 			new Dictionary<int, Tuple<string,string>>();
 		/// <summary>
-		/// A dictionary of this tileset's terrains as IDs that keys a tuple
-		/// that pairs terrain-labels with basepath-strings. A basepath-string
-		/// can be blank (use config's basepath), "basepath" (use the tileset's
+		/// A dictionary of this tileset's terrains as IDs that key a tuple that
+		/// pairs terrain-labels with basepath-strings. A basepath-string can be
+		/// blank (use config's basepath), "basepath" (use the tileset's
 		/// basepath), or the basepath of any TERRAIN directory.
 		/// </summary>
 		public Dictionary<int, Tuple<string,string>> Terrains
@@ -61,11 +61,12 @@ namespace XCom
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="label"></param>
-		/// <param name="basepath"></param>
-		/// <param name="terrains"></param>
-		/// <param name="groupType">UFO or TFTD</param>
-		/// <param name="bypassRecordsExceeded"></param>
+		/// <param name="label">the label of this tileset</param>
+		/// <param name="basepath">the parent directory of the Map and Routes</param>
+		/// <param name="terrains">a dictionary of terrains</param>
+		/// <param name="groupType">GameType.Ufo or GameType.Tftd</param>
+		/// <param name="bypassRecordsExceeded">true to not issue a warning if
+		/// the terrainset exceeds 253 parts</param>
 		public Descriptor(
 				string label,
 				string basepath,
@@ -94,7 +95,7 @@ namespace XCom
 			{
 				_dirTerr = Path.Combine(_dirTerr, GlobalsXC.TerrainDir);
 			}
-			else  // NOTE: the Share can return null if the resource-type is notconfigured
+			else // NOTE: the Share can return null if the resource-type is notconfigured
 				_dirTerr = String.Empty;
 
 			BypassRecordsExceeded = bypassRecordsExceeded;
