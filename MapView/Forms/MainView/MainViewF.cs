@@ -601,30 +601,41 @@ namespace MapView
 		/// <summary>
 		/// Sets the toner to be used for drawing the parts of selected tiles.
 		/// </summary>
-		internal static void SetTileToner()
+		internal void SetTileToner()
 		{
+			miNone .Checked =
+			miGray .Checked =
+			miRed  .Checked =
+			miGreen.Checked =
+			miBlue .Checked = false;
+
 			if (ResourceInfo.Spritesets.Count != 0)
 			{
 				ColorPalette table;
 				switch (Optionables.SelectedTileToner)
 				{
-					case MainViewOptionables.TONER_STANDARD:
+					case MainViewOptionables.TONER_NONE:
+						miNone.Checked = true;
 						return;
 
 					default: // case TONER_GRAY
 						table = ResourceInfo.Spritesets[0].Pal.GrayScaled.ColorTable;	// NOTE: All loaded spritesets will have the same palette.
-						break;															// - this demonstrates how redundant palette-pointers are.
-																						//   palette this palette that, here have a palette ...
-					case MainViewOptionables.TONER_RED:									//   i know you want one
+						miGray.Checked = true;											// - this demonstrates how redundant palette-pointers are.
+						break;															//   palette this palette that, here have a palette ...
+																						//   i know you want one
+					case MainViewOptionables.TONER_RED:
 						table = ResourceInfo.Spritesets[0].Pal.RedScaled.ColorTable;
+						miRed.Checked = true;
 						break;
 
 					case MainViewOptionables.TONER_GREEN:
 						table = ResourceInfo.Spritesets[0].Pal.GreenScaled.ColorTable;
+						miGreen.Checked = true;
 						break;
 
 					case MainViewOptionables.TONER_BLUE:
 						table = ResourceInfo.Spritesets[0].Pal.BlueScaled.ColorTable;
+						miBlue.Checked = true;
 						break;
 				}
 
@@ -1881,27 +1892,32 @@ namespace MapView
 
 
 		/// <summary>
-		/// Selects a selected-tile toner color.
+		/// Selects a selected-tile toner color. It does this by changing the
+		/// option which fires MainViewOptionables.OnOptionChanged() which calls
+		/// SetTileToner() which sets an alternate set of sprites with the
+		/// toner-palette and also checks the item in MainView's Toner menu.
+		/// so bite
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnTonerClick(object sender, EventArgs e)
 		{
-			object val;
-
 			var it = sender as MenuItem;
+			if (!it.Checked)
+			{
+				object val;
+				if      (it == miNone)  val = MainViewOptionables.TONER_NONE;
+				else if (it == miGray)  val = MainViewOptionables.TONER_GRAY;
+				else if (it == miRed)   val = MainViewOptionables.TONER_RED;
+				else if (it == miGreen) val = MainViewOptionables.TONER_GREEN;
+				else                    val = MainViewOptionables.TONER_BLUE; // (it == miBlue)
 
-			if      (it == miNone)  val = 0;
-			else if (it == miGray)  val = 1;
-			else if (it == miRed)   val = 2;
-			else if (it == miGreen) val = 3;
-			else                    val = 4; // (it == miBlue)
+				Options[MainViewOptionables.str_SelectedTileToner].Value = val;
+				Optionables.OnOptionChanged(MainViewOptionables.str_SelectedTileToner, val);
 
-			Options[MainViewOptionables.str_SelectedTileToner].Value = val;
-			Optionables.OnOptionChanged(MainViewOptionables.str_SelectedTileToner, val);
-
-			if (_foptions != null && _foptions.Visible)
-				(_foptions as OptionsForm).propertyGrid.Refresh();
+				if (_foptions != null && _foptions.Visible)
+					(_foptions as OptionsForm).propertyGrid.Refresh();
+			}
 		}
 
 
@@ -3132,7 +3148,7 @@ namespace MapView
 							(_foptions as OptionsForm).propertyGrid.Refresh();
 						}
 
-						SetTileToner();
+						SetTileToner(); // create toned spriteset(s) for selected-tile(s)
 
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 							MenuManager.StartSecondaryStageBoosters();

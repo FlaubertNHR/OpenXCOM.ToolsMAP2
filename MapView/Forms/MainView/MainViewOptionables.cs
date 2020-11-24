@@ -18,11 +18,11 @@ namespace MapView.Forms.MainView
 	internal sealed class MainViewOptionables
 	{
 		#region Fields (static)
-		public const int TONER_STANDARD = 0;
-		public const int TONER_GRAY     = 1;
-		public const int TONER_RED      = 2;
-		public const int TONER_GREEN    = 3;
-		public const int TONER_BLUE     = 4;
+		public const int TONER_NONE  = 0;
+		public const int TONER_GRAY  = 1;
+		public const int TONER_RED   = 2;
+		public const int TONER_GREEN = 3;
+		public const int TONER_BLUE  = 4;
 		#endregion Fields (static)
 
 
@@ -333,8 +333,8 @@ namespace MapView.Forms.MainView
 		[Category(cat_Selection)]
 		[Description(@"The colortone of tiles that are selected (0..4 default 1)
 (F10 - cycle; Shift+F10 - reverse cycle)
-0 - standard
-1 - grayscale
+0 - none
+1 - grayscale (default)
 2 - redscale
 3 - greenscale
 4 - bluescale
@@ -349,9 +349,9 @@ namespace MapView.Forms.MainView
 				if (foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SelectedTileToner].Value =
-					_selectedTileToner = value.Viceroy(TONER_STANDARD, TONER_BLUE);
+					_selectedTileToner = value.Viceroy(TONER_NONE, TONER_BLUE);
 				}
-				else if ((_selectedTileToner = value.Viceroy(TONER_STANDARD, TONER_BLUE)) != value) // on user-changed
+				else if ((_selectedTileToner = value.Viceroy(TONER_NONE, TONER_BLUE)) != value) // user-changed ->
 				{
 					MainViewF.that.Options[str_SelectedTileToner].Value = _selectedTileToner;
 				}
@@ -756,7 +756,7 @@ namespace MapView.Forms.MainView
 
 				case str_SelectedTileToner:
 					SelectedTileToner = (int)val;
-					MainViewF.SetTileToner();
+					MainViewF.that.SetTileToner();
 					break;
 
 				case str_Interpolation:
