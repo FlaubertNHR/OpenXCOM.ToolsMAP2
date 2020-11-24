@@ -206,7 +206,7 @@ namespace MapView
 					{
 						switch (quad)
 						{
-							default: part = tile.Floor;   break; // case 0:
+							default: part = tile.Floor;   break; // case 0
 							case  1: part = tile.West;    break;
 							case  2: part = tile.North;   break;
 							case  3: part = tile.Content; break;
