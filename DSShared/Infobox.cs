@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -23,17 +22,16 @@ namespace DSShared
 		#endregion Fields (static)
 
 
-		#region Designer (fix)
+		#region Designer (workaround)
 		/// <summary>
-		/// Since the programmers of .net couldn't figure out that when
-		/// you set a label's height to 0 and invisible it ought maintain a
-		/// height of 0, I need to *not* instantiate said label unless it is
-		/// required.
+		/// Since the programmers of .net couldn't figure out that when you set
+		/// a label's height to 0 and invisible it ought maintain a height of 0,
+		/// I need to *not* instantiate said label unless it is required.
 		///
 		/// Don't forget to do null-checks.
 		/// </summary>
 		private Label lbl_Head;
-		#endregion Designer (fix)
+		#endregion Designer (workaround)
 
 
 		#region cTor
@@ -99,13 +97,13 @@ namespace DSShared
 
 			if (!String.IsNullOrEmpty(label))
 			{
-				lbl_Head          = new System.Windows.Forms.Label();
+				lbl_Head = new Label();
 				lbl_Head.Name     = "lbl_Head";
-				lbl_Head.Location = new System.Drawing.Point(0, 0);
-				lbl_Head.Size     = new System.Drawing.Size(20, 27);
-				lbl_Head.Margin   = new System.Windows.Forms.Padding(0);
-				lbl_Head.Padding  = new System.Windows.Forms.Padding(10, 10, 5, 5);
-				lbl_Head.Dock     = System.Windows.Forms.DockStyle.Top;
+				lbl_Head.Location = new Point(0,0);
+				lbl_Head.Size     = new Size(20,27);
+				lbl_Head.Margin   = new Padding(0);
+				lbl_Head.Padding  = new Padding(10,10,5,5);
+				lbl_Head.Dock     = DockStyle.Top;
 				lbl_Head.AutoSize = true;
 				lbl_Head.TabIndex = 0;
 				Controls.Add(this.lbl_Head);
@@ -201,23 +199,9 @@ namespace DSShared
 
 
 		#region Designer
-		private Container components = null;
-
 		private Button btn_Okay;
 		private RichTextBox rtb_Copyable;
 		private Panel pnl_Copyable;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
 
 
 		/// <summary>
