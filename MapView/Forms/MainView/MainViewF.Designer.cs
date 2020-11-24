@@ -297,7 +297,7 @@ namespace MapView
 			// miClearRecordsExceeded
 			// 
 			this.miClearRecordsExceeded.Index = 3;
-			this.miClearRecordsExceeded.Text = "Clear all BypassRecordsExceeded flags";
+			this.miClearRecordsExceeded.Text = "Clear all BypassRecordsExceeded &flags";
 			this.miClearRecordsExceeded.Click += new System.EventHandler(this.OnClearRecordsExceededClick);
 			// 
 			// miSeparator6
@@ -333,36 +333,36 @@ namespace MapView
 			this.miRed,
 			this.miGreen,
 			this.miBlue});
-			this.menuToner.Text = "Toner";
+			this.menuToner.Text = "&Toner";
 			// 
 			// miNone
 			// 
 			this.miNone.Index = 0;
-			this.miNone.Text = "None";
+			this.miNone.Text = "&None";
 			this.miNone.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// miGray
 			// 
 			this.miGray.Index = 1;
-			this.miGray.Text = "Gray";
+			this.miGray.Text = "Gr&ay";
 			this.miGray.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// miRed
 			// 
 			this.miRed.Index = 2;
-			this.miRed.Text = "Red";
+			this.miRed.Text = "&Red";
 			this.miRed.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// miGreen
 			// 
 			this.miGreen.Index = 3;
-			this.miGreen.Text = "Green";
+			this.miGreen.Text = "&Green";
 			this.miGreen.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// miBlue
 			// 
 			this.miBlue.Index = 4;
-			this.miBlue.Text = "Blue";
+			this.miBlue.Text = "&Blue";
 			this.miBlue.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// menuHelp
@@ -386,13 +386,13 @@ namespace MapView
 			// miColors
 			// 
 			this.miColors.Index = 1;
-			this.miColors.Text = "Colors";
+			this.miColors.Text = "&Colors";
 			this.miColors.Click += new System.EventHandler(this.OnColorsClick);
 			// 
 			// miAbout
 			// 
 			this.miAbout.Index = 2;
-			this.miAbout.Text = "About";
+			this.miAbout.Text = "&About";
 			this.miAbout.Click += new System.EventHandler(this.OnAboutClick);
 			// 
 			// miSeparator7
