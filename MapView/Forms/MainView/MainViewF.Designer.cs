@@ -39,6 +39,7 @@ namespace MapView
 		private MenuItem menuEdit;
 		private MenuItem miModifySize;
 		private MenuItem miTilepartSubstitution;
+		private MenuItem miSeparator8;
 		private MenuItem miClearRecordsExceeded;
 		private MenuItem miSeparator6;
 		private MenuItem miConfigurator;
@@ -112,6 +113,7 @@ namespace MapView
 			this.menuEdit = new System.Windows.Forms.MenuItem();
 			this.miModifySize = new System.Windows.Forms.MenuItem();
 			this.miTilepartSubstitution = new System.Windows.Forms.MenuItem();
+			this.miSeparator8 = new System.Windows.Forms.MenuItem();
 			this.miClearRecordsExceeded = new System.Windows.Forms.MenuItem();
 			this.miSeparator6 = new System.Windows.Forms.MenuItem();
 			this.miConfigurator = new System.Windows.Forms.MenuItem();
@@ -264,6 +266,7 @@ namespace MapView
 			this.menuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miModifySize,
 			this.miTilepartSubstitution,
+			this.miSeparator8,
 			this.miClearRecordsExceeded,
 			this.miSeparator6,
 			this.miConfigurator,
@@ -286,26 +289,31 @@ namespace MapView
 			this.miTilepartSubstitution.Text = "Tilepart S&ubstitution";
 			this.miTilepartSubstitution.Click += new System.EventHandler(this.OnTilepartSubstitutionClick);
 			// 
+			// miSeparator8
+			// 
+			this.miSeparator8.Index = 2;
+			this.miSeparator8.Text = "-";
+			// 
 			// miClearRecordsExceeded
 			// 
-			this.miClearRecordsExceeded.Index = 2;
+			this.miClearRecordsExceeded.Index = 3;
 			this.miClearRecordsExceeded.Text = "Clear all BypassRecordsExceeded flags";
 			this.miClearRecordsExceeded.Click += new System.EventHandler(this.OnClearRecordsExceededClick);
 			// 
 			// miSeparator6
 			// 
-			this.miSeparator6.Index = 3;
+			this.miSeparator6.Index = 4;
 			this.miSeparator6.Text = "-";
 			// 
 			// miConfigurator
 			// 
-			this.miConfigurator.Index = 4;
+			this.miConfigurator.Index = 5;
 			this.miConfigurator.Text = "&Configurator";
 			this.miConfigurator.Click += new System.EventHandler(this.OnConfiguratorClick);
 			// 
 			// miOptions
 			// 
-			this.miOptions.Index = 5;
+			this.miOptions.Index = 6;
 			this.miOptions.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOptions.Text = "&Options";
 			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
