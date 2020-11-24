@@ -597,57 +597,6 @@ namespace MapView
 													bytesTab);
 			}
 		}
-
-		/// <summary>
-		/// Sets the toner to be used for drawing the parts of selected tiles.
-		/// </summary>
-		internal void SetTileToner()
-		{
-			miNone .Checked =
-			miGray .Checked =
-			miRed  .Checked =
-			miGreen.Checked =
-			miBlue .Checked = false;
-
-			if (ResourceInfo.Spritesets.Count != 0)
-			{
-				ColorPalette table;
-				switch (Optionables.SelectedTileToner)
-				{
-					case MainViewOptionables.TONER_NONE:
-						miNone.Checked = true;
-						return;
-
-					default: // case TONER_GRAY
-						table = ResourceInfo.Spritesets[0].Pal.GrayScaled.ColorTable;	// NOTE: All loaded spritesets will have the same palette.
-						miGray.Checked = true;											// - this demonstrates how redundant palette-pointers are.
-						break;															//   palette this palette that, here have a palette ...
-																						//   i know you want one
-					case MainViewOptionables.TONER_RED:
-						table = ResourceInfo.Spritesets[0].Pal.RedScaled.ColorTable;
-						miRed.Checked = true;
-						break;
-
-					case MainViewOptionables.TONER_GREEN:
-						table = ResourceInfo.Spritesets[0].Pal.GreenScaled.ColorTable;
-						miGreen.Checked = true;
-						break;
-
-					case MainViewOptionables.TONER_BLUE:
-						table = ResourceInfo.Spritesets[0].Pal.BlueScaled.ColorTable;
-						miBlue.Checked = true;
-						break;
-				}
-
-				foreach (var spriteset in ResourceInfo.Spritesets)
-				{
-					for (int id = 0; id != spriteset.Count; ++id)
-					{
-						(spriteset[id] as PckImage).SpriteT.Palette = table; // lovely.
-					}
-				}
-			}
-		}
 		#endregion Methods (static)
 
 
@@ -3195,6 +3144,57 @@ namespace MapView
 				}
 			}
 			_loadReady = LOADREADY_STAGE_0;
+		}
+
+		/// <summary>
+		/// Sets the toner to be used for drawing the parts of selected tiles.
+		/// </summary>
+		internal void SetTileToner()
+		{
+			miNone .Checked =
+			miGray .Checked =
+			miRed  .Checked =
+			miGreen.Checked =
+			miBlue .Checked = false;
+
+			if (ResourceInfo.Spritesets.Count != 0)
+			{
+				ColorPalette table;
+				switch (Optionables.SelectedTileToner)
+				{
+					case MainViewOptionables.TONER_NONE:
+						miNone.Checked = true;
+						return;
+
+					default: // case TONER_GRAY
+						table = ResourceInfo.Spritesets[0].Pal.GrayScaled.ColorTable;	// NOTE: All loaded spritesets will have the same palette.
+						miGray.Checked = true;											// - this demonstrates how redundant palette-pointers are.
+						break;															//   palette this palette that, here have a palette ...
+																						//   i know you want one
+					case MainViewOptionables.TONER_RED:
+						table = ResourceInfo.Spritesets[0].Pal.RedScaled.ColorTable;
+						miRed.Checked = true;
+						break;
+
+					case MainViewOptionables.TONER_GREEN:
+						table = ResourceInfo.Spritesets[0].Pal.GreenScaled.ColorTable;
+						miGreen.Checked = true;
+						break;
+
+					case MainViewOptionables.TONER_BLUE:
+						table = ResourceInfo.Spritesets[0].Pal.BlueScaled.ColorTable;
+						miBlue.Checked = true;
+						break;
+				}
+
+				foreach (var spriteset in ResourceInfo.Spritesets)
+				{
+					for (int id = 0; id != spriteset.Count; ++id)
+					{
+						(spriteset[id] as PckImage).SpriteT.Palette = table; // lovely.
+					}
+				}
+			}
 		}
 
 		/// <summary>
