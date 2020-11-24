@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using XCom;
 using XCom.Base;
 
 
@@ -62,11 +63,11 @@ namespace MapView
 
 			_base = @base;
 
-			la_head.Text = "Change all tileparts between setIds (inclusive)"
+			la_head.Text = "Change all tileparts between setIds"
 						 + Environment.NewLine
-						 + "if stop is blank use start id"
+						 + "inclusive - if stop is blank use start id"
 						 + Environment.NewLine
-						 + "Highest detected id in the Mapfile = " + _base.HighestTilepartId; // TODO: adjust 'HighestTilepartId' as the tileset is edited.
+						 + "Highest detected id placed = " + HighId();
 
 			tb_Src0.BackColor =
 			tb_Src1.BackColor = Color.Wheat;
@@ -112,6 +113,36 @@ namespace MapView
 				case RadioSelected.Desti: rb_dst  .Checked = true; break;
 				case RadioSelected.Shift: rb_shift.Checked = true; break;
 			}
+		}
+
+		/// <summary>
+		/// Gets the highest setId placed in the current tileset.
+		/// </summary>
+		/// <returns></returns>
+		private int HighId()
+		{
+			int id = -1;
+
+			MapTile tile;
+			Tilepart part;
+
+			int cols = _base.MapSize.Cols;
+			int rows = _base.MapSize.Rows;
+			int levs = _base.MapSize.Levs;
+
+			for (int lev = 0; lev != levs; ++lev)
+			for (int row = 0; row != rows; ++row)
+			for (int col = 0; col != cols; ++col)
+			{
+				if (!(tile = _base[col, row, lev]).Vacant)
+				{
+					if ((part = tile.Floor)   != null && part.SetId > id) id = part.SetId;
+					if ((part = tile.West)    != null && part.SetId > id) id = part.SetId;
+					if ((part = tile.North)   != null && part.SetId > id) id = part.SetId;
+					if ((part = tile.Content) != null && part.SetId > id) id = part.SetId;
+				}
+			}
+			return id;
 		}
 		#endregion cTor
 

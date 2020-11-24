@@ -137,19 +137,6 @@ namespace XCom
 				int quad3,
 				int quad4)
 		{
-			if (quad1 > HighestTilepartId)
-				HighestTilepartId = quad1;
-
-			if (quad2 > HighestTilepartId)
-				HighestTilepartId = quad2;
-
-			if (quad3 > HighestTilepartId)
-				HighestTilepartId = quad3;
-
-			if (quad4 > HighestTilepartId)
-				HighestTilepartId = quad4;
-
-
 			Tilepart floor, west, north, content;
 
 			// NOTE: quads will be "-1" if "read from the end of the stream".

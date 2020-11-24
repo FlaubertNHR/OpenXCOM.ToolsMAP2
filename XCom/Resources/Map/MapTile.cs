@@ -85,7 +85,8 @@ namespace XCom
 
 		/// <summary>
 		/// a tile is flagged as vacant if it has no tileparts. Is used to
-		/// optimize the draw-cycle as well as by MapInfoDialog.
+		/// optimize the draw-cycle as well as by MapInfoDialog and
+		/// TileslotSubstitution.
 		/// </summary>
 		public bool Vacant
 		{ get; private set; }
