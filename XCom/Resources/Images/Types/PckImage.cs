@@ -53,6 +53,10 @@ namespace XCom
 
 
 		#region Properties
+		/// <summary>
+		/// A copy of the image but toned according to the currently selected
+		/// selected-tile toner.
+		/// </summary>
 		public Bitmap SpriteT
 		{ get; private set; }
 
