@@ -62,6 +62,7 @@ namespace MapView
 		private Label lbl_TilesetCount;
 		private CheckBox cb_BypassRecordsExceeded;
 		private Button btn_GlobalTerrains;
+		private Button btn_GlobalTerrainsList;
 
 
 		/// <summary>
@@ -133,6 +134,7 @@ namespace MapView
 			this.pnl_Bottom = new System.Windows.Forms.Panel();
 			this.btn_GlobalTerrains = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.btn_GlobalTerrainsList = new System.Windows.Forms.Button();
 			this.pnl_Top.SuspendLayout();
 			this.gb_Terrains.SuspendLayout();
 			this.pnl_Spacer.SuspendLayout();
@@ -177,7 +179,7 @@ namespace MapView
 			this.lb_TerrainsAllocated.Location = new System.Drawing.Point(3, 110);
 			this.lb_TerrainsAllocated.Margin = new System.Windows.Forms.Padding(0);
 			this.lb_TerrainsAllocated.Name = "lb_TerrainsAllocated";
-			this.lb_TerrainsAllocated.Size = new System.Drawing.Size(267, 265);
+			this.lb_TerrainsAllocated.Size = new System.Drawing.Size(267, 270);
 			this.lb_TerrainsAllocated.TabIndex = 1;
 			this.lb_TerrainsAllocated.SelectedIndexChanged += new System.EventHandler(this.OnAllocatedIndexChanged);
 			// 
@@ -288,11 +290,11 @@ namespace MapView
 			// cb_BypassRecordsExceeded
 			// 
 			this.cb_BypassRecordsExceeded.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.cb_BypassRecordsExceeded.Location = new System.Drawing.Point(3, 375);
+			this.cb_BypassRecordsExceeded.Location = new System.Drawing.Point(3, 380);
 			this.cb_BypassRecordsExceeded.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_BypassRecordsExceeded.Name = "cb_BypassRecordsExceeded";
 			this.cb_BypassRecordsExceeded.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-			this.cb_BypassRecordsExceeded.Size = new System.Drawing.Size(322, 22);
+			this.cb_BypassRecordsExceeded.Size = new System.Drawing.Size(322, 17);
 			this.cb_BypassRecordsExceeded.TabIndex = 0;
 			this.cb_BypassRecordsExceeded.Text = "bypass RecordsExceeded";
 			this.cb_BypassRecordsExceeded.UseVisualStyleBackColor = true;
@@ -707,6 +709,7 @@ namespace MapView
 			// 
 			// pnl_Bottom
 			// 
+			this.pnl_Bottom.Controls.Add(this.btn_GlobalTerrainsList);
 			this.pnl_Bottom.Controls.Add(this.btn_GlobalTerrains);
 			this.pnl_Bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.pnl_Bottom.Location = new System.Drawing.Point(0, 545);
@@ -718,15 +721,30 @@ namespace MapView
 			// 
 			// btn_GlobalTerrains
 			// 
-			this.btn_GlobalTerrains.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.btn_GlobalTerrains.Location = new System.Drawing.Point(6, 2);
+			this.btn_GlobalTerrains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_GlobalTerrains.Location = new System.Drawing.Point(2, 1);
 			this.btn_GlobalTerrains.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_GlobalTerrains.Name = "btn_GlobalTerrains";
-			this.btn_GlobalTerrains.Size = new System.Drawing.Size(580, 27);
+			this.btn_GlobalTerrains.Size = new System.Drawing.Size(502, 27);
 			this.btn_GlobalTerrains.TabIndex = 1;
 			this.btn_GlobalTerrains.Text = "Apply allocated terrains to all tilesets that are defined by Path+Map";
 			this.btn_GlobalTerrains.UseVisualStyleBackColor = true;
 			this.btn_GlobalTerrains.Click += new System.EventHandler(this.OnGlobalTerrainsClick);
+			// 
+			// btn_GlobalTerrainsList
+			// 
+			this.btn_GlobalTerrainsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_GlobalTerrainsList.Location = new System.Drawing.Point(505, 1);
+			this.btn_GlobalTerrainsList.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_GlobalTerrainsList.Name = "btn_GlobalTerrainsList";
+			this.btn_GlobalTerrainsList.Size = new System.Drawing.Size(85, 27);
+			this.btn_GlobalTerrainsList.TabIndex = 2;
+			this.btn_GlobalTerrainsList.Text = "List ...";
+			this.btn_GlobalTerrainsList.UseVisualStyleBackColor = true;
+			this.btn_GlobalTerrainsList.Click += new System.EventHandler(this.OnGlobalTerrainsListClick);
 			// 
 			// toolTip1
 			// 

@@ -259,8 +259,8 @@ namespace MapView
 					for (int i = 0; i != descriptor.Terrains.Count; ++i)
 					{
 						TerrainsOriginal[i] = new Tuple<string,string>(
-																String.Copy(descriptor.Terrains[i].Item1),
-																String.Copy(descriptor.Terrains[i].Item2));
+																	String.Copy(descriptor.Terrains[i].Item1),
+																	String.Copy(descriptor.Terrains[i].Item2));
 						records += descriptor.GetRecordCount(i);
 					}
 					lbl_McdRecords.Text = records + " MCD Records";
@@ -322,7 +322,7 @@ namespace MapView
 					e.Cancel = true;
 					ShowErrorDialog("The Map must have at least one terrain allocated.");
 				}
-				else if (IsTerrainsChanged(TerrainsOriginal, Descriptor.Terrains))
+				else if (TerrainsChanged(TerrainsOriginal, Descriptor.Terrains))
 				{
 					DialogResult = DialogResult.OK; // force reload of the Tileset
 				}
@@ -563,7 +563,7 @@ namespace MapView
 
 			btn_TerrainClear.Enabled =
 			btn_TerrainCopy .Enabled = (Descriptor != null && Descriptor.Terrains.Count != 0);
-			btn_TerrainPaste.Enabled = (Descriptor != null && CopiedTerrains.Count != 0);
+			btn_TerrainPaste.Enabled = (Descriptor != null && CopiedTerrains     .Count != 0);
 
 
 			// Get the text of 'tb_PathAvailable' (reflects the currently selected radio-button)
@@ -732,7 +732,7 @@ namespace MapView
 					case BoxType.EditTileset:
 						if (Tileset == TilesetOriginal) // label didn't change; check if terrains changed ->
 						{
-							if (!IsTerrainsChanged(TerrainsOriginal, Descriptor.Terrains))
+							if (!TerrainsChanged(TerrainsOriginal, Descriptor.Terrains))
 							{
 								ShowErrorDialog("No changes were made.");
 							}
@@ -811,8 +811,8 @@ namespace MapView
 
 			var it = lb_TerrainsAvailable.SelectedItem as tle;
 			var terrain = new Tuple<string,string>(
-											String.Copy(it.Terrain),
-											String.Copy(it.Basepath));
+												String.Copy(it.Terrain),
+												String.Copy(it.Basepath));
 
 			int id = Descriptor.Terrains.Count;
 			Descriptor.Terrains[id] = terrain;
@@ -1178,6 +1178,35 @@ namespace MapView
 			if (changed && !MainViewF.that.MaptreeChanged)
 				MainViewF.that.MaptreeChanged = true;
 		}
+
+		private void OnGlobalTerrainsListClick(object sender, EventArgs e)
+		{
+			string copyable = String.Empty;
+
+			var terrains = Descriptor.Terrains;
+
+			foreach (var @group in TileGroupManager.TileGroups)
+			foreach (var category in @group.Value.Categories)
+			if (category.Key != Category)
+			{
+				foreach (var descriptor in category.Value.Values)
+				if (   descriptor.Label    == Descriptor.Label
+					&& descriptor.Basepath == Descriptor.Basepath)
+				{
+					if (!String.IsNullOrEmpty(copyable))
+						copyable += Environment.NewLine;
+
+					copyable += @group.Key + " : " + category.Key + " : " + descriptor.Label;
+				}
+			}
+
+			using (var f = new Infobox("Tileset list",
+									   "other Tilesets defined by Path+Map",
+									   copyable))
+			{
+				f.ShowDialog(this);
+			}
+		}
 		#endregion Events
 
 
@@ -1467,7 +1496,7 @@ namespace MapView
 		/// <param name="a">first terrains-list</param>
 		/// <param name="b">second terrains-list</param>
 		/// <returns>true if the specified terrains-lists are different</returns>
-		private static bool IsTerrainsChanged(
+		private static bool TerrainsChanged(
 				IDictionary<int, Tuple<string,string>> a,
 				IDictionary<int, Tuple<string,string>> b)
 		{
