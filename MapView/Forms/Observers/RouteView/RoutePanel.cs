@@ -36,22 +36,28 @@ namespace MapView.Forms.Observers
 		private const string Attack = "attack";
 
 		private const string textTile1 = ""; // "position" or "location" or ... "pos" or "loc" ... ie, undecided
+
+		private static readonly Brush BrushOverlayBlue  = new SolidBrush(Color.FromArgb(205, Color.DarkSlateBlue));
+		private static readonly Brush BrushOverlayLight = new SolidBrush(Color.FromArgb( 90, Color.AntiqueWhite));
+
+		private static readonly Font FontOverlay = new Font("Verdana",      7F, FontStyle.Bold);
+		private static readonly Font FontRose    = new Font("Courier New", 22F, FontStyle.Bold);
+
+		private static SolidBrush BrushNode;
+		private static SolidBrush BrushNodeSpawn;
+		private static SolidBrush BrushNodeSelected;
+
+		private static Pen PenLink;
+		private static Pen PenLinkSelected;
+
+		internal static ColorTool ToolWall;
+		internal static ColorTool ToolContent;
 		#endregion Fields (static)
 
 
 		#region Fields
-		private readonly Font _fontOverlay = new Font("Verdana",      7F, FontStyle.Bold);
-		private readonly Font _fontRose    = new Font("Courier New", 22F, FontStyle.Bold);
-
 		private Graphics _graphics;
 		private GraphicsPath _nodeFill = new GraphicsPath();
-
-		private SolidBrush _brushNode;
-		private SolidBrush _brushNodeSpawn;
-		private SolidBrush _brushNodeSelected;
-
-		private Pen _penLink;
-		private Pen _penLinkSelected;
 
 		/// <summary>
 		/// Tracks the position of the mouse-cursor. Used to position the
@@ -130,7 +136,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-
 		/// <summary>
 		/// You know the drill ... Paint it, Black
 		/// black as night
@@ -150,8 +155,8 @@ namespace MapView.Forms.Observers
 				BlobService.HalfWidth  = HalfWidth;
 				BlobService.HalfHeight = HalfHeight;
 
-				_penLink         = RoutePens[RouteViewOptionables.str_LinkColor];
-				_penLinkSelected = RoutePens[RouteViewOptionables.str_LinkSelectedColor];
+				PenLink         = RoutePens[RouteViewOptionables.str_LinkColor];
+				PenLinkSelected = RoutePens[RouteViewOptionables.str_LinkSelectedColor];
 
 				DrawBlobs();
 
@@ -218,9 +223,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Methods (draw)
-		internal static ColorTool ToolWall;
-		internal static ColorTool ToolContent;
-
 		/// <summary>
 		/// Draws any wall and/or content indicators.
 		/// </summary>
@@ -376,7 +378,7 @@ namespace MapView.Forms.Observers
 
 					if (selected) // draw link-lines for a selected node ->
 					{
-						var pen = _penLinkSelected;
+						var pen = PenLinkSelected;
 
 						if (SpotPosition.X != -1)
 						{
@@ -385,17 +387,17 @@ namespace MapView.Forms.Observers
 								if (   SpotPosition.X != dest.Col
 									|| SpotPosition.Y != dest.Row)
 								{
-									pen = _penLink;
+									pen = PenLink;
 								}
 							}
 							else
 							{
 								switch (destId) // see RouteView.SpotGoDestination() for def'n of the following spot-positions
 								{
-									case Link.ExitNorth: if (SpotPosition.X != -2) pen = _penLink; break;
-									case Link.ExitEast:  if (SpotPosition.X != -3) pen = _penLink; break;
-									case Link.ExitSouth: if (SpotPosition.X != -4) pen = _penLink; break;
-									case Link.ExitWest:  if (SpotPosition.X != -5) pen = _penLink; break;
+									case Link.ExitNorth: if (SpotPosition.X != -2) pen = PenLink; break;
+									case Link.ExitEast:  if (SpotPosition.X != -3) pen = PenLink; break;
+									case Link.ExitSouth: if (SpotPosition.X != -4) pen = PenLink; break;
+									case Link.ExitWest:  if (SpotPosition.X != -5) pen = PenLink; break;
 								}
 							}
 						}
@@ -406,7 +408,7 @@ namespace MapView.Forms.Observers
 					}
 					else // draw link-lines for a non-selected node ->
 						_graphics.DrawLine(
-										_penLink,
+										PenLink,
 										xSrc, ySrc + HalfHeight, // unselected nodes need an offset
 										xDst, yDst);
 				}
@@ -418,9 +420,9 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawNodes()
 		{
-			_brushNode         = RouteBrushes[RouteViewOptionables.str_NodeColor];
-			_brushNodeSpawn    = RouteBrushes[RouteViewOptionables.str_NodeSpawnColor];
-			_brushNodeSelected = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
+			BrushNode         = RouteBrushes[RouteViewOptionables.str_NodeColor];
+			BrushNodeSpawn    = RouteBrushes[RouteViewOptionables.str_NodeSpawnColor];
+			BrushNodeSelected = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
 
 
 			int startX = Origin.X;
@@ -460,14 +462,14 @@ namespace MapView.Forms.Observers
 								&& col == NodeSelected.Col
 								&& row == NodeSelected.Row)
 							{
-								_graphics.FillPath(_brushNodeSelected, _nodeFill);
+								_graphics.FillPath(BrushNodeSelected, _nodeFill);
 							}
 							else if (node.Spawn != SpawnWeight.None)
 							{
-								_graphics.FillPath(_brushNodeSpawn, _nodeFill);
+								_graphics.FillPath(BrushNodeSpawn, _nodeFill);
 							}
 							else
-								_graphics.FillPath(_brushNode, _nodeFill);
+								_graphics.FillPath(BrushNode, _nodeFill);
 
 
 							for (int i = 0; i != RouteNode.LinkSlots; ++i) // check for and if applicable draw the up/down indicators.
@@ -489,30 +491,30 @@ namespace MapView.Forms.Observers
 											if (level < MapFile.Level) // draw arrow up.
 											{
 												_graphics.DrawLine( // start w/ a vertical line in the tile-lozenge
-																_penLink,
+																PenLink,
 																x, y + 1,
 																x, y - 1 + HalfHeight * 2);
 												_graphics.DrawLine( // then lines on the two top edges of the tile
-																_penLink,
+																PenLink,
 																x + 1,             y + 1,
 																x + 3 - HalfWidth, y + 0 + HalfHeight);
 												_graphics.DrawLine(
-																_penLink,
+																PenLink,
 																x - 1,             y + 1,
 																x - 3 + HalfWidth, y + 0 + HalfHeight);
 											}
 											else if (level > MapFile.Level) // draw arrow down.
 											{
 												_graphics.DrawLine( // start w/ a horizontal line in the tile-lozenge
-																_penLink,
+																PenLink,
 																x + 2 - HalfWidth, y + HalfHeight,
 																x - 2 + HalfWidth, y + HalfHeight);
 												_graphics.DrawLine( // then lines on the two bottom edges of the tile
-																_penLink,
+																PenLink,
 																x + 1,             y - 1 + HalfHeight * 2,
 																x + 3 - HalfWidth, y - 0 + HalfHeight);
 												_graphics.DrawLine(
-																_penLink,
+																PenLink,
 																x - 1,             y - 1 + HalfHeight * 2,
 																x - 3 + HalfWidth, y - 0 + HalfHeight);
 											}
@@ -651,30 +653,30 @@ namespace MapView.Forms.Observers
 		{
 			_graphics.DrawString(
 							"W",
-							_fontRose,
+							FontRose,
 							Brushes.Black,
 							RoseMarginX,
 							RoseMarginY);
 			_graphics.DrawString(
 							"N",
-							_fontRose,
+							FontRose,
 							Brushes.Black,
 //							Width - TextRenderer.MeasureText("N", _fontRose).Width - RoseMarginX,
-							Width - (int)_graphics.MeasureString("N", _fontRose).Width - RoseMarginX,
+							Width - (int)_graphics.MeasureString("N", FontRose).Width - RoseMarginX,
 							RoseMarginY);
 			_graphics.DrawString(
 							"S",
-							_fontRose,
+							FontRose,
 							Brushes.Black,
 							RoseMarginX,
-							Height - _fontRose.Height - RoseMarginY);
+							Height - FontRose.Height - RoseMarginY);
 			_graphics.DrawString(
 							"E",
-							_fontRose,
+							FontRose,
 							Brushes.Black,
 //							Width  - TextRenderer.MeasureText("E", _fontRose).Width - RoseMarginX,
-							Width  - (int)_graphics.MeasureString("E", _fontRose).Width - RoseMarginX,
-							Height - _fontRose.Height - RoseMarginY);
+							Width  - (int)_graphics.MeasureString("E", FontRose).Width - RoseMarginX,
+							Height - FontRose.Height - RoseMarginY);
 		}
 
 		/// <summary>
@@ -696,8 +698,8 @@ namespace MapView.Forms.Observers
 								 + "  r " + r
 								 + "  L " + l;
 
-				int textWidth1 = (int)_graphics.MeasureString(textTile1, _fontOverlay).Width;
-				int textWidth2 = (int)_graphics.MeasureString(textTile2, _fontOverlay).Width;
+				int textWidth1 = (int)_graphics.MeasureString(textTile1, FontOverlay).Width;
+				int textWidth2 = (int)_graphics.MeasureString(textTile2, FontOverlay).Width;
 
 //				int textWidth1 = TextRenderer.MeasureText(textTile1, font).Width;
 //				int textWidth2 = TextRenderer.MeasureText(textTile2, font).Width;
@@ -726,26 +728,26 @@ namespace MapView.Forms.Observers
 					textPatrol2 = RouteNodeCollection.Patrol[(byte)node.Patrol].ToString();
 
 					int width;
-					width = (int)_graphics.MeasureString(textOver1,   _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textOver1,   FontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
-					width = (int)_graphics.MeasureString(textType1,   _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textType1,   FontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
-					width = (int)_graphics.MeasureString(textRank1,   _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textRank1,   FontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
-					width = (int)_graphics.MeasureString(textSpawn1,  _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textSpawn1,  FontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
-					width = (int)_graphics.MeasureString(textPatrol1, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textPatrol1, FontOverlay).Width;
 					if (width > textWidth1) textWidth1 = width;
 
-					width = (int)_graphics.MeasureString(textOver2,   _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textOver2,   FontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
-					width = (int)_graphics.MeasureString(textType2,   _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textType2,   FontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
-					width = (int)_graphics.MeasureString(textRank2,   _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textRank2,   FontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
-					width = (int)_graphics.MeasureString(textSpawn2,  _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textSpawn2,  FontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
-					width = (int)_graphics.MeasureString(textPatrol2, _fontOverlay).Width;
+					width = (int)_graphics.MeasureString(textPatrol2, FontOverlay).Width;
 					if (width > textWidth2) textWidth2 = width;
 
 					if (node.Attack != 0)
@@ -753,10 +755,10 @@ namespace MapView.Forms.Observers
 						textAttack1 = Attack;
 						textAttack2 = RouteNodeCollection.Attack[(byte)node.Attack].ToString();
 
-						width = (int)_graphics.MeasureString(textAttack1, _fontOverlay).Width;
+						width = (int)_graphics.MeasureString(textAttack1, FontOverlay).Width;
 						if (width > textWidth1) textWidth1 = width;
 
-						width = (int)_graphics.MeasureString(textAttack2, _fontOverlay).Width;
+						width = (int)_graphics.MeasureString(textAttack2, FontOverlay).Width;
 						if (width > textWidth2) textWidth2 = width;
 					}
 					else
@@ -783,7 +785,7 @@ namespace MapView.Forms.Observers
 				}
 
 //				int textHeight = TextRenderer.MeasureText("X", font).Height;
-				int textHeight = (int)_graphics.MeasureString("X", _fontOverlay).Height + 1; // pad +1
+				int textHeight = (int)_graphics.MeasureString("X", FontOverlay).Height + 1; // pad +1
 				var rect = new Rectangle(
 									_pos.X + 18, _pos.Y,
 									textWidth1 + OverlayColPad + textWidth2 + 5, textHeight + 7); // trim right & bottom (else +8 for both w/h)
@@ -818,9 +820,9 @@ namespace MapView.Forms.Observers
 						rect.Y = _pos.Y - rect.Height;
 				}
 
-				_graphics.FillRectangle(new SolidBrush(Color.FromArgb(205, Color.DarkSlateBlue)), rect);
+				_graphics.FillRectangle(BrushOverlayBlue, rect);
 				_graphics.FillRectangle(
-									new SolidBrush(Color.FromArgb(90, Color.AntiqueWhite)),
+									BrushOverlayLight,
 									rect.X + 2,
 									rect.Y + 2,
 									rect.Width  - 4,
@@ -831,30 +833,30 @@ namespace MapView.Forms.Observers
 
 				int colRight = textLeft + textWidth1 + OverlayColPad;
 
-				_graphics.DrawString(textTile1, _fontOverlay, Brushes.Yellow, textLeft, textTop);
-				_graphics.DrawString(textTile2, _fontOverlay, Brushes.Yellow, colRight, textTop);
+				_graphics.DrawString(textTile1, FontOverlay, Brushes.Yellow, textLeft, textTop);
+				_graphics.DrawString(textTile2, FontOverlay, Brushes.Yellow, colRight, textTop);
 
 				if (node != null)
 				{
-					_graphics.DrawString(textOver1,   _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight);
-					_graphics.DrawString(textOver2,   _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight);
+					_graphics.DrawString(textOver1,   FontOverlay, Brushes.Yellow, textLeft, textTop + textHeight);
+					_graphics.DrawString(textOver2,   FontOverlay, Brushes.Yellow, colRight, textTop + textHeight);
 
-					_graphics.DrawString(textType1,   _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 2);
-					_graphics.DrawString(textType2,   _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 2);
+					_graphics.DrawString(textType1,   FontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 2);
+					_graphics.DrawString(textType2,   FontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 2);
 
-					_graphics.DrawString(textRank1,   _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 3);
-					_graphics.DrawString(textRank2,   _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 3);
+					_graphics.DrawString(textRank1,   FontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 3);
+					_graphics.DrawString(textRank2,   FontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 3);
 
-					_graphics.DrawString(textSpawn1,  _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 4);
-					_graphics.DrawString(textSpawn2,  _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 4);
+					_graphics.DrawString(textSpawn1,  FontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 4);
+					_graphics.DrawString(textSpawn2,  FontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 4);
 
-					_graphics.DrawString(textPatrol1, _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 5);
-					_graphics.DrawString(textPatrol2, _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 5);
+					_graphics.DrawString(textPatrol1, FontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 5);
+					_graphics.DrawString(textPatrol2, FontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 5);
 
 					if (node.Attack != 0)
 					{
-						_graphics.DrawString(textAttack1, _fontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 6);
-						_graphics.DrawString(textAttack2, _fontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 6);
+						_graphics.DrawString(textAttack1, FontOverlay, Brushes.Yellow, textLeft, textTop + textHeight * 6);
+						_graphics.DrawString(textAttack2, FontOverlay, Brushes.Yellow, colRight, textTop + textHeight * 6);
 					}
 				}
 			}
