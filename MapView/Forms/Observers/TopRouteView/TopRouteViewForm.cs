@@ -22,16 +22,16 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		private TopView TopViewControl;
+		private TopView _topView;
 		internal TopView ControlTop
 		{
-			get { return TopViewControl; }
+			get { return _topView; }
 		}
 
-		private RouteView RouteViewControl;
+		private RouteView _routeView;
 		internal RouteView ControlRoute
 		{
-			get { return RouteViewControl; }
+			get { return _routeView; }
 		}
 		#endregion Properties
 
@@ -50,24 +50,26 @@ namespace MapView.Forms.Observers
 
 		private void InitializeTopRouteViews()
 		{
-			TopViewControl = new TopView();
-			TopViewControl.Name       = "TopViewControl";
-			TopViewControl.Location   = new Point(3, 3);
-			TopViewControl.Size       = new Size(618, 423);
-			TopViewControl.Dock       = DockStyle.Fill;
-			TopViewControl.TabIndex   = 0;
-			TopViewControl.Tag        = "TOPROUTE";
+			_topView = new TopView();
 
-			RouteViewControl = new RouteView();
-			RouteViewControl.Name     = "RouteViewControl";
-			RouteViewControl.Location = new Point(3, 3);
-			RouteViewControl.Size     = new Size(618, 423);
-			RouteViewControl.Dock     = DockStyle.Fill;
-			RouteViewControl.TabIndex = 0;
-			RouteViewControl.Tag      = "TOPROUTE";
+			ControlTop.Name       = "TopViewControl";
+			ControlTop.Location   = new Point(3, 3);
+			ControlTop.Size       = new Size(618, 423);
+			ControlTop.Dock       = DockStyle.Fill;
+			ControlTop.TabIndex   = 0;
+			ControlTop.Tag        = "TOPROUTE";
 
-			tp_Top  .Controls.Add(TopViewControl);
-			tp_Route.Controls.Add(RouteViewControl);
+			_routeView = new RouteView();
+
+			ControlRoute.Name     = "RouteViewControl";
+			ControlRoute.Location = new Point(3, 3);
+			ControlRoute.Size     = new Size(618, 423);
+			ControlRoute.Dock     = DockStyle.Fill;
+			ControlRoute.TabIndex = 0;
+			ControlRoute.Tag      = "TOPROUTE";
+
+			tp_Top  .Controls.Add(ControlTop);
+			tp_Route.Controls.Add(ControlRoute);
 		}
 		#endregion cTor
 
@@ -75,7 +77,7 @@ namespace MapView.Forms.Observers
 		#region Events (override)
 		protected override void OnShown(EventArgs e)
 		{
-			RouteViewControl.ActivateConnector();
+			ControlRoute.ActivateConnector();
 
 //			base.OnShown(e);
 		}
@@ -93,8 +95,8 @@ namespace MapView.Forms.Observers
 
 			if (tabControl.SelectedIndex == TAB_TOP)
 			{
-				TopViewControl.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
-				TopViewControl.TopPanel.Focus();
+				ControlTop.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+				ControlTop.TopPanel.Focus();
 			}
 
 //			base.OnActivated(e);
@@ -185,18 +187,13 @@ namespace MapView.Forms.Observers
 							else
 								MainViewOverlay.that.Edit(e);
 							break;
-	
+
 						case TAB_ROT:
 							e.SuppressKeyPress = true;
 							if (ControlRoute.RoutePanel.Focused)
 							{
 								RouteView.NodeSelected = null;
-	
-								ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-								ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-	
-								ObserverManager.RouteView   .Control     .UpdateNodeInformation();
-								ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+								RouteView.Invalidator();
 							}
 							else
 								ControlRoute.RoutePanel.Focus();

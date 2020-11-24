@@ -507,45 +507,43 @@ namespace MapView.Forms.Observers
 		/// <param name="args"></param>
 		private void OnRoutePanelMouseDown(object sender, RoutePanelEventArgs args)
 		{
-			bool update = false;
+			bool updateinfo = false;
 
 			RouteNode node = args.Tile.Node;
 
-			if (NodeSelected == null)
+			if (NodeSelected == null) // a node is not currently selected ->
 			{
 				if ((NodeSelected = node) == null
 					&& args.MouseButton == MouseButtons.Right)
 				{
 					RouteChanged = true;
 					NodeSelected = _file.AddRouteNode(args.Location);
+					InvalidatePanels(); // not sure why but that's needed after adding the "ReduceDraws" option
 				}
-				update = (NodeSelected != null);
+				updateinfo = (NodeSelected != null);
 			}
-			else // if a node is already selected ...
+			else if (node == null) // a node is already selected but there's not a node on the current tile ->
 			{
-				if (node == null)
+				if (args.MouseButton == MouseButtons.Right)
 				{
-					if (args.MouseButton == MouseButtons.Right)
-					{
-						RouteChanged = true;
-						node = _file.AddRouteNode(args.Location);
-						ConnectNode(node);
-					}
-					NodeSelected = node;
-					update = true;
+					RouteChanged = true;
+					node = _file.AddRouteNode(args.Location);
+					ConnectNode(node);
 				}
-				else if (node != NodeSelected)
-				{
-					if (args.MouseButton == MouseButtons.Right)
-						ConnectNode(node);
-
-					NodeSelected = node;
-					update = true;
-				}
-				// else the selected node is the node clicked.
+				NodeSelected = node;
+				updateinfo = true;
 			}
+			else if (node != NodeSelected) // a node is already selected and it's not the node on the current tile ->
+			{
+				if (args.MouseButton == MouseButtons.Right)
+					ConnectNode(node);
 
-			if (update) UpdateNodeInfo();
+				NodeSelected = node;
+				updateinfo = true;
+			}
+			// else the selected-node is the node clicked.
+
+			if (updateinfo) UpdateNodeInfo();
 
 			Dragnode = NodeSelected;
 
@@ -984,7 +982,7 @@ namespace MapView.Forms.Observers
 							lblText = labelLink4;
 							break;
 
-						default: // case 4:
+						default: // case 4
 							cbTypL  = cbLink5UnitType;
 							cbDest  = cbLink5Dest;
 							tbDist  = tbLink5Dist;
@@ -1824,23 +1822,30 @@ namespace MapView.Forms.Observers
 					alt = ObserverManager.RouteView.Control;
 				}
 
+					tsb_connect0.Checked =
+				alt.tsb_connect0.Checked =
+					tsb_connect1.Checked =
+				alt.tsb_connect1.Checked =
+					tsb_connect2.Checked =
+				alt.tsb_connect2.Checked = false;
+
+					tsb_connect0.Image =
+				alt.tsb_connect0.Image = Properties.Resources.connect_0;
+					tsb_connect1.Image =
+				alt.tsb_connect1.Image = Properties.Resources.connect_1;
+					tsb_connect2.Image =
+				alt.tsb_connect2.Image = Properties.Resources.connect_2;
+
+
 				if (tsb == tsb_connect0)
 				{
 					_conType = ConnectNodesType.None;
 
 						tsb_connect0.Checked =
 					alt.tsb_connect0.Checked = true;
-						tsb_connect1.Checked =
-					alt.tsb_connect1.Checked =
-						tsb_connect2.Checked =
-					alt.tsb_connect2.Checked = false;
 
 						tsb_connect0.Image =
 					alt.tsb_connect0.Image = Properties.Resources.connect_0_red;
-						tsb_connect1.Image =
-					alt.tsb_connect1.Image = Properties.Resources.connect_1;
-						tsb_connect2.Image =
-					alt.tsb_connect2.Image = Properties.Resources.connect_2;
 				}
 				else if (tsb == tsb_connect1)
 				{
@@ -1848,17 +1853,9 @@ namespace MapView.Forms.Observers
 
 						tsb_connect1.Checked =
 					alt.tsb_connect1.Checked = true;
-						tsb_connect0.Checked =
-					alt.tsb_connect0.Checked =
-						tsb_connect2.Checked =
-					alt.tsb_connect2.Checked = false;
 
 						tsb_connect1.Image =
 					alt.tsb_connect1.Image = Properties.Resources.connect_1_blue;
-						tsb_connect0.Image =
-					alt.tsb_connect0.Image = Properties.Resources.connect_0;
-						tsb_connect2.Image =
-					alt.tsb_connect2.Image = Properties.Resources.connect_2;
 				}
 				else //if (tsb == tsb_connect2)
 				{
@@ -1866,17 +1863,8 @@ namespace MapView.Forms.Observers
 
 						tsb_connect2.Checked =
 					alt.tsb_connect2.Checked = true;
-						tsb_connect0.Checked =
-					alt.tsb_connect0.Checked =
-						tsb_connect1.Checked =
-					alt.tsb_connect1.Checked = false;
-
 						tsb_connect2.Image =
 					alt.tsb_connect2.Image = Properties.Resources.connect_2_green;
-						tsb_connect0.Image =
-					alt.tsb_connect0.Image = Properties.Resources.connect_0;
-						tsb_connect1.Image =
-					alt.tsb_connect1.Image = Properties.Resources.connect_1;
 				}
 			}
 			RoutePanel.Select();
@@ -2327,7 +2315,7 @@ namespace MapView.Forms.Observers
 				ToolStripButton tsb;
 				switch (Optionables.StartConnector)
 				{
-					default: tsb = tsb_connect0; break; // case 0:
+					default: tsb = tsb_connect0; break; // case 0
 					case  1: tsb = tsb_connect1; break;
 					case  2: tsb = tsb_connect2; break;
 				}
@@ -2413,42 +2401,48 @@ namespace MapView.Forms.Observers
 		#endregion Options
 
 
-		#region Update UI
-//		internal void InvalidateRoutePanels()
-//		{
-//			ObserverManager.RouteView   .Control     ._pnlRoutes.Invalidate();
-//			ObserverManager.TopRouteView.ControlRoute._pnlRoutes.Invalidate();
-//		}
-
-		internal void RefreshControls()
+		#region Update UI (static)
+		internal static void RefreshControls()
 		{
 			ObserverManager.RouteView   .Control     .Refresh();
 			ObserverManager.TopRouteView.ControlRoute.Refresh();
 		}
 
-		private void InvalidateControls()
+		private static void InvalidateControls()
 		{
 			ObserverManager.RouteView   .Control     .Invalidate();
 			ObserverManager.TopRouteView.ControlRoute.Invalidate();
 		}
 
-		private void RefreshPanels()
+		private static void RefreshPanels()
 		{
 			ObserverManager.RouteView   .Control     .RoutePanel.Refresh();
 			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
 		}
 
-//		private void InvalidatePanels()
-//		{
-//			ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-//			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-//		}
+		private static void InvalidatePanels()
+		{
+			ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
+			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+		}
 
-		private void UpdateNodeInfo()
+		private static void UpdateNodeInfo()
 		{
 			ObserverManager.RouteView   .Control     .UpdateNodeInformation();
 			ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
 		}
-		#endregion Update UI
+
+		internal static void Invalidator()
+		{
+			InvalidatePanels();
+			UpdateNodeInfo();
+		}
+
+//		internal static void InvalidateRoutePanels() // just do InvalidatePanels()
+//		{
+//			ObserverManager.RouteView   .Control     ._pnlRoutes.Invalidate();
+//			ObserverManager.TopRouteView.ControlRoute._pnlRoutes.Invalidate();
+//		}
+		#endregion Update UI (static)
 	}
 }

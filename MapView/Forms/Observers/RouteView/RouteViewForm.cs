@@ -13,17 +13,17 @@ namespace MapView.Forms.Observers
 			IMapObserverProvider
 	{
 		#region Fields
-		private RouteView RouteViewControl;
+		private RouteView _routeView;
 		#endregion Fields
 
 
 		#region Properties
 		/// <summary>
-		/// Gets 'RouteViewControl' as a child of 'MapObserverControl'.
+		/// Gets '_routeView' as a child of 'MapObserverControl'.
 		/// </summary>
 		internal RouteView Control
 		{
-			get { return RouteViewControl; }
+			get { return _routeView; }
 		}
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		public MapObserverControl ObserverControl
 		{
-			get { return RouteViewControl; }
+			get { return _routeView; }
 		}
 		#endregion Properties
 
@@ -45,16 +45,16 @@ namespace MapView.Forms.Observers
 
 		private void InitializeRouteView()
 		{
-			RouteViewControl = new RouteView();
+			_routeView = new RouteView();
 
-			RouteViewControl.Name     = "RouteViewControl";
-			RouteViewControl.Location = new Point(0, 0);
-			RouteViewControl.Size     = new Size(632, 454);
-			RouteViewControl.Dock     = DockStyle.Fill;
-			RouteViewControl.TabIndex = 0;
-			RouteViewControl.Tag      = "ROUTE";
+			Control.Name     = "RouteViewControl";
+			Control.Location = new Point(0, 0);
+			Control.Size     = new Size(632, 454);
+			Control.Dock     = DockStyle.Fill;
+			Control.TabIndex = 0;
+			Control.Tag      = "ROUTE";
 
-			Controls.Add(RouteViewControl);
+			Controls.Add(Control);
 		}
 		#endregion cTor
 
@@ -62,7 +62,7 @@ namespace MapView.Forms.Observers
 		#region Events (override)
 		protected override void OnShown(EventArgs e)
 		{
-			RouteViewControl.ActivateConnector();
+			Control.ActivateConnector();
 
 //			base.OnShown(e);
 		}
@@ -132,12 +132,7 @@ namespace MapView.Forms.Observers
 					if (Control.RoutePanel.Focused)
 					{
 						RouteView.NodeSelected = null;
-	
-						ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-						ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
-	
-						ObserverManager.RouteView   .Control     .UpdateNodeInformation();
-						ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+						RouteView.Invalidator();
 					}
 					else
 						Control.RoutePanel.Focus();

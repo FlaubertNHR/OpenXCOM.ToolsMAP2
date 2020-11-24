@@ -13,14 +13,14 @@ namespace MapView.Forms.Observers
 	internal sealed class RouteViewOptionables
 	{
 		#region Fields
-		private readonly RouteView RouteView;
+		private readonly RouteView _routeView;
 		#endregion Fields
 
 
 		#region cTor
 		internal RouteViewOptionables(RouteView routeview)
 		{
-			RouteView = routeview;
+			_routeView = routeview;
 		}
 		#endregion cTor
 
@@ -67,12 +67,12 @@ namespace MapView.Forms.Observers
 				var foptions = RouteView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					RouteView.Options[str_GridLineWidth].Value =
+					_routeView.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Viceroy(1,6);
 				}
 				else if ((_gridLineWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
-					RouteView.Options[str_GridLineWidth].Value = _gridLineWidth;
+					_routeView.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
 			}
 		}
@@ -106,12 +106,12 @@ namespace MapView.Forms.Observers
 				var foptions = RouteView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					RouteView.Options[str_GridLine10Width].Value =
+					_routeView.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Viceroy(1,6);
 				}
 				else if ((_gridLine10Width = value.Viceroy(1,6)) != value) // on user-changed
 				{
-					RouteView.Options[str_GridLine10Width].Value = _gridLine10Width;
+					_routeView.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
 			}
 		}
@@ -148,12 +148,12 @@ namespace MapView.Forms.Observers
 				var foptions = RouteView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					RouteView.Options[str_WallWidth].Value =
+					_routeView.Options[str_WallWidth].Value =
 					_wallWidth = value.Viceroy(1,9);
 				}
 				else if ((_wallWidth = value.Viceroy(1,9)) != value) // on user-changed
 				{
-					RouteView.Options[str_WallWidth].Value = _wallWidth;
+					_routeView.Options[str_WallWidth].Value = _wallWidth;
 				}
 			}
 		}
@@ -233,12 +233,12 @@ namespace MapView.Forms.Observers
 				var foptions = RouteView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					RouteView.Options[str_NodeOpacity].Value =
+					_routeView.Options[str_NodeOpacity].Value =
 					_nodeOpacity = value.Viceroy(0,255);
 				}
 				else if ((_nodeOpacity = value.Viceroy(0,255)) != value) // on user-changed
 				{
-					RouteView.Options[str_NodeOpacity].Value = _nodeOpacity;
+					_routeView.Options[str_NodeOpacity].Value = _nodeOpacity;
 				}
 			}
 		}
@@ -275,12 +275,12 @@ namespace MapView.Forms.Observers
 				var foptions = RouteView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					RouteView.Options[str_LinkWidth].Value =
+					_routeView.Options[str_LinkWidth].Value =
 					_linkWidth = value.Viceroy(1,6);
 				}
 				else if ((_linkWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
-					RouteView.Options[str_LinkWidth].Value = _linkWidth;
+					_routeView.Options[str_LinkWidth].Value = _linkWidth;
 				}
 			}
 		}
@@ -314,12 +314,12 @@ namespace MapView.Forms.Observers
 				var foptions = RouteView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					RouteView.Options[str_LinkSelectedWidth].Value =
+					_routeView.Options[str_LinkSelectedWidth].Value =
 					_linkSelectedWidth = value.Viceroy(1,6);
 				}
 				else if ((_linkSelectedWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
-					RouteView.Options[str_LinkSelectedWidth].Value = _linkSelectedWidth;
+					_routeView.Options[str_LinkSelectedWidth].Value = _linkSelectedWidth;
 				}
 			}
 		}
@@ -376,24 +376,36 @@ namespace MapView.Forms.Observers
 
 		private const string cat_Connector = "Connector";
 
-		const int LinkDont   = 0;
-		const int LinkOneway = 1;
-		const int LinkTwoway = 2;
+		private const int LinkOff     = 0;
+//		private const int LinkForward = 1;
+		private const int LinkForBac  = 2;
 
 		private const string str_StartConnector = "StartConnector";
-		private const int    def_StartConnector = 0;
+		private const int    def_StartConnector = LinkOff;
 
 		private int _startConnector = def_StartConnector;
 		[Category(cat_Connector)]
 		[Description(@"The selected connector button when Mapview starts.
-0 - don't link
-1 - link one way
-2 - link two ways")]
+0 - link off (default)
+1 - link forward
+2 - link forward and backward")]
 		[DefaultValue(0)]
 		public int StartConnector
 		{
 			get { return _startConnector; }
-			set { _startConnector = value; }
+			set
+			{
+				var foptions = MainViewF._foptions as OptionsForm;
+				if (foptions == null) // on load ->
+				{
+					_routeView.Options[str_StartConnector].Value =
+					_startConnector = value.Viceroy(LinkOff, LinkForBac);
+				}
+				else if ((_startConnector = value.Viceroy(LinkOff, LinkForBac)) != value) // user-changed ->
+				{
+					_routeView.Options[str_StartConnector].Value = _startConnector;
+				}
+			}
 		}
 
 
@@ -622,7 +634,7 @@ namespace MapView.Forms.Observers
 				switch (key)
 				{
 					case str_NodeSelectedColor:
-						RouteView.SetInfoSelectedColor();
+						_routeView.SetInfoSelectedColor();
 						break;
 
 					case str_NodeColor:

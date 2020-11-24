@@ -366,9 +366,9 @@ namespace MapView.Forms.Observers
 			this.tsb_connect0.Margin = new System.Windows.Forms.Padding(2, 1, 0, 1);
 			this.tsb_connect0.Name = "tsb_connect0";
 			this.tsb_connect0.Size = new System.Drawing.Size(23, 23);
-			this.tsb_connect0.Text = "dont link";
+			this.tsb_connect0.Text = "link off";
 			this.tsb_connect0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.tsb_connect0.ToolTipText = "dont link";
+			this.tsb_connect0.ToolTipText = "link off";
 			this.tsb_connect0.Click += new System.EventHandler(this.OnConnectTypeClicked);
 			// 
 			// tsb_connect1
@@ -379,9 +379,9 @@ namespace MapView.Forms.Observers
 			this.tsb_connect1.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsb_connect1.Name = "tsb_connect1";
 			this.tsb_connect1.Size = new System.Drawing.Size(23, 23);
-			this.tsb_connect1.Text = "1 way link";
+			this.tsb_connect1.Text = "link forward";
 			this.tsb_connect1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.tsb_connect1.ToolTipText = "1 way link";
+			this.tsb_connect1.ToolTipText = "link forward";
 			this.tsb_connect1.Click += new System.EventHandler(this.OnConnectTypeClicked);
 			// 
 			// tsb_connect2
@@ -392,9 +392,9 @@ namespace MapView.Forms.Observers
 			this.tsb_connect2.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsb_connect2.Name = "tsb_connect2";
 			this.tsb_connect2.Size = new System.Drawing.Size(23, 23);
-			this.tsb_connect2.Text = "2 way link";
+			this.tsb_connect2.Text = "link forward and backward";
 			this.tsb_connect2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.tsb_connect2.ToolTipText = "2 way link";
+			this.tsb_connect2.ToolTipText = "link forward and backward";
 			this.tsb_connect2.Click += new System.EventHandler(this.OnConnectTypeClicked);
 			// 
 			// _pnlRoutes
