@@ -26,7 +26,17 @@
 			}
 			set
 			{
-				_tiles[_locations.GetLocid(col, row, lev)] = value;
+				MapTile tile;
+				if (   col > -1 && col < _locations.MaxCols
+					&& row > -1 && row < _locations.MaxRows
+					&& lev > -1 && lev < _locations.MaxLevs)
+				{
+					tile = value;
+				}
+				else
+					tile = null;
+
+				_tiles[_locations.GetLocid(col, row, lev)] = tile;
 			}
 		}
 		#endregion Properties
