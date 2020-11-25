@@ -32,7 +32,7 @@ namespace XCom
 		/// starting at the top level, MRZT_BOT to add or subtract delta-levels
 		/// starting at the ground level - but only if a height difference is
 		/// found for either case</param>
-		/// <returns>the resized MapTileArray</returns>
+		/// <returns>a resized MapTileArray or null</returns>
 		internal static MapTileArray GetTileArray(
 				int cols,
 				int rows,
@@ -41,9 +41,7 @@ namespace XCom
 				MapTileArray tiles0,
 				MapResizeZtype zType)
 		{
-			if (   cols > 0
-				&& rows > 0
-				&& levs > 0)
+			if (cols > 0 && rows > 0 && levs > 0)
 			{
 				var tiles1 = new MapTileArray(cols, rows, levs);
 
@@ -68,7 +66,7 @@ namespace XCom
 					case MapResizeZtype.MRZT_TOP:
 					{
 						int levels0 = size.Levs - 1;
-						int levels1 = levs      - 1;
+						int levels1 =      levs - 1;
 
 						for (int lev = 0; lev != levs && lev != size.Levs; ++lev)
 						for (int row = 0; row != rows && row != size.Rows; ++row)
