@@ -129,9 +129,9 @@ namespace XCom
 
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{
-					Tilepart[] records = descriptor.CreateTerrain(i);	// NOTE: calls
-					if (records == null)								//     - TilepartFactory.CreateTileparts()
-					{													//     - ResourceInfo.LoadSpriteset()
+					Tilepart[] records = descriptor.CreateTerrain(i);	// -> TilepartFactory.CreateTileparts()
+					if (records == null)								// -> ResourceInfo.LoadSpriteset()
+					{
 						//LogFile.WriteLine(". . . . no records ABORT");
 						return null;
 					}

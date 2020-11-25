@@ -26,15 +26,10 @@ namespace XCom.Base
 		#region Fields (static)
 		public const int MaxTerrainId = 253; // cf. MapFileService.MAX_MCDRECORDS=254
 
-		/// <summary>
-		/// A bitwise int of changes for MapResize:
-		/// 	0 - no changes
-		/// 	1 - Map changed
-		/// 	2 - Routes changed
-		/// </summary>
-		public const int CHANGED_NOT = 0;
-		public const int CHANGED_MAP = 1;
-		public const int CHANGED_NOD = 2;
+		// bitwise changes for MapResize()
+		public const int CHANGED_NOT = 0; // changed not
+		public const int CHANGED_MAP = 1; // changed Map
+		public const int CHANGED_NOD = 2; // changed Routes
 
 		public const int LEVEL_Dn = +1;
 		public const int LEVEL_no =  0;
@@ -49,7 +44,7 @@ namespace XCom.Base
 		public List<Tilepart> Parts
 		{ get; internal protected set; }
 
-		public MapTileList Tiles
+		public MapTileArray Tiles
 		{ get; internal protected set; }
 
 

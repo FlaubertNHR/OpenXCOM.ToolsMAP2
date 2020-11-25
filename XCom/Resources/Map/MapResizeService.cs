@@ -21,36 +21,36 @@ namespace XCom
 
 
 		/// <summary>
-		/// Gets a resized tilelist when changing a Map's dimensions.
+		/// Gets a resized tile-array when changing a Map's dimensions.
 		/// </summary>
 		/// <param name="cols">cols for the new Map</param>
 		/// <param name="rows">rows for the new Map</param>
 		/// <param name="levs">levs for the new Map</param>
 		/// <param name="size">dimensions of the current Map</param>
-		/// <param name="tileList">list of Tiles in the current Map</param>
+		/// <param name="tiles0">array of Tiles in the current tileset</param>
 		/// <param name="zType">MRZT_TOP to add or subtract delta-levels
 		/// starting at the top level, MRZT_BOT to add or subtract delta-levels
 		/// starting at the ground level - but only if a height difference is
 		/// found for either case</param>
-		/// <returns>the resized MapTileList</returns>
-		internal static MapTileList GetResizedTileList(
+		/// <returns>the resized MapTileArray</returns>
+		internal static MapTileArray GetTileArray(
 				int cols,
 				int rows,
 				int levs,
 				MapSize size,
-				MapTileList tileList,
+				MapTileArray tiles0,
 				MapResizeZtype zType)
 		{
 			if (   cols > 0
 				&& rows > 0
 				&& levs > 0)
 			{
-				var tileListOut = new MapTileList(cols, rows, levs);
+				var tiles1 = new MapTileArray(cols, rows, levs);
 
 				for (int lev = 0; lev != levs; ++lev)
 				for (int row = 0; row != rows; ++row)
 				for (int col = 0; col != cols; ++col)
-					tileListOut[col, row, lev] = MapTile.VacantTile;
+					tiles1[col, row, lev] = MapTile.VacantTile;
 
 				switch (zType)
 				{
@@ -60,7 +60,7 @@ namespace XCom
 						for (int row = 0; row != rows && row != size.Rows; ++row)
 						for (int col = 0; col != cols && col != size.Cols; ++col)
 						{
-							tileListOut[col, row, lev] = tileList[col, row, lev];
+							tiles1[col, row, lev] = tiles0[col, row, lev];
 						}
 						break;
 					}
@@ -74,13 +74,13 @@ namespace XCom
 						for (int row = 0; row != rows && row != size.Rows; ++row)
 						for (int col = 0; col != cols && col != size.Cols; ++col)
 						{
-							tileListOut[col, row, levels1 - lev] = // copy tiles from bot to top.
-							tileList   [col, row, levels0 - lev];
+							tiles1[col, row, levels1 - lev] = // copy tiles from bot to top.
+							tiles0[col, row, levels0 - lev];
 						}
 						break;
 					}
 				}
-				return tileListOut;
+				return tiles1;
 			}
 			return null;
 		}

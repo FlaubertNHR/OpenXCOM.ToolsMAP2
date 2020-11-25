@@ -95,7 +95,7 @@ namespace XCom
 		/// <param name="pfe">path-file-extension of a Mapfile</param>
 		/// <param name="parts">a list of tileparts</param>
 		/// <returns>true if read okay</returns>
-		private bool LoadMapfile(string pfe, List<Tilepart> parts)
+		private bool LoadMapfile(string pfe, IList<Tilepart> parts)
 		{
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
@@ -104,8 +104,8 @@ namespace XCom
 				int cols = fs.ReadByte(); // - says this header is "height, width and depth (in that order)"
 				int levs = fs.ReadByte(); //   ie. y/x/z
 
-				Tiles   = new MapTileList(cols, rows, levs);
-				MapSize = new MapSize(    cols, rows, levs);
+				Tiles   = new MapTileArray(cols, rows, levs);
+				MapSize = new MapSize(     cols, rows, levs);
 
 				for (int lev = 0; lev != levs; ++lev) // z-axis (inverted)
 				for (int row = 0; row != rows; ++row) // y-axis
@@ -113,10 +113,10 @@ namespace XCom
 				{
 					this[col, row, lev] = CreateTile(
 												parts,
-												fs.ReadByte(),
-												fs.ReadByte(),
-												fs.ReadByte(),
-												fs.ReadByte());
+												fs.ReadByte(),  // floor
+												fs.ReadByte(),  // westwall
+												fs.ReadByte(),  // northwall
+												fs.ReadByte()); // content
 				}
 
 				if (TerrainsetPartsExceeded)
@@ -243,8 +243,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Clears all route-nodes before importing a Routes file or when doing
-		/// a MapResize.
+		/// Clears all route-nodes before RouteView.OnImportClick or for a
+		/// <see cref="MapFile.MapResize">MapFile.MapResize</see>.
 		/// </summary>
 		public void ClearRouteNodes()
 		{
@@ -481,12 +481,12 @@ namespace XCom
 		{
 			int bit = CHANGED_NOT;
 
-			var tileList = MapResizeService.GetResizedTileList(
+			MapTileArray tiles = MapResizeService.GetTileArray(
 															cols, rows, levs,
 															MapSize,
 															Tiles,
 															zType);
-			if (tileList != null)
+			if (tiles != null)
 			{
 				bit |= CHANGED_MAP;
 
@@ -518,7 +518,7 @@ namespace XCom
 				}
 
 				MapSize = new MapSize(cols, rows, levs);
-				Tiles = tileList;
+				Tiles = tiles;
 
 				if (RouteCheckService.CheckNodeBounds(this) == DialogResult.Yes)
 					bit |= CHANGED_NOD;

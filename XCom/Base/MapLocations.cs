@@ -56,7 +56,7 @@
 		/// <param name="row">y-position</param>
 		/// <param name="lev">z-position</param>
 		/// <returns></returns>
-		internal int GetLocationId(int col, int row, int lev)
+		internal int GetLocid(int col, int row, int lev)
 		{
 			return col + (row * _cols) + (lev * _cols * _rows);
 		}

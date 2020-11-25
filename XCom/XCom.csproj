@@ -104,7 +104,7 @@
     <Compile Include="Resources\Map\MapFileService.cs" />
     <Compile Include="Resources\Map\TilepartFactory.cs" />
     <Compile Include="Base\MapLocations.cs" />
-    <Compile Include="Base\MapTileList.cs" />
+    <Compile Include="Base\MapTileArray.cs" />
     <Compile Include="SelectEventArgs.cs" />
     <Compile Include="Base\MapFileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
