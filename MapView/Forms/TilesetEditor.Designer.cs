@@ -41,7 +41,7 @@ namespace MapView
 		private ToolTip toolTip1;
 		private Label lbl_Available;
 		private Label lbl_Allocated;
-		private Panel pnl_TerrainsHeader;
+		private Panel pnl_TerrainsTop;
 		private Label lbl_TilesetCurrent;
 		private Label lbl_AddType;
 		private Label lbl_TerrainChanges;
@@ -98,7 +98,7 @@ namespace MapView
 			this.btn_MoveDown = new System.Windows.Forms.Button();
 			this.cb_BypassRecordsExceeded = new System.Windows.Forms.CheckBox();
 			this.lb_TerrainsAvailable = new System.Windows.Forms.ListBox();
-			this.pnl_TerrainsHeader = new System.Windows.Forms.Panel();
+			this.pnl_TerrainsTop = new System.Windows.Forms.Panel();
 			this.lbl_TerrainChanges = new System.Windows.Forms.Label();
 			this.lbl_ListAvailable_ = new System.Windows.Forms.Label();
 			this.rb_ConfigBasepath = new System.Windows.Forms.RadioButton();
@@ -132,13 +132,13 @@ namespace MapView
 			this.lbl_TilesetCurrent = new System.Windows.Forms.Label();
 			this.lbl_McdRecords = new System.Windows.Forms.Label();
 			this.pnl_Bottom = new System.Windows.Forms.Panel();
+			this.btn_GlobalTerrainsList = new System.Windows.Forms.Button();
 			this.btn_GlobalTerrains = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.btn_GlobalTerrainsList = new System.Windows.Forms.Button();
 			this.pnl_Top.SuspendLayout();
 			this.gb_Terrains.SuspendLayout();
 			this.pnl_Spacer.SuspendLayout();
-			this.pnl_TerrainsHeader.SuspendLayout();
+			this.pnl_TerrainsTop.SuspendLayout();
 			this.gb_Tileset.SuspendLayout();
 			this.gb_Maptree.SuspendLayout();
 			this.pnl_Bottom.SuspendLayout();
@@ -161,7 +161,7 @@ namespace MapView
 			this.gb_Terrains.Controls.Add(this.pnl_Spacer);
 			this.gb_Terrains.Controls.Add(this.cb_BypassRecordsExceeded);
 			this.gb_Terrains.Controls.Add(this.lb_TerrainsAvailable);
-			this.gb_Terrains.Controls.Add(this.pnl_TerrainsHeader);
+			this.gb_Terrains.Controls.Add(this.pnl_TerrainsTop);
 			this.gb_Terrains.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gb_Terrains.Location = new System.Drawing.Point(0, 145);
 			this.gb_Terrains.Margin = new System.Windows.Forms.Padding(0);
@@ -180,7 +180,7 @@ namespace MapView
 			this.lb_TerrainsAllocated.Margin = new System.Windows.Forms.Padding(0);
 			this.lb_TerrainsAllocated.Name = "lb_TerrainsAllocated";
 			this.lb_TerrainsAllocated.Size = new System.Drawing.Size(267, 270);
-			this.lb_TerrainsAllocated.TabIndex = 1;
+			this.lb_TerrainsAllocated.TabIndex = 0;
 			this.lb_TerrainsAllocated.SelectedIndexChanged += new System.EventHandler(this.OnAllocatedIndexChanged);
 			// 
 			// pnl_Spacer
@@ -197,7 +197,7 @@ namespace MapView
 			this.pnl_Spacer.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Spacer.Name = "pnl_Spacer";
 			this.pnl_Spacer.Size = new System.Drawing.Size(55, 190);
-			this.pnl_Spacer.TabIndex = 3;
+			this.pnl_Spacer.TabIndex = 2;
 			// 
 			// btn_TerrainCopy
 			// 
@@ -295,7 +295,7 @@ namespace MapView
 			this.cb_BypassRecordsExceeded.Name = "cb_BypassRecordsExceeded";
 			this.cb_BypassRecordsExceeded.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
 			this.cb_BypassRecordsExceeded.Size = new System.Drawing.Size(322, 17);
-			this.cb_BypassRecordsExceeded.TabIndex = 0;
+			this.cb_BypassRecordsExceeded.TabIndex = 3;
 			this.cb_BypassRecordsExceeded.Text = "bypass RecordsExceeded";
 			this.cb_BypassRecordsExceeded.UseVisualStyleBackColor = true;
 			this.cb_BypassRecordsExceeded.CheckedChanged += new System.EventHandler(this.OnBypassRecordsExceededCheckedChanged);
@@ -309,28 +309,28 @@ namespace MapView
 			this.lb_TerrainsAvailable.Margin = new System.Windows.Forms.Padding(0);
 			this.lb_TerrainsAvailable.Name = "lb_TerrainsAvailable";
 			this.lb_TerrainsAvailable.Size = new System.Drawing.Size(264, 287);
-			this.lb_TerrainsAvailable.TabIndex = 2;
+			this.lb_TerrainsAvailable.TabIndex = 1;
 			this.lb_TerrainsAvailable.SelectedIndexChanged += new System.EventHandler(this.OnAvailableIndexChanged);
 			// 
-			// pnl_TerrainsHeader
+			// pnl_TerrainsTop
 			// 
-			this.pnl_TerrainsHeader.Controls.Add(this.lbl_TerrainChanges);
-			this.pnl_TerrainsHeader.Controls.Add(this.lbl_ListAvailable_);
-			this.pnl_TerrainsHeader.Controls.Add(this.rb_ConfigBasepath);
-			this.pnl_TerrainsHeader.Controls.Add(this.rb_TilesetBasepath);
-			this.pnl_TerrainsHeader.Controls.Add(this.rb_CustomBasepath);
-			this.pnl_TerrainsHeader.Controls.Add(this.lbl_PathAvailable_);
-			this.pnl_TerrainsHeader.Controls.Add(this.tb_PathAvailable);
-			this.pnl_TerrainsHeader.Controls.Add(this.btn_FindBasepath);
-			this.pnl_TerrainsHeader.Controls.Add(this.lbl_PathAllocated);
-			this.pnl_TerrainsHeader.Controls.Add(this.lbl_PathAllocated_);
-			this.pnl_TerrainsHeader.Controls.Add(this.lbl_Allocated);
-			this.pnl_TerrainsHeader.Controls.Add(this.lbl_Available);
-			this.pnl_TerrainsHeader.Dock = System.Windows.Forms.DockStyle.Top;
-			this.pnl_TerrainsHeader.Location = new System.Drawing.Point(3, 15);
-			this.pnl_TerrainsHeader.Name = "pnl_TerrainsHeader";
-			this.pnl_TerrainsHeader.Size = new System.Drawing.Size(586, 95);
-			this.pnl_TerrainsHeader.TabIndex = 0;
+			this.pnl_TerrainsTop.Controls.Add(this.lbl_TerrainChanges);
+			this.pnl_TerrainsTop.Controls.Add(this.lbl_ListAvailable_);
+			this.pnl_TerrainsTop.Controls.Add(this.rb_ConfigBasepath);
+			this.pnl_TerrainsTop.Controls.Add(this.rb_TilesetBasepath);
+			this.pnl_TerrainsTop.Controls.Add(this.rb_CustomBasepath);
+			this.pnl_TerrainsTop.Controls.Add(this.lbl_PathAvailable_);
+			this.pnl_TerrainsTop.Controls.Add(this.tb_PathAvailable);
+			this.pnl_TerrainsTop.Controls.Add(this.btn_FindBasepath);
+			this.pnl_TerrainsTop.Controls.Add(this.lbl_PathAllocated);
+			this.pnl_TerrainsTop.Controls.Add(this.lbl_PathAllocated_);
+			this.pnl_TerrainsTop.Controls.Add(this.lbl_Allocated);
+			this.pnl_TerrainsTop.Controls.Add(this.lbl_Available);
+			this.pnl_TerrainsTop.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pnl_TerrainsTop.Location = new System.Drawing.Point(3, 15);
+			this.pnl_TerrainsTop.Name = "pnl_TerrainsTop";
+			this.pnl_TerrainsTop.Size = new System.Drawing.Size(586, 95);
+			this.pnl_TerrainsTop.TabIndex = 0;
 			// 
 			// lbl_TerrainChanges
 			// 
@@ -433,7 +433,7 @@ namespace MapView
 			this.lbl_PathAllocated.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_PathAllocated.Name = "lbl_PathAllocated";
 			this.lbl_PathAllocated.Size = new System.Drawing.Size(425, 15);
-			this.lbl_PathAllocated.TabIndex = 8;
+			this.lbl_PathAllocated.TabIndex = 9;
 			this.lbl_PathAllocated.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl_PathAllocated_
@@ -442,7 +442,7 @@ namespace MapView
 			this.lbl_PathAllocated_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_PathAllocated_.Name = "lbl_PathAllocated_";
 			this.lbl_PathAllocated_.Size = new System.Drawing.Size(140, 15);
-			this.lbl_PathAllocated_.TabIndex = 9;
+			this.lbl_PathAllocated_.TabIndex = 8;
 			this.lbl_PathAllocated_.Text = "Path (allocated terrain)";
 			this.lbl_PathAllocated_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -576,7 +576,7 @@ namespace MapView
 			this.lbl_TilesetCount.Location = new System.Drawing.Point(280, 60);
 			this.lbl_TilesetCount.Name = "lbl_TilesetCount";
 			this.lbl_TilesetCount.Size = new System.Drawing.Size(95, 15);
-			this.lbl_TilesetCount.TabIndex = 7;
+			this.lbl_TilesetCount.TabIndex = 8;
 			this.lbl_TilesetCount.Text = "lbl_TilesetCount";
 			this.lbl_TilesetCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -585,7 +585,7 @@ namespace MapView
 			this.lbl_TilesetCount_.Location = new System.Drawing.Point(10, 60);
 			this.lbl_TilesetCount_.Name = "lbl_TilesetCount_";
 			this.lbl_TilesetCount_.Size = new System.Drawing.Size(270, 15);
-			this.lbl_TilesetCount_.TabIndex = 8;
+			this.lbl_TilesetCount_.TabIndex = 7;
 			this.lbl_TilesetCount_.Text = "Count of tilesets that are defined by Path+Map";
 			this.lbl_TilesetCount_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -667,7 +667,7 @@ namespace MapView
 			this.lbl_Category_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Category_.Name = "lbl_Category_";
 			this.lbl_Category_.Size = new System.Drawing.Size(65, 15);
-			this.lbl_Category_.TabIndex = 2;
+			this.lbl_Category_.TabIndex = 3;
 			this.lbl_Category_.Text = "CATEGORY";
 			// 
 			// lbl_CategoryCurrent
@@ -678,7 +678,7 @@ namespace MapView
 			this.lbl_CategoryCurrent.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_CategoryCurrent.Name = "lbl_CategoryCurrent";
 			this.lbl_CategoryCurrent.Size = new System.Drawing.Size(260, 15);
-			this.lbl_CategoryCurrent.TabIndex = 3;
+			this.lbl_CategoryCurrent.TabIndex = 4;
 			this.lbl_CategoryCurrent.Text = "lbl_CategoryCurrent";
 			// 
 			// lbl_TilesetCurrent
@@ -690,7 +690,7 @@ namespace MapView
 			this.lbl_TilesetCurrent.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_TilesetCurrent.Name = "lbl_TilesetCurrent";
 			this.lbl_TilesetCurrent.Size = new System.Drawing.Size(235, 15);
-			this.lbl_TilesetCurrent.TabIndex = 4;
+			this.lbl_TilesetCurrent.TabIndex = 2;
 			this.lbl_TilesetCurrent.Text = "lbl_TilesetCurrent";
 			this.lbl_TilesetCurrent.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
@@ -719,6 +719,19 @@ namespace MapView
 			this.pnl_Bottom.Size = new System.Drawing.Size(592, 29);
 			this.pnl_Bottom.TabIndex = 1;
 			// 
+			// btn_GlobalTerrainsList
+			// 
+			this.btn_GlobalTerrainsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_GlobalTerrainsList.Location = new System.Drawing.Point(505, 1);
+			this.btn_GlobalTerrainsList.Margin = new System.Windows.Forms.Padding(0);
+			this.btn_GlobalTerrainsList.Name = "btn_GlobalTerrainsList";
+			this.btn_GlobalTerrainsList.Size = new System.Drawing.Size(85, 27);
+			this.btn_GlobalTerrainsList.TabIndex = 1;
+			this.btn_GlobalTerrainsList.Text = "List ...";
+			this.btn_GlobalTerrainsList.UseVisualStyleBackColor = true;
+			this.btn_GlobalTerrainsList.Click += new System.EventHandler(this.OnGlobalTerrainsListClick);
+			// 
 			// btn_GlobalTerrains
 			// 
 			this.btn_GlobalTerrains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -728,23 +741,10 @@ namespace MapView
 			this.btn_GlobalTerrains.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_GlobalTerrains.Name = "btn_GlobalTerrains";
 			this.btn_GlobalTerrains.Size = new System.Drawing.Size(502, 27);
-			this.btn_GlobalTerrains.TabIndex = 1;
+			this.btn_GlobalTerrains.TabIndex = 0;
 			this.btn_GlobalTerrains.Text = "Apply allocated terrains to all tilesets that are defined by Path+Map";
 			this.btn_GlobalTerrains.UseVisualStyleBackColor = true;
 			this.btn_GlobalTerrains.Click += new System.EventHandler(this.OnGlobalTerrainsClick);
-			// 
-			// btn_GlobalTerrainsList
-			// 
-			this.btn_GlobalTerrainsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_GlobalTerrainsList.Location = new System.Drawing.Point(505, 1);
-			this.btn_GlobalTerrainsList.Margin = new System.Windows.Forms.Padding(0);
-			this.btn_GlobalTerrainsList.Name = "btn_GlobalTerrainsList";
-			this.btn_GlobalTerrainsList.Size = new System.Drawing.Size(85, 27);
-			this.btn_GlobalTerrainsList.TabIndex = 2;
-			this.btn_GlobalTerrainsList.Text = "List ...";
-			this.btn_GlobalTerrainsList.UseVisualStyleBackColor = true;
-			this.btn_GlobalTerrainsList.Click += new System.EventHandler(this.OnGlobalTerrainsListClick);
 			// 
 			// toolTip1
 			// 
@@ -771,8 +771,8 @@ namespace MapView
 			this.pnl_Top.ResumeLayout(false);
 			this.gb_Terrains.ResumeLayout(false);
 			this.pnl_Spacer.ResumeLayout(false);
-			this.pnl_TerrainsHeader.ResumeLayout(false);
-			this.pnl_TerrainsHeader.PerformLayout();
+			this.pnl_TerrainsTop.ResumeLayout(false);
+			this.pnl_TerrainsTop.PerformLayout();
 			this.gb_Tileset.ResumeLayout(false);
 			this.gb_Tileset.PerformLayout();
 			this.gb_Maptree.ResumeLayout(false);

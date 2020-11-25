@@ -164,8 +164,8 @@ namespace XCom.Base
 		public bool RoutesChanged
 		{ get; set; }
 
-		public bool FunkyPartidsDetected
-		{ get; internal protected set; }
+		public bool TerrainsetPartsExceeded
+		{ get; set; }
 		#endregion Properties
 
 

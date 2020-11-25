@@ -63,6 +63,8 @@ namespace XCom
 				List<Tilepart> parts,
 				RouteNodeCollection routes)
 		{
+			//LogFile.WriteLine("MapFile..cTor");
+
 			string dir = Path.Combine(descriptor.Basepath, GlobalsXC.MapsDir);
 			string pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
 
@@ -116,6 +118,25 @@ namespace XCom
 												fs.ReadByte(),
 												fs.ReadByte());
 				}
+
+				if (TerrainsetPartsExceeded)
+				{
+					MessageBox.Show(
+								"There are tileparts that exceed the bounds of the Map's"
+									+ " currently allocated MCD records. They will be"
+									+ " nulled so that the rest of the tileset can be"
+									+ " displayed."
+									+ Environment.NewLine + Environment.NewLine
+									+ "WARNING: Saving the Map in its current state would"
+									+ " lose those tilepart references. But if you know"
+									+ " what terrain(s) have gone rogue they can be added"
+									+ " to the Map's terrainset with the TilesetEditor.",
+								" Warning",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Warning,
+								MessageBoxDefaultButton.Button1,
+								0);
+				}
 				return true;
 			}
 			return false;
@@ -152,7 +173,7 @@ namespace XCom
 			else
 			{
 				floor = null;
-				if (!FunkyPartidsDetected) ShowWarning();
+				TerrainsetPartsExceeded = true;
 			}
 
 			if (quad2 < BlanksReservedCount)
@@ -166,7 +187,7 @@ namespace XCom
 			else
 			{
 				west = null;
-				if (!FunkyPartidsDetected) ShowWarning();
+				TerrainsetPartsExceeded = true;
 			}
 
 			if (quad3 < BlanksReservedCount)
@@ -180,7 +201,7 @@ namespace XCom
 			else
 			{
 				north = null;
-				if (!FunkyPartidsDetected) ShowWarning();
+				TerrainsetPartsExceeded = true;
 			}
 
 			if (quad4 < BlanksReservedCount)
@@ -194,7 +215,7 @@ namespace XCom
 			else
 			{
 				content = null;
-				if (!FunkyPartidsDetected) ShowWarning();
+				TerrainsetPartsExceeded = true;
 			}
 
 			return new MapTile(
@@ -202,30 +223,6 @@ namespace XCom
 							west,
 							north,
 							content);
-		}
-
-		/// <summary>
-		/// Issues a warning if a tilepart's id overflows or underflows the
-		/// total tileparts-list.
-		/// </summary>
-		private void ShowWarning()
-		{
-			FunkyPartidsDetected = true;
-			MessageBox.Show(
-						"There are tileparts that exceed the bounds of the Map's"
-							+ " currently allocated MCD records. They will be"
-							+ " nulled so that the rest of the tileset can be"
-							+ " displayed."
-							+ Environment.NewLine + Environment.NewLine
-							+ "WARNING: Saving the Map in its current state would"
-							+ " lose those tilepart references. But if you know"
-							+ " what terrain(s) have gone rogue they can be added"
-							+ " to the Map's terrainset with the TilesetEditor.",
-						" Warning",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Warning,
-						MessageBoxDefaultButton.Button1,
-						0);
 		}
 		#endregion Methods (read/load)
 

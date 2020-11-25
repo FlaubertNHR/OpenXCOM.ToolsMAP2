@@ -74,6 +74,8 @@ namespace XCom
 				GameType groupType,
 				bool bypassRecordsExceeded)
 		{
+			//LogFile.WriteLine("Descriptor..cTor label= " + label);
+
 			Label    = label;
 			Basepath = basepath;
 			Terrains = terrains;
@@ -125,6 +127,8 @@ namespace XCom
 		/// if spriteset creation borks</returns>
 		internal Tilepart[] CreateTerrain(int id)
 		{
+			//LogFile.WriteLine("Descriptor.CreateTerrain() id= " + id);
+
 			var terrain = Terrains[id];
 			string terr = terrain.Item1;
 			string path = terrain.Item2;
@@ -136,8 +140,12 @@ namespace XCom
 																ResourceInfo.TAB_WORD_LENGTH_2,
 																Pal);
 			if (spriteset != null)
+			{
+				//LogFile.WriteLine(". spriteset Valid - create tileparts");
 				return TilepartFactory.CreateTileparts(terr, path, spriteset);
+			}
 
+			//LogFile.WriteLine(". spriteset NOT Valid - ret null");
 			return null;
 		}
 

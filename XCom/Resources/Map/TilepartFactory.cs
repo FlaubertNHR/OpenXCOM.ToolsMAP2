@@ -22,37 +22,39 @@ namespace XCom
 				string dirTerrain,
 				SpriteCollection spriteset)
 		{
-			if (spriteset != null)
+			//LogFile.WriteLine("TilepartFactory.CreateTileparts()");
+
+			string pfe = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
+
+			using (var fs = FileService.OpenFile(pfe))
+			if (fs != null)
 			{
-				string pfe = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
+				var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
 
-				using (var fs = FileService.OpenFile(pfe))
-				if (fs != null)
+				for (int id = 0; id != parts.Length; ++id)
 				{
-					var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
+					var bindata = new byte[McdRecord.Length];
+					fs.Read(bindata, 0, McdRecord.Length);
 
-					for (int id = 0; id != parts.Length; ++id)
-					{
-						var bindata = new byte[McdRecord.Length];
-						fs.Read(bindata, 0, McdRecord.Length);
-
-						parts[id] = new Tilepart(
-											id,
-											new McdRecord(bindata),
-											spriteset);
-					}
-
-					Tilepart part;
-					for (int id = 0; id != parts.Length; ++id)
-					{
-						part = parts[id];
-						part.Dead = GetDeadPart(part.Record, parts, terrain, id);
-						part.Altr = GetAltrPart(part.Record, parts, terrain, id);
-					}
-
-					return parts;
+					parts[id] = new Tilepart(
+										id,
+										new McdRecord(bindata),
+										spriteset);
 				}
+
+				Tilepart part;
+				for (int id = 0; id != parts.Length; ++id)
+				{
+					part = parts[id];
+					part.Dead = GetDeadPart(part.Record, parts, terrain, id);
+					part.Altr = GetAltrPart(part.Record, parts, terrain, id);
+				}
+
+				//LogFile.WriteLine(". ret parts array");
+				return parts;
 			}
+
+			//LogFile.WriteLine(". ret EMPTY parts array");
 			return new Tilepart[0];
 		}
 

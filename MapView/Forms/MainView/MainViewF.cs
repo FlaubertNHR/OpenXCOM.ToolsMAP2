@@ -135,7 +135,7 @@ namespace MapView
 		/// <summary>
 		/// Sets the MapChanged flag. This is only an intermediary that adds an
 		/// asterisk to the file-label in MainView's statusbar; the real
-		/// MapChanged flag is stored in XCom..MapFileBase. reasons.
+		/// MapChanged flag is stored in <see cref="MapFileBase"/>. reasons.
 		/// </summary>
 		internal bool MapChanged
 		{
@@ -951,6 +951,7 @@ namespace MapView
 			if (_finfo   != null) _finfo  .Close(); // close MapInfo and its Detail dialog
 
 			// NOTE: TopView's PartslotTest dialog is closed when TopView closes.
+			// TODO: McdRecordsExceeded dialog is pseudo-static ... close it (if it was instantiated).
 
 			if (ObserverManager.TileView.Control.McdInfobox != null)
 				ObserverManager.TileView.Control.McdInfobox.Close(); // close TileView's McdInfo dialog
@@ -1395,6 +1396,8 @@ namespace MapView
 		/// </summary>
 		private void OnReloadDescriptor()
 		{
+			//LogFile.WriteLine("MainViewF.OnReloadDescriptor()");
+
 			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 
@@ -2385,6 +2388,8 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
+			//LogFile.WriteLine("MainViewF.OnMapTreeMouseDown() BypassChanged= " + BypassChanged);
+
 			if (e.Button == MouseButtons.Right)
 			{
 				if (MainViewUnderlay.MapBase == null					// prevent a bunch of problems, like looping dialogs when returning from
@@ -2691,11 +2696,15 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						MaptreeChanged =
-						BypassChanged  = true;
+						MaptreeChanged = true;
 
+						BypassChanged = true;
 						CreateTree();
-						SelectTilesetNode(f.Tileset, labelCategory, labelGroup);
+
+						// CreateTree() fires OnMapTreeBeforeSelect() which clears 'BypassChanged'
+						// so it needs to be set again - the wonders of the .net Framework in action!
+						BypassChanged = true;
+						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 					}
 				}
 			}
@@ -2722,11 +2731,17 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						MaptreeChanged =
-						BypassChanged  = true;
+						//LogFile.WriteLine("return to OnEditTilesetClick() w/ DialogResult.OK");
 
+						MaptreeChanged = true;
+
+						BypassChanged = true;
 						CreateTree();
-						SelectTilesetNode(f.Tileset, labelCategory, labelGroup);
+
+						// CreateTree() fires OnMapTreeBeforeSelect() which clears 'BypassChanged'
+						// so it needs to be set again - the wonders of the .net Framework in action!
+						BypassChanged = true;
+						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 					}
 				}
 			}
@@ -2968,6 +2983,8 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
+			//LogFile.WriteLine("MainViewF.OnMapTreeNodeMouseClick() _loadReady= " + _loadReady);
+
 			if (e.Node == _selected)
 			{
 				var descriptor = e.Node.Tag as Descriptor;
@@ -2992,6 +3009,8 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
 		{
+			//LogFile.WriteLine("MainViewF.OnMapTreeBeforeSelect() BypassChanged= " + BypassChanged);
+
 			if (!BypassChanged) // is true on TilesetEditor DialogResult.OK
 			{
 				e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
@@ -3008,6 +3027,8 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
+			//LogFile.WriteLine("MainViewF.OnMapTreeAfterSelect() _loadReady= " + _loadReady);
+
 			ClearSearched();
 
 			if (_loadReady == LOADREADY_STAGE_1)
@@ -3023,10 +3044,15 @@ namespace MapView
 		#region Methods
 		/// <summary>
 		/// Loads the Map that's selected in the Maptree.
-		/// <param name="find">true to force the find Mapfile dialog</param>
+		/// <param name="browseMapfile">true to force the find Mapfile dialog</param>
 		/// </summary>
-		private void LoadSelectedDescriptor(bool find = false)
+		private void LoadSelectedDescriptor(bool browseMapfile = false)
 		{
+			//LogFile.WriteLine("");
+			//LogFile.WriteLine("");
+			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
+			//LogFile.WriteLine(". browseMapfile= " + browseMapfile);
+
 			if (_loadReady == LOADREADY_STAGE_2)
 			{
 				var descriptor = MapTree.SelectedNode.Tag as Descriptor;
@@ -3036,7 +3062,7 @@ namespace MapView
 					var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
 															descriptor,
 															ref treechanged,
-															find,
+															browseMapfile,
 															Optionables.IgnoreRecordsExceeded);
 					if (treechanged) MaptreeChanged = true;
 
@@ -3078,7 +3104,10 @@ namespace MapView
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						MapChanged = @base.FunkyPartidsDetected; // don't bother to reset 'FunkyPartidsDetected'.
+						//LogFile.WriteLine(". MapChanged [1]= " + @base.MapChanged);
+						if (!@base.MapChanged) MapChanged = @base.TerrainsetPartsExceeded;
+						//LogFile.WriteLine(". MapChanged [2]= " + @base.MapChanged);
+						@base.TerrainsetPartsExceeded = false;
 
 						var routeview1 = ObserverManager.RouteView.Control;
 						var routeview2 = ObserverManager.TopRouteView.ControlRoute;
@@ -3252,6 +3281,8 @@ namespace MapView
 		/// <returns></returns>
 		private DialogResult SaveAlertMap()
 		{
+			//LogFile.WriteLine("MainViewF.SaveAlertMap()");
+
 			if (MainViewUnderlay.MapBase != null && MainViewUnderlay.MapBase.MapChanged)
 			{
 				switch (MessageBox.Show(

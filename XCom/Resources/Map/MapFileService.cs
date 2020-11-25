@@ -49,20 +49,26 @@ namespace XCom
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
-		/// <param name="find">true to force the find file dialog</param>
+		/// <param name="browseMapfile">true to force the find file dialog</param>
 		/// <param name="ignoreRecordsExceeded">true to bypass a potential
 		/// RecordsExceeded warning dialog</param>
 		/// <returns>null if things go south</returns>
 		public static MapFileBase LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
-				bool find,
+				bool browseMapfile,
 				bool ignoreRecordsExceeded)
 		{
+			//LogFile.WriteLine("MapFileService.LoadDescriptor()");
+			//LogFile.WriteLine(". descriptor.Label= " + descriptor.Label);
+			//LogFile.WriteLine(". treechanged= " + treechanged);
+			//LogFile.WriteLine(". browseMapfile= " + browseMapfile);
+			//LogFile.WriteLine(". ignoreRecordsExceeded= " + ignoreRecordsExceeded);
+
 			string pfe = MapfileExists(descriptor);
 
 			if (pfe == null // Open a folderbrowser for user to point to a basepath ->
-				&& (find || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // [Shift] to ask for a MapBrowser dialog.
+				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // hold [Shift] to ask for a MapBrowser dialog.
 				&& MessageBox.Show(
 								"Files not found for : " + descriptor.Label
 									+ Environment.NewLine + Environment.NewLine
@@ -95,6 +101,8 @@ namespace XCom
 						{
 							descriptor.Basepath = fbd.SelectedPath;
 							treechanged = true;
+
+							//LogFile.WriteLine(". . treechanged= " + treechanged);
 						}
 						else
 							MessageBox.Show(
@@ -109,21 +117,31 @@ namespace XCom
 				}
 			}
 
+			//LogFile.WriteLine("");
+
 			if (File.Exists(pfe))
 			{
 				var parts = new List<Tilepart>();
 
 				ResourceInfo.Spritesets.Clear();
 
+				//LogFile.WriteLine(". . terraincount= " + descriptor.Terrains.Count);
+
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{
 					Tilepart[] records = descriptor.CreateTerrain(i);	// NOTE: calls
 					if (records == null)								//     - TilepartFactory.CreateTileparts()
-						return null;									//     - ResourceInfo.LoadSpriteset()
+					{													//     - ResourceInfo.LoadSpriteset()
+						//LogFile.WriteLine(". . . . no records ABORT");
+						return null;
+					}
 
 					foreach (Tilepart record in records)
 						parts.Add(record);
 				}
+
+				//LogFile.WriteLine("");
+				//LogFile.WriteLine(". . partscount= " + parts.Count);
 
 				if (parts.Count != 0)
 				{
@@ -159,24 +177,32 @@ namespace XCom
 						McdRecordsExceeded.that.ShowDialog();
 					}
 
+					//LogFile.WriteLine(". . . load Routes");
+
 					var nodes = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
 					if (nodes.Fail)
 					{
 						nodes.Fail = false;
 						nodes.Nodes.Clear();
 					}
-					// if Routes fail try to load the Mapfile regardless ->
+					// if Routes fail load the Mapfile regardless ->
 
 					var file = new MapFile(
 										descriptor,
 										parts,
 										nodes);
 
-					if (file.Fail) return null;
+					if (file.Fail)
+					{
+						//LogFile.WriteLine(". . . MapFile FAILED");
+						return null;
+					}
 
+					//LogFile.WriteLine(". . . ret MapFile");
 					return file;
 				}
 
+				//LogFile.WriteLine(". . MCD Error");
 				MessageBox.Show(
 							"There are no terrains allocated or they do not contain MCD records.",
 							" Error",
@@ -186,6 +212,7 @@ namespace XCom
 							0);
 			}
 
+			//LogFile.WriteLine(". ret null Descriptor");
 			return null;
 		}
 		#endregion Methods (static)
