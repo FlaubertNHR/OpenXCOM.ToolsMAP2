@@ -194,6 +194,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <EmbeddedResource Include="_Embedded\MONOTONE_D.PCK" />
+    <EmbeddedResource Include="_Embedded\MONOTONE_D.TAB" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />
