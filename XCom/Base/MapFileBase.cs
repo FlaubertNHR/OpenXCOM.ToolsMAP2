@@ -98,8 +98,6 @@ namespace XCom.Base
 
 		/// <summary>
 		/// Gets/Sets a MapTile object using col,row,lev values.
-		/// @note No error checking is done to ensure that the given location is
-		/// valid.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
@@ -107,19 +105,12 @@ namespace XCom.Base
 		/// <returns>the corresponding MapTile object</returns>
 		public MapTile this[int col, int row, int lev]
 		{
-			get
-			{
-				if (Tiles != null) // TODO: Get rid of that.
-					return Tiles[col, row, lev];
-				return null;
-			}
+			get { return Tiles[col, row, lev]; }
 			set { Tiles[col, row, lev] = value; }
 		}
 		/// <summary>
 		/// Gets/Sets a MapTile object at the current level using col,row
 		/// values.
-		/// @note No error checking is done to ensure that the given location is
-		/// valid.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
