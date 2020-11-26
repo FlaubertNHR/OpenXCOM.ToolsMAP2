@@ -191,7 +191,6 @@ namespace XCom
 										descriptor,
 										parts,
 										nodes);
-
 					if (file.Fail)
 					{
 						//LogFile.WriteLine(". . . MapFile FAILED");
