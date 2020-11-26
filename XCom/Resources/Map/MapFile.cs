@@ -72,7 +72,7 @@ namespace XCom
 			{
 				PfeMap     = pfe;
 				Descriptor = descriptor;
-				Terrains   = Descriptor.Terrains;
+				Terrains   = descriptor.Terrains;
 				Parts      = parts;
 				Routes     = routes;
 
@@ -113,10 +113,10 @@ namespace XCom
 				{
 					this[col, row, lev] = CreateTile(
 												parts,
-												fs.ReadByte(),  // floor
-												fs.ReadByte(),  // westwall
-												fs.ReadByte(),  // northwall
-												fs.ReadByte()); // content
+												fs.ReadByte(),  // floor id
+												fs.ReadByte(),  // westwall id
+												fs.ReadByte(),  // northwall id
+												fs.ReadByte()); // content id
 				}
 
 				if (TerrainsetPartsExceeded)
@@ -144,77 +144,84 @@ namespace XCom
 
 		/// <summary>
 		/// Creates a tile with its four parts.
+		/// @note If an id in the Mapfile exceeds the maxid of the file's
+		/// terrainset a crippled tilepart will be created for it and displayed
+		/// in MainView.
 		/// </summary>
 		/// <param name="parts">a list of total tileparts that can be used</param>
-		/// <param name="quad1">the floor</param>
-		/// <param name="quad2">the westwall</param>
-		/// <param name="quad3">the northwall</param>
-		/// <param name="quad4">the content</param>
+		/// <param name="id_Floor">the floor id</param>
+		/// <param name="id_West">the westwall id</param>
+		/// <param name="id_North">the northwall id</param>
+		/// <param name="id_Content">the content id</param>
 		/// <returns>the MapTile created</returns>
 		private MapTile CreateTile(
 				IList<Tilepart> parts,
-				int quad1,
-				int quad2,
-				int quad3,
-				int quad4)
+				int id_Floor,
+				int id_West,
+				int id_North,
+				int id_Content)
 		{
 			Tilepart floor, west, north, content;
 
-			// NOTE: quads will be "-1" if "read from the end of the stream".
+			// NOTE: ids will be "-1" if "read from the end of the stream".
 
-			if (quad1 < BlanksReservedCount)
+			if (id_Floor < BlanksReservedCount)
 			{
-				floor = null;
+				floor = null; // silently fail.
 			}
-			else if ((quad1 -= BlanksReservedCount) < parts.Count)
+			else if ((id_Floor -= BlanksReservedCount) < parts.Count)
 			{
-				floor = parts[quad1];
+				floor = parts[id_Floor];
 			}
 			else
 			{
-				floor = null;
+				floor = new Tilepart(id_Floor);
+				floor.Cripple(QuadrantType.Floor);
 				TerrainsetPartsExceeded = true;
 			}
 
-			if (quad2 < BlanksReservedCount)
+			if (id_West < BlanksReservedCount)
 			{
-				west = null;
+				west = null; // silently fail.
 			}
-			else if ((quad2 -= BlanksReservedCount) < parts.Count)
+			else if ((id_West -= BlanksReservedCount) < parts.Count)
 			{
-				west = parts[quad2];
+				west = parts[id_West];
 			}
 			else
 			{
-				west = null;
+				west = new Tilepart(id_West);
+				west.Cripple(QuadrantType.West);
 				TerrainsetPartsExceeded = true;
 			}
 
-			if (quad3 < BlanksReservedCount)
+			if (id_North < BlanksReservedCount)
 			{
-				north = null;
+				north = null; // silently fail.
 			}
-			else if ((quad3 -= BlanksReservedCount) < parts.Count)
+			else if ((id_North -= BlanksReservedCount) < parts.Count)
 			{
-				north = parts[quad3];
+				north = parts[id_North];
 			}
 			else
 			{
-				north = null;
+				north = new Tilepart(id_North);
+				north.Cripple(QuadrantType.North);
 				TerrainsetPartsExceeded = true;
 			}
 
-			if (quad4 < BlanksReservedCount)
+			if (id_Content < BlanksReservedCount)
 			{
-				content = null;
+				content = null; // silently fail.
 			}
-			else if ((quad4 -= BlanksReservedCount) < parts.Count)
+			else if ((id_Content -= BlanksReservedCount) < parts.Count)
 			{
-				content = parts[quad4];
+				content = parts[id_Content];
 			}
 			else
 			{
-				content = null;
+				content = new Tilepart(id_Content);
+				content.Cripple(QuadrantType.Content);
 				TerrainsetPartsExceeded = true;
 			}
 

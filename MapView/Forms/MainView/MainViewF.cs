@@ -576,18 +576,19 @@ namespace MapView
 		/// Loads the sprites for TopView's blank quads and TileView's eraser.
 		/// @note These sprites could be broken out and put in Resources but
 		/// it's kinda cute this way too.
+		/// @note See also Tilepart.LoadMonotoneSprites().
 		/// </summary>
 		private static void LoadMonotoneSprites()
 		{
 			var ass = Assembly.GetExecutingAssembly();
-			using (var fsPck = ass.GetManifestResourceStream("MapView._Embedded.MONOTONE.PCK"))
-			using (var fsTab = ass.GetManifestResourceStream("MapView._Embedded.MONOTONE.TAB"))
+			using (var strPck = ass.GetManifestResourceStream("MapView._Embedded.MONOTONE.PCK"))
+			using (var strTab = ass.GetManifestResourceStream("MapView._Embedded.MONOTONE.TAB"))
 			{
-				var bytesPck = new byte[fsPck.Length];
-				var bytesTab = new byte[fsTab.Length];
+				var bytesPck = new byte[strPck.Length];
+				var bytesTab = new byte[strTab.Length];
 
-				fsPck.Read(bytesPck, 0, (int)fsPck.Length);
-				fsTab.Read(bytesTab, 0, (int)fsTab.Length);
+				strPck.Read(bytesPck, 0, (int)strPck.Length);
+				strTab.Read(bytesTab, 0, (int)strTab.Length);
 
 				MonotoneSprites = new SpriteCollection(
 													"Monotone",
@@ -3268,7 +3269,7 @@ namespace MapView
 			if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
 			{
 				foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
-					part.SpritesToAlternate();
+					part.SetSprite1_alt();
 			}
 		}
 

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 
 namespace XCom
@@ -7,6 +8,8 @@ namespace XCom
 	{
 		#region Fields (static)
 		private const int PHASECOUNT = 8;
+
+		private static SpriteCollection MonotoneSprites;
 		#endregion Fields (static)
 
 
@@ -105,11 +108,12 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[1]. Creates a blank part that's ready to go in McdView.
+		/// cTor[1]. Creates a blank part that's ready to go in McdView
+		/// ('TerId'). Also used for crippled parts on Mapfile load ('SetId').
 		/// </summary>
 		public Tilepart(int id)
 		{
-			TerId = id;
+			TerId = SetId = id;
 			Record = new McdRecord();
 		}
 
@@ -148,43 +152,50 @@ namespace XCom
 		{
 			if (!Record.SlidingDoor && !Record.HingedDoor)
 			{
-				SpritesToPhases();
+				SetSpritesArray();
 			}
 			else
-				SpritesToFirstPhase();
+				SetSprite1();
 		}
 
 		/// <summary>
 		/// Sets this tilepart's sprites in accord with its record's
 		/// sprite-phases.
 		/// </summary>
-		public void SpritesToPhases()
+		private void SetSpritesArray()
 		{
-			int spriteId;
-			for (int i = 0; i != PHASECOUNT; ++i)
-			{
-				switch (i)
-				{
-					default: spriteId = Record.Sprite1; break; // case 0
-					case 1:  spriteId = Record.Sprite2; break;
-					case 2:  spriteId = Record.Sprite3; break;
-					case 3:  spriteId = Record.Sprite4; break;
-					case 4:  spriteId = Record.Sprite5; break;
-					case 5:  spriteId = Record.Sprite6; break;
-					case 6:  spriteId = Record.Sprite7; break;
-					case 7:  spriteId = Record.Sprite8; break;
-				}
-				Sprites[i] = Spriteset[spriteId];
-			}
+			Sprites[0] = Spriteset[Record.Sprite1];
+			Sprites[1] = Spriteset[Record.Sprite2];
+			Sprites[2] = Spriteset[Record.Sprite3];
+			Sprites[3] = Spriteset[Record.Sprite4];
+			Sprites[4] = Spriteset[Record.Sprite5];
+			Sprites[5] = Spriteset[Record.Sprite6];
+			Sprites[6] = Spriteset[Record.Sprite7];
+			Sprites[7] = Spriteset[Record.Sprite8];
 		}
 
 		/// <summary>
 		/// Sets this tilepart's sprites to its record's first sprite-phase.
 		/// </summary>
-		private void SpritesToFirstPhase()
+		private void SetSprite1()
 		{
 			for (int i = 0; i != PHASECOUNT; ++i)
 				Sprites[i] = Spriteset[Record.Sprite1];
+		}
+
+		/// <summary>
+		/// Sets this tilepart's sprites to the first phase of its Altr part. Is
+		/// for doors only.
+		/// </summary>
+		public void SetSprite1_alt()
+		{
+			if (Spriteset != null
+				&& (Record.SlidingDoor || Record.HingedDoor))
+			{
+				byte altr = Altr.Record.Sprite1;
+				for (int i = 0; i != PHASECOUNT; ++i)
+					Sprites[i] = Spriteset[altr];
+			}
 		}
 
 		/// <summary>
@@ -200,32 +211,17 @@ namespace XCom
 				{
 					if (Record.SlidingDoor || Altr == null)
 					{
-						SpritesToPhases();
+						SetSpritesArray();
 					}
 					else
 					{
 						byte altr = Altr.Record.Sprite1;
-						for (int i = 4; i != PHASECOUNT; ++i) // ie. cycle between Sprite1 and Altr.Sprite1
+						for (int i = 4; i != PHASECOUNT; ++i) // ie. flip between Sprite1 and Altr.Sprite1
 							Sprites[i] = Spriteset[altr];
 					}
 				}
 				else
-					SpritesToFirstPhase();
-			}
-		}
-
-		/// <summary>
-		/// Sets this tilepart's sprites to the first phase of its Altr part. Is
-		/// for doors only.
-		/// </summary>
-		public void SpritesToAlternate()
-		{
-			if (Spriteset != null
-				&& (Record.SlidingDoor || Record.HingedDoor))
-			{
-				byte altr = Altr.Record.Sprite1;
-				for (int i = 0; i != PHASECOUNT; ++i)
-					Sprites[i] = Spriteset[altr];
+					SetSprite1();
 			}
 		}
 
@@ -260,6 +256,151 @@ namespace XCom
 								// after insertion. (aha!)
 			return part;
 		}
+
+
+		/// <summary>
+		/// When a Mapfile contains tilepart-ids that are beyond the count of
+		/// parts in its current terrainset do not null those parts. To cripple
+		/// a part instead is to create a new part and assign it a default
+		/// record and one of the MonotoneSprites (based on its quadslot) but to
+		/// transfer the old SetId to the new SetId.
+		/// 
+		/// This allows the user to invoke TileslotSubstitution to shift ids
+		/// above the currently displayable range down into accepted values.
+		/// It's useful only when records have been removed from the Mapfile's
+		/// current terrains but there are still used records with ids that are
+		/// higher than any of the (previously/externally) removed records' ids.
+		/// 
+		/// Records are MCD-entries in case you haven't figured that.
+		/// 
+		/// IMPORTANT: This is strictly a one-way operation!
+		/// 
+		/// See <see cref="MapFile"/> CreateTile()
+		/// 
+		/// IMPORTANT: All crippled parts shall go ~poof~ when the Mapfile is
+		/// saved.
+		/// </summary>
+		internal void Cripple(QuadrantType quadType)
+		{
+			LoadMonotoneSprites();
+
+			Sprites = new XCImage[PHASECOUNT];
+
+			switch (quadType)
+			{
+				case QuadrantType.Floor:
+					for (int i = 0; i != PHASECOUNT; ++i)
+						Sprites[i] = MonotoneSprites[3];
+					break;
+
+				case QuadrantType.West:
+					for (int i = 0; i != PHASECOUNT; ++i)
+						Sprites[i] = MonotoneSprites[1];
+					break;
+
+				case QuadrantType.North:
+					for (int i = 0; i != PHASECOUNT; ++i)
+						Sprites[i] = MonotoneSprites[2];
+					break;
+
+				case QuadrantType.Content:
+					for (int i = 0; i != PHASECOUNT; ++i)
+						Sprites[i] = MonotoneSprites[4];
+					break;
+			}
+		}
 		#endregion Methods
+
+
+		#region Methods (static)
+		/// <summary>
+		/// Loads the sprites for TopView's blank quads and TileView's eraser.
+		/// @note These sprites could be broken out and put in Resources but
+		/// it's kinda cute this way too.
+		/// @note See also MainViewF.LoadMonotoneSprites().
+		/// </summary>
+		private static void LoadMonotoneSprites()
+		{
+			if (MonotoneSprites == null)
+			{
+				var ass = Assembly.GetExecutingAssembly();
+				using (var strPck = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE_D.PCK"))
+				using (var strTab = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE_D.TAB"))
+				{
+					var bytesPck = new byte[strPck.Length];
+					var bytesTab = new byte[strTab.Length];
+
+					strPck.Read(bytesPck, 0, (int)strPck.Length);
+					strTab.Read(bytesTab, 0, (int)strTab.Length);
+
+					MonotoneSprites = new SpriteCollection(
+														"Monotone_D",
+														Palette.UfoBattle,
+														ResourceInfo.TAB_WORD_LENGTH_2,
+														bytesPck,
+														bytesTab);
+
+					foreach (var sprite in MonotoneSprites.Sprites) // change to Orange-red ->
+					{
+						for (int i = 0; i != sprite.Bindata.Length; ++i)
+						{
+							if (sprite.Bindata[i] != 0)
+								sprite.Bindata[i] = (byte)(32);
+						}
+						sprite.Sprite = BitmapService.CreateColored(
+																XCImage.SpriteWidth32,
+																XCImage.SpriteHeight40,
+																sprite.Bindata,
+																sprite.Pal.ColorTable);
+					}
+				}
+			}
+		}
+		#endregion Methods (static)
 	}
 }
+
+/*		internal void Cripple()
+		{
+//			Record = null;
+//			Dead   = null;
+//			Altr   = null;
+
+			Spriteset = null;
+
+			var bindata = new byte[XCImage.SpriteWidth32
+								 * XCImage.SpriteHeight40]; // inits to 0
+
+			for (int i = 0; i != bindata.Length; ++i)
+			{
+				if (   i % XCImage.SpriteWidth32 == 0
+					|| i % XCImage.SpriteWidth32 - (XCImage.SpriteWidth32 - 1) == 0)
+				{
+					bindata[i] = 15; // color-id
+				}
+			}
+
+			var image = new PckImage();
+			image.Bindata = bindata;
+			image.Id = -1;
+			image.Pal = Palette.UfoBattle;
+//			image.SetId = -1;
+
+			image.Sprite = BitmapService.CreateColored(
+													XCImage.SpriteWidth32,
+													XCImage.SpriteHeight40,
+													image.Bindata,
+													image.Pal.ColorTable);
+
+			image.SpriteT = BitmapService.CreateColored(
+													XCImage.SpriteWidth32,
+													XCImage.SpriteHeight40,
+													image.Bindata,
+													image.Pal.GrayScaled.ColorTable);
+
+			Sprites = new XCImage[PHASECOUNT];
+			for (int i = 0; i != PHASECOUNT; ++i)
+				Sprites[i] = image;
+
+//			TerId = -1;
+		} */
