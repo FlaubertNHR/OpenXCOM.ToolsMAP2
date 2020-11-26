@@ -424,6 +424,12 @@ namespace XCom
 
 				int id;
 
+//				int topid = Parts.Count - 1;
+//				if (topid > (int)Byte.MaxValue) // NOTE: User is actually disallowed from placing
+//					topid = (int)Byte.MaxValue; // any tilepart w/ an id greater than Byte.MaxValue.
+
+				// TODO: Ask user before NOT writing crippled tileids.
+
 				MapTile tile;
 
 				for (int lev = 0; lev != MapSize.Levs; ++lev)
@@ -432,23 +438,51 @@ namespace XCom
 				{
 					tile = this[col, row, lev];
 
-					if (tile.Floor   == null || (id = tile.Floor  .SetId + BlanksReservedCount) > (int)Byte.MaxValue)
-						fs.WriteByte(0);
+					if (tile.Floor == null || (id = tile.Floor.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
+					{
+						fs.WriteByte((byte)0);
+					}
+					else if (id >= Parts.Count)
+					{
+						fs.WriteByte((byte)0);
+						ForceReload = true;
+					}
 					else
 						fs.WriteByte((byte)id);
 
-					if (tile.West    == null || (id = tile.West   .SetId + BlanksReservedCount) > (int)Byte.MaxValue)
-						fs.WriteByte(0);
+					if (tile.West == null || (id = tile.West.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
+					{
+						fs.WriteByte((byte)0);
+					}
+					else if (id >= Parts.Count)
+					{
+						fs.WriteByte((byte)0);
+						ForceReload = true;
+					}
 					else
 						fs.WriteByte((byte)id);
 
-					if (tile.North   == null || (id = tile.North  .SetId + BlanksReservedCount) > (int)Byte.MaxValue)
-						fs.WriteByte(0);
+					if (tile.North == null || (id = tile.North.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
+					{
+						fs.WriteByte((byte)0);
+					}
+					else if (id >= Parts.Count)
+					{
+						fs.WriteByte((byte)0);
+						ForceReload = true;
+					}
 					else
 						fs.WriteByte((byte)id);
 
 					if (tile.Content == null || (id = tile.Content.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
-						fs.WriteByte(0);
+					{
+						fs.WriteByte((byte)0);
+					}
+					else if (id >= Parts.Count)
+					{
+						fs.WriteByte((byte)0);
+						ForceReload = true;
+					}
 					else
 						fs.WriteByte((byte)id);
 				}

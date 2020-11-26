@@ -152,6 +152,12 @@ namespace XCom.Base
 
 		public int TerrainsetPartsExceeded
 		{ get; set; }
+
+		/// <summary>
+		/// Set true if a crippled tile was deleted and MainView needs to update.
+		/// </summary>
+		public bool ForceReload
+		{ get; set; }
 		#endregion Properties
 
 

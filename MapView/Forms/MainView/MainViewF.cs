@@ -1284,7 +1284,15 @@ namespace MapView
 			if (MainViewUnderlay.MapBase != null)
 			{
 				if (MainViewUnderlay.MapBase.SaveMap())
+				{
 					MapChanged = false;
+
+					if (MainViewUnderlay.MapBase.ForceReload)
+					{
+						MainViewUnderlay.MapBase.ForceReload = false;
+						ForceReload();
+					}
+				}
 
 				if (MainViewUnderlay.MapBase.SaveRoutes())
 					ObserverManager.RouteView.Control.RouteChanged = false;
@@ -1297,7 +1305,15 @@ namespace MapView
 			if (MainViewUnderlay.MapBase != null)
 			{
 				if (MainViewUnderlay.MapBase.SaveMap())
+				{
 					MapChanged = false;
+
+					if (MainViewUnderlay.MapBase.ForceReload)
+					{
+						MainViewUnderlay.MapBase.ForceReload = false;
+						ForceReload();
+					}
+				}
 			}
 		}
 
@@ -1407,6 +1423,12 @@ namespace MapView
 				_loadReady = LOADREADY_STAGE_2;
 				LoadSelectedDescriptor();
 			}
+		}
+
+		private void ForceReload()
+		{
+			_loadReady = LOADREADY_STAGE_2;
+			LoadSelectedDescriptor();
 		}
 
 
@@ -1775,6 +1797,12 @@ namespace MapView
 								&& MainViewUnderlay.MapBase.SaveMap())
 							{
 								MapChanged = false;
+
+								if (MainViewUnderlay.MapBase.ForceReload)
+								{
+									MainViewUnderlay.MapBase.ForceReload = false;
+									ForceReload();
+								}
 							}
 
 							if (   MainViewUnderlay.MapBase.RoutesChanged
@@ -2461,6 +2489,12 @@ namespace MapView
 								&& MainViewUnderlay.MapBase.SaveMap())
 							{
 								MapChanged = false;
+
+								if (MainViewUnderlay.MapBase.ForceReload)
+								{
+									MainViewUnderlay.MapBase.ForceReload = false;
+									ForceReload();
+								}
 							}
 
 							if (   MainViewUnderlay.MapBase.RoutesChanged
