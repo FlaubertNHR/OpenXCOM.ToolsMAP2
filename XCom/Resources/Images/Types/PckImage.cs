@@ -48,7 +48,7 @@ namespace XCom
 
 
 		#region Fields
-		private SpriteCollection Spriteset;
+		private SpriteCollection _spriteset;
 		#endregion Fields
 
 
@@ -83,13 +83,14 @@ namespace XCom
 				SpriteCollection spriteset)
 			:
 				base(
-					new byte[XCImage.SpriteWidth * XCImage.SpriteHeight],	// new byte[]{}
-					XCImage.SpriteWidth,									// 0
-					XCImage.SpriteHeight,									// 0
+					new byte[XCImage.SpriteWidth
+						   * XCImage.SpriteHeight],	// new byte[]{}
+					XCImage.SpriteWidth,			// 0
+					XCImage.SpriteHeight,			// 0
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
 					pckId)
 		{
-			Spriteset = spriteset;	// only for ToString().
+			_spriteset = spriteset;	// only for ToString().
 			SetId = _setId++;		// only for 'MapInfoDialog'.
 
 			Pal = pal;
@@ -113,7 +114,7 @@ namespace XCom
 						if (posDst >= Bindata.Length)
 						{
 							//DSShared.LogFile.WriteLine(". . FAIL posDst= " + posDst);
-							Spriteset.Fail |= SpriteCollection.FAIL_OF_SPRITE;
+							_spriteset.Fail |= SpriteCollection.FAIL_OF_SPRITE;
 							return;
 						}
 
@@ -228,8 +229,8 @@ namespace XCom
 		{
 			string ret = String.Empty;
 
-			if (Spriteset != null)
-				ret += Spriteset.ToString();
+			if (_spriteset != null)
+				ret += _spriteset.ToString();
 
 			ret += Id + Environment.NewLine;
 
@@ -290,7 +291,7 @@ namespace XCom
 			var sprite = new PckImage();
 
 			// PckImage vars
-			sprite.Spriteset = spriteset;
+			sprite._spriteset = spriteset;
 			sprite.SetId = -1;
 
 			// XCImage vars
