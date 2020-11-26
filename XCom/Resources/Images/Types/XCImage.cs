@@ -25,7 +25,7 @@ namespace XCom
 		/// @note Byte arrays get initialized w/ "0" by default.
 		/// </summary>
 		public byte[] Bindata
-		{ get; protected set; }
+		{ get; internal protected set; }
 
 		public int Id
 		{ get; set; }
@@ -72,13 +72,13 @@ namespace XCom
 			Bindata = bindata;
 			Pal     = pal;
 
-			if (Pal != null)											// NOTE: this is to check for a call by BitmapService.CreateSprite()
-				Sprite = BitmapService.CreateColored(					// which is called by
-													width,				// BitmapService.CreateSpriteset() and
-													height,				// several PckViewForm contextmenu events
-													Bindata,			// BUT: the call by PckImage..cTor initializer needs to decode
-													Pal.ColorTable);	// the file-data first, then it creates its own 'Image'.
-		}																// that's why i prefer pizza.
+			if (Pal != null)										// NOTE: this is to check for a call by BitmapService.CreateSprite()
+				Sprite = BitmapService.CreateColored(				// which is called by
+												width,				// BitmapService.CreateSpriteset() and
+												height,				// several PckViewForm contextmenu events
+												Bindata,			// BUT: the call by PckImage..cTor initializer needs to decode
+												Pal.ColorTable);	// the file-data first, then it creates its own 'Image'.
+		}															// that's why i prefer pizza.
 
 		/// <summary>
 		/// cTor[1]. For clone. See PckImage..cTor[1] and .Duplicate().
