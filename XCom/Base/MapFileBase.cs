@@ -150,7 +150,7 @@ namespace XCom.Base
 		public bool RoutesChanged
 		{ get; set; }
 
-		public bool TerrainsetPartsExceeded
+		public int TerrainsetPartsExceeded
 		{ get; set; }
 		#endregion Properties
 

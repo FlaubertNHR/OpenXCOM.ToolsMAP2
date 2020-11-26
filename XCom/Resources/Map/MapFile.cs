@@ -119,28 +119,43 @@ namespace XCom
 												fs.ReadByte()); // content id
 				}
 
-				if (TerrainsetPartsExceeded)
+				if (TerrainsetPartsExceeded != 0)
 				{
-					MessageBox.Show(
-								"There are tileparts that exceed the bounds of the Map's"
-									+ " currently allocated MCD records. They will be"
-									+ " nulled so that the rest of the tileset can be"
-									+ " displayed."
-									+ Environment.NewLine + Environment.NewLine
-									+ "WARNING: Saving the Map in its current state would"
-									+ " lose those tilepart references. But if you know"
-									+ " what terrain(s) have gone rogue they can be added"
-									+ " to the Map's terrainset with the TilesetEditor.",
-								" Warning",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Warning,
-								MessageBoxDefaultButton.Button1,
-								0);
+					const string label = "partids detected in the Mapfile that exceed the bounds of the allocated terrainset";
+
+					bool singular = (TerrainsetPartsExceeded == 1);
+
+					string copyable0 = "There " + (singular ? "is " : "are ") + TerrainsetPartsExceeded + " tilepart"
+									 + (singular ? String.Empty : "s") + " that exceed" + (singular ? "s" : String.Empty)
+									 + " the bounds of the Map's currently allocated MCD records. "
+									 + (singular ? "It" : "They") + " will be replaced by" + (singular ? " a" : String.Empty)
+									 + " temporary tilepart" + (singular ? String.Empty : "s") + " and displayed on"
+									 + " the Map as orange-red borkiness.";
+					copyable0 = Infobox.FormatString(copyable0, 55) + Environment.NewLine + Environment.NewLine;
+
+					string copyable1 = "Note that borked parts that are in floor-slots could"
+									 + " get hidden beneath valid content-parts, etc.";
+					copyable1 = Infobox.FormatString(copyable1, 55) + Environment.NewLine + Environment.NewLine;
+
+					string copyable2 = "WARNING: Saving the Map in its current state would forever lose"
+									 + " those tilepart references. But if you know what terrain(s) have"
+									 + " gone rogue they can be added to the Map's terrainset with the"
+									 + " TilesetEditor. Or if you know how many records have been removed"
+									 + " from the terrainset the ids of the missing parts can be shifted"
+									 + " downward into an acceptable range by the TilepartSubstitution"
+									 + " dialog under MainView's edit-menu.";
+					copyable2 = Infobox.FormatString(copyable2, 55);
+
+					using (var f = new Infobox("Warning", label, copyable0 + copyable1 + copyable2))
+					{
+						f.ShowDialog();
+					}
 				}
 				return true;
 			}
 			return false;
 		}
+
 
 		/// <summary>
 		/// Creates a tile with its four parts.
@@ -177,7 +192,7 @@ namespace XCom
 			{
 				floor = new Tilepart(id_Floor);
 				floor.Cripple(QuadrantType.Floor);
-				TerrainsetPartsExceeded = true;
+				++TerrainsetPartsExceeded;
 			}
 
 			if (id_West < BlanksReservedCount)
@@ -192,7 +207,7 @@ namespace XCom
 			{
 				west = new Tilepart(id_West);
 				west.Cripple(QuadrantType.West);
-				TerrainsetPartsExceeded = true;
+				++TerrainsetPartsExceeded;
 			}
 
 			if (id_North < BlanksReservedCount)
@@ -207,7 +222,7 @@ namespace XCom
 			{
 				north = new Tilepart(id_North);
 				north.Cripple(QuadrantType.North);
-				TerrainsetPartsExceeded = true;
+				++TerrainsetPartsExceeded;
 			}
 
 			if (id_Content < BlanksReservedCount)
@@ -222,7 +237,7 @@ namespace XCom
 			{
 				content = new Tilepart(id_Content);
 				content.Cripple(QuadrantType.Content);
-				TerrainsetPartsExceeded = true;
+				++TerrainsetPartsExceeded;
 			}
 
 			return new MapTile(

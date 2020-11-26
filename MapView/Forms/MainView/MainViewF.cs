@@ -3106,9 +3106,9 @@ namespace MapView
 						tsslSelectionSize.Text = String.Empty;
 
 						//LogFile.WriteLine(". MapChanged [1]= " + @base.MapChanged);
-						if (!@base.MapChanged) MapChanged = @base.TerrainsetPartsExceeded;
+						if (!@base.MapChanged) MapChanged = (@base.TerrainsetPartsExceeded != 0);
 						//LogFile.WriteLine(". MapChanged [2]= " + @base.MapChanged);
-						@base.TerrainsetPartsExceeded = false;
+						@base.TerrainsetPartsExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
 
 						var routeview1 = ObserverManager.RouteView.Control;
 						var routeview2 = ObserverManager.TopRouteView.ControlRoute;

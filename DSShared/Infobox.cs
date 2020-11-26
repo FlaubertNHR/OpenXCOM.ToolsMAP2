@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -136,6 +137,8 @@ namespace DSShared
 		{
 			rtb_Copyable.AutoWordSelection = false; // <- needs to be here not in the designer to work right.
 			rtb_Copyable.Select();
+
+			rtb_Copyable.SelectionStart = rtb_Copyable.TextLength;
 		}
 
 		protected override void OnResize(EventArgs e)
@@ -196,6 +199,72 @@ namespace DSShared
 		}
 		#endregion Methods
 
+
+		#region Methods (static)
+		/// <summary>
+		/// Takes and input-string and splices it with newlines every length in
+		/// chars.
+		/// TODO: There's something borky with the algo. See testcase below ...
+		/// </summary>
+		/// <param name="text"></param>
+		/// <param name="chars"></param>
+		/// <returns></returns>
+		public static string FormatString(string text, int chars)
+		{
+			var sb = new System.Text.StringBuilder();
+
+			int pos = 0;
+
+			var list = new List<int>();
+
+			for (int i = 0; i != text.Length; ++i)
+			{
+				if (text[i] == ' ')
+					pos = i;
+
+				sb.Append(text[i]);
+
+				if (i != 0 && (i % chars) == 0)
+				{
+					sb.Remove(pos - list.Count, 1);
+					list.Add(pos + list.Count);
+				}
+			}
+
+			foreach (var i in list)
+				sb.Insert(i, Environment.NewLine);
+
+			return sb.ToString();
+		}
+/* FormatString() testcase:
+- use 60-char width and a "terrainset" in 'copyable2' gets stuck out to the right
+
+	const string label = "partids detected in the Mapfile that exceed the bounds of the allocated terrainset";
+
+	string copyable0 = "There are " + TerrainsetPartsExceeded + " tilepart(s) that"
+					 + " exceed the bounds of the Map's currently allocated MCD records."
+					 + " They will be replaced by temporary tileparts and displayed on"
+					 + " the Map as orange-red borkiness.";
+	copyable0 = FormatString(copyable0, 60) + Environment.NewLine + Environment.NewLine;
+
+	string copyable1 = "Note that borked parts that are in floor-slots could"
+					 + " get hidden beneath valid content-parts, etc.";
+	copyable1 = FormatString(copyable1, 60) + Environment.NewLine + Environment.NewLine;
+
+	string copyable2 = "WARNING: Saving the Map in its current state would forever lose"
+					 + " those tilepart references. But if you know what terrain(s) have"
+					 + " gone rogue they can be added to the Map's terrainset with the"
+					 + " TilesetEditor. Or if you know how many records have been removed"
+					 + " from the terrainset the ids of the missing parts can be shifted"
+					 + " downward into an acceptable range by the TilepartSubstitution"
+					 + " dialog under MainView's edit-menu.";
+	copyable2 = FormatString(copyable2, 60);
+
+	using (var f = new Infobox("Warning", label, copyable0 + copyable1 + copyable2))
+	{
+		f.ShowDialog();
+	} */
+		#endregion Methods (static)
 
 
 		#region Designer
