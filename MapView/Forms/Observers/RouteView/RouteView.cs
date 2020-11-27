@@ -158,18 +158,12 @@ namespace MapView.Forms.Observers
 				}
 			}
 		}
-		#endregion Properties (static)
-
-
-		#region Properties
-		internal RoutePanel RoutePanel
-		{ get; private set; }
 
 		/// <summary>
 		/// Coordinates the <see cref="RoutesChanged"/> flag between RouteView
 		/// and TopRouteView(Route).
 		/// </summary>
-		internal bool RouteChanged
+		internal static bool RoutesChangedCoordinator
 		{
 			set
 			{
@@ -177,6 +171,12 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.RoutesChanged = value;
 			}
 		}
+		#endregion Properties (static)
+
+
+		#region Properties
+		internal RoutePanel RoutePanel
+		{ get; private set; }
 
 		/// <summary>
 		/// Sets the 'MapFileBase.RoutesChanged' flag. This is only an
@@ -516,7 +516,7 @@ namespace MapView.Forms.Observers
 				if ((NodeSelected = node) == null
 					&& args.MouseButton == MouseButtons.Right)
 				{
-					RouteChanged = true;
+					RoutesChangedCoordinator = true;
 					NodeSelected = _file.AddRouteNode(args.Location);
 					InvalidatePanels(); // not sure why but that's needed after adding the "ReduceDraws" option
 				}
@@ -526,7 +526,7 @@ namespace MapView.Forms.Observers
 			{
 				if (args.MouseButton == MouseButtons.Right)
 				{
-					RouteChanged = true;
+					RoutesChangedCoordinator = true;
 					node = _file.AddRouteNode(args.Location);
 					ConnectNode(node);
 				}
@@ -561,7 +561,7 @@ namespace MapView.Forms.Observers
 			{
 				if (args.Tile.Node == null)
 				{
-					RouteChanged = true;
+					RoutesChangedCoordinator = true;
 
 					_file[Dragnode.Col, // clear the node from the previous tile
 						  Dragnode.Row,
@@ -670,7 +670,7 @@ namespace MapView.Forms.Observers
 							break;
 
 						default:
-							RouteChanged = true;
+							RoutesChangedCoordinator = true;
 							node[(int)result].Destination = NodeSelected.Id;
 							node[(int)result].Distance = CalculateLinkDistance(node, NodeSelected);
 							break;
@@ -701,7 +701,7 @@ namespace MapView.Forms.Observers
 							break;
 
 						default:
-							RouteChanged = true;
+							RoutesChangedCoordinator = true;
 							NodeSelected[(int)result].Destination = node.Id;
 							NodeSelected[(int)result].Distance = CalculateLinkDistance(NodeSelected, node);
 							break;
@@ -1073,7 +1073,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!_loadingInfo)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 				NodeSelected.Type = (UnitType)cbType.SelectedItem;
 
 				if (Tag as String == "ROUTE")
@@ -1096,7 +1096,7 @@ namespace MapView.Forms.Observers
 				}
 				else
 				{
-					RouteChanged = true;
+					RoutesChangedCoordinator = true;
 					NodeSelected.Rank = (byte)cbRank.SelectedIndex;
 //					NodeSelected.Rank = (byte)((Pterodactyl)cbRank.SelectedItem).Case; // <- MapView1-type code.
 
@@ -1122,7 +1122,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!_loadingInfo)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)cbSpawn.SelectedItem).O;
 
 				if (RoutesInfo != null)
@@ -1143,7 +1143,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!_loadingInfo)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 				NodeSelected.Patrol = (PatrolPriority)((Pterodactyl)cbPatrol.SelectedItem).O;
 
 				if (Tag as String == "ROUTE")
@@ -1159,7 +1159,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!_loadingInfo)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 				NodeSelected.Attack = (AttackBase)((Pterodactyl)cbAttack.SelectedItem).O;
 
 				if (Tag as String == "ROUTE")
@@ -1181,7 +1181,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!_loadingInfo)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 
 				int slot;
 				TextBox tb;
@@ -1381,7 +1381,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!_loadingInfo)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 
 				int slot;
 
@@ -1468,7 +1468,7 @@ namespace MapView.Forms.Observers
 
 				if (RouteCheckService.dialog_InvalidNode(_file, node) == DialogResult.Yes)
 				{
-					RouteChanged = true;
+					RoutesChangedCoordinator = true;
 
 					if (RoutesInfo != null)
 						RoutesInfo.DeleteNode(node);
@@ -1705,7 +1705,7 @@ namespace MapView.Forms.Observers
 				var nodeData = Clipboard.GetText().Split(NodeCopySeparator);
 				if (nodeData[0] == NodeCopyPrefix)
 				{
-					RouteChanged = true;
+					RoutesChangedCoordinator = true;
 
 					var invariant = CultureInfo.InvariantCulture;
 
@@ -1735,7 +1735,7 @@ namespace MapView.Forms.Observers
 		{
 			if (NodeSelected != null)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 
 				if (RoutesInfo != null)
 					RoutesInfo.DeleteNode(NodeSelected);
@@ -1933,7 +1933,7 @@ namespace MapView.Forms.Observers
 						var routes = new RouteNodeCollection(ofd.FileName);
 						if (!routes.Fail)
 						{
-							RouteChanged = true;
+							RoutesChangedCoordinator = true;
 
 							ObserverManager.RouteView   .Control     .DeselectNode();
 							ObserverManager.TopRouteView.ControlRoute.DeselectNode();
@@ -2045,7 +2045,7 @@ namespace MapView.Forms.Observers
 
 				if (changed != 0)
 				{
-					RouteChanged = true;
+					RoutesChangedCoordinator = true;
 					UpdateNodeInfo();
 
 					MessageBox.Show(
@@ -2088,7 +2088,7 @@ namespace MapView.Forms.Observers
 								MessageBoxDefaultButton.Button2,
 								0) == DialogResult.Yes)
 				{
-					RouteChanged = true;
+					RoutesChangedCoordinator = true;
 
 					for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 					{
@@ -2155,7 +2155,7 @@ namespace MapView.Forms.Observers
 			string info;
 			if (changed != 0)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 				info = String.Format(
 								CultureInfo.CurrentCulture,
 								"{0} link{1} updated.",
@@ -2194,7 +2194,7 @@ namespace MapView.Forms.Observers
 
 			if (RouteCheckService.CheckNodeBounds(_file, true) == DialogResult.Yes)
 			{
-				RouteChanged = true;
+				RoutesChangedCoordinator = true;
 
 				foreach (RouteNode node in RouteCheckService.Invalids)
 				{

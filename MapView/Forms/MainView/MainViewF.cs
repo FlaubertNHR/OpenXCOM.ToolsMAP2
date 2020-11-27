@@ -1284,36 +1284,30 @@ namespace MapView
 			if (MainViewUnderlay.MapBase != null)
 			{
 				if (MainViewUnderlay.MapBase.SaveMap())
-				{
 					MapChanged = false;
 
-					if (MainViewUnderlay.MapBase.ForceReload)
-					{
-						MainViewUnderlay.MapBase.ForceReload = false;
-						ForceReload();
-					}
-				}
-
 				if (MainViewUnderlay.MapBase.SaveRoutes())
-					ObserverManager.RouteView.Control.RouteChanged = false;
+					RouteView.RoutesChangedCoordinator = false;
+
+				if (MainViewUnderlay.MapBase.ForceReload // force reload only if Mapfile and Routefile were saved successfully ->
+					&& !MainViewUnderlay.MapBase.MapChanged
+					&& !MainViewUnderlay.MapBase.RoutesChanged) // TODO: if Routes not Ok reload Mapfile but NOT Routesfile ...
+				{
+					ForceReload();
+				}
 			}
 			MaptreeChanged = !TileGroupManager.WriteTileGroups();
 		}
 
 		internal void OnSaveMapClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapBase != null
+				&& MainViewUnderlay.MapBase.SaveMap())
 			{
-				if (MainViewUnderlay.MapBase.SaveMap())
-				{
-					MapChanged = false;
+				MapChanged = false;
 
-					if (MainViewUnderlay.MapBase.ForceReload)
-					{
-						MainViewUnderlay.MapBase.ForceReload = false;
-						ForceReload();
-					}
-				}
+				if (MainViewUnderlay.MapBase.ForceReload)
+					ForceReload();
 			}
 		}
 
@@ -1322,7 +1316,7 @@ namespace MapView
 			if (   MainViewUnderlay.MapBase != null
 				&& MainViewUnderlay.MapBase.SaveRoutes())
 			{
-				ObserverManager.RouteView.Control.RouteChanged = false;
+				RouteView.RoutesChangedCoordinator = false;
 			}
 		}
 
@@ -1410,6 +1404,8 @@ namespace MapView
 		/// it would be better if it didn't so that the SaveAlerts could be
 		/// bypassed) - so this function ought be reworked to reload only the
 		/// Terrains (MCDs/PCKs/TABs). But that's a headache and a half ...
+		/// 
+		/// TODO: Actually there should be a separate ReloadTerrains() funct.
 		/// </summary>
 		private void OnReloadDescriptor()
 		{
@@ -1425,10 +1421,18 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Call this only after the Mapfile was saved successfully.
+		/// </summary>
 		private void ForceReload()
 		{
-			_loadReady = LOADREADY_STAGE_2;
-			LoadSelectedDescriptor();
+			if (SaveAlertRoutes() == DialogResult.OK) // TODO: if Routes not Ok reload Mapfile but NOT Routesfile ...
+			{
+				MainViewUnderlay.MapBase.ForceReload = false;
+
+				_loadReady = LOADREADY_STAGE_2;
+				LoadSelectedDescriptor();
+			}
 		}
 
 
@@ -1619,7 +1623,7 @@ namespace MapView
 						if ((changes & MapFileBase.CHANGED_NOD) != 0)
 						{
 							if (!@base.RoutesChanged)
-								ObserverManager.RouteView.Control.RouteChanged = true;
+								RouteView.RoutesChangedCoordinator = true;
 
 							foreach (RouteNode node in RouteCheckService.Invalids)
 							{
@@ -1720,7 +1724,7 @@ namespace MapView
 			if (count != 0)
 			{
 				if (!MainViewF.that.MaptreeChanged)
-					MainViewF.that.MaptreeChanged = true;
+					 MainViewF.that.MaptreeChanged = true;
 
 				if (count == 1) info = count + " flag cleared.";
 				else            info = count + " flags cleared.";
@@ -1793,40 +1797,41 @@ namespace MapView
 					case DialogResult.Retry:
 						if (MainViewUnderlay.MapBase != null)
 						{
-							if (   MainViewUnderlay.MapBase.MapChanged
+							if (MainViewUnderlay.MapBase.MapChanged
 								&& MainViewUnderlay.MapBase.SaveMap())
 							{
 								MapChanged = false;
-
-								if (MainViewUnderlay.MapBase.ForceReload)
-								{
-									MainViewUnderlay.MapBase.ForceReload = false;
-									ForceReload();
-								}
 							}
 
-							if (   MainViewUnderlay.MapBase.RoutesChanged
+							if (MainViewUnderlay.MapBase.RoutesChanged
 								&& MainViewUnderlay.MapBase.SaveRoutes())
 							{
-								ObserverManager.RouteView.Control.RouteChanged = false;
+								RouteView.RoutesChangedCoordinator = false;
+							}
+
+							if (MainViewUnderlay.MapBase.ForceReload		// NOTE: Forcing reload is probably not necessary here
+								&& !MainViewUnderlay.MapBase.MapChanged		// because the current Map is *probably* going to change.
+								&& !MainViewUnderlay.MapBase.RoutesChanged) // TODO: if Routes not Ok reload Mapfile but NOT Routesfile ...
+							{
+								ForceReload();
 							}
 						}
 
 						if (MaptreeChanged)
 						{
 //							MaptreeChanged = !TileGroupInfo.WriteTileGroups(); // <- that could cause endless recursion.
+							// TODO: if(TileGroupManager.WriteTileGroups()) MaptreeChanged=false;
 							TileGroupManager.WriteTileGroups();
 							MaptreeChanged = false;
 						}
 						break;
 
 					case DialogResult.Ignore:
-						// The process will be killed or Canceled so don't change these
+						// The process will be killed or Canceled so don't bother to change these ->
 //						MapChanged =
 //						ObserverManager.RouteView   .Control     .RoutesChanged =
 //						ObserverManager.TopRouteView.ControlRoute.RoutesChanged =
 //						MaptreeChanged = false;
-
 						break;
 				}
 			}
@@ -1997,7 +2002,7 @@ namespace MapView
 				}
 			}
 			else
-				_finfo.Close(); // TODO: Close MapInfo when loading a different Mapfile. (etc)
+				_finfo.Close();
 		}
 
 		/// <summary>
@@ -2485,22 +2490,23 @@ namespace MapView
 							return;
 
 						case DialogResult.Retry:
-							if (   MainViewUnderlay.MapBase.MapChanged
+							if (MainViewUnderlay.MapBase.MapChanged
 								&& MainViewUnderlay.MapBase.SaveMap())
 							{
 								MapChanged = false;
-
-								if (MainViewUnderlay.MapBase.ForceReload)
-								{
-									MainViewUnderlay.MapBase.ForceReload = false;
-									ForceReload();
-								}
 							}
 
-							if (   MainViewUnderlay.MapBase.RoutesChanged
+							if (MainViewUnderlay.MapBase.RoutesChanged
 								&& MainViewUnderlay.MapBase.SaveRoutes())
 							{
-								ObserverManager.RouteView.Control.RouteChanged = false;
+								RouteView.RoutesChangedCoordinator = false;
+							}
+
+							if (MainViewUnderlay.MapBase.ForceReload		// NOTE: Forcing reload is probably not necessary here
+								&& !MainViewUnderlay.MapBase.MapChanged		// because the current Map is *probably* going to change.
+								&& !MainViewUnderlay.MapBase.RoutesChanged) // TODO: if Routes not Ok reload Mapfile but NOT Routesfile ...
+							{
+								ForceReload();
 							}
 							break;
 
@@ -3173,7 +3179,7 @@ namespace MapView
 
 						if (RouteCheckService.CheckNodeBounds(@base as MapFile) == DialogResult.Yes)
 						{
-							routeview1.RouteChanged = true;
+							RouteView.RoutesChangedCoordinator = true;
 
 							foreach (RouteNode node in RouteCheckService.Invalids)
 								(@base as MapFile).Routes.DeleteNode(node);
@@ -3313,7 +3319,8 @@ namespace MapView
 		/// @note Is called when either (a) MapView is closing (b) a Map is
 		/// about to load/reload.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>DialogResult.OK if things went Ok; DialogResult.Cancel if
+		/// user chose to cancel or the Mapfile was not written successfully</returns>
 		private DialogResult SaveAlertMap()
 		{
 			//LogFile.WriteLine("MainViewF.SaveAlertMap()");
@@ -3352,7 +3359,8 @@ namespace MapView
 		/// @note Is called when either (a) MapView is closing (b) another Map
 		/// is about to load.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>DialogResult.OK if things went Ok; DialogResult.Cancel if
+		/// user chose to cancel or the Routefile was not written successfully</returns>
 		private DialogResult SaveAlertRoutes()
 		{
 			if (MainViewUnderlay.MapBase != null && MainViewUnderlay.MapBase.RoutesChanged)
@@ -3373,7 +3381,7 @@ namespace MapView
 						goto case DialogResult.Cancel;
 
 					case DialogResult.No:		// don't save & clear RoutesChanged flag
-						ObserverManager.RouteView.Control.RouteChanged = false;
+						RouteView.RoutesChangedCoordinator = false;
 						break;
 
 					case DialogResult.Cancel:	// dismiss confirmation dialog & leave state unaffected
@@ -3392,7 +3400,9 @@ namespace MapView
 		/// tilesets-config file - is changed then saving the current one is
 		/// pointless).
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>DialogResult.OK if things went Ok; DialogResult.Cancel if
+		/// user chose to cancel. TODO: The return will be Ok even if the
+		/// Maptree was NOT successfully written.</returns>
 		private DialogResult SaveAlertMaptree()
 		{
 			if (MaptreeChanged)
