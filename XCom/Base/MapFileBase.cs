@@ -154,7 +154,8 @@ namespace XCom.Base
 		{ get; set; }
 
 		/// <summary>
-		/// Set true if a crippled tile was deleted and MainView needs to update.
+		/// Set true if a crippled tile was deleted and MainView needs to reload
+		/// the Mapfile.
 		/// </summary>
 		public bool ForceReload
 		{ get; set; }
