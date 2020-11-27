@@ -138,7 +138,8 @@ namespace DSShared
 			rtb_Copyable.AutoWordSelection = false; // <- needs to be here not in the designer to work right.
 			rtb_Copyable.Select();
 
-			rtb_Copyable.SelectionStart = rtb_Copyable.TextLength;
+			// don't do this because the top of the text gets hidden if a scrollbar appears
+//			rtb_Copyable.SelectionStart = rtb_Copyable.TextLength;
 		}
 
 		protected override void OnResize(EventArgs e)
@@ -214,7 +215,6 @@ namespace DSShared
 			var sb = new System.Text.StringBuilder();
 
 			int pos = 0;
-
 			var list = new List<int>();
 
 			for (int i = 0; i != text.Length; ++i)
@@ -225,45 +225,46 @@ namespace DSShared
 				sb.Append(text[i]);
 
 				if (i != 0 && (i % chars) == 0)
-				{
-					sb.Remove(pos - list.Count, 1);
-					list.Add(pos + list.Count);
-				}
+					list.Add(pos);
 			}
 
-			foreach (var i in list)
-				sb.Insert(i, Environment.NewLine);
-
+			for (int i = list.Count - 1; i != -1; --i)
+			{
+				sb.Remove(list[i], 1);
+				sb.Insert(list[i], Environment.NewLine);
+			}
 			return sb.ToString();
 		}
 /* FormatString() testcase:
-- use 60-char width and a "terrainset" in 'copyable2' gets stuck out to the right
+- use 60-char width and "terrainset" in 'copyable' gets stuck out to the right
 
-	const string label = "partids detected in the Mapfile that exceed the bounds of the allocated terrainset";
+	string copyable = "WARNING: Saving the Map in its current state would forever lose"
+					+ " those tilepart references. But if you know what terrain(s) have"
+					+ " gone rogue they can be added to the Map's terrainset with the"
+					+ " TilesetEditor. Or if you know how many records have been removed"
+					+ " from the terrainset the ids of the missing parts can be shifted"
+					+ " downward into an acceptable range by the TilepartSubstitution"
+					+ " dialog under MainView's edit-menu.";
+	copyable = FormatString(copyable, 60);
 
-	string copyable0 = "There are " + TerrainsetPartsExceeded + " tilepart(s) that"
-					 + " exceed the bounds of the Map's currently allocated MCD records."
-					 + " They will be replaced by temporary tileparts and displayed on"
-					 + " the Map as orange-red borkiness.";
-	copyable0 = FormatString(copyable0, 60) + Environment.NewLine + Environment.NewLine;
-
-	string copyable1 = "Note that borked parts that are in floor-slots could"
-					 + " get hidden beneath valid content-parts, etc.";
-	copyable1 = FormatString(copyable1, 60) + Environment.NewLine + Environment.NewLine;
-
-	string copyable2 = "WARNING: Saving the Map in its current state would forever lose"
-					 + " those tilepart references. But if you know what terrain(s) have"
-					 + " gone rogue they can be added to the Map's terrainset with the"
-					 + " TilesetEditor. Or if you know how many records have been removed"
-					 + " from the terrainset the ids of the missing parts can be shifted"
-					 + " downward into an acceptable range by the TilepartSubstitution"
-					 + " dialog under MainView's edit-menu.";
-	copyable2 = FormatString(copyable2, 60);
-
-	using (var f = new Infobox("Warning", label, copyable0 + copyable1 + copyable2))
+	using (var f = new Infobox("Warning", "test", copyable))
 	{
 		f.ShowDialog();
-	} */
+	}
+		WARNING: Saving the Map in its current state would forever
+		lose those tilepart references. But if you know what
+		terrain(s) have gone rogue they can be added to the Map's terrainset <- Is sticking out.
+		with the TilesetEditor. Or if you know how many records
+		have been removed from the terrainset the ids of the missing
+		parts can be shifted downward into an acceptable range by the
+		TilepartSubstitution dialog under MainView's edit-menu.
+
+- or this string w/ 55-char width:
+		There are 2 tileparts that exceed the bounds of the
+		Map's currently allocated MCD records. They will be
+		replaced by temporary tileparts and displayed on the Map as <- Is sticking out.
+		orange-red borkiness.
+*/
 		#endregion Methods (static)
 
 
