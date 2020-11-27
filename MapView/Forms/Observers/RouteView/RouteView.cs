@@ -184,7 +184,7 @@ namespace MapView.Forms.Observers
 		/// 'RoutesChanged' flag is stored in <see cref="T:XCom.Base.MapFileBase"/>.
 		/// reasons.
 		/// </summary>
-		internal bool RoutesChanged
+		private bool RoutesChanged
 		{
 			set { btnSave.Enabled = (_file.RoutesChanged = value); }
 		}
