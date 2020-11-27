@@ -1284,17 +1284,15 @@ namespace MapView
 			if (MainViewUnderlay.MapBase != null)
 			{
 				if (MainViewUnderlay.MapBase.SaveMap())
+				{
 					MapChanged = false;
+
+					if (MainViewUnderlay.MapBase.ForceReload)
+						ForceMapReload();
+				}
 
 				if (MainViewUnderlay.MapBase.SaveRoutes())
 					RouteView.RoutesChangedCoordinator = false;
-
-				if (MainViewUnderlay.MapBase.ForceReload // force reload only if Mapfile and Routefile were saved successfully ->
-					&& !MainViewUnderlay.MapBase.MapChanged
-					&& !MainViewUnderlay.MapBase.RoutesChanged) // TODO: if Routes not Ok reload Mapfile but NOT Routesfile ...
-				{
-					ForceReload();
-				}
 			}
 			MaptreeChanged = !TileGroupManager.WriteTileGroups();
 		}
@@ -1307,7 +1305,7 @@ namespace MapView
 				MapChanged = false;
 
 				if (MainViewUnderlay.MapBase.ForceReload)
-					ForceReload();
+					ForceMapReload();
 			}
 		}
 
@@ -1424,15 +1422,12 @@ namespace MapView
 		/// <summary>
 		/// Call this only after the Mapfile was saved successfully.
 		/// </summary>
-		private void ForceReload()
+		private void ForceMapReload()
 		{
-			if (SaveAlertRoutes() == DialogResult.OK) // TODO: if Routes not Ok reload Mapfile but NOT Routesfile ...
-			{
-				MainViewUnderlay.MapBase.ForceReload = false;
+			MainViewUnderlay.MapBase.ForceReload = false;
 
-				_loadReady = LOADREADY_STAGE_2;
-				LoadSelectedDescriptor();
-			}
+			_loadReady = LOADREADY_STAGE_2;
+			LoadSelectedDescriptor(false, true);
 		}
 
 
@@ -1801,19 +1796,15 @@ namespace MapView
 								&& MainViewUnderlay.MapBase.SaveMap())
 							{
 								MapChanged = false;
+
+								if (MainViewUnderlay.MapBase.ForceReload)	// NOTE: Forcing reload is probably not necessary here
+									ForceMapReload();						// because the current Map is *probably* going to change. I think ...
 							}
 
 							if (MainViewUnderlay.MapBase.RoutesChanged
 								&& MainViewUnderlay.MapBase.SaveRoutes())
 							{
 								RouteView.RoutesChangedCoordinator = false;
-							}
-
-							if (MainViewUnderlay.MapBase.ForceReload		// NOTE: Forcing reload is probably not necessary here
-								&& !MainViewUnderlay.MapBase.MapChanged		// because the current Map is *probably* going to change.
-								&& !MainViewUnderlay.MapBase.RoutesChanged) // TODO: if Routes not Ok reload Mapfile but NOT Routesfile ...
-							{
-								ForceReload();
 							}
 						}
 
@@ -2494,19 +2485,15 @@ namespace MapView
 								&& MainViewUnderlay.MapBase.SaveMap())
 							{
 								MapChanged = false;
+
+								if (MainViewUnderlay.MapBase.ForceReload)	// NOTE: Forcing reload is probably not necessary here
+									ForceMapReload();						// because the current Map is *probably* going to change. I think ...
 							}
 
 							if (MainViewUnderlay.MapBase.RoutesChanged
 								&& MainViewUnderlay.MapBase.SaveRoutes())
 							{
 								RouteView.RoutesChangedCoordinator = false;
-							}
-
-							if (MainViewUnderlay.MapBase.ForceReload		// NOTE: Forcing reload is probably not necessary here
-								&& !MainViewUnderlay.MapBase.MapChanged		// because the current Map is *probably* going to change.
-								&& !MainViewUnderlay.MapBase.RoutesChanged) // TODO: if Routes not Ok reload Mapfile but NOT Routesfile ...
-							{
-								ForceReload();
 							}
 							break;
 
@@ -3086,8 +3073,10 @@ namespace MapView
 		/// <summary>
 		/// Loads the Map that's selected in the Maptree.
 		/// <param name="browseMapfile">true to force the find Mapfile dialog</param>
+		/// <param name="keepRoutes">true to keep the current Routes (use this
+		/// only when reloading the current Mapfile)</param>
 		/// </summary>
-		private void LoadSelectedDescriptor(bool browseMapfile = false)
+		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
 			//LogFile.WriteLine("");
 			//LogFile.WriteLine("");
@@ -3100,11 +3089,17 @@ namespace MapView
 				if (descriptor != null)
 				{
 					bool treechanged = false;
+
+					RouteNodeCollection routes;
+					if (keepRoutes) routes = (MainViewUnderlay.MapBase as MapFile).Routes;
+					else            routes = null;
+
 					var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
 															descriptor,
 															ref treechanged,
 															browseMapfile,
-															Optionables.IgnoreRecordsExceeded);
+															Optionables.IgnoreRecordsExceeded,
+															routes);
 					if (treechanged) MaptreeChanged = true;
 
 					if (@base != null)

@@ -49,15 +49,18 @@ namespace XCom
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="treechanged"></param>
-		/// <param name="browseMapfile">true to force the find file dialog</param>
+		/// <param name="browseMapfile">true to force the find Mapfile dialog</param>
 		/// <param name="ignoreRecordsExceeded">true to bypass a potential
 		/// RecordsExceeded warning dialog</param>
+		/// <param name="routes">current Routes - use this only when reloading
+		/// the current Mapfile and want to keep the route-collection as is</param>
 		/// <returns>null if things go south</returns>
 		public static MapFileBase LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
 				bool browseMapfile,
-				bool ignoreRecordsExceeded)
+				bool ignoreRecordsExceeded,
+				RouteNodeCollection routes)
 		{
 			//LogFile.WriteLine("MapFileService.LoadDescriptor()");
 			//LogFile.WriteLine(". descriptor.Label= " + descriptor.Label);
@@ -179,13 +182,21 @@ namespace XCom
 
 					//LogFile.WriteLine(". . . load Routes");
 
-					var nodes = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
-					if (nodes.Fail)
+					RouteNodeCollection nodes;
+					if (routes == null)
 					{
-						nodes.Fail = false;
-						nodes.Nodes.Clear();
+						nodes = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
+						if (nodes.Fail)
+						{
+							// if Routes fail load the Mapfile regardless
+							// do not null the Routes just clear all nodes
+
+							nodes.Fail = false;
+							nodes.Nodes.Clear();
+						}
 					}
-					// if Routes fail load the Mapfile regardless ->
+					else
+						nodes = routes;
 
 					var file = new MapFile(
 										descriptor,
