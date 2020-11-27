@@ -107,7 +107,7 @@ namespace XCom
 				Tiles   = new MapTileArray(cols, rows, levs);
 				MapSize = new MapSize(     cols, rows, levs);
 
-				for (int lev = 0; lev != levs; ++lev) // z-axis (inverted)
+				for (int lev = 0; lev != levs; ++lev) // z-axis (top to bot)
 				for (int row = 0; row != rows; ++row) // y-axis
 				for (int col = 0; col != cols; ++col) // x-axis
 				{
@@ -144,12 +144,31 @@ namespace XCom
 									 + " from the terrainset the ids of the missing parts can be shifted"
 									 + " downward into an acceptable range by the TilepartSubstitution"
 									 + " dialog under MainView's edit-menu.";
-					copyable2 = Infobox.FormatString(copyable2, 55);
+					copyable2 = Infobox.FormatString(copyable2, 55) + Environment.NewLine + Environment.NewLine;
 
-					using (var f = new Infobox("Warning", label, copyable0 + copyable1 + copyable2))
-					{
+					string copyable3 = "In any case this is a new feature that likely has bugs with regard"
+									 + " to the broader operation of MapView. So it's recommended to resolve"
+									 + " this issue by";
+					copyable3 = Infobox.FormatString(copyable3, 55) + Environment.NewLine + Environment.NewLine;
+
+					string copyable4 = "(a) saving the Mapfile, deleting the rogue tileparts" + Environment.NewLine;
+					string copyable5 = "(b) adding terrains to the terrainset in the TilesetEditor" + Environment.NewLine;
+					string copyable6 = "(c) adding tileparts to allocated terrains externally" + Environment.NewLine;
+					string copyable7 = "(d) using TilepartSubstitution to shift ids down" + Environment.NewLine;
+
+					string copyable = copyable0
+									+ copyable1
+									+ copyable2
+									+ copyable3
+									+ copyable4
+									+ copyable5
+									+ copyable6
+									+ copyable7
+									+ Environment.NewLine
+									+ "Pronto!";
+
+					using (var f = new Infobox("Warning", label, copyable))
 						f.ShowDialog();
-					}
 				}
 				return true;
 			}
