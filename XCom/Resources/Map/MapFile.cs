@@ -424,11 +424,10 @@ namespace XCom
 
 				int id;
 
-//				int topid = Parts.Count - 1;
-//				if (topid > (int)Byte.MaxValue) // NOTE: User is actually disallowed from placing
-//					topid = (int)Byte.MaxValue; // any tilepart w/ an id greater than Byte.MaxValue.
+				// NOTE: User is actually disallowed from placing any tilepart
+				// with an id greater than MapFileBase.MaxTerrainId.
 
-				// TODO: Ask user before NOT writing crippled tileids.
+				// TODO: Ask user before NOT writing crippled partids.
 
 				MapTile tile;
 
@@ -438,7 +437,8 @@ namespace XCom
 				{
 					tile = this[col, row, lev];
 
-					if (tile.Floor == null || (id = tile.Floor.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
+					if (tile.Floor == null
+						|| (id = tile.Floor.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
 					{
 						fs.WriteByte((byte)0);
 					}
@@ -450,7 +450,8 @@ namespace XCom
 					else
 						fs.WriteByte((byte)id);
 
-					if (tile.West == null || (id = tile.West.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
+					if (tile.West == null
+						|| (id = tile.West.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
 					{
 						fs.WriteByte((byte)0);
 					}
@@ -462,7 +463,8 @@ namespace XCom
 					else
 						fs.WriteByte((byte)id);
 
-					if (tile.North == null || (id = tile.North.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
+					if (tile.North == null
+						|| (id = tile.North.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
 					{
 						fs.WriteByte((byte)0);
 					}
@@ -474,7 +476,8 @@ namespace XCom
 					else
 						fs.WriteByte((byte)id);
 
-					if (tile.Content == null || (id = tile.Content.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
+					if (tile.Content == null
+						|| (id = tile.Content.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
 					{
 						fs.WriteByte((byte)0);
 					}
