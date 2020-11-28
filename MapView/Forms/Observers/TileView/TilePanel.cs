@@ -520,7 +520,7 @@ namespace MapView.Forms.Observers
 				List<Brush> brushes;
 				if (MainViewF.Optionables.UseMono)
 				{
-					if (MainViewUnderlay.that.MapBase.Descriptor.GroupType == GameType.Tftd)
+					if (MainViewUnderlay.that.MapFile.Descriptor.GroupType == GameType.Tftd)
 						brushes = Palette.BrushesTftdBattle;
 					else
 						brushes = Palette.BrushesUfoBattle;

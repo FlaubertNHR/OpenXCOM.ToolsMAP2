@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using MapView.Forms.MainView;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -280,7 +279,7 @@ namespace MapView.Forms.Observers
 
 			if (MainViewF.Optionables.UseMono)
 			{
-				if (MainViewUnderlay.that.MapBase.Descriptor.GroupType == GameType.Tftd)
+				if (MainViewUnderlay.that.MapFile.Descriptor.GroupType == GameType.Tftd)
 					_brushes = Palette.BrushesTftdBattle;
 				else
 					_brushes = Palette.BrushesUfoBattle;
@@ -523,7 +522,7 @@ namespace MapView.Forms.Observers
 		/// <param name="panelwidth">the width of QuadrantPanel</param>
 		internal static void PrintSelectedLocation(MapLocation location, int panelwidth)
 		{
-			var file = ObserverManager.TopView.Control.TopPanel.MapBase as MapFile;
+			var file = ObserverManager.TopView.Control.TopPanel.MapFile;
 
 			int c = location.Col;
 			int r = location.Row;
@@ -555,16 +554,16 @@ namespace MapView.Forms.Observers
 		/// <param name="location"></param>
 		/// <param name="panelwidth">the width of TopPanel</param>
 		/// <param name="panelheight">the width of TopPanel</param>
-		/// <param name="base"></param>
+		/// <param name="file"></param>
 		internal static void PrintSelectorLocation(
 				Point location,
 				int panelwidth,
 				int panelheight,
-				MapFileBase @base)
+				MapFile file)
 		{
 			int c = location.X;
 			int r = location.Y;
-			int l = @base.MapSize.Levs - @base.Level;
+			int l = file.MapSize.Levs - file.Level;
 
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (!MainViewF.Optionables.Base1_z) { --l; }

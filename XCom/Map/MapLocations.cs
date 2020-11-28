@@ -1,4 +1,4 @@
-﻿namespace XCom.Base
+﻿namespace XCom
 {
 	internal sealed class MapLocations
 	{

@@ -151,7 +151,7 @@ namespace MapView
 			btnDetail .Visible =
 			btnCancel .Visible = false;
 
-			_file = MainViewUnderlay.that.MapBase as MapFile;
+			_file = MainViewUnderlay.that.MapFile;
 
 			Text = "MapInfo - " + _file.Descriptor.Label;
 

@@ -180,7 +180,7 @@ namespace MapView.Forms.Observers
 				else
 					VisibleQuadrants &= ~FLOOR;
 
-				MapBase.CalculateOccultations(!it.Checked);
+				MapFile.CalculateOccultations(!it.Checked);
 			}
 			else if (it == West)
 			{
@@ -239,11 +239,11 @@ namespace MapView.Forms.Observers
 
 			MapTile tile;
 
-			for (int l = 0; l != MapBase.MapSize.Levs; ++l)
-			for (int r = 0; r != MapBase.MapSize.Rows; ++r)
-			for (int c = 0; c != MapBase.MapSize.Cols; ++c)
+			for (int l = 0; l != MapFile.MapSize.Levs; ++l)
+			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
+			for (int c = 0; c != MapFile.MapSize.Cols; ++c)
 			{
-				tile = MapBase[c,r,l];
+				tile = MapFile[c,r,l];
 				if (!tile.Vacant)
 				{
 					if (tile.Floor   != null && (QuadrantType)tile.Floor  .Record.PartType != QuadrantType.Floor)
@@ -322,7 +322,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		private string FormatTilequad(int c, int r, int l, QuadrantType quad)
 		{
-			l = MapBase.MapSize.Levs - l; // invert.
+			l = MapFile.MapSize.Levs - l; // invert.
 
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (!MainViewF.Optionables.Base1_z) { --l; }

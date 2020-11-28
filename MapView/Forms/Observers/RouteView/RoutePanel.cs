@@ -443,7 +443,7 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((tile = MapFile[col, row]) != null	// NOTE: MapFileBase has the current level stored and uses
+					if ((tile = MapFile[col, row]) != null	// NOTE: MapFile has the current level stored and uses
 						&& (node = tile.Node) != null)		// it to return only tiles on the correct level here.
 					{
 							_nodeFill.Reset();

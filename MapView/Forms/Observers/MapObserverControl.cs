@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using MapView.Forms.MainView;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -28,13 +27,13 @@ namespace MapView.Forms.Observers
 			get { return _panels; }
 		}
 
-		private MapFileBase _base;
+		private MapFile _file;
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
-		public virtual MapFileBase MapBase
+		public virtual MapFile MapFile
 		{
-			get { return _base; }
-			set { _base = value; Refresh(); }
+			get { return _file; }
+			set { _file = value; Refresh(); }
 		}
 
 		/// <summary>
@@ -80,12 +79,12 @@ namespace MapView.Forms.Observers
 		{
 			base.OnMouseWheel(e);
 
-			int dir = MapFileBase.LEVEL_no;
-			if      (e.Delta < 0) dir = MapFileBase.LEVEL_Up;
-			else if (e.Delta > 0) dir = MapFileBase.LEVEL_Dn;
-			MapBase.ChangeLevel(dir);
+			int dir = MapFile.LEVEL_no;
+			if      (e.Delta < 0) dir = MapFile.LEVEL_Up;
+			else if (e.Delta > 0) dir = MapFile.LEVEL_Dn;
+			MapFile.ChangeLevel(dir);
 
-			ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapBase.Level, MapBase.MapSize.Levs);
+			ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapFile.Level, MapFile.MapSize.Levs);
 		}
 		#endregion Events (override)
 

@@ -5,7 +5,6 @@ using System.ComponentModel;
 using DSShared.Controls;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -19,12 +18,12 @@ namespace MapView.Forms.Observers
 			IMapObserver
 	{
 		#region IMapObserver requirements
-		private MapFileBase _mapBase;
+		private MapFile _file;
 		[Browsable(false)]
-		public virtual MapFileBase MapBase
+		public virtual MapFile MapFile
 		{
-			get { return _mapBase; }
-			set { _mapBase = value; Refresh(); }
+			get { return _file; }
+			set { _file = value; Refresh(); }
 		}
 
 		private readonly Dictionary<string, IMapObserver> _panels =

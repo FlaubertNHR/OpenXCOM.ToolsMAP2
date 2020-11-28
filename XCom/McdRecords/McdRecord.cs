@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 using DSShared;
@@ -212,7 +213,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[2].
+		/// cTor[1].
 		/// </summary>
 		/// <param name="bindata">if null a blank byte-array gets created</param>
 		public McdRecord(IList<byte> bindata = null)
@@ -293,7 +294,7 @@ namespace XCom
 
 
 			stSprites = string.Format(
-								System.Globalization.CultureInfo.InvariantCulture,
+								CultureInfo.InvariantCulture,
 								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
 								"images:",
 								Sprite1,
@@ -306,7 +307,7 @@ namespace XCom
 								Sprite8);
 
 			stScanG = string.Format(
-								System.Globalization.CultureInfo.CurrentCulture,
+								CultureInfo.CurrentCulture,
 								"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
 								"scang reference:",
 								bindata[20],
@@ -315,7 +316,7 @@ namespace XCom
 								ScanG_reduced);
 
 			stLoFTs = string.Format(
-								System.Globalization.CultureInfo.CurrentCulture,
+								CultureInfo.CurrentCulture,
 								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
 								"loft references:",
 								Loft1,
@@ -335,7 +336,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[1]. Creates a blank record for Duplicate().
+		/// cTor[2]. Creates a blank record for Duplicate().
 		/// @note The compiler figures out the difference between
 		/// 1) private McdRecord()
 		/// 2) public  McdRecord(null)

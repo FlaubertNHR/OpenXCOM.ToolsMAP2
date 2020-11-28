@@ -9,7 +9,6 @@ using DSShared.Controls;
 using MapView.Forms.MainView;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView
@@ -28,7 +27,7 @@ namespace MapView
 			Form
 	{
 		#region Fields
-		private MapFileBase _base;
+		private MapFile _file;
 
 		private int[,]  _icons;
 		private Palette _pal;
@@ -42,11 +41,11 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal ScanGViewer(MapFileBase @base)
+		internal ScanGViewer(MapFile file)
 		{
 			InitializeComponent();
 
-			Level = (_base = @base).Level;
+			Level = (_file = file).Level;
 			Text = GetTitle();
 
 			SetResources();
@@ -58,8 +57,8 @@ namespace MapView
 			}
 
 			ClientSize = new Size(
-								_base.MapSize.Cols * 16 + 2,
-								_base.MapSize.Rows * 16 + 2);
+								_file.MapSize.Cols * 16 + 2,
+								_file.MapSize.Rows * 16 + 2);
 		}
 		#endregion cTor
 
@@ -109,7 +108,7 @@ namespace MapView
 			{
 				--Level;
 			}
-			else if (e.Delta > 0 && Level != _base.MapSize.Levs - 1)
+			else if (e.Delta > 0 && Level != _file.MapSize.Levs - 1)
 			{
 				++Level;
 			}
@@ -145,7 +144,7 @@ namespace MapView
 					string result, title;
 					MessageBoxIcon icon;
 
-					if (_base.Descriptor.GroupType == GameType.Tftd)
+					if (_file.Descriptor.GroupType == GameType.Tftd)
 					{
 						if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 						{
@@ -220,8 +219,8 @@ namespace MapView
 			if (_icons != null && _pal != null)
 			{
 				using (var icon = new Bitmap(
-										_base.MapSize.Cols * 16,
-										_base.MapSize.Rows * 16,
+										_file.MapSize.Cols * 16,
+										_file.MapSize.Rows * 16,
 										PixelFormat.Format8bppIndexed))
 				{
 					var data = icon.LockBits(
@@ -250,17 +249,17 @@ namespace MapView
 
 						int zStart;
 						if (SingleLevel) zStart = Level;
-						else             zStart = _base.MapSize.Levs - 1;
+						else             zStart = _file.MapSize.Levs - 1;
 
 						int iconsTotal = _icons.Length / ScanGicon.Length_ScanG;
 
 						for (int z = zStart; z >= Level; --z)
-						for (int y = 0; y != _base.MapSize.Rows; ++y)
-						for (int x = 0; x != _base.MapSize.Cols; ++x)
+						for (int y = 0; y != _file.MapSize.Rows; ++y)
+						for (int x = 0; x != _file.MapSize.Cols; ++x)
 						{
 							ptrPixel = pos + (x * 16) + (y * 16 * data.Stride);
 
-							tile = _base[x,y,z];
+							tile = _file[x,y,z];
 
 							if (tile.Floor != null
 								&& (iconid = tile.Floor.Record.ScanG) < iconsTotal
@@ -372,7 +371,7 @@ namespace MapView
 		private string GetTitle()
 		{
 			return "ScanG - "
-				 + "L" + (_base.MapSize.Levs - Level)
+				 + "L" + (_file.MapSize.Levs - Level)
 				 + (SingleLevel ? " - 1 layer" : String.Empty);
 		}
 
@@ -388,16 +387,16 @@ namespace MapView
 		/// Loads a Mapfile.
 		/// </summary>
 		/// <param name="base"></param>
-		internal void LoadMapfile(MapFileBase @base)
+		internal void LoadMapfile(MapFile file)
 		{
-			Level = (_base = @base).Level;
+			Level = (_file = file).Level;
 			Text = GetTitle();
 
 			SetResources();
 
 			ClientSize = new Size(
-								_base.MapSize.Cols * 16 + 2,
-								_base.MapSize.Rows * 16 + 2);
+								_file.MapSize.Cols * 16 + 2,
+								_file.MapSize.Rows * 16 + 2);
 			Refresh(); // req'd.
 		}
 
@@ -406,7 +405,7 @@ namespace MapView
 		/// </summary>
 		private void SetResources()
 		{
-			if (_base.Descriptor.GroupType == GameType.Tftd)
+			if (_file.Descriptor.GroupType == GameType.Tftd)
 			{
 				_icons = ResourceInfo.ScanGtftd;
 				_pal   = Palette.TftdBattle;

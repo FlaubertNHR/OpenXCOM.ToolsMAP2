@@ -5,7 +5,7 @@ using DSShared;
 
 using MapView.Forms.Observers;
 
-using XCom.Base;
+using XCom;
 
 
 namespace MapView.Forms.MainView
@@ -85,30 +85,30 @@ namespace MapView.Forms.MainView
 			OptionsManager.setOptionsType(key, control.Options);
 		}
 
-		internal static void SetObservers(MapFileBase @base)
+		internal static void SetObservers(MapFile file)
 		{
 			foreach (var f in _observers)
-				SetObserver(@base, f);
+				SetObserver(file, f);
 
 			MainViewOverlay.that.Refresh();
 		}
 
-		private static void SetObserver(MapFileBase @base, IMapObserver observer)
+		private static void SetObserver(MapFile file, IMapObserver observer)
 		{
-			if (observer.MapBase != null)
+			if (observer.MapFile != null)
 			{
-				observer.MapBase.SelectLocation -= observer.OnSelectLocationObserver;
-				observer.MapBase.SelectLevel    -= observer.OnSelectLevelObserver;
+				observer.MapFile.SelectLocation -= observer.OnSelectLocationObserver;
+				observer.MapFile.SelectLevel    -= observer.OnSelectLevelObserver;
 			}
 
-			if ((observer.MapBase = @base) != null)
+			if ((observer.MapFile = file) != null)
 			{
-				observer.MapBase.SelectLocation += observer.OnSelectLocationObserver;
-				observer.MapBase.SelectLevel    += observer.OnSelectLevelObserver;
+				observer.MapFile.SelectLocation += observer.OnSelectLocationObserver;
+				observer.MapFile.SelectLevel    += observer.OnSelectLevelObserver;
 			}
 
 			foreach (string key in observer.ObserverPanels.Keys) // ie. TopPanel and QuadrantPanel
-				SetObserver(observer.MapBase, observer.ObserverPanels[key]);
+				SetObserver(observer.MapFile, observer.ObserverPanels[key]);
 		}
 
 		/// <summary>

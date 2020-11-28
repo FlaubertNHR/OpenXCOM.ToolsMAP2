@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using MapView.Forms.MainView;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -312,7 +311,7 @@ namespace MapView.Forms.Observers
 				else if ((keyData & Keys.Shift) == Keys.None)
 				{
 					var loc = new Point(0,0);
-					int vert = MapFileBase.LEVEL_no;
+					int vert = MapFile.LEVEL_no;
 
 					switch (keyData)
 					{
@@ -326,8 +325,8 @@ namespace MapView.Forms.Observers
 						case Keys.End:      loc.Y = +1; break;
 						case Keys.Home:     loc.X = -1; break;
 
-						case Keys.Add:      vert = MapFileBase.LEVEL_Dn; break;
-						case Keys.Subtract: vert = MapFileBase.LEVEL_Up; break;
+						case Keys.Add:      vert = MapFile.LEVEL_Dn; break;
+						case Keys.Subtract: vert = MapFile.LEVEL_Up; break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0)
@@ -350,7 +349,7 @@ namespace MapView.Forms.Observers
 							invalidate = true;
 						}
 					}
-					else if (vert != MapFileBase.LEVEL_no)
+					else if (vert != MapFile.LEVEL_no)
 					{
 						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs)
@@ -366,7 +365,7 @@ namespace MapView.Forms.Observers
 				else if (NodeSelected != null) // Shift = drag node ->
 				{
 					var loc = new Point(0,0);
-					int vert = MapFileBase.LEVEL_no;
+					int vert = MapFile.LEVEL_no;
 
 					switch (keyData)
 					{
@@ -380,8 +379,8 @@ namespace MapView.Forms.Observers
 						case Keys.Shift | Keys.End:      loc.Y = +1; break;
 						case Keys.Shift | Keys.Home:     loc.X = -1; break;
 
-						case Keys.Shift | Keys.Add:      vert = MapFileBase.LEVEL_Dn; break;
-						case Keys.Shift | Keys.Subtract: vert = MapFileBase.LEVEL_Up; break;
+						case Keys.Shift | Keys.Add:      vert = MapFile.LEVEL_Dn; break;
+						case Keys.Shift | Keys.Subtract: vert = MapFile.LEVEL_Up; break;
 					}
 
 					if (loc.X != 0 || loc.Y != 0)
@@ -406,7 +405,7 @@ namespace MapView.Forms.Observers
 							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
 						}
 					}
-					else if (vert != MapFileBase.LEVEL_no)
+					else if (vert != MapFile.LEVEL_no)
 					{
 						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs

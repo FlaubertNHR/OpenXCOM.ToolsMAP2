@@ -19,7 +19,6 @@ using McdView;
 using PckView;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -44,12 +43,12 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		[Browsable(false)]
-		public override MapFileBase MapBase
+		public override MapFile MapFile
 		{
 			set
 			{
 				IList<Tilepart> parts;
-				if ((base.MapBase = value) != null)
+				if ((base.MapFile = value) != null)
 					parts = value.Parts;
 				else
 					parts = null;
@@ -408,7 +407,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnVolutarMcdEditorClick(object sender, EventArgs e)
 		{
-			if ((MapBase as MapFile) != null)
+			if (MapFile != null)
 			{
 				var service = new VolutarService(Options);
 				var pfe = service.FullPath;	// this will invoke a box for the user to input the
@@ -436,12 +435,12 @@ namespace MapView.Forms.Observers
 		{
 			if (SelectedTilepart != null)
 			{
-				var terrain = ((MapFile)MapBase).GetTerrain(SelectedTilepart);
+				var terrain = MapFile.GetTerrain(SelectedTilepart);
 
 				string terr = terrain.Item1;
 				string path = terrain.Item2;
 
-				path = MapBase.Descriptor.GetTerrainDirectory(path);
+				path = MapFile.Descriptor.GetTerrainDirectory(path);
 
 				string pfePck = Path.Combine(path, terr + GlobalsXC.PckExt);
 				string pfeTab = Path.Combine(path, terr + GlobalsXC.TabExt);
@@ -461,7 +460,7 @@ namespace MapView.Forms.Observers
 					using (var fPckView = new PckViewForm(true))
 					{
 						fPckView.LoadSpriteset(pfePck);
-						fPckView.SetPalette(MapBase.Descriptor.Pal.Label);
+						fPckView.SetPalette(MapFile.Descriptor.Pal.Label);
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
 
 						ShowHideManager.HideViewers();
@@ -492,12 +491,12 @@ namespace MapView.Forms.Observers
 		{
 			if (SelectedTilepart != null)
 			{
-				var terrain = ((MapFile)MapBase).GetTerrain(SelectedTilepart);
+				var terrain = ((MapFile)MapFile).GetTerrain(SelectedTilepart);
 
 				string terr = terrain.Item1;
 				string path = terrain.Item2;
 
-				path = MapBase.Descriptor.GetTerrainDirectory(path);
+				path = MapFile.Descriptor.GetTerrainDirectory(path);
 
 				string pfeMcd = Path.Combine(path, terr + GlobalsXC.McdExt);
 
@@ -515,7 +514,7 @@ namespace MapView.Forms.Observers
 
 						fMcdView.LoadRecords(
 										pfeMcd,
-										MapBase.Descriptor.Pal.Label,
+										MapFile.Descriptor.Pal.Label,
 										SelectedTilepart.TerId);
 
 						ShowHideManager.HideViewers();
@@ -551,10 +550,10 @@ namespace MapView.Forms.Observers
 						  + " changes that were made to the terrainset.";
 
 			string changed = String.Empty;
-			if (MapBase.MapChanged)
+			if (MapFile.MapChanged)
 				changed = "Map";
 
-			if (MapBase.RoutesChanged)
+			if (MapFile.RoutesChanged)
 			{
 				if (!String.IsNullOrEmpty(changed))
 					changed += " and its ";
@@ -605,7 +604,7 @@ namespace MapView.Forms.Observers
 
 			tsslTotal.Text = "Total " + parts.Count;
 
-			if (parts.Count > MapFileBase.MaxTerrainId)
+			if (parts.Count > MapFile.MaxTerrainId)
 				tsslTotal.ForeColor = Color.MediumVioletRed;
 			else
 				tsslTotal.ForeColor = SystemColors.ControlText;
@@ -642,7 +641,7 @@ namespace MapView.Forms.Observers
 
 			if (part != null)
 			{
-				string label = ((MapFile)MapBase).GetTerrainLabel(part);
+				string label = MapFile.GetTerrainLabel(part);
 				info = String.Format(
 								CultureInfo.CurrentCulture,
 								"{2}  terId {1}  setId {0}",
@@ -660,7 +659,7 @@ namespace MapView.Forms.Observers
 		internal string GetTerrainLabel()
 		{
 			if (SelectedTilepart != null)
-				return ((MapFile)MapBase).GetTerrainLabel(SelectedTilepart);
+				return MapFile.GetTerrainLabel(SelectedTilepart);
 
 			return "ERROR";
 		}

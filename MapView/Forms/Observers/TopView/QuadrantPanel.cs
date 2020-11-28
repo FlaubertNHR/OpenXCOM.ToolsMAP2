@@ -92,7 +92,7 @@ namespace MapView.Forms.Observers
 		{
 			if (SelectedLocation != null)
 			{
-				Tile = MapBase[SelectedLocation.Col, SelectedLocation.Row];
+				Tile = MapFile[SelectedLocation.Col, SelectedLocation.Row];
 				SelectedLocation.Lev = args.Level;
 			}
 			Refresh();

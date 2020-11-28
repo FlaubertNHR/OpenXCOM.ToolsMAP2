@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using MapView.Properties;
 
-using XCom.Base;
+using XCom;
 
 
 namespace MapView.Forms.MainView
@@ -359,11 +359,11 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnDownClick(object sender, EventArgs e)
 		{
-			var @base = MainViewOverlay.MapBase;
-			if (@base != null)
+			var file = MainViewOverlay.MapFile;
+			if (file != null)
 			{
-				@base.ChangeLevel(MapFileBase.LEVEL_Dn);
-				SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
+				file.ChangeLevel(MapFile.LEVEL_Dn);
+				SetLevelButtonsEnabled(file.Level, file.MapSize.Levs);
 			}
 		}
 
@@ -374,11 +374,11 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnUpClick(object sender, EventArgs e)
 		{
-			var @base = MainViewOverlay.MapBase;
-			if (@base != null)
+			var file = MainViewOverlay.MapFile;
+			if (file != null)
 			{
-				@base.ChangeLevel(MapFileBase.LEVEL_Up);
-				SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
+				file.ChangeLevel(MapFile.LEVEL_Up);
+				SetLevelButtonsEnabled(file.Level, file.MapSize.Levs);
 			}
 		}
 		#endregion Events (level)

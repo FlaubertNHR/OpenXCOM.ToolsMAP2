@@ -16,7 +16,6 @@ using MapView.Forms.MainView;
 using MapView.Forms.Observers;
 
 using XCom;
-using XCom.Base;
 
 using YamlDotNet.RepresentationModel; // read values (deserialization)
 
@@ -135,14 +134,14 @@ namespace MapView
 		/// <summary>
 		/// Sets the MapChanged flag. This is only an intermediary that adds an
 		/// asterisk to the file-label in MainView's statusbar; the real
-		/// MapChanged flag is stored in <see cref="MapFileBase"/>. reasons.
+		/// MapChanged flag is stored in <see cref="MapFile"/>. reasons.
 		/// </summary>
 		internal bool MapChanged
 		{
 			set
 			{
 				string text = tsslMapLabel.Text;
-				if (MainViewUnderlay.MapBase.MapChanged = value) // shuffle the value down to MapFileBase.MapChanged ...
+				if (MainViewUnderlay.MapFile.MapChanged = value) // shuffle the value down to MapFile.MapChanged ...
 				{
 					if (!text.EndsWith(GlobalsXC.PADDED_ASTERISK, StringComparison.Ordinal))
 						text += GlobalsXC.PADDED_ASTERISK;
@@ -1083,8 +1082,8 @@ namespace MapView
 						if (_selected.Level == TREELEVEL_TILESET)
 						{
 							var descriptor = _selected.Tag as Descriptor;
-							if (   MainViewUnderlay.MapBase == null
-								|| MainViewUnderlay.MapBase.Descriptor != descriptor)
+							if (   MainViewUnderlay.MapFile == null
+								|| MainViewUnderlay.MapFile.Descriptor != descriptor)
 							{
 								_dontbeeptype = DontBeepType.LoadDescriptor;
 								BeginInvoke(DontBeepEvent);
@@ -1281,17 +1280,17 @@ namespace MapView
 
 		private void OnSaveAllClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapFile != null)
 			{
-				if (MainViewUnderlay.MapBase.SaveMap())
+				if (MainViewUnderlay.MapFile.SaveMap())
 				{
 					MapChanged = false;
 
-					if (MainViewUnderlay.MapBase.ForceReload)
+					if (MainViewUnderlay.MapFile.ForceReload)
 						ForceMapReload();
 				}
 
-				if (MainViewUnderlay.MapBase.SaveRoutes())
+				if (MainViewUnderlay.MapFile.SaveRoutes())
 					RouteView.RoutesChangedCoordinator = false;
 			}
 			MaptreeChanged = !TileGroupManager.WriteTileGroups();
@@ -1299,20 +1298,20 @@ namespace MapView
 
 		internal void OnSaveMapClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.MapBase != null
-				&& MainViewUnderlay.MapBase.SaveMap())
+			if (MainViewUnderlay.MapFile != null
+				&& MainViewUnderlay.MapFile.SaveMap())
 			{
 				MapChanged = false;
 
-				if (MainViewUnderlay.MapBase.ForceReload)
+				if (MainViewUnderlay.MapFile.ForceReload)
 					ForceMapReload();
 			}
 		}
 
 		internal void OnSaveRoutesClick(object sender, EventArgs e)
 		{
-			if (   MainViewUnderlay.MapBase != null
-				&& MainViewUnderlay.MapBase.SaveRoutes())
+			if (   MainViewUnderlay.MapFile != null
+				&& MainViewUnderlay.MapFile.SaveRoutes())
 			{
 				RouteView.RoutesChangedCoordinator = false;
 			}
@@ -1323,19 +1322,19 @@ namespace MapView
 
 		private void OnExportMapRoutesClick(object sender, EventArgs e)
 		{
-			if (   MainViewUnderlay.MapBase != null
-				&& MainViewUnderlay.MapBase.Descriptor != null)
+			if (   MainViewUnderlay.MapFile != null
+				&& MainViewUnderlay.MapFile.Descriptor != null)
 			{
 				using (var sfd = new SaveFileDialog())
 				{
 					sfd.Title      = "Export Map (and Routes) ...";
 					sfd.Filter     = "Map files (*.MAP)|*.MAP|All files (*.*)|*.*";
 					sfd.DefaultExt = GlobalsXC.MapExt;
-					sfd.FileName   = MainViewUnderlay.MapBase.Descriptor.Label;
+					sfd.FileName   = MainViewUnderlay.MapFile.Descriptor.Label;
 
 					if (!Directory.Exists(_lastExportDirectory))
 					{
-						string path = Path.Combine(MainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
+						string path = Path.Combine(MainViewUnderlay.MapFile.Descriptor.Basepath, GlobalsXC.MapsDir);
 						if (Directory.Exists(path))
 							sfd.InitialDirectory = path;
 					}
@@ -1360,8 +1359,8 @@ namespace MapView
 							string dirRoutes = Path.Combine(dir, GlobalsXC.RoutesDir);
 							string label     = Path.GetFileNameWithoutExtension(pfe);
 
-							MainViewUnderlay.MapBase.ExportMap(   Path.Combine(dirMaps,   label));
-							MainViewUnderlay.MapBase.ExportRoutes(Path.Combine(dirRoutes, label));
+							MainViewUnderlay.MapFile.ExportMap(   Path.Combine(dirMaps,   label));
+							MainViewUnderlay.MapFile.ExportRoutes(Path.Combine(dirRoutes, label));
 						}
 						else
 							MessageBox.Show(
@@ -1424,7 +1423,7 @@ namespace MapView
 		/// </summary>
 		private void ForceMapReload()
 		{
-			MainViewUnderlay.MapBase.ForceReload = false;
+			MainViewUnderlay.MapFile.ForceReload = false;
 
 			_loadReady = LOADREADY_STAGE_2;
 			LoadSelectedDescriptor(false, true);
@@ -1435,8 +1434,8 @@ namespace MapView
 
 		private void OnScreenshotClick(object sender, EventArgs e)
 		{
-			MapFileBase @base = MainViewUnderlay.MapBase;
-			if (@base != null)
+			MapFile file = MainViewUnderlay.MapFile;
+			if (file != null)
 			{
 				using (var sfd = new SaveFileDialog())
 				{
@@ -1454,7 +1453,7 @@ namespace MapView
 					}
 
 					string digits = String.Empty;
-					int levs = @base.MapSize.Levs;
+					int levs = file.MapSize.Levs;
 					do
 					{ digits += "0"; }
 					while ((levs /= 10) != 0);
@@ -1462,12 +1461,12 @@ namespace MapView
 					string suffix = String.Format(
 												CultureInfo.InvariantCulture,
 												"_L{0:" + digits + "}",
-												@base.MapSize.Levs - @base.Level);
-					sfd.FileName = @base.Descriptor.Label + suffix;
+												file.MapSize.Levs - file.Level);
+					sfd.FileName = file.Descriptor.Label + suffix;
 
 					if (!Directory.Exists(_lastScreenshotDirectory))
 					{
-						string path = Path.Combine(MainViewUnderlay.MapBase.Descriptor.Basepath, GlobalsXC.MapsDir);
+						string path = Path.Combine(MainViewUnderlay.MapFile.Descriptor.Basepath, GlobalsXC.MapsDir);
 						if (Directory.Exists(path))
 							sfd.InitialDirectory = path;
 					}
@@ -1497,15 +1496,15 @@ namespace MapView
 			const int LAYERS          = 24;
 
 
-			MapFileBase @base = MainViewUnderlay.MapBase;
-			MapSize size = @base.MapSize;
-			int level = @base.Level;
+			MapFile file = MainViewUnderlay.MapFile;
+			MapSize size = file.MapSize;
+			int level = file.Level;
 
 			var width = size.Rows + size.Cols;
 			using (var b = BitmapService.CreateTransparent(
 												width * ConstHalfWidth,
 												width * ConstHalfHeight + (size.Levs - level) * LAYERS,
-												@base.Descriptor.Pal.ColorTable))
+												file.Descriptor.Pal.ColorTable))
 			{
 				if (b != null)
 				{
@@ -1514,7 +1513,7 @@ namespace MapView
 									   -(level * LAYERS));
 
 					int i = 0;
-					if (@base.Tiles != null)
+					if (file.Tiles != null)
 					{
 						for (int lev = size.Levs - 1; lev >= level; --lev)
 						{
@@ -1537,7 +1536,7 @@ namespace MapView
 											y += ConstHalfHeight,
 											++i)
 								{
-									var parts = @base[col, row, lev].UsedParts;
+									var parts = file[col, row, lev].UsedParts;
 									foreach (var part in parts)
 									{
 										BitmapService.Insert(
@@ -1596,28 +1595,28 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapResizeClick(object sender, EventArgs e)
 		{
-			MapFileBase @base = MainViewUnderlay.MapBase;
-			if (@base != null)
+			MapFile file = MainViewUnderlay.MapFile;
+			if (file != null)
 			{
-				using (var f = new MapResizeInputBox(@base))
+				using (var f = new MapResizeInputBox(file))
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
 						RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
 						RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
-						int changes = @base.MapResize(
+						int changes = file.MapResize(
 													f.Cols,
 													f.Rows,
 													f.Levs,
 													f.zType);
 
-						if ((changes & MapFileBase.CHANGED_MAP) != 0 && !@base.MapChanged)
+						if ((changes & MapFile.CHANGED_MAP) != 0 && !file.MapChanged)
 							MapChanged = true;
 
-						if ((changes & MapFileBase.CHANGED_NOD) != 0)
+						if ((changes & MapFile.CHANGED_NOD) != 0)
 						{
-							if (!@base.RoutesChanged)
+							if (!file.RoutesChanged)
 								RouteView.RoutesChangedCoordinator = true;
 
 							foreach (RouteNode node in RouteCheckService.Invalids)
@@ -1625,7 +1624,7 @@ namespace MapView
 								if (RouteView.RoutesInfo != null)
 									RouteView.RoutesInfo.DeleteNode(node);
 
-								(@base as MapFile).Routes.DeleteNode(node);
+								file.Routes.DeleteNode(node);
 							}
 						}
 
@@ -1636,19 +1635,19 @@ namespace MapView
 						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
 						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
 
-						ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
+						ObserverManager.ToolFactory.SetLevelButtonsEnabled(file.Level, file.MapSize.Levs);
 
-						tsslDimensions   .Text = @base.MapSize.ToString();
+						tsslDimensions   .Text = file.MapSize.ToString();
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						ObserverManager.SetObservers(@base);
+						ObserverManager.SetObservers(file);
 
 						ObserverManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
 						ObserverManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
 
 						if (ScanG != null) // update ScanG viewer if open
-							ScanG.LoadMapfile(@base);
+							ScanG.LoadMapfile(file);
 
 						ResetQuadrantPanel();
 					}
@@ -1664,7 +1663,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTilepartSubstitutionClick(object sender, EventArgs e)
 		{
-			using (var f = new TilepartSubstitution(MainViewUnderlay.MapBase))
+			using (var f = new TilepartSubstitution(MainViewUnderlay.MapFile))
 			{
 				if (f.ShowDialog() == DialogResult.OK)
 				{
@@ -1745,12 +1744,12 @@ namespace MapView
 		{
 			string changed = null;
 
-			if (MainViewUnderlay.MapBase != null)
+			if (MainViewUnderlay.MapFile != null)
 			{
-				if (MainViewUnderlay.MapBase.MapChanged)
+				if (MainViewUnderlay.MapFile.MapChanged)
 					changed = "Map";
 
-				if (MainViewUnderlay.MapBase.RoutesChanged)
+				if (MainViewUnderlay.MapFile.RoutesChanged)
 				{
 					if (!String.IsNullOrEmpty(changed))
 						changed += " and ";
@@ -1790,19 +1789,19 @@ namespace MapView
 						return;
 
 					case DialogResult.Retry:
-						if (MainViewUnderlay.MapBase != null)
+						if (MainViewUnderlay.MapFile != null)
 						{
-							if (MainViewUnderlay.MapBase.MapChanged
-								&& MainViewUnderlay.MapBase.SaveMap())
+							if (MainViewUnderlay.MapFile.MapChanged
+								&& MainViewUnderlay.MapFile.SaveMap())
 							{
 								MapChanged = false;
 
-								if (MainViewUnderlay.MapBase.ForceReload)	// NOTE: Forcing reload is probably not necessary here
+								if (MainViewUnderlay.MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
 									ForceMapReload();						// because the current Map is *probably* going to change. I think ...
 							}
 
-							if (MainViewUnderlay.MapBase.RoutesChanged
-								&& MainViewUnderlay.MapBase.SaveRoutes())
+							if (MainViewUnderlay.MapFile.RoutesChanged
+								&& MainViewUnderlay.MapFile.SaveRoutes())
 							{
 								RouteView.RoutesChangedCoordinator = false;
 							}
@@ -1986,7 +1985,7 @@ namespace MapView
 		{
 			if (!miMapInfo.Checked)
 			{
-				if (MainViewUnderlay.MapBase != null) // safety.
+				if (MainViewUnderlay.MapFile != null) // safety.
 				{
 					miMapInfo.Checked = true;
 					_finfo = new MapInfoDialog(this);
@@ -2417,10 +2416,10 @@ namespace MapView
 
 			if (e.Button == MouseButtons.Right)
 			{
-				if (MainViewUnderlay.MapBase == null					// prevent a bunch of problems, like looping dialogs when returning from
+				if (MainViewUnderlay.MapFile == null					// prevent a bunch of problems, like looping dialogs when returning from
 					|| BypassChanged									// the Tileset Editor and the Maptree-node gets re-selected, causing
-					|| (   !MainViewUnderlay.MapBase.MapChanged			// this class-object to react as if a different Map is going to load ...
-						&& !MainViewUnderlay.MapBase.RoutesChanged))	// vid. LoadSelectedDescriptor()
+					|| (   !MainViewUnderlay.MapFile.MapChanged			// this class-object to react as if a different Map is going to load ...
+						&& !MainViewUnderlay.MapFile.RoutesChanged))	// vid. LoadSelectedDescriptor()
 				{
 					BypassChanged = false;
 
@@ -2481,17 +2480,17 @@ namespace MapView
 							return;
 
 						case DialogResult.Retry:
-							if (MainViewUnderlay.MapBase.MapChanged
-								&& MainViewUnderlay.MapBase.SaveMap())
+							if (MainViewUnderlay.MapFile.MapChanged
+								&& MainViewUnderlay.MapFile.SaveMap())
 							{
 								MapChanged = false;
 
-								if (MainViewUnderlay.MapBase.ForceReload)	// NOTE: Forcing reload is probably not necessary here
+								if (MainViewUnderlay.MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
 									ForceMapReload();						// because the current Map is *probably* going to change. I think ...
 							}
 
-							if (MainViewUnderlay.MapBase.RoutesChanged
-								&& MainViewUnderlay.MapBase.SaveRoutes())
+							if (MainViewUnderlay.MapFile.RoutesChanged
+								&& MainViewUnderlay.MapFile.SaveRoutes())
 							{
 								RouteView.RoutesChangedCoordinator = false;
 							}
@@ -3018,8 +3017,8 @@ namespace MapView
 				var descriptor = e.Node.Tag as Descriptor;
 				if (descriptor != null)
 				{
-					if (   MainViewUnderlay.MapBase == null
-						|| MainViewUnderlay.MapBase.Descriptor != descriptor)
+					if (   MainViewUnderlay.MapFile == null
+						|| MainViewUnderlay.MapFile.Descriptor != descriptor)
 					{
 						ClearSearched();
 
@@ -3091,18 +3090,18 @@ namespace MapView
 					bool treechanged = false;
 
 					RouteNodeCollection routes;
-					if (keepRoutes) routes = (MainViewUnderlay.MapBase as MapFile).Routes;
+					if (keepRoutes) routes = MainViewUnderlay.MapFile.Routes;
 					else            routes = null;
 
-					var @base = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
-															descriptor,
-															ref treechanged,
-															browseMapfile,
-															Optionables.IgnoreRecordsExceeded,
-															routes);
+					var file = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
+														descriptor,
+														ref treechanged,
+														browseMapfile,
+														Optionables.IgnoreRecordsExceeded,
+														routes);
 					if (treechanged) MaptreeChanged = true;
 
-					if (@base != null)
+					if (file != null)
 					{
 						miSaveAll             .Enabled =
 						miSaveMap             .Enabled =
@@ -3127,23 +3126,21 @@ namespace MapView
 							MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle; // used by Mono only
 						}
 
-						MainViewUnderlay.MapBase = @base;
+						MainViewUnderlay.MapFile = file;
 
 						ObserverManager.ToolFactory.EnableScaleAutoButton();
-						ObserverManager.ToolFactory.SetLevelButtonsEnabled(@base.Level, @base.MapSize.Levs);
+						ObserverManager.ToolFactory.SetLevelButtonsEnabled(file.Level, file.MapSize.Levs);
 
 						Text = TITLE + " " + descriptor.Basepath;
 						if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
 
 						tsslMapLabel     .Text = descriptor.Label;
-						tsslDimensions   .Text = @base.MapSize.ToString();
+						tsslDimensions   .Text = file.MapSize.ToString();
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						//LogFile.WriteLine(". MapChanged [1]= " + @base.MapChanged);
-						if (!@base.MapChanged) MapChanged = (@base.TerrainsetPartsExceeded != 0);
-						//LogFile.WriteLine(". MapChanged [2]= " + @base.MapChanged);
-						@base.TerrainsetPartsExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
+						if (!file.MapChanged) MapChanged = (file.TerrainsetPartsExceeded != 0);
+						file.TerrainsetPartsExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
 
 						var routeview1 = ObserverManager.RouteView.Control;
 						var routeview2 = ObserverManager.TopRouteView.ControlRoute;
@@ -3167,23 +3164,23 @@ namespace MapView
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 							MenuManager.StartSecondaryStageBoosters();
 
-						ObserverManager.SetObservers(@base); // reset all observer events
+						ObserverManager.SetObservers(file); // reset all observer events
 
 						RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
 						RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
 
-						if (RouteCheckService.CheckNodeBounds(@base as MapFile) == DialogResult.Yes)
+						if (RouteCheckService.CheckNodeBounds(file) == DialogResult.Yes)
 						{
 							RouteView.RoutesChangedCoordinator = true;
 
 							foreach (RouteNode node in RouteCheckService.Invalids)
-								(@base as MapFile).Routes.DeleteNode(node);
+								file.Routes.DeleteNode(node);
 						}
 
 						Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
 
 						if (ScanG != null) // update ScanG viewer if open
-							ScanG.LoadMapfile(@base);
+							ScanG.LoadMapfile(file);
 
 						var tileview = ObserverManager.TileView.Control; // update MCD Info if open
 						if (tileview.McdInfobox != null)
@@ -3199,7 +3196,7 @@ namespace MapView
 						}
 
 						if (RouteView.RoutesInfo != null) // update RoutesInfo if open
-							RouteView.RoutesInfo.Initialize(@base as MapFile);
+							RouteView.RoutesInfo.Initialize(file);
 
 						ResetQuadrantPanel(); // update the Quadrant panel
 
@@ -3289,9 +3286,9 @@ namespace MapView
 		/// <param name="full">true to animate any doors</param>
 		internal void SetDoorSpritesFullPhase(bool full)
 		{
-			if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
+			if (MainViewUnderlay.MapFile != null) // NOTE: MapFile is null on MapView load.
 			{
-				foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
+				foreach (Tilepart part in MainViewUnderlay.MapFile.Parts)
 					part.ToggleDoorSprites(full);
 			}
 		}
@@ -3301,9 +3298,9 @@ namespace MapView
 		/// </summary>
 		internal void SetDoorSpritesAlternate()
 		{
-			if (MainViewUnderlay.MapBase != null) // NOTE: MapBase is null on MapView load.
+			if (MainViewUnderlay.MapFile != null) // NOTE: MapFile is null on MapView load.
 			{
-				foreach (Tilepart part in MainViewUnderlay.MapBase.Parts)
+				foreach (Tilepart part in MainViewUnderlay.MapFile.Parts)
 					part.SetSprite1_alt();
 			}
 		}
@@ -3320,7 +3317,7 @@ namespace MapView
 		{
 			//LogFile.WriteLine("MainViewF.SaveAlertMap()");
 
-			if (MainViewUnderlay.MapBase != null && MainViewUnderlay.MapBase.MapChanged)
+			if (MainViewUnderlay.MapFile != null && MainViewUnderlay.MapFile.MapChanged)
 			{
 				switch (MessageBox.Show(
 									this,
@@ -3332,7 +3329,7 @@ namespace MapView
 									0))
 				{
 					case DialogResult.Yes:		// save & clear MapChanged flag
-						if (MainViewUnderlay.MapBase.SaveMap())
+						if (MainViewUnderlay.MapFile.SaveMap())
 							goto case DialogResult.No;
 
 						goto case DialogResult.Cancel;
@@ -3358,7 +3355,7 @@ namespace MapView
 		/// user chose to cancel or the Routefile was not written successfully</returns>
 		private DialogResult SaveAlertRoutes()
 		{
-			if (MainViewUnderlay.MapBase != null && MainViewUnderlay.MapBase.RoutesChanged)
+			if (MainViewUnderlay.MapFile != null && MainViewUnderlay.MapFile.RoutesChanged)
 			{
 				switch (MessageBox.Show(
 									this,
@@ -3370,7 +3367,7 @@ namespace MapView
 									0))
 				{
 					case DialogResult.Yes:		// save & clear RoutesChanged flag
-						if (MainViewUnderlay.MapBase.SaveRoutes())
+						if (MainViewUnderlay.MapFile.SaveRoutes())
 							goto case DialogResult.No;
 
 						goto case DialogResult.Cancel;
@@ -3434,11 +3431,11 @@ namespace MapView
 		{
 			if (MainViewOverlay.FirstClick)
 			{
-				MapFileBase @base = MainViewUnderlay.MapBase;
+				MapFile file = MainViewUnderlay.MapFile;
 
-				int c = @base.Location.Col;
-				int r = @base.Location.Row;
-				int l = @base.MapSize.Levs - @base.Level;
+				int c = file.Location.Col;
+				int r = file.Location.Row;
+				int l = file.MapSize.Levs - file.Level;
 
 				if (Optionables.Base1_xy) { ++c; ++r; }
 				if (!Optionables.Base1_z) { --l; }

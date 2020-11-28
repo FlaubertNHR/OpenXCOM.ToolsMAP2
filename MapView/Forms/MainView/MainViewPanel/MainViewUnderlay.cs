@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 using DSShared.Controls;
 
-using XCom.Base;
+using XCom;
 
 
 namespace MapView.Forms.MainView
@@ -42,24 +42,24 @@ namespace MapView.Forms.MainView
 		private MainViewOverlay MainViewOverlay
 		{ get; set; }
 
-		private MapFileBase _base;
-		internal MapFileBase MapBase
+		private MapFile _file;
+		internal MapFile MapFile
 		{
-			get { return _base; }
+			get { return _file; }
 			set
 			{
-				MainViewOverlay.MapBase = value;
+				MainViewOverlay.MapFile = value;
 
-				if (_base != null)
+				if (_file != null)
 				{
-					_base.SelectLocation -= MainViewOverlay.OnSelectLocationMain;
-					_base.SelectLevel    -= MainViewOverlay.OnSelectLevelMain;
+					_file.SelectLocation -= MainViewOverlay.OnSelectLocationMain;
+					_file.SelectLevel    -= MainViewOverlay.OnSelectLevelMain;
 				}
 
-				if ((_base = value) != null)
+				if ((_file = value) != null)
 				{
-					_base.SelectLocation += MainViewOverlay.OnSelectLocationMain;
-					_base.SelectLevel    += MainViewOverlay.OnSelectLevelMain;
+					_file.SelectLocation += MainViewOverlay.OnSelectLocationMain;
+					_file.SelectLevel    += MainViewOverlay.OnSelectLevelMain;
 
 					SetOverlaySize();
 				}
@@ -178,7 +178,7 @@ namespace MapView.Forms.MainView
 
 			base.OnResize(eventargs);
 
-			if (MapBase != null && Globals.AutoScale)
+			if (MapFile != null && Globals.AutoScale)
 			{
 				SetScale();
 				SetOverlaySize();
@@ -368,7 +368,7 @@ namespace MapView.Forms.MainView
 			//DSShared.LogFile.WriteLine("");
 			//DSShared.LogFile.WriteLine("MainViewUnderlay.SetOverlaySize");
 
-			if (MapBase != null)
+			if (MapFile != null)
 			{
 				//DSShared.LogFile.WriteLine(". scale= " + Globals.Scale);
 				var required = GetRequiredOverlaySize(Globals.Scale);
@@ -382,7 +382,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Gets the required x/y size in pixels for the current MapBase as a
+		/// Gets the required x/y size in pixels for the current MapFile as a
 		/// lozenge. Also sets the 'Origin' point and the half-width/height vals.
 		/// </summary>
 		/// <param name="scale">the current scaling factor</param>
@@ -392,7 +392,7 @@ namespace MapView.Forms.MainView
 			//DSShared.LogFile.WriteLine("");
 			//DSShared.LogFile.WriteLine("MainViewUnderlay.GetRequiredOverlaySize");
 
-			if (MapBase != null)
+			if (MapFile != null)
 			{
 				//DSShared.LogFile.WriteLine(". scale= " + Globals.Scale);
 
@@ -420,12 +420,12 @@ namespace MapView.Forms.MainView
 
 
 				MainViewOverlay.Origin = new Point(
-												OffsetX + (MapBase.MapSize.Rows - 1) * halfWidth,
+												OffsetX + (MapFile.MapSize.Rows - 1) * halfWidth,
 												OffsetY);
 
-				int width  = (MapBase.MapSize.Rows + MapBase.MapSize.Cols) * halfWidth;
-				int height = (MapBase.MapSize.Rows + MapBase.MapSize.Cols) * halfHeight
-						   +  MapBase.MapSize.Levs * halfHeight * 3;
+				int width  = (MapFile.MapSize.Rows + MapFile.MapSize.Cols) * halfWidth;
+				int height = (MapFile.MapSize.Rows + MapFile.MapSize.Cols) * halfHeight
+						   +  MapFile.MapSize.Levs * halfHeight * 3;
 
 				//DSShared.LogFile.WriteLine(". width= " + width);
 				//DSShared.LogFile.WriteLine(". height= " + height);

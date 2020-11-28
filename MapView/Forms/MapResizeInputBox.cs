@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows.Forms;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView
@@ -13,7 +12,7 @@ namespace MapView
 			Form
 	{
 		#region Fields
-		private MapFileBase _base;
+		private MapFile _file;
 		#endregion Fields
 
 
@@ -53,19 +52,19 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="base"></param>
-		internal MapResizeInputBox(MapFileBase @base)
+		/// <param name="file"></param>
+		internal MapResizeInputBox(MapFile file)
 		{
 			InitializeComponent();
 
-			_base = @base;
+			_file = file;
 
 			tb_Row0.Text =
-			tb_Row1.Text = @base.MapSize.Rows.ToString(CultureInfo.InvariantCulture);
+			tb_Row1.Text = file.MapSize.Rows.ToString(CultureInfo.InvariantCulture);
 			tb_Col0.Text =
-			tb_Col1.Text = @base.MapSize.Cols.ToString(CultureInfo.InvariantCulture);
+			tb_Col1.Text = file.MapSize.Cols.ToString(CultureInfo.InvariantCulture);
 			tb_Lev0.Text =
-			tb_Lev1.Text = @base.MapSize.Levs.ToString(CultureInfo.InvariantCulture);
+			tb_Lev1.Text = file.MapSize.Levs.ToString(CultureInfo.InvariantCulture);
 
 			btn_Cancel.Select();
 			DialogResult = DialogResult.Cancel;
@@ -129,7 +128,7 @@ namespace MapView
 				{
 					if (height > 0)
 					{
-						int delta = (height - _base.MapSize.Levs);
+						int delta = (height - _file.MapSize.Levs);
 						if (cb_Ceil.Enabled = (delta != 0))
 						{
 							if (delta > 0)
@@ -174,8 +173,6 @@ namespace MapView
 
 
 		#region Designer
-		private System.ComponentModel.Container components = null;
-
 		private Label lbl_Lev1;
 		private Label lbl_Col0;
 		private Label lbl_Row0;
@@ -193,17 +190,6 @@ namespace MapView
 		private Label lbl_Head;
 		private CheckBox cb_Ceil;
 
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of

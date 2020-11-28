@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -13,8 +12,8 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal interface IMapObserver
 	{
-		[Browsable(false)]
-		MapFileBase MapBase
+		[Browsable(false)] // wtf
+		MapFile MapFile
 		{ set; get;}
 
 		[Browsable(false)]

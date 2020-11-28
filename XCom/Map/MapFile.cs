@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using DSShared;
 
 using XCom;
-using XCom.Base;
 
 
 namespace XCom
@@ -16,21 +15,42 @@ namespace XCom
 	/// This is the currently loaded Map.
 	/// </summary>
 	public sealed class MapFile
-		:
-			MapFileBase
 	{
+		#region Delegates
+		public delegate void SelectLocationEvent(SelectLocationEventArgs e);
+		public delegate void SelectLevelEvent(SelectLevelEventArgs e);
+		#endregion Delegates
+
+
+		#region Events
+		public event SelectLocationEvent SelectLocation;
+		public event SelectLevelEvent SelectLevel;
+		#endregion Events
+
+
 		#region Fields (static)
+		public const int MaxTerrainId = 253; // cf. MapFileService.MAX_MCDRECORDS=254
+
+		// bitwise changes for MapResize()
+		public const int CHANGED_NOT = 0; // changed not
+		public const int CHANGED_MAP = 1; // changed Map
+		public const int CHANGED_NOD = 2; // changed Routes
+
+		public const int LEVEL_Dn = +1;
+		public const int LEVEL_no =  0;
+		public const int LEVEL_Up = -1;
+
 		/// <summary>
 		/// The tilepart-id that's stored in a .MAP file's array of tilepart-ids
 		/// accounts for the fact that ids #0 and #1 will be assigned the
 		/// so-called Blank MCD records (the scorched earth parts that are
 		/// instantiated when x-com itself loads). MapView, however, subtracts
 		/// the count of blanks-records to assign the id-values in the
-		/// <see cref="MapFileBase.Parts">MapFileBase.Parts</see> list; terrain-
-		/// and terrainset-ids are easier to cope with that way. The part-ids
-		/// will then be incremented again by the blanks-count when a .MAP file
-		/// gets saved. Put another way #0 and #1 are reserved, by x-com but not
-		/// by MapView, for the 2 BLANKS tiles.
+		/// <see cref="Parts">Parts</see> list; terrain- and terrainset-ids are
+		/// easier to cope with that way. The part-ids will then be incremented
+		/// again by the blanks-count when a .MAP file gets saved. Put another
+		/// way #0 and #1 are reserved, by x-com but not by MapView, for the 2
+		/// BLANKS tiles.
 		/// </summary>
 		private const int BlanksReservedCount = 2;
 		#endregion Fields (static)
@@ -40,10 +60,131 @@ namespace XCom
 		private string PfeMap
 		{ get; set; }
 
+		public Descriptor Descriptor
+		{ get; private set; }
+
+		public MapTileArray Tiles
+		{ get; private set; }
+
+		public List<Tilepart> Parts
+		{ get; private set; }
+
 		public Dictionary<int, Tuple<string,string>> Terrains
 		{ get; private set; }
 
 		public RouteNodeCollection Routes
+		{ get; set; }
+
+		private int _level;
+		/// <summary>
+		/// Gets/Sets the currently selected level.
+		/// @note Setting the level will fire the SelectLevel event.
+		/// WARNING: Level 0 is the top level of the displayed Map.
+		/// </summary>
+		public int Level // TODO: why is Level distinct from Location.Lev - why is Location.Lev not even set by Level
+		{
+			get { return _level; }
+			set
+			{
+				_level = Math.Max(0, Math.Min(value, MapSize.Levs - 1));
+
+				if (SelectLevel != null)
+					SelectLevel(new SelectLevelEventArgs(_level));
+			}
+		}
+
+		private MapLocation _location;
+		/// <summary>
+		/// Gets/Sets the currently selected location.
+		/// @note Setting the location will fire the SelectLocation event.
+		/// </summary>
+		public MapLocation Location
+		{
+			get { return _location; }
+			set
+			{
+				if (   value.Col > -1 && value.Col < MapSize.Cols
+					&& value.Row > -1 && value.Row < MapSize.Rows)
+				{
+					_location = value;
+
+					if (SelectLocation != null)
+						SelectLocation(new SelectLocationEventArgs(
+																_location,
+																this[_location.Col,
+																	 _location.Row]));
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the current size of the Map.
+		/// </summary>
+		public MapSize MapSize
+		{ get; private set; }
+
+		/// <summary>
+		/// Gets/Sets a MapTile object using col,row,lev values.
+		/// </summary>
+		/// <param name="col"></param>
+		/// <param name="row"></param>
+		/// <param name="lev"></param>
+		/// <returns>the corresponding MapTile object</returns>
+		public MapTile this[int col, int row, int lev]
+		{
+			get { return Tiles[col, row, lev]; }
+			set { Tiles[col, row, lev] = value; }
+		}
+		/// <summary>
+		/// Gets/Sets a MapTile object at the current level using col,row
+		/// values.
+		/// </summary>
+		/// <param name="col"></param>
+		/// <param name="row"></param>
+		/// <returns>the corresponding MapTile object</returns>
+		public MapTile this[int col, int row]
+		{
+			get { return this[col, row, Level]; }
+			set { this[col, row, Level] = value; }
+		}
+
+//		/// <summary>
+//		/// Gets/Sets a MapTile object using a MapLocation.
+//		/// @note No error checking is done to ensure that the given location is
+//		/// valid.
+//		/// </summary>
+//		public MapTile this[MapLocation loc]
+//		{
+//			get { return this[loc.Col, loc.Row, loc.Lev]; }
+//			set { this[loc.Col, loc.Row, loc.Lev] = value; }
+//		}
+
+		/// <summary>
+		/// User will be shown a dialog asking to save if the Map changed.
+		/// @note The setter must be mediated by MainViewF.MapChanged in order
+		/// to apply/remove an asterisk to/from the file-label in MainView's
+		/// statusbar.
+		/// </summary>
+		public bool MapChanged
+		{ get; set; }
+
+		/// <summary>
+		/// User will be shown a dialog asking to save if the Routes changed.
+		/// @note The setter must be mediated by RouteView.RoutesChanged in
+		/// order to show/hide a "routes changed" label to/from 'pnlDataFields'
+		/// in RouteView.
+		/// </summary>
+		public bool RoutesChanged
+		{ get; set; }
+
+		public int TerrainsetPartsExceeded
+		{ get; set; }
+
+		/// <summary>
+		/// Set true if a crippled tile was deleted and MainView needs to reload
+		/// the Mapfile.
+		/// </summary>
+		public bool ForceReload
 		{ get; set; }
 
 		internal bool Fail
@@ -88,7 +229,61 @@ namespace XCom
 		#endregion cTor
 
 
-		#region Methods (read/load)
+		#region Methods
+		/// <summary>
+		/// Changes the view-level and fires the SelectLevel event.
+		/// </summary>
+		/// <param name="dir">+1 is down, -1 is up</param>
+		public void ChangeLevel(int dir)
+		{
+			switch (dir)
+			{
+				case LEVEL_Dn:
+					if (Level != MapSize.Levs - 1)
+						++Level;
+					break;
+
+				case LEVEL_Up:
+					if (Level != 0)
+						--Level;
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Generates occultation data for all tiles in the Map.
+		/// </summary>
+		/// <param name="forceVis">true to force visibility</param>
+		public void CalculateOccultations(bool forceVis = false)
+		{
+			if (MapSize.Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
+			{
+				MapTile tile;
+
+				for (int lev = MapSize.Levs - 1; lev != 0; --lev)
+				for (int row = 0; row != MapSize.Rows - 2; ++row)
+				for (int col = 0; col != MapSize.Cols - 2; ++col)
+				{
+					if ((tile = this[col, row, lev]) != null) // safety. The tile should always be valid.
+					{
+						tile.Occulted = !forceVis
+									 && this[col,     row,     lev - 1].Floor != null // above
+
+									 && this[col,     row + 1, lev - 1].Floor != null // south
+									 && this[col,     row + 2, lev - 1].Floor != null
+
+									 && this[col + 1, row,     lev - 1].Floor != null // east
+									 && this[col + 2, row,     lev - 1].Floor != null
+
+									 && this[col + 1, row + 1, lev - 1].Floor != null // southeast
+									 && this[col + 2, row + 1, lev - 1].Floor != null
+									 && this[col + 1, row + 2, lev - 1].Floor != null
+									 && this[col + 2, row + 2, lev - 1].Floor != null;
+					}
+				}
+			}
+		}
+
 		/// <summary>
 		/// Reads a .MAP file.
 		/// </summary>
@@ -174,7 +369,6 @@ namespace XCom
 			}
 			return false;
 		}
-
 
 		/// <summary>
 		/// Creates a tile with its four parts.
@@ -404,7 +598,7 @@ namespace XCom
 		/// Saves the current Mapfile.
 		/// </summary>
 		/// <returns>true on success</returns>
-		public override bool SaveMap()
+		public bool SaveMap()
 		{
 			return WriteMapfile(PfeMap);
 		}
@@ -413,7 +607,7 @@ namespace XCom
 		/// Exports the Map to a different file.
 		/// </summary>
 		/// <param name="pf">path-file w/out extension</param>
-		public override void ExportMap(string pf)
+		public void ExportMap(string pf)
 		{
 			WriteMapfile(pf + GlobalsXC.MapExt);
 		}
@@ -444,7 +638,7 @@ namespace XCom
 				int id;
 
 				// NOTE: User is actually disallowed from placing any tilepart
-				// with an id greater than MapFileBase.MaxTerrainId.
+				// with an id greater than MapFile.MaxTerrainId.
 
 				// TODO: Ask user before NOT writing crippled partids.
 
@@ -520,7 +714,7 @@ namespace XCom
 		/// Saves the current Routefile.
 		/// </summary>
 		/// <returns>true on success</returns>
-		public override bool SaveRoutes()
+		public bool SaveRoutes()
 		{
 			return Routes.SaveRoutes();
 		}
@@ -529,7 +723,7 @@ namespace XCom
 		/// Exports the routes to a different file.
 		/// </summary>
 		/// <param name="pf">path-file w/out extension</param>
-		public override void ExportRoutes(string pf)
+		public void ExportRoutes(string pf)
 		{
 			Routes.ExportRoutes(pf + GlobalsXC.RouteExt);
 		}
@@ -551,7 +745,7 @@ namespace XCom
 		///          0x0 - no changes
 		///          0x1 - Map changed
 		///          0x2 - Routes changed</returns>
-		public override int MapResize(
+		public int MapResize(
 				int cols,
 				int rows,
 				int levs,

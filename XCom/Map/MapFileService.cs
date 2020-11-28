@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using DSShared;
 
-using XCom.Base;
-
 
 namespace XCom
 {
@@ -17,7 +15,7 @@ namespace XCom
 	public static class MapFileService
 	{
 		#region Fields (static)
-		public const int MAX_MCDRECORDS = 254; // cf. MapFileBase.MaxTerrainId=253
+		public const int MAX_MCDRECORDS = 254; // cf. MapFile.MaxTerrainId=253
 		#endregion Fields (static)
 
 
@@ -55,7 +53,7 @@ namespace XCom
 		/// <param name="routes">current Routes - use this only when reloading
 		/// the current Mapfile and want to keep the route-collection as is</param>
 		/// <returns>null if things go south</returns>
-		public static MapFileBase LoadDescriptor(
+		public static MapFile LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
 				bool browseMapfile,

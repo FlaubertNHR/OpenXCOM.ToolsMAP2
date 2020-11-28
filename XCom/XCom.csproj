@@ -81,64 +81,63 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Descriptor\TileGroup.cs" />
+    <Compile Include="Sprites\ResourceInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="McdRecords\McdRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="McdRecords\McdRecordsExceeded.cs" />
+    <Compile Include="McdRecords\SpecialType.cs" />
     <Compile Include="ProgressBarForm.cs" />
-    <Compile Include="Resources\Images\BitmapHandler.cs" />
-    <Compile Include="Resources\Images\BitmapService.cs">
+    <Compile Include="Sprites\BitmapHandler.cs" />
+    <Compile Include="Sprites\BitmapService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Images\SpriteCollection.cs" />
-    <Compile Include="Resources\Images\Types\PckImage.cs">
+    <Compile Include="Sprites\Palette.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Images\Types\ScanGicon.cs" />
-    <Compile Include="Resources\Images\Types\XCImage.cs">
+    <Compile Include="Sprites\SpriteCollection.cs" />
+    <Compile Include="Sprites\Types\PckImage.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Map\McdRecordsExceeded.cs" />
-    <Compile Include="Resources\Map\MapResizeService.cs" />
-    <Compile Include="Resources\Map\RouteData\Link.cs" />
-    <Compile Include="Resources\Map\RouteData\RouteCheckInfobox.cs" />
-    <Compile Include="Resources\Map\RouteData\RouteNode.cs" />
-    <Compile Include="Resources\Map\RouteData\RouteCheckService.cs" />
-    <Compile Include="Resources\Map\SpecialType.cs" />
-    <Compile Include="Resources\Map\MapFileService.cs" />
-    <Compile Include="Resources\Map\TilepartFactory.cs" />
-    <Compile Include="Base\MapLocations.cs" />
-    <Compile Include="Base\MapTileArray.cs" />
+    <Compile Include="Sprites\Types\ScanGicon.cs" />
+    <Compile Include="Sprites\Types\XCImage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Map\MapLocations.cs" />
+    <Compile Include="Map\MapSize.cs" />
+    <Compile Include="Map\MapTileArray.cs" />
+    <Compile Include="Map\MapResizeService.cs" />
+    <Compile Include="Pterodactyl.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RouteData\Link.cs" />
+    <Compile Include="RouteData\RouteCheckInfobox.cs" />
+    <Compile Include="RouteData\RouteNode.cs" />
+    <Compile Include="RouteData\RouteCheckService.cs" />
+    <Compile Include="Map\MapFileService.cs" />
+    <Compile Include="Map\TilepartFactory.cs" />
     <Compile Include="SelectEventArgs.cs" />
-    <Compile Include="Base\MapFileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Map\MapFile.cs">
+    <Compile Include="Map\MapFile.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Map\MapTile.cs">
+    <Compile Include="Map\MapTile.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Map\McdRecord.cs">
+    <Compile Include="RouteData\RouteNodeCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Map\RouteData\RouteNodeCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Resources\Map\Pterodactyl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Resources\Map\Tilepart.cs">
+    <Compile Include="Map\Tilepart.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Descriptor\TileGroupManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ResourceInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Descriptor\Descriptor.cs" />
-    <Compile Include="MapSize.cs" />
-    <Compile Include="Palette.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MapLocation.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -155,6 +154,9 @@
     <Compile Include="Console.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="McdRecords\McdRecordsExceeded.resx">
+      <DependentUpon>McdRecordsExceeded.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProgressBarForm.resx">
       <DependentUpon>ProgressBarForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -163,10 +165,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Map\McdRecordsExceeded.resx">
-      <DependentUpon>McdRecordsExceeded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Map\RouteData\RouteCheckInfobox.resx">
+    <EmbeddedResource Include="RouteData\RouteCheckInfobox.resx">
       <DependentUpon>RouteCheckInfobox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="_Embedded\tftd-battle.pal" />
@@ -198,9 +197,9 @@
     <EmbeddedResource Include="_Embedded\MONOTONE_D.TAB" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources" />
-    <Folder Include="Resources\Images" />
-    <Folder Include="Resources\Images\Types" />
+    <Folder Include="Sprites" />
+    <Folder Include="Sprites\Types" />
+    <Folder Include="McdRecords" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

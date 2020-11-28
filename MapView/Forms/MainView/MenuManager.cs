@@ -362,14 +362,14 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		internal static void OnScanGClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.that.MapBase != null)
+			if (MainViewUnderlay.that.MapFile != null)
 			{
 				var it = Viewers.MenuItems[MI_SCANG];
 				if (!it.Checked)
 				{
 					it.Checked = true;
 
-					MainViewF.ScanG = new ScanGViewer(MainViewUnderlay.that.MapBase);
+					MainViewF.ScanG = new ScanGViewer(MainViewUnderlay.that.MapFile);
 					MainViewF.ScanG.Show(); // no owner.
 				}
 				else

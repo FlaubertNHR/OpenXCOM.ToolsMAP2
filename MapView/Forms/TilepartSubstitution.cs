@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView
@@ -33,7 +32,7 @@ namespace MapView
 		/// <summary>
 		/// The currently loaded Mapfile.
 		/// </summary>
-		private MapFileBase _base;
+		private MapFile _file;
 
 		/// <summary>
 		/// Holds the value of the currently active textbox. The value in the
@@ -57,11 +56,11 @@ namespace MapView
 
 
 		#region cTor
-		internal TilepartSubstitution(MapFileBase @base)
+		internal TilepartSubstitution(MapFile file)
 		{
 			InitializeComponent();
 
-			_base = @base;
+			_file = file;
 
 			la_head.Text = "Change all tileparts between setIds"
 						 + Environment.NewLine
@@ -126,15 +125,15 @@ namespace MapView
 			MapTile tile;
 			Tilepart part;
 
-			int cols = _base.MapSize.Cols;
-			int rows = _base.MapSize.Rows;
-			int levs = _base.MapSize.Levs;
+			int cols = _file.MapSize.Cols;
+			int rows = _file.MapSize.Rows;
+			int levs = _file.MapSize.Levs;
 
 			for (int lev = 0; lev != levs; ++lev)
 			for (int row = 0; row != rows; ++row)
 			for (int col = 0; col != cols; ++col)
 			{
-				if (!(tile = _base[col, row, lev]).Vacant)
+				if (!(tile = _file[col, row, lev]).Vacant)
 				{
 					if ((part = tile.Floor)   != null && part.SetId > id) id = part.SetId;
 					if ((part = tile.West)    != null && part.SetId > id) id = part.SetId;
@@ -234,7 +233,7 @@ namespace MapView
 					else if (tb == tb_dst)						// shall be a positive integer less than partcount
 					{
 						fail = result < 0
-							|| result >= _base.Parts.Count;
+							|| result >= _file.Parts.Count;
 					}
 
 					if (fail)
@@ -290,8 +289,8 @@ namespace MapView
 						 && (    rb_clear.Checked
 							 || (rb_dst  .Checked && dst   != Int32.MaxValue && (dst != src0 || (src1 != Int32.MaxValue && src1 != src0)))
 							 || (rb_shift.Checked && shift != Int32.MaxValue && shift != 0
-								 && shift + src0 > -1 && ((src1 == Int32.MaxValue && shift + src0 < _base.Parts.Count)
-													   || (src1 != Int32.MaxValue && shift + src1 < _base.Parts.Count))));
+								 && shift + src0 > -1 && ((src1 == Int32.MaxValue && shift + src0 < _file.Parts.Count)
+													   || (src1 != Int32.MaxValue && shift + src1 < _file.Parts.Count))));
 		}
 		#endregion Methods
 

@@ -12,7 +12,6 @@ using DSShared.Controls;
 using MapView.Forms.MainView;
 
 using XCom;
-using XCom.Base;
 
 
 namespace MapView.Forms.Observers
@@ -97,11 +96,11 @@ namespace MapView.Forms.Observers
 		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
 		/// </summary>
 		[Browsable(false)]
-		public override MapFileBase MapBase
+		public override MapFile MapFile
 		{
 			set // TODO: check RouteView/TopRouteView(Route)
 			{
-				_file = (base.MapBase = value) as MapFile;
+				_file = (base.MapFile = value);
 
 				DeselectNode();
 
@@ -179,9 +178,9 @@ namespace MapView.Forms.Observers
 		{ get; private set; }
 
 		/// <summary>
-		/// Sets the 'MapFileBase.RoutesChanged' flag. This is only an
+		/// Sets the 'MapFile.RoutesChanged' flag. This is only an
 		/// intermediary that shows "routes changed" in RouteView; the real
-		/// 'RoutesChanged' flag is stored in <see cref="T:XCom.Base.MapFileBase"/>.
+		/// 'RoutesChanged' flag is stored in <see cref="T:XCom.MapFile"/>.
 		/// reasons.
 		/// </summary>
 		private bool RoutesChanged
@@ -283,9 +282,9 @@ namespace MapView.Forms.Observers
 
 				Color color; int id;
 
-				RouteNode node = MapBase[RoutePanel._col,
+				RouteNode node = MapFile[RoutePanel._col,
 										 RoutePanel._row,
-										 MapBase.Level].Node;
+										 MapFile.Level].Node;
 				if (node == null)
 				{
 					id = -1;
@@ -361,9 +360,9 @@ namespace MapView.Forms.Observers
 			{
 				Color color;
 
-				RouteNode node = MapBase[RoutePanel._col,
+				RouteNode node = MapFile[RoutePanel._col,
 										 RoutePanel._row,
-										 MapBase.Level].Node;
+										 MapFile.Level].Node;
 				if (node == null)
 				{
 					color = SystemColors.ControlText;
@@ -388,9 +387,9 @@ namespace MapView.Forms.Observers
 			{
 				Color color; int id;
 
-				RouteNode node = MapBase[RoutePanel._col,
+				RouteNode node = MapFile[RoutePanel._col,
 										 RoutePanel._row,
-										 MapBase.Level].Node;
+										 MapFile.Level].Node;
 				if (node == null)
 				{
 					id = -1;
@@ -434,7 +433,7 @@ namespace MapView.Forms.Observers
 
 				int c = RoutePanel._col;
 				int r = RoutePanel._row;
-				int l = _file.MapSize.Levs - MapBase.Level;
+				int l = _file.MapSize.Levs - MapFile.Level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }
@@ -466,7 +465,7 @@ namespace MapView.Forms.Observers
 				if (NodeSelected == null)
 				{
 					info = String.Empty;
-					level = MapBase.Level;
+					level = MapFile.Level;
 					color = SystemColors.ControlText;
 				}
 				else
@@ -478,8 +477,8 @@ namespace MapView.Forms.Observers
 
 				info += Environment.NewLine;
 
-				int c = MapBase.Location.Col;
-				int r = MapBase.Location.Row;
+				int c = MapFile.Location.Col;
+				int r = MapFile.Location.Row;
 				int l = _file.MapSize.Levs - level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
@@ -1886,7 +1885,7 @@ namespace MapView.Forms.Observers
 
 					if (!Directory.Exists(_lastExportDirectory))
 					{
-						string path = Path.Combine(MapBase.Descriptor.Basepath, GlobalsXC.RoutesDir);
+						string path = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.RoutesDir);
 						if (Directory.Exists(path))
 							sfd.InitialDirectory = path;
 					}
@@ -1918,7 +1917,7 @@ namespace MapView.Forms.Observers
 
 					if (!Directory.Exists(_lastImportDirectory))
 					{
-						string dir = Path.Combine(MapBase.Descriptor.Basepath, GlobalsXC.RoutesDir);
+						string dir = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.RoutesDir);
 						if (Directory.Exists(dir))
 							ofd.InitialDirectory = dir;
 					}
