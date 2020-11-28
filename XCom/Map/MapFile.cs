@@ -56,10 +56,12 @@ namespace XCom
 		#endregion Fields (static)
 
 
-		#region Properties
-		private string PfeMap
-		{ get; set; }
+		#region Fields
+		private string _pfe;
+		#endregion Fields
 
+
+		#region Properties
 		public Descriptor Descriptor
 		{ get; private set; }
 
@@ -211,7 +213,8 @@ namespace XCom
 
 			if (LoadMapfile(pfe, parts))
 			{
-				PfeMap     = pfe;
+				_pfe = pfe;
+
 				Descriptor = descriptor;
 				Terrains   = descriptor.Terrains;
 				Parts      = parts;
@@ -600,7 +603,7 @@ namespace XCom
 		/// <returns>true on success</returns>
 		public bool SaveMap()
 		{
-			return WriteMapfile(PfeMap);
+			return WriteMapfile(_pfe);
 		}
 
 		/// <summary>
