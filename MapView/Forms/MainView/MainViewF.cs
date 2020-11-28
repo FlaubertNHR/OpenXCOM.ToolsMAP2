@@ -1423,6 +1423,8 @@ namespace MapView
 		/// </summary>
 		private void ForceMapReload()
 		{
+			//LogFile.WriteLine("MainViewF.ForceMapReload()");
+
 			MainViewUnderlay.MapFile.ForceReload = false;
 
 			_loadReady = LOADREADY_STAGE_2;
@@ -2730,7 +2732,8 @@ namespace MapView
 
 						// CreateTree() fires OnMapTreeBeforeSelect() which clears 'BypassChanged'
 						// so it needs to be set again - the wonders of the .net Framework in action!
-						BypassChanged = true;
+						// NOTE: just don't release it until the file loads
+//						BypassChanged = true;
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 					}
 				}
@@ -2767,7 +2770,8 @@ namespace MapView
 
 						// CreateTree() fires OnMapTreeBeforeSelect() which clears 'BypassChanged'
 						// so it needs to be set again - the wonders of the .net Framework in action!
-						BypassChanged = true;
+						// NOTE: just don't release it until the file loads
+//						BypassChanged = true;
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 					}
 				}
@@ -3043,8 +3047,8 @@ namespace MapView
 				e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				e.Cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 			}
-			else
-				BypassChanged = false;
+//			else
+//				BypassChanged = false;
 		}
 
 		/// <summary>
@@ -3084,6 +3088,8 @@ namespace MapView
 
 			if (_loadReady == LOADREADY_STAGE_2)
 			{
+				BypassChanged = false;
+
 				var descriptor = MapTree.SelectedNode.Tag as Descriptor;
 				if (descriptor != null)
 				{
