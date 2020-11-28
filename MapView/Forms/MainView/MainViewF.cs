@@ -3089,9 +3089,17 @@ namespace MapView
 				{
 					bool treechanged = false;
 
-					RouteNodeCollection routes;
-					if (keepRoutes) routes = MainViewUnderlay.MapFile.Routes;
-					else            routes = null;
+					RouteNodeCollection routes; bool routesChanged;
+					if (keepRoutes)
+					{
+						routes = MainViewUnderlay.MapFile.Routes;
+						routesChanged = MainViewUnderlay.MapFile.RoutesChanged;
+					}
+					else
+					{
+						routes = null;
+						routesChanged = false;
+					}
 
 					var file = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
 														descriptor,
@@ -3176,6 +3184,9 @@ namespace MapView
 							foreach (RouteNode node in RouteCheckService.Invalids)
 								file.Routes.DeleteNode(node);
 						}
+
+						if (routesChanged && !file.RoutesChanged)
+							RouteView.RoutesChangedCoordinator = true;
 
 						Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
 
