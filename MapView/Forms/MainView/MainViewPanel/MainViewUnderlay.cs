@@ -150,8 +150,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Forces an OnResize event for this Panel. Grants access for MainViewF
-		/// to place a call or two.
+		/// Forces an OnResize event for this Panel. Grants access for
+		/// MainViewF.OnMapResizeClick().
 		/// </summary>
 		internal void ForceResize()
 		{
