@@ -178,7 +178,7 @@ namespace MapView.Forms.MainView
 		{
 			if (MapFile != null)
 			{
-				ResetOverValues();
+				ResetMouseoverTracker();
 				Invalidate();
 			}
 		}
@@ -278,7 +278,7 @@ namespace MapView.Forms.MainView
 					{
 						_targeterForced = false;
 
-						ResetOverValues();
+						ResetMouseoverTracker();
 
 						_keyDeltaX =
 						_keyDeltaY = 0;
@@ -315,9 +315,9 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Resets the values of '_col' and '_row'.
+		/// Resets the values of '_col' and '_row' on [Esc] and OnFocusGained().
 		/// </summary>
-		private void ResetOverValues()
+		private void ResetMouseoverTracker()
 		{
 			var pt = PointToClient(Control.MousePosition);
 				pt = GetTileLocation(pt.X, pt.Y);
