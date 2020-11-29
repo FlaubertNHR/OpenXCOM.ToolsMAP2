@@ -319,53 +319,10 @@ namespace XCom
 
 				if (TerrainsetPartsExceeded != 0)
 				{
-					const string label = "partids detected in the Mapfile that exceed the bounds of the allocated terrainset";
+					const string label = "partids detected in the Mapfile that exceed"
+									   + " the bounds of the allocated terrainset";
 
-					bool singular = (TerrainsetPartsExceeded == 1);
-
-					string copyable0 = "There " + (singular ? "is " : "are ") + TerrainsetPartsExceeded + " tilepart"
-									 + (singular ? String.Empty : "s") + " that exceed" + (singular ? "s" : String.Empty)
-									 + " the bounds of the Map's currently allocated MCD records. "
-									 + (singular ? "It" : "They") + " will be replaced by" + (singular ? " a" : String.Empty)
-									 + " temporary tilepart" + (singular ? String.Empty : "s") + " and displayed on"
-									 + " the Map as orange-red borkiness.";
-					copyable0 = Infobox.FormatString(copyable0, 55) + Environment.NewLine + Environment.NewLine;
-
-					string copyable1 = "Note that borked parts that are in floor-slots could"
-									 + " get hidden beneath valid content-parts, etc.";
-					copyable1 = Infobox.FormatString(copyable1, 55) + Environment.NewLine + Environment.NewLine;
-
-					string copyable2 = "WARNING: Saving the Map in its current state would forever lose"
-									 + " those tilepart references. But if you know what terrain(s) have"
-									 + " gone rogue they can be added to the Map's terrainset with the"
-									 + " TilesetEditor. Or if you know how many records have been removed"
-									 + " from the terrainset the ids of the missing parts can be shifted"
-									 + " downward into an acceptable range by the TilepartSubstitution"
-									 + " dialog under MainView's edit-menu.";
-					copyable2 = Infobox.FormatString(copyable2, 55) + Environment.NewLine + Environment.NewLine;
-
-					string copyable3 = "In any case this is a new feature that likely has bugs with regard"
-									 + " to the broader operation of MapView. So it's recommended to resolve"
-									 + " this issue by";
-					copyable3 = Infobox.FormatString(copyable3, 55) + Environment.NewLine + Environment.NewLine;
-
-					string copyable4 = "(a) saving the Mapfile, deleting the rogue tileparts" + Environment.NewLine;
-					string copyable5 = "(b) adding terrains to the terrainset in the TilesetEditor" + Environment.NewLine;
-					string copyable6 = "(c) adding tileparts to allocated terrains externally" + Environment.NewLine;
-					string copyable7 = "(d) using TilepartSubstitution to shift ids down" + Environment.NewLine;
-
-					string copyable = copyable0
-									+ copyable1
-									+ copyable2
-									+ copyable3
-									+ copyable4
-									+ copyable5
-									+ copyable6
-									+ copyable7
-									+ Environment.NewLine
-									+ "Pronto!";
-
-					using (var f = new Infobox("Warning", label, copyable))
+					using (var f = new Infobox("Warning", label, GetCopyableWarning()))
 						f.ShowDialog();
 				}
 				return true;
@@ -461,6 +418,60 @@ namespace XCom
 							west,
 							north,
 							content);
+		}
+
+		/// <summary>
+		/// Gets the copyable text that is displayed in an Infobox when a
+		/// tileset has parts that exceed the terrainset count.
+		/// </summary>
+		/// <returns></returns>
+		private string GetCopyableWarning()
+		{
+			string n = Environment.NewLine;
+
+			bool singular = (TerrainsetPartsExceeded == 1);
+
+			string copyable0 = "There " + (singular ? "is " : "are ") + TerrainsetPartsExceeded + " tilepart"
+							 + (singular ? String.Empty : "s") + " that exceed" + (singular ? "s" : String.Empty)
+							 + " the bounds of the Map's currently allocated MCD records. "
+							 + (singular ? "It" : "They") + " will be replaced by" + (singular ? " a" : String.Empty)
+							 + " temporary tilepart" + (singular ? String.Empty : "s") + " and displayed on"
+							 + " the Map as borked yellow sprites.";
+			copyable0 = Infobox.FormatString(copyable0, 55) + n + n;
+
+			string copyable1 = "Note that borked parts that are in floor-slots could"
+							 + " get hidden beneath valid content-parts, etc.";
+			copyable1 = Infobox.FormatString(copyable1, 55) + n + n;
+
+			string copyable2 = "IMPORTANT: Saving the Map in its current state would forever lose"
+							 + " those tilepart references. But if you know what terrain(s) have"
+							 + " gone rogue they can be added to the Map's terrainset with the"
+							 + " TilesetEditor. Or if you know how many records have been removed"
+							 + " from the terrainset the ids of the missing parts can be shifted"
+							 + " downward into an acceptable range by the TilepartSubstitution"
+							 + " dialog under MainView's edit-menu.";
+			copyable2 = Infobox.FormatString(copyable2, 55) + n + n;
+
+			string copyable3 = "In any case this is a new feature that likely has bugs with regard"
+							 + " to the broader operation of MapView. So it's recommended to resolve"
+							 + " this issue by";
+			copyable3 = Infobox.FormatString(copyable3, 55) + n + n;
+
+			string copyable4 = "(a) saving the Mapfile, deleting the rogue tileparts"       + n;
+			string copyable5 = "(b) adding terrains to the terrainset in the TilesetEditor" + n;
+			string copyable6 = "(c) adding tileparts to allocated terrains externally"      + n;
+			string copyable7 = "(d) using TilepartSubstitution to shift ids down"           + n;
+
+			string copyable = copyable0
+							+ copyable1
+							+ copyable2
+							+ copyable3
+							+ copyable4
+							+ copyable5
+							+ copyable6
+							+ copyable7 + n + n
+							+ "Pronto!";
+			return copyable;
 		}
 		#endregion Methods (read/load)
 
