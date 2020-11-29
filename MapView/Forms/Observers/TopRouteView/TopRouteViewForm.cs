@@ -330,9 +330,6 @@ namespace MapView.Forms.Observers
 		internal void SelectTabpage(int page)
 		{
 			tabControl.SelectedIndex = page;
-
-//			if (tabControl.SelectedIndex == TAB_TOP) // cf OnActivated
-//				ControlTop.TopPanel.Focus();
 		}
 		#endregion Methods
 	}
