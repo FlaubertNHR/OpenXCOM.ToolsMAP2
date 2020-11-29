@@ -40,6 +40,8 @@ namespace MapView.Forms.MainView
 
 
 		#region Fields
+		private MainViewF _mainView;
+
 		/// <summary>
 		/// Suppresses display of the targeter sprite when the panel loses
 		/// focus or the mouse-cursor leaves the clientarea. This gets overruled
@@ -56,12 +58,12 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Tracks the mouseover location col.
 		/// </summary>
-		private int _overCol;
+		private int _col;
 
 		/// <summary>
 		/// Tracks the mouseover location row.
 		/// </summary>
-		private int _overRow;
+		private int _row;
 		#endregion Fields
 
 
@@ -72,8 +74,6 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties
-		private MainViewF MainView;
-
 		/// <summary>
 		/// MapFile is set only by MainViewUnderlay.MapFile{set}.
 		/// </summary>
@@ -152,11 +152,11 @@ namespace MapView.Forms.MainView
 
 
 		#region cTor
-		internal MainViewOverlay(MainViewF main)
+		internal MainViewOverlay(MainViewF mainView)
 		{
-			MainView = main;
+			_mainView = mainView;
 
-			that = MainView.MainViewOverlay = this;
+			that = _mainView.MainViewOverlay = this;
 
 			SetStyle(ControlStyles.Selectable, true);
 			TabStop = true;
@@ -296,7 +296,7 @@ namespace MapView.Forms.MainView
 					break;
 
 				case Keys.Control | Keys.S:
-					MainView.OnSaveMapClick(null, EventArgs.Empty);
+					_mainView.OnSaveMapClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.X:
@@ -315,14 +315,15 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Resets the values of '_overCol' and '_overRow'.
+		/// Resets the values of '_col' and '_row'.
 		/// </summary>
 		private void ResetOverValues()
 		{
 			var pt = PointToClient(Control.MousePosition);
 				pt = GetTileLocation(pt.X, pt.Y);
-			_overCol = pt.X;
-			_overRow = pt.Y;
+
+			_col = pt.X;
+			_row = pt.Y;
 		}
 
 		/// <summary>
@@ -332,7 +333,7 @@ namespace MapView.Forms.MainView
 		{
 			if (MapFile != null && FirstClick)
 			{
-				MainView.MapChanged = true;
+				_mainView.MapChanged = true;
 
 				MapTile tile;
 
@@ -410,7 +411,7 @@ namespace MapView.Forms.MainView
 			{
 				if (AllowPaste(_copiedTerrains, MapFile.Descriptor.Terrains))
 				{
-					MainView.MapChanged = true;
+					_mainView.MapChanged = true;
 
 					MapTile tile, copy;
 
@@ -527,7 +528,7 @@ namespace MapView.Forms.MainView
 				var part = ObserverManager.TileView.Control.SelectedTilepart;
 				if (part.SetId <= MapFile.MaxTerrainId)
 				{
-					MainView.MapChanged = true;
+					_mainView.MapChanged = true;
 
 					var a = GetDragBeg_abs();
 					var b = GetDragEnd_abs();
@@ -568,7 +569,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal void ClearSelectedQuads()
 		{
-			MainView.MapChanged = true;
+			_mainView.MapChanged = true;
 
 			var a = GetDragBeg_abs();
 			var b = GetDragEnd_abs();
@@ -602,7 +603,7 @@ namespace MapView.Forms.MainView
 				int dst,
 				int shift)
 		{
-			MainView.MapChanged = true;
+			_mainView.MapChanged = true;
 
 			MapTile tile;
 			Tilepart part;
@@ -777,8 +778,8 @@ namespace MapView.Forms.MainView
 
 								MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire SelectLocation
 
-								loc.X = _overCol = c;
-								loc.Y = _overRow = r;
+								loc.X = _col = c;
+								loc.Y = _row = r;
 								ProcessSelection(loc,loc);
 							}
 						}
@@ -827,8 +828,8 @@ namespace MapView.Forms.MainView
 						if (pos > -1 && pos < MapFile.MapSize.Rows)
 							_keyDeltaY += loc.Y;
 
-						loc.X = _overCol = MapFile.Location.Col + _keyDeltaX;
-						loc.Y = _overRow = MapFile.Location.Row + _keyDeltaY;
+						loc.X = _col = MapFile.Location.Col + _keyDeltaX;
+						loc.Y = _row = MapFile.Location.Row + _keyDeltaY;
 						ProcessSelection(DragBeg, loc);
 					}
 				}
@@ -870,15 +871,15 @@ namespace MapView.Forms.MainView
 					_targeterForced = false;
 
 					var loc = GetTileLocation(e.X, e.Y);
-					_overCol = loc.X;
-					_overRow = loc.Y;
+					_col = loc.X;
+					_row = loc.Y;
 				}
 				else // ie. is keyboard navigation
 				{
 					_targeterForced = (e.Clicks == TARGETER_KEY_MAIN);
 
-					_overCol = DragEnd.X;
-					_overRow = DragEnd.Y;
+					_col = DragEnd.X;
+					_row = DragEnd.Y;
 				}
 
 				ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapFile.Level, MapFile.MapSize.Levs);
@@ -886,8 +887,8 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private bool _isMouseDragL;
-		private bool _isMouseDragR;
+		private bool _isMouseDragL; // is a drag-selection
+		private bool _isMouseDragR; // scrolls the Map when zoomed-in
 		private Point _preloc;
 
 		/// <summary>
@@ -914,8 +915,8 @@ namespace MapView.Forms.MainView
 							_keyDeltaX =
 							_keyDeltaY = 0;
 
-							_overCol = loc.X; // stop the targeter from persisting at its
-							_overRow = loc.Y; // previous location when the form is activated.
+							_col = loc.X; // stop the targeter from persisting at its
+							_row = loc.Y; // previous location when the form is activated.
 
 							MapFile.Location = new MapLocation( // fire SelectLocation
 															loc.X, loc.Y,
@@ -958,6 +959,8 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
+			//LogFile.WriteLine("MainViewOverlay.OnMouseMove()");
+
 			if (MapFile != null)
 			{
 				if (e.Button == MouseButtons.Right)
@@ -972,21 +975,23 @@ namespace MapView.Forms.MainView
 				}
 				else if (e.X != _x || e.Y != _y)
 				{
+					//LogFile.WriteLine(". proc");
+
 					_x = e.X; _y = e.Y;
 
 					var loc = GetTileLocation(e.X, e.Y);
 
 					_targeterForced = false;
-					_overCol = loc.X;
-					_overRow = loc.Y;
+					_col = loc.X;
+					_row = loc.Y;
 
 					if (_isMouseDragL
-						&& (_overCol != DragEnd.X || _overRow != DragEnd.Y))
+						&& (_col != DragEnd.X || _row != DragEnd.Y))
 					{
-						_keyDeltaX = _overCol - DragBeg.X;	// NOTE: These are in case a mousedrag-selection protocol stops
-						_keyDeltaY = _overRow - DragBeg.Y;	// but the selection protocol is then continued using the keyboard.
-															// TODO: Implement [Ctrl+LMB] to instantly select an area based
-						ProcessSelection(DragBeg, loc);		// on the currently selected tile ofc.
+						_keyDeltaX = _col - DragBeg.X;	// NOTE: These are in case a mousedrag-selection protocol stops
+						_keyDeltaY = _row - DragBeg.Y;	// but the selection protocol is then continued using the keyboard.
+														// TODO: Implement [Ctrl+LMB] to instantly select an area based
+						ProcessSelection(DragBeg, loc);	// on the currently selected tile ofc.
 					}
 					else
 						Invalidate();
@@ -1014,7 +1019,7 @@ namespace MapView.Forms.MainView
 
 				var a = GetDragBeg_abs(); // update SelectionSize on statusbar ->
 				var b = GetDragEnd_abs();
-				MainView.sb_PrintSelectionSize(
+				_mainView.sb_PrintSelectionSize(
 											b.X - a.X + 1,
 											b.Y - a.Y + 1);
 			}
@@ -1096,7 +1101,7 @@ namespace MapView.Forms.MainView
 			//LogFile.WriteLine("MainViewOverlay.OnSelectLocationMain");
 
 			FirstClick = true;
-			MainView.sb_PrintPosition();
+			_mainView.sb_PrintPosition();
 		}
 
 		/// <summary>
@@ -1107,7 +1112,7 @@ namespace MapView.Forms.MainView
 		{
 			//LogFile.WriteLine("MainViewOverlay.OnSelectLevelMain");
 
-			MainView.sb_PrintPosition();
+			_mainView.sb_PrintPosition();
 			Invalidate();
 		}
 		#endregion Events
@@ -1262,8 +1267,8 @@ namespace MapView.Forms.MainView
 						}
 
 						if (!_targeterSuppressed
-							&& col == _overCol
-							&& row == _overRow
+							&& col == _col
+							&& row == _row
 							&& lev == MapFile.Level)
 						{
 							CuboidSprite.DrawTargeter_Rembrandt(
@@ -1293,13 +1298,13 @@ namespace MapView.Forms.MainView
 			}
 
 /*			if (!_targeterSuppressed // draw Targeter after selection-border ->
-				&& _overCol > -1 && _overCol < MapFile.MapSize.Cols
-				&& _overRow > -1 && _overRow < MapFile.MapSize.Rows)
+				&& _col > -1 && _col < MapFile.MapSize.Cols
+				&& _row > -1 && _row < MapFile.MapSize.Rows)
 			{
 				CuboidSprite.DrawTargeter_Rembrandt(
 											_graphics,
-											_overCol * HalfWidth  + Origin.X - (_overRow * HalfWidth),
-											_overCol * HalfHeight + Origin.Y + (_overRow * HalfHeight) + (MapFile.Level * heightfactor),
+											_col * HalfWidth  + Origin.X - (_row * HalfWidth),
+											_col * HalfHeight + Origin.Y + (_row * HalfHeight) + (MapFile.Level * heightfactor),
 											HalfWidth,
 											HalfHeight);
 			} */
@@ -1360,8 +1365,8 @@ namespace MapView.Forms.MainView
 						}
 
 						if (!_targeterSuppressed
-							&& col == _overCol
-							&& row == _overRow
+							&& col == _col
+							&& row == _row
 							&& lev == MapFile.Level)
 						{
 							CuboidSprite.DrawTargeter_Picasso(
@@ -1399,13 +1404,13 @@ namespace MapView.Forms.MainView
 			}
 
 /*			if (!_targeterSuppressed // draw Targeter after selection-border ->
-				&& _overCol > -1 && _overCol < MapFile.MapSize.Cols
-				&& _overRow > -1 && _overRow < MapFile.MapSize.Rows)
+				&& _col > -1 && _col < MapFile.MapSize.Cols
+				&& _row > -1 && _row < MapFile.MapSize.Rows)
 			{
 				CuboidSprite.DrawTargeter_Picasso(
 											_graphics,
-											_overCol * HalfWidth  + Origin.X - (_overRow * HalfWidth),
-											_overCol * HalfHeight + Origin.Y + (_overRow * HalfHeight) + (MapFile.Level * heightfactor));
+											_col * HalfWidth  + Origin.X - (_row * HalfWidth),
+											_col * HalfHeight + Origin.Y + (_row * HalfHeight) + (MapFile.Level * heightfactor));
 			} */
 		}
 
@@ -1487,8 +1492,8 @@ namespace MapView.Forms.MainView
 //											lev == MapFile.Level);
 //						}
 //						else if (isTargeted
-//							&& col == _overCol
-//							&& row == _overRow
+//							&& col == _col
+//							&& row == _row
 //							&& lev == MapFile.Level)
 //						{
 //							Cuboid.DrawTargeter(
