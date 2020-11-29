@@ -27,14 +27,14 @@ namespace MapView.Forms.MainView
 
 
 		#region Fields
-		private readonly MainViewOverlay MainViewOverlay;
+		private readonly MainViewOverlay _overlay;
 		#endregion Fields
 
 
 		#region cTor
-		internal MainViewOptionables(MainViewOverlay panel)
+		internal MainViewOptionables(MainViewOverlay overlay)
 		{
-			MainViewOverlay = panel;
+			_overlay = overlay;
 		}
 		#endregion cTor
 
@@ -639,13 +639,13 @@ namespace MapView.Forms.MainView
 		internal void LoadDefaults(Options options)
 		{
 			Color color = Color.FromArgb(def_GridLayerOpacity, def_GridLayerColor);
-			MainViewOverlay.BrushLayer = new SolidBrush(color);
+			_overlay.BrushLayer = new SolidBrush(color);
 
-			MainViewOverlay.PenGrid   = new Pen(def_GridLineColor,   def_GridLineWidth);
-			MainViewOverlay.PenGrid10 = new Pen(def_GridLine10Color, def_GridLine10Width);
+			_overlay.PenGrid   = new Pen(def_GridLineColor,   def_GridLineWidth);
+			_overlay.PenGrid10 = new Pen(def_GridLine10Color, def_GridLine10Width);
 
 			color = Color.FromArgb(def_SelectionBorderOpacity, def_SelectionBorderColor);
-			MainViewOverlay.PenSelect = new Pen(color, def_SelectionBorderWidth);
+			_overlay.PenSelect = new Pen(color, def_SelectionBorderWidth);
 
 
 			OptionChangedEvent changer0 = OnOptionChanged;
@@ -709,49 +709,49 @@ namespace MapView.Forms.MainView
 				case str_GridLayerColor:
 				{
 					Color color = Color.FromArgb(GridLayerOpacity, (GridLayerColor = (Color)val));
-					MainViewOverlay.BrushLayer.Color = color;
+					_overlay.BrushLayer.Color = color;
 					break;
 				}
 
 				case str_GridLayerOpacity:
 				{
 					Color color = Color.FromArgb((GridLayerOpacity = (int)val), GridLayerColor);
-					MainViewOverlay.BrushLayer.Color = color;
+					_overlay.BrushLayer.Color = color;
 					break;
 				}
 
 				case str_GridLineColor:
-					MainViewOverlay.PenGrid.Color = (GridLineColor = (Color)val);
+					_overlay.PenGrid.Color = (GridLineColor = (Color)val);
 					break;
 
 				case str_GridLineWidth:
-					MainViewOverlay.PenGrid.Width = (GridLineWidth = (int)val);
+					_overlay.PenGrid.Width = (GridLineWidth = (int)val);
 					break;
 
 				case str_GridLine10Color:
-					MainViewOverlay.PenGrid10.Color = (GridLine10Color = (Color)val);
+					_overlay.PenGrid10.Color = (GridLine10Color = (Color)val);
 					break;
 
 				case str_GridLine10Width:
-					MainViewOverlay.PenGrid10.Width = (GridLine10Width = (int)val);
+					_overlay.PenGrid10.Width = (GridLine10Width = (int)val);
 					break;
 
 				case str_SelectionBorderColor:
 				{
 					Color color = Color.FromArgb(SelectionBorderOpacity, (SelectionBorderColor = (Color)val));
-					MainViewOverlay.PenSelect.Color = color;
+					_overlay.PenSelect.Color = color;
 					break;
 				}
 
 				case str_SelectionBorderOpacity:
 				{
 					Color color = Color.FromArgb((SelectionBorderOpacity = (int)val), SelectionBorderColor);
-					MainViewOverlay.PenSelect.Color = color;
+					_overlay.PenSelect.Color = color;
 					break;
 				}
 
 				case str_SelectionBorderWidth:
-					MainViewOverlay.PenSelect.Width = (SelectionBorderWidth = (int)val);
+					_overlay.PenSelect.Width = (SelectionBorderWidth = (int)val);
 					break;
 
 				case str_SelectedTileToner:
@@ -764,7 +764,7 @@ namespace MapView.Forms.MainView
 					break;
 			}
 
-			MainViewOverlay.Invalidate();
+			_overlay.Invalidate();
 		}
 
 		/// <summary>
@@ -874,7 +874,7 @@ namespace MapView.Forms.MainView
 					break;
 			}
 
-			MainViewOverlay.Invalidate();
+			_overlay.Invalidate();
 			InvalidateSecondaryPanels();
 		}
 
@@ -890,7 +890,7 @@ namespace MapView.Forms.MainView
 		{
 			SpriteShade = (int)val;
 
-			MainViewOverlay.Invalidate();
+			_overlay.Invalidate();
 			InvalidateSecondaryPanels();
 
 			if (MainViewF.ScanG != null)

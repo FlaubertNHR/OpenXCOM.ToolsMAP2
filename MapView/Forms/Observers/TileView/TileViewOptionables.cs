@@ -15,14 +15,14 @@ namespace MapView.Forms.Observers
 	internal sealed class TileViewOptionables
 	{
 		#region Fields
-		private readonly TileView TileView;
+		private readonly TileView _tileView;
 		#endregion Fields
 
 
 		#region cTor
 		internal TileViewOptionables(TileView tileview)
 		{
-			TileView = tileview;
+			_tileView = tileview;
 		}
 		#endregion cTor
 
@@ -309,7 +309,7 @@ The path specified can actually be used to start any valid application"
 			}
 
 			TilePanel.SpecialBrushes[special].Color = color;
-			TileView.GetVisiblePanel().Invalidate();
+			_tileView.GetVisiblePanel().Invalidate();
 		}
 		#endregion Events
 	}

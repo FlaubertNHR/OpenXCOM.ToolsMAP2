@@ -13,14 +13,14 @@ namespace MapView.Forms.Observers
 	internal sealed class TopViewOptionables
 	{
 		#region Fields
-		private readonly TopView TopView;
+		private readonly TopView _topView;
 		#endregion Fields
 
 
 		#region cTor
 		internal TopViewOptionables(TopView topview)
 		{
-			TopView = topview;
+			_topView = topview;
 		}
 		#endregion cTor
 
@@ -67,12 +67,12 @@ namespace MapView.Forms.Observers
 				var foptions = TopView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					TopView.Options[str_GridLineWidth].Value =
+					_topView.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Viceroy(1,6);
 				}
 				else if ((_gridLineWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
-					TopView.Options[str_GridLineWidth].Value = _gridLineWidth;
+					_topView.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
 			}
 		}
@@ -106,12 +106,12 @@ namespace MapView.Forms.Observers
 				var foptions = TopView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					TopView.Options[str_GridLine10Width].Value =
+					_topView.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Viceroy(1,6);
 				}
 				else if ((_gridLine10Width = value.Viceroy(1,6)) != value) // on user-changed
 				{
-					TopView.Options[str_GridLine10Width].Value = _gridLine10Width;
+					_topView.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
 			}
 		}
@@ -162,12 +162,12 @@ namespace MapView.Forms.Observers
 				var foptions = TopView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					TopView.Options[str_WestWidth].Value =
+					_topView.Options[str_WestWidth].Value =
 					_westWidth = value.Viceroy(1,9);
 				}
 				else if ((_westWidth = value.Viceroy(1,9)) != value) // on user-changed
 				{
-					TopView.Options[str_WestWidth].Value = _westWidth;
+					_topView.Options[str_WestWidth].Value = _westWidth;
 				}
 			}
 		}
@@ -201,12 +201,12 @@ namespace MapView.Forms.Observers
 				var foptions = TopView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					TopView.Options[str_NorthWidth].Value =
+					_topView.Options[str_NorthWidth].Value =
 					_northWidth = value.Viceroy(1,9);
 				}
 				else if ((_northWidth = value.Viceroy(1,9)) != value) // on user-changed
 				{
-					TopView.Options[str_NorthWidth].Value = _northWidth;
+					_topView.Options[str_NorthWidth].Value = _northWidth;
 				}
 			}
 		}
@@ -257,12 +257,12 @@ namespace MapView.Forms.Observers
 				var foptions = TopView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					TopView.Options[str_SelectorWidth].Value =
+					_topView.Options[str_SelectorWidth].Value =
 					_selectorWidth = value.Viceroy(1,6);
 				}
 				else if ((_selectorWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
-					TopView.Options[str_SelectorWidth].Value = _selectorWidth;
+					_topView.Options[str_SelectorWidth].Value = _selectorWidth;
 				}
 			}
 		}
@@ -296,12 +296,12 @@ namespace MapView.Forms.Observers
 				var foptions = TopView._foptions as OptionsForm;
 				if (foptions == null) // on load
 				{
-					TopView.Options[str_SelectedWidth].Value =
+					_topView.Options[str_SelectedWidth].Value =
 					_selectedWidth = value.Viceroy(1,6);
 				}
 				else if ((_selectedWidth = value.Viceroy(1,6)) != value) // on user-changed
 				{
-					TopView.Options[str_SelectedWidth].Value = _selectedWidth;
+					_topView.Options[str_SelectedWidth].Value = _selectedWidth;
 				}
 			}
 		}
