@@ -153,138 +153,151 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAcceptClick(object sender, EventArgs e)
 		{
-			if (cbResources.Checked) // handle resource path(s) configuration ->
+			if (!rbTilesets.Enabled || !rbTilesets.Checked
+				|| MessageBox.Show(
+								this,
+								"ARE YOU SURE YOU WANT TO REPLACE YOUR TILESET CONFIGURATION FILE!"
+									+ Environment.NewLine + Environment.NewLine
+									+ "The file contains all data for the MapTree",
+								" Replace tileset data",
+								MessageBoxButtons.YesNo,
+								MessageBoxIcon.Exclamation,
+								MessageBoxDefaultButton.Button2,
+								0) == DialogResult.Yes)
 			{
-				Ufo  = Ufo .Trim();
-				Tftd = Tftd.Trim();
-
-				if (Ufo.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
-					Ufo = Ufo.Substring(0, Ufo.Length - 1);
-
-				if (Tftd.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
-					Tftd = Tftd.Substring(0, Tftd.Length - 1);
-
-				if (String.IsNullOrEmpty(Ufo) && String.IsNullOrEmpty(Tftd))
+				if (cbResources.Checked) // handle resource path(s) configuration ->
 				{
-					ShowErrorDialog("Both folders cannot be blank.");
-					return;
-				}
+					Ufo  = Ufo .Trim();
+					Tftd = Tftd.Trim();
 
-				if (!String.IsNullOrEmpty(Ufo) && !Directory.Exists(Ufo))
-				{
-					ShowErrorDialog("The UFO folder does not exist.");
-					return;
-				}
+					if (Ufo.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
+						Ufo = Ufo.Substring(0, Ufo.Length - 1);
 
-				if (!String.IsNullOrEmpty(Tftd) && !Directory.Exists(Tftd))
-				{
-					ShowErrorDialog("The TFTD folder does not exist.");
-					return;
-				}
+					if (Tftd.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
+						Tftd = Tftd.Substring(0, Tftd.Length - 1);
 
-
-				// check for a valid CursorSprite
-				string CursorPck = SharedSpace.CursorFilePrefix + GlobalsXC.PckExt;
-				string CursorTab = SharedSpace.CursorFilePrefix + GlobalsXC.TabExt;
-
-				if (   (!File.Exists(Path.Combine(Ufo,  CursorPck)) || !File.Exists(Path.Combine(Ufo,  CursorTab)))
-					&& (!File.Exists(Path.Combine(Tftd, CursorPck)) || !File.Exists(Path.Combine(Tftd, CursorTab))))
-				{
-					using (var f = new Infobox(
-											"Error",
-											"A valid UFO or TFTD resource directory must exist with the XCOM cursor files.",
-											@"<basepath>" + Path.DirectorySeparatorChar + CursorPck
-												+ Environment.NewLine +
-											@"<basepath>" + Path.DirectorySeparatorChar + CursorTab))
+					if (String.IsNullOrEmpty(Ufo) && String.IsNullOrEmpty(Tftd))
 					{
-						f.ShowDialog(this);
+						ShowErrorDialog("Both folders cannot be blank.");
+						return;
 					}
-					return;
-				}
 
-
-				// create "settings/MapResources.yml"
-				string pfeT;
-				if (File.Exists(_piResources.Fullpath))
-					pfeT = _piResources.Fullpath + GlobalsXC.TEMPExt;
-				else
-					pfeT = _piResources.Fullpath;
-
-				bool fail = true;
-				using (var fs = FileService.CreateFile(pfeT))
-				if (fs != null)
-				{
-					fail = false;
-
-					using (var sw = new StreamWriter(fs))
+					if (!String.IsNullOrEmpty(Ufo) && !Directory.Exists(Ufo))
 					{
-						object node = new
+						ShowErrorDialog("The UFO folder does not exist.");
+						return;
+					}
+
+					if (!String.IsNullOrEmpty(Tftd) && !Directory.Exists(Tftd))
+					{
+						ShowErrorDialog("The TFTD folder does not exist.");
+						return;
+					}
+
+
+					// check for a valid CursorSprite
+					string CursorPck = SharedSpace.CursorFilePrefix + GlobalsXC.PckExt;
+					string CursorTab = SharedSpace.CursorFilePrefix + GlobalsXC.TabExt;
+
+					if (   (!File.Exists(Path.Combine(Ufo,  CursorPck)) || !File.Exists(Path.Combine(Ufo,  CursorTab)))
+						&& (!File.Exists(Path.Combine(Tftd, CursorPck)) || !File.Exists(Path.Combine(Tftd, CursorTab))))
+					{
+						using (var f = new Infobox(
+												"Error",
+												"A valid UFO or TFTD resource directory must exist with the XCOM cursor files.",
+												@"<basepath>" + Path.DirectorySeparatorChar + CursorPck
+													+ Environment.NewLine +
+												@"<basepath>" + Path.DirectorySeparatorChar + CursorTab))
 						{
-							ufo  = (!String.IsNullOrEmpty(Ufo)  ? Ufo  : PathInfo.NotConfigured),
-							tftd = (!String.IsNullOrEmpty(Tftd) ? Tftd : PathInfo.NotConfigured)
-						};
-						var ser = new Serializer();
-						ser.Serialize(sw, node);
+							f.ShowDialog(this);
+						}
+						return;
 					}
-				}
 
-				if (!fail && pfeT != _piResources.Fullpath)
-					FileService.ReplaceFile(_piResources.Fullpath);
 
-				DialogResult = DialogResult.OK; // close Configurator and reload MapView
-			}
-
-			if (cbTilesets.Checked) // deal with MapTilesets.yml/.tpl ->
-			{
-				// create "settings/MapTilesets.[yml|tpl]"
-				string pfe, pfeT;
-				if (rbTilesets.Checked)
-				{
-					if (File.Exists(pfe = _piTilesets.Fullpath))
-						pfeT = pfe + GlobalsXC.TEMPExt;
+					// create "settings/MapResources.yml"
+					string pfeT;
+					if (File.Exists(_piResources.Fullpath))
+						pfeT = _piResources.Fullpath + GlobalsXC.TEMPExt;
 					else
-						pfeT = pfe;
-				}
-				else // rbTilesetsTpl.Checked
-				{
-//					string dir = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);
-//					pfe = pfeT = Path.Combine(dir, PathInfo.TPL_Tilesets);
+						pfeT = _piResources.Fullpath;
 
-					pfe  =
-					pfeT = Path.Combine(_piTilesets.DirectoryPath, PathInfo.TPL_Tilesets);
-				}
-
-				bool fail = true;
-				using (var fs = FileService.CreateFile(pfeT))
-				if (fs != null)
-				{
-					fail = false;
-
-					using (var sw = new StreamWriter(fs))
-					using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
-															 .GetManifestResourceStream(PathInfo.MAN_Tilesets)))
+					bool fail = true;
+					using (var fs = FileService.CreateFile(pfeT))
+					if (fs != null)
 					{
-						string line;
-						while ((line = sr.ReadLine()) != null)
-							sw.WriteLine(line);
+						fail = false;
+
+						using (var sw = new StreamWriter(fs))
+						{
+							object node = new
+							{
+								ufo  = (!String.IsNullOrEmpty(Ufo)  ? Ufo  : PathInfo.NotConfigured),
+								tftd = (!String.IsNullOrEmpty(Tftd) ? Tftd : PathInfo.NotConfigured)
+							};
+							var ser = new Serializer();
+							ser.Serialize(sw, node);
+						}
 					}
-				}
 
-				if (!fail && pfeT != pfe)
-					FileService.ReplaceFile(pfe);
+					if (!fail && pfeT != _piResources.Fullpath)
+						FileService.ReplaceFile(_piResources.Fullpath);
 
-				if (rbTilesets.Checked)
-				{
 					DialogResult = DialogResult.OK; // close Configurator and reload MapView
 				}
-				else if (!fail) // rbTilesetsTpl.Checked
+
+				if (cbTilesets.Checked) // deal with MapTilesets.yml/.tpl ->
 				{
-					using (var f = new Infobox(
-											"Info",
-											"Tileset template has been created.",
-											pfe))
+					// create "settings/MapTilesets.[yml|tpl]"
+					string pfe, pfeT;
+					if (rbTilesets.Checked)
 					{
-						f.ShowDialog(this);
+						if (File.Exists(pfe = _piTilesets.Fullpath))
+							pfeT = pfe + GlobalsXC.TEMPExt;
+						else
+							pfeT = pfe;
+					}
+					else // rbTilesetsTpl.Checked
+					{
+//						string dir = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);
+//						pfe = pfeT = Path.Combine(dir, PathInfo.TPL_Tilesets);
+
+						pfe  =
+						pfeT = Path.Combine(_piTilesets.DirectoryPath, PathInfo.TPL_Tilesets);
+					}
+
+					bool fail = true;
+					using (var fs = FileService.CreateFile(pfeT))
+					if (fs != null)
+					{
+						fail = false;
+
+						using (var sw = new StreamWriter(fs))
+						using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
+																 .GetManifestResourceStream(PathInfo.MAN_Tilesets)))
+						{
+							string line;
+							while ((line = sr.ReadLine()) != null)
+								sw.WriteLine(line);
+						}
+					}
+
+					if (!fail && pfeT != pfe)
+						FileService.ReplaceFile(pfe);
+
+					if (rbTilesets.Checked)
+					{
+						DialogResult = DialogResult.OK; // close Configurator and reload MapView
+					}
+					else if (!fail) // rbTilesetsTpl.Checked
+					{
+						using (var f = new Infobox(
+												"Info",
+												"Tileset template has been created.",
+												pfe))
+						{
+							f.ShowDialog(this);
+						}
 					}
 				}
 			}
