@@ -345,7 +345,7 @@ namespace XCom
 						for (int i = 0; i != sprite.Bindata.Length; ++i)
 						{
 							if (sprite.Bindata[i] != 0)
-								sprite.Bindata[i] = (byte)(32);
+								sprite.Bindata[i] = (byte)(96); // 32+ red // 144+ yellow // 96+ lightbrown
 						}
 						sprite.Sprite = BitmapService.CreateColored(
 																XCImage.SpriteWidth32,
