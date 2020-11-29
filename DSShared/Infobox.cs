@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 
@@ -205,16 +206,16 @@ namespace DSShared
 		/// <summary>
 		/// Takes and input-string and splices it with newlines every length in
 		/// chars.
-		/// TODO: There's something borky with the algo. See testcase below ...
+		/// TODO: There's something borky with the algo. See testcases below ...
 		/// </summary>
 		/// <param name="text"></param>
 		/// <param name="chars"></param>
 		/// <returns></returns>
 		public static string FormatString(string text, int chars)
 		{
-			var sb = new System.Text.StringBuilder();
+			var sb = new StringBuilder();
 
-			int pos = 0;
+			int pos = -1;
 			var list = new List<int>();
 
 			for (int i = 0; i != text.Length; ++i)
@@ -224,7 +225,7 @@ namespace DSShared
 
 				sb.Append(text[i]);
 
-				if (i != 0 && (i % chars) == 0)
+				if (pos != -1 && i % chars == 0)
 					list.Add(pos);
 			}
 
@@ -251,6 +252,7 @@ namespace DSShared
 	{
 		f.ShowDialog();
 	}
+         |         |         |         |         |         |         ^
 		WARNING: Saving the Map in its current state would forever
 		lose those tilepart references. But if you know what
 		terrain(s) have gone rogue they can be added to the Map's terrainset <- Is sticking out.
@@ -259,11 +261,21 @@ namespace DSShared
 		parts can be shifted downward into an acceptable range by the
 		TilepartSubstitution dialog under MainView's edit-menu.
 
-- or this string w/ 55-char width:
+- or these strings w/ 55-char width:
 		There are 2 tileparts that exceed the bounds of the
 		Map's currently allocated MCD records. They will be
 		replaced by temporary tileparts and displayed on the Map as <- Is sticking out.
 		orange-red borkiness.
+
+         |         |         |         |         |         |    ^    |
+		IMPORTANT: Saving the Map in its current state would
+		forever lose those tilepart references. But if you know
+		what terrain(s) have gone rogue they can be added to the
+		Map's terrainset with the TilesetEditor. Or if you
+		know how many records have been removed from the
+		terrainset the ids of the missing parts can be shifted downward <- Is sticking out.
+		into an acceptable range by the TilepartSubstitution
+		dialog under MainView's edit-menu.
 */
 		#endregion Methods (static)
 
