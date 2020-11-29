@@ -1209,6 +1209,9 @@ namespace MapView
 				}
 			}
 
+			if (copyable == String.Empty)
+				copyable = "none";
+
 			using (var f = new Infobox("Tileset list",
 									   "other Tilesets defined by Path+Map",
 									   copyable))
