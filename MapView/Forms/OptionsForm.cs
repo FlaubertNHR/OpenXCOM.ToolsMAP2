@@ -33,7 +33,7 @@ namespace MapView
 		/// The height of the Description area at the bottom of the form.
 		/// 143 is large enough to show "Interpolation" 11-lines of text.
 		/// </summary>
-		private const int hDescription = 143;
+		private const int hDescription = 142;
 		#endregion Fields (static)
 
 
