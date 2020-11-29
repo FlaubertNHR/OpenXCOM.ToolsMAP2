@@ -28,6 +28,12 @@ namespace MapView
 
 		#region Fields (static)
 		private const string GridViewEdit = "GridViewEdit"; // ie. editfield
+
+		/// <summary>
+		/// The height of the Description area at the bottom of the form.
+		/// 143 is large enough to show "Interpolation" 11-lines of text.
+		/// </summary>
+		private const int hDescription = 143;
 		#endregion Fields (static)
 
 
@@ -65,7 +71,7 @@ namespace MapView
 
 			RegistryInfo.RegisterProperties(this); // NOTE: 1 metric for all four types
 
-			CompositedPropertyGrid.SetDescriptionHeight(propertyGrid, 145); // is large enough to show "Interpolation" 11-lines of text
+			CompositedPropertyGrid.SetDescriptionHeight(propertyGrid, hDescription);
 		}
 		#endregion cTor
 
