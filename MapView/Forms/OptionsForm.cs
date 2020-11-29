@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 using DSShared;
@@ -128,23 +127,7 @@ namespace MapView
 
 
 		#region Designer
-		private IContainer components = null;
-
 		internal CompositedPropertyGrid propertyGrid;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
 
 		private void InitializeComponent()
 		{
