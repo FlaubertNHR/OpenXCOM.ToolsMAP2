@@ -2503,7 +2503,7 @@ namespace MapView
 							break;
 					}
 
-					OnMapTreeMouseDown(null, e); // recurse.
+					OnMapTreeMouseDown(null, e); // RECURSE^
 				}
 			}
 			else // is leftclick
