@@ -125,6 +125,35 @@ namespace MapView.Forms.MainView
 		}
 
 
+		private const string str_StartTopRoutePage = "StartTopRoutePage";
+		private const int    def_StartTopRoutePage = 0;
+
+		private int _starttoproutepage = def_StartTopRoutePage;
+		[Category(cat_Observers)]
+		[Description(@"The tab-page to focus when TopRouteView starts
+0 - TopView always (default)
+1 - RouteView always
+2 - TopView recall
+3 - RouteView recall")]
+		[DefaultValue(def_StartTopRoutePage)]
+		public int StartTopRoutePage
+		{
+			get { return _starttoproutepage; }
+			set
+			{
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
+				{
+					MainViewF.that.Options[str_StartTopRoutePage].Value =
+					_starttoproutepage = value.Viceroy(0,3);
+				}
+				else if ((_starttoproutepage = value.Viceroy(0,3)) != value) // on user-changed
+				{
+					MainViewF.that.Options[str_StartTopRoutePage].Value = _starttoproutepage;
+				}
+			}
+		}
+
+
 
 		private const string cat_Grid = "Grid";
 
@@ -658,6 +687,7 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_StartTopView,           def_StartTopView,           changer1);
 			options.AddOptionDefault(str_StartRouteView,         def_StartRouteView,         changer1);
 			options.AddOptionDefault(str_StartTopRouteView,      def_StartTopRouteView,      changer1);
+			options.AddOptionDefault(str_StartTopRoutePage,      def_StartTopRoutePage,      changer1);
 
 			options.AddOptionDefault(str_GridVisible,            def_GridVisible,            changer0);
 			options.AddOptionDefault(str_GridLayerColor,         def_GridLayerColor,         changer0);
@@ -799,6 +829,16 @@ namespace MapView.Forms.MainView
 					MenuManager.setMenuChecked(
 											MenuManager.MI_TOPROUTE,
 											(StartTopRouteView = (bool)val));
+					break;
+
+				case str_StartTopRoutePage:
+					StartTopRoutePage = (int)val;
+
+					if ((MainViewF._foptions as OptionsForm) == null // on load
+						|| StartTopRoutePage > 1)
+					{
+						ObserverManager.TopRouteView.SelectTabpage(StartTopRoutePage % 2); // 0,2 TopView; 1,3 RouteView
+					}
 					break;
 
 

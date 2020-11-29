@@ -301,5 +301,39 @@ namespace MapView.Forms.Observers
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
+
+
+		#region Events
+		private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (MainViewF.Optionables.StartTopRoutePage > 1)
+			{
+				MainViewF.Optionables.StartTopRoutePage = tabControl.SelectedIndex + 2;
+
+				var foptions = MainViewF._foptions;
+				if (foptions != null)
+				{
+					var grid = (foptions as OptionsForm).propertyGrid;
+					grid.Refresh(); // yes refresh the grid even if it's hidden.
+				}
+			}
+		}
+		#endregion Events
+
+
+		#region Methods
+		/// <summary>
+		/// Focuses a tabpage when the MainView option "StartTopRoutePage"
+		/// changes.
+		/// </summary>
+		/// <param name="page"></param>
+		internal void SelectTabpage(int page)
+		{
+			tabControl.SelectedIndex = page;
+
+//			if (tabControl.SelectedIndex == TAB_TOP) // cf OnActivated
+//				ControlTop.TopPanel.Focus();
+		}
+		#endregion Methods
 	}
 }
