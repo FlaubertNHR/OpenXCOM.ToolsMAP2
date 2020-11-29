@@ -947,9 +947,6 @@ namespace MapView.Forms.MainView
 			_isMouseDragR = false;
 		}
 
-		private int _x = -1;	// these keep track of whether the mouse-cursor
-		private int _y = -1;	// actually moves or if .NET is simply firing
-								// arbitrary MouseMove events.
 		/// <summary>
 		/// Updates the drag-selection process.
 		/// @note The MouseMove event appears to fire multiple times when the
@@ -959,8 +956,6 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewOverlay.OnMouseMove()");
-
 			if (MapFile != null)
 			{
 				if (e.Button == MouseButtons.Right)
@@ -973,28 +968,27 @@ namespace MapView.Forms.MainView
 						MainViewUnderlay.that.ScrollVert(delta.Y);
 					}
 				}
-				else if (e.X != _x || e.Y != _y)
+				else
 				{
-					//LogFile.WriteLine(". proc");
-
-					_x = e.X; _y = e.Y;
-
 					var loc = GetTileLocation(e.X, e.Y);
-
-					_targeterForced = false;
-					_col = loc.X;
-					_row = loc.Y;
-
-					if (_isMouseDragL
-						&& (_col != DragEnd.X || _row != DragEnd.Y))
+					if (loc.X != _col || loc.Y != _row)
 					{
-						_keyDeltaX = _col - DragBeg.X;	// NOTE: These are in case a mousedrag-selection protocol stops
-						_keyDeltaY = _row - DragBeg.Y;	// but the selection protocol is then continued using the keyboard.
-														// TODO: Implement [Ctrl+LMB] to instantly select an area based
-						ProcessSelection(DragBeg, loc);	// on the currently selected tile ofc.
+						_col = loc.X;
+						_row = loc.Y;
+
+						_targeterForced = false;
+
+						if (_isMouseDragL
+							&& (_col != DragEnd.X || _row != DragEnd.Y))
+						{
+							_keyDeltaX = _col - DragBeg.X;	// NOTE: These are in case a mousedrag-selection protocol stops
+							_keyDeltaY = _row - DragBeg.Y;	// but the selection protocol is then continued using the keyboard.
+															// TODO: Implement [Ctrl+LMB] to instantly select an area based
+							ProcessSelection(DragBeg, loc);	// on the currently selected tile ofc.
+						}
+						else
+							Invalidate();
 					}
-					else
-						Invalidate();
 				}
 			}
 		}
