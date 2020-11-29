@@ -58,12 +58,12 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Tracks the mouseover location col.
 		/// </summary>
-		private int _col;
+		private int _col = -1;
 
 		/// <summary>
 		/// Tracks the mouseover location row.
 		/// </summary>
-		private int _row;
+		private int _row = -1;
 		#endregion Fields
 
 
