@@ -98,11 +98,12 @@ namespace XCom
 			this.rtb_Text.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.rtb_Text.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rtb_Text.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.rtb_Text.Location = new System.Drawing.Point(25, 65);
+			this.rtb_Text.Location = new System.Drawing.Point(25, 64);
+			this.rtb_Text.Margin = new System.Windows.Forms.Padding(0);
 			this.rtb_Text.Name = "rtb_Text";
 			this.rtb_Text.ReadOnly = true;
 			this.rtb_Text.ShortcutsEnabled = false;
-			this.rtb_Text.Size = new System.Drawing.Size(370, 180);
+			this.rtb_Text.Size = new System.Drawing.Size(370, 182);
 			this.rtb_Text.TabIndex = 1;
 			this.rtb_Text.Text = "";
 			// 
@@ -111,9 +112,10 @@ namespace XCom
 			this.lbl_InfoBody.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lbl_InfoBody.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.lbl_InfoBody.Location = new System.Drawing.Point(10, 10);
+			this.lbl_InfoBody.Location = new System.Drawing.Point(8, 8);
+			this.lbl_InfoBody.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_InfoBody.Name = "lbl_InfoBody";
-			this.lbl_InfoBody.Size = new System.Drawing.Size(390, 45);
+			this.lbl_InfoBody.Size = new System.Drawing.Size(392, 46);
 			this.lbl_InfoBody.TabIndex = 0;
 			// 
 			// btn_No
