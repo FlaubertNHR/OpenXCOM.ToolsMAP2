@@ -331,14 +331,14 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmiTestPositions.Name = "tsmiTestPositions";
 			this.tsmiTestPositions.Size = new System.Drawing.Size(157, 22);
-			this.tsmiTestPositions.Text = "Test &positions";
+			this.tsmiTestPositions.Text = "Test node &positions";
 			this.tsmiTestPositions.Click += new System.EventHandler(this.OnTestPositionsClick);
 			// 
 			// tsmiTestNodeRanks
 			// 
 			this.tsmiTestNodeRanks.Name = "tsmiTestNodeRanks";
 			this.tsmiTestNodeRanks.Size = new System.Drawing.Size(157, 22);
-			this.tsmiTestNodeRanks.Text = "Test node&ranks";
+			this.tsmiTestNodeRanks.Text = "Test node &ranks";
 			this.tsmiTestNodeRanks.Click += new System.EventHandler(this.OnTestNodeRanksClick);
 			// 
 			// tsb_Options
