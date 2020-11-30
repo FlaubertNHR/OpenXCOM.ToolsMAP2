@@ -64,8 +64,7 @@ namespace MapView.Forms.Observers
 			get { return _gridLineWidth; }
 			set
 			{
-				var foptions = TopView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Viceroy(1,6);
@@ -103,8 +102,7 @@ namespace MapView.Forms.Observers
 			get { return _gridLine10Width; }
 			set
 			{
-				var foptions = TopView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Viceroy(1,6);
@@ -159,8 +157,7 @@ namespace MapView.Forms.Observers
 			get { return _westWidth; }
 			set
 			{
-				var foptions = TopView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_WestWidth].Value =
 					_westWidth = value.Viceroy(1,9);
@@ -198,8 +195,7 @@ namespace MapView.Forms.Observers
 			get { return _northWidth; }
 			set
 			{
-				var foptions = TopView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_NorthWidth].Value =
 					_northWidth = value.Viceroy(1,9);
@@ -254,8 +250,7 @@ namespace MapView.Forms.Observers
 			get { return _selectorWidth; }
 			set
 			{
-				var foptions = TopView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_SelectorWidth].Value =
 					_selectorWidth = value.Viceroy(1,6);
@@ -293,8 +288,7 @@ namespace MapView.Forms.Observers
 			get { return _selectedWidth; }
 			set
 			{
-				var foptions = TopView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_SelectedWidth].Value =
 					_selectedWidth = value.Viceroy(1,6);

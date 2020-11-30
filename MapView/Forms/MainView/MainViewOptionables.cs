@@ -196,8 +196,7 @@ namespace MapView.Forms.MainView
 			get { return _gridLayerOpacity; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_GridLayerOpacity].Value =
 					_gridLayerOpacity = value.Viceroy(0,255);
@@ -235,8 +234,7 @@ namespace MapView.Forms.MainView
 			get { return _gridLineWidth; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Viceroy(1,6);
@@ -274,8 +272,7 @@ namespace MapView.Forms.MainView
 			get { return _gridLine10Width; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Viceroy(1,6);
@@ -316,8 +313,7 @@ namespace MapView.Forms.MainView
 			get { return _selectionBorderOpacity; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_SelectionBorderOpacity].Value =
 					_selectionBorderOpacity = value.Viceroy(0,255);
@@ -341,8 +337,7 @@ namespace MapView.Forms.MainView
 			get { return _selectionBorderWidth; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_SelectionBorderWidth].Value =
 					_selectionBorderWidth = value.Viceroy(1,6);
@@ -373,8 +368,7 @@ namespace MapView.Forms.MainView
 			get { return _selectedTileToner; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_SelectedTileToner].Value =
 					_selectedTileToner = value.Viceroy(TONER_NONE, TONER_BLUE);
@@ -402,7 +396,7 @@ namespace MapView.Forms.MainView
 			get { return _layerSelectionBorder; }
 			set
 			{
-				if (MainViewF._foptions as OptionsForm == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_LayerSelectionBorder].Value =
 					_layerSelectionBorder = value.Viceroy(0,2);
@@ -441,8 +435,7 @@ namespace MapView.Forms.MainView
 			get { return _spriteShade; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_SpriteShade].Value =
 					_spriteShade = value.Viceroy(0,100);
@@ -497,8 +490,7 @@ namespace MapView.Forms.MainView
 			get { return _interpolation; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_Interpolation].Value =
 					_interpolation = value.Viceroy(0,7);

@@ -64,8 +64,7 @@ namespace MapView.Forms.Observers
 			get { return _gridLineWidth; }
 			set
 			{
-				var foptions = RouteView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Viceroy(1,6);
@@ -103,8 +102,7 @@ namespace MapView.Forms.Observers
 			get { return _gridLine10Width; }
 			set
 			{
-				var foptions = RouteView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Viceroy(1,6);
@@ -145,8 +143,7 @@ namespace MapView.Forms.Observers
 			get { return _wallWidth; }
 			set
 			{
-				var foptions = RouteView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_WallWidth].Value =
 					_wallWidth = value.Viceroy(1,9);
@@ -230,8 +227,7 @@ namespace MapView.Forms.Observers
 			get { return _nodeOpacity; }
 			set
 			{
-				var foptions = RouteView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_NodeOpacity].Value =
 					_nodeOpacity = value.Viceroy(0,255);
@@ -272,8 +268,7 @@ namespace MapView.Forms.Observers
 			get { return _linkWidth; }
 			set
 			{
-				var foptions = RouteView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_LinkWidth].Value =
 					_linkWidth = value.Viceroy(1,6);
@@ -311,8 +306,7 @@ namespace MapView.Forms.Observers
 			get { return _linkSelectedWidth; }
 			set
 			{
-				var foptions = RouteView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_LinkSelectedWidth].Value =
 					_linkSelectedWidth = value.Viceroy(1,6);
@@ -395,13 +389,12 @@ namespace MapView.Forms.Observers
 			get { return _startConnector; }
 			set
 			{
-				var foptions = MainViewF._foptions as OptionsForm;
-				if (foptions == null) // on load ->
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_StartConnector].Value =
 					_startConnector = value.Viceroy(LinkOff, LinkForBac);
 				}
-				else if ((_startConnector = value.Viceroy(LinkOff, LinkForBac)) != value) // user-changed ->
+				else if ((_startConnector = value.Viceroy(LinkOff, LinkForBac)) != value) // on user-changed
 				{
 					_routeView.Options[str_StartConnector].Value = _startConnector;
 				}
@@ -436,8 +429,7 @@ namespace MapView.Forms.Observers
 			get { return _selectorWidth; }
 			set
 			{
-				var foptions = RouteView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					RouteView.Options[str_SelectorWidth].Value =
 					_selectorWidth = value.Clamp(1,6);
@@ -475,8 +467,7 @@ namespace MapView.Forms.Observers
 			get { return _selectedWidth; }
 			set
 			{
-				var foptions = RouteView._foptions as OptionsForm;
-				if (foptions == null) // on load
+				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					RouteView.Options[str_SelectedWidth].Value =
 					_selectedWidth = value.Clamp(1,6);
