@@ -1651,6 +1651,30 @@ namespace MapView.Forms.MainView
 		}
 #endif
 
+		bool _visFloor   = true;
+		bool _visWest    = true;
+		bool _visNorth   = true;
+		bool _visContent = true;
+
+		/// <summary>
+		/// Sets the current quadrant-visibilites as checked in TopView.
+		/// </summary>
+		/// <param name="floor"></param>
+		/// <param name="west"></param>
+		/// <param name="north"></param>
+		/// <param name="content"></param>
+		internal void SetQuadrantVisibilities(
+				bool floor,
+				bool west,
+				bool north,
+				bool content)
+		{
+			_visFloor   = floor;
+			_visWest    = west;
+			_visNorth   = north;
+			_visContent = content;
+		}
+
 		/// <summary>
 		/// Draws the tileparts in the Tile if 'UseMono' or LOCKBITS.
 		/// </summary>
@@ -1669,33 +1693,28 @@ namespace MapView.Forms.MainView
 
 			Tilepart part;
 
-			var topView = ObserverManager.TopView.Control;
-			if (topView.Floor.Checked
-				&& (part = tile.Floor) != null)
+			if (_visFloor && (part = tile.Floor) != null)
 			{
 				DrawSprite(
 						part[_anistep].Bindata,
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.West.Checked
-				&& (part = tile.West) != null)
+			if (_visWest && (part = tile.West) != null)
 			{
 				DrawSprite(
 						part[_anistep].Bindata,
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.North.Checked
-				&& (part = tile.North) != null)
+			if (_visNorth && (part = tile.North) != null)
 			{
 				DrawSprite(
 						part[_anistep].Bindata,
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (topView.Content.Checked
-				&& (part = tile.Content) != null)
+			if (_visContent && (part = tile.Content) != null)
 			{
 				DrawSprite(
 						part[_anistep].Bindata,

@@ -213,6 +213,11 @@ namespace MapView.Forms.Observers
 					VisibleQuadrants &= ~CONTENT;
 			}
 
+			MainViewOverlay.that.SetQuadrantVisibilities(
+													(VisibleQuadrants & FLOOR)   != 0,
+													(VisibleQuadrants & WEST)    != 0,
+													(VisibleQuadrants & NORTH)   != 0,
+													(VisibleQuadrants & CONTENT) != 0);
 			MainViewOverlay.that.Invalidate();
 
 			ObserverManager.TopView     .Control   .TopPanel     .Invalidate();
