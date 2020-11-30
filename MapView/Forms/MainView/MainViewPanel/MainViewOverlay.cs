@@ -319,11 +319,11 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private void ResetMouseoverTracker()
 		{
-			var pt = PointToClient(Control.MousePosition);
-				pt = GetTileLocation(pt.X, pt.Y);
+			var loc = PointToClient(Control.MousePosition);
+				loc = GetTileLocation(loc.X, loc.Y);
 
-			_col = pt.X;
-			_row = pt.Y;
+			_col = loc.X;
+			_row = loc.Y;
 		}
 
 		/// <summary>
@@ -905,9 +905,8 @@ namespace MapView.Forms.MainView
 				{
 					case MouseButtons.Left:
 					{
-						var loc = GetTileLocation(e.X, e.Y);
-						if (   loc.X > -1 && loc.X < MapFile.MapSize.Cols
-							&& loc.Y > -1 && loc.Y < MapFile.MapSize.Rows)
+						if (   _col > -1 && _col < MapFile.MapSize.Cols
+							&& _row > -1 && _row < MapFile.MapSize.Rows)
 						{
 							ObserverManager.RouteView   .Control     .DeselectNode(false);
 							ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
@@ -915,8 +914,7 @@ namespace MapView.Forms.MainView
 							_keyDeltaX =
 							_keyDeltaY = 0;
 
-							_col = loc.X; // stop the targeter from persisting at its
-							_row = loc.Y; // previous location when the form is activated.
+							var loc = new Point(_col, _row);
 
 							MapFile.Location = new MapLocation( // fire SelectLocation
 															loc.X, loc.Y,
