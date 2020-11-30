@@ -664,13 +664,28 @@ namespace MapView.Forms.MainView
 
 		private bool _ignoreRecordsExceeded = def_IgnoreRecordsExceeded;
 		[Category(cat_Global)]
-		[Description("If true do not show warnings when the total MCD (terrain)" +
-			" record count exceeds 254")]
+		[Description("If true do not show warnings when the total MCD (terrain)"
+			+ " record count exceeds 254")]
 		[DefaultValue(def_IgnoreRecordsExceeded)]
 		public bool IgnoreRecordsExceeded
 		{
 			get { return _ignoreRecordsExceeded; }
 			set { _ignoreRecordsExceeded = value; }
+		}
+
+
+		private const string str_InvertMousewheel = "InvertMousewheel";
+		private const bool   def_InvertMousewheel = false;
+
+		private bool _invertMousewheel = def_InvertMousewheel;
+		[Category(cat_Global)]
+		[Description("If true the mousewheel changes levels in the opposite direction"
+			+ " than it should (default false)")]
+		[DefaultValue(def_InvertMousewheel)]
+		public bool InvertMousewheel
+		{
+			get { return _invertMousewheel; }
+			set { _invertMousewheel = value; }
 		}
 		#endregion Properties (optionable)
 
@@ -737,6 +752,7 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_Base1_xy,               def_Base1_xy,               changer4);
 			options.AddOptionDefault(str_Base1_z,                def_Base1_z,                changer4);
 			options.AddOptionDefault(str_IgnoreRecordsExceeded,  def_IgnoreRecordsExceeded,  changer1);
+			options.AddOptionDefault(str_InvertMousewheel,       def_InvertMousewheel,       changer1);
 		}
 		#endregion Methods
 
@@ -886,6 +902,10 @@ namespace MapView.Forms.MainView
 
 				case str_IgnoreRecordsExceeded:
 					IgnoreRecordsExceeded = (bool)val;
+					break;
+
+				case str_InvertMousewheel:
+					InvertMousewheel = (bool)val;
 					break;
 			}
 		}

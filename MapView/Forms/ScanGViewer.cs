@@ -102,13 +102,19 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
+			int delta;
+			if (MainViewF.Optionables.InvertMousewheel)
+				delta = -e.Delta;
+			else
+				delta =  e.Delta;
+
 			int level = Level;
 
-			if (e.Delta < 0 && Level != 0)
+			if (delta < 0 && Level != 0)
 			{
 				--Level;
 			}
-			else if (e.Delta > 0 && Level != _file.MapSize.Levs - 1)
+			else if (delta > 0 && Level != _file.MapSize.Levs - 1)
 			{
 				++Level;
 			}

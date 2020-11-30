@@ -79,9 +79,15 @@ namespace MapView.Forms.Observers
 		{
 			base.OnMouseWheel(e);
 
+			int delta;
+			if (MainViewF.Optionables.InvertMousewheel)
+				delta = -e.Delta;
+			else
+				delta =  e.Delta;
+
 			int dir = MapFile.LEVEL_no;
-			if      (e.Delta < 0) dir = MapFile.LEVEL_Up;
-			else if (e.Delta > 0) dir = MapFile.LEVEL_Dn;
+			if      (delta < 0) dir = MapFile.LEVEL_Up;
+			else if (delta > 0) dir = MapFile.LEVEL_Dn;
 			MapFile.ChangeLevel(dir);
 
 			ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapFile.Level, MapFile.MapSize.Levs);
