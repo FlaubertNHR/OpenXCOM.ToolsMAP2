@@ -1205,21 +1205,29 @@ namespace MapView.Forms.MainView
 
 
 			MapTile tile;
-			bool cuboid;
+			bool isLocCuboid;
+
+			bool isLevel;
 
 			int heightfactor = HalfHeight * 3;
+			int offsetVert;
+
 			for (int
 				lev  = MapFile.MapSize.Levs - 1;
 				lev >= MapFile.Level;
 				--lev)
 			{
-				if (MainViewF.Optionables.GridVisible && lev == MapFile.Level)
+				isLevel = (lev == MapFile.Level);
+
+				if (isLevel && MainViewF.Optionables.GridVisible)
 					DrawGrid();
+
+				offsetVert = lev * heightfactor;
 
 				for (int
 						row = 0,
 							startX = Origin.X,
-							startY = Origin.Y + (lev * heightfactor);
+							startY = Origin.Y + offsetVert;
 						row != _rows;
 						++row,
 							startX -= HalfWidth,
@@ -1234,51 +1242,49 @@ namespace MapView.Forms.MainView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
+						if (isLocCuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
 														_graphics,
-														x, y,
+														x,y,
 														HalfWidth,
 														HalfHeight,
 														false,
-														lev == MapFile.Level);
+														isLevel);
 						}
 
 						if (!(tile = MapFile[col, row, lev]).Vacant
-							&& (!tile.Occulted
-								|| lev == MapFile.Level))
+							&& (isLevel || !tile.Occulted))
 						{
 							// This is different between REMBRANDT and PICASSO ->
 							DrawTile(
 									tile,
-									x, y,
-									MainViewF.Optionables.SelectedTileToner != 0
-										&& lev == MapFile.Level
+									x,y,
+									isLevel
+										&& MainViewF.Optionables.SelectedTileToner != 0
 										&& rect.Contains(col, row));
 						}
 
-						if (!_targeterSuppressed
+						if (isLevel && !_targeterSuppressed
 							&& col == _col
-							&& row == _row
-							&& lev == MapFile.Level)
+							&& row == _row)
 						{
 							CuboidSprite.DrawTargeter_Rembrandt(
 														_graphics,
-														x, y,
+														x,y,
 														HalfWidth,
 														HalfHeight);
 						}
 
-						if (cuboid)
+						if (isLocCuboid)
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
 														_graphics,
-														x, y,
+														x,y,
 														HalfWidth,
 														HalfHeight,
 														true,
-														lev == MapFile.Level);
+														isLevel);
 						}
 					}
 				}
@@ -1311,21 +1317,29 @@ namespace MapView.Forms.MainView
 		private void DrawPicasso()
 		{
 			MapTile tile;
-			bool cuboid;
+			bool isLocCuboid;
+
+			bool isLevel;
 
 			int heightfactor = HalfHeight * 3;
+			int offsetVert;
+
 			for (int
 				lev  = MapFile.MapSize.Levs - 1;
 				lev >= MapFile.Level;
 				--lev)
 			{
-				if (MainViewF.Optionables.GridVisible && lev == MapFile.Level)
+				isLevel = (lev == MapFile.Level);
+
+				if (isLevel && MainViewF.Optionables.GridVisible)
 					DrawGrid();
+
+				offsetVert = (lev * heightfactor);
 
 				for (int
 						row = 0,
 							startX = Origin.X,
-							startY = Origin.Y + (lev * heightfactor);
+							startY = Origin.Y + offsetVert;
 						row != _rows;
 						++row,
 							startX -= HalfWidth,
@@ -1340,39 +1354,38 @@ namespace MapView.Forms.MainView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
+						if (isLocCuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
 							CuboidSprite.DrawCuboid_Picasso(
 														_graphics,
-														x, y,
+														x,y,
 														false,
-														lev == MapFile.Level);
+														isLevel);
 						}
 
 						if (!(tile = MapFile[col, row, lev]).Vacant
-							&& (!tile.Occulted || lev == MapFile.Level))
+							&& (isLevel || !tile.Occulted))
 						{
 							// This is different between REMBRANDT and PICASSO ->
-							DrawTile(tile, x, y);
+							DrawTile(tile, x,y);
 						}
 
-						if (!_targeterSuppressed
+						if (isLevel && !_targeterSuppressed
 							&& col == _col
-							&& row == _row
-							&& lev == MapFile.Level)
+							&& row == _row)
 						{
 							CuboidSprite.DrawTargeter_Picasso(
 														_graphics,
-														x, y);
+														x,y);
 						}
 
-						if (cuboid)
+						if (isLocCuboid)
 						{
 							CuboidSprite.DrawCuboid_Picasso(
 														_graphics,
-														x, y,
+														x,y,
 														true,
-														lev == MapFile.Level);
+														isLevel);
 						}
 					}
 				}
