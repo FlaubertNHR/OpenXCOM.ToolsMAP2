@@ -1942,12 +1942,15 @@ namespace MapView.Forms.MainView
 			b.X += HalfWidth;
 			l.X += HalfWidth;
 
-			_graphics.DrawLine(PenSelect, t, r);
-			_graphics.DrawLine(PenSelect, r, b);
-			_graphics.DrawLine(PenSelect, b, l);
-			_graphics.DrawLine(PenSelect, l, t);
+			if (MainViewF.Optionables.LayerSelectionBorder < 2)
+			{
+				_graphics.DrawLine(PenSelect, t, r); // draw at grid level
+				_graphics.DrawLine(PenSelect, r, b);
+				_graphics.DrawLine(PenSelect, b, l);
+				_graphics.DrawLine(PenSelect, l, t);
+			}
 
-			if (MainViewF.Optionables.DoubleLayerSelectionBorder)
+			if (MainViewF.Optionables.LayerSelectionBorder > 0)
 			{
 				int offsetVert = HalfHeight * 3;
 
@@ -1956,7 +1959,7 @@ namespace MapView.Forms.MainView
 				b.Y -= offsetVert;
 				l.Y -= offsetVert;
 
-				_graphics.DrawLine(PenSelect, t, r);
+				_graphics.DrawLine(PenSelect, t, r); // draw at level above
 				_graphics.DrawLine(PenSelect, r, b);
 				_graphics.DrawLine(PenSelect, b, l);
 				_graphics.DrawLine(PenSelect, l, t);

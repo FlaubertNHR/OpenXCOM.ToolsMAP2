@@ -1114,9 +1114,9 @@ namespace MapView
 					}
 					break;
 
-				case Keys.F9: // toggle DoubleLayerSelectionBorder
-					key = MainViewOptionables.str_DoubleLayerSelectionBorder;
-					val = !Optionables.DoubleLayerSelectionBorder;
+				case Keys.F9: // cycle LayerSelectionBorder
+					key = MainViewOptionables.str_LayerSelectionBorder;
+					val = (Optionables.LayerSelectionBorder + 1) % 3;
 					Options[key].Value = val;
 					Optionables.OnOptionChanged(key,val);
 					break;
