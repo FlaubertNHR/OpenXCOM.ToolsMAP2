@@ -22,8 +22,6 @@ namespace MapView.Forms.Observers
 		internal const int NORTH   = 0x4;
 		internal const int CONTENT = 0x8;
 
-		private const int DIGITS = 3;
-
 		/// <summary>
 		/// The TestPartslots dialog.
 		/// @note Be careful with this pointer because closing the dialog in the
@@ -251,17 +249,17 @@ namespace MapView.Forms.Observers
 				tile = MapFile[c,r,l];
 				if (!tile.Vacant)
 				{
-					if (tile.Floor   != null && (QuadrantType)tile.Floor  .Record.PartType != QuadrantType.Floor)
-						list.Add(FormatTilequad(c,r,l,QuadrantType.Floor));
+					if (tile.Floor != null && (QuadrantType)tile.Floor.Record.PartType != QuadrantType.Floor)
+						list.Add(FormatTilequad(c,r,l,QuadrantType.Floor, tile.Floor.Record.PartType));
 
-					if (tile.West    != null && (QuadrantType)tile.West   .Record.PartType != QuadrantType.West)
-						list.Add(FormatTilequad(c,r,l,QuadrantType.West));
+					if (tile.West != null && (QuadrantType)tile.West.Record.PartType != QuadrantType.West)
+						list.Add(FormatTilequad(c,r,l,QuadrantType.West, tile.West.Record.PartType));
 
-					if (tile.North   != null && (QuadrantType)tile.North  .Record.PartType != QuadrantType.North)
-						list.Add(FormatTilequad(c,r,l,QuadrantType.North));
+					if (tile.North != null && (QuadrantType)tile.North.Record.PartType != QuadrantType.North)
+						list.Add(FormatTilequad(c,r,l,QuadrantType.North, tile.North.Record.PartType));
 
 					if (tile.Content != null && (QuadrantType)tile.Content.Record.PartType != QuadrantType.Content)
-						list.Add(FormatTilequad(c,r,l,QuadrantType.Content));
+						list.Add(FormatTilequad(c,r,l,QuadrantType.Content, tile.Content.Record.PartType));
 				}
 			}
 
@@ -270,7 +268,7 @@ namespace MapView.Forms.Observers
 
 			if (list.Count != 0)
 			{
-				string copyable = "  c   r   L - slot" + Environment.NewLine;
+				string copyable = "  c   r   L - slot     record" + Environment.NewLine;
 				foreach (var line in list)
 					copyable += Environment.NewLine + line;
 
@@ -320,25 +318,29 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Formats a string of x/y/z + quadtype for the TestPartslots dialog.
 		/// </summary>
-		/// <param name="c"></param>
-		/// <param name="r"></param>
-		/// <param name="l"></param>
+		/// <param name="col"></param>
+		/// <param name="row"></param>
+		/// <param name="lev"></param>
 		/// <param name="quad"></param>
+		/// <param name="parttype"></param>
 		/// <returns></returns>
-		private string FormatTilequad(int c, int r, int l, QuadrantType quad)
+		private string FormatTilequad(int col, int row, int lev, QuadrantType quad, PartType parttype)
 		{
-			l = MapFile.MapSize.Levs - l; // invert.
+			lev = MapFile.MapSize.Levs - lev; // invert.
 
-			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-			if (!MainViewF.Optionables.Base1_z) { --l; }
+			if (MainViewF.Optionables.Base1_xy) { ++col; ++row; }
+			if (!MainViewF.Optionables.Base1_z) { --lev; }
 
-			string c1 = c.ToString().PadLeft(DIGITS);
-			string r1 = r.ToString().PadLeft(DIGITS);
-			string l1 = l.ToString().PadLeft(DIGITS);
+			const int DIGITS = 3;
 
-			string quad1 = Enum.GetName(typeof(QuadrantType), quad);
+			string c = col.ToString().PadLeft(DIGITS);
+			string r = row.ToString().PadLeft(DIGITS);
+			string l = lev.ToString().PadLeft(DIGITS);
 
-			return c1 + " " + r1 + " " + l1 + " - " + quad1;
+			string q = Enum.GetName(typeof(QuadrantType), quad).PadRight(9);
+			string p = Enum.GetName(typeof(PartType), parttype);
+
+			return c + " " + r + " " + l + " - " + q + p;
 		}
 		#endregion Methods
 
