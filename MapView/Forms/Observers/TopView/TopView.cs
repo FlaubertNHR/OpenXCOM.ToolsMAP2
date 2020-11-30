@@ -104,7 +104,7 @@ namespace MapView.Forms.Observers
 
 			SuspendLayout();
 
-			QuadrantPanel.SelectedQuadrant = QuadrantType.Floor;
+			QuadrantPanel.SelectedQuadrant = PartType.Floor;
 
 
 			TopPanel = new TopPanel(this);
@@ -234,7 +234,7 @@ namespace MapView.Forms.Observers
 		{
 			if (_finfobox != null && !_finfobox.IsDisposed)
 			{
-				_finfobox.Close();
+				_finfobox.Close(); // TODO: Close the dialog if the Mapfile changes/reloads/etc
 				_finfobox = null;
 			}
 
@@ -249,17 +249,17 @@ namespace MapView.Forms.Observers
 				tile = MapFile[c,r,l];
 				if (!tile.Vacant)
 				{
-					if (tile.Floor != null && (QuadrantType)tile.Floor.Record.PartType != QuadrantType.Floor)
-						list.Add(FormatTilequad(c,r,l,QuadrantType.Floor, tile.Floor.Record.PartType));
+					if (tile.Floor != null && tile.Floor.Record.PartType != PartType.Floor)
+						list.Add(FormatTilequad(c,r,l, PartType.Floor, tile.Floor.Record.PartType));
 
-					if (tile.West != null && (QuadrantType)tile.West.Record.PartType != QuadrantType.West)
-						list.Add(FormatTilequad(c,r,l,QuadrantType.West, tile.West.Record.PartType));
+					if (tile.West != null && tile.West.Record.PartType != PartType.West)
+						list.Add(FormatTilequad(c,r,l, PartType.West, tile.West.Record.PartType));
 
-					if (tile.North != null && (QuadrantType)tile.North.Record.PartType != QuadrantType.North)
-						list.Add(FormatTilequad(c,r,l,QuadrantType.North, tile.North.Record.PartType));
+					if (tile.North != null && tile.North.Record.PartType != PartType.North)
+						list.Add(FormatTilequad(c,r,l, PartType.North, tile.North.Record.PartType));
 
-					if (tile.Content != null && (QuadrantType)tile.Content.Record.PartType != QuadrantType.Content)
-						list.Add(FormatTilequad(c,r,l,QuadrantType.Content, tile.Content.Record.PartType));
+					if (tile.Content != null && tile.Content.Record.PartType != PartType.Content)
+						list.Add(FormatTilequad(c,r,l, PartType.Content, tile.Content.Record.PartType));
 				}
 			}
 
@@ -301,21 +301,6 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Selects a quadrant in the QuadrantPanel given a selected tiletype.
-		/// </summary>
-		/// <param name="parttype"></param>
-		internal void SelectQuadrant(PartType parttype)
-		{
-			switch (parttype)
-			{
-				case PartType.Floor:   QuadrantPanel.SelectedQuadrant = QuadrantType.Floor;   break;
-				case PartType.West:    QuadrantPanel.SelectedQuadrant = QuadrantType.West;    break;
-				case PartType.North:   QuadrantPanel.SelectedQuadrant = QuadrantType.North;   break;
-				case PartType.Content: QuadrantPanel.SelectedQuadrant = QuadrantType.Content; break;
-			}
-		}
-
-		/// <summary>
 		/// Formats a string of x/y/z + quadtype for the TestPartslots dialog.
 		/// </summary>
 		/// <param name="col"></param>
@@ -324,7 +309,7 @@ namespace MapView.Forms.Observers
 		/// <param name="quad"></param>
 		/// <param name="parttype"></param>
 		/// <returns></returns>
-		private string FormatTilequad(int col, int row, int lev, QuadrantType quad, PartType parttype)
+		private string FormatTilequad(int col, int row, int lev, PartType quad, PartType parttype)
 		{
 			lev = MapFile.MapSize.Levs - lev; // invert.
 
@@ -337,7 +322,7 @@ namespace MapView.Forms.Observers
 			string r = row.ToString().PadLeft(DIGITS);
 			string l = lev.ToString().PadLeft(DIGITS);
 
-			string q = Enum.GetName(typeof(QuadrantType), quad).PadRight(9);
+			string q = Enum.GetName(typeof(PartType), quad).PadRight(9);
 			string p = Enum.GetName(typeof(PartType), parttype);
 
 			return c + " " + r + " " + l + " - " + q + p;

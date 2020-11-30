@@ -125,7 +125,7 @@ namespace MapView.Forms.Observers
 
 			TilePanel.Chaparone = this;
 
-			_allTiles      = new TilePanel(PartType.All);
+			_allTiles      = new TilePanel(PartType.Invalid);
 			var floors     = new TilePanel(PartType.Floor);
 			var westwalls  = new TilePanel(PartType.West);
 			var northwalls = new TilePanel(PartType.North);
@@ -252,9 +252,9 @@ namespace MapView.Forms.Observers
 
 			if (part != null)
 			{
-				PartType quadrant = part.Record.PartType;
-				ObserverManager.TopView     .Control   .SelectQuadrant(quadrant);
-				ObserverManager.TopRouteView.ControlTop.SelectQuadrant(quadrant);
+				PartType slot = part.Record.PartType;
+				ObserverManager.TopView     .Control   .QuadrantPanel.SelectedQuadrant = slot;
+				ObserverManager.TopRouteView.ControlTop.QuadrantPanel.SelectedQuadrant = slot;
 			}
 
 			QuadrantDrawService.CurrentTilepart = part;

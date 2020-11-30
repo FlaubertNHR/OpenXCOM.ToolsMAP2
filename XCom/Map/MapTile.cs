@@ -4,16 +4,6 @@ using System.Collections.Generic;
 
 namespace XCom
 {
-	public enum QuadrantType
-	{
-		None    = -1,
-		Floor   =  0,
-		West    =  1,
-		North   =  2,
-		Content =  3
-	};
-
-
 	/// <summary>
 	/// A tile in the Tileset consisting of four parts.
 	/// </summary>
@@ -30,27 +20,27 @@ namespace XCom
 		public Tilepart North   { get; set; }
 		public Tilepart Content { get; set; }
 
-		public Tilepart this[QuadrantType quad]
+		public Tilepart this[PartType slot]
 		{
 			get
 			{
-				switch (quad)
+				switch (slot)
 				{
-					case QuadrantType.Floor:   return Floor;
-					case QuadrantType.West:    return West;
-					case QuadrantType.North:   return North;
-					case QuadrantType.Content: return Content;
+					case PartType.Floor:   return Floor;
+					case PartType.West:    return West;
+					case PartType.North:   return North;
+					case PartType.Content: return Content;
 				}
 				return null;
 			}
 			set
 			{
-				switch (quad)
+				switch (slot)
 				{
-					case QuadrantType.Floor:   Floor   = value; break;
-					case QuadrantType.West:    West    = value; break;
-					case QuadrantType.North:   North   = value; break;
-					case QuadrantType.Content: Content = value; break;
+					case PartType.Floor:   Floor   = value; break;
+					case PartType.West:    West    = value; break;
+					case PartType.North:   North   = value; break;
+					case PartType.Content: Content = value; break;
 				}
 			}
 		}

@@ -636,9 +636,9 @@ namespace MapView.Forms.Observers
 		#region Methods
 		internal void SetTiles(IList<Tilepart> parts)
 		{
-			if (parts != null) //&& _tiles.Length != 0)	// NOTE: This check for Length should be enough
-			{											// to cover all other checks for Length==0.
-				if (_quadType == PartType.All)			// Except that the eraser needs to be added anyway ....
+			if (parts != null)
+			{
+				if (_quadType == PartType.Invalid)
 				{
 					_parts = new Tilepart[parts.Count + 1];
 					_parts[0] = null;

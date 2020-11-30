@@ -171,7 +171,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			QuadrantType quad = QuadrantType.None;
+			PartType slot = PartType.Invalid;
 
 			switch (e.KeyData)
 			{
@@ -219,10 +219,10 @@ namespace MapView.Forms.Observers
 					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
 					break;
 
-				case Keys.D1: quad = QuadrantType.Floor;   break;
-				case Keys.D2: quad = QuadrantType.West;    break;
-				case Keys.D3: quad = QuadrantType.North;   break;
-				case Keys.D4: quad = QuadrantType.Content; break;
+				case Keys.D1: slot = PartType.Floor;   break;
+				case Keys.D2: slot = PartType.West;    break;
+				case Keys.D3: slot = PartType.North;   break;
+				case Keys.D4: slot = PartType.Content; break;
 
 				case Keys.Subtract:
 				case Keys.Add:
@@ -272,11 +272,11 @@ namespace MapView.Forms.Observers
 			switch (tabControl.SelectedIndex)
 			{
 				case TAB_TOP:
-					if (quad != QuadrantType.None)
+					if (slot != PartType.Invalid)
 					{
 						e.SuppressKeyPress = true;
 						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-						ControlTop.QuadrantPanel.doMouseDown(args, quad);
+						ControlTop.QuadrantPanel.doMouseDown(args, slot);
 					}
 					break;
 

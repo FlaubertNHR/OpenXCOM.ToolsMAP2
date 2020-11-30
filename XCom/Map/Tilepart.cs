@@ -280,35 +280,36 @@ namespace XCom
 		/// IMPORTANT: All crippled parts shall go ~poof~ when the Mapfile is
 		/// saved.
 		/// </summary>
-		internal void Cripple(QuadrantType quadType)
+		/// <param name="slot"></param>
+		internal void Cripple(PartType slot)
 		{
 			// TODO: stop the 'tile' from being selected in TileView
 			// when the slot in QuadrantPanel is double-clicked
 
-			Record.PartType = PartType.All;	// NOTE: Assigning "-1" to the record's 'PartType' should
-											// make it show in TopView's TestPartslots dialog.
+			Record.PartType = PartType.Invalid;	// NOTE: Assigning "-1" to the record's 'PartType' should
+												// make it show in TopView's TestPartslots dialog.
 			LoadMonotoneSprites();
 
 			Sprites = new XCImage[PHASECOUNT];
 
-			switch (quadType)
+			switch (slot)
 			{
-				case QuadrantType.Floor:
+				case PartType.Floor:
 					for (int i = 0; i != PHASECOUNT; ++i)
 						Sprites[i] = MonotoneSprites[3];
 					break;
 
-				case QuadrantType.West:
+				case PartType.West:
 					for (int i = 0; i != PHASECOUNT; ++i)
 						Sprites[i] = MonotoneSprites[1];
 					break;
 
-				case QuadrantType.North:
+				case PartType.North:
 					for (int i = 0; i != PHASECOUNT; ++i)
 						Sprites[i] = MonotoneSprites[2];
 					break;
 
-				case QuadrantType.Content:
+				case PartType.Content:
 					for (int i = 0; i != PHASECOUNT; ++i)
 						Sprites[i] = MonotoneSprites[4];
 					break;

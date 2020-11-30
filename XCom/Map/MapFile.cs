@@ -364,7 +364,7 @@ namespace XCom
 			else
 			{
 				floor = new Tilepart(id_Floor);
-				floor.Cripple(QuadrantType.Floor);
+				floor.Cripple(PartType.Floor);
 				++TerrainsetPartsExceeded;
 			}
 
@@ -379,7 +379,7 @@ namespace XCom
 			else
 			{
 				west = new Tilepart(id_West);
-				west.Cripple(QuadrantType.West);
+				west.Cripple(PartType.West);
 				++TerrainsetPartsExceeded;
 			}
 
@@ -394,7 +394,7 @@ namespace XCom
 			else
 			{
 				north = new Tilepart(id_North);
-				north.Cripple(QuadrantType.North);
+				north.Cripple(PartType.North);
 				++TerrainsetPartsExceeded;
 			}
 
@@ -409,7 +409,7 @@ namespace XCom
 			else
 			{
 				content = new Tilepart(id_Content);
-				content.Cripple(QuadrantType.Content);
+				content.Cripple(PartType.Content);
 				++TerrainsetPartsExceeded;
 			}
 

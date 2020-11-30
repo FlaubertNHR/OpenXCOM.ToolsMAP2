@@ -215,7 +215,7 @@ namespace MapView.Forms.Observers
 		/// <param name="selectedQuadrant"></param>
 		internal static void Draw(
 				MapTile tile,
-				QuadrantType selectedQuadrant)
+				PartType selectedQuadrant)
 		{
 			if (!MainViewF.Optionables.UseMono && MainViewF.Optionables.SpriteShadeEnabled)
 			{
@@ -239,22 +239,22 @@ namespace MapView.Forms.Observers
 			// fill the background of the selected quadrant type
 			switch (selectedQuadrant)
 			{
-				case QuadrantType.Floor:
+				case PartType.Floor:
 					if (TopViewControl.Floor.Checked)
 						_graphics.FillPath(Brush, _pathFloor);
 					break;
 
-				case QuadrantType.West:
+				case PartType.West:
 					if (TopViewControl.West.Checked)
 						_graphics.FillPath(Brush, _pathWest);
 					break;
 
-				case QuadrantType.North:
+				case PartType.North:
 					if (TopViewControl.North.Checked)
 						_graphics.FillPath(Brush, _pathNorth);
 					break;
 
-				case QuadrantType.Content:
+				case PartType.Content:
 					if (TopViewControl.Content.Checked)
 						_graphics.FillPath(Brush, _pathContent);
 					break;
@@ -293,7 +293,7 @@ namespace MapView.Forms.Observers
 				DrawSprite(tile.Floor[anistep], 0, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString((int)QuadrantType.Floor);
+					DrawDoorString((int)PartType.Floor);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_FLOOR], 0);
@@ -306,7 +306,7 @@ namespace MapView.Forms.Observers
 				DrawSprite(tile.West[anistep], Quadwidth, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString((int)QuadrantType.West);
+					DrawDoorString((int)PartType.West);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_WEST], Quadwidth);
@@ -316,26 +316,26 @@ namespace MapView.Forms.Observers
 			if (tile != null && tile.North != null)
 			{
 				McdRecord record = tile.North.Record;
-				DrawSprite(tile.North[anistep], Quadwidth * (int)QuadrantType.North, record.TileOffset);
+				DrawSprite(tile.North[anistep], Quadwidth * (int)PartType.North, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString((int)QuadrantType.North);
+					DrawDoorString((int)PartType.North);
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_NORTH], Quadwidth * (int)QuadrantType.North);
+				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_NORTH], Quadwidth * (int)PartType.North);
 
 
 			// Content ->
 			if (tile != null && tile.Content != null)
 			{
 				McdRecord record = tile.Content.Record;
-				DrawSprite(tile.Content[anistep], Quadwidth * (int)QuadrantType.Content, record.TileOffset);
+				DrawSprite(tile.Content[anistep], Quadwidth * (int)PartType.Content, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString((int)QuadrantType.Content);
+					DrawDoorString((int)PartType.Content);
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_CONTENT], Quadwidth * (int)QuadrantType.Content);
+				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_CONTENT], Quadwidth * (int)PartType.Content);
 
 
 			// Current ->
@@ -359,10 +359,10 @@ namespace MapView.Forms.Observers
 			_graphics.DrawPath(Pens.Black, _pathPart);
 
 			// draw the quad-type label under each quadrant
-			DrawTypeString(Floor,   TextWidth_floor,   (int)QuadrantType.Floor);
-			DrawTypeString(West,    TextWidth_west,    (int)QuadrantType.West);
-			DrawTypeString(North,   TextWidth_north,   (int)QuadrantType.North);
-			DrawTypeString(Content, TextWidth_content, (int)QuadrantType.Content);
+			DrawTypeString(Floor,   TextWidth_floor,   (int)PartType.Floor);
+			DrawTypeString(West,    TextWidth_west,    (int)PartType.West);
+			DrawTypeString(North,   TextWidth_north,   (int)PartType.North);
+			DrawTypeString(Content, TextWidth_content, (int)PartType.Content);
 			DrawTypeString(Part,    TextWidth_part,    QuadrantPart);
 
 			// fill the color-swatch under each quadrant-label
@@ -384,10 +384,10 @@ namespace MapView.Forms.Observers
 			if (_swatchbrushNorth == null)
 				_swatchbrushNorth = new SolidBrush(TopPanel.Pens[TopViewOptionables.str_NorthColor].Color);
 
-			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_FloorColor],   (int)QuadrantType.Floor);
-			FillSwatchColor(_swatchbrushWest,                                      (int)QuadrantType.West);
-			FillSwatchColor(_swatchbrushNorth,                                     (int)QuadrantType.North);
-			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_ContentColor], (int)QuadrantType.Content);
+			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_FloorColor],   PartType.Floor);
+			FillSwatchColor(_swatchbrushWest,                                      PartType.West);
+			FillSwatchColor(_swatchbrushNorth,                                     PartType.North);
+			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_ContentColor], PartType.Content);
 		}
 		private static SolidBrush _swatchbrushWest;
 		private static SolidBrush _swatchbrushNorth;
@@ -487,14 +487,14 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="type"></param>
 		/// <param name="width"></param>
-		/// <param name="quad"></param>
-		private static void DrawTypeString(string type, int width, int quad)
+		/// <param name="slot"></param>
+		private static void DrawTypeString(string type, int width, int slot)
 		{
 			_graphics.DrawString(
 							type,
 							Font,
 							Brushes.Black,
-							StartX + (XCImage.SpriteWidth32 - width) / 2 + Quadwidth * quad + 1,
+							StartX + (XCImage.SpriteWidth32 - width) / 2 + Quadwidth * slot + 1,
 							StartY +  XCImage.SpriteHeight40 + MarginVert);
 		}
 
@@ -502,13 +502,13 @@ namespace MapView.Forms.Observers
 		/// Fills the swatch under a given quadrant.
 		/// </summary>
 		/// <param name="brush"></param>
-		/// <param name="quad"></param>
-		private static void FillSwatchColor(Brush brush, int quad)
+		/// <param name="slot"></param>
+		private static void FillSwatchColor(Brush brush, PartType slot)
 		{
 			_graphics.FillRectangle(
 								brush,
 								new RectangleF(
-											StartX + Quadwidth * quad,
+											StartX + Quadwidth * (int)slot,
 											StartY + XCImage.SpriteHeight40 + MarginVert + Font.Height + 1,
 											XCImage.SpriteWidth32,
 											SwatchHeight));

@@ -34,14 +34,23 @@ namespace MapView.Forms.Observers
 		#endregion Fields (static)
 
 
-		// TODO: Figure out what else can be made static here ->
+		// TODO: Figure out what else can be made static here
+
+
+		#region Fields
+		/// <summary>
+		/// For use by keyboard-input.
+		/// </summary>
+		private PartType _keyslot = PartType.Invalid;
+		#endregion Fields
+
 
 		#region Properties
-		private QuadrantType _quadrant;
-		internal QuadrantType SelectedQuadrant
+		private PartType _slot;
+		internal PartType SelectedQuadrant
 		{
-			get { return _quadrant; }
-			set { _quadrant = value; Refresh(); }
+			get { return _slot; }
+			set { _slot = value; Refresh(); }
 		}
 
 		internal MapTile Tile
@@ -100,21 +109,16 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// For use by keyboard-input.
-		/// </summary>
-		private QuadrantType _quad = QuadrantType.None;
-
-		/// <summary>
 		/// Wrapper for OnMouseDown() for use by keyboard-input only.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <param name="quad"></param>
-		internal void doMouseDown(MouseEventArgs e, QuadrantType quad)
+		/// <param name="slot"></param>
+		internal void doMouseDown(MouseEventArgs e, PartType slot)
 		{
-			if (quad != QuadrantType.None)
-				_quad = quad;
+			if (slot != PartType.Invalid)
+				_keyslot = slot;
 			else
-				_quad = SelectedQuadrant;
+				_keyslot = SelectedQuadrant;
 
 			OnMouseDown(e);
 		}
@@ -125,47 +129,45 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			//DSShared.LogFile.WriteLine("QuadrantPanel.OnMouseDown()");
-
 			ObserverManager.TopView     .Control   .TopPanel.Select();
 			ObserverManager.TopRouteView.ControlTop.TopPanel.Select();
 
-			bool keySelectQuadrant = _quad !=  QuadrantType.None
-								  && _quad != (QuadrantType)QuadrantDrawService.QuadrantPart;
+			bool keySelectQuadrant = _keyslot !=  PartType.Invalid
+								  && _keyslot != (PartType)QuadrantDrawService.QuadrantPart;
 
 			if (!keySelectQuadrant)
 			{
 				int x = (e.X - QuadrantDrawService.StartX);
 				if (x > -1 && x % QuadrantDrawService.Quadwidth < XCImage.SpriteWidth32) // ignore spaces between sprites
-					_quad = (QuadrantType)(x / QuadrantDrawService.Quadwidth);
+					_keyslot = (PartType)(x / QuadrantDrawService.Quadwidth);
 			}
 
 			bool isCurrentClick = false;
 
-			PartType part = PartType.All;
-			switch (_quad)
+			PartType part = PartType.Invalid;
+			switch (_keyslot)
 			{
-				case QuadrantType.Floor:   part = PartType.Floor;   break;
-				case QuadrantType.West:    part = PartType.West;    break;
-				case QuadrantType.North:   part = PartType.North;   break;
-				case QuadrantType.Content: part = PartType.Content; break;
+				case PartType.Floor:   part = PartType.Floor;   break; // TODO: refactor
+				case PartType.West:    part = PartType.West;    break;
+				case PartType.North:   part = PartType.North;   break;
+				case PartType.Content: part = PartType.Content; break;
 
-				case (QuadrantType)QuadrantDrawService.QuadrantPart:
+				case (PartType)QuadrantDrawService.QuadrantPart:
 					isCurrentClick = true;
 					if (QuadrantDrawService.CurrentTilepart != null)
 						part = QuadrantDrawService.CurrentTilepart.Record.PartType;
 					break;
 			}
 
-			if (part != PartType.All)
+			if (part != PartType.Invalid)
 			{
-				ObserverManager.TopView     .Control   .SelectQuadrant(part);
-				ObserverManager.TopRouteView.ControlTop.SelectQuadrant(part);
+				ObserverManager.TopView     .Control   .QuadrantPanel.SelectedQuadrant = part;
+				ObserverManager.TopRouteView.ControlTop.QuadrantPanel.SelectedQuadrant = part;
 
 				if (!isCurrentClick)
 					Clicker(e.Button, e.Clicks, keySelectQuadrant);
 			}
-			_quad = QuadrantType.None;
+			_keyslot = PartType.Invalid;
 		}
 
 		/// <summary>
@@ -190,8 +192,6 @@ namespace MapView.Forms.Observers
 					case MouseButtons.Right:
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							//DSShared.LogFile.WriteLine("QuadrantPanel.Clicker()");
-
 							if (keySelectQuadrant || !TopView.Optionables.EnableRightClickWaitTimer)
 							{
 								_t1Clicks = clicks;

@@ -390,32 +390,32 @@ namespace MapView.Forms.Observers
 		{
 			MouseButtons button;
 			int clicks;
-			QuadrantType quad;
+			PartType slot;
 
 			switch (e.KeyData)
 			{
 				case Keys.Q: // select the proper quadrant of the currently selected Tileview-part
 					button = MouseButtons.Left;
 					clicks = 1;
-					quad = (QuadrantType)QuadrantDrawService.QuadrantPart;
+					slot = (PartType)QuadrantDrawService.QuadrantPart;
 					break;
 
 				case Keys.T: // select the TileView-part of the selected quadrant
 					button = MouseButtons.Left;
 					clicks = 2;
-					quad = QuadrantType.None;
+					slot = PartType.Invalid;
 					break;
 
 				case Keys.Enter: // place selected TileView-part in selected quadrant
 					button = MouseButtons.Right;
 					clicks = 1;
-					quad = QuadrantType.None;
+					slot = PartType.Invalid;
 					break;
 
 				case Keys.Shift | Keys.Delete: // delete part of selected Quadrant-type from a selected tile
 					button = MouseButtons.Right;
 					clicks = 2;
-					quad = QuadrantType.None;
+					slot = PartType.Invalid;
 					break;
 
 				default:
@@ -425,8 +425,7 @@ namespace MapView.Forms.Observers
 
 			TopView.QuadrantPanel.doMouseDown(
 											new MouseEventArgs(button, clicks, 0,0, 0),
-											quad);
-
+											slot);
 //			base.OnKeyDown(e);
 		}
 
