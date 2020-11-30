@@ -3448,8 +3448,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Prints the currently selected location to the status bar.
-		/// @note The 'lev' should be inverted before it's passed in.
+		/// Prints the currently selected location to the statusbar.
 		/// </summary>
 		internal void sb_PrintPosition()
 		{
@@ -3471,6 +3470,9 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Prints the current scale to the statusbar.
+		/// </summary>
 		internal void sb_PrintScale()
 		{
 			tsslScale.Text = String.Format(
@@ -3479,6 +3481,11 @@ namespace MapView
 										Globals.Scale);
 		}
 
+		/// <summary>
+		/// Prints the current selection-size to the statusbar.
+		/// </summary>
+		/// <param name="tx"></param>
+		/// <param name="ty"></param>
 		internal void sb_PrintSelectionSize(int tx, int ty)
 		{
 			tsslSelectionSize.Text = String.Format(
