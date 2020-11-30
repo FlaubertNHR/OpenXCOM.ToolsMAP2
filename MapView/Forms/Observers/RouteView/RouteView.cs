@@ -454,8 +454,6 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void PrintSelectedInfo()
 		{
-			//LogFile.WriteLine("RouteView.PrintSelectedInfo()" + Tag);
-
 			if (MainViewOverlay.that.FirstClick)
 			{
 				string info;
