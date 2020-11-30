@@ -470,7 +470,8 @@ namespace XCom
 							+ copyable5
 							+ copyable6
 							+ copyable7 + n + n
-							+ "Pronto!";
+							+ "Pronto!" + n
+							+ "TopView | Test | Test parts in tileslot for info";
 			return copyable;
 		}
 		#endregion Methods (read/load)
