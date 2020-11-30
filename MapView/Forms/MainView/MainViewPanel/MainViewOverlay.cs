@@ -1744,14 +1744,14 @@ namespace MapView.Forms.MainView
 
 			Tilepart part;
 			var rect = new Rectangle(
-								 x,y,
+								 x,0,
 								_halfwidth2, _halfheight5);
 
 			if (_visFloor && (part = tile.Floor) != null)
 			{
 				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
 								   :  part[_anistep].Sprite;
-				rect.Y -= part.Record.TileOffset * HalfHeight / HalfHeightConst;
+				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
@@ -1759,7 +1759,7 @@ namespace MapView.Forms.MainView
 			{
 				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
 								   :  part[_anistep].Sprite;
-				rect.Y -= part.Record.TileOffset * HalfHeight / HalfHeightConst;
+				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
@@ -1767,7 +1767,7 @@ namespace MapView.Forms.MainView
 			{
 				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
 								   :  part[_anistep].Sprite;
-				rect.Y -= part.Record.TileOffset * HalfHeight / HalfHeightConst;
+				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
@@ -1775,7 +1775,7 @@ namespace MapView.Forms.MainView
 			{
 				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
 								   :  part[_anistep].Sprite;
-				rect.Y -= part.Record.TileOffset * HalfHeight / HalfHeightConst;
+				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 		}
