@@ -18,7 +18,7 @@ namespace DSShared
 	{
 		#region Fields (static)
 		private const int w_MinCutoff = 345;
-		private const int h_MinCutoff = 450;
+		private const int h_MinCutoff = 455;
 
 		private const string HEIGHT_TEST = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|\\;:'\"<>,.?";
 		#endregion Fields (static)
