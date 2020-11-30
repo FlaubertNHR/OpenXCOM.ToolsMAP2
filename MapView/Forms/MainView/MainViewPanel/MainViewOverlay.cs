@@ -1747,9 +1747,7 @@ namespace MapView.Forms.MainView
 								x, y,
 								_halfwidth2, _halfheight5);
 
-			var topView = ObserverManager.TopView.Control;
-			if (topView.Floor.Checked
-				&& (part = tile.Floor) != null)
+			if (_visFloor && (part = tile.Floor) != null)
 			{
 				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
 								   :  part[_anistep].Sprite;
@@ -1757,8 +1755,7 @@ namespace MapView.Forms.MainView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.West.Checked
-				&& (part = tile.West) != null)
+			if (_visWest && (part = tile.West) != null)
 			{
 				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
 								   :  part[_anistep].Sprite;
@@ -1766,8 +1763,7 @@ namespace MapView.Forms.MainView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.North.Checked
-				&& (part = tile.North) != null)
+			if (_visNorth && (part = tile.North) != null)
 			{
 				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
 								   :  part[_anistep].Sprite;
@@ -1775,8 +1771,7 @@ namespace MapView.Forms.MainView
 				DrawSprite(sprite, rect);
 			}
 
-			if (topView.Content.Checked
-				&& (part = tile.Content) != null)
+			if (_visContent && (part = tile.Content) != null)
 			{
 				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
 								   :  part[_anistep].Sprite;
