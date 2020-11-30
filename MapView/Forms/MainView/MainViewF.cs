@@ -1114,6 +1114,13 @@ namespace MapView
 					}
 					break;
 
+				case Keys.F9: // toggle DoubleLayerSelectionBorder
+					key = MainViewOptionables.str_DoubleLayerSelectionBorder;
+					val = !Optionables.DoubleLayerSelectionBorder;
+					Options[key].Value = val;
+					Optionables.OnOptionChanged(key,val);
+					break;
+
 				case Keys.F10:				// cycle tiletoner option forward
 					key = MainViewOptionables.str_SelectedTileToner;
 					val = Optionables.GetNextTileToner(+1);

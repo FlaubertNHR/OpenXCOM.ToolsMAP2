@@ -1909,6 +1909,21 @@ namespace MapView.Forms.MainView
 			_graphics.DrawLine(PenSelect, r, b);
 			_graphics.DrawLine(PenSelect, b, l);
 			_graphics.DrawLine(PenSelect, l, t);
+
+			if (MainViewF.Optionables.DoubleLayerSelectionBorder)
+			{
+				int offsetVert = HalfHeight * 3;
+
+				t.Y -= offsetVert;
+				r.Y -= offsetVert;
+				b.Y -= offsetVert;
+				l.Y -= offsetVert;
+
+				_graphics.DrawLine(PenSelect, t, r);
+				_graphics.DrawLine(PenSelect, r, b);
+				_graphics.DrawLine(PenSelect, b, l);
+				_graphics.DrawLine(PenSelect, l, t);
+			}
 		}
 #else
 		/// <summary>

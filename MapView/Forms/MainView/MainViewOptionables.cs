@@ -360,8 +360,7 @@ namespace MapView.Forms.MainView
 
 		private int _selectedTileToner = def_SelectedTileToner;
 		[Category(cat_Selection)]
-		[Description(@"The colortone of tiles that are selected (0..4 default 1)
-(F10 - cycle; Shift+F10 - reverse cycle)
+		[Description(@"The colortone of tiles that are selected (F10 - cycle; Shift+F10 - reverse cycle)
 0 - none
 1 - grayscale (default)
 2 - redscale
@@ -385,6 +384,23 @@ namespace MapView.Forms.MainView
 					MainViewF.that.Options[str_SelectedTileToner].Value = _selectedTileToner;
 				}
 			}
+		}
+
+
+		internal const string str_DoubleLayerSelectionBorder = "DoubleLayerSelectionBorder";
+		private const bool   def_DoubleLayerSelectionBorder = false;
+
+		private bool _doubleLayerSelectionBorder = def_DoubleLayerSelectionBorder;
+		[Category(cat_Selection)]
+		[Description("If true the selection border of selected tiles will be"
+					+ " drawn at both the top and bottom layers of the tiles."
+					+ " This is helpful when large tileparts obstruct the"
+					+ " grid-floor. (F9 - On/Off)")]
+		[DefaultValue(def_DoubleLayerSelectionBorder)]
+		public bool DoubleLayerSelectionBorder
+		{
+			get { return _doubleLayerSelectionBorder; }
+			set { _doubleLayerSelectionBorder = value; }
 		}
 
 
@@ -683,40 +699,41 @@ namespace MapView.Forms.MainView
 			OptionChangedEvent changer3 = OnSpriteShadeChanged;
 			OptionChangedEvent changer4 = OnPositionCountTypeChanged;
 
-			options.AddOptionDefault(str_StartTileView,          def_StartTileView,          changer1);
-			options.AddOptionDefault(str_StartTopView,           def_StartTopView,           changer1);
-			options.AddOptionDefault(str_StartRouteView,         def_StartRouteView,         changer1);
-			options.AddOptionDefault(str_StartTopRouteView,      def_StartTopRouteView,      changer1);
-			options.AddOptionDefault(str_StartTopRoutePage,      def_StartTopRoutePage,      changer1);
+			options.AddOptionDefault(str_StartTileView,              def_StartTileView,              changer1);
+			options.AddOptionDefault(str_StartTopView,               def_StartTopView,               changer1);
+			options.AddOptionDefault(str_StartRouteView,             def_StartRouteView,             changer1);
+			options.AddOptionDefault(str_StartTopRouteView,          def_StartTopRouteView,          changer1);
+			options.AddOptionDefault(str_StartTopRoutePage,          def_StartTopRoutePage,          changer1);
 
-			options.AddOptionDefault(str_GridVisible,            def_GridVisible,            changer0);
-			options.AddOptionDefault(str_GridLayerColor,         def_GridLayerColor,         changer0);
-			options.AddOptionDefault(str_GridLayerOpacity,       def_GridLayerOpacity,       changer0);
-			options.AddOptionDefault(str_GridLineColor,          def_GridLineColor,          changer0);
-			options.AddOptionDefault(str_GridLineWidth,          def_GridLineWidth,          changer0);
-			options.AddOptionDefault(str_GridLine10Color,        def_GridLine10Color,        changer0);
-			options.AddOptionDefault(str_GridLine10Width,        def_GridLine10Width,        changer0);
+			options.AddOptionDefault(str_GridVisible,                def_GridVisible,                changer0);
+			options.AddOptionDefault(str_GridLayerColor,             def_GridLayerColor,             changer0);
+			options.AddOptionDefault(str_GridLayerOpacity,           def_GridLayerOpacity,           changer0);
+			options.AddOptionDefault(str_GridLineColor,              def_GridLineColor,              changer0);
+			options.AddOptionDefault(str_GridLineWidth,              def_GridLineWidth,              changer0);
+			options.AddOptionDefault(str_GridLine10Color,            def_GridLine10Color,            changer0);
+			options.AddOptionDefault(str_GridLine10Width,            def_GridLine10Width,            changer0);
 
-			options.AddOptionDefault(str_SelectionBorderColor,   def_SelectionBorderColor,   changer0);
-			options.AddOptionDefault(str_SelectionBorderOpacity, def_SelectionBorderOpacity, changer0);
-			options.AddOptionDefault(str_SelectionBorderWidth,   def_SelectionBorderWidth,   changer0);
-			options.AddOptionDefault(str_SelectedTileToner,      def_SelectedTileToner,      changer0);
+			options.AddOptionDefault(str_SelectionBorderColor,       def_SelectionBorderColor,       changer0);
+			options.AddOptionDefault(str_SelectionBorderOpacity,     def_SelectionBorderOpacity,     changer0);
+			options.AddOptionDefault(str_SelectionBorderWidth,       def_SelectionBorderWidth,       changer0);
+			options.AddOptionDefault(str_SelectedTileToner,          def_SelectedTileToner,          changer0);
+			options.AddOptionDefault(str_DoubleLayerSelectionBorder, def_DoubleLayerSelectionBorder, changer0);
 
-			options.AddOptionDefault(str_SpriteShade,            def_SpriteShade,            changer3);
-			options.AddOptionDefault(str_Interpolation,          def_Interpolation,          changer0);
+			options.AddOptionDefault(str_SpriteShade,                def_SpriteShade,                changer3);
+			options.AddOptionDefault(str_Interpolation,              def_Interpolation,              changer0);
 
-			options.AddOptionDefault(str_AnimateSprites,         def_AnimateSprites,         changer2);
-			options.AddOptionDefault(str_OpenDoors,              def_OpenDoors,              changer2);
-			options.AddOptionDefault(str_BringAllToFront,        def_BringAllToFront,        changer1);
-			options.AddOptionDefault(str_UseMono,                def_UseMono,                changer2);
+			options.AddOptionDefault(str_AnimateSprites,             def_AnimateSprites,             changer2);
+			options.AddOptionDefault(str_OpenDoors,                  def_OpenDoors,                  changer2);
+			options.AddOptionDefault(str_BringAllToFront,            def_BringAllToFront,            changer1);
+			options.AddOptionDefault(str_UseMono,                    def_UseMono,                    changer2);
 
-			options.AddOptionDefault(str_BackgroundColor,        def_BackgroundColor,        changer1);
-			options.AddOptionDefault(str_CropBackground,         def_CropBackground,         changer1);
-			options.AddOptionDefault(str_Png_notGif,             def_Png_notGif,             changer1);
+			options.AddOptionDefault(str_BackgroundColor,            def_BackgroundColor,            changer1);
+			options.AddOptionDefault(str_CropBackground,             def_CropBackground,             changer1);
+			options.AddOptionDefault(str_Png_notGif,                 def_Png_notGif,                 changer1);
 
-			options.AddOptionDefault(str_Base1_xy,               def_Base1_xy,               changer4);
-			options.AddOptionDefault(str_Base1_z,                def_Base1_z,                changer4);
-			options.AddOptionDefault(str_IgnoreRecordsExceeded,  def_IgnoreRecordsExceeded,  changer1);
+			options.AddOptionDefault(str_Base1_xy,                   def_Base1_xy,                   changer4);
+			options.AddOptionDefault(str_Base1_z,                    def_Base1_z,                    changer4);
+			options.AddOptionDefault(str_IgnoreRecordsExceeded,      def_IgnoreRecordsExceeded,      changer1);
 		}
 		#endregion Methods
 
@@ -787,6 +804,10 @@ namespace MapView.Forms.MainView
 				case str_SelectedTileToner:
 					SelectedTileToner = (int)val;
 					MainViewF.that.SetTileToner();
+					break;
+
+				case str_DoubleLayerSelectionBorder:
+					DoubleLayerSelectionBorder = (bool)val;
 					break;
 
 				case str_Interpolation:
