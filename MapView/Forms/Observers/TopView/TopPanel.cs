@@ -101,6 +101,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// cTor. Is NOT a panel.
 		/// </summary>
+		/// <param name="control"></param>
 		internal TopPanel(TopView control)
 		{
 			TopView = control; // beautiful. This pattern should be iterated throughout MapView.
