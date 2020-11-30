@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -1172,14 +1173,50 @@ namespace MapView.Forms.MainView
 					_halfheight5 = HalfHeight * 5;
 					DrawRembrandt();
 				}
-
 #else
 				_b = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
 				BuildPanelImage();
 //				_graphics.DrawImage(_b, 0, 0, _b.Width, _b.Height);
 				_graphics.DrawImageUnscaled(_b, Point.Empty);	// uh does not draw the image unscaled. it
 #endif															// still uses the DPI in the Graphics object ...
+
+				if (Globals.Scale > 0.55 // else the text starts to hit the sprites
+					&& _col > -1 && _col < _cols
+					&& _row > -1 && _row < _rows)
+				{
+					PrintSelectorLocation();
+				}
 			}
+		}
+
+
+		private static readonly Font FontLocation = new Font("Verdana", 7F, FontStyle.Bold);
+		private static readonly Brush BrushLocation = new SolidBrush(SystemColors.ControlText);
+
+		/// <summary>
+		/// Prints the selector's current tile location.
+		/// </summary>
+		private void PrintSelectorLocation()
+		{
+			int c = _col;
+			int r = _row;
+			int l = MapFile.MapSize.Levs - MapFile.Level;
+
+			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+			if (!MainViewF.Optionables.Base1_z) { --l; }
+
+			string loc = String.Format(
+									CultureInfo.InvariantCulture,
+									"c {0}  r {1}  L {2}",
+									c,r,l);
+
+			int x = Width - TextRenderer.MeasureText(loc, FontLocation).Width;
+			int y = Height - 20;
+			_graphics.DrawString(
+							loc,
+							FontLocation,
+							BrushLocation,
+							x,y);
 		}
 
 #if !LOCKBITS
