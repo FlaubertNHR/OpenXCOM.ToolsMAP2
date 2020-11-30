@@ -27,6 +27,8 @@ namespace MapView.Forms.MainView
 		#region Fields
 		private readonly VScrollBar _scrollBarV = new VScrollBar();
 		private readonly HScrollBar _scrollBarH = new HScrollBar();
+
+		private MainViewF _mainView;
 		#endregion Fields
 
 
@@ -37,8 +39,6 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties
-		private MainViewF MainView;
-
 		private MainViewOverlay MainViewOverlay
 		{ get; set; }
 
@@ -87,12 +87,13 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal MainViewUnderlay(MainViewF main)
+		/// <param name="mainView"></param>
+		internal MainViewUnderlay(MainViewF mainView)
 		{
-			MainView = main;
+			_mainView = mainView;
 
 			that = this;
-			MainViewOverlay = new MainViewOverlay(MainView);
+			MainViewOverlay = new MainViewOverlay(_mainView);
 
 			Dock = DockStyle.Fill;
 			BorderStyle = BorderStyle.Fixed3D;
@@ -431,7 +432,7 @@ namespace MapView.Forms.MainView
 				//DSShared.LogFile.WriteLine(". height= " + height);
 
 				Globals.Scale = (double)halfWidth / MainViewOverlay.HalfWidthConst;
-				MainView.sb_PrintScale();
+				_mainView.sb_PrintScale();
 				//DSShared.LogFile.WriteLine(". set scale= " + Globals.Scale);
 
 				return new Size(
