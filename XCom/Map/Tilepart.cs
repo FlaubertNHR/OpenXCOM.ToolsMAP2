@@ -282,6 +282,11 @@ namespace XCom
 		/// </summary>
 		internal void Cripple(QuadrantType quadType)
 		{
+			// TODO: stop the 'tile' from being selected in TileView
+			// when the slot in QuadrantPanel is double-clicked
+
+			Record.PartType = PartType.All;	// NOTE: Assigning "-1" to the record's 'PartType' should
+											// make it show in TopView's TestPartslots dialog.
 			LoadMonotoneSprites();
 
 			Sprites = new XCImage[PHASECOUNT];
