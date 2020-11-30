@@ -3093,6 +3093,12 @@ namespace MapView
 			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
 			//LogFile.WriteLine(". browseMapfile= " + browseMapfile);
 
+			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed) // close the PartslotTest dialog
+			{
+				TopView._finfobox.Close();
+				TopView._finfobox = null;
+			}
+
 			if (_loadReady == LOADREADY_STAGE_2)
 			{
 				BypassChanged = false;
