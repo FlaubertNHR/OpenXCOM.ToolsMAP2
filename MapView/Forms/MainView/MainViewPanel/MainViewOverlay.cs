@@ -1744,7 +1744,7 @@ namespace MapView.Forms.MainView
 
 			Tilepart part;
 			var rect = new Rectangle(
-								x, y,
+								 x,y,
 								_halfwidth2, _halfheight5);
 
 			if (_visFloor && (part = tile.Floor) != null)
