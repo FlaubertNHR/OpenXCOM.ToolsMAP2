@@ -427,6 +427,8 @@ namespace XCom
 		/// <returns></returns>
 		private string GetCopyableWarning()
 		{
+			const int width = 57;
+
 			string n = Environment.NewLine;
 
 			bool singular = (TerrainsetPartsExceeded == 1);
@@ -437,32 +439,32 @@ namespace XCom
 							 + (singular ? "It" : "They") + " will be replaced by" + (singular ? " a" : String.Empty)
 							 + " temporary tilepart" + (singular ? String.Empty : "s") + " and displayed on"
 							 + " the Map as borked yellow sprites.";
-			copyable0 = Infobox.FormatString(copyable0, 55) + n + n;
+			copyable0 = Infobox.FormatString(copyable0, width) + n + n;
 
 			string copyable1 = "Note that borked parts that are in floor-slots could"
 							 + " get hidden beneath valid content-parts, etc.";
-			copyable1 = Infobox.FormatString(copyable1, 55) + n + n;
+			copyable1 = Infobox.FormatString(copyable1, width) + n + n;
 
 			string copyable2 = "IMPORTANT: Saving the Map in its current state would forever lose"
 							 + " those tilepart references. But if you know what terrain(s) have"
 							 + " gone rogue they can be added to the Map's terrainset with the"
 							 + " TilesetEditor. Or if you know how many records have been removed"
-							 + " from the terrainset the ids of the missing parts can be shifted"
-							 + " downward into an acceptable range by the TilepartSubstitution"
-							 + " dialog under MainView's edit-menu.";
-			copyable2 = Infobox.FormatString(copyable2, 55) + n + n;
+							 + " from the terrainset the ids of the rogue parts can be shifted"
+							 + " down into a valid range with MainView | TilepartSubstitution";
+			copyable2 = Infobox.FormatString(copyable2, width) + n + n;
 
-			string copyable3 = "In any case this is a new feature that likely has bugs with regard"
+			string copyable3 = "In any case this is a new feature that could have bugs with regard"
 							 + " to the broader operation of MapView. So it's recommended to resolve"
 							 + " this issue by";
-			copyable3 = Infobox.FormatString(copyable3, 55) + n + n;
+			copyable3 = Infobox.FormatString(copyable3, width) + n + n;
 
-			string copyable4 = "(a) saving the Mapfile, deleting the rogue tileparts"       + n;
+			string copyable4 = "(a) saving the Mapfile, hence deleting the rogue tileparts" + n;
 			string copyable5 = "(b) adding terrains to the terrainset in the TilesetEditor" + n;
 			string copyable6 = "(c) adding tileparts to allocated terrains externally"      + n;
 			string copyable7 = "(d) using TilepartSubstitution to shift ids down"           + n;
 
 			string copyable = copyable0
+							+ "info: TopView | Test | Test parts in tileslots" + n + n
 							+ copyable1
 							+ copyable2
 							+ copyable3
@@ -470,8 +472,7 @@ namespace XCom
 							+ copyable5
 							+ copyable6
 							+ copyable7 + n + n
-							+ "Pronto!" + n
-							+ "TopView | Test | Test parts in tileslot for info";
+							+ "Pronto!";
 			return copyable;
 		}
 		#endregion Methods (read/load)
