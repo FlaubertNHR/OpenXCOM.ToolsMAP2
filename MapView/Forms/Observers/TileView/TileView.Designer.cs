@@ -1,36 +1,31 @@
-﻿namespace MapView.Forms.Observers
+﻿using System;
+using System.Windows.Forms;
+
+using DSShared.Controls;
+
+
+namespace MapView.Forms.Observers
 {
 	partial class TileView
 	{
 		#region Designer
-		private System.ComponentModel.IContainer components = null;
+		CompositedTabControl tcTileTypes;
 
-		DSShared.Controls.CompositedTabControl tcTileTypes;
-
-		private System.Windows.Forms.ToolStrip tsMain;
-		private System.Windows.Forms.ToolStripDropDownButton tsddbExternal;
-		private System.Windows.Forms.ToolStripMenuItem tsmiEditPck;
-		private System.Windows.Forms.ToolStripMenuItem tsmiVolutarMcdEditor;
-		private System.Windows.Forms.TabPage tpAll;
-		private System.Windows.Forms.TabPage tpFloors;
-		private System.Windows.Forms.TabPage tpContents;
-		private System.Windows.Forms.TabPage tpNorthwalls;
-		private System.Windows.Forms.TabPage tpWestwalls;
-		private System.Windows.Forms.StatusStrip ssStatus;
-		private System.Windows.Forms.ToolStripStatusLabel tsslTotal;
-		private System.Windows.Forms.ToolStripStatusLabel tsslOver;
-		private System.Windows.Forms.ToolStripButton tsb_Options;
-		private System.Windows.Forms.ToolStripMenuItem tsmiEditMcd;
-		private System.Windows.Forms.ToolStripSeparator tsmi_Sep0;
-
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
+		private ToolStrip tsMain;
+		private ToolStripDropDownButton tsddbExternal;
+		private ToolStripMenuItem tsmiEditPck;
+		private ToolStripMenuItem tsmiVolutarMcdEditor;
+		private TabPage tpAll;
+		private TabPage tpFloors;
+		private TabPage tpContents;
+		private TabPage tpNorthwalls;
+		private TabPage tpWestwalls;
+		private StatusStrip ssStatus;
+		private ToolStripStatusLabel tsslTotal;
+		private ToolStripStatusLabel tsslOver;
+		private ToolStripButton tsb_Options;
+		private ToolStripMenuItem tsmiEditMcd;
+		private ToolStripSeparator tsmi_Sep0;
 
 
 		/// <summary>
@@ -209,11 +204,11 @@
 			// tsslOver
 			// 
 			this.tsslOver.AutoSize = false;
-			this.tsslOver.Margin = new System.Windows.Forms.Padding(5, 3, 0, 2);
+			this.tsslOver.Margin = new System.Windows.Forms.Padding(6, 3, 0, 2);
 			this.tsslOver.Name = "tsslOver";
-			this.tsslOver.Size = new System.Drawing.Size(551, 17);
+			this.tsslOver.Size = new System.Drawing.Size(550, 17);
 			this.tsslOver.Spring = true;
-			this.tsslOver.Text = "Over";
+			this.tsslOver.Text = "{over}";
 			this.tsslOver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// TileView
