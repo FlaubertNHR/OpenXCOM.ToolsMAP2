@@ -131,10 +131,10 @@ namespace MapView.Forms.MainView
 		private int _starttoproutepage = def_StartTopRoutePage;
 		[Category(cat_Observers)]
 		[Description(@"The tab-page to focus when TopRouteView starts
-0 - TopView always (default)
-1 - RouteView always
-2 - TopView recall
-3 - RouteView recall")]
+0 - TopView (default)
+1 - RouteView
+2 - TopView - recall state
+3 - RouteView - recall state")]
 		[DefaultValue(def_StartTopRoutePage)]
 		public int StartTopRoutePage
 		{
