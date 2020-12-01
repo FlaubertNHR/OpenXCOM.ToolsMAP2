@@ -1933,42 +1933,60 @@ namespace MapView.Forms.MainView
 
 #if !LOCKBITS
 		/// <summary>
-		/// Draws a colored lozenge around any selected Tiles.
+		/// Draws a colored lozenge around selected Tiles.
 		/// </summary>
 		/// <param name="dragrect"></param>
 		private void DrawSelectionBorder(Rectangle dragrect)
 		{
-			var t = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Top));
-			var r = GetClientCoordinates(new Point(dragrect.Right, dragrect.Top));
-			var b = GetClientCoordinates(new Point(dragrect.Right, dragrect.Bottom));
-			var l = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Bottom));
+			var t0 = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Top));
+			var r0 = GetClientCoordinates(new Point(dragrect.Right, dragrect.Top));
+			var b0 = GetClientCoordinates(new Point(dragrect.Right, dragrect.Bottom));
+			var l0 = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Bottom));
 
-			t.X += HalfWidth;
-			r.X += HalfWidth;
-			b.X += HalfWidth;
-			l.X += HalfWidth;
+			t0.X += HalfWidth;
+			r0.X += HalfWidth;
+			b0.X += HalfWidth;
+			l0.X += HalfWidth;
 
 			if (MainViewF.Optionables.LayerSelectionBorder < 2)
 			{
-				_graphics.DrawLine(PenSelect, t, r); // draw at grid level
-				_graphics.DrawLine(PenSelect, r, b);
-				_graphics.DrawLine(PenSelect, b, l);
-				_graphics.DrawLine(PenSelect, l, t);
+				_graphics.DrawLine(PenSelect, t0,r0); // draw at grid level ->
+				_graphics.DrawLine(PenSelect, r0,b0);
+				_graphics.DrawLine(PenSelect, b0,l0);
+				_graphics.DrawLine(PenSelect, l0,t0);
 			}
 
 			if (MainViewF.Optionables.LayerSelectionBorder > 0)
 			{
+				var t1 = t0; // auto-copied ->
+				var r1 = r0;
+				var b1 = b0;
+				var l1 = l0;
+
 				int offsetVert = HalfHeight * 3;
 
-				t.Y -= offsetVert;
-				r.Y -= offsetVert;
-				b.Y -= offsetVert;
-				l.Y -= offsetVert;
+				t1.Y -= offsetVert;
+				r1.Y -= offsetVert;
+				b1.Y -= offsetVert;
+				l1.Y -= offsetVert;
 
-				_graphics.DrawLine(PenSelect, t, r); // draw at level above
-				_graphics.DrawLine(PenSelect, r, b);
-				_graphics.DrawLine(PenSelect, b, l);
-				_graphics.DrawLine(PenSelect, l, t);
+				_graphics.DrawLine(PenSelect, t1,r1); // draw at level above ->
+				_graphics.DrawLine(PenSelect, r1,b1);
+				_graphics.DrawLine(PenSelect, b1,l1);
+				_graphics.DrawLine(PenSelect, l1,t1);
+
+				if (MainViewF.Optionables.LayerSelectionBorder == 1)
+				{
+					offsetVert = (l0.Y - l1.Y) / 3; // NOTE: is for left And right verts
+
+					l0.Y -= offsetVert;
+					l1.Y += offsetVert;
+					r0.Y -= offsetVert;
+					r1.Y += offsetVert;
+
+					_graphics.DrawLine(PenSelect, l0,l1); // draw vertical lines ->
+					_graphics.DrawLine(PenSelect, r0,r1);
+				}
 			}
 		}
 #else
@@ -1993,6 +2011,9 @@ namespace MapView.Forms.MainView
 			graphics.DrawLine(_penSelect, r, b);
 			graphics.DrawLine(_penSelect, b, l);
 			graphics.DrawLine(_penSelect, l, t);
+
+			// TODO: Respect MainViewF.Optionables.LayerSelectionBorder
+			// see !LOCKBITS DrawSelectionBorder()
 		}
 #endif
 		#endregion Draw
