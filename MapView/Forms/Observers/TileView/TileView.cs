@@ -649,7 +649,7 @@ namespace MapView.Forms.Observers
 								part.TerId,
 								label);
 			}
-			tsslOver.Text = "Over " + info;
+			tsslOver.Text = info;
 		}
 
 		/// <summary>
