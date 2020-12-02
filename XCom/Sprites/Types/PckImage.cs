@@ -40,8 +40,8 @@ namespace XCom
 		public const byte MxId = 0xFD;
 
 		/// <summary>
-		/// Tracks the id of an image across all loaded terrainsets. Used only
-		/// by 'MapInfoDialog'.
+		/// Tracks the id of an image across all loaded terrainsets.
+		/// @note Used only by 'MapInfoDialog'.
 		/// </summary>
 		private static int _setId = -1;
 		#endregion Fields (static)

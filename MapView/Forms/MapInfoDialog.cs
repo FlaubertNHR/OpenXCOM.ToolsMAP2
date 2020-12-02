@@ -252,7 +252,6 @@ namespace MapView
 
 				foreach (var sprite in part.Sprites)
 					_sprites.Add(sprite.SetId);
-//					_sprites.Add(sprite.Id); // TODO: fix this mess. The id goes borked in MapInfo after the set is opened in McdView
 
 				tally(part.Dead);
 				tally(part.Altr);
