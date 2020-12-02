@@ -671,8 +671,6 @@ namespace McdView
 							PfeMcd = pfe; // sets 'Label' also.
 							SelId = -1;
 
-							ResourceInfo.Spritesets.Clear();
-
 							string dir = Path.GetDirectoryName(PfeMcd);
 							string pf  = Path.Combine(dir, Label);
 							if (   File.Exists(pf + GlobalsXC.PckExt)
@@ -686,7 +684,8 @@ namespace McdView
 																	Label,
 																	Path.GetDirectoryName(PfeMcd),
 																	ResourceInfo.TAB_WORD_LENGTH_2,
-																	pal);
+																	pal,
+																	true);
 							}
 
 							Parts = new Tilepart[0];
@@ -769,12 +768,12 @@ namespace McdView
 					if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
 					else                      pal = Palette.TftdBattle;
 
-					ResourceInfo.Spritesets.Clear();
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(PfeMcd),
 														ResourceInfo.TAB_WORD_LENGTH_2,
-														pal);
+														pal,
+														true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -851,12 +850,12 @@ namespace McdView
 					if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
 					else                      pal = Palette.TftdBattle;
 
-					ResourceInfo.Spritesets.Clear();
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(PfeMcd),
 														ResourceInfo.TAB_WORD_LENGTH_2,
-														pal);
+														pal,
+														true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -935,12 +934,12 @@ namespace McdView
 					else
 						pal = Palette.UfoBattle;
 
-					ResourceInfo.Spritesets.Clear();
 					Spriteset = ResourceInfo.LoadSpriteset(
 														Label,
 														Path.GetDirectoryName(PfeMcd),
 														ResourceInfo.TAB_WORD_LENGTH_2,
-														pal);
+														pal,
+														true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -1356,12 +1355,12 @@ namespace McdView
 						if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
 						else                      pal = Palette.TftdBattle;
 
-						ResourceInfo.Spritesets.Clear();
 						Copier.Spriteset = ResourceInfo.LoadSpriteset(
 																Copier.Label,
 																Path.GetDirectoryName(Copier.PfeMcd),
 																ResourceInfo.TAB_WORD_LENGTH_2,
-																pal);
+																pal,
+																true);
 
 						for (int id = 0; id != parts.Length; ++id)
 						{

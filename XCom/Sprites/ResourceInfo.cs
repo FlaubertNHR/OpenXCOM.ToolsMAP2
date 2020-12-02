@@ -9,7 +9,7 @@ using DSShared;
 
 namespace XCom
 {
-	public static class ResourceInfo
+	public static class ResourceInfo // TODO: -> SpritesetsManager
 	{
 		#region Fields (static)
 		public static int[,] ScanGufo;
@@ -30,7 +30,7 @@ namespace XCom
 		/// <summary>
 		/// A list of spritesets in the currently loaded tileset or so.
 		/// @note It has relevance only for MapInfoDialog and
-		/// MainViewOptionables.SelectedTileColor.
+		/// MainViewOptionables.SelectedTileColor/SelectedTileToner.
 		/// </summary>
 		public static List<SpriteCollection> Spritesets
 		{
@@ -58,13 +58,16 @@ namespace XCom
 		/// <param name="dir">path to the directory of the file</param>
 		/// <param name="tabwordLength"></param>
 		/// <param name="pal"></param>
+		/// <param name="preserveStaticSpritesets">true if called by McdView -
+		/// dont screw with the spritesets when McdView is called via TileView</param>
 		/// <returns>a SpriteCollection containing all the sprites, or null if
 		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		public static SpriteCollection LoadSpriteset(
 				string label,
 				string dir,
 				int tabwordLength,
-				Palette pal)
+				Palette pal,
+				bool preserveStaticSpritesets = false)
 		{
 			//LogFile.WriteLine("ResourceInfo.LoadSpriteSet()");
 
@@ -103,7 +106,9 @@ namespace XCom
 						// {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
-							Spritesets.Add(spriteset); // used only by MapInfoDialog and MainViewOptionables.SelectedTileColor.
+							if (!preserveStaticSpritesets)
+								Spritesets.Add(spriteset);
+
 							return spriteset;
 						}
 					}
