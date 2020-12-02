@@ -9,7 +9,7 @@ using DSShared;
 
 namespace XCom
 {
-	public static class ResourceInfo // TODO: -> SpritesetsManager
+	public static class SpritesetsManager
 	{
 		#region Fields (static)
 		public static int[,] ScanGufo;
@@ -69,7 +69,7 @@ namespace XCom
 				Palette pal,
 				bool preserveStaticSpritesets = false)
 		{
-			//LogFile.WriteLine("ResourceInfo.LoadSpriteSet()");
+			//LogFile.WriteLine("SpritesetsManager.LoadSpriteSet()");
 
 			if (Directory.Exists(dir))
 			{

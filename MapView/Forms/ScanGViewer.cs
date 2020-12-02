@@ -152,9 +152,9 @@ namespace MapView
 
 					if (_file.Descriptor.GroupType == GameType.Tftd)
 					{
-						if (ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+						if (SpritesetsManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 						{
-							_icons = ResourceInfo.ScanGtftd;
+							_icons = SpritesetsManager.ScanGtftd;
 
 							result = "SCANG.DAT reloaded.";
 							title  = " Info";
@@ -169,9 +169,9 @@ namespace MapView
 							icon   = MessageBoxIcon.Error;
 						}
 					}
-					else if (ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+					else if (SpritesetsManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 					{
-						_icons = ResourceInfo.ScanGufo;
+						_icons = SpritesetsManager.ScanGufo;
 
 						result = "SCANG.DAT reloaded.";
 						title  = " Info";
@@ -413,12 +413,12 @@ namespace MapView
 		{
 			if (_file.Descriptor.GroupType == GameType.Tftd)
 			{
-				_icons = ResourceInfo.ScanGtftd;
+				_icons = SpritesetsManager.ScanGtftd;
 				_pal   = Palette.TftdBattle;
 			}
 			else
 			{
-				_icons = ResourceInfo.ScanGufo;
+				_icons = SpritesetsManager.ScanGufo;
 				_pal   = Palette.UfoBattle;
 			}
 		}

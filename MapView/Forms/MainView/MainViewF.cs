@@ -423,11 +423,11 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
-				cuboidufo = ResourceInfo.LoadSpriteset(
-													label,
-													dir,
-													ResourceInfo.TAB_WORD_LENGTH_2,
-													Palette.UfoBattle);
+				cuboidufo = SpritesetsManager.LoadSpriteset(
+														label,
+														dir,
+														SpritesetsManager.TAB_WORD_LENGTH_2,
+														Palette.UfoBattle);
 
 				if (cuboidufo != null)
 				{
@@ -446,11 +446,11 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
-				cuboidtftd = ResourceInfo.LoadSpriteset(
-													label,
-													dir,
-													ResourceInfo.TAB_WORD_LENGTH_4,
-													Palette.TftdBattle);
+				cuboidtftd = SpritesetsManager.LoadSpriteset(
+														label,
+														dir,
+														SpritesetsManager.TAB_WORD_LENGTH_4,
+														Palette.TftdBattle);
 
 				if (cuboidtftd != null)
 				{
@@ -496,7 +496,7 @@ namespace MapView
 
 			// NOTE: ScanG's are conditional loads iff File exists.
 			if (piScanGufo != null && piScanGufo.FileExists()
-				&& ResourceInfo.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+				&& SpritesetsManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 			{
 				LogFile.WriteLine("ScanG UFO loaded.");
 			}
@@ -504,7 +504,7 @@ namespace MapView
 				LogFile.WriteLine("ScanG UFO not found.");
 
 			if (piScanGtftd != null && piScanGtftd.FileExists()
-				&& ResourceInfo.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+				&& SpritesetsManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 			{
 				LogFile.WriteLine("ScanG TFTD loaded.");
 			}
@@ -592,7 +592,7 @@ namespace MapView
 				MonotoneSprites = new SpriteCollection(
 													"Monotone",
 													Palette.UfoBattle,
-													ResourceInfo.TAB_WORD_LENGTH_2,
+													SpritesetsManager.TAB_WORD_LENGTH_2,
 													bytesPck,
 													bytesTab);
 			}
@@ -3144,12 +3144,12 @@ namespace MapView
 
 						if (descriptor.GroupType == GameType.Tftd)
 						{
-							MenuManager.EnableScanG(ResourceInfo.ScanGtftd != null);
+							MenuManager.EnableScanG(SpritesetsManager.ScanGtftd != null);
 							MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle; // used by Mono only
 						}
 						else // default to ufo-battle palette
 						{
-							MenuManager.EnableScanG(ResourceInfo.ScanGufo != null);
+							MenuManager.EnableScanG(SpritesetsManager.ScanGufo != null);
 							MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle; // used by Mono only
 						}
 
@@ -3249,7 +3249,7 @@ namespace MapView
 			miGreen.Checked =
 			miBlue .Checked = false;
 
-			if (ResourceInfo.Spritesets.Count != 0)
+			if (SpritesetsManager.Spritesets.Count != 0)
 			{
 				ColorPalette table;
 				switch (Optionables.SelectedTileToner)
@@ -3259,27 +3259,27 @@ namespace MapView
 						return;
 
 					default: // case TONER_GRAY
-						table = ResourceInfo.Spritesets[0].Pal.GrayScaled.ColorTable;	// NOTE: All loaded spritesets will have the same palette.
-						miGray.Checked = true;											// - this demonstrates how redundant palette-pointers are.
-						break;															//   palette this palette that, here have a palette ...
-																						//   i know you want one
+						table = SpritesetsManager.Spritesets[0].Pal.GrayScaled.ColorTable;	// NOTE: All loaded spritesets will have the same palette.
+						miGray.Checked = true;												// - this demonstrates how redundant palette-pointers are.
+						break;																//   palette this palette that, here have a palette ...
+																							//   i know you want one
 					case MainViewOptionables.TONER_RED:
-						table = ResourceInfo.Spritesets[0].Pal.RedScaled.ColorTable;
+						table = SpritesetsManager.Spritesets[0].Pal.RedScaled.ColorTable;
 						miRed.Checked = true;
 						break;
 
 					case MainViewOptionables.TONER_GREEN:
-						table = ResourceInfo.Spritesets[0].Pal.GreenScaled.ColorTable;
+						table = SpritesetsManager.Spritesets[0].Pal.GreenScaled.ColorTable;
 						miGreen.Checked = true;
 						break;
 
 					case MainViewOptionables.TONER_BLUE:
-						table = ResourceInfo.Spritesets[0].Pal.BlueScaled.ColorTable;
+						table = SpritesetsManager.Spritesets[0].Pal.BlueScaled.ColorTable;
 						miBlue.Checked = true;
 						break;
 				}
 
-				foreach (var spriteset in ResourceInfo.Spritesets)
+				foreach (var spriteset in SpritesetsManager.Spritesets)
 				{
 					for (int id = 0; id != spriteset.Count; ++id)
 					{

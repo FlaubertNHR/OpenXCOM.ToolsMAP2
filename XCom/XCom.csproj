@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Descriptor\TileGroup.cs" />
-    <Compile Include="Sprites\ResourceInfo.cs">
+    <Compile Include="Sprites\SpritesetsManager.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="McdRecords\McdRecord.cs">

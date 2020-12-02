@@ -164,7 +164,7 @@ namespace MapView
 								 + rows + " x "
 								 + levs;
 
-			int spritesTotal = ResourceInfo.GetTotalSpriteCount();
+			int spritesTotal = SpritesetsManager.GetTotalSpriteCount();
 			int recordsTotal = 0;
 
 			string text = String.Empty;

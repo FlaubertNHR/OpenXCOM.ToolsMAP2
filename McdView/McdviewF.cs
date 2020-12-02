@@ -321,23 +321,23 @@ namespace McdView
 			if (pathufo != null)
 			{
 				if (File.Exists(Path.Combine(pathufo, SharedSpace.ScanGfile)))
-					ResourceInfo.LoadScanGufo(pathufo);		// -> ResourceInfo.ScanGufo
+					SpritesetsManager.LoadScanGufo(pathufo);	// -> SpritesetsManager.ScanGufo
 
 				if (File.Exists(Path.Combine(pathufo, SharedSpace.LoftfileUfo)))
-					ResourceInfo.LoadLoFTufo(pathufo);		// -> ResourceInfo.LoFTufo
+					SpritesetsManager.LoadLoFTufo(pathufo);		// -> SpritesetsManager.LoFTufo
 			}
 
 			if (pathtftd != null)
 			{
 				if (File.Exists(Path.Combine(pathtftd, SharedSpace.ScanGfile)))
-					ResourceInfo.LoadScanGtftd(pathtftd);	// -> ResourceInfo.ScanGtftd
+					SpritesetsManager.LoadScanGtftd(pathtftd);	// -> SpritesetsManager.ScanGtftd
 
 				if (File.Exists(Path.Combine(pathtftd, SharedSpace.LoftfileTftd)))
-					ResourceInfo.LoadLoFTtftd(pathtftd);	// -> ResourceInfo.LoFTtftd
+					SpritesetsManager.LoadLoFTtftd(pathtftd);	// -> SpritesetsManager.LoFTtftd
 			}
 
-			ScanG = ResourceInfo.ScanGufo; // default.
-			LoFT  = ResourceInfo.LoFTufo;  // default.
+			ScanG = SpritesetsManager.ScanGufo; // default.
+			LoFT  = SpritesetsManager.LoFTufo;  // default.
 
 
 /*			// RotatingCube ->
@@ -680,12 +680,12 @@ namespace McdView
 								if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
 								else                      pal = Palette.TftdBattle;
 
-								Spriteset = ResourceInfo.LoadSpriteset(
-																	Label,
-																	Path.GetDirectoryName(PfeMcd),
-																	ResourceInfo.TAB_WORD_LENGTH_2,
-																	pal,
-																	true);
+								Spriteset = SpritesetsManager.LoadSpriteset(
+																		Label,
+																		Path.GetDirectoryName(PfeMcd),
+																		SpritesetsManager.TAB_WORD_LENGTH_2,
+																		pal,
+																		true);
 							}
 
 							Parts = new Tilepart[0];
@@ -768,12 +768,12 @@ namespace McdView
 					if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
 					else                      pal = Palette.TftdBattle;
 
-					Spriteset = ResourceInfo.LoadSpriteset(
-														Label,
-														Path.GetDirectoryName(PfeMcd),
-														ResourceInfo.TAB_WORD_LENGTH_2,
-														pal,
-														true);
+					Spriteset = SpritesetsManager.LoadSpriteset(
+															Label,
+															Path.GetDirectoryName(PfeMcd),
+															SpritesetsManager.TAB_WORD_LENGTH_2,
+															pal,
+															true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -850,12 +850,12 @@ namespace McdView
 					if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
 					else                      pal = Palette.TftdBattle;
 
-					Spriteset = ResourceInfo.LoadSpriteset(
-														Label,
-														Path.GetDirectoryName(PfeMcd),
-														ResourceInfo.TAB_WORD_LENGTH_2,
-														pal,
-														true);
+					Spriteset = SpritesetsManager.LoadSpriteset(
+															Label,
+															Path.GetDirectoryName(PfeMcd),
+															SpritesetsManager.TAB_WORD_LENGTH_2,
+															pal,
+															true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -934,12 +934,12 @@ namespace McdView
 					else
 						pal = Palette.UfoBattle;
 
-					Spriteset = ResourceInfo.LoadSpriteset(
-														Label,
-														Path.GetDirectoryName(PfeMcd),
-														ResourceInfo.TAB_WORD_LENGTH_2,
-														pal,
-														true);
+					Spriteset = SpritesetsManager.LoadSpriteset(
+															Label,
+															Path.GetDirectoryName(PfeMcd),
+															SpritesetsManager.TAB_WORD_LENGTH_2,
+															pal,
+															true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -1178,8 +1178,8 @@ namespace McdView
 				if (Spriteset != null)
 					Spriteset.Pal = Palette.UfoBattle;
 
-				ScanG = ResourceInfo.ScanGufo;
-				LoFT  = ResourceInfo.LoFTufo;
+				ScanG = SpritesetsManager.ScanGufo;
+				LoFT  = SpritesetsManager.LoFTufo;
 
 				InvalidatePanels();
 			}
@@ -1200,8 +1200,8 @@ namespace McdView
 				if (Spriteset != null)
 					Spriteset.Pal = Palette.TftdBattle;
 
-				ScanG = ResourceInfo.ScanGtftd;
-				LoFT  = ResourceInfo.LoFTtftd;
+				ScanG = SpritesetsManager.ScanGtftd;
+				LoFT  = SpritesetsManager.LoFTtftd;
 
 				InvalidatePanels();
 			}
@@ -1355,12 +1355,12 @@ namespace McdView
 						if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
 						else                      pal = Palette.TftdBattle;
 
-						Copier.Spriteset = ResourceInfo.LoadSpriteset(
-																Copier.Label,
-																Path.GetDirectoryName(Copier.PfeMcd),
-																ResourceInfo.TAB_WORD_LENGTH_2,
-																pal,
-																true);
+						Copier.Spriteset = SpritesetsManager.LoadSpriteset(
+																		Copier.Label,
+																		Path.GetDirectoryName(Copier.PfeMcd),
+																		SpritesetsManager.TAB_WORD_LENGTH_2,
+																		pal,
+																		true);
 
 						for (int id = 0; id != parts.Length; ++id)
 						{

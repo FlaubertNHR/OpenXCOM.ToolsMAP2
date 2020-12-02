@@ -35,7 +35,7 @@ namespace XCom
 		/// <summary>
 		/// WHY THE FUCK DOES EVERY TILEPART STORE THE ENTIRE SPRITESET.
 		/// Yes, this is The spriteset. Each tilepart has a pointer to it ...
-		/// psst if you really want the spritesets get it in ResourceInfo.
+		/// psst if you really want the spritesets get it in SpritesetsManager.
 		/// </summary>
 		private SpriteCollection Spriteset
 		{ get; set; }
@@ -349,7 +349,7 @@ namespace XCom
 					MonotoneSprites = new SpriteCollection(
 														"Monotone_D",
 														Palette.UfoBattle,
-														ResourceInfo.TAB_WORD_LENGTH_2,
+														SpritesetsManager.TAB_WORD_LENGTH_2,
 														bytesPck,
 														bytesTab);
 

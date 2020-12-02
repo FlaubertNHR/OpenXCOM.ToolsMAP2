@@ -1231,7 +1231,7 @@ namespace PckView
 					{
 						sfd.Title = "Create a PCK (bigobs) file";
 						XCImage.SpriteHeight = 48;
-						tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
+						tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
 					}
 					else
 					{
@@ -1240,11 +1240,11 @@ namespace PckView
 						if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckImage
 						{
 							sfd.Title = "Create a PCK (tftd unit) file";
-							tabwordLength = ResourceInfo.TAB_WORD_LENGTH_4;
+							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
 						}
 						else
 						{
-							tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
+							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
 
 							if (sender == miCreateUnitUfo) // Ufo Unit support for XCImage/PckImage
 								sfd.Title = "Create a PCK (ufo unit) file";
@@ -1949,7 +1949,7 @@ namespace PckView
 					{
 						XCImage.SpriteHeight = 48;
 
-						tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
+						tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
 						pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
 					}
 					else // is terrain or unit ->
@@ -1960,12 +1960,12 @@ namespace PckView
 							|| bytesTab[2] != 0
 							|| bytesTab[3] != 0) // if either of the 3rd or 4th bytes is nonzero ... it's a UFO set.
 						{
-							tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2;
+							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
 							pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
 						}
 						else
 						{
-							tabwordLength = ResourceInfo.TAB_WORD_LENGTH_4;
+							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
 							pal = Palette.TftdBattle;
 						}
 					}
@@ -2117,7 +2117,7 @@ namespace PckView
 
 			valid = valid
 				 && TilePanel.Spriteset != null
-				 && TilePanel.Spriteset.TabwordLength == ResourceInfo.TAB_WORD_LENGTH_2;
+				 && TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_2;
 
 			if (tssl_Offset    .Visible =
 				tssl_OffsetLast.Visible =

@@ -124,14 +124,14 @@ namespace XCom
 			{
 				var parts = new List<Tilepart>();
 
-				ResourceInfo.Spritesets.Clear();
+				SpritesetsManager.Spritesets.Clear();
 
 				//LogFile.WriteLine(". . terraincount= " + descriptor.Terrains.Count);
 
 				for (int i = 0; i != descriptor.Terrains.Count; ++i) // push together the tileparts of all allocated terrains
 				{
 					Tilepart[] records = descriptor.CreateTerrain(i);	// -> TilepartFactory.CreateTileparts()
-					if (records == null)								// -> ResourceInfo.LoadSpriteset()
+					if (records == null)								// -> SpritesetsManager.LoadSpriteset()
 					{
 						//LogFile.WriteLine(". . . . no records ABORT");
 						return null;

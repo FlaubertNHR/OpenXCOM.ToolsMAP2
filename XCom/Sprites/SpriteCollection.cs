@@ -121,7 +121,7 @@ namespace XCom
 		public SpriteCollection(
 				string label,
 				Palette pal,
-				int tabwordLength = ResourceInfo.TAB_WORD_LENGTH_2)
+				int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2)
 		{
 			Label         = label;
 			Pal           = pal;
@@ -138,7 +138,7 @@ namespace XCom
 		/// calls MapFileService.LoadDescriptor()
 		/// calls Descriptor.GetTerrainRecords()
 		/// calls Descriptor.GetTerrainSpriteset()
-		/// calls ResourceInfo.LoadSpriteset()
+		/// calls SpritesetsManager.LoadSpriteset()
 		/// calls SpriteCollection..cTor.
 		/// 2.
 		/// PckViewForm.LoadSpriteset()
@@ -176,7 +176,7 @@ namespace XCom
 			uint b;
 			int pos = 0;
 
-			if (TabwordLength == ResourceInfo.TAB_WORD_LENGTH_4)
+			if (TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_4)
 			{
 				while (pos != bytesTab.Length)
 				{
@@ -197,7 +197,7 @@ namespace XCom
 					pos += TabwordLength;
 				}
 			}
-			else //if (TabwordLength == ResourceInfo.TAB_WORD_LENGTH_2)
+			else //if (TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_2)
 			{
 				while (pos != bytesTab.Length)
 				{
@@ -345,7 +345,7 @@ namespace XCom
 		{
 			Label         = label;
 			Pal           = null;
-			TabwordLength = ResourceInfo.TAB_WORD_LENGTH_0;
+			TabwordLength = SpritesetsManager.TAB_WORD_LENGTH_0;
 
 			var bindata = new byte[(int)fsScanG.Length];
 			fsScanG.Read(bindata, 0, bindata.Length);
@@ -406,7 +406,7 @@ namespace XCom
 				{
 					switch (spriteset.TabwordLength)
 					{
-						case ResourceInfo.TAB_WORD_LENGTH_2:
+						case SpritesetsManager.TAB_WORD_LENGTH_2:
 						{
 							uint pos = 0;
 							for (int id = 0; id != spriteset.Count; ++id)
@@ -425,7 +425,7 @@ namespace XCom
 							break;
 						}
 
-						case ResourceInfo.TAB_WORD_LENGTH_4:
+						case SpritesetsManager.TAB_WORD_LENGTH_4:
 						{
 							uint pos = 0;
 							for (int id = 0; id != spriteset.Count; ++id)

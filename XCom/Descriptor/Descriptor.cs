@@ -135,10 +135,10 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			SpriteCollection spriteset = ResourceInfo.LoadSpriteset(
-																terr, path,
-																ResourceInfo.TAB_WORD_LENGTH_2,
-																Pal);
+			SpriteCollection spriteset = SpritesetsManager.LoadSpriteset(
+																	terr, path,
+																	SpritesetsManager.TAB_WORD_LENGTH_2,
+																	Pal);
 			if (spriteset != null)
 			{
 				//LogFile.WriteLine(". spriteset Valid - create tileparts");
@@ -155,7 +155,7 @@ namespace XCom
 		/// but at present there is no general cache of all available terrains;
 		/// even a Map's Descriptor retains only the allocated terrains as
 		/// tuples in a dictionary-object.
-		/// See ResourceInfo - where the *sprites* of a terrain *are* cached.
+		/// See SpritesetsManager - where the *sprites* of a terrain *are* cached.
 		/// </summary>
 		/// <param name="id">the position of the terrain in this tileset's terrains-list</param>
 		/// <param name="disregard">true to disregard any error</param>
@@ -191,7 +191,7 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			return ResourceInfo.GetSpritesetCount(terr, path, Pal);
+			return SpritesetsManager.GetSpritesetCount(terr, path, Pal);
 		} */
 		#endregion Methods
 
