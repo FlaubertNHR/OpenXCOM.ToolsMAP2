@@ -356,7 +356,7 @@ namespace MapView.Forms.Observers
 					int id;
 					string label;
 
-					var part = SelectedTilepart;
+					Tilepart part = SelectedTilepart;
 					if (part != null)
 					{
 						record = part.Record;

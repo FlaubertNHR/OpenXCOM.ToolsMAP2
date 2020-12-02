@@ -319,8 +319,8 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private void ResetMouseoverTracker()
 		{
-			var loc = PointToClient(Control.MousePosition);
-				loc = GetTileLocation(loc.X, loc.Y);
+			Point loc = PointToClient(Control.MousePosition);
+				  loc = GetTileLocation(loc.X, loc.Y);
 
 			_col = loc.X;
 			_row = loc.Y;
@@ -339,8 +339,8 @@ namespace MapView.Forms.MainView
 
 				int visible = ObserverManager.TopView.Control.VisibleQuadrants;
 
-				var a = GetDragBeg_abs();
-				var b = GetDragEnd_abs();
+				Point a = GetDragBeg_abs();
+				Point b = GetDragEnd_abs();
 
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
@@ -376,8 +376,8 @@ namespace MapView.Forms.MainView
 
 				_copiedTerrains = MapFile.Descriptor.Terrains;
 
-				var a = GetDragBeg_abs();
-				var b = GetDragEnd_abs();
+				Point a = GetDragBeg_abs();
+				Point b = GetDragEnd_abs();
 
 				_copied = new MapTile[b.X - a.X + 1,
 									  b.Y - a.Y + 1];
@@ -525,21 +525,21 @@ namespace MapView.Forms.MainView
 		{
 			if (MapFile != null && FirstClick)
 			{
-				var part = ObserverManager.TileView.Control.SelectedTilepart;
+				Tilepart part = ObserverManager.TileView.Control.SelectedTilepart;
 				if (part.SetId <= MapFile.MaxTerrainId)
 				{
 					_mainView.MapChanged = true;
 
-					var a = GetDragBeg_abs();
-					var b = GetDragEnd_abs();
+					Point a = GetDragBeg_abs();
+					Point b = GetDragEnd_abs();
 
-					var quad = ObserverManager.TopView.Control.QuadrantPanel.SelectedQuadrant;
+					PartType slot = ObserverManager.TopView.Control.QuadrantPanel.SelectedQuadrant;
 
 					MapTile tile;
 					for (int col = a.X; col <= b.X; ++col)
 					for (int row = a.Y; row <= b.Y; ++row)
 					{
-						(tile = MapFile[col, row])[quad] = part;
+						(tile = MapFile[col, row])[slot] = part;
 						tile.Vacancy();
 					}
 
@@ -571,17 +571,17 @@ namespace MapView.Forms.MainView
 		{
 			_mainView.MapChanged = true;
 
-			var a = GetDragBeg_abs();
-			var b = GetDragEnd_abs();
+			Point a = GetDragBeg_abs();
+			Point b = GetDragEnd_abs();
 
-			var quad = ObserverManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
+			PartType slot = ObserverManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
 
 			MapTile tile;
 			for (int col = a.X; col <= b.X; ++col)
 			for (int row = a.Y; row <= b.Y; ++row)
 			{
 				tile = MapFile[col, row];
-				tile[quad] = null;
+				tile[slot] = null;
 				tile.Vacancy();
 			}
 
