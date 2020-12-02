@@ -100,9 +100,10 @@ namespace MapView.Forms.Observers
 			}
 			set
 			{
-				if (value != null)
+				if (value != null						// crippled parts shall not be selected here
+					&& value.SetId < _parts.Length - 1)	// -1 to account for the null-sprite
 				{
-					_id = value.SetId + 1; // +1 to account for the nullpart.
+					_id = value.SetId + 1;				// +1 to account for the null-sprite.
 				}
 				else
 					_id = 0;
@@ -484,7 +485,7 @@ namespace MapView.Forms.Observers
 		{
 			if (_parts != null && _parts.Length != 0)
 			{
-				var graphics = e.Graphics;
+				Graphics graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 				var rectOuter = new Rectangle(0,0, SpriteWidth, SpriteHeight);
@@ -640,7 +641,7 @@ namespace MapView.Forms.Observers
 			{
 				if (_quadType == PartType.Invalid)
 				{
-					_parts = new Tilepart[parts.Count + 1];
+					_parts = new Tilepart[parts.Count + 1]; // +1 for the null-sprite
 					_parts[0] = null;
 
 					for (int i = 0; i != parts.Count; ++i)
