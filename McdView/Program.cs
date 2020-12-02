@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -14,6 +16,11 @@ namespace McdView
 		{
 			if (args != null)
 				McdviewF._args = args;
+
+			Thread.CurrentThread.CurrentCulture       = //sheesh
+			Thread.CurrentThread.CurrentUICulture     =
+			CultureInfo.DefaultThreadCurrentCulture   =
+			CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);

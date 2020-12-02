@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -209,9 +208,7 @@ namespace PckView
 			miCreate.MenuItems.Add(miCreateUnitUfo);
 			miCreate.MenuItems.Add(miCreateUnitTftd);
 
-			tssl_TilesTotal.Text = String.Format(
-											CultureInfo.InvariantCulture,
-											Total + None);
+			tssl_TilesTotal.Text = Total + None;
 
 			tssl_OffsetLast.Text =
 			tssl_OffsetAftr.Text = String.Empty;
@@ -280,7 +277,7 @@ namespace PckView
 				while ((line = sr.ReadLine()) != null)
 				{
 					line = line.Trim();
-					if (line.StartsWith("SpriteShade", StringComparison.InvariantCulture))
+					if (line.StartsWith("SpriteShade", StringComparison.Ordinal))
 						return line.Substring(12);
 				}
 			}
@@ -740,25 +737,17 @@ namespace PckView
 		/// <param name="hint">true to suggest proper dimensions/format</param>
 		private void ShowBitmapError(bool hint = true)
 		{
-			string error = String.Format(
-									CultureInfo.CurrentCulture,
-									"Detected incorrect Dimensions and/or PixelFormat.");
+			string error = "Detected incorrect Dimensions and/or PixelFormat.";
 
 			if (hint)
 			{
 				error += Environment.NewLine + Environment.NewLine;
 				if (IsScanG)
-					error += String.Format(
-										CultureInfo.CurrentCulture,
-										"Image needs to be 4x4 8-bpp");
+					error += "Image needs to be 4x4 8-bpp";
 				else if (IsBigobs)
-					error += String.Format(
-										CultureInfo.CurrentCulture,
-										"Image needs to be 32x48 8-bpp");
+					error += "Image needs to be 32x48 8-bpp";
 				else
-					error += String.Format(
-										CultureInfo.CurrentCulture,
-										"Image needs to be 32x40 8-bpp");
+					error += "Image needs to be 32x40 8-bpp";
 			}
 
 			MessageBox.Show(
@@ -1176,7 +1165,6 @@ namespace PckView
 			while ((count /= 10) != 0);
 
 			string suffix = String.Format(
-										CultureInfo.InvariantCulture,
 										"_{0:" + digits + "}",
 										TilePanel.idSel);
 
@@ -1543,11 +1531,9 @@ namespace PckView
 					{
 						string label = TilePanel.Spriteset.Label.ToUpperInvariant();
 
-						fbd.Description = String.Format(
-													CultureInfo.CurrentCulture,
-													"Export spriteset to 8-bpp PNG files"
-														+ Environment.NewLine + Environment.NewLine
-														+ "\t\t" + label);
+						fbd.Description = "Export spriteset to 8-bpp PNG files"
+										+ Environment.NewLine + Environment.NewLine
+										+ "\t" + label;
 
 						if (!Directory.Exists(_lastSpriteDirectory))
 						{
@@ -1574,7 +1560,6 @@ namespace PckView
 							{
 								sprite = TilePanel.Spriteset[id];
 								string suffix = String.Format(
-															CultureInfo.InvariantCulture,
 															"_{0:" + digits + "}",
 															sprite.Id);
 								string pfe = Path.Combine(_lastSpriteDirectory, label + suffix + GlobalsXC.PngExt);
@@ -1602,11 +1587,9 @@ namespace PckView
 				{
 					string label = TilePanel.Spriteset.Label.ToUpperInvariant();
 
-					fbd.Description = String.Format(
-												CultureInfo.CurrentCulture,
-												"Export spriteset to an 8-bpp PNG spritesheet file"
-													+ Environment.NewLine + Environment.NewLine
-													+ "\t" + label);
+					fbd.Description = "Export spriteset to an 8-bpp PNG spritesheet file"
+									+ Environment.NewLine + Environment.NewLine
+									+ "\t" + label;
 
 					if (!Directory.Exists(_lastSpriteDirectory))
 					{
@@ -2001,9 +1984,7 @@ namespace PckView
 						if (IsBigobs) error = "Bigobs : ";	// won't happen unless a file is corrupt.
 						else          error = String.Empty;	// possibly trying to load a Bigobs to 32x40 d
 
-						error += String.Format(
-											CultureInfo.CurrentCulture,
-											"File data overflowed the sprite's count of pixels.");
+						error += "File data overflowed the sprite's count of pixels.";
 						MessageBox.Show(
 									this,
 									error,
@@ -2077,13 +2058,11 @@ namespace PckView
 		{
 			string over;
 			if (TilePanel.idOver != -1)
-				over = TilePanel.idOver.ToString(CultureInfo.InvariantCulture);
+				over = TilePanel.idOver.ToString();
 			else
 				over = None;
 
-			tssl_TileOver.Text = String.Format(
-										CultureInfo.InvariantCulture,
-										Over + "{0}", over);
+			tssl_TileOver.Text = Over + over;
 		}
 
 		/// <summary>
@@ -2098,11 +2077,11 @@ namespace PckView
 			int id = TilePanel.idSel;
 			if (id != -1)
 			{
-				selected = id.ToString(CultureInfo.InvariantCulture);
+				selected = id.ToString();
 				if (IsScanG)
 				{
 					if (id > 34)
-						selected += " [" + (id - 35).ToString(CultureInfo.InvariantCulture) + "]";
+						selected += " [" + (id - 35) + "]";
 					else
 						selected += " [0]";
 				}
@@ -2110,9 +2089,7 @@ namespace PckView
 			else
 				selected = None;
 
-			tssl_TileSelected.Text = String.Format(
-												CultureInfo.InvariantCulture,
-												Selected + "{0}", selected);
+			tssl_TileSelected.Text = Selected + selected;
 
 
 			valid = valid
@@ -2151,9 +2128,7 @@ namespace PckView
 
 			if (valid)
 			{
-				tssl_TilesTotal.Text = String.Format(
-												CultureInfo.InvariantCulture,
-												Total + "{0}", TilePanel.Spriteset.Count);
+				tssl_TilesTotal.Text = Total + TilePanel.Spriteset.Count;
 			}
 			else
 				tssl_TilesTotal.Text = String.Empty;

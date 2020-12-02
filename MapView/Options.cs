@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -84,18 +83,11 @@ namespace MapView
 		private static string ConvertColor(object o)
 		{
 			var color = (Color)o;
-			if (!isFamiliarColor(color))
-				return String.Format(
-								CultureInfo.InvariantCulture,
-								"{0},{1},{2},{3}",
-								color.A, color.R, color.G, color.B);
-
+			if (!color.IsKnownColor && !color.IsNamedColor && !color.IsSystemColor)
+			{
+				return color.A + "," + color.R + "," + color.G + "," + color.B;
+			}
 			return color.Name;
-		}
-
-		private static bool isFamiliarColor(Color color)
-		{
-			return color.IsKnownColor || color.IsNamedColor || color.IsSystemColor;
 		}
 		#endregion Methods (static)
 

@@ -155,7 +155,7 @@ namespace McdView
 			string text = tb.Text.Trim();
 			if (text.Length > 1)
 			{
-				while (text.StartsWith("0", StringComparison.InvariantCulture))
+				while (text.StartsWith("0", StringComparison.Ordinal))
 					text = text.Substring(1);
 			}
 

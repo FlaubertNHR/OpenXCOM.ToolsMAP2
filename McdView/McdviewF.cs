@@ -926,7 +926,7 @@ namespace McdView
 					PfeMcd = pfeMcd;
 
 					Palette pal;
-					if (palette.Substring(0,4) == "tftd")
+					if (palette.StartsWith("tftd", StringComparison.Ordinal))
 					{
 						pal = Palette.TftdBattle;
 						OnClick_PaletteTftd(null, EventArgs.Empty);
@@ -1499,7 +1499,7 @@ namespace McdView
 		private void OnTextChanged_SpriteShade(object sender, EventArgs e)
 		{
 			string text = tb_SpriteShade.Text.Trim();
-			while (text.StartsWith("0", StringComparison.InvariantCulture))
+			while (text.StartsWith("0", StringComparison.Ordinal))
 				text = text.Substring(1);
 
 			if (text != tb_SpriteShade.Text)

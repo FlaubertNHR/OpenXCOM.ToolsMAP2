@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Windows.Forms;
 
 using XCom;
@@ -60,11 +59,11 @@ namespace MapView
 			_file = file;
 
 			tb_Row0.Text =
-			tb_Row1.Text = file.MapSize.Rows.ToString(CultureInfo.InvariantCulture);
+			tb_Row1.Text = file.MapSize.Rows.ToString();
 			tb_Col0.Text =
-			tb_Col1.Text = file.MapSize.Cols.ToString(CultureInfo.InvariantCulture);
+			tb_Col1.Text = file.MapSize.Cols.ToString();
 			tb_Lev0.Text =
-			tb_Lev1.Text = file.MapSize.Levs.ToString(CultureInfo.InvariantCulture);
+			tb_Lev1.Text = file.MapSize.Levs.ToString();
 
 			btn_Cancel.Select();
 			DialogResult = DialogResult.Cancel;
@@ -91,9 +90,9 @@ namespace MapView
 			{
 				ShowErrorDialog("Columns and Rows must be evenly divisible by 10.", " Error");
 			}
-			else if (_cols == int.Parse(tb_Col0.Text, CultureInfo.InvariantCulture)
-				&&   _rows == int.Parse(tb_Row0.Text, CultureInfo.InvariantCulture)
-				&&   _levs == int.Parse(tb_Lev0.Text, CultureInfo.InvariantCulture))
+			else if (_cols == int.Parse(tb_Col0.Text)
+				&&   _rows == int.Parse(tb_Row0.Text)
+				&&   _levs == int.Parse(tb_Lev0.Text))
 			{
 				ShowErrorDialog("The new size is the same as the old size.", " uh ...");
 			}

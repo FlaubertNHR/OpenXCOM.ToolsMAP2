@@ -211,21 +211,18 @@ namespace XCom
 			using (var b = new Bitmap(1,1, PixelFormat.Format8bppIndexed))
 				ColorTable = b.Palette;
 
-			using (var input = new StreamReader(fs))
+			using (var sr = new StreamReader(fs))
 			{
-				Label = input.ReadLine(); // 1st line is the label.
+				Label = sr.ReadLine(); // 1st line is the label.
 
 				var rgb = new string[3];
-
-				var invariant = System.Globalization.CultureInfo.InvariantCulture;
-
 				for (int id = 0; id != 256; ++id)
 				{
-					rgb = input.ReadLine().Split(',');
+					rgb = sr.ReadLine().Split(',');
 					ColorTable.Entries[id] = Color.FromArgb(
-														Int32.Parse(rgb[0], invariant),
-														Int32.Parse(rgb[1], invariant),
-														Int32.Parse(rgb[2], invariant));
+														Int32.Parse(rgb[0]),
+														Int32.Parse(rgb[1]),
+														Int32.Parse(rgb[2]));
 				}
 				CreateTonescaledPalettes(Label);
 			}

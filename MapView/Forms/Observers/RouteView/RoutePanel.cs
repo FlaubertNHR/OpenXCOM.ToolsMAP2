@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Globalization;
 using System.Windows.Forms;
 
 using MapView.Forms.MainView;
@@ -716,7 +715,7 @@ namespace MapView.Forms.Observers
 					textSpawn1  = Spawn;
 					textPatrol1 = Patrol;
 
-					textOver2 = (node.Id).ToString(CultureInfo.CurrentCulture);
+					textOver2 = node.Id.ToString();
 					textType2 = Enum.GetName(typeof(UnitType), node.Type);
 
 					if (MapFile.Descriptor.GroupType == GameType.Tftd)

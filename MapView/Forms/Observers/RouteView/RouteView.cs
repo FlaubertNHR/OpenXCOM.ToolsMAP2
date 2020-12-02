@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -438,10 +437,7 @@ namespace MapView.Forms.Observers
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }
 
-				info += String.Format(
-									CultureInfo.InvariantCulture,
-									"c {0}  r {1}  L {2}",
-									c,r,l);
+				info += "c " + c + "  r " + r + "  L " + l;
 			}
 
 			ObserverManager.RouteView   .Control     .lblOver.Text =
@@ -482,10 +478,7 @@ namespace MapView.Forms.Observers
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }
 
-				info += String.Format(
-									CultureInfo.InvariantCulture,
-									"c {0}  r {1}  L {2}",
-									c,r,l);
+				info += "c " + c + "  r " + r + "  L " + l;
 
 				lblSelected.ForeColor = color;
 				lblSelected.Text = info;
@@ -787,8 +780,7 @@ namespace MapView.Forms.Observers
 						link.Distance = CalculateLinkDistance(
 															NodeSelected,
 															_file.Routes[link.Destination]);
-						distance = link.Distance.ToString(CultureInfo.InvariantCulture)
-								 + GetDistanceArrow(slot);
+						distance = link.Distance + GetDistanceArrow(slot);
 						break;
 				}
 
@@ -996,11 +988,8 @@ namespace MapView.Forms.Observers
 					dest = link.Destination;
 					if (link.isUsed())
 					{
-						btnGo.Text = Go;
-						tbDist.Text = Convert.ToString(
-													link.Distance,
-													CultureInfo.InvariantCulture)
-									+ GetDistanceArrow(slot);
+						btnGo .Text = Go;
+						tbDist.Text = link.Distance + GetDistanceArrow(slot);
 
 						if (link.isNodelink())
 						{
@@ -1360,8 +1349,7 @@ namespace MapView.Forms.Observers
 									Math.Pow(nodeA.Row - nodeB.Row, 2) +
 									Math.Pow(nodeA.Lev - nodeB.Lev, 2));
 			if (textBox != null)
-				textBox.Text = dist.ToString(CultureInfo.InvariantCulture)
-							 + GetDistanceArrow(slot);
+				textBox.Text = dist + GetDistanceArrow(slot);
 
 			return (byte)dist;
 		}
@@ -1673,21 +1661,17 @@ namespace MapView.Forms.Observers
 				ObserverManager.RouteView   .Control     .btnPaste.Enabled =
 				ObserverManager.TopRouteView.ControlRoute.btnPaste.Enabled = true;
 
-				var nodeText = string.Format(
-										CultureInfo.InvariantCulture,
-										"{0}{6}{1}{6}{2}{6}{3}{6}{4}{6}{5}",
-										NodeCopyPrefix,
-										cbType  .SelectedIndex,
-										cbPatrol.SelectedIndex,
-										cbAttack.SelectedIndex,
-										cbRank  .SelectedIndex,
-										cbSpawn .SelectedIndex,
-										NodeCopySeparator);
+				string nodeCopy = NodeCopyPrefix         + NodeCopySeparator
+								+ cbType  .SelectedIndex + NodeCopySeparator
+								+ cbPatrol.SelectedIndex + NodeCopySeparator
+								+ cbAttack.SelectedIndex + NodeCopySeparator
+								+ cbRank  .SelectedIndex + NodeCopySeparator
+								+ cbSpawn .SelectedIndex;
 
 				// TODO: include Link info ... perhaps.
 				// But re-assigning the link node-ids would be difficult, since
 				// those nodes could have be deleted, etc.
-				Clipboard.SetText(nodeText);
+				Clipboard.SetText(nodeCopy);
 			}
 			else
 				ShowErrorDialog("A node must be selected.");
@@ -1704,13 +1688,11 @@ namespace MapView.Forms.Observers
 				{
 					RoutesChangedCoordinator = true;
 
-					var invariant = CultureInfo.InvariantCulture;
-
-					cbType  .SelectedIndex = Int32.Parse(nodeData[1], invariant);
-					cbPatrol.SelectedIndex = Int32.Parse(nodeData[2], invariant);
-					cbAttack.SelectedIndex = Int32.Parse(nodeData[3], invariant);
-					cbRank  .SelectedIndex = Int32.Parse(nodeData[4], invariant);
-					cbSpawn .SelectedIndex = Int32.Parse(nodeData[5], invariant);
+					cbType  .SelectedIndex = Int32.Parse(nodeData[1]);
+					cbPatrol.SelectedIndex = Int32.Parse(nodeData[2]);
+					cbAttack.SelectedIndex = Int32.Parse(nodeData[3]);
+					cbRank  .SelectedIndex = Int32.Parse(nodeData[4]);
+					cbSpawn .SelectedIndex = Int32.Parse(nodeData[5]);
 
 					// TODO: include Link info ... perhaps.
 					// But re-assigning the link node-ids would be difficult, since
@@ -2154,18 +2136,15 @@ namespace MapView.Forms.Observers
 			{
 				RoutesChangedCoordinator = true;
 				info = String.Format(
-								CultureInfo.CurrentCulture,
 								"{0} link{1} updated.",
-								changed,
+								 changed,
 								(changed == 1) ? " has been" : "s have been");
 
 				UpdateNodeInfo();
 			}
 			else
 			{
-				info = String.Format(
-								CultureInfo.CurrentCulture,
-								"All link distances are already correct.");
+				info = "All link distances are already correct.";
 			}
 
 			MessageBox.Show(
@@ -2228,12 +2207,10 @@ namespace MapView.Forms.Observers
 			{
 				icon  = MessageBoxIcon.Warning;
 				title = " Warning";
-				info  = String.Format(
-									CultureInfo.CurrentCulture,
-									"The following route-{0} an invalid NodeRank.{1}",
-									(invalids.Count == 1) ? "node has"
-														  : "nodes have",
-									Environment.NewLine);
+				info  = "The following route-"
+					  + ((invalids.Count == 1) ? "node has" : "nodes have")
+					  + " an invalid NodeRank."
+					  + Environment.NewLine;
 
 				foreach (byte id in invalids)
 					info += Environment.NewLine + id;

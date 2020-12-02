@@ -46,11 +46,9 @@ namespace XCom
 		{
 			using (var f = new RouteCheckInfobox())
 			{
-				string label = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"Destination node is outside the Map's bounds."
-											+ "{0}{0}Do you want it deleted?",
-										Environment.NewLine);
+				string label = "Destination node is outside the Map's bounds."
+							 + Environment.NewLine + Environment.NewLine
+							 + "Do you want it deleted?";
 				string text = "id " + node.Id + " : " + node.GetLocationString(file.MapSize.Levs);
 				f.SetTexts(label, text);
 
@@ -118,14 +116,11 @@ namespace XCom
 			using (var f = new RouteCheckInfobox())
 			{
 				bool singular = (_count == 1);
-				string label = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
-										"There {0} " + _count + " route-node{1} outside"
-											+ " the bounds of the Map.{3}{3}Do you want {2} deleted?",
-										singular ? "is" : "are",
-										singular ? ""   : "s",
-										singular ? "it" : "them",
-										Environment.NewLine);
+				string label = "There " + (singular ? "is " : "are ") + _count
+					+ " route-node" + (singular ? "" : "s")
+					+ " outside the bounds of the Map."
+					+ Environment.NewLine + Environment.NewLine
+					+ "Do you want " + (singular ? "it" : "them") + " deleted?";
 
 				string text = String.Empty;
 				int total = _file.Routes.Nodes.Count;

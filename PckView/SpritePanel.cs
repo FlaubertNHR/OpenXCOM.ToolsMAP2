@@ -371,18 +371,14 @@ namespace PckView
 			if (palid != -1)
 			{
 				string text = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
 										"id:{0} (0x{0:X2})",
 										palid);
 
 				var color = PckViewForm.Pal[palid];
-				text += String.Format(
-									System.Globalization.CultureInfo.CurrentCulture,
-									" r:{0} g:{1} b:{2} a:{3}",
-									color.R,
-									color.G,
-									color.B,
-									color.A);
+				text += " r:" + color.R
+					  + " g:" + color.G
+					  + " b:" + color.B
+					  + " a:" + color.A;
 
 				switch (palid)
 				{

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Globalization;
 using System.Windows.Forms;
 
 using XCom;
@@ -113,196 +112,168 @@ namespace MapView
 				rtbInfo.AppendText(record.stLoFTs);
 				rtbInfo.AppendText(record.stScanG);
 
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[22]));
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[23]));
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[24]));
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[25]));
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[26]));
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[27]));
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[28]));
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[29]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[22]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[23]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[24]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[25]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[26]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[27]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[28]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[29]));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"ufo door:",
 											record.SlidingDoor));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"stop LOS:",
 											record.StopLOS));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"no floor:",
 											record.NotFloored));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"bigwall:",
 											record.BigWall));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"gravlift:",
 											record.GravLift));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"standard door:",
 											record.HingedDoor));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"blocks fire:",
 											record.BlockFire));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"blocks smoke:",
 											record.BlockSmoke));
 
 				// LeftRightHalf
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[38]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[38]));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"tu walk:",
 											record.TU_Walk));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"tu slide:",
 											record.TU_Slide));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"tu fly:",
 											record.TU_Fly));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"armor:",
 											record.Armor));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"explosive block:",
 											record.HE_Block));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"anti-flammability:",
 											record.FireResist));
 
 				rtbInfo.SelectionColor = Color.Firebrick;
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"death tile:",
 											record.DieTile));
 
 				rtbInfo.SelectionColor = Color.Firebrick;
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"alternate tile:",
 											record.Alt_MCD));
 
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[47]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[47]));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"unit y-offset:",
 											record.StandOffset));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"tile y-offset:",
 											record.TileOffset));
 
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[50]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[50]));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"block light[0-10]:",
 											record.LightBlock));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"footstep sound:",
 											record.Footstep));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1} - {2}" + Environment.NewLine,
 											"part type:",
 											(sbyte)record.PartType,
 											Enum.GetName(typeof(PartType), record.PartType)));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1} - {2}" + Environment.NewLine,
 											"explosive type:",
 											record.HE_Type,
 											(record.HE_Type == 0) ? "HE" : (record.HE_Type == 1) ? "smoke" : "unknown"));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"HE Strength:",
 											record.HE_Strength));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"smoke block:",
 											record.SmokeBlockage));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"fuel:",
 											record.Fuel));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"light:",
 											record.LightSource));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1} - {2}" + Environment.NewLine,
 											"special property:",
 											(byte)record.Special,
 											Enum.GetName(typeof(SpecialType), record.Special)));
 
 				rtbInfo.AppendText(string.Format(
-											CultureInfo.InvariantCulture,
 											"{0,-20}{1}" + Environment.NewLine,
 											"base object:",
 											record.BaseObject));
 
-//				rtb.AppendText(string.Format(CultureInfo.InvariantCulture, "Unknown data: {0}" + Environment.NewLine, info[61]));
+//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[61]));
 
 
 				rtbInfo.AppendText(Environment.NewLine);

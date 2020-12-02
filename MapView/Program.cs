@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+using System.Threading;
 
 
 namespace MapView
@@ -11,6 +13,11 @@ namespace MapView
 		public static void Main(string[] args)
 		{
 			Args = args;
+
+			Thread.CurrentThread.CurrentCulture       = //sheesh
+			Thread.CurrentThread.CurrentUICulture     =
+			CultureInfo.DefaultThreadCurrentCulture   =
+			CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
 			var start = new Startup();
 			start.RunProgram();

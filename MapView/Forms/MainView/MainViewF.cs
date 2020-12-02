@@ -1468,7 +1468,6 @@ namespace MapView
 					while ((levs /= 10) != 0);
 
 					string suffix = String.Format(
-												CultureInfo.InvariantCulture,
 												"_L{0:" + digits + "}",
 												file.MapSize.Levs - file.Level);
 					sfd.FileName = file.Descriptor.Label + suffix;
@@ -2587,13 +2586,12 @@ namespace MapView
 
 			string labelGroup = MapTree.SelectedNode.Text;
 
-			string notice = String.Format(
-										CultureInfo.CurrentCulture,
-										"Are you sure you want to remove this Map group?"
-											+ " This will also remove all its categories and tilesets,"
-											+ " but files on disk are unaffected.{0}{0}group\t{1}",
-										Environment.NewLine,
-										labelGroup);
+			string notice = "Are you sure you want to remove this Map group?"
+						  + " This will also remove all its categories and tilesets,"
+						  + " but files on disk are unaffected."
+						  + Environment.NewLine + Environment.NewLine
+						  + "group\t" + labelGroup;
+
 			if (MessageBox.Show(
 							this,
 							notice,
@@ -2683,15 +2681,13 @@ namespace MapView
 			string labelGroup    = MapTree.SelectedNode.Parent.Text;
 			string labelCategory = MapTree.SelectedNode.Text;
 
-			string notice = String.Format(
-										CultureInfo.CurrentCulture,
-										"Are you sure you want to remove this Map category?"
-											+ " This will also remove all its tilesets, but"
-											+ " files on disk are unaffected.{0}{0}"
-											+ "group\t{1}{0}"
-											+ "category\t{2}",
-										Environment.NewLine,
-										labelGroup, labelCategory);
+			string notice = "Are you sure you want to remove this Map category?"
+						  + " This will also remove all its tilesets, but"
+						  + " files on disk are unaffected."
+						  + Environment.NewLine + Environment.NewLine
+						  + "group\t"    + labelGroup + Environment.NewLine
+						  + "category\t" + labelCategory;
+
 			if (MessageBox.Show(
 							this,
 							notice,
@@ -2836,15 +2832,12 @@ namespace MapView
 			string labelCategory = MapTree.SelectedNode.Parent.Text;
 			string labelTileset  = MapTree.SelectedNode.Text;
 
-			string notice = String.Format(
-										CultureInfo.CurrentCulture,
-										"Are you sure you want to remove this Map tileset?"
-											+ " Files on disk are unaffected.{0}{0}"
-											+ "group\t{1}{0}"
-											+ "category\t{2}{0}"
-											+ "tileset\t{3}",
-										Environment.NewLine,
-										labelGroup, labelCategory, labelTileset);
+			string notice = "Are you sure you want to remove this Map tileset?"
+						  + " Files on disk are unaffected.{0}{0}"
+						  + "group\t"    + labelGroup    + Environment.NewLine
+						  + "category\t" + labelCategory + Environment.NewLine
+						  + "tileset\t"  + labelTileset;
+
 			if (MessageBox.Show(
 							this,
 							notice,
@@ -3469,10 +3462,7 @@ namespace MapView
 				if (Optionables.Base1_xy) { ++c; ++r; }
 				if (!Optionables.Base1_z) { --l; }
 
-				tsslPosition.Text = String.Format(
-												CultureInfo.CurrentCulture,
-												"c {0}  r {1}  L {2}",
-												c,r,l);
+				tsslPosition.Text = "c " + c + "  r " + r + "  L " + l;
 			}
 		}
 
@@ -3494,10 +3484,7 @@ namespace MapView
 		/// <param name="ty"></param>
 		internal void sb_PrintSelectionSize(int tx, int ty)
 		{
-			tsslSelectionSize.Text = String.Format(
-												CultureInfo.CurrentCulture,
-												"{0} x {1}",
-												tx, ty);
+			tsslSelectionSize.Text = tx + " x " + ty;
 			ssMain.Refresh(); // fast update for selection-size.
 		}
 		#endregion Methods

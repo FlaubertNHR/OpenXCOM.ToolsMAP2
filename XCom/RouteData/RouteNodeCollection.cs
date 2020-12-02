@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 
 using DSShared;
@@ -363,11 +362,9 @@ namespace XCom
 
 				if (invalids.Count != 0)
 				{
-					string info = String.Format(
-											CultureInfo.CurrentCulture,
-											"The following route-{0} an invalid NodeRank.",
-											(invalids.Count == 1) ? "node has"
-																  : "nodes have");
+					string info = "The following route-"
+								+ ((invalids.Count == 1) ? "node has" : "nodes have")
+								+ " an invalid NodeRank.";
 
 					string copyable = String.Empty;
 					foreach (byte id in invalids)

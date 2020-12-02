@@ -1,4 +1,9 @@
-﻿namespace MapView
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Forms;
+
+
+namespace MapView
 {
 	partial class McdInfoF
 	{
@@ -6,10 +11,10 @@
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components;
 
-		private System.Windows.Forms.RichTextBox rtbInfo;
-		private System.Windows.Forms.BindingSource bsInfo;
+		private RichTextBox rtbInfo;
+		private BindingSource bsInfo;
 
 
 		/// <summary>

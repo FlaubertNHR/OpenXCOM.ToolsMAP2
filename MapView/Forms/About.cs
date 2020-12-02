@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -31,10 +32,10 @@ namespace MapView
 
 			string text = "About";
 			string before = String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"{0:n0}", GC.GetTotalMemory(false));
 //			string after  = String.Format(
-//										System.Globalization.CultureInfo.CurrentCulture,
+//										CultureInfo.CurrentCulture,
 //										"{0:n0}", GC.GetTotalMemory(true));
 
 //			text += " - " + before + " \u2192 " + after + " bytes"; // '\u2192' = right arrow.
@@ -58,7 +59,7 @@ namespace MapView
 
 			lblVersion.Text += Environment.NewLine + Environment.NewLine
 							+ String.Format(
-										System.Globalization.CultureInfo.CurrentCulture,
+										CultureInfo.CurrentCulture,
 										"{0:yyyy MMM d}  {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
 										dt);
 		}

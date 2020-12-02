@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 
 using DSShared;
@@ -275,7 +274,6 @@ namespace XCom
 
 
 			stSprites = string.Format(
-								CultureInfo.InvariantCulture,
 								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
 								"images:",
 								Sprite1,
@@ -288,7 +286,6 @@ namespace XCom
 								Sprite8);
 
 			stScanG = string.Format(
-								CultureInfo.CurrentCulture,
 								"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
 								"scang reference:",
 								bindata[20],
@@ -297,7 +294,6 @@ namespace XCom
 								ScanG_reduced);
 
 			stLoFTs = string.Format(
-								CultureInfo.CurrentCulture,
 								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
 								"loft references:",
 								Loft1,

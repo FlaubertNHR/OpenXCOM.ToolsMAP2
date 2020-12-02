@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.Windows.Forms;
 
 using MapView.Forms.MainView;
@@ -531,10 +530,7 @@ namespace MapView.Forms.Observers
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (!MainViewF.Optionables.Base1_z) { --l; }
 
-			string loc = String.Format(
-									CultureInfo.InvariantCulture,
-									"c {0}  r {1}  L {2}",
-									c,r,l);
+			string loc = "c " + c + "  r " + r + "  L " + l;
 
 			int w = TextRenderer.MeasureText(loc, FontLocation).Width;
 			if (StartX + Quadwidth * (QuadrantPart + 1) - MarginHori + w < panelwidth)
@@ -568,10 +564,7 @@ namespace MapView.Forms.Observers
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (!MainViewF.Optionables.Base1_z) { --l; }
 
-			string loc = String.Format(
-									CultureInfo.InvariantCulture,
-									"c {0}  r {1}  L {2}",
-									c,r,l);
+			string loc = "c " + c + "  r " + r + "  L " + l;
 
 			int x = panelwidth - TextRenderer.MeasureText(loc, FontLocation).Width;
 			int y = panelheight - 20;

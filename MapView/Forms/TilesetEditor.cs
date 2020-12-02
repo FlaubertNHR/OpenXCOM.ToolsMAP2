@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -353,10 +352,8 @@ namespace MapView
 		{
 			using (var fbd = new FolderBrowserDialog())
 			{
-				fbd.Description = String.Format(
-											CultureInfo.CurrentCulture,
-											"Browse to a basepath folder. A valid basepath"
-										  + " folder has the subfolders MAPS and ROUTES.");
+				fbd.Description = "Browse to a basepath folder. A valid basepath"
+								+ " folder has the subfolders MAPS and ROUTES.";
 
 				if (Directory.Exists(TilesetBasepath))
 					fbd.SelectedPath = TilesetBasepath;
@@ -487,7 +484,6 @@ namespace MapView
 									bool singular = (--tilesets == 1);
 
 									string warn = String.Format(
-															CultureInfo.CurrentCulture,
 															"There {1} {0} other tileset{2} that {1} defined with the current"
 																+ " .MAP and .RMP files. The label{2} of {3} tileset{2} will"
 																+ " be changed also if you change the label of this Map.",
@@ -873,7 +869,12 @@ namespace MapView
 
 			if (sel != -1)
 			{
-				if (String.Compare(itAllocated, itAvailable, StringComparison.CurrentCultureIgnoreCase) < 0)
+				// NOTE: Since program-entry-point sets the app to the
+				// InvariantCulture, ListBox is likely sorting by that culture.
+				// So let String.Compare() use that culture also
+				// TODO: Set the listbox Sort() method and this string comparison
+				// to use StringComparison.CurrentCultureIgnoreCase
+				if (String.Compare(itAllocated, itAvailable, StringComparison.InvariantCultureIgnoreCase) < 0)
 					++sel;
 
 				if (sel >= lb_TerrainsAvailable.Items.Count) // jic
@@ -1115,10 +1116,8 @@ namespace MapView
 		{
 			using (var fbd = new FolderBrowserDialog())
 			{
-				fbd.Description = String.Format(
-											CultureInfo.CurrentCulture,
-											"Browse to a basepath folder. A valid basepath"
-										  + " folder has the subfolder TERRAIN.");
+				fbd.Description = "Browse to a basepath folder. A valid basepath"
+								+ " folder has the subfolder TERRAIN.";
 				fbd.SelectedPath = _lastTerrainFolder;
 
 

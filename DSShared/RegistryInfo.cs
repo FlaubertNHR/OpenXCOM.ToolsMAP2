@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -71,8 +70,6 @@ namespace DSShared
 			if (fs != null)
 			using (var sr = new StreamReader(fs))
 			{
-				var invariant = CultureInfo.InvariantCulture;
-
 				var ys = new YamlStream();
 				ys.Load(sr);
 
@@ -86,7 +83,7 @@ namespace DSShared
 					var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
 					foreach (var keyval in keyvals)
 					{
-						int val = Int32.Parse(keyval.Value.ToString(), invariant); // TODO: Error handling.
+						int val = Int32.Parse(keyval.Value.ToString()); // TODO: Error handling.
 						switch (keyval.Key.ToString())
 						{
 							case Left:   tric.left   = val; break;

@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 #if !__MonoCS__
 using System.Runtime.InteropServices;
@@ -23,13 +22,10 @@ namespace PckView
 
 			var info = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
 
-			lblVersion.Text = String.Format(
-									CultureInfo.InvariantCulture,
-									"{0}.{1}.{2}.{3}",
-									info.FileMajorPart,
-									info.FileMinorPart,
-									info.FileBuildPart,
-									info.FilePrivatePart);
+			lblVersion.Text = info.FileMajorPart + "."
+							+ info.FileMinorPart + "."
+							+ info.FileBuildPart + "."
+							+ info.FilePrivatePart;
 
 			// NOTE: this won't work for .NET 4+ (always returns 'None')
 			// if compiling against .NET 4+ use GetPEKinds() see:
@@ -68,10 +64,7 @@ namespace PckView
 #else
 			const string config = "Release";
 #endif
-			lblBuildConfig.Text = String.Format(
-											CultureInfo.InvariantCulture,
-											"{0}{1}",
-											config, arch);
+			lblBuildConfig.Text = config + arch;
 		}
 
 		/// <summary>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -621,13 +620,11 @@ namespace MapView.Forms.Observers
 		{
 			string title = "TileView";
 			if (part != null)
-				title += String.Format(
-									CultureInfo.CurrentCulture,
-									" - {2}  terId {1}  setId {0}",
-									part.SetId,
-									part.TerId,
-									GetTerrainLabel());
-
+			{
+				title += " - " + GetTerrainLabel()
+					   + "  terId " + part.TerId
+					   + "  setId " + part.SetId;
+			}
 			ObserverManager.TileView.Text = title;
 		}
 
@@ -641,13 +638,9 @@ namespace MapView.Forms.Observers
 
 			if (part != null)
 			{
-				string label = MapFile.GetTerrainLabel(part);
-				info = String.Format(
-								CultureInfo.CurrentCulture,
-								"{2}  terId {1}  setId {0}",
-								part.SetId,
-								part.TerId,
-								label);
+				info = MapFile.GetTerrainLabel(part)
+					 + "  terId " + part.TerId
+					 + "  setId " + part.SetId;
 			}
 			tsslOver.Text = info;
 		}

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 
 using DSShared;
@@ -77,13 +76,11 @@ namespace XCom
 				if (record.DieTile < parts.Length)
 					return parts[record.DieTile];
 
-				string warn = String.Format(
-										CultureInfo.CurrentCulture,
-										"In the MCD file {0} part #{1} has an invalid death part (id #{2} of {3} records).",
-										terrain,
-										id,
-										record.DieTile,
-										parts.Length);
+				string warn = "In the MCD file " + terrain
+							+ " part #" + id
+							+ " has an invalid death part (id #" + record.DieTile
+							+ " of " + parts.Length + " records).";
+
 				using (var f = new Infobox(
 										"Invalid death part",
 										null,
@@ -114,13 +111,11 @@ namespace XCom
 				if (record.Alt_MCD < parts.Length)
 					return parts[record.Alt_MCD];
 
-				string warn = String.Format(
-										CultureInfo.CurrentCulture,
-										"In the MCD file {0} part #{1} has an invalid alternate part (id #{2} of {3} records).",
-										terrain,
-										id,
-										record.Alt_MCD,
-										parts.Length);
+				string warn = "In the MCD file " + terrain
+							+ " part #" + id
+							+ " has an invalid alternate part (id #" + record.Alt_MCD
+							+ " of " + parts.Length + " records).";
+
 				using (var f = new Infobox(
 										"Invalid alternate part",
 										null,

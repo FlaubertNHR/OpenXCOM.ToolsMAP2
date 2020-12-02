@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
@@ -82,10 +81,8 @@ namespace XCom
 			{
 				using (var fbd = new FolderBrowserDialog())
 				{
-					fbd.Description = String.Format(
-												CultureInfo.CurrentCulture,
-												"Browse to a basepath folder. A valid basepath folder"
-													+ " has the subfolders MAPS and ROUTES.");
+					fbd.Description = "Browse to a basepath folder. A valid basepath folder"
+									+ " has the subfolders MAPS and ROUTES.";
 
 					if (Directory.Exists(descriptor.Basepath))
 						fbd.SelectedPath = descriptor.Basepath;

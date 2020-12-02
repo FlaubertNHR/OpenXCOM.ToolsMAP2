@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 
 
 namespace XCom
@@ -55,10 +54,7 @@ namespace XCom
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return String.Format(
-							CultureInfo.InvariantCulture,
-							"{0}, {1}, {2}",
-							_cols, _rows, _levs);
+			return _cols + ", " + _rows + ", " + _levs;
 		}
 		#endregion Methods (override)
 
