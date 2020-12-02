@@ -60,7 +60,7 @@ namespace MapView.Forms.MainView
 		/// NOTE: Appears only in MainView.
 		/// </summary>
 		/// <param name="toolStrip"></param>
-		internal void CreateToolstripSearchObjects(ToolStrip toolStrip)
+		internal void CreateSearchTools(ToolStrip toolStrip)
 		{
 			var tsItems = new ToolStripItem[]
 			{
@@ -105,7 +105,7 @@ namespace MapView.Forms.MainView
 		/// NOTE: Appears only in MainView.
 		/// </summary>
 		/// <param name="toolStrip"></param>
-		internal void CreateToolstripScaleObjects(ToolStrip toolStrip)
+		internal void CreateScaleTools(ToolStrip toolStrip)
 		{
 			var tsItems = new ToolStripItem[]
 			{
@@ -186,7 +186,7 @@ namespace MapView.Forms.MainView
 		/// <param name="toolStrip">a toolstrip to put the buttons in</param>
 		/// <param name="tertiary">false for MainView's toolstrip, true for
 		/// TopView's and TopRouteView's toolstrips</param>
-		internal void CreateToolstripEditorObjects(
+		internal void CreateEditTools(
 				ToolStrip toolStrip,
 				bool tertiary = false)
 		{

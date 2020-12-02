@@ -353,9 +353,9 @@ namespace MapView
 			tscPanel.ContentPanel.Controls.Add(MainViewUnderlay);
 
 			tsTools.SuspendLayout();
-			ObserverManager.ToolFactory.CreateToolstripSearchObjects(tsTools);
-			ObserverManager.ToolFactory.CreateToolstripScaleObjects(tsTools);
-			ObserverManager.ToolFactory.CreateToolstripEditorObjects(tsTools);
+			ObserverManager.ToolFactory.CreateSearchTools(tsTools);
+			ObserverManager.ToolFactory.CreateScaleTools(tsTools);
+			ObserverManager.ToolFactory.CreateEditTools(tsTools);
 			tsTools.ResumeLayout();
 			LogFile.WriteLine("MainView toolstrip created.");
 
