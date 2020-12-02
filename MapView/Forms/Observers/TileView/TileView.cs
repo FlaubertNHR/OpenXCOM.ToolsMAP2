@@ -435,7 +435,7 @@ namespace MapView.Forms.Observers
 		{
 			if (SelectedTilepart != null)
 			{
-				var terrain = MapFile.GetTerrain(SelectedTilepart);
+				Tuple<string,string> terrain = MapFile.GetTerrain(SelectedTilepart);
 
 				string terr = terrain.Item1;
 				string path = terrain.Item2;
