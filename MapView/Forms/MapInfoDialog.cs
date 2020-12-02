@@ -75,6 +75,20 @@ namespace MapView
 
 			base.OnFormClosing(e);
 		}
+
+		/// <summary>
+		/// [Ctrl+i] does a refresh.
+		/// @note Requires 'KeyPreview' true.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyData == (Keys.Control | Keys.I))
+			{
+				e.Handled = e.SuppressKeyPress = true;
+				Analyze();
+			}
+		}
 		#endregion Events (override)
 
 
@@ -545,6 +559,7 @@ namespace MapView
 			this.ClientSize = new System.Drawing.Size(342, 154);
 			this.Controls.Add(this.gbInfo);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MapInfoDialog";
