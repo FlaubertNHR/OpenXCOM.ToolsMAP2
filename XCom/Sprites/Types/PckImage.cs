@@ -59,12 +59,6 @@ namespace XCom
 		/// </summary>
 		public Bitmap SpriteT
 		{ get; private set; }
-
-		/// <summary>
-		/// SetId is used only by 'MapInfoDialog'.
-		/// </summary>
-		public int SetId
-		{ get; private set; }
 		#endregion Properties
 
 
@@ -74,21 +68,21 @@ namespace XCom
 		/// </summary>
 		/// <param name="bindata">the COMPRESSED source data</param>
 		/// <param name="pal"></param>
-		/// <param name="pckId">the id of this sprite in its spriteset</param>
+		/// <param name="spriteId">the id of this sprite in its spriteset</param>
 		/// <param name="spriteset"></param>
 		internal PckImage(
 				byte[] bindata,
 				Palette pal,
-				int pckId,
+				int spriteId,
 				SpriteCollection spriteset)
 			:
 				base(
 					new byte[XCImage.SpriteWidth
-						   * XCImage.SpriteHeight],	// new byte[]{}
-					XCImage.SpriteWidth,			// 0
-					XCImage.SpriteHeight,			// 0
+						   * XCImage.SpriteHeight],
+					XCImage.SpriteWidth,
+					XCImage.SpriteHeight,
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
-					pckId)
+					spriteId)
 		{
 			_spriteset = spriteset;	// only for ToString().
 			SetId = ++_setId;		// only for 'MapInfoDialog'.

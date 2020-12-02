@@ -201,9 +201,9 @@ namespace MapView
 			{
 				if (!(tile = _file[col, row, lev]).Vacant)
 				{
-					for (int quad = 0; quad != MapTile.QUADS; ++quad)
+					for (int slot = 0; slot != MapTile.QUADS; ++slot)
 					{
-						switch (quad)
+						switch (slot)
 						{
 							default: part = tile.Floor;   break; // case 0
 							case  1: part = tile.West;    break;
@@ -251,7 +251,8 @@ namespace MapView
 				_used.Add(new Tuple<string, int>(_file.GetTerrainLabel(part), part.TerId));
 
 				foreach (var sprite in part.Sprites)
-					_sprites.Add((sprite as PckImage).SetId);
+					_sprites.Add(sprite.SetId);
+//					_sprites.Add(sprite.Id); // TODO: fix this mess. The id goes borked in MapInfo after the set is opened in McdView
 
 				tally(part.Dead);
 				tally(part.Altr);

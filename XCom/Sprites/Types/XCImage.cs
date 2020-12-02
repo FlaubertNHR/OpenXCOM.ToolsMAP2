@@ -45,6 +45,13 @@ namespace XCom
 					Sprite.Palette = _palette.ColorTable;
 			}
 		}
+
+		/// <summary>
+		/// SetId is used only by 'MapInfoDialog'.
+		/// @note It is set in the PckImage cTor if necessary.
+		/// </summary>
+		public int SetId
+		{ get; internal protected set; }
 		#endregion Properties
 
 
@@ -59,18 +66,19 @@ namespace XCom
 		/// <param name="pal">pass in null to *bypass* creating the 'Image'; ie,
 		/// the PckImage..cTor has already unravelled the compressed image-data
 		/// instead</param>
-		/// <param name="id"></param>
+		/// <param name="spriteId"></param>
 		internal XCImage(
 				byte[] bindata,
 				int width,
 				int height,
 				Palette pal,
-				int id)
+				int spriteId)
 		{
-			Id = id;
+			Id = spriteId;
+			SetId = -1; // used only by MapInfo
 
 			Bindata = bindata;
-			Pal     = pal;
+			Pal = pal;
 
 			if (Pal != null)										// NOTE: this is to check for a call by BitmapService.CreateSprite()
 				Sprite = BitmapService.CreateColored(				// which is called by
