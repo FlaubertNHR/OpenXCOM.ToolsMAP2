@@ -43,7 +43,7 @@ namespace XCom
 		/// Tracks the id of an image across all loaded terrainsets. Used only
 		/// by 'MapInfoDialog'.
 		/// </summary>
-		private static int _setId;
+		private static int _setId = -1;
 		#endregion Fields (static)
 
 
@@ -91,7 +91,7 @@ namespace XCom
 					pckId)
 		{
 			_spriteset = spriteset;	// only for ToString().
-			SetId = _setId++;		// only for 'MapInfoDialog'.
+			SetId = ++_setId;		// only for 'MapInfoDialog'.
 
 			Pal = pal;
 
