@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -300,8 +299,6 @@ namespace MapView
 
 
 		#region Designer
-		private Container components = null;
-
 		private GroupBox gbInfo;
 		private Label lbl1_Dimensions;
 		private Label lbl2_Dimensions;
@@ -321,18 +318,6 @@ namespace MapView
 
 		private ProgressBar pBar;
 		private GroupBox gbAnalyze;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
 
 
 		/// <summary>
