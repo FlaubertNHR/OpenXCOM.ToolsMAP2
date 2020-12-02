@@ -1,3 +1,8 @@
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
+
+
 namespace MapView
 {
 	partial class About
@@ -6,16 +11,16 @@ namespace MapView
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components;
 
-		private System.Windows.Forms.Label lblVersion;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Timer t1;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label6;
+		private Label lblVersion;
+		private Label label1;
+		private Label label2;
+		private Label label4;
+		private Label label5;
+		private Timer t1;
+		private Label label3;
+		private Label label6;
 
 
 		/// <summary>
@@ -50,7 +55,7 @@ namespace MapView
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(5, 75);
+			this.label1.Location = new System.Drawing.Point(5, 60);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(305, 15);
 			this.label1.TabIndex = 1;
@@ -59,7 +64,7 @@ namespace MapView
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(5, 90);
+			this.label2.Location = new System.Drawing.Point(5, 75);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(305, 15);
 			this.label2.TabIndex = 2;
@@ -68,15 +73,16 @@ namespace MapView
 			// 
 			// lblVersion
 			// 
-			this.lblVersion.Location = new System.Drawing.Point(5, 10);
+			this.lblVersion.Dock = System.Windows.Forms.DockStyle.Top;
+			this.lblVersion.Location = new System.Drawing.Point(0, 0);
 			this.lblVersion.Name = "lblVersion";
-			this.lblVersion.Size = new System.Drawing.Size(305, 55);
+			this.lblVersion.Size = new System.Drawing.Size(314, 55);
 			this.lblVersion.TabIndex = 0;
 			this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label4
 			// 
-			this.label4.Location = new System.Drawing.Point(5, 130);
+			this.label4.Location = new System.Drawing.Point(5, 115);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(305, 15);
 			this.label4.TabIndex = 4;
@@ -90,7 +96,7 @@ namespace MapView
 			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(5, 145);
+			this.label5.Location = new System.Drawing.Point(5, 140);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(305, 15);
 			this.label5.TabIndex = 5;
@@ -99,7 +105,7 @@ namespace MapView
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(5, 115);
+			this.label3.Location = new System.Drawing.Point(5, 100);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(305, 15);
 			this.label3.TabIndex = 3;
@@ -108,7 +114,7 @@ namespace MapView
 			// 
 			// label6
 			// 
-			this.label6.Location = new System.Drawing.Point(5, 160);
+			this.label6.Location = new System.Drawing.Point(5, 155);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(305, 15);
 			this.label6.TabIndex = 6;
