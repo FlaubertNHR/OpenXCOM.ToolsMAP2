@@ -238,9 +238,11 @@ namespace MapView.Forms.Observers
 				_finfobox = null;
 			}
 
-			var list = new List<string>();
+			var lines = new List<string>();
 
 			MapTile tile;
+			Tilepart part;
+			McdRecord record;
 
 			for (int l = 0; l != MapFile.MapSize.Levs; ++l)
 			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
@@ -249,27 +251,55 @@ namespace MapView.Forms.Observers
 				tile = MapFile[c,r,l];
 				if (!tile.Vacant)
 				{
-					if (tile.Floor != null && tile.Floor.Record.PartType != PartType.Floor)
-						list.Add(FormatTilequad(c,r,l, PartType.Floor, tile.Floor.Record.PartType));
+					if ((part = tile.Floor) != null
+						&& (record = part.Record).PartType != PartType.Floor)
+					{
+						lines.Add(GetParttestString(
+												c,r,l,
+												PartType.Floor,
+												record.PartType,
+												part.SetId));
+					}
 
-					if (tile.West != null && tile.West.Record.PartType != PartType.West)
-						list.Add(FormatTilequad(c,r,l, PartType.West, tile.West.Record.PartType));
+					if ((part = tile.West) != null
+						&& (record = part.Record).PartType != PartType.West)
+					{
+						lines.Add(GetParttestString(
+												c,r,l,
+												PartType.West,
+												record.PartType,
+												part.SetId));
+					}
 
-					if (tile.North != null && tile.North.Record.PartType != PartType.North)
-						list.Add(FormatTilequad(c,r,l, PartType.North, tile.North.Record.PartType));
+					if ((part = tile.North) != null
+						&& (record = part.Record).PartType != PartType.North)
+					{
+						lines.Add(GetParttestString(
+												c,r,l,
+												PartType.North,
+												record.PartType,
+												part.SetId));
+					}
 
-					if (tile.Content != null && tile.Content.Record.PartType != PartType.Content)
-						list.Add(FormatTilequad(c,r,l, PartType.Content, tile.Content.Record.PartType));
+					if ((part = tile.Content) != null
+						&& (record = part.Record).PartType != PartType.Content)
+					{
+						lines.Add(GetParttestString(
+												c,r,l,
+												PartType.Content,
+												record.PartType,
+												part.SetId));
+					}
 				}
 			}
 
 
 			const string title = "Partslots test";
 
-			if (list.Count != 0)
+			if (lines.Count != 0)
 			{
-				string copyable = "  c   r   L - slot     record" + Environment.NewLine;
-				foreach (var line in list)
+				string copyable = "  c   r   L - slot     record   id" + Environment.NewLine;
+				foreach (var line in lines)
 					copyable += Environment.NewLine + line;
 
 				_finfobox = new Infobox( // not Modal.
@@ -306,26 +336,31 @@ namespace MapView.Forms.Observers
 		/// <param name="col"></param>
 		/// <param name="row"></param>
 		/// <param name="lev"></param>
-		/// <param name="quad"></param>
+		/// <param name="quadrant"></param>
 		/// <param name="parttype"></param>
+		/// <param name="id"></param>
 		/// <returns></returns>
-		private string FormatTilequad(int col, int row, int lev, PartType quad, PartType parttype)
+		private string GetParttestString(
+				int col,
+				int row,
+				int lev,
+				PartType quadrant,
+				PartType parttype,
+				int id)
 		{
 			lev = MapFile.MapSize.Levs - lev; // invert.
 
 			if (MainViewF.Optionables.Base1_xy) { ++col; ++row; }
 			if (!MainViewF.Optionables.Base1_z) { --lev; }
 
-			const int DIGITS = 3;
+			string c = col.ToString().PadLeft(3);
+			string r = row.ToString().PadLeft(3);
+			string l = lev.ToString().PadLeft(3);
 
-			string c = col.ToString().PadLeft(DIGITS);
-			string r = row.ToString().PadLeft(DIGITS);
-			string l = lev.ToString().PadLeft(DIGITS);
+			string q = Enum.GetName(typeof(PartType), quadrant).PadRight(9);
+			string p = Enum.GetName(typeof(PartType), parttype).PadRight(9);
 
-			string q = Enum.GetName(typeof(PartType), quad).PadRight(9);
-			string p = Enum.GetName(typeof(PartType), parttype);
-
-			return c + " " + r + " " + l + " - " + q + p;
+			return c + " " + r + " " + l + " - " + q + p + id;
 		}
 		#endregion Methods
 

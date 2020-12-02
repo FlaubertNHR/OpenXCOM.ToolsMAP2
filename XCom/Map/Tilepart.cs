@@ -109,12 +109,15 @@ namespace XCom
 
 		/// <summary>
 		/// cTor[1]. Creates a blank part that's ready to go in McdView
-		/// ('TerId'). Also used for crippled parts on Mapfile load ('SetId').
+		/// (req'd: 'TerId'). Also used for crippled parts on Mapfile load
+		/// (req'd: 'SetId').
 		/// </summary>
 		public Tilepart(int id)
 		{
-			TerId = SetId = id;
-			Record = new McdRecord();
+			Record = new McdRecord(null, true);
+
+			TerId =
+			SetId = id;
 		}
 
 		/// <summary>
@@ -286,8 +289,12 @@ namespace XCom
 			// TODO: stop the 'tile' from being selected in TileView
 			// when the slot in QuadrantPanel is double-clicked
 
-			Record.PartType = PartType.Invalid;	// NOTE: Assigning "-1" to the record's 'PartType' should
-												// make it show in TopView's TestPartslots dialog.
+			// NOTE: Assigning "-1" to the record's 'PartType' shall force it to
+			// be listed in TopView's TestPartslots dialog. And discount it from
+			// consideration as a valid highid in the TilepartSubstitution
+			// dialog.
+			Record.PartType = PartType.Invalid;
+
 			LoadMonotoneSprites();
 
 			Sprites = new XCImage[PHASECOUNT];
@@ -346,12 +353,12 @@ namespace XCom
 														bytesPck,
 														bytesTab);
 
-					foreach (var sprite in MonotoneSprites.Sprites) // change to Orange-red ->
+					foreach (var sprite in MonotoneSprites.Sprites) // change nontransparent pixels to color ->
 					{
 						for (int i = 0; i != sprite.Bindata.Length; ++i)
 						{
 							if (sprite.Bindata[i] != 0)
-								sprite.Bindata[i] = (byte)(96); // 32+ red // 144+ yellow // 96+ lightbrown
+								sprite.Bindata[i] = (byte)(96); // light brown/yellowy
 						}
 						sprite.Sprite = BitmapService.CreateColored(
 																XCImage.SpriteWidth32,

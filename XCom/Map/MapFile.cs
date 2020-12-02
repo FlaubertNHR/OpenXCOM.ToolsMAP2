@@ -337,78 +337,78 @@ namespace XCom
 		/// in MainView.
 		/// </summary>
 		/// <param name="parts">a list of total tileparts that can be used</param>
-		/// <param name="id_Floor">the floor id</param>
-		/// <param name="id_West">the westwall id</param>
-		/// <param name="id_North">the northwall id</param>
-		/// <param name="id_Content">the content id</param>
+		/// <param name="id_floor">the floor id</param>
+		/// <param name="id_west">the westwall id</param>
+		/// <param name="id_north">the northwall id</param>
+		/// <param name="id_content">the content id</param>
 		/// <returns>the MapTile created</returns>
 		private MapTile CreateTile(
 				IList<Tilepart> parts,
-				int id_Floor,
-				int id_West,
-				int id_North,
-				int id_Content)
+				int id_floor,
+				int id_west,
+				int id_north,
+				int id_content)
 		{
 			Tilepart floor, west, north, content;
 
 			// NOTE: ids will be "-1" if "read from the end of the stream".
 
-			if (id_Floor < BlanksReservedCount)
+			if (id_floor < BlanksReservedCount)
 			{
 				floor = null; // silently fail.
 			}
-			else if ((id_Floor -= BlanksReservedCount) < parts.Count)
+			else if ((id_floor -= BlanksReservedCount) < parts.Count)
 			{
-				floor = parts[id_Floor];
+				floor = parts[id_floor];
 			}
 			else
 			{
-				floor = new Tilepart(id_Floor);
+				floor = new Tilepart(id_floor);
 				floor.Cripple(PartType.Floor);
 				++TerrainsetPartsExceeded;
 			}
 
-			if (id_West < BlanksReservedCount)
+			if (id_west < BlanksReservedCount)
 			{
 				west = null; // silently fail.
 			}
-			else if ((id_West -= BlanksReservedCount) < parts.Count)
+			else if ((id_west -= BlanksReservedCount) < parts.Count)
 			{
-				west = parts[id_West];
+				west = parts[id_west];
 			}
 			else
 			{
-				west = new Tilepart(id_West);
+				west = new Tilepart(id_west);
 				west.Cripple(PartType.West);
 				++TerrainsetPartsExceeded;
 			}
 
-			if (id_North < BlanksReservedCount)
+			if (id_north < BlanksReservedCount)
 			{
 				north = null; // silently fail.
 			}
-			else if ((id_North -= BlanksReservedCount) < parts.Count)
+			else if ((id_north -= BlanksReservedCount) < parts.Count)
 			{
-				north = parts[id_North];
+				north = parts[id_north];
 			}
 			else
 			{
-				north = new Tilepart(id_North);
+				north = new Tilepart(id_north);
 				north.Cripple(PartType.North);
 				++TerrainsetPartsExceeded;
 			}
 
-			if (id_Content < BlanksReservedCount)
+			if (id_content < BlanksReservedCount)
 			{
 				content = null; // silently fail.
 			}
-			else if ((id_Content -= BlanksReservedCount) < parts.Count)
+			else if ((id_content -= BlanksReservedCount) < parts.Count)
 			{
-				content = parts[id_Content];
+				content = parts[id_content];
 			}
 			else
 			{
-				content = new Tilepart(id_Content);
+				content = new Tilepart(id_content);
 				content.Cripple(PartType.Content);
 				++TerrainsetPartsExceeded;
 			}

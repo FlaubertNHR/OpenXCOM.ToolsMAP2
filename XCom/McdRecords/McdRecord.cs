@@ -33,7 +33,7 @@ namespace XCom
 		/// TODO: Investigate to ensure that only the currently loaded Map's
 		/// terrains are counted.
 		/// </summary>
-		private static int _sid;
+		private static int _sid = -1;
 		#endregion Fields (static)
 
 
@@ -213,12 +213,16 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[1].
+		/// cTor[0].
 		/// </summary>
 		/// <param name="bindata">if null a blank byte-array gets created</param>
-		public McdRecord(IList<byte> bindata = null)
+		/// <param name="bypassSetid">true to bypass auto-incrementing SetId; is
+		/// used when creating crippled tileparts, which are not parts in a
+		/// terrainset</param>
+		public McdRecord(IList<byte> bindata, bool bypassSetid = false)
 		{
-			SetId = _sid++;
+			if (!bypassSetid)
+				SetId = ++_sid; // auto-increment the SetId as records are instantiated
 
 			if (bindata == null)
 				bindata = new byte[McdRecord.Length]; // all values in the byte-array default to "0"
@@ -336,10 +340,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a blank record for Duplicate().
-		/// @note The compiler figures out the difference between
-		/// 1) private McdRecord()
-		/// 2) public  McdRecord(null)
+		/// cTor[1]. Creates a blank record for Duplicate().
 		/// </summary>
 		private McdRecord()
 		{}
