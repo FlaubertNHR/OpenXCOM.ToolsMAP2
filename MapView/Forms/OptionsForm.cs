@@ -1,5 +1,4 @@
 using System;
-//using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -212,21 +211,6 @@ namespace MapView
 			Option option = Options[key];
 			option.doUpdate(key, (option.Value = e.ChangedItem.Value));
 		}
-
-/*		protected override void OnSelectedGridItemChanged(SelectedGridItemChangedEventArgs e)
-		{
-			GridItem it = e.NewSelection;
-			if (it != null && it.PropertyDescriptor != null)
-			{
-				LogFile.WriteLine(it.Label);
-
-				string sDescription = GetCurrentPropertyDescription(it.PropertyDescriptor.Name); // is not getting the Description.
-				LogFile.WriteLine("sDescription= " + sDescription);
-			}
-			CompositedPropertyGrid.SetDescriptionHeight(this, 145);
-
-//			base.OnSelectedGridItemChanged(e);
-		} */
 		#endregion Events (override)
 
 
@@ -250,41 +234,6 @@ namespace MapView
 			}
 		}
 		#endregion Methods (static)
-
-
-/*		/// <summary>
-		/// https://stackoverflow.com/questions/24468820/changing-the-propertygrids-description-and-category-attributes-at-runtiome#answer-34096023
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void pgConfig_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
-		{
-			GridItem giSelected = e.NewSelection;
-			if ((giSelected != null) && (giSelected.PropertyDescriptor != null))
-			{
-				string sDescription = GetCurrentPropertyDescription(giSelected.PropertyDescriptor.Name);
-				LogFile.WriteLine("sDescription= " + sDescription);
-
-//				if ((sDescription != null) && (sDescription != giSelected.PropertyDescriptor.Description))
-//				{
-//					MethodInfo miSetStatusBox = pgConfig.GetType().GetMethod("SetStatusBox", BindingFlags.NonPublic | BindingFlags.Instance);
-//					if (miSetStatusBox != null)
-//						miSetStatusBox.Invoke(pgConfig, new object[] { giSelected.PropertyDescriptor.DisplayName, sDescription });
-//				}
-			}
-		}
-		private string GetCurrentPropertyDescription(string sPropertyName)
-		{
-			PropertyDescriptor oPropDescriptor = TypeDescriptor.GetProperties(this.GetType())[sPropertyName];
-			if (oPropDescriptor != null)
-			{
-				var oDescriptionAttr = (DescriptionAttribute)oPropDescriptor.Attributes[typeof(DescriptionAttribute)];
-				if (oDescriptionAttr != null)
-					return oDescriptionAttr.Description;
-			}
-			return null;
-		} */
-
 
 
 /*		#region Methods
