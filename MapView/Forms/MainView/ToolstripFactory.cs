@@ -46,10 +46,10 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="panel"></param>
-		internal ToolstripFactory(MainViewOverlay panel)
+		/// <param name="overlay"></param>
+		internal ToolstripFactory(MainViewOverlay overlay)
 		{
-			MainViewOverlay = panel;
+			MainViewOverlay = overlay;
 		}
 		#endregion cTor
 

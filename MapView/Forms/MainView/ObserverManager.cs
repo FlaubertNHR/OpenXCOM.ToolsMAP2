@@ -45,8 +45,8 @@ namespace MapView.Forms.MainView
 
 			ToolFactory  = new ToolstripFactory(MainViewOverlay.that);
 
-			TopView     .Control   .InitializeToolstrip(ToolFactory);
-			TopRouteView.ControlTop.InitializeToolstrip(ToolFactory);
+			TopView     .Control   .InitializeToolstrip();
+			TopRouteView.ControlTop.InitializeToolstrip();
 
 			_observers = new IMapObserver[]
 			{
