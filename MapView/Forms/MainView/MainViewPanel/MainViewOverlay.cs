@@ -610,10 +610,8 @@ namespace MapView.Forms.MainView
 			Tilepart part;
 			int id;
 
-			int records = MapFile.Parts.Count;
-			if (records > MapFile.MaxTerrainId)
-				records = MapFile.MaxTerrainId;
-
+			int records = Math.Min(MapFile.Parts.Count, MapFileService.MAX_MCDRECORDS);	// NOTE: Also checked in the TilepartSubstitution
+																						// dialog else the Accept button does not enable.
 			MapSize size = MapFile.MapSize;
 
 			for (int lev = 0; lev != size.Levs; ++lev)
