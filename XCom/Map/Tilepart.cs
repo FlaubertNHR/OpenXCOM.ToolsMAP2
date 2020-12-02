@@ -114,7 +114,7 @@ namespace XCom
 		/// </summary>
 		public Tilepart(int id)
 		{
-			Record = new McdRecord(null, true);
+			Record = new McdRecord(null);
 
 			TerId =
 			SetId = id;

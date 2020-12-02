@@ -246,7 +246,7 @@ namespace MapView
 
 		private void tally(Tilepart part)
 		{
-			if (part != null && _records.Add(part.Record.SetId))
+			if (part != null && _records.Add(part.SetId))
 			{
 				_used.Add(new Tuple<string, int>(_file.GetTerrainLabel(part), part.TerId));
 

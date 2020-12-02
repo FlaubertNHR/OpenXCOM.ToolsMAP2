@@ -27,27 +27,10 @@ namespace XCom
 
 		#region Fields (static)
 		public const int Length = 62; // there are 62 bytes in each MCD record.
-
-		/// <summary>
-		/// Tracks the 'SetId' of all records.
-		/// TODO: Investigate to ensure that only the currently loaded Map's
-		/// terrains are counted.
-		/// </summary>
-		private static int _sid = -1;
 		#endregion Fields (static)
 
 
 		#region Properties
-		private int _setId = -1;
-		/// <summary>
-		/// SetId is used only by 'MapInfoDialog'.
-		/// </summary>
-		public int SetId
-		{
-			get { return _setId; }
-			private set { _setId = value; }
-		}
-
 		// kL_note: All values in an MCD record are unsigned bytes except the
 		// ScanG ref (little endian unsigned short) and the TerrainOffset
 		// (signed byte).
@@ -216,14 +199,8 @@ namespace XCom
 		/// cTor[0].
 		/// </summary>
 		/// <param name="bindata">if null a blank byte-array gets created</param>
-		/// <param name="bypassSetid">true to bypass auto-incrementing SetId; is
-		/// used when creating crippled tileparts, which are not parts in a
-		/// terrainset</param>
-		public McdRecord(IList<byte> bindata, bool bypassSetid = false)
+		public McdRecord(IList<byte> bindata)
 		{
-			if (!bypassSetid)
-				SetId = ++_sid; // auto-increment the SetId as records are instantiated
-
 			if (bindata == null)
 				bindata = new byte[McdRecord.Length]; // all values in the byte-array default to "0"
 
@@ -521,9 +498,6 @@ namespace XCom
 		public McdRecord Duplicate()
 		{
 			var record = new McdRecord();
-
-			// SetId is used only by 'MapInfoDialog'.
-			record.SetId = SetId;
 
 			record.Sprite1 = Sprite1;
 			record.Sprite2 = Sprite2;
