@@ -100,7 +100,7 @@ namespace MapView
 			{
 				case RadioSelected.Clear: rb_clear.Checked = true; break;
 				case RadioSelected.Desti: rb_dst  .Checked = true; break;
-				case RadioSelected.Shift: rb_shift.Checked = true; break;
+				case RadioSelected.Shift: ForceBlasterInitShift(); break; //rb_shift.Checked = true;
 			}
 
 			tb_Src0.Select(); // set '_text'
@@ -189,34 +189,62 @@ namespace MapView
 			if (!_init)
 			{
 				var rb = sender as RadioButton;
+				if (rb.Checked)
+				{
+					if (rb == rb_clear)
+					{
+						rb_selected = RadioSelected.Clear;
 
-				if (rb == rb_clear)
-				{
-					tb_dst  .Enabled =
-					tb_shift.Enabled = false;
-					rb_selected = RadioSelected.Clear;
-					tb_dst  .BackColor =
-					tb_shift.BackColor = SystemColors.Control;
-				}
-				else if (rb == rb_dst)
-				{
-					tb_dst  .Enabled = true;
-					tb_shift.Enabled = false;
-					rb_selected = RadioSelected.Desti;
-					tb_dst  .BackColor = Color.LightGreen;
-					tb_shift.BackColor = SystemColors.Control;
-				}
-				else //if (rb == rb_shift)
-				{
-					tb_dst  .Enabled = false;
-					tb_shift.Enabled = true;
-					rb_selected = RadioSelected.Shift;
-					tb_dst  .BackColor = SystemColors.Control;
-					tb_shift.BackColor = Color.LightGreen;
-				}
+						tb_dst  .Enabled =
+						tb_shift.Enabled = false;
 
-				Enable();
+						tb_dst  .BackColor =
+						tb_shift.BackColor = SystemColors.Control;
+					}
+					else if (rb == rb_dst)
+					{
+						rb_selected = RadioSelected.Desti;
+
+						tb_dst  .Enabled = true;
+						tb_shift.Enabled = false;
+
+						tb_dst  .BackColor = Color.LightGreen;
+						tb_shift.BackColor = SystemColors.Control;
+					}
+					else //if (rb == rb_shift)
+					{
+						rb_selected = RadioSelected.Shift;
+
+						tb_dst  .Enabled = false;
+						tb_shift.Enabled = true;
+
+						tb_dst  .BackColor = SystemColors.Control;
+						tb_shift.BackColor = Color.LightGreen;
+					}
+
+					Enable();
+				}
 			}
+		}
+
+		/// <summary>
+		/// Lord knows why rb_CheckedChanged() does not fire when trying to init
+		/// w/ 'RadioSelected.Shift'.
+		/// @note thanks ...
+		/// </summary>
+		private void ForceBlasterInitShift()
+		{
+			_init = true; // safety.
+			rb_shift.Checked = true; // that doesn't fire rb_CheckedChanged() - it should. But it doesn't ...
+			_init = false;
+
+			tb_dst  .Enabled = false;
+			tb_shift.Enabled = true;
+
+			tb_dst  .BackColor = SystemColors.Control;
+			tb_shift.BackColor = Color.LightGreen;
+
+			Enable();
 		}
 
 		private void tb_Activated(object sender, EventArgs e)
@@ -374,6 +402,7 @@ namespace MapView
 			// 
 			// tb_dst
 			// 
+			this.tb_dst.Enabled = false;
 			this.tb_dst.HideSelection = false;
 			this.tb_dst.Location = new System.Drawing.Point(110, 130);
 			this.tb_dst.Margin = new System.Windows.Forms.Padding(0);
@@ -389,6 +418,7 @@ namespace MapView
 			// 
 			this.bu_ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.bu_ok.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.bu_ok.Enabled = false;
 			this.bu_ok.Location = new System.Drawing.Point(172, 193);
 			this.bu_ok.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_ok.Name = "bu_ok";
@@ -422,6 +452,7 @@ namespace MapView
 			// 
 			// tb_shift
 			// 
+			this.tb_shift.Enabled = false;
 			this.tb_shift.HideSelection = false;
 			this.tb_shift.Location = new System.Drawing.Point(110, 150);
 			this.tb_shift.Margin = new System.Windows.Forms.Padding(0);
