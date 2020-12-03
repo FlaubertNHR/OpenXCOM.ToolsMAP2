@@ -87,13 +87,19 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Closes the screen on [Esc] keyup event.
+		/// Closes the viewer on [Ctrl+g] keydown event.
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnKeyUp(KeyEventArgs e)
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyData == Keys.Escape)
-				Close();
+			switch (e.KeyData)
+			{
+				case Keys.Escape:
+				case Keys.Enter:
+				case Keys.Control | Keys.G:
+					Close();
+					break;
+			}
 		}
 
 		/// <summary>
@@ -392,7 +398,7 @@ namespace MapView
 		/// <summary>
 		/// Loads a Mapfile.
 		/// </summary>
-		/// <param name="base"></param>
+		/// <param name="file"></param>
 		internal void LoadMapfile(MapFile file)
 		{
 			Level = (_file = file).Level;
@@ -426,22 +432,7 @@ namespace MapView
 
 
 		#region Designer
-		private System.ComponentModel.Container components = null;
-
 		private BufferedPanel pnl_ScanG;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
