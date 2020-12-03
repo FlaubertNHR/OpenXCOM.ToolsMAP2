@@ -430,7 +430,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnPckEditClick(object sender, EventArgs e)
+		internal void OnPckViewClick(object sender, EventArgs e)
 		{
 			if (SelectedTilepart != null)
 			{
@@ -486,7 +486,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnMcdEditClick(object sender, EventArgs e)
+		internal void OnMcdViewClick(object sender, EventArgs e)
 		{
 			if (SelectedTilepart != null)
 			{

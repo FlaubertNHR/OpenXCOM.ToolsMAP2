@@ -168,12 +168,12 @@ namespace MapView.Forms.Observers
 		#region Events
 		private void OnClick_OpenPckview(object sender, EventArgs e)
 		{
-			Chaparone.OnPckEditClick(sender, e);
+			Chaparone.OnPckViewClick(sender, e);
 		}
 
 		private void OnClick_OpenMcdview(object sender, EventArgs e)
 		{
-			Chaparone.OnMcdEditClick(sender, e);
+			Chaparone.OnMcdViewClick(sender, e);
 		}
 
 		private void OnClick_OpenMcdinfo(object sender, EventArgs e)

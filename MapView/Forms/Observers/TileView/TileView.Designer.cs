@@ -145,7 +145,7 @@ namespace MapView.Forms.Observers
 			this.tsmiEditPck.Name = "tsmiEditPck";
 			this.tsmiEditPck.Size = new System.Drawing.Size(173, 22);
 			this.tsmiEditPck.Text = "open in &PckView";
-			this.tsmiEditPck.Click += new System.EventHandler(this.OnPckEditClick);
+			this.tsmiEditPck.Click += new System.EventHandler(this.OnPckViewClick);
 			// 
 			// tsmiEditMcd
 			// 
@@ -153,7 +153,7 @@ namespace MapView.Forms.Observers
 			this.tsmiEditMcd.Name = "tsmiEditMcd";
 			this.tsmiEditMcd.Size = new System.Drawing.Size(173, 22);
 			this.tsmiEditMcd.Text = "open in &McdView";
-			this.tsmiEditMcd.Click += new System.EventHandler(this.OnMcdEditClick);
+			this.tsmiEditMcd.Click += new System.EventHandler(this.OnMcdViewClick);
 			// 
 			// tsmi_Sep0
 			// 
