@@ -1327,7 +1327,8 @@ namespace MapView.Forms.MainView
 				}
 			}
 
-			if (rect.Width > 1 || rect.Height > 1) // This is different between REMBRANDT and PICASSO ->
+			if ((FirstClick && MainViewF.Optionables.OneTileDraw) // This is different between REMBRANDT and PICASSO ->
+				|| rect.Width > 1 || rect.Height > 1)
 			{
 				DrawSelectionBorder(rect);
 			}
@@ -1436,7 +1437,8 @@ namespace MapView.Forms.MainView
 				int width  = b.X - a.X + 1;
 				int height = b.Y - a.Y + 1;
 
-				if (width > 1 || height > 1)
+				if (MainViewF.Optionables.OneTileDraw
+					|| width > 1 || height > 1)
 				{
 					var rect = new Rectangle(
 										a.X, a.Y,

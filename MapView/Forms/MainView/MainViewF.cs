@@ -1121,6 +1121,13 @@ namespace MapView
 					Optionables.OnOptionChanged(key,val);
 					break;
 
+				case Keys.F9 | Keys.Control: // toggle OneTileDraw
+					key = MainViewOptionables.str_OneTileDraw;
+					val = !Optionables.OneTileDraw;
+					Options[key].Value = val;
+					Optionables.OnOptionChanged(key,val);
+					break;
+
 				case Keys.F10:				// cycle tiletoner option forward
 					key = MainViewOptionables.str_SelectedTileToner;
 					val = Optionables.GetNextTileToner(+1);

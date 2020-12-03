@@ -408,6 +408,23 @@ namespace MapView.Forms.MainView
 			}
 		}
 
+		internal const string str_OneTileDraw = "OneTileDraw";
+		private  const bool   def_OneTileDraw = false;
+
+		private bool _oneTileDraw = def_OneTileDraw;
+		[Category(cat_Selection)]
+		[Description("If true a selection border will be drawn even when there"
+			+ " is only 1 tile selected. Typically this should be left false"
+			+ " but if particularly large sprites hide the selector then this"
+			+ " can help resolve the tile - see also " + str_LayerSelectionBorder
+			+ " (Ctrl+F9 - On/Off)")]
+		[DefaultValue(def_OneTileDraw)]
+		public bool OneTileDraw
+		{
+			get { return _oneTileDraw; }
+			set { _oneTileDraw = value; }
+		}
+
 
 
 		private const string cat_Sprites = "Sprites";
@@ -736,6 +753,7 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_SelectionBorderWidth,   def_SelectionBorderWidth,   changer0);
 			options.AddOptionDefault(str_SelectedTileToner,      def_SelectedTileToner,      changer0);
 			options.AddOptionDefault(str_LayerSelectionBorder,   def_LayerSelectionBorder,   changer0);
+			options.AddOptionDefault(str_OneTileDraw,            def_OneTileDraw,            changer0);
 
 			options.AddOptionDefault(str_SpriteShade,            def_SpriteShade,            changer3);
 			options.AddOptionDefault(str_Interpolation,          def_Interpolation,          changer0);
@@ -827,6 +845,10 @@ namespace MapView.Forms.MainView
 
 				case str_LayerSelectionBorder:
 					LayerSelectionBorder = (int)val;
+					break;
+
+				case str_OneTileDraw:
+					OneTileDraw = (bool)val;
 					break;
 
 				case str_Interpolation:
