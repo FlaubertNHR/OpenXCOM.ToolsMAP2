@@ -1891,15 +1891,21 @@ namespace PckView
 
 		/// <summary>
 		/// Sets the currently selected id.
-		/// @note Called only from TileView to set 'idSel' externally.
+		/// @note Called only from TileView to set 'idSel' externally. Based on
+		/// PckViewPanel.OnMouseDown().
+		/// @note 'id' shall be valid in 'TilePanel.Spriteset'
 		/// </summary>
 		/// <param name="id"></param>
 		public void SetSelectedId(int id)
 		{
 			TilePanel.idSel = id;
 			PrintSelectedId();
-		}
 
+			SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[id];
+			TilePanel.ScrollToTile(id);
+
+			OnSpriteClick(null, EventArgs.Empty);
+		}
 
 		/// <summary>
 		/// Loads PCK+TAB spriteset files.

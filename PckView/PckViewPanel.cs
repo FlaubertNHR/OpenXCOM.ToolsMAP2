@@ -449,7 +449,7 @@ namespace PckView
 		/// scrolls the table to show it if not.
 		/// </summary>
 		/// <param name="id"></param>
-		private void ScrollToTile(int id)
+		internal void ScrollToTile(int id)
 		{
 			if (id != -1 && _scrollBar.Visible)
 			{
