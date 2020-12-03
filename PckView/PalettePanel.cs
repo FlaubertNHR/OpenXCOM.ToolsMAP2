@@ -180,7 +180,7 @@ namespace PckView
 			{
 				graphics.DrawRectangle(
 									Pens.Red,
-									_x           - 1, _y            - 1,
+									_x          - 1, _y           - 1,
 									SwatchWidth - 1, SwatchHeight - 1);
 			}
 		}
