@@ -87,7 +87,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Closes the viewer on [Ctrl+g] keydown event.
+		/// Closes the viewer on [Esc] or [Enter] or [Ctrl+g] keydown event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
