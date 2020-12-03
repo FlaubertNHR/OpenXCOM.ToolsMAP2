@@ -158,7 +158,7 @@ namespace MapView.Forms.Observers
 			context.MenuItems.Add(new MenuItem("open in PckView", OnClick_OpenPckview, Shortcut.F9));	// 0
 			context.MenuItems.Add(new MenuItem("open in McdView", OnClick_OpenMcdview, Shortcut.F10));	// 1
 			context.MenuItems.Add(new MenuItem("-"));													// 2
-			context.MenuItems.Add(new MenuItem("Tilepart Info"  , OnClick_OpenMcdinfo));				// 3
+			context.MenuItems.Add(new MenuItem("view MCD record", OnClick_OpenMcdinfo));				// 3
 
 			return context;
 		}
