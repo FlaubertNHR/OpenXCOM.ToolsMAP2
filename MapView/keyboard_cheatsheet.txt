@@ -76,6 +76,8 @@ Ctrl+F4 - toggles content visibility
 
 Note: Visibility affects Cut/Paste/Delete operations.
 
+F9 - cycle through selection border options
+Ctrl+F9 - toggle show selection border when only 1 tile is selected
 F10 - cycle to the next colortone for selected tile(s) [Shift] backwards
 
 RMB on the Map panel enables drag-panning when zoomed in on the Map.
