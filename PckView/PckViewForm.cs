@@ -217,15 +217,11 @@ namespace PckView
 			ss_Status.Renderer = r;
 
 
-			// get SpriteShade from MapView's options ...
-			string dir = Path.Combine(dirAppL, PathInfo.DIR_Settings);	// "settings"
-			string pfe = Path.Combine(dir,     PathInfo.CFG_Options);	// "MapOptions.cfg"
-
-			string val = GetSpriteShade(pfe);
-			if (val != null)
+			string shade = GetSpriteShade(dirAppL); // get SpriteShade from MapView's options
+			if (shade != null)
 			{
 				int result;
-				if (Int32.TryParse(val, out result)
+				if (Int32.TryParse(shade, out result)
 					&& result > 0)
 				{
 					miSpriteShade.Checked = true;
@@ -265,10 +261,13 @@ namespace PckView
 		/// <summary>
 		/// Parses the sprite-shade value out of settings/MapOptions.Cfg.
 		/// </summary>
-		/// <param name="pfe"></param>
+		/// <param name="dirAppL"></param>
 		/// <returns></returns>
-		private string GetSpriteShade(string pfe)
+		private string GetSpriteShade(string dirAppL)
 		{
+			string dir = Path.Combine(dirAppL, PathInfo.DIR_Settings);	// "settings"
+			string pfe = Path.Combine(dir,     PathInfo.CFG_Options);	// "MapOptions.cfg"
+
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
 			using (var sr = new StreamReader(fs))
