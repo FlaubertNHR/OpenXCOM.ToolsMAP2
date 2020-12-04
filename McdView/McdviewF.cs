@@ -323,17 +323,22 @@ namespace McdView
 
 			if (pathufo != null)
 			{
-				pfe = Path.Combine(pathufo, SharedSpace.ScanGfile);
-				if (File.Exists(pfe))
-					SpritesetsManager.LoadScanGufo(pathufo);	// -> SpritesetsManager.ScanGufo
-				else
-					files.Add("ufo\t- " + pfe);
+				if (pathufo != PathInfo.NotConfigured)
+				{
+					pfe = Path.Combine(pathufo, SharedSpace.ScanGfile);
+					if (File.Exists(pfe))
+						SpritesetsManager.LoadScanGufo(pathufo);	// -> SpritesetsManager.ScanGufo
+					else
+						files.Add("ufo\t- " + pfe);
 
-				pfe = Path.Combine(pathufo, SharedSpace.LoftfileUfo);
-				if (File.Exists(pfe))
-					SpritesetsManager.LoadLoFTufo(pathufo);		// -> SpritesetsManager.LoFTufo
+					pfe = Path.Combine(pathufo, SharedSpace.LoftfileUfo);
+					if (File.Exists(pfe))
+						SpritesetsManager.LoadLoFTufo(pathufo);		// -> SpritesetsManager.LoFTufo
+					else
+						files.Add("ufo\t- " + pfe);
+				}
 				else
-					files.Add("ufo\t- " + pfe);
+					pathufo = null;
 			}
 			else
 			{
@@ -343,17 +348,22 @@ namespace McdView
 
 			if (pathtftd != null)
 			{
-				pfe = Path.Combine(pathtftd, SharedSpace.ScanGfile);
-				if (File.Exists(pfe))
-					SpritesetsManager.LoadScanGtftd(pathtftd);	// -> SpritesetsManager.ScanGtftd
-				else
-					files.Add("tftd\t- " + pfe);
+				if (pathtftd != PathInfo.NotConfigured)
+				{
+					pfe = Path.Combine(pathtftd, SharedSpace.ScanGfile);
+					if (File.Exists(pfe))
+						SpritesetsManager.LoadScanGtftd(pathtftd);	// -> SpritesetsManager.ScanGtftd
+					else
+						files.Add("tftd\t- " + pfe);
 
-				pfe = Path.Combine(pathtftd, SharedSpace.LoftfileTftd);
-				if (File.Exists(pfe))
-					SpritesetsManager.LoadLoFTtftd(pathtftd);	// -> SpritesetsManager.LoFTtftd
+					pfe = Path.Combine(pathtftd, SharedSpace.LoftfileTftd);
+					if (File.Exists(pfe))
+						SpritesetsManager.LoadLoFTtftd(pathtftd);	// -> SpritesetsManager.LoFTtftd
+					else
+						files.Add("tftd\t- " + pfe);
+				}
 				else
-					files.Add("tftd\t- " + pfe);
+					pathtftd = null;
 			}
 			else
 			{
@@ -376,8 +386,8 @@ namespace McdView
 					f.ShowDialog(this);
 			}
 
-			ScanG = SpritesetsManager.ScanGufo; // default.
-			LoFT  = SpritesetsManager.LoFTufo;  // default.
+			ScanG = SpritesetsManager.ScanGufo; // set defaults for ScanG/LoFT to ufo ->
+			LoFT  = SpritesetsManager.LoFTufo;
 
 
 /*			// RotatingCube ->
@@ -456,21 +466,20 @@ namespace McdView
 				var ys = new YamlStream();
 				ys.Load(sr);
 
-				string val;
-
 				var nodeRoot = ys.Documents[0].RootNode as YamlMappingNode;
 				foreach (var node in nodeRoot.Children)
 				{
 					switch (node.Key.ToString())
 					{
+						// NOTE: Use 'PathInfo.NotConfigured' to bypass warn in cTor
+						// then set the path back to null there.
+
 						case "ufo":
-							if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
-								pathufo = val;
+							pathufo = node.Value.ToString();
 							break;
 
 						case "tftd":
-							if ((val = node.Value.ToString()) != PathInfo.NotConfigured)
-								pathtftd = val;
+							pathtftd = node.Value.ToString();
 							break;
 					}
 				}
