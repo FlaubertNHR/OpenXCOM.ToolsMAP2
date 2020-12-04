@@ -5,6 +5,8 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.MainView;
 
 
@@ -95,9 +97,11 @@ namespace MapView
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			MainViewF.that._fabout = null;
-			MainViewF.that.DecheckAbout();
-
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				MainViewF.that._fabout = null;
+				MainViewF.that.DecheckAbout();
+			}
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)

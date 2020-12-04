@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.MainView;
 
 using XCom;
@@ -191,7 +193,8 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed)
+			if (!RegistryInfo.FastClose(e.CloseReason)
+				&& TopView._finfobox != null && !TopView._finfobox.IsDisposed)
 			{
 				TopView._finfobox.Close();
 				TopView._finfobox = null;

@@ -261,6 +261,35 @@ namespace DSShared
 			if (!fail && pfeT != _pfe)
 				FileService.ReplaceFile(_pfe);
 		}
+
+
+		/// <summary>
+		/// Checks if the OS wants this shit to stop instantly.
+		/// @note holy erection batrat
+		/// https://stackoverflow.com/questions/23872921/how-to-reset-the-close-reason-when-close-is-cancelled#answer-23919394
+		/// </summary>
+		/// <param name="reason"></param>
+		/// <returns>true if Windoze is shutting down [or another application
+		/// such as TaskManager sends a WM_CLOSE message]</returns>
+		public static bool FastClose(CloseReason reason)
+		{
+			switch (reason)
+			{
+				case CloseReason.WindowsShutDown:		// <- accurate
+//				case CloseReason.TaskManagerClosing:	// <- might not be TaskManager but can be anything that sends a WM_CLOSE message
+					return true;
+
+//				case CloseReason.ApplicationExitCall:	// <- accurate
+//				case CloseReason.FormOwnerClosing:		// <- accurate
+//				case CloseReason.UserClosing:			// <- not reliable
+//				case CloseReason.None:					// <- whatever
+//					break;
+
+//				case CloseReason.MdiFormClosing:		// not used by MapView2.
+//					break;
+			}
+			return false;
+		}
 		#endregion Methods (static)
 
 

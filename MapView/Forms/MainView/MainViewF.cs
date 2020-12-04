@@ -897,42 +897,44 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			Quit = true;
-
-			if (SaveAlertMap() == DialogResult.Cancel) // NOTE: do not short-circuit these ->
-				Quit = false;
-
-			if (SaveAlertRoutes() == DialogResult.Cancel)
-				Quit = false;
-
-			if (SaveAlertMaptree() == DialogResult.Cancel)
-				Quit = false;
-
-			if (Quit)
+			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				SafeQuit();
+				Quit = true;
 
-				// kL_note: This is for storing MainView's location and size in
-				// the Windows Registry:
-//				if (PathsEditor.SaveRegistry)
-//				{
-//					using (var keySoftware = Registry.CurrentUser.CreateSubKey(DSShared.Windows.RegistryInfo.SoftwareRegistry))
-//					using (var keyMapView = keySoftware.CreateSubKey(DSShared.Windows.RegistryInfo.MapViewRegistry))
-//					using (var keyMainView = keyMapView.CreateSubKey("MainView"))
+				if (SaveAlertMap() == DialogResult.Cancel) // NOTE: do not short-circuit these ->
+					Quit = false;
+
+				if (SaveAlertRoutes() == DialogResult.Cancel)
+					Quit = false;
+
+				if (SaveAlertMaptree() == DialogResult.Cancel)
+					Quit = false;
+
+				if (Quit)
+				{
+					SafeQuit();
+
+					// kL_note: This is for storing MainView's location and size in
+					// the Windows Registry:
+//					if (PathsEditor.SaveRegistry)
 //					{
-//						keyMainView.SetValue("Left",   Left);
-//						keyMainView.SetValue("Top",    Top);
-//						keyMainView.SetValue("Width",  Width);
-//						keyMainView.SetValue("Height", Height - SystemInformation.CaptionButtonSize.Height); ps. not
-//						keyMainView.Close();
-//						keyMapView.Close();
-//						keySoftware.Close();
+//						using (var keySoftware = Registry.CurrentUser.CreateSubKey(DSShared.Windows.RegistryInfo.SoftwareRegistry))
+//						using (var keyMapView = keySoftware.CreateSubKey(DSShared.Windows.RegistryInfo.MapViewRegistry))
+//						using (var keyMainView = keyMapView.CreateSubKey("MainView"))
+//						{
+//							keyMainView.SetValue("Left",   Left);
+//							keyMainView.SetValue("Top",    Top);
+//							keyMainView.SetValue("Width",  Width);
+//							keyMainView.SetValue("Height", Height - SystemInformation.CaptionButtonSize.Height); ps. not
+//							keyMainView.Close();
+//							keyMapView.Close();
+//							keySoftware.Close();
+//						}
 //					}
-//				}
+				}
+				else
+					e.Cancel = true;
 			}
-			else
-				e.Cancel = true;
-
 			base.OnFormClosing(e);
 		}
 

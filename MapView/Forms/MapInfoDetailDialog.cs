@@ -133,11 +133,13 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			_x = Left;
-			_y = Top;
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				_x = Left;
+				_y = Top;
 
-			_finfo._fdetail = null;
-
+				_finfo._fdetail = null;
+			}
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)

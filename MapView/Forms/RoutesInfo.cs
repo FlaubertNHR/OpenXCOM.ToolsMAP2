@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.Observers;
 
 using XCom;
@@ -59,8 +61,10 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
+			if (!RegistryInfo.FastClose(e.CloseReason))
+				RouteView.RoutesInfo = null;
+
 			base.OnFormClosing(e);
-			RouteView.RoutesInfo = null;
 		}
 		#endregion Events (override)
 

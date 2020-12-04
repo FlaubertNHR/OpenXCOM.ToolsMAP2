@@ -4,6 +4,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
+using DSShared;
+
 
 namespace McdView
 {
@@ -222,7 +224,9 @@ namespace McdView
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			Loc = new Point(Location.X, Location.Y);
+			if (!RegistryInfo.FastClose(e.CloseReason))
+				Loc = new Point(Location.X, Location.Y);
+
 			base.OnFormClosing(e);
 		}
 
@@ -242,25 +246,6 @@ namespace McdView
 
 
 		#region Designer
-		/// <summary>
-		/// Designer variable used to keep track of non-visual components.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
-
-
-		/// <summary>
-		/// Disposes resources used by the form.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
-
 		/// <summary>
 		/// This method is required for Windows Forms designer support.
 		/// Do not change the method contents inside the source code editor. The

@@ -317,26 +317,28 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			//LogFile.WriteLine("TilesetEditor.OnFormClosing() _isDescriptor0= " + _isDescriptor0 + " DialogResult= " + DialogResult);
-
-			if (DialogResult != DialogResult.OK
-				&& _isDescriptor0)
+			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				if (_descriptor.Terrains.Count == 0)
+				//LogFile.WriteLine("TilesetEditor.OnFormClosing() _isDescriptor0= " + _isDescriptor0 + " DialogResult= " + DialogResult);
+
+				if (DialogResult != DialogResult.OK
+					&& _isDescriptor0)
 				{
-					e.Cancel = true;
-					ShowErrorDialog("The Map must have at least one terrain allocated.");
+					if (_descriptor.Terrains.Count == 0)
+					{
+						e.Cancel = true;
+						ShowErrorDialog("The Map must have at least one terrain allocated.");
+					}
+					else if (TerrainsChanged(Terrains_0, _descriptor.Terrains))
+					{
+						//LogFile.WriteLine(". force DialogResult.OK");
+						DialogResult = DialogResult.OK; // force reload of the Tileset
+					}
 				}
-				else if (TerrainsChanged(Terrains_0, _descriptor.Terrains))
-				{
-					//LogFile.WriteLine(". force DialogResult.OK");
-					DialogResult = DialogResult.OK; // force reload of the Tileset
-				}
+
+				if (!e.Cancel)
+					RegistryInfo.UpdateRegistry(this);
 			}
-
-			if (!e.Cancel)
-				RegistryInfo.UpdateRegistry(this);
-
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)

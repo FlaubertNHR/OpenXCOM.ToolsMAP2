@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using DSShared;
 using DSShared.Controls;
 
 using MapView.Forms.MainView;
@@ -86,12 +87,14 @@ namespace MapView
 
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			_x = Left;
-			_y = Top;
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				_x = Left;
+				_y = Top;
 
-			_f._fcolors = null;
-			_f.DecheckColors();
-
+				_f._fcolors = null;
+				_f.DecheckColors();
+			}
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)

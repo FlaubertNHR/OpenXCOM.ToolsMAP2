@@ -232,14 +232,16 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			RegistryInfo.UpdateRegistry(this);
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				RegistryInfo.UpdateRegistry(this);
 
-			ialDeadpartChecked = cb_IalDeadpart.Checked;
-			ialAltrpartChecked = cb_IalAltrpart.Checked;
-			ialSpritesChecked  = cb_IalSprites .Checked;
+				ialDeadpartChecked = cb_IalDeadpart.Checked;
+				ialAltrpartChecked = cb_IalAltrpart.Checked;
+				ialSpritesChecked  = cb_IalSprites .Checked;
 
-			_f.CloseCopyPanel();
-
+				_f.CloseCopyPanel();
+			}
 			base.OnFormClosing(e);
 		}
 

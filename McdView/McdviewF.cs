@@ -499,20 +499,22 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (closeTerrain())
+			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				RegistryInfo.UpdateRegistry(this);
+				if (closeTerrain())
+				{
+					RegistryInfo.UpdateRegistry(this);
 
-				if (Copier != null) // this is needed when McdView is
-					Copier.Close(); // invoked via TileView
+					if (Copier != null) // this is needed when McdView is invoked via TileView
+						Copier.Close(); // it's also just good procedure
 
-				if (!IsInvoked)
-					RegistryInfo.WriteRegistry();
-
-				base.OnFormClosing(e);
+					if (!IsInvoked)
+						RegistryInfo.WriteRegistry();
+				}
+				else
+					e.Cancel = true;
 			}
-			else
-				e.Cancel = true; // not sure if this does anything w/out the call to 'base' above.
+			base.OnFormClosing(e);
 		}
 
 		/// <summary>

@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 
 
@@ -165,8 +167,12 @@ namespace MapView
 		#region Events (override)
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			x = Location.X;
-			y = Location.Y;
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				x = Location.X;
+				y = Location.Y;
+			}
+			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
 

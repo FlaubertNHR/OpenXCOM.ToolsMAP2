@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.MainView;
 
 using XCom;
@@ -64,15 +66,17 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			_x = Left;
-			_y = Top;
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				_x = Left;
+				_y = Top;
 
-			if (_fdetail != null)
-				_fdetail.Close();
+				if (_fdetail != null)
+					_fdetail.Close();
 
-			_f._finfo = null;
-			_f.DecheckMapInfo();
-
+				_f._finfo = null;
+				_f.DecheckMapInfo();
+			}
 			base.OnFormClosing(e);
 		}
 

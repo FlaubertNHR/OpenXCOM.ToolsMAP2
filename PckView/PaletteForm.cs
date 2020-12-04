@@ -81,14 +81,16 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (!PckViewForm.Quit)
+			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				e.Cancel = true;
-				Hide();
+				if (!PckViewForm.Quit)
+				{
+					e.Cancel = true;
+					Hide();
+				}
+				else
+					RegistryInfo.UpdateRegistry(this);
 			}
-			else
-				RegistryInfo.UpdateRegistry(this);
-
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)

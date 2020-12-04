@@ -488,23 +488,25 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (closeSpriteset())
+			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				RegistryInfo.UpdateRegistry(this);
+				if (closeSpriteset())
+				{
+					RegistryInfo.UpdateRegistry(this);
 
-				Quit = true;
+					Quit = true;
 
-				SpriteEditor.ClosePalette();	// these are needed when PckView
-				SpriteEditor.Close();			// is invoked via TileView.
+					SpriteEditor.ClosePalette();	// these are needed when PckView is invoked via TileView
+					SpriteEditor.Close();			// it's also just good procedure
 
-				ByteTableManager.HideTable();
+					ByteTableManager.HideTable();
 
-				if (!IsInvoked)
-					RegistryInfo.WriteRegistry();
+					if (!IsInvoked)
+						RegistryInfo.WriteRegistry();
+				}
+				else
+					e.Cancel = true;
 			}
-			else
-				e.Cancel = true;
-
 			base.OnFormClosing(e);
 		}
 
