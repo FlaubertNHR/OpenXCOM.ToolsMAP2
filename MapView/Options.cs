@@ -108,7 +108,7 @@ namespace MapView
 		{
 			var option = new Option(@default);
 
-			if (changer != null)
+			if (changer != null) // safety. I don't think this will ever be null.
 				option.OptionChanged += changer;
 
 			_options[key] = option;
@@ -182,7 +182,6 @@ namespace MapView
 			get { return _value; }
 			set
 			{
-				//DSShared.LogFile.WriteLine("Options set_Value");
 				if (!_value.Equals(value)) // TODO: Investigate that: (true != true) sic.
 				{
 					var type = _value.GetType();
@@ -352,12 +351,11 @@ namespace MapView
 		#region Methods
 		// TODO: FxCop CA1030:UseEventsWhereAppropriate
 		/// <summary>
-		/// Called by OptionsForm.ReadOptions() when an OptionsForm loads.
+		/// Called by OptionsManager.ReadOptions() when an OptionsForm loads.
 		/// </summary>
 		/// <param name="key"></param>
 		internal void doUpdate(string key)
 		{
-			//DSShared.LogFile.WriteLine("doUpdate() key= " + key);
 //			if (OptionChanged != null)
 			OptionChanged(key, Value);
 		}
@@ -371,7 +369,6 @@ namespace MapView
 		/// <param name="val"></param>
 		internal void doUpdate(string key, object val)
 		{
-			//DSShared.LogFile.WriteLine("doUpdate() key= " + key + " val= " + val);
 //			if (OptionChanged != null)
 			OptionChanged(key, val);
 		}

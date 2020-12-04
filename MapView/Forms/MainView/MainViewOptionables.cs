@@ -704,6 +704,25 @@ namespace MapView.Forms.MainView
 			get { return _invertMousewheel; }
 			set { _invertMousewheel = value; }
 		}
+
+
+		private const string str_DescriptionHeight = "DescriptionHeight";
+		private const int    def_DescriptionHeight = 142;
+
+		private int _descriptionHeight = def_DescriptionHeight;
+		[Browsable(false)]
+		[Category(cat_Global)]
+		[Description("The height of the Description area at the bottom of Options")]
+		[DefaultValue(def_DescriptionHeight)]
+		public int DescriptionHeight
+		{
+			get { return _descriptionHeight; }
+			set
+			{
+				MainViewF.that.Options[str_DescriptionHeight].Value =
+				_descriptionHeight = value;
+			}
+		}
 		#endregion Properties (optionable)
 
 
@@ -732,7 +751,8 @@ namespace MapView.Forms.MainView
 			OptionChangedEvent changer1 = OnFlagChanged;
 			OptionChangedEvent changer2 = OnSpriteStateChanged;
 			OptionChangedEvent changer3 = OnSpriteShadeChanged;
-			OptionChangedEvent changer4 = OnPositionCountTypeChanged;
+			OptionChangedEvent changer4 = OnBaseCounttypeChanged;
+			OptionChangedEvent changer5 = OnDescriptionHeightChanged;
 
 			options.AddOptionDefault(str_StartTileView,          def_StartTileView,          changer1);
 			options.AddOptionDefault(str_StartTopView,           def_StartTopView,           changer1);
@@ -771,6 +791,7 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_Base1_z,                def_Base1_z,                changer4);
 			options.AddOptionDefault(str_IgnoreRecordsExceeded,  def_IgnoreRecordsExceeded,  changer1);
 			options.AddOptionDefault(str_InvertMousewheel,       def_InvertMousewheel,       changer1);
+			options.AddOptionDefault(str_DescriptionHeight,      def_DescriptionHeight,      changer5);
 		}
 		#endregion Methods
 
@@ -1003,7 +1024,7 @@ namespace MapView.Forms.MainView
 				MainViewF.ScanG.InvalidatePanel();
 		}
 
-		private void OnPositionCountTypeChanged(string key, object val)
+		private void OnBaseCounttypeChanged(string key, object val)
 		{
 			switch (key)
 			{
@@ -1029,6 +1050,11 @@ namespace MapView.Forms.MainView
 
 			// NOTE: Routenode Checks don't need to be handled here because
 			// their dialogs are Modal.
+		}
+
+		private void OnDescriptionHeightChanged(string key, object val)
+		{
+			DescriptionHeight = (int)val;
 		}
 
 		/// <summary>

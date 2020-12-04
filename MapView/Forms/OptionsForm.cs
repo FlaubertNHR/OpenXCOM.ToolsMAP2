@@ -26,13 +26,10 @@ namespace MapView
 		}
 
 		#region Fields (static)
-		private const string GridViewEdit = "GridViewEdit"; // ie. editfield
+		private const string GridViewEdit = "GridViewEdit";	// the currently edited field
+		private const string DocComment   = "DocComment";	// the Description area
 
-		/// <summary>
-		/// The height of the Description area at the bottom of the form.
-		/// 143 is large enough to show "Interpolation" 11-lines of text.
-		/// </summary>
-		private const int hDescription = 142;
+		private Control _desc;
 		#endregion Fields (static)
 
 
@@ -49,6 +46,17 @@ namespace MapView
 				OptionableType type)
 		{
 			InitializeComponent();
+
+			_desc = null;
+			foreach (Control control in propertyGrid.Controls)
+			{
+				if (control.GetType().Name == DocComment)
+				{
+					_desc = control;
+					break;
+				}
+			}
+			_desc.SizeChanged += OnDescriptionSizeChanged;
 
 			propertyGrid.Options = options;
 
@@ -70,7 +78,10 @@ namespace MapView
 
 			RegistryInfo.RegisterProperties(this); // NOTE: 1 metric for all four types
 
-			CompositedPropertyGrid.SetDescriptionHeight(propertyGrid, hDescription);
+			var fieldInfo = _desc.GetType().BaseType.GetField("userSized", BindingFlags.Instance | BindingFlags.NonPublic);
+			fieldInfo.SetValue(_desc, true);
+
+			_desc.Height = MainViewF.Optionables.DescriptionHeight;
 		}
 		#endregion cTor
 
@@ -102,6 +113,11 @@ namespace MapView
 
 
 		#region Events
+		private void OnDescriptionSizeChanged(object sender, EventArgs e)
+		{
+			MainViewF.Optionables.DescriptionHeight = _desc.Height;
+		}
+
 		/// <summary>
 		/// Handles this form's VisibleChanged event.
 		/// @note The cached metric of an OptionsForm is updated every time the
@@ -203,46 +219,22 @@ namespace MapView
 		#region Events (override)
 		protected override void OnPropertyValueChanged(PropertyValueChangedEventArgs e)
 		{
-			//LogFile.WriteLine("OnPropertyValueChanged()");
 			base.OnPropertyValueChanged(e);
 
 			string key = e.ChangedItem.PropertyDescriptor.Name;
-			//LogFile.WriteLine(". key= " + key);
 			Option option = Options[key];
 			option.doUpdate(key, (option.Value = e.ChangedItem.Value));
 		}
 		#endregion Events (override)
 
 
-		#region Methods (static)
-		/// <summary>
-		/// https://stackoverflow.com/questions/29884237/how-remove-description-area-from-property-grid#answer-29885361
-		/// </summary>
-		/// <param name="grid"></param>
-		/// <param name="height">height in pixels</param>
-		internal static void SetDescriptionHeight(PropertyGrid grid, int height)
-		{
-			foreach (Control control in grid.Controls)
-			{
-				if (control.GetType().Name == "DocComment")
-				{
-					var fieldInfo = control.GetType().BaseType.GetField("userSized", BindingFlags.Instance | BindingFlags.NonPublic);
-					fieldInfo.SetValue(control, true);
-					control.Height = height;
-					return;
-				}
-			}
-		}
-		#endregion Methods (static)
-
-
-/*		#region Methods
-		internal void SetSelectedValue(object val)
-		{
-			//LogFile.WriteLine("SetSelectedValue() val= " + val);
-			if (SelectedGridItem != null && SelectedObject != null)
-				SelectedGridItem.PropertyDescriptor.SetValue(SelectedObject, val); // no fucking guff.
-		}
-		#endregion Methods */
+//		#region Methods
+//		internal void SetSelectedValue(object val)
+//		{
+//			//LogFile.WriteLine("SetSelectedValue() val= " + val);
+//			if (SelectedGridItem != null && SelectedObject != null)
+//				SelectedGridItem.PropertyDescriptor.SetValue(SelectedObject, val); // no fucking guff.
+//		}
+//		#endregion Methods
 	}
 }
