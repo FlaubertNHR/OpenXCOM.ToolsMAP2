@@ -178,19 +178,19 @@ namespace MapView
 
 					if (String.IsNullOrEmpty(Ufo) && String.IsNullOrEmpty(Tftd))
 					{
-						ShowErrorDialog("Both folders cannot be blank.");
+						ShowError("Both folders cannot be blank.");
 						return;
 					}
 
 					if (!String.IsNullOrEmpty(Ufo) && !Directory.Exists(Ufo))
 					{
-						ShowErrorDialog("The UFO folder does not exist.");
+						ShowError("The UFO folder does not exist.");
 						return;
 					}
 
 					if (!String.IsNullOrEmpty(Tftd) && !Directory.Exists(Tftd))
 					{
-						ShowErrorDialog("The TFTD folder does not exist.");
+						ShowError("The TFTD folder does not exist.");
 						return;
 					}
 
@@ -320,7 +320,7 @@ namespace MapView
 		/// Wrapper for Infobox.ShowDialog().
 		/// </summary>
 		/// <param name="error">an error-string to show</param>
-		private void ShowErrorDialog(string error)
+		private void ShowError(string error)
 		{
 			using (var f = new Infobox("Error", error))
 				f.ShowDialog(this);

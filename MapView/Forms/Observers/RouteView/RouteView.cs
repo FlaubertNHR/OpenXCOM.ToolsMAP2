@@ -1674,7 +1674,7 @@ namespace MapView.Forms.Observers
 				Clipboard.SetText(nodeCopy);
 			}
 			else
-				ShowErrorDialog("A node must be selected.");
+				ShowError("A node must be selected.");
 		}
 
 		private void OnPasteClick(object sender, EventArgs e)
@@ -1703,11 +1703,11 @@ namespace MapView.Forms.Observers
 					ObserverManager.RouteView   .Control     .btnPaste.Enabled =
 					ObserverManager.TopRouteView.ControlRoute.btnPaste.Enabled = false;
 
-					ShowErrorDialog("The data on the clipboard is not a node.");
+					ShowError("The data on the clipboard is not a node.");
 				}
 			}
 			else
-				ShowErrorDialog("A node must be selected.");
+				ShowError("A node must be selected.");
 		}
 
 		private void OnDeleteClick(object sender, EventArgs e)
@@ -1737,10 +1737,10 @@ namespace MapView.Forms.Observers
 				RefreshControls();
 			}			
 			else if (!_asterisk)
-				ShowErrorDialog("A node must be selected.");
+				ShowError("A node must be selected.");
 		}
 
-		private void ShowErrorDialog(string error)
+		private void ShowError(string error)
 		{
 			MessageBox.Show(
 						this,

@@ -111,19 +111,19 @@ namespace MapView
 				case BoxType.EditGroup:
 					if (String.IsNullOrEmpty(Label))
 					{
-						ShowErrorDialog("A group label has not been specified.");
+						ShowError("A group label has not been specified.");
 						tbInput.Select();
 					}
 					else if (!Label.StartsWith("ufo",  StringComparison.OrdinalIgnoreCase)
 						&&   !Label.StartsWith("tftd", StringComparison.OrdinalIgnoreCase))
 					{
-						ShowErrorDialog("The group label needs to start with UFO or TFTD (case insensitive).");
+						ShowError("The group label needs to start with UFO or TFTD (case insensitive).");
 						tbInput.Select();
 					}
 					else if (Label.StartsWith("ufo", StringComparison.OrdinalIgnoreCase)
 						&& String.IsNullOrEmpty(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 					{
-						ShowErrorDialog("UFO has not been configured. If you have UFO resources"
+						ShowError("UFO has not been configured. If you have UFO resources"
 							+ " and want to set the configuration for UFO, run the Configurator"
 							+ " from MainView's Edit menu.");
 						tbInput.Select();
@@ -131,7 +131,7 @@ namespace MapView
 					else if (Label.StartsWith("tftd", StringComparison.OrdinalIgnoreCase)
 						&& String.IsNullOrEmpty(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 					{
-						ShowErrorDialog("TFTD has not been configured. If you have TFTD resources"
+						ShowError("TFTD has not been configured. If you have TFTD resources"
 							+ " and want to set the configuration for TFTD, run the Configurator"
 							+ " from MainView's Edit menu.");
 						tbInput.Select();
@@ -152,7 +152,7 @@ namespace MapView
 
 						if (bork)
 						{
-							ShowErrorDialog("The group label already exists.");
+							ShowError("The group label already exists.");
 							tbInput.Select();
 						}
 						else
@@ -164,7 +164,7 @@ namespace MapView
 				case BoxType.EditCategory:
 					if (String.IsNullOrEmpty(Label))
 					{
-						ShowErrorDialog("A category label has not been specified.");
+						ShowError("A category label has not been specified.");
 						tbInput.Select();
 					}
 					else
@@ -183,7 +183,7 @@ namespace MapView
 
 						if (bork)
 						{
-							ShowErrorDialog("The category label already exists.");
+							ShowError("The category label already exists.");
 							tbInput.Select();
 						}
 						else
@@ -200,7 +200,7 @@ namespace MapView
 		/// Wrapper for MessageBox.Show().
 		/// </summary>
 		/// <param name="error">the error string to show</param>
-		private void ShowErrorDialog(string error)
+		private void ShowError(string error)
 		{
 			MessageBox.Show(
 						this,

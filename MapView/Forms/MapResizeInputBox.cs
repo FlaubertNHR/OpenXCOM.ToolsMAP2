@@ -78,23 +78,23 @@ namespace MapView
 				|| String.IsNullOrEmpty(tb_Row1.Text)
 				|| String.IsNullOrEmpty(tb_Lev1.Text))
 			{
-				ShowErrorDialog("All fields must have a value.", " Error");
+				ShowError("All fields must have a value.", " Error");
 			}
 			else if (!Int32.TryParse(tb_Col1.Text, out _cols) || _cols < 1
 				||   !Int32.TryParse(tb_Row1.Text, out _rows) || _rows < 1
 				||   !Int32.TryParse(tb_Lev1.Text, out _levs) || _levs < 1)
 			{
-				ShowErrorDialog("Values must be positive integers greater than 0.", " Error");
+				ShowError("Values must be positive integers greater than 0.", " Error");
 			}
 			else if (_cols % 10 != 0 || _rows % 10 != 0)
 			{
-				ShowErrorDialog("Columns and Rows must be evenly divisible by 10.", " Error");
+				ShowError("Columns and Rows must be evenly divisible by 10.", " Error");
 			}
 			else if (_cols == int.Parse(tb_Col0.Text)
 				&&   _rows == int.Parse(tb_Row0.Text)
 				&&   _levs == int.Parse(tb_Lev0.Text))
 			{
-				ShowErrorDialog("The new size is the same as the old size.", " uh ...");
+				ShowError("The new size is the same as the old size.", " uh ...");
 			}
 			else // finally (sic) ->
 			{
@@ -139,10 +139,10 @@ namespace MapView
 						}
 					}
 					else
-						ShowErrorDialog("Height must be 1 or more.", " Error");
+						ShowError("Height must be 1 or more.", " Error");
 				}
 				else
-					ShowErrorDialog("Height must a positive integer.", " Error");
+					ShowError("Height must a positive integer.", " Error");
 			}
 		}
 		#endregion Events
@@ -154,7 +154,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="error">the error string to show</param>
 		/// <param name="caption">the dialog's caption text</param>
-		private void ShowErrorDialog(
+		private void ShowError(
 				string error,
 				string caption)
 		{

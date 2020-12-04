@@ -327,7 +327,7 @@ namespace MapView
 					if (_descriptor.Terrains.Count == 0)
 					{
 						e.Cancel = true;
-						ShowErrorDialog("The Map must have at least one terrain allocated.");
+						ShowError("The Map must have at least one terrain allocated.");
 					}
 					else if (TerrainsChanged(Terrains_0, _descriptor.Terrains))
 					{
@@ -408,7 +408,7 @@ namespace MapView
 						OnTilesetTextboxChanged(null, EventArgs.Empty);
 					}
 					else
-						ShowErrorDialog("Maps must be in a directory MAPS.");
+						ShowError("Maps must be in a directory MAPS.");
 				}
 			}
 		}
@@ -427,7 +427,7 @@ namespace MapView
 			{
 				if (!ValidateCharacters(TilesetLabel))
 				{
-					ShowErrorDialog("Characters detected that are not allowed.");
+					ShowError("Characters detected that are not allowed.");
 
 					TilesetLabel = InvalidateCharacters(TilesetLabel); // recurse after removing invalid chars.
 					tb_TilesetCurrent.SelectionStart = tb_TilesetCurrent.TextLength;
@@ -679,7 +679,7 @@ namespace MapView
 				PrintTilesetCount();
 			}
 			else
-				ShowErrorDialog("The label is already assigned to a different tileset.");
+				ShowError("The label is already assigned to a different tileset.");
 		}
 
 
@@ -701,12 +701,12 @@ namespace MapView
 		{
 			if (String.IsNullOrEmpty(TilesetLabel))	// NOTE: The tileset-label should already
 			{										// have been checked for validity by here.
-				ShowErrorDialog("The Map label cannot be blank.");
+				ShowError("The Map label cannot be blank.");
 				tb_TilesetCurrent.Select();
 			}
 			else if (lb_TerrainsAllocated.Items.Count == 0)
 			{
-				ShowErrorDialog("The Map must have at least one terrain allocated.");
+				ShowError("The Map must have at least one terrain allocated.");
 				// TODO: Handle cases where user doesn't have any terrains in a
 				// valid TERRAIN basepath or otherwise.
 			}
@@ -745,7 +745,7 @@ namespace MapView
 							{
 								// NOTE: This shouldn't happen anymore now that the
 								// Accept button remains disabled until it isn't.
-								ShowErrorDialog("No changes were made.");
+								ShowError("No changes were made.");
 							}
 							else
 								DialogResult = DialogResult.OK;
@@ -754,7 +754,7 @@ namespace MapView
 						}
 						else if (TilesetExistsInCategory())
 						{
-							ShowErrorDialog("The tileset already exists in the Category."
+							ShowError("The tileset already exists in the Category."
 										+ Environment.NewLine + Environment.NewLine
 										+ TilesetLabel
 										+ Environment.NewLine + Environment.NewLine
@@ -772,7 +772,7 @@ namespace MapView
 							// ... which is kind of awkward.
 
 							// TODO: Ask user if he/she wants to overwrite the Map-file.
-							ShowErrorDialog("The Map file already exists on disk. The Tileset Editor is"
+							ShowError("The Map file already exists on disk. The Tileset Editor is"
 											+ " not sophisticated enough to deal with this eventuality."
 											+ " Either edit that Map directly if it's already in the Maptree,"
 											+ " or use Add Tileset to make it editable, or as a last"
@@ -1456,7 +1456,7 @@ namespace MapView
 		/// Wrapper for MessageBox.Show().
 		/// </summary>
 		/// <param name="error">the error string to show</param>
-		private void ShowErrorDialog(string error)
+		private void ShowError(string error)
 		{
 			MessageBox.Show(
 						this,
@@ -1569,14 +1569,14 @@ namespace MapView
 //			if (String.IsNullOrEmpty(Tileset)) // TODO: this should be checked before getting here.
 //			{
 //				LogFile.WriteLine(". The Map label cannot be blank.");
-//				ShowErrorDialog("The Map label cannot be blank.");
+//				ShowError("The Map label cannot be blank.");
 //
 //				tbTileset.Select();
 //			}
 //			else if (!ValidateCharacters(Tileset)) // TODO: this should be checked before getting here.
 //			{
 //				LogFile.WriteLine(". The Map label contains illegal characters.");
-//				ShowErrorDialog("The Map label contains illegal characters.");
+//				ShowError("The Map label contains illegal characters.");
 //
 //				tbTileset.Select();
 //				tbTileset.SelectionStart = tbTileset.TextLength;
@@ -1584,12 +1584,12 @@ namespace MapView
 //			else if (MapFileExists(Tileset))	// TODO: check to ensure that this Create function (and KeyUp-Enter events)
 //			{									// cannot be called if a descriptor and/or a Map-file already exist.
 //				LogFile.WriteLine(". The Map file already exists."); // NOTE: Don't worry about it yet; this does not create a Map-file.
-//				ShowErrorDialog("The Map file already exists.");
+//				ShowError("The Map file already exists.");
 //			}
 //			else if (TileGroup.Categories[Category].ContainsKey(Tileset))	// safety -> TODO: the create map and tileset keyup events should
 //			{																// be disabled if a Descriptor w/ tileset-label already exists
 //				LogFile.WriteLine(". The Tileset label already exists.");
-//				ShowErrorDialog("The Tileset label already exists.");
+//				ShowError("The Tileset label already exists.");
 //			}
 //			else
 //			{}
