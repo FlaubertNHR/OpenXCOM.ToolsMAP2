@@ -506,7 +506,13 @@ namespace MapView.Forms.Observers
 				}
 				else
 				{
-					using (var fMcdView = new McdviewF(true))
+					int spriteshade;
+					if (MainViewF.Optionables.SpriteShadeEnabled)
+						spriteshade = MainViewF.Optionables.SpriteShade;
+					else
+						spriteshade = -1;
+
+					using (var fMcdView = new McdviewF(true, spriteshade))
 					{
 						Palette.UfoBattle .SetTransparent(false); // NOTE: McdView wants non-transparent palettes.
 						Palette.TftdBattle.SetTransparent(false);

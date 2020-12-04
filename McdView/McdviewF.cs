@@ -117,21 +117,17 @@ namespace McdView
 
 		internal bool _spriteShadeEnabled;
 
-#if !DEBUG
-		private int _spriteShadeInt = -1;
-#else
-		private int _spriteShadeInt = -1;//10;
-#endif
+		private int _spriteshade = -1;
+
 		/// <summary>
 		/// The inverse-gamma adjustment for sprites and icons.
 		/// </summary>
-		private int SpriteShadeInt
+		private int SpriteShade
 		{
-			get { return _spriteShadeInt; }
 			set
 			{
-				if (_spriteShadeEnabled = ((_spriteShadeInt = value) != -1))
-					SpriteShadeFloat = ((float)_spriteShadeInt * 0.03f); // NOTE: 33 is unity.
+				if (_spriteShadeEnabled = ((_spriteshade = value) != -1))
+					SpriteShadeFloat = (float)_spriteshade * 0.03f; // NOTE: 33 is unity.
 
 				InvalidatePanels(false);
 
@@ -245,7 +241,9 @@ namespace McdView
 		/// Instantiates the McdView app.
 		/// </summary>
 		/// <param name="isInvoked">true if invoked via TileView</param>
-		public McdviewF(bool isInvoked = false)
+		/// <param name="spriteshade">if 'isInvoked' is true you can pass in a
+		/// SpriteShade value from MapView</param>
+		public McdviewF(bool isInvoked = false, int spriteshade = -1)
 		{
 			IsInvoked = isInvoked;
 
@@ -311,7 +309,26 @@ namespace McdView
 			gb_Collection.Controls.Add(PartsPanel);
 			PartsPanel.Width = gb_Collection.Width - 10;
 
-			tb_SpriteShade.Text = SpriteShadeInt.ToString();
+
+			if (IsInvoked) // don't run set 'SpriteShade' yet ->
+			{
+				_spriteshade = spriteshade;
+			}
+			else
+			{
+				string shade = PathInfo.GetSpriteShade(dirAppL); // get shade from MapView's options
+				if (shade != null)
+				{
+					int result;
+					if (Int32.TryParse(shade, out result)
+						&& result > 0)
+					{
+						_spriteshade = Math.Min(result, 100);
+					}
+				}
+			}
+			tb_SpriteShade.Text = _spriteshade.ToString(); // set 'SpriteShade' here
+
 
 			PartsPanel.Select();
 
@@ -1549,7 +1566,6 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnTextChanged_SpriteShade(object sender, EventArgs e)
 		{
-			LogFile.WriteLine("OnTextChanged_SpriteShade()");
 			string text = tb_SpriteShade.Text.Trim();
 			while (text.StartsWith("0", StringComparison.Ordinal))
 				text = text.Substring(1);
@@ -1568,7 +1584,7 @@ namespace McdView
 					else if (result > 100) tb_SpriteShade.Text = "100"; // recurse
 					else
 					{
-						SpriteShadeInt = result;
+						SpriteShade = result;
 						bar_SpriteShade.Value = (result != -1 ? result : 0);
 					}
 				}
@@ -1584,10 +1600,8 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnValueChanged_SpriteShade(object sender, EventArgs e)
 		{
-			LogFile.WriteLine("OnValueChanged_SpriteShade()");
 			int val = bar_SpriteShade.Value;
-			if (val == 0)
-				val = -1;
+			if (val == 0) val = -1;
 
 			tb_SpriteShade.Text = val.ToString();
 		}
