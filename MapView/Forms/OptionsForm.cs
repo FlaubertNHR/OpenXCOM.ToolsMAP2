@@ -34,10 +34,21 @@ namespace MapView
 
 
 		#region Fields
+		/// <summary>
+		/// The viewer that this belongs to as an OptionableType.
+		/// </summary>
 		private OptionableType _oType;
 
+		/// <summary>
+		/// The Description area control - used to get/set each viewers'
+		/// 'DescriptionHeight' option.
+		/// @note .net appears to handle heights that are too large etc okay.
+		/// </summary>
 		private Control _desc;
 
+		/// <summary>
+		/// True bypasses eventhandlers during instantiation.
+		/// </summary>
 		private bool _init;
 		#endregion Fields
 
@@ -59,12 +70,10 @@ namespace MapView
 
 			_desc = null;
 			foreach (Control control in propertyGrid.Controls)
+			if (control.GetType().Name == DocComment)
 			{
-				if (control.GetType().Name == DocComment)
-				{
-					_desc = control;
-					break;
-				}
+				_desc = control;
+				break;
 			}
 			_desc.SizeChanged += OnDescriptionSizeChanged;
 
@@ -135,7 +144,6 @@ namespace MapView
 		{
 			if (!_init && WindowState == FormWindowState.Normal)
 			{
-				LogFile.WriteLine("OnDescriptionSizeChanged()");
 				switch (_oType)
 				{
 					case OptionableType.MainView:
