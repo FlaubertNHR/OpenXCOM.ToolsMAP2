@@ -268,7 +268,7 @@ namespace DSShared
 		/// @note holy erection batrat
 		/// https://stackoverflow.com/questions/23872921/how-to-reset-the-close-reason-when-close-is-cancelled#answer-23919394
 		/// </summary>
-		/// <param name="reason"></param>
+		/// <param name="reason"><see cref="CloseReason"/></param>
 		/// <returns>true if Windoze is shutting down [or another application
 		/// such as TaskManager sends a WM_CLOSE message]</returns>
 		public static bool FastClose(CloseReason reason)
