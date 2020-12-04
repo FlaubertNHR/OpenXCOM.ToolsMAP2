@@ -155,8 +155,10 @@ namespace PckView
 		/// <summary>
 		/// cTor. Creates the PckView window.
 		/// </summary>
-		/// <param name="isInvoked"></param>
-		public PckViewForm(bool isInvoked = false)
+		/// <param name="isInvoked">true if invoked via TileView</param>
+		/// <param name="spriteshade">if 'isInvoked' is true you can pass in a
+		/// SpriteShade value from MapView</param>
+		public PckViewForm(bool isInvoked = false, int spriteshade = -1)
 		{
 			IsInvoked = isInvoked;
 
@@ -217,22 +219,31 @@ namespace PckView
 			ss_Status.Renderer = r;
 
 
-			string shade = GetSpriteShade(dirAppL); // get SpriteShade from MapView's options
-			if (shade != null)
+			bool @set = false;
+			if (IsInvoked)
 			{
-				int result;
-				if (Int32.TryParse(shade, out result)
-					&& result > 0)
+				@set = (spriteshade > 0);
+			}
+			else
+			{
+				string shade = PathInfo.GetSpriteShade(dirAppL); // get shade from MapView's options
+				if (shade != null)
 				{
-					miSpriteShade.Checked = true;
-
-					SpriteShade = result;
-					if (SpriteShade > 100) SpriteShade = 100;
-					SpriteShadeFloat = (float)SpriteShade * 0.03F;
-
-					Attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+					@set = Int32.TryParse(shade, out spriteshade)
+						&& spriteshade > 0;
 				}
 			}
+
+			if (@set)
+			{
+				miSpriteShade.Checked = true;
+
+				SpriteShade = Math.Min(spriteshade, 100);
+				SpriteShadeFloat = (float)SpriteShade * 0.03F;
+
+				Attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+			}
+
 
 			if (_args != null && _args.Length != 0)
 			{
@@ -256,31 +267,6 @@ namespace PckView
 
 				LoadSpriteset(_args[0]);
 			}
-		}
-
-		/// <summary>
-		/// Parses the sprite-shade value out of settings/MapOptions.Cfg.
-		/// </summary>
-		/// <param name="dirAppL"></param>
-		/// <returns></returns>
-		private string GetSpriteShade(string dirAppL)
-		{
-			string dir = Path.Combine(dirAppL, PathInfo.DIR_Settings);	// "settings"
-			string pfe = Path.Combine(dir,     PathInfo.CFG_Options);	// "MapOptions.cfg"
-
-			using (var fs = FileService.OpenFile(pfe))
-			if (fs != null)
-			using (var sr = new StreamReader(fs))
-			{
-				string line;
-				while ((line = sr.ReadLine()) != null)
-				{
-					line = line.Trim();
-					if (line.StartsWith("SpriteShade", StringComparison.Ordinal))
-						return line.Substring(12);
-				}
-			}
-			return null;
 		}
 
 

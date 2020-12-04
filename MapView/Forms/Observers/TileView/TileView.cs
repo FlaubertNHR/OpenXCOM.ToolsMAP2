@@ -456,7 +456,7 @@ namespace MapView.Forms.Observers
 				}
 				else
 				{
-					using (var fPckView = new PckViewForm(true))
+					using (var fPckView = new PckViewForm(true, GetSpriteshade()))
 					{
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapFile.Descriptor.Pal.Label);
@@ -506,13 +506,7 @@ namespace MapView.Forms.Observers
 				}
 				else
 				{
-					int spriteshade;
-					if (MainViewF.Optionables.SpriteShadeEnabled)
-						spriteshade = MainViewF.Optionables.SpriteShade;
-					else
-						spriteshade = -1;
-
-					using (var fMcdView = new McdviewF(true, spriteshade))
+					using (var fMcdView = new McdviewF(true, GetSpriteshade()))
 					{
 						Palette.UfoBattle .SetTransparent(false); // NOTE: McdView wants non-transparent palettes.
 						Palette.TftdBattle.SetTransparent(false);
@@ -541,6 +535,14 @@ namespace MapView.Forms.Observers
 			}
 			else
 				error_SelectTile();
+		}
+
+		private int GetSpriteshade()
+		{
+			if (MainViewF.Optionables.SpriteShadeEnabled)
+				return MainViewF.Optionables.SpriteShade;
+
+			return -1;
 		}
 
 		/// <summary>
