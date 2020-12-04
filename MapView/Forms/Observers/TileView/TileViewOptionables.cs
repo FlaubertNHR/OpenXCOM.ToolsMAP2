@@ -257,7 +257,7 @@ The path specified can actually be used to start any valid application"
 		private const string cat_nonBrowsable = "nonBrowsable";
 
 		private const string str_DescriptionHeight = "DescriptionHeight";
-		private const int    def_DescriptionHeight = 58;
+		private const int    def_DescriptionHeight = 58; // header(22) + 3 line(12)
 
 		private int _descriptionHeight = def_DescriptionHeight;
 		[Browsable(false)]

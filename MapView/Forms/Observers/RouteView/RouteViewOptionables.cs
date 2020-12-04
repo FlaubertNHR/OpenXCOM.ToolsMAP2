@@ -410,7 +410,7 @@ namespace MapView.Forms.Observers
 		private const string cat_nonBrowsable = "nonBrowsable";
 
 		private const string str_DescriptionHeight = "DescriptionHeight";
-		private const int    def_DescriptionHeight = 70;
+		private const int    def_DescriptionHeight = 70; // header(22) + 4 line(12)
 
 		private int _descriptionHeight = def_DescriptionHeight;
 		[Browsable(false)]
