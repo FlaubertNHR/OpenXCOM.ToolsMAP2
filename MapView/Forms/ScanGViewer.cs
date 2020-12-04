@@ -360,7 +360,7 @@ namespace MapView
 					icon.Palette = _pal.ColorTable;
 
 					var spriteAttributes = new ImageAttributes();
-					if (MainViewF.Optionables.SpriteShadeEnabled)
+					if (MainViewF.Optionables.SpriteShadeEnabled) // TODO: how does UseMono cope w/ this
 						spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 					e.Graphics.DrawImage(
