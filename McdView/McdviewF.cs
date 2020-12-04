@@ -120,7 +120,7 @@ namespace McdView
 #if !DEBUG
 		private int _spriteShadeInt = -1;
 #else
-		private int _spriteShadeInt = 10;
+		private int _spriteShadeInt = -1;//10;
 #endif
 		/// <summary>
 		/// The inverse-gamma adjustment for sprites and icons.
@@ -315,25 +315,65 @@ namespace McdView
 
 			PartsPanel.Select();
 
-			string pathufo, pathtftd;
+
+			var files = new List<string>(); // for Warn ->
+
+			string pathufo, pathtftd, pfe;
 			GetResourcePaths(out pathufo, out pathtftd);
 
 			if (pathufo != null)
 			{
-				if (File.Exists(Path.Combine(pathufo, SharedSpace.ScanGfile)))
+				pfe = Path.Combine(pathufo, SharedSpace.ScanGfile);
+				if (File.Exists(pfe))
 					SpritesetsManager.LoadScanGufo(pathufo);	// -> SpritesetsManager.ScanGufo
+				else
+					files.Add("ufo\t- " + pfe);
 
-				if (File.Exists(Path.Combine(pathufo, SharedSpace.LoftfileUfo)))
+				pfe = Path.Combine(pathufo, SharedSpace.LoftfileUfo);
+				if (File.Exists(pfe))
 					SpritesetsManager.LoadLoFTufo(pathufo);		// -> SpritesetsManager.LoFTufo
+				else
+					files.Add("ufo\t- " + pfe);
+			}
+			else
+			{
+				files.Add("ufo\t- " + SharedSpace.ScanGfile);
+				files.Add("ufo\t- " + SharedSpace.LoftfileUfo);
 			}
 
 			if (pathtftd != null)
 			{
-				if (File.Exists(Path.Combine(pathtftd, SharedSpace.ScanGfile)))
+				pfe = Path.Combine(pathtftd, SharedSpace.ScanGfile);
+				if (File.Exists(pfe))
 					SpritesetsManager.LoadScanGtftd(pathtftd);	// -> SpritesetsManager.ScanGtftd
+				else
+					files.Add("tftd\t- " + pfe);
 
-				if (File.Exists(Path.Combine(pathtftd, SharedSpace.LoftfileTftd)))
+				pfe = Path.Combine(pathtftd, SharedSpace.LoftfileTftd);
+				if (File.Exists(pfe))
 					SpritesetsManager.LoadLoFTtftd(pathtftd);	// -> SpritesetsManager.LoFTtftd
+				else
+					files.Add("tftd\t- " + pfe);
+			}
+			else
+			{
+				files.Add("tftd\t- " + SharedSpace.ScanGfile);
+				files.Add("tftd\t- " + SharedSpace.LoftfileTftd);
+			}
+
+			if (files.Count != 0)
+			{
+				string copyable = String.Empty;
+				foreach (var file in files)
+				{
+					if (!String.IsNullOrEmpty(copyable))
+						copyable += Environment.NewLine;
+
+					copyable += file;
+				}
+
+				using (var f = new Infobox("Warning", "Resource files not found.", copyable))
+					f.ShowDialog(this);
 			}
 
 			ScanG = SpritesetsManager.ScanGufo; // default.
@@ -1500,6 +1540,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnTextChanged_SpriteShade(object sender, EventArgs e)
 		{
+			LogFile.WriteLine("OnTextChanged_SpriteShade()");
 			string text = tb_SpriteShade.Text.Trim();
 			while (text.StartsWith("0", StringComparison.Ordinal))
 				text = text.Substring(1);
@@ -1534,6 +1575,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnValueChanged_SpriteShade(object sender, EventArgs e)
 		{
+			LogFile.WriteLine("OnValueChanged_SpriteShade()");
 			int val = bar_SpriteShade.Value;
 			if (val == 0)
 				val = -1;
