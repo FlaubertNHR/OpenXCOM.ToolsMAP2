@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 
+using MapView.Forms.MainView;
 using MapView.Volutar;
 
 using XCom;
@@ -20,9 +21,13 @@ namespace MapView.Forms.Observers
 
 
 		#region cTor
-		internal TileViewOptionables(TileView tileview)
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="tileView"></param>
+		internal TileViewOptionables(TileView tileView)
 		{
-			_tileView = tileview;
+			_tileView = tileView;
 		}
 		#endregion cTor
 
@@ -246,6 +251,28 @@ The path specified can actually be used to start any valid application"
 			get { return _volutar; }
 			set { _volutar = value; }
 		}
+
+
+
+		private const string cat_nonBrowsable = "nonBrowsable";
+
+		private const string str_DescriptionHeight = "DescriptionHeight";
+		private const int    def_DescriptionHeight = 58;
+
+		private int _descriptionHeight = def_DescriptionHeight;
+		[Browsable(false)]
+		[Category(cat_nonBrowsable)]
+		[Description("The height of the Description area at the bottom of Options")]
+		[DefaultValue(def_DescriptionHeight)]
+		public int DescriptionHeight
+		{
+			get { return _descriptionHeight; }
+			set
+			{
+				ObserverManager.TileView.Control.Options[str_DescriptionHeight].Value =
+				_descriptionHeight = value;
+			}
+		}
 		#endregion Properties (optionable)
 
 
@@ -272,7 +299,9 @@ The path specified can actually be used to start any valid application"
 									changer);
 			}
 
-			VolutarService.LoadVolutarOptionDefault(options);
+			options.AddOptionDefault(str_DescriptionHeight, def_DescriptionHeight, OnDescriptionHeightChanged);
+
+			VolutarService.AddVolutarOptionDefault(options);
 		}
 		#endregion Methods
 
@@ -310,6 +339,17 @@ The path specified can actually be used to start any valid application"
 
 			TilePanel.SpecialBrushes[special].Color = color;
 			_tileView.GetVisiblePanel().Invalidate();
+		}
+
+		/// <summary>
+		/// Stores the property panel's Description area's height when the user
+		/// changes it.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		private void OnDescriptionHeightChanged(string key, object val)
+		{
+			DescriptionHeight = (int)val;
 		}
 		#endregion Events
 	}

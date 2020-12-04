@@ -32,6 +32,10 @@ namespace MapView.Forms.MainView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="overlay"></param>
 		internal MainViewOptionables(MainViewOverlay overlay)
 		{
 			_overlay = overlay;
@@ -40,6 +44,11 @@ namespace MapView.Forms.MainView
 
 
 		#region Methods
+		/// <summary>
+		/// Sets a specified viewer's show-on-startup property.
+		/// </summary>
+		/// <param name="f">the viewer</param>
+		/// <param name="val">true to show on startup</param>
 		internal void setStartPropertyValue(Form f, bool val)
 		{
 			if      ((f as TileViewForm)     != null) StartTileView     = val;
@@ -48,6 +57,11 @@ namespace MapView.Forms.MainView
 			else if ((f as TopRouteViewForm) != null) StartTopRouteView = val;
 		}
 
+		/// <summary>
+		/// Gets the next tile-toner in a specified direction.
+		/// </summary>
+		/// <param name="dir">+/- 1</param>
+		/// <returns></returns>
 		internal int GetNextTileToner(int dir)
 		{
 			return (SelectedTileToner + dir + 5) % 5;
@@ -706,12 +720,15 @@ namespace MapView.Forms.MainView
 		}
 
 
+
+		private const string cat_nonBrowsable = "nonBrowsable";
+
 		private const string str_DescriptionHeight = "DescriptionHeight";
 		private const int    def_DescriptionHeight = 142;
 
 		private int _descriptionHeight = def_DescriptionHeight;
 		[Browsable(false)]
-		[Category(cat_Global)]
+		[Category(cat_nonBrowsable)]
 		[Description("The height of the Description area at the bottom of Options")]
 		[DefaultValue(def_DescriptionHeight)]
 		public int DescriptionHeight
@@ -791,6 +808,7 @@ namespace MapView.Forms.MainView
 			options.AddOptionDefault(str_Base1_z,                def_Base1_z,                changer4);
 			options.AddOptionDefault(str_IgnoreRecordsExceeded,  def_IgnoreRecordsExceeded,  changer1);
 			options.AddOptionDefault(str_InvertMousewheel,       def_InvertMousewheel,       changer1);
+
 			options.AddOptionDefault(str_DescriptionHeight,      def_DescriptionHeight,      changer5);
 		}
 		#endregion Methods
@@ -1052,6 +1070,13 @@ namespace MapView.Forms.MainView
 			// their dialogs are Modal.
 		}
 
+
+		/// <summary>
+		/// Stores the property panel's Description area's height when the user
+		/// changes it.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
 			DescriptionHeight = (int)val;

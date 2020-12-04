@@ -25,12 +25,21 @@ namespace MapView
 			RouteView
 		}
 
+
 		#region Fields (static)
 		private const string GridViewEdit = "GridViewEdit";	// the currently edited field
 		private const string DocComment   = "DocComment";	// the Description area
+		private const string userSized    = "userSized";	// tells .net that the Description area has been/can be resized
+		#endregion Fields (static)
+
+
+		#region Fields
+		private OptionableType _oType;
 
 		private Control _desc;
-		#endregion Fields (static)
+
+		private bool _init;
+		#endregion Fields
 
 
 		#region cTor
@@ -39,12 +48,13 @@ namespace MapView
 		/// </summary>
 		/// <param name="o">a class-object w/ Properties that are optionable</param>
 		/// <param name="options">its Options</param>
-		/// <param name="type">its optionable type</param>
+		/// <param name="oType">its optionable type</param>
 		internal OptionsForm(
 				object o,
 				Options options,
-				OptionableType type)
+				OptionableType oType)
 		{
+			_init = true;
 			InitializeComponent();
 
 			_desc = null;
@@ -58,30 +68,33 @@ namespace MapView
 			}
 			_desc.SizeChanged += OnDescriptionSizeChanged;
 
+			_desc.GetType().BaseType.GetField(userSized, BindingFlags.Instance
+													   | BindingFlags.NonPublic).SetValue(_desc, true);
+
 			propertyGrid.Options = options;
 
-			switch (type)
+			switch (_oType = oType)
 			{
 				case OptionableType.MainView:
 					propertyGrid.SelectedObject = o as MainViewOptionables;
+					_desc.Height = MainViewF.Optionables.DescriptionHeight;
 					break;
 				case OptionableType.TileView:
 					propertyGrid.SelectedObject = o as TileViewOptionables;
+					_desc.Height = TileView.Optionables.DescriptionHeight;
 					break;
 				case OptionableType.TopView:
 					propertyGrid.SelectedObject = o as TopViewOptionables;
+					_desc.Height = TopView.Optionables.DescriptionHeight;
 					break;
 				case OptionableType.RouteView:
 					propertyGrid.SelectedObject = o as RouteViewOptionables;
+					_desc.Height = RouteView.Optionables.DescriptionHeight;
 					break;
 			}
 
 			RegistryInfo.RegisterProperties(this); // NOTE: 1 metric for all four types
-
-			var fieldInfo = _desc.GetType().BaseType.GetField("userSized", BindingFlags.Instance | BindingFlags.NonPublic);
-			fieldInfo.SetValue(_desc, true);
-
-			_desc.Height = MainViewF.Optionables.DescriptionHeight;
+			_init = false;
 		}
 		#endregion cTor
 
@@ -113,9 +126,32 @@ namespace MapView
 
 
 		#region Events
+		/// <summary>
+		/// Handles the SizeChanged event of the Description area.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnDescriptionSizeChanged(object sender, EventArgs e)
 		{
-			MainViewF.Optionables.DescriptionHeight = _desc.Height;
+			if (!_init && WindowState == FormWindowState.Normal)
+			{
+				LogFile.WriteLine("OnDescriptionSizeChanged()");
+				switch (_oType)
+				{
+					case OptionableType.MainView:
+						MainViewF.Optionables.DescriptionHeight = _desc.Height;
+						break;
+					case OptionableType.TileView:
+						TileView.Optionables.DescriptionHeight = _desc.Height;
+						break;
+					case OptionableType.TopView:
+						TopView.Optionables.DescriptionHeight = _desc.Height;
+						break;
+					case OptionableType.RouteView:
+						RouteView.Optionables.DescriptionHeight = _desc.Height;
+						break;
+				}
+			}
 		}
 
 		/// <summary>

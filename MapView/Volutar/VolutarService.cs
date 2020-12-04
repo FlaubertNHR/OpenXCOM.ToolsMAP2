@@ -80,7 +80,7 @@ namespace MapView.Volutar
 		/// Adds the Volutar-option with default-value to TileView's options.
 		/// </summary>
 		/// <param name="options"></param>
-		internal static void LoadVolutarOptionDefault(Options options)
+		internal static void AddVolutarOptionDefault(Options options)
 		{
 			options.AddOptionDefault(
 								VOLUTAR,

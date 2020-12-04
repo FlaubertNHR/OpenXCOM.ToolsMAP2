@@ -18,9 +18,13 @@ namespace MapView.Forms.Observers
 
 
 		#region cTor
-		internal RouteViewOptionables(RouteView routeview)
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="routeView"></param>
+		internal RouteViewOptionables(RouteView routeView)
 		{
-			_routeView = routeview;
+			_routeView = routeView;
 		}
 		#endregion cTor
 
@@ -402,6 +406,28 @@ namespace MapView.Forms.Observers
 		}
 
 
+
+		private const string cat_nonBrowsable = "nonBrowsable";
+
+		private const string str_DescriptionHeight = "DescriptionHeight";
+		private const int    def_DescriptionHeight = 70;
+
+		private int _descriptionHeight = def_DescriptionHeight;
+		[Browsable(false)]
+		[Category(cat_nonBrowsable)]
+		[Description("The height of the Description area at the bottom of Options")]
+		[DefaultValue(def_DescriptionHeight)]
+		public int DescriptionHeight
+		{
+			get { return _descriptionHeight; }
+			set
+			{
+				ObserverManager.RouteView.Control.Options[str_DescriptionHeight].Value =
+				_descriptionHeight = value;
+			}
+		}
+
+
 /*		private const string cat_Selects = "Selects";
 
 		internal const string str_SelectorColor = "SelectorColor";
@@ -525,32 +551,35 @@ namespace MapView.Forms.Observers
 			RoutePanel.RoutePens[str_LinkSelectedColor] = penLinkSelected;
 
 
-			OptionChangedEvent changer = OnOptionChanged;
+			OptionChangedEvent changer0 = OnOptionChanged;
+			OptionChangedEvent changer1 = OnDescriptionHeightChanged;
 
-			options.AddOptionDefault(str_GridLineColor,     def_GridLineColor,     changer);
-			options.AddOptionDefault(str_GridLineWidth,     def_GridLineWidth,     changer);
-			options.AddOptionDefault(str_GridLine10Color,   def_GridLine10Color,   changer);
-			options.AddOptionDefault(str_GridLine10Width,   def_GridLine10Width,   changer);
+			options.AddOptionDefault(str_GridLineColor,     def_GridLineColor,     changer0);
+			options.AddOptionDefault(str_GridLineWidth,     def_GridLineWidth,     changer0);
+			options.AddOptionDefault(str_GridLine10Color,   def_GridLine10Color,   changer0);
+			options.AddOptionDefault(str_GridLine10Width,   def_GridLine10Width,   changer0);
 
-			options.AddOptionDefault(str_WallColor,         def_WallColor,         changer);
-			options.AddOptionDefault(str_WallWidth,         def_WallWidth,         changer);
-			options.AddOptionDefault(str_ContentColor,      def_ContentColor,      changer);
+			options.AddOptionDefault(str_WallColor,         def_WallColor,         changer0);
+			options.AddOptionDefault(str_WallWidth,         def_WallWidth,         changer0);
+			options.AddOptionDefault(str_ContentColor,      def_ContentColor,      changer0);
 
-			options.AddOptionDefault(str_NodeColor,         def_NodeColor,         changer);
-			options.AddOptionDefault(str_NodeSpawnColor,    def_NodeSpawnColor,    changer);
-			options.AddOptionDefault(str_NodeSelectedColor, def_NodeSelectedColor, changer);
-			options.AddOptionDefault(str_NodeOpacity,       def_NodeOpacity,       changer);
+			options.AddOptionDefault(str_NodeColor,         def_NodeColor,         changer0);
+			options.AddOptionDefault(str_NodeSpawnColor,    def_NodeSpawnColor,    changer0);
+			options.AddOptionDefault(str_NodeSelectedColor, def_NodeSelectedColor, changer0);
+			options.AddOptionDefault(str_NodeOpacity,       def_NodeOpacity,       changer0);
 
-			options.AddOptionDefault(str_LinkColor,         def_LinkColor,         changer);
-			options.AddOptionDefault(str_LinkWidth,         def_LinkWidth,         changer);
-			options.AddOptionDefault(str_LinkSelectedColor, def_LinkSelectedColor, changer);
-			options.AddOptionDefault(str_LinkSelectedWidth, def_LinkSelectedWidth, changer);
+			options.AddOptionDefault(str_LinkColor,         def_LinkColor,         changer0);
+			options.AddOptionDefault(str_LinkWidth,         def_LinkWidth,         changer0);
+			options.AddOptionDefault(str_LinkSelectedColor, def_LinkSelectedColor, changer0);
+			options.AddOptionDefault(str_LinkSelectedWidth, def_LinkSelectedWidth, changer0);
 
-			options.AddOptionDefault(str_ShowOverlay,       def_ShowOverlay,       changer);
-			options.AddOptionDefault(str_ShowPriorityBars,  def_ShowPriorityBars,  changer);
-			options.AddOptionDefault(str_ReduceDraws,       def_ReduceDraws,       changer);
+			options.AddOptionDefault(str_ShowOverlay,       def_ShowOverlay,       changer0);
+			options.AddOptionDefault(str_ShowPriorityBars,  def_ShowPriorityBars,  changer0);
+			options.AddOptionDefault(str_ReduceDraws,       def_ReduceDraws,       changer0);
 
-			options.AddOptionDefault(str_StartConnector,    def_StartConnector,    changer);
+			options.AddOptionDefault(str_StartConnector,    def_StartConnector,    changer0);
+
+			options.AddOptionDefault(str_DescriptionHeight, def_DescriptionHeight, changer1);
 		}
 		#endregion Methods
 
@@ -652,6 +681,18 @@ namespace MapView.Forms.Observers
 
 			color = Color.FromArgb((int)val, NodeSelectedColor);
 			RoutePanel.RouteBrushes[str_NodeSelectedColor].Color = color;
+		}
+
+
+		/// <summary>
+		/// Stores the property panel's Description area's height when the user
+		/// changes it.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		private void OnDescriptionHeightChanged(string key, object val)
+		{
+			DescriptionHeight = (int)val;
 		}
 		#endregion Methods
 

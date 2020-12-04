@@ -18,9 +18,13 @@ namespace MapView.Forms.Observers
 
 
 		#region cTor
-		internal TopViewOptionables(TopView topview)
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="topView"></param>
+		internal TopViewOptionables(TopView topView)
 		{
-			_topView = topview;
+			_topView = topView;
 		}
 		#endregion cTor
 
@@ -338,6 +342,28 @@ namespace MapView.Forms.Observers
 			get { return _enablewait; }
 			set { _enablewait = value; }
 		}
+
+
+
+		private const string cat_nonBrowsable = "nonBrowsable";
+
+		private const string str_DescriptionHeight = "DescriptionHeight";
+		private const int    def_DescriptionHeight = 82;
+
+		private int _descriptionHeight = def_DescriptionHeight;
+		[Browsable(false)]
+		[Category(cat_nonBrowsable)]
+		[Description("The height of the Description area at the bottom of Options")]
+		[DefaultValue(def_DescriptionHeight)]
+		public int DescriptionHeight
+		{
+			get { return _descriptionHeight; }
+			set
+			{
+				ObserverManager.TopView.Control.Options[str_DescriptionHeight].Value =
+				_descriptionHeight = value;
+			}
+		}
 		#endregion Properties (optionable)
 
 
@@ -384,6 +410,7 @@ namespace MapView.Forms.Observers
 			OptionChangedEvent changer0 = OnOptionChanged;
 			OptionChangedEvent changer1 = OnQuadColorChanged;
 			OptionChangedEvent changer2 = OnFlagChanged;
+			OptionChangedEvent changer3 = OnDescriptionHeightChanged;
 
 			options.AddOptionDefault(str_GridLineColor,             def_GridLineColor,             changer0);
 			options.AddOptionDefault(str_GridLineWidth,             def_GridLineWidth,             changer0);
@@ -404,6 +431,8 @@ namespace MapView.Forms.Observers
 			options.AddOptionDefault(str_SelectedQuadColor,         def_SelectedQuadColor,         changer1);
 
 			options.AddOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, changer2);
+
+			options.AddOptionDefault(str_DescriptionHeight,         def_DescriptionHeight,         changer3);
 		}
 		#endregion Methods
 
@@ -468,9 +497,20 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
-		internal void OnFlagChanged(string key, object val)
+		private void OnFlagChanged(string key, object val)
 		{
 			EnableRightClickWaitTimer = (bool)val;
+		}
+
+		/// <summary>
+		/// Stores the property panel's Description area's height when the user
+		/// changes it.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		private void OnDescriptionHeightChanged(string key, object val)
+		{
+			DescriptionHeight = (int)val;
 		}
 		#endregion Events
 

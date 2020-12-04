@@ -43,11 +43,7 @@ namespace MapView.Forms.Observers
 		internal TileViewForm()
 		{
 			InitializeComponent();
-			InitializeTileView();
-		}
 
-		private void InitializeTileView()
-		{
 			TileViewControl = new TileView();
 
 			TileViewControl.Name     = "TileViewControl";
