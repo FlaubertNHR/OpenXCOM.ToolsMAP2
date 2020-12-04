@@ -67,7 +67,7 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			lblInfoTop.Text    = infoAbove;
+			lblInfoTop   .Text = infoAbove;
 			lblInfoBottom.Text = infoBelow;
 
 			switch (InputBoxType = boxType)
