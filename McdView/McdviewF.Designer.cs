@@ -29,14 +29,14 @@ namespace McdView
 		private MenuItem miSaveSpriteset;
 		private MenuItem miSeparator2;
 		private MenuItem miQuit;
-		private MenuItem miPaletteMenu;
-		private MenuItem miPaletteUfo;
-		private MenuItem miPaletteTftd;
 		private MenuItem miEditMenu;
 		private MenuItem miCopier;
 		private MenuItem miSeparator3;
 		private MenuItem miZeroVals;
 		private MenuItem miCheckVals;
+		private MenuItem miPaletteMenu;
+		private MenuItem miPaletteUfo;
+		private MenuItem miPaletteTftd;
 		private MenuItem miHelpMenu;
 		private MenuItem miHelp;
 		private MenuItem miAbout;
@@ -308,14 +308,14 @@ namespace McdView
 			this.miSaveSpriteset = new System.Windows.Forms.MenuItem();
 			this.miSeparator2 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
-			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
-			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
-			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.miEditMenu = new System.Windows.Forms.MenuItem();
 			this.miCopier = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miZeroVals = new System.Windows.Forms.MenuItem();
 			this.miCheckVals = new System.Windows.Forms.MenuItem();
+			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
+			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
+			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miAbout = new System.Windows.Forms.MenuItem();
@@ -570,8 +570,8 @@ namespace McdView
 			// 
 			this.mmMainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miFileMenu,
-			this.miPaletteMenu,
 			this.miEditMenu,
+			this.miPaletteMenu,
 			this.miHelpMenu});
 			// 
 			// miFileMenu
@@ -673,34 +673,9 @@ namespace McdView
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnClick_Quit);
 			// 
-			// miPaletteMenu
-			// 
-			this.miPaletteMenu.Index = 1;
-			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miPaletteUfo,
-			this.miPaletteTftd});
-			this.miPaletteMenu.Text = "&Palette";
-			// 
-			// miPaletteUfo
-			// 
-			this.miPaletteUfo.Checked = true;
-			this.miPaletteUfo.Enabled = false;
-			this.miPaletteUfo.Index = 0;
-			this.miPaletteUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
-			this.miPaletteUfo.Text = "&UFO";
-			this.miPaletteUfo.Click += new System.EventHandler(this.OnClick_PaletteUfo);
-			// 
-			// miPaletteTftd
-			// 
-			this.miPaletteTftd.Enabled = false;
-			this.miPaletteTftd.Index = 1;
-			this.miPaletteTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
-			this.miPaletteTftd.Text = "&TFTD";
-			this.miPaletteTftd.Click += new System.EventHandler(this.OnClick_PaletteTftd);
-			// 
 			// miEditMenu
 			// 
-			this.miEditMenu.Index = 2;
+			this.miEditMenu.Index = 1;
 			this.miEditMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miCopier,
 			this.miSeparator3,
@@ -735,6 +710,31 @@ namespace McdView
 			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlK;
 			this.miCheckVals.Text = "Chec&k STRICT values";
 			this.miCheckVals.Click += new System.EventHandler(this.OnClick_CheckVals);
+			// 
+			// miPaletteMenu
+			// 
+			this.miPaletteMenu.Index = 2;
+			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miPaletteUfo,
+			this.miPaletteTftd});
+			this.miPaletteMenu.Text = "&Palette";
+			// 
+			// miPaletteUfo
+			// 
+			this.miPaletteUfo.Checked = true;
+			this.miPaletteUfo.Enabled = false;
+			this.miPaletteUfo.Index = 0;
+			this.miPaletteUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
+			this.miPaletteUfo.Text = "&UFO";
+			this.miPaletteUfo.Click += new System.EventHandler(this.OnClick_PaletteUfo);
+			// 
+			// miPaletteTftd
+			// 
+			this.miPaletteTftd.Enabled = false;
+			this.miPaletteTftd.Index = 1;
+			this.miPaletteTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
+			this.miPaletteTftd.Text = "&TFTD";
+			this.miPaletteTftd.Click += new System.EventHandler(this.OnClick_PaletteTftd);
 			// 
 			// miHelpMenu
 			// 
