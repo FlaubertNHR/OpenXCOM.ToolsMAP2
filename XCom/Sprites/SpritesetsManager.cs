@@ -134,6 +134,7 @@ namespace XCom
 
 		/// <summary>
 		/// Loads a ScanG.dat file for UFO.
+		/// @note Cf McdviewF.LoadScanGufo()
 		/// </summary>
 		/// <param name="dirUfo"></param>
 		/// <returns></returns>
@@ -157,11 +158,14 @@ namespace XCom
 					return true;
 				}
 			}
+
+			ScanGufo = null;
 			return false;
 		}
 
 		/// <summary>
 		/// Loads a ScanG.dat file for TFTD.
+		/// @note Cf McdviewF.LoadScanGtftd()
 		/// </summary>
 		/// <param name="dirTftd"></param>
 		/// <returns></returns>
@@ -185,6 +189,8 @@ namespace XCom
 					return true;
 				}
 			}
+
+			ScanGtftd = null;
 			return false;
 		}
 
@@ -192,6 +198,7 @@ namespace XCom
 		/// <summary>
 		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
 		/// Loads a LoFTemps.dat file for UFO.
+		/// @note Cf McdviewF.LoadLoFTufo()
 		/// </summary>
 		/// <param name="dirUfo"></param>
 		public static void LoadLoFTufo(string dirUfo)
@@ -206,9 +213,7 @@ namespace XCom
 					// 32 bytes in a loft
 					// 256 bits in a loft
 
-					int length = bytes.Length * 8;
-
-					LoFTufo = new BitArray(length); // init to Falses
+					LoFTufo = new BitArray(bytes.Length * 8); // init to Falses
 
 					// read the file as little-endian unsigned shorts
 					// eg. C0 01 -> 01 C0
@@ -226,12 +231,16 @@ namespace XCom
 							LoFTufo[++id] = ((bytes[i] & j) != 0);
 						}
 					}
+					return;
 				}
 			}
+
+			LoFTufo = null;
 		}
 
 		/// <summary>
 		/// Loads a LoFTemps.dat file for TFTD.
+		/// @note Cf McdviewF.LoadLoFTtftd()
 		/// </summary>
 		/// <param name="dirTftd"></param>
 		public static void LoadLoFTtftd(string dirTftd)
@@ -246,9 +255,7 @@ namespace XCom
 					// 32 bytes in a loft
 					// 256 bits in a loft
 
-					int length = bytes.Length * 8;
-
-					LoFTtftd = new BitArray(length); // init to Falses
+					LoFTtftd = new BitArray(bytes.Length * 8); // init to Falses
 
 					// read the file as little-endian unsigned shorts
 					// eg. C0 01 -> 01 C0
@@ -266,8 +273,11 @@ namespace XCom
 							LoFTtftd[++id] = ((bytes[i] & j) != 0);
 						}
 					}
+					return;
 				}
 			}
+
+			LoFTtftd = null;
 		}
 		#endregion Methods (static)
 	}
