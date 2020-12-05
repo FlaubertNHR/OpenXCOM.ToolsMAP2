@@ -1232,51 +1232,6 @@ namespace McdView
 
 
 		/// <summary>
-		/// Handles clicking the Palette|UFO menuitem.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnClick_PaletteUfo(object sender, EventArgs e)
-		{
-			if (!miPaletteUfo.Checked)
-			{
-				miPaletteUfo .Checked = true;
-				miPaletteTftd.Checked = false;
-
-				if (Spriteset != null)
-					Spriteset.Pal = Palette.UfoBattle;
-
-				ScanG = SpritesetsManager.ScanGufo;
-				LoFT  = SpritesetsManager.LoFTufo;
-
-				InvalidatePanels();
-			}
-		}
-
-		/// <summary>
-		/// Handles clicking the Palette|TFTD menuitem.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnClick_PaletteTftd(object sender, EventArgs e)
-		{
-			if (!miPaletteTftd.Checked)
-			{
-				miPaletteTftd.Checked = true;
-				miPaletteUfo .Checked = false;
-
-				if (Spriteset != null)
-					Spriteset.Pal = Palette.TftdBattle;
-
-				ScanG = SpritesetsManager.ScanGtftd;
-				LoFT  = SpritesetsManager.LoFTtftd;
-
-				InvalidatePanels();
-			}
-		}
-
-
-		/// <summary>
 		/// Handles clicking the Edit|ZeroVals menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -1480,6 +1435,51 @@ namespace McdView
 		{
 			Copier = null;
 			miCopier.Checked = false;
+		}
+
+
+		/// <summary>
+		/// Handles clicking the Palette|UFO menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_PaletteUfo(object sender, EventArgs e)
+		{
+			if (!miPaletteUfo.Checked)
+			{
+				miPaletteUfo .Checked = true;
+				miPaletteTftd.Checked = false;
+
+				if (Spriteset != null)
+					Spriteset.Pal = Palette.UfoBattle;
+
+				ScanG = SpritesetsManager.ScanGufo;
+				LoFT  = SpritesetsManager.LoFTufo;
+
+				InvalidatePanels();
+			}
+		}
+
+		/// <summary>
+		/// Handles clicking the Palette|TFTD menuitem.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClick_PaletteTftd(object sender, EventArgs e)
+		{
+			if (!miPaletteTftd.Checked)
+			{
+				miPaletteTftd.Checked = true;
+				miPaletteUfo .Checked = false;
+
+				if (Spriteset != null)
+					Spriteset.Pal = Palette.TftdBattle;
+
+				ScanG = SpritesetsManager.ScanGtftd;
+				LoFT  = SpritesetsManager.LoFTtftd;
+
+				InvalidatePanels();
+			}
 		}
 
 
