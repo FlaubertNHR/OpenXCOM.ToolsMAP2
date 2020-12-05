@@ -45,7 +45,7 @@ namespace MapView.Forms.MainView
 					_visible.Add(f);
 
 			foreach (var f in _visible)
-				if (f.Name != "MainViewF")
+				if (f != MainViewF.that)
 					f.Hide();
 		}
 
@@ -54,11 +54,11 @@ namespace MapView.Forms.MainView
 		/// PckView or McdView via TileView. Is used in conjunction with
 		/// HideViewers().
 		/// </summary>
-		internal static void RestoreViewers()
+		internal static void ShowViewers()
 		{
 			foreach (var f in _visible)
 			{
-				if (f.Name != "MainViewF")
+				if (f != MainViewF.that)
 				{
 					f.Show();
 					f.WindowState = FormWindowState.Normal;

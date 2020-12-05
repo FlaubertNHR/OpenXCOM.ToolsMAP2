@@ -464,7 +464,7 @@ namespace MapView.Forms.Observers
 
 						ShowHideManager.HideViewers();
 						fPckView.ShowDialog(ObserverManager.TileView); // <- Pause UI until PckView is closed.
-						ShowHideManager.RestoreViewers();
+						ShowHideManager.ShowViewers();
 
 
 						if (fPckView.FireMvReload					// the Descriptor needs to reload
@@ -518,7 +518,7 @@ namespace MapView.Forms.Observers
 
 						ShowHideManager.HideViewers();
 						fMcdView.ShowDialog(ObserverManager.TileView); // <- Pause UI until McdView is closed.
-						ShowHideManager.RestoreViewers();
+						ShowHideManager.ShowViewers();
 
 						Palette.UfoBattle .SetTransparent(true);
 						Palette.TftdBattle.SetTransparent(true);
