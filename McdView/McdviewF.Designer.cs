@@ -38,8 +38,10 @@ namespace McdView
 		private MenuItem miPaletteUfo;
 		private MenuItem miPaletteTftd;
 		private MenuItem miLoadMenu;
-		private MenuItem miScanG;
-		private MenuItem miLoFT;
+		private MenuItem miLoadScanGufo;
+		private MenuItem miLoadLoFTufo;
+		private MenuItem miLoadScanGtftd;
+		private MenuItem miLoadLoFTtftd;
 		private MenuItem miHelpMenu;
 		private MenuItem miHelp;
 		private MenuItem miAbout;
@@ -320,8 +322,10 @@ namespace McdView
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
 			this.miLoadMenu = new System.Windows.Forms.MenuItem();
-			this.miScanG = new System.Windows.Forms.MenuItem();
-			this.miLoFT = new System.Windows.Forms.MenuItem();
+			this.miLoadScanGufo = new System.Windows.Forms.MenuItem();
+			this.miLoadLoFTufo = new System.Windows.Forms.MenuItem();
+			this.miLoadScanGtftd = new System.Windows.Forms.MenuItem();
+			this.miLoadLoFTtftd = new System.Windows.Forms.MenuItem();
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miAbout = new System.Windows.Forms.MenuItem();
@@ -724,7 +728,7 @@ namespace McdView
 			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miPaletteUfo,
 			this.miPaletteTftd});
-			this.miPaletteMenu.Text = "&Palette";
+			this.miPaletteMenu.Text = "&Resources";
 			// 
 			// miPaletteUfo
 			// 
@@ -747,19 +751,35 @@ namespace McdView
 			// 
 			this.miLoadMenu.Index = 3;
 			this.miLoadMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miScanG,
-			this.miLoFT});
-			this.miLoadMenu.Text = "Load";
+			this.miLoadScanGufo,
+			this.miLoadLoFTufo,
+			this.miLoadScanGtftd,
+			this.miLoadLoFTtftd});
+			this.miLoadMenu.Text = "&Load";
 			// 
-			// miScanG
+			// miLoadScanGufo
 			// 
-			this.miScanG.Index = 0;
-			this.miScanG.Text = "ScanG";
+			this.miLoadScanGufo.Index = 0;
+			this.miLoadScanGufo.Text = "ufo - ScanG";
+			this.miLoadScanGufo.Click += new System.EventHandler(this.OnClick_LoadScanGufo);
 			// 
-			// miLoFT
+			// miLoadLoFTufo
 			// 
-			this.miLoFT.Index = 1;
-			this.miLoFT.Text = "LoFT";
+			this.miLoadLoFTufo.Index = 1;
+			this.miLoadLoFTufo.Text = "ufo - LoFT";
+			this.miLoadLoFTufo.Click += new System.EventHandler(this.OnClick_LoadLoFTufo);
+			// 
+			// miLoadScanGtftd
+			// 
+			this.miLoadScanGtftd.Index = 2;
+			this.miLoadScanGtftd.Text = "tftd - ScanG";
+			this.miLoadScanGtftd.Click += new System.EventHandler(this.OnClick_LoadScanGtftd);
+			// 
+			// miLoadLoFTtftd
+			// 
+			this.miLoadLoFTtftd.Index = 3;
+			this.miLoadLoFTtftd.Text = "tftd - LoFT";
+			this.miLoadLoFTtftd.Click += new System.EventHandler(this.OnClick_LoadLoFTtftd);
 			// 
 			// miHelpMenu
 			// 

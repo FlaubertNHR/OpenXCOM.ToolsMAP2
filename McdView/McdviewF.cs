@@ -463,18 +463,9 @@ namespace McdView
 		{
 			pathufo = pathtftd = null;
 
-			// First check the current Terrain's basepath ...
-//			string path = Path.GetDirectoryName(_pfeMcd);
-//			if (path.EndsWith(GlobalsXC.TerrainDir, StringComparison.OrdinalIgnoreCase))
-//			{
-//				path = path.Substring(0, path.Length - GlobalsXC.TerrainDir.Length + 1);
-//				return Path.Combine(path, SharedSpace.ScanGfile);
-//			}
-
-			// Second check the Configurator's basepath ...
 			string dir = Path.GetDirectoryName(Application.ExecutablePath);
 				   dir = Path.Combine(dir, PathInfo.DIR_Settings);
-			string pfe = Path.Combine(dir, PathInfo.YML_Resources);
+			string pfe = Path.Combine(dir, PathInfo.YML_Resources); // check the Configurator's basepath
 
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
@@ -501,8 +492,6 @@ namespace McdView
 					}
 				}
 			}
-
-			// Third let the user load ScanG.Dat/LoFT.Dat files from menuitems.
 		}
 		#endregion cTor
 
@@ -1453,8 +1442,15 @@ namespace McdView
 				if (Spriteset != null)
 					Spriteset.Pal = Palette.UfoBattle;
 
-				ScanG = SpritesetsManager.ScanGufo;
-				LoFT  = SpritesetsManager.LoFTufo;
+				if (_scanGufo != null) // miLoadScanGufo.Checked
+					ScanG = _scanGufo;
+				else
+					ScanG = SpritesetsManager.ScanGufo;
+
+				if (_loftufo != null) // miLoadLoFTufo.Checked
+					LoFT = _loftufo;
+				else
+					LoFT = SpritesetsManager.LoFTufo;
 
 				InvalidatePanels();
 			}
@@ -1475,11 +1471,312 @@ namespace McdView
 				if (Spriteset != null)
 					Spriteset.Pal = Palette.TftdBattle;
 
-				ScanG = SpritesetsManager.ScanGtftd;
-				LoFT  = SpritesetsManager.LoFTtftd;
+				if (_scanGtftd != null) // miLoadScanGtftd.Checked
+					ScanG = _scanGtftd;
+				else
+					ScanG = SpritesetsManager.ScanGtftd;
+
+				if (_lofttftd != null) // miLoadLoFTtftd.Checked
+					LoFT = _lofttftd;
+				else
+					LoFT = SpritesetsManager.LoFTtftd;
 
 				InvalidatePanels();
 			}
+		}
+
+
+		private int[,] _scanGufo;
+		private int[,] _scanGtftd;
+		private BitArray _loftufo;
+		private BitArray _lofttftd;
+
+		private string _lastdir;
+
+		private string GetInitialDirectory()
+		{
+			if (!String.IsNullOrEmpty(_lastdir) && Directory.Exists(_lastdir))
+				return _lastdir;
+
+			string path;
+			if (!String.IsNullOrEmpty(PfeMcd)
+				&& (!String.IsNullOrEmpty(path = Path.GetDirectoryName(PfeMcd))))
+			{
+				return path;
+			}
+
+			return String.Empty;
+		}
+
+		private void OnClick_LoadScanGufo(object sender, EventArgs e)
+		{
+			if (!miLoadScanGufo.Checked)
+			{
+				using (var ofd = new OpenFileDialog())
+				{
+					ofd.Title            = "Open SCANG.DAT for ufo";
+					ofd.Filter           = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.FileName         = "SCANG.DAT";
+					ofd.InitialDirectory = GetInitialDirectory();
+
+
+					if (ofd.ShowDialog(this) == DialogResult.OK)
+					{
+						_lastdir = Path.GetDirectoryName(ofd.FileName);
+
+						LoadScanGufo(ofd.FileName); // fill the '_scanGufo' array
+						if (_scanGufo != null)
+						{
+							miLoadScanGufo.Checked = true;
+
+							if (miPaletteUfo.Checked)
+							{
+								ScanG = _scanGufo;
+								pnl_ScanGic.Invalidate();
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				miLoadScanGufo.Checked = false;
+				_scanGufo = null;
+				ScanG = SpritesetsManager.ScanGufo;
+			}
+		}
+
+		/// <summary>
+		/// Loads a ScanG.dat file for UFO.
+		/// @note Cf SpritesetsManager.LoadScanGufo()
+		/// </summary>
+		/// <param name="pfeScanG"></param>
+		public void LoadScanGufo(string pfeScanG)
+		{
+			byte[] bytes = FileService.ReadFile(pfeScanG);
+			if (bytes != null)
+			{
+				int d1 = bytes.Length / ScanGicon.Length_ScanG;
+				_scanGufo = new int[d1, ScanGicon.Length_ScanG];
+
+				for (int i = 0; i != d1; ++i)
+				for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
+				{
+					_scanGufo[i,j] = bytes[i * ScanGicon.Length_ScanG + j];
+				}
+			}
+			else
+				_scanGufo = null;
+		}
+
+		private void OnClick_LoadLoFTufo(object sender, EventArgs e)
+		{
+			if (!miLoadLoFTufo.Checked)
+			{
+				using (var ofd = new OpenFileDialog())
+				{
+					ofd.Title            = "Open LOFTEMPS.DAT for ufo";
+					ofd.Filter           = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.FileName         = "LOFTEMPS.DAT";
+					ofd.InitialDirectory = GetInitialDirectory();
+
+
+					if (ofd.ShowDialog(this) == DialogResult.OK)
+					{
+						_lastdir = Path.GetDirectoryName(ofd.FileName);
+
+						LoadLoFTufo(ofd.FileName); // fill the '_loftufo' array
+						if (_loftufo != null)
+						{
+							miLoadLoFTufo.Checked = true;
+
+							if (miPaletteUfo.Checked)
+							{
+								LoFT = _loftufo;
+								InvalidateLoftPanels();
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				miLoadLoFTufo.Checked = false;
+				_loftufo = null;
+				LoFT = SpritesetsManager.LoFTufo;
+			}
+		}
+
+		/// <summary>
+		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
+		/// Loads a LoFTemps.dat file for UFO.
+		/// @note Cf SpritesetsManager.LoadLoFTufo()
+		/// </summary>
+		/// <param name="pfeLoft"></param>
+		public void LoadLoFTufo(string pfeLoft)
+		{
+			byte[] bytes = FileService.ReadFile(pfeLoft);
+			if (bytes != null)
+			{
+				// 32 bytes in a loft
+				// 256 bits in a loft
+
+				_loftufo = new BitArray(bytes.Length * 8); // init to Falses
+
+				// read the file as little-endian unsigned shorts
+				// eg. C0 01 -> 01 C0
+
+				int id = -1;
+				for (int i = 0; i != bytes.Length; i += 2)
+				{
+					for (int j = 0x80; j != 0x00; j >>= 1) // 1000 0000
+					{
+						_loftufo[++id] = ((bytes[i + 1] & j) != 0);
+					}
+
+					for (int j = 0x80; j != 0x00; j >>= 1)
+					{
+						_loftufo[++id] = ((bytes[i] & j) != 0);
+					}
+				}
+			}
+			else
+				_loftufo = null;
+		}
+
+		private void OnClick_LoadScanGtftd(object sender, EventArgs e)
+		{
+			if (!miLoadScanGtftd.Checked)
+			{
+				using (var ofd = new OpenFileDialog())
+				{
+					ofd.Title            = "Open SCANG.DAT for tftd";
+					ofd.Filter           = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.FileName         = "SCANG.DAT";
+					ofd.InitialDirectory = GetInitialDirectory();
+
+
+					if (ofd.ShowDialog(this) == DialogResult.OK)
+					{
+						_lastdir = Path.GetDirectoryName(ofd.FileName);
+
+						LoadScanGtftd(ofd.FileName); // fill the '_scanGtftd' array
+						if (_scanGtftd != null)
+						{
+							miLoadScanGtftd.Checked = true;
+
+							if (miPaletteTftd.Checked)
+							{
+								ScanG = _scanGtftd;
+								pnl_ScanGic.Invalidate();
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				miLoadScanGtftd.Checked = false;
+				_scanGtftd = null;
+				ScanG = SpritesetsManager.ScanGtftd;
+			}
+		}
+
+		/// <summary>
+		/// Loads a ScanG.dat file for UFO.
+		/// @note Cf SpritesetsManager.LoadScanGtftd()
+		/// </summary>
+		/// <param name="pfeScanG"></param>
+		public void LoadScanGtftd(string pfeScanG)
+		{
+			byte[] bytes = FileService.ReadFile(pfeScanG);
+			if (bytes != null)
+			{
+				int d1 = bytes.Length / ScanGicon.Length_ScanG;
+				_scanGtftd = new int[d1, ScanGicon.Length_ScanG];
+
+				for (int i = 0; i != d1; ++i)
+				for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
+				{
+					_scanGtftd[i,j] = bytes[i * ScanGicon.Length_ScanG + j];
+				}
+			}
+			else
+				_scanGtftd = null;
+		}
+
+		private void OnClick_LoadLoFTtftd(object sender, EventArgs e)
+		{
+			if (!miLoadLoFTtftd.Checked)
+			{
+				using (var ofd = new OpenFileDialog())
+				{
+					ofd.Title            = "Open LOFTEMPS.DAT for tftd";
+					ofd.Filter           = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.FileName         = "LOFTEMPS.DAT";
+					ofd.InitialDirectory = GetInitialDirectory();
+
+
+					if (ofd.ShowDialog(this) == DialogResult.OK)
+					{
+						_lastdir = Path.GetDirectoryName(ofd.FileName);
+
+						LoadLoFTtftd(ofd.FileName); // fill the '_lofttftd' array
+						if (_lofttftd != null)
+						{
+							miLoadLoFTtftd.Checked = true;
+
+							if (miPaletteTftd.Checked)
+							{
+								LoFT = _lofttftd;
+								InvalidateLoftPanels();
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				miLoadLoFTtftd.Checked = false;
+				_lofttftd = null;
+				LoFT = SpritesetsManager.LoFTtftd;
+			}
+		}
+
+		/// <summary>
+		/// Loads a LoFTemps.dat file for TFTD.
+		/// @note Cf SpritesetsManager.LoadLoFTtftd()
+		/// </summary>
+		/// <param name="pfeLoft"></param>
+		public void LoadLoFTtftd(string pfeLoft)
+		{
+			byte[] bytes = FileService.ReadFile(pfeLoft);
+			if (bytes != null)
+			{
+				// 32 bytes in a loft
+				// 256 bits in a loft
+
+				_lofttftd = new BitArray(bytes.Length * 8); // init to Falses
+
+				// read the file as little-endian unsigned shorts
+				// eg. C0 01 -> 01 C0
+
+				int id = -1;
+				for (int i = 0; i != bytes.Length; i += 2)
+				{
+					for (int j = 0x80; j != 0x00; j >>= 1) // 1000 0000
+					{
+						_lofttftd[++id] = ((bytes[i + 1] & j) != 0);
+					}
+
+					for (int j = 0x80; j != 0x00; j >>= 1)
+					{
+						_lofttftd[++id] = ((bytes[i] & j) != 0);
+					}
+				}
+			}
+			else
+				_lofttftd = null;
 		}
 
 
@@ -1784,22 +2081,25 @@ namespace McdView
 			pnl_ScanGic.Invalidate();
 
 			if (lofts)
-			{
-				pnl_Loft08.Invalidate();
-				pnl_Loft09.Invalidate();
-				pnl_Loft10.Invalidate();
-				pnl_Loft11.Invalidate();
-				pnl_Loft12.Invalidate();
-				pnl_Loft13.Invalidate();
-				pnl_Loft14.Invalidate();
-				pnl_Loft15.Invalidate();
-				pnl_Loft16.Invalidate();
-				pnl_Loft17.Invalidate();
-				pnl_Loft18.Invalidate();
-				pnl_Loft19.Invalidate();
+				InvalidateLoftPanels();
+		}
 
-				pnl_IsoLoft.Invalidate();
-			}
+		private void InvalidateLoftPanels()
+		{
+			pnl_Loft08.Invalidate();
+			pnl_Loft09.Invalidate();
+			pnl_Loft10.Invalidate();
+			pnl_Loft11.Invalidate();
+			pnl_Loft12.Invalidate();
+			pnl_Loft13.Invalidate();
+			pnl_Loft14.Invalidate();
+			pnl_Loft15.Invalidate();
+			pnl_Loft16.Invalidate();
+			pnl_Loft17.Invalidate();
+			pnl_Loft18.Invalidate();
+			pnl_Loft19.Invalidate();
+
+			pnl_IsoLoft.Invalidate();
 		}
 
 		/// <summary>
