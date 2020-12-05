@@ -37,6 +37,9 @@ namespace McdView
 		private MenuItem miPaletteMenu;
 		private MenuItem miPaletteUfo;
 		private MenuItem miPaletteTftd;
+		private MenuItem miLoadMenu;
+		private MenuItem miScanG;
+		private MenuItem miLoFT;
 		private MenuItem miHelpMenu;
 		private MenuItem miHelp;
 		private MenuItem miAbout;
@@ -316,6 +319,9 @@ namespace McdView
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
 			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
 			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
+			this.miLoadMenu = new System.Windows.Forms.MenuItem();
+			this.miScanG = new System.Windows.Forms.MenuItem();
+			this.miLoFT = new System.Windows.Forms.MenuItem();
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miAbout = new System.Windows.Forms.MenuItem();
@@ -572,6 +578,7 @@ namespace McdView
 			this.miFileMenu,
 			this.miEditMenu,
 			this.miPaletteMenu,
+			this.miLoadMenu,
 			this.miHelpMenu});
 			// 
 			// miFileMenu
@@ -687,7 +694,7 @@ namespace McdView
 			// 
 			this.miCopier.Index = 0;
 			this.miCopier.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
-			this.miCopier.Text = "Open Co&pier ...";
+			this.miCopier.Text = "Open Co&pier panel ...";
 			this.miCopier.Click += new System.EventHandler(this.OnClick_OpenCopier);
 			// 
 			// miSeparator3
@@ -700,7 +707,7 @@ namespace McdView
 			this.miZeroVals.Enabled = false;
 			this.miZeroVals.Index = 2;
 			this.miZeroVals.Shortcut = System.Windows.Forms.Shortcut.Ctrl0;
-			this.miZeroVals.Text = "&Zero this part\'s values";
+			this.miZeroVals.Text = "&Zero record\'s values";
 			this.miZeroVals.Click += new System.EventHandler(this.OnClick_ZeroVals);
 			// 
 			// miCheckVals
@@ -708,7 +715,7 @@ namespace McdView
 			this.miCheckVals.Enabled = false;
 			this.miCheckVals.Index = 3;
 			this.miCheckVals.Shortcut = System.Windows.Forms.Shortcut.CtrlK;
-			this.miCheckVals.Text = "Chec&k STRICT values";
+			this.miCheckVals.Text = "Chec&k record STRICT";
 			this.miCheckVals.Click += new System.EventHandler(this.OnClick_CheckVals);
 			// 
 			// miPaletteMenu
@@ -736,9 +743,27 @@ namespace McdView
 			this.miPaletteTftd.Text = "&TFTD";
 			this.miPaletteTftd.Click += new System.EventHandler(this.OnClick_PaletteTftd);
 			// 
+			// miLoadMenu
+			// 
+			this.miLoadMenu.Index = 3;
+			this.miLoadMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miScanG,
+			this.miLoFT});
+			this.miLoadMenu.Text = "Load";
+			// 
+			// miScanG
+			// 
+			this.miScanG.Index = 0;
+			this.miScanG.Text = "ScanG";
+			// 
+			// miLoFT
+			// 
+			this.miLoFT.Index = 1;
+			this.miLoFT.Text = "LoFT";
+			// 
 			// miHelpMenu
 			// 
-			this.miHelpMenu.Index = 3;
+			this.miHelpMenu.Index = 4;
 			this.miHelpMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miHelp,
 			this.miAbout});
