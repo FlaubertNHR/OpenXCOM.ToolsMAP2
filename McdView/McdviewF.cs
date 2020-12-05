@@ -17,7 +17,7 @@ using YamlDotNet.RepresentationModel; // read values (deserialization)
 namespace McdView
 {
 	/// <summary>
-	/// 
+	/// McdView app.
 	/// </summary>
 	public partial class McdviewF
 		:
