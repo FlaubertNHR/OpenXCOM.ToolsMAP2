@@ -233,6 +233,27 @@ namespace McdView
 				Label = Path.GetFileNameWithoutExtension(_pfeMcd = value);
 			}
 		}
+
+		/// <summary>
+		/// Gets the current palette based on the state of the Resources menu.
+		/// </summary>
+		internal Palette Palette
+		{
+			get
+			{
+				if (miResourcesTftd.Checked)
+					return Palette.TftdBattle;
+
+				return Palette.UfoBattle;
+			}
+		}
+
+		/// <summary>
+		/// Gets the IsoLoFT's trackbar's current value.
+		/// </summary>
+		/// <returns></returns>
+		internal int IsoLoftVal
+		{ get { return bar_IsoLoft.Value; } }
 		#endregion Properties
 
 
@@ -733,15 +754,11 @@ namespace McdView
 							if (   File.Exists(pf + GlobalsXC.PckExt)
 								&& File.Exists(pf + GlobalsXC.TabExt))
 							{
-								Palette pal;
-								if (miResourcesUfo.Checked) pal = Palette.UfoBattle;
-								else                        pal = Palette.TftdBattle;
-
 								Spriteset = SpritesetsManager.LoadSpriteset(
 																		Label,
 																		Path.GetDirectoryName(PfeMcd),
 																		SpritesetsManager.TAB_WORD_LENGTH_2,
-																		pal,
+																		Palette,
 																		true);
 							}
 
@@ -821,15 +838,11 @@ namespace McdView
 					PfeMcd = pfe;
 					SelId = -1;
 
-					Palette pal;
-					if (miResourcesUfo.Checked) pal = Palette.UfoBattle;
-					else                        pal = Palette.TftdBattle;
-
 					Spriteset = SpritesetsManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															SpritesetsManager.TAB_WORD_LENGTH_2,
-															pal,
+															Palette,
 															true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
@@ -903,15 +916,11 @@ namespace McdView
 				{
 					SelId = -1;
 
-					Palette pal;
-					if (miResourcesUfo.Checked) pal = Palette.UfoBattle;
-					else                        pal = Palette.TftdBattle;
-
 					Spriteset = SpritesetsManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															SpritesetsManager.TAB_WORD_LENGTH_2,
-															pal,
+															Palette,
 															true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
@@ -1363,15 +1372,11 @@ namespace McdView
 					{
 						var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
 
-						Palette pal;
-						if (miResourcesUfo.Checked) pal = Palette.UfoBattle;
-						else                        pal = Palette.TftdBattle;
-
 						Copier.Spriteset = SpritesetsManager.LoadSpriteset(
 																		Copier.Label,
 																		Path.GetDirectoryName(Copier.PfeMcd),
 																		SpritesetsManager.TAB_WORD_LENGTH_2,
-																		pal,
+																		Palette,
 																		true);
 
 						for (int id = 0; id != parts.Length; ++id)
@@ -2054,20 +2059,6 @@ namespace McdView
 				tssl_OffsetLast.Text =
 				tssl_OffsetAftr.Text = String.Empty;
 			}
-		}
-
-		internal bool isTftd()
-		{
-			return miResourcesTftd.Checked;
-		}
-
-		/// <summary>
-		/// Gets the IsoLoFT's trackbar's current value.
-		/// </summary>
-		/// <returns></returns>
-		internal int GetIsoLoftVal()
-		{
-			return bar_IsoLoft.Value;
 		}
 
 		/// <summary>

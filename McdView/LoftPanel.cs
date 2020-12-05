@@ -80,7 +80,7 @@ namespace McdView
 
 						Color color;
 						int panelid = Int32.Parse(tb.Tag.ToString());
-						int track = _f.GetIsoLoftVal();
+						int track = _f.IsoLoftVal;
 
 						if (track == panelid * 2 + 1)
 							color = SystemColors.Control;

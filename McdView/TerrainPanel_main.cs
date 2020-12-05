@@ -385,12 +385,7 @@ namespace McdView
 							SpritesChanged = true;
 
 							if (_f.Spriteset == null)
-							{
-								Palette pal;
-								if (_f.isTftd()) pal = Palette.TftdBattle;
-								else             pal = Palette.UfoBattle;
-								_f.Spriteset = new SpriteCollection(_f.Label, pal);
-							}
+								_f.Spriteset = new SpriteCollection(_f.Label, _f.Palette);
 
 							var sprite_src = _f.Copier.Spriteset[spriteId] as PckImage;
 							var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);

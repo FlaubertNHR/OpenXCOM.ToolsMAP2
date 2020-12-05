@@ -383,10 +383,7 @@ namespace McdView
 					}
 					icon.UnlockBits(data);
 
-					if (miResourcesTftd.Checked)
-						icon.Palette = Palette.TftdBattle.ColorTable;
-					else
-						icon.Palette = Palette.UfoBattle.ColorTable;
+					icon.Palette = Palette.ColorTable;
 
 					ColorPalette pal = icon.Palette; // palettes get copied not referenced ->
 					pal.Entries[Palette.TranId] = Color.Transparent;
@@ -396,8 +393,8 @@ namespace McdView
 									icon,
 									new Rectangle(
 												0,0,
-												((Panel)sender).Width,
-												((Panel)sender).Height),
+												(sender as Panel).Width,
+												(sender as Panel).Height),
 									0,0, icon.Width, icon.Height,
 									GraphicsUnit.Pixel,
 									_attri);
@@ -420,13 +417,7 @@ namespace McdView
 			{
 				if (ScanG != null)
 				{
-					ColorPalette pal;
-					if (miResourcesTftd.Checked)
-						pal = Palette.TftdBattle.ColorTable;
-					else
-						pal = Palette.UfoBattle.ColorTable;
-
-					using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), pal))
+					using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), Palette.ColorTable))
 						f.ShowDialog(this);
 				}
 				else
