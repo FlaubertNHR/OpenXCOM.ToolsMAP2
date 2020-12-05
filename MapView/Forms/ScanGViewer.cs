@@ -87,7 +87,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Closes the viewer on [Esc] or [Enter] or [Ctrl+g] keydown event.
+		/// Closes the viewer on [Esc] or [Ctrl+g] keydown event. Reloads the
+		/// ScanG.Dat file on [Enter].
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
@@ -95,9 +96,12 @@ namespace MapView
 			switch (e.KeyData)
 			{
 				case Keys.Escape:
-				case Keys.Enter:
 				case Keys.Control | Keys.G:
 					Close();
+					break;
+
+				case Keys.Enter:
+					ReloadScanGfile();
 					break;
 			}
 		}
@@ -136,90 +140,20 @@ namespace MapView
 
 		#region Events (panel)
 		/// <summary>
-		/// MouseDoubleClick handler for the panel. LMB toggles between
-		/// single-level view and multilevel view. RMB reloads ScanG.Dat file.
+		/// MouseClick handler for the panel. RMB toggles between multi-level
+		/// view and single-level view.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void panel_OnMouseDoubleClick(object sender, MouseEventArgs e)
+		private void panel_OnMouseClick(object sender, MouseEventArgs e)
 		{
-			switch (e.Button)
+			if (e.Button == MouseButtons.Right)
 			{
-				case MouseButtons.Left:
-					SingleLevel = !SingleLevel;
-					Text = GetTitle();
-					pnl_ScanG.Invalidate();
-					break;
-
-				case MouseButtons.Right:
-				{
-					string result, title;
-					MessageBoxIcon icon;
-
-					if (_file.Descriptor.GroupType == GameType.Tftd)
-					{
-						if (SpritesetsManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
-						{
-							_icons = SpritesetsManager.ScanGtftd;
-
-							result = "SCANG.DAT reloaded.";
-							title  = " Info";
-							icon   = MessageBoxIcon.None;
-						}
-						else
-						{
-							_icons = null;
-
-							result = "SCANG.DAT failed to reload. Take the red pill.";
-							title  = " Error";
-							icon   = MessageBoxIcon.Error;
-						}
-					}
-					else if (SpritesetsManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
-					{
-						_icons = SpritesetsManager.ScanGufo;
-
-						result = "SCANG.DAT reloaded.";
-						title  = " Info";
-						icon   = MessageBoxIcon.None;
-					}
-					else
-					{
-						_icons = null;
-
-						result = "SCANG.DAT failed to reload. Take the red pill.";
-						title  = " Error";
-						icon   = MessageBoxIcon.Error;
-					}
-					ShowReloadResult(result, title, icon);
-
-					// NOTE: Invalidate/refresh is not needed apparently.
-					break;
-				}
+				SingleLevel = !SingleLevel;
+				Text = GetTitle();
+				pnl_ScanG.Invalidate();
 			}
 		}
-
-		/// <summary>
-		/// Shows a messagebox with the reload-result.
-		/// </summary>
-		/// <param name="result"></param>
-		/// <param name="title"></param>
-		/// <param name="icon"></param>
-		private void ShowReloadResult(
-				string result,
-				string title,
-				MessageBoxIcon icon)
-		{
-			MessageBox.Show(
-						this,
-						result,
-						title,
-						MessageBoxButtons.OK,
-						icon,
-						MessageBoxDefaultButton.Button1,
-						0);
-		}
-
 
 		/// <summary>
 		/// Paint handler for the panel.
@@ -428,6 +362,62 @@ namespace MapView
 				_pal   = Palette.UfoBattle;
 			}
 		}
+
+		/// <summary>
+		/// Reloads the ScanG.Dat file.
+		/// </summary>
+		private void ReloadScanGfile()
+		{
+			string result, title;
+			MessageBoxIcon icon;
+
+			if (_file.Descriptor.GroupType == GameType.Tftd)
+			{
+				if (SpritesetsManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+				{
+					_icons = SpritesetsManager.ScanGtftd;
+
+					result = "SCANG.DAT reloaded.";
+					title  = " Info";
+					icon   = MessageBoxIcon.None;
+				}
+				else
+				{
+					_icons = null;
+
+					result = "SCANG.DAT failed to reload. Take the red pill.";
+					title  = " Error";
+					icon   = MessageBoxIcon.Error;
+				}
+			}
+			else if (SpritesetsManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+			{
+				_icons = SpritesetsManager.ScanGufo;
+
+				result = "SCANG.DAT reloaded.";
+				title  = " Info";
+				icon   = MessageBoxIcon.None;
+			}
+			else
+			{
+				_icons = null;
+
+				result = "SCANG.DAT failed to reload. Take the red pill.";
+				title  = " Error";
+				icon   = MessageBoxIcon.Error;
+			}
+
+			MessageBox.Show(
+						this,
+						result,
+						title,
+						MessageBoxButtons.OK,
+						icon,
+						MessageBoxDefaultButton.Button1,
+						0);
+
+			// NOTE: Invalidate/refresh is not needed apparently.
+		}
 		#endregion Methods
 
 
@@ -453,7 +443,7 @@ namespace MapView
 			this.pnl_ScanG.Size = new System.Drawing.Size(294, 276);
 			this.pnl_ScanG.TabIndex = 0;
 			this.pnl_ScanG.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_OnPaint);
-			this.pnl_ScanG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel_OnMouseDoubleClick);
+			this.pnl_ScanG.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel_OnMouseClick);
 			// 
 			// ScanGViewer
 			// 
