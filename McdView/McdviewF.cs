@@ -327,7 +327,7 @@ namespace McdView
 					}
 				}
 			}
-			tb_SpriteShade.Text = _spriteshade.ToString(); // set 'SpriteShade' here
+			tb_SpriteShade.Text = _spriteshade.ToString(); // set 'SpriteShade' here.
 
 
 			PartsPanel.Select();
