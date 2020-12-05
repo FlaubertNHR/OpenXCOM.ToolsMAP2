@@ -383,7 +383,7 @@ namespace McdView
 					}
 					icon.UnlockBits(data);
 
-					if (miPaletteTftd.Checked)
+					if (miResourcesTftd.Checked)
 						icon.Palette = Palette.TftdBattle.ColorTable;
 					else
 						icon.Palette = Palette.UfoBattle.ColorTable;
@@ -421,7 +421,7 @@ namespace McdView
 				if (ScanG != null)
 				{
 					ColorPalette pal;
-					if (miPaletteTftd.Checked)
+					if (miResourcesTftd.Checked)
 						pal = Palette.TftdBattle.ColorTable;
 					else
 						pal = Palette.UfoBattle.ColorTable;

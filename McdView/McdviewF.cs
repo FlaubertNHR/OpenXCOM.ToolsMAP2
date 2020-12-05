@@ -84,8 +84,8 @@ namespace McdView
 			get { return _parts; }
 			set
 			{
-				if (miPaletteUfo .Enabled =
-					miPaletteTftd.Enabled = ((PartsPanel.Parts = (_parts = value)) != null)) // perfect.
+				if (miResourcesUfo .Enabled =
+					miResourcesTftd.Enabled = ((PartsPanel.Parts = (_parts = value)) != null)) // perfect.
 				{
 					tssl_Records.Text = "Records: " + Parts.Length;
 				}
@@ -734,8 +734,8 @@ namespace McdView
 								&& File.Exists(pf + GlobalsXC.TabExt))
 							{
 								Palette pal;
-								if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
-								else                      pal = Palette.TftdBattle;
+								if (miResourcesUfo.Checked) pal = Palette.UfoBattle;
+								else                        pal = Palette.TftdBattle;
 
 								Spriteset = SpritesetsManager.LoadSpriteset(
 																		Label,
@@ -822,8 +822,8 @@ namespace McdView
 					SelId = -1;
 
 					Palette pal;
-					if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
-					else                      pal = Palette.TftdBattle;
+					if (miResourcesUfo.Checked) pal = Palette.UfoBattle;
+					else                        pal = Palette.TftdBattle;
 
 					Spriteset = SpritesetsManager.LoadSpriteset(
 															Label,
@@ -904,8 +904,8 @@ namespace McdView
 					SelId = -1;
 
 					Palette pal;
-					if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
-					else                      pal = Palette.TftdBattle;
+					if (miResourcesUfo.Checked) pal = Palette.UfoBattle;
+					else                        pal = Palette.TftdBattle;
 
 					Spriteset = SpritesetsManager.LoadSpriteset(
 															Label,
@@ -1364,8 +1364,8 @@ namespace McdView
 						var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
 
 						Palette pal;
-						if (miPaletteUfo.Checked) pal = Palette.UfoBattle;
-						else                      pal = Palette.TftdBattle;
+						if (miResourcesUfo.Checked) pal = Palette.UfoBattle;
+						else                        pal = Palette.TftdBattle;
 
 						Copier.Spriteset = SpritesetsManager.LoadSpriteset(
 																		Copier.Label,
@@ -1434,10 +1434,10 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_PaletteUfo(object sender, EventArgs e)
 		{
-			if (!miPaletteUfo.Checked)
+			if (!miResourcesUfo.Checked)
 			{
-				miPaletteUfo .Checked = true;
-				miPaletteTftd.Checked = false;
+				miResourcesUfo .Checked = true;
+				miResourcesTftd.Checked = false;
 
 				if (Spriteset != null)
 					Spriteset.Pal = Palette.UfoBattle;
@@ -1463,10 +1463,10 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_PaletteTftd(object sender, EventArgs e)
 		{
-			if (!miPaletteTftd.Checked)
+			if (!miResourcesTftd.Checked)
 			{
-				miPaletteTftd.Checked = true;
-				miPaletteUfo .Checked = false;
+				miResourcesTftd.Checked = true;
+				miResourcesUfo .Checked = false;
 
 				if (Spriteset != null)
 					Spriteset.Pal = Palette.TftdBattle;
@@ -1529,7 +1529,7 @@ namespace McdView
 						{
 							miLoadScanGufo.Checked = true;
 
-							if (miPaletteUfo.Checked)
+							if (miResourcesUfo.Checked)
 							{
 								ScanG = _scanGufo;
 								pnl_ScanGic.Invalidate();
@@ -1590,7 +1590,7 @@ namespace McdView
 						{
 							miLoadLoFTufo.Checked = true;
 
-							if (miPaletteUfo.Checked)
+							if (miResourcesUfo.Checked)
 							{
 								LoFT = _loftufo;
 								InvalidateLoftPanels();
@@ -1665,7 +1665,7 @@ namespace McdView
 						{
 							miLoadScanGtftd.Checked = true;
 
-							if (miPaletteTftd.Checked)
+							if (miResourcesTftd.Checked)
 							{
 								ScanG = _scanGtftd;
 								pnl_ScanGic.Invalidate();
@@ -1726,7 +1726,7 @@ namespace McdView
 						{
 							miLoadLoFTtftd.Checked = true;
 
-							if (miPaletteTftd.Checked)
+							if (miResourcesTftd.Checked)
 							{
 								LoFT = _lofttftd;
 								InvalidateLoftPanels();
@@ -2058,7 +2058,7 @@ namespace McdView
 
 		internal bool isTftd()
 		{
-			return miPaletteTftd.Checked;
+			return miResourcesTftd.Checked;
 		}
 
 		/// <summary>

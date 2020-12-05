@@ -34,9 +34,9 @@ namespace McdView
 		private MenuItem miSeparator3;
 		private MenuItem miZeroVals;
 		private MenuItem miCheckVals;
-		private MenuItem miPaletteMenu;
-		private MenuItem miPaletteUfo;
-		private MenuItem miPaletteTftd;
+		private MenuItem miResourcesMenu;
+		private MenuItem miResourcesUfo;
+		private MenuItem miResourcesTftd;
 		private MenuItem miLoadMenu;
 		private MenuItem miLoadScanGufo;
 		private MenuItem miLoadLoFTufo;
@@ -318,9 +318,9 @@ namespace McdView
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miZeroVals = new System.Windows.Forms.MenuItem();
 			this.miCheckVals = new System.Windows.Forms.MenuItem();
-			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
-			this.miPaletteUfo = new System.Windows.Forms.MenuItem();
-			this.miPaletteTftd = new System.Windows.Forms.MenuItem();
+			this.miResourcesMenu = new System.Windows.Forms.MenuItem();
+			this.miResourcesUfo = new System.Windows.Forms.MenuItem();
+			this.miResourcesTftd = new System.Windows.Forms.MenuItem();
 			this.miLoadMenu = new System.Windows.Forms.MenuItem();
 			this.miLoadScanGufo = new System.Windows.Forms.MenuItem();
 			this.miLoadLoFTufo = new System.Windows.Forms.MenuItem();
@@ -581,7 +581,7 @@ namespace McdView
 			this.mmMainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miFileMenu,
 			this.miEditMenu,
-			this.miPaletteMenu,
+			this.miResourcesMenu,
 			this.miLoadMenu,
 			this.miHelpMenu});
 			// 
@@ -722,30 +722,30 @@ namespace McdView
 			this.miCheckVals.Text = "Chec&k record STRICT";
 			this.miCheckVals.Click += new System.EventHandler(this.OnClick_CheckVals);
 			// 
-			// miPaletteMenu
+			// miResourcesMenu
 			// 
-			this.miPaletteMenu.Index = 2;
-			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miPaletteUfo,
-			this.miPaletteTftd});
-			this.miPaletteMenu.Text = "&Resources";
+			this.miResourcesMenu.Index = 2;
+			this.miResourcesMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miResourcesUfo,
+			this.miResourcesTftd});
+			this.miResourcesMenu.Text = "&Resources";
 			// 
-			// miPaletteUfo
+			// miResourcesUfo
 			// 
-			this.miPaletteUfo.Checked = true;
-			this.miPaletteUfo.Enabled = false;
-			this.miPaletteUfo.Index = 0;
-			this.miPaletteUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
-			this.miPaletteUfo.Text = "&UFO";
-			this.miPaletteUfo.Click += new System.EventHandler(this.OnClick_PaletteUfo);
+			this.miResourcesUfo.Checked = true;
+			this.miResourcesUfo.Enabled = false;
+			this.miResourcesUfo.Index = 0;
+			this.miResourcesUfo.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
+			this.miResourcesUfo.Text = "&UFO";
+			this.miResourcesUfo.Click += new System.EventHandler(this.OnClick_PaletteUfo);
 			// 
-			// miPaletteTftd
+			// miResourcesTftd
 			// 
-			this.miPaletteTftd.Enabled = false;
-			this.miPaletteTftd.Index = 1;
-			this.miPaletteTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
-			this.miPaletteTftd.Text = "&TFTD";
-			this.miPaletteTftd.Click += new System.EventHandler(this.OnClick_PaletteTftd);
+			this.miResourcesTftd.Enabled = false;
+			this.miResourcesTftd.Index = 1;
+			this.miResourcesTftd.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
+			this.miResourcesTftd.Text = "&TFTD";
+			this.miResourcesTftd.Click += new System.EventHandler(this.OnClick_PaletteTftd);
 			// 
 			// miLoadMenu
 			// 
