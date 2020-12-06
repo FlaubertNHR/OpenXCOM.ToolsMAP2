@@ -1066,6 +1066,9 @@ namespace MapView.Forms.MainView
 				TopView._finfobox = null;
 			}
 
+			if (MainViewF.ScanG != null)
+				MainViewF.ScanG.SetTitle();
+
 			// NOTE: Routenode Checks don't need to be handled here because
 			// their dialogs are Modal.
 		}

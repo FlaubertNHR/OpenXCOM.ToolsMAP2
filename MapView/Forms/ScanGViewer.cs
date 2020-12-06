@@ -26,14 +26,20 @@ namespace MapView
 		:
 			Form
 	{
+		private enum Layer
+		{ @default, single, locked }
+
+
+		#region Fields (static)
+		private static Layer Aspect = Layer.@default;
+		#endregion Fields (static)
+
+
 		#region Fields
 		private MapFile _file;
 
 		private int[,]  _icons;
 		private Palette _pal;
-
-		private int  Level;
-		private bool SingleLevel;
 		#endregion Fields
 
 
@@ -45,20 +51,13 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			Level = (_file = file).Level;
-			Text = GetTitle();
-
-			SetResources();
-
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
 			{											// let ClientSize deter width and height.
 				Left = 200;
 				Top  = 100;
 			}
 
-			ClientSize = new Size(
-								_file.MapSize.Cols * 16 + 2,
-								_file.MapSize.Rows * 16 + 2);
+			LoadMapfile(file);
 		}
 		#endregion cTor
 
@@ -75,20 +74,25 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the FormClosed eventhandler.
+		/// Overrides the FormClosing eventhandler.
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnFormClosed(FormClosedEventArgs e)
+		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			RegistryInfo.UpdateRegistry(this);
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				RegistryInfo.UpdateRegistry(this);
 
-			MenuManager.DecheckScanG();
-			MainViewF.ScanG = null;
+				_file.SelectLevel -= OnSelectLevel;
+
+				MenuManager.DecheckScanG();
+				MainViewF.ScanG = null;
+			}
+			base.OnFormClosing(e);
 		}
 
 		/// <summary>
-		/// Closes the viewer on [Esc] or [Ctrl+g] keydown event. Reloads the
-		/// ScanG.Dat file on [Enter].
+		/// Overrides the KeyDown eventhandler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
@@ -103,6 +107,18 @@ namespace MapView
 				case Keys.Enter:
 					ReloadScanGfile();
 					break;
+
+				case Keys.Subtract:
+					--_file.Level;
+					break;
+
+				case Keys.Add:
+					++_file.Level;
+					break;
+
+				case Keys.L:
+					CycleLayers();
+					break;
 			}
 		}
 
@@ -112,27 +128,16 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
-			int delta;
-			if (MainViewF.Optionables.InvertMousewheel)
-				delta = -e.Delta;
-			else
-				delta =  e.Delta;
-
-			int level = Level;
-
-			if (delta < 0 && Level != 0)
+			if (e.Delta != 0)
 			{
-				--Level;
-			}
-			else if (delta > 0 && Level != _file.MapSize.Levs - 1)
-			{
-				++Level;
-			}
+				int delta;
+				if (MainViewF.Optionables.InvertMousewheel)
+					delta = -e.Delta;
+				else
+					delta =  e.Delta;
 
-			if (level != Level)
-			{
-				Text = GetTitle();
-				pnl_ScanG.Invalidate();
+				if      (delta >  1) ++_file.Level;
+				else if (delta < -1) --_file.Level;
 			}
 		}
 		#endregion Events (override)
@@ -140,19 +145,14 @@ namespace MapView
 
 		#region Events (panel)
 		/// <summary>
-		/// MouseClick handler for the panel. RMB toggles between multi-level
-		/// view and single-level view.
+		/// MouseClick handler for the panel. RMB cycles among aspects.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void panel_OnMouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
-			{
-				SingleLevel = !SingleLevel;
-				Text = GetTitle();
-				pnl_ScanG.Invalidate();
-			}
+				CycleLayers();
 		}
 
 		/// <summary>
@@ -193,13 +193,28 @@ namespace MapView
 						int iconid, palid, j;
 
 
-						int zStart;
-						if (SingleLevel) zStart = Level;
-						else             zStart = _file.MapSize.Levs - 1;
+						int zStrt, zStop;
+						switch (Aspect)
+						{
+							default: //case Layer.@default
+								zStrt = _file.MapSize.Levs - 1;
+								zStop = _file.Level;
+								break;
+
+							case Layer.single:
+								zStrt =
+								zStop = _file.Level;
+								break;
+
+							case Layer.locked:
+								zStrt = _file.MapSize.Levs - 1;
+								zStop = 0;
+								break;
+						}
 
 						int iconsTotal = _icons.Length / ScanGicon.Length_ScanG;
 
-						for (int z = zStart; z >= Level; --z)
+						for (int z = zStrt; z >= zStop; --z)
 						for (int y = 0; y != _file.MapSize.Rows; ++y)
 						for (int x = 0; x != _file.MapSize.Cols; ++x)
 						{
@@ -309,41 +324,40 @@ namespace MapView
 		#endregion Events (panel)
 
 
+		#region Events
+		/// <summary>
+		/// Fires when the Maplevel changes.
+		/// </summary>
+		/// <param name="args"></param>
+		internal void OnSelectLevel(SelectLevelEventArgs args)
+		{
+			SetTitle();
+			pnl_ScanG.Refresh(); // fast Refresh for key-repeats
+		}
+		#endregion Events
+
+
 		#region Methods
-		/// <summary>
-		/// Gets a title-string.
-		/// </summary>
-		/// <returns></returns>
-		private string GetTitle()
-		{
-			return "ScanG - "
-				 + "L" + (_file.MapSize.Levs - Level)
-				 + (SingleLevel ? " - 1 layer" : String.Empty);
-		}
-
-		/// <summary>
-		/// Invalidates the panel.
-		/// </summary>
-		internal void InvalidatePanel()
-		{
-			pnl_ScanG.Invalidate();
-		}
-
 		/// <summary>
 		/// Loads a Mapfile.
 		/// </summary>
 		/// <param name="file"></param>
 		internal void LoadMapfile(MapFile file)
 		{
-			Level = (_file = file).Level;
-			Text = GetTitle();
+			if (_file != null)
+				_file.SelectLevel -= OnSelectLevel;
+
+			(_file = file).SelectLevel += OnSelectLevel;
+
+			SetTitle();
 
 			SetResources();
 
 			ClientSize = new Size(
 								_file.MapSize.Cols * 16 + 2,
 								_file.MapSize.Rows * 16 + 2);
-			Refresh(); // req'd.
+
+			Refresh(); // req'd. if loading a Mapfile iff this viewer is already instantiated.
 		}
 
 		/// <summary>
@@ -361,6 +375,42 @@ namespace MapView
 				_icons = SpritesetsManager.ScanGufo;
 				_pal   = Palette.UfoBattle;
 			}
+		}
+
+		/// <summary>
+		/// Sets the title on the titlebar.
+		/// </summary>
+		internal void SetTitle()
+		{
+			int level = _file.MapSize.Levs - _file.Level;
+			if (!MainViewF.Optionables.Base1_z) --level;
+
+			Text = "ScanG - "
+				 + "L" + level + " - "
+				 + Enum.GetName(typeof(Layer), Aspect);
+		}
+
+		/// <summary>
+		/// Toggles between single-layer and multi-layer view.
+		/// </summary>
+		private void CycleLayers()
+		{
+			switch (Aspect)
+			{
+				case Layer.@default: Aspect = Layer.single;   break;
+				case Layer.single:   Aspect = Layer.locked;   break;
+				case Layer.locked:   Aspect = Layer.@default; break;
+			}
+			SetTitle();
+			pnl_ScanG.Invalidate();
+		}
+
+		/// <summary>
+		/// Invalidates the panel.
+		/// </summary>
+		internal void InvalidatePanel()
+		{
+			pnl_ScanG.Invalidate();
 		}
 
 		/// <summary>
