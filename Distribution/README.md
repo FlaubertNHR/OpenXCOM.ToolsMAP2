@@ -14,6 +14,125 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2020 December 6<br>
+[MapView2_201206.7z](https://drive.google.com/file/d/1mKJIW7A8pgI61njIz09F6_9AcuFJFoxP/view?usp=sharing)
+
+MapView.exe - 3.8.0.0 - code and UI tweaks generally
+
+MainView
+- addition to TilepartSubstition [Ctrl+u] specify a range of placed tileparts
+  and shift their ids to different parts in the terrainset (useful when parts
+  have been added to or removed from a terrain in either McdView or McdEdit
+  externally). reworked dialog
+- disallow placing a tilepart with an id greater than 253 (x-com Mapfiles still
+  can't deal with it, sry)
+- add Toner dropdown to the menubar (renders selected tiles in a monochrome
+  colorscale - [F10] see options)
+- add option "StartTopRoutePage" to start TopRouteView with a tab-page selected
+  (the TopView panel or the RouteView panel)
+- slightish optimizations to the draw routines: redraw the panel only when the
+  cursor moves in and out of a tile instead of every pixel and eg, cache
+  quadrant visibility flags from TopView for use by DrawTile() etc.
+- fix drawing parts with a y-offset in their MCD record
+- add option "LayerSelectionBorder" [F9] cycles through 3 ways to draw the
+  selection border (0) at the grid level (1) at both the grid level and the
+  level above (2) at the level above only (helpful when working with a bunch of
+  big blocks of dirt eg.)
+- add option "OneTileDraw" [Ctrl+F9] toggles whether or not to draw a selection
+  border when only 1 tile is selected (helpful when large and obscuring sprites
+  hide the tile you really want)
+- add option "InvertMousewheel" to change levels in the opposite direction
+- display cursor location in the panel
+
+TopView
+- respect options Base1_xy and Base1_z in TestPartslots dialog
+- close the TestPartslots dialog if it's open when options Base1_xy or Base1_z
+  change (displayed data is no longer valid)
+- properly close an old TestPartslots dialog if user recalls the test
+- display cursor location and selected tile location in the panel
+- stop redundant handling of a mousedown event ...
+
+TopView.QuadrantPanel
+- dispose old brushes when they change
+- update quad-swatches when their color changes in options
+
+RouteView
+- respect options Base1_xy and Base1_z when displaying locations of invalid
+  route-nodes
+- refactor automatic node-connection routines
+- faster location tracking and less redundant panel drawing
+- add option "ReduceDraws" to further speed panel drawing (but the InfoOverlay
+  will be drawn at stepped locations) (default false)
+- when a node is deleted clear all linked nodes' link-Type and -Distance (as
+  well as -Destination which was already done)
+- add option "StartConnector" to start RouteView with your prefered
+  auto-node-linker setting (default none)
+- draw temporary tilepart placeholders on the Map if there are any parts with
+  ids that exceed the currently allocated terrainset. Saving the Mapfile shall
+  irrevocably clear such rogue tileparts, so if you want to get legitimate
+  terrain-parts back in those slots do it right away. A dialog will be shown
+  when the tileset re/loads with vague instructions; vague because whatever went
+  wrong and how to fix it is really in your court. The only thing that Mapview2
+  detects is that there are placed tileparts with ids that exceed the bounds of
+  the current terrainset.
+
+MapInfoDialog
+- add a Refresh button
+
+TilesetEditor
+- add button that lists Tilesets that are defined by Path+Map (info for global
+  terrain allocation)
+
+Configurator
+- replacing tileset metadata (MapTilesets.yml) with the hardcoded manifest
+  requires explicit user-confirmation
+
+ScanG
+- cycle single/multi/full-layer view on RMB click or [L] (was LMB double-click)
+- reload ScanG.dat on [Enter] (was RMB double-click)
+- close the viewer on [Esc] or [Ctrl+G]
+- raise/lower the view-level with numeric keypad [Subtract] and [Add]
+- keep view-level synched with the other viewers
+
+
+McdView.exe - 3.4.2.0
+- don't clear MapView's static spritesets when invoked by TileView
+- set spriteshade from MainView options on load
+- allow user to choose ScanG and/or LoFT for either/both UFO and TFTD resources
+
+PckView.exe - 3.3.5.0
+- select a sprite correctly when invoked by TileView
+- set spriteshade from MainView options on load
+
+DSShared.dll - 3.3.3.0
+- better check for isOnScreen when instantiating the viewers
+
+XCom.dll - 3.6.0.0
+- integral support for MapView.exe, McdView.exe, and PckView.exe changes.
+
+global:
+- changed the y/x/z coordinate code-patterns to x/y/z
+- force strings to be interpreted for usage, storage and/or display by the
+  InvariantCulture rule (except for very few cases)
+- store and restore the height of the Description area for each viewer's
+  Options-panel
+- bypass all close routines when the OS wants to shut down
+
+- update CHM helpfile and keyboard_cheatsheet.txt with the added option keys
+
+big thanks to Kato for advocating enhanced TilepartSubstitution
+
+
+OnDetectBugs(EventArgs repro)
+{
+   report(kevL, repro);
+}
+
+GREAT TIME TO BACK UP ALL OF YOUR /MAPS, /ROUTES, and /TERRAIN (mcd/pck/tab)
+
+just do it ... i know you know i want you to know i want you to !
+I did a lot of things that can conceivably bork up. Treat as beta+
+
 2020 February 22<br>
 [MapView2_200222.7z](https://drive.google.com/file/d/1Agy0eLoc_glB07ij5wXOv34oqOiZ5NIl/view?usp=sharing)
 
@@ -30,7 +149,6 @@ Clear BypassRecordsExceeded flags - this will clear all BypassRecordsExceeded fl
 
 McdView 3.4.1.0
 - fixed a graphics glitch where the sprites of dead or alternate parts that have a y-offset were being drawn above the destination rectangle.
-
 
 2019 November 16<br>
 [MapView2_191116.7z](https://drive.google.com/file/d/1bM25j24XevtnMSjSe-_8YZlr6ms04O6a/view?usp=sharing)
