@@ -1101,7 +1101,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Fires when the map level changes in MainView.
+		/// Fires when the Maplevel changes in MainView.
 		/// </summary>
 		/// <param name="args"></param>
 		internal void OnSelectLevelMain(SelectLevelEventArgs args)
