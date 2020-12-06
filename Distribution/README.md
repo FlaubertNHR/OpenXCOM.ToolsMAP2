@@ -43,6 +43,14 @@ MainView
   hide the tile you really want)
 - add option "InvertMousewheel" to change levels in the opposite direction
 - display cursor location in the panel
+- draw temporary tilepart placeholders on the Map if there are any parts with
+  ids that exceed the currently allocated terrainset. Saving the Mapfile shall
+  irrevocably clear such rogue tileparts, so if you want to get legitimate
+  terrain-parts back in those slots do it right away. A dialog will be shown
+  when the tileset re/loads with vague instructions; vague because whatever went
+  wrong and how to fix it is really in your court. The only thing that Mapview2
+  detects is that there are placed tileparts with ids that exceed the bounds of
+  the current terrainset.
 
 TopView
 - respect options Base1_xy and Base1_z in TestPartslots dialog
@@ -67,14 +75,6 @@ RouteView
   well as -Destination which was already done)
 - add option "StartConnector" to start RouteView with your prefered
   auto-node-linker setting (default none)
-- draw temporary tilepart placeholders on the Map if there are any parts with
-  ids that exceed the currently allocated terrainset. Saving the Mapfile shall
-  irrevocably clear such rogue tileparts, so if you want to get legitimate
-  terrain-parts back in those slots do it right away. A dialog will be shown
-  when the tileset re/loads with vague instructions; vague because whatever went
-  wrong and how to fix it is really in your court. The only thing that Mapview2
-  detects is that there are placed tileparts with ids that exceed the bounds of
-  the current terrainset.
 
 MapInfoDialog
 - add a Refresh button
