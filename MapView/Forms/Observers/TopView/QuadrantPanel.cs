@@ -132,17 +132,17 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopView     .Control   .TopPanel.Select();
 			ObserverManager.TopRouteView.ControlTop.TopPanel.Select();
 
-			bool keySelectQuadrant = _keyslot !=  PartType.Invalid
-								  && _keyslot != (PartType)QuadrantDrawService.QuadrantPart;
+			bool isKeyInput = _keyslot !=  PartType.Invalid
+						   && _keyslot != (PartType)QuadrantDrawService.QuadrantPart;
 
-			if (!keySelectQuadrant)
+			if (!isKeyInput)
 			{
 				int x = (e.X - QuadrantDrawService.StartX);
 				if (x > -1 && x % QuadrantDrawService.Quadwidth < XCImage.SpriteWidth32) // ignore spaces between sprites
 					_keyslot = (PartType)(x / QuadrantDrawService.Quadwidth);
 			}
 
-			bool isCurrentClick = false;
+			bool isPartSlot = false;
 
 			PartType part = PartType.Invalid;
 			switch (_keyslot)
@@ -153,7 +153,7 @@ namespace MapView.Forms.Observers
 				case PartType.Content: part = PartType.Content; break;
 
 				case (PartType)QuadrantDrawService.QuadrantPart:
-					isCurrentClick = true;
+					isPartSlot = true;
 					if (QuadrantDrawService.CurrentTilepart != null)
 						part = QuadrantDrawService.CurrentTilepart.Record.PartType;
 					break;
@@ -164,8 +164,8 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopView     .Control   .QuadrantPanel.SelectedQuadrant = part;
 				ObserverManager.TopRouteView.ControlTop.QuadrantPanel.SelectedQuadrant = part;
 
-				if (!isCurrentClick)
-					Clicker(e.Button, e.Clicks, keySelectQuadrant);
+				if (!isPartSlot)
+					Clicker(e.Button, e.Clicks, isKeyInput);
 			}
 			_keyslot = PartType.Invalid;
 		}
@@ -177,8 +177,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="button"></param>
 		/// <param name="clicks"></param>
-		/// <param name="keySelectQuadrant">true if invoked by keyboard-input</param>
-		internal void Clicker(MouseButtons button, int clicks, bool keySelectQuadrant = false)
+		/// <param name="isKeyInput">true if invoked by keyboard-input</param>
+		internal void Clicker(MouseButtons button, int clicks, bool isKeyInput = false)
 		{
 			if (Tile != null)
 			{
@@ -192,7 +192,7 @@ namespace MapView.Forms.Observers
 					case MouseButtons.Right:
 						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
 						{
-							if (keySelectQuadrant || !TopView.Optionables.EnableRightClickWaitTimer)
+							if (isKeyInput || !TopView.Optionables.EnableRightClickWaitTimer)
 							{
 								_t1Clicks = clicks;
 								OnClicksElapsed(null,null);
@@ -240,11 +240,16 @@ namespace MapView.Forms.Observers
 
 			_t1.Stop();
 
-			if (_t1Clicks == 1)
-				MainViewOverlay.that.FillSelectedQuads();
-			else // 2+ clicks
-				MainViewOverlay.that.ClearSelectedQuads();
+			switch (_t1Clicks)
+			{
+				case 1:
+					MainViewOverlay.that.FillSelectedQuads();
+					break;
 
+				case 2:
+					MainViewOverlay.that.ClearSelectedQuads();
+					break;
+			}
 			_t1Clicks = 0;
 		}
 

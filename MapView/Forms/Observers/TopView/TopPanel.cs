@@ -33,14 +33,16 @@ namespace MapView.Forms.Observers
 		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over cursor lozenge
 		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // selected tile or tiles being drag-selected
 
+		private int _originX;	// since the lozenge is drawn with its Origin at 0,0 of the
+								// panel, the entire lozenge needs to be displaced to the right.
+//		private int _originY;	// But this isn't really used. It's set to 'OffsetY' and stays that way. -> done.
+
 		private Point _loc;
 
 		private int _col = -1; // these track the location of the mouse-cursor
 		private int _row = -1;
 
-		private int _originX;	// since the lozenge is drawn with its Origin at 0,0 of the
-								// panel, the entire lozenge needs to be displaced to the right.
-//		private int _originY;	// But this isn't really used. It's set to 'OffsetY' and stays that way. -> done.
+		private bool _isMouseDrag;
 		#endregion Fields
 
 
@@ -430,8 +432,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private bool _isMouseDrag;
-
 		/// <summary>
 		/// Handles the MouseDown event.
 		/// </summary>
@@ -440,47 +440,27 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			switch (e.Button)
+			if (   _col > -1 && _col < MapFile.MapSize.Cols
+				&& _row > -1 && _row < MapFile.MapSize.Rows)
 			{
-				case MouseButtons.Left:
-				case MouseButtons.Right:
+				SelectMapLocation(); // NOTE: Will select a tile on any mousebutton down.
+
+				switch (e.Button)
 				{
-					if (   _col > -1 && _col < MapFile.MapSize.Cols
-						&& _row > -1 && _row < MapFile.MapSize.Rows)
-					{
-						ObserverManager.RouteView   .Control     .DeselectNode(false);
-						ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+					case MouseButtons.Left:
+						switch (e.Clicks)
+						{
+							case 1:
+								_isMouseDrag = true;
+								break;
 
-						MainViewOverlay.that._keyDeltaX =
-						MainViewOverlay.that._keyDeltaY = 0;
+							case 2:
+								TopView.QuadrantPanel.Clicker(MouseButtons.Left, 2);
+								break;
+						}
+						break;
 
-						// as long as MainViewOverlay.OnSelectLocationMain()
-						// fires before the secondary viewers' OnSelectLocationObserver()
-						// functions fire, FirstClick is set okay by the former.
-						//
-						// TODO: Make a flag of FirstClick in MapFile where Location is really
-						// set, and where all these OnLocationSelected events actually fire out of!
-//						MainViewOverlay.that.FirstClick = true;
-
-						MapFile.Location = new MapLocation( // fire SelectLocation
-														_col, _row,
-														MapFile.Level);
-						_isMouseDrag = true;
-						MainViewOverlay.that.ProcessSelection(_loc, _loc);
-					}
-					break;
-				}
-			}
-
-			switch (e.Button)
-			{
-				case MouseButtons.Left:
-					if (e.Clicks == 2)
-						TopView.QuadrantPanel.Clicker(MouseButtons.Left, 2);
-					break;
-
-				case MouseButtons.Right:
-					if (MainViewOverlay.that.FirstClick)
+					case MouseButtons.Right:
 					{
 						int clicks;
 						if (TopView.Optionables.EnableRightClickWaitTimer)
@@ -490,13 +470,38 @@ namespace MapView.Forms.Observers
 						else
 							clicks = e.Clicks;
 
-						//DSShared.LogFile.WriteLine("TopPanel.OnMouseDown() fire Clicker() clicks= " + clicks);
-
 						TopView.QuadrantPanel.Clicker(MouseButtons.Right, clicks);
+						break;
 					}
-					break;
+				}
 			}
 //			base.OnMouseDown(e);
+		}
+
+		/// <summary>
+		/// Selects a location when a tile is clicked.
+		/// @note Helper for OnMouseDown().
+		/// </summary>
+		private void SelectMapLocation()
+		{
+			ObserverManager.RouteView   .Control     .DeselectNode(false);
+			ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+
+			MainViewOverlay.that._keyDeltaX =
+			MainViewOverlay.that._keyDeltaY = 0;
+
+			// IMPORTANT: as long as MainViewOverlay.OnSelectLocationMain()
+			// fires before the secondary viewers' OnSelectLocationObserver()
+			// functions fire, FirstClick is set okay by the former.
+			//
+			// TODO: Make a flag of FirstClick in MapFile where Location is really
+			// set, and where all these OnLocationSelected events actually fire out of!
+//			MainViewOverlay.that.FirstClick = true;
+
+			MapFile.Location = new MapLocation( // fire SelectLocation
+											_col, _row,
+											MapFile.Level);
+			MainViewOverlay.that.ProcessSelection(_loc, _loc);
 		}
 
 		/// <summary>
