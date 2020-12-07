@@ -384,7 +384,7 @@ namespace MapView.Forms.Observers
 		private int _startConnector = def_StartConnector;
 		[Category(cat_Connector)]
 		[Description(@"The selected connector button when Mapview starts.
-0 - link off (default)
+0 - auto-link off (default)
 1 - link forward
 2 - link forward and back")]
 		[DefaultValue(0)]
