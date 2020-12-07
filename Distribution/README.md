@@ -14,8 +14,12 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
-2020 December 7<br>
-[MapView2_201207.7z](https://drive.google.com/file/d/1Uyc4uNVNDXYppSdy32AunuRaXhACyQJr/view?usp=sharing)
+2020 December 7-b<br>
+[MapView2_201207b.7z](https://drive.google.com/file/d/1-HIl47bE5yP2xa7K9IuVVQmKfeQ8XrS2/view?usp=sharing)
+
+MapView.exe - 3.8.2.0
+XCom.dll - 3.6.1.0
+- fix inability to save the top two tileparts of a terrainset to a Mapfile
 
 MapView.exe - 3.8.1.0
 - fix exception in TopView when placing the null-part (eraser)
