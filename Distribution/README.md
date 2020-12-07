@@ -23,9 +23,6 @@ MapView.exe - 3.8.1.0
 - tiptext tweaks in RouteView re. the auto-connector
 - remove some redundant vars in the Designers
 
-2020 December 6<br>
-[MapView2_201206.7z](https://drive.google.com/file/d/1mKJIW7A8pgI61njIz09F6_9AcuFJFoxP/view?usp=sharing)
-
 MapView.exe - 3.8.0.0 - code and UI tweaks generally
 
 MainView
