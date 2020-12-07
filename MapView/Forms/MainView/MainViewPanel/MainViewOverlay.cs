@@ -526,7 +526,8 @@ namespace MapView.Forms.MainView
 			if (MapFile != null && FirstClick)
 			{
 				Tilepart part = ObserverManager.TileView.Control.SelectedTilepart;
-				if (part.SetId <= MapFile.MaxTerrainId)
+				if (part == null
+					|| part.SetId <= MapFile.MaxTerrainId)
 				{
 					_mainView.MapChanged = true;
 
