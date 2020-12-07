@@ -14,6 +14,15 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2020 December 7<br>
+[MapView2_201207.7z](https://drive.google.com/file/d/1Uyc4uNVNDXYppSdy32AunuRaXhACyQJr/view?usp=sharing)
+
+MapView.exe - 3.8.1.0
+- fix exception in TopView when placing the null-part (eraser)
+- close TilepartSubstition dialog on [Ctrl+U]
+- tiptext tweaks in RouteView re. the auto-connector
+- remove some redundant vars in the Designers
+
 2020 December 6<br>
 [MapView2_201206.7z](https://drive.google.com/file/d/1mKJIW7A8pgI61njIz09F6_9AcuFJFoxP/view?usp=sharing)
 
