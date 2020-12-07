@@ -1,26 +1,11 @@
-﻿namespace MapView.Forms.Observers
+﻿using System;
+
+
+namespace MapView.Forms.Observers
 {
 	partial class TopViewForm
 	{
 		#region Designer
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
-
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -43,6 +28,6 @@
 			this.ResumeLayout(false);
 
 		}
-		#endregion
+		#endregion Designer
 	}
 }

@@ -1,24 +1,18 @@
-﻿namespace MapView.Forms.Observers
+﻿using System;
+using System.Windows.Forms;
+
+using DSShared.Controls;
+
+
+namespace MapView.Forms.Observers
 {
 	partial class TopRouteViewForm
 	{
 		#region Designer
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private CompositedTabControl tabControl;
 
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
+		private TabPage tp_Top;
+		private TabPage tp_Route;
 
 
 		/// <summary>
@@ -79,11 +73,6 @@
 			this.ResumeLayout(false);
 
 		}
-
-		DSShared.Controls.CompositedTabControl tabControl;
-
-		private System.Windows.Forms.TabPage tp_Top;
-		private System.Windows.Forms.TabPage tp_Route;
 		#endregion Designer
 	}
 }

@@ -1,19 +1,20 @@
+using System;
+using System.Windows.Forms;
+
+
 namespace MapView.Forms.Observers
 {
 	partial class TopView
 	{
 		#region Designer
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
+		private ToolStrip tsTools;
+		private Panel pnlMain;
+		private ToolStripContainer tscPanel;
+		private ToolStrip tsMain;
+		private ToolStripDropDownButton tsddbVisibleQuads;
+		private ToolStripButton tsb_Options;
+		private ToolStripDropDownButton tsddbTest;
+		private ToolStripMenuItem tsddbTestPartslots;
 
 
 		/// <summary>
@@ -157,17 +158,6 @@ namespace MapView.Forms.Observers
 			this.PerformLayout();
 
 		}
-
-		private System.ComponentModel.IContainer components = null;
-
-		private System.Windows.Forms.ToolStrip tsTools;
-		private System.Windows.Forms.Panel pnlMain;
-		private System.Windows.Forms.ToolStripContainer tscPanel;
-		private System.Windows.Forms.ToolStrip tsMain;
-		private System.Windows.Forms.ToolStripDropDownButton tsddbVisibleQuads;
-		private System.Windows.Forms.ToolStripButton tsb_Options;
-		private System.Windows.Forms.ToolStripDropDownButton tsddbTest;
-		private System.Windows.Forms.ToolStripMenuItem tsddbTestPartslots;
 		#endregion
 	}
 }
