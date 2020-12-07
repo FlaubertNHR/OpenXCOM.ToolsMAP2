@@ -651,72 +651,22 @@ namespace XCom
 				fs.WriteByte((byte)MapSize.Cols); // - says this header is "height, width and depth (in that order)"
 				fs.WriteByte((byte)MapSize.Levs); //   ie. y/x/z
 
-				int id;
-
-				// NOTE: User is actually disallowed from placing any tilepart
-				// with an id greater than MapFile.MaxTerrainId.
+				// NOTE: User is disallowed from placing any tilepart with an id
+				// greater than MapFile.MaxTerrainId.
 
 				// TODO: Ask user before NOT writing crippled partids.
 
 				MapTile tile;
-
 				for (int lev = 0; lev != MapSize.Levs; ++lev)
 				for (int row = 0; row != MapSize.Rows; ++row)
 				for (int col = 0; col != MapSize.Cols; ++col)
 				{
 					tile = this[col, row, lev];
 
-					if (tile.Floor == null
-						|| (id = tile.Floor.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
-					{
-						fs.WriteByte((byte)0);
-					}
-					else if (id >= Parts.Count)
-					{
-						fs.WriteByte((byte)0);
-						ForceReload = true;
-					}
-					else
-						fs.WriteByte((byte)id);
-
-					if (tile.West == null
-						|| (id = tile.West.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
-					{
-						fs.WriteByte((byte)0);
-					}
-					else if (id >= Parts.Count)
-					{
-						fs.WriteByte((byte)0);
-						ForceReload = true;
-					}
-					else
-						fs.WriteByte((byte)id);
-
-					if (tile.North == null
-						|| (id = tile.North.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
-					{
-						fs.WriteByte((byte)0);
-					}
-					else if (id >= Parts.Count)
-					{
-						fs.WriteByte((byte)0);
-						ForceReload = true;
-					}
-					else
-						fs.WriteByte((byte)id);
-
-					if (tile.Content == null
-						|| (id = tile.Content.SetId + BlanksReservedCount) > (int)Byte.MaxValue)
-					{
-						fs.WriteByte((byte)0);
-					}
-					else if (id >= Parts.Count)
-					{
-						fs.WriteByte((byte)0);
-						ForceReload = true;
-					}
-					else
-						fs.WriteByte((byte)id);
+					WritePartId(fs, tile.Floor);
+					WritePartId(fs, tile.West);
+					WritePartId(fs, tile.North);
+					WritePartId(fs, tile.Content);
 				}
 			}
 
@@ -724,6 +674,32 @@ namespace XCom
 				return FileService.ReplaceFile(pfe);
 
 			return !fail;
+		}
+
+		/// <summary>
+		/// Writes a tilepart's id to the Filestream.
+		/// </summary>
+		/// <param name="fs"></param>
+		/// <param name="part"></param>
+		private void WritePartId(Stream fs, Tilepart part)
+		{
+			int id;
+
+			if (part == null)
+			{
+				fs.WriteByte((byte)0);
+			}
+			else if ((id = part.SetId) >= Parts.Count) // wipe crippled part
+			{
+				fs.WriteByte((byte)0);
+				ForceReload = true;
+			}
+			else if ((id += BlanksReservedCount) > (int)Byte.MaxValue) // NOTE: shall be disallowed by the edit-functs
+			{
+				fs.WriteByte((byte)0);
+			}
+			else
+				fs.WriteByte((byte)id);
 		}
 
 		/// <summary>
