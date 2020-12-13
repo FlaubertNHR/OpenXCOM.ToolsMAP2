@@ -11,7 +11,7 @@
 
 		<p>McdView can create, open, edit, and save MCD files. An MCD file - or recordset - is a collection of data - records - denoting the characteristics of tileparts. A tilepart is the basic building block for the terrain of every XCOM battlefield. Each record in the collection is a tilepart and the 62 integer fields of each part are called a record.</p>
 
-		<p>IMPORTANT: ScanG and LoFT icons for UFO and TFTD are different. So UFO and/or TFTD resources have to be set in MapView II's Configurator basepath for ScanG and LoFT icons to appear in McdView. The respective resources that should be used to draw the icons can then be selected under the Palette menu: UFO or TFTD. Note that McdView is still functional without ScanG or LoFT resources but the ScanG and LoFT values will no longer be safely capped at the number of entries in their respective resource files.</p>
+		<p>IMPORTANT: ScanG and LoFT icons for UFO and TFTD are different. So UFO and/or TFTD resources have to be set in MapView II's Configurator basepath for ScanG and LoFT icons to appear in McdView. The respective resources that should be used to draw the icons can then be selected under the Resources menu: UFO or TFTD. Note that McdView is still functional without ScanG or LoFT resources but the ScanG and LoFT values will no longer be safely capped at the number of entries in their respective resource files.</p>
 
 		<p>Also note that McdView can be used to edit an MCD file without requiring its corresponding terrain sprites (PCK + TAB files). But sprite values will no longer be safely capped at the number of entries in those rogue terrain files.</p>
 
@@ -75,16 +75,26 @@
 		<p>Quit [Ctrl+q] - exits the application. Confirmation is required if a collection is loaded and its values were changed.</p>
 
 		<br>
-		<h3>Palette menu</h3>
-
-		<p>UFO [Ctrl+u] - displays sprites with the standard UFO battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if UFO resources are not configured in MapView II's basepath. The UFO palette is selected by default.</p>
-		<p>TFTD [Ctrl+t] - displays sprites with the standard TFTD battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if TFTD resources are not configured in MapView II's basepath.</p>
-
-		<br>
 		<h3>Edit menu</h3>
 
 		<p>zero this part's values [Ctrl+0] - zeros all fields of the currently selected tilepart.</p>
 		<p>check STRICT values [Ctrl+k] - runs a test of the values of the currently selected tilepart against a range of values that are generally suitable for XCOM. Also runs tests for internal consistency. The results are displayed in a dialog.</p>
+
+		<br>
+		<h3>Resources menu</h3>
+
+		<p>UFO [Ctrl+u] - displays sprites by rendering them with the standard UFO battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if UFO resources are not configured in MapView II's basepath. UFO resources is selected by default.</p>
+		<p>TFTD [Ctrl+t] - displays sprites by rendering them with the standard TFTD battle-palette. ScanG and LoFT icons will <b>not</b> be displayed if TFTD resources are not configured in MapView II's basepath.</p>
+
+		<br>
+		<h3>Load menu</h3>
+
+		<p>ufo - ScanG - loads a ScanG.dat file as a UFO resource. This will override a ScanG resource that has been set by MapView configuration.</p>
+		<p>ufo - LoFT - loads a LoFTemps.dat file as a UFO resource. This will override a LoFT resource that has been set by MapView configuration.</p>
+		<p>tftd - ScanG - loads a ScanG.dat file as a TFTD resource. This will override a ScanG resource that has been set by MapView configuration.</p>
+		<p>tftd - LoFT - loads a LoFTemps.dat file as a TFTD resource. This will override a LoFT resource that has been set by MapView configuration.</p>
+
+		<p>A check will appear beside the above menuitems when that resource is loaded. Clicking a checked item will unload that resource and try to revert to the standard MapView configuration resource.</p>
 
 		<br>
 		<h3>Help menu</h3>
