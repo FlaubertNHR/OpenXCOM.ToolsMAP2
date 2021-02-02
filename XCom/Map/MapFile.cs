@@ -17,14 +17,14 @@ namespace XCom
 	public sealed class MapFile
 	{
 		#region Delegates
-		public delegate void SelectLocationEvent(SelectLocationEventArgs e);
-		public delegate void SelectLevelEvent(SelectLevelEventArgs e);
+		public delegate void LocationSelectedEvent(LocationSelectedEventArgs e);
+		public delegate void LevelSelectedEvent(LevelSelectedEventArgs e);
 		#endregion Delegates
 
 
 		#region Events
-		public event SelectLocationEvent SelectLocation;
-		public event SelectLevelEvent SelectLevel;
+		public event LocationSelectedEvent LocationSelected;
+		public event LevelSelectedEvent LevelSelected;
 		#endregion Events
 
 
@@ -80,7 +80,7 @@ namespace XCom
 		private int _level;
 		/// <summary>
 		/// Gets/Sets the currently selected level.
-		/// @note Setting the level will fire the SelectLevel event.
+		/// @note Setting the level will fire the LevelSelected event.
 		/// WARNING: Level 0 is the top level of the displayed Map.
 		/// </summary>
 		public int Level // TODO: why is Level distinct from Location.Lev - why is Location.Lev not even set by Level
@@ -90,15 +90,15 @@ namespace XCom
 			{
 				_level = Math.Max(0, Math.Min(value, MapSize.Levs - 1));
 
-				if (SelectLevel != null)
-					SelectLevel(new SelectLevelEventArgs(_level));
+				if (LevelSelected != null)
+					LevelSelected(new LevelSelectedEventArgs(_level));
 			}
 		}
 
 		private MapLocation _location;
 		/// <summary>
 		/// Gets/Sets the currently selected location.
-		/// @note Setting the location will fire the SelectLocation event.
+		/// @note Setting the location will fire the LocationSelected event.
 		/// </summary>
 		public MapLocation Location
 		{
@@ -110,11 +110,11 @@ namespace XCom
 				{
 					_location = value;
 
-					if (SelectLocation != null)
-						SelectLocation(new SelectLocationEventArgs(
-																_location,
-																this[_location.Col,
-																	 _location.Row]));
+					if (LocationSelected != null)
+						LocationSelected(new LocationSelectedEventArgs(
+																	_location,
+																	this[_location.Col,
+																		 _location.Row]));
 				}
 			}
 		}
@@ -234,7 +234,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Changes the view-level and fires the SelectLevel event.
+		/// Changes the view-level and fires the LevelSelected event.
 		/// </summary>
 		/// <param name="dir">+1 is down, -1 is up</param>
 		public void ChangeLevel(int dir)
@@ -790,7 +790,7 @@ namespace XCom
 				ClearRouteNodes();
 				SetupRouteNodes();
 
-				Level = 0; // fire SelectLevel event
+				Level = 0; // fire LevelSelected event
 			}
 			return bit;
 		}

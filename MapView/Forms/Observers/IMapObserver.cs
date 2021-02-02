@@ -20,7 +20,7 @@ namespace MapView.Forms.Observers
 		Dictionary<string, IMapObserver> ObserverPanels
 		{ get; }
 
-		void OnSelectLocationObserver(SelectLocationEventArgs args);
-		void OnSelectLevelObserver(SelectLevelEventArgs args);
+		void OnLocationSelectedObserver(LocationSelectedEventArgs args);
+		void OnLevelSelectedObserver(LevelSelectedEventArgs args);
 	}
 }

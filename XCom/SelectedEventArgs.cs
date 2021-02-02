@@ -1,9 +1,9 @@
 namespace XCom
 {
 	/// <summary>
-	/// EventArgs for when a SelectLocation event fires.
+	/// EventArgs for when a LocationSelected event fires.
 	/// </summary>
-	public sealed class SelectLocationEventArgs
+	public sealed class LocationSelectedEventArgs
 	{
 		public MapLocation Location
 		{ get; private set; }
@@ -16,7 +16,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="tile"></param>
-		internal SelectLocationEventArgs(MapLocation location, MapTile tile)
+		internal LocationSelectedEventArgs(MapLocation location, MapTile tile)
 		{
 			Location = location;
 			Tile     = tile;
@@ -26,9 +26,9 @@ namespace XCom
 
 
 	/// <summary>
-	/// EventArgs for when a SelectLevel event fires.
+	/// EventArgs for when a LevelSelected event fires.
 	/// </summary>
-	public sealed class SelectLevelEventArgs
+	public sealed class LevelSelectedEventArgs
 	{
 		public int Level
 		{ get; private set; }
@@ -37,7 +37,7 @@ namespace XCom
 		/// cTor.
 		/// </summary>
 		/// <param name="level">the new level</param>
-		internal SelectLevelEventArgs(int level)
+		internal LevelSelectedEventArgs(int level)
 		{
 			Level = level;
 		}

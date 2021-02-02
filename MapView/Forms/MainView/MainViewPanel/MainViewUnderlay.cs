@@ -52,14 +52,14 @@ namespace MapView.Forms.MainView
 
 				if (_file != null)
 				{
-					_file.SelectLocation -= MainViewOverlay.OnSelectLocationMain;
-					_file.SelectLevel    -= MainViewOverlay.OnSelectLevelMain;
+					_file.LocationSelected -= MainViewOverlay.OnLocationSelectedMain;
+					_file.LevelSelected    -= MainViewOverlay.OnLevelSelectedMain;
 				}
 
 				if ((_file = value) != null)
 				{
-					_file.SelectLocation += MainViewOverlay.OnSelectLocationMain;
-					_file.SelectLevel    += MainViewOverlay.OnSelectLevelMain;
+					_file.LocationSelected += MainViewOverlay.OnLocationSelectedMain;
+					_file.LevelSelected    += MainViewOverlay.OnLevelSelectedMain;
 
 					SetOverlaySize();
 				}

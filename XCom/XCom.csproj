@@ -118,7 +118,7 @@
     <Compile Include="RouteData\RouteCheckService.cs" />
     <Compile Include="Map\MapFileService.cs" />
     <Compile Include="Map\TilepartFactory.cs" />
-    <Compile Include="SelectEventArgs.cs" />
+    <Compile Include="SelectedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

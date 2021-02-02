@@ -83,7 +83,7 @@ namespace MapView
 			{
 				RegistryInfo.UpdateRegistry(this);
 
-				_file.SelectLevel -= OnSelectLevel;
+				_file.LevelSelected -= OnLevelSelected;
 
 				MenuManager.DecheckScanG();
 				MainViewF.ScanG = null;
@@ -329,7 +329,7 @@ namespace MapView
 		/// Fires when the Maplevel changes.
 		/// </summary>
 		/// <param name="args"></param>
-		internal void OnSelectLevel(SelectLevelEventArgs args)
+		internal void OnLevelSelected(LevelSelectedEventArgs args)
 		{
 			SetTitle();
 			pnl_ScanG.Refresh(); // fast Refresh for key-repeats
@@ -345,9 +345,9 @@ namespace MapView
 		internal void LoadMapfile(MapFile file)
 		{
 			if (_file != null)
-				_file.SelectLevel -= OnSelectLevel;
+				_file.LevelSelected -= OnLevelSelected;
 
-			(_file = file).SelectLevel += OnSelectLevel;
+			(_file = file).LevelSelected += OnLevelSelected;
 
 			SetTitle();
 

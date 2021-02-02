@@ -205,7 +205,7 @@ namespace MapView.Forms.Observers
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
 
-				MapFile.Location = new MapLocation( // fire SelectLocation
+				MapFile.Location = new MapLocation( // fire LocationSelected
 												_col, _row,
 												MapFile.Level);
 
@@ -227,7 +227,7 @@ namespace MapView.Forms.Observers
 		{
 			if (_col != -1)
 			{
-				MapFile.Location = new MapLocation( // fire SelectLocation
+				MapFile.Location = new MapLocation( // fire LocationSelected
 												_col, _row,
 												MapFile.Level);
 
@@ -286,7 +286,7 @@ namespace MapView.Forms.Observers
 
 				if (!MainViewOverlay.that.FirstClick) // allow Shift
 				{
-					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire SelectLocation event
+					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire LocationSelected event
 
 					var loc = new Point(0,0);
 					MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -336,7 +336,7 @@ namespace MapView.Forms.Observers
 						if (   c > -1 && c < MapFile.MapSize.Cols
 							&& r > -1 && r < MapFile.MapSize.Rows)
 						{
-							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire SelectLocation event
+							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire LocationSelected event
 
 							loc.X = c; loc.Y = r;
 							MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -354,8 +354,8 @@ namespace MapView.Forms.Observers
 						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs)
 						{
-							MapFile.ChangeLevel(vert);			// fire SelectLevel event
-							MapFile.Location = new MapLocation(	// fire SelectLocation event
+							MapFile.ChangeLevel(vert);			// fire LevelSelected event
+							MapFile.Location = new MapLocation(	// fire LocationSelected event
 															MapFile.Location.Col,
 															MapFile.Location.Row,
 															level);
@@ -393,7 +393,7 @@ namespace MapView.Forms.Observers
 						{
 							RouteView.Dragnode = NodeSelected;
 
-							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire SelectLocation event
+							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire LocationSelected event
 
 							var args = new RoutePanelEventArgs(
 															MouseButtons.None,
@@ -415,8 +415,8 @@ namespace MapView.Forms.Observers
 						{
 							RouteView.Dragnode = NodeSelected;
 
-							MapFile.ChangeLevel(vert);			// fire SelectLevel event
-							MapFile.Location = new MapLocation(	// fire SelectLocation event
+							MapFile.ChangeLevel(vert);			// fire LevelSelected event
+							MapFile.Location = new MapLocation(	// fire LocationSelected event
 															MapFile.Location.Col,
 															MapFile.Location.Row,
 															level);

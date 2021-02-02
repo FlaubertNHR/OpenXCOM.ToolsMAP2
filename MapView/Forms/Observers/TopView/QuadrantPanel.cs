@@ -85,7 +85,7 @@ namespace MapView.Forms.Observers
 		/// Inherited from IMapObserver through MapObserverControl_Top.
 		/// </summary>
 		/// <param name="args"></param>
-		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
+		public override void OnLocationSelectedObserver(LocationSelectedEventArgs args)
 		{
 			Tile             = args.Tile;
 			SelectedLocation = args.Location;
@@ -97,7 +97,7 @@ namespace MapView.Forms.Observers
 		/// Inherited from IMapObserver through MapObserverControl_Top.
 		/// </summary>
 		/// <param name="args"></param>
-		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
+		public override void OnLevelSelectedObserver(LevelSelectedEventArgs args)
 		{
 			if (SelectedLocation != null)
 			{

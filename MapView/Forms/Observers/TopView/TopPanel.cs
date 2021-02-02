@@ -490,15 +490,15 @@ namespace MapView.Forms.Observers
 			MainViewOverlay.that._keyDeltaX =
 			MainViewOverlay.that._keyDeltaY = 0;
 
-			// IMPORTANT: as long as MainViewOverlay.OnSelectLocationMain()
-			// fires before the secondary viewers' OnSelectLocationObserver()
+			// IMPORTANT: as long as MainViewOverlay.OnLocationSelectedMain()
+			// fires before the secondary viewers' OnLocationSelectedObserver()
 			// functions fire, FirstClick is set okay by the former.
 			//
 			// TODO: Make a flag of FirstClick in MapFile where Location is really
 			// set, and where all these OnLocationSelected events actually fire out of!
 //			MainViewOverlay.that.FirstClick = true;
 
-			MapFile.Location = new MapLocation( // fire SelectLocation
+			MapFile.Location = new MapLocation( // fire LocationSelected
 											_col, _row,
 											MapFile.Level);
 			MainViewOverlay.that.ProcessSelection(_loc, _loc);

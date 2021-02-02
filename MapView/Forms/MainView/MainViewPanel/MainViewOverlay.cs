@@ -735,7 +735,7 @@ namespace MapView.Forms.MainView
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire SelectLocation
+					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire LocationSelected
 
 					var loc = new Point(0,0);
 					ProcessSelection(loc,loc);
@@ -775,7 +775,7 @@ namespace MapView.Forms.MainView
 								_keyDeltaX =
 								_keyDeltaY = 0;
 
-								MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire SelectLocation
+								MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire LocationSelected
 
 								loc.X = _col = c;
 								loc.Y = _row = r;
@@ -921,7 +921,7 @@ namespace MapView.Forms.MainView
 
 							var loc = new Point(_col, _row);
 
-							MapFile.Location = new MapLocation( // fire SelectLocation
+							MapFile.Location = new MapLocation( // fire LocationSelected
 															loc.X, loc.Y,
 															MapFile.Level);
 							_isMouseDragL = true;
@@ -1093,9 +1093,9 @@ namespace MapView.Forms.MainView
 		/// Fires when a location is selected in MainView.
 		/// </summary>
 		/// <param name="args"></param>
-		internal void OnSelectLocationMain(SelectLocationEventArgs args)
+		internal void OnLocationSelectedMain(LocationSelectedEventArgs args)
 		{
-			//LogFile.WriteLine("MainViewOverlay.OnSelectLocationMain");
+			//LogFile.WriteLine("MainViewOverlay.OnLocationSelectedMain");
 
 			FirstClick = true;
 			_mainView.sb_PrintPosition();
@@ -1105,9 +1105,9 @@ namespace MapView.Forms.MainView
 		/// Fires when the Maplevel changes in MainView.
 		/// </summary>
 		/// <param name="args"></param>
-		internal void OnSelectLevelMain(SelectLevelEventArgs args)
+		internal void OnLevelSelectedMain(LevelSelectedEventArgs args)
 		{
-			//LogFile.WriteLine("MainViewOverlay.OnSelectLevelMain");
+			//LogFile.WriteLine("MainViewOverlay.OnLevelSelectedMain");
 
 			_mainView.sb_PrintPosition();
 			Invalidate();

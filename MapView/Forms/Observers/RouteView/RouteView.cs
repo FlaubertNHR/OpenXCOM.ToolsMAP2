@@ -252,7 +252,7 @@ namespace MapView.Forms.Observers
 		/// to stay selected while other tiles get highlighted.
 		/// </summary>
 		/// <param name="args"></param>
-		public override void OnSelectLocationObserver(SelectLocationEventArgs args)
+		public override void OnLocationSelectedObserver(LocationSelectedEventArgs args)
 		{
 			PrintSelectedInfo();
 		}
@@ -271,9 +271,9 @@ namespace MapView.Forms.Observers
 		/// to stay selected while other tiles get highlighted.
 		/// </summary>
 		/// <param name="args"></param>
-		public override void OnSelectLevelObserver(SelectLevelEventArgs args)
+		public override void OnLevelSelectedObserver(LevelSelectedEventArgs args)
 		{
-			//LogFile.WriteLine("RouteView.OnSelectLevelObserver() " + Tag);
+			//LogFile.WriteLine("RouteView.OnLevelSelectedObserver() " + Tag);
 
 			if (RoutePanel._col != -1) // find the Control that the mousecursor is in (if either)
 			{
@@ -1480,9 +1480,9 @@ namespace MapView.Forms.Observers
 			var loc = new Point(node.Col, node.Row);
 
 			if (node.Lev != _file.Level)
-				_file.Level = node.Lev; // fire SelectLevel
+				_file.Level = node.Lev; // fire LevelSelected
 
-			_file.Location = new MapLocation( // fire SelectLocation
+			_file.Location = new MapLocation( // fire LocationSelected
 										loc.X, loc.Y,
 										_file.Level);
 
