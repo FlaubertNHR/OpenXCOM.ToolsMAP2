@@ -1900,7 +1900,10 @@ namespace McdView
 					else
 					{
 						SpriteShade = result;
+
+						_bypassShadebar = true;
 						bar_SpriteShade.Value = (result != -1 ? result : 0);
+						_bypassShadebar = false;
 					}
 				}
 				else
@@ -1908,6 +1911,7 @@ namespace McdView
 			}
 		}
 
+		bool _bypassShadebar;
 		/// <summary>
 		/// Handles SpriteShade's trackbar's ValueChanged event.
 		/// </summary>
@@ -1915,10 +1919,13 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnValueChanged_SpriteShade(object sender, EventArgs e)
 		{
-			int val = bar_SpriteShade.Value;
-			if (val == 0) val = -1;
+			if (!_bypassShadebar)
+			{
+				int val = bar_SpriteShade.Value;
+				if (val == 0) val = -1;
 
-			tb_SpriteShade.Text = val.ToString();
+				tb_SpriteShade.Text = val.ToString();
+			}
 		}
 
 		/// <summary>
