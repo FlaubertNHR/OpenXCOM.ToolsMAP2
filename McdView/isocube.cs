@@ -182,7 +182,7 @@ namespace McdView
 			graphics.PixelOffsetMode   = PixelOffsetMode  .HighQuality;
 			graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-			graphics.FillRectangle(new SolidBrush(Color.Transparent), 0,0, width, HEIGHT);
+			graphics.FillRectangle(Brushes.Transparent, 0,0, width, HEIGHT);
 
 
 			//     p0
@@ -205,7 +205,7 @@ namespace McdView
 			path.AddLine(p2, p3);
 			path.AddLine(p3, p1);
 			path.CloseFigure();
-			graphics.FillPath(new SolidBrush(Color.DeepSkyBlue), path);
+			graphics.FillPath(Brushes.DeepSkyBlue, path);
 
 			path.Reset();
 
@@ -213,7 +213,7 @@ namespace McdView
 			path.AddLine(p3, p6);
 			path.AddLine(p6, p4);
 			path.CloseFigure();
-			graphics.FillPath(new SolidBrush(Color.LawnGreen), path);
+			graphics.FillPath(Brushes.LawnGreen, path);
 
 			path.Reset();
 
@@ -221,7 +221,7 @@ namespace McdView
 			path.AddLine(p3, p6);
 			path.AddLine(p6, p5);
 			path.CloseFigure();
-			graphics.FillPath(new SolidBrush(Color.Crimson), path);
+			graphics.FillPath(Brushes.Crimson, path);
 
 			return b;
 		}

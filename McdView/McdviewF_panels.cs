@@ -20,7 +20,7 @@ namespace McdView
 	{
 		#region Fields
 		private Graphics _graphics;
-		private ImageAttributes _attri;
+		private ImageAttributes _ia;
 		#endregion Fields
 
 
@@ -92,9 +92,9 @@ namespace McdView
 				_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 				_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-				_attri = new ImageAttributes();
+				_ia = new ImageAttributes();
 				if (_spriteShadeEnabled)
-					_attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+					_ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 				McdRecord record = Parts[SelId].Record;
 				int y = SPRITE_ORIGIN_Y;
@@ -110,11 +110,10 @@ namespace McdView
 										XCImage.SpriteWidth32  * 2,
 										XCImage.SpriteHeight40 * 2);
 
-					var brush = new SolidBrush(Color.Black); // actually palette-id #0 Transparent
 					for (int i = 0; i != 8; ++i)
 					{
 						rect.X = SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i;
-						_graphics.FillRectangle(brush, rect);
+						_graphics.FillRectangle(Brushes.Black, rect); // actually palette-id #0 Transparent
 					}
 				}
 
@@ -145,6 +144,7 @@ namespace McdView
 											XCImage.SpriteWidth32  * 2,
 											XCImage.SpriteHeight40 * 2);
 				}
+				_ia.Dispose();
 			}
 			else // draw blank rectanges ->
 			{
@@ -181,7 +181,7 @@ namespace McdView
 										XCImage.SpriteHeight40 * 2),
 							0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 							GraphicsUnit.Pixel,
-							_attri);
+							_ia);
 		}
 
 
@@ -353,9 +353,9 @@ namespace McdView
 					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-					_attri = new ImageAttributes();
+					_ia = new ImageAttributes();
 					if (_spriteShadeEnabled)
-						_attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+						_ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 					var icon = new Bitmap(
 										4,4,
@@ -397,7 +397,8 @@ namespace McdView
 												(sender as Panel).Height),
 									0,0, icon.Width, icon.Height,
 									GraphicsUnit.Pixel,
-									_attri);
+									_ia);
+					_ia.Dispose();
 				}
 			}
 		}
@@ -517,7 +518,7 @@ namespace McdView
 		private static GraphicsPath CuboidVertLineTopPath;
 		private static GraphicsPath CuboidVertLineBotPath;
 
-		private Font fontRose = new Font("Courier New", 8);
+		private Font _fontRose = new Font("Courier New", 8);
 
 		/// <summary>
 		/// Paints a 3d LoFT representation in the IsoLoft panel as well as the
@@ -531,8 +532,7 @@ namespace McdView
 
 			_graphics.DrawRectangle(
 								Colors.PenText,
-								0,
-								0,
+								0,0,
 								pnl_IsoLoft.Width  - 1,
 								pnl_IsoLoft.Height - 1);
 
@@ -568,7 +568,7 @@ namespace McdView
 					TextRenderer.DrawText(
 										_graphics,
 										rose,
-										fontRose,
+										_fontRose,
 										pt,
 										SystemColors.ControlDark);
 				}

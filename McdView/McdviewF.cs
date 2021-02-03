@@ -590,6 +590,19 @@ namespace McdView
 				else
 					e.Cancel = true;
 			}
+
+			Colors.BrushHilight      .Dispose();
+			Colors.BrushHilightsubsel.Dispose();
+
+			Isocube              .Dispose();
+			CuboidOutlinePath    .Dispose();
+			CuboidTopAnglePath   .Dispose();
+			CuboidBotAnglePath   .Dispose();
+			CuboidVertLineTopPath.Dispose();
+			CuboidVertLineBotPath.Dispose();
+
+			_fontRose.Dispose();
+
 			base.OnFormClosing(e);
 		}
 

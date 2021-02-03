@@ -217,7 +217,7 @@ namespace McdView
 		const int y3_sprite = y2_line;
 
 		private Graphics _graphics;
-		private ImageAttributes _attri;
+		private ImageAttributes _ia;
 
 		/// <summary>
 		/// Paints this TerrainPanel.
@@ -230,9 +230,9 @@ namespace McdView
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-				_attri = new ImageAttributes();
+				_ia = new ImageAttributes();
 				if (_f._spriteShadeEnabled)
-					_attri.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
+					_ia.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 				Bitmap sprite;
 
@@ -374,6 +374,7 @@ namespace McdView
 						}
 					}
 				}
+				_ia.Dispose();
 			}
 		}
 
@@ -398,7 +399,7 @@ namespace McdView
 										XCImage.SpriteHeight40),
 							0, topcrop, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 							GraphicsUnit.Pixel,
-							_attri);
+							_ia);
 		}
 
 

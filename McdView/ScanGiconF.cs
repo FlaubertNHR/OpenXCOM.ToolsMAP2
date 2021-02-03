@@ -141,9 +141,9 @@ namespace McdView
 			graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 			graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-			var attri = new ImageAttributes();
+			var ia = new ImageAttributes();
 			if (_f._spriteShadeEnabled)
-				attri.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
+				ia.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 			_scrolloffset = (-Scroller.Value * (TotalHeight - ClientSize.Height)) / MaxScrollVal;
 
@@ -199,7 +199,7 @@ namespace McdView
 											ICON_WIDTH, ICON_HEIGHT),
 								0,0, icon.Width, icon.Height,
 								GraphicsUnit.Pixel,
-								attri);
+								ia);
 
 				rect = new Rectangle(
 								x,
@@ -220,6 +220,7 @@ namespace McdView
 									SystemColors.ControlText,
 									McdviewF.FLAGS);
 			}
+			ia.Dispose();
 		}
 
 		protected override void OnMouseWheel(MouseEventArgs e)

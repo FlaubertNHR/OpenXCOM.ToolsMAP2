@@ -102,9 +102,9 @@ namespace McdView
 			var graphics = e.Graphics;
 			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-			var attri = new ImageAttributes();
+			var ia = new ImageAttributes();
 			if (_f._spriteShadeEnabled)
-				attri.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
+				ia.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 			Rectangle rect;
 
@@ -122,7 +122,7 @@ namespace McdView
 											XCImage.SpriteHeight40),
 								0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 								GraphicsUnit.Pixel,
-								attri);
+								ia);
 
 				rect = new Rectangle(
 								x,
@@ -143,6 +143,7 @@ namespace McdView
 									SystemColors.ControlText,
 									McdviewF.FLAGS);
 			}
+			ia.Dispose();
 		}
 
 
