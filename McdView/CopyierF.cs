@@ -40,7 +40,6 @@ namespace McdView
 		internal string Label;
 
 		private Graphics _graphics;
-		private ImageAttributes _ia;
 		#endregion Fields
 
 
@@ -297,6 +296,11 @@ namespace McdView
 
 
 		#region Events
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_Open(object sender, EventArgs e)
 		{
 			_f.OpenCopier();
@@ -577,10 +581,6 @@ namespace McdView
 					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-					_ia = new ImageAttributes();
-					if (_f._spriteShadeEnabled)
-						_ia.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
-
 					var icon = new Bitmap(
 										4,4,
 										PixelFormat.Format8bppIndexed);
@@ -621,8 +621,7 @@ namespace McdView
 												(sender as Panel).Height),
 									0,0, icon.Width, icon.Height,
 									GraphicsUnit.Pixel,
-									_ia);
-					_ia.Dispose();
+									_f.Ia);
 				}
 			}
 		}

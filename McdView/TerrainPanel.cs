@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using DSShared.Controls;
@@ -92,6 +91,11 @@ namespace McdView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="fcopier"></param>
 		protected TerrainPanel(
 				McdviewF f,
 				CopierF fcopier = null)
@@ -217,7 +221,6 @@ namespace McdView
 		const int y3_sprite = y2_line;
 
 		private Graphics _graphics;
-		private ImageAttributes _ia;
 
 		/// <summary>
 		/// Paints this TerrainPanel.
@@ -229,10 +232,6 @@ namespace McdView
 			{
 				_graphics = e.Graphics;
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-				_ia = new ImageAttributes();
-				if (_f._spriteShadeEnabled)
-					_ia.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 				Bitmap sprite;
 
@@ -374,7 +373,6 @@ namespace McdView
 						}
 					}
 				}
-				_ia.Dispose();
 			}
 		}
 
@@ -399,7 +397,7 @@ namespace McdView
 										XCImage.SpriteHeight40),
 							0, topcrop, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 							GraphicsUnit.Pixel,
-							_ia);
+							_f.Ia);
 		}
 
 

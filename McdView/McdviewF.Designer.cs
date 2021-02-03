@@ -2895,7 +2895,7 @@ namespace McdView
 			this.pnl_Sprites.Size = new System.Drawing.Size(680, 80);
 			this.pnl_Sprites.TabIndex = 0;
 			this.pnl_Sprites.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Sprites);
-			this.pnl_Sprites.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_SpritePanel);
+			this.pnl_Sprites.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown_SpritePanel);
 			// 
 			// gb_Collection
 			// 
@@ -2960,7 +2960,7 @@ namespace McdView
 			this.pnl_ScanGic.Size = new System.Drawing.Size(32, 32);
 			this.pnl_ScanGic.TabIndex = 4;
 			this.pnl_ScanGic.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_ScanG_panel);
-			this.pnl_ScanGic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_ScanGicon);
+			this.pnl_ScanGic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown_ScanGicon);
 			// 
 			// gb_Tu
 			// 

@@ -110,9 +110,12 @@ namespace McdView
 
 		/// <summary>
 		/// Opens the LoFT viewer when this LoftPanel is clicked.
+		/// @note If user has the openfile dialog open and double-clicks to open
+		/// a file that happens to be over the panel a mouse-up event fires. So
+		/// use MouseDown here.
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnMouseUp(MouseEventArgs e)
+		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			_f.PartsPanel.Select(); // NOTE: Workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using DSShared;
@@ -76,12 +75,12 @@ namespace McdView
 		/// <summary>
 		/// Blinks the current iconId text-bg.
 		/// </summary>
-		private async void blink()
+		private async void blink() // yes i know - this goes FOREVER!!
 		{
 			_id = SpriteId;
 
-			int tick = Int32.MinValue;
-			while (++tick != Int32.MaxValue)
+			uint tick = UInt32.MinValue;
+			while (++tick != UInt32.MaxValue)
 			{
 				await System.Threading.Tasks.Task.Delay(McdviewF.PERIOD);
 
@@ -92,19 +91,21 @@ namespace McdView
 
 				Invalidate();
 			}
+			tick = UInt32.MinValue;
+			blink();
 		}
 		#endregion Methods
 
 
 		#region Events (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			var graphics = e.Graphics;
 			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-			var ia = new ImageAttributes();
-			if (_f._spriteShadeEnabled)
-				ia.SetGamma(_f.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
 			Rectangle rect;
 
@@ -122,7 +123,7 @@ namespace McdView
 											XCImage.SpriteHeight40),
 								0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 								GraphicsUnit.Pixel,
-								ia);
+								_f.Ia);
 
 				rect = new Rectangle(
 								x,
@@ -143,10 +144,13 @@ namespace McdView
 									SystemColors.ControlText,
 									McdviewF.FLAGS);
 			}
-			ia.Dispose();
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			if (   e.X > -1 && e.X < ClientSize.Width // NOTE: Bypass event if cursor moves off the clientarea before released.
@@ -198,6 +202,10 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
@@ -206,6 +214,10 @@ namespace McdView
 			base.OnFormClosing(e);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnLoad(EventArgs e)
 		{
 			if (Loc.X == -1)

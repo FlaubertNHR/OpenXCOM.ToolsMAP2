@@ -20,7 +20,6 @@ namespace McdView
 	{
 		#region Fields
 		private Graphics _graphics;
-		private ImageAttributes _ia;
 		#endregion Fields
 
 
@@ -92,10 +91,6 @@ namespace McdView
 				_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 				_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-				_ia = new ImageAttributes();
-				if (_spriteShadeEnabled)
-					_ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
-
 				McdRecord record = Parts[SelId].Record;
 				int y = SPRITE_ORIGIN_Y;
 
@@ -144,7 +139,6 @@ namespace McdView
 											XCImage.SpriteWidth32  * 2,
 											XCImage.SpriteHeight40 * 2);
 				}
-				_ia.Dispose();
 			}
 			else // draw blank rectanges ->
 			{
@@ -181,16 +175,19 @@ namespace McdView
 										XCImage.SpriteHeight40 * 2),
 							0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 							GraphicsUnit.Pixel,
-							_ia);
+							Ia);
 		}
 
 
 		/// <summary>
 		/// Opens the spriteset-viewer when a sprite-phase is clicked.
+		/// @note If user has the openfile dialog open and double-clicks to open
+		/// a file that happens to be over the panel a mouse-up event fires. So
+		/// use MouseDown here.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMouseUp_SpritePanel(object sender, MouseEventArgs e)
+		private void OnMouseDown_SpritePanel(object sender, MouseEventArgs e)
 		{
 			PartsPanel.Select();
 
@@ -353,10 +350,6 @@ namespace McdView
 					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-					_ia = new ImageAttributes();
-					if (_spriteShadeEnabled)
-						_ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
-
 					var icon = new Bitmap(
 										4,4,
 										PixelFormat.Format8bppIndexed);
@@ -397,18 +390,20 @@ namespace McdView
 												(sender as Panel).Height),
 									0,0, icon.Width, icon.Height,
 									GraphicsUnit.Pixel,
-									_ia);
-					_ia.Dispose();
+									Ia);
 				}
 			}
 		}
 
 		/// <summary>
 		/// Opens the ScanG viewer when the ScanG icon is clicked.
+		/// @note If user has the openfile dialog open and double-clicks to open
+		/// a file that happens to be over the panel a mouse-up event fires. So
+		/// use MouseDown here.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMouseUp_ScanGicon(object sender, MouseEventArgs e)
+		private void OnMouseDown_ScanGicon(object sender, MouseEventArgs e)
 		{
 			PartsPanel.Select();
 

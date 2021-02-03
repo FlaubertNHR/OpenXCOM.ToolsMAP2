@@ -77,12 +77,12 @@ namespace McdView
 		/// <summary>
 		/// Blinks the current iconId text-bg.
 		/// </summary>
-		private async void blink()
+		private async void blink() // yes i know - this goes FOREVER!!
 		{
 			_id = LoftId;
 
-			int tick = Int32.MinValue;
-			while (++tick != Int32.MaxValue)
+			uint tick = UInt32.MinValue;
+			while (++tick != UInt32.MaxValue)
 			{
 				await System.Threading.Tasks.Task.Delay(McdviewF.PERIOD);
 
@@ -93,6 +93,8 @@ namespace McdView
 
 				Invalidate();
 			}
+			tick = UInt32.MinValue;
+			blink();
 		}
 		#endregion Methods
 

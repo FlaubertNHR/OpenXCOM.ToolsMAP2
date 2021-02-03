@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -115,10 +116,26 @@ namespace McdView
 		}
 
 
-		internal bool _spriteShadeEnabled;
+		private ImageAttributes _ia;
+		internal ImageAttributes Ia
+		{
+			get { return _ia; }
+			private set
+			{
+				if (_ia != null)
+					_ia.Dispose();
+
+				_ia = value;
+
+				if (SpriteShadeEnabled)
+					_ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+			}
+		}
+
+		internal bool SpriteShadeEnabled
+		{ get; private set; }
 
 		private int _spriteshade = -1;
-
 		/// <summary>
 		/// The inverse-gamma adjustment for sprites and icons.
 		/// </summary>
@@ -126,8 +143,10 @@ namespace McdView
 		{
 			set
 			{
-				if (_spriteShadeEnabled = ((_spriteshade = value) != -1))
+				if (SpriteShadeEnabled = ((_spriteshade = value) != -1))
 					SpriteShadeFloat = (float)_spriteshade * 0.03f; // NOTE: 33 is unity.
+
+				Ia = new ImageAttributes();
 
 				InvalidatePanels(false);
 
@@ -602,6 +621,8 @@ namespace McdView
 			CuboidVertLineBotPath.Dispose();
 
 			_fontRose.Dispose();
+
+			Ia.Dispose();
 
 			base.OnFormClosing(e);
 		}
