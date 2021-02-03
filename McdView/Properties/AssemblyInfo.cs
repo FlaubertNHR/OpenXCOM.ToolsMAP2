@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the sectoids")]
 [assembly: AssemblyProduct("McdView")]
-[assembly: AssemblyCopyright("2019-2020")]
+[assembly: AssemblyCopyright("2019-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,9 +31,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values, or the defaults by using '*' for the Build
 // and Revision.
-[assembly: AssemblyVersion("3.4.2.0")]
-[assembly: AssemblyFileVersion("3.4.2.0")]
-[assembly: AssemblyInformationalVersion("3.4.2.0")]
+[assembly: AssemblyVersion("3.4.3.0")]
+[assembly: AssemblyFileVersion("3.4.3.0")]
+[assembly: AssemblyInformationalVersion("3.4.3.0")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]
