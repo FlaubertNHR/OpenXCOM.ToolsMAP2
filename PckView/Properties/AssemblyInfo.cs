@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the grays")]
 [assembly: AssemblyProduct("PckView")]
-[assembly: AssemblyCopyright("2017-2020")]
+[assembly: AssemblyCopyright("2017-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,9 +31,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values, or the defaults by using '*' for the Build
 // and Revision.
-[assembly: AssemblyVersion("3.3.5.0")]
-[assembly: AssemblyFileVersion("3.3.5.0")]
-[assembly: AssemblyInformationalVersion("3.3.5.0")]
+[assembly: AssemblyVersion("3.4.0.0")]
+[assembly: AssemblyFileVersion("3.4.0.0")]
+[assembly: AssemblyInformationalVersion("3.4.0.0")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]
