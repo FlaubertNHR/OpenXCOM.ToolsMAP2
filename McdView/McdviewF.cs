@@ -1531,6 +1531,10 @@ namespace McdView
 
 		private string _lastdir;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		private string GetInitialDirectory()
 		{
 			if (!String.IsNullOrEmpty(_lastdir) && Directory.Exists(_lastdir))
@@ -1546,6 +1550,11 @@ namespace McdView
 			return String.Empty;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_LoadScanGufo(object sender, EventArgs e)
 		{
 			if (!miLoadScanGufo.Checked)
@@ -1589,7 +1598,7 @@ namespace McdView
 		/// @note Cf SpritesetsManager.LoadScanGufo()
 		/// </summary>
 		/// <param name="pfeScanG"></param>
-		public void LoadScanGufo(string pfeScanG)
+		private void LoadScanGufo(string pfeScanG)
 		{
 			byte[] bytes = FileService.ReadFile(pfeScanG);
 			if (bytes != null)
@@ -1607,6 +1616,11 @@ namespace McdView
 				_scanGufo = null;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_LoadLoFTufo(object sender, EventArgs e)
 		{
 			if (!miLoadLoFTufo.Checked)
@@ -1651,7 +1665,7 @@ namespace McdView
 		/// @note Cf SpritesetsManager.LoadLoFTufo()
 		/// </summary>
 		/// <param name="pfeLoft"></param>
-		public void LoadLoFTufo(string pfeLoft)
+		private void LoadLoFTufo(string pfeLoft)
 		{
 			byte[] bytes = FileService.ReadFile(pfeLoft);
 			if (bytes != null)
@@ -1682,6 +1696,11 @@ namespace McdView
 				_loftufo = null;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_LoadScanGtftd(object sender, EventArgs e)
 		{
 			if (!miLoadScanGtftd.Checked)
@@ -1725,7 +1744,7 @@ namespace McdView
 		/// @note Cf SpritesetsManager.LoadScanGtftd()
 		/// </summary>
 		/// <param name="pfeScanG"></param>
-		public void LoadScanGtftd(string pfeScanG)
+		private void LoadScanGtftd(string pfeScanG)
 		{
 			byte[] bytes = FileService.ReadFile(pfeScanG);
 			if (bytes != null)
@@ -1743,6 +1762,11 @@ namespace McdView
 				_scanGtftd = null;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClick_LoadLoFTtftd(object sender, EventArgs e)
 		{
 			if (!miLoadLoFTtftd.Checked)
@@ -1786,7 +1810,7 @@ namespace McdView
 		/// @note Cf SpritesetsManager.LoadLoFTtftd()
 		/// </summary>
 		/// <param name="pfeLoft"></param>
-		public void LoadLoFTtftd(string pfeLoft)
+		private void LoadLoFTtftd(string pfeLoft)
 		{
 			byte[] bytes = FileService.ReadFile(pfeLoft);
 			if (bytes != null)

@@ -33,7 +33,7 @@ namespace McdView
 
 		#region cTor
 		/// <summary>
-		/// 
+		/// cTor.
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="panelid"></param>
@@ -100,6 +100,10 @@ namespace McdView
 
 
 		#region Events (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			var graphics = e.Graphics;
@@ -173,6 +177,10 @@ namespace McdView
 		}
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			if (   e.X > -1 && e.X < ClientSize.Width // NOTE: Bypass event if cursor moves off the clientarea before released.
@@ -224,6 +232,10 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
@@ -232,6 +244,10 @@ namespace McdView
 			base.OnFormClosing(e);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnLoad(EventArgs e)
 		{
 			if (Loc.X == -1)
