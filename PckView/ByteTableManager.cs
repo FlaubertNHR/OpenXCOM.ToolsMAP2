@@ -29,7 +29,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sprite">the sprite whose bytes to display</param>
 		/// <param name="callback">function pointer that unchecks the menuitem
-		/// in PckViewForm</param>
+		/// in PckViewF</param>
 		internal static void LoadTable(
 				XCImage sprite,
 				MethodInvoker callback)
@@ -111,7 +111,7 @@ namespace PckView
 		{
 			if (_fBytes != null)
 			{
-				if (PckViewForm.Quit)
+				if (PckViewF.Quit)
 					_fBytes.Close();
 				else
 					_fBytes.Hide();
@@ -121,6 +121,11 @@ namespace PckView
 
 
 		#region Events (static)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private static void OnBytesKeyDown(object sender, KeyEventArgs e)
 		{
 			switch (e.KeyData)
@@ -133,9 +138,14 @@ namespace PckView
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private static void OnBytesClosing(object sender, CancelEventArgs e)
 		{
-			if (e.Cancel = !PckViewForm.Quit)
+			if (e.Cancel = !PckViewF.Quit)
 				_fBytes.Hide();
 		}
 		#endregion Events (static)

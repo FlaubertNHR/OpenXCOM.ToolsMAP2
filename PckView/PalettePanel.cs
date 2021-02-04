@@ -18,13 +18,13 @@ namespace PckView
 
 
 		#region Fields
-		private readonly PaletteForm _fpalette;
+		private readonly PaletteF _fpalette;
 
 		private int _x = -1;
 		private int _y = -1;
 
-		private readonly GraphicsPath pathTran_hori = new GraphicsPath();
-		private readonly GraphicsPath pathTran_vert = new GraphicsPath();
+		private readonly GraphicsPath _pathTran_hori = new GraphicsPath();
+		private readonly GraphicsPath _pathTran_vert = new GraphicsPath();
 		#endregion Fields
 
 
@@ -48,12 +48,12 @@ namespace PckView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal PalettePanel(PaletteForm f)
+		internal PalettePanel(PaletteF f)
 		{
 			_fpalette = f;
 
 			Dock = DockStyle.Fill;
-			PckViewForm.PaletteChanged += OnPaletteChanged;
+			PckViewF.PaletteChanged += OnPaletteChanged;
 		}
 		#endregion cTor
 
@@ -69,18 +69,18 @@ namespace PckView
 			SwatchWidth  = Width  / SwatchesPerSide;
 			SwatchHeight = Height / SwatchesPerSide;
 
-			pathTran_hori.Reset();
-			pathTran_vert.Reset();
+			_pathTran_hori.Reset();
+			_pathTran_vert.Reset();
 
 			int x0 = SwatchWidth  / 3;
 			int x1 = SwatchWidth  * 2 / 3;
 			int y0 = SwatchHeight / 3;
 			int y1 = SwatchHeight * 2 / 3;
 
-			pathTran_hori.AddLine(x0,y0, x1,y0); pathTran_hori.StartFigure();
-			pathTran_hori.AddLine(x0,y1, x1,y1);
-			pathTran_vert.AddLine(x0,y0, x0,y1); pathTran_vert.StartFigure();
-			pathTran_vert.AddLine(x1,y0, x1,y1);
+			_pathTran_hori.AddLine(x0,y0, x1,y0); _pathTran_hori.StartFigure();
+			_pathTran_hori.AddLine(x0,y1, x1,y1);
+			_pathTran_vert.AddLine(x0,y0, x0,y1); _pathTran_vert.StartFigure();
+			_pathTran_vert.AddLine(x1,y0, x1,y1);
 
 			if (Palid != -1)
 			{
@@ -135,7 +135,7 @@ namespace PckView
 							++j,
 								x += SwatchWidth)
 					{
-						using (var brush = new SolidBrush(SpritePanel.AdjustColor(PckViewForm.Pal[j + SwatchesPerSide * i])))
+						using (var brush = new SolidBrush(SpritePanel.AdjustColor(PckViewF.Pal[j + SwatchesPerSide * i])))
 						{
 							graphics.FillRectangle(
 												brush,
@@ -161,7 +161,7 @@ namespace PckView
 							++j,
 								x += SwatchWidth)
 					{
-						using (var brush = new SolidBrush(PckViewForm.Pal[j + SwatchesPerSide * i]))
+						using (var brush = new SolidBrush(PckViewF.Pal[j + SwatchesPerSide * i]))
 						{
 							graphics.FillRectangle(
 												brush,
@@ -173,14 +173,14 @@ namespace PckView
 			}
 
 			// draw a small square w/ light and dark lines in the transparent swatch.
-			graphics.DrawPath(Pens.LightGray, pathTran_hori);
-			graphics.DrawPath(Pens.     Gray, pathTran_vert);
+			graphics.DrawPath(Pens.LightGray, _pathTran_hori);
+			graphics.DrawPath(Pens.     Gray, _pathTran_vert);
 
 			if (Palid != -1) // highlight the selected id ->
 			{
 				graphics.DrawRectangle(
 									Pens.Red,
-									_x          - 1, _y           - 1,
+									_x - 1, _y - 1,
 									SwatchWidth - 1, SwatchHeight - 1);
 			}
 		}
@@ -188,6 +188,9 @@ namespace PckView
 
 
 		#region Events
+		/// <summary>
+		/// 
+		/// </summary>
 		private void OnPaletteChanged()
 		{
 			UpdatePalette();
@@ -210,10 +213,30 @@ namespace PckView
 			UpdatePalette();
 		}
 
-		internal void UpdatePalette()
+		/// <summary>
+		/// 
+		/// </summary>
+		private void UpdatePalette()
 		{
 			_fpalette.PrintPaletteId(Palid);
 			Invalidate();
+		}
+
+		/// <summary>
+		/// fing jackasses.
+		/// @note I have no idea if this is really necessary despite hundreds of
+		/// hours reading about Dispose() et al. This class is a visual control
+		/// so it gets disposed when its parent closes, but do its private
+		/// fields get disposed reliably ...
+		/// </summary>
+		internal void Destroy()
+		{
+			PckViewF.PaletteChanged -= OnPaletteChanged;
+
+			_pathTran_hori.Dispose();
+			_pathTran_vert.Dispose();
+
+//			base.Dispose(); // <- I *still* don't know if that is a Good Thing or not.
 		}
 		#endregion Methods
 	}

@@ -1,6 +1,6 @@
 namespace PckView
 {
-	partial class PckViewForm
+	partial class PckViewF
 	{
 		#region Designer
 		private System.ComponentModel.IContainer components = null;
@@ -70,7 +70,7 @@ namespace PckView
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckViewForm));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PckViewF));
 			this.mmMainMenu = new System.Windows.Forms.MainMenu(this.components);
 			this.miFileMenu = new System.Windows.Forms.MenuItem();
 			this.miCreate = new System.Windows.Forms.MenuItem();
@@ -423,7 +423,7 @@ namespace PckView
 			this.tssl_OffsetAftr.Text = "after";
 			this.tssl_OffsetAftr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// PckViewForm
+			// PckViewF
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(632, 454);
@@ -435,7 +435,7 @@ namespace PckView
 			this.MaximumSize = new System.Drawing.Size(640, 480);
 			this.Menu = this.mmMainMenu;
 			this.MinimumSize = new System.Drawing.Size(427, 0);
-			this.Name = "PckViewForm";
+			this.Name = "PckViewF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "PckView";
 			this.ss_Status.ResumeLayout(false);

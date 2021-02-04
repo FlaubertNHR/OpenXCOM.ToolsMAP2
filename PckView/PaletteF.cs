@@ -1,7 +1,5 @@
 using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using DSShared;
@@ -12,14 +10,19 @@ namespace PckView
 	/// <summary>
 	/// Displays the currently active 256-color palette.
 	/// </summary>
-	internal sealed class PaletteForm
+	internal sealed class PaletteF
 		:
 			Form
 	{
 		#region Fields
 		internal readonly SpriteEditorF _feditor;
-		internal readonly PalettePanel _pnlPalette;
 		#endregion Fields
+
+
+		#region Properties
+		internal PalettePanel PalPanel
+		{ get; private set; }
+		#endregion Properties
 
 
 		#region Properties (override)
@@ -35,16 +38,15 @@ namespace PckView
 		/// cTor.
 		/// </summary>
 		/// <param name="f">caller</param>
-		internal PaletteForm(SpriteEditorF f)
+		internal PaletteF(SpriteEditorF f)
 		{
 			InitializeComponent();
 
 			_feditor = f;
-			_pnlPalette = new PalettePanel(this);
 
-			Controls.Add(_pnlPalette);
-
-			lblStatus.SendToBack();
+			PalPanel = new PalettePanel(this);
+			Controls.Add(PalPanel);
+			PalPanel.BringToFront();
 
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
 			{											// let ClientSize deter width and height.
@@ -69,7 +71,7 @@ namespace PckView
 		{
 			if (e.KeyData == Keys.Escape)
 			{
-				e.SuppressKeyPress = true;
+				e.Handled = e.SuppressKeyPress = true;
 				Close();
 			}
 			base.OnKeyDown(e);
@@ -83,13 +85,16 @@ namespace PckView
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				if (!PckViewForm.Quit)
+				if (!PckViewF.Quit)
 				{
 					e.Cancel = true;
 					Hide();
 				}
 				else
+				{
 					RegistryInfo.UpdateRegistry(this);
+					PalPanel.Destroy();
+				}
 			}
 			base.OnFormClosing(e);
 		}
@@ -97,6 +102,10 @@ namespace PckView
 
 
 		#region Methods
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="palid"></param>
 		internal void PrintPaletteId(int palid)
 		{
 			lblStatus.Text = _feditor.SpritePanel.GetColorInfo(palid);
@@ -106,22 +115,7 @@ namespace PckView
 
 
 		#region Designer
-		private Container components = null;
-
-		private PckView.PaletteLabelbar lblStatus;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
+		private PaletteLabelBar lblStatus;
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -129,7 +123,7 @@ namespace PckView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.lblStatus = new PckView.PaletteLabelbar();
+			this.lblStatus = new PckView.PaletteLabelBar();
 			this.SuspendLayout();
 			// 
 			// lblStatus
@@ -142,7 +136,7 @@ namespace PckView
 			this.lblStatus.TabIndex = 0;
 			this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// PaletteForm
+			// PaletteF
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(292, 274);
@@ -152,45 +146,12 @@ namespace PckView
 			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "PaletteForm";
+			this.Name = "PaletteF";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.ResumeLayout(false);
 
 		}
 		#endregion Designer
-	}
-
-
-
-	internal sealed class PaletteLabelbar
-		:
-			Label
-	{
-		private readonly GraphicsPath path3d = new GraphicsPath();
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnResize(EventArgs e)
-		{
-			base.OnResize(e);
-
-			path3d.Reset();
-
-			path3d.AddLine(Width, 0, 0,0);
-			path3d.AddLine(0,0, 0, Height);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			base.OnPaint(e);
-			e.Graphics.DrawPath(Pens.Gray, path3d);
-		}
 	}
 }

@@ -141,7 +141,7 @@ namespace XCom
 		/// calls SpritesetsManager.LoadSpriteset()
 		/// calls SpriteCollection..cTor.
 		/// 2.
-		/// PckViewForm.LoadSpriteset()
+		/// PckViewF.LoadSpriteset()
 		/// 3.
 		/// Also instantiated by Globals.LoadExtraSprites()
 		/// 4.

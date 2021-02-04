@@ -15,7 +15,7 @@ namespace PckView
 		private static void Main(string[] args)
 		{
 			if (args != null)
-				PckViewForm._args = args;
+				PckViewF._args = args;
 
 			Thread.CurrentThread.CurrentCulture       = //sheesh
 			Thread.CurrentThread.CurrentUICulture     =
@@ -24,7 +24,7 @@ namespace PckView
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new PckViewForm());
+			Application.Run(new PckViewF());
 		}
 	}
 }

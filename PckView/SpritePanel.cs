@@ -24,7 +24,8 @@ namespace PckView
 
 
 		#region Fields
-		private SpriteEditorF _feditor;
+		private readonly SpriteEditorF _feditor;
+
 		private Pen _penGrid;
 		#endregion Fields
 
@@ -94,16 +95,22 @@ namespace PckView
 		/// </summary>
 		internal SpritePanel(SpriteEditorF f)
 		{
+			Dock = DockStyle.Fill;
+
 			_feditor = f;
 
 			_penGrid = Pens.Gray;
 
-			PckViewForm.PaletteChanged += OnPaletteChanged;
+			PckViewF.PaletteChanged += OnPaletteChanged;
 		}
 		#endregion cTor
 
 
 		#region Events (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
 		{
 //			base.OnMouseLeave(e);
@@ -138,7 +145,7 @@ namespace PckView
 					{
 						case SpriteEditorF.EditMode.Enabled: // paint ->
 						{
-							int palid = _feditor._fpalette._pnlPalette.Palid;
+							int palid = _feditor._fpalette.PalPanel.Palid;
 							if (palid > -1
 								&& (palid < PckImage.MarkerRle
 									|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_0))
@@ -150,7 +157,7 @@ namespace PckView
 																			XCImage.SpriteWidth,
 																			XCImage.SpriteHeight,
 																			Sprite.Bindata,
-																			PckViewForm.Pal.ColorTable);
+																			PckViewF.Pal.ColorTable);
 									Invalidate();
 									_feditor._f.TilePanel.Invalidate();
 
@@ -183,7 +190,7 @@ namespace PckView
 						}
 
 						case SpriteEditorF.EditMode.Locked: // eye-dropper ->
-							_feditor._fpalette._pnlPalette.SelectPaletteId((int)Sprite.Bindata[bindataId]);
+							_feditor._fpalette.PalPanel.SelectPaletteId((int)Sprite.Bindata[bindataId]);
 							break;
 					}
 				}
@@ -313,14 +320,15 @@ namespace PckView
 							1,
 							1);
 
-			var path = new GraphicsPath();
+			using (var path = new GraphicsPath())
+			{
+				path.AddLine(p0, p1);
+				path.AddLine(p1, p2);
+				path.AddLine(p2, p3);
+				path.AddLine(p3, p4);
 
-			path.AddLine(p0, p1);
-			path.AddLine(p1, p2);
-			path.AddLine(p2, p3);
-			path.AddLine(p3, p4);
-
-			graphics.DrawPath(Pens.Black, path);
+				graphics.DrawPath(Pens.Black, path);
+			}
 		}
 		#endregion Events (override)
 
@@ -335,7 +343,8 @@ namespace PckView
 
 		#region Methods (static)
 		/// <summary>
-		/// Adjusts the gamma-value of each pixel in OnPaint().
+		/// Adjusts the gamma-value of each pixel in <see cref="OnPaint()"/>.
+		/// Also called by <see cref="PalettePanel"/>.OnPaint().
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
@@ -345,8 +354,8 @@ namespace PckView
 			double green = (double)color.G / 255;
 			double blue  = (double)color.B / 255;
 
-			double factor = (double)PckViewForm.SpriteShadeFloat + 1.62;	// <- is arbitrary; it would help to know the actual
-																			// algorithm used by ImageAttributes.SetGamma() ...
+			double factor = (double)PckViewF.SpriteShadeFloat + 1.63;	// <- is arbitrary; it would help to know the actual
+																		// algorithm used by ImageAttributes.SetGamma() ...
 			return Color.FromArgb(
 							color.A,
 							(int)(Math.Pow(red,   1 / factor) * 255),
@@ -374,7 +383,7 @@ namespace PckView
 										"id:{0} (0x{0:X2})",
 										palid);
 
-				var color = PckViewForm.Pal[palid];
+				var color = PckViewF.Pal[palid];
 				text += " r:" + color.R
 					  + " g:" + color.G
 					  + " b:" + color.B
@@ -399,11 +408,25 @@ namespace PckView
 			return String.Empty;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="invert"></param>
 		internal void InvertGridColor(bool invert)
 		{
 			_penGrid = (invert) ? Pens.LightGray
 								: Pens.Gray;
 			Invalidate();
+		}
+
+		/// <summary>
+		/// fing jackasses.
+		/// </summary>
+		internal void Destroy()
+		{
+			PckViewF.PaletteChanged -= OnPaletteChanged;
+
+//			base.Dispose(); // <- I *still* don't know if that is a Good Thing or not.
 		}
 		#endregion Methods
 	}

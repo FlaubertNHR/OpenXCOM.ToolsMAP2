@@ -25,17 +25,14 @@ namespace PckView
 
 
 		#region Fields
-		internal readonly PckViewForm _f;
-		internal readonly PaletteForm _fpalette;
-
-		private readonly TrackBar _trackBar = new TrackBar();
-		private readonly Label _lblEditMode = new Label();
+		internal readonly PckViewF _f;
+		internal readonly PaletteF _fpalette;
 		#endregion Fields
 
 
 		#region Properties (static)
 		internal static EditMode Mode
-		{ get; set; }
+		{ get; private set; }
 		#endregion Properties (static)
 
 
@@ -57,46 +54,22 @@ namespace PckView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal SpriteEditorF(PckViewForm f)
+		internal SpriteEditorF(PckViewF f)
 		{
-			_f = f;
-
-			_trackBar.AutoSize    = false;
-			_trackBar.Height      = 23;
-			_trackBar.Minimum     =  1;
-			_trackBar.Maximum     = 10;
-			_trackBar.Value       = 10;
-			_trackBar.LargeChange =  1;
-			_trackBar.BackColor   = Color.Silver;
-
-			_trackBar.Scroll += OnTrackScroll;
-
-			_lblEditMode.Text      = "Locked";
-			_lblEditMode.TextAlign = ContentAlignment.MiddleCenter;
-			_lblEditMode.Height    = 15;
-			_lblEditMode.Top       = _trackBar.Height;
-
-			_lblEditMode.MouseClick += OnEditModeMouseClick;
-
-			Mode = EditMode.Locked;
-
-
-			SpritePanel = new SpritePanel(this);
-			SpritePanel.Top = _trackBar.Height + _lblEditMode.Height;
-
-
 			InitializeComponent();
 
 			// WORKAROUND: See note in MainViewF cTor.
 			MaximumSize = new Size(0,0); // fu.net
 
+			_f = f;
+
+			SpritePanel = new SpritePanel(this);
 			Controls.Add(SpritePanel);
-			Controls.Add(_trackBar);
-			Controls.Add(_lblEditMode);
+			SpritePanel.BringToFront();
 
-			OnTrackScroll(null, EventArgs.Empty);
+			Mode = EditMode.Locked;
 
-			_fpalette = new PaletteForm(this);
+			_fpalette = new PaletteF(this);
 			_fpalette.FormClosing += OnPaletteFormClosing;
 
 			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
@@ -105,25 +78,12 @@ namespace PckView
 				Top  = _f.Top  + 20;
 			}
 
-			var r = new CustomToolStripRenderer();
-			ss_Status.Renderer = r;
+			ss_Status.Renderer = new CustomToolStripRenderer();
 		}
 		#endregion cTor
 
 
 		#region Events (override)
-		protected override void OnResize(EventArgs e)
-		{
-//			base.OnResize(e);
-
-			_trackBar   .Width  =
-			_lblEditMode.Width  =
-			SpritePanel .Width  = ClientSize.Width;
-			SpritePanel .Height = ClientSize.Height
-								- _trackBar.Height
-								- _lblEditMode.Height;
-		}
-
 		/// <summary>
 		/// @note Requires KeyPreview TRUE.
 		/// </summary>
@@ -132,7 +92,7 @@ namespace PckView
 		{
 			if (e.KeyData == Keys.Escape)
 			{
-				e.SuppressKeyPress = true;
+				e.Handled = e.SuppressKeyPress = true;
 				Close();
 			}
 			base.OnKeyDown(e);
@@ -146,13 +106,16 @@ namespace PckView
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				if (!PckViewForm.Quit)
+				if (!PckViewF.Quit)
 				{
 					e.Cancel = true;
 					Hide();
 				}
 				else
+				{
 					RegistryInfo.UpdateRegistry(this);
+					SpritePanel.Destroy();
+				}
 			}
 			base.OnFormClosing(e);
 		}
@@ -162,7 +125,7 @@ namespace PckView
 		#region Events
 		/// <summary>
 		/// Sets the *proper* ClientSize.
-		/// @note Also called by PckViewForm.SpritesetChanged()
+		/// @note Also called by <see cref="PckViewF.SpritesetChanged()"/>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -171,34 +134,49 @@ namespace PckView
 			ClientSize = new Size(
 								XCImage.SpriteWidth32 * 10 + SpritePanel.Pad, // <- keep the statusbar at 32px width
 								XCImage.SpriteHeight  * 10 + SpritePanel.Pad
-									+ _trackBar   .Height
-									+ _lblEditMode.Height
-									+ ss_Status   .Height);
+									+ bar_Scale  .Height
+									+ la_EditMode.Height
+									+ ss_Status  .Height);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTrackScroll(object sender, EventArgs e)
 		{
-			SpritePanel.ScaleFactor = _trackBar.Value;
+			SpritePanel.ScaleFactor = bar_Scale.Value;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnEditModeMouseClick(object sender, EventArgs e)
 		{
 			switch (Mode)
 			{
 				case EditMode.Locked:
 					Mode = EditMode.Enabled;
-					_lblEditMode.Text = "Enabled";
-					_lblEditMode.BackColor = Color.AliceBlue;
+					la_EditMode.Text = "Enabled";
+					la_EditMode.BackColor = Color.AliceBlue;
 					break;
 
 				case EditMode.Enabled:
 					Mode = EditMode.Locked;
-					_lblEditMode.Text = "Locked";
-					_lblEditMode.BackColor = Control.DefaultBackColor;
+					la_EditMode.Text = "Locked";
+					la_EditMode.BackColor = Control.DefaultBackColor;
 					break;
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnShowPaletteClick(object sender, EventArgs e)
 		{
 			if (!miPalette.Checked)
@@ -220,11 +198,21 @@ namespace PckView
 			miPalette.Checked = false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnShowGridClick(object sender, EventArgs e)
 		{
 			SpritePanel.Grid = (miGrid.Checked = !miGrid.Checked);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnInvertGridColorClick(object sender, EventArgs e)
 		{
 			SpritePanel.InvertGridColor(miGridInvert.Checked = !miGridInvert.Checked);
@@ -233,11 +221,18 @@ namespace PckView
 
 
 		#region Methods
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="info"></param>
 		internal void PrintColorInfo(string info)
 		{
 			tssl_ColorInfo.Text = info;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		internal void ClearColorInfo()
 		{
 			tssl_ColorInfo.Text = String.Empty;
@@ -266,6 +261,8 @@ namespace PckView
 		private MenuItem miGridInvert;
 		private StatusStrip ss_Status;
 		private ToolStripStatusLabel tssl_ColorInfo;
+		private TrackBar bar_Scale;
+		private Label la_EditMode;
 
 
 		/// <summary>
@@ -295,7 +292,10 @@ namespace PckView
 			this.miGridInvert = new System.Windows.Forms.MenuItem();
 			this.ss_Status = new System.Windows.Forms.StatusStrip();
 			this.tssl_ColorInfo = new System.Windows.Forms.ToolStripStatusLabel();
+			this.bar_Scale = new System.Windows.Forms.TrackBar();
+			this.la_EditMode = new System.Windows.Forms.Label();
 			this.ss_Status.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bar_Scale)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// mmMainMenu
@@ -360,10 +360,40 @@ namespace PckView
 			this.tssl_ColorInfo.Text = "colorinfo";
 			this.tssl_ColorInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
+			// bar_Scale
+			// 
+			this.bar_Scale.AutoSize = false;
+			this.bar_Scale.BackColor = System.Drawing.Color.Gainsboro;
+			this.bar_Scale.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bar_Scale.LargeChange = 1;
+			this.bar_Scale.Location = new System.Drawing.Point(0, 0);
+			this.bar_Scale.Margin = new System.Windows.Forms.Padding(0);
+			this.bar_Scale.Minimum = 1;
+			this.bar_Scale.Name = "bar_Scale";
+			this.bar_Scale.Size = new System.Drawing.Size(294, 23);
+			this.bar_Scale.TabIndex = 1;
+			this.bar_Scale.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.bar_Scale.Value = 10;
+			this.bar_Scale.Scroll += new System.EventHandler(this.OnTrackScroll);
+			// 
+			// la_EditMode
+			// 
+			this.la_EditMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.la_EditMode.Location = new System.Drawing.Point(0, 23);
+			this.la_EditMode.Margin = new System.Windows.Forms.Padding(0);
+			this.la_EditMode.Name = "la_EditMode";
+			this.la_EditMode.Size = new System.Drawing.Size(294, 15);
+			this.la_EditMode.TabIndex = 2;
+			this.la_EditMode.Text = "Locked";
+			this.la_EditMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.la_EditMode.Click += new System.EventHandler(this.OnEditModeMouseClick);
+			// 
 			// SpriteEditorF
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(294, 276);
+			this.Controls.Add(this.la_EditMode);
+			this.Controls.Add(this.bar_Scale);
 			this.Controls.Add(this.ss_Status);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -379,6 +409,7 @@ namespace PckView
 			this.Load += new System.EventHandler(this.OnLoad);
 			this.ss_Status.ResumeLayout(false);
 			this.ss_Status.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bar_Scale)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -83,7 +83,7 @@ namespace XCom
 			if (Pal != null)										// NOTE: this is to check for a call by BitmapService.CreateSprite()
 				Sprite = BitmapService.CreateColored(				// which is called by
 												width,				// BitmapService.CreateSpriteset() and
-												height,				// several PckViewForm contextmenu events
+												height,				// several PckViewF contextmenu events
 												Bindata,			// BUT: the call by PckImage..cTor initializer needs to decode
 												Pal.ColorTable);	// the file-data first, then it creates its own 'Image'.
 		}															// that's why i prefer pizza.

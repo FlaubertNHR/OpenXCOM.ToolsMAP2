@@ -20,7 +20,7 @@ namespace XCom
 		/// Ensures there aren't any StopBytes or TransparencyBytes in the
 		/// returned XCImage data.
 		/// Helper for CreateSheetSprites().
-		/// Also called by PckViewForm's contextmenu:
+		/// Also called by PckViewF's contextmenu:
 		/// - OnAddSpritesClick()
 		/// - InsertSprites()
 		/// - OnReplaceSpriteClick()
@@ -90,7 +90,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Called by PckViewForm.OnImportSpritesheetClick()
+		/// Called by PckViewF.OnImportSpritesheetClick()
 		/// </summary>
 		/// <param name="b">an indexed Bitmap of a spritesheet</param>
 		/// <param name="pal">an XCOM Palette-object</param>

@@ -456,7 +456,7 @@ namespace MapView.Forms.Observers
 				}
 				else
 				{
-					using (var fPckView = new PckViewForm(true, GetSpriteshade()))
+					using (var fPckView = new PckViewF(true, GetSpriteshade()))
 					{
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapFile.Descriptor.Pal.Label);

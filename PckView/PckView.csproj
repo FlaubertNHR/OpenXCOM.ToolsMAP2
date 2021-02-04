@@ -107,9 +107,10 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="PaletteForm.cs">
+    <Compile Include="PaletteF.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PaletteLabelBar.cs" />
     <Compile Include="PalettePanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -128,11 +129,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="PckViewForm.cs">
+    <Compile Include="PckViewF.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PckViewForm.Designer.cs">
-      <DependentUpon>PckViewForm.cs</DependentUpon>
+    <Compile Include="PckViewF.Designer.cs">
+      <DependentUpon>PckViewF.cs</DependentUpon>
     </Compile>
     <Compile Include="ByteTableManager.cs" />
     <Compile Include="SpriteEditorF.cs">
@@ -146,17 +147,17 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaletteForm.resx">
-      <DependentUpon>PaletteForm.cs</DependentUpon>
+    <EmbeddedResource Include="PaletteF.resx">
+      <DependentUpon>PaletteF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="PckViewForm.resx">
+    <EmbeddedResource Include="PckViewF.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>PckViewForm.cs</DependentUpon>
+      <DependentUpon>PckViewF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SpriteEditorF.resx">
       <DependentUpon>SpriteEditorF.cs</DependentUpon>

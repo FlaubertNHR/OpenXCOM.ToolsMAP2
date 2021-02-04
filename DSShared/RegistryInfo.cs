@@ -19,23 +19,23 @@ namespace DSShared
 	public static class RegistryInfo
 	{
 		#region Fields (static)
-		public const string MainView      = "MainView";
-		public const string TileView      = "TileView";
-		public const string TopView       = "TopView";
-		public const string RouteView     = "RouteView";
-		public const string TopRouteView  = "TopRouteView";
+		public  const string MainView      = "MainView";
+		public  const string TileView      = "TileView";
+		public  const string TopView       = "TopView";
+		public  const string RouteView     = "RouteView";
+		private const string TopRouteView  = "TopRouteView";
 
-		public const string TilesetEditor = "TilesetEditor";
-		public const string ScanG         = "ScanG";
+		private const string TilesetEditor = "TilesetEditor";
+		private const string ScanG         = "ScanG";
 
-		public const string Options       = "Options";
+		private const string Options       = "Options";
 
-		public const string PckView       = "PckView";
-		public const string SpriteEditor  = "SpriteEditor";
-		public const string PaletteViewer = "PaletteViewer";
+		private const string PckView       = "PckView";
+		private const string SpriteEditor  = "SpriteEditor";
+		private const string PaletteViewer = "PaletteViewer";
 
-		public const string McdView       = "McdView";
-		public const string CopyPanel     = "CopyPanel";
+		private const string McdView       = "McdView";
+		private const string CopyPanel     = "CopyPanel";
 
 
 		private const string Left   = "left";
@@ -46,7 +46,7 @@ namespace DSShared
 
 		private static string _pfe;
 
-		private static readonly Dictionary<string, Metric> _dict =
+		private static readonly Dictionary<string, Metric> _trics =
 							new Dictionary<string, Metric>();
 		#endregion Fields (static)
 
@@ -112,7 +112,7 @@ namespace DSShared
 						tric.top  =  50;
 					}
 
-					_dict.Add(label, tric);
+					_trics.Add(label, tric);
 				}
 			}
 		}
@@ -122,8 +122,8 @@ namespace DSShared
 		/// Gets the registry-label of a specified Form.
 		/// @note This function would be unnecessary if each form's Name
 		/// variable had been used as its registry-label. But since they weren't
-		/// this function maintains backward compatibility with the property-
-		/// headers in "MapViewers.yml".
+		/// this function maintains backward compatibility with the toplevel
+		/// types in "settings/MapViewers.yml".
 		/// TODO: MCDInfo, MapInfo, McdRecordsExceeded, etc etc. RouteInfo, RouteCheckInfobox ...
 		/// TODO: McdView's Spriteset, ScanGset, LoFTset viewers.
 		/// TODO: PckView's BytesViewer
@@ -144,9 +144,9 @@ namespace DSShared
 				case "ScanGViewer":      return ScanG;
 				case "McdviewF":         return McdView;		// is in manifest
 				case "CopyPanelF":       return CopyPanel;
-				case "PckViewForm":      return PckView;		// is in manifest
+				case "PckViewF":         return PckView;		// is in manifest
 				case "SpriteEditorF":    return SpriteEditor;
-				case "PaletteForm":      return PaletteViewer;
+				case "PaletteF":         return PaletteViewer;
 			}
 			return null;
 		}
@@ -160,9 +160,9 @@ namespace DSShared
 		public static bool RegisterProperties(Form f)
 		{
 			string label = getRegistryLabel(f);
-			if (label != null && _dict.ContainsKey(label))
+			if (label != null && _trics.ContainsKey(label))
 			{
-				Metric tric = _dict[label];
+				Metric tric = _trics[label];
 
 				f.Left = tric.left;
 				f.Top  = tric.top;
@@ -202,19 +202,19 @@ namespace DSShared
 
 				Metric tric;
 
-				if (!_dict.ContainsKey(label))
+				if (!_trics.ContainsKey(label))
 				{
 					tric = new Metric();
 				}
 				else
-					tric = _dict[label];
+					tric = _trics[label];
 
 				tric.left   = Math.Max(0, f.Left);
 				tric.top    = Math.Max(0, f.Top);
 				tric.width  = f.ClientSize.Width;
 				tric.height = f.ClientSize.Height;
 
-				_dict[label] = tric; // yeeahhhhhh riiiiighhthghttt
+				_trics[label] = tric; // yeeahhhhhh riiiiighhthghttt
 			}
 		}
 
@@ -245,9 +245,9 @@ namespace DSShared
 					sw.WriteLine("# NOTE: Do *not* add extra lines or anything to the format; it's not that robust.");
 					sw.WriteLine("#");
 
-					foreach (var key in _dict.Keys)
+					foreach (var key in _trics.Keys)
 					{
-						Metric tric = _dict[key];
+						Metric tric = _trics[key];
 
 						sw.WriteLine(key + ":");
 						sw.WriteLine("  " + Left   + ": " + tric.left);

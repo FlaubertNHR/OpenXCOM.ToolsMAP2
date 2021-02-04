@@ -26,16 +26,12 @@ namespace PckView
 
 
 		#region Fields
-		private readonly PckViewForm _f;
+		private readonly PckViewF _f;
 
 		private readonly VScrollBar _scrollBar = new VScrollBar();
 
 		private int HoriCount = 1;
 		private int TableHeight;
-
-		private Pen   _penBlack        = Pens.Black;
-		private Pen   _penControlLight = SystemPens.ControlLight;
-		private Brush _brushCrimson    = Brushes.Crimson;
 
 		/// <summary>
 		/// The LargeChange value for the scrollbar will return "1" when the bar
@@ -54,7 +50,7 @@ namespace PckView
 			set
 			{
 				if ((_spriteset = value) != null)
-					_spriteset.Pal = PckViewForm.Pal;
+					_spriteset.Pal = PckViewF.Pal;
 
 				if (_f.IsScanG)
 				{
@@ -77,7 +73,7 @@ namespace PckView
 				_f.SpriteEditor.SpritePanel.Sprite = null;
 
 				idOver =
-				idSel = -1;
+				idSel  = -1;
 
 				_f.SpritesetChanged(_spriteset != null);
 
@@ -98,7 +94,7 @@ namespace PckView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal PckViewPanel(PckViewForm f)
+		internal PckViewPanel(PckViewF f)
 		{
 			_f = f;
 
@@ -107,24 +103,26 @@ namespace PckView
 			_scrollBar.Dock = DockStyle.Right;
 			_scrollBar.SmallChange = 1;
 			_scrollBar.ValueChanged += OnScrollBarValueChanged;
-
 			Controls.Add(_scrollBar);
 
-
 			idOver =
-			idSel = -1;
+			idSel  = -1;
 
-			PckViewForm.PaletteChanged += OnPaletteChanged;
+			PckViewF.PaletteChanged += OnPaletteChanged;
 		}
 		#endregion cTor
 
 
 		#region Events (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
 		{
 			base.OnResize(eventargs);
 
-			if (FindForm().WindowState != FormWindowState.Minimized)
+			if (_f.WindowState != FormWindowState.Minimized)
 			{
 				CalculateScrollRange(false);
 				ScrollToTile(idSel);
@@ -144,7 +142,6 @@ namespace PckView
 		{
 			OnResize(EventArgs.Empty);
 		}
-
 
 		/// <summary>
 		/// Scrolls this panel with the mousewheel.
@@ -182,7 +179,7 @@ namespace PckView
 		/// <summary>
 		/// Selects and shows status-information for a sprite. Overrides core
 		/// implementation for the MouseDown event.
-		/// NOTE: This fires before PckViewForm.OnSpriteClick().
+		/// NOTE: This fires before PckViewF.OnSpriteClick().
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -282,7 +279,7 @@ namespace PckView
 
 				if (!_scrollBar.Visible) // indicate the reserved width for scrollbar.
 					graphics.DrawLine(
-									_penControlLight,
+									SystemPens.ControlLight,
 									Width - _scrollBar.Width - 1, 0,
 									Width - _scrollBar.Width - 1, Height);
 
@@ -299,7 +296,7 @@ namespace PckView
 //					if (selectedIds.Contains(id))
 					if (id == idSel)
 						graphics.FillRectangle(
-											_brushCrimson,
+											Brushes.Crimson,
 											TableOffsetHori + TileWidth  * tileX,
 											TableOffsetVert + TileHeight * tileY - _scrollBar.Value,
 											TableOffsetHori + TileWidth  - SpriteMargin * 2,
@@ -318,7 +315,7 @@ namespace PckView
 														XCImage.SpriteHeight),
 											0,0, XCImage.SpriteWidth, XCImage.SpriteHeight,
 											GraphicsUnit.Pixel,
-											_f.Attri);
+											_f.Ia);
 						}
 						else
 						{
@@ -339,7 +336,7 @@ namespace PckView
 													Spriteset[id].Sprite.Height * 4),
 										0,0, Spriteset[id].Sprite.Width, Spriteset[id].Sprite.Height,
 										GraphicsUnit.Pixel,
-										_f.Attri);
+										_f.Ia);
 					}
 					else
 					{
@@ -354,14 +351,14 @@ namespace PckView
 
 
 				graphics.FillRectangle(
-									new SolidBrush(_penBlack.Color),
+									Brushes.Black,
 									TableOffsetHori - 1,
 									TableOffsetVert - 1 - _scrollBar.Value,
 									1,1); // so bite me.
 
 				for (int tileX = 0; tileX <= HoriCount; ++tileX) // draw vertical lines
 					graphics.DrawLine(
-									_penBlack,
+									Pens.Black,
 									new Point(
 											TableOffsetHori + TileWidth * tileX,
 											TableOffsetVert - _scrollBar.Value),
@@ -375,7 +372,7 @@ namespace PckView
 
 				for (int tileY = 0; tileY <= tilesY; ++tileY) // draw horizontal lines
 					graphics.DrawLine(
-									_penBlack,
+									Pens.Black,
 									new Point(
 											TableOffsetHori,
 											TableOffsetVert + TileHeight * tileY - _scrollBar.Value),
@@ -530,6 +527,16 @@ namespace PckView
 			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[idSel];
 			ScrollToTile(idSel);
 			Invalidate();
+		}
+
+		/// <summary>
+		/// fing jackasses.
+		/// </summary>
+		internal void Destroy()
+		{
+			PckViewF.PaletteChanged -= OnPaletteChanged;
+
+//			base.Dispose(); // <- I *still* don't know if that is a Good Thing or not.
 		}
 		#endregion Methods
 	}

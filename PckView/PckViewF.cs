@@ -15,7 +15,7 @@ using XCom;
 
 namespace PckView
 {
-	public sealed partial class PckViewForm
+	public sealed partial class PckViewF
 		:
 			Form
 	{
@@ -69,7 +69,7 @@ namespace PckView
 					 new Dictionary<Palette, MenuItem>();
 
 		internal int SpriteShade = -1;
-		internal readonly ImageAttributes Attri = new ImageAttributes();
+		internal readonly ImageAttributes Ia = new ImageAttributes();
 
 
 		private string _lastCreateDirectory;
@@ -158,7 +158,7 @@ namespace PckView
 		/// <param name="isInvoked">true if invoked via TileView</param>
 		/// <param name="spriteshade">if 'isInvoked' is true you can pass in a
 		/// SpriteShade value from MapView</param>
-		public PckViewForm(bool isInvoked = false, int spriteshade = -1)
+		public PckViewF(bool isInvoked = false, int spriteshade = -1)
 		{
 			IsInvoked = isInvoked;
 
@@ -179,11 +179,9 @@ namespace PckView
 //			regInfo.AddProperty("SelectedPalette");
 
 			TilePanel = new PckViewPanel(this);
-
-			TilePanel.ContextMenuStrip = ViewerContextMenu();
+			TilePanel.ContextMenuStrip = CreateContext();
 			TilePanel.Click       += OnSpriteClick;
 			TilePanel.DoubleClick += OnSpriteEditorClick;
-
 			Controls.Add(TilePanel);
 			TilePanel.BringToFront();
 
@@ -215,8 +213,7 @@ namespace PckView
 			tssl_OffsetLast.Text =
 			tssl_OffsetAftr.Text = String.Empty;
 
-			var r = new CustomToolStripRenderer();
-			ss_Status.Renderer = r;
+			ss_Status.Renderer = new CustomToolStripRenderer();
 
 
 			bool @set = false;
@@ -241,7 +238,7 @@ namespace PckView
 				SpriteShade = Math.Min(spriteshade, 100);
 				SpriteShadeFloat = (float)SpriteShade * 0.03F;
 
-				Attri.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+				Ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 			}
 
 
@@ -306,7 +303,7 @@ namespace PckView
 		/// Builds the RMB contextmenu.
 		/// </summary>
 		/// <returns></returns>
-		private ContextMenuStrip ViewerContextMenu()
+		private ContextMenuStrip CreateContext()
 		{
 			_miEdit        = new ToolStripMenuItem("Edit",              null, OnSpriteEditorClick);			// OnKeyDown Enter
 			_miAdd         = new ToolStripMenuItem("Add ...",           null, OnAddSpritesClick);			// OnKeyDown d
@@ -404,6 +401,11 @@ namespace PckView
 
 		#region Events (override)
 		internal static bool BypassActivatedEvent;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
 			if (!BypassActivatedEvent)
@@ -431,6 +433,11 @@ namespace PckView
 		}
 
 		private bool IsMinimized;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
@@ -484,6 +491,9 @@ namespace PckView
 					SpriteEditor.ClosePalette();	// these are needed when PckView is invoked via TileView
 					SpriteEditor.Close();			// it's also just good procedure
 
+					Ia.Dispose();
+					TilePanel.Destroy();
+
 					ByteTableManager.HideTable();
 
 					if (!IsInvoked)
@@ -502,7 +512,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("PckViewForm.OnKeyDown() " + e.KeyData);
+			//LogFile.WriteLine("PckViewF.OnKeyDown() " + e.KeyData);
 
 			switch (e.KeyData)
 			{
@@ -1690,7 +1700,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnPaletteClick(object sender, EventArgs e)
 		{
-			var pal = ((MenuItem)sender).Tag as Palette;
+			var pal = (sender as MenuItem).Tag as Palette;
 			if (pal != Pal)
 			{
 				_itPalettes[Pal].Checked = false;
@@ -1719,8 +1729,6 @@ namespace PckView
 			Pal.SetTransparent(miTransparent.Checked = !miTransparent.Checked);
 
 			TilePanel.Spriteset.Pal = Pal;
-			SpriteEditor._fpalette._pnlPalette.UpdatePalette();	// update the palette-panel's statusbar
-																// in case palette-id #0 is currently selected.
 			PaletteChanged();
 		}
 
@@ -1749,7 +1757,7 @@ namespace PckView
 
 				TilePanel.Invalidate();
 				SpriteEditor.SpritePanel.Invalidate();
-				SpriteEditor._fpalette._pnlPalette.Invalidate();
+				SpriteEditor._fpalette.PalPanel.Invalidate();
 			}
 		}
 
