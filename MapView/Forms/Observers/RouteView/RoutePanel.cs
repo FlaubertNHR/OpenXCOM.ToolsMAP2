@@ -627,22 +627,23 @@ namespace MapView.Forms.Observers
 							infoboxX,
 							infoboxY);
 
-			var path = new GraphicsPath();
+			using (var path = new GraphicsPath())
+			{
+				path.AddLine(p0, p1);
+				path.AddLine(p1, p2);
+				path.AddLine(p2, p3);
+				path.AddLine(p3, p4);
 
-			path.AddLine(p0, p1);
-			path.AddLine(p1, p2);
-			path.AddLine(p2, p3);
-			path.AddLine(p3, p4);
+				_graphics.FillPath(Brushes.WhiteSmoke, path); // fill background.
 
-			_graphics.FillPath(Brushes.WhiteSmoke, path); // fill background.
+				if (value > 0)
+					_graphics.FillRectangle(
+										color,
+										infoboxX, infoboxY + NodeValHeight - value - 2,
+										2, value);
 
-			if (value > 0)
-				_graphics.FillRectangle(
-									color,
-									infoboxX, infoboxY + NodeValHeight - value - 2,
-									2, value);
-
-			_graphics.DrawPath(Pens.Black, path); // draw borders.
+				_graphics.DrawPath(Pens.Black, path); // draw borders.
+			}
 		}
 
 		/// <summary>

@@ -199,30 +199,30 @@ namespace McdView
 			var p5 = new Point(width,     HEIGHT * 3 / 4);
 			var p6 = new Point(width / 2, HEIGHT);
 
-			var path = new GraphicsPath();
+			using (var path = new GraphicsPath())
+			{
+				path.AddLine(p0, p2);
+				path.AddLine(p2, p3);
+				path.AddLine(p3, p1);
+				path.CloseFigure();
+				graphics.FillPath(Brushes.DeepSkyBlue, path);
 
-			path.AddLine(p0, p2);
-			path.AddLine(p2, p3);
-			path.AddLine(p3, p1);
-			path.CloseFigure();
-			graphics.FillPath(Brushes.DeepSkyBlue, path);
+				path.Reset();
 
-			path.Reset();
+				path.AddLine(p1, p3);
+				path.AddLine(p3, p6);
+				path.AddLine(p6, p4);
+				path.CloseFigure();
+				graphics.FillPath(Brushes.LawnGreen, path);
 
-			path.AddLine(p1, p3);
-			path.AddLine(p3, p6);
-			path.AddLine(p6, p4);
-			path.CloseFigure();
-			graphics.FillPath(Brushes.LawnGreen, path);
+				path.Reset();
 
-			path.Reset();
-
-			path.AddLine(p2, p3);
-			path.AddLine(p3, p6);
-			path.AddLine(p6, p5);
-			path.CloseFigure();
-			graphics.FillPath(Brushes.Crimson, path);
-
+				path.AddLine(p2, p3);
+				path.AddLine(p3, p6);
+				path.AddLine(p6, p5);
+				path.CloseFigure();
+				graphics.FillPath(Brushes.Crimson, path);
+			}
 			return b;
 		}
 /*			var b = new Bitmap(
