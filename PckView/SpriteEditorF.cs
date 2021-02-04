@@ -349,7 +349,7 @@ namespace PckView
 			this.ss_Status.Name = "ss_Status";
 			this.ss_Status.Size = new System.Drawing.Size(294, 22);
 			this.ss_Status.SizingGrip = false;
-			this.ss_Status.TabIndex = 0;
+			this.ss_Status.TabIndex = 2;
 			// 
 			// tssl_ColorInfo
 			// 
@@ -371,7 +371,7 @@ namespace PckView
 			this.bar_Scale.Minimum = 1;
 			this.bar_Scale.Name = "bar_Scale";
 			this.bar_Scale.Size = new System.Drawing.Size(294, 23);
-			this.bar_Scale.TabIndex = 1;
+			this.bar_Scale.TabIndex = 0;
 			this.bar_Scale.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.bar_Scale.Value = 10;
 			this.bar_Scale.Scroll += new System.EventHandler(this.OnTrackScroll);
@@ -383,7 +383,7 @@ namespace PckView
 			this.la_EditMode.Margin = new System.Windows.Forms.Padding(0);
 			this.la_EditMode.Name = "la_EditMode";
 			this.la_EditMode.Size = new System.Drawing.Size(294, 15);
-			this.la_EditMode.TabIndex = 2;
+			this.la_EditMode.TabIndex = 1;
 			this.la_EditMode.Text = "Locked";
 			this.la_EditMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.la_EditMode.Click += new System.EventHandler(this.OnEditModeMouseClick);
