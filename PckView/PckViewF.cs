@@ -19,6 +19,19 @@ namespace PckView
 		:
 			Form
 	{
+		internal enum Type : byte
+		{
+			Pck,	// a terrain or unit PCK+TAB set is currently loaded.
+					// These are 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword (tftd-unit)
+			Bigobs,	// a Bigobs PCK+TAB set is currently loaded.
+					// Bigobs are 32x48 w/ 2-byte Tabword.
+			ScanG,	// a ScanG iconset is currently loaded.
+					// ScanGs are 4x4 w/ 0-byte Tabword.
+			LoFT
+		}
+		internal Type SetType;
+
+
 		#region Delegates
 		internal delegate void PaletteChangedEvent();
 		#endregion Delegates
@@ -113,20 +126,6 @@ namespace PckView
 		{ get; private set; }
 
 
-		/// <summary>
-		/// True if a Bigobs PCK+TAB set is currently loaded.
-		/// @note Bigobs are 32x48 w/ 2-byte Tabword.
-		/// </summary>
-		private bool IsBigobs
-		{ get; set; }
-
-		/// <summary>
-		/// True if a ScanG iconset is currently loaded.
-		/// @note ScanGs are 4x4 w/ 0-byte Tabword.
-		/// </summary>
-		internal bool IsScanG
-		{ get; private set; }
-
 		private bool _changed;
 		internal bool Changed
 		{
@@ -135,14 +134,19 @@ namespace PckView
 			{
 				if (!String.IsNullOrEmpty(PfSpriteset))
 				{
-					string ext;
-					if (IsScanG) ext = String.Empty;
-					else         ext = GlobalsXC.PckExt_lc;
+					string text;
+					switch (SetType)
+					{
+//						case Type.Pck: case Type.Bigobs:
+						default:         text = GlobalsXC.PckExt_lc; break;
+						case Type.ScanG: text = String.Empty;        break;
+					}
+					text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + text;
 
 					if (_changed = value)
-						Text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + ext + GlobalsXC.PADDED_ASTERISK;
-					else
-						Text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + ext;
+						text += GlobalsXC.PADDED_ASTERISK;
+
+					Text = text;
 				}
 				else
 					Text = TITLE;
@@ -245,24 +249,21 @@ namespace PckView
 			if (_args != null && _args.Length != 0)
 			{
 				string feLoad = Path.GetFileName(_args[0]).ToLower();
-				if (feLoad == "bigobs.pck")
+				if (feLoad == "scang.dat")
 				{
-					IsBigobs = true;
-					IsScanG  = false;
+					SetType = Type.ScanG;
+					LoadScanG(_args[0]);
 				}
-				else if (feLoad == "scang.dat")
+				else if (feLoad == "bigobs.pck")
 				{
-					IsBigobs = false;
-					IsScanG  = true;
+					SetType = Type.Bigobs;
+					LoadSpriteset(_args[0]);
 				}
 				else if (Path.GetExtension(feLoad) == ".pck")	// NOTE: LoadSpriteset() will check for a TAB file
 				{												// and issue an error to the user if not found.
-					IsBigobs =
-					IsScanG  = false;
+					SetType = Type.Pck;
+					LoadSpriteset(_args[0]);
 				}
-				else return;
-
-				LoadSpriteset(_args[0]);
 			}
 		}
 
@@ -739,12 +740,20 @@ namespace PckView
 			if (hint)
 			{
 				error += Environment.NewLine + Environment.NewLine;
-				if (IsScanG)
-					error += "Image needs to be 4x4 8-bpp";
-				else if (IsBigobs)
-					error += "Image needs to be 32x48 8-bpp";
-				else
-					error += "Image needs to be 32x40 8-bpp";
+				switch (SetType)
+				{
+					case Type.Pck:
+						error += "Image needs to be 32x40 8-bpp";
+						break;
+
+					case Type.Bigobs:
+						error += "Image needs to be 32x48 8-bpp";
+						break;
+
+					case Type.ScanG:
+						error += "Image needs to be 4x4 8-bpp";
+						break;
+				}
 			}
 
 			MessageBox.Show(
@@ -767,12 +776,20 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				if (IsScanG)
-					ofd.Title = "Add 4x4 8-bpp Image file(s)";
-				else if (IsBigobs)
-					ofd.Title = "Add 32x48 8-bpp Image file(s)";
-				else
-					ofd.Title = "Add 32x40 8-bpp Image file(s)";
+				switch (SetType)
+				{
+					case Type.Pck:
+						ofd.Title = "Add 32x40 8-bpp Image file(s)";
+						break;
+
+					case Type.Bigobs:
+						ofd.Title = "Add 32x48 8-bpp Image file(s)";
+						break;
+
+					case Type.ScanG:
+						ofd.Title = "Add 4x4 8-bpp Image file(s)";
+						break;
+				}
 
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
@@ -833,7 +850,7 @@ namespace PckView
 															Pal,
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight,
-															IsScanG);
+															SetType == Type.ScanG);
 						TilePanel.Spriteset.Sprites.Add(sprite);
 					}
 
@@ -853,12 +870,20 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				if (IsScanG)
-					ofd.Title = "Add 4x4 8-bpp Image file(s)";
-				else if (IsBigobs)
-					ofd.Title = "Add 32x48 8-bpp Image file(s)";
-				else
-					ofd.Title = "Add 32x40 8-bpp Image file(s)";
+				switch (SetType)
+				{
+					case Type.Pck:
+						ofd.Title = "Add 32x40 8-bpp Image file(s)";
+						break;
+
+					case Type.Bigobs:
+						ofd.Title = "Add 32x48 8-bpp Image file(s)";
+						break;
+
+					case Type.ScanG:
+						ofd.Title = "Add 4x4 8-bpp Image file(s)";
+						break;
+				}
 
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
@@ -908,12 +933,20 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				if (IsScanG)
-					ofd.Title = "Add 4x4 8-bpp Image file(s)";
-				else if (IsBigobs)
-					ofd.Title = "Add 32x48 8-bpp Image file(s)";
-				else
-					ofd.Title = "Add 32x40 8-bpp Image file(s)";
+				switch (SetType)
+				{
+					case Type.Pck:
+						ofd.Title = "Add 32x40 8-bpp Image file(s)";
+						break;
+
+					case Type.Bigobs:
+						ofd.Title = "Add 32x48 8-bpp Image file(s)";
+						break;
+
+					case Type.ScanG:
+						ofd.Title = "Add 4x4 8-bpp Image file(s)";
+						break;
+				}
 
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
@@ -990,7 +1023,7 @@ namespace PckView
 													Pal,
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,
-													IsScanG);
+													SetType == Type.ScanG);
 				TilePanel.Spriteset.Sprites.Insert(id++, sprite);
 			}
 			return true;
@@ -1022,12 +1055,20 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				if (IsScanG)
-					ofd.Title = "Add 4x4 8-bpp Image file(s)";
-				else if (IsBigobs)
-					ofd.Title = "Add 32x48 8-bpp Image file";
-				else
-					ofd.Title = "Add 32x40 8-bpp Image file";
+				switch (SetType)
+				{
+					case Type.Pck:
+						ofd.Title = "Add 32x40 8-bpp Image file";
+						break;
+
+					case Type.Bigobs:
+						ofd.Title = "Add 32x48 8-bpp Image file";
+						break;
+
+					case Type.ScanG:
+						ofd.Title = "Add 4x4 8-bpp Image file";
+						break;
+				}
 
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
@@ -1067,7 +1108,7 @@ namespace PckView
 																Pal,
 																XCImage.SpriteWidth,
 																XCImage.SpriteHeight,
-																IsScanG);
+																SetType == Type.ScanG);
 							TilePanel.Spriteset[TilePanel.idSel] =
 							SpriteEditor.SpritePanel.Sprite = sprite;
 
@@ -1209,23 +1250,25 @@ namespace PckView
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					IsScanG = false; // NOTE: ScanG.dat cannot be created.
+					// NOTE: ScanG.dat cannot be created.
 
 					int tabwordLength;
-					if (IsBigobs = (sender == miCreateBigobs)) // Bigobs support for XCImage/PckImage
+					if (sender == miCreateBigobs) // Bigobs support for XCImage/PckImage
 					{
-						sfd.Title = "Create a PCK (bigobs) file";
+						SetType = Type.Bigobs;
 						XCImage.SpriteHeight = 48;
 						tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
+						sfd.Title = "Create a PCK (bigobs) file";
 					}
 					else
 					{
+						SetType = Type.Pck;
 						XCImage.SpriteHeight = 40;
 
 						if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckImage
 						{
-							sfd.Title = "Create a PCK (tftd unit) file";
 							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
+							sfd.Title = "Create a PCK (tftd unit) file";
 						}
 						else
 						{
@@ -1339,8 +1382,7 @@ namespace PckView
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
-						IsBigobs =
-						IsScanG  = false;
+						SetType = Type.Pck;
 						LoadSpriteset(ofd.FileName);
 					}
 				}
@@ -1374,8 +1416,7 @@ namespace PckView
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
-						IsBigobs = true;
-						IsScanG  = false;
+						SetType = Type.Bigobs;
 						LoadSpriteset(ofd.FileName);
 					}
 				}
@@ -1402,8 +1443,7 @@ namespace PckView
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
-						IsBigobs = false;
-						IsScanG  = true;
+						SetType = Type.ScanG;
 						LoadScanG(ofd.FileName);
 					}
 				}
@@ -1421,21 +1461,24 @@ namespace PckView
 		{
 			if (TilePanel.Spriteset != null)
 			{
-				if (IsScanG)
+				switch (SetType)
 				{
-					if (SpriteCollection.WriteScanG(PfSpriteset, TilePanel.Spriteset)) // NOTE: 'PfSpriteset' contains extension .DAT for ScanG iconset.
-					{
-						Changed = false;
-						// TODO: FireMvReloadScanG file
-					}
-				}
-				else // save Pck+Tab terrain/unit/bigobs ->
-				{
-					if (SpriteCollection.WriteSpriteset(PfSpriteset, TilePanel.Spriteset))
-					{
-						Changed = false;
-						FireMvReload = true;
-					}
+					case Type.Pck: // save Pck+Tab terrain/unit/bigobs ->
+					case Type.Bigobs:
+						if (SpriteCollection.WriteSpriteset(PfSpriteset, TilePanel.Spriteset))
+						{
+							Changed = false;
+							FireMvReload = true;
+						}
+						break;
+
+					case Type.ScanG:
+						if (SpriteCollection.WriteScanG(PfSpriteset, TilePanel.Spriteset)) // NOTE: 'PfSpriteset' contains extension .DAT for ScanG iconset.
+						{
+							Changed = false;
+							// TODO: FireMvReloadScanG file
+						}
+						break;
 				}
 			}
 		}
@@ -1453,19 +1496,22 @@ namespace PckView
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					if (IsScanG)
+					switch (SetType)
 					{
-						sfd.Title      = "Save ScanG.dat as ...";
-						sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
-						sfd.DefaultExt = GlobalsXC.DatExt;
-						sfd.FileName   = Path.GetFileName(PfSpriteset);
-					}
-					else
-					{
-						sfd.Title      = "Save Pck+Tab as ...";
-						sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-						sfd.DefaultExt = GlobalsXC.PckExt;
-						sfd.FileName   = Path.GetFileName(PfSpriteset) + GlobalsXC.PckExt;
+						case Type.Pck:
+						case Type.Bigobs:
+							sfd.Title      = "Save Pck+Tab as ...";
+							sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+							sfd.DefaultExt = GlobalsXC.PckExt;
+							sfd.FileName   = Path.GetFileName(PfSpriteset) + GlobalsXC.PckExt;
+							break;
+
+						case Type.ScanG:
+							sfd.Title      = "Save ScanG.dat as ...";
+							sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+							sfd.DefaultExt = GlobalsXC.DatExt;
+							sfd.FileName   = Path.GetFileName(PfSpriteset);
+							break;
 					}
 
 					if (!Directory.Exists(_lastBrowserDirectory))
@@ -1484,26 +1530,29 @@ namespace PckView
 						string dir = Path.GetDirectoryName(pfe);
 						_lastBrowserDirectory = dir;
 
-						if (IsScanG)
+						switch (SetType)
 						{
-							if (SpriteCollection.WriteScanG(pfe, TilePanel.Spriteset))
-							{
-								PfSpriteset = pfe; // 'PfSpriteset' for ScanG.dat has its extension.
-								Changed = false;
-								// TODO: FireMvReloadScanG file
-							}
-						}
-						else
-						{
-							string label = Path.GetFileNameWithoutExtension(pfe);
-							string pf    = Path.Combine(dir, label);
+							case Type.Pck:
+							case Type.Bigobs:
+								string label = Path.GetFileNameWithoutExtension(pfe);
+								string pf    = Path.Combine(dir, label);
 
-							if (SpriteCollection.WriteSpriteset(pf, TilePanel.Spriteset))
-							{
-								PfSpriteset = pf;
-								Changed = false;
-								FireMvReload = true;
-							}
+								if (SpriteCollection.WriteSpriteset(pf, TilePanel.Spriteset))
+								{
+									PfSpriteset = pf;
+									Changed = false;
+									FireMvReload = true;
+								}
+								break;
+
+							case Type.ScanG:
+								if (SpriteCollection.WriteScanG(pfe, TilePanel.Spriteset))
+								{
+									PfSpriteset = pfe; // 'PfSpriteset' for ScanG.dat has its extension.
+									Changed = false;
+									// TODO: FireMvReloadScanG file
+								}
+								break;
 						}
 					}
 				}
@@ -1666,7 +1715,7 @@ namespace PckView
 																								Pal,
 																								XCImage.SpriteWidth,
 																								XCImage.SpriteHeight,
-																								IsScanG);
+																								SetType == Type.ScanG);
 								for (int i = 0; i != spriteset.Count; ++i)
 									TilePanel.Spriteset.Sprites.Add(spriteset[i]);
 
@@ -1925,35 +1974,36 @@ namespace PckView
 				byte[] bytesTab = FileService.ReadFile(pf + GlobalsXC.TabExt);
 				if (bytesTab != null)
 				{
-					XCImage.SpriteWidth = 32;
-
 					int tabwordLength;
 
-					if (IsBigobs) // Bigobs support for PckImage<-XCImage ->
-					{
-						XCImage.SpriteHeight = 48;
+					XCImage.SpriteWidth = 32;
 
-						tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-						pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
-					}
-					else // is terrain or unit ->
+					switch (SetType)
 					{
-						XCImage.SpriteHeight = 40;
+						default: // case Type.Pck: // is terrain or unit ->
+							XCImage.SpriteHeight = 40;
 
-						if (bytesTab.Length == 2
-							|| bytesTab[2] != 0
-							|| bytesTab[3] != 0) // if either of the 3rd or 4th bytes is nonzero ... it's a UFO set.
-						{
+							if (bytesTab.Length == 2
+								|| bytesTab[2] != 0
+								|| bytesTab[3] != 0) // if either of the 3rd or 4th bytes is nonzero ... it's a UFO set.
+							{
+								tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
+								pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
+							}
+							else
+							{
+								tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
+								pal = Palette.TftdBattle;
+							}
+							break;
+
+						case Type.Bigobs: // Bigobs support for PckImage<-XCImage ->
+							XCImage.SpriteHeight = 48;
+
 							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
 							pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
-						}
-						else
-						{
-							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
-							pal = Palette.TftdBattle;
-						}
+							break;
 					}
-
 
 					spriteset = new SpriteCollection(
 												label,
@@ -1982,8 +2032,16 @@ namespace PckView
 						spriteset = null;
 
 						string error;
-						if (IsBigobs) error = "Bigobs : ";	// won't happen unless a file is corrupt.
-						else          error = String.Empty;	// possibly trying to load a Bigobs to 32x40 d
+						switch (SetType)
+						{
+							default: // case Type.Pck:
+								error = String.Empty; // possibly trying to load a Bigobs to 32x40 d
+								break;
+
+							case Type.Bigobs:
+								error = "Bigobs : "; // won't happen unless a file is corrupt.
+								break;
+						}
 
 						error += "File data overflowed the sprite's count of pixels.";
 						MessageBox.Show(
@@ -2079,7 +2137,7 @@ namespace PckView
 			if (id != -1)
 			{
 				selected = id.ToString();
-				if (IsScanG)
+				if (SetType == Type.ScanG)
 				{
 					if (id > 34)
 						selected += " [" + (id - 35) + "]";
@@ -2167,9 +2225,12 @@ namespace PckView
 			{
 				text = TilePanel.Spriteset.Label;
 
-				if      (IsBigobs) text += " (32x48)"; // TODO: Use bitflags.
-				else if (IsScanG)  text += " (4x4)";
-				else               text += " (32x40)";
+				switch (SetType)
+				{
+					case Type.Pck:    text += " (32x40)"; break;
+					case Type.Bigobs: text += " (32x48)"; break;
+					case Type.ScanG:  text += " (4x4)";   break;
+				}
 			}
 			else
 				text = String.Empty;

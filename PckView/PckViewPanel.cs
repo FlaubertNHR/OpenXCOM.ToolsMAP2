@@ -52,15 +52,13 @@ namespace PckView
 				if ((_spriteset = value) != null)
 					_spriteset.Pal = PckViewF.Pal;
 
-				if (_f.IsScanG)
+				TileWidth  = XCImage.SpriteWidth;
+				TileHeight = XCImage.SpriteHeight;
+
+				if (_f.SetType == PckViewF.Type.ScanG)
 				{
-					TileWidth  = XCImage.SpriteWidth  * 4;
-					TileHeight = XCImage.SpriteHeight * 4;
-				}
-				else
-				{
-					TileWidth  = XCImage.SpriteWidth;
-					TileHeight = XCImage.SpriteHeight;
+					TileWidth  *= 4;
+					TileHeight *= 4;
 				}
 				TileWidth  += SpriteMargin * 2 + 1;
 				TileHeight += SpriteMargin * 2 + 1;
@@ -302,7 +300,7 @@ namespace PckView
 											TableOffsetHori + TileWidth  - SpriteMargin * 2,
 											TableOffsetVert + TileHeight - SpriteMargin - 1);
 
-					if (!_f.IsScanG)
+					if (_f.SetType != PckViewF.Type.ScanG)
 					{
 						if (_f.SpriteShade > -1)
 						{
