@@ -122,24 +122,20 @@ namespace PckView
 			if (_fpalette._feditor._f.SpriteShade > -1)
 			{
 				for (int
-						i = 0,
-							y = 0;
+						i = 0, y = 0;
 						i != SwatchesPerSide;
-						++i,
-							y += SwatchHeight)
+						++i, y += SwatchHeight)
 				{
 					for (int
-							j = 0,
-								x = 0;
+							j = 0, x = 0;
 							j != SwatchesPerSide;
-							++j,
-								x += SwatchWidth)
+							++j, x += SwatchWidth)
 					{
 						using (var brush = new SolidBrush(SpritePanel.AdjustColor(PckViewF.Pal[j + SwatchesPerSide * i])))
 						{
 							graphics.FillRectangle(
 												brush,
-												x, y,
+												x,y,
 												SwatchWidth, SwatchHeight);
 						}
 					}
@@ -148,24 +144,20 @@ namespace PckView
 			else
 			{
 				for (int
-						i = 0,
-							y = 0;
+						i = 0, y = 0;
 						i != SwatchesPerSide;
-						++i,
-							y += SwatchHeight)
+						++i, y += SwatchHeight)
 				{
 					for (int
-							j = 0,
-								x = 0;
+							j = 0, x = 0;
 							j != SwatchesPerSide;
-							++j,
-								x += SwatchWidth)
+							++j, x += SwatchWidth)
 					{
 						using (var brush = new SolidBrush(PckViewF.Pal[j + SwatchesPerSide * i]))
 						{
 							graphics.FillRectangle(
 												brush,
-												x, y,
+												x,y,
 												SwatchWidth, SwatchHeight);
 						}
 					}
