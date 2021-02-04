@@ -484,8 +484,7 @@ namespace McdView
 			tssl_OffsetLast.Text =
 			tssl_OffsetAftr.Text = String.Empty;
 
-			var r = new CustomToolStripRenderer();
-			ss_Statusbar.Renderer = r;
+			ss_Statusbar.Renderer = new CustomToolStripRenderer();
 
 
 			if (_args != null && _args.Length != 0)

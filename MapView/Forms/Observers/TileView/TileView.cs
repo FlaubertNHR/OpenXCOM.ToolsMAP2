@@ -152,8 +152,7 @@ namespace MapView.Forms.Observers
 
 			_allTiles.SetTickerSubscription(true);
 
-			var r = new CustomToolStripRenderer();
-			ssStatus.Renderer = r;
+			ssStatus.Renderer = new CustomToolStripRenderer();
 		}
 
 		private void AddPanel(TilePanel panel, Control page)
@@ -211,9 +210,9 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void tabs_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
-			var panel = GetVisiblePanel();
-			foreach (var panel_ in _panels)
-				panel_.SetTickerSubscription(panel_ == panel);
+			var current = GetVisiblePanel();
+			foreach (var panel in _panels)
+				panel.SetTickerSubscription(panel == current);
 
 			panel_OnTilepartSelected(SelectedTilepart);
 		}
