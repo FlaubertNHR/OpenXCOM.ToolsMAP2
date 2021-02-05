@@ -1595,7 +1595,9 @@ namespace McdView
 
 		/// <summary>
 		/// Loads a ScanG.dat file for UFO.
-		/// @note Cf SpritesetsManager.LoadScanGufo()
+		/// @note Cf
+		/// - SpritesetsManager.LoadScanGufo()
+		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeScanG"></param>
 		private void LoadScanGufo(string pfeScanG)
@@ -1662,7 +1664,9 @@ namespace McdView
 		/// <summary>
 		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
 		/// Loads a LoFTemps.dat file for UFO.
-		/// @note Cf SpritesetsManager.LoadLoFTufo()
+		/// @note Cf
+		/// - SpritesetsManager.LoadLoFTufo()
+		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeLoft"></param>
 		private void LoadLoFTufo(string pfeLoft)
@@ -1675,7 +1679,7 @@ namespace McdView
 
 				_loftufo = new BitArray(bytes.Length * 8); // init to Falses
 
-				// read the file as little-endian unsigned shorts
+				// read the data as little-endian unsigned shorts
 				// eg. C0 01 -> 01 C0
 
 				int id = -1;
@@ -1740,8 +1744,10 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Loads a ScanG.dat file for UFO.
-		/// @note Cf SpritesetsManager.LoadScanGtftd()
+		/// Loads a ScanG.dat file for TFTD.
+		/// @note Cf
+		/// - SpritesetsManager.LoadScanGtftd()
+		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeScanG"></param>
 		private void LoadScanGtftd(string pfeScanG)
@@ -1807,7 +1813,9 @@ namespace McdView
 
 		/// <summary>
 		/// Loads a LoFTemps.dat file for TFTD.
-		/// @note Cf SpritesetsManager.LoadLoFTtftd()
+		/// @note Cf
+		/// - SpritesetsManager.LoadLoFTtftd()
+		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeLoft"></param>
 		private void LoadLoFTtftd(string pfeLoft)
@@ -1820,7 +1828,7 @@ namespace McdView
 
 				_lofttftd = new BitArray(bytes.Length * 8); // init to Falses
 
-				// read the file as little-endian unsigned shorts
+				// read the data as little-endian unsigned shorts
 				// eg. C0 01 -> 01 C0
 
 				int id = -1;

@@ -144,50 +144,68 @@ namespace PckView
 					switch (SpriteEditorF.Mode)
 					{
 						case SpriteEditorF.EditMode.Enabled: // paint ->
-						{
-							int palid = _feditor._fpalette.PalPanel.Palid;
-							if (palid > -1
-								&& (palid < PckImage.MarkerRle
-									|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_0))
+							if (_feditor._f.SetType != PckViewF.Type.LoFT)
 							{
-								if (palid != (int)Sprite.Bindata[bindataId])
+								int palid = _feditor._fpalette.PalPanel.Palid;
+								if (palid > -1
+									&& (palid < PckImage.MarkerRle
+										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_0))
 								{
-									Sprite.Bindata[bindataId] = (byte)palid;
-									Sprite.Sprite = BitmapService.CreateColored(
-																			XCImage.SpriteWidth,
-																			XCImage.SpriteHeight,
-																			Sprite.Bindata,
-																			PckViewF.Pal.ColorTable);
-									Invalidate();
-									_feditor._f.TilePanel.Invalidate();
-
-									_feditor._f.Changed = true;
+									if (palid != (int)Sprite.Bindata[bindataId])
+									{
+										Sprite.Bindata[bindataId] = (byte)palid;
+										Sprite.Sprite = BitmapService.CreateColored(
+																				XCImage.SpriteWidth,
+																				XCImage.SpriteHeight,
+																				Sprite.Bindata,
+																				PckViewF.Pal.ColorTable);
+										Invalidate();
+										_feditor._f.TilePanel.Invalidate();
+	
+										_feditor._f.Changed = true;
+									}
+								}
+								else
+								{
+									switch (palid)
+									{
+										case PckImage.MarkerRle: // #254
+										case PckImage.MarkerEos: // #255
+											MessageBox.Show(
+														this,
+														"The colortable values #254 and #255 are reserved"
+															+ " as special markers in a .PCK file."
+															+ Environment.NewLine + Environment.NewLine
+															+ "#254 is used for RLE encoding"
+															+ Environment.NewLine
+															+ "#255 is the End-of-Sprite marker",
+														" Error",
+														MessageBoxButtons.OK,
+														MessageBoxIcon.Error,
+														MessageBoxDefaultButton.Button1,
+														0);
+											break;
+									}
 								}
 							}
-							else
+							else // is LoFT
 							{
-								switch (palid)
-								{
-									case PckImage.MarkerRle: // #254
-									case PckImage.MarkerEos: // #255
-										MessageBox.Show(
-													this,
-													"The colortable values #254 and #255 are reserved"
-														+ " as special markers in a .PCK file."
-														+ Environment.NewLine + Environment.NewLine
-														+ "#254 is used for RLE encoding"
-														+ Environment.NewLine
-														+ "#255 is the End-of-Sprite marker",
-													" Error",
-													MessageBoxButtons.OK,
-													MessageBoxIcon.Error,
-													MessageBoxDefaultButton.Button1,
-													0);
-										break;
-								}
+								if (Sprite.Bindata[bindataId] == 0)
+									Sprite.Bindata[bindataId] = 1;
+								else
+									Sprite.Bindata[bindataId] = 0;
+
+								Sprite.Sprite = BitmapService.CreateColored(
+																		XCImage.SpriteWidth,
+																		XCImage.SpriteHeight,
+																		Sprite.Bindata,
+																		PckViewF.Pal.ColorTable);
+								Invalidate();
+								_feditor._f.TilePanel.Invalidate();
+
+								_feditor._f.Changed = true;
 							}
 							break;
-						}
 
 						case SpriteEditorF.EditMode.Locked: // eye-dropper ->
 							_feditor._fpalette.PalPanel.SelectPaletteId((int)Sprite.Bindata[bindataId]);
@@ -354,7 +372,7 @@ namespace PckView
 			double green = (double)color.G / 255;
 			double blue  = (double)color.B / 255;
 
-			double factor = (double)PckViewF.SpriteShadeFloat + 1.63;	// <- is arbitrary; it would help to know the actual
+			double factor = (double)PckViewF.SpriteShadeFloat + 1.65;	// <- is arbitrary; it would help to know the actual
 																		// algorithm used by ImageAttributes.SetGamma() ...
 			return Color.FromArgb(
 							color.A,

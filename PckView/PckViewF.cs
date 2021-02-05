@@ -138,8 +138,10 @@ namespace PckView
 					switch (SetType)
 					{
 //						case Type.Pck: case Type.Bigobs:
-						default:         text = GlobalsXC.PckExt_lc; break;
-						case Type.ScanG: text = String.Empty;        break;
+						default: text = GlobalsXC.PckExt_lc; break;
+
+						case Type.ScanG:
+						case Type.LoFT: text = String.Empty; break;
 					}
 					text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + text;
 
@@ -249,20 +251,30 @@ namespace PckView
 			if (_args != null && _args.Length != 0)
 			{
 				string feLoad = Path.GetFileName(_args[0]).ToLower();
-				if (feLoad == "scang.dat")
+				switch (feLoad)
 				{
-					SetType = Type.ScanG;
-					LoadScanG(_args[0]);
-				}
-				else if (feLoad == "bigobs.pck")
-				{
-					SetType = Type.Bigobs;
-					LoadSpriteset(_args[0]);
-				}
-				else if (Path.GetExtension(feLoad) == ".pck")	// NOTE: LoadSpriteset() will check for a TAB file
-				{												// and issue an error to the user if not found.
-					SetType = Type.Pck;
-					LoadSpriteset(_args[0]);
+					default: 
+						if (Path.GetExtension(feLoad) == ".pck")	// NOTE: LoadSpriteset() will check for a TAB file
+						{											// and issue an error to the user if not found.
+							SetType = Type.Pck;
+							LoadSpriteset(_args[0]);
+						}
+						break;
+
+					case "bigobs.pck":
+						SetType = Type.Bigobs;
+						LoadSpriteset(_args[0]);
+						break;
+
+					case "scang.dat":
+						SetType = Type.ScanG;
+						LoadScanG(_args[0]);
+						break;
+
+					case "loftemps.dat":
+						SetType = Type.LoFT;
+						LoadLoFT(_args[0]);
+						break;
 				}
 			}
 		}
@@ -753,6 +765,10 @@ namespace PckView
 					case Type.ScanG:
 						error += "Image needs to be 4x4 8-bpp";
 						break;
+
+					case Type.LoFT:
+						error += "Image needs to be 16x16 8-bpp"; // TODO
+						break;
 				}
 			}
 
@@ -779,15 +795,19 @@ namespace PckView
 				switch (SetType)
 				{
 					case Type.Pck:
-						ofd.Title = "Add 32x40 8-bpp Image file(s)";
+						ofd.Title = "Select 32x40 8-bpp Image file(s)";
 						break;
 
 					case Type.Bigobs:
-						ofd.Title = "Add 32x48 8-bpp Image file(s)";
+						ofd.Title = "Select 32x48 8-bpp Image file(s)";
 						break;
 
 					case Type.ScanG:
-						ofd.Title = "Add 4x4 8-bpp Image file(s)";
+						ofd.Title = "Select 4x4 8-bpp Image file(s)";
+						break;
+
+					case Type.LoFT:
+						ofd.Title = "Select 16x16 8-bpp Image file(s)"; // TODO
 						break;
 				}
 
@@ -873,15 +893,19 @@ namespace PckView
 				switch (SetType)
 				{
 					case Type.Pck:
-						ofd.Title = "Add 32x40 8-bpp Image file(s)";
+						ofd.Title = "Select 32x40 8-bpp Image file(s)";
 						break;
 
 					case Type.Bigobs:
-						ofd.Title = "Add 32x48 8-bpp Image file(s)";
+						ofd.Title = "Select 32x48 8-bpp Image file(s)";
 						break;
 
 					case Type.ScanG:
-						ofd.Title = "Add 4x4 8-bpp Image file(s)";
+						ofd.Title = "Select 4x4 8-bpp Image file(s)";
+						break;
+
+					case Type.LoFT:
+						ofd.Title = "Select 16x16 8-bpp Image file(s)"; // TODO
 						break;
 				}
 
@@ -936,15 +960,19 @@ namespace PckView
 				switch (SetType)
 				{
 					case Type.Pck:
-						ofd.Title = "Add 32x40 8-bpp Image file(s)";
+						ofd.Title = "Select 32x40 8-bpp Image file(s)";
 						break;
 
 					case Type.Bigobs:
-						ofd.Title = "Add 32x48 8-bpp Image file(s)";
+						ofd.Title = "Select 32x48 8-bpp Image file(s)";
 						break;
 
 					case Type.ScanG:
-						ofd.Title = "Add 4x4 8-bpp Image file(s)";
+						ofd.Title = "Select 4x4 8-bpp Image file(s)";
+						break;
+
+					case Type.LoFT:
+						ofd.Title = "Select 16x16 8-bpp Image file(s)"; // TODO
 						break;
 				}
 
@@ -1058,15 +1086,19 @@ namespace PckView
 				switch (SetType)
 				{
 					case Type.Pck:
-						ofd.Title = "Add 32x40 8-bpp Image file";
+						ofd.Title = "Select 32x40 8-bpp Image file";
 						break;
 
 					case Type.Bigobs:
-						ofd.Title = "Add 32x48 8-bpp Image file";
+						ofd.Title = "Select 32x48 8-bpp Image file";
 						break;
 
 					case Type.ScanG:
-						ofd.Title = "Add 4x4 8-bpp Image file";
+						ofd.Title = "Select 4x4 8-bpp Image file";
+						break;
+
+					case Type.LoFT:
+						ofd.Title = "Select 16x16 8-bpp Image file"; // TODO
 						break;
 				}
 
@@ -1250,7 +1282,7 @@ namespace PckView
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					// NOTE: ScanG.dat cannot be created.
+					// NOTE: ScanG.dat and LoFTemps.dat cannot be created.
 
 					int tabwordLength;
 					if (sender == miCreateBigobs) // Bigobs support for XCImage/PckImage
@@ -1361,7 +1393,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnOpenClick(object sender, EventArgs e)
+		private void OnOpenPckClick(object sender, EventArgs e)
 		{
 			if (closeSpriteset())
 			{
@@ -1451,6 +1483,33 @@ namespace PckView
 		}
 
 		/// <summary>
+		/// Opens a sprite-collection of LoFT icons.
+		/// @note Called when the File menu's click-event is raised.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnOpenLoFTClick(object sender, EventArgs e)
+		{
+			if (closeSpriteset())
+			{
+				using (var ofd = new OpenFileDialog())
+				{
+					ofd.Title      = "Select a LoFTemps file";
+					ofd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+//					ofd.DefaultExt = GlobalsXC.DatExt;
+					ofd.FileName   = "LOFTEMPS.DAT";
+
+
+					if (ofd.ShowDialog(this) == DialogResult.OK)
+					{
+						SetType = Type.LoFT;
+						LoadLoFT(ofd.FileName);
+					}
+				}
+			}
+		}
+
+		/// <summary>
 		/// Saves all the sprites to the currently loaded PCK+TAB files if
 		/// terrain/unit/bigobs or to the currently loaded DAT file if ScanG.
 		/// @note Called when the File menu's click-event is raised.
@@ -1478,6 +1537,9 @@ namespace PckView
 							Changed = false;
 							// TODO: FireMvReloadScanG file
 						}
+						break;
+
+					case Type.LoFT: // TODO
 						break;
 				}
 			}
@@ -1511,6 +1573,9 @@ namespace PckView
 							sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
 							sfd.DefaultExt = GlobalsXC.DatExt;
 							sfd.FileName   = Path.GetFileName(PfSpriteset);
+							break;
+
+						case Type.LoFT: // TODO
 							break;
 					}
 
@@ -1552,6 +1617,9 @@ namespace PckView
 									Changed = false;
 									// TODO: FireMvReloadScanG file
 								}
+								break;
+
+							case Type.LoFT: // TODO
 								break;
 						}
 					}
@@ -2096,13 +2164,56 @@ namespace PckView
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = 4;
 
-					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeScanG), fs);
+					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
 
 					OnPaletteClick(
 								_itPalettes[DefaultPalette],
 								EventArgs.Empty);
 
-					PfSpriteset = pfeScanG; // NOTE: has the extension
+					PfSpriteset = pfeScanG; // NOTE: keep the extension
+					Changed = false;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Loads a LoFT iconset.
+		/// </summary>
+		/// <param name="pfeLoFT">path-file-extension of LOFTEMPS.DAT</param>
+		private void LoadLoFT(string pfeLoFT)
+		{
+			using (var fs = FileService.OpenFile(pfeLoFT))
+			if (fs != null)
+			{
+				if (((int)fs.Length % LoFTicon.Length_LoFT) != 0)
+				{
+					using (var f = new Infobox(
+											"Error",
+											"The LoFTemps.dat file appears to be corrupted."
+										  + " The length of the file is not evenly divisible by the length of an icon.",
+											pfeLoFT))
+					{
+						f.ShowDialog(this);
+					}
+				}
+				else
+				{
+					XCImage.SpriteWidth  =
+					XCImage.SpriteHeight = 16;
+
+					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeLoFT), fs, true);
+
+					OnPaletteClick(
+								_itPalettes[DefaultPalette],
+								EventArgs.Empty);
+
+					if (miTransparent.Checked)
+						OnTransparencyClick(null, EventArgs.Empty);
+
+					if (SpriteEditor._fpalette.Visible)
+						SpriteEditor._fpalette.Close(); // actually Hide() + uncheck the SpriteEditor's it
+
+					PfSpriteset = pfeLoFT; // NOTE: keep the extension
 					Changed = false;
 				}
 			}
@@ -2230,6 +2341,7 @@ namespace PckView
 					case Type.Pck:    text += " (32x40)"; break;
 					case Type.Bigobs: text += " (32x48)"; break;
 					case Type.ScanG:  text += " (4x4)";   break;
+					case Type.LoFT:   text += " (16x16)"; break;
 				}
 			}
 			else

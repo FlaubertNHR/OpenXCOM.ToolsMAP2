@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -34,7 +35,7 @@ namespace XCom
 		}
 
 		public string Label
-		{ get; set; }
+		{ get; private set; }
 
 		public int TabwordLength
 		{ get; private set; }
@@ -336,29 +337,84 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a spriteset of ScanG icons.
-		/// Chops bindata into 16-byte icons (4x4 256-color indexed).
+		/// cTor[2]. Creates a spriteset of ScanG or LoFT icons.
+		/// ScanG chops bindata into 16-byte icons (4x4 256-color indexed).
+		/// LoFT chops bindata into 256-bit icons (16x16 2-color true/false bits).
+		/// @note Cf
+		/// - SpritesetsManager.LoadScanGufo()
+		/// - McdviewF.LoadScanGufo()
 		/// </summary>
 		/// <param name="label"></param>
-		/// <param name="fsScanG">filestream of the SCANG.DAT file</param>
-		public SpriteCollection(string label, Stream fsScanG)
+		/// <param name="fs">filestream of the SCANG.DAT or LOFTEMPS.DAT file</param>
+		/// <param name="isLoFT">true if LoFT data, false if ScanG</param>
+		public SpriteCollection(string label, Stream fs, bool isLoFT)
 		{
 			Label         = label;
 			Pal           = null;
 			TabwordLength = SpritesetsManager.TAB_WORD_LENGTH_0;
 
-			var bindata = new byte[(int)fsScanG.Length];
-			fsScanG.Read(bindata, 0, bindata.Length);
-
-			int iconCount = bindata.Length / ScanGicon.Length_ScanG;
-			for (int i = 0; i != iconCount; ++i)
+			if (!isLoFT) // is ScanG
 			{
-				var icondata = new byte[ScanGicon.Length_ScanG];
+				var bindata = new byte[(int)fs.Length];
+				fs.Read(bindata, 0, bindata.Length);
 
-				for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
-					icondata[j] = bindata[i * ScanGicon.Length_ScanG + j];
+				int iconCount = bindata.Length / ScanGicon.Length_ScanG;
+				for (int i = 0; i != iconCount; ++i)
+				{
+					var icondata = new byte[ScanGicon.Length_ScanG];
 
-				Sprites.Add(new ScanGicon(icondata, i));
+					for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
+						icondata[j] = bindata[i * ScanGicon.Length_ScanG + j];
+
+					Sprites.Add(new ScanGicon(icondata, i));
+				}
+			}
+			else // is LoFT
+			{
+				//LogFile.WriteLine("SpriteCollection label= " + label);
+				//LogFile.WriteLine(". fs.Length= " + fs.Length);
+
+				var bindata = new byte[(int)fs.Length];
+				fs.Read(bindata, 0, bindata.Length);
+
+				int posByte = 0;
+
+				int iconCount = bindata.Length / LoFTicon.Length_LoFT;
+				for (int id = 0; id != iconCount; ++id)
+				{
+					// 32 bytes in a loft
+					// 256 bits in a loft
+
+					var icondata = new BitArray(LoFTicon.Length_LoFT * 8); // init to Falses
+
+					// read the data as little-endian unsigned shorts - you gotta be kidding
+					// who decided to write LoFTemps.dat as SHORTS
+					// eg. C0 01 -> 01 C0
+
+					int posBit = -1;
+					for (int i = 0; i != LoFTicon.Length_LoFT; i += 2, posByte += 2)
+					{
+						for (int j = 0x80; j != 0x00; j >>= 1) // 1000 0000 - iterate over bits in each even byte
+						{
+							icondata[++posBit] = ((bindata[posByte + 1] & j) != 0);
+						}
+
+						for (int j = 0x80; j != 0x00; j >>= 1) // iterate over bits in each odd byte
+						{
+							icondata[++posBit] = ((bindata[posByte] & j) != 0);
+						}
+					}
+
+					var bytes = new byte[icondata.Length];
+					for (int i = 0; i != icondata.Length; ++i)
+					{
+						if (icondata[i])
+							bytes[i] = 1;
+						else
+							bytes[i] = 0;
+					}
+					Sprites.Add(new LoFTicon(bytes, id));
+				}
 			}
 		}
 		#endregion cTor

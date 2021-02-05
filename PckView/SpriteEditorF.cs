@@ -172,6 +172,17 @@ namespace PckView
 			}
 		}
 
+
+		/// <summary>
+		/// Disables the Palette it when editing LoFTs.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void popup_Palette(object sender, EventArgs e)
+		{
+			miPalette.Enabled = (_f.SetType != PckViewF.Type.LoFT);
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -179,13 +190,16 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnShowPaletteClick(object sender, EventArgs e)
 		{
-			if (!miPalette.Checked)
+			if (_f.SetType != PckViewF.Type.LoFT) // don't allow the Palette to show if editing LoFTs
 			{
-				miPalette.Checked = true;
-				_fpalette.Show();
+				if (!miPalette.Checked)
+				{
+					miPalette.Checked = true;
+					_fpalette.Show();
+				}
+				else
+					_fpalette.BringToFront();
 			}
-			else
-				_fpalette.BringToFront();
 		}
 
 		/// <summary>
@@ -310,6 +324,7 @@ namespace PckView
 			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miPalette});
 			this.miPaletteMenu.Text = "&Palette";
+			this.miPaletteMenu.Popup += popup_Palette;
 			// 
 			// miPalette
 			// 

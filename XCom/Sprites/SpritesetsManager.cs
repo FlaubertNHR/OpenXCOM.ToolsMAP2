@@ -134,7 +134,9 @@ namespace XCom
 
 		/// <summary>
 		/// Loads a ScanG.dat file for UFO.
-		/// @note Cf McdviewF.LoadScanGufo()
+		/// @note Cf
+		/// - McdviewF.LoadScanGufo()
+		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="dirUfo"></param>
 		/// <returns></returns>
@@ -165,7 +167,9 @@ namespace XCom
 
 		/// <summary>
 		/// Loads a ScanG.dat file for TFTD.
-		/// @note Cf McdviewF.LoadScanGtftd()
+		/// @note Cf
+		/// - McdviewF.LoadScanGtftd()
+		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="dirTftd"></param>
 		/// <returns></returns>
@@ -198,7 +202,9 @@ namespace XCom
 		/// <summary>
 		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
 		/// Loads a LoFTemps.dat file for UFO.
-		/// @note Cf McdviewF.LoadLoFTufo()
+		/// @note Cf
+		/// - McdviewF.LoadLoFTufo()
+		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="dirUfo"></param>
 		public static void LoadLoFTufo(string dirUfo)
@@ -215,7 +221,7 @@ namespace XCom
 
 					LoFTufo = new BitArray(bytes.Length * 8); // init to Falses
 
-					// read the file as little-endian unsigned shorts
+					// read the data as little-endian unsigned shorts
 					// eg. C0 01 -> 01 C0
 
 					int id = -1;
@@ -240,7 +246,9 @@ namespace XCom
 
 		/// <summary>
 		/// Loads a LoFTemps.dat file for TFTD.
-		/// @note Cf McdviewF.LoadLoFTtftd()
+		/// @note Cf
+		/// - McdviewF.LoadLoFTtftd()
+		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="dirTftd"></param>
 		public static void LoadLoFTtftd(string dirTftd)
@@ -257,7 +265,7 @@ namespace XCom
 
 					LoFTtftd = new BitArray(bytes.Length * 8); // init to Falses
 
-					// read the file as little-endian unsigned shorts
+					// read the data as little-endian unsigned shorts
 					// eg. C0 01 -> 01 C0
 
 					int id = -1;

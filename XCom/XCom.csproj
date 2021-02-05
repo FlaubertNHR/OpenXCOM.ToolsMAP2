@@ -98,6 +98,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sprites\SpriteCollection.cs" />
+    <Compile Include="Sprites\Types\LoFTicon.cs" />
     <Compile Include="Sprites\Types\PckImage.cs">
       <SubType>Code</SubType>
     </Compile>

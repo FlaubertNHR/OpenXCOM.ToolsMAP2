@@ -14,8 +14,8 @@ namespace XCom
 		public const  int SpriteHeight40 = 40;	// for MapView, so I don't have to recode a bunch of crap there.
 
 		public static int SpriteWidth    = 32;
-		public static int SpriteHeight   = 40;	// terrain & units 40px / bigobs 48px / scang 4px
-		#endregion Fields (static)				// NOTE: Bigobs and ScanG shall be supported only by PckView.
+		public static int SpriteHeight   = 40;	// terrain & units 40px / bigobs 48px / scang 4px / loft 16px
+		#endregion Fields (static)				// NOTE: Bigobs, ScanG, and LoFT shall be supported only by PckView.
 
 
 		#region Properties
@@ -66,18 +66,19 @@ namespace XCom
 		/// <param name="pal">pass in null to *bypass* creating the 'Image'; ie,
 		/// the PckImage..cTor has already unravelled the compressed image-data
 		/// instead</param>
-		/// <param name="spriteId"></param>
+		/// <param name="id"></param>
 		internal XCImage(
 				byte[] bindata,
 				int width,
 				int height,
 				Palette pal,
-				int spriteId)
+				int id)
 		{
-			Id = spriteId;
+			Id = id;
 			SetId = -1; // used only by MapInfo
 
 			Bindata = bindata;
+
 			Pal = pal;
 
 			if (Pal != null)										// NOTE: this is to check for a call by BitmapService.CreateSprite()

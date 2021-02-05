@@ -68,12 +68,12 @@ namespace XCom
 		/// </summary>
 		/// <param name="bindata">the COMPRESSED source data</param>
 		/// <param name="pal"></param>
-		/// <param name="spriteId">the id of this sprite in its spriteset</param>
+		/// <param name="id">the id of this sprite in its spriteset</param>
 		/// <param name="spriteset"></param>
 		internal PckImage(
 				byte[] bindata,
 				Palette pal,
-				int spriteId,
+				int id,
 				SpriteCollection spriteset)
 			:
 				base(
@@ -82,7 +82,7 @@ namespace XCom
 					XCImage.SpriteWidth,
 					XCImage.SpriteHeight,
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
-					spriteId)
+					id)
 		{
 			_spriteset = spriteset;	// only for ToString().
 			SetId = ++_setId;		// only for 'MapInfoDialog'.
@@ -219,6 +219,10 @@ namespace XCom
 
 
 		#region Methods (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			string ret = String.Empty;
@@ -246,6 +250,11 @@ namespace XCom
 			return ret;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
 		public override bool Equals(object obj)
 		{
 			if (obj is PckImage)
@@ -254,6 +263,10 @@ namespace XCom
 			return false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override int GetHashCode()
 		{
 			return ToString().GetHashCode();
