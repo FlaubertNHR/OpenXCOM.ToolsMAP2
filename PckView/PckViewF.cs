@@ -767,7 +767,7 @@ namespace PckView
 						break;
 
 					case Type.LoFT:
-						error += "Image needs to be 16x16 8-bpp"; // TODO
+						error += "Image needs to be 16x16 8-bpp";
 						break;
 				}
 			}
@@ -807,7 +807,7 @@ namespace PckView
 						break;
 
 					case Type.LoFT:
-						ofd.Title = "Select 16x16 8-bpp Image file(s)"; // TODO
+						ofd.Title = "Select 16x16 8-bpp Image file(s)";
 						break;
 				}
 
@@ -905,7 +905,7 @@ namespace PckView
 						break;
 
 					case Type.LoFT:
-						ofd.Title = "Select 16x16 8-bpp Image file(s)"; // TODO
+						ofd.Title = "Select 16x16 8-bpp Image file(s)";
 						break;
 				}
 
@@ -972,7 +972,7 @@ namespace PckView
 						break;
 
 					case Type.LoFT:
-						ofd.Title = "Select 16x16 8-bpp Image file(s)"; // TODO
+						ofd.Title = "Select 16x16 8-bpp Image file(s)";
 						break;
 				}
 
@@ -1098,7 +1098,7 @@ namespace PckView
 						break;
 
 					case Type.LoFT:
-						ofd.Title = "Select 16x16 8-bpp Image file"; // TODO
+						ofd.Title = "Select 16x16 8-bpp Image file";
 						break;
 				}
 

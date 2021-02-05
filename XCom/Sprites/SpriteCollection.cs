@@ -371,9 +371,6 @@ namespace XCom
 			}
 			else // is LoFT
 			{
-				//LogFile.WriteLine("SpriteCollection label= " + label);
-				//LogFile.WriteLine(". fs.Length= " + fs.Length);
-
 				var bindata = new byte[(int)fs.Length];
 				fs.Read(bindata, 0, bindata.Length);
 
@@ -405,6 +402,7 @@ namespace XCom
 						}
 					}
 
+					// convert and store the data to a byte-array in 'XCImage' ->
 					var bytes = new byte[icondata.Length];
 					for (int i = 0; i != icondata.Length; ++i)
 					{
