@@ -870,7 +870,7 @@ namespace PckView
 															Pal,
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight,
-															SetType == Type.ScanG);
+															SetType == Type.ScanG || SetType == Type.LoFT);
 						TilePanel.Spriteset.Sprites.Add(sprite);
 					}
 
@@ -1051,7 +1051,7 @@ namespace PckView
 													Pal,
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,
-													SetType == Type.ScanG);
+													SetType == Type.ScanG || SetType == Type.LoFT);
 				TilePanel.Spriteset.Sprites.Insert(id++, sprite);
 			}
 			return true;
@@ -1140,7 +1140,7 @@ namespace PckView
 																Pal,
 																XCImage.SpriteWidth,
 																XCImage.SpriteHeight,
-																SetType == Type.ScanG);
+																SetType == Type.ScanG || SetType == Type.LoFT);
 							TilePanel.Spriteset[TilePanel.idSel] =
 							SpriteEditor.SpritePanel.Sprite = sprite;
 
@@ -1511,7 +1511,8 @@ namespace PckView
 
 		/// <summary>
 		/// Saves all the sprites to the currently loaded PCK+TAB files if
-		/// terrain/unit/bigobs or to the currently loaded DAT file if ScanG.
+		/// terrain/unit/bigobs or to the currently loaded DAT file if ScanG or
+		/// LoFT.
 		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -1539,7 +1540,11 @@ namespace PckView
 						}
 						break;
 
-					case Type.LoFT: // TODO
+					case Type.LoFT:
+						if (SpriteCollection.WriteLoFT(PfSpriteset, TilePanel.Spriteset)) // NOTE: 'PfSpriteset' contains extension .DAT for LoFT iconset.
+						{
+							Changed = false;
+						}
 						break;
 				}
 			}
@@ -1547,7 +1552,8 @@ namespace PckView
 
 		/// <summary>
 		/// Saves all the sprites to potentially different PCK+TAB files if
-		/// terrain/unit/bigobs or to a potentially different DAT file if ScanG.
+		/// terrain/unit/bigobs or to a potentially different DAT file if ScanG
+		/// or LoFT.
 		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -1575,7 +1581,11 @@ namespace PckView
 							sfd.FileName   = Path.GetFileName(PfSpriteset);
 							break;
 
-						case Type.LoFT: // TODO
+						case Type.LoFT:
+							sfd.Title      = "Save LoFTemps.dat as ...";
+							sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+							sfd.DefaultExt = GlobalsXC.DatExt;
+							sfd.FileName   = Path.GetFileName(PfSpriteset);
 							break;
 					}
 
@@ -1599,6 +1609,7 @@ namespace PckView
 						{
 							case Type.Pck:
 							case Type.Bigobs:
+							{
 								string label = Path.GetFileNameWithoutExtension(pfe);
 								string pf    = Path.Combine(dir, label);
 
@@ -1609,6 +1620,7 @@ namespace PckView
 									FireMvReload = true;
 								}
 								break;
+							}
 
 							case Type.ScanG:
 								if (SpriteCollection.WriteScanG(pfe, TilePanel.Spriteset))
@@ -1619,7 +1631,12 @@ namespace PckView
 								}
 								break;
 
-							case Type.LoFT: // TODO
+							case Type.LoFT:
+								if (SpriteCollection.WriteLoFT(pfe, TilePanel.Spriteset))
+								{
+									PfSpriteset = pfe; // 'PfSpriteset' for LoFTemps.dat has its extension.
+									Changed = false;
+								}
 								break;
 						}
 					}
@@ -1783,7 +1800,7 @@ namespace PckView
 																								Pal,
 																								XCImage.SpriteWidth,
 																								XCImage.SpriteHeight,
-																								SetType == Type.ScanG);
+																								SetType == Type.ScanG || SetType == Type.LoFT);
 								for (int i = 0; i != spriteset.Count; ++i)
 									TilePanel.Spriteset.Sprites.Add(spriteset[i]);
 

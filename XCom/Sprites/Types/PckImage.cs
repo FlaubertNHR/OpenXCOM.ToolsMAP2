@@ -37,7 +37,7 @@ namespace XCom
 		/// <summary>
 		/// The maximum valid color-id in a pck-packaged sprite.
 		/// </summary>
-		public const byte MxId = 0xFD;
+		internal const byte MaxId = 0xFD;
 
 		/// <summary>
 		/// Tracks the id of an image across all loaded terrainsets.

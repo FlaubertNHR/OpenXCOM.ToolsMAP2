@@ -385,7 +385,7 @@ namespace XCom
 					// 32 bytes in a loft
 					// 256 bits in a loft
 
-					var icondata = new BitArray(LoFTicon.Length_LoFT * 8); // init to Falses
+					var icondata = new BitArray(LoFTicon.Length_LoFT_bits); // init to Falses
 
 					// read the data as little-endian unsigned shorts - you gotta be kidding
 					// who decided to write LoFTemps.dat as SHORTS
@@ -607,6 +607,74 @@ namespace XCom
 				{
 					icon = iconset[id];
 					fs.Write(icon.Bindata, 0, icon.Bindata.Length);
+				}
+			}
+
+			if (!fail && pfeT != pfe)
+				return FileService.ReplaceFile(pfe);
+
+			return !fail;
+		}
+
+		/// <summary>
+		/// Saves a specified iconset to LOFTEMPS.DAT.
+		/// </summary>
+		/// <param name="pfe">the directory to save to</param>
+		/// <param name="iconset">pointer to the iconset</param>
+		/// <returns>true if mission was successful</returns>
+		public static bool WriteLoFT(
+				string pfe,
+				SpriteCollection iconset)
+		{
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
+
+			bool fail = true;
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
+			{
+				fail = false;
+
+				XCImage icon;
+				for (int id = 0; id != iconset.Count; ++id)
+				{
+					icon = iconset[id];
+
+					var buffer = new byte[1];
+					BitArray bits;
+					int b;
+
+					for (int i = 0; i != icon.Bindata.Length; i += 16)
+					{
+						// Look don't ask it appears to work ...
+
+						b = 0;
+						bits = new BitArray(8);
+						for (int j = 15; j != 7; --j, ++b)
+						{
+							if (icon.Bindata[i + j] != 0)
+								bits[b] = true;
+							else
+								bits[b] = false;
+						}
+						bits.CopyTo(buffer, 0);
+						fs.Write(buffer, 0, 1);
+
+						b = 0;
+						bits = new BitArray(8);
+						for (int j = 7; j != -1; --j, ++b)
+						{
+							if (icon.Bindata[i + j] != 0)
+								bits[b] = true;
+							else
+								bits[b] = false;
+						}
+						bits.CopyTo(buffer, 0);
+						fs.Write(buffer, 0, 1);
+					}
 				}
 			}
 

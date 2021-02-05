@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 
 
 namespace XCom
@@ -9,7 +8,8 @@ namespace XCom
 			XCImage
 	{
 		#region Fields (static)
-		public const int Length_LoFT = 32; // each LoFT icon is 32 bytes [(16x16 bits) / 8 bits per byte]
+		public   const int Length_LoFT      =  32; // each LoFT icon is 32 bytes [(16x16 bits) / 8 bits per byte]
+		internal const int Length_LoFT_bits = 256;
 		#endregion Fields (static)
 
 
@@ -38,6 +38,6 @@ namespace XCom
 											Bindata,
 											Pal.ColorTable);
 		}
-		#endregion
+		#endregion cTor
 	}
 }

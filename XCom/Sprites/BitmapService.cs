@@ -30,7 +30,7 @@ namespace XCom
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of the image</param>
 		/// <param name="height">the height of the image</param>
-		/// <param name="isScanG">true if creating a ScanG icon</param>
+		/// <param name="bypassMarkers">true if creating a ScanG icon</param>
 		/// <param name="x">used by spritesheets only</param>
 		/// <param name="y">used by spritesheets only</param>
 		/// <returns>an XCImage-object (base of PckImage)</returns>
@@ -40,7 +40,7 @@ namespace XCom
 				Palette pal,
 				int width,
 				int height,
-				bool isScanG = false,
+				bool bypassMarkers,
 				int x = 0,
 				int y = 0)
 		{
@@ -71,13 +71,13 @@ namespace XCom
 				{
 					byte palid = *(pos + row * stride + col);
 
-					if (!isScanG)
+					if (!bypassMarkers)
 					{
 						switch (palid)
 						{
 							case PckImage.MarkerRle:	// #254
 							case PckImage.MarkerEos:	// #255
-								palid = PckImage.MxId;	// #253
+								palid = PckImage.MaxId;	// #253
 								break;
 						}
 					}
@@ -96,7 +96,7 @@ namespace XCom
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of a sprite in the collection</param>
 		/// <param name="height">the height of a sprite in the collection</param>
-		/// <param name="isScanG">true if creating a ScanG iconset</param>
+		/// <param name="bypassMarkers">true if creating a ScanG or LoFT iconset</param>
 		/// <param name="pad">padding between sprites</param>
 		/// <returns>a spriteset, the entries of which will be repurposed to
 		/// another spriteset</returns>
@@ -105,7 +105,7 @@ namespace XCom
 				Palette pal,
 				int width,
 				int height,
-				bool isScanG,
+				bool bypassMarkers,
 				int pad = 0)
 		{
 			var spriteset = new SpriteCollection(String.Empty, pal);
@@ -123,7 +123,7 @@ namespace XCom
 												++id,
 												pal,
 												width, height,
-												isScanG,
+												bypassMarkers,
 												x, y));
 			}
 			return spriteset;

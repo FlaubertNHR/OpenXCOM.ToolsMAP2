@@ -39,6 +39,6 @@ namespace XCom
 											Bindata,
 											Pal.ColorTable);
 		}
-		#endregion
+		#endregion cTor
 	}
 }
