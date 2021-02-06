@@ -137,9 +137,9 @@ namespace PckView
 				int pixelX = e.X / _scale;
 				int pixelY = e.Y / _scale;
 
-				int bindataId = pixelY * (Sprite.Bindata.Length / XCImage.SpriteHeight) + pixelX;
+				int binid = pixelY * (Sprite.Bindata.Length / XCImage.SpriteHeight) + pixelX;
 
-				if (bindataId > -1 && bindataId < Sprite.Bindata.Length) // safety.
+				if (binid > -1 && binid < Sprite.Bindata.Length) // safety.
 				{
 					switch (SpriteEditorF.Mode)
 					{
@@ -151,9 +151,9 @@ namespace PckView
 									&& (palid < PckImage.MarkerRle
 										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_0))
 								{
-									if (palid != (int)Sprite.Bindata[bindataId])
+									if (palid != (int)Sprite.Bindata[binid])
 									{
-										Sprite.Bindata[bindataId] = (byte)palid;
+										Sprite.Bindata[binid] = (byte)palid;
 										Sprite.Sprite = BitmapService.CreateColored(
 																				XCImage.SpriteWidth,
 																				XCImage.SpriteHeight,
@@ -190,10 +190,10 @@ namespace PckView
 							}
 							else // is LoFT
 							{
-								if (Sprite.Bindata[bindataId] == 0)
-									Sprite.Bindata[bindataId] = 1;
+								if (Sprite.Bindata[binid] != (byte)0)
+									Sprite.Bindata[binid]  = (byte)0;
 								else
-									Sprite.Bindata[bindataId] = 0;
+									Sprite.Bindata[binid]  = (byte)1;
 
 								Sprite.Sprite = BitmapService.CreateColored(
 																		XCImage.SpriteWidth,
@@ -208,7 +208,7 @@ namespace PckView
 							break;
 
 						case SpriteEditorF.EditMode.Locked: // eye-dropper ->
-							_feditor._fpalette.PalPanel.SelectPaletteId((int)Sprite.Bindata[bindataId]);
+							_feditor._fpalette.PalPanel.SelectPaletteId((int)Sprite.Bindata[binid]);
 							break;
 					}
 				}
@@ -231,11 +231,11 @@ namespace PckView
 					int pixelX = e.X / _scale;
 					int pixelY = e.Y / _scale;
 
-					int bindataId = pixelY * (Sprite.Bindata.Length / XCImage.SpriteHeight) + pixelX;
+					int binid = pixelY * (Sprite.Bindata.Length / XCImage.SpriteHeight) + pixelX;
 
-					if (bindataId > -1 && bindataId < Sprite.Bindata.Length) // safety.
+					if (binid > -1 && binid < Sprite.Bindata.Length) // safety.
 					{
-						int palid = Sprite.Bindata[bindataId];
+						int palid = Sprite.Bindata[binid];
 						if (palid != Palid)
 							Palid = palid;
 					}

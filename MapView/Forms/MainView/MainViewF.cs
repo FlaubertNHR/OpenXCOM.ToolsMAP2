@@ -1519,9 +1519,9 @@ namespace MapView
 
 			var width = size.Rows + size.Cols;
 			using (var b = BitmapService.CreateTransparent(
-												width * ConstHalfWidth,
-												width * ConstHalfHeight + (size.Levs - level) * LAYERS,
-												file.Descriptor.Pal.ColorTable))
+														width * ConstHalfWidth,
+														width * ConstHalfHeight + (size.Levs - level) * LAYERS,
+														file.Descriptor.Pal.ColorTable))
 			{
 				if (b != null)
 				{
@@ -1557,10 +1557,10 @@ namespace MapView
 									foreach (var part in parts)
 									{
 										BitmapService.Insert(
-														part[0].Sprite,
-														b,
-														x,
-														y - part.Record.TileOffset);
+															part[0].Sprite,
+															b,
+															x,
+															y - part.Record.TileOffset);
 									}
 								}
 							}

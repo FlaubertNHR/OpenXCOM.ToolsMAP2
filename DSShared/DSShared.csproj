@@ -82,6 +82,7 @@
     <Compile Include="GlobalsXC.cs" />
     <Compile Include="Infobox.cs" />
     <Compile Include="LogFile.cs" />
+    <Compile Include="ObjectCopier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

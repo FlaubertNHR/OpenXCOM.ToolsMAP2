@@ -391,12 +391,12 @@ namespace XCom
 					int posBit = -1;
 					for (int i = 0; i != LoFTicon.Length_LoFT; i += 2, posByte += 2)
 					{
-						for (int j = 0x80; j != 0x00; j >>= 1) // 1000 0000 - iterate over bits in each even byte
+						for (byte j = 0x80; j != 0x00; j >>= 1) // 1000 0000 - iterate over bits in each even byte
 						{
 							icondata[++posBit] = ((bindata[posByte + 1] & j) != 0);
 						}
 
-						for (int j = 0x80; j != 0x00; j >>= 1) // iterate over bits in each odd byte
+						for (byte j = 0x80; j != 0x00; j >>= 1) // iterate over bits in each odd byte
 						{
 							icondata[++posBit] = ((bindata[posByte] & j) != 0);
 						}
@@ -407,9 +407,9 @@ namespace XCom
 					for (int i = 0; i != icondata.Length; ++i)
 					{
 						if (icondata[i])
-							bytes[i] = 1;
+							bytes[i] = (byte)1;
 						else
-							bytes[i] = 0;
+							bytes[i] = (byte)0;
 					}
 					Sprites.Add(new LoFTicon(bytes, id));
 				}

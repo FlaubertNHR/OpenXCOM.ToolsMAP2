@@ -70,8 +70,7 @@ namespace PckView
 
 				_f.SpriteEditor.SpritePanel.Sprite = null;
 
-				idOver =
-				idSel  = -1;
+				Ovid = Selid = -1;
 
 				_f.SpritesetChanged(_spriteset != null);
 
@@ -80,10 +79,16 @@ namespace PckView
 			}
 		}
 
-		internal int idSel
+		/// <summary>
+		/// The selected id.
+		/// </summary>
+		internal int Selid
 		{ get; set; }
 
-		internal int idOver
+		/// <summary>
+		/// The overid.
+		/// </summary>
+		internal int Ovid
 		{ get; private set; }
 		#endregion Properties
 
@@ -103,8 +108,7 @@ namespace PckView
 			_scrollBar.ValueChanged += OnScrollBarValueChanged;
 			Controls.Add(_scrollBar);
 
-			idOver =
-			idSel  = -1;
+			Ovid = Selid  = -1;
 
 			PckViewF.PaletteChanged += OnPaletteChanged;
 		}
@@ -123,7 +127,7 @@ namespace PckView
 			if (_f.WindowState != FormWindowState.Minimized)
 			{
 				CalculateScrollRange(false);
-				ScrollToTile(idSel);
+				ScrollToTile(Selid);
 
 				if (_scrollBar.Visible
 					&& _scrollBar.Value + (_scrollBar.LargeChange - 1) + _scrollBar.LargeChange > _scrollBar.Maximum)
@@ -190,13 +194,13 @@ namespace PckView
 				// IMPORTANT: 'idSel' is currently allowed only 1 entry.
 
 				int id = GetTileId(e);
-				if (id != idSel)
+				if (id != Selid)
 				{
 					XCImage sprite;
 
-					if ((idSel = id) != -1)
+					if ((Selid = id) != -1)
 					{
-						sprite = Spriteset[idSel];
+						sprite = Spriteset[Selid];
 
 //						if (ModifierKeys == Keys.Control)
 //						{
@@ -220,7 +224,7 @@ namespace PckView
 					_f.PrintSelectedId();
 					Invalidate();
 				}
-				ScrollToTile(idSel);
+				ScrollToTile(Selid);
 			}
 		}
 
@@ -236,9 +240,9 @@ namespace PckView
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
 				int id = GetTileId(e);
-				if (id != idOver)
+				if (id != Ovid)
 				{
-					idOver = id;
+					Ovid = id;
 					_f.PrintOverId();
 				}
 			}
@@ -253,7 +257,7 @@ namespace PckView
 		{
 //			base.OnMouseLeave(e);
 
-			idOver = -1;
+			Ovid = -1;
 			_f.PrintOverId();
 		}
 
@@ -292,7 +296,7 @@ namespace PckView
 					int tileY = id / HoriCount;
 
 //					if (selectedIds.Contains(id))
-					if (id == idSel)
+					if (id == Selid)
 						graphics.FillRectangle(
 											Brushes.Crimson,
 											TableOffsetHori + TileWidth  * tileX,
@@ -492,8 +496,8 @@ namespace PckView
 		/// <param name="dir">-1 left, +1 right</param>
 		internal void SelectAdjacentHori(int dir)
 		{
-			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[idSel += dir];
-			ScrollToTile(idSel);
+			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[Selid += dir];
+			ScrollToTile(Selid);
 			Invalidate();
 		}
 
@@ -506,24 +510,24 @@ namespace PckView
 			switch (dir)
 			{
 				case -1:
-					if (idSel >= HoriCount)
-						idSel -= HoriCount;
+					if (Selid >= HoriCount)
+						Selid -= HoriCount;
 					break;
 
 				case +1:
-					if (idSel == -1 && Spriteset.Count != 0)
+					if (Selid == -1 && Spriteset.Count != 0)
 					{
-						idSel = Spriteset.Count - 1;
+						Selid = Spriteset.Count - 1;
 					}
-					else if (idSel < Spriteset.Count - HoriCount)
+					else if (Selid < Spriteset.Count - HoriCount)
 					{
-						idSel += HoriCount;
+						Selid += HoriCount;
 					}
 					break;
 			}
 
-			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[idSel];
-			ScrollToTile(idSel);
+			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[Selid];
+			ScrollToTile(Selid);
 			Invalidate();
 		}
 

@@ -215,7 +215,8 @@ namespace PckView
 			// miOpenLoFT
 			// 
 			this.miOpenLoFT.Index = 9;
-			this.miOpenLoFT.Text = "Open LoFTemps.Dat ...";
+			this.miOpenLoFT.Shortcut = System.Windows.Forms.Shortcut.CtrlM;
+			this.miOpenLoFT.Text = "Open LoFTe&mps.Dat ...";
 			this.miOpenLoFT.Click += new System.EventHandler(this.OnOpenLoFTClick);
 			// 
 			// miSeparator1

@@ -15,7 +15,9 @@ namespace XCom
 	public sealed class Palette
 	{
 		#region Fields (static)
-		public const byte TranId = 0x00;
+		public   const byte TranId    = 0x00;
+		internal const byte LoFTclear = 0x00;
+		internal const byte LoFTSolid = 0x01;
 
 		private static readonly Dictionary<string, Palette> _palettes =
 							new Dictionary<string, Palette>();

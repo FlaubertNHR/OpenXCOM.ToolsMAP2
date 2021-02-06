@@ -133,16 +133,30 @@ namespace XCom
 		/// <summary>
 		/// Saves a sprite after setting colorid #0 transparent.
 		/// </summary>
-		/// <param name="fullpath"></param>
-		/// <param name="b"></param>
-		public static void ExportSprite(string fullpath, Bitmap b)
+		/// <param name="fullpath">fullpath of the output file</param>
+		/// <param name="b">the Bitmap to export</param>
+		/// <param name="isLoFT">true to force palid #0 black and #1 white for LoFTs</param>
+		public static void ExportSprite(
+				string fullpath,
+				Bitmap b,
+				bool isLoFT = false)
 		{
-			ColorPalette pal = b.Palette;
-			pal.Entries[Palette.TranId] = Color.Transparent;
-			b.Palette = pal;
+			ColorPalette pal0 = null; // workaround for the fact that ColorPalette is copied
+			if (isLoFT)
+			{
+				pal0 = b.Palette;
+
+				ColorPalette pal = b.Palette;
+				pal.Entries[Palette.LoFTclear] = Color.Black;
+				pal.Entries[Palette.LoFTSolid] = Color.White;
+				b.Palette = pal;
+			}
 
 			Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
 			b.Save(fullpath, ImageFormat.Png);
+
+			if (pal0 != null)
+				b.Palette = pal0;
 		}
 
 		/// <summary>
@@ -154,12 +168,14 @@ namespace XCom
 		/// <param name="spriteset">spriteset</param>
 		/// <param name="pal">palette</param>
 		/// <param name="cols">quantity of cols</param>
+		/// <param name="isLoFT">true to force palid #0 black and #1 white for LoFTs</param>
 		/// <param name="pad">padding between sprites in the spritesheet</param>
 		public static void ExportSpritesheet(
 				string fullpath,
 				SpriteCollection spriteset,
 				Palette pal,
 				int cols,
+				bool isLoFT,
 				int pad = 0)
 		{
 			if (spriteset.Count < cols)
@@ -177,7 +193,7 @@ namespace XCom
 
 					Insert(spriteset[i].Sprite, b, x, y);
 				}
-				ExportSprite(fullpath, b);
+				ExportSprite(fullpath, b, isLoFT);
 			}
 		}
 
@@ -237,7 +253,10 @@ namespace XCom
 
 
 		/// <summary>
-		/// @note Called by ExportSpritesheet() and MainViewF.Screenshot().
+		/// @note Called by
+		/// - ExportSpritesheet()
+		/// - CropToRectangle()
+		/// - MainViewF.Screenshot()
 		/// </summary>
 		/// <param name="width">width of final Bitmap</param>
 		/// <param name="height">height of final Bitmap</param>
