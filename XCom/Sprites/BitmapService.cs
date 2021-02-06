@@ -131,7 +131,7 @@ namespace XCom
 
 
 		/// <summary>
-		/// Saves a sprite after setting colorid #0 transparent.
+		/// Saves a sprite. Forces black/white for LoFTs.
 		/// </summary>
 		/// <param name="fullpath">fullpath of the output file</param>
 		/// <param name="b">the Bitmap to export</param>
@@ -144,7 +144,7 @@ namespace XCom
 			ColorPalette pal0 = null; // workaround for the fact that ColorPalette is copied
 			if (isLoFT)
 			{
-				pal0 = b.Palette;
+				pal0 = b.Palette; // don't screw up the sprite's palette; use a copy ->
 
 				ColorPalette pal = b.Palette;
 				pal.Entries[Palette.LoFTclear] = Color.Black;
@@ -155,7 +155,7 @@ namespace XCom
 			Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
 			b.Save(fullpath, ImageFormat.Png);
 
-			if (pal0 != null)
+			if (pal0 != null) // revert sprite's palette ->
 				b.Palette = pal0;
 		}
 
