@@ -256,7 +256,7 @@ namespace McdView
 		/// <summary>
 		/// Gets the current palette based on the state of the Resources menu.
 		/// </summary>
-		internal Palette Palette
+		internal Palette Pal
 		{
 			get
 			{
@@ -791,7 +791,7 @@ namespace McdView
 																		Label,
 																		Path.GetDirectoryName(PfeMcd),
 																		SpritesetsManager.TAB_WORD_LENGTH_2,
-																		Palette,
+																		Pal,
 																		true);
 							}
 
@@ -875,7 +875,7 @@ namespace McdView
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															SpritesetsManager.TAB_WORD_LENGTH_2,
-															Palette,
+															Pal,
 															true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
@@ -953,7 +953,7 @@ namespace McdView
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															SpritesetsManager.TAB_WORD_LENGTH_2,
-															Palette,
+															Pal,
 															true);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
@@ -999,7 +999,7 @@ namespace McdView
 		/// Loads a specified Mcdfile as called from TileView.
 		/// </summary>
 		/// <param name="pfeMcd">path-file-extension of an MCD file</param>
-		/// <param name="palette">ufo or tftd battle-palette</param>
+		/// <param name="palette">ufo- or tftd-battle palette</param>
 		/// <param name="terId">the record to select</param>
 		public void LoadRecords(
 				string pfeMcd,
@@ -1409,7 +1409,7 @@ namespace McdView
 																		Copier.Label,
 																		Path.GetDirectoryName(Copier.PfeMcd),
 																		SpritesetsManager.TAB_WORD_LENGTH_2,
-																		Palette,
+																		Pal,
 																		true);
 
 						for (int id = 0; id != parts.Length; ++id)

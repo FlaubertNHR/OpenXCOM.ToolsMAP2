@@ -374,7 +374,7 @@ namespace McdView
 						}
 						icon.UnlockBits(data);
 
-						icon.Palette = Palette.Table;
+						icon.Palette = Pal.Table;
 
 						ColorPalette pal = icon.Palette; // palettes get copied not referenced ->
 						pal.Entries[Palette.Tid] = Color.Transparent;
@@ -412,7 +412,7 @@ namespace McdView
 			{
 				if (ScanG != null)
 				{
-					using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), Palette.Table))
+					using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), Pal.Table))
 						f.ShowDialog(this);
 				}
 				else
