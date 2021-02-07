@@ -1789,7 +1789,7 @@ namespace MapView.Forms.MainView
 
 			if (_visFloor && (part = tile.Floor) != null)
 			{
-				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
+				var sprite = toned ? (part[_anistep] as PckImage).SpriteToned
 								   :  part[_anistep].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
@@ -1797,7 +1797,7 @@ namespace MapView.Forms.MainView
 
 			if (_visWest && (part = tile.West) != null)
 			{
-				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
+				var sprite = toned ? (part[_anistep] as PckImage).SpriteToned
 								   :  part[_anistep].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
@@ -1805,7 +1805,7 @@ namespace MapView.Forms.MainView
 
 			if (_visNorth && (part = tile.North) != null)
 			{
-				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
+				var sprite = toned ? (part[_anistep] as PckImage).SpriteToned
 								   :  part[_anistep].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
@@ -1813,7 +1813,7 @@ namespace MapView.Forms.MainView
 
 			if (_visContent && (part = tile.Content) != null)
 			{
-				var sprite = toned ? (part[_anistep] as PckImage).SpriteT
+				var sprite = toned ? (part[_anistep] as PckImage).SpriteToned
 								   :  part[_anistep].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
@@ -1835,7 +1835,7 @@ namespace MapView.Forms.MainView
 			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 			{
 				palid = bindata[++i];
-				if (palid != Palette.TranId) // <- this is the fix for Mono.
+				if (palid != Palette.Tid) // <- this is the fix for Mono.
 				{
 					_graphics.FillRectangle(
 										SpriteBrushes[palid],
@@ -1906,7 +1906,7 @@ namespace MapView.Forms.MainView
 				{
 					palid = bindata[++i];
 
-					if (palid != Palette.TranId)
+					if (palid != Palette.Tid)
 					{
 						pos = start
 							+ (((uint)y0 + y) * stride)

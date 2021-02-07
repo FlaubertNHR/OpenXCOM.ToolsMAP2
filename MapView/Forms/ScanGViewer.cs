@@ -244,7 +244,7 @@ namespace MapView
 									j = ((i / 64) * 4) + ((i % 16) / 4);
 
 									palid = _icons[iconid, j];
-									if (palid != Palette.TranId)
+									if (palid != Palette.Tid)
 									{
 										ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
 										*ptr = (byte)palid;
@@ -261,7 +261,7 @@ namespace MapView
 									j = ((i / 64) * 4) + ((i % 16) / 4);
 
 									palid = _icons[iconid, j];
-									if (palid != Palette.TranId)
+									if (palid != Palette.Tid)
 									{
 										ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
 										*ptr = (byte)palid;
@@ -278,7 +278,7 @@ namespace MapView
 									j = ((i / 64) * 4) + ((i % 16) / 4);
 
 									palid = _icons[iconid, j];
-									if (palid != Palette.TranId)
+									if (palid != Palette.Tid)
 									{
 										ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
 										*ptr = (byte)palid;
@@ -295,7 +295,7 @@ namespace MapView
 									j = ((i / 64) * 4) + ((i % 16) / 4);
 
 									palid = _icons[iconid, j];
-									if (palid != Palette.TranId)
+									if (palid != Palette.Tid)
 									{
 										ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
 										*ptr = (byte)palid;
@@ -306,7 +306,7 @@ namespace MapView
 					}
 					icon.UnlockBits(data);
 
-					icon.Palette = _pal.ColorTable;
+					icon.Palette = _pal.Table;
 
 					var spriteAttributes = new ImageAttributes();
 					if (MainViewF.Optionables.SpriteShadeEnabled) // TODO: how does UseMono cope w/ this

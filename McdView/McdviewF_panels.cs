@@ -350,47 +350,46 @@ namespace McdView
 					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-					var icon = new Bitmap(
-										4,4,
-										PixelFormat.Format8bppIndexed);
-
-					var data = icon.LockBits(
-										new Rectangle(0,0, icon.Width, icon.Height),
-										ImageLockMode.WriteOnly,
-										PixelFormat.Format8bppIndexed);
-					var start = data.Scan0;
-
-					unsafe
+					using (var icon = new Bitmap(4,4, PixelFormat.Format8bppIndexed))
 					{
-						var pos = (byte*)start.ToPointer();
+						var data = icon.LockBits(
+											new Rectangle(0,0, icon.Width, icon.Height),
+											ImageLockMode.WriteOnly,
+											PixelFormat.Format8bppIndexed);
+						var start = data.Scan0;
 
-						int palid;
-						for (uint row = 0; row != icon.Height; ++row)
-						for (uint col = 0; col != icon.Width;  ++col)
+						unsafe
 						{
-							byte* pixel = pos + col + row * data.Stride;
+							var pos = (byte*)start.ToPointer();
 
-							palid = ScanG[id, (row * 4) + col];
-							*pixel = (byte)palid;
+							int palid;
+							for (uint row = 0; row != icon.Height; ++row)
+							for (uint col = 0; col != icon.Width;  ++col)
+							{
+								byte* pixel = pos + col + row * data.Stride;
+
+								palid = ScanG[id, (row * 4) + col];
+								*pixel = (byte)palid;
+							}
 						}
+						icon.UnlockBits(data);
+
+						icon.Palette = Palette.Table;
+
+						ColorPalette pal = icon.Palette; // palettes get copied not referenced ->
+						pal.Entries[Palette.Tid] = Color.Transparent;
+						icon.Palette = pal;
+
+						_graphics.DrawImage(
+										icon,
+										new Rectangle(
+													0,0,
+													(sender as Panel).Width,
+													(sender as Panel).Height),
+										0,0, icon.Width, icon.Height,
+										GraphicsUnit.Pixel,
+										Ia);
 					}
-					icon.UnlockBits(data);
-
-					icon.Palette = Palette.ColorTable;
-
-					ColorPalette pal = icon.Palette; // palettes get copied not referenced ->
-					pal.Entries[Palette.TranId] = Color.Transparent;
-					icon.Palette = pal;
-
-					_graphics.DrawImage(
-									icon,
-									new Rectangle(
-												0,0,
-												(sender as Panel).Width,
-												(sender as Panel).Height),
-									0,0, icon.Width, icon.Height,
-									GraphicsUnit.Pixel,
-									Ia);
 				}
 			}
 		}
@@ -413,7 +412,7 @@ namespace McdView
 			{
 				if (ScanG != null)
 				{
-					using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), Palette.ColorTable))
+					using (var f = new ScanGiconF(this, Int32.Parse(tb20_scang1.Text), Palette.Table))
 						f.ShowDialog(this);
 				}
 				else

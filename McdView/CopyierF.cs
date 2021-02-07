@@ -607,10 +607,10 @@ namespace McdView
 					}
 					icon.UnlockBits(data);
 
-					icon.Palette = _f.Palette.ColorTable;
+					icon.Palette = _f.Palette.Table;
 
 					ColorPalette pal = icon.Palette; // palettes get copied not referenced ->
-					pal.Entries[Palette.TranId] = Color.Transparent;
+					pal.Entries[Palette.Tid] = Color.Transparent;
 					icon.Palette = pal;
 
 					_graphics.DrawImage(

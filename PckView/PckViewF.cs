@@ -43,8 +43,6 @@ namespace PckView
 
 
 		#region Fields (static)
-		private static readonly Palette DefaultPalette = Palette.UfoBattle;
-
 		private const string TITLE    = "PckView";
 
 		private const string Total    = "Total ";
@@ -197,11 +195,6 @@ namespace PckView
 			tssl_SpritesetLabel.Text = None;
 
 			PopulatePaletteMenu();
-
-			Pal = DefaultPalette;
-			Pal.SetTransparent(true);
-
-			_itPalettes[Pal].Checked = true;
 
 			SpriteEditor = new SpriteEditorF(this);
 			SpriteEditor.FormClosing += OnEditorFormClosing;
@@ -375,8 +368,14 @@ namespace PckView
 		/// </summary>
 		private void PopulatePaletteMenu()
 		{
-			var pals = new List<Palette>();
+			// instantiate the palettes
+			// iff not invoked by MapView - else the palettes have already been
+			// instantiated and these are just pointers in which case
+			// 'BypassTonescales' is irrelevant
 
+			Palette.BypassTonescales = true;
+
+			var pals = new List<Palette>();
 			pals.Add(Palette.UfoBattle);
 			pals.Add(Palette.UfoGeo);
 			pals.Add(Palette.UfoGraph);
@@ -386,29 +385,39 @@ namespace PckView
 			pals.Add(Palette.TftdGraph);
 			pals.Add(Palette.TftdResearch);
 
+			Palette.BypassTonescales = false;
+
+
+			MenuItem it;
+			Palette pal;
+
 			for (int i = 0; i != pals.Count; ++i)
 			{
-				var pal = pals[i];
-
-				var itPal = new MenuItem(pal.Label);
-				itPal.Tag = pal;
-				itPal.Click += OnPaletteClick;
-				miPaletteMenu.MenuItems.Add(itPal);
-
-				_itPalettes[pal] = itPal;
+				pal = pals[i];
+				it = new MenuItem(pal.Label, OnPaletteClick);
+				it.Tag = pal;
+				miPaletteMenu.MenuItems.Add(it);
+				_itPalettes[pal] = it;
 
 				switch (i)
 				{
-					case 0: itPal.Shortcut = Shortcut.Ctrl1; break;
-					case 1: itPal.Shortcut = Shortcut.Ctrl2; break;
-					case 2: itPal.Shortcut = Shortcut.Ctrl3; break;
-					case 3: itPal.Shortcut = Shortcut.Ctrl4; break;
-					case 4: itPal.Shortcut = Shortcut.Ctrl5; break;
-					case 5: itPal.Shortcut = Shortcut.Ctrl6; break;
-					case 6: itPal.Shortcut = Shortcut.Ctrl7; break;
-					case 7: itPal.Shortcut = Shortcut.Ctrl8; break;
+					case 0: // Check the ufo-battle palette it
+						it.Shortcut = Shortcut.Ctrl1;
+						it.Checked = true;
+						break;
+
+					case 1: it.Shortcut = Shortcut.Ctrl2; break;
+					case 2: it.Shortcut = Shortcut.Ctrl3; break;
+					case 3: it.Shortcut = Shortcut.Ctrl4; break;
+					case 4: it.Shortcut = Shortcut.Ctrl5; break;
+					case 5: it.Shortcut = Shortcut.Ctrl6; break;
+					case 6: it.Shortcut = Shortcut.Ctrl7; break;
+					case 7: it.Shortcut = Shortcut.Ctrl8; break;
 				}
 			}
+
+			Pal = Palette.UfoBattle;
+			Pal.SetTransparent(miTransparent.Checked);
 		}
 		#endregion cTor
 
@@ -1370,7 +1379,7 @@ namespace PckView
 
 							if (!fail)
 							{
-								var pal = DefaultPalette;
+								var pal = Palette.UfoBattle;
 								var spriteset = new SpriteCollection(
 																label,
 																pal,
@@ -1842,15 +1851,14 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnPaletteClick(object sender, EventArgs e)
 		{
-			var pal = (sender as MenuItem).Tag as Palette;
-			if (pal != Pal)
+			var it = sender as MenuItem;
+			if (!it.Checked)
 			{
+				it.Checked = true;
 				_itPalettes[Pal].Checked = false;
 
-				Pal = pal;
+				Pal = it.Tag as Palette;
 				Pal.SetTransparent(miTransparent.Checked);
-
-				_itPalettes[Pal].Checked = true;
 
 				TilePanel.Spriteset.Pal = Pal;
 				PaletteChanged();
@@ -2055,7 +2063,7 @@ namespace PckView
 		public void LoadSpriteset(string pfePck)
 		{
 			SpriteCollection spriteset = null;
-			Palette pal = DefaultPalette;
+			Palette pal = Palette.UfoBattle;
 
 			string dir   = Path.GetDirectoryName(pfePck);
 			string label = Path.GetFileNameWithoutExtension(pfePck);
@@ -2081,7 +2089,7 @@ namespace PckView
 								|| bytesTab[3] != 0) // if either of the 3rd or 4th bytes is nonzero ... it's a UFO set.
 							{
 								tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-								pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
+//								pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
 							}
 							else
 							{
@@ -2094,7 +2102,7 @@ namespace PckView
 							XCImage.SpriteHeight = 48;
 
 							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-							pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
+//							pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
 							break;
 					}
 
@@ -2192,7 +2200,7 @@ namespace PckView
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
 
 					OnPaletteClick(
-								_itPalettes[DefaultPalette],
+								_itPalettes[Palette.UfoBattle],
 								EventArgs.Empty);
 
 					PfSpriteset = pfeScanG; // NOTE: keep the extension
@@ -2229,7 +2237,7 @@ namespace PckView
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeLoFT), fs, true);
 
 					OnPaletteClick(
-								_itPalettes[DefaultPalette],
+								_itPalettes[Palette.UfoBattle],
 								EventArgs.Empty);
 
 					if (miTransparent.Checked)

@@ -42,7 +42,7 @@ namespace XCom
 				_palette = value;
 
 				if (Sprite != null)
-					Sprite.Palette = _palette.ColorTable;
+					Sprite.Palette = _palette.Table;
 			}
 		}
 
@@ -81,13 +81,13 @@ namespace XCom
 
 			Pal = pal;
 
-			if (Pal != null)										// NOTE: this is to check for a call by BitmapService.CreateSprite()
-				Sprite = BitmapService.CreateColored(				// which is called by
-												width,				// BitmapService.CreateSpriteset() and
-												height,				// several PckViewF contextmenu events
-												Bindata,			// BUT: the call by PckImage..cTor initializer needs to decode
-												Pal.ColorTable);	// the file-data first, then it creates its own 'Image'.
-		}															// that's why i prefer pizza.
+			if (Pal != null)								// NOTE: this is to check for a call by BitmapService.CreateSprite()
+				Sprite = BitmapService.CreateColored(		// which is called by
+												width,		// BitmapService.CreateSpriteset() and
+												height,		// several PckViewF contextmenu events
+												Bindata,	// BUT: the call by PckImage..cTor initializer needs to decode
+												Pal.Table);	// the file-data first, then it creates its own 'Image'.
+		}													// that's why i prefer pizza.
 
 		/// <summary>
 		/// cTor[1]. For clone. See PckImage..cTor[1] and .Duplicate().

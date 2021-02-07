@@ -91,7 +91,7 @@ namespace MapView
 			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 			{
 				palid = bindata[++i];
-				if (palid != Palette.TranId)
+				if (palid != Palette.Tid)
 				{
 					graphics.FillRectangle(
 										brushes[palid],
@@ -145,7 +145,7 @@ namespace MapView
 			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
 			{
 				palid = bindata[++i];
-				if (palid != Palette.TranId)
+				if (palid != Palette.Tid)
 				{
 					graphics.FillRectangle(
 										brushes[palid],

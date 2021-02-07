@@ -184,7 +184,7 @@ namespace XCom
 			using (var b = CreateTransparent(
 										cols * (XCImage.SpriteWidth + pad) - pad,
 										((spriteset.Count + (cols - 1)) / cols) * (XCImage.SpriteHeight + pad) - pad,
-										pal.ColorTable))
+										pal.Table))
 			{
 				for (int i = 0; i != spriteset.Count; ++i)
 				{
@@ -292,7 +292,7 @@ namespace XCom
 				for (uint col = 0; col != width;  ++col)
 				{
 					byte* pixel = pos + row * stride + col;
-					*pixel = Palette.TranId;
+					*pixel = Palette.Tid;
 				}
 			}
 			b.UnlockBits(locked);
@@ -351,7 +351,7 @@ namespace XCom
 					byte* srcPixel = srcPos +  row      * srcStride +  col;
 					byte* dstPixel = dstPos + (row + y) * dstStride + (col + x);
 
-					if (*srcPixel != Palette.TranId)
+					if (*srcPixel != Palette.Tid)
 						*dstPixel = *srcPixel;
 				}
 			}
@@ -388,7 +388,7 @@ namespace XCom
 				for (rMin = 0; rMin != b.Height; ++rMin)
 				for (   c = 0;    c != b.Width;  ++c)
 				{
-					if (*(pos + rMin * stride + c) != Palette.TranId)
+					if (*(pos + rMin * stride + c) != Palette.Tid)
 						goto outLoop1; // got 'rMin'
 				}
 
@@ -396,7 +396,7 @@ namespace XCom
 				for (cMin = 0; cMin != b.Width;  ++cMin)
 				for (   r = rMin; r != b.Height; ++r)
 				{
-					if (*(pos + r * stride + cMin) != Palette.TranId)
+					if (*(pos + r * stride + cMin) != Palette.Tid)
 						goto outLoop2; // got 'cMin'
 				}
 
@@ -404,7 +404,7 @@ namespace XCom
 				for (rMax = b.Height - 1; rMax != rMin; --rMax)
 				for (   c = b.Width  - 1;    c != cMin; --c)
 				{
-					if (*(pos + rMax * stride + c) != Palette.TranId)
+					if (*(pos + rMax * stride + c) != Palette.Tid)
 						goto outLoop3; // got 'rMax'
 				}
 
@@ -412,7 +412,7 @@ namespace XCom
 				for (cMax = b.Width - 1; cMax != cMin; --cMax)
 				for (   r = rMax;           r != rMin; --r)
 				{
-					if (*(pos + r * stride + cMax) != Palette.TranId)
+					if (*(pos + r * stride + cMax) != Palette.Tid)
 						goto outLoop4; // got 'cMax'
 				}
 			}
@@ -483,7 +483,7 @@ namespace XCom
 						byte* srcPixel = srcPos + (row + rect.Y) * srcStride + (col + rect.X);
 						byte* dstPixel = dstPos +  row           * dstStride +  col;
 
-						if (*srcPixel != Palette.TranId)
+						if (*srcPixel != Palette.Tid)
 							*dstPixel = *srcPixel;
 					}
 				}

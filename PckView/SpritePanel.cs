@@ -158,7 +158,7 @@ namespace PckView
 																				XCImage.SpriteWidth,
 																				XCImage.SpriteHeight,
 																				Sprite.Bindata,
-																				PckViewF.Pal.ColorTable);
+																				PckViewF.Pal.Table);
 										Invalidate();
 										_feditor._f.TilePanel.Invalidate();
 	
@@ -199,7 +199,7 @@ namespace PckView
 																		XCImage.SpriteWidth,
 																		XCImage.SpriteHeight,
 																		Sprite.Bindata,
-																		PckViewF.Pal.ColorTable);
+																		PckViewF.Pal.Table);
 								Invalidate();
 								_feditor._f.TilePanel.Invalidate();
 
@@ -409,7 +409,7 @@ namespace PckView
 
 				switch (palid)
 				{
-					case Palette.TranId: // #0
+					case Palette.Tid: // #0
 						text += " [transparent]";
 						break;
 

@@ -55,9 +55,9 @@ namespace XCom
 		#region Properties
 		/// <summary>
 		/// A copy of the image but toned according to the currently selected
-		/// selected-tile toner.
+		/// tile toner.
 		/// </summary>
-		public Bitmap SpriteT
+		public Bitmap SpriteToned
 		{ get; private set; }
 		#endregion Properties
 
@@ -122,13 +122,14 @@ namespace XCom
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
 											Bindata,
-											Pal.ColorTable);
+											Pal.Table);
 
-			SpriteT = BitmapService.CreateColored(
-											XCImage.SpriteWidth,
-											XCImage.SpriteHeight,
-											Bindata,
-											Pal.GrayScaled.ColorTable); // default to grayscale.
+			if (!Palette.BypassTonescales)
+				SpriteToned = BitmapService.CreateColored(
+													XCImage.SpriteWidth,
+													XCImage.SpriteHeight,
+													Bindata,
+													Pal.GrayScale.Table); // default to grayscale.
 		}
 
 		/// <summary>
@@ -158,7 +159,7 @@ namespace XCom
 			{
 				byte b = sprite.Bindata[id];
 
-				if (b == Palette.TranId)
+				if (b == Palette.Tid)
 				{
 					++tran;
 				}
@@ -275,13 +276,13 @@ namespace XCom
 
 
 		#region Methods
-		/// <summary>
-		/// Sets the color-toned palette of the SpriteToned sprite.
-		/// </summary>
-		private void SetTonedPalette(Palette pal)
-		{
-			SpriteT.Palette = pal.ColorTable;
-		}
+//		/// <summary>
+//		/// Sets the color-toned palette of the SpriteToned sprite.
+//		/// </summary>
+//		private void SetTonedPalette(Palette pal)
+//		{
+//			SpriteToned.Palette = pal.Table;
+//		}
 
 		/// <summary>
 		/// Returns a deep clone of this PckImage. Except 'Pal'.
@@ -302,10 +303,10 @@ namespace XCom
 			sprite.SetId = -1;
 
 			// XCImage vars
-			sprite.Bindata = Bindata.Clone() as byte[];
-			sprite.Sprite  = ObjectCopier.Clone<Bitmap>(Sprite);	// workaround for Bitmap's clone/copy/new shenanigans
-			sprite.SpriteT = ObjectCopier.Clone<Bitmap>(SpriteT);	// workaround for Bitmap's clone/copy/new shenanigans
-			sprite.Pal     = Pal;
+			sprite.Bindata     = Bindata.Clone() as byte[];
+			sprite.Sprite      = ObjectCopier.Clone<Bitmap>(Sprite);		// workaround for Bitmap's clone/copy/new shenanigans
+			sprite.SpriteToned = ObjectCopier.Clone<Bitmap>(SpriteToned);	// workaround for Bitmap's clone/copy/new shenanigans
+			sprite.Pal         = Pal;
 
 			sprite.Id = id;
 

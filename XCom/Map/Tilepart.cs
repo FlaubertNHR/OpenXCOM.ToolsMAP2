@@ -357,14 +357,14 @@ namespace XCom
 					{
 						for (int i = 0; i != sprite.Bindata.Length; ++i)
 						{
-							if (sprite.Bindata[i] != 0)
+							if (sprite.Bindata[i] != Palette.Tid)
 								sprite.Bindata[i] = (byte)(96); // light brown/yellowy
 						}
 						sprite.Sprite = BitmapService.CreateColored(
 																XCImage.SpriteWidth32,
 																XCImage.SpriteHeight40,
 																sprite.Bindata,
-																sprite.Pal.ColorTable);
+																sprite.Pal.Table);
 					}
 				}
 			}
@@ -403,13 +403,13 @@ namespace XCom
 													XCImage.SpriteWidth32,
 													XCImage.SpriteHeight40,
 													image.Bindata,
-													image.Pal.ColorTable);
+													image.Pal.Table);
 
-			image.SpriteT = BitmapService.CreateColored(
+			image.SpriteToned = BitmapService.CreateColored(
 													XCImage.SpriteWidth32,
 													XCImage.SpriteHeight40,
 													image.Bindata,
-													image.Pal.GrayScaled.ColorTable);
+													image.Pal.GrayScaled.Table);
 
 			Sprites = new XCImage[PHASECOUNT];
 			for (int i = 0; i != PHASECOUNT; ++i)

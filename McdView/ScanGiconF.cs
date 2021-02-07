@@ -190,7 +190,7 @@ namespace McdView
 				icon.Palette = Pal;
 				ColorPalette pal = icon.Palette; // <- clone Palette
 				if (i > 35)
-					pal.Entries[Palette.TranId] = Color.Transparent;
+					pal.Entries[Palette.Tid] = Color.Transparent;
 				icon.Palette = pal;
 
 				graphics.DrawImage(

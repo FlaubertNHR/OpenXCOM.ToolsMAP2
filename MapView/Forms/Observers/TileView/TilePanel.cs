@@ -552,7 +552,7 @@ namespace MapView.Forms.Observers
 								for (int h = 0; h != XCImage.SpriteHeight40; ++h)
 								for (int w = 0; w != XCImage.SpriteWidth32;  ++w)
 								{
-									if ((palid = bindata[++i]) != Palette.TranId)
+									if ((palid = bindata[++i]) != Palette.Tid)
 									{
 										graphics.FillRectangle(
 															brushes[palid],

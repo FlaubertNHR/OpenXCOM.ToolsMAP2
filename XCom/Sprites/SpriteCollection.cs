@@ -81,9 +81,9 @@ namespace XCom
 				_pal = value;
 
 				foreach (XCImage sprite in Sprites)
-					sprite.Sprite.Palette = _pal.ColorTable;	// why is the dang palette in every god-dang XCImage.
-			}													// why is 'Palette' EVERYWHERE: For indexed images
-		}														// the palette ought be merely a peripheral.
+					sprite.Sprite.Palette = _pal.Table;	// why is the dang palette in every god-dang XCImage.
+			}											// why is 'Palette' EVERYWHERE: For indexed images
+		}												// the palette ought be merely a peripheral.
 
 		/// <summary>
 		/// Gets/sets the 'XCImage' at a specified id. Adds a sprite to the end
@@ -682,5 +682,17 @@ namespace XCom
 			return !fail;
 		}
 		#endregion Methods (static)
+
+
+		#region Methods (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return Label;
+		}
+		#endregion Methods (override)
 	}
 }

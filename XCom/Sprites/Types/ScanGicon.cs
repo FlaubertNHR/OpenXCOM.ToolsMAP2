@@ -37,7 +37,7 @@ namespace XCom
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
 											Bindata,
-											Pal.ColorTable);
+											Pal.Table);
 		}
 		#endregion cTor
 	}

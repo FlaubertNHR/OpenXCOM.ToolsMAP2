@@ -333,11 +333,14 @@ namespace MapView
 
 
 			Palette.UfoBattle .SetTransparent(true);
+			LogFile.WriteLine("ufo-battle Palette instantiated.");
 			Palette.TftdBattle.SetTransparent(true);
+			LogFile.WriteLine("tftd-battle Palette instantiated.");
 			LogFile.WriteLine("Palette transparencies set.");
 
 			LoadMonotoneSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
 									// NOTE: transparency of the 'UfoBattle' palette must be set first.
+			LogFile.WriteLine("Monotone sprites loaded.");
 
 
 			QuadrantDrawService.Punkstrings();
@@ -1521,7 +1524,7 @@ namespace MapView
 			using (var b = BitmapService.CreateTransparent(
 														width * ConstHalfWidth,
 														width * ConstHalfHeight + (size.Levs - level) * LAYERS,
-														file.Descriptor.Pal.ColorTable))
+														file.Descriptor.Pal.Table))
 			{
 				if (b != null)
 				{
@@ -1580,7 +1583,7 @@ namespace MapView
 					using (bout) // -> workaround the inability to re-assign a using-variable inside a using-statement.
 					{
 						ColorPalette pal = bout.Palette;
-						pal.Entries[Palette.TranId] = Optionables.BackgroundColor;
+						pal.Entries[Palette.Tid] = Optionables.BackgroundColor;
 						bout.Palette = pal;
 
 						ImageFormat format;
@@ -3261,22 +3264,22 @@ namespace MapView
 						return;
 
 					default: // case TONER_GRAY
-						table = SpritesetsManager.Spritesets[0].Pal.GrayScaled.ColorTable;	// NOTE: All loaded spritesets will have the same palette.
-						miGray.Checked = true;												// - this demonstrates how redundant palette-pointers are.
-						break;																//   palette this palette that, here have a palette ...
-																							//   i know you want one
+						table = SpritesetsManager.Spritesets[0].Pal.GrayScale.Table;	// NOTE: All loaded spritesets will have the same palette.
+						miGray.Checked = true;											// - this demonstrates how redundant palette-pointers are.
+						break;															//   palette this palette that, here have a palette ...
+																						//   i know you want one
 					case MainViewOptionables.TONER_RED:
-						table = SpritesetsManager.Spritesets[0].Pal.RedScaled.ColorTable;
+						table = SpritesetsManager.Spritesets[0].Pal.RedScale.Table;
 						miRed.Checked = true;
 						break;
 
 					case MainViewOptionables.TONER_GREEN:
-						table = SpritesetsManager.Spritesets[0].Pal.GreenScaled.ColorTable;
+						table = SpritesetsManager.Spritesets[0].Pal.GreenScale.Table;
 						miGreen.Checked = true;
 						break;
 
 					case MainViewOptionables.TONER_BLUE:
-						table = SpritesetsManager.Spritesets[0].Pal.BlueScaled.ColorTable;
+						table = SpritesetsManager.Spritesets[0].Pal.BlueScale.Table;
 						miBlue.Checked = true;
 						break;
 				}
@@ -3285,7 +3288,7 @@ namespace MapView
 				{
 					for (int id = 0; id != spriteset.Count; ++id)
 					{
-						(spriteset[id] as PckImage).SpriteT.Palette = table; // lovely.
+						(spriteset[id] as PckImage).SpriteToned.Palette = table; // lovely.
 					}
 				}
 			}
