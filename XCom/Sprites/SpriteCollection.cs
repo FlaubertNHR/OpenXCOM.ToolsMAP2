@@ -68,10 +68,10 @@ namespace XCom
 
 		private Palette _pal;
 		/// <summary>
-		/// TODO: SpriteCollection should not have a pointer to the palette; the
-		/// palette should be applied only when drawing. Where palette is used
-		/// to determine game-type a game-type enum should be implemented and
-		/// checked.
+		/// This SpriteCollection's reference to a <see cref="Palette"/>.
+		/// @note Changing the palette requires re-assigning the changed
+		/// <see cref="System.Drawing.Imaging.ColorPalette"/>.
+		/// to all sprites in this spriteset.
 		/// </summary>
 		public Palette Pal
 		{
@@ -81,9 +81,14 @@ namespace XCom
 				_pal = value;
 
 				foreach (XCImage sprite in Sprites)
-					sprite.Sprite.Palette = _pal.Table;	// why is the dang palette in every god-dang XCImage.
-			}											// why is 'Palette' EVERYWHERE: For indexed images
-		}												// the palette ought be merely a peripheral.
+					sprite.Sprite.Palette = _pal.Table;
+
+				// rant
+				// why is the dang palette in every god-dang XCImage.
+				// why is 'Palette' EVERYWHERE: For indexed images
+				// the palette ought be merely a peripheral.
+			}
+		}
 
 		/// <summary>
 		/// Gets/sets the 'XCImage' at a specified id. Adds a sprite to the end
