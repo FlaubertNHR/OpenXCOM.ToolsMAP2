@@ -97,7 +97,7 @@ namespace McdView
 
 		#region Methods
 		/// <summary>
-		/// 
+		/// Ensures that the current ScanG icon is displayed.
 		/// </summary>
 		private void ScrollIcon()
 		{
@@ -140,6 +140,10 @@ namespace McdView
 
 
 		#region Events (override)
+		/// <summary>
+		/// Paints this Form.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			var graphics = e.Graphics;
@@ -223,7 +227,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// 
+		/// Scrolls the icons.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -253,7 +257,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// 
+		/// Selects an icon and closes the Form.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -291,7 +295,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// 
+		/// Registers telemetry OnFormClosing.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -303,17 +307,15 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// 
+		/// Sets Location OnLoad.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnLoad(EventArgs e)
 		{
-			if (Loc.X == -1)
-			{
-				Location = new Point(_f.Location.X + 170, _f.Location.Y + 30);
-			}
-			else
+			if (Loc.X != -1)
 				Location = new Point(Loc.X, Loc.Y);
+			else
+				Location = new Point(_f.Location.X + 170, _f.Location.Y + 30);
 
 			base.OnLoad(e);
 		}
