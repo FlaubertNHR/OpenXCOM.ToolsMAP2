@@ -221,15 +221,17 @@ namespace XCom
 
 		#region Methods (override)
 		/// <summary>
-		/// 
+		/// Gets a string-representation of this PckImage incl/ its bindata.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
 		{
-			string ret = String.Empty;
+			string ret;
 
 			if (_spriteset != null)
-				ret += _spriteset.ToString();
+				ret = _spriteset + ": ";
+			else
+				ret = String.Empty;
 
 			ret += Id + Environment.NewLine;
 
@@ -276,14 +278,6 @@ namespace XCom
 
 
 		#region Methods
-//		/// <summary>
-//		/// Sets the color-toned palette of the SpriteToned sprite.
-//		/// </summary>
-//		private void SetTonedPalette(Palette pal)
-//		{
-//			SpriteToned.Palette = pal.Table;
-//		}
-
 		/// <summary>
 		/// Returns a deep clone of this PckImage. Except 'Pal'.
 		/// </summary>
