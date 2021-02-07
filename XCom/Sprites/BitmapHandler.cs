@@ -86,7 +86,7 @@ namespace XCom
 					b.Palette = pal;
 				}
 
-				// Images in .Net often cause odd crashes when their backing
+				// Images in .net often cause odd crashes when their backing
 				// resource disappears. This prevents that from happening by
 				// copying its inner contents into a new Bitmap object.
 				return CloneImage(b);
@@ -94,14 +94,14 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Finds the start of a png chunk. This assumes the image is already
-		/// identified as PNG. It does not go over the first 8 bytes, but starts
+		/// Finds the start of a PNG chunk. This assumes the image is already
+		/// identified as PNG. It does not go over the first 8 bytes but starts
 		/// at the start of the header chunk.
 		/// </summary>
-		/// <param name="data">The bytes of the png image.</param>
-		/// <param name="chunkName">The name of the chunk to find.</param>
-		/// <returns>The offset of the start of the png chunk, or -1 if the
-		/// chunk was not found.</returns>
+		/// <param name="data">he bytes of the PNG image</param>
+		/// <param name="chunkName">the name of the chunk to find</param>
+		/// <returns>the offset of the start of the png chunk or -1 if the chunk
+		/// was not found.</returns>
 		private static int FindChunk(byte[] data, string chunkName)
 		{
 			if (data == null)
@@ -110,8 +110,7 @@ namespace XCom
 			if (chunkName == null)
 				throw new ArgumentNullException("chunkName", "No chunk name given!");
 
-			// Using UTF-8 as extra check to make sure the name does not contain
-			// > 127 values.
+			// using UTF-8 as extra check to make sure the name does not contain > 127 values
 			byte[] chunkNameBytes = Encoding.UTF8.GetBytes(chunkName);
 
 			if (chunkName.Length != 4 || chunkNameBytes.Length != 4)
@@ -122,7 +121,7 @@ namespace XCom
 
 			byte[] test = new Byte[4];
 
-			// continue until either the end is reached, or there is not enough
+			// continue until either the end is reached or there is not enough
 			// space behind it for reading a new header
 			while (offset < end && offset + 8 < end) // huh - if (offset + 8 < end) then shirley (offset < end)
 			{
@@ -135,7 +134,7 @@ namespace XCom
 					return offset;
 
 				int chunkLength = GetChunkDataLength(data, offset);
-				offset += chunkLength + 12; // chunk size + chunk header + chunk checksum = 12 bytes.
+				offset += chunkLength + 12; // chunk size + chunk header + chunk checksum = 12 bytes
 			}
 			return -1;
 		}
@@ -161,12 +160,12 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Clones an image object to free it from any backing resources.
-		/// Code taken from http://stackoverflow.com/a/3661892/ with some extra
-		/// fixes.
+		/// Clones an image object to free it from any backing resources. Code
+		/// taken from http://stackoverflow.com/a/3661892/ with some extra fixes.
+		/// @note It's the responsibility of the caller to dispose the Bitmap.
 		/// </summary>
-		/// <param name="src">The image to clone.</param>
-		/// <returns>The cloned image.</returns>
+		/// <param name="src">the image to clone</param>
+		/// <returns>the cloned image</returns>
 		private static Bitmap CloneImage(Bitmap src)
 		{
 			var rect = new Rectangle(0,0, src.Width, src.Height);
