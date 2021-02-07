@@ -251,7 +251,8 @@ namespace XCom
 		{ get; private set; }
 
 		/// <summary>
-		/// Gets/Sets the Color of a given index in this Palette's <see cref="Table"/>.
+		/// Gets/Sets the Color of a given index in this Palette's
+		/// <see cref="Table"/>.
 		/// </summary>
 		public Color this[int id]
 		{
@@ -324,8 +325,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[1]. Instantiates a standard palette with a given label for each
-		/// of the tone-scaled palettes.
+		/// cTor[1]. Instantiates a standard palette with a given label for a
+		/// tone-scaled palette.
 		/// </summary>
 		/// <param name="label"></param>
 		private Palette(string label)
@@ -341,6 +342,8 @@ namespace XCom
 		#region Methods
 		/// <summary>
 		/// Creates the toner-palettes.
+		/// @note Tonescaled palettes are required by ufo-battle and tftd-battle
+		/// for MapView only.
 		/// </summary>
 		/// <param name="baselabel">all your label are belong to us</param>
 		private void CreateTonescaledPalettes(string baselabel)
@@ -421,7 +424,8 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// 
+		/// Create brushes for drawing UFO sprites per
+		/// 'MainViewF.Optionables.UseMono'.
 		/// </summary>
 		private static void CreateUfoBrushes()
 		{
@@ -433,7 +437,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// 
+		/// Create brushes for drawing TFTD sprites per
+		/// 'MainViewF.Optionables.UseMono'.
 		/// </summary>
 		private static void CreateTftdBrushes()
 		{
@@ -448,7 +453,7 @@ namespace XCom
 
 		#region Methods (override)
 		/// <summary>
-		/// 
+		/// Returns <see cref="Label"/>.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
@@ -468,7 +473,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// 
+		/// Gets an untrustable hashcode but it's a hashcode.
 		/// </summary>
 		/// <returns></returns>
 		public override int GetHashCode()
