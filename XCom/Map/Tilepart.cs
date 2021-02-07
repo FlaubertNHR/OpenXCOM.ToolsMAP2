@@ -13,6 +13,20 @@ namespace XCom
 		#endregion Fields (static)
 
 
+		#region Fields
+		// TODO: The fact that the spriteset points to a "sprite" and this
+		// tilepart points to a "sprite" causes a glitch when changing "that"
+		// sprite. They ought be kept consistent since there is an awkward
+		// sort of latency-effect happening on refresh.
+
+		/// <summary>
+		/// The spriteset of this Tilepart's sprites. It's used to animate the
+		/// part or to render the part with its alternate part.
+		/// </summary>
+		private SpriteCollection _spriteset;
+		#endregion Fields
+
+
 		#region Properties
 		/// <summary>
 		/// The object that has information about the mechanics and appearance
@@ -25,19 +39,6 @@ namespace XCom
 		{ get; set; }
 
 		public Tilepart Altr
-		{ get; set; }
-
-		// TODO: The fact that the spriteset points to a "sprite" and this
-		// tilepart points to a "sprite" causes a glitch when changing "that"
-		// sprite. They ought be kept consistent since there is an awkward
-		// sort of latency-effect happening on refresh.
-
-		/// <summary>
-		/// WHY THE FUCK DOES EVERY TILEPART STORE THE ENTIRE SPRITESET.
-		/// Yes, this is The spriteset. Each tilepart has a pointer to it ...
-		/// psst if you really want the spritesets get it in SpritesetsManager.
-		/// </summary>
-		private SpriteCollection Spriteset
 		{ get; set; }
 
 		/// <summary>
@@ -99,7 +100,7 @@ namespace XCom
 			TerId = id;
 			SetId = -1;
 
-			if ((Spriteset = spriteset) != null) // nota bene: 'Spriteset' and 'Sprites' shall be null for McdView.
+			if ((_spriteset = spriteset) != null) // nota bene: 'Spriteset' and 'Sprites' shall be null for McdView.
 			{
 				Sprites = new XCImage[PHASECOUNT];	// for MapView a part contains its own pointers to 8 sprites.
 													// - animations and doors toggle basically
@@ -167,14 +168,14 @@ namespace XCom
 		/// </summary>
 		private void SetSpritesArray()
 		{
-			Sprites[0] = Spriteset[Record.Sprite1];
-			Sprites[1] = Spriteset[Record.Sprite2];
-			Sprites[2] = Spriteset[Record.Sprite3];
-			Sprites[3] = Spriteset[Record.Sprite4];
-			Sprites[4] = Spriteset[Record.Sprite5];
-			Sprites[5] = Spriteset[Record.Sprite6];
-			Sprites[6] = Spriteset[Record.Sprite7];
-			Sprites[7] = Spriteset[Record.Sprite8];
+			Sprites[0] = _spriteset[Record.Sprite1];
+			Sprites[1] = _spriteset[Record.Sprite2];
+			Sprites[2] = _spriteset[Record.Sprite3];
+			Sprites[3] = _spriteset[Record.Sprite4];
+			Sprites[4] = _spriteset[Record.Sprite5];
+			Sprites[5] = _spriteset[Record.Sprite6];
+			Sprites[6] = _spriteset[Record.Sprite7];
+			Sprites[7] = _spriteset[Record.Sprite8];
 		}
 
 		/// <summary>
@@ -183,7 +184,7 @@ namespace XCom
 		private void SetSprite1()
 		{
 			for (int i = 0; i != PHASECOUNT; ++i)
-				Sprites[i] = Spriteset[Record.Sprite1];
+				Sprites[i] = _spriteset[Record.Sprite1];
 		}
 
 		/// <summary>
@@ -192,12 +193,12 @@ namespace XCom
 		/// </summary>
 		public void SetSprite1_alt()
 		{
-			if (Spriteset != null
+			if (_spriteset != null
 				&& (Record.SlidingDoor || Record.HingedDoor))
 			{
 				byte altr = Altr.Record.Sprite1;
 				for (int i = 0; i != PHASECOUNT; ++i)
-					Sprites[i] = Spriteset[altr];
+					Sprites[i] = _spriteset[altr];
 			}
 		}
 
@@ -207,7 +208,7 @@ namespace XCom
 		/// <param name="animate">true to animate</param>
 		public void ToggleDoorSprites(bool animate)
 		{
-			if (Spriteset != null
+			if (_spriteset != null
 				&& (Record.SlidingDoor || Record.HingedDoor))
 			{
 				if (animate)
@@ -220,7 +221,7 @@ namespace XCom
 					{
 						byte altr = Altr.Record.Sprite1;
 						for (int i = 4; i != PHASECOUNT; ++i) // ie. flip between Sprite1 and Altr.Sprite1
-							Sprites[i] = Spriteset[altr];
+							Sprites[i] = _spriteset[altr];
 					}
 				}
 				else
