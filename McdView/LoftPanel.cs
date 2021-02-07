@@ -52,10 +52,8 @@ namespace McdView
 
 					loftid *= 256; // array id
 
-					using (var loft = new Bitmap(
-											16,16,
-											PixelFormat.Format8bppIndexed))	// Format1bppIndexed <- uses only 1 BIT per pixel
-					{														// - causes probs setting the pixels below.
+					using (var loft = new Bitmap(16,16, PixelFormat.Format8bppIndexed))	// Format1bppIndexed <- uses only 1 BIT per pixel
+					{																	// - causes probs setting the pixels below.
 						var data = loft.LockBits(
 											new Rectangle(0,0, loft.Width, loft.Height),
 											ImageLockMode.WriteOnly,

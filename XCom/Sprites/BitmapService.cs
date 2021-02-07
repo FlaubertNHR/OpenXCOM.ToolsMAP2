@@ -85,6 +85,7 @@ namespace XCom
 				}
 			}
 			b.UnlockBits(locked);
+			b.Dispose();
 
 			return new XCImage(bindata, width, height, pal, id); // note: XCImage..cTor calls CreateColorized() below.
 		}

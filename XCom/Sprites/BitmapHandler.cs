@@ -23,13 +23,13 @@ namespace XCom
 
 
 		/// <summary>
-		/// Loads an image, checks if it is a PNG containing palette
-		/// transparency, and if so, ensures it loads correctly.
-		/// The theory on the png internals can be found at
+		/// Loads an image. Checks if it is a PNG containing palette
+		/// transparency and if so ensures it loads correctly. The theory on the
+		/// PNG internals can be found at
 		/// http://www.libpng.org/pub/png/book/chapter08.html
 		/// </summary>
-		/// <param name="data">File data to load.</param>
-		/// <returns>The loaded image.</returns>
+		/// <param name="data">file data to load</param>
+		/// <returns>a CLONED image - the onus is on the receiver for disposal</returns>
 		public static Bitmap LoadBitmap(byte[] data)
 		{
 			byte[] dataTrns = null;
@@ -140,6 +140,12 @@ namespace XCom
 			return -1;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="offset"></param>
+		/// <returns></returns>
 		private static int GetChunkDataLength(byte[] data, int offset)
 		{
 			if (offset + 4 > data.Length)
@@ -163,7 +169,7 @@ namespace XCom
 		/// <returns>The cloned image.</returns>
 		private static Bitmap CloneImage(Bitmap src)
 		{
-			var rect = new Rectangle(0, 0, src.Width, src.Height);
+			var rect = new Rectangle(0,0, src.Width, src.Height);
 			var dst = new Bitmap(rect.Width, rect.Height, src.PixelFormat);
 
 			dst.SetResolution(src.HorizontalResolution, src.VerticalResolution);
@@ -171,8 +177,8 @@ namespace XCom
 			var srcLocked = src.LockBits(rect, ImageLockMode.ReadOnly,  src.PixelFormat);
 			var dstLocked = dst.LockBits(rect, ImageLockMode.WriteOnly, dst.PixelFormat);
 
-			int actualDataWidth = ((Image.GetPixelFormatSize(src.PixelFormat) * rect.Width) + 7) / 8;
-			int h = src.Height;
+			int actualDataWidth = (Image.GetPixelFormatSize(src.PixelFormat) * rect.Width + 7) / 8;
+			int height = src.Height;
 			int srcStride = srcLocked.Stride;
 			int dstStride = dstLocked.Stride;
 
@@ -182,7 +188,7 @@ namespace XCom
 			IntPtr dstPos = dstLocked.Scan0;
 
 			// Copy line by line, skipping by stride but copying actual data width
-			for (int y = 0; y < h; ++y)
+			for (int y = 0; y != height; ++y)
 			{
 				Marshal.Copy(srcPos, imageData, 0, actualDataWidth);
 				Marshal.Copy(imageData, 0, dstPos, actualDataWidth);

@@ -156,51 +156,50 @@ namespace McdView
 				x = (i % COLS_Max) * (ICON_WIDTH  + HORI_PAD);
 				y = (i / COLS_Max) * (ICON_HEIGHT + VERT_PAD_TEXT);
 
-				var icon = new Bitmap(
-									4,4,
-									PixelFormat.Format8bppIndexed);
-
-				var data = icon.LockBits(
-									new Rectangle(0,0, icon.Width, icon.Height),
-									ImageLockMode.WriteOnly,
-									PixelFormat.Format8bppIndexed);
-				var start = data.Scan0;
-
-				unsafe
+				using (var icon = new Bitmap(4,4, PixelFormat.Format8bppIndexed))
 				{
-					var pos = (byte*)start.ToPointer();
+					var data = icon.LockBits(
+										new Rectangle(0,0, icon.Width, icon.Height),
+										ImageLockMode.WriteOnly,
+										PixelFormat.Format8bppIndexed);
+					var start = data.Scan0;
 
-					int palid;
-					for (uint row = 0; row != icon.Height; ++row)
-					for (uint col = 0; col != icon.Width;  ++col)
+					unsafe
 					{
-						byte* pixel = pos + col + row * data.Stride;
+						var pos = (byte*)start.ToPointer();
 
-						palid = _f.ScanG[i, row * 4 + col];
-						*pixel = (byte)palid;
+						int palid;
+						for (uint row = 0; row != icon.Height; ++row)
+						for (uint col = 0; col != icon.Width;  ++col)
+						{
+							byte* pixel = pos + col + row * data.Stride;
+
+							palid = _f.ScanG[i, row * 4 + col];
+							*pixel = (byte)palid;
+						}
 					}
+					icon.UnlockBits(data);
+
+					// - if assigning a Bitmap's palette it gets cloned
+					// - if assigning a standalone palette it gets referenced
+					// so yes this higgledy-piggeldy is necessary.
+					// The point is to draw icons that are unavailable to terrain-
+					// parts with a non-transparent background.
+					icon.Palette = Pal;
+					ColorPalette pal = icon.Palette; // <- clone Palette
+					if (i > 35)
+						pal.Entries[Palette.Tid] = Color.Transparent;
+					icon.Palette = pal;
+
+					graphics.DrawImage(
+									icon,
+									new Rectangle(
+												x, y + _scrolloffset,
+												ICON_WIDTH, ICON_HEIGHT),
+									0,0, icon.Width, icon.Height,
+									GraphicsUnit.Pixel,
+									_f.Ia);
 				}
-				icon.UnlockBits(data);
-
-				// - if assigning a Bitmap's palette it gets cloned
-				// - if assigning a standalone palette it gets referenced
-				// so yes this higgledy-piggeldy is necessary.
-				// The point is to draw icons that are unavailable to terrain-
-				// parts with a non-transparent background.
-				icon.Palette = Pal;
-				ColorPalette pal = icon.Palette; // <- clone Palette
-				if (i > 35)
-					pal.Entries[Palette.Tid] = Color.Transparent;
-				icon.Palette = pal;
-
-				graphics.DrawImage(
-								icon,
-								new Rectangle(
-											x, y + _scrolloffset,
-											ICON_WIDTH, ICON_HEIGHT),
-								0,0, icon.Width, icon.Height,
-								GraphicsUnit.Pixel,
-								_f.Ia);
 
 				rect = new Rectangle(
 								x,

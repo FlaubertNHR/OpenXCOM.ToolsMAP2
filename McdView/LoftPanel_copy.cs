@@ -54,41 +54,40 @@ namespace McdView
 
 					loftid *= 256; // array id
 
-					var loft = new Bitmap(
-										16,16,
-										PixelFormat.Format8bppIndexed);	// Format1bppIndexed <- uses only 1 BIT per pixel
-																		// - causes probs setting the pixels below.
-					var data = loft.LockBits(
-										new Rectangle(0,0, loft.Width, loft.Height),
-										ImageLockMode.WriteOnly,
-										PixelFormat.Format8bppIndexed); // Format1bppIndexed
-					var start = data.Scan0;
+					using (var loft = new Bitmap(16,16, PixelFormat.Format8bppIndexed))	// Format1bppIndexed <- uses only 1 BIT per pixel
+					{																	// - causes probs setting the pixels below.
+						var data = loft.LockBits(
+											new Rectangle(0,0, loft.Width, loft.Height),
+											ImageLockMode.WriteOnly,
+											PixelFormat.Format8bppIndexed); // Format1bppIndexed
+						var start = data.Scan0;
 
-					unsafe
-					{
-						var pos = (byte*)start.ToPointer();
-
-						byte palid;
-						for (int row = 0; row != loft.Height; ++row)
-						for (int col = 0; col != loft.Width;  ++col)
+						unsafe
 						{
-							byte* pixel = pos + (row * data.Stride) + col;
+							var pos = (byte*)start.ToPointer();
 
-							palid = Convert.ToByte(_f.LoFT[loftid + (row * loft.Width) + col]);
-							*pixel = palid;
+							byte palid;
+							for (int row = 0; row != loft.Height; ++row)
+							for (int col = 0; col != loft.Width;  ++col)
+							{
+								byte* pixel = pos + (row * data.Stride) + col;
+
+								palid = Convert.ToByte(_f.LoFT[loftid + (row * loft.Width) + col]);
+								*pixel = palid;
+							}
 						}
+						loft.UnlockBits(data);
+
+						ColorPalette pal = loft.Palette;
+						pal.Entries[0] = SystemColors.ControlDarkDark;
+						pal.Entries[1] = SystemColors.ControlLightLight;
+						loft.Palette = pal;
+
+						graphics.DrawImage(
+										loft,
+										0,0,
+										Width,Height);
 					}
-					loft.UnlockBits(data);
-
-					ColorPalette pal = loft.Palette;
-					pal.Entries[0] = SystemColors.ControlDarkDark;
-					pal.Entries[1] = SystemColors.ControlLightLight;
-					loft.Palette = pal;
-
-					graphics.DrawImage(
-									loft,
-									0,0,
-									Width,Height);
 				}
 				else
 					graphics.FillRectangle(

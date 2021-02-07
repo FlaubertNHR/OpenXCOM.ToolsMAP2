@@ -152,6 +152,10 @@ namespace MapView.Forms.MainView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="mainView"></param>
 		internal MainViewOverlay(MainViewF mainView)
 		{
 			_mainView = mainView;
@@ -174,6 +178,11 @@ namespace MapView.Forms.MainView
 
 
 		#region Events and Methods for targeter-suppression
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnFocusGained(object sender, EventArgs e)
 		{
 			if (MapFile != null)
@@ -183,6 +192,11 @@ namespace MapView.Forms.MainView
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnFocusLost(object sender, EventArgs e)
 		{
 			if (MapFile != null)
@@ -1178,12 +1192,13 @@ namespace MapView.Forms.MainView
 					DrawRembrandt();
 				}
 #else
-				_b = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
-				BuildPanelImage();
-//				_graphics.DrawImage(_b, 0, 0, _b.Width, _b.Height);
-				_graphics.DrawImageUnscaled(_b, Point.Empty);	// uh does not draw the image unscaled. it
-#endif															// still uses the DPI in the Graphics object ...
-
+				using (_b = new Bitmap(Width, Height, PixelFormat.Format32bppArgb))
+				{
+					BuildPanelImage();
+//					_graphics.DrawImage(_b, 0,0, _b.Width, _b.Height);
+					_graphics.DrawImageUnscaled(_b, Point.Empty);	// uh does not draw the image unscaled. it
+				}													// still uses the DPI in the Graphics object ...
+#endif
 				if (Globals.Scale > 0.55 // else the text starts to hit the sprites
 					&& _col > -1 && _col < _cols
 					&& _row > -1 && _row < _rows)
@@ -1467,7 +1482,7 @@ namespace MapView.Forms.MainView
 			graphics.Clear(Color.Transparent);
 
 			_data = _b.LockBits(
-							new Rectangle(0, 0, _b.Width, _b.Height),
+							new Rectangle(0,0, _b.Width, _b.Height),
 							ImageLockMode.WriteOnly,
 							PixelFormat.Format32bppArgb);
 			_scan0 = _data.Scan0;
@@ -1530,7 +1545,7 @@ namespace MapView.Forms.MainView
 //						{
 //							Cuboid.DrawCuboid(
 //											graphics,
-//											x, y,
+//											x,y,
 //											HalfWidth,
 //											HalfHeight,
 //											true,
@@ -1543,7 +1558,7 @@ namespace MapView.Forms.MainView
 //						{
 //							Cuboid.DrawTargeter(
 //											graphics,
-//											x, y,
+//											x,y,
 //											HalfWidth,
 //											HalfHeight);
 //						}
@@ -1554,17 +1569,17 @@ namespace MapView.Forms.MainView
 
 			if (FirstClick)
 			{
-				var start = GetAbsoluteDragStart();
-				var end   = GetAbsoluteDragEnd();
+				Point beg = GetDragBeg_abs();
+				Point end = GetDragEnd_abs();
 
-				int width  = end.X - start.X + 1;
-				int height = end.Y - start.Y + 1;
+				int width  = end.X - beg.X + 1;
+				int height = end.Y - beg.Y + 1;
 
 				if (    width > 2 || height > 2
 					|| (width > 1 && height > 1))
 				{
 					var dragrect = new Rectangle(
-											start.X, start.Y,
+											beg.X, beg.Y,
 											width, height);
 					DrawSelectionBorder(dragrect, graphics);
 				}
@@ -1665,11 +1680,11 @@ namespace MapView.Forms.MainView
 			Pen pen;
 			for (int i = 0; i <= _rows; ++i)
 			{
-				if (i % 10 == 0) pen = _penGrid10;
-				else             pen = _penGrid;
+				if (i % 10 != 0) pen = PenGrid;
+				else             pen = PenGrid10;
 
 				graphics.DrawLine(
-								_penGrid,
+								pen,
 								x - HalfWidth  * i,
 								y + HalfHeight * i,
 								x + (_cols - i) * HalfWidth,
@@ -1678,11 +1693,11 @@ namespace MapView.Forms.MainView
 
 			for (int i = 0; i <= _cols; ++i)
 			{
-				if (i % 10 == 0) pen = _penGrid10;
-				else             pen = _penGrid;
+				if (i % 10 != 0) pen = PenGrid;
+				else             pen = PenGrid10;
 
 				graphics.DrawLine(
-								_penGrid,
+								pen,
 								x + HalfWidth  * i,
 								y + HalfHeight * i,
 								x - x1 + HalfWidth  * i,
@@ -2004,10 +2019,10 @@ namespace MapView.Forms.MainView
 			b.X += HalfWidth;
 			l.X += HalfWidth;
 
-			graphics.DrawLine(_penSelect, t, r);
-			graphics.DrawLine(_penSelect, r, b);
-			graphics.DrawLine(_penSelect, b, l);
-			graphics.DrawLine(_penSelect, l, t);
+			graphics.DrawLine(PenSelect, t, r);
+			graphics.DrawLine(PenSelect, r, b);
+			graphics.DrawLine(PenSelect, b, l);
+			graphics.DrawLine(PenSelect, l, t);
 
 			// TODO: Respect MainViewF.Optionables.LayerSelectionBorder
 			// see !LOCKBITS DrawSelectionBorder()
