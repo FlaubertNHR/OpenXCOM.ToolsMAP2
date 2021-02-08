@@ -465,6 +465,9 @@ namespace MapView.Forms.Observers
 						fPckView.ShowDialog(ObserverManager.TileView); // <- Pause UI until PckView is closed.
 						ShowHideManager.ShowViewers();
 
+						Palette.UfoBattle .SetTransparent(true); // ensure that transparency is on after returning
+						Palette.TftdBattle.SetTransparent(true); // from PckView
+
 
 						if (fPckView.FireMvReload					// the Descriptor needs to reload
 							&& CheckReload() == DialogResult.OK)	// so ask user if he/she wants to save the current Map+Routes (if changed)
