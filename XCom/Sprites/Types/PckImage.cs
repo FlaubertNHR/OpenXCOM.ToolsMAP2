@@ -124,7 +124,7 @@ namespace XCom
 											Bindata,
 											Pal.Table);
 
-			if (!Palette.BypassTonescales)
+			if (Pal.GrayScale != null) // do NOT create ANY tone-scaled sprites for PckView or McdView
 				SpriteToned = BitmapService.CreateColored(
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,

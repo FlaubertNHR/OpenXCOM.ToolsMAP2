@@ -266,7 +266,13 @@ namespace XCom
 		/// </summary>
 		public Palette GrayScale
 		{
-			get { return _palettes[Label + GRAY]; }
+			get
+			{
+				if (_palettes.ContainsKey(Label + GRAY))
+					return _palettes[Label + GRAY];
+
+				return null;
+			}
 		}
 		/// <summary>
 		/// The red-scaled Palette of this Palette.
