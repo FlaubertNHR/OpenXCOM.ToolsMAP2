@@ -667,12 +667,12 @@ namespace McdView
 			switch (e.KeyData)
 			{
 				case Keys.Enter:
-					e.SuppressKeyPress = true;
+					e.Handled = e.SuppressKeyPress = true;
 					PartsPanel.Select();
 					break;
 
 				case Keys.Escape:
-					e.SuppressKeyPress = true;
+					e.Handled = e.SuppressKeyPress = true;
 					if ((ActiveControl as TextBox) == null)
 						Selid = -1;
 
@@ -691,7 +691,7 @@ namespace McdView
 					break;
 
 				case Keys.S:
-					e.SuppressKeyPress = true; // NOTE: all alphabetic codes can be suppressed ...
+					e.Handled = e.SuppressKeyPress = true; // NOTE: all alphabetic codes can be suppressed ...
 					cb_Strict.Checked = !cb_Strict.Checked;
 					break;
 
@@ -709,14 +709,14 @@ namespace McdView
 							{
 //								case Keys.OemMinus: // on the numeric row -> don't do that; #48 TerrainOffset (sbyte) wants "-" key-input
 								case Keys.Subtract: // on the numeric keypad (regardless of NumLock state)
-									e.SuppressKeyPress = true;
+									e.Handled = e.SuppressKeyPress = true;
 									val = Int32.Parse(tb.Text);
 									tb.Text = (--val).ToString();
 									break;
 
 //								case Keys.Oemplus:
 								case Keys.Add:
-									e.SuppressKeyPress = true;
+									e.Handled = e.SuppressKeyPress = true;
 									val = Int32.Parse(tb.Text);
 									tb.Text = (++val).ToString();
 									break;

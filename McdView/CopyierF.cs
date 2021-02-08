@@ -279,12 +279,12 @@ namespace McdView
 			switch (e.KeyData)
 			{
 				case Keys.Enter:
-					e.SuppressKeyPress = true;
+					e.Handled = e.SuppressKeyPress = true;
 					PartsPanel.Select();
 					break;
 
 				case Keys.Escape:
-					e.SuppressKeyPress = true;
+					e.Handled = e.SuppressKeyPress = true;
 					if ((ActiveControl as TextBox) == null)
 						SelId = -1;
 

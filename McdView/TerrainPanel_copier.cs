@@ -108,7 +108,7 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			e.SuppressKeyPress = true;
+			e.Handled = e.SuppressKeyPress = true;
 			KeyInput(e);
 		}
 		#endregion Events (override)
