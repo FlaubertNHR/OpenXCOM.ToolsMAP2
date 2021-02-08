@@ -39,17 +39,25 @@ namespace McdView
 		/// <param name="f"></param>
 		/// <param name="slot"></param>
 		/// <param name="id"></param>
+		/// <param name="label"></param>
 		internal LoftChooserF(
 				McdviewF f,
 				int slot,
-				int id)
+				int id,
+				string label)
 		{
 			InitializeComponent();
 
 			_f = f;
 			Id = id;
 
-			Text = "LOFTEMPS.DAT - slot " + (slot + 1); // TODO: + "ufo"/"tftd"
+			string text;
+			if (label != null)
+				text = label;
+			else
+				text = "LOFTEMPS.DAT";
+
+			Text = text + " - slot " + (slot + 1); // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
 

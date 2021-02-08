@@ -34,7 +34,7 @@ namespace McdView
 											 | TextFormatFlags.NoPadding;
 
 		/// <summary>
-		/// Half the period of a current ID's text-bg blinker in
+		/// Half the period of a current ID's text-backcolor blinker in
 		/// 'SpriteChooserF', 'ScangChooserF', and 'LoftChooserF'.
 		/// </summary>
 		internal const int PERIOD = 456;
@@ -49,10 +49,19 @@ namespace McdView
 		/// </summary>
 		private bool IsInvoked;
 
+		private bool _strict = true;
+
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
-		private bool _strict = true;
+		private string   _scanGufo_Label;
+		private int[,]   _scanGufo;
+		private string   _scanGtftd_Label;
+		private int[,]   _scanGtftd;
+		private string   _loftufo_Label;
+		private BitArray _loftufo;
+		private string   _lofttftd_Label;
+		private BitArray _lofttftd;
 
 		/// <summary>
 		/// True to prevent the Changed flag when a part is being selected.
@@ -66,6 +75,8 @@ namespace McdView
 
 		private string _lastCreateDirectory;
 		private string _lastBrowserDirectory;
+
+		private string _lastdir;
 		#endregion Fields
 
 
@@ -1466,6 +1477,31 @@ namespace McdView
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		internal string GetScangChooserTitle()
+		{
+			if (miResourcesTftd.Checked)
+				return _scanGtftd_Label;
+
+			return _scanGufo_Label;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		internal string GetLoftChooserTitle()
+		{
+			if (miResourcesTftd.Checked)
+				return _lofttftd_Label;
+
+			return _loftufo_Label;
+		}
+
+
+		/// <summary>
 		/// Handles clicking the Palette|UFO menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -1524,13 +1560,6 @@ namespace McdView
 		}
 
 
-		private int[,] _scanGufo;
-		private int[,] _scanGtftd;
-		private BitArray _loftufo;
-		private BitArray _lofttftd;
-
-		private string _lastdir;
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -1588,6 +1617,7 @@ namespace McdView
 			else
 			{
 				miLoadScanGufo.Checked = false;
+				_scanGufo_Label = null;
 				_scanGufo = null;
 				ScanG = SpritesetsManager.ScanGufo;
 			}
@@ -1605,6 +1635,8 @@ namespace McdView
 			byte[] bytes = FileService.ReadFile(pfeScanG);
 			if (bytes != null)
 			{
+				_scanGufo_Label = Path.GetFileNameWithoutExtension(pfeScanG);
+
 				int d1 = bytes.Length / ScanGicon.Length_ScanG;
 				_scanGufo = new int[d1, ScanGicon.Length_ScanG];
 
@@ -1615,7 +1647,10 @@ namespace McdView
 				}
 			}
 			else
+			{
+				_scanGufo_Label = null;
 				_scanGufo = null;
+			}
 		}
 
 		/// <summary>
@@ -1656,6 +1691,7 @@ namespace McdView
 			else
 			{
 				miLoadLoFTufo.Checked = false;
+				_loftufo_Label = null;
 				_loftufo = null;
 				LoFT = SpritesetsManager.LoFTufo;
 			}
@@ -1674,6 +1710,8 @@ namespace McdView
 			byte[] bytes = FileService.ReadFile(pfeLoft);
 			if (bytes != null)
 			{
+				_loftufo_Label = Path.GetFileNameWithoutExtension(pfeLoft);
+
 				// 32 bytes in a loft
 				// 256 bits in a loft
 
@@ -1697,7 +1735,10 @@ namespace McdView
 				}
 			}
 			else
+			{
+				_loftufo_Label = null;
 				_loftufo = null;
+			}
 		}
 
 		/// <summary>
@@ -1738,6 +1779,7 @@ namespace McdView
 			else
 			{
 				miLoadScanGtftd.Checked = false;
+				_scanGtftd_Label = null;
 				_scanGtftd = null;
 				ScanG = SpritesetsManager.ScanGtftd;
 			}
@@ -1755,6 +1797,8 @@ namespace McdView
 			byte[] bytes = FileService.ReadFile(pfeScanG);
 			if (bytes != null)
 			{
+				_scanGtftd_Label = Path.GetFileNameWithoutExtension(pfeScanG);
+
 				int d1 = bytes.Length / ScanGicon.Length_ScanG;
 				_scanGtftd = new int[d1, ScanGicon.Length_ScanG];
 
@@ -1765,7 +1809,10 @@ namespace McdView
 				}
 			}
 			else
+			{
+				_scanGtftd_Label = null;
 				_scanGtftd = null;
+			}
 		}
 
 		/// <summary>
@@ -1806,6 +1853,7 @@ namespace McdView
 			else
 			{
 				miLoadLoFTtftd.Checked = false;
+				_lofttftd_Label = null;
 				_lofttftd = null;
 				LoFT = SpritesetsManager.LoFTtftd;
 			}
@@ -1823,6 +1871,8 @@ namespace McdView
 			byte[] bytes = FileService.ReadFile(pfeLoft);
 			if (bytes != null)
 			{
+				_lofttftd_Label = Path.GetFileNameWithoutExtension(pfeLoft);
+
 				// 32 bytes in a loft
 				// 256 bits in a loft
 
@@ -1846,7 +1896,10 @@ namespace McdView
 				}
 			}
 			else
+			{
+				_lofttftd_Label = null;
 				_lofttftd = null;
+			}
 		}
 
 
@@ -1963,7 +2016,7 @@ namespace McdView
 			}
 		}
 
-		bool _bypassShadebar;
+		private bool _bypassShadebar;
 		/// <summary>
 		/// Handles SpriteShade's trackbar's ValueChanged event.
 		/// </summary>

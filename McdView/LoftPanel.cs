@@ -133,7 +133,8 @@ namespace McdView
 							using (var f = new LoftChooserF(
 														_f,
 														Int32.Parse(tb.Tag.ToString()),
-														Int32.Parse(id)))
+														Int32.Parse(id),
+														_f.GetLoftChooserTitle()))
 							{
 								_f._pnlLoFT = this;
 								f.ShowDialog();

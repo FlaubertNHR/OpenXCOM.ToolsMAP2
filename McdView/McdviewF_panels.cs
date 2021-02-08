@@ -412,8 +412,14 @@ namespace McdView
 			{
 				if (ScanG != null)
 				{
-					using (var f = new ScangChooserF(this, Int32.Parse(tb20_scang1.Text), Pal.Table))
+					using (var f = new ScangChooserF(
+												this,
+												Int32.Parse(tb20_scang1.Text),
+												Pal.Table,
+												GetScangChooserTitle()))
+					{
 						f.ShowDialog(this);
+					}
 				}
 				else
 					MessageBox.Show(

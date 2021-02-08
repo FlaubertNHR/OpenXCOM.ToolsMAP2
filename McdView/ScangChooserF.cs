@@ -50,10 +50,12 @@ namespace McdView
 		/// <param name="f"></param>
 		/// <param name="id"></param>
 		/// <param name="pal"></param>
+		/// <param name="label"></param>
 		internal ScangChooserF(
 				McdviewF f,
 				int id,
-				ColorPalette pal)
+				ColorPalette pal,
+				string label)
 		{
 			InitializeComponent();
 
@@ -61,7 +63,10 @@ namespace McdView
 			Id = id;
 			_pal = pal;
 
-			Text = "SCANG.DAT"; // TODO: + "ufo"/"tftd"
+			if (label != null)
+				Text = label;
+			else
+				Text = "SCANG.DAT"; // TODO: + "ufo"/"tftd"
 
 			_scroller.Dock = DockStyle.Right;
 			_scroller.Scroll += OnScroll;
