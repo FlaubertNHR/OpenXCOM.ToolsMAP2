@@ -280,7 +280,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Sets an anisprite before returning from SpritesetF.
+		/// Sets an anisprite before returning from 'SpriteChooserF'.
 		/// </summary>
 		/// <param name="phase"></param>
 		/// <param name="id"></param>
@@ -428,7 +428,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Sets a ScanG icon before returning from ScanGiconF.
+		/// Sets a ScanG icon before returning from 'ScangChooserF'.
 		/// </summary>
 		/// <param name="id"></param>
 		internal void SetIcon(int id)
@@ -476,7 +476,7 @@ namespace McdView
 		internal LoftPanel _pnlLoFT;
 
 		/// <summary>
-		/// Sets a LoFT before returning from LoftF.
+		/// Sets a LoFT before returning from 'LoftChooserF'.
 		/// </summary>
 		/// <param name="id"></param>
 		internal void SetLoft(int id)

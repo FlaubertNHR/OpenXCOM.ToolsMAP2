@@ -34,8 +34,8 @@ namespace McdView
 											 | TextFormatFlags.NoPadding;
 
 		/// <summary>
-		/// Half the period of a current ID's text-bg blinker in 'SpritesetF',
-		/// 'ScanGiconF', and 'LoftF'.
+		/// Half the period of a current ID's text-bg blinker in
+		/// 'SpriteChooserF', 'ScangChooserF', and 'LoftChooserF'.
 		/// </summary>
 		internal const int PERIOD = 456;
 		#endregion Fields (static)
@@ -52,7 +52,7 @@ namespace McdView
 		internal int[,] ScanG;
 		internal BitArray LoFT;
 
-		private bool strict = true;
+		private bool _strict = true;
 
 		/// <summary>
 		/// True to prevent the Changed flag when a part is being selected.
@@ -191,10 +191,10 @@ namespace McdView
 				{
 					if ((_selid = value) != -1)
 					{
-						bool strict0 = strict; // don't let the STRICT policy screw up populating the textfields
-						strict = false;
+						bool strict0 = _strict; // don't let the STRICT policy screw up populating the textfields
+						_strict = false;
 						PopulateTextFields();
-						strict = strict0;
+						_strict = strict0;
 
 						PartsPanel.ScrollToPart();
 
@@ -1278,10 +1278,10 @@ namespace McdView
 							MessageBoxDefaultButton.Button2,
 							0) == DialogResult.Yes)
 			{
-				bool strict0 = strict; // don't let the STRICT policy prevent setting LeftRightHalf to "0"
-				strict = false;
+				bool strict0 = _strict; // don't let the STRICT policy prevent setting LeftRightHalf to "0"
+				_strict = false;
 				ClearTextFields(true);
-				strict = strict0;
+				_strict = strict0;
 			}
 		}
 
@@ -2016,7 +2016,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnCheckChanged_Strict(object sender, EventArgs e)
 		{
-			if (strict = cb_Strict.Checked)
+			if (_strict = cb_Strict.Checked)
 			{
 				lbl_Strict.ForeColor = SystemColors.ControlText;
 				lbl_Strict.Text = "STRICT";
