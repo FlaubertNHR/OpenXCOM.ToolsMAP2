@@ -72,7 +72,7 @@
       <DependentUpon>CopyierF.cs</DependentUpon>
     </Compile>
     <Compile Include="isocube.cs" />
-    <Compile Include="LoftF.cs" />
+    <Compile Include="LoftChooserF.cs" />
     <Compile Include="LoftPanel.cs" />
     <Compile Include="LoftPanel_copy.cs" />
     <Compile Include="McdviewF.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="RecordTextbox.cs" />
     <Compile Include="TerrainPanel_copier.cs" />
     <Compile Include="TerrainPanel_main.cs" />
-    <Compile Include="ScanGiconF.cs" />
+    <Compile Include="ScangChooserF.cs" />
     <Compile Include="SpritesetF.cs" />
     <Compile Include="TerrainPanel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -109,8 +109,8 @@
     <EmbeddedResource Include="CopyierF.resx">
       <DependentUpon>CopyierF.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoftF.resx">
-      <DependentUpon>LoftF.cs</DependentUpon>
+    <EmbeddedResource Include="LoftChooserF.resx">
+      <DependentUpon>LoftChooserF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="McdviewF.resx">
       <DependentUpon>McdviewF.cs</DependentUpon>
@@ -120,8 +120,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ScanGiconF.resx">
-      <DependentUpon>ScanGiconF.cs</DependentUpon>
+    <EmbeddedResource Include="ScangChooserF.resx">
+      <DependentUpon>ScangChooserF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SpritesetF.resx">
       <DependentUpon>SpritesetF.cs</DependentUpon>

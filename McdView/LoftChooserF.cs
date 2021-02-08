@@ -9,7 +9,7 @@ using DSShared;
 
 namespace McdView
 {
-	internal sealed class LoftF
+	internal sealed class LoftChooserF
 		:
 			Form
 	{
@@ -39,7 +39,7 @@ namespace McdView
 		/// <param name="f"></param>
 		/// <param name="slot"></param>
 		/// <param name="id"></param>
-		internal LoftF(
+		internal LoftChooserF(
 				McdviewF f,
 				int slot,
 				int id)
@@ -271,7 +271,7 @@ namespace McdView
 		{
 			this.SuspendLayout();
 			// 
-			// LoftF
+			// LoftChooserF
 			// 
 			this.ClientSize = new System.Drawing.Size(494, 276);
 			this.DoubleBuffered = true;
@@ -279,7 +279,7 @@ namespace McdView
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "LoftF";
+			this.Name = "LoftChooserF";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.ResumeLayout(false);

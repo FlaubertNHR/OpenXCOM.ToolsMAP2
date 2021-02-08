@@ -130,10 +130,10 @@ namespace McdView
 					{
 						case MouseButtons.Left:
 						{
-							using (var f = new LoftF(
-													_f,
-													Int32.Parse(tb.Tag.ToString()),
-													Int32.Parse(id)))
+							using (var f = new LoftChooserF(
+														_f,
+														Int32.Parse(tb.Tag.ToString()),
+														Int32.Parse(id)))
 							{
 								_f._pnlLoFT = this;
 								f.ShowDialog();

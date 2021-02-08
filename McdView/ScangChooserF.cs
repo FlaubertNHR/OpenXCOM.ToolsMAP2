@@ -11,7 +11,7 @@ using XCom;
 
 namespace McdView
 {
-	internal sealed class ScanGiconF
+	internal sealed class ScangChooserF
 		:
 			Form
 	{
@@ -50,7 +50,7 @@ namespace McdView
 		/// <param name="f"></param>
 		/// <param name="id"></param>
 		/// <param name="pal"></param>
-		internal ScanGiconF(
+		internal ScangChooserF(
 				McdviewF f,
 				int id,
 				ColorPalette pal)
@@ -348,7 +348,7 @@ namespace McdView
 		{
 			this.SuspendLayout();
 			// 
-			// ScanGiconF
+			// ScangChooserF
 			// 
 			this.ClientSize = new System.Drawing.Size(494, 276);
 			this.DoubleBuffered = true;
@@ -356,7 +356,7 @@ namespace McdView
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "ScanGiconF";
+			this.Name = "ScangChooserF";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.ResumeLayout(false);
