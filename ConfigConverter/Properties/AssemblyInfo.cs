@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the mutons")]
 [assembly: AssemblyProduct("ConfigConverter")]
-[assembly: AssemblyCopyright("2017-2020")]
+[assembly: AssemblyCopyright("2017-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -28,9 +28,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values, or the defaults by using '*' for the Build
 // and Revision.
-[assembly: AssemblyVersion("2.2.1.0")]
-[assembly: AssemblyFileVersion("2.2.1.0")]
-[assembly: AssemblyInformationalVersion("2.2.1.0")]
+[assembly: AssemblyVersion("2.2.1.1")]
+[assembly: AssemblyFileVersion("2.2.1.1")]
+[assembly: AssemblyInformationalVersion("2.2.1.1")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]
