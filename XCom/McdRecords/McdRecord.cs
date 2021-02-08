@@ -256,7 +256,7 @@ namespace XCom
 			FireResist    = bindata[45];
 			Alt_MCD       = bindata[46];
 			Unknown47     = bindata[47];
-			StandOffset   = (sbyte)bindata[48];
+			StandOffset   = unchecked((sbyte)bindata[48]);
 			TileOffset    = bindata[49];
 			Unknown50     = bindata[50];
 			LightBlock    = bindata[51];
