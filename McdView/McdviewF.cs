@@ -115,6 +115,20 @@ namespace McdView
 			}
 		}
 
+		/// <summary>
+		/// Gets the current palette based on the state of the Resources menu.
+		/// </summary>
+		internal Palette Pal
+		{
+			get
+			{
+				if (miResourcesTftd.Checked)
+					return Palette.TftdBattle;
+
+				return Palette.UfoBattle;
+			}
+		}
+
 
 		private ImageAttributes _ia;
 		internal ImageAttributes Ia
@@ -250,20 +264,6 @@ namespace McdView
 			set
 			{
 				Label = Path.GetFileNameWithoutExtension(_pfeMcd = value);
-			}
-		}
-
-		/// <summary>
-		/// Gets the current palette based on the state of the Resources menu.
-		/// </summary>
-		internal Palette Pal
-		{
-			get
-			{
-				if (miResourcesTftd.Checked)
-					return Palette.TftdBattle;
-
-				return Palette.UfoBattle;
 			}
 		}
 
@@ -999,11 +999,11 @@ namespace McdView
 		/// Loads a specified Mcdfile as called from TileView.
 		/// </summary>
 		/// <param name="pfeMcd">path-file-extension of an MCD file</param>
-		/// <param name="palette">ufo- or tftd-battle palette</param>
+		/// <param name="pal">ufo- or tftd-battle palette</param>
 		/// <param name="terId">the record to select</param>
 		public void LoadRecords(
 				string pfeMcd,
-				string palette,
+				Palette pal,
 				int terId)
 		{
 			using (var fs = FileService.OpenFile(pfeMcd))
@@ -1024,14 +1024,8 @@ namespace McdView
 				{
 					PfeMcd = pfeMcd;
 
-					Palette pal;
-					if (palette.StartsWith("tftd", StringComparison.Ordinal))
-					{
-						pal = Palette.TftdBattle;
+					if (pal == Palette.TftdBattle) // else is 'Palette.UfoBattle'
 						OnClick_PaletteTftd(null, EventArgs.Empty);
-					}
-					else
-						pal = Palette.UfoBattle;
 
 					Spriteset = SpritesetsManager.LoadSpriteset(
 															Label,

@@ -512,7 +512,7 @@ namespace MapView.Forms.Observers
 
 						fMcdView.LoadRecords(
 										pfeMcd,
-										MapFile.Descriptor.Pal.Label,
+										MapFile.Descriptor.Pal,
 										SelectedTilepart.TerId);
 
 						ShowHideManager.HideViewers();
