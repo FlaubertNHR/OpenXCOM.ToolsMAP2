@@ -27,7 +27,8 @@ namespace McdView
 		#region Fields
 		private readonly McdviewF _f;
 
-		private int LoftId;
+		private readonly int  Id;
+		private          int _id;
 		#endregion Fields
 
 
@@ -36,19 +37,19 @@ namespace McdView
 		/// cTor.
 		/// </summary>
 		/// <param name="f"></param>
-		/// <param name="panelid"></param>
-		/// <param name="loftid"></param>
+		/// <param name="slot"></param>
+		/// <param name="id"></param>
 		internal LoftF(
 				McdviewF f,
-				int panelid,
-				int loftid)
+				int slot,
+				int id)
 		{
 			InitializeComponent();
 
 			_f = f;
-			LoftId = loftid;
+			Id = id;
 
-			Text = "LOFTEMPS.DAT - slot " + (panelid + 1); // TODO: + "ufo"/"tftd"
+			Text = "LOFTEMPS.DAT - slot " + (slot + 1); // TODO: + "ufo"/"tftd"
 
 			int lofts = _f.LoFT.Length / 256;
 
@@ -73,13 +74,12 @@ namespace McdView
 
 
 		#region Methods
-		private int _id;
 		/// <summary>
 		/// Blinks the current iconId text-bg.
 		/// </summary>
 		private async void blink() // yes i know - this goes FOREVER!!
 		{
-			_id = LoftId;
+			_id = Id;
 
 			uint tick = UInt32.MinValue;
 			while (++tick != UInt32.MaxValue)
@@ -89,7 +89,7 @@ namespace McdView
 				if (tick % 2 != 0)
 					_id = -1;
 				else
-					_id = LoftId;
+					_id = Id;
 
 				Invalidate();
 			}
@@ -112,7 +112,7 @@ namespace McdView
 
 			Rectangle rect;
 
-			int x, y;
+			int x,y;
 			for (int i = 0; i != _f.LoFT.Length / 256; ++i)
 			{
 				using (var loft = new Bitmap(16,16, PixelFormat.Format8bppIndexed))	// Format1bppIndexed <- uses only 1 BIT per pixel

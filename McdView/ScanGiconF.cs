@@ -31,13 +31,15 @@ namespace McdView
 		#region Fields
 		private readonly McdviewF _f;
 
-		private readonly int IconId;
-		private readonly ColorPalette Pal;
+		private readonly int  Id;
+		private          int _id;
 
-		private readonly VScrollBar Scroller = new VScrollBar();
-		private readonly int MaxScrollVal;
-		private readonly int TotalHeight;
-		private int _scrolloffset;
+		private readonly ColorPalette _pal;
+
+		private readonly VScrollBar _scroller = new VScrollBar();
+		private readonly int _scrollrange;
+		private          int _scrolloffset;
+		private readonly int _height;
 		#endregion Fields
 
 
@@ -46,24 +48,24 @@ namespace McdView
 		/// Creates a ScanG icon viewer/chooser.
 		/// </summary>
 		/// <param name="f"></param>
-		/// <param name="iconId"></param>
+		/// <param name="id"></param>
 		/// <param name="pal"></param>
 		internal ScanGiconF(
 				McdviewF f,
-				int iconId,
+				int id,
 				ColorPalette pal)
 		{
 			InitializeComponent();
 
 			_f = f;
-			IconId = iconId;
-			Pal = pal;
+			Id = id;
+			_pal = pal;
 
 			Text = "SCANG.DAT"; // TODO: + "ufo"/"tftd"
 
-			Scroller.Dock = DockStyle.Right;
-			Scroller.Scroll += OnScroll;
-			Controls.Add(Scroller);
+			_scroller.Dock = DockStyle.Right;
+			_scroller.Scroll += OnScroll;
+			Controls.Add(_scroller);
 
 			int iconCount = _f.ScanG.Length / ScanGicon.Length_ScanG;
 
@@ -76,18 +78,18 @@ namespace McdView
 			else
 				w = COLS_Max;
 
-			w = (w * ICON_WIDTH) + (w * HORI_PAD) - 1 + Scroller.Width;
+			w = (w * ICON_WIDTH) + (w * HORI_PAD) - 1 + _scroller.Width;
 
 			int h = (iconCount + COLS_Max - 1) / COLS_Max * (ICON_HEIGHT + VERT_PAD_TEXT);
 
-			TotalHeight = h;
+			_height = h;
 
 			if (h > (ICON_HEIGHT + VERT_PAD_TEXT) * ROWS_VISIBLE_Max)
 				h = (ICON_HEIGHT + VERT_PAD_TEXT) * ROWS_VISIBLE_Max;
 
 			ClientSize = new Size(w, h);
 
-			MaxScrollVal = Scroller.Maximum - (Scroller.LargeChange - 1);
+			_scrollrange = _scroller.Maximum - (_scroller.LargeChange - 1);
 			ScrollIcon();
 
 			blink();
@@ -101,25 +103,24 @@ namespace McdView
 		/// </summary>
 		private void ScrollIcon()
 		{
-			int r = IconId / COLS_Max;
+			int r = Id / COLS_Max;
 			if (r > ROWS_VISIBLE_Max - 1)
 			{
 				r -= ROWS_VISIBLE_Max - 1;
 				r *= ICON_HEIGHT + VERT_PAD_TEXT;
-				int h = TotalHeight - ClientSize.Height;
-				r = (r * MaxScrollVal + (h - 1)) / h;
+				int h = _height - ClientSize.Height;
+				r = (r * _scrollrange + (h - 1)) / h;
 
-				Scroller.Value = r;
+				_scroller.Value = r;
 			}
 		}
 
-		private int _id;
 		/// <summary>
 		/// Blinks the current iconId text-bg.
 		/// </summary>
 		private async void blink() // yes i know - this goes FOREVER!!
 		{
-			_id = IconId;
+			_id = Id;
 
 			uint tick = UInt32.MinValue;
 			while (++tick != UInt32.MaxValue)
@@ -129,7 +130,7 @@ namespace McdView
 				if (tick % 2 != 0)
 					_id = -1;
 				else
-					_id = IconId;
+					_id = Id;
 
 				Invalidate();
 			}
@@ -150,11 +151,11 @@ namespace McdView
 			graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 			graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-			_scrolloffset = (-Scroller.Value * (TotalHeight - ClientSize.Height)) / MaxScrollVal;
+			_scrolloffset = (-_scroller.Value * (_height - ClientSize.Height)) / _scrollrange;
 
 			Rectangle rect;
 
-			int x, y;
+			int x,y;
 			for (int i = 0; i != _f.ScanG.Length / ScanGicon.Length_ScanG; ++i)
 			{
 				x = (i % COLS_Max) * (ICON_WIDTH  + HORI_PAD);
@@ -189,7 +190,7 @@ namespace McdView
 					// so yes this higgledy-piggeldy is necessary.
 					// The point is to draw icons that are unavailable to terrain-
 					// parts with a non-transparent background.
-					icon.Palette = Pal;
+					icon.Palette = _pal;
 					ColorPalette pal = icon.Palette; // <- clone Palette
 					if (i > 35)
 						pal.Entries[Palette.Tid] = Color.Transparent;
@@ -234,24 +235,24 @@ namespace McdView
 		{
 			if (e.Delta > 0)
 			{
-				int val0 = Scroller.Value;
-				int val  = Scroller.Value - Scroller.LargeChange;
+				int val0 = _scroller.Value;
+				int val  = _scroller.Value - _scroller.LargeChange;
 				if (val < 0)
 					val = 0;
-				Scroller.Value = val;
+				_scroller.Value = val;
 
-				if (Scroller.Value != val0)
+				if (_scroller.Value != val0)
 					Invalidate();
 			}
 			else if (e.Delta < 0)
 			{
-				int val0 = Scroller.Value;
-				int val  = Scroller.Value + Scroller.LargeChange;
-				if (val > MaxScrollVal)
-					val = MaxScrollVal;
-				Scroller.Value = val;
+				int val0 = _scroller.Value;
+				int val  = _scroller.Value + _scroller.LargeChange;
+				if (val > _scrollrange)
+					val = _scrollrange;
+				_scroller.Value = val;
 
-				if (Scroller.Value != val0)
+				if (_scroller.Value != val0)
 					Invalidate();
 			}
 		}
