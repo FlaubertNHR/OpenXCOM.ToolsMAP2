@@ -79,12 +79,20 @@ namespace MapView
 
 
 		#region Events (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
@@ -349,11 +357,6 @@ namespace MapView
 
 
 		#region Designer
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
-
 		private CompositedTabControl tabMain;
 		private TabPage tpTopView;
 		private TabPage tpRouteView;
@@ -388,19 +391,6 @@ namespace MapView
 		private RadioButton rbUfo;
 		private GroupBox gbTopViewColors;
 		private GroupBox gbRouteViewColors;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
