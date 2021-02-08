@@ -230,8 +230,7 @@ namespace XCom
 
 		/// <summary>
 		/// Bypass creating tone-scaled subpalettes if this Palette is created
-		/// by PckView.
-		/// TODO: or McdView
+		/// by PckView or McdView.
 		/// </summary>
 		public static bool BypassTonescales
 		{ internal get; set; }

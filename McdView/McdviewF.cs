@@ -122,10 +122,16 @@ namespace McdView
 		{
 			get
 			{
-				if (miResourcesTftd.Checked)
-					return Palette.TftdBattle;
+				Palette.BypassTonescales = true;
 
-				return Palette.UfoBattle;
+				Palette pal;
+				if (miResourcesTftd.Checked)
+					pal = Palette.TftdBattle;
+				else
+					pal = Palette.UfoBattle;
+
+				Palette.BypassTonescales = false;
+				return pal;
 			}
 		}
 
@@ -1472,7 +1478,7 @@ namespace McdView
 				miResourcesTftd.Checked = false;
 
 				if (Spriteset != null)
-					Spriteset.Pal = Palette.UfoBattle;
+					Spriteset.Pal = Pal;
 
 				if (_scanGufo != null) // miLoadScanGufo.Checked
 					ScanG = _scanGufo;
@@ -1501,7 +1507,7 @@ namespace McdView
 				miResourcesUfo .Checked = false;
 
 				if (Spriteset != null)
-					Spriteset.Pal = Palette.TftdBattle;
+					Spriteset.Pal = Pal;
 
 				if (_scanGtftd != null) // miLoadScanGtftd.Checked
 					ScanG = _scanGtftd;
