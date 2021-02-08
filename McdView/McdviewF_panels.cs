@@ -86,12 +86,12 @@ namespace McdView
 		{
 			_graphics = e.Graphics;
 
-			if (SelId != -1 && Spriteset != null)
+			if (Selid != -1 && Spriteset != null)
 			{
 				_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 				_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
-				McdRecord record = Parts[SelId].Record;
+				McdRecord record = Parts[Selid].Record;
 				int y = SPRITE_ORIGIN_Y;
 
 				int yoffset = record.TileOffset;
@@ -191,7 +191,7 @@ namespace McdView
 		{
 			PartsPanel.Select();
 
-			if (Parts != null && Parts.Length != 0 && SelId != -1
+			if (Parts != null && Parts.Length != 0 && Selid != -1
 				&& e.Y > -1 && e.Y < pnl_Sprites.Height) // NOTE: Bypass event if cursor moves off the panel before released.
 			{
 				if (Spriteset == null)
@@ -341,7 +341,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPaint_ScanG_panel(object sender, PaintEventArgs e)
 		{
-			if (SelId != -1 && ScanG != null)
+			if (Selid != -1 && ScanG != null)
 			{
 				int id = Int32.Parse(tb20_scang1.Text);
 				if (id > ScanGicon.UNITICON_Max && id < ScanG.Length / ScanGicon.Length_ScanG)
@@ -406,7 +406,7 @@ namespace McdView
 		{
 			PartsPanel.Select();
 
-			if (Parts != null && Parts.Length != 0 && SelId != -1
+			if (Parts != null && Parts.Length != 0 && Selid != -1
 				&& e.X > -1 && e.X < pnl_ScanGic.Width // NOTE: Bypass event if cursor moves off the panel before released.
 				&& e.Y > -1 && e.Y < pnl_ScanGic.Height)
 			{
@@ -530,7 +530,7 @@ namespace McdView
 								pnl_IsoLoft.Width  - 1,
 								pnl_IsoLoft.Height - 1);
 
-			if (Parts != null && SelId != -1 && LoFT != null)
+			if (Parts != null && Selid != -1 && LoFT != null)
 			{
 				string rose;
 				var pt = new Point();
@@ -582,7 +582,7 @@ namespace McdView
 				int y_layer, y_cell, x_cell;
 				int loftid, pos;
 
-				McdRecord record = Parts[SelId].Record;
+				McdRecord record = Parts[Selid].Record;
 				for (int layer = 0; layer != bar_IsoLoft.Value; ++layer)
 				{
 					switch (layer / 2)

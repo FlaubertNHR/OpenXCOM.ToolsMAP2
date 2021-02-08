@@ -38,7 +38,7 @@ namespace McdView
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			if (McdviewF.isRunT // <- is set in McdviewF.cTor; prevents designer barf attacks.
-				&& _f.SelId != -1 && _f.LoFT != null)
+				&& _f.Selid != -1 && _f.LoFT != null)
 			{
 				var graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.Half;
@@ -117,7 +117,7 @@ namespace McdView
 		{
 			_f.PartsPanel.Select(); // NOTE: Workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
 
-			if (_f.SelId != -1
+			if (_f.Selid != -1
 				&& e.X > -1 && e.X < Width // NOTE: Bypass event if cursor moves off the panel before released.
 				&& e.Y > -1 && e.Y < Height)
 			{

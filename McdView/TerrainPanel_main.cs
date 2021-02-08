@@ -26,8 +26,8 @@ namespace McdView
 		#region Properties
 		protected override int SelId
 		{
-			get { return _f.SelId; }
-			set { _f.SelId = value; }
+			get { return _f.Selid; }
+			set { _f.Selid = value; }
 		}
 
 		private bool _spritesChanged;

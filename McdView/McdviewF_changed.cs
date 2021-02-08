@@ -185,7 +185,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged0(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb00_phase0)) // else recurse
 				{
@@ -194,7 +194,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Sprite1 = (byte)result;
+						Parts[Selid].Record.Sprite1 = (byte)result;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -236,7 +236,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged1(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb01_phase1)) // else recurse
 				{
@@ -245,7 +245,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Sprite2 = (byte)result;
+						Parts[Selid].Record.Sprite2 = (byte)result;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -287,7 +287,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged2(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb02_phase2)) // else recurse
 				{
@@ -296,7 +296,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Sprite3 = (byte)result;
+						Parts[Selid].Record.Sprite3 = (byte)result;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -338,7 +338,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged3(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb03_phase3)) // else recurse
 				{
@@ -347,7 +347,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Sprite4 = (byte)result;
+						Parts[Selid].Record.Sprite4 = (byte)result;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -389,7 +389,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged4(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb04_phase4)) // else recurse
 				{
@@ -398,7 +398,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Sprite5 = (byte)result;
+						Parts[Selid].Record.Sprite5 = (byte)result;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -440,7 +440,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged5(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb05_phase5)) // else recurse
 				{
@@ -449,7 +449,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Sprite6 = (byte)result;
+						Parts[Selid].Record.Sprite6 = (byte)result;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -491,7 +491,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged6(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb06_phase6)) // else recurse
 				{
@@ -500,7 +500,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Sprite7 = (byte)result;
+						Parts[Selid].Record.Sprite7 = (byte)result;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -542,7 +542,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged7(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb07_phase7)) // else recurse
 				{
@@ -551,7 +551,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Sprite8 = (byte)result;
+						Parts[Selid].Record.Sprite8 = (byte)result;
 
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
@@ -601,7 +601,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged8(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb08_loft00)) // else recurse
 				{
@@ -610,7 +610,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft1 = (byte)result;
+						Parts[Selid].Record.Loft1 = (byte)result;
 
 						pnl_Loft08 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -652,7 +652,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged9(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb09_loft01)) // else recurse
 				{
@@ -661,7 +661,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft2 = (byte)result;
+						Parts[Selid].Record.Loft2 = (byte)result;
 
 						pnl_Loft09 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -703,7 +703,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged10(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb10_loft02)) // else recurse
 				{
@@ -712,7 +712,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft3 = (byte)result;
+						Parts[Selid].Record.Loft3 = (byte)result;
 
 						pnl_Loft10 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -754,7 +754,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged11(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb11_loft03)) // else recurse
 				{
@@ -763,7 +763,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft4 = (byte)result;
+						Parts[Selid].Record.Loft4 = (byte)result;
 
 						pnl_Loft11 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -805,7 +805,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged12(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb12_loft04)) // else recurse
 				{
@@ -814,7 +814,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft5 = (byte)result;
+						Parts[Selid].Record.Loft5 = (byte)result;
 
 						pnl_Loft12 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -856,7 +856,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged13(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb13_loft05)) // else recurse
 				{
@@ -865,7 +865,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft6 = (byte)result;
+						Parts[Selid].Record.Loft6 = (byte)result;
 
 						pnl_Loft13 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -907,7 +907,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged14(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb14_loft06)) // else recurse
 				{
@@ -916,7 +916,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft7 = (byte)result;
+						Parts[Selid].Record.Loft7 = (byte)result;
 
 						pnl_Loft14 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -958,7 +958,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged15(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb15_loft07)) // else recurse
 				{
@@ -967,7 +967,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft8 = (byte)result;
+						Parts[Selid].Record.Loft8 = (byte)result;
 
 						pnl_Loft15 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -1009,7 +1009,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged16(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb16_loft08)) // else recurse
 				{
@@ -1018,7 +1018,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft9 = (byte)result;
+						Parts[Selid].Record.Loft9 = (byte)result;
 
 						pnl_Loft16 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -1060,7 +1060,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged17(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb17_loft09)) // else recurse
 				{
@@ -1069,7 +1069,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft10 = (byte)result;
+						Parts[Selid].Record.Loft10 = (byte)result;
 
 						pnl_Loft17 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -1111,7 +1111,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged18(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb18_loft10)) // else recurse
 				{
@@ -1120,7 +1120,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft11 = (byte)result;
+						Parts[Selid].Record.Loft11 = (byte)result;
 
 						pnl_Loft18 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -1162,7 +1162,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged19(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb19_loft11)) // else recurse
 				{
@@ -1171,7 +1171,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Loft12 = (byte)result;
+						Parts[Selid].Record.Loft12 = (byte)result;
 
 						pnl_Loft19 .Invalidate();
 						pnl_IsoLoft.Invalidate();
@@ -1227,7 +1227,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged20(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb20_scang1)) // else recurse
 				{
@@ -1238,8 +1238,8 @@ namespace McdView
 							|| result == ScanGicon.UNITICON_Max // req'd after choosing an icon per ScanGiconF but the iconset has less than 35 icons
 							|| !strict || result < ScanG.Length / ScanGicon.Length_ScanG))
 					{
-						Parts[SelId].Record.ScanG         = (ushort)(result);
-						Parts[SelId].Record.ScanG_reduced = (ushort)(result - ScanGicon.UNITICON_Max);
+						Parts[Selid].Record.ScanG         = (ushort)(result);
+						Parts[Selid].Record.ScanG_reduced = (ushort)(result - ScanGicon.UNITICON_Max);
 
 						tb20_scang2.Text = (result - ScanGicon.UNITICON_Max).ToString();
 						pnl_ScanGic.Invalidate(); // uh how does the IsoLoFT panel refresh - it seems to okay ...
@@ -1292,7 +1292,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged20r(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb20_scang2)) // else recurse
 				{
@@ -1303,8 +1303,8 @@ namespace McdView
 							|| result == 0 // safety.
 							|| !strict || result < ScanG.Length / ScanGicon.Length_ScanG - ScanGicon.UNITICON_Max))
 					{
-						Parts[SelId].Record.ScanG         = (ushort)(result + ScanGicon.UNITICON_Max);
-						Parts[SelId].Record.ScanG_reduced = (ushort)(result);
+						Parts[Selid].Record.ScanG         = (ushort)(result + ScanGicon.UNITICON_Max);
+						Parts[Selid].Record.ScanG_reduced = (ushort)(result);
 
 						tb20_scang1.Text = (result + ScanGicon.UNITICON_Max).ToString();
 						pnl_ScanGic.Invalidate(); // uh how does the IsoLoFT panel refresh - it seems to okay ...
@@ -1356,7 +1356,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged22(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb22_)) // else recurse
 				{
@@ -1365,7 +1365,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown22 = (byte)result;
+						Parts[Selid].Record.Unknown22 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1402,7 +1402,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged23(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb23_)) // else recurse
 				{
@@ -1411,7 +1411,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown23 = (byte)result;
+						Parts[Selid].Record.Unknown23 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1448,7 +1448,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged24(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb24_)) // else recurse
 				{
@@ -1457,7 +1457,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown24 = (byte)result;
+						Parts[Selid].Record.Unknown24 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1494,7 +1494,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged25(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb25_)) // else recurse
 				{
@@ -1503,7 +1503,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown25 = (byte)result;
+						Parts[Selid].Record.Unknown25 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1540,7 +1540,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged26(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb26_)) // else recurse
 				{
@@ -1549,7 +1549,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown26 = (byte)result;
+						Parts[Selid].Record.Unknown26 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1586,7 +1586,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged27(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb27_)) // else recurse
 				{
@@ -1595,7 +1595,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown27 = (byte)result;
+						Parts[Selid].Record.Unknown27 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1632,7 +1632,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged28(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb28_)) // else recurse
 				{
@@ -1641,7 +1641,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown28 = (byte)result;
+						Parts[Selid].Record.Unknown28 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1678,7 +1678,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged29(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb29_)) // else recurse
 				{
@@ -1687,7 +1687,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown29 = (byte)result;
+						Parts[Selid].Record.Unknown29 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1724,7 +1724,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged30(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb30_isslidingdoor)) // else recurse
 				{
@@ -1733,11 +1733,11 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.SlidingDoor = Convert.ToBoolean(result);
+						Parts[Selid].Record.SlidingDoor = Convert.ToBoolean(result);
 
 						if (strict
-							&& Parts[SelId].Record.SlidingDoor
-							&& Parts[SelId].Record.HingedDoor)
+							&& Parts[Selid].Record.SlidingDoor
+							&& Parts[Selid].Record.HingedDoor)
 						{
 							tb35_ishingeddoor.Text = "0";
 						}
@@ -1794,7 +1794,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged31(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb31_isblocklos)) // else recurse
 				{
@@ -1803,7 +1803,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.StopLOS = Convert.ToBoolean(result);
+						Parts[Selid].Record.StopLOS = Convert.ToBoolean(result);
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1849,7 +1849,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged32(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb32_isdropthrou)) // else recurse
 				{
@@ -1858,7 +1858,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.NotFloored = Convert.ToBoolean(result);
+						Parts[Selid].Record.NotFloored = Convert.ToBoolean(result);
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1905,7 +1905,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged33(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb33_isbigwall)) // else recurse
 				{
@@ -1914,7 +1914,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.BigWall = Convert.ToBoolean(result);
+						Parts[Selid].Record.BigWall = Convert.ToBoolean(result);
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1962,7 +1962,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged34(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb34_isgravlift)) // else recurse
 				{
@@ -1971,7 +1971,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.GravLift = Convert.ToBoolean(result);
+						Parts[Selid].Record.GravLift = Convert.ToBoolean(result);
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2019,7 +2019,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged35(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb35_ishingeddoor)) // else recurse
 				{
@@ -2028,11 +2028,11 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.HingedDoor = Convert.ToBoolean(result);
+						Parts[Selid].Record.HingedDoor = Convert.ToBoolean(result);
 
 						if (strict
-							&& Parts[SelId].Record.HingedDoor
-							&& Parts[SelId].Record.SlidingDoor)
+							&& Parts[Selid].Record.HingedDoor
+							&& Parts[Selid].Record.SlidingDoor)
 						{
 							tb30_isslidingdoor.Text = "0";
 						}
@@ -2084,7 +2084,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged36(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb36_isblockfire)) // else recurse
 				{
@@ -2093,7 +2093,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.BlockFire = Convert.ToBoolean(result);
+						Parts[Selid].Record.BlockFire = Convert.ToBoolean(result);
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2139,7 +2139,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged37(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb37_isblocksmoke)) // else recurse
 				{
@@ -2148,7 +2148,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.BlockSmoke = Convert.ToBoolean(result);
+						Parts[Selid].Record.BlockSmoke = Convert.ToBoolean(result);
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2195,7 +2195,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged38(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb38_)) // else recurse
 				{
@@ -2204,7 +2204,7 @@ namespace McdView
 						&&     ((strict && result == 3)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.LeftRightHalf = (byte)result;
+						Parts[Selid].Record.LeftRightHalf = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2254,7 +2254,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged39(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb39_tuwalk)) // else recurse
 				{
@@ -2263,7 +2263,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.TU_Walk = (byte)result;
+						Parts[Selid].Record.TU_Walk = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2301,7 +2301,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged40(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb40_tuslide)) // else recurse
 				{
@@ -2310,7 +2310,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.TU_Slide = (byte)result;
+						Parts[Selid].Record.TU_Slide = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2348,7 +2348,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged41(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb41_tufly)) // else recurse
 				{
@@ -2357,7 +2357,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.TU_Fly = (byte)result;
+						Parts[Selid].Record.TU_Fly = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2395,7 +2395,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged42(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb42_armor)) // else recurse
 				{
@@ -2404,7 +2404,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Armor = (byte)result;
+						Parts[Selid].Record.Armor = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2445,7 +2445,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged43(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb43_heblock)) // else recurse
 				{
@@ -2454,7 +2454,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.HE_Block = (byte)result;
+						Parts[Selid].Record.HE_Block = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2492,7 +2492,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged44(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb44_deathid)) // else recurse
 				{
@@ -2501,12 +2501,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && result < Parts.Length) // NOTE: 'Parts' shall not be null here.
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.DieTile = (byte)result;
+						Parts[Selid].Record.DieTile = (byte)result;
 
 						if (result != 0 && result < Parts.Length)
-							Parts[SelId].Dead = Parts[result];
+							Parts[Selid].Dead = Parts[result];
 						else
-							Parts[SelId].Dead = null;
+							Parts[Selid].Dead = null;
 
 						PartsPanel.Invalidate();
 
@@ -2552,7 +2552,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged45(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb45_fireresist)) // else recurse
 				{
@@ -2561,7 +2561,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.FireResist = (byte)result;
+						Parts[Selid].Record.FireResist = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2602,7 +2602,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged46(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb46_alternateid)) // else recurse
 				{
@@ -2611,12 +2611,12 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256 && result < Parts.Length) // NOTE: 'Parts' shall not be null here.
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Alt_MCD = (byte)result;
+						Parts[Selid].Record.Alt_MCD = (byte)result;
 
 						if (result != 0 && result < Parts.Length)
-							Parts[SelId].Altr = Parts[result];
+							Parts[Selid].Altr = Parts[result];
 						else
-							Parts[SelId].Altr = null;
+							Parts[Selid].Altr = null;
 
 						PartsPanel.Invalidate();
 
@@ -2663,7 +2663,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged47(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb47_)) // else recurse
 				{
@@ -2672,7 +2672,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown47 = (byte)result;
+						Parts[Selid].Record.Unknown47 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2711,7 +2711,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged48(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb48_terrainoffset)) // else recurse // TODO: check 0 after "-" sign
 				{
@@ -2720,7 +2720,7 @@ namespace McdView
 						&&     ((strict && result > - 25 && result < 1)
 							|| (!strict && result > -129 && result < 128)))
 					{
-						Parts[SelId].Record.StandOffset = (sbyte)result;
+						Parts[Selid].Record.StandOffset = (sbyte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2773,7 +2773,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged49(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb49_spriteoffset)) // else recurse
 				{
@@ -2782,7 +2782,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 25)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.TileOffset = (byte)result;
+						Parts[Selid].Record.TileOffset = (byte)result;
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 
@@ -2827,7 +2827,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged50(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb50_)) // else recurse
 				{
@@ -2836,7 +2836,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown50 = (byte)result;
+						Parts[Selid].Record.Unknown50 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2874,7 +2874,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged51(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb51_lightblock)) // else recurse
 				{
@@ -2883,7 +2883,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.LightBlock = (byte)result;
+						Parts[Selid].Record.LightBlock = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2922,7 +2922,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged52(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb52_footsound)) // else recurse
 				{
@@ -2931,7 +2931,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 7)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Footstep = (byte)result;
+						Parts[Selid].Record.Footstep = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2987,7 +2987,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged53(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb53_parttype)) // else recurse
 				{
@@ -2996,7 +2996,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 4)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
+						Parts[Selid].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
 																			// explicitly defined in the enum is allowed.
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -3046,7 +3046,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged54(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb54_hetype)) // else recurse
 				{
@@ -3055,7 +3055,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.HE_Type = (byte)result;
+						Parts[Selid].Record.HE_Type = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -3104,7 +3104,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged55(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb55_hestrength)) // else recurse
 				{
@@ -3113,7 +3113,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.HE_Strength = (byte)result;
+						Parts[Selid].Record.HE_Strength = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -3152,7 +3152,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged56(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb56_smokeblock)) // else recurse
 				{
@@ -3161,7 +3161,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.SmokeBlockage = (byte)result;
+						Parts[Selid].Record.SmokeBlockage = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -3200,7 +3200,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged57(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb57_fuel)) // else recurse
 				{
@@ -3209,7 +3209,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Fuel = (byte)result;
+						Parts[Selid].Record.Fuel = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -3247,7 +3247,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged58(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb58_lightintensity)) // else recurse
 				{
@@ -3256,7 +3256,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.LightSource = (byte)result;
+						Parts[Selid].Record.LightSource = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -3296,7 +3296,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged59(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb59_specialtype)) // else recurse
 				{
@@ -3305,7 +3305,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 15)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
+						Parts[Selid].Record.Special = (SpecialType)result;	// NOTE: Assigning integers that are not
 																			// explicitly defined in the enum is allowed.
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -3374,7 +3374,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged60(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb60_isbaseobject)) // else recurse
 				{
@@ -3383,7 +3383,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 2)
 							|| (!strict && result > -1 && result < 2)))
 					{
-						Parts[SelId].Record.BaseObject = Convert.ToBoolean(result);
+						Parts[Selid].Record.BaseObject = Convert.ToBoolean(result);
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -3430,7 +3430,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnChanged61(object sender, EventArgs e)
 		{
-			if (SelId != -1)
+			if (Selid != -1)
 			{
 				if (TryParseText(tb61_)) // else recurse
 				{
@@ -3439,7 +3439,7 @@ namespace McdView
 						&&     ((strict && result > -1 && result < 256)
 							|| (!strict && result > -1 && result < 256)))
 					{
-						Parts[SelId].Record.Unknown61 = (byte)result;
+						Parts[Selid].Record.Unknown61 = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
