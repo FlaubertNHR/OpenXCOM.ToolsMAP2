@@ -410,6 +410,8 @@ namespace XCom
 
 		/// <summary>
 		/// Enables or disables transparency on the 'Tid' palette-index.
+		/// TODO: It would perhaps be worthwhile to create a separate Palette
+		/// for ufo-battle and tftd-battle that has id #0 transparent.
 		/// </summary>
 		/// <param name="transparent">true to enable transparency</param>
 		public void SetTransparent(bool transparent)
