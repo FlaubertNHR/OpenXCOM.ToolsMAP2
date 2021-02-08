@@ -146,8 +146,8 @@ namespace McdView
 			}
 		}
 
-		internal bool SpriteShadeEnabled
-		{ get; private set; }
+		private bool SpriteShadeEnabled
+		{ get; set; }
 
 		private int _spriteshade = -1;
 		/// <summary>
@@ -168,8 +168,8 @@ namespace McdView
 					Copier.PartsPanel.Invalidate();
 			}
 		}
-		internal float SpriteShadeFloat
-		{ get; private set; }
+		private float SpriteShadeFloat
+		{ get; set; }
 
 
 		private int _selId = -1;
