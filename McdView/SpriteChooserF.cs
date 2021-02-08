@@ -10,7 +10,7 @@ using XCom;
 
 namespace McdView
 {
-	internal sealed class SpritesetF
+	internal sealed class SpriteChooserF
 		:
 			Form
 	{
@@ -25,8 +25,10 @@ namespace McdView
 		#region Fields
 		private readonly McdviewF _f;
 
-		private int Phase;
-		private int SpriteId;
+		private readonly int  Id;
+		private          int _id;
+
+		private readonly int _phase;
 		#endregion Fields
 
 
@@ -37,7 +39,7 @@ namespace McdView
 		/// <param name="f"></param>
 		/// <param name="phase"></param>
 		/// <param name="spriteId"></param>
-		internal SpritesetF(
+		internal SpriteChooserF(
 				McdviewF f,
 				int phase,
 				int spriteId)
@@ -45,10 +47,10 @@ namespace McdView
 			InitializeComponent();
 
 			_f = f;
-			Phase = phase;
-			SpriteId = spriteId;
+			_phase = phase;
+			Id = spriteId;
 
-			Text = _f.Label + ".PCK - phase " + (Phase + 1);
+			Text = _f.Label + ".PCK - phase " + (_phase + 1);
 
 			int w;
 			if (_f.Spriteset.Count < COLS)
@@ -71,13 +73,12 @@ namespace McdView
 
 
 		#region Methods
-		private int _id;
 		/// <summary>
-		/// Blinks the current iconId text-bg.
+		/// Blinks the current spriteId text-bg.
 		/// </summary>
 		private async void blink() // yes i know - this goes FOREVER!!
 		{
-			_id = SpriteId;
+			_id = Id;
 
 			uint tick = UInt32.MinValue;
 			while (++tick != UInt32.MaxValue)
@@ -87,7 +88,7 @@ namespace McdView
 				if (tick % 2 != 0)
 					_id = -1;
 				else
-					_id = SpriteId;
+					_id = Id;
 
 				Invalidate();
 			}
@@ -164,7 +165,7 @@ namespace McdView
 					switch (e.Button)
 					{
 						case MouseButtons.Left:
-							_f.SetSprite(Phase, id);
+							_f.SetSprite(_phase, id);
 							break;
 
 						case MouseButtons.Right:
@@ -244,7 +245,7 @@ namespace McdView
 		{
 			this.SuspendLayout();
 			// 
-			// SpritesetF
+			// SpriteChooserF
 			// 
 			this.ClientSize = new System.Drawing.Size(494, 276);
 			this.DoubleBuffered = true;
@@ -252,7 +253,7 @@ namespace McdView
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "SpritesetF";
+			this.Name = "SpriteChooserF";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.ResumeLayout(false);

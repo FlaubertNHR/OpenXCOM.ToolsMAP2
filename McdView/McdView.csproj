@@ -88,7 +88,7 @@
     <Compile Include="TerrainPanel_copier.cs" />
     <Compile Include="TerrainPanel_main.cs" />
     <Compile Include="ScangChooserF.cs" />
-    <Compile Include="SpritesetF.cs" />
+    <Compile Include="SpriteChooserF.cs" />
     <Compile Include="TerrainPanel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -123,8 +123,8 @@
     <EmbeddedResource Include="ScangChooserF.resx">
       <DependentUpon>ScangChooserF.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpritesetF.resx">
-      <DependentUpon>SpritesetF.cs</DependentUpon>
+    <EmbeddedResource Include="SpriteChooserF.resx">
+      <DependentUpon>SpriteChooserF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

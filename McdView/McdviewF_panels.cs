@@ -255,7 +255,7 @@ namespace McdView
 						{
 							case MouseButtons.Left:
 							{
-								using (var f = new SpritesetF(this, phase, Int32.Parse(id)))
+								using (var f = new SpriteChooserF(this, phase, Int32.Parse(id)))
 									f.ShowDialog(this);
 								break;
 							}
