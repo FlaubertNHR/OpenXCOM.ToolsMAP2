@@ -141,7 +141,7 @@ namespace MapView.Forms.Observers
 
 			ContextMenu = CreateContext();
 
-			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
+			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
 
 			_t1.Interval = Globals.PERIOD;	// because the mouse OnLeave event doesn't fire
 			_t1.Enabled = true;				// when the mouse moves out of the panel directly
@@ -205,9 +205,9 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// whee. Handles animations.
+		/// Invalidates this TilePanel if tileparts are being animated.
 		/// </summary>
-		private void OnAnimationUpdate()
+		private void OnPhaseEvent()
 		{
 			Invalidate();
 		}
@@ -541,7 +541,7 @@ namespace MapView.Forms.Observers
 						if (SpecialBrushes.ContainsKey(special))
 							graphics.FillRectangle(SpecialBrushes[special], rectOuter);
 
-						if ((sprite = part[MainViewUnderlay.AniStep]) != null)
+						if ((sprite = part[MainViewUnderlay.Phase]) != null)
 						{
 							if (MainViewF.Optionables.UseMono)
 							{

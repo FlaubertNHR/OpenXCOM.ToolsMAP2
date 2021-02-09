@@ -64,6 +64,8 @@ namespace MapView.Forms.MainView
 		/// Tracks the mouseover location row.
 		/// </summary>
 		private int _row = -1;
+
+		private int _phase;
 		#endregion Fields
 
 
@@ -146,7 +148,6 @@ namespace MapView.Forms.MainView
 		private Graphics _graphics;
 		private ImageAttributes _spriteAttributes = new ImageAttributes();
 
-		private int _anistep;
 		private int _cols, _rows;
 		#endregion Fields (graphics)
 
@@ -1174,10 +1175,10 @@ namespace MapView.Forms.MainView
 				ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 
 
-				_anistep = MainViewUnderlay.AniStep;
-
 				_cols = MapFile.MapSize.Cols;
 				_rows = MapFile.MapSize.Rows;
+
+				_phase = MainViewUnderlay.Phase;
 
 #if !LOCKBITS
 				if (MainViewF.Optionables.UseMono)
@@ -1210,7 +1211,7 @@ namespace MapView.Forms.MainView
 
 
 		private static readonly Font FontLocation = new Font("Verdana", 7F, FontStyle.Bold);
-		private static readonly Brush BrushLocation = new SolidBrush(SystemColors.ControlText);
+		private static readonly Brush BrushLocation = SystemBrushes.ControlText;
 
 		/// <summary>
 		/// Prints the selector's current tile location.
@@ -1751,28 +1752,28 @@ namespace MapView.Forms.MainView
 			if (_visFloor && (part = tile.Floor) != null)
 			{
 				DrawSprite(
-						part[_anistep].Bindata,
+						part[_phase].Bindata,
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (_visWest && (part = tile.West) != null)
 			{
 				DrawSprite(
-						part[_anistep].Bindata,
+						part[_phase].Bindata,
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (_visNorth && (part = tile.North) != null)
 			{
 				DrawSprite(
-						part[_anistep].Bindata,
+						part[_phase].Bindata,
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (_visContent && (part = tile.Content) != null)
 			{
 				DrawSprite(
-						part[_anistep].Bindata,
+						part[_phase].Bindata,
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 		}
@@ -1795,7 +1796,7 @@ namespace MapView.Forms.MainView
 			// Going back to a universal sprite-size would do this:
 			//   (int)(sprite.Width  * Globals.Scale)
 			//   (int)(sprite.Height * Globals.Scale)
-			// with its attendent consequences.
+			// with its attendant consequences.
 
 			Tilepart part;
 			var rect = new Rectangle(
@@ -1804,32 +1805,32 @@ namespace MapView.Forms.MainView
 
 			if (_visFloor && (part = tile.Floor) != null)
 			{
-				var sprite = toned ? (part[_anistep] as PckImage).SpriteToned
-								   :  part[_anistep].Sprite;
+				var sprite = toned ? (part[_phase] as PckImage).SpriteToned
+								   :  part[_phase].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
 			if (_visWest && (part = tile.West) != null)
 			{
-				var sprite = toned ? (part[_anistep] as PckImage).SpriteToned
-								   :  part[_anistep].Sprite;
+				var sprite = toned ? (part[_phase] as PckImage).SpriteToned
+								   :  part[_phase].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
 			if (_visNorth && (part = tile.North) != null)
 			{
-				var sprite = toned ? (part[_anistep] as PckImage).SpriteToned
-								   :  part[_anistep].Sprite;
+				var sprite = toned ? (part[_phase] as PckImage).SpriteToned
+								   :  part[_phase].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
 			if (_visContent && (part = tile.Content) != null)
 			{
-				var sprite = toned ? (part[_anistep] as PckImage).SpriteToned
-								   :  part[_anistep].Sprite;
+				var sprite = toned ? (part[_phase] as PckImage).SpriteToned
+								   :  part[_phase].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}

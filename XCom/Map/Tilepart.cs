@@ -7,7 +7,7 @@ namespace XCom
 	public sealed class Tilepart
 	{
 		#region Fields (static)
-		private const int PHASECOUNT = 8;
+		public const int PHASES = 8;
 
 		private static SpriteCollection MonotoneSprites;
 		#endregion Fields (static)
@@ -51,8 +51,7 @@ namespace XCom
 		/// But unfortunately that difficult perspective is deeply ingrained in
 		/// the design of the code.
 		/// </summary>
-		public XCImage[] Sprites
-		{ get; private set; }
+		private XCImage[] _sprites;
 
 		/// <summary>
 		/// Gets the sprite at a specified animation phase.
@@ -61,8 +60,7 @@ namespace XCom
 		/// <returns></returns>
 		public XCImage this[int id]
 		{
-			get { return Sprites[id]; }
-			set { Sprites[id] = value; }
+			get { return _sprites[id]; }
 		}
 
 		/// <summary>
@@ -102,8 +100,6 @@ namespace XCom
 
 			if ((_spriteset = spriteset) != null) // nota bene: 'Spriteset' and 'Sprites' shall be null for McdView.
 			{
-				Sprites = new XCImage[PHASECOUNT];	// for MapView a part contains its own pointers to 8 sprites.
-													// - animations and doors toggle basically
 				InitSprites();
 			}
 		}
@@ -154,9 +150,11 @@ namespace XCom
 		/// </summary>
 		private void InitSprites()
 		{
+			_sprites = new XCImage[PHASES]; // for MapView a part contains its own pointers to 8 sprites.
+
 			if (!Record.SlidingDoor && !Record.HingedDoor)
 			{
-				SetSpritesArray();
+				SetSprites();
 			}
 			else
 				SetSprite1();
@@ -166,16 +164,16 @@ namespace XCom
 		/// Sets this tilepart's sprites in accord with its record's
 		/// sprite-phases.
 		/// </summary>
-		private void SetSpritesArray()
+		private void SetSprites()
 		{
-			Sprites[0] = _spriteset[Record.Sprite1];
-			Sprites[1] = _spriteset[Record.Sprite2];
-			Sprites[2] = _spriteset[Record.Sprite3];
-			Sprites[3] = _spriteset[Record.Sprite4];
-			Sprites[4] = _spriteset[Record.Sprite5];
-			Sprites[5] = _spriteset[Record.Sprite6];
-			Sprites[6] = _spriteset[Record.Sprite7];
-			Sprites[7] = _spriteset[Record.Sprite8];
+			_sprites[0] = _spriteset[Record.Sprite1];
+			_sprites[1] = _spriteset[Record.Sprite2];
+			_sprites[2] = _spriteset[Record.Sprite3];
+			_sprites[3] = _spriteset[Record.Sprite4];
+			_sprites[4] = _spriteset[Record.Sprite5];
+			_sprites[5] = _spriteset[Record.Sprite6];
+			_sprites[6] = _spriteset[Record.Sprite7];
+			_sprites[7] = _spriteset[Record.Sprite8];
 		}
 
 		/// <summary>
@@ -183,8 +181,8 @@ namespace XCom
 		/// </summary>
 		private void SetSprite1()
 		{
-			for (int i = 0; i != PHASECOUNT; ++i)
-				Sprites[i] = _spriteset[Record.Sprite1];
+			for (int i = 0; i != PHASES; ++i)
+				_sprites[i] = _spriteset[Record.Sprite1];
 		}
 
 		/// <summary>
@@ -197,8 +195,8 @@ namespace XCom
 				&& (Record.SlidingDoor || Record.HingedDoor))
 			{
 				byte altr = Altr.Record.Sprite1;
-				for (int i = 0; i != PHASECOUNT; ++i)
-					Sprites[i] = _spriteset[altr];
+				for (int i = 0; i != PHASES; ++i)
+					_sprites[i] = _spriteset[altr];
 			}
 		}
 
@@ -215,13 +213,13 @@ namespace XCom
 				{
 					if (Record.SlidingDoor || Altr == null)
 					{
-						SetSpritesArray();
+						SetSprites();
 					}
 					else
 					{
 						byte altr = Altr.Record.Sprite1;
-						for (int i = 4; i != PHASECOUNT; ++i) // ie. flip between Sprite1 and Altr.Sprite1
-							Sprites[i] = _spriteset[altr];
+						for (int i = 4; i != PHASES; ++i) // ie. flip between Sprite1 and Altr.Sprite1
+							_sprites[i] = _spriteset[altr];
 					}
 				}
 				else
@@ -298,28 +296,28 @@ namespace XCom
 
 			LoadMonotoneSprites();
 
-			Sprites = new XCImage[PHASECOUNT];
+			_sprites = new XCImage[PHASES];
 
 			switch (slot)
 			{
 				case PartType.Floor:
-					for (int i = 0; i != PHASECOUNT; ++i)
-						Sprites[i] = MonotoneSprites[3];
+					for (int i = 0; i != PHASES; ++i)
+						_sprites[i] = MonotoneSprites[3];
 					break;
 
 				case PartType.West:
-					for (int i = 0; i != PHASECOUNT; ++i)
-						Sprites[i] = MonotoneSprites[1];
+					for (int i = 0; i != PHASES; ++i)
+						_sprites[i] = MonotoneSprites[1];
 					break;
 
 				case PartType.North:
-					for (int i = 0; i != PHASECOUNT; ++i)
-						Sprites[i] = MonotoneSprites[2];
+					for (int i = 0; i != PHASES; ++i)
+						_sprites[i] = MonotoneSprites[2];
 					break;
 
 				case PartType.Content:
-					for (int i = 0; i != PHASECOUNT; ++i)
-						Sprites[i] = MonotoneSprites[4];
+					for (int i = 0; i != PHASES; ++i)
+						_sprites[i] = MonotoneSprites[4];
 					break;
 			}
 		}

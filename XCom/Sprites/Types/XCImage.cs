@@ -10,12 +10,20 @@ namespace XCom
 	public class XCImage
 	{
 		#region Fields (static)
-		public const  int SpriteWidth32  = 32;	// for MapView, so I don't have to recode a bunch of crap there.
-		public const  int SpriteHeight40 = 40;	// for MapView, so I don't have to recode a bunch of crap there.
+		public const  int SpriteWidth32  = 32; // for MapView, so I don't have to recode a bunch of crap there.
+		public const  int SpriteHeight40 = 40; // for MapView, so I don't have to recode a bunch of crap there.
 
-		public static int SpriteWidth    = 32;
-		public static int SpriteHeight   = 40;	// terrain & units 40px / bigobs 48px / scang 4px / loft 16px
-		#endregion Fields (static)				// NOTE: Bigobs, ScanG, and LoFT shall be supported only by PckView.
+		// terrain & units 40px / bigobs 48px / scang 4px / loft 16px
+		// NOTE: Bigobs, ScanG, and LoFT shall be supported only by PckView.
+
+		public const  int SpriteHeight48 = 48; // for Bigobs in PckView
+
+		public const  int ScanGside      =  4; // for ScanG icon dimensions in PckView
+		public const  int LoFTside       = 16; // for LoFT  icon dimensions in PckView
+
+		public static int SpriteWidth    = 32; // these two change depending on the type of spriteset ->
+		public static int SpriteHeight   = 40; // their initial values are only defaults
+		#endregion Fields (static)
 
 
 		#region Properties

@@ -1854,8 +1854,8 @@ namespace PckView
 			var it = sender as MenuItem;
 			if (!it.Checked)
 			{
-				it.Checked = true;
 				_itPalettes[Pal].Checked = false;
+				it.Checked = true;
 
 				Pal = it.Tag as Palette;
 				Pal.SetTransparent(miTransparent.Checked);
@@ -2021,17 +2021,10 @@ namespace PckView
 		/// Sets the current palette.
 		/// @note Called only from TileView to set the palette externally.
 		/// </summary>
-		/// <param name="palette"></param>
-		public void SetPalette(string palette)
+		/// <param name="pal"></param>
+		public void SetPalette(Palette pal)
 		{
-			foreach (var pal in _itPalettes.Keys)
-			{
-				if (pal.Label.Equals(palette))
-				{
-					OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
-					break;
-				}
-			}
+			OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -2077,12 +2070,12 @@ namespace PckView
 				{
 					int tabwordLength;
 
-					XCImage.SpriteWidth = 32;
+					XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
 					switch (SetType)
 					{
 						default: // case Type.Pck: // is terrain or unit ->
-							XCImage.SpriteHeight = 40;
+							XCImage.SpriteHeight = XCImage.SpriteHeight40;
 
 							if (bytesTab.Length == 2
 								|| bytesTab[2] != 0
@@ -2099,7 +2092,7 @@ namespace PckView
 							break;
 
 						case Type.Bigobs: // Bigobs support for PckImage<-XCImage ->
-							XCImage.SpriteHeight = 48;
+							XCImage.SpriteHeight = XCImage.SpriteHeight48;
 
 							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
 //							pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
@@ -2162,12 +2155,10 @@ namespace PckView
 						_itPalettes[pal],
 						EventArgs.Empty);
 
-			if ((TilePanel.Spriteset = spriteset) == null)
-			{
-				PfSpriteset = String.Empty;
-			}
-			else
+			if ((TilePanel.Spriteset = spriteset) != null)
 				PfSpriteset = pf;
+			else
+				PfSpriteset = String.Empty;
 
 			Changed = false;
 		}
@@ -2195,7 +2186,7 @@ namespace PckView
 				else
 				{
 					XCImage.SpriteWidth  =
-					XCImage.SpriteHeight = 4;
+					XCImage.SpriteHeight = XCImage.ScanGside;
 
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
 
@@ -2232,16 +2223,21 @@ namespace PckView
 				else
 				{
 					XCImage.SpriteWidth  =
-					XCImage.SpriteHeight = 16;
+					XCImage.SpriteHeight = XCImage.LoFTside;
 
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeLoFT), fs, true);
 
-					OnPaletteClick(
-								_itPalettes[Palette.UfoBattle],
-								EventArgs.Empty);
-
-					if (miTransparent.Checked)
+					if (!_itPalettes[Palette.TftdGeo].Checked) // 'Palette.TftdGeo' has white palid #1 (255,255,255)
+					{
+						miTransparent.Checked = false;
+						OnPaletteClick(
+									_itPalettes[Palette.TftdGeo],
+									EventArgs.Empty);
+					}
+					else if (miTransparent.Checked)
+					{
 						OnTransparencyClick(null, EventArgs.Empty);
+					}
 
 					if (SpriteEditor._fpalette.Visible)
 						SpriteEditor._fpalette.Close(); // actually Hide() + uncheck the SpriteEditor's it

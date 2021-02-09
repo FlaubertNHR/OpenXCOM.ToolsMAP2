@@ -59,7 +59,7 @@ namespace XCom
 		/// <param name="tabwordLength"></param>
 		/// <param name="pal"></param>
 		/// <param name="preserveStaticSpritesets">true if called by McdView -
-		/// dont screw with the spritesets when McdView is called via TileView</param>
+		/// don't screw with the spritesets when McdView is called via TileView</param>
 		/// <returns>a SpriteCollection containing all the sprites, or null if
 		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		public static SpriteCollection LoadSpriteset(

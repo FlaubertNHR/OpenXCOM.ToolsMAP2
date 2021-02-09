@@ -185,7 +185,7 @@ namespace McdView
 			PartsPanel.Width = gb_Collection.Width - 10;
 
 			TagLoftPanels();
-			LoftPanel_copy.SetStaticVars(_f, this);
+			LoftPanel_copier.SetStaticVars(_f, this);
 
 			PartsPanel.Select();
 
@@ -657,7 +657,7 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPaint_LoFT_group(object sender, PaintEventArgs e)
 		{
-			LoftPanel_copy pnlLoFT;
+			LoftPanel_copier pnlLoFT;
 			for (int i = 0; i != 12; ++i)
 			{
 				switch (i)

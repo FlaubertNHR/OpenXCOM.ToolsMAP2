@@ -84,36 +84,37 @@ namespace XCom
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
 					id)
 		{
-			_spriteset = spriteset;	// only for ToString().
+			_spriteset = spriteset;	// only for ToString() and 'Fail'.
 			SetId = ++_setId;		// only for 'MapInfoDialog'.
 
 			Pal = pal;
 
-			int posDst = bindata[0] * XCImage.SpriteWidth; // first byte is always count of transparent rows
+			//LogFile.WriteLine("PckImage..cTor id= " + id + " bindata.Length= " + bindata.Length);
 
-			for (int posSrc = 1; posSrc != bindata.Length; ++posSrc)
+			int dst = bindata[0] * XCImage.SpriteWidth; // first byte is always count of transparent rows
+			for (int src = 1; src != bindata.Length; ++src)
 			{
-				switch (bindata[posSrc])
+				switch (bindata[src])
 				{
 					case MarkerEos: // end of image
-						//DSShared.LogFile.WriteLine(". EoS");
+						//LogFile.WriteLine(". EoS");
 						break;
 
 					case MarkerRle: // skip quantity of pixels
-						posDst += bindata[++posSrc];
-						//DSShared.LogFile.WriteLine(". posDst= " + posDst);
+						dst += bindata[++src];
+						//LogFile.WriteLine(". dst= " + dst);
 						break;
 
 					default:
-						if (posDst >= Bindata.Length)
+						if (dst >= Bindata.Length)
 						{
-							//DSShared.LogFile.WriteLine(". . FAIL posDst= " + posDst);
+							//LogFile.WriteLine(". . FAIL dst= " + dst);
 							_spriteset.Fail |= SpriteCollection.FAIL_OF_SPRITE;
 							return;
 						}
 
-						Bindata[posDst++] = bindata[posSrc];
-						//DSShared.LogFile.WriteLine(". posDst= " + posDst);
+						Bindata[dst++] = bindata[src];
+						//LogFile.WriteLine(". dst= " + dst);
 						break;
 				}
 			}
@@ -124,7 +125,7 @@ namespace XCom
 											Bindata,
 											Pal.Table);
 
-			if (Pal.GrayScale != null) // do NOT create ANY tone-scaled sprites for PckView or McdView
+			if (Pal.GrayScale != null) // do NOT create ANY tone-scaled sprites for PckView or McdView TODO: PckView is still creating that ->
 				SpriteToned = BitmapService.CreateColored(
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,

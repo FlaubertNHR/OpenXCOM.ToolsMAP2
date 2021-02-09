@@ -268,8 +268,8 @@ namespace MapView
 			{
 				_used.Add(new Tuple<string, int>(_file.GetTerrainLabel(part), part.TerId));
 
-				foreach (var sprite in part.Sprites)
-					_sprites.Add(sprite.SetId);
+				for (int i = 0; i != Tilepart.PHASES; ++i)
+					_sprites.Add(part[i].SetId); // TODO: Don't add sprite's 'SetId' if it's already in '_sprites'
 
 				tally(part.Dead);
 				tally(part.Altr);

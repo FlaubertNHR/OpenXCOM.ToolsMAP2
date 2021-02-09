@@ -69,7 +69,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal QuadrantPanel()
 		{
-			MainViewUnderlay.AnimationUpdate += OnAnimationUpdate;
+			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
 
 			if (!_t1subscribed) // only once (for both QuadrantPanels)
 			{
@@ -253,7 +253,10 @@ namespace MapView.Forms.Observers
 			_t1Clicks = 0;
 		}
 
-		private void OnAnimationUpdate()
+		/// <summary>
+		/// Invalidates this QuadrantPanel if tileparts are being animated.
+		/// </summary>
+		private void OnPhaseEvent()
 		{
 			Invalidate();
 		}

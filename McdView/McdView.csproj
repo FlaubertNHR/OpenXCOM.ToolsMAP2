@@ -75,7 +75,7 @@
     <Compile Include="isocube.cs" />
     <Compile Include="LoftChooserF.cs" />
     <Compile Include="LoftPanel.cs" />
-    <Compile Include="LoftPanel_copy.cs" />
+    <Compile Include="LoftPanel_copier.cs" />
     <Compile Include="McdviewF.cs" />
     <Compile Include="McdviewF.Designer.cs">
       <DependentUpon>McdviewF.cs</DependentUpon>

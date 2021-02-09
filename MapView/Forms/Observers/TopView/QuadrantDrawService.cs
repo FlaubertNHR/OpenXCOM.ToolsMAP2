@@ -274,7 +274,7 @@ namespace MapView.Forms.Observers
 
 
 			// draw the Sprites
-			int anistep = MainViewUnderlay.AniStep;
+			int phase = MainViewUnderlay.Phase;
 
 			if (MainViewF.Optionables.UseMono)
 			{
@@ -289,7 +289,7 @@ namespace MapView.Forms.Observers
 			if (tile != null && tile.Floor != null)
 			{
 				McdRecord record = tile.Floor.Record;
-				DrawSprite(tile.Floor[anistep], 0, record.TileOffset);
+				DrawSprite(tile.Floor[phase], 0, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString((int)PartType.Floor);
@@ -302,7 +302,7 @@ namespace MapView.Forms.Observers
 			if (tile != null && tile.West != null)
 			{
 				McdRecord record = tile.West.Record;
-				DrawSprite(tile.West[anistep], Quadwidth, record.TileOffset);
+				DrawSprite(tile.West[phase], Quadwidth, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString((int)PartType.West);
@@ -315,7 +315,7 @@ namespace MapView.Forms.Observers
 			if (tile != null && tile.North != null)
 			{
 				McdRecord record = tile.North.Record;
-				DrawSprite(tile.North[anistep], Quadwidth * (int)PartType.North, record.TileOffset);
+				DrawSprite(tile.North[phase], Quadwidth * (int)PartType.North, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString((int)PartType.North);
@@ -328,7 +328,7 @@ namespace MapView.Forms.Observers
 			if (tile != null && tile.Content != null)
 			{
 				McdRecord record = tile.Content.Record;
-				DrawSprite(tile.Content[anistep], Quadwidth * (int)PartType.Content, record.TileOffset);
+				DrawSprite(tile.Content[phase], Quadwidth * (int)PartType.Content, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString((int)PartType.Content);
@@ -341,7 +341,7 @@ namespace MapView.Forms.Observers
 			if (CurrentTilepart != null)
 			{
 				McdRecord record = CurrentTilepart.Record;
-				DrawSprite(CurrentTilepart[anistep], Quadwidth * QuadrantPart, record.TileOffset);
+				DrawSprite(CurrentTilepart[phase], Quadwidth * QuadrantPart, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString(QuadrantPart);

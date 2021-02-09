@@ -9,7 +9,7 @@ using DSShared.Controls;
 
 namespace McdView
 {
-	internal sealed class LoftPanel_copy
+	internal sealed class LoftPanel_copier
 		:
 			BufferedPanel
 	{
@@ -34,7 +34,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Draws a LoFT icon in this LoftPanel_copy.
+		/// Draws a LoFT icon in this LoftPanel_copier.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)

@@ -166,7 +166,7 @@ namespace XCom
 				byte[] bytesPck,
 				byte[] bytesTab)
 		{
-			//LogFile.WriteLine("SpriteCollection..cTor");
+			//LogFile.WriteLine("SpriteCollection..cTor label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
 			Label         = label;
 			Pal           = pal;

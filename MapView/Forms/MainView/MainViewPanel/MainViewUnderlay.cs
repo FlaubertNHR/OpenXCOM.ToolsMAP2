@@ -98,7 +98,7 @@ namespace MapView.Forms.MainView
 			Dock = DockStyle.Fill;
 			BorderStyle = BorderStyle.Fixed3D;
 
-			AnimationUpdate += OnAnimationUpdate;
+			PhaseEvent += OnPhaseEvent;
 
 			_scrollBarV.Dock = DockStyle.Right;
 			_scrollBarV.Scroll += OnScrollVert;
@@ -194,6 +194,11 @@ namespace MapView.Forms.MainView
 
 
 		#region Events
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnScrollVert(object sender, ScrollEventArgs e)
 		{
 			//DSShared.LogFile.WriteLine("OnVerticalScroll overlay.Left= " + MainViewOverlay.Left);
@@ -203,6 +208,11 @@ namespace MapView.Forms.MainView
 			MainViewOverlay.Invalidate();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnScrollHori(object sender, ScrollEventArgs e)
 		{
 			//DSShared.LogFile.WriteLine("OnVerticalScroll overlay.Top= " + MainViewOverlay.Top);
@@ -212,7 +222,10 @@ namespace MapView.Forms.MainView
 			MainViewOverlay.Invalidate();
 		}
 
-		private void OnAnimationUpdate()
+		/// <summary>
+		/// Invalidates MainViewOverlay if tileparts are being animated.
+		/// </summary>
+		private void OnPhaseEvent()
 		{
 			MainViewOverlay.Invalidate();
 		}
@@ -447,11 +460,11 @@ namespace MapView.Forms.MainView
 
 
 		#region Timer stuff for animations (static)
-		internal delegate void AnimationEventHandler();
-		internal static AnimationEventHandler AnimationUpdate;	// NOTE: 'AnimationUpdate' uses the delegate directly;
-																// it is not an event per se.
-		private static Timer _t1;
-		private static int _anistep;
+		internal delegate void PhaseEventHandler();
+		internal static PhaseEventHandler PhaseEvent;	// NOTE: 'PhaseEvent' uses the delegate directly;
+														// it is not an event per se.
+		private  static Timer _t1;
+		internal static int Phase; // the current animation phase [0..7] that deters which tilepart-sprite to draw
 
 		internal static void Animate(bool animate)
 		{
@@ -461,7 +474,7 @@ namespace MapView.Forms.MainView
 				{
 					_t1 = new Timer();
 					_t1.Interval = Globals.PERIOD;
-					_t1.Tick += AnimateStep;
+					_t1.Tick += Phaser;
 				}
 
 				if (!_t1.Enabled)
@@ -470,7 +483,7 @@ namespace MapView.Forms.MainView
 			else if (_t1 != null)
 			{
 				_t1.Stop();
-				_anistep = 0;
+				Phase = 0;
 			}
 		}
 
@@ -479,18 +492,10 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private static void AnimateStep(object sender, EventArgs e)
+		private static void Phaser(object sender, EventArgs e)
 		{
-			_anistep = ++_anistep % 8;
-			AnimationUpdate();
-		}
-
-		/// <summary>
-		/// Gets which phase [0..7] of the sprite to display.
-		/// </summary>
-		internal static int AniStep
-		{
-			get { return _anistep; }
+			Phase = ++Phase % 8;
+			PhaseEvent();
 		}
 		#endregion Timer stuff for animations (static)
 	}
