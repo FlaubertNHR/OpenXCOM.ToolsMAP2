@@ -9,7 +9,7 @@
 
 		<p>PckView is a spriteset editor for XCOM.</p>
 
-		<p>PckView II can load, create, edit, and save PCK+TAB files that contain terrain sprites or unit sprites that are 32x40 8-bpp and bigobs sprites that are 32x48 8-bpp. Note that .PCK files must have corresponding .TAB files. Loading, editing, and saving SCANG.DAT files is also supported. Note that a .DAT file cannot be created from scratch; instead, I suggest backing up an already existing SCANG.DAT and modifying a copy of it.</p>
+		<p>PckView II can load, create, edit, and save PCK+TAB files that contain terrain sprites or unit sprites that are 32x40 8-bpp and bigobs sprites that are 32x48 8-bpp. Note that .PCK files must have corresponding .TAB files. Loading, editing, and saving SCANG.DAT and LOFTEMPS.DAT files is also supported. Note that a .DAT file cannot be created from scratch; instead, I suggest backing up an already existing SCANG.DAT or LOFTEMPS.DAT and modifying a copy of it.</p>
 
 		<p>The center panel displays sprites that are currently in the loaded spriteset.</p>
 
@@ -26,11 +26,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;Delete [Del] - removes the selected sprite from the spriteset.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Export sprite [p] ... - exports the selected sprite to a file in PNG format.</p>
 
-		<p>Adding and inserting sprites requires that their files are of the proper dimensions for the spriteset, 8-bpp images in PNG, GIF, or Windows BMP format.</p>
+		<p>Adding, inserting, or replacing sprites requires that their files are of the proper dimensions for the spriteset, 8-bpp images in PNG, GIF, or Windows BMP format.</p>
 
 		<p>Only one sprite can be selected at a time. To delete multiple sprites, select the first sprite you wish to delete and press [Del] repeatedly (or hold it pressed down) until the range of sprites has been deleted.</p>
 
-		<p>The statusbar along the bottom shows the total quantity of sprites in the set, the id of the sprite that is under the mouse-cursor, and the id of the currently selected sprite. The label of the spriteset is also displayed. The Offsets field to the right displays two values: the first is the TabOffset of the selected sprite and the second is the TabOffset of the next sprite. Terrain sprites can have a maximum TabOffset of 65535 (2^16 - 1) because their TAB files store sprite-offsets in only 2-byte words. If a sprite-offset exceeds that threshold it goes red to indicate that you will receive an error when trying to save the spriteset. Note however that if the last sprite is selected and only the second Offsets field is red there is no error - since the next sprite doesn't exist it's just a warning that if you were to add another sprite to the set there would be an error.</p>
+		<p>The statusbar along the bottom shows the total quantity of sprites in the set, the id of the sprite that is under the mouse-cursor, and the id of the currently selected sprite. The label of the spriteset is also displayed. If a PCK file is loaded the Offsets field to the right displays two values: the first is the TabOffset of the selected sprite and the second is the TabOffset of the next sprite. Terrain sprites can have a maximum TabOffset of 65535 (2^16 - 1) because their TAB files store sprite-offsets in only 2-byte words. If a sprite-offset exceeds that threshold it goes red to indicate that you will receive an error when trying to save the spriteset. Note however that if the last sprite is selected and only the second Offsets field is red there is no error - since the next sprite doesn't exist it's just a warning that if you were to add another sprite to the set there would be an error.</p>
 
 		<p>Note that different programs use slightly different algorithms to compress sprites and therefore to calculate the TabOffsets in a TAB file. The Offsets field displays values as they would be calculated by PckView II's algorithm and may not be accurate for a spriteset that was RLE-compressed by a different agorithm. But once a PCK + TAB has been saved in PckView II their values ought be accurate. PckView II uses the highest compression that produces valid files that I know of by excluding transparent pixels that stretch to the End-of-Sprite marker.</p>
 
@@ -45,8 +45,9 @@
 		<p>Open Pck (terrain/unit) file ... [Ctrl+o] - opens a PCK spriteset that contains UFO/TFTD terrain or unit sprites (32x40).</p>
 		<p>Open Pck (bigobs) file ... [Ctrl+g] - opens a PCK spriteset that contains UFO/TFTD bigobs sprites (32x48).</p>
 		<p>Open ScanG.Dat ... [Ctrl+d] - opens a DAT spriteset that contains ScanG icons (4x4).</p>
-		<p>Save [Ctrl+s] - saves the current PCK spriteset.</p>
-		<p>Save As ... [Ctrl+e] - saves the current PCK spriteset to another file.</p>
+		<p>Open LoFTemps.Dat ... [Ctrl+m] - opens a DAT spriteset that contains LoFT icons (16x16).</p>
+		<p>Save [Ctrl+s] - saves the current spriteset.</p>
+		<p>Save As ... [Ctrl+e] - saves the current spriteset to another file.</p>
 		<p>Export sprites ... [Ctrl+p] - exports all the sprites in the current spriteset to a directory. The images will be in PNG format.</p>
 		<p>Export spritesheet ... [F5] - exports all the sprites in the current spriteset to a spritesheet in PNG format.</p>
 		<p>Import spritesheet ... [F6] - replaces the spriteset with an imported spritesheet. Spritesheets can be imported in PNG, GIF, or Windows BMP format.</p>
@@ -55,11 +56,11 @@
 		<br>
 		<h3>Palette menu</h3>
 
-		<p>Transparent [F7] - toggles whether or not color index #0 is displayed as transparent. This affects only the display in PckView and does <b>not</b> get saved to the spriteset.</p>
+		<p>Transparent [F7] - toggles whether or not color index #0 is displayed as transparent. This only affects the display in PckView and exported sprites but does <b>not</b> get saved to the spriteset. Note that LoFT icons are always exported in black and white.</p>
 
 		<p>SpriteShade [F8] - toggles whether or not to respect MapView's "SpriteShade" option when drawing sprites and color-swatches. This affects only the display in PckView and does <b>not</b> get saved to the spriteset.</p>
 
-		<p>[Ctrl+1]..[Ctrl+8] - choose from a list of available palettes. Note that sprites do <b>not</b> contain color information - only <b>256 palette indices</b> are loaded and saved. Hence the currently selected palette makes no difference when saving a spriteset. However, sprites are displayed with hard-coded color information, which may or may not make them appear slightly differently than they would while actually playing XCOM.</p>
+		<p>UFO and TftD palettes [Ctrl+1]..[Ctrl+8] - choose from a list of available palettes. Note that sprites do <b>not</b> contain color information - only <b>256 palette indices</b> are loaded and saved. Hence the currently selected palette makes no difference when saving a spriteset. However, sprites are displayed and/or exported with hard-coded color values for the selected palette, which may or may not make them appear slightly differently than they would while actually playing XCOM. Note again that LoFT icons are always exported in black and white.</p>
 
 		<br>
 		<h3>Bytes menu</h3>
