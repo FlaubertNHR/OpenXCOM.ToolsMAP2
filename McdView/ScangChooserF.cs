@@ -50,12 +50,10 @@ namespace McdView
 		/// <param name="f"></param>
 		/// <param name="id"></param>
 		/// <param name="pal"></param>
-		/// <param name="label"></param>
 		internal ScangChooserF(
 				McdviewF f,
 				int id,
-				ColorPalette pal,
-				string label)
+				ColorPalette pal)
 		{
 			InitializeComponent();
 
@@ -63,10 +61,12 @@ namespace McdView
 			Id = id;
 			_pal = pal;
 
-			if (label != null)
-				Text = label;
+			// TODO: + "ufo"/"tftd"
+			string text = _f.GetScangChooserTitle();
+			if (text != null)
+				Text = text;
 			else
-				Text = "SCANG.DAT"; // TODO: + "ufo"/"tftd"
+				Text = "SCANG.DAT"; // default to file found by MapView's Configurator
 
 			_scroller.Dock = DockStyle.Right;
 			_scroller.Scroll += OnScroll;

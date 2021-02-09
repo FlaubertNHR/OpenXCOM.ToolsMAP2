@@ -39,25 +39,22 @@ namespace McdView
 		/// <param name="f"></param>
 		/// <param name="slot"></param>
 		/// <param name="id"></param>
-		/// <param name="label"></param>
 		internal LoftChooserF(
 				McdviewF f,
 				int slot,
-				int id,
-				string label)
+				int id)
 		{
 			InitializeComponent();
 
 			_f = f;
 			Id = id;
 
-			string text;
-			if (label != null)
-				text = label;
-			else
-				text = "LOFTEMPS.DAT";
+			// TODO: + "ufo"/"tftd"
+			string text = _f.GetLoftChooserTitle();
+			if (text == null)
+				text = "LOFTEMPS.DAT"; // default to file found by MapView's Configurator
 
-			Text = text + " - slot " + (slot + 1); // TODO: + "ufo"/"tftd"
+			Text = text + " - slot " + (slot + 1);
 
 			int lofts = _f.LoFT.Length / 256;
 

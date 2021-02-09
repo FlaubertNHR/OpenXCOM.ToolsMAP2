@@ -415,8 +415,7 @@ namespace McdView
 					using (var f = new ScangChooserF(
 												this,
 												Int32.Parse(tb20_scang1.Text),
-												Pal.Table,
-												GetScangChooserTitle()))
+												Pal.Table))
 					{
 						f.ShowDialog(this);
 					}

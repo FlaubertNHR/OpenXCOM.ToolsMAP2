@@ -50,7 +50,7 @@ namespace McdView
 			_phase = phase;
 			Id = spriteId;
 
-			Text = _f.Label + ".PCK - phase " + (_phase + 1);
+			Text = _f.Label + GlobalsXC.PckExt + " - phase " + (_phase + 1);
 
 			int w;
 			if (_f.Spriteset.Count < COLS)
