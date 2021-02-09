@@ -262,6 +262,11 @@ namespace XCom
 		}
 
 
+		// TODO: Move the TonescaledPalettes out to their own Palette(s).
+		// Reference them in Tileparts perhaps. The interrelation among
+		// Palettes, Tileparts, Sprites, Spritesets, Descriptors, etc. ought be
+		// rethought and reworked ...
+
 		/// <summary>
 		/// The gray-scaled Palette of this Palette.
 		/// </summary>
