@@ -264,19 +264,21 @@ namespace McdView
 
 		/// <summary>
 		/// Selects an icon and closes the Form.
+		/// @note Use the MouseDown event to prevent window-over-window
+		/// shenanigans.
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnMouseUp(MouseEventArgs e)
+		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (   e.X > -1 && e.X < ClientSize.Width
-				&& e.Y > -1 && e.Y < ClientSize.Height)
+			if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
+				&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
 			{
 				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_PAD_TEXT) * COLS_Max
 					   +  e.X / (ICON_WIDTH  + HORI_PAD);
 
 				if (id < _f.ScanG.Length / ScanGicon.Length_ScanG)
 				{
-					if (id < ScanGicon.UNITICON_Max)
+					if (id < ScanGicon.UNITICON_Max) // do not allow selecting an icon for units
 						id = ScanGicon.UNITICON_Max;
 
 					_f.SetIcon(id);
@@ -321,7 +323,7 @@ namespace McdView
 			if (Loc.X != -1)
 				Location = new Point(Loc.X, Loc.Y);
 			else
-				Location = new Point(_f.Location.X + 170, _f.Location.Y + 30);
+				Location = new Point(_f.Location.X + 20, _f.Location.Y + 20);
 
 			base.OnLoad(e);
 		}
@@ -330,7 +332,7 @@ namespace McdView
 
 		#region Events
 		/// <summary>
-		/// 
+		/// Invalidates this ScangChooserF on the scrollbar's scroll-event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

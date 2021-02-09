@@ -149,13 +149,15 @@ namespace McdView
 
 
 		/// <summary>
-		/// 
+		/// Selects a sprite and closes the Form.
+		/// @note Use the MouseDown event to prevent window-over-window
+		/// shenanigans.
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnMouseUp(MouseEventArgs e)
+		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (   e.X > -1 && e.X < ClientSize.Width // NOTE: Bypass event if cursor moves off the clientarea before released.
-				&& e.Y > -1 && e.Y < ClientSize.Height)
+			if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
+				&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
 			{
 				int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
 					   + e.X /  XCImage.SpriteWidth32;
@@ -204,7 +206,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// 
+		/// Registers telemetry OnFormClosing.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -216,17 +218,15 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// 
+		/// Sets Location OnLoad.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnLoad(EventArgs e)
 		{
-			if (Loc.X == -1)
-			{
-				Location = new Point(_f.Location.X + 25, _f.Location.Y + 345);
-			}
-			else
+			if (Loc.X != -1)
 				Location = new Point(Loc.X, Loc.Y);
+			else
+				Location = new Point(_f.Location.X + 20, _f.Location.Y + 20);
 
 			base.OnLoad(e);
 		}
