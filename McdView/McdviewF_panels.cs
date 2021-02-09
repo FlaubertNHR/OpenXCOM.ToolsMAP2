@@ -611,15 +611,15 @@ namespace McdView
 					for (int r = 0; r != 16; ++r)
 					for (int c = 0; c != 16; ++c)
 					{
-						y_cell = y_layer + (c * halfheight) + (r * halfheight) - (r + c);
-
-						x_cell = x_origin + ((c * halfwidth) - (r * halfwidth));
-						if      (x_cell > x_origin) x_cell += (c - r);
-						else if (x_cell < x_origin) x_cell -= (r - c);
-
 						pos = (loftid * 256) + (r * 16) + c;
 						if (pos < LoFT.Length && LoFT[pos])
 						{
+							y_cell = y_layer + (c * halfheight) + (r * halfheight) - (r + c);
+
+							x_cell = x_origin + ((c * halfwidth) - (r * halfwidth));
+							if      (x_cell > x_origin) x_cell += (c - r);
+							else if (x_cell < x_origin) x_cell -= (r - c);
+
 							_graphics.DrawImage(Isocube, x_cell, y_cell);
 						}
 					}
