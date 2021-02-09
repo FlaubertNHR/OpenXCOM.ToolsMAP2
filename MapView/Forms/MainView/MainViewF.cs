@@ -3291,7 +3291,7 @@ namespace MapView
 				{
 					for (int id = 0; id != spriteset.Count; ++id)
 					{
-						(spriteset[id] as PckImage).SpriteToned.Palette = table; // lovely.
+						(spriteset[id] as PckSprite).SpriteToned.Palette = table; // lovely.
 					}
 				}
 			}

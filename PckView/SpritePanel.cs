@@ -148,7 +148,7 @@ namespace PckView
 							{
 								int palid = _feditor._fpalette.PalPanel.Palid;
 								if (palid > -1
-									&& (palid < PckImage.MarkerRle
+									&& (palid < PckSprite.MarkerRle
 										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_0))
 								{
 									if (palid != (int)Sprite.Bindata[binid])
@@ -169,8 +169,8 @@ namespace PckView
 								{
 									switch (palid)
 									{
-										case PckImage.MarkerRle: // #254
-										case PckImage.MarkerEos: // #255
+										case PckSprite.MarkerRle: // #254
+										case PckSprite.MarkerEos: // #255
 											MessageBox.Show(
 														this,
 														"The colortable values #254 and #255 are reserved"
@@ -413,8 +413,8 @@ namespace PckView
 						text += " [transparent]";
 						break;
 
-					case PckImage.MarkerRle: // #254
-					case PckImage.MarkerEos: // #255
+					case PckSprite.MarkerRle: // #254
+					case PckSprite.MarkerEos: // #255
 						if (_feditor._f.TilePanel.Spriteset.TabwordLength != SpritesetsManager.TAB_WORD_LENGTH_0)
 						{
 							text += " [invalid]";

@@ -1297,7 +1297,7 @@ namespace PckView
 					// NOTE: ScanG.dat and LoFTemps.dat cannot be created.
 
 					int tabwordLength;
-					if (sender == miCreateBigobs) // Bigobs support for XCImage/PckImage
+					if (sender == miCreateBigobs) // Bigobs support for XCImage/PckSprite
 					{
 						SetType = Type.Bigobs;
 						XCImage.SpriteHeight = 48;
@@ -1309,7 +1309,7 @@ namespace PckView
 						SetType = Type.Pck;
 						XCImage.SpriteHeight = 40;
 
-						if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckImage
+						if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckSprite
 						{
 							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
 							sfd.Title = "Create a PCK (tftd unit) file";
@@ -1318,7 +1318,7 @@ namespace PckView
 						{
 							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
 
-							if (sender == miCreateUnitUfo) // Ufo Unit support for XCImage/PckImage
+							if (sender == miCreateUnitUfo) // Ufo Unit support for XCImage/PckSprite
 								sfd.Title = "Create a PCK (ufo unit) file";
 							else
 								sfd.Title = "Create a PCK (terrain) file";
@@ -2091,7 +2091,7 @@ namespace PckView
 							}
 							break;
 
-						case Type.Bigobs: // Bigobs support for PckImage<-XCImage ->
+						case Type.Bigobs: // Bigobs support for XCImage/PckSprite
 							XCImage.SpriteHeight = XCImage.SpriteHeight48;
 
 							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;

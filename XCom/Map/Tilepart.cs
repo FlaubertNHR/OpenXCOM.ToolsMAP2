@@ -136,8 +136,8 @@ namespace XCom
 		// 
 		// SlidingDoor sprites will animate when the Animation option is on and
 		// the Doors option is turned on; but whether or not they animate is
-		// controlled by setting their sprite-arrays to either the first image
-		// or an array of images, like non-door records do.
+		// controlled by setting their sprite-arrays to either the first sprite
+		// or an array of sprites, like non-door records do.
 		// 
 		// HingedDoors, which also need the Animation option on to animate as
 		// well as the Doors option on, will cycle by flipping their sprite
@@ -392,27 +392,27 @@ namespace XCom
 				}
 			}
 
-			var image = new PckImage();
-			image.Bindata = bindata;
-			image.Id = -1;
-			image.Pal = Palette.UfoBattle;
-//			image.SetId = -1;
+			var sprite = new PckSprite();
+			sprite.Bindata = bindata;
+			sprite.Id = -1;
+			sprite.Pal = Palette.UfoBattle;
+//			sprite.SetId = -1;
 
-			image.Sprite = BitmapService.CreateColored(
+			sprite.Sprite = BitmapService.CreateColored(
 													XCImage.SpriteWidth32,
 													XCImage.SpriteHeight40,
-													image.Bindata,
-													image.Pal.Table);
+													sprite.Bindata,
+													sprite.Pal.Table);
 
-			image.SpriteToned = BitmapService.CreateColored(
+			sprite.SpriteToned = BitmapService.CreateColored(
 													XCImage.SpriteWidth32,
 													XCImage.SpriteHeight40,
-													image.Bindata,
-													image.Pal.GrayScaled.Table);
+													sprite.Bindata,
+													sprite.Pal.GrayScaled.Table);
 
 			Sprites = new XCImage[PHASECOUNT];
 			for (int i = 0; i != PHASECOUNT; ++i)
-				Sprites[i] = image;
+				Sprites[i] = sprite;
 
 //			TerId = -1;
 		} */

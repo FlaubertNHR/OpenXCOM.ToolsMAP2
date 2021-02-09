@@ -56,7 +56,7 @@ namespace XCom
 
 		/// <summary>
 		/// SetId is used only by 'MapInfoDialog'.
-		/// @note It is set in the PckImage cTor if necessary.
+		/// @note It is set in the PckSprite cTor if necessary.
 		/// </summary>
 		public int SetId
 		{ get; internal protected set; }
@@ -72,7 +72,7 @@ namespace XCom
 		/// <param name="width"></param>
 		/// <param name="height"></param>
 		/// <param name="pal">pass in null to *bypass* creating the 'Image'; ie,
-		/// the PckImage..cTor has already unravelled the compressed image-data
+		/// the PckSprite..cTor has already unravelled the compressed image-data
 		/// instead</param>
 		/// <param name="id"></param>
 		internal XCImage(
@@ -93,12 +93,12 @@ namespace XCom
 				Sprite = BitmapService.CreateColored(		// which is called by
 												width,		// BitmapService.CreateSpriteset() and
 												height,		// several PckViewF contextmenu events
-												Bindata,	// BUT: the call by PckImage..cTor initializer needs to decode
+												Bindata,	// BUT: the call by PckSprite..cTor initializer needs to decode
 												Pal.Table);	// the file-data first, then it creates its own 'Image'.
 		}													// that's why i prefer pizza.
 
 		/// <summary>
-		/// cTor[1]. For clone. See PckImage..cTor[1] and .Duplicate().
+		/// cTor[1]. For clone. See PckSprite..cTor[1] and .Duplicate().
 		/// </summary>
 		protected XCImage()
 		{}

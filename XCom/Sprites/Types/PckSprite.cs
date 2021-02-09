@@ -14,7 +14,7 @@ namespace XCom
 	// pixels as transparent by using 2 bytes: 0xFE itself, and the next byte is
 	// the quantity of pixels that are transparent and hence are not written.
 
-	public sealed class PckImage
+	public sealed class PckSprite
 		:
 			XCImage
 	{
@@ -64,14 +64,14 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Instantiates a PckImage, based on an XCImage.
+		/// cTor[0]. Instantiates a PckSprite, based on an XCImage.
 		/// </summary>
 		/// <param name="bindata">the COMPRESSED source data</param>
 		/// <param name="pal"></param>
 		/// <param name="id">the id of this sprite in its spriteset</param>
 		/// <param name="spriteset"></param>
 		/// <param name="bypassTonescales">true to not create Tonescaled sprites</param>
-		internal PckImage(
+		internal PckSprite(
 				byte[] bindata,
 				Palette pal,
 				int id,
@@ -91,7 +91,7 @@ namespace XCom
 
 			Pal = pal;
 
-			//LogFile.WriteLine("PckImage..cTor id= " + id + " bindata.Length= " + bindata.Length);
+			//LogFile.WriteLine("PckSprite..cTor id= " + id + " bindata.Length= " + bindata.Length);
 
 			int dst = bindata[0] * XCImage.SpriteWidth; // first byte is always count of transparent rows
 			for (int src = 1; src != bindata.Length; ++src)
@@ -140,7 +140,7 @@ namespace XCom
 		/// <summary>
 		/// cTor[1]. Creates a blank sprite for Duplicate().
 		/// </summary>
-		private PckImage()
+		private PckSprite()
 		{}
 		#endregion cTor
 
@@ -226,7 +226,7 @@ namespace XCom
 
 		#region Methods (override)
 		/// <summary>
-		/// Gets a string-representation of this PckImage incl/ its bindata.
+		/// Gets a string-representation of this PckSprite incl/ its bindata.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
@@ -265,7 +265,7 @@ namespace XCom
 		/// <returns></returns>
 		public override bool Equals(object obj)
 		{
-			if (obj is PckImage)
+			if (obj is PckSprite)
 				return ToString().Equals(obj.ToString());
 
 			return false;
@@ -284,20 +284,20 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Returns a deep clone of this PckImage. Except 'Pal'.
+		/// Returns a deep clone of this PckSprite. Except 'Pal'.
 		/// </summary>
 		/// <param name="spriteset">the spriteset that the sprite will belong
 		/// to; note that the returned sprite has not been transfered to this
 		/// other spriteset yet</param>
 		/// <param name="id">the id in the destination spriteset</param>
 		/// <returns></returns>
-		public PckImage Duplicate(
+		public PckSprite Duplicate(
 				SpriteCollection spriteset,
 				int id)
 		{
-			var sprite = new PckImage();
+			var sprite = new PckSprite();
 
-			// PckImage vars
+			// PckSprite vars
 			sprite._spriteset = spriteset;
 			sprite.SetId = -1;
 

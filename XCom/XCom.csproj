@@ -98,7 +98,7 @@
     </Compile>
     <Compile Include="Sprites\SpriteCollection.cs" />
     <Compile Include="Sprites\Types\LoFTicon.cs" />
-    <Compile Include="Sprites\Types\PckImage.cs">
+    <Compile Include="Sprites\Types\PckSprite.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sprites\Types\ScanGicon.cs" />

@@ -33,7 +33,7 @@ namespace XCom
 		/// <param name="bypassMarkers">true if creating a ScanG icon</param>
 		/// <param name="x">used by spritesheets only</param>
 		/// <param name="y">used by spritesheets only</param>
-		/// <returns>an XCImage-object (base of PckImage)</returns>
+		/// <returns>an XCImage-object (base of PckSprite)</returns>
 		public static XCImage CreateSprite(
 				Bitmap b,
 				int id,
@@ -75,9 +75,9 @@ namespace XCom
 					{
 						switch (palid)
 						{
-							case PckImage.MarkerRle:	// #254
-							case PckImage.MarkerEos:	// #255
-								palid = PckImage.MaxId;	// #253
+							case PckSprite.MarkerRle:		// #254
+							case PckSprite.MarkerEos:		// #255
+								palid = PckSprite.MaxId;	// #253
 								break;
 						}
 					}

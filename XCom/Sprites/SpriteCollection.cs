@@ -239,8 +239,8 @@ namespace XCom
 			{
 				for (int i = 1; i != bytesPck.Length; ++i)
 				{
-					if (   bytesPck[i]     == PckImage.MarkerEos
-						&& bytesPck[i - 1] != PckImage.MarkerRle)
+					if (   bytesPck[i]     == PckSprite.MarkerEos
+						&& bytesPck[i - 1] != PckSprite.MarkerRle)
 					{
 						++CountSprites; // qty of bytes in 'bytesPck' w/ value 0xFF (ie. qty of sprites)
 					}
@@ -289,14 +289,14 @@ namespace XCom
 							bindata[j] = bytesPck[offsets[i] + j];
 
 						//LogFile.WriteLine("sprite #" + i);
-						var sprite = new PckImage(
+						var sprite = new PckSprite(
 												bindata,
 												Pal,
 												i,
 												this,
 												bypassTonescales);
 
-						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckImage above can set the Fail_Overflo flag
+						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckSprite above can set the Fail_Overflo flag
 							return;									// which shall be handled by the caller; ie. set the spriteset to null.
 
 						Sprites.Add(sprite);
@@ -482,7 +482,7 @@ namespace XCom
 								}
 
 								bwTab.Write((ushort)pos);
-								pos += PckImage.Write(spriteset[id], bwPck);
+								pos += PckSprite.Write(spriteset[id], bwPck);
 							}
 							break;
 						}
@@ -493,7 +493,7 @@ namespace XCom
 							for (int id = 0; id != spriteset.Count; ++id)
 							{
 								bwTab.Write(pos);
-								pos += PckImage.Write(spriteset[id], bwPck);
+								pos += PckSprite.Write(spriteset[id], bwPck);
 							}
 							break;
 						}
@@ -546,7 +546,7 @@ namespace XCom
 						   + "Failed at position " + pos;
 					return false;
 				}
-				pos += PckImage.Write(spriteset[id]);
+				pos += PckSprite.Write(spriteset[id]);
 			}
 
 			result = "Sprite offsets are valid.";
@@ -577,7 +577,7 @@ namespace XCom
 			uint len;
 			for (int id = 0; id <= spriteId; ++id)
 			{
-				len = PckImage.Write(spriteset[id]);
+				len = PckSprite.Write(spriteset[id]);
 				if (id != spriteId)
 					last += len;
 				else

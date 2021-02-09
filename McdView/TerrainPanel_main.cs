@@ -387,7 +387,7 @@ namespace McdView
 							if (_f.Spriteset == null)
 								_f.Spriteset = new SpriteCollection(_f.Label, _f.Pal);
 
-							var sprite_src = _f.Copier.Spriteset[spriteId] as PckImage;
+							var sprite_src = _f.Copier.Spriteset[spriteId] as PckSprite;
 							var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);
 							_ial_SpriteIds.Add(spriteId, _f.Spriteset.Count);
 
