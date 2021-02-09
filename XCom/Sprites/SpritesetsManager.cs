@@ -58,8 +58,9 @@ namespace XCom
 		/// <param name="dir">path to the directory of the file</param>
 		/// <param name="tabwordLength"></param>
 		/// <param name="pal"></param>
-		/// <param name="preserveStaticSpritesets">true if called by McdView -
-		/// don't screw with the spritesets when McdView is called via TileView</param>
+		/// <param name="bypassManager">true to not create Tonescaled sprites
+		/// and, if called by McdView, don't screw with the spritesets when
+		/// McdView is called via TileView</param>
 		/// <returns>a SpriteCollection containing all the sprites, or null if
 		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		public static SpriteCollection LoadSpriteset(
@@ -67,7 +68,7 @@ namespace XCom
 				string dir,
 				int tabwordLength,
 				Palette pal,
-				bool preserveStaticSpritesets = false)
+				bool bypassManager = false)
 		{
 			//LogFile.WriteLine("SpritesetsManager.LoadSpriteSet()");
 
@@ -89,7 +90,8 @@ namespace XCom
 														pal,
 														tabwordLength,
 														bytesPck,
-														bytesTab);
+														bytesTab,
+														bypassManager);
 
 						if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non)
 						{
@@ -106,7 +108,7 @@ namespace XCom
 						// {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
-							if (!preserveStaticSpritesets)
+							if (!bypassManager)
 								Spritesets.Add(spriteset);
 
 							return spriteset;
@@ -118,7 +120,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the total count of sprites in 'Spritesets'.
+		/// Gets the total count of sprites in all 'Spritesets'.
 		/// @note Used only by MapInfoDialog.Analyze()
 		/// </summary>
 		/// <returns>count of sprites</returns>

@@ -430,7 +430,8 @@ namespace MapView
 														label,
 														dir,
 														SpritesetsManager.TAB_WORD_LENGTH_2,
-														Palette.UfoBattle);
+														Palette.UfoBattle,
+														true);
 
 				if (cuboidufo != null)
 				{
@@ -453,7 +454,8 @@ namespace MapView
 														label,
 														dir,
 														SpritesetsManager.TAB_WORD_LENGTH_4,
-														Palette.TftdBattle);
+														Palette.TftdBattle,
+														true);
 
 				if (cuboidtftd != null)
 				{
@@ -597,7 +599,8 @@ namespace MapView
 													Palette.UfoBattle,
 													SpritesetsManager.TAB_WORD_LENGTH_2,
 													bytesPck,
-													bytesTab);
+													bytesTab,
+													true);
 			}
 		}
 		#endregion Methods (static)

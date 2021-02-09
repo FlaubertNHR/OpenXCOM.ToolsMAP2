@@ -159,12 +159,14 @@ namespace XCom
 		/// <param name="tabwordLength">2 for terrains/bigobs/ufo-units, 4 for tftd-units</param>
 		/// <param name="bytesPck">byte array of the PCK file</param>
 		/// <param name="bytesTab">byte array of the TAB file</param>
+		/// <param name="bypassTonescales">true to not create Tonescaled sprites</param>
 		public SpriteCollection(
 				string label,
 				Palette pal,
 				int tabwordLength,
 				byte[] bytesPck,
-				byte[] bytesTab)
+				byte[] bytesTab,
+				bool bypassTonescales = false)
 		{
 			//LogFile.WriteLine("SpriteCollection..cTor label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
@@ -291,7 +293,8 @@ namespace XCom
 												bindata,
 												Pal,
 												i,
-												this);
+												this,
+												bypassTonescales);
 
 						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckImage above can set the Fail_Overflo flag
 							return;									// which shall be handled by the caller; ie. set the spriteset to null.

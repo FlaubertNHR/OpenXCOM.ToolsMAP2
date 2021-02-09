@@ -70,11 +70,13 @@ namespace XCom
 		/// <param name="pal"></param>
 		/// <param name="id">the id of this sprite in its spriteset</param>
 		/// <param name="spriteset"></param>
+		/// <param name="bypassTonescales">true to not create Tonescaled sprites</param>
 		internal PckImage(
 				byte[] bindata,
 				Palette pal,
 				int id,
-				SpriteCollection spriteset)
+				SpriteCollection spriteset,
+				bool bypassTonescales)
 			:
 				base(
 					new byte[XCImage.SpriteWidth
@@ -125,7 +127,9 @@ namespace XCom
 											Bindata,
 											Pal.Table);
 
-			if (Pal.GrayScale != null) // do NOT create ANY tone-scaled sprites for PckView or McdView TODO: PckView is still creating that ->
+			// do NOT create ANY tone-scaled sprites for PckView or McdView nor
+			// MapView's MonotoneSprites or UFO/TFTD cursor-sprites
+			if (!bypassTonescales)
 				SpriteToned = BitmapService.CreateColored(
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,

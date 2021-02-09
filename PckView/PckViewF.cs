@@ -2104,7 +2104,8 @@ namespace PckView
 												pal,
 												tabwordLength,
 												bytesPck,
-												bytesTab);
+												bytesTab,
+												true);
 
 					if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non) // pck vs tab mismatch counts
 					{
