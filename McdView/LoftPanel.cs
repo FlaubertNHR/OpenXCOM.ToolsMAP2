@@ -77,18 +77,18 @@ namespace McdView
 						loft.UnlockBits(data);
 
 						Color color;
-						int panelid = Int32.Parse(tb.Tag.ToString());
+						int slot = Int32.Parse(tb.Tag.ToString());
 						int track = _f.IsoLoftVal;
 
-						if (track == panelid * 2 + 1)
-							color = SystemColors.Control;
-						else if (track <= panelid * 2)
-							color = SystemColors.ControlLight;
+						if (track == slot * 2 + 1)
+							color = Color.Gainsboro;
+						else if (track <= slot * 2)
+							color = Color.Silver;
 						else
-							color = SystemColors.ControlLightLight;
+							color = Color.White;
 
 						ColorPalette pal = loft.Palette;
-						pal.Entries[0] = SystemColors.ControlDarkDark;
+						pal.Entries[0] = Color.Black;
 						pal.Entries[1] = color;
 						loft.Palette = pal;
 

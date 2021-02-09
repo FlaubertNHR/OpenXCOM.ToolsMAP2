@@ -79,8 +79,8 @@ namespace McdView
 						loft.UnlockBits(data);
 
 						ColorPalette pal = loft.Palette;
-						pal.Entries[0] = SystemColors.ControlDarkDark;
-						pal.Entries[1] = SystemColors.ControlLightLight;
+						pal.Entries[0] = Color.Black;
+						pal.Entries[1] = Color.White;
 						loft.Palette = pal;
 
 						graphics.DrawImage(
