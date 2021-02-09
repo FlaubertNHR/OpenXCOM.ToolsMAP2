@@ -56,7 +56,7 @@ namespace McdView
 			if (text == null)
 				text = "LOFTEMPS.DAT"; // default to file found by MapView's Configurator
 
-			Text = text + " - slot " + (layer + 1);
+			Text = text + " - layer " + (layer + 1);
 
 			int lofts = _f.LoFT.Length / 256;
 
