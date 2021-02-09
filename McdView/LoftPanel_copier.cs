@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using DSShared.Controls;
 
+using XCom;
+
 
 namespace McdView
 {
@@ -15,19 +17,19 @@ namespace McdView
 	{
 		#region Fields (static)
 		private static McdviewF   _f;
-		private static CopierF _fcopy;
+		private static CopierF _fcopier;
 		#endregion Fields (static)
 
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes '_f' and '_fcopy'.
+		/// Initializes '_f' and '_fcopier'.
 		/// </summary>
 		/// <param name="f"></param>
-		/// <param name="fcopy"></param>
-		internal static void SetStaticVars(McdviewF f, CopierF fcopy)
+		/// <param name="fcopier"></param>
+		internal static void SetStaticVars(McdviewF f, CopierF fcopier)
 		{
-			_f = f; _fcopy = fcopy;
+			_f = f; _fcopier = fcopier;
 		}
 		#endregion Methods (static)
 
@@ -40,7 +42,7 @@ namespace McdView
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			if (McdviewF.isRunT // <- is set in McdviewF.cTor; prevents designer barf attacks.
-				&& _fcopy.SelId != -1 && _f.LoFT != null)
+				&& _fcopier.SelId != -1 && _f.LoFT != null)
 			{
 				var graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.Half;
@@ -79,8 +81,8 @@ namespace McdView
 						loft.UnlockBits(data);
 
 						ColorPalette pal = loft.Palette;
-						pal.Entries[0] = Color.Black;
-						pal.Entries[1] = Color.White;
+						pal.Entries[Palette.LoFTclear] = Color.Black;
+						pal.Entries[Palette.LoFTSolid] = Color.White;
 						loft.Palette = pal;
 
 						graphics.DrawImage(

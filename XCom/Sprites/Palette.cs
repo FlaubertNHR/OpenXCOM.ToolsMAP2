@@ -27,19 +27,20 @@ namespace XCom
 		/// The transparent Id in the <see cref="Table">Table.Entries</see>
 		/// array.
 		/// </summary>
-		public   const byte Tid       = 0x00;
+		public const byte Tid = 0x00;
 
 		/// <summary>
 		/// LoFT icons use only <see cref="ColorPalette">ColorPalette.Entries</see>
 		/// #0 and #1. LoFTclear shall be black for non-solid voxelspace.
 		/// </summary>
-		internal const byte LoFTclear = 0x00;
+		public const byte LoFTclear = 0x00;
 
 		/// <summary>
 		/// LoFT icons use only <see cref="ColorPalette">ColorPalette.Entries</see>
 		/// #0 and #1. LoFTSolid shall be white for solid voxelspace.
 		/// </summary>
-		internal const byte LoFTSolid = 0x01;
+		public const byte LoFTSolid = 0x01;
+
 
 		private static readonly Dictionary<string, Palette> _palettes =
 							new Dictionary<string, Palette>();

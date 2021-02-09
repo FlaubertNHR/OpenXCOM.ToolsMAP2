@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using DSShared;
 
+using XCom;
+
 
 namespace McdView
 {
@@ -37,11 +39,11 @@ namespace McdView
 		/// cTor.
 		/// </summary>
 		/// <param name="f"></param>
-		/// <param name="slot"></param>
+		/// <param name="layer"></param>
 		/// <param name="id"></param>
 		internal LoftChooserF(
 				McdviewF f,
-				int slot,
+				int layer,
 				int id)
 		{
 			InitializeComponent();
@@ -54,7 +56,7 @@ namespace McdView
 			if (text == null)
 				text = "LOFTEMPS.DAT"; // default to file found by MapView's Configurator
 
-			Text = text + " - slot " + (slot + 1);
+			Text = text + " - slot " + (layer + 1);
 
 			int lofts = _f.LoFT.Length / 256;
 
@@ -145,8 +147,8 @@ namespace McdView
 					loft.UnlockBits(data);
 
 					ColorPalette pal = loft.Palette;
-					pal.Entries[0] = Color.Black;
-					pal.Entries[1] = Color.White;
+					pal.Entries[Palette.LoFTclear] = Color.Black;
+					pal.Entries[Palette.LoFTSolid] = Color.White;
 					loft.Palette = pal;
 
 					x = (i % COLS) * (LOFT_WIDTH  + HORI_PAD);

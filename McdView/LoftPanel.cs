@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 using DSShared.Controls;
 
+using XCom;
+
 
 namespace McdView
 {
@@ -77,19 +79,19 @@ namespace McdView
 						loft.UnlockBits(data);
 
 						Color color;
-						int slot = Int32.Parse(tb.Tag.ToString());
+						int layer = Int32.Parse(tb.Tag.ToString());
 						int track = _f.IsoLoftVal;
 
-						if (track == slot * 2 + 1)
+						if (track == layer * 2 + 1)
 							color = Color.Gainsboro;
-						else if (track <= slot * 2)
+						else if (track <= layer * 2)
 							color = Color.Silver;
 						else
 							color = Color.White;
 
 						ColorPalette pal = loft.Palette;
-						pal.Entries[0] = Color.Black;
-						pal.Entries[1] = color;
+						pal.Entries[Palette.LoFTclear] = Color.Black;
+						pal.Entries[Palette.LoFTSolid] = color;
 						loft.Palette = pal;
 
 						graphics.DrawImage(
