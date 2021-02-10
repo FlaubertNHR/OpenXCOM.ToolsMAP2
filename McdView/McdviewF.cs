@@ -1620,6 +1620,7 @@ namespace McdView
 				_scanGufo_Label = null;
 				_scanGufo = null;
 				ScanG = SpritesetsManager.ScanGufo;
+				pnl_ScanGic.Invalidate();
 			}
 		}
 
@@ -1694,6 +1695,7 @@ namespace McdView
 				_loftufo_Label = null;
 				_loftufo = null;
 				LoFT = SpritesetsManager.LoFTufo;
+				InvalidateLoftPanels();
 			}
 		}
 
@@ -1782,6 +1784,7 @@ namespace McdView
 				_scanGtftd_Label = null;
 				_scanGtftd = null;
 				ScanG = SpritesetsManager.ScanGtftd;
+				pnl_ScanGic.Invalidate();
 			}
 		}
 
@@ -1856,6 +1859,7 @@ namespace McdView
 				_lofttftd_Label = null;
 				_lofttftd = null;
 				LoFT = SpritesetsManager.LoFTtftd;
+				InvalidateLoftPanels();
 			}
 		}
 
