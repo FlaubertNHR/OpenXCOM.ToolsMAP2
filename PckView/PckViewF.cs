@@ -27,7 +27,8 @@ namespace PckView
 					// Bigobs are 32x48 w/ 2-byte Tabword.
 			ScanG,	// a ScanG iconset is currently loaded.
 					// ScanGs are 4x4 w/ 0-byte Tabword.
-			LoFT
+			LoFT	// a LoFT iconset is currently loaded.
+					// LoFTs are 16x16 w/ 0-byte Tabword.
 		}
 		internal Type SetType;
 
@@ -764,21 +765,10 @@ namespace PckView
 				error += Environment.NewLine + Environment.NewLine;
 				switch (SetType)
 				{
-					case Type.Pck:
-						error += "Image needs to be 32x40 8-bpp";
-						break;
-
-					case Type.Bigobs:
-						error += "Image needs to be 32x48 8-bpp";
-						break;
-
-					case Type.ScanG:
-						error += "Image needs to be 4x4 8-bpp";
-						break;
-
-					case Type.LoFT:
-						error += "Image needs to be 16x16 8-bpp";
-						break;
+					case Type.Pck:    error += "Image needs to be 32x40 8-bpp"; break;
+					case Type.Bigobs: error += "Image needs to be 32x48 8-bpp"; break;
+					case Type.ScanG:  error += "Image needs to be 4x4 8-bpp";   break;
+					case Type.LoFT:   error += "Image needs to be 16x16 8-bpp"; break;
 				}
 			}
 
@@ -804,21 +794,10 @@ namespace PckView
 			{
 				switch (SetType)
 				{
-					case Type.Pck:
-						ofd.Title = "Select 32x40 8-bpp Image file(s)";
-						break;
-
-					case Type.Bigobs:
-						ofd.Title = "Select 32x48 8-bpp Image file(s)";
-						break;
-
-					case Type.ScanG:
-						ofd.Title = "Select 4x4 8-bpp Image file(s)";
-						break;
-
-					case Type.LoFT:
-						ofd.Title = "Select 16x16 8-bpp Image file(s)";
-						break;
+					case Type.Pck:    ofd.Title = "Select 32x40 8-bpp Image file(s)"; break;
+					case Type.Bigobs: ofd.Title = "Select 32x48 8-bpp Image file(s)"; break;
+					case Type.ScanG:  ofd.Title = "Select 4x4 8-bpp Image file(s)";   break;
+					case Type.LoFT:   ofd.Title = "Select 16x16 8-bpp Image file(s)"; break;
 				}
 
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
@@ -902,21 +881,10 @@ namespace PckView
 			{
 				switch (SetType)
 				{
-					case Type.Pck:
-						ofd.Title = "Select 32x40 8-bpp Image file(s)";
-						break;
-
-					case Type.Bigobs:
-						ofd.Title = "Select 32x48 8-bpp Image file(s)";
-						break;
-
-					case Type.ScanG:
-						ofd.Title = "Select 4x4 8-bpp Image file(s)";
-						break;
-
-					case Type.LoFT:
-						ofd.Title = "Select 16x16 8-bpp Image file(s)";
-						break;
+					case Type.Pck:    ofd.Title = "Select 32x40 8-bpp Image file(s)"; break;
+					case Type.Bigobs: ofd.Title = "Select 32x48 8-bpp Image file(s)"; break;
+					case Type.ScanG:  ofd.Title = "Select 4x4 8-bpp Image file(s)";   break;
+					case Type.LoFT:   ofd.Title = "Select 16x16 8-bpp Image file(s)"; break;
 				}
 
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
@@ -969,21 +937,10 @@ namespace PckView
 			{
 				switch (SetType)
 				{
-					case Type.Pck:
-						ofd.Title = "Select 32x40 8-bpp Image file(s)";
-						break;
-
-					case Type.Bigobs:
-						ofd.Title = "Select 32x48 8-bpp Image file(s)";
-						break;
-
-					case Type.ScanG:
-						ofd.Title = "Select 4x4 8-bpp Image file(s)";
-						break;
-
-					case Type.LoFT:
-						ofd.Title = "Select 16x16 8-bpp Image file(s)";
-						break;
+					case Type.Pck:    ofd.Title = "Select 32x40 8-bpp Image file(s)"; break;
+					case Type.Bigobs: ofd.Title = "Select 32x48 8-bpp Image file(s)"; break;
+					case Type.ScanG:  ofd.Title = "Select 4x4 8-bpp Image file(s)";   break;
+					case Type.LoFT:   ofd.Title = "Select 16x16 8-bpp Image file(s)"; break;
 				}
 
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
@@ -1095,21 +1052,10 @@ namespace PckView
 			{
 				switch (SetType)
 				{
-					case Type.Pck:
-						ofd.Title = "Select 32x40 8-bpp Image file";
-						break;
-
-					case Type.Bigobs:
-						ofd.Title = "Select 32x48 8-bpp Image file";
-						break;
-
-					case Type.ScanG:
-						ofd.Title = "Select 4x4 8-bpp Image file";
-						break;
-
-					case Type.LoFT:
-						ofd.Title = "Select 16x16 8-bpp Image file";
-						break;
+					case Type.Pck:    ofd.Title = "Select 32x40 8-bpp Image file"; break;
+					case Type.Bigobs: ofd.Title = "Select 32x48 8-bpp Image file"; break;
+					case Type.ScanG:  ofd.Title = "Select 4x4 8-bpp Image file";   break;
+					case Type.LoFT:   ofd.Title = "Select 16x16 8-bpp Image file"; break;
 				}
 
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
