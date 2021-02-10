@@ -93,12 +93,12 @@ namespace XCom
 
 			//LogFile.WriteLine("PckSprite..cTor id= " + id + " bindata.Length= " + bindata.Length);
 
-			int dst = bindata[0] * XCImage.SpriteWidth; // first byte is always count of transparent rows
+			int dst = bindata[0] * XCImage.SpriteWidth; // first byte is count of transparent rows
 			for (int src = 1; src != bindata.Length; ++src)
 			{
 				switch (bindata[src])
 				{
-					case MarkerEos: // end of image
+					case MarkerEos: // end of sprite
 						//LogFile.WriteLine(". EoS");
 						break;
 
