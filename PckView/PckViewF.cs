@@ -21,6 +21,8 @@ namespace PckView
 	{
 		internal enum Type : byte
 		{
+			non,	// default
+
 			Pck,	// a terrain or unit PCK+TAB set is currently loaded.
 					// These are 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword (tftd-unit)
 			Bigobs,	// a Bigobs PCK+TAB set is currently loaded.
@@ -244,30 +246,32 @@ namespace PckView
 
 			if (_args != null && _args.Length != 0)
 			{
-				string feLoad = Path.GetFileName(_args[0]).ToLower();
-				switch (feLoad)
+				string file = Path.GetFileNameWithoutExtension(_args[0]).ToLower();
+				switch (Path.GetExtension(_args[0]).ToLower())
 				{
-					default: 
-						if (Path.GetExtension(feLoad) == ".pck")	// NOTE: LoadSpriteset() will check for a TAB file
-						{											// and issue an error to the user if not found.
-							SetType = Type.Pck;
-							LoadSpriteset(_args[0]);
-						}
-						break;
+					case ".pck":
+						// NOTE: LoadSpriteset() will check for a TAB file and
+						// issue an error if not found.
 
-					case "bigobs.pck":
-						SetType = Type.Bigobs;
+						if (file.Contains("bigobs"))
+							SetType = Type.Bigobs;
+						else
+							SetType = Type.Pck;
+
 						LoadSpriteset(_args[0]);
 						break;
 
-					case "scang.dat":
-						SetType = Type.ScanG;
-						LoadScanG(_args[0]);
-						break;
-
-					case "loftemps.dat":
-						SetType = Type.LoFT;
-						LoadLoFT(_args[0]);
+					case ".dat":
+						if (file.Contains("scang"))
+						{
+							SetType = Type.ScanG;
+							LoadScanG(_args[0]);
+						}
+						else if (file.Contains("loftemps"))
+						{
+							SetType = Type.LoFT;
+							LoadLoFT(_args[0]);
+						}
 						break;
 				}
 			}
