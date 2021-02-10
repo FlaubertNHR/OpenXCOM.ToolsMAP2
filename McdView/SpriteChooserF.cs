@@ -156,37 +156,43 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
-				&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
+			switch (e.Button)
 			{
-				int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
-					   + e.X /  XCImage.SpriteWidth32;
-
-				if (id < _f.Spriteset.Count)
-				{
-					switch (e.Button)
+				case MouseButtons.Left:
+				case MouseButtons.Right:
+					if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
+						&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
 					{
-						case MouseButtons.Left:
-							_f.SetSprite(_phase, id);
-							break;
+						int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
+							   + e.X /  XCImage.SpriteWidth32;
 
-						case MouseButtons.Right:
-							if (MessageBox.Show(
-											this,
-											"Set all sprite phases to #" + id,
-											" Set all sprite phases",
-											MessageBoxButtons.YesNo,
-											MessageBoxIcon.Question,
-											MessageBoxDefaultButton.Button1,
-											0) == DialogResult.No)
+						if (id < _f.Spriteset.Count)
+						{
+							switch (e.Button)
 							{
-								return; // do nothing if No.
+								case MouseButtons.Left:
+									_f.SetSprite(_phase, id);
+									break;
+
+								case MouseButtons.Right:
+									if (MessageBox.Show(
+													this,
+													"Set all sprite phases to #" + id,
+													" Set all sprite phases",
+													MessageBoxButtons.YesNo,
+													MessageBoxIcon.Question,
+													MessageBoxDefaultButton.Button1,
+													0) == DialogResult.No)
+									{
+										return; // do nothing if No.
+									}
+									_f.SetAllSprites(id.ToString());
+									break;
 							}
-							_f.SetAllSprites(id.ToString());
-							break;
+							Close();
+						}
 					}
-					Close();
-				}
+					break;
 			}
 		}
 

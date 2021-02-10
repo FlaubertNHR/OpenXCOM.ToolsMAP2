@@ -270,7 +270,8 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
+			if (e.Button == MouseButtons.Left
+				&& e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
 				&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
 			{
 				int id = (e.Y - _scrolloffset) / (ICON_HEIGHT + VERT_PAD_TEXT) * COLS_Max

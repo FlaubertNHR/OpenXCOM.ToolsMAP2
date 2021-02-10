@@ -191,37 +191,43 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
-				&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
+			switch (e.Button)
 			{
-				int id = e.Y / (LOFT_HEIGHT + TEXT_HEIGHT) * COLS
-					   + e.X / (LOFT_WIDTH  + HORI_PAD);
-
-				if (id < _f.LoFT.Length / 256)
-				{
-					switch (e.Button)
+				case MouseButtons.Left:
+				case MouseButtons.Right:
+					if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
+						&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
 					{
-						case MouseButtons.Left:
-							_f.SetLoft(id);
-							break;
-
-						case MouseButtons.Right:
-							if (MessageBox.Show(
-											this,
-											"Set all LoFTs to #" + id,
-											" Set all LoFTs",
-											MessageBoxButtons.YesNo,
-											MessageBoxIcon.Question,
-											MessageBoxDefaultButton.Button1,
-											0) == DialogResult.No)
+						int id = e.Y / (LOFT_HEIGHT + TEXT_HEIGHT) * COLS
+							   + e.X / (LOFT_WIDTH  + HORI_PAD);
+	
+						if (id < _f.LoFT.Length / 256)
+						{
+							switch (e.Button)
 							{
-								return; // do nothing if No.
+								case MouseButtons.Left:
+									_f.SetLoft(id);
+									break;
+	
+								case MouseButtons.Right:
+									if (MessageBox.Show(
+													this,
+													"Set all LoFTs to #" + id,
+													" Set all LoFTs",
+													MessageBoxButtons.YesNo,
+													MessageBoxIcon.Question,
+													MessageBoxDefaultButton.Button1,
+													0) == DialogResult.No)
+									{
+										return; // do nothing if No.
+									}
+									_f.SetAllLofts(id.ToString());
+									break;
 							}
-							_f.SetAllLofts(id.ToString());
-							break;
+							Close();
+						}
 					}
-					Close();
-				}
+					break;
 			}
 		}
 
