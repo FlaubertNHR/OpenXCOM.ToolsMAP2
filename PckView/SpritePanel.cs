@@ -261,7 +261,7 @@ namespace PckView
 
 			if (Sprite != null)
 			{
-				if (_feditor._f.SpriteShade > -1)
+				if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON)
 				{
 					for (int y = 0; y != XCImage.SpriteHeight; ++y)
 					for (int x = 0; x != XCImage.SpriteWidth;  ++x)

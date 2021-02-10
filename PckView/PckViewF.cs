@@ -56,6 +56,10 @@ namespace PckView
 		internal static bool Quit;
 
 		internal static float SpriteShadeFloat;
+
+		internal const int SPRITESHADE_ON       =  0;
+		internal const int SPRITESHADE_DISABLED = -1;
+		internal const int SPRITESHADE_OFF      = -2;
 		#endregion Fields (static)
 
 
@@ -82,7 +86,7 @@ namespace PckView
 		private readonly Dictionary<Palette, MenuItem> _itPalettes =
 					 new Dictionary<Palette, MenuItem>();
 
-		internal int SpriteShade = -1;
+		internal int SpriteShade = SPRITESHADE_DISABLED;
 		internal readonly ImageAttributes Ia = new ImageAttributes();
 
 
@@ -1361,10 +1365,8 @@ namespace PckView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title      = "Select a PCK (terrain/unit) file";
-					ofd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-//					ofd.DefaultExt = GlobalsXC.PckExt;
-//					ofd.FileName   = ;
+					ofd.Title  = "Select a PCK (terrain/unit) file";
+					ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
 
 					if (!String.IsNullOrEmpty(PfSpriteset))
 					{
@@ -1395,10 +1397,9 @@ namespace PckView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title      = "Select a PCK (bigobs) file";
-					ofd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
-//					ofd.DefaultExt = GlobalsXC.PckExt;
-					ofd.FileName   = "BIGOBS.PCK";
+					ofd.Title    = "Select a PCK (bigobs) file";
+					ofd.Filter   = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					ofd.FileName = "BIGOBS.PCK";
 
 					if (!String.IsNullOrEmpty(PfSpriteset))
 					{
@@ -1429,10 +1430,9 @@ namespace PckView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title      = "Select a ScanG file";
-					ofd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
-//					ofd.DefaultExt = GlobalsXC.DatExt;
-					ofd.FileName   = "SCANG.DAT";
+					ofd.Title    = "Select a ScanG file";
+					ofd.Filter   = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.FileName = "SCANG.DAT";
 
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
@@ -1456,10 +1456,9 @@ namespace PckView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title      = "Select a LoFTemps file";
-					ofd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
-//					ofd.DefaultExt = GlobalsXC.DatExt;
-					ofd.FileName   = "LOFTEMPS.DAT";
+					ofd.Title    = "Select a LoFTemps file";
+					ofd.Filter   = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.FileName = "LOFTEMPS.DAT";
 
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
@@ -1737,9 +1736,6 @@ namespace PckView
 							   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 							   + "All files (*.*)|*.*";
 
-//					ofd.DefaultExt = ;
-//					ofd.FileName = ;
-
 					if (!Directory.Exists(_lastSpriteDirectory))
 					{
 						string dir = Path.GetDirectoryName(PfSpriteset);
@@ -1847,14 +1843,14 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSpriteshadeClick(object sender, EventArgs e)
 		{
-			if (SpriteShade != -1)
+			if (SpriteShade != SPRITESHADE_DISABLED)
 			{
 				if (miSpriteShade.Checked = !miSpriteShade.Checked)
 				{
-					SpriteShade = 0;
+					SpriteShade = SPRITESHADE_ON;
 				}
 				else
-					SpriteShade = -2;
+					SpriteShade = SPRITESHADE_OFF;
 
 				TilePanel.Invalidate();
 				SpriteEditor.SpritePanel.Invalidate();

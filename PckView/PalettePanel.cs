@@ -119,7 +119,7 @@ namespace PckView
 
 			var graphics = e.Graphics;
 
-			if (_fpalette._feditor._f.SpriteShade > -1)
+			if (_fpalette._feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON)
 			{
 				for (int
 						i = 0, y = 0;

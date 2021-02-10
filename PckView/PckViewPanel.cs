@@ -306,7 +306,7 @@ namespace PckView
 
 					if (_f.SetType != PckViewF.Type.ScanG)
 					{
-						if (_f.SpriteShade > -1)
+						if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
 						{
 							graphics.DrawImage(
 											Spriteset[id].Sprite,
@@ -327,7 +327,7 @@ namespace PckView
 											TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
 						}
 					}
-					else if (_f.SpriteShade > -1)
+					else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
 					{
 						graphics.DrawImage(
 										Spriteset[id].Sprite,
