@@ -97,6 +97,11 @@ namespace MapView
 
 
 		#region Events
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void click_btnRefresh(object sender, EventArgs e)
 		{
 			Analyze();
@@ -108,6 +113,12 @@ namespace MapView
 		// - CategoryDetail	(Tilesets in the Category)
 		// - GroupDetail	(Categories + Tilesets in the Group)
 		// - TerrainDetail	(all Tilesets that use a Terrain or all Terrains used in the Maptree)
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void click_btnTerrainDetail(object sender, EventArgs e)
 		{
 			if (_fdetail == null)
@@ -144,6 +155,11 @@ namespace MapView
 
 
 		#region Methods (static)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="terrains"></param>
+		/// <returns></returns>
 		private static int GetLongestTerrainLabelLength(Dictionary<int, Tuple<string,string>> terrains)
 		{
 			int length = 0, lengthtest;
@@ -158,6 +174,9 @@ namespace MapView
 
 
 		#region Methods
+		/// <summary>
+		/// 
+		/// </summary>
 		private void Analyze()
 		{
 			if (_fdetail != null)
@@ -262,6 +281,10 @@ namespace MapView
 			btnCancel .Visible = true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="part"></param>
 		private void tally(Tilepart part)
 		{
 			if (part != null && _records.Add(part.SetId))
