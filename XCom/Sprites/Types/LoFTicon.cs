@@ -32,7 +32,7 @@ namespace XCom
 		{
 			Pal = Palette.UfoBattle; // default: icons have no integral palette.
 
-			Sprite = BitmapService.CreateColored(
+			Sprite = BitmapService.CreateSprite(
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
 											Bindata,

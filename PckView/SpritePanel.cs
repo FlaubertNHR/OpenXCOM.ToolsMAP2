@@ -154,7 +154,7 @@ namespace PckView
 									if (palid != (int)Sprite.Bindata[binid])
 									{
 										Sprite.Bindata[binid] = (byte)palid;
-										Sprite.Sprite = BitmapService.CreateColored(
+										Sprite.Sprite = BitmapService.CreateSprite(
 																				XCImage.SpriteWidth,
 																				XCImage.SpriteHeight,
 																				Sprite.Bindata,
@@ -195,7 +195,7 @@ namespace PckView
 								else
 									Sprite.Bindata[binid]  = (byte)1;
 
-								Sprite.Sprite = BitmapService.CreateColored(
+								Sprite.Sprite = BitmapService.CreateSprite(
 																		XCImage.SpriteWidth,
 																		XCImage.SpriteHeight,
 																		Sprite.Bindata,

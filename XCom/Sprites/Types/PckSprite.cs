@@ -121,7 +121,7 @@ namespace XCom
 				}
 			}
 
-			Sprite = BitmapService.CreateColored(
+			Sprite = BitmapService.CreateSprite(
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
 											Bindata,
@@ -130,7 +130,7 @@ namespace XCom
 			// do NOT create ANY tone-scaled sprites for PckView or McdView nor
 			// MapView's MonotoneSprites or UFO/TFTD cursor-sprites
 			if (!bypassTonescales)
-				SpriteToned = BitmapService.CreateColored(
+				SpriteToned = BitmapService.CreateSprite(
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,
 													Bindata,

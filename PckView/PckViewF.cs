@@ -1812,12 +1812,12 @@ namespace PckView
 								&& b.Height % XCImage.SpriteHeight == 0
 								&& b.PixelFormat == PixelFormat.Format8bppIndexed)
 							{
-								SpriteCollection spriteset = BitmapService.CreateSpriteCollection(
-																								b,
-																								Pal,
-																								XCImage.SpriteWidth,
-																								XCImage.SpriteHeight,
-																								SetType == Type.ScanG || SetType == Type.LoFT);
+								SpriteCollection spriteset = BitmapService.CreateSpriteset(
+																						b,
+																						Pal,
+																						XCImage.SpriteWidth,
+																						XCImage.SpriteHeight,
+																						SetType == Type.ScanG || SetType == Type.LoFT);
 								for (int i = 0; i != spriteset.Count; ++i)
 									TilePanel.Spriteset.Sprites.Add(spriteset[i]);
 

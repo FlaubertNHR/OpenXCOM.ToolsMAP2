@@ -359,7 +359,7 @@ namespace XCom
 							if (sprite.Bindata[i] != Palette.Tid)
 								sprite.Bindata[i] = (byte)(96); // light brown/yellowy
 						}
-						sprite.Sprite = BitmapService.CreateColored(
+						sprite.Sprite = BitmapService.CreateSprite(
 																XCImage.SpriteWidth32,
 																XCImage.SpriteHeight40,
 																sprite.Bindata,
@@ -398,13 +398,13 @@ namespace XCom
 			sprite.Pal = Palette.UfoBattle;
 //			sprite.SetId = -1;
 
-			sprite.Sprite = BitmapService.CreateColored(
+			sprite.Sprite = BitmapService.CreateSprite(
 													XCImage.SpriteWidth32,
 													XCImage.SpriteHeight40,
 													sprite.Bindata,
 													sprite.Pal.Table);
 
-			sprite.SpriteToned = BitmapService.CreateColored(
+			sprite.SpriteToned = BitmapService.CreateSprite(
 													XCImage.SpriteWidth32,
 													XCImage.SpriteHeight40,
 													sprite.Bindata,

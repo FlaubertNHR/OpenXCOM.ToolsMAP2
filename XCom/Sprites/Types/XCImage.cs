@@ -90,7 +90,7 @@ namespace XCom
 			Pal = pal;
 
 			if (Pal != null)								// NOTE: this is to check for a call by BitmapService.CreateSprite()
-				Sprite = BitmapService.CreateColored(		// which is called by
+				Sprite = BitmapService.CreateSprite(		// which is called by
 												width,		// BitmapService.CreateSpriteset() and
 												height,		// several PckViewF contextmenu events
 												Bindata,	// BUT: the call by PckSprite..cTor initializer needs to decode

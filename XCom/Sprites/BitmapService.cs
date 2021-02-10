@@ -17,20 +17,74 @@ namespace XCom
 	public static class BitmapService
 	{
 		/// <summary>
-		/// Ensures there aren't any StopBytes or TransparencyBytes in the
+		/// Creates an 8-bit indexed bitmap from the specified byte-array.
+		/// </summary>
+		/// <param name="width">width of final Bitmap</param>
+		/// <param name="height">height of final Bitmap</param>
+		/// <param name="bindata">image data</param>
+		/// <param name="pal">palette to color the image with</param>
+		/// <returns>a .net Bitmap image</returns>
+		public static Bitmap CreateSprite(
+				int width,
+				int height,
+				byte[] bindata,
+				ColorPalette pal)
+		{
+			var b = new Bitmap(
+							width, height,
+							PixelFormat.Format8bppIndexed);
+
+			var locked = b.LockBits(
+								new Rectangle(0,0, width, height),
+								ImageLockMode.WriteOnly,
+								PixelFormat.Format8bppIndexed);
+			var start = locked.Scan0;
+
+			unsafe
+			{
+				byte* pos;
+				if (locked.Stride > 0)
+					pos = (byte*)start.ToPointer();
+				else
+					pos = (byte*)start.ToPointer() + locked.Stride * (height - 1);
+
+				// if the stride is negative Scan0 points to the last scanline
+				// in the buffer; to normalize the loop obtain a pointer to the
+				// front of the buffer that is located Height-1 scanlines previous.
+
+				uint stride = (uint)Math.Abs(locked.Stride);
+
+
+				int i = 0;
+				for (uint row = 0; row != height; ++row)
+				for (uint col = 0; col != width && i != bindata.Length; ++col, ++i)
+				{
+					byte* pixel = pos + row * stride + col;
+					*pixel = bindata[i];
+				}
+			}
+			b.UnlockBits(locked);
+
+			b.Palette = pal;
+			return b;
+		}
+
+
+		/// <summary>
+		/// Ensures there aren't any End_of_Sprite or RLE markers in the
 		/// returned XCImage data.
-		/// Helper for CreateSheetSprites().
+		/// Helper for CreateSpriteset().
 		/// Also called by PckViewF's contextmenu:
 		/// - OnAddSpritesClick()
 		/// - InsertSprites()
 		/// - OnReplaceSpriteClick()
 		/// </summary>
-		/// <param name="b">a 32x40 indexed Bitmap</param>
+		/// <param name="b">an indexed Bitmap</param>
 		/// <param name="id">an appropriate set-id</param>
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of the image</param>
 		/// <param name="height">the height of the image</param>
-		/// <param name="bypassMarkers">true if creating a ScanG icon</param>
+		/// <param name="bypassMarkers">true if creating a ScanG or LoFT icon</param>
 		/// <param name="x">used by spritesheets only</param>
 		/// <param name="y">used by spritesheets only</param>
 		/// <returns>an XCImage-object (base of PckSprite)</returns>
@@ -87,11 +141,11 @@ namespace XCom
 			b.UnlockBits(locked);
 			b.Dispose();
 
-			return new XCImage(bindata, width, height, pal, id); // note: XCImage..cTor calls CreateColorized() below.
+			return new XCImage(bindata, width, height, pal, id); // note: XCImage..cTor calls CreateSprite() above.
 		}
 
 		/// <summary>
-		/// Called by PckViewF.OnImportSpritesheetClick()
+		/// Called by PckViewF.OnImportSpritesheetClick().
 		/// </summary>
 		/// <param name="b">an indexed Bitmap of a spritesheet</param>
 		/// <param name="pal">an XCOM Palette-object</param>
@@ -101,7 +155,7 @@ namespace XCom
 		/// <param name="pad">padding between sprites</param>
 		/// <returns>a spriteset, the entries of which will be repurposed to
 		/// another spriteset</returns>
-		public static SpriteCollection CreateSpriteCollection(
+		public static SpriteCollection CreateSpriteset(
 				Bitmap b,
 				Palette pal,
 				int width,
@@ -114,18 +168,18 @@ namespace XCom
 			int cols = (b.Width  + pad) / (width  + pad);
 			int rows = (b.Height + pad) / (height + pad);
 
-			int id = -1;
+			int id = -1, x,y;
 			for (int i = 0; i != cols * rows; ++i)
 			{
-				int x = (i % cols) * (width  + pad);
-				int y = (i / cols) * (height + pad);
+				x = (i % cols) * (width  + pad);
+				y = (i / cols) * (height + pad);
 				spriteset.Sprites.Add(CreateSprite(
 												b,
 												++id,
 												pal,
 												width, height,
 												bypassMarkers,
-												x, y));
+												x,y));
 			}
 			return spriteset;
 		}
@@ -192,64 +246,10 @@ namespace XCom
 					int x = i % cols * (XCImage.SpriteWidth  + pad);
 					int y = i / cols * (XCImage.SpriteHeight + pad);
 
-					Insert(spriteset[i].Sprite, b, x, y);
+					Insert(spriteset[i].Sprite, b, x,y);
 				}
 				ExportSprite(fullpath, b, isLoFT);
 			}
-		}
-
-
-		/// <summary>
-		/// Creates an 8-bit indexed bitmap from the specified byte-array.
-		/// </summary>
-		/// <param name="width">width of final Bitmap</param>
-		/// <param name="height">height of final Bitmap</param>
-		/// <param name="bindata">image data</param>
-		/// <param name="pal">palette to color the image with</param>
-		/// <returns></returns>
-		public static Bitmap CreateColored(
-				int width,
-				int height,
-				byte[] bindata,
-				ColorPalette pal)
-		{
-			var b = new Bitmap(
-							width, height,
-							PixelFormat.Format8bppIndexed);
-
-			var locked = b.LockBits(
-								new Rectangle(0,0, width, height),
-								ImageLockMode.WriteOnly,
-								PixelFormat.Format8bppIndexed);
-			var start = locked.Scan0;
-
-			unsafe
-			{
-				byte* pos;
-				if (locked.Stride > 0)
-					pos = (byte*)start.ToPointer();
-				else
-					pos = (byte*)start.ToPointer() + locked.Stride * (height - 1);
-
-				// if the stride is negative Scan0 points to the last scanline
-				// in the buffer; to normalize the loop obtain a pointer to the
-				// front of the buffer that is located Height-1 scanlines previous.
-
-				uint stride = (uint)Math.Abs(locked.Stride);
-
-
-				int i = 0;
-				for (uint row = 0; row != height; ++row)
-				for (uint col = 0; col != width && i != bindata.Length; ++col, ++i)
-				{
-					byte* pixel = pos + row * stride + col;
-					*pixel = bindata[i];
-				}
-			}
-			b.UnlockBits(locked);
-
-			b.Palette = pal;
-			return b;
 		}
 
 
