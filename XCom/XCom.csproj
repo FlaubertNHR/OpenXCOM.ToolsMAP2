@@ -89,7 +89,7 @@
     <Compile Include="McdRecords\McdRecordsExceeded.cs" />
     <Compile Include="McdRecords\SpecialType.cs" />
     <Compile Include="ProgressBarForm.cs" />
-    <Compile Include="Sprites\BitmapHandler.cs" />
+    <Compile Include="Sprites\BitmapLoader.cs" />
     <Compile Include="Sprites\BitmapService.cs">
       <SubType>Code</SubType>
     </Compile>

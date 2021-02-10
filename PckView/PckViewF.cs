@@ -854,7 +854,7 @@ namespace PckView
 						byte[] bindata = FileService.ReadFile(ofd.FileNames[i]);
 						if (bindata != null)
 						{
-							Bitmap b = BitmapHandler.LoadBitmap(bindata);
+							Bitmap b = BitmapLoader.LoadBitmap(bindata);
 
 							if (   b.Width  == XCImage.SpriteWidth
 								&& b.Height == XCImage.SpriteHeight
@@ -1036,7 +1036,7 @@ namespace PckView
 				byte[] bindata = FileService.ReadFile(files[i]);
 				if (bindata != null)
 				{
-					Bitmap b = BitmapHandler.LoadBitmap(bindata);
+					Bitmap b = BitmapLoader.LoadBitmap(bindata);
 
 					if (   b.Width  == XCImage.SpriteWidth
 						&& b.Height == XCImage.SpriteHeight
@@ -1138,7 +1138,7 @@ namespace PckView
 					byte[] bindata = FileService.ReadFile(ofd.FileName);
 					if (bindata != null)
 					{
-						Bitmap b = BitmapHandler.LoadBitmap(bindata);
+						Bitmap b = BitmapLoader.LoadBitmap(bindata);
 
 						if (   b.Width  == XCImage.SpriteWidth
 							&& b.Height == XCImage.SpriteHeight
@@ -1749,15 +1749,15 @@ namespace PckView
 						_lastSpriteDirectory = fbd.SelectedPath;
 
 						string pfe = Path.Combine(_lastSpriteDirectory, label + GlobalsXC.PngExt);
-/*						if (File.Exists(pfe)) // TODO: Ask to overwrite the existing file.
-							MessageBox.Show(
-										this,
-										label + PngExt + " already exists.",
-										" Error",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Error,
-										MessageBoxDefaultButton.Button1,
-										0); */
+//						if (File.Exists(pfe)) // TODO: Ask to overwrite an existing file.
+//							MessageBox.Show(
+//										this,
+//										label + PngExt + " already exists.",
+//										" Error",
+//										MessageBoxButtons.OK,
+//										MessageBoxIcon.Error,
+//										MessageBoxDefaultButton.Button1,
+//										0);
 						BitmapService.ExportSpritesheet(
 													pfe,
 													TilePanel.Spriteset,
@@ -1770,7 +1770,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Imports (and replaces) the current spriteset from a BMP spritesheet.
+		/// Imports (and replaces) the current spriteset from an external
+		/// spritesheet.
 		/// @note Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -1801,30 +1802,30 @@ namespace PckView
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
-						TilePanel.Spriteset.Sprites.Clear();
-
 						byte[] bindata = FileService.ReadFile(ofd.FileName);
 						if (bindata != null)
 						{
-							Bitmap b = BitmapHandler.LoadBitmap(bindata);
-
-							if (   b.Width  % XCImage.SpriteWidth  == 0
-								&& b.Height % XCImage.SpriteHeight == 0
-								&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+							using (Bitmap b = BitmapLoader.LoadBitmap(bindata))
 							{
-								SpriteCollection spriteset = BitmapService.CreateSpriteset(
-																						b,
-																						Pal,
-																						XCImage.SpriteWidth,
-																						XCImage.SpriteHeight,
-																						SetType == Type.ScanG || SetType == Type.LoFT);
-								for (int i = 0; i != spriteset.Count; ++i)
-									TilePanel.Spriteset.Sprites.Add(spriteset[i]);
+								if (   b.Width  % XCImage.SpriteWidth  == 0
+									&& b.Height % XCImage.SpriteHeight == 0
+									&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+								{
+									TilePanel.Selid = -1;
+									TilePanel.Spriteset.Dispose();
 
-								InsertSpritesFinish();
+									BitmapService.CreateSprites(
+															TilePanel.Spriteset.Sprites,
+															b,
+															Pal,
+															XCImage.SpriteWidth,
+															XCImage.SpriteHeight,
+															SetType == Type.ScanG || SetType == Type.LoFT);
+									InsertSpritesFinish();
+								}
+								else
+									ShowBitmapError(false);
 							}
-							else
-								ShowBitmapError(false);
 						}
 					}
 				}

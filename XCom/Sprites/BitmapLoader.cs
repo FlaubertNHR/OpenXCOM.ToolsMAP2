@@ -17,9 +17,9 @@ namespace XCom
 	/// TODO: Vet this 'cause there's enough I've seen and done here to warrant
 	/// a thorough lookover ...
 	/// </summary>
-	public static class BitmapHandler
+	public static class BitmapLoader
 	{
-		private static byte[] PNG_IDENTIFIER = {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
+		private static byte[] PNG_IDENTIFIER = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
 
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace XCom
 				// Images in .net often cause odd crashes when their backing
 				// resource disappears. This prevents that from happening by
 				// copying its inner contents into a new Bitmap object.
-				return CloneImage(b);
+				return Copy(b);
 			}
 		}
 
@@ -166,7 +166,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="src">the image to clone</param>
 		/// <returns>the cloned image</returns>
-		private static Bitmap CloneImage(Bitmap src)
+		private static Bitmap Copy(Bitmap src)
 		{
 			var rect = new Rectangle(0,0, src.Width, src.Height);
 			var dst = new Bitmap(rect.Width, rect.Height, src.PixelFormat);

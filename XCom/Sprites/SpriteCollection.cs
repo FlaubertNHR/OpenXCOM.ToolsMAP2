@@ -13,6 +13,8 @@ namespace XCom
 	/// terrain file data but can also be bigobs or a ScanG iconset.
 	/// </summary>
 	public sealed class SpriteCollection
+		:
+			IDisposable
 	{
 		#region Fields (static)
 		public const int FAIL_non            = 0x0; // bitflags for Fail states ->
@@ -702,5 +704,19 @@ namespace XCom
 			return Label;
 		}
 		#endregion Methods (override)
+
+
+		#region Methods (IDisposable)
+		/// <summary>
+		/// Disposes all 'XCImage's in list 'Sprites' and clears the list.
+		/// </summary>
+		public void Dispose()
+		{
+			for (int i = Sprites.Count - 1; i != -1; --i)
+				Sprites[i].Dispose();
+
+			Sprites.Clear();
+		}
+		#endregion Methods (IDisposable)
 	}
 }

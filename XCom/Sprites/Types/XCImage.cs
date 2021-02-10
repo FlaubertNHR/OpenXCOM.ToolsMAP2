@@ -8,6 +8,8 @@ namespace XCom
 	/// A container for storing data about an XCOM image.
 	/// </summary>
 	public class XCImage
+		:
+			IDisposable
 	{
 		#region Fields (static)
 		public const  int SpriteWidth32  = 32; // for MapView, so I don't have to recode a bunch of crap there.
@@ -103,5 +105,16 @@ namespace XCom
 		protected XCImage()
 		{}
 		#endregion cTor
+
+
+		#region Methods (IDisposable)
+		/// <summary>
+		/// Disposes the Bitmap 'Sprite'.
+		/// </summary>
+		public void Dispose()
+		{
+			Sprite.Dispose();
+		}
+		#endregion Methods (IDisposable)
 	}
 }

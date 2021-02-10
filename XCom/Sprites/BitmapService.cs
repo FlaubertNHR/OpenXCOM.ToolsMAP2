@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -101,12 +102,12 @@ namespace XCom
 			var bindata = new byte[width * height]; // image data in uncompressed 8-bpp (color-indexed) format
 
 			var locked = b.LockBits(
-								new Rectangle(x, y, width, height),
+								new Rectangle(x,y, width, height),
 								ImageLockMode.ReadOnly,
 								PixelFormat.Format8bppIndexed);
 			var start = locked.Scan0;
 
-			unsafe // change any palette-indices 0xFF or 0xFE to 0xFD if *not* a ScanG icon ->
+			unsafe // change any palette-indices 0xFF or 0xFE to 0xFD if *not* a ScanG or LoFT icon ->
 			{
 				// kL_note: I suspect any of this negative-stride stuff is redundant.
 
@@ -139,23 +140,23 @@ namespace XCom
 				}
 			}
 			b.UnlockBits(locked);
-			b.Dispose();
 
 			return new XCImage(bindata, width, height, pal, id); // note: XCImage..cTor calls CreateSprite() above.
 		}
 
 		/// <summary>
-		/// Called by PckViewF.OnImportSpritesheetClick().
+		/// Creates a list of sprites from a spritesheet.
+		/// @note Called by PckViewF.OnImportSpritesheetClick().
 		/// </summary>
+		/// <param name="sprites">the blank XCImage list of a spriteset</param>
 		/// <param name="b">an indexed Bitmap of a spritesheet</param>
 		/// <param name="pal">an XCOM Palette-object</param>
-		/// <param name="width">the width of a sprite in the collection</param>
-		/// <param name="height">the height of a sprite in the collection</param>
+		/// <param name="width">the width of a sprite in the spritesheet</param>
+		/// <param name="height">the height of a sprite in the spritesheet</param>
 		/// <param name="bypassMarkers">true if creating a ScanG or LoFT iconset</param>
 		/// <param name="pad">padding between sprites</param>
-		/// <returns>a spriteset, the entries of which will be repurposed to
-		/// another spriteset</returns>
-		public static SpriteCollection CreateSpriteset(
+		public static void CreateSprites(
+				List<XCImage> sprites,
 				Bitmap b,
 				Palette pal,
 				int width,
@@ -163,8 +164,6 @@ namespace XCom
 				bool bypassMarkers,
 				int pad = 0)
 		{
-			var spriteset = new SpriteCollection(String.Empty, pal);
-
 			int cols = (b.Width  + pad) / (width  + pad);
 			int rows = (b.Height + pad) / (height + pad);
 
@@ -173,15 +172,14 @@ namespace XCom
 			{
 				x = (i % cols) * (width  + pad);
 				y = (i / cols) * (height + pad);
-				spriteset.Sprites.Add(CreateSprite(
-												b,
-												++id,
-												pal,
-												width, height,
-												bypassMarkers,
-												x,y));
+				sprites.Add(CreateSprite(
+										b,
+										++id,
+										pal,
+										width, height,
+										bypassMarkers,
+										x,y));
 			}
-			return spriteset;
 		}
 
 
