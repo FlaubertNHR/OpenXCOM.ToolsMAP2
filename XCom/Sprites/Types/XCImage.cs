@@ -111,7 +111,7 @@ namespace XCom
 		/// <summary>
 		/// Checks if all bytes are the transparent id #0.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>true if all palette refs are tid</returns>
 		public bool Istid()
 		{
 			for (int i = 0; i != Bindata.Length; ++i)
