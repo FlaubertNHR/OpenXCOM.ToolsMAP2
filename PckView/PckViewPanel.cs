@@ -39,6 +39,8 @@ namespace PckView
 		/// actual LargeValue in order to calculate the panel's various dynamics.
 		/// </summary>
 		private int _largeChange;
+
+		private Graphics _graphics;
 		#endregion Fields
 
 
@@ -271,153 +273,40 @@ namespace PckView
 
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
-				var graphics = e.Graphics;
+				_graphics = e.Graphics;
 
-				graphics.PixelOffsetMode    = PixelOffsetMode.Half;
-				graphics.InterpolationMode  = InterpolationMode.NearestNeighbor;
-				graphics.SmoothingMode      = SmoothingMode.None;
-//				graphics.CompositingQuality = CompositingQuality.HighQuality;
+				_graphics.PixelOffsetMode    = PixelOffsetMode.Half;
+				_graphics.InterpolationMode  = InterpolationMode.NearestNeighbor;
+				_graphics.SmoothingMode      = SmoothingMode.None;
+//				_graphics.CompositingQuality = CompositingQuality.HighQuality;
 
 
 				if (!_scrollBar.Visible) // indicate the reserved width for scrollbar.
-					graphics.DrawLine(
+					_graphics.DrawLine(
 									SystemPens.ControlLight,
 									Width - _scrollBar.Width - 1, 0,
 									Width - _scrollBar.Width - 1, Height);
-
 
 //				var selectedIds = new List<int>(); // track currently selected spriteIds.
 //				foreach (var sprite in Selected)
 //					selectedIds.Add(sprite.Sprite.TerrainId);
 
-//				Bitmap sprite;
-
-				for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+				switch (_f.SetType) // draw sprites
 				{
-					int tileX = id % HoriCount;
-					int tileY = id / HoriCount;
-
-//					if (selectedIds.Contains(id))
-					if (id == Selid)
-						graphics.FillRectangle(
-											Brushes.Crimson,
-											TableOffsetHori + TileWidth  * tileX,
-											TableOffsetVert + TileHeight * tileY - _scrollBar.Value,
-											TableOffsetHori + TileWidth  - SpriteMargin * 2,
-											TableOffsetVert + TileHeight - SpriteMargin - 1);
-
-
-					if (Spriteset[id].Istid())
-					{
-						switch (_f.SetType)
-						{
-							case PckViewF.Type.Pck:
-								graphics.DrawImage(
-												_f.BlankSprite,
-												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
-								break;
-
-							case PckViewF.Type.Bigobs:
-								graphics.DrawImage(
-												_f.BlankSprite,
-												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-												XCImage.SpriteWidth32,
-												XCImage.SpriteHeight48);
-								break;
-
-							case PckViewF.Type.ScanG:
-								graphics.DrawImage(
-												_f.BlankSprite,
-												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-												XCImage.ScanGside * 4,
-												XCImage.ScanGside * 4);
-								break;
-
-							case PckViewF.Type.LoFT:
-								graphics.DrawImage(
-												_f.BlankSprite,
-												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-												XCImage.LoFTside,
-												XCImage.LoFTside);
-								break;
-						}
-					}
-					else
-					{
-						switch (_f.SetType)
-						{
-							case PckViewF.Type.Pck:
-							case PckViewF.Type.Bigobs:
-								if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
-								{
-									graphics.DrawImage(
-													Spriteset[id].Sprite,
-													new Rectangle(
-																TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-																TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-																XCImage.SpriteWidth,
-																XCImage.SpriteHeight),
-													0,0, XCImage.SpriteWidth, XCImage.SpriteHeight,
-													GraphicsUnit.Pixel,
-													_f.Ia);
-								}
-								else
-								{
-									graphics.DrawImage(
-													Spriteset[id].Sprite,
-													TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-													TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
-								}
-								break;
-
-							case PckViewF.Type.ScanG:
-								if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
-								{
-//									sprite = Spriteset[id].Sprite;
-									graphics.DrawImage(
-													Spriteset[id].Sprite,
-													new Rectangle(
-																TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-																TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-																16,16), //sprite.Width  * 4, sprite.Height * 4),
-													0,0, 4,4, //sprite.Width, sprite.Height
-													GraphicsUnit.Pixel,
-													_f.Ia);
-								}
-								else
-								{
-//									sprite = Spriteset[id].Sprite;
-									graphics.DrawImage(
-													Spriteset[id].Sprite,
-													TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-													TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-													16,16); //sprite.Width  * 4, sprite.Height * 4
-								}
-								break;
-
-							case PckViewF.Type.LoFT: // duplicate Type.Pck shade OFF
-								graphics.DrawImage(
-												Spriteset[id].Sprite,
-												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
-												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
-								break;
-						}
-					}
+					case PckViewF.Type.Pck:    DrawPck();    break;
+					case PckViewF.Type.Bigobs: DrawBigobs(); break;
+					case PckViewF.Type.ScanG:  DrawScanG();  break;
+					case PckViewF.Type.LoFT:   DrawLoFT();   break;
 				}
 
-
-				graphics.FillRectangle(
+				_graphics.FillRectangle(
 									Brushes.Black,
 									TableOffsetHori - 1,
 									TableOffsetVert - 1 - _scrollBar.Value,
 									1,1); // so bite me.
 
 				for (int tileX = 0; tileX <= HoriCount; ++tileX) // draw vertical lines
-					graphics.DrawLine(
+					_graphics.DrawLine(
 									Pens.Black,
 									new Point(
 											TableOffsetHori + TileWidth * tileX,
@@ -431,7 +320,7 @@ namespace PckView
 					++tilesY;
 
 				for (int tileY = 0; tileY <= tilesY; ++tileY) // draw horizontal lines
-					graphics.DrawLine(
+					_graphics.DrawLine(
 									Pens.Black,
 									new Point(
 											TableOffsetHori,
@@ -439,6 +328,174 @@ namespace PckView
 									new Point(
 											TableOffsetHori + TileWidth  * HoriCount,
 											TableOffsetVert + TileHeight * tileY - _scrollBar.Value));
+			}
+		}
+
+		/// <summary>
+		/// Draws a Pck spriteset.
+		/// </summary>
+		private void DrawPck()
+		{
+			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+			{
+				int tileX = id % HoriCount;
+				int tileY = id / HoriCount;
+
+				if (id == Selid)
+					_graphics.FillRectangle(
+										Brushes.Crimson,
+										TableOffsetHori + TileWidth  * tileX,
+										TableOffsetVert + TileHeight * tileY - _scrollBar.Value,
+										TableOffsetHori + TileWidth  - SpriteMargin * 2,
+										TableOffsetVert + TileHeight - SpriteMargin - 1);
+
+
+				if (Spriteset[id].Istid())
+				{
+					_graphics.DrawImage(
+									_f.BlankSprite,
+									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
+				}
+				else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				{
+					_graphics.DrawImage(
+									Spriteset[id].Sprite,
+									new Rectangle(
+												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+												XCImage.SpriteWidth, XCImage.SpriteHeight),
+									0,0, XCImage.SpriteWidth, XCImage.SpriteHeight,
+									GraphicsUnit.Pixel,
+									_f.Ia);
+				}
+				else
+					_graphics.DrawImage(
+									Spriteset[id].Sprite,
+									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
+			}
+		}
+
+		/// <summary>
+		/// Draws a Bigobs spriteset.
+		/// </summary>
+		private void DrawBigobs()
+		{
+			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+			{
+				int tileX = id % HoriCount;
+				int tileY = id / HoriCount;
+
+				if (id == Selid)
+					_graphics.FillRectangle(
+										Brushes.Crimson,
+										TableOffsetHori + TileWidth  * tileX,
+										TableOffsetVert + TileHeight * tileY - _scrollBar.Value,
+										TableOffsetHori + TileWidth  - SpriteMargin * 2,
+										TableOffsetVert + TileHeight - SpriteMargin - 1);
+
+
+				if (Spriteset[id].Istid())
+				{
+					_graphics.DrawImage(
+									_f.BlankSprite,
+									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+									XCImage.SpriteWidth32, XCImage.SpriteHeight48);
+				}
+				else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				{
+					_graphics.DrawImage(
+									Spriteset[id].Sprite,
+									new Rectangle(
+												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+												XCImage.SpriteWidth, XCImage.SpriteHeight),
+									0,0, XCImage.SpriteWidth, XCImage.SpriteHeight,
+									GraphicsUnit.Pixel,
+									_f.Ia);
+				}
+				else
+					_graphics.DrawImage(
+									Spriteset[id].Sprite,
+									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
+			}
+		}
+
+		/// <summary>
+		/// Draws a ScanG iconset.
+		/// </summary>
+		private void DrawScanG()
+		{
+			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+			{
+				int tileX = id % HoriCount;
+				int tileY = id / HoriCount;
+
+				if (id == Selid)
+					_graphics.FillRectangle(
+										Brushes.Crimson,
+										TableOffsetHori + TileWidth  * tileX,
+										TableOffsetVert + TileHeight * tileY - _scrollBar.Value,
+										TableOffsetHori + TileWidth  - SpriteMargin * 2,
+										TableOffsetVert + TileHeight - SpriteMargin - 1);
+
+
+				if (Spriteset[id].Istid())
+				{
+					_graphics.DrawImage( // TODO: this don't look right
+									_f.BlankSprite,
+									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+									XCImage.SpriteWidth * 4, XCImage.SpriteHeight * 4);
+				}
+				else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				{
+					_graphics.DrawImage(
+									Spriteset[id].Sprite,
+									new Rectangle(
+												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+												XCImage.SpriteWidth * 4, XCImage.SpriteHeight * 4),
+									0,0, XCImage.ScanGside, XCImage.ScanGside,
+									GraphicsUnit.Pixel,
+									_f.Ia);
+				}
+				else
+				{
+					_graphics.DrawImage(
+									Spriteset[id].Sprite,
+									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
+									XCImage.SpriteWidth * 4, XCImage.SpriteHeight * 4);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Draws a LoFT iconset.
+		/// </summary>
+		private void DrawLoFT()
+		{
+			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+			{
+				int tileX = id % HoriCount;
+				int tileY = id / HoriCount;
+
+				if (id == Selid)
+					_graphics.FillRectangle(
+										Brushes.Crimson,
+										TableOffsetHori + TileWidth  * tileX,
+										TableOffsetVert + TileHeight * tileY - _scrollBar.Value,
+										TableOffsetHori + TileWidth  - SpriteMargin * 2,
+										TableOffsetVert + TileHeight - SpriteMargin - 1);
+
+				_graphics.DrawImage(
+								Spriteset[id].Sprite,
+								TableOffsetHori + tileX * TileWidth  + SpriteMargin,
+								TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
 			}
 		}
 		#endregion Events (override)
