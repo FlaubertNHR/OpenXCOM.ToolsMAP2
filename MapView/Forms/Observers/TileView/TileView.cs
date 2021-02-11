@@ -457,6 +457,7 @@ namespace MapView.Forms.Observers
 				{
 					using (var fPckView = new PckViewF(true, GetSpriteshade()))
 					{
+						fPckView.SetType = PckViewF.Type.Pck;
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapFile.Descriptor.Pal);
 						fPckView.SetSelectedId(SelectedTilepart[0].Id);
