@@ -19,7 +19,7 @@ namespace PckView
 		:
 			Form
 	{
-		internal enum Type : byte
+		public enum Type : byte
 		{
 			non,	// default
 
@@ -32,7 +32,7 @@ namespace PckView
 			LoFT	// a LoFT iconset is currently loaded.
 					// LoFTs are 16x16 w/ 0-byte Tabword.
 		}
-		internal Type SetType;
+		public Type SetType;
 
 
 		#region Delegates
@@ -97,6 +97,8 @@ namespace PckView
 		private string _lastSpriteDirectory;
 
 		private bool _minimized;
+
+		internal Bitmap BlankSprite;
 		#endregion Fields
 
 
@@ -205,7 +207,8 @@ namespace PckView
 
 			tssl_SpritesetLabel.Text = None;
 
-			PopulatePaletteMenu();
+			PopulatePaletteMenu(); // WARNING: Palettes created here <-
+			BlankSprite = EmbeddedService.CreateBlankSprite();
 
 			SpriteEditor = new SpriteEditorF(this);
 			SpriteEditor.FormClosing += OnEditorFormClosing;
@@ -526,6 +529,8 @@ namespace PckView
 
 					Ia.Dispose();
 					TilePanel.Destroy();
+
+					BlankSprite.Dispose();
 
 					ByteTableManager.HideTable();
 
@@ -2129,7 +2134,7 @@ namespace PckView
 			else
 			{
 				PfSpriteset = String.Empty;
-				SetType = Type.non; // pseudo-safety. Not thoroughly implemented ie. case default: will grab that
+//				SetType = Type.non; // TODO: pseudo-safety. Not thoroughly implemented ie. case default: will grab that
 			}
 
 			Changed = false;

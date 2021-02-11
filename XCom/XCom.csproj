@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Descriptor\TileGroup.cs" />
+    <Compile Include="Sprites\EmbeddedService.cs" />
     <Compile Include="Sprites\SpritesetsManager.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -195,6 +196,8 @@
     </None>
     <EmbeddedResource Include="_Embedded\MONOTONE_D.PCK" />
     <EmbeddedResource Include="_Embedded\MONOTONE_D.TAB" />
+    <EmbeddedResource Include="_Embedded\MONOTONE.PCK" />
+    <EmbeddedResource Include="_Embedded\MONOTONE.TAB" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sprites" />

@@ -332,14 +332,14 @@ namespace MapView
 																	// when OnOptionsClick() runs ....
 
 
-			Palette.UfoBattle .SetTransparent(true);
+			Palette.UfoBattle .SetTransparent(true); // WARNING: ufo/tftd Palettes created here ->
 			LogFile.WriteLine("ufo-battle Palette instantiated.");
 			Palette.TftdBattle.SetTransparent(true);
 			LogFile.WriteLine("tftd-battle Palette instantiated.");
 			LogFile.WriteLine("Palette transparencies set.");
 
-			LoadMonotoneSprites();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
-									// NOTE: transparency of the 'UfoBattle' palette must be set first.
+			MonotoneSprites = EmbeddedService.CreateMonotoneSpriteset();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
+																			// NOTE: transparency of the 'UfoBattle' palette must be set first.
 			LogFile.WriteLine("Monotone sprites loaded.");
 
 
@@ -573,35 +573,6 @@ namespace MapView
 				return true;
 			}
 			return false;
-		}
-
-
-		/// <summary>
-		/// Loads the sprites for TopView's blank quads and TileView's eraser.
-		/// @note These sprites could be broken out and put in Resources but
-		/// it's kinda cute this way too.
-		/// @note See also Tilepart.LoadMonotoneSprites().
-		/// </summary>
-		private static void LoadMonotoneSprites()
-		{
-			var ass = Assembly.GetExecutingAssembly();
-			using (var strPck = ass.GetManifestResourceStream("MapView._Embedded.MONOTONE.PCK"))
-			using (var strTab = ass.GetManifestResourceStream("MapView._Embedded.MONOTONE.TAB"))
-			{
-				var bytesPck = new byte[strPck.Length];
-				var bytesTab = new byte[strTab.Length];
-
-				strPck.Read(bytesPck, 0, (int)strPck.Length);
-				strTab.Read(bytesTab, 0, (int)strTab.Length);
-
-				MonotoneSprites = new SpriteCollection(
-													"Monotone",
-													Palette.UfoBattle,
-													SpritesetsManager.TAB_WORD_LENGTH_2,
-													bytesPck,
-													bytesTab,
-													true);
-			}
 		}
 		#endregion Methods (static)
 
