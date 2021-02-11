@@ -73,7 +73,7 @@ namespace XCom
 
 		/// <summary>
 		/// Ensures there aren't any End_of_Sprite or RLE markers in the
-		/// returned XCImage data.
+		/// returned <see cref="XCImage"/>.
 		/// Helper for CreateSpriteset().
 		/// Also called by PckViewF's contextmenu:
 		/// - OnAddSpritesClick()
