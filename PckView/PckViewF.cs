@@ -60,6 +60,8 @@ namespace PckView
 		internal const int SPRITESHADE_ON       =  0;
 		internal const int SPRITESHADE_DISABLED = -1;
 		internal const int SPRITESHADE_OFF      = -2;
+
+		internal static bool BypassActivatedEvent;
 		#endregion Fields (static)
 
 
@@ -93,6 +95,8 @@ namespace PckView
 		private string _lastCreateDirectory;
 		private string _lastBrowserDirectory;
 		private string _lastSpriteDirectory;
+
+		private bool _minimized;
 		#endregion Fields
 
 
@@ -432,10 +436,8 @@ namespace PckView
 
 
 		#region Events (override)
-		internal static bool BypassActivatedEvent;
-
 		/// <summary>
-		/// 
+		/// Brings all forms to top when this is activated.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
@@ -464,10 +466,9 @@ namespace PckView
 			base.OnActivated(e);
 		}
 
-		private bool IsMinimized;
-
 		/// <summary>
-		/// 
+		/// Minimizes and restores this along with the SpriteEditor and
+		/// PaletteViewer synchronistically.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
@@ -476,7 +477,7 @@ namespace PckView
 
 			if (WindowState == FormWindowState.Minimized)
 			{
-				IsMinimized = true;
+				_minimized = true;
 
 				if (SpriteEditor.Visible)
 					SpriteEditor.WindowState = FormWindowState.Minimized;
@@ -484,9 +485,9 @@ namespace PckView
 				if (SpriteEditor._fpalette.Visible)
 					SpriteEditor._fpalette.WindowState = FormWindowState.Minimized;
 			}
-			else if (IsMinimized)
+			else if (_minimized)
 			{
-				IsMinimized = false;
+				_minimized = false;
 
 				if (SpriteEditor.Visible)
 					SpriteEditor.WindowState = FormWindowState.Normal;
@@ -780,7 +781,7 @@ namespace PckView
 				}
 			}
 
-			MessageBox.Show(
+			MessageBox.Show( // is modal
 						this,
 						error,
 						" Error",
@@ -788,6 +789,16 @@ namespace PckView
 						MessageBoxIcon.Error,
 						MessageBoxDefaultButton.Button1,
 						0);
+		}
+
+		/// <summary>
+		/// Disposes temporary bitmaps.
+		/// </summary>
+		/// <param name="bs"></param>
+		private void DisposeBitmaps(IList<Bitmap> bs)
+		{
+			for (int i = bs.Count - 1; i != -1; --i) // not sure if Dispose() needs to be done in reverse order
+				bs[i].Dispose();
 		}
 
 		/// <summary>
@@ -811,9 +822,6 @@ namespace PckView
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 						   + "All files (*.*)|*.*";
-
-//				ofd.DefaultExt = ;
-//				ofd.FileName = ;
 
 				if (Directory.Exists(_lastSpriteDirectory))
 					ofd.InitialDirectory = _lastSpriteDirectory;
@@ -852,6 +860,7 @@ namespace PckView
 							else
 							{
 								ShowBitmapError();
+								DisposeBitmaps(bs);
 								return;
 							}
 						}
@@ -871,6 +880,7 @@ namespace PckView
 						TilePanel.Spriteset.Sprites.Add(sprite);
 					}
 
+					DisposeBitmaps(bs);
 					InsertSpritesFinish();
 				}
 			}
@@ -898,9 +908,6 @@ namespace PckView
 				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 						   + "All files (*.*)|*.*";
-
-//				ofd.DefaultExt = ;
-//				ofd.FileName = ;
 
 				if (Directory.Exists(_lastSpriteDirectory))
 					ofd.InitialDirectory = _lastSpriteDirectory;
@@ -955,9 +962,6 @@ namespace PckView
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 						   + "All files (*.*)|*.*";
 
-//				ofd.DefaultExt = ;
-//				ofd.FileName = ;
-
 				if (Directory.Exists(_lastSpriteDirectory))
 					ofd.InitialDirectory = _lastSpriteDirectory;
 				else
@@ -1009,7 +1013,11 @@ namespace PckView
 					{
 						bs[i] = b;
 					}
-					else return false;
+					else
+					{
+						DisposeBitmaps(bs);
+						return false;
+					}
 				}
 				else return false;
 			}
@@ -1029,6 +1037,8 @@ namespace PckView
 													SetType == Type.ScanG || SetType == Type.LoFT);
 				TilePanel.Spriteset.Sprites.Insert(id++, sprite);
 			}
+
+			DisposeBitmaps(bs);
 			return true;
 		}
 
@@ -1070,9 +1080,6 @@ namespace PckView
 						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
 						   + "All files (*.*)|*.*";
 
-//				ofd.DefaultExt = ;
-//				ofd.FileName = ;
-
 				if (Directory.Exists(_lastSpriteDirectory))
 					ofd.InitialDirectory = _lastSpriteDirectory;
 				else
@@ -1092,27 +1099,28 @@ namespace PckView
 					byte[] bindata = FileService.ReadFile(ofd.FileName);
 					if (bindata != null)
 					{
-						Bitmap b = BitmapLoader.LoadBitmap(bindata);
-
-						if (   b.Width  == XCImage.SpriteWidth
-							&& b.Height == XCImage.SpriteHeight
-							&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+						using (Bitmap b = BitmapLoader.LoadBitmap(bindata))
 						{
-							var sprite = BitmapService.CreateSprite(
-																b,
-																TilePanel.Selid,
-																Pal,
-																XCImage.SpriteWidth,
-																XCImage.SpriteHeight,
-																SetType == Type.ScanG || SetType == Type.LoFT);
-							TilePanel.Spriteset[TilePanel.Selid] =
-							SpriteEditor.SpritePanel.Sprite = sprite;
+							if (   b.Width  == XCImage.SpriteWidth
+								&& b.Height == XCImage.SpriteHeight
+								&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+							{
+								var sprite = BitmapService.CreateSprite(
+																	b,
+																	TilePanel.Selid,
+																	Pal,
+																	XCImage.SpriteWidth,
+																	XCImage.SpriteHeight,
+																	SetType == Type.ScanG || SetType == Type.LoFT);
+								TilePanel.Spriteset[TilePanel.Selid] =
+								SpriteEditor.SpritePanel.Sprite = sprite;
 
-							TilePanel.Refresh();
-							Changed = true;
+								TilePanel.Refresh();
+								Changed = true;
+							}
+							else
+								ShowBitmapError();
 						}
-						else
-							ShowBitmapError();
 					}
 				}
 			}
@@ -1171,6 +1179,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnDeleteSpriteClick(object sender, EventArgs e)
 		{
+			TilePanel.Spriteset.Sprites[TilePanel.Selid].Dispose();
 			TilePanel.Spriteset.Sprites.RemoveAt(TilePanel.Selid);
 
 			for (int i = TilePanel.Selid; i != TilePanel.Spriteset.Count; ++i)
@@ -2002,6 +2011,13 @@ namespace PckView
 		/// <param name="pfePck">path-file-extension of a PCK file</param>
 		public void LoadSpriteset(string pfePck)
 		{
+			// TODO: Is it okay to clear the Spriteset
+			// Probably should do this like LoadScanG() and LoadLoFT()
+
+			if (TilePanel.Spriteset != null)
+				TilePanel.Spriteset.Dispose();
+
+
 			SpriteCollection spriteset = null;
 			Palette pal = Palette.UfoBattle;
 
@@ -2056,6 +2072,9 @@ namespace PckView
 
 					if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non) // pck vs tab mismatch counts
 					{
+						spriteset.Dispose();
+						spriteset = null;
+
 						MessageBox.Show(
 									this,
 									"The count of sprites in the PCK file ["
@@ -2067,10 +2086,10 @@ namespace PckView
 									MessageBoxIcon.Error,
 									MessageBoxDefaultButton.Button1,
 									0);
-						spriteset = null;
 					}
 					else if ((spriteset.Fail & SpriteCollection.FAIL_OF_SPRITE) != SpriteCollection.FAIL_non) // too many bytes for a sprite
 					{
+						spriteset.Dispose();
 						spriteset = null;
 
 						string error;
@@ -2104,9 +2123,14 @@ namespace PckView
 						EventArgs.Empty);
 
 			if ((TilePanel.Spriteset = spriteset) != null)
+			{
 				PfSpriteset = pf;
+			}
 			else
+			{
 				PfSpriteset = String.Empty;
+				SetType = Type.non; // pseudo-safety. Not thoroughly implemented ie. case default: will grab that
+			}
 
 			Changed = false;
 		}
@@ -2135,6 +2159,9 @@ namespace PckView
 				{
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = XCImage.ScanGside;
+
+					if (TilePanel.Spriteset != null)
+						TilePanel.Spriteset.Dispose();
 
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
 
@@ -2172,6 +2199,9 @@ namespace PckView
 				{
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = XCImage.LoFTside;
+
+					if (TilePanel.Spriteset != null)
+						TilePanel.Spriteset.Dispose();
 
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeLoFT), fs, true);
 
