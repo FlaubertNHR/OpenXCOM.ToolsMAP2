@@ -41,10 +41,10 @@ namespace PckView
 
 				Palid = -1;
 
-				string caption = "Sprite Editor";
+				string title = "Sprite Editor";
 				if (_sprite != null)
-					caption += " - id " + _sprite.Id;
-				_feditor.Text = caption;
+					title += " - id " + _sprite.Id;
+				_feditor.Text = title;
 
 				ByteTableManager.ReloadTable(_sprite);
 
@@ -59,9 +59,7 @@ namespace PckView
 			set
 			{
 				if ((_palid = value) != -1)
-				{
 					_feditor.PrintColorInfo(GetColorInfo(_palid));
-				}
 				else
 					_feditor.ClearColorInfo();
 			}
@@ -147,59 +145,67 @@ namespace PckView
 							if (_feditor._f.SetType != PckViewF.Type.LoFT)
 							{
 								int palid = _feditor._fpalette.PalPanel.Palid;
-								if (palid > -1
-									&& (palid < PckSprite.MarkerRle
-										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_0))
+								if (palid > -1)
 								{
-									if (palid != (int)Sprite.Bindata[binid])
+									if (palid < PckSprite.MarkerRle
+										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_0)
 									{
-										Sprite.Bindata[binid] = (byte)palid;
-										Sprite.Sprite = BitmapService.CreateSprite(
-																				XCImage.SpriteWidth,
-																				XCImage.SpriteHeight,
-																				Sprite.Bindata,
-																				PckViewF.Pal.Table);
-										Invalidate();
-										_feditor._f.TilePanel.Invalidate();
-	
-										_feditor._f.Changed = true;
+										if (palid != (int)Sprite.Bindata[binid])
+										{
+											Sprite.Bindata[binid] = (byte)palid;
+											Bitmap sprite = BitmapService.CreateSprite(
+																					XCImage.SpriteWidth,
+																					XCImage.SpriteHeight,
+																					Sprite.Bindata,
+																					PckViewF.Pal.Table);
+											Sprite.Dispose();
+											Sprite.Sprite = sprite;
+
+											Invalidate();
+											_feditor._f.TilePanel.Invalidate();
+
+											_feditor._f.Changed = true;
+										}
 									}
-								}
-								else
-								{
-									switch (palid)
+									else
 									{
-										case PckSprite.MarkerRle: // #254
-										case PckSprite.MarkerEos: // #255
-											MessageBox.Show(
-														this,
-														"The colortable values #254 and #255 are reserved"
-															+ " as special markers in a .PCK file."
-															+ Environment.NewLine + Environment.NewLine
-															+ "#254 is used for RLE encoding"
-															+ Environment.NewLine
-															+ "#255 is the End-of-Sprite marker",
-														" Error",
-														MessageBoxButtons.OK,
-														MessageBoxIcon.Error,
-														MessageBoxDefaultButton.Button1,
-														0);
-											break;
+										switch (palid)
+										{
+											case PckSprite.MarkerRle: // #254
+											case PckSprite.MarkerEos: // #255
+												MessageBox.Show(
+															this,
+															"The colortable values #254 and #255 are reserved"
+																+ " as special markers in a .PCK file."
+																+ Environment.NewLine + Environment.NewLine
+																+ "#254 is used for RLE encoding"
+																+ Environment.NewLine
+																+ "#255 is the End-of-Sprite marker",
+															" Error",
+															MessageBoxButtons.OK,
+															MessageBoxIcon.Error,
+															MessageBoxDefaultButton.Button1,
+															0);
+												break;
+										}
 									}
 								}
 							}
 							else // is LoFT
 							{
-								if (Sprite.Bindata[binid] != (byte)0)
-									Sprite.Bindata[binid]  = (byte)0;
+								if (Sprite.Bindata[binid] != Palette.LoFTclear)
+									Sprite.Bindata[binid]  = Palette.LoFTclear;
 								else
-									Sprite.Bindata[binid]  = (byte)1;
+									Sprite.Bindata[binid]  = Palette.LoFTSolid;
 
-								Sprite.Sprite = BitmapService.CreateSprite(
+								Bitmap sprite = BitmapService.CreateSprite(
 																		XCImage.SpriteWidth,
 																		XCImage.SpriteHeight,
 																		Sprite.Bindata,
 																		PckViewF.Pal.Table);
+								Sprite.Dispose();
+								Sprite.Sprite = sprite;
+
 								Invalidate();
 								_feditor._f.TilePanel.Invalidate();
 
@@ -238,12 +244,11 @@ namespace PckView
 						int palid = Sprite.Bindata[binid];
 						if (palid != Palid)
 							Palid = palid;
+
+						return;
 					}
-					else
-						Palid = -1;
 				}
-				else
-					Palid = -1;
+				Palid = -1;
 			}
 		}
 
