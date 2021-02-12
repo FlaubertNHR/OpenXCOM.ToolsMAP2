@@ -1121,13 +1121,13 @@ namespace PckView
 								&& b.Height == XCImage.SpriteHeight
 								&& b.PixelFormat == PixelFormat.Format8bppIndexed)
 							{
-								var sprite = BitmapService.CreateSprite(
-																	b,
-																	TilePanel.Selid,
-																	Pal,
-																	XCImage.SpriteWidth,
-																	XCImage.SpriteHeight,
-																	SetType == Type.ScanG || SetType == Type.LoFT);
+								XCImage sprite = BitmapService.CreateSprite(
+																		b,
+																		TilePanel.Selid,
+																		Pal,
+																		XCImage.SpriteWidth,
+																		XCImage.SpriteHeight,
+																		SetType == Type.ScanG || SetType == Type.LoFT);
 
 								TilePanel.Spriteset[TilePanel.Selid].Dispose();
 								TilePanel.Spriteset[TilePanel.Selid] =
