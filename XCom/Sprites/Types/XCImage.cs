@@ -126,11 +126,15 @@ namespace XCom
 
 		#region Methods (IDisposable)
 		/// <summary>
-		/// Disposes the Bitmap 'Sprite'.
+		/// Disposes the Bitmaps 'Sprite' and 'SpriteToned' if applicable.
 		/// </summary>
 		public void Dispose()
 		{
 			Sprite.Dispose();
+
+			var sprite = this as PckSprite;
+			if (sprite != null && sprite.SpriteToned != null)
+				sprite.SpriteToned.Dispose();
 		}
 		#endregion Methods (IDisposable)
 	}
