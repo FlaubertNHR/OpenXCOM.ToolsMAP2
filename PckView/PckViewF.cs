@@ -797,7 +797,7 @@ namespace PckView
 				}
 			}
 
-			MessageBox.Show( // is modal
+			MessageBox.Show(
 						this,
 						error,
 						" Error",
@@ -1128,8 +1128,10 @@ namespace PckView
 																	XCImage.SpriteWidth,
 																	XCImage.SpriteHeight,
 																	SetType == Type.ScanG || SetType == Type.LoFT);
+
+								TilePanel.Spriteset[TilePanel.Selid].Dispose();
 								TilePanel.Spriteset[TilePanel.Selid] =
-								SpriteEditor.SpritePanel.Sprite = sprite;
+								SpriteEditor.SpritePanel.Sprite      = sprite;
 
 								TilePanel.Refresh();
 								Changed = true;
