@@ -131,7 +131,7 @@ namespace PckView
 							j != SwatchesPerSide;
 							++j, x += SwatchWidth)
 					{
-						using (var brush = new SolidBrush(SpritePanel.AdjustColor(PckViewF.Pal[j + SwatchesPerSide * i])))
+						using (var brush = new SolidBrush(SpritePanel.AdjustColor(PckViewF.Pal[i * SwatchesPerSide + j])))
 						{
 							graphics.FillRectangle(
 												brush,
@@ -153,7 +153,7 @@ namespace PckView
 							j != SwatchesPerSide;
 							++j, x += SwatchWidth)
 					{
-						using (var brush = new SolidBrush(PckViewF.Pal[j + SwatchesPerSide * i]))
+						using (var brush = new SolidBrush(PckViewF.Pal[i * SwatchesPerSide + j]))
 						{
 							graphics.FillRectangle(
 												brush,
@@ -219,7 +219,8 @@ namespace PckView
 		/// @note I have no idea if this is really necessary despite hundreds of
 		/// hours reading about Dispose() et al. This class is a visual control
 		/// so it gets disposed when its parent closes, but do its private
-		/// fields get disposed reliably ...
+		/// fields get disposed reliably ... the designer doesn't appear to care
+		/// re. Font eg.
 		/// </summary>
 		internal void Destroy()
 		{
