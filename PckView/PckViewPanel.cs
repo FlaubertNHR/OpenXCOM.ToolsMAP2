@@ -653,6 +653,9 @@ namespace PckView
 		{
 			PckViewF.PaletteChanged -= OnPaletteChanged;
 
+			if (Spriteset != null)
+				Spriteset.Dispose();
+
 //			base.Dispose(); // <- I *still* don't know if that is a Good Thing or not.
 		}
 		#endregion Methods
