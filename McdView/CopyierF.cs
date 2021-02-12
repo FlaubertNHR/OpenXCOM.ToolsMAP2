@@ -25,9 +25,9 @@ namespace McdView
 		#region Fields (static)
 		private const string TITLE = "Copier";
 
-		private static bool ialDeadpartChecked = true;
-		private static bool ialAltrpartChecked = true;
-		private static bool ialSpritesChecked  = true;
+		private static bool IalDeadpartChecked = true;
+		private static bool IalAltrpartChecked = true;
+		private static bool IalSpritesChecked  = true;
 		#endregion Fields (static)
 
 
@@ -66,6 +66,9 @@ namespace McdView
 			get { return _spriteset; }
 			set
 			{
+				if (_spriteset != null)
+					_spriteset.Dispose();
+
 				string text = TITLE;
 
 				if (!String.IsNullOrEmpty(Label))
@@ -235,9 +238,12 @@ namespace McdView
 			{
 				RegistryInfo.UpdateRegistry(this);
 
-				ialDeadpartChecked = cb_IalDeadpart.Checked;
-				ialAltrpartChecked = cb_IalAltrpart.Checked;
-				ialSpritesChecked  = cb_IalSprites .Checked;
+				if (Spriteset != null)
+					Spriteset.Dispose();
+
+				IalDeadpartChecked = cb_IalDeadpart.Checked;
+				IalAltrpartChecked = cb_IalAltrpart.Checked;
+				IalSpritesChecked  = cb_IalSprites .Checked;
 
 				_f.CloseCopyPanel();
 			}
@@ -375,9 +381,9 @@ namespace McdView
 		/// </summary>
 		internal void LoadIalOptions()
 		{
-			cb_IalDeadpart.Checked = ialDeadpartChecked;
-			cb_IalAltrpart.Checked = ialAltrpartChecked;
-			cb_IalSprites .Checked = ialSpritesChecked;
+			cb_IalDeadpart.Checked = IalDeadpartChecked;
+			cb_IalAltrpart.Checked = IalAltrpartChecked;
+			cb_IalSprites .Checked = IalSpritesChecked;
 		}
 
 

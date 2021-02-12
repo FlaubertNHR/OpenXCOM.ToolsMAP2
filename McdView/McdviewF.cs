@@ -616,8 +616,22 @@ namespace McdView
 				{
 					RegistryInfo.UpdateRegistry(this);
 
+					Colors.BrushHilight      .Dispose();
+					Colors.BrushHilightsubsel.Dispose();
+					_fontRose                .Dispose();
+					Ia                       .Dispose();
+					Isocube                  .Dispose();
+					CuboidOutlinePath        .Dispose();
+					CuboidTopAnglePath       .Dispose();
+					CuboidBotAnglePath       .Dispose();
+					CuboidVertLineTopPath    .Dispose();
+					CuboidVertLineBotPath    .Dispose();
+
 					if (Copier != null) // this is needed when McdView is invoked via TileView
 						Copier.Close(); // it's also just good procedure
+
+					if (Spriteset != null)
+						Spriteset.Dispose();
 
 					if (!IsInvoked)
 						RegistryInfo.WriteRegistry();
@@ -625,21 +639,6 @@ namespace McdView
 				else
 					e.Cancel = true;
 			}
-
-			Colors.BrushHilight      .Dispose();
-			Colors.BrushHilightsubsel.Dispose();
-
-			Isocube              .Dispose();
-			CuboidOutlinePath    .Dispose();
-			CuboidTopAnglePath   .Dispose();
-			CuboidBotAnglePath   .Dispose();
-			CuboidVertLineTopPath.Dispose();
-			CuboidVertLineBotPath.Dispose();
-
-			_fontRose.Dispose();
-
-			Ia.Dispose();
-
 			base.OnFormClosing(e);
 		}
 
@@ -799,6 +798,9 @@ namespace McdView
 							PfeMcd = pfe; // sets 'Label' also.
 							Selid = -1;
 
+							if (Spriteset != null)
+								Spriteset.Dispose();
+
 							string dir = Path.GetDirectoryName(PfeMcd);
 							string pf  = Path.Combine(dir, Label);
 							if (   File.Exists(pf + GlobalsXC.PckExt)
@@ -811,6 +813,8 @@ namespace McdView
 																		Pal,
 																		true);
 							}
+							else
+								Spriteset = null;
 
 							Parts = new Tilepart[0];
 							CacheLoad.SetCacheSaved(Parts);
@@ -887,6 +891,9 @@ namespace McdView
 				{
 					PfeMcd = pfe;
 					Selid = -1;
+
+					if (Spriteset != null)
+						Spriteset.Dispose();
 
 					Spriteset = SpritesetsManager.LoadSpriteset(
 															Label,
@@ -966,6 +973,9 @@ namespace McdView
 				{
 					Selid = -1;
 
+					if (Spriteset != null)
+						Spriteset.Dispose();
+
 					Spriteset = SpritesetsManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
@@ -1043,6 +1053,9 @@ namespace McdView
 
 					if (pal == Palette.TftdBattle) // else is 'Palette.UfoBattle'
 						OnClick_PaletteTftd(null, EventArgs.Empty);
+
+//					if (Spriteset != null)
+//						Spriteset.Dispose(); // not needed when invoked via TileView
 
 					Spriteset = SpritesetsManager.LoadSpriteset(
 															Label,
