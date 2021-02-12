@@ -14,11 +14,6 @@ namespace XCom
 
 
 		#region Fields
-		// TODO: The fact that the spriteset points to a "sprite" and this
-		// tilepart points to a "sprite" causes a glitch when changing "that"
-		// sprite. They ought be kept consistent since there is an awkward
-		// sort of latency-effect happening on refresh.
-
 		/// <summary>
 		/// The spriteset of this Tilepart's sprites. It's used to animate the
 		/// part or to render the part with its alternate part.
