@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Reflection;
 
 
@@ -7,8 +6,6 @@ namespace XCom
 {
 	public static class EmbeddedService
 	{
-		private const int MonoTONE_ERASER = 0; // duplicate MapView.Forms.Observers.QuadrantDrawService.MonoTONE_ERASER
-
 		/// <summary>
 		/// Loads the sprites for TopView's blank quads and TileView's eraser.
 		/// @note See also Tilepart.LoadMonotoneSprites().
@@ -33,18 +30,6 @@ namespace XCom
 										bytesTab,
 										true);
 			}
-		}
-
-		/// <summary>
-		/// Loads the eraser-sprite for use as a blank-sprite in PckView.
-		/// </summary>
-		public static Bitmap CreateBlankSprite()
-		{
-			return BitmapService.CreateSprite(
-										XCImage.SpriteWidth32,
-										XCImage.SpriteHeight40,
-										CreateMonotoneSpriteset()[MonoTONE_ERASER].Bindata,
-										Palette.UfoBattle.Table);
 		}
 	}
 }

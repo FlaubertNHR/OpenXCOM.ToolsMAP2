@@ -56,12 +56,12 @@ namespace XCom
 				uint stride = (uint)Math.Abs(locked.Stride);
 
 
-				int i = 0;
+				int i = -1;
 				for (uint row = 0; row != height; ++row)
-				for (uint col = 0; col != width && i != bindata.Length; ++col, ++i)
+				for (uint col = 0; col != width && i != bindata.Length; ++col)
 				{
 					byte* pixel = pos + row * stride + col;
-					*pixel = bindata[i];
+					*pixel = bindata[++i];
 				}
 			}
 			b.UnlockBits(locked);
@@ -495,6 +495,47 @@ namespace XCom
 		}
 	}
 }
+
+
+/*		/// <summary>
+		/// Resize the image to the specified width and height.
+		/// https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp#24199315
+		/// WARNING: System.Exception: A Graphics object cannot be created from
+		/// an image that has an indexed pixel format.
+		/// </summary>
+		/// <param name="image">the image to resize</param>
+		/// <param name="width">the width to resize to</param>
+		/// <param name="height">the height to resize to</param>
+		/// <returns>the resized image</returns>
+		public static Bitmap ResizeImage(Image image, int width, int height)
+		{
+			var rect = new Rectangle(0,0, width, height);
+			var dst  = new Bitmap(width, height);
+
+			dst.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+			using (var graphics = Graphics.FromImage(dst))
+			{
+				graphics.CompositingMode    = CompositingMode   .SourceCopy;
+				graphics.CompositingQuality = CompositingQuality.HighQuality;
+				graphics.InterpolationMode  = InterpolationMode .HighQualityBicubic;
+				graphics.SmoothingMode      = SmoothingMode     .HighQuality;
+				graphics.PixelOffsetMode    = PixelOffsetMode   .HighQuality;
+
+				using (var ia = new ImageAttributes())
+				{
+					ia.SetWrapMode(WrapMode.TileFlipXY);
+					graphics.DrawImage(
+									image,
+									rect,
+									0,0,
+									image.Width, image.Height,
+									GraphicsUnit.Pixel,
+									ia);
+				}
+			}
+			return dst;
+		} */
 
 /*		/// <summary>
 		/// Saves a sprite to a given path w/ format: MS Windows 3 Bitmap, uncompressed.

@@ -445,8 +445,8 @@ namespace PckView
 
 				if (Spriteset[id].Istid())
 				{
-					_graphics.DrawImage( // TODO: this don't look right
-									_f.BlankSprite,
+					_graphics.DrawImage(
+									_f.BlankIcon,
 									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
 									XCImage.SpriteWidth * 4, XCImage.SpriteHeight * 4);

@@ -98,7 +98,15 @@ namespace PckView
 
 		private bool _minimized;
 
+		/// <summary>
+		/// A placeholder sprite to draw instead of totally transparent sprite.
+		/// </summary>
 		internal Bitmap BlankSprite;
+
+		/// <summary>
+		/// A placeholder icon to draw instead of totally transparent icon.
+		/// </summary>
+		internal Bitmap BlankIcon;
 		#endregion Fields
 
 
@@ -208,7 +216,9 @@ namespace PckView
 			tssl_SpritesetLabel.Text = None;
 
 			PopulatePaletteMenu(); // WARNING: Palettes created here <-
-			BlankSprite = EmbeddedService.CreateBlankSprite();
+
+			BlankSprite = Properties.Resources.blanksprite;
+			BlankIcon   = Properties.Resources.blankicon;
 
 			SpriteEditor = new SpriteEditorF(this);
 			SpriteEditor.FormClosing += OnEditorFormClosing;
@@ -531,6 +541,7 @@ namespace PckView
 					TilePanel.Destroy();
 
 					BlankSprite.Dispose();
+					BlankIcon  .Dispose();
 
 					ByteTableManager.HideTable();
 

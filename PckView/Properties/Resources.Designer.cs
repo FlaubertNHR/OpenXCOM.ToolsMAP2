@@ -68,5 +68,29 @@ namespace PckView.Properties
 				resourceCulture = value;
 			}
 		}
+		
+		/// <summary>
+		///   Looks up a localized resource of type System.Drawing.Bitmap.
+		/// </summary>
+		internal static System.Drawing.Bitmap blankicon
+		{
+			get
+			{
+				object obj = ResourceManager.GetObject("blankicon", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   Looks up a localized resource of type System.Drawing.Bitmap.
+		/// </summary>
+		internal static System.Drawing.Bitmap blanksprite
+		{
+			get
+			{
+				object obj = ResourceManager.GetObject("blanksprite", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
 	}
 }
