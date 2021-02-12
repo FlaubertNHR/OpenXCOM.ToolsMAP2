@@ -1277,18 +1277,20 @@ namespace PckView
 				{
 					// NOTE: ScanG.dat and LoFTemps.dat cannot be created.
 
+					XCImage.SpriteWidth = XCImage.SpriteWidth32;
+
 					int tabwordLength;
 					if (sender == miCreateBigobs) // Bigobs support for XCImage/PckSprite
 					{
 						SetType = Type.Bigobs;
-						XCImage.SpriteHeight = 48;
+						XCImage.SpriteHeight = XCImage.SpriteHeight48;
 						tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
 						sfd.Title = "Create a PCK (bigobs) file";
 					}
 					else
 					{
 						SetType = Type.Pck;
-						XCImage.SpriteHeight = 40;
+						XCImage.SpriteHeight = XCImage.SpriteHeight40;
 
 						if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckSprite
 						{
@@ -1367,6 +1369,9 @@ namespace PckView
 																tabwordLength);
 
 								OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+
+								if (TilePanel.Spriteset != null)
+									TilePanel.Spriteset.Dispose();
 
 								TilePanel.Spriteset = spriteset;
 								OnSpriteClick(null, EventArgs.Empty);
