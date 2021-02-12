@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
 
 using XCom;
@@ -152,17 +153,40 @@ namespace McdView
 		/// <returns>true if the textbox's text is valid</returns>
 		private bool TryParseText(Control tb)
 		{
-			string text = tb.Text.Trim();
-			if (text.Length > 1)
+			if (!String.IsNullOrEmpty(tb.Text))
 			{
-				while (text.StartsWith("0", StringComparison.Ordinal))
-					text = text.Substring(1);
-			}
+				string text = tb.Text.Trim();
+				if (text.Length != 0)
+				{
+					text = String.Join(
+									"",
+									text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
+				}
 
-			if (text != tb.Text)
-			{
-				tb.Text = text; // recurse
-				return false;
+				bool n = false;
+				if (text.Contains("-"))
+				{
+					n = true;
+					text = String.Join(
+									"",
+									text.Split(new[]{"-"}, StringSplitOptions.RemoveEmptyEntries));
+				}
+
+				while (text.Length > 1 && text.StartsWith("0", StringComparison.Ordinal))
+					text = text.Substring(1);
+
+				if (text != "0")
+				{
+					if (text == "") text = "0";
+					else if (n)     text = "-" + text;
+				}
+
+
+				if (text != tb.Text)
+				{
+					tb.Text = text; // recurse
+					return false;
+				}
 			}
 			return true;
 		}
