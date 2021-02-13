@@ -274,23 +274,16 @@ namespace PckView
 						// NOTE: LoadSpriteset() will check for a TAB file and
 						// issue an error if not found.
 
-						if (file.Contains("bigobs"))
-							SetType = Type.Bigobs;
-						else
-							SetType = Type.Pck;
-
-						LoadSpriteset(_args[0]);
+						LoadSpriteset(_args[0], file.Contains("bigobs"));
 						break;
 
 					case ".dat":
 						if (file.Contains("scang"))
 						{
-							SetType = Type.ScanG;
 							LoadScanG(_args[0]);
 						}
 						else if (file.Contains("loftemps"))
 						{
-							SetType = Type.LoFT;
 							LoadLoFT(_args[0]);
 						}
 						break;
@@ -699,6 +692,8 @@ namespace PckView
 		/// <param name="valid">true if the spriteset is valid</param>
 		internal void SpritesetChanged(bool valid)
 		{
+			SpriteEditor.SpritePanel.Sprite = null;
+
 			miSave             .Enabled = // File ->
 			miSaveAs           .Enabled =
 			miExportSprites    .Enabled =
@@ -1263,53 +1258,32 @@ namespace PckView
 
 
 		/// <summary>
-		/// Creates a brand sparkling new (blank) sprite-collection.
-		/// @note Called when the File menu's click-event is raised.
-		/// @note ScanG.dat cannot be created.
+		/// Creates a brand sparkling new (blank) sprite-collection. Called when
+		/// the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>ScanG.dat and LoFTemps.dat cannot be created.</remarks>
 		private void OnCreateClick(object sender, EventArgs e)
 		{
 			if (closeSpriteset())
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					// NOTE: ScanG.dat and LoFTemps.dat cannot be created.
-
-					XCImage.SpriteWidth = XCImage.SpriteWidth32;
-
-					int tabwordLength;
-					if (sender == miCreateBigobs) // Bigobs support for XCImage/PckSprite
-					{
-						SetType = Type.Bigobs;
-						XCImage.SpriteHeight = XCImage.SpriteHeight48;
-						tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-						sfd.Title = "Create a PCK (bigobs) file";
-					}
-					else
-					{
-						SetType = Type.Pck;
-						XCImage.SpriteHeight = XCImage.SpriteHeight40;
-
-						if (sender == miCreateUnitTftd) // Tftd Unit support for XCImage/PckSprite
-						{
-							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
-							sfd.Title = "Create a PCK (tftd unit) file";
-						}
-						else
-						{
-							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-
-							if (sender == miCreateUnitUfo) // Ufo Unit support for XCImage/PckSprite
-								sfd.Title = "Create a PCK (ufo unit) file";
-							else
-								sfd.Title = "Create a PCK (terrain) file";
-						}
-					}
-
 					sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
 					sfd.DefaultExt = GlobalsXC.PckExt;
+
+					string text;
+					if (sender == miCreateBigobs)			// Bigobs support for XCImage/PckSprite
+						text = "Bigobs";
+					else if (sender == miCreateUnitTftd)	// Tftd Unit support for XCImage/PckSprite
+						text = "Tftd Unit";
+					else if (sender == miCreateUnitUfo)		// Ufo Unit support for XCImage/PckSprite
+						text = "Ufo Unit";
+					else //if (sender == miCreateTerrain)	// Terrain support for XCImage/PckSprite
+						text = "Terrain";
+
+					sfd.Title = "Create " + text + " pck+tab files";
 
 					if (Directory.Exists(_lastCreateDirectory))
 						sfd.InitialDirectory = _lastCreateDirectory;
@@ -1326,59 +1300,73 @@ namespace PckView
 						string pfe = sfd.FileName;
 						_lastCreateDirectory = Path.GetDirectoryName(pfe);
 
-						string dir   = Path.GetDirectoryName(pfe);
 						string label = Path.GetFileNameWithoutExtension(pfe);
-						string pf    = Path.Combine(dir, label);
+						string pf    = Path.Combine(Path.GetDirectoryName(pfe), label);
 
 						string pfePck = pf + GlobalsXC.PckExt;
 						string pfeTab = pf + GlobalsXC.TabExt;
 
-						string pfePckT, pfeTabT;
-						if (File.Exists(pfePck))
-							pfePckT = pfePck + GlobalsXC.TEMPExt;
-						else
-							pfePckT = pfePck;
+						string pfePckT = pfePck;
+						string pfeTabT = pfeTab;
+						if (File.Exists(pfePck)) pfePckT += GlobalsXC.TEMPExt;
+						if (File.Exists(pfeTab)) pfeTabT += GlobalsXC.TEMPExt;
 
-						if (File.Exists(pfeTab))
-							pfeTabT = pfeTab + GlobalsXC.TEMPExt;
-						else
-							pfeTabT = pfeTab;
-
-
+						// NOTE: Use 'fail' to allow the files to unlock - for
+						// ReplaceFile() if necessary - after they get created.
 						bool fail = true;
+
 						using (var fsPck = FileService.CreateFile(pfePckT))
 						if (fsPck != null)
 						using (var fsTab = FileService.CreateFile(pfeTabT))
 						if (fsTab != null)
 							fail = false;
 
-						if (!fail)
+						if (!fail
+							&& (pfePckT == pfePck || FileService.ReplaceFile(pfePck))
+							&& (pfeTabT == pfeTab || FileService.ReplaceFile(pfeTab)))
 						{
-							if (pfePckT != pfePck && !FileService.ReplaceFile(pfePck))
-								fail = true;
+							XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
-							if (pfeTabT != pfeTab && !FileService.ReplaceFile(pfeTab))
-								fail = true;
+							int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
+							Palette pal = Palette.UfoBattle;
 
-							if (!fail)
+							if (sender == miCreateBigobs)
 							{
-								var pal = Palette.UfoBattle;
-								var spriteset = new SpriteCollection(
-																label,
-																pal,
-																tabwordLength);
-
-								OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
-
-								if (TilePanel.Spriteset != null)
-									TilePanel.Spriteset.Dispose();
-
-								TilePanel.Spriteset = spriteset;
-								OnSpriteClick(null, EventArgs.Empty);
-
-								PfSpriteset = pf;
-								Changed = false;
+								SetType = Type.Bigobs;
+								XCImage.SpriteHeight = XCImage.SpriteHeight48;
 							}
+							else
+							{
+								SetType = Type.Pck;
+								XCImage.SpriteHeight = XCImage.SpriteHeight40;
+
+								if (sender == miCreateUnitTftd)
+								{
+									tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
+									pal = Palette.TftdBattle;
+								}
+							}
+
+							if (!_itPalettes[pal].Checked)
+							{
+								miTransparent.Checked = true;
+								OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+							}
+							else if (!miTransparent.Checked)
+							{
+								OnTransparencyClick(null, EventArgs.Empty);
+							}
+
+							if (TilePanel.Spriteset != null)
+								TilePanel.Spriteset.Dispose();
+
+							TilePanel.Spriteset = new SpriteCollection(
+																	label,
+																	pal,
+																	tabwordLength);
+
+							PfSpriteset = pf;
+							Changed = false;
 						}
 					}
 				}
@@ -1409,10 +1397,7 @@ namespace PckView
 
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
-					{
-						SetType = Type.Pck;
 						LoadSpriteset(ofd.FileName);
-					}
 				}
 			}
 		}
@@ -1442,10 +1427,7 @@ namespace PckView
 
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
-					{
-						SetType = Type.Bigobs;
-						LoadSpriteset(ofd.FileName);
-					}
+						LoadSpriteset(ofd.FileName, true);
 				}
 			}
 		}
@@ -1468,10 +1450,7 @@ namespace PckView
 
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
-					{
-						SetType = Type.ScanG;
 						LoadScanG(ofd.FileName);
-					}
 				}
 			}
 		}
@@ -1494,10 +1473,7 @@ namespace PckView
 
 
 					if (ofd.ShowDialog(this) == DialogResult.OK)
-					{
-						SetType = Type.LoFT;
 						LoadLoFT(ofd.FileName);
-					}
 				}
 			}
 		}
@@ -2032,71 +2008,57 @@ namespace PckView
 		/// @note May be called from MapView.Forms.Observers.TileView.OnPckEditorClick()
 		/// </summary>
 		/// <param name="pfePck">path-file-extension of a PCK file</param>
-		public void LoadSpriteset(string pfePck)
+		/// <param name="isBigobs">true if Bigobs, false if terrain or unit Pck</param>
+		public void LoadSpriteset(string pfePck, bool isBigobs = false)
 		{
-			// TODO: Is it okay to clear the Spriteset
-			// Probably should do this like LoadScanG() and LoadLoFT()
-
-			if (TilePanel.Spriteset != null)
-				TilePanel.Spriteset.Dispose();
-
-
-			SpriteCollection spriteset = null;
-			Palette pal = Palette.UfoBattle;
-
-			string dir   = Path.GetDirectoryName(pfePck);
-			string label = Path.GetFileNameWithoutExtension(pfePck);
-			string pf    = Path.Combine(dir, label);
-
 			byte[] bytesPck = FileService.ReadFile(pfePck);
 			if (bytesPck != null)
 			{
+				string label = Path.GetFileNameWithoutExtension(pfePck);
+				string pf    = Path.Combine(Path.GetDirectoryName(pfePck), label);
+
 				byte[] bytesTab = FileService.ReadFile(pf + GlobalsXC.TabExt);
 				if (bytesTab != null)
 				{
-					int tabwordLength;
+					int pre_width  = XCImage.SpriteWidth;
+					int pre_height = XCImage.SpriteHeight;
 
 					XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
-					switch (SetType)
+					int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
+					Palette pal = Palette.UfoBattle; // User can change this but for now I need a palette ...
+
+					if (isBigobs)
 					{
-						default: // case Type.Pck: // is terrain or unit ->
-							XCImage.SpriteHeight = XCImage.SpriteHeight40;
+						XCImage.SpriteHeight = XCImage.SpriteHeight48;
+					}
+					else
+					{
+						XCImage.SpriteHeight = XCImage.SpriteHeight40;
 
-							if (bytesTab.Length == 2
-								|| bytesTab[2] != 0
-								|| bytesTab[3] != 0) // if either of the 3rd or 4th bytes is nonzero ... it's a UFO set.
-							{
-								tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-//								pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
-							}
-							else
-							{
-								tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
-								pal = Palette.TftdBattle;
-							}
-							break;
-
-						case Type.Bigobs: // Bigobs support for XCImage/PckSprite
-							XCImage.SpriteHeight = XCImage.SpriteHeight48;
-
-							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-//							pal = Palette.UfoBattle; // NOTE: Can be TftD but that can be corrected by the user.
-							break;
+						if (bytesTab.Length >= SpritesetsManager.TAB_WORD_LENGTH_4
+							&& bytesTab[2] == 0
+							&& bytesTab[3] == 0) // if both the 3rd or 4th bytes are zero ... it's a TFTD set.
+						{
+							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
+							pal = Palette.TftdBattle;
+						}
 					}
 
-					spriteset = new SpriteCollection(
-												label,
-												pal,
-												tabwordLength,
-												bytesPck,
-												bytesTab,
-												true);
+					var spriteset = new SpriteCollection(
+													label,
+													pal,
+													tabwordLength,
+													bytesPck,
+													bytesTab,
+													true);
 
 					if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non) // pck vs tab mismatch counts
 					{
 						spriteset.Dispose();
-						spriteset = null;
+
+						XCImage.SpriteWidth  = pre_width;
+						XCImage.SpriteHeight = pre_height;
 
 						MessageBox.Show(
 									this,
@@ -2113,19 +2075,15 @@ namespace PckView
 					else if ((spriteset.Fail & SpriteCollection.FAIL_OF_SPRITE) != SpriteCollection.FAIL_non) // too many bytes for a sprite
 					{
 						spriteset.Dispose();
-						spriteset = null;
+
+						XCImage.SpriteWidth  = pre_width;
+						XCImage.SpriteHeight = pre_height;
 
 						string error;
-						switch (SetType)
-						{
-							default: // case Type.Pck:
-								error = String.Empty; // possibly trying to load a Bigobs to 32x40 d
-								break;
-
-							case Type.Bigobs:
-								error = "Bigobs : "; // won't happen unless a file is corrupt.
-								break;
-						}
+						if (isBigobs)
+							error = "Bigobs : "; // won't happen unless a file is corrupt.
+						else
+							error = String.Empty; // possibly trying to load a Bigobs to 32x40 d
 
 						error += "File data overflowed the sprite's count of pixels.";
 						MessageBox.Show(
@@ -2137,25 +2095,31 @@ namespace PckView
 									MessageBoxDefaultButton.Button1,
 									0);
 					}
+					else
+					{
+						if (isBigobs) SetType = Type.Bigobs;
+						else          SetType = Type.Pck;
+
+						if (TilePanel.Spriteset != null)
+							TilePanel.Spriteset.Dispose();
+
+						TilePanel.Spriteset = spriteset;
+
+						if (!_itPalettes[pal].Checked)
+						{
+							miTransparent.Checked = true;
+							OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+						}
+						else if (!miTransparent.Checked)
+						{
+							OnTransparencyClick(null, EventArgs.Empty);
+						}
+
+						PfSpriteset = pf;
+						Changed = false;
+					}
 				}
 			}
-
-
-			OnPaletteClick(
-						_itPalettes[pal],
-						EventArgs.Empty);
-
-			if ((TilePanel.Spriteset = spriteset) != null)
-			{
-				PfSpriteset = pf;
-			}
-			else
-			{
-				PfSpriteset = String.Empty;
-//				SetType = Type.non; // TODO: pseudo-safety. Not thoroughly implemented ie. case default: will grab that
-			}
-
-			Changed = false;
 		}
 
 		/// <summary>
@@ -2180,6 +2144,8 @@ namespace PckView
 				}
 				else
 				{
+					SetType = Type.ScanG;
+
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = XCImage.ScanGside;
 
@@ -2188,9 +2154,17 @@ namespace PckView
 
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
 
-					OnPaletteClick(
-								_itPalettes[Palette.UfoBattle],
-								EventArgs.Empty);
+					if (!_itPalettes[Palette.UfoBattle].Checked)
+					{
+						miTransparent.Checked = true;
+						OnPaletteClick(
+									_itPalettes[Palette.UfoBattle],
+									EventArgs.Empty);
+					}
+					else if (!miTransparent.Checked)
+					{
+						OnTransparencyClick(null, EventArgs.Empty);
+					}
 
 					PfSpriteset = pfeScanG; // NOTE: keep the extension
 					Changed = false;
@@ -2220,6 +2194,8 @@ namespace PckView
 				}
 				else
 				{
+					SetType = Type.LoFT;
+
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = XCImage.LoFTside;
 
@@ -2335,7 +2311,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		private void PrintOffsets()
 		{

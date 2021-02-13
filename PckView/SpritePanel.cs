@@ -128,7 +128,8 @@ namespace PckView
 		{
 			base.OnMouseDown(e);
 
-			if (Sprite != null
+			if (e.Button == MouseButtons.Left
+				&& Sprite != null
 				&& e.X > 0 && e.X < XCImage.SpriteWidth  * _scale
 				&& e.Y > 0 && e.Y < XCImage.SpriteHeight * _scale)
 			{
@@ -266,12 +267,31 @@ namespace PckView
 
 			if (Sprite != null)
 			{
-				if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				if (_feditor._f.SetType == PckViewF.Type.LoFT)
 				{
 					for (int y = 0; y != XCImage.SpriteHeight; ++y)
 					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
 					{
-						using (var brush = new SolidBrush(AdjustColor(Sprite.Sprite.GetPixel(x,y))))
+						int palid = Sprite.Bindata[y * XCImage.SpriteWidth + x];
+//						using (var brush = new SolidBrush(Sprite.Pal.Table.Entries[palid]))
+						using (var brush = new SolidBrush(Sprite.Sprite.Palette.Entries[palid]))	// TODO: Sprite.Pal is transparent but
+						{																			// Sprite.Sprite.Palette is nontransparent ...
+							graphics.FillRectangle(
+												brush,
+												x * _scale,
+												y * _scale,
+													_scale,
+													_scale);
+						}
+					}
+				}
+				else if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				{
+					for (int y = 0; y != XCImage.SpriteHeight; ++y)
+					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
+					{
+						int palid = Sprite.Bindata[y * XCImage.SpriteWidth + x];
+						using (var brush = new SolidBrush(Shade(Sprite.Pal.Table.Entries[palid])))
 						{
 							graphics.FillRectangle(
 												brush,
@@ -287,7 +307,8 @@ namespace PckView
 					for (int y = 0; y != XCImage.SpriteHeight; ++y)
 					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
 					{
-						using (var brush = new SolidBrush(Sprite.Sprite.GetPixel(x,y)))
+						int palid = Sprite.Bindata[y * XCImage.SpriteWidth + x];
+						using (var brush = new SolidBrush(Sprite.Pal.Table.Entries[palid]))
 						{
 							graphics.FillRectangle(
 												brush,
@@ -371,7 +392,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
-		internal static Color AdjustColor(Color color)
+		internal static Color Shade(Color color)
 		{
 			double red   = (double)color.R / 255;
 			double green = (double)color.G / 255;

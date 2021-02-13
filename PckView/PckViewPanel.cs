@@ -70,9 +70,7 @@ namespace PckView
 
 				CalculateScrollRange(true);
 
-				_f.SpriteEditor.SpritePanel.Sprite = null;
-
-				Ovid = Selid = -1;
+				Selid = Ovid = -1;
 
 				_f.SpritesetChanged(_spriteset != null);
 

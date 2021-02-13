@@ -98,15 +98,18 @@ namespace PckView
 		{
 			base.OnMouseDown(e);
 
-			int swatchX = e.X / SwatchWidth;
-			int swatchY = e.Y / SwatchHeight;
+			if (e.Button == MouseButtons.Left)
+			{
+				int swatchX = e.X / SwatchWidth;
+				int swatchY = e.Y / SwatchHeight;
 
-			_x = swatchX * SwatchWidth  + 1;
-			_y = swatchY * SwatchHeight + 1;
+				_x = swatchX * SwatchWidth  + 1;
+				_y = swatchY * SwatchHeight + 1;
 
-			Palid = swatchY * SwatchesPerSide + swatchX;
+				Palid = swatchY * SwatchesPerSide + swatchX;
 
-			UpdatePalette();
+				UpdatePalette();
+			}
 		}
 
 		/// <summary>
@@ -131,7 +134,7 @@ namespace PckView
 							j != SwatchesPerSide;
 							++j, x += SwatchWidth)
 					{
-						using (var brush = new SolidBrush(SpritePanel.AdjustColor(PckViewF.Pal[i * SwatchesPerSide + j])))
+						using (var brush = new SolidBrush(SpritePanel.Shade(PckViewF.Pal[i * SwatchesPerSide + j])))
 						{
 							graphics.FillRectangle(
 												brush,
