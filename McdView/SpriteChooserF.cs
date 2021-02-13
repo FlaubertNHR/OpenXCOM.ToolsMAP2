@@ -175,14 +175,15 @@ namespace McdView
 									break;
 
 								case MouseButtons.Right:
-									if (MessageBox.Show(
-													this,
-													"Set all sprite phases to #" + id,
-													" Set all sprite phases",
-													MessageBoxButtons.YesNo,
-													MessageBoxIcon.Question,
-													MessageBoxDefaultButton.Button1,
-													0) == DialogResult.No)
+									if (_f.CanSetAllSprites(id.ToString())
+										&& MessageBox.Show(
+														this,
+														"Set all sprite phases to #" + id,
+														" Set all sprite phases",
+														MessageBoxButtons.YesNo,
+														MessageBoxIcon.Question,
+														MessageBoxDefaultButton.Button1,
+														0) == DialogResult.No)
 									{
 										return; // do nothing if No.
 									}

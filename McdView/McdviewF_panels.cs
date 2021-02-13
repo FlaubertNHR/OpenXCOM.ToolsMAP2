@@ -173,14 +173,14 @@ namespace McdView
 										x, y,
 										XCImage.SpriteWidth32  * 2,
 										XCImage.SpriteHeight40 * 2),
-							0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+							0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 							GraphicsUnit.Pixel,
 							Ia);
 		}
 
 
 		/// <summary>
-		/// Opens the spriteset-viewer when a sprite-phase is clicked.
+		/// Opens the sprite-chooser when a sprite-phase is clicked.
 		/// @note If user has the openfile dialog open and double-clicks to open
 		/// a file that happens to be over the panel a mouse-up event fires. So
 		/// use MouseDown here.
@@ -191,91 +191,97 @@ namespace McdView
 		{
 			PartsPanel.Select();
 
-			if (Parts != null && Parts.Length != 0 && Selid != -1
-				&& e.Y > -1 && e.Y < pnl_Sprites.Height) // NOTE: Bypass event if cursor moves off the panel before released.
+			switch (e.Button)
 			{
-				if (Spriteset == null)
-				{
-					MessageBox.Show(
-								this,
-								"Sprites not found for " + Label + "."
-									+ Environment.NewLine + Environment.NewLine
-									+ "A spriteset can be instantiated by"
-									+ " inserting records with the CopyPanel"
-									+ " or one can be created externally"
-									+ " with PckView.",
-								" Spriteset null",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
-				}
-				else if (Spriteset.Count == 0)
-				{
-					MessageBox.Show(
-								this,
-								"The spriteset has no sprites."
-									+ Environment.NewLine + Environment.NewLine
-									+ "Sprites can be added by inserting records with"
-									+ " the CopyPanel or externally with PckView.",
-								" Spriteset empty",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Warning,
-								MessageBoxDefaultButton.Button1,
-								0);
-				}
-				else
-				{
-					int phase;
-					for (phase = 0; phase != 8; ++phase)
+				case MouseButtons.Left:
+				case MouseButtons.Right:
+					if (Parts != null && Parts.Length != 0 && Selid != -1
+						&& e.Y > -1 && e.Y < pnl_Sprites.Height) // NOTE: Bypass event if cursor moves off the panel before released.
 					{
-						if (   e.X > SPRITE_ORIGIN_X + (phase * SPRITE_OFFSET_X)
-							&& e.X < SPRITE_ORIGIN_X + (phase * SPRITE_OFFSET_X) + (XCImage.SpriteWidth32 * 2))
+						int phase, left;
+						for (phase = 0; phase != 8; ++phase)
 						{
-							break;
-						}
-					}
-
-					if (phase != 8)
-					{
-						string id;
-						switch (phase)
-						{
-							default: id = tb00_phase0.Text; break; // #0
-							case 1:  id = tb01_phase1.Text; break;
-							case 2:  id = tb02_phase2.Text; break;
-							case 3:  id = tb03_phase3.Text; break;
-							case 4:  id = tb04_phase4.Text; break;
-							case 5:  id = tb05_phase5.Text; break;
-							case 6:  id = tb06_phase6.Text; break;
-							case 7:  id = tb07_phase7.Text; break;
-						}
-
-						switch (e.Button)
-						{
-							case MouseButtons.Left:
+							left = SPRITE_ORIGIN_X + phase * SPRITE_OFFSET_X;
+							if (   e.X > left
+								&& e.X < left + XCImage.SpriteWidth32 * 2)
 							{
-								using (var f = new SpriteChooserF(this, phase, Int32.Parse(id)))
-									f.ShowDialog(this);
 								break;
 							}
+						}
 
-							case MouseButtons.Right:
-								if (MessageBox.Show(
-												this,
-												"Set all sprite phases to #" + id,
-												" Set all sprite phases",
-												MessageBoxButtons.YesNo,
-												MessageBoxIcon.Question,
-												MessageBoxDefaultButton.Button1,
-												0) == DialogResult.Yes)
+						if (phase != 8)
+						{
+							if (Spriteset == null)
+							{
+								MessageBox.Show(
+											this,
+											"Sprites not found for " + Label + "."
+												+ Environment.NewLine + Environment.NewLine
+												+ "A spriteset can be instantiated by"
+												+ " inserting records with the CopyPanel"
+												+ " or one can be created externally"
+												+ " with PckView.",
+											" Spriteset null",
+											MessageBoxButtons.OK,
+											MessageBoxIcon.Error,
+											MessageBoxDefaultButton.Button1,
+											0);
+							}
+							else if (Spriteset.Count == 0)
+							{
+								MessageBox.Show(
+											this,
+											"The spriteset has no sprites."
+												+ Environment.NewLine + Environment.NewLine
+												+ "Sprites can be added by inserting records with"
+												+ " the CopyPanel or externally with PckView.",
+											" Spriteset empty",
+											MessageBoxButtons.OK,
+											MessageBoxIcon.Warning,
+											MessageBoxDefaultButton.Button1,
+											0);
+							}
+							else
+							{
+								string id;
+								switch (phase)
 								{
-									SetAllSprites(id);
+									default: id = tb00_phase0.Text; break; // #0
+									case 1:  id = tb01_phase1.Text; break;
+									case 2:  id = tb02_phase2.Text; break;
+									case 3:  id = tb03_phase3.Text; break;
+									case 4:  id = tb04_phase4.Text; break;
+									case 5:  id = tb05_phase5.Text; break;
+									case 6:  id = tb06_phase6.Text; break;
+									case 7:  id = tb07_phase7.Text; break;
 								}
-								break;
+
+								switch (e.Button)
+								{
+									case MouseButtons.Left:
+										using (var f = new SpriteChooserF(this, phase, Int32.Parse(id)))
+											f.ShowDialog(this);
+										break;
+
+									case MouseButtons.Right:
+										if (CanSetAllSprites(id)
+											&& MessageBox.Show(
+														this,
+														"Set all sprite phases to #" + id,
+														" Set all sprite phases",
+														MessageBoxButtons.YesNo,
+														MessageBoxIcon.Question,
+														MessageBoxDefaultButton.Button1,
+														0) == DialogResult.Yes)
+										{
+											SetAllSprites(id);
+										}
+										break;
+								}
+							}
 						}
 					}
-				}
+					break;
 			}
 		}
 
@@ -314,6 +320,23 @@ namespace McdView
 			tb05_phase5.Text =
 			tb06_phase6.Text =
 			tb07_phase7.Text = id;
+		}
+
+		/// <summary>
+		/// Checks if any phase differs from the current phase.
+		/// </summary>
+		/// <param name="id">the sprite-id of the currently selected phase</param>
+		/// <returns>true if any are different</returns>
+		internal bool CanSetAllSprites(string id)
+		{
+			return tb00_phase0.Text != id
+				|| tb01_phase1.Text != id
+				|| tb02_phase2.Text != id
+				|| tb03_phase3.Text != id
+				|| tb04_phase4.Text != id
+				|| tb05_phase5.Text != id
+				|| tb06_phase6.Text != id
+				|| tb07_phase7.Text != id;
 		}
 		#endregion Anisprites
 
@@ -406,7 +429,8 @@ namespace McdView
 		{
 			PartsPanel.Select();
 
-			if (Parts != null && Parts.Length != 0 && Selid != -1
+			if (e.Button == MouseButtons.Left
+				&& Parts != null && Parts.Length != 0 && Selid != -1
 				&& e.X > -1 && e.X < pnl_ScanGic.Width // NOTE: Bypass event if cursor moves off the panel before released.
 				&& e.Y > -1 && e.Y < pnl_ScanGic.Height)
 			{
@@ -509,13 +533,34 @@ namespace McdView
 			tb19_loft11.Text = id;
 		}
 
+		/// <summary>
+		/// Checks if any loft-id differs from the current loft-id.
+		/// </summary>
+		/// <param name="id">the loft-id of the currently selected loft</param>
+		/// <returns>true if any are different</returns>
+		internal bool CanSetAllLofts(string id)
+		{
+			return tb08_loft00.Text != id
+				|| tb09_loft01.Text != id
+				|| tb10_loft02.Text != id
+				|| tb11_loft03.Text != id
+				|| tb12_loft04.Text != id
+				|| tb13_loft05.Text != id
+				|| tb14_loft06.Text != id
+				|| tb15_loft07.Text != id
+				|| tb16_loft08.Text != id
+				|| tb17_loft09.Text != id
+				|| tb18_loft10.Text != id
+				|| tb19_loft11.Text != id;
+		}
+
 
 		internal static Bitmap Isocube;
-		private static GraphicsPath CuboidOutlinePath;
-		private static GraphicsPath CuboidTopAnglePath;
-		private static GraphicsPath CuboidBotAnglePath;
-		private static GraphicsPath CuboidVertLineTopPath;
-		private static GraphicsPath CuboidVertLineBotPath;
+		private  static GraphicsPath CuboidOutlinePath;
+		private  static GraphicsPath CuboidTopAnglePath;
+		private  static GraphicsPath CuboidBotAnglePath;
+		private  static GraphicsPath CuboidVertLineTopPath;
+		private  static GraphicsPath CuboidVertLineBotPath;
 
 		private Font _fontRose = new Font("Courier New", 8);
 
@@ -639,9 +684,7 @@ namespace McdView
 			bar_IsoLoft.Select();
 
 			if (sender != null && e.Button == MouseButtons.Right)
-			{
 				bar_IsoLoft.Value = 24;
-			}
 		}
 
 /*		// RotatingCube -->

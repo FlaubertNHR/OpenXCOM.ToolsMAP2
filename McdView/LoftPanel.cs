@@ -123,15 +123,14 @@ namespace McdView
 				&& e.X > -1 && e.X < Width // NOTE: Bypass event if cursor moves off the panel before released.
 				&& e.Y > -1 && e.Y < Height)
 			{
-				if (_f.LoFT != null)
+				switch (e.Button)
 				{
-					var tb = Tag as TextBox;
-					string id = tb.Text;
-
-					switch (e.Button)
-					{
-						case MouseButtons.Left:
+					case MouseButtons.Left:
+						if (_f.LoFT != null)
 						{
+							var tb = Tag as TextBox;
+							string id = tb.Text;
+
 							using (var f = new LoftChooserF(
 														_f,
 														Int32.Parse(tb.Tag.ToString()),
@@ -140,11 +139,23 @@ namespace McdView
 								_f._pnlLoFT = this;
 								f.ShowDialog();
 							}
-							break;
 						}
+						else
+							MessageBox.Show(
+										this,
+										"LoFT icons not found.",
+										" Error",
+										MessageBoxButtons.OK,
+										MessageBoxIcon.Error,
+										MessageBoxDefaultButton.Button1,
+										0);
+						break;
 
-						case MouseButtons.Right:
-							if (MessageBox.Show(
+					case MouseButtons.Right:
+					{
+						string id = (Tag as TextBox).Text;
+						if (_f.CanSetAllLofts(id)
+							&& MessageBox.Show(
 											this,
 											"Set all LoFTs to #" + id,
 											" Set all LoFTs",
@@ -152,23 +163,14 @@ namespace McdView
 											MessageBoxIcon.Question,
 											MessageBoxDefaultButton.Button1,
 											0) == DialogResult.Yes)
-							{
-								_f.SetAllLofts(id);
-							}
-							break;
+						{
+							_f.SetAllLofts(id);
+						}
+						break;
 					}
-
-					_f.OnMouseClick_IsoLoft(null,null); // select the IsoLoFT's trackbar
 				}
-				else
-					MessageBox.Show(
-								this,
-								"LoFT icons not found.",
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+
+				_f.OnMouseClick_IsoLoft(null,null); // select the IsoLoFT's trackbar
 			}
 		}
 		#endregion Events (override)

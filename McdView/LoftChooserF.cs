@@ -210,14 +210,15 @@ namespace McdView
 									break;
 	
 								case MouseButtons.Right:
-									if (MessageBox.Show(
-													this,
-													"Set all LoFTs to #" + id,
-													" Set all LoFTs",
-													MessageBoxButtons.YesNo,
-													MessageBoxIcon.Question,
-													MessageBoxDefaultButton.Button1,
-													0) == DialogResult.No)
+									if (_f.CanSetAllLofts(id.ToString())
+										&& MessageBox.Show(
+														this,
+														"Set all LoFTs to #" + id,
+														" Set all LoFTs",
+														MessageBoxButtons.YesNo,
+														MessageBoxIcon.Question,
+														MessageBoxDefaultButton.Button1,
+														0) == DialogResult.No)
 									{
 										return; // do nothing if No.
 									}
