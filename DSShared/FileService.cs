@@ -171,8 +171,8 @@ namespace DSShared
 				}
 			}
 			else
-				MoveFile(pfe + GlobalsXC.TEMPExt, pfe);
-
+				return MoveFile(pfe + GlobalsXC.TEMPExt, pfe);	// not sure if this should return the result of MoveFile()
+																// or fallthrough to true
 			return true;
 		}
 
