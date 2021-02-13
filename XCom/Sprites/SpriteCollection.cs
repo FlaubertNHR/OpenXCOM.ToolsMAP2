@@ -278,6 +278,9 @@ namespace XCom
 				// problems can occur depending on the decoding application.
 				//
 				// protip: a Minimal (blank) sprite would/could/should be "00 FF".
+				// - 0 blank initial rows
+				// - End_of_Sprite marker
+				// - let the decoding algo fill the sprite with palette-id #0 as default
 
 				if (CountSprites == CountOffsets) // avoid throwing 1 or 15000 exceptions ...
 				{
