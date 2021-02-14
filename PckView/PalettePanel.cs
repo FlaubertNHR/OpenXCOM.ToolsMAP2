@@ -60,8 +60,8 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// @note The PalettePanel cannot be resized, but OnResize will fire
-		/// when its form loads etc.
+		/// The PalettePanel cannot be resized, but OnResize will fire when its
+		/// form loads etc.
 		/// </summary>
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
@@ -77,10 +77,10 @@ namespace PckView
 			int y0 = SwatchHeight / 3;
 			int y1 = SwatchHeight * 2 / 3;
 
-			_pathTran_hori.AddLine(x0,y0, x1,y0); _pathTran_hori.StartFigure();
-			_pathTran_hori.AddLine(x0,y1, x1,y1);
-			_pathTran_vert.AddLine(x0,y0, x0,y1); _pathTran_vert.StartFigure();
+			_pathTran_hori.AddLine(x0,y1, x0,y0);
+			_pathTran_hori.AddLine(x0,y0, x1,y0);
 			_pathTran_vert.AddLine(x1,y0, x1,y1);
+			_pathTran_vert.AddLine(x1,y1, x0,y1);
 
 			if (Palid != -1)
 			{
@@ -118,8 +118,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-//			base.OnPaint(e);
-
 			var graphics = e.Graphics;
 
 			if (_fpalette._feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON)
@@ -168,15 +166,27 @@ namespace PckView
 			}
 
 			// draw a small square w/ light and dark lines in the transparent swatch.
-			graphics.DrawPath(Pens.LightGray, _pathTran_hori);
-			graphics.DrawPath(Pens.     Gray, _pathTran_vert);
+			graphics.DrawPath(Pens.Black, _pathTran_hori);
+			graphics.DrawPath(Pens.White, _pathTran_vert);
 
 			if (Palid != -1) // highlight the selected id ->
 			{
-				graphics.DrawRectangle(
-									Pens.Red,
-									_x - 1, _y - 1,
-									SwatchWidth - 1, SwatchHeight - 1);
+				graphics.DrawLine(
+							Pens.White,
+							_x - 1,               _y - 1,
+							_x + SwatchWidth - 2, _y - 1);
+				graphics.DrawLine(
+							Pens.White,
+							_x - 1,               _y - 1,
+							_x - 1,               _y + SwatchHeight - 2);
+				graphics.DrawLine(
+							Pens.Black,
+							_x + SwatchWidth - 2, _y - 1,
+							_x + SwatchWidth - 2, _y + SwatchHeight - 2);
+				graphics.DrawLine(
+							Pens.Black,
+							_x - 1,               _y + SwatchHeight - 2,
+							_x + SwatchWidth - 2, _y + SwatchHeight - 2);
 			}
 		}
 		#endregion Events (override)
