@@ -55,8 +55,8 @@ namespace PckView
 			}
 
 			ClientSize = new Size(
-								PalettePanel.SwatchesPerSide * 20,
-								PalettePanel.SwatchesPerSide * 20 + lblStatus.Height);
+								PalettePanel.Sqrt * 20,
+								PalettePanel.Sqrt * 20 + lblStatus.Height);
 		}
 		#endregion cTor
 
@@ -78,7 +78,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles form closing event.
+		/// Handles the FormClosing event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -103,7 +103,7 @@ namespace PckView
 
 		#region Methods
 		/// <summary>
-		/// 
+		/// Prints color-info to the statusbar.
 		/// </summary>
 		/// <param name="palid"></param>
 		internal void PrintPaletteId(int palid)

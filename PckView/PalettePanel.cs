@@ -13,7 +13,10 @@ namespace PckView
 			BufferedPanel
 	{
 		#region Fields (static)
-		internal const int SwatchesPerSide = 16; // 16 swatches across the panel.
+		/// <summary>
+		/// 16 swatches hori/vert in the panel.
+		/// </summary>
+		internal const int Sqrt = 16;
 		#endregion Fields (static)
 
 
@@ -66,8 +69,8 @@ namespace PckView
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
 		{
-			SwatchWidth  = Width  / SwatchesPerSide;
-			SwatchHeight = Height / SwatchesPerSide;
+			SwatchWidth  = Width  / Sqrt;
+			SwatchHeight = Height / Sqrt;
 
 			_pathTran_hori.Reset();
 			_pathTran_vert.Reset();
@@ -84,8 +87,8 @@ namespace PckView
 
 			if (Palid != -1)
 			{
-				_x = Palid % SwatchesPerSide * SwatchWidth  + 1;
-				_y = Palid / SwatchesPerSide * SwatchHeight + 1;
+				_x = Palid % Sqrt * SwatchWidth  + 1;
+				_y = Palid / Sqrt * SwatchHeight + 1;
 			}
 			Refresh();
 		}
@@ -106,7 +109,7 @@ namespace PckView
 				_x = swatchX * SwatchWidth  + 1;
 				_y = swatchY * SwatchHeight + 1;
 
-				Palid = swatchY * SwatchesPerSide + swatchX;
+				Palid = swatchY * Sqrt + swatchX;
 
 				UpdatePalette();
 			}
@@ -122,54 +125,38 @@ namespace PckView
 
 			if (_fpalette._feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON)
 			{
-				for (int
-						i = 0, y = 0;
-						i != SwatchesPerSide;
-						++i, y += SwatchHeight)
+				for (int i = 0, y = 0; i != Sqrt; ++i, y += SwatchHeight)
+				for (int j = 0, x = 0; j != Sqrt; ++j, x += SwatchWidth)
 				{
-					for (int
-							j = 0, x = 0;
-							j != SwatchesPerSide;
-							++j, x += SwatchWidth)
+					using (var brush = new SolidBrush(SpritePanel.Shade(PckViewF.Pal[i * Sqrt + j])))
 					{
-						using (var brush = new SolidBrush(SpritePanel.Shade(PckViewF.Pal[i * SwatchesPerSide + j])))
-						{
-							graphics.FillRectangle(
-												brush,
-												x,y,
-												SwatchWidth, SwatchHeight);
-						}
+						graphics.FillRectangle(
+											brush,
+											x,y,
+											SwatchWidth, SwatchHeight);
 					}
 				}
 			}
 			else
 			{
-				for (int
-						i = 0, y = 0;
-						i != SwatchesPerSide;
-						++i, y += SwatchHeight)
+				for (int i = 0, y = 0; i != Sqrt; ++i, y += SwatchHeight)
+				for (int j = 0, x = 0; j != Sqrt; ++j, x += SwatchWidth)
 				{
-					for (int
-							j = 0, x = 0;
-							j != SwatchesPerSide;
-							++j, x += SwatchWidth)
+					using (var brush = new SolidBrush(PckViewF.Pal[i * Sqrt + j]))
 					{
-						using (var brush = new SolidBrush(PckViewF.Pal[i * SwatchesPerSide + j]))
-						{
-							graphics.FillRectangle(
-												brush,
-												x,y,
-												SwatchWidth, SwatchHeight);
-						}
+						graphics.FillRectangle(
+											brush,
+											x,y,
+											SwatchWidth, SwatchHeight);
 					}
 				}
 			}
 
-			// draw a small square w/ light and dark lines in the transparent swatch.
-			graphics.DrawPath(Pens.Black, _pathTran_hori);
+
+			graphics.DrawPath(Pens.Black, _pathTran_hori); // draw an indicator in the transparent-id swatch ->
 			graphics.DrawPath(Pens.White, _pathTran_vert);
 
-			if (Palid != -1) // highlight the selected id ->
+			if (Palid != -1) // highlight the selected swatch ->
 			{
 				graphics.DrawLine(
 							Pens.White,
@@ -194,7 +181,7 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// 
+		/// Handles the PaletteChanged event.
 		/// </summary>
 		private void OnPaletteChanged()
 		{
@@ -212,14 +199,14 @@ namespace PckView
 		{
 			Palid = palid;
 
-			_x = palid % SwatchesPerSide * SwatchWidth  + 1;
-			_y = palid / SwatchesPerSide * SwatchHeight + 1;
+			_x = palid % Sqrt * SwatchWidth  + 1;
+			_y = palid / Sqrt * SwatchHeight + 1;
 
 			UpdatePalette();
 		}
 
 		/// <summary>
-		/// 
+		/// Prints color-info to the statusbar and invalidates this panel.
 		/// </summary>
 		private void UpdatePalette()
 		{
