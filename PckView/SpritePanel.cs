@@ -25,8 +25,6 @@ namespace PckView
 
 		#region Fields
 		private readonly SpriteEditorF _feditor;
-
-		private Pen _penGrid;
 		#endregion Fields
 
 
@@ -65,12 +63,12 @@ namespace PckView
 			}
 		}
 
-		private bool _grid;
-		internal bool Grid
+		private Pen _penGrid;
+		internal Pen PenGrid
 		{
 			set
 			{
-				_grid = value;
+				_penGrid = value;
 				Invalidate();
 			}
 		}
@@ -97,8 +95,6 @@ namespace PckView
 
 			_feditor = f;
 
-			_penGrid = Pens.Gray;
-
 			PckViewF.PaletteChanged += OnPaletteChanged;
 		}
 		#endregion cTor
@@ -111,8 +107,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
 		{
-//			base.OnMouseLeave(e);
-
 			Palid = -1;
 		}
 
@@ -228,8 +222,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-//			base.OnMouseMove(e);
-
 			if (Sprite != null)
 			{
 				if (   e.X > 0 && e.X < XCImage.SpriteWidth  * _scale
@@ -260,8 +252,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-//			base.OnPaint(e);
-
 			var graphics = e.Graphics;
 			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
@@ -322,7 +312,7 @@ namespace PckView
 			}
 
 
-			if (_grid && _scale != 1)
+			if (_penGrid != null && _scale > 2)
 			{
 				for (int x = 0; x != XCImage.SpriteWidth; ++x) // vertical lines
 					graphics.DrawLine(
@@ -341,12 +331,6 @@ namespace PckView
 									y * _scale + Pad);
 			}
 
-
-//			var p0 = new Point(0,     1); // draw a 1px border around the panel ->
-//			var p1 = new Point(Width, 1);
-//			var p2 = new Point(Width, Height);
-//			var p3 = new Point(1,     Height);
-//			var p4 = new Point(1,     1);
 
 			var p0 = new Point( // draw a 1px border around the image ->
 							0,
@@ -450,17 +434,6 @@ namespace PckView
 				return text;
 			}
 			return String.Empty;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="invert"></param>
-		internal void InvertGridColor(bool invert)
-		{
-			_penGrid = (invert) ? Pens.LightGray
-								: Pens.Gray;
-			Invalidate();
 		}
 
 		/// <summary>

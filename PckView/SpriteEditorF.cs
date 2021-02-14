@@ -213,23 +213,35 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Overlays a dark grid on the sprite.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnShowGridClick(object sender, EventArgs e)
+		private void OnGridDarkClick(object sender, EventArgs e)
 		{
-			SpritePanel.Grid = (miGrid.Checked = !miGrid.Checked);
+			if ((miGridDark.Checked = !miGridDark.Checked))
+			{
+				miGridLight.Checked = false;
+				SpritePanel.PenGrid = Pens.Black;
+			}
+			else
+				SpritePanel.PenGrid = null;
 		}
 
 		/// <summary>
-		/// 
+		/// Overlays a light grid on the sprite.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnInvertGridColorClick(object sender, EventArgs e)
+		private void OnGridLightClick(object sender, EventArgs e)
 		{
-			SpritePanel.InvertGridColor(miGridInvert.Checked = !miGridInvert.Checked);
+			if ((miGridLight.Checked = !miGridLight.Checked))
+			{
+				miGridDark.Checked = false;
+				SpritePanel.PenGrid = Pens.White;
+			}
+			else
+				SpritePanel.PenGrid = null;
 		}
 		#endregion Events
 
@@ -271,8 +283,8 @@ namespace PckView
 		private MenuItem miPaletteMenu;
 		private MenuItem miPalette;
 		private MenuItem miGridMenu;
-		private MenuItem miGrid;
-		private MenuItem miGridInvert;
+		private MenuItem miGridDark;
+		private MenuItem miGridLight;
 		private StatusStrip ss_Status;
 		private ToolStripStatusLabel tssl_ColorInfo;
 		private TrackBar bar_Scale;
@@ -302,8 +314,8 @@ namespace PckView
 			this.miPaletteMenu = new System.Windows.Forms.MenuItem();
 			this.miPalette = new System.Windows.Forms.MenuItem();
 			this.miGridMenu = new System.Windows.Forms.MenuItem();
-			this.miGrid = new System.Windows.Forms.MenuItem();
-			this.miGridInvert = new System.Windows.Forms.MenuItem();
+			this.miGridDark = new System.Windows.Forms.MenuItem();
+			this.miGridLight = new System.Windows.Forms.MenuItem();
 			this.ss_Status = new System.Windows.Forms.StatusStrip();
 			this.tssl_ColorInfo = new System.Windows.Forms.ToolStripStatusLabel();
 			this.bar_Scale = new System.Windows.Forms.TrackBar();
@@ -337,23 +349,23 @@ namespace PckView
 			// 
 			this.miGridMenu.Index = 1;
 			this.miGridMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miGrid,
-			this.miGridInvert});
+			this.miGridDark,
+			this.miGridLight});
 			this.miGridMenu.Text = "&Grid";
 			// 
-			// miGrid
+			// miGridDark
 			// 
-			this.miGrid.Index = 0;
-			this.miGrid.Shortcut = System.Windows.Forms.Shortcut.CtrlG;
-			this.miGrid.Text = "Show &grid";
-			this.miGrid.Click += new System.EventHandler(this.OnShowGridClick);
+			this.miGridDark.Index = 0;
+			this.miGridDark.Shortcut = System.Windows.Forms.Shortcut.CtrlD;
+			this.miGridDark.Text = "grid &dark";
+			this.miGridDark.Click += new System.EventHandler(this.OnGridDarkClick);
 			// 
-			// miGridInvert
+			// miGridLight
 			// 
-			this.miGridInvert.Index = 1;
-			this.miGridInvert.Shortcut = System.Windows.Forms.Shortcut.CtrlI;
-			this.miGridInvert.Text = "&Invert color";
-			this.miGridInvert.Click += new System.EventHandler(this.OnInvertGridColorClick);
+			this.miGridLight.Index = 1;
+			this.miGridLight.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
+			this.miGridLight.Text = "grid &light";
+			this.miGridLight.Click += new System.EventHandler(this.OnGridLightClick);
 			// 
 			// ss_Status
 			// 
