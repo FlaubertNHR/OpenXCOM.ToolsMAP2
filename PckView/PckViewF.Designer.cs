@@ -196,7 +196,7 @@ namespace PckView
 			this.miOpen.Index = 6;
 			this.miOpen.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOpen.Text = "&Open Pck (terrain/unit) file ...";
-			this.miOpen.Click += new System.EventHandler(this.OnOpenPckClick);
+			this.miOpen.Click += new System.EventHandler(this.OnOpenTuClick);
 			// 
 			// miOpenBigobs
 			// 

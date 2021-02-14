@@ -110,48 +110,62 @@ namespace PckView
 		#endregion Fields
 
 
-		#region Properties (static)
-		internal static Palette Pal
-		{ get; set; }
-		#endregion Properties (static)
-
-
 		#region Properties
+		/// <summary>
+		/// The current palette per the Palette menu.
+		/// </summary>
+		/// <remarks>Use <see cref="GetCurrentPalette"/> as appropriate since
+		/// LoFTsets don't have a standard palette.</remarks>
+		internal Palette Pal
+		{ get; private set; }
+
+		/// <summary>
+		/// The sprite-editor form.
+		/// </summary>
 		internal SpriteEditorF SpriteEditor
 		{ get; private set; }
 
+		/// <summary>
+		/// The panel in which all sprites of a currently loaded spriteset are
+		/// displayed.
+		/// </summary>
 		internal PckViewPanel TilePanel
 		{ get; private set; }
 
 
-		private string _pfSpriteset = String.Empty;
-		/// <summary>
-		/// The path-file w/out extension of the spriteset.
-		/// </summary>
-		private string PfSpriteset
-		{
-			get { return _pfSpriteset; }
-			set { _pfSpriteset = value; }
-		}
-
-
 		/// <summary>
 		/// For reloading the Map when PckView is invoked via TileView.
-		/// @note Reload MapView's Map even if the PCK+TAB is saved as a
-		/// different file; the new terrain-label might also be in the Map's
-		/// terrainset.
 		/// </summary>
-		public bool FireMvReload
+		/// <remarks>Reload MapView's Map even if the PCK+TAB is saved as a
+		/// different file; any modified terrain (etc) could be in the Map's
+		/// terrainset or other resources.</remarks>
+		public bool RequestReload
 		{ get; private set; }
 
 
+		/// <summary>
+		/// The fullpath of the spriteset. Shall not contain the file-extension
+		/// for terrain/unit/bigobs files (since it's easier to add .PCK and.TAB
+		/// strings later) but ScanG and LoFT files retain their .DAT extension.
+		/// </summary>
+		private string _path
+		{ get; set; }
+
 		private bool _changed;
+		/// <summary>
+		/// Sets the titlebar-text when a spriteset loads or gets changed.
+		/// </summary>
 		internal bool Changed
 		{
 			private get { return _changed; }
 			set
 			{
-				if (!String.IsNullOrEmpty(PfSpriteset))
+				if (TilePanel.Spriteset == null)
+				{
+					Text = TITLE;
+					_changed = value;
+				}
+				else if (!value || _changed != value)
 				{
 					string text;
 					switch (SetType)
@@ -162,15 +176,14 @@ namespace PckView
 						case Type.ScanG:
 						case Type.LoFT: text = String.Empty; break;
 					}
-					text = TITLE + GlobalsXC.PADDED_SEPARATOR + PfSpriteset + text;
+					text = TITLE + GlobalsXC.PADDED_SEPARATOR + _path + text;
 
-					if (_changed = value)
+					if (value)
 						text += GlobalsXC.PADDED_ASTERISK;
 
 					Text = text;
+					_changed = value;
 				}
-				else
-					Text = TITLE;
 			}
 		}
 		#endregion Properties
@@ -210,20 +223,16 @@ namespace PckView
 			Controls.Add(TilePanel);
 			TilePanel.BringToFront();
 
-			PrintSelectedId();
+			PrintSelectedId(false);
 			PrintOverId();
 
-			tssl_SpritesetLabel.Text = None;
+			SpriteEditor = new SpriteEditorF(this);
+			SpriteEditor.FormClosing += OnEditorFormClosing;
 
 			PopulatePaletteMenu(); // WARNING: Palettes created here <-
 
 			BlankSprite = Properties.Resources.blanksprite;
 			BlankIcon   = Properties.Resources.blankicon;
-
-			SpriteEditor = new SpriteEditorF(this);
-			SpriteEditor.FormClosing += OnEditorFormClosing;
-
-			SpriteEditor._fpalette.Text = "Palette - " + Pal.Label;
 
 
 			miCreate.MenuItems.Add(miCreateTerrain);	// NOTE: These items are added to the Filemenu first
@@ -231,10 +240,10 @@ namespace PckView
 			miCreate.MenuItems.Add(miCreateUnitUfo);
 			miCreate.MenuItems.Add(miCreateUnitTftd);
 
-			tssl_TilesTotal.Text = Total + None;
-
-			tssl_OffsetLast.Text =
-			tssl_OffsetAftr.Text = String.Empty;
+			tssl_SpritesetLabel.Text = None;
+			tssl_TilesTotal    .Text = Total + None;
+			tssl_OffsetLast    .Text =
+			tssl_OffsetAftr    .Text = String.Empty;
 
 			ss_Status.Renderer = new CustomToolStripRenderer();
 
@@ -420,11 +429,7 @@ namespace PckView
 
 				switch (i)
 				{
-					case 0: // Check the ufo-battle palette it
-						it.Shortcut = Shortcut.Ctrl1;
-						it.Checked = true;
-						break;
-
+					case 0: it.Shortcut = Shortcut.Ctrl1; break;
 					case 1: it.Shortcut = Shortcut.Ctrl2; break;
 					case 2: it.Shortcut = Shortcut.Ctrl3; break;
 					case 3: it.Shortcut = Shortcut.Ctrl4; break;
@@ -435,8 +440,7 @@ namespace PckView
 				}
 			}
 
-			Pal = Palette.UfoBattle;
-			Pal.SetTransparent(miTransparent.Checked);
+			OnPaletteClick(_itPalettes[Palette.UfoBattle], EventArgs.Empty);
 		}
 		#endregion cTor
 
@@ -521,7 +525,7 @@ namespace PckView
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				if (closeSpriteset())
+				if (RequestSpritesetClose())
 				{
 					RegistryInfo.UpdateRegistry(this);
 
@@ -687,10 +691,10 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// Enables (or disables) various menuitems.
+		/// Enables or disables various menus and initializes the statusbar.
 		/// </summary>
 		/// <param name="valid">true if the spriteset is valid</param>
-		internal void SpritesetChanged(bool valid)
+		internal void ResetUi(bool valid)
 		{
 			SpriteEditor.SpritePanel.Sprite = null;
 
@@ -714,13 +718,12 @@ namespace PckView
 
 		/// <summary>
 		/// Bring back the dinosaurs. Enables (or disables) several Context
-		/// menuitems.
-		/// @note Called when the tile-panel's click-event is raised.
-		/// @note This fires after PckViewPanel.OnMouseDown(). Thought you'd
-		/// like to know.
+		/// menuitems. Called when the tile-panel's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>This fires after PckViewPanel.OnMouseDown(). Thought you'd
+		/// like to know.</remarks>
 		private void OnSpriteClick(object sender, EventArgs e)
 		{
 			bool enabled = (TilePanel.Selid != -1);
@@ -737,9 +740,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens the currently selected sprite in the sprite-editor.
-		/// @note Called when the Context menu's click-event or the
-		/// viewer-panel's DoubleClick event is raised or [Enter] is pressed.
+		/// Opens the currently selected sprite in the sprite-editor. Called
+		/// when the Context menu's click-event or the viewer-panel's
+		/// DoubleClick event is raised or [Enter] is pressed.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -753,18 +756,20 @@ namespace PckView
 				{
 					_miEdit.Checked = true;
 
-					SpriteEditor          .Show();
-					SpriteEditor._fpalette.Show();
+					SpriteEditor.Show();
+
+					if (SetType != Type.LoFT)
+						SpriteEditor._fpalette.Show();
 				}
 			}
 		}
 
 		/// <summary>
-		/// Cancels closing the editor and hides it instead.
-		/// @note This fires after the editor's FormClosing event.
+		/// Dechecks the context's Edit it.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>This fires after the editor's FormClosing event.</remarks>
 		private void OnEditorFormClosing(object sender, CancelEventArgs e)
 		{
 			_miEdit.Checked = false;
@@ -813,8 +818,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Adds a sprite or sprites to the collection.
-		/// @note Called when the Context menu's click-event is raised.
+		/// Adds a sprite or sprites to the collection. Called when the Context
+		/// menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -838,7 +843,7 @@ namespace PckView
 					ofd.InitialDirectory = _lastSpriteDirectory;
 				else
 				{
-					string dir = Path.GetDirectoryName(PfSpriteset);
+					string dir = Path.GetDirectoryName(_path);
 					if (Directory.Exists(dir))
 						ofd.InitialDirectory = dir;
 				}
@@ -884,7 +889,7 @@ namespace PckView
 						var sprite = BitmapService.CreateSprite(
 															b,
 															++id,
-															Pal,
+															GetCurrentPalette(),
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight,
 															SetType == Type.ScanG || SetType == Type.LoFT);
@@ -899,8 +904,8 @@ namespace PckView
 
 		/// <summary>
 		/// Inserts sprites into the currently loaded spriteset before the
-		/// currently selected sprite.
-		/// @note Called when the Context menu's click-event is raised.
+		/// currently selected sprite. Called when the Context menu's click-
+		/// event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -924,7 +929,7 @@ namespace PckView
 					ofd.InitialDirectory = _lastSpriteDirectory;
 				else
 				{
-					string dir = Path.GetDirectoryName(PfSpriteset);
+					string dir = Path.GetDirectoryName(_path);
 					if (Directory.Exists(dir))
 						ofd.InitialDirectory = dir;
 				}
@@ -952,8 +957,8 @@ namespace PckView
 
 		/// <summary>
 		/// Inserts sprites into the currently loaded spriteset after the
-		/// currently selected sprite.
-		/// @note Called when the Context menu's click-event is raised.
+		/// currently selected sprite. Called when the Context menu's click-
+		/// event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -977,7 +982,7 @@ namespace PckView
 					ofd.InitialDirectory = _lastSpriteDirectory;
 				else
 				{
-					string dir = Path.GetDirectoryName(PfSpriteset);
+					string dir = Path.GetDirectoryName(_path);
 					if (Directory.Exists(dir))
 						ofd.InitialDirectory = dir;
 				}
@@ -1001,13 +1006,12 @@ namespace PckView
 		/// <summary>
 		/// Inserts sprites into the currently loaded spriteset starting at a
 		/// given Id.
-		/// @note Helper for
-		/// - OnInsertSpriteBeforeClick()
-		/// - OnInsertSpriteAfterClick()
 		/// </summary>
 		/// <param name="id">the terrain-id to start inserting at</param>
 		/// <param name="files">an array of filenames</param>
 		/// <returns>true if all sprites are inserted successfully</returns>
+		/// <remarks>Helper for <see cref="OnInsertSpritesBeforeClick"/> and
+		/// <see cref="OnInsertSpritesAfterClick"/></remarks>
 		private bool InsertSprites(int id, string[] files)
 		{
 			var bs = new Bitmap[files.Length]; // first run a check against all sprites and if any are borked exit w/ false.
@@ -1042,7 +1046,7 @@ namespace PckView
 				var sprite = BitmapService.CreateSprite(
 													b,
 													id,
-													Pal,
+													GetCurrentPalette(),
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,
 													SetType == Type.ScanG || SetType == Type.LoFT);
@@ -1060,7 +1064,7 @@ namespace PckView
 		{
 			OnSpriteClick(null, EventArgs.Empty);
 
-			PrintTotal(true);
+			PrintTotal();
 
 			TilePanel.ForceResize();
 			TilePanel.Invalidate();
@@ -1070,8 +1074,7 @@ namespace PckView
 
 		/// <summary>
 		/// Replaces the selected sprite in the collection with a different
-		/// sprite.
-		/// @note Called when the Context menu's click-event is raised.
+		/// sprite. Called when the Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1095,7 +1098,7 @@ namespace PckView
 					ofd.InitialDirectory = _lastSpriteDirectory;
 				else
 				{
-					string dir = Path.GetDirectoryName(PfSpriteset);
+					string dir = Path.GetDirectoryName(_path);
 					if (Directory.Exists(dir))
 						ofd.InitialDirectory = dir;
 				}
@@ -1119,7 +1122,7 @@ namespace PckView
 								XCImage sprite = BitmapService.CreateSprite(
 																		b,
 																		TilePanel.Selid,
-																		Pal,
+																		GetCurrentPalette(),
 																		XCImage.SpriteWidth,
 																		XCImage.SpriteHeight,
 																		SetType == Type.ScanG || SetType == Type.LoFT);
@@ -1185,8 +1188,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Deletes the selected sprite from the collection.
-		/// @note Called when the Context menu's click-event is raised.
+		/// Deletes the selected sprite from the collection. Called when the
+		/// Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1207,8 +1210,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Exports the selected sprite in the collection to a PNG file.
-		/// @note Called when the Context menu's click-event is raised.
+		/// Exports the selected sprite in the collection to a PNG file. Called
+		/// when the Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1233,7 +1236,7 @@ namespace PckView
 
 				if (!Directory.Exists(_lastSpriteDirectory))
 				{
-					string dir = Path.GetDirectoryName(PfSpriteset);
+					string dir = Path.GetDirectoryName(_path);
 					if (Directory.Exists(dir))
 						sfd.InitialDirectory = dir;
 				}
@@ -1266,7 +1269,7 @@ namespace PckView
 		/// <remarks>ScanG.dat and LoFTemps.dat cannot be created.</remarks>
 		private void OnCreateClick(object sender, EventArgs e)
 		{
-			if (closeSpriteset())
+			if (RequestSpritesetClose())
 			{
 				using (var sfd = new SaveFileDialog())
 				{
@@ -1287,9 +1290,9 @@ namespace PckView
 
 					if (Directory.Exists(_lastCreateDirectory))
 						sfd.InitialDirectory = _lastCreateDirectory;
-					else if (!String.IsNullOrEmpty(PfSpriteset))
+					else if (_path != null)
 					{
-						string dir = Path.GetDirectoryName(PfSpriteset);
+						string dir = Path.GetDirectoryName(_path);
 						if (Directory.Exists(dir))
 							sfd.InitialDirectory = dir;
 					}
@@ -1328,7 +1331,7 @@ namespace PckView
 							XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
 							int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-							Palette pal = Palette.UfoBattle;
+//							Palette pal = Palette.UfoBattle;
 
 							if (sender == miCreateBigobs)
 							{
@@ -1343,29 +1346,29 @@ namespace PckView
 								if (sender == miCreateUnitTftd)
 								{
 									tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
-									pal = Palette.TftdBattle;
+//									pal = Palette.TftdBattle;
 								}
 							}
 
-							if (!_itPalettes[pal].Checked)
-							{
-								miTransparent.Checked = true;
-								OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
-							}
-							else if (!miTransparent.Checked)
-							{
-								OnTransparencyClick(null, EventArgs.Empty);
-							}
+//							if (!_itPalettes[pal].Checked)
+//							{
+//								miTransparent.Checked = true;
+//								OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+//							}
+//							else if (!miTransparent.Checked)
+//							{
+//								OnTransparencyClick(null, EventArgs.Empty);
+//							}
 
 							if (TilePanel.Spriteset != null)
 								TilePanel.Spriteset.Dispose();
 
 							TilePanel.Spriteset = new SpriteCollection(
 																	label,
-																	pal,
+																	Pal, //pal
 																	tabwordLength);
 
-							PfSpriteset = pf;
+							_path = pf;
 							Changed = false;
 						}
 					}
@@ -1374,23 +1377,23 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a sprite-collection of a terrain or a unit.
-		/// @note Called when the File menu's click-event is raised.
+		/// Opens a sprite-collection of a terrain or a unit. Called when the
+		/// File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnOpenPckClick(object sender, EventArgs e)
+		private void OnOpenTuClick(object sender, EventArgs e)
 		{
-			if (closeSpriteset())
+			if (RequestSpritesetClose())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
 					ofd.Title  = "Select a PCK (terrain/unit) file";
 					ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
 
-					if (!String.IsNullOrEmpty(PfSpriteset))
+					if (_path != null)
 					{
-						string dir = Path.GetDirectoryName(PfSpriteset);
+						string dir = Path.GetDirectoryName(_path);
 						if (Directory.Exists(dir))
 							ofd.InitialDirectory = dir;
 					}
@@ -1403,14 +1406,14 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a sprite-collection of bigobs.
-		/// @note Called when the File menu's click-event is raised.
+		/// Opens a sprite-collection of bigobs. Called when the File menu's
+		/// click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnOpenBigobsClick(object sender, EventArgs e)
 		{
-			if (closeSpriteset())
+			if (RequestSpritesetClose())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1418,9 +1421,9 @@ namespace PckView
 					ofd.Filter   = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
 					ofd.FileName = "BIGOBS.PCK";
 
-					if (!String.IsNullOrEmpty(PfSpriteset))
+					if (_path != null)
 					{
-						string dir = Path.GetDirectoryName(PfSpriteset);
+						string dir = Path.GetDirectoryName(_path);
 						if (Directory.Exists(dir))
 							ofd.InitialDirectory = dir;
 					}
@@ -1433,14 +1436,14 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a sprite-collection of ScanG icons.
-		/// @note Called when the File menu's click-event is raised.
+		/// Opens a sprite-collection of ScanG icons. Called when the File
+		/// menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnOpenScanGClick(object sender, EventArgs e)
 		{
-			if (closeSpriteset())
+			if (RequestSpritesetClose())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1456,14 +1459,14 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a sprite-collection of LoFT icons.
-		/// @note Called when the File menu's click-event is raised.
+		/// Opens a sprite-collection of LoFT icons. Called when the File menu's
+		/// click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnOpenLoFTClick(object sender, EventArgs e)
 		{
-			if (closeSpriteset())
+			if (RequestSpritesetClose())
 			{
 				using (var ofd = new OpenFileDialog())
 				{
@@ -1481,8 +1484,7 @@ namespace PckView
 		/// <summary>
 		/// Saves all the sprites to the currently loaded PCK+TAB files if
 		/// terrain/unit/bigobs or to the currently loaded DAT file if ScanG or
-		/// LoFT.
-		/// @note Called when the File menu's click-event is raised.
+		/// LoFT. Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1494,15 +1496,15 @@ namespace PckView
 				{
 					case Type.Pck: // save Pck+Tab terrain/unit/bigobs ->
 					case Type.Bigobs:
-						if (SpriteCollection.WriteSpriteset(PfSpriteset, TilePanel.Spriteset))
+						if (SpriteCollection.WriteSpriteset(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
-							FireMvReload = true;
+							RequestReload = true;
 						}
 						break;
 
 					case Type.ScanG:
-						if (SpriteCollection.WriteScanG(PfSpriteset, TilePanel.Spriteset)) // NOTE: 'PfSpriteset' contains extension .DAT for ScanG iconset.
+						if (SpriteCollection.WriteScanG(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
 							// TODO: FireMvReloadScanG file
@@ -1510,7 +1512,7 @@ namespace PckView
 						break;
 
 					case Type.LoFT:
-						if (SpriteCollection.WriteLoFT(PfSpriteset, TilePanel.Spriteset)) // NOTE: 'PfSpriteset' contains extension .DAT for LoFT iconset.
+						if (SpriteCollection.WriteLoFT(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
 						}
@@ -1522,8 +1524,7 @@ namespace PckView
 		/// <summary>
 		/// Saves all the sprites to potentially different PCK+TAB files if
 		/// terrain/unit/bigobs or to a potentially different DAT file if ScanG
-		/// or LoFT.
-		/// @note Called when the File menu's click-event is raised.
+		/// or LoFT. Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1540,27 +1541,27 @@ namespace PckView
 							sfd.Title      = "Save Pck+Tab as ...";
 							sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
 							sfd.DefaultExt = GlobalsXC.PckExt;
-							sfd.FileName   = Path.GetFileName(PfSpriteset) + GlobalsXC.PckExt;
+							sfd.FileName   = Path.GetFileName(_path) + GlobalsXC.PckExt;
 							break;
 
 						case Type.ScanG:
 							sfd.Title      = "Save ScanG.dat as ...";
 							sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
 							sfd.DefaultExt = GlobalsXC.DatExt;
-							sfd.FileName   = Path.GetFileName(PfSpriteset);
+							sfd.FileName   = Path.GetFileName(_path);
 							break;
 
 						case Type.LoFT:
 							sfd.Title      = "Save LoFTemps.dat as ...";
 							sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
 							sfd.DefaultExt = GlobalsXC.DatExt;
-							sfd.FileName   = Path.GetFileName(PfSpriteset);
+							sfd.FileName   = Path.GetFileName(_path);
 							break;
 					}
 
 					if (!Directory.Exists(_lastBrowserDirectory))
 					{
-						string dir = Path.GetDirectoryName(PfSpriteset);
+						string dir = Path.GetDirectoryName(_path);
 						if (Directory.Exists(dir))
 							sfd.InitialDirectory = dir;
 					}
@@ -1584,9 +1585,9 @@ namespace PckView
 
 								if (SpriteCollection.WriteSpriteset(pf, TilePanel.Spriteset))
 								{
-									PfSpriteset = pf;
+									_path = pf;
 									Changed = false;
-									FireMvReload = true;
+									RequestReload = true;
 								}
 								break;
 							}
@@ -1594,7 +1595,7 @@ namespace PckView
 							case Type.ScanG:
 								if (SpriteCollection.WriteScanG(pfe, TilePanel.Spriteset))
 								{
-									PfSpriteset = pfe; // 'PfSpriteset' for ScanG.dat has its extension.
+									_path = pfe;
 									Changed = false;
 									// TODO: FireMvReloadScanG file
 								}
@@ -1603,7 +1604,7 @@ namespace PckView
 							case Type.LoFT:
 								if (SpriteCollection.WriteLoFT(pfe, TilePanel.Spriteset))
 								{
-									PfSpriteset = pfe; // 'PfSpriteset' for LoFTemps.dat has its extension.
+									_path = pfe;
 									Changed = false;
 								}
 								break;
@@ -1616,7 +1617,7 @@ namespace PckView
 
 		/// <summary>
 		/// Exports all sprites in the currently loaded spriteset to PNG files.
-		/// @note Called when the File menu's click-event is raised.
+		/// Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1637,7 +1638,7 @@ namespace PckView
 
 						if (!Directory.Exists(_lastSpriteDirectory))
 						{
-							string dir = Path.GetDirectoryName(PfSpriteset);
+							string dir = Path.GetDirectoryName(_path);
 							if (Directory.Exists(dir))
 								fbd.SelectedPath = dir;
 						}
@@ -1674,8 +1675,7 @@ namespace PckView
 
 		/// <summary>
 		/// Exports all sprites in the currently loaded spriteset to a PNG
-		/// spritesheet file.
-		/// @note Called when the File menu's click-event is raised.
+		/// spritesheet file. Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1693,7 +1693,7 @@ namespace PckView
 
 					if (!Directory.Exists(_lastSpriteDirectory))
 					{
-						string dir = Path.GetDirectoryName(PfSpriteset);
+						string dir = Path.GetDirectoryName(_path);
 						if (Directory.Exists(dir))
 							fbd.SelectedPath = dir;
 					}
@@ -1718,9 +1718,9 @@ namespace PckView
 						BitmapService.ExportSpritesheet(
 													pfe,
 													TilePanel.Spriteset,
-													Pal,
+													GetCurrentPalette(),
 													8,
-													SetType == Type.LoFT);
+													SetType == Type.ScanG || SetType == Type.LoFT);
 					}
 				}
 			}
@@ -1728,8 +1728,7 @@ namespace PckView
 
 		/// <summary>
 		/// Imports (and replaces) the current spriteset from an external
-		/// spritesheet.
-		/// @note Called when the File menu's click-event is raised.
+		/// spritesheet. Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1746,7 +1745,7 @@ namespace PckView
 
 					if (!Directory.Exists(_lastSpriteDirectory))
 					{
-						string dir = Path.GetDirectoryName(PfSpriteset);
+						string dir = Path.GetDirectoryName(_path);
 						if (Directory.Exists(dir))
 							ofd.InitialDirectory = dir;
 					}
@@ -1771,7 +1770,7 @@ namespace PckView
 									BitmapService.CreateSprites(
 															TilePanel.Spriteset.Sprites,
 															b,
-															Pal,
+															GetCurrentPalette(),
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight,
 															SetType == Type.ScanG || SetType == Type.LoFT);
@@ -1787,8 +1786,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Closes the app.
-		/// @note Called when the File menu's click-event is raised.
+		/// Closes the app. Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1798,57 +1796,66 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Changes the current palette.
-		/// @note Called when the Palette menu's click-event is raised whether
-		/// by mouse or keyboard.
+		/// Changes the current palette. Called when the Palette menu's click-
+		/// event is raised whether by mouse or keyboard.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>LoFTsets don't need their palette set; their palette is set
+		/// on creation and don't change.</remarks>
 		private void OnPaletteClick(object sender, EventArgs e)
 		{
 			var it = sender as MenuItem;
 			if (!it.Checked)
 			{
-				_itPalettes[Pal].Checked = false;
+				if (Pal != null)
+					_itPalettes[Pal].Checked = false;
+
 				it.Checked = true;
 
 				Pal = it.Tag as Palette;
 				Pal.SetTransparent(miTransparent.Checked);
 
-				TilePanel.Spriteset.Pal = Pal;
-				PaletteChanged();
+				if (TilePanel.Spriteset != null && SetType != Type.LoFT)
+					TilePanel.Spriteset.Pal = Pal;
+
+				PaletteChanged(); // TODO: That probably doesn't need to fire if a LoFTset is loaded.
 
 				SpriteEditor._fpalette.Text = "Palette - " + Pal.Label;
 			}
 		}
 
 		/// <summary>
-		/// Toggles transparency of the currently loaded palette.
-		/// @note Called when the Palette menu's click-event is raised whether
-		/// by mouse or keyboard.
+		/// Toggles transparency of the currently loaded palette. Called when
+		/// the Palette menu's click-event is raised whether by mouse or
+		/// keyboard.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>LoFTsets don't need their palette set; their palette is set
+		/// on creation and don't change.</remarks>
 		private void OnTransparencyClick(object sender, EventArgs e)
 		{
 			Pal.SetTransparent(miTransparent.Checked = !miTransparent.Checked);
 
-			TilePanel.Spriteset.Pal = Pal;
-			PaletteChanged();
+			if (TilePanel.Spriteset != null && SetType != Type.LoFT)
+				TilePanel.Spriteset.Pal = Pal;
+
+			PaletteChanged(); // TODO: That probably doesn't need to fire if a LoFTset is loaded.
 		}
 
 		/// <summary>
-		/// Toggles usage of the sprite-shade value of MapView's options.
-		/// @note Called when the Palette menu's click-event is raised.
-		/// @note 'SpriteShade' is no longer the sprite-shade value.
-		/// 'SpriteShade' was converted to 'SpriteShadeFloat' in the cTor, hence
-		/// it can and does take a new definition here:
-		/// -2 user toggled sprite-shade off
-		/// -1 sprite-shade was not found by the cTor, thus it cannot be enabled
-		///  0 draw sprites/swatches w/ the 'SpriteShadeFloat' val.
+		/// Toggles usage of the sprite-shade value of MapView's options. Called
+		/// when the Palette menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>'SpriteShade' is no longer the sprite-shade value.
+		/// 'SpriteShade' was converted to 'SpriteShadeFloat' in the cTor, hence
+		/// it can and does take a new definition here:
+		/// -2 user toggled sprite-shade off;
+		/// -1 sprite-shade was not found by the cTor thus it cannot be enabled;
+		///  0 draw sprites/swatches w/ the 'SpriteShadeFloat' val.</remarks>
 		private void OnSpriteshadeClick(object sender, EventArgs e)
 		{
 			if (SpriteShade != SPRITESHADE_DISABLED)
@@ -1860,8 +1867,8 @@ namespace PckView
 				else
 					SpriteShade = SPRITESHADE_OFF;
 
-				TilePanel.Invalidate();
-				SpriteEditor.SpritePanel.Invalidate();
+				TilePanel                      .Invalidate();
+				SpriteEditor.SpritePanel       .Invalidate();
 				SpriteEditor._fpalette.PalPanel.Invalidate();
 			}
 		}
@@ -1869,8 +1876,8 @@ namespace PckView
 
 		/// <summary>
 		/// Shows a richtextbox with all the bytes of the currently selected
-		/// sprite laid out in a fairly readable fashion.
-		/// @note Called when the Bytes menu's click-event is raised.
+		/// sprite laid out in a fairly readable fashion. Called when the Bytes
+		/// menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1894,7 +1901,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// @note Callback for LoadBytesTable().
+		/// Callback for LoadBytesTable().
 		/// </summary>
 		private void BytesClosingCallback()
 		{
@@ -1902,8 +1909,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Shows the CHM helpfile.
-		/// @note Called when the Help menu's click-event is raised.
+		/// Shows the CHM helpfile. Called when the Help menu's click-event is
+		/// raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1915,8 +1922,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Shows the about-box.
-		/// @note Called when the Help menu's click-event is raised.
+		/// Shows the about-box. Called when the Help menu's click-event is
+		/// raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1973,8 +1980,8 @@ namespace PckView
 
 		#region Methods
 		/// <summary>
-		/// Sets the current palette.
-		/// @note Called only from TileView to set the palette externally.
+		/// Sets the current palette. Called only from TileView to set the
+		/// palette externally.
 		/// </summary>
 		/// <param name="pal"></param>
 		public void SetPalette(Palette pal)
@@ -1983,12 +1990,25 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Sets the currently selected id.
-		/// @note Called only from TileView to set 'idSel' externally. Based on
-		/// PckViewPanel.OnMouseDown().
-		/// @note 'id' shall be valid in 'TilePanel.Spriteset'
+		/// Gets the currently selected palette unless a LoFTset is loaded, in
+		/// which case return 'Palette.Binary'.
+		/// </summary>
+		/// <returns>the current palette or the binary palette for LoFTicons</returns>
+		internal Palette GetCurrentPalette()
+		{
+			if (SetType == Type.LoFT)
+				return Palette.Binary;
+
+			return Pal;
+		}
+
+		/// <summary>
+		/// Sets the currently selected id. Called only from TileView to set
+		/// 'idSel' externally.
 		/// </summary>
 		/// <param name="id"></param>
+		/// <remarks>Based on PckViewPanel.OnMouseDown(). 'id' shall be valid
+		/// in 'TilePanel.Spriteset'</remarks>
 		public void SetSelectedId(int id)
 		{
 			TilePanel.Selid = id;
@@ -2026,7 +2046,7 @@ namespace PckView
 					XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
 					int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
-					Palette pal = Palette.UfoBattle; // User can change this but for now I need a palette ...
+//					Palette pal = Palette.UfoBattle; // User can change this but for now I need a palette ...
 
 					if (isBigobs)
 					{
@@ -2041,13 +2061,13 @@ namespace PckView
 							&& bytesTab[3] == 0) // if both the 3rd or 4th bytes are zero ... it's a TFTD set.
 						{
 							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
-							pal = Palette.TftdBattle;
+//							pal = Palette.TftdBattle;
 						}
 					}
 
 					var spriteset = new SpriteCollection(
 													label,
-													pal,
+													Pal, //pal
 													tabwordLength,
 													bytesPck,
 													bytesTab,
@@ -2105,17 +2125,17 @@ namespace PckView
 
 						TilePanel.Spriteset = spriteset;
 
-						if (!_itPalettes[pal].Checked)
-						{
-							miTransparent.Checked = true;
-							OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
-						}
-						else if (!miTransparent.Checked)
-						{
-							OnTransparencyClick(null, EventArgs.Empty);
-						}
+//						if (!_itPalettes[pal].Checked)
+//						{
+//							miTransparent.Checked = true;
+//							OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+//						}
+//						else if (!miTransparent.Checked)
+//						{
+//							OnTransparencyClick(null, EventArgs.Empty);
+//						}
 
-						PfSpriteset = pf;
+						_path = pf;
 						Changed = false;
 					}
 				}
@@ -2154,19 +2174,19 @@ namespace PckView
 
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
 
-					if (!_itPalettes[Palette.UfoBattle].Checked)
-					{
-						miTransparent.Checked = true;
-						OnPaletteClick(
-									_itPalettes[Palette.UfoBattle],
-									EventArgs.Empty);
-					}
-					else if (!miTransparent.Checked)
-					{
-						OnTransparencyClick(null, EventArgs.Empty);
-					}
+//					if (!_itPalettes[Palette.UfoBattle].Checked)
+//					{
+//						miTransparent.Checked = true;
+//						OnPaletteClick(
+//									_itPalettes[Palette.UfoBattle],
+//									EventArgs.Empty);
+//					}
+//					else if (!miTransparent.Checked)
+//					{
+//						OnTransparencyClick(null, EventArgs.Empty);
+//					}
 
-					PfSpriteset = pfeScanG; // NOTE: keep the extension
+					_path = pfeScanG;
 					Changed = false;
 				}
 			}
@@ -2204,22 +2224,22 @@ namespace PckView
 
 					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeLoFT), fs, true);
 
-					if (!_itPalettes[Palette.TftdGeo].Checked) // 'Palette.TftdGeo' has white palid #1 (255,255,255)
-					{
-						miTransparent.Checked = false;
-						OnPaletteClick(
-									_itPalettes[Palette.TftdGeo],
-									EventArgs.Empty);
-					}
-					else if (miTransparent.Checked)
-					{
-						OnTransparencyClick(null, EventArgs.Empty);
-					}
+//					if (!_itPalettes[Palette.TftdGeo].Checked) // 'Palette.TftdGeo' has white palid #1 (255,255,255)
+//					{
+//						miTransparent.Checked = false;
+//						OnPaletteClick(
+//									_itPalettes[Palette.TftdGeo],
+//									EventArgs.Empty);
+//					}
+//					else if (miTransparent.Checked)
+//					{
+//						OnTransparencyClick(null, EventArgs.Empty);
+//					}
 
 					if (SpriteEditor._fpalette.Visible)
 						SpriteEditor._fpalette.Close(); // actually Hide() + uncheck the SpriteEditor's it
 
-					PfSpriteset = pfeLoFT; // NOTE: keep the extension
+					_path = pfeLoFT;
 					Changed = false;
 				}
 			}
@@ -2232,13 +2252,13 @@ namespace PckView
 		/// </summary>
 		internal void PrintOverId()
 		{
-			string over;
+			string text;
 			if (TilePanel.Ovid != -1)
-				over = TilePanel.Ovid.ToString();
+				text = TilePanel.Ovid.ToString();
 			else
-				over = None;
+				text = None;
 
-			tssl_TileOver.Text = Over + over;
+			tssl_TileOver.Text = Over + text;
 		}
 
 		/// <summary>
@@ -2269,7 +2289,6 @@ namespace PckView
 
 
 			valid = valid
-				 && TilePanel.Spriteset != null
 				 && TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_2;
 
 			if (tssl_Offset    .Visible =
@@ -2297,15 +2316,13 @@ namespace PckView
 		/// the statusbar.
 		/// </summary>
 		/// <param name="valid">true if the spriteset is valid</param>
-		private void PrintTotal(bool valid)
+		private void PrintTotal(bool valid = true)
 		{
 			PrintOverId();
 			PrintSelectedId(valid);
 
 			if (valid)
-			{
 				tssl_TilesTotal.Text = Total + TilePanel.Spriteset.Count;
-			}
 			else
 				tssl_TilesTotal.Text = String.Empty;
 		}
@@ -2362,7 +2379,7 @@ namespace PckView
 		/// ought be closed anyway.
 		/// </summary>
 		/// <returns>true if state is NOT changed or 'DialogResult.Yes'</returns>
-		private bool closeSpriteset()
+		private bool RequestSpritesetClose()
 		{
 			return !Changed
 				|| MessageBox.Show(

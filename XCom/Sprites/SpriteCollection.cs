@@ -83,7 +83,7 @@ namespace XCom
 				_pal = value;
 
 				foreach (XCImage sprite in Sprites)
-					sprite.Sprite.Palette = _pal.Table;
+					sprite.Pal = Pal;
 
 				// rant
 				// why is the dang palette in every god-dang XCImage.
@@ -363,7 +363,6 @@ namespace XCom
 		public SpriteCollection(string label, Stream fs, bool isLoFT)
 		{
 			Label         = label;
-			Pal           = null;
 			TabwordLength = SpritesetsManager.TAB_WORD_LENGTH_0;
 
 			if (!isLoFT) // is ScanG
@@ -381,6 +380,7 @@ namespace XCom
 
 					Sprites.Add(new ScanGicon(icondata, i));
 				}
+				Pal = Palette.UfoBattle; // <- default
 			}
 			else // is LoFT
 			{
@@ -426,6 +426,7 @@ namespace XCom
 					}
 					Sprites.Add(new LoFTicon(bytes, id));
 				}
+				Pal = Palette.Binary;
 			}
 		}
 		#endregion cTor
@@ -699,7 +700,7 @@ namespace XCom
 
 		#region Methods (override)
 		/// <summary>
-		/// 
+		/// Returns 'Label'.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()

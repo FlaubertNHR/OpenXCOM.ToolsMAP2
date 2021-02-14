@@ -122,13 +122,14 @@ namespace PckView
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			var graphics = e.Graphics;
+			PckViewF f = _fpalette._feditor._f;
 
-			if (_fpalette._feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+			if (f.SpriteShade >= PckViewF.SPRITESHADE_ON)
 			{
 				for (int i = 0, y = 0; i != Sqrt; ++i, y += SwatchHeight)
 				for (int j = 0, x = 0; j != Sqrt; ++j, x += SwatchWidth)
 				{
-					using (var brush = new SolidBrush(SpritePanel.Shade(PckViewF.Pal[i * Sqrt + j])))
+					using (var brush = new SolidBrush(SpritePanel.Shade(f.Pal[i * Sqrt + j])))
 					{
 						graphics.FillRectangle(
 											brush,
@@ -142,7 +143,7 @@ namespace PckView
 				for (int i = 0, y = 0; i != Sqrt; ++i, y += SwatchHeight)
 				for (int j = 0, x = 0; j != Sqrt; ++j, x += SwatchWidth)
 				{
-					using (var brush = new SolidBrush(PckViewF.Pal[i * Sqrt + j]))
+					using (var brush = new SolidBrush(f.Pal[i * Sqrt + j]))
 					{
 						graphics.FillRectangle(
 											brush,
@@ -206,12 +207,13 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Prints color-info to the statusbar and invalidates this panel.
+		/// Handler for PaletteChanged. Prints color-info to the statusbar and
+		/// invalidates this panel.
 		/// </summary>
 		private void UpdatePalette()
 		{
 			_fpalette.PrintPaletteId(Palid);
-			Invalidate();
+			if (Visible) Invalidate();
 		}
 
 		/// <summary>

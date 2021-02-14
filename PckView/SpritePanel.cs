@@ -152,7 +152,7 @@ namespace PckView
 																					XCImage.SpriteWidth,
 																					XCImage.SpriteHeight,
 																					Sprite.Bindata,
-																					PckViewF.Pal.Table);
+																					Sprite.Pal.Table); //_feditor._f.Pal.Table
 											Sprite.Dispose();
 											Sprite.Sprite = sprite;
 
@@ -197,7 +197,7 @@ namespace PckView
 																		XCImage.SpriteWidth,
 																		XCImage.SpriteHeight,
 																		Sprite.Bindata,
-																		PckViewF.Pal.Table);
+																		Sprite.Pal.Table); //Palette.Binary.Table
 								Sprite.Dispose();
 								Sprite.Sprite = sprite;
 
@@ -263,9 +263,8 @@ namespace PckView
 					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
 					{
 						int palid = Sprite.Bindata[y * XCImage.SpriteWidth + x];
-//						using (var brush = new SolidBrush(Sprite.Pal.Table.Entries[palid]))
-						using (var brush = new SolidBrush(Sprite.Sprite.Palette.Entries[palid]))	// TODO: Sprite.Pal is transparent but
-						{																			// Sprite.Sprite.Palette is nontransparent ...
+						using (var brush = new SolidBrush(Sprite.Pal.Table.Entries[palid]))
+						{
 							graphics.FillRectangle(
 												brush,
 												x * _scale,
@@ -362,9 +361,12 @@ namespace PckView
 
 
 		#region Events
+		/// <summary>
+		/// Handler for PaletteChanged. Invalidates this panel.
+		/// </summary>
 		private void OnPaletteChanged()
 		{
-			Invalidate();
+			if (Visible) Invalidate();
 		}
 		#endregion Events
 
@@ -411,11 +413,11 @@ namespace PckView
 										"id:{0} (0x{0:X2})",
 										palid);
 
-				var color = PckViewF.Pal[palid];
-				text += " r:" + color.R
-					  + " g:" + color.G
-					  + " b:" + color.B
-					  + " a:" + color.A;
+				Color color = _feditor._f.GetCurrentPalette()[palid];
+				text += " [a:" + color.A + "]"
+					  +  " r:" + color.R
+					  +  " g:" + color.G
+					  +  " b:" + color.B;
 
 				switch (palid)
 				{

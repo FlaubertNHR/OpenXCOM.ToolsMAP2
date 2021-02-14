@@ -30,7 +30,7 @@ namespace XCom
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
 					id)
 		{
-			Pal = Palette.UfoBattle; // default: icons have no integral palette.
+			Pal = Palette.Binary;
 
 			Sprite = BitmapService.CreateSprite(
 											XCImage.SpriteWidth,

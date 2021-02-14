@@ -46,13 +46,23 @@ namespace PckView
 
 		#region Properties
 		private SpriteCollection _spriteset;
+		/// <summary>
+		/// The currently loaded spriteset or null. Initializes the UI according
+		/// to parameters of the spriteset. Also ensures that the spriteset and
+		/// its sprites have their palettes set to PckView's current palette.
+		/// </summary>
+		/// <remarks>LoFTsets don't need their palette set; their palette is set
+		/// on creation and don't change.</remarks>
 		internal SpriteCollection Spriteset
 		{
 			get { return _spriteset; }
 			set
 			{
-				if ((_spriteset = value) != null)
-					_spriteset.Pal = PckViewF.Pal;
+				if ((_spriteset = value) != null
+					&& _f.SetType != PckViewF.Type.LoFT)
+				{
+					_spriteset.Pal = _f.Pal;
+				}
 
 				TileWidth  = XCImage.SpriteWidth;
 				TileHeight = XCImage.SpriteHeight;
@@ -72,7 +82,7 @@ namespace PckView
 
 				Selid = Ovid = -1;
 
-				_f.SpritesetChanged(_spriteset != null);
+				_f.ResetUi(_spriteset != null);
 
 				// TODO: update PaletteViewer if the spriteset's palette changes.
 				Invalidate();
@@ -151,8 +161,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
-//			base.OnMouseWheel(e);
-
 			if (_scrollBar.Visible)
 			{
 				if (e.Delta > 0)
@@ -186,8 +194,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-//			base.OnMouseDown(e);
-
 			if (e.Button == MouseButtons.Left
 				&& Spriteset != null && Spriteset.Count != 0)
 			{
@@ -235,8 +241,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-//			base.OnMouseMove(e);
-
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
 				int id = GetTileId(e);
@@ -255,8 +259,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
 		{
-//			base.OnMouseLeave(e);
-
 			Ovid = -1;
 			_f.PrintOverId();
 		}
@@ -267,8 +269,6 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-//			base.OnPaint(e);
-
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
 				_graphics = e.Graphics;
@@ -501,11 +501,11 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// Handler for PaletteChanged.
+		/// Handler for PaletteChanged. Invalidates this panel.
 		/// </summary>
 		private void OnPaletteChanged()
 		{
-			Invalidate();
+			if (Spriteset != null) Invalidate();
 		}
 
 		/// <summary>
@@ -604,7 +604,7 @@ namespace PckView
 
 
 		/// <summary>
-		/// 
+		/// Selects a sprite after left/right keypress.
 		/// </summary>
 		/// <param name="dir">-1 left, +1 right</param>
 		internal void SelectAdjacentHori(int dir)
@@ -615,7 +615,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Selects a sprite after up/down keypress.
 		/// </summary>
 		/// <param name="dir">-1 up, +1 down</param>
 		internal void SelectAdjacentVert(int dir)

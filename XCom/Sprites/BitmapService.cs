@@ -194,22 +194,22 @@ namespace XCom
 				Bitmap b,
 				bool isLoFT = false)
 		{
-			ColorPalette pal0 = null; // workaround for the fact that ColorPalette is copied
-			if (isLoFT)
-			{
-				pal0 = b.Palette; // don't screw up the sprite's palette; use a copy ->
-
-				ColorPalette pal = b.Palette;
-				pal.Entries[Palette.LoFTclear] = Color.Black;
-				pal.Entries[Palette.LoFTSolid] = Color.White;
-				b.Palette = pal;
-			}
+//			ColorPalette pal0 = null; // workaround for the fact that ColorPalette is copied
+//			if (isLoFT)
+//			{
+//				pal0 = b.Palette; // don't screw up the sprite's palette; use a copy ->
+//
+//				ColorPalette pal = b.Palette;
+//				pal.Entries[Palette.LoFTclear] = Color.Black;
+//				pal.Entries[Palette.LoFTSolid] = Color.White;
+//				b.Palette = pal;
+//			}
 
 			Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
 			b.Save(fullpath, ImageFormat.Png);
 
-			if (pal0 != null) // revert sprite's palette ->
-				b.Palette = pal0;
+//			if (isLoFT) // revert sprite's palette ->
+//				b.Palette = pal0;
 		}
 
 		/// <summary>

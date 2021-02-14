@@ -1,27 +1,17 @@
 using System;
+using System.Windows.Forms;
 
 
 namespace PckView
 {
 	partial class About
 	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		#region Designer
+		private Label label1;
+		private Label lblVersion;
+		private Label label2;
+		private Label lblBuildConfig;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
-		#region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -43,29 +33,29 @@ namespace PckView
 			this.label1.Text = "Main coding and design: Ben Ratzlaff";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// lblVersion
-			// 
-			this.lblVersion.Location = new System.Drawing.Point(5, 65);
-			this.lblVersion.Name = "lblVersion";
-			this.lblVersion.Size = new System.Drawing.Size(285, 15);
-			this.lblVersion.TabIndex = 3;
-			this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
 			// label2
 			// 
 			this.label2.Location = new System.Drawing.Point(5, 35);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(285, 15);
-			this.label2.TabIndex = 4;
+			this.label2.TabIndex = 1;
 			this.label2.Text = "revised: kevL";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// lblVersion
+			// 
+			this.lblVersion.Location = new System.Drawing.Point(5, 65);
+			this.lblVersion.Name = "lblVersion";
+			this.lblVersion.Size = new System.Drawing.Size(285, 15);
+			this.lblVersion.TabIndex = 2;
+			this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// lblBuildConfig
 			// 
 			this.lblBuildConfig.Location = new System.Drawing.Point(5, 95);
 			this.lblBuildConfig.Name = "lblBuildConfig";
 			this.lblBuildConfig.Size = new System.Drawing.Size(285, 15);
-			this.lblBuildConfig.TabIndex = 5;
+			this.lblBuildConfig.TabIndex = 3;
 			this.lblBuildConfig.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// About
@@ -73,8 +63,8 @@ namespace PckView
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(294, 126);
 			this.Controls.Add(this.lblBuildConfig);
-			this.Controls.Add(this.label2);
 			this.Controls.Add(this.lblVersion);
+			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -86,11 +76,6 @@ namespace PckView
 			this.ResumeLayout(false);
 
 		}
-		#endregion
-
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label lblVersion;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label lblBuildConfig;
+		#endregion Designer
 	}
 }

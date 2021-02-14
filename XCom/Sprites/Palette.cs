@@ -8,18 +8,17 @@ using System.Reflection;
 
 namespace XCom
 {
+	//see http://support.microsoft.com/default.aspx?scid=kb%3Ben-us%3B319061
 	/// <summary>
 	/// A class defining a Color array of 256 values.
-	/// @note Palettes are instantiated only as the 8 palettes for ufo/tftd and
-	/// the 4 tone-scaled palettes (for selected tileparts in MainView). The
+	/// </summary>
+	/// <remarks>Palettes are instantiated only as the 8 palettes for ufo/tftd
+	/// and the 4 tone-scaled palettes (for selected tileparts in MainView). The
 	/// transparency (alpha-value) of colorid #0 can be toggled but beware that
 	/// it appears to require re-assigning the changed ColorPalette to affected
 	/// sprites/spritesets ... palettes are difficult to reliably/intuitively
 	/// work with in .net - you'd think they would be referenced but they could
-	/// be/ are dereferences of a copy instead.
-	/// .net strikes again!
-	/// </summary>
-	//see http://support.microsoft.com/default.aspx?scid=kb%3Ben-us%3B319061
+	/// be/ are dereferences of a copy instead. .net strikes again!</remarks>
 	public sealed class Palette
 	{
 		#region Fields (static)
@@ -56,6 +55,8 @@ namespace XCom
 		private const string tftdgeo      = "tftd-geo";
 		private const string tftdgraph    = "tftd-graph";
 		private const string tftdresearch = "tftd-research";
+
+		private const string binary       = "binary";
 
 		private const string PalExt = ".pal";
 
@@ -230,6 +231,21 @@ namespace XCom
 		}
 
 		/// <summary>
+		/// The "binary" palette _Embedded in this assembly.
+		/// @note Is used by PckView only.
+		/// </summary>
+		public static Palette Binary
+		{
+			get
+			{
+				if (!_palettes.ContainsKey(binary))
+					CreateBinaryTable(_palettes[binary] = new Palette(binary));
+
+				return _palettes[binary] as Palette;
+			}
+		}
+
+		/// <summary>
 		/// Bypass creating tone-scaled subpalettes if this Palette is created
 		/// by PckView or McdView.
 		/// </summary>
@@ -246,7 +262,7 @@ namespace XCom
 		{ get; private set; }
 
 		/// <summary>
-		/// Gets/Sets the Table of this Palette.
+		/// Gets/Sets the ColorPalette of this Palette (sic).
 		/// </summary>
 		public ColorPalette Table
 		{ get; private set; }
@@ -319,7 +335,7 @@ namespace XCom
 
 			using (var sr = new StreamReader(fs))
 			{
-				Label = sr.ReadLine(); // 1st line is the label.
+				Label = sr.ReadLine(); // 1st line is the label
 
 				var rgb = new string[3];
 				for (int id = 0; id != 256; ++id)
@@ -437,6 +453,18 @@ namespace XCom
 
 
 		#region Methods (static)
+		/// <summary>
+		/// Creates a binary ColorTable for LoFTicons.
+		/// </summary>
+		private static void CreateBinaryTable(Palette pal)
+		{
+			pal.Table.Entries[Tid] = Color.Black;
+
+			for (int id = Tid + 1; id != 256; ++id)
+				pal.Table.Entries[id] = Color.White;
+		}
+
+
 		/// <summary>
 		/// Create brushes for drawing UFO sprites per
 		/// 'MainViewF.Optionables.UseMono'.

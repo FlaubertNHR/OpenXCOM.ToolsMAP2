@@ -473,7 +473,7 @@ namespace MapView.Forms.Observers
 						XCImage.SpriteHeight = XCImage.SpriteHeight40; // to MapView defaults
 
 
-						if (fPckView.FireMvReload					// the Descriptor needs to reload
+						if (fPckView.RequestReload					// the Descriptor needs to reload
 							&& CheckReload() == DialogResult.OK)	// so ask user if he/she wants to save the current Map+Routes (if changed)
 						{
 							if (ReloadDescriptor != null)

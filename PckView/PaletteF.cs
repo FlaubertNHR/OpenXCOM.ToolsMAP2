@@ -10,6 +10,8 @@ namespace PckView
 	/// <summary>
 	/// Displays the currently active 256-color palette.
 	/// </summary>
+	/// <remarks>This palette-viewer/chooser shall be hidden and remain hidden
+	/// when a LoFTset is current.</remarks>
 	internal sealed class PaletteF
 		:
 			Form
@@ -63,10 +65,12 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// @note Does not require KeyPreview TRUE because there's not really a
-		/// child-control to pass the keydown to. But do KeyPreview TRUE anyway.
+		/// Handles the keydown event.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Does not require KeyPreview TRUE because there's not really
+		/// a child-control to pass the keydown to. But do KeyPreview TRUE
+		/// anyway.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyData == Keys.Escape)
@@ -78,7 +82,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles the FormClosing event.
+		/// Handles the FormClosing event. Closes this form if PckView is
+		/// quitting - else hide.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -93,7 +98,9 @@ namespace PckView
 				else
 				{
 					RegistryInfo.UpdateRegistry(this);
+
 					PalPanel.Destroy();
+					lblStatus.Destroy();
 				}
 			}
 			base.OnFormClosing(e);
@@ -119,7 +126,7 @@ namespace PckView
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
-		/// this method with the code editor.
+		/// this method with the code editor. Unless you feel lucky.
 		/// </summary>
 		private void InitializeComponent()
 		{
