@@ -24,6 +24,11 @@ namespace PckView
 		#endregion Enums
 
 
+		#region Fields (static)
+		internal static bool BypassActivatedEvent;
+		#endregion Fields (static)
+
+
 		#region Fields
 		internal readonly PckViewF _f;
 		internal readonly PaletteF _fpalette;
@@ -46,6 +51,30 @@ namespace PckView
 		protected override bool ShowWithoutActivation
 		{
 			get { return true; }
+		}
+
+		/// <summary>
+		/// Brings PaletteViewer to top when this is activated.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnActivated(EventArgs e)
+		{
+			if (!BypassActivatedEvent)
+			{
+				BypassActivatedEvent = true;
+
+				if (_fpalette.Visible)
+				{
+					_fpalette.TopMost = true;
+					_fpalette.TopMost = false;
+				}
+
+				TopMost = true;		// req'd else this form won't activate at all
+				TopMost = false;	// unless user closes the PaletteViewer
+
+				BypassActivatedEvent = false;
+			}
+			base.OnActivated(e);
 		}
 		#endregion Properties (override)
 

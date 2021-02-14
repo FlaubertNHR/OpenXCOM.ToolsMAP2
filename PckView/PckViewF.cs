@@ -464,8 +464,8 @@ namespace PckView
 					SpriteEditor.TopMost = false;
 				}
 
-				TopMost = true;
-				TopMost = false;
+				TopMost = true;		// req'd else this form won't activate at all
+				TopMost = false;	// unless user closes the other forms
 
 				BypassActivatedEvent = false;
 			}
@@ -752,10 +752,10 @@ namespace PckView
 				if (!_miEdit.Checked)
 				{
 					_miEdit.Checked = true;
-					SpriteEditor.Show();
+
+					SpriteEditor          .Show();
+					SpriteEditor._fpalette.Show();
 				}
-				else
-					SpriteEditor.BringToFront();
 			}
 		}
 
