@@ -389,14 +389,13 @@ namespace XCom
 
 				var pal = new Palette(label);
 
-				Color color = this[0];
-				int val = GetL(color.R, color.G, color.B);
-				pal[0] = Color.FromArgb(0, val,val,val); // id#0 shall always be transparent grayscale
+				pal[Tid] = Color.FromArgb(0, 0,0,0); // id#0 shall always be transparent black
 
-				for (int id = 1; id != Table.Entries.Length; ++id)
+				Color color; int val;
+				for (int id = Tid + 1; id != Table.Entries.Length; ++id)
 				{
 					color = this[id];
-					val = GetL(color.R, color.G, color.B);
+					val = GetMonochromaticBrightness(color.R, color.G, color.B);
 
 					switch (i)
 					{
@@ -418,10 +417,8 @@ namespace XCom
 		/// <param name="green"></param>
 		/// <param name="blue"></param>
 		/// <returns></returns>
-		private int GetL(int red, int green, int blue)
+		private int GetMonochromaticBrightness(int red, int green, int blue)
 		{
-//			return (int)(red * 0.2126 + green * 0.7152 + blue * 0.0722);
-//			return (int)(red * 0.2990 + green * 0.5870 + blue * 0.1140);
 			return (int)(Math.Sqrt(Math.Pow(red,   2) * 0.2990
 								 + Math.Pow(green, 2) * 0.5870
 								 + Math.Pow(blue,  2) * 0.1140));
