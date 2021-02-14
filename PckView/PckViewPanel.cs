@@ -84,13 +84,12 @@ namespace PckView
 
 				_f.ResetUi(_spriteset != null);
 
-				// TODO: update PaletteViewer if the spriteset's palette changes.
 				Invalidate();
 			}
 		}
 
 		/// <summary>
-		/// The selected id.
+		/// The selected sprite-id.
 		/// </summary>
 		internal int Selid
 		{ get; set; }
