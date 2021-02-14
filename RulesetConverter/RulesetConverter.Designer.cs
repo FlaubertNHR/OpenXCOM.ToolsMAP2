@@ -1,39 +1,24 @@
-﻿namespace RulesetConverter
+﻿using System;
+using System.Windows.Forms;
+
+
+namespace RulesetConverter
 {
 	partial class RulesetConverter
 	{
 		#region Designer
-		/// <summary>
-		/// Designer variable used to keep track of non-visual components.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
-
-		private System.Windows.Forms.Button btn_Cancel;
-		private System.Windows.Forms.Button btn_Convert;
-		private System.Windows.Forms.TextBox tb_Input;
-		private System.Windows.Forms.Button btn_Input;
-		private System.Windows.Forms.Label lbl_Input;
-		private System.Windows.Forms.Label lbl_Info;
-		private System.Windows.Forms.RadioButton rb_Ufo;
-		private System.Windows.Forms.RadioButton rb_Tftd;
-		private System.Windows.Forms.Label lbl_GameType;
-		private System.Windows.Forms.CheckBox cb_Basepath;
-		private System.Windows.Forms.Button btn_Basepath;
-		private System.Windows.Forms.Label lbl_Basepath;
-		
-
-		/// <summary>
-		/// Disposes resources used by the form.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
+		private Button btn_Cancel;
+		private Button btn_Convert;
+		private TextBox tb_Input;
+		private Button btn_Input;
+		private Label lbl_Input;
+		private Label lbl_Info;
+		private RadioButton rb_Ufo;
+		private RadioButton rb_Tftd;
+		private Label lbl_GameType;
+		private CheckBox cb_Basepath;
+		private Button btn_Basepath;
+		private Label lbl_Basepath;
 
 		/// <summary>
 		/// This method is required for Windows Forms designer support.
