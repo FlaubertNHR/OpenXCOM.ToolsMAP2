@@ -290,7 +290,6 @@ namespace PckView
 			// 
 			// miPaletteMenu
 			// 
-			this.miPaletteMenu.Enabled = false;
 			this.miPaletteMenu.Index = 1;
 			this.miPaletteMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miTransparent,
@@ -320,7 +319,6 @@ namespace PckView
 			// 
 			// miBytesMenu
 			// 
-			this.miBytesMenu.Enabled = false;
 			this.miBytesMenu.Index = 2;
 			this.miBytesMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miBytes});

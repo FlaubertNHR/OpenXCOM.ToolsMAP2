@@ -704,8 +704,7 @@ namespace PckView
 			miExportSpritesheet.Enabled =
 			miImportSpritesheet.Enabled =
 
-			miPaletteMenu      .Enabled = // Main ->
-			miBytesMenu        .Enabled =
+			miPaletteMenu      .Enabled = // Main
 
 			_miAdd             .Enabled = valid; // Context
 
@@ -1883,21 +1882,21 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnBytesClick(object sender, EventArgs e)
 		{
-			if (!miBytes.Checked)
+			if (miBytes.Checked = !miBytes.Checked)
 			{
-				if (TilePanel.Selid != -1)
-				{
-					miBytes.Checked = true;
-					ByteTableManager.LoadTable(
-											TilePanel.Spriteset[TilePanel.Selid],
-											BytesClosingCallback);
-				}
+				XCImage sprite;
+				if (TilePanel.Spriteset != null && TilePanel.Selid != -1)
+					sprite = TilePanel.Spriteset[TilePanel.Selid];
+				else
+					sprite = null;
+
+				ByteTableManager.LoadTable(
+										sprite,
+										SetType,
+										BytesClosingCallback);
 			}
 			else
-			{
-				miBytes.Checked = false;
 				ByteTableManager.HideTable();
-			}
 		}
 
 		/// <summary>

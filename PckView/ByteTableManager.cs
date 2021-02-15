@@ -28,10 +28,12 @@ namespace PckView
 		/// inside.
 		/// </summary>
 		/// <param name="sprite">the sprite whose bytes to display</param>
+		/// <param name="setType">the type of spriteset to deal with</param>
 		/// <param name="callback">function pointer that unchecks the menuitem
 		/// in PckViewF</param>
 		internal static void LoadTable(
 				XCImage sprite,
+				PckViewF.Type setType,
 				MethodInvoker callback)
 		{
 			_sprite = sprite;
@@ -39,22 +41,23 @@ namespace PckView
 			if (_fBytes == null)
 			{
 				_fBytes = new Form();
-				_fBytes.Size = new Size(960, 620);
-				_fBytes.Font = new Font("Verdana", 7);
-				_fBytes.Text = "Byte Table";
+				_fBytes.Font       = new Font("Verdana", 7);
+				_fBytes.Text       = "Byte Table";
 				_fBytes.KeyPreview = true;
 				_fBytes.KeyDown     += OnBytesKeyDown;
 				_fBytes.FormClosing += (sender, e) => callback();
 				_fBytes.FormClosing += OnBytesClosing;
+				_fBytes.Load        += OnBytesLoad;
 
 				_rtbBytes = new RichTextBox();
-				_rtbBytes.Dock = DockStyle.Fill;
-				_rtbBytes.Font = new Font("Courier New", 8);
+				_rtbBytes.Dock     = DockStyle.Fill;
+				_rtbBytes.Font     = new Font("Courier New", 8);
 				_rtbBytes.WordWrap = false;
 				_rtbBytes.ReadOnly = true;
 
 				_fBytes.Controls.Add(_rtbBytes);
 			}
+			_fBytes.ClientSize = SizeTable(setType);
 
 			PrintTable();
 			_fBytes.Show();
@@ -64,12 +67,41 @@ namespace PckView
 		/// Loads new sprite information when the table is already open/visible.
 		/// </summary>
 		/// <param name="sprite"></param>
-		internal static void ReloadTable(XCImage sprite)
+		/// <param name="setType"></param>
+		internal static void ReloadTable(XCImage sprite, PckViewF.Type setType)
 		{
 			_sprite = sprite;
 
 			if (_fBytes != null && _fBytes.Visible)
+			{
+				_fBytes.ClientSize = SizeTable(setType);
 				PrintTable();
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="setType"></param>
+		/// <returns></returns>
+		private static Size SizeTable(PckViewF.Type setType)
+		{
+			switch (setType)
+			{
+//				case PckViewF.Type.non:
+//				case PckViewF.Type.Pck:
+				default:
+					return new Size(949, 589);	// Tr w= 924 h= 574
+
+				case PckViewF.Type.Bigobs:
+					return new Size(949, 701);	// Tr w= 924 h= 686
+
+				case PckViewF.Type.ScanG:
+					return new Size(165, 85);	// Tr w= 140 h= 70
+
+				case PckViewF.Type.LoFT:
+					return new Size(501, 253);	// Tr w= 476 h= 238
+			}
 		}
 
 		/// <summary>
@@ -122,7 +154,18 @@ namespace PckView
 
 		#region Events (static)
 		/// <summary>
-		/// 
+		/// Fix 'AutoWordSelection'.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private static void OnBytesLoad(object sender, EventArgs e)
+		{
+			_rtbBytes.AutoWordSelection = false;
+		}
+
+		/// <summary>
+		/// Handles the keydown event. Hides or closes the form on [Esc] or
+		/// [F9] keypress.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -132,14 +175,15 @@ namespace PckView
 			{
 				case Keys.Escape:
 				case Keys.F9:
-					e.SuppressKeyPress = true;
+					e.Handled = e.SuppressKeyPress = true;
 					_fBytes.Close();
 					break;
 			}
 		}
 
 		/// <summary>
-		/// 
+		/// Handles the formclosing event. Hides the form if PckView is not
+		/// quitting.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -147,6 +191,11 @@ namespace PckView
 		{
 			if (e.Cancel = !PckViewF.Quit)
 				_fBytes.Hide();
+			else
+			{
+				_rtbBytes.Font.Dispose();
+				_fBytes  .Font.Dispose();
+			}
 		}
 		#endregion Events (static)
 	}

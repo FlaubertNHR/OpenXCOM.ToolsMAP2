@@ -44,7 +44,7 @@ namespace PckView
 					title += " - id " + _sprite.Id;
 				_feditor.Text = title;
 
-				ByteTableManager.ReloadTable(_sprite);
+				ByteTableManager.ReloadTable(_sprite, _feditor._f.SetType);
 
 				Refresh();
 			}
@@ -160,6 +160,8 @@ namespace PckView
 											_feditor._f.TilePanel.Invalidate();
 
 											_feditor._f.Changed = true;
+
+											ByteTableManager.ReloadTable(Sprite, _feditor._f.SetType);
 										}
 									}
 									else
@@ -205,6 +207,8 @@ namespace PckView
 								_feditor._f.TilePanel.Invalidate();
 
 								_feditor._f.Changed = true;
+
+								ByteTableManager.ReloadTable(Sprite, _feditor._f.SetType);
 							}
 							break;
 
