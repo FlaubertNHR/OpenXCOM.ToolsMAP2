@@ -261,24 +261,8 @@ namespace PckView
 
 			if (Sprite != null)
 			{
-				if (_feditor._f.SetType == PckViewF.Type.LoFT)
-				{
-					for (int y = 0; y != XCImage.SpriteHeight; ++y)
-					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
-					{
-						int palid = Sprite.Bindata[y * XCImage.SpriteWidth + x];
-						using (var brush = new SolidBrush(Sprite.Pal.Table.Entries[palid]))
-						{
-							graphics.FillRectangle(
-												brush,
-												x * _scale,
-												y * _scale,
-													_scale,
-													_scale);
-						}
-					}
-				}
-				else if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON
+					&& _feditor._f.SetType != PckViewF.Type.LoFT)
 				{
 					for (int y = 0; y != XCImage.SpriteHeight; ++y)
 					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
