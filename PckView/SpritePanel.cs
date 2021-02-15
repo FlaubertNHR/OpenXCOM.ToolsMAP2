@@ -221,7 +221,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Displays the color of any mouseovered paletteId.
+		/// Displays the color of any mouseovered pixel.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
@@ -372,8 +372,8 @@ namespace PckView
 			double green = (double)color.G / 255;
 			double blue  = (double)color.B / 255;
 
-			double factor = (double)PckViewF.SpriteShadeFloat + 1.65;	// <- is arbitrary; it would help to know the actual
-																		// algorithm used by ImageAttributes.SetGamma() ...
+			double factor = (double)PckViewF.SpriteShadeFloat + 1.65;	// <- is arbitrary - it would help to know the actual
+																		//    algorithm used by ImageAttributes.SetGamma()
 			return Color.FromArgb(
 							color.A,
 							(int)(Math.Pow(red,   1 / factor) * 255),
@@ -387,12 +387,12 @@ namespace PckView
 		/// <summary>
 		/// Gets a string of information that describes either a pixel's or a
 		/// palette-swatch's color.
-		/// @note Palette ids #254 and #255 are invalid (as colors) in PCK files
-		/// because the RLE-compression algorithm uses them as markers with
-		/// different meanings.
 		/// </summary>
 		/// <param name="palid">a palette-id to get info about</param>
 		/// <returns>string of color-info</returns>
+		/// <remarks>Palette ids #254 and #255 are invalid (as colors) in PCK
+		/// files because the RLE-compression algorithm uses them as markers
+		/// with different meanings.</remarks>
 		internal string GetColorInfo(int palid)
 		{
 			if (palid != -1)
@@ -409,12 +409,12 @@ namespace PckView
 
 				switch (palid)
 				{
-					case Palette.Tid: // #0
+					case Palette.Tid:
 						text += " [transparent]";
 						break;
 
-					case PckSprite.MarkerRle: // #254
-					case PckSprite.MarkerEos: // #255
+					case PckSprite.MarkerRle:
+					case PckSprite.MarkerEos:
 						if (_feditor._f.TilePanel.Spriteset.TabwordLength != SpritesetsManager.TAB_WORD_LENGTH_0)
 						{
 							text += " [invalid]";
