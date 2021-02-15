@@ -196,8 +196,6 @@ namespace PckView
 			if (e.Button == MouseButtons.Left
 				&& Spriteset != null && Spriteset.Count != 0)
 			{
-				// IMPORTANT: 'idSel' is currently allowed only 1 entry.
-
 				int id = GetTileId(e);
 				if (id != Selid)
 				{
@@ -207,7 +205,7 @@ namespace PckView
 					{
 						sprite = Spriteset[Selid];
 
-//						if (ModifierKeys == Keys.Control)
+//						if (ModifierKeys == Keys.Control) // IMPORTANT: 'Selid' is currently allowed only 1 entry.
 //						{
 //							SpriteSelected spritePre = null;
 //							foreach (var sprite in _selectedSprites)
@@ -608,9 +606,28 @@ namespace PckView
 		/// <param name="dir">-1 left, +1 right</param>
 		internal void SelectAdjacentHori(int dir)
 		{
-			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[Selid += dir];
-			ScrollToTile(Selid);
-			Invalidate();
+			if (Spriteset.Count != 0)
+			{
+				int selid = Selid;
+				switch (dir)
+				{
+					case -1:
+						if (Selid == -1) Selid = 0;
+						else if (Selid > 0) --Selid;
+						break;
+
+					case +1:
+						if (Selid == -1) Selid = Spriteset.Count - 1;
+						else if (Selid < Spriteset.Count - 1) ++Selid;
+						break;
+				}
+
+				if (Selid != selid)
+				{
+					_f.SetSelectedId(Selid);
+					Invalidate();
+				}
+			}
 		}
 
 		/// <summary>
@@ -619,28 +636,28 @@ namespace PckView
 		/// <param name="dir">-1 up, +1 down</param>
 		internal void SelectAdjacentVert(int dir)
 		{
-			switch (dir)
+			if (Spriteset.Count != 0)
 			{
-				case -1:
-					if (Selid >= HoriCount)
-						Selid -= HoriCount;
-					break;
+				int selid = Selid;
+				switch (dir)
+				{
+					case -1:
+						if (Selid == -1) Selid = 0;
+						else if (Selid >= HoriCount) Selid -= HoriCount;
+						break;
 
-				case +1:
-					if (Selid == -1 && Spriteset.Count != 0)
-					{
-						Selid = Spriteset.Count - 1;
-					}
-					else if (Selid < Spriteset.Count - HoriCount)
-					{
-						Selid += HoriCount;
-					}
-					break;
+					case +1:
+						if (Selid == -1) Selid = Spriteset.Count - 1;
+						else if (Selid < Spriteset.Count - HoriCount) Selid += HoriCount;
+						break;
+				}
+
+				if (Selid != selid)
+				{
+					_f.SetSelectedId(Selid);
+					Invalidate();
+				}
 			}
-
-			_f.SpriteEditor.SpritePanel.Sprite = Spriteset[Selid];
-			ScrollToTile(Selid);
-			Invalidate();
 		}
 
 		/// <summary>

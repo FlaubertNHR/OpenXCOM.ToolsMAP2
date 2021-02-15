@@ -214,7 +214,7 @@ namespace PckView
 				RegistryInfo.InitializeRegistry(dirAppL);
 
 			RegistryInfo.RegisterProperties(this);
-//			regInfo.AddProperty("SelectedPalette");
+//			regInfo.AddProperty("SelectedPalette"); // + Transparency On/Off
 
 			TilePanel = new PckViewPanel(this);
 			TilePanel.ContextMenuStrip = CreateContext();
@@ -564,76 +564,76 @@ namespace PckView
 			{
 				// Context shortcuts ->
 
-				case Keys.Enter:												// edit
+				case Keys.Enter:											// edit
 					if (_miEdit.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnSpriteEditorClick(null, EventArgs.Empty);
 					}
 					break;
 
-				case Keys.D:													// add
+				case Keys.D:												// add
 					if (_miAdd.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnAddSpritesClick(null, EventArgs.Empty);
 					}
 					break;
 
-				case Keys.B:													// insert before
+				case Keys.B:												// insert before
 					if (_miInsertBefor.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnInsertSpritesBeforeClick(null, EventArgs.Empty);
 					}
 					break;
 
-				case Keys.A:													// insert after
+				case Keys.A:												// insert after
 					if (_miInsertAfter.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnInsertSpritesAfterClick(null, EventArgs.Empty);
 					}
 					break;
 
-				case Keys.R:													// replace
+				case Keys.R:												// replace
 					if (_miReplace.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnReplaceSpriteClick(null, EventArgs.Empty);
 					}
 					break;
 
 				case Keys.OemMinus: // drugs ...
-				case Keys.Subtract:												// move left
+				case Keys.Subtract:											// move left
 					if (_miMoveL.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnMoveLeftSpriteClick(null, EventArgs.Empty);
 					}
 					break;
 
 				case Keys.Oemplus: // drugs ...
-				case Keys.Add:													// move right
+				case Keys.Add:												// move right
 					if (_miMoveR.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnMoveRightSpriteClick(null, EventArgs.Empty);
 					}
 					break;
 
-				case Keys.Delete:												// delete
+				case Keys.Delete:											// delete
 					if (_miDelete.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnDeleteSpriteClick(null, EventArgs.Empty);
 					}
 					break;
 
-				case Keys.P:													// export
+				case Keys.P:												// export
 					if (_miExport.Enabled)
 					{
-						e.SuppressKeyPress = true;
+						e.Handled = e.SuppressKeyPress = true;
 						OnExportSpriteClick(null, EventArgs.Empty);
 					}
 					break;
@@ -642,43 +642,42 @@ namespace PckView
 				// Navigation shortcuts ->
 
 				case Keys.Left:
-					if (TilePanel.Spriteset != null && TilePanel.Selid > 0)
+					if (TilePanel.Spriteset != null)
 					{
+						e.Handled = e.SuppressKeyPress = true;
 						TilePanel.SelectAdjacentHori(-1);
-						PrintSelectedId();
 					}
 					break;
 
 				case Keys.Right:
-					if (TilePanel.Spriteset != null && TilePanel.Selid != TilePanel.Spriteset.Count - 1)
+					if (TilePanel.Spriteset != null)
 					{
+						e.Handled = e.SuppressKeyPress = true;
 						TilePanel.SelectAdjacentHori(+1);
-						PrintSelectedId();
 					}
 					break;
 
 				case Keys.Up:
 					if (TilePanel.Spriteset != null)
 					{
+						e.Handled = e.SuppressKeyPress = true;
 						TilePanel.SelectAdjacentVert(-1);
-						PrintSelectedId();
 					}
 					break;
 
 				case Keys.Down:
 					if (TilePanel.Spriteset != null)
 					{
+						e.Handled = e.SuppressKeyPress = true;
 						TilePanel.SelectAdjacentVert(+1);
-						PrintSelectedId();
 					}
 					break;
 
 				case Keys.Escape:
 					if (TilePanel.Spriteset != null)
 					{
-						TilePanel.Selid = -1;
-						SpriteEditor.SpritePanel.Sprite = null;
-						PrintSelectedId();
+						e.Handled = e.SuppressKeyPress = true;
+						SetSelectedId(TilePanel.Selid = -1);
 						TilePanel.Invalidate();
 					}
 					break;
@@ -723,7 +722,7 @@ namespace PckView
 		/// <param name="e"></param>
 		/// <remarks>This fires after PckViewPanel.OnMouseDown(). Thought you'd
 		/// like to know.</remarks>
-		private void OnSpriteClick(object sender, EventArgs e)
+		internal void OnSpriteClick(object sender, EventArgs e)
 		{
 			bool enabled = (TilePanel.Selid != -1);
 
@@ -2011,12 +2010,21 @@ namespace PckView
 		public void SetSelectedId(int id)
 		{
 			TilePanel.Selid = id;
-			PrintSelectedId();
 
-			SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[id];
+			if (TilePanel.Spriteset != null
+				&& id != -1
+				&& id < TilePanel.Spriteset.Count)
+			{
+				SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[id];
+			}
+			else
+				SpriteEditor.SpritePanel.Sprite = null;
+
 			TilePanel.ScrollToTile(id);
 
 			OnSpriteClick(null, EventArgs.Empty);
+
+			PrintSelectedId();
 		}
 
 		/// <summary>
