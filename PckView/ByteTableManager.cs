@@ -90,17 +90,10 @@ namespace PckView
 			{
 //				case PckViewF.Type.non:
 //				case PckViewF.Type.Pck:
-				default:
-					return new Size(949, 589);	// Tr w= 924 h= 574
-
-				case PckViewF.Type.Bigobs:
-					return new Size(949, 701);	// Tr w= 924 h= 686
-
-				case PckViewF.Type.ScanG:
-					return new Size(165, 85);	// Tr w= 140 h= 70
-
-				case PckViewF.Type.LoFT:
-					return new Size(501, 253);	// Tr w= 476 h= 238
+				default:                   return new Size(949, 589);	// Tr w= 924 h= 574
+				case PckViewF.Type.Bigobs: return new Size(949, 701);	// Tr w= 924 h= 686
+				case PckViewF.Type.ScanG:  return new Size(165, 85);	// Tr w= 140 h= 70
+				case PckViewF.Type.LoFT:   return new Size(501, 253);	// Tr w= 476 h= 238
 			}
 		}
 
