@@ -227,7 +227,7 @@ namespace PckView
 			PrintOverId();
 
 			SpriteEditor = new SpriteEditorF(this);
-			SpriteEditor.FormClosing += OnEditorFormClosing;
+			SpriteEditor.FormClosing += OnSpriteEditorClosing;
 
 			PopulatePaletteMenu(); // WARNING: Palettes created here <-
 
@@ -377,7 +377,6 @@ namespace PckView
 			contextmenu.Items.Add(new ToolStripSeparator());
 			contextmenu.Items.Add(_miExport);
 
-			_miEdit       .Enabled =
 			_miAdd        .Enabled =
 			_miInsertBefor.Enabled =
 			_miInsertAfter.Enabled =
@@ -565,11 +564,8 @@ namespace PckView
 				// Context shortcuts ->
 
 				case Keys.Enter:											// edit
-					if (_miEdit.Enabled)
-					{
-						e.Handled = e.SuppressKeyPress = true;
-						OnSpriteEditorClick(null, EventArgs.Empty);
-					}
+					e.Handled = e.SuppressKeyPress = true;
+					OnSpriteEditorClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.D:												// add
@@ -726,8 +722,7 @@ namespace PckView
 		{
 			bool enabled = (TilePanel.Selid != -1);
 
-			_miEdit       .Enabled = // Context ->
-			_miInsertBefor.Enabled =
+			_miInsertBefor.Enabled = // Context ->
 			_miInsertAfter.Enabled =
 			_miReplace    .Enabled =
 			_miDelete     .Enabled =
@@ -749,16 +744,18 @@ namespace PckView
 			if (TilePanel.Spriteset != null && TilePanel.Selid != -1)
 			{
 				SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[TilePanel.Selid];
+			}
+			else
+				SpriteEditor.SpritePanel.Sprite = null;
 
-				if (!_miEdit.Checked)
-				{
-					_miEdit.Checked = true;
+			if (!_miEdit.Checked)
+			{
+				_miEdit.Checked = true;
 
-					SpriteEditor.Show();
+				SpriteEditor.Show();
 
-					if (SetType != Type.LoFT)
-						SpriteEditor._fpalette.Show();
-				}
+				if (SetType != Type.LoFT)
+					SpriteEditor._fpalette.Show();
 			}
 		}
 
@@ -768,7 +765,7 @@ namespace PckView
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		/// <remarks>This fires after the editor's FormClosing event.</remarks>
-		private void OnEditorFormClosing(object sender, CancelEventArgs e)
+		private void OnSpriteEditorClosing(object sender, CancelEventArgs e)
 		{
 			_miEdit.Checked = false;
 		}
