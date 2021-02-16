@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -11,17 +12,27 @@ namespace RulesetConverter
 	/// <summary>
 	/// The Ruleset Converter.
 	/// </summary>
-	internal partial class RulesetConverter
+	internal sealed partial class RulesetConverter
 		:
 			Form
 	{
-		#region Fields
+		#region Fields (static)
 		private const string PrePad = "#----- ";
+
+		private const string LabelBasepathDefault = "[use Configurator's basepath]";
+		private const string LabelBasepathInvalid = "[basepath needs MAPS and ROUTES folders]";
+
+		private const string UFO  = "ufo_";
+		private const string TFTD = "tftd_";
+		#endregion Fields (static)
+
+
+		#region Fields
 		private int PrePadLength = PrePad.Length;
 
-		private const string LabelBasepathDefault = "[using Configurator's basepath]";
-
 		private string _basepath = String.Empty;
+
+		private string _typetext = String.Empty;
 		#endregion Fields
 
 
@@ -38,13 +49,22 @@ namespace RulesetConverter
 		#endregion cTor
 
 
+		#region Events (override)
+		protected override void OnLoad(EventArgs e)
+		{
+			MinimumSize = new Size(500, Height);
+			MaximumSize = new Size(Int32.MaxValue, Height);
+		}
+		#endregion Events (override)
+
+
 		#region Events
 		/// <summary>
 		/// Closes the converter when the Cancel button is clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void OnCancelClick(object sender, EventArgs e)
+		private void OnCancelClick(object sender, EventArgs e)
 		{
 			Close();
 		}
@@ -54,42 +74,68 @@ namespace RulesetConverter
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void OnFindInputClick(object sender, EventArgs e)
+		private void OnFindInputClick(object sender, EventArgs e)
 		{
 			using (var ofd = new OpenFileDialog())
 			{
 				ofd.Title  = "Open an OxC ruleset file ...";
 				ofd.Filter = "Ruleset files(*.rul)|*.rul|All files(*.*)|*.*";
 
-				ofd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+				string dir;
+				if (!String.IsNullOrEmpty(tb_Input.Text)
+					&& Directory.Exists(dir = Path.GetDirectoryName(tb_Input.Text)))
+				{
+					ofd.InitialDirectory = dir;
+				}
+				else if (Directory.Exists(_basepath))
+				{
+					ofd.InitialDirectory = _basepath;
+				}
+				else
+					ofd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
 
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
 					tb_Input.Text = ofd.FileName;
-					btn_Convert.Enabled = true;
+
+					if (String.IsNullOrEmpty(tb_Label.Text))
+					{
+						string text = Path.GetFileNameWithoutExtension(ofd.FileName).Trim();
+						for (int i = text.Length - 1; i != -1; --i)
+						{
+							if (!IsValidAscii((int)text[i]))
+								text.Remove(i,1);
+						}
+						tb_Label.Text = text;
+					}
 				}
 			}
+			EnableConvert();
 		}
-
 
 		/// <summary>
 		/// Handles the Basepath checkbox.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void OnBasepathCheckChanged(object sender, EventArgs e)
+		private void OnBasepathCheckChanged(object sender, EventArgs e)
 		{
 			if (cb_Basepath.Checked)
 			{
 				btn_Basepath.Enabled = true;
-				lbl_Basepath.Text = _basepath;
+
+				if (IsBasepathValid(_basepath))
+					lbl_Basepath.Text = _basepath;
+				else
+					lbl_Basepath.Text = LabelBasepathInvalid;
 			}
 			else
 			{
 				btn_Basepath.Enabled = false;
 				lbl_Basepath.Text = LabelBasepathDefault;
 			}
+			EnableConvert();
 		}
 
 		/// <summary>
@@ -97,26 +143,81 @@ namespace RulesetConverter
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void OnFindBasepathClick(object sender, EventArgs e)
+		private void OnFindBasepathClick(object sender, EventArgs e)
 		{
 			using (var fbd = new FolderBrowserDialog())
 			{
 				fbd.Description = "Select a basepath. A valid basepath has the"
 								+ " folders MAPS, ROUTES, and preferably TERRAIN.";
 
-				if (!String.IsNullOrEmpty(tb_Input.Text))
+				string dir;
+				if (Directory.Exists(_basepath))
 				{
-					string path = Path.GetDirectoryName(tb_Input.Text);
-					fbd.SelectedPath = Path.GetDirectoryName(path);
+					fbd.SelectedPath = _basepath;
+				}
+				else if (!String.IsNullOrEmpty(tb_Input.Text)
+					&& Directory.Exists(dir = Path.GetDirectoryName(tb_Input.Text)))
+				{
+					fbd.SelectedPath = dir;
 				}
 				else
 					fbd.SelectedPath = Path.GetDirectoryName(Application.ExecutablePath);
 
 
 				if (fbd.ShowDialog() == DialogResult.OK)
-					lbl_Basepath.Text = (_basepath = fbd.SelectedPath);
+				{
+					if (IsBasepathValid(fbd.SelectedPath))
+						lbl_Basepath.Text = _basepath = fbd.SelectedPath;
+					else
+					{
+						_basepath = String.Empty;
+						lbl_Basepath.Text = LabelBasepathInvalid;
+					}
+				}
+			}
+			EnableConvert();
+		}
+
+
+		/// <summary>
+		/// Changes the group prefix by UFO/TFTD type.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnTypeChanged(object sender, EventArgs e)
+		{
+			var rb = sender as RadioButton;
+			if (rb == rb_Ufo)
+			{
+				if (rb.Checked)
+					lbl_Label.Text = UFO;
+				else
+					lbl_Label.Text = TFTD;
 			}
 		}
+
+		/// <summary>
+		/// Prevents unwanted chars from appearing in the Group-label.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		/// <remarks>Can't do this on key-events because text can be pasted.</remarks>
+		private void OnTypeTextChanged(object sender, EventArgs e)
+		{
+			for (int i = 0; i != tb_Label.Text.Length; ++i)
+			{
+				if (!IsValidAscii((int)tb_Label.Text[i]))
+				{
+					// fail
+					tb_Label.Text = _typetext;
+					tb_Label.SelectionLength = 0;
+					tb_Label.SelectionStart = tb_Label.Text.Length;
+					return;
+				}
+			}
+			_typetext = tb_Label.Text; // success.
+		}
+
 
 		/// <summary>
 		/// Runs through the file parsing data into Tilesets. Then writes it to
@@ -124,7 +225,7 @@ namespace RulesetConverter
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void OnConvertClick(object sender, EventArgs e)
+		private void OnConvertClick(object sender, EventArgs e)
 		{
 			if (!File.Exists(tb_Input.Text))
 			{
@@ -137,21 +238,7 @@ namespace RulesetConverter
 							MessageBoxDefaultButton.Button1,
 							0);
 			}
-			else if (cb_Basepath.Checked && !Directory.Exists(_basepath))
-			{
-				MessageBox.Show(
-							this,
-							"Selected basepath directory does not exist.",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
-				OnFindBasepathClick(null, EventArgs.Empty);
-			}
-			else if (cb_Basepath.Checked
-				&& (   !Directory.Exists(Path.Combine(_basepath, "MAPS"))
-					|| !Directory.Exists(Path.Combine(_basepath, "ROUTES")))) // NOTE: Allow nonexistent TERRAIN directory.
+			else if (cb_Basepath.Checked && !IsBasepathValid(_basepath))
 			{
 				MessageBox.Show(
 							this,
@@ -197,7 +284,7 @@ namespace RulesetConverter
 
 				string @group = GetGroupLabel();
 
-				using (var fs = new FileStream(tb_Input.Text, FileMode.Open))
+				using (var fs = new FileStream(tb_Input.Text, FileMode.Open, FileAccess.Read, FileShare.Read))
 				using (var sr = new StreamReader(fs))
 				{
 					var str = new YamlStream();
@@ -283,7 +370,7 @@ namespace RulesetConverter
 				else
 				{
 					// YAML the tilesets ....
-					using (var fs = new FileStream(Path.Combine(dirAppl, "MapTilesets.tpl"), FileMode.Create))
+					using (var fs = new FileStream(Path.Combine(dirAppl, "MapTilesets.tpl"), FileMode.Create, FileAccess.Write, FileShare.None))
 					using (var sw = new StreamWriter(fs))
 					{
 						sw.WriteLine("# This is MapTilesets for MapViewII.");
@@ -368,6 +455,21 @@ namespace RulesetConverter
 						//    category: UFO
 						//    group: ufoShips
 					}
+
+					string result;
+					if (Tilesets.Count == 1)
+						result = "1 terrain converted to a tileset";
+					else
+						result = Tilesets.Count + " terrains converted to tilesets";
+
+					MessageBox.Show(
+								this,
+								result,
+								" Info",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Information,
+								MessageBoxDefaultButton.Button1,
+								0);
 				}
 //				}
 			}
@@ -376,13 +478,55 @@ namespace RulesetConverter
 
 
 		#region Methods
+		/// <summary>
+		/// Enables/disables the Convert button as detered by valid inputfile
+		/// and basepath.
+		/// </summary>
+		private void EnableConvert()
+		{
+			btn_Convert.Enabled = File.Exists(tb_Input.Text)
+							 && (!cb_Basepath.Checked || IsBasepathValid(_basepath));
+		}
+
+		/// <summary>
+		/// Checks if the current basepath has both MAPS and ROUTES subdirs.
+		/// </summary>
+		/// <param name="basepath">the basepath</param>
+		/// <returns>true if basepath is valid</returns>
+		/// <remarks>Allow nonexistent TERRAIN directory.</remarks>
+		private bool IsBasepathValid(string basepath)
+		{
+			return Directory.Exists(Path.Combine(basepath, "MAPS"))
+				&& Directory.Exists(Path.Combine(basepath, "ROUTES"));
+		}
+
+		/// <summary>
+		/// Gets a label for the Maptree group.
+		/// </summary>
+		/// <returns></returns>
 		private string GetGroupLabel()
 		{
-			string @group;
-			if (rb_Ufo.Checked) @group = "ufo_";
-			else                @group = "tftd_"; // rb_Tftd.Checked
+			string label;
+			if (rb_Ufo.Checked) label = UFO;
+			else                label = TFTD; // rb_Tftd.Checked
 
-			return @group + Path.GetFileNameWithoutExtension(tb_Input.Text);
+			string text = tb_Label.Text.Trim();
+			if (!String.IsNullOrEmpty(text))
+				return label + text;
+
+			return label;
+		}
+
+		/// <summary>
+		/// Checks if val is readable ASCII w/out quotes.
+		/// </summary>
+		/// <param name="val"></param>
+		/// <returns></returns>
+		/// <remarks>really not sure - have to look at how Group-label is used
+		/// by the Maptree.</remarks>
+		private bool IsValidAscii(int val)
+		{
+			return val > 31 && val != 34 && val < 127;
 		}
 
 		/// <summary>
