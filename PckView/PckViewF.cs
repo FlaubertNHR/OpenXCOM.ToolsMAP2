@@ -218,7 +218,7 @@ namespace PckView
 
 			TilePanel = new PckViewPanel(this);
 			TilePanel.ContextMenuStrip = CreateContext();
-			TilePanel.Click       += OnSpriteClick;
+			TilePanel.Click       += OnPanelClick;
 			TilePanel.DoubleClick += OnSpriteEditorClick;
 			Controls.Add(TilePanel);
 			TilePanel.BringToFront();
@@ -704,7 +704,7 @@ namespace PckView
 			_miAdd             .Enabled = valid; // Context
 
 			SpriteEditor.OnLoad(null, EventArgs.Empty);	// resize the Editor to the spriteset's sprite-size
-			OnSpriteClick(null, EventArgs.Empty);		// enable/disable items on the contextmenu
+			OnPanelClick(null, EventArgs.Empty);		// enable/disable items on the contextmenu
 
 			PrintSpritesetLabel(valid);
 			PrintTotal(valid);
@@ -718,7 +718,7 @@ namespace PckView
 		/// <param name="e"></param>
 		/// <remarks>This fires after PckViewPanel.OnMouseDown(). Thought you'd
 		/// like to know.</remarks>
-		internal void OnSpriteClick(object sender, EventArgs e)
+		private void OnPanelClick(object sender, EventArgs e)
 		{
 			bool enabled = (TilePanel.Selid != -1);
 
@@ -742,9 +742,7 @@ namespace PckView
 		private void OnSpriteEditorClick(object sender, EventArgs e)
 		{
 			if (TilePanel.Spriteset != null && TilePanel.Selid != -1)
-			{
 				SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[TilePanel.Selid];
-			}
 			else
 				SpriteEditor.SpritePanel.Sprite = null;
 
@@ -1057,7 +1055,7 @@ namespace PckView
 		/// </summary>
 		private void InsertSpritesFinish()
 		{
-			OnSpriteClick(null, EventArgs.Empty);
+			OnPanelClick(null, EventArgs.Empty);
 
 			PrintTotal();
 
@@ -1176,7 +1174,7 @@ namespace PckView
 
 			PrintSelectedId();
 
-			OnSpriteClick(null, EventArgs.Empty);
+			OnPanelClick(null, EventArgs.Empty);
 
 			TilePanel.Refresh();
 			Changed = true;
@@ -1998,30 +1996,31 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Sets the currently selected id. Called only from TileView to set
-		/// 'idSel' externally.
+		/// Sets the currently selected sprite-id.
 		/// </summary>
 		/// <param name="id"></param>
-		/// <remarks>Based on PckViewPanel.OnMouseDown(). 'id' shall be valid
-		/// in 'TilePanel.Spriteset'</remarks>
+		/// <remarks>Can be called by TileView to set 'Selid' externally.</remarks>
 		public void SetSelectedId(int id)
 		{
-			TilePanel.Selid = id;
-
-			if (TilePanel.Spriteset != null
-				&& id != -1
-				&& id < TilePanel.Spriteset.Count)
+			if (id != TilePanel.Selid)
 			{
-				SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[id];
+				TilePanel.Selid = id;
+
+				if (TilePanel.Spriteset != null
+					&& id != -1
+					&& id < TilePanel.Spriteset.Count)
+				{
+					SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[id];
+				}
+				else
+					SpriteEditor.SpritePanel.Sprite = null;
+
+				TilePanel.ScrollToTile(id);
+
+				OnPanelClick(null, EventArgs.Empty);
+
+				PrintSelectedId();
 			}
-			else
-				SpriteEditor.SpritePanel.Sprite = null;
-
-			TilePanel.ScrollToTile(id);
-
-			OnSpriteClick(null, EventArgs.Empty);
-
-			PrintSelectedId();
 		}
 
 		/// <summary>

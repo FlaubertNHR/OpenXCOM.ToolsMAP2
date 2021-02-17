@@ -88,17 +88,25 @@ namespace PckView
 			}
 		}
 
+		private int _selid = -1;
 		/// <summary>
 		/// The selected sprite-id.
 		/// </summary>
 		internal int Selid
-		{ get; set; }
+		{
+			get { return _selid; }
+			set { _selid = value; }
+		}
 
+		private int _ovid = -1;
 		/// <summary>
 		/// The overid.
 		/// </summary>
 		internal int Ovid
-		{ get; private set; }
+		{
+			get { return _ovid; }
+			private set { _ovid = value; }
+		}
 		#endregion Properties
 
 
@@ -117,8 +125,6 @@ namespace PckView
 			_scrollBar.ValueChanged += OnScrollBarValueChanged;
 			Controls.Add(_scrollBar);
 
-			Ovid = Selid  = -1;
-
 			PckViewF.PaletteChanged += OnPaletteChanged;
 		}
 		#endregion cTor
@@ -126,7 +132,9 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// 
+		/// Handles this panel's resize event. Sets the scrollbar range, forces
+		/// any selected sprite into view, and fixes the quirky .net behavior
+		/// that shifts the scroll up by a pixel.
 		/// </summary>
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
@@ -135,7 +143,7 @@ namespace PckView
 
 			if (_f.WindowState != FormWindowState.Minimized)
 			{
-				CalculateScrollRange(false);
+				CalculateScrollRange();
 				ScrollToTile(Selid);
 
 				if (_scrollBar.Visible
@@ -188,9 +196,9 @@ namespace PckView
 		/// <summary>
 		/// Selects and shows status-information for a sprite. Overrides core
 		/// implementation for the MouseDown event.
-		/// NOTE: This fires before PckViewF.OnSpriteClick().
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>This fires before PckViewF.OnPanelClick().</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left
@@ -204,20 +212,6 @@ namespace PckView
 					if ((Selid = id) != -1)
 					{
 						sprite = Spriteset[Selid];
-
-//						if (ModifierKeys == Keys.Control) // IMPORTANT: 'Selid' is currently allowed only 1 entry.
-//						{
-//							SpriteSelected spritePre = null;
-//							foreach (var sprite in _selectedSprites)
-//								if (sprite.X == tileX && sprite.Y == tileY)
-//									spritePre = sprite;
-//							if (spritePre != null)
-//								_selectedSprites.Remove(spritePre);
-//							else
-//								_selectedSprites.Add(selected);
-//						}
-//						else
-//							Selected.Add(selected);
 					}
 					else
 						sprite = null;
@@ -522,13 +516,11 @@ namespace PckView
 		/// Calculates the scrollbar-range after a resize event or a spriteset-
 		/// changed event.
 		/// </summary>
-		/// <param name="resetTrack">true to set the thing to the top of the track</param>
-		private void CalculateScrollRange(bool resetTrack)
+		/// <param name="resetTrack">true to set the scroll to the top of the
+		/// track</param>
+		private void CalculateScrollRange(bool resetTrack = false)
 		{
-			HoriCount   = 1;
-			TableHeight = 0;
-
-			int range = 0;
+			int range;
 			if (Spriteset != null && Spriteset.Count != 0)
 			{
 				if (resetTrack)
@@ -549,15 +541,22 @@ namespace PckView
 				if (range < _largeChange)
 					range = 0;
 			}
+			else
+			{
+				HoriCount   = 1;
+				TableHeight = 0;
+				range       = 0;
+			}
+
 			_scrollBar.Maximum = range;
-			_scrollBar.Visible = (range != 0);
+			_scrollBar.Visible = range != 0;
 		}
 
 		/// <summary>
 		/// Checks if a selected tile is fully visible in the view-panel and
 		/// scrolls the table to show it if not.
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="id">the sprite-id to scroll to</param>
 		internal void ScrollToTile(int id)
 		{
 			if (id != -1 && _scrollBar.Visible)
@@ -565,11 +564,11 @@ namespace PckView
 				int r = id / HoriCount;
 
 				int cutoff = r * TileHeight + TableOffsetVert - 1;
-				if (cutoff < _scrollBar.Value)	// <- check cutoff high
+				if (cutoff < _scrollBar.Value)	// <- check high
 				{
 					_scrollBar.Value = cutoff;
 				}
-				else							// <- check cutoff low
+				else							// <- check low
 				{
 					cutoff = (r + 1) * TileHeight - Height + 1;
 					if (cutoff > _scrollBar.Value)
