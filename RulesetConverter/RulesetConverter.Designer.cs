@@ -50,7 +50,7 @@ namespace RulesetConverter
 			// 
 			this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Cancel.Location = new System.Drawing.Point(315, 142);
+			this.btn_Cancel.Location = new System.Drawing.Point(315, 162);
 			this.btn_Cancel.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Cancel.Name = "btn_Cancel";
 			this.btn_Cancel.Size = new System.Drawing.Size(85, 30);
@@ -63,7 +63,7 @@ namespace RulesetConverter
 			// 
 			this.btn_Convert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btn_Convert.Enabled = false;
-			this.btn_Convert.Location = new System.Drawing.Point(95, 140);
+			this.btn_Convert.Location = new System.Drawing.Point(95, 160);
 			this.btn_Convert.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Convert.Name = "btn_Convert";
 			this.btn_Convert.Size = new System.Drawing.Size(85, 30);
@@ -76,7 +76,7 @@ namespace RulesetConverter
 			// 
 			this.tb_Input.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.tb_Input.Location = new System.Drawing.Point(5, 50);
+			this.tb_Input.Location = new System.Drawing.Point(5, 60);
 			this.tb_Input.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Input.Name = "tb_Input";
 			this.tb_Input.ReadOnly = true;
@@ -87,7 +87,7 @@ namespace RulesetConverter
 			// btn_Input
 			// 
 			this.btn_Input.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_Input.Location = new System.Drawing.Point(460, 49);
+			this.btn_Input.Location = new System.Drawing.Point(460, 59);
 			this.btn_Input.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Input.Name = "btn_Input";
 			this.btn_Input.Size = new System.Drawing.Size(30, 26);
@@ -103,10 +103,10 @@ namespace RulesetConverter
 			this.lbl_Input.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Input.Name = "lbl_Input";
 			this.lbl_Input.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lbl_Input.Size = new System.Drawing.Size(492, 20);
+			this.lbl_Input.Size = new System.Drawing.Size(492, 25);
 			this.lbl_Input.TabIndex = 1;
 			this.lbl_Input.Text = "File to convert";
-			this.lbl_Input.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_Input.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
 			// 
 			// lbl_Info
 			// 
@@ -123,7 +123,7 @@ namespace RulesetConverter
 			// rb_Ufo
 			// 
 			this.rb_Ufo.Checked = true;
-			this.rb_Ufo.Location = new System.Drawing.Point(75, 70);
+			this.rb_Ufo.Location = new System.Drawing.Point(75, 80);
 			this.rb_Ufo.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_Ufo.Name = "rb_Ufo";
 			this.rb_Ufo.Size = new System.Drawing.Size(50, 20);
@@ -135,7 +135,7 @@ namespace RulesetConverter
 			// 
 			// rb_Tftd
 			// 
-			this.rb_Tftd.Location = new System.Drawing.Point(125, 70);
+			this.rb_Tftd.Location = new System.Drawing.Point(125, 80);
 			this.rb_Tftd.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_Tftd.Name = "rb_Tftd";
 			this.rb_Tftd.Size = new System.Drawing.Size(55, 20);
@@ -146,7 +146,7 @@ namespace RulesetConverter
 			// 
 			// lbl_GameType
 			// 
-			this.lbl_GameType.Location = new System.Drawing.Point(5, 70);
+			this.lbl_GameType.Location = new System.Drawing.Point(5, 80);
 			this.lbl_GameType.Name = "lbl_GameType";
 			this.lbl_GameType.Size = new System.Drawing.Size(65, 20);
 			this.lbl_GameType.TabIndex = 4;
@@ -155,7 +155,7 @@ namespace RulesetConverter
 			// 
 			// cb_Basepath
 			// 
-			this.cb_Basepath.Location = new System.Drawing.Point(10, 95);
+			this.cb_Basepath.Location = new System.Drawing.Point(10, 110);
 			this.cb_Basepath.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_Basepath.Name = "cb_Basepath";
 			this.cb_Basepath.Size = new System.Drawing.Size(105, 20);
@@ -168,7 +168,7 @@ namespace RulesetConverter
 			// 
 			this.btn_Basepath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_Basepath.Enabled = false;
-			this.btn_Basepath.Location = new System.Drawing.Point(460, 114);
+			this.btn_Basepath.Location = new System.Drawing.Point(460, 129);
 			this.btn_Basepath.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Basepath.Name = "btn_Basepath";
 			this.btn_Basepath.Size = new System.Drawing.Size(30, 26);
@@ -181,7 +181,7 @@ namespace RulesetConverter
 			// 
 			this.lbl_Basepath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lbl_Basepath.Location = new System.Drawing.Point(10, 120);
+			this.lbl_Basepath.Location = new System.Drawing.Point(10, 135);
 			this.lbl_Basepath.Name = "lbl_Basepath";
 			this.lbl_Basepath.Size = new System.Drawing.Size(445, 15);
 			this.lbl_Basepath.TabIndex = 10;
@@ -189,10 +189,10 @@ namespace RulesetConverter
 			// 
 			// lbl_Label
 			// 
-			this.lbl_Label.Location = new System.Drawing.Point(180, 70);
+			this.lbl_Label.Location = new System.Drawing.Point(180, 80);
 			this.lbl_Label.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Label.Name = "lbl_Label";
-			this.lbl_Label.Size = new System.Drawing.Size(35, 20);
+			this.lbl_Label.Size = new System.Drawing.Size(30, 20);
 			this.lbl_Label.TabIndex = 7;
 			this.lbl_Label.Text = "ufo_";
 			this.lbl_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -201,10 +201,10 @@ namespace RulesetConverter
 			// 
 			this.tb_Label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.tb_Label.Location = new System.Drawing.Point(215, 70);
+			this.tb_Label.Location = new System.Drawing.Point(210, 80);
 			this.tb_Label.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Label.Name = "tb_Label";
-			this.tb_Label.Size = new System.Drawing.Size(240, 19);
+			this.tb_Label.Size = new System.Drawing.Size(245, 19);
 			this.tb_Label.TabIndex = 8;
 			this.tb_Label.WordWrap = false;
 			this.tb_Label.TextChanged += new System.EventHandler(this.OnTypeTextChanged);
@@ -215,7 +215,7 @@ namespace RulesetConverter
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btn_Cancel;
-			this.ClientSize = new System.Drawing.Size(492, 174);
+			this.ClientSize = new System.Drawing.Size(492, 194);
 			this.Controls.Add(this.tb_Label);
 			this.Controls.Add(this.lbl_Label);
 			this.Controls.Add(this.lbl_Basepath);
@@ -235,7 +235,7 @@ namespace RulesetConverter
 			this.MinimumSize = new System.Drawing.Size(400, 200);
 			this.Name = "RulesetConverter";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "RulesetConverter";
+			this.Text = "OxC/e Ruleset Converter";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
