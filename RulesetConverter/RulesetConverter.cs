@@ -17,17 +17,21 @@ namespace RulesetConverter
 			Form
 	{
 		#region Fields (static)
-		private const string PrePad = "#----- ";
-
 		private const string LabelBasepathDefault = "[use Configurator's basepath]";
 		private const string LabelBasepathInvalid = "[basepath needs MAPS and ROUTES folders]";
 
 		private const string UFO  = "ufo_";
 		private const string TFTD = "tftd_";
+
+		private const string PrePad = "#----- ";
 		#endregion Fields (static)
 
 
 		#region Fields
+		private readonly string Info = "This app inputs an OxC ruleset and converts any terrains it has out to MapTilesets.tpl"
+									 + Environment.NewLine
+									 + "a YAML template file (.TPL) for MapView 2 tileset configuration.";
+
 		private int PrePadLength = PrePad.Length;
 
 		private string _basepath = String.Empty;
@@ -44,7 +48,11 @@ namespace RulesetConverter
 		{
 			InitializeComponent();
 
+			lbl_Info    .Text = Info;
 			lbl_Basepath.Text = LabelBasepathDefault;
+
+			tb_Input.BackColor =
+			tb_Label.BackColor = Color.Linen;
 		}
 		#endregion cTor
 
@@ -134,6 +142,7 @@ namespace RulesetConverter
 			{
 				btn_Basepath.Enabled = false;
 				lbl_Basepath.Text = LabelBasepathDefault;
+				SetInfo();
 			}
 			EnableConvert();
 		}
@@ -229,47 +238,23 @@ namespace RulesetConverter
 		{
 			if (!File.Exists(tb_Input.Text))
 			{
-				MessageBox.Show(
-							this,
-							"File not found.",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				lbl_Info.BorderStyle = BorderStyle.FixedSingle;
+				lbl_Info.BackColor = Color.LightCoral;
+				lbl_Info.Text = "File not found.";
+				btn_Convert.Enabled = false;
+//				OnFindInputClick(null, EventArgs.Empty);
 			}
 			else if (cb_Basepath.Checked && !IsBasepathValid(_basepath))
 			{
-				MessageBox.Show(
-							this,
-							"Selected basepath directory does not contain MAPS and ROUTES folders.",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
-				OnFindBasepathClick(null, EventArgs.Empty);
+//				lbl_Info.BorderStyle = BorderStyle.FixedSingle;
+//				lbl_Info.BackColor = Color.LightCoral;
+//				lbl_Info.Text = "Selected basepath does not contain MAPS and ROUTES folders.";
+				lbl_Basepath.Text = LabelBasepathInvalid;
+				btn_Convert.Enabled = false;
+//				OnFindBasepathClick(null, EventArgs.Empty);
 			}
-			else
+			else 
 			{
-				if (cb_Basepath.Checked
-					&& !Directory.Exists(Path.Combine(_basepath, "TERRAIN")))
-				{
-					MessageBox.Show(
-								this,
-								"Selected basepath directory does not contain TERRAIN folder."
-								+ Environment.NewLine + Environment.NewLine
-								+ "While this is not invalid it means that the terrainsets"
-								+ " of each tileset has to be assigned manually with the"
-								+ " TilesetEditor.",
-								" Warning",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Warning,
-								MessageBoxDefaultButton.Button1,
-								0);
-				}
-
-
 				string dirAppl = Path.GetDirectoryName(Application.ExecutablePath);
 
 //				using (var log = new StreamWriter(File.Open(
@@ -358,14 +343,9 @@ namespace RulesetConverter
 
 				if (Tilesets.Count == 0)
 				{
-					MessageBox.Show(
-								this,
-								"No tilesets were found in the ruleset.",
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+					lbl_Info.BorderStyle = BorderStyle.FixedSingle;
+					lbl_Info.BackColor = Color.LightCoral;
+					lbl_Info.Text = "No terrains were found in the ruleset.";
 				}
 				else
 				{
@@ -462,14 +442,9 @@ namespace RulesetConverter
 					else
 						result = Tilesets.Count + " terrains converted to tilesets";
 
-					MessageBox.Show(
-								this,
-								result,
-								" Info",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Information,
-								MessageBoxDefaultButton.Button1,
-								0);
+					lbl_Info.BorderStyle = BorderStyle.FixedSingle;
+					lbl_Info.BackColor = Color.PaleGreen;
+					lbl_Info.Text = result;
 				}
 //				}
 			}
@@ -496,8 +471,27 @@ namespace RulesetConverter
 		/// <remarks>Allow nonexistent TERRAIN directory.</remarks>
 		private bool IsBasepathValid(string basepath)
 		{
+			if (!Directory.Exists(Path.Combine(basepath, "TERRAIN")))
+			{
+				lbl_Info.BorderStyle = BorderStyle.FixedSingle;
+				lbl_Info.BackColor = Color.LemonChiffon;
+				lbl_Info.Text = "Basepath does not contain a folder for TERRAIN.";
+			}
+			else
+				SetInfo();
+
 			return Directory.Exists(Path.Combine(basepath, "MAPS"))
 				&& Directory.Exists(Path.Combine(basepath, "ROUTES"));
+		}
+
+		/// <summary>
+		/// Resets the info at the top.
+		/// </summary>
+		private void SetInfo()
+		{
+			lbl_Info.BorderStyle = BorderStyle.None;
+			lbl_Info.BackColor = SystemColors.Control;
+			lbl_Info.Text = Info;
 		}
 
 		/// <summary>

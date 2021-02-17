@@ -110,7 +110,6 @@ namespace RulesetConverter
 			// 
 			// lbl_Info
 			// 
-			this.lbl_Info.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.lbl_Info.Dock = System.Windows.Forms.DockStyle.Top;
 			this.lbl_Info.Location = new System.Drawing.Point(0, 0);
 			this.lbl_Info.Margin = new System.Windows.Forms.Padding(0);
@@ -118,14 +117,13 @@ namespace RulesetConverter
 			this.lbl_Info.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.lbl_Info.Size = new System.Drawing.Size(492, 30);
 			this.lbl_Info.TabIndex = 0;
-			this.lbl_Info.Text = "This app inputs an OxC ruleset and converts any tilesets it has out to MapTileset" +
-	"s.tpl\r\n- a YAML configuration (template) file for MapView 2";
+			this.lbl_Info.Text = "Info";
 			this.lbl_Info.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// rb_Ufo
 			// 
 			this.rb_Ufo.Checked = true;
-			this.rb_Ufo.Location = new System.Drawing.Point(80, 70);
+			this.rb_Ufo.Location = new System.Drawing.Point(75, 70);
 			this.rb_Ufo.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_Ufo.Name = "rb_Ufo";
 			this.rb_Ufo.Size = new System.Drawing.Size(50, 20);
@@ -137,7 +135,7 @@ namespace RulesetConverter
 			// 
 			// rb_Tftd
 			// 
-			this.rb_Tftd.Location = new System.Drawing.Point(130, 70);
+			this.rb_Tftd.Location = new System.Drawing.Point(125, 70);
 			this.rb_Tftd.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_Tftd.Name = "rb_Tftd";
 			this.rb_Tftd.Size = new System.Drawing.Size(55, 20);
@@ -187,10 +185,11 @@ namespace RulesetConverter
 			this.lbl_Basepath.Name = "lbl_Basepath";
 			this.lbl_Basepath.Size = new System.Drawing.Size(445, 15);
 			this.lbl_Basepath.TabIndex = 10;
+			this.lbl_Basepath.Text = "basepath";
 			// 
 			// lbl_Label
 			// 
-			this.lbl_Label.Location = new System.Drawing.Point(185, 70);
+			this.lbl_Label.Location = new System.Drawing.Point(180, 70);
 			this.lbl_Label.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Label.Name = "lbl_Label";
 			this.lbl_Label.Size = new System.Drawing.Size(35, 20);
@@ -202,10 +201,10 @@ namespace RulesetConverter
 			// 
 			this.tb_Label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.tb_Label.Location = new System.Drawing.Point(220, 70);
+			this.tb_Label.Location = new System.Drawing.Point(215, 70);
 			this.tb_Label.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Label.Name = "tb_Label";
-			this.tb_Label.Size = new System.Drawing.Size(235, 19);
+			this.tb_Label.Size = new System.Drawing.Size(240, 19);
 			this.tb_Label.TabIndex = 8;
 			this.tb_Label.WordWrap = false;
 			this.tb_Label.TextChanged += new System.EventHandler(this.OnTypeTextChanged);
