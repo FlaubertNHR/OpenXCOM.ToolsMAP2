@@ -99,23 +99,24 @@ namespace RulesetConverter
 			// lbl_Input
 			// 
 			this.lbl_Input.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lbl_Input.Location = new System.Drawing.Point(0, 35);
+			this.lbl_Input.Location = new System.Drawing.Point(0, 30);
 			this.lbl_Input.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Input.Name = "lbl_Input";
 			this.lbl_Input.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lbl_Input.Size = new System.Drawing.Size(492, 15);
+			this.lbl_Input.Size = new System.Drawing.Size(492, 20);
 			this.lbl_Input.TabIndex = 1;
 			this.lbl_Input.Text = "File to convert";
 			this.lbl_Input.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lbl_Info
 			// 
+			this.lbl_Info.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.lbl_Info.Dock = System.Windows.Forms.DockStyle.Top;
 			this.lbl_Info.Location = new System.Drawing.Point(0, 0);
 			this.lbl_Info.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Info.Name = "lbl_Info";
-			this.lbl_Info.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.lbl_Info.Size = new System.Drawing.Size(492, 35);
+			this.lbl_Info.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.lbl_Info.Size = new System.Drawing.Size(492, 30);
 			this.lbl_Info.TabIndex = 0;
 			this.lbl_Info.Text = "This app inputs an OxC ruleset and converts any tilesets it has out to MapTileset" +
 	"s.tpl\r\n- a YAML configuration (template) file for MapView 2";
@@ -147,16 +148,16 @@ namespace RulesetConverter
 			// 
 			// lbl_GameType
 			// 
-			this.lbl_GameType.Location = new System.Drawing.Point(10, 70);
+			this.lbl_GameType.Location = new System.Drawing.Point(5, 70);
 			this.lbl_GameType.Name = "lbl_GameType";
-			this.lbl_GameType.Size = new System.Drawing.Size(70, 20);
+			this.lbl_GameType.Size = new System.Drawing.Size(65, 20);
 			this.lbl_GameType.TabIndex = 4;
 			this.lbl_GameType.Text = "GameType";
 			this.lbl_GameType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// cb_Basepath
 			// 
-			this.cb_Basepath.Location = new System.Drawing.Point(5, 95);
+			this.cb_Basepath.Location = new System.Drawing.Point(10, 95);
 			this.cb_Basepath.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_Basepath.Name = "cb_Basepath";
 			this.cb_Basepath.Size = new System.Drawing.Size(105, 20);
@@ -182,9 +183,9 @@ namespace RulesetConverter
 			// 
 			this.lbl_Basepath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lbl_Basepath.Location = new System.Drawing.Point(5, 120);
+			this.lbl_Basepath.Location = new System.Drawing.Point(10, 120);
 			this.lbl_Basepath.Name = "lbl_Basepath";
-			this.lbl_Basepath.Size = new System.Drawing.Size(450, 15);
+			this.lbl_Basepath.Size = new System.Drawing.Size(445, 15);
 			this.lbl_Basepath.TabIndex = 10;
 			// 
 			// lbl_Label
