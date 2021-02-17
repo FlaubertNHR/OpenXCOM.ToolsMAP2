@@ -28,9 +28,9 @@ namespace RulesetConverter
 
 
 		#region Fields
-		private readonly string Info = "This app inputs an OxC ruleset and converts any terrains it has out to MapTilesets.tpl"
+		private readonly string Info = "This app inputs an OpenXcom/E ruleset and converts any terrains found out to"
 									 + Environment.NewLine
-									 + "a YAML template file (.TPL) for MapView 2 tileset configuration.";
+									 + "MapTilesets.tpl a YAML template file (.TPL) for MapView 2 tileset configuration.";
 
 		private int PrePadLength = PrePad.Length;
 
@@ -86,7 +86,7 @@ namespace RulesetConverter
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Title  = "Open an OxC ruleset file ...";
+				ofd.Title  = "Open an OxC/e ruleset file ...";
 				ofd.Filter = "Ruleset files(*.rul)|*.rul|All files(*.*)|*.*";
 
 				string dir;
@@ -198,10 +198,8 @@ namespace RulesetConverter
 			var rb = sender as RadioButton;
 			if (rb == rb_Ufo)
 			{
-				if (rb.Checked)
-					lbl_Label.Text = UFO;
-				else
-					lbl_Label.Text = TFTD;
+				if (rb.Checked) lbl_Label.Text = UFO;
+				else            lbl_Label.Text = TFTD;
 			}
 		}
 
