@@ -471,17 +471,20 @@ namespace RulesetConverter
 		/// <remarks>Allow nonexistent TERRAIN directory.</remarks>
 		private bool IsBasepathValid(string basepath)
 		{
-			if (!Directory.Exists(Path.Combine(basepath, "TERRAIN")))
-			{
-				lbl_Info.BorderStyle = BorderStyle.FixedSingle;
-				lbl_Info.BackColor = Color.LemonChiffon;
-				lbl_Info.Text = "Basepath does not contain a folder for TERRAIN.";
-			}
-			else
-				SetInfo();
+			SetInfo();
 
-			return Directory.Exists(Path.Combine(basepath, "MAPS"))
-				&& Directory.Exists(Path.Combine(basepath, "ROUTES"));
+			if (   Directory.Exists(Path.Combine(basepath, "MAPS"))
+				&& Directory.Exists(Path.Combine(basepath, "ROUTES")))
+			{
+				if (!Directory.Exists(Path.Combine(basepath, "TERRAIN")))
+				{
+					lbl_Info.BorderStyle = BorderStyle.FixedSingle;
+					lbl_Info.BackColor = Color.LemonChiffon;
+					lbl_Info.Text = "Basepath does not contain a folder for TERRAIN.";
+				}
+				return true;
+			}
+			return false;
 		}
 
 		/// <summary>
