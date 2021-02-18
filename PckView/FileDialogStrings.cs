@@ -3,20 +3,24 @@
 
 namespace PckView
 {
+	/// <summary>
+	/// A static class that creates several of the OpenFileDialog and
+	/// SaveFileDialog strings for titles and filters.
+	/// </summary>
 	internal static class FileDialogStrings
 	{
 		/// <summary>
-		/// Gets an open-file title for dialogs.
+		/// Gets title for dialogs.
 		/// </summary>
 		/// <param name="t">the SetType of the currently loaded spriteset</param>
 		/// <param name="plural">true if multi-file open dialog</param>
 		/// <returns></returns>
 		internal static string GetTitle(PckViewF.Type t, bool plural)
 		{
-			string title;
+			string title = String.Empty;
 			switch (t)
 			{
-				default:                   title = "Select 32x40 8-bpp Image file"; break; // PckViewF.Type.Pck
+				case PckViewF.Type.Pck:    title = "Select 32x40 8-bpp Image file"; break;
 				case PckViewF.Type.Bigobs: title = "Select 32x48 8-bpp Image file"; break;
 				case PckViewF.Type.ScanG:  title = "Select 4x4 8-bpp Image file";   break;
 				case PckViewF.Type.LoFT:   title = "Select 16x16 8-bpp Image file"; break;
@@ -29,7 +33,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets the open-file filter for dialogs.
+		/// Gets filter for dialogs.
 		/// </summary>
 		/// <returns></returns>
 		internal static string GetFilter()
@@ -40,7 +44,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets the open-file filter for PCK files.
+		/// Gets filter for PCK files.
 		/// </summary>
 		/// <returns></returns>
 		internal static string GetFilterPck()
@@ -49,7 +53,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets the open-file filter for PCK files.
+		/// Gets filter for DAT files.
 		/// </summary>
 		/// <returns></returns>
 		internal static string GetFilterDat()
@@ -58,7 +62,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets the open-file filter for PNG files.
+		/// Gets filter for PNG files.
 		/// </summary>
 		/// <returns></returns>
 		internal static string GetFilterPng()
