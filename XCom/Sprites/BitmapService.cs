@@ -85,7 +85,8 @@ namespace XCom
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of the image</param>
 		/// <param name="height">the height of the image</param>
-		/// <param name="bypassMarkers">true if creating a ScanG or LoFT icon</param>
+		/// <param name="bypassMarkers">true if creating a ScanG or LoFT iconset
+		/// - disregard End_of_Sprite and RLE markers</param>
 		/// <param name="x">used by spritesheets only</param>
 		/// <param name="y">used by spritesheets only</param>
 		/// <returns>an XCImage-object (base of PckSprite)</returns>
@@ -153,7 +154,8 @@ namespace XCom
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of a sprite in the spritesheet</param>
 		/// <param name="height">the height of a sprite in the spritesheet</param>
-		/// <param name="bypassMarkers">true if creating a ScanG or LoFT iconset</param>
+		/// <param name="bypassMarkers">true if creating a ScanG or LoFT iconset
+		/// - disregard End_of_Sprite and RLE markers</param>
 		/// <param name="pad">padding between sprites</param>
 		public static void CreateSprites(
 				List<XCImage> sprites,
@@ -188,14 +190,20 @@ namespace XCom
 		/// </summary>
 		/// <param name="fullpath">fullpath of the output file</param>
 		/// <param name="b">the Bitmap to export</param>
-		/// <param name="isLoFT">true to force palid #0 black and #1 white for LoFTs</param>
+//		/// <param name="bilevel">true to force palid #0 black and #1 white for
+//		/// LoFTs</param>
 		public static void ExportSprite(
 				string fullpath,
-				Bitmap b,
-				bool isLoFT = false)
+				Bitmap b)
+//				bool bilevel = false
 		{
+			// NOTE: LoFT icons are created as bilevel images and shall remain
+			// bilevel 8-bpp images throughout the operation of this program.
+			// Palette id #0 shall be black and the rest of the colortable shall
+			// be white.
+
 //			ColorPalette pal0 = null; // workaround for the fact that ColorPalette is copied
-//			if (isLoFT)
+//			if (bilevel)
 //			{
 //				pal0 = b.Palette; // don't screw up the sprite's palette; use a copy ->
 //
@@ -208,27 +216,28 @@ namespace XCom
 			Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
 			b.Save(fullpath, ImageFormat.Png);
 
-//			if (isLoFT) // revert sprite's palette ->
+//			if (bilevel) // revert sprite's palette ->
 //				b.Palette = pal0;
 		}
 
 		/// <summary>
 		/// Saves a spriteset as a PNG spritesheet.
-		/// @note Check that spriteset is not null or blank before call.
-		/// @note DO NOT PASS IN 0 COLS idiot.
 		/// </summary>
 		/// <param name="fullpath">fullpath of the output file</param>
 		/// <param name="spriteset">spriteset</param>
 		/// <param name="pal">palette</param>
 		/// <param name="cols">quantity of cols</param>
-		/// <param name="isLoFT">true to force palid #0 black and #1 white for LoFTs</param>
+//		/// <param name="bilevel">true to force palid #0 black and #1 white for
+//		/// LoFTs</param>
 		/// <param name="pad">padding between sprites in the spritesheet</param>
+		/// <remarks>Check that spriteset is not null or blank before call. DO
+		/// NOT PASS IN 0 COLS idiot.</remarks>
 		public static void ExportSpritesheet(
 				string fullpath,
 				SpriteCollection spriteset,
 				Palette pal,
-				int cols,
-				bool isLoFT,
+				int cols = 8,
+//				bool bilevel = false,
 				int pad = 0)
 		{
 			if (spriteset.Count < cols)
@@ -246,7 +255,7 @@ namespace XCom
 
 					Insert(spriteset[i].Sprite, b, x,y);
 				}
-				ExportSprite(fullpath, b, isLoFT);
+				ExportSprite(fullpath, b); // bilevel
 			}
 		}
 

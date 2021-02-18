@@ -1208,8 +1208,8 @@ namespace PckView
 					// TODO: Ask to overwrite an existing file.
 					BitmapService.ExportSprite(
 											sfd.FileName,
-											TilePanel.Spriteset[TilePanel.Selid].Sprite,
-											SetType == Type.LoFT);
+											TilePanel.Spriteset[TilePanel.Selid].Sprite);
+//											SetType == Type.LoFT
 				}
 			}
 		}
@@ -1620,7 +1620,7 @@ namespace PckView
 															sprite.Id);
 								string pfe = Path.Combine(_lastSpriteDirectory, label + suffix + GlobalsXC.PngExt);
 								// TODO: Ask to overwrite an existing file.
-								BitmapService.ExportSprite(pfe, sprite.Sprite, SetType == Type.LoFT);
+								BitmapService.ExportSprite(pfe, sprite.Sprite); // SetType == Type.LoFT
 							}
 						}
 					}
@@ -1673,9 +1673,8 @@ namespace PckView
 						BitmapService.ExportSpritesheet(
 													pfe,
 													TilePanel.Spriteset,
-													GetCurrentPalette(),
-													8,
-													SetType == Type.ScanG || SetType == Type.LoFT);
+													GetCurrentPalette());
+//													8, SetType == Type.LoFT
 					}
 				}
 			}
