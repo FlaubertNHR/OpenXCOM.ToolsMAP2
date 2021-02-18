@@ -460,7 +460,7 @@ namespace MapView.Forms.Observers
 						fPckView.SetType = PckViewF.Type.Pck;
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapFile.Descriptor.Pal);
-						fPckView.SetSelectedId(SelectedTilepart[0].Id);
+						fPckView.SetSelected(SelectedTilepart[0].Id);
 
 						ShowHideManager.HideViewers();
 						fPckView.ShowDialog(ObserverManager.TileView); // <- Pause UI until PckView is closed.

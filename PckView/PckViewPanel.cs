@@ -77,12 +77,12 @@ namespace PckView
 
 				_largeChange           =
 				_scrollBar.LargeChange = TileHeight;
-
 				CalculateScrollRange(true);
 
-				Selid = Ovid = -1;
+				Ovid = -1;
 
-				_f.ResetUi(_spriteset != null);
+				_f.SetSelected(-1, true);
+				_f.EnableInterface();
 
 				Invalidate();
 			}
@@ -90,8 +90,11 @@ namespace PckView
 
 		private int _selid = -1;
 		/// <summary>
-		/// The selected sprite-id.
+		/// The currently selected sprite-id.
 		/// </summary>
+		/// <remarks>Selid shall be -1 if the spriteset is invalid; if Selid is
+		/// not -1 the spriteset is valid. Selid can however be -1 with a valid
+		/// spriteset loaded.</remarks>
 		internal int Selid
 		{
 			get { return _selid; }
@@ -144,7 +147,7 @@ namespace PckView
 			if (_f.WindowState != FormWindowState.Minimized)
 			{
 				CalculateScrollRange();
-				ScrollToTile(Selid);
+				ScrollToTile();
 
 				if (_scrollBar.Visible
 					&& _scrollBar.Value + (_scrollBar.LargeChange - 1) + _scrollBar.LargeChange > _scrollBar.Maximum)
@@ -204,24 +207,12 @@ namespace PckView
 			if (e.Button == MouseButtons.Left
 				&& Spriteset != null && Spriteset.Count != 0)
 			{
-				int id = GetTileId(e);
-				if (id != Selid)
+				if (_f.SetSelected(GetTileId(e)))
 				{
-					XCImage sprite;
-
-					if ((Selid = id) != -1)
-					{
-						sprite = Spriteset[Selid];
-					}
-					else
-						sprite = null;
-
-					_f.SpriteEditor.SpritePanel.Sprite = sprite;
-
-					_f.PrintSelectedId();
 					Invalidate();
 				}
-				ScrollToTile(Selid);
+				else
+					ScrollToTile();
 			}
 		}
 
@@ -238,7 +229,7 @@ namespace PckView
 				if (id != Ovid)
 				{
 					Ovid = id;
-					_f.PrintOverId();
+					_f.PrintOver();
 				}
 			}
 		}
@@ -251,7 +242,7 @@ namespace PckView
 		protected override void OnMouseLeave(EventArgs e)
 		{
 			Ovid = -1;
-			_f.PrintOverId();
+			_f.PrintOver();
 		}
 
 		/// <summary>
@@ -264,10 +255,8 @@ namespace PckView
 			{
 				_graphics = e.Graphics;
 
-				_graphics.PixelOffsetMode    = PixelOffsetMode.Half;
-				_graphics.InterpolationMode  = InterpolationMode.NearestNeighbor;
-				_graphics.SmoothingMode      = SmoothingMode.None;
-//				_graphics.CompositingQuality = CompositingQuality.HighQuality;
+				_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
+				_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
 
 				if (!_scrollBar.Visible) // indicate the reserved width for scrollbar.
@@ -275,10 +264,6 @@ namespace PckView
 									SystemPens.ControlLight,
 									Width - _scrollBar.Width - 1, 0,
 									Width - _scrollBar.Width - 1, Height);
-
-//				var selectedIds = new List<int>(); // track currently selected spriteIds.
-//				foreach (var sprite in Selected)
-//					selectedIds.Add(sprite.Sprite.TerrainId);
 
 				switch (_f.SetType) // draw sprites
 				{
@@ -321,11 +306,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Draws a Pck spriteset.
+		/// Draws a Pck (terrain/unit) spriteset.
 		/// </summary>
 		private void DrawPck()
 		{
-			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile and draw sprites.
 			{
 				int tileX = id % HoriCount;
 				int tileY = id / HoriCount;
@@ -367,11 +352,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Draws a Bigobs spriteset.
+		/// Draws a Pck (bigobs) spriteset.
 		/// </summary>
 		private void DrawBigobs()
 		{
-			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile and draw sprites.
 			{
 				int tileX = id % HoriCount;
 				int tileY = id / HoriCount;
@@ -418,7 +403,7 @@ namespace PckView
 		/// </summary>
 		private void DrawScanG()
 		{
-			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile and draw icons.
 			{
 				int tileX = id % HoriCount;
 				int tileY = id / HoriCount;
@@ -468,7 +453,7 @@ namespace PckView
 		/// </summary>
 		private void DrawLoFT()
 		{
-			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile(s) and draw sprites.
+			for (int id = 0; id != Spriteset.Count; ++id) // fill selected tile and draw icons.
 			{
 				int tileX = id % HoriCount;
 				int tileY = id / HoriCount;
@@ -556,12 +541,11 @@ namespace PckView
 		/// Checks if a selected tile is fully visible in the view-panel and
 		/// scrolls the table to show it if not.
 		/// </summary>
-		/// <param name="id">the sprite-id to scroll to</param>
-		internal void ScrollToTile(int id)
+		internal void ScrollToTile()
 		{
-			if (id != -1 && _scrollBar.Visible)
+			if (Selid != -1 && _scrollBar.Visible)
 			{
-				int r = id / HoriCount;
+				int r = Selid / HoriCount;
 
 				int cutoff = r * TileHeight + TableOffsetVert - 1;
 				if (cutoff < _scrollBar.Value)	// <- check high
@@ -607,25 +591,22 @@ namespace PckView
 		{
 			if (Spriteset.Count != 0)
 			{
-				int selid = Selid;
+				int id = Int32.MaxValue;
 				switch (dir)
 				{
 					case -1:
-						if (Selid == -1) Selid = 0;
-						else if (Selid > 0) --Selid;
+						if (Selid == -1) id = 0;
+						else if (Selid > 0) id = Selid - 1;
 						break;
 
 					case +1:
-						if (Selid == -1) Selid = Spriteset.Count - 1;
-						else if (Selid < Spriteset.Count - 1) ++Selid;
+						if (Selid == -1) id = Spriteset.Count - 1;
+						else if (Selid < Spriteset.Count - 1) id = Selid + 1;
 						break;
 				}
 
-				if (Selid != selid)
-				{
-					_f.SetSelectedId(Selid);
+				if (id != Int32.MaxValue && _f.SetSelected(id))
 					Invalidate();
-				}
 			}
 		}
 
@@ -637,25 +618,22 @@ namespace PckView
 		{
 			if (Spriteset.Count != 0)
 			{
-				int selid = Selid;
+				int id = Int32.MaxValue;
 				switch (dir)
 				{
 					case -1:
-						if (Selid == -1) Selid = 0;
-						else if (Selid >= HoriCount) Selid -= HoriCount;
+						if (Selid == -1) id = 0;
+						else if (Selid >= HoriCount) id = Selid - HoriCount;
 						break;
 
 					case +1:
-						if (Selid == -1) Selid = Spriteset.Count - 1;
-						else if (Selid < Spriteset.Count - HoriCount) Selid += HoriCount;
+						if (Selid == -1) id = Spriteset.Count - 1;
+						else if (Selid < Spriteset.Count - HoriCount) id = Selid + HoriCount;
 						break;
 				}
 
-				if (Selid != selid)
-				{
-					_f.SetSelectedId(Selid);
+				if (id != Int32.MaxValue && _f.SetSelected(id))
 					Invalidate();
-				}
 			}
 		}
 
@@ -674,44 +652,3 @@ namespace PckView
 		#endregion Methods
 	}
 }
-
-//		/// <summary>
-//		/// Deletes the currently selected sprite and selects another one.
-//		/// </summary>
-//		internal void SpriteDelete()
-//		{
-//			if (Selected.Count != 0)
-//			{
-//				var lowestId = Int32.MaxValue;
-//
-//				var selectedIds = new List<int>();
-//				foreach (var sprite in Selected)
-//					selectedIds.Add(sprite.Id);
-//
-//				selectedIds.Sort();
-//				selectedIds.Reverse();
-//
-//				foreach (var id in selectedIds)
-//				{
-//					if (id < lowestId)
-//						lowestId = id;
-//
-//					Spriteset.Remove(id);
-//				}
-//
-//				if (lowestId > 0 && lowestId == Spriteset.Count)
-//					lowestId = Spriteset.Count - 1;
-//
-//				Selected.Clear();
-//	
-//				if (Spriteset.Count != 0)
-//				{
-//					var selected = new SelectedSprite();
-//					selected.Y   = lowestId / HoriCount;
-//					selected.X   = lowestId - selected.Y;
-//					selected.Id  = selected.X + selected.Y * HoriCount;
-//	
-//					Selected.Add(selected);
-//				}
-//			}
-//		}

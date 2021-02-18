@@ -58,7 +58,7 @@ namespace PckView
 
 			ClientSize = new Size(
 								PalettePanel.Sqrt * 20,
-								PalettePanel.Sqrt * 20 + lblStatus.Height);
+								PalettePanel.Sqrt * 20 + lbl_Palettebar.Height);
 		}
 		#endregion cTor
 
@@ -100,7 +100,7 @@ namespace PckView
 					RegistryInfo.UpdateRegistry(this);
 
 					PalPanel.Destroy();
-					lblStatus.Destroy();
+					lbl_Palettebar.Destroy();
 				}
 			}
 			base.OnFormClosing(e);
@@ -113,16 +113,16 @@ namespace PckView
 		/// Prints color-info to the statusbar.
 		/// </summary>
 		/// <param name="palid"></param>
-		internal void PrintPaletteId(int palid)
+		internal void PrintPaletteColor(int palid)
 		{
-			lblStatus.Text = _feditor.SpritePanel.GetColorInfo(palid);
+			lbl_Palettebar.Text = _feditor.SpritePanel.GetColorInfo(palid);
 		}
 		#endregion Methods
 
 
 
 		#region Designer
-		private PaletteLabelBar lblStatus;
+		private PaletteLabelBar lbl_Palettebar;
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -130,24 +130,24 @@ namespace PckView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.lblStatus = new PckView.PaletteLabelBar();
+			this.lbl_Palettebar = new PckView.PaletteLabelBar();
 			this.SuspendLayout();
 			// 
-			// lblStatus
+			// lbl_Palettebar
 			// 
-			this.lblStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.lblStatus.Location = new System.Drawing.Point(0, 254);
-			this.lblStatus.Name = "lblStatus";
-			this.lblStatus.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblStatus.Size = new System.Drawing.Size(292, 20);
-			this.lblStatus.TabIndex = 0;
-			this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_Palettebar.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.lbl_Palettebar.Location = new System.Drawing.Point(0, 254);
+			this.lbl_Palettebar.Name = "lbl_Palettebar";
+			this.lbl_Palettebar.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.lbl_Palettebar.Size = new System.Drawing.Size(292, 20);
+			this.lbl_Palettebar.TabIndex = 0;
+			this.lbl_Palettebar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// PaletteF
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(292, 274);
-			this.Controls.Add(this.lblStatus);
+			this.Controls.Add(this.lbl_Palettebar);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.KeyPreview = true;

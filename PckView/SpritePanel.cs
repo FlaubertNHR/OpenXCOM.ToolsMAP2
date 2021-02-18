@@ -56,10 +56,7 @@ namespace PckView
 			get { return _palid; }
 			set
 			{
-				if ((_palid = value) != -1)
-					_feditor.PrintColorInfo(GetColorInfo(_palid));
-				else
-					_feditor.ClearColorInfo();
+				_feditor.PrintPixelColor(GetColorInfo(_palid = value));
 			}
 		}
 
@@ -213,7 +210,7 @@ namespace PckView
 							break;
 
 						case SpriteEditorF.EditMode.Locked: // eye-dropper ->
-							_feditor._fpalette.PalPanel.SelectPaletteId((int)Sprite.Bindata[binid]);
+							_feditor._fpalette.PalPanel.SelectPalid(Sprite.Bindata[binid]);
 							break;
 					}
 				}
@@ -410,14 +407,14 @@ namespace PckView
 				switch (palid)
 				{
 					case Palette.Tid:
-						text += " [transparent]";
+						text += " - transparent";
 						break;
 
 					case PckSprite.MarkerRle:
 					case PckSprite.MarkerEos:
 						if (_feditor._f.TilePanel.Spriteset.TabwordLength != SpritesetsManager.TAB_WORD_LENGTH_0)
 						{
-							text += " [invalid]";
+							text += " - INVALID";
 						}
 						break;
 				}

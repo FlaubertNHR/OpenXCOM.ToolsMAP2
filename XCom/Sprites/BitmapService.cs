@@ -145,8 +145,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Creates a list of sprites from a spritesheet.
-		/// @note Called by PckViewF.OnImportSpritesheetClick().
+		/// Creates a list of sprites from a spritesheet. Called by
+		/// PckViewF.OnImportSpritesheetClick().
 		/// </summary>
 		/// <param name="sprites">the blank XCImage list of a spriteset</param>
 		/// <param name="b">an indexed Bitmap of a spritesheet</param>

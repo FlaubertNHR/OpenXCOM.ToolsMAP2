@@ -52,30 +52,6 @@ namespace PckView
 		{
 			get { return true; }
 		}
-
-		/// <summary>
-		/// Brings PaletteViewer to top when this is activated.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnActivated(EventArgs e)
-		{
-			if (!BypassActivatedEvent)
-			{
-				BypassActivatedEvent = true;
-
-				if (_fpalette.Visible)
-				{
-					_fpalette.TopMost = true;
-					_fpalette.TopMost = false;
-				}
-
-				TopMost = true;		// req'd else this form won't activate at all
-				TopMost = false;	// unless user closes the PaletteViewer
-
-				BypassActivatedEvent = false;
-			}
-			base.OnActivated(e);
-		}
 		#endregion Properties (override)
 
 
@@ -113,6 +89,30 @@ namespace PckView
 
 
 		#region Events (override)
+		/// <summary>
+		/// Brings PaletteViewer to top when this is activated.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnActivated(EventArgs e)
+		{
+			if (!BypassActivatedEvent)
+			{
+				BypassActivatedEvent = true;
+
+				if (_fpalette.Visible)
+				{
+					_fpalette.TopMost = true;
+					_fpalette.TopMost = false;
+				}
+
+				TopMost = true;		// req'd else this form won't activate at all
+				TopMost = false;	// unless user closes the PaletteViewer
+
+				BypassActivatedEvent = false;
+			}
+			base.OnActivated(e);
+		}
+
 		/// <summary>
 		/// @note Requires KeyPreview TRUE.
 		/// </summary>
@@ -154,22 +154,22 @@ namespace PckView
 		#region Events
 		/// <summary>
 		/// Sets the *proper* ClientSize.
-		/// @note Also called by <see cref="PckViewF.SpritesetChanged()"/>.
+		/// @note Also called by <see cref="PckViewF.EnableInterface"/>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		internal void OnLoad(object sender, EventArgs e)
 		{
 			ClientSize = new Size(
-								XCImage.SpriteWidth32 * 10 + SpritePanel.Pad, // <- keep the statusbar at 32px width
+								XCImage.SpriteWidth32 * 10 + SpritePanel.Pad, // <- keep the statusbar at 32px sprite-width
 								XCImage.SpriteHeight  * 10 + SpritePanel.Pad
-									+ bar_Scale  .Height
-									+ la_EditMode.Height
-									+ ss_Status  .Height);
+														   + bar_Scale  .Height
+														   + la_EditMode.Height
+														   + ss_Status  .Height);
 		}
 
 		/// <summary>
-		/// 
+		/// Sets the scale-factor of the sprite in the panel.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -179,7 +179,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Locks or enables the sprite for edits.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -213,10 +213,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Shows the palette-viewer or brings it to front if already shown.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Has no effect if a LoFTset is loaded.</remarks>
 		private void OnShowPaletteClick(object sender, EventArgs e)
 		{
 			if (_f.SetType != PckViewF.Type.LoFT) // don't allow the Palette to show if editing LoFTs
@@ -277,20 +278,12 @@ namespace PckView
 
 		#region Methods
 		/// <summary>
-		/// 
+		/// Prints color to the statusbar.
 		/// </summary>
-		/// <param name="info"></param>
-		internal void PrintColorInfo(string info)
+		/// <param name="color"></param>
+		internal void PrintPixelColor(string color)
 		{
-			tssl_ColorInfo.Text = info;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		internal void ClearColorInfo()
-		{
-			tssl_ColorInfo.Text = String.Empty;
+			tssl_ColorInfo.Text = color;
 		}
 
 		/// <summary>

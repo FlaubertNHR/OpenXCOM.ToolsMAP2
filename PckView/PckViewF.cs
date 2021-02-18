@@ -217,17 +217,20 @@ namespace PckView
 //			regInfo.AddProperty("SelectedPalette"); // + Transparency On/Off
 
 			TilePanel = new PckViewPanel(this);
-			TilePanel.ContextMenuStrip = CreateContext();
 			TilePanel.Click       += OnPanelClick;
 			TilePanel.DoubleClick += OnSpriteEditorClick;
 			Controls.Add(TilePanel);
-			TilePanel.BringToFront();
-
-			PrintSelectedId(false);
-			PrintOverId();
 
 			SpriteEditor = new SpriteEditorF(this);
 			SpriteEditor.FormClosing += OnSpriteEditorClosing;
+
+			TilePanel.ContextMenuStrip = CreateContext();
+
+//			SetSelected(-1,true);
+			PrintSelected();
+			PrintOver();
+//			PrintTotal();
+//			PrintSpritesetLabel();
 
 			PopulatePaletteMenu(); // WARNING: Palettes created here <-
 
@@ -673,8 +676,7 @@ namespace PckView
 					if (TilePanel.Spriteset != null)
 					{
 						e.Handled = e.SuppressKeyPress = true;
-						SetSelectedId(TilePanel.Selid = -1);
-						TilePanel.Invalidate();
+						if (SetSelected(-1)) TilePanel.Invalidate();
 					}
 					break;
 			}
@@ -686,50 +688,16 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// Enables or disables various menus and initializes the statusbar.
-		/// </summary>
-		/// <param name="valid">true if the spriteset is valid</param>
-		internal void ResetUi(bool valid)
-		{
-			SpriteEditor.SpritePanel.Sprite = null;
-
-			miSave             .Enabled = // File ->
-			miSaveAs           .Enabled =
-			miExportSprites    .Enabled =
-			miExportSpritesheet.Enabled =
-			miImportSpritesheet.Enabled =
-
-			miPaletteMenu      .Enabled = // Main
-
-			_miAdd             .Enabled = valid; // Context
-
-			SpriteEditor.OnLoad(null, EventArgs.Empty);	// resize the Editor to the spriteset's sprite-size
-			OnPanelClick(null, EventArgs.Empty);		// enable/disable items on the contextmenu
-
-			PrintSpritesetLabel(valid);
-			PrintTotal(valid);
-		}
-
-		/// <summary>
-		/// Bring back the dinosaurs. Enables (or disables) several Context
-		/// menuitems. Called when the tile-panel's click-event is raised.
+		/// Bring back the dinosaurs. Called when the tile-panel's click-event
+		/// is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>This fires after PckViewPanel.OnMouseDown(). Thought you'd
+		/// <remarks>This fires after PckViewPanel.OnMouseDown() - thought you'd
 		/// like to know.</remarks>
 		private void OnPanelClick(object sender, EventArgs e)
 		{
-			bool enabled = (TilePanel.Selid != -1);
-
-			_miInsertBefor.Enabled = // Context ->
-			_miInsertAfter.Enabled =
-			_miReplace    .Enabled =
-			_miDelete     .Enabled =
-			_miExport     .Enabled = enabled;
-
-			_miMoveL.Enabled = enabled && (TilePanel.Selid != 0);
-			_miMoveR.Enabled = enabled && (TilePanel.Selid != TilePanel.Spriteset.Count - 1);
+			EnableContext();
 		}
 
 		/// <summary>
@@ -741,11 +709,6 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSpriteEditorClick(object sender, EventArgs e)
 		{
-			if (TilePanel.Spriteset != null && TilePanel.Selid != -1)
-				SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[TilePanel.Selid];
-			else
-				SpriteEditor.SpritePanel.Sprite = null;
-
 			if (!_miEdit.Checked)
 			{
 				_miEdit.Checked = true;
@@ -790,7 +753,7 @@ namespace PckView
 				}
 			}
 
-			MessageBox.Show(
+			MessageBox.Show( // TODO: use DSShared.Infobox
 						this,
 						error,
 						" Error",
@@ -876,21 +839,22 @@ namespace PckView
 						else return;
 					}
 
+
 					int id = (TilePanel.Spriteset.Count - 1);
 					foreach (var b in bs)
 					{
-						var sprite = BitmapService.CreateSprite(
-															b,
-															++id,
-															GetCurrentPalette(),
-															XCImage.SpriteWidth,
-															XCImage.SpriteHeight,
-															SetType == Type.ScanG || SetType == Type.LoFT);
+						XCImage sprite = BitmapService.CreateSprite(
+																b,
+																++id,
+																GetCurrentPalette(),
+																XCImage.SpriteWidth,
+																XCImage.SpriteHeight,
+																SetType == Type.ScanG || SetType == Type.LoFT);
 						TilePanel.Spriteset.Sprites.Add(sprite);
 					}
-
 					DisposeBitmaps(bs);
-					InsertSpritesFinish();
+
+					SpritesetCountChanged(TilePanel.Selid);
 				}
 			}
 		}
@@ -937,10 +901,7 @@ namespace PckView
 
 					if (InsertSprites(TilePanel.Selid, ofd.FileNames))
 					{
-						TilePanel.Selid += ofd.FileNames.Length;
-						SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[TilePanel.Selid];
-
-						InsertSpritesFinish();
+						SpritesetCountChanged(TilePanel.Selid + ofd.FileNames.Length);
 					}
 					else
 						ShowBitmapError();
@@ -989,7 +950,9 @@ namespace PckView
 					_lastSpriteDirectory = Path.GetDirectoryName(ofd.FileName);
 
 					if (InsertSprites(TilePanel.Selid + 1, ofd.FileNames))
-						InsertSpritesFinish();
+					{
+						SpritesetCountChanged(TilePanel.Selid);
+					}
 					else
 						ShowBitmapError();
 				}
@@ -1036,26 +999,27 @@ namespace PckView
 
 			foreach (var b in bs)
 			{
-				var sprite = BitmapService.CreateSprite(
-													b,
-													id,
-													GetCurrentPalette(),
-													XCImage.SpriteWidth,
-													XCImage.SpriteHeight,
-													SetType == Type.ScanG || SetType == Type.LoFT);
+				XCImage sprite = BitmapService.CreateSprite(
+														b,
+														id,
+														GetCurrentPalette(),
+														XCImage.SpriteWidth,
+														XCImage.SpriteHeight,
+														SetType == Type.ScanG || SetType == Type.LoFT);
 				TilePanel.Spriteset.Sprites.Insert(id++, sprite);
 			}
-
 			DisposeBitmaps(bs);
+
 			return true;
 		}
 
 		/// <summary>
-		/// Finishes the insert-sprite operation.
+		/// Finishes an operation that changed the spriteset-count.
 		/// </summary>
-		private void InsertSpritesFinish()
+		/// <param name="id">sprite-id to select</param>
+		private void SpritesetCountChanged(int id)
 		{
-			OnPanelClick(null, EventArgs.Empty);
+			SetSelected(id, true);
 
 			PrintTotal();
 
@@ -1121,8 +1085,9 @@ namespace PckView
 																		SetType == Type.ScanG || SetType == Type.LoFT);
 
 								TilePanel.Spriteset[TilePanel.Selid].Dispose();
-								TilePanel.Spriteset[TilePanel.Selid] =
-								SpriteEditor.SpritePanel.Sprite      = sprite;
+								TilePanel.Spriteset[TilePanel.Selid] = sprite;
+
+								SetSelected(TilePanel.Selid, true);
 
 								TilePanel.Refresh();
 								Changed = true;
@@ -1161,20 +1126,17 @@ namespace PckView
 		/// <param name="dir">-1 to move left, +1 to move right</param>
 		private void MoveSprite(int dir)
 		{
-			var sprite = TilePanel.Spriteset[TilePanel.Selid];
+			int id = TilePanel.Selid;
 
-			TilePanel.Spriteset[TilePanel.Selid]       = TilePanel.Spriteset[TilePanel.Selid + dir];
-			TilePanel.Spriteset[TilePanel.Selid + dir] = sprite;
+			var sprite = TilePanel.Spriteset[id];
 
-			TilePanel.Spriteset[TilePanel.Selid].Id = TilePanel.Selid;
-			TilePanel.Selid += dir;
-			TilePanel.Spriteset[TilePanel.Selid].Id = TilePanel.Selid;
+			TilePanel.Spriteset[id] = TilePanel.Spriteset[id + dir];
+			TilePanel.Spriteset[id + dir] = sprite;
 
-			SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[TilePanel.Selid];
+			TilePanel.Spriteset[id].Id = id;
+			TilePanel.Spriteset[id + dir].Id = id + dir;
 
-			PrintSelectedId();
-
-			OnPanelClick(null, EventArgs.Empty);
+			SetSelected(id + dir);
 
 			TilePanel.Refresh();
 			Changed = true;
@@ -1188,18 +1150,18 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnDeleteSpriteClick(object sender, EventArgs e)
 		{
-			TilePanel.Spriteset.Sprites[TilePanel.Selid].Dispose();
-			TilePanel.Spriteset.Sprites.RemoveAt(TilePanel.Selid);
+			int id = TilePanel.Selid;
 
-			for (int i = TilePanel.Selid; i != TilePanel.Spriteset.Count; ++i)
+			TilePanel.Spriteset.Sprites[id].Dispose();
+			TilePanel.Spriteset.Sprites.RemoveAt(id);
+
+			for (int i = id; i != TilePanel.Spriteset.Count; ++i)
 				TilePanel.Spriteset[i].Id = i;
 
-			if (TilePanel.Selid == TilePanel.Spriteset.Count)
-			{
-				SpriteEditor.SpritePanel.Sprite = null;
-				TilePanel.Selid = -1;
-			}
-			InsertSpritesFinish();
+			if (id == TilePanel.Spriteset.Count)
+				id = -1;
+
+			SpritesetCountChanged(id);
 		}
 
 		/// <summary>
@@ -1210,8 +1172,8 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnExportSpriteClick(object sender, EventArgs e)
 		{
-			string digits = String.Empty;
 			int count = TilePanel.Spriteset.Count;
+			string digits = String.Empty;
 			do
 			{ digits += "0"; }
 			while ((count /= 10) != 0);
@@ -1375,7 +1337,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnOpenTuClick(object sender, EventArgs e)
+		private void OnOpenPckClick(object sender, EventArgs e)
 		{
 			if (RequestSpritesetClose())
 			{
@@ -1757,7 +1719,6 @@ namespace PckView
 									&& b.Height % XCImage.SpriteHeight == 0
 									&& b.PixelFormat == PixelFormat.Format8bppIndexed)
 								{
-									TilePanel.Selid = -1;
 									TilePanel.Spriteset.Dispose();
 
 									BitmapService.CreateSprites(
@@ -1767,7 +1728,7 @@ namespace PckView
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight,
 															SetType == Type.ScanG || SetType == Type.LoFT);
-									InsertSpritesFinish();
+									SpritesetCountChanged(-1);
 								}
 								else
 									ShowBitmapError(false);
@@ -1971,58 +1932,7 @@ namespace PckView
 		#endregion Events
 
 
-		#region Methods
-		/// <summary>
-		/// Sets the current palette. Called only from TileView to set the
-		/// palette externally.
-		/// </summary>
-		/// <param name="pal"></param>
-		public void SetPalette(Palette pal)
-		{
-			OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
-		}
-
-		/// <summary>
-		/// Gets the currently selected palette unless a LoFTset is loaded, in
-		/// which case return 'Palette.Binary'.
-		/// </summary>
-		/// <returns>the current palette or the binary palette for LoFTicons</returns>
-		internal Palette GetCurrentPalette()
-		{
-			if (SetType == Type.LoFT)
-				return Palette.Binary;
-
-			return Pal;
-		}
-
-		/// <summary>
-		/// Sets the currently selected sprite-id.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <remarks>Can be called by TileView to set 'Selid' externally.</remarks>
-		public void SetSelectedId(int id)
-		{
-			if (id != TilePanel.Selid)
-			{
-				TilePanel.Selid = id;
-
-				if (TilePanel.Spriteset != null
-					&& id != -1
-					&& id < TilePanel.Spriteset.Count)
-				{
-					SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[id];
-				}
-				else
-					SpriteEditor.SpritePanel.Sprite = null;
-
-				TilePanel.ScrollToTile(id);
-
-				OnPanelClick(null, EventArgs.Empty);
-
-				PrintSelectedId();
-			}
-		}
-
+		#region Methods (load)
 		/// <summary>
 		/// Loads PCK+TAB spriteset files.
 		/// @note Pck files require their corresponding Tab file. That is, the
@@ -2247,29 +2157,122 @@ namespace PckView
 				}
 			}
 		}
+		#endregion Methods (load)
 
+
+		#region Methods
+		/// <summary>
+		/// Sets the current palette. Called only from TileView to set the
+		/// palette externally.
+		/// </summary>
+		/// <param name="pal"></param>
+		public void SetPalette(Palette pal)
+		{
+			OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+		}
 
 		/// <summary>
-		/// Updates the status-information for the sprite that the cursor is
-		/// currently over.
+		/// Gets the currently selected palette unless a LoFTset is loaded, in
+		/// which case return 'Palette.Binary'.
 		/// </summary>
-		internal void PrintOverId()
+		/// <returns>the current palette or the binary palette if a LoFTset is
+		/// loaded</returns>
+		internal Palette GetCurrentPalette()
 		{
-			string text;
-			if (TilePanel.Ovid != -1)
-				text = TilePanel.Ovid.ToString();
-			else
-				text = None;
+			if (SetType == Type.LoFT)
+				return Palette.Binary;
 
-			tssl_TileOver.Text = Over + text;
+			return Pal;
+		}
+
+		/// <summary>
+		/// Enables or disables various menus and initializes the statusbar.
+		/// </summary>
+		/// <remarks>Called only when the spriteset changes in
+		/// <see cref="PckViewPanel.Spriteset"/></remarks>
+		internal void EnableInterface()
+		{
+			SpriteEditor.SpritePanel.Sprite = null;
+
+			miSave             .Enabled =									// File ->
+			miSaveAs           .Enabled =
+			miExportSprites    .Enabled =
+			miExportSpritesheet.Enabled =
+			miImportSpritesheet.Enabled =
+			miPaletteMenu      .Enabled =									// Main
+			_miAdd             .Enabled = (TilePanel.Spriteset != null);	// context
+
+			EnableContext();
+
+			SpriteEditor.OnLoad(null, EventArgs.Empty); // resize the Editor to the sprite-size
+
+			PrintTotal();
+			PrintSelected();
+			PrintOver();
+
+			PrintSpritesetLabel();
+
+			// NOTE: Although the palette 'Pal' does not change here the
+			// palette-viewer might need to change its statusbar description if
+			// either palid #254 or #255 is currently selected.
+			PaletteChanged(); // TODO: That probably doesn't need to fire if a LoFTset is loaded.
+		}
+
+		/// <summary>
+		/// Enables or disables several context its.
+		/// </summary>
+		private void EnableContext()
+		{
+			bool enabled = (TilePanel.Selid != -1);
+
+			_miInsertBefor.Enabled = // Context ->
+			_miInsertAfter.Enabled =
+			_miReplace    .Enabled =
+			_miDelete     .Enabled =
+			_miExport     .Enabled = enabled;
+
+			_miMoveL.Enabled = enabled && (TilePanel.Selid != 0);
+			_miMoveR.Enabled = enabled && (TilePanel.Selid != TilePanel.Spriteset.Count - 1);
+		}
+
+		/// <summary>
+		/// Sets the currently selected sprite-id.
+		/// </summary>
+		/// <param name="id">the sprite-id to select</param>
+		/// <param name="force">true to force init even if <see cref="PckViewPanel.Selid"/>
+		/// doesn't change</param>
+		/// <returns>true if currently selected sprite-id changed or is forced</returns>
+		/// <remarks>Can be called by TileView to set <see cref="PckViewPanel.Selid"/>
+		/// externally.</remarks>
+		public bool SetSelected(int id, bool force = false)
+		{
+			if (id != TilePanel.Selid || force)
+			{
+				TilePanel.Selid = id;
+
+				if (id != -1 && id < TilePanel.Spriteset.Count)
+				{
+					SpriteEditor.SpritePanel.Sprite = TilePanel.Spriteset[id];
+				}
+				else
+					SpriteEditor.SpritePanel.Sprite = null;
+
+				TilePanel.ScrollToTile();
+
+				EnableContext();
+
+				PrintSelected();
+
+				return true;
+			}
+			return false;
 		}
 
 		/// <summary>
 		/// Updates the status-information for the sprite that is currently
 		/// selected.
 		/// </summary>
-		/// <param name="valid">true if the spriteset is valid</param>
-		internal void PrintSelectedId(bool valid = true)
+		internal void PrintSelected()
 		{
 			string selected;
 
@@ -2290,75 +2293,85 @@ namespace PckView
 
 			tssl_TileSelected.Text = Selected + selected;
 
+			PrintOffsets();
+		}
 
-			valid = valid
-				 && TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_2;
+		/// <summary>
+		/// Prints last and after offsets to the statubar.
+		/// </summary>
+		/// <remarks>Helper for <see cref="PrintSelected"/></remarks>
+		private void PrintOffsets()
+		{
+			if (   TilePanel.Spriteset != null
+				&& TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_2)
+			{
+				int id;
+				if (TilePanel.Selid != -1) id = TilePanel.Selid;
+				else                       id = TilePanel.Spriteset.Count - 1;
 
-			if (tssl_Offset    .Visible =
+				uint last, aftr;
+				SpriteCollection.TestTabOffsets(TilePanel.Spriteset, out last, out aftr, id);
+
+				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
+
+				tssl_OffsetLast.Text = last.ToString();
+				tssl_OffsetAftr.Text = aftr.ToString();
+
+				tssl_Offset    .Visible =
 				tssl_OffsetLast.Visible =
-				tssl_OffsetAftr.Visible = valid)
-			{
-				tssl_SpritesetLabel.BorderSides = ToolStripStatusLabelBorderSides.Right;
-			}
-			else
-				tssl_SpritesetLabel.BorderSides = ToolStripStatusLabelBorderSides.None;
+				tssl_OffsetAftr.Visible = true;
 
-			if (valid)
-			{
-				PrintOffsets();
+				tssl_SpritesetLabel.BorderSides = ToolStripStatusLabelBorderSides.Right;
 			}
 			else
 			{
 				tssl_OffsetLast.Text =
 				tssl_OffsetAftr.Text = String.Empty;
+
+				tssl_Offset    .Visible =
+				tssl_OffsetLast.Visible =
+				tssl_OffsetAftr.Visible = false;
+
+				tssl_SpritesetLabel.BorderSides = ToolStripStatusLabelBorderSides.None;
 			}
+		}
+
+		/// <summary>
+		/// Updates the status-information for the sprite that the cursor is
+		/// currently over.
+		/// </summary>
+		internal void PrintOver()
+		{
+			string text;
+			if (TilePanel.Ovid != -1)
+				text = TilePanel.Ovid.ToString();
+			else
+				text = None;
+
+			tssl_TileOver.Text = Over + text;
 		}
 
 		/// <summary>
 		/// Prints the quantity of sprites in the currently loaded spriteset to
 		/// the statusbar.
 		/// </summary>
-		/// <param name="valid">true if the spriteset is valid</param>
-		private void PrintTotal(bool valid = true)
+		private void PrintTotal()
 		{
-			PrintOverId();
-			PrintSelectedId(valid);
-
-			if (valid)
+			if (TilePanel.Spriteset != null)
 				tssl_TilesTotal.Text = Total + TilePanel.Spriteset.Count;
 			else
 				tssl_TilesTotal.Text = String.Empty;
 		}
 
 		/// <summary>
-		///
-		/// </summary>
-		private void PrintOffsets()
-		{
-			int spriteId;
-			if (TilePanel.Selid != -1)
-				spriteId = TilePanel.Selid;
-			else
-				spriteId = TilePanel.Spriteset.Count - 1;
-
-			uint last, aftr;
-			SpriteCollection.Test2byteSpriteset(TilePanel.Spriteset, out last, out aftr, spriteId);
-
-			tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
-			tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
-
-			tssl_OffsetLast.Text = last.ToString();
-			tssl_OffsetAftr.Text = aftr.ToString();
-		}
-
-		/// <summary>
 		/// Prints the label of the currently loaded spriteset to the statubar.
 		/// </summary>
-		/// <param name="valid">true if the spriteset is valid</param>
-		private void PrintSpritesetLabel(bool valid)
+		/// <remarks>Helper for <see cref="EnableInterface"/></remarks>
+		private void PrintSpritesetLabel()
 		{
 			string text;
-			if (valid)
+			if (TilePanel.Spriteset != null)
 			{
 				text = TilePanel.Spriteset.Label;
 

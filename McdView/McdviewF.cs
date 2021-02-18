@@ -2180,6 +2180,9 @@ namespace McdView
 
 
 		#region Methods
+		/// <summary>
+		/// Prints spriteset count and last/after offsets to the statusbar.
+		/// </summary>
 		internal void statusbar_PrintSpriteInfo()
 		{
 			if (Spriteset != null)
@@ -2187,7 +2190,7 @@ namespace McdView
 				tssl_Sprites.Text = "Sprites: " + Spriteset.Count;
 
 				uint last, aftr;
-				SpriteCollection.Test2byteSpriteset(Spriteset, out last, out aftr);
+				SpriteCollection.TestTabOffsets(Spriteset, out last, out aftr);
 
 				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
 				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
@@ -2217,6 +2220,9 @@ namespace McdView
 				InvalidateLoftPanels();
 		}
 
+		/// <summary>
+		/// Invalidates all the LoFT panels.
+		/// </summary>
 		private void InvalidateLoftPanels()
 		{
 			pnl_Loft08.Invalidate();

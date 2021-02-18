@@ -196,12 +196,12 @@ namespace PckView
 		/// Forces selection of a specific palette-id.
 		/// </summary>
 		/// <param name="palid">the palette id</param>
-		internal void SelectPaletteId(int palid)
+		internal void SelectPalid(byte palid)
 		{
-			Palid = palid;
+			Palid = (int)palid;
 
-			_x = palid % Sqrt * SwatchWidth  + 1;
-			_y = palid / Sqrt * SwatchHeight + 1;
+			_x = Palid % Sqrt * SwatchWidth  + 1;
+			_y = Palid / Sqrt * SwatchHeight + 1;
 
 			UpdatePalette();
 		}
@@ -212,7 +212,7 @@ namespace PckView
 		/// </summary>
 		private void UpdatePalette()
 		{
-			_fpalette.PrintPaletteId(Palid);
+			_fpalette.PrintPaletteColor(Palid);
 			if (Visible) Invalidate();
 		}
 

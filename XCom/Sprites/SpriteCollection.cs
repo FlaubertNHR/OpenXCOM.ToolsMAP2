@@ -71,10 +71,10 @@ namespace XCom
 		private Palette _pal;
 		/// <summary>
 		/// This SpriteCollection's reference to a <see cref="Palette"/>.
-		/// @note Changing the palette requires re-assigning the changed
-		/// <see cref="System.Drawing.Imaging.ColorPalette"/>.
-		/// to all sprites in this spriteset.
 		/// </summary>
+		/// <remarks>Changing the palette requires re-assigning the changed
+		/// <see cref="System.Drawing.Imaging.ColorPalette"/> to all sprites in
+		/// this spriteset.</remarks>
 		public Palette Pal
 		{
 			get { return _pal; }
@@ -93,8 +93,9 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets/sets the 'XCImage' at a specified id. Adds a sprite to the end
-		/// of the set if the specified id falls outside the bounds of the List.
+		/// Gets/sets the <see cref="XCImage"/> at a specified id. Adds a sprite
+		/// to the end of the set if the specified id falls outside the bounds
+		/// of the List.
 		/// </summary>
 		public XCImage this[int id]
 		{
@@ -560,31 +561,31 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Deters a specified spriteId's 2-byte TabIndex for a specified
-		/// spriteset as well as the TabIndex for the next sprite.
-		/// @note Ensure that 'spriteId' is less than the spriteset count before
-		/// call.
+		/// Deters a specified sprite-id's 2-byte TabOffset for a specified
+		/// spriteset as well as the TabOffset of the next sprite.
 		/// </summary>
 		/// <param name="spriteset">the SpriteCollection to test</param>
 		/// <param name="last">ref for the TabOffset of 'spriteId'</param>
 		/// <param name="aftr">ref for the TabOffset of the next sprite</param>
-		/// <param name="spriteId">default -1 to test the final sprite in the set</param>
-		public static void Test2byteSpriteset(
+		/// <param name="id">default -1 to test the final sprite in the set</param>
+		/// <remarks>Ensure that 'id' is less than the spriteset count before
+		/// call.</remarks>
+		public static void TestTabOffsets(
 				SpriteCollection spriteset,
 				out uint last,
 				out uint aftr,
-				int spriteId = -1)
+				int id = -1)
 		{
-			if (spriteId == -1)
-				spriteId = spriteset.Count - 1;
+			if (id == -1)
+				id = spriteset.Count - 1;
 
 			last = aftr = 0;
 
 			uint len;
-			for (int id = 0; id <= spriteId; ++id)
+			for (int i = 0; i <= id; ++i)
 			{
-				len = PckSprite.Write(spriteset[id]);
-				if (id != spriteId)
+				len = PckSprite.Write(spriteset[i]); // test only.
+				if (i != id)
 					last += len;
 				else
 					aftr = last + len;
@@ -712,8 +713,11 @@ namespace XCom
 
 		#region Methods (IDisposable)
 		/// <summary>
-		/// Disposes all 'XCImage's in list 'Sprites' and clears the list.
+		/// Disposes all <see cref="XCImage"/>s in <see cref="Sprites"/> and
+		/// clears the list.
 		/// </summary>
+		/// <remarks>The spriteset itself remains valid along with the
+		/// sprites-list.</remarks>
 		public void Dispose()
 		{
 			for (int i = Sprites.Count - 1; i != -1; --i)
