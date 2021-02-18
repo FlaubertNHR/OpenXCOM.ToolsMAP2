@@ -106,6 +106,7 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileDialogStrings.cs" />
     <Compile Include="PaletteF.cs">
       <SubType>Form</SubType>
     </Compile>

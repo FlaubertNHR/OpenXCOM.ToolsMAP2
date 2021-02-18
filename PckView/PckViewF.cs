@@ -783,17 +783,8 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				switch (SetType)
-				{
-					case Type.Pck:    ofd.Title = "Select 32x40 8-bpp Image file(s)"; break;
-					case Type.Bigobs: ofd.Title = "Select 32x48 8-bpp Image file(s)"; break;
-					case Type.ScanG:  ofd.Title = "Select 4x4 8-bpp Image file(s)";   break;
-					case Type.LoFT:   ofd.Title = "Select 16x16 8-bpp Image file(s)"; break;
-				}
-
-				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
-						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
-						   + "All files (*.*)|*.*";
+				ofd.Title  = FileDialogStrings.GetTitle(SetType, true);
+				ofd.Filter = FileDialogStrings.GetFilter();
 
 				if (Directory.Exists(_lastSpriteDirectory))
 					ofd.InitialDirectory = _lastSpriteDirectory;
@@ -870,17 +861,8 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				switch (SetType)
-				{
-					case Type.Pck:    ofd.Title = "Select 32x40 8-bpp Image file(s)"; break;
-					case Type.Bigobs: ofd.Title = "Select 32x48 8-bpp Image file(s)"; break;
-					case Type.ScanG:  ofd.Title = "Select 4x4 8-bpp Image file(s)";   break;
-					case Type.LoFT:   ofd.Title = "Select 16x16 8-bpp Image file(s)"; break;
-				}
-
-				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
-						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
-						   + "All files (*.*)|*.*";
+				ofd.Title  = FileDialogStrings.GetTitle(SetType, true);
+				ofd.Filter = FileDialogStrings.GetFilter();
 
 				if (Directory.Exists(_lastSpriteDirectory))
 					ofd.InitialDirectory = _lastSpriteDirectory;
@@ -920,17 +902,8 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				switch (SetType)
-				{
-					case Type.Pck:    ofd.Title = "Select 32x40 8-bpp Image file(s)"; break;
-					case Type.Bigobs: ofd.Title = "Select 32x48 8-bpp Image file(s)"; break;
-					case Type.ScanG:  ofd.Title = "Select 4x4 8-bpp Image file(s)";   break;
-					case Type.LoFT:   ofd.Title = "Select 16x16 8-bpp Image file(s)"; break;
-				}
-
-				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
-						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
-						   + "All files (*.*)|*.*";
+				ofd.Title  = FileDialogStrings.GetTitle(SetType, true);
+				ofd.Filter = FileDialogStrings.GetFilter();
 
 				if (Directory.Exists(_lastSpriteDirectory))
 					ofd.InitialDirectory = _lastSpriteDirectory;
@@ -1039,17 +1012,8 @@ namespace PckView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				switch (SetType)
-				{
-					case Type.Pck:    ofd.Title = "Select 32x40 8-bpp Image file"; break;
-					case Type.Bigobs: ofd.Title = "Select 32x48 8-bpp Image file"; break;
-					case Type.ScanG:  ofd.Title = "Select 4x4 8-bpp Image file";   break;
-					case Type.LoFT:   ofd.Title = "Select 16x16 8-bpp Image file"; break;
-				}
-
-				ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
-						   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
-						   + "All files (*.*)|*.*";
+				ofd.Title  = FileDialogStrings.GetTitle(SetType, false);
+				ofd.Filter = FileDialogStrings.GetFilter();
 
 				if (Directory.Exists(_lastSpriteDirectory))
 					ofd.InitialDirectory = _lastSpriteDirectory;
@@ -1185,7 +1149,7 @@ namespace PckView
 			using (var sfd = new SaveFileDialog())
 			{
 				sfd.Title      = "Export sprite to 8-bpp PNG file";
-				sfd.Filter     = "PNG files (*.PNG)|*.PNG|All files (*.*)|*.*";
+				sfd.Filter     = FileDialogStrings.GetFilterPng();
 				sfd.DefaultExt = GlobalsXC.PngExt;
 				sfd.FileName   = TilePanel.Spriteset.Label.ToUpperInvariant() + suffix;
 
@@ -1228,7 +1192,7 @@ namespace PckView
 			{
 				using (var sfd = new SaveFileDialog())
 				{
-					sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					sfd.Filter     = FileDialogStrings.GetFilterPck();
 					sfd.DefaultExt = GlobalsXC.PckExt;
 
 					string text;
@@ -1344,7 +1308,7 @@ namespace PckView
 				using (var ofd = new OpenFileDialog())
 				{
 					ofd.Title  = "Select a PCK (terrain/unit) file";
-					ofd.Filter = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					ofd.Filter = FileDialogStrings.GetFilterPck();
 
 					if (_path != null)
 					{
@@ -1373,7 +1337,7 @@ namespace PckView
 				using (var ofd = new OpenFileDialog())
 				{
 					ofd.Title    = "Select a PCK (bigobs) file";
-					ofd.Filter   = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+					ofd.Filter   = FileDialogStrings.GetFilterPck();
 					ofd.FileName = "BIGOBS.PCK";
 
 					if (_path != null)
@@ -1403,7 +1367,7 @@ namespace PckView
 				using (var ofd = new OpenFileDialog())
 				{
 					ofd.Title    = "Select a ScanG file";
-					ofd.Filter   = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.Filter   = FileDialogStrings.GetFilterDat();
 					ofd.FileName = "SCANG.DAT";
 
 
@@ -1426,7 +1390,7 @@ namespace PckView
 				using (var ofd = new OpenFileDialog())
 				{
 					ofd.Title    = "Select a LoFTemps file";
-					ofd.Filter   = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+					ofd.Filter   = FileDialogStrings.GetFilterDat();
 					ofd.FileName = "LOFTEMPS.DAT";
 
 
@@ -1494,21 +1458,21 @@ namespace PckView
 						case Type.Pck:
 						case Type.Bigobs:
 							sfd.Title      = "Save Pck+Tab as ...";
-							sfd.Filter     = "PCK files (*.PCK)|*.PCK|All files (*.*)|*.*";
+							sfd.Filter     = FileDialogStrings.GetFilterPck();
 							sfd.DefaultExt = GlobalsXC.PckExt;
 							sfd.FileName   = Path.GetFileName(_path) + GlobalsXC.PckExt;
 							break;
 
 						case Type.ScanG:
-							sfd.Title      = "Save ScanG.dat as ...";
-							sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+							sfd.Title      = "Save ScanG as ...";
+							sfd.Filter     = FileDialogStrings.GetFilterDat();
 							sfd.DefaultExt = GlobalsXC.DatExt;
 							sfd.FileName   = Path.GetFileName(_path);
 							break;
 
 						case Type.LoFT:
-							sfd.Title      = "Save LoFTemps.dat as ...";
-							sfd.Filter     = "DAT files (*.DAT)|*.DAT|All files (*.*)|*.*";
+							sfd.Title      = "Save LoFTemps as ...";
+							sfd.Filter     = FileDialogStrings.GetFilterDat();
 							sfd.DefaultExt = GlobalsXC.DatExt;
 							sfd.FileName   = Path.GetFileName(_path);
 							break;
@@ -1693,9 +1657,7 @@ namespace PckView
 				using (var ofd = new OpenFileDialog())
 				{
 					ofd.Title = "Import an 8-bpp spritesheet file";
-					ofd.Filter = "Image files (*.PNG *.GIF *.BMP)|*.PNG;*.GIF;*.BMP|"
-							   + "PNG files (*.PNG)|*.PNG|GIF files (*.GIF)|*.GIF|BMP files (*.BMP)|*.BMP|"
-							   + "All files (*.*)|*.*";
+					ofd.Filter = FileDialogStrings.GetFilter();
 
 					if (!Directory.Exists(_lastSpriteDirectory))
 					{
