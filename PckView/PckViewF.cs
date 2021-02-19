@@ -170,11 +170,14 @@ namespace PckView
 					string text;
 					switch (SetType)
 					{
-//						case Type.Pck: case Type.Bigobs:
-						default: text = GlobalsXC.PckExt_lc; break;
+						case Type.Pck:
+						case Type.Bigobs:
+							text = GlobalsXC.PckExt_lc;
+							break;
 
-						case Type.ScanG:
-						case Type.LoFT: text = String.Empty; break;
+						default:
+							text = String.Empty;
+							break;
 					}
 					text = TITLE + GlobalsXC.PADDED_SEPARATOR + _path + text;
 
@@ -640,6 +643,8 @@ namespace PckView
 
 				// Navigation shortcuts ->
 
+				// TODO: [Home] [End] [Ctrl+Home] [Ctrl+End] [PgUp] [PgDn]
+
 				case Keys.Left:
 					if (TilePanel.Spriteset != null)
 					{
@@ -965,6 +970,7 @@ namespace PckView
 				}
 				else return false;
 			}
+
 
 			int length = files.Length;
 			for (int i = id; i != TilePanel.Spriteset.Count; ++i)
@@ -1457,21 +1463,22 @@ namespace PckView
 					{
 						case Type.Pck:
 						case Type.Bigobs:
-							sfd.Title      = "Save Pck+Tab as ...";
+							sfd.Title = "Save Pck+Tab as ...";
+
 							sfd.Filter     = FileDialogStrings.GetFilterPck();
 							sfd.DefaultExt = GlobalsXC.PckExt;
 							sfd.FileName   = Path.GetFileName(_path) + GlobalsXC.PckExt;
 							break;
 
 						case Type.ScanG:
-							sfd.Title      = "Save ScanG as ...";
-							sfd.Filter     = FileDialogStrings.GetFilterDat();
-							sfd.DefaultExt = GlobalsXC.DatExt;
-							sfd.FileName   = Path.GetFileName(_path);
-							break;
+							sfd.Title = "Save ScanG as ...";
+							goto case Type.non;
 
 						case Type.LoFT:
-							sfd.Title      = "Save LoFTemps as ...";
+							sfd.Title = "Save LoFTemps as ...";
+							goto case Type.non;
+
+						case Type.non: // not Type.non - is only a label
 							sfd.Filter     = FileDialogStrings.GetFilterDat();
 							sfd.DefaultExt = GlobalsXC.DatExt;
 							sfd.FileName   = Path.GetFileName(_path);
@@ -1625,15 +1632,7 @@ namespace PckView
 						_lastSpriteDirectory = fbd.SelectedPath;
 
 						string pfe = Path.Combine(_lastSpriteDirectory, label + GlobalsXC.PngExt);
-//						if (File.Exists(pfe)) // TODO: Ask to overwrite an existing file.
-//							MessageBox.Show(
-//										this,
-//										label + PngExt + " already exists.",
-//										" Error",
-//										MessageBoxButtons.OK,
-//										MessageBoxIcon.Error,
-//										MessageBoxDefaultButton.Button1,
-//										0);
+						// TODO: Ask to overwrite an existing file.
 						BitmapService.ExportSpritesheet(
 													pfe,
 													TilePanel.Spriteset,
@@ -1681,7 +1680,6 @@ namespace PckView
 									&& b.PixelFormat == PixelFormat.Format8bppIndexed)
 								{
 									TilePanel.Spriteset.Dispose();
-
 									BitmapService.CreateSprites(
 															TilePanel.Spriteset.Sprites,
 															b,
