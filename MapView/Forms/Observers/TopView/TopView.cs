@@ -304,8 +304,8 @@ namespace MapView.Forms.Observers
 
 				_finfobox = new Infobox( // not Modal.
 									title,
-									"The following tileslots are occupied by incorrect PartTypes." + Environment.NewLine
-								  + "This could result in broken battlescape behavior.",
+									Infobox.SplitString("The following tileslots are occupied by incorrect"
+											+ " PartTypes. This could result in broken battlescape behavior."),
 									copyable,
 									Infobox.BoxType.Warn);
 				_finfobox.Show();
