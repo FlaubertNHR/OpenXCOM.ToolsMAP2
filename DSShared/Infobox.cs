@@ -122,7 +122,7 @@ namespace DSShared
 				switch (type)
 				{
 					case BoxType.Info:
-						lbl_Head.BackColor = Color.PaleTurquoise;
+						lbl_Head.BackColor = Color.PowderBlue;
 						break;
 
 					case BoxType.Error:
