@@ -1,6 +1,8 @@
 using System;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 
 
@@ -78,23 +80,23 @@ namespace MapView
 				|| String.IsNullOrEmpty(tb_Row1.Text)
 				|| String.IsNullOrEmpty(tb_Lev1.Text))
 			{
-				ShowError("All fields must have a value.", " Error");
+				ShowError("All fields must have a value.");
 			}
 			else if (!Int32.TryParse(tb_Col1.Text, out _cols) || _cols < 1
 				||   !Int32.TryParse(tb_Row1.Text, out _rows) || _rows < 1
 				||   !Int32.TryParse(tb_Lev1.Text, out _levs) || _levs < 1)
 			{
-				ShowError("Values must be positive integers greater than 0.", " Error");
+				ShowError("Values must be positive integers greater than 0.");
 			}
 			else if (_cols % 10 != 0 || _rows % 10 != 0)
 			{
-				ShowError("Columns and Rows must be exactly divisible by 10.", " Error");
+				ShowError("Columns and Rows must be exactly divisible by 10.");
 			}
 			else if (_cols == int.Parse(tb_Col0.Text)
 				&&   _rows == int.Parse(tb_Row0.Text)
 				&&   _levs == int.Parse(tb_Lev0.Text))
 			{
-				ShowError("The new size is the same as the old size.", " uh ...");
+				ShowError("The new size is the same as the old size.");
 			}
 			else // finally (sic) ->
 			{
@@ -139,10 +141,10 @@ namespace MapView
 						}
 					}
 					else
-						ShowError("Height must be 1 or more.", " Error");
+						ShowError("Height must be 1 or more.");
 				}
 				else
-					ShowError("Height must a positive integer.", " Error");
+					ShowError("Height must a positive integer.");
 			}
 		}
 		#endregion Events
@@ -152,20 +154,17 @@ namespace MapView
 		/// <summary>
 		/// Wrapper for MessageBox.Show().
 		/// </summary>
-		/// <param name="error">the error string to show</param>
-		/// <param name="caption">the dialog's caption text</param>
-		private void ShowError(
-				string error,
-				string caption)
+		/// <param name="head">the error string to show</param>
+		private void ShowError(string head)
 		{
-			MessageBox.Show(
-						this,
-						error,
-						caption,
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox(
+									"Error",
+									head,
+									null,
+									Infobox.BoxType.Error))
+			{
+				f.ShowDialog(this);
+			}
 		}
 		#endregion Methods
 
