@@ -754,18 +754,13 @@ namespace XCom
 			{
 				bit |= CHANGED_MAP;
 
-				int
-					preRows = MapSize.Rows,
-					preCols = MapSize.Cols,
-					preLevs = MapSize.Levs;
-
 				if (zType == MapResizeService.MapResizeZtype.MRZT_TOP // adjust route-nodes ->
 					&& Routes.Any())
 				{
 					bit |= CHANGED_NOD;
 
-					int delta = (levs - preLevs);	// NOTE: map levels are inverted so adding or subtracting levels
-													// to the top needs to push any existing node-levels down or up.
+					int delta = (levs - MapSize.Levs);	// NOTE: map levels are inverted so adding or subtracting levels
+														// to the top needs to push any existing node-levels down or up.
 					foreach (RouteNode node in Routes)
 					{
 						if (node.Lev < 128) // allow nodes that are OoB to come back into view
