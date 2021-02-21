@@ -226,7 +226,9 @@ namespace MapView
 				LogFile.WriteLine("Resources or Tilesets file does not exist: quit MapView.");
 				using (var dialog = new Infobox(
 											"Error",
-											"Cannot find configuration files. The application will exit."))
+											"Cannot find configuration files. The application will exit.",
+											null,
+											Infobox.BoxType.Error))
 				{
 					dialog.ShowDialog(this);
 				}
@@ -491,7 +493,8 @@ namespace MapView
 				using (var dialog = new Infobox(
 											"Error",
 											"Cannot find CURSOR spriteset. The application will exit.",
-											copyable))
+											copyable,
+											Infobox.BoxType.Error))
 				{
 					dialog.ShowDialog(this);
 				}
@@ -1695,6 +1698,11 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Clears all 'Descriptor.BypassRecordsExceeded' flags in the Maptree.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnClearRecordsExceededClick(object sender, EventArgs e)
 		{
 			int count = 0;
@@ -3145,8 +3153,8 @@ namespace MapView
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						if (!file.MapChanged) MapChanged = (file.TerrainsetPartsExceeded != 0);
-						file.TerrainsetPartsExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
+						if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
+						file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
 
 						var routeview1 = ObserverManager.RouteView.Control;
 						var routeview2 = ObserverManager.TopRouteView.ControlRoute;

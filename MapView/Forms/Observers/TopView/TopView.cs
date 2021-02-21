@@ -304,9 +304,10 @@ namespace MapView.Forms.Observers
 
 				_finfobox = new Infobox( // not Modal.
 									title,
-									"The following tileslots are occupied by incorrect PartTypes."
-										+ " This could result in broken battlescape behavior.",
-									copyable);
+									"The following tileslots are occupied by incorrect PartTypes." + Environment.NewLine
+								  + "This could result in broken battlescape behavior.",
+									copyable,
+									Infobox.BoxType.Warn);
 				_finfobox.Show();
 			}
 			else
@@ -314,7 +315,9 @@ namespace MapView.Forms.Observers
 				using (var f = new Infobox( // is Modal.
 										title,
 										"All assigned parts are in their correct slots."))
+				{
 					f.ShowDialog();
+				}
 			}
 		}
 		#endregion Events

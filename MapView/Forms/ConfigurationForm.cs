@@ -205,9 +205,9 @@ namespace MapView
 						using (var f = new Infobox(
 												"Error",
 												"A valid UFO or TFTD resource directory must exist with the XCOM cursor files.",
-												@"<basepath>" + Path.DirectorySeparatorChar + CursorPck
-													+ Environment.NewLine +
-												@"<basepath>" + Path.DirectorySeparatorChar + CursorTab))
+												@"<basepath>" + Path.DirectorySeparatorChar + CursorPck + Environment.NewLine
+											  + @"<basepath>" + Path.DirectorySeparatorChar + CursorTab,
+												Infobox.BoxType.Error))
 						{
 							f.ShowDialog(this);
 						}
@@ -317,13 +317,19 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Wrapper for Infobox.ShowDialog().
+		/// Wrapper for <see cref="Infobox"/>.
 		/// </summary>
 		/// <param name="error">an error-string to show</param>
 		private void ShowError(string error)
 		{
-			using (var f = new Infobox("Error", error))
+			using (var f = new Infobox(
+									"Error",
+									error,
+									null,
+									Infobox.BoxType.Error))
+			{
 				f.ShowDialog(this);
+			}
 		}
 		#endregion Methods
 	}

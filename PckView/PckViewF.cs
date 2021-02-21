@@ -744,28 +744,20 @@ namespace PckView
 		/// <param name="hint">true to suggest proper dimensions/format</param>
 		private void ShowBitmapError(bool hint = true)
 		{
-			string error = "Detected incorrect Dimensions and/or PixelFormat.";
-
+			string copyable;
 			if (hint)
-			{
-				error += Environment.NewLine + Environment.NewLine;
-				switch (SetType)
-				{
-					case Type.Pck:    error += "Image needs to be 32x40 8-bpp"; break;
-					case Type.Bigobs: error += "Image needs to be 32x48 8-bpp"; break;
-					case Type.ScanG:  error += "Image needs to be 4x4 8-bpp";   break;
-					case Type.LoFT:   error += "Image needs to be 16x16 8-bpp"; break;
-				}
-			}
+				copyable = FileDialogStrings.GetError(SetType);
+			else
+				copyable = null;
 
-			MessageBox.Show( // TODO: use DSShared.Infobox
-						this,
-						error,
-						" Error",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox(
+									"Image error",
+									"Detected incorrect Dimensions and/or PixelFormat.",
+									copyable,
+									Infobox.BoxType.Error))
+			{
+				f.ShowDialog(this);
+			}
 		}
 
 		/// <summary>
@@ -775,6 +767,7 @@ namespace PckView
 		private void DisposeBitmaps(IList<Bitmap> bs)
 		{
 			for (int i = bs.Count - 1; i != -1; --i) // not sure if Dispose() needs to be done in reverse order
+			if (bs[i] != null)
 				bs[i].Dispose();
 		}
 
@@ -1952,17 +1945,17 @@ namespace PckView
 						XCImage.SpriteWidth  = pre_width;
 						XCImage.SpriteHeight = pre_height;
 
-						MessageBox.Show(
-									this,
-									"The count of sprites in the PCK file ["
-										+ spriteset.CountSprites + "] does not match"
-										+ " the count of sprites expected by the TAB file ["
-										+ spriteset.CountOffsets + "].",
-									" Error",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Error,
-									MessageBoxDefaultButton.Button1,
-									0);
+						using (var f = new Infobox(
+												"Load error",
+												Infobox.SplitString("The count of sprites in the PCK file ["
+														+ spriteset.CountSprites + "] does not match"
+														+ " the count of sprites expected by the TAB file ["
+														+ spriteset.CountOffsets + "]."),
+												null,
+												Infobox.BoxType.Error))
+						{
+							f.ShowDialog(this);
+						}
 					}
 					else if ((spriteset.Fail & SpriteCollection.FAIL_OF_SPRITE) != SpriteCollection.FAIL_non) // too many bytes for a sprite
 					{
@@ -1971,21 +1964,22 @@ namespace PckView
 						XCImage.SpriteWidth  = pre_width;
 						XCImage.SpriteHeight = pre_height;
 
-						string error;
+						string head;
 						if (isBigobs)
-							error = "Bigobs : "; // won't happen unless a file is corrupt.
+							head = "Bigobs : "; // won't happen unless a file is corrupt.
 						else
-							error = String.Empty; // possibly trying to load a Bigobs to 32x40 d
+							head = String.Empty; // possibly trying to load a Bigobs to 32x40
 
-						error += "File data overflowed the sprite's count of pixels.";
-						MessageBox.Show(
-									this,
-									error,
-									" Error",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Error,
-									MessageBoxDefaultButton.Button1,
-									0);
+						head += "File data overflowed the sprite's count of pixels.";
+
+						using (var f = new Infobox(
+												"Load error",
+												head,
+												null,
+												Infobox.BoxType.Error))
+						{
+							f.ShowDialog(this);
+						}
 					}
 					else
 					{
@@ -2026,10 +2020,11 @@ namespace PckView
 				if (((int)fs.Length % ScanGicon.Length_ScanG) != 0)
 				{
 					using (var f = new Infobox(
-											"Error",
-											"The ScanG.dat file appears to be corrupted."
-										  + " The length of the file is not evenly divisible by the length of an icon.",
-											pfeScanG))
+											"Load error",
+											Infobox.SplitString("The file appears to be corrupted. The length of the"
+													+ " file is not exactly divisible by the length of an icon."),
+											pfeScanG,
+											Infobox.BoxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -2076,10 +2071,11 @@ namespace PckView
 				if (((int)fs.Length % LoFTicon.Length_LoFT) != 0)
 				{
 					using (var f = new Infobox(
-											"Error",
-											"The LoFTemps.dat file appears to be corrupted."
-										  + " The length of the file is not evenly divisible by the length of an icon.",
-											pfeLoFT))
+											"Load error",
+											Infobox.SplitString("The file appears to be corrupted. The length of the"
+													+ " file is not exactly divisible by the length of an icon."),
+											pfeLoFT,
+											Infobox.BoxType.Error))
 					{
 						f.ShowDialog(this);
 					}

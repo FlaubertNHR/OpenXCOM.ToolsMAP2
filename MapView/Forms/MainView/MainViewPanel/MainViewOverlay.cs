@@ -479,11 +479,11 @@ namespace MapView.Forms.MainView
 
 					using (var f = new Infobox(
 											"Allocated terrains differ",
-											"The list of terrains that were copied are too different"
-												+ " from the terrains in the currently loaded Map.",
-											info))
+											Infobox.SplitString("The list of terrains that were copied are too"
+													+ " different from the terrains in the currently loaded Map."),
+											info,
+											Infobox.BoxType.Error))
 					{
-						f.SetLabelColor(Color.Firebrick);
 						f.ShowDialog(this);
 					}
 				}

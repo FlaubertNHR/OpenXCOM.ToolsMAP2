@@ -443,15 +443,48 @@ namespace MapView.Forms.Observers
 				string pfePck = Path.Combine(path, terr + GlobalsXC.PckExt);
 				string pfeTab = Path.Combine(path, terr + GlobalsXC.TabExt);
 
+				int lines = 0;
+				string copyable = null;
 				if (!File.Exists(pfePck))
 				{
-					using (var f = new Infobox("File not found", "File does not exist.", pfePck))
-						f.ShowDialog(this);
+					++lines;
+					copyable = pfePck;
 				}
-				else if (!File.Exists(pfeTab))
+
+				if (!File.Exists(pfeTab))
 				{
-					using (var f = new Infobox("File not found", "File does not exist.", pfeTab))
+					++lines;
+					if (copyable != null)
+					{
+						copyable += Environment.NewLine;
+						copyable += pfeTab;
+					}
+					else
+						copyable = pfeTab;
+				}
+
+				if (lines != 0)
+				{
+					string title, head;
+					if (lines == 1)
+					{
+						title = "File not found";
+						head  = "File does not exist.";
+					}
+					else
+					{
+						title = "Files not found";
+						head  = "Files do not exist.";
+					}
+
+					using (var f = new Infobox(
+											title,
+											head,
+											copyable,
+											Infobox.BoxType.Error))
+					{
 						f.ShowDialog(this);
+					}
 				}
 				else
 				{
@@ -507,8 +540,14 @@ namespace MapView.Forms.Observers
 
 				if (!File.Exists(pfeMcd))
 				{
-					using (var f = new Infobox("File not found", "File does not exist.", pfeMcd))
+					using (var f = new Infobox(
+											"File not found",
+											"File does not exist.",
+											pfeMcd,
+											Infobox.BoxType.Error))
+					{
 						f.ShowDialog(this);
+					}
 				}
 				else
 				{

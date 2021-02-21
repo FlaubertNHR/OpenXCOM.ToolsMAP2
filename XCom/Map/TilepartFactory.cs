@@ -80,11 +80,13 @@ namespace XCom
 							+ " part #" + id
 							+ " has an invalid death part (id #" + record.DieTile
 							+ " of " + parts.Length + " records).";
+				warn = Infobox.SplitString(warn);
 
 				using (var f = new Infobox(
+										"Warning",
 										"Invalid death part",
-										null,
-										warn))
+										warn,
+										Infobox.BoxType.Warn))
 				{
 					f.ShowDialog();
 				}
@@ -115,11 +117,13 @@ namespace XCom
 							+ " part #" + id
 							+ " has an invalid alternate part (id #" + record.Alt_MCD
 							+ " of " + parts.Length + " records).";
+				warn = Infobox.SplitString(warn);
 
 				using (var f = new Infobox(
+										"Warning",
 										"Invalid alternate part",
-										null,
-										warn))
+										warn,
+										Infobox.BoxType.Warn))
 				{
 					f.ShowDialog();
 				}

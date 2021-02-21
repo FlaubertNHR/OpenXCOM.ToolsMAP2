@@ -164,7 +164,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// Creates a Tileset Editor.
+		/// Creates a Tileset Editor dialog.
 		/// </summary>
 		/// <param name="boxType"></param>
 		/// <param name="labelGroup"></param>
@@ -193,19 +193,7 @@ namespace MapView
 			_inited_TL = true;	// don't let setting 'Tileset' fire OnTilesetTextChanged() until
 								// after 'BasePath' is initialized. Else ListTerrains() will throwup.
 
-			var invalids = new List<char>();
-
-			char[] chars = Path.GetInvalidFileNameChars();
-			for (int i = 0; i != chars.Length; ++i)
-				invalids.Add(chars[i]);
-
-			invalids.Add(' '); // no spaces also.
-			invalids.Add('.'); // and not dots.
-			// TODO: hell i should just check for alpha-numeric and underscore. Old-school style. guaranteed.
-			// Although users might not appreciate their old filenames getting too mangled.
-
-			Invalids = invalids.ToArray();
-			// TODO: should disallow filenames like 'CON' and 'PRN' etc. also
+			Invalids = GetInvalids();
 
 			SetPasteTip();
 
@@ -293,6 +281,10 @@ namespace MapView
 
 
 		#region Events (override)
+		/// <summary>
+		/// Resizes listboxes etc.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
@@ -310,11 +302,11 @@ namespace MapView
 		/// <summary>
 		/// Checks if the box has been closed by Cancel/exit click and if so do
 		/// terrain verifications.
-		/// @note Terrains get changed on-the-fly and do not require an Accept
-		/// click. But the Map needs to be reloaded when things go back to
-		/// OnAdd/EditTilesetClick() in MainViewF.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Terrains get changed on-the-fly and do not require an
+		/// Accept click. But the Map needs to be reloaded when things go back
+		/// to OnAdd/EditTilesetClick() in <see cref="MainViewF"/>.</remarks>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
@@ -378,19 +370,16 @@ namespace MapView
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Title      = "Select a Map file";
-				ofd.Filter     = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
-//				ofd.DefaultExt = GlobalsXC.MapExt;
-//				ofd.FileName   = ;
+				ofd.Title  = "Select a Map file";
+				ofd.Filter = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
 
 				string dir = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
-				if (!Directory.Exists(dir))
+				if (Directory.Exists(dir))
 				{
-					if (Directory.Exists(TilesetBasepath))
-						ofd.InitialDirectory = TilesetBasepath;
-				}
-				else
 					ofd.InitialDirectory = dir;
+				}
+				else if (Directory.Exists(TilesetBasepath))
+					ofd.InitialDirectory = TilesetBasepath;
 
 
 				if (ofd.ShowDialog(this) == DialogResult.OK)
@@ -403,7 +392,7 @@ namespace MapView
 						TilesetBasepath = Path.GetDirectoryName(dir);
 						TilesetLabel    = Path.GetFileNameWithoutExtension(pfe);
 
-						// NOTE: This will fire OnTilesetLabelChanged() twice usually but
+						// NOTE: This will fire OnTilesetTextboxChanged() twice usually but
 						// has to be here in case the basepath changed but the label didn't.
 						OnTilesetTextboxChanged(null, EventArgs.Empty);
 					}
@@ -417,10 +406,10 @@ namespace MapView
 		/// <summary>
 		/// Refreshes the terrains-lists and ensures that the tileset-label is
 		/// valid to be a Mapfile.
-		/// NOTE: The textbox forces UpperCASE.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>The textbox forces UpperCASE.</remarks>
 		private void OnTilesetTextboxChanged(object sender, EventArgs e)
 		{
 			if (_inited_TL) // do not run until the textbox has been initialized.
@@ -486,14 +475,15 @@ namespace MapView
 									bool singular = (--tilesets == 1);
 
 									string warn = String.Format(
-															"There {1} {0} other tileset{2} that {1} defined with the current"
-																+ " .MAP and .RMP files. The label{2} of {3} tileset{2} will"
-																+ " be changed also if you change the label of this Map.",
+															"There {1} {0} other tileset{2} that {1} defined with the"
+														  + " current .MAP and .RMP files. The label{2} of {3} tileset{2}"
+														  + " will be changed also if you change the label of this Map.",
 															tilesets,
 															singular ? "is" : "are",
 															singular ? String.Empty : "s",
 															singular ? "that" : "those");
-									ShowWarningDialog(warn);
+
+									ShowWarn(Infobox.SplitString(warn));
 								}
 							}
 
@@ -577,13 +567,13 @@ namespace MapView
 			string dirTerrain = tb_PathAvailable.Text;
 			if (Directory.Exists(dirTerrain))
 			{
-				var terrains = Directory.GetFiles(
-												dirTerrain,
-												Globals.ALLFILES,
-												SearchOption.TopDirectoryOnly)
-											.Where(file => file.EndsWith(
-																	GlobalsXC.McdExt,
-																	StringComparison.OrdinalIgnoreCase));
+				IEnumerable<string> terrains = Directory.GetFiles(
+															dirTerrain,
+															Globals.ALLFILES,
+															SearchOption.TopDirectoryOnly)
+														.Where(file => file.EndsWith(
+																				GlobalsXC.McdExt,
+																				StringComparison.OrdinalIgnoreCase));
 				if (terrains.Any())
 				{
 					string basepath;
@@ -633,17 +623,29 @@ namespace MapView
 
 
 		/// <summary>
-		/// Creates a tileset as a valid Descriptor. This is allowed iff a
-		/// tileset is being Added/Created; it's disallowed if a tileset is only
-		/// being Edited.
-		/// @note A Map's descriptor must be created/valid before terrains can
-		/// be added.
+		/// Creates a tileset as a valid <see cref="Descriptor"/>. This is
+		/// allowed iff this dialog is <see cref="BoxType.AddTileset"/> -
+		/// <see cref="AddType.MapExists"/>/<see cref="AddType.MapCreate"/>.
+		/// It's disallowed if the mode is <see cref="BoxType.EditTileset"/>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>A Map's descriptor must be created/valid before terrains
+		/// can be added.</remarks>
 		private void OnCreateDescriptorClick(object sender, EventArgs e)
 		{
-			if (!TilesetExistsInCategory())
+			if (TilesetExistsInCategory())
+			{
+				using (var f = new Infobox(
+										"Error",
+										"The label already exists in the Category.",
+										TilesetLabel,
+										Infobox.BoxType.Error))
+				{
+					f.ShowDialog(this);
+				}
+			}
+			else
 			{
 				_descriptor = new Descriptor(
 										TilesetLabel,
@@ -678,29 +680,29 @@ namespace MapView
 
 				PrintTilesetCount();
 			}
-			else
-				ShowError("The label is already assigned to a different tileset.");
 		}
 
 
 		/// <summary>
-		/// If this inputbox is type AddTileset, the accept click must check to
-		/// see if a descriptor has been created already with the CreateMap
-		/// button first.
+		/// If this inputbox is type <see cref="BoxType.AddTileset"/>, the
+		/// accept click must check to see if a descriptor has been created
+		/// already with the CreateMap button first.
 		/// 
-		/// If this inputbox is type EditTileset, the accept click will create a
-		/// descriptor if the tileset-label changed and delete the old
-		/// descriptor, and add the new one to the current tilegroup/category.
-		/// If the tileset-label didn't change, nothing more need be done since
-		/// any terrains that were changed have already been changed by changes
-		/// to the Allocated/Available listboxes.
+		/// If this inputbox is type <see cref="BoxType.EditTileset"/>, the
+		/// accept click will create a descriptor if the tileset-label changed
+		/// and delete the old descriptor, and add the new one to the current
+		/// tilegroup/category. If the tileset-label didn't change, nothing more
+		/// need be done since any terrains that were changed have already been
+		/// changed by changes to the Allocated/Available listboxes.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>The tileset-label shall be checked for validity before the
+		/// Accept button is enabled.</remarks>
 		private void OnAcceptClick(object sender, EventArgs e)
 		{
-			if (String.IsNullOrEmpty(TilesetLabel))	// NOTE: The tileset-label should already
-			{										// have been checked for validity by here.
+			if (String.IsNullOrEmpty(TilesetLabel))
+			{
 				ShowError("The Map label cannot be blank.");
 				tb_TilesetCurrent.Select();
 			}
@@ -715,6 +717,9 @@ namespace MapView
 				switch (InputBoxType)
 				{
 					case BoxType.AddTileset:
+
+						// TODO: MapfileExists(TilesetLabel) - see BoxType.EditTileset below.
+
 						switch (FileAddType)
 						{
 							case AddType.MapCreate:
@@ -754,12 +759,14 @@ namespace MapView
 						}
 						else if (TilesetExistsInCategory())
 						{
-							ShowError("The tileset already exists in the Category."
-										+ Environment.NewLine + Environment.NewLine
-										+ TilesetLabel
-										+ Environment.NewLine + Environment.NewLine
-										+ "Options are to edit that one, delete that one,"
-										+ " or choose a different label for this one.");
+							using (var f = new Infobox(
+													"Error",
+													"The label already exists in the Category.",
+													TilesetLabel,
+													Infobox.BoxType.Error))
+							{
+								f.ShowDialog(this);
+							}
 						}
 						else if (MapfileExists(TilesetLabel))
 						{
@@ -772,13 +779,20 @@ namespace MapView
 							// ... which is kind of awkward.
 
 							// TODO: Ask user if he/she wants to overwrite the Map-file.
-							ShowError("The Map file already exists on disk. The Tileset Editor is"
-											+ " not sophisticated enough to deal with this eventuality."
-											+ " Either edit that Map directly if it's already in the Maptree,"
-											+ " or use Add Tileset to make it editable, or as a last"
-											+ " resort delete it from your disk."
-											+ Environment.NewLine + Environment.NewLine
-											+ GetFullpathMapfile(TilesetLabel));
+							const string head = "The Map file already exists on disk. The Tileset Editor is"
+											  + " not sophisticated enough to deal with this eventuality."
+											  + " Either edit that Map directly if it's already in the Maptree,"
+											  + " or use Add Tileset to make it editable, or as a last resort"
+											  + " remove it from your MAPS folder.";
+
+							using (var f = new Infobox(
+													"Error",
+													Infobox.SplitString(head),
+													GetFullpathMapfile(TilesetLabel),
+													Infobox.BoxType.Error))
+							{
+								f.ShowDialog(this);
+							}
 						}
 						else // label changed; rewrite the descriptor ->
 						{
@@ -813,6 +827,11 @@ namespace MapView
 		}
 
 
+		/// <summary>
+		/// Allocates a terrain.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTerrainLeftClick(object sender, EventArgs e)
 		{
 			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
@@ -839,6 +858,11 @@ namespace MapView
 			lb_TerrainsAllocated.SelectedIndex = id;
 		}
 
+		/// <summary>
+		/// Deallocates a terrain.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTerrainRightClick(object sender, EventArgs e)
 		{
 			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
@@ -886,17 +910,33 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Shifts a terrain up in the allocated terrains list.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTerrainUpClick(object sender, EventArgs e)
 		{
-			StepTerrainEntry(-1);
+			ShiftTerrainEntry(-1);
 		}
 
+		/// <summary>
+		/// Shifts a terrain down in the allocated terrains list.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTerrainDownClick(object sender, EventArgs e)
 		{
-			StepTerrainEntry(+1);
+			ShiftTerrainEntry(+1);
 		}
 
-		private void StepTerrainEntry(int dir)
+		/// <summary>
+		/// Shifts a terrain up/down in the allocated terrains list.
+		/// </summary>
+		/// <param name="dir"></param>
+		/// <remarks>Helper for <see cref="OnTerrainUpClick"/> and
+		/// <see cref="OnTerrainDownClick"/>.</remarks>
+		private void ShiftTerrainEntry(int dir)
 		{
 			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
 				 MainViewF.that.MaptreeChanged = true;
@@ -922,6 +962,11 @@ namespace MapView
 			lb_TerrainsAllocated.Select();
 		}
 
+		/// <summary>
+		/// Copies the current tileset's allocated terrains list.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTerrainCopyClick(object sender, EventArgs e)
 		{
 			CopiedTerrains.Clear();
@@ -936,6 +981,11 @@ namespace MapView
 			lb_TerrainsAvailable.Select();
 		}
 
+		/// <summary>
+		/// Pastes the currently copied allocated terrains list.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTerrainPasteClick(object sender, EventArgs e)
 		{
 			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
@@ -952,6 +1002,11 @@ namespace MapView
 			lb_TerrainsAvailable.Select();
 		}
 
+		/// <summary>
+		/// Clears the current tileset's allocated terrains list.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTerrainClearClick(object sender, EventArgs e)
 		{
 			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
@@ -962,25 +1017,27 @@ namespace MapView
 			lb_TerrainsAvailable.Select();
 		}
 
+		/// <summary>
+		/// Sets the paste-tip.
+		/// </summary>
 		private void SetPasteTip()
 		{
 			string tip = String.Empty;
 			for (int i = 0; i != CopiedTerrains.Count; ++i)
 			{
-				if (!String.IsNullOrEmpty(tip))
-					tip += Environment.NewLine;
-
+				if (tip != String.Empty) tip += Environment.NewLine;
 				tip += CopiedTerrains[i].Item1;
 			}
 			toolTip1.SetToolTip(btn_TerrainPaste, tip);
 		}
 
 		/// <summary>
-		/// @note Does not fire when a selected item is removed; the index does
-		/// not change. Read: it should. But it doesn't.
+		/// Handles a click on the allocated terrains listbox basically.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Does not fire when a selected item is removed; the index
+		/// does not change. Read: it should. But it doesn't.</remarks>
 		private void OnAllocatedIndexChanged(object sender, EventArgs e)
 		{
 			int id = lb_TerrainsAllocated.SelectedIndex;
@@ -1049,6 +1106,11 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Handles a click on the available terrains listbox basically.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnAvailableIndexChanged(object sender, EventArgs e)
 		{
 			btn_MoveLeft.Enabled = lb_TerrainsAvailable.SelectedIndex != -1
@@ -1102,6 +1164,11 @@ namespace MapView
 //			lbTerrainsAvailable.Select();
 		}
 
+		/// <summary>
+		/// Handles text-changes to the available terrains TextBox.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTerrainPathChanged(object sender, EventArgs e)
 		{
 			if (!_bypassTerrainPathChanged)
@@ -1120,20 +1187,20 @@ namespace MapView
 			{
 				fbd.Description = "Browse to a basepath folder. A valid basepath"
 								+ " folder has the subfolder TERRAIN.";
-				fbd.SelectedPath = _lastTerrainFolder;
+
+				if (Directory.Exists(_lastTerrainFolder))
+					fbd.SelectedPath = _lastTerrainFolder;
 
 
 				if (fbd.ShowDialog() == DialogResult.OK)
 				{
-					string path = fbd.SelectedPath;
+					_lastTerrainFolder = fbd.SelectedPath;
 
-					_lastTerrainFolder = path;
+					tb_PathAvailable.Text = Path.Combine(_lastTerrainFolder, GlobalsXC.TerrainDir);
 
-					string pathTerrain = Path.Combine(path, GlobalsXC.TerrainDir);
-					tb_PathAvailable.Text = pathTerrain;
-					if (!Directory.Exists(pathTerrain)) // check that a subfolder is labeled "TERRAIN"
+					if (!Directory.Exists(tb_PathAvailable.Text))
 					{
-						ShowWarningDialog("The subfolder TERRAIN does not exist.");
+						ShowWarn("The subfolder TERRAIN does not exist.");
 					}
 				}
 			}
@@ -1142,7 +1209,8 @@ namespace MapView
 
 
 		/// <summary>
-		/// 
+		/// Handles the checkedchanged event for the BypassRecordsExceeded
+		/// checkbox.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1189,6 +1257,12 @@ namespace MapView
 				MainViewF.that.MaptreeChanged = true;
 		}
 
+		/// <summary>
+		/// Shows a dialog that lists other tilesets that have an identical
+		/// Path+Map as the current tileset.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnGlobalTerrainsListClick(object sender, EventArgs e)
 		{
 			string copyable = String.Empty;
@@ -1206,16 +1280,17 @@ namespace MapView
 					if (!String.IsNullOrEmpty(copyable))
 						copyable += Environment.NewLine;
 
-					copyable += @group.Key + " : " + category.Key + " : " + descriptor.Label;
+					copyable += @group.Key + "|" + category.Key + "|" + descriptor.Label;
 				}
 			}
 
 			if (copyable == String.Empty)
 				copyable = "none";
 
-			using (var f = new Infobox("Tileset list",
-									   "other Tilesets defined by Path+Map",
-									   copyable))
+			using (var f = new Infobox(
+									"Tileset list",
+									"other Tilesets defined by Path+Map",
+									copyable))
 			{
 				f.ShowDialog(this);
 			}
@@ -1265,11 +1340,15 @@ namespace MapView
 							// NOTE: If this happens both the old and new tilesets get left
 							// in the Category.
 
-							ShowWarningDialog("The tileset already exists in category"
-											  + Environment.NewLine + Environment.NewLine
-											  + keyCategory
-											  + Environment.NewLine + Environment.NewLine
-											  + "That tileset will not be changed.");
+							using (var f = new Infobox(
+													"Warning",
+													Infobox.SplitString("The tileset already exists in"
+															+ " Category. That tileset will not be changed."),
+													@group.Key + "|" + keyCategory + "|" + descriptor.Label,
+													Infobox.BoxType.Warn))
+							{
+								f.ShowDialog(this);
+							}
 						}
 						else
 						{
@@ -1295,10 +1374,10 @@ namespace MapView
 
 		/// <summary>
 		/// Checks that a string can be a valid filename for Windows OS.
-		/// NOTE: Check that 'chars' is not null or blank before call.
 		/// </summary>
 		/// <param name="chars"></param>
 		/// <returns></returns>
+		/// <remarks>Check that 'chars' is not null or blank before call.</remarks>
 		private bool ValidateCharacters(string chars)
 		{
 			return (chars.IndexOfAny(Invalids) == -1);
@@ -1311,7 +1390,7 @@ namespace MapView
 		/// <returns></returns>
 		private string InvalidateCharacters(string chars)
 		{
-			int pos = -1;
+			int pos;
 			while ((pos = chars.IndexOfAny(Invalids)) != -1)
 				chars = chars.Remove(pos, 1);
 
@@ -1402,12 +1481,12 @@ namespace MapView
 		/// Checks if the current tileset-label exists in a specified Group and
 		/// Category. The current tileset's Group and Category will be searched
 		/// if 'labelGroup' and 'labelCategory' are left to default.
-		/// @note A label shall be unique in its Category.
 		/// </summary>
 		/// <param name="labelGroup">the group-label of the category-label to check</param>
 		/// <param name="labelCategory">the category-label of the tileset-label to check</param>
 		/// <returns>true if the tileset-label already exists in the current or
 		/// specified Group and Category</returns>
+		/// <remarks>A label shall be unique in its Category.</remarks>
 		private bool TilesetExistsInCategory(string labelGroup = null, string labelCategory = null)
 		{
 			if (labelGroup    == null) labelGroup    = GroupLabel;
@@ -1439,66 +1518,38 @@ namespace MapView
 			return false;
 		}
 
-		/// <summary>
-		/// Deep clones a given terrain-tuple. jic.
-		/// </summary>
-		/// <param name="terrain">a terrain-tuple</param>
-		/// <returns>deep clone of the specified terrain-tuple</returns>
-		private Tuple<string,string> CloneTerrainTuple(Tuple<string,string> terrain)
-		{
-			return new Tuple<string,string>(
-										String.Copy(terrain.Item1),
-										String.Copy(terrain.Item2));
-		}
-
 
 		/// <summary>
-		/// Wrapper for MessageBox.Show().
+		/// Wrapper for <see cref="Infobox"/>.
 		/// </summary>
 		/// <param name="error">the error string to show</param>
 		private void ShowError(string error)
 		{
-			MessageBox.Show(
-						this,
-						error,
-						" Error",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox(
+									"Error",
+									error,
+									null,
+									Infobox.BoxType.Error))
+			{
+				f.ShowDialog(this);
+			}
 		}
 
 		/// <summary>
-		/// Wrapper for MessageBox.Show().
+		/// Wrapper for <see cref="Infobox"/>.
 		/// </summary>
 		/// <param name="warn">the warn string to show</param>
-		private void ShowWarningDialog(string warn)
+		private void ShowWarn(string warn)
 		{
-			MessageBox.Show(
-						this,
-						warn,
-						" Warning",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Warning,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox(
+									"Warning",
+									warn,
+									null,
+									Infobox.BoxType.Warn))
+			{
+				f.ShowDialog(this);
+			}
 		}
-
-/*		/// <summary>
-		/// Wrapper for MessageBox.Show().
-		/// </summary>
-		/// <param name="info">the info string to show</param>
-		private void ShowInfoDialog(string info)
-		{
-			MessageBox.Show(
-						this,
-						info,
-						" Info",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.None,
-						MessageBoxDefaultButton.Button1,
-						0);
-		} */
 		#endregion Methods
 
 
@@ -1527,7 +1578,6 @@ namespace MapView
 			return false;
 		}
 
-
 		/// <summary>
 		/// Checks if the MCD-file of a terrain exists.
 		/// </summary>
@@ -1538,6 +1588,40 @@ namespace MapView
 		{
 			string pfe = Path.Combine(path, label + GlobalsXC.McdExt);
 			return File.Exists(pfe);
+		}
+
+		/// <summary>
+		/// Deep clones a given terrain-tuple. jic.
+		/// </summary>
+		/// <param name="terrain">a terrain-tuple</param>
+		/// <returns>deep clone of the specified terrain-tuple</returns>
+		private static Tuple<string,string> CloneTerrainTuple(Tuple<string,string> terrain)
+		{
+			return new Tuple<string,string>(
+										String.Copy(terrain.Item1),
+										String.Copy(terrain.Item2));
+		}
+
+
+		/// <summary>
+		/// Gets an array of chars that are invalid in file-labels.
+		/// </summary>
+		/// <returns></returns>
+		private static char[] GetInvalids()
+		{
+			var invalids = new List<char>();
+
+			char[] chars = Path.GetInvalidFileNameChars();
+			for (int i = 0; i != chars.Length; ++i)
+				invalids.Add(chars[i]);
+
+			invalids.Add(' '); // no spaces also.
+			invalids.Add('.'); // and not dots.
+			// TODO: hell i should just check for alpha-numeric and underscore. Old-school style. guaranteed.
+			// Although users might not appreciate their old filenames getting too mangled.
+
+			return invalids.ToArray();
+			// TODO: should disallow filenames like 'CON' and 'PRN' etc. also
 		}
 		#endregion Methods (static)
 	}

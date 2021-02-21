@@ -69,5 +69,22 @@ namespace PckView
 		{
 			return "PNG files (*.PNG)|*.PNG|All files (*.*)|*.*";
 		}
+
+		/// <summary>
+		/// Gets error hint.
+		/// </summary>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		internal static string GetError(PckViewF.Type t)
+		{
+			switch (t)
+			{
+				case PckViewF.Type.Pck:    return "Image needs to be 32x40 8-bpp";
+				case PckViewF.Type.Bigobs: return "Image needs to be 32x48 8-bpp";
+				case PckViewF.Type.ScanG:  return "Image needs to be 4x4 8-bpp";
+				case PckViewF.Type.LoFT:   return "Image needs to be 16x16 8-bpp";
+			}
+			return String.Empty;
+		}
 	}
 }

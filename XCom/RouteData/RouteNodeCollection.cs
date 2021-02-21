@@ -362,21 +362,22 @@ namespace XCom
 
 				if (invalids.Count != 0)
 				{
-					string info = "The following route-"
+					string head = "The following route-"
 								+ ((invalids.Count == 1) ? "node has" : "nodes have")
 								+ " an invalid NodeRank.";
 
 					string copyable = String.Empty;
 					foreach (byte id in invalids)
 					{
-						if (!String.IsNullOrEmpty(copyable)) copyable += Environment.NewLine;
+						if (copyable != String.Empty) copyable += Environment.NewLine;
 						copyable += id.ToString();
 					}
 
 					using (var f = new Infobox(
 											"Invalid noderanks",
-											info,
-											copyable))
+											head,
+											copyable,
+											Infobox.BoxType.Warn))
 					{
 						f.ShowDialog();
 					}

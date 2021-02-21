@@ -16,12 +16,13 @@ namespace DSShared
 		/// </summary>
 		/// <param name="head"></param>
 		/// <param name="copyable"></param>
-		private static void ShowDialogError(string head, string copyable)
+		private static void ShowFileError(string head, string copyable)
 		{
 			using (var f = new Infobox(
 									"IO Error",
 									head, // + " The operation will not proceed.",
-									copyable))
+									copyable,
+									Infobox.BoxType.Error))
 			{
 				f.ShowDialog();
 			}
@@ -46,14 +47,14 @@ namespace DSShared
 				}
 				catch (Exception ex)
 				{
-					ShowDialogError(
+					ShowFileError(
 								"File could not be read.",
 								pfe + Environment.NewLine + Environment.NewLine + ex);
 					return null;
 				}
 			}
 			else
-				ShowDialogError("File does not exist.", pfe);
+				ShowFileError("File does not exist.", pfe);
 
 			return bytes;
 		}
@@ -78,14 +79,14 @@ namespace DSShared
 				}
 				catch (Exception ex)
 				{
-					ShowDialogError(
+					ShowFileError(
 								"File could not be opened.",
 								pfe + Environment.NewLine + Environment.NewLine + ex);
 					return null;
 				}
 			}
 			else if (!disregard)
-				ShowDialogError("File does not exist.", pfe);
+				ShowFileError("File does not exist.", pfe);
 
 			return fs;
 		}
@@ -110,7 +111,7 @@ namespace DSShared
 			}
 			catch (Exception ex)
 			{
-				ShowDialogError(
+				ShowFileError(
 							"File could not be created.",
 							pfe + Environment.NewLine + Environment.NewLine + ex);
 				return null;
@@ -146,7 +147,7 @@ namespace DSShared
 					}
 					catch (Exception ex)
 					{
-						ShowDialogError(
+						ShowFileError(
 									"File backup could not be deleted.",
 									pfeBackup + Environment.NewLine + Environment.NewLine + ex);
 						return false;
@@ -164,7 +165,7 @@ namespace DSShared
 				}
 				catch (Exception ex)
 				{
-					ShowDialogError(
+					ShowFileError(
 								"File could not be replaced.",
 								pfe + Environment.NewLine + Environment.NewLine + ex);
 					return false;
@@ -192,7 +193,7 @@ namespace DSShared
 			}
 			catch (Exception ex)
 			{
-				ShowDialogError(
+				ShowFileError(
 							"File could not be copied.",
 							src + Environment.NewLine + Environment.NewLine + ex);
 				return false;
@@ -204,7 +205,7 @@ namespace DSShared
 			}
 			catch (Exception ex)
 			{
-				ShowDialogError(
+				ShowFileError(
 							"File could not be deleted.",
 							src + Environment.NewLine + Environment.NewLine + ex);
 				return false;

@@ -179,7 +179,7 @@ namespace XCom
 		public bool RoutesChanged
 		{ get; set; }
 
-		public int TerrainsetPartsExceeded
+		public int TerrainsetCountExceeded
 		{ get; set; }
 
 		/// <summary>
@@ -317,13 +317,19 @@ namespace XCom
 												fs.ReadByte()); // content id
 				}
 
-				if (TerrainsetPartsExceeded != 0)
+				if (TerrainsetCountExceeded != 0)
 				{
 					const string label = "partids detected in the Mapfile that exceed"
 									   + " the bounds of the allocated terrainset";
 
-					using (var f = new Infobox("Warning", label, GetCopyableWarning()))
+					using (var f = new Infobox(
+											"Warning",
+											label,
+											GetCopyableWarning(),
+											Infobox.BoxType.Warn))
+					{
 						f.ShowDialog();
+					}
 				}
 				return true;
 			}
@@ -332,9 +338,6 @@ namespace XCom
 
 		/// <summary>
 		/// Creates a tile with its four parts.
-		/// @note If an id in the Mapfile exceeds the maxid of the file's
-		/// terrainset a crippled tilepart will be created for it and displayed
-		/// in MainView.
 		/// </summary>
 		/// <param name="parts">a list of total tileparts that can be used</param>
 		/// <param name="id_floor">the floor id</param>
@@ -342,6 +345,9 @@ namespace XCom
 		/// <param name="id_north">the northwall id</param>
 		/// <param name="id_content">the content id</param>
 		/// <returns>the MapTile created</returns>
+		/// <remarks>If an id in the Mapfile exceeds the maxid of the file's
+		/// terrainset a crippled tilepart will be created for it and displayed
+		/// in MainView.</remarks>
 		private MapTile CreateTile(
 				IList<Tilepart> parts,
 				int id_floor,
@@ -365,7 +371,7 @@ namespace XCom
 			{
 				floor = new Tilepart(id_floor);
 				floor.Cripple(PartType.Floor);
-				++TerrainsetPartsExceeded;
+				++TerrainsetCountExceeded;
 			}
 
 			if (id_west < BlanksReservedCount)
@@ -380,7 +386,7 @@ namespace XCom
 			{
 				west = new Tilepart(id_west);
 				west.Cripple(PartType.West);
-				++TerrainsetPartsExceeded;
+				++TerrainsetCountExceeded;
 			}
 
 			if (id_north < BlanksReservedCount)
@@ -395,7 +401,7 @@ namespace XCom
 			{
 				north = new Tilepart(id_north);
 				north.Cripple(PartType.North);
-				++TerrainsetPartsExceeded;
+				++TerrainsetCountExceeded;
 			}
 
 			if (id_content < BlanksReservedCount)
@@ -410,7 +416,7 @@ namespace XCom
 			{
 				content = new Tilepart(id_content);
 				content.Cripple(PartType.Content);
-				++TerrainsetPartsExceeded;
+				++TerrainsetCountExceeded;
 			}
 
 			return new MapTile(
@@ -427,51 +433,45 @@ namespace XCom
 		/// <returns></returns>
 		private string GetCopyableWarning()
 		{
-			const int width = 57;
+			string L = Environment.NewLine;
 
-			string n = Environment.NewLine;
+			bool singular = (TerrainsetCountExceeded == 1);
 
-			bool singular = (TerrainsetPartsExceeded == 1);
-
-			string copyable0 = "There " + (singular ? "is " : "are ") + TerrainsetPartsExceeded + " tilepart"
+			string copyable0 = "There " + (singular ? "is " : "are ") + TerrainsetCountExceeded + " tilepart"
 							 + (singular ? String.Empty : "s") + " that exceed" + (singular ? "s" : String.Empty)
 							 + " the bounds of the Map's currently allocated MCD records. "
 							 + (singular ? "It" : "They") + " will be replaced by" + (singular ? " a" : String.Empty)
 							 + " temporary tilepart" + (singular ? String.Empty : "s") + " and displayed on"
 							 + " the Map as borked yellow sprites.";
-			copyable0 = Infobox.FormatString(copyable0, width) + n + n;
+			copyable0 = Infobox.SplitString(copyable0) + L + L;
 
 			string copyable1 = "Note that borked parts that are in floor-slots could"
 							 + " get hidden beneath valid content-parts, etc.";
-			copyable1 = Infobox.FormatString(copyable1, width) + n + n;
+			copyable1 = Infobox.SplitString(copyable1) + L + L;
 
 			string copyable2 = "IMPORTANT: Saving the Map in its current state would forever lose"
 							 + " those tilepart references. But if you know what terrain(s) have"
 							 + " gone rogue they can be added to the Map's terrainset with the"
 							 + " TilesetEditor. Or if you know how many records have been removed"
 							 + " from the terrainset the ids of the rogue parts can be shifted"
-							 + " down into a valid range with MainView | TilepartSubstitution";
-			copyable2 = Infobox.FormatString(copyable2, width) + n + n;
+							 + " down into a valid range.";
+			copyable2 = Infobox.SplitString(copyable2) + L + L;
 
-			string copyable3 = "In any case this is a new feature that could have bugs with regard"
-							 + " to the broader operation of MapView. So it's recommended to resolve"
-							 + " this issue by";
-			copyable3 = Infobox.FormatString(copyable3, width) + n + n;
+			string copyable3 = "It's recommended to resolve this issue immediately.";
+			copyable3 = Infobox.SplitString(copyable3) + L + L;
 
-			string copyable4 = "(a) saving the Mapfile, hence deleting the rogue tileparts" + n;
-			string copyable5 = "(b) adding terrains to the terrainset in the TilesetEditor" + n;
-			string copyable6 = "(c) adding tileparts to allocated terrains externally"      + n;
-			string copyable7 = "(d) using TilepartSubstitution to shift ids down"           + n;
+			string copyable4 = "(a) save the Mapfile hence deleting the rogue tileparts" + L
+							 + "(b) add terrains to the terrainset in the TilesetEditor" + L
+							 + "(c) add tileparts to allocated terrains externally"      + L
+							 + "(d) use TilepartSubstitution to shift ids down"          + L + L;
 
 			string copyable = copyable0
-							+ "info: TopView | Test | Test parts in tileslots" + n + n
+							+ "TopView|Test|Test parts in tileslots" + L + L
 							+ copyable1
 							+ copyable2
+							+ "MainView|Edit|TilepartSubstitution" + L + L
 							+ copyable3
 							+ copyable4
-							+ copyable5
-							+ copyable6
-							+ copyable7 + n + n
 							+ "Pronto!";
 			return copyable;
 		}

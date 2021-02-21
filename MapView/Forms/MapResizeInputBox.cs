@@ -88,7 +88,7 @@ namespace MapView
 			}
 			else if (_cols % 10 != 0 || _rows % 10 != 0)
 			{
-				ShowError("Columns and Rows must be evenly divisible by 10.", " Error");
+				ShowError("Columns and Rows must be exactly divisible by 10.", " Error");
 			}
 			else if (_cols == int.Parse(tb_Col0.Text)
 				&&   _rows == int.Parse(tb_Row0.Text)

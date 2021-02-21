@@ -450,14 +450,18 @@ namespace McdView
 				string copyable = String.Empty;
 				foreach (var file in files)
 				{
-					if (!String.IsNullOrEmpty(copyable))
-						copyable += Environment.NewLine;
-
+					if (copyable != String.Empty) copyable += Environment.NewLine;
 					copyable += file;
 				}
 
-				using (var f = new Infobox("Warning", "Resource files not found.", copyable))
+				using (var f = new Infobox(
+										"Warning",
+										"Resource files not found.",
+										copyable,
+										Infobox.BoxType.Warn))
+				{
 					f.ShowDialog(this);
+				}
 			}
 
 			ScanG = SpritesetsManager.ScanGufo; // set defaults for ScanG/LoFT to ufo ->
@@ -870,26 +874,27 @@ namespace McdView
 		/// Loads a terrain from either the File|Open menu or by Explorer's
 		/// file-association.
 		/// </summary>
-		/// <param name="pfe">path-file-extension of a file to load</param>
-		private void LoadTerrain(string pfe)
+		/// <param name="pfeMcd">path-file-extension of a file to load</param>
+		private void LoadTerrain(string pfeMcd)
 		{
-			using (var fs = FileService.OpenFile(pfe))
+			using (var fs = FileService.OpenFile(pfeMcd))
 			if (fs != null)
 			{
 				if (((int)fs.Length % McdRecord.Length) != 0)
 				{
 					using (var f = new Infobox(
-											"Error",
-											"The MCD file appears to be corrupted."
-										  + " The length of the file is not evenly divisible by the length of a record.",
-											pfe))
+											"Load error",
+											Infobox.SplitString("The file appears to be corrupted. The length of the"
+													+ " file is not exactly divisible by the length of a record."),
+											pfeMcd,
+											Infobox.BoxType.Error))
 					{
 						f.ShowDialog(this);
 					}
 				}
 				else
 				{
-					PfeMcd = pfe;
+					PfeMcd = pfeMcd;
 					Selid = -1;
 
 					if (Spriteset != null)
@@ -961,10 +966,11 @@ namespace McdView
 				if (((int)fs.Length % McdRecord.Length) != 0)
 				{
 					using (var f = new Infobox(
-											"Error",
-											"The MCD file appears to be corrupted."
-										  + " The length of the file is not evenly divisible by the length of a record.",
-											PfeMcd))
+											"Load error",
+											Infobox.SplitString("The file appears to be corrupted. The length of the"
+													+ " file is not exactly divisible by the length of a record."),
+											PfeMcd,
+											Infobox.BoxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -1039,10 +1045,11 @@ namespace McdView
 				if (((int)fs.Length % McdRecord.Length) != 0)
 				{
 					using (var f = new Infobox(
-											"Error",
-											"The MCD file appears to be corrupted."
-										  + " The length of the file is not evenly divisible by the length of a record.",
-											PfeMcd))
+											"Load error",
+											Infobox.SplitString("The file appears to be corrupted. The length of the"
+													+ " file is not exactly divisible by the length of a record."),
+											PfeMcd,
+											Infobox.BoxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -1316,26 +1323,25 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_CheckVals(object sender, EventArgs e)
 		{
-			bool suppress = false;
+			bool verified = true;
 
 			List<string> borks = GetStrictBorks();
 			if (borks.Count != 0)
 			{
-				suppress = true;
+				verified = false;
 
 				string copyable = String.Empty;
 				foreach (var bork in borks)
 				{
-					if (!String.IsNullOrEmpty(copyable))
-						copyable += Environment.NewLine;
-
+					if (copyable != String.Empty) copyable += Environment.NewLine;
 					copyable += bork;
 				}
 
 				using (var f = new Infobox(
 										"Strict test",
 										"The following items exhibit anomalies.",
-										copyable))
+										copyable,
+										Infobox.BoxType.Warn))
 				{
 					f.ShowDialog(this);
 				}
@@ -1346,26 +1352,27 @@ namespace McdView
 				string result;
 				if (!SpriteCollection.Test2byteSpriteset(Spriteset, out result))
 				{
-					suppress = true;
+					verified = false;
 					using (var f = new Infobox(
 											"Strict test",
 											"Sprite offset is invalid.",
-											result))
+											result,
+											Infobox.BoxType.Warn))
 					{
 						f.ShowDialog(this);
 					}
 				}
 			}
 
-			if (!suppress)
-				MessageBox.Show(
-							this,
-							"All values appear to be within accepted ranges.",
-							" Strict test",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.None,
-							MessageBoxDefaultButton.Button1,
-							0);
+			if (verified)
+			{
+				using (var f = new Infobox(
+										"Strict test",
+										"All values appear to be within accepted ranges."))
+				{
+					f.ShowDialog(this);
+				}
+			}
 		}
 
 

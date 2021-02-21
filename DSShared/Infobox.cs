@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace DSShared
 {
 	/// <summary>
-	/// A generic outputbox for Errors/Warnings/Info.
+	/// A generic outputbox for Info/Warnings/Errors.
 	/// The point is to stop wrapping long path-strings like the stock .NET
 	/// MessageBox does. And to stop beeps.
 	/// </summary>
@@ -16,9 +16,19 @@ namespace DSShared
 		:
 			Form
 	{
+		#region enums
+		public enum BoxType
+		{
+			Info,
+			Warn,
+			Error
+		}
+		#endregion enums
+
+
 		#region Fields (static)
-		private const int w_MinCutoff = 345;
-		private const int h_MinCutoff = 455;
+		private const int w_Min = 345;
+		private const int h_Max = 463;
 
 		private const string HEIGHT_TEST = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|\\;:'\"<>,.?";
 		#endregion Fields (static)
@@ -29,9 +39,8 @@ namespace DSShared
 		/// Since the programmers of .net couldn't figure out that when you set
 		/// a label's height to 0 and invisible it ought maintain a height of 0,
 		/// I need to *not* instantiate said label unless it is required.
-		///
-		/// Don't forget to do null-checks.
 		/// </summary>
+		/// <remarks>Don't forget to do null-checks.</remarks>
 		private Label lbl_Head;
 		#endregion Designer (workaround)
 
@@ -39,31 +48,38 @@ namespace DSShared
 		#region cTor
 		/// <summary>
 		/// cTor.
-		/// @note 'null' can be used instead of a blank string for the args
 		/// </summary>
 		/// <param name="title">a caption on the titlebar</param>
-		/// <param name="label">info to be displayed with a proportional font</param>
+		/// <param name="head">info to be displayed with a proportional font</param>
 		/// <param name="copyable">info to be displayed in a fixed-width font as
 		/// readily copyable text</param>
-		/// TODO: Store static location and size of the Infobox (if shown non-modally).
+		/// <param name="type">a <see cref="BoxType"/> to deter the head's
+		/// backcolor - is valid only with head-text specified</param>
+		/// <remarks>Limit the length of 'head' to ~100 chars max or break it
+		/// into lines if greater.</remarks>
 		public Infobox(
 				string title,
-				string label,
-				string copyable = null)
+				string head,
+				string copyable = null,
+				BoxType type = BoxType.Info)
 		{
+			// TODO: Store static location and size of the Infobox (if shown non-modally).
+
 			InitializeComponent();
 
 			SuspendLayout();
 
-			int widthborder = Width  - ClientSize.Width; // cache these before things go wonky
-			int heighttitle = Height - ClientSize.Height - widthborder;
+			int widthBorder = Width  - ClientSize.Width; // cache these before things go wonky
+			int heightTitle = Height - ClientSize.Height - widthBorder;
 
 			Text = title;
 
 			int width  = 0;
 			int height = 0;
 
-			if (!String.IsNullOrEmpty(copyable)) // deter total width based on longest copyable line
+			int widthScroller = SystemInformation.VerticalScrollBarWidth;
+
+			if (!String.IsNullOrWhiteSpace(copyable)) // deter total width based on longest copyable line
 			{
 				string[] lines = copyable.Split(GlobalsXC.CRandorLF, StringSplitOptions.None);
 
@@ -76,7 +92,7 @@ namespace DSShared
 					if ((test = size.Width) > width)
 						width = test;
 				}
-				width += pnl_Copyable.Padding.Horizontal + 15; // +15 width of alleged scrollbar in the rtb.
+				width += pnl_Copyable.Padding.Horizontal + widthScroller;
 
 				height = TextRenderer.MeasureText(HEIGHT_TEST, rtb_Copyable.Font).Height;
 				pnl_Copyable.Height = height * (lines.Length + 1) + pnl_Copyable.Padding.Vertical;
@@ -93,25 +109,44 @@ namespace DSShared
 				rtb_Copyable.Visible = false;
 			}
 
-			if (width < w_MinCutoff)
-				width = w_MinCutoff;
+			if (width < w_Min)
+				width = w_Min;
 
 
-			if (!String.IsNullOrEmpty(label))
+			if (!String.IsNullOrWhiteSpace(head))
 			{
 				lbl_Head = new Label();
-				lbl_Head.Name     = "lbl_Head";
-				lbl_Head.Location = new Point(0,0);
-				lbl_Head.Size     = new Size(20,27);
-				lbl_Head.Margin   = new Padding(0);
-				lbl_Head.Padding  = new Padding(10,10,5,5);
-				lbl_Head.Dock     = DockStyle.Top;
-				lbl_Head.AutoSize = true;
-				lbl_Head.TabIndex = 0;
+				lbl_Head.Name      = "lbl_Head";
+				lbl_Head.Dock      = DockStyle.Top;
+				lbl_Head.Margin    = new Padding(0);
+				lbl_Head.Padding   = new Padding(8,0,0,0);
+				lbl_Head.TextAlign = ContentAlignment.MiddleLeft;
+				lbl_Head.TabIndex  = 0;
+				lbl_Head.Paint += OnPaintHead;
 				Controls.Add(this.lbl_Head);
 
-				lbl_Head.MaximumSize = new Size(width, 0); // auto-calc 'lbl_Head.Height'
-				lbl_Head.Text = label;
+				switch (type)
+				{
+					case BoxType.Info:
+						lbl_Head.BackColor = Color.PaleTurquoise;
+						break;
+
+					case BoxType.Error:
+						lbl_Head.BackColor = Color.SandyBrown;
+						break;
+
+					case BoxType.Warn:
+						lbl_Head.BackColor = Color.Moccasin;
+						break;
+				}
+
+				lbl_Head.Text = head;
+
+				Size size = TextRenderer.MeasureText(head, lbl_Head.Font);
+				lbl_Head.Height = size.Height + 10;
+
+				if (size.Width + lbl_Head.Padding.Horizontal + widthScroller > width)
+					width = size.Width + lbl_Head.Padding.Horizontal + widthScroller;
 			}
 
 
@@ -120,13 +155,13 @@ namespace DSShared
 				   + btn_Okay    .Height
 				   + btn_Okay    .Margin.Vertical;
 
-			if (height > h_MinCutoff)
-				height = h_MinCutoff;
+			if (height > h_Max)
+				height = h_Max;
 
 			ClientSize = new Size(width, height);
 
-			MinimumSize = new Size(width  + widthborder,
-								   height + widthborder + heighttitle);
+			MinimumSize = new Size(width  + widthBorder,
+								   height + widthBorder + heightTitle);
 
 			ResumeLayout();
 		}
@@ -134,20 +169,24 @@ namespace DSShared
 
 
 		#region Events (override)
+		/// <summary>
+		/// Overrides the load event.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <remarks>AutoWordSelection needs to be done here not in the designer
+		/// or cTor to work right.</remarks>
 		protected override void OnLoad(EventArgs e)
 		{
-			rtb_Copyable.AutoWordSelection = false; // <- needs to be here not in the designer to work right.
+			rtb_Copyable.AutoWordSelection = false;
 			rtb_Copyable.Select();
-
-			// don't do this because the top of the text gets hidden if a scrollbar appears
-//			rtb_Copyable.SelectionStart = rtb_Copyable.TextLength;
 		}
 
+		/// <summary>
+		/// Overrides the resize event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
-			if (lbl_Head != null)
-				lbl_Head.MaximumSize = new Size(ClientSize.Width, 0);
-
 			pnl_Copyable.Height = ClientSize.Height
 								- (lbl_Head != null ? lbl_Head.Height : 0)
 								- btn_Okay.Height
@@ -156,135 +195,103 @@ namespace DSShared
 
 			base.OnResize(e);
 		}
+
+		/// <summary>
+		/// Overrides the paint event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, Height - 1);
+		}
 		#endregion Events (override)
 
 
 		#region Events
+		/// <summary>
+		/// Paints border lines left/top on the head.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaintHead(object sender, PaintEventArgs e)
+		{
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, lbl_Head.Height - 1);
+			e.Graphics.DrawLine(Pens.Black, 1,0, lbl_Head.Width - 1, 0);
+		}
+
+		/// <summary>
+		/// Paints border lines left/top on the copyable panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaintPanel(object sender, PaintEventArgs e)
+		{
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, pnl_Copyable.Height - 1);
+			e.Graphics.DrawLine(Pens.Black, 1,0, pnl_Copyable.Width - 1, 0);
+		}
+
+		/// <summary>
+		/// Closes the dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnOkayClick(object sender, EventArgs e)
 		{
 			Close();
 		}
-
-/*		/// <summary>
-		/// Draws a 1px border around the copyable-panel.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void paint_CopyPanel(object sender, PaintEventArgs e)
-		{
-			var l = pnl_Copyable.Width     / 4; // top & bot half-borders ->
-			var r = pnl_Copyable.Width * 3 / 4;
-			var b = pnl_Copyable.Height - 1;
-			e.Graphics.DrawLine(Pens.Gray, l,0, r,0);
-			e.Graphics.DrawLine(Pens.Gray, l,b, r,b);
-
-//			int w = pnl_Copyable.Width  - 1; // 4-sided border ->
-//			int h = pnl_Copyable.Height - 1;
-//			var tl = new Point(0, 0);
-//			var tr = new Point(w, 0);
-//			var br = new Point(w, h);
-//			var bl = new Point(0, h);
-//			var graphics = e.Graphics;
-//			graphics.DrawLine(Pens.Black, tl, tr);
-//			graphics.DrawLine(Pens.Black, tr, br);
-//			graphics.DrawLine(Pens.Black, br, bl);
-//			graphics.DrawLine(Pens.Black, bl, tl);
-		} */
 		#endregion Events
-
-
-		#region Methods
-		public void SetLabelColor(Color color)
-		{
-			if (lbl_Head != null)
-				lbl_Head.ForeColor = color;
-		}
-		#endregion Methods
 
 
 		#region Methods (static)
 		/// <summary>
-		/// Takes and input-string and splices it with newlines every length in
+		/// Takes an input-string and splices it with newlines every length in
 		/// chars.
-		/// TODO: There's something borky with the algo. See testcases below ...
 		/// </summary>
-		/// <param name="text"></param>
-		/// <param name="chars"></param>
-		/// <returns></returns>
-		public static string FormatString(string text, int chars)
+		/// <param name="text">input only a trimmed sentence with no newlines
+		/// and keep words shorter than width</param>
+		/// <param name="width">desired width in chars - lines of output will
+		/// not exceed width</param>
+		/// <returns>text split into lines of maximum width</returns>
+		public static string SplitString(string text, int width = 60)
 		{
+			string[] words = text.Split(new[]{' '}, StringSplitOptions.RemoveEmptyEntries);
+			IList<string> list = new List<string>(words);
+
 			var sb = new StringBuilder();
 
-			int pos = -1;
-			var list = new List<int>();
+			int tally = 0;
 
-			for (int i = 0; i != text.Length; ++i)
+			string word;
+			for (int i = 0; i != list.Count; ++i)
 			{
-				if (text[i] == ' ')
-					pos = i;
+				word = list[i];
 
-				sb.Append(text[i]);
-
-				if (pos != -1 && i % chars == 0)
-					list.Add(pos);
-			}
-
-			for (int i = list.Count - 1; i != -1; --i)
-			{
-				sb.Remove(list[i], 1);
-				sb.Insert(list[i], Environment.NewLine);
+				if (i == 0)
+				{
+					sb.Append(word);
+					tally = word.Length;
+				}
+				else if (tally + word.Length < width - 1)
+				{
+					sb.Append(" " + word);
+					tally += word.Length + 1;
+				}
+				else
+				{
+					sb.AppendLine();
+					sb.Append(word);
+					tally = word.Length;
+				}
 			}
 			return sb.ToString();
 		}
-/* FormatString() testcase:
-- use 60-char width and "terrainset" in 'copyable' gets stuck out to the right
-
-	string copyable = "WARNING: Saving the Map in its current state would forever lose"
-					+ " those tilepart references. But if you know what terrain(s) have"
-					+ " gone rogue they can be added to the Map's terrainset with the"
-					+ " TilesetEditor. Or if you know how many records have been removed"
-					+ " from the terrainset the ids of the missing parts can be shifted"
-					+ " downward into an acceptable range by the TilepartSubstitution"
-					+ " dialog under MainView's edit-menu.";
-	copyable = FormatString(copyable, 60);
-
-	using (var f = new Infobox("Warning", "test", copyable))
-	{
-		f.ShowDialog();
-	}
-         |         |         |         |         |         |         ^
-		WARNING: Saving the Map in its current state would forever
-		lose those tilepart references. But if you know what
-		terrain(s) have gone rogue they can be added to the Map's terrainset <- Is sticking out.
-		with the TilesetEditor. Or if you know how many records
-		have been removed from the terrainset the ids of the missing
-		parts can be shifted downward into an acceptable range by the
-		TilepartSubstitution dialog under MainView's edit-menu.
-
-- or these strings w/ 55-char width:
-		There are 2 tileparts that exceed the bounds of the
-		Map's currently allocated MCD records. They will be
-		replaced by temporary tileparts and displayed on the Map as <- Is sticking out.
-		orange-red borkiness.
-
-         |         |         |         |         |         |    ^    |
-		IMPORTANT: Saving the Map in its current state would
-		forever lose those tilepart references. But if you know
-		what terrain(s) have gone rogue they can be added to the
-		Map's terrainset with the TilesetEditor. Or if you
-		know how many records have been removed from the
-		terrainset the ids of the missing parts can be shifted downward <- Is sticking out.
-		into an acceptable range by the TilepartSubstitution
-		dialog under MainView's edit-menu.
-*/
 		#endregion Methods (static)
 
 
 		#region Designer
-		private Button btn_Okay;
 		private RichTextBox rtb_Copyable;
 		private Panel pnl_Copyable;
-
+		private Button btn_Okay;
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -292,24 +299,11 @@ namespace DSShared
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.btn_Okay = new System.Windows.Forms.Button();
 			this.rtb_Copyable = new System.Windows.Forms.RichTextBox();
 			this.pnl_Copyable = new System.Windows.Forms.Panel();
+			this.btn_Okay = new System.Windows.Forms.Button();
 			this.pnl_Copyable.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// btn_Okay
-			// 
-			this.btn_Okay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_Okay.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Okay.Location = new System.Drawing.Point(312, 144);
-			this.btn_Okay.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-			this.btn_Okay.Name = "btn_Okay";
-			this.btn_Okay.Size = new System.Drawing.Size(80, 30);
-			this.btn_Okay.TabIndex = 2;
-			this.btn_Okay.Text = "ok";
-			this.btn_Okay.UseVisualStyleBackColor = true;
-			this.btn_Okay.Click += new System.EventHandler(this.OnOkayClick);
 			// 
 			// rtb_Copyable
 			// 
@@ -317,13 +311,14 @@ namespace DSShared
 			this.rtb_Copyable.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.rtb_Copyable.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rtb_Copyable.HideSelection = false;
-			this.rtb_Copyable.Location = new System.Drawing.Point(20, 10);
+			this.rtb_Copyable.Location = new System.Drawing.Point(18, 9);
 			this.rtb_Copyable.Margin = new System.Windows.Forms.Padding(0);
 			this.rtb_Copyable.Name = "rtb_Copyable";
 			this.rtb_Copyable.ReadOnly = true;
 			this.rtb_Copyable.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-			this.rtb_Copyable.Size = new System.Drawing.Size(374, 98);
+			this.rtb_Copyable.Size = new System.Drawing.Size(376, 116);
 			this.rtb_Copyable.TabIndex = 0;
+			this.rtb_Copyable.Text = "";
 			this.rtb_Copyable.WordWrap = false;
 			// 
 			// pnl_Copyable
@@ -333,9 +328,23 @@ namespace DSShared
 			this.pnl_Copyable.Location = new System.Drawing.Point(0, 0);
 			this.pnl_Copyable.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Copyable.Name = "pnl_Copyable";
-			this.pnl_Copyable.Padding = new System.Windows.Forms.Padding(20, 10, 0, 5);
-			this.pnl_Copyable.Size = new System.Drawing.Size(394, 113);
+			this.pnl_Copyable.Padding = new System.Windows.Forms.Padding(18, 9, 0, 5);
+			this.pnl_Copyable.Size = new System.Drawing.Size(394, 130);
 			this.pnl_Copyable.TabIndex = 1;
+			this.pnl_Copyable.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintPanel);
+			// 
+			// btn_Okay
+			// 
+			this.btn_Okay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_Okay.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btn_Okay.Location = new System.Drawing.Point(312, 144);
+			this.btn_Okay.Margin = new System.Windows.Forms.Padding(0, 2, 0, 3);
+			this.btn_Okay.Name = "btn_Okay";
+			this.btn_Okay.Size = new System.Drawing.Size(80, 30);
+			this.btn_Okay.TabIndex = 2;
+			this.btn_Okay.Text = "ok";
+			this.btn_Okay.UseVisualStyleBackColor = true;
+			this.btn_Okay.Click += new System.EventHandler(this.OnOkayClick);
 			// 
 			// Infobox
 			// 
