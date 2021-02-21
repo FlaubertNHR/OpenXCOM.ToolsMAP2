@@ -18,8 +18,8 @@ namespace MapView
 
 
 		#region Fields (static)
-		private static int x = -1;
-		private static int y;
+		private static int _x = -1;
+		private static int _y;
 
 		internal static int src0  = Int32.MaxValue;
 		internal static int src1  = Int32.MaxValue;
@@ -50,6 +50,10 @@ namespace MapView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="file"></param>
 		internal TilepartSubstitution(MapFile file)
 		{
 			InitializeComponent();
@@ -67,9 +71,9 @@ namespace MapView
 			tb_Src0.BackColor =
 			tb_Src1.BackColor = Color.Wheat;
 
-			var loc = new Point(x,y);
+			var loc = new Point(_x,_y);
 			bool isInsideBounds = false;
-			if (x > -1)
+			if (_x > -1)
 			{
 				foreach (var screen in Screen.AllScreens)
 				{
@@ -165,21 +169,25 @@ namespace MapView
 
 
 		#region Events (override)
+		/// <summary>
+		/// Stores this dialog's current location.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				x = Location.X;
-				y = Location.Y;
+				_x = Location.X;
+				_y = Location.Y;
 			}
 			base.OnFormClosing(e);
 		}
 
 		/// <summary>
-		/// Overrides the KeyDown eventhandler.
-		/// @note Requires KeyPreview true.
+		/// Overrides the keydown event. Closes this dialog on [Ctrl+u].
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Requires KeyPreview true.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyData == (Keys.Control | Keys.U))
@@ -201,6 +209,11 @@ namespace MapView
 			(sender as Control).TabStop = true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void rb_CheckedChanged(object sender, EventArgs e)
 		{
 			if (!_init)
@@ -264,11 +277,21 @@ namespace MapView
 			Enable();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void tb_Activated(object sender, EventArgs e)
 		{
 			_text = (sender as Control).Text;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void tb_TextChanged(object sender, EventArgs e)
 		{
 			if (!_init)
@@ -370,7 +393,6 @@ namespace MapView
 		private Label la_start;
 		private Label la_stop;
 		private Label la_note;
-
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
