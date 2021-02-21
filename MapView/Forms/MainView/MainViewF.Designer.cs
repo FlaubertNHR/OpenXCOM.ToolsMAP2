@@ -278,7 +278,7 @@ namespace MapView
 			this.miModifySize.Enabled = false;
 			this.miModifySize.Index = 0;
 			this.miModifySize.Shortcut = System.Windows.Forms.Shortcut.CtrlZ;
-			this.miModifySize.Text = "Modify Map Si&ze";
+			this.miModifySize.Text = "Modify Mapsi&ze";
 			this.miModifySize.Click += new System.EventHandler(this.OnMapResizeClick);
 			// 
 			// miTilepartSubstitution
