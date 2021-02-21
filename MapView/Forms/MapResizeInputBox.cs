@@ -123,15 +123,6 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the paint event.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			e.Graphics.DrawLine(Pens.Black, 0,0, 0, ClientSize.Height - 1);
-		}
-
-		/// <summary>
 		/// Stores this dialog's current location.
 		/// </summary>
 		/// <param name="e"></param>
@@ -144,12 +135,21 @@ namespace MapView
 			}
 			base.OnFormClosing(e);
 		}
+
+		/// <summary>
+		/// Overrides the paint event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, ClientSize.Height - 1);
+		}
 		#endregion Events (override)
 
 
 		#region Events
 		/// <summary>
-		/// Paints a left/top border on the head-panel.
+		/// Paints a left/top border on the head-label.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -195,7 +195,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Shows the AddToCeiling checkbox if the height has delta.
+		/// Shows the ceiling-type checkbox if the levels have delta.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
