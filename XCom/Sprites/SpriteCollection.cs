@@ -538,7 +538,7 @@ namespace XCom
 		/// <param name="spriteset">the SpriteCollection to test</param>
 		/// <param name="result">a ref to hold the result as a string</param>
 		/// <returns>true if mission was successful</returns>
-		public static bool Test2byteSpriteset(
+		public static bool TestTabOffsets(
 				SpriteCollection spriteset,
 				out string result)
 		{

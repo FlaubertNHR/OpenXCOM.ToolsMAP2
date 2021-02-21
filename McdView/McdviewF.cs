@@ -1350,14 +1350,14 @@ namespace McdView
 			if (Spriteset != null)
 			{
 				string result;
-				if (!SpriteCollection.Test2byteSpriteset(Spriteset, out result))
+				if (!SpriteCollection.TestTabOffsets(Spriteset, out result))
 				{
 					verified = false;
 					using (var f = new Infobox(
 											"Strict test",
 											"Sprite offset is invalid.",
 											result,
-											Infobox.BoxType.Warn))
+											Infobox.BoxType.Error))
 					{
 						f.ShowDialog(this);
 					}
