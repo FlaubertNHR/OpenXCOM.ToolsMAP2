@@ -11,7 +11,7 @@
 
 			/// <summary>
 			/// this needs to create/delete levels at top and push existing
-			/// levels down/up
+			/// levels down or pull them upward
 			/// </summary>
 			MRZT_TOP  // 1
 		}
