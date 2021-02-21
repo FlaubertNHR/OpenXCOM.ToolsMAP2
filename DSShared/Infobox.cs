@@ -16,14 +16,8 @@ namespace DSShared
 		:
 			Form
 	{
-		#region enums
 		public enum BoxType
-		{
-			Info,
-			Warn,
-			Error
-		}
-		#endregion enums
+		{ Info, Warn, Error }
 
 
 		#region Fields (static)
