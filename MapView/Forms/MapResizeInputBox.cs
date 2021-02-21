@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 using DSShared;
@@ -12,22 +13,28 @@ namespace MapView
 		:
 			Form
 	{
+		#region Fields (static)
+		private static int _x = -1;
+		private static int _y;
+		#endregion Fields (static)
+
+
 		#region Fields
 		private MapFile _file;
 		#endregion Fields
 
 
 		#region Properties
-		private int _rows;
-		internal int Rows
-		{
-			get { return _rows; }
-		}
-
 		private int _cols;
 		internal int Cols
 		{
 			get { return _cols; }
+		}
+
+		private int _rows;
+		internal int Rows
+		{
+			get { return _rows; }
 		}
 
 		private int _levs;
@@ -40,6 +47,9 @@ namespace MapView
 		{
 			get
 			{
+				// NOTE: When the form closes Visible==true/false is unreliable
+				// but Enabled==true/false still works.
+
 				if (cb_Ceil.Enabled && cb_Ceil.Checked)
 					return MapResizeService.MapResizeZtype.MRZT_TOP;
 
@@ -60,6 +70,34 @@ namespace MapView
 
 			_file = file;
 
+			var loc = new Point(_x,_y);
+			bool isInsideBounds = false;
+			if (_x > -1)
+			{
+				foreach (var screen in Screen.AllScreens)
+				{
+					if (isInsideBounds = screen.Bounds.Contains(loc)
+									  && screen.Bounds.Contains(loc + Size))
+					{
+						break;
+					}
+				}
+			}
+
+			if (isInsideBounds)
+				Location = loc;
+			else
+				CenterToScreen();
+
+
+			tb_Row0.BackColor =
+			tb_Col0.BackColor =
+			tb_Lev0.BackColor = Color.LavenderBlush;
+
+			tb_Row1.BackColor =
+			tb_Col1.BackColor =
+			tb_Lev1.BackColor = Color.Azure;
+
 			tb_Row0.Text =
 			tb_Row1.Text = file.MapSize.Rows.ToString();
 			tb_Col0.Text =
@@ -68,12 +106,64 @@ namespace MapView
 			tb_Lev1.Text = file.MapSize.Levs.ToString();
 
 			btn_Cancel.Select();
-			DialogResult = DialogResult.Cancel;
 		}
 		#endregion cTor
 
 
+		#region Events (override)
+		/// <summary>
+		/// Overrides the keydown event. Closes this dialog on [Ctrl+z].
+		/// </summary>
+		/// <param name="e"></param>
+		/// <remarks>Requires KeyPreview true.</remarks>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyData == (Keys.Control | Keys.Z))
+				Close();
+		}
+
+		/// <summary>
+		/// Overrides the paint event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, ClientSize.Height - 1);
+		}
+
+		/// <summary>
+		/// Stores this dialog's current location.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				_x = Location.X;
+				_y = Location.Y;
+			}
+			base.OnFormClosing(e);
+		}
+		#endregion Events (override)
+
+
 		#region Events
+		/// <summary>
+		/// Paints a left/top border on the head-panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaintHead(object sender, PaintEventArgs e)
+		{
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, ClientSize.Height - 1);
+			e.Graphics.DrawLine(Pens.Black, 1,0, ClientSize.Width - 1, 0);
+		}
+
+		/// <summary>
+		/// Handles an Ok click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnOkClick(object sender, EventArgs e)
 		{
 			if (   String.IsNullOrEmpty(tb_Col1.Text)
@@ -101,18 +191,7 @@ namespace MapView
 			else // finally (sic) ->
 			{
 				DialogResult = DialogResult.OK;
-				Close();
 			}
-		}
-
-		/// <summary>
-		/// Closes this form and discards any changes.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnCancelClick(object sender, EventArgs e)
-		{
-			Close();
 		}
 
 		/// <summary>
@@ -124,27 +203,29 @@ namespace MapView
 		{
 			if (!String.IsNullOrEmpty(tb_Lev1.Text)) // NOTE: btnOkClick will deal with a blank string.
 			{
-				int height;
-				if (Int32.TryParse(tb_Lev1.Text, out height))
+				int levels;
+				if (Int32.TryParse(tb_Lev1.Text, out levels))
 				{
-					if (height > 0)
+					if (levels > 0)
 					{
-						int delta = (height - _file.MapSize.Levs);
-						if (cb_Ceil.Enabled = (delta != 0))
+						int delta = (levels - _file.MapSize.Levs);
+						if (cb_Ceil.Visible = cb_Ceil.Enabled = (delta != 0))
 						{
-							if (delta > 0)
-							{
-								cb_Ceil.Text = "add to top";
-							}
-							else
-								cb_Ceil.Text = "subtract from top";
+							if (delta > 0) cb_Ceil.Text = "add to top";
+							else           cb_Ceil.Text = "remove from top";
 						}
 					}
 					else
+					{
 						ShowError("Height must be 1 or more.");
+						tb_Lev1.Text = tb_Lev0.Text; // recurse
+					}
 				}
 				else
+				{
 					ShowError("Height must a positive integer.");
+					tb_Lev1.Text = tb_Lev0.Text; // recurse
+				}
 			}
 		}
 		#endregion Events
@@ -188,7 +269,6 @@ namespace MapView
 		private Label lbl_Head;
 		private CheckBox cb_Ceil;
 
-
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
 		/// this method with the code editor.
@@ -215,7 +295,8 @@ namespace MapView
 			// 
 			// tb_Col0
 			// 
-			this.tb_Col0.Location = new System.Drawing.Point(20, 55);
+			this.tb_Col0.Location = new System.Drawing.Point(10, 50);
+			this.tb_Col0.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Col0.Name = "tb_Col0";
 			this.tb_Col0.ReadOnly = true;
 			this.tb_Col0.Size = new System.Drawing.Size(45, 19);
@@ -223,7 +304,8 @@ namespace MapView
 			// 
 			// tb_Row0
 			// 
-			this.tb_Row0.Location = new System.Drawing.Point(70, 55);
+			this.tb_Row0.Location = new System.Drawing.Point(60, 50);
+			this.tb_Row0.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Row0.Name = "tb_Row0";
 			this.tb_Row0.ReadOnly = true;
 			this.tb_Row0.Size = new System.Drawing.Size(45, 19);
@@ -231,7 +313,8 @@ namespace MapView
 			// 
 			// tb_Lev0
 			// 
-			this.tb_Lev0.Location = new System.Drawing.Point(120, 55);
+			this.tb_Lev0.Location = new System.Drawing.Point(110, 50);
+			this.tb_Lev0.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Lev0.Name = "tb_Lev0";
 			this.tb_Lev0.ReadOnly = true;
 			this.tb_Lev0.Size = new System.Drawing.Size(45, 19);
@@ -239,14 +322,16 @@ namespace MapView
 			// 
 			// tb_Row1
 			// 
-			this.tb_Row1.Location = new System.Drawing.Point(70, 95);
+			this.tb_Row1.Location = new System.Drawing.Point(60, 90);
+			this.tb_Row1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Row1.Name = "tb_Row1";
 			this.tb_Row1.Size = new System.Drawing.Size(45, 19);
 			this.tb_Row1.TabIndex = 11;
 			// 
 			// lbl_Col0
 			// 
-			this.lbl_Col0.Location = new System.Drawing.Point(20, 40);
+			this.lbl_Col0.Location = new System.Drawing.Point(10, 35);
+			this.lbl_Col0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Col0.Name = "lbl_Col0";
 			this.lbl_Col0.Size = new System.Drawing.Size(45, 15);
 			this.lbl_Col0.TabIndex = 1;
@@ -255,7 +340,8 @@ namespace MapView
 			// 
 			// lbl_Row0
 			// 
-			this.lbl_Row0.Location = new System.Drawing.Point(70, 40);
+			this.lbl_Row0.Location = new System.Drawing.Point(60, 35);
+			this.lbl_Row0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Row0.Name = "lbl_Row0";
 			this.lbl_Row0.Size = new System.Drawing.Size(45, 15);
 			this.lbl_Row0.TabIndex = 2;
@@ -264,7 +350,8 @@ namespace MapView
 			// 
 			// lbl_Lev0
 			// 
-			this.lbl_Lev0.Location = new System.Drawing.Point(120, 40);
+			this.lbl_Lev0.Location = new System.Drawing.Point(110, 35);
+			this.lbl_Lev0.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Lev0.Name = "lbl_Lev0";
 			this.lbl_Lev0.Size = new System.Drawing.Size(45, 15);
 			this.lbl_Lev0.TabIndex = 3;
@@ -273,14 +360,16 @@ namespace MapView
 			// 
 			// tb_Col1
 			// 
-			this.tb_Col1.Location = new System.Drawing.Point(20, 95);
+			this.tb_Col1.Location = new System.Drawing.Point(10, 90);
+			this.tb_Col1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Col1.Name = "tb_Col1";
 			this.tb_Col1.Size = new System.Drawing.Size(45, 19);
 			this.tb_Col1.TabIndex = 10;
 			// 
 			// tb_Lev1
 			// 
-			this.tb_Lev1.Location = new System.Drawing.Point(120, 95);
+			this.tb_Lev1.Location = new System.Drawing.Point(110, 90);
+			this.tb_Lev1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Lev1.Name = "tb_Lev1";
 			this.tb_Lev1.Size = new System.Drawing.Size(45, 19);
 			this.tb_Lev1.TabIndex = 12;
@@ -288,8 +377,9 @@ namespace MapView
 			// 
 			// btn_Ok
 			// 
-			this.btn_Ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_Ok.Location = new System.Drawing.Point(120, 125);
+			this.btn_Ok.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.btn_Ok.Location = new System.Drawing.Point(112, 121);
+			this.btn_Ok.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Ok.Name = "btn_Ok";
 			this.btn_Ok.Size = new System.Drawing.Size(80, 30);
 			this.btn_Ok.TabIndex = 14;
@@ -298,31 +388,33 @@ namespace MapView
 			// 
 			// btn_Cancel
 			// 
-			this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btn_Cancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Cancel.Location = new System.Drawing.Point(210, 125);
+			this.btn_Cancel.Location = new System.Drawing.Point(200, 121);
 			this.btn_Cancel.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Cancel.Name = "btn_Cancel";
 			this.btn_Cancel.Size = new System.Drawing.Size(80, 30);
 			this.btn_Cancel.TabIndex = 15;
 			this.btn_Cancel.Text = "Cancel";
-			this.btn_Cancel.Click += new System.EventHandler(this.OnCancelClick);
 			// 
 			// cb_Ceil
 			// 
 			this.cb_Ceil.Checked = true;
 			this.cb_Ceil.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cb_Ceil.Enabled = false;
-			this.cb_Ceil.Location = new System.Drawing.Point(170, 95);
+			this.cb_Ceil.Location = new System.Drawing.Point(160, 90);
+			this.cb_Ceil.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_Ceil.Name = "cb_Ceil";
-			this.cb_Ceil.Size = new System.Drawing.Size(120, 21);
+			this.cb_Ceil.Size = new System.Drawing.Size(120, 20);
 			this.cb_Ceil.TabIndex = 13;
-			this.cb_Ceil.Text = "top";
+			this.cb_Ceil.Text = "ceil";
 			this.cb_Ceil.UseVisualStyleBackColor = true;
+			this.cb_Ceil.Visible = false;
 			// 
 			// lbl_Lev1
 			// 
-			this.lbl_Lev1.Location = new System.Drawing.Point(120, 80);
+			this.lbl_Lev1.Location = new System.Drawing.Point(110, 75);
+			this.lbl_Lev1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Lev1.Name = "lbl_Lev1";
 			this.lbl_Lev1.Size = new System.Drawing.Size(45, 15);
 			this.lbl_Lev1.TabIndex = 9;
@@ -331,7 +423,8 @@ namespace MapView
 			// 
 			// lbl_Row1
 			// 
-			this.lbl_Row1.Location = new System.Drawing.Point(70, 80);
+			this.lbl_Row1.Location = new System.Drawing.Point(60, 75);
+			this.lbl_Row1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Row1.Name = "lbl_Row1";
 			this.lbl_Row1.Size = new System.Drawing.Size(45, 15);
 			this.lbl_Row1.TabIndex = 8;
@@ -340,7 +433,8 @@ namespace MapView
 			// 
 			// lbl_Col1
 			// 
-			this.lbl_Col1.Location = new System.Drawing.Point(20, 80);
+			this.lbl_Col1.Location = new System.Drawing.Point(10, 75);
+			this.lbl_Col1.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Col1.Name = "lbl_Col1";
 			this.lbl_Col1.Size = new System.Drawing.Size(45, 15);
 			this.lbl_Col1.TabIndex = 7;
@@ -349,21 +443,23 @@ namespace MapView
 			// 
 			// lbl_Head
 			// 
+			this.lbl_Head.BackColor = System.Drawing.Color.PowderBlue;
 			this.lbl_Head.Dock = System.Windows.Forms.DockStyle.Top;
 			this.lbl_Head.Location = new System.Drawing.Point(0, 0);
+			this.lbl_Head.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Head.Name = "lbl_Head";
-			this.lbl_Head.Padding = new System.Windows.Forms.Padding(3, 5, 0, 0);
-			this.lbl_Head.Size = new System.Drawing.Size(304, 35);
+			this.lbl_Head.Padding = new System.Windows.Forms.Padding(3, 2, 0, 0);
+			this.lbl_Head.Size = new System.Drawing.Size(284, 30);
 			this.lbl_Head.TabIndex = 0;
-			this.lbl_Head.Text = "Columns and Rows must be multiples of 10 (10, 20, 30, etc) and Levels must be 1 o" +
-	"r more.";
+			this.lbl_Head.Text = "Columns and Rows must be exact multiples of 10 and Levels must be 1 or more.";
+			this.lbl_Head.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintHead);
 			// 
 			// MapResizeInputBox
 			// 
 			this.AcceptButton = this.btn_Ok;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.CancelButton = this.btn_Cancel;
-			this.ClientSize = new System.Drawing.Size(304, 161);
+			this.ClientSize = new System.Drawing.Size(284, 156);
 			this.Controls.Add(this.lbl_Head);
 			this.Controls.Add(this.lbl_Lev1);
 			this.Controls.Add(this.lbl_Row1);
@@ -382,12 +478,13 @@ namespace MapView
 			this.Controls.Add(this.tb_Row0);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MapResizeInputBox";
 			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Modify Map Size";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+			this.Text = "Modify Mapsize";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
