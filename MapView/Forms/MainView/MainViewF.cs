@@ -1359,15 +1359,17 @@ namespace MapView
 							MainViewUnderlay.MapFile.ExportRoutes(Path.Combine(dirRoutes, label));
 						}
 						else
-							MessageBox.Show(
-										this,
-										"Maps must be saved to a directory MAPS. Routes shall"
-											+ " then be saved to its sibling directory ROUTES.",
-										" Error",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Error,
-										MessageBoxDefaultButton.Button1,
-										0);
+						{
+							using (var f = new Infobox(
+													"Error",
+													Infobox.SplitString("Maps must be saved to a directory MAPS."
+															+ " Routes can then be saved to its sibling directory ROUTES."),
+													null,
+													Infobox.BoxType.Error))
+							{
+								f.ShowDialog(this);
+							}
+						}
 					}
 				}
 			}
@@ -2800,14 +2802,14 @@ namespace MapView
 					case GameType.Tftd: key = "TFTD"; break;
 				}
 
-				MessageBox.Show(
-							this,
-							key + " is not configured.",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				using (var f = new Infobox(
+										"Error",
+										key + " is not configured.",
+										null,
+										Infobox.BoxType.Error))
+				{
+					f.ShowDialog(this);
+				}
 				return false;
 			}
 			return true;

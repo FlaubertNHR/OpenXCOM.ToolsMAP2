@@ -103,14 +103,16 @@ namespace XCom
 							//LogFile.WriteLine(". . treechanged= " + treechanged);
 						}
 						else
-							MessageBox.Show(
-										descriptor.Label + GlobalsXC.MapExt
-											+ " was not found in that basepath.",
-										" Error",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Error,
-										MessageBoxDefaultButton.Button1,
-										0);
+						{
+							using (var f = new Infobox(
+													"Error",
+													"File not found in that basepath.",
+													descriptor.Label + GlobalsXC.MapExt,
+													Infobox.BoxType.Error))
+							{
+								f.ShowDialog();
+							}
+						}
 					}
 				}
 			}
@@ -208,13 +210,14 @@ namespace XCom
 				}
 
 				//LogFile.WriteLine(". . MCD Error");
-				MessageBox.Show(
-							"There are no terrains allocated or they do not contain MCD records.",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				using (var f = new Infobox(
+										"Error",
+										"There are no terrains allocated or they do not contain MCD records.",
+										null,
+										Infobox.BoxType.Error))
+				{
+					f.ShowDialog();
+				}
 			}
 
 			//LogFile.WriteLine(". ret null Descriptor");

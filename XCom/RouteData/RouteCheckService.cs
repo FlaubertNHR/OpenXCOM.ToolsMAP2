@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+using DSShared;
+
 
 namespace XCom
 {
@@ -72,13 +74,14 @@ namespace XCom
 					return dialog_InvalidNodes();
 
 				if (userinvoked)
-					MessageBox.Show(
-								"There are no Out of Bounds nodes detected.",
-								" Good stuff, Magister Ludi",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.None,
-								MessageBoxDefaultButton.Button1,
-								0);
+				{
+					using (var f = new Infobox(
+											"Good stuff, Magister Ludi",
+											"There are no Out of Bounds nodes detected."))
+					{
+						f.ShowDialog();
+					}
+				}
 			}
 			return DialogResult.No;
 		}

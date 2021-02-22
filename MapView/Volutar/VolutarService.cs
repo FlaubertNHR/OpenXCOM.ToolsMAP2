@@ -2,6 +2,8 @@
 using System.IO;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.Observers;
 
 
@@ -33,13 +35,13 @@ namespace MapView.Volutar
 				_fullpath = option.Value as String;
 				if (!File.Exists(_fullpath))
 				{
-					using (var f = new FindVolutarF())
+					using (var volutar = new FindVolutarF())
 					{
-						if (f.ShowDialog() == DialogResult.OK)
+						if (volutar.ShowDialog() == DialogResult.OK)
 						{
-							if (File.Exists(f.InputString))
+							if (File.Exists(volutar.InputString))
 							{
-								_fullpath = f.InputString;
+								_fullpath = volutar.InputString;
 								TileView.Optionables.VolutarMcdEditorPath = _fullpath;
 								option.Value = (object)_fullpath;
 
@@ -47,13 +49,16 @@ namespace MapView.Volutar
 									(TileView._foptions as OptionsForm).propertyGrid.Refresh();
 							}
 							else
-								MessageBox.Show(
-											"File not found.",
-											" Error",
-											MessageBoxButtons.OK,
-											MessageBoxIcon.Error,
-											MessageBoxDefaultButton.Button1,
-											0);
+							{
+								using (var f = new Infobox(
+														"Error",
+														"File not found.",
+														null,
+														Infobox.BoxType.Error))
+								{
+									f.ShowDialog();
+								}
+							}
 						}
 					}
 				}

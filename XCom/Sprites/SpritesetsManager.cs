@@ -95,14 +95,15 @@ namespace XCom
 
 						if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non)
 						{
-							MessageBox.Show(
-										"The count of sprites in the PCK file does not match"
-											+ " the count of sprites expected by the TAB file.",
-										" Error",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Error,
-										MessageBoxDefaultButton.Button1,
-										0);
+							using (var f = new Infobox(
+													"Error",
+													Infobox.SplitString("The count of sprites in the PCK file does not"
+															+ " match the count of sprites expected by the TAB file."),
+													null,
+													Infobox.BoxType.Error))
+							{
+								f.ShowDialog();
+							}
 						}
 						// else if ((spriteset.Fail & SpriteCollection.FAIL_OF_SPRITE) != SpriteCollection.FAIL_non)
 						// {} // too many bytes for a nonbigob sprite - better not happen here.

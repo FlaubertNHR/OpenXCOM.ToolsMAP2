@@ -631,19 +631,19 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// An errorbox telling the user that the operation they are attempting
-		/// is invalid because they haven't selected a tilepart.
+		/// An <see cref="Infobox"/> telling the user that the operation they
+		/// are attempting is invalid because they haven't selected a tilepart.
 		/// </summary>
 		void error_SelectTile()
 		{
-			MessageBox.Show(
-						this,
-						"Select a Tile.",
-						" Error",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox(
+									"Error",
+									"Select a Tile.",
+									null,
+									Infobox.BoxType.Error))
+			{
+				f.ShowDialog(this);
+			}
 		}
 		#endregion Events (menu)
 

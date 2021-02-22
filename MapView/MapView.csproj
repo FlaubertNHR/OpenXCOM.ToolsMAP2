@@ -273,9 +273,6 @@
     </Compile>
     <Compile Include="Varidia.cs" />
     <Compile Include="Volutar\FindVolutarF.cs" />
-    <Compile Include="Volutar\FindVolutarF.Designer.cs">
-      <DependentUpon>FindVolutarF.cs</DependentUpon>
-    </Compile>
     <Compile Include="Volutar\VolutarService.cs" />
     <EmbeddedResource Include="Error\ErrorF.resx">
       <DependentUpon>ErrorF.cs</DependentUpon>

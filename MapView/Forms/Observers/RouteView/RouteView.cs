@@ -575,14 +575,14 @@ namespace MapView.Forms.Observers
 					||   args.Location.Row != (int)Dragnode.Row
 					||   args.Location.Lev !=      Dragnode.Lev)
 				{
-					MessageBox.Show(
-								this,
-								"Cannot move node onto another node.",
-								" Err..",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+					using (var f = new Infobox(
+											"Err...",
+											"Cannot move node onto another node.",
+											null,
+											Infobox.BoxType.Error))
+					{
+						f.ShowDialog(this);
+					}
 				}
 				Dragnode = null;
 			}
@@ -640,15 +640,15 @@ namespace MapView.Forms.Observers
 					switch (result = GetOpenLinkSlot(node, NodeSelected.Id))
 					{
 						case LinkSlotResult.AllSlotsUsed:
-							MessageBox.Show(
-										this,
-										"Destination node could not be linked to the source node."
-											+ " Its link-slots are full.",
-										" Warning",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Warning,
-										MessageBoxDefaultButton.Button1,
-										0);
+							using (var f = new Infobox(
+													"Warning",
+													Infobox.SplitString("Destination node could not be linked"
+															+ " to the source node. Its link-slots are full."),
+													null,
+													Infobox.BoxType.Warn))
+							{
+								f.ShowDialog(this);
+							}
 							// TODO: the message leaves the RoutePanel drawn in an awkward state
 							// but discovering where to call Refresh() is not trivial.
 							// Fortunately a simple mouseover straightens things out for now.
@@ -671,15 +671,15 @@ namespace MapView.Forms.Observers
 					switch (result = GetOpenLinkSlot(NodeSelected, node.Id))
 					{
 						case LinkSlotResult.AllSlotsUsed:
-							MessageBox.Show(
-										this,
-										"Source node could not be linked to the destination node."
-											+ " Its link-slots are full.",
-										" Warning",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Warning,
-										MessageBoxDefaultButton.Button1,
-										0);
+							using (var f = new Infobox(
+													"Warning",
+													Infobox.SplitString("Source node could not be linked to the"
+															+ " destination node. Its link-slots are full."),
+													null,
+													Infobox.BoxType.Warn))
+							{
+								f.ShowDialog(this);
+							}
 							// TODO: the message leaves the RoutePanel drawn in an awkward state
 							// but discovering where to call Refresh() is not trivial.
 							// Fortunately a simple mouseover straightens things out for now.
@@ -2026,29 +2026,19 @@ namespace MapView.Forms.Observers
 					}
 				}
 
+				string head;
 				if (changed != 0)
 				{
 					RoutesChangedCoordinator = true;
 					UpdateNodeInfo();
 
-					MessageBox.Show(
-								this,
-								changed + " nodes were changed.",
-								" All nodes rank 0",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.None,
-								MessageBoxDefaultButton.Button1,
-								0);
+					head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
 				}
 				else
-					MessageBox.Show(
-								this,
-								"All nodes are already rank 0.",
-								" All nodes rank 0",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.None,
-								MessageBoxDefaultButton.Button1,
-								0);
+					head = "All nodes are already rank 0.";
+
+				using (var f = new Infobox("All nodes rank 0", head))
+					f.ShowDialog(this);
 			}
 		}
 
@@ -2135,30 +2125,19 @@ namespace MapView.Forms.Observers
 				}
 			}
 
-			string info;
+			string head;
 			if (changed != 0)
 			{
 				RoutesChangedCoordinator = true;
-				info = String.Format(
-								"{0} link{1} updated.",
-								 changed,
-								(changed == 1) ? " has been" : "s have been");
-
 				UpdateNodeInfo();
+
+				head = ((changed == 1) ? " link has" : " links have") + " been updated.";
 			}
 			else
-			{
-				info = "All link distances are already correct.";
-			}
+				head = "All link distances are already correct.";
 
-			MessageBox.Show(
-						this,
-						info,
-						" Link distances updated",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.None,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox("Link distances updated", head))
+				f.ShowDialog(this);
 		}
 
 		/// <summary>
@@ -2204,36 +2183,39 @@ namespace MapView.Forms.Observers
 					invalids.Add(node.Id);
 			}
 
-			string info, title;
-			MessageBoxIcon icon;
+			Infobox.BoxType boxType;
+			string title, head, copyable;
 
 			if (invalids.Count != 0)
 			{
-				icon  = MessageBoxIcon.Warning;
-				title = " Warning";
-				info  = "The following route-"
-					  + ((invalids.Count == 1) ? "node has" : "nodes have")
-					  + " an invalid NodeRank."
-					  + Environment.NewLine;
+				boxType = Infobox.BoxType.Warn;
+				title = "Warning";
+				head  = "The following " + ((invalids.Count == 1) ? "node has" : "nodes have")
+					  + " an invalid NodeRank.";
 
+				copyable = String.Empty;
 				foreach (byte id in invalids)
-					info += Environment.NewLine + id;
+				{
+					if (copyable != String.Empty) copyable += Environment.NewLine;
+					copyable += id;
+				}
 			}
 			else
 			{
-				icon  = MessageBoxIcon.None;
-				title = " Good stuff, Magister Ludi";
-				info  = "There are no invalid NodeRanks detected.";
+				boxType  = Infobox.BoxType.Info;
+				title    = "Good stuff, Magister Ludi";
+				head     = "There are no invalid NodeRanks detected.";
+				copyable = null;
 			}
 
-			MessageBox.Show(
-						this,
-						info,
-						title,
-						MessageBoxButtons.OK,
-						icon,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox(
+									title,
+									head,
+									copyable,
+									boxType))
+			{
+				f.ShowDialog(this);
+			}
 		}
 		#endregion Events (toolstrip)
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 
@@ -20,12 +19,17 @@ namespace XCom
 		internal RouteCheckInfobox()
 		{
 			InitializeComponent();
-			DialogResult = DialogResult.No;
+			ActiveControl = btn_Yes;
 		}
 		#endregion cTor
 
 
 		#region Events
+		/// <summary>
+		/// Closes this dialog and returns DialogResult.Yes.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btn_AcceptClick(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.Yes;
@@ -34,6 +38,11 @@ namespace XCom
 
 
 		#region Methods
+		/// <summary>
+		/// Sets texts.
+		/// </summary>
+		/// <param name="label"></param>
+		/// <param name="text"></param>
 		internal void SetTexts(string label, string text)
 		{
 			lbl_InfoBody.Text = label;
@@ -42,27 +51,11 @@ namespace XCom
 		#endregion Methods
 
 
-
 		#region Designer
-		private Container components = null;
-
 		private Label lbl_InfoBody;
 		private RichTextBox rtb_Text;
 		private Button btn_Yes;
 		private Button btn_No;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using DSShared;
 using DSShared.Controls;
 
 using XCom;
@@ -167,19 +168,16 @@ namespace PckView
 										{
 											case PckSprite.MarkerRle: // #254
 											case PckSprite.MarkerEos: // #255
-												MessageBox.Show(
-															this,
-															"The colortable values #254 and #255 are reserved"
-																+ " as special markers in a .PCK file."
-																+ Environment.NewLine + Environment.NewLine
-																+ "#254 is used for RLE encoding"
-																+ Environment.NewLine
-																+ "#255 is the End-of-Sprite marker",
-															" Error",
-															MessageBoxButtons.OK,
-															MessageBoxIcon.Error,
-															MessageBoxDefaultButton.Button1,
-															0);
+												using (var f = new Infobox(
+																		"Error",
+																		Infobox.SplitString("The colortable values #254 and #255"
+																				+ " are reserved as special markers in a .PCK file."),
+																		"#254 - RLE" + Environment.NewLine
+																	  + "#255 - End-of-Sprite",
+																		Infobox.BoxType.Error))
+												{
+													f.ShowDialog(this);
+												}
 												break;
 										}
 									}

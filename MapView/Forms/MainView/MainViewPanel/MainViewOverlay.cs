@@ -534,8 +534,8 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Fills the selected quadrant of the currently selected tile(s) with
 		/// the currently selected tilepart from TileView.
-		/// @note Unlike Paste() this ignores quadtype visibility.
 		/// </summary>
+		/// <remarks>Unlike Paste() this ignores quadtype visibility.</remarks>
 		internal void FillSelectedQuads()
 		{
 			if (MapFile != null && FirstClick)
@@ -564,18 +564,18 @@ namespace MapView.Forms.MainView
 					InvalidateObservers();
 				}
 				else
-					MessageBox.Show(
-								this,
-								"Cannot place a tilepart that has setId greater than "
-									+ MapFile.MaxTerrainId + "."
-									+ Environment.NewLine + Environment.NewLine
-									+ "The value cannot be written to a Mapfile due"
-									+ " to the 1-byte restriction on Tilepart ids.",
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+				{
+					using (var f = new Infobox(
+											"Error",
+											Infobox.SplitString("Cannot place a tilepart that has setId greater than "
+													+ MapFile.MaxTerrainId + ". The value cannot be written to"
+													+ " a Mapfile due to the 1-byte restriction on Tilepart ids."),
+											null,
+											Infobox.BoxType.Error))
+					{
+						f.ShowDialog(this);
+					}
+				}
 			}
 		}
 
