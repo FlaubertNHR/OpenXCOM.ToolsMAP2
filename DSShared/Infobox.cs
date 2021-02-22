@@ -331,10 +331,10 @@ namespace DSShared
 			// 
 			this.btn_Okay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btn_Okay.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Okay.Location = new System.Drawing.Point(312, 144);
-			this.btn_Okay.Margin = new System.Windows.Forms.Padding(0, 2, 0, 3);
+			this.btn_Okay.Location = new System.Drawing.Point(296, 150);
+			this.btn_Okay.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
 			this.btn_Okay.Name = "btn_Okay";
-			this.btn_Okay.Size = new System.Drawing.Size(80, 30);
+			this.btn_Okay.Size = new System.Drawing.Size(95, 25);
 			this.btn_Okay.TabIndex = 2;
 			this.btn_Okay.Text = "ok";
 			this.btn_Okay.UseVisualStyleBackColor = true;
