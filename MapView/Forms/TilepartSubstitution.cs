@@ -193,10 +193,30 @@ namespace MapView
 			if (e.KeyData == (Keys.Control | Keys.U))
 				Close();
 		}
+
+		/// <summary>
+		/// Overrides the paint event.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, ClientSize.Height - 1);
+		}
 		#endregion Events (override)
 
 
 		#region Events
+		/// <summary>
+		/// Paints a left/top border on the head-label.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaintHead(object sender, PaintEventArgs e)
+		{
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, ClientSize.Height - 1);
+			e.Graphics.DrawLine(Pens.Black, 1,0, ClientSize.Width - 1, 0);
+		}
+
 		/// <summary>
 		/// holy fc genius
 		/// https://stackoverflow.com/questions/24997658/tab-index-is-not-working-on-radio-buttons#answer-31063124
@@ -418,6 +438,7 @@ namespace MapView
 			// 
 			// la_head
 			// 
+			this.la_head.BackColor = System.Drawing.Color.Lavender;
 			this.la_head.Dock = System.Windows.Forms.DockStyle.Top;
 			this.la_head.Location = new System.Drawing.Point(0, 0);
 			this.la_head.Margin = new System.Windows.Forms.Padding(0);
@@ -425,6 +446,7 @@ namespace MapView
 			this.la_head.Size = new System.Drawing.Size(274, 75);
 			this.la_head.TabIndex = 0;
 			this.la_head.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.la_head.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintHead);
 			// 
 			// tb_Src0
 			// 
@@ -508,7 +530,7 @@ namespace MapView
 			this.rb_clear.Location = new System.Drawing.Point(15, 110);
 			this.rb_clear.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_clear.Name = "rb_clear";
-			this.rb_clear.Size = new System.Drawing.Size(85, 20);
+			this.rb_clear.Size = new System.Drawing.Size(95, 20);
 			this.rb_clear.TabIndex = 6;
 			this.rb_clear.Text = "clear parts";
 			this.rb_clear.UseVisualStyleBackColor = true;
@@ -532,7 +554,7 @@ namespace MapView
 			this.rb_shift.Location = new System.Drawing.Point(15, 150);
 			this.rb_shift.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_shift.Name = "rb_shift";
-			this.rb_shift.Size = new System.Drawing.Size(85, 20);
+			this.rb_shift.Size = new System.Drawing.Size(95, 20);
 			this.rb_shift.TabIndex = 9;
 			this.rb_shift.Text = "shift +/-";
 			this.rb_shift.UseVisualStyleBackColor = true;
