@@ -391,7 +391,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Toggles between single-layer and multi-layer view.
+		/// Cycles between default-layer, single-layer, multi-layer views.
 		/// </summary>
 		private void CycleLayers()
 		{
@@ -418,8 +418,8 @@ namespace MapView
 		/// </summary>
 		private void ReloadScanGfile()
 		{
-			string result, title;
-			MessageBoxIcon icon;
+			string title, head;
+			Infobox.BoxType boxType;
 
 			if (_file.Descriptor.GroupType == GameType.Tftd)
 			{
@@ -427,45 +427,44 @@ namespace MapView
 				{
 					_icons = SpritesetsManager.ScanGtftd;
 
-					result = "SCANG.DAT reloaded.";
-					title  = " Info";
-					icon   = MessageBoxIcon.None;
+					title   = "Info";
+					head    = "SCANG.DAT reloaded.";
+					boxType = Infobox.BoxType.Info;
 				}
 				else
 				{
 					_icons = null;
 
-					result = "SCANG.DAT failed to reload. Take the red pill.";
-					title  = " Error";
-					icon   = MessageBoxIcon.Error;
+					title   = "Error";
+					head    = "SCANG.DAT failed to reload. Take the red pill.";
+					boxType = Infobox.BoxType.Error;
 				}
 			}
 			else if (SpritesetsManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 			{
 				_icons = SpritesetsManager.ScanGufo;
 
-				result = "SCANG.DAT reloaded.";
-				title  = " Info";
-				icon   = MessageBoxIcon.None;
+				title   = "Info";
+				head    = "SCANG.DAT reloaded.";
+				boxType = Infobox.BoxType.Info;
 			}
 			else
 			{
 				_icons = null;
 
-				result = "SCANG.DAT failed to reload. Take the red pill.";
-				title  = " Error";
-				icon   = MessageBoxIcon.Error;
+				title   = "Error";
+				head    = "SCANG.DAT failed to reload. Take the red pill.";
+				boxType = Infobox.BoxType.Error;
 			}
 
-			MessageBox.Show(
-						this,
-						result,
-						title,
-						MessageBoxButtons.OK,
-						icon,
-						MessageBoxDefaultButton.Button1,
-						0);
-
+			using (var f = new Infobox(
+									title,
+									head,
+									null,
+									boxType))
+			{
+				f.ShowDialog(this);
+			}
 			// NOTE: Invalidate/refresh is not needed apparently.
 		}
 		#endregion Methods
