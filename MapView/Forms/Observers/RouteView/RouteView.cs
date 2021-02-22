@@ -1740,16 +1740,20 @@ namespace MapView.Forms.Observers
 				ShowError("A node must be selected.");
 		}
 
-		private void ShowError(string error)
+		/// <summary>
+		/// Wrapper for <see cref="Infobox"/>.
+		/// </summary>
+		/// <param name="head">the error string to show</param>
+		private void ShowError(string head)
 		{
-			MessageBox.Show(
-						this,
-						error,
-						" Err..",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Error,
-						MessageBoxDefaultButton.Button1,
-						0);
+			using (var f = new Infobox(
+									"Error",
+									head,
+									null,
+									Infobox.BoxType.Error))
+			{
+				f.ShowDialog(this);
+			}
 		}
 		#endregion Events (node edit)
 

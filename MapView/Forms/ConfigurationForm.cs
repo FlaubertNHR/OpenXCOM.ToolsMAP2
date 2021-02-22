@@ -319,12 +319,12 @@ namespace MapView
 		/// <summary>
 		/// Wrapper for <see cref="Infobox"/>.
 		/// </summary>
-		/// <param name="error">an error-string to show</param>
-		private void ShowError(string error)
+		/// <param name="head">an error-string to show</param>
+		private void ShowError(string head)
 		{
 			using (var f = new Infobox(
 									"Error",
-									error,
+									head,
 									null,
 									Infobox.BoxType.Error))
 			{
