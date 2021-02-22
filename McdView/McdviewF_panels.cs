@@ -4,6 +4,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 
 // RotatingCube ->
@@ -181,12 +183,12 @@ namespace McdView
 
 		/// <summary>
 		/// Opens the sprite-chooser when a sprite-phase is clicked.
-		/// @note If user has the openfile dialog open and double-clicks to open
-		/// a file that happens to be over the panel a mouse-up event fires. So
-		/// use MouseDown here.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>If user has the openfile dialog open and double-clicks to
+		/// open a file that happens to be over the panel a mouse-up event
+		/// fires. So use MouseDown here.</remarks>
 		private void OnMouseDown_SpritePanel(object sender, MouseEventArgs e)
 		{
 			PartsPanel.Select();
@@ -213,33 +215,41 @@ namespace McdView
 						{
 							if (Spriteset == null)
 							{
-								MessageBox.Show(
-											this,
-											"Sprites not found for " + Label + "."
-												+ Environment.NewLine + Environment.NewLine
-												+ "A spriteset can be instantiated by"
-												+ " inserting records with the CopyPanel"
-												+ " or one can be created externally"
-												+ " with PckView.",
-											" Spriteset null",
-											MessageBoxButtons.OK,
-											MessageBoxIcon.Error,
-											MessageBoxDefaultButton.Button1,
-											0);
+								string copyable = Label + Environment.NewLine + Environment.NewLine;
+								copyable += Infobox.SplitString("A spriteset for the terrain can be created by"
+															  + " inserting records with the Copier or a spriteset"
+															  + " can be created externally with PckView.");
+								copyable += Environment.NewLine + Environment.NewLine
+										  + "Edit|Open Copier panel ...";
+
+								// TODO: add a button to open the Copier
+
+								using (var f = new Infobox(
+														"Error",
+														"Sprites not found.",
+														copyable,
+														Infobox.BoxType.Error))
+								{
+									f.ShowDialog(this);
+								}
 							}
 							else if (Spriteset.Count == 0)
 							{
-								MessageBox.Show(
-											this,
-											"The spriteset has no sprites."
-												+ Environment.NewLine + Environment.NewLine
-												+ "Sprites can be added by inserting records with"
-												+ " the CopyPanel or externally with PckView.",
-											" Spriteset empty",
-											MessageBoxButtons.OK,
-											MessageBoxIcon.Warning,
-											MessageBoxDefaultButton.Button1,
-											0);
+								string copyable = Infobox.SplitString("Sprites can be added by inserting records"
+																	+ " with the Copier or externally with PckView.");
+								copyable += Environment.NewLine + Environment.NewLine
+										  + "Edit|Open Copier panel ...";
+
+								// TODO: add a button to open the Copier
+
+								using (var f = new Infobox(
+														"Warning",
+														"The terrain's spriteset has no sprites.",
+														copyable,
+														Infobox.BoxType.Warn))
+								{
+									f.ShowDialog(this);
+								}
 							}
 							else
 							{
@@ -419,12 +429,12 @@ namespace McdView
 
 		/// <summary>
 		/// Opens the ScanG viewer when the ScanG icon is clicked.
-		/// @note If user has the openfile dialog open and double-clicks to open
-		/// a file that happens to be over the panel a mouse-up event fires. So
-		/// use MouseDown here.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>If user has the openfile dialog open and double-clicks to
+		/// open a file that happens to be over the panel a mouse-up event
+		/// fires. So use MouseDown here.</remarks>
 		private void OnMouseDown_ScanGicon(object sender, MouseEventArgs e)
 		{
 			PartsPanel.Select();
@@ -445,14 +455,16 @@ namespace McdView
 					}
 				}
 				else
-					MessageBox.Show(
-								this,
-								"ScanG icons not found.",
-								" Error",
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0);
+				{
+					using (var f = new Infobox(
+											"Error",
+											"ScanG icons not found.",
+											null,
+											Infobox.BoxType.Error))
+					{
+						f.ShowDialog(this);
+					}
+				}
 			}
 		}
 

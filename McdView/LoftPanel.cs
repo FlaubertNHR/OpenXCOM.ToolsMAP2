@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
+using DSShared;
 using DSShared.Controls;
 
 using XCom;
@@ -110,11 +111,11 @@ namespace McdView
 
 		/// <summary>
 		/// Opens the LoFT viewer when this LoftPanel is clicked.
-		/// @note If user has the openfile dialog open and double-clicks to open
-		/// a file that happens to be over the panel a mouse-up event fires. So
-		/// use MouseDown here.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>If user has the openfile dialog open and double-clicks to
+		/// open a file that happens to be over the panel a mouse-up event
+		/// fires. So use MouseDown here.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			_f.PartsPanel.Select(); // NOTE: Workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
@@ -141,14 +142,16 @@ namespace McdView
 							}
 						}
 						else
-							MessageBox.Show(
-										this,
-										"LoFT icons not found.",
-										" Error",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Error,
-										MessageBoxDefaultButton.Button1,
-										0);
+						{
+							using (var f = new Infobox(
+													"Error",
+													"LoFT icons not found.",
+													null,
+													Infobox.BoxType.Error))
+							{
+								f.ShowDialog(this);
+							}
+						}
 						break;
 
 					case MouseButtons.Right:

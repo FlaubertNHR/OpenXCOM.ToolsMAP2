@@ -458,11 +458,12 @@ namespace McdView
 
 
 		/// <summary>
-		/// @note If user has the openfile dialog open and double-clicks to open
-		/// a file that happens to be over the panel a mouse-up event fires. So
-		/// use MouseDown here.
+		/// Selects tileparts.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>If user has the openfile dialog open and double-clicks to
+		/// open a file that happens to be over the panel a mouse-up event
+		/// fires. So use MouseDown here.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			Select();
