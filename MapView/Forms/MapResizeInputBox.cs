@@ -112,17 +112,6 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// Overrides the keydown event. Closes this dialog on [Ctrl+z].
-		/// </summary>
-		/// <param name="e"></param>
-		/// <remarks>Requires KeyPreview true.</remarks>
-		protected override void OnKeyDown(KeyEventArgs e)
-		{
-			if (e.KeyData == (Keys.Control | Keys.Z))
-				Close();
-		}
-
-		/// <summary>
 		/// Stores this dialog's current location.
 		/// </summary>
 		/// <param name="e"></param>
@@ -134,6 +123,17 @@ namespace MapView
 				_y = Location.Y;
 			}
 			base.OnFormClosing(e);
+		}
+
+		/// <summary>
+		/// Overrides the keydown event. Closes this dialog on [Ctrl+z].
+		/// </summary>
+		/// <param name="e"></param>
+		/// <remarks>Requires KeyPreview true.</remarks>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyData == (Keys.Control | Keys.Z))
+				Close();
 		}
 
 		/// <summary>
@@ -233,7 +233,7 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Wrapper for MessageBox.Show().
+		/// Wrapper for <see cref="Infobox"/>.
 		/// </summary>
 		/// <param name="head">the error string to show</param>
 		private void ShowError(string head)
@@ -378,10 +378,10 @@ namespace MapView
 			// btn_Ok
 			// 
 			this.btn_Ok.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btn_Ok.Location = new System.Drawing.Point(112, 121);
+			this.btn_Ok.Location = new System.Drawing.Point(182, 128);
 			this.btn_Ok.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Ok.Name = "btn_Ok";
-			this.btn_Ok.Size = new System.Drawing.Size(80, 30);
+			this.btn_Ok.Size = new System.Drawing.Size(95, 25);
 			this.btn_Ok.TabIndex = 14;
 			this.btn_Ok.Text = "Ok";
 			this.btn_Ok.Click += new System.EventHandler(this.OnOkClick);
@@ -390,10 +390,10 @@ namespace MapView
 			// 
 			this.btn_Cancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Cancel.Location = new System.Drawing.Point(200, 121);
+			this.btn_Cancel.Location = new System.Drawing.Point(7, 133);
 			this.btn_Cancel.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_Cancel.Name = "btn_Cancel";
-			this.btn_Cancel.Size = new System.Drawing.Size(80, 30);
+			this.btn_Cancel.Size = new System.Drawing.Size(85, 20);
 			this.btn_Cancel.TabIndex = 15;
 			this.btn_Cancel.Text = "Cancel";
 			// 
@@ -443,7 +443,7 @@ namespace MapView
 			// 
 			// lbl_Head
 			// 
-			this.lbl_Head.BackColor = System.Drawing.Color.PowderBlue;
+			this.lbl_Head.BackColor = System.Drawing.Color.Lavender;
 			this.lbl_Head.Dock = System.Windows.Forms.DockStyle.Top;
 			this.lbl_Head.Location = new System.Drawing.Point(0, 0);
 			this.lbl_Head.Margin = new System.Windows.Forms.Padding(0);
