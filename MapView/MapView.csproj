@@ -147,9 +147,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MapTreeInputBox.cs" />
-    <Compile Include="Forms\MapTreeInputBox.Designer.cs">
-      <DependentUpon>MapTreeInputBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\McdInfoF.cs" />
     <Compile Include="Forms\McdInfoF.Designer.cs">
       <DependentUpon>McdInfoF.cs</DependentUpon>
