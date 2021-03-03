@@ -1376,7 +1376,7 @@ namespace MapView
 		/// Checks that a string can be a valid filename for Windows OS.
 		/// </summary>
 		/// <param name="chars"></param>
-		/// <returns></returns>
+		/// <returns>true if no invalid chars are found</returns>
 		/// <remarks>Check that 'chars' is not null or blank before call.</remarks>
 		private bool ValidateCharacters(string chars)
 		{
@@ -1387,7 +1387,8 @@ namespace MapView
 		/// Removes invalid characters from a given string.
 		/// </summary>
 		/// <param name="chars"></param>
-		/// <returns></returns>
+		/// <returns>a sanitized string</returns>
+		/// <remarks>Check that 'chars' is not null or blank before call.</remarks>
 		private string InvalidateCharacters(string chars)
 		{
 			int pos;
@@ -1400,7 +1401,7 @@ namespace MapView
 		/// <summary>
 		/// Gets the fullpath for a Map-file.
 		/// </summary>
-		/// <param name="label"></param>
+		/// <param name="label">the label w/out extension of a Map-file to check for</param>
 		/// <returns></returns>
 		private string GetFullpathMapfile(string label)
 		{
@@ -1411,7 +1412,7 @@ namespace MapView
 		/// <summary>
 		/// Gets the fullpath for a Route-file.
 		/// </summary>
-		/// <param name="label"></param>
+		/// <param name="label">the label w/out extension of a Route-file to check for</param>
 		/// <returns></returns>
 		private string GetFullpathRoutefile(string label)
 		{
@@ -1423,12 +1424,12 @@ namespace MapView
 		/// Checks if a Map-file w/ label exists in the current basepath
 		/// directory.
 		/// </summary>
-		/// <param name="labelMap">the label w/out extension of a Map-file to check for</param>
+		/// <param name="label">the label w/out extension of a Map-file to check for</param>
 		/// <returns>true if the Map-file already exists on the hardrive</returns>
-		private bool MapfileExists(string labelMap)
+		private bool MapfileExists(string label)
 		{
-			if (!String.IsNullOrEmpty(labelMap))
-				return File.Exists(GetFullpathMapfile(labelMap));
+			if (!String.IsNullOrEmpty(label))
+				return File.Exists(GetFullpathMapfile(label));
 
 			return false;
 		}
@@ -1436,9 +1437,9 @@ namespace MapView
 		/// <summary>
 		/// Gets the count of a specified tileset in the TileGroups.
 		/// </summary>
-		/// <param name="labelMap">the tileset-label to check</param>
+		/// <param name="label">the tileset-label to check against</param>
 		/// <returns>the count of tilesets already in the TileGroups</returns>
-		private int GetTilesetCount(string labelMap)
+		private int GetTilesetCount(string label)
 		{
 			int count = 0;
 
@@ -1446,7 +1447,7 @@ namespace MapView
 			foreach (var category in @group.Value.Categories)
 			foreach (var descriptor in category.Value.Values)
 			{
-				if (   descriptor.Label    == labelMap
+				if (   descriptor.Label    == label
 					&& descriptor.Basepath == TilesetBasepath)
 				{
 					++count;
