@@ -1146,7 +1146,7 @@ namespace McdView
 										"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
 										null,
 										Infobox.BoxType.Warn,
-										Infobox.BUTTONS_CancelOkay))
+										Infobox.Buttons.CancelOkay))
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 						proceed = true;
@@ -1221,7 +1221,7 @@ namespace McdView
 												"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
 												null,
 												Infobox.BoxType.Warn,
-												Infobox.BUTTONS_CancelOkay))
+												Infobox.Buttons.CancelOkay))
 						{
 							if (f.ShowDialog(this) == DialogResult.OK)
 								proceed = true;
@@ -1271,7 +1271,7 @@ namespace McdView
 														Infobox.SplitString(head),
 														pfePck + Environment.NewLine + pfeTab,
 														bt,
-														Infobox.BUTTONS_CancelOkay))
+														Infobox.Buttons.CancelOkay))
 								{
 									if (f.ShowDialog(this) == DialogResult.OK)
 										OnClick_SaveSpriteset(null, EventArgs.Empty);
@@ -1309,7 +1309,7 @@ namespace McdView
 									"Zero the current record's values ...",
 									null,
 									Infobox.BoxType.Warn,
-									Infobox.BUTTONS_CancelOkay))
+									Infobox.Buttons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{

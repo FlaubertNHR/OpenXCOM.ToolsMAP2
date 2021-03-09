@@ -625,7 +625,7 @@ namespace MapView.Forms.Observers
 									Infobox.SplitString(head),
 									null,
 									Infobox.BoxType.Warn,
-									Infobox.BUTTONS_CancelOkay))
+									Infobox.Buttons.CancelOkay))
 			{
 				return f.ShowDialog(this);
 			}

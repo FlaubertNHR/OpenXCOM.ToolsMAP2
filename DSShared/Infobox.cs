@@ -9,15 +9,20 @@ namespace DSShared
 {
 	/// <summary>
 	/// A generic outputbox for Info/Warnings/Errors.
-	/// The point is to stop wrapping long path-strings like the stock .NET
-	/// MessageBox does. And to stop beeps.
 	/// </summary>
+	/// <remarks>The point is to stop wrapping long path-strings like the stock
+	/// .NET MessageBox does. And to stop beeps.</remarks>
 	public sealed class Infobox
 		:
 			Form
 	{
+		#region Enums
 		public enum BoxType
 		{ Info, Warn, Error }
+
+		public enum Buttons
+		{ Cancel, CancelOkay, CancelOkayRetry, CancelYesNo }
+		#endregion Enums
 
 
 		#region Fields (static)
@@ -25,11 +30,6 @@ namespace DSShared
 		private const int h_Max = 463;
 
 		private const string HEIGHT_TEST = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|\\;:'\"<>,.?";
-
-		public const int BUTTONS_Cancel          = 0;
-		public const int BUTTONS_CancelOkay      = 1;
-		public const int BUTTONS_CancelOkayRetry = 2;
-		public const int BUTTONS_CancelYesNo     = 3;
 		#endregion Fields (static)
 
 
@@ -62,7 +62,7 @@ namespace DSShared
 				string head,
 				string copyable = null,
 				BoxType type = BoxType.Info,
-				int buttons = BUTTONS_Cancel)
+				Buttons buttons = Buttons.Cancel)
 		{
 			// TODO: Store static location and size of the Infobox (if shown non-modally).
 
@@ -72,23 +72,23 @@ namespace DSShared
 
 			switch (buttons)
 			{
-				case BUTTONS_Cancel:
+				case Buttons.Cancel:
 					bu_Cancel.Text = "ok";
 					break;
 
-				case BUTTONS_CancelOkay:
+				case Buttons.CancelOkay:
 					bu_Okay.Visible = true;
 					break;
 
-				case BUTTONS_CancelOkayRetry:
+				case Buttons.CancelOkayRetry:
 					bu_Okay .Visible =
 					bu_Retry.Visible = true;
 					break;
 
-				case BUTTONS_CancelYesNo:
+				case Buttons.CancelYesNo:
 					bu_Okay .Text = "yes";
 					bu_Retry.Text = "no";
-					goto case BUTTONS_CancelOkayRetry;
+					goto case Buttons.CancelOkayRetry;
 			}
 
 
