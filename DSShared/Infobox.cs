@@ -152,17 +152,9 @@ namespace DSShared
 
 				switch (type)
 				{
-					case BoxType.Info:
-						lbl_Head.BackColor = Color.PowderBlue;
-						break;
-
-					case BoxType.Warn:
-						lbl_Head.BackColor = Color.Moccasin;
-						break;
-
-					case BoxType.Error:
-						lbl_Head.BackColor = Color.SandyBrown;
-						break;
+					case BoxType.Info:  lbl_Head.BackColor = Color.PowderBlue; break;
+					case BoxType.Warn:  lbl_Head.BackColor = Color.Moccasin;   break;
+					case BoxType.Error: lbl_Head.BackColor = Color.SandyBrown; break;
 				}
 
 				lbl_Head.Text = head;
