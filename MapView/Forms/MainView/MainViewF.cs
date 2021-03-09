@@ -1213,6 +1213,11 @@ namespace MapView
 
 
 		#region Events
+		/// <summary>
+		/// Draws treenodes on the Maptree.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void tv_DrawNode(object sender, DrawTreeNodeEventArgs e)
 		{
 			if (e.Node != null)
@@ -1274,6 +1279,11 @@ namespace MapView
 		}
 
 
+		/// <summary>
+		/// Handles a save-all click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnSaveAllClick(object sender, EventArgs e)
 		{
 			if (MainViewUnderlay.MapFile != null)
@@ -1292,6 +1302,11 @@ namespace MapView
 			MaptreeChanged = !TileGroupManager.WriteTileGroups();
 		}
 
+		/// <summary>
+		/// Handles a save-Mapfile click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnSaveMapClick(object sender, EventArgs e)
 		{
 			if (MainViewUnderlay.MapFile != null
@@ -1304,6 +1319,11 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Handles a save-Routesfile click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnSaveRoutesClick(object sender, EventArgs e)
 		{
 			if (   MainViewUnderlay.MapFile != null
@@ -1316,6 +1336,11 @@ namespace MapView
 
 		private string _lastExportDirectory;
 
+		/// <summary>
+		/// Handles an export-Routesfile click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnExportMapRoutesClick(object sender, EventArgs e)
 		{
 			if (   MainViewUnderlay.MapFile != null
@@ -1375,13 +1400,18 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Saves the tree to "settings/MapTilesets.yml".
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnSaveMaptreeClick(object sender, EventArgs e)
 		{
 			MaptreeChanged = !TileGroupManager.WriteTileGroups();
 		}
 
 		/// <summary>
-		/// 
+		/// Reloads the current tileset.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1393,8 +1423,7 @@ namespace MapView
 		/// <summary>
 		/// Reloads the Map/Routes/Terrains when a save is done in PckView or
 		/// McdView (via TileView).
-		/// @note Is double-purposed to reload the Map/Routes/Terrains when user
-		/// chooses to reload the current Map et al. on the File menu.
+		/// 
 		/// TODO: Neither event really needs to reload the Map/Routes (in fact
 		/// it would be better if it didn't so that the SaveAlerts could be
 		/// bypassed) - so this function ought be reworked to reload only the
@@ -1402,6 +1431,8 @@ namespace MapView
 		/// 
 		/// TODO: Actually there should be a separate ReloadTerrains() funct.
 		/// </summary>
+		/// <remarks>Is double-purposed to reload the Map/Routes/Terrains when
+		/// user chooses to reload the current Map et al. on the File menu.</remarks>
 		private void OnReloadDescriptor()
 		{
 			//LogFile.WriteLine("MainViewF.OnReloadDescriptor()");
@@ -1432,6 +1463,11 @@ namespace MapView
 
 		private string _lastScreenshotDirectory;
 
+		/// <summary>
+		/// Handles a screenshot click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnScreenshotClick(object sender, EventArgs e)
 		{
 			MapFile file = MainViewUnderlay.MapFile;
@@ -1740,93 +1776,101 @@ namespace MapView
 
 
 		/// <summary>
+		/// Gets a string of Changed objects - Map, Routes, and/or the Maptree.
+		/// </summary>
+		/// <returns></returns>
+		private string GetChangedInfo()
+		{
+			string info = String.Empty;
+
+			if (MainViewUnderlay.MapFile != null)
+			{
+				if (MainViewUnderlay.MapFile.MapChanged)
+					info = "Map";
+
+				if (MainViewUnderlay.MapFile.RoutesChanged)
+				{
+					if (info != String.Empty) info += " and ";
+					info += "Routes";
+				}
+			}
+
+			if (MaptreeChanged)
+			{
+				if (info != String.Empty) info += " and ";
+				info += "Maptree";
+			}
+
+			return info;
+		}
+
+		/// <summary>
 		/// Opens the Configuration Editor.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnConfiguratorClick(object sender, EventArgs e)
 		{
-			string changed = null;
+			string info = GetChangedInfo();
 
-			if (MainViewUnderlay.MapFile != null)
+			if (info != String.Empty)
 			{
-				if (MainViewUnderlay.MapFile.MapChanged)
-					changed = "Map";
+				string head = Infobox.SplitString("Accepting the Configuration Editor can"
+							+ " restart MapView. The current " + info + " should be saved or"
+							+ " else any changes will be lost. How do you wish to proceed?");
 
-				if (MainViewUnderlay.MapFile.RoutesChanged)
+				string copyable = "cancel - return to state"                               + Environment.NewLine
+								+ "ok     - risk losing changes and open the Configurator" + Environment.NewLine
+								+ "retry  - save changes and open the Configurator"        + Environment.NewLine;
+
+				using (var f = new Infobox(
+										"Changes detected",
+										head,
+										copyable,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelOkayRetry))
 				{
-					if (!String.IsNullOrEmpty(changed))
-						changed += " and ";
+					switch (f.ShowDialog(this))
+					{
+						default: // DialogResult.Cancel
+							return;
 
-					changed += "Routes";
-				}
-			}
-
-			if (MaptreeChanged)
-			{
-				if (!String.IsNullOrEmpty(changed))
-					changed += " and ";
-
-				changed += "Maptree";
-			}
-
-			if (!String.IsNullOrEmpty(changed))
-			{
-				switch (MessageBox.Show(
-									this,
-									"Accepting the Configuration Editor can restart MapView."
-										+ " The current " + changed + " should be saved or else"
-										+ " any changes will be lost. How do you wish to proceed?"
-										+ Environment.NewLine + Environment.NewLine
-										+ "Abort\treturn to state"
-										+ Environment.NewLine
-										+ "Retry\tsave changes and open the Configurator"
-										+ Environment.NewLine
-										+ "Ignore\trisk losing changes and open the Configurator",
-									" Changes detected",
-									MessageBoxButtons.AbortRetryIgnore,
-									MessageBoxIcon.Warning,
-									MessageBoxDefaultButton.Button1,
-									0))
-				{
-					case DialogResult.Abort:
-						return;
-
-					case DialogResult.Retry:
-						if (MainViewUnderlay.MapFile != null)
-						{
-							if (MainViewUnderlay.MapFile.MapChanged
-								&& MainViewUnderlay.MapFile.SaveMap())
+						case DialogResult.Retry:
+							if (MainViewUnderlay.MapFile != null)
 							{
-								MapChanged = false;
+								if (MainViewUnderlay.MapFile.MapChanged
+									&& MainViewUnderlay.MapFile.SaveMap())
+								{
+									MapChanged = false;
 
-								if (MainViewUnderlay.MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
-									ForceMapReload();						// because the current Map is *probably* going to change. I think ...
+									if (MainViewUnderlay.MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
+										ForceMapReload();						// because the current Map is *probably* going to change. I think ...
+								}
+
+								if (MainViewUnderlay.MapFile.RoutesChanged
+									&& MainViewUnderlay.MapFile.SaveRoutes())
+								{
+									RouteView.RoutesChangedCoordinator = false;
+								}
 							}
 
-							if (MainViewUnderlay.MapFile.RoutesChanged
-								&& MainViewUnderlay.MapFile.SaveRoutes())
+							if (MaptreeChanged)
 							{
-								RouteView.RoutesChangedCoordinator = false;
+//								MaptreeChanged = !TileGroupInfo.WriteTileGroups(); // <- that could cause endless recursion.
+								// TODO: if(TileGroupManager.WriteTileGroups()) MaptreeChanged=false;
+								TileGroupManager.WriteTileGroups();
+								MaptreeChanged = false;
 							}
-						}
+							break;
 
-						if (MaptreeChanged)
-						{
-//							MaptreeChanged = !TileGroupInfo.WriteTileGroups(); // <- that could cause endless recursion.
-							// TODO: if(TileGroupManager.WriteTileGroups()) MaptreeChanged=false;
-							TileGroupManager.WriteTileGroups();
-							MaptreeChanged = false;
-						}
-						break;
-
-					case DialogResult.Ignore:
-						// The process will be killed or Canceled so don't bother to change these ->
-//						MapChanged =
-//						ObserverManager.RouteView   .Control     .RoutesChanged =
-//						ObserverManager.TopRouteView.ControlRoute.RoutesChanged =
-//						MaptreeChanged = false;
-						break;
+						case DialogResult.OK:
+							// The process will be killed or Canceled so don't bother to change these ->
+//							MapChanged =
+//							ObserverManager.RouteView   .Control     .RoutesChanged =
+//							ObserverManager.TopRouteView.ControlRoute.RoutesChanged =
+//							MaptreeChanged = false;
+							break;
+					}
 				}
 			}
 
@@ -1949,11 +1993,11 @@ namespace MapView
 
 		/// <summary>
 		/// Opens the About dialog
-		/// @note This handler is not a toggle. The dialog will be focused if
-		/// already open.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>This handler is not a toggle. The dialog will be focused if
+		/// already open.</remarks>
 		private void OnAboutClick(object sender, EventArgs e)
 		{
 			if (!miAbout.Checked)
@@ -1980,11 +2024,11 @@ namespace MapView
 
 		/// <summary>
 		/// Opens the MapInfo dialog.
-		/// @note This handler is a toggle. The dialog will be closed if it's
-		/// open.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>This handler is a toggle. The dialog will be closed if it's
+		/// open.</remarks>
 		private void OnMapInfoClick(object sender, EventArgs e)
 		{
 			if (!miMapInfo.Checked)
@@ -2008,6 +2052,11 @@ namespace MapView
 		}
 
 
+		/// <summary>
+		/// Zooms in.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnScaleInClick(object sender, EventArgs e)
 		{
 			if (Globals.Scale < Globals.ScaleMaximum)
@@ -2019,6 +2068,11 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Zooms out.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnScaleOutClick(object sender, EventArgs e)
 		{
 			if (Globals.Scale > Globals.ScaleMinimum)
@@ -2030,6 +2084,9 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Zooms in/out.
+		/// </summary>
 		private void Scale()
 		{
 			ObserverManager.ToolFactory.DisableScaleChecked();
@@ -2041,7 +2098,12 @@ namespace MapView
 			Invalidate();
 		}
 
-		internal void OnScaleClick(object sender, EventArgs e)
+		/// <summary>
+		/// Handles a click on the toolstrip's auto-scale button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal void OnAutoScaleClick(object sender, EventArgs e)
 		{
 			Globals.AutoScale = ObserverManager.ToolFactory.ToggleScaleChecked();
 			if (Globals.AutoScale)
@@ -2405,111 +2467,118 @@ namespace MapView
 
 		/// <summary>
 		/// Opens a context-menu on RMB-click.
-		/// @note A MouseDown event occurs *before* the treeview's BeforeSelect
-		/// and AfterSelected events occur ....
-		/// A MouseClick event occurs *after* the treeview's BeforeSelect
-		/// and AfterSelected events occur. So the selected Map will change
-		/// *before* a context-menu is shown, which is good.
-		/// A MouseClick event won't work if the tree is blank. So use MouseDown.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>A MouseDown event occurs *before* the treeview's
+		/// BeforeSelect and AfterSelected events occur .... A MouseClick event
+		/// occurs *after* the treeview's BeforeSelect and AfterSelected events
+		/// occur. So the selected Map will change *before* a context-menu is
+		/// shown, which is good. A MouseClick event won't work if the tree is
+		/// blank. So use MouseDown.</remarks>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
 			//LogFile.WriteLine("MainViewF.OnMapTreeMouseDown() BypassChanged= " + BypassChanged);
 
-			if (e.Button == MouseButtons.Right)
+			switch (e.Button)
 			{
-				if (MainViewUnderlay.MapFile == null					// prevent a bunch of problems, like looping dialogs when returning from
-					|| BypassChanged									// the Tileset Editor and the Maptree-node gets re-selected, causing
-					|| (   !MainViewUnderlay.MapFile.MapChanged			// this class-object to react as if a different Map is going to load ...
-						&& !MainViewUnderlay.MapFile.RoutesChanged))	// vid. LoadSelectedDescriptor()
-				{
-					BypassChanged = false;
-
-					cmMapTreeMenu.MenuItems.Clear();
-
-					cmMapTreeMenu.MenuItems.Add("Add Group ...", OnAddGroupClick);
-
-					if (MapTree.SelectedNode != null)
+				case MouseButtons.Right:
+					if (MainViewUnderlay.MapFile == null					// prevent a bunch of problems, like looping dialogs when returning from
+						|| BypassChanged									// the Tileset Editor and the Maptree-node gets re-selected, causing
+						|| (   !MainViewUnderlay.MapFile.MapChanged			// this class-object to react as if a different Map is going to load ...
+							&& !MainViewUnderlay.MapFile.RoutesChanged))	// vid. LoadSelectedDescriptor()
 					{
-						switch (MapTree.SelectedNode.Level)
+						BypassChanged = false;
+
+						cmMapTreeMenu.MenuItems.Clear();
+
+						cmMapTreeMenu.MenuItems.Add("Add Group ...", OnAddGroupClick);
+
+						if (MapTree.SelectedNode != null)
 						{
-							case TREELEVEL_GROUP:
-								cmMapTreeMenu.MenuItems.Add("-");
-								cmMapTreeMenu.MenuItems.Add("Edit Group ...",   OnEditGroupClick);
-								cmMapTreeMenu.MenuItems.Add("Delete Group",     OnDeleteGroupClick);
-								cmMapTreeMenu.MenuItems.Add("-");
-								cmMapTreeMenu.MenuItems.Add("Add Category ...", OnAddCategoryClick);
-								break;
+							switch (MapTree.SelectedNode.Level)
+							{
+								case TREELEVEL_GROUP:
+									cmMapTreeMenu.MenuItems.Add("-");
+									cmMapTreeMenu.MenuItems.Add("Edit Group ...",   OnEditGroupClick);
+									cmMapTreeMenu.MenuItems.Add("Delete Group",     OnDeleteGroupClick);
+									cmMapTreeMenu.MenuItems.Add("-");
+									cmMapTreeMenu.MenuItems.Add("Add Category ...", OnAddCategoryClick);
+									break;
 
-							case TREELEVEL_CATEGORY:
-								cmMapTreeMenu.MenuItems.Add("-");
-								cmMapTreeMenu.MenuItems.Add("Edit Category ...", OnEditCategoryClick);
-								cmMapTreeMenu.MenuItems.Add("Delete Category",   OnDeleteCategoryClick);
-								cmMapTreeMenu.MenuItems.Add("-");
-								cmMapTreeMenu.MenuItems.Add("Add Tileset ...",   OnAddTilesetClick);
-								break;
+								case TREELEVEL_CATEGORY:
+									cmMapTreeMenu.MenuItems.Add("-");
+									cmMapTreeMenu.MenuItems.Add("Edit Category ...", OnEditCategoryClick);
+									cmMapTreeMenu.MenuItems.Add("Delete Category",   OnDeleteCategoryClick);
+									cmMapTreeMenu.MenuItems.Add("-");
+									cmMapTreeMenu.MenuItems.Add("Add Tileset ...",   OnAddTilesetClick);
+									break;
 
-							case TREELEVEL_TILESET:
-								cmMapTreeMenu.MenuItems.Add("-");
-								cmMapTreeMenu.MenuItems.Add("Edit Tileset ...",  OnEditTilesetClick);
-								cmMapTreeMenu.MenuItems.Add("Delete Tileset",    OnDeleteTilesetClick);
-								break;
+								case TREELEVEL_TILESET:
+									cmMapTreeMenu.MenuItems.Add("-");
+									cmMapTreeMenu.MenuItems.Add("Edit Tileset ...",  OnEditTilesetClick);
+									cmMapTreeMenu.MenuItems.Add("Delete Tileset",    OnDeleteTilesetClick);
+									break;
+							}
 						}
-					}
 
-					cmMapTreeMenu.Show(MapTree, e.Location);
-				}
-				else
-				{
-					switch (MessageBox.Show(
-										this,
-										"Modifying the Maptree can cause the Tilesets to reload."
-											+ " The current Map and/or its Routes should be saved or else"
-											+ " any changes would be lost. How do you wish to proceed?"
-											+ Environment.NewLine + Environment.NewLine
-											+ "Abort\treturn to state"
-											+ Environment.NewLine
-											+ "Retry\tsave changes and show the Maptree-menu"
-											+ Environment.NewLine
-											+ "Ignore\trisk losing changes and show the Maptree-menu",
-										" Changes detected",
-										MessageBoxButtons.AbortRetryIgnore,
-										MessageBoxIcon.Warning,
-										MessageBoxDefaultButton.Button1,
-										0))
+						cmMapTreeMenu.Show(MapTree, e.Location);
+					}
+					else
 					{
-						case DialogResult.Abort:
-							return;
+						string info = GetChangedInfo();
 
-						case DialogResult.Retry:
-							if (MainViewUnderlay.MapFile.MapChanged
-								&& MainViewUnderlay.MapFile.SaveMap())
+						string head = Infobox.SplitString("Modifying the Maptree can cause the Tilesets"
+									+ " to reload. The current " + info + " should be saved or else any"
+									+ " changes will be lost. How do you wish to proceed?");
+
+						string copyable = "cancel - return to state"                               + Environment.NewLine
+										+ "ok     - risk losing changes and show the Maptree-menu" + Environment.NewLine
+										+ "retry  - save changes and show the Maptree-menu"        + Environment.NewLine;
+
+						using (var f = new Infobox(
+												"Changes detected",
+												head,
+												copyable,
+												Infobox.BoxType.Warn,
+												Infobox.BUTTONS_CancelOkayRetry))
+						{
+							switch (f.ShowDialog(this))
 							{
-								MapChanged = false;
+								default: // DialogResult.Cancel:
+									return;
 
-								if (MainViewUnderlay.MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
-									ForceMapReload();						// because the current Map is *probably* going to change. I think ...
+								case DialogResult.Retry:
+									if (MainViewUnderlay.MapFile.MapChanged
+										&& MainViewUnderlay.MapFile.SaveMap())
+									{
+										MapChanged = false;
+
+										if (MainViewUnderlay.MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
+											ForceMapReload();						// because the current Map is *probably* going to change. I think ...
+									}
+
+									if (MainViewUnderlay.MapFile.RoutesChanged
+										&& MainViewUnderlay.MapFile.SaveRoutes())
+									{
+										RouteView.RoutesChangedCoordinator = false;
+									}
+									break;
+
+								case DialogResult.OK:
+									BypassChanged = true;
+									break;
 							}
+						}
 
-							if (MainViewUnderlay.MapFile.RoutesChanged
-								&& MainViewUnderlay.MapFile.SaveRoutes())
-							{
-								RouteView.RoutesChangedCoordinator = false;
-							}
-							break;
-
-						case DialogResult.Ignore:
-							BypassChanged = true;
-							break;
+						OnMapTreeMouseDown(null, e); // RECURSE^
 					}
+					break;
 
-					OnMapTreeMouseDown(null, e); // RECURSE^
-				}
+				case MouseButtons.Left:
+					_loadReady = LOADREADY_STAGE_1;
+					break;
 			}
-			else // is leftclick
-				_loadReady = LOADREADY_STAGE_1;
 		}
 
 
@@ -2580,29 +2649,28 @@ namespace MapView
 		{
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
+			string head = Infobox.SplitString("Are you sure you want to remove"
+						+ " this Map group? This will also remove all its categories"
+						+ " and tilesets, but files on disk are unaffected.");
+
 			string labelGroup = MapTree.SelectedNode.Text;
 
-			string notice = "Are you sure you want to remove this Map group?"
-						  + " This will also remove all its categories and tilesets,"
-						  + " but files on disk are unaffected."
-						  + Environment.NewLine + Environment.NewLine
-						  + "group\t" + labelGroup;
-
-			if (MessageBox.Show(
-							this,
-							notice,
-							" Warning",
-							MessageBoxButtons.OKCancel,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0) == DialogResult.OK)
+			using (var f = new Infobox(
+									"Warning",
+									head,
+									"group - " + labelGroup,
+									Infobox.BoxType.Warn,
+									Infobox.BUTTONS_CancelOkay))
 			{
-				MaptreeChanged = true;
+				if (f.ShowDialog(this) == DialogResult.OK)
+				{
+					MaptreeChanged = true;
 
-				TileGroupManager.DeleteTileGroup(labelGroup);
+					TileGroupManager.DeleteTileGroup(labelGroup);
 
-				CreateTree();
-				SelectGroupNodeTop();
+					CreateTree();
+					SelectGroupNodeTop();
+				}
 			}
 		}
 
@@ -2674,32 +2742,33 @@ namespace MapView
 		{
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
+			string head = Infobox.SplitString("Are you sure you want to remove"
+						+ " this Map category? This will also remove all its"
+						+ " tilesets, but files on disk are unaffected.");
+
 			string labelGroup    = MapTree.SelectedNode.Parent.Text;
 			string labelCategory = MapTree.SelectedNode.Text;
 
-			string notice = "Are you sure you want to remove this Map category?"
-						  + " This will also remove all its tilesets, but"
-						  + " files on disk are unaffected."
-						  + Environment.NewLine + Environment.NewLine
-						  + "group\t"    + labelGroup + Environment.NewLine
-						  + "category\t" + labelCategory;
+			string copyable = "group    - " + labelGroup + Environment.NewLine
+							+ "category - " + labelCategory;
 
-			if (MessageBox.Show(
-							this,
-							notice,
-							" Warning",
-							MessageBoxButtons.OKCancel,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0) == DialogResult.OK)
+			using (var f = new Infobox(
+									"Warning",
+									head,
+									copyable,
+									Infobox.BoxType.Warn,
+									Infobox.BUTTONS_CancelOkay))
 			{
-				MaptreeChanged = true;
+				if (f.ShowDialog(this) == DialogResult.OK)
+				{
+					MaptreeChanged = true;
 
-				var @group = TileGroupManager.TileGroups[labelGroup];
-				@group.DeleteCategory(labelCategory);
+					var @group = TileGroupManager.TileGroups[labelGroup];
+					@group.DeleteCategory(labelCategory);
 
-				CreateTree();
-				SelectCategoryNodeTop(labelGroup);
+					CreateTree();
+					SelectCategoryNodeTop(labelGroup);
+				}
 			}
 		}
 
@@ -2769,7 +2838,7 @@ namespace MapView
 
 						// CreateTree() fires OnMapTreeBeforeSelect() which clears 'BypassChanged'
 						// so it needs to be set again - the wonders of the .net Framework in action!
-						// NOTE: just don't release it until the file loads
+						// Solution: just don't release it until the file loads
 //						BypassChanged = true;
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 					}
@@ -2824,32 +2893,34 @@ namespace MapView
 		{
 			// TODO: Make a custom box for delete Group/Category/Tileset.
 
+			string head = Infobox.SplitString("Are you sure you want to remove"
+						+ " this Map tileset? Files on disk are unaffected.");
+
 			string labelGroup    = MapTree.SelectedNode.Parent.Parent.Text;
 			string labelCategory = MapTree.SelectedNode.Parent.Text;
 			string labelTileset  = MapTree.SelectedNode.Text;
 
-			string notice = "Are you sure you want to remove this Map tileset?"
-						  + " Files on disk are unaffected.{0}{0}"
-						  + "group\t"    + labelGroup    + Environment.NewLine
-						  + "category\t" + labelCategory + Environment.NewLine
-						  + "tileset\t"  + labelTileset;
+			string copyable = "group    - " + labelGroup    + Environment.NewLine
+							+ "category - " + labelCategory + Environment.NewLine
+							+ "tileset  - " + labelTileset;
 
-			if (MessageBox.Show(
-							this,
-							notice,
-							" Warning",
-							MessageBoxButtons.OKCancel,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button1,
-							0) == DialogResult.OK)
+			using (var f = new Infobox(
+									"Warning",
+									head,
+									copyable,
+									Infobox.BoxType.Warn,
+									Infobox.BUTTONS_CancelOkay))
 			{
-				MaptreeChanged = true;
+				if (f.ShowDialog(this) == DialogResult.OK)
+				{
+					MaptreeChanged = true;
 
-				var @group = TileGroupManager.TileGroups[labelGroup];
-				@group.DeleteTileset(labelTileset, labelCategory);
+					var @group = TileGroupManager.TileGroups[labelGroup];
+					@group.DeleteTileset(labelTileset, labelCategory);
 
-				CreateTree();
-				SelectTilesetNodeTop(labelCategory);
+					CreateTree();
+					SelectTilesetNodeTop(labelCategory);
+				}
 			}
 		}
 
@@ -3324,41 +3395,43 @@ namespace MapView
 			}
 		}
 
+
 		/// <summary>
 		/// Shows the user a dialog-box asking to Save if the currently
 		/// displayed Map has changed.
-		/// @note Is called when either (a) MapView is closing (b) a Map is
-		/// about to load/reload.
 		/// </summary>
-		/// <returns>DialogResult.OK if things went Ok; DialogResult.Cancel if
-		/// user chose to cancel or the Mapfile was not written successfully</returns>
+		/// <returns>DialogResult.OK if things can proceed; DialogResult.Cancel
+		/// if user chose to cancel or the Mapfile was not written successfully</returns>
+		/// <remarks>Is called when either (a) MapView is closing (b) a Map is
+		/// about to load/reload.</remarks>
 		private DialogResult SaveAlertMap()
 		{
 			//LogFile.WriteLine("MainViewF.SaveAlertMap()");
 
 			if (MainViewUnderlay.MapFile != null && MainViewUnderlay.MapFile.MapChanged)
 			{
-				switch (MessageBox.Show(
-									this,
-									"Do you want to save changes to the Map?",
-									" Map Changed",
-									MessageBoxButtons.YesNoCancel,
-									MessageBoxIcon.Question,
-									MessageBoxDefaultButton.Button1,
-									0))
+				using (var f = new Infobox(
+										"Map Changed",
+										"Do you want to save changes to the Map?",
+										null,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelYesNo)) // cancel/ok/retry
 				{
-					case DialogResult.Yes:		// save & clear MapChanged flag
-						if (MainViewUnderlay.MapFile.SaveMap())
-							goto case DialogResult.No;
+					switch (f.ShowDialog(this))
+					{
+						case DialogResult.Cancel:	// close dialog and maintain state
+							return DialogResult.Cancel;
 
-						goto case DialogResult.Cancel;
+						case DialogResult.OK:		// Yes. save Mapfile and clear MapChanged flag
+							if (MainViewUnderlay.MapFile.SaveMap())
+								goto case DialogResult.Retry;
 
-					case DialogResult.No:		// don't save & clear MapChanged flag
-						MapChanged = false;
-						break;
+							return DialogResult.Cancel;
 
-					case DialogResult.Cancel:	// dismiss confirmation dialog & leave state unaffected
-						return DialogResult.Cancel;
+						case DialogResult.Retry:	// No. don't save just clear MapChanged flag
+							MapChanged = false;
+							break;
+					}
 				}
 			}
 			return DialogResult.OK;
@@ -3367,36 +3440,38 @@ namespace MapView
 		/// <summary>
 		/// Shows the user a dialog-box asking to Save if the currently
 		/// displayed Routes has changed.
-		/// @note Is called when either (a) MapView is closing (b) another Map
-		/// is about to load.
 		/// </summary>
-		/// <returns>DialogResult.OK if things went Ok; DialogResult.Cancel if
-		/// user chose to cancel or the Routefile was not written successfully</returns>
+		/// <returns>DialogResult.OK if things can proceed; DialogResult.Cancel
+		/// if user chose to cancel or the Routefile was not written
+		/// successfully</returns>
+		/// <remarks>Is called when either (a) MapView is closing (b) another
+		/// Map is about to load.</remarks>
 		private DialogResult SaveAlertRoutes()
 		{
 			if (MainViewUnderlay.MapFile != null && MainViewUnderlay.MapFile.RoutesChanged)
 			{
-				switch (MessageBox.Show(
-									this,
-									"Do you want to save changes to the Routes?",
-									" Routes Changed",
-									MessageBoxButtons.YesNoCancel,
-									MessageBoxIcon.Question,
-									MessageBoxDefaultButton.Button1,
-									0))
+				using (var f = new Infobox(
+										"Routes Changed",
+										"Do you want to save changes to the Routes?",
+										null,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelYesNo)) // cancel/ok/retry
 				{
-					case DialogResult.Yes:		// save & clear RoutesChanged flag
-						if (MainViewUnderlay.MapFile.SaveRoutes())
-							goto case DialogResult.No;
+					switch (f.ShowDialog(this))
+					{
+						case DialogResult.Cancel:	// close dialog and maintain state
+							return DialogResult.Cancel;
 
-						goto case DialogResult.Cancel;
+						case DialogResult.OK:		// Yes. save Routes and clear RoutesChanged flag
+							if (MainViewUnderlay.MapFile.SaveRoutes())
+								goto case DialogResult.Retry;
 
-					case DialogResult.No:		// don't save & clear RoutesChanged flag
-						RouteView.RoutesChangedCoordinator = false;
-						break;
+							return DialogResult.Cancel;
 
-					case DialogResult.Cancel:	// dismiss confirmation dialog & leave state unaffected
-						return DialogResult.Cancel;
+						case DialogResult.Retry:	// No. don't save just clear RoutesChanged flag
+							RouteView.RoutesChangedCoordinator = false;
+							break;
+					}
 				}
 			}
 			return DialogResult.OK;
@@ -3405,42 +3480,45 @@ namespace MapView
 		/// <summary>
 		/// Shows the user a dialog-box asking to Save the Maptree if it has
 		/// changed.
-		/// @note Is called when either (a) MapView is closing (b) MapView is
+		/// </summary>
+		/// <returns>DialogResult.OK if things can proceed; DialogResult.Cancel
+		/// if user chose to cancel or MapTilesets was not written successfully.</returns>
+		/// <remarks>Is called when either (a) MapView is closing (b) MapView is
 		/// reloading due to a configuration change (ie. only if resource-paths
 		/// have been changed, since the only other relevant option - if the
 		/// tilesets-config file - is changed then saving the current one is
-		/// pointless).
-		/// </summary>
-		/// <returns>DialogResult.OK if things went Ok; DialogResult.Cancel if
-		/// user chose to cancel. TODO: The return will be Ok even if the
-		/// Maptree was NOT successfully written.</returns>
+		/// pointless).</remarks>
 		private DialogResult SaveAlertMaptree()
 		{
 			if (MaptreeChanged)
 			{
-				switch (MessageBox.Show(
-									this,
-									"Do you want to save changes to the Map Tree?",
-									" Maptree Changed",
-									MessageBoxButtons.YesNoCancel,
-									MessageBoxIcon.Question,
-									MessageBoxDefaultButton.Button1,
-									0))
+				using (var f = new Infobox(
+										"Maptree Changed",
+										"Do you want to save changes to the Map Tree?",
+										null,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelYesNo))
 				{
-					case DialogResult.Yes:		// save & clear MaptreeChanged flag
-						OnSaveMaptreeClick(null, EventArgs.Empty);
-						break;
+					switch (f.ShowDialog(this))
+					{
+						case DialogResult.Cancel:	// close dialog and maintain state
+							return DialogResult.Cancel;
 
-					case DialogResult.No:		// don't save & clear MaptreeChanged flag
-						MaptreeChanged = false; // kinda irrelevant since this class-object is about to disappear.
-						break;
+						case DialogResult.OK:		// Yes. save MapTilesets then check MaptreeChanged flag
+							OnSaveMaptreeClick(null, EventArgs.Empty);
+							if (MaptreeChanged) // ie. failed
+								return DialogResult.Cancel;
+							break;
 
-					case DialogResult.Cancel:	// dismiss confirmation dialog & leave state unaffected
-						return DialogResult.Cancel;
+						case DialogResult.Retry:	// No. don't save just clear MaptreeChanged flag
+							MaptreeChanged = false;
+							break;
+					}
 				}
 			}
 			return DialogResult.OK;
 		}
+
 
 		/// <summary>
 		/// Prints the currently selected location to the statusbar.
@@ -3484,30 +3562,5 @@ namespace MapView
 			ssMain.Refresh(); // fast update for selection-size.
 		}
 		#endregion Methods
-	}
-
-
-
-	/// <summary>
-	/// Derived class for TreeView.
-	/// </summary>
-	internal sealed class CompositedTreeView
-		:
-			TreeView
-	{
-		#region Properties (override)
-		/// <summary>
-		/// Prevents flicker.
-		/// </summary>
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
 	}
 }

@@ -1856,6 +1856,11 @@ namespace MapView.Forms.Observers
 
 		private string _lastExportDirectory;
 
+		/// <summary>
+		/// Exports nodes to a Routes-file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnExportClick(object sender, EventArgs e)
 		{
 			if (_file != null)
@@ -1888,6 +1893,11 @@ namespace MapView.Forms.Observers
 
 		private string _lastImportDirectory;
 
+		/// <summary>
+		/// Imports nodes from a Routes-file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnImportClick(object sender, EventArgs e)
 		{
 			if (_file != null)
@@ -1946,6 +1956,11 @@ namespace MapView.Forms.Observers
 		}
 
 
+		/// <summary>
+		/// Dis/enables its on the Edit menu.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnEditOpening(object sender, EventArgs e)
 		{
 			tsmi_LowerNode.Enabled = (NodeSelected != null && NodeSelected.Lev != _file.MapSize.Levs - 1);
@@ -1953,6 +1968,11 @@ namespace MapView.Forms.Observers
 		}
 
 
+		/// <summary>
+		/// Raises a node 1 level.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnNodeRaise(object sender, EventArgs e)
 		{
 			Dragnode = NodeSelected;
@@ -1971,6 +1991,11 @@ namespace MapView.Forms.Observers
 			SelectNode(NodeSelected.Id);
 		}
 
+		/// <summary>
+		/// Lowers a node 1 level.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnNodeLower(object sender, EventArgs e)
 		{
 			Dragnode = NodeSelected;
@@ -2002,43 +2027,42 @@ namespace MapView.Forms.Observers
 			else
 				rank = ((Pterodactyl)RouteNodeCollection.RankUfo [0]).ToString();
 
-			if (MessageBox.Show(
-							this,
-							"Are you sure you want to change all node ranks to"
-								+ Environment.NewLine + Environment.NewLine
-								+ rank,
-							" Warning",
-							MessageBoxButtons.YesNo,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button2,
-							0) == DialogResult.Yes)
+			using (var f = new Infobox(
+									"Warning",
+									"Are you sure you want to change all node ranks to " + rank + " ...",
+									null,
+									Infobox.BoxType.Warn,
+									Infobox.BUTTONS_CancelOkay))
 			{
-				int changed = 0;
-				foreach (RouteNode node in _file.Routes)
+				if (f.ShowDialog(this) == DialogResult.OK)
 				{
-					if (node.Rank != 0)
+					int changed = 0;
+					foreach (RouteNode node in _file.Routes)
 					{
-						if (RoutesInfo != null && node.Spawn != SpawnWeight.None)
-							RoutesInfo.UpdateNoderank(node.Rank, 0);
+						if (node.Rank != 0)
+						{
+							if (RoutesInfo != null && node.Spawn != SpawnWeight.None)
+								RoutesInfo.UpdateNoderank(node.Rank, 0);
 
-						++changed;
-						node.Rank = 0;
+							++changed;
+							node.Rank = 0;
+						}
 					}
+
+					string head;
+					if (changed != 0)
+					{
+						RoutesChangedCoordinator = true;
+						UpdateNodeInfo();
+
+						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
+					}
+					else
+						head = "All nodes are already rank 0.";
+
+					using (var f1 = new Infobox("All nodes rank 0", head))
+						f1.ShowDialog(this);
 				}
-
-				string head;
-				if (changed != 0)
-				{
-					RoutesChangedCoordinator = true;
-					UpdateNodeInfo();
-
-					head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
-				}
-				else
-					head = "All nodes are already rank 0.";
-
-				using (var f = new Infobox("All nodes rank 0", head))
-					f.ShowDialog(this);
 			}
 		}
 
@@ -2052,27 +2076,28 @@ namespace MapView.Forms.Observers
 		{
 			if (NodeSelected != null)
 			{
-				if (MessageBox.Show(
-								this,
-								"Are you sure you want to clear the selected node's Link data ...",
-								" Warning",
-								MessageBoxButtons.YesNo,
-								MessageBoxIcon.Warning,
-								MessageBoxDefaultButton.Button2,
-								0) == DialogResult.Yes)
+				using (var f = new Infobox(
+										"Warning",
+										"Are you sure you want to clear the selected node's Link data ...",
+										null,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelOkay))
 				{
-					RoutesChangedCoordinator = true;
-
-					for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
+					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						NodeSelected[slot].Destination = Link.NotUsed;
-						NodeSelected[slot].Distance = 0;
+						RoutesChangedCoordinator = true;
 
-						NodeSelected[slot].Type = UnitType.Any;
+						for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
+						{
+							NodeSelected[slot].Destination = Link.NotUsed;
+							NodeSelected[slot].Distance = 0;
+
+							NodeSelected[slot].Type = UnitType.Any;
+						}
+
+						UpdateNodeInfo();
+						RefreshControls();
 					}
-
-					UpdateNodeInfo();
-					RefreshControls();
 				}
 			}
 		}

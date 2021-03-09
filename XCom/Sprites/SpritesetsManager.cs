@@ -29,9 +29,9 @@ namespace XCom
 							new List<SpriteCollection>();
 		/// <summary>
 		/// A list of spritesets in the currently loaded tileset or so.
-		/// @note It has relevance only for MapInfoDialog and
-		/// MainViewOptionables.SelectedTileColor/SelectedTileToner.
 		/// </summary>
+		/// <remarks>It has relevance only for MapInfoDialog and
+		/// MainViewOptionables.SelectedTileColor/SelectedTileToner.</remarks>
 		public static List<SpriteCollection> Spritesets
 		{
 			get { return _spritesets; }
@@ -45,10 +45,7 @@ namespace XCom
 		/// except the XCOM cursor-sprites load w/out a descriptor. As do the
 		/// monotone-sprites - although that's done differently w/
 		/// MainViewF.LoadMonotoneSprites().
-		/// @note Both UFO and TFTD use 2-byte TabwordLengths for
-		/// - 32x40 terrain-sprites and 32x48 bigobs-sprites
-		/// - TFTD unit-sprites use 4-byte TabwordLengths
-		/// - the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte
+		/// 
 		/// TODO: Each effing tilepart gets a pointer to the SpriteCollection.
 		/// Effectively, at present, every tilepart maintains the
 		/// SpriteCollection; the SpriteCollection should rather be an
@@ -63,6 +60,13 @@ namespace XCom
 		/// McdView is called via TileView</param>
 		/// <returns>a SpriteCollection containing all the sprites, or null if
 		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
+		/// <remarks>Both UFO and TFTD use 2-byte TabwordLengths for
+		/// 
+		/// - 32x40 terrain-sprites and 32x48 bigobs-sprites
+		/// 
+		/// - TFTD unit-sprites use 4-byte TabwordLengths
+		/// 
+		/// - the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte</remarks>
 		public static SpriteCollection LoadSpriteset(
 				string label,
 				string dir,
@@ -122,9 +126,9 @@ namespace XCom
 
 		/// <summary>
 		/// Gets the total count of sprites in all 'Spritesets'.
-		/// @note Used only by MapInfoDialog.Analyze()
 		/// </summary>
 		/// <returns>count of sprites</returns>
+		/// <remarks>Used only by MapInfoDialog.Analyze().</remarks>
 		public static int GetTotalSpriteCount()
 		{
 			int count = 0;
@@ -137,12 +141,14 @@ namespace XCom
 
 		/// <summary>
 		/// Loads a ScanG.dat file for UFO.
-		/// @note Cf
-		/// - McdviewF.LoadScanGufo()
-		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="dirUfo"></param>
 		/// <returns></returns>
+		/// <remarks>See
+		/// 
+		/// - McdviewF.LoadScanGufo()
+		/// 
+		/// - SpriteCollection(string, Stream, bool)</remarks>
 		public static bool LoadScanGufo(string dirUfo)
 		{
 			if (Directory.Exists(dirUfo))
@@ -170,12 +176,14 @@ namespace XCom
 
 		/// <summary>
 		/// Loads a ScanG.dat file for TFTD.
-		/// @note Cf
-		/// - McdviewF.LoadScanGtftd()
-		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="dirTftd"></param>
 		/// <returns></returns>
+		/// <remarks>See
+		/// 
+		/// - McdviewF.LoadScanGtftd()
+		/// 
+		/// - SpriteCollection(string, Stream, bool)</remarks>
 		public static bool LoadScanGtftd(string dirTftd)
 		{
 			if (Directory.Exists(dirTftd))
@@ -203,13 +211,15 @@ namespace XCom
 
 
 		/// <summary>
-		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
-		/// Loads a LoFTemps.dat file for UFO.
-		/// @note Cf
-		/// - McdviewF.LoadLoFTufo()
-		/// - SpriteCollection(string, Stream, bool)
+		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu. Loads a
+		/// LoFTemps.dat file for UFO.
 		/// </summary>
 		/// <param name="dirUfo"></param>
+		/// <remarks>See
+		/// 
+		/// - McdviewF.LoadLoFTufo()
+		/// 
+		/// - SpriteCollection(string, Stream, bool)</remarks>
 		public static void LoadLoFTufo(string dirUfo)
 		{
 			if (Directory.Exists(dirUfo))
@@ -249,11 +259,13 @@ namespace XCom
 
 		/// <summary>
 		/// Loads a LoFTemps.dat file for TFTD.
-		/// @note Cf
-		/// - McdviewF.LoadLoFTtftd()
-		/// - SpriteCollection(string, Stream, bool)
 		/// </summary>
 		/// <param name="dirTftd"></param>
+		/// <remarks>See
+		/// 
+		/// - McdviewF.LoadLoFTtftd()
+		/// 
+		/// - SpriteCollection(string, Stream, bool)</remarks>
 		public static void LoadLoFTtftd(string dirTftd)
 		{
 			if (Directory.Exists(dirTftd))

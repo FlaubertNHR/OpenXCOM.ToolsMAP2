@@ -635,6 +635,10 @@ namespace MapView.Forms.Observers
 
 
 		#region Methods
+		/// <summary>
+		/// Assigns tileparts to this TilePanel.
+		/// </summary>
+		/// <param name="parts"></param>
 		internal void SetTiles(IList<Tilepart> parts)
 		{
 			if (parts != null)
@@ -655,7 +659,7 @@ namespace MapView.Forms.Observers
 						if (parts[i].Record.PartType == _quadType)
 							++qtyTiles;
 
-					_parts = new Tilepart[qtyTiles + 1];
+					_parts = new Tilepart[qtyTiles + 1]; // +1 for the null-sprite
 					_parts[0] = null;
 
 					for (int i = 0, j = 1; i != parts.Count; ++i)

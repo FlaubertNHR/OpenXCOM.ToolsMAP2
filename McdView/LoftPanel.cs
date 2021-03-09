@@ -120,60 +120,67 @@ namespace McdView
 		{
 			_f.PartsPanel.Select(); // NOTE: Workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).
 
-			if (_f.Selid != -1
-				&& e.X > -1 && e.X < Width // NOTE: Bypass event if cursor moves off the panel before released.
-				&& e.Y > -1 && e.Y < Height)
+			switch (e.Button)
 			{
-				switch (e.Button)
-				{
-					case MouseButtons.Left:
-						if (_f.LoFT != null)
-						{
-							var tb = Tag as TextBox;
-							string id = tb.Text;
-
-							using (var f = new LoftChooserF(
-														_f,
-														Int32.Parse(tb.Tag.ToString()),
-														Int32.Parse(id)))
-							{
-								_f._pnlLoFT = this;
-								f.ShowDialog();
-							}
-						}
-						else
-						{
-							using (var f = new Infobox(
-													"Error",
-													"LoFT icons not found.",
-													null,
-													Infobox.BoxType.Error))
-							{
-								f.ShowDialog(this);
-							}
-						}
-						break;
-
-					case MouseButtons.Right:
+				case MouseButtons.Left:
+				case MouseButtons.Right:
+					if (_f.Selid != -1)
+//						&& e.X > -1 && e.X < Width // NOTE: Bypass event if cursor moves off the panel before released.
+//						&& e.Y > -1 && e.Y < Height
 					{
-						string id = (Tag as TextBox).Text;
-						if (_f.CanSetAllLofts(id)
-							&& MessageBox.Show(
-											this,
-											"Set all LoFTs to #" + id,
-											" Set all LoFTs",
-											MessageBoxButtons.YesNo,
-											MessageBoxIcon.Question,
-											MessageBoxDefaultButton.Button1,
-											0) == DialogResult.Yes)
+						switch (e.Button)
 						{
-							_f.SetAllLofts(id);
-						}
-						break;
-					}
-				}
+							case MouseButtons.Left:
+								if (_f.LoFT != null)
+								{
+									var tb = Tag as TextBox;
+									string id = tb.Text;
 
-				_f.OnMouseClick_IsoLoft(null,null); // select the IsoLoFT's trackbar
+									using (var f = new LoftChooserF(
+																_f,
+																Int32.Parse(tb.Tag.ToString()),
+																Int32.Parse(id)))
+									{
+										_f._pnlLoFT = this;
+										f.ShowDialog(this);
+									}
+								}
+								else
+								{
+									using (var f = new Infobox(
+															"Error",
+															"LoFT icons not found.",
+															null,
+															Infobox.BoxType.Error))
+									{
+										f.ShowDialog(this);
+									}
+								}
+								break;
+
+							case MouseButtons.Right:
+							{
+								string id = (Tag as TextBox).Text;
+								if (_f.CanSetAllLofts(id))
+								{
+									using (var f = new Infobox(
+															"Set all LoFTs",
+															"Set all LoFTs to #" + id,
+															null,
+															Infobox.BoxType.Warn,
+															Infobox.BUTTONS_CancelOkay))
+									{
+										if (f.ShowDialog(this) == DialogResult.OK)
+											_f.SetAllLofts(id);
+									}
+								}
+								break;
+							}
+						}
+
+						_f.OnMouseClick_IsoLoft(null,null); // select the IsoLoFT's trackbar
+					}
+					break;
 			}
 		}
 		#endregion Events (override)

@@ -160,40 +160,43 @@ namespace McdView
 			{
 				case MouseButtons.Left:
 				case MouseButtons.Right:
-					if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
-						&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
+//					if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
+//						&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
+				{
+					int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
+						   + e.X /  XCImage.SpriteWidth32;
+
+					if (id < _f.Spriteset.Count)
 					{
-						int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
-							   + e.X /  XCImage.SpriteWidth32;
-
-						if (id < _f.Spriteset.Count)
+						switch (e.Button)
 						{
-							switch (e.Button)
-							{
-								case MouseButtons.Left:
-									_f.SetSprite(_phase, id);
-									break;
+							case MouseButtons.Left:
+								_f.SetSprite(_phase, id);
+								Close();
+								break;
 
-								case MouseButtons.Right:
-									if (_f.CanSetAllSprites(id.ToString())
-										&& MessageBox.Show(
-														this,
-														"Set all sprite phases to #" + id,
-														" Set all sprite phases",
-														MessageBoxButtons.YesNo,
-														MessageBoxIcon.Question,
-														MessageBoxDefaultButton.Button1,
-														0) == DialogResult.No)
+							case MouseButtons.Right:
+								if (_f.CanSetAllSprites(id.ToString()))
+								{
+									using (var f = new Infobox(
+															"Set all sprite phases",
+															"Set all sprite phases to #" + id,
+															null,
+															Infobox.BoxType.Warn,
+															Infobox.BUTTONS_CancelOkay))
 									{
-										return; // do nothing if No.
+										if (f.ShowDialog(this) == DialogResult.OK)
+										{
+											_f.SetAllSprites(id.ToString());
+											Close();
+										}
 									}
-									_f.SetAllSprites(id.ToString());
-									break;
-							}
-							Close();
+								}
+								break;
 						}
 					}
 					break;
+				}
 			}
 		}
 

@@ -153,17 +153,23 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAcceptClick(object sender, EventArgs e)
 		{
-			if (!rbTilesets.Enabled || !rbTilesets.Checked
-				|| MessageBox.Show(
-								this,
-								"ARE YOU SURE YOU WANT TO REPLACE YOUR TILESET CONFIGURATION FILE!"
-									+ Environment.NewLine + Environment.NewLine
-									+ "The file contains all data for the MapTree",
-								" Replace tileset data",
-								MessageBoxButtons.YesNo,
-								MessageBoxIcon.Exclamation,
-								MessageBoxDefaultButton.Button2,
-								0) == DialogResult.Yes)
+			bool proceed = !rbTilesets.Enabled || !rbTilesets.Checked;
+			if (!proceed)
+			{
+				using (var f = new Infobox(
+										"Replace Maptree data",
+										"ARE YOU SURE YOU WANT TO REPLACE YOUR TILESET CONFIGURATION FILE!" + Environment.NewLine
+									  + "The file contains all data for the MapTree",
+										null,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelOkay))
+				{
+					if (f.ShowDialog(this) == DialogResult.OK)
+						proceed = true;
+				}
+			}
+
+			if (proceed)
 			{
 				if (cbResources.Checked) // handle resource path(s) configuration ->
 				{

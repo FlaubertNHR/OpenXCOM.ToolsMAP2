@@ -185,50 +185,53 @@ namespace McdView
 
 		/// <summary>
 		/// Selects an icon and closes the Form.
-		/// @note Use the MouseDown event to prevent window-over-window
-		/// shenanigans.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Use the MouseDown event to prevent window-over-window
+		/// shenanigans.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			switch (e.Button)
 			{
 				case MouseButtons.Left:
 				case MouseButtons.Right:
-					if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
-						&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
+//					if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
+//						&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
+				{
+					int id = e.Y / (LOFT_HEIGHT + TEXT_HEIGHT) * COLS
+						   + e.X / (LOFT_WIDTH  + HORI_PAD);
+
+					if (id < _f.LoFT.Length / 256)
 					{
-						int id = e.Y / (LOFT_HEIGHT + TEXT_HEIGHT) * COLS
-							   + e.X / (LOFT_WIDTH  + HORI_PAD);
-	
-						if (id < _f.LoFT.Length / 256)
+						switch (e.Button)
 						{
-							switch (e.Button)
-							{
-								case MouseButtons.Left:
-									_f.SetLoft(id);
-									break;
-	
-								case MouseButtons.Right:
-									if (_f.CanSetAllLofts(id.ToString())
-										&& MessageBox.Show(
-														this,
-														"Set all LoFTs to #" + id,
-														" Set all LoFTs",
-														MessageBoxButtons.YesNo,
-														MessageBoxIcon.Question,
-														MessageBoxDefaultButton.Button1,
-														0) == DialogResult.No)
+							case MouseButtons.Left:
+								_f.SetLoft(id);
+								Close();
+								break;
+
+							case MouseButtons.Right:
+								if (_f.CanSetAllLofts(id.ToString()))
+								{
+									using (var f = new Infobox(
+															"Set all LoFTs",
+															"Set all LoFTs to #" + id,
+															null,
+															Infobox.BoxType.Warn,
+															Infobox.BUTTONS_CancelOkay))
 									{
-										return; // do nothing if No.
+										if (f.ShowDialog(this) == DialogResult.OK)
+										{
+											_f.SetAllLofts(id.ToString());
+											Close();
+										}
 									}
-									_f.SetAllLofts(id.ToString());
-									break;
-							}
-							Close();
+								}
+								break;
 						}
 					}
 					break;
+				}
 			}
 		}
 

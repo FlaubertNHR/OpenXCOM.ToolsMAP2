@@ -2349,18 +2349,22 @@ namespace PckView
 		/// Checks state of the 'Changed' flag and/or asks user if the spriteset
 		/// ought be closed anyway.
 		/// </summary>
-		/// <returns>true if state is NOT changed or 'DialogResult.Yes'</returns>
+		/// <returns>true if state is NOT changed or 'DialogResult.OK'</returns>
 		private bool RequestSpritesetClose()
 		{
-			return !Changed
-				|| MessageBox.Show(
-								this,
-								"The spriteset has changed. Do you really want to close it?",
-								" Spriteset changed",
-								MessageBoxButtons.YesNo,
-								MessageBoxIcon.Question,
-								MessageBoxDefaultButton.Button2,
-								0) == DialogResult.Yes;
+			if (Changed)
+			{
+				using (var f = new Infobox(
+										"Spriteset changed",
+										"The spriteset has changed. Do you really want to close it?",
+										null,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelOkay))
+				{
+					return (f.ShowDialog(this) == DialogResult.OK);
+				}
+			}
+			return true;
 		}
 		#endregion Methods
 	}

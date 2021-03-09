@@ -1138,25 +1138,29 @@ namespace McdView
 		{
 			SaveRecordsetFailed = true;
 
-			if (Parts.Length <= MapFileService.MAX_MCDRECORDS
-				|| MessageBox.Show(
-								this,
-								"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
-								" Warning",
-								MessageBoxButtons.OKCancel,
-								MessageBoxIcon.Warning,
-								MessageBoxDefaultButton.Button2,
-								0) == DialogResult.OK)
+			bool proceed = (Parts.Length <= MapFileService.MAX_MCDRECORDS);
+			if (!proceed)
 			{
-				if (McdRecord.WriteRecords(PfeMcd, Parts))
+				using (var f = new Infobox(
+										"Warning",
+										"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
+										null,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelOkay))
 				{
-					SaveRecordsetFailed = false;
-
-					CacheLoad.SetCacheSaved(Parts);
-					Changed = false;
-
-					FireMvReload = true;
+					if (f.ShowDialog(this) == DialogResult.OK)
+						proceed = true;
 				}
+			}
+
+			if (proceed && McdRecord.WriteRecords(PfeMcd, Parts))
+			{
+				SaveRecordsetFailed = false;
+
+				CacheLoad.SetCacheSaved(Parts);
+				Changed = false;
+
+				FireMvReload = true;
 			}
 		}
 
@@ -1207,75 +1211,75 @@ namespace McdView
 					sfd.InitialDirectory = _lastBrowserDirectory;
 
 
-				if (sfd.ShowDialog(this) == DialogResult.OK
-					&& (Parts.Length <= MapFileService.MAX_MCDRECORDS
-						|| MessageBox.Show(
-										this,
-										"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
-										" Warning",
-										MessageBoxButtons.OKCancel,
-										MessageBoxIcon.Warning,
-										MessageBoxDefaultButton.Button2,
-										0) == DialogResult.OK))
+				if (sfd.ShowDialog(this) == DialogResult.OK)
 				{
-					string pfe = sfd.FileName;
-					_lastBrowserDirectory = Path.GetDirectoryName(pfe);
-
-					if (McdRecord.WriteRecords(pfe, Parts))
+					bool proceed = (Parts.Length <= MapFileService.MAX_MCDRECORDS);
+					if (!proceed)
 					{
-						PfeMcd = pfe;
-
-						CacheLoad.SetCacheSaved(Parts);
-
-						Changed = false;
-
-						FireMvReload = true;
-
-
-						if (Spriteset != null)
+						using (var f = new Infobox(
+												"Warning",
+												"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
+												null,
+												Infobox.BoxType.Warn,
+												Infobox.BUTTONS_CancelOkay))
 						{
-							string info = String.Empty;
-
-							string dir    = Path.GetDirectoryName(PfeMcd);
-							string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
-							string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
-
-							if (File.Exists(pfePck))
-							{
-								info += "Pck file found." + Environment.NewLine;
-							}
-
-							if (File.Exists(pfeTab))
-							{
-								info += "Tab file found." + Environment.NewLine;
-							}
-
-							if (info != String.Empty)
-							{
-								info += Environment.NewLine;
-
-								info += "Sprites for the terrain detected. Do you want"
-									  + " to overwrite the spriteset ...";
-							}
-							else
-							{
-								info += "Sprites for the terrain were not found. Do you"
-									  + " want to write the spriteset ...";
-							}
-
-							if (MessageBox.Show(
-											this,
-											info,
-											" Write spriteset",
-											MessageBoxButtons.YesNo,
-											MessageBoxIcon.Question,
-											MessageBoxDefaultButton.Button1,
-											0) == DialogResult.Yes)
-							{
-								OnClick_SaveSpriteset(null, EventArgs.Empty);
-							}
+							if (f.ShowDialog(this) == DialogResult.OK)
+								proceed = true;
 						}
-						OnClick_Reload(null, EventArgs.Empty);
+					}
+
+					if (proceed)
+					{
+						string pfe = sfd.FileName;
+						_lastBrowserDirectory = Path.GetDirectoryName(pfe);
+
+						if (McdRecord.WriteRecords(pfe, Parts))
+						{
+							PfeMcd = pfe;
+
+							CacheLoad.SetCacheSaved(Parts);
+
+							Changed = false;
+
+							FireMvReload = true;
+
+
+							if (Spriteset != null)
+							{
+								string dir    = Path.GetDirectoryName(PfeMcd);
+								string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
+								string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
+
+								Infobox.BoxType bt;
+
+								string head;
+								if (File.Exists(pfePck) || File.Exists(pfeTab))
+								{
+									bt = Infobox.BoxType.Warn;
+									head = "A spriteset for the terrain is detected on disk."
+										 + " Do you want to overwrite that spriteset ...";
+								}
+								else
+								{
+									bt = Infobox.BoxType.Info;
+									head = "A spriteset was not found with that label. Do you"
+										 + " want to write the spriteset also ...";
+								}
+
+								using (var f = new Infobox(
+														"Write spriteset",
+														Infobox.SplitString(head),
+														pfePck + Environment.NewLine + pfeTab,
+														bt,
+														Infobox.BUTTONS_CancelOkay))
+								{
+									if (f.ShowDialog(this) == DialogResult.OK)
+										OnClick_SaveSpriteset(null, EventArgs.Empty);
+								}
+							}
+
+							OnClick_Reload(null, EventArgs.Empty);
+						}
 					}
 				}
 			}
@@ -1300,19 +1304,20 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnClick_ZeroVals(object sender, EventArgs e)
 		{
-			if (MessageBox.Show(
-							this,
-							"Zero the current record's values",
-							" Zero all values",
-							MessageBoxButtons.YesNo,
-							MessageBoxIcon.Warning,
-							MessageBoxDefaultButton.Button2,
-							0) == DialogResult.Yes)
+			using (var f = new Infobox(
+									"Zero all values",
+									"Zero the current record's values ...",
+									null,
+									Infobox.BoxType.Warn,
+									Infobox.BUTTONS_CancelOkay))
 			{
-				bool strict0 = _strict; // don't let the STRICT policy prevent setting LeftRightHalf to "0"
-				_strict = false;
-				ClearTextFields(true);
-				_strict = strict0;
+				if (f.ShowDialog(this) == DialogResult.OK)
+				{
+					bool strict0 = _strict; // don't let the STRICT policy prevent setting LeftRightHalf to "0"
+					_strict = false;
+					ClearTextFields(true);
+					_strict = strict0;
+				}
 			}
 		}
 

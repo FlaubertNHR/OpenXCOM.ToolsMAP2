@@ -7,11 +7,12 @@ namespace XCom
 {
 	/// <summary>
 	/// An outputbox that warns if a Tileset's total terrains has exceeded 254
-	/// MCD-records. The IDs are stored in 1 byte but the first two records are
-	/// reserved for the two BLANKS records. Note that this limit can be safely
-	/// exceeded as long as no tileparts that exceed the limit have been placed
-	/// on the Map.
+	/// MCD-records.
 	/// </summary>
+	/// <remarks>The IDs are stored in 1 byte but the first two records are
+	/// reserved for the two BLANKS records. This limit can be safely exceeded
+	/// as long as no tileparts that exceed the limit have been placed on the
+	/// Map.</remarks>
 	internal sealed class McdRecordsExceeded
 		:
 			Form
@@ -69,25 +70,10 @@ namespace XCom
 
 
 		#region Designer
-		private Container components = null;
-
 		private Label lbl_InfoHeader;
 		private Label lbl_InfoBody;
 		private RichTextBox rtb_Text;
 		private Button btn_Ok;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-		
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of

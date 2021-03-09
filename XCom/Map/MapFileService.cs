@@ -21,10 +21,10 @@ namespace XCom
 		#region Methods (static)
 		/// <summary>
 		/// Checks if the Mapfile for a specified Descriptor exists.
-		/// @note Check (or ensure) that 'descriptor' is valid before call.
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <returns>the path to the Mapfile else null</returns>
+		/// <remarks>Check (or ensure) that 'descriptor' is valid before call.</remarks>
 		public static string MapfileExists(Descriptor descriptor)
 		{
 			string dir = descriptor.Basepath;
@@ -40,11 +40,10 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Loads all routes and terrains for a Map.
-		/// @note Called by MainViewF.LoadSelectedDescriptor().
-		/// @note Check (or ensure) that 'descriptor' is valid before call.
+		/// Loads all routes and terrains for a Map. Called by
+		/// MainViewF.LoadSelectedDescriptor().
 		/// </summary>
-		/// <param name="descriptor"></param>
+		/// <param name="descriptor">a <see cref="Descriptor"/></param>
 		/// <param name="treechanged"></param>
 		/// <param name="browseMapfile">true to force the find Mapfile dialog</param>
 		/// <param name="ignoreRecordsExceeded">true to bypass a potential
@@ -52,6 +51,7 @@ namespace XCom
 		/// <param name="routes">current Routes - use this only when reloading
 		/// the current Mapfile and want to keep the route-collection as is</param>
 		/// <returns>null if things go south</returns>
+		/// <remarks>Check (or ensure) that 'descriptor' is valid before call.</remarks>
 		public static MapFile LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
@@ -67,50 +67,52 @@ namespace XCom
 
 			string pfe = MapfileExists(descriptor);
 
-			if (pfe == null // Open a folderbrowser for user to point to a basepath ->
-				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) == Keys.Shift) // hold [Shift] to ask for a MapBrowser dialog.
-				&& MessageBox.Show(
-								"Files not found for : " + descriptor.Label
-									+ Environment.NewLine + Environment.NewLine
-									+ "Browse to a basepath for the MAP and RMP files ...",
-								" Error",
-								MessageBoxButtons.YesNo,
-								MessageBoxIcon.Error,
-								MessageBoxDefaultButton.Button1,
-								0) == DialogResult.Yes)
+			if (pfe == null
+				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) == Keys.Shift)) // hold [Shift] to ask for a MapBrowser dialog.
 			{
-				using (var fbd = new FolderBrowserDialog())
+				using (var f = new Infobox(
+										"Files not found",
+										"Browse to a basepath for the MAP and RMP files ...",
+										descriptor.Label,
+										Infobox.BoxType.Warn,
+										Infobox.BUTTONS_CancelOkay))
 				{
-					fbd.Description = "Browse to a basepath folder. A valid basepath folder"
-									+ " has the subfolders MAPS and ROUTES.";
-
-					if (Directory.Exists(descriptor.Basepath))
-						fbd.SelectedPath = descriptor.Basepath;
-
-					// TODO: Check descriptor's Palette and default to Ufo/Tftd Resource dir instead.
-
-
-					if (fbd.ShowDialog() == DialogResult.OK)
+					if (f.ShowDialog() == DialogResult.OK) // Open a folderbrowser for user to find a basepath ->
 					{
-						string dir = Path.Combine(fbd.SelectedPath, GlobalsXC.MapsDir);
-							   pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
-
-						if (File.Exists(pfe))
+						using (var fbd = new FolderBrowserDialog())
 						{
-							descriptor.Basepath = fbd.SelectedPath;
-							treechanged = true;
+							fbd.Description = "Browse to a basepath folder. A valid basepath folder"
+											+ " has the subfolders MAPS and ROUTES.";
 
-							//LogFile.WriteLine(". . treechanged= " + treechanged);
-						}
-						else
-						{
-							using (var f = new Infobox(
-													"Error",
-													"File not found in that basepath.",
-													descriptor.Label + GlobalsXC.MapExt,
-													Infobox.BoxType.Error))
+							if (Directory.Exists(descriptor.Basepath))
+								fbd.SelectedPath = descriptor.Basepath;
+
+							// TODO: Check descriptor's Palette and default to Ufo/Tftd Resource dir instead.
+
+
+							if (fbd.ShowDialog() == DialogResult.OK)
 							{
-								f.ShowDialog();
+								string dir = Path.Combine(fbd.SelectedPath, GlobalsXC.MapsDir);
+									   pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
+
+								if (File.Exists(pfe))
+								{
+									descriptor.Basepath = fbd.SelectedPath;
+									treechanged = true;
+
+									//LogFile.WriteLine(". . treechanged= " + treechanged);
+								}
+								else
+								{
+									using (var f1 = new Infobox(
+															"Error",
+															"File not found in that basepath.",
+															descriptor.Label + GlobalsXC.MapExt,
+															Infobox.BoxType.Error))
+									{
+										f1.ShowDialog();
+									}
+								}
 							}
 						}
 					}

@@ -582,6 +582,10 @@ namespace MapView.Forms.Observers
 				error_SelectTile();
 		}
 
+		/// <summary>
+		/// Gets the current sprite-shade in <see cref="MainViewF.Optionables"/>.
+		/// </summary>
+		/// <returns>sprite-shade or -1 if disabled</returns>
 		private int GetSpriteshade()
 		{
 			if (MainViewF.Optionables.SpriteShadeEnabled)
@@ -596,45 +600,42 @@ namespace MapView.Forms.Observers
 		/// things a bit less jarring by stating the reason why.
 		/// </summary>
 		/// <returns></returns>
-		DialogResult CheckReload()
+		private DialogResult CheckReload()
 		{
-			string notice = "The Map needs to reload to show any"
-						  + " changes that were made to the terrainset.";
+			string head = "The tileset needs to reload to show any changes"
+						+ " that may have been made to its terrainset.";
 
-			string changed = String.Empty;
+			string info = String.Empty;
 			if (MapFile.MapChanged)
-				changed = "Map";
+				info = "Map";
 
 			if (MapFile.RoutesChanged)
 			{
-				if (!String.IsNullOrEmpty(changed))
-					changed += " and its ";
-
-				changed += "Routes";
+				if (info != String.Empty) info += " and its ";
+				info += "Routes";
 			}
 
-			if (!String.IsNullOrEmpty(changed))
+			if (info != String.Empty)
 			{
-				notice += Environment.NewLine + Environment.NewLine
-						+ "You will be asked to save the current"
-						+ " changes to the " + changed + ".";
+				head += " You will be asked to save changes to the " + info + ".";
 			}
 
-			return MessageBox.Show(
-								this,
-								notice,
-								" Reload Map",
-								MessageBoxButtons.OKCancel,
-								MessageBoxIcon.Warning,
-								MessageBoxDefaultButton.Button1,
-								0);
+			using (var f = new Infobox(
+									"Reload tileset",
+									Infobox.SplitString(head),
+									null,
+									Infobox.BoxType.Warn,
+									Infobox.BUTTONS_CancelOkay))
+			{
+				return f.ShowDialog(this);
+			}
 		}
 
 		/// <summary>
 		/// An <see cref="Infobox"/> telling the user that the operation they
 		/// are attempting is invalid because they haven't selected a tilepart.
 		/// </summary>
-		void error_SelectTile()
+		private void error_SelectTile()
 		{
 			using (var f = new Infobox(
 									"Error",
@@ -649,6 +650,10 @@ namespace MapView.Forms.Observers
 
 
 		#region Methods
+		/// <summary>
+		/// Fills the <see cref="TileView"/> pages with tileparts.
+		/// </summary>
+		/// <param name="parts"></param>
 		private void SetTileParts(IList<Tilepart> parts)
 		{
 			for (int id = 0; id != _panels.Length; ++id)

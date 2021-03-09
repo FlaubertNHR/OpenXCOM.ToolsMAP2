@@ -121,7 +121,7 @@ namespace MapView.Forms.MainView
 			_tsbScale.ToolTipText     = "autoscale";
 			_tsbScale.DisplayStyle    = ToolStripItemDisplayStyle.Image;
 			_tsbScale.Image           = Resources.scale;
-			_tsbScale.Click          += MainViewF.that.OnScaleClick;
+			_tsbScale.Click          += MainViewF.that.OnAutoScaleClick;
 			_tsbScale.Checked         = true;
 			_tsbScale.Enabled         = false;
 
@@ -167,11 +167,19 @@ namespace MapView.Forms.MainView
 			_tsbScale.Enabled = true;
 		}
 
+		/// <summary>
+		/// Dis/enables the ScaleOut button.
+		/// </summary>
+		/// <param name="enabled"></param>
 		internal void SetScaleOutButtonEnabled(bool enabled)
 		{
 			_tsbScaleOut.Enabled = enabled;
 		}
 
+		/// <summary>
+		/// Dis/enables the ScaleIn button.
+		/// </summary>
+		/// <param name="enabled"></param>
 		internal void SetScaleInButtonEnabled(bool enabled)
 		{
 			_tsbScaleIn.Enabled = enabled;
@@ -326,6 +334,11 @@ namespace MapView.Forms.MainView
 		}
 
 
+		/// <summary>
+		/// Dis/enables all level up/down buttons on the toolstrips.
+		/// </summary>
+		/// <param name="level"></param>
+		/// <param name="levels"></param>
 		internal void SetLevelButtonsEnabled(int level, int levels)
 		{
 			bool enabled = level != levels - 1;
@@ -337,12 +350,20 @@ namespace MapView.Forms.MainView
 				tsb.Enabled = enabled;
 		}
 
+		/// <summary>
+		/// Dis/enables all edit buttons on the toolstrips.
+		/// </summary>
+		/// <param name="enabled"></param>
 		internal void SetEditButtonsEnabled(bool enabled)
 		{
 			foreach (var tsb in _editers)
 				tsb.Enabled = enabled;
 		}
 
+		/// <summary>
+		/// Dis/enables all paste buttons on the toolstrips.
+		/// </summary>
+		/// <param name="enabled"></param>
 		internal void SetPasteButtonsEnabled(bool enabled = true)
 		{
 			foreach (var tsb in _pasters)
@@ -392,12 +413,11 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		void OnSearchKeyPress(object sender, KeyPressEventArgs e)
 		{
-			//DSShared.LogFile.WriteLine("ToolstripFactory.OnSearchKeyPress() " + e.KeyChar);
 			if (e.KeyChar == (char)Keys.Enter
 				&& Control.ModifierKeys == Keys.None)
 			{
-				MainViewF.that.Search(_tstbSearch.Text);
 				e.Handled = true;
+				MainViewF.that.Search(_tstbSearch.Text);
 			}
 		}
 

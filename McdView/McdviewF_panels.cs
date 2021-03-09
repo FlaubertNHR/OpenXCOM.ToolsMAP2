@@ -33,8 +33,8 @@ namespace McdView
 		/// <summary>
 		/// Spaces the layout of the fields etc. of the anisprites in the
 		/// sprite-group and -panel.
-		/// @note See also CopierF.LayoutSpritesGroup().
 		/// </summary>
+		/// <remarks>See also CopierF.LayoutSpritesGroup().</remarks>
 		private void LayoutSpritesGroup()
 		{
 			SPRITE_ORIGIN_X = gb_Sprites.Width / 2 - SPRITE_OFFSET_X * 4;
@@ -197,11 +197,11 @@ namespace McdView
 			{
 				case MouseButtons.Left:
 				case MouseButtons.Right:
-					if (Parts != null && Parts.Length != 0 && Selid != -1
-						&& e.Y > -1 && e.Y < pnl_Sprites.Height) // NOTE: Bypass event if cursor moves off the panel before released.
+					if (Parts != null && Parts.Length != 0 && Selid != -1)
+//						&& e.Y > -1 && e.Y < pnl_Sprites.Height // NOTE: Bypass event if cursor moves off the panel before released.
 					{
 						int phase, left;
-						for (phase = 0; phase != 8; ++phase)
+						for (phase = 0; phase != 8; ++phase) // find sprite-phase that was clicked ->
 						{
 							left = SPRITE_ORIGIN_X + phase * SPRITE_OFFSET_X;
 							if (   e.X > left
@@ -274,17 +274,18 @@ namespace McdView
 										break;
 
 									case MouseButtons.Right:
-										if (CanSetAllSprites(id)
-											&& MessageBox.Show(
-														this,
-														"Set all sprite phases to #" + id,
-														" Set all sprite phases",
-														MessageBoxButtons.YesNo,
-														MessageBoxIcon.Question,
-														MessageBoxDefaultButton.Button1,
-														0) == DialogResult.Yes)
+										if (CanSetAllSprites(id))
 										{
-											SetAllSprites(id);
+											using (var f = new Infobox(
+																	"Set all sprite phases",
+																	"Set all sprite phases to #" + id,
+																	null,
+																	Infobox.BoxType.Warn,
+																	Infobox.BUTTONS_CancelOkay))
+											{
+												if (f.ShowDialog(this) == DialogResult.OK)
+													SetAllSprites(id);
+											}
 										}
 										break;
 								}
@@ -440,9 +441,9 @@ namespace McdView
 			PartsPanel.Select();
 
 			if (e.Button == MouseButtons.Left
-				&& Parts != null && Parts.Length != 0 && Selid != -1
-				&& e.X > -1 && e.X < pnl_ScanGic.Width // NOTE: Bypass event if cursor moves off the panel before released.
-				&& e.Y > -1 && e.Y < pnl_ScanGic.Height)
+				&& Parts != null && Parts.Length != 0 && Selid != -1)
+//				&& e.X > -1 && e.X < pnl_ScanGic.Width // NOTE: Bypass event if cursor moves off the panel before released.
+//				&& e.Y > -1 && e.Y < pnl_ScanGic.Height
 			{
 				if (ScanG != null)
 				{

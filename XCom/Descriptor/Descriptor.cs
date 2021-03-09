@@ -10,11 +10,11 @@ namespace XCom
 	/// <summary>
 	/// Descriptors describe a tileset: a Map, its route-nodes, and terrain. It
 	/// also holds the path to its files' parent directory.
-	/// A descriptor is accessed *only* through a Group and Category, and is
-	/// identified by its tileset-label. This allows multiple tilesets (ie. with
-	/// the same label) to be configured differently according to Category and
-	/// Group.
 	/// </summary>
+	/// <remarks>A descriptor is accessed *only* through a Group and Category,
+	/// and is identified by its tileset-label. This allows multiple tilesets
+	/// (ie. with the same label) to be configured differently according to
+	/// Category and Group.</remarks>
 	public sealed class Descriptor // *snap*
 	{
 		#region Fields
@@ -33,10 +33,11 @@ namespace XCom
 			new Dictionary<int, Tuple<string,string>>();
 		/// <summary>
 		/// A dictionary of this tileset's terrains as IDs that key a tuple that
-		/// pairs terrain-labels with basepath-strings. A basepath-string can be
-		/// blank (use config's basepath), "basepath" (use the tileset's
-		/// basepath), or the basepath of any TERRAIN directory.
+		/// pairs terrain-labels with basepath-strings.
 		/// </summary>
+		/// <remarks>A basepath-string can be blank (use config's basepath),
+		/// "basepath" (use the tileset's basepath), or the basepath of any
+		/// TERRAIN directory.</remarks>
 		public Dictionary<int, Tuple<string,string>> Terrains
 		{
 			get { return _terrains; }
@@ -104,6 +105,12 @@ namespace XCom
 
 
 		#region Methods
+		/// <summary>
+		/// Gets the appropriate terrain-directory for this tileset.
+		/// </summary>
+		/// <param name="path">value2 of the Tuple in the <see cref="Terrains"/>
+		/// property</param>
+		/// <returns>the actual terrain-directory for this tileset</returns>
 		public string GetTerrainDirectory(string path)
 		{
 			if (String.IsNullOrEmpty(path))								// use Configurator's basepath
@@ -118,11 +125,11 @@ namespace XCom
 		/// <summary>
 		/// Creates the MCD-records and PCK-spriteset for a given terrain in
 		/// this Descriptor and returns an array of Tileparts.
-		/// @note The TabwordLength of terrains in UFO and TFTD is 2-bytes.
 		/// </summary>
 		/// <param name="id">the id of the terrain in this tileset's terrains-list</param>
 		/// <returns>an array containing the Tileparts for the terrain, or null
 		/// if spriteset creation borks</returns>
+		/// <remarks>The TabwordLength of terrains in UFO and TFTD is 2-bytes.</remarks>
 		internal Tilepart[] CreateTerrain(int id)
 		{
 			//LogFile.WriteLine("Descriptor.CreateTerrain() id= " + id);
@@ -150,15 +157,16 @@ namespace XCom
 
 		/// <summary>
 		/// Gets the count of MCD-records in an MCD-file.
-		/// @note It's funky to read from disk just to get the count of records
-		/// but at present there is no general cache of all available terrains;
-		/// even a Map's Descriptor retains only the allocated terrains as
-		/// tuples in a dictionary-object.
-		/// See SpritesetsManager - where the *sprites* of a terrain *are* cached.
 		/// </summary>
 		/// <param name="id">the position of the terrain in this tileset's terrains-list</param>
 		/// <param name="disregard">true to disregard any error</param>
 		/// <returns>count of MCD-records or 0 on fail</returns>
+		/// <remarks>It's funky to read from disk just to get the count of
+		/// records but at present there is no general cache of all available
+		/// terrains; even a Map's Descriptor retains only the allocated
+		/// terrains as tuples in a dictionary-object. See
+		/// <see cref="SpritesetsManager"/> - where the *sprites* of a terrain
+		/// *are* cached.</remarks>
 		public int GetRecordCount(int id, bool disregard = false)
 		{
 			var terrain = Terrains[id];
@@ -178,10 +186,10 @@ namespace XCom
 
 /*		/// <summary>
 		/// Gets the count of sprites in a given Terrain.
-		/// @note Used only by MapInfoDialog.Analyze()
 		/// </summary>
 		/// <param name="id">the position of the terrain in this tileset's terrains-list</param>
 		/// <returns>count of sprites</returns>
+		/// <remarks>Used only by MapInfoDialog.Analyze().</remarks>
 		public int GetSpriteCount(int id)
 		{
 			var terrain = Terrains[id];

@@ -245,8 +245,6 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			//DSShared.LogFile.WriteLine("RoutePanelParent.OnMouseMove()");
-
 			_loc = GetTileLocation(e.X, e.Y);
 			if (_loc.X != _col || _loc.Y != _row)
 			{

@@ -25,6 +25,11 @@ namespace DSShared
 		private const int h_Max = 463;
 
 		private const string HEIGHT_TEST = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|\\;:'\"<>,.?";
+
+		public const int BUTTONS_Cancel          = 0;
+		public const int BUTTONS_CancelOkay      = 1;
+		public const int BUTTONS_CancelOkayRetry = 2;
+		public const int BUTTONS_CancelYesNo     = 3;
 		#endregion Fields (static)
 
 
@@ -49,17 +54,43 @@ namespace DSShared
 		/// readily copyable text</param>
 		/// <param name="type">a <see cref="BoxType"/> to deter the head's
 		/// backcolor - is valid only with head-text specified</param>
+		/// <param name="buttons">buttons to show</param>
 		/// <remarks>Limit the length of 'head' to ~100 chars max or break it
 		/// into lines if greater.</remarks>
 		public Infobox(
 				string title,
 				string head,
 				string copyable = null,
-				BoxType type = BoxType.Info)
+				BoxType type = BoxType.Info,
+				int buttons = BUTTONS_Cancel)
 		{
 			// TODO: Store static location and size of the Infobox (if shown non-modally).
 
 			InitializeComponent();
+
+			DialogResult = DialogResult.Cancel;
+
+			switch (buttons)
+			{
+				case BUTTONS_Cancel:
+					bu_Cancel.Text = "ok";
+					break;
+
+				case BUTTONS_CancelOkay:
+					bu_Okay.Visible = true;
+					break;
+
+				case BUTTONS_CancelOkayRetry:
+					bu_Okay .Visible =
+					bu_Retry.Visible = true;
+					break;
+
+				case BUTTONS_CancelYesNo:
+					bu_Okay .Text = "yes";
+					bu_Retry.Text = "no";
+					goto case BUTTONS_CancelOkayRetry;
+			}
+
 
 			SuspendLayout();
 
@@ -82,25 +113,25 @@ namespace DSShared
 				int test;
 				foreach (var line in lines)
 				{
-					size = TextRenderer.MeasureText(line, rtb_Copyable.Font);
+					size = TextRenderer.MeasureText(line, rt_Copyable.Font);
 					if ((test = size.Width) > width)
 						width = test;
 				}
-				width += pnl_Copyable.Padding.Horizontal + widthScroller;
+				width += pa_Copyable.Padding.Horizontal + widthScroller;
 
-				height = TextRenderer.MeasureText(HEIGHT_TEST, rtb_Copyable.Font).Height;
-				pnl_Copyable.Height = height * (lines.Length + 1) + pnl_Copyable.Padding.Vertical;
+				height = TextRenderer.MeasureText(HEIGHT_TEST, rt_Copyable.Font).Height;
+				pa_Copyable.Height = height * (lines.Length + 1) + pa_Copyable.Padding.Vertical;
 
 				copyable += Environment.NewLine; // add a blank line to bot of the copyable text.
-				rtb_Copyable.Text = copyable;
+				rt_Copyable.Text = copyable;
 			}
 			else
 			{
-				pnl_Copyable.Height =
-				rtb_Copyable.Height = 0;
+				pa_Copyable.Height =
+				rt_Copyable.Height = 0;
 
-				pnl_Copyable.Visible =
-				rtb_Copyable.Visible = false;
+				pa_Copyable.Visible =
+				rt_Copyable.Visible = false;
 			}
 
 			if (width < w_Min)
@@ -125,12 +156,12 @@ namespace DSShared
 						lbl_Head.BackColor = Color.PowderBlue;
 						break;
 
-					case BoxType.Error:
-						lbl_Head.BackColor = Color.SandyBrown;
-						break;
-
 					case BoxType.Warn:
 						lbl_Head.BackColor = Color.Moccasin;
+						break;
+
+					case BoxType.Error:
+						lbl_Head.BackColor = Color.SandyBrown;
 						break;
 				}
 
@@ -145,9 +176,8 @@ namespace DSShared
 
 
 			height = (lbl_Head != null ? lbl_Head.Height : 0)
-				   + pnl_Copyable.Height
-				   + btn_Okay    .Height
-				   + btn_Okay    .Margin.Vertical;
+				   + pa_Copyable.Height
+				   + bu_Cancel  .Height + bu_Cancel.Margin.Vertical;
 
 			if (height > h_Max)
 				height = h_Max;
@@ -171,8 +201,8 @@ namespace DSShared
 		/// or cTor to work right.</remarks>
 		protected override void OnLoad(EventArgs e)
 		{
-			rtb_Copyable.AutoWordSelection = false;
-			rtb_Copyable.Select();
+			rt_Copyable.AutoWordSelection = false;
+			ActiveControl = bu_Cancel;
 		}
 
 		/// <summary>
@@ -181,13 +211,52 @@ namespace DSShared
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
-			pnl_Copyable.Height = ClientSize.Height
-								- (lbl_Head != null ? lbl_Head.Height : 0)
-								- btn_Okay.Height
-								- btn_Okay.Margin.Vertical;
-			pnl_Copyable.Invalidate();
-
 			base.OnResize(e);
+
+			if (pa_Copyable.Visible)
+			{
+				pa_Copyable.Height = ClientSize.Height
+								   - (lbl_Head != null ? lbl_Head.Height : 0)
+								   - bu_Cancel.Height - bu_Cancel.Margin.Vertical;
+				pa_Copyable.Invalidate();
+			}
+
+			int width = ClientSize.Width / 3;
+
+			switch (ClientSize.Width % 3)
+			{
+				case 0:
+					bu_Retry .Left  = 0;
+					bu_Retry .Width = width;
+					bu_Okay  .Left  = width;
+					bu_Okay  .Width = width;
+					bu_Cancel.Left  = width * 2;
+					bu_Cancel.Width = width;
+					break;
+
+				case 1:
+					bu_Retry .Left  = 0;
+					bu_Retry .Width = width;
+					bu_Okay  .Left  = width;
+					bu_Okay  .Width = width + 1;
+					bu_Cancel.Left  = width * 2 + 1;
+					bu_Cancel.Width = width;
+					break;
+
+				case 2:
+					bu_Retry .Left  = 0;
+					bu_Retry .Width = width + 1;
+					bu_Okay  .Left  = width;
+					bu_Okay  .Width = width;
+					bu_Cancel.Left  = width * 2 + 1;
+					bu_Cancel.Width = width + 1;
+					break;
+			}
+
+			bu_Cancel.Top =
+			bu_Okay  .Top =
+			bu_Retry .Top = ClientSize.Height
+						  - bu_Cancel .Height - bu_Cancel.Margin.Bottom;
 		}
 
 		/// <summary>
@@ -220,18 +289,41 @@ namespace DSShared
 		/// <param name="e"></param>
 		private void OnPaintPanel(object sender, PaintEventArgs e)
 		{
-			e.Graphics.DrawLine(Pens.Black, 0,0, 0, pnl_Copyable.Height - 1);
-			e.Graphics.DrawLine(Pens.Black, 1,0, pnl_Copyable.Width - 1, 0);
+			e.Graphics.DrawLine(Pens.Black, 0,0, 0, pa_Copyable.Height - 1);
+			e.Graphics.DrawLine(Pens.Black, 1,0, pa_Copyable.Width - 1, 0);
+
+			// test
+//			e.Graphics.DrawLine(Pens.Black, 0, pa_Copyable.Height - 1, pa_Copyable.Width - 1, pa_Copyable.Height - 1);
 		}
 
 		/// <summary>
-		/// Closes the dialog.
+		/// Closes this dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCancelClick(object sender, EventArgs e)
+		{
+			Close();
+		}
+
+		/// <summary>
+		/// Sets DialogResult to OK and closes this dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnOkayClick(object sender, EventArgs e)
 		{
-			Close();
+			DialogResult = DialogResult.OK;
+		}
+
+		/// <summary>
+		/// Sets DialogResult to Yes and closes this dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnRetryClick(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.Retry;
 		}
 		#endregion Events
 
@@ -248,17 +340,17 @@ namespace DSShared
 		/// <returns>text split into lines of maximum width</returns>
 		public static string SplitString(string text, int width = 60)
 		{
-			string[] words = text.Split(new[]{' '}, StringSplitOptions.RemoveEmptyEntries);
-			IList<string> list = new List<string>(words);
+			string[] array = text.Split(new[]{' '}, StringSplitOptions.RemoveEmptyEntries);
+			IList<string> words = new List<string>(array);
 
 			var sb = new StringBuilder();
 
 			int tally = 0;
 
 			string word;
-			for (int i = 0; i != list.Count; ++i)
+			for (int i = 0; i != words.Count; ++i)
 			{
-				word = list[i];
+				word = words[i];
 
 				if (i == 0)
 				{
@@ -283,9 +375,11 @@ namespace DSShared
 
 
 		#region Designer
-		private RichTextBox rtb_Copyable;
-		private Panel pnl_Copyable;
-		private Button btn_Okay;
+		private Panel pa_Copyable;
+		private RichTextBox rt_Copyable;
+		private Button bu_Cancel;
+		private Button bu_Okay;
+		private Button bu_Retry;
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -293,67 +387,98 @@ namespace DSShared
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.rtb_Copyable = new System.Windows.Forms.RichTextBox();
-			this.pnl_Copyable = new System.Windows.Forms.Panel();
-			this.btn_Okay = new System.Windows.Forms.Button();
-			this.pnl_Copyable.SuspendLayout();
+			this.pa_Copyable = new System.Windows.Forms.Panel();
+			this.rt_Copyable = new System.Windows.Forms.RichTextBox();
+			this.bu_Cancel = new System.Windows.Forms.Button();
+			this.bu_Okay = new System.Windows.Forms.Button();
+			this.bu_Retry = new System.Windows.Forms.Button();
+			this.pa_Copyable.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// rtb_Copyable
+			// pa_Copyable
 			// 
-			this.rtb_Copyable.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.rtb_Copyable.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rtb_Copyable.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.rtb_Copyable.HideSelection = false;
-			this.rtb_Copyable.Location = new System.Drawing.Point(18, 9);
-			this.rtb_Copyable.Margin = new System.Windows.Forms.Padding(0);
-			this.rtb_Copyable.Name = "rtb_Copyable";
-			this.rtb_Copyable.ReadOnly = true;
-			this.rtb_Copyable.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-			this.rtb_Copyable.Size = new System.Drawing.Size(376, 116);
-			this.rtb_Copyable.TabIndex = 0;
-			this.rtb_Copyable.Text = "";
-			this.rtb_Copyable.WordWrap = false;
+			this.pa_Copyable.Controls.Add(this.rt_Copyable);
+			this.pa_Copyable.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pa_Copyable.Location = new System.Drawing.Point(0, 0);
+			this.pa_Copyable.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_Copyable.Name = "pa_Copyable";
+			this.pa_Copyable.Padding = new System.Windows.Forms.Padding(18, 9, 0, 5);
+			this.pa_Copyable.Size = new System.Drawing.Size(394, 130);
+			this.pa_Copyable.TabIndex = 1;
+			this.pa_Copyable.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintPanel);
 			// 
-			// pnl_Copyable
+			// rt_Copyable
 			// 
-			this.pnl_Copyable.Controls.Add(this.rtb_Copyable);
-			this.pnl_Copyable.Dock = System.Windows.Forms.DockStyle.Top;
-			this.pnl_Copyable.Location = new System.Drawing.Point(0, 0);
-			this.pnl_Copyable.Margin = new System.Windows.Forms.Padding(0);
-			this.pnl_Copyable.Name = "pnl_Copyable";
-			this.pnl_Copyable.Padding = new System.Windows.Forms.Padding(18, 9, 0, 5);
-			this.pnl_Copyable.Size = new System.Drawing.Size(394, 130);
-			this.pnl_Copyable.TabIndex = 1;
-			this.pnl_Copyable.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintPanel);
+			this.rt_Copyable.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.rt_Copyable.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rt_Copyable.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.rt_Copyable.HideSelection = false;
+			this.rt_Copyable.Location = new System.Drawing.Point(18, 9);
+			this.rt_Copyable.Margin = new System.Windows.Forms.Padding(0);
+			this.rt_Copyable.Name = "rt_Copyable";
+			this.rt_Copyable.ReadOnly = true;
+			this.rt_Copyable.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+			this.rt_Copyable.Size = new System.Drawing.Size(376, 116);
+			this.rt_Copyable.TabIndex = 0;
+			this.rt_Copyable.Text = "";
+			this.rt_Copyable.WordWrap = false;
 			// 
-			// btn_Okay
+			// bu_Cancel
 			// 
-			this.btn_Okay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btn_Okay.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btn_Okay.Location = new System.Drawing.Point(296, 150);
-			this.btn_Okay.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-			this.btn_Okay.Name = "btn_Okay";
-			this.btn_Okay.Size = new System.Drawing.Size(95, 25);
-			this.btn_Okay.TabIndex = 2;
-			this.btn_Okay.Text = "ok";
-			this.btn_Okay.UseVisualStyleBackColor = true;
-			this.btn_Okay.Click += new System.EventHandler(this.OnOkayClick);
+			this.bu_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.bu_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.bu_Cancel.Location = new System.Drawing.Point(296, 150);
+			this.bu_Cancel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 2);
+			this.bu_Cancel.Name = "bu_Cancel";
+			this.bu_Cancel.Size = new System.Drawing.Size(95, 25);
+			this.bu_Cancel.TabIndex = 4;
+			this.bu_Cancel.Text = "cancel";
+			this.bu_Cancel.UseVisualStyleBackColor = true;
+			this.bu_Cancel.Click += new System.EventHandler(this.OnCancelClick);
+			// 
+			// bu_Okay
+			// 
+			this.bu_Okay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.bu_Okay.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.bu_Okay.Location = new System.Drawing.Point(196, 150);
+			this.bu_Okay.Margin = new System.Windows.Forms.Padding(0);
+			this.bu_Okay.Name = "bu_Okay";
+			this.bu_Okay.Size = new System.Drawing.Size(95, 25);
+			this.bu_Okay.TabIndex = 3;
+			this.bu_Okay.Text = "ok";
+			this.bu_Okay.UseVisualStyleBackColor = true;
+			this.bu_Okay.Visible = false;
+			this.bu_Okay.Click += new System.EventHandler(this.OnOkayClick);
+			// 
+			// bu_Retry
+			// 
+			this.bu_Retry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.bu_Retry.DialogResult = System.Windows.Forms.DialogResult.Yes;
+			this.bu_Retry.Location = new System.Drawing.Point(97, 150);
+			this.bu_Retry.Margin = new System.Windows.Forms.Padding(0);
+			this.bu_Retry.Name = "bu_Retry";
+			this.bu_Retry.Size = new System.Drawing.Size(95, 25);
+			this.bu_Retry.TabIndex = 2;
+			this.bu_Retry.Text = "retry";
+			this.bu_Retry.UseVisualStyleBackColor = true;
+			this.bu_Retry.Visible = false;
+			this.bu_Retry.Click += new System.EventHandler(this.OnRetryClick);
 			// 
 			// Infobox
 			// 
-			this.AcceptButton = this.btn_Okay;
-			this.CancelButton = this.btn_Okay;
+			this.CancelButton = this.bu_Cancel;
 			this.ClientSize = new System.Drawing.Size(394, 176);
-			this.Controls.Add(this.pnl_Copyable);
-			this.Controls.Add(this.btn_Okay);
+			this.Controls.Add(this.pa_Copyable);
+			this.Controls.Add(this.bu_Cancel);
+			this.Controls.Add(this.bu_Okay);
+			this.Controls.Add(this.bu_Retry);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "Infobox";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.pnl_Copyable.ResumeLayout(false);
+			this.pa_Copyable.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
