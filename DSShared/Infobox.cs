@@ -283,9 +283,6 @@ namespace DSShared
 		{
 			e.Graphics.DrawLine(Pens.Black, 0,0, 0, pa_Copyable.Height - 1);
 			e.Graphics.DrawLine(Pens.Black, 1,0, pa_Copyable.Width - 1, 0);
-
-			// test
-//			e.Graphics.DrawLine(Pens.Black, 0, pa_Copyable.Height - 1, pa_Copyable.Width - 1, pa_Copyable.Height - 1);
 		}
 
 		/// <summary>
@@ -322,14 +319,14 @@ namespace DSShared
 
 		#region Methods (static)
 		/// <summary>
-		/// Takes an input-string and splices it with newlines every length in
+		/// Takes an input-string and splices it with newlines every width in
 		/// chars.
 		/// </summary>
-		/// <param name="text">input only a trimmed sentence with no newlines
-		/// and keep words shorter than width</param>
-		/// <param name="width">desired width in chars - lines of output will
+		/// <param name="text">input only a single trimmed sentence with no
+		/// newlines and keep words shorter than width</param>
+		/// <param name="width">desired width in chars - lines of output shall
 		/// not exceed width</param>
-		/// <returns>text split into lines of maximum width</returns>
+		/// <returns>text split into lines no longer than width</returns>
 		public static string SplitString(string text, int width = 60)
 		{
 			string[] array = text.Split(new[]{' '}, StringSplitOptions.RemoveEmptyEntries);
