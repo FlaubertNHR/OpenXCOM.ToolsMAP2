@@ -492,7 +492,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void OnSearchKeyPress(object sender, KeyPressEventArgs e)
+		private void OnSearchKeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (e.KeyChar == (char)Keys.Enter
 				&& Control.ModifierKeys == Keys.None)
