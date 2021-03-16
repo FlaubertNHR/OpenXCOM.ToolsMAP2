@@ -279,15 +279,21 @@ namespace MapView.Forms.MainView
 				tss4      = new ToolStripSeparator();
 
 				tertiaryControls.Add(tss1);
+
 				tertiaryControls.Add(tsbDown);
 				tertiaryControls.Add(tsbUp);
+
 				tertiaryControls.Add(tss2);
+
 				tertiaryControls.Add(tsbCut);
 				tertiaryControls.Add(tsbCopy);
 				tertiaryControls.Add(tsbPaste);
 				tertiaryControls.Add(tsbDelete);
+
 				tertiaryControls.Add(tss3);
+
 				tertiaryControls.Add(tsbFill);
+
 				tertiaryControls.Add(tss4);
 			}
 			else
@@ -507,7 +513,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnClearHighlightClick(object sender, EventArgs e)
+		private void OnClearHighlightClick(object sender, EventArgs e)
 		{
 			MainViewF.that.ClearSearched();
 			_tstbSearch.Focus();
