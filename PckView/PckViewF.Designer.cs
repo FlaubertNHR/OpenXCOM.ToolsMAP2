@@ -8,7 +8,7 @@ namespace PckView
 	partial class PckViewF
 	{
 		#region Designer
-		private IContainer components = null;
+		private IContainer components;
 
 		private MainMenu mmMainMenu;
 

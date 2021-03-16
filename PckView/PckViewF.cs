@@ -367,21 +367,21 @@ namespace PckView
 			_miExport     .ShortcutKeyDisplayString = "p";
 
 
-			var contextmenu = new ContextMenuStrip();
+			var context = new ContextMenuStrip();
 
-			contextmenu.Items.Add(_miEdit);
-			contextmenu.Items.Add(new ToolStripSeparator());
-			contextmenu.Items.Add(_miAdd);
-			contextmenu.Items.Add(_miInsertBefor);
-			contextmenu.Items.Add(_miInsertAfter);
-			contextmenu.Items.Add(new ToolStripSeparator());
-			contextmenu.Items.Add(_miReplace);
-			contextmenu.Items.Add(_miMoveL);
-			contextmenu.Items.Add(_miMoveR);
-			contextmenu.Items.Add(new ToolStripSeparator());
-			contextmenu.Items.Add(_miDelete);
-			contextmenu.Items.Add(new ToolStripSeparator());
-			contextmenu.Items.Add(_miExport);
+			context.Items.Add(_miEdit);
+			context.Items.Add(new ToolStripSeparator());
+			context.Items.Add(_miAdd);
+			context.Items.Add(_miInsertBefor);
+			context.Items.Add(_miInsertAfter);
+			context.Items.Add(new ToolStripSeparator());
+			context.Items.Add(_miReplace);
+			context.Items.Add(_miMoveL);
+			context.Items.Add(_miMoveR);
+			context.Items.Add(new ToolStripSeparator());
+			context.Items.Add(_miDelete);
+			context.Items.Add(new ToolStripSeparator());
+			context.Items.Add(_miExport);
 
 			_miAdd        .Enabled =
 			_miInsertBefor.Enabled =
@@ -392,7 +392,7 @@ namespace PckView
 			_miDelete     .Enabled =
 			_miExport     .Enabled = false;
 
-			return contextmenu;
+			return context;
 		}
 
 		/// <summary>
@@ -427,10 +427,10 @@ namespace PckView
 			for (int i = 0; i != pals.Count; ++i)
 			{
 				pal = pals[i];
-				it = new MenuItem(pal.Label, OnPaletteClick);
-				it.Tag = pal;
-				miPaletteMenu.MenuItems.Add(it);
-				_itPalettes[pal] = it;
+				it = new MenuItem(pal.Label, OnPaletteClick);	// I believe these will be disposed
+				it.Tag = pal;									// when the Form gets closed since
+				miPaletteMenu.MenuItems.Add(it);				// they are owned by 'miPaletteMenu'
+				_itPalettes[pal] = it;							// which is owned/disposed by the Form.
 
 				switch (i)
 				{
