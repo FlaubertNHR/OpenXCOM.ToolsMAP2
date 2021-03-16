@@ -36,7 +36,17 @@ namespace MapView.Forms.MainView
 
 
 		#region Methods (static)
-		internal static void Initialize()
+		/// <summary>
+		/// Creates the observers (tertiary viewers) as well as
+		/// toolstrip-controls for <see cref="MainViewF"/>, <see cref="Observers.TopView"/>,
+		/// and <see cref="Observers.TopRouteViewForm"/>(Top). Also synchronizes
+		/// Optionables for TopRouteView(Top) and TopRouteView(Route) to
+		/// <see cref="Observers.TopView.Optionables">TopView</see> and
+		/// <see cref="Observers.RouteView.Optionables">RouteView</see>
+		/// respectively. Then loads default options for <see cref="Observers.TileView"/>,
+		/// <see cref="Observers.TopView"/>, and <see cref="Observers.RouteView"/>.
+		/// </summary>
+		internal static void CreateViewers()
 		{
 			TileView     = new TileViewForm();
 			TopView      = new TopViewForm();
@@ -63,28 +73,33 @@ namespace MapView.Forms.MainView
 			TopRouteView.ControlTop  .Options = ObserverManager.TopView  .Control.Options;
 			TopRouteView.ControlRoute.Options = ObserverManager.RouteView.Control.Options;
 
-			InitializeObserver(RegistryInfo.TileView,  TileView);
-			InitializeObserver(RegistryInfo.TopView,   TopView);
-			InitializeObserver(RegistryInfo.RouteView, RouteView);
+			LoadDefaultOptions(RegistryInfo.TileView,  TileView);
+			LoadDefaultOptions(RegistryInfo.TopView,   TopView);
+			LoadDefaultOptions(RegistryInfo.RouteView, RouteView);
 
 			_viewers.Add(TopRouteView);
 		}
 
 		/// <summary>
-		/// Sets a viewer as an Observer.
-		/// @note 'TileViewForm', 'TopViewForm', 'RouteViewForm' only.
+		/// Sets an observer as a viewer and loads its default options.
 		/// </summary>
 		/// <param name="key"></param>
 		/// <param name="f"></param>
-		private static void InitializeObserver(string key, Form f)
+		/// <remarks><see cref="TileViewForm"/>, <see cref="TopViewForm"/>,
+		/// <see cref="RouteViewForm"/> only.</remarks>
+		private static void LoadDefaultOptions(string key, IMapObserverProvider f)
 		{
-			_viewers.Add(f);
+			_viewers.Add(f as Form);
 
-			var control = (f as IMapObserverProvider).ObserverControl; // ie. TileView, TopView, RouteView.
+			var control = f.ObserverControl; // ie. TileView, TopView, RouteView.
 			control.LoadControlDefaultOptions();
 			OptionsManager.setOptionsType(key, control.Options);
 		}
 
+		/// <summary>
+		/// Sets or resets the MapFile for each observer.
+		/// </summary>
+		/// <param name="file"></param>
 		internal static void SetObservers(MapFile file)
 		{
 			foreach (var f in _observers)
@@ -93,6 +108,14 @@ namespace MapView.Forms.MainView
 			MainViewOverlay.that.Refresh();
 		}
 
+		/// <summary>
+		/// Subscribes <see cref="IMapObserver.OnLocationSelectedObserver"/> and
+		/// <see cref="IMapObserver.OnLevelSelectedObserver"/> events to a
+		/// specified MapFile ( TODO: isn't that redundant ) for an observer -
+		/// incl/ the panels in TopView.
+		/// </summary>
+		/// <param name="file"></param>
+		/// <param name="observer"></param>
 		private static void SetObserver(MapFile file, IMapObserver observer)
 		{
 			if (observer.MapFile != null)

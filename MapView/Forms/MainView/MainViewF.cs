@@ -349,7 +349,7 @@ namespace MapView
 			LogFile.WriteLine("Quadrant strings punked.");
 
 
-			ObserverManager.Initialize(); // adds each subsidiary viewer's options and Options-type etc.
+			ObserverManager.CreateViewers(); // adds each subsidiary viewer's options and Options-type etc.
 			LogFile.WriteLine("ObserverManager initialized.");
 
 			ObserverManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
@@ -940,6 +940,8 @@ namespace MapView
 
 			if (RouteView.RoutesInfo != null)
 				RouteView.RoutesInfo.Close();	// close RouteView's SpawnInfo dialog
+
+			ObserverManager.ToolFactory.Dispose();
 
 			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 

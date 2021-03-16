@@ -10,6 +10,7 @@ using XCom;
 namespace MapView.Forms.MainView
 {
 	internal sealed class ToolstripFactory
+		: IDisposable
 	{
 		#region Fields
 		private readonly MainViewOverlay MainViewOverlay;
@@ -52,6 +53,34 @@ namespace MapView.Forms.MainView
 			MainViewOverlay = overlay;
 		}
 		#endregion cTor
+
+
+		#region Methods (IDisposable)
+		/// <summary>
+		/// Functionally this isn't necessary since MainView's toolstrip
+		/// controls last the lifetime of the app. That is, their memory
+		/// allocations get reclaimed by the OS when the app closes.
+		/// </summary>
+		public void Dispose()
+		{
+			_tstbSearch    .Dispose();
+			_tsbSearchClear.Dispose();
+
+			_tsbScale      .Dispose();
+			_tsbScaleOut   .Dispose();
+			_tsbScaleIn    .Dispose();
+
+			_tsbDown       .Dispose();
+			_tsbUp         .Dispose();
+
+			_tsbCut        .Dispose();
+			_tsbCopy       .Dispose();
+			_tsbPaste      .Dispose();
+			_tsbDelete     .Dispose();
+
+			_tsbFill       .Dispose();
+		}
+		#endregion Methods (IDisposable)
 
 
 		#region Methods
