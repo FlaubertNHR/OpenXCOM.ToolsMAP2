@@ -13,7 +13,7 @@ namespace MapView.Forms.MainView
 		: IDisposable
 	{
 		#region Fields
-		private readonly MainViewOverlay MainViewOverlay;
+		private readonly List<IDisposable> tertiaryControls = new List<IDisposable>();
 
 		private readonly List<ToolStripButton> _editers = new List<ToolStripButton>(); // all edit-buttons except the pasters
 		private readonly List<ToolStripButton> _pasters = new List<ToolStripButton>();
@@ -27,58 +27,79 @@ namespace MapView.Forms.MainView
 		private readonly ToolStripTextBox _tstbSearch     = new ToolStripTextBox();
 		private readonly ToolStripButton  _tsbSearchClear = new ToolStripButton();
 
+		private readonly ToolStripSeparator _tss0         = new ToolStripSeparator();
+
 		private readonly ToolStripButton _tsbScale        = new ToolStripButton();
 		private readonly ToolStripButton _tsbScaleOut     = new ToolStripButton();
 		private readonly ToolStripButton _tsbScaleIn      = new ToolStripButton();
 
+		private readonly ToolStripSeparator _tss1         = new ToolStripSeparator();
+
 		private readonly ToolStripButton _tsbDown         = new ToolStripButton();
 		private readonly ToolStripButton _tsbUp           = new ToolStripButton();
+
+		private readonly ToolStripSeparator _tss2         = new ToolStripSeparator();
 
 		private readonly ToolStripButton _tsbCut          = new ToolStripButton();
 		private readonly ToolStripButton _tsbCopy         = new ToolStripButton();
 		private readonly ToolStripButton _tsbPaste        = new ToolStripButton();
 		private readonly ToolStripButton _tsbDelete       = new ToolStripButton();
 
+		private readonly ToolStripSeparator _tss3         = new ToolStripSeparator();
+
 		private readonly ToolStripButton _tsbFill         = new ToolStripButton();
+
+		private readonly ToolStripSeparator _tss4         = new ToolStripSeparator();
 		#endregion Fields
-
-
-		#region cTor
-		/// <summary>
-		/// cTor.
-		/// </summary>
-		/// <param name="overlay"></param>
-		internal ToolstripFactory(MainViewOverlay overlay)
-		{
-			MainViewOverlay = overlay;
-		}
-		#endregion cTor
 
 
 		#region Methods (IDisposable)
 		/// <summary>
-		/// Functionally this isn't necessary since MainView's toolstrip
-		/// controls last the lifetime of the app. That is, their memory
-		/// allocations get reclaimed by the OS when the app closes.
+		/// Disposes toolstrip controls in MainView.
 		/// </summary>
+		/// <remarks>Functionally this isn't necessary since MainView's
+		/// toolstrip controls last the lifetime of the app. That is, their
+		/// memory allocations get reclaimed by the OS when the app closes.</remarks>
 		public void Dispose()
 		{
 			_tstbSearch    .Dispose();
 			_tsbSearchClear.Dispose();
 
+			_tss0          .Dispose();
+
 			_tsbScale      .Dispose();
 			_tsbScaleOut   .Dispose();
 			_tsbScaleIn    .Dispose();
 
+			_tss1          .Dispose();
+
 			_tsbDown       .Dispose();
 			_tsbUp         .Dispose();
+
+			_tss2          .Dispose();
 
 			_tsbCut        .Dispose();
 			_tsbCopy       .Dispose();
 			_tsbPaste      .Dispose();
 			_tsbDelete     .Dispose();
 
+			_tss3          .Dispose();
+
 			_tsbFill       .Dispose();
+
+			_tss4          .Dispose();
+		}
+
+		/// <summary>
+		/// Disposes toolstrip controls in TopView and TopRouteView(Top).
+		/// </summary>
+		/// <remarks>Functionally this isn't necessary since all toolstrip
+		/// controls last the lifetime of the app. That is, their memory
+		/// allocations get reclaimed by the OS when the app closes.</remarks>
+		internal void DisposeTertiaryControls()
+		{
+			for (int i = tertiaryControls.Count - 1; i != -1; --i)
+				tertiaryControls[i].Dispose();
 		}
 		#endregion Methods (IDisposable)
 
@@ -86,17 +107,13 @@ namespace MapView.Forms.MainView
 		#region Methods
 		/// <summary>
 		/// Adds a textfield for search to the specified toolstrip.
-		/// NOTE: Appears only in MainView.
 		/// </summary>
 		/// <param name="toolStrip"></param>
+		/// <remarks>Appears only in MainView.</remarks>
 		internal void CreateSearchTools(ToolStrip toolStrip)
 		{
-			var tsItems = new ToolStripItem[]
-			{
-				_tstbSearch,
-				_tsbSearchClear
-			};
-			toolStrip.Items.AddRange(tsItems);
+			toolStrip.Items.Add(_tstbSearch);
+			toolStrip.Items.Add(_tsbSearchClear);
 
 			// Search textfield
 			_tstbSearch.Name             = "tstbSearch";
@@ -136,14 +153,10 @@ namespace MapView.Forms.MainView
 		/// <param name="toolStrip"></param>
 		internal void CreateScaleTools(ToolStrip toolStrip)
 		{
-			var tsItems = new ToolStripItem[]
-			{
-				new ToolStripSeparator(),
-				_tsbScale,
-				_tsbScaleOut,
-				_tsbScaleIn
-			};
-			toolStrip.Items.AddRange(tsItems);
+			toolStrip.Items.Add(_tss0);
+			toolStrip.Items.Add(_tsbScale);
+			toolStrip.Items.Add(_tsbScaleOut);
+			toolStrip.Items.Add(_tsbScaleIn);
 
 			// AutoZoom btn
 			_tsbScale.Name            = "tsbScale";
@@ -227,57 +240,96 @@ namespace MapView.Forms.MainView
 				ToolStrip toolStrip,
 				bool tertiary = false)
 		{
+			ToolStripSeparator tss1;
+
 			ToolStripButton tsbDown;	// NOTE: Down/Up are not really editor-objects ...
 			ToolStripButton tsbUp;		// but they appear in TopView and TopRouteView(Top)
 										// as well as MainView, with the editor-objects.
+			ToolStripSeparator tss2;
+
 			ToolStripButton tsbCut;
 			ToolStripButton tsbCopy;
 			ToolStripButton tsbPaste;
 			ToolStripButton tsbDelete;
 
+			ToolStripSeparator tss3;
+
 			ToolStripButton tsbFill;
+
+			ToolStripSeparator tss4;
 
 			if (tertiary)
 			{
+				tss1      = new ToolStripSeparator();
+
 				tsbDown   = new ToolStripButton();
 				tsbUp     = new ToolStripButton();
+
+				tss2      = new ToolStripSeparator();
 
 				tsbCut    = new ToolStripButton();
 				tsbCopy   = new ToolStripButton();
 				tsbPaste  = new ToolStripButton();
 				tsbDelete = new ToolStripButton();
 
+				tss3      = new ToolStripSeparator();
+
 				tsbFill   = new ToolStripButton();
+
+				tss4      = new ToolStripSeparator();
+
+				tertiaryControls.Add(tss1);
+				tertiaryControls.Add(tsbDown);
+				tertiaryControls.Add(tsbUp);
+				tertiaryControls.Add(tss2);
+				tertiaryControls.Add(tsbCut);
+				tertiaryControls.Add(tsbCopy);
+				tertiaryControls.Add(tsbPaste);
+				tertiaryControls.Add(tsbDelete);
+				tertiaryControls.Add(tss3);
+				tertiaryControls.Add(tsbFill);
+				tertiaryControls.Add(tss4);
 			}
 			else
 			{
+				tss1      = _tss1;
+
 				tsbDown   = _tsbDown;
 				tsbUp     = _tsbUp;
+
+				tss2      = _tss2;
 
 				tsbCut    = _tsbCut;
 				tsbCopy   = _tsbCopy;
 				tsbPaste  = _tsbPaste;
 				tsbDelete = _tsbDelete;
 
+				tss3      = _tss3;
+
 				tsbFill   = _tsbFill;
+
+				tss4      = _tss4;
 			}
 
 			var tsItems = new ToolStripItem[]
 			{
-				new ToolStripSeparator(), // NOTE: c#/.NET cant figure out how to use 1 separator 4 times.
+				tss1, // NOTE: c#/.NET cant figure out how to use 1 separator 4 times.
+
 				tsbDown,
 				tsbUp,
 
-				new ToolStripSeparator(),
+				tss2,
+
 				tsbCut,
 				tsbCopy,
 				tsbPaste,
 				tsbDelete,
 
-				new ToolStripSeparator(),
+				tss3,
+
 				tsbFill,
 
-				new ToolStripSeparator()
+				tss4
 			};
 			toolStrip.Items.AddRange(tsItems);
 
@@ -306,7 +358,7 @@ namespace MapView.Forms.MainView
 			tsbCut.ToolTipText     = "cut";
 			tsbCut.DisplayStyle    = ToolStripItemDisplayStyle.Image;
 			tsbCut.Image           = Resources.cut;
-			tsbCut.Click          += MainViewOverlay.OnCut;
+			tsbCut.Click          += MainViewOverlay.that.OnCut;
 			tsbCut.Enabled         = false;
 //			tsbCut.Click          += (sender, e) => // -> example of ... lambda usage
 //									{
@@ -321,7 +373,7 @@ namespace MapView.Forms.MainView
 			tsbCopy.ToolTipText    = "copy";
 			tsbCopy.DisplayStyle   = ToolStripItemDisplayStyle.Image;
 			tsbCopy.Image          = Resources.copy;
-			tsbCopy.Click         += MainViewOverlay.OnCopy;
+			tsbCopy.Click         += MainViewOverlay.that.OnCopy;
 			tsbCopy.Enabled        = false;
 //			tsbCopy.Click         += (sender, e) => // -> example of ... lambda usage
 //									{
@@ -336,7 +388,7 @@ namespace MapView.Forms.MainView
 			tsbPaste.ToolTipText   = "paste";
 			tsbPaste.DisplayStyle  = ToolStripItemDisplayStyle.Image;
 			tsbPaste.Image         = Resources.paste;
-			tsbPaste.Click        += MainViewOverlay.OnPaste;
+			tsbPaste.Click        += MainViewOverlay.that.OnPaste;
 			tsbPaste.Enabled       = false;
 
 			_pasters.Add(tsbPaste);
@@ -346,7 +398,7 @@ namespace MapView.Forms.MainView
 			tsbDelete.ToolTipText  = "delete";
 			tsbDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			tsbDelete.Image        = Resources.delete;
-			tsbDelete.Click       += MainViewOverlay.OnDelete;
+			tsbDelete.Click       += MainViewOverlay.that.OnDelete;
 			tsbDelete.Enabled      = false;
 
 			_editers.Add(tsbDelete);
@@ -356,7 +408,7 @@ namespace MapView.Forms.MainView
 			tsbFill.ToolTipText    = "fill";
 			tsbFill.DisplayStyle   = ToolStripItemDisplayStyle.Image;
 			tsbFill.Image          = Resources.fill;
-			tsbFill.Click         += MainViewOverlay.OnFill;
+			tsbFill.Click         += MainViewOverlay.that.OnFill;
 			tsbFill.Enabled        = false;
 
 			_editers.Add(tsbFill);
@@ -409,7 +461,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnDownClick(object sender, EventArgs e)
 		{
-			var file = MainViewOverlay.MapFile;
+			MapFile file = MainViewOverlay.that.MapFile;
 			if (file != null)
 			{
 				file.ChangeLevel(MapFile.LEVEL_Dn);
@@ -424,7 +476,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnUpClick(object sender, EventArgs e)
 		{
-			var file = MainViewOverlay.MapFile;
+			MapFile file = MainViewOverlay.that.MapFile;
 			if (file != null)
 			{
 				file.ChangeLevel(MapFile.LEVEL_Up);

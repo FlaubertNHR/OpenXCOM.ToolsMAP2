@@ -327,7 +327,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Creates the tool-objects in the toolstrip.
 		/// </summary>
-		internal void InitializeToolstrip()
+		internal void CreateToolstripControls()
 		{
 			ObserverManager.ToolFactory.CreateEditTools(tsTools, true);
 		}

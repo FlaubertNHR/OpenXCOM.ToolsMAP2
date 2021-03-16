@@ -942,6 +942,7 @@ namespace MapView
 				RouteView.RoutesInfo.Close();	// close RouteView's SpawnInfo dialog
 
 			ObserverManager.ToolFactory.Dispose();
+			ObserverManager.ToolFactory.DisposeTertiaryControls();
 
 			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
