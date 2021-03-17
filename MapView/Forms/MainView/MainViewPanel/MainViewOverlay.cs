@@ -721,8 +721,8 @@ namespace MapView.Forms.MainView
 			else
 				Invalidate();
 
-			ObserverManager.InvalidateTopPanels();
-			ObserverManager.InvalidateQuadrantPanels();
+			ObserverManager.InvalidateTopControls();
+			ObserverManager.InvalidateQuadrantControls();
 			RouteView.InvalidatePanels();
 
 			if (MainViewF.ScanG != null)

@@ -466,10 +466,10 @@ namespace MapView.Forms.Observers
 				case str_GridLine10Width: GridLine10Width =   (int)val; ChangePenWidth(key, val); break;
 			}
 
-			ObserverManager.InvalidateTopPanels();
+			ObserverManager.InvalidateTopControls();
 
 			if (invalidateQuads)
-				ObserverManager.InvalidateQuadrantPanels();
+				ObserverManager.InvalidateQuadrantControls();
 		}
 
 		/// <summary>
@@ -483,7 +483,7 @@ namespace MapView.Forms.Observers
 			SelectedQuadColor =
 			QuadrantDrawService.Brush.Color = (Color)val;
 
-			ObserverManager.InvalidateQuadrantPanels();
+			ObserverManager.InvalidateQuadrantControls();
 		}
 
 		/// <summary>

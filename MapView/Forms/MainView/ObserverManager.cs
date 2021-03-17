@@ -156,7 +156,7 @@ namespace MapView.Forms.MainView
 		/// Invalidates the <see cref="TopControl">TopControls</see> in TopView
 		/// and TopRouteView(Top).
 		/// </summary>
-		internal static void InvalidateTopPanels()
+		internal static void InvalidateTopControls()
 		{
 			TopView     .Control   .TopControl.Invalidate();
 			TopRouteView.ControlTop.TopControl.Invalidate();
@@ -166,7 +166,7 @@ namespace MapView.Forms.MainView
 		/// Invalidates the <see cref="QuadrantControl">QuadrantControls</see>
 		/// in TopView and TopRouteView(Top).
 		/// </summary>
-		internal static void InvalidateQuadrantPanels()
+		internal static void InvalidateQuadrantControls()
 		{
 			TopView     .Control   .QuadrantControl.Invalidate();
 			TopRouteView.ControlTop.QuadrantControl.Invalidate();

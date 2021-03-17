@@ -218,8 +218,8 @@ namespace MapView.Forms.Observers
 													(VisibleQuadrants & CONTENT) != 0);
 			MainViewOverlay.that.Invalidate();
 
-			ObserverManager.InvalidateTopPanels();
-			ObserverManager.InvalidateQuadrantPanels();
+			ObserverManager.InvalidateTopControls();
+			ObserverManager.InvalidateQuadrantControls();
 		}
 
 

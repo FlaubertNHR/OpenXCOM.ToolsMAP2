@@ -1061,8 +1061,8 @@ namespace MapView.Forms.MainView
 			ObserverManager.RouteView   .Control     .PrintSelectedInfo();
 			ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
 
-			ObserverManager.InvalidateQuadrantPanels();	// NOTE: Trying to print only the string w/ QuadrantDrawService
-														// borks out w/ an obscure "Parameter is invalid" exception.
+			ObserverManager.InvalidateQuadrantControls();	// NOTE: Trying to print only the string w/ QuadrantDrawService
+															// borks out w/ an obscure "Parameter is invalid" exception.
 
 			// close the PartslotTest dialog (its displayed data has changed)
 			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed)
@@ -1091,12 +1091,13 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Invalidates panels in secondary viewers.
+		/// Invalidates the visible panel in <see cref="TileView"/> and both
+		/// <see cref="QuadrantControl">QuadrantControls</see>.
 		/// </summary>
 		private void InvalidateSecondaryPanels()
 		{
 			ObserverManager.TileView.Control.GetVisiblePanel().Invalidate();
-			ObserverManager.InvalidateQuadrantPanels();
+			ObserverManager.InvalidateQuadrantControls();
 		}
 		#endregion Events
 	}
