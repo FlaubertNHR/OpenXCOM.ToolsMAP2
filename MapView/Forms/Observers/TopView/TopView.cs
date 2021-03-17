@@ -24,10 +24,10 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// The TestPartslots dialog.
-		/// @note Be careful with this pointer because closing the dialog in the
-		/// dialog itself does *not* null this pointer. So check for both !null
-		/// and !IsDisposed if necessary.
 		/// </summary>
+		/// <remarks>Be careful with this pointer because closing the dialog in
+		/// the dialog itself does *not* null this pointer. So check for both
+		/// !null and !IsDisposed if necessary.</remarks>
 		internal static Infobox _finfobox;
 		#endregion Fields (static)
 
