@@ -13,17 +13,17 @@ namespace MapView.Forms.Observers
 			IObserverProvider
 	{
 		#region Fields
-		private RouteView _routeView;
+		private RouteView _route;
 		#endregion Fields
 
 
 		#region Properties
 		/// <summary>
-		/// Gets '_routeView' as a child of 'ObserverControl'.
+		/// Gets '_route' as a child of 'ObserverControl'.
 		/// </summary>
 		internal RouteView Control
 		{
-			get { return _routeView; }
+			get { return _route; }
 		}
 
 		/// <summary>
@@ -31,25 +31,22 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		public ObserverControl Observer
 		{
-			get { return _routeView; }
+			get { return _route; }
 		}
 		#endregion Properties
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
 		internal RouteViewForm()
 		{
 			InitializeComponent();
-			InitializeRouteView();
-		}
 
-		private void InitializeRouteView()
-		{
-			_routeView = new RouteView();
+			_route = new RouteView(); // 'Control'
 
 			Control.Name     = "RouteViewControl";
-			Control.Location = new Point(0, 0);
-			Control.Size     = new Size(632, 454);
 			Control.Dock     = DockStyle.Fill;
 			Control.TabIndex = 0;
 			Control.Tag      = "ROUTE";
@@ -60,6 +57,10 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (override)
+		/// <summary>
+		/// Sets up the link-connector when this form is shown.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnShown(EventArgs e)
 		{
 			Control.ActivateConnector();
