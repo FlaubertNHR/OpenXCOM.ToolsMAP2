@@ -241,6 +241,8 @@ namespace McdView
 				if (Spriteset != null)
 					Spriteset.Dispose();
 
+				PartsPanel.ContextMenuStrip.Dispose();
+
 				IalDeadpartChecked = cb_IalDeadpart.Checked;
 				IalAltrpartChecked = cb_IalAltrpart.Checked;
 				IalSpritesChecked  = cb_IalSprites .Checked;

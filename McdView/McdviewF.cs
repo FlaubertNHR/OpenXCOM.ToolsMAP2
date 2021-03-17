@@ -637,6 +637,8 @@ namespace McdView
 					if (Spriteset != null)
 						Spriteset.Dispose();
 
+					PartsPanel.ContextMenuStrip.Dispose();
+
 					if (!IsInvoked)
 						RegistryInfo.WriteRegistry();
 				}
