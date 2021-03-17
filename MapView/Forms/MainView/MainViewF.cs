@@ -3354,19 +3354,19 @@ namespace MapView
 		/// </summary>
 		private void ResetQuadrantPanel()
 		{
-			var quadrantpanel1 = ObserverManager.TopView     .Control   .QuadrantPanel;
-			var quadrantpanel2 = ObserverManager.TopRouteView.ControlTop.QuadrantPanel;
+			QuadrantPanel p1 = ObserverManager.TopView     .Control   .QuadrantPanel;
+			QuadrantPanel p2 = ObserverManager.TopRouteView.ControlTop.QuadrantPanel;
 
-			quadrantpanel1.Tile =
-			quadrantpanel2.Tile = null;
+			p1.Tile =
+			p2.Tile = null;
 
-			quadrantpanel1.SelectedLocation =
-			quadrantpanel2.SelectedLocation = null;
+			p1.SelectedLocation =
+			p2.SelectedLocation = null;
 
 			QuadrantDrawService.CurrentTilepart = ObserverManager.TileView.Control.SelectedTilepart;
 
-			quadrantpanel1.Invalidate();
-			quadrantpanel2.Invalidate();
+			p1.Invalidate();
+			p2.Invalidate();
 		}
 
 
