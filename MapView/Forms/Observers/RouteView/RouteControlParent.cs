@@ -10,19 +10,18 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The base class for <see cref="MapView.Forms.Observers.RoutePanel"/>.
+	/// The base class for <see cref="MapView.Forms.Observers.RouteControl"/>.
 	/// Generally handles mousey things and keyboard navigation.
 	/// </summary>
-	/// <remarks>This is not a Panel. It is a UserControl inside of a Panel.
-	/// Note that <see cref="MapView.Forms.Observers.RouteView"/> also handles
+	/// <remarks><see cref="MapView.Forms.Observers.RouteView"/> also handles
 	/// mouse events.</remarks>
-	internal class RoutePanelParent
+	internal class RouteControlParent
 		:
 			UserControl
 	{
 		#region Events
-		public event EventHandler<RoutePanelEventArgs> RoutePanelMouseDownEvent;
-		public event EventHandler<RoutePanelEventArgs> RoutePanelMouseUpEvent;
+		public event EventHandler<RouteControlEventArgs> RouteControlMouseDownEvent;
+		public event EventHandler<RouteControlEventArgs> RouteControlMouseUpEvent;
 		#endregion Events
 
 
@@ -58,7 +57,9 @@ namespace MapView.Forms.Observers
 
 		#region Properties (static)
 		/// <summary>
-		/// A node that is currently selected. Set its value via RouteView only.
+		/// A node that is currently selected. Set its value via
+		/// <see cref="RouteView.NodeSelected">RouteView.NodeSelected</see>
+		/// only.
 		/// </summary>
 		internal protected static RouteNode NodeSelected
 		{ get; set; }
@@ -113,9 +114,9 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiated only as the parent of RoutePanel.
+		/// cTor. Instantiated only as the parent of RouteControl.
 		/// </summary>
-		internal protected RoutePanelParent()
+		internal protected RouteControlParent()
 		{
 			var t1 = new Timer();			// because the mouse OnLeave event doesn't fire when the mouse
 			t1.Interval = Globals.PERIOD;	// moves over a different form before actually "leaving" this
@@ -128,7 +129,7 @@ namespace MapView.Forms.Observers
 		#region Events
 		/// <summary>
 		/// A ticker that checks if the mouse has left the building. See also
-		/// RouteView.OnRoutePanelMouseLeave().
+		/// RouteView.OnRouteControlMouseLeave().
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -155,7 +156,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Fires from (child)RoutePanel.
+		/// Fires from (child)RouteControl.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
@@ -191,11 +192,11 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Selects a tile on the mouse-down event.
-		/// IMPORTANT: Any changes that are done here regarding node-selection
-		/// should be reflected in RouteView.SelectNode() since that is an
-		/// alternate way to select a tile/node.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Any changes that are done here regarding node-selection
+		/// should be reflected in RouteView.SelectNode() since that is an
+		/// alternate way to select a tile/node.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			Select();
@@ -211,16 +212,16 @@ namespace MapView.Forms.Observers
 
 				MainViewOverlay.that.ProcessSelection(_loc, _loc);	// set selected location for other viewers.
 																	// NOTE: drag-selection is not allowed here.
-				var args = new RoutePanelEventArgs(
+				var args = new RouteControlEventArgs(
 												e.Button,
 												MapFile[_col, _row],
 												MapFile.Location);
-				RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+				RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 			}
 		}
 
 		/// <summary>
-		/// Calls RouteView.OnRoutePanelMouseUp().
+		/// Calls RouteView.OnRouteControlMouseUp().
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -231,11 +232,11 @@ namespace MapView.Forms.Observers
 												_col, _row,
 												MapFile.Level);
 
-				var args = new RoutePanelEventArgs(
+				var args = new RouteControlEventArgs(
 												e.Button,
 												MapFile[_col, _row],
 												MapFile.Location);
-				RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+				RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 			}
 		}
 
@@ -253,7 +254,7 @@ namespace MapView.Forms.Observers
 
 				// this fires panel refreshes only when the cursor moves to another tile
 				// The InfoOverlay goes sticky but the panel feels tighter.
-				base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()
+				base.OnMouseMove(e); // fire RouteView.OnRouteControlMouseMove()
 				return;
 			}
 
@@ -262,7 +263,7 @@ namespace MapView.Forms.Observers
 
 			// this fires panel refreshes whenever the mouse moves a single pixel
 			// The InfoOverlay moves freely.
-			base.OnMouseMove(e); // fire RouteView.OnRoutePanelMouseMove()
+			base.OnMouseMove(e); // fire RouteView.OnRouteControlMouseMove()
 		}
 		#endregion Events (override)
 
@@ -289,21 +290,21 @@ namespace MapView.Forms.Observers
 					var loc = new Point(0,0);
 					MainViewOverlay.that.ProcessSelection(loc,loc);
 
-					var args = new RoutePanelEventArgs(
+					var args = new RouteControlEventArgs(
 													MouseButtons.Left,
 													MapFile[0,0],
 													MapFile.Location);
-					RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+					RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 					invalidate = true;
 				}
 				else if (keyData == Keys.Enter)
 				{
-					var args = new RoutePanelEventArgs(
+					var args = new RouteControlEventArgs(
 													MouseButtons.Right,
 													MapFile[MapFile.Location.Col,
 															MapFile.Location.Row],
 													MapFile.Location);
-					RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+					RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 					invalidate = true;
 				}
 				else if ((keyData & Keys.Shift) == Keys.None)
@@ -339,11 +340,11 @@ namespace MapView.Forms.Observers
 							loc.X = c; loc.Y = r;
 							MainViewOverlay.that.ProcessSelection(loc,loc);
 
-							var args = new RoutePanelEventArgs(
+							var args = new RouteControlEventArgs(
 															MouseButtons.Left,
 															MapFile[c,r],
 															MapFile.Location);
-							RoutePanelMouseDownEvent(this, args); // fire RouteView.OnRoutePanelMouseDown()
+							RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 							invalidate = true;
 						}
 					}
@@ -393,11 +394,11 @@ namespace MapView.Forms.Observers
 
 							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire LocationSelected event
 
-							var args = new RoutePanelEventArgs(
+							var args = new RouteControlEventArgs(
 															MouseButtons.None,
 															MapFile[c,r],
 															MapFile.Location);
-							RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+							RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
 
 							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
@@ -419,12 +420,12 @@ namespace MapView.Forms.Observers
 															MapFile.Location.Row,
 															level);
 
-							var args = new RoutePanelEventArgs(
+							var args = new RouteControlEventArgs(
 															MouseButtons.None,
 															MapFile[MapFile.Location.Col,
 																	MapFile.Location.Row],
 															MapFile.Location);
-							RoutePanelMouseUpEvent(this, args); // fire RouteView.OnRoutePanelMouseUp()
+							RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
 
 							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
@@ -437,8 +438,8 @@ namespace MapView.Forms.Observers
 
 				if (invalidate)
 				{
-					ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-					ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+					ObserverManager.RouteView   .Control     .RouteControl.Invalidate();
+					ObserverManager.TopRouteView.ControlRoute.RouteControl.Invalidate();
 				}
 			}
 		}

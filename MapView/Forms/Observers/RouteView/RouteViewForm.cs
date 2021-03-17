@@ -92,7 +92,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (Control.RoutePanel.Focused)
+			if (Control.RouteControl.Focused)
 			{
 				switch (keyData)
 				{
@@ -104,7 +104,7 @@ namespace MapView.Forms.Observers
 					case Keys.Shift | Keys.Right:
 					case Keys.Shift | Keys.Up:
 					case Keys.Shift | Keys.Down:
-						Control.RoutePanel.Navigate(keyData);
+						Control.RouteControl.Navigate(keyData);
 						return true;
 				}
 			}
@@ -129,13 +129,13 @@ namespace MapView.Forms.Observers
 			{
 				case Keys.Escape:
 					e.SuppressKeyPress = true;
-					if (Control.RoutePanel.Focused)
+					if (Control.RouteControl.Focused)
 					{
 						RouteView.NodeSelected = null;
 						RouteView.Invalidator();
 					}
 					else
-						Control.RoutePanel.Focus();
+						Control.RouteControl.Focus();
 					break;
 
 				case Keys.Control | Keys.O:
@@ -159,10 +159,10 @@ namespace MapView.Forms.Observers
 				case Keys.Shift | Keys.PageUp:
 				case Keys.Shift | Keys.PageDown:
 				case Keys.Enter:
-					if (Control.RoutePanel.Focused)
+					if (Control.RouteControl.Focused)
 					{
 						e.SuppressKeyPress = true;
-						Control.RoutePanel.Navigate(e.KeyData);
+						Control.RouteControl.Navigate(e.KeyData);
 					}
 					break;
 

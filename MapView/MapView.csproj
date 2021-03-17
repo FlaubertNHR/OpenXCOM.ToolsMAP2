@@ -151,10 +151,10 @@
     <Compile Include="Forms\McdInfoF.Designer.cs">
       <DependentUpon>McdInfoF.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Observers\RouteView\RoutePanel.cs">
+    <Compile Include="Forms\Observers\RouteView\RouteControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Observers\RouteView\RoutePanelEventArgs.cs" />
+    <Compile Include="Forms\Observers\RouteView\RouteControlEventArgs.cs" />
     <Compile Include="Forms\Observers\RouteView\RouteViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,7 +220,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Forms\Observers\RouteView\RoutePanelParent.cs">
+    <Compile Include="Forms\Observers\RouteView\RouteControlParent.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Startup.cs" />

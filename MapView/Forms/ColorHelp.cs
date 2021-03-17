@@ -170,9 +170,9 @@ namespace MapView
 			Color color;
 
 			string key = RouteViewOptionables.str_WallColor;
-			if (RoutePanel.RoutePens.ContainsKey(key))
+			if (RouteControl.RoutePens.ContainsKey(key))
 			{
-				color = RoutePanel.RoutePens[key].Color;
+				color = RouteControl.RoutePens[key].Color;
 
 				label14.BackColor = color;
 				label15.BackColor = color;
@@ -182,9 +182,9 @@ namespace MapView
 			}
 
 			key = RouteViewOptionables.str_ContentColor;
-			if (RoutePanel.RouteBrushes.ContainsKey(key))
+			if (RouteControl.RouteBrushes.ContainsKey(key))
 			{
-				color = RoutePanel.RouteBrushes[key].Color;
+				color = RouteControl.RouteBrushes[key].Color;
 				label16.BackColor = color;
 				label16.ForeColor = GetTextColor(color);
 			}

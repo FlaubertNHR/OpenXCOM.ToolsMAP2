@@ -6,11 +6,10 @@ using XCom;
 
 namespace MapView.Forms.Observers
 {
-	#region Event args
 	/// <summary>
 	/// Event args for RouteView.
 	/// </summary>
-	internal sealed class RoutePanelEventArgs
+	internal sealed class RouteControlEventArgs
 		:
 			EventArgs
 	{
@@ -33,7 +32,7 @@ namespace MapView.Forms.Observers
 		/// <param name="button"></param>
 		/// <param name="tile"></param>
 		/// <param name="location"></param>
-		internal RoutePanelEventArgs(
+		internal RouteControlEventArgs(
 				MouseButtons button,
 				MapTile tile,
 				MapLocation location)
@@ -44,5 +43,4 @@ namespace MapView.Forms.Observers
 		}
 		#endregion cTor
 	}
-	#endregion Event args
 }

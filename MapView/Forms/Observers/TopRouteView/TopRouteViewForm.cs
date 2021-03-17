@@ -137,7 +137,7 @@ namespace MapView.Forms.Observers
 					break;
 
 				case TAB_ROT:
-					if (ControlRoute.RoutePanel.Focused)
+					if (ControlRoute.RouteControl.Focused)
 					{
 						switch (keyData)
 						{
@@ -149,7 +149,7 @@ namespace MapView.Forms.Observers
 							case Keys.Shift | Keys.Right:
 							case Keys.Shift | Keys.Up:
 							case Keys.Shift | Keys.Down:
-								ControlRoute.RoutePanel.Navigate(keyData);
+								ControlRoute.RouteControl.Navigate(keyData);
 								return true;
 						}
 					}
@@ -191,13 +191,13 @@ namespace MapView.Forms.Observers
 
 						case TAB_ROT:
 							e.SuppressKeyPress = true;
-							if (ControlRoute.RoutePanel.Focused)
+							if (ControlRoute.RouteControl.Focused)
 							{
 								RouteView.NodeSelected = null;
 								RouteView.Invalidator();
 							}
 							else
-								ControlRoute.RoutePanel.Focus();
+								ControlRoute.RouteControl.Focus();
 							break;
 					}
 					break;
@@ -246,10 +246,10 @@ namespace MapView.Forms.Observers
 							break;
 
 						case TAB_ROT:
-							if (ControlRoute.RoutePanel.Focused) // is Route
+							if (ControlRoute.RouteControl.Focused) // is Route
 							{
 								e.SuppressKeyPress = true;
-								ControlRoute.RoutePanel.Navigate(e.KeyData);
+								ControlRoute.RouteControl.Navigate(e.KeyData);
 							}
 							break;
 					}
@@ -258,10 +258,10 @@ namespace MapView.Forms.Observers
 				case Keys.Shift | Keys.Subtract:
 				case Keys.Shift | Keys.Add:
 				case Keys.Enter:
-					if (tabControl.SelectedIndex == TAB_ROT && ControlRoute.RoutePanel.Focused)
+					if (tabControl.SelectedIndex == TAB_ROT && ControlRoute.RouteControl.Focused)
 					{
 						e.SuppressKeyPress = true;
-						ControlRoute.RoutePanel.Navigate(e.KeyData);
+						ControlRoute.RouteControl.Navigate(e.KeyData);
 					}
 					break;
 

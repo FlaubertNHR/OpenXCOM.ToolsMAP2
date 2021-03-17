@@ -98,7 +98,7 @@ namespace MapView.Forms.Observers
 		#region Methods
 /*		/// <summary>
 		/// Simulates a mousewheel event for keyboard navigation by
-		/// RoutePanelParent.Navigate().
+		/// RouteControlParent.Navigate().
 		/// </summary>
 		/// <param name="e"></param>
 		internal void doMousewheel(MouseEventArgs e)

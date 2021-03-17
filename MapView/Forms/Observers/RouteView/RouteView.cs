@@ -20,7 +20,7 @@ namespace MapView.Forms.Observers
 	/// TopRouteView(Route).
 	/// @note Static objects in this class are shared between the two viewers -
 	/// otherwise RouteView and TopRouteView(Route) instantiate separately.
-	/// @note <see cref="RoutePanelParent"/> also handles mouse events.
+	/// @note <see cref="RouteControlParent"/> also handles mouse events.
 	/// </summary>
 	internal sealed partial class RouteView
 		:
@@ -103,7 +103,7 @@ namespace MapView.Forms.Observers
 
 				DeselectNode();
 
-				if ((RoutePanel.MapFile = _file) != null)
+				if ((RouteControl.MapFile = _file) != null)
 				{
 					cbRank.Items.Clear();
 
@@ -147,7 +147,7 @@ namespace MapView.Forms.Observers
 			private get { return _nodeSelected; }
 			set
 			{
-				_nodeSelected = RoutePanelParent.NodeSelected = value;
+				_nodeSelected = RouteControlParent.NodeSelected = value;
 
 				if (_nodeSelected != null) // for RoutesInfo ->
 				{
@@ -173,7 +173,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		internal RoutePanel RoutePanel
+		internal RouteControl RouteControl
 		{ get; private set; }
 
 		/// <summary>
@@ -201,14 +201,14 @@ namespace MapView.Forms.Observers
 
 			InitializeComponent();
 
-			RoutePanel = new RoutePanel();
-			RoutePanel.Dock = DockStyle.Fill;
-			RoutePanel.RoutePanelMouseDownEvent += OnRoutePanelMouseDown;
-			RoutePanel.RoutePanelMouseUpEvent   += OnRoutePanelMouseUp;
-			RoutePanel.MouseMove                += OnRoutePanelMouseMove;
-			RoutePanel.MouseLeave               += OnRoutePanelMouseLeave;
-			RoutePanel.KeyDown                  += OnRoutePanelKeyDown;
-			_pnlRoutes.Controls.Add(RoutePanel);
+			RouteControl = new RouteControl();
+			RouteControl.Dock = DockStyle.Fill;
+			RouteControl.RouteControlMouseDownEvent += OnRouteControlMouseDown;
+			RouteControl.RouteControlMouseUpEvent   += OnRouteControlMouseUp;
+			RouteControl.MouseMove                  += OnRouteControlMouseMove;
+			RouteControl.MouseLeave                 += OnRouteControlMouseLeave;
+			RouteControl.KeyDown                    += OnRouteControlKeyDown;
+			_pnlRoutes.Controls.Add(RouteControl);
 
 			// node data ->
 			var unitTypes = new object[]
@@ -267,7 +267,7 @@ namespace MapView.Forms.Observers
 		/// RouteView and again by TopRouteView(Route). However only the viewer
 		/// that the mousecursor is currently in should have the
 		/// location-string's color updated; the condition to allow that update
-		/// is (RoutePanel._col != -1).
+		/// is (RouteControl._col != -1).
 		/// 
 		/// 
 		/// The route-node at location will *not* be selected; only the
@@ -279,14 +279,14 @@ namespace MapView.Forms.Observers
 		{
 			//LogFile.WriteLine("RouteView.OnLevelSelectedObserver() " + Tag);
 
-			if (RoutePanel._col != -1) // find the Control that the mousecursor is in (if either)
+			if (RouteControl._col != -1) // find the Control that the mousecursor is in (if either)
 			{
 				//LogFile.WriteLine(". do overinfo");
 
 				Color color; int id;
 
-				RouteNode node = MapFile[RoutePanel._col,
-										 RoutePanel._row,
+				RouteNode node = MapFile[RouteControl._col,
+										 RouteControl._row,
 										 MapFile.Level].Node;
 				if (node == null)
 				{
@@ -359,12 +359,12 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void SetInfoOverColor()
 		{
-			if (RoutePanel._col != -1) // find the Control that the mousecursor is in (if either)
+			if (RouteControl._col != -1) // find the Control that the mousecursor is in (if either)
 			{
 				Color color;
 
-				RouteNode node = MapFile[RoutePanel._col,
-										 RoutePanel._row,
+				RouteNode node = MapFile[RouteControl._col,
+										 RouteControl._row,
 										 MapFile.Level].Node;
 				if (node == null)
 				{
@@ -386,12 +386,12 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void SetInfoOverText()
 		{
-			if (RoutePanel._col != -1) // find the Control that the mousecursor is in (if either)
+			if (RouteControl._col != -1) // find the Control that the mousecursor is in (if either)
 			{
 				Color color; int id;
 
-				RouteNode node = MapFile[RoutePanel._col,
-										 RoutePanel._row,
+				RouteNode node = MapFile[RouteControl._col,
+										 RouteControl._row,
 										 MapFile.Level].Node;
 				if (node == null)
 				{
@@ -430,12 +430,12 @@ namespace MapView.Forms.Observers
 			else
 				info = String.Empty;
 
-			if (RoutePanel._col != -1)
+			if (RouteControl._col != -1)
 			{
 				info += Environment.NewLine;
 
-				int c = RoutePanel._col;
-				int r = RoutePanel._row;
+				int c = RouteControl._col;
+				int r = RouteControl._row;
 				int l = _file.MapSize.Levs - MapFile.Level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
@@ -492,14 +492,14 @@ namespace MapView.Forms.Observers
 		#endregion Methods (print TileData)
 
 
-		#region Events (mouse-events for RoutePanel)
+		#region Events (mouse-events for RouteControl)
 		/// <summary>
 		/// Handler that selects a node on LMB, creates and/or connects nodes on
 		/// RMB.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		private void OnRoutePanelMouseDown(object sender, RoutePanelEventArgs args)
+		private void OnRouteControlMouseDown(object sender, RouteControlEventArgs args)
 		{
 			bool updateinfo = false;
 
@@ -549,7 +549,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		private void OnRoutePanelMouseUp(object sender, RoutePanelEventArgs args)
+		private void OnRouteControlMouseUp(object sender, RouteControlEventArgs args)
 		{
 			if (Dragnode != null)
 			{
@@ -598,11 +598,11 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		internal void OnRoutePanelMouseMove(object sender, MouseEventArgs args)
+		internal void OnRouteControlMouseMove(object sender, MouseEventArgs args)
 		{
-			//LogFile.WriteLine("RouteView.OnRoutePanelMouseMove()");
+			//LogFile.WriteLine("RouteView.OnRouteControlMouseMove()");
 
-			RoutePanel._pos = new Point(args.X, args.Y);
+			RouteControl._pos = new Point(args.X, args.Y);
 
 			SetInfoOverText();
 
@@ -615,17 +615,17 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Handler that hides the info-overlay when the mouse leaves this
-		/// control. See also RoutePanelParent.t1_Tick().
+		/// control. See also RouteControlParent.t1_Tick().
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnRoutePanelMouseLeave(object sender, EventArgs e)
+		private void OnRouteControlMouseLeave(object sender, EventArgs e)
 		{
-			// TODO: perhaps fire RoutePanelParent.OnMouseMove()
-			RoutePanel._col = -1;
+			// TODO: perhaps fire RouteControlParent.OnMouseMove()
+			RouteControl._col = -1;
 			RefreshPanels();
 		}
-		#endregion Events (mouse-events for RoutePanel)
+		#endregion Events (mouse-events for RouteControl)
 
 
 		#region Methods (mouse-event helpers)
@@ -653,10 +653,10 @@ namespace MapView.Forms.Observers
 							{
 								f.ShowDialog(this);
 							}
-							// TODO: the message leaves the RoutePanel drawn in an awkward state
+							// TODO: the message leaves the RouteControl drawn in an awkward state
 							// but discovering where to call Refresh() is not trivial.
 							// Fortunately a simple mouseover straightens things out for now.
-//							RoutePanel.Refresh(); // in case of a warning this needs to happen ...
+//							RouteControl.Refresh(); // in case of a warning this needs to happen ...
 							break;
 
 						case LinkSlotResult.LinkExists:
@@ -684,10 +684,10 @@ namespace MapView.Forms.Observers
 							{
 								f.ShowDialog(this);
 							}
-							// TODO: the message leaves the RoutePanel drawn in an awkward state
+							// TODO: the message leaves the RouteControl drawn in an awkward state
 							// but discovering where to call Refresh() is not trivial.
 							// Fortunately a simple mouseover straightens things out for now.
-//							RoutePanel.Refresh(); // in case of a warning this needs to happen ...
+//							RouteControl.Refresh(); // in case of a warning this needs to happen ...
 							break;
 
 						case LinkSlotResult.LinkExists:
@@ -1253,7 +1253,7 @@ namespace MapView.Forms.Observers
 				btnGo.Enabled = enable;
 				btnGo.Text = text ? Go : String.Empty;
 
-				RoutePanel.SpotPosition = new Point(-1,-1);
+				RouteControl.SpotPosition = new Point(-1,-1);
 
 				if (Tag as String == "ROUTE")
 				{
@@ -1468,16 +1468,16 @@ namespace MapView.Forms.Observers
 				}
 			}
 
-			RoutePanel.Select();
+			RouteControl.Select();
 		}
 
 		/// <summary>
 		/// Deals with the ramifications of a Go or Og click.
-		/// IMPORTANT: Any changes that are done here regarding node-selection
-		/// should be reflected in RoutePanelParent.OnMouseDown() since that is
-		/// an alternate way to select a tile/node.
 		/// </summary>
 		/// <param name="id"></param>
+		/// <remarks>Any changes that are done here regarding node-selection
+		/// should be reflected in RouteControlParent.OnMouseDown() since that
+		/// is an alternate way to select a tile/node.</remarks>
 		private void SelectNode(int id)
 		{
 			var node = _file.Routes[id];
@@ -1492,11 +1492,11 @@ namespace MapView.Forms.Observers
 
 			MainViewOverlay.that.ProcessSelection(loc,loc);
 
-			var args = new RoutePanelEventArgs(
+			var args = new RouteControlEventArgs(
 											MouseButtons.Left,
 											_file[loc.X, loc.Y],
 											_file.Location);
-			OnRoutePanelMouseDown(null, args);
+			OnRouteControlMouseDown(null, args);
 
 			InvalidateControls();
 		}
@@ -1554,9 +1554,9 @@ namespace MapView.Forms.Observers
 							break;
 					}
 	
-					RoutePanel.SpotPosition = new Point(c, r); // TODO: static - RouteView/TopRouteView(Route)
+					RouteControl.SpotPosition = new Point(c, r); // TODO: static - RouteView/TopRouteView(Route)
 
-					RoutePanel.Refresh();
+					RouteControl.Refresh();
 //					RefreshControls();
 				}
 			}
@@ -1564,9 +1564,9 @@ namespace MapView.Forms.Observers
 
 		private void OnLinkMouseLeave(object sender, EventArgs e)
 		{
-			RoutePanel.SpotPosition = new Point(-1, -1);
+			RouteControl.SpotPosition = new Point(-1, -1);
 
-			RoutePanel.Refresh();
+			RouteControl.Refresh();
 //			RefreshControls();
 		}
 
@@ -1583,7 +1583,7 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
 			}
 
-			RoutePanel.Select();
+			RouteControl.Select();
 		}
 
 		private void OnOgMouseEnter(object sender, EventArgs e)
@@ -1591,9 +1591,9 @@ namespace MapView.Forms.Observers
 			if (_ogId < _file.Routes.Nodes.Count) // in case nodes were deleted.
 			{
 				var node = _file.Routes[_ogId];
-				RoutePanel.SpotPosition = new Point(node.Col, node.Row);
+				RouteControl.SpotPosition = new Point(node.Col, node.Row);
 
-				RoutePanel.Refresh();
+				RouteControl.Refresh();
 //				RefreshControls();
 			}
 		}
@@ -1617,11 +1617,12 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Handles keyboard input.
-		/// @note Navigation keys are handled by 'KeyPreview' at the form level.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnRoutePanelKeyDown(object sender, KeyEventArgs e)
+		/// <remarks>Navigation keys are handled by 'KeyPreview' at the form
+		/// level.</remarks>
+		private void OnRouteControlKeyDown(object sender, KeyEventArgs e)
 		{
 			switch (e.KeyData)
 			{
@@ -1658,7 +1659,7 @@ namespace MapView.Forms.Observers
 
 		private void OnCopyClick(object sender, EventArgs e)
 		{
-			RoutePanel.Select();
+			RouteControl.Select();
 
 			if (NodeSelected != null)
 			{
@@ -1683,7 +1684,7 @@ namespace MapView.Forms.Observers
 
 		private void OnPasteClick(object sender, EventArgs e)
 		{
-			RoutePanel.Select();
+			RouteControl.Select();
 
 			if (NodeSelected != null) // TODO: auto-create a new node
 			{
@@ -1772,7 +1773,7 @@ namespace MapView.Forms.Observers
 
 			if (clearloc) // basically the node is deleted from RouteView itself
 			{
-				RoutePanel.Select();
+				RouteControl.Select();
 			}
 			else // basically a location is selected in MainView or TopView (even if it's still the node's location)
 			{
@@ -1781,7 +1782,7 @@ namespace MapView.Forms.Observers
 				gbNodeData.Enabled =
 				gbLinkData.Enabled = false;
 
-				RoutePanel.Invalidate();
+				RouteControl.Invalidate();
 			}
 
 			tsmiClearLinkData.Enabled = false;
@@ -1854,7 +1855,7 @@ namespace MapView.Forms.Observers
 					alt.tsb_connect2.Image = Properties.Resources.connect_2_green;
 				}
 			}
-			RoutePanel.Select();
+			RouteControl.Select();
 		}
 
 
@@ -1981,7 +1982,7 @@ namespace MapView.Forms.Observers
 		{
 			Dragnode = NodeSelected;
 
-			var args = new RoutePanelEventArgs(
+			var args = new RouteControlEventArgs(
 											MouseButtons.None,
 											_file[Dragnode.Col,
 												  Dragnode.Row,
@@ -1990,7 +1991,7 @@ namespace MapView.Forms.Observers
 														Dragnode.Col,
 														Dragnode.Row,
 														Dragnode.Lev - 1));
-			OnRoutePanelMouseUp(null, args);
+			OnRouteControlMouseUp(null, args);
 
 			SelectNode(NodeSelected.Id);
 		}
@@ -2004,7 +2005,7 @@ namespace MapView.Forms.Observers
 		{
 			Dragnode = NodeSelected;
 
-			var args = new RoutePanelEventArgs(
+			var args = new RouteControlEventArgs(
 											MouseButtons.None,
 											_file[Dragnode.Col,
 												  Dragnode.Row,
@@ -2013,7 +2014,7 @@ namespace MapView.Forms.Observers
 														Dragnode.Col,
 														Dragnode.Row,
 														Dragnode.Lev + 1));
-			OnRoutePanelMouseUp(null, args);
+			OnRouteControlMouseUp(null, args);
 
 			SelectNode(NodeSelected.Id);
 		}
@@ -2284,7 +2285,7 @@ namespace MapView.Forms.Observers
 		private void OnSaveClick(object sender, EventArgs e)
 		{
 			MainViewF.that.OnSaveRoutesClick(null, EventArgs.Empty);
-			RoutePanel.Select();
+			RouteControl.Select();
 		}
 		#endregion Events
 
@@ -2409,14 +2410,14 @@ namespace MapView.Forms.Observers
 
 		private static void RefreshPanels()
 		{
-			ObserverManager.RouteView   .Control     .RoutePanel.Refresh();
-			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
+			ObserverManager.RouteView   .Control     .RouteControl.Refresh();
+			ObserverManager.TopRouteView.ControlRoute.RouteControl.Refresh();
 		}
 
 		internal static void InvalidatePanels()
 		{
-			ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
-			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
+			ObserverManager.RouteView   .Control     .RouteControl.Invalidate();
+			ObserverManager.TopRouteView.ControlRoute.RouteControl.Invalidate();
 		}
 
 		private static void UpdateNodeInfo()

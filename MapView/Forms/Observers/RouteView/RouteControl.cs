@@ -12,12 +12,11 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The derived class for RoutePanel. Handles drawing/painting the panel.
+	/// The derived class for RouteControl. Handles drawing/painting the panel.
 	/// </summary>
-	/// <remarks>This is not a Panel. It is a UserControl inside of a Panel.</remarks>
-	internal sealed class RoutePanel
+	internal sealed class RouteControl
 		:
-			RoutePanelParent
+			RouteControlParent
 	{
 		#region Fields (static)
 		private const int RoseMarginX = 25;
@@ -117,7 +116,7 @@ namespace MapView.Forms.Observers
 
 
 		#region cTor
-		internal RoutePanel()
+		internal RouteControl()
 		{
 			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;
 		}
@@ -210,8 +209,8 @@ namespace MapView.Forms.Observers
 				if (RouteView.Optionables.ShowOverlay && _col != -1)
 					DrawInfoOverlay();
 
-				if (   ObserverManager.RouteView   .Control     .RoutePanel._col == -1
-					&& ObserverManager.TopRouteView.ControlRoute.RoutePanel._col == -1)
+				if (   ObserverManager.RouteView   .Control     .RouteControl._col == -1
+					&& ObserverManager.TopRouteView.ControlRoute.RouteControl._col == -1)
 				{
 					ObserverManager.RouteView   .Control     .ClearOveredInfo();
 					ObserverManager.TopRouteView.ControlRoute.ClearOveredInfo();

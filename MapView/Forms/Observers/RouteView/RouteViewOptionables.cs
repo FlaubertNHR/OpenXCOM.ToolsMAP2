@@ -519,36 +519,36 @@ namespace MapView.Forms.Observers
 		internal void LoadDefaults(Options options)
 		{
 			var penGrid = new Pen(def_GridLineColor, def_GridLineWidth);
-			RoutePanel.RoutePens[str_GridLineColor] = penGrid;
+			RouteControl.RoutePens[str_GridLineColor] = penGrid;
 
 			var penGrid10 = new Pen(def_GridLine10Color, def_GridLine10Width);
-			RoutePanel.RoutePens[str_GridLine10Color] = penGrid10;
+			RouteControl.RoutePens[str_GridLine10Color] = penGrid10;
 
 			var penWall = new Pen(def_WallColor, def_WallWidth);
-			RoutePanel.RoutePens[str_WallColor] = penWall;
-			RoutePanel.ToolWall = new ColorTool(penWall);
+			RouteControl.RoutePens[str_WallColor] = penWall;
+			RouteControl.ToolWall = new ColorTool(penWall);
 
 			var brushContent = new SolidBrush(def_ContentColor);
-			RoutePanel.RouteBrushes[str_ContentColor] = brushContent;
-			RoutePanel.ToolContent = new ColorTool(brushContent, DrawBlobService.LINEWIDTH_CONTENT);
+			RouteControl.RouteBrushes[str_ContentColor] = brushContent;
+			RouteControl.ToolContent = new ColorTool(brushContent, DrawBlobService.LINEWIDTH_CONTENT);
 
 			Color color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
 			var brushNode = new SolidBrush(color);
-			RoutePanel.RouteBrushes[str_NodeColor] = brushNode;
+			RouteControl.RouteBrushes[str_NodeColor] = brushNode;
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeSpawnColor);
 			var brushNodeSpawn = new SolidBrush(color);
-			RoutePanel.RouteBrushes[str_NodeSpawnColor] = brushNodeSpawn;
+			RouteControl.RouteBrushes[str_NodeSpawnColor] = brushNodeSpawn;
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeSelectedColor);
 			var brushNodeSelected = new SolidBrush(color);
-			RoutePanel.RouteBrushes[str_NodeSelectedColor] = brushNodeSelected;
+			RouteControl.RouteBrushes[str_NodeSelectedColor] = brushNodeSelected;
 
 			var penLink = new Pen(def_LinkColor, def_LinkWidth);
-			RoutePanel.RoutePens[str_LinkColor] = penLink;
+			RouteControl.RoutePens[str_LinkColor] = penLink;
 
 			var penLinkSelected = new Pen(def_LinkSelectedColor, def_LinkSelectedWidth);
-			RoutePanel.RoutePens[str_LinkSelectedColor] = penLinkSelected;
+			RouteControl.RoutePens[str_LinkSelectedColor] = penLinkSelected;
 
 
 			OptionChangedEvent changer0 = OnOptionChanged;
@@ -639,17 +639,17 @@ namespace MapView.Forms.Observers
 			if (key == str_ContentColor)
 			{
 				// Do not apply alpha to ContentColor.
-				RoutePanel.RouteBrushes[str_ContentColor].Color = color;
+				RouteControl.RouteBrushes[str_ContentColor].Color = color;
 
-				RoutePanel.ToolContent.Dispose();
-				RoutePanel.ToolContent = new ColorTool(
-													RoutePanel.RouteBrushes[str_ContentColor],
+				RouteControl.ToolContent.Dispose();
+				RouteControl.ToolContent = new ColorTool(
+													RouteControl.RouteBrushes[str_ContentColor],
 													DrawBlobService.LINEWIDTH_CONTENT);
 			}
 			else // is Node color
 			{
 				color = Color.FromArgb(NodeOpacity, color);
-				RoutePanel.RouteBrushes[key].Color = color;
+				RouteControl.RouteBrushes[key].Color = color;
 
 				switch (key)
 				{
@@ -674,13 +674,13 @@ namespace MapView.Forms.Observers
 		private void ChangeBruOpaci(string key, object val)
 		{
 			Color color = Color.FromArgb((int)val, NodeColor);
-			RoutePanel.RouteBrushes[str_NodeColor].Color = color;
+			RouteControl.RouteBrushes[str_NodeColor].Color = color;
 
 			color = Color.FromArgb((int)val, NodeSpawnColor);
-			RoutePanel.RouteBrushes[str_NodeSpawnColor].Color = color;
+			RouteControl.RouteBrushes[str_NodeSpawnColor].Color = color;
 
 			color = Color.FromArgb((int)val, NodeSelectedColor);
-			RoutePanel.RouteBrushes[str_NodeSelectedColor].Color = color;
+			RouteControl.RouteBrushes[str_NodeSelectedColor].Color = color;
 		}
 
 
@@ -705,13 +705,13 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenColor(string key, object val)
 		{
-			RoutePanel.RoutePens[key].Color = (Color)val;
+			RouteControl.RoutePens[key].Color = (Color)val;
 
 			switch (key)
 			{
 				case str_WallColor:
-					RoutePanel.ToolWall.Dispose();
-					RoutePanel.ToolWall = new ColorTool(RoutePanel.RoutePens[key]);
+					RouteControl.ToolWall.Dispose();
+					RouteControl.ToolWall = new ColorTool(RouteControl.RoutePens[key]);
 					break;
 			}
 		}
@@ -723,13 +723,13 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenWidth(string key, object val)
 		{
-			RoutePanel.RoutePens[key = WidthToColor(key)].Width = (int)val;
+			RouteControl.RoutePens[key = WidthToColor(key)].Width = (int)val;
 
 			switch (key)
 			{
 				case str_WallColor: // doh!
-					RoutePanel.ToolWall.Dispose();
-					RoutePanel.ToolWall = new ColorTool(RoutePanel.RoutePens[key]);
+					RouteControl.ToolWall.Dispose();
+					RouteControl.ToolWall = new ColorTool(RouteControl.RoutePens[key]);
 					break;
 			}
 		}
