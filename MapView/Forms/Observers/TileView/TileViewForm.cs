@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 using MapView.Forms.MainView;
@@ -16,25 +15,25 @@ namespace MapView.Forms.Observers
 		// - one private, one internal, one public ... 42!
 
 		#region Fields
-		private TileView TileViewControl;
+		private TileView _tile;
 		#endregion Fields
 
 
 		#region Properties
 		/// <summary>
-		/// Gets TileViewControl as a child of ObserverControl.
+		/// Gets '_tile' as a child of <see cref="ObserverControl"/>.
 		/// </summary>
 		internal TileView Control
 		{
-			get { return TileViewControl; }
+			get { return _tile; }
 		}
 
 		/// <summary>
-		/// Satisfies IObserverProvider.
+		/// Satisfies <see cref="IObserverProvider"/>.
 		/// </summary>
 		public ObserverControl Observer
 		{
-			get { return TileViewControl; }
+			get { return _tile; }
 		}
 		#endregion Properties
 
@@ -44,15 +43,13 @@ namespace MapView.Forms.Observers
 		{
 			InitializeComponent();
 
-			TileViewControl = new TileView();
+			_tile = new TileView();
 
-			TileViewControl.Name     = "TileViewControl";
-			TileViewControl.Location = new Point(0, 0);
-			TileViewControl.Size     = new Size(632, 454);
-			TileViewControl.Dock     = DockStyle.Fill;
-			TileViewControl.TabIndex = 0;
+			_tile.Name     = "TileViewControl";
+			_tile.Dock     = DockStyle.Fill;
+			_tile.TabIndex = 0;
 
-			Controls.Add(TileViewControl);
+			Controls.Add(_tile);
 		}
 		#endregion cTor
 
@@ -68,7 +65,7 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			TileViewControl.GetVisiblePanel().Focus();
+			_tile.GetVisiblePanel().Focus();
 
 //			base.OnActivated(e);
 		}

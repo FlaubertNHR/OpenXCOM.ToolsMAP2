@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 using DSShared;
@@ -17,25 +16,25 @@ namespace MapView.Forms.Observers
 			IObserverProvider
 	{
 		#region Fields
-		private TopView TopViewControl;
+		private TopView _top;
 		#endregion Fields
 
 
 		#region Properties
 		/// <summary>
-		/// Gets TopViewControl as a child of ObserverControl.
+		/// Gets '_top' as a child of <see cref="ObserverControl"/>.
 		/// </summary>
 		internal TopView Control
 		{
-			get { return TopViewControl; }
+			get { return _top; }
 		}
 
 		/// <summary>
-		/// Satisfies IObserverProvider.
+		/// Satisfies <see cref="IObserverProvider"/>.
 		/// </summary>
 		public ObserverControl Observer
 		{
-			get { return TopViewControl; }
+			get { return _top; }
 		}
 		#endregion Properties
 
@@ -44,21 +43,15 @@ namespace MapView.Forms.Observers
 		internal TopViewForm()
 		{
 			InitializeComponent();
-			InitializeTopView();
-		}
 
-		private void InitializeTopView()
-		{
-			TopViewControl = new TopView();
+			_top = new TopView();
 
-			TopViewControl.Name     = "TopViewControl";
-			TopViewControl.Location = new Point(0, 0);
-			TopViewControl.Size     = new Size(632, 454);
-			TopViewControl.Dock     = DockStyle.Fill;
-			TopViewControl.TabIndex = 1;
-			TopViewControl.Tag      = "TOP";
+			_top.Name     = "TopViewControl";
+			_top.Dock     = DockStyle.Fill;
+			_top.TabIndex = 0;
+			_top.Tag      = "TOP";
 
-			Controls.Add(TopViewControl);
+			Controls.Add(_top);
 		}
 		#endregion cTor
 
@@ -74,8 +67,8 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			TopViewControl.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
-			TopViewControl.TopPanel.Focus();
+			_top.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+			_top.TopPanel.Focus();
 
 //			base.OnActivated(e);
 		}
@@ -92,7 +85,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (Control.TopPanel.Focused)
+			if (_top.TopPanel.Focused)
 			{
 				switch (keyData)
 				{
@@ -131,10 +124,10 @@ namespace MapView.Forms.Observers
 			switch (e.KeyData)
 			{
 				case Keys.Escape:
-					if (!Control.TopPanel.Focused)
+					if (!_top.TopPanel.Focused)
 					{
 						e.SuppressKeyPress = true;
-						Control.TopPanel.Focus();
+						_top.TopPanel.Focus();
 					}
 					else
 						MainViewOverlay.that.Edit(e);
@@ -142,7 +135,7 @@ namespace MapView.Forms.Observers
 
 				case Keys.Control | Keys.O:
 					e.SuppressKeyPress = true;
-					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+					_top.OnOptionsClick(_top.GetOptionsButton(), EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.Q:
@@ -160,7 +153,7 @@ namespace MapView.Forms.Observers
 				case Keys.Shift | Keys.End:
 				case Keys.Shift | Keys.PageUp:
 				case Keys.Shift | Keys.PageDown:
-					if (Control.TopPanel.Focused)
+					if (_top.TopPanel.Focused)
 					{
 						e.SuppressKeyPress = true;
 						MainViewOverlay.that.Navigate(e.KeyData, true);
@@ -181,7 +174,7 @@ namespace MapView.Forms.Observers
 			{
 				e.SuppressKeyPress = true;
 				var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-				Control.QuadrantPanel.doMouseDown(args, slot);
+				_top.QuadrantPanel.doMouseDown(args, slot);
 			}
 //			base.OnKeyDown(e);
 		}

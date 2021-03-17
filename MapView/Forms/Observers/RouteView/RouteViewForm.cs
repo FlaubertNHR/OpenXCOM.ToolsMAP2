@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 using MapView.Forms.MainView;
@@ -19,7 +18,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Gets '_route' as a child of 'ObserverControl'.
+		/// Gets '_route' as a child of <see cref="ObserverControl"/>.
 		/// </summary>
 		internal RouteView Control
 		{
@@ -27,7 +26,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Satisfies 'IObserverProvider'.
+		/// Satisfies <see cref="IObserverProvider"/>.
 		/// </summary>
 		public ObserverControl Observer
 		{
@@ -44,14 +43,14 @@ namespace MapView.Forms.Observers
 		{
 			InitializeComponent();
 
-			_route = new RouteView(); // 'Control'
+			_route = new RouteView();
 
-			Control.Name     = "RouteViewControl";
-			Control.Dock     = DockStyle.Fill;
-			Control.TabIndex = 0;
-			Control.Tag      = "ROUTE";
+			_route.Name     = "RouteViewControl";
+			_route.Dock     = DockStyle.Fill;
+			_route.TabIndex = 0;
+			_route.Tag      = "ROUTE";
 
-			Controls.Add(Control);
+			Controls.Add(_route);
 		}
 		#endregion cTor
 
@@ -63,7 +62,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnShown(EventArgs e)
 		{
-			Control.ActivateConnector();
+			_route.ActivateConnector();
 
 //			base.OnShown(e);
 		}
@@ -93,7 +92,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (Control.RouteControl.Focused)
+			if (_route.RouteControl.Focused)
 			{
 				switch (keyData)
 				{
@@ -105,7 +104,7 @@ namespace MapView.Forms.Observers
 					case Keys.Shift | Keys.Right:
 					case Keys.Shift | Keys.Up:
 					case Keys.Shift | Keys.Down:
-						Control.RouteControl.Navigate(keyData);
+						_route.RouteControl.Navigate(keyData);
 						return true;
 				}
 			}
@@ -130,18 +129,18 @@ namespace MapView.Forms.Observers
 			{
 				case Keys.Escape:
 					e.SuppressKeyPress = true;
-					if (Control.RouteControl.Focused)
+					if (_route.RouteControl.Focused)
 					{
 						RouteView.NodeSelected = null;
 						RouteView.Invalidator();
 					}
 					else
-						Control.RouteControl.Focus();
+						_route.RouteControl.Focus();
 					break;
 
 				case Keys.Control | Keys.O:
 					e.SuppressKeyPress = true;
-					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+					_route.OnOptionsClick(_route.GetOptionsButton(), EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.Q:
@@ -160,10 +159,10 @@ namespace MapView.Forms.Observers
 				case Keys.Shift | Keys.PageUp:
 				case Keys.Shift | Keys.PageDown:
 				case Keys.Enter:
-					if (Control.RouteControl.Focused)
+					if (_route.RouteControl.Focused)
 					{
 						e.SuppressKeyPress = true;
-						Control.RouteControl.Navigate(e.KeyData);
+						_route.RouteControl.Navigate(e.KeyData);
 					}
 					break;
 

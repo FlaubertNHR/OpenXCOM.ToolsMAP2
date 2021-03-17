@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 using DSShared;
@@ -23,16 +22,16 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		private TopView _topView;
+		private TopView _top;
 		internal TopView ControlTop
 		{
-			get { return _topView; }
+			get { return _top; }
 		}
 
-		private RouteView _routeView;
+		private RouteView _route;
 		internal RouteView ControlRoute
 		{
-			get { return _routeView; }
+			get { return _route; }
 		}
 		#endregion Properties
 
@@ -44,41 +43,40 @@ namespace MapView.Forms.Observers
 		internal TopRouteViewForm()
 		{
 			InitializeComponent();
-			InitializeTopRouteViews();
+
+			_top = new TopView();
+
+			_top.Name       = "TopViewControl";
+			_top.Dock       = DockStyle.Fill;
+			_top.TabIndex   = 0;
+			_top.Tag        = "TOPROUTE";
+
+			tp_Top.Controls.Add(_top);
+
+
+			_route = new RouteView();
+
+			_route.Name     = "RouteViewControl";
+			_route.Dock     = DockStyle.Fill;
+			_route.TabIndex = 0;
+			_route.Tag      = "TOPROUTE";
+
+			tp_Route.Controls.Add(_route);
+
 
 			var tpTabControl = new TabPageBorder(tabControl);
-		}
-
-		private void InitializeTopRouteViews()
-		{
-			_topView = new TopView();
-
-			ControlTop.Name       = "TopViewControl";
-			ControlTop.Location   = new Point(3, 3);
-			ControlTop.Size       = new Size(618, 423);
-			ControlTop.Dock       = DockStyle.Fill;
-			ControlTop.TabIndex   = 0;
-			ControlTop.Tag        = "TOPROUTE";
-
-			_routeView = new RouteView();
-
-			ControlRoute.Name     = "RouteViewControl";
-			ControlRoute.Location = new Point(3, 3);
-			ControlRoute.Size     = new Size(618, 423);
-			ControlRoute.Dock     = DockStyle.Fill;
-			ControlRoute.TabIndex = 0;
-			ControlRoute.Tag      = "TOPROUTE";
-
-			tp_Top  .Controls.Add(ControlTop);
-			tp_Route.Controls.Add(ControlRoute);
 		}
 		#endregion cTor
 
 
 		#region Events (override)
+		/// <summary>
+		/// Sets up the link-connector when this form is shown.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnShown(EventArgs e)
 		{
-			ControlRoute.ActivateConnector();
+			_route.ActivateConnector();
 
 //			base.OnShown(e);
 		}
@@ -96,8 +94,8 @@ namespace MapView.Forms.Observers
 
 			if (tabControl.SelectedIndex == TAB_TOP)
 			{
-				ControlTop.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
-				ControlTop.TopPanel.Focus();
+				_top.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+				_top.TopPanel.Focus();
 			}
 
 //			base.OnActivated(e);
@@ -118,7 +116,7 @@ namespace MapView.Forms.Observers
 			switch (tabControl.SelectedIndex)
 			{
 				case TAB_TOP:
-					if (ControlTop.TopPanel.Focused)
+					if (_top.TopPanel.Focused)
 					{
 						switch (keyData)
 						{
@@ -137,7 +135,7 @@ namespace MapView.Forms.Observers
 					break;
 
 				case TAB_ROT:
-					if (ControlRoute.RouteControl.Focused)
+					if (_route.RouteControl.Focused)
 					{
 						switch (keyData)
 						{
@@ -149,7 +147,7 @@ namespace MapView.Forms.Observers
 							case Keys.Shift | Keys.Right:
 							case Keys.Shift | Keys.Up:
 							case Keys.Shift | Keys.Down:
-								ControlRoute.RouteControl.Navigate(keyData);
+								_route.RouteControl.Navigate(keyData);
 								return true;
 						}
 					}
@@ -180,10 +178,10 @@ namespace MapView.Forms.Observers
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
-							if (!ControlTop.TopPanel.Focused)
+							if (!_top.TopPanel.Focused)
 							{
 								e.SuppressKeyPress = true;
-								ControlTop.TopPanel.Focus();
+								_top.TopPanel.Focus();
 							}
 							else
 								MainViewOverlay.that.Edit(e);
@@ -191,13 +189,13 @@ namespace MapView.Forms.Observers
 
 						case TAB_ROT:
 							e.SuppressKeyPress = true;
-							if (ControlRoute.RouteControl.Focused)
+							if (_route.RouteControl.Focused)
 							{
 								RouteView.NodeSelected = null;
 								RouteView.Invalidator();
 							}
 							else
-								ControlRoute.RouteControl.Focus();
+								_route.RouteControl.Focus();
 							break;
 					}
 					break;
@@ -207,10 +205,10 @@ namespace MapView.Forms.Observers
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
-							ControlTop.OnOptionsClick(ControlTop.GetOptionsButton(), EventArgs.Empty);
+							_top.OnOptionsClick(_top.GetOptionsButton(), EventArgs.Empty);
 							break;
 						case TAB_ROT:
-							ControlRoute.OnOptionsClick(ControlRoute.GetOptionsButton(), EventArgs.Empty);
+							_route.OnOptionsClick(_route.GetOptionsButton(), EventArgs.Empty);
 							break;
 					}
 					break;
@@ -238,7 +236,7 @@ namespace MapView.Forms.Observers
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
-							if (ControlTop.TopPanel.Focused)
+							if (_top.TopPanel.Focused)
 							{
 								e.SuppressKeyPress = true;
 								MainViewOverlay.that.Navigate(e.KeyData, true);
@@ -246,10 +244,10 @@ namespace MapView.Forms.Observers
 							break;
 
 						case TAB_ROT:
-							if (ControlRoute.RouteControl.Focused) // is Route
+							if (_route.RouteControl.Focused) // is Route
 							{
 								e.SuppressKeyPress = true;
-								ControlRoute.RouteControl.Navigate(e.KeyData);
+								_route.RouteControl.Navigate(e.KeyData);
 							}
 							break;
 					}
@@ -258,10 +256,10 @@ namespace MapView.Forms.Observers
 				case Keys.Shift | Keys.Subtract:
 				case Keys.Shift | Keys.Add:
 				case Keys.Enter:
-					if (tabControl.SelectedIndex == TAB_ROT && ControlRoute.RouteControl.Focused)
+					if (tabControl.SelectedIndex == TAB_ROT && _route.RouteControl.Focused)
 					{
 						e.SuppressKeyPress = true;
-						ControlRoute.RouteControl.Navigate(e.KeyData);
+						_route.RouteControl.Navigate(e.KeyData);
 					}
 					break;
 
@@ -277,7 +275,7 @@ namespace MapView.Forms.Observers
 					{
 						e.SuppressKeyPress = true;
 						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-						ControlTop.QuadrantPanel.doMouseDown(args, slot);
+						_top.QuadrantPanel.doMouseDown(args, slot);
 					}
 					break;
 
@@ -306,6 +304,11 @@ namespace MapView.Forms.Observers
 
 
 		#region Events
+		/// <summary>
+		/// Tracks the selected page in <see cref="MainViewF.Optionables">MainViewF.Optionables</see>.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (MainViewF.Optionables.StartTopRoutePage > 1)
