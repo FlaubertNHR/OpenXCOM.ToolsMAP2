@@ -56,7 +56,8 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// 
+		/// Nulls <see cref="RouteView.RoutesInfo">RouteView.RoutesInfo</see>
+		/// when this form closes.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -71,7 +72,7 @@ namespace MapView
 
 		#region Events
 		/// <summary>
-		/// 
+		/// Closes this form on [Esc].
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyUp(KeyEventArgs e)
@@ -134,7 +135,6 @@ namespace MapView
 		/// <summary>
 		/// Initializes the ranks for the Tileset.
 		/// </summary>
-		/// <returns></returns>
 		private void InitRanks()
 		{
 			ResetTallies();
@@ -357,10 +357,11 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// @note Check that node is SpawnWeight.None before call.
+		/// Updates texts when noderank gets changed.
 		/// </summary>
 		/// <param name="rankPre"></param>
 		/// <param name="rankPos"></param>
+		/// <remarks>Check that node is SpawnWeight.None before call.</remarks>
 		internal void UpdateNoderank(byte rankPre, byte rankPos)
 		{
 			switch (rankPre)

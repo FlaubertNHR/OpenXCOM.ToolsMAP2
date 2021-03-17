@@ -162,6 +162,9 @@
       <DependentUpon>RouteViewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Observers\RouteView\RouteViewOptionables.cs" />
+    <Compile Include="Forms\Observers\TileView\TileViewForm.Designer.cs">
+      <DependentUpon>TileViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Observers\TileView\TileViewOptionables.cs" />
     <Compile Include="Forms\Observers\TopRouteView\TopRouteViewForm.cs">
       <SubType>Form</SubType>

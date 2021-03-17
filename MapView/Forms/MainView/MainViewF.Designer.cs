@@ -467,7 +467,6 @@ namespace MapView
 			// 
 			// tscPanel.ContentPanel
 			// 
-			this.tscPanel.ContentPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.tscPanel.ContentPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(792, 407);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;

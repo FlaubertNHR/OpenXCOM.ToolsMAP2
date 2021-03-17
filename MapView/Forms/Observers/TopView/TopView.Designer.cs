@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace MapView.Forms.Observers
 {
-	partial class TopView
+	internal sealed partial class TopView
 	{
 		#region Designer
 		private ToolStrip tsTools;

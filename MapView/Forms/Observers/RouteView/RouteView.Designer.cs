@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace MapView.Forms.Observers
 {
-	partial class RouteView
+	internal sealed partial class RouteView
 	{
 		#region Designer
 		private ToolStrip tsMain;

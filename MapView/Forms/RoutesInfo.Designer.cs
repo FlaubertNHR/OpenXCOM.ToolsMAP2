@@ -1,51 +1,56 @@
-﻿namespace MapView
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Forms;
+
+
+namespace MapView
 {
-	partial class RoutesInfo
+	internal sealed partial class RoutesInfo
 	{
 		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components;
 
-		private System.Windows.Forms.Label lbl_Tileset_;
-		private System.Windows.Forms.Label lbl_Category;
-		private System.Windows.Forms.Label lbl_Group;
-		private System.Windows.Forms.GroupBox gb_Info;
-		private System.Windows.Forms.GroupBox gb_Tileset;
-		private System.Windows.Forms.Label lbl_tsRanks0;
-		private System.Windows.Forms.Label lbl_tsRanks1;
-		private System.Windows.Forms.Label lbl_tsRanks8;
-		private System.Windows.Forms.Label lbl_tsRanks7;
-		private System.Windows.Forms.Label lbl_tsRanks6;
-		private System.Windows.Forms.Label lbl_tsRanks5;
-		private System.Windows.Forms.Label lbl_tsRanks4;
-		private System.Windows.Forms.Label lbl_tsRanks3;
-		private System.Windows.Forms.Label lbl_tsRanks2;
-		private System.Windows.Forms.Label lbl_tsRanks8_out;
-		private System.Windows.Forms.Label lbl_tsRanks7_out;
-		private System.Windows.Forms.Label lbl_tsRanks6_out;
-		private System.Windows.Forms.Label lbl_tsRanks5_out;
-		private System.Windows.Forms.Label lbl_tsRanks4_out;
-		private System.Windows.Forms.Label lbl_tsRanks3_out;
-		private System.Windows.Forms.Label lbl_tsRanks2_out;
-		private System.Windows.Forms.Label lbl_tsRanks1_out;
-		private System.Windows.Forms.Label lbl_tsRanks0_out;
-		private System.Windows.Forms.Label lbl_tsCategoryTotals;
-		private System.Windows.Forms.Label lbl_tsTilesetTotals;
-		private System.Windows.Forms.Label lbl_tsRanks8_outcat;
-		private System.Windows.Forms.Label lbl_tsRanks7_outcat;
-		private System.Windows.Forms.Label lbl_tsRanks6_outcat;
-		private System.Windows.Forms.Label lbl_tsRanks5_outcat;
-		private System.Windows.Forms.Label lbl_tsRanks4_outcat;
-		private System.Windows.Forms.Label lbl_tsRanks3_outcat;
-		private System.Windows.Forms.Label lbl_tsRanks2_outcat;
-		private System.Windows.Forms.Label lbl_tsRanks1_outcat;
-		private System.Windows.Forms.Label lbl_tsRanks0_outcat;
-		private System.Windows.Forms.Label lbl_Tileset;
-		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.Label lbl_TotalCategory;
-		private System.Windows.Forms.Label lbl_TotalTileset;
+		private Label lbl_Tileset_;
+		private Label lbl_Category;
+		private Label lbl_Group;
+		private GroupBox gb_Info;
+		private GroupBox gb_Tileset;
+		private Label lbl_tsRanks0;
+		private Label lbl_tsRanks1;
+		private Label lbl_tsRanks8;
+		private Label lbl_tsRanks7;
+		private Label lbl_tsRanks6;
+		private Label lbl_tsRanks5;
+		private Label lbl_tsRanks4;
+		private Label lbl_tsRanks3;
+		private Label lbl_tsRanks2;
+		private Label lbl_tsRanks8_out;
+		private Label lbl_tsRanks7_out;
+		private Label lbl_tsRanks6_out;
+		private Label lbl_tsRanks5_out;
+		private Label lbl_tsRanks4_out;
+		private Label lbl_tsRanks3_out;
+		private Label lbl_tsRanks2_out;
+		private Label lbl_tsRanks1_out;
+		private Label lbl_tsRanks0_out;
+		private Label lbl_tsCategoryTotals;
+		private Label lbl_tsTilesetTotals;
+		private Label lbl_tsRanks8_outcat;
+		private Label lbl_tsRanks7_outcat;
+		private Label lbl_tsRanks6_outcat;
+		private Label lbl_tsRanks5_outcat;
+		private Label lbl_tsRanks4_outcat;
+		private Label lbl_tsRanks3_outcat;
+		private Label lbl_tsRanks2_outcat;
+		private Label lbl_tsRanks1_outcat;
+		private Label lbl_tsRanks0_outcat;
+		private Label lbl_Tileset;
+		private ToolTip toolTip1;
+		private Label lbl_TotalCategory;
+		private Label lbl_TotalTileset;
 
 
 		/// <summary>
@@ -534,8 +539,6 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.ClientSize = new System.Drawing.Size(412, 234);
 			this.Controls.Add(this.gb_Tileset);
 			this.Controls.Add(this.gb_Info);

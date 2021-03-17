@@ -6,7 +6,7 @@ using DSShared.Controls;
 
 namespace MapView.Forms.Observers
 {
-	partial class TileView
+	internal sealed partial class TileView
 	{
 		#region Designer
 		CompositedTabControl tcTileTypes;

@@ -6,7 +6,7 @@ using DSShared.Controls;
 
 namespace MapView.Forms.Observers
 {
-	partial class TopRouteViewForm
+	internal sealed partial class TopRouteViewForm
 	{
 		#region Designer
 		private CompositedTabControl tabControl;
