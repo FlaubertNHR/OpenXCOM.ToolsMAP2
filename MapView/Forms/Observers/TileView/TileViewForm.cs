@@ -11,9 +11,6 @@ namespace MapView.Forms.Observers
 			Form,
 			IObserverProvider
 	{
-		// TODO: There are three (3) variables all returning 'TileViewControl'.
-		// - one private, one internal, one public ... 42!
-
 		#region Fields
 		private TileView _tile;
 		#endregion Fields
@@ -39,6 +36,9 @@ namespace MapView.Forms.Observers
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
 		internal TileViewForm()
 		{
 			InitializeComponent();
@@ -81,7 +81,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			TilePanel panel = Control.GetVisiblePanel();
+			TilePanel panel = _tile.GetVisiblePanel();
 			if (panel.Focused)
 			{
 				switch (keyData)
@@ -114,12 +114,12 @@ namespace MapView.Forms.Observers
 			{
 				case Keys.Escape:
 					e.SuppressKeyPress = true;
-					Control.GetVisiblePanel().Focus();
+					_tile.GetVisiblePanel().Focus();
 					break;
 
 				case Keys.Control | Keys.O:
 					e.SuppressKeyPress = true;
-					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
+					_tile.OnOptionsClick(_tile.GetOptionsButton(), EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.Q:
@@ -134,7 +134,7 @@ namespace MapView.Forms.Observers
 				case Keys.Control | Keys.Home:
 				case Keys.Control | Keys.End:
 				{
-					TilePanel panel = Control.GetVisiblePanel();
+					TilePanel panel = _tile.GetVisiblePanel();
 					if (panel.Focused)
 					{
 						e.SuppressKeyPress = true;
