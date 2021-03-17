@@ -85,10 +85,10 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Gets the selected-tilepart.
-		/// Sets the selected-tilepart when a valid QuadrantPanel quad is
+		/// Sets the selected-tilepart when a valid QuadrantControl quad is
 		/// double-clicked.
-		/// @note The setter is invoked only by TileView.SelectedTilepart.
 		/// </summary>
+		/// <remarks>The setter is invoked only by TileView.SelectedTilepart.</remarks>
 		internal Tilepart SelectedTilepart
 		{
 			get

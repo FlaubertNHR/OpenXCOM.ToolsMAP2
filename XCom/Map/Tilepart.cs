@@ -281,7 +281,7 @@ namespace XCom
 		internal void Cripple(PartType slot)
 		{
 			// TODO: stop the 'tile' from being selected in TileView
-			// when the slot in QuadrantPanel is double-clicked
+			// when the slot in QuadrantControl is double-clicked
 
 			// NOTE: Assigning "-1" to the record's 'PartType' shall force it to
 			// be listed in TopView's TestPartslots dialog. And discount it from

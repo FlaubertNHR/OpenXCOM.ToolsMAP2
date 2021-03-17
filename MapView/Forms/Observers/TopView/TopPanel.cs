@@ -425,7 +425,7 @@ namespace MapView.Forms.Observers
 					return;
 			}
 
-			TopView.QuadrantPanel.doMouseDown(
+			TopView.QuadrantControl.doMouseDown(
 											new MouseEventArgs(button, clicks, 0,0, 0),
 											slot);
 //			base.OnKeyDown(e);
@@ -455,7 +455,7 @@ namespace MapView.Forms.Observers
 								break;
 
 							case 2:
-								TopView.QuadrantPanel.Clicker(MouseButtons.Left, 2);
+								TopView.QuadrantControl.Clicker(MouseButtons.Left, 2);
 								break;
 						}
 						break;
@@ -470,7 +470,7 @@ namespace MapView.Forms.Observers
 						else
 							clicks = e.Clicks;
 
-						TopView.QuadrantPanel.Clicker(MouseButtons.Right, clicks);
+						TopView.QuadrantControl.Clicker(MouseButtons.Right, clicks);
 						break;
 					}
 				}

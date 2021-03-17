@@ -227,7 +227,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Forms\Observers\TopView\QuadrantPanel.cs">
+    <Compile Include="Forms\Observers\TopView\QuadrantControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CuboidSprite.cs">

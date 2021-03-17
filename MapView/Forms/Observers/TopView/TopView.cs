@@ -60,7 +60,7 @@ namespace MapView.Forms.Observers
 		internal TopPanel TopPanel
 		{ get; private set; }
 
-		internal QuadrantPanel QuadrantPanel
+		internal QuadrantControl QuadrantControl
 		{ get; private set; }
 
 
@@ -104,7 +104,7 @@ namespace MapView.Forms.Observers
 
 			SuspendLayout();
 
-			QuadrantPanel.SelectedQuadrant = PartType.Floor;
+			QuadrantControl.SelectedQuadrant = PartType.Floor;
 
 
 			TopPanel = new TopPanel(this);
@@ -135,26 +135,26 @@ namespace MapView.Forms.Observers
 			VisibleQuadrants = FLOOR | WEST | NORTH | CONTENT;
 
 			ObserverPanels.Add("TopPanel",      TopPanel);
-			ObserverPanels.Add("QuadrantPanel", QuadrantPanel);
+			ObserverPanels.Add("QuadrantControl", QuadrantControl);
 
 			ResumeLayout();
 		}
 
 		/// <summary>
-		/// Instantiates and initializes the <see cref="QuadrantPanel"/>.
+		/// Instantiates and initializes the <see cref="QuadrantControl"/>.
 		/// </summary>
 		private void CreateQuadrantPanel()
 		{
-			QuadrantPanel = new QuadrantPanel();
+			QuadrantControl = new QuadrantControl();
 
-			QuadrantPanel.Name     = "QuadrantPanel";
-			QuadrantPanel.Location = new Point(0, 410);
-			QuadrantPanel.Size     = new Size(640, 70);
-			QuadrantPanel.Dock     = DockStyle.Bottom;
-			QuadrantPanel.TabIndex = 2;
-			QuadrantPanel.TabStop  = false;
+			QuadrantControl.Name     = "QuadrantControl";
+			QuadrantControl.Location = new Point(0, 410);
+			QuadrantControl.Size     = new Size(640, 70);
+			QuadrantControl.Dock     = DockStyle.Bottom;
+			QuadrantControl.TabIndex = 2;
+			QuadrantControl.TabStop  = false;
 
-			Controls.Add(QuadrantPanel);
+			Controls.Add(QuadrantControl);
 		}
 		#endregion cTor
 

@@ -58,14 +58,14 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Gets the selected-tilepart.
-		/// Sets the selected-tilepart when a valid QuadrantPanel quad is
+		/// Sets the selected-tilepart when a valid QuadrantControl quad is
 		/// double-clicked.
-		/// @note TileView switches to the ALL tabpage and selects the
-		/// appropriate tilepart, w/ TilePanel.SelectedTilepart, when a quad is
-		/// selected in the QuadrantPanel. The TilepartSelected event then
-		/// fires, and then the TilepartSelected_SelectQuadrant event fires.
-		/// Thought you'd like to know how good the spaghetti tastes.
 		/// </summary>
+		/// <remarks>TileView switches to the ALL tabpage and selects the
+		/// appropriate tilepart, w/ TilePanel.SelectedTilepart, when a quad is
+		/// selected in the QuadrantControl. The TilepartSelected event then
+		/// fires, and then the TilepartSelected_SelectQuadrant event fires.
+		/// Thought you'd like to know how good the spaghetti tastes.</remarks>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] // w.t.f.
 		internal Tilepart SelectedTilepart
 		{
@@ -257,8 +257,8 @@ namespace MapView.Forms.Observers
 			if (part != null)
 			{
 				PartType slot = part.Record.PartType;
-				ObserverManager.TopView     .Control   .QuadrantPanel.SelectedQuadrant = slot;
-				ObserverManager.TopRouteView.ControlTop.QuadrantPanel.SelectedQuadrant = slot;
+				ObserverManager.TopView     .Control   .QuadrantControl.SelectedQuadrant = slot;
+				ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = slot;
 			}
 
 			QuadrantDrawService.CurrentTilepart = part;

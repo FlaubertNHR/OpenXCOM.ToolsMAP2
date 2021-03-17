@@ -984,7 +984,7 @@ namespace MapView.Forms.MainView
 				case str_AnimateSprites:
 					MainViewUnderlay.Animate(AnimateSprites = (bool)val); // F2 toggle
 
-					if (!AnimateSprites) // show the doorsprites closed in TileView and QuadrantPanel.
+					if (!AnimateSprites) // show the doorsprites closed in TileView and QuadrantControl.
 					{
 						if (OpenDoors) // toggle off doors if general animations stop.
 						{

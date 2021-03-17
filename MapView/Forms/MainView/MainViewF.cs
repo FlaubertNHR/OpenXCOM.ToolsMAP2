@@ -338,7 +338,7 @@ namespace MapView
 			LogFile.WriteLine("tftd-battle Palette instantiated.");
 			LogFile.WriteLine("Palette transparencies set.");
 
-			MonotoneSprites = EmbeddedService.CreateMonotoneSpriteset();	// sprites for TileView's eraser and QuadrantPanel's blank quads.
+			MonotoneSprites = EmbeddedService.CreateMonotoneSpriteset();	// sprites for TileView's eraser and QuadrantControl's blank quads.
 																			// NOTE: transparency of the 'UfoBattle' palette must be set first.
 			LogFile.WriteLine("Monotone sprites loaded.");
 
@@ -3348,12 +3348,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Resets the QuadrantPanel when either a Map loads or gets resized.
+		/// Resets the QuadrantControl when either a Map loads or gets resized.
 		/// </summary>
 		private void ResetQuadrantPanel()
 		{
-			QuadrantPanel p1 = ObserverManager.TopView     .Control   .QuadrantPanel;
-			QuadrantPanel p2 = ObserverManager.TopRouteView.ControlTop.QuadrantPanel;
+			QuadrantControl p1 = ObserverManager.TopView     .Control   .QuadrantControl;
+			QuadrantControl p2 = ObserverManager.TopRouteView.ControlTop.QuadrantControl;
 
 			p1.Tile =
 			p2.Tile = null;

@@ -275,7 +275,7 @@ namespace MapView.Forms.Observers
 					{
 						e.SuppressKeyPress = true;
 						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-						_top.QuadrantPanel.doMouseDown(args, slot);
+						_top.QuadrantControl.doMouseDown(args, slot);
 					}
 					break;
 

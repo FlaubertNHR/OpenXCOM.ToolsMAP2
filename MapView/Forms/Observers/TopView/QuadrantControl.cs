@@ -13,9 +13,8 @@ namespace MapView.Forms.Observers
 	/// <summary>
 	/// These are not actually "quadrants"; they are tile-part types. But that's
 	/// the way this trolls.
-	/// @note This is not a Panel. It is a Control.
 	/// </summary>
-	internal sealed class QuadrantPanel
+	internal sealed class QuadrantControl
 		:
 			ObserverControl_Top // DoubleBufferedControl, IObserver
 	{
@@ -67,11 +66,11 @@ namespace MapView.Forms.Observers
 		/// TopRouteView(Top).
 		/// TODO: This should be a static class.
 		/// </summary>
-		internal QuadrantPanel()
+		internal QuadrantControl()
 		{
 			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
 
-			if (!_t1subscribed) // only once (for both QuadrantPanels)
+			if (!_t1subscribed) // only once (for both QuadrantControls)
 			{
 				_t1subscribed = true;
 				_t1.Elapsed += OnClicksElapsed;
@@ -124,7 +123,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		///  Handles mousedown events on this QuadrantPanel.
+		///  Handles mousedown events on this QuadrantControl.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -161,8 +160,8 @@ namespace MapView.Forms.Observers
 
 			if (part != PartType.Invalid)
 			{
-				ObserverManager.TopView     .Control   .QuadrantPanel.SelectedQuadrant = part;
-				ObserverManager.TopRouteView.ControlTop.QuadrantPanel.SelectedQuadrant = part;
+				ObserverManager.TopView     .Control   .QuadrantControl.SelectedQuadrant = part;
+				ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = part;
 
 				if (!isPartSlot)
 					Clicker(e.Button, e.Clicks, isKeyInput);
@@ -171,7 +170,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the details of LMB and RMB wrt the QuadrantPanels.
+		/// Handles the details of LMB and RMB wrt the QuadrantControls.
 		/// TODO: GENERAL - Bypass operations (and the MapChanged flag)
 		///       if user does an operation that results in identical state.
 		/// </summary>
@@ -229,14 +228,14 @@ namespace MapView.Forms.Observers
 		#region Events
 		/// <summary>
 		/// Clever handling of RMB double-click event ...
-		/// WARNING: The interaction between this QuadrantPanel, its respective
+		/// WARNING: The interaction between this QuadrantControl, its respective
 		/// TopPanel, and the TilePanel in TileView is a little bit fragile.
 		/// </summary>
 		/// <param name="source"></param>
 		/// <param name="e"></param>
 		private void OnClicksElapsed(object source, ElapsedEventArgs e)
 		{
-			//DSShared.LogFile.WriteLine("QuadrantPanel.OnClicksElapsed() _t1Clicks= " + _t1Clicks);
+			//DSShared.LogFile.WriteLine("QuadrantControl.OnClicksElapsed() _t1Clicks= " + _t1Clicks);
 
 			_t1.Stop();
 
@@ -254,7 +253,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Invalidates this QuadrantPanel if tileparts are being animated.
+		/// Invalidates this QuadrantControl if tileparts are being animated.
 		/// </summary>
 		private void OnPhaseEvent()
 		{

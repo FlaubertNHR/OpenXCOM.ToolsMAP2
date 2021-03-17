@@ -10,7 +10,7 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Inherited by TopPanel, QuadrantPanel.
+	/// Inherited by TopPanel, QuadrantControl.
 	/// </summary>
 	internal class ObserverControl_Top
 		:
@@ -35,22 +35,22 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Satisfies IObserver. Is overridden only by QuadrantPanel.
+		/// Satisfies IObserver. Is overridden only by QuadrantControl.
 		/// TODO: So either (a) it should not be a requirement in IObserver
 		/// or, (b) this should not inherit from IObserver or, (c) it should
 		/// not be a virtual function but instead it should be wired differently
-		/// for the QuadrantPanel.
+		/// for the QuadrantControl.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
 		{}
 
 		/// <summary>
-		/// Satisfies IObserver. Is overridden only by QuadrantPanel.
+		/// Satisfies IObserver. Is overridden only by QuadrantControl.
 		/// TODO: So either (a) it should not be a requirement in IObserver
 		/// or, (b) this should not inherit from IObserver or, (c) it should
 		/// not be a virtual function but instead it should be wired differently
-		/// for the QuadrantPanel.
+		/// for the QuadrantControl.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnLevelSelectedObserver(LevelSelectedEventArgs args)

@@ -549,7 +549,7 @@ namespace MapView.Forms.MainView
 					Point a = GetDragBeg_abs();
 					Point b = GetDragEnd_abs();
 
-					PartType slot = ObserverManager.TopView.Control.QuadrantPanel.SelectedQuadrant;
+					PartType slot = ObserverManager.TopView.Control.QuadrantControl.SelectedQuadrant;
 
 					MapTile tile;
 					for (int col = a.X; col <= b.X; ++col)
@@ -590,7 +590,7 @@ namespace MapView.Forms.MainView
 			Point a = GetDragBeg_abs();
 			Point b = GetDragEnd_abs();
 
-			PartType slot = ObserverManager.TopView .Control.QuadrantPanel.SelectedQuadrant;
+			PartType slot = ObserverManager.TopView .Control.QuadrantControl.SelectedQuadrant;
 
 			MapTile tile;
 			for (int col = a.X; col <= b.X; ++col)

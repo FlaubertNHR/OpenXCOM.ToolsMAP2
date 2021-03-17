@@ -208,7 +208,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Draws the QuadrantPanel incl/ sprites.
+		/// Draws the QuadrantControl incl/ sprites.
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="selectedQuadrant"></param>
@@ -515,10 +515,10 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Prints the currently selected tile's location.
-		/// @note This is called by QuadrantPanel.
+		/// @note This is called by QuadrantControl.
 		/// </summary>
 		/// <param name="location"></param>
-		/// <param name="panelwidth">the width of QuadrantPanel</param>
+		/// <param name="panelwidth">the width of QuadrantControl</param>
 		internal static void PrintSelectedLocation(MapLocation location, int panelwidth)
 		{
 			var file = ObserverManager.TopView.Control.TopPanel.MapFile;

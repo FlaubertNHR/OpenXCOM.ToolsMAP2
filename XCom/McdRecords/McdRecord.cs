@@ -11,7 +11,7 @@ namespace XCom
 {
 	public enum PartType
 	{
-		Invalid = -1, // <- for TileView's ALL tabpage only. Also used by QuadrantPanel.OnMouseDown() as None.
+		Invalid = -1, // <- for TileView's ALL tabpage only. Also used by QuadrantControl.OnMouseDown() as None.
 		Floor   =  0, //    As well as for crippled tileparts.
 		West    =  1,
 		North   =  2,
