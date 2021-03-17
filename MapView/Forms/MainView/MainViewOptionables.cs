@@ -878,8 +878,7 @@ namespace MapView.Forms.MainView
 					break;
 
 				case str_SelectedTileToner:
-					SelectedTileToner = (int)val;
-					MainViewF.that.SetTileToner();
+					MainViewF.that.SetTileToner(SelectedTileToner = (int)val);
 					break;
 
 				case str_LayerSelectionBorder:

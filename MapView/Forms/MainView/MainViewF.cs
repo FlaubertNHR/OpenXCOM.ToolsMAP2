@@ -3246,7 +3246,7 @@ namespace MapView
 							(_foptions as OptionsForm).propertyGrid.Refresh();
 						}
 
-						SetTileToner(); // create toned spriteset(s) for selected-tile(s)
+						SetTileToner(Optionables.SelectedTileToner); // create toned spriteset(s) for selected-tile(s)
 
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 							MenuManager.StartSecondaryStageBoosters();
@@ -3301,41 +3301,42 @@ namespace MapView
 		/// <summary>
 		/// Sets the toner to be used for drawing the parts of selected tiles.
 		/// </summary>
-		internal void SetTileToner()
+		/// <param name="toner"></param>
+		internal void SetTileToner(int toner)
 		{
-			miNone .Checked =
-			miGray .Checked =
-			miRed  .Checked =
-			miGreen.Checked =
-			miBlue .Checked = false;
+			miNone .Checked = (toner == MainViewOptionables.TONER_NONE);
+			miGray .Checked = (toner == MainViewOptionables.TONER_GRAY);
+			miRed  .Checked = (toner == MainViewOptionables.TONER_RED);
+			miGreen.Checked = (toner == MainViewOptionables.TONER_GREEN);
+			miBlue .Checked = (toner == MainViewOptionables.TONER_BLUE);
 
 			if (SpritesetsManager.Spritesets.Count != 0)
 			{
 				ColorPalette table;
-				switch (Optionables.SelectedTileToner)
+				switch (toner)
 				{
 					case MainViewOptionables.TONER_NONE:
-						miNone.Checked = true;
-						return;
+						return; // sprites shall draw their standard, no-toned palette version
+
+					// NOTE: All loaded spritesets will have the same palette.
+					// - this demonstrates how redundant palette-pointers are.
+					//   palette this palette that, here have a palette ...
+					//   i know you want one
 
 					default: // case TONER_GRAY
-						table = SpritesetsManager.Spritesets[0].Pal.GrayScale.Table;	// NOTE: All loaded spritesets will have the same palette.
-						miGray.Checked = true;											// - this demonstrates how redundant palette-pointers are.
-						break;															//   palette this palette that, here have a palette ...
-																						//   i know you want one
+						table = SpritesetsManager.Spritesets[0].Pal.GrayScale.Table;
+						break;
+
 					case MainViewOptionables.TONER_RED:
 						table = SpritesetsManager.Spritesets[0].Pal.RedScale.Table;
-						miRed.Checked = true;
 						break;
 
 					case MainViewOptionables.TONER_GREEN:
 						table = SpritesetsManager.Spritesets[0].Pal.GreenScale.Table;
-						miGreen.Checked = true;
 						break;
 
 					case MainViewOptionables.TONER_BLUE:
 						table = SpritesetsManager.Spritesets[0].Pal.BlueScale.Table;
-						miBlue.Checked = true;
 						break;
 				}
 
