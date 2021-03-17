@@ -192,9 +192,9 @@ namespace MapView.Forms.Observers
 		#region cTor
 		/// <summary>
 		/// cTor. Instantiates the RouteView viewer and its components/controls.
-		/// IMPORTANT: RouteViewForm and TopRouteViewForm will each invoke and
-		/// maintain their own instantiations.
 		/// </summary>
+		/// <remarks><see cref="RouteViewForm"/> and <see cref="TopRouteViewForm"/>
+		/// will each invoke and maintain their own instantiations.</remarks>
 		public RouteView()
 		{
 			Optionables = new RouteViewOptionables(this);
@@ -242,16 +242,18 @@ namespace MapView.Forms.Observers
 		#region Events (override) inherited from IMapObserver/MapObserverControl
 		/// <summary>
 		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
-		/// @note This will fire twice whenever the location changes: once by
+		/// </summary>
+		/// <param name="args"></param>
+		/// <remarks>This will fire twice whenever the location changes: once by
 		/// RouteView and again by TopRouteView(Route). This is desired behavior
 		/// since it updates the selected-location in both viewers.
-		/// @note A route-node at location will *not* be selected; only the
+		/// 
+		/// 
+		/// A route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to (or press [Enter] when the tile is
 		/// selected). This is a design decision that allows the selected node
-		/// to stay selected while other tiles get highlighted.
-		/// </summary>
-		/// <param name="args"></param>
+		/// to stay selected while other tiles get highlighted.</remarks>
 		public override void OnLocationSelectedObserver(LocationSelectedEventArgs args)
 		{
 			PrintSelectedInfo();
@@ -259,18 +261,20 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
-		/// @note This will fire twice whenever the location changes: once by
+		/// </summary>
+		/// <param name="args"></param>
+		/// <remarks>This will fire twice whenever the location changes: once by
 		/// RouteView and again by TopRouteView(Route). However only the viewer
 		/// that the mousecursor is currently in should have the
 		/// location-string's color updated; the condition to allow that update
 		/// is (RoutePanel._col != -1).
-		/// @note The route-node at location will *not* be selected; only the
+		/// 
+		/// 
+		/// The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to (or press [Enter] when the tile is
 		/// selected). This is a design decision that allows the selected node
-		/// to stay selected while other tiles get highlighted.
-		/// </summary>
-		/// <param name="args"></param>
+		/// to stay selected while other tiles get highlighted.</remarks>
 		public override void OnLevelSelectedObserver(LevelSelectedEventArgs args)
 		{
 			//LogFile.WriteLine("RouteView.OnLevelSelectedObserver() " + Tag);

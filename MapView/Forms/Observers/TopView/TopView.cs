@@ -87,9 +87,9 @@ namespace MapView.Forms.Observers
 		#region cTor
 		/// <summary>
 		/// cTor. Instantiates the TopView viewer and its components/controls.
-		/// IMPORTANT: TopViewForm and TopRouteViewForm will each invoke and
-		/// maintain their own instantiations.
 		/// </summary>
+		/// <remarks><see cref="RouteViewForm"/> and <see cref="TopRouteViewForm"/>
+		/// will each invoke and maintain their own instantiations.</remarks>
 		internal TopView()
 		{
 			Optionables = new TopViewOptionables(this);

@@ -13,8 +13,8 @@ namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// The derived class for RoutePanel. Handles drawing/painting the panel.
-	/// @note This is not a Panel. It is a UserControl inside of a Panel.
 	/// </summary>
+	/// <remarks>This is not a Panel. It is a UserControl inside of a Panel.</remarks>
 	internal sealed class RoutePanel
 		:
 			RoutePanelParent

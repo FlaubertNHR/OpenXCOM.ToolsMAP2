@@ -10,12 +10,12 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The base class for <see cref="T:MapView.Forms.Observers.RoutePanel"/>.
+	/// The base class for <see cref="MapView.Forms.Observers.RoutePanel"/>.
 	/// Generally handles mousey things and keyboard navigation.
-	/// @note <see cref="T:MapView.Forms.Observers.RouteView"/> also handles
-	/// mouse events.
-	/// @note This is not a Panel. It is a UserControl inside of a Panel.
 	/// </summary>
+	/// <remarks>This is not a Panel. It is a UserControl inside of a Panel.
+	/// Note that <see cref="MapView.Forms.Observers.RouteView"/> also handles
+	/// mouse events.</remarks>
 	internal class RoutePanelParent
 		:
 			UserControl
