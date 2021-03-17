@@ -379,30 +379,30 @@ namespace MapView.Forms.Observers
 		internal void LoadDefaults(Options options)
 		{
 			var penGrid = new Pen(def_GridLineColor, def_GridLineWidth);
-			TopPanel.Pens.Add(str_GridLineColor, penGrid);
+			TopControl.Pens.Add(str_GridLineColor, penGrid);
 
 			var penGrid10 = new Pen(def_GridLine10Color, def_GridLine10Width);
-			TopPanel.Pens.Add(str_GridLine10Color, penGrid10);
+			TopControl.Pens.Add(str_GridLine10Color, penGrid10);
 
-			TopPanel.Brushes.Add(str_FloorColor, new SolidBrush(def_FloorColor));
+			TopControl.Brushes.Add(str_FloorColor, new SolidBrush(def_FloorColor));
 
 			var penWest = new Pen(def_WestColor, def_WestWidth);
-			TopPanel.Pens.Add(str_WestColor, penWest);
-			TopPanel.ToolWest = new ColorTool(penWest);
+			TopControl.Pens.Add(str_WestColor, penWest);
+			TopControl.ToolWest = new ColorTool(penWest);
 
 			var penNorth = new Pen(def_NorthColor, def_NorthWidth);
-			TopPanel.Pens.Add(str_NorthColor, penNorth);
-			TopPanel.ToolNorth = new ColorTool(penNorth);
+			TopControl.Pens.Add(str_NorthColor, penNorth);
+			TopControl.ToolNorth = new ColorTool(penNorth);
 
 			var brushContent = new SolidBrush(def_ContentColor);
-			TopPanel.Brushes.Add(str_ContentColor, brushContent);
-			TopPanel.ToolContent = new ColorTool(brushContent, DrawBlobService.LINEWIDTH_CONTENT);
+			TopControl.Brushes.Add(str_ContentColor, brushContent);
+			TopControl.ToolContent = new ColorTool(brushContent, DrawBlobService.LINEWIDTH_CONTENT);
 
 			var penSelector = new Pen(def_SelectorColor, def_SelectorWidth);
-			TopPanel.Pens.Add(str_SelectorColor, penSelector);
+			TopControl.Pens.Add(str_SelectorColor, penSelector);
 
 			var penSelected = new Pen(def_SelectedColor, def_SelectedWidth);
-			TopPanel.Pens.Add(str_SelectedColor, penSelected);
+			TopControl.Pens.Add(str_SelectedColor, penSelected);
 
 			QuadrantDrawService.Brush = new SolidBrush(def_SelectedQuadColor);
 
@@ -518,14 +518,14 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangeBruColor(string key, object val)
 		{
-			TopPanel.Brushes[key].Color = (Color)val;
+			TopControl.Brushes[key].Color = (Color)val;
 
 			if (key == str_ContentColor)
 			{
-				TopPanel.ToolContent.Dispose();
-				TopPanel.ToolContent = new ColorTool(
-												TopPanel.Brushes[key],
-												DrawBlobService.LINEWIDTH_CONTENT);
+				TopControl.ToolContent.Dispose();
+				TopControl.ToolContent = new ColorTool(
+													TopControl.Brushes[key],
+													DrawBlobService.LINEWIDTH_CONTENT);
 			}
 		}
 
@@ -536,18 +536,18 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenColor(string key, object val)
 		{
-			TopPanel.Pens[key].Color = (Color)val;
+			TopControl.Pens[key].Color = (Color)val;
 
 			switch (key)
 			{
 				case str_WestColor:
-					TopPanel.ToolWest.Dispose();
-					TopPanel.ToolWest = new ColorTool(TopPanel.Pens[key]);
+					TopControl.ToolWest.Dispose();
+					TopControl.ToolWest = new ColorTool(TopControl.Pens[key]);
 					break;
 
 				case str_NorthColor:
-					TopPanel.ToolNorth.Dispose();
-					TopPanel.ToolNorth = new ColorTool(TopPanel.Pens[key]);
+					TopControl.ToolNorth.Dispose();
+					TopControl.ToolNorth = new ColorTool(TopControl.Pens[key]);
 					break;
 			}
 		}
@@ -559,18 +559,18 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenWidth(string key, object val)
 		{
-			TopPanel.Pens[key = WidthToColor(key)].Width = (int)val;
+			TopControl.Pens[key = WidthToColor(key)].Width = (int)val;
 
 			switch (key)
 			{
 				case str_WestColor:
-					TopPanel.ToolWest.Dispose();
-					TopPanel.ToolWest = new ColorTool(TopPanel.Pens[key]);
+					TopControl.ToolWest.Dispose();
+					TopControl.ToolWest = new ColorTool(TopControl.Pens[key]);
 					break;
 
 				case str_NorthColor:
-					TopPanel.ToolNorth.Dispose();
-					TopPanel.ToolNorth = new ColorTool(TopPanel.Pens[key]);
+					TopControl.ToolNorth.Dispose();
+					TopControl.ToolNorth = new ColorTool(TopControl.Pens[key]);
 					break;
 			}
 		}

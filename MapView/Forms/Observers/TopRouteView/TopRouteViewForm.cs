@@ -94,8 +94,8 @@ namespace MapView.Forms.Observers
 
 			if (tabControl.SelectedIndex == TAB_TOP)
 			{
-				_top.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
-				_top.TopPanel.Focus();
+				_top.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+				_top.TopControl.Focus();
 			}
 
 //			base.OnActivated(e);
@@ -116,7 +116,7 @@ namespace MapView.Forms.Observers
 			switch (tabControl.SelectedIndex)
 			{
 				case TAB_TOP:
-					if (_top.TopPanel.Focused)
+					if (_top.TopControl.Focused)
 					{
 						switch (keyData)
 						{
@@ -178,10 +178,10 @@ namespace MapView.Forms.Observers
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
-							if (!_top.TopPanel.Focused)
+							if (!_top.TopControl.Focused)
 							{
 								e.SuppressKeyPress = true;
-								_top.TopPanel.Focus();
+								_top.TopControl.Focus();
 							}
 							else
 								MainViewOverlay.that.Edit(e);
@@ -236,7 +236,7 @@ namespace MapView.Forms.Observers
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
-							if (_top.TopPanel.Focused)
+							if (_top.TopControl.Focused)
 							{
 								e.SuppressKeyPress = true;
 								MainViewOverlay.that.Navigate(e.KeyData, true);

@@ -11,9 +11,10 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// These are not actually "quadrants"; they are tile-part types. But that's
-	/// the way this trolls.
+	/// The bottom region of <see cref="TopView"/>.
 	/// </summary>
+	/// <remarks>These are not actually "quadrants"; they are tile-part types.
+	/// But that's the way this trolls.</remarks>
 	internal sealed class QuadrantControl
 		:
 			ObserverControl_Top // DoubleBufferedControl, IObserver
@@ -62,10 +63,11 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. There are 2 quadpanels: one in TopView and another in
-		/// TopRouteView(Top).
+		/// cTor.
 		/// TODO: This should be a static class.
 		/// </summary>
+		/// <remarks>There are 2 controls - one in TopView and another in
+		/// TopRouteView(Top).</remarks>
 		internal QuadrantControl()
 		{
 			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
@@ -128,8 +130,8 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			ObserverManager.TopView     .Control   .TopPanel.Select();
-			ObserverManager.TopRouteView.ControlTop.TopPanel.Select();
+			ObserverManager.TopView     .Control   .TopControl.Select();
+			ObserverManager.TopRouteView.ControlTop.TopControl.Select();
 
 			bool isKeyInput = _keyslot !=  PartType.Invalid
 						   && _keyslot != (PartType)QuadrantDrawService.QuadrantPart;
@@ -229,7 +231,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Clever handling of RMB double-click event ...
 		/// WARNING: The interaction between this QuadrantControl, its respective
-		/// TopPanel, and the TilePanel in TileView is a little bit fragile.
+		/// TopControl, and the TilePanel in TileView is a little bit fragile.
 		/// </summary>
 		/// <param name="source"></param>
 		/// <param name="e"></param>

@@ -67,8 +67,8 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			_top.TopPanel.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
-			_top.TopPanel.Focus();
+			_top.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+			_top.TopControl.Focus();
 
 //			base.OnActivated(e);
 		}
@@ -85,7 +85,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (_top.TopPanel.Focused)
+			if (_top.TopControl.Focused)
 			{
 				switch (keyData)
 				{
@@ -114,7 +114,7 @@ namespace MapView.Forms.Observers
 		/// - selects a quadrant
 		/// @note Requires 'KeyPreview' true.
 		/// @note See also TileViewForm, RouteViewForm, TopRouteViewForm
-		/// @note Edit/Save keys are handled by 'TopPanel.OnKeyDown()'.
+		/// @note Edit/Save keys are handled by 'TopControl.OnKeyDown()'.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
@@ -124,10 +124,10 @@ namespace MapView.Forms.Observers
 			switch (e.KeyData)
 			{
 				case Keys.Escape:
-					if (!_top.TopPanel.Focused)
+					if (!_top.TopControl.Focused)
 					{
 						e.SuppressKeyPress = true;
-						_top.TopPanel.Focus();
+						_top.TopControl.Focus();
 					}
 					else
 						MainViewOverlay.that.Edit(e);
@@ -153,7 +153,7 @@ namespace MapView.Forms.Observers
 				case Keys.Shift | Keys.End:
 				case Keys.Shift | Keys.PageUp:
 				case Keys.Shift | Keys.PageDown:
-					if (_top.TopPanel.Focused)
+					if (_top.TopControl.Focused)
 					{
 						e.SuppressKeyPress = true;
 						MainViewOverlay.that.Navigate(e.KeyData, true);

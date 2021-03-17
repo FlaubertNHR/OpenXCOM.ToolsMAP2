@@ -130,7 +130,7 @@ namespace MapView.Forms.MainView
 				observer.MapFile.LevelSelected    += observer.OnLevelSelectedObserver;
 			}
 
-			foreach (string key in observer.ObserverPanels.Keys) // ie. TopPanel and QuadrantControl
+			foreach (string key in observer.ObserverPanels.Keys) // ie. TopControl and QuadrantControl
 				SubscribeObserver(observer.MapFile, observer.ObserverPanels[key]);
 		}
 
@@ -153,13 +153,13 @@ namespace MapView.Forms.MainView
 
 		#region Update UI (static)
 		/// <summary>
-		/// Invalidates the <see cref="TopPanel">TopPanels</see> in TopView and
-		/// TopRouteView(Top).
+		/// Invalidates the <see cref="TopControl">TopControls</see> in TopView
+		/// and TopRouteView(Top).
 		/// </summary>
 		internal static void InvalidateTopPanels()
 		{
-			TopView     .Control   .TopPanel.Invalidate();
-			TopRouteView.ControlTop.TopPanel.Invalidate();
+			TopView     .Control   .TopControl.Invalidate();
+			TopRouteView.ControlTop.TopControl.Invalidate();
 		}
 
 		/// <summary>

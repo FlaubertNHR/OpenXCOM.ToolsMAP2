@@ -10,7 +10,7 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Inherited by TopPanel, QuadrantControl.
+	/// Inherited by TopControl, QuadrantControl.
 	/// </summary>
 	internal class ObserverControl_Top
 		:

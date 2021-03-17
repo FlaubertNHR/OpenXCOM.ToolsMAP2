@@ -262,7 +262,7 @@
     <Compile Include="Forms\Observers\TileView\TileView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Observers\TopView\TopPanel.cs">
+    <Compile Include="Forms\Observers\TopView\TopControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Observers\TopView\TopView.cs">

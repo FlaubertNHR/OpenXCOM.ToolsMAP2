@@ -365,28 +365,28 @@ namespace MapView.Forms.Observers
 			DrawTypeString(Part,    TextWidth_part,    QuadrantPart);
 
 			// fill the color-swatch under each quadrant-label
-			if (_swatchbrushWest != null && _swatchbrushWest.Color != TopPanel.Pens[TopViewOptionables.str_WestColor].Color)
+			if (_swatchbrushWest != null && _swatchbrushWest.Color != TopControl.Pens[TopViewOptionables.str_WestColor].Color)
 			{
 				_swatchbrushWest.Dispose();
 				_swatchbrushWest = null;
 			}
 
 			if (_swatchbrushWest == null)
-				_swatchbrushWest = new SolidBrush(TopPanel.Pens[TopViewOptionables.str_WestColor].Color);
+				_swatchbrushWest = new SolidBrush(TopControl.Pens[TopViewOptionables.str_WestColor].Color);
 
-			if (_swatchbrushNorth != null && _swatchbrushNorth.Color != TopPanel.Pens[TopViewOptionables.str_NorthColor].Color)
+			if (_swatchbrushNorth != null && _swatchbrushNorth.Color != TopControl.Pens[TopViewOptionables.str_NorthColor].Color)
 			{
 				_swatchbrushNorth.Dispose();
 				_swatchbrushNorth = null;
 			}
 
 			if (_swatchbrushNorth == null)
-				_swatchbrushNorth = new SolidBrush(TopPanel.Pens[TopViewOptionables.str_NorthColor].Color);
+				_swatchbrushNorth = new SolidBrush(TopControl.Pens[TopViewOptionables.str_NorthColor].Color);
 
-			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_FloorColor],   PartType.Floor);
+			FillSwatchColor(TopControl.Brushes[TopViewOptionables.str_FloorColor],   PartType.Floor);
 			FillSwatchColor(_swatchbrushWest,                                      PartType.West);
 			FillSwatchColor(_swatchbrushNorth,                                     PartType.North);
-			FillSwatchColor(TopPanel.Brushes[TopViewOptionables.str_ContentColor], PartType.Content);
+			FillSwatchColor(TopControl.Brushes[TopViewOptionables.str_ContentColor], PartType.Content);
 		}
 		private static SolidBrush _swatchbrushWest;
 		private static SolidBrush _swatchbrushNorth;
@@ -521,7 +521,7 @@ namespace MapView.Forms.Observers
 		/// <param name="panelwidth">the width of QuadrantControl</param>
 		internal static void PrintSelectedLocation(MapLocation location, int panelwidth)
 		{
-			var file = ObserverManager.TopView.Control.TopPanel.MapFile;
+			var file = ObserverManager.TopView.Control.TopControl.MapFile;
 
 			int c = location.Col;
 			int r = location.Row;
@@ -545,11 +545,11 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Prints the selector's current tile location.
-		/// @note This is called by TopPanel.
+		/// @note This is called by TopControl.
 		/// </summary>
 		/// <param name="location"></param>
-		/// <param name="panelwidth">the width of TopPanel</param>
-		/// <param name="panelheight">the width of TopPanel</param>
+		/// <param name="panelwidth">the width of TopControl</param>
+		/// <param name="panelheight">the width of TopControl</param>
 		/// <param name="file"></param>
 		internal static void PrintSelectorLocation(
 				Point location,

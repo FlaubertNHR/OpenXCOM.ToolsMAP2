@@ -13,9 +13,9 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// @note This is not a Panel. It is a Control shown inside of a Panel.
+	/// The top region of <see cref="TopView"/>.
 	/// </summary>
-	internal sealed class TopPanel
+	internal sealed class TopControl
 		:
 			ObserverControl_Top // DoubleBufferedControl, IObserver
 	{
@@ -77,7 +77,7 @@ namespace MapView.Forms.Observers
 		private static readonly Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();
 		/// <summary>
-		/// Pens for use in TopPanel.
+		/// Pens for use in TopControl.
 		/// @note The identifier 'Pens' could cause a clash w/ System.Drawing
 		/// </summary>
 		internal static Dictionary<string, Pen> Pens
@@ -88,7 +88,7 @@ namespace MapView.Forms.Observers
 		private static readonly Dictionary<string, SolidBrush> _brushes =
 							new Dictionary<string, SolidBrush>();
 		/// <summary>
-		/// Brushes for use in TopPanel.
+		/// Brushes for use in TopControl.
 		/// @note The identifier 'Brushes' could cause a clash w/
 		/// System.Drawing.Brushes.
 		/// </summary>
@@ -101,10 +101,12 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. Is NOT a panel.
+		/// cTor.
 		/// </summary>
 		/// <param name="control"></param>
-		internal TopPanel(TopView control)
+		/// <remarks>There are 2 controls - one in TopView and another in
+		/// TopRouteView(Top).</remarks>
+		internal TopControl(TopView control)
 		{
 			TopView = control; // beautiful. This pattern should be iterated throughout MapView.
 
@@ -293,8 +295,8 @@ namespace MapView.Forms.Observers
 				Pen pen;
 				for (int i = 0; i <= MapFile.MapSize.Rows; ++i) // draw horizontal grid-lines (ie. upperleft to lowerright)
 				{
-					if (i % 10 != 0) pen = TopPanel.Pens[TopViewOptionables.str_GridLineColor];
-					else             pen = TopPanel.Pens[TopViewOptionables.str_GridLine10Color];
+					if (i % 10 != 0) pen = TopControl.Pens[TopViewOptionables.str_GridLineColor];
+					else             pen = TopControl.Pens[TopViewOptionables.str_GridLine10Color];
 
 					graphics.DrawLine(
 									pen,
@@ -306,8 +308,8 @@ namespace MapView.Forms.Observers
 
 				for (int i = 0; i <= MapFile.MapSize.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
 				{
-					if (i % 10 != 0) pen = TopPanel.Pens[TopViewOptionables.str_GridLineColor];
-					else             pen = TopPanel.Pens[TopViewOptionables.str_GridLine10Color];
+					if (i % 10 != 0) pen = TopControl.Pens[TopViewOptionables.str_GridLineColor];
+					else             pen = TopControl.Pens[TopViewOptionables.str_GridLine10Color];
 
 					graphics.DrawLine(
 									pen,
@@ -326,7 +328,7 @@ namespace MapView.Forms.Observers
 					PathSelectorLozenge(
 									_originX + (_col - _row) * halfWidth,
 									OffsetY  + (_col + _row) * halfHeight);
-					graphics.DrawPath(TopPanel.Pens[TopViewOptionables.str_SelectorColor], _lozSelector);
+					graphics.DrawPath(TopControl.Pens[TopViewOptionables.str_SelectorColor], _lozSelector);
 
 					// print mouseover location ->
 					QuadrantDrawService.SetGraphics(graphics);
@@ -335,7 +337,7 @@ namespace MapView.Forms.Observers
 
 				// draw tiles-selected lozenge ->
 				if (MainViewOverlay.that.FirstClick)
-					graphics.DrawPath(TopPanel.Pens[TopViewOptionables.str_SelectedColor], _lozSelected);
+					graphics.DrawPath(TopControl.Pens[TopViewOptionables.str_SelectedColor], _lozSelected);
 			}
 		}
 
@@ -354,7 +356,7 @@ namespace MapView.Forms.Observers
 			if (TopView.Floor.Checked && tile.Floor != null)
 				BlobService.DrawFloor(
 									graphics,
-									TopPanel.Brushes[TopViewOptionables.str_FloorColor],
+									TopControl.Brushes[TopViewOptionables.str_FloorColor],
 									x,y);
 
 			if (TopView.Content.Checked && tile.Content != null)

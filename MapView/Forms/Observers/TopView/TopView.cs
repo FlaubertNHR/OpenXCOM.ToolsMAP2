@@ -57,7 +57,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		internal TopPanel TopPanel
+		internal TopControl TopControl
 		{ get; private set; }
 
 		internal QuadrantControl QuadrantControl
@@ -107,11 +107,11 @@ namespace MapView.Forms.Observers
 			QuadrantControl.SelectedQuadrant = PartType.Floor;
 
 
-			TopPanel = new TopPanel(this);
-			TopPanel.Dock = DockStyle.Fill;
+			TopControl = new TopControl(this);
+			TopControl.Dock = DockStyle.Fill;
 
-			pnlMain.Controls.Add(TopPanel);
-			pnlMain.Resize += (sender, e) => TopPanel.ResizeObserver(
+			pnlMain.Controls.Add(TopControl);
+			pnlMain.Resize += (sender, e) => TopControl.ResizeObserver(
 																pnlMain.Width,
 																pnlMain.Height);
 
@@ -134,7 +134,7 @@ namespace MapView.Forms.Observers
 
 			VisibleQuadrants = FLOOR | WEST | NORTH | CONTENT;
 
-			ObserverPanels.Add("TopPanel",      TopPanel);
+			ObserverPanels.Add("TopControl",      TopControl);
 			ObserverPanels.Add("QuadrantControl", QuadrantControl);
 
 			ResumeLayout();

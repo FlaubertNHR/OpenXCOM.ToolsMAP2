@@ -1676,8 +1676,8 @@ namespace MapView
 
 						ObserverManager.SetMapfile(file);
 
-						ObserverManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
-						ObserverManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
+						ObserverManager.TopView     .Control   .TopControl.ClearSelectorLozenge();
+						ObserverManager.TopRouteView.ControlTop.TopControl.ClearSelectorLozenge();
 
 						if (ScanG != null) // update ScanG viewer if open
 							ScanG.LoadMapfile(file);

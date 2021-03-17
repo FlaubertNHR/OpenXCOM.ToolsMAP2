@@ -34,7 +34,8 @@ namespace MapView.Forms.Observers
 
 
 	/// <summary>
-	/// Draws floor- and wall- and content-blobs for TopView and RouteView.
+	/// Draws floor- and wall- and content-blobs for <see cref="TopView"/> and
+	/// <see cref="RouteView"/>.
 	/// </summary>
 	internal sealed class DrawBlobService
 		:

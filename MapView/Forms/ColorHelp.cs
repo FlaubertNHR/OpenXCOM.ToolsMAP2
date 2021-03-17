@@ -129,33 +129,33 @@ namespace MapView
 			Color color;
 
 			string key = TopViewOptionables.str_FloorColor;
-			if (TopPanel.Brushes.ContainsKey(key))
+			if (TopControl.Brushes.ContainsKey(key))
 			{
-				color = TopPanel.Brushes[key].Color;
+				color = TopControl.Brushes[key].Color;
 				label7.BackColor = color;
 				label7.ForeColor = GetTextColor(color);
 			}
 
 			key = TopViewOptionables.str_WestColor;
-			if (TopPanel.Pens.ContainsKey(key))
+			if (TopControl.Pens.ContainsKey(key))
 			{
-				color = TopPanel.Pens[key].Color;
+				color = TopControl.Pens[key].Color;
 				label8.BackColor = color;
 				label8.ForeColor = GetTextColor(color);
 			}
 
 			key = TopViewOptionables.str_NorthColor;
-			if (TopPanel.Pens.ContainsKey(key))
+			if (TopControl.Pens.ContainsKey(key))
 			{
-				color = TopPanel.Pens[key].Color;
+				color = TopControl.Pens[key].Color;
 				label9.BackColor = color;
 				label9.ForeColor = GetTextColor(color);
 			}
 
 			key = TopViewOptionables.str_ContentColor;
-			if (TopPanel.Brushes.ContainsKey(key))
+			if (TopControl.Brushes.ContainsKey(key))
 			{
-				color = TopPanel.Brushes[key].Color;
+				color = TopControl.Brushes[key].Color;
 				label10.BackColor = color;
 				label10.ForeColor = GetTextColor(color);
 			}
