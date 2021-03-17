@@ -190,7 +190,7 @@ namespace MapView.Forms.Observers
 		private void t1_Tick(object sender, EventArgs e)
 		{
 			if (!Bounds.Contains(PointToClient(Control.MousePosition)))
-				Chaparone.StatbarOverInfo(null);
+				Chaparone.PrintOverInfo(null);
 		}
 
 		/// <summary>
@@ -449,7 +449,7 @@ namespace MapView.Forms.Observers
 			if (id != -1 && id < _parts.Length)
 				part = _parts[id];
 
-			Chaparone.StatbarOverInfo(part);
+			Chaparone.PrintOverInfo(part);
 		}
 
 

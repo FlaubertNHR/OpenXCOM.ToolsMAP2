@@ -155,6 +155,12 @@ namespace MapView.Forms.Observers
 			ssStatus.Renderer = new CustomToolStripRenderer();
 		}
 
+		/// <summary>
+		/// Adds a panel to a specified page and subscribes to the
+		/// TilepartSelected event.
+		/// </summary>
+		/// <param name="panel"></param>
+		/// <param name="page"></param>
 		private void AddPanel(TilePanel panel, Control page)
 		{
 			panel.TilepartSelected += panel_OnTilepartSelected;
@@ -689,7 +695,7 @@ namespace MapView.Forms.Observers
 		/// Prints info for a mouseovered tilepart.
 		/// </summary>
 		/// <param name="part"></param>
-		internal void StatbarOverInfo(Tilepart part)
+		internal void PrintOverInfo(Tilepart part)
 		{
 			string info = String.Empty;
 
