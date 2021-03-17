@@ -37,12 +37,12 @@ namespace MapView.Forms.MainView
 
 		#region Methods (static)
 		/// <summary>
-		/// Creates the observers (tertiary viewers) as well as
+		/// Creates the observers (secondary viewers) as well as
 		/// toolstrip-controls for <see cref="MainViewF"/>, <see cref="Observers.TopView"/>,
 		/// and <see cref="Observers.TopRouteViewForm"/>(Top). Also synchronizes
 		/// Optionables for TopRouteView(Top) and TopRouteView(Route) to
-		/// <see cref="Observers.TopView.Optionables">TopView</see> and
-		/// <see cref="Observers.RouteView.Optionables">RouteView</see>
+		/// <see cref="Observers.TopView.Optionables">TopView.Optionables</see>
+		/// and <see cref="Observers.RouteView.Optionables">RouteView.Optionables</see>
 		/// respectively. Then loads default options for <see cref="Observers.TileView"/>,
 		/// <see cref="Observers.TopView"/>, and <see cref="Observers.RouteView"/>.
 		/// </summary>
@@ -91,9 +91,9 @@ namespace MapView.Forms.MainView
 		{
 			_viewers.Add(f as Form);
 
-			var control = f.Observer; // ie. TileView, TopView, RouteView.
-			control.LoadControlDefaultOptions();
-			OptionsManager.setOptionsType(key, control.Options);
+			MapObserverControl observer = f.Observer; // ie. TileView, TopView, RouteView.
+			observer.LoadControlDefaultOptions();
+			OptionsManager.setOptionsType(key, observer.Options);
 		}
 
 		/// <summary>
