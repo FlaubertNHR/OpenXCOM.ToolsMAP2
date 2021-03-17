@@ -2282,6 +2282,11 @@ namespace MapView.Forms.Observers
 			}
 		}
 
+		/// <summary>
+		/// Saves the routes-file when the Save button is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnSaveClick(object sender, EventArgs e)
 		{
 			MainViewF.that.OnSaveRoutesClick(null, EventArgs.Empty);
