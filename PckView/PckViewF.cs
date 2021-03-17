@@ -229,11 +229,8 @@ namespace PckView
 
 			TilePanel.ContextMenuStrip = CreateContext();
 
-//			SetSelected(-1,true);
 			PrintSelected();
 			PrintOver();
-//			PrintTotal();
-//			PrintSpritesetLabel();
 
 			PopulatePaletteMenu(); // WARNING: Palettes created here <-
 
