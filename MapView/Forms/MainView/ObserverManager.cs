@@ -15,7 +15,7 @@ namespace MapView.Forms.MainView
 		#region Fields (static)
 		internal static ToolstripFactory ToolFactory;
 
-		private static IMapObserver[] _observers;
+		private static IObserver[] _observers;
 		private static readonly List<Form> _viewers = new List<Form>();
 		#endregion Fields (static)
 
@@ -58,7 +58,7 @@ namespace MapView.Forms.MainView
 			TopView     .Control   .CreateToolstripControls();
 			TopRouteView.ControlTop.CreateToolstripControls();
 
-			_observers = new IMapObserver[]
+			_observers = new IObserver[]
 			{
 				TileView    .Control,
 				TopView     .Control,
@@ -87,11 +87,11 @@ namespace MapView.Forms.MainView
 		/// <param name="f"></param>
 		/// <remarks><see cref="TileViewForm"/>, <see cref="TopViewForm"/>,
 		/// <see cref="RouteViewForm"/> only.</remarks>
-		private static void LoadDefaultOptions(string key, IMapObserverProvider f)
+		private static void LoadDefaultOptions(string key, IObserverProvider f)
 		{
 			_viewers.Add(f as Form);
 
-			MapObserverControl observer = f.Observer; // ie. TileView, TopView, RouteView.
+			ObserverControl observer = f.Observer; // ie. TileView, TopView, RouteView.
 			observer.LoadControlDefaultOptions();
 			OptionsManager.setOptionsType(key, observer.Options);
 		}
@@ -109,14 +109,14 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Subscribes <see cref="IMapObserver.OnLocationSelectedObserver"/> and
-		/// <see cref="IMapObserver.OnLevelSelectedObserver"/> events to a
+		/// Subscribes <see cref="IObserver.OnLocationSelectedObserver"/> and
+		/// <see cref="IObserver.OnLevelSelectedObserver"/> events to a
 		/// specified MapFile ( TODO: isn't that redundant ) for an observer -
 		/// incl/ the panels in TopView.
 		/// </summary>
 		/// <param name="file"></param>
 		/// <param name="observer"></param>
-		private static void SubscribeObserver(MapFile file, IMapObserver observer)
+		private static void SubscribeObserver(MapFile file, IObserver observer)
 		{
 			if (observer.MapFile != null)
 			{

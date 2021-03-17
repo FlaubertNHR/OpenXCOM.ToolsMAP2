@@ -14,7 +14,7 @@ namespace MapView.Forms.Observers
 	internal sealed partial class TopViewForm
 		:
 			Form,
-			IMapObserverProvider
+			IObserverProvider
 	{
 		#region Fields
 		private TopView TopViewControl;
@@ -23,7 +23,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Gets TopViewControl as a child of MapObserverControl.
+		/// Gets TopViewControl as a child of ObserverControl.
 		/// </summary>
 		internal TopView Control
 		{
@@ -31,9 +31,9 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Satisfies IMapObserverProvider.
+		/// Satisfies IObserverProvider.
 		/// </summary>
-		public MapObserverControl Observer
+		public ObserverControl Observer
 		{
 			get { return TopViewControl; }
 		}

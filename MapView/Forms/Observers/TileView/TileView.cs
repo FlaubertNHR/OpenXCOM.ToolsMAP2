@@ -24,7 +24,7 @@ namespace MapView.Forms.Observers
 {
 	internal sealed partial class TileView
 		:
-			MapObserverControl // UserControl, IMapObserver
+			ObserverControl // UserControl, IObserver
 	{
 		#region Events
 		/// <summary>
@@ -171,7 +171,7 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Bypasses level-change in MapObserverControl and scrolls through the
+		/// Bypasses level-change in ObserverControl and scrolls through the
 		/// tabpages instead. Actually it doesn't; it just prevents awkward
 		/// level-changes in the other viewers.
 		/// </summary>

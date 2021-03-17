@@ -13,16 +13,16 @@ namespace MapView.Forms.Observers
 	/// <summary>
 	/// Inherited by TileView, TopView, RouteView.
 	/// </summary>
-	internal class MapObserverControl
+	internal class ObserverControl
 		:
 			UserControl,
-			IMapObserver
+			IObserver
 	{
-		#region IMapObserver requirements
-		private readonly Dictionary<string, IMapObserver> _panels =
-					 new Dictionary<string, IMapObserver>();
+		#region IObserver requirements
+		private readonly Dictionary<string, IObserver> _panels =
+					 new Dictionary<string, IObserver>();
 		[Browsable(false)]
-		public Dictionary<string, IMapObserver> ObserverPanels
+		public Dictionary<string, IObserver> ObserverPanels
 		{
 			get { return _panels; }
 		}
@@ -37,27 +37,27 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Satisfies IMapObserver.
+		/// Satisfies IObserver.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
 		{
-			//DSShared.LogFile.WriteLine("MapObserverControl.OnLocationSelectedObserver() DOES THIS EVER DO ANYTHING.");
+			//DSShared.LogFile.WriteLine("ObserverControl.OnLocationSelectedObserver() DOES THIS EVER DO ANYTHING.");
 			// TODO: YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
 			Refresh();
 		}
 
 		/// <summary>
-		/// Satisfies IMapObserver.
+		/// Satisfies IObserver.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnLevelSelectedObserver(LevelSelectedEventArgs args)
 		{
-			//DSShared.LogFile.WriteLine("MapObserverControl.OnLevelSelectedObserver() DOES THIS EVER DO ANYTHING.");
+			//DSShared.LogFile.WriteLine("ObserverControl.OnLevelSelectedObserver() DOES THIS EVER DO ANYTHING.");
 			// TODO: YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
 			Refresh();
 		}
-		#endregion IMapObserver requirements
+		#endregion IObserver requirements
 
 
 		#region Properties

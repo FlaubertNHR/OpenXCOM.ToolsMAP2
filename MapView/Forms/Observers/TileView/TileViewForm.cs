@@ -10,7 +10,7 @@ namespace MapView.Forms.Observers
 	internal sealed class TileViewForm
 		:
 			Form,
-			IMapObserverProvider
+			IObserverProvider
 	{
 		// TODO: There are three (3) variables all returning 'TileViewControl'.
 		// - one private, one internal, one public ... 42!
@@ -22,7 +22,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Gets TileViewControl as a child of MapObserverControl.
+		/// Gets TileViewControl as a child of ObserverControl.
 		/// </summary>
 		internal TileView Control
 		{
@@ -30,9 +30,9 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Satisfies IMapObserverProvider.
+		/// Satisfies IObserverProvider.
 		/// </summary>
-		public MapObserverControl Observer
+		public ObserverControl Observer
 		{
 			get { return TileViewControl; }
 		}

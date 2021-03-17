@@ -17,7 +17,7 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal sealed class QuadrantPanel
 		:
-			MapObserverControl_Top // DoubleBufferedControl, IMapObserver
+			ObserverControl_Top // DoubleBufferedControl, IObserver
 	{
 		#region Fields (static)
 		/// <summary>
@@ -82,7 +82,7 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl_Top.
+		/// Inherited from IObserver through ObserverControl_Top.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnLocationSelectedObserver(LocationSelectedEventArgs args)
@@ -94,7 +94,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Inherited from IMapObserver through MapObserverControl_Top.
+		/// Inherited from IObserver through ObserverControl_Top.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnLevelSelectedObserver(LevelSelectedEventArgs args)

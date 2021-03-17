@@ -14,7 +14,7 @@ namespace MapView.Forms.Observers
 {
 	internal sealed partial class TopView
 		:
-			MapObserverControl // UserControl, IMapObserver
+			ObserverControl // UserControl, IObserver
 	{
 		#region Fields (static)
 		internal const int FLOOR   = 0x1; // flags for parttype visibility ->

@@ -196,12 +196,12 @@
     <Compile Include="Forms\Observers\TopView\TopViewOptionables.cs" />
     <Compile Include="Forms\Observers\ColorTool.cs" />
     <Compile Include="Forms\Observers\DrawBlobService.cs" />
-    <Compile Include="Forms\Observers\IMapObserver.cs" />
-    <Compile Include="Forms\Observers\IMapObserverProvider.cs" />
-    <Compile Include="Forms\Observers\MapObserverControl.cs">
+    <Compile Include="Forms\Observers\IObserver.cs" />
+    <Compile Include="Forms\Observers\IObserverProvider.cs" />
+    <Compile Include="Forms\Observers\ObserverControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Observers\MapObserverControl_Top.cs">
+    <Compile Include="Forms\Observers\ObserverControl_Top.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\OptionsForm.cs">

@@ -24,7 +24,7 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal sealed partial class RouteView
 		:
-			MapObserverControl // UserControl, IMapObserver/MapObserverControl
+			ObserverControl // UserControl, IObserver/ObserverControl
 	{
 		#region Enums
 		private enum ConnectNodesType
@@ -92,7 +92,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties (override)
 		/// <summary>
-		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
+		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
 		/// </summary>
 		[Browsable(false)]
 		public override MapFile MapFile
@@ -239,9 +239,9 @@ namespace MapView.Forms.Observers
 		#endregion cTor
 
 
-		#region Events (override) inherited from IMapObserver/MapObserverControl
+		#region Events (override) inherited from IObserver/ObserverControl
 		/// <summary>
-		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
+		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
 		/// </summary>
 		/// <param name="args"></param>
 		/// <remarks>This will fire twice whenever the location changes: once by
@@ -260,7 +260,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Inherited from <see cref="IMapObserver"/> through <see cref="MapObserverControl"/>.
+		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
 		/// </summary>
 		/// <param name="args"></param>
 		/// <remarks>This will fire twice whenever the location changes: once by
@@ -315,7 +315,7 @@ namespace MapView.Forms.Observers
 			Refresh(); // required to force the other RouteView panel to redraw.
 //			InvalidatePanels();
 		}
-		#endregion Events (override) inherited from IMapObserver/MapObserverControl
+		#endregion Events (override) inherited from IObserver/ObserverControl
 
 
 		#region Methods (print TileData)

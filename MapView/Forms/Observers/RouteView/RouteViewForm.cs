@@ -10,7 +10,7 @@ namespace MapView.Forms.Observers
 	internal sealed partial class RouteViewForm
 		:
 			Form,
-			IMapObserverProvider
+			IObserverProvider
 	{
 		#region Fields
 		private RouteView _routeView;
@@ -19,7 +19,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Gets '_routeView' as a child of 'MapObserverControl'.
+		/// Gets '_routeView' as a child of 'ObserverControl'.
 		/// </summary>
 		internal RouteView Control
 		{
@@ -27,9 +27,9 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Satisfies 'IMapObserverProvider'.
+		/// Satisfies 'IObserverProvider'.
 		/// </summary>
-		public MapObserverControl Observer
+		public ObserverControl Observer
 		{
 			get { return _routeView; }
 		}
