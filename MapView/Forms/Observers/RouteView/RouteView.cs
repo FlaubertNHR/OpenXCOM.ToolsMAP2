@@ -2274,11 +2274,11 @@ namespace MapView.Forms.Observers
 					RoutesInfo.WindowState  = FormWindowState.Normal;
 
 				RoutesInfo.Activate(); // so what's the diff ->
-//				_routesinfo.Focus();
-//				_routesinfo.Select();
-//				_routesinfo.BringToFront();
-//				_routesinfo.TopMost = true;
-//				_routesinfo.TopMost = false;
+//				RoutesInfo.Focus();
+//				RoutesInfo.Select();
+//				RoutesInfo.BringToFront();
+//				RoutesInfo.TopMost = true;
+//				RoutesInfo.TopMost = false;
 			}
 		}
 
