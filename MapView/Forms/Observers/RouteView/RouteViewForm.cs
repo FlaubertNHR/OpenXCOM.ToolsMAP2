@@ -29,7 +29,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Satisfies 'IMapObserverProvider'.
 		/// </summary>
-		public MapObserverControl ObserverControl
+		public MapObserverControl Observer
 		{
 			get { return _routeView; }
 		}

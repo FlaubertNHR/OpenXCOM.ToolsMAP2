@@ -91,7 +91,7 @@ namespace MapView.Forms.MainView
 		{
 			_viewers.Add(f as Form);
 
-			var control = f.ObserverControl; // ie. TileView, TopView, RouteView.
+			var control = f.Observer; // ie. TileView, TopView, RouteView.
 			control.LoadControlDefaultOptions();
 			OptionsManager.setOptionsType(key, control.Options);
 		}
@@ -100,10 +100,10 @@ namespace MapView.Forms.MainView
 		/// Sets or resets the MapFile for each observer.
 		/// </summary>
 		/// <param name="file"></param>
-		internal static void SetObservers(MapFile file)
+		internal static void SetMapfile(MapFile file)
 		{
 			foreach (var f in _observers)
-				SetObserver(file, f);
+				SubscribeObserver(file, f);
 
 			MainViewOverlay.that.Refresh();
 		}
@@ -116,7 +116,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="file"></param>
 		/// <param name="observer"></param>
-		private static void SetObserver(MapFile file, IMapObserver observer)
+		private static void SubscribeObserver(MapFile file, IMapObserver observer)
 		{
 			if (observer.MapFile != null)
 			{
@@ -131,7 +131,7 @@ namespace MapView.Forms.MainView
 			}
 
 			foreach (string key in observer.ObserverPanels.Keys) // ie. TopPanel and QuadrantPanel
-				SetObserver(observer.MapFile, observer.ObserverPanels[key]);
+				SubscribeObserver(observer.MapFile, observer.ObserverPanels[key]);
 		}
 
 		/// <summary>

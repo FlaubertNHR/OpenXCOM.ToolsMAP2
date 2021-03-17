@@ -2,12 +2,12 @@
 {
 	/// <summary>
 	/// Interface for TileViewForm, TopViewForm, RouteViewForm.
-	/// @note This interface ensures that derived forms have implemented a
-	/// MapObserverControl.
 	/// </summary>
+	/// <remarks>This interface ensures that derived forms have implemented a
+	/// MapObserverControl.</remarks>
 	internal interface IMapObserverProvider
 	{
-		MapObserverControl ObserverControl
+		MapObserverControl Observer
 		{ get; }
 	}
 }

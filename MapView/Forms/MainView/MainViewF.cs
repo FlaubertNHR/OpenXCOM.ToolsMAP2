@@ -1674,7 +1674,7 @@ namespace MapView
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						ObserverManager.SetObservers(file);
+						ObserverManager.SetMapfile(file);
 
 						ObserverManager.TopView     .Control   .TopPanel.ClearSelectorLozenge();
 						ObserverManager.TopRouteView.ControlTop.TopPanel.ClearSelectorLozenge();
@@ -3248,7 +3248,7 @@ namespace MapView
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 							MenuManager.StartSecondaryStageBoosters();
 
-						ObserverManager.SetObservers(file); // reset all observer events
+						ObserverManager.SetMapfile(file); // and reset all observer events
 
 						RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
 						RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
