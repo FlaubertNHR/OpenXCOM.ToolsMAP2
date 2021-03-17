@@ -140,14 +140,37 @@ namespace MapView.Forms.MainView
 		/// - TopView
 		/// - RouteView
 		/// - TopRouteView
-		/// @note Called by MainViewF.OnFormClosing() so this really does close
-		/// -> update registry vals.
 		/// </summary>
+		/// <remarks>Called by MainViewF.OnFormClosing() so this really does
+		/// close -> update registry vals.</remarks>
 		internal static void CloseViewers()
 		{
 			foreach (var f in _viewers)
 				f.Close();
 		}
 		#endregion Methods (static)
+
+
+		#region Update UI (static)
+		/// <summary>
+		/// Invalidates the <see cref="TopPanel">TopPanels</see> in TopView and
+		/// TopRouteView(Top).
+		/// </summary>
+		internal static void InvalidateTopPanels()
+		{
+			TopView     .Control   .TopPanel.Invalidate();
+			TopRouteView.ControlTop.TopPanel.Invalidate();
+		}
+
+		/// <summary>
+		/// Invalidates the <see cref="QuadrantPanel">QuadrantPanels</see> in
+		/// TopView and TopRouteView(Top).
+		/// </summary>
+		internal static void InvalidateQuadrantPanels()
+		{
+			TopView     .Control   .QuadrantPanel.Invalidate();
+			TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+		}
+		#endregion Update UI (static)
 	}
 }

@@ -2368,6 +2368,10 @@ namespace MapView.Forms.Observers
 				_foptions.Close();
 		}
 
+		/// <summary>
+		/// Checks or unchecks the Options button.
+		/// </summary>
+		/// <param name="checked"></param>
 		private void setOptionsChecked(bool @checked)
 		{
 			ObserverManager.RouteView   .Control     .tsb_Options.Checked =
@@ -2405,7 +2409,7 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Refresh();
 		}
 
-		private static void InvalidatePanels()
+		internal static void InvalidatePanels()
 		{
 			ObserverManager.RouteView   .Control     .RoutePanel.Invalidate();
 			ObserverManager.TopRouteView.ControlRoute.RoutePanel.Invalidate();
@@ -2422,12 +2426,6 @@ namespace MapView.Forms.Observers
 			InvalidatePanels();
 			UpdateNodeInfo();
 		}
-
-//		internal static void InvalidateRoutePanels() // just do InvalidatePanels()
-//		{
-//			ObserverManager.RouteView   .Control     ._pnlRoutes.Invalidate();
-//			ObserverManager.TopRouteView.ControlRoute._pnlRoutes.Invalidate();
-//		}
 		#endregion Update UI (static)
 	}
 }

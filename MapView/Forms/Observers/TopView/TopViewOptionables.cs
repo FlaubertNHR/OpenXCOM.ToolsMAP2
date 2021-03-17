@@ -446,16 +446,16 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnOptionChanged(string key, object val)
 		{
-			bool invalidatequadrantpanel = false;
+			bool invalidateQuads = false;
 
 			switch (key)
 			{
-				case str_FloorColor:      FloorColor      = (Color)val; ChangeBruColor(key, val); invalidatequadrantpanel = true; break;
-				case str_WestColor:       WestColor       = (Color)val; ChangePenColor(key, val); invalidatequadrantpanel = true; break;
+				case str_FloorColor:      FloorColor      = (Color)val; ChangeBruColor(key, val); invalidateQuads = true; break;
+				case str_WestColor:       WestColor       = (Color)val; ChangePenColor(key, val); invalidateQuads = true; break;
 				case str_WestWidth:       WestWidth       =   (int)val; ChangePenWidth(key, val); break;
-				case str_NorthColor:      NorthColor      = (Color)val; ChangePenColor(key, val); invalidatequadrantpanel = true; break;
+				case str_NorthColor:      NorthColor      = (Color)val; ChangePenColor(key, val); invalidateQuads = true; break;
 				case str_NorthWidth:      NorthWidth      =   (int)val; ChangePenWidth(key, val); break;
-				case str_ContentColor:    ContentColor    = (Color)val; ChangeBruColor(key, val); invalidatequadrantpanel = true; break;
+				case str_ContentColor:    ContentColor    = (Color)val; ChangeBruColor(key, val); invalidateQuads = true; break;
 				case str_SelectorColor:   SelectorColor   = (Color)val; ChangePenColor(key, val); break;
 				case str_SelectorWidth:   SelectorWidth   =   (int)val; ChangePenWidth(key, val); break;
 				case str_SelectedColor:   SelectedColor   = (Color)val; ChangePenColor(key, val); break;
@@ -466,14 +466,10 @@ namespace MapView.Forms.Observers
 				case str_GridLine10Width: GridLine10Width =   (int)val; ChangePenWidth(key, val); break;
 			}
 
-			ObserverManager.TopView     .Control   .TopPanel.Invalidate();
-			ObserverManager.TopRouteView.ControlTop.TopPanel.Invalidate();
+			ObserverManager.InvalidateTopPanels();
 
-			if (invalidatequadrantpanel)
-			{
-				ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
-				ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
-			}
+			if (invalidateQuads)
+				ObserverManager.InvalidateQuadrantPanels();
 		}
 
 		/// <summary>
@@ -487,8 +483,7 @@ namespace MapView.Forms.Observers
 			SelectedQuadColor =
 			QuadrantDrawService.Brush.Color = (Color)val;
 
-			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
-			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+			ObserverManager.InvalidateQuadrantPanels();
 		}
 
 		/// <summary>

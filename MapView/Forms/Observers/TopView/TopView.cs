@@ -100,7 +100,7 @@ namespace MapView.Forms.Observers
 			// designer ... uh, apparently
 			tscPanel.LeftToolStripPanel.Controls.Add(tsTools);
 
-			InitializeQuadrantPanel();
+			CreateQuadrantPanel();
 
 			SuspendLayout();
 
@@ -141,9 +141,9 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Instantiates and initializes the QuadrantPanel.
+		/// Instantiates and initializes the <see cref="QuadrantPanel"/>.
 		/// </summary>
-		private void InitializeQuadrantPanel()
+		private void CreateQuadrantPanel()
 		{
 			QuadrantPanel = new QuadrantPanel();
 
@@ -218,10 +218,8 @@ namespace MapView.Forms.Observers
 													(VisibleQuadrants & CONTENT) != 0);
 			MainViewOverlay.that.Invalidate();
 
-			ObserverManager.TopView     .Control   .TopPanel     .Invalidate();
-			ObserverManager.TopRouteView.ControlTop.TopPanel     .Invalidate();
-			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
-			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+			ObserverManager.InvalidateTopPanels();
+			ObserverManager.InvalidateQuadrantPanels();
 		}
 
 
@@ -427,6 +425,10 @@ namespace MapView.Forms.Observers
 				_foptions.Close();
 		}
 
+		/// <summary>
+		/// Checks or unchecks the Options button.
+		/// </summary>
+		/// <param name="checked"></param>
 		private void setOptionsChecked(bool @checked)
 		{
 			ObserverManager.TopView     .Control   .tsb_Options.Checked =

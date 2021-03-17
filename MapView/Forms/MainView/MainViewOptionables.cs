@@ -1042,6 +1042,12 @@ namespace MapView.Forms.MainView
 				MainViewF.ScanG.InvalidatePanel();
 		}
 
+		/// <summary>
+		/// Changes the format of printed location strings between base-0 and
+		/// base-1 counttypes.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
 		private void OnBaseCounttypeChanged(string key, object val)
 		{
 			switch (key)
@@ -1056,8 +1062,8 @@ namespace MapView.Forms.MainView
 			ObserverManager.RouteView   .Control     .PrintSelectedInfo();
 			ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
 
-			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate(); // NOTE: Trying to print only the string w/ QuadrantDrawService
-			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate(); // borks out w/ an obscure "Parameter is invalid" exception.
+			ObserverManager.InvalidateQuadrantPanels();	// NOTE: Trying to print only the string w/ QuadrantDrawService
+														// borks out w/ an obscure "Parameter is invalid" exception.
 
 			// close the PartslotTest dialog (its displayed data has changed)
 			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed)
@@ -1090,9 +1096,8 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private void InvalidateSecondaryPanels()
 		{
-			ObserverManager.TileView    .Control   .GetVisiblePanel().Invalidate();
-			ObserverManager.TopView     .Control   .QuadrantPanel    .Invalidate();
-			ObserverManager.TopRouteView.ControlTop.QuadrantPanel    .Invalidate();
+			ObserverManager.TileView.Control.GetVisiblePanel().Invalidate();
+			ObserverManager.InvalidateQuadrantPanels();
 		}
 		#endregion Events
 	}

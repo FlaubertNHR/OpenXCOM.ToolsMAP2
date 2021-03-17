@@ -256,8 +256,7 @@ namespace MapView.Forms.Observers
 			}
 
 			QuadrantDrawService.CurrentTilepart = part;
-			ObserverManager.TopView     .Control   .QuadrantPanel.Invalidate();
-			ObserverManager.TopRouteView.ControlTop.QuadrantPanel.Invalidate();
+			ObserverManager.InvalidateQuadrantPanels();
 		}
 		#endregion Events
 

@@ -721,12 +721,9 @@ namespace MapView.Forms.MainView
 			else
 				Invalidate();
 
-			ObserverManager.TopView     .Control     .TopPanel     .Invalidate();
-			ObserverManager.TopRouteView.ControlTop  .TopPanel     .Invalidate();
-			ObserverManager.TopView     .Control     .QuadrantPanel.Invalidate();
-			ObserverManager.TopRouteView.ControlTop  .QuadrantPanel.Invalidate();
-			ObserverManager.RouteView   .Control     .RoutePanel   .Invalidate();
-			ObserverManager.TopRouteView.ControlRoute.RoutePanel   .Invalidate();
+			ObserverManager.InvalidateTopPanels();
+			ObserverManager.InvalidateQuadrantPanels();
+			RouteView.InvalidatePanels();
 
 			if (MainViewF.ScanG != null)
 				MainViewF.ScanG.InvalidatePanel();	// incl/ ProcessTileSelection() for selection rectangle
