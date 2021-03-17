@@ -363,10 +363,10 @@ namespace MapView.Forms.MainView
 			//DSShared.LogFile.WriteLine("");
 			//DSShared.LogFile.WriteLine("MainViewUnderlay.SetScale");
 
-			var required = GetRequiredOverlaySize(1.0);
+			var required = GetRequiredOverlaySize(1f);
 			Globals.Scale = Math.Min(
-								(double)(Width  - OffsetX) / required.Width,
-								(double)(Height - OffsetY) / required.Height);
+								(float)(Width  - OffsetX) / required.Width,
+								(float)(Height - OffsetY) / required.Height);
 			Globals.Scale = Globals.Scale.Viceroy(
 												Globals.ScaleMinimum,
 												Globals.ScaleMaximum);
@@ -385,10 +385,10 @@ namespace MapView.Forms.MainView
 			if (MapFile != null)
 			{
 				//DSShared.LogFile.WriteLine(". scale= " + Globals.Scale);
-				var required = GetRequiredOverlaySize(Globals.Scale);
+				Size size = GetRequiredOverlaySize(Globals.Scale);
 
-				MainViewOverlay.Width  = required.Width;
-				MainViewOverlay.Height = required.Height;
+				MainViewOverlay.Width  = size.Width;
+				MainViewOverlay.Height = size.Height;
 
 				//DSShared.LogFile.WriteLine(". set overlay.Width= " + MainViewOverlay.Width);
 				//DSShared.LogFile.WriteLine(". set overlay.Height= " + MainViewOverlay.Height);
@@ -401,7 +401,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="scale">the current scaling factor</param>
 		/// <returns></returns>
-		private Size GetRequiredOverlaySize(double scale)
+		private Size GetRequiredOverlaySize(float scale)
 		{
 			//DSShared.LogFile.WriteLine("");
 			//DSShared.LogFile.WriteLine("MainViewUnderlay.GetRequiredOverlaySize");
@@ -444,7 +444,7 @@ namespace MapView.Forms.MainView
 				//DSShared.LogFile.WriteLine(". width= " + width);
 				//DSShared.LogFile.WriteLine(". height= " + height);
 
-				Globals.Scale = (double)halfWidth / MainViewOverlay.HalfWidthConst;
+				Globals.Scale = (float)halfWidth / MainViewOverlay.HalfWidthConst;
 				_mainView.sb_PrintScale();
 				//DSShared.LogFile.WriteLine(". set scale= " + Globals.Scale);
 

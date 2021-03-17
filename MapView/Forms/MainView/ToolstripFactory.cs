@@ -131,26 +131,26 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Disables the auto-scale button when user switches to glide.
-		/// </summary>
-		internal void DisableScaleChecked()
-		{
-			_tsbScale.Checked = false;
-		}
-
-		/// <summary>
 		/// Toggles the auto-scale button checked/unchecked.
 		/// </summary>
 		/// <returns>true if checked</returns>
-		internal bool ToggleScaleChecked()
+		internal bool ToggleAutoscale()
 		{
 			return (_tsbScale.Checked = !_tsbScale.Checked);
 		}
 
 		/// <summary>
-		/// Enables MainView's auto-scale button.
+		/// Dechecks the auto-scale button when user switches to glide.
 		/// </summary>
-		internal void EnableScaleAutoButton()
+		internal void DecheckAutoscale()
+		{
+			_tsbScale.Checked = false;
+		}
+
+		/// <summary>
+		/// Enables the auto-scale button.
+		/// </summary>
+		internal void EnableAutoscale()
 		{
 			_tsbScale.Enabled = true;
 		}
@@ -159,7 +159,7 @@ namespace MapView.Forms.MainView
 		/// Dis/enables the ScaleOut button.
 		/// </summary>
 		/// <param name="enabled"></param>
-		internal void SetScaleOutButtonEnabled(bool enabled)
+		internal void EnableScaleout(bool enabled)
 		{
 			_tsbScaleOut.Enabled = enabled;
 		}
@@ -168,7 +168,7 @@ namespace MapView.Forms.MainView
 		/// Dis/enables the ScaleIn button.
 		/// </summary>
 		/// <param name="enabled"></param>
-		internal void SetScaleInButtonEnabled(bool enabled)
+		internal void EnableScalein(bool enabled)
 		{
 			_tsbScaleIn.Enabled = enabled;
 		}
@@ -329,7 +329,6 @@ namespace MapView.Forms.MainView
 
 			_editors.Add(tsbFill);
 		}
-
 
 		/// <summary>
 		/// Dis/enables all level up/down buttons on the toolstrips.

@@ -45,8 +45,6 @@ namespace MapView
 		#region Fields (static)
 		private const string TITLE = "Map Editor ||";
 
-		private const double ScaleDelta = 0.125;
-
 		private const int TREELEVEL_GROUP    = 0;
 		private const int TREELEVEL_CATEGORY = 1;
 		private const int TREELEVEL_TILESET  = 2;
@@ -2063,7 +2061,7 @@ namespace MapView
 			{
 				Globals.Scale += Math.Min(
 										Globals.ScaleMaximum - Globals.Scale,
-										ScaleDelta);
+										Globals.ScaleDelta);
 				Scale();
 			}
 		}
@@ -2079,7 +2077,7 @@ namespace MapView
 			{
 				Globals.Scale -= Math.Min(
 										Globals.Scale - Globals.ScaleMinimum,
-										ScaleDelta);
+										Globals.ScaleDelta);
 				Scale();
 			}
 		}
@@ -2089,8 +2087,8 @@ namespace MapView
 		/// </summary>
 		private void Scale()
 		{
-			ObserverManager.ToolFactory.DisableScaleChecked();
 			Globals.AutoScale = false;
+			ObserverManager.ToolFactory.DecheckAutoscale();
 
 			MainViewUnderlay.SetOverlaySize();
 			MainViewUnderlay.UpdateScrollers();
@@ -2105,8 +2103,7 @@ namespace MapView
 		/// <param name="e"></param>
 		internal void OnAutoScaleClick(object sender, EventArgs e)
 		{
-			Globals.AutoScale = ObserverManager.ToolFactory.ToggleScaleChecked();
-			if (Globals.AutoScale)
+			if (Globals.AutoScale = ObserverManager.ToolFactory.ToggleAutoscale())
 			{
 				MainViewUnderlay.SetScale();
 				MainViewUnderlay.SetOverlaySize();
@@ -3180,12 +3177,12 @@ namespace MapView
 						routesChanged = false;
 					}
 
-					var file = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
-														descriptor,
-														ref treechanged,
-														browseMapfile,
-														Optionables.IgnoreRecordsExceeded,
-														routes);
+					MapFile file = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
+															descriptor,
+															ref treechanged,
+															browseMapfile,
+															Optionables.IgnoreRecordsExceeded,
+															routes);
 					if (treechanged) MaptreeChanged = true;
 
 					if (file != null)
@@ -3215,7 +3212,7 @@ namespace MapView
 
 						MainViewUnderlay.MapFile = file;
 
-						ObserverManager.ToolFactory.EnableScaleAutoButton();
+						ObserverManager.ToolFactory.EnableAutoscale();
 						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.MapSize.Levs);
 
 						Text = TITLE + " " + descriptor.Basepath;

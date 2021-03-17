@@ -9,8 +9,9 @@ namespace MapView
 	internal static class Globals
 	{
 		#region Fields (static)
-		internal const double ScaleMinimum = 0.25;
-		internal const double ScaleMaximum = 3.00;
+		internal const float ScaleMinimum = 0.250f;
+		internal const float ScaleMaximum = 3.000f;
+		internal const float ScaleDelta   = 0.125f;
 
 		internal const string ALLFILES = "*.*";
 
@@ -19,20 +20,20 @@ namespace MapView
 
 
 		#region Properties (static)
-		private static double _scale = 1.0;
+		private static float _scale = 1f;
 		/// <summary>
 		/// The scale-factor for sprites and clicks (etc) in MainView only.
 		/// TODO: Then why isn't this in MainViewF.
 		/// </summary>
-		internal static double Scale
+		internal static float Scale
 		{
 			get { return _scale; }
 			set
 			{
 				_scale = value;
 
-				ObserverManager.ToolFactory.SetScaleOutButtonEnabled(Math.Abs(_scale - ScaleMinimum) > 0.001);
-				ObserverManager.ToolFactory.SetScaleInButtonEnabled( Math.Abs(_scale - ScaleMaximum) > 0.001);
+				ObserverManager.ToolFactory.EnableScaleout(Math.Abs(_scale - ScaleMinimum) > 0.001f);
+				ObserverManager.ToolFactory.EnableScalein( Math.Abs(_scale - ScaleMaximum) > 0.001f);
 			}
 		}
 
