@@ -217,13 +217,13 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// fing jackasses.
-		/// @note I have no idea if this is really necessary despite hundreds of
-		/// hours reading about Dispose() et al. This class is a visual control
-		/// so it gets disposed when its parent closes, but do its private
-		/// fields get disposed reliably ... the designer doesn't appear to care
-		/// re. Font eg.
+		/// Disposes graphics paths and unsubscribes from static event.
 		/// </summary>
+		/// <remarks>I have no idea if this is really necessary despite hundreds
+		/// of hours reading about Dispose() et al. This class is a visual
+		/// control so it gets disposed when its parent closes, but do its
+		/// private fields get disposed reliably ... the designer doesn't appear
+		/// to care re. Font eg.</remarks>
 		internal void Destroy()
 		{
 			PckViewF.PaletteChanged -= OnPaletteChanged;

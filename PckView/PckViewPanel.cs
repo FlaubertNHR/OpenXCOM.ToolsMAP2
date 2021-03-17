@@ -638,7 +638,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// fing jackasses.
+		/// Disposes the ContextMenuStrip and the Spriteset, and unsubscribes
+		/// from static event.
 		/// </summary>
 		internal void Destroy()
 		{
@@ -648,8 +649,6 @@ namespace PckView
 				Spriteset.Dispose();
 
 			ContextMenuStrip.Dispose();
-
-//			base.Dispose(); // <- I *still* don't know if that is a Good Thing or not.
 		}
 		#endregion Methods
 	}
