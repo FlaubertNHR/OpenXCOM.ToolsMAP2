@@ -359,8 +359,8 @@ namespace MapView
 
 			tsTools.SuspendLayout();
 			ObserverManager.ToolFactory.CreateSearchTools(tsTools);
-			ObserverManager.ToolFactory.CreateScaleTools(tsTools);
-			ObserverManager.ToolFactory.CreateEditTools(tsTools);
+			ObserverManager.ToolFactory.CreateScalerTools(tsTools);
+			ObserverManager.ToolFactory.CreateEditorTools(tsTools);
 			tsTools.ResumeLayout();
 			LogFile.WriteLine("MainView toolstrip created.");
 
@@ -940,9 +940,6 @@ namespace MapView
 
 			if (RouteView.RoutesInfo != null)
 				RouteView.RoutesInfo.Close();	// close RouteView's SpawnInfo dialog
-
-			ObserverManager.ToolFactory.Dispose();
-			ObserverManager.ToolFactory.DisposeTertiaryControls();
 
 			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
@@ -1673,7 +1670,7 @@ namespace MapView
 						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
 						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
 
-						ObserverManager.ToolFactory.SetLevelButtonsEnabled(file.Level, file.MapSize.Levs);
+						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.MapSize.Levs);
 
 						tsslDimensions   .Text = file.MapSize.ToString();
 						tsslPosition     .Text =
@@ -3219,7 +3216,7 @@ namespace MapView
 						MainViewUnderlay.MapFile = file;
 
 						ObserverManager.ToolFactory.EnableScaleAutoButton();
-						ObserverManager.ToolFactory.SetLevelButtonsEnabled(file.Level, file.MapSize.Levs);
+						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.MapSize.Levs);
 
 						Text = TITLE + " " + descriptor.Basepath;
 						if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.

@@ -329,7 +329,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void CreateToolstripControls()
 		{
-			ObserverManager.ToolFactory.CreateEditTools(tsTools, true);
+			ObserverManager.ToolFactory.CreateEditorTools(tsTools, true);
 		}
 
 		/// <summary>

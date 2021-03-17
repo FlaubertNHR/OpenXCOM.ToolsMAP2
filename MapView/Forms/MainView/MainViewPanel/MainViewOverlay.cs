@@ -99,11 +99,11 @@ namespace MapView.Forms.MainView
 		private bool _firstClick;
 		/// <summary>
 		/// A flag that indicates that the user has selected a tile(s).
-		/// @note The operation of the flag relies on the fact that once a
+		/// </summary>
+		/// <remarks>The operation of the flag relies on the fact that once a
 		/// tile(s) has been selected on a Map there will always be a tile(s)
 		/// selected until either (a) the Map is resized or (b) user loads a
-		/// different Map or (c) the Map/terrains are reloaded.
-		/// </summary>
+		/// different Map or (c) the Map/terrains are reloaded.</remarks>
 		internal bool FirstClick
 		{
 			get { return _firstClick; }
@@ -115,8 +115,8 @@ namespace MapView.Forms.MainView
 					_dragEnd = new Point(-1,-1);
 				}
 
-				ObserverManager.ToolFactory.SetEditButtonsEnabled( _firstClick);
-				ObserverManager.ToolFactory.SetPasteButtonsEnabled(_firstClick && _copied != null);
+				ObserverManager.ToolFactory.EnableEditors(_firstClick);
+				ObserverManager.ToolFactory.EnablePasters(_firstClick && _copied != null);
 			}
 		}
 
@@ -387,7 +387,7 @@ namespace MapView.Forms.MainView
 		{
 			if (MapFile != null && FirstClick)
 			{
-				ObserverManager.ToolFactory.SetPasteButtonsEnabled();
+				ObserverManager.ToolFactory.EnablePasters();
 
 				_copiedTerrains = MapFile.Descriptor.Terrains;
 
@@ -902,7 +902,7 @@ namespace MapView.Forms.MainView
 					_row = DragEnd.Y;
 				}
 
-				ObserverManager.ToolFactory.SetLevelButtonsEnabled(MapFile.Level, MapFile.MapSize.Levs);
+				ObserverManager.ToolFactory.EnableLevelers(MapFile.Level, MapFile.MapSize.Levs);
 			}
 		}
 
