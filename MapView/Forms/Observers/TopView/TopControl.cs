@@ -68,8 +68,8 @@ namespace MapView.Forms.Observers
 		{ get; set; }
 
 
-		private readonly DrawBlobService _blobService = new DrawBlobService();
-		internal DrawBlobService BlobService
+		private readonly BlobDrawService _blobService = new BlobDrawService();
+		internal BlobDrawService BlobService
 		{
 			get { return _blobService; }
 		}

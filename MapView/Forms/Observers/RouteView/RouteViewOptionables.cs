@@ -531,7 +531,7 @@ namespace MapView.Forms.Observers
 
 			var brushContent = new SolidBrush(def_ContentColor);
 			RouteControl.RouteBrushes[str_ContentColor] = brushContent;
-			RouteControl.ToolContent = new ColorTool(brushContent, DrawBlobService.LINEWIDTH_CONTENT);
+			RouteControl.ToolContent = new ColorTool(brushContent, BlobDrawService.LINEWIDTH_CONTENT);
 
 			Color color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
 			var brushNode = new SolidBrush(color);
@@ -645,7 +645,7 @@ namespace MapView.Forms.Observers
 				RouteControl.ToolContent.Dispose();
 				RouteControl.ToolContent = new ColorTool(
 													RouteControl.RouteBrushes[str_ContentColor],
-													DrawBlobService.LINEWIDTH_CONTENT);
+													BlobDrawService.LINEWIDTH_CONTENT);
 			}
 			else // is Node color
 			{

@@ -396,7 +396,7 @@ namespace MapView.Forms.Observers
 
 			var brushContent = new SolidBrush(def_ContentColor);
 			TopControl.Brushes.Add(str_ContentColor, brushContent);
-			TopControl.ToolContent = new ColorTool(brushContent, DrawBlobService.LINEWIDTH_CONTENT);
+			TopControl.ToolContent = new ColorTool(brushContent, BlobDrawService.LINEWIDTH_CONTENT);
 
 			var penSelector = new Pen(def_SelectorColor, def_SelectorWidth);
 			TopControl.Pens.Add(str_SelectorColor, penSelector);
@@ -525,7 +525,7 @@ namespace MapView.Forms.Observers
 				TopControl.ToolContent.Dispose();
 				TopControl.ToolContent = new ColorTool(
 													TopControl.Brushes[key],
-													DrawBlobService.LINEWIDTH_CONTENT);
+													BlobDrawService.LINEWIDTH_CONTENT);
 			}
 		}
 

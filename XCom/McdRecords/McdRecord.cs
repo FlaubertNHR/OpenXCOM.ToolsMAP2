@@ -464,7 +464,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Used by MapView.DrawBlobService.
+		/// Used by MapView.BlobDrawService.
 		/// </summary>
 		/// <returns></returns>
 		public List<byte> GetLoftList()

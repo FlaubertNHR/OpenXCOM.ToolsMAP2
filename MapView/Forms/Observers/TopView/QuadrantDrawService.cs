@@ -579,7 +579,7 @@ namespace MapView.Forms.Observers
 /*		/// <summary>
 		/// This isn't really necessary since the GraphicsPaths last the
 		/// lifetime of the app. But FxCop gets antsy ....
-		/// NOTE: Dispose() is never called. cf ColorTool. cf DrawBlobService.
+		/// NOTE: Dispose() is never called. cf ColorTool. cf BlobDrawService.
 		/// WARNING: This is NOT a robust implementation perhaps. But it
 		/// satisifes the core of the matter and could likely be used for
 		/// further development if that's ever required.
