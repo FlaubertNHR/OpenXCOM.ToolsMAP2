@@ -367,10 +367,11 @@ namespace MapView.Forms.Observers
 
 		#region Options
 		/// <summary>
-		/// Loads default options for TopView in TopRouteView screens.
+		/// Loads default options for TopView in TopRouteView(Top) screens.
 		/// </summary>
 		internal protected override void LoadControlDefaultOptions()
 		{
+			//LogFile.WriteLine("TopView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
 		}
 

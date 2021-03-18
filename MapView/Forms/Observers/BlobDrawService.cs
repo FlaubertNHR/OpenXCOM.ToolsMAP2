@@ -12,8 +12,8 @@ namespace MapView.Forms.Observers
 	/// <see cref="RouteView"/>.
 	/// </summary>
 	internal sealed class BlobDrawService
-		:
-			IDisposable
+//		:
+//			IDisposable
 	{
 		#region Fields (static)
 		internal const int LINEWIDTH_CONTENT = 3;
@@ -52,7 +52,7 @@ namespace MapView.Forms.Observers
 		/// <param name="end"></param>
 		private static void DrawWindow(
 				Graphics g,
-				ColorTool tool,
+				BlobColorTool tool,
 				Point beg, Point end)
 		{
 			g.DrawLine(tool.Pen, beg, end);
@@ -108,7 +108,7 @@ namespace MapView.Forms.Observers
 		/// <param name="part"></param>
 		internal void DrawContent(
 				Graphics g,
-				ColorTool tool,
+				BlobColorTool tool,
 				int x, int y,
 				Tilepart part)
 		{
@@ -290,20 +290,15 @@ namespace MapView.Forms.Observers
 		#endregion Methods
 
 
-		/// <summary>
-		/// This isn't really necessary since the GraphicsPath's last the
-		/// lifetime of the app. But FxCop gets antsy ....
-		/// NOTE: Dispose() is never called. cf ColorTool. cf QuadrantDrawService.
-		/// WARNING: This is NOT a robust implementation perhaps. But it
-		/// satisifes the core of the matter and could likely be used for
-		/// further development if that's ever required.
-		/// </summary>
-		public void Dispose()
-		{
-			if (_floor   != null) _floor  .Dispose();
-			if (_content != null) _content.Dispose();
-
-			GC.SuppressFinalize(this);
-		}
+//		/// <summary>
+//		/// This isn't necessary since the GraphicsPaths last the lifetime of
+//		/// the app. But FxCop gets antsy ....
+//		/// </summary>
+//		/// <remarks>cf. <see cref="BlobColorTool"/> and <see cref="QuadrantDrawService"/></remarks>
+//		public void Dispose()
+//		{
+//			_floor  .Dispose();
+//			_content.Dispose();
+//		}
 	}
 }

@@ -5,9 +5,10 @@ using System.Drawing;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// A ColorTool is used for drawing blobs on TopView and RouteView.
+	/// A BlobColorTool is used for drawing blobs in <see cref="TopView"/> and
+	/// <see cref="RouteView"/>.
 	/// </summary>
-	internal sealed class ColorTool
+	internal sealed class BlobColorTool
 		:
 			IDisposable
 	{
@@ -74,7 +75,7 @@ namespace MapView.Forms.Observers
 		/// cTor[0]. Instantiates a colortool from a Pen object.
 		/// </summary>
 		/// <param name="pen"></param>
-		internal ColorTool(Pen pen)
+		internal BlobColorTool(Pen pen)
 		{
 			var colorLight = Color.FromArgb(ALFALFA, pen.Color);
 
@@ -92,7 +93,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="brush"></param>
 		/// <param name="width"></param>
-		internal ColorTool(SolidBrush brush, float width)
+		internal BlobColorTool(SolidBrush brush, float width)
 		{
 			var colorLight = Color.FromArgb(ALFALFA, brush.Color);
 
@@ -108,11 +109,9 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// @note cf BlobDrawService. cf QuadrantDrawService.
-		/// WARNING: This is NOT a robust implementation perhaps. But it
-		/// satisifes the core of the matter and could likely be used for
-		/// further development if that's ever required.
+		/// Disposes pens and brushes owned by this object.
 		/// </summary>
+		/// <remarks>cf. <see cref="BlobDrawService"/> and <see cref="QuadrantDrawService"/></remarks>
 		public void Dispose()
 		{
 			_pen           .Dispose();
@@ -121,8 +120,6 @@ namespace MapView.Forms.Observers
 			_brush         .Dispose();
 			_brushLight    .Dispose();
 			_brushLightPrep.Dispose();
-
-			GC.SuppressFinalize(this);
 		}
 	}
 }

@@ -519,6 +519,8 @@ namespace MapView.Forms.Observers
 		/// <param name="options">RouteView's options</param>
 		internal void LoadDefaults(Options options)
 		{
+			//DSShared.LogFile.WriteLine("RouteViewOptionables.LoadDefaults()");
+
 			var penGrid = new Pen(def_GridLineColor, def_GridLineWidth);
 			RouteControl.RoutePens[str_GridLineColor] = penGrid;
 
@@ -527,11 +529,11 @@ namespace MapView.Forms.Observers
 
 			var penWall = new Pen(def_WallColor, def_WallWidth);
 			RouteControl.RoutePens[str_WallColor] = penWall;
-			RouteControl.ToolWall = new ColorTool(penWall);
+			RouteControl.ToolWall = new BlobColorTool(penWall);
 
 			var brushContent = new SolidBrush(def_ContentColor);
 			RouteControl.RouteBrushes[str_ContentColor] = brushContent;
-			RouteControl.ToolContent = new ColorTool(brushContent, BlobDrawService.LINEWIDTH_CONTENT);
+			RouteControl.ToolContent = new BlobColorTool(brushContent, BlobDrawService.LINEWIDTH_CONTENT);
 
 			Color color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
 			var brushNode = new SolidBrush(color);
@@ -643,9 +645,9 @@ namespace MapView.Forms.Observers
 				RouteControl.RouteBrushes[str_ContentColor].Color = color;
 
 				RouteControl.ToolContent.Dispose();
-				RouteControl.ToolContent = new ColorTool(
-													RouteControl.RouteBrushes[str_ContentColor],
-													BlobDrawService.LINEWIDTH_CONTENT);
+				RouteControl.ToolContent = new BlobColorTool(
+														RouteControl.RouteBrushes[str_ContentColor],
+														BlobDrawService.LINEWIDTH_CONTENT);
 			}
 			else // is Node color
 			{
@@ -712,7 +714,7 @@ namespace MapView.Forms.Observers
 			{
 				case str_WallColor:
 					RouteControl.ToolWall.Dispose();
-					RouteControl.ToolWall = new ColorTool(RouteControl.RoutePens[key]);
+					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);
 					break;
 			}
 		}
@@ -730,14 +732,14 @@ namespace MapView.Forms.Observers
 			{
 				case str_WallColor: // doh!
 					RouteControl.ToolWall.Dispose();
-					RouteControl.ToolWall = new ColorTool(RouteControl.RoutePens[key]);
+					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);
 					break;
 			}
 		}
 
 		/// <summary>
 		/// Maps a pen's width-key to its corresponding color-key. Because
-		/// TopPens are stored and accessed with their color-keys not their
+		/// RoutePens are stored and accessed with their color-keys not their
 		/// width-keys.
 		/// </summary>
 		/// <param name="width">width-key</param>

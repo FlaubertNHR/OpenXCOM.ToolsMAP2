@@ -15,7 +15,14 @@ namespace MapView.Forms.MainView
 		#region Fields (static)
 		internal static ToolstripFactory ToolFactory;
 
+		/// <summary>
+		/// An array of controls that will act as observers.
+		/// </summary>
 		private static IObserver[] _observers;
+
+		/// <summary>
+		/// A list of forms that shall be closed when MapView quits.
+		/// </summary>
 		private static readonly List<Form> _viewers = new List<Form>();
 		#endregion Fields (static)
 
@@ -89,6 +96,10 @@ namespace MapView.Forms.MainView
 		/// <see cref="RouteViewForm"/> only.</remarks>
 		private static void LoadDefaultOptions(string key, IObserverProvider f)
 		{
+			//DSShared.LogFile.WriteLine("ObserverManager.LoadDefaultOptions()");
+			//DSShared.LogFile.WriteLine(". key= " + key);
+			//DSShared.LogFile.WriteLine(". f= " + (f as Form).Name);
+
 			_viewers.Add(f as Form);
 
 			ObserverControl observer = f.Observer; // ie. TileView, TopView, RouteView.

@@ -365,28 +365,30 @@ namespace MapView.Forms.Observers
 			DrawTypeString(Part,    TextWidth_part,    QuadrantPart);
 
 			// fill the color-swatch under each quadrant-label
-			if (_swatchbrushWest != null && _swatchbrushWest.Color != TopControl.Pens[TopViewOptionables.str_WestColor].Color)
+			if (   _swatchbrushWest != null
+				&& _swatchbrushWest.Color != TopControl.TopPens[TopViewOptionables.str_WestColor].Color)
 			{
 				_swatchbrushWest.Dispose();
 				_swatchbrushWest = null;
 			}
 
 			if (_swatchbrushWest == null)
-				_swatchbrushWest = new SolidBrush(TopControl.Pens[TopViewOptionables.str_WestColor].Color);
+				_swatchbrushWest = new SolidBrush(TopControl.TopPens[TopViewOptionables.str_WestColor].Color);
 
-			if (_swatchbrushNorth != null && _swatchbrushNorth.Color != TopControl.Pens[TopViewOptionables.str_NorthColor].Color)
+			if (   _swatchbrushNorth != null
+				&& _swatchbrushNorth.Color != TopControl.TopPens[TopViewOptionables.str_NorthColor].Color)
 			{
 				_swatchbrushNorth.Dispose();
 				_swatchbrushNorth = null;
 			}
 
 			if (_swatchbrushNorth == null)
-				_swatchbrushNorth = new SolidBrush(TopControl.Pens[TopViewOptionables.str_NorthColor].Color);
+				_swatchbrushNorth = new SolidBrush(TopControl.TopPens[TopViewOptionables.str_NorthColor].Color);
 
-			FillSwatchColor(TopControl.Brushes[TopViewOptionables.str_FloorColor],   PartType.Floor);
-			FillSwatchColor(_swatchbrushWest,                                      PartType.West);
-			FillSwatchColor(_swatchbrushNorth,                                     PartType.North);
-			FillSwatchColor(TopControl.Brushes[TopViewOptionables.str_ContentColor], PartType.Content);
+			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_FloorColor],   PartType.Floor);
+			FillSwatchColor(_swatchbrushWest,                                           PartType.West);
+			FillSwatchColor(_swatchbrushNorth,                                          PartType.North);
+			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_ContentColor], PartType.Content);
 		}
 		private static SolidBrush _swatchbrushWest;
 		private static SolidBrush _swatchbrushNorth;
@@ -577,24 +579,22 @@ namespace MapView.Forms.Observers
 
 
 /*		/// <summary>
-		/// This isn't really necessary since the GraphicsPaths last the
-		/// lifetime of the app. But FxCop gets antsy ....
-		/// NOTE: Dispose() is never called. cf ColorTool. cf BlobDrawService.
-		/// WARNING: This is NOT a robust implementation perhaps. But it
-		/// satisifes the core of the matter and could likely be used for
-		/// further development if that's ever required.
+		/// This isn't necessary since the GraphicsPaths last the lifetime of
+		/// the app. But FxCop gets antsy ....
 		/// </summary>
+		/// <remarks>cf. <see cref="BlobDrawService"/> and <see cref="BlobColorTool"/></remarks>
 		public static void Dispose()
 		{
-			if (_pathFloor   != null) _pathFloor  .Dispose();
-			if (_pathWest    != null) _pathWest   .Dispose();
-			if (_pathNorth   != null) _pathNorth  .Dispose();
-			if (_pathContent != null) _pathContent.Dispose();
+			_pathFloor   .Dispose();
+			_pathWest    .Dispose();
+			_pathNorth   .Dispose();
+			_pathContent .Dispose();
+			_pathPart    .Dispose();
 
-			if (Font  != null) Font .Dispose();
-			if (Brush != null) Brush.Dispose();
-
-			GC.SuppressFinalize(this);
+			Font         .Dispose();
+			Brush        .Dispose();
+			FontLocation .Dispose();
+			BrushLocation.Dispose();
 		} */
 		#endregion Methods (static)
 	}

@@ -755,6 +755,8 @@ namespace MapView.Forms.MainView
 		/// <param name="options">MainView's options</param>
 		internal void LoadDefaults(Options options)
 		{
+			//DSShared.LogFile.WriteLine("MainViewOptionables.LoadDefaults()");
+
 			Color color = Color.FromArgb(def_GridLayerOpacity, def_GridLayerColor);
 			_overlay.BrushLayer = new SolidBrush(color);
 

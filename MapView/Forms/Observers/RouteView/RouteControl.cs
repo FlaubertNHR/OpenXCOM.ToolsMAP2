@@ -48,8 +48,8 @@ namespace MapView.Forms.Observers
 		private static Pen PenLink;
 		private static Pen PenLinkSelected;
 
-		internal static ColorTool ToolWall;
-		internal static ColorTool ToolContent;
+		internal static BlobColorTool ToolWall;
+		internal static BlobColorTool ToolContent;
 		#endregion Fields (static)
 
 
@@ -101,6 +101,9 @@ namespace MapView.Forms.Observers
 		#region Properties (static)
 		private static readonly Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();
+		/// <summary>
+		/// Pens for use in RouteControl.
+		/// </summary>
 		internal static Dictionary<string, Pen> RoutePens
 		{
 			get { return _pens; }
@@ -108,6 +111,9 @@ namespace MapView.Forms.Observers
 
 		private static readonly Dictionary<string, SolidBrush> _brushes =
 							new Dictionary<string, SolidBrush>();
+		/// <summary>
+		/// Brushes for use in RouteControl.
+		/// </summary>
 		internal static Dictionary<string, SolidBrush> RouteBrushes
 		{
 			get { return _brushes; }
@@ -116,6 +122,9 @@ namespace MapView.Forms.Observers
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
 		internal RouteControl()
 		{
 			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;
@@ -124,6 +133,10 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (override)
+		/// <summary>
+		/// Repaths the selected-lozenge on the Resize event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
 			if (MapFile != null)
@@ -137,10 +150,10 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// You know the drill ... Paint it, Black
 		/// black as night
-		/// @note Pens and Brushes need to be refreshed each call to draw since
-		/// they can be changed in Options. Or not ....
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Pens and Brushes need to be refreshed each call to draw
+		/// since they can be changed in Options. Or not ....</remarks>
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			_graphics = e.Graphics;

@@ -287,6 +287,8 @@ The path specified can actually be used to start any valid application"
 		/// <param name="options">TileView's options</param>
 		internal void LoadDefaults(Options options)
 		{
+			//DSShared.LogFile.WriteLine("TileViewOptionables.LoadDefaults()");
+
 			OptionChangedEvent changer = OnSpecialPropertyColorChanged;
 
 			foreach (SpecialType key in Enum.GetValues(typeof(SpecialType)))

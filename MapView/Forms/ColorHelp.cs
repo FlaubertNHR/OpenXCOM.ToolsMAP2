@@ -129,33 +129,33 @@ namespace MapView
 			Color color;
 
 			string key = TopViewOptionables.str_FloorColor;
-			if (TopControl.Brushes.ContainsKey(key))
+			if (TopControl.TopBrushes.ContainsKey(key))
 			{
-				color = TopControl.Brushes[key].Color;
+				color = TopControl.TopBrushes[key].Color;
 				label7.BackColor = color;
 				label7.ForeColor = GetTextColor(color);
 			}
 
 			key = TopViewOptionables.str_WestColor;
-			if (TopControl.Pens.ContainsKey(key))
+			if (TopControl.TopPens.ContainsKey(key))
 			{
-				color = TopControl.Pens[key].Color;
+				color = TopControl.TopPens[key].Color;
 				label8.BackColor = color;
 				label8.ForeColor = GetTextColor(color);
 			}
 
 			key = TopViewOptionables.str_NorthColor;
-			if (TopControl.Pens.ContainsKey(key))
+			if (TopControl.TopPens.ContainsKey(key))
 			{
-				color = TopControl.Pens[key].Color;
+				color = TopControl.TopPens[key].Color;
 				label9.BackColor = color;
 				label9.ForeColor = GetTextColor(color);
 			}
 
 			key = TopViewOptionables.str_ContentColor;
-			if (TopControl.Brushes.ContainsKey(key))
+			if (TopControl.TopBrushes.ContainsKey(key))
 			{
-				color = TopControl.Brushes[key].Color;
+				color = TopControl.TopBrushes[key].Color;
 				label10.BackColor = color;
 				label10.ForeColor = GetTextColor(color);
 			}
@@ -267,11 +267,11 @@ namespace MapView
 
 		/// <summary>
 		/// Gets a contrasting color based on the input color.
-		/// @note Does not check alpha.
 		/// See also Palette.CreateTonescaledPalettes().
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
+		/// <remarks>Does not check alpha.</remarks>
 		private static Color GetTextColor(Color color)
 		{
 			if ((int)color.R + color.G + color.B > 485)

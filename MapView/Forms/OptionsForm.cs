@@ -11,7 +11,7 @@ using MapView.Forms.Observers;
 namespace MapView
 {
 	/// <summary>
-	/// The Options form.
+	/// An Options form.
 	/// </summary>
 	internal sealed class OptionsForm
 		:
@@ -150,10 +150,10 @@ namespace MapView
 						MainViewF.Optionables.DescriptionHeight = _desc.Height;
 						break;
 					case OptionableType.TileView:
-						TileView.Optionables.DescriptionHeight = _desc.Height;
+						TileView .Optionables.DescriptionHeight = _desc.Height;
 						break;
 					case OptionableType.TopView:
-						TopView.Optionables.DescriptionHeight = _desc.Height;
+						TopView  .Optionables.DescriptionHeight = _desc.Height;
 						break;
 					case OptionableType.RouteView:
 						RouteView.Optionables.DescriptionHeight = _desc.Height;
@@ -164,12 +164,12 @@ namespace MapView
 
 		/// <summary>
 		/// Handles this form's VisibleChanged event.
-		/// @note The cached metric of an OptionsForm is updated every time the
-		/// form is hidden, unlike other viewers that update their metrics only
-		/// when MapView quits.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>The cached metric of an OptionsForm is updated every time
+		/// the form is hidden, unlike other viewers that update their metrics
+		/// only when MapView quits.</remarks>
 		private void OnVisibleChanged(object sender, EventArgs e)
 		{
 			if (!Visible)
@@ -179,6 +179,10 @@ namespace MapView
 
 
 		#region Methods
+		/// <summary>
+		/// Finds the focused control in this container.
+		/// </summary>
+		/// <returns></returns>
 		private Control FindFocusedControl()
 		{
 			Control control = null;
@@ -196,11 +200,11 @@ namespace MapView
 
 
 		#region Designer
-		internal CompositedPropertyGrid propertyGrid;
+		internal OptionsPropertyGrid propertyGrid;
 
 		private void InitializeComponent()
 		{
-			this.propertyGrid = new CompositedPropertyGrid();
+			this.propertyGrid = new MapView.OptionsPropertyGrid();
 			this.SuspendLayout();
 			// 
 			// propertyGrid
@@ -208,6 +212,7 @@ namespace MapView
 			this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.propertyGrid.LineColor = System.Drawing.SystemColors.ScrollBar;
 			this.propertyGrid.Location = new System.Drawing.Point(0, 0);
+			this.propertyGrid.Margin = new System.Windows.Forms.Padding(0);
 			this.propertyGrid.Name = "propertyGrid";
 			this.propertyGrid.Size = new System.Drawing.Size(592, 374);
 			this.propertyGrid.TabIndex = 0;
@@ -227,58 +232,5 @@ namespace MapView
 
 		}
 		#endregion Designer
-	}
-
-
-
-	/// <summary>
-	/// Derived class for PropertyGrid.
-	/// </summary>
-	internal sealed class CompositedPropertyGrid
-		:
-			PropertyGrid
-	{
-		#region Properties (override)
-		/// <summary>
-		/// Prevents flicker.
-		/// </summary>
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
-
-
-		#region Properties
-		internal Options Options
-		{ private get; set; }
-		#endregion Properties
-
-
-		#region Events (override)
-		protected override void OnPropertyValueChanged(PropertyValueChangedEventArgs e)
-		{
-			base.OnPropertyValueChanged(e);
-
-			string key = e.ChangedItem.PropertyDescriptor.Name;
-			Option option = Options[key];
-			option.doUpdate(key, (option.Value = e.ChangedItem.Value));
-		}
-		#endregion Events (override)
-
-
-//		#region Methods
-//		internal void SetSelectedValue(object val)
-//		{
-//			//LogFile.WriteLine("SetSelectedValue() val= " + val);
-//			if (SelectedGridItem != null && SelectedObject != null)
-//				SelectedGridItem.PropertyDescriptor.SetValue(SelectedObject, val); // no fucking guff.
-//		}
-//		#endregion Methods
 	}
 }

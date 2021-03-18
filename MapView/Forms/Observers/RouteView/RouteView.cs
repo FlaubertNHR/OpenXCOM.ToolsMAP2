@@ -2324,6 +2324,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal protected override void LoadControlDefaultOptions()
 		{
+			//LogFile.WriteLine("RouteView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
 		}
 

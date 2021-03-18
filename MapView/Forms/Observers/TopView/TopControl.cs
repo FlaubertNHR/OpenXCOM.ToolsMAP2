@@ -23,9 +23,9 @@ namespace MapView.Forms.Observers
 		private const int OffsetX = 2; // these are the offsets between the
 		private const int OffsetY = 3; // panel border and the lozenge-tip(s).
 
-		internal static ColorTool ToolWest;
-		internal static ColorTool ToolNorth;
-		internal static ColorTool ToolContent;
+		internal static BlobColorTool ToolWest;
+		internal static BlobColorTool ToolNorth;
+		internal static BlobColorTool ToolContent;
 		#endregion Fields (static)
 
 
@@ -74,9 +74,8 @@ namespace MapView.Forms.Observers
 							new Dictionary<string, Pen>();
 		/// <summary>
 		/// Pens for use in TopControl.
-		/// @note The identifier 'Pens' could cause a clash w/ System.Drawing
 		/// </summary>
-		internal static Dictionary<string, Pen> Pens
+		internal static Dictionary<string, Pen> TopPens
 		{
 			get { return _pens; }
 		}
@@ -85,10 +84,8 @@ namespace MapView.Forms.Observers
 							new Dictionary<string, SolidBrush>();
 		/// <summary>
 		/// Brushes for use in TopControl.
-		/// @note The identifier 'Brushes' could cause a clash w/
-		/// System.Drawing.Brushes.
 		/// </summary>
-		internal static Dictionary<string, SolidBrush> Brushes
+		internal static Dictionary<string, SolidBrush> TopBrushes
 		{
 			get { return _brushes; }
 		}
@@ -174,6 +171,10 @@ namespace MapView.Forms.Observers
 			}
 		}
 
+		/// <summary>
+		/// Repaths the selected-lozenge on the Resize event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
@@ -241,6 +242,9 @@ namespace MapView.Forms.Observers
 			_lozSelector.CloseFigure();
 		}
 
+		/// <summary>
+		/// Clears the selector-lozenge.
+		/// </summary>
 		internal void ClearSelectorLozenge()
 		{
 			_col =
@@ -291,8 +295,8 @@ namespace MapView.Forms.Observers
 				Pen pen;
 				for (int i = 0; i <= MapFile.MapSize.Rows; ++i) // draw horizontal grid-lines (ie. upperleft to lowerright)
 				{
-					if (i % 10 != 0) pen = TopControl.Pens[TopViewOptionables.str_GridLineColor];
-					else             pen = TopControl.Pens[TopViewOptionables.str_GridLine10Color];
+					if (i % 10 != 0) pen = TopPens[TopViewOptionables.str_GridLineColor];
+					else             pen = TopPens[TopViewOptionables.str_GridLine10Color];
 
 					graphics.DrawLine(
 									pen,
@@ -304,8 +308,8 @@ namespace MapView.Forms.Observers
 
 				for (int i = 0; i <= MapFile.MapSize.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
 				{
-					if (i % 10 != 0) pen = TopControl.Pens[TopViewOptionables.str_GridLineColor];
-					else             pen = TopControl.Pens[TopViewOptionables.str_GridLine10Color];
+					if (i % 10 != 0) pen = TopPens[TopViewOptionables.str_GridLineColor];
+					else             pen = TopPens[TopViewOptionables.str_GridLine10Color];
 
 					graphics.DrawLine(
 									pen,
@@ -324,7 +328,7 @@ namespace MapView.Forms.Observers
 					PathSelectorLozenge(
 									_originX + (_col - _row) * halfWidth,
 									OffsetY  + (_col + _row) * halfHeight);
-					graphics.DrawPath(TopControl.Pens[TopViewOptionables.str_SelectorColor], _lozSelector);
+					graphics.DrawPath(TopPens[TopViewOptionables.str_SelectorColor], _lozSelector);
 
 					// print mouseover location ->
 					QuadrantDrawService.SetGraphics(graphics);
@@ -333,7 +337,7 @@ namespace MapView.Forms.Observers
 
 				// draw tiles-selected lozenge ->
 				if (MainViewOverlay.that.FirstClick)
-					graphics.DrawPath(TopControl.Pens[TopViewOptionables.str_SelectedColor], _lozSelected);
+					graphics.DrawPath(TopPens[TopViewOptionables.str_SelectedColor], _lozSelected);
 			}
 		}
 
@@ -352,7 +356,7 @@ namespace MapView.Forms.Observers
 			if (TopView.Floor.Checked && tile.Floor != null)
 				_blobService.DrawFloor(
 									graphics,
-									TopControl.Brushes[TopViewOptionables.str_FloorColor],
+									TopBrushes[TopViewOptionables.str_FloorColor],
 									x,y);
 
 			if (TopView.Content.Checked && tile.Content != null)

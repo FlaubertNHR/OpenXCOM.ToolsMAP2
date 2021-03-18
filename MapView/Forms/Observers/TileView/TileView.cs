@@ -273,6 +273,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal protected override void LoadControlDefaultOptions()
 		{
+			//LogFile.WriteLine("TileView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
 		}
 

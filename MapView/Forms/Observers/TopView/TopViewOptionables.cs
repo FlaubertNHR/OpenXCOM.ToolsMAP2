@@ -378,31 +378,33 @@ namespace MapView.Forms.Observers
 		/// <param name="options">TopView's options</param>
 		internal void LoadDefaults(Options options)
 		{
+			//DSShared.LogFile.WriteLine("TopViewOptionables.LoadDefaults()");
+
 			var penGrid = new Pen(def_GridLineColor, def_GridLineWidth);
-			TopControl.Pens.Add(str_GridLineColor, penGrid);
+			TopControl.TopPens.Add(str_GridLineColor, penGrid);
 
 			var penGrid10 = new Pen(def_GridLine10Color, def_GridLine10Width);
-			TopControl.Pens.Add(str_GridLine10Color, penGrid10);
+			TopControl.TopPens.Add(str_GridLine10Color, penGrid10);
 
-			TopControl.Brushes.Add(str_FloorColor, new SolidBrush(def_FloorColor));
+			TopControl.TopBrushes.Add(str_FloorColor, new SolidBrush(def_FloorColor));
 
 			var penWest = new Pen(def_WestColor, def_WestWidth);
-			TopControl.Pens.Add(str_WestColor, penWest);
-			TopControl.ToolWest = new ColorTool(penWest);
+			TopControl.TopPens.Add(str_WestColor, penWest);
+			TopControl.ToolWest = new BlobColorTool(penWest);
 
 			var penNorth = new Pen(def_NorthColor, def_NorthWidth);
-			TopControl.Pens.Add(str_NorthColor, penNorth);
-			TopControl.ToolNorth = new ColorTool(penNorth);
+			TopControl.TopPens.Add(str_NorthColor, penNorth);
+			TopControl.ToolNorth = new BlobColorTool(penNorth);
 
 			var brushContent = new SolidBrush(def_ContentColor);
-			TopControl.Brushes.Add(str_ContentColor, brushContent);
-			TopControl.ToolContent = new ColorTool(brushContent, BlobDrawService.LINEWIDTH_CONTENT);
+			TopControl.TopBrushes.Add(str_ContentColor, brushContent);
+			TopControl.ToolContent = new BlobColorTool(brushContent, BlobDrawService.LINEWIDTH_CONTENT);
 
 			var penSelector = new Pen(def_SelectorColor, def_SelectorWidth);
-			TopControl.Pens.Add(str_SelectorColor, penSelector);
+			TopControl.TopPens.Add(str_SelectorColor, penSelector);
 
 			var penSelected = new Pen(def_SelectedColor, def_SelectedWidth);
-			TopControl.Pens.Add(str_SelectedColor, penSelected);
+			TopControl.TopPens.Add(str_SelectedColor, penSelected);
 
 			QuadrantDrawService.Brush = new SolidBrush(def_SelectedQuadColor);
 
@@ -518,14 +520,14 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangeBruColor(string key, object val)
 		{
-			TopControl.Brushes[key].Color = (Color)val;
+			TopControl.TopBrushes[key].Color = (Color)val;
 
 			if (key == str_ContentColor)
 			{
 				TopControl.ToolContent.Dispose();
-				TopControl.ToolContent = new ColorTool(
-													TopControl.Brushes[key],
-													BlobDrawService.LINEWIDTH_CONTENT);
+				TopControl.ToolContent = new BlobColorTool(
+														TopControl.TopBrushes[key],
+														BlobDrawService.LINEWIDTH_CONTENT);
 			}
 		}
 
@@ -536,18 +538,18 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenColor(string key, object val)
 		{
-			TopControl.Pens[key].Color = (Color)val;
+			TopControl.TopPens[key].Color = (Color)val;
 
 			switch (key)
 			{
 				case str_WestColor:
 					TopControl.ToolWest.Dispose();
-					TopControl.ToolWest = new ColorTool(TopControl.Pens[key]);
+					TopControl.ToolWest = new BlobColorTool(TopControl.TopPens[key]);
 					break;
 
 				case str_NorthColor:
 					TopControl.ToolNorth.Dispose();
-					TopControl.ToolNorth = new ColorTool(TopControl.Pens[key]);
+					TopControl.ToolNorth = new BlobColorTool(TopControl.TopPens[key]);
 					break;
 			}
 		}
@@ -559,18 +561,18 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenWidth(string key, object val)
 		{
-			TopControl.Pens[key = WidthToColor(key)].Width = (int)val;
+			TopControl.TopPens[key = WidthToColor(key)].Width = (int)val;
 
 			switch (key)
 			{
 				case str_WestColor:
 					TopControl.ToolWest.Dispose();
-					TopControl.ToolWest = new ColorTool(TopControl.Pens[key]);
+					TopControl.ToolWest = new BlobColorTool(TopControl.TopPens[key]);
 					break;
 
 				case str_NorthColor:
 					TopControl.ToolNorth.Dispose();
-					TopControl.ToolNorth = new ColorTool(TopControl.Pens[key]);
+					TopControl.ToolNorth = new BlobColorTool(TopControl.TopPens[key]);
 					break;
 			}
 		}

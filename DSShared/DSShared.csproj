@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\CompositedPropertyGrid.cs" />
     <Compile Include="Controls\CompositedTreeView.cs" />
     <Compile Include="Controls\CustomToolStripRenderer.cs" />
     <Compile Include="FileService.cs" />
