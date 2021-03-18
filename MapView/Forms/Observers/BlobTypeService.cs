@@ -58,7 +58,7 @@ namespace MapView.Forms.Observers
 		/// tile.</remarks>
 		internal static BlobType GetBlobType(Tilepart part)
 		{
-			var record = part.Record;
+			McdRecord record = part.Record;
 			if (record != null)
 			{
 				_loftList = record.GetLoftList();
