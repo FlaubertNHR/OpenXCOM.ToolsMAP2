@@ -13,7 +13,8 @@ using MapView.Forms.Observers;
 namespace MapView.Forms.MainView
 {
 	/// <summary>
-	/// Properties for MainView that appear in MainView's Options.
+	/// Properties for <see cref="MainViewF"/> that appear in MainView's
+	/// Options.
 	/// </summary>
 	internal sealed class MainViewOptionables
 	{
