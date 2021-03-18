@@ -103,12 +103,12 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="control"></param>
-		/// <remarks>There are 2 controls - one in TopView and another in
+		/// <param name="topviewcontrol"></param>
+		/// <remarks>There are 2 TopControls - one in TopView and another in
 		/// TopRouteView(Top).</remarks>
-		internal TopControl(TopView control)
+		internal TopControl(TopView topviewcontrol)
 		{
-			TopView = control; // beautiful. This pattern should be iterated throughout MapView.
+			TopView = topviewcontrol; // beautiful. This pattern should be iterated throughout MapView.
 
 			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;
 		}

@@ -10,7 +10,8 @@ namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// The various wall- and content-types that will be used to determine how
-	/// to draw the wall- and content-blobs in TopView and RouteView.
+	/// to draw the wall- and content-blobs in <see cref="TopView"/> and
+	/// <see cref="RouteView"/>.
 	/// </summary>
 	internal enum BlobType
 	{
@@ -69,6 +70,13 @@ namespace MapView.Forms.Observers
 
 
 		#region Methods (static)
+		/// <summary>
+		/// Draws a window.
+		/// </summary>
+		/// <param name="g"></param>
+		/// <param name="tool"></param>
+		/// <param name="beg"></param>
+		/// <param name="end"></param>
 		private static void DrawWindow(
 				Graphics g,
 				ColorTool tool,
@@ -76,7 +84,7 @@ namespace MapView.Forms.Observers
 		{
 			g.DrawLine(tool.Pen, beg, end);
 
-			var delta = Point.Subtract(end, new Size(beg));
+			Point delta = Point.Subtract(end, new Size(beg));
 			g.SetClip(new Rectangle(
 								beg.X + delta.X / 3, beg  .Y,
 								        delta.X / 3, delta.Y));
@@ -90,8 +98,8 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Draws floor-blobs for TopView only; floors are not drawn for
-		/// RouteView.
+		/// Draws floor-blobs for <see cref="TopView"/> only; floors are not
+		/// drawn for <see cref="RouteView"/>.
 		/// </summary>
 		internal void DrawFloor(
 				Graphics g,
@@ -117,7 +125,8 @@ namespace MapView.Forms.Observers
 		private const int Offset = 4; // offset the blobs from the grid-lines a bit.
 
 		/// <summary>
-		/// Draws wall- and content-blobs for RouteView and TopView.
+		/// Draws wall- and content-blobs for <see cref="RouteView"/> and
+		/// <see cref="TopView"/>.
 		/// </summary>
 		/// <param name="g"></param>
 		/// <param name="tool"></param>
@@ -281,6 +290,11 @@ namespace MapView.Forms.Observers
 			}
 		}
 
+		/// <summary>
+		/// Sets a GraphicsPath for content-object.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
 		private void PathContent(int x, int y)
 		{
 			int w = HalfWidth  / 2;
@@ -336,12 +350,13 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Gets the BlobType of a given tile for drawing its blob in TopView
 		/// and/or RouteView.
-		/// NOTE: The checks are not robust; the return BlobType is just a guess
-		/// based on what LoFTs have been assigned (externally) to a given tile.
 		/// </summary>
 		/// <remarks>http://www.ufopaedia.org/index.php/LOFTEMPS.DAT</remarks>
 		/// <param name="part"></param>
 		/// <returns></returns>
+		/// <remarks>The checks are not robust; the return BlobType is just a
+		/// guess based on what LoFTs have been assigned (externally) to a given
+		/// tile.</remarks>
 		internal static BlobType GetBlobType(Tilepart part)
 		{
 			var record = part.Record;
@@ -456,7 +471,7 @@ namespace MapView.Forms.Observers
 		{
 			foreach (var loft in _loftList)
 			{
-				var valid = false;
+				bool valid = false;
 				foreach (var gottfried in contingent)
 					if (gottfried == loft)
 					{
@@ -533,7 +548,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		internal static bool IsDoor(Tilepart part)
 		{
-			var record = part.Record;
+			McdRecord record = part.Record;
 			return (record != null
 				&& (record.HingedDoor || record.SlidingDoor));
 		}

@@ -66,8 +66,8 @@ namespace MapView.Forms.Observers
 		/// cTor.
 		/// TODO: This should be a static class.
 		/// </summary>
-		/// <remarks>There are 2 controls - one in TopView and another in
-		/// TopRouteView(Top).</remarks>
+		/// <remarks>There are 2 QuadrantControls - one in TopView and another
+		/// in TopRouteView(Top).</remarks>
 		internal QuadrantControl()
 		{
 			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
@@ -83,7 +83,7 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Inherited from IObserver through ObserverControl_Top.
+		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl_Top"/>.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnLocationSelectedObserver(LocationSelectedEventArgs args)
@@ -95,7 +95,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Inherited from IObserver through ObserverControl_Top.
+		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl_Top"/>.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnLevelSelectedObserver(LevelSelectedEventArgs args)
@@ -110,7 +110,7 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Wrapper for OnMouseDown() for use by keyboard-input only.
+		/// Wrapper for <see cref="OnMouseDown"/> for use by keyboard-input only.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <param name="slot"></param>

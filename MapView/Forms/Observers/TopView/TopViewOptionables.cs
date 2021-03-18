@@ -8,7 +8,7 @@ using MapView.Forms.MainView;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Properties for TopView that appear in TopView's Options.
+	/// Properties for <see cref="TopView"/> that appear in TopView's Options.
 	/// </summary>
 	internal sealed class TopViewOptionables
 	{
