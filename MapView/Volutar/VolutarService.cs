@@ -46,7 +46,7 @@ namespace MapView.Volutar
 								option.Value = (object)_fullpath;
 
 								if (TileView._foptions != null && TileView._foptions.Visible)
-									(TileView._foptions as OptionsForm).propertyGrid.Refresh();
+								   (TileView._foptions as OptionsForm).propertyGrid.Refresh();
 							}
 							else
 							{
