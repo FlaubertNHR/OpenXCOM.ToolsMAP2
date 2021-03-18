@@ -69,10 +69,6 @@ namespace MapView.Forms.Observers
 
 
 		private readonly BlobDrawService _blobService = new BlobDrawService();
-		internal BlobDrawService BlobService
-		{
-			get { return _blobService; }
-		}
 
 		private static readonly Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();
@@ -354,27 +350,27 @@ namespace MapView.Forms.Observers
 				int x, int y)
 		{
 			if (TopView.Floor.Checked && tile.Floor != null)
-				BlobService.DrawFloor(
+				_blobService.DrawFloor(
 									graphics,
 									TopControl.Brushes[TopViewOptionables.str_FloorColor],
 									x,y);
 
 			if (TopView.Content.Checked && tile.Content != null)
-				BlobService.DrawContent(
+				_blobService.DrawContent(
 									graphics,
 									ToolContent,
 									x,y,
 									tile.Content);
 
 			if (TopView.West.Checked && tile.West != null)
-				BlobService.DrawContent(
+				_blobService.DrawContent(
 									graphics,
 									ToolWest,
 									x,y,
 									tile.West);
 
 			if (TopView.North.Checked && tile.North != null)
-				BlobService.DrawContent(
+				_blobService.DrawContent(
 									graphics,
 									ToolNorth,
 									x,y,
