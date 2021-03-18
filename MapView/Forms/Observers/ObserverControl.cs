@@ -13,7 +13,7 @@ namespace MapView.Forms.Observers
 	/// <summary>
 	/// Inherited by TileView, TopView, RouteView.
 	/// </summary>
-	internal class ObserverControl
+	internal abstract class ObserverControl
 		:
 			UserControl,
 			IObserver
@@ -70,6 +70,11 @@ namespace MapView.Forms.Observers
 		#endregion Properties
 
 
+		#region Methods (abstract)
+		internal protected abstract void LoadControlDefaultOptions();
+		#endregion Methods (abstract)
+
+
 		#region Events (override)
 		/// <summary>
 		/// Scrolls the z-axis for TopView and RouteView.
@@ -106,11 +111,5 @@ namespace MapView.Forms.Observers
 			OnMouseWheel(e);
 		} */
 		#endregion Methods
-
-
-		#region Methods (virtual)
-		internal protected virtual void LoadControlDefaultOptions()
-		{}
-		#endregion Methods (virtual)
 	}
 }
