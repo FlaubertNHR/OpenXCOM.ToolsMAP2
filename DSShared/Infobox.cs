@@ -68,6 +68,8 @@ namespace DSShared
 
 			InitializeComponent();
 
+			Text = title;
+
 			DialogResult = DialogResult.Cancel;
 
 			switch (buttons)
@@ -96,8 +98,6 @@ namespace DSShared
 
 			int widthBorder = Width  - ClientSize.Width; // cache these before things go wonky
 			int heightTitle = Height - ClientSize.Height - widthBorder;
-
-			Text = title;
 
 			int width  = 0;
 			int height = 0;
@@ -213,41 +213,17 @@ namespace DSShared
 				pa_Copyable.Invalidate();
 			}
 
-			int width = ClientSize.Width / 3;
+			int width = ClientSize.Width / 3 - 4; // ~2px padding on both sides of buttons
 
-			switch (ClientSize.Width % 3)
-			{
-				case 0:
-					bu_Retry .Left  = 0;
-					bu_Retry .Width = width;
-					bu_Okay  .Left  = width;
-					bu_Okay  .Width = width;
-					bu_Cancel.Left  = width * 2;
-					bu_Cancel.Width = width;
-					break;
+			bu_Retry.Width = bu_Okay.Width = bu_Cancel.Width = width;
 
-				case 1:
-					bu_Retry .Left  = 0;
-					bu_Retry .Width = width;
-					bu_Okay  .Left  = width;
-					bu_Okay  .Width = width + 1;
-					bu_Cancel.Left  = width * 2 + 1;
-					bu_Cancel.Width = width;
-					break;
+			bu_Retry .Left =  4;
+			bu_Okay  .Left =  7 + width;
+			bu_Cancel.Left = 10 + width * 2;
 
-				case 2:
-					bu_Retry .Left  = 0;
-					bu_Retry .Width = width + 1;
-					bu_Okay  .Left  = width;
-					bu_Okay  .Width = width;
-					bu_Cancel.Left  = width * 2 + 1;
-					bu_Cancel.Width = width + 1;
-					break;
-			}
-
-			bu_Cancel.Top =
+			bu_Retry .Top =
 			bu_Okay  .Top =
-			bu_Retry .Top = ClientSize.Height
+			bu_Cancel.Top = ClientSize.Height
 						  - bu_Cancel .Height - bu_Cancel.Margin.Bottom;
 		}
 
