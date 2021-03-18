@@ -522,7 +522,7 @@ namespace MapView
 			LogFile.WriteLine("Tilesets loaded/Descriptors created.");
 
 
-			if (piOptions.FileExists()) // load user-options before MenuManager.StartSecondaryStageBoosters()
+			if (piOptions.FileExists()) // NOTE: load user-options before MenuManager.StartSecondaryStageBoosters() in LoadSelectedDescriptor()
 			{
 				if (OptionsManager.LoadUserOptions(piOptions.Fullpath))
 					LogFile.WriteLine("User options loaded.");
