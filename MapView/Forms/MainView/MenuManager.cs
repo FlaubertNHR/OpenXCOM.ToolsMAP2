@@ -78,13 +78,13 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Creates a menuitem for a specified viewer and tags the item with its
 		/// viewer's Form-object, etc.
-		/// @note These forms never actually close until MainView closes.
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="shortcut"></param>
 		/// <param name="options"></param>
-		/// <param name="default"></param>
+		/// <param name="default">true to have the viewer open on 1st run</param>
 		/// <param name="changer"></param>
+		/// <remarks>These forms never actually close until MainView closes.</remarks>
 		private static void CreateSecondaryViewerMenuitem(
 				Form f,
 				Shortcut shortcut,
@@ -115,7 +115,7 @@ namespace MapView.Forms.MainView
 			string key = PropertyStartObserver + RegistryInfo.getRegistryLabel(f);
 			options.AddOptionDefault(
 								key,
-								@default, // true to have the viewer open on 1st run.
+								@default,
 								changer);
 
 			f.VisibleChanged += (sender, e) =>
@@ -135,8 +135,8 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Visibles the subsidiary viewers that are flagged when a Map loads.
-		/// @note Called by MainViewF.LoadSelectedDescriptor().
 		/// </summary>
+		/// <remarks>Called by MainViewF.LoadSelectedDescriptor().</remarks>
 		internal static void StartSecondaryStageBoosters()
 		{
 			Viewers.Enabled = true;
@@ -163,7 +163,6 @@ namespace MapView.Forms.MainView
 		///   and TopRouteViewForm
 		/// </summary>
 		/// <param name="e"></param>
-		/// <returns>true if key is suppressed</returns>
 		internal static void ViewerKeyDown(KeyEventArgs e)
 		{
 			int id = MI_non;
