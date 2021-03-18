@@ -370,10 +370,10 @@ namespace XCom
 		#region Methods
 		/// <summary>
 		/// Creates the toner-palettes.
-		/// @note Tonescaled palettes are required by ufo-battle and tftd-battle
-		/// for MapView only.
 		/// </summary>
 		/// <param name="baselabel">all your label are belong to us</param>
+		/// <remarks>Tonescaled palettes are required by ufo-battle and
+		/// tftd-battle for MapView only.</remarks>
 		private void CreateTonescaledPalettes(string baselabel)
 		{
 			string label;
@@ -411,12 +411,12 @@ namespace XCom
 
 		/// <summary>
 		/// Gets a luminance value (roughly).
-		/// See also ColorHelp.GetTextColor().
 		/// </summary>
 		/// <param name="red"></param>
 		/// <param name="green"></param>
 		/// <param name="blue"></param>
 		/// <returns></returns>
+		/// <remarks>See also ColorHelp.GetTextColor().</remarks>
 		private int GetMonochromaticBrightness(int red, int green, int blue)
 		{
 			return (int)(Math.Sqrt(Math.Pow(red,   2) * 0.2990
@@ -464,7 +464,7 @@ namespace XCom
 
 		/// <summary>
 		/// Create brushes for drawing UFO sprites per
-		/// 'MainViewF.Optionables.UseMono'.
+		/// MainViewF.Optionables.UseMono.
 		/// </summary>
 		private static void CreateUfoBrushes()
 		{
@@ -477,7 +477,7 @@ namespace XCom
 
 		/// <summary>
 		/// Create brushes for drawing TFTD sprites per
-		/// 'MainViewF.Optionables.UseMono'.
+		/// MainViewF.Optionables.UseMono.
 		/// </summary>
 		private static void CreateTftdBrushes()
 		{
