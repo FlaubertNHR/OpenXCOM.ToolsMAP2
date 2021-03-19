@@ -550,21 +550,21 @@ namespace MapView.Forms.MainView
 		internal const string str_AnimateSprites = "AnimateSprites";
 		private  const bool   def_AnimateSprites = false;
 
-		private bool _animatesprites = def_AnimateSprites;
+		private bool _animateSprites = def_AnimateSprites;
 		[Category(cat_General)]
 		[Description("If true the sprites will animate (F2 - On/Off)")]
 		[DefaultValue(def_AnimateSprites)]
 		public bool AnimateSprites
 		{
-			get { return _animatesprites; }
-			set { _animatesprites = value; }
+			get { return _animateSprites; }
+			set { _animateSprites = value; }
 		}
 
 
 		internal const string str_OpenDoors = "OpenDoors";
 		private  const bool   def_OpenDoors = false;
 
-		private bool _opendoors = def_OpenDoors;
+		private bool _openDoors = def_OpenDoors;
 		[Category(cat_General)]
 		[Description("If true the doors will animate if Animate is also on - if"
 			+ " Animate is false the doors will show their alternate tile. This"
@@ -572,15 +572,15 @@ namespace MapView.Forms.MainView
 		[DefaultValue(def_OpenDoors)]
 		public bool OpenDoors
 		{
-			get { return _opendoors; }
-			set { _opendoors = value; }
+			get { return _openDoors; }
+			set { _openDoors = value; }
 		}
 
 
 		private const string str_BringAllToFront = "BringAllToFront";
 		private const bool   def_BringAllToFront = false;
 
-		private bool _bringalltofront = def_BringAllToFront;
+		private bool _bringAllToFront = def_BringAllToFront;
 		[Category(cat_General)]
 		[Description("If true any open subsidiary viewers will be brought to the"
 			+ " top of the desktop whenever MainView takes focus - this implements"
@@ -590,15 +590,15 @@ namespace MapView.Forms.MainView
 		[DefaultValue(def_BringAllToFront)]
 		public bool BringAllToFront
 		{
-			get { return _bringalltofront; }
-			set { _bringalltofront = value; }
+			get { return _bringAllToFront; }
+			set { _bringAllToFront = value; }
 		}
 
 
 		private const string str_UseMono = "UseMono";
 		private const bool   def_UseMono = false;
 
-		private bool _usemono = def_UseMono;
+		private bool _useMono = def_UseMono;
 		[Category(cat_General)]
 		[Description("If true use sprite-drawing algorithms that are designed for Mono."
 			+ " This fixes an issue on non-Windows systems where non-transparent"
@@ -607,8 +607,8 @@ namespace MapView.Forms.MainView
 		[DefaultValue(def_UseMono)]
 		public bool UseMono
 		{
-			get { return _usemono; }
-			set { _usemono = value; }
+			get { return _useMono; }
+			set { _useMono = value; }
 		}
 
 
@@ -618,28 +618,28 @@ namespace MapView.Forms.MainView
 		private const string str_BackgroundColor = "BackgroundColor";
 		private static Color def_BackgroundColor = Color.Transparent;
 
-		private Color _backgroundcolor = def_BackgroundColor;
+		private Color _backgroundColor = def_BackgroundColor;
 		[Category(cat_Screenshot)]
 		[Description("The color for the background of a screenshot")]
 		[DefaultValue(typeof(Color), "Transparent")]
 		public Color BackgroundColor
 		{
-			get { return _backgroundcolor; }
-			set { _backgroundcolor = value; }
+			get { return _backgroundColor; }
+			set { _backgroundColor = value; }
 		}
 
 
 		private const string str_CropBackground = "CropBackground";
 		private const bool   def_CropBackground = false;
 
-		private bool _cropbackground = def_CropBackground;
+		private bool _cropBackground = def_CropBackground;
 		[Category(cat_Screenshot)]
 		[Description("If true a screenshot will be cropped to its foreground pixels")]
 		[DefaultValue(def_CropBackground)]
 		public bool CropBackground
 		{
-			get { return _cropbackground; }
-			set { _cropbackground = value; }
+			get { return _cropBackground; }
+			set { _cropBackground = value; }
 		}
 
 
@@ -820,7 +820,7 @@ namespace MapView.Forms.MainView
 		#region Events
 		/// <summary>
 		/// Sets the value of an optionable property and invalidates the
-		/// MainViewOverlay panel.
+		/// <see cref="MainViewOverlay"/> panel.
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
@@ -975,8 +975,10 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Sets the value of an optionable property and invalidates the
-		/// MainViewOverlay panel as well as the current TileView panel and
-		/// the quadrant-panels in TopView and TopRouteView.
+		/// <see cref="MainViewOverlay"/> panel as well as the current
+		/// <see cref="TileView"/> panel and the
+		/// <see cref="QuadrantControl">QuadrantControls</see> in TopView and
+		/// TopRouteView.
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
@@ -1027,9 +1029,11 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Sets the value of an optionable property and invalidates the
-		/// MainViewOverlay panel as well as the current TileView panel and
-		/// the quadrant-panels in TopView and TopRouteView. Also invalidates
-		/// the ScanG viewer's panel.
+		/// <see cref="MainViewOverlay"/> panel as well as the current
+		/// <see cref="TileView"/> panel and the
+		/// <see cref="QuadrantControl">QuadrantControls</see> in TopView and
+		/// TopRouteView(Top). Also invalidates the <see cref="ScanGViewer"/>
+		/// panel.
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
