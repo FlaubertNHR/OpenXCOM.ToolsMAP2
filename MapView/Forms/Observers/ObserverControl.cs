@@ -20,19 +20,17 @@ namespace MapView.Forms.Observers
 			IObserver
 	{
 		#region IObserver requirements
-		private MapFile _file;
 		/// <summary>
 		/// The currently loaded <see cref="XCom.MapFile"/>.
 		/// </summary>
 		/// <remarks>Is overridden by <see cref="TileView.MapFile">TileView.MapFile</see>
-		/// and <see cref="RouteView.MapFile">RouteView.MapFile</see></remarks>
+		/// and <see cref="RouteView.MapFile">RouteView.MapFile</see>.
+		/// <see cref="TopView"/> uses this MapFile.</remarks>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
 		public virtual MapFile MapFile
-		{
-			get { return _file; }
-			set { _file = value; Refresh(); }
-		}
+		{ get; set; }
+
 
 		private readonly Dictionary<string, IObserver> _panels =
 					 new Dictionary<string, IObserver>();
