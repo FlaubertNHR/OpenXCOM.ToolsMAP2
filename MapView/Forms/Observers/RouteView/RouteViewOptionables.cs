@@ -657,7 +657,7 @@ namespace MapView.Forms.Observers
 				switch (key)
 				{
 					case str_NodeSelectedColor:
-						_routeView.SetInfoSelectedColor();
+						RouteView.SetInfoSelectedColor();
 						break;
 
 					case str_NodeColor:

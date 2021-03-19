@@ -117,7 +117,7 @@ namespace MapView
 		/// Gets the highest valid setId placed in the current tileset.
 		/// </summary>
 		/// <returns></returns>
-		private int HighId(MapFile file)
+		private static int HighId(MapFile file)
 		{
 			int id = -1;
 

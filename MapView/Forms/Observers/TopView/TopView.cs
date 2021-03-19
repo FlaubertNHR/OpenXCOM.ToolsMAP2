@@ -430,7 +430,7 @@ namespace MapView.Forms.Observers
 		/// Checks or unchecks the Options button.
 		/// </summary>
 		/// <param name="checked"></param>
-		private void setOptionsChecked(bool @checked)
+		private static void setOptionsChecked(bool @checked)
 		{
 			ObserverManager.TopView     .Control   .tsb_Options.Checked =
 			ObserverManager.TopRouteView.ControlTop.tsb_Options.Checked = @checked;

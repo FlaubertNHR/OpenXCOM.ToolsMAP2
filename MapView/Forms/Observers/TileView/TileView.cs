@@ -592,7 +592,7 @@ namespace MapView.Forms.Observers
 		/// Gets the current sprite-shade in <see cref="MainViewF.Optionables"/>.
 		/// </summary>
 		/// <returns>sprite-shade or -1 if disabled</returns>
-		private int GetSpriteshade()
+		private static int GetSpriteshade()
 		{
 			if (MainViewF.Optionables.SpriteShadeEnabled)
 				return MainViewF.Optionables.SpriteShade;

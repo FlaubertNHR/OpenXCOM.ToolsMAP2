@@ -343,10 +343,6 @@ namespace MapView
 			LogFile.WriteLine("Monotone sprites loaded.");
 
 
-			QuadrantDrawService.Punkstrings();
-			LogFile.WriteLine("Quadrant strings punked.");
-
-
 			ObserverManager.CreateViewers(); // adds each subsidiary viewer's options and Options-type etc.
 			LogFile.WriteLine("ObserverManager initialized.");
 
@@ -3232,8 +3228,8 @@ namespace MapView
 						routeview1.ClearSelectedInfo();
 						routeview2.ClearSelectedInfo();
 
-						routeview1.DisableOg();
-						routeview2.DisableOg();
+						RouteView.DisableOg();
+						RouteView.DisableOg();
 
 						Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
 						Optionables.OpenDoors = false;
@@ -3350,7 +3346,7 @@ namespace MapView
 		/// <summary>
 		/// Resets the QuadrantControl when either a Map loads or gets resized.
 		/// </summary>
-		private void ResetQuadrantPanel()
+		private static void ResetQuadrantPanel()
 		{
 			QuadrantControl p1 = ObserverManager.TopView     .Control   .QuadrantControl;
 			QuadrantControl p2 = ObserverManager.TopRouteView.ControlTop.QuadrantControl;

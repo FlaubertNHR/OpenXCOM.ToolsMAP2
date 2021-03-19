@@ -337,9 +337,9 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Updates the selected node's textcolor when the Option changes.
-		/// @note Called by Options only.
 		/// </summary>
-		internal void SetInfoSelectedColor()
+		/// <remarks>Called by Options only.</remarks>
+		internal static void SetInfoSelectedColor()
 		{
 			Color color;
 			if (NodeSelected == null)
@@ -355,8 +355,8 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Updates the overed node's textcolor when the Option changes.
-		/// @note Called by Options only.
 		/// </summary>
+		/// <remarks>Called by Options only.</remarks>
 		internal void SetInfoOverColor()
 		{
 			if (RouteControl._col != -1) // find the Control that the mousecursor is in (if either)
@@ -731,7 +731,7 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private void EnableEditButtons()
+		private static void EnableEditButtons()
 		{
 			bool valid = (NodeSelected != null);
 
@@ -1601,7 +1601,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Disables the og-button when a Map gets loaded.
 		/// </summary>
-		internal void DisableOg()
+		internal static void DisableOg()
 		{
 			ObserverManager.RouteView   .Control     .btnOg.Enabled =
 			ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
@@ -2383,7 +2383,7 @@ namespace MapView.Forms.Observers
 		/// Checks or unchecks the Options button.
 		/// </summary>
 		/// <param name="checked"></param>
-		private void setOptionsChecked(bool @checked)
+		private static void setOptionsChecked(bool @checked)
 		{
 			ObserverManager.RouteView   .Control     .tsb_Options.Checked =
 			ObserverManager.TopRouteView.ControlRoute.tsb_Options.Checked = @checked;

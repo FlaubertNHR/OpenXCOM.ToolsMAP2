@@ -226,7 +226,7 @@ namespace MapView.Forms.MainView
 		/// be checked before call.
 		/// </summary>
 		/// <returns></returns>
-		private bool SuppressTargeter()
+		private static bool SuppressTargeter()
 		{
 			MainViewUnderlay underlay = MainViewUnderlay.that;
 			var centerpanel = MainViewF.that.tscPanel.ContentPanel;
@@ -497,7 +497,7 @@ namespace MapView.Forms.MainView
 		/// <param name="src">source terrain definition</param>
 		/// <param name="dst">destination terrain definition</param>
 		/// <returns></returns>
-		private bool AllowPaste(
+		private static bool AllowPaste(
 				IDictionary<int, Tuple<string,string>> src,
 				IDictionary<int, Tuple<string,string>> dst)
 		{
@@ -520,7 +520,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="basepath"></param>
 		/// <returns></returns>
-		private string GetBasepathDescript(string basepath)
+		private static string GetBasepathDescript(string basepath)
 		{
 			if (String.IsNullOrEmpty(basepath))
 				return "config basepath";
