@@ -41,6 +41,9 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
+		/// <summary>
+		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
+		/// </summary>
 		[Browsable(false)]
 		public override MapFile MapFile
 		{
