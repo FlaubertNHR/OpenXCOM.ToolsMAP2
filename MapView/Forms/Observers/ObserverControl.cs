@@ -11,7 +11,8 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Inherited by TileView, TopView, RouteView.
+	/// Inherited by <see cref="TileView"/>, <see cref="TopView"/>,
+	/// <see cref="RouteView"/>.
 	/// </summary>
 	internal abstract class ObserverControl
 		:
@@ -37,9 +38,12 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Satisfies IObserver.
+		/// Refreshes <see cref="TileView"/> and <see cref="TopView"/> when a
+		/// location is selected.
 		/// </summary>
 		/// <param name="args"></param>
+		/// <remarks>Satisfies IObserver. Is overridden only by
+		/// <see cref="RouteView.OnLocationSelectedObserver">RouteView.OnLocationSelectedObserver</see>.</remarks>
 		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
 		{
 			//DSShared.LogFile.WriteLine("ObserverControl.OnLocationSelectedObserver() DOES THIS EVER DO ANYTHING.");
@@ -48,9 +52,12 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Satisfies IObserver.
+		/// Refreshes <see cref="TileView"/> and <see cref="TopView"/> when a
+		/// level is selected.
 		/// </summary>
 		/// <param name="args"></param>
+		/// <remarks>Satisfies IObserver. Is overridden only by
+		/// <see cref="RouteView.OnLevelSelectedObserver">RouteView.OnLevelSelectedObserver</see>.</remarks>
 		public virtual void OnLevelSelectedObserver(LevelSelectedEventArgs args)
 		{
 			//DSShared.LogFile.WriteLine("ObserverControl.OnLevelSelectedObserver() DOES THIS EVER DO ANYTHING.");
@@ -77,9 +84,11 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Scrolls the z-axis for TopView and RouteView.
+		/// Scrolls the z-axis for <see cref="TopView"/> and <see cref="RouteView"/>.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks><see cref="TileView"/> overrides this override to do
+		/// nothing.</remarks>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);

@@ -171,9 +171,8 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Bypasses level-change in <see cref="ObserverControl"/> and scrolls
-		/// through the tabpages instead. Actually it doesn't; it just prevents
-		/// awkward level-changes in the other viewers.
+		/// Bypasses level-change in <see cref="ObserverControl"/> to prevent
+		/// awkward level changes.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
