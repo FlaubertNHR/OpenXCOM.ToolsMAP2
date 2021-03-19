@@ -639,33 +639,35 @@ namespace MapView.Forms.Observers
 		{
 			var color = (Color)val;
 
-			if (key == str_ContentColor)
+			switch (key)
 			{
-				// Do not apply alpha to ContentColor.
-				RouteControl.RouteBrushes[str_ContentColor].Color = color;
+				case str_ContentColor:
+					// Do not apply alpha to ContentColor.
+					RouteControl.RouteBrushes[str_ContentColor].Color = color;
 
-				RouteControl.ToolContent.Dispose();
-				RouteControl.ToolContent = new BlobColorTool(
-														RouteControl.RouteBrushes[str_ContentColor],
-														BlobDrawService.LINEWIDTH_CONTENT);
-			}
-			else // is Node color
-			{
-				color = Color.FromArgb(NodeOpacity, color);
-				RouteControl.RouteBrushes[key].Color = color;
+					RouteControl.ToolContent.Dispose();
+					RouteControl.ToolContent = new BlobColorTool(
+															RouteControl.RouteBrushes[str_ContentColor],
+															BlobDrawService.LINEWIDTH_CONTENT);
+					break;
 
-				switch (key)
-				{
-					case str_NodeSelectedColor:
-						RouteView.SetInfoSelectedColor();
-						break;
+				default: // is Node color
+					color = Color.FromArgb(NodeOpacity, color);
+					RouteControl.RouteBrushes[key].Color = color;
 
-					case str_NodeColor:
-					case str_NodeSpawnColor:
-						ObserverManager.RouteView   .Control     .SetInfoOverColor();
-						ObserverManager.TopRouteView.ControlRoute.SetInfoOverColor();
-						break;
-				}
+					switch (key)
+					{
+						case str_NodeColor:
+						case str_NodeSpawnColor:
+							ObserverManager.RouteView   .Control     .SetInfoOverColor();
+							ObserverManager.TopRouteView.ControlRoute.SetInfoOverColor();
+							break;
+
+						case str_NodeSelectedColor:
+							RouteView.SetInfoSelectedColor();
+							break;
+					}
+					break;
 			}
 		}
 
