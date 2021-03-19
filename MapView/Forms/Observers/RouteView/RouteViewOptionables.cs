@@ -47,15 +47,11 @@ namespace MapView.Forms.Observers
 		internal const string str_GridLineColor = "GridLineColor";
 		private static Color  def_GridLineColor = Color.Black;
 
-		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_Grid)]
 		[Description("Color of the grid lines")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLineColor
-		{
-			get { return _gridLineColor; }
-			set { _gridLineColor = value; }
-		}
+		{ get; set; }
 
 		private const string str_GridLineWidth = "GridLineWidth";
 		private const int    def_GridLineWidth = 1;
@@ -85,15 +81,11 @@ namespace MapView.Forms.Observers
 		internal const string str_GridLine10Color = "GridLine10Color";
 		private static Color  def_GridLine10Color = Color.Black;
 
-		private Color _gridLine10Color = def_GridLine10Color;
 		[Category(cat_Grid)]
 		[Description("Color of every tenth grid line")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLine10Color
-		{
-			get { return _gridLine10Color; }
-			set { _gridLine10Color = value; }
-		}
+		{ get; set; }
 
 		private const string str_GridLine10Width = "GridLine10Width";
 		private const int    def_GridLine10Width = 2;
@@ -126,15 +118,11 @@ namespace MapView.Forms.Observers
 		internal const string str_WallColor = "WallColor";
 		private static Color  def_WallColor = Color.BurlyWood;
 
-		private Color _wallColor = def_WallColor;
 		[Category(cat_Blobs)]
 		[Description("Color of the wall indicators")]
 		[DefaultValue(typeof(Color), "BurlyWood")]
 		public Color WallColor
-		{
-			get { return _wallColor; }
-			set { _wallColor = value; }
-		}
+		{ get; set; }
 
 		private const string str_WallWidth = "WallWidth";
 		private const int    def_WallWidth = 3;
@@ -164,15 +152,11 @@ namespace MapView.Forms.Observers
 		internal const string str_ContentColor = "ContentColor";
 		private static Color  def_ContentColor = Color.DarkGoldenrod;
 
-		private Color _contentColor = def_ContentColor;
 		[Category(cat_Blobs)]
 		[Description("Color of the content indicator")]
 		[DefaultValue(typeof(Color), "DarkGoldenrod")]
 		public Color ContentColor
-		{
-			get { return _contentColor; }
-			set { _contentColor = value; }
-		}
+		{ get; set; }
 
 
 
@@ -181,43 +165,31 @@ namespace MapView.Forms.Observers
 		internal const string str_NodeColor = "NodeColor";
 		private static Color  def_NodeColor = Color.MediumSeaGreen;
 
-		private Color _nodeColor = def_NodeColor;
 		[Category(cat_Nodes)]
 		[Description("Color of unselected nodes")]
 		[DefaultValue(typeof(Color), "MediumSeaGreen")]
 		public Color NodeColor
-		{
-			get { return _nodeColor; }
-			set { _nodeColor = value; }
-		}
+		{ get; set; }
 
 
 		internal const string str_NodeSpawnColor = "NodeSpawnColor";
 		private static Color  def_NodeSpawnColor = Color.GreenYellow;
 
-		private Color _nodeSpawnColor = def_NodeSpawnColor;
 		[Category(cat_Nodes)]
 		[Description("Color of spawn nodes")]
 		[DefaultValue(typeof(Color), "GreenYellow")]
 		public Color NodeSpawnColor
-		{
-			get { return _nodeSpawnColor; }
-			set { _nodeSpawnColor = value; }
-		}
+		{ get; set; }
 
 
 		internal const string str_NodeSelectedColor = "NodeSelectedColor";
 		private static Color  def_NodeSelectedColor = Color.RoyalBlue;
 
-		private Color _nodeSelectedColor = def_NodeSelectedColor;
 		[Category(cat_Nodes)]
 		[Description("Color of selected nodes")]
 		[DefaultValue(typeof(Color), "RoyalBlue")]
 		public Color NodeSelectedColor
-		{
-			get { return _nodeSelectedColor; }
-			set { _nodeSelectedColor = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_NodeOpacity = "NodeOpacity";
@@ -251,15 +223,11 @@ namespace MapView.Forms.Observers
 		internal const string str_LinkColor = "LinkColor";
 		private static Color  def_LinkColor = Color.OrangeRed;
 
-		private Color _linkColor = def_LinkColor;
 		[Category(cat_Links)]
 		[Description("Color of unselected link lines")]
 		[DefaultValue(typeof(Color), "OrangeRed")]
 		public Color LinkColor
-		{
-			get { return _linkColor; }
-			set { _linkColor = value; }
-		}
+		{ get; set; }
 
 		private const string str_LinkWidth = "LinkWidth";
 		private const int    def_LinkWidth = 2;
@@ -289,15 +257,11 @@ namespace MapView.Forms.Observers
 		internal const string str_LinkSelectedColor = "LinkSelectedColor";
 		private static Color  def_LinkSelectedColor = Color.RoyalBlue;
 
-		private Color _linkSelectedColor = def_LinkSelectedColor;
 		[Category(cat_Links)]
 		[Description("Color of selected link lines")]
 		[DefaultValue(typeof(Color), "RoyalBlue")]
 		public Color LinkSelectedColor
-		{
-			get { return _linkSelectedColor; }
-			set { _linkSelectedColor = value; }
-		}
+		{ get; set; }
 
 		private const string str_LinkSelectedWidth = "LinkSelectedWidth";
 		private const int    def_LinkSelectedWidth = 2;
@@ -330,35 +294,26 @@ namespace MapView.Forms.Observers
 		private const string str_ShowOverlay = "ShowOverlay";
 		private const bool   def_ShowOverlay = true;
 
-		private bool _showOverlay = def_ShowOverlay;
 		[Category(cat_Panel)]
 		[Description("True to display cursor info")]
 		[DefaultValue(true)]
 		public bool ShowOverlay
-		{
-			get { return _showOverlay; }
-			set { _showOverlay = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_ShowPriorityBars = "ShowPriorityBars";
 		private const bool   def_ShowPriorityBars = true;
 
-		private bool _showPriorityBars = def_ShowPriorityBars;
 		[Category(cat_Panel)]
 		[Description("True to display the spawn/patrol bars")]
 		[DefaultValue(true)]
 		public bool ShowPriorityBars
-		{
-			get { return _showPriorityBars; }
-			set { _showPriorityBars = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_ReduceDraws = "ReduceDraws";
 		private const bool   def_ReduceDraws = false;
 
-		private bool _reduceDraws = def_ReduceDraws;
 		[Category(cat_Panel)]
 		[Description("True to reduce the frequency of draw-calls to the panel."
 					+ " If so the InfoOverlay doesn't track exactly with the"
@@ -366,10 +321,7 @@ namespace MapView.Forms.Observers
 					+ str_ShowOverlay + " is false draws will be reduced regardless.")]
 		[DefaultValue(false)]
 		public bool ReduceDraws
-		{
-			get { return _reduceDraws; }
-			set { _reduceDraws = value; }
-		}
+		{ get; set; }
 
 
 
@@ -434,15 +386,11 @@ namespace MapView.Forms.Observers
 		internal const string str_SelectorColor = "SelectorColor";
 		internal static Color def_SelectorColor = Color.Black;
 
-		private Color _selectorColor = def_SelectorColor;
 		[Category(cat_Selects)]
 		[Description("Color of the tile selector")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color SelectorColor
-		{
-			get { return _selectorColor; }
-			set { _selectorColor = value; }
-		}
+		{ get; set; }
 
 		internal const string str_SelectorWidth = "SelectorWidth";
 		internal const int    def_SelectorWidth = widthselector;
@@ -472,15 +420,11 @@ namespace MapView.Forms.Observers
 		internal const string str_SelectedColor = "SelectedColor";
 		internal static Color def_SelectedColor = Color.RoyalBlue;
 
-		private Color _selectedColor = def_SelectedColor;
 		[Category(cat_Selects)]
 		[Description("Color of the selection border")]
 		[DefaultValue(typeof(Color), "RoyalBlue")]
 		public Color SelectedColor
-		{
-			get { return _selectedColor; }
-			set { _selectedColor = value; }
-		}
+		{ get; set; }
 
 		internal const string str_SelectedWidth = "SelectedWidth";
 		internal const int    def_SelectedWidth = widthselected;
