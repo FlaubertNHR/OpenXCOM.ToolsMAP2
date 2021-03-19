@@ -30,8 +30,10 @@ namespace MapView.Forms.Observers
 
 		private MapFile _file;
 		/// <summary>
-		/// The currently loaded <see cref="XCom.Mapfile"/>.
+		/// The currently loaded <see cref="XCom.MapFile"/>.
 		/// </summary>
+		/// <remarks>Is overridden by <see cref="TileView.MapFile">TileView.MapFile</see>
+		/// and <see cref="RouteView.MapFile">RouteView.MapFile</see></remarks>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
 		public virtual MapFile MapFile
@@ -41,8 +43,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Refreshes <see cref="TileView"/> and <see cref="TopView"/> when a
-		/// location is selected.
+		/// 
 		/// </summary>
 		/// <param name="args"></param>
 		/// <remarks>Satisfies IObserver. Is overridden only by
@@ -50,22 +51,26 @@ namespace MapView.Forms.Observers
 		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
 		{
 			//DSShared.LogFile.WriteLine("ObserverControl.OnLocationSelectedObserver() DOES THIS EVER DO ANYTHING.");
-			// TODO: YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
-			Refresh();
+			// YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
+//			Refresh();
+			// But Refresh() doesn't appear to be needed.
+			// why would you need to refresh TileView ...
 		}
 
 		/// <summary>
-		/// Refreshes <see cref="TileView"/> and <see cref="TopView"/> when a
-		/// level is selected.
+		/// 
 		/// </summary>
 		/// <param name="args"></param>
 		/// <remarks>Satisfies IObserver. Is overridden only by
-		/// <see cref="RouteView.OnLevelSelectedObserver">RouteView.OnLevelSelectedObserver</see>.</remarks>
+		/// <see cref="RouteView.OnLevelSelectedObserver">RouteView.OnLevelSelectedObserver</see>
+		/// and <see cref="TopView.OnLevelSelectedObserver">TopView.OnLevelSelectedObserver</see>.</remarks>
 		public virtual void OnLevelSelectedObserver(LevelSelectedEventArgs args)
 		{
 			//DSShared.LogFile.WriteLine("ObserverControl.OnLevelSelectedObserver() DOES THIS EVER DO ANYTHING.");
-			// TODO: YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
-			Refresh();
+			// YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
+//			Refresh();
+			// Refresh() appears to be needed for TopView.
+			// why would you need to refresh TileView ...
 		}
 		#endregion IObserver requirements
 

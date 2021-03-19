@@ -159,6 +159,19 @@ namespace MapView.Forms.Observers
 		#endregion cTor
 
 
+		#region Events (override) inherited from IObserver/ObserverControl
+		/// <summary>
+		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
+		/// </summary>
+		/// <param name="args"></param>
+		public override void OnLevelSelectedObserver(LevelSelectedEventArgs args)
+		{
+			//LogFile.WriteLine("TopView.OnLevelSelectedObserver() " + Tag);
+			Refresh(); // req'd.
+		}
+		#endregion Events (override) inherited from IObserver/ObserverControl
+
+
 		#region Events
 		/// <summary>
 		/// Handles a click on any of the quadrant-visibility menuitems.
