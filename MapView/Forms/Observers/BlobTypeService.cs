@@ -197,25 +197,6 @@ namespace MapView.Forms.Observers
 			return true;
 		}
 
-//		private static bool CheckAllAreLoftExcludeFloor(int necessary)
-//		{
-//			int length = _loftList.Count;
-//			for (int layer = 0; layer != length; ++layer)
-//			{
-//				switch (layer)
-//				{
-//					case 0:
-//						break;
-//
-//					default:
-//						if (_loftList[layer] != necessary)
-//							return false;
-//						break;
-//				}
-//			}
-//			return true;
-//		}
-
 		/// <summary>
 		/// Checks if any entry in '_loftList' matches 'necessary'.
 		/// </summary>
@@ -237,6 +218,25 @@ namespace MapView.Forms.Observers
 //						return true;
 //
 //			return false;
+//		}
+
+//		private static bool CheckAllAreLoftExcludeFloor(int necessary)
+//		{
+//			int length = _loftList.Count;
+//			for (int layer = 0; layer != length; ++layer)
+//			{
+//				switch (layer)
+//				{
+//					case 0:
+//						break;
+//
+//					default:
+//						if (_loftList[layer] != necessary)
+//							return false;
+//						break;
+//				}
+//			}
+//			return true;
 //		}
 
 		/// <summary>
