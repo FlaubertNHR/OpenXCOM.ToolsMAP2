@@ -11,7 +11,7 @@ namespace DSShared
 	/// A generic outputbox for Info/Warnings/Errors.
 	/// </summary>
 	/// <remarks>The point is to stop wrapping long path-strings like the stock
-	/// .NET MessageBox does. And to stop beeps.</remarks>
+	/// .NET MessageBox does. And to stop beeps. And to make it look nicer.</remarks>
 	public sealed class Infobox
 		:
 			Form
