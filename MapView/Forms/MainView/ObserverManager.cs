@@ -129,6 +129,10 @@ namespace MapView.Forms.MainView
 		/// <param name="observer"></param>
 		private static void SubscribeObserver(MapFile file, IObserver observer)
 		{
+			// TODO: This stuff is so useless/redundant (think TileView eg.)
+			// that the observer hierarchy needs to be reworked from scratch -
+			// ie. precision calls are warranted.
+
 			if (observer.MapFile != null)
 			{
 				observer.MapFile.LocationSelected -= observer.OnLocationSelectedObserver;
@@ -141,8 +145,8 @@ namespace MapView.Forms.MainView
 				observer.MapFile.LevelSelected    += observer.OnLevelSelectedObserver;
 			}
 
-			foreach (string key in observer.ObserverPanels.Keys) // ie. TopControl and QuadrantControl
-				SubscribeObserver(observer.MapFile, observer.ObserverPanels[key]);
+			foreach (string key in observer.ObserverPanels.Keys)					// ie. TopControl and QuadrantControl
+				SubscribeObserver(observer.MapFile, observer.ObserverPanels[key]);	// ie. This recursion is req'd only for TopView.
 		}
 
 		/// <summary>
