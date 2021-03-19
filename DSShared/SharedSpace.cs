@@ -13,10 +13,10 @@ namespace DSShared
 		public const string ResourceDirectoryUfo  = "ResourceDirectoryUfo";
 		public const string ResourceDirectoryTftd = "ResourceDirectoryTftd";
 
-		public static string CursorFilePrefix     = "UFOGRAPH" + Path.DirectorySeparatorChar + "CURSOR"; // the cursor is determined in MainViewF..cTor
-		public static string ScanGfile            = "GEODATA"  + Path.DirectorySeparatorChar + "SCANG.DAT";
-		public static string LoftfileUfo          = "GEODATA"  + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
-		public static string LoftfileTftd         = "TERRAIN"  + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
+		public static readonly string CursorFilePrefix = "UFOGRAPH" + Path.DirectorySeparatorChar + "CURSOR"; // the cursor is determined in MainViewF..cTor
+		public static readonly string ScanGfile        = "GEODATA"  + Path.DirectorySeparatorChar + "SCANG.DAT";
+		public static readonly string LoftfileUfo      = "GEODATA"  + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
+		public static readonly string LoftfileTftd     = "TERRAIN"  + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
 
 
 		private static readonly Dictionary<string, object> _shares =
