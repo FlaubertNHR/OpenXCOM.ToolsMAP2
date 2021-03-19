@@ -325,7 +325,7 @@ namespace MapView.Forms.Observers
 		private const string str_EnableRightClickWaitTimer = "EnableRightClickWaitTimer";
 		private const bool   def_EnableRightClickWaitTimer = false;
 
-		private bool _enablewait = def_EnableRightClickWaitTimer;
+		private bool _enableWaitTimer = def_EnableRightClickWaitTimer;
 		[Category(cat_General)]
 		[Description("If true then right-clicking or double right-clicking on"
 			+ " either a tile or a quadrant slot causes a very short delay"
@@ -339,8 +339,8 @@ namespace MapView.Forms.Observers
 		[DefaultValue(def_EnableRightClickWaitTimer)]
 		public bool EnableRightClickWaitTimer
 		{
-			get { return _enablewait; }
-			set { _enablewait = value; }
+			get { return _enableWaitTimer; }
+			set { _enableWaitTimer = value; }
 		}
 
 
