@@ -159,29 +159,21 @@ namespace MapView.Forms.MainView
 		internal const string str_GridVisible = "GridVisible";
 		private  const bool   def_GridVisible = true;
 
-		private bool _gridVisible = def_GridVisible;
 		[Category(cat_Grid)]
 		[Description("If true a grid will display at the current level of editing (F4 - On/Off)")]
 		[DefaultValue(def_GridVisible)]
 		public bool GridVisible
-		{
-			get { return _gridVisible; }
-			set { _gridVisible = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_GridLayerColor = "GridLayerColor";
 		private static Color def_GridLayerColor = Color.MediumVioletRed;
 
-		private Color _gridLayerColor = def_GridLayerColor;
 		[Category(cat_Grid)]
 		[Description("Color of the grid")]
 		[DefaultValue(typeof(Color), "MediumVioletRed")]
 		public Color GridLayerColor
-		{
-			get { return _gridLayerColor; }
-			set { _gridLayerColor = value; }
-		}
+		{ get; set; }
 
 		private const string str_GridLayerOpacity = "GridLayerOpacity";
 		private const int    def_GridLayerOpacity = 120;
@@ -282,15 +274,11 @@ namespace MapView.Forms.MainView
 		private const string str_SelectionBorderColor = "SelectionBorderColor";
 		private static Color def_SelectionBorderColor = Color.Tomato;
 
-		private Color _selectionBorderColor = def_SelectionBorderColor;
 		[Category(cat_Selection)]
 		[Description("Color of the border of selected tiles")]
 		[DefaultValue(typeof(Color), "Tomato")]
 		public Color SelectionBorderColor
-		{
-			get { return _selectionBorderColor; }
-			set { _selectionBorderColor = value; }
-		}
+		{ get; set; }
 
 		private const string str_SelectionBorderOpacity = "SelectionBorderOpacity";
 		private const int    def_SelectionBorderOpacity = 255;
@@ -402,7 +390,6 @@ namespace MapView.Forms.MainView
 		internal const string str_OneTileDraw = "OneTileDraw";
 		private  const bool   def_OneTileDraw = false;
 
-		private bool _oneTileDraw = def_OneTileDraw;
 		[Category(cat_Selection)]
 		[Description("If true a selection border will be drawn even when there"
 			+ " is only 1 tile selected. Typically this should be left false"
@@ -411,10 +398,7 @@ namespace MapView.Forms.MainView
 			+ " (Ctrl+F9 - On/Off)")]
 		[DefaultValue(def_OneTileDraw)]
 		public bool OneTileDraw
-		{
-			get { return _oneTileDraw; }
-			set { _oneTileDraw = value; }
-		}
+		{ get; set; }
 
 
 
@@ -526,37 +510,28 @@ namespace MapView.Forms.MainView
 		internal const string str_AnimateSprites = "AnimateSprites";
 		private  const bool   def_AnimateSprites = false;
 
-		private bool _animatesprites = def_AnimateSprites;
 		[Category(cat_General)]
 		[Description("If true the sprites will animate (F2 - On/Off)")]
 		[DefaultValue(def_AnimateSprites)]
 		public bool AnimateSprites
-		{
-			get { return _animatesprites; }
-			set { _animatesprites = value; }
-		}
+		{ get; set; }
 
 
 		internal const string str_OpenDoors = "OpenDoors";
 		private  const bool   def_OpenDoors = false;
 
-		private bool _opendoors = def_OpenDoors;
 		[Category(cat_General)]
 		[Description("If true the doors will animate if Animate is also on - if"
 			+ " Animate is false the doors will show their alternate tile. This"
 			+ " setting may need to be re-toggled if Animate changes (F3 - On/Off)")]
 		[DefaultValue(def_OpenDoors)]
 		public bool OpenDoors
-		{
-			get { return _opendoors; }
-			set { _opendoors = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_BringAllToFront = "BringAllToFront";
 		private const bool   def_BringAllToFront = false;
 
-		private bool _bringalltofront = def_BringAllToFront;
 		[Category(cat_General)]
 		[Description("If true any open subsidiary viewers will be brought to the"
 			+ " top of the desktop whenever MainView takes focus - this implements"
@@ -565,16 +540,12 @@ namespace MapView.Forms.MainView
 			+ " secondary viewers are closed")]
 		[DefaultValue(def_BringAllToFront)]
 		public bool BringAllToFront
-		{
-			get { return _bringalltofront; }
-			set { _bringalltofront = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_UseMono = "UseMono";
 		private const bool   def_UseMono = false;
 
-		private bool _usemono = def_UseMono;
 		[Category(cat_General)]
 		[Description("If true use sprite-drawing algorithms that are designed for Mono."
 			+ " This fixes an issue on non-Windows systems where non-transparent"
@@ -582,10 +553,7 @@ namespace MapView.Forms.MainView
 			+ " and SpriteShade routines. Also selected tiles will not be grayed")]
 		[DefaultValue(def_UseMono)]
 		public bool UseMono
-		{
-			get { return _usemono; }
-			set { _usemono = value; }
-		}
+		{ get; set; }
 
 
 
@@ -594,44 +562,32 @@ namespace MapView.Forms.MainView
 		private const string str_BackgroundColor = "BackgroundColor";
 		private static Color def_BackgroundColor = Color.Transparent;
 
-		private Color _backgroundcolor = def_BackgroundColor;
 		[Category(cat_Screenshot)]
 		[Description("The color for the background of a screenshot")]
 		[DefaultValue(typeof(Color), "Transparent")]
 		public Color BackgroundColor
-		{
-			get { return _backgroundcolor; }
-			set { _backgroundcolor = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_CropBackground = "CropBackground";
 		private const bool   def_CropBackground = false;
 
-		private bool _cropbackground = def_CropBackground;
 		[Category(cat_Screenshot)]
 		[Description("If true a screenshot will be cropped to its foreground pixels")]
 		[DefaultValue(def_CropBackground)]
 		public bool CropBackground
-		{
-			get { return _cropbackground; }
-			set { _cropbackground = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_Png_notGif = "Png_notGif";
 		private const bool   def_Png_notGif = true;
 
-		private bool _png_notGif = def_Png_notGif;
 		[Category(cat_Screenshot)]
 		[Description("If true screenshots will be saved to PNG format, if false"
 			+ " they will be saved to GIF format")]
 		[DefaultValue(def_Png_notGif)]
 		public bool Png_notGif
-		{
-			get { return _png_notGif; }
-			set { _png_notGif = value; }
-		}
+		{ get; set; }
 
 
 
@@ -640,61 +596,45 @@ namespace MapView.Forms.MainView
 		private const string str_Base1_xy = "Base1_xy";
 		private const bool   def_Base1_xy = false;
 
-		private bool _base1_xy = def_Base1_xy;
 		[Category(cat_Global)]
 		[Description("If true the printed position of rows and cols starts at 1"
 			+ " instead of 0")]
 		[DefaultValue(def_Base1_xy)]
 		public bool Base1_xy
-		{
-			get { return _base1_xy; }
-			set { _base1_xy = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_Base1_z = "Base1_z";
 		private const bool   def_Base1_z = false;
 
-		private bool _base1_z = def_Base1_z;
 		[Category(cat_Global)]
 		[Description("If true the printed position of the level starts at 1"
 			+ " instead of 0")]
 		[DefaultValue(def_Base1_z)]
 		public bool Base1_z
-		{
-			get { return _base1_z; }
-			set { _base1_z = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_IgnoreRecordsExceeded = "IgnoreRecordsExceeded";
 		private const bool   def_IgnoreRecordsExceeded = false;
 
-		private bool _ignoreRecordsExceeded = def_IgnoreRecordsExceeded;
 		[Category(cat_Global)]
 		[Description("If true do not show warnings when the total MCD (terrain)"
 			+ " record count exceeds 254")]
 		[DefaultValue(def_IgnoreRecordsExceeded)]
 		public bool IgnoreRecordsExceeded
-		{
-			get { return _ignoreRecordsExceeded; }
-			set { _ignoreRecordsExceeded = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_InvertMousewheel = "InvertMousewheel";
 		private const bool   def_InvertMousewheel = false;
 
-		private bool _invertMousewheel = def_InvertMousewheel;
 		[Category(cat_Global)]
 		[Description("If true the mousewheel changes levels in the opposite direction"
 			+ " than it should (default false)")]
 		[DefaultValue(def_InvertMousewheel)]
 		public bool InvertMousewheel
-		{
-			get { return _invertMousewheel; }
-			set { _invertMousewheel = value; }
-		}
+		{ get; set; }
 
 
 
