@@ -145,11 +145,11 @@ namespace MapView
 		/// Writes this Options to 'ShareOptions' = "MV_OptionsFile" -> MapOptions.cfg
 		/// And you thought indirection was a bad thing.
 		/// </summary>
-		/// <param name="line"></param>
+		/// <param name="head"></param>
 		/// <param name="tw"></param>
-		internal void WriteOptions(string line, TextWriter tw)
+		internal void WriteOptions(string head, TextWriter tw)
 		{
-			tw.WriteLine(line);
+			tw.WriteLine(head);
 			tw.WriteLine("{");
 
 			foreach (string key in _options.Keys)
