@@ -816,10 +816,11 @@ namespace MapView.Forms.Observers
 					rect.X = Origin.X + (_col * HalfWidth)  - (_row * HalfHeight * 2); // heh nailed it.
 					rect.Y = Origin.Y + (_row * HalfHeight) + (_col * HalfWidth  / 2);
 
+					rect.X += HalfWidth;
 					rect.Y += HalfHeight / 2;
 
 					if (rect.X + rect.Width > ClientRectangle.Width)
-						rect.X -= rect.Width + HalfWidth;
+						rect.X -= rect.Width + HalfWidth * 2;
 	
 					if (rect.Y + rect.Height > ClientRectangle.Height)
 						rect.Y -= rect.Height;
