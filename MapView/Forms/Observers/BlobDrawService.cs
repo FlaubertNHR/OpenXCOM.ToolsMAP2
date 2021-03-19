@@ -12,8 +12,8 @@ namespace MapView.Forms.Observers
 	/// <see cref="RouteView"/>.
 	/// </summary>
 	internal sealed class BlobDrawService
-//		:
-//			IDisposable
+		:
+			IDisposable
 	{
 		#region Fields (static)
 		internal const int LINEWIDTH_CONTENT = 3;
@@ -290,15 +290,14 @@ namespace MapView.Forms.Observers
 		#endregion Methods
 
 
-//		/// <summary>
-//		/// This isn't necessary since the GraphicsPaths last the lifetime of
-//		/// the app. But FxCop gets antsy ....
-//		/// </summary>
-//		/// <remarks>cf. <see cref="BlobColorTool"/> and <see cref="QuadrantDrawService"/></remarks>
-//		public void Dispose()
-//		{
-//			_floor  .Dispose();
-//			_content.Dispose();
-//		}
+		/// <summary>
+		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
+		/// of the app. But FxCop gets antsy ....
+		/// </summary>
+		public void Dispose()
+		{
+			_floor  .Dispose();
+			_content.Dispose();
+		}
 	}
 }
