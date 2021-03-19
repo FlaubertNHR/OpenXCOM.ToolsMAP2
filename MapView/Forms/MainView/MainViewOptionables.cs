@@ -1097,7 +1097,7 @@ namespace MapView.Forms.MainView
 		/// Invalidates the visible panel in <see cref="TileView"/> and both
 		/// <see cref="QuadrantControl">QuadrantControls</see>.
 		/// </summary>
-		private void InvalidateSecondaryPanels()
+		private static void InvalidateSecondaryPanels()
 		{
 			ObserverManager.TileView.Control.GetVisiblePanel().Invalidate();
 			ObserverManager.InvalidateQuadrantControls();
