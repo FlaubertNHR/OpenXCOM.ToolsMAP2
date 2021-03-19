@@ -111,7 +111,6 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Disposes pens and brushes owned by this object.
 		/// </summary>
-		/// <remarks>cf. <see cref="BlobDrawService"/> and <see cref="QuadrantDrawService"/></remarks>
 		public void Dispose()
 		{
 			_pen           .Dispose();
