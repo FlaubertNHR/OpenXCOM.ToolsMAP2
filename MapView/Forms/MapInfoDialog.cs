@@ -154,23 +154,23 @@ namespace MapView
 		#endregion Events
 
 
-		#region Methods (static)
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="terrains"></param>
-		/// <returns></returns>
-		private static int GetLongestTerrainLabelLength(Dictionary<int, Tuple<string,string>> terrains)
-		{
-			int length = 0, lengthtest;
-			foreach (var terrain in terrains)
-			{
-				if ((lengthtest = terrain.Value.Item1.Length) > length)
-					length = lengthtest;
-			}
-			return length;
-		}
-		#endregion Methods (static)
+//		#region Methods (static)
+//		/// <summary>
+//		/// 
+//		/// </summary>
+//		/// <param name="terrains"></param>
+//		/// <returns></returns>
+//		private static int GetLongestTerrainLabelLength(Dictionary<int, Tuple<string,string>> terrains)
+//		{
+//			int length = 0, lengthtest;
+//			foreach (var terrain in terrains)
+//			{
+//				if ((lengthtest = terrain.Value.Item1.Length) > length)
+//					length = lengthtest;
+//			}
+//			return length;
+//		}
+//		#endregion Methods (static)
 
 
 		#region Methods
@@ -307,7 +307,7 @@ namespace MapView
 		{
 			string detail = String.Empty;
 
-			int labelwidth = GetLongestTerrainLabelLength(_file.Terrains);
+//			int labelwidth = GetLongestTerrainLabelLength(_file.Terrains);
 			string label;
 
 			foreach (var terrain in _file.Terrains)
