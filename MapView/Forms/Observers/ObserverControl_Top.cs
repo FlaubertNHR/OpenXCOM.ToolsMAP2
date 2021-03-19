@@ -29,7 +29,7 @@ namespace MapView.Forms.Observers
 		private readonly Dictionary<string, IObserver> _panels =
 					 new Dictionary<string, IObserver>();
 		[Browsable(false)]
-		public Dictionary<string, IObserver> ObserverPanels
+		public Dictionary<string, IObserver> ObserverControls
 		{
 			get { return _panels; }
 		}

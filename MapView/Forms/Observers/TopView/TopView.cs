@@ -134,8 +134,8 @@ namespace MapView.Forms.Observers
 
 			VisibleQuadrants = FLOOR | WEST | NORTH | CONTENT;
 
-			ObserverPanels.Add("TopControl",      TopControl);
-			ObserverPanels.Add("QuadrantControl", QuadrantControl);
+			ObserverControls.Add("TopControl",      TopControl);
+			ObserverControls.Add("QuadrantControl", QuadrantControl);
 
 			ResumeLayout();
 		}

@@ -145,8 +145,8 @@ namespace MapView.Forms.MainView
 				observer.MapFile.LevelSelected    += observer.OnLevelSelectedObserver;
 			}
 
-			foreach (string key in observer.ObserverPanels.Keys)					// ie. TopControl and QuadrantControl
-				SubscribeObserver(observer.MapFile, observer.ObserverPanels[key]);	// ie. This recursion is req'd only for TopView.
+			foreach (string key in observer.ObserverControls.Keys)						// ie. TopControl and QuadrantControl
+				SubscribeObserver(observer.MapFile, observer.ObserverControls[key]);	// ie. This recursion is req'd only for TopView.
 		}
 
 		/// <summary>

@@ -17,7 +17,7 @@ namespace MapView.Forms.Observers
 		{ set; get;}
 
 		[Browsable(false)]
-		Dictionary<string, IObserver> ObserverPanels
+		Dictionary<string, IObserver> ObserverControls
 		{ get; }
 
 		void OnLocationSelectedObserver(LocationSelectedEventArgs args);
