@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Text;
 using System.Windows.Forms;
 
 using MapView.Forms.MainView;
@@ -31,12 +32,14 @@ namespace MapView.Forms.Observers
 		// TilePanel.OnPaint().
 		private const int PrintOffsetY = 2;
 
+		private static Random _rnd = new Random();
+
 		private  const  string Door    = "door";
-		internal static string Floor   = "floor";
-		internal static string West    = "west";
-		internal static string North   = "north";
-		internal static string Content = "content";
-		private  static string Part    = "part";
+		internal static string Floor   = Punkstring("floor");
+		internal static string West    = Punkstring("west");
+		internal static string North   = Punkstring("north");
+		internal static string Content = Punkstring("content");
+		private  static string Part    = Punkstring("part");
 
 		private static int TextWidth_door;
 		private static int TextWidth_floor;
@@ -156,37 +159,24 @@ namespace MapView.Forms.Observers
 
 
 		#region punc (static)
-		private static Random _rnd = new Random();
-
 		/// <summary>
-		/// Changes each character of the four quadrant strings to uppercase or
+		/// Changes each character of the quadrant strings to uppercase or
 		/// lowercase randomly.
 		/// </summary>
-		internal static void Punkstrings()
-		{
-			Floor   = Punkstring(Floor);
-			West    = Punkstring(West);
-			North   = Punkstring(North);
-			Content = Punkstring(Content);
-			Part    = Punkstring(Part);
-		}
-
-		/// <summary>
-		/// Helper for Punkstrings().
-		/// </summary>
-		/// <param name="input"></param>
+		/// <param name="in"></param>
 		/// <returns></returns>
-		private static string Punkstring(string input)
+		private static string Punkstring(string @in)
 		{
-			string output = String.Empty;
-			foreach (var letter in input)
+			var sb = new StringBuilder();
+
+			for (int i = 0; i != @in.Length; ++i)
 			{
 				if (_rnd.Next() % 2 != 0)
-					output += Char.ToUpper(Convert.ToChar(letter)).ToString();
+					sb.Append((char)(@in[i] - 32)); // uc
 				else
-					output += letter;
+					sb.Append((char)@in[i]);
 			}
-			return output;
+			return sb.ToString();
 		}
 		#endregion punc (static)
 
@@ -578,11 +568,10 @@ namespace MapView.Forms.Observers
 		}
 
 
-/*		/// <summary>
-		/// This isn't necessary since the GraphicsPaths last the lifetime of
-		/// the app. But FxCop gets antsy ....
+		/// <summary>
+		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
+		/// of the app. But FxCop gets antsy ....
 		/// </summary>
-		/// <remarks>cf. <see cref="BlobDrawService"/> and <see cref="BlobColorTool"/></remarks>
 		public static void Dispose()
 		{
 			_pathFloor   .Dispose();
@@ -595,7 +584,7 @@ namespace MapView.Forms.Observers
 			Brush        .Dispose();
 			FontLocation .Dispose();
 			BrushLocation.Dispose();
-		} */
+		}
 		#endregion Methods (static)
 	}
 }
