@@ -20,14 +20,6 @@ namespace MapView.Forms.Observers
 			IObserver
 	{
 		#region IObserver requirements
-		private readonly Dictionary<string, IObserver> _panels =
-					 new Dictionary<string, IObserver>();
-		[Browsable(false)]
-		public Dictionary<string, IObserver> ObserverControls
-		{
-			get { return _panels; }
-		}
-
 		private MapFile _file;
 		/// <summary>
 		/// The currently loaded <see cref="XCom.MapFile"/>.
@@ -40,6 +32,14 @@ namespace MapView.Forms.Observers
 		{
 			get { return _file; }
 			set { _file = value; Refresh(); }
+		}
+
+		private readonly Dictionary<string, IObserver> _panels =
+					 new Dictionary<string, IObserver>();
+		[Browsable(false)]
+		public Dictionary<string, IObserver> ObserverControls
+		{
+			get { return _panels; }
 		}
 
 		/// <summary>
