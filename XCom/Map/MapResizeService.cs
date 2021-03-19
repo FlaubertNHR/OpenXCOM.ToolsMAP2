@@ -45,7 +45,7 @@
 				for (int lev = 0; lev != levs; ++lev)
 				for (int row = 0; row != rows; ++row)
 				for (int col = 0; col != cols; ++col)
-					tiles1[col, row, lev] = MapTile.VacantTile;
+					tiles1[col, row, lev] = new MapTile();
 
 				switch (zType)
 				{

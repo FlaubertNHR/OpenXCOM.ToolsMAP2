@@ -80,23 +80,17 @@ namespace XCom
 		/// </summary>
 		public bool Vacant
 		{ get; private set; }
-
-		/// <summary>
-		/// Creates and returns a vacant tile.
-		/// </summary>
-		public static MapTile VacantTile
-		{
-			get
-			{
-				var tile = new MapTile(null,null,null,null);
-				tile.Vacant = true;
-				return tile;
-			}
-		}
 		#endregion Properties
 
 
 		#region cTor
+		/// <summary>
+		/// cTor[0]. Creates a MapTile with given parts.
+		/// </summary>
+		/// <param name="floor"></param>
+		/// <param name="west"></param>
+		/// <param name="north"></param>
+		/// <param name="content"></param>
 		public MapTile(
 				Tilepart floor,
 				Tilepart west,
@@ -109,6 +103,19 @@ namespace XCom
 			Content = content;
 
 			Vacancy();
+		}
+
+		/// <summary>
+		/// cTor[1]. Creates a blank MapTile.
+		/// </summary>
+		public MapTile()
+		{
+			Floor   =
+			West    =
+			North   =
+			Content = null;
+
+			Vacant = true;
 		}
 		#endregion cTor
 
