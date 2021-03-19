@@ -33,7 +33,7 @@
 		public const string BYPASSRE = "bypassRecordsExceeded";
 
 
-		public static string[] CRandorLF = { "\r\n","\r","\n" };
+		public static readonly string[] CRandorLF = { "\r\n","\r","\n" };
 
 		public const string PADDED_SEPARATOR = " - ";
 		public const string PADDED_ASTERISK  = " *";
