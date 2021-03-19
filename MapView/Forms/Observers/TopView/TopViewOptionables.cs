@@ -46,11 +46,15 @@ namespace MapView.Forms.Observers
 		internal const string str_GridLineColor = "GridLineColor";
 		private static Color  def_GridLineColor = Color.Black;
 
+		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_Grid)]
 		[Description("Color of the grid lines")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLineColor
-		{ get; set; }
+		{
+			get { return _gridLineColor; }
+			set { _gridLineColor = value; }
+		}
 
 		private const string str_GridLineWidth = "GridLineWidth";
 		private const int    def_GridLineWidth = 1;
@@ -80,11 +84,15 @@ namespace MapView.Forms.Observers
 		internal const string str_GridLine10Color = "GridLine10Color";
 		private static Color  def_GridLine10Color = Color.Black;
 
+		private Color _gridLine10Color = def_GridLine10Color;
 		[Category(cat_Grid)]
 		[Description("Color of every tenth grid line")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLine10Color
-		{ get; set; }
+		{
+			get { return _gridLine10Color; }
+			set { _gridLine10Color = value; }
+		}
 
 		private const string str_GridLine10Width = "GridLine10Width";
 		private const int    def_GridLine10Width = 2;
@@ -117,21 +125,29 @@ namespace MapView.Forms.Observers
 		internal const string str_FloorColor = "FloorColor"; // The key to the Option shall be identical to its Property label.
 		private static Color  def_FloorColor = Color.BurlyWood;
 
+		private Color _floorColor = def_FloorColor;
 		[Category(cat_Blobs)]
 		[Description("Color of the floor indicator")]
 		[DefaultValue(typeof(Color), "BurlyWood")]
 		public Color FloorColor
-		{ get; set; }
+		{
+			get { return _floorColor; }
+			set { _floorColor = value; }
+		}
 
 
 		internal const string str_WestColor = "WestColor";
 		private static Color  def_WestColor = Color.Khaki;
 
+		private Color _westColor = def_WestColor;
 		[Category(cat_Blobs)]
 		[Description("Color of the westwall indicator")]
 		[DefaultValue(typeof(Color), "Khaki")]
 		public Color WestColor
-		{ get; set; }
+		{
+			get { return _westColor; }
+			set { _westColor = value; }
+		}
 
 		private const string str_WestWidth = "WestWidth";
 		private const int    def_WestWidth = 3;
@@ -161,11 +177,15 @@ namespace MapView.Forms.Observers
 		internal const string str_NorthColor = "NorthColor";
 		private static Color  def_NorthColor = Color.Wheat;
 
+		private Color _northColor = def_NorthColor;
 		[Category(cat_Blobs)]
 		[Description("Color of the northwall indicator")]
 		[DefaultValue(typeof(Color), "Wheat")]
 		public Color NorthColor
-		{ get; set; }
+		{
+			get { return _northColor; }
+			set { _northColor = value; }
+		}
 
 		private const string str_NorthWidth = "NorthWidth";
 		private const int    def_NorthWidth = 3;
@@ -195,11 +215,15 @@ namespace MapView.Forms.Observers
 		internal const string str_ContentColor = "ContentColor";
 		private static Color  def_ContentColor = Color.MediumSeaGreen;
 
+		private Color _contentColor = def_ContentColor;
 		[Category(cat_Blobs)]
 		[Description("Color of the content indicator")]
 		[DefaultValue(typeof(Color), "MediumSeaGreen")]
 		public Color ContentColor
-		{ get; set; }
+		{
+			get { return _contentColor; }
+			set { _contentColor = value; }
+		}
 
 
 
@@ -208,11 +232,15 @@ namespace MapView.Forms.Observers
 		internal const string str_SelectorColor = "SelectorColor";
 		private static Color  def_SelectorColor = Color.Black;
 
+		private Color _selectorColor = def_SelectorColor;
 		[Category(cat_Selects)]
 		[Description("Color of the tile selector")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color SelectorColor
-		{ get; set; }
+		{
+			get { return _selectorColor; }
+			set { _selectorColor = value; }
+		}
 
 		private const string str_SelectorWidth = "SelectorWidth";
 		private const int    def_SelectorWidth = 2;
@@ -242,11 +270,15 @@ namespace MapView.Forms.Observers
 		internal const string str_SelectedColor = "SelectedColor";
 		private static Color  def_SelectedColor = Color.RoyalBlue;
 
+		private Color _selectedColor = def_SelectedColor;
 		[Category(cat_Selects)]
 		[Description("Color of the selection border")]
 		[DefaultValue(typeof(Color), "RoyalBlue")]
 		public Color SelectedColor
-		{ get; set; }
+		{
+			get { return _selectedColor; }
+			set { _selectedColor = value; }
+		}
 
 		private const string str_SelectedWidth = "SelectedWidth";
 		private const int    def_SelectedWidth = 2;
@@ -276,11 +308,15 @@ namespace MapView.Forms.Observers
 		private const string str_SelectedQuadColor = "SelectedQuadColor";
 		private static Color def_SelectedQuadColor = Color.LightBlue;
 
+		private Color _selectedQuadColor = def_SelectedQuadColor;
 		[Category(cat_Selects)]
 		[Description("Background color of the selected parttype")]
 		[DefaultValue(typeof(Color), "LightBlue")]
 		public Color SelectedQuadColor
-		{ get; set; }
+		{
+			get { return _selectedQuadColor; }
+			set { _selectedQuadColor = value; }
+		}
 
 
 
@@ -289,6 +325,7 @@ namespace MapView.Forms.Observers
 		private const string str_EnableRightClickWaitTimer = "EnableRightClickWaitTimer";
 		private const bool   def_EnableRightClickWaitTimer = false;
 
+		private bool _enablewait = def_EnableRightClickWaitTimer;
 		[Category(cat_General)]
 		[Description("If true then right-clicking or double right-clicking on"
 			+ " either a tile or a quadrant slot causes a very short delay"
@@ -301,7 +338,10 @@ namespace MapView.Forms.Observers
 			+ " to exhibit unstable behavior")]
 		[DefaultValue(def_EnableRightClickWaitTimer)]
 		public bool EnableRightClickWaitTimer
-		{ get; set; }
+		{
+			get { return _enablewait; }
+			set { _enablewait = value; }
+		}
 
 
 
