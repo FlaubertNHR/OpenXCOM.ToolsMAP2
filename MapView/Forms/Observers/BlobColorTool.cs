@@ -14,59 +14,40 @@ namespace MapView.Forms.Observers
 	{
 		#region Fields (static)
 		private const int ALFALFA = 100;
+
+		internal static Brush BrushLightPrep = Brushes.White;
 		#endregion Fields (static)
 
 
 		#region Properties
-		private readonly Pen _pen;
 		/// <summary>
 		/// A pen for drawing walls.
 		/// </summary>
 		internal Pen Pen
-		{
-			get { return _pen; }
-		}
+		{ get; set; }
 
-		private readonly Pen _penLight;
 		/// <summary>
 		/// A translucent pen for drawing non-solid walls (eg, windows and
 		/// fences).
 		/// </summary>
 		internal Pen PenLight
-		{
-			get { return _penLight; }
-		}
+		{ get; set; }
 
-		private readonly Pen _penLightPrep;
 		internal Pen PenLightPrep
-		{
-			get { return _penLightPrep; }
-		}
+		{ get; set; }
 
 
-		private readonly SolidBrush _brush;
 		/// <summary>
 		/// A brush for drawing content objects.
 		/// </summary>
 		internal Brush Brush
-		{
-			get { return _brush; }
-		}
+		{ get; set; }
 
-		private readonly SolidBrush _brushLight;
 		/// <summary>
 		/// A translucent brush for drawing floor objects.
 		/// </summary>
 		internal Brush BrushLight
-		{
-			get { return _brushLight; }
-		}
-
-		private readonly Brush _brushLightPrep;
-		internal Brush BrushLightPrep
-		{
-			get { return _brushLightPrep; }
-		}
+		{ get; set; }
 		#endregion Properties
 
 
@@ -79,13 +60,12 @@ namespace MapView.Forms.Observers
 		{
 			var colorLight = Color.FromArgb(ALFALFA, pen.Color);
 
-			_pen          = new Pen(pen.Color,        pen.Width);
-			_penLight     = new Pen(colorLight,       pen.Width);
-			_penLightPrep = new Pen(Color.GhostWhite, pen.Width);
+			Pen          = new Pen(pen.Color,   pen.Width);
+			PenLight     = new Pen(colorLight,  pen.Width);
+			PenLightPrep = new Pen(Color.White, pen.Width);
 
-			_brush          = new SolidBrush(pen.Color);
-			_brushLight     = new SolidBrush(colorLight);
-			_brushLightPrep = new SolidBrush(Color.GhostWhite);
+			Brush          = new SolidBrush(pen.Color);
+			BrushLight     = new SolidBrush(colorLight);
 		}
 
 		/// <summary>
@@ -97,13 +77,12 @@ namespace MapView.Forms.Observers
 		{
 			var colorLight = Color.FromArgb(ALFALFA, brush.Color);
 
-			_pen          = new Pen(brush.Color,      width);
-			_penLight     = new Pen(colorLight,       width);
-			_penLightPrep = new Pen(Color.GhostWhite, width);
+			Pen          = new Pen(brush.Color, width);
+			PenLight     = new Pen(colorLight,  width);
+			PenLightPrep = new Pen(Color.White, width);
 
-			_brush          = new SolidBrush(brush.Color);
-			_brushLight     = new SolidBrush(colorLight);
-			_brushLightPrep = new SolidBrush(Color.GhostWhite);
+			Brush          = new SolidBrush(brush.Color);
+			BrushLight     = new SolidBrush(colorLight);
 		}
 		#endregion cTor
 
@@ -113,12 +92,11 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		public void Dispose()
 		{
-			_pen           .Dispose();
-			_penLight      .Dispose();
-			_penLightPrep  .Dispose();
-			_brush         .Dispose();
-			_brushLight    .Dispose();
-			_brushLightPrep.Dispose();
+			Pen         .Dispose();
+			PenLight    .Dispose();
+			PenLightPrep.Dispose();
+			Brush       .Dispose();
+			BrushLight  .Dispose();
 		}
 	}
 }

@@ -258,16 +258,17 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((tile = MapFile[c,r]) != null)
+//					if ((tile = MapFile[c,r]) != null)
+					if (!(tile = MapFile[c,r]).Vacant)
 					{
 						if (tile.Content != null)
-							BlobService.DrawContent(_graphics, ToolContent, x,y, tile.Content);
+							BlobService.Draw(_graphics, ToolContent, x,y, tile.Content);
 
 						if (tile.West != null)
-							BlobService.DrawContent(_graphics, ToolWall, x,y, tile.West);
+							BlobService.Draw(_graphics, ToolWall, x,y, tile.West);
 
 						if (tile.North != null)
-							BlobService.DrawContent(_graphics, ToolWall, x,y, tile.North);
+							BlobService.Draw(_graphics, ToolWall, x,y, tile.North);
 					}
 				}
 			}

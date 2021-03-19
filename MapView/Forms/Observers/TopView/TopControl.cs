@@ -30,6 +30,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
+		private Graphics _graphics;
 		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over cursor lozenge
 		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // selected tile or tiles being drag-selected
 
@@ -257,9 +258,10 @@ namespace MapView.Forms.Observers
 		/// <param name="graphics"></param>
 		protected override void RenderGraphics(Graphics graphics)
 		{
-			graphics.FillRectangle(SystemBrushes.Control, ClientRectangle);
+			_graphics = graphics;
+			_graphics.FillRectangle(SystemBrushes.Control, ClientRectangle);
 
-			ControlPaint.DrawBorder3D(graphics, ClientRectangle, Border3DStyle.Etched);
+			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 
 			if (MapFile != null)
 			{
@@ -271,7 +273,7 @@ namespace MapView.Forms.Observers
 				for (int
 						r = 0,
 							startX = _originX,
-							startY = OffsetY;
+							startY =  OffsetY;
 						r != MapFile.MapSize.Rows;
 						++r,
 							startX -= halfWidth,
@@ -286,8 +288,9 @@ namespace MapView.Forms.Observers
 								x += halfWidth,
 								y += halfHeight)
 					{
-						if ((tile = MapFile[c,r]) != null)
-							DrawBlobs(tile, graphics, x,y);
+//						if ((tile = MapFile[c,r]) != null)
+						if (!(tile = MapFile[c,r]).Vacant)
+							DrawBlobs(tile, x,y);
 					}
 				}
 
@@ -298,12 +301,12 @@ namespace MapView.Forms.Observers
 					if (i % 10 != 0) pen = TopPens[TopViewOptionables.str_GridLineColor];
 					else             pen = TopPens[TopViewOptionables.str_GridLine10Color];
 
-					graphics.DrawLine(
+					_graphics.DrawLine(
 									pen,
 									_originX - i * halfWidth,
-									OffsetY  + i * halfHeight,
+									 OffsetY + i * halfHeight,
 									_originX + (MapFile.MapSize.Cols - i) * halfWidth,
-									OffsetY  + (MapFile.MapSize.Cols + i) * halfHeight);
+									 OffsetY + (MapFile.MapSize.Cols + i) * halfHeight);
 				}
 
 				for (int i = 0; i <= MapFile.MapSize.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
@@ -311,12 +314,12 @@ namespace MapView.Forms.Observers
 					if (i % 10 != 0) pen = TopPens[TopViewOptionables.str_GridLineColor];
 					else             pen = TopPens[TopViewOptionables.str_GridLine10Color];
 
-					graphics.DrawLine(
+					_graphics.DrawLine(
 									pen,
 									_originX + i * halfWidth,
-									OffsetY  + i * halfHeight,
+									 OffsetY + i * halfHeight,
 									_originX + i * halfWidth  - MapFile.MapSize.Rows * halfWidth,
-									OffsetY  + i * halfHeight + MapFile.MapSize.Rows * halfHeight);
+									 OffsetY + i * halfHeight + MapFile.MapSize.Rows * halfHeight);
 				}
 
 
@@ -327,17 +330,17 @@ namespace MapView.Forms.Observers
 				{
 					PathSelectorLozenge(
 									_originX + (_col - _row) * halfWidth,
-									OffsetY  + (_col + _row) * halfHeight);
-					graphics.DrawPath(TopPens[TopViewOptionables.str_SelectorColor], _lozSelector);
+									 OffsetY + (_col + _row) * halfHeight);
+					_graphics.DrawPath(TopPens[TopViewOptionables.str_SelectorColor], _lozSelector);
 
 					// print mouseover location ->
-					QuadrantDrawService.SetGraphics(graphics);
+					QuadrantDrawService.SetGraphics(_graphics);
 					QuadrantDrawService.PrintSelectorLocation(_loc, Width, Height, MapFile);
 				}
 
 				// draw tiles-selected lozenge ->
 				if (MainViewOverlay.that.FirstClick)
-					graphics.DrawPath(TopPens[TopViewOptionables.str_SelectedColor], _lozSelected);
+					_graphics.DrawPath(TopPens[TopViewOptionables.str_SelectedColor], _lozSelected);
 			}
 		}
 
@@ -345,40 +348,38 @@ namespace MapView.Forms.Observers
 		/// Draws the floor, westwall, northwall, and content indicator blobs.
 		/// </summary>
 		/// <param name="tile"></param>
-		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		private void DrawBlobs(
 				MapTile tile,
-				Graphics graphics,
 				int x, int y)
 		{
 			if (TopView.Floor.Checked && tile.Floor != null)
-				_blobService.DrawFloor(
-									graphics,
-									TopBrushes[TopViewOptionables.str_FloorColor],
-									x,y);
+				_blobService.Draw(
+								_graphics,
+								TopBrushes[TopViewOptionables.str_FloorColor],
+								x,y);
 
 			if (TopView.Content.Checked && tile.Content != null)
-				_blobService.DrawContent(
-									graphics,
-									ToolContent,
-									x,y,
-									tile.Content);
+				_blobService.Draw(
+								_graphics,
+								ToolContent,
+								x,y,
+								tile.Content);
 
 			if (TopView.West.Checked && tile.West != null)
-				_blobService.DrawContent(
-									graphics,
-									ToolWest,
-									x,y,
-									tile.West);
+				_blobService.Draw(
+								_graphics,
+								ToolWest,
+								x,y,
+								tile.West);
 
 			if (TopView.North.Checked && tile.North != null)
-				_blobService.DrawContent(
-									graphics,
-									ToolNorth,
-									x,y,
-									tile.North);
+				_blobService.Draw(
+								_graphics,
+								ToolNorth,
+								x,y,
+								tile.North);
 		}
 		#endregion Draw
 
