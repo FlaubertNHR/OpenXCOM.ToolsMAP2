@@ -6,8 +6,6 @@ using System.Windows.Forms;
 
 using DSShared;
 
-using XCom;
-
 
 namespace XCom
 {

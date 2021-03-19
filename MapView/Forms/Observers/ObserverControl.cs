@@ -29,6 +29,9 @@ namespace MapView.Forms.Observers
 		}
 
 		private MapFile _file;
+		/// <summary>
+		/// The currently loaded <see cref="XCom.Mapfile"/>.
+		/// </summary>
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
 		public virtual MapFile MapFile
