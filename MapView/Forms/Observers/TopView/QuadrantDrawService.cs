@@ -14,8 +14,6 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	internal static class QuadrantDrawService
-//		:
-//			IDisposable
 	{
 		#region Fields (static)
 		private const int MarginHori = 10;
@@ -567,7 +565,7 @@ namespace MapView.Forms.Observers
 		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
 		/// of the app. But FxCop gets antsy ....
 		/// </summary>
-		public static void Dispose()
+		internal static void Dispose()
 		{
 			_pathFloor   .Dispose();
 			_pathWest    .Dispose();
