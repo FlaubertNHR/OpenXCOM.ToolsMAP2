@@ -250,7 +250,7 @@ namespace MapView.Forms.Observers
 			}
 		}
 
-		private Point pT(int x, int y)
+		private static Point pT(int x, int y)
 		{
 			return new Point(x, (y > Int32.MaxValue - Offset) ? Int32.MaxValue : y + Offset);
 		}
