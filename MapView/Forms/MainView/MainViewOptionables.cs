@@ -90,54 +90,38 @@ namespace MapView.Forms.MainView
 		private  const string str_StartTileView = "StartTileView";	// const string key of the Property
 		internal const bool   def_StartTileView = true;				// default value of the Property
 
-		private bool _starttileview = def_StartTileView;
 		[Category(cat_Observers)]
 		[Description("Open on load - TileView")]
 		[DefaultValue(def_StartTileView)]
 		public bool StartTileView									// the Property.
-		{
-			get { return _starttileview; }
-			set { _starttileview = value; }
-		}
+		{ get; set; }
 
 		private  const string str_StartTopView = "StartTopView";
 		internal const bool   def_StartTopView = true;
 
-		private bool _starttopview = def_StartTopView;
 		[Category(cat_Observers)]
 		[Description("Open on load - TopView")]
 		[DefaultValue(def_StartTopView)]
 		public bool StartTopView
-		{
-			get { return _starttopview; }
-			set { _starttopview = value; }
-		}
+		{ get; set; }
 
 		private  const string str_StartRouteView = "StartRouteView";
 		internal const bool   def_StartRouteView = true;
 
-		private bool _startrouteview = def_StartRouteView;
 		[Category(cat_Observers)]
 		[Description("Open on load - RouteView")]
 		[DefaultValue(def_StartRouteView)]
 		public bool StartRouteView
-		{
-			get { return _startrouteview; }
-			set { _startrouteview = value; }
-		}
+		{ get; set; }
 
 		private  const string str_StartTopRouteView = "StartTopRouteView";
 		internal const bool   def_StartTopRouteView = false;
 
-		private bool _starttoprouteview = def_StartTopRouteView;
 		[Category(cat_Observers)]
 		[Description("Open on load - TopRouteView")]
 		[DefaultValue(def_StartTopRouteView)]
 		public bool StartTopRouteView
-		{
-			get { return _starttoprouteview; }
-			set { _starttoprouteview = value; }
-		}
+		{ get; set; }
 
 
 		private const string str_StartTopRoutePage = "StartTopRoutePage";
@@ -227,15 +211,11 @@ namespace MapView.Forms.MainView
 		private const string str_GridLineColor = "GridLineColor";
 		private static Color def_GridLineColor = Color.Black;
 
-		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_Grid)]
 		[Description("Color of the lines that draw the grid")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLineColor
-		{
-			get { return _gridLineColor; }
-			set { _gridLineColor = value; }
-		}
+		{ get; set; }
 
 		private const string str_GridLineWidth = "GridLineWidth";
 		private const int    def_GridLineWidth = 1;
@@ -265,15 +245,11 @@ namespace MapView.Forms.MainView
 		private const string str_GridLine10Color = "GridLine10Color";
 		private static Color def_GridLine10Color = Color.Black;
 
-		private Color _gridLine10Color = def_GridLine10Color;
 		[Category(cat_Grid)]
 		[Description("Color of every tenth line on the grid")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLine10Color
-		{
-			get { return _gridLine10Color; }
-			set { _gridLine10Color = value; }
-		}
+		{ get; set; }
 
 		private const string str_GridLine10Width = "GridLine10Width";
 		private const int    def_GridLine10Width = 2;
@@ -1097,7 +1073,7 @@ namespace MapView.Forms.MainView
 		/// Invalidates the visible panel in <see cref="TileView"/> and both
 		/// <see cref="QuadrantControl">QuadrantControls</see>.
 		/// </summary>
-		private void InvalidateSecondaryPanels()
+		private static void InvalidateSecondaryPanels()
 		{
 			ObserverManager.TileView.Control.GetVisiblePanel().Invalidate();
 			ObserverManager.InvalidateQuadrantControls();
