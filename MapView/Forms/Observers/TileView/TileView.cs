@@ -171,9 +171,9 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Bypasses level-change in ObserverControl and scrolls through the
-		/// tabpages instead. Actually it doesn't; it just prevents awkward
-		/// level-changes in the other viewers.
+		/// Bypasses level-change in <see cref="ObserverControl"/> and scrolls
+		/// through the tabpages instead. Actually it doesn't; it just prevents
+		/// awkward level-changes in the other viewers.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -256,9 +256,8 @@ namespace MapView.Forms.Observers
 
 			if (part != null)
 			{
-				PartType slot = part.Record.PartType;
-				ObserverManager.TopView     .Control   .QuadrantControl.SelectedQuadrant = slot;
-				ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = slot;
+				ObserverManager.TopView     .Control   .QuadrantControl.SelectedQuadrant =
+				ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = part.Record.PartType;
 			}
 
 			QuadrantDrawService.CurrentTilepart = part;
@@ -269,7 +268,7 @@ namespace MapView.Forms.Observers
 
 		#region Options
 		/// <summary>
-		/// Loads default options for TileView screen.
+		/// Loads default options for TileView.
 		/// </summary>
 		internal protected override void LoadControlDefaultOptions()
 		{
@@ -387,7 +386,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Hides the MCD-info screen.
+		/// Hides the <see cref="McdInfoF"/> dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
