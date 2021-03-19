@@ -62,6 +62,15 @@ namespace MapView.Forms.Observers
 		internal const int QuadrantPart     = 5;
 
 		private static TopView TopViewControl;
+
+		private static Graphics _graphics;
+		private static bool _inited;
+
+		private static ImageAttributes _attribs = new ImageAttributes();
+		private static List<Brush>     _brushes = new List<Brush>();
+
+		private static SolidBrush _swatchbrushWest;
+		private static SolidBrush _swatchbrushNorth;
 		#endregion Fields (static)
 
 
@@ -84,14 +93,12 @@ namespace MapView.Forms.Observers
 		#endregion Properties (static)
 
 
-		#region cTor (static)
+		#region Methods (static)
 		/// <summary>
-		/// cTor.
+		/// init.
 		/// </summary>
-		static QuadrantDrawService()
+		internal static void initQuadrantDrawService()
 		{
-			// NOTE: Fonts and Brushes are not disposed; they last the lifetime
-			// of the app.
 			Font  = new Font("Comic Sans MS", 7);
 			Brush = new SolidBrush(Color.LightBlue);
 
@@ -155,10 +162,8 @@ namespace MapView.Forms.Observers
 			_pathPart.AddLine(p2, p3); // NOTE: try DrawRectangle() it's even worse.
 			_pathPart.AddLine(p3, p4); // NOTE: It's due to PixelOffsetMode ...
 		}
-		#endregion cTor (static)
 
 
-		#region punc (static)
 		/// <summary>
 		/// Changes each character of the quadrant strings to uppercase or
 		/// lowercase randomly.
@@ -178,15 +183,7 @@ namespace MapView.Forms.Observers
 			}
 			return sb.ToString();
 		}
-		#endregion punc (static)
 
-
-		#region Methods (static)
-		private static Graphics _graphics;
-		private static bool _inited;
-
-		private static ImageAttributes _attribs = new ImageAttributes();
-		private static List<Brush>     _brushes = new List<Brush>();
 
 		/// <summary>
 		/// Sets the graphics object.
@@ -380,8 +377,6 @@ namespace MapView.Forms.Observers
 			FillSwatchColor(_swatchbrushNorth,                                          PartType.North);
 			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_ContentColor], PartType.Content);
 		}
-		private static SolidBrush _swatchbrushWest;
-		private static SolidBrush _swatchbrushNorth;
 
 		/// <summary>
 		/// Draws a terrain-sprite with an x/y-offset.

@@ -306,6 +306,9 @@ namespace MapView
 			MinimumSize = new Size(0,0); // fu.net
 
 
+			QuadrantDrawService.initQuadrantDrawService();
+
+
 			that = this;
 
 			MainViewUnderlay = new MainViewUnderlay(this);
