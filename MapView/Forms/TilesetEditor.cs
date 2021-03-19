@@ -67,17 +67,11 @@ namespace MapView
 
 
 		#region Properties (static)
-		private static Dictionary<int, Tuple<string,string>> _copiedTerrains
-				 = new Dictionary<int, Tuple<string,string>>();
-
 		/// <summary>
 		/// Is static to grant access to subsequent instantiations.
 		/// </summary>
-		private static Dictionary<int, Tuple<string,string>> CopiedTerrains
-		{
-			get { return _copiedTerrains; }
-			set { _copiedTerrains = value; }
-		}
+		private static readonly Dictionary<int, Tuple<string,string>> _copiedTerrains
+						  = new Dictionary<int, Tuple<string,string>>();
 		#endregion Properties (static)
 
 
@@ -560,7 +554,7 @@ namespace MapView
 
 			btn_TerrainClear.Enabled =
 			btn_TerrainCopy .Enabled = (_descriptor != null && _descriptor.Terrains.Count != 0);
-			btn_TerrainPaste.Enabled = (_descriptor != null && CopiedTerrains      .Count != 0);
+			btn_TerrainPaste.Enabled = (_descriptor != null && _copiedTerrains     .Count != 0);
 
 
 			// Get the text of 'tb_PathAvailable' (reflects the currently selected radio-button)
@@ -897,9 +891,11 @@ namespace MapView
 			{
 				// NOTE: Since program-entry-point sets the app to the
 				// InvariantCulture, ListBox is likely sorting by that culture.
-				// So let String.Compare() use that culture also
+				// So let String.Compare() use that culture also.
+
 				// TODO: Set the listbox Sort() method and this string comparison
-				// to use StringComparison.CurrentCultureIgnoreCase
+				// to use StringComparison.CurrentCultureIgnoreCase.
+
 				if (String.Compare(itAllocated, itAvailable, StringComparison.InvariantCultureIgnoreCase) < 0)
 					++sel;
 
@@ -969,11 +965,11 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainCopyClick(object sender, EventArgs e)
 		{
-			CopiedTerrains.Clear();
+			_copiedTerrains.Clear();
 
 			for (int i = 0; i != _descriptor.Terrains.Count; ++i)
 			{
-				CopiedTerrains[i] = CloneTerrainTuple(_descriptor.Terrains[i]);
+				_copiedTerrains[i] = CloneTerrainTuple(_descriptor.Terrains[i]);
 			}
 
 			SetPasteTip();
@@ -993,9 +989,9 @@ namespace MapView
 
 			_descriptor.Terrains.Clear();
 
-			for (int i = 0; i != CopiedTerrains.Count; ++i)
+			for (int i = 0; i != _copiedTerrains.Count; ++i)
 			{
-				_descriptor.Terrains[i] = CloneTerrainTuple(CopiedTerrains[i]);
+				_descriptor.Terrains[i] = CloneTerrainTuple(_copiedTerrains[i]);
 			}
 
 			ListTerrains();
@@ -1023,10 +1019,10 @@ namespace MapView
 		private void SetPasteTip()
 		{
 			string tip = String.Empty;
-			for (int i = 0; i != CopiedTerrains.Count; ++i)
+			for (int i = 0; i != _copiedTerrains.Count; ++i)
 			{
 				if (tip != String.Empty) tip += Environment.NewLine;
-				tip += CopiedTerrains[i].Item1;
+				tip += _copiedTerrains[i].Item1;
 			}
 			toolTip1.SetToolTip(btn_TerrainPaste, tip);
 		}
@@ -1267,8 +1263,6 @@ namespace MapView
 		{
 			string copyable = String.Empty;
 
-			var terrains = _descriptor.Terrains;
-
 			foreach (var @group in TileGroupManager.TileGroups)
 			foreach (var category in @group.Value.Categories)
 			if (category.Key != CategoryLabel)
@@ -1277,9 +1271,7 @@ namespace MapView
 				if (   descriptor.Label    == _descriptor.Label
 					&& descriptor.Basepath == _descriptor.Basepath)
 				{
-					if (!String.IsNullOrEmpty(copyable))
-						copyable += Environment.NewLine;
-
+					if (copyable != String.Empty) copyable += Environment.NewLine;
 					copyable += @group.Key + "|" + category.Key + "|" + descriptor.Label;
 				}
 			}
