@@ -409,7 +409,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Opens the MCD-info screen when a valid tilepart is
+		/// Opens the <see cref="McdInfoF"/> dialog when a valid tilepart is
 		/// double-left-clicked.
 		/// </summary>
 		/// <param name="e"></param>
@@ -428,7 +428,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Opens the MCD-info screen when [i] is key-upped.
+		/// Opens the <see cref="McdInfoF"/> dialog when [i] is key-upped.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyUp(KeyEventArgs e)

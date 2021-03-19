@@ -339,7 +339,7 @@ namespace MapView.Forms.Observers
 
 		#region Events (menu)
 		/// <summary>
-		/// Opens the MCD-info screen.
+		/// Opens the <see cref="McdInfoF"/> dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
