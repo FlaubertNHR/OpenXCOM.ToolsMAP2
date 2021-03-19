@@ -18,13 +18,15 @@ namespace MapView.Forms.Observers
 			IObserver
 	{
 		#region IObserver requirements
-		private MapFile _file;
+		/// <summary>
+		/// The currently loaded <see cref="XCom.MapFile"/>.
+		/// </summary>
+		/// <remarks>Is overridden by <see cref="TopControl.MapFile">TopControl.MapFile</see>.
+		/// <see cref="QuadrantControl"/> uses this MapFile.</remarks>
 		[Browsable(false)]
 		public virtual MapFile MapFile
-		{
-			get { return _file; }
-			set { _file = value; Refresh(); }
-		}
+		{ get; set; }
+
 
 		private readonly Dictionary<string, IObserver> _panels =
 					 new Dictionary<string, IObserver>();
