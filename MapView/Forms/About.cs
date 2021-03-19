@@ -140,7 +140,8 @@ namespace MapView
 	/// </summary>
 	public static class DateTimeExtension
 	{
-		public static DateTime GetLinkerTime(this Assembly assembly, TimeZoneInfo target = null)
+//		public static DateTime GetLinkerTime(this Assembly assembly, TimeZoneInfo target = null)
+		public static DateTime GetLinkerTime(this Assembly assembly)
 		{
 			var filePath = assembly.Location;
 			const int c_PeHeaderOffset = 60;
