@@ -310,8 +310,8 @@ The path specified can actually be used to start any valid application"
 
 		#region Events
 		/// <summary>
-		/// Sets a color for a SpecialBrush and invalidates the current TileView
-		/// panel.
+		/// Sets a color for a <see cref="TilePanel.SpecialBrushes">SpecialBrush</see>
+		/// and invalidates the current <see cref="TileView"/> panel.
 		/// </summary>
 		/// <param name="key">one of the SpecialType keys</param>
 		/// <param name="val">its color</param>
