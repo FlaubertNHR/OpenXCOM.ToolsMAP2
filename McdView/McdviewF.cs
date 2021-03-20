@@ -464,7 +464,7 @@ namespace McdView
 				}
 			}
 
-			ScanG = SpritesetManager.ScanGufo; // set defaults for ScanG/LoFT to ufo ->
+			ScanG = SpritesetManager.GetScanGufo(); // set defaults for ScanG/LoFT to ufo ->
 			LoFT  = SpritesetManager.LoFTufo;
 
 
@@ -1546,7 +1546,7 @@ namespace McdView
 				if (_scanGufo != null) // miLoadScanGufo.Checked
 					ScanG = _scanGufo;
 				else
-					ScanG = SpritesetManager.ScanGufo;
+					ScanG = SpritesetManager.GetScanGufo();
 
 				if (_loftufo != null) // miLoadLoFTufo.Checked
 					LoFT = _loftufo;
@@ -1575,7 +1575,7 @@ namespace McdView
 				if (_scanGtftd != null) // miLoadScanGtftd.Checked
 					ScanG = _scanGtftd;
 				else
-					ScanG = SpritesetManager.ScanGtftd;
+					ScanG = SpritesetManager.GetScanGtftd();
 
 				if (_lofttftd != null) // miLoadLoFTtftd.Checked
 					LoFT = _lofttftd;
@@ -1646,7 +1646,7 @@ namespace McdView
 				miLoadScanGufo.Checked = false;
 				_scanGufo_Label = null;
 				_scanGufo = null;
-				ScanG = SpritesetManager.ScanGufo;
+				ScanG = SpritesetManager.GetScanGufo();
 				pnl_ScanGic.Invalidate();
 			}
 		}
@@ -1810,7 +1810,7 @@ namespace McdView
 				miLoadScanGtftd.Checked = false;
 				_scanGtftd_Label = null;
 				_scanGtftd = null;
-				ScanG = SpritesetManager.ScanGtftd;
+				ScanG = SpritesetManager.GetScanGtftd();
 				pnl_ScanGic.Invalidate();
 			}
 		}

@@ -3205,12 +3205,12 @@ namespace MapView
 
 						if (descriptor.GroupType == GameType.Tftd)
 						{
-							MenuManager.EnableScanG(SpritesetManager.ScanGtftd != null);
+							MenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
 							MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle; // used by Mono only
 						}
 						else // default to ufo-battle palette
 						{
-							MenuManager.EnableScanG(SpritesetManager.ScanGufo != null);
+							MenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
 							MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle; // used by Mono only
 						}
 

@@ -11,15 +11,8 @@ namespace XCom
 	public static class SpritesetManager
 	{
 		#region Fields (static)
-		public static int[,] ScanGufo;
-		public static int[,] ScanGtftd;
-
-		public static BitArray LoFTufo;
-		public static BitArray LoFTtftd;
-
-		public const int TAB_WORD_LENGTH_0 = 0; // ie. no Tabfile
-		public const int TAB_WORD_LENGTH_2 = 2;
-		public const int TAB_WORD_LENGTH_4 = 4;
+		private static int[,] _scanGufo;
+		private static int[,] _scanGtftd;
 		#endregion Fields (static)
 
 
@@ -51,6 +44,16 @@ namespace XCom
 				return count;
 			}
 		}
+
+		public static BitArray LoFTufo
+		{ get; private set; }
+
+		public static BitArray LoFTtftd
+		{ get; private set; }
+
+		public const int TAB_WORD_LENGTH_0 = 0; // ie. no Tabfile
+		public const int TAB_WORD_LENGTH_2 = 2;
+		public const int TAB_WORD_LENGTH_4 = 4;
 		#endregion Properties (static)
 
 
@@ -160,18 +163,18 @@ namespace XCom
 				if (bytes != null)
 				{
 					int d1 = bytes.Length / ScanGicon.Length_ScanG;
-					ScanGufo = new int[d1, ScanGicon.Length_ScanG];
+					_scanGufo = new int[d1, ScanGicon.Length_ScanG];
 
 					for (int i = 0; i != d1; ++i)
 					for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
 					{
-						ScanGufo[i,j] = bytes[i * ScanGicon.Length_ScanG + j];
+						_scanGufo[i,j] = bytes[i * ScanGicon.Length_ScanG + j];
 					}
 					return true;
 				}
 			}
 
-			ScanGufo = null;
+			_scanGufo = null;
 			return false;
 		}
 
@@ -195,18 +198,18 @@ namespace XCom
 				if (bytes != null)
 				{
 					int d1 = bytes.Length / ScanGicon.Length_ScanG;
-					ScanGtftd = new int[d1, ScanGicon.Length_ScanG];
+					_scanGtftd = new int[d1, ScanGicon.Length_ScanG];
 
 					for (int i = 0; i != d1; ++i)
 					for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
 					{
-						ScanGtftd[i,j] = bytes[i * ScanGicon.Length_ScanG + j];
+						_scanGtftd[i,j] = bytes[i * ScanGicon.Length_ScanG + j];
 					}
 					return true;
 				}
 			}
 
-			ScanGtftd = null;
+			_scanGtftd = null;
 			return false;
 		}
 
@@ -302,6 +305,24 @@ namespace XCom
 			}
 
 			LoFTtftd = null;
+		}
+
+		/// <summary>
+		/// Gets ScanG for UFO.
+		/// </summary>
+		/// <returns></returns>
+		public static int[,] GetScanGufo()
+		{
+			return _scanGufo;
+		}
+
+		/// <summary>
+		/// Gets ScanG for TFTD.
+		/// </summary>
+		/// <returns></returns>
+		public static int[,] GetScanGtftd()
+		{
+			return _scanGtftd;
 		}
 		#endregion Methods (static)
 	}
