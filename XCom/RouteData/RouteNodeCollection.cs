@@ -128,7 +128,7 @@ namespace XCom
 
 	public enum AttackBase
 		:
-			byte
+			byte // ca1028 - use Int32
 	{
 		Zero,	// 0
 		One,	// 1
