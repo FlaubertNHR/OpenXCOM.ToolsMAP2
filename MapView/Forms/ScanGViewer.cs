@@ -20,12 +20,14 @@ namespace MapView
 	/// part, and finally the content-part. The MCD-record of each tilepart
 	/// references a ScanG entry using this formula:
 	///     offset = [21] * 256 + [20] + 35
-	/// Note that the draw-scale is 4x.
 	/// </summary>
+	/// <remarks>The draw-scale is 4x.</remarks>
 	internal sealed class ScanGViewer
 		:
 			Form
 	{
+		// TODO: Consider inheriting from IObserver.
+
 		private enum Layer
 		{ @default, single, locked }
 
