@@ -53,7 +53,7 @@ namespace XCom
 		/// Checks if this is a node-link or an exit-link.
 		/// </summary>
 		/// <returns>true if node-link</returns>
-		public bool isNodelink()
+		public bool IsNodelink()
 		{
 			return (Destination < ExitWest);
 		}
@@ -62,7 +62,7 @@ namespace XCom
 		/// Checks if this link-slot is used.
 		/// </summary>
 		/// <returns>true if used</returns>
-		public bool isUsed()
+		public bool IsUsed()
 		{
 			return (Destination != NotUsed);
 		}
