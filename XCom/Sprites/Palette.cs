@@ -77,8 +77,8 @@ namespace XCom
 		/// </summary>
 		private const string BLUE  = "#blue";
 
-		public static List<Brush> BrushesUfoBattle  = new List<Brush>(); // used by Mono only
-		public static List<Brush> BrushesTftdBattle = new List<Brush>(); // used by Mono only
+		public static readonly List<Brush> BrushesUfoBattle  = new List<Brush>(); // used by Mono only
+		public static readonly List<Brush> BrushesTftdBattle = new List<Brush>(); // used by Mono only
 		#endregion Fields (static)
 
 
@@ -250,7 +250,7 @@ namespace XCom
 		/// by PckView or McdView.
 		/// </summary>
 		public static bool BypassTonescales
-		{ internal get; set; }
+		{ private get; set; }
 		#endregion Properties (static)
 
 
@@ -417,7 +417,7 @@ namespace XCom
 		/// <param name="blue"></param>
 		/// <returns></returns>
 		/// <remarks>See also ColorHelp.GetTextColor().</remarks>
-		private int GetMonochromaticBrightness(int red, int green, int blue)
+		private static int GetMonochromaticBrightness(int red, int green, int blue)
 		{
 			return (int)(Math.Sqrt(Math.Pow(red,   2) * 0.2990
 								 + Math.Pow(green, 2) * 0.5870
