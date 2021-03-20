@@ -25,7 +25,7 @@ namespace XCom
 				return new Spriteset(
 								"Monotone",
 								Palette.UfoBattle,
-								SpritesetsManager.TAB_WORD_LENGTH_2,
+								SpritesetManager.TAB_WORD_LENGTH_2,
 								bytesPck,
 								bytesTab,
 								true);

@@ -130,7 +130,7 @@ namespace XCom
 		public Spriteset(
 				string label,
 				Palette pal,
-				int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2)
+				int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2)
 		{
 			Label         = label;
 			Pal           = pal;
@@ -147,7 +147,7 @@ namespace XCom
 		/// calls MapFileService.LoadDescriptor()
 		/// calls Descriptor.GetTerrainRecords()
 		/// calls Descriptor.GetTerrainSpriteset()
-		/// calls SpritesetsManager.LoadSpriteset()
+		/// calls SpritesetManager.LoadSpriteset()
 		/// calls Spriteset..cTor.
 		/// 2.
 		/// PckViewF.LoadSpriteset()
@@ -187,7 +187,7 @@ namespace XCom
 			uint b;
 			int pos = 0;
 
-			if (TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_4)
+			if (TabwordLength == SpritesetManager.TAB_WORD_LENGTH_4)
 			{
 				while (pos != bytesTab.Length)
 				{
@@ -208,7 +208,7 @@ namespace XCom
 					pos += TabwordLength;
 				}
 			}
-			else //if (TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_2)
+			else //if (TabwordLength == SpritesetManager.TAB_WORD_LENGTH_2)
 			{
 				while (pos != bytesTab.Length)
 				{
@@ -355,7 +355,7 @@ namespace XCom
 		/// ScanG chops bindata into 16-byte icons (4x4 256-color indexed).
 		/// LoFT chops bindata into 256-bit icons (16x16 2-color true/false bits).
 		/// @note Cf
-		/// - SpritesetsManager.LoadScanGufo()
+		/// - SpritesetManager.LoadScanGufo()
 		/// - McdviewF.LoadScanGufo()
 		/// </summary>
 		/// <param name="label"></param>
@@ -364,7 +364,7 @@ namespace XCom
 		public Spriteset(string label, Stream fs, bool isLoFT)
 		{
 			Label         = label;
-			TabwordLength = SpritesetsManager.TAB_WORD_LENGTH_0;
+			TabwordLength = SpritesetManager.TAB_WORD_LENGTH_0;
 
 			if (!isLoFT) // is ScanG
 			{
@@ -475,7 +475,7 @@ namespace XCom
 				{
 					switch (spriteset.TabwordLength)
 					{
-						case SpritesetsManager.TAB_WORD_LENGTH_2:
+						case SpritesetManager.TAB_WORD_LENGTH_2:
 						{
 							uint pos = 0;
 							for (int id = 0; id != spriteset.Count; ++id)
@@ -494,7 +494,7 @@ namespace XCom
 							break;
 						}
 
-						case SpritesetsManager.TAB_WORD_LENGTH_4:
+						case SpritesetManager.TAB_WORD_LENGTH_4:
 						{
 							uint pos = 0;
 							for (int id = 0; id != spriteset.Count; ++id)

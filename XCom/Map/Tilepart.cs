@@ -343,7 +343,7 @@ namespace XCom
 					MonotoneSprites = new Spriteset(
 												"Monotone_D",
 												Palette.UfoBattle,
-												SpritesetsManager.TAB_WORD_LENGTH_2,
+												SpritesetManager.TAB_WORD_LENGTH_2,
 												bytesPck,
 												bytesTab);
 

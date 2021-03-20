@@ -425,10 +425,10 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
-				cuboidufo = SpritesetsManager.LoadSpriteset(
+				cuboidufo = SpritesetManager.LoadSpriteset(
 														label,
 														dir,
-														SpritesetsManager.TAB_WORD_LENGTH_2,
+														SpritesetManager.TAB_WORD_LENGTH_2,
 														Palette.UfoBattle,
 														true);
 
@@ -449,10 +449,10 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
-				cuboidtftd = SpritesetsManager.LoadSpriteset(
+				cuboidtftd = SpritesetManager.LoadSpriteset(
 														label,
 														dir,
-														SpritesetsManager.TAB_WORD_LENGTH_4,
+														SpritesetManager.TAB_WORD_LENGTH_4,
 														Palette.TftdBattle,
 														true);
 
@@ -501,7 +501,7 @@ namespace MapView
 
 			// NOTE: ScanG's are conditional loads iff File exists.
 			if (piScanGufo != null && piScanGufo.FileExists()
-				&& SpritesetsManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+				&& SpritesetManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 			{
 				LogFile.WriteLine("ScanG UFO loaded.");
 			}
@@ -509,7 +509,7 @@ namespace MapView
 				LogFile.WriteLine("ScanG UFO not found.");
 
 			if (piScanGtftd != null && piScanGtftd.FileExists()
-				&& SpritesetsManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+				&& SpritesetManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 			{
 				LogFile.WriteLine("ScanG TFTD loaded.");
 			}
@@ -3205,12 +3205,12 @@ namespace MapView
 
 						if (descriptor.GroupType == GameType.Tftd)
 						{
-							MenuManager.EnableScanG(SpritesetsManager.ScanGtftd != null);
+							MenuManager.EnableScanG(SpritesetManager.ScanGtftd != null);
 							MainViewOverlay.SpriteBrushes = Palette.BrushesTftdBattle; // used by Mono only
 						}
 						else // default to ufo-battle palette
 						{
-							MenuManager.EnableScanG(SpritesetsManager.ScanGufo != null);
+							MenuManager.EnableScanG(SpritesetManager.ScanGufo != null);
 							MainViewOverlay.SpriteBrushes = Palette.BrushesUfoBattle; // used by Mono only
 						}
 
@@ -3311,7 +3311,7 @@ namespace MapView
 			miGreen.Checked = (toner == MainViewOptionables.TONER_GREEN);
 			miBlue .Checked = (toner == MainViewOptionables.TONER_BLUE);
 
-			if (SpritesetsManager.Spritesets.Count != 0)
+			if (SpritesetManager.Spritesets.Count != 0)
 			{
 				ColorPalette table;
 				switch (toner)
@@ -3325,23 +3325,23 @@ namespace MapView
 					//   i know you want one
 
 					default: // case TONER_GRAY
-						table = SpritesetsManager.Spritesets[0].Pal.GrayScale.Table;
+						table = SpritesetManager.Spritesets[0].Pal.GrayScale.Table;
 						break;
 
 					case MainViewOptionables.TONER_RED:
-						table = SpritesetsManager.Spritesets[0].Pal.RedScale.Table;
+						table = SpritesetManager.Spritesets[0].Pal.RedScale.Table;
 						break;
 
 					case MainViewOptionables.TONER_GREEN:
-						table = SpritesetsManager.Spritesets[0].Pal.GreenScale.Table;
+						table = SpritesetManager.Spritesets[0].Pal.GreenScale.Table;
 						break;
 
 					case MainViewOptionables.TONER_BLUE:
-						table = SpritesetsManager.Spritesets[0].Pal.BlueScale.Table;
+						table = SpritesetManager.Spritesets[0].Pal.BlueScale.Table;
 						break;
 				}
 
-				foreach (var spriteset in SpritesetsManager.Spritesets)
+				foreach (var spriteset in SpritesetManager.Spritesets)
 				{
 					for (int id = 0; id != spriteset.Count; ++id)
 					{

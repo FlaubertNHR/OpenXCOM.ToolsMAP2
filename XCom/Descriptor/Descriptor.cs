@@ -135,10 +135,10 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			Spriteset spriteset = SpritesetsManager.LoadSpriteset(
+			Spriteset spriteset = SpritesetManager.LoadSpriteset(
 																terr,
 																path,
-																SpritesetsManager.TAB_WORD_LENGTH_2,
+																SpritesetManager.TAB_WORD_LENGTH_2,
 																Pal);
 			if (spriteset != null)
 			{
@@ -160,7 +160,7 @@ namespace XCom
 		/// records but at present there is no general cache of all available
 		/// terrains; even a Map's Descriptor retains only the allocated
 		/// terrains as tuples in a dictionary-object. See
-		/// <see cref="SpritesetsManager"/> - where the *sprites* of a terrain
+		/// <see cref="SpritesetManager"/> - where the *sprites* of a terrain
 		/// *are* cached.</remarks>
 		public int GetRecordCount(int id, bool disregard = false)
 		{
@@ -193,7 +193,7 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			return SpritesetsManager.GetSpritesetCount(terr, path, Pal);
+			return SpritesetManager.GetSpritesetCount(terr, path, Pal);
 		} */
 		#endregion Methods
 

@@ -401,13 +401,13 @@ namespace McdView
 				{
 					pfe = Path.Combine(pathufo, SharedSpace.ScanGfile);
 					if (File.Exists(pfe))
-						SpritesetsManager.LoadScanGufo(pathufo);	// -> SpritesetsManager.ScanGufo
+						SpritesetManager.LoadScanGufo(pathufo);	// -> SpritesetManager.ScanGufo
 					else
 						files.Add("ufo\t- " + pfe);
 
 					pfe = Path.Combine(pathufo, SharedSpace.LoftfileUfo);
 					if (File.Exists(pfe))
-						SpritesetsManager.LoadLoFTufo(pathufo);		// -> SpritesetsManager.LoFTufo
+						SpritesetManager.LoadLoFTufo(pathufo);	// -> SpritesetManager.LoFTufo
 					else
 						files.Add("ufo\t- " + pfe);
 				}
@@ -426,13 +426,13 @@ namespace McdView
 				{
 					pfe = Path.Combine(pathtftd, SharedSpace.ScanGfile);
 					if (File.Exists(pfe))
-						SpritesetsManager.LoadScanGtftd(pathtftd);	// -> SpritesetsManager.ScanGtftd
+						SpritesetManager.LoadScanGtftd(pathtftd);	// -> SpritesetManager.ScanGtftd
 					else
 						files.Add("tftd\t- " + pfe);
 
 					pfe = Path.Combine(pathtftd, SharedSpace.LoftfileTftd);
 					if (File.Exists(pfe))
-						SpritesetsManager.LoadLoFTtftd(pathtftd);	// -> SpritesetsManager.LoFTtftd
+						SpritesetManager.LoadLoFTtftd(pathtftd);	// -> SpritesetManager.LoFTtftd
 					else
 						files.Add("tftd\t- " + pfe);
 				}
@@ -464,8 +464,8 @@ namespace McdView
 				}
 			}
 
-			ScanG = SpritesetsManager.ScanGufo; // set defaults for ScanG/LoFT to ufo ->
-			LoFT  = SpritesetsManager.LoFTufo;
+			ScanG = SpritesetManager.ScanGufo; // set defaults for ScanG/LoFT to ufo ->
+			LoFT  = SpritesetManager.LoFTufo;
 
 
 /*			// RotatingCube ->
@@ -812,10 +812,10 @@ namespace McdView
 							if (   File.Exists(pf + GlobalsXC.PckExt)
 								&& File.Exists(pf + GlobalsXC.TabExt))
 							{
-								Spriteset = SpritesetsManager.LoadSpriteset(
+								Spriteset = SpritesetManager.LoadSpriteset(
 																		Label,
 																		Path.GetDirectoryName(PfeMcd),
-																		SpritesetsManager.TAB_WORD_LENGTH_2,
+																		SpritesetManager.TAB_WORD_LENGTH_2,
 																		Pal,
 																		true);
 							}
@@ -902,10 +902,10 @@ namespace McdView
 					if (Spriteset != null)
 						Spriteset.Dispose();
 
-					Spriteset = SpritesetsManager.LoadSpriteset(
+					Spriteset = SpritesetManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
-															SpritesetsManager.TAB_WORD_LENGTH_2,
+															SpritesetManager.TAB_WORD_LENGTH_2,
 															Pal,
 															true);
 
@@ -984,10 +984,10 @@ namespace McdView
 					if (Spriteset != null)
 						Spriteset.Dispose();
 
-					Spriteset = SpritesetsManager.LoadSpriteset(
+					Spriteset = SpritesetManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
-															SpritesetsManager.TAB_WORD_LENGTH_2,
+															SpritesetManager.TAB_WORD_LENGTH_2,
 															Pal,
 															true);
 
@@ -1066,10 +1066,10 @@ namespace McdView
 //					if (Spriteset != null)
 //						Spriteset.Dispose(); // not needed when invoked via TileView
 
-					Spriteset = SpritesetsManager.LoadSpriteset(
+					Spriteset = SpritesetManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
-															SpritesetsManager.TAB_WORD_LENGTH_2,
+															SpritesetManager.TAB_WORD_LENGTH_2,
 															pal,
 															true);
 
@@ -1443,10 +1443,10 @@ namespace McdView
 					{
 						var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
 
-						Copier.Spriteset = SpritesetsManager.LoadSpriteset(
+						Copier.Spriteset = SpritesetManager.LoadSpriteset(
 																		Copier.Label,
 																		Path.GetDirectoryName(Copier.PfeMcd),
-																		SpritesetsManager.TAB_WORD_LENGTH_2,
+																		SpritesetManager.TAB_WORD_LENGTH_2,
 																		Pal,
 																		true);
 
@@ -1546,12 +1546,12 @@ namespace McdView
 				if (_scanGufo != null) // miLoadScanGufo.Checked
 					ScanG = _scanGufo;
 				else
-					ScanG = SpritesetsManager.ScanGufo;
+					ScanG = SpritesetManager.ScanGufo;
 
 				if (_loftufo != null) // miLoadLoFTufo.Checked
 					LoFT = _loftufo;
 				else
-					LoFT = SpritesetsManager.LoFTufo;
+					LoFT = SpritesetManager.LoFTufo;
 
 				InvalidatePanels();
 			}
@@ -1575,12 +1575,12 @@ namespace McdView
 				if (_scanGtftd != null) // miLoadScanGtftd.Checked
 					ScanG = _scanGtftd;
 				else
-					ScanG = SpritesetsManager.ScanGtftd;
+					ScanG = SpritesetManager.ScanGtftd;
 
 				if (_lofttftd != null) // miLoadLoFTtftd.Checked
 					LoFT = _lofttftd;
 				else
-					LoFT = SpritesetsManager.LoFTtftd;
+					LoFT = SpritesetManager.LoFTtftd;
 
 				InvalidatePanels();
 			}
@@ -1646,7 +1646,7 @@ namespace McdView
 				miLoadScanGufo.Checked = false;
 				_scanGufo_Label = null;
 				_scanGufo = null;
-				ScanG = SpritesetsManager.ScanGufo;
+				ScanG = SpritesetManager.ScanGufo;
 				pnl_ScanGic.Invalidate();
 			}
 		}
@@ -1654,7 +1654,7 @@ namespace McdView
 		/// <summary>
 		/// Loads a ScanG.dat file for UFO.
 		/// @note Cf
-		/// - SpritesetsManager.LoadScanGufo()
+		/// - SpritesetManager.LoadScanGufo()
 		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeScanG"></param>
@@ -1721,7 +1721,7 @@ namespace McdView
 				miLoadLoFTufo.Checked = false;
 				_loftufo_Label = null;
 				_loftufo = null;
-				LoFT = SpritesetsManager.LoFTufo;
+				LoFT = SpritesetManager.LoFTufo;
 				InvalidateLoftPanels();
 			}
 		}
@@ -1730,7 +1730,7 @@ namespace McdView
 		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
 		/// Loads a LoFTemps.dat file for UFO.
 		/// @note Cf
-		/// - SpritesetsManager.LoadLoFTufo()
+		/// - SpritesetManager.LoadLoFTufo()
 		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeLoft"></param>
@@ -1810,7 +1810,7 @@ namespace McdView
 				miLoadScanGtftd.Checked = false;
 				_scanGtftd_Label = null;
 				_scanGtftd = null;
-				ScanG = SpritesetsManager.ScanGtftd;
+				ScanG = SpritesetManager.ScanGtftd;
 				pnl_ScanGic.Invalidate();
 			}
 		}
@@ -1818,7 +1818,7 @@ namespace McdView
 		/// <summary>
 		/// Loads a ScanG.dat file for TFTD.
 		/// @note Cf
-		/// - SpritesetsManager.LoadScanGtftd()
+		/// - SpritesetManager.LoadScanGtftd()
 		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeScanG"></param>
@@ -1885,7 +1885,7 @@ namespace McdView
 				miLoadLoFTtftd.Checked = false;
 				_lofttftd_Label = null;
 				_lofttftd = null;
-				LoFT = SpritesetsManager.LoFTtftd;
+				LoFT = SpritesetManager.LoFTtftd;
 				InvalidateLoftPanels();
 			}
 		}
@@ -1893,7 +1893,7 @@ namespace McdView
 		/// <summary>
 		/// Loads a LoFTemps.dat file for TFTD.
 		/// @note Cf
-		/// - SpritesetsManager.LoadLoFTtftd()
+		/// - SpritesetManager.LoadLoFTtftd()
 		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeLoft"></param>

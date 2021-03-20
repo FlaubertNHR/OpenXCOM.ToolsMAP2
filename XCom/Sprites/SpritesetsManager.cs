@@ -2,14 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
 
 using DSShared;
 
 
 namespace XCom
 {
-	public static class SpritesetsManager
+	public static class SpritesetManager
 	{
 		#region Fields (static)
 		public static int[,] ScanGufo;
@@ -74,7 +73,7 @@ namespace XCom
 				Palette pal,
 				bool bypassManager = false)
 		{
-			//LogFile.WriteLine("SpritesetsManager.LoadSpriteSet()");
+			//LogFile.WriteLine("SpritesetManager.LoadSpriteSet()");
 
 			if (Directory.Exists(dir))
 			{

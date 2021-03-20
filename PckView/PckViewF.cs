@@ -1260,7 +1260,7 @@ namespace PckView
 						{
 							XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
-							int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
+							int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2;
 //							Palette pal = Palette.UfoBattle;
 
 							if (sender == miCreateBigobs)
@@ -1275,7 +1275,7 @@ namespace PckView
 
 								if (sender == miCreateUnitTftd)
 								{
-									tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
+									tabwordLength = SpritesetManager.TAB_WORD_LENGTH_4;
 //									pal = Palette.TftdBattle;
 								}
 							}
@@ -1929,7 +1929,7 @@ namespace PckView
 
 					XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
-					int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2;
+					int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2;
 //					Palette pal = Palette.UfoBattle; // User can change this but for now I need a palette ...
 
 					if (isBigobs)
@@ -1940,11 +1940,11 @@ namespace PckView
 					{
 						XCImage.SpriteHeight = XCImage.SpriteHeight40;
 
-						if (bytesTab.Length >= SpritesetsManager.TAB_WORD_LENGTH_4
+						if (bytesTab.Length >= SpritesetManager.TAB_WORD_LENGTH_4
 							&& bytesTab[2] == 0
 							&& bytesTab[3] == 0) // if both the 3rd or 4th bytes are zero ... it's a TFTD set.
 						{
-							tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_4;
+							tabwordLength = SpritesetManager.TAB_WORD_LENGTH_4;
 //							pal = Palette.TftdBattle;
 						}
 					}
@@ -2277,7 +2277,7 @@ namespace PckView
 		private void PrintOffsets()
 		{
 			if (   TilePanel.Spriteset != null
-				&& TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_2)
+				&& TilePanel.Spriteset.TabwordLength == SpritesetManager.TAB_WORD_LENGTH_2)
 			{
 				int id;
 				if (TilePanel.Selid != -1) id = TilePanel.Selid;

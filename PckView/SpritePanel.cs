@@ -141,7 +141,7 @@ namespace PckView
 								if (palid > -1)
 								{
 									if (palid < PckSprite.MarkerRle
-										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetsManager.TAB_WORD_LENGTH_0)
+										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetManager.TAB_WORD_LENGTH_0)
 									{
 										if (palid != (int)Sprite.Bindata[binid])
 										{
@@ -410,7 +410,7 @@ namespace PckView
 
 					case PckSprite.MarkerRle:
 					case PckSprite.MarkerEos:
-						if (_feditor._f.TilePanel.Spriteset.TabwordLength != SpritesetsManager.TAB_WORD_LENGTH_0)
+						if (_feditor._f.TilePanel.Spriteset.TabwordLength != SpritesetManager.TAB_WORD_LENGTH_0)
 						{
 							text += " - INVALID";
 						}
