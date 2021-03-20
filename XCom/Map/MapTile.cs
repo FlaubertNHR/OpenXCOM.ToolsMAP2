@@ -45,24 +45,6 @@ namespace XCom
 			}
 		}
 
-		/// <summary>
-		/// @note This is used only by MainViewF.Screenshot().
-		/// </summary>
-		public Tilepart[] UsedParts
-		{
-			get
-			{
-				var parts = new List<Tilepart>();
-
-				if (Floor   != null) parts.Add(Floor);
-				if (West    != null) parts.Add(West);
-				if (North   != null) parts.Add(North);
-				if (Content != null) parts.Add(Content);
-
-				return parts.ToArray();
-			}
-		}
-
 		public RouteNode Node
 		{ get; set; }
 

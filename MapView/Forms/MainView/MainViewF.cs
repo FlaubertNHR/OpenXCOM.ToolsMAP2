@@ -1527,7 +1527,7 @@ namespace MapView
 		{
 			const int ConstHalfWidth  = 16;
 			const int ConstHalfHeight =  8;
-			const int LAYERS          = 24;
+			const int Layers          = 24;
 
 
 			MapFile file = MainViewUnderlay.MapFile;
@@ -1537,41 +1537,44 @@ namespace MapView
 			int width = size.Rows + size.Cols;
 			using (var b = BitmapService.CreateTransparent(
 														width * ConstHalfWidth,
-														width * ConstHalfHeight + (size.Levs - level) * LAYERS,
+														width * ConstHalfHeight + (size.Levs - level) * Layers,
 														file.Descriptor.Pal.Table))
 			{
 				if (b != null)
 				{
 					var start = new Point(
 										(size.Rows - 1) * ConstHalfWidth,
-									   -(level * LAYERS));
+									   -(level * Layers));
 
 					MapTileArray tiles = file.Tiles;
 					if (tiles != null)
 					{
-						Tilepart[] parts;
-						for (int lev = size.Levs - 1; lev >= level; --lev)
+						Tilepart part;
+						MapTile tile;
+
+						for (int l = size.Levs - 1; l >= level; --l)
 						{
 							for (int
-									row = 0,
+									r = 0,
 										startX = start.X,
-										startY = start.Y + lev * LAYERS;
-									row != size.Rows;
-									++row,
+										startY = start.Y + l * Layers;
+									r != size.Rows;
+									++r,
 										startX -= ConstHalfWidth,
 										startY += ConstHalfHeight)
 							{
 								for (int
-										col = 0,
+										c = 0,
 											x = startX,
 											y = startY;
-										col != size.Cols;
-										++col,
+										c != size.Cols;
+										++c,
 											x += ConstHalfWidth,
 											y += ConstHalfHeight)
 								{
-									parts = tiles[col, row, lev].UsedParts;
-									foreach (var part in parts)
+									if (!(tile = tiles[c,r,l]).Vacant)
+									for (int i = 0; i != MapTile.QUADS; ++i)
+									if ((part = tile[(PartType)i]) != null)
 									{
 										BitmapService.Insert(
 															part[0].Sprite,
