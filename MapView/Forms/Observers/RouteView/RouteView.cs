@@ -984,15 +984,15 @@ namespace MapView.Forms.Observers
 					link = NodeSelected[slot];
 
 					cbTypL.SelectedItem = link.Unit;
-					btnGo.Enabled = link.isNodelink();
+					btnGo.Enabled = link.IsNodelink();
 
 					dest = link.Destination;
-					if (link.isUsed())
+					if (link.IsUsed())
 					{
 						btnGo .Text = Go;
 						tbDist.Text = link.Distance + GetDistanceArrow(slot);
 
-						if (link.isNodelink())
+						if (link.IsNodelink())
 						{
 							cbDest.SelectedItem = dest;
 
@@ -1039,7 +1039,7 @@ namespace MapView.Forms.Observers
 		private string GetDistanceArrow(int slot)
 		{
 			var link = NodeSelected[slot];
-			if (link.isNodelink())
+			if (link.IsNodelink())
 			{
 				var dest = _file.Routes[link.Destination];
 				if (dest != null) // safety.

@@ -492,7 +492,7 @@ namespace XCom
 
 				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 				{
-					if ((link = node0[slot]).isNodelink())
+					if ((link = node0[slot]).IsNodelink())
 					{
 						if (link.Destination == id)
 						{
