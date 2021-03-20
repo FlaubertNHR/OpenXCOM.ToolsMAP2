@@ -35,6 +35,22 @@ namespace XCom
 		{
 			get { return _spritesets; }
 		}
+
+		/// <summary>
+		/// Gets the total count of sprites in all <see cref="Spritesets"/>.
+		/// </summary>
+		/// <remarks>Used only by MapInfoDialog.Analyze().</remarks>
+		public static int TotalSpriteCount
+		{
+			get
+			{
+				int count = 0;
+				foreach (var spriteset in Spritesets)
+					count += spriteset.Count;
+
+				return count;
+			}
+		}
 		#endregion Properties (static)
 
 
@@ -121,20 +137,6 @@ namespace XCom
 				}
 			}
 			return null;
-		}
-
-		/// <summary>
-		/// Gets the total count of sprites in all 'Spritesets'.
-		/// </summary>
-		/// <returns>count of sprites</returns>
-		/// <remarks>Used only by MapInfoDialog.Analyze().</remarks>
-		public static int GetTotalSpriteCount()
-		{
-			int count = 0;
-			foreach (var spriteset in Spritesets)
-				count += spriteset.Count;
-
-			return count;
 		}
 
 
