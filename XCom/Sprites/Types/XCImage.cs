@@ -32,8 +32,8 @@ namespace XCom
 		/// <summary>
 		/// A byte array containing the (uncompressed) sprite-pixels as
 		/// palette-indices.
-		/// @note Byte arrays get initialized w/ "0" by default.
 		/// </summary>
+		/// <remarks>Byte arrays get initialized w/ "0" by default.</remarks>
 		public byte[] Bindata
 		{ get; internal protected set; }
 
