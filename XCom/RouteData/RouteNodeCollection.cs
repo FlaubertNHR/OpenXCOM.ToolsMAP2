@@ -498,7 +498,7 @@ namespace XCom
 						{
 							link.Destination = Link.NotUsed;
 							link.Distance    = (byte)0;
-							link.Type        = UnitType.Any;
+							link.Unit        = UnitType.Any;
 						}
 						else if (link.Destination > id)
 							--link.Destination;

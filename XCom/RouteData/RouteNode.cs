@@ -150,7 +150,7 @@ namespace XCom
 			{
 				fs.WriteByte(      _links[slot].Destination);
 				fs.WriteByte(      _links[slot].Distance);
-				fs.WriteByte((byte)_links[slot].Type);
+				fs.WriteByte((byte)_links[slot].Unit);
 			}
 
 			fs.WriteByte((byte)Type);

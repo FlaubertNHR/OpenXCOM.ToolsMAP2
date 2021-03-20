@@ -27,7 +27,7 @@ namespace XCom
 		/// <summary>
 		/// Gets/Sets the unit-type that can use this link.
 		/// </summary>
-		public UnitType Type
+		public UnitType Unit
 		{ get; set; }
 		#endregion Properties
 
@@ -38,22 +38,30 @@ namespace XCom
 		/// </summary>
 		/// <param name="id">the id of the destination-node</param>
 		/// <param name="distance">the distance to the destination-node</param>
-		/// <param name="type">the type of units than can use this link</param>
-		internal Link(byte id, byte distance, byte type)
+		/// <param name="unit">the type of unit than can use this link</param>
+		internal Link(byte id, byte distance, byte unit)
 		{
 			Destination = id;
 			Distance    = distance;
-			Type        = (UnitType)type;
+			Unit        = (UnitType)unit;
 		}
 		#endregion cTor
 
 
 		#region Methods
+		/// <summary>
+		/// Checks if this is a node-link or an exit-link.
+		/// </summary>
+		/// <returns>true if node-link</returns>
 		public bool isNodelink()
 		{
 			return (Destination < ExitWest);
 		}
 
+		/// <summary>
+		/// Checks if this link-slot is used.
+		/// </summary>
+		/// <returns>true if used</returns>
 		public bool isUsed()
 		{
 			return (Destination != NotUsed);

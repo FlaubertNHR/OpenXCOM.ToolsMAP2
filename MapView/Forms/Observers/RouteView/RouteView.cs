@@ -986,7 +986,7 @@ namespace MapView.Forms.Observers
 
 					link = NodeSelected[slot];
 
-					cbTypL.SelectedItem = link.Type;
+					cbTypL.SelectedItem = link.Unit;
 					btnGo.Enabled = link.isNodelink();
 
 					dest = link.Destination;
@@ -1219,7 +1219,7 @@ namespace MapView.Forms.Observers
 				switch (link.Destination = dest.Value)
 				{
 					case Link.NotUsed:
-						link.Type = UnitType.Any;
+						link.Unit = UnitType.Any;
 
 						tb.Text = String.Empty;
 						link.Distance = 0;
@@ -1386,7 +1386,7 @@ namespace MapView.Forms.Observers
 				else //if (cb == cbLink5UnitType)
 					slot = 4;
 
-				NodeSelected[slot].Type = (UnitType)cb.SelectedItem;
+				NodeSelected[slot].Unit = (UnitType)cb.SelectedItem;
 
 				if (Tag as String == "ROUTE")
 					ObserverManager.TopRouteView.ControlRoute.TransferUnitType(slot, cb.SelectedIndex);
@@ -2097,7 +2097,7 @@ namespace MapView.Forms.Observers
 							NodeSelected[slot].Destination = Link.NotUsed;
 							NodeSelected[slot].Distance = 0;
 
-							NodeSelected[slot].Type = UnitType.Any;
+							NodeSelected[slot].Unit = UnitType.Any;
 						}
 
 						UpdateNodeInfo();
