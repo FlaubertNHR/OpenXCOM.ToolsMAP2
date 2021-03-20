@@ -8,7 +8,8 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Interface for ObserverControl and ObserverControl_Top.
+	/// Interface for <see cref="ObserverControl"/> and
+	/// <see cref="ObserverControl_Top"/>.
 	/// </summary>
 	internal interface IObserver
 	{
