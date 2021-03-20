@@ -81,7 +81,7 @@
   <ItemGroup>
     <Compile Include="Descriptor\TileGroup.cs" />
     <Compile Include="Sprites\EmbeddedService.cs" />
-    <Compile Include="Sprites\SpritesetsManager.cs">
+    <Compile Include="Sprites\SpritesetManager.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="McdRecords\McdRecord.cs">
