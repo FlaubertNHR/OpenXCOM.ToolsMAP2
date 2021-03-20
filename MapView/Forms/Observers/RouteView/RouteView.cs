@@ -892,7 +892,7 @@ namespace MapView.Forms.Observers
 				gbLinkData  .Enabled =
 				gbNodeEditor.Enabled = true;
 
-				cbType.SelectedItem = NodeSelected.Type;
+				cbType.SelectedItem = NodeSelected.Unit;
 
 				if (_file.Descriptor.GroupType == GameType.Tftd)
 					cbRank.SelectedItem = RouteNodeCollection.RankTftd[NodeSelected.Rank];
@@ -1061,7 +1061,7 @@ namespace MapView.Forms.Observers
 			if (!_loadingInfo)
 			{
 				RoutesChangedCoordinator = true;
-				NodeSelected.Type = (UnitType)cbType.SelectedItem;
+				NodeSelected.Unit = (UnitType)cbType.SelectedItem;
 
 				if (Tag as String == "ROUTE")
 					ObserverManager.TopRouteView.ControlRoute.cbType.SelectedIndex = cbType.SelectedIndex;

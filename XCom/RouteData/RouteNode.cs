@@ -30,7 +30,7 @@ namespace XCom
 			get { return _links[slot]; }
 		}
 
-		public UnitType Type
+		public UnitType Unit
 		{ get; set; }
 
 		public byte Rank
@@ -89,7 +89,7 @@ namespace XCom
 				offset += 3;
 			}
 
-			Type   = (UnitType)bindata[19];
+			Unit   = (UnitType)bindata[19];
 			Rank   = bindata[20];
 			Patrol = (PatrolPriority)bindata[21];
 			Attack = (AttackBase)bindata[22];
@@ -123,7 +123,7 @@ namespace XCom
 			for (int slot = 0; slot != LinkSlots; ++slot)
 				_links[slot] = new Link(Link.NotUsed, 0,0);
 
-			Type   = UnitType.Any;
+			Unit   = UnitType.Any;
 			Rank   = (byte)0;
 			Patrol = PatrolPriority.Zero;
 			Attack = AttackBase.Zero;
@@ -153,7 +153,7 @@ namespace XCom
 				fs.WriteByte((byte)_links[slot].Unit);
 			}
 
-			fs.WriteByte((byte)Type);
+			fs.WriteByte((byte)Unit);
 
 			if (Rank != (byte)9)
 			{

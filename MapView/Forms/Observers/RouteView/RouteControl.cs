@@ -723,7 +723,7 @@ namespace MapView.Forms.Observers
 					textPatrol1 = Patrol;
 
 					textOver2 = node.Id.ToString();
-					textType2 = Enum.GetName(typeof(UnitType), node.Type);
+					textType2 = Enum.GetName(typeof(UnitType), node.Unit);
 
 					if (MapFile.Descriptor.GroupType == GameType.Tftd)
 						textRank2 = RouteNodeCollection.RankTftd[node.Rank].ToString();
