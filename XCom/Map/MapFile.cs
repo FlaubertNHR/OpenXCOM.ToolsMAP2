@@ -726,7 +726,7 @@ namespace XCom
 				int cols,
 				int rows,
 				int levs,
-				MapResizeService.MapResizeZtype zType)
+				MapResizeZtype zType)
 		{
 			int bit = CHANGED_NOT;
 
@@ -739,7 +739,7 @@ namespace XCom
 			{
 				bit |= CHANGED_MAP;
 
-				if (zType == MapResizeService.MapResizeZtype.MRZT_TOP // adjust route-nodes ->
+				if (zType == MapResizeZtype.MRZT_TOP // adjust route-nodes ->
 					&& Routes.Any())
 				{
 					bit |= CHANGED_NOD;

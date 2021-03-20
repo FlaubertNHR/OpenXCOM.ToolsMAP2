@@ -1,22 +1,22 @@
 ﻿namespace XCom
 {
+	public enum MapResizeZtype
+	{
+		/// <summary>
+		/// a simple addition or subtraction of z-levels (increase/decrease)
+		/// </summary>
+		MRZT_BOT, // 0
+
+		/// <summary>
+		/// this needs to create/delete levels at top and push existing
+		/// levels down or pull them upward
+		/// </summary>
+		MRZT_TOP  // 1
+	}
+
+
 	public static class MapResizeService
 	{
-		public enum MapResizeZtype
-		{
-			/// <summary>
-			/// a simple addition or subtraction of z-levels (increase/decrease)
-			/// </summary>
-			MRZT_BOT, // 0
-
-			/// <summary>
-			/// this needs to create/delete levels at top and push existing
-			/// levels down or pull them upward
-			/// </summary>
-			MRZT_TOP  // 1
-		}
-
-
 		/// <summary>
 		/// Gets a resized tile-array when changing a Map's dimensions.
 		/// </summary>

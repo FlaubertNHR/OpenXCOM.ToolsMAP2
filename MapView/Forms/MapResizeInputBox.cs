@@ -43,7 +43,7 @@ namespace MapView
 			get { return _levs; }
 		}
 
-		internal MapResizeService.MapResizeZtype zType
+		internal MapResizeZtype zType
 		{
 			get
 			{
@@ -51,9 +51,9 @@ namespace MapView
 				// but Enabled==true/false still works.
 
 				if (cb_Ceil.Enabled && cb_Ceil.Checked)
-					return MapResizeService.MapResizeZtype.MRZT_TOP;
+					return MapResizeZtype.MRZT_TOP;
 
-				return MapResizeService.MapResizeZtype.MRZT_BOT;
+				return MapResizeZtype.MRZT_BOT;
 			}
 		}
 		#endregion Properties
