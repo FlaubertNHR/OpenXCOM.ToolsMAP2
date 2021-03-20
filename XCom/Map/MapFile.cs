@@ -9,17 +9,17 @@ using DSShared;
 
 namespace XCom
 {
+	#region Delegates
+	public delegate void LocationSelectedEvent(LocationSelectedArgs args);
+	public delegate void LevelSelectedEvent(LevelSelectedArgs args);
+	#endregion Delegates
+
+
 	/// <summary>
 	/// This is the currently loaded Map.
 	/// </summary>
 	public sealed class MapFile
 	{
-		#region Delegates
-		public delegate void LocationSelectedEvent(LocationSelectedArgs args);
-		public delegate void LevelSelectedEvent(LevelSelectedArgs args);
-		#endregion Delegates
-
-
 		#region Events
 		public event LocationSelectedEvent LocationSelected;
 		public event LevelSelectedEvent LevelSelected;
