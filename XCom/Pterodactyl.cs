@@ -51,6 +51,9 @@ namespace XCom
 		{
 			return _label;
 		}
+
+		// TODO: override Equals()
+		// TODO: override operators == and !=
 		#endregion Methods (override)
 	}
 }
