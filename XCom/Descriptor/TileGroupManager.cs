@@ -20,8 +20,8 @@ namespace XCom
 
 
 	/// <summary>
-	/// Manages tileset-groups, loads the Tilesets into Descriptors, and writes
-	/// MapTilesets.yml.
+	/// Manages tileset-groups, loads the tilesets into
+	/// <see cref="Descriptor">Descriptors</see>, and writes MapTilesets.yml.
 	/// </summary>
 	public static class TileGroupManager
 	{
@@ -44,9 +44,9 @@ namespace XCom
 		#region Methods (static)
 		/// <summary>
 		/// Adds a group. Called by MainViewF.OnAddGroupClick()
-		/// NOTE: Check if the group already exists first.
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to add</param>
+		/// <remarks>Check if the group already exists first.</remarks>
 		public static void AddTileGroup(string labelGroup)
 		{
 			TileGroups[labelGroup] = new TileGroup(labelGroup);
@@ -65,10 +65,10 @@ namespace XCom
 		/// Creates a new tilegroup and transfers ownership of all Categories
 		/// and Descriptors from their previous Group to the specified new
 		/// Group. Called by MainViewF.OnEditGroupClick()
-		/// @note Check if the group and category already exist first.
 		/// </summary>
 		/// <param name="labelGroup">the new label for the group</param>
 		/// <param name="labelGroupPre">the old label of the group</param>
+		/// <remarks>Check if the group and category already exist first.</remarks>
 		public static void EditTileGroup(string labelGroup, string labelGroupPre)
 		{
 			TileGroups[labelGroup] = new TileGroup(labelGroup);
@@ -88,7 +88,8 @@ namespace XCom
 
 
 		/// <summary>
-		/// Reads MapTilesets.yml and converts all its data to Descriptors.
+		/// Reads MapTilesets.yml and converts all its data to
+		/// <see cref="Descriptor">Descriptors</see>.
 		/// </summary>
 		/// <param name="fullpath">path-file-extension of settings/MapTilesets.yml</param>
 		public static void LoadTileGroups(string fullpath)
@@ -182,7 +183,7 @@ namespace XCom
 
 						// get the BypassRecordsExceeded bool
 						bypassRe = keyvals.ContainsKey(keyBypassRe)
-								&& keyvals[keyBypassRe].ToString().ToLowerInvariant() == "true";
+								&& keyvals[keyBypassRe].ToString().ToUpperInvariant() == "TRUE";
 
 
 						// IMPORTANT: ensure that tileset-labels (ie, types) and
@@ -251,8 +252,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Saves the TileGroups with their children (categories and tilesets)
-		/// to a YAML file.
+		/// Saves the <see cref="TileGroup">TileGroups</see> with their children
+		/// (categories and tilesets) to a YAML file.
 		/// </summary>
 		/// <returns>true if no exception was thrown</returns>
 		public static bool WriteTileGroups()
