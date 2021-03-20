@@ -15,8 +15,8 @@ namespace XCom
 	public sealed class MapFile
 	{
 		#region Delegates
-		public delegate void LocationSelectedEvent(LocationSelectedArgs e);
-		public delegate void LevelSelectedEvent(LevelSelectedArgs e);
+		public delegate void LocationSelectedEvent(LocationSelectedArgs args);
+		public delegate void LevelSelectedEvent(LevelSelectedArgs args);
 		#endregion Delegates
 
 
