@@ -222,7 +222,7 @@ namespace MapView
 						{
 							ptrPixel = pos + (x * 16) + (y * 16 * data.Stride);
 
-							tile = _file[x,y,z];
+							tile = _file.GetTile(x,y,z);
 
 							if (tile.Floor != null
 								&& (iconid = tile.Floor.Record.ScanG) < iconsTotal

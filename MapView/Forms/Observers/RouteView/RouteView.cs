@@ -285,9 +285,8 @@ namespace MapView.Forms.Observers
 
 				Color color; int id;
 
-				RouteNode node = MapFile[RouteControl._col,
-										 RouteControl._row,
-										 MapFile.Level].Node;
+				RouteNode node = MapFile.GetTile(RouteControl._col,
+												 RouteControl._row).Node;
 				if (node == null)
 				{
 					id = -1;
@@ -363,9 +362,8 @@ namespace MapView.Forms.Observers
 			{
 				Color color;
 
-				RouteNode node = MapFile[RouteControl._col,
-										 RouteControl._row,
-										 MapFile.Level].Node;
+				RouteNode node = MapFile.GetTile(RouteControl._col,
+												 RouteControl._row).Node;
 				if (node == null)
 				{
 					color = SystemColors.ControlText;
@@ -390,9 +388,8 @@ namespace MapView.Forms.Observers
 			{
 				Color color; int id;
 
-				RouteNode node = MapFile[RouteControl._col,
-										 RouteControl._row,
-										 MapFile.Level].Node;
+				RouteNode node = MapFile.GetTile(RouteControl._col,
+												 RouteControl._row).Node;
 				if (node == null)
 				{
 					id = -1;
@@ -557,9 +554,9 @@ namespace MapView.Forms.Observers
 				{
 					RoutesChangedCoordinator = true;
 
-					_file[Dragnode.Col, // clear the node from the previous tile
-						  Dragnode.Row,
-						  Dragnode.Lev].Node = null;
+					_file.GetTile(Dragnode.Col, // clear the node from the previous tile
+								  Dragnode.Row,
+								  Dragnode.Lev).Node = null;
 
 					Dragnode.Col = (byte)args.Location.Col; // reassign the node's x/y/z values
 					Dragnode.Row = (byte)args.Location.Row; // these get saved w/ Routes.
@@ -1494,7 +1491,7 @@ namespace MapView.Forms.Observers
 
 			var args = new RouteControlEventArgs(
 											MouseButtons.Left,
-											_file[loc.X, loc.Y],
+											_file.GetTile(loc.X, loc.Y),
 											_file.Location);
 			OnRouteControlMouseDown(null, args);
 
@@ -1724,9 +1721,9 @@ namespace MapView.Forms.Observers
 				if (RoutesInfo != null)
 					RoutesInfo.DeleteNode(NodeSelected);
 
-				_file[NodeSelected.Col,
-					  NodeSelected.Row,
-					  NodeSelected.Lev].Node = null;
+				_file.GetTile(NodeSelected.Col,
+							  NodeSelected.Row,
+							  NodeSelected.Lev).Node = null;
 				_file.Routes.DeleteNode(NodeSelected);
 
 				ObserverManager.RouteView   .Control     .DeselectNode();
@@ -1984,9 +1981,9 @@ namespace MapView.Forms.Observers
 
 			var args = new RouteControlEventArgs(
 											MouseButtons.None,
-											_file[Dragnode.Col,
-												  Dragnode.Row,
-												  Dragnode.Lev - 1],
+											_file.GetTile(Dragnode.Col,
+														  Dragnode.Row,
+														  Dragnode.Lev - 1),
 											new MapLocation(
 														Dragnode.Col,
 														Dragnode.Row,
@@ -2007,9 +2004,9 @@ namespace MapView.Forms.Observers
 
 			var args = new RouteControlEventArgs(
 											MouseButtons.None,
-											_file[Dragnode.Col,
-												  Dragnode.Row,
-												  Dragnode.Lev + 1],
+											_file.GetTile(Dragnode.Col,
+														  Dragnode.Row,
+														  Dragnode.Lev + 1),
 											new MapLocation(
 														Dragnode.Col,
 														Dragnode.Row,

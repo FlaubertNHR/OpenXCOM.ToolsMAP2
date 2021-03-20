@@ -12,7 +12,7 @@
 		/// <summary>
 		/// Gets/Sets a MapTile object according to a given location.
 		/// </summary>
-		internal MapTile this[int col, int row, int lev]
+		public MapTile this[int col, int row, int lev]
 		{
 			get
 			{
@@ -24,7 +24,7 @@
 				}
 				return null;
 			}
-			set
+			internal set
 			{
 				MapTile tile;
 				if (   col > -1 && col < _locations.MaxCols

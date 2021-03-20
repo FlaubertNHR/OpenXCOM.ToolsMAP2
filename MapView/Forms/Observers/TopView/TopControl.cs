@@ -291,8 +291,7 @@ namespace MapView.Forms.Observers
 								x += halfWidth,
 								y += halfHeight)
 					{
-//						if ((tile = MapFile[c,r]) != null)
-						if (!(tile = MapFile[c,r]).Vacant)
+						if (!(tile = MapFile.GetTile(c,r)).Vacant)
 							DrawBlobs(tile, x,y);
 					}
 				}

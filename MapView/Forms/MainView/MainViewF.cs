@@ -1534,7 +1534,7 @@ namespace MapView
 			MapSize size = file.MapSize;
 			int level = file.Level;
 
-			var width = size.Rows + size.Cols;
+			int width = size.Rows + size.Cols;
 			using (var b = BitmapService.CreateTransparent(
 														width * ConstHalfWidth,
 														width * ConstHalfHeight + (size.Levs - level) * LAYERS,
@@ -1546,9 +1546,10 @@ namespace MapView
 										(size.Rows - 1) * ConstHalfWidth,
 									   -(level * LAYERS));
 
-					int i = 0;
-					if (file.Tiles != null)
+					MapTileArray tiles = file.Tiles;
+					if (tiles != null)
 					{
+						Tilepart[] parts;
 						for (int lev = size.Levs - 1; lev >= level; --lev)
 						{
 							for (int
@@ -1567,10 +1568,9 @@ namespace MapView
 										col != size.Cols;
 										++col,
 											x += ConstHalfWidth,
-											y += ConstHalfHeight,
-											++i)
+											y += ConstHalfHeight)
 								{
-									var parts = file[col, row, lev].UsedParts;
+									parts = tiles[col, row, lev].UsedParts;
 									foreach (var part in parts)
 									{
 										BitmapService.Insert(

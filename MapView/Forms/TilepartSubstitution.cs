@@ -132,7 +132,7 @@ namespace MapView
 			for (int row = 0; row != rows; ++row)
 			for (int col = 0; col != cols; ++col)
 			{
-				if (!(tile = file[col, row, lev]).Vacant)
+				if (!(tile = file.GetTile(col, row, lev)).Vacant)
 				{
 					if (  (part = tile.Floor)   != null
 						&& part.Record.PartType != PartType.Invalid // bypass crippled parts

@@ -111,8 +111,9 @@ namespace XCom
 					if (LocationSelected != null)
 						LocationSelected(new LocationSelectedArgs(
 																_location,
-																this[_location.Col,
-																	 _location.Row]));
+																Tiles[_location.Col,
+																	  _location.Row,
+																	   Level]));
 				}
 			}
 		}
@@ -124,38 +125,26 @@ namespace XCom
 		{ get; private set; }
 
 		/// <summary>
-		/// Gets/Sets a MapTile object using col,row,lev values.
+		/// Gets a MapTile object using col,row,lev values.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
 		/// <param name="lev"></param>
 		/// <returns>the corresponding MapTile object</returns>
-		public MapTile this[int col, int row, int lev] // ca1023 - don't use 2+ indices
+		public MapTile GetTile(int col, int row, int lev)
 		{
-			get { return Tiles[col, row, lev]; }
+			return Tiles[col, row, lev];
 		}
 		/// <summary>
-		/// Gets/Sets a MapTile object at the current level using col,row
-		/// values.
+		/// Gets a MapTile object at the current level using col,row values.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
 		/// <returns>the corresponding MapTile object</returns>
-		public MapTile this[int col, int row] // ca1023 - don't use 2+ indices
+		public MapTile GetTile(int col, int row)
 		{
-			get { return this[col, row, Level]; }
+			return Tiles[col, row, Level];
 		}
-
-//		/// <summary>
-//		/// Gets/Sets a MapTile object using a MapLocation.
-//		/// @note No error checking is done to ensure that the given location is
-//		/// valid.
-//		/// </summary>
-//		public MapTile this[MapLocation loc]
-//		{
-//			get { return this[loc.Col, loc.Row, loc.Lev]; }
-//			set { this[loc.Col, loc.Row, loc.Lev] = value; }
-//		}
 
 		/// <summary>
 		/// User will be shown a dialog asking to save if the Map changed.
@@ -263,21 +252,21 @@ namespace XCom
 				for (int row = 0; row != MapSize.Rows - 2; ++row)
 				for (int col = 0; col != MapSize.Cols - 2; ++col)
 				{
-					if ((tile = this[col, row, lev]) != null) // safety. The tile should always be valid.
+					if ((tile = Tiles[col, row, lev]) != null) // safety. The tile should always be valid.
 					{
 						tile.Occulted = !forceVis
-									 && this[col,     row,     lev - 1].Floor != null // above
+									 && Tiles[col,     row,     lev - 1].Floor != null // above
 
-									 && this[col,     row + 1, lev - 1].Floor != null // south
-									 && this[col,     row + 2, lev - 1].Floor != null
+									 && Tiles[col,     row + 1, lev - 1].Floor != null // south
+									 && Tiles[col,     row + 2, lev - 1].Floor != null
 
-									 && this[col + 1, row,     lev - 1].Floor != null // east
-									 && this[col + 2, row,     lev - 1].Floor != null
+									 && Tiles[col + 1, row,     lev - 1].Floor != null // east
+									 && Tiles[col + 2, row,     lev - 1].Floor != null
 
-									 && this[col + 1, row + 1, lev - 1].Floor != null // southeast
-									 && this[col + 2, row + 1, lev - 1].Floor != null
-									 && this[col + 1, row + 2, lev - 1].Floor != null
-									 && this[col + 2, row + 2, lev - 1].Floor != null;
+									 && Tiles[col + 1, row + 1, lev - 1].Floor != null // southeast
+									 && Tiles[col + 2, row + 1, lev - 1].Floor != null
+									 && Tiles[col + 1, row + 2, lev - 1].Floor != null
+									 && Tiles[col + 2, row + 2, lev - 1].Floor != null;
 					}
 				}
 			}
@@ -484,7 +473,7 @@ namespace XCom
 			MapTile tile;
 			foreach (RouteNode node in Routes)
 			{
-				if ((tile = this[node.Col, node.Row, node.Lev]) != null)
+				if ((tile = Tiles[node.Col, node.Row, node.Lev]) != null)
 					tile.Node = node;
 			}
 		}
@@ -499,7 +488,7 @@ namespace XCom
 			for (int row = 0; row != MapSize.Rows; ++row)
 			for (int col = 0; col != MapSize.Cols; ++col)
 			{
-				this[col, row, lev].Node = null;
+				Tiles[col, row, lev].Node = null;
 			}
 		}
 
@@ -515,9 +504,9 @@ namespace XCom
 										(byte)location.Row,
 										(byte)location.Lev);
 
-			return (this[(int)node.Col,
-						 (int)node.Row,
-						      node.Lev].Node = node);
+			return (Tiles[(int)node.Col,
+						  (int)node.Row,
+							   node.Lev].Node = node);
 		}
 		#endregion Methods (routenodes)
 
@@ -657,7 +646,7 @@ namespace XCom
 				for (int row = 0; row != MapSize.Rows; ++row)
 				for (int col = 0; col != MapSize.Cols; ++col)
 				{
-					tile = this[col, row, lev];
+					tile = Tiles[col, row, lev];
 
 					WritePartId(fs, tile.Floor);
 					WritePartId(fs, tile.West);

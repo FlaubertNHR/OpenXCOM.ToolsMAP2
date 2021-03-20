@@ -258,8 +258,7 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-//					if ((tile = MapFile[c,r]) != null)
-					if (!(tile = MapFile[c,r]).Vacant)
+					if (!(tile = MapFile.GetTile(c,r)).Vacant)
 					{
 						if (tile.Content != null)
 							BlobService.Draw(_graphics, ToolContent, x,y, tile.Content);
@@ -280,7 +279,6 @@ namespace MapView.Forms.Observers
 		private void DrawLinks()
 		{
 			RouteNode node;
-			MapTile tile;
 
 			for (int
 					rSrc = 0,
@@ -300,8 +298,7 @@ namespace MapView.Forms.Observers
 							xSrc += HalfWidth,
 							ySrc += HalfHeight)
 				{
-					if ((tile = MapFile[cSrc, rSrc]) != null
-						&& (node = tile.Node) != null
+					if ((node = MapFile.GetTile(cSrc, rSrc).Node) != null
 						&& (NodeSelected == null || node != NodeSelected))
 					{
 						DrawLinkLines(xSrc, ySrc, node);
@@ -440,24 +437,22 @@ namespace MapView.Forms.Observers
 			int startX = Origin.X;
 			int startY = Origin.Y;
 
-			MapTile tile;
 			RouteNode node;
 			Link link;
 
-			for (int row = 0; row != MapFile.MapSize.Rows; ++row)
+			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
 			{
 				for (int
-						col = 0,
+						c = 0,
 							x = startX,
 							y = startY;
-						col != MapFile.MapSize.Cols;
-						++col,
+						c != MapFile.MapSize.Cols;
+						++c,
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((tile = MapFile[col, row]) != null	// NOTE: MapFile has the current level stored and uses
-						&& (node = tile.Node) != null)		// it to return only tiles on the correct level here.
-					{
+					if ((node = MapFile.GetTile(c,r).Node) != null)	// NOTE: MapFile has the current level stored and uses
+					{												// it to return only tiles on the correct level here.
 							_nodeFill.Reset();
 							_nodeFill.AddLine(
 											x,             y,
@@ -471,8 +466,8 @@ namespace MapView.Forms.Observers
 							_nodeFill.CloseFigure();
 
 							if (NodeSelected != null && MapFile.Level == NodeSelected.Lev
-								&& col == NodeSelected.Col
-								&& row == NodeSelected.Row)
+								&& c == NodeSelected.Col
+								&& r == NodeSelected.Row)
 							{
 								_graphics.FillPath(BrushNodeSelected, _nodeFill);
 							}
@@ -486,7 +481,7 @@ namespace MapView.Forms.Observers
 
 							for (int i = 0; i != RouteNode.LinkSlots; ++i) // check for and if applicable draw the up/down indicators.
 							{
-								link = node[i];// as Link;
+								link = node[i];
 								switch (link.Destination)
 								{
 									case Link.NotUsed:
@@ -582,7 +577,6 @@ namespace MapView.Forms.Observers
 			int startX = Origin.X;
 			int startY = Origin.Y;
 
-			MapTile tile;
 			RouteNode node;
 
 			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
@@ -596,8 +590,7 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((tile = MapFile[c,r]) != null
-						&& (node = tile.Node) != null)
+					if ((node = MapFile.GetTile(c,r).Node) != null)
 					{
 						int infoboxX = x - HalfWidth / 2 - 2;				// -2 to prevent drawing over the link-going-up vertical
 						int infoboxY = y + HalfHeight - NodeValHeight / 2;	//    line indicator when panel-size is fairly small.
@@ -697,7 +690,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawInfoOverlay()
 		{
-			MapTile tile = MapFile[_col, _row, MapFile.Level];
+			MapTile tile = MapFile.GetTile(_col, _row);
 			if (tile != null) // safety.
 			{
 				int c = _col;

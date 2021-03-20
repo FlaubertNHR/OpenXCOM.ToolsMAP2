@@ -259,7 +259,7 @@ namespace MapView.Forms.Observers
 			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
 			for (int c = 0; c != MapFile.MapSize.Cols; ++c)
 			{
-				tile = MapFile[c,r,l];
+				tile = MapFile.GetTile(c,r,l);
 				if (!tile.Vacant)
 				{
 					if ((part = tile.Floor) != null

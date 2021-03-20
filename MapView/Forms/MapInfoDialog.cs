@@ -236,7 +236,7 @@ namespace MapView
 			for (int row = 0; row != rows; ++row)
 			for (int col = 0; col != cols; ++col)
 			{
-				if (!(tile = _file[col, row, lev]).Vacant)
+				if (!(tile = _file.GetTile(col, row, lev)).Vacant)
 				{
 					for (int slot = 0; slot != MapTile.QUADS; ++slot)
 					{

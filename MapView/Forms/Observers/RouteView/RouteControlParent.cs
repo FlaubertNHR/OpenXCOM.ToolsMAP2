@@ -214,7 +214,7 @@ namespace MapView.Forms.Observers
 																	// NOTE: drag-selection is not allowed here.
 				var args = new RouteControlEventArgs(
 												e.Button,
-												MapFile[_col, _row],
+												MapFile.GetTile(_col, _row),
 												MapFile.Location);
 				RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 			}
@@ -234,7 +234,7 @@ namespace MapView.Forms.Observers
 
 				var args = new RouteControlEventArgs(
 												e.Button,
-												MapFile[_col, _row],
+												MapFile.GetTile(_col, _row),
 												MapFile.Location);
 				RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 			}
@@ -292,7 +292,7 @@ namespace MapView.Forms.Observers
 
 					var args = new RouteControlEventArgs(
 													MouseButtons.Left,
-													MapFile[0,0],
+													MapFile.GetTile(0,0),
 													MapFile.Location);
 					RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 					invalidate = true;
@@ -301,8 +301,8 @@ namespace MapView.Forms.Observers
 				{
 					var args = new RouteControlEventArgs(
 													MouseButtons.Right,
-													MapFile[MapFile.Location.Col,
-															MapFile.Location.Row],
+													MapFile.GetTile(MapFile.Location.Col,
+																	MapFile.Location.Row),
 													MapFile.Location);
 					RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 					invalidate = true;
@@ -342,7 +342,7 @@ namespace MapView.Forms.Observers
 
 							var args = new RouteControlEventArgs(
 															MouseButtons.Left,
-															MapFile[c,r],
+															MapFile.GetTile(c,r),
 															MapFile.Location);
 							RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 							invalidate = true;
@@ -388,7 +388,7 @@ namespace MapView.Forms.Observers
 						int r = MapFile.Location.Row + loc.Y;
 						if (   c > -1 && c < MapFile.MapSize.Cols
 							&& r > -1 && r < MapFile.MapSize.Rows
-							&& MapFile[c,r].Node == null)
+							&& MapFile.GetTile(c,r).Node == null)
 						{
 							RouteView.Dragnode = NodeSelected;
 
@@ -396,7 +396,7 @@ namespace MapView.Forms.Observers
 
 							var args = new RouteControlEventArgs(
 															MouseButtons.None,
-															MapFile[c,r],
+															MapFile.GetTile(c,r),
 															MapFile.Location);
 							RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
@@ -408,9 +408,9 @@ namespace MapView.Forms.Observers
 					{
 						int level = MapFile.Level + vert;
 						if (level > -1 && level < MapFile.MapSize.Levs
-							&& MapFile[MapFile.Location.Col,
-									   MapFile.Location.Row,
-									   level].Node == null)
+							&& MapFile.GetTile(MapFile.Location.Col,
+											   MapFile.Location.Row,
+											   level).Node == null)
 						{
 							RouteView.Dragnode = NodeSelected;
 
@@ -422,8 +422,8 @@ namespace MapView.Forms.Observers
 
 							var args = new RouteControlEventArgs(
 															MouseButtons.None,
-															MapFile[MapFile.Location.Col,
-																	MapFile.Location.Row],
+															MapFile.GetTile(MapFile.Location.Col,
+																			MapFile.Location.Row),
 															MapFile.Location);
 							RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
