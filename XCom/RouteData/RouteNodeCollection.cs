@@ -51,7 +51,7 @@ namespace XCom
 
 	public enum UnitType
 		:
-			byte
+			byte // ca1028 - use Int32
 	{
 		Any,			// 0
 		FlyingSmall,	// 1
@@ -62,7 +62,7 @@ namespace XCom
 
 	public enum NodeRankUfo
 		:
-			byte
+			byte // ca1028 - use Int32
 	{
 		CivScout,			// 0
 		XCOM,				// 1
@@ -78,7 +78,7 @@ namespace XCom
 
 	public enum NodeRankTftd
 		:
-			byte
+			byte // ca1028 - use Int32
 	{
 		CivScout,			// 0
 		XCOM,				// 1
@@ -94,7 +94,7 @@ namespace XCom
 
 	public enum SpawnWeight
 		:
-			byte
+			byte // ca1028 - use Int32
 	{
 		None,	// 0
 		Spawn1,	// 1
@@ -111,7 +111,7 @@ namespace XCom
 
 	public enum PatrolPriority
 		:
-			byte
+			byte // ca1028 - use Int32
 	{
 		Zero,	// 0
 		One,	// 1
@@ -145,7 +145,7 @@ namespace XCom
 
 	public enum LinkType
 		:
-			byte
+			byte // ca1028 - use Int32
 	{
 		None      = 0x00, // pacify FxCop CA1008 BUT DO NOT USE IT.
 		NotUsed   = 0xFF, // since valid route-nodes can and will have a value of 0.
