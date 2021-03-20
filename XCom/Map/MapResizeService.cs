@@ -45,7 +45,7 @@
 				for (int lev = 0; lev != levs; ++lev)
 				for (int row = 0; row != rows; ++row)
 				for (int col = 0; col != cols; ++col)
-					tiles1[col, row, lev] = new MapTile();
+					tiles1.SetTile(col, row, lev, new MapTile());
 
 				switch (zType)
 				{
@@ -55,7 +55,7 @@
 						for (int row = 0; row != rows && row != size.Rows; ++row)
 						for (int col = 0; col != cols && col != size.Cols; ++col)
 						{
-							tiles1[col, row, lev] = tiles0[col, row, lev];
+							tiles1.SetTile(col, row, lev, tiles0.GetTile(col, row, lev));
 						}
 						break;
 					}
@@ -69,8 +69,8 @@
 						for (int row = 0; row != rows && row != size.Rows; ++row)
 						for (int col = 0; col != cols && col != size.Cols; ++col)
 						{
-							tiles1[col, row, levels1 - lev] = // copy tiles from bot to top.
-							tiles0[col, row, levels0 - lev];
+							tiles1.SetTile(col, row, levels1 - lev, // copy tiles from bot to top.
+							tiles0.GetTile(col, row, levels0 - lev));
 						}
 						break;
 					}

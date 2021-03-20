@@ -111,9 +111,9 @@ namespace XCom
 					if (LocationSelected != null)
 						LocationSelected(new LocationSelectedArgs(
 																_location,
-																Tiles[_location.Col,
-																	  _location.Row,
-																	   Level]));
+																Tiles.GetTile(_location.Col,
+																			  _location.Row,
+																			   Level)));
 				}
 			}
 		}
@@ -133,7 +133,7 @@ namespace XCom
 		/// <returns>the corresponding MapTile object</returns>
 		public MapTile GetTile(int col, int row, int lev)
 		{
-			return Tiles[col, row, lev];
+			return Tiles.GetTile(col, row, lev);
 		}
 		/// <summary>
 		/// Gets a MapTile object at the current level using col,row values.
@@ -143,7 +143,7 @@ namespace XCom
 		/// <returns>the corresponding MapTile object</returns>
 		public MapTile GetTile(int col, int row)
 		{
-			return Tiles[col, row, Level];
+			return Tiles.GetTile(col, row, Level);
 		}
 
 		/// <summary>
@@ -252,21 +252,21 @@ namespace XCom
 				for (int row = 0; row != MapSize.Rows - 2; ++row)
 				for (int col = 0; col != MapSize.Cols - 2; ++col)
 				{
-					if ((tile = Tiles[col, row, lev]) != null) // safety. The tile should always be valid.
+					if ((tile = Tiles.GetTile(col, row, lev)) != null) // safety. The tile should always be valid.
 					{
 						tile.Occulted = !forceVis
-									 && Tiles[col,     row,     lev - 1].Floor != null // above
+									 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
 
-									 && Tiles[col,     row + 1, lev - 1].Floor != null // south
-									 && Tiles[col,     row + 2, lev - 1].Floor != null
+									 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
+									 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
 
-									 && Tiles[col + 1, row,     lev - 1].Floor != null // east
-									 && Tiles[col + 2, row,     lev - 1].Floor != null
+									 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
+									 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
 
-									 && Tiles[col + 1, row + 1, lev - 1].Floor != null // southeast
-									 && Tiles[col + 2, row + 1, lev - 1].Floor != null
-									 && Tiles[col + 1, row + 2, lev - 1].Floor != null
-									 && Tiles[col + 2, row + 2, lev - 1].Floor != null;
+									 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
+									 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
+									 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
+									 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
 					}
 				}
 			}
@@ -294,12 +294,12 @@ namespace XCom
 				for (int row = 0; row != rows; ++row) // y-axis
 				for (int col = 0; col != cols; ++col) // x-axis
 				{
-					Tiles[col, row, lev] = CreateTile(
-													parts,
-													fs.ReadByte(),  // floor id
-													fs.ReadByte(),  // westwall id
-													fs.ReadByte(),  // northwall id
-													fs.ReadByte()); // content id
+					Tiles.SetTile(col, row, lev, CreateTile(
+														parts,
+														fs.ReadByte(),		// floor id
+														fs.ReadByte(),		// westwall id
+														fs.ReadByte(),		// northwall id
+														fs.ReadByte()));	// content id
 				}
 
 				if (TerrainsetCountExceeded != 0)
@@ -473,7 +473,7 @@ namespace XCom
 			MapTile tile;
 			foreach (RouteNode node in Routes)
 			{
-				if ((tile = Tiles[node.Col, node.Row, node.Lev]) != null)
+				if ((tile = Tiles.GetTile(node.Col, node.Row, node.Lev)) != null)
 					tile.Node = node;
 			}
 		}
@@ -488,7 +488,7 @@ namespace XCom
 			for (int row = 0; row != MapSize.Rows; ++row)
 			for (int col = 0; col != MapSize.Cols; ++col)
 			{
-				Tiles[col, row, lev].Node = null;
+				Tiles.GetTile(col, row, lev).Node = null;
 			}
 		}
 
@@ -504,9 +504,9 @@ namespace XCom
 										(byte)location.Row,
 										(byte)location.Lev);
 
-			return (Tiles[(int)node.Col,
-						  (int)node.Row,
-							   node.Lev].Node = node);
+			return Tiles.GetTile((int)node.Col,
+								 (int)node.Row,
+									  node.Lev).Node = node;
 		}
 		#endregion Methods (routenodes)
 
@@ -646,7 +646,7 @@ namespace XCom
 				for (int row = 0; row != MapSize.Rows; ++row)
 				for (int col = 0; col != MapSize.Cols; ++col)
 				{
-					tile = Tiles[col, row, lev];
+					tile = Tiles.GetTile(col, row, lev);
 
 					WritePartId(fs, tile.Floor);
 					WritePartId(fs, tile.West);
@@ -744,7 +744,7 @@ namespace XCom
 				{
 					bit |= CHANGED_NOD;
 
-					int delta = (levs - MapSize.Levs);	// NOTE: map levels are inverted so adding or subtracting levels
+					int delta = (levs - MapSize.Levs);	// NOTE: Map levels are inverted so adding or subtracting levels
 														// to the top needs to push any existing node-levels down or up.
 					foreach (RouteNode node in Routes)
 					{
@@ -753,11 +753,8 @@ namespace XCom
 							if ((node.Lev += delta) < 0)	// NOTE: node x/y/z are stored as bytes.
 								node.Lev += 256;			// -> ie. level -1 = level 255
 						}
-						else
-						{
-							if ((node.Lev += delta - 256) < 0)	// nodes above the highest Maplevel maintain
-								node.Lev += 256;				// their relative z-level
-						}
+						else if ((node.Lev += delta - 256) < 0)	// nodes above the highest Maplevel maintain
+							node.Lev += 256;					// their relative z-level
 					}
 				}
 

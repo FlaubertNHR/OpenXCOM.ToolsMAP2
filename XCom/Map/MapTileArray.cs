@@ -3,43 +3,9 @@
 	public sealed class MapTileArray
 	{
 		#region Fields
-		private readonly MapTile[] _tiles;
+		private readonly MapTile[]    _tiles;
 		private readonly MapLocations _locations;
 		#endregion Fields
-
-
-		#region Properties
-		/// <summary>
-		/// Gets/Sets a MapTile object according to a given location.
-		/// </summary>
-		public MapTile this[int col, int row, int lev]
-		{
-			get
-			{
-				if (   col > -1 && col < _locations.MaxCols
-					&& row > -1 && row < _locations.MaxRows
-					&& lev > -1 && lev < _locations.MaxLevs)
-				{
-					return _tiles[_locations.GetLocid(col, row, lev)];
-				}
-				return null;
-			}
-			internal set
-			{
-				MapTile tile;
-				if (   col > -1 && col < _locations.MaxCols
-					&& row > -1 && row < _locations.MaxRows
-					&& lev > -1 && lev < _locations.MaxLevs)
-				{
-					tile = value;
-				}
-				else
-					tile = null;
-
-				_tiles[_locations.GetLocid(col, row, lev)] = tile;
-			}
-		}
-		#endregion Properties
 
 
 		#region cTor
@@ -55,5 +21,43 @@
 			_locations = new MapLocations(cols, rows, levs);
 		}
 		#endregion cTor
+
+
+		#region Methods
+		/// <summary>
+		/// Gets the tile at a specified location.
+		/// </summary>
+		/// <param name="col"></param>
+		/// <param name="row"></param>
+		/// <param name="lev"></param>
+		/// <returns></returns>
+		public MapTile GetTile(int col, int row, int lev)
+		{
+			if (   col > -1 && col < _locations.MaxCols
+				&& row > -1 && row < _locations.MaxRows
+				&& lev > -1 && lev < _locations.MaxLevs)
+			{
+				return _tiles[_locations.GetLocid(col, row, lev)];
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Sets a specified tile at a specified location.
+		/// </summary>
+		/// <param name="col"></param>
+		/// <param name="row"></param>
+		/// <param name="lev"></param>
+		/// <param name="tile"></param>
+		internal void SetTile(int col, int row, int lev, MapTile tile)
+		{
+			if (   col > -1 && col < _locations.MaxCols
+				&& row > -1 && row < _locations.MaxRows
+				&& lev > -1 && lev < _locations.MaxLevs)
+			{
+				_tiles[_locations.GetLocid(col, row, lev)] = tile;
+			}
+		}
+		#endregion Methods
 	}
 }

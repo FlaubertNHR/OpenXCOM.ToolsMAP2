@@ -1572,7 +1572,7 @@ namespace MapView
 											x += ConstHalfWidth,
 											y += ConstHalfHeight)
 								{
-									if (!(tile = tiles[c,r,l]).Vacant)
+									if (!(tile = tiles.GetTile(c,r,l)).Vacant)
 									for (int i = 0; i != MapTile.QUADS; ++i)
 									if ((part = tile[(PartType)i]) != null)
 									{
