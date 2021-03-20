@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using DSShared;
+
 
 namespace XCom
 {
@@ -13,10 +15,10 @@ namespace XCom
 	/// <summary>
 	/// Image loading toolset class which corrects the bug that prevents
 	/// paletted PNG images with transparency from being loaded as paletted.
-	/// @note Handles 8-bpp PNG,GIF,BMP (tested).
 	/// TODO: Vet this 'cause there's enough I've seen and done here to warrant
 	/// a thorough lookover ...
 	/// </summary>
+	/// <remarks>Handles 8-bpp PNG,GIF,BMP (tested).</remarks>
 	public static class BitmapLoader
 	{
 		private static byte[] PNG_IDENTIFIER = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
@@ -52,22 +54,40 @@ namespace XCom
 						if (trnsOffset != -1)
 						{
 							// Get chunk
-							int trnsLength = GetChunkDataLength(data, trnsOffset);
-							dataTrns = new Byte[trnsLength];
-							Array.Copy(data, trnsOffset + 8, dataTrns, 0, trnsLength);
+							int trnsLength = GetChunkLength(data, trnsOffset);
+							switch (trnsLength)
+							{
+								default:
+									dataTrns = new Byte[trnsLength];
+									Array.Copy(data, trnsOffset + 8, dataTrns, 0, trnsLength);
 
-							// filter out the palette alpha chunk, make new data array
-							var data2 = new Byte[data.Length - (trnsLength + 12)];
-							Array.Copy(data, 0, data2, 0, trnsOffset);
+									// filter out the palette alpha chunk, make new data array
+									var data2 = new Byte[data.Length - (trnsLength + 12)];
+									Array.Copy(data, 0, data2, 0, trnsOffset);
 
-							int trnsEnd = trnsOffset + trnsLength + 12;
-							Array.Copy(data, trnsEnd, data2, trnsOffset, data.Length - trnsEnd);
+									int trnsEnd = trnsOffset + trnsLength + 12;
+									Array.Copy(data, trnsEnd, data2, trnsOffset, data.Length - trnsEnd);
 
-							data = data2;
+									data = data2;
+									break;
+
+								case -1:
+									showinfo("Bad chunk length in PNG image.", true);
+									return null;
+
+								case -2:
+									showinfo("Bad chunk endianness in PNG image.", true);
+									return null;
+							}
 						}
+						else showinfo("Chunk not found in PNG image: tRNS");
 					}
+					else showinfo("Chunk not found in PNG image: PLTE");
 				}
+				else showinfo("Image is not a PNG.");
 			}
+			else showinfo("Data length is larger than PNG identifier.");
+
 
 			using (var ms = new MemoryStream(data))
 			using (var b = new Bitmap(ms))
@@ -133,8 +153,21 @@ namespace XCom
 				if (chunkNameBytes.SequenceEqual(test))
 					return offset;
 
-				int chunkLength = GetChunkDataLength(data, offset);
-				offset += chunkLength + 12; // chunk size + chunk header + chunk checksum = 12 bytes
+				int chunkLength = GetChunkLength(data, offset);
+				switch (chunkLength)
+				{
+					default:
+						offset += chunkLength + 12; // chunk size + chunk header + chunk checksum = 12 bytes
+						break;
+
+					case -1:
+						showinfo("Bad chunk length in PNG image.", true);
+						return -1;
+
+					case -2:
+						showinfo("Bad chunk endianness in PNG image.", true);
+						return -1;
+				}
 			}
 			return -1;
 		}
@@ -145,16 +178,16 @@ namespace XCom
 		/// <param name="data"></param>
 		/// <param name="offset"></param>
 		/// <returns></returns>
-		private static int GetChunkDataLength(byte[] data, int offset)
+		private static int GetChunkLength(byte[] data, int offset)
 		{
 			if (offset + 4 > data.Length)
-				throw new IndexOutOfRangeException("Bad chunk length in png image.");
+				return -1;
 
 			// Don't want to use BitConverter; then you have to check platform
 			// endianness and all that mess.
 			int length = data[offset + 3] + (data[offset + 2] << 8) + (data[offset + 1] << 16) + (data[offset] << 24);
 			if (length < 0)
-				throw new IndexOutOfRangeException("Bad chunk endianness in png image.");
+				return -2;
 
 			return length;
 		}
@@ -208,6 +241,31 @@ namespace XCom
 			dst.SetResolution(src.HorizontalResolution, src.VerticalResolution); // Restore DPI settings - wtf.
 
 			return dst;
+		}
+
+
+		/// <summary>
+		/// Displays an <see cref="Infobox"/>.
+		/// </summary>
+		/// <param name="head"></param>
+		/// <param name="error"></param>
+		private static void showinfo(string head, bool error = false)
+		{
+			string title; Infobox.BoxType boxtype;
+
+			if (error)
+			{
+				title   = "Load error";
+				boxtype = Infobox.BoxType.Error;
+			}
+			else
+			{
+				title   = "Load info";
+				boxtype = Infobox.BoxType.Info;
+			}
+
+			using (var f = new Infobox(title, head, null, boxtype))
+				f.ShowDialog();
 		}
 	}
 }

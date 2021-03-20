@@ -798,49 +798,55 @@ namespace PckView
 				{
 					_lastSpriteDirectory = Path.GetDirectoryName(ofd.FileName);
 
+					bool valid = true;
+
 					var bs = new Bitmap[ofd.FileNames.Length]; // first run a check against all sprites and if any are borked set error.
-					for (int i = 0; i != ofd.FileNames.Length; ++i)
+					for (int i = 0; valid && i != ofd.FileNames.Length; ++i)
 					{
 //						var b = new Bitmap(ofd.FileNames[i]);	// <- .net.bork. Creates a 32-bpp Argb image if source is
-																// 8-bpp PNG w/tranparency; GIF,BMP however retains 8-bpp format.
+																// 8-bpp PNG w/transparency; GIF,BMP however retains 8-bpp format.
 
 						byte[] bindata = FileService.ReadFile(ofd.FileNames[i]);
 						if (bindata != null)
 						{
 							Bitmap b = BitmapLoader.LoadBitmap(bindata);
 
-							if (   b.Width  == XCImage.SpriteWidth
-								&& b.Height == XCImage.SpriteHeight
-								&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+							if (b == null) // error was shown by BitmapLoader.
 							{
-								bs[i] = b;
+								valid = false;
 							}
-							else
+							else if (b.Width       != XCImage.SpriteWidth
+								||   b.Height      != XCImage.SpriteHeight
+								||   b.PixelFormat != PixelFormat.Format8bppIndexed)
 							{
 								ShowBitmapError();
-								DisposeBitmaps(bs);
-								return;
+								valid = false;
 							}
+							else
+								bs[i] = b;
 						}
-						else return;
+						else valid = false; // error was shown by FileService.
 					}
 
-
-					int id = (TilePanel.Spriteset.Count - 1);
-					foreach (var b in bs)
+					if (valid)
 					{
-						XCImage sprite = BitmapService.CreateSprite(
-																b,
-																++id,
-																GetCurrentPalette(),
-																XCImage.SpriteWidth,
-																XCImage.SpriteHeight,
-																SetType == Type.ScanG || SetType == Type.LoFT);
-						TilePanel.Spriteset.Sprites.Add(sprite);
-					}
-					DisposeBitmaps(bs);
+						int id = (TilePanel.Spriteset.Count - 1);
+						foreach (var b in bs)
+						{
+							XCImage sprite = BitmapService.CreateSprite(
+																	b,
+																	++id,
+																	GetCurrentPalette(),
+																	XCImage.SpriteWidth,
+																	XCImage.SpriteHeight,
+																	SetType == Type.ScanG || SetType == Type.LoFT);
+							TilePanel.Spriteset.Sprites.Add(sprite);
+						}
 
-					SpritesetCountChanged(TilePanel.Selid);
+						SpritesetCountChanged(TilePanel.Selid);
+					}
+
+					DisposeBitmaps(bs);
 				}
 			}
 		}
@@ -880,8 +886,6 @@ namespace PckView
 					{
 						SpritesetCountChanged(TilePanel.Selid + ofd.FileNames.Length);
 					}
-					else
-						ShowBitmapError();
 				}
 			}
 		}
@@ -921,8 +925,6 @@ namespace PckView
 					{
 						SpritesetCountChanged(TilePanel.Selid);
 					}
-					else
-						ShowBitmapError();
 				}
 			}
 		}
@@ -938,48 +940,56 @@ namespace PckView
 		/// <see cref="OnInsertSpritesAfterClick"/></remarks>
 		private bool InsertSprites(int id, string[] files)
 		{
+			bool valid = true;
+
 			var bs = new Bitmap[files.Length]; // first run a check against all sprites and if any are borked exit w/ false.
-			for (int i = 0; i != files.Length; ++i)
+			for (int i = 0; valid && i != files.Length; ++i)
 			{
 				byte[] bindata = FileService.ReadFile(files[i]);
 				if (bindata != null)
 				{
 					Bitmap b = BitmapLoader.LoadBitmap(bindata);
 
-					if (   b.Width  == XCImage.SpriteWidth
-						&& b.Height == XCImage.SpriteHeight
-						&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+					if (b == null) // error was shown by BitmapLoader.
 					{
-						bs[i] = b;
+						valid = false;
+					}
+					else if (b.Width       != XCImage.SpriteWidth
+						||   b.Height      != XCImage.SpriteHeight
+						||   b.PixelFormat != PixelFormat.Format8bppIndexed)
+					{
+						ShowBitmapError();
+						valid = false;
 					}
 					else
-					{
-						DisposeBitmaps(bs);
-						return false;
-					}
+						bs[i] = b;
 				}
-				else return false;
+				else valid = false; // error was shown by FileService.
 			}
 
 
-			int length = files.Length;
-			for (int i = id; i != TilePanel.Spriteset.Count; ++i)
-				TilePanel.Spriteset[i].Id = i + length;
-
-			foreach (var b in bs)
+			if (valid)
 			{
-				XCImage sprite = BitmapService.CreateSprite(
-														b,
-														id,
-														GetCurrentPalette(),
-														XCImage.SpriteWidth,
-														XCImage.SpriteHeight,
-														SetType == Type.ScanG || SetType == Type.LoFT);
-				TilePanel.Spriteset.Sprites.Insert(id++, sprite);
+				int length = files.Length;
+				for (int i = id; i != TilePanel.Spriteset.Count; ++i)
+					TilePanel.Spriteset[i].Id = i + length;
+
+				foreach (var b in bs)
+				{
+					XCImage sprite = BitmapService.CreateSprite(
+															b,
+															id,
+															GetCurrentPalette(),
+															XCImage.SpriteWidth,
+															XCImage.SpriteHeight,
+															SetType == Type.ScanG || SetType == Type.LoFT);
+					TilePanel.Spriteset.Sprites.Insert(id++, sprite);
+				}
 			}
+
 			DisposeBitmaps(bs);
 
-			return true;
+			return valid;
 		}
 
 		/// <summary>
@@ -1028,32 +1038,37 @@ namespace PckView
 					_lastSpriteDirectory = Path.GetDirectoryName(ofd.FileName);
 
 					byte[] bindata = FileService.ReadFile(ofd.FileName);
-					if (bindata != null)
+					if (bindata != null) // else error was shown by FileService.
 					{
 						using (Bitmap b = BitmapLoader.LoadBitmap(bindata))
 						{
-							if (   b.Width  == XCImage.SpriteWidth
-								&& b.Height == XCImage.SpriteHeight
-								&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+							if (b != null) // else error was shown by BitmapLoader.
 							{
-								XCImage sprite = BitmapService.CreateSprite(
-																		b,
-																		TilePanel.Selid,
-																		GetCurrentPalette(),
-																		XCImage.SpriteWidth,
-																		XCImage.SpriteHeight,
-																		SetType == Type.ScanG || SetType == Type.LoFT);
+								if (   b.Width       != XCImage.SpriteWidth
+									|| b.Height      != XCImage.SpriteHeight
+									|| b.PixelFormat != PixelFormat.Format8bppIndexed)
+								{
+									ShowBitmapError();
+								}
+								else
+								{
+									XCImage sprite = BitmapService.CreateSprite(
+																			b,
+																			TilePanel.Selid,
+																			GetCurrentPalette(),
+																			XCImage.SpriteWidth,
+																			XCImage.SpriteHeight,
+																			SetType == Type.ScanG || SetType == Type.LoFT);
 
-								TilePanel.Spriteset[TilePanel.Selid].Dispose();
-								TilePanel.Spriteset[TilePanel.Selid] = sprite;
+									TilePanel.Spriteset[TilePanel.Selid].Dispose();
+									TilePanel.Spriteset[TilePanel.Selid] = sprite;
 
-								SetSelected(TilePanel.Selid, true);
+									SetSelected(TilePanel.Selid, true);
 
-								TilePanel.Refresh();
-								Changed = true;
+									TilePanel.Refresh();
+									Changed = true;
+								}
 							}
-							else
-								ShowBitmapError();
 						}
 					}
 				}
@@ -1591,10 +1606,11 @@ namespace PckView
 
 		/// <summary>
 		/// Exports all sprites in the currently loaded spriteset to a PNG
-		/// spritesheet file. Called when the File menu's click-event is raised.
+		/// spritesheet file.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Called when the File menu's click-event is raised.</remarks>
 		private void OnExportSpritesheetClick(object sender, EventArgs e)
 		{
 			if (TilePanel.Spriteset != null && TilePanel.Spriteset.Count != 0)
@@ -1635,10 +1651,11 @@ namespace PckView
 
 		/// <summary>
 		/// Imports (and replaces) the current spriteset from an external
-		/// spritesheet. Called when the File menu's click-event is raised.
+		/// spritesheet.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Called when the File menu's click-event is raised.</remarks>
 		private void OnImportSpritesheetClick(object sender, EventArgs e)
 		{
 			if (TilePanel.Spriteset != null)
@@ -1661,26 +1678,31 @@ namespace PckView
 					if (ofd.ShowDialog(this) == DialogResult.OK)
 					{
 						byte[] bindata = FileService.ReadFile(ofd.FileName);
-						if (bindata != null)
+						if (bindata != null) // else error was shown by FileService.
 						{
 							using (Bitmap b = BitmapLoader.LoadBitmap(bindata))
 							{
-								if (   b.Width  % XCImage.SpriteWidth  == 0
-									&& b.Height % XCImage.SpriteHeight == 0
-									&& b.PixelFormat == PixelFormat.Format8bppIndexed)
+								if (b != null) // else error was shown by BitmapLoader.
 								{
-									TilePanel.Spriteset.Dispose();
-									BitmapService.CreateSprites(
-															TilePanel.Spriteset.Sprites,
-															b,
-															GetCurrentPalette(),
-															XCImage.SpriteWidth,
-															XCImage.SpriteHeight,
-															SetType == Type.ScanG || SetType == Type.LoFT);
-									SpritesetCountChanged(-1);
+									if (   b.Width  % XCImage.SpriteWidth  != 0
+										|| b.Height % XCImage.SpriteHeight != 0
+										|| b.PixelFormat != PixelFormat.Format8bppIndexed)
+									{
+										ShowBitmapError(false);
+									}
+									else
+									{
+										TilePanel.Spriteset.Dispose();
+										BitmapService.CreateSprites(
+																TilePanel.Spriteset.Sprites,
+																b,
+																GetCurrentPalette(),
+																XCImage.SpriteWidth,
+																XCImage.SpriteHeight,
+																SetType == Type.ScanG || SetType == Type.LoFT);
+										SpritesetCountChanged(-1);
+									}
 								}
-								else
-									ShowBitmapError(false);
 							}
 						}
 					}
