@@ -150,7 +150,7 @@ namespace XCom
 		/// PckViewF.OnImportSpritesheetClick().
 		/// </summary>
 		/// <param name="sprites">the blank XCImage list of a spriteset</param>
-		/// <param name="b">an indexed Bitmap of a spritesheet</param>
+		/// <param name="b">an indexed (Image)Bitmap of a spritesheet</param>
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of a sprite in the spritesheet</param>
 		/// <param name="height">the height of a sprite in the spritesheet</param>
@@ -158,8 +158,8 @@ namespace XCom
 		/// - disregard End_of_Sprite and RLE markers</param>
 		/// <param name="pad">padding between sprites</param>
 		public static void CreateSprites(
-				List<XCImage> sprites,
-				Bitmap b,
+				IList<XCImage> sprites,
+				Image b,
 				Palette pal,
 				int width,
 				int height,
@@ -175,7 +175,7 @@ namespace XCom
 				x = (i % cols) * (width  + pad);
 				y = (i / cols) * (height + pad);
 				sprites.Add(CreateSprite(
-										b,
+										b as Bitmap,
 										++id,
 										pal,
 										width, height,
@@ -194,7 +194,7 @@ namespace XCom
 //		/// LoFTs</param>
 		public static void ExportSprite(
 				string fullpath,
-				Bitmap b)
+				Image b)
 //				bool bilevel = false
 		{
 			// NOTE: LoFT icons are created as bilevel images and shall remain
