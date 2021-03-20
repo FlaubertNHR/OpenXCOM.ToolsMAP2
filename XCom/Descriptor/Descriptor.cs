@@ -29,8 +29,6 @@ namespace XCom
 		public string Basepath
 		{ get; internal set; }
 
-		private Dictionary<int, Tuple<string,string>> _terrains =
-			new Dictionary<int, Tuple<string,string>>();
 		/// <summary>
 		/// A dictionary of this tileset's terrains as IDs that key a tuple that
 		/// pairs terrain-labels with basepath-strings.
@@ -39,10 +37,7 @@ namespace XCom
 		/// "basepath" (use the tileset's basepath), or the basepath of any
 		/// TERRAIN directory.</remarks>
 		public Dictionary<int, Tuple<string,string>> Terrains
-		{
-			get { return _terrains; }
-			set { _terrains = value; }
-		}
+		{ get; private set; }
 
 		public GameType GroupType
 		{ get; private set; }
