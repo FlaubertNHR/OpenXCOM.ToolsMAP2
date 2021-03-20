@@ -130,10 +130,9 @@ namespace XCom
 		/// <param name="row"></param>
 		/// <param name="lev"></param>
 		/// <returns>the corresponding MapTile object</returns>
-		public MapTile this[int col, int row, int lev]
+		public MapTile this[int col, int row, int lev] // ca1023 - don't use 2+ indices
 		{
 			get { return Tiles[col, row, lev]; }
-			set { Tiles[col, row, lev] = value; }
 		}
 		/// <summary>
 		/// Gets/Sets a MapTile object at the current level using col,row
@@ -142,10 +141,9 @@ namespace XCom
 		/// <param name="col"></param>
 		/// <param name="row"></param>
 		/// <returns>the corresponding MapTile object</returns>
-		public MapTile this[int col, int row]
+		public MapTile this[int col, int row] // ca1023 - don't use 2+ indices
 		{
 			get { return this[col, row, Level]; }
-			set { this[col, row, Level] = value; }
 		}
 
 //		/// <summary>
@@ -307,12 +305,12 @@ namespace XCom
 				for (int row = 0; row != rows; ++row) // y-axis
 				for (int col = 0; col != cols; ++col) // x-axis
 				{
-					this[col, row, lev] = CreateTile(
-												parts,
-												fs.ReadByte(),  // floor id
-												fs.ReadByte(),  // westwall id
-												fs.ReadByte(),  // northwall id
-												fs.ReadByte()); // content id
+					Tiles[col, row, lev] = CreateTile(
+													parts,
+													fs.ReadByte(),  // floor id
+													fs.ReadByte(),  // westwall id
+													fs.ReadByte(),  // northwall id
+													fs.ReadByte()); // content id
 				}
 
 				if (TerrainsetCountExceeded != 0)
