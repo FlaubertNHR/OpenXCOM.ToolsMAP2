@@ -1105,7 +1105,7 @@ namespace MapView.Forms.MainView
 		/// Fires when a location is selected in MainView.
 		/// </summary>
 		/// <param name="args"></param>
-		internal void OnLocationSelectedMain(LocationSelectedEventArgs args)
+		internal void OnLocationSelectedMain(LocationSelectedArgs args)
 		{
 			//LogFile.WriteLine("MainViewOverlay.OnLocationSelectedMain");
 
@@ -1117,7 +1117,7 @@ namespace MapView.Forms.MainView
 		/// Fires when the Maplevel changes in MainView.
 		/// </summary>
 		/// <param name="args"></param>
-		internal void OnLevelSelectedMain(LevelSelectedEventArgs args)
+		internal void OnLevelSelectedMain(LevelSelectedArgs args)
 		{
 			//LogFile.WriteLine("MainViewOverlay.OnLevelSelectedMain");
 

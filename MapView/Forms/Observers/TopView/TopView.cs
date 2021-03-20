@@ -164,7 +164,7 @@ namespace MapView.Forms.Observers
 		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
 		/// </summary>
 		/// <param name="args"></param>
-		public override void OnLevelSelectedObserver(LevelSelectedEventArgs args)
+		public override void OnLevelSelectedObserver(LevelSelectedArgs args)
 		{
 			//LogFile.WriteLine("TopView.OnLevelSelectedObserver() " + Tag);
 			Refresh(); // req'd.

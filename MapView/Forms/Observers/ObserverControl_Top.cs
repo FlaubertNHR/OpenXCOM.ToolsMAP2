@@ -44,7 +44,7 @@ namespace MapView.Forms.Observers
 		/// for the QuadrantControl.
 		/// </summary>
 		/// <param name="args"></param>
-		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
+		public virtual void OnLocationSelectedObserver(LocationSelectedArgs args)
 		{}
 
 		/// <summary>
@@ -55,7 +55,7 @@ namespace MapView.Forms.Observers
 		/// for the QuadrantControl.
 		/// </summary>
 		/// <param name="args"></param>
-		public virtual void OnLevelSelectedObserver(LevelSelectedEventArgs args)
+		public virtual void OnLevelSelectedObserver(LevelSelectedArgs args)
 		{}
 		#endregion IObserver requirements
 	}

@@ -46,7 +46,7 @@ namespace MapView.Forms.Observers
 		/// <param name="args"></param>
 		/// <remarks>Satisfies IObserver. Is overridden only by
 		/// <see cref="RouteView.OnLocationSelectedObserver">RouteView.OnLocationSelectedObserver</see>.</remarks>
-		public virtual void OnLocationSelectedObserver(LocationSelectedEventArgs args)
+		public virtual void OnLocationSelectedObserver(LocationSelectedArgs args)
 		{
 			//DSShared.LogFile.WriteLine("ObserverControl.OnLocationSelectedObserver() DOES THIS EVER DO ANYTHING.");
 			// YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
@@ -62,7 +62,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>Satisfies IObserver. Is overridden only by
 		/// <see cref="RouteView.OnLevelSelectedObserver">RouteView.OnLevelSelectedObserver</see>
 		/// and <see cref="TopView.OnLevelSelectedObserver">TopView.OnLevelSelectedObserver</see>.</remarks>
-		public virtual void OnLevelSelectedObserver(LevelSelectedEventArgs args)
+		public virtual void OnLevelSelectedObserver(LevelSelectedArgs args)
 		{
 			//DSShared.LogFile.WriteLine("ObserverControl.OnLevelSelectedObserver() DOES THIS EVER DO ANYTHING.");
 			// YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.

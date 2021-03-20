@@ -15,8 +15,8 @@ namespace XCom
 	public sealed class MapFile
 	{
 		#region Delegates
-		public delegate void LocationSelectedEvent(LocationSelectedEventArgs e);
-		public delegate void LevelSelectedEvent(LevelSelectedEventArgs e);
+		public delegate void LocationSelectedEvent(LocationSelectedArgs e);
+		public delegate void LevelSelectedEvent(LevelSelectedArgs e);
 		#endregion Delegates
 
 
@@ -78,9 +78,9 @@ namespace XCom
 		private int _level;
 		/// <summary>
 		/// Gets/Sets the currently selected level.
-		/// @note Setting the level will fire the LevelSelected event.
 		/// WARNING: Level 0 is the top level of the displayed Map.
 		/// </summary>
+		/// <remarks>Setting the level will fire the LevelSelected event.</remarks>
 		public int Level // TODO: why is Level distinct from Location.Lev - why is Location.Lev not even set by Level
 		{
 			get { return _level; }
@@ -89,15 +89,15 @@ namespace XCom
 				_level = Math.Max(0, Math.Min(value, MapSize.Levs - 1));
 
 				if (LevelSelected != null)
-					LevelSelected(new LevelSelectedEventArgs(_level));
+					LevelSelected(new LevelSelectedArgs(_level));
 			}
 		}
 
 		private MapLocation _location;
 		/// <summary>
 		/// Gets/Sets the currently selected location.
-		/// @note Setting the location will fire the LocationSelected event.
 		/// </summary>
+		/// <remarks>Setting the location will fire the LocationSelected event.</remarks>
 		public MapLocation Location
 		{
 			get { return _location; }
@@ -109,10 +109,10 @@ namespace XCom
 					_location = value;
 
 					if (LocationSelected != null)
-						LocationSelected(new LocationSelectedEventArgs(
-																	_location,
-																	this[_location.Col,
-																		 _location.Row]));
+						LocationSelected(new LocationSelectedArgs(
+																_location,
+																this[_location.Col,
+																	 _location.Row]));
 				}
 			}
 		}

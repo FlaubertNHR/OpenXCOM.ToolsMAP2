@@ -254,7 +254,7 @@ namespace MapView.Forms.Observers
 		/// either clicked or keyboarded to (or press [Enter] when the tile is
 		/// selected). This is a design decision that allows the selected node
 		/// to stay selected while other tiles get highlighted.</remarks>
-		public override void OnLocationSelectedObserver(LocationSelectedEventArgs args)
+		public override void OnLocationSelectedObserver(LocationSelectedArgs args)
 		{
 			PrintSelectedInfo();
 		}
@@ -275,7 +275,7 @@ namespace MapView.Forms.Observers
 		/// either clicked or keyboarded to (or press [Enter] when the tile is
 		/// selected). This is a design decision that allows the selected node
 		/// to stay selected while other tiles get highlighted.</remarks>
-		public override void OnLevelSelectedObserver(LevelSelectedEventArgs args)
+		public override void OnLevelSelectedObserver(LevelSelectedArgs args)
 		{
 			//LogFile.WriteLine("RouteView.OnLevelSelectedObserver() " + Tag);
 

@@ -329,7 +329,7 @@ namespace MapView
 		/// Fires when the Maplevel changes.
 		/// </summary>
 		/// <param name="args"></param>
-		internal void OnLevelSelected(LevelSelectedEventArgs args)
+		internal void OnLevelSelected(LevelSelectedArgs args)
 		{
 			SetTitle();
 			pnl_ScanG.Refresh(); // fast Refresh for key-repeats
