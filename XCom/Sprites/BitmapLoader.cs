@@ -124,26 +124,14 @@ namespace XCom
 		/// was not found.</returns>
 		private static int FindChunk(byte[] data, string chunkName)
 		{
-			if (data == null)
-				throw new ArgumentNullException("data", "No data given!");
-
-			if (chunkName == null)
-				throw new ArgumentNullException("chunkName", "No chunk name given!");
-
-			// using UTF-8 as extra check to make sure the name does not contain > 127 values
-			byte[] chunkNameBytes = Encoding.UTF8.GetBytes(chunkName);
-
-			if (chunkName.Length != 4 || chunkNameBytes.Length != 4)
-				throw new ArgumentException("Chunk name must be 4 ASCII characters!", "chunkName");
-
-			int offset = PNG_IDENTIFIER.Length;
-			int end = data.Length;
-
+			byte[] chunkNameBytes = Encoding.ASCII.GetBytes(chunkName);
 			byte[] test = new Byte[4];
 
 			// continue until either the end is reached or there is not enough
 			// space behind it for reading a new header
-			while (offset < end && offset + 8 < end) // huh - if (offset + 8 < end) then shirley (offset < end)
+
+			int offset = PNG_IDENTIFIER.Length;
+			while (offset < data.Length && offset + 8 < data.Length) // huh - if (offset + 8 < end) then shirley (offset < end)
 			{
 				Array.Copy(
 						data, offset + 4,	// src,pos
