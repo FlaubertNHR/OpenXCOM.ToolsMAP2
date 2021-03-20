@@ -234,7 +234,7 @@ namespace XCom
 		/// NOT PASS IN 0 COLS idiot.</remarks>
 		public static void ExportSpritesheet(
 				string fullpath,
-				SpriteCollection spriteset,
+				Spriteset spriteset,
 				Palette pal,
 				int cols = 8,
 //				bool bilevel = false,
@@ -759,7 +759,7 @@ namespace XCom
 //		}
 //		public static XCImage LoadSingle(Bitmap src, int num, Palette pal, Type collectionType)
 //		{
-//			//return SpriteCollection.FromBmpSingle(src, num, pal);
+//			//return Spriteset.FromBmpSingle(src, num, pal);
 //
 //			MethodInfo mi = collectionType.GetMethod("FromBmpSingle");
 //			if (mi == null)

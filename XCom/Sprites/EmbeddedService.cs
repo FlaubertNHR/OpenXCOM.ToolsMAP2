@@ -8,9 +8,9 @@ namespace XCom
 	{
 		/// <summary>
 		/// Loads the sprites for TopView's blank quads and TileView's eraser.
-		/// @note See also Tilepart.LoadMonotoneSprites().
 		/// </summary>
-		public static SpriteCollection CreateMonotoneSpriteset()
+		/// <remarks>See also Tilepart.LoadMonotoneSprites().</remarks>
+		public static Spriteset CreateMonotoneSpriteset()
 		{
 			var ass = Assembly.GetExecutingAssembly();
 			using (var strPck = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE.PCK"))
@@ -22,13 +22,13 @@ namespace XCom
 				strPck.Read(bytesPck, 0, (int)strPck.Length);
 				strTab.Read(bytesTab, 0, (int)strTab.Length);
 
-				return new SpriteCollection(
-										"Monotone",
-										Palette.UfoBattle,
-										SpritesetsManager.TAB_WORD_LENGTH_2,
-										bytesPck,
-										bytesTab,
-										true);
+				return new Spriteset(
+								"Monotone",
+								Palette.UfoBattle,
+								SpritesetsManager.TAB_WORD_LENGTH_2,
+								bytesPck,
+								bytesTab,
+								true);
 			}
 		}
 	}

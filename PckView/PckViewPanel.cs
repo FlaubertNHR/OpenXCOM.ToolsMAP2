@@ -45,7 +45,7 @@ namespace PckView
 
 
 		#region Properties
-		private SpriteCollection _spriteset;
+		private Spriteset _spriteset;
 		/// <summary>
 		/// The currently loaded spriteset or null. Initializes the UI according
 		/// to parameters of the spriteset. Also ensures that the spriteset and
@@ -53,7 +53,7 @@ namespace PckView
 		/// </summary>
 		/// <remarks>LoFTsets don't need their palette set; their palette is set
 		/// on creation and don't change.</remarks>
-		internal SpriteCollection Spriteset
+		internal Spriteset Spriteset
 		{
 			get { return _spriteset; }
 			set

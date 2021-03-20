@@ -12,7 +12,7 @@ namespace XCom
 	/// a SPRITESET: A collection of images that is usually created of PCK/TAB
 	/// terrain file data but can also be bigobs or a ScanG iconset.
 	/// </summary>
-	public sealed class SpriteCollection
+	public sealed class Spriteset
 		:
 			IDisposable
 	{
@@ -70,7 +70,7 @@ namespace XCom
 
 		private Palette _pal;
 		/// <summary>
-		/// This SpriteCollection's reference to a <see cref="Palette"/>.
+		/// This Spriteset's reference to a <see cref="Palette"/>.
 		/// </summary>
 		/// <remarks>Changing the palette requires re-assigning the changed
 		/// <see cref="System.Drawing.Imaging.ColorPalette"/> to all sprites in
@@ -127,7 +127,7 @@ namespace XCom
 		/// <param name="label">file w/out path or extension</param>
 		/// <param name="pal"></param>
 		/// <param name="tabwordLength"></param>
-		public SpriteCollection(
+		public Spriteset(
 				string label,
 				Palette pal,
 				int tabwordLength = SpritesetsManager.TAB_WORD_LENGTH_2)
@@ -148,7 +148,7 @@ namespace XCom
 		/// calls Descriptor.GetTerrainRecords()
 		/// calls Descriptor.GetTerrainSpriteset()
 		/// calls SpritesetsManager.LoadSpriteset()
-		/// calls SpriteCollection..cTor.
+		/// calls Spriteset..cTor.
 		/// 2.
 		/// PckViewF.LoadSpriteset()
 		/// 3.
@@ -163,7 +163,7 @@ namespace XCom
 		/// <param name="bytesPck">byte array of the PCK file</param>
 		/// <param name="bytesTab">byte array of the TAB file</param>
 		/// <param name="bypassTonescales">true to not create Tonescaled sprites</param>
-		public SpriteCollection(
+		public Spriteset(
 				string label,
 				Palette pal,
 				int tabwordLength,
@@ -171,7 +171,7 @@ namespace XCom
 				byte[] bytesTab,
 				bool bypassTonescales = false)
 		{
-			//LogFile.WriteLine("SpriteCollection..cTor label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
+			//LogFile.WriteLine("Spriteset..cTor label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
 			Label         = label;
 			Pal           = pal;
@@ -361,7 +361,7 @@ namespace XCom
 		/// <param name="label"></param>
 		/// <param name="fs">filestream of the SCANG.DAT or LOFTEMPS.DAT file</param>
 		/// <param name="isLoFT">true if LoFT data, false if ScanG</param>
-		public SpriteCollection(string label, Stream fs, bool isLoFT)
+		public Spriteset(string label, Stream fs, bool isLoFT)
 		{
 			Label         = label;
 			TabwordLength = SpritesetsManager.TAB_WORD_LENGTH_0;
@@ -444,7 +444,7 @@ namespace XCom
 		/// Pck or Tab file could not be created.</returns>
 		public static bool WriteSpriteset(
 				string pf,
-				SpriteCollection spriteset)
+				Spriteset spriteset)
 		{
 			string pfePck = pf + GlobalsXC.PckExt;
 			string pfeTab = pf + GlobalsXC.TabExt;
@@ -535,11 +535,11 @@ namespace XCom
 		/// Tests a specified 2-byte TabwordLength spriteset for validity of its
 		/// TAB-file.
 		/// </summary>
-		/// <param name="spriteset">the SpriteCollection to test</param>
+		/// <param name="spriteset">the Spriteset to test</param>
 		/// <param name="result">a ref to hold the result as a string</param>
 		/// <returns>true if mission was successful</returns>
 		public static bool TestTabOffsets(
-				SpriteCollection spriteset,
+				Spriteset spriteset,
 				out string result)
 		{
 			uint pos = 0;
@@ -564,14 +564,14 @@ namespace XCom
 		/// Deters a specified sprite-id's 2-byte TabOffset for a specified
 		/// spriteset as well as the TabOffset of the next sprite.
 		/// </summary>
-		/// <param name="spriteset">the SpriteCollection to test</param>
+		/// <param name="spriteset">the Spriteset to test</param>
 		/// <param name="last">ref for the TabOffset of 'spriteId'</param>
 		/// <param name="aftr">ref for the TabOffset of the next sprite</param>
 		/// <param name="id">default -1 to test the final sprite in the set</param>
 		/// <remarks>Ensure that 'id' is less than the spriteset count before
 		/// call.</remarks>
 		public static void TestTabOffsets(
-				SpriteCollection spriteset,
+				Spriteset spriteset,
 				out uint last,
 				out uint aftr,
 				int id = -1)
@@ -601,7 +601,7 @@ namespace XCom
 		/// <returns>true if mission was successful</returns>
 		public static bool WriteScanG(
 				string pfe,
-				SpriteCollection iconset)
+				Spriteset iconset)
 		{
 			string pfeT;
 			if (File.Exists(pfe))
@@ -637,7 +637,7 @@ namespace XCom
 		/// <returns>true if mission was successful</returns>
 		public static bool WriteLoFT(
 				string pfe,
-				SpriteCollection iconset)
+				Spriteset iconset)
 		{
 			string pfeT;
 			if (File.Exists(pfe))

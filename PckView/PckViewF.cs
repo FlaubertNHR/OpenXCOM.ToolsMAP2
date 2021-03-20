@@ -1293,10 +1293,10 @@ namespace PckView
 							if (TilePanel.Spriteset != null)
 								TilePanel.Spriteset.Dispose();
 
-							TilePanel.Spriteset = new SpriteCollection(
-																	label,
-																	Pal, //pal
-																	tabwordLength);
+							TilePanel.Spriteset = new Spriteset(
+															label,
+															Pal, //pal
+															tabwordLength);
 
 							_path = pf;
 							Changed = false;
@@ -1426,7 +1426,7 @@ namespace PckView
 				{
 					case Type.Pck: // save Pck+Tab terrain/unit/bigobs ->
 					case Type.Bigobs:
-						if (SpriteCollection.WriteSpriteset(_path, TilePanel.Spriteset))
+						if (Spriteset.WriteSpriteset(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
 							RequestReload = true;
@@ -1434,7 +1434,7 @@ namespace PckView
 						break;
 
 					case Type.ScanG:
-						if (SpriteCollection.WriteScanG(_path, TilePanel.Spriteset))
+						if (Spriteset.WriteScanG(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
 							// TODO: FireMvReloadScanG file
@@ -1442,7 +1442,7 @@ namespace PckView
 						break;
 
 					case Type.LoFT:
-						if (SpriteCollection.WriteLoFT(_path, TilePanel.Spriteset))
+						if (Spriteset.WriteLoFT(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
 						}
@@ -1514,7 +1514,7 @@ namespace PckView
 								string label = Path.GetFileNameWithoutExtension(pfe);
 								string pf    = Path.Combine(dir, label);
 
-								if (SpriteCollection.WriteSpriteset(pf, TilePanel.Spriteset))
+								if (Spriteset.WriteSpriteset(pf, TilePanel.Spriteset))
 								{
 									_path = pf;
 									Changed = false;
@@ -1524,7 +1524,7 @@ namespace PckView
 							}
 
 							case Type.ScanG:
-								if (SpriteCollection.WriteScanG(pfe, TilePanel.Spriteset))
+								if (Spriteset.WriteScanG(pfe, TilePanel.Spriteset))
 								{
 									_path = pfe;
 									Changed = false;
@@ -1533,7 +1533,7 @@ namespace PckView
 								break;
 
 							case Type.LoFT:
-								if (SpriteCollection.WriteLoFT(pfe, TilePanel.Spriteset))
+								if (Spriteset.WriteLoFT(pfe, TilePanel.Spriteset))
 								{
 									_path = pfe;
 									Changed = false;
@@ -1949,15 +1949,15 @@ namespace PckView
 						}
 					}
 
-					var spriteset = new SpriteCollection(
-													label,
-													Pal, //pal
-													tabwordLength,
-													bytesPck,
-													bytesTab,
-													true);
+					var spriteset = new Spriteset(
+												label,
+												Pal, //pal
+												tabwordLength,
+												bytesPck,
+												bytesTab,
+												true);
 
-					if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non) // pck vs tab mismatch counts
+					if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non) // pck vs tab mismatch counts
 					{
 						spriteset.Dispose();
 
@@ -1976,7 +1976,7 @@ namespace PckView
 							f.ShowDialog(this);
 						}
 					}
-					else if ((spriteset.Fail & SpriteCollection.FAIL_OF_SPRITE) != SpriteCollection.FAIL_non) // too many bytes for a sprite
+					else if ((spriteset.Fail & Spriteset.FAIL_OF_SPRITE) != Spriteset.FAIL_non) // too many bytes for a sprite
 					{
 						spriteset.Dispose();
 
@@ -2058,7 +2058,7 @@ namespace PckView
 					if (TilePanel.Spriteset != null)
 						TilePanel.Spriteset.Dispose();
 
-					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
+					TilePanel.Spriteset = new Spriteset(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
 
 //					if (!_itPalettes[Palette.UfoBattle].Checked)
 //					{
@@ -2109,7 +2109,7 @@ namespace PckView
 					if (TilePanel.Spriteset != null)
 						TilePanel.Spriteset.Dispose();
 
-					TilePanel.Spriteset = new SpriteCollection(Path.GetFileNameWithoutExtension(pfeLoFT), fs, true);
+					TilePanel.Spriteset = new Spriteset(Path.GetFileNameWithoutExtension(pfeLoFT), fs, true);
 
 //					if (!_itPalettes[Palette.TftdGeo].Checked) // 'Palette.TftdGeo' has white palid #1 (255,255,255)
 //					{
@@ -2284,7 +2284,7 @@ namespace PckView
 				else                       id = TilePanel.Spriteset.Count - 1;
 
 				uint last, aftr;
-				SpriteCollection.TestTabOffsets(TilePanel.Spriteset, out last, out aftr, id);
+				Spriteset.TestTabOffsets(TilePanel.Spriteset, out last, out aftr, id);
 
 				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
 				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;

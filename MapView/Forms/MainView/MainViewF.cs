@@ -98,7 +98,7 @@ namespace MapView
 		internal static ScanGViewer ScanG
 		{ get; set; }
 
-		internal static SpriteCollection MonotoneSprites
+		internal static Spriteset MonotoneSprites
 		{ get; private set; }
 		#endregion Properties (static)
 
@@ -417,8 +417,8 @@ namespace MapView
 			// NOTE: This is the only stock XCOM resource that is required for
 			// MapView to start. See ConfigurationForm ...
 			// TODO: give user the option to choose which cursor-spriteset to use.
-			SpriteCollection cuboidufo  = null;
-			SpriteCollection cuboidtftd = null;
+			Spriteset cuboidufo  = null;
+			Spriteset cuboidtftd = null;
 			string label = SharedSpace.CursorFilePrefix;
 			string dir;
 
@@ -434,7 +434,7 @@ namespace MapView
 
 				if (cuboidufo != null)
 				{
-					if (cuboidufo.Fail != SpriteCollection.FAIL_non)
+					if (cuboidufo.Fail != Spriteset.FAIL_non)
 					{
 						cuboidufo = null;
 						LogFile.WriteLine("UFO Cursor failed to load.");
@@ -458,7 +458,7 @@ namespace MapView
 
 				if (cuboidtftd != null)
 				{
-					if (cuboidtftd.Fail != SpriteCollection.FAIL_non)
+					if (cuboidtftd.Fail != Spriteset.FAIL_non)
 					{
 						cuboidtftd = null;
 						LogFile.WriteLine("TFTD Cursor failed to load.");

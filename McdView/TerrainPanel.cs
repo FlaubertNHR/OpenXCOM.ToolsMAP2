@@ -81,7 +81,7 @@ namespace McdView
 		/// !!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopierF' as
 		/// appropriate. IMPORTANT!!
 		/// </summary>
-		internal protected SpriteCollection Spriteset
+		internal protected Spriteset Spriteset
 		{ private get; set; }
 
 

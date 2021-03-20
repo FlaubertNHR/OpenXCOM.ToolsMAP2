@@ -135,11 +135,11 @@ namespace XCom
 
 			path = GetTerrainDirectory(path);
 
-			SpriteCollection spriteset = SpritesetsManager.LoadSpriteset(
-																	terr,
-																	path,
-																	SpritesetsManager.TAB_WORD_LENGTH_2,
-																	Pal);
+			Spriteset spriteset = SpritesetsManager.LoadSpriteset(
+																terr,
+																path,
+																SpritesetsManager.TAB_WORD_LENGTH_2,
+																Pal);
 			if (spriteset != null)
 			{
 				//LogFile.WriteLine(". spriteset Valid - create tileparts");

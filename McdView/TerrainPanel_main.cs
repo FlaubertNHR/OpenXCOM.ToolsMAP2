@@ -385,7 +385,7 @@ namespace McdView
 							SpritesChanged = true;
 
 							if (_f.Spriteset == null)
-								_f.Spriteset = new SpriteCollection(_f.Label, _f.Pal);
+								_f.Spriteset = new Spriteset(_f.Label, _f.Pal);
 
 							var sprite_src = _f.Copier.Spriteset[spriteId] as PckSprite;
 							var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);

@@ -60,8 +60,8 @@ namespace McdView
 			}
 		}
 
-		private SpriteCollection _spriteset;
-		internal SpriteCollection Spriteset
+		private Spriteset _spriteset;
+		internal Spriteset Spriteset
 		{
 			get { return _spriteset; }
 			set

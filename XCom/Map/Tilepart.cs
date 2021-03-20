@@ -9,7 +9,7 @@ namespace XCom
 		#region Fields (static)
 		public const int PHASES = 8;
 
-		private static SpriteCollection MonotoneSprites;
+		private static Spriteset MonotoneSprites;
 		#endregion Fields (static)
 
 
@@ -18,7 +18,7 @@ namespace XCom
 		/// The spriteset of this Tilepart's sprites. It's used to animate the
 		/// part or to render the part with its alternate part.
 		/// </summary>
-		private SpriteCollection _spriteset;
+		private Spriteset _spriteset;
 		#endregion Fields
 
 
@@ -40,7 +40,7 @@ namespace XCom
 		/// Gets the sprite-array used to animate this tile.
 		/// TODO: This should never have happened; there should be no pointers
 		/// to sprites in a 'Tilepart'. The sprites need to be retrieved
-		/// directly from its 'SpriteCollection' by 'Record' (int)Phase*
+		/// directly from its 'Spriteset' by 'Record' (int)Phase*
 		/// on-the-fly.
 		/// 
 		/// But unfortunately that difficult perspective is deeply ingrained in
@@ -86,7 +86,7 @@ namespace XCom
 		public Tilepart(
 				int id,
 				McdRecord record,
-				SpriteCollection spriteset = null)
+				Spriteset spriteset = null)
 		{
 			Record = record;
 
@@ -340,12 +340,12 @@ namespace XCom
 					strPck.Read(bytesPck, 0, (int)strPck.Length);
 					strTab.Read(bytesTab, 0, (int)strTab.Length);
 
-					MonotoneSprites = new SpriteCollection(
-														"Monotone_D",
-														Palette.UfoBattle,
-														SpritesetsManager.TAB_WORD_LENGTH_2,
-														bytesPck,
-														bytesTab);
+					MonotoneSprites = new Spriteset(
+												"Monotone_D",
+												Palette.UfoBattle,
+												SpritesetsManager.TAB_WORD_LENGTH_2,
+												bytesPck,
+												bytesTab);
 
 					foreach (var sprite in MonotoneSprites.Sprites) // change nontransparent pixels to color ->
 					{

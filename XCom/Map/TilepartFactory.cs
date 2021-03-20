@@ -14,12 +14,12 @@ namespace XCom
 		/// </summary>
 		/// <param name="terrain">the terrain file w/out extension</param>
 		/// <param name="dirTerrain">path to the directory of the terrain file</param>
-		/// <param name="spriteset">a SpriteCollection containing the needed sprites</param>
+		/// <param name="spriteset">a Spriteset containing the needed sprites</param>
 		/// <returns>an array of Tileparts</returns>
 		internal static Tilepart[] CreateTileparts(
 				string terrain,
 				string dirTerrain,
-				SpriteCollection spriteset)
+				Spriteset spriteset)
 		{
 			//LogFile.WriteLine("TilepartFactory.CreateTileparts()");
 

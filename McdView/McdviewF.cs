@@ -106,14 +106,14 @@ namespace McdView
 			}
 		}
 
-		private SpriteCollection _spriteset;
+		private Spriteset _spriteset;
 		/// <summary>
 		/// The spriteset that will be used to display any/all sprites.
 		/// @note Printing the quantity of sprites on the statusbar is either
 		/// handled here or by the Copier's InsertAfterLast operation (which is
 		/// the only other way to alter the spriteset).
 		/// </summary>
-		internal SpriteCollection Spriteset
+		internal Spriteset Spriteset
 		{
 			get { return _spriteset; }
 			set
@@ -1180,7 +1180,7 @@ namespace McdView
 				string dir = Path.GetDirectoryName(PfeMcd);
 				string pf  = Path.Combine(dir, Label);
 
-				if (SpriteCollection.WriteSpriteset(pf, Spriteset))
+				if (Spriteset.WriteSpriteset(pf, Spriteset))
 				{
 					SaveSpritesetFailed = false;
 					PartsPanel.SpritesChanged = false;
@@ -1357,7 +1357,7 @@ namespace McdView
 			if (Spriteset != null)
 			{
 				string result;
-				if (!SpriteCollection.TestTabOffsets(Spriteset, out result))
+				if (!Spriteset.TestTabOffsets(Spriteset, out result))
 				{
 					verified = false;
 					using (var f = new Infobox(
@@ -1655,7 +1655,7 @@ namespace McdView
 		/// Loads a ScanG.dat file for UFO.
 		/// @note Cf
 		/// - SpritesetsManager.LoadScanGufo()
-		/// - SpriteCollection(string, Stream, bool)
+		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeScanG"></param>
 		private void LoadScanGufo(string pfeScanG)
@@ -1731,7 +1731,7 @@ namespace McdView
 		/// Loads a LoFTemps.dat file for UFO.
 		/// @note Cf
 		/// - SpritesetsManager.LoadLoFTufo()
-		/// - SpriteCollection(string, Stream, bool)
+		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeLoft"></param>
 		private void LoadLoFTufo(string pfeLoft)
@@ -1819,7 +1819,7 @@ namespace McdView
 		/// Loads a ScanG.dat file for TFTD.
 		/// @note Cf
 		/// - SpritesetsManager.LoadScanGtftd()
-		/// - SpriteCollection(string, Stream, bool)
+		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeScanG"></param>
 		private void LoadScanGtftd(string pfeScanG)
@@ -1894,7 +1894,7 @@ namespace McdView
 		/// Loads a LoFTemps.dat file for TFTD.
 		/// @note Cf
 		/// - SpritesetsManager.LoadLoFTtftd()
-		/// - SpriteCollection(string, Stream, bool)
+		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeLoft"></param>
 		private void LoadLoFTtftd(string pfeLoft)
@@ -2204,7 +2204,7 @@ namespace McdView
 				tssl_Sprites.Text = "Sprites: " + Spriteset.Count;
 
 				uint last, aftr;
-				SpriteCollection.TestTabOffsets(Spriteset, out last, out aftr);
+				Spriteset.TestTabOffsets(Spriteset, out last, out aftr);
 
 				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
 				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;

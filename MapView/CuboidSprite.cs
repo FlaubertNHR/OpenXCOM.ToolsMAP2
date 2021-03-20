@@ -26,7 +26,7 @@ namespace MapView
 
 
 		#region Properties (static)
-		internal static SpriteCollection Cursorset
+		internal static Spriteset Cursorset
 		{ private get; set; }
 		#endregion Properties (static)
 

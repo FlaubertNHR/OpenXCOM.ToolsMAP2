@@ -48,7 +48,7 @@ namespace XCom
 
 
 		#region Fields
-		private SpriteCollection _spriteset;
+		private Spriteset _spriteset;
 		#endregion Fields
 
 
@@ -75,7 +75,7 @@ namespace XCom
 				byte[] bindata,
 				Palette pal,
 				int id,
-				SpriteCollection spriteset,
+				Spriteset spriteset,
 				bool bypassTonescales)
 			:
 				base(
@@ -111,7 +111,7 @@ namespace XCom
 						if (dst >= Bindata.Length)
 						{
 							//LogFile.WriteLine(". . FAIL dst= " + dst);
-							_spriteset.Fail |= SpriteCollection.FAIL_OF_SPRITE;
+							_spriteset.Fail |= Spriteset.FAIL_OF_SPRITE;
 							return;
 						}
 
@@ -292,7 +292,7 @@ namespace XCom
 		/// <param name="id">the id in the destination spriteset</param>
 		/// <returns></returns>
 		public PckSprite Duplicate(
-				SpriteCollection spriteset,
+				Spriteset spriteset,
 				int id)
 		{
 			var sprite = new PckSprite();

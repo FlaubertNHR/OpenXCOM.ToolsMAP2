@@ -25,14 +25,14 @@ namespace XCom
 
 
 		#region Properties (static)
-		private static readonly List<SpriteCollection> _spritesets =
-							new List<SpriteCollection>();
+		private static readonly List<Spriteset> _spritesets =
+							new List<Spriteset>();
 		/// <summary>
 		/// A list of spritesets in the currently loaded tileset or so.
 		/// </summary>
 		/// <remarks>It has relevance only for MapInfoDialog and
 		/// MainViewOptionables.SelectedTileColor/SelectedTileToner.</remarks>
-		public static List<SpriteCollection> Spritesets
+		public static List<Spriteset> Spritesets
 		{
 			get { return _spritesets; }
 		}
@@ -46,10 +46,10 @@ namespace XCom
 		/// monotone-sprites - although that's done differently w/
 		/// MainViewF.LoadMonotoneSprites().
 		/// 
-		/// TODO: Each effing tilepart gets a pointer to the SpriteCollection.
-		/// Effectively, at present, every tilepart maintains the
-		/// SpriteCollection; the SpriteCollection should rather be an
-		/// independent object maintained by a MapFile object eg.
+		/// TODO: Each effing tilepart gets a pointer to the Spriteset.
+		/// Effectively, at present, every tilepart maintains the Spriteset; the
+		/// Spriteset should rather be an independent object maintained by a
+		/// MapFile object eg.
 		/// </summary>
 		/// <param name="label">the file w/out extension</param>
 		/// <param name="dir">path to the directory of the file</param>
@@ -58,8 +58,8 @@ namespace XCom
 		/// <param name="bypassManager">true to not create Tonescaled sprites
 		/// and, if called by McdView, don't screw with the spritesets when
 		/// McdView is called via TileView</param>
-		/// <returns>a SpriteCollection containing all the sprites, or null if
-		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
+		/// <returns>a Spriteset containing all the sprites, or null if the
+		/// quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		/// <remarks>Both UFO and TFTD use 2-byte TabwordLengths for
 		/// 
 		/// - 32x40 terrain-sprites and 32x48 bigobs-sprites
@@ -67,7 +67,7 @@ namespace XCom
 		/// - TFTD unit-sprites use 4-byte TabwordLengths
 		/// 
 		/// - the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte</remarks>
-		public static SpriteCollection LoadSpriteset(
+		public static Spriteset LoadSpriteset(
 				string label,
 				string dir,
 				int tabwordLength,
@@ -89,15 +89,15 @@ namespace XCom
 					byte[] bytesTab = FileService.ReadFile(pf + GlobalsXC.TabExt);
 					if (bytesTab != null)
 					{
-						var spriteset = new SpriteCollection(
-														label,
-														pal,
-														tabwordLength,
-														bytesPck,
-														bytesTab,
-														bypassManager);
+						var spriteset = new Spriteset(
+													label,
+													pal,
+													tabwordLength,
+													bytesPck,
+													bytesTab,
+													bypassManager);
 
-						if ((spriteset.Fail & SpriteCollection.FAIL_COUNT_MISMATCH) != SpriteCollection.FAIL_non)
+						if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non)
 						{
 							using (var f = new Infobox(
 													"Error",
@@ -109,7 +109,7 @@ namespace XCom
 								f.ShowDialog();
 							}
 						}
-						// else if ((spriteset.Fail & SpriteCollection.FAIL_OF_SPRITE) != SpriteCollection.FAIL_non)
+						// else if ((spriteset.Fail & Spriteset.FAIL_OF_SPRITE) != Spriteset.FAIL_non)
 						// {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
@@ -148,7 +148,7 @@ namespace XCom
 		/// 
 		/// - McdviewF.LoadScanGufo()
 		/// 
-		/// - SpriteCollection(string, Stream, bool)</remarks>
+		/// - Spriteset(string, Stream, bool)</remarks>
 		public static bool LoadScanGufo(string dirUfo)
 		{
 			if (Directory.Exists(dirUfo))
@@ -183,7 +183,7 @@ namespace XCom
 		/// 
 		/// - McdviewF.LoadScanGtftd()
 		/// 
-		/// - SpriteCollection(string, Stream, bool)</remarks>
+		/// - Spriteset(string, Stream, bool)</remarks>
 		public static bool LoadScanGtftd(string dirTftd)
 		{
 			if (Directory.Exists(dirTftd))
@@ -219,7 +219,7 @@ namespace XCom
 		/// 
 		/// - McdviewF.LoadLoFTufo()
 		/// 
-		/// - SpriteCollection(string, Stream, bool)</remarks>
+		/// - Spriteset(string, Stream, bool)</remarks>
 		public static void LoadLoFTufo(string dirUfo)
 		{
 			if (Directory.Exists(dirUfo))
@@ -265,7 +265,7 @@ namespace XCom
 		/// 
 		/// - McdviewF.LoadLoFTtftd()
 		/// 
-		/// - SpriteCollection(string, Stream, bool)</remarks>
+		/// - Spriteset(string, Stream, bool)</remarks>
 		public static void LoadLoFTtftd(string dirTftd)
 		{
 			if (Directory.Exists(dirTftd))
