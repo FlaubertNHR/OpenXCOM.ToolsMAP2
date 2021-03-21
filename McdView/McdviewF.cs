@@ -450,7 +450,7 @@ namespace McdView
 				string copyable = String.Empty;
 				foreach (var file in files)
 				{
-					if (copyable != String.Empty) copyable += Environment.NewLine;
+					if (copyable.Length != 0) copyable += Environment.NewLine;
 					copyable += file;
 				}
 
@@ -1340,7 +1340,7 @@ namespace McdView
 				string copyable = String.Empty;
 				foreach (var bork in borks)
 				{
-					if (copyable != String.Empty) copyable += Environment.NewLine;
+					if (copyable.Length != 0) copyable += Environment.NewLine;
 					copyable += bork;
 				}
 

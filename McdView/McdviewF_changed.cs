@@ -177,8 +177,8 @@ namespace McdView
 
 				if (text != "0")
 				{
-					if (text == "") text = "0";
-					else if (n)     text = "-" + text;
+					if (text.Length == 0) text = "0";
+					else if (n)           text = "-" + text;
 				}
 
 
