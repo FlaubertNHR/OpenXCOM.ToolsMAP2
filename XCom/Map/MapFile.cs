@@ -246,28 +246,41 @@ namespace XCom
 		{
 			if (MapSize.Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
 			{
-				MapTile tile;
+//				MapTile tile;
 
 				for (int lev = MapSize.Levs - 1; lev != 0; --lev)
 				for (int row = 0; row != MapSize.Rows - 2; ++row)
 				for (int col = 0; col != MapSize.Cols - 2; ++col)
 				{
-					if ((tile = Tiles.GetTile(col, row, lev)) != null) // safety. The tile should always be valid.
-					{
-						tile.Occulted = !forceVis
-									 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
+//					if ((tile = Tiles.GetTile(col, row, lev)) != null) // safety. The tile should always be valid.
+//					{
+//						tile.Occulted = !forceVis
+//									 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
+//
+//									 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
+//									 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
+//
+//									 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
+//									 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
+//
+//									 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
+//									 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
+//									 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
+//									 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
+//					}
+					Tiles.GetTile(col, row, lev).Occulted = !forceVis
+														 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
 
-									 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
-									 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
+														 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
+														 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
 
-									 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
-									 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
+														 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
+														 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
 
-									 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
-									 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
-									 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
-									 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
-					}
+														 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
+														 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
+														 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
+														 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
 				}
 			}
 		}
