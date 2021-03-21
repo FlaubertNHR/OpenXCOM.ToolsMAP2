@@ -112,7 +112,7 @@ namespace MapView.Forms.MainView
 			};
 
 			 // initialize MainView's Options w/ each viewer's default Start setting ->
-			string key = PropertyStartObserver + RegistryInfo.getRegistryLabel(f);
+			string key = PropertyStartObserver + RegistryInfo.GetRegistryLabel(f);
 			options.AddOptionDefault(
 								key,
 								@default,
@@ -147,7 +147,7 @@ namespace MapView.Forms.MainView
 				if (id == MI_sep1) ++id; // skip the separator
 
 				var it = Viewers.MenuItems[id];
-				if (options[PropertyStartObserver + RegistryInfo.getRegistryLabel(it.Tag as Form)].IsTrue)
+				if (options[PropertyStartObserver + RegistryInfo.GetRegistryLabel(it.Tag as Form)].IsTrue)
 				{
 					OnMenuItemClick(it, EventArgs.Empty);
 				}

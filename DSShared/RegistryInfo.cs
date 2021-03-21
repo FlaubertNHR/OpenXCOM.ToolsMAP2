@@ -120,19 +120,19 @@ namespace DSShared
 
 		/// <summary>
 		/// Gets the registry-label of a specified Form.
-		/// @note This function would be unnecessary if each form's Name
-		/// variable had been used as its registry-label. But since they weren't
-		/// this function maintains backward compatibility with the toplevel
-		/// types in "settings/MapViewers.yml".
 		/// TODO: MCDInfo, MapInfo, McdRecordsExceeded, etc etc. RouteInfo, RouteCheckInfobox ...
 		/// TODO: McdView's Spriteset, ScanGset, LoFTset viewers.
 		/// TODO: PckView's BytesViewer
 		/// </summary>
 		/// <param name="f">a form for which to get the registry-label</param>
 		/// <returns>the registry-label or null if not found</returns>
-		public static string getRegistryLabel(Control f)
+		/// <remarks>This function would be unnecessary if each form's Name
+		/// variable had been used as its registry-label. But since they weren't
+		/// this function maintains backward compatibility with the toplevel
+		/// types in "settings/MapViewers.yml".</remarks>
+		public static string GetRegistryLabel(Control f)
 		{
-			switch (f.Name)
+			switch (f.Name) // <- not a wise practice.
 			{
 				case "MainViewF":        return MainView;		// is in manifest
 				case "TileViewForm":     return TileView;		// is in manifest
@@ -159,7 +159,7 @@ namespace DSShared
 		/// properties get loaded</returns>
 		public static bool RegisterProperties(Form f)
 		{
-			string label = getRegistryLabel(f);
+			string label = GetRegistryLabel(f);
 			if (label != null && _trics.ContainsKey(label))
 			{
 				Metric tric = _trics[label];
@@ -187,7 +187,7 @@ namespace DSShared
 		/// the registry gets finalized</param>
 		public static void UpdateRegistry(Form f, bool bypassShow = false)
 		{
-			string label = getRegistryLabel(f);
+			string label = GetRegistryLabel(f);
 			if (label != null)
 			{
 				if (!bypassShow)
