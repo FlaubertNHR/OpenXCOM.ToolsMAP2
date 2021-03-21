@@ -129,7 +129,7 @@
     <Compile Include="Map\MapTile.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RouteData\RouteNodeCollection.cs">
+    <Compile Include="RouteData\RouteNodes.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Map\Tilepart.cs">
