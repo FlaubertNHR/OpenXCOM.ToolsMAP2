@@ -28,9 +28,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values, or the defaults by using '*' for the Build
 // and Revision.
-[assembly: AssemblyVersion("2.2.1.1")]
-[assembly: AssemblyFileVersion("2.2.1.1")]
-[assembly: AssemblyInformationalVersion("2.2.1.1")]
+[assembly: AssemblyVersion("2.2.2.0")]
+[assembly: AssemblyFileVersion("2.2.2.0")]
+[assembly: AssemblyInformationalVersion("2.2.2.0")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]

@@ -9,9 +9,9 @@ namespace ConfigConverter
 {
 	/// <summary>
 	/// A converter for turning MapEdit.dat into a YAML file. Roughly.
-	/// @note The files Images.dat and Paths.pth are required in the directory
-	/// with MapEdit.dat.
 	/// </summary>
+	/// <remarks>The files Images.dat and Paths.pth are required in the
+	/// directory with MapEdit.dat.</remarks>
 	internal sealed partial class ConfigConverter
 		:
 			Form
@@ -82,35 +82,11 @@ namespace ConfigConverter
 							{
 								btnConvert.Enabled = true;
 							}
-							else
-								MessageBox.Show(
-											this,
-											"Can't find Paths.pth",
-											" Error",
-											MessageBoxButtons.OK,
-											MessageBoxIcon.Error,
-											MessageBoxDefaultButton.Button1,
-											0);
+							else Error("Can't find Paths.pth");
 						}
-						else
-							MessageBox.Show(
-										this,
-										"Can't find Images.dat",
-										" Error",
-										MessageBoxButtons.OK,
-										MessageBoxIcon.Error,
-										MessageBoxDefaultButton.Button1,
-										0);
+						else Error("Can't find Images.dat");
 					}
-					else
-						MessageBox.Show(
-									this,
-									"Can't find MapEdit.dat",
-									" Error",
-									MessageBoxButtons.OK,
-									MessageBoxIcon.Error,
-									MessageBoxDefaultButton.Button1,
-									0);
+					else Error("Can't find MapEdit.dat");
 				}
 			}
 		}
@@ -130,36 +106,15 @@ namespace ConfigConverter
 
 			if (!File.Exists(tbInput.Text))
 			{
-				MessageBox.Show(
-							this,
-							"Can't find MapEdit.dat",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				Error("Can't find MapEdit.dat");
 			}
 			else if (!File.Exists(pfeImages))
 			{
-				MessageBox.Show(
-							this,
-							"Can't find Images.dat",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				Error("Can't find Images.dat");
 			}
 			else if (!File.Exists(pfePaths))
 			{
-				MessageBox.Show(
-							this,
-							"Can't find Paths.pth",
-							" Error",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Error,
-							MessageBoxDefaultButton.Button1,
-							0);
+				Error("Can't find Paths.pth");
 			}
 			else
 			{
@@ -177,8 +132,8 @@ namespace ConfigConverter
 														FileAccess.Write,
 														FileShare.None)))
 				{
-					ParsePaths(sw);
-					ParseImages(sw);
+					ParsePaths(/*sw*/);
+					ParseImages(/*sw*/);
 
 					//sw.WriteLine("");
 					//foreach (var key0 in Vars)
@@ -248,10 +203,7 @@ namespace ConfigConverter
 										val = val.Replace(key1, Vars[key1]); // var/val in MapEdit.dat or Paths.pth
 									}
 									else
-									{
-										MessageBox.Show(terminate(key1));
-										Process.GetCurrentProcess().Kill();
-									}
+										Error(terminate(key1), true);
 								}
 
 								if (val.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase))
@@ -308,10 +260,7 @@ namespace ConfigConverter
 										BASEPATH = BASEPATH.Replace(key1, Vars[key1]); // var/val in Images.dat
 									}
 									else
-									{
-										MessageBox.Show(terminate(key1));
-										Process.GetCurrentProcess().Kill();
-									}
+										Error(terminate(key1), true);
 								}
 
 								if (BASEPATH.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase))
@@ -368,10 +317,7 @@ namespace ConfigConverter
 										terrains = Vars[terrains];
 									}
 									else
-									{
-										MessageBox.Show(terminate(terrains));
-										Process.GetCurrentProcess().Kill();
-									}
+										Error(terminate(terrains),true);
 								}
 
 								//sw.WriteLine("");
@@ -439,11 +385,9 @@ namespace ConfigConverter
 									{
 										if (tileset.Label == label)
 										{
-											MessageBox.Show("WARNING"
-															+ Environment.NewLine + Environment.NewLine
-															+ "A Map label " + label + " is duplicated in MapEdit.dat"
-															+ Environment.NewLine + Environment.NewLine
-															+ "It will be changed to " + TILESET + "_" + (incr + 1));
+											Error("A Map label " + label + " is duplicated in MapEdit.dat"
+													+ Environment.NewLine + Environment.NewLine
+													+ "It will be changed to " + TILESET + "_" + (incr + 1));
 
 											label = TILESET + "_" + (++incr);
 											found = false;
@@ -573,17 +517,24 @@ namespace ConfigConverter
 					if (configufo  == null) configufo  = String.Empty;
 					if (configtftd == null) configtftd = String.Empty;
 
-					string text = "Finished" + Environment.NewLine + Environment.NewLine
-								+ "MapView2's Configurator expects your resources' basepath(s) to be"
+					string info = "Finished" + Environment.NewLine + Environment.NewLine
+								+ "MapView2's Configurator expects your resource basepath(s) to be"
 								+ Environment.NewLine;
 
-					text += Environment.NewLine + "UFO -\t"  + configufo;
-					text += Environment.NewLine + "TFTD -\t" + configtftd;
+					info += Environment.NewLine + "UFO  -\t" + configufo;
+					info += Environment.NewLine + "TFTD -\t" + configtftd;
 
-					text += Environment.NewLine + Environment.NewLine
+					info += Environment.NewLine + Environment.NewLine
 						  + "Press Ctrl+c to copy this text.";
 
-					MessageBox.Show(text);
+					MessageBox.Show(
+								this,
+								info,
+								" Mission success",
+								MessageBoxButtons.OK,
+								MessageBoxIcon.Information,
+								MessageBoxDefaultButton.Button1,
+								0);
 				}
 			}
 		}
@@ -591,7 +542,10 @@ namespace ConfigConverter
 
 
 		#region Methods
-		void ParsePaths(TextWriter tw)
+		/// <summary>
+		/// Parses path-info.
+		/// </summary>
+		void ParsePaths(/*TextWriter tw*/)
 		{
 			//tw.WriteLine("\nParsePaths");
 			string key, val, l;
@@ -618,7 +572,10 @@ namespace ConfigConverter
 			}
 		}
 
-		void ParseImages(TextWriter tw)
+		/// <summary>
+		/// Parses image-info.
+		/// </summary>
+		void ParseImages(/*TextWriter tw*/)
 		{
 			//tw.WriteLine("\nParseImages");
 			string key, val, terr, path, l;
@@ -646,10 +603,7 @@ namespace ConfigConverter
 								val = val.Replace(key1, Vars[key1]); // var/val in Paths.pth
 							}
 							else
-							{
-								MessageBox.Show(terminate(key1));
-								Process.GetCurrentProcess().Kill();
-							}
+								Error(terminate(key1), true);
 						}
 
 						if (val.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase))
@@ -677,10 +631,7 @@ namespace ConfigConverter
 								path = path.Replace(key1, Vars[key1]); // var/val in Images.dat
 							}
 							else
-							{
-								MessageBox.Show(terminate(key1));
-								Process.GetCurrentProcess().Kill();
-							}
+								Error(terminate(key1), true);
 						}
 
 						if (path.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.OrdinalIgnoreCase))
@@ -701,13 +652,10 @@ namespace ConfigConverter
 						//tw.WriteLine(". terr= " + terr + " path= " + path);
 						if (Terrains.ContainsKey(terr))
 						{
-							MessageBox.Show("WARNING / ERROR"
-											+ Environment.NewLine + Environment.NewLine
-											+ "The terrain " + terr + " is redefined in Images.dat"
-											+ Environment.NewLine + Environment.NewLine
-											+ "pre -\t" + Terrains[terr]
-											+ Environment.NewLine
-											+ "post - \t" + path);
+							Error("The terrain " + terr + " is redefined in Images.dat"
+									+ Environment.NewLine + Environment.NewLine
+									+ "pre  -\t" + Terrains[terr] + Environment.NewLine
+									+ "post -\t" + path);
 						}
 						Terrains[terr] = path;
 					}
@@ -715,10 +663,35 @@ namespace ConfigConverter
 			}
 		}
 
-		string terminate(string key)
+
+		/// <summary>
+		/// Shows an error in a MessageBox.
+		/// </summary>
+		/// <param name="error"></param>
+		/// <param name="terminate">true to exit pronto</param>
+		void Error(string error, bool terminate = false)
 		{
-			return "ERROR" + Environment.NewLine + Environment.NewLine
-				 + "The value of " + key + " can't be found"
+			MessageBox.Show(
+						this,
+						error,
+						" Error",
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Error,
+						MessageBoxDefaultButton.Button1,
+						0);
+
+			if (terminate)
+				Process.GetCurrentProcess().Kill();
+		}
+
+		/// <summary>
+		/// Gets an error string before the converter terminates itself.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		static string terminate(string key)
+		{
+			return "The value of " + key + " can't be found"
 				 + Environment.NewLine + Environment.NewLine
 				 + "gah";
 		}
@@ -728,7 +701,7 @@ namespace ConfigConverter
 		/// </summary>
 		/// <param name="len"></param>
 		/// <returns></returns>
-		string Padder(int len)
+		static string Padder(int len)
 		{
 			string pad = String.Empty;
 			if (len < 79)
