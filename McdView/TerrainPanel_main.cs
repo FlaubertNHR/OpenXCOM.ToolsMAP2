@@ -51,6 +51,10 @@ namespace McdView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="f"></param>
 		internal TerrainPanel_main(McdviewF f)
 			:
 				base(f)

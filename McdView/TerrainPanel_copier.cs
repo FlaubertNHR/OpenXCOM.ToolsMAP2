@@ -24,6 +24,11 @@ namespace McdView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="fcopier"></param>
 		internal TerrainPanel_copier(McdviewF f, CopierF fcopier)
 			:
 				base(f, fcopier)
