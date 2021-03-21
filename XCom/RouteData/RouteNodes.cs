@@ -325,9 +325,9 @@ namespace XCom
 		/// <summary>
 		/// cTor[1]. Imports a Routefile and replaces the current nodes-list
 		/// with its nodes.
-		/// @note Do *not* replace 'PfeRoutes' on an import.
 		/// </summary>
 		/// <param name="pfe"></param>
+		/// <remarks>Do *not* replace 'PfeRoutes' on an import.</remarks>
 		public RouteNodes(string pfe)
 		{
 			if (!LoadNodes(pfe))
@@ -515,7 +515,7 @@ namespace XCom
 		/// <param name="rows"></param>
 		/// <param name="levs"></param>
 		/// <returns></returns>
-		public static bool IsNodeOutsideMapBounds(
+		public static bool OutsideMapBounds(
 				RouteNode node,
 				int cols,
 				int rows,

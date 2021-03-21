@@ -996,11 +996,11 @@ namespace MapView.Forms.Observers
 						{
 							cbDest.SelectedItem = dest;
 
-							if (RouteNodes.IsNodeOutsideMapBounds(
-															_file.Routes[dest],
-															_file.MapSize.Cols,
-															_file.MapSize.Rows,
-															_file.MapSize.Levs))
+							if (RouteNodes.OutsideMapBounds(
+														_file.Routes[dest],
+														_file.MapSize.Cols,
+														_file.MapSize.Rows,
+														_file.MapSize.Levs))
 							{
 								lblText.ForeColor = Color.Chocolate;
 							}
@@ -1432,22 +1432,11 @@ namespace MapView.Forms.Observers
 			byte dest = NodeSelected[slot].Destination;
 			var node  = _file.Routes[dest];
 
-			if (!RouteNodes.IsNodeOutsideMapBounds(
-												node,
-												_file.MapSize.Cols,
-												_file.MapSize.Rows,
-												_file.MapSize.Levs))
-			{
-				_ogId = NodeSelected.Id; // store the current nodeId for the og-button.
-
-				ObserverManager.RouteView   .Control     .btnOg.Enabled =
-				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = true;
-
-				SelectNode(dest);
-
-				SpotGoDestination(slot); // highlight back to the startnode.
-			}
-			else
+			if (RouteNodes.OutsideMapBounds(
+										node,
+										_file.MapSize.Cols,
+										_file.MapSize.Rows,
+										_file.MapSize.Levs))
 			{
 				RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
 				RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
@@ -1463,6 +1452,17 @@ namespace MapView.Forms.Observers
 					UpdateNodeInfo();
 					// TODO: May need _pnlRoutes.Refresh()
 				}
+			}
+			else
+			{
+				_ogId = NodeSelected.Id; // store the current nodeId for the og-button.
+
+				ObserverManager.RouteView   .Control     .btnOg.Enabled =
+				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = true;
+
+				SelectNode(dest);
+
+				SpotGoDestination(slot); // highlight back to the startnode.
 			}
 
 			RouteControl.Select();

@@ -96,11 +96,11 @@ namespace XCom
 
 			foreach (RouteNode node in _file.Routes)
 			{
-				if (RouteNodes.IsNodeOutsideMapBounds(
-													node,
-													_file.MapSize.Cols,
-													_file.MapSize.Rows,
-													_file.MapSize.Levs))
+				if (RouteNodes.OutsideMapBounds(
+											node,
+											_file.MapSize.Cols,
+											_file.MapSize.Rows,
+											_file.MapSize.Levs))
 				{
 					Invalids.Add(node);
 				}
