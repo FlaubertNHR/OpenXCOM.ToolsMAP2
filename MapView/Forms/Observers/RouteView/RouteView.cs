@@ -17,20 +17,18 @@ namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// Does all the heavy-lifting/node-manipulations in RouteView and
-	/// TopRouteView(Route).
-	/// @note Static objects in this class are shared between the two viewers -
-	/// otherwise RouteView and TopRouteView(Route) instantiate separately.
-	/// @note <see cref="RouteControlParent"/> also handles mouse events.
+	/// TopRouteView(Route). <see cref="RouteControlParent"/> also handles mouse
+	/// events.
 	/// </summary>
+	/// <remarks>Static objects in this class are shared between the two viewers
+	/// - otherwise RouteView and TopRouteView(Route) instantiate separately.</remarks>
 	internal sealed partial class RouteView
 		:
 			ObserverControl // UserControl, IObserver/ObserverControl
 	{
 		#region Enums
 		private enum ConnectNodesType
-		{
-			None, OneWay, TwoWay
-		}
+		{ None, OneWay, TwoWay }
 
 		private enum LinkSlotResult
 		{
