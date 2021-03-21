@@ -80,6 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Descriptor\TileGroup.cs" />
+    <Compile Include="Map\MapLocation.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Sprites\EmbeddedService.cs" />
     <Compile Include="Sprites\SpritesetManager.cs">
       <SubType>Code</SubType>
@@ -106,7 +109,6 @@
     <Compile Include="Sprites\Types\XCImage.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Map\MapLocations.cs" />
     <Compile Include="Map\MapTileArray.cs" />
     <Compile Include="Map\MapResizeService.cs" />
     <Compile Include="Pterodactyl.cs">
@@ -138,9 +140,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Descriptor\Descriptor.cs" />
-    <Compile Include="MapLocation.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
