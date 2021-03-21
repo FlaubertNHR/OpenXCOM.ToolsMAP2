@@ -72,7 +72,7 @@ namespace XCom
 		public Dictionary<int, Tuple<string,string>> Terrains
 		{ get; private set; }
 
-		public RouteNodeCollection Routes
+		public RouteNodes Routes
 		{ get; set; }
 
 		private int _level;
@@ -189,7 +189,7 @@ namespace XCom
 		internal MapFile(
 				Descriptor descriptor,
 				List<Tilepart> parts,
-				RouteNodeCollection routes)
+				RouteNodes routes)
 		{
 			//LogFile.WriteLine("MapFile..cTor");
 

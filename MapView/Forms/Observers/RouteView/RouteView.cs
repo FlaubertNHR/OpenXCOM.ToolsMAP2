@@ -108,9 +108,9 @@ namespace MapView.Forms.Observers
 					cbRank.Items.Clear();
 
 					if (_file.Descriptor.GroupType == GameType.Tftd)
-						cbRank.Items.AddRange(RouteNodeCollection.RankTftd);
+						cbRank.Items.AddRange(RouteNodes.RankTftd);
 					else
-						cbRank.Items.AddRange(RouteNodeCollection.RankUfo);
+						cbRank.Items.AddRange(RouteNodes.RankUfo);
 
 					UpdateNodeInformation();
 				}
@@ -221,9 +221,9 @@ namespace MapView.Forms.Observers
 			};
 			cbType.Items.AddRange(unitTypes);
 
-			cbSpawn .Items.AddRange(RouteNodeCollection.Spawn);
-			cbPatrol.Items.AddRange(RouteNodeCollection.Patrol);
-			cbAttack.Items.AddRange(RouteNodeCollection.Attack);
+			cbSpawn .Items.AddRange(RouteNodes.Spawn);
+			cbPatrol.Items.AddRange(RouteNodes.Patrol);
+			cbAttack.Items.AddRange(RouteNodes.Attack);
 
 			// link data ->
 			cbLink1UnitType.Items.AddRange(unitTypes);
@@ -854,13 +854,13 @@ namespace MapView.Forms.Observers
 				cbType.SelectedItem = UnitType.Any;
 
 				if (_file.Descriptor.GroupType == GameType.Tftd)
-					cbRank.SelectedItem = RouteNodeCollection.RankTftd[0];	//(byte)NodeRankTftd.CivScout
+					cbRank.SelectedItem = RouteNodes.RankTftd[0];	//(byte)NodeRankTftd.CivScout
 				else
-					cbRank.SelectedItem = RouteNodeCollection.RankUfo [0];	//(byte)NodeRankUfo.CivScout
+					cbRank.SelectedItem = RouteNodes.RankUfo [0];	//(byte)NodeRankUfo.CivScout
 
-				cbSpawn .SelectedItem = RouteNodeCollection.Spawn [0];		//(byte)SpawnWeight.None
-				cbPatrol.SelectedItem = RouteNodeCollection.Patrol[0];		//(byte)PatrolPriority.Zero
-				cbAttack.SelectedItem = RouteNodeCollection.Attack[0];		//(byte)AttackBase.Zero
+				cbSpawn .SelectedItem = RouteNodes.Spawn [0];		//(byte)SpawnWeight.None
+				cbPatrol.SelectedItem = RouteNodes.Patrol[0];		//(byte)PatrolPriority.Zero
+				cbAttack.SelectedItem = RouteNodes.Attack[0];		//(byte)AttackBase.Zero
 
 				cbLink1Dest.SelectedItem = // TODO: figure out why these show blank and not "NotUsed"
 				cbLink2Dest.SelectedItem = // when the app loads its very first Map.
@@ -895,13 +895,13 @@ namespace MapView.Forms.Observers
 				cbType.SelectedItem = NodeSelected.Unit;
 
 				if (_file.Descriptor.GroupType == GameType.Tftd)
-					cbRank.SelectedItem = RouteNodeCollection.RankTftd[NodeSelected.Rank];
+					cbRank.SelectedItem = RouteNodes.RankTftd[NodeSelected.Rank];
 				else
-					cbRank.SelectedItem = RouteNodeCollection.RankUfo [NodeSelected.Rank];
+					cbRank.SelectedItem = RouteNodes.RankUfo [NodeSelected.Rank];
 
-				cbSpawn .SelectedItem = RouteNodeCollection.Spawn [(byte)NodeSelected.Spawn];
-				cbPatrol.SelectedItem = RouteNodeCollection.Patrol[(byte)NodeSelected.Patrol];
-				cbAttack.SelectedItem = RouteNodeCollection.Attack[(byte)NodeSelected.Attack];
+				cbSpawn .SelectedItem = RouteNodes.Spawn [(byte)NodeSelected.Spawn];
+				cbPatrol.SelectedItem = RouteNodes.Patrol[(byte)NodeSelected.Patrol];
+				cbAttack.SelectedItem = RouteNodes.Attack[(byte)NodeSelected.Attack];
 
 				cbLink1Dest.Items.Clear();
 				cbLink2Dest.Items.Clear();
@@ -996,11 +996,11 @@ namespace MapView.Forms.Observers
 						{
 							cbDest.SelectedItem = dest;
 
-							if (RouteNodeCollection.IsNodeOutsideMapBounds(
-																		_file.Routes[dest],
-																		_file.MapSize.Cols,
-																		_file.MapSize.Rows,
-																		_file.MapSize.Levs))
+							if (RouteNodes.IsNodeOutsideMapBounds(
+															_file.Routes[dest],
+															_file.MapSize.Cols,
+															_file.MapSize.Rows,
+															_file.MapSize.Levs))
 							{
 								lblText.ForeColor = Color.Chocolate;
 							}
@@ -1432,11 +1432,11 @@ namespace MapView.Forms.Observers
 			byte dest = NodeSelected[slot].Destination;
 			var node  = _file.Routes[dest];
 
-			if (!RouteNodeCollection.IsNodeOutsideMapBounds(
-														node,
-														_file.MapSize.Cols,
-														_file.MapSize.Rows,
-														_file.MapSize.Levs))
+			if (!RouteNodes.IsNodeOutsideMapBounds(
+												node,
+												_file.MapSize.Cols,
+												_file.MapSize.Rows,
+												_file.MapSize.Levs))
 			{
 				_ogId = NodeSelected.Id; // store the current nodeId for the og-button.
 
@@ -1925,7 +1925,7 @@ namespace MapView.Forms.Observers
 					{
 						_lastImportDirectory = Path.GetDirectoryName(ofd.FileName);
 
-						var routes = new RouteNodeCollection(ofd.FileName);
+						var routes = new RouteNodes(ofd.FileName);
 						if (!routes.Fail)
 						{
 							RoutesChangedCoordinator = true;
@@ -2025,9 +2025,9 @@ namespace MapView.Forms.Observers
 		{
 			string rank;
 			if (_file.Descriptor.GroupType == GameType.Tftd)
-				rank = ((Pterodactyl)RouteNodeCollection.RankTftd[0]).ToString();
+				rank = ((Pterodactyl)RouteNodes.RankTftd[0]).ToString();
 			else
-				rank = ((Pterodactyl)RouteNodeCollection.RankUfo [0]).ToString();
+				rank = ((Pterodactyl)RouteNodes.RankUfo [0]).ToString();
 
 			using (var f = new Infobox(
 									"Warning",
@@ -2196,7 +2196,7 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Handler for menuitem that checks if any node's rank is beyond the
-		/// array of the combobox. See also RouteNodeCollection.cTor
+		/// array of the combobox. See also RouteNodes..cTor.
 		/// TODO: Consolidate these checks to RouteCheckService.
 		/// </summary>
 		/// <param name="sender"></param>

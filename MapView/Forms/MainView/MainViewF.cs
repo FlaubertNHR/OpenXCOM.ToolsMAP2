@@ -3169,7 +3169,7 @@ namespace MapView
 				{
 					bool treechanged = false;
 
-					RouteNodeCollection routes; bool routesChanged;
+					RouteNodes routes; bool routesChanged;
 					if (keepRoutes)
 					{
 						routes = MainViewUnderlay.MapFile.Routes;

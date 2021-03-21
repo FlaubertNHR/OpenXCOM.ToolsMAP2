@@ -371,11 +371,11 @@ namespace MapView.Forms.Observers
 							if ((dest = MapFile.Routes[destId]) == null
 								|| dest.Lev != MapFile.Level
 								|| (NodeSelected != null && dest == NodeSelected)
-								|| RouteNodeCollection.IsNodeOutsideMapBounds(
-																			dest,
-																			MapFile.MapSize.Cols,
-																			MapFile.MapSize.Rows,
-																			MapFile.MapSize.Levs))
+								|| RouteNodes.IsNodeOutsideMapBounds(
+																	dest,
+																	MapFile.MapSize.Cols,
+																	MapFile.MapSize.Rows,
+																	MapFile.MapSize.Levs))
 							{
 								continue;
 							}
@@ -726,12 +726,12 @@ namespace MapView.Forms.Observers
 					textType2 = Enum.GetName(typeof(UnitType), node.Unit);
 
 					if (MapFile.Descriptor.GroupType == GameType.Tftd)
-						textRank2 = RouteNodeCollection.RankTftd[node.Rank].ToString();
+						textRank2 = RouteNodes.RankTftd[node.Rank].ToString();
 					else
-						textRank2 = RouteNodeCollection.RankUfo [node.Rank].ToString();
+						textRank2 = RouteNodes.RankUfo [node.Rank].ToString();
 
-					textSpawn2  = RouteNodeCollection.Spawn [(byte)node.Spawn] .ToString();
-					textPatrol2 = RouteNodeCollection.Patrol[(byte)node.Patrol].ToString();
+					textSpawn2  = RouteNodes.Spawn [(byte)node.Spawn] .ToString();
+					textPatrol2 = RouteNodes.Patrol[(byte)node.Patrol].ToString();
 
 					int width;
 					width = (int)_graphics.MeasureString(textOver1,   FontOverlay).Width;
@@ -759,7 +759,7 @@ namespace MapView.Forms.Observers
 					if (node.Attack != 0)
 					{
 						textAttack1 = Attack;
-						textAttack2 = RouteNodeCollection.Attack[(byte)node.Attack].ToString();
+						textAttack2 = RouteNodes.Attack[(byte)node.Attack].ToString();
 
 						width = (int)_graphics.MeasureString(textAttack1, FontOverlay).Width;
 						if (width > textWidth1) textWidth1 = width;

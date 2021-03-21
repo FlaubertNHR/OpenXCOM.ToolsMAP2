@@ -57,7 +57,7 @@ namespace XCom
 				ref bool treechanged,
 				bool browseMapfile,
 				bool ignoreRecordsExceeded,
-				RouteNodeCollection routes)
+				RouteNodes routes)
 		{
 			//LogFile.WriteLine("MapFileService.LoadDescriptor()");
 			//LogFile.WriteLine(". descriptor.Label= " + descriptor.Label);
@@ -181,10 +181,10 @@ namespace XCom
 
 					//LogFile.WriteLine(". . . load Routes");
 
-					RouteNodeCollection nodes;
+					RouteNodes nodes;
 					if (routes == null)
 					{
-						nodes = new RouteNodeCollection(descriptor.Label, descriptor.Basepath);
+						nodes = new RouteNodes(descriptor.Label, descriptor.Basepath);
 						if (nodes.Fail)
 						{
 							// if Routes fail load the Mapfile regardless

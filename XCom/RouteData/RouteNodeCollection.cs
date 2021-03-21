@@ -161,7 +161,7 @@ namespace XCom
 	/// This class reads, saves, and generally manages all the information in a
 	/// .RMP file. It's like the parent of RouteNode.
 	/// </summary>
-	public sealed class RouteNodeCollection
+	public sealed class RouteNodes
 		:
 			IEnumerable<RouteNode>
 	{
@@ -313,7 +313,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="label"></param>
 		/// <param name="basepath"></param>
-		public RouteNodeCollection(string label, string basepath)
+		public RouteNodes(string label, string basepath)
 		{
 			string dir = Path.Combine(basepath, GlobalsXC.RoutesDir);
 			PfeRoutes  = Path.Combine(dir, label + GlobalsXC.RouteExt);
@@ -328,14 +328,14 @@ namespace XCom
 		/// @note Do *not* replace 'PfeRoutes' on an import.
 		/// </summary>
 		/// <param name="pfe"></param>
-		public RouteNodeCollection(string pfe)
+		public RouteNodes(string pfe)
 		{
 			if (!LoadNodes(pfe))
 				Fail = true;
 		}
 
 		/// <summary>
-		/// Helper for the cTors. Reads a file into this RouteNodeCollection.
+		/// Helper for the cTors. Reads a file into this RouteNodes.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
 		/// <returns>true if situation normal</returns>

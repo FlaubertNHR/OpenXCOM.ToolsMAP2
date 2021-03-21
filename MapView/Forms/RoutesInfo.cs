@@ -94,9 +94,9 @@ namespace MapView
 
 			object[] pters;
 			if (_file.Descriptor.GroupType == GameType.Tftd)
-				pters = RouteNodeCollection.RankTftd;
+				pters = RouteNodes.RankTftd;
 			else
-				pters = RouteNodeCollection.RankUfo;
+				pters = RouteNodes.RankUfo;
 
 			lbl_tsRanks0.Text = pters[0].ToString();
 			lbl_tsRanks1.Text = pters[1].ToString();
@@ -182,14 +182,14 @@ namespace MapView
 			KeyValuePair<string, Dictionary<string, Descriptor>> cat = getCategory();
 			if (!cat.Equals(new KeyValuePair<string, Dictionary<string, Descriptor>>()))
 			{
-				RouteNodeCollection routes;
+				RouteNodes routes;
 				foreach (var descriptor in cat.Value)
 				{
 					Descriptor tileset = descriptor.Value;
 
 					if (tileset == _file.Descriptor)
 						routes = _file.Routes; // -> not only efficient, is req'd when importing Routes
-					else if ((routes = new RouteNodeCollection(tileset.Label, tileset.Basepath)).Fail)
+					else if ((routes = new RouteNodes(tileset.Label, tileset.Basepath)).Fail)
 					{
 //						routes.Fail = false; -> nobody cares, Marvin.
 						routes.Nodes.Clear();
