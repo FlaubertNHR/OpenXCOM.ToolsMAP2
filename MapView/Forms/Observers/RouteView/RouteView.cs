@@ -2221,7 +2221,7 @@ namespace MapView.Forms.Observers
 				copyable = String.Empty;
 				foreach (byte id in invalids)
 				{
-					if (copyable != String.Empty) copyable += Environment.NewLine;
+					if (copyable.Length != 0) copyable += Environment.NewLine;
 					copyable += id;
 				}
 			}

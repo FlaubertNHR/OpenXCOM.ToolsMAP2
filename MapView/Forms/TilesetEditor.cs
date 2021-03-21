@@ -1022,7 +1022,7 @@ namespace MapView
 			string tip = String.Empty;
 			for (int i = 0; i != _copiedTerrains.Count; ++i)
 			{
-				if (tip != String.Empty) tip += Environment.NewLine;
+				if (tip.Length != 0) tip += Environment.NewLine;
 				tip += _copiedTerrains[i].Item1;
 			}
 			toolTip1.SetToolTip(btn_TerrainPaste, tip);
@@ -1272,12 +1272,12 @@ namespace MapView
 				if (   descriptor.Label    == _descriptor.Label
 					&& descriptor.Basepath == _descriptor.Basepath)
 				{
-					if (copyable != String.Empty) copyable += Environment.NewLine;
+					if (copyable.Length != 0) copyable += Environment.NewLine;
 					copyable += @group.Key + "|" + category.Key + "|" + descriptor.Label;
 				}
 			}
 
-			if (copyable == String.Empty)
+			if (copyable.Length == 0)
 				copyable = "none";
 
 			using (var f = new Infobox(

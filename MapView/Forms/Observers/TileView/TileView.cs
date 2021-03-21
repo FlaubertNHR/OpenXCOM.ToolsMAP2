@@ -618,11 +618,11 @@ namespace MapView.Forms.Observers
 
 			if (MapFile.RoutesChanged)
 			{
-				if (info != String.Empty) info += " and its ";
+				if (info.Length != 0) info += " and its ";
 				info += "Routes";
 			}
 
-			if (info != String.Empty)
+			if (info.Length != 0)
 			{
 				head += " You will be asked to save changes to the " + info + ".";
 			}

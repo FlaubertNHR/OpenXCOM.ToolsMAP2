@@ -1791,14 +1791,14 @@ namespace MapView
 
 				if (MainViewUnderlay.MapFile.RoutesChanged)
 				{
-					if (info != String.Empty) info += " and ";
+					if (info.Length != 0) info += " and ";
 					info += "Routes";
 				}
 			}
 
 			if (MaptreeChanged)
 			{
-				if (info != String.Empty) info += " and ";
+				if (info.Length != 0) info += " and ";
 				info += "Maptree";
 			}
 
@@ -1814,7 +1814,7 @@ namespace MapView
 		{
 			string info = GetChangedInfo();
 
-			if (info != String.Empty)
+			if (info.Length != 0)
 			{
 				string head = Infobox.SplitString("Accepting the Configuration Editor can"
 							+ " restart MapView. The current " + info + " should be saved or"
