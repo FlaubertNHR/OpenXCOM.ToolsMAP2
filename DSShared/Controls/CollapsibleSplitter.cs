@@ -23,6 +23,8 @@ namespace DSShared.Controls
 
 
 		#region Fields
+		private Control _control;
+
 		private bool _collapsed;
 		private bool _over;
 
@@ -32,9 +34,6 @@ namespace DSShared.Controls
 
 
 		#region Properties
-		public Control Collapsible
-		{ private get; set; }
-
 		private Rectangle Clickable
 		{ get; set; }
 		#endregion Properties
@@ -43,6 +42,9 @@ namespace DSShared.Controls
 		int x1, x2;
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
 		public CollapsibleSplitter()
 		{
 			Width = 7;
@@ -55,6 +57,20 @@ namespace DSShared.Controls
 
 
 		#region Methods
+		/// <summary>
+		/// Assigns what control to collapse.
+		/// </summary>
+		/// <param name="control"></param>
+		public void SetControl(Control control)
+		{
+			_control = control;
+		}
+
+		/// <summary>
+		/// Defines the center third of the splitter as a clickable area that
+		/// collapses the Maptree. Also sets the graphics-paths for the small
+		/// triangles.
+		/// </summary>
 		public void SetClickableRectangle()
 		{
 			int height = Height / 3;
@@ -91,14 +107,21 @@ namespace DSShared.Controls
 		}
 
 
+		/// <summary>
+		/// Toggles visibility of the splitter.
+		/// </summary>
 		private void ToggleSplitter()
 		{
-			Collapsible.Visible = !(_collapsed = !_collapsed);
+			_control.Visible = !(_collapsed = !_collapsed);
 		}
 		#endregion Methods
 
 
 		#region Events (override)
+		/// <summary>
+		/// Overrides the resize event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
 			SetClickableRectangle();
@@ -106,18 +129,30 @@ namespace DSShared.Controls
 		}
 
 
+		/// <summary>
+		/// Overrides the click event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnClick(EventArgs e)
 		{
 			if (_over)
 				ToggleSplitter();
 		}
 
+		/// <summary>
+		/// Overrides the mousedown event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			if (!_over && !_collapsed)
 				base.OnMouseDown(e);
 		}
 
+		/// <summary>
+		/// Overrides the mousemove event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			if (   e.X >= Clickable.X && e.X <= Clickable.X + Clickable.Width
@@ -150,6 +185,10 @@ namespace DSShared.Controls
 			base.OnMouseMove(e);
 		}
 
+		/// <summary>
+		/// Overrides the mouseleave event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
 		{
 			_over = false;
@@ -157,6 +196,10 @@ namespace DSShared.Controls
 		}
 
 
+		/// <summary>
+		/// Overrides the paint event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);

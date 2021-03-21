@@ -251,7 +251,7 @@ namespace MapView
 			LogFile.WriteLine("MainView initialized.");
 
 
-			var splitter = new CollapsibleSplitter();
+			var splitter = new CollapsibleSplitter(); // NOTE: This needs to be weird ->
 			Controls.Add(splitter);
 
 			MapTree = new CompositedTreeView();
@@ -278,7 +278,7 @@ namespace MapView
 //			MapTree.NodeMouseClick += (sender, args) => MapTree.SelectedNode = args.Node;
 
 			Controls.Add(MapTree);
-			splitter.Collapsible = MapTree;
+			splitter.SetControl(MapTree);
 
 			MapTree.TreeViewNodeSorter = StringComparer.Ordinal;
 
