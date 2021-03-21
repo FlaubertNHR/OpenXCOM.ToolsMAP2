@@ -66,7 +66,7 @@ namespace XCom
 		public MapTileArray Tiles
 		{ get; private set; }
 
-		public List<Tilepart> Parts
+		public IList<Tilepart> Parts
 		{ get; private set; }
 
 		public Dictionary<int, Tuple<string,string>> Terrains
@@ -178,7 +178,7 @@ namespace XCom
 		/// <param name="routes"></param>
 		internal MapFile(
 				Descriptor descriptor,
-				List<Tilepart> parts,
+				IList<Tilepart> parts,
 				RouteNodes routes)
 		{
 			//LogFile.WriteLine("MapFile..cTor");
@@ -550,17 +550,17 @@ namespace XCom
 		/// <summary>
 		/// Gets the terrain-label of a given tile-part.
 		/// </summary>
-		/// <param name="part"></param>
+		/// <param name="tilepart"></param>
 		/// <returns></returns>
-		public string GetTerrainLabel(Tilepart part)
+		public string GetTerrainLabel(Tilepart tilepart)
 		{
 			int id = -1;
-			foreach (var part_ in Parts)
+			foreach (var part in Parts)
 			{
-				if (part_.TerId == 0)
+				if (part.TerId == 0)
 					++id;
 
-				if (part_ == part)
+				if (part == tilepart)
 					break;
 			}
 
@@ -573,17 +573,17 @@ namespace XCom
 		/// <summary>
 		/// Gets the terrain of a given tile-part.
 		/// </summary>
-		/// <param name="part"></param>
+		/// <param name="tilepart"></param>
 		/// <returns></returns>
-		public Tuple<string,string> GetTerrain(Tilepart part)
+		public Tuple<string,string> GetTerrain(Tilepart tilepart)
 		{
 			int id = -1;
-			foreach (var part_ in Parts)
+			foreach (var part in Parts)
 			{
-				if (part_.TerId == 0)
+				if (part.TerId == 0)
 					++id;
 
-				if (part_ == part)
+				if (part == tilepart)
 					break;
 			}
 
