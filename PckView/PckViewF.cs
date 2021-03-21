@@ -2378,7 +2378,7 @@ namespace PckView
 										"The spriteset has changed. Do you really want to close it?",
 										null,
 										InfoboxType.Warn,
-										Infobox.Buttons.CancelOkay))
+										InfoboxResults.CancelOkay))
 				{
 					return (f.ShowDialog(this) == DialogResult.OK);
 				}

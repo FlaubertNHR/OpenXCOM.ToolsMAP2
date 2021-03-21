@@ -1829,7 +1829,7 @@ namespace MapView
 										head,
 										copyable,
 										InfoboxType.Warn,
-										Infobox.Buttons.CancelOkayRetry))
+										InfoboxResults.CancelOkayRetry))
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -2541,7 +2541,7 @@ namespace MapView
 												head,
 												copyable,
 												InfoboxType.Warn,
-												Infobox.Buttons.CancelOkayRetry))
+												InfoboxResults.CancelOkayRetry))
 						{
 							switch (f.ShowDialog(this))
 							{
@@ -2660,7 +2660,7 @@ namespace MapView
 									head,
 									"group - " + labelGroup,
 									InfoboxType.Warn,
-									Infobox.Buttons.CancelOkay))
+									InfoboxResults.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -2757,7 +2757,7 @@ namespace MapView
 									head,
 									copyable,
 									InfoboxType.Warn,
-									Infobox.Buttons.CancelOkay))
+									InfoboxResults.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -2909,7 +2909,7 @@ namespace MapView
 									head,
 									copyable,
 									InfoboxType.Warn,
-									Infobox.Buttons.CancelOkay))
+									InfoboxResults.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -3416,7 +3416,7 @@ namespace MapView
 										"Do you want to save changes to the Map?",
 										null,
 										InfoboxType.Warn,
-										Infobox.Buttons.CancelYesNo)) // cancel/ok/retry
+										InfoboxResults.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -3456,7 +3456,7 @@ namespace MapView
 										"Do you want to save changes to the Routes?",
 										null,
 										InfoboxType.Warn,
-										Infobox.Buttons.CancelYesNo)) // cancel/ok/retry
+										InfoboxResults.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -3498,7 +3498,7 @@ namespace MapView
 										"Do you want to save changes to the Map Tree?",
 										null,
 										InfoboxType.Warn,
-										Infobox.Buttons.CancelYesNo)) // cancel/ok/retry
+										InfoboxResults.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{

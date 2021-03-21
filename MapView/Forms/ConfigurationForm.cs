@@ -162,7 +162,7 @@ namespace MapView
 									  + "The file contains all data for the MapTree",
 										null,
 										InfoboxType.Warn,
-										Infobox.Buttons.CancelOkay))
+										InfoboxResults.CancelOkay))
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 						proceed = true;

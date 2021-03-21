@@ -2034,7 +2034,7 @@ namespace MapView.Forms.Observers
 									"Are you sure you want to change all node ranks to " + rank + " ...",
 									null,
 									InfoboxType.Warn,
-									Infobox.Buttons.CancelOkay))
+									InfoboxResults.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -2083,7 +2083,7 @@ namespace MapView.Forms.Observers
 										"Are you sure you want to clear the selected node's Link data ...",
 										null,
 										InfoboxType.Warn,
-										Infobox.Buttons.CancelOkay))
+										InfoboxResults.CancelOkay))
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{

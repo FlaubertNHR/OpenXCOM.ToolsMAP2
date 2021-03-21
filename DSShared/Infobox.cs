@@ -10,6 +10,9 @@ namespace DSShared
 	public enum InfoboxType
 	{ Info, Warn, Error }
 
+	public enum InfoboxResults
+	{ Cancel, CancelOkay, CancelOkayRetry, CancelYesNo }
+
 
 	/// <summary>
 	/// A generic outputbox for Info/Warnings/Errors.
@@ -20,10 +23,6 @@ namespace DSShared
 		:
 			Form
 	{
-		public enum Buttons
-		{ Cancel, CancelOkay, CancelOkayRetry, CancelYesNo }
-
-
 		#region Fields (static)
 		private const int w_Min = 345;
 		private const int h_Max = 463;
@@ -53,7 +52,7 @@ namespace DSShared
 		/// readily copyable text</param>
 		/// <param name="bt">an <see cref="InfoboxType"/> to deter the head's
 		/// backcolor - is valid only with head-text specified</param>
-		/// <param name="buttons">buttons to show</param>
+		/// <param name="results">buttons to show</param>
 		/// <remarks>Limit the length of 'head' to ~100 chars max or break it
 		/// into lines if greater.</remarks>
 		public Infobox(
@@ -61,7 +60,7 @@ namespace DSShared
 				string head,
 				string copyable = null,
 				InfoboxType bt = InfoboxType.Info,
-				Buttons buttons = Buttons.Cancel)
+				InfoboxResults results = InfoboxResults.Cancel)
 		{
 			// TODO: Store static location and size of the Infobox (if shown non-modally).
 
@@ -71,25 +70,25 @@ namespace DSShared
 
 			DialogResult = DialogResult.Cancel;
 
-			switch (buttons)
+			switch (results)
 			{
-				case Buttons.Cancel:
+				case InfoboxResults.Cancel:
 					bu_Cancel.Text = "ok";
 					break;
 
-				case Buttons.CancelOkay:
+				case InfoboxResults.CancelOkay:
 					bu_Okay.Visible = true;
 					break;
 
-				case Buttons.CancelOkayRetry:
+				case InfoboxResults.CancelOkayRetry:
 					bu_Okay .Visible =
 					bu_Retry.Visible = true;
 					break;
 
-				case Buttons.CancelYesNo:
+				case InfoboxResults.CancelYesNo:
 					bu_Okay .Text = "yes";
 					bu_Retry.Text = "no";
-					goto case Buttons.CancelOkayRetry;
+					goto case InfoboxResults.CancelOkayRetry;
 			}
 
 

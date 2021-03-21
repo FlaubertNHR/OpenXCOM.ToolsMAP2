@@ -632,7 +632,7 @@ namespace MapView.Forms.Observers
 									Infobox.SplitString(head),
 									null,
 									InfoboxType.Warn,
-									Infobox.Buttons.CancelOkay))
+									InfoboxResults.CancelOkay))
 			{
 				return f.ShowDialog(this);
 			}
