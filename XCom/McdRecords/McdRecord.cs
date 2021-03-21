@@ -197,6 +197,33 @@ namespace XCom
 				return 0;
 			}
 		}
+
+
+		/// <summary>
+		/// Used by MapView.BlobDrawService.
+		/// </summary>
+		public List<byte> LoftList
+		{
+			get
+			{
+				var lofts = new List<byte>();
+
+				lofts.Add(Loft1);
+				lofts.Add(Loft2);
+				lofts.Add(Loft3);
+				lofts.Add(Loft4);
+				lofts.Add(Loft5);
+				lofts.Add(Loft6);
+				lofts.Add(Loft7);
+				lofts.Add(Loft8);
+				lofts.Add(Loft9);
+				lofts.Add(Loft10);
+				lofts.Add(Loft11);
+				lofts.Add(Loft12);
+
+				return lofts;
+			}
+		}
 		#endregion Properties
 
 
@@ -470,30 +497,6 @@ namespace XCom
 
 
 		#region Methods
-		/// <summary>
-		/// Used by MapView.BlobDrawService.
-		/// </summary>
-		/// <returns></returns>
-		public List<byte> GetLoftList()
-		{
-			var lofts = new List<byte>();
-
-			lofts.Add(Loft1);
-			lofts.Add(Loft2);
-			lofts.Add(Loft3);
-			lofts.Add(Loft4);
-			lofts.Add(Loft5);
-			lofts.Add(Loft6);
-			lofts.Add(Loft7);
-			lofts.Add(Loft8);
-			lofts.Add(Loft9);
-			lofts.Add(Loft10);
-			lofts.Add(Loft11);
-			lofts.Add(Loft12);
-
-			return lofts;
-		}
-
 		/// <summary>
 		/// Creates an independent copy of this McdRecord.
 		/// </summary>

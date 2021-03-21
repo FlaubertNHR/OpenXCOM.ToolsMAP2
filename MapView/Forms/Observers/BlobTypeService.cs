@@ -59,7 +59,7 @@ namespace MapView.Forms.Observers
 			McdRecord record = part.Record;
 			if (record != null)
 			{
-				_loftList = record.GetLoftList();
+				_loftList = record.LoftList;
 
 				// Floor
 				if (isFloor())
