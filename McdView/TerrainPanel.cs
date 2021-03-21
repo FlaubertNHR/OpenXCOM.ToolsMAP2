@@ -12,26 +12,26 @@ using XCom;
 namespace McdView
 {
 	/// <summary>
-	/// A panel that displays an entire MCD recordset with each record's Sprite1
-	/// sprite. This class is inherited by 'TerrainPanel_main' and
-	/// 'TerrainPanel_copier'.
+	/// A panel that displays an entire <see cref="XCom.McdRecord">MCD recordset</see>
+	/// with each record's 'Sprite1' sprite. This class is inherited by
+	/// <see cref="TerrainPanel_main"/> and <see cref="TerrainPanel_copier"/>.
 	/// </summary>
-	internal class TerrainPanel
+	internal abstract class TerrainPanel
 		:
 			BufferedPanel
 	{
 		#region Fields (static)
 		protected static McdviewF _f;
 
-		protected static readonly List<Tilepart> _partsCopied = new List<Tilepart>();
+		protected static readonly IList<Tilepart> _partsCopied = new List<Tilepart>();
 		protected static string _partsCopiedLabel;
+
+		private const int LargeChange = XCImage.SpriteWidth32 + 1;
 		#endregion Fields (static)
 
 
 		#region Fields
 		private readonly HScrollBar Scroller = new HScrollBar();
-
-		private const int _largeChange = XCImage.SpriteWidth32 + 1;
 
 		private int TableWidth;
 
@@ -42,10 +42,10 @@ namespace McdView
 
 
 		#region Properties
-		internal protected CopierF _fcopier
+		protected CopierF _fcopier
 		{ get; private set; }
 
-		protected virtual int SelId
+		protected abstract int SelId
 		{ get; set; }
 
 		private Tilepart[] _parts;
@@ -81,7 +81,7 @@ namespace McdView
 		/// !!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopierF' as
 		/// appropriate. IMPORTANT!!
 		/// </summary>
-		internal protected Spriteset Spriteset
+		internal Spriteset Spriteset
 		{ private get; set; }
 
 
@@ -118,7 +118,7 @@ namespace McdView
 			Location = new Point(5, 15);
 
 			Scroller.Dock = DockStyle.Bottom;
-			Scroller.LargeChange = _largeChange;
+			Scroller.LargeChange = LargeChange;
 			Scroller.ValueChanged += OnValueChanged_Scroll;
 			Controls.Add(Scroller);
 
@@ -415,8 +415,8 @@ namespace McdView
 			int range = 0;
 			if (Parts != null && Parts.Length != 0)
 			{
-				range = TableWidth + (_largeChange - 1) - Width;
-				if (range < _largeChange)
+				range = TableWidth + (LargeChange - 1) - Width;
+				if (range < LargeChange)
 					range = 0;
 			}
 
