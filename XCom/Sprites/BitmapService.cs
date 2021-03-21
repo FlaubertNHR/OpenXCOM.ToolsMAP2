@@ -77,8 +77,8 @@ namespace XCom
 		/// Helper for CreateSpriteset().
 		/// Also called by PckViewF's contextmenu:
 		/// - OnAddSpritesClick()
-		/// - InsertSprites()
 		/// - OnReplaceSpriteClick()
+		/// - InsertSprites()
 		/// </summary>
 		/// <param name="b">an indexed Bitmap</param>
 		/// <param name="id">an appropriate set-id</param>
