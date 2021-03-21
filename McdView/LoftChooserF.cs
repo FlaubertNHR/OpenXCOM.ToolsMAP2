@@ -217,7 +217,7 @@ namespace McdView
 															"Set all LoFTs",
 															"Set all LoFTs to #" + id,
 															null,
-															Infobox.BoxType.Warn,
+															InfoboxType.Warn,
 															Infobox.Buttons.CancelOkay))
 									{
 										if (f.ShowDialog(this) == DialogResult.OK)

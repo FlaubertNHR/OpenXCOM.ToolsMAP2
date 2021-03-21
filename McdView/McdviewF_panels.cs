@@ -228,7 +228,7 @@ namespace McdView
 														"Error",
 														"Sprites not found.",
 														copyable,
-														Infobox.BoxType.Error))
+														InfoboxType.Error))
 								{
 									f.ShowDialog(this);
 								}
@@ -246,7 +246,7 @@ namespace McdView
 														"Warning",
 														"The terrain's spriteset has no sprites.",
 														copyable,
-														Infobox.BoxType.Warn))
+														InfoboxType.Warn))
 								{
 									f.ShowDialog(this);
 								}
@@ -280,7 +280,7 @@ namespace McdView
 																	"Set all sprite phases",
 																	"Set all sprite phases to #" + id,
 																	null,
-																	Infobox.BoxType.Warn,
+																	InfoboxType.Warn,
 																	Infobox.Buttons.CancelOkay))
 											{
 												if (f.ShowDialog(this) == DialogResult.OK)
@@ -461,7 +461,7 @@ namespace McdView
 											"Error",
 											"ScanG icons not found.",
 											null,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}

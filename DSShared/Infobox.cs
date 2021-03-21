@@ -7,6 +7,10 @@ using System.Windows.Forms;
 
 namespace DSShared
 {
+	public enum InfoboxType
+	{ Info, Warn, Error }
+
+
 	/// <summary>
 	/// A generic outputbox for Info/Warnings/Errors.
 	/// </summary>
@@ -16,13 +20,8 @@ namespace DSShared
 		:
 			Form
 	{
-		#region Enums
-		public enum BoxType
-		{ Info, Warn, Error }
-
 		public enum Buttons
 		{ Cancel, CancelOkay, CancelOkayRetry, CancelYesNo }
-		#endregion Enums
 
 
 		#region Fields (static)
@@ -52,7 +51,7 @@ namespace DSShared
 		/// <param name="head">info to be displayed with a proportional font</param>
 		/// <param name="copyable">info to be displayed in a fixed-width font as
 		/// readily copyable text</param>
-		/// <param name="type">a <see cref="BoxType"/> to deter the head's
+		/// <param name="bt">an <see cref="InfoboxType"/> to deter the head's
 		/// backcolor - is valid only with head-text specified</param>
 		/// <param name="buttons">buttons to show</param>
 		/// <remarks>Limit the length of 'head' to ~100 chars max or break it
@@ -61,7 +60,7 @@ namespace DSShared
 				string title,
 				string head,
 				string copyable = null,
-				BoxType type = BoxType.Info,
+				InfoboxType bt = InfoboxType.Info,
 				Buttons buttons = Buttons.Cancel)
 		{
 			// TODO: Store static location and size of the Infobox (if shown non-modally).
@@ -150,11 +149,11 @@ namespace DSShared
 				lbl_Head.Paint += OnPaintHead;
 				Controls.Add(this.lbl_Head);
 
-				switch (type)
+				switch (bt)
 				{
-					case BoxType.Info:  lbl_Head.BackColor = Color.PowderBlue; break;
-					case BoxType.Warn:  lbl_Head.BackColor = Color.Moccasin;   break;
-					case BoxType.Error: lbl_Head.BackColor = Color.SandyBrown; break;
+					case InfoboxType.Info:  lbl_Head.BackColor = Color.PowderBlue; break;
+					case InfoboxType.Warn:  lbl_Head.BackColor = Color.Moccasin;   break;
+					case InfoboxType.Error: lbl_Head.BackColor = Color.SandyBrown; break;
 				}
 
 				lbl_Head.Text = head;

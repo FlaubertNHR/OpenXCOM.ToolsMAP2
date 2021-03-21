@@ -161,7 +161,7 @@ namespace MapView
 										"ARE YOU SURE YOU WANT TO REPLACE YOUR TILESET CONFIGURATION FILE!" + Environment.NewLine
 									  + "The file contains all data for the MapTree",
 										null,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelOkay))
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
@@ -213,7 +213,7 @@ namespace MapView
 												"A valid UFO or TFTD resource directory must exist with the XCOM cursor files.",
 												@"<basepath>" + Path.DirectorySeparatorChar + CursorPck + Environment.NewLine
 											  + @"<basepath>" + Path.DirectorySeparatorChar + CursorTab,
-												Infobox.BoxType.Error))
+												InfoboxType.Error))
 						{
 							f.ShowDialog(this);
 						}
@@ -332,7 +332,7 @@ namespace MapView
 									"Error",
 									head,
 									null,
-									Infobox.BoxType.Error))
+									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
 			}

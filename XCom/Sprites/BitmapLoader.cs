@@ -239,20 +239,20 @@ namespace XCom
 		/// <param name="error"></param>
 		private static void showinfo(string head, bool error = false)
 		{
-			string title; Infobox.BoxType boxtype;
+			string title; InfoboxType bt;
 
 			if (error)
 			{
-				title   = "Load error";
-				boxtype = Infobox.BoxType.Error;
+				title = "Load error";
+				bt = InfoboxType.Error;
 			}
 			else
 			{
-				title   = "Load info";
-				boxtype = Infobox.BoxType.Info;
+				title = "Load info";
+				bt = InfoboxType.Info;
 			}
 
-			using (var f = new Infobox(title, head, null, boxtype))
+			using (var f = new Infobox(title, head, null, bt))
 				f.ShowDialog();
 		}
 	}

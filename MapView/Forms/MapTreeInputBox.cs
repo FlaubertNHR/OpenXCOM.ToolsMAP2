@@ -8,22 +8,22 @@ using XCom;
 
 namespace MapView
 {
+	/// <summary>
+	/// The possible box-types.
+	/// </summary>
+	internal enum TreeboxType
+	{
+		AddGroup,
+		AddCategory,
+		EditGroup,
+		EditCategory
+	}
+
+
 	internal sealed class MapTreeInputBox
 		:
 			Form
 	{
-		/// <summary>
-		/// The possible box-types.
-		/// </summary>
-		internal enum BoxType
-		{
-			AddGroup,
-			AddCategory,
-			EditGroup,
-			EditCategory
-		}
-
-
 		#region Fields (static)
 		private const string NewGroup    = "Add Group";
 		private const string NewCategory = "Add Category";
@@ -33,7 +33,7 @@ namespace MapView
 
 
 		#region Properties
-		private BoxType InputBoxType
+		private TreeboxType InputBoxType
 		{ get; set; }
 
 		private string GroupLabel
@@ -57,12 +57,12 @@ namespace MapView
 		/// </summary>
 		/// <param name="infoAbove">info about the add/edit</param>
 		/// <param name="infoBelow">more info about the add/edit</param>
-		/// <param name="boxType">type of box</param>
+		/// <param name="bt">type of box</param>
 		/// <param name="labelGroup">label of the group if applicable</param>
 		internal MapTreeInputBox(
 				string infoAbove,
 				string infoBelow,
-				BoxType boxType,
+				TreeboxType bt,
 				string labelGroup)
 		{
 			InitializeComponent();
@@ -70,24 +70,24 @@ namespace MapView
 			lbl_InfoTop   .Text = infoAbove;
 			lbl_InfoBottom.Text = infoBelow;
 
-			switch (InputBoxType = boxType)
+			switch (InputBoxType = bt)
 			{
-				case BoxType.AddGroup:
+				case TreeboxType.AddGroup:
 					Text = NewGroup;
 					lbl_Parent.Text = "@root";
 					break;
 
-				case BoxType.EditGroup:
+				case TreeboxType.EditGroup:
 					Text = RenGroup;
 					lbl_Parent.Text = "@root";
 					break;
 
-				case BoxType.AddCategory:
+				case TreeboxType.AddCategory:
 					Text = NewCategory;
 					lbl_Parent.Text = "@" + labelGroup;
 					break;
 
-				case BoxType.EditCategory:
+				case TreeboxType.EditCategory:
 					Text = RenCategory;
 					lbl_Parent.Text = "@" + labelGroup;
 					break;
@@ -107,8 +107,8 @@ namespace MapView
 
 			switch (InputBoxType)
 			{
-				case BoxType.AddGroup:
-				case BoxType.EditGroup:
+				case TreeboxType.AddGroup:
+				case TreeboxType.EditGroup:
 					if (String.IsNullOrEmpty(Label))
 					{
 						ShowError("A group label has not been specified.");
@@ -161,8 +161,8 @@ namespace MapView
 					}
 					break;
 
-				case BoxType.AddCategory:
-				case BoxType.EditCategory:
+				case TreeboxType.AddCategory:
+				case TreeboxType.EditCategory:
 					if (String.IsNullOrEmpty(Label))
 					{
 						ShowError("A category label has not been specified.");
@@ -207,7 +207,7 @@ namespace MapView
 									"Error",
 									head,
 									null,
-									Infobox.BoxType.Error))
+									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
 			}

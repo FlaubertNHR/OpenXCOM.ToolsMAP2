@@ -482,7 +482,7 @@ namespace MapView.Forms.MainView
 											Infobox.SplitString("The list of terrains that were copied are too"
 													+ " different from the terrains in the currently loaded Map."),
 											info,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -571,7 +571,7 @@ namespace MapView.Forms.MainView
 													+ MapFile.MaxTerrainId + ". The value cannot be written to"
 													+ " a Mapfile due to the 1-byte restriction on Tilepart ids."),
 											null,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}

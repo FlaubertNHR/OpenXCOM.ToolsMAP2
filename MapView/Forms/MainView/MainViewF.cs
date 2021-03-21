@@ -226,7 +226,7 @@ namespace MapView
 											"Error",
 											"Cannot find configuration files. The application will exit.",
 											null,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 				{
 					dialog.ShowDialog(this);
 				}
@@ -491,7 +491,7 @@ namespace MapView
 											"Error",
 											"Cannot find CURSOR spriteset. The application will exit.",
 											copyable,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 				{
 					dialog.ShowDialog(this);
 				}
@@ -1389,7 +1389,7 @@ namespace MapView
 													Infobox.SplitString("Maps must be saved to a directory MAPS."
 															+ " Routes can then be saved to its sibling directory ROUTES."),
 													null,
-													Infobox.BoxType.Error))
+													InfoboxType.Error))
 							{
 								f.ShowDialog(this);
 							}
@@ -1828,7 +1828,7 @@ namespace MapView
 										"Changes detected",
 										head,
 										copyable,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelOkayRetry))
 				{
 					switch (f.ShowDialog(this))
@@ -2540,7 +2540,7 @@ namespace MapView
 												"Changes detected",
 												head,
 												copyable,
-												Infobox.BoxType.Warn,
+												InfoboxType.Warn,
 												Infobox.Buttons.CancelOkayRetry))
 						{
 							switch (f.ShowDialog(this))
@@ -2594,7 +2594,7 @@ namespace MapView
 												+ " It needs to start with UFO or TFTD (case insensitive) since"
 												+ " the prefix will set the default path and palette of its tilesets.",
 											"Note that groups that do not contain tilesets will not be saved.",
-											MapTreeInputBox.BoxType.AddGroup,
+											TreeboxType.AddGroup,
 											String.Empty))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -2621,7 +2621,7 @@ namespace MapView
 												+ " It needs to start with UFO or TFTD (case insensitive) since"
 												+ " the prefix will set the default path and palette of its tilesets.",
 											"Note that groups that do not contain tilesets will not be saved.",
-											MapTreeInputBox.BoxType.EditGroup,
+											TreeboxType.EditGroup,
 											String.Empty))
 			{
 				string labelGroup = MapTree.SelectedNode.Text;
@@ -2659,7 +2659,7 @@ namespace MapView
 									"Warning",
 									head,
 									"group - " + labelGroup,
-									Infobox.BoxType.Warn,
+									InfoboxType.Warn,
 									Infobox.Buttons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -2686,7 +2686,7 @@ namespace MapView
 			using (var f = new MapTreeInputBox(
 											"Enter the label for a new Map category.",
 											"Note that categories that do not contain tilesets will not be saved.",
-											MapTreeInputBox.BoxType.AddCategory,
+											TreeboxType.AddCategory,
 											labelGroup))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -2714,7 +2714,7 @@ namespace MapView
 			using (var f = new MapTreeInputBox(
 											"Enter a new label for the Map category.",
 											"Note that categories that do not contain tilesets will not be saved.",
-											MapTreeInputBox.BoxType.EditCategory,
+											TreeboxType.EditCategory,
 											labelGroup))
 			{
 				string labelCategory = MapTree.SelectedNode.Text;
@@ -2756,7 +2756,7 @@ namespace MapView
 									"Warning",
 									head,
 									copyable,
-									Infobox.BoxType.Warn,
+									InfoboxType.Warn,
 									Infobox.Buttons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -2786,7 +2786,7 @@ namespace MapView
 				string labelTileset  = String.Empty;
 
 				using (var f = new TilesetEditor(
-											TilesetEditor.BoxType.AddTileset,
+											TilesetEditor.TilesetEditType.AddTileset,
 											labelGroup,
 											labelCategory,
 											labelTileset))
@@ -2822,7 +2822,7 @@ namespace MapView
 				string labelTileset  = MapTree.SelectedNode.Text;
 
 				using (var f = new TilesetEditor(
-											TilesetEditor.BoxType.EditTileset,
+											TilesetEditor.TilesetEditType.EditTileset,
 											labelGroup,
 											labelCategory,
 											labelTileset))
@@ -2875,7 +2875,7 @@ namespace MapView
 										"Error",
 										key + " is not configured.",
 										null,
-										Infobox.BoxType.Error))
+										InfoboxType.Error))
 				{
 					f.ShowDialog(this);
 				}
@@ -2908,7 +2908,7 @@ namespace MapView
 									"Warning",
 									head,
 									copyable,
-									Infobox.BoxType.Warn,
+									InfoboxType.Warn,
 									Infobox.Buttons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -3415,7 +3415,7 @@ namespace MapView
 										"Map Changed",
 										"Do you want to save changes to the Map?",
 										null,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
@@ -3455,7 +3455,7 @@ namespace MapView
 										"Routes Changed",
 										"Do you want to save changes to the Routes?",
 										null,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
@@ -3497,7 +3497,7 @@ namespace MapView
 										"Maptree Changed",
 										"Do you want to save changes to the Map Tree?",
 										null,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))

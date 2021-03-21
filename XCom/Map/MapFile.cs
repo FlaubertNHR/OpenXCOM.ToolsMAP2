@@ -237,7 +237,7 @@ namespace XCom
 											"Warning",
 											head,
 											GetCopyableWarning(),
-											Infobox.BoxType.Warn))
+											InfoboxType.Warn))
 					{
 						f.ShowDialog();
 					}

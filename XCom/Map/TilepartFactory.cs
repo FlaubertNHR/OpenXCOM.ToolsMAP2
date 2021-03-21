@@ -85,7 +85,7 @@ namespace XCom
 										"Warning",
 										"Invalid death part",
 										Infobox.SplitString(warn),
-										Infobox.BoxType.Warn))
+										InfoboxType.Warn))
 				{
 					f.ShowDialog();
 				}
@@ -121,7 +121,7 @@ namespace XCom
 										"Warning",
 										"Invalid alternate part",
 										Infobox.SplitString(warn),
-										Infobox.BoxType.Warn))
+										InfoboxType.Warn))
 				{
 					f.ShowDialog();
 				}

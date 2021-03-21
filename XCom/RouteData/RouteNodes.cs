@@ -377,7 +377,7 @@ namespace XCom
 											"Invalid noderanks",
 											head,
 											copyable,
-											Infobox.BoxType.Warn))
+											InfoboxType.Warn))
 					{
 						f.ShowDialog();
 					}

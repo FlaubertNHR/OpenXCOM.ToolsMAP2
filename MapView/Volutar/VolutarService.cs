@@ -54,7 +54,7 @@ namespace MapView.Volutar
 														"Error",
 														"File not found.",
 														null,
-														Infobox.BoxType.Error))
+														InfoboxType.Error))
 								{
 									f.ShowDialog();
 								}

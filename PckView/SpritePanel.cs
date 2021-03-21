@@ -174,7 +174,7 @@ namespace PckView
 																				+ " are reserved as special markers in a .PCK file."),
 																		"#254 - RLE" + Environment.NewLine
 																	  + "#255 - End-of-Sprite",
-																		Infobox.BoxType.Error))
+																		InfoboxType.Error))
 												{
 													f.ShowDialog(this);
 												}

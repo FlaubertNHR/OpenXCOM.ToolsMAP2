@@ -74,7 +74,7 @@ namespace XCom
 										"Files not found",
 										"Browse to a basepath for the MAP and RMP files ...",
 										descriptor.Label,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelOkay))
 				{
 					if (f.ShowDialog() == DialogResult.OK) // Open a folderbrowser for user to find a basepath ->
@@ -108,7 +108,7 @@ namespace XCom
 															"Error",
 															"File not found in that basepath.",
 															descriptor.Label + GlobalsXC.MapExt,
-															Infobox.BoxType.Error))
+															InfoboxType.Error))
 									{
 										f1.ShowDialog();
 									}
@@ -213,7 +213,7 @@ namespace XCom
 										"Error",
 										"There are no terrains allocated or they do not contain MCD records.",
 										null,
-										Infobox.BoxType.Error))
+										InfoboxType.Error))
 				{
 					f.ShowDialog();
 				}

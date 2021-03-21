@@ -488,7 +488,7 @@ namespace MapView.Forms.Observers
 											title,
 											head,
 											copyable,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -551,7 +551,7 @@ namespace MapView.Forms.Observers
 											"File not found",
 											"File does not exist.",
 											pfeMcd,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -631,7 +631,7 @@ namespace MapView.Forms.Observers
 									"Reload tileset",
 									Infobox.SplitString(head),
 									null,
-									Infobox.BoxType.Warn,
+									InfoboxType.Warn,
 									Infobox.Buttons.CancelOkay))
 			{
 				return f.ShowDialog(this);
@@ -648,7 +648,7 @@ namespace MapView.Forms.Observers
 									"Error",
 									"Select a Tile.",
 									null,
-									Infobox.BoxType.Error))
+									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
 			}

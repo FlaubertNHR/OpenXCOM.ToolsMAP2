@@ -24,7 +24,7 @@ namespace MapView
 		/// <summary>
 		/// The possible dialog-types.
 		/// </summary>
-		internal enum BoxType
+		internal enum TilesetEditType
 		{
 			AddTileset,
 			EditTileset
@@ -76,7 +76,7 @@ namespace MapView
 
 
 		#region Properties
-		private BoxType InputBoxType
+		private TilesetEditType InputBoxType
 		{ get; set; }
 
 		private AddType FileAddType
@@ -160,12 +160,12 @@ namespace MapView
 		/// <summary>
 		/// Creates a Tileset Editor dialog.
 		/// </summary>
-		/// <param name="boxType"></param>
+		/// <param name="bt"></param>
 		/// <param name="labelGroup"></param>
 		/// <param name="labelCategory"></param>
 		/// <param name="labelTileset"></param>
 		internal TilesetEditor(
-				BoxType boxType,
+				TilesetEditType bt,
 				string labelGroup,
 				string labelCategory,
 				string labelTileset)
@@ -206,9 +206,9 @@ namespace MapView
 			rb_ConfigBasepath.Checked = true;
 
 
-			switch (InputBoxType = boxType)
+			switch (InputBoxType = bt)
 			{
-				case BoxType.AddTileset:
+				case TilesetEditType.AddTileset:
 					Text = AddTileset;
 					lbl_AddType.Text = "Descriptor invalid";
 
@@ -226,7 +226,7 @@ namespace MapView
 					TilesetBasepath = Basepath;
 					break;
 
-				case BoxType.EditTileset:
+				case TilesetEditType.EditTileset:
 				{
 					Text = EditTileset;
 					lbl_AddType.Text = "Modify existing tileset";
@@ -421,7 +421,7 @@ namespace MapView
 
 					switch (InputBoxType)
 					{
-						case BoxType.AddTileset:
+						case TilesetEditType.AddTileset:
 							ListTerrains();
 
 							if (String.IsNullOrEmpty(TilesetLabel))
@@ -458,7 +458,7 @@ namespace MapView
 							}
 							break;
 
-						case BoxType.EditTileset:
+						case TilesetEditType.EditTileset:
 							if (!_warned_MultipleTilesets && TilesetLabel != TilesetLabel_0)
 							{
 								_warned_MultipleTilesets = true; // only once per instantiation.
@@ -513,12 +513,12 @@ namespace MapView
 
 			switch (InputBoxType)
 			{
-				case BoxType.AddTileset:
+				case TilesetEditType.AddTileset:
 					if (TilesetExistsInCategory())
 						_descriptor = null;
 					break;
 
-				case BoxType.EditTileset:
+				case TilesetEditType.EditTileset:
 					if (TilesetLabel == TilesetLabel_0
 						|| (!TilesetExistsInCategory() && !MapfileExists(TilesetLabel)))
 					{
@@ -618,9 +618,9 @@ namespace MapView
 
 		/// <summary>
 		/// Creates a tileset as a valid <see cref="Descriptor"/>. This is
-		/// allowed iff this dialog is <see cref="BoxType.AddTileset"/> -
-		/// <see cref="AddType.MapExists"/>/<see cref="AddType.MapCreate"/>.
-		/// It's disallowed if the mode is <see cref="BoxType.EditTileset"/>.
+		/// allowed iff this dialog is <see cref="TilesetEditType.AddTileset"/>
+		/// - <see cref="AddType.MapExists"/>/<see cref="AddType.MapCreate"/>.
+		/// It's disallowed if the mode is <see cref="TilesetEditType.EditTileset"/>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -634,7 +634,7 @@ namespace MapView
 										"Error",
 										"The label already exists in the Category.",
 										TilesetLabel,
-										Infobox.BoxType.Error))
+										InfoboxType.Error))
 				{
 					f.ShowDialog(this);
 				}
@@ -678,16 +678,16 @@ namespace MapView
 
 
 		/// <summary>
-		/// If this inputbox is type <see cref="BoxType.AddTileset"/>, the
-		/// accept click must check to see if a descriptor has been created
+		/// If this inputbox is type <see cref="TilesetEditType.AddTileset"/>,
+		/// the accept click must check to see if a descriptor has been created
 		/// already with the CreateMap button first.
 		/// 
-		/// If this inputbox is type <see cref="BoxType.EditTileset"/>, the
-		/// accept click will create a descriptor if the tileset-label changed
-		/// and delete the old descriptor, and add the new one to the current
-		/// tilegroup/category. If the tileset-label didn't change, nothing more
-		/// need be done since any terrains that were changed have already been
-		/// changed by changes to the Allocated/Available listboxes.
+		/// If this inputbox is type <see cref="TilesetEditType.EditTileset"/>,
+		/// the accept click will create a descriptor if the tileset-label
+		/// changed and delete the old descriptor, and add the new one to the
+		/// current tilegroup/category. If the tileset-label didn't change,
+		/// nothing more need be done since any terrains that were changed have
+		/// already been changed by changes to the Allocated/Available listboxes.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -710,9 +710,9 @@ namespace MapView
 			{
 				switch (InputBoxType)
 				{
-					case BoxType.AddTileset:
+					case TilesetEditType.AddTileset:
 
-						// TODO: MapfileExists(TilesetLabel) - see BoxType.EditTileset below.
+						// TODO: MapfileExists(TilesetLabel) - see TilesetEditType.EditTileset below.
 
 						switch (FileAddType)
 						{
@@ -737,7 +737,7 @@ namespace MapView
 						}
 						break;
 
-					case BoxType.EditTileset:
+					case TilesetEditType.EditTileset:
 						if (TilesetLabel == TilesetLabel_0) // label didn't change; check if terrains changed ->
 						{
 							if (!TerrainsChanged(Terrains_0, _descriptor.Terrains))
@@ -757,7 +757,7 @@ namespace MapView
 													"Error",
 													"The label already exists in the Category.",
 													TilesetLabel,
-													Infobox.BoxType.Error))
+													InfoboxType.Error))
 							{
 								f.ShowDialog(this);
 							}
@@ -783,7 +783,7 @@ namespace MapView
 													"Error",
 													Infobox.SplitString(head),
 													GetFullpathMapfile(TilesetLabel),
-													Infobox.BoxType.Error))
+													InfoboxType.Error))
 							{
 								f.ShowDialog(this);
 							}
@@ -828,7 +828,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainLeftClick(object sender, EventArgs e)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TilesetEditType.EditTileset)
 				 MainViewF.that.MaptreeChanged = true;
 
 			int sel = lb_TerrainsAvailable.SelectedIndex;
@@ -859,7 +859,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainRightClick(object sender, EventArgs e)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TilesetEditType.EditTileset)
 				 MainViewF.that.MaptreeChanged = true;
 
 			string itAvailable = null;
@@ -934,7 +934,7 @@ namespace MapView
 		/// <see cref="OnTerrainDownClick"/>.</remarks>
 		private void ShiftTerrainEntry(int dir)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TilesetEditType.EditTileset)
 				 MainViewF.that.MaptreeChanged = true;
 
 			var terrains = _descriptor.Terrains;
@@ -984,7 +984,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainPasteClick(object sender, EventArgs e)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TilesetEditType.EditTileset)
 				 MainViewF.that.MaptreeChanged = true;
 
 			_descriptor.Terrains.Clear();
@@ -1005,7 +1005,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainClearClick(object sender, EventArgs e)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == BoxType.EditTileset)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TilesetEditType.EditTileset)
 				 MainViewF.that.MaptreeChanged = true;
 
 			_descriptor.Terrains.Clear();
@@ -1337,7 +1337,7 @@ namespace MapView
 													Infobox.SplitString("The tileset already exists in"
 															+ " Category. That tileset will not be changed."),
 													@group.Key + "|" + keyCategory + "|" + descriptor.Label,
-													Infobox.BoxType.Warn))
+													InfoboxType.Warn))
 							{
 								f.ShowDialog(this);
 							}
@@ -1456,7 +1456,7 @@ namespace MapView
 		{
 			int count = GetTilesetCount(TilesetLabel);
 
-			if (InputBoxType == BoxType.AddTileset
+			if (InputBoxType == TilesetEditType.AddTileset
 				&& _descriptor != null
 				&& _descriptor.Label == TilesetLabel)
 			{
@@ -1522,7 +1522,7 @@ namespace MapView
 									"Error",
 									head,
 									null,
-									Infobox.BoxType.Error))
+									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
 			}
@@ -1538,7 +1538,7 @@ namespace MapView
 									"Warning",
 									warn,
 									null,
-									Infobox.BoxType.Warn))
+									InfoboxType.Warn))
 			{
 				f.ShowDialog(this);
 			}
@@ -1634,10 +1634,10 @@ namespace MapView
 //			//LogFile.WriteLine("");
 //			//LogFile.WriteLine("OnTilesetLabelKeyUp");
 //
-//			if (InputBoxType == BoxType.AddTileset	// NOTE: have to remove this. If a user enters an invalid char in the label
-//				&& btnCreateMap.Enabled				// then uses Enter to get rid of the error-popup, the KeyDown dismisses the
-//				&& e.KeyCode == Keys.Enter)			// error but then the KeyUp will instantiate a descriptor ....
-//			{										// Am sick of fighting with WinForms in an already complicated class like this.
+//			if (InputBoxType == TilesetEditType.AddTileset	// NOTE: have to remove this. If a user enters an invalid char in the label
+//				&& btnCreateMap.Enabled						// then uses Enter to get rid of the error-popup, the KeyDown dismisses the
+//				&& e.KeyCode == Keys.Enter)					// error but then the KeyUp will instantiate a descriptor ....
+//			{												// Am sick of fighting with WinForms in an already complicated class like this.
 //				OnCreateDescriptorClick(null, EventArgs.Empty);
 //			}
 //		}

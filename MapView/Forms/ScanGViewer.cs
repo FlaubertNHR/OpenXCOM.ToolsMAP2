@@ -420,8 +420,7 @@ namespace MapView
 		/// </summary>
 		private void ReloadScanGfile()
 		{
-			string title, head;
-			Infobox.BoxType boxType;
+			string title, head; InfoboxType bt;
 
 			if (_file.Descriptor.GroupType == GameType.Tftd)
 			{
@@ -429,41 +428,41 @@ namespace MapView
 				{
 					_icons = SpritesetManager.GetScanGtftd();
 
-					title   = "Info";
-					head    = "SCANG.DAT reloaded.";
-					boxType = Infobox.BoxType.Info;
+					title = "Info";
+					head  = "SCANG.DAT reloaded.";
+					bt    = InfoboxType.Info;
 				}
 				else
 				{
 					_icons = null;
 
-					title   = "Error";
-					head    = "SCANG.DAT failed to reload. Take the red pill.";
-					boxType = Infobox.BoxType.Error;
+					title = "Error";
+					head  = "SCANG.DAT failed to reload. Take the red pill.";
+					bt    = InfoboxType.Error;
 				}
 			}
 			else if (SpritesetManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 			{
 				_icons = SpritesetManager.GetScanGufo();
 
-				title   = "Info";
-				head    = "SCANG.DAT reloaded.";
-				boxType = Infobox.BoxType.Info;
+				title = "Info";
+				head  = "SCANG.DAT reloaded.";
+				bt    = InfoboxType.Info;
 			}
 			else
 			{
 				_icons = null;
 
-				title   = "Error";
-				head    = "SCANG.DAT failed to reload. Take the red pill.";
-				boxType = Infobox.BoxType.Error;
+				title = "Error";
+				head  = "SCANG.DAT failed to reload. Take the red pill.";
+				bt    = InfoboxType.Error;
 			}
 
 			using (var f = new Infobox(
 									title,
 									head,
 									null,
-									boxType))
+									bt))
 			{
 				f.ShowDialog(this);
 			}

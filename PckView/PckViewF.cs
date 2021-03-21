@@ -751,7 +751,7 @@ namespace PckView
 									"Image error",
 									"Detected incorrect Dimensions and/or PixelFormat.",
 									copyable,
-									Infobox.BoxType.Error))
+									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
 			}
@@ -1971,7 +1971,7 @@ namespace PckView
 														+ " the count of sprites expected by the TAB file ["
 														+ spriteset.CountOffsets + "]."),
 												null,
-												Infobox.BoxType.Error))
+												InfoboxType.Error))
 						{
 							f.ShowDialog(this);
 						}
@@ -1995,7 +1995,7 @@ namespace PckView
 												"Load error",
 												head,
 												null,
-												Infobox.BoxType.Error))
+												InfoboxType.Error))
 						{
 							f.ShowDialog(this);
 						}
@@ -2043,7 +2043,7 @@ namespace PckView
 											Infobox.SplitString("The file appears to be corrupted. The length of the"
 													+ " file is not exactly divisible by the length of an icon."),
 											pfeScanG,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -2094,7 +2094,7 @@ namespace PckView
 											Infobox.SplitString("The file appears to be corrupted. The length of the"
 													+ " file is not exactly divisible by the length of an icon."),
 											pfeLoFT,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -2377,7 +2377,7 @@ namespace PckView
 										"Spriteset changed",
 										"The spriteset has changed. Do you really want to close it?",
 										null,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelOkay))
 				{
 					return (f.ShowDialog(this) == DialogResult.OK);

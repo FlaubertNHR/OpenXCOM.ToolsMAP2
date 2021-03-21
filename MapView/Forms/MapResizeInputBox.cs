@@ -242,7 +242,7 @@ namespace MapView
 									"Error",
 									head,
 									null,
-									Infobox.BoxType.Error))
+									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
 			}

@@ -22,7 +22,7 @@ namespace DSShared
 									"IO Error",
 									head, // + " The operation will not proceed.",
 									copyable,
-									Infobox.BoxType.Error))
+									InfoboxType.Error))
 			{
 				f.ShowDialog();
 			}

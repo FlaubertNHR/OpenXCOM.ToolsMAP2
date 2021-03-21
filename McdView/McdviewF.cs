@@ -458,7 +458,7 @@ namespace McdView
 										"Warning",
 										"Resource files not found.",
 										copyable,
-										Infobox.BoxType.Warn))
+										InfoboxType.Warn))
 				{
 					f.ShowDialog(this);
 				}
@@ -889,7 +889,7 @@ namespace McdView
 											Infobox.SplitString("The file appears to be corrupted. The length of the"
 													+ " file is not exactly divisible by the length of a record."),
 											pfeMcd,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -972,7 +972,7 @@ namespace McdView
 											Infobox.SplitString("The file appears to be corrupted. The length of the"
 													+ " file is not exactly divisible by the length of a record."),
 											PfeMcd,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -1051,7 +1051,7 @@ namespace McdView
 											Infobox.SplitString("The file appears to be corrupted. The length of the"
 													+ " file is not exactly divisible by the length of a record."),
 											PfeMcd,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -1147,7 +1147,7 @@ namespace McdView
 										"Warning",
 										"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
 										null,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelOkay))
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
@@ -1222,7 +1222,7 @@ namespace McdView
 												"Warning",
 												"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
 												null,
-												Infobox.BoxType.Warn,
+												InfoboxType.Warn,
 												Infobox.Buttons.CancelOkay))
 						{
 							if (f.ShowDialog(this) == DialogResult.OK)
@@ -1252,18 +1252,18 @@ namespace McdView
 								string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
 								string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
 
-								Infobox.BoxType bt;
+								InfoboxType bt;
 
 								string head;
 								if (File.Exists(pfePck) || File.Exists(pfeTab))
 								{
-									bt = Infobox.BoxType.Warn;
+									bt = InfoboxType.Warn;
 									head = "A spriteset for the terrain is detected on disk."
 										 + " Do you want to overwrite that spriteset ...";
 								}
 								else
 								{
-									bt = Infobox.BoxType.Info;
+									bt = InfoboxType.Info;
 									head = "A spriteset was not found with that label. Do you"
 										 + " want to write the spriteset also ...";
 								}
@@ -1310,7 +1310,7 @@ namespace McdView
 									"Zero all values",
 									"Zero the current record's values ...",
 									null,
-									Infobox.BoxType.Warn,
+									InfoboxType.Warn,
 									Infobox.Buttons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -1348,7 +1348,7 @@ namespace McdView
 										"Strict test",
 										"The following items exhibit anomalies.",
 										copyable,
-										Infobox.BoxType.Warn))
+										InfoboxType.Warn))
 				{
 					f.ShowDialog(this);
 				}
@@ -1364,7 +1364,7 @@ namespace McdView
 											"Strict test",
 											"Sprite offset is invalid.",
 											result,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}

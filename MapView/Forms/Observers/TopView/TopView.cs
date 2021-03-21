@@ -318,7 +318,7 @@ namespace MapView.Forms.Observers
 									Infobox.SplitString("The following tileslots are occupied by incorrect"
 											+ " PartTypes. This could result in broken battlescape behavior."),
 									copyable,
-									Infobox.BoxType.Warn);
+									InfoboxType.Warn);
 				_finfobox.Show();
 			}
 			else

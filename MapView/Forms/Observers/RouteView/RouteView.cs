@@ -580,7 +580,7 @@ namespace MapView.Forms.Observers
 											"Err...",
 											"Cannot move node onto another node.",
 											null,
-											Infobox.BoxType.Error))
+											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
 					}
@@ -646,7 +646,7 @@ namespace MapView.Forms.Observers
 													Infobox.SplitString("Destination node could not be linked"
 															+ " to the source node. Its link-slots are full."),
 													null,
-													Infobox.BoxType.Warn))
+													InfoboxType.Warn))
 							{
 								f.ShowDialog(this);
 							}
@@ -677,7 +677,7 @@ namespace MapView.Forms.Observers
 													Infobox.SplitString("Source node could not be linked to the"
 															+ " destination node. Its link-slots are full."),
 													null,
-													Infobox.BoxType.Warn))
+													InfoboxType.Warn))
 							{
 								f.ShowDialog(this);
 							}
@@ -1752,7 +1752,7 @@ namespace MapView.Forms.Observers
 									"Error",
 									head,
 									null,
-									Infobox.BoxType.Error))
+									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
 			}
@@ -2033,7 +2033,7 @@ namespace MapView.Forms.Observers
 									"Warning",
 									"Are you sure you want to change all node ranks to " + rank + " ...",
 									null,
-									Infobox.BoxType.Warn,
+									InfoboxType.Warn,
 									Infobox.Buttons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
@@ -2082,7 +2082,7 @@ namespace MapView.Forms.Observers
 										"Warning",
 										"Are you sure you want to clear the selected node's Link data ...",
 										null,
-										Infobox.BoxType.Warn,
+										InfoboxType.Warn,
 										Infobox.Buttons.CancelOkay))
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
@@ -2210,12 +2210,12 @@ namespace MapView.Forms.Observers
 					invalids.Add(node.Id);
 			}
 
-			Infobox.BoxType boxType;
+			InfoboxType bt;
 			string title, head, copyable;
 
 			if (invalids.Count != 0)
 			{
-				boxType = Infobox.BoxType.Warn;
+				bt    = InfoboxType.Warn;
 				title = "Warning";
 				head  = "The following " + ((invalids.Count == 1) ? "node has" : "nodes have")
 					  + " an invalid NodeRank.";
@@ -2229,7 +2229,7 @@ namespace MapView.Forms.Observers
 			}
 			else
 			{
-				boxType  = Infobox.BoxType.Info;
+				bt       = InfoboxType.Info;
 				title    = "Good stuff, Magister Ludi";
 				head     = "There are no invalid NodeRanks detected.";
 				copyable = null;
@@ -2239,7 +2239,7 @@ namespace MapView.Forms.Observers
 									title,
 									head,
 									copyable,
-									boxType))
+									bt))
 			{
 				f.ShowDialog(this);
 			}

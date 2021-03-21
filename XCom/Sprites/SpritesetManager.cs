@@ -122,7 +122,7 @@ namespace XCom
 													Infobox.SplitString("The count of sprites in the PCK file does not"
 															+ " match the count of sprites expected by the TAB file."),
 													null,
-													Infobox.BoxType.Error))
+													InfoboxType.Error))
 							{
 								f.ShowDialog();
 							}
