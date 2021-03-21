@@ -115,7 +115,7 @@ namespace MapView.Forms.Observers
 			switch (BlobTypeService.GetBlobType(part))
 			{
 				// content ->
-				case BlobTypeService.BlobType.Content:
+				case BlobType.Content:
 					PathContent(x,y);
 					g.FillPath(
 							tool.Brush,
@@ -123,7 +123,7 @@ namespace MapView.Forms.Observers
 					break;
 
 				// floor ->
-				case BlobTypeService.BlobType.Floor:
+				case BlobType.Floor:
 					PathContent(x,y);
 					g.FillPath(
 							BlobColorTool.BrushLightPrep,
@@ -134,14 +134,14 @@ namespace MapView.Forms.Observers
 					break;
 
 				// walls ->
-				case BlobTypeService.BlobType.NorthWallFence:
+				case BlobType.NorthWallFence:
 					g.DrawLine(
 							tool.PenLight,
 							pT(x,y),
 							pR(x,y));
 					break;
 
-				case BlobTypeService.BlobType.NorthWall:
+				case BlobType.NorthWall:
 					g.DrawLine(
 							tool.Pen,
 							pT(x,y),
@@ -154,14 +154,14 @@ namespace MapView.Forms.Observers
 								x,             y + HalfHeight);
 					break;
 
-				case BlobTypeService.BlobType.WestWallFence:
+				case BlobType.WestWallFence:
 					g.DrawLine(
 							tool.PenLight,
 							pT(x,y),
 							pL(x,y));
 					break;
 
-				case BlobTypeService.BlobType.WestWall:
+				case BlobType.WestWall:
 					g.DrawLine(
 							tool.Pen,
 							pT(x,y),
@@ -174,7 +174,7 @@ namespace MapView.Forms.Observers
 								x,             y + HalfHeight);
 					break;
 
-				case BlobTypeService.BlobType.NorthWallWindow:
+				case BlobType.NorthWallWindow:
 					DrawWindow(
 							g,
 							tool,
@@ -182,7 +182,7 @@ namespace MapView.Forms.Observers
 							pR(x,y));
 					break;
 
-				case BlobTypeService.BlobType.WestWallWindow:
+				case BlobType.WestWallWindow:
 					DrawWindow(
 							g,
 							tool,
@@ -190,14 +190,14 @@ namespace MapView.Forms.Observers
 							pL(x,y));
 					break;
 
-				case BlobTypeService.BlobType.SouthWall:
+				case BlobType.SouthWall:
 					g.DrawLine(
 							tool.Pen,
 							pL(x,y),
 							pB(x,y));
 					break;
 
-				case BlobTypeService.BlobType.EastWall:
+				case BlobType.EastWall:
 					g.DrawLine(
 							tool.Pen,
 							pB(x,y),
@@ -205,14 +205,14 @@ namespace MapView.Forms.Observers
 					break;
 
 				// diagonals ->
-				case BlobTypeService.BlobType.NorthwestSoutheast:
+				case BlobType.NorthwestSoutheast:
 					g.DrawLine(
 							tool.Pen,
 							pT(x,y),
 							pB(x,y));
 					break;
 
-				case BlobTypeService.BlobType.NortheastSouthwest:
+				case BlobType.NortheastSouthwest:
 					g.DrawLine(
 							tool.Pen,
 							pL(x,y),
@@ -220,28 +220,28 @@ namespace MapView.Forms.Observers
 					break;
 
 				// corners ->
-				case BlobTypeService.BlobType.NorthwestCorner:
+				case BlobType.NorthwestCorner:
 					g.DrawLine(
 							tool.Pen,
 							Point.Add(pT(x,y), new Size(-Offset - Offset / 2, 0)),
 							Point.Add(pT(x,y), new Size( Offset + Offset / 2, 0)));
 					break;
 
-				case BlobTypeService.BlobType.NortheastCorner:
+				case BlobType.NortheastCorner:
 					g.DrawLine(
 							tool.Pen,
 							Point.Add(pR(x,y), new Size(0, -Offset)),
 							Point.Add(pR(x,y), new Size(0,  Offset)));
 					break;
 
-				case BlobTypeService.BlobType.SoutheastCorner:
+				case BlobType.SoutheastCorner:
 					g.DrawLine(
 							tool.Pen,
 							Point.Add(pB(x,y), new Size(-Offset - Offset / 2, 0)),
 							Point.Add(pB(x,y), new Size( Offset + Offset / 2, 0)));
 					break;
 
-				case BlobTypeService.BlobType.SouthwestCorner:
+				case BlobType.SouthwestCorner:
 					g.DrawLine(
 							tool.Pen,
 							Point.Add(pL(x,y), new Size(0, -Offset)),

@@ -7,39 +7,37 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
+	/// The various wall- and content-types that will be used to determine how
+	/// to draw the wall- and content-blobs in <see cref="TopView"/> and
+	/// <see cref="RouteView"/>.
+	/// </summary>
+	internal enum BlobType
+	{
+		Content,
+		EastWall,
+		SouthWall,
+		NorthWall,
+		WestWall,
+		NorthwestSoutheast,
+		NortheastSouthwest,
+		NorthWallWindow,
+		WestWallWindow,
+		Floor,
+		NorthWallFence,
+		WestWallFence,
+		NorthwestCorner,
+		NortheastCorner,
+		SouthwestCorner,
+		SoutheastCorner
+	}
+
+
+	/// <summary>
 	/// A class that determines how walls and objects are drawn for TopView and
 	/// RouteView.
 	/// </summary>
 	internal static class BlobTypeService
 	{
-		#region Enums
-		/// <summary>
-		/// The various wall- and content-types that will be used to determine how
-		/// to draw the wall- and content-blobs in <see cref="TopView"/> and
-		/// <see cref="RouteView"/>.
-		/// </summary>
-		internal enum BlobType
-		{
-			Content,
-			EastWall,
-			SouthWall,
-			NorthWall,
-			WestWall,
-			NorthwestSoutheast,
-			NortheastSouthwest,
-			NorthWallWindow,
-			WestWallWindow,
-			Floor,
-			NorthWallFence,
-			WestWallFence,
-			NorthwestCorner,
-			NortheastCorner,
-			SouthwestCorner,
-			SoutheastCorner
-		}
-		#endregion Enums
-
-
 		#region Fields (static)
 		private static List<byte> _loftList;
 		#endregion Fields (static)
