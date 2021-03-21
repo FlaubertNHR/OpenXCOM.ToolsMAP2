@@ -181,26 +181,23 @@ namespace XCom
 
 					//LogFile.WriteLine(". . . load Routes");
 
-					RouteNodes nodes;
 					if (routes == null)
 					{
-						nodes = new RouteNodes(descriptor.Label, descriptor.Basepath);
-						if (nodes.Fail)
+						routes = new RouteNodes(descriptor.Label, descriptor.Basepath);
+						if (routes.Fail)
 						{
 							// if Routes fail load the Mapfile regardless
 							// do not null the Routes just clear all nodes
 
-							nodes.Fail = false;
-							nodes.Nodes.Clear();
+							routes.Fail = false;
+							routes.Nodes.Clear();
 						}
 					}
-					else
-						nodes = routes;
 
 					var file = new MapFile(
 										descriptor,
 										parts,
-										nodes);
+										routes);
 					if (file.Fail)
 					{
 						//LogFile.WriteLine(". . . MapFile FAILED");
