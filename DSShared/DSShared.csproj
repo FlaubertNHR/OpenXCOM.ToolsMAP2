@@ -82,6 +82,9 @@
     <Compile Include="FileService.cs" />
     <Compile Include="GlobalsXC.cs" />
     <Compile Include="Infobox.cs" />
+    <Compile Include="Infobox.Designer.cs">
+      <DependentUpon>Infobox.cs</DependentUpon>
+    </Compile>
     <Compile Include="LogFile.cs" />
     <Compile Include="ObjectCopier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
