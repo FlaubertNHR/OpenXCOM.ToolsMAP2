@@ -12,7 +12,7 @@ namespace MapView
 	{
 		#region Methods (static)
 		/// <summary>
-		/// Read a line from DSShared.PathInfo.CFG_Options.
+		/// Read a line from 'DSShared.PathInfo.CFG_Options'.
 		/// </summary>
 		/// <param name="tr"></param>
 		/// <returns>KeyvalPair else null</returns>
