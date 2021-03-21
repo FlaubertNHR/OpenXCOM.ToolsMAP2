@@ -157,6 +157,15 @@ namespace XCom
 
 		internal bool Fail
 		{ get; private set; }
+
+		/// <summary>
+		/// Gets the Map's dimensions as a string to print in MainView's
+		/// statusbar.
+		/// </summary>
+		public string SizeString
+		{
+			get { return Cols + ", " + Rows + ", " + Levs; }
+		}
 		#endregion Properties
 
 
@@ -678,15 +687,6 @@ namespace XCom
 			}
 		}
 
-		/// <summary>
-		/// Gets the Map's dimensions as a string to print in MainView's
-		/// statusbar.
-		/// </summary>
-		/// <returns></returns>
-		public string GetSizeString()
-		{
-			return Cols + ", " + Rows + ", " + Levs;
-		}
 
 		/// <summary>
 		/// Gets the copyable text that is displayed in an Infobox when a

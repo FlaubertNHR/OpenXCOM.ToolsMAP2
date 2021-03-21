@@ -1673,7 +1673,7 @@ namespace MapView
 
 						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
 
-						tsslDimensions   .Text = file.GetSizeString();
+						tsslDimensions   .Text = file.SizeString;
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
@@ -3222,7 +3222,7 @@ namespace MapView
 						if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
 
 						tsslMapLabel     .Text = descriptor.Label;
-						tsslDimensions   .Text = file.GetSizeString();
+						tsslDimensions   .Text = file.SizeString;
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
