@@ -244,7 +244,7 @@ namespace MapView.Forms.Observers
 					r = 0,
 						startX = Origin.X,
 						startY = Origin.Y;
-					r != MapFile.MapSize.Rows;
+					r != MapFile.Rows;
 					++r,
 						startX -= HalfWidth,
 						startY += HalfHeight)
@@ -253,7 +253,7 @@ namespace MapView.Forms.Observers
 						c = 0,
 							x = startX,
 							y = startY;
-						c != MapFile.MapSize.Cols;
+						c != MapFile.Cols;
 						++c,
 							x += HalfWidth,
 							y += HalfHeight)
@@ -284,7 +284,7 @@ namespace MapView.Forms.Observers
 					rSrc = 0,
 						x = Origin.X,
 						y = Origin.Y;
-					rSrc != MapFile.MapSize.Rows;
+					rSrc != MapFile.Rows;
 					++rSrc,
 						x -= HalfWidth,
 						y += HalfHeight)
@@ -293,7 +293,7 @@ namespace MapView.Forms.Observers
 						cSrc = 0,
 							xSrc = x,
 							ySrc = y;
-						cSrc != MapFile.MapSize.Cols;
+						cSrc != MapFile.Cols;
 						++cSrc,
 							xSrc += HalfWidth,
 							ySrc += HalfHeight)
@@ -373,9 +373,9 @@ namespace MapView.Forms.Observers
 								|| (NodeSelected != null && dest == NodeSelected)
 								|| RouteNodes.OutsideMapBounds(
 															dest,
-															MapFile.MapSize.Cols,
-															MapFile.MapSize.Rows,
-															MapFile.MapSize.Levs))
+															MapFile.Cols,
+															MapFile.Rows,
+															MapFile.Levs))
 							{
 								continue;
 							}
@@ -440,13 +440,13 @@ namespace MapView.Forms.Observers
 			RouteNode node;
 			Link link;
 
-			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
+			for (int r = 0; r != MapFile.Rows; ++r)
 			{
 				for (int
 						c = 0,
 							x = startX,
 							y = startY;
-						c != MapFile.MapSize.Cols;
+						c != MapFile.Cols;
 						++c,
 							x += HalfWidth,
 							y += HalfHeight)
@@ -542,7 +542,7 @@ namespace MapView.Forms.Observers
 		private void DrawGridLines()
 		{
 			Pen pen;
-			for (int i = 0; i <= MapFile.MapSize.Rows; ++i)
+			for (int i = 0; i <= MapFile.Rows; ++i)
 			{
 				if (i % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
 				else             pen = RoutePens[RouteViewOptionables.str_GridLine10Color];
@@ -551,11 +551,11 @@ namespace MapView.Forms.Observers
 								pen,
 								Origin.X - i * HalfWidth,
 								Origin.Y + i * HalfHeight,
-								Origin.X + (MapFile.MapSize.Cols - i) * HalfWidth,
-								Origin.Y + (MapFile.MapSize.Cols + i) * HalfHeight);
+								Origin.X + (MapFile.Cols - i) * HalfWidth,
+								Origin.Y + (MapFile.Cols + i) * HalfHeight);
 			}
 
-			for (int i = 0; i <= MapFile.MapSize.Cols; ++i)
+			for (int i = 0; i <= MapFile.Cols; ++i)
 			{
 				if (i % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
 				else             pen = RoutePens[RouteViewOptionables.str_GridLine10Color];
@@ -564,8 +564,8 @@ namespace MapView.Forms.Observers
 								pen,
 								Origin.X + i * HalfWidth,
 								Origin.Y + i * HalfHeight,
-							   (Origin.X + i * HalfWidth)  - MapFile.MapSize.Rows * HalfWidth,
-							   (Origin.Y + i * HalfHeight) + MapFile.MapSize.Rows * HalfHeight);
+							   (Origin.X + i * HalfWidth)  - MapFile.Rows * HalfWidth,
+							   (Origin.Y + i * HalfHeight) + MapFile.Rows * HalfHeight);
 			}
 		}
 
@@ -579,13 +579,13 @@ namespace MapView.Forms.Observers
 
 			RouteNode node;
 
-			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
+			for (int r = 0; r != MapFile.Rows; ++r)
 			{
 				for (int
 						c = 0,
 							x = startX,
 							y = startY;
-						c != MapFile.MapSize.Cols;
+						c != MapFile.Cols;
 						++c,
 							x += HalfWidth,
 							y += HalfHeight)
@@ -695,7 +695,7 @@ namespace MapView.Forms.Observers
 			{
 				int c = _col;
 				int r = _row;
-				int l = MapFile.MapSize.Levs - MapFile.Level;
+				int l = MapFile.Levs - MapFile.Level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }

@@ -433,7 +433,7 @@ namespace MapView.Forms.Observers
 
 				int c = RouteControl._col;
 				int r = RouteControl._row;
-				int l = _file.MapSize.Levs - MapFile.Level;
+				int l = _file.Levs - MapFile.Level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }
@@ -474,7 +474,7 @@ namespace MapView.Forms.Observers
 
 				int c = MapFile.Location.Col;
 				int r = MapFile.Location.Row;
-				int l = _file.MapSize.Levs - level;
+				int l = _file.Levs - level;
 
 				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 				if (!MainViewF.Optionables.Base1_z) { --l; }
@@ -998,9 +998,9 @@ namespace MapView.Forms.Observers
 
 							if (RouteNodes.OutsideMapBounds(
 														_file.Routes[dest],
-														_file.MapSize.Cols,
-														_file.MapSize.Rows,
-														_file.MapSize.Levs))
+														_file.Cols,
+														_file.Rows,
+														_file.Levs))
 							{
 								lblText.ForeColor = Color.Chocolate;
 							}
@@ -1434,9 +1434,9 @@ namespace MapView.Forms.Observers
 
 			if (RouteNodes.OutsideMapBounds(
 										node,
-										_file.MapSize.Cols,
-										_file.MapSize.Rows,
-										_file.MapSize.Levs))
+										_file.Cols,
+										_file.Rows,
+										_file.Levs))
 			{
 				RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
 				RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
@@ -1965,7 +1965,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnEditOpening(object sender, EventArgs e)
 		{
-			tsmi_LowerNode.Enabled = (NodeSelected != null && NodeSelected.Lev != _file.MapSize.Levs - 1);
+			tsmi_LowerNode.Enabled = (NodeSelected != null && NodeSelected.Lev != _file.Levs - 1);
 			tsmi_RaiseNode.Enabled = (NodeSelected != null && NodeSelected.Lev != 0);
 		}
 

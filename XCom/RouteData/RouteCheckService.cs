@@ -51,7 +51,7 @@ namespace XCom
 				string label = "Destination node is outside the Map's bounds."
 							 + Environment.NewLine + Environment.NewLine
 							 + "Do you want it deleted?";
-				string text = "id " + node.Id + " : " + node.GetLocationString(file.MapSize.Levs);
+				string text = "id " + node.Id + " : " + node.GetLocationString(file.Levs);
 				f.SetTexts(label, text);
 
 				return f.ShowDialog();
@@ -98,9 +98,9 @@ namespace XCom
 			{
 				if (RouteNodes.OutsideMapBounds(
 											node,
-											_file.MapSize.Cols,
-											_file.MapSize.Rows,
-											_file.MapSize.Levs))
+											_file.Cols,
+											_file.Rows,
+											_file.Levs))
 				{
 					Invalids.Add(node);
 				}
@@ -162,7 +162,7 @@ namespace XCom
 
 					text += loc + "  L ";
 
-					loc = (byte)(_file.MapSize.Levs - node.Lev);
+					loc = (byte)(_file.Levs - node.Lev);
 					if (!Base1_z) --loc;
 
 					if (loc < 10)

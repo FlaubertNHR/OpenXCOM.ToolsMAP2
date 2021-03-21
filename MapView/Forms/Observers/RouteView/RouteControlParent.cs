@@ -168,7 +168,7 @@ namespace MapView.Forms.Observers
 
 				if (height > width / 2) // use width
 				{
-					HalfWidth = width / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
+					HalfWidth = width / (MapFile.Rows + MapFile.Cols);
 
 					if (HalfWidth % 2 != 0)
 						--HalfWidth;
@@ -177,12 +177,12 @@ namespace MapView.Forms.Observers
 				}
 				else // use height
 				{
-					HalfHeight = height / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
+					HalfHeight = height / (MapFile.Rows + MapFile.Cols);
 					HalfWidth  = HalfHeight * 2;
 				}
 
 				Origin = new Point( // offset the left and top edges to account for the 3d panel border
-								OffsetX + MapFile.MapSize.Rows * HalfWidth,
+								OffsetX + MapFile.Rows * HalfWidth,
 								OffsetY);
 
 				BlobService.HalfWidth  = HalfWidth;
@@ -332,8 +332,8 @@ namespace MapView.Forms.Observers
 					{
 						int c = MapFile.Location.Col + loc.X;
 						int r = MapFile.Location.Row + loc.Y;
-						if (   c > -1 && c < MapFile.MapSize.Cols
-							&& r > -1 && r < MapFile.MapSize.Rows)
+						if (   c > -1 && c < MapFile.Cols
+							&& r > -1 && r < MapFile.Rows)
 						{
 							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire LocationSelected event
 
@@ -351,7 +351,7 @@ namespace MapView.Forms.Observers
 					else if (vert != MapFile.LEVEL_no)
 					{
 						int level = MapFile.Level + vert;
-						if (level > -1 && level < MapFile.MapSize.Levs)
+						if (level > -1 && level < MapFile.Levs)
 						{
 							MapFile.ChangeLevel(vert);			// fire LevelSelected event
 							MapFile.Location = new MapLocation(	// fire LocationSelected event
@@ -386,8 +386,8 @@ namespace MapView.Forms.Observers
 					{
 						int c = MapFile.Location.Col + loc.X;
 						int r = MapFile.Location.Row + loc.Y;
-						if (   c > -1 && c < MapFile.MapSize.Cols
-							&& r > -1 && r < MapFile.MapSize.Rows
+						if (   c > -1 && c < MapFile.Cols
+							&& r > -1 && r < MapFile.Rows
 							&& MapFile.GetTile(c,r).Node == null)
 						{
 							RouteView.Dragnode = NodeSelected;
@@ -407,7 +407,7 @@ namespace MapView.Forms.Observers
 					else if (vert != MapFile.LEVEL_no)
 					{
 						int level = MapFile.Level + vert;
-						if (level > -1 && level < MapFile.MapSize.Levs
+						if (level > -1 && level < MapFile.Levs
 							&& MapFile.GetTile(MapFile.Location.Col,
 											   MapFile.Location.Row,
 											   level).Node == null)
@@ -486,8 +486,8 @@ namespace MapView.Forms.Observers
 								(int)Math.Floor(xd),
 								(int)Math.Floor(yd));
 
-				if (   loc.X > -1 && loc.X < MapFile.MapSize.Cols
-					&& loc.Y > -1 && loc.Y < MapFile.MapSize.Rows)
+				if (   loc.X > -1 && loc.X < MapFile.Cols
+					&& loc.Y > -1 && loc.Y < MapFile.Rows)
 				{
 					return loc;
 				}

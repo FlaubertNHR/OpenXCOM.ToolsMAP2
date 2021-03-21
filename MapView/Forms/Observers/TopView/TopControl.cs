@@ -130,11 +130,11 @@ namespace MapView.Forms.Observers
 				width  -= OffsetX * 2; // don't clip the right or bottom tip of the big-lozenge.
 				height -= OffsetY * 2;
 
-				if (MapFile.MapSize.Rows > 0 || MapFile.MapSize.Cols > 0) // safety vs. div-by-0
+				if (MapFile.Rows > 0 || MapFile.Cols > 0) // safety vs. div-by-0
 				{
 					if (height > width / 2) // use width
 					{
-						halfWidth = width / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
+						halfWidth = width / (MapFile.Rows + MapFile.Cols);
 
 						if (halfWidth % 2 != 0)
 							--halfWidth;
@@ -143,7 +143,7 @@ namespace MapView.Forms.Observers
 					}
 					else // use height
 					{
-						halfHeight = height / (MapFile.MapSize.Rows + MapFile.MapSize.Cols);
+						halfHeight = height / (MapFile.Rows + MapFile.Cols);
 						halfWidth  = halfHeight * 2;
 					}
 				}
@@ -162,13 +162,13 @@ namespace MapView.Forms.Observers
 				_blobService.HalfWidth  = halfWidth;
 				_blobService.HalfHeight = halfHeight;
 
-				_originX = OffsetX + MapFile.MapSize.Rows * halfWidth;
+				_originX = OffsetX + MapFile.Rows * halfWidth;
 //				_originY = OffsetY;
 
 				if (halfWidthPre != halfWidth)
 				{
-					Width  = (MapFile.MapSize.Rows + MapFile.MapSize.Cols) * halfWidth;
-					Height = (MapFile.MapSize.Rows + MapFile.MapSize.Cols) * halfHeight;
+					Width  = (MapFile.Rows + MapFile.Cols) * halfWidth;
+					Height = (MapFile.Rows + MapFile.Cols) * halfHeight;
 
 					Refresh();
 				}
@@ -277,7 +277,7 @@ namespace MapView.Forms.Observers
 						r = 0,
 							startX = _originX,
 							startY =  OffsetY;
-						r != MapFile.MapSize.Rows;
+						r != MapFile.Rows;
 						++r,
 							startX -= halfWidth,
 							startY += halfHeight)
@@ -286,7 +286,7 @@ namespace MapView.Forms.Observers
 							c = 0,
 								x = startX,
 								y = startY;
-							c != MapFile.MapSize.Cols;
+							c != MapFile.Cols;
 							++c,
 								x += halfWidth,
 								y += halfHeight)
@@ -298,7 +298,7 @@ namespace MapView.Forms.Observers
 
 				// draw grid-lines ->
 				Pen pen;
-				for (int i = 0; i <= MapFile.MapSize.Rows; ++i) // draw horizontal grid-lines (ie. upperleft to lowerright)
+				for (int i = 0; i <= MapFile.Rows; ++i) // draw horizontal grid-lines (ie. upperleft to lowerright)
 				{
 					if (i % 10 != 0) pen = TopPens[TopViewOptionables.str_GridLineColor];
 					else             pen = TopPens[TopViewOptionables.str_GridLine10Color];
@@ -307,11 +307,11 @@ namespace MapView.Forms.Observers
 									pen,
 									_originX - i * halfWidth,
 									 OffsetY + i * halfHeight,
-									_originX + (MapFile.MapSize.Cols - i) * halfWidth,
-									 OffsetY + (MapFile.MapSize.Cols + i) * halfHeight);
+									_originX + (MapFile.Cols - i) * halfWidth,
+									 OffsetY + (MapFile.Cols + i) * halfHeight);
 				}
 
-				for (int i = 0; i <= MapFile.MapSize.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
+				for (int i = 0; i <= MapFile.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
 				{
 					if (i % 10 != 0) pen = TopPens[TopViewOptionables.str_GridLineColor];
 					else             pen = TopPens[TopViewOptionables.str_GridLine10Color];
@@ -320,15 +320,15 @@ namespace MapView.Forms.Observers
 									pen,
 									_originX + i * halfWidth,
 									 OffsetY + i * halfHeight,
-									_originX + i * halfWidth  - MapFile.MapSize.Rows * halfWidth,
-									 OffsetY + i * halfHeight + MapFile.MapSize.Rows * halfHeight);
+									_originX + i * halfWidth  - MapFile.Rows * halfWidth,
+									 OffsetY + i * halfHeight + MapFile.Rows * halfHeight);
 				}
 
 
 				// draw the selector lozenge ->
 				if (Focused
-					&& _col > -1 && _col < MapFile.MapSize.Cols
-					&& _row > -1 && _row < MapFile.MapSize.Rows)
+					&& _col > -1 && _col < MapFile.Cols
+					&& _row > -1 && _row < MapFile.Rows)
 				{
 					PathSelectorLozenge(
 									_originX + (_col - _row) * halfWidth,
@@ -445,8 +445,8 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			if (   _col > -1 && _col < MapFile.MapSize.Cols
-				&& _row > -1 && _row < MapFile.MapSize.Rows)
+			if (   _col > -1 && _col < MapFile.Cols
+				&& _row > -1 && _row < MapFile.Rows)
 			{
 				SelectMapLocation(); // NOTE: Will select a tile on any mousebutton down.
 

@@ -434,12 +434,12 @@ namespace MapView.Forms.MainView
 
 					for (int
 							row = DragBeg.Y;
-							row != MapFile.MapSize.Rows && (row - DragBeg.Y) < _copied.GetLength(1);
+							row != MapFile.Rows && (row - DragBeg.Y) < _copied.GetLength(1);
 							++row)
 					{
 						for (int
 								col = DragBeg.X;
-								col != MapFile.MapSize.Cols && (col - DragBeg.X) < _copied.GetLength(0);
+								col != MapFile.Cols && (col - DragBeg.X) < _copied.GetLength(0);
 								++col)
 						{
 							if ((tile = MapFile.GetTile(col, row)) != null
@@ -627,11 +627,9 @@ namespace MapView.Forms.MainView
 
 			int records = Math.Min(MapFile.Parts.Count, MapFileService.MAX_MCDRECORDS);	// NOTE: Also checked in the TilepartSubstitution
 																						// dialog else the Accept button does not enable.
-			MapSize size = MapFile.MapSize;
-
-			for (int lev = 0; lev != size.Levs; ++lev)
-			for (int row = 0; row != size.Rows; ++row)
-			for (int col = 0; col != size.Cols; ++col)
+			for (int lev = 0; lev != MapFile.Levs; ++lev)
+			for (int row = 0; row != MapFile.Rows; ++row)
+			for (int col = 0; col != MapFile.Cols; ++col)
 			{
 				tile = MapFile.GetTile(col, row, lev);
 
@@ -776,10 +774,10 @@ namespace MapView.Forms.MainView
 					if (loc.X != 0 || loc.Y != 0)
 					{
 						int c = MapFile.Location.Col + loc.X;
-						if (c > -1 && c < MapFile.MapSize.Cols)
+						if (c > -1 && c < MapFile.Cols)
 						{
 							int r = MapFile.Location.Row + loc.Y;
-							if (r > -1 && r < MapFile.MapSize.Rows)
+							if (r > -1 && r < MapFile.Rows)
 							{
 								ObserverManager.RouteView   .Control     .DeselectNode(false);
 								ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
@@ -798,7 +796,7 @@ namespace MapView.Forms.MainView
 					else if (vert != MapFile.LEVEL_no)
 					{
 						int level = MapFile.Location.Lev + vert;
-						if (level > -1 && level < MapFile.MapSize.Levs) // safety.
+						if (level > -1 && level < MapFile.Levs) // safety.
 						{
 							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
@@ -832,11 +830,11 @@ namespace MapView.Forms.MainView
 						_targeterForced = !isTop;
 
 						int pos = DragBeg.X + _keyDeltaX + loc.X;
-						if (pos > -1 && pos < MapFile.MapSize.Cols)
+						if (pos > -1 && pos < MapFile.Cols)
 							_keyDeltaX += loc.X;
 
 						pos = DragBeg.Y + _keyDeltaY + loc.Y;
-						if (pos > -1 && pos < MapFile.MapSize.Rows)
+						if (pos > -1 && pos < MapFile.Rows)
 							_keyDeltaY += loc.Y;
 
 						loc.X = _col = MapFile.Location.Col + _keyDeltaX;
@@ -899,7 +897,7 @@ namespace MapView.Forms.MainView
 					_row = DragEnd.Y;
 				}
 
-				ObserverManager.ToolFactory.EnableLevelers(MapFile.Level, MapFile.MapSize.Levs);
+				ObserverManager.ToolFactory.EnableLevelers(MapFile.Level, MapFile.Levs);
 			}
 		}
 
@@ -922,8 +920,8 @@ namespace MapView.Forms.MainView
 				{
 					case MouseButtons.Left:
 					{
-						if (   _col > -1 && _col < MapFile.MapSize.Cols
-							&& _row > -1 && _row < MapFile.MapSize.Rows)
+						if (   _col > -1 && _col < MapFile.Cols
+							&& _row > -1 && _row < MapFile.Rows)
 						{
 							ObserverManager.RouteView   .Control     .DeselectNode(false);
 							ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
@@ -1073,10 +1071,10 @@ namespace MapView.Forms.MainView
 				_dragBeg = value;
 
 				if      (_dragBeg.Y < 0)                     _dragBeg.Y = 0;
-				else if (_dragBeg.Y >= MapFile.MapSize.Rows) _dragBeg.Y = MapFile.MapSize.Rows - 1;
+				else if (_dragBeg.Y >= MapFile.Rows) _dragBeg.Y = MapFile.Rows - 1;
 
 				if      (_dragBeg.X < 0)                     _dragBeg.X = 0;
-				else if (_dragBeg.X >= MapFile.MapSize.Cols) _dragBeg.X = MapFile.MapSize.Cols - 1;
+				else if (_dragBeg.X >= MapFile.Cols) _dragBeg.X = MapFile.Cols - 1;
 			}
 		}
 
@@ -1091,10 +1089,10 @@ namespace MapView.Forms.MainView
 				_dragEnd = value;
 
 				if      (_dragEnd.Y < 0)                     _dragEnd.Y = 0;
-				else if (_dragEnd.Y >= MapFile.MapSize.Rows) _dragEnd.Y = MapFile.MapSize.Rows - 1;
+				else if (_dragEnd.Y >= MapFile.Rows) _dragEnd.Y = MapFile.Rows - 1;
 
 				if      (_dragEnd.X < 0)                     _dragEnd.X = 0;
-				else if (_dragEnd.X >= MapFile.MapSize.Cols) _dragEnd.X = MapFile.MapSize.Cols - 1;
+				else if (_dragEnd.X >= MapFile.Cols) _dragEnd.X = MapFile.Cols - 1;
 			}
 		}
 		#endregion Mouse & drag-points
@@ -1172,8 +1170,8 @@ namespace MapView.Forms.MainView
 				ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 
 
-				_cols = MapFile.MapSize.Cols;
-				_rows = MapFile.MapSize.Rows;
+				_cols = MapFile.Cols;
+				_rows = MapFile.Rows;
 
 				_phase = MainViewUnderlay.Phase;
 
@@ -1217,7 +1215,7 @@ namespace MapView.Forms.MainView
 		{
 			int c = _col;
 			int r = _row;
-			int l = MapFile.MapSize.Levs - MapFile.Level;
+			int l = MapFile.Levs - MapFile.Level;
 
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (!MainViewF.Optionables.Base1_z) { --l; }
@@ -1264,7 +1262,7 @@ namespace MapView.Forms.MainView
 			int offsetVert;
 
 			for (int
-				lev  = MapFile.MapSize.Levs - 1;
+				lev  = MapFile.Levs - 1;
 				lev >= MapFile.Level;
 				--lev)
 			{
@@ -1377,7 +1375,7 @@ namespace MapView.Forms.MainView
 			int offsetVert;
 
 			for (int
-				lev  = MapFile.MapSize.Levs - 1;
+				lev  = MapFile.Levs - 1;
 				lev >= MapFile.Level;
 				--lev)
 			{

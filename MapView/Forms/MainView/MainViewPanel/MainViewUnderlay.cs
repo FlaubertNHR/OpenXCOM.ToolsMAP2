@@ -434,12 +434,12 @@ namespace MapView.Forms.MainView
 
 
 				MainViewOverlay.Origin = new Point(
-												OffsetX + (MapFile.MapSize.Rows - 1) * halfWidth,
+												OffsetX + (MapFile.Rows - 1) * halfWidth,
 												OffsetY);
 
-				int width  = (MapFile.MapSize.Rows + MapFile.MapSize.Cols) * halfWidth;
-				int height = (MapFile.MapSize.Rows + MapFile.MapSize.Cols) * halfHeight
-						   +  MapFile.MapSize.Levs * halfHeight * 3;
+				int width  = (MapFile.Rows + MapFile.Cols) * halfWidth;
+				int height = (MapFile.Rows + MapFile.Cols) * halfHeight
+						   +  MapFile.Levs * halfHeight * 3;
 
 				//DSShared.LogFile.WriteLine(". width= " + width);
 				//DSShared.LogFile.WriteLine(". height= " + height);

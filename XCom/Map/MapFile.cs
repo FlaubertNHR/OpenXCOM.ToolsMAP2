@@ -75,6 +75,14 @@ namespace XCom
 		public RouteNodes Routes
 		{ get; set; }
 
+
+		public int Cols
+		{ get; private set; }
+		public int Rows
+		{ get; private set; }
+		public int Levs
+		{ get; private set; }
+
 		private int _level;
 		/// <summary>
 		/// Gets/Sets the currently selected level.
@@ -86,7 +94,7 @@ namespace XCom
 			get { return _level; }
 			set
 			{
-				_level = Math.Max(0, Math.Min(value, MapSize.Levs - 1));
+				_level = Math.Max(0, Math.Min(value, Levs - 1));
 
 				if (LevelSelected != null)
 					LevelSelected(new LevelSelectedArgs(_level));
@@ -103,8 +111,8 @@ namespace XCom
 			get { return _location; }
 			set
 			{
-				if (   value.Col > -1 && value.Col < MapSize.Cols
-					&& value.Row > -1 && value.Row < MapSize.Rows)
+				if (   value.Col > -1 && value.Col < Cols
+					&& value.Row > -1 && value.Row < Rows)
 				{
 					_location = value;
 
@@ -118,33 +126,6 @@ namespace XCom
 			}
 		}
 
-		/// <summary>
-		/// Gets the current size of the Map.
-		/// </summary>
-		public MapSize MapSize
-		{ get; private set; }
-
-		/// <summary>
-		/// Gets a MapTile object using col,row,lev values.
-		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="row"></param>
-		/// <param name="lev"></param>
-		/// <returns>the corresponding MapTile object</returns>
-		public MapTile GetTile(int col, int row, int lev)
-		{
-			return Tiles.GetTile(col, row, lev);
-		}
-		/// <summary>
-		/// Gets a MapTile object at the current level using col,row values.
-		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="row"></param>
-		/// <returns>the corresponding MapTile object</returns>
-		public MapTile GetTile(int col, int row)
-		{
-			return Tiles.GetTile(col, row, Level);
-		}
 
 		/// <summary>
 		/// User will be shown a dialog asking to save if the Map changed.
@@ -217,74 +198,7 @@ namespace XCom
 		#endregion cTor
 
 
-		#region Methods
-		/// <summary>
-		/// Changes the view-level and fires the LevelSelected event.
-		/// </summary>
-		/// <param name="dir">+1 is down, -1 is up</param>
-		public void ChangeLevel(int dir)
-		{
-			switch (dir)
-			{
-				case LEVEL_Dn:
-					if (Level != MapSize.Levs - 1)
-						++Level;
-					break;
-
-				case LEVEL_Up:
-					if (Level != 0)
-						--Level;
-					break;
-			}
-		}
-
-		/// <summary>
-		/// Generates occultation data for all tiles in the Map.
-		/// </summary>
-		/// <param name="forceVis">true to force visibility</param>
-		public void CalculateOccultations(bool forceVis = false)
-		{
-			if (MapSize.Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
-			{
-//				MapTile tile;
-
-				for (int lev = MapSize.Levs - 1; lev != 0; --lev)
-				for (int row = 0; row != MapSize.Rows - 2; ++row)
-				for (int col = 0; col != MapSize.Cols - 2; ++col)
-				{
-//					if ((tile = Tiles.GetTile(col, row, lev)) != null) // safety. The tile should always be valid.
-//					{
-//						tile.Occulted = !forceVis
-//									 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
-//
-//									 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
-//									 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
-//
-//									 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
-//									 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
-//
-//									 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
-//									 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
-//									 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
-//									 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
-//					}
-					Tiles.GetTile(col, row, lev).Occulted = !forceVis
-														 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
-
-														 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
-														 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
-
-														 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
-														 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
-
-														 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
-														 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
-														 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
-														 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
-				}
-			}
-		}
-
+		#region Methods (read/load)
 		/// <summary>
 		/// Reads a .MAP file.
 		/// </summary>
@@ -296,16 +210,15 @@ namespace XCom
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
 			{
-				int rows = fs.ReadByte(); // http://www.ufopaedia.org/index.php/MAPS
-				int cols = fs.ReadByte(); // - says this header is "height, width and depth (in that order)"
-				int levs = fs.ReadByte(); //   ie. y/x/z
+				Rows = fs.ReadByte(); // http://www.ufopaedia.org/index.php/MAPS
+				Cols = fs.ReadByte(); // - says this header is "height, width and depth (in that order)"
+				Levs = fs.ReadByte(); //   ie. y/x/z
 
-				Tiles   = new MapTileArray(cols, rows, levs);
-				MapSize = new MapSize(     cols, rows, levs);
+				Tiles = new MapTileArray(Cols, Rows, Levs);
 
-				for (int lev = 0; lev != levs; ++lev) // z-axis (top to bot)
-				for (int row = 0; row != rows; ++row) // y-axis
-				for (int col = 0; col != cols; ++col) // x-axis
+				for (int lev = 0; lev != Levs; ++lev) // z-axis (top to bot)
+				for (int row = 0; row != Rows; ++row) // y-axis
+				for (int col = 0; col != Cols; ++col) // x-axis
 				{
 					Tiles.SetTile(col, row, lev, CreateTile(
 														parts,
@@ -317,12 +230,12 @@ namespace XCom
 
 				if (TerrainsetCountExceeded != 0)
 				{
-					const string label = "partids detected in the Mapfile that exceed"
-									   + " the bounds of the allocated terrainset";
+					string head = Infobox.SplitString("Partids detected in the Mapfile that exceed"
+													+ " the bounds of the allocated terrainset.");
 
 					using (var f = new Infobox(
 											"Warning",
-											label,
+											head,
 											GetCopyableWarning(),
 											Infobox.BoxType.Warn))
 					{
@@ -423,57 +336,157 @@ namespace XCom
 							north,
 							content);
 		}
+		#endregion Methods (read/load)
+
+
+		#region Methods (static)
+		/// <summary>
+		/// Writes default Map and blank Route files.
+		/// </summary>
+		/// <param name="pfeMap"></param>
+		/// <param name="pfeRoutes"></param>
+		/// <returns>true on success</returns>
+		/// <remarks>Call this funct only if the Mapfile does *not* exist. This
+		/// funct does *not* create backup files!</remarks>
+		public static bool CreateDefault(string pfeMap, string pfeRoutes)
+		{
+			using (var fs = FileService.CreateFile(pfeMap)) // create a default Map-file and release its handle.
+			if (fs != null)
+			{
+				fs.WriteByte((byte)10); // rows // default new Map size ->
+				fs.WriteByte((byte)10); // cols
+				fs.WriteByte((byte) 1); // levs
+
+				for (int r = 0; r != 10; ++r)
+				for (int c = 0; c != 10; ++c)
+				{
+					fs.WriteByte((byte)0);
+					fs.WriteByte((byte)0);
+					fs.WriteByte((byte)0);
+					fs.WriteByte((byte)0);
+				}
+
+				using (var fsRoutes = FileService.CreateFile(pfeRoutes)) // create a blank Route-file and release its handle.
+				{}
+
+				return true; // ie. don't worry too much about successful creation of the Routesfile.
+			}
+			return false;
+		}
+		#endregion Methods (static)
+
+
+		#region Methods (save/write)
+		/// <summary>
+		/// Saves the current Mapfile.
+		/// </summary>
+		/// <returns>true on success</returns>
+		public bool SaveMap()
+		{
+			return WriteMapfile(_pfe);
+		}
 
 		/// <summary>
-		/// Gets the copyable text that is displayed in an Infobox when a
-		/// tileset has parts that exceed the terrainset count.
+		/// Exports the Map to a different file.
 		/// </summary>
-		/// <returns></returns>
-		private string GetCopyableWarning()
+		/// <param name="pf">path-file w/out extension</param>
+		public void ExportMap(string pf)
 		{
-			string L = Environment.NewLine;
-
-			bool singular = (TerrainsetCountExceeded == 1);
-
-			string copyable0 = "There " + (singular ? "is " : "are ") + TerrainsetCountExceeded + " tilepart"
-							 + (singular ? String.Empty : "s") + " that exceed" + (singular ? "s" : String.Empty)
-							 + " the bounds of the Map's currently allocated MCD records. "
-							 + (singular ? "It" : "They") + " will be replaced by" + (singular ? " a" : String.Empty)
-							 + " temporary tilepart" + (singular ? String.Empty : "s") + " and displayed on"
-							 + " the Map as borked yellow sprites.";
-			copyable0 = Infobox.SplitString(copyable0) + L + L;
-
-			string copyable1 = "Note that borked parts that are in floor-slots could"
-							 + " get hidden beneath valid content-parts, etc.";
-			copyable1 = Infobox.SplitString(copyable1) + L + L;
-
-			string copyable2 = "IMPORTANT: Saving the Map in its current state would forever lose"
-							 + " those tilepart references. But if you know what terrain(s) have"
-							 + " gone rogue they can be added to the Map's terrainset with the"
-							 + " TilesetEditor. Or if you know how many records have been removed"
-							 + " from the terrainset the ids of the rogue parts can be shifted"
-							 + " down into a valid range.";
-			copyable2 = Infobox.SplitString(copyable2) + L + L;
-
-			string copyable3 = "It's recommended to resolve this issue immediately.";
-			copyable3 = Infobox.SplitString(copyable3) + L + L;
-
-			string copyable4 = "(a) save the Mapfile hence deleting the rogue tileparts" + L
-							 + "(b) add terrains to the terrainset in the TilesetEditor" + L
-							 + "(c) add tileparts to allocated terrains externally"      + L
-							 + "(d) use TilepartSubstitution to shift ids down"          + L + L;
-
-			string copyable = copyable0
-							+ "TopView|Test|Test parts in tileslots" + L + L
-							+ copyable1
-							+ copyable2
-							+ "MainView|Edit|TilepartSubstitution" + L + L
-							+ copyable3
-							+ copyable4
-							+ "Pronto!";
-			return copyable;
+			WriteMapfile(pf + GlobalsXC.MapExt);
 		}
-		#endregion Methods (read/load)
+
+		/// <summary>
+		/// Writes a Mapfile.
+		/// </summary>
+		/// <param name="pfe">path-file-extension</param>
+		/// <returns>true on success</returns>
+		private bool WriteMapfile(string pfe)
+		{
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
+
+			bool fail = true;
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
+			{
+				fail = false;
+
+				fs.WriteByte((byte)Rows); // http://www.ufopaedia.org/index.php/MAPS
+				fs.WriteByte((byte)Cols); // - says this header is "height, width and depth (in that order)"
+				fs.WriteByte((byte)Levs); //   ie. y/x/z
+
+				// NOTE: User is disallowed from placing any tilepart with an id
+				// greater than MapFile.MaxTerrainId.
+
+				// TODO: Ask user before NOT writing crippled partids.
+
+				MapTile tile;
+				for (int lev = 0; lev != Levs; ++lev) // z-axis (top to bot)
+				for (int row = 0; row != Rows; ++row) // y-axis
+				for (int col = 0; col != Cols; ++col) // x-axis
+				{
+					tile = Tiles.GetTile(col, row, lev);
+
+					WritePartId(fs, tile.Floor);
+					WritePartId(fs, tile.West);
+					WritePartId(fs, tile.North);
+					WritePartId(fs, tile.Content);
+				}
+			}
+
+			if (!fail && pfeT != pfe)
+				return FileService.ReplaceFile(pfe);
+
+			return !fail;
+		}
+
+		/// <summary>
+		/// Writes a tilepart's id to the Filestream.
+		/// </summary>
+		/// <param name="fs"></param>
+		/// <param name="part"></param>
+		private void WritePartId(Stream fs, Tilepart part)
+		{
+			int id;
+
+			if (part == null)
+			{
+				fs.WriteByte((byte)0);
+			}
+			else if ((id = part.SetId) >= Parts.Count) // wipe crippled part
+			{
+				fs.WriteByte((byte)0);
+				ForceReload = true;
+			}
+			else if ((id += BlanksReservedCount) > (int)Byte.MaxValue) // NOTE: shall be disallowed by the edit-functs
+			{
+				fs.WriteByte((byte)0);
+			}
+			else
+				fs.WriteByte((byte)id);
+		}
+
+		/// <summary>
+		/// Saves the current Routefile.
+		/// </summary>
+		/// <returns>true on success</returns>
+		public bool SaveRoutes()
+		{
+			return Routes.SaveRoutes();
+		}
+
+		/// <summary>
+		/// Exports the routes to a different file.
+		/// </summary>
+		/// <param name="pf">path-file w/out extension</param>
+		public void ExportRoutes(string pf)
+		{
+			Routes.ExportRoutes(pf + GlobalsXC.RouteExt);
+		}
+		#endregion Methods (save/write)
 
 
 		#region Methods (routenodes)
@@ -497,9 +510,9 @@ namespace XCom
 		/// </summary>
 		public void ClearRouteNodes()
 		{
-			for (int lev = 0; lev != MapSize.Levs; ++lev)
-			for (int row = 0; row != MapSize.Rows; ++row)
-			for (int col = 0; col != MapSize.Cols; ++col)
+			for (int lev = 0; lev != Levs; ++lev)
+			for (int row = 0; row != Rows; ++row)
+			for (int col = 0; col != Cols; ++col)
 			{
 				Tiles.GetTile(col, row, lev).Node = null;
 			}
@@ -573,151 +586,158 @@ namespace XCom
 		#endregion Methods (terrain)
 
 
-		#region Methods (static)
+		#region Methods
 		/// <summary>
-		/// Writes default Map and blank Route files.
-		/// IMPORTANT: Call this funct only if the Mapfile does *not* exist.
-		/// This funct does *not* create backup files!
+		/// Gets a MapTile object using col,row,lev values.
 		/// </summary>
-		/// <param name="pfeMap"></param>
-		/// <param name="pfeRoutes"></param>
-		/// <returns>true on success</returns>
-		public static bool CreateDefault(string pfeMap, string pfeRoutes)
+		/// <param name="col"></param>
+		/// <param name="row"></param>
+		/// <param name="lev"></param>
+		/// <returns>the corresponding MapTile object</returns>
+		public MapTile GetTile(int col, int row, int lev)
 		{
-			using (var fs = FileService.CreateFile(pfeMap)) // create a default Map-file and release its handle.
-			if (fs != null)
+			return Tiles.GetTile(col, row, lev);
+		}
+		/// <summary>
+		/// Gets a MapTile object at the current level using col,row values.
+		/// </summary>
+		/// <param name="col"></param>
+		/// <param name="row"></param>
+		/// <returns>the corresponding MapTile object</returns>
+		public MapTile GetTile(int col, int row)
+		{
+			return Tiles.GetTile(col, row, Level);
+		}
+
+
+		/// <summary>
+		/// Changes the view-level and fires the LevelSelected event.
+		/// </summary>
+		/// <param name="dir">+1 is down, -1 is up</param>
+		public void ChangeLevel(int dir)
+		{
+			switch (dir)
 			{
-				fs.WriteByte((byte)10); // rows // default new Map size ->
-				fs.WriteByte((byte)10); // cols
-				fs.WriteByte((byte) 1); // levs
+				case LEVEL_Dn:
+					if (Level != Levs - 1)
+						++Level;
+					break;
 
-				for (int r = 0; r != 10; ++r)
-				for (int c = 0; c != 10; ++c)
-				{
-					fs.WriteByte((byte)0);
-				}
-
-				using (var fsRoutes = FileService.CreateFile(pfeRoutes)) // create a blank Route-file and release its handle.
-				{}
-
-				return true; // ie. don't worry too much about successful creation of the Routesfile.
+				case LEVEL_Up:
+					if (Level != 0)
+						--Level;
+					break;
 			}
-			return false;
-		}
-		#endregion Methods (static)
-
-
-		#region Methods (save/write)
-		/// <summary>
-		/// Saves the current Mapfile.
-		/// </summary>
-		/// <returns>true on success</returns>
-		public bool SaveMap()
-		{
-			return WriteMapfile(_pfe);
 		}
 
-		/// <summary>
-		/// Exports the Map to a different file.
-		/// </summary>
-		/// <param name="pf">path-file w/out extension</param>
-		public void ExportMap(string pf)
-		{
-			WriteMapfile(pf + GlobalsXC.MapExt);
-		}
 
 		/// <summary>
-		/// Writes a Mapfile.
+		/// Generates occultation data for all tiles in the Map.
 		/// </summary>
-		/// <param name="pfe">path-file-extension</param>
-		/// <returns>true on success</returns>
-		private bool WriteMapfile(string pfe)
+		/// <param name="forceVis">true to force visibility</param>
+		public void CalculateOccultations(bool forceVis = false)
 		{
-			string pfeT;
-			if (File.Exists(pfe))
-				pfeT = pfe + GlobalsXC.TEMPExt;
-			else
-				pfeT = pfe;
-
-			bool fail = true;
-			using (var fs = FileService.CreateFile(pfeT))
-			if (fs != null)
+			if (Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
 			{
-				fail = false;
+//				MapTile tile;
 
-				fs.WriteByte((byte)MapSize.Rows); // http://www.ufopaedia.org/index.php/MAPS
-				fs.WriteByte((byte)MapSize.Cols); // - says this header is "height, width and depth (in that order)"
-				fs.WriteByte((byte)MapSize.Levs); //   ie. y/x/z
-
-				// NOTE: User is disallowed from placing any tilepart with an id
-				// greater than MapFile.MaxTerrainId.
-
-				// TODO: Ask user before NOT writing crippled partids.
-
-				MapTile tile;
-				for (int lev = 0; lev != MapSize.Levs; ++lev)
-				for (int row = 0; row != MapSize.Rows; ++row)
-				for (int col = 0; col != MapSize.Cols; ++col)
+				for (int lev = Levs - 1; lev != 0; --lev)
+				for (int row = 0; row != Rows - 2; ++row)
+				for (int col = 0; col != Cols - 2; ++col)
 				{
-					tile = Tiles.GetTile(col, row, lev);
+//					if ((tile = Tiles.GetTile(col, row, lev)) != null) // safety. The tile should always be valid.
+//					{
+//						tile.Occulted = !forceVis
+//									 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
+//
+//									 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
+//									 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
+//
+//									 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
+//									 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
+//
+//									 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
+//									 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
+//									 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
+//									 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
+//					}
+					Tiles.GetTile(col, row, lev).Occulted = !forceVis
+														 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
 
-					WritePartId(fs, tile.Floor);
-					WritePartId(fs, tile.West);
-					WritePartId(fs, tile.North);
-					WritePartId(fs, tile.Content);
+														 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
+														 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
+
+														 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
+														 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
+
+														 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
+														 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
+														 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
+														 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
 				}
 			}
-
-			if (!fail && pfeT != pfe)
-				return FileService.ReplaceFile(pfe);
-
-			return !fail;
 		}
 
 		/// <summary>
-		/// Writes a tilepart's id to the Filestream.
+		/// Gets the Map's dimensions as a string to print in MainView's
+		/// statusbar.
 		/// </summary>
-		/// <param name="fs"></param>
-		/// <param name="part"></param>
-		private void WritePartId(Stream fs, Tilepart part)
+		/// <returns></returns>
+		public string GetSizeString()
 		{
-			int id;
-
-			if (part == null)
-			{
-				fs.WriteByte((byte)0);
-			}
-			else if ((id = part.SetId) >= Parts.Count) // wipe crippled part
-			{
-				fs.WriteByte((byte)0);
-				ForceReload = true;
-			}
-			else if ((id += BlanksReservedCount) > (int)Byte.MaxValue) // NOTE: shall be disallowed by the edit-functs
-			{
-				fs.WriteByte((byte)0);
-			}
-			else
-				fs.WriteByte((byte)id);
+			return Cols + ", " + Rows + ", " + Levs;
 		}
 
 		/// <summary>
-		/// Saves the current Routefile.
+		/// Gets the copyable text that is displayed in an Infobox when a
+		/// tileset has parts that exceed the terrainset count.
 		/// </summary>
-		/// <returns>true on success</returns>
-		public bool SaveRoutes()
+		/// <returns></returns>
+		private string GetCopyableWarning()
 		{
-			return Routes.SaveRoutes();
-		}
+			string L = Environment.NewLine;
 
-		/// <summary>
-		/// Exports the routes to a different file.
-		/// </summary>
-		/// <param name="pf">path-file w/out extension</param>
-		public void ExportRoutes(string pf)
-		{
-			Routes.ExportRoutes(pf + GlobalsXC.RouteExt);
+			bool singular = (TerrainsetCountExceeded == 1);
+
+			string copyable0 = "There " + (singular ? "is " : "are ") + TerrainsetCountExceeded + " tilepart"
+							 + (singular ? String.Empty : "s") + " that exceed" + (singular ? "s" : String.Empty)
+							 + " the bounds of the Map's currently allocated MCD records. "
+							 + (singular ? "It" : "They") + " will be replaced by" + (singular ? " a" : String.Empty)
+							 + " temporary tilepart" + (singular ? String.Empty : "s") + " and displayed on"
+							 + " the Map as borked yellow sprites.";
+			copyable0 = Infobox.SplitString(copyable0) + L + L;
+
+			string copyable1 = "Note that borked parts that are in floor-slots could"
+							 + " get hidden beneath valid content-parts, etc.";
+			copyable1 = Infobox.SplitString(copyable1) + L + L;
+
+			string copyable2 = "IMPORTANT: Saving the Map in its current state would forever lose"
+							 + " those tilepart references. But if you know what terrain(s) have"
+							 + " gone rogue they can be added to the Map's terrainset with the"
+							 + " TilesetEditor. Or if you know how many records have been removed"
+							 + " from the terrainset the ids of the rogue parts can be shifted"
+							 + " down into a valid range.";
+			copyable2 = Infobox.SplitString(copyable2) + L + L;
+
+			string copyable3 = "It's recommended to resolve this issue immediately.";
+			copyable3 = Infobox.SplitString(copyable3) + L + L;
+
+			string copyable4 = "(a) save the Mapfile hence deleting the rogue tileparts" + L
+							 + "(b) add terrains to the terrainset in the TilesetEditor" + L
+							 + "(c) add tileparts to allocated terrains externally"      + L
+							 + "(d) use TilepartSubstitution to shift ids down"          + L + L;
+
+			string copyable = copyable0
+							+ "TopView|Test|Test parts in tileslots" + L + L
+							+ copyable1
+							+ copyable2
+							+ "MainView|Edit|TilepartSubstitution" + L + L
+							+ copyable3
+							+ copyable4
+							+ "Pronto!";
+			return copyable;
 		}
-		#endregion Methods (save/write)
+		#endregion Methods
 
 
 		#region Methods (resize)
@@ -745,7 +765,7 @@ namespace XCom
 
 			MapTileArray tiles = MapResizeService.GetTileArray(
 															cols, rows, levs,
-															MapSize,
+															Cols, Rows, Levs,
 															Tiles,
 															zType);
 			if (tiles != null)
@@ -757,8 +777,8 @@ namespace XCom
 				{
 					bit |= CHANGED_NOD;
 
-					int delta = (levs - MapSize.Levs);	// NOTE: Map levels are inverted so adding or subtracting levels
-														// to the top needs to push any existing node-levels down or up.
+					int delta = (levs - Levs);	// NOTE: Map levels are inverted so adding or subtracting levels
+												// to the top needs to push any existing node-levels down or up.
 					foreach (RouteNode node in Routes)
 					{
 						if (node.Lev < 128) // allow nodes that are OoB to come back into view
@@ -771,7 +791,10 @@ namespace XCom
 					}
 				}
 
-				MapSize = new MapSize(cols, rows, levs);
+				Cols = cols;
+				Rows = rows;
+				Levs = levs;
+
 				Tiles = tiles;
 
 				if (RouteCheckService.CheckNodeBounds(this) == DialogResult.Yes)

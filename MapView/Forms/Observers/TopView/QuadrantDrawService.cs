@@ -510,7 +510,7 @@ namespace MapView.Forms.Observers
 
 			int c = location.Col;
 			int r = location.Row;
-			int l = file.MapSize.Levs - file.Level;
+			int l = file.Levs - file.Level;
 
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (!MainViewF.Optionables.Base1_z) { --l; }
@@ -544,7 +544,7 @@ namespace MapView.Forms.Observers
 		{
 			int c = location.X;
 			int r = location.Y;
-			int l = file.MapSize.Levs - file.Level;
+			int l = file.Levs - file.Level;
 
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (!MainViewF.Optionables.Base1_z) { --l; }

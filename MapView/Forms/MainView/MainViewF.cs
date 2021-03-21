@@ -1488,14 +1488,14 @@ namespace MapView
 					}
 
 					string digits = String.Empty;
-					int levs = file.MapSize.Levs;
+					int levs = file.Levs;
 					do
 					{ digits += "0"; }
 					while ((levs /= 10) != 0);
 
 					string suffix = String.Format(
 												"_L{0:" + digits + "}",
-												file.MapSize.Levs - file.Level);
+												file.Levs - file.Level);
 					sfd.FileName = file.Descriptor.Label + suffix;
 
 					if (!Directory.Exists(_lastScreenshotDirectory))
@@ -1531,19 +1531,18 @@ namespace MapView
 
 
 			MapFile file = MainViewUnderlay.MapFile;
-			MapSize size = file.MapSize;
 			int level = file.Level;
 
-			int width = size.Rows + size.Cols;
+			int width = file.Rows + file.Cols;
 			using (var b = BitmapService.CreateTransparent(
 														width * ConstHalfWidth,
-														width * ConstHalfHeight + (size.Levs - level) * Layers,
+														width * ConstHalfHeight + (file.Levs - level) * Layers,
 														file.Descriptor.Pal.Table))
 			{
 				if (b != null)
 				{
 					var start = new Point(
-										(size.Rows - 1) * ConstHalfWidth,
+										(file.Rows - 1) * ConstHalfWidth,
 									   -(level * Layers));
 
 					MapTileArray tiles = file.Tiles;
@@ -1552,13 +1551,13 @@ namespace MapView
 						Tilepart part;
 						MapTile tile;
 
-						for (int l = size.Levs - 1; l >= level; --l)
+						for (int l = file.Levs - 1; l >= level; --l)
 						{
 							for (int
 									r = 0,
 										startX = start.X,
 										startY = start.Y + l * Layers;
-									r != size.Rows;
+									r != file.Rows;
 									++r,
 										startX -= ConstHalfWidth,
 										startY += ConstHalfHeight)
@@ -1567,7 +1566,7 @@ namespace MapView
 										c = 0,
 											x = startX,
 											y = startY;
-										c != size.Cols;
+										c != file.Cols;
 										++c,
 											x += ConstHalfWidth,
 											y += ConstHalfHeight)
@@ -1672,9 +1671,9 @@ namespace MapView
 						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
 						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
 
-						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.MapSize.Levs);
+						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
 
-						tsslDimensions   .Text = file.MapSize.ToString();
+						tsslDimensions   .Text = file.GetSizeString();
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
@@ -3217,13 +3216,13 @@ namespace MapView
 						MainViewUnderlay.MapFile = file;
 
 						ObserverManager.ToolFactory.EnableAutoscale();
-						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.MapSize.Levs);
+						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
 
 						Text = TITLE + " " + descriptor.Basepath;
 						if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
 
 						tsslMapLabel     .Text = descriptor.Label;
-						tsslDimensions   .Text = file.MapSize.ToString();
+						tsslDimensions   .Text = file.GetSizeString();
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
@@ -3533,7 +3532,7 @@ namespace MapView
 
 				int c = file.Location.Col;
 				int r = file.Location.Row;
-				int l = file.MapSize.Levs - file.Level;
+				int l = file.Levs - file.Level;
 
 				if (Optionables.Base1_xy) { ++c; ++r; }
 				if (!Optionables.Base1_z) { --l; }

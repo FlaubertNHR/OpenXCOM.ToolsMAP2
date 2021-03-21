@@ -255,9 +255,9 @@ namespace MapView.Forms.Observers
 			Tilepart part;
 			McdRecord record;
 
-			for (int l = 0; l != MapFile.MapSize.Levs; ++l)
-			for (int r = 0; r != MapFile.MapSize.Rows; ++r)
-			for (int c = 0; c != MapFile.MapSize.Cols; ++c)
+			for (int l = 0; l != MapFile.Levs; ++l)
+			for (int r = 0; r != MapFile.Rows; ++r)
+			for (int c = 0; c != MapFile.Cols; ++c)
 			{
 				tile = MapFile.GetTile(c,r,l);
 				if (!tile.Vacant)
@@ -361,7 +361,7 @@ namespace MapView.Forms.Observers
 				PartType parttype,
 				int id)
 		{
-			lev = MapFile.MapSize.Levs - lev; // invert.
+			lev = MapFile.Levs - lev; // invert.
 
 			if (MainViewF.Optionables.Base1_xy) { ++col; ++row; }
 			if (!MainViewF.Optionables.Base1_z) { --lev; }

@@ -167,8 +167,8 @@ namespace MapView
 			if (_icons != null && _pal != null)
 			{
 				using (var icon = new Bitmap(
-										_file.MapSize.Cols * 16,
-										_file.MapSize.Rows * 16,
+										_file.Cols * 16,
+										_file.Rows * 16,
 										PixelFormat.Format8bppIndexed))
 				{
 					var data = icon.LockBits(
@@ -199,7 +199,7 @@ namespace MapView
 						switch (Aspect)
 						{
 							default: //case Layer.@default
-								zStrt = _file.MapSize.Levs - 1;
+								zStrt = _file.Levs - 1;
 								zStop = _file.Level;
 								break;
 
@@ -209,7 +209,7 @@ namespace MapView
 								break;
 
 							case Layer.locked:
-								zStrt = _file.MapSize.Levs - 1;
+								zStrt = _file.Levs - 1;
 								zStop = 0;
 								break;
 						}
@@ -217,8 +217,8 @@ namespace MapView
 						int iconsTotal = _icons.Length / ScanGicon.Length_ScanG;
 
 						for (int z = zStrt; z >= zStop; --z)
-						for (int y = 0; y != _file.MapSize.Rows; ++y)
-						for (int x = 0; x != _file.MapSize.Cols; ++x)
+						for (int y = 0; y != _file.Rows; ++y)
+						for (int x = 0; x != _file.Cols; ++x)
 						{
 							ptrPixel = pos + (x * 16) + (y * 16 * data.Stride);
 
@@ -356,8 +356,8 @@ namespace MapView
 			SetResources();
 
 			ClientSize = new Size(
-								_file.MapSize.Cols * 16 + 2,
-								_file.MapSize.Rows * 16 + 2);
+								_file.Cols * 16 + 2,
+								_file.Rows * 16 + 2);
 
 			Refresh(); // req'd. if loading a Mapfile iff this viewer is already instantiated.
 		}
@@ -384,7 +384,7 @@ namespace MapView
 		/// </summary>
 		internal void SetTitle()
 		{
-			int level = _file.MapSize.Levs - _file.Level;
+			int level = _file.Levs - _file.Level;
 			if (!MainViewF.Optionables.Base1_z) --level;
 
 			Text = "ScanG - "

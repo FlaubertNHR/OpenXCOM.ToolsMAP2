@@ -99,11 +99,11 @@ namespace MapView
 			tb_Lev1.BackColor = Color.Azure;
 
 			tb_Row0.Text =
-			tb_Row1.Text = file.MapSize.Rows.ToString();
+			tb_Row1.Text = file.Rows.ToString();
 			tb_Col0.Text =
-			tb_Col1.Text = file.MapSize.Cols.ToString();
+			tb_Col1.Text = file.Cols.ToString();
 			tb_Lev0.Text =
-			tb_Lev1.Text = file.MapSize.Levs.ToString();
+			tb_Lev1.Text = file.Levs.ToString();
 
 			btn_Cancel.Select();
 		}
@@ -208,7 +208,7 @@ namespace MapView
 				{
 					if (levels > 0)
 					{
-						int delta = (levels - _file.MapSize.Levs);
+						int delta = (levels - _file.Levs);
 						if (cb_Ceil.Visible = cb_Ceil.Enabled = (delta != 0))
 						{
 							if (delta > 0) cb_Ceil.Text = "add to top";

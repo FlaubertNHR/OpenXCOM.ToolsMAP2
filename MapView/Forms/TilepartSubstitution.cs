@@ -124,13 +124,9 @@ namespace MapView
 			MapTile tile;
 			Tilepart part;
 
-			int cols = file.MapSize.Cols;
-			int rows = file.MapSize.Rows;
-			int levs = file.MapSize.Levs;
-
-			for (int lev = 0; lev != levs; ++lev)
-			for (int row = 0; row != rows; ++row)
-			for (int col = 0; col != cols; ++col)
+			for (int lev = 0; lev != file.Levs; ++lev)
+			for (int row = 0; row != file.Rows; ++row)
+			for (int col = 0; col != file.Cols; ++col)
 			{
 				if (!(tile = file.GetTile(col, row, lev)).Vacant)
 				{

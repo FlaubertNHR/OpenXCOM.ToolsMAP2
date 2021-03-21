@@ -382,7 +382,7 @@ namespace MapView.Forms.MainView
 			if (file != null)
 			{
 				file.ChangeLevel(MapFile.LEVEL_Dn);
-				EnableLevelers(file.Level, file.MapSize.Levs);
+				EnableLevelers(file.Level, file.Levs);
 			}
 		}
 
@@ -397,7 +397,7 @@ namespace MapView.Forms.MainView
 			if (file != null)
 			{
 				file.ChangeLevel(MapFile.LEVEL_Up);
-				EnableLevelers(file.Level, file.MapSize.Levs);
+				EnableLevelers(file.Level, file.Levs);
 			}
 		}
 		#endregion Events (level)

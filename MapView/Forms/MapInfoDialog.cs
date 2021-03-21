@@ -193,9 +193,9 @@ namespace MapView
 
 			gbInfo.Text = " " + _file.Descriptor.Label + " ";
 
-			int cols = _file.MapSize.Cols;
-			int rows = _file.MapSize.Rows;
-			int levs = _file.MapSize.Levs;
+			int cols = _file.Cols;
+			int rows = _file.Rows;
+			int levs = _file.Levs;
 
 			lbl2_Dimensions.Text = cols + " x "
 								 + rows + " x "

@@ -110,7 +110,7 @@ namespace MapView.Forms.Observers
 			else if (delta > 0) dir = MapFile.LEVEL_Dn;
 			MapFile.ChangeLevel(dir);
 
-			ObserverManager.ToolFactory.EnableLevelers(MapFile.Level, MapFile.MapSize.Levs);
+			ObserverManager.ToolFactory.EnableLevelers(MapFile.Level, MapFile.Levs);
 		}
 		#endregion Events (override)
 
