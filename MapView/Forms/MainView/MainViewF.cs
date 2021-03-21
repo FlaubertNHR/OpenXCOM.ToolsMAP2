@@ -738,7 +738,7 @@ namespace MapView
 					_foptions = new OptionsForm(
 											Optionables,
 											Options,
-											OptionsForm.OptionableType.MainView);
+											OptionableType.MainView);
 					_foptions.Text = "MainView Options";
 
 					OptionsManager.Views.Add(_foptions);
@@ -1721,12 +1721,12 @@ namespace MapView
 							shift = Int32.MaxValue;
 							break;
 
-						case TilepartSubstitution.RadioSelected.Desti:
+						case TilepartSubstitutionType.Desti:
 							dst   = TilepartSubstitution.dst;
 							shift = Int32.MaxValue;
 							break;
 
-						case TilepartSubstitution.RadioSelected.Shift:
+						case TilepartSubstitutionType.Shift:
 							dst   = Int32.MaxValue;
 							shift = TilepartSubstitution.shift;
 							break;
@@ -2786,7 +2786,7 @@ namespace MapView
 				string labelTileset  = String.Empty;
 
 				using (var f = new TilesetEditor(
-											TilesetEditor.TilesetEditType.AddTileset,
+											TilesetEditType.AddTileset,
 											labelGroup,
 											labelCategory,
 											labelTileset))
@@ -2822,7 +2822,7 @@ namespace MapView
 				string labelTileset  = MapTree.SelectedNode.Text;
 
 				using (var f = new TilesetEditor(
-											TilesetEditor.TilesetEditType.EditTileset,
+											TilesetEditType.EditTileset,
 											labelGroup,
 											labelCategory,
 											labelTileset))

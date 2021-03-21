@@ -13,6 +13,16 @@ using XCom;
 namespace MapView
 {
 	/// <summary>
+	/// The possible dialog-types.
+	/// </summary>
+	internal enum TilesetEditType
+	{
+		AddTileset,
+		EditTileset
+	}
+
+
+	/// <summary>
 	/// This is the Tileset Editor for MapView ii. It replaces the Paths Editor
 	/// of MapView i.
 	/// </summary>
@@ -21,15 +31,6 @@ namespace MapView
 			Form
 	{
 		#region Enums
-		/// <summary>
-		/// The possible dialog-types.
-		/// </summary>
-		internal enum TilesetEditType
-		{
-			AddTileset,
-			EditTileset
-		}
-
 		/// <summary>
 		/// The possible add-types.
 		/// </summary>

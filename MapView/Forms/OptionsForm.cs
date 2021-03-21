@@ -10,6 +10,15 @@ using MapView.Forms.Observers;
 
 namespace MapView
 {
+	internal enum OptionableType
+	{
+		MainView,
+		TileView,
+		TopView,
+		RouteView
+	}
+
+
 	/// <summary>
 	/// An Options form.
 	/// </summary>
@@ -17,15 +26,6 @@ namespace MapView
 		:
 			Form
 	{
-		internal enum OptionableType
-		{
-			MainView,
-			TileView,
-			TopView,
-			RouteView
-		}
-
-
 		#region Fields (static)
 		private const string GridViewEdit = "GridViewEdit";	// the currently edited field
 		private const string DocComment   = "DocComment";	// the Description area

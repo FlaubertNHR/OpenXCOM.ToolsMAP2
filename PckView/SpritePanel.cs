@@ -100,7 +100,7 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// 
+		/// Clears <see cref="Palid"/> when the cursor leaves this panel.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
@@ -110,10 +110,13 @@ namespace PckView
 
 		/// <summary>
 		/// Handles a mousedown event on the editor-panel.
-		/// EditMode.Enabled: changes a clicked pixel's palette-id (color) to
-		/// whatever the current 'PaletteId' is in PalettePanel.
-		/// EditMode.Locked: changes the 'PaletteId' in the PalettePanel to
-		/// whatever a clicked pixel's palette-id (color) is.
+		/// 
+		/// <see cref="EditMode.Enabled">EditMode.Enabled</see>: changes a
+		/// clicked pixel's palette-id (color) to whatever the current
+		/// 'PaletteId' is in PalettePanel.
+		/// <see cref="EditMode.Locked">EditMode.Locked</see>: changes the
+		/// 'PaletteId' in the PalettePanel to whatever a clicked pixel's
+		/// palette-id (color) is.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -134,7 +137,7 @@ namespace PckView
 				{
 					switch (SpriteEditorF.Mode)
 					{
-						case SpriteEditorF.EditMode.Enabled: // paint ->
+						case EditMode.Enabled: // paint ->
 							if (_feditor._f.SetType != PckViewF.Type.LoFT)
 							{
 								int palid = _feditor._fpalette.PalPanel.Palid;
@@ -207,7 +210,7 @@ namespace PckView
 							}
 							break;
 
-						case SpriteEditorF.EditMode.Locked: // eye-dropper ->
+						case EditMode.Locked: // eye-dropper ->
 							_feditor._fpalette.PalPanel.SelectPalid(Sprite.Bindata[binid]);
 							break;
 					}

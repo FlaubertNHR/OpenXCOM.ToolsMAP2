@@ -9,14 +9,17 @@ using XCom;
 
 namespace MapView
 {
+	internal enum TilepartSubstitutionType
+	{ Clear, Desti, Shift }
+
+
+	/// <summary>
+	/// A dialog that allows the user to change or shift tilepart-ids.
+	/// </summary>
 	internal sealed class TilepartSubstitution
 		:
 			Form
 	{
-		internal enum RadioSelected
-		{ Clear, Desti, Shift }
-
-
 		#region Fields (static)
 		private static int _x = -1;
 		private static int _y;
@@ -26,7 +29,7 @@ namespace MapView
 		internal static int dst   = Int32.MaxValue;
 		internal static int shift = Int32.MaxValue;
 
-		internal static RadioSelected rb_selected = RadioSelected.Clear;
+		internal static TilepartSubstitutionType rb_selected = TilepartSubstitutionType.Clear;
 		#endregion Fields (static)
 
 
@@ -104,9 +107,9 @@ namespace MapView
 
 			switch (rb_selected) // fire rb_CheckedChanged()
 			{
-				case RadioSelected.Clear: rb_clear.Checked = true; break;
-				case RadioSelected.Desti: rb_dst  .Checked = true; break;
-				case RadioSelected.Shift: ForceBlasterInitShift(); break; //rb_shift.Checked = true;
+				case TilepartSubstitutionType.Clear: rb_clear.Checked = true; break;
+				case TilepartSubstitutionType.Desti: rb_dst  .Checked = true; break;
+				case TilepartSubstitutionType.Shift: ForceBlasterInitShift(); break; //rb_shift.Checked = true;
 			}
 
 			tb_Src0.Select(); // set '_text'
@@ -239,7 +242,7 @@ namespace MapView
 				{
 					if (rb == rb_clear)
 					{
-						rb_selected = RadioSelected.Clear;
+						rb_selected = TilepartSubstitutionType.Clear;
 
 						tb_dst  .Enabled =
 						tb_shift.Enabled = false;
@@ -249,7 +252,7 @@ namespace MapView
 					}
 					else if (rb == rb_dst)
 					{
-						rb_selected = RadioSelected.Desti;
+						rb_selected = TilepartSubstitutionType.Desti;
 
 						tb_dst  .Enabled = true;
 						tb_shift.Enabled = false;
@@ -259,7 +262,7 @@ namespace MapView
 					}
 					else //if (rb == rb_shift)
 					{
-						rb_selected = RadioSelected.Shift;
+						rb_selected = TilepartSubstitutionType.Shift;
 
 						tb_dst  .Enabled = false;
 						tb_shift.Enabled = true;

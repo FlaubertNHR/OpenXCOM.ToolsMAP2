@@ -299,7 +299,7 @@ namespace MapView.Forms.Observers
 					_foptions = new OptionsForm(
 											Optionables,
 											Options,
-											OptionsForm.OptionableType.TileView);
+											OptionableType.TileView);
 					_foptions.Text = "TileView Options";
 
 					OptionsManager.Views.Add(_foptions);

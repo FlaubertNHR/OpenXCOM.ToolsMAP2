@@ -11,19 +11,17 @@ using XCom;
 
 namespace PckView
 {
+	internal enum EditMode
+	{
+		Locked,
+		Enabled
+	}
+
+
 	internal sealed class SpriteEditorF
 		:
 			Form
 	{
-		#region Enums
-		internal enum EditMode
-		{
-			Locked,
-			Enabled
-		}
-		#endregion Enums
-
-
 		#region Fields (static)
 		internal static bool BypassActivatedEvent;
 		#endregion Fields (static)
