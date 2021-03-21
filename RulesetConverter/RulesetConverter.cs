@@ -113,7 +113,7 @@ namespace RulesetConverter
 						for (int i = text.Length - 1; i != -1; --i)
 						{
 							if (!IsValidAscii((int)text[i]))
-								text.Remove(i,1);
+								text = text.Remove(i,1);
 						}
 						tb_Label.Text = text;
 					}
@@ -307,7 +307,7 @@ namespace RulesetConverter
 											terrainset = keyvals[key] as YamlSequenceNode;
 											foreach (var terrain in terrainset)
 											{
-												if (terrain.ToString().ToLowerInvariant() != "blanks")
+												if (terrain.ToString().ToUpperInvariant() != "BLANKS")
 													terrains.Add(terrain.ToString());
 											}
 										}
@@ -519,7 +519,7 @@ namespace RulesetConverter
 		/// <returns></returns>
 		/// <remarks>really not sure - have to look at how Group-label is used
 		/// by the Maptree.</remarks>
-		private bool IsValidAscii(int val)
+		private static bool IsValidAscii(int val)
 		{
 			return val > 31 && val != 34 && val < 127;
 		}
@@ -529,7 +529,7 @@ namespace RulesetConverter
 		/// </summary>
 		/// <param name="len"></param>
 		/// <returns></returns>
-		private string Padder(int len)
+		private static string Padder(int len)
 		{
 			string pad = String.Empty;
 			if (len < 79)
