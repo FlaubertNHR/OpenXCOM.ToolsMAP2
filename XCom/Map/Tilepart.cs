@@ -347,7 +347,7 @@ namespace XCom
 												bytesPck,
 												bytesTab);
 
-					foreach (var sprite in MonotoneSprites.Sprites) // change nontransparent pixels to color ->
+					foreach (XCImage sprite in MonotoneSprites.Sprites) // change nontransparent pixels to color ->
 					{
 						for (int i = 0; i != sprite.Bindata.Length; ++i)
 						{
