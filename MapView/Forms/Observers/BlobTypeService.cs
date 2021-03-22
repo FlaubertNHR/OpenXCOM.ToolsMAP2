@@ -39,7 +39,7 @@ namespace MapView.Forms.Observers
 	internal static class BlobTypeService
 	{
 		#region Fields (static)
-		private static List<byte> _loftList;
+		private static IList<byte> _loftList;
 		#endregion Fields (static)
 
 

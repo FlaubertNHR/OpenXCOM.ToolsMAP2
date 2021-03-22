@@ -202,7 +202,7 @@ namespace XCom
 		/// <summary>
 		/// Used by MapView.BlobDrawService.
 		/// </summary>
-		public List<byte> LoftList
+		public IList<byte> LoftList
 		{
 			get
 			{
