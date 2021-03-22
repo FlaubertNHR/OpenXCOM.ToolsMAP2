@@ -25,8 +25,8 @@ namespace XCom
 
 
 		#region Properties
-		private List<XCImage> _sprites = new List<XCImage>();
-		public List<XCImage> Sprites
+		private IList<XCImage> _sprites = new List<XCImage>();
+		public IList<XCImage> Sprites
 		{
 			get { return _sprites; }
 		}

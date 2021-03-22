@@ -24,7 +24,7 @@ namespace XCom
 		/// </summary>
 		/// <remarks>It has relevance only for MapInfoDialog and
 		/// MainViewOptionables.SelectedTileColor/SelectedTileToner.</remarks>
-		public static List<Spriteset> Spritesets
+		public static IList<Spriteset> Spritesets
 		{
 			get { return _spritesets; }
 		}
