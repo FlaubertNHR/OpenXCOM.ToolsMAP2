@@ -353,11 +353,11 @@ namespace McdView
 		private bool _isTer;
 
 		/// <summary>
-		/// Clones a tilepart and its sprites from the Copier's partset (and
-		/// spriteset) to the Main partset (and spriteset).
+		/// Clones a tilepart and its sprites from the Copier's recordset (and
+		/// spriteset) to the Main recordset (and spriteset).
 		/// </summary>
-		/// <param name="id_src">the id of the part in the Copier partset</param>
-		/// <param name="id_dst">the id of the part in the Main partset</param>
+		/// <param name="id_src">the id of the part in the Copier recordset</param>
+		/// <param name="id_dst">the id of the part in the Main recordset</param>
 		private void addPart(int id_src, int id_dst)
 		{
 			if (!_ial_PartIds.ContainsKey(id_src))

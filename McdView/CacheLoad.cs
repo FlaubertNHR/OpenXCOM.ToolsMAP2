@@ -104,9 +104,9 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Checks if a specified partset has changed.
+		/// Checks if a specified recordset has changed.
 		/// </summary>
-		/// <param name="parts">a partset to test</param>
+		/// <param name="parts">a recordset to test</param>
 		/// <returns></returns>
 		internal static bool Changed(Tilepart[] parts)
 		{
@@ -130,8 +130,8 @@ namespace McdView
 		/// Checks if a specific value is Cached.
 		/// </summary>
 		/// <param name="val">a value to check</param>
-		/// <param name="i">the partset id to check against</param>
-		/// <param name="j">the part id to check against</param>
+		/// <param name="i">the recordset-id to check against</param>
+		/// <param name="j">the record-id to check against</param>
 		/// <returns>true if cached</returns>
 		internal static bool Cached(int val, int i, int j)
 		{
