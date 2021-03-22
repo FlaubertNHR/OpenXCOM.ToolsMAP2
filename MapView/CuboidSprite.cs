@@ -81,7 +81,7 @@ namespace MapView
 
 			int d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value here.
 
-			byte[] bindata = Cursorset[id].Bindata;
+			byte[] bindata = Cursorset[id].GetBindata();
 
 			IList<Brush> brushes = Palette.BrushesUfoBattle;
 			int palid;
@@ -135,7 +135,7 @@ namespace MapView
 		{
 			int d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value here.
 
-			byte[] bindata = Cursorset[7].Bindata;
+			byte[] bindata = Cursorset[7].GetBindata();
 
 			IList<Brush> brushes = Palette.BrushesUfoBattle;
 			int palid;

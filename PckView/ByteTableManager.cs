@@ -109,7 +109,7 @@ namespace PckView
 				int wrapCount = 0;
 				int row       = 0;
 
-				foreach (byte b in _sprite.Bindata)
+				foreach (byte b in _sprite.GetBindata())
 				{
 					if (wrapCount % XCImage.SpriteWidth == 0)
 					{

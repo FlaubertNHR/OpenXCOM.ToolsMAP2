@@ -1747,28 +1747,28 @@ namespace MapView.Forms.MainView
 			if (_visFloor && (part = tile.Floor) != null)
 			{
 				DrawSprite(
-						part[_phase].Bindata,
+						part[_phase].GetBindata(),
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (_visWest && (part = tile.West) != null)
 			{
 				DrawSprite(
-						part[_phase].Bindata,
+						part[_phase].GetBindata(),
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (_visNorth && (part = tile.North) != null)
 			{
 				DrawSprite(
-						part[_phase].Bindata,
+						part[_phase].GetBindata(),
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (_visContent && (part = tile.Content) != null)
 			{
 				DrawSprite(
-						part[_phase].Bindata,
+						part[_phase].GetBindata(),
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 		}

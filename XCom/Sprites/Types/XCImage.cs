@@ -28,15 +28,17 @@ namespace XCom
 		#endregion Fields (static)
 
 
-		#region Properties
+		#region Fields
 		/// <summary>
 		/// A byte array containing the (uncompressed) sprite-pixels as
 		/// palette-indices.
 		/// </summary>
 		/// <remarks>Byte arrays get initialized w/ "0" by default.</remarks>
-		public byte[] Bindata
-		{ get; internal protected set; }
+		private byte[] _bindata;
+		#endregion Fields
 
+
+		#region Properties
 		public int Id
 		{ get; set; }
 
@@ -57,11 +59,11 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// SetId is used only by 'MapInfoDialog'.
-		/// @note It is set in the PckSprite cTor if necessary.
+		/// The SetId is set in the <see cref="PckSprite"/> cTor if necessary.
 		/// </summary>
+		/// <remarks>SetId is used only by 'MapInfoDialog'.</remarks>
 		public int SetId
-		{ get; internal protected set; }
+		{ get; protected set; }
 		#endregion Properties
 
 
@@ -87,17 +89,17 @@ namespace XCom
 			Id = id;
 			SetId = -1; // used only by MapInfo
 
-			Bindata = bindata;
+			_bindata = bindata;
 
 			Pal = pal;
 
-			if (Pal != null)								// NOTE: this is to check for a call by BitmapService.CreateSprite()
-				Sprite = BitmapService.CreateSprite(		// which is called by
-												width,		// BitmapService.CreateSpriteset() and
-												height,		// several PckViewF contextmenu events
-												Bindata,	// BUT: the call by PckSprite..cTor initializer needs to decode
-												Pal.Table);	// the file-data first, then it creates its own 'Image'.
-		}													// that's why i prefer pizza.
+			if (Pal != null)									// NOTE: this is to check for a call by BitmapService.CreateSprite()
+				Sprite = BitmapService.CreateSprite(			// which is called by
+												width,			// BitmapService.CreateSpriteset() and
+												height,			// several PckViewF contextmenu events
+												GetBindata(),	// BUT: the call by PckSprite..cTor initializer needs to decode
+												Pal.Table);		// the file-data first, then it creates its own 'Image'.
+		}														// that's why i prefer pizza.
 
 		/// <summary>
 		/// cTor[1]. For clone. See PckSprite..cTor[1] and .Duplicate().
@@ -109,14 +111,37 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
+		/// Sets bindata.
+		/// </summary>
+		/// <param name="bindata"></param>
+		/// <remarks>Don't use a property setter - ca1044 - fxCop doesn't like
+		/// writeonly properties.</remarks>
+		protected void SetBindata(byte[] bindata)
+		{
+			_bindata = bindata;
+		}
+
+		/// <summary>
+		/// Gets bindata.
+		/// </summary>
+		/// <returns></returns>
+		/// <remarks>Don't use a property getter - ca1819 - without changing the
+		/// type to a collection.</remarks>
+		public byte[] GetBindata()
+		{
+			return _bindata;
+		}
+
+
+		/// <summary>
 		/// Checks if all bytes are the transparent id #0.
 		/// </summary>
 		/// <returns>true if all palette refs are tid</returns>
 		public bool Istid()
 		{
-			for (int i = 0; i != Bindata.Length; ++i)
+			for (int i = 0; i != GetBindata().Length; ++i)
 			{
-				if (Bindata[i] != Palette.Tid)
+				if (GetBindata()[i] != Palette.Tid)
 					return false;
 			}
 			return true;
@@ -130,12 +155,52 @@ namespace XCom
 		/// </summary>
 		public void Dispose()
 		{
-			Sprite.Dispose();
+//			Sprite.Dispose();
+//
+//			var sprite = this as PckSprite;
+//			if (sprite != null && sprite.SpriteToned != null)
+//				sprite.SpriteToned.Dispose();
 
-			var sprite = this as PckSprite;
-			if (sprite != null && sprite.SpriteToned != null)
-				sprite.SpriteToned.Dispose();
+			// fxCop ca1063
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 		#endregion Methods (IDisposable)
+
+
+		#region fxCop ca1063
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				if (Sprite != null)
+				{
+					Sprite.Dispose();
+					Sprite = null; // pointless.
+				}
+
+				var sprite = this as PckSprite; // TODO: dispose this in PckSprite
+				if (sprite != null && sprite.SpriteToned != null)
+				{
+					sprite.SpriteToned.Dispose();
+					sprite.SpriteToned = null; // pointless.
+				}
+			}
+
+//			if (nativeResource != IntPtr.Zero)
+//			{
+//				Marshal.FreeHGlobal(nativeResource);
+//				nativeResource = IntPtr.Zero;
+//			}
+		}
+
+		// NOTE: Leave out the finalizer altogether if this class doesn't own
+		// unmanaged resources itself but leave the other methods exactly as
+		// they are.
+//		~XCImage()
+//		{
+//			Dispose(false);
+//		}
+		#endregion fxCop ca1063
 	}
 }

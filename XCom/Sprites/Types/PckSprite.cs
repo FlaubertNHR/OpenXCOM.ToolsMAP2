@@ -58,7 +58,8 @@ namespace XCom
 		/// tile toner.
 		/// </summary>
 		public Bitmap SpriteToned
-		{ get; private set; }
+//		{ get; private set; }
+		{ get; internal set; } // see XCImage.Dispose(bool)
 		#endregion Properties
 
 
@@ -108,14 +109,14 @@ namespace XCom
 						break;
 
 					default:
-						if (dst >= Bindata.Length)
+						if (dst >= GetBindata().Length)
 						{
 							//LogFile.WriteLine(". . FAIL dst= " + dst);
 							_spriteset.Fail |= Spriteset.FAIL_OF_SPRITE;
 							return;
 						}
 
-						Bindata[dst++] = bindata[src];
+						GetBindata()[dst++] = bindata[src];
 						//LogFile.WriteLine(". dst= " + dst);
 						break;
 				}
@@ -124,7 +125,7 @@ namespace XCom
 			Sprite = BitmapService.CreateSprite(
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
-											Bindata,
+											GetBindata(),
 											Pal.Table);
 
 			// do NOT create ANY tone-scaled sprites for PckView or McdView nor
@@ -133,7 +134,7 @@ namespace XCom
 				SpriteToned = BitmapService.CreateSprite(
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,
-													Bindata,
+													GetBindata(),
 													Pal.GrayScale.Table); // default to grayscale.
 		}
 
@@ -160,9 +161,9 @@ namespace XCom
 			int tran = 0;
 			bool first = true;
 
-			for (int id = 0; id != sprite.Bindata.Length; ++id)
+			for (int id = 0; id != sprite.GetBindata().Length; ++id)
 			{
-				byte b = sprite.Bindata[id];
+				byte b = sprite.GetBindata()[id];
 
 				if (b == Palette.Tid)
 				{
@@ -240,11 +241,11 @@ namespace XCom
 
 			ret += Id + Environment.NewLine;
 
-			for (int i = 0; i != Bindata.Length; ++i)
+			for (int i = 0; i != GetBindata().Length; ++i)
 			{
-				ret += Bindata[i];
+				ret += GetBindata()[i];
 
-				switch (Bindata[i])
+				switch (GetBindata()[i])
 				{
 					case MarkerEos:
 						ret += Environment.NewLine;
@@ -302,7 +303,8 @@ namespace XCom
 			sprite.SetId = -1;
 
 			// XCImage vars
-			sprite.Bindata     = Bindata.Clone() as byte[];
+			sprite.SetBindata(GetBindata().Clone() as byte[]);
+
 			sprite.Sprite      = ObjectCopier.Clone<Bitmap>(Sprite);		// workaround for Bitmap's clone/copy/new shenanigans
 			sprite.SpriteToned = ObjectCopier.Clone<Bitmap>(SpriteToned);	// workaround for Bitmap's clone/copy/new shenanigans
 			sprite.Pal         = Pal;

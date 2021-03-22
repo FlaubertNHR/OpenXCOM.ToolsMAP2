@@ -545,7 +545,7 @@ namespace MapView.Forms.Observers
 						{
 							if (MainViewF.Optionables.UseMono)
 							{
-								bindata = sprite.Bindata;
+								bindata = sprite.GetBindata();
 
 								int palid;
 								int i = -1;

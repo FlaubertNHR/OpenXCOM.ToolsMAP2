@@ -36,7 +36,7 @@ namespace XCom
 			Sprite = BitmapService.CreateSprite(
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
-											Bindata,
+											GetBindata(),
 											Pal.Table);
 		}
 		#endregion cTor

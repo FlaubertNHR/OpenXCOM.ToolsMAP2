@@ -619,7 +619,7 @@ namespace XCom
 				for (int id = 0; id != iconset.Count; ++id)
 				{
 					icon = iconset[id];
-					fs.Write(icon.Bindata, 0, icon.Bindata.Length);
+					fs.Write(icon.GetBindata(), 0, icon.GetBindata().Length);
 				}
 			}
 
@@ -660,7 +660,7 @@ namespace XCom
 					BitArray bits;
 					int b;
 
-					for (int i = 0; i != icon.Bindata.Length; i += 16)
+					for (int i = 0; i != icon.GetBindata().Length; i += 16)
 					{
 						// Look don't ask it appears to work ...
 
@@ -668,7 +668,7 @@ namespace XCom
 						bits = new BitArray(8);
 						for (int j = 15; j != 7; --j, ++b)
 						{
-							if (icon.Bindata[i + j] != 0)
+							if (icon.GetBindata()[i + j] != 0)
 								bits[b] = true;
 							else
 								bits[b] = false;
@@ -680,7 +680,7 @@ namespace XCom
 						bits = new BitArray(8);
 						for (int j = 7; j != -1; --j, ++b)
 						{
-							if (icon.Bindata[i + j] != 0)
+							if (icon.GetBindata()[i + j] != 0)
 								bits[b] = true;
 							else
 								bits[b] = false;

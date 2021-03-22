@@ -349,15 +349,15 @@ namespace XCom
 
 					foreach (XCImage sprite in MonotoneSprites.Sprites) // change nontransparent pixels to color ->
 					{
-						for (int i = 0; i != sprite.Bindata.Length; ++i)
+						for (int i = 0; i != sprite.GetBindata().Length; ++i)
 						{
-							if (sprite.Bindata[i] != Palette.Tid)
-								sprite.Bindata[i] = (byte)(96); // light brown/yellowy
+							if (sprite.GetBindata()[i] != Palette.Tid)
+								sprite.GetBindata()[i] = (byte)(96); // light brown/yellowy
 						}
 						sprite.Sprite = BitmapService.CreateSprite(
 																XCImage.SpriteWidth32,
 																XCImage.SpriteHeight40,
-																sprite.Bindata,
+																sprite.GetBindata(),
 																sprite.Pal.Table);
 					}
 				}
