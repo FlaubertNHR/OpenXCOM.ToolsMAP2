@@ -65,7 +65,7 @@ namespace MapView.Forms.Observers
 		private static bool _inited;
 
 		private static ImageAttributes _attribs = new ImageAttributes();
-		private static List<Brush>     _brushes = new List<Brush>();
+		private static IList<Brush>    _brushes = new List<Brush>();
 
 		private static SolidBrush _swatchbrushWest;
 		private static SolidBrush _swatchbrushNorth;

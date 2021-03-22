@@ -518,7 +518,7 @@ namespace MapView.Forms.Observers
 				XCImage sprite;
 
 				byte[] bindata;
-				List<Brush> brushes;
+				IList<Brush> brushes;
 				if (MainViewF.Optionables.UseMono)
 				{
 					if (MainViewUnderlay.that.MapFile.Descriptor.GroupType == GameType.Tftd)

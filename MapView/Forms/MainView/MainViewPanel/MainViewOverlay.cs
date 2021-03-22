@@ -125,7 +125,7 @@ namespace MapView.Forms.MainView
 		/// Mono). Can be either UfoBattle palette brushes or TftdBattle
 		/// palette brushes.
 		/// </summary>
-		internal List<Brush> SpriteBrushes
+		internal IList<Brush> SpriteBrushes
 		{ private get; set; }
 
 		internal SolidBrush BrushLayer

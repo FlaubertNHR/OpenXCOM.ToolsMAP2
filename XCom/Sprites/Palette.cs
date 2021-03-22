@@ -77,8 +77,18 @@ namespace XCom
 		/// </summary>
 		private const string BLUE  = "#blue";
 
-		public static readonly List<Brush> BrushesUfoBattle  = new List<Brush>(); // used by Mono only
-		public static readonly List<Brush> BrushesTftdBattle = new List<Brush>(); // used by Mono only
+
+		private static readonly IList<Brush> _brushesUfoBattle = new List<Brush>();
+		public static IList<Brush> BrushesUfoBattle
+		{
+			get { return _brushesUfoBattle; }
+		}
+
+		private static readonly IList<Brush> _brushesTftdBattle = new List<Brush>();
+		public static IList<Brush> BrushesTftdBattle
+		{
+			get { return _brushesTftdBattle; }
+		}
 		#endregion Fields (static)
 
 
@@ -90,8 +100,8 @@ namespace XCom
 		#region Properties (static)
 		/// <summary>
 		/// The "ufo-battle" palette _Embedded in this assembly.
-		/// @note Is used throughout MapView.
 		/// </summary>
+		/// <remarks>Is used throughout MapView.</remarks>
 		public static Palette UfoBattle
 		{
 			get
@@ -110,8 +120,8 @@ namespace XCom
 
 		/// <summary>
 		/// The "ufo-geo" palette _Embedded in this assembly.
-		/// @note Is used by PckView only.
 		/// </summary>
+		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette UfoGeo
 		{
 			get
@@ -127,8 +137,8 @@ namespace XCom
 
 		/// <summary>
 		/// The "ufo-graph" palette _Embedded in this assembly.
-		/// @note Is used by PckView only.
 		/// </summary>
+		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette UfoGraph
 		{
 			get
@@ -144,8 +154,8 @@ namespace XCom
 
 		/// <summary>
 		/// The "ufo-research" palette _Embedded in this assembly.
-		/// @note Is used by PckView only.
 		/// </summary>
+		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette UfoResearch
 		{
 			get
@@ -161,8 +171,8 @@ namespace XCom
 
 		/// <summary>
 		/// The "tftd-battle" palette _Embedded in this assembly.
-		/// @note Is used throughout MapView.
 		/// </summary>
+		/// <remarks>Is used throughout MapView.</remarks>
 		public static Palette TftdBattle
 		{
 			get
@@ -181,8 +191,8 @@ namespace XCom
 
 		/// <summary>
 		/// The "tftd-geo" palette _Embedded in this assembly.
-		/// @note Is used by PckView only.
 		/// </summary>
+		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette TftdGeo
 		{
 			get
@@ -198,8 +208,8 @@ namespace XCom
 
 		/// <summary>
 		/// The "tftd-graph" palette _Embedded in this assembly.
-		/// @note Is used by PckView only.
 		/// </summary>
+		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette TftdGraph
 		{
 			get
@@ -215,8 +225,8 @@ namespace XCom
 
 		/// <summary>
 		/// The "tftd-research" palette _Embedded in this assembly.
-		/// @note Is used by PckView only.
 		/// </summary>
+		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette TftdResearch
 		{
 			get
@@ -232,8 +242,8 @@ namespace XCom
 
 		/// <summary>
 		/// The "binary" palette _Embedded in this assembly.
-		/// @note Is used by PckView only.
 		/// </summary>
+		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette Binary
 		{
 			get

@@ -83,7 +83,7 @@ namespace MapView
 
 			byte[] bindata = Cursorset[id].Bindata;
 
-			List<Brush> brushes = Palette.BrushesUfoBattle;
+			IList<Brush> brushes = Palette.BrushesUfoBattle;
 			int palid;
 
 			int i = -1, h,w;
@@ -137,7 +137,7 @@ namespace MapView
 
 			byte[] bindata = Cursorset[7].Bindata;
 
-			List<Brush> brushes = Palette.BrushesUfoBattle;
+			IList<Brush> brushes = Palette.BrushesUfoBattle;
 			int palid;
 
 			int i = -1, h,w;
