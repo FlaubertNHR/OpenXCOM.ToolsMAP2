@@ -76,6 +76,12 @@ namespace XCom
 		/// The suffix for the (key)label of the bluescaled version of this palette.
 		/// </summary>
 		private const string BLUE  = "#blue";
+
+		/// <summary>
+		/// Bypasses creating tone-scaled subpalettes if this Palette is created
+		/// by PckView or McdView.
+		/// </summary>
+		private static bool _bypassTonescales;
 		#endregion Fields (static)
 
 
@@ -260,14 +266,6 @@ namespace XCom
 		{
 			get { return _brushesTftdBattle; }
 		}
-
-
-		/// <summary>
-		/// Bypass creating tone-scaled subpalettes if this Palette is created
-		/// by PckView or McdView.
-		/// </summary>
-		public static bool BypassTonescales
-		{ private get; set; }
 		#endregion Properties (static)
 
 
@@ -364,7 +362,7 @@ namespace XCom
 													Int32.Parse(rgb[2]));
 				}
 
-				if (createTonescales && !BypassTonescales)
+				if (createTonescales && !_bypassTonescales)
 					CreateTonescaledPalettes(Label);
 			}
 		}
@@ -427,7 +425,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets a luminance value (roughly).
+		/// Gets a brightness value (roughly).
 		/// </summary>
 		/// <param name="red"></param>
 		/// <param name="green"></param>
@@ -503,6 +501,16 @@ namespace XCom
 			{
 				BrushesTftdBattle.Add(new SolidBrush(color));
 			}
+		}
+
+		/// <summary>
+		/// Bypasses creating tone-scaled subpalettes if this Palette is created
+		/// by PckView or McdView.
+		/// </summary>
+		/// <param name="bypass"></param>
+		public static void BypassTonescales(bool bypass)
+		{
+			_bypassTonescales = bypass;
 		}
 		#endregion Methods (static)
 

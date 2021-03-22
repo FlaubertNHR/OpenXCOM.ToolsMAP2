@@ -403,7 +403,7 @@ namespace PckView
 			// instantiated and these are just pointers in which case
 			// 'BypassTonescales' is irrelevant
 
-			Palette.BypassTonescales = true;
+			Palette.BypassTonescales(true);
 
 			var pals = new List<Palette>();
 			pals.Add(Palette.UfoBattle);
@@ -415,7 +415,7 @@ namespace PckView
 			pals.Add(Palette.TftdGraph);
 			pals.Add(Palette.TftdResearch);
 
-			Palette.BypassTonescales = false;
+			Palette.BypassTonescales(false);
 
 
 			MenuItem it;
