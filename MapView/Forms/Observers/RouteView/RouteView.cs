@@ -1436,8 +1436,8 @@ namespace MapView.Forms.Observers
 										_file.Rows,
 										_file.Levs))
 			{
-				RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
-				RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
+				RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
+				RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);
 
 				if (RouteCheckService.dialog_InvalidNode(_file, node) == DialogResult.Yes)
 				{
@@ -1935,8 +1935,8 @@ namespace MapView.Forms.Observers
 							_file.Routes = routes;
 							_file.SetupRouteNodes();
 
-							RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
-							RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
+							RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
+							RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);
 
 							if (RouteCheckService.CheckNodeBounds(_file) == DialogResult.Yes)
 							{
@@ -2173,8 +2173,8 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnTestPositionsClick(object sender, EventArgs e)
 		{
-			RouteCheckService.Base1_xy = MainViewF.Optionables.Base1_xy; // send the base1-count options to 'XCom' ->
-			RouteCheckService.Base1_z  = MainViewF.Optionables.Base1_z;
+			RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
+			RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);
 
 			if (RouteCheckService.CheckNodeBounds(_file, true) == DialogResult.Yes)
 			{

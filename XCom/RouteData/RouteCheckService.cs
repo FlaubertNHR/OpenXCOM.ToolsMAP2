@@ -24,16 +24,30 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Holds the MainView option "Base1_xy" for use here.
+		/// Holds the MainView option 'Base1_xy' for use here.
 		/// </summary>
-		public static bool Base1_xy
-		{ internal get; set; }
+		private static bool _base1_xy;
+
+		internal static bool Base1_xy
+		{ get { return _base1_xy; } }
+
+		public static void SetBase1_xy(bool base1)
+		{
+			_base1_xy = base1;
+		}
 
 		/// <summary>
-		/// Holds the MainView option "Base1_z" for use here.
+		/// Holds the MainView option 'Base1_z' for use here.
 		/// </summary>
-		public static bool Base1_z
-		{ internal get; set; }
+		private static bool _base1_z;
+
+		internal static bool Base1_z
+		{ get { return _base1_z; } }
+
+		public static void SetBase1_z(bool base1)
+		{
+			_base1_z = base1;
+		}
 		#endregion Properties (static)
 
 
