@@ -2,11 +2,11 @@ namespace XCom
 {
 	/// <summary>
 	/// A struct that associates any object with a readable label.
-	/// @note This could be deleted and done w/ Tuple or Dictionary or HashTable
-	/// or SortedSet or whatever. Hence 'Pterodactyl'. Because it should go the
-	/// way of the dinosaurs.
 	/// </summary>
-	public struct Pterodactyl
+	/// <remarks>This could be deleted and done w/ Tuple or Dictionary or
+	/// HashTable or SortedSet or whatever. Hence 'Pterodactyl'. Because it
+	/// should go the way of the dinosaurs.</remarks>
+	public class Pterodactyl
 	{
 		#region Fields
 		/// <summary>
@@ -17,10 +17,10 @@ namespace XCom
 
 
 		#region Properties
+		private readonly object _o;
 		/// <summary>
 		/// Anything - it's boxed.
 		/// </summary>
-		private readonly object _o;
 		public object O
 		{
 			get { return _o; }
@@ -51,9 +51,6 @@ namespace XCom
 		{
 			return _label;
 		}
-
-		// TODO: override Equals()
-		// TODO: override operators == and !=
 		#endregion Methods (override)
 	}
 }
