@@ -76,19 +76,6 @@ namespace XCom
 		/// The suffix for the (key)label of the bluescaled version of this palette.
 		/// </summary>
 		private const string BLUE  = "#blue";
-
-
-		private static readonly IList<Brush> _brushesUfoBattle = new List<Brush>();
-		public static IList<Brush> BrushesUfoBattle
-		{
-			get { return _brushesUfoBattle; }
-		}
-
-		private static readonly IList<Brush> _brushesTftdBattle = new List<Brush>();
-		public static IList<Brush> BrushesTftdBattle
-		{
-			get { return _brushesTftdBattle; }
-		}
 		#endregion Fields (static)
 
 
@@ -254,6 +241,26 @@ namespace XCom
 				return _palettes[binary] as Palette;
 			}
 		}
+
+
+		private static readonly IList<Brush> _brushesUfoBattle = new List<Brush>();
+		/// <summary>
+		/// Brushes for MainViewF.Optionables.UseMono.
+		/// </summary>
+		public static IList<Brush> BrushesUfoBattle
+		{
+			get { return _brushesUfoBattle; }
+		}
+
+		private static readonly IList<Brush> _brushesTftdBattle = new List<Brush>();
+		/// <summary>
+		/// Brushes for MainViewF.Optionables.UseMono.
+		/// </summary>
+		public static IList<Brush> BrushesTftdBattle
+		{
+			get { return _brushesTftdBattle; }
+		}
+
 
 		/// <summary>
 		/// Bypass creating tone-scaled subpalettes if this Palette is created
