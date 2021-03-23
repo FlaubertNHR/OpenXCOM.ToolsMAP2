@@ -31,7 +31,11 @@ namespace XCom
 		private const string techie    = "7 : Technician";
 		private const string ter2      = "8 : Terrorist2";
 
-		private const string RankInvalid = "INVALID"; // WORKAROUND for several bugged Route files in TftD.
+		/// <summary>
+		/// Workaround for several bugged Route-files in TftD.
+		/// </summary>
+		/// <remarks>TODO: Repeat this pattern for the other Route-file vars.</remarks>
+		private const string RankInvalid = "INVALID";
 
 		private const string none0 =  "0 : None";
 		private const string lolo0 =  "0 : LoLo";
