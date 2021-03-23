@@ -414,12 +414,13 @@ namespace McdView
 						pal.Entries[Palette.Tid] = Color.Transparent;
 						icon.Palette = pal;
 
+						var panel = sender as Panel;
 						_graphics.DrawImage(
 										icon,
 										new Rectangle(
 													0,0,
-													(sender as Panel).Width,
-													(sender as Panel).Height),
+													panel.Width,
+													panel.Height),
 										0,0, icon.Width, icon.Height,
 										GraphicsUnit.Pixel,
 										Ia);
