@@ -179,7 +179,7 @@ namespace XCom
 					Sprite = null; // pointless.
 				}
 
-				var sprite = this as PckSprite; // TODO: dispose this in PckSprite
+				var sprite = this as PckSprite; // TODO: dispose this in PckSprite - not so fast.
 				if (sprite != null && sprite.SpriteToned != null)
 				{
 					sprite.SpriteToned.Dispose();

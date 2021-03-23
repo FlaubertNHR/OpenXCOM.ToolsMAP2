@@ -314,5 +314,13 @@ namespace XCom
 			return sprite;
 		}
 		#endregion Methods
+
+
+//		#region disposal
+//		protected override void Dispose(bool disposing)
+//		{
+//			// NOTE: Do not dispose '_spriteset'.
+//		}
+//		#endregion disposal
 	}
 }
