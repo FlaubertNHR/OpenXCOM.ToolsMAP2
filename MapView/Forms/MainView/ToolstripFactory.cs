@@ -14,10 +14,10 @@ namespace MapView.Forms.MainView
 			IDisposable
 	{
 		#region Fields
-		private readonly List<ToolStripButton> _editors = new List<ToolStripButton>(); // all edit-buttons except the pasters
-		private readonly List<ToolStripButton> _pasters = new List<ToolStripButton>();
-		private readonly List<ToolStripButton> _downrs  = new List<ToolStripButton>();
-		private readonly List<ToolStripButton> _uppers  = new List<ToolStripButton>();
+		private readonly IList<ToolStripButton> _editors = new List<ToolStripButton>(); // all edit-buttons except the pasters
+		private readonly IList<ToolStripButton> _pasters = new List<ToolStripButton>();
+		private readonly IList<ToolStripButton> _downrs  = new List<ToolStripButton>();
+		private readonly IList<ToolStripButton> _uppers  = new List<ToolStripButton>();
 
 		// The instantiations of toolstrip-objects that are classvars are for
 		// MainView, while the toolstrip-objects for TopView and

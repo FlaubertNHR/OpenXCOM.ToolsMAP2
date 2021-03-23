@@ -90,7 +90,7 @@ namespace MapView.Forms.MainView
 		/// (BringAllToFront).</remarks>
 		internal static IList<Form> getZorderList()
 		{
-			var zOrder = new List<Form>();
+			IList<Form> zOrder = new List<Form>();
 			foreach (var f in _zOrder) // don't screw with the iteration of '_zOrder' if MainViewF.OnActivated()
 				if (f.Visible)
 					zOrder.Add(f);
