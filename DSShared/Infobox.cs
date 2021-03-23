@@ -304,7 +304,7 @@ namespace DSShared
 		public static string SplitString(string text, int width = 60)
 		{
 			string[] array = text.Split(new[]{' '}, StringSplitOptions.RemoveEmptyEntries);
-			IList<string> words = new List<string>(array);
+			var words = new List<string>(array);
 
 			var sb = new StringBuilder();
 

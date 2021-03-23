@@ -17,7 +17,7 @@ namespace McdView
 	{
 		#region Fields
 		// containers for InsertAfterLast ->
-		private readonly List<Tilepart>      _ial_PartsList = new List<Tilepart>();
+		private readonly List<Tilepart>      _ial_PartsList = new List<Tilepart>(); // List req'd.
 		private readonly Dictionary<int,int> _ial_PartIds   = new Dictionary<int,int>();
 		private readonly Dictionary<int,int> _ial_SpriteIds = new Dictionary<int,int>();
 		#endregion Fields

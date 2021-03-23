@@ -72,7 +72,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Used by <see cref="UpdateNodeInformation"/>.
 		/// </summary>
-		private readonly List<object> _linksList = new List<object>();
+		private readonly List<object> _linksList = new List<object>(); // List req'd.
 
 		/// <summary>
 		/// Used by <see cref="UpdateNodeInformation"/>.
