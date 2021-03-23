@@ -151,7 +151,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="tb">a TextBox to check the text of</param>
 		/// <returns>true if the textbox's text is valid</returns>
-		private bool TryParseText(Control tb)
+		private static bool TryParseText(Control tb)
 		{
 			if (!String.IsNullOrEmpty(tb.Text))
 			{
@@ -196,7 +196,7 @@ namespace McdView
 		/// Gets a generic description for the aniphase fields.
 		/// </summary>
 		/// <returns></returns>
-		private string GetPhaseDescription()
+		private static string GetPhaseDescription()
 		{
 			return " Terrain sprites typically cycle through eight phases"
 				 + " (sliding doors are static at phase 1 - see #30 isSlidingDoor).";
@@ -610,7 +610,7 @@ namespace McdView
 			}
 		}
 
-		private string GetLoftDescription()
+		private static string GetLoftDescription()
 		{
 			return " Line of Fire Templates (LoFTs) are representations of solid voxel-space"
 				 + " (white in the graphical icons to the right). A 3d-tile in XCOM has"

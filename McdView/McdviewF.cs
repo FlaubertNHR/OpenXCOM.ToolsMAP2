@@ -3018,7 +3018,7 @@ namespace McdView
 		/// <param name="x">the minimum accepted value</param>
 		/// <param name="y">the maximum accepted value</param>
 		/// <returns></returns>
-		private bool Test(int val, int x, int y)
+		private static bool Test(int val, int x, int y)
 		{
 			return (val >= x && val <= y);
 		}
