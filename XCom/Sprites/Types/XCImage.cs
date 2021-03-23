@@ -22,9 +22,6 @@ namespace XCom
 
 		public const  int ScanGside      =  4; // for ScanG icon dimensions in PckView
 		public const  int LoFTside       = 16; // for LoFT  icon dimensions in PckView
-
-		public static int SpriteWidth    = 32; // these two change depending on the type of spriteset ->
-		public static int SpriteHeight   = 40; // their initial values are only defaults
 		#endregion Fields (static)
 
 
@@ -36,6 +33,29 @@ namespace XCom
 		/// <remarks>Byte arrays get initialized w/ "0" by default.</remarks>
 		private byte[] _bindata;
 		#endregion Fields
+
+
+		#region Properties (static)
+		private static int _width = 32;
+		/// <summary>
+		/// The current width of a Pck sprite depends on the type of spriteset.
+		/// </summary>
+		public static int SpriteWidth
+		{
+			get { return _width; }
+			set { _width = value; }
+		}
+
+		private static int _height = 40;
+		/// <summary>
+		/// The current height of a Pck sprite depends on the type of spriteset.
+		/// </summary>
+		public static int SpriteHeight
+		{
+			get { return _height; }
+			set { _height = value; }
+		}
+		#endregion Properties (static)
 
 
 		#region Properties
