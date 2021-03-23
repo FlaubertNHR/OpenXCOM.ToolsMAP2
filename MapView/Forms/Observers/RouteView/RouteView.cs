@@ -597,7 +597,7 @@ namespace MapView.Forms.Observers
 		{
 			//LogFile.WriteLine("RouteView.OnRouteControlMouseMove()");
 
-			RouteControl._pos = new Point(args.X, args.Y);
+			RouteControl.SetOver(new Point(args.X, args.Y));
 
 			SetInfoOverText();
 
@@ -1248,7 +1248,7 @@ namespace MapView.Forms.Observers
 				btnGo.Enabled = enable;
 				btnGo.Text = text ? Go : String.Empty;
 
-				RouteControl.SpotPosition = new Point(-1,-1);
+				RouteControl.SetSpot(new Point(-1,-1));
 
 				if (Tag as String == "ROUTE")
 				{
@@ -1460,7 +1460,7 @@ namespace MapView.Forms.Observers
 
 				SelectNode(dest);
 
-				SpotGoDestination(slot); // highlight back to the startnode.
+				SpotDestination(slot); // highlight back to the startnode.
 			}
 
 			RouteControl.Select();
@@ -1519,7 +1519,7 @@ namespace MapView.Forms.Observers
 				case "L4": slot = 3; break;
 				default:   slot = 4; break; // tag == "L5"
 			}
-			SpotGoDestination(slot); // TODO: RouteView/TopRouteView(Route)
+			SpotDestination(slot); // TODO: RouteView/TopRouteView(Route)
 		}
 
 		/// <summary>
@@ -1527,14 +1527,14 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="slot">the link-slot whose destination should get
 		/// highlighted</param>
-		private void SpotGoDestination(int slot)
+		private void SpotDestination(int slot)
 		{
 			if (NodeSelected != null && NodeSelected[slot] != null) // safety: Go should not be enabled unless a node is selected.
 			{
 				byte dest = NodeSelected[slot].Destination;
 				if (dest != Link.NotUsed)
 				{
-					int c, r;
+					int c,r;
 					switch (dest)
 					{
 						case Link.ExitNorth: c = r = -2; break;
@@ -1549,7 +1549,7 @@ namespace MapView.Forms.Observers
 							break;
 					}
 	
-					RouteControl.SpotPosition = new Point(c, r); // TODO: static - RouteView/TopRouteView(Route)
+					RouteControl.SetSpot(new Point(c,r)); // TODO: static - RouteView/TopRouteView(Route)
 
 					RouteControl.Refresh();
 //					RefreshControls();
@@ -1557,14 +1557,24 @@ namespace MapView.Forms.Observers
 			}
 		}
 
+		/// <summary>
+		/// Clears the spot position when the cursor leaves a link-control.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnLinkMouseLeave(object sender, EventArgs e)
 		{
-			RouteControl.SpotPosition = new Point(-1, -1);
+			RouteControl.SetSpot(new Point(-1,-1));
 
 			RouteControl.Refresh();
 //			RefreshControls();
 		}
 
+		/// <summary>
+		/// Selects the appropriate route-node when an Og button is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnOgClick(object sender, EventArgs e)
 		{
 			if (_ogId < _file.Routes.Nodes.Count) // in case nodes were deleted.
@@ -1581,12 +1591,17 @@ namespace MapView.Forms.Observers
 			RouteControl.Select();
 		}
 
+		/// <summary>
+		/// Spots a route-node when the cursor enters an Og button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnOgMouseEnter(object sender, EventArgs e)
 		{
 			if (_ogId < _file.Routes.Nodes.Count) // in case nodes were deleted.
 			{
 				var node = _file.Routes[_ogId];
-				RouteControl.SpotPosition = new Point(node.Col, node.Row);
+				RouteControl.SetSpot(new Point(node.Col, node.Row));
 
 				RouteControl.Refresh();
 //				RefreshControls();

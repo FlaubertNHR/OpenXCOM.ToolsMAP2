@@ -58,10 +58,36 @@ namespace MapView.Forms.Observers
 		private GraphicsPath _nodeFill = new GraphicsPath();
 
 		/// <summary>
-		/// Tracks the position of the mouse-cursor. Used to position the
-		/// InfoOverlay.
+		/// Tracks the position of the mouse-cursor.
 		/// </summary>
-		internal Point _pos = new Point(-1,-1);
+		/// <remarks>Used to position the InfoOverlay.</remarks>
+		private Point _over = new Point(-1,-1);
+
+		/// <summary>
+		/// Sets the over position.
+		/// </summary>
+		/// <param name="over"></param>
+		/// <remarks>Used to position the InfoOverlay.</remarks>
+		internal void SetOver(Point over)
+		{
+			_over = over;
+		}
+
+		/// <summary>
+		/// The location of the tile that is highlighted by a mouseovered Go
+		/// button.
+		/// </summary>
+		private Point _spot = new Point(-1,-1);
+
+		/// <summary>
+		/// Sets the spot location.
+		/// </summary>
+		/// <param name="spot"></param>
+		/// <remarks>Used to highlight a destination node.</remarks>
+		internal void SetSpot(Point spot)
+		{
+			_spot = spot;
+		}
 		#endregion Fields
 
 
@@ -82,18 +108,6 @@ namespace MapView.Forms.Observers
 		private GraphicsPath LozSpotted
 		{
 			get { return _lozSpotted; }
-		}
-
-
-		private Point _spot = new Point(-1,-1);
-		/// <summary>
-		/// The location of the tile that is highlighted by a mouse-overed Go
-		/// button.
-		/// </summary>
-		internal Point SpotPosition
-		{
-			private get { return _spot; }
-			set { _spot = value; }
 		}
 		#endregion Properties
 
@@ -204,11 +218,11 @@ namespace MapView.Forms.Observers
 					{
 						_graphics.DrawPath(pen, LozSelected);
 
-						if (SpotPosition.X > -1)
+						if (_spot.X > -1)
 						{
 							PathSpottedLozenge(
-											Origin.X + (SpotPosition.X - SpotPosition.Y) * HalfWidth,
-											Origin.Y + (SpotPosition.X + SpotPosition.Y) * HalfHeight);
+											Origin.X + (_spot.X - _spot.Y) * HalfWidth,
+											Origin.Y + (_spot.X + _spot.Y) * HalfHeight);
 							_graphics.DrawPath(pen, LozSpotted); // TODO: Make spotted-pen a separate Option.
 						}
 					}
@@ -389,12 +403,12 @@ namespace MapView.Forms.Observers
 					{
 						var pen = PenLinkSelected;
 
-						if (SpotPosition.X != -1)
+						if (_spot.X != -1)
 						{
 							if (dest != null)
 							{
-								if (   SpotPosition.X != dest.Col
-									|| SpotPosition.Y != dest.Row)
+								if (   _spot.X != dest.Col
+									|| _spot.Y != dest.Row)
 								{
 									pen = PenLink;
 								}
@@ -403,10 +417,10 @@ namespace MapView.Forms.Observers
 							{
 								switch (destId) // see RouteView.SpotGoDestination() for def'n of the following spot-positions
 								{
-									case Link.ExitNorth: if (SpotPosition.X != -2) pen = PenLink; break;
-									case Link.ExitEast:  if (SpotPosition.X != -3) pen = PenLink; break;
-									case Link.ExitSouth: if (SpotPosition.X != -4) pen = PenLink; break;
-									case Link.ExitWest:  if (SpotPosition.X != -5) pen = PenLink; break;
+									case Link.ExitNorth: if (_spot.X != -2) pen = PenLink; break;
+									case Link.ExitEast:  if (_spot.X != -3) pen = PenLink; break;
+									case Link.ExitSouth: if (_spot.X != -4) pen = PenLink; break;
+									case Link.ExitWest:  if (_spot.X != -5) pen = PenLink; break;
 								}
 							}
 						}
@@ -793,7 +807,7 @@ namespace MapView.Forms.Observers
 //				int textHeight = TextRenderer.MeasureText("X", font).Height;
 				int textHeight = (int)_graphics.MeasureString("X", FontOverlay).Height + 1; // pad +1
 				var rect = new Rectangle(
-									_pos.X + 18, _pos.Y,
+									_over.X + 18, _over.Y,
 									textWidth1 + OverlayColPad + textWidth2 + 5, textHeight + 7); // trim right & bottom (else +8 for both w/h)
 
 				if (node != null)
@@ -821,10 +835,10 @@ namespace MapView.Forms.Observers
 				else
 				{
 					if (rect.X + rect.Width > ClientRectangle.Width)
-						rect.X = _pos.X - rect.Width - 8;
+						rect.X = _over.X - rect.Width - 8;
 	
 					if (rect.Y + rect.Height > ClientRectangle.Height)
-						rect.Y = _pos.Y - rect.Height;
+						rect.Y = _over.Y - rect.Height;
 				}
 
 				_graphics.FillRectangle(BrushOverlayBlue, rect);
