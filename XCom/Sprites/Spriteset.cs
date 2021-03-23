@@ -45,9 +45,9 @@ namespace XCom
 
 		/// <summary>
 		/// A bitflagged int containing Fail states - "0" on a successful load.
-		/// @note The caller shall set this spriteset to null if any bits are
-		/// flagged.
 		/// </summary>
+		/// <remarks>The caller shall set this spriteset to null if any bits are
+		/// flagged.</remarks>
 		public int Fail
 		{ get; internal set; }
 
@@ -93,7 +93,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets/sets the <see cref="XCImage"/> at a specified id. Adds a sprite
+		/// Gets/Sets the <see cref="XCImage"/> at a specified id. Adds a sprite
 		/// to the end of the set if the specified id falls outside the bounds
 		/// of the List.
 		/// </summary>
