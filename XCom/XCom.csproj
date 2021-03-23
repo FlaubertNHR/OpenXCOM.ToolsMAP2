@@ -83,6 +83,7 @@
     <Compile Include="Map\MapLocation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RouteData\RouteNodeEnum.cs" />
     <Compile Include="Sprites\EmbeddedService.cs" />
     <Compile Include="Sprites\SpritesetManager.cs">
       <SubType>Code</SubType>
