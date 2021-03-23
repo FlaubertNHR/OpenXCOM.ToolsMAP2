@@ -15,26 +15,28 @@ using XCom;
 
 namespace PckView
 {
+	public enum Type : byte
+	{
+		non,	// default
+
+		Pck,	// a terrain or unit PCK+TAB set is currently loaded.
+				// These are 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword (tftd-unit)
+		Bigobs,	// a Bigobs PCK+TAB set is currently loaded.
+				// Bigobs are 32x48 w/ 2-byte Tabword.
+		ScanG,	// a ScanG iconset is currently loaded.
+				// ScanGs are 4x4 w/ 0-byte Tabword.
+		LoFT	// a LoFT iconset is currently loaded.
+				// LoFTs are 16x16 w/ 0-byte Tabword.
+	}
+
+
+	/// <summary>
+	/// The mainform for PckView.
+	/// </summary>
 	public sealed partial class PckViewF
 		:
 			Form
 	{
-		public enum Type : byte
-		{
-			non,	// default
-
-			Pck,	// a terrain or unit PCK+TAB set is currently loaded.
-					// These are 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword (tftd-unit)
-			Bigobs,	// a Bigobs PCK+TAB set is currently loaded.
-					// Bigobs are 32x48 w/ 2-byte Tabword.
-			ScanG,	// a ScanG iconset is currently loaded.
-					// ScanGs are 4x4 w/ 0-byte Tabword.
-			LoFT	// a LoFT iconset is currently loaded.
-					// LoFTs are 16x16 w/ 0-byte Tabword.
-		}
-		public Type SetType;
-
-
 		#region Delegates
 		internal delegate void PaletteChangedEvent();
 		#endregion Delegates
@@ -46,6 +48,8 @@ namespace PckView
 
 
 		#region Fields (static)
+		internal static string[] _args;
+
 		private const string TITLE    = "PckView";
 
 		private const string Total    = "Total ";
@@ -66,8 +70,6 @@ namespace PckView
 
 
 		#region Fields
-		internal static string[] _args;
-
 		/// <summary>
 		/// True if PckView has been invoked via TileView.
 		/// </summary>
@@ -111,6 +113,21 @@ namespace PckView
 
 
 		#region Properties
+		/// <summary>
+		/// The currently loaded spriteset type.
+		/// </summary>
+		internal Type SetType
+		{ get; private set; }
+
+		/// <summary>
+		/// Sets the <see cref="SetType"/> externally if invoked via TileView.
+		/// </summary>
+		/// <param name="setType"></param>
+		public void SetSpritesetType(Type setType)
+		{
+			SetType = setType;
+		}
+
 		/// <summary>
 		/// The current palette per the Palette menu.
 		/// </summary>
@@ -761,7 +778,7 @@ namespace PckView
 		/// Disposes temporary bitmaps.
 		/// </summary>
 		/// <param name="bs"></param>
-		private void DisposeBitmaps(IList<Bitmap> bs)
+		private static void DisposeBitmaps(IList<Bitmap> bs)
 		{
 			for (int i = bs.Count - 1; i != -1; --i) // not sure if Dispose() needs to be done in reverse order
 			if (bs[i] != null)

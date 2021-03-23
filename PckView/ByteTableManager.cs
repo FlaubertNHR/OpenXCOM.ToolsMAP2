@@ -33,7 +33,7 @@ namespace PckView
 		/// in PckViewF</param>
 		internal static void LoadTable(
 				XCImage sprite,
-				PckViewF.Type setType,
+				Type setType,
 				MethodInvoker callback)
 		{
 			_sprite = sprite;
@@ -68,7 +68,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sprite"></param>
 		/// <param name="setType"></param>
-		internal static void ReloadTable(XCImage sprite, PckViewF.Type setType)
+		internal static void ReloadTable(XCImage sprite, Type setType)
 		{
 			_sprite = sprite;
 
@@ -80,20 +80,20 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Gets a decent size for the table.
 		/// </summary>
 		/// <param name="setType"></param>
 		/// <returns></returns>
-		private static Size SizeTable(PckViewF.Type setType)
+		private static Size SizeTable(Type setType)
 		{
 			switch (setType)
 			{
-//				case PckViewF.Type.non:
-//				case PckViewF.Type.Pck:
-				default:                   return new Size(949, 589);	// Tr w= 924 h= 574
-				case PckViewF.Type.Bigobs: return new Size(949, 701);	// Tr w= 924 h= 686
-				case PckViewF.Type.ScanG:  return new Size(165, 85);	// Tr w= 140 h= 70
-				case PckViewF.Type.LoFT:   return new Size(501, 253);	// Tr w= 476 h= 238
+//				case Type.non:
+//				case Type.Pck:
+				default:          return new Size(949, 589);	// Tr w= 924 h= 574
+				case Type.Bigobs: return new Size(949, 701);	// Tr w= 924 h= 686
+				case Type.ScanG:  return new Size(165, 85);		// Tr w= 140 h= 70
+				case Type.LoFT:   return new Size(501, 253);	// Tr w= 476 h= 238
 			}
 		}
 

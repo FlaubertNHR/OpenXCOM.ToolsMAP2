@@ -207,7 +207,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void popup_Palette(object sender, EventArgs e)
 		{
-			miPalette.Enabled = (_f.SetType != PckViewF.Type.LoFT);
+			miPalette.Enabled = (_f.SetType != Type.LoFT);
 		}
 
 		/// <summary>
@@ -218,7 +218,7 @@ namespace PckView
 		/// <remarks>Has no effect if a LoFTset is loaded.</remarks>
 		private void OnShowPaletteClick(object sender, EventArgs e)
 		{
-			if (_f.SetType != PckViewF.Type.LoFT) // don't allow the Palette to show if editing LoFTs
+			if (_f.SetType != Type.LoFT) // don't allow the Palette to show if editing LoFTs
 			{
 				if (!miPalette.Checked)
 				{

@@ -15,15 +15,15 @@ namespace PckView
 		/// <param name="t">the SetType of the currently loaded spriteset</param>
 		/// <param name="plural">true if multi-file open dialog</param>
 		/// <returns></returns>
-		internal static string GetTitle(PckViewF.Type t, bool plural)
+		internal static string GetTitle(Type t, bool plural)
 		{
 			string title = String.Empty;
 			switch (t)
 			{
-				case PckViewF.Type.Pck:    title = "Select 32x40 8-bpp Image file"; break;
-				case PckViewF.Type.Bigobs: title = "Select 32x48 8-bpp Image file"; break;
-				case PckViewF.Type.ScanG:  title = "Select 4x4 8-bpp Image file";   break;
-				case PckViewF.Type.LoFT:   title = "Select 16x16 8-bpp Image file"; break;
+				case Type.Pck:    title = "Select 32x40 8-bpp Image file"; break;
+				case Type.Bigobs: title = "Select 32x48 8-bpp Image file"; break;
+				case Type.ScanG:  title = "Select 4x4 8-bpp Image file";   break;
+				case Type.LoFT:   title = "Select 16x16 8-bpp Image file"; break;
 			}
 
 			if (plural)
@@ -75,14 +75,14 @@ namespace PckView
 		/// </summary>
 		/// <param name="t"></param>
 		/// <returns></returns>
-		internal static string GetError(PckViewF.Type t)
+		internal static string GetError(Type t)
 		{
 			switch (t)
 			{
-				case PckViewF.Type.Pck:    return "Image needs to be 32x40 8-bpp";
-				case PckViewF.Type.Bigobs: return "Image needs to be 32x48 8-bpp";
-				case PckViewF.Type.ScanG:  return "Image needs to be 4x4 8-bpp";
-				case PckViewF.Type.LoFT:   return "Image needs to be 16x16 8-bpp";
+				case Type.Pck:    return "Image needs to be 32x40 8-bpp";
+				case Type.Bigobs: return "Image needs to be 32x48 8-bpp";
+				case Type.ScanG:  return "Image needs to be 4x4 8-bpp";
+				case Type.LoFT:   return "Image needs to be 16x16 8-bpp";
 			}
 			return String.Empty;
 		}
