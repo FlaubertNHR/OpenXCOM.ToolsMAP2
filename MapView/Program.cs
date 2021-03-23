@@ -7,8 +7,12 @@ namespace MapView
 {
 	static class Program
 	{
+		#region Fields
 		internal static string[] Args;
+		#endregion Fields
 
+
+		#region MainMethod
 		[STAThread]
 		public static void Main(string[] args)
 		{
@@ -19,8 +23,8 @@ namespace MapView
 			CultureInfo.DefaultThreadCurrentCulture   =
 			CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
-			var start = new Startup();
-			start.RunProgram();
+			var start = new Start();
 		}
+		#endregion MainMethod
 	}
 }

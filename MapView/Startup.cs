@@ -10,7 +10,7 @@ namespace MapView
 	/// <summary>
 	/// Class that starts application execution.
 	/// </summary>
-	public class Startup
+	internal class Start
 	{
 		#region Fields
 		private readonly IErrorHandler _errorHandler;
@@ -21,33 +21,18 @@ namespace MapView
 		/// <summary>
 		/// cTor. Initializes a handler for unhandled exceptions.
 		/// </summary>
-		public Startup()
-		{
-			_errorHandler = new ErrorAdapter();
-		}
-		#endregion cTor
-
-
-		#region Methods
-		/// <summary>
-		/// Let's run this puppy.
-		/// </summary>
-		public void RunProgram()
+		internal Start()
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+
+			_errorHandler = new ErrorAdapter();
+
 			Application.ThreadException += Application_ThreadException;
-			try
-			{
-				Application.Run(new MainViewF()); // fly like the wind.
-			}
-			catch (Exception ex)
-			{
-				_errorHandler.HandleException(ex);
-				throw;
-			}
+			Application.Run(new MainViewF()); // fly like the wind.
+			Application.ThreadException -= Application_ThreadException;
 		}
-		#endregion Methods
+		#endregion cTor
 
 
 		#region Events
