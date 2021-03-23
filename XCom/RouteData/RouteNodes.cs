@@ -51,7 +51,7 @@ namespace XCom
 		private const string hi10  = "10 : Hi";
 
 		/// <summary>
-		/// RankUfo Pterodactyls.
+		/// RankUfo <see cref="Pterodactyl">Pterodactyls</see>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] RankUfo =
@@ -69,7 +69,7 @@ namespace XCom
 		};
 
 		/// <summary>
-		/// RankTftd Pterodactyls.
+		/// RankTftd <see cref="Pterodactyl">Pterodactyls</see>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] RankTftd =
@@ -87,7 +87,7 @@ namespace XCom
 		};
 
 		/// <summary>
-		/// Spawn Pterodactyls.
+		/// Spawn <see cref="Pterodactyl">Pterodactyls</see>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Spawn =
@@ -106,7 +106,7 @@ namespace XCom
 		};
 
 		/// <summary>
-		/// Patrol Pterodactyls.
+		/// Patrol <see cref="Pterodactyl">Pterodactyls</see>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Patrol =
@@ -125,7 +125,7 @@ namespace XCom
 		};
 
 		/// <summary>
-		/// Attack Pterodactyls.
+		/// Attack <see cref="Pterodactyl">Pterodactyls</see>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Attack =
