@@ -15,7 +15,7 @@ using XCom;
 
 namespace PckView
 {
-	public enum Type : byte
+	public enum Type
 	{
 		non,	// default
 
