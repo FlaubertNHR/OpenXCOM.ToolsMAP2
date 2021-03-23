@@ -12,7 +12,7 @@ namespace XCom
 	/// This class reads, saves, and generally manages all the information in a
 	/// .RMP file. It's like the parent of RouteNode.
 	/// </summary>
-	public sealed class RouteNodes
+	public sealed class RouteNodes // fxCop ca1710 - wants "RouteNodeCollection"
 		:
 			IEnumerable<RouteNode>
 	{
@@ -244,7 +244,7 @@ namespace XCom
 					string copyable = String.Empty;
 					foreach (byte id in invalids)
 					{
-						if (copyable != String.Empty) copyable += Environment.NewLine;
+						if (copyable.Length != 0) copyable += Environment.NewLine;
 						copyable += id.ToString();
 					}
 
