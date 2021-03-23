@@ -814,13 +814,13 @@ namespace MapView
 		/// <summary>
 		/// Overrides the Activated event. Brings any other open viewers to the
 		/// top of the desktop, along with this. And focuses the panel.
-		/// IMPORTANT: trying to bring this form to the top after the other
-		/// forms apparently fails in Windows 10 - which makes it impossible for
-		/// MainView to gain focus when clicked (if there are other viewers
-		/// open). Hence MainView's option "AllowBringToFront" is FALSE by
-		/// default.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Trying to bring this form to the top after the other forms
+		/// apparently fails in Windows 10 - which makes it impossible for
+		/// MainView to gain focus when clicked (if there are other viewers
+		/// open). Hence <see cref="MainViewOptionables.BringAllToFront">
+		/// MainViewOptionables.BringAllToFront</see> is FALSE by default.</remarks>
 		protected override void OnActivated(EventArgs e)
 		{
 			ShowHideManager._zOrder.Remove(this);
@@ -834,7 +834,7 @@ namespace MapView
 					BypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
 													// NOTE: 'TopMost_set' won't, but other calls like BringToFront() or Select() can/will.
 
-					var zOrder = ShowHideManager.getZorderList();
+					IList<Form> zOrder = ShowHideManager.getZorderList();
 					foreach (var f in zOrder)
 					{
 						f.TopMost = true;

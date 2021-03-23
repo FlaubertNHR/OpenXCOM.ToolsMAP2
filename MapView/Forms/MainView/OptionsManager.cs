@@ -22,7 +22,7 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties (static)
-		private static List<Form> _views = new List<Form>();
+		private static IList<Form> _views = new List<Form>();
 		/// <summary>
 		/// A list of the <see cref="OptionsForm">OptionsForms</see> that are
 		/// instantiated by each viewer.
@@ -30,7 +30,7 @@ namespace MapView.Forms.MainView
 		/// <remarks>The list is used only to close any open forms when MapView
 		/// quits. Such forms are instantiated when called to, then they last
 		/// the lifetime of the app.</remarks>
-		internal static List<Form> Views
+		internal static IList<Form> Views
 		{
 			get { return _views; }
 		}

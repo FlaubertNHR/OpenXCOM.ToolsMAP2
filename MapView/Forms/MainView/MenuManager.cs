@@ -296,7 +296,7 @@ namespace MapView.Forms.MainView
 		{
 			MainViewF.BypassActivatedEvent = true;
 
-			var zOrder = ShowHideManager.getZorderList();
+			IList<Form> zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
 			{
 				if (   f.WindowState == FormWindowState.Normal
@@ -325,7 +325,7 @@ namespace MapView.Forms.MainView
 			bool bringtofront = !MainViewF.that.Focused
 							 || !MainViewF.Optionables.BringAllToFront;
 
-			var zOrder = ShowHideManager.getZorderList();
+			IList<Form> zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
 			{
 				if (   f.WindowState == FormWindowState.Minimized

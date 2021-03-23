@@ -9,26 +9,33 @@ namespace MapView.Forms.MainView
 	{
 		#region Fields (static)
 		/// <summary>
-		/// A list of Forms that updates in various Activated events.
-		/// @note Only views that do not close are valid; they must only hide
-		/// instead.
-		/// - MainView
-		/// - TileView
-		/// - TopView
-		/// - RouteView
-		/// - TopRouteView
-		/// - ColorsHelp
-		/// - About
-		/// @note The list is maintained in reverse order - the first entry is
-		/// the earliest form activated, the last entry is the latest. It works
-		/// well like that.
+		/// A list of Forms that updates in various Activated events. The list
+		/// is maintained in reverse order - the first entry is the earliest
+		/// form activated, the last entry is the latest. It works well like
+		/// that.
 		/// </summary>
-		internal static List<Form> _zOrder = new List<Form>();
+		/// <remarks>Only views that do not close are valid; they shall use the
+		/// hide pattern instead.
+		/// 
+		/// - MainView
+		/// 
+		/// - TileView
+		/// 
+		/// - TopView
+		/// 
+		/// - RouteView
+		/// 
+		/// - TopRouteView
+		/// 
+		/// - ColorsHelp
+		/// 
+		/// - About</remarks>
+		internal static IList<Form> _zOrder = new List<Form>();
 
 		/// <summary>
 		/// Exclusively for use when invoking McdView or PckView from TileView.
 		/// </summary>
-		private static readonly List<Form> _visible = new List<Form>();
+		private static readonly IList<Form> _visible = new List<Form>();
 		#endregion Fields (static)
 
 
@@ -77,14 +84,14 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Gets the current z-order of visible Forms and returns it in a List.
-		/// @note Used by MinimizeAll, RestoreAll, and MainView activation
-		/// (BringAllToFront).
 		/// </summary>
 		/// <returns></returns>
-		internal static List<Form> getZorderList()
+		/// <remarks>Used by MinimizeAll, RestoreAll, and MainView activation
+		/// (BringAllToFront).</remarks>
+		internal static IList<Form> getZorderList()
 		{
 			var zOrder = new List<Form>();
-			foreach (var f in _zOrder) // don't screw with the iteration of '_zOrder'
+			foreach (var f in _zOrder) // don't screw with the iteration of '_zOrder' if MainViewF.OnActivated()
 				if (f.Visible)
 					zOrder.Add(f);
 

@@ -23,7 +23,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// A list of forms that shall be closed when MapView quits.
 		/// </summary>
-		private static readonly List<Form> _viewers = new List<Form>();
+		private static readonly IList<Form> _viewers = new List<Form>();
 		#endregion Fields (static)
 
 
