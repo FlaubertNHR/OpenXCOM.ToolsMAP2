@@ -65,6 +65,8 @@ namespace PckView
 			if (disposing && components != null)
 				components.Dispose();
 
+			Ia.Dispose(); // fxCop ca2213 - wants this here despite not caring about BlankSprite or BlankIcon.
+
 			base.Dispose(disposing);
 		}
 

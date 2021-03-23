@@ -553,8 +553,9 @@ namespace PckView
 					SpriteEditor.ClosePalette();	// these are needed when PckView is invoked via TileView
 					SpriteEditor.Close();			// it's also just good procedure
 
-					Ia.Dispose();
 					TilePanel.Destroy();
+
+//					Ia.Dispose(); // fxCop ca2213 - wants this in Dispose() despite not caring about BlankSprite or BlankIcon.
 
 					BlankSprite.Dispose();
 					BlankIcon  .Dispose();
