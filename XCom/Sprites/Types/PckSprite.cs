@@ -230,6 +230,7 @@ namespace XCom
 		/// Gets a string-representation of this PckSprite incl/ its bindata.
 		/// </summary>
 		/// <returns></returns>
+		/// <remarks>Not used.</remarks>
 		public override string ToString()
 		{
 			string ret;
@@ -257,28 +258,6 @@ namespace XCom
 				}
 			}
 			return ret;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="obj"></param>
-		/// <returns></returns>
-		public override bool Equals(object obj)
-		{
-			if (obj is PckSprite)
-				return ToString().Equals(obj.ToString());
-
-			return false;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		public override int GetHashCode()
-		{
-			return ToString().GetHashCode();
 		}
 		#endregion Methods (override)
 
@@ -317,9 +296,28 @@ namespace XCom
 
 
 //		#region disposal
+//		private bool _disposed; // <- probably for multithreaded stuff
+//
 //		protected override void Dispose(bool disposing)
 //		{
-//			// NOTE: Do not dispose '_spriteset'.
+//			// NOTE: Do not dispose '_spriteset'. Let it get disposed elsewhere.
+//
+//			if (!_disposed)
+//			{
+//				try
+//				{
+//					if (disposing) // DISPOSE OF UN-MANAGED RESOURCES HERE ->
+//					{
+//						SpriteToned.Dispose();
+//						SpriteToned = null; // pointless.
+//					}
+//				}
+//				finally
+//				{
+//					_disposed = true;
+//					base.Dispose(disposing);
+//				}
+//			}
 //		}
 //		#endregion disposal
 	}

@@ -90,7 +90,6 @@ namespace XCom
 		#region cTor
 		/// <summary>
 		/// cTor[0]. Creates an XCImage.
-		/// @note Binary data must not be compressed.
 		/// </summary>
 		/// <param name="bindata">the uncompressed source data</param>
 		/// <param name="width"></param>
@@ -99,6 +98,7 @@ namespace XCom
 		/// the PckSprite..cTor has already unravelled the compressed image-data
 		/// instead</param>
 		/// <param name="id"></param>
+		/// <remarks>Binary data must not be compressed.</remarks>
 		internal XCImage(
 				byte[] bindata,
 				int width,
@@ -122,8 +122,10 @@ namespace XCom
 		}														// that's why i prefer pizza.
 
 		/// <summary>
-		/// cTor[1]. For clone. See PckSprite..cTor[1] and .Duplicate().
+		/// cTor[1]. For clone.
 		/// </summary>
+		/// <remarks>See <see cref="PckSprite">PckSprite..cTor</see> and
+		/// <see cref="PckSprite.Duplicate">PckSprite.Duplicate</see></remarks>
 		protected XCImage()
 		{}
 		#endregion cTor
@@ -189,29 +191,41 @@ namespace XCom
 
 
 		#region fxCop ca1063
+		private bool _disposed; // <- probably for multithreaded stuff
+
 		protected virtual void Dispose(bool disposing)
 		{
-			if (disposing)
+			if (!_disposed)
 			{
-				if (Sprite != null)
+//				try
 				{
-					Sprite.Dispose();
-					Sprite = null; // pointless.
-				}
+					if (disposing)
+					{
+						if (Sprite != null)
+						{
+							Sprite.Dispose();
+							Sprite = null; // pointless.
+						}
 
-				var sprite = this as PckSprite; // TODO: dispose this in PckSprite - not so fast.
-				if (sprite != null && sprite.SpriteToned != null)
+						var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
+						if (sprite != null && sprite.SpriteToned != null)
+						{
+							sprite.SpriteToned.Dispose();
+							sprite.SpriteToned = null; // pointless.
+						}
+					}
+
+//					if (nativeResource != IntPtr.Zero)
+//					{
+//						Marshal.FreeHGlobal(nativeResource);
+//						nativeResource = IntPtr.Zero;
+//					}
+				}
+//				finally
 				{
-					sprite.SpriteToned.Dispose();
-					sprite.SpriteToned = null; // pointless.
+					_disposed = true;
 				}
 			}
-
-//			if (nativeResource != IntPtr.Zero)
-//			{
-//				Marshal.FreeHGlobal(nativeResource);
-//				nativeResource = IntPtr.Zero;
-//			}
 		}
 
 		// NOTE: Leave out the finalizer altogether if this class doesn't own
