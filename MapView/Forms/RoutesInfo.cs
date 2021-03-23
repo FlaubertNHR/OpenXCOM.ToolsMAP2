@@ -188,7 +188,9 @@ namespace MapView
 					Descriptor tileset = descriptor.Value;
 
 					if (tileset == _file.Descriptor)
+					{
 						routes = _file.Routes; // -> not only efficient, is req'd when importing Routes
+					}
 					else if ((routes = new RouteNodes(tileset.Label, tileset.Basepath)).Fail)
 					{
 //						routes.Fail = false; -> nobody cares, Marvin.
@@ -447,63 +449,3 @@ namespace MapView
 		#endregion Methods
 	}
 }
-/*
-		public UnitType Type
-		{ get; set; }
-
-		public byte Rank
-		{ get; set; }
-
-		public PatrolPriority Patrol
-		{ get; set; }
-
-		public AttackBase Attack
-		{ get; set; }
-
-		public SpawnWeight Spawn
-		{ get; set; }
-*/
-/*
-		public static readonly object[] NodeRankUfo =
-		{
-			new Pterodactyl("0 : Civ/Scout",        XCom.NodeRankUfo.CivScout),
-			new Pterodactyl("1 : XCOM",             XCom.NodeRankUfo.XCOM),
-			new Pterodactyl("2 : Soldier",          XCom.NodeRankUfo.Soldier),
-			new Pterodactyl("3 : Navigator",        XCom.NodeRankUfo.Navigator),
-			new Pterodactyl("4 : Leader/Commander", XCom.NodeRankUfo.LeaderCommander),
-			new Pterodactyl("5 : Engineer",         XCom.NodeRankUfo.Engineer),
-			new Pterodactyl("6 : Terrorist1",       XCom.NodeRankUfo.Misc1),
-			new Pterodactyl("7 : Medic",            XCom.NodeRankUfo.Medic),
-			new Pterodactyl("8 : Terrorist2",       XCom.NodeRankUfo.Misc2),
-			new Pterodactyl(RankInvalid,            XCom.NodeRankUfo.invalid) // WORKAROUND.
-		};
-
-		public static readonly object[] NodeRankTftd =
-		{
-			new Pterodactyl("0 : Civ/Scout",        XCom.NodeRankTftd.CivScout),
-			new Pterodactyl("1 : XCOM",             XCom.NodeRankTftd.XCOM),
-			new Pterodactyl("2 : Soldier",          XCom.NodeRankTftd.Soldier),
-			new Pterodactyl("3 : Squad Leader",     XCom.NodeRankTftd.SquadLeader),
-			new Pterodactyl("4 : Leader/Commander", XCom.NodeRankTftd.LeaderCommander),
-			new Pterodactyl("5 : Medic",            XCom.NodeRankTftd.Medic),
-			new Pterodactyl("6 : Terrorist1",       XCom.NodeRankTftd.Misc1),
-			new Pterodactyl("7 : Technician",       XCom.NodeRankTftd.Technician),
-			new Pterodactyl("8 : Terrorist2",       XCom.NodeRankTftd.Misc2),
-			new Pterodactyl(RankInvalid,            XCom.NodeRankTftd.invalid) // WORKAROUND.
-		};
-
-		public static readonly object[] SpawnWeight =
-		{
-			new Pterodactyl( "0 : None", XCom.SpawnWeight.None),
-			new Pterodactyl( "1 : Lo",   XCom.SpawnWeight.Spawn1),
-			new Pterodactyl( "2 : Lo",   XCom.SpawnWeight.Spawn2),
-			new Pterodactyl( "3 : Lo",   XCom.SpawnWeight.Spawn3),
-			new Pterodactyl( "4 : Med",  XCom.SpawnWeight.Spawn4),
-			new Pterodactyl( "5 : Med",  XCom.SpawnWeight.Spawn5),
-			new Pterodactyl( "6 : Med",  XCom.SpawnWeight.Spawn6),
-			new Pterodactyl( "7 : Med",  XCom.SpawnWeight.Spawn7),
-			new Pterodactyl( "8 : Hi",   XCom.SpawnWeight.Spawn8),
-			new Pterodactyl( "9 : Hi",   XCom.SpawnWeight.Spawn9),
-			new Pterodactyl("10 : Hi",   XCom.SpawnWeight.Spawn10)
-		};
-*/
