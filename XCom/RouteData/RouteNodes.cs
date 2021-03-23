@@ -281,8 +281,8 @@ namespace XCom
 
 
 		#region Properties
-		private readonly List<RouteNode> _nodes = new List<RouteNode>();
-		public List<RouteNode> Nodes
+		private readonly IList<RouteNode> _nodes = new List<RouteNode>();
+		public IList<RouteNode> Nodes
 		{
 			get { return _nodes; }
 		}
