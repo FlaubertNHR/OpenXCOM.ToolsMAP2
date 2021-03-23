@@ -10,8 +10,8 @@ using DSShared;
 namespace XCom
 {
 	#region Delegates
-	public delegate void LocationSelectedEvent(LocationSelectedArgs args);
-	public delegate void LevelSelectedEvent(LevelSelectedArgs args);
+	public delegate void LocationSelectedEvent(LocationSelectedArgs args);	// -> fxCop ca1009 - wants (object sender, EventArgs e)
+	public delegate void LevelSelectedEvent(LevelSelectedArgs args);		// -> ditto
 	#endregion Delegates
 
 
