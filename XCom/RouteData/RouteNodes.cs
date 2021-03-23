@@ -195,6 +195,10 @@ namespace XCom
 		private const string hi9   =  "9 : Hi";
 		private const string hi10  = "10 : Hi";
 
+		/// <summary>
+		/// RankUfo Pterodactyls.
+		/// </summary>
+		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] RankUfo =
 		{
 			new Pterodactyl(civscout,    NodeRankUfo.CivScout),
@@ -209,6 +213,10 @@ namespace XCom
 			new Pterodactyl(RankInvalid, NodeRankUfo.invalid) // WORKAROUND.
 		};
 
+		/// <summary>
+		/// RankTftd Pterodactyls.
+		/// </summary>
+		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] RankTftd =
 		{
 			new Pterodactyl(civscout,    NodeRankTftd.CivScout),
@@ -223,6 +231,10 @@ namespace XCom
 			new Pterodactyl(RankInvalid, NodeRankTftd.invalid) // WORKAROUND.
 		};
 
+		/// <summary>
+		/// Spawn Pterodactyls.
+		/// </summary>
+		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Spawn =
 		{
 			new Pterodactyl(none0, SpawnWeight.None),
@@ -238,6 +250,10 @@ namespace XCom
 			new Pterodactyl(hi10,  SpawnWeight.Spawn10)
 		};
 
+		/// <summary>
+		/// Patrol Pterodactyls.
+		/// </summary>
+		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Patrol =
 		{
 			new Pterodactyl(lolo0, PatrolPriority.Zero),
@@ -253,6 +269,10 @@ namespace XCom
 			new Pterodactyl(hi10,  PatrolPriority.Ten)
 		};
 
+		/// <summary>
+		/// Attack Pterodactyls.
+		/// </summary>
+		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Attack =
 		{
 			new Pterodactyl(none0, AttackBase.Zero),
@@ -273,8 +293,9 @@ namespace XCom
 		#region Properties (static)
 		/// <summary>
 		/// The fullpath of the .RMP file.
-		/// Is static to maintain its value when importing a different .RMP file.
 		/// </summary>
+		/// <remarks>Is static to maintain its value when importing a different
+		/// .RMP file.</remarks>
 		private static string PfeRoutes
 		{ get; set; }
 		#endregion Properties (static)
@@ -286,7 +307,6 @@ namespace XCom
 		{
 			get { return _nodes; }
 		}
-
 
 		/// <summary>
 		/// Returns the node at id.
