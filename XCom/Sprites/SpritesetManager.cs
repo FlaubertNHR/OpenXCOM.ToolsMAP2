@@ -17,8 +17,7 @@ namespace XCom
 
 
 		#region Properties (static)
-		private static readonly List<Spriteset> _spritesets =
-							new List<Spriteset>();
+		private static readonly IList<Spriteset> _spritesets = new List<Spriteset>();
 		/// <summary>
 		/// A list of spritesets in the currently loaded tileset or so.
 		/// </summary>

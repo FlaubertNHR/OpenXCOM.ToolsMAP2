@@ -1332,7 +1332,7 @@ namespace McdView
 		{
 			bool verified = true;
 
-			List<string> borks = GetStrictBorks();
+			IList<string> borks = GetStrictBorks();
 			if (borks.Count != 0)
 			{
 				verified = false;
@@ -2434,12 +2434,12 @@ namespace McdView
 
 		/// <summary>
 		/// Tests all values for STRICT.
-		/// @note These tests shall stay synched w/ McdviewF_changed events.
-		/// @note Tests are done against the values that are currently stored in
-		/// the records - not against the values shown in the textboxes.
 		/// </summary>
 		/// <returns>a list of borks if any</returns>
-		private List<string> GetStrictBorks()
+		/// <remarks>These tests shall stay synched w/ McdviewF_changed events.
+		/// Tests are done against the values that are currently stored in the
+		/// records - not against the values shown in the textboxes.</remarks>
+		private IList<string> GetStrictBorks()
 		{
 			var borks = new List<string>();
 
