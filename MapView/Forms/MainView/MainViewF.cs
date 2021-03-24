@@ -941,6 +941,7 @@ namespace MapView
 			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
 			QuadrantDrawService.Dispose();
+			MonotoneSprites    .Dispose();
 
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
 			RegistryInfo.WriteRegistry();		// write all registered windows' locations and sizes to file
