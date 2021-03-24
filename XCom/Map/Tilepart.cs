@@ -341,7 +341,7 @@ namespace XCom
 					for (int i = 0; i != sprite.GetBindata().Length; ++i)
 					{
 						if (sprite.GetBindata()[i] != Palette.Tid)
-							sprite.GetBindata()[i] = (byte)(96); // light brown/yellowy // TODO: what about TftD
+							sprite.GetBindata()[i] = (byte)96; // light brown/yellowy // TODO: what about TftD
 					}
 					sprite.Sprite = BitmapService.CreateSprite(
 															XCImage.SpriteWidth32,
