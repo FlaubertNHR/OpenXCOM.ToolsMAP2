@@ -10,6 +10,11 @@ namespace XCom
 		public const int PHASES = 8;
 
 		private static Spriteset CrippledSprites;
+
+		private const int MonoTONE_WEST    = 1; // cf. QuadrantDrawService.MonoTONE_* ->
+		private const int MonoTONE_NORTH   = 2;
+		private const int MonoTONE_FLOOR   = 3;
+		private const int MonoTONE_CONTENT = 4;
 		#endregion Fields (static)
 
 
@@ -297,22 +302,22 @@ namespace XCom
 			{
 				case PartType.Floor:
 					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = CrippledSprites[3];
+						_sprites[i] = CrippledSprites[MonoTONE_FLOOR];
 					break;
 
 				case PartType.West:
 					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = CrippledSprites[1];
+						_sprites[i] = CrippledSprites[MonoTONE_WEST];
 					break;
 
 				case PartType.North:
 					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = CrippledSprites[2];
+						_sprites[i] = CrippledSprites[MonoTONE_NORTH];
 					break;
 
 				case PartType.Content:
 					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = CrippledSprites[4];
+						_sprites[i] = CrippledSprites[MonoTONE_CONTENT];
 					break;
 			}
 		}

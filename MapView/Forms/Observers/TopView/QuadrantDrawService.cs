@@ -52,7 +52,7 @@ namespace MapView.Forms.Observers
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
 		private static readonly GraphicsPath _pathPart    = new GraphicsPath();
 
-		internal const int MonoTONE_ERASER  = 0;
+		internal const int MonoTONE_ERASER  = 0; // cf. Tilepart.MonoTONE_* ->
 		private  const int MonoTONE_WEST    = 1;
 		private  const int MonoTONE_NORTH   = 2;
 		private  const int MonoTONE_FLOOR   = 3;
