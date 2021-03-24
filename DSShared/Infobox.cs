@@ -25,9 +25,7 @@ namespace DSShared
 	{
 		#region Fields (static)
 		private const int w_Min = 345;
-		private const int h_Max = 463;
-
-		private const string HEIGHT_TEST = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()_+-={}[]|\\;:'\"<>,.?";
+		private const int h_Max = 470;
 		#endregion Fields (static)
 
 
@@ -47,7 +45,8 @@ namespace DSShared
 		/// cTor.
 		/// </summary>
 		/// <param name="title">a caption on the titlebar</param>
-		/// <param name="head">info to be displayed with a proportional font</param>
+		/// <param name="head">info to be displayed with a proportional font -
+		/// keep this brief</param>
 		/// <param name="copyable">info to be displayed in a fixed-width font as
 		/// readily copyable text</param>
 		/// <param name="bt">an <see cref="InfoboxType"/> to deter the head's
@@ -117,8 +116,8 @@ namespace DSShared
 				}
 				width += pa_Copyable.Padding.Horizontal + widthScroller;
 
-				height = TextRenderer.MeasureText(HEIGHT_TEST, rt_Copyable.Font).Height;
-				pa_Copyable.Height = height * (lines.Length + 1) + pa_Copyable.Padding.Vertical;
+				height = rt_Copyable.Font.Height;
+				pa_Copyable.Height = (height - 1) * (lines.Length + 1) + pa_Copyable.Padding.Vertical;
 
 				copyable += Environment.NewLine; // add a blank line to bot of the copyable text.
 				rt_Copyable.Text = copyable;
@@ -170,7 +169,10 @@ namespace DSShared
 				   + bu_Cancel  .Height + bu_Cancel.Margin.Vertical;
 
 			if (height > h_Max)
-				height = h_Max;
+			{
+				pa_Copyable.Height -= height - h_Max;	// <- The only way that (height > h_Max) is
+				height = h_Max;							// because 'pa_Copyable' contains a lot of text.
+			}
 
 			ClientSize = new Size(width, height);
 
@@ -257,6 +259,8 @@ namespace DSShared
 		{
 			e.Graphics.DrawLine(Pens.Black, 0,0, 0, pa_Copyable.Height - 1);
 			e.Graphics.DrawLine(Pens.Black, 1,0, pa_Copyable.Width - 1, 0);
+
+//			e.Graphics.DrawLine(Pens.Black, 0, pa_Copyable.Height - 1, pa_Copyable.Width, pa_Copyable.Height - 1); // test
 		}
 
 		/// <summary>
