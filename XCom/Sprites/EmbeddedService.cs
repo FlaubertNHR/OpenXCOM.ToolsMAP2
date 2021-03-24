@@ -9,7 +9,8 @@ namespace XCom
 	public static class EmbeddedService
 	{
 		/// <summary>
-		/// Creates an embedded monotone spriteset.
+		/// Creates a monotone spriteset from the embedded MONOTONE.PCK/TAB
+		/// files.
 		/// </summary>
 		/// <param name="label">"Monotone" creates the sprites for TopView's
 		/// blank quads and TileView's eraser or "Monotone_crippled" creates the
