@@ -9,7 +9,7 @@ namespace XCom
 		#region Fields (static)
 		public const int PHASES = 8;
 
-		private static Spriteset MonotoneSprites;
+		private static Spriteset CrippledSprites;
 		#endregion Fields (static)
 
 
@@ -275,7 +275,7 @@ namespace XCom
 		/// See <see cref="MapFile"/> CreateTile()
 		/// 
 		/// IMPORTANT: All crippled parts shall go ~poof~ when the Mapfile is
-		/// saved.
+		/// saved. TODO: Dispose and null <see cref="CrippledSprites"/>.
 		/// </summary>
 		/// <param name="slot"></param>
 		internal void Cripple(PartType slot)
@@ -289,7 +289,7 @@ namespace XCom
 			// dialog.
 			Record.PartType = PartType.Invalid;
 
-			LoadMonotoneSprites();
+			CreateCrippledSprites();
 
 			_sprites = new XCImage[PHASES];
 
@@ -297,22 +297,22 @@ namespace XCom
 			{
 				case PartType.Floor:
 					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = MonotoneSprites[3];
+						_sprites[i] = CrippledSprites[3];
 					break;
 
 				case PartType.West:
 					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = MonotoneSprites[1];
+						_sprites[i] = CrippledSprites[1];
 					break;
 
 				case PartType.North:
 					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = MonotoneSprites[2];
+						_sprites[i] = CrippledSprites[2];
 					break;
 
 				case PartType.Content:
 					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = MonotoneSprites[4];
+						_sprites[i] = CrippledSprites[4];
 					break;
 			}
 		}
@@ -321,45 +321,28 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Loads the sprites for TopView's blank quads and TileView's eraser.
-		/// @note These sprites could be broken out and put in Resources but
-		/// it's kinda cute this way too.
-		/// @note See also MainViewF.LoadMonotoneSprites().
+		/// Creates the sprites for crippled tileparts.
 		/// </summary>
-		private static void LoadMonotoneSprites()
+		/// <remarks>These sprites could be broken out and put in Resources but
+		/// it's kinda cute this way too.</remarks>
+		private static void CreateCrippledSprites()
 		{
-			if (MonotoneSprites == null)
+			if (CrippledSprites == null)
 			{
-				var ass = Assembly.GetExecutingAssembly();
-				using (var strPck = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE_D.PCK"))
-				using (var strTab = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE_D.TAB"))
+				CrippledSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone_crippled");
+
+				foreach (XCImage sprite in CrippledSprites.Sprites) // change nontransparent pixels to color ->
 				{
-					var bytesPck = new byte[strPck.Length];
-					var bytesTab = new byte[strTab.Length];
-
-					strPck.Read(bytesPck, 0, (int)strPck.Length);
-					strTab.Read(bytesTab, 0, (int)strTab.Length);
-
-					MonotoneSprites = new Spriteset(
-												"Monotone_D",
-												Palette.UfoBattle,
-												SpritesetManager.TAB_WORD_LENGTH_2,
-												bytesPck,
-												bytesTab);
-
-					foreach (XCImage sprite in MonotoneSprites.Sprites) // change nontransparent pixels to color ->
+					for (int i = 0; i != sprite.GetBindata().Length; ++i)
 					{
-						for (int i = 0; i != sprite.GetBindata().Length; ++i)
-						{
-							if (sprite.GetBindata()[i] != Palette.Tid)
-								sprite.GetBindata()[i] = (byte)(96); // light brown/yellowy
-						}
-						sprite.Sprite = BitmapService.CreateSprite(
-																XCImage.SpriteWidth32,
-																XCImage.SpriteHeight40,
-																sprite.GetBindata(),
-																sprite.Pal.Table);
+						if (sprite.GetBindata()[i] != Palette.Tid)
+							sprite.GetBindata()[i] = (byte)(96); // light brown/yellowy // TODO: what about TftD
 					}
+					sprite.Sprite = BitmapService.CreateSprite(
+															XCImage.SpriteWidth32,
+															XCImage.SpriteHeight40,
+															sprite.GetBindata(),
+															sprite.Pal.Table);
 				}
 			}
 		}

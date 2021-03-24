@@ -341,8 +341,8 @@ namespace MapView
 			LogFile.WriteLine("tftd-battle Palette instantiated.");
 			LogFile.WriteLine("Palette transparencies set.");
 
-			MonotoneSprites = EmbeddedService.CreateMonotoneSpriteset();	// sprites for TileView's eraser and QuadrantControl's blank quads.
-																			// NOTE: transparency of the 'UfoBattle' palette must be set first.
+			MonotoneSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone");	// sprites for TileView's eraser and QuadrantControl's blank quads.
+																					// NOTE: transparency of the 'UfoBattle' palette must be set first.
 			LogFile.WriteLine("Monotone sprites loaded.");
 
 
