@@ -45,7 +45,7 @@ namespace DSShared
 				{
 					bytes = File.ReadAllBytes(pfe);
 				}
-				catch (Exception ex)
+				catch (Exception ex) // fxCop ca1031 - catch a specific Exception
 				{
 					ShowFileError(
 								"File could not be read.",
@@ -77,7 +77,7 @@ namespace DSShared
 				{
 					fs = File.OpenRead(pfe);
 				}
-				catch (Exception ex)
+				catch (Exception ex) // fxCop ca1031 - catch a specific Exception
 				{
 					ShowFileError(
 								"File could not be opened.",
@@ -109,7 +109,7 @@ namespace DSShared
 				Directory.CreateDirectory(Path.GetDirectoryName(pfe));
 				fs = File.Create(pfe);
 			}
-			catch (Exception ex)
+			catch (Exception ex) // fxCop ca1031 - catch a specific Exception
 			{
 				ShowFileError(
 							"File could not be created.",
@@ -145,7 +145,7 @@ namespace DSShared
 					{
 						File.Delete(pfeBackup);
 					}
-					catch (Exception ex)
+					catch (Exception ex) // fxCop ca1031 - catch a specific Exception
 					{
 						ShowFileError(
 									"File backup could not be deleted.",
@@ -163,7 +163,7 @@ namespace DSShared
 							pfeBackup,
 							true);
 				}
-				catch (Exception ex)
+				catch (Exception ex) // fxCop ca1031 - catch a specific Exception
 				{
 					ShowFileError(
 								"File could not be replaced.",
@@ -191,7 +191,7 @@ namespace DSShared
 			{
 				File.Copy(src, dst);
 			}
-			catch (Exception ex)
+			catch (Exception ex) // fxCop ca1031 - catch a specific Exception
 			{
 				ShowFileError(
 							"File could not be copied.",
@@ -203,7 +203,7 @@ namespace DSShared
 			{
 				File.Delete(src);
 			}
-			catch (Exception ex)
+			catch (Exception ex) // fxCop ca1031 - catch a specific Exception
 			{
 				ShowFileError(
 							"File could not be deleted.",
