@@ -140,8 +140,11 @@ namespace XCom
 		/// <summary>
 		/// cTor[1]. Parses a PCK-file into a collection of images according to
 		/// its TAB-file.
-		/// @note Ensure that 'bytesPck' and 'bytesTab' are valid before call.
-		/// NOTE: a spriteset is loaded by:
+		/// 
+		/// 
+		/// A spriteset is loaded by:
+		/// 
+		/// 
 		/// 1.
 		/// MainViewF.LoadSelectedDescriptor()
 		/// calls MapFileService.LoadDescriptor()
@@ -149,12 +152,15 @@ namespace XCom
 		/// calls Descriptor.GetTerrainSpriteset()
 		/// calls SpritesetManager.LoadSpriteset()
 		/// calls Spriteset..cTor.
-		/// 2.
-		/// PckViewF.LoadSpriteset()
-		/// 3.
-		/// Also instantiated by Globals.LoadExtraSprites()
-		/// 4.
-		/// MainViewF..cTor also needs to load the CURSOR.
+		/// 
+		/// 
+		/// 2. PckViewF.LoadSpriteset()
+		/// 
+		/// 
+		/// 3. Also instantiated by Globals.LoadExtraSprites()
+		/// 
+		/// 
+		/// 4. MainViewF..cTor also needs to load the CURSOR.
 		/// </summary>
 		/// <param name="label">file w/out extension or path</param>
 		/// <param name="pal">the palette to use (typically Palette.UfoBattle
@@ -163,6 +169,7 @@ namespace XCom
 		/// <param name="bytesPck">byte array of the PCK file</param>
 		/// <param name="bytesTab">byte array of the TAB file</param>
 		/// <param name="bypassTonescales">true to not create Tonescaled sprites</param>
+		/// <remarks>Ensure that 'bytesPck' and 'bytesTab' are valid before call.</remarks>
 		public Spriteset(
 				string label,
 				Palette pal,
@@ -354,13 +361,15 @@ namespace XCom
 		/// cTor[2]. Creates a spriteset of ScanG or LoFT icons.
 		/// ScanG chops bindata into 16-byte icons (4x4 256-color indexed).
 		/// LoFT chops bindata into 256-bit icons (16x16 2-color true/false bits).
-		/// @note Cf
-		/// - SpritesetManager.LoadScanGufo()
-		/// - McdviewF.LoadScanGufo()
 		/// </summary>
 		/// <param name="label"></param>
 		/// <param name="fs">filestream of the SCANG.DAT or LOFTEMPS.DAT file</param>
 		/// <param name="isLoFT">true if LoFT data, false if ScanG</param>
+		/// <remarks>Cf
+		/// 
+		/// - SpritesetManager.LoadScanGufo()
+		/// 
+		/// - McdviewF.LoadScanGufo()</remarks>
 		public Spriteset(string label, Stream fs, bool isLoFT)
 		{
 			Label         = label;
