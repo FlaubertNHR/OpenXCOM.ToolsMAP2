@@ -2534,7 +2534,7 @@ namespace MapView
 
 						string copyable = "cancel - return to state"                               + Environment.NewLine
 										+ "ok     - risk losing changes and show the Maptree-menu" + Environment.NewLine
-										+ "retry  - save changes and show the Maptree-menu"        + Environment.NewLine;
+										+ "retry  - save changes and show the Maptree-menu";
 
 						using (var f = new Infobox(
 												"Changes detected",
