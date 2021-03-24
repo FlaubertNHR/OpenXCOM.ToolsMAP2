@@ -33,7 +33,7 @@
 		public const string BYPASSRE = "bypassRecordsExceeded";
 
 
-		public static readonly string[] CRandorLF = { "\r\n","\r","\n" };
+		public static readonly string[] CRandorLF = { "\r\n","\r","\n" }; // fxCop ca2105 - wants a strongly typed collection
 
 		public const string PADDED_SEPARATOR = " - ";
 		public const string PADDED_ASTERISK  = " *";
