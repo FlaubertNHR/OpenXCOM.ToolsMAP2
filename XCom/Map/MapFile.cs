@@ -240,7 +240,7 @@ namespace XCom
 				if (TerrainsetCountExceeded != 0)
 				{
 					string head = Infobox.SplitString("Partids detected in the Mapfile that exceed"
-													+ " the bounds of the allocated terrainset.");
+													+ " the bounds of the allocated terrainset.", 80);
 
 					using (var f = new Infobox(
 											"Warning",
