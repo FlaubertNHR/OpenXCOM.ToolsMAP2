@@ -351,6 +351,18 @@ namespace XCom
 				}
 			}
 		}
+
+		/// <summary>
+		/// Disposes the crippled spriteset.
+		/// </summary>
+		public static void DisposeCrippledSprites()
+		{
+			if (CrippledSprites != null)
+			{
+				CrippledSprites.Dispose();
+				CrippledSprites = null;
+			}
+		}
 		#endregion Methods (static)
 	}
 }

@@ -943,6 +943,9 @@ namespace MapView
 			QuadrantDrawService.Dispose();
 			MonotoneSprites    .Dispose();
 
+			Tilepart.DisposeCrippledSprites();	// NOTE: .net will try to draw the MainView panel again but
+												// if the tileset has crippled sprites it throws.
+
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
 			RegistryInfo.WriteRegistry();		// write all registered windows' locations and sizes to file
 		}
@@ -3181,7 +3184,7 @@ namespace MapView
 						routesChanged = false;
 					}
 
-					MapFile file = MapFileService.LoadDescriptor( // NOTE: LoadDescriptor() instantiates a MapFile but whatver.
+					MapFile file = MapFileService.LoadDescriptor(
 															descriptor,
 															ref treechanged,
 															browseMapfile,

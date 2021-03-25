@@ -1148,6 +1148,13 @@ namespace MapView.Forms.MainView
 			//LogFile.WriteLine(Environment.StackTrace);
 //			base.OnPaint(e);
 
+			// NOTE: If the currently loaded tileset has crippled tileparts and
+			// MapView is closing .net will try to paint the MainView panel one
+			// last time. But the crippled tileparts' sprites have just been
+			// disposed and nulled in MainViewF.SafeQuit() ...
+			if (MainViewF.Quit) return;
+
+
 			if (MapFile != null)
 			{
 				_targeterSuppressed = !_targeterForced && (!Focused || SuppressTargeter());
@@ -1868,7 +1875,7 @@ namespace MapView.Forms.MainView
 				_graphics.DrawImage(
 								sprite,
 								rect,
-								0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+								0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 								GraphicsUnit.Pixel,
 								_spriteAttributes);
 			else
@@ -1884,7 +1891,7 @@ namespace MapView.Forms.MainView
 		private void DrawSprite(IList<byte> bindata, int x0, int y0)
 		{
 //			var data = _b.LockBits(
-//								new Rectangle(0, 0, _b.Width, _b.Height),
+//								new Rectangle(0,0, _b.Width, _b.Height),
 //								ImageLockMode.WriteOnly,
 //								PixelFormat.Format32bppArgb);
 //			var scan0 = data.Scan0;

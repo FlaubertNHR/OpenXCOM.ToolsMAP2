@@ -219,6 +219,9 @@ namespace XCom
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
 			{
+				Tilepart.DisposeCrippledSprites();	// dispose any crippled sprites used by a previous Mapfile
+													// they shall be re-created if req'd by CreateTile()
+
 				Rows = fs.ReadByte(); // http://www.ufopaedia.org/index.php/MAPS
 				Cols = fs.ReadByte(); // - says this header is "height, width and depth (in that order)"
 				Levs = fs.ReadByte(); //   ie. y/x/z
