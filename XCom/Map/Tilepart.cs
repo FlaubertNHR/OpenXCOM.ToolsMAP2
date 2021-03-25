@@ -336,17 +336,21 @@ namespace XCom
 			{
 				CrippledSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone_crippled");
 
+				byte[] bindata;
 				foreach (XCImage sprite in CrippledSprites.Sprites) // change nontransparent pixels to color ->
 				{
-					for (int i = 0; i != sprite.GetBindata().Length; ++i)
+					bindata = sprite.GetBindata();
+					for (int i = 0; i != bindata.Length; ++i)
 					{
-						if (sprite.GetBindata()[i] != Palette.Tid)
-							sprite.GetBindata()[i] = (byte)96; // light brown/yellowy // TODO: what about TftD
+						if (bindata[i] != Palette.Tid)
+							bindata[i] = (byte)96; // light brown/yellowy - is Palette.UfoBattle
 					}
-					sprite.Sprite = BitmapService.CreateSprite(
+
+					(sprite as PckSprite).SpriteToned =
+					 sprite.Sprite = BitmapService.CreateSprite(
 															XCImage.SpriteWidth32,
 															XCImage.SpriteHeight40,
-															sprite.GetBindata(),
+															bindata,
 															sprite.Pal.Table);
 				}
 			}
