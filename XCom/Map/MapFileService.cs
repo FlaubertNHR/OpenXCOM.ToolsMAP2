@@ -198,14 +198,14 @@ namespace XCom
 										descriptor,
 										parts,
 										routes);
-					if (file.Fail)
+					if (!file.Fail)
 					{
-						//LogFile.WriteLine(". . . MapFile FAILED");
-						return null;
+						//LogFile.WriteLine(". . . ret MapFile");
+						return file;
 					}
 
-					//LogFile.WriteLine(". . . ret MapFile");
-					return file;
+					//LogFile.WriteLine(". . . MapFile FAILED");
+					return null;
 				}
 
 				//LogFile.WriteLine(". . MCD Error");
