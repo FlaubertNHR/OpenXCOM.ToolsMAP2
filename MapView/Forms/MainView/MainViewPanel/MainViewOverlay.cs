@@ -1807,32 +1807,32 @@ namespace MapView.Forms.MainView
 
 			if (_visFloor && (part = tile.Floor) != null)
 			{
-				var sprite = toned ? (part[_phase] as PckSprite).SpriteToned
-								   :  part[_phase].Sprite;
+				Bitmap sprite = toned ? (part[_phase] as PckSprite).SpriteToned
+									  :  part[_phase].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
 			if (_visWest && (part = tile.West) != null)
 			{
-				var sprite = toned ? (part[_phase] as PckSprite).SpriteToned
-								   :  part[_phase].Sprite;
+				Bitmap sprite = toned ? (part[_phase] as PckSprite).SpriteToned
+									  :  part[_phase].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
 			if (_visNorth && (part = tile.North) != null)
 			{
-				var sprite = toned ? (part[_phase] as PckSprite).SpriteToned
-								   :  part[_phase].Sprite;
+				Bitmap sprite = toned ? (part[_phase] as PckSprite).SpriteToned
+									  :  part[_phase].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
 
 			if (_visContent && (part = tile.Content) != null)
 			{
-				var sprite = toned ? (part[_phase] as PckSprite).SpriteToned
-								   :  part[_phase].Sprite;
+				Bitmap sprite = toned ? (part[_phase] as PckSprite).SpriteToned
+									  :  part[_phase].Sprite;
 				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 				DrawSprite(sprite, rect);
 			}
