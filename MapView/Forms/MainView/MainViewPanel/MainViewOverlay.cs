@@ -36,6 +36,9 @@ namespace MapView.Forms.MainView
 		#region Fields (static)
 		internal const int HalfWidthConst  = 16;
 		internal const int HalfHeightConst =  8;
+
+		private static readonly Font  LocationFont  = new Font("Verdana", 7F, FontStyle.Bold);
+		private static readonly Brush LocationBrush = SystemBrushes.ControlText;
 		#endregion Fields (static)
 
 
@@ -581,8 +584,8 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Clears the selected quadrant of the currently selected tile(s).
-		/// @note Unlike ClearSelection() this ignores quadtype visibility.
 		/// </summary>
+		/// <remarks>Unlike ClearSelection() this ignores quadtype visibility.</remarks>
 		internal void ClearSelectedQuads()
 		{
 			_mainView.MapChanged = true;
@@ -1024,8 +1027,8 @@ namespace MapView.Forms.MainView
 
 				InvalidateObservers(true);
 
-				var a = GetDragBeg_abs(); // update SelectionSize on statusbar ->
-				var b = GetDragEnd_abs();
+				Point a = GetDragBeg_abs(); // update SelectionSize on statusbar ->
+				Point b = GetDragEnd_abs();
 				_mainView.sb_PrintSelectionSize(
 											b.X - a.X + 1,
 											b.Y - a.Y + 1);
@@ -1070,10 +1073,10 @@ namespace MapView.Forms.MainView
 			{
 				_dragBeg = value;
 
-				if      (_dragBeg.Y < 0)                     _dragBeg.Y = 0;
+				if      (_dragBeg.Y < 0)             _dragBeg.Y = 0;
 				else if (_dragBeg.Y >= MapFile.Rows) _dragBeg.Y = MapFile.Rows - 1;
 
-				if      (_dragBeg.X < 0)                     _dragBeg.X = 0;
+				if      (_dragBeg.X < 0)             _dragBeg.X = 0;
 				else if (_dragBeg.X >= MapFile.Cols) _dragBeg.X = MapFile.Cols - 1;
 			}
 		}
@@ -1088,10 +1091,10 @@ namespace MapView.Forms.MainView
 			{
 				_dragEnd = value;
 
-				if      (_dragEnd.Y < 0)                     _dragEnd.Y = 0;
+				if      (_dragEnd.Y < 0)             _dragEnd.Y = 0;
 				else if (_dragEnd.Y >= MapFile.Rows) _dragEnd.Y = MapFile.Rows - 1;
 
-				if      (_dragEnd.X < 0)                     _dragEnd.X = 0;
+				if      (_dragEnd.X < 0)             _dragEnd.X = 0;
 				else if (_dragEnd.X >= MapFile.Cols) _dragEnd.X = MapFile.Cols - 1;
 			}
 		}
@@ -1212,9 +1215,6 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private static readonly Font FontLocation = new Font("Verdana", 7F, FontStyle.Bold);
-		private static readonly Brush BrushLocation = SystemBrushes.ControlText;
-
 		/// <summary>
 		/// Prints the selector's current tile location.
 		/// </summary>
@@ -1229,12 +1229,12 @@ namespace MapView.Forms.MainView
 
 			string loc = "c " + c + "  r " + r + "  L " + l;
 
-			int x = Width - TextRenderer.MeasureText(loc, FontLocation).Width;
+			int x = Width - TextRenderer.MeasureText(loc, LocationFont).Width;
 			int y = Height - 20;
 			_graphics.DrawString(
 							loc,
-							FontLocation,
-							BrushLocation,
+							LocationFont,
+							LocationBrush,
 							x,y);
 		}
 
@@ -1250,8 +1250,8 @@ namespace MapView.Forms.MainView
 			var rect = new Rectangle(-1,-1, 0,0); // This is different between REMBRANDT and PICASSO ->
 			if (FirstClick)
 			{
-				var a = GetDragBeg_abs();
-				var b = GetDragEnd_abs();
+				Point a = GetDragBeg_abs();
+				Point b = GetDragEnd_abs();
 
 				rect.X = a.X;
 				rect.Y = a.Y;

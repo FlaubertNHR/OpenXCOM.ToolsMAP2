@@ -916,8 +916,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void PathSelectedLozenge()
 		{
-			var a = MainViewOverlay.that.GetDragBeg_abs();
-			var b = MainViewOverlay.that.GetDragEnd_abs();
+			Point a = MainViewOverlay.that.GetDragBeg_abs();
+			Point b = MainViewOverlay.that.GetDragEnd_abs();
 
 			int halfWidth  = BlobService.HalfWidth;
 			int halfHeight = BlobService.HalfHeight;
