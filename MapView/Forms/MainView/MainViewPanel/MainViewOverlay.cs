@@ -23,6 +23,15 @@ namespace MapView.Forms.MainView
 		:
 			BufferedPanel // god I hate these double-panels!!!! cf. MainViewUnderlay
 	{
+		public void DisposeOverlay()
+		{
+			LocationFont.Dispose();
+			_layerFill  .Dispose();
+			_t1         .Dispose();
+			_ia         .Dispose();
+		}
+
+
 		#region Delegates
 		internal delegate void MouseDragEvent();
 		#endregion Delegates
@@ -69,6 +78,8 @@ namespace MapView.Forms.MainView
 		private int _row = -1;
 
 		private int _phase;
+
+		Timer _t1 = new Timer();
 		#endregion Fields
 
 
@@ -149,7 +160,7 @@ namespace MapView.Forms.MainView
 		private GraphicsPath _layerFill = new GraphicsPath();
 
 		private Graphics _graphics;
-		private ImageAttributes _spriteAttributes = new ImageAttributes();
+		private ImageAttributes _ia = new ImageAttributes();
 
 		private int _cols, _rows;
 		#endregion Fields (graphics)
@@ -173,10 +184,9 @@ namespace MapView.Forms.MainView
 			GotFocus  += OnFocusGained;
 			LostFocus += OnFocusLost;
 
-			var t1 = new Timer();
-			t1.Interval = Globals.PERIOD;
-			t1.Enabled = true;
-			t1.Tick += t1_Tick;
+			_t1.Interval = Globals.PERIOD;
+			_t1.Enabled = true;
+			_t1.Tick += t1_Tick;
 		}
 		#endregion cTor
 
@@ -1170,7 +1180,7 @@ namespace MapView.Forms.MainView
 					_graphics.InterpolationMode = MainViewF.Optionables.InterpolationE;
 
 					if (MainViewF.Optionables.SpriteShadeEnabled)
-						_spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+						_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 				}
 #endif
 
@@ -1877,7 +1887,7 @@ namespace MapView.Forms.MainView
 								rect,
 								0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 								GraphicsUnit.Pixel,
-								_spriteAttributes);
+								_ia);
 			else
 				_graphics.DrawImage(sprite, rect);
 		}

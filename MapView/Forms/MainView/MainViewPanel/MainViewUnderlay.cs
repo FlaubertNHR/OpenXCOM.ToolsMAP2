@@ -14,6 +14,12 @@ namespace MapView.Forms.MainView
 		:
 			BufferedPanel // god I hate these double-panels!!!! cf. MainViewOverlay
 	{
+		public void DisposeUnderlay()
+		{
+			if (_t1 != null)
+				_t1.Dispose();
+		}
+
 		#region Fields (static)
 		// these track the offset between the panel border and the lozenge-tips.
 		// NOTE: they are used for both the underlay and the overlay, which

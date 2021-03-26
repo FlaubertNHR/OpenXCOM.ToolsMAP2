@@ -946,6 +946,10 @@ namespace MapView
 			Tilepart.DisposeCrippledSprites();	// NOTE: .net will try to draw the MainView panel again but
 												// if the tileset has crippled sprites it throws.
 
+			MainViewOverlay .DisposeOverlay();
+			MainViewUnderlay.DisposeUnderlay();
+
+
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
 			RegistryInfo.WriteRegistry();		// write all registered windows' locations and sizes to file
 		}
