@@ -15,8 +15,6 @@ namespace XCom
 	/// <summary>
 	/// Image loading toolset class which corrects the bug that prevents
 	/// paletted PNG images with transparency from being loaded as paletted.
-	/// TODO: Vet this 'cause there's enough I've seen and done here to warrant
-	/// a thorough lookover ...
 	/// </summary>
 	/// <remarks>Handles 8-bpp PNG,GIF,BMP (tested).</remarks>
 	public static class BitmapLoader
@@ -183,10 +181,11 @@ namespace XCom
 		/// <summary>
 		/// Clones an image object to free it from any backing resources. Code
 		/// taken from http://stackoverflow.com/a/3661892/ with some extra fixes.
-		/// @note It's the responsibility of the caller to dispose the Bitmap.
 		/// </summary>
 		/// <param name="src">the image to clone</param>
 		/// <returns>the cloned image</returns>
+		/// <remarks>It's the responsibility of the caller to dispose the
+		/// Bitmap.</remarks>
 		private static Bitmap Copy(Bitmap src)
 		{
 			var rect = new Rectangle(0,0, src.Width, src.Height);
