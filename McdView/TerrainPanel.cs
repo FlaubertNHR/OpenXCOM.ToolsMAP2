@@ -51,10 +51,10 @@ namespace McdView
 		private Tilepart[] _parts;
 		/// <summary>
 		/// An array of 'Tilepart'.
-		/// !!IMPORTANT: Only set 'Parts' via 'McdviewF.Parts' when
-		/// instantiating a 'TerrainPanel_main' object and via 'CopierF.Parts'
-		/// when instantiating a 'TerrainPanel_copier' object. IMPORTANT!!
 		/// </summary>
+		/// <remarks>!!IMPORTANT: Only set 'Parts' via 'McdviewF.Parts' when
+		/// instantiating a 'TerrainPanel_main' object and via 'CopierF.Parts'
+		/// when instantiating a 'TerrainPanel_copier' object. IMPORTANT!!</remarks>
 		internal protected Tilepart[] Parts
 		{
 			get { return _parts; }
@@ -78,11 +78,20 @@ namespace McdView
 		/// <summary>
 		/// The spriteset. Use this var only for drawing; get the spriteset
 		/// directly in 'McdviewF' otherwise. (no reason, jic)
-		/// !!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopierF' as
-		/// appropriate. IMPORTANT!!
 		/// </summary>
-		internal Spriteset Spriteset
-		{ private get; set; }
+		/// <remarks>!!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopierF'
+		/// as appropriate. IMPORTANT!!</remarks>
+		private Spriteset Spriteset
+		{ get; set; }
+
+		/// <summary>
+		/// Sets the <see cref="Spriteset"/> property.
+		/// </summary>
+		/// <param name="spriteset"></param>
+		internal void SetSpriteset(Spriteset spriteset)
+		{
+			Spriteset = spriteset;
+		}
 
 
 		protected ContextMenuStrip Context

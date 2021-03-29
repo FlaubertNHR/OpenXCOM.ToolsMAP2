@@ -86,11 +86,14 @@ namespace McdView
 
 		private Tilepart[] _parts;
 		/// <summary>
-		/// An array of 'Tileparts'. Each entry's record is referenced w/ 'Record'.
-		/// @note Printing the quantity of records on the statusbar relies on
-		/// reconstructing/assigning the Tilepart array on the fly (see the file
-		/// and panel-edit operations).
+		/// An array of <see cref="Tilepart">Tileparts</see>.
 		/// </summary>
+		/// <remarks>Each entry's record is referenced w/ Tilepart.Record.
+		/// 
+		/// 
+		/// Printing the quantity of records on the statusbar relies on
+		/// reconstructing/assigning the Tilepart array on the fly (see the file
+		/// and panel-edit operations).</remarks>
 		internal Tilepart[] Parts
 		{
 			get { return _parts; }
@@ -109,16 +112,16 @@ namespace McdView
 		private Spriteset _spriteset;
 		/// <summary>
 		/// The spriteset that will be used to display any/all sprites.
-		/// @note Printing the quantity of sprites on the statusbar is either
-		/// handled here or by the Copier's InsertAfterLast operation (which is
-		/// the only other way to alter the spriteset).
 		/// </summary>
+		/// <remarks>Printing the quantity of sprites on the statusbar is either
+		/// handled here or by the Copier's InsertAfterLast operation (which is
+		/// the only other way to alter the spriteset).</remarks>
 		internal Spriteset Spriteset
 		{
 			get { return _spriteset; }
 			set
 			{
-				PartsPanel.Spriteset = (_spriteset = value);
+				PartsPanel.SetSpriteset(_spriteset = value);
 				statusbar_PrintSpriteInfo();
 
 				miSaveSpriteset     .Enabled =

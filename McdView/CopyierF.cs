@@ -49,8 +49,9 @@ namespace McdView
 
 		private Tilepart[] _parts;
 		/// <summary>
-		/// An array of 'Tileparts'. Each entry's record is referenced w/ 'Record'.
+		/// An array of <see cref="Tilepart">Tileparts</see>.
 		/// </summary>
+		/// <remarks>Each entry's record is referenced w/ Tilepart.Record.</remarks>
 		internal Tilepart[] Parts
 		{
 			get { return _parts; }
@@ -74,7 +75,8 @@ namespace McdView
 				if (!String.IsNullOrEmpty(Label))
 					text += GlobalsXC.PADDED_SEPARATOR + Label;
 
-				if ((PartsPanel.Spriteset = (_spriteset = value)) == null)
+				PartsPanel.SetSpriteset(_spriteset = value);
+				if (_spriteset == null)
 					text += GlobalsXC.PADDED_SEPARATOR + "spriteset invalid";
 
 				Text = text;
