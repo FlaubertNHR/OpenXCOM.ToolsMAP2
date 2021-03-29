@@ -24,12 +24,12 @@ namespace XCom
 
 		/// <summary>
 		/// Loads an image. Checks if it is a PNG containing palette
-		/// transparency and if so ensures it loads correctly. The theory on the
-		/// PNG internals can be found at
-		/// http://www.libpng.org/pub/png/book/chapter08.html
+		/// transparency and if so ensures it loads correctly.
 		/// </summary>
 		/// <param name="data">file data to load</param>
 		/// <returns>a CLONED image - the onus is on the receiver for disposal</returns>
+		/// <remarks>The theory on the PNG internals can be found at
+		/// http://www.libpng.org/pub/png/book/chapter08.html</remarks>
 		public static Bitmap LoadBitmap(byte[] data)
 		{
 			byte[] dataTrns = null;
@@ -222,7 +222,7 @@ namespace XCom
 			// For indexed images, restore the palette. This is not linking to a
 			// referenced object in the original image; the getter of Palette
 			// creates a new object when called.
-			if (((int)src.PixelFormat & (int)PixelFormat.Indexed) != 0) //Indexed = 65536
+			if (((int)src.PixelFormat & (int)PixelFormat.Indexed) != 0) // Indexed = 65536
 				dst.Palette = src.Palette;
 
 			dst.SetResolution(src.HorizontalResolution, src.VerticalResolution); // Restore DPI settings - wtf.
