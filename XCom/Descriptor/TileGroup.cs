@@ -8,7 +8,7 @@ namespace XCom
 	/// The class for a TileGroup contains its Categories and through those
 	/// Categories all of its tilesets/Descriptors.
 	/// </summary>
-	public class TileGroup
+	public sealed class TileGroup
 	{
 		#region Properties
 		public string Label
@@ -35,11 +35,11 @@ namespace XCom
 		#region cTor
 		/// <summary>
 		/// cTor.
-		/// @note If the prefix "tftd" is not found at the beginning of this
-		/// TileGroup's label then default to UFO grouptype.
 		/// </summary>
 		/// <param name="labelGroup"></param>
-		internal protected TileGroup(string labelGroup)
+		/// <remarks>If the prefix "tftd" is not found at the beginning of this
+		/// TileGroup's label then default to UFO grouptype.</remarks>
+		internal TileGroup(string labelGroup)
 		{
 			Label = labelGroup;
 
@@ -57,17 +57,21 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Adds a category. Called by MainViewF.OnAddCategoryClick()
-		/// NOTE: Check if the category already exists first.
+		/// Adds a category. Called by
+		/// 
+		/// MainViewF.OnAddCategoryClick()
 		/// </summary>
 		/// <param name="labelCategory">the label of the category to add</param>
+		/// <remarks>Check if the category already exists first.</remarks>
 		public void AddCategory(string labelCategory)
 		{
 			Categories[labelCategory] = new Dictionary<string, Descriptor>();
 		}
 
 		/// <summary>
-		/// Deletes a category. Called by MainViewF.OnDeleteCategoryClick()
+		/// Deletes a category. Called by
+		/// 
+		/// MainViewF.OnDeleteCategoryClick()
 		/// </summary>
 		/// <param name="labelCategory">the label of the category to delete</param>
 		public void DeleteCategory(string labelCategory)
@@ -78,11 +82,13 @@ namespace XCom
 		/// <summary>
 		/// Creates a new category and transfers ownership of all Descriptors
 		/// from their previous Category to the specified new Category. Called
-		/// by MainViewF.OnEditCategoryClick()
-		/// NOTE: Check if the category already exists first.
+		/// by
+		/// 
+		/// MainViewF.OnEditCategoryClick()
 		/// </summary>
 		/// <param name="labelCategory">the new label for the category</param>
 		/// <param name="labelCategoryPre">the old label of the category</param>
+		/// <remarks>Check if the category already exists first.</remarks>
 		public void EditCategory(string labelCategory, string labelCategoryPre)
 		{
 			AddCategory(labelCategory);
@@ -90,17 +96,18 @@ namespace XCom
 			foreach (var descriptor in Categories[labelCategoryPre].Values)
 				Categories[labelCategory][descriptor.Label] = descriptor;
 
-			DeleteCategory(labelCategoryPre); // hopefully this won't wipe all Values after transferring ownership.
+			DeleteCategory(labelCategoryPre); // hopefully this won't wipe all Values after transfering ownership.
 		}
 
 		/// <summary>
 		/// Adds a tileset-descriptor. Called by
-		/// - TilesetEditor.OnAcceptClick()
-		/// NOTE: Check that the descriptor does *not* exist and category does
-		/// exist first.
+		/// 
+		/// TilesetEditor.OnAcceptClick().
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="labelCategory"></param>
+		/// <remarks>Check that the descriptor does *not* exist and category
+		/// does exist first.</remarks>
 		public void AddTileset(Descriptor descriptor, string labelCategory)
 		{
 			Categories[labelCategory][descriptor.Label] = descriptor;
@@ -108,12 +115,14 @@ namespace XCom
 
 		/// <summary>
 		/// Deletes a tileset-descriptor. Called by
-		/// - MainViewF.OnDeleteTilesetClick()
-		/// - TilesetEditor.OnAcceptClick()
-		/// NOTE: Check that category and perhaps tileset exist first.
+		/// 
+		/// MainViewF.OnDeleteTilesetClick()
+		/// 
+		/// TilesetEditor.OnAcceptClick()
 		/// </summary>
 		/// <param name="labelTileset">the label of the tileset to delete</param>
 		/// <param name="labelCategory">the label of the category of the tileset</param>
+		/// <remarks>Check that category and perhaps tileset exist first.</remarks>
 		public void DeleteTileset(string labelTileset, string labelCategory)
 		{
 			Categories[labelCategory].Remove(labelTileset);
