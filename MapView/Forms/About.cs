@@ -13,7 +13,7 @@ using MapView.Forms.MainView;
 namespace MapView
 {
 	/// <summary>
-	/// Displays the About box.
+	/// The About box.
 	/// </summary>
 	internal sealed partial class About
 		:
@@ -28,6 +28,9 @@ namespace MapView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
 		internal About()
 		{
 			InitializeComponent();
@@ -60,7 +63,7 @@ namespace MapView
 			DateTime dt = Assembly.GetExecutingAssembly().GetLinkerTime();
 
 			lblVersion.Text += Environment.NewLine + Environment.NewLine
-							+ String.Format(
+							 + String.Format(
 										CultureInfo.CurrentCulture,
 										"{0:yyyy MMM d}  {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
 										dt);
@@ -69,17 +72,31 @@ namespace MapView
 
 
 		#region Events (override)
+		/// <summary>
+		/// Sets the base-location on the shown event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnShown(EventArgs e)
 		{
 			_lBase = Location;
 		}
 
+		/// <summary>
+		/// Adds this form to the zOrder on the activated event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 		}
 
+		/// <summary>
+		/// Handles keyup events.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <remarks>[Esc] closes the About box. [Enter] starts and stops
+		/// brownian movement.</remarks>
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
 			switch (e.KeyData)
@@ -95,6 +112,10 @@ namespace MapView
 			}
 		}
 
+		/// <summary>
+		/// Handles the formclosing event.
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
@@ -108,6 +129,11 @@ namespace MapView
 
 
 		#region Events
+		/// <summary>
+		/// Does brownian movement on each tick if enabled.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnTick(object sender, EventArgs e)
 		{
 			_l = Location;
@@ -134,12 +160,18 @@ namespace MapView
 
 
 	/// <summary>
-	/// Lifted from StackOverflow.com:
-	/// https://stackoverflow.com/questions/1600962/displaying-the-build-date#answer-1600990
-	/// - what a fucking pain in the ass.
+	/// Determines date/time of an assembly.
 	/// </summary>
+	/// <remarks>Lifted from StackOverflow.com:
+	/// https://stackoverflow.com/questions/1600962/displaying-the-build-date#answer-1600990
+	/// - what a fucking pain in the ass.</remarks>
 	public static class DateTimeExtension
 	{
+		/// <summary>
+		/// Gets the UTC-time that an assembly was assembled.
+		/// </summary>
+		/// <param name="assembly"></param>
+		/// <returns>DateTime since 1970</returns>
 //		public static DateTime GetLinkerTime(this Assembly assembly, TimeZoneInfo target = null)
 		public static DateTime GetLinkerTime(this Assembly assembly)
 		{
