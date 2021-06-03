@@ -108,13 +108,13 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Sets or resets the MapFile for each observer.
+		/// Sets or resets the MapFile for each observer-control.
 		/// </summary>
 		/// <param name="file"></param>
 		internal static void SetMapfile(MapFile file)
 		{
-			foreach (var f in _observers)
-				SubscribeObserver(file, f);
+			foreach (var observer in _observers)
+				SubscribeObserver(file, observer);
 
 			MainViewOverlay.that.Refresh();
 		}
@@ -150,14 +150,16 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Closes the Observers.
-		/// - TileView
-		/// - TopView
-		/// - RouteView
-		/// - TopRouteView
+		/// Closes each Observers' parent-Form.
+		/// <list>
+		///   <item><see cref="TileViewForm"/></item>
+		///   <item><see cref="TopViewForm"/></item>
+		///   <item><see cref="RouteViewForm"/></item>
+		///   <item><see cref="TopRouteViewForm"/></item>
+		/// </list>
 		/// </summary>
-		/// <remarks>Called by MainViewF.OnFormClosing() so this really does
-		/// close -> update registry vals.</remarks>
+		/// <remarks>Called by MainViewF.SafeQuit() so this really does close
+		/// the forms and update registry values.</remarks>
 		internal static void CloseViewers()
 		{
 			foreach (var f in _viewers)

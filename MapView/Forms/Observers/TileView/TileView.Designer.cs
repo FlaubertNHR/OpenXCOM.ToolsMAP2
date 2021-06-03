@@ -9,7 +9,7 @@ namespace MapView.Forms.Observers
 	internal sealed partial class TileView
 	{
 		#region Designer
-		CompositedTabControl tcTileTypes;
+		private CompositedTabControl tcTileTypes;
 
 		private ToolStrip tsMain;
 		private ToolStripDropDownButton tsddbExternal;

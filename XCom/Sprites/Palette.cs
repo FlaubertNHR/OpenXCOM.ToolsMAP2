@@ -21,6 +21,21 @@ namespace XCom
 	/// be/ are dereferences of a copy instead. .net strikes again!</remarks>
 	public sealed class Palette
 	{
+		/// <summary>
+		/// Disposes the UFO and TFTD brushes used by
+		/// MainViewF.Optionables.UseMono.
+		/// </summary>
+		public static void DisposeMonoBrushes()
+		{
+			DSShared.LogFile.WriteLine("Palette.DisposeMonoBrushes()");
+			foreach (var brush in _brushesUfoBattle)
+				brush.Dispose();
+
+			foreach (var brush in _brushesTftdBattle)
+				brush.Dispose();
+		}
+
+
 		#region Fields (static)
 		/// <summary>
 		/// The transparent Id in the <see cref="Table">Table.Entries</see>

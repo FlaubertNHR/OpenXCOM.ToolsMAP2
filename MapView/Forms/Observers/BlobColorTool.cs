@@ -12,6 +12,20 @@ namespace MapView.Forms.Observers
 		:
 			IDisposable
 	{
+		/// <summary>
+		/// Disposes pens and brushes owned by this object.
+		/// </summary>
+		public void Dispose()
+		{
+			DSShared.LogFile.WriteLine("BlobColorTool.Dispose()");
+			Pen         .Dispose();
+			PenLight    .Dispose();
+			PenLightPrep.Dispose();
+			Brush       .Dispose();
+			BrushLight  .Dispose();
+		}
+
+
 		#region Fields (static)
 		private const int ALFALFA = 100;
 
@@ -64,8 +78,8 @@ namespace MapView.Forms.Observers
 			PenLight     = new Pen(colorLight,  pen.Width);
 			PenLightPrep = new Pen(Color.White, pen.Width);
 
-			Brush          = new SolidBrush(pen.Color);
-			BrushLight     = new SolidBrush(colorLight);
+			Brush        = new SolidBrush(pen.Color);
+			BrushLight   = new SolidBrush(colorLight);
 		}
 
 		/// <summary>
@@ -81,22 +95,9 @@ namespace MapView.Forms.Observers
 			PenLight     = new Pen(colorLight,  width);
 			PenLightPrep = new Pen(Color.White, width);
 
-			Brush          = new SolidBrush(brush.Color);
-			BrushLight     = new SolidBrush(colorLight);
+			Brush        = new SolidBrush(brush.Color);
+			BrushLight   = new SolidBrush(colorLight);
 		}
 		#endregion cTor
-
-
-		/// <summary>
-		/// Disposes pens and brushes owned by this object.
-		/// </summary>
-		public void Dispose()
-		{
-			Pen         .Dispose();
-			PenLight    .Dispose();
-			PenLightPrep.Dispose();
-			Brush       .Dispose();
-			BrushLight  .Dispose();
-		}
 	}
 }

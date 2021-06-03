@@ -97,11 +97,13 @@ namespace MapView.Forms.Observers
 		{
 			set // TODO: check RouteView/TopRouteView(Route)
 			{
-				_file = (base.MapFile = value);
-
+				_file = (base.MapFile = value);	// TODO: reduce count of pointers to the MapFile.
+												// It should be stored in ObserverControl and that's basically it.
 				DeselectNode();
 
-				if ((RouteControl.MapFile = _file) != null)
+				RouteControl.SetMapfile(_file);
+
+				if (_file != null)
 				{
 					cbRank.Items.Clear();
 
@@ -139,13 +141,14 @@ namespace MapView.Forms.Observers
 		internal static RouteViewOptionables Optionables
 		{ get; private set; }
 
+
 		private static RouteNode _nodeSelected;
 		internal static RouteNode NodeSelected
 		{
 			private get { return _nodeSelected; }
 			set
 			{
-				_nodeSelected = RouteControlParent.NodeSelected = value;
+				RouteControlParent.SetNodeSelected(_nodeSelected = value);
 
 				if (_nodeSelected != null) // for RoutesInfo ->
 				{
@@ -180,7 +183,7 @@ namespace MapView.Forms.Observers
 		/// 'RoutesChanged' flag is stored in <see cref="T:XCom.MapFile"/>.
 		/// reasons.
 		/// </summary>
-		private bool RoutesChanged
+		private bool RoutesChanged // TODO: static
 		{
 			set { btnSave.Enabled = (_file.RoutesChanged = value); }
 		}

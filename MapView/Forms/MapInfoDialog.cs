@@ -74,7 +74,6 @@ namespace MapView
 				if (_fdetail != null)
 					_fdetail.Close();
 
-				_f._finfo = null;
 				_f.DecheckMapInfo();
 			}
 			base.OnFormClosing(e);

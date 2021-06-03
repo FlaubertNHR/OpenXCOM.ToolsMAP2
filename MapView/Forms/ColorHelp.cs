@@ -28,6 +28,8 @@ namespace MapView
 
 		#region Fields
 		private readonly MainViewF _f;
+
+		private Font _fontBold;
 		#endregion Fields
 
 
@@ -41,30 +43,32 @@ namespace MapView
 
 			_f = f;
 
-			var tpTabControl = new TabPageBorder(tabMain);
+			var tpTabControl = new TabPageBorder(tabcontrol);
 
-			label7   .Font =
-			label8   .Font =
-			label9   .Font =
-			label10  .Font =
-			label14  .Font =
-			label15  .Font =
-			label16  .Font =
-			lblType00.Font =
-			lblType01.Font =
-			lblType02.Font =
-			lblType03.Font =
-			lblType04.Font =
-			lblType05.Font =
-			lblType06.Font =
-			lblType07.Font =
-			lblType08.Font =
-			lblType09.Font =
-			lblType10.Font =
-			lblType11.Font =
-			lblType12.Font =
-			lblType13.Font =
-			lblType14.Font = new Font(Font, FontStyle.Bold);
+			_fontBold = new Font(Font, FontStyle.Bold);
+
+			la_TopFloor    .Font =
+			la_TopWest     .Font =
+			la_TopNorth    .Font =
+			la_TopContent  .Font =
+			la_RouteWalls  .Font =
+			la_RouteContent.Font =
+
+			la_Type00      .Font =
+			la_Type01      .Font =
+			la_Type02      .Font =
+			la_Type03      .Font =
+			la_Type04      .Font =
+			la_Type05      .Font =
+			la_Type06      .Font =
+			la_Type07      .Font =
+			la_Type08      .Font =
+			la_Type09      .Font =
+			la_Type10      .Font =
+			la_Type11      .Font =
+			la_Type12      .Font =
+			la_Type13      .Font =
+			la_Type14      .Font = _fontBold;
 
 			UpdateColors();
 			OnCheckChanged(null, EventArgs.Empty);
@@ -100,8 +104,9 @@ namespace MapView
 				_x = Left;
 				_y = Top;
 
-				_f._fcolors = null;
 				_f.DecheckColors();
+
+				_fontBold.Dispose();
 			}
 			base.OnFormClosing(e);
 		}
@@ -115,154 +120,102 @@ namespace MapView
 		/// </summary>
 		private void UpdateColors()
 		{
+			UpdateSpecialPropertyColors();
 			UpdateTopViewBlobColors();
 			UpdateRouteViewBlobColors();
-			UpdateSpecialPropertyColors();
-		}
-
-		/// <summary>
-		/// Updates the TopView blob colors via an arcane methodology from the
-		/// user's custom Options.
-		/// </summary>
-		private void UpdateTopViewBlobColors()
-		{
-			Color color;
-
-			string key = TopViewOptionables.str_FloorColor;
-			if (TopControl.TopBrushes.ContainsKey(key))
-			{
-				color = TopControl.TopBrushes[key].Color;
-				label7.BackColor = color;
-				label7.ForeColor = GetTextColor(color);
-			}
-
-			key = TopViewOptionables.str_WestColor;
-			if (TopControl.TopPens.ContainsKey(key))
-			{
-				color = TopControl.TopPens[key].Color;
-				label8.BackColor = color;
-				label8.ForeColor = GetTextColor(color);
-			}
-
-			key = TopViewOptionables.str_NorthColor;
-			if (TopControl.TopPens.ContainsKey(key))
-			{
-				color = TopControl.TopPens[key].Color;
-				label9.BackColor = color;
-				label9.ForeColor = GetTextColor(color);
-			}
-
-			key = TopViewOptionables.str_ContentColor;
-			if (TopControl.TopBrushes.ContainsKey(key))
-			{
-				color = TopControl.TopBrushes[key].Color;
-				label10.BackColor = color;
-				label10.ForeColor = GetTextColor(color);
-			}
-		}
-
-		/// <summary>
-		/// Updates the RouteView blob colors via an arcane methodology from the
-		/// user's custom Options.
-		/// </summary>
-		private void UpdateRouteViewBlobColors()
-		{
-			Color color;
-
-			string key = RouteViewOptionables.str_WallColor;
-			if (RouteControl.RoutePens.ContainsKey(key))
-			{
-				color = RouteControl.RoutePens[key].Color;
-
-				label14.BackColor = color;
-				label15.BackColor = color;
-
-				label14.ForeColor = GetTextColor(color);
-				label15.ForeColor = GetTextColor(color);
-			}
-
-			key = RouteViewOptionables.str_ContentColor;
-			if (RouteControl.RouteBrushes.ContainsKey(key))
-			{
-				color = RouteControl.RouteBrushes[key].Color;
-				label16.BackColor = color;
-				label16.ForeColor = GetTextColor(color);
-			}
 		}
 
 		/// <summary>
 		/// Updates TileView's special property colors via an arcane methodology
-		/// from the user's custom Options.
+		/// from the user's custom Options. But I got rid of the arcane
+		/// methodology even though it was faster.
 		/// </summary>
-		private void UpdateSpecialPropertyColors()
+		internal void UpdateSpecialPropertyColors()
 		{
-			// TODO: update special-property colors from Options without
-			// requiring that the Help screen be reloaded. Neither form (Options
-			// or Help) is modal, so the code can't rely on that user-forced
-			// effect. A pointer to this ColorHelp needs to be passed to
-			// TileViewOptionables.
-
 			Color color;
 
 			color = TilePanel.SpecialBrushes[SpecialType.Standard].Color;
-			lblType00.BackColor = color;
-			lblType00.ForeColor = GetTextColor(color);
+			la_Type00.ForeColor = GetTextColor(la_Type00.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.EntryPoint].Color;
-			lblType01.BackColor = color;
-			lblType01.ForeColor = GetTextColor(color);
+			la_Type01.ForeColor = GetTextColor(la_Type01.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.PowerSource].Color;
-			lblType02.BackColor = color;
-			lblType02.ForeColor = GetTextColor(color);
+			la_Type02.ForeColor = GetTextColor(la_Type02.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Navigation].Color;
-			lblType03.BackColor = color;
-			lblType03.ForeColor = GetTextColor(color);
+			la_Type03.ForeColor = GetTextColor(la_Type03.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Construction].Color;
-			lblType04.BackColor = color;
-			lblType04.ForeColor = GetTextColor(color);
+			la_Type04.ForeColor = GetTextColor(la_Type04.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Food].Color;
-			lblType05.BackColor = color;
-			lblType05.ForeColor = GetTextColor(color);
+			la_Type05.ForeColor = GetTextColor(la_Type05.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Reproduction].Color;
-			lblType06.BackColor = color;
-			lblType06.ForeColor = GetTextColor(color);
+			la_Type06.ForeColor = GetTextColor(la_Type06.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Entertainment].Color;
-			lblType07.BackColor = color;
-			lblType07.ForeColor = GetTextColor(color);
+			la_Type07.ForeColor = GetTextColor(la_Type07.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Surgery].Color;
-			lblType08.BackColor = color;
-			lblType08.ForeColor = GetTextColor(color);
+			la_Type08.ForeColor = GetTextColor(la_Type08.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Examination].Color;
-			lblType09.BackColor = color;
-			lblType09.ForeColor = GetTextColor(color);
+			la_Type09.ForeColor = GetTextColor(la_Type09.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Alloys].Color;
-			lblType10.BackColor = color;
-			lblType10.ForeColor = GetTextColor(color);
+			la_Type10.ForeColor = GetTextColor(la_Type10.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Habitat].Color;
-			lblType11.BackColor = color;
-			lblType11.ForeColor = GetTextColor(color);
+			la_Type11.ForeColor = GetTextColor(la_Type11.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.Destroyed].Color;
-			lblType12.BackColor = color;
-			lblType12.ForeColor = GetTextColor(color);
+			la_Type12.ForeColor = GetTextColor(la_Type12.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.ExitPoint].Color;
-			lblType13.BackColor = color;
-			lblType13.ForeColor = GetTextColor(color);
+			la_Type13.ForeColor = GetTextColor(la_Type13.BackColor = color);
 
 			color = TilePanel.SpecialBrushes[SpecialType.MustDestroy].Color;
-			lblType14.BackColor = color;
-			lblType14.ForeColor = GetTextColor(color);
+			la_Type14.ForeColor = GetTextColor(la_Type14.BackColor = color);
+		}
+
+		/// <summary>
+		/// Updates the TopView blob colors via an arcane methodology from the
+		/// user's custom Options. But I got rid of the arcane methodology even
+		/// though it was faster.
+		/// </summary>
+		internal void UpdateTopViewBlobColors()
+		{
+			Color color;
+
+			color = TopControl.TopBrushes[TopViewOptionables.str_FloorColor].Color;
+			la_TopFloor.ForeColor = GetTextColor(la_TopFloor.BackColor = color);
+
+			color = TopControl.TopPens[TopViewOptionables.str_WestColor].Color;
+			la_TopWest.ForeColor = GetTextColor(la_TopWest.BackColor = color);
+
+			color = TopControl.TopPens[TopViewOptionables.str_NorthColor].Color;
+			la_TopNorth.ForeColor = GetTextColor(la_TopNorth.BackColor = color);
+
+			color = TopControl.TopBrushes[TopViewOptionables.str_ContentColor].Color;
+			la_TopContent.ForeColor = GetTextColor(la_TopContent.BackColor = color);
+		}
+
+		/// <summary>
+		/// Updates the RouteView blob colors via an arcane methodology from the
+		/// user's custom Options. But I got rid of the arcane methodology even
+		/// though it was faster.
+		/// </summary>
+		internal void UpdateRouteViewBlobColors()
+		{
+			Color color;
+
+			color = RouteControl.RoutePens[RouteViewOptionables.str_WallColor].Color;
+			la_RouteWalls.ForeColor = GetTextColor(la_RouteWalls.BackColor = color);
+
+			color = RouteControl.RouteBrushes[RouteViewOptionables.str_ContentColor].Color;
+			la_RouteContent.ForeColor = GetTextColor(la_RouteContent.BackColor = color);
 		}
 
 		/// <summary>
@@ -299,39 +252,39 @@ namespace MapView
 		{
 			if (rbUfo.Checked)
 			{
-				lblType00.Text = "standard"; // switch to UFO ->
-				lblType01.Text = "entry point";
-				lblType02.Text = "power source";
-				lblType03.Text = "navigation";
-				lblType04.Text = "construction";
-				lblType05.Text = "food";
-				lblType06.Text = "reproduction";
-				lblType07.Text = "entertainment";
-				lblType08.Text = "surgery";
-				lblType09.Text = "examination";
-				lblType10.Text = "alloys";
-				lblType11.Text = "habitat";
-				lblType12.Text = "dead tile";
-				lblType13.Text = "exit point";
-				lblType14.Text = "must destroy";
+				la_Type00.Text = "standard"; // switch to UFO ->
+				la_Type01.Text = "entry point";
+				la_Type02.Text = "power source";
+				la_Type03.Text = "navigation";
+				la_Type04.Text = "construction";
+				la_Type05.Text = "food";
+				la_Type06.Text = "reproduction";
+				la_Type07.Text = "entertainment";
+				la_Type08.Text = "surgery";
+				la_Type09.Text = "examination";
+				la_Type10.Text = "alloys";
+				la_Type11.Text = "habitat";
+				la_Type12.Text = "dead tile";
+				la_Type13.Text = "exit point";
+				la_Type14.Text = "must destroy";
 			}
 			else // rbTftd.Checked
 			{
-				lblType00.Text = "standard"; // switch to TFTD ->
-				lblType01.Text = "entry point";
-				lblType02.Text = "ion accelerator";
-				lblType03.Text = "navigation";
-				lblType04.Text = "construction";
-				lblType05.Text = "cryogenics";
-				lblType06.Text = "cloning";
-				lblType07.Text = "learning arrays";
-				lblType08.Text = "implanter";
-				lblType09.Text = "examination";
-				lblType10.Text = "plastics";
-				lblType11.Text = "re-animation";
-				lblType12.Text = "dead tile";
-				lblType13.Text = "exit point";
-				lblType14.Text = "must destroy";
+				la_Type00.Text = "standard"; // switch to TFTD ->
+				la_Type01.Text = "entry point";
+				la_Type02.Text = "ion accelerator";
+				la_Type03.Text = "navigation";
+				la_Type04.Text = "construction";
+				la_Type05.Text = "cryogenics";
+				la_Type06.Text = "cloning";
+				la_Type07.Text = "learning arrays";
+				la_Type08.Text = "implanter";
+				la_Type09.Text = "examination";
+				la_Type10.Text = "plastics";
+				la_Type11.Text = "re-animation";
+				la_Type12.Text = "dead tile";
+				la_Type13.Text = "exit point";
+				la_Type14.Text = "must destroy";
 			}
 		}
 		#endregion Events
@@ -357,40 +310,41 @@ namespace MapView
 
 
 		#region Designer
-		private CompositedTabControl tabMain;
-		private TabPage tpTopView;
-		private TabPage tpRouteView;
+		private CompositedTabControl tabcontrol;
+
 		private TabPage tpTileView;
-		private Label label1;
-		private Label label7;
-		private Label label8;
-		private Label label9;
-		private Label label10;
-		private Label label14;
-		private Label label15;
-		private Label label16;
-		private Label label25;
-		private Label label26;
-		private GroupBox gbTileViewColors;
-		private Label lblType00;
-		private Label lblType01;
-		private Label lblType02;
-		private Label lblType03;
-		private Label lblType04;
-		private Label lblType05;
-		private Label lblType06;
-		private Label lblType07;
-		private Label lblType08;
-		private Label lblType09;
-		private Label lblType10;
-		private Label lblType11;
-		private Label lblType12;
-		private Label lblType13;
-		private Label lblType14;
-		private RadioButton rbTftd;
+		private Label la_TileHead;
 		private RadioButton rbUfo;
+		private RadioButton rbTftd;
+		private GroupBox gbTileViewColors;
+		private Label la_Type00;
+		private Label la_Type01;
+		private Label la_Type02;
+		private Label la_Type03;
+		private Label la_Type04;
+		private Label la_Type05;
+		private Label la_Type06;
+		private Label la_Type07;
+		private Label la_Type08;
+		private Label la_Type09;
+		private Label la_Type10;
+		private Label la_Type11;
+		private Label la_Type12;
+		private Label la_Type13;
+		private Label la_Type14;
+
+		private TabPage tpTopRouteView;
+		private Label la_TopHead;
 		private GroupBox gbTopViewColors;
+		private Label la_TopFloor;
+		private Label la_TopWest;
+		private Label la_TopNorth;
+		private Label la_TopContent;
+		private Label la_RouteHead;
 		private GroupBox gbRouteViewColors;
+		private Label la_RouteWalls;
+		private Label la_RouteContent;
+
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -398,96 +352,85 @@ namespace MapView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabMain = new DSShared.Controls.CompositedTabControl();
+			this.tabcontrol = new DSShared.Controls.CompositedTabControl();
 			this.tpTileView = new System.Windows.Forms.TabPage();
-			this.label25 = new System.Windows.Forms.Label();
-			this.rbTftd = new System.Windows.Forms.RadioButton();
+			this.la_TileHead = new System.Windows.Forms.Label();
 			this.rbUfo = new System.Windows.Forms.RadioButton();
+			this.rbTftd = new System.Windows.Forms.RadioButton();
 			this.gbTileViewColors = new System.Windows.Forms.GroupBox();
-			this.lblType09 = new System.Windows.Forms.Label();
-			this.lblType14 = new System.Windows.Forms.Label();
-			this.lblType13 = new System.Windows.Forms.Label();
-			this.lblType12 = new System.Windows.Forms.Label();
-			this.lblType11 = new System.Windows.Forms.Label();
-			this.lblType10 = new System.Windows.Forms.Label();
-			this.lblType08 = new System.Windows.Forms.Label();
-			this.lblType07 = new System.Windows.Forms.Label();
-			this.lblType06 = new System.Windows.Forms.Label();
-			this.lblType05 = new System.Windows.Forms.Label();
-			this.lblType04 = new System.Windows.Forms.Label();
-			this.lblType03 = new System.Windows.Forms.Label();
-			this.lblType02 = new System.Windows.Forms.Label();
-			this.lblType01 = new System.Windows.Forms.Label();
-			this.lblType00 = new System.Windows.Forms.Label();
-			this.tpTopView = new System.Windows.Forms.TabPage();
-			this.label26 = new System.Windows.Forms.Label();
+			this.la_Type00 = new System.Windows.Forms.Label();
+			this.la_Type01 = new System.Windows.Forms.Label();
+			this.la_Type02 = new System.Windows.Forms.Label();
+			this.la_Type03 = new System.Windows.Forms.Label();
+			this.la_Type04 = new System.Windows.Forms.Label();
+			this.la_Type05 = new System.Windows.Forms.Label();
+			this.la_Type06 = new System.Windows.Forms.Label();
+			this.la_Type07 = new System.Windows.Forms.Label();
+			this.la_Type08 = new System.Windows.Forms.Label();
+			this.la_Type09 = new System.Windows.Forms.Label();
+			this.la_Type10 = new System.Windows.Forms.Label();
+			this.la_Type11 = new System.Windows.Forms.Label();
+			this.la_Type12 = new System.Windows.Forms.Label();
+			this.la_Type13 = new System.Windows.Forms.Label();
+			this.la_Type14 = new System.Windows.Forms.Label();
+			this.tpTopRouteView = new System.Windows.Forms.TabPage();
+			this.la_TopHead = new System.Windows.Forms.Label();
 			this.gbTopViewColors = new System.Windows.Forms.GroupBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.tpRouteView = new System.Windows.Forms.TabPage();
-			this.label1 = new System.Windows.Forms.Label();
+			this.la_TopFloor = new System.Windows.Forms.Label();
+			this.la_TopWest = new System.Windows.Forms.Label();
+			this.la_TopNorth = new System.Windows.Forms.Label();
+			this.la_TopContent = new System.Windows.Forms.Label();
+			this.la_RouteHead = new System.Windows.Forms.Label();
 			this.gbRouteViewColors = new System.Windows.Forms.GroupBox();
-			this.label16 = new System.Windows.Forms.Label();
-			this.label15 = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
-			this.tabMain.SuspendLayout();
+			this.la_RouteWalls = new System.Windows.Forms.Label();
+			this.la_RouteContent = new System.Windows.Forms.Label();
+			this.tabcontrol.SuspendLayout();
 			this.tpTileView.SuspendLayout();
 			this.gbTileViewColors.SuspendLayout();
-			this.tpTopView.SuspendLayout();
+			this.tpTopRouteView.SuspendLayout();
 			this.gbTopViewColors.SuspendLayout();
-			this.tpRouteView.SuspendLayout();
 			this.gbRouteViewColors.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tabMain
+			// tabcontrol
 			// 
-			this.tabMain.Controls.Add(this.tpTileView);
-			this.tabMain.Controls.Add(this.tpTopView);
-			this.tabMain.Controls.Add(this.tpRouteView);
-			this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabMain.Location = new System.Drawing.Point(0, 0);
-			this.tabMain.Name = "tabMain";
-			this.tabMain.SelectedIndex = 0;
-			this.tabMain.Size = new System.Drawing.Size(454, 256);
-			this.tabMain.TabIndex = 0;
+			this.tabcontrol.Controls.Add(this.tpTileView);
+			this.tabcontrol.Controls.Add(this.tpTopRouteView);
+			this.tabcontrol.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabcontrol.Location = new System.Drawing.Point(0, 0);
+			this.tabcontrol.Margin = new System.Windows.Forms.Padding(0);
+			this.tabcontrol.Name = "tabcontrol";
+			this.tabcontrol.SelectedIndex = 0;
+			this.tabcontrol.Size = new System.Drawing.Size(454, 256);
+			this.tabcontrol.TabIndex = 0;
 			// 
 			// tpTileView
 			// 
-			this.tpTileView.Controls.Add(this.label25);
-			this.tpTileView.Controls.Add(this.rbTftd);
+			this.tpTileView.Controls.Add(this.la_TileHead);
 			this.tpTileView.Controls.Add(this.rbUfo);
+			this.tpTileView.Controls.Add(this.rbTftd);
 			this.tpTileView.Controls.Add(this.gbTileViewColors);
 			this.tpTileView.Location = new System.Drawing.Point(4, 21);
+			this.tpTileView.Margin = new System.Windows.Forms.Padding(0);
 			this.tpTileView.Name = "tpTileView";
 			this.tpTileView.Size = new System.Drawing.Size(446, 231);
-			this.tpTileView.TabIndex = 3;
+			this.tpTileView.TabIndex = 0;
 			this.tpTileView.Text = "TileView";
 			// 
-			// label25
+			// la_TileHead
 			// 
-			this.label25.Location = new System.Drawing.Point(10, 10);
-			this.label25.Margin = new System.Windows.Forms.Padding(0);
-			this.label25.Name = "label25";
-			this.label25.Size = new System.Drawing.Size(315, 15);
-			this.label25.TabIndex = 0;
-			this.label25.Text = "These are the background colors for special properties.";
-			// 
-			// rbTftd
-			// 
-			this.rbTftd.Location = new System.Drawing.Point(20, 50);
-			this.rbTftd.Name = "rbTftd";
-			this.rbTftd.Size = new System.Drawing.Size(55, 15);
-			this.rbTftd.TabIndex = 2;
-			this.rbTftd.Text = "TFTD";
-			this.rbTftd.UseVisualStyleBackColor = true;
-			this.rbTftd.CheckedChanged += new System.EventHandler(this.OnCheckChanged);
+			this.la_TileHead.Location = new System.Drawing.Point(10, 10);
+			this.la_TileHead.Margin = new System.Windows.Forms.Padding(0);
+			this.la_TileHead.Name = "la_TileHead";
+			this.la_TileHead.Size = new System.Drawing.Size(315, 15);
+			this.la_TileHead.TabIndex = 0;
+			this.la_TileHead.Text = "These are the background colors for special properties.";
 			// 
 			// rbUfo
 			// 
 			this.rbUfo.Checked = true;
 			this.rbUfo.Location = new System.Drawing.Point(20, 30);
+			this.rbUfo.Margin = new System.Windows.Forms.Padding(0);
 			this.rbUfo.Name = "rbUfo";
 			this.rbUfo.Size = new System.Drawing.Size(55, 15);
 			this.rbUfo.TabIndex = 1;
@@ -496,335 +439,348 @@ namespace MapView
 			this.rbUfo.UseVisualStyleBackColor = true;
 			this.rbUfo.CheckedChanged += new System.EventHandler(this.OnCheckChanged);
 			// 
+			// rbTftd
+			// 
+			this.rbTftd.Location = new System.Drawing.Point(20, 50);
+			this.rbTftd.Margin = new System.Windows.Forms.Padding(0);
+			this.rbTftd.Name = "rbTftd";
+			this.rbTftd.Size = new System.Drawing.Size(55, 15);
+			this.rbTftd.TabIndex = 2;
+			this.rbTftd.Text = "TFTD";
+			this.rbTftd.UseVisualStyleBackColor = true;
+			this.rbTftd.CheckedChanged += new System.EventHandler(this.OnCheckChanged);
+			// 
 			// gbTileViewColors
 			// 
 			this.gbTileViewColors.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.gbTileViewColors.Controls.Add(this.lblType09);
-			this.gbTileViewColors.Controls.Add(this.lblType14);
-			this.gbTileViewColors.Controls.Add(this.lblType13);
-			this.gbTileViewColors.Controls.Add(this.lblType12);
-			this.gbTileViewColors.Controls.Add(this.lblType11);
-			this.gbTileViewColors.Controls.Add(this.lblType10);
-			this.gbTileViewColors.Controls.Add(this.lblType08);
-			this.gbTileViewColors.Controls.Add(this.lblType07);
-			this.gbTileViewColors.Controls.Add(this.lblType06);
-			this.gbTileViewColors.Controls.Add(this.lblType05);
-			this.gbTileViewColors.Controls.Add(this.lblType04);
-			this.gbTileViewColors.Controls.Add(this.lblType03);
-			this.gbTileViewColors.Controls.Add(this.lblType02);
-			this.gbTileViewColors.Controls.Add(this.lblType01);
-			this.gbTileViewColors.Controls.Add(this.lblType00);
+			this.gbTileViewColors.Controls.Add(this.la_Type00);
+			this.gbTileViewColors.Controls.Add(this.la_Type01);
+			this.gbTileViewColors.Controls.Add(this.la_Type02);
+			this.gbTileViewColors.Controls.Add(this.la_Type03);
+			this.gbTileViewColors.Controls.Add(this.la_Type04);
+			this.gbTileViewColors.Controls.Add(this.la_Type05);
+			this.gbTileViewColors.Controls.Add(this.la_Type06);
+			this.gbTileViewColors.Controls.Add(this.la_Type07);
+			this.gbTileViewColors.Controls.Add(this.la_Type08);
+			this.gbTileViewColors.Controls.Add(this.la_Type09);
+			this.gbTileViewColors.Controls.Add(this.la_Type10);
+			this.gbTileViewColors.Controls.Add(this.la_Type11);
+			this.gbTileViewColors.Controls.Add(this.la_Type12);
+			this.gbTileViewColors.Controls.Add(this.la_Type13);
+			this.gbTileViewColors.Controls.Add(this.la_Type14);
 			this.gbTileViewColors.Location = new System.Drawing.Point(10, 75);
+			this.gbTileViewColors.Margin = new System.Windows.Forms.Padding(0);
 			this.gbTileViewColors.Name = "gbTileViewColors";
 			this.gbTileViewColors.Size = new System.Drawing.Size(430, 150);
 			this.gbTileViewColors.TabIndex = 3;
 			this.gbTileViewColors.TabStop = false;
 			this.gbTileViewColors.Text = " Tilepart Colors ";
 			// 
-			// lblType09
+			// la_Type00
 			// 
-			this.lblType09.Location = new System.Drawing.Point(10, 95);
-			this.lblType09.Name = "lblType09";
-			this.lblType09.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType09.Size = new System.Drawing.Size(130, 20);
-			this.lblType09.TabIndex = 9;
-			this.lblType09.Text = "09";
-			this.lblType09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type00.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.la_Type00.Location = new System.Drawing.Point(10, 20);
+			this.la_Type00.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type00.Name = "la_Type00";
+			this.la_Type00.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type00.Size = new System.Drawing.Size(130, 20);
+			this.la_Type00.TabIndex = 0;
+			this.la_Type00.Text = "00";
+			this.la_Type00.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType14
+			// la_Type01
 			// 
-			this.lblType14.Location = new System.Drawing.Point(290, 120);
-			this.lblType14.Name = "lblType14";
-			this.lblType14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType14.Size = new System.Drawing.Size(130, 20);
-			this.lblType14.TabIndex = 14;
-			this.lblType14.Text = "14";
-			this.lblType14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type01.Location = new System.Drawing.Point(150, 20);
+			this.la_Type01.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type01.Name = "la_Type01";
+			this.la_Type01.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type01.Size = new System.Drawing.Size(130, 20);
+			this.la_Type01.TabIndex = 1;
+			this.la_Type01.Text = "01";
+			this.la_Type01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType13
+			// la_Type02
 			// 
-			this.lblType13.Location = new System.Drawing.Point(150, 120);
-			this.lblType13.Name = "lblType13";
-			this.lblType13.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType13.Size = new System.Drawing.Size(130, 20);
-			this.lblType13.TabIndex = 13;
-			this.lblType13.Text = "13";
-			this.lblType13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type02.Location = new System.Drawing.Point(290, 20);
+			this.la_Type02.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type02.Name = "la_Type02";
+			this.la_Type02.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type02.Size = new System.Drawing.Size(130, 20);
+			this.la_Type02.TabIndex = 2;
+			this.la_Type02.Text = "02";
+			this.la_Type02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType12
+			// la_Type03
 			// 
-			this.lblType12.Location = new System.Drawing.Point(10, 120);
-			this.lblType12.Name = "lblType12";
-			this.lblType12.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType12.Size = new System.Drawing.Size(130, 20);
-			this.lblType12.TabIndex = 12;
-			this.lblType12.Text = "12";
-			this.lblType12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type03.Location = new System.Drawing.Point(10, 45);
+			this.la_Type03.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type03.Name = "la_Type03";
+			this.la_Type03.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type03.Size = new System.Drawing.Size(130, 20);
+			this.la_Type03.TabIndex = 3;
+			this.la_Type03.Text = "03";
+			this.la_Type03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType11
+			// la_Type04
 			// 
-			this.lblType11.Location = new System.Drawing.Point(290, 95);
-			this.lblType11.Name = "lblType11";
-			this.lblType11.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType11.Size = new System.Drawing.Size(130, 20);
-			this.lblType11.TabIndex = 11;
-			this.lblType11.Text = "11";
-			this.lblType11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type04.Location = new System.Drawing.Point(150, 45);
+			this.la_Type04.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type04.Name = "la_Type04";
+			this.la_Type04.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type04.Size = new System.Drawing.Size(130, 20);
+			this.la_Type04.TabIndex = 4;
+			this.la_Type04.Text = "04";
+			this.la_Type04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType10
+			// la_Type05
 			// 
-			this.lblType10.Location = new System.Drawing.Point(150, 95);
-			this.lblType10.Name = "lblType10";
-			this.lblType10.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType10.Size = new System.Drawing.Size(130, 20);
-			this.lblType10.TabIndex = 10;
-			this.lblType10.Text = "10";
-			this.lblType10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type05.Location = new System.Drawing.Point(290, 45);
+			this.la_Type05.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type05.Name = "la_Type05";
+			this.la_Type05.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type05.Size = new System.Drawing.Size(130, 20);
+			this.la_Type05.TabIndex = 5;
+			this.la_Type05.Text = "05";
+			this.la_Type05.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType08
+			// la_Type06
 			// 
-			this.lblType08.Location = new System.Drawing.Point(290, 70);
-			this.lblType08.Name = "lblType08";
-			this.lblType08.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType08.Size = new System.Drawing.Size(130, 20);
-			this.lblType08.TabIndex = 8;
-			this.lblType08.Text = "08";
-			this.lblType08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type06.Location = new System.Drawing.Point(10, 70);
+			this.la_Type06.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type06.Name = "la_Type06";
+			this.la_Type06.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type06.Size = new System.Drawing.Size(130, 20);
+			this.la_Type06.TabIndex = 6;
+			this.la_Type06.Text = "06";
+			this.la_Type06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType07
+			// la_Type07
 			// 
-			this.lblType07.Location = new System.Drawing.Point(150, 70);
-			this.lblType07.Name = "lblType07";
-			this.lblType07.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType07.Size = new System.Drawing.Size(130, 20);
-			this.lblType07.TabIndex = 7;
-			this.lblType07.Text = "07";
-			this.lblType07.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type07.Location = new System.Drawing.Point(150, 70);
+			this.la_Type07.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type07.Name = "la_Type07";
+			this.la_Type07.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type07.Size = new System.Drawing.Size(130, 20);
+			this.la_Type07.TabIndex = 7;
+			this.la_Type07.Text = "07";
+			this.la_Type07.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType06
+			// la_Type08
 			// 
-			this.lblType06.Location = new System.Drawing.Point(10, 70);
-			this.lblType06.Name = "lblType06";
-			this.lblType06.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType06.Size = new System.Drawing.Size(130, 20);
-			this.lblType06.TabIndex = 6;
-			this.lblType06.Text = "06";
-			this.lblType06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type08.Location = new System.Drawing.Point(290, 70);
+			this.la_Type08.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type08.Name = "la_Type08";
+			this.la_Type08.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type08.Size = new System.Drawing.Size(130, 20);
+			this.la_Type08.TabIndex = 8;
+			this.la_Type08.Text = "08";
+			this.la_Type08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType05
+			// la_Type09
 			// 
-			this.lblType05.Location = new System.Drawing.Point(290, 45);
-			this.lblType05.Name = "lblType05";
-			this.lblType05.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType05.Size = new System.Drawing.Size(130, 20);
-			this.lblType05.TabIndex = 5;
-			this.lblType05.Text = "05";
-			this.lblType05.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type09.Location = new System.Drawing.Point(10, 95);
+			this.la_Type09.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type09.Name = "la_Type09";
+			this.la_Type09.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type09.Size = new System.Drawing.Size(130, 20);
+			this.la_Type09.TabIndex = 9;
+			this.la_Type09.Text = "09";
+			this.la_Type09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType04
+			// la_Type10
 			// 
-			this.lblType04.Location = new System.Drawing.Point(150, 45);
-			this.lblType04.Name = "lblType04";
-			this.lblType04.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType04.Size = new System.Drawing.Size(130, 20);
-			this.lblType04.TabIndex = 4;
-			this.lblType04.Text = "04";
-			this.lblType04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type10.Location = new System.Drawing.Point(150, 95);
+			this.la_Type10.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type10.Name = "la_Type10";
+			this.la_Type10.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type10.Size = new System.Drawing.Size(130, 20);
+			this.la_Type10.TabIndex = 10;
+			this.la_Type10.Text = "10";
+			this.la_Type10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType03
+			// la_Type11
 			// 
-			this.lblType03.Location = new System.Drawing.Point(10, 45);
-			this.lblType03.Name = "lblType03";
-			this.lblType03.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType03.Size = new System.Drawing.Size(130, 20);
-			this.lblType03.TabIndex = 3;
-			this.lblType03.Text = "03";
-			this.lblType03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type11.Location = new System.Drawing.Point(290, 95);
+			this.la_Type11.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type11.Name = "la_Type11";
+			this.la_Type11.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type11.Size = new System.Drawing.Size(130, 20);
+			this.la_Type11.TabIndex = 11;
+			this.la_Type11.Text = "11";
+			this.la_Type11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType02
+			// la_Type12
 			// 
-			this.lblType02.Location = new System.Drawing.Point(290, 20);
-			this.lblType02.Name = "lblType02";
-			this.lblType02.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType02.Size = new System.Drawing.Size(130, 20);
-			this.lblType02.TabIndex = 2;
-			this.lblType02.Text = "02";
-			this.lblType02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type12.Location = new System.Drawing.Point(10, 120);
+			this.la_Type12.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type12.Name = "la_Type12";
+			this.la_Type12.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type12.Size = new System.Drawing.Size(130, 20);
+			this.la_Type12.TabIndex = 12;
+			this.la_Type12.Text = "12";
+			this.la_Type12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType01
+			// la_Type13
 			// 
-			this.lblType01.Location = new System.Drawing.Point(150, 20);
-			this.lblType01.Name = "lblType01";
-			this.lblType01.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType01.Size = new System.Drawing.Size(130, 20);
-			this.lblType01.TabIndex = 1;
-			this.lblType01.Text = "01";
-			this.lblType01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type13.Location = new System.Drawing.Point(150, 120);
+			this.la_Type13.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type13.Name = "la_Type13";
+			this.la_Type13.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type13.Size = new System.Drawing.Size(130, 20);
+			this.la_Type13.TabIndex = 13;
+			this.la_Type13.Text = "13";
+			this.la_Type13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lblType00
+			// la_Type14
 			// 
-			this.lblType00.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.lblType00.Location = new System.Drawing.Point(10, 20);
-			this.lblType00.Name = "lblType00";
-			this.lblType00.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.lblType00.Size = new System.Drawing.Size(130, 20);
-			this.lblType00.TabIndex = 0;
-			this.lblType00.Text = "00";
-			this.lblType00.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Type14.Location = new System.Drawing.Point(290, 120);
+			this.la_Type14.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Type14.Name = "la_Type14";
+			this.la_Type14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_Type14.Size = new System.Drawing.Size(130, 20);
+			this.la_Type14.TabIndex = 14;
+			this.la_Type14.Text = "14";
+			this.la_Type14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tpTopView
+			// tpTopRouteView
 			// 
-			this.tpTopView.Controls.Add(this.label26);
-			this.tpTopView.Controls.Add(this.gbTopViewColors);
-			this.tpTopView.Location = new System.Drawing.Point(4, 22);
-			this.tpTopView.Name = "tpTopView";
-			this.tpTopView.Size = new System.Drawing.Size(446, 230);
-			this.tpTopView.TabIndex = 1;
-			this.tpTopView.Text = "TopView";
+			this.tpTopRouteView.Controls.Add(this.la_TopHead);
+			this.tpTopRouteView.Controls.Add(this.gbTopViewColors);
+			this.tpTopRouteView.Controls.Add(this.la_RouteHead);
+			this.tpTopRouteView.Controls.Add(this.gbRouteViewColors);
+			this.tpTopRouteView.Location = new System.Drawing.Point(4, 22);
+			this.tpTopRouteView.Margin = new System.Windows.Forms.Padding(0);
+			this.tpTopRouteView.Name = "tpTopRouteView";
+			this.tpTopRouteView.Size = new System.Drawing.Size(446, 230);
+			this.tpTopRouteView.TabIndex = 1;
+			this.tpTopRouteView.Text = "Top/RouteView";
 			// 
-			// label26
+			// la_TopHead
 			// 
-			this.label26.Location = new System.Drawing.Point(10, 195);
-			this.label26.Margin = new System.Windows.Forms.Padding(0);
-			this.label26.Name = "label26";
-			this.label26.Size = new System.Drawing.Size(425, 25);
-			this.label26.TabIndex = 1;
-			this.label26.Text = "The Colors viewer must be closed and re-opened to update any colors that have bee" +
-	"n changed in Options.";
+			this.la_TopHead.Location = new System.Drawing.Point(10, 10);
+			this.la_TopHead.Margin = new System.Windows.Forms.Padding(0);
+			this.la_TopHead.Name = "la_TopHead";
+			this.la_TopHead.Size = new System.Drawing.Size(235, 15);
+			this.la_TopHead.TabIndex = 0;
+			this.la_TopHead.Text = "These are the blob colors for TopView.";
 			// 
 			// gbTopViewColors
 			// 
 			this.gbTopViewColors.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.gbTopViewColors.Controls.Add(this.label7);
-			this.gbTopViewColors.Controls.Add(this.label9);
-			this.gbTopViewColors.Controls.Add(this.label10);
-			this.gbTopViewColors.Controls.Add(this.label8);
-			this.gbTopViewColors.Location = new System.Drawing.Point(10, 10);
+			this.gbTopViewColors.Controls.Add(this.la_TopFloor);
+			this.gbTopViewColors.Controls.Add(this.la_TopWest);
+			this.gbTopViewColors.Controls.Add(this.la_TopNorth);
+			this.gbTopViewColors.Controls.Add(this.la_TopContent);
+			this.gbTopViewColors.Location = new System.Drawing.Point(10, 30);
+			this.gbTopViewColors.Margin = new System.Windows.Forms.Padding(0);
 			this.gbTopViewColors.Name = "gbTopViewColors";
 			this.gbTopViewColors.Size = new System.Drawing.Size(430, 55);
-			this.gbTopViewColors.TabIndex = 0;
+			this.gbTopViewColors.TabIndex = 1;
 			this.gbTopViewColors.TabStop = false;
 			this.gbTopViewColors.Text = " Blob Colors ";
 			// 
-			// label7
+			// la_TopFloor
 			// 
-			this.label7.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label7.Location = new System.Drawing.Point(10, 20);
-			this.label7.Name = "label7";
-			this.label7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label7.Size = new System.Drawing.Size(95, 25);
-			this.label7.TabIndex = 0;
-			this.label7.Text = "floor";
-			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_TopFloor.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.la_TopFloor.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.la_TopFloor.Location = new System.Drawing.Point(10, 20);
+			this.la_TopFloor.Margin = new System.Windows.Forms.Padding(0);
+			this.la_TopFloor.Name = "la_TopFloor";
+			this.la_TopFloor.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_TopFloor.Size = new System.Drawing.Size(95, 25);
+			this.la_TopFloor.TabIndex = 0;
+			this.la_TopFloor.Text = "floor";
+			this.la_TopFloor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label9
+			// la_TopWest
 			// 
-			this.label9.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label9.Location = new System.Drawing.Point(220, 20);
-			this.label9.Name = "label9";
-			this.label9.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label9.Size = new System.Drawing.Size(95, 25);
-			this.label9.TabIndex = 2;
-			this.label9.Text = "north";
-			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_TopWest.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.la_TopWest.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.la_TopWest.Location = new System.Drawing.Point(115, 20);
+			this.la_TopWest.Margin = new System.Windows.Forms.Padding(0);
+			this.la_TopWest.Name = "la_TopWest";
+			this.la_TopWest.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_TopWest.Size = new System.Drawing.Size(95, 25);
+			this.la_TopWest.TabIndex = 1;
+			this.la_TopWest.Text = "west";
+			this.la_TopWest.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label10
+			// la_TopNorth
 			// 
-			this.label10.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label10.Location = new System.Drawing.Point(325, 20);
-			this.label10.Name = "label10";
-			this.label10.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label10.Size = new System.Drawing.Size(95, 25);
-			this.label10.TabIndex = 3;
-			this.label10.Text = "content";
-			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_TopNorth.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.la_TopNorth.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.la_TopNorth.Location = new System.Drawing.Point(220, 20);
+			this.la_TopNorth.Margin = new System.Windows.Forms.Padding(0);
+			this.la_TopNorth.Name = "la_TopNorth";
+			this.la_TopNorth.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_TopNorth.Size = new System.Drawing.Size(95, 25);
+			this.la_TopNorth.TabIndex = 2;
+			this.la_TopNorth.Text = "north";
+			this.la_TopNorth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label8
+			// la_TopContent
 			// 
-			this.label8.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label8.Location = new System.Drawing.Point(115, 20);
-			this.label8.Name = "label8";
-			this.label8.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label8.Size = new System.Drawing.Size(95, 25);
-			this.label8.TabIndex = 1;
-			this.label8.Text = "west";
-			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_TopContent.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.la_TopContent.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.la_TopContent.Location = new System.Drawing.Point(325, 20);
+			this.la_TopContent.Margin = new System.Windows.Forms.Padding(0);
+			this.la_TopContent.Name = "la_TopContent";
+			this.la_TopContent.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_TopContent.Size = new System.Drawing.Size(95, 25);
+			this.la_TopContent.TabIndex = 3;
+			this.la_TopContent.Text = "content";
+			this.la_TopContent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tpRouteView
+			// la_RouteHead
 			// 
-			this.tpRouteView.Controls.Add(this.label1);
-			this.tpRouteView.Controls.Add(this.gbRouteViewColors);
-			this.tpRouteView.Location = new System.Drawing.Point(4, 22);
-			this.tpRouteView.Name = "tpRouteView";
-			this.tpRouteView.Size = new System.Drawing.Size(446, 230);
-			this.tpRouteView.TabIndex = 2;
-			this.tpRouteView.Text = "RouteView";
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(10, 195);
-			this.label1.Margin = new System.Windows.Forms.Padding(0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(425, 25);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "The Colors viewer must be closed and re-opened to update any colors that have bee" +
-	"n changed in Options.";
+			this.la_RouteHead.Location = new System.Drawing.Point(10, 95);
+			this.la_RouteHead.Margin = new System.Windows.Forms.Padding(0);
+			this.la_RouteHead.Name = "la_RouteHead";
+			this.la_RouteHead.Size = new System.Drawing.Size(235, 15);
+			this.la_RouteHead.TabIndex = 2;
+			this.la_RouteHead.Text = "These are the blob colors for RouteView.";
 			// 
 			// gbRouteViewColors
 			// 
 			this.gbRouteViewColors.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.gbRouteViewColors.Controls.Add(this.label16);
-			this.gbRouteViewColors.Controls.Add(this.label15);
-			this.gbRouteViewColors.Controls.Add(this.label14);
-			this.gbRouteViewColors.Location = new System.Drawing.Point(10, 10);
+			this.gbRouteViewColors.Controls.Add(this.la_RouteWalls);
+			this.gbRouteViewColors.Controls.Add(this.la_RouteContent);
+			this.gbRouteViewColors.Location = new System.Drawing.Point(10, 115);
 			this.gbRouteViewColors.Name = "gbRouteViewColors";
-			this.gbRouteViewColors.Size = new System.Drawing.Size(325, 55);
-			this.gbRouteViewColors.TabIndex = 0;
+			this.gbRouteViewColors.Size = new System.Drawing.Size(220, 55);
+			this.gbRouteViewColors.TabIndex = 3;
 			this.gbRouteViewColors.TabStop = false;
 			this.gbRouteViewColors.Text = " Blob Colors ";
 			// 
-			// label16
+			// la_RouteWalls
 			// 
-			this.label16.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label16.Location = new System.Drawing.Point(220, 20);
-			this.label16.Name = "label16";
-			this.label16.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label16.Size = new System.Drawing.Size(95, 25);
-			this.label16.TabIndex = 2;
-			this.label16.Text = "content";
-			this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_RouteWalls.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.la_RouteWalls.Location = new System.Drawing.Point(10, 20);
+			this.la_RouteWalls.Margin = new System.Windows.Forms.Padding(0);
+			this.la_RouteWalls.Name = "la_RouteWalls";
+			this.la_RouteWalls.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_RouteWalls.Size = new System.Drawing.Size(95, 25);
+			this.la_RouteWalls.TabIndex = 0;
+			this.la_RouteWalls.Text = "walls";
+			this.la_RouteWalls.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// label15
+			// la_RouteContent
 			// 
-			this.label15.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label15.Location = new System.Drawing.Point(115, 20);
-			this.label15.Name = "label15";
-			this.label15.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label15.Size = new System.Drawing.Size(95, 25);
-			this.label15.TabIndex = 1;
-			this.label15.Text = "north";
-			this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// label14
-			// 
-			this.label14.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.label14.Location = new System.Drawing.Point(10, 20);
-			this.label14.Name = "label14";
-			this.label14.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.label14.Size = new System.Drawing.Size(95, 25);
-			this.label14.TabIndex = 0;
-			this.label14.Text = "west";
-			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_RouteContent.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.la_RouteContent.Location = new System.Drawing.Point(115, 20);
+			this.la_RouteContent.Margin = new System.Windows.Forms.Padding(0);
+			this.la_RouteContent.Name = "la_RouteContent";
+			this.la_RouteContent.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.la_RouteContent.Size = new System.Drawing.Size(95, 25);
+			this.la_RouteContent.TabIndex = 1;
+			this.la_RouteContent.Text = "content";
+			this.la_RouteContent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// ColorHelp
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(454, 256);
-			this.Controls.Add(this.tabMain);
+			this.Controls.Add(this.tabcontrol);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.KeyPreview = true;
@@ -833,12 +789,11 @@ namespace MapView
 			this.Name = "ColorHelp";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Colors";
-			this.tabMain.ResumeLayout(false);
+			this.tabcontrol.ResumeLayout(false);
 			this.tpTileView.ResumeLayout(false);
 			this.gbTileViewColors.ResumeLayout(false);
-			this.tpTopView.ResumeLayout(false);
+			this.tpTopRouteView.ResumeLayout(false);
 			this.gbTopViewColors.ResumeLayout(false);
-			this.tpRouteView.ResumeLayout(false);
 			this.gbRouteViewColors.ResumeLayout(false);
 			this.ResumeLayout(false);
 

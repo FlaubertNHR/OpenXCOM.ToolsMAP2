@@ -18,6 +18,22 @@ namespace MapView.Forms.Observers
 		:
 			RouteControlParent
 	{
+		public void DisposeControl()
+		{
+			DSShared.LogFile.WriteLine("RouteControl.DisposeControl()");
+			BrushOverlayBlue .Dispose();
+			BrushOverlayLight.Dispose();
+			FontOverlay      .Dispose();
+			FontRose         .Dispose();
+			_nodeFill        .Dispose();
+			_lozSelector     .Dispose();
+			_lozSelected     .Dispose();
+			_lozSpotted      .Dispose();
+
+			DisposeControlParent();
+		}
+
+
 		#region Fields (static)
 		private const int RoseMarginX = 25;
 		private const int RoseMarginY = 5;
@@ -55,7 +71,10 @@ namespace MapView.Forms.Observers
 
 		#region Fields
 		private Graphics _graphics;
-		private GraphicsPath _nodeFill = new GraphicsPath();
+		private readonly GraphicsPath _nodeFill    = new GraphicsPath();
+		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over lozenge
+		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // click/drag lozenge
+		private readonly GraphicsPath _lozSpotted  = new GraphicsPath(); // go-button lozenge
 
 		/// <summary>
 		/// Tracks the position of the mouse-cursor.
@@ -89,27 +108,6 @@ namespace MapView.Forms.Observers
 			_spot = spot;
 		}
 		#endregion Fields
-
-
-		#region Properties
-		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over lozenge
-		private GraphicsPath LozSelector
-		{
-			get { return _lozSelector; }
-		}
-
-		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // click/drag lozenge
-		private GraphicsPath LozSelected
-		{
-			get { return _lozSelected; }
-		}
-
-		private readonly GraphicsPath _lozSpotted = new GraphicsPath(); // go-button lozenge
-		private GraphicsPath LozSpotted
-		{
-			get { return _lozSpotted; }
-		}
-		#endregion Properties
 
 
 		#region Properties (static)
@@ -206,7 +204,7 @@ namespace MapView.Forms.Observers
 											RouteView.Optionables.GridLineColor,
 											RouteView.Optionables.GridLineWidth + 1))
 					{
-						_graphics.DrawPath(pen, LozSelector);
+						_graphics.DrawPath(pen, _lozSelector);
 					}
 				}
 
@@ -216,14 +214,14 @@ namespace MapView.Forms.Observers
 											RouteView.Optionables.NodeSelectedColor,
 											RouteView.Optionables.GridLineWidth + 1))
 					{
-						_graphics.DrawPath(pen, LozSelected);
+						_graphics.DrawPath(pen, _lozSelected);
 
 						if (_spot.X > -1)
 						{
 							PathSpottedLozenge(
 											Origin.X + (_spot.X - _spot.Y) * HalfWidth,
 											Origin.Y + (_spot.X + _spot.Y) * HalfHeight);
-							_graphics.DrawPath(pen, LozSpotted); // TODO: Make spotted-pen a separate Option.
+							_graphics.DrawPath(pen, _lozSpotted); // TODO: Make spotted-pen a separate Option.
 						}
 					}
 				}
@@ -903,11 +901,11 @@ namespace MapView.Forms.Observers
 			var p2 = new Point(x,             y + halfHeight * 2);
 			var p3 = new Point(x - halfWidth, y + halfHeight);
 
-			LozSelector.Reset();
-			LozSelector.AddLine(p0, p1);
-			LozSelector.AddLine(p1, p2);
-			LozSelector.AddLine(p2, p3);
-			LozSelector.CloseFigure();
+			_lozSelector.Reset();
+			_lozSelector.AddLine(p0, p1);
+			_lozSelector.AddLine(p1, p2);
+			_lozSelector.AddLine(p2, p3);
+			_lozSelector.CloseFigure();
 		}
 
 		/// <summary>
@@ -935,11 +933,11 @@ namespace MapView.Forms.Observers
 							Origin.X + (a.X - b.Y) * halfWidth  - halfWidth,
 							Origin.Y + (a.X + b.Y) * halfHeight + halfHeight);
 
-			LozSelected.Reset();
-			LozSelected.AddLine(p0, p1);
-			LozSelected.AddLine(p1, p2);
-			LozSelected.AddLine(p2, p3);
-			LozSelected.CloseFigure();
+			_lozSelected.Reset();
+			_lozSelected.AddLine(p0, p1);
+			_lozSelected.AddLine(p1, p2);
+			_lozSelected.AddLine(p2, p3);
+			_lozSelected.CloseFigure();
 
 			Refresh(); // fast update for drag-selection.
 		}
@@ -960,11 +958,11 @@ namespace MapView.Forms.Observers
 			var p2 = new Point(x,             y + halfHeight * 2);
 			var p3 = new Point(x - halfWidth, y + halfHeight);
 
-			LozSpotted.Reset();
-			LozSpotted.AddLine(p0, p1);
-			LozSpotted.AddLine(p1, p2);
-			LozSpotted.AddLine(p2, p3);
-			LozSpotted.CloseFigure();
+			_lozSpotted.Reset();
+			_lozSpotted.AddLine(p0, p1);
+			_lozSpotted.AddLine(p1, p2);
+			_lozSpotted.AddLine(p2, p3);
+			_lozSpotted.CloseFigure();
 		}
 		#endregion Methods (path)
 	}

@@ -18,12 +18,22 @@ namespace MapView.Forms.MainView
 	/// </summary>
 	internal sealed class MainViewOptionables
 	{
+		public void DisposeOptionables()
+		{
+			DSShared.LogFile.WriteLine("MainViewOptionables.DisposeOptionables()");
+			_overlay.BrushLayer.Dispose();
+			_overlay.PenGrid   .Dispose();
+			_overlay.PenGrid10 .Dispose();
+			_overlay.PenSelect .Dispose();
+		}
+
+
 		#region Fields (static)
-		public const int TONER_NONE  = 0;
-		public const int TONER_GRAY  = 1;
-		public const int TONER_RED   = 2;
-		public const int TONER_GREEN = 3;
-		public const int TONER_BLUE  = 4;
+		internal const int TONER_NONE  = 0;
+		internal const int TONER_GRAY  = 1;
+		internal const int TONER_RED   = 2;
+		internal const int TONER_GREEN = 3;
+		internal const int TONER_BLUE  = 4;
 		#endregion Fields (static)
 
 
@@ -52,10 +62,10 @@ namespace MapView.Forms.MainView
 		/// <param name="val">true to show on startup</param>
 		internal void setStartPropertyValue(Form f, bool val)
 		{
-			if      ((f as TileViewForm)     != null) StartTileView     = val;
-			else if ((f as TopViewForm)      != null) StartTopView      = val;
-			else if ((f as RouteViewForm)    != null) StartRouteView    = val;
-			else if ((f as TopRouteViewForm) != null) StartTopRouteView = val;
+			if      (f is TileViewForm)     StartTileView     = val;
+			else if (f is TopViewForm)      StartTopView      = val;
+			else if (f is RouteViewForm)    StartRouteView    = val;
+			else if (f is TopRouteViewForm) StartTopRouteView = val;
 		}
 
 		/// <summary>
@@ -603,7 +613,7 @@ namespace MapView.Forms.MainView
 		[Description("If true use sprite-drawing algorithms that are designed for Mono."
 			+ " This fixes an issue on non-Windows systems where non-transparent"
 			+ " black boxes appear around sprites but it bypasses Interpolation"
-			+ " and SpriteShade routines. Also selected tiles will not be grayed")]
+			+ " and SpriteShade routines. Also selected tiles will not be toned")]
 		[DefaultValue(def_UseMono)]
 		public bool UseMono
 		{
@@ -757,7 +767,9 @@ namespace MapView.Forms.MainView
 		{
 			//DSShared.LogFile.WriteLine("MainViewOptionables.LoadDefaults()");
 
-			Color color = Color.FromArgb(def_GridLayerOpacity, def_GridLayerColor);
+			Color color;
+
+			color = Color.FromArgb(def_GridLayerOpacity, def_GridLayerColor);
 			_overlay.BrushLayer = new SolidBrush(color);
 
 			_overlay.PenGrid   = new Pen(def_GridLineColor,   def_GridLineWidth);
@@ -937,7 +949,7 @@ namespace MapView.Forms.MainView
 				case str_StartTopRoutePage:
 					StartTopRoutePage = (int)val;
 
-					if ((MainViewF._foptions as OptionsForm) == null // on load
+					if (MainViewF._foptions as OptionsForm == null // on load
 						|| StartTopRoutePage > 1)
 					{
 						ObserverManager.TopRouteView.SelectTabpage(StartTopRoutePage % 2); // 0,2 TopView; 1,3 RouteView
@@ -1103,7 +1115,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private static void InvalidateSecondaryPanels()
 		{
-			ObserverManager.TileView.Control.GetVisiblePanel().Invalidate();
+			ObserverManager.TileView.Control.GetSelectedPanel().Invalidate();
 			ObserverManager.InvalidateQuadrantControls();
 		}
 		#endregion Events

@@ -19,6 +19,13 @@ namespace MapView.Forms.Observers
 		:
 			UserControl
 	{
+		public void DisposeControlParent()
+		{
+			DSShared.LogFile.WriteLine("RouteControlParent.DisposeControlParent()");
+			_t1.Dispose();
+		}
+
+
 		#region Events
 		public event EventHandler<RouteControlEventArgs> RouteControlMouseDownEvent;
 		public event EventHandler<RouteControlEventArgs> RouteControlMouseUpEvent;
@@ -26,8 +33,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields (static)
-		internal protected const int OffsetX = 2; // these track the offset between the panel border
-		internal protected const int OffsetY = 3; // and the lozenge-tip.
+		protected const int OffsetX = 2; // these track the offset between the panel border
+		protected const int OffsetY = 3; // and the lozenge-tip.
 		#endregion Fields (static)
 
 
@@ -51,7 +58,13 @@ namespace MapView.Forms.Observers
 		/// Tracks tile-location for move/up/down mouse events: '_col' and
 		/// '_row' in a convenient Point object.
 		/// </summary>
-		internal protected Point _loc;
+		private Point _loc;
+
+		/// <summary>
+		/// A timer whose tick event determines if the cursor has left this
+		/// control and if so clears the overed lozenge.
+		/// </summary>
+		private Timer _t1 = new Timer();
 		#endregion Fields
 
 
@@ -61,17 +74,26 @@ namespace MapView.Forms.Observers
 		/// <see cref="RouteView.NodeSelected">RouteView.NodeSelected</see>
 		/// only.
 		/// </summary>
-		internal protected static RouteNode NodeSelected
-		{ get; set; }
+		protected static RouteNode NodeSelected
+		{ get; private set; }
+
+		/// <summary>
+		/// Sets <see cref="NodeSelected"/>.
+		/// </summary>
+		/// <param name="node"></param>
+		internal static void SetNodeSelected(RouteNode node)
+		{
+			NodeSelected = node;
+		}
 		#endregion Properties (static)
 
 
 		#region Properties
 		private MapFile _file;
-		internal protected MapFile MapFile
+		protected MapFile MapFile
 		{
 			get { return _file; }
-			set
+			private set
 			{
 				_file = value;
 				OnResize(EventArgs.Empty);
@@ -79,16 +101,26 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
+		/// Sets <see cref="MapFile"/>.
+		/// </summary>
+		/// <param name="file"></param>
+		internal void SetMapfile(MapFile file)
+		{
+			MapFile = file;
+		}
+
+
+		/// <summary>
 		/// The top-left point of the panel.
 		/// </summary>
-		internal protected Point Origin
+		protected Point Origin
 		{ get; set; }
 
 		private int _halfwidth = 8;
 		/// <summary>
 		/// Half the horizontal width of a tile-lozenge.
 		/// </summary>
-		internal protected int HalfWidth
+		protected int HalfWidth
 		{
 			get { return _halfwidth; }
 			set { _halfwidth = value; }
@@ -97,7 +129,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Half the vertical height of a tile-lozenge.
 		/// </summary>
-		internal protected int HalfHeight
+		protected int HalfHeight
 		{
 			get { return _halfheight; }
 			set { _halfheight = value; }
@@ -105,25 +137,30 @@ namespace MapView.Forms.Observers
 
 
 		private readonly BlobDrawService _blobService = new BlobDrawService();
-		internal protected BlobDrawService BlobService
+		protected BlobDrawService BlobService
 		{
 			get { return _blobService; }
 		}
 		#endregion Properties
 
-
 		#region cTor
 		/// <summary>
 		/// cTor. Instantiated only as the parent of RouteControl.
 		/// </summary>
-		internal protected RouteControlParent()
+		protected RouteControlParent()
 		{
-			var t1 = new Timer();			// because the mouse OnLeave event doesn't fire when the mouse
-			t1.Interval = Globals.PERIOD;	// moves over a different form before actually "leaving" this
-			t1.Enabled = true;				// control. btw, this is only to stop the overlay from drawing
-			t1.Tick += t1_Tick;				// on both RouteView and TopRouteView(Route) simultaneously.
-		}									// so uh yeah it's overkill - Good Lord it works.
-		#endregion cTor						// Plus it clears the overed infotext tile-coordinates.
+			// Because the mouse OnLeave event doesn't fire when the mouse
+			// moves over a different form before actually "leaving" this
+			// control. btw, this is only to stop the overlay from drawing
+			// on both RouteView and TopRouteView(Route) simultaneously.
+			// so uh yeah it's overkill - Good Lord it works.
+			// Plus it clears the overed infotext tile-coordinates.
+
+			_t1.Interval = Globals.PERIOD;
+			_t1.Enabled = true;
+			_t1.Tick += t1_Tick;
+		}
+		#endregion cTor
 
 
 		#region Events
@@ -471,7 +508,7 @@ namespace MapView.Forms.Observers
 		/// <param name="y">the y-position of the mouse-cursor wrt Client-area</param>
 		/// <returns>the corresponding tile-location or (-1,-1) if the location
 		/// is invalid</returns>
-		internal protected Point GetTileLocation(int x, int y)
+		private Point GetTileLocation(int x, int y)
 		{
 			if (MapFile != null) // safety.
 			{

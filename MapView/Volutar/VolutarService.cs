@@ -30,7 +30,7 @@ namespace MapView.Volutar
 		{
 			get
 			{
-				var option = Options.GetOption(VOLUTAR, String.Empty);
+				Option option = Options.GetOption(VOLUTAR, String.Empty);
 
 				_fullpath = option.Value as String;
 				if (!File.Exists(_fullpath))
@@ -41,8 +41,7 @@ namespace MapView.Volutar
 						{
 							if (File.Exists(volutar.InputString))
 							{
-								_fullpath = volutar.InputString;
-								TileView.Optionables.VolutarMcdEditorPath = _fullpath;
+								TileView.Optionables.VolutarMcdEditorPath = _fullpath = volutar.InputString;
 								option.Value = (object)_fullpath;
 
 								if (TileView._foptions != null && TileView._foptions.Visible)

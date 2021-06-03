@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using MapView.Forms.Observers;
+
 using XCom;
 
 
@@ -14,6 +16,11 @@ namespace MapView
 		#region Fields (static)
 		private const string TITLE = "MCD Info";
 		#endregion Fields (static)
+
+
+		#region Fields
+		TileView _tileView;
+		#endregion Fields
 
 
 		#region Properties (override)
@@ -33,9 +40,12 @@ namespace MapView
 		/// <summary>
 		/// cTor. Instantiates an MCD-info screen.
 		/// </summary>
-		internal McdInfoF()
+		/// <param name="tileView"></param>
+		internal McdInfoF(TileView tileView)
 		{
 			InitializeComponent();
+
+			_tileView = tileView;
 
 			rtbInfo.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
 			rtbInfo.WordWrap = false;
@@ -92,22 +102,20 @@ namespace MapView
 		/// <summary>
 		/// Updates the displayed data whenever the selected tile changes.
 		/// </summary>
-		/// <param name="record">null to blank the info</param>
-		/// <param name="id">terrain Id</param>
-		/// <param name="terrainlabel"></param>
-		internal void UpdateData(
-				McdRecord record = null,
-				int id = -1,
-				string terrainlabel = "")
+		internal void UpdateData()
 		{
-			Text = TITLE;
 			rtbInfo.Text = String.Empty;
 
-			if ((bsInfo.DataSource = record) != null)
+			Tilepart part; McdRecord record;
+			if ((part = _tileView.SelectedTilepart) != null
+				&& (record = part.Record) != null)
 			{
-				Text += " - " + terrainlabel + "  terId " + id;
+				Text = TITLE + " - " + _tileView.GetTerrainLabel() + "  terId " + part.TerId;
 
 				rtbInfo.SelectionColor = Color.Black;
+
+				// TODO: StringBuilder ->
+
 				rtbInfo.AppendText(record.stSprites);
 				rtbInfo.AppendText(record.stLoFTs);
 				rtbInfo.AppendText(record.stScanG);
@@ -281,10 +289,13 @@ namespace MapView
 				rtbInfo.AppendText("byte data:" + Environment.NewLine);
 				rtbInfo.SelectionColor = Color.DarkGray;
 				rtbInfo.AppendText(record.ByteTable + Environment.NewLine);
-			}
 
-			rtbInfo.SelectionStart  =
-			rtbInfo.SelectionLength = 0;
+
+				rtbInfo.SelectionStart  =
+				rtbInfo.SelectionLength = 0;
+			}
+			else
+				Text = TITLE;
 		}
 		#endregion Methods
 	}

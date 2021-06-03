@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 
@@ -53,9 +54,10 @@ namespace XCom
 
 
 		/// <summary>
-		/// Catches an out-of-bounds Rank value if it tries to load from the .RMP.
-		/// TFTD appears to have ~10 Maps that have OobRanks.
+		/// Catches an out-of-bounds Rank value if it tries to load from the
+		/// .RMP.
 		/// </summary>
+		/// <remarks>TFTD appears to have ~10 Maps that have OobRanks.</remarks>
 		public byte OobRank
 		{ get; set; }
 		#endregion Properties

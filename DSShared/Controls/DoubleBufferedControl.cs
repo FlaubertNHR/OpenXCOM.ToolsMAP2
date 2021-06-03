@@ -48,7 +48,7 @@ namespace DSShared.Controls
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-			RenderGraphics(e.Graphics);
+			OnPaintControl(e.Graphics);
 		}
 		#endregion Events (override)
 
@@ -57,7 +57,7 @@ namespace DSShared.Controls
 		/// <summary>
 		/// Shunts rendering off to TopControl and QuadrantControl.
 		/// </summary>
-		protected virtual void RenderGraphics(Graphics graphics)
+		protected virtual void OnPaintControl(Graphics graphics)
 		{}
 		#endregion Methods (virtual)
 	}

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 
@@ -8,27 +7,7 @@ namespace MapView
 	partial class McdInfoF
 	{
 		#region Designer
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private IContainer components;
-
 		private RichTextBox rtbInfo;
-		private BindingSource bsInfo;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -36,10 +15,7 @@ namespace MapView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			this.rtbInfo = new System.Windows.Forms.RichTextBox();
-			this.bsInfo = new System.Windows.Forms.BindingSource(this.components);
-			((System.ComponentModel.ISupportInitialize)(this.bsInfo)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// rtbInfo
@@ -52,12 +28,9 @@ namespace MapView
 			this.rtbInfo.ShowSelectionMargin = true;
 			this.rtbInfo.Size = new System.Drawing.Size(512, 609);
 			this.rtbInfo.TabIndex = 0;
+			this.rtbInfo.Text = "";
 			this.rtbInfo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown_rtb);
 			this.rtbInfo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUp_rtb);
-			// 
-			// bsInfo
-			// 
-			this.bsInfo.DataSource = typeof(XCom.McdRecord);
 			// 
 			// McdInfoF
 			// 
@@ -69,7 +42,6 @@ namespace MapView
 			this.Name = "McdInfoF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "MCD Info";
-			((System.ComponentModel.ISupportInitialize)(this.bsInfo)).EndInit();
 			this.ResumeLayout(false);
 
 		}

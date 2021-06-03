@@ -139,8 +139,7 @@ namespace MapView
 		{
 			ResetTallies();
 
-			var routes = _file.Routes;
-			foreach (RouteNode node in routes)
+			foreach (RouteNode node in _file.Routes)
 			{
 				if (node.Spawn != SpawnWeight.None)
 				{

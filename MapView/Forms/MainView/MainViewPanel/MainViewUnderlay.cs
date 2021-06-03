@@ -14,8 +14,9 @@ namespace MapView.Forms.MainView
 		:
 			BufferedPanel // god I hate these double-panels!!!! cf. MainViewOverlay
 	{
-		public void DisposeUnderlay()
+		public static void DisposeUnderlay()
 		{
+			DSShared.LogFile.WriteLine("MainViewOverlay.DisposeUnderlay()");
 			if (_t1 != null)
 				_t1.Dispose();
 		}

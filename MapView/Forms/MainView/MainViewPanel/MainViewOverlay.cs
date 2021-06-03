@@ -25,6 +25,7 @@ namespace MapView.Forms.MainView
 	{
 		public void DisposeOverlay()
 		{
+			LogFile.WriteLine("MainViewOverlay.DisposeOverlay()");
 			LocationFont.Dispose();
 			_layerFill  .Dispose();
 			_t1         .Dispose();
@@ -79,7 +80,7 @@ namespace MapView.Forms.MainView
 
 		private int _phase;
 
-		Timer _t1 = new Timer();
+		private Timer _t1 = new Timer();
 		#endregion Fields
 
 
@@ -136,9 +137,10 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// List of SolidBrushes used to draw sprites from XCImage.Bindata (in
-		/// Mono). Can be either UfoBattle palette brushes or TftdBattle
-		/// palette brushes.
+		/// Mono).
 		/// </summary>
+		/// <remarks>Can be either UfoBattle palette brushes or TftdBattle
+		/// palette brushes.</remarks>
 		internal IList<Brush> SpriteBrushes
 		{ private get; set; }
 
@@ -174,8 +176,7 @@ namespace MapView.Forms.MainView
 		internal MainViewOverlay(MainViewF mainView)
 		{
 			_mainView = mainView;
-
-			that = _mainView.MainViewOverlay = this;
+			_mainView.SetMainViewOverlay(that = this);
 
 			SetStyle(ControlStyles.Selectable, true);
 			TabStop = true;
@@ -475,26 +476,26 @@ namespace MapView.Forms.MainView
 				}
 				else
 				{
-					string info = "copied:";
+					string copyable = "copied:";
 					foreach (var key in _copiedTerrains)
 					{
-						info += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
-							  + GetBasepathDescript(key.Value.Item2);
+						copyable += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
+								  + GetBasepathDescript(key.Value.Item2);
 					}
 
-					info += Environment.NewLine + Environment.NewLine
-						  + "currently allocated:";
+					copyable += Environment.NewLine + Environment.NewLine
+							  + "currently allocated:";
 					foreach (var key in MapFile.Descriptor.Terrains)
 					{
-						info += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
-							  + GetBasepathDescript(key.Value.Item2);
+						copyable += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
+								  + GetBasepathDescript(key.Value.Item2);
 					}
 
 					using (var f = new Infobox(
 											"Allocated terrains differ",
 											Infobox.SplitString("The list of terrains that were copied are too"
 													+ " different from the terrains in the currently loaded Map."),
-											info,
+											copyable,
 											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
@@ -975,11 +976,11 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Updates the drag-selection process.
-		/// @note The MouseMove event appears to fire multiple times when the
-		/// form is activated but there is no actual mouse-movement; so good
-		/// luck with that. Workaround: '_x' and '_y'.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>The MouseMove event appears to fire multiple times when the
+		/// form is activated but there is no actual mouse-movement; so good
+		/// luck with that. Workaround: '_x' and '_y'.</remarks>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
 			if (MapFile != null)
@@ -1053,8 +1054,8 @@ namespace MapView.Forms.MainView
 		internal Point GetDragBeg_abs()
 		{
 			return new Point(
-						Math.Min(DragBeg.X, DragEnd.X),
-						Math.Min(DragBeg.Y, DragEnd.Y));
+							Math.Min(DragBeg.X, DragEnd.X),
+							Math.Min(DragBeg.Y, DragEnd.Y));
 		}
 
 		/// <summary>
@@ -1065,8 +1066,8 @@ namespace MapView.Forms.MainView
 		internal Point GetDragEnd_abs()
 		{
 			return new Point(
-						Math.Max(DragBeg.X, DragEnd.X),
-						Math.Max(DragBeg.Y, DragEnd.Y));
+							Math.Max(DragBeg.X, DragEnd.X),
+							Math.Max(DragBeg.Y, DragEnd.Y));
 		}
 
 
@@ -1460,8 +1461,8 @@ namespace MapView.Forms.MainView
 
 			if (FirstClick) // This is different between REMBRANDT and PICASSO ->
 			{
-				var a = GetDragBeg_abs();
-				var b = GetDragEnd_abs();
+				Point a = GetDragBeg_abs();
+				Point b = GetDragEnd_abs();
 
 				int width  = b.X - a.X + 1;
 				int height = b.Y - a.Y + 1;
@@ -1963,10 +1964,10 @@ namespace MapView.Forms.MainView
 		/// <param name="dragrect"></param>
 		private void DrawSelectionBorder(Rectangle dragrect)
 		{
-			var t0 = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Top));
-			var r0 = GetClientCoordinates(new Point(dragrect.Right, dragrect.Top));
-			var b0 = GetClientCoordinates(new Point(dragrect.Right, dragrect.Bottom));
-			var l0 = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Bottom));
+			Point t0 = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Top));
+			Point r0 = GetClientCoordinates(new Point(dragrect.Right, dragrect.Top));
+			Point b0 = GetClientCoordinates(new Point(dragrect.Right, dragrect.Bottom));
+			Point l0 = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Bottom));
 
 			t0.X += HalfWidth;
 			r0.X += HalfWidth;

@@ -1,11 +1,24 @@
 using System;
-using System.Reflection;
 
 
 namespace XCom
 {
 	public sealed class Tilepart
 	{
+		/// <summary>
+		/// Disposes the crippled spriteset.
+		/// </summary>
+		public static void DisposeCrippledSprites()
+		{
+			DSShared.LogFile.WriteLine("Tilepart.DisposeCrippledSprites()");
+			if (CrippledSprites != null)
+			{
+				CrippledSprites.Dispose();
+				CrippledSprites = null;
+			}
+		}
+
+
 		#region Fields (static)
 		public const int PHASES = 8;
 
@@ -232,7 +245,6 @@ namespace XCom
 		/// Returns a copy of this Tilepart with a deep-cloned Record for
 		/// McdView. But any referred to sprites and dead/altr tileparts
 		/// keep pointers to their current objects.
-		/// @note Sprites and the Spriteset shall be null.
 		/// - classvars:
 		///   Record	(ptr)
 		///   Sprites	(ptr) -> not used in McdView
@@ -244,6 +256,7 @@ namespace XCom
 		///   SetId		(int)
 		/// </summary>
 		/// <returns></returns>
+		/// <remarks>Sprites and the Spriteset shall be null.</remarks>
 		public Tilepart CreateInsert()
 		{
 			var part = new Tilepart();
@@ -267,17 +280,22 @@ namespace XCom
 		/// record and one of the MonotoneSprites (based on its quadslot) but to
 		/// transfer the old SetId to the new SetId.
 		/// 
+		/// 
 		/// This allows the user to invoke TileslotSubstitution to shift ids
 		/// above the currently displayable range down into accepted values.
 		/// It's useful only when records have been removed from the Mapfile's
 		/// current terrains but there are still used records with ids that are
 		/// higher than any of the (previously/externally) removed records' ids.
 		/// 
+		/// 
 		/// Records are MCD-entries in case you haven't figured that.
+		/// 
 		/// 
 		/// IMPORTANT: This is strictly a one-way operation!
 		/// 
+		/// 
 		/// See <see cref="MapFile"/> CreateTile()
+		/// 
 		/// 
 		/// IMPORTANT: All crippled parts shall go ~poof~ when the Mapfile is
 		/// saved. TODO: Dispose and null <see cref="CrippledSprites"/>.
@@ -353,18 +371,6 @@ namespace XCom
 															bindata,
 															sprite.Pal.Table);
 				}
-			}
-		}
-
-		/// <summary>
-		/// Disposes the crippled spriteset.
-		/// </summary>
-		public static void DisposeCrippledSprites()
-		{
-			if (CrippledSprites != null)
-			{
-				CrippledSprites.Dispose();
-				CrippledSprites = null;
 			}
 		}
 		#endregion Methods (static)

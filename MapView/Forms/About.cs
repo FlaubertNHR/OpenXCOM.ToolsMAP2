@@ -119,10 +119,8 @@ namespace MapView
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
-			{
-				MainViewF.that._fabout = null;
 				MainViewF.that.DecheckAbout();
-			}
+
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)

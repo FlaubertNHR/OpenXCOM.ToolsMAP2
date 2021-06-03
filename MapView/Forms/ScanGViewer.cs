@@ -162,6 +162,9 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>SpriteShade works on Mono here because the graphic is built
+		/// up from scratch on a black background and bypasses the transparent
+		/// pixels.</remarks>
 		private void panel_OnPaint(object sender, PaintEventArgs e)
 		{
 			if (_icons != null && _pal != null)
@@ -310,16 +313,18 @@ namespace MapView
 
 					icon.Palette = _pal.Table;
 
-					var spriteAttributes = new ImageAttributes();
-					if (MainViewF.Optionables.SpriteShadeEnabled) // TODO: how does UseMono cope w/ this
-						spriteAttributes.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+					using (var ia = new ImageAttributes())
+					{
+						if (MainViewF.Optionables.SpriteShadeEnabled) // && !MainViewF.Optionables.UseMono
+							ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 
-					e.Graphics.DrawImage(
-										icon,
-										new Rectangle(1,1, icon.Width, icon.Height),
-										0,0, icon.Width, icon.Height,
-										GraphicsUnit.Pixel,
-										spriteAttributes);
+						e.Graphics.DrawImage(
+											icon,
+											new Rectangle(1,1, icon.Width, icon.Height),
+											0,0, icon.Width, icon.Height,
+											GraphicsUnit.Pixel,
+											ia);
+					}
 				}
 			}
 		}

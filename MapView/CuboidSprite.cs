@@ -13,6 +13,14 @@ namespace MapView
 	/// </summary>
 	internal static class CuboidSprite
 	{
+		public static void DisposeCursorset()
+		{
+			DSShared.LogFile.WriteLine("CuboidSprite.DisposeCursorset()");
+			if (Cursorset != null)
+				Cursorset.Dispose();
+		}
+
+
 		#region Fields (static)
 		private const int RED_BACK   = 0; // sprite-ids in CURSOR.PCK ->
 		private const int RED_FRONT  = 3;
@@ -26,8 +34,17 @@ namespace MapView
 
 
 		#region Properties (static)
-		internal static Spriteset Cursorset
-		{ private get; set; }
+		private static Spriteset Cursorset
+		{ get; set; }
+
+		/// <summary>
+		/// Sets the <see cref="Cursorset"/> property.
+		/// </summary>
+		/// <param name="cursorset"></param>
+		internal static void SetCursorset(Spriteset cursorset)
+		{
+			Cursorset = cursorset;
+		}
 		#endregion Properties (static)
 
 

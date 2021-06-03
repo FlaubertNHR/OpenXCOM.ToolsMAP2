@@ -21,6 +21,123 @@ namespace MapView.Forms.Observers
 		:
 			BufferedPanel
 	{
+		#region IDisposable inherited
+		// https://dave-black.blogspot.com/2011/03/how-do-you-properly-implement.html
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this instance is disposed.
+		/// </summary>
+		/// <value><c>true</c> if this instance is disposed</value>
+		/// <remarks>Default initialization for a bool is <c>false</c>.</remarks>
+//		private bool IsDisposed { get; set; }	// <- hides inherited member 'System.Windows.Forms.Control.IsDisposed'
+//		private bool Disposed { get; set; }		// <- hides inherited member 'System.ComponentModel.Component.Disposed'
+		private bool _disposed;					// -> so fuck you too.
+
+		// Look. This is more convoluted, confusing, and time-consuming to
+		// figure out how to implement than simply allocating and deallocating
+		// memory in totally unmanaged languages like C/C++ (before they decided
+		// it would be a good thing to implement it there also).
+		//
+		// No one even seems to know exactly what "managed" and "unmanaged"
+		// means - not to mention wtf a "native resource" is.
+		//
+		// Dave Black, who has been working professionally with low-level C#,
+		// specializing in and trouble-shooting disposal, for 15 years can't
+		// describe what to do accurately (although he sounds like he does). The
+		// wiser folks who are really on .NET have learned, rather, to keep
+		// their mouths shut.
+		//
+		// To be honest, the only practical reason I can see for overriding
+		// Dispose(bool) is so that objects can be instantiated then disposed
+		// with a using() statement. But MapView doesn't really do that pattern
+		// for major objects like viewers and their controls.
+		//
+		// And it doesn't have to: just write and call a function
+		//   DisposeObject()
+		//   FreeResources()
+		//   ReleaseHandles()
+		//   DestroyStuff()
+		//   whatever()
+		//
+		// That is bypass their fuckin "pattern" wherever possible.
+		//
+		// Treat c#/.net like an 'unmanaged' language. If you new it
+		// it's your responsibility to decide whether, when, where, and how to
+		// dispose it.
+
+		/// <summary>
+		/// Overloaded Implementation of Dispose.
+		/// </summary>
+		/// <param name="disposing"><c>true</c> to release both managed and
+		/// unmanaged resources; <c>false</c> to release only unmanaged
+		/// resources.</param>
+		/// <remarks>
+		/// <list type="bulleted">Dispose(bool isDisposing) executes in two
+		/// distinct scenarios.
+		/// <item>If <paramref name="disposing"/> equals <c>true</c> the
+		/// method has been called directly or indirectly by a user's code.
+		/// Managed and unmanaged resources can be disposed.</item>
+		/// <item>If <paramref name="disposing"/> equals <c>false</c> the
+		/// method has been called by the runtime from inside the finalizer and
+		/// you should not reference other objects. Only unmanaged resources can
+		/// be disposed.</item></list>
+		/// </remarks>
+		protected override void Dispose(bool disposing)
+		{
+			DSShared.LogFile.WriteLine("TilePanel.Dispose(" + disposing + ")");
+			// TODO If you need thread safety, use a lock around these
+			// operations as well as in your methods that use the resource.
+			try
+			{
+				if (!_disposed) // && !IsDisposed
+				{
+					// Explicitly set root references to null to expressly tell the
+					// GarbageCollector that the resources have been disposed of
+					// and it's ok to release the memory allocated for them.
+
+					if (disposing)
+					{
+						// Release all managed resources here
+						//
+						// Need to unregister/detach yourself from the events. Always make
+						// sure the object is not null first before trying to unregister/detach
+						// them! Failure to unregister can be a BIG source of memory leaks.
+
+						if (PenRed != null) // static object
+						{
+							PenRed.Dispose();
+//							PenRed = null;
+						}
+
+						if (_t1 != null) // static object
+						{
+//							_t1 -= t1_Tick; // should not be a problem even if already unsubscribed.
+							_t1.Dispose();
+//							_t1 = null;
+						}
+
+						// uncomment this code if this is a WinForm-UI control that has assigned components
+//						if (components != null)
+//							components.Dispose();
+					}
+
+					// release all unmanaged resources here
+//					if (someComObject != null && Marshal.IsComObject(someComObject))
+//					{
+//						Marshal.FinalReleaseComObject(someComObject);
+//						someComObject = null;
+//					}
+				}
+			}
+			finally
+			{
+				_disposed = true;
+				base.Dispose(disposing);
+			}
+		}
+		#endregion IDisposable inherited
+
+
 		internal delegate void TilepartSelectedEvent(Tilepart part);
 
 		internal event TilepartSelectedEvent TilepartSelected;
@@ -39,7 +156,14 @@ namespace MapView.Forms.Observers
 		internal static readonly Dictionary<SpecialType, SolidBrush> SpecialBrushes =
 							 new Dictionary<SpecialType, SolidBrush>();
 
-		private static Timer _t1 = new Timer();
+		private static readonly Pen PenRed = new Pen(Color.Red, 3);
+
+		private static readonly Timer _t1 = new Timer();
+
+		private const string Door = "door";
+		private static int TextWidth;
+
+		private const int TableOffset = 2;
 		#endregion Fields (static)
 
 
@@ -48,13 +172,13 @@ namespace MapView.Forms.Observers
 
 		private readonly VScrollBar _scrollBar;
 
-		private readonly Pen _penRed = new Pen(Color.Red, 3);
-
 		private int _tilesX = 1;
 		private int _startY;
 		private int _id;
 
 		private PartType _quadType;
+
+		private bool _resetTrack;
 		#endregion Fields
 
 
@@ -139,48 +263,15 @@ namespace MapView.Forms.Observers
 
 			Controls.Add(_scrollBar);
 
-			ContextMenu = CreateContext();
-
 			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
 
 			_t1.Interval = Globals.PERIOD;	// because the mouse OnLeave event doesn't fire
 			_t1.Enabled = true;				// when the mouse moves out of the panel directly
 		}									// from a tilepart's part-icon.
-
-		/// <summary>
-		/// Builds a ContextMenu for RMB on this TilePanel.
-		/// </summary>
-		/// <returns>the ContextMenu</returns>
-		private ContextMenu CreateContext()
-		{
-			var context = new ContextMenu();
-
-			context.MenuItems.Add(new MenuItem("open in PckView", OnClick_OpenPckview, Shortcut.F9));	// 0
-			context.MenuItems.Add(new MenuItem("open in McdView", OnClick_OpenMcdview, Shortcut.F10));	// 1
-			context.MenuItems.Add(new MenuItem("-"));													// 2
-			context.MenuItems.Add(new MenuItem("view MCD record", OnClick_OpenMcdinfo));				// 3
-
-			return context;
-		}
 		#endregion cTor
 
 
 		#region Events
-		private void OnClick_OpenPckview(object sender, EventArgs e)
-		{
-			Chaparone.OnPckViewClick(sender, e);
-		}
-
-		private void OnClick_OpenMcdview(object sender, EventArgs e)
-		{
-			Chaparone.OnMcdViewClick(sender, e);
-		}
-
-		private void OnClick_OpenMcdinfo(object sender, EventArgs e)
-		{
-			Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
-		}
-
 		/// <summary>
 		/// Ensures that any OverInfo on the statusbar is cleared when the
 		/// mouse-cursor leaves this panel.
@@ -229,8 +320,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (override)
-		private bool _resetTrack;
-
 		/// <summary>
 		/// Handles client resizing. Sets the scrollbar's Maximum value. And
 		/// ensures that the bottom of the tile-table gets snuggled down against
@@ -452,7 +541,6 @@ namespace MapView.Forms.Observers
 			Chaparone.PrintOverInfo(part);
 		}
 
-
 		/// <summary>
 		/// Gets the ID of a tilepart at a mouse-position.
 		/// </summary>
@@ -472,11 +560,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string Door = "door";
-		private static int TextWidth;
-
-		private const int TableOffset = 2;
-
 		/// <summary>
 		/// this.Fill(black)
 		/// </summary>
@@ -491,13 +574,13 @@ namespace MapView.Forms.Observers
 				var rectOuter = new Rectangle(0,0, SpriteWidth, SpriteHeight);
 				var rectInner = new Rectangle();
 
-				ImageAttributes attribs = null;
+				ImageAttributes ia = null;
 				if (!MainViewF.Optionables.UseMono)
 				{
 					if (MainViewF.Optionables.SpriteShadeEnabled)
 					{
-						attribs = new ImageAttributes();
-						attribs.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+						ia = new ImageAttributes();
+						ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 					}
 
 					rectInner.Width  = XCImage.SpriteWidth32;
@@ -518,7 +601,7 @@ namespace MapView.Forms.Observers
 				XCImage sprite;
 
 				byte[] bindata;
-				IList<Brush> brushes;
+				IList<Brush> brushes; // TODO: set these when the Mapfile loads
 				if (MainViewF.Optionables.UseMono)
 				{
 					if (MainViewUnderlay.that.MapFile.Descriptor.GroupType == GameType.Tftd)
@@ -571,7 +654,7 @@ namespace MapView.Forms.Observers
 												rectInner,
 												0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
 												GraphicsUnit.Pixel,
-												attribs);
+												ia);
 							}
 						}
 
@@ -625,10 +708,13 @@ namespace MapView.Forms.Observers
 									TableOffset + SpriteWidth * _tilesX, TableOffset + _startY + i);
 
 				graphics.DrawRectangle(											// draw selected rectangle
-									_penRed,
+									PenRed,
 									TableOffset + _id % _tilesX * SpriteWidth,
 									TableOffset + _id / _tilesX * SpriteHeight + _startY,
 									SpriteWidth, SpriteHeight);
+
+				if (ia != null)
+					ia.Dispose();
 			}
 		}
 		#endregion Events (override)

@@ -96,31 +96,28 @@ namespace MapView.Forms.Observers
 
 			InitializeComponent();
 
+			SuspendLayout();
+
 			// Mono prefers the toolstrip added here in the cTor instead of the
 			// designer ... uh, apparently
 			tscPanel.LeftToolStripPanel.Controls.Add(tsTools);
 
 			CreateQuadrantPanel();
 
-			SuspendLayout();
-
-			QuadrantControl.SelectedQuadrant = PartType.Floor;
-
-
 			TopControl = new TopControl(this);
 			TopControl.Dock = DockStyle.Fill;
 
 			pnlMain.Controls.Add(TopControl);
 			pnlMain.Resize += (sender, e) => TopControl.ResizeObserver(
-																pnlMain.Width,
-																pnlMain.Height);
+																	pnlMain.Width,
+																	pnlMain.Height);
 
 			Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantVisibilityClick, Keys.F1);
 			West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantVisibilityClick, Keys.F2);
 			North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantVisibilityClick, Keys.F3);
 			Content = new ToolStripMenuItem(QuadrantDrawService.Content, null, OnQuadrantVisibilityClick, Keys.F4);
 
-			var visQuads = tsddbVisibleQuads.DropDown.Items;
+			ToolStripItemCollection visQuads = tsddbVisibleQuads.DropDown.Items;
 
 			visQuads.Add(Floor);
 			visQuads.Add(West);
@@ -146,14 +143,6 @@ namespace MapView.Forms.Observers
 		private void CreateQuadrantPanel()
 		{
 			QuadrantControl = new QuadrantControl();
-
-			QuadrantControl.Name     = "QuadrantControl";
-			QuadrantControl.Location = new Point(0, 410);
-			QuadrantControl.Size     = new Size(640, 70);
-			QuadrantControl.Dock     = DockStyle.Bottom;
-			QuadrantControl.TabIndex = 2;
-			QuadrantControl.TabStop  = false;
-
 			Controls.Add(QuadrantControl);
 		}
 		#endregion cTor

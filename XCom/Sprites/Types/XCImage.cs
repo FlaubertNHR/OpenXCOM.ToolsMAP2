@@ -11,6 +11,74 @@ namespace XCom
 		:
 			IDisposable
 	{
+		#region Methods (IDisposable)
+		/// <summary>
+		/// Disposes the Bitmaps 'Sprite' and 'SpriteToned' if applicable.
+		/// </summary>
+		public void Dispose()
+		{
+			DSShared.LogFile.WriteLine("XCImage.Dispose()");
+//			Sprite.Dispose();
+//
+//			var sprite = this as PckSprite;
+//			if (sprite != null && sprite.SpriteToned != null)
+//				sprite.SpriteToned.Dispose();
+
+			// fxCop ca1063
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+		#endregion Methods (IDisposable)
+
+
+		#region fxCop ca1063
+		private bool _disposed; // <- probably for multithreaded stuff
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!_disposed)
+			{
+//				try
+//				{
+				if (disposing)
+				{
+					if (Sprite != null)
+					{
+						Sprite.Dispose();
+						Sprite = null; // pointless. not necessarily ...
+					}
+
+					var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
+					if (sprite != null && sprite.SpriteToned != null)
+					{
+						sprite.SpriteToned.Dispose();
+						sprite.SpriteToned = null; // pointless. not necessarily ...
+					}
+				}
+
+//				if (nativeResource != IntPtr.Zero) // dispose unmanaged resources here ->
+//				{
+//					Marshal.FreeHGlobal(nativeResource);
+//					nativeResource = IntPtr.Zero;
+//				}
+//				}
+//				finally
+//				{
+				_disposed = true;
+//				}
+			}
+		}
+
+		// NOTE: Leave out the finalizer altogether if this class doesn't own
+		// unmanaged resources itself but leave the other methods exactly as
+		// they are.
+//		~XCImage()
+//		{
+//			Dispose(false);
+//		}
+		#endregion fxCop ca1063
+
+
 		#region Fields (static)
 		public const  int SpriteWidth32  = 32; // for MapView, so I don't have to recode a bunch of crap there.
 		public const  int SpriteHeight40 = 40; // for MapView, so I don't have to recode a bunch of crap there.
@@ -169,72 +237,5 @@ namespace XCom
 			return true;
 		}
 		#endregion Methods
-
-
-		#region Methods (IDisposable)
-		/// <summary>
-		/// Disposes the Bitmaps 'Sprite' and 'SpriteToned' if applicable.
-		/// </summary>
-		public void Dispose()
-		{
-//			Sprite.Dispose();
-//
-//			var sprite = this as PckSprite;
-//			if (sprite != null && sprite.SpriteToned != null)
-//				sprite.SpriteToned.Dispose();
-
-			// fxCop ca1063
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-		#endregion Methods (IDisposable)
-
-
-		#region fxCop ca1063
-		private bool _disposed; // <- probably for multithreaded stuff
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-//				try
-				{
-					if (disposing)
-					{
-						if (Sprite != null)
-						{
-							Sprite.Dispose();
-							Sprite = null; // pointless.
-						}
-
-						var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
-						if (sprite != null && sprite.SpriteToned != null)
-						{
-							sprite.SpriteToned.Dispose();
-							sprite.SpriteToned = null; // pointless.
-						}
-					}
-
-//					if (nativeResource != IntPtr.Zero)
-//					{
-//						Marshal.FreeHGlobal(nativeResource);
-//						nativeResource = IntPtr.Zero;
-//					}
-				}
-//				finally
-				{
-					_disposed = true;
-				}
-			}
-		}
-
-		// NOTE: Leave out the finalizer altogether if this class doesn't own
-		// unmanaged resources itself but leave the other methods exactly as
-		// they are.
-//		~XCImage()
-//		{
-//			Dispose(false);
-//		}
-		#endregion fxCop ca1063
 	}
 }

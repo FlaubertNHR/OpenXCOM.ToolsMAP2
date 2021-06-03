@@ -16,6 +16,24 @@ namespace XCom
 		:
 			IDisposable
 	{
+		#region Methods (IDisposable)
+		/// <summary>
+		/// Disposes all <see cref="XCImage"/>s in <see cref="Sprites"/> and
+		/// clears the list.
+		/// </summary>
+		/// <remarks>The spriteset itself remains valid along with the cleared
+		/// sprites-list.</remarks>
+		public void Dispose()
+		{
+			LogFile.WriteLine("Spriteset.Dispose() Label= " + Label);
+			for (int i = Sprites.Count - 1; i != -1; --i)
+				Sprites[i].Dispose();
+
+			Sprites.Clear();
+		}
+		#endregion Methods (IDisposable)
+
+
 		#region Fields (static)
 		public const int FAIL_non            = 0x0; // bitflags for Fail states ->
 		public const int FAIL_OF_SPRITE      = 0x1; // overflow
@@ -718,22 +736,5 @@ namespace XCom
 			return Label;
 		}
 		#endregion Methods (override)
-
-
-		#region Methods (IDisposable)
-		/// <summary>
-		/// Disposes all <see cref="XCImage"/>s in <see cref="Sprites"/> and
-		/// clears the list.
-		/// </summary>
-		/// <remarks>The spriteset itself remains valid along with the
-		/// sprites-list.</remarks>
-		public void Dispose()
-		{
-			for (int i = Sprites.Count - 1; i != -1; --i)
-				Sprites[i].Dispose();
-
-			Sprites.Clear();
-		}
-		#endregion Methods (IDisposable)
 	}
 }

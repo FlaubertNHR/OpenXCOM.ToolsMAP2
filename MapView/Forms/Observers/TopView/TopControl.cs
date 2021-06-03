@@ -19,6 +19,16 @@ namespace MapView.Forms.Observers
 		:
 			ObserverControl_Top // DoubleBufferedControl, IObserver
 	{
+		public void DisposeControl()
+		{
+			DSShared.LogFile.WriteLine("TopControl.DisposeControl()");
+			_lozSelector.Dispose();
+			_lozSelected.Dispose();
+
+			_blobService.Dispose();
+		}
+
+
 		#region Fields (static)
 		private const int OffsetX = 2; // these are the offsets between the
 		private const int OffsetY = 3; // panel border and the lozenge-tip(s).
@@ -256,10 +266,10 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Overrides DoubleBufferedControl.RenderGraphics() - ie, OnPaint().
+		/// Overrides DoubleBufferedControl.OnPaintControl() - ie, OnPaint().
 		/// </summary>
 		/// <param name="graphics"></param>
-		protected override void RenderGraphics(Graphics graphics)
+		protected override void OnPaintControl(Graphics graphics)
 		{
 			_graphics = graphics;
 			_graphics.FillRectangle(SystemBrushes.Control, ClientRectangle);
@@ -533,7 +543,7 @@ namespace MapView.Forms.Observers
 
 				if (_isMouseDrag)
 				{
-					var overlay = MainViewOverlay.that;
+					MainViewOverlay overlay = MainViewOverlay.that;
 
 					overlay._keyDeltaX = _loc.X - overlay.DragBeg.X; // these are in case user stops a mouse-drag
 					overlay._keyDeltaY = _loc.Y - overlay.DragBeg.Y; // and resumes selection using keyboard.

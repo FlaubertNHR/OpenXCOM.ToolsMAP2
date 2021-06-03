@@ -15,6 +15,27 @@ namespace MapView.Forms.Observers
 {
 	internal static class QuadrantDrawService
 	{
+		/// <summary>
+		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
+		/// of the app. But FxCop gets antsy ....
+		/// </summary>
+		internal static void DisposeService()
+		{
+			DSShared.LogFile.WriteLine("QuadrantDrawService.Dispose()");
+			_pathFloor   .Dispose();
+			_pathWest    .Dispose();
+			_pathNorth   .Dispose();
+			_pathContent .Dispose();
+			_pathPart    .Dispose();
+
+			_ia          .Dispose();
+
+			Font         .Dispose();
+			LocationFont .Dispose();
+			LocationBrush.Dispose();
+		}
+
+
 		#region Fields (static)
 		private const int MarginHori = 10;
 		private const int MarginVert =  3;
@@ -30,7 +51,7 @@ namespace MapView.Forms.Observers
 		// TilePanel.OnPaint().
 		private const int PrintOffsetY = 2;
 
-		private static Random _rnd = new Random();
+		private static Random _rand = new Random();
 
 		private  const  string Door    = "door";
 		internal static string Floor   = Punkstring("floor");
@@ -64,26 +85,23 @@ namespace MapView.Forms.Observers
 		private static Graphics _graphics;
 		private static bool _inited;
 
-		private static ImageAttributes _attribs = new ImageAttributes();
+		private static ImageAttributes _ia      = new ImageAttributes();
 		private static IList<Brush>    _brushes = new List<Brush>();
-
-		private static SolidBrush _swatchbrushWest;
-		private static SolidBrush _swatchbrushNorth;
 		#endregion Fields (static)
 
 
 		#region Properties (static)
-		private static Font Font
-		{ get; set; }
-
+		/// <summary>
+		/// The background color of the selected quadrant.
+		/// </summary>
+		/// <remarks>Set in <see cref="TopViewOptionables"/>.</remarks>
 		internal static SolidBrush Brush
 		{ get; set; }
 
-		private static Font FontLocation
-		{ get; set; }
+		private static Font Font = new Font("Comic Sans MS", 7);
 
-		private static SolidBrush BrushLocation
-		{ get; set; }
+		private static readonly Font       LocationFont  = new Font("Verdana", 7F, FontStyle.Bold);
+		private static readonly SolidBrush LocationBrush = new SolidBrush(SystemColors.ControlText);
 
 
 		internal static Tilepart CurrentTilepart
@@ -93,19 +111,13 @@ namespace MapView.Forms.Observers
 
 		#region Methods (static)
 		/// <summary>
-		/// init.
+		/// Initializes the graphics paths of each quadrant-slot outline.
 		/// </summary>
-		internal static void initQuadrantDrawService()
+		internal static void CacheQuadrantPaths()
 		{
-			Font  = new Font("Comic Sans MS", 7);
-			Brush = new SolidBrush(Color.LightBlue);
-
-			FontLocation  = new Font("Verdana", 7F, FontStyle.Bold);
-			BrushLocation = new SolidBrush(SystemColors.ControlText);
+			Point p0,p1,p2,p3,p4;
 
 			GraphicsPath path;
-			Point p0, p1, p2, p3, p4;
-
 			for (int quad = 0; quad != MapTile.QUADS; ++quad) // cache each quadrant's rectangular bounding path
 			{
 				p0 = new Point(
@@ -124,12 +136,12 @@ namespace MapView.Forms.Observers
 							StartX + Quadwidth * quad,
 							StartY);
 
-				switch (quad)
+				switch ((PartType)quad)
 				{
-					default: path = _pathFloor;   break; // case 0
-					case  1: path = _pathWest;    break;
-					case  2: path = _pathNorth;   break;
-					case  3: path = _pathContent; break;
+					default:               path = _pathFloor;   break; // PartType.Floor
+					case PartType.West:    path = _pathWest;    break;
+					case PartType.North:   path = _pathNorth;   break;
+					case PartType.Content: path = _pathContent; break;
 				}
 
 				path.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
@@ -174,7 +186,7 @@ namespace MapView.Forms.Observers
 
 			for (int i = 0; i != @in.Length; ++i)
 			{
-				if (_rnd.Next() % 2 != 0)
+				if (_rand.Next() % 2 != 0)
 					sb.Append((char)(@in[i] - 32)); // uc
 				else
 					sb.Append((char)@in[i]);
@@ -203,7 +215,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!MainViewF.Optionables.UseMono && MainViewF.Optionables.SpriteShadeEnabled)
 			{
-				_attribs.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+				_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 			}
 
 			if (!_inited) // TODO: break that out ->
@@ -349,30 +361,9 @@ namespace MapView.Forms.Observers
 			DrawTypeString(Content, TextWidth_content, (int)PartType.Content);
 			DrawTypeString(Part,    TextWidth_part,    QuadrantPart);
 
-			// fill the color-swatch under each quadrant-label
-			if (   _swatchbrushWest != null
-				&& _swatchbrushWest.Color != TopControl.TopPens[TopViewOptionables.str_WestColor].Color)
-			{
-				_swatchbrushWest.Dispose();
-				_swatchbrushWest = null;
-			}
-
-			if (_swatchbrushWest == null)
-				_swatchbrushWest = new SolidBrush(TopControl.TopPens[TopViewOptionables.str_WestColor].Color);
-
-			if (   _swatchbrushNorth != null
-				&& _swatchbrushNorth.Color != TopControl.TopPens[TopViewOptionables.str_NorthColor].Color)
-			{
-				_swatchbrushNorth.Dispose();
-				_swatchbrushNorth = null;
-			}
-
-			if (_swatchbrushNorth == null)
-				_swatchbrushNorth = new SolidBrush(TopControl.TopPens[TopViewOptionables.str_NorthColor].Color);
-
 			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_FloorColor],   PartType.Floor);
-			FillSwatchColor(_swatchbrushWest,                                           PartType.West);
-			FillSwatchColor(_swatchbrushNorth,                                          PartType.North);
+			FillSwatchColor(TopControl.ToolWest .Brush,                                 PartType.West);
+			FillSwatchColor(TopControl.ToolNorth.Brush,                                 PartType.North);
 			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_ContentColor], PartType.Content);
 		}
 
@@ -415,7 +406,7 @@ namespace MapView.Forms.Observers
 											b.Height),
 								0,0, b.Width, b.Height,
 								GraphicsUnit.Pixel,
-								_attribs);
+								_ia);
 			}
 		}
 
@@ -500,13 +491,13 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Prints the currently selected tile's location.
-		/// @note This is called by QuadrantControl.
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="panelwidth">the width of QuadrantControl</param>
+		/// <remarks>This is called by <see cref="QuadrantControl"/>.</remarks>
 		internal static void PrintSelectedLocation(MapLocation location, int panelwidth)
 		{
-			var file = ObserverManager.TopView.Control.TopControl.MapFile;
+			MapFile file = ObserverManager.TopView.Control.TopControl.MapFile;
 
 			int c = location.Col;
 			int r = location.Row;
@@ -517,25 +508,25 @@ namespace MapView.Forms.Observers
 
 			string loc = "c " + c + "  r " + r + "  L " + l;
 
-			int w = TextRenderer.MeasureText(loc, FontLocation).Width;
+			int w = TextRenderer.MeasureText(loc, LocationFont).Width;
 			if (StartX + Quadwidth * (QuadrantPart + 1) - MarginHori + w < panelwidth)
 			{
 				_graphics.DrawString(
 								loc,
-								FontLocation,
-								BrushLocation,
+								LocationFont,
+								LocationBrush,
 								panelwidth - w, StartY);
 			}
 		}
 
 		/// <summary>
 		/// Prints the selector's current tile location.
-		/// @note This is called by TopControl.
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="panelwidth">the width of TopControl</param>
 		/// <param name="panelheight">the width of TopControl</param>
 		/// <param name="file"></param>
+		/// <remarks>This is called by <see cref="TopControl"/>.</remarks>
 		internal static void PrintSelectorLocation(
 				Point location,
 				int panelwidth,
@@ -551,32 +542,13 @@ namespace MapView.Forms.Observers
 
 			string loc = "c " + c + "  r " + r + "  L " + l;
 
-			int x = panelwidth - TextRenderer.MeasureText(loc, FontLocation).Width;
+			int x = panelwidth - TextRenderer.MeasureText(loc, LocationFont).Width;
 			int y = panelheight - 20;
 			_graphics.DrawString(
 							loc,
-							FontLocation,
-							BrushLocation,
+							LocationFont,
+							LocationBrush,
 							x,y);
-		}
-
-
-		/// <summary>
-		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
-		/// of the app. But FxCop gets antsy ....
-		/// </summary>
-		internal static void Dispose()
-		{
-			_pathFloor   .Dispose();
-			_pathWest    .Dispose();
-			_pathNorth   .Dispose();
-			_pathContent .Dispose();
-			_pathPart    .Dispose();
-
-			Font         .Dispose();
-			Brush        .Dispose();
-			FontLocation .Dispose();
-			BrushLocation.Dispose();
 		}
 		#endregion Methods (static)
 	}

@@ -194,7 +194,7 @@ namespace McdView
 
 		private int _selid = -1;
 		/// <summary>
-		/// The currently selected 'Parts' ID.
+		/// The currently selected <see cref="Parts"/> ID.
 		/// </summary>
 		internal int Selid
 		{

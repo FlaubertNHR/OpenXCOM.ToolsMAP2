@@ -13,6 +13,20 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal sealed class RouteViewOptionables
 	{
+		internal static void DisposeOptionables()
+		{
+			DSShared.LogFile.WriteLine("RouteViewOptionables.DisposeOptionables()");
+			foreach (var pair in RouteControl.RoutePens)
+				pair.Value.Dispose();
+
+			foreach (var pair in RouteControl.RouteBrushes)
+				pair.Value.Dispose();
+
+			RouteControl.ToolWall   .Dispose();
+			RouteControl.ToolContent.Dispose();
+		}
+
+
 		#region Fields
 		private readonly RouteView _routeView;
 		#endregion Fields
@@ -521,37 +535,39 @@ namespace MapView.Forms.Observers
 		{
 			//DSShared.LogFile.WriteLine("RouteViewOptionables.LoadDefaults()");
 
-			var penGrid = new Pen(def_GridLineColor, def_GridLineWidth);
-			RouteControl.RoutePens[str_GridLineColor] = penGrid;
+			Pen pen; SolidBrush brush; Color color;
 
-			var penGrid10 = new Pen(def_GridLine10Color, def_GridLine10Width);
-			RouteControl.RoutePens[str_GridLine10Color] = penGrid10;
+			pen = new Pen(def_GridLineColor, def_GridLineWidth);
+			RouteControl.RoutePens[str_GridLineColor] = pen;
 
-			var penWall = new Pen(def_WallColor, def_WallWidth);
-			RouteControl.RoutePens[str_WallColor] = penWall;
-			RouteControl.ToolWall = new BlobColorTool(penWall);
+			pen = new Pen(def_GridLine10Color, def_GridLine10Width);
+			RouteControl.RoutePens[str_GridLine10Color] = pen;
 
-			var brushContent = new SolidBrush(def_ContentColor);
-			RouteControl.RouteBrushes[str_ContentColor] = brushContent;
-			RouteControl.ToolContent = new BlobColorTool(brushContent, BlobDrawService.LINEWIDTH_CONTENT);
+			pen = new Pen(def_WallColor, def_WallWidth);
+			RouteControl.RoutePens[str_WallColor] = pen;
+			RouteControl.ToolWall = new BlobColorTool(pen);
 
-			Color color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
-			var brushNode = new SolidBrush(color);
-			RouteControl.RouteBrushes[str_NodeColor] = brushNode;
+			brush = new SolidBrush(def_ContentColor);
+			RouteControl.RouteBrushes[str_ContentColor] = brush;
+			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColor] = brush;
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeSpawnColor);
-			var brushNodeSpawn = new SolidBrush(color);
-			RouteControl.RouteBrushes[str_NodeSpawnColor] = brushNodeSpawn;
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeSpawnColor] = brush;
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeSelectedColor);
-			var brushNodeSelected = new SolidBrush(color);
-			RouteControl.RouteBrushes[str_NodeSelectedColor] = brushNodeSelected;
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeSelectedColor] = brush;
 
-			var penLink = new Pen(def_LinkColor, def_LinkWidth);
-			RouteControl.RoutePens[str_LinkColor] = penLink;
+			pen = new Pen(def_LinkColor, def_LinkWidth);
+			RouteControl.RoutePens[str_LinkColor] = pen;
 
-			var penLinkSelected = new Pen(def_LinkSelectedColor, def_LinkSelectedWidth);
-			RouteControl.RoutePens[str_LinkSelectedColor] = penLinkSelected;
+			pen = new Pen(def_LinkSelectedColor, def_LinkSelectedWidth);
+			RouteControl.RoutePens[str_LinkSelectedColor] = pen;
 
 
 			OptionChangedEvent changer0 = OnOptionChanged;
@@ -649,6 +665,9 @@ namespace MapView.Forms.Observers
 					RouteControl.ToolContent = new BlobColorTool(
 															RouteControl.RouteBrushes[str_ContentColor],
 															BlobDrawService.LINEWIDTH_CONTENT);
+
+					if (MainViewF.that._fcolors != null)
+						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
 					break;
 
 				default: // is Node color
@@ -717,6 +736,9 @@ namespace MapView.Forms.Observers
 				case str_WallColor:
 					RouteControl.ToolWall.Dispose();
 					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);
+
+					if (MainViewF.that._fcolors != null)
+						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
 					break;
 			}
 		}
@@ -744,11 +766,11 @@ namespace MapView.Forms.Observers
 		/// RoutePens are stored and accessed with their color-keys not their
 		/// width-keys.
 		/// </summary>
-		/// <param name="width">width-key</param>
-		/// <returns>the width-keys corresponding color-key</returns>
-		private static string WidthToColor(string width)
+		/// <param name="key">width-key</param>
+		/// <returns>the width-key's corresponding color-key</returns>
+		private static string WidthToColor(string key)
 		{
-			switch (width)
+			switch (key)
 			{
 				case str_GridLineWidth:     return str_GridLineColor;
 				case str_GridLine10Width:   return str_GridLine10Color;

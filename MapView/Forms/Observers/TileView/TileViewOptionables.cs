@@ -15,6 +15,14 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal sealed class TileViewOptionables
 	{
+		internal static void DisposeOptionables()
+		{
+			DSShared.LogFile.WriteLine("TileViewOptionables.DisposeOptionables()");
+			foreach (var pair in TilePanel.SpecialBrushes)
+				pair.Value.Dispose();
+		}
+
+
 		#region Fields
 		private readonly TileView _tileView;
 		#endregion Fields
@@ -291,9 +299,10 @@ The path specified can actually be used to start any valid application"
 
 			OptionChangedEvent changer = OnSpecialPropertyColorChanged;
 
+			Color color;
 			foreach (SpecialType key in Enum.GetValues(typeof(SpecialType)))
 			{
-				Color color = def_SpecialColors[(int)key];
+				color = def_SpecialColors[(int)key];
 				TilePanel.SpecialBrushes[key] = new SolidBrush(color);
 				options.AddOptionDefault(
 									Enum.GetName(typeof(SpecialType), key),
@@ -340,7 +349,10 @@ The path specified can actually be used to start any valid application"
 			}
 
 			TilePanel.SpecialBrushes[special].Color = color;
-			_tileView.GetVisiblePanel().Invalidate();
+			_tileView.GetSelectedPanel().Invalidate();
+
+			if (MainViewF.that._fcolors != null)
+				MainViewF.that._fcolors.UpdateSpecialPropertyColors();
 		}
 
 		/// <summary>

@@ -19,14 +19,21 @@ namespace MapView.Forms.Observers
 		:
 			ObserverControl_Top // DoubleBufferedControl, IObserver
 	{
+		public static void DisposeControl()
+		{
+			DSShared.LogFile.WriteLine("QuadrantControl.DisposeControl()");
+			_t1.Dispose();
+		}
+
+
 		#region Fields (static)
 		/// <summary>
 		/// A timer that delays processing clicks until the user's double-click
 		/// duration has elapsed. That is, don't do 1-click RMB processing if
 		/// 2-clicks are inc.
-		/// w/ Thanks to Natxo
-		/// https://stackoverflow.com/questions/2086213/how-can-i-catch-both-single-click-and-double-click-events-on-wpf-frameworkelement/2087517#2087517
 		/// </summary>
+		/// <remarks>w/ Thanks to Natxo
+		/// https://stackoverflow.com/questions/2086213/how-can-i-catch-both-single-click-and-double-click-events-on-wpf-frameworkelement/2087517#2087517</remarks>
 		private static readonly System.Timers.Timer _t1 = new System.Timers.Timer(SystemInformation.DoubleClickTime);
 
 		private static int _t1Clicks;
@@ -46,11 +53,14 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		private PartType _slot;
+		private PartType _slot = PartType.Floor;
 		internal PartType SelectedQuadrant
 		{
 			get { return _slot; }
-			set { _slot = value; Refresh(); }
+			set
+			{
+				_slot = value; Refresh();
+			}
 		}
 
 		internal MapTile Tile
@@ -70,6 +80,10 @@ namespace MapView.Forms.Observers
 		/// in TopRouteView(Top).</remarks>
 		internal QuadrantControl()
 		{
+			Name   = "QuadrantControl";
+			Height = 70;
+			Dock   = DockStyle.Bottom;
+
 			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
 
 			if (!_t1subscribed) // only once (for both QuadrantControls)
@@ -213,11 +227,11 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Overrides DoubleBufferedControl.RenderGraphics() - ie, OnPaint().
-		/// @note Calls the draw-function in QuadrantDrawService.
+		/// Overrides DoubleBufferedControl.OnPaintControl() - ie, OnPaint().
 		/// </summary>
 		/// <param name="graphics"></param>
-		protected override void RenderGraphics(Graphics graphics)
+		/// <remarks>Calls the draw-function in QuadrantDrawService.</remarks>
+		protected override void OnPaintControl(Graphics graphics)
 		{
 			QuadrantDrawService.SetGraphics(graphics);
 			QuadrantDrawService.Draw(Tile, SelectedQuadrant);
@@ -231,11 +245,12 @@ namespace MapView.Forms.Observers
 		#region Events
 		/// <summary>
 		/// Clever handling of RMB double-click event ...
-		/// WARNING: The interaction between this QuadrantControl, its respective
-		/// TopControl, and the TilePanel in TileView is a little bit fragile.
 		/// </summary>
 		/// <param name="source"></param>
 		/// <param name="e"></param>
+		/// <remarks>WARNING: The interaction between this QuadrantControl, its
+		/// respective TopControl, and the TilePanel in TileView is a little bit
+		/// fragile.</remarks>
 		private void OnClicksElapsed(object source, ElapsedEventArgs e)
 		{
 			//DSShared.LogFile.WriteLine("QuadrantControl.OnClicksElapsed() _t1Clicks= " + _t1Clicks);

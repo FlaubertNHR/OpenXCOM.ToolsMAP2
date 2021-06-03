@@ -13,6 +13,33 @@ namespace MapView.Forms.MainView
 		:
 			IDisposable
 	{
+		/// <summary>
+		/// Disposal isn't necessary since this object lasts the lifetime of the
+		/// app. But FxCop gets antsy ....
+		/// </summary>
+		public void Dispose()
+		{
+			DSShared.LogFile.WriteLine("ToolstripFactory.Dispose()");
+			_tsbCopy       .Dispose();
+			_tsbCut        .Dispose();
+			_tsbDelete     .Dispose();
+			_tsbDown       .Dispose();
+			_tsbFill       .Dispose();
+			_tsbPaste      .Dispose();
+			_tsbScale      .Dispose();
+			_tsbScaleIn    .Dispose();
+			_tsbScaleOut   .Dispose();
+			_tsbSearchClear.Dispose();
+			_tsbUp         .Dispose();
+			_tss0          .Dispose();
+			_tss1          .Dispose();
+			_tss2          .Dispose();
+			_tss3          .Dispose();
+			_tss4          .Dispose();
+			_tstbSearch    .Dispose();
+		}
+
+
 		#region Fields
 		private readonly IList<ToolStripButton> _editors = new List<ToolStripButton>(); // all edit-buttons except the pasters
 		private readonly IList<ToolStripButton> _pasters = new List<ToolStripButton>();
@@ -431,31 +458,5 @@ namespace MapView.Forms.MainView
 			_tstbSearch.Focus();
 		}
 		#endregion Events (search)
-
-
-		/// <summary>
-		/// Disposal isn't necessary since this object lasts the lifetime of the
-		/// app. But FxCop gets antsy ....
-		/// </summary>
-		public void Dispose()
-		{
-			_tsbCopy       .Dispose();
-			_tsbCut        .Dispose();
-			_tsbDelete     .Dispose();
-			_tsbDown       .Dispose();
-			_tsbFill       .Dispose();
-			_tsbPaste      .Dispose();
-			_tsbScale      .Dispose();
-			_tsbScaleIn    .Dispose();
-			_tsbScaleOut   .Dispose();
-			_tsbSearchClear.Dispose();
-			_tsbUp         .Dispose();
-			_tss0          .Dispose();
-			_tss1          .Dispose();
-			_tss2          .Dispose();
-			_tss3          .Dispose();
-			_tss4          .Dispose();
-			_tstbSearch    .Dispose();
-		}
 	}
 }

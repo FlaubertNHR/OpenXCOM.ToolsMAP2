@@ -12,6 +12,23 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal sealed class TopViewOptionables
 	{
+		internal static void DisposeOptionables()
+		{
+			DSShared.LogFile.WriteLine("TopViewOptionables.DisposeOptionables()");
+			foreach (var pair in TopControl.TopPens)
+				pair.Value.Dispose();
+
+			foreach (var pair in TopControl.TopBrushes)
+				pair.Value.Dispose();
+
+			TopControl.ToolWest   .Dispose();
+			TopControl.ToolNorth  .Dispose();
+			TopControl.ToolContent.Dispose();
+
+			QuadrantDrawService.Brush.Dispose();
+		}
+
+
 		#region Fields
 		private readonly TopView _topView;
 		#endregion Fields
@@ -380,31 +397,33 @@ namespace MapView.Forms.Observers
 		{
 			//DSShared.LogFile.WriteLine("TopViewOptionables.LoadDefaults()");
 
-			var penGrid = new Pen(def_GridLineColor, def_GridLineWidth);
-			TopControl.TopPens.Add(str_GridLineColor, penGrid);
+			Pen pen; SolidBrush brush;
 
-			var penGrid10 = new Pen(def_GridLine10Color, def_GridLine10Width);
-			TopControl.TopPens.Add(str_GridLine10Color, penGrid10);
+			pen = new Pen(def_GridLineColor, def_GridLineWidth);
+			TopControl.TopPens.Add(str_GridLineColor, pen);
+
+			pen = new Pen(def_GridLine10Color, def_GridLine10Width);
+			TopControl.TopPens.Add(str_GridLine10Color, pen);
 
 			TopControl.TopBrushes.Add(str_FloorColor, new SolidBrush(def_FloorColor));
 
-			var penWest = new Pen(def_WestColor, def_WestWidth);
-			TopControl.TopPens.Add(str_WestColor, penWest);
-			TopControl.ToolWest = new BlobColorTool(penWest);
+			pen = new Pen(def_WestColor, def_WestWidth);
+			TopControl.TopPens.Add(str_WestColor, pen);
+			TopControl.ToolWest = new BlobColorTool(pen);
 
-			var penNorth = new Pen(def_NorthColor, def_NorthWidth);
-			TopControl.TopPens.Add(str_NorthColor, penNorth);
-			TopControl.ToolNorth = new BlobColorTool(penNorth);
+			pen = new Pen(def_NorthColor, def_NorthWidth);
+			TopControl.TopPens.Add(str_NorthColor, pen);
+			TopControl.ToolNorth = new BlobColorTool(pen);
 
-			var brushContent = new SolidBrush(def_ContentColor);
-			TopControl.TopBrushes.Add(str_ContentColor, brushContent);
-			TopControl.ToolContent = new BlobColorTool(brushContent, BlobDrawService.LINEWIDTH_CONTENT);
+			brush = new SolidBrush(def_ContentColor);
+			TopControl.TopBrushes.Add(str_ContentColor, brush);
+			TopControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);
 
-			var penSelector = new Pen(def_SelectorColor, def_SelectorWidth);
-			TopControl.TopPens.Add(str_SelectorColor, penSelector);
+			pen = new Pen(def_SelectorColor, def_SelectorWidth);
+			TopControl.TopPens.Add(str_SelectorColor, pen);
 
-			var penSelected = new Pen(def_SelectedColor, def_SelectedWidth);
-			TopControl.TopPens.Add(str_SelectedColor, penSelected);
+			pen = new Pen(def_SelectedColor, def_SelectedWidth);
+			TopControl.TopPens.Add(str_SelectedColor, pen);
 
 			QuadrantDrawService.Brush = new SolidBrush(def_SelectedQuadColor);
 
@@ -529,6 +548,9 @@ namespace MapView.Forms.Observers
 														TopControl.TopBrushes[key],
 														BlobDrawService.LINEWIDTH_CONTENT);
 			}
+
+			if (MainViewF.that._fcolors != null)
+				MainViewF.that._fcolors.UpdateTopViewBlobColors();
 		}
 
 		/// <summary>
@@ -540,18 +562,25 @@ namespace MapView.Forms.Observers
 		{
 			TopControl.TopPens[key].Color = (Color)val;
 
+			bool updateColorhelp = false;
+
 			switch (key)
 			{
 				case str_WestColor:
 					TopControl.ToolWest.Dispose();
 					TopControl.ToolWest = new BlobColorTool(TopControl.TopPens[key]);
+					updateColorhelp = true;
 					break;
 
 				case str_NorthColor:
 					TopControl.ToolNorth.Dispose();
 					TopControl.ToolNorth = new BlobColorTool(TopControl.TopPens[key]);
+					updateColorhelp = true;
 					break;
 			}
+
+			if (updateColorhelp && MainViewF.that._fcolors != null)
+				MainViewF.that._fcolors.UpdateTopViewBlobColors();
 		}
 
 		/// <summary>

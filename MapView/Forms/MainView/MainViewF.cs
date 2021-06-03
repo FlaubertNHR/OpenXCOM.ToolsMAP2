@@ -55,6 +55,10 @@ namespace MapView
 		private CompositedTreeView MapTree;
 
 		internal Options Options;
+
+		internal ColorHelp     _fcolors;
+		private  About         _fabout;
+		private  MapInfoDialog _finfo;
 		#endregion Fields
 
 
@@ -107,8 +111,18 @@ namespace MapView
 		private MainViewUnderlay MainViewUnderlay
 		{ get; set; }
 
-		internal MainViewOverlay MainViewOverlay
-		{ private get; set; }
+		private MainViewOverlay MainViewOverlay
+		{ get; set; }
+
+		/// <summary>
+		/// Sets the <see cref="MainViewOverlay"/> property.
+		/// </summary>
+		/// <param name="overlay"></param>
+		internal void SetMainViewOverlay(MainViewOverlay overlay)
+		{
+			MainViewOverlay = overlay;
+		}
+
 
 		private bool _treeChanged;
 		/// <summary>
@@ -306,7 +320,8 @@ namespace MapView
 			MinimumSize = new Size(0,0); // fu.net
 
 
-			QuadrantDrawService.initQuadrantDrawService();
+			QuadrantDrawService.CacheQuadrantPaths();
+			LogFile.WriteLine("Quadrant panel graphics paths cached.");
 
 
 			that = this;
@@ -473,11 +488,11 @@ namespace MapView
 			// Exit app if a cuboid-targeter did not get instantiated
 			if (cuboidtftd != null) // NOTE: The TFTD cursorsprite takes precedence over the UFO cursorsprite.
 			{
-				CuboidSprite.Cursorset = cuboidtftd;
+				CuboidSprite.SetCursorset(cuboidtftd);
 			}
 			else if (cuboidufo != null)
 			{
-				CuboidSprite.Cursorset = cuboidufo;
+				CuboidSprite.SetCursorset(cuboidufo);
 			}
 			else
 			{
@@ -921,6 +936,8 @@ namespace MapView
 		/// </summary>
 		private void SafeQuit()
 		{
+			LogFile.WriteLine("MainViewF.SafeQuit() EXIT MapView ->");
+
 			OptionsManager.SaveOptions();	// save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
 			OptionsManager.CloseOptions();	// close any open Options windows
 
@@ -932,22 +949,41 @@ namespace MapView
 			// NOTE: TopView's PartslotTest dialog is closed when TopView closes.
 			// TODO: McdRecordsExceeded dialog is pseudo-static ... close it (if it was instantiated).
 
-			if (ObserverManager.TileView.Control.McdInfobox != null)
-				ObserverManager.TileView.Control.McdInfobox.Close(); // close TileView's McdInfo dialog
+			if (ObserverManager.TileView.Control.McdInfo != null)
+				ObserverManager.TileView.Control.McdInfo.Close(); // close TileView's McdInfo dialog
 
 			if (RouteView.RoutesInfo != null)
 				RouteView.RoutesInfo.Close();	// close RouteView's SpawnInfo dialog
 
 			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
-			QuadrantDrawService.Dispose();
-			MonotoneSprites    .Dispose();
+			QuadrantDrawService.DisposeService();
+
+			MonotoneSprites.Dispose();
+			CuboidSprite.DisposeCursorset();
 
 			Tilepart.DisposeCrippledSprites();	// NOTE: .net will try to draw the MainView panel again but
 												// if the tileset has crippled sprites it throws.
-
 			MainViewOverlay .DisposeOverlay();
 			MainViewUnderlay.DisposeUnderlay();
+
+			MainViewUnderlay.that.Dispose();
+
+			TileViewOptionables .DisposeOptionables();
+			TopViewOptionables  .DisposeOptionables();
+			RouteViewOptionables.DisposeOptionables();
+			Optionables         .DisposeOptionables();
+
+			ObserverManager.TopView     .Control   .TopControl.DisposeControl();
+			ObserverManager.TopRouteView.ControlTop.TopControl.DisposeControl();
+
+			QuadrantControl.DisposeControl();
+
+			ObserverManager.RouteView   .Control     .RouteControl.DisposeControl();
+			ObserverManager.TopRouteView.ControlRoute.RouteControl.DisposeControl();
+
+
+			Palette.DisposeMonoBrushes();
 
 
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
@@ -1899,13 +1935,13 @@ namespace MapView
 
 					string args = String.Empty;
 
-					var node0 = MapTree.SelectedNode;
+					TreeNode node0 = MapTree.SelectedNode;
 					if (node0 != null)
 					{
-						var node1 = node0.Parent;
+						TreeNode node1 = node0.Parent;
 						if (node1 != null)
 						{
-							var node2 = node1.Parent;
+							TreeNode node2 = node1.Parent;
 							if (node2 != null)
 							{
 								args = node2.Text + " " + node1.Text + " " + node0.Text;
@@ -1967,8 +2003,6 @@ namespace MapView
 		}
 
 
-		internal ColorHelp _fcolors;
-
 		/// <summary>
 		/// Opens the ColorsHelp dialog.
 		/// @note This handler is not a toggle. The dialog will be focused if
@@ -1995,10 +2029,9 @@ namespace MapView
 		internal void DecheckColors()
 		{
 			miColors.Checked = false;
+			_fcolors = null;
 		}
 
-
-		internal About _fabout;
 
 		/// <summary>
 		/// Opens the About dialog
@@ -2026,10 +2059,9 @@ namespace MapView
 		internal void DecheckAbout()
 		{
 			miAbout.Checked = false;
+			_fabout = null;
 		}
 
-
-		internal MapInfoDialog _finfo;
 
 		/// <summary>
 		/// Opens the MapInfo dialog.
@@ -2058,6 +2090,7 @@ namespace MapView
 		internal void DecheckMapInfo()
 		{
 			miMapInfo.Checked = false;
+			_finfo = null;
 		}
 
 
@@ -3250,9 +3283,7 @@ namespace MapView
 						Optionables.OpenDoors = false;
 						SetDoorSpritesFullPhase(false);
 						if (_foptions != null && _foptions.Visible)
-						{
-							(_foptions as OptionsForm).propertyGrid.Refresh();
-						}
+						   (_foptions as OptionsForm).propertyGrid.Refresh();
 
 						SetTileToner(Optionables.SelectedTileToner); // create toned spriteset(s) for selected-tile(s)
 
@@ -3280,20 +3311,11 @@ namespace MapView
 						if (ScanG != null) // update ScanG viewer if open
 							ScanG.LoadMapfile(file);
 
-						var tileview = ObserverManager.TileView.Control; // update MCD Info if open
-						if (tileview.McdInfobox != null)
-						{
-							Tilepart part = tileview.SelectedTilepart;
-							if (part != null)
-								tileview.McdInfobox.UpdateData(
-															part.Record,
-															part.TerId,
-															tileview.GetTerrainLabel());
-							else
-								tileview.McdInfobox.UpdateData();
-						}
+						TileView tileView = ObserverManager.TileView.Control; // update MCD Info if open ->
+						if (tileView.McdInfo != null)
+							tileView.McdInfo.UpdateData();
 
-						if (RouteView.RoutesInfo != null) // update RoutesInfo if open
+						if (RouteView.RoutesInfo != null) // update RoutesInfo if open ->
 							RouteView.RoutesInfo.Initialize(file);
 
 						ResetQuadrantPanel(); // update the Quadrant panel

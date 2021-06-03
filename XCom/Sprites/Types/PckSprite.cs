@@ -18,6 +18,33 @@ namespace XCom
 		:
 			XCImage
 	{
+//		#region disposal
+//		private bool _disposed; // <- probably for multithreaded stuff
+//
+//		protected override void Dispose(bool disposing)
+//		{
+//			// NOTE: Do not dispose '_spriteset'. Let it get disposed elsewhere.
+//
+//			if (!_disposed)
+//			{
+//				try
+//				{
+//					if (disposing) // DISPOSE OF UN-MANAGED RESOURCES HERE ->
+//					{
+//						SpriteToned.Dispose();
+//						SpriteToned = null; // pointless.
+//					}
+//				}
+//				finally
+//				{
+//					_disposed = true;
+//					base.Dispose(disposing);
+//				}
+//			}
+//		}
+//		#endregion disposal
+
+
 		#region Fields (static)
 		/// <summary>
 		/// A marker that is inserted into the file-data that indicates that an
@@ -58,8 +85,7 @@ namespace XCom
 		/// tile toner.
 		/// </summary>
 		public Bitmap SpriteToned
-//		{ get; private set; }
-		{ get; internal set; } // see XCImage.Dispose(bool)
+		{ get; internal set; }
 		#endregion Properties
 
 
@@ -293,32 +319,5 @@ namespace XCom
 			return sprite;
 		}
 		#endregion Methods
-
-
-//		#region disposal
-//		private bool _disposed; // <- probably for multithreaded stuff
-//
-//		protected override void Dispose(bool disposing)
-//		{
-//			// NOTE: Do not dispose '_spriteset'. Let it get disposed elsewhere.
-//
-//			if (!_disposed)
-//			{
-//				try
-//				{
-//					if (disposing) // DISPOSE OF UN-MANAGED RESOURCES HERE ->
-//					{
-//						SpriteToned.Dispose();
-//						SpriteToned = null; // pointless.
-//					}
-//				}
-//				finally
-//				{
-//					_disposed = true;
-//					base.Dispose(disposing);
-//				}
-//			}
-//		}
-//		#endregion disposal
 	}
 }

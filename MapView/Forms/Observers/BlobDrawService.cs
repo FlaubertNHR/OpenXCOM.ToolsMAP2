@@ -15,6 +15,18 @@ namespace MapView.Forms.Observers
 		:
 			IDisposable
 	{
+		/// <summary>
+		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
+		/// of the app. But FxCop gets antsy ....
+		/// </summary>
+		public void Dispose()
+		{
+			DSShared.LogFile.WriteLine("BlobDrawService.Dispose()");
+			_floor  .Dispose();
+			_content.Dispose();
+		}
+
+
 		#region Fields (static)
 		internal const int LINEWIDTH_CONTENT = 3;
 		#endregion Fields (static)
@@ -46,25 +58,25 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Draws a window.
 		/// </summary>
-		/// <param name="g"></param>
+		/// <param name="graphics"></param>
 		/// <param name="tool"></param>
 		/// <param name="beg"></param>
 		/// <param name="end"></param>
 		private static void DrawWindow(
-				Graphics g,
+				Graphics graphics,
 				BlobColorTool tool,
 				Point beg, Point end)
 		{
-			g.DrawLine(tool.Pen, beg, end);
+			graphics.DrawLine(tool.Pen, beg, end);
 
 			Point delta = Point.Subtract(end, new Size(beg));
-			g.SetClip(new Rectangle(
-								beg.X + delta.X / 3, beg  .Y,
-								        delta.X / 3, delta.Y));
-			g.DrawLine(tool.PenLightPrep, beg, end);
-			g.DrawLine(tool.PenLight,     beg, end);
+			graphics.SetClip(new Rectangle(
+										beg.X + delta.X / 3, beg  .Y,
+										        delta.X / 3, delta.Y));
+			graphics.DrawLine(tool.PenLightPrep, beg, end);
+			graphics.DrawLine(tool.PenLight,     beg, end);
 
-			g.ResetClip();
+			graphics.ResetClip();
 		}
 		#endregion Methods (static)
 
@@ -74,8 +86,12 @@ namespace MapView.Forms.Observers
 		/// Draws floor-blobs for <see cref="TopView"/> only; floors are not
 		/// drawn for <see cref="RouteView"/>.
 		/// </summary>
+		/// <param name="graphics"></param>
+		/// <param name="brush"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
 		internal void Draw(
-				Graphics g,
+				Graphics graphics,
 				Brush brush,
 				int x, int y)
 		{
@@ -91,7 +107,7 @@ namespace MapView.Forms.Observers
 						x - HalfWidth, y + HalfHeight);
 			_floor.CloseFigure();
 
-			g.FillPath(brush, _floor);
+			graphics.FillPath(brush, _floor);
 		}
 
 
@@ -101,13 +117,13 @@ namespace MapView.Forms.Observers
 		/// Draws wall- and content-blobs for <see cref="RouteView"/> and
 		/// <see cref="TopView"/>.
 		/// </summary>
-		/// <param name="g"></param>
+		/// <param name="graphics"></param>
 		/// <param name="tool"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="part"></param>
 		internal void Draw(
-				Graphics g,
+				Graphics graphics,
 				BlobColorTool tool,
 				int x, int y,
 				Tilepart part)
@@ -117,66 +133,66 @@ namespace MapView.Forms.Observers
 				// content ->
 				case BlobType.Content:
 					PathContent(x,y);
-					g.FillPath(
-							tool.Brush,
-							_content);
+					graphics.FillPath(
+									tool.Brush,
+									_content);
 					break;
 
 				// floor ->
 				case BlobType.Floor:
 					PathContent(x,y);
-					g.FillPath(
-							BlobColorTool.BrushLightPrep,
-							_content);
-					g.FillPath(
-							tool.BrushLight,
-							_content);
+					graphics.FillPath(
+									BlobColorTool.BrushLightPrep,
+									_content);
+					graphics.FillPath(
+									tool.BrushLight,
+									_content);
 					break;
 
 				// walls ->
 				case BlobType.NorthWallFence:
-					g.DrawLine(
-							tool.PenLight,
-							pT(x,y),
-							pR(x,y));
+					graphics.DrawLine(
+									tool.PenLight,
+									pT(x,y),
+									pR(x,y));
 					break;
 
 				case BlobType.NorthWall:
-					g.DrawLine(
-							tool.Pen,
-							pT(x,y),
-							pR(x,y));
+					graphics.DrawLine(
+									tool.Pen,
+									pT(x,y),
+									pR(x,y));
 
 					if (BlobTypeService.IsDoor(part))
-						g.DrawLine(
-								tool.Pen,
-								x + HalfWidth, y,
-								x,             y + HalfHeight);
+						graphics.DrawLine(
+										tool.Pen,
+										x + HalfWidth, y,
+										x,             y + HalfHeight);
 					break;
 
 				case BlobType.WestWallFence:
-					g.DrawLine(
-							tool.PenLight,
-							pT(x,y),
-							pL(x,y));
+					graphics.DrawLine(
+									tool.PenLight,
+									pT(x,y),
+									pL(x,y));
 					break;
 
 				case BlobType.WestWall:
-					g.DrawLine(
-							tool.Pen,
-							pT(x,y),
-							pL(x,y));
+					graphics.DrawLine(
+									tool.Pen,
+									pT(x,y),
+									pL(x,y));
 
 					if (BlobTypeService.IsDoor(part))
-						g.DrawLine(
-								tool.Pen,
-								x - HalfWidth, y,
-								x,             y + HalfHeight);
+						graphics.DrawLine(
+										tool.Pen,
+										x - HalfWidth, y,
+										x,             y + HalfHeight);
 					break;
 
 				case BlobType.NorthWallWindow:
 					DrawWindow(
-							g,
+							graphics,
 							tool,
 							pT(x,y),
 							pR(x,y));
@@ -184,68 +200,68 @@ namespace MapView.Forms.Observers
 
 				case BlobType.WestWallWindow:
 					DrawWindow(
-							g,
+							graphics,
 							tool,
 							pT(x,y),
 							pL(x,y));
 					break;
 
 				case BlobType.SouthWall:
-					g.DrawLine(
-							tool.Pen,
-							pL(x,y),
-							pB(x,y));
+					graphics.DrawLine(
+									tool.Pen,
+									pL(x,y),
+									pB(x,y));
 					break;
 
 				case BlobType.EastWall:
-					g.DrawLine(
-							tool.Pen,
-							pB(x,y),
-							pR(x,y));
+					graphics.DrawLine(
+									tool.Pen,
+									pB(x,y),
+									pR(x,y));
 					break;
 
 				// diagonals ->
 				case BlobType.NorthwestSoutheast:
-					g.DrawLine(
-							tool.Pen,
-							pT(x,y),
-							pB(x,y));
+					graphics.DrawLine(
+									tool.Pen,
+									pT(x,y),
+									pB(x,y));
 					break;
 
 				case BlobType.NortheastSouthwest:
-					g.DrawLine(
-							tool.Pen,
-							pL(x,y),
-							pR(x,y));
+					graphics.DrawLine(
+									tool.Pen,
+									pL(x,y),
+									pR(x,y));
 					break;
 
 				// corners ->
 				case BlobType.NorthwestCorner:
-					g.DrawLine(
-							tool.Pen,
-							Point.Add(pT(x,y), new Size(-Offset - Offset / 2, 0)),
-							Point.Add(pT(x,y), new Size( Offset + Offset / 2, 0)));
+					graphics.DrawLine(
+									tool.Pen,
+									Point.Add(pT(x,y), new Size(-Offset - Offset / 2, 0)),
+									Point.Add(pT(x,y), new Size( Offset + Offset / 2, 0)));
 					break;
 
 				case BlobType.NortheastCorner:
-					g.DrawLine(
-							tool.Pen,
-							Point.Add(pR(x,y), new Size(0, -Offset)),
-							Point.Add(pR(x,y), new Size(0,  Offset)));
+					graphics.DrawLine(
+									tool.Pen,
+									Point.Add(pR(x,y), new Size(0, -Offset)),
+									Point.Add(pR(x,y), new Size(0,  Offset)));
 					break;
 
 				case BlobType.SoutheastCorner:
-					g.DrawLine(
-							tool.Pen,
-							Point.Add(pB(x,y), new Size(-Offset - Offset / 2, 0)),
-							Point.Add(pB(x,y), new Size( Offset + Offset / 2, 0)));
+					graphics.DrawLine(
+									tool.Pen,
+									Point.Add(pB(x,y), new Size(-Offset - Offset / 2, 0)),
+									Point.Add(pB(x,y), new Size( Offset + Offset / 2, 0)));
 					break;
 
 				case BlobType.SouthwestCorner:
-					g.DrawLine(
-							tool.Pen,
-							Point.Add(pL(x,y), new Size(0, -Offset)),
-							Point.Add(pL(x,y), new Size(0,  Offset)));
+					graphics.DrawLine(
+									tool.Pen,
+									Point.Add(pL(x,y), new Size(0, -Offset)),
+									Point.Add(pL(x,y), new Size(0,  Offset)));
 					break;
 			}
 		}
@@ -292,16 +308,5 @@ namespace MapView.Forms.Observers
 			_content.CloseFigure();
 		}
 		#endregion Methods
-
-
-		/// <summary>
-		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
-		/// of the app. But FxCop gets antsy ....
-		/// </summary>
-		public void Dispose()
-		{
-			_floor  .Dispose();
-			_content.Dispose();
-		}
 	}
 }

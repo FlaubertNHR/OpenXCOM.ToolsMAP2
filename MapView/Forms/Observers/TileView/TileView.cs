@@ -26,12 +26,98 @@ namespace MapView.Forms.Observers
 		:
 			ObserverControl // UserControl, IObserver
 	{
+		#region IDisposable inherited
+		// https://dave-black.blogspot.com/2011/03/how-do-you-properly-implement.html
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this instance is disposed.
+		/// </summary>
+		/// <value><c>true</c> if this instance is disposed</value>
+		/// <remarks>Default initialization for a bool is <c>false</c>.</remarks>
+		private bool _disposed;
+
+		/// <summary>
+		/// Overloaded Implementation of Dispose.
+		/// </summary>
+		/// <param name="disposing"><c>true</c> to release both managed and
+		/// unmanaged resources; <c>false</c> to release only unmanaged
+		/// resources.</param>
+		/// <remarks>
+		/// <list>Dispose(bool isDisposing) executes in two distinct scenarios.
+		///   <item>If <paramref name="disposing"/> equals <c>true</c> the
+		///   method has been called directly or indirectly by a user's code.
+		///   Managed and unmanaged resources can be disposed.</item>
+		///   <item>If <paramref name="disposing"/> equals <c>false</c> the
+		///   method has been called by the runtime from inside the finalizer
+		///   and you should not reference other objects. Only unmanaged
+		///   resources can be disposed.</item>
+		/// </list>
+		/// </remarks>
+		protected override void Dispose(bool disposing)
+		{
+			LogFile.WriteLine("TileView.Dispose(" + disposing + ")");
+			try
+			{
+				if (!_disposed && disposing)
+				{
+//					if (_foptions != null) // static object
+//					{
+//						_foptions.Dispose();
+//						_foptions = null;
+//					}
+
+					if (ContextMenu != null)
+					{
+//						DisposeContext(); // paranoia ...
+						ContextMenu.Dispose();
+						ContextMenu = null;
+					}
+
+					if (McdInfo != null)
+					{
+						McdInfo.Dispose();
+						McdInfo = null;
+					}
+				}
+			}
+			finally
+			{
+				_disposed = true;
+				base.Dispose(disposing);
+			}
+		}
+
+//		private void DisposeContext()
+//		{
+//			ContextMenu.MenuItems[3].Click -= OnMcdInfoClick;
+//			ContextMenu.MenuItems[3].Dispose();
+//			ContextMenu.MenuItems.RemoveAt(3);
+//
+//			ContextMenu.MenuItems[2].Dispose();
+//			ContextMenu.MenuItems.RemoveAt(2);
+//
+//			ContextMenu.MenuItems[1].Click -= OnMcdViewClick;
+//			ContextMenu.MenuItems[1].Dispose();
+//			ContextMenu.MenuItems.RemoveAt(1);
+//
+//			ContextMenu.MenuItems[0].Click -= OnPckViewClick;
+//			ContextMenu.MenuItems[0].Dispose();
+//			ContextMenu.MenuItems.RemoveAt(0);
+//		}
+		#endregion IDisposable inherited
+
+
 		#region Events
 		/// <summary>
 		/// Fires if a save was done in PckView or McdView (via TileView).
 		/// </summary>
 		internal event MethodInvoker ReloadDescriptor;
 		#endregion Events
+
+
+		#region Fields (static)
+		private const int CONTEXT_MI_MCDINFO = 3;
+		#endregion Fields (static)
 
 
 		#region Fields
@@ -72,7 +158,7 @@ namespace MapView.Forms.Observers
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] // w.t.f.
 		internal Tilepart SelectedTilepart
 		{
-			get { return GetVisiblePanel().SelectedTilepart; }
+			get { return GetSelectedPanel().SelectedTilepart; }
 			set
 			{
 				_allTiles.SelectedTilepart = value;
@@ -82,8 +168,8 @@ namespace MapView.Forms.Observers
 			}
 		}
 
-		internal McdInfoF McdInfobox
-		{ get; set; }
+		internal McdInfoF McdInfo
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -113,7 +199,7 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiates the TileView viewer and its pages/panels.
+		/// cTor. Instantiates the TileView control and its pages/panels.
 		/// </summary>
 		internal TileView()
 		{
@@ -122,21 +208,23 @@ namespace MapView.Forms.Observers
 			InitializeComponent();
 			var tpTileTypes = new TabPageBorder(tcTileTypes);
 
+			Dock = DockStyle.Fill;
+
 //			tcTileTypes.MouseWheel           += tabs_OnMouseWheel;
 			tcTileTypes.SelectedIndexChanged += tabs_OnSelectedIndexChanged;
 
 			TilePanel.Chaparone = this;
+
+			tpFloors    .Text = QuadrantDrawService.Floor;
+			tpWestwalls .Text = QuadrantDrawService.West;
+			tpNorthwalls.Text = QuadrantDrawService.North;
+			tpContents  .Text = QuadrantDrawService.Content;
 
 			_allTiles      = new TilePanel(PartType.Invalid);
 			var floors     = new TilePanel(PartType.Floor);
 			var westwalls  = new TilePanel(PartType.West);
 			var northwalls = new TilePanel(PartType.North);
 			var content    = new TilePanel(PartType.Content);
-
-			tpFloors    .Text = QuadrantDrawService.Floor;
-			tpWestwalls .Text = QuadrantDrawService.West;
-			tpNorthwalls.Text = QuadrantDrawService.North;
-			tpContents  .Text = QuadrantDrawService.Content;
 
 			_panels = new[]
 			{
@@ -147,27 +235,44 @@ namespace MapView.Forms.Observers
 				content
 			};
 
-			AddPanel(_allTiles,  tpAll);
-			AddPanel(floors,     tpFloors);
-			AddPanel(westwalls,  tpWestwalls);
-			AddPanel(northwalls, tpNorthwalls);
-			AddPanel(content,    tpContents);
+			AddPanel(tpAll,       _allTiles);
+			AddPanel(tpFloors,     floors);
+			AddPanel(tpWestwalls,  westwalls);
+			AddPanel(tpNorthwalls, northwalls);
+			AddPanel(tpContents,   content);
 
 			_allTiles.SetTickerSubscription(true);
 
 			ssStatus.Renderer = new CustomToolStripRenderer();
+
+			CreateContext();
 		}
 
 		/// <summary>
-		/// Adds a panel to a specified page and subscribes to the
-		/// TilepartSelected event.
+		/// Adds a panel to a specified tabpage and subscribes the panel's
+		/// <see cref="TilePanel.TilepartSelected">TilePanel.TilepartSelected</see>
+		/// event to <see cref="panel_OnTilepartSelected"/>.
 		/// </summary>
-		/// <param name="panel"></param>
 		/// <param name="page"></param>
-		private void AddPanel(TilePanel panel, Control page)
+		/// <param name="panel"></param>
+		private void AddPanel(Control page, TilePanel panel)
 		{
 			panel.TilepartSelected += panel_OnTilepartSelected;
 			page.Controls.Add(panel);
+		}
+
+
+		/// <summary>
+		/// Builds the ContextMenu.
+		/// </summary>
+		private void CreateContext()
+		{
+			ContextMenu = new ContextMenu();
+
+			ContextMenu.MenuItems.Add(new MenuItem("open in PckView", OnPckViewClick, Shortcut.F9));	// 0
+			ContextMenu.MenuItems.Add(new MenuItem("open in McdView", OnMcdViewClick, Shortcut.F10));	// 1
+			ContextMenu.MenuItems.Add(new MenuItem("-"));												// 2
+			ContextMenu.MenuItems.Add(new MenuItem("view MCD record", OnMcdInfoClick));					// 3 //null, EventArgs.Empty
 		}
 		#endregion cTor
 
@@ -178,6 +283,7 @@ namespace MapView.Forms.Observers
 		/// awkward level changes.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>redesign wanted.</remarks>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 //			base.OnMouseWheel(e);
@@ -218,7 +324,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void tabs_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
-			var current = GetVisiblePanel();
+			TilePanel current = GetSelectedPanel();
 			foreach (var panel in _panels)
 				panel.SetTickerSubscription(panel == current);
 
@@ -226,35 +332,16 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Triggers on the 'TilepartSelected' event. Further triggers the
-		/// 'TilepartSelected_SelectQuadrant' event.
+		/// Handles the panels' <see cref="TilePanel.TilepartSelected">TilePanel.TilepartSelected</see>
+		/// event. Further triggers the 'TilepartSelected_SelectQuadrant' event.
 		/// </summary>
 		/// <param name="part"></param>
 		private void panel_OnTilepartSelected(Tilepart part)
 		{
 			SetTitleText(part);
 
-			if (McdInfobox != null)
-			{
-				McdRecord record;
-				int id;
-				string label;
-
-				if (part != null)
-				{
-					record = part.Record;
-					id = part.TerId;
-					label = GetTerrainLabel();
-				}
-				else
-				{
-					record = null;
-					id = -1;
-					label = String.Empty;
-				}
-
-				McdInfobox.UpdateData(record, id, label);
-			}
+			if (McdInfo != null)
+				McdInfo.UpdateData();
 
 			if (part != null)
 			{
@@ -283,9 +370,9 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an Options-
-		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
-		/// viewer. Also subscribes to a form-closing handler that will hide the
-		/// form unless MainView is closing.
+		/// form. Instantiates an <see cref="OptionsForm"/> if one doesn't exist
+		/// for this viewer. Also subscribes to a form-closing handler that will
+		/// hide the form unless MapView is quitting.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -346,42 +433,20 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		internal void OnMcdInfoClick(object sender, EventArgs e)
 		{
-			if (!GetVisiblePanel().ContextMenu.MenuItems[3].Checked)
+			if (!ContextMenu.MenuItems[CONTEXT_MI_MCDINFO].Checked)
 			{
-				foreach (var panel in _panels)
+				ContextMenu.MenuItems[CONTEXT_MI_MCDINFO].Checked = true;
+
+				if (McdInfo == null)
 				{
-					panel.ContextMenu.MenuItems[3].Checked = true;
+					McdInfo = new McdInfoF(this);
+					McdInfo.FormClosing += OnMcdInfoFormClosing;
+					McdInfo.UpdateData();
 				}
+				McdInfo.Show();
 
-				if (McdInfobox == null)
-				{
-					McdInfobox = new McdInfoF();
-					McdInfobox.FormClosing += OnMcdInfoFormClosing;
-
-					McdRecord record;
-					int id;
-					string label;
-
-					Tilepart part = SelectedTilepart;
-					if (part != null)
-					{
-						record = part.Record;
-						id = part.TerId;
-						label = GetTerrainLabel();
-					}
-					else
-					{
-						record = null;
-						id = -1;
-						label = String.Empty;
-					}
-
-					McdInfobox.UpdateData(record, id, label);
-				}
-				McdInfobox.Show();
-
-				if (McdInfobox.WindowState == FormWindowState.Minimized)
-					McdInfobox.WindowState  = FormWindowState.Normal;
+				if (McdInfo.WindowState == FormWindowState.Minimized)
+					McdInfo.WindowState  = FormWindowState.Normal;
 			}
 			else
 				OnMcdInfoFormClosing(null, null);
@@ -394,15 +459,12 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnMcdInfoFormClosing(object sender, CancelEventArgs e)
 		{
-			foreach (var panel in _panels)
-			{
-				panel.ContextMenu.MenuItems[3].Checked = false;
-			}
+			ContextMenu.MenuItems[CONTEXT_MI_MCDINFO].Checked = false;
 
-			if (e != null)			// if (e==null) the form is hiding due to a menu-click, or a double-click on a part
-				e.Cancel = true;	// if (e!=null) the form really was closed, so cancel that.
-									// NOTE: wtf - is way too complicated for what it is
-			McdInfobox.Hide();
+			if (e != null)			// if (e!=null) the form really was closed, so cancel that.
+				e.Cancel = true;	// if (e==null) the form is hiding due to a menu-click, or a double-click on a part
+									// TODO: wtf - is way too complicated for what it is
+			McdInfo.Hide();
 		}
 
 		/// <summary>
@@ -590,7 +652,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Gets the current sprite-shade in <see cref="MainViewF.Optionables"/>.
+		/// Gets the current sprite-shade in
+		/// <see cref="MainViewF.Optionables">MainViewF.Optionables</see>.
 		/// </summary>
 		/// <returns>sprite-shade or -1 if disabled</returns>
 		private static int GetSpriteshade()
@@ -723,10 +786,10 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Gets the panel of the currently displayed tabpage.
+		/// Gets the panel of the currently selected tabpage.
 		/// </summary>
 		/// <returns></returns>
-		internal TilePanel GetVisiblePanel()
+		internal TilePanel GetSelectedPanel()
 		{
 			return _panels[tcTileTypes.SelectedIndex];
 		}

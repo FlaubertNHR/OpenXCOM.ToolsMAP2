@@ -82,9 +82,9 @@ namespace MapView.Forms.MainView
 		/// <param name="f"></param>
 		/// <param name="shortcut"></param>
 		/// <param name="options"></param>
-		/// <param name="default">true to have the viewer open on 1st run</param>
+		/// <param name="default"><c>true</c> to have the viewer open on 1st run</param>
 		/// <param name="changer"></param>
-		/// <remarks>These forms never actually close until MainView closes.</remarks>
+		/// <remarks>These forms never actually close until MapView closes.</remarks>
 		private static void CreateSecondaryViewerMenuitem(
 				Form f,
 				Shortcut shortcut,
@@ -346,7 +346,7 @@ namespace MapView.Forms.MainView
 
 
 		/// <summary>
-		/// Enables the ScanG menuitem.
+		/// Enables the ScanG viewer menuitem.
 		/// </summary>
 		/// <param name="enabled"></param>
 		internal static void EnableScanG(bool enabled)
@@ -377,7 +377,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Unchecks the ScanG view item when ScanG view closes.
+		/// Unchecks the ScanG viewer item when ScanG viewer closes.
 		/// </summary>
 		internal static void DecheckScanG()
 		{

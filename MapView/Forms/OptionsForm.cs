@@ -42,8 +42,8 @@ namespace MapView
 		/// <summary>
 		/// The Description area control - used to get/set each viewers'
 		/// 'DescriptionHeight' option.
-		/// @note .net appears to handle heights that are too large etc okay.
 		/// </summary>
+		/// <remarks>.net appears to handle heights that are too large etc okay.</remarks>
 		private Control _desc;
 
 		/// <summary>

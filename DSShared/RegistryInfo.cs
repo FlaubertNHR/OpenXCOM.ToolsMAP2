@@ -52,6 +52,10 @@ namespace DSShared
 
 
 		#region Methods (static)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="dir"></param>
 		public static void InitializeRegistry(string dir)
 		{
 			 dir = Path.Combine(dir, PathInfo.DIR_Settings);
@@ -61,9 +65,10 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// @note Although there are 4 Options forms only 1 metric is saved or
-		/// loaded for all.
+		/// 
 		/// </summary>
+		/// <remarks>Although there are 4 Options forms only 1 metric is saved
+		/// or loaded for all.</remarks>
 		private static void LoadMetrics()
 		{
 			using (var fs = FileService.OpenFile(_pfe))
@@ -178,13 +183,13 @@ namespace DSShared
 
 		/// <summary>
 		/// Updates the dictionary's properties when a specified Form closes.
-		/// @note Most forms never actually close until the app exits; almost
-		/// all of them merely hide.
 		/// </summary>
 		/// <param name="f">a Form aka viewer</param>
 		/// <param name="bypassShow">true for Options forms when they are merely
 		/// changing their visible state; false to force the form to show before
 		/// the registry gets finalized</param>
+		/// <remarks>Most forms never actually close until the app exits; almost
+		/// all of them merely hide.</remarks>
 		public static void UpdateRegistry(Form f, bool bypassShow = false)
 		{
 			string label = GetRegistryLabel(f);
@@ -219,9 +224,10 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// @note Although there are 4 Options forms only 1 metric is saved or
-		/// loaded for all.
+		/// 
 		/// </summary>
+		/// <remarks>Although there are 4 Options forms only 1 metric is saved
+		/// or loaded for all.</remarks>
 		public static void WriteRegistry()
 		{
 			// create "settings/MapViewers.yml"
@@ -265,12 +271,12 @@ namespace DSShared
 
 		/// <summary>
 		/// Checks if the OS wants this shit to stop instantly.
-		/// @note holy erection batrat
-		/// https://stackoverflow.com/questions/23872921/how-to-reset-the-close-reason-when-close-is-cancelled#answer-23919394
 		/// </summary>
 		/// <param name="reason"><see cref="CloseReason"/></param>
 		/// <returns>true if Windoze is shutting down [or another application
 		/// such as TaskManager sends a WM_CLOSE message]</returns>
+		/// <remarks>holy erection batrat
+		/// https://stackoverflow.com/questions/23872921/how-to-reset-the-close-reason-when-close-is-cancelled#answer-23919394</remarks>
 		public static bool FastClose(CloseReason reason)
 		{
 			switch (reason)
@@ -295,6 +301,9 @@ namespace DSShared
 
 
 		#region Structs
+		/// <summary>
+		/// Contains window-telemetry.
+		/// </summary>
 		private struct Metric
 		{
 			internal int left;
