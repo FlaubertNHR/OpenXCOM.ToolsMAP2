@@ -9,7 +9,7 @@ namespace MapView.Forms.Observers
 	internal sealed partial class TileView
 	{
 		#region Designer
-		private CompositedTabControl tcTileTypes;
+		private CompositedTabControl tcPartTypes;
 
 		private ToolStrip tsMain;
 		private ToolStripDropDownButton tsddbExternal;
@@ -34,7 +34,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tcTileTypes = new DSShared.Controls.CompositedTabControl();
+			this.tcPartTypes = new DSShared.Controls.CompositedTabControl();
 			this.tpAll = new System.Windows.Forms.TabPage();
 			this.tpFloors = new System.Windows.Forms.TabPage();
 			this.tpWestwalls = new System.Windows.Forms.TabPage();
@@ -50,24 +50,24 @@ namespace MapView.Forms.Observers
 			this.ssStatus = new System.Windows.Forms.StatusStrip();
 			this.tsslTotal = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsslOver = new System.Windows.Forms.ToolStripStatusLabel();
-			this.tcTileTypes.SuspendLayout();
+			this.tcPartTypes.SuspendLayout();
 			this.tsMain.SuspendLayout();
 			this.ssStatus.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tcTileTypes
+			// tcPartTypes
 			// 
-			this.tcTileTypes.Controls.Add(this.tpAll);
-			this.tcTileTypes.Controls.Add(this.tpFloors);
-			this.tcTileTypes.Controls.Add(this.tpWestwalls);
-			this.tcTileTypes.Controls.Add(this.tpNorthwalls);
-			this.tcTileTypes.Controls.Add(this.tpContents);
-			this.tcTileTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tcTileTypes.Location = new System.Drawing.Point(0, 25);
-			this.tcTileTypes.Name = "tcTileTypes";
-			this.tcTileTypes.SelectedIndex = 0;
-			this.tcTileTypes.Size = new System.Drawing.Size(640, 433);
-			this.tcTileTypes.TabIndex = 0;
+			this.tcPartTypes.Controls.Add(this.tpAll);
+			this.tcPartTypes.Controls.Add(this.tpFloors);
+			this.tcPartTypes.Controls.Add(this.tpWestwalls);
+			this.tcPartTypes.Controls.Add(this.tpNorthwalls);
+			this.tcPartTypes.Controls.Add(this.tpContents);
+			this.tcPartTypes.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tcPartTypes.Location = new System.Drawing.Point(0, 25);
+			this.tcPartTypes.Name = "tcPartTypes";
+			this.tcPartTypes.SelectedIndex = 0;
+			this.tcPartTypes.Size = new System.Drawing.Size(640, 433);
+			this.tcPartTypes.TabIndex = 0;
 			// 
 			// tpAll
 			// 
@@ -213,14 +213,14 @@ namespace MapView.Forms.Observers
 			// 
 			// TileView
 			// 
-			this.Controls.Add(this.tcTileTypes);
+			this.Controls.Add(this.tcPartTypes);
 			this.Controls.Add(this.ssStatus);
 			this.Controls.Add(this.tsMain);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Margin = new System.Windows.Forms.Padding(0);
 			this.Name = "TileView";
 			this.Size = new System.Drawing.Size(640, 480);
-			this.tcTileTypes.ResumeLayout(false);
+			this.tcPartTypes.ResumeLayout(false);
 			this.tsMain.ResumeLayout(false);
 			this.tsMain.PerformLayout();
 			this.ssStatus.ResumeLayout(false);

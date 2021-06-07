@@ -11,6 +11,14 @@ using XCom;
 
 namespace MapView.Forms.Observers
 {
+	/// <summary>
+	/// This is the form that contains TopView and RouteView as pages in a
+	/// tabcontrol.
+	/// </summary>
+	/// <remarks>This is instantiated by
+	/// <see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see>
+	/// and closed by
+	/// <see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see>.</remarks>
 	internal sealed partial class TopRouteViewForm
 		:
 			Form
@@ -43,28 +51,22 @@ namespace MapView.Forms.Observers
 		internal TopRouteViewForm()
 		{
 			InitializeComponent();
+			var tpBorder = new TabPageBorder(tabControl);
+			tpBorder.TabPageBorder_init();
 
 			_top = new TopView();
-
 			_top.Name       = "TopViewControl";
 			_top.Dock       = DockStyle.Fill;
 			_top.TabIndex   = 0;
 			_top.Tag        = "TOPROUTE";
-
 			tp_Top.Controls.Add(_top);
 
-
 			_route = new RouteView();
-
 			_route.Name     = "RouteViewControl";
 			_route.Dock     = DockStyle.Fill;
 			_route.TabIndex = 0;
 			_route.Tag      = "TOPROUTE";
-
 			tp_Route.Controls.Add(_route);
-
-
-			var tpTabControl = new TabPageBorder(tabControl);
 		}
 		#endregion cTor
 
@@ -292,11 +294,16 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (!RegistryInfo.FastClose(e.CloseReason)
-				&& TopView._finfobox != null && !TopView._finfobox.IsDisposed)
+			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				TopView._finfobox.Close();
-				TopView._finfobox = null;
+				if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed)
+				{
+					TopView._fpartslots.Close();
+					TopView._fpartslots = null;
+				}
+
+				if (MainViewF.Quit) // else just hide
+					_top.DisposeObserver();
 			}
 			base.OnFormClosing(e);
 		}

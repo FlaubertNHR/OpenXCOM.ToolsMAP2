@@ -75,7 +75,7 @@ namespace XCom
 										"Browse to a basepath for the MAP and RMP files ...",
 										descriptor.Label,
 										InfoboxType.Warn,
-										InfoboxResults.CancelOkay))
+										InfoboxButtons.CancelOkay))
 				{
 					if (f.ShowDialog() == DialogResult.OK) // Open a folderbrowser for user to find a basepath ->
 					{

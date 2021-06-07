@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 
 using DSShared;
@@ -16,19 +15,37 @@ namespace MapView.Forms.Observers
 		:
 			ObserverControl // UserControl, IObserver
 	{
+		/// <summary>
+		/// Disposes <see cref="TopControl"/>.
+		/// </summary>
+		/// <remarks>Do NOT use <c>public void Dispose()</c> or else you'll have
+		/// one Fuck of a time trying to trace usage. Use <c>public void Dispose()</c>
+		/// only for the Designer code w/ <c>components</c>. Thank yourself for
+		/// heeding this piece of hard-won wisdom later.</remarks>
+		internal void DisposeObserver()
+		{
+			LogFile.WriteLine("TopView.DisposeObserver()");
+			TopControl.DisposeControl();
+
+			// static
+//			TopViewOptionables.DisposeOptionables();
+//			QuadrantControl.DisposeControl();
+		}
+
+
 		#region Fields (static)
-		internal const int FLOOR   = 0x1; // flags for parttype visibility ->
-		internal const int WEST    = 0x2;
-		internal const int NORTH   = 0x4;
-		internal const int CONTENT = 0x8;
+		internal const int Vis_FLOOR   = 0x1; // flags for parttype visibility ->
+		internal const int Vis_WEST    = 0x2;
+		internal const int Vis_NORTH   = 0x4;
+		internal const int Vis_CONTENT = 0x8;
 
 		/// <summary>
-		/// The TestPartslots dialog.
+		/// The TestPartslots dialog - a nonmodal <see cref="Infobox"/>.
 		/// </summary>
 		/// <remarks>Be careful with this pointer because closing the dialog in
 		/// the dialog itself does *not* null this pointer. So check for both
 		/// !null and !IsDisposed if necessary.</remarks>
-		internal static Infobox _finfobox;
+		internal static Infobox _fpartslots;
 		#endregion Fields (static)
 
 
@@ -129,7 +146,7 @@ namespace MapView.Forms.Observers
 			North  .Checked =
 			Content.Checked = true;
 
-			VisibleQuadrants = FLOOR | WEST | NORTH | CONTENT;
+			VisibleQuadrants = Vis_FLOOR | Vis_WEST | Vis_NORTH | Vis_CONTENT;
 
 			ObserverControls.Add("TopControl",      TopControl);
 			ObserverControls.Add("QuadrantControl", QuadrantControl);
@@ -175,10 +192,10 @@ namespace MapView.Forms.Observers
 				if (ObserverManager.TopView     .Control   .Floor.Checked =
 					ObserverManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked)
 				{
-					VisibleQuadrants |= FLOOR;
+					VisibleQuadrants |= Vis_FLOOR;
 				}
 				else
-					VisibleQuadrants &= ~FLOOR;
+					VisibleQuadrants &= ~Vis_FLOOR;
 
 				MapFile.CalculateOccultations(!it.Checked);
 			}
@@ -187,37 +204,37 @@ namespace MapView.Forms.Observers
 				if (ObserverManager.TopView     .Control   .West.Checked =
 					ObserverManager.TopRouteView.ControlTop.West.Checked = !it.Checked)
 				{
-					VisibleQuadrants |= WEST;
+					VisibleQuadrants |= Vis_WEST;
 				}
 				else
-					VisibleQuadrants &= ~WEST;
+					VisibleQuadrants &= ~Vis_WEST;
 			}
 			else if (it == North)
 			{
 				if (ObserverManager.TopView     .Control   .North.Checked =
 					ObserverManager.TopRouteView.ControlTop.North.Checked = !it.Checked)
 				{
-					VisibleQuadrants |= NORTH;
+					VisibleQuadrants |= Vis_NORTH;
 				}
 				else
-					VisibleQuadrants &= ~NORTH;
+					VisibleQuadrants &= ~Vis_NORTH;
 			}
 			else //if (it == Content)
 			{
 				if (ObserverManager.TopView     .Control   .Content.Checked =
 					ObserverManager.TopRouteView.ControlTop.Content.Checked = !it.Checked)
 				{
-					VisibleQuadrants |= CONTENT;
+					VisibleQuadrants |= Vis_CONTENT;
 				}
 				else
-					VisibleQuadrants &= ~CONTENT;
+					VisibleQuadrants &= ~Vis_CONTENT;
 			}
 
 			MainViewOverlay.that.SetQuadrantVisibilities(
-													(VisibleQuadrants & FLOOR)   != 0,
-													(VisibleQuadrants & WEST)    != 0,
-													(VisibleQuadrants & NORTH)   != 0,
-													(VisibleQuadrants & CONTENT) != 0);
+													(VisibleQuadrants & Vis_FLOOR)   != 0,
+													(VisibleQuadrants & Vis_WEST)    != 0,
+													(VisibleQuadrants & Vis_NORTH)   != 0,
+													(VisibleQuadrants & Vis_CONTENT) != 0);
 			MainViewOverlay.that.Invalidate();
 
 			ObserverManager.InvalidateTopControls();
@@ -232,10 +249,10 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnTestPartslotsClick(object sender, EventArgs e)
 		{
-			if (_finfobox != null && !_finfobox.IsDisposed)
+			if (_fpartslots != null && !_fpartslots.IsDisposed)
 			{
-				_finfobox.Close(); // TODO: Close the dialog if the Mapfile changes/reloads/etc
-				_finfobox = null;
+				_fpartslots.Close(); // TODO: Update the data if/when parts change.
+				_fpartslots = null;
 			}
 
 			var lines = new List<string>();
@@ -302,13 +319,13 @@ namespace MapView.Forms.Observers
 				foreach (var line in lines)
 					copyable += Environment.NewLine + line;
 
-				_finfobox = new Infobox( // not Modal.
+				_fpartslots = new Infobox( // not Modal.
 									title,
 									Infobox.SplitString("The following tileslots are occupied by incorrect"
 											+ " PartTypes. This could result in broken battlescape behavior."),
 									copyable,
 									InfoboxType.Warn);
-				_finfobox.Show();
+				_fpartslots.Show();
 			}
 			else
 			{

@@ -10,6 +10,13 @@ using XCom;
 
 namespace MapView.Forms.Observers
 {
+	/// <summary>
+	/// This is the form that contains TopView.
+	/// </summary>
+	/// <remarks>This is instantiated by
+	/// <see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see>
+	/// and closed by
+	/// <see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see>.</remarks>
 	internal sealed partial class TopViewForm
 		:
 			Form,
@@ -40,6 +47,9 @@ namespace MapView.Forms.Observers
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
 		internal TopViewForm()
 		{
 			InitializeComponent();
@@ -186,11 +196,16 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (!RegistryInfo.FastClose(e.CloseReason)
-				&& TopView._finfobox != null && !TopView._finfobox.IsDisposed)
+			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				TopView._finfobox.Close();
-				TopView._finfobox = null;
+				if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed)
+				{
+					TopView._fpartslots.Close();
+					TopView._fpartslots = null;
+				}
+
+				if (MainViewF.Quit) // else just hide
+					_top.DisposeObserver();
 			}
 			base.OnFormClosing(e);
 		}

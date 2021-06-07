@@ -40,10 +40,10 @@ namespace MapView
 		internal ColorHelp(MainViewF f)
 		{
 			InitializeComponent();
+			var tpBorder = new TabPageBorder(tabControl);
+			tpBorder.TabPageBorder_init();
 
 			_f = f;
-
-			var tpTabControl = new TabPageBorder(tabcontrol);
 
 			_fontBold = new Font(Font, FontStyle.Bold);
 
@@ -310,7 +310,7 @@ namespace MapView
 
 
 		#region Designer
-		private CompositedTabControl tabcontrol;
+		private CompositedTabControl tabControl;
 
 		private TabPage tpTileView;
 		private Label la_TileHead;
@@ -352,7 +352,7 @@ namespace MapView
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabcontrol = new DSShared.Controls.CompositedTabControl();
+			this.tabControl = new DSShared.Controls.CompositedTabControl();
 			this.tpTileView = new System.Windows.Forms.TabPage();
 			this.la_TileHead = new System.Windows.Forms.Label();
 			this.rbUfo = new System.Windows.Forms.RadioButton();
@@ -384,7 +384,7 @@ namespace MapView
 			this.gbRouteViewColors = new System.Windows.Forms.GroupBox();
 			this.la_RouteWalls = new System.Windows.Forms.Label();
 			this.la_RouteContent = new System.Windows.Forms.Label();
-			this.tabcontrol.SuspendLayout();
+			this.tabControl.SuspendLayout();
 			this.tpTileView.SuspendLayout();
 			this.gbTileViewColors.SuspendLayout();
 			this.tpTopRouteView.SuspendLayout();
@@ -392,17 +392,17 @@ namespace MapView
 			this.gbRouteViewColors.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tabcontrol
+			// tabControl
 			// 
-			this.tabcontrol.Controls.Add(this.tpTileView);
-			this.tabcontrol.Controls.Add(this.tpTopRouteView);
-			this.tabcontrol.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabcontrol.Location = new System.Drawing.Point(0, 0);
-			this.tabcontrol.Margin = new System.Windows.Forms.Padding(0);
-			this.tabcontrol.Name = "tabcontrol";
-			this.tabcontrol.SelectedIndex = 0;
-			this.tabcontrol.Size = new System.Drawing.Size(454, 256);
-			this.tabcontrol.TabIndex = 0;
+			this.tabControl.Controls.Add(this.tpTileView);
+			this.tabControl.Controls.Add(this.tpTopRouteView);
+			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl.Location = new System.Drawing.Point(0, 0);
+			this.tabControl.Margin = new System.Windows.Forms.Padding(0);
+			this.tabControl.Name = "tabControl";
+			this.tabControl.SelectedIndex = 0;
+			this.tabControl.Size = new System.Drawing.Size(454, 256);
+			this.tabControl.TabIndex = 0;
 			// 
 			// tpTileView
 			// 
@@ -780,7 +780,7 @@ namespace MapView
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(454, 256);
-			this.Controls.Add(this.tabcontrol);
+			this.Controls.Add(this.tabControl);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.KeyPreview = true;
@@ -789,7 +789,7 @@ namespace MapView
 			this.Name = "ColorHelp";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Colors";
-			this.tabcontrol.ResumeLayout(false);
+			this.tabControl.ResumeLayout(false);
 			this.tpTileView.ResumeLayout(false);
 			this.gbTileViewColors.ResumeLayout(false);
 			this.tpTopRouteView.ResumeLayout(false);

@@ -26,7 +26,7 @@ namespace MapView.Forms.Observers
 		:
 			ObserverControl // UserControl, IObserver
 	{
-		#region IDisposable inherited
+		#region IDisposable interface
 		// https://dave-black.blogspot.com/2011/03/how-do-you-properly-implement.html
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace MapView.Forms.Observers
 //			ContextMenu.MenuItems[0].Dispose();
 //			ContextMenu.MenuItems.RemoveAt(0);
 //		}
-		#endregion IDisposable inherited
+		#endregion IDisposable interface
 
 
 		#region Events
@@ -162,7 +162,7 @@ namespace MapView.Forms.Observers
 			set
 			{
 				_allTiles.SelectedTilepart = value;
-				tcTileTypes.SelectedIndex = 0;
+				tcPartTypes.SelectedIndex = 0;
 
 				Refresh(); // req'd.
 			}
@@ -206,12 +206,13 @@ namespace MapView.Forms.Observers
 			Optionables = new TileViewOptionables(this);
 
 			InitializeComponent();
-			var tpTileTypes = new TabPageBorder(tcTileTypes);
+			var tpBorder = new TabPageBorder(tcPartTypes);
+			tpBorder.TabPageBorder_init();
 
 			Dock = DockStyle.Fill;
 
-//			tcTileTypes.MouseWheel           += tabs_OnMouseWheel;
-			tcTileTypes.SelectedIndexChanged += tabs_OnSelectedIndexChanged;
+//			tcPartTypes.MouseWheel           += tabs_OnMouseWheel;
+			tcPartTypes.SelectedIndexChanged += tabs_OnSelectedIndexChanged;
 
 			TilePanel.Chaparone = this;
 
@@ -307,10 +308,10 @@ namespace MapView.Forms.Observers
 
 			if (dir != 0)
 			{
-				int page = tcTileTypes.SelectedIndex + dir;
-				if (page > -1 && page < tcTileTypes.TabCount)
+				int page = tcPartTypes.SelectedIndex + dir;
+				if (page > -1 && page < tcPartTypes.TabCount)
 				{
-					tcTileTypes.SelectedIndex = page;
+					tcPartTypes.SelectedIndex = page;
 				}
 			}
 		} */
@@ -559,7 +560,7 @@ namespace MapView.Forms.Observers
 				{
 					using (var fPckView = new PckViewF(true, GetSpriteshade()))
 					{
-						fPckView.SetSpritesetType(PckView.Type.Pck);
+						fPckView.SetSpritesetType(PckView.SpritesetType.Pck);
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(MapFile.Descriptor.Pal);
 						fPckView.SetSelected(SelectedTilepart[0].Id);
@@ -695,21 +696,22 @@ namespace MapView.Forms.Observers
 									Infobox.SplitString(head),
 									null,
 									InfoboxType.Warn,
-									InfoboxResults.CancelOkay))
+									InfoboxButtons.CancelOkay))
 			{
 				return f.ShowDialog(this);
 			}
 		}
 
 		/// <summary>
-		/// An <see cref="Infobox"/> telling the user that the operation they
-		/// are attempting is invalid because they haven't selected a tilepart.
+		/// Invokes an <see cref="Infobox"/> telling the user that the operation
+		/// they are attempting is invalid because they haven't selected a
+		/// tilepart.
 		/// </summary>
 		private void error_SelectTile()
 		{
 			using (var f = new Infobox(
 									"Error",
-									"Select a Tile.",
+									"Select a Tilepart.",
 									null,
 									InfoboxType.Error))
 			{
@@ -791,7 +793,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		internal TilePanel GetSelectedPanel()
 		{
-			return _panels[tcTileTypes.SelectedIndex];
+			return _panels[tcPartTypes.SelectedIndex];
 		}
 		#endregion Methods
 	}

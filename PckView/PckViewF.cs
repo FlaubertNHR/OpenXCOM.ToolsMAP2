@@ -15,21 +15,6 @@ using XCom;
 
 namespace PckView
 {
-	public enum Type
-	{
-		non,	// default
-
-		Pck,	// a terrain or unit PCK+TAB set is currently loaded.
-				// These are 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword (tftd-unit)
-		Bigobs,	// a Bigobs PCK+TAB set is currently loaded.
-				// Bigobs are 32x48 w/ 2-byte Tabword.
-		ScanG,	// a ScanG iconset is currently loaded.
-				// ScanGs are 4x4 w/ 0-byte Tabword.
-		LoFT	// a LoFT iconset is currently loaded.
-				// LoFTs are 16x16 w/ 0-byte Tabword.
-	}
-
-
 	/// <summary>
 	/// The mainform for PckView.
 	/// </summary>
@@ -116,14 +101,14 @@ namespace PckView
 		/// <summary>
 		/// The currently loaded spriteset type.
 		/// </summary>
-		internal Type SetType
+		internal SpritesetType SetType
 		{ get; private set; }
 
 		/// <summary>
 		/// Sets the <see cref="SetType"/> externally if invoked via TileView.
 		/// </summary>
 		/// <param name="setType"></param>
-		public void SetSpritesetType(Type setType)
+		public void SetSpritesetType(SpritesetType setType)
 		{
 			SetType = setType;
 		}
@@ -187,8 +172,8 @@ namespace PckView
 					string text;
 					switch (SetType)
 					{
-						case Type.Pck:
-						case Type.Bigobs:
+						case SpritesetType.Pck:
+						case SpritesetType.Bigobs:
 							text = GlobalsXC.PckExt_lc;
 							break;
 
@@ -735,7 +720,7 @@ namespace PckView
 
 				SpriteEditor.Show();
 
-				if (SetType != Type.LoFT)
+				if (SetType != SpritesetType.LoFT)
 					SpriteEditor._fpalette.Show();
 			}
 		}
@@ -857,7 +842,7 @@ namespace PckView
 																	GetCurrentPalette(),
 																	XCImage.SpriteWidth,
 																	XCImage.SpriteHeight,
-																	SetType == Type.ScanG || SetType == Type.LoFT);
+																	SetType == SpritesetType.ScanG || SetType == SpritesetType.LoFT);
 							TilePanel.Spriteset.Sprites.Add(sprite);
 						}
 
@@ -1000,7 +985,7 @@ namespace PckView
 															GetCurrentPalette(),
 															XCImage.SpriteWidth,
 															XCImage.SpriteHeight,
-															SetType == Type.ScanG || SetType == Type.LoFT);
+															SetType == SpritesetType.ScanG || SetType == SpritesetType.LoFT);
 					TilePanel.Spriteset.Sprites.Insert(id++, sprite);
 				}
 			}
@@ -1076,7 +1061,7 @@ namespace PckView
 																			GetCurrentPalette(),
 																			XCImage.SpriteWidth,
 																			XCImage.SpriteHeight,
-																			SetType == Type.ScanG || SetType == Type.LoFT);
+																			SetType == SpritesetType.ScanG || SetType == SpritesetType.LoFT);
 
 									TilePanel.Spriteset[TilePanel.Selid].Dispose();
 									TilePanel.Spriteset[TilePanel.Selid] = sprite;
@@ -1283,12 +1268,12 @@ namespace PckView
 
 							if (sender == miCreateBigobs)
 							{
-								SetType = Type.Bigobs;
+								SetType = SpritesetType.Bigobs;
 								XCImage.SpriteHeight = XCImage.SpriteHeight48;
 							}
 							else
 							{
-								SetType = Type.Pck;
+								SetType = SpritesetType.Pck;
 								XCImage.SpriteHeight = XCImage.SpriteHeight40;
 
 								if (sender == miCreateUnitTftd)
@@ -1442,8 +1427,8 @@ namespace PckView
 			{
 				switch (SetType)
 				{
-					case Type.Pck: // save Pck+Tab terrain/unit/bigobs ->
-					case Type.Bigobs:
+					case SpritesetType.Pck: // save Pck+Tab terrain/unit/bigobs ->
+					case SpritesetType.Bigobs:
 						if (Spriteset.WriteSpriteset(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
@@ -1451,7 +1436,7 @@ namespace PckView
 						}
 						break;
 
-					case Type.ScanG:
+					case SpritesetType.ScanG:
 						if (Spriteset.WriteScanG(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
@@ -1459,7 +1444,7 @@ namespace PckView
 						}
 						break;
 
-					case Type.LoFT:
+					case SpritesetType.LoFT:
 						if (Spriteset.WriteLoFT(_path, TilePanel.Spriteset))
 						{
 							Changed = false;
@@ -1484,8 +1469,8 @@ namespace PckView
 				{
 					switch (SetType)
 					{
-						case Type.Pck:
-						case Type.Bigobs:
+						case SpritesetType.Pck:
+						case SpritesetType.Bigobs:
 							sfd.Title = "Save Pck+Tab as ...";
 
 							sfd.Filter     = FileDialogStrings.GetFilterPck();
@@ -1493,15 +1478,15 @@ namespace PckView
 							sfd.FileName   = Path.GetFileName(_path) + GlobalsXC.PckExt;
 							break;
 
-						case Type.ScanG:
+						case SpritesetType.ScanG:
 							sfd.Title = "Save ScanG as ...";
-							goto case Type.non;
+							goto case SpritesetType.non;
 
-						case Type.LoFT:
+						case SpritesetType.LoFT:
 							sfd.Title = "Save LoFTemps as ...";
-							goto case Type.non;
+							goto case SpritesetType.non;
 
-						case Type.non: // not Type.non - is only a label
+						case SpritesetType.non: // not Type.non - is only a label
 							sfd.Filter     = FileDialogStrings.GetFilterDat();
 							sfd.DefaultExt = GlobalsXC.DatExt;
 							sfd.FileName   = Path.GetFileName(_path);
@@ -1526,8 +1511,8 @@ namespace PckView
 
 						switch (SetType)
 						{
-							case Type.Pck:
-							case Type.Bigobs:
+							case SpritesetType.Pck:
+							case SpritesetType.Bigobs:
 							{
 								string label = Path.GetFileNameWithoutExtension(pfe);
 								string pf    = Path.Combine(dir, label);
@@ -1541,7 +1526,7 @@ namespace PckView
 								break;
 							}
 
-							case Type.ScanG:
+							case SpritesetType.ScanG:
 								if (Spriteset.WriteScanG(pfe, TilePanel.Spriteset))
 								{
 									_path = pfe;
@@ -1550,7 +1535,7 @@ namespace PckView
 								}
 								break;
 
-							case Type.LoFT:
+							case SpritesetType.LoFT:
 								if (Spriteset.WriteLoFT(pfe, TilePanel.Spriteset))
 								{
 									_path = pfe;
@@ -1717,7 +1702,7 @@ namespace PckView
 																GetCurrentPalette(),
 																XCImage.SpriteWidth,
 																XCImage.SpriteHeight,
-																SetType == Type.ScanG || SetType == Type.LoFT);
+																SetType == SpritesetType.ScanG || SetType == SpritesetType.LoFT);
 										SpritesetCountChanged(-1);
 									}
 								}
@@ -1759,7 +1744,7 @@ namespace PckView
 				Pal = it.Tag as Palette;
 				Pal.SetTransparent(miTransparent.Checked);
 
-				if (TilePanel.Spriteset != null && SetType != Type.LoFT)
+				if (TilePanel.Spriteset != null && SetType != SpritesetType.LoFT)
 					TilePanel.Spriteset.Pal = Pal;
 
 				PaletteChanged(); // TODO: That probably doesn't need to fire if a LoFTset is loaded.
@@ -1781,7 +1766,7 @@ namespace PckView
 		{
 			Pal.SetTransparent(miTransparent.Checked = !miTransparent.Checked);
 
-			if (TilePanel.Spriteset != null && SetType != Type.LoFT)
+			if (TilePanel.Spriteset != null && SetType != SpritesetType.LoFT)
 				TilePanel.Spriteset.Pal = Pal;
 
 			PaletteChanged(); // TODO: That probably doesn't need to fire if a LoFTset is loaded.
@@ -2020,8 +2005,8 @@ namespace PckView
 					}
 					else
 					{
-						if (isBigobs) SetType = Type.Bigobs;
-						else          SetType = Type.Pck;
+						if (isBigobs) SetType = SpritesetType.Bigobs;
+						else          SetType = SpritesetType.Pck;
 
 						if (TilePanel.Spriteset != null)
 							TilePanel.Spriteset.Dispose();
@@ -2068,7 +2053,7 @@ namespace PckView
 				}
 				else
 				{
-					SetType = Type.ScanG;
+					SetType = SpritesetType.ScanG;
 
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = XCImage.ScanGside;
@@ -2119,7 +2104,7 @@ namespace PckView
 				}
 				else
 				{
-					SetType = Type.LoFT;
+					SetType = SpritesetType.LoFT;
 
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = XCImage.LoFTside;
@@ -2171,7 +2156,7 @@ namespace PckView
 		/// loaded</returns>
 		internal Palette GetCurrentPalette()
 		{
-			if (SetType == Type.LoFT)
+			if (SetType == SpritesetType.LoFT)
 				return Palette.Binary;
 
 			return Pal;
@@ -2272,7 +2257,7 @@ namespace PckView
 			if (id != -1)
 			{
 				selected = id.ToString();
-				if (SetType == Type.ScanG)
+				if (SetType == SpritesetType.ScanG)
 				{
 					if (id > 34)
 						selected += " [" + (id - 35) + "]";
@@ -2369,10 +2354,10 @@ namespace PckView
 
 				switch (SetType)
 				{
-					case Type.Pck:    text += " (32x40)"; break;
-					case Type.Bigobs: text += " (32x48)"; break;
-					case Type.ScanG:  text += " (4x4)";   break;
-					case Type.LoFT:   text += " (16x16)"; break;
+					case SpritesetType.Pck:    text += " (32x40)"; break;
+					case SpritesetType.Bigobs: text += " (32x48)"; break;
+					case SpritesetType.ScanG:  text += " (4x4)";   break;
+					case SpritesetType.LoFT:   text += " (16x16)"; break;
 				}
 			}
 			else
@@ -2396,7 +2381,7 @@ namespace PckView
 										"The spriteset has changed. Do you really want to close it?",
 										null,
 										InfoboxType.Warn,
-										InfoboxResults.CancelOkay))
+										InfoboxButtons.CancelOkay))
 				{
 					return (f.ShowDialog(this) == DialogResult.OK);
 				}
@@ -2405,4 +2390,21 @@ namespace PckView
 		}
 		#endregion Methods
 	}
+
+
+	#region Enums (public)
+	public enum SpritesetType
+	{
+		non,	// default
+
+		Pck,	// a terrain or unit PCK+TAB set is currently loaded.
+				// These are 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword (tftd-unit)
+		Bigobs,	// a Bigobs PCK+TAB set is currently loaded.
+				// Bigobs are 32x48 w/ 2-byte Tabword.
+		ScanG,	// a ScanG iconset is currently loaded.
+				// ScanGs are 4x4 w/ 0-byte Tabword.
+		LoFT	// a LoFT iconset is currently loaded.
+				// LoFTs are 16x16 w/ 0-byte Tabword.
+	}
+	#endregion Enums (public)
 }

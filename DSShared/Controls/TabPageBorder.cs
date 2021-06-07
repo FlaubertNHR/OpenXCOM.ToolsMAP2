@@ -13,7 +13,12 @@ namespace DSShared.Controls
 	/// public Form1()
 	/// {
 	/// 	InitializeComponent();
-	/// 	var tab = new TabPageBorder(tabControl1);
+	/// 	var tpBorder = new TabPageBorder(tabControl);	// ca1804: "Use this variable or remove it."
+	/// 	// or
+	/// 	new TabPageBorder(tabControl1);					// "Possible unassigned object creating by 'new' expression."
+	/// 	// so ->
+	/// 	var tpBorder = new TabPageBorder(tabControl);	// foff thx!
+	/// 	tpBorder.TabPageBorder_init();
 	/// }
 	/// </summary>
 	public sealed class TabPageBorder
@@ -26,26 +31,50 @@ namespace DSShared.Controls
 
 
 		#region Fields
-		private readonly TabControl tabControl;
+		private readonly TabControl _tabControl;
 		#endregion Fields
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="tc"></param>
 		public TabPageBorder(TabControl tc)
 		{
-			tabControl = tc;
-			tabControl.Selected += tabControl_Selected;
-
-			AssignHandle(tc.Handle);
+			_tabControl = tc;
 		}
 		#endregion cTor
 
 
-		#region Events
-		void tabControl_Selected(object sender, TabControlEventArgs e)
+		#region Methods (init)
+		/// <summary>
+		/// Subscribes events.
+		/// </summary>
+		public void TabPageBorder_init()
 		{
-			tabControl.Invalidate();
+			_tabControl.HandleCreated   += tabControl_HandleCreated;	// TODO: Does this object need to unsubscribe
+			_tabControl.HandleDestroyed += tabControl_HandleDestroyed;	//       the TabControl events.
+//			_tabControl.Selected        += tabControl_Selected;
 		}
+		#endregion Methods (init)
+
+
+		#region Events
+		private void tabControl_HandleCreated(object sender, EventArgs e)
+		{
+			AssignHandle(_tabControl.Handle);
+		}
+
+		private void tabControl_HandleDestroyed(object sender, EventArgs e)
+		{
+			ReleaseHandle();
+		}
+
+//		void tabControl_Selected(object sender, TabControlEventArgs e)
+//		{
+//			_tabControl.Invalidate();
+//		}
 		#endregion Events
 
 
@@ -56,30 +85,30 @@ namespace DSShared.Controls
 
 			if (m.Msg == WM_PAINT)
 			{
-				using (Graphics g = Graphics.FromHwnd(m.HWnd))
+				using (Graphics graphics = Graphics.FromHwnd(m.HWnd))
 				{
-					if (tabControl.Parent != null) // replace the outside white borders ->
+					if (_tabControl.Parent != null) // replace the outside white borders ->
 					{
-						g.SetClip(new Rectangle(0, 0, tabControl.Width - 2, tabControl.Height - 1), CombineMode.Exclude);
-						using (var sb = new SolidBrush(tabControl.Parent.BackColor))
-							g.FillRectangle(sb, new Rectangle(
-															0,
-															tabControl.ItemSize.Height + 2,
-															tabControl.Width,
-															tabControl.Height - (tabControl.ItemSize.Height + 2)));
+						graphics.SetClip(new Rectangle(0,0, _tabControl.Width - 2, _tabControl.Height - 1), CombineMode.Exclude);
+						using (var brush = new SolidBrush(_tabControl.Parent.BackColor))
+							graphics.FillRectangle(brush, new Rectangle(
+																	0,
+																	_tabControl.ItemSize.Height + 2,
+																	_tabControl.Width,
+																	_tabControl.Height - (_tabControl.ItemSize.Height + 2)));
 					}
 
-					if (tabControl.SelectedTab != null) // replace the inside white borders ->
+					if (_tabControl.SelectedTab != null) // replace the inside white borders ->
 					{
-						g.ResetClip();
-						Rectangle r = tabControl.SelectedTab.Bounds;
-						g.SetClip(r, CombineMode.Exclude);
-						using (var sb = new SolidBrush(tabControl.SelectedTab.BackColor))
-							g.FillRectangle(sb, new Rectangle(
-															r.Left   - 3,
-															r.Top    - 1,
-															r.Width  + 4,
-															r.Height + 3));
+						graphics.ResetClip();
+						Rectangle rect = _tabControl.SelectedTab.Bounds;
+						graphics.SetClip(rect, CombineMode.Exclude);
+						using (var brush = new SolidBrush(_tabControl.SelectedTab.BackColor))
+							graphics.FillRectangle(brush, new Rectangle(
+																	rect.Left   - 3,
+																	rect.Top    - 1,
+																	rect.Width  + 4,
+																	rect.Height + 3));
 					}
 				}
 			}
@@ -90,7 +119,7 @@ namespace DSShared.Controls
 
 
 	/// <summary>
-	/// Derived class for TabControl.
+	/// Derived class for a TabControl.
 	/// </summary>
 	public sealed class CompositedTabControl
 		:

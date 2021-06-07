@@ -33,7 +33,7 @@ namespace PckView
 		/// in PckViewF</param>
 		internal static void LoadTable(
 				XCImage sprite,
-				Type setType,
+				SpritesetType setType,
 				MethodInvoker callback)
 		{
 			_sprite = sprite;
@@ -68,7 +68,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sprite"></param>
 		/// <param name="setType"></param>
-		internal static void ReloadTable(XCImage sprite, Type setType)
+		internal static void ReloadTable(XCImage sprite, SpritesetType setType)
 		{
 			_sprite = sprite;
 
@@ -84,16 +84,16 @@ namespace PckView
 		/// </summary>
 		/// <param name="setType"></param>
 		/// <returns></returns>
-		private static Size SizeTable(Type setType)
+		private static Size SizeTable(SpritesetType setType)
 		{
 			switch (setType)
 			{
 //				case Type.non:
 //				case Type.Pck:
-				default:          return new Size(949, 589);	// Tr w= 924 h= 574
-				case Type.Bigobs: return new Size(949, 701);	// Tr w= 924 h= 686
-				case Type.ScanG:  return new Size(165, 85);		// Tr w= 140 h= 70
-				case Type.LoFT:   return new Size(501, 253);	// Tr w= 476 h= 238
+				default:                   return new Size(949, 589);	// Tr w= 924 h= 574
+				case SpritesetType.Bigobs: return new Size(949, 701);	// Tr w= 924 h= 686
+				case SpritesetType.ScanG:  return new Size(165, 85);	// Tr w= 140 h= 70
+				case SpritesetType.LoFT:   return new Size(501, 253);	// Tr w= 476 h= 238
 			}
 		}
 

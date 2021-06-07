@@ -138,7 +138,7 @@ namespace PckView
 					switch (SpriteEditorF.Mode)
 					{
 						case EditMode.Enabled: // paint ->
-							if (_feditor._f.SetType != Type.LoFT)
+							if (_feditor._f.SetType != SpritesetType.LoFT)
 							{
 								int palid = _feditor._fpalette.PalPanel.Palid;
 								if (palid > -1)
@@ -260,7 +260,7 @@ namespace PckView
 			if (Sprite != null)
 			{
 				if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON
-					&& _feditor._f.SetType != Type.LoFT)
+					&& _feditor._f.SetType != SpritesetType.LoFT)
 				{
 					for (int y = 0; y != XCImage.SpriteHeight; ++y)
 					for (int x = 0; x != XCImage.SpriteWidth;  ++x)

@@ -376,10 +376,10 @@ namespace MapView.Forms.MainView
 				{
 					tile = MapFile.GetTile(col, row);
 
-					if ((visible & TopView.FLOOR)   != 0) tile.Floor   = null;
-					if ((visible & TopView.WEST)    != 0) tile.West    = null;
-					if ((visible & TopView.NORTH)   != 0) tile.North   = null;
-					if ((visible & TopView.CONTENT) != 0) tile.Content = null;
+					if ((visible & TopView.Vis_FLOOR)   != 0) tile.Floor   = null;
+					if ((visible & TopView.Vis_WEST)    != 0) tile.West    = null;
+					if ((visible & TopView.Vis_NORTH)   != 0) tile.North   = null;
+					if ((visible & TopView.Vis_CONTENT) != 0) tile.Content = null;
 
 					tile.Vacancy();
 				}
@@ -460,10 +460,10 @@ namespace MapView.Forms.MainView
 								&& (copy = _copied[col - DragBeg.X,
 												   row - DragBeg.Y]) != null)
 							{
-								if ((visible & TopView.FLOOR)   != 0) tile.Floor   = copy.Floor;
-								if ((visible & TopView.WEST)    != 0) tile.West    = copy.West;
-								if ((visible & TopView.NORTH)   != 0) tile.North   = copy.North;
-								if ((visible & TopView.CONTENT) != 0) tile.Content = copy.Content;
+								if ((visible & TopView.Vis_FLOOR)   != 0) tile.Floor   = copy.Floor;
+								if ((visible & TopView.Vis_WEST)    != 0) tile.West    = copy.West;
+								if ((visible & TopView.Vis_NORTH)   != 0) tile.North   = copy.North;
+								if ((visible & TopView.Vis_CONTENT) != 0) tile.Content = copy.Content;
 
 								tile.Vacancy();
 							}

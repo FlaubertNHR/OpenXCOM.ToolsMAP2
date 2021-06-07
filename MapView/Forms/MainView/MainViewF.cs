@@ -967,17 +967,18 @@ namespace MapView
 			MainViewOverlay .DisposeOverlay();
 			MainViewUnderlay.DisposeUnderlay();
 
-			MainViewUnderlay.that.Dispose();
+			MainViewOverlay .Dispose();
+			MainViewUnderlay.Dispose();
+
+
+			// static
+			QuadrantControl.DisposeControl();
 
 			TileViewOptionables .DisposeOptionables();
 			TopViewOptionables  .DisposeOptionables();
 			RouteViewOptionables.DisposeOptionables();
+
 			Optionables         .DisposeOptionables();
-
-			ObserverManager.TopView     .Control   .TopControl.DisposeControl();
-			ObserverManager.TopRouteView.ControlTop.TopControl.DisposeControl();
-
-			QuadrantControl.DisposeControl();
 
 			ObserverManager.RouteView   .Control     .RouteControl.DisposeControl();
 			ObserverManager.TopRouteView.ControlRoute.RouteControl.DisposeControl();
@@ -1669,7 +1670,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Opens a dialog that allows user to resize the current Mapfile.
+		/// Opens a dialog for user to resize the current Mapfile.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1682,6 +1683,12 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
+						if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the PartslotTest dialog
+						{
+							TopView._fpartslots.Close();
+							TopView._fpartslots = null;
+						}
+
 						RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
 						RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);
 
@@ -1873,7 +1880,7 @@ namespace MapView
 										head,
 										copyable,
 										InfoboxType.Warn,
-										InfoboxResults.CancelOkayRetry))
+										InfoboxButtons.CancelOkayRetry))
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -2582,7 +2589,7 @@ namespace MapView
 												head,
 												copyable,
 												InfoboxType.Warn,
-												InfoboxResults.CancelOkayRetry))
+												InfoboxButtons.CancelOkayRetry))
 						{
 							switch (f.ShowDialog(this))
 							{
@@ -2701,7 +2708,7 @@ namespace MapView
 									head,
 									"group - " + labelGroup,
 									InfoboxType.Warn,
-									InfoboxResults.CancelOkay))
+									InfoboxButtons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -2798,7 +2805,7 @@ namespace MapView
 									head,
 									copyable,
 									InfoboxType.Warn,
-									InfoboxResults.CancelOkay))
+									InfoboxButtons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -2950,7 +2957,7 @@ namespace MapView
 									head,
 									copyable,
 									InfoboxType.Warn,
-									InfoboxResults.CancelOkay))
+									InfoboxButtons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -3194,10 +3201,10 @@ namespace MapView
 			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
 			//LogFile.WriteLine(". browseMapfile= " + browseMapfile);
 
-			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed) // close the PartslotTest dialog
+			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the PartslotTest dialog
 			{
-				TopView._finfobox.Close();
-				TopView._finfobox = null;
+				TopView._fpartslots.Close();
+				TopView._fpartslots = null;
 			}
 
 			if (_loadReady == LOADREADY_STAGE_2)
@@ -3446,7 +3453,7 @@ namespace MapView
 										"Do you want to save changes to the Map?",
 										null,
 										InfoboxType.Warn,
-										InfoboxResults.CancelYesNo)) // cancel/ok/retry
+										InfoboxButtons.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -3486,7 +3493,7 @@ namespace MapView
 										"Do you want to save changes to the Routes?",
 										null,
 										InfoboxType.Warn,
-										InfoboxResults.CancelYesNo)) // cancel/ok/retry
+										InfoboxButtons.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -3528,7 +3535,7 @@ namespace MapView
 										"Do you want to save changes to the Map Tree?",
 										null,
 										InfoboxType.Warn,
-										InfoboxResults.CancelYesNo)) // cancel/ok/retry
+										InfoboxButtons.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{

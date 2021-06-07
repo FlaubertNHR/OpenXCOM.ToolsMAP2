@@ -1084,10 +1084,10 @@ namespace MapView.Forms.MainView
 															// borks out w/ an obscure "Parameter is invalid" exception.
 
 			// close the PartslotTest dialog (its displayed data has changed)
-			if (TopView._finfobox != null && !TopView._finfobox.IsDisposed)
+			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed)
 			{
-				TopView._finfobox.Close();
-				TopView._finfobox = null;
+				TopView._fpartslots.Close();
+				TopView._fpartslots = null;
 			}
 
 			if (MainViewF.ScanG != null)
