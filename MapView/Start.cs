@@ -19,20 +19,30 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// cTor. Initializes a handler for unhandled exceptions.
+		/// cTor.
 		/// </summary>
 		internal Start()
 		{
+			_errorHandler = new ErrorAdapter();
+		}
+		#endregion cTor
+
+
+		#region Methods (init)
+		/// <summary>
+		/// Initializes the app, instantiates a handler for unhandled
+		/// exceptions, and runs <see cref="MainViewF"/>.
+		/// </summary>
+		internal void Start_init()
+		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-
-			_errorHandler = new ErrorAdapter();
 
 			Application.ThreadException += Application_ThreadException;
 			Application.Run(new MainViewF()); // fly like the wind.
 			Application.ThreadException -= Application_ThreadException;
 		}
-		#endregion cTor
+		#endregion Methods (init)
 
 
 		#region Events

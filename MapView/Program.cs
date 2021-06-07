@@ -24,6 +24,7 @@ namespace MapView
 			CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
 			var start = new Start();
+			start.Start_init();
 		}
 		#endregion MainMethod
 	}
