@@ -1,33 +1,38 @@
-﻿namespace MapView
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Forms;
+
+
+namespace MapView
 {
-	partial class ConfigurationForm
+	internal sealed partial class ConfigurationForm
 	{
 		#region Designer
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components;
 
-		private System.Windows.Forms.Label labelUfo;
-		private System.Windows.Forms.Label labelTftd;
-		private System.Windows.Forms.Button btnFindUfo;
-		private System.Windows.Forms.Button btnFindTftd;
-		private System.Windows.Forms.TextBox tbUfo;
-		private System.Windows.Forms.TextBox tbTftd;
-		private System.Windows.Forms.Button btnOk;
-		private System.Windows.Forms.Panel pUfo;
-		private System.Windows.Forms.Panel pTftd;
-		private System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Label lblInfo;
-		private System.Windows.Forms.CheckBox cbResources;
-		private System.Windows.Forms.GroupBox gbResources;
-		private System.Windows.Forms.GroupBox gbOptions;
-		private System.Windows.Forms.RadioButton rbTilesetsTpl;
-		private System.Windows.Forms.RadioButton rbTilesets;
-		private System.Windows.Forms.Label lblResources;
-		private System.Windows.Forms.Label lblTilesets;
-		private System.Windows.Forms.CheckBox cbTilesets;
-		private System.Windows.Forms.ToolTip toolTip1;
+		private Label labelUfo;
+		private Label labelTftd;
+		private Button btnFindUfo;
+		private Button btnFindTftd;
+		private TextBox tbUfo;
+		private TextBox tbTftd;
+		private Button btnOk;
+		private Panel pUfo;
+		private Panel pTftd;
+		private Button btnCancel;
+		private Label lblInfo;
+		private CheckBox cbResources;
+		private GroupBox gbResources;
+		private GroupBox gbOptions;
+		private RadioButton rbTilesetsTpl;
+		private RadioButton rbTilesets;
+		private Label lblResources;
+		private Label lblTilesets;
+		private CheckBox cbTilesets;
+		private ToolTip toolTip1;
 
 
 		/// <summary>
