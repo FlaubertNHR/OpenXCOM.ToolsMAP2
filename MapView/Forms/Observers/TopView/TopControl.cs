@@ -19,6 +19,9 @@ namespace MapView.Forms.Observers
 		:
 			ObserverControl_Top // DoubleBufferedControl, IObserver
 	{
+		/// <summary>
+		/// Disposes the GraphicsPaths.
+		/// </summary>
 		public void DisposeControl()
 		{
 			DSShared.LogFile.WriteLine("TopControl.DisposeControl()");
@@ -43,6 +46,9 @@ namespace MapView.Forms.Observers
 		private Graphics _graphics;
 		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over cursor lozenge
 		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // selected tile or tiles being drag-selected
+
+		private readonly BlobDrawService _blobService = new BlobDrawService();
+
 
 		private int _originX;	// since the lozenge is drawn with its Origin at 0,0 of the
 								// panel, the entire lozenge needs to be displaced to the right.
@@ -81,8 +87,6 @@ namespace MapView.Forms.Observers
 		private TopView TopView
 		{ get; set; }
 
-
-		private readonly BlobDrawService _blobService = new BlobDrawService();
 
 		private static readonly Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();

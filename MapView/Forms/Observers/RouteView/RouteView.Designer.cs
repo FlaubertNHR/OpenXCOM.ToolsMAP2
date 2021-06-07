@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 
@@ -7,6 +8,8 @@ namespace MapView.Forms.Observers
 	internal sealed partial class RouteView
 	{
 		#region Designer
+		private IContainer components;
+
 		private ToolStrip tsMain;
 
 		private ToolStripDropDownButton tsddbFile;
@@ -93,14 +96,8 @@ namespace MapView.Forms.Observers
 		private Button btnTallyho;
 		private Button btnSave;
 
-
 		private ToolTip toolTip1;
 
-
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
 		/// Cleans up any resources being used.

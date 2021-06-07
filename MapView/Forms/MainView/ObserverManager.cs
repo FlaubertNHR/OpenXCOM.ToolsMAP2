@@ -88,7 +88,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Sets an observer as a viewer and loads its default options.
+		/// Sets a viewer as an observer and loads its default options.
 		/// </summary>
 		/// <param name="key"></param>
 		/// <param name="f"></param>
@@ -158,8 +158,8 @@ namespace MapView.Forms.MainView
 		///   <item><see cref="TopRouteViewForm"/></item>
 		/// </list>
 		/// </summary>
-		/// <remarks>Called by MainViewF.SafeQuit() so this really does close
-		/// the forms and update registry values.</remarks>
+		/// <remarks>Called by <c>MainViewF.SafeQuit()</c> so this really does
+		/// close the forms and update registry values.</remarks>
 		internal static void CloseViewers()
 		{
 			foreach (var f in _viewers)

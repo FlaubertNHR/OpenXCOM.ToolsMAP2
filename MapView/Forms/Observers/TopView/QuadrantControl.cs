@@ -36,7 +36,7 @@ namespace MapView.Forms.Observers
 		/// https://stackoverflow.com/questions/2086213/how-can-i-catch-both-single-click-and-double-click-events-on-wpf-frameworkelement/2087517#2087517</remarks>
 		private static readonly System.Timers.Timer _t1 = new System.Timers.Timer(SystemInformation.DoubleClickTime);
 
-		private static int _t1Clicks;
+		private static int  _t1clicks;
 		private static bool _t1subscribed;
 		#endregion Fields (static)
 
@@ -210,13 +210,13 @@ namespace MapView.Forms.Observers
 						{
 							if (isKeyInput || !TopView.Optionables.EnableRightClickWaitTimer)
 							{
-								_t1Clicks = clicks;
+								_t1clicks = clicks;
 								OnClicksElapsed(null,null);
 							}
 							else
 							{
 								_t1.Stop();
-								++_t1Clicks;
+								++_t1clicks;
 								_t1.Start();
 							}
 						}
@@ -257,7 +257,7 @@ namespace MapView.Forms.Observers
 
 			_t1.Stop();
 
-			switch (_t1Clicks)
+			switch (_t1clicks)
 			{
 				case 1:
 					MainViewOverlay.that.FillSelectedQuads();
@@ -267,7 +267,7 @@ namespace MapView.Forms.Observers
 					MainViewOverlay.that.ClearSelectedQuads();
 					break;
 			}
-			_t1Clicks = 0;
+			_t1clicks = 0;
 		}
 
 		/// <summary>

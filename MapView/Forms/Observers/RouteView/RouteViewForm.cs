@@ -6,6 +6,13 @@ using MapView.Forms.MainView;
 
 namespace MapView.Forms.Observers
 {
+	/// <summary>
+	/// This is the form that contains RouteView.
+	/// </summary>
+	/// <remarks>This is instantiated by
+	/// <see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see>
+	/// and closed by
+	/// <see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see>.</remarks>
 	internal sealed partial class RouteViewForm
 		:
 			Form,

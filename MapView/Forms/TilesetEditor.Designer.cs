@@ -11,7 +11,7 @@ namespace MapView
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private IContainer components = null;
+		private IContainer components;
 
 		private Panel pnl_Top;
 		private GroupBox gb_Maptree;

@@ -29,11 +29,12 @@ namespace XCom
 //			{
 //				try
 //				{
-//					if (disposing) // DISPOSE OF UN-MANAGED RESOURCES HERE ->
+//					if (disposing) // DISPOSE OF MANAGED RESOURCES HERE ->
 //					{
 //						SpriteToned.Dispose();
 //						SpriteToned = null; // pointless.
 //					}
+//					// DISPOSE OF UN-MANAGED RESOURCES HERE ->
 //				}
 //				finally
 //				{

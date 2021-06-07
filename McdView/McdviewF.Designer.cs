@@ -10,9 +10,6 @@ namespace McdView
 	public partial class McdviewF
 	{
 		#region Designer
-		/// <summary>
-		/// Designer variable used to keep track of non-visual components.
-		/// </summary>
 		private IContainer components;
 
 		private MainMenu mmMainMenu;

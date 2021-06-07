@@ -16,7 +16,7 @@ namespace MapView.Forms.MainView
 	{
 		public static void DisposeUnderlay()
 		{
-			DSShared.LogFile.WriteLine("MainViewOverlay.DisposeUnderlay()");
+			DSShared.LogFile.WriteLine("MainViewUnderlay.DisposeUnderlay()");
 			if (_t1 != null)
 				_t1.Dispose();
 		}

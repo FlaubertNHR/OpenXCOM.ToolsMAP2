@@ -5,13 +5,10 @@ using System.Windows.Forms;
 
 namespace MapView
 {
-	partial class MainViewF
+	internal sealed partial class MainViewF
 	{
 		#region Designer
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private IContainer components = null;
+		private IContainer components;
 
 
 		private ContextMenu cmMapTreeMenu;
