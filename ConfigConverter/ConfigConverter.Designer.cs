@@ -1,33 +1,19 @@
-﻿namespace ConfigConverter
+﻿using System;
+using System.Windows.Forms;
+
+
+namespace ConfigConverter
 {
-	partial class ConfigConverter
+	internal sealed partial class ConfigConverter
 	{
 		#region Designer
-		/// <summary>
-		/// Designer variable used to keep track of non-visual components.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
-
-		private System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Button btnConvert;
-		private System.Windows.Forms.TextBox tbInput;
-		private System.Windows.Forms.Button btnInput;
-		private System.Windows.Forms.Label lblInput;
-		private System.Windows.Forms.Label lblResult;
-		private System.Windows.Forms.Label lblInfo;
-
-
-		/// <summary>
-		/// Disposes resources used by the form.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
+		private Button btnCancel;
+		private Button btnConvert;
+		private TextBox tbInput;
+		private Button btnInput;
+		private Label lblInput;
+		private Label lblResult;
+		private Label lblInfo;
 
 
 		/// <summary>
