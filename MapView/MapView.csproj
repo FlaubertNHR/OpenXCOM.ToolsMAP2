@@ -229,7 +229,7 @@
     <Compile Include="Forms\Observers\RouteView\RouteControlParent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Startup.cs" />
+    <Compile Include="Start.cs" />
     <Compile Include="Forms\Observers\TopView\QuadrantControl.cs">
       <SubType>Component</SubType>
     </Compile>
