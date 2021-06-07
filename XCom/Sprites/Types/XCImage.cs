@@ -26,7 +26,7 @@ namespace XCom
 
 			// fxCop ca1063
 			Dispose(true);
-			GC.SuppressFinalize(this);
+//			GC.SuppressFinalize(this); // there is no finalizer.
 		}
 		#endregion Methods (IDisposable)
 
