@@ -7,13 +7,6 @@ using System.Windows.Forms;
 
 namespace DSShared
 {
-	public enum InfoboxType
-	{ Info, Warn, Error }
-
-	public enum InfoboxResults
-	{ Cancel, CancelOkay, CancelOkayRetry, CancelYesNo }
-
-
 	/// <summary>
 	/// A generic outputbox for Info/Warnings/Errors.
 	/// </summary>
@@ -51,7 +44,7 @@ namespace DSShared
 		/// readily copyable text</param>
 		/// <param name="bt">an <see cref="InfoboxType"/> to deter the head's
 		/// backcolor - is valid only with head-text specified</param>
-		/// <param name="results">buttons to show</param>
+		/// <param name="buttons">buttons to show</param>
 		/// <remarks>Limit the length of 'head' to ~100 chars max or break it
 		/// into lines if greater.</remarks>
 		public Infobox(
@@ -59,7 +52,7 @@ namespace DSShared
 				string head,
 				string copyable = null,
 				InfoboxType bt = InfoboxType.Info,
-				InfoboxResults results = InfoboxResults.Cancel)
+				InfoboxButtons buttons = InfoboxButtons.Cancel)
 		{
 			// TODO: Store static location and size of the Infobox (if shown non-modally).
 
@@ -69,25 +62,25 @@ namespace DSShared
 
 			DialogResult = DialogResult.Cancel;
 
-			switch (results)
+			switch (buttons)
 			{
-				case InfoboxResults.Cancel:
+				case InfoboxButtons.Cancel:
 					bu_Cancel.Text = "ok";
 					break;
 
-				case InfoboxResults.CancelOkay:
+				case InfoboxButtons.CancelOkay:
 					bu_Okay.Visible = true;
 					break;
 
-				case InfoboxResults.CancelOkayRetry:
+				case InfoboxButtons.CancelOkayRetry:
 					bu_Okay .Visible =
 					bu_Retry.Visible = true;
 					break;
 
-				case InfoboxResults.CancelYesNo:
+				case InfoboxButtons.CancelYesNo:
 					bu_Okay .Text = "yes";
 					bu_Retry.Text = "no";
-					goto case InfoboxResults.CancelOkayRetry;
+					goto case InfoboxButtons.CancelOkayRetry;
 			}
 
 
@@ -340,4 +333,13 @@ namespace DSShared
 		}
 		#endregion Methods (static)
 	}
+
+
+	#region Enums (public)
+	public enum InfoboxType
+	{ Info, Warn, Error }
+
+	public enum InfoboxButtons
+	{ Cancel, CancelOkay, CancelOkayRetry, CancelYesNo }
+	#endregion Enums (public)
 }
