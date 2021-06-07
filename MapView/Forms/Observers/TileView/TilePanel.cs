@@ -21,7 +21,8 @@ namespace MapView.Forms.Observers
 		:
 			BufferedPanel
 	{
-		#region IDisposable inherited
+		#region IDisposable interface
+		// https://www.codeproject.com/articles/29534/idisposable-what-your-mother-never-told-you-about
 		// https://dave-black.blogspot.com/2011/03/how-do-you-properly-implement.html
 
 		/// <summary>
@@ -42,28 +43,29 @@ namespace MapView.Forms.Observers
 		// means - not to mention wtf a "native resource" is.
 		//
 		// Dave Black, who has been working professionally with low-level C#,
-		// specializing in and trouble-shooting disposal, for 15 years can't
-		// describe what to do accurately (although he sounds like he does). The
-		// wiser folks who are really on .NET have learned, rather, to keep
-		// their mouths shut.
+		// specializing in and trouble-shooting disposal for 15 years, can't
+		// describe what to do accurately (although he tries to sound like he
+		// does). The wiser folks who are on .NET have learned, rather, to just
+		// keep their mouths shut.
 		//
-		// To be honest, the only practical reason I can see for overriding
+		// To be honest, the only categorical reason I can see for overriding
 		// Dispose(bool) is so that objects can be instantiated then disposed
 		// with a using() statement. But MapView doesn't really do that pattern
-		// for major objects like viewers and their controls.
+		// for major objects like the viewers and their controls.
 		//
-		// And it doesn't have to: just write and call a function
+		// And it doesn't have to: because just write and call a function like
 		//   DisposeObject()
 		//   FreeResources()
 		//   ReleaseHandles()
 		//   DestroyStuff()
 		//   whatever()
 		//
-		// That is bypass their fuckin "pattern" wherever possible.
+		// That is bypass their confusing-as-fuck "pattern" wherever possible.
 		//
-		// Treat c#/.net like an 'unmanaged' language. If you new it
-		// it's your responsibility to decide whether, when, where, and how to
-		// dispose it.
+		// Treat c#/.net like an 'unmanaged' language. If you new it it's your
+		// responsibility to decide whether, when, where, and how to dispose it.
+		//
+		// And congratulate yourself that no one is going to notice ...
 
 		/// <summary>
 		/// Overloaded Implementation of Dispose.
@@ -135,7 +137,7 @@ namespace MapView.Forms.Observers
 				base.Dispose(disposing);
 			}
 		}
-		#endregion IDisposable inherited
+		#endregion IDisposable interface
 
 
 		internal delegate void TilepartSelectedEvent(Tilepart part);
@@ -183,30 +185,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		private int TableHeight
-		{
-			get // TODO: calculate and cache this value in the OnResize and loading events.
-			{
-				if (_parts != null && _parts.Length != 0)
-				{
-					_tilesX = (Width - TableOffset - _scrollBar.Width - 1) / SpriteWidth;	// reserve width for the scrollbar.
-					if (_tilesX != 0)														// <- happens when minimizing the TileView form.
-					{																		// NOTE: that could be intercepted and disallowed w/
-						if (_tilesX > _parts.Length)										// 'if (WindowState != FormWindowState.Minimized)'
-							_tilesX = _parts.Length;										// in the OnResize().
-
-						int extra = 0;
-						if (_parts.Length % _tilesX != 0)
-							extra = 1;
-
-						return (_parts.Length / _tilesX + extra) * SpriteHeight + TableOffset;
-					}
-				}
-				_tilesX = 1;
-				return 0;
-			}
-		}
-
 		/// <summary>
 		/// Gets the selected-tilepart.
 		/// Sets the selected-tilepart when a valid QuadrantControl quad is
@@ -330,6 +308,8 @@ namespace MapView.Forms.Observers
 		{
 			base.OnResize(eventargs);
 
+			int height = GetTableHeight();
+
 			int range = 0;
 			if (_parts != null && _parts.Length != 0)
 			{
@@ -339,7 +319,7 @@ namespace MapView.Forms.Observers
 					_scrollBar.Value = 0;
 				}
 
-				range = TableHeight + _largeChange - Height;
+				range = height + _largeChange - Height;
 				if (range < _largeChange)
 					range = 0;
 			}
@@ -347,7 +327,7 @@ namespace MapView.Forms.Observers
 			_scrollBar.Visible = range != 0;
 
 			if (_scrollBar.Visible
-				&& TableHeight - _scrollBar.Value < Height)
+				&& height - _scrollBar.Value < Height)
 			{
 				_scrollBar.Value = _scrollBar.Maximum - _largeChange - 1 + TableOffset;
 			}
@@ -693,7 +673,7 @@ namespace MapView.Forms.Observers
 									TableOffset + _startY - 1,
 									1,1); // so bite me.
 
-				int height = TableHeight;
+				int height = GetTableHeight();
 
 				for (int i = 0; i <= _tilesX; ++i)								// draw vertical lines
 					graphics.DrawLine(
@@ -764,6 +744,33 @@ namespace MapView.Forms.Observers
 
 			_resetTrack = true;
 			OnResize(null);
+		}
+
+		/// <summary>
+		/// Gets the total height required for the tile-table.
+		/// </summary>
+		/// <returns></returns>
+		/// <remarks>TODO: calculate and cache this value in the OnResize and
+		/// loading events.</remarks>
+		private int GetTableHeight()
+		{
+			if (_parts != null && _parts.Length != 0)
+			{
+				_tilesX = (Width - TableOffset - _scrollBar.Width - 1) / SpriteWidth;	// reserve width for the scrollbar.
+				if (_tilesX != 0)														// <- happens when minimizing the TileView form.
+				{																		// NOTE: that could be intercepted and disallowed w/
+					if (_tilesX > _parts.Length)										// 'if (WindowState != FormWindowState.Minimized)'
+						_tilesX = _parts.Length;										// in the OnResize().
+
+					int extra = 0;
+					if (_parts.Length % _tilesX != 0)
+						extra = 1;
+
+					return (_parts.Length / _tilesX + extra) * SpriteHeight + TableOffset;
+				}
+			}
+			_tilesX = 1;
+			return 0;
 		}
 
 		/// <summary>
