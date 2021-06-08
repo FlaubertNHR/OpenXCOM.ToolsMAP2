@@ -824,11 +824,11 @@ namespace MapView.Forms.Observers
 
 				switch (slot)
 				{
-					case 0: tb_Link1Dist.Text = distance; break;
-					case 1: tb_Link2Dist.Text = distance; break;
-					case 2: tb_Link3Dist.Text = distance; break;
-					case 3: tb_Link4Dist.Text = distance; break;
-					case 4: tb_Link5Dist.Text = distance; break;
+					case 0: la_Link1Dist.Text = distance; break;
+					case 1: la_Link2Dist.Text = distance; break;
+					case 2: la_Link3Dist.Text = distance; break;
+					case 3: la_Link4Dist.Text = distance; break;
+					case 4: la_Link5Dist.Text = distance; break;
 				}
 			}
 
@@ -911,11 +911,11 @@ namespace MapView.Forms.Observers
 				co_Link4UnitType.SelectedItem =
 				co_Link5UnitType.SelectedItem = UnitType.Any;
 
-				tb_Link1Dist.Text =
-				tb_Link2Dist.Text =
-				tb_Link3Dist.Text =
-				tb_Link4Dist.Text =
-				tb_Link5Dist.Text = String.Empty;
+				la_Link1Dist.Text =
+				la_Link2Dist.Text =
+				la_Link3Dist.Text =
+				la_Link4Dist.Text =
+				la_Link5Dist.Text = String.Empty;
 
 				la_Link1.ForeColor =
 				la_Link2.ForeColor =
@@ -965,10 +965,10 @@ namespace MapView.Forms.Observers
 				co_Link5Dest.Items.AddRange(linkListArray);
 
 
-				ComboBox co_TypL, co_Dest;
-				TextBox tb_Dist;
-				Button bu_Go;
-				Label la_Text;
+				ComboBox co_unit, co_dest;
+				Label la_dist;
+				Button bu_go;
+				Label la_text;
 
 				Link link;
 				byte dest;
@@ -978,60 +978,60 @@ namespace MapView.Forms.Observers
 					switch (slot)
 					{
 						case 0:
-							co_TypL = co_Link1UnitType;
-							co_Dest = co_Link1Dest;
-							tb_Dist = tb_Link1Dist;
-							bu_Go   = bu_GoLink1;
-							la_Text = la_Link1;
+							co_unit = co_Link1UnitType;
+							co_dest = co_Link1Dest;
+							la_dist = la_Link1Dist;
+							bu_go   = bu_GoLink1;
+							la_text = la_Link1;
 							break;
 
 						case 1:
-							co_TypL = co_Link2UnitType;
-							co_Dest = co_Link2Dest;
-							tb_Dist = tb_Link2Dist;
-							bu_Go   = bu_GoLink2;
-							la_Text = la_Link2;
+							co_unit = co_Link2UnitType;
+							co_dest = co_Link2Dest;
+							la_dist = la_Link2Dist;
+							bu_go   = bu_GoLink2;
+							la_text = la_Link2;
 							break;
 
 						case 2:
-							co_TypL = co_Link3UnitType;
-							co_Dest = co_Link3Dest;
-							tb_Dist = tb_Link3Dist;
-							bu_Go   = bu_GoLink3;
-							la_Text = la_Link3;
+							co_unit = co_Link3UnitType;
+							co_dest = co_Link3Dest;
+							la_dist = la_Link3Dist;
+							bu_go   = bu_GoLink3;
+							la_text = la_Link3;
 							break;
 
 						case 3:
-							co_TypL = co_Link4UnitType;
-							co_Dest = co_Link4Dest;
-							tb_Dist = tb_Link4Dist;
-							bu_Go   = bu_GoLink4;
-							la_Text = la_Link4;
+							co_unit = co_Link4UnitType;
+							co_dest = co_Link4Dest;
+							la_dist = la_Link4Dist;
+							bu_go   = bu_GoLink4;
+							la_text = la_Link4;
 							break;
 
 						default: // case 4
-							co_TypL = co_Link5UnitType;
-							co_Dest = co_Link5Dest;
-							tb_Dist = tb_Link5Dist;
-							bu_Go   = bu_GoLink5;
-							la_Text = la_Link5;
+							co_unit = co_Link5UnitType;
+							co_dest = co_Link5Dest;
+							la_dist = la_Link5Dist;
+							bu_go   = bu_GoLink5;
+							la_text = la_Link5;
 							break;
 					}
 
 					link = NodeSelected[slot];
 
-					co_TypL.SelectedItem = link.Unit;
-					bu_Go.Enabled = link.IsNodelink();
+					co_unit.SelectedItem = link.Unit;
+					bu_go.Enabled = link.IsNodelink();
 
 					dest = link.Destination;
 					if (link.IsUsed())
 					{
-						bu_Go  .Text = Go;
-						tb_Dist.Text = link.Distance + GetDistanceArrow(slot);
+						bu_go  .Text = Go;
+						la_dist.Text = link.Distance + GetDistanceArrow(slot);
 
 						if (link.IsNodelink())
 						{
-							co_Dest.SelectedItem = dest;
+							co_dest.SelectedItem = dest;
 
 							if (RouteNodes.OutsideMapBounds(
 														MapFile.Routes[dest],
@@ -1039,23 +1039,23 @@ namespace MapView.Forms.Observers
 														MapFile.Rows,
 														MapFile.Levs))
 							{
-								la_Text.ForeColor = Color.Chocolate;
+								la_text.ForeColor = Color.Chocolate;
 							}
 							else
-								la_Text.ForeColor = SystemColors.ControlText;
+								la_text.ForeColor = SystemColors.ControlText;
 						}
 						else
 						{
-							co_Dest.SelectedItem = (LinkType)dest;
-							la_Text.ForeColor = SystemColors.ControlText;
+							co_dest.SelectedItem = (LinkType)dest;
+							la_text.ForeColor = SystemColors.ControlText;
 						}
 					}
 					else
 					{
-						bu_Go  .Text =
-						tb_Dist.Text = String.Empty;
-						co_Dest.SelectedItem = (LinkType)dest;
-						la_Text.ForeColor = SystemColors.ControlText;
+						bu_go  .Text =
+						la_dist.Text = String.Empty;
+						co_dest.SelectedItem = (LinkType)dest;
+						la_text.ForeColor = SystemColors.ControlText;
 					}
 				}
 			}
@@ -1233,39 +1233,39 @@ namespace MapView.Forms.Observers
 				RoutesChangedCoordinator = true;
 
 				int slot;
-				TextBox tb;
-				Button bu_Go;
+				Label la_dist;
+				Button bu_go;
 
 				var co = sender as ComboBox;
 				if (co == co_Link1Dest)
 				{
-					slot  = 0;
-					tb    = tb_Link1Dist;
-					bu_Go = bu_GoLink1;
+					slot    = 0;
+					la_dist = la_Link1Dist;
+					bu_go   = bu_GoLink1;
 				}
 				else if (co == co_Link2Dest)
 				{
-					slot  = 1;
-					tb    = tb_Link2Dist;
-					bu_Go = bu_GoLink2;
+					slot    = 1;
+					la_dist = la_Link2Dist;
+					bu_go   = bu_GoLink2;
 				}
 				else if (co == co_Link3Dest)
 				{
-					slot  = 2;
-					tb    = tb_Link3Dist;
-					bu_Go = bu_GoLink3;
+					slot    = 2;
+					la_dist = la_Link3Dist;
+					bu_go   = bu_GoLink3;
 				}
 				else if (co == co_Link4Dest)
 				{
-					slot  = 3;
-					tb    = tb_Link4Dist;
-					bu_Go = bu_GoLink4;
+					slot    = 3;
+					la_dist = la_Link4Dist;
+					bu_go   = bu_GoLink4;
 				}
 				else //if (co == co_Link5Dest)
 				{
-					slot  = 4;
-					tb    = tb_Link5Dist;
-					bu_Go = bu_GoLink5;
+					slot    = 4;
+					la_dist = la_Link5Dist;
+					bu_go   = bu_GoLink5;
 				}
 
 				var dest = co.SelectedItem as byte?; // check for id or compass pt/not used.
@@ -1280,7 +1280,7 @@ namespace MapView.Forms.Observers
 					case Link.NotUsed:
 						link.Unit = UnitType.Any;
 
-						tb.Text = String.Empty;
+						la_dist.Text = String.Empty;
 						link.Distance = 0;
 
 						enable =
@@ -1291,7 +1291,7 @@ namespace MapView.Forms.Observers
 					case Link.ExitNorth:
 					case Link.ExitEast:
 					case Link.ExitSouth:
-						tb.Text = "0";
+						la_dist.Text = "0";
 						link.Distance = 0;
 
 						enable = false;
@@ -1302,15 +1302,15 @@ namespace MapView.Forms.Observers
 						link.Distance = CalculateLinkDistance(
 															NodeSelected,
 															MapFile.Routes[link.Destination],
-															tb,
+															la_dist,
 															slot);
 						enable =
 						text   = true;
 						break;
 				}
 
-				bu_Go.Enabled = enable;
-				bu_Go.Text = text ? Go : String.Empty;
+				bu_go.Enabled = enable;
+				bu_go.Text = text ? Go : String.Empty;
 
 				RouteControl.SetSpot(new Point(-1,-1));
 
@@ -1319,18 +1319,18 @@ namespace MapView.Forms.Observers
 					ObserverManager.TopRouteView.ControlRoute.TransferDestination(
 																				slot,
 																				co.SelectedIndex,
-																				tb.Text,
+																				la_dist.Text,
 																				enable,
-																				bu_Go.Text);
+																				bu_go.Text);
 				}
 				else //if (Tag == "TOPROUTE")
 				{
 					ObserverManager.RouteView.Control.TransferDestination(
 																		slot,
 																		co.SelectedIndex,
-																		tb.Text,
+																		la_dist.Text,
 																		enable,
-																		bu_Go.Text);
+																		bu_go.Text);
 				}
 
 				RefreshControls();
@@ -1349,47 +1349,47 @@ namespace MapView.Forms.Observers
 		/// <param name="text">the Go button text</param>
 		private void TransferDestination(int slot, int dest, string dist, bool enable, string text)
 		{
-			ComboBox co_Dest;
-			TextBox tb_Dist;
-			Button bu_Go;
+			ComboBox co_dest;
+			Label la_dist;
+			Button bu_go;
 
 			switch (slot)
 			{
 				case 0:
-					co_Dest = co_Link1Dest;
-					tb_Dist = tb_Link1Dist;
-					bu_Go   = bu_GoLink1;
+					co_dest = co_Link1Dest;
+					la_dist = la_Link1Dist;
+					bu_go   = bu_GoLink1;
 					break;
 
 				case 1:
-					co_Dest = co_Link2Dest;
-					tb_Dist = tb_Link2Dist;
-					bu_Go   = bu_GoLink2;
+					co_dest = co_Link2Dest;
+					la_dist = la_Link2Dist;
+					bu_go   = bu_GoLink2;
 					break;
 
 				case 2:
-					co_Dest = co_Link3Dest;
-					tb_Dist = tb_Link3Dist;
-					bu_Go   = bu_GoLink3;
+					co_dest = co_Link3Dest;
+					la_dist = la_Link3Dist;
+					bu_go   = bu_GoLink3;
 					break;
 
 				case 3:
-					co_Dest = co_Link4Dest;
-					tb_Dist = tb_Link4Dist;
-					bu_Go   = bu_GoLink4;
+					co_dest = co_Link4Dest;
+					la_dist = la_Link4Dist;
+					bu_go   = bu_GoLink4;
 					break;
 
 				default: //case 4:
-					co_Dest = co_Link5Dest;
-					tb_Dist = tb_Link5Dist;
-					bu_Go   = bu_GoLink5;
+					co_dest = co_Link5Dest;
+					la_dist = la_Link5Dist;
+					bu_go   = bu_GoLink5;
 					break;
 			}
 
-			co_Dest.SelectedIndex = dest;
-			tb_Dist.Text          = dist;
-			bu_Go.Enabled         = enable;
-			bu_Go.Text            = text;
+			co_dest.SelectedIndex = dest;
+			la_dist.Text          = dist;
+			bu_go.Enabled         = enable;
+			bu_go.Text            = text;
 		}
 
 		/// <summary>

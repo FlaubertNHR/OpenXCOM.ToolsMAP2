@@ -74,11 +74,11 @@ namespace MapView.Forms.Observers
 		private ComboBox co_Link3UnitType;
 		private ComboBox co_Link4UnitType;
 		private ComboBox co_Link5UnitType;
-		private TextBox tb_Link1Dist;
-		private TextBox tb_Link2Dist;
-		private TextBox tb_Link3Dist;
-		private TextBox tb_Link4Dist;
-		private TextBox tb_Link5Dist;
+		private Label la_Link1Dist;
+		private Label la_Link2Dist;
+		private Label la_Link3Dist;
+		private Label la_Link4Dist;
+		private Label la_Link5Dist;
 		private Button bu_GoLink1;
 		private Button bu_GoLink2;
 		private Button bu_GoLink3;
@@ -174,11 +174,11 @@ namespace MapView.Forms.Observers
 			this.co_Link3UnitType = new System.Windows.Forms.ComboBox();
 			this.co_Link4UnitType = new System.Windows.Forms.ComboBox();
 			this.co_Link5UnitType = new System.Windows.Forms.ComboBox();
-			this.tb_Link1Dist = new System.Windows.Forms.TextBox();
-			this.tb_Link2Dist = new System.Windows.Forms.TextBox();
-			this.tb_Link3Dist = new System.Windows.Forms.TextBox();
-			this.tb_Link4Dist = new System.Windows.Forms.TextBox();
-			this.tb_Link5Dist = new System.Windows.Forms.TextBox();
+			this.la_Link1Dist = new System.Windows.Forms.Label();
+			this.la_Link2Dist = new System.Windows.Forms.Label();
+			this.la_Link3Dist = new System.Windows.Forms.Label();
+			this.la_Link4Dist = new System.Windows.Forms.Label();
+			this.la_Link5Dist = new System.Windows.Forms.Label();
 			this.bu_GoLink1 = new System.Windows.Forms.Button();
 			this.bu_GoLink2 = new System.Windows.Forms.Button();
 			this.bu_GoLink3 = new System.Windows.Forms.Button();
@@ -616,11 +616,11 @@ namespace MapView.Forms.Observers
 			this.gb_LinkData.Controls.Add(this.co_Link3UnitType);
 			this.gb_LinkData.Controls.Add(this.co_Link4UnitType);
 			this.gb_LinkData.Controls.Add(this.co_Link5UnitType);
-			this.gb_LinkData.Controls.Add(this.tb_Link1Dist);
-			this.gb_LinkData.Controls.Add(this.tb_Link2Dist);
-			this.gb_LinkData.Controls.Add(this.tb_Link3Dist);
-			this.gb_LinkData.Controls.Add(this.tb_Link4Dist);
-			this.gb_LinkData.Controls.Add(this.tb_Link5Dist);
+			this.gb_LinkData.Controls.Add(this.la_Link1Dist);
+			this.gb_LinkData.Controls.Add(this.la_Link2Dist);
+			this.gb_LinkData.Controls.Add(this.la_Link3Dist);
+			this.gb_LinkData.Controls.Add(this.la_Link4Dist);
+			this.gb_LinkData.Controls.Add(this.la_Link5Dist);
 			this.gb_LinkData.Controls.Add(this.bu_GoLink1);
 			this.gb_LinkData.Controls.Add(this.bu_GoLink2);
 			this.gb_LinkData.Controls.Add(this.bu_GoLink3);
@@ -853,70 +853,65 @@ namespace MapView.Forms.Observers
 			this.co_Link5UnitType.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			this.co_Link5UnitType.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
 			// 
-			// tb_Link1Dist
+			// la_Link1Dist
 			// 
-			this.tb_Link1Dist.Location = new System.Drawing.Point(215, 25);
-			this.tb_Link1Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tb_Link1Dist.Name = "tb_Link1Dist";
-			this.tb_Link1Dist.ReadOnly = true;
-			this.tb_Link1Dist.Size = new System.Drawing.Size(35, 19);
-			this.tb_Link1Dist.TabIndex = 6;
-			this.tb_Link1Dist.Tag = "L1";
-			this.tb_Link1Dist.WordWrap = false;
-			this.tb_Link1Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tb_Link1Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.la_Link1Dist.Location = new System.Drawing.Point(220, 25);
+			this.la_Link1Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Link1Dist.Name = "la_Link1Dist";
+			this.la_Link1Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link1Dist.TabIndex = 6;
+			this.la_Link1Dist.Tag = "L1";
+			this.la_Link1Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Link1Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.la_Link1Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// tb_Link2Dist
+			// la_Link2Dist
 			// 
-			this.tb_Link2Dist.Location = new System.Drawing.Point(215, 50);
-			this.tb_Link2Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tb_Link2Dist.Name = "tb_Link2Dist";
-			this.tb_Link2Dist.ReadOnly = true;
-			this.tb_Link2Dist.Size = new System.Drawing.Size(35, 19);
-			this.tb_Link2Dist.TabIndex = 11;
-			this.tb_Link2Dist.Tag = "L2";
-			this.tb_Link2Dist.WordWrap = false;
-			this.tb_Link2Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tb_Link2Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.la_Link2Dist.Location = new System.Drawing.Point(220, 50);
+			this.la_Link2Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Link2Dist.Name = "la_Link2Dist";
+			this.la_Link2Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link2Dist.TabIndex = 11;
+			this.la_Link2Dist.Tag = "L2";
+			this.la_Link2Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Link2Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.la_Link2Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// tb_Link3Dist
+			// la_Link3Dist
 			// 
-			this.tb_Link3Dist.Location = new System.Drawing.Point(215, 75);
-			this.tb_Link3Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tb_Link3Dist.Name = "tb_Link3Dist";
-			this.tb_Link3Dist.ReadOnly = true;
-			this.tb_Link3Dist.Size = new System.Drawing.Size(35, 19);
-			this.tb_Link3Dist.TabIndex = 16;
-			this.tb_Link3Dist.Tag = "L3";
-			this.tb_Link3Dist.WordWrap = false;
-			this.tb_Link3Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tb_Link3Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.la_Link3Dist.Location = new System.Drawing.Point(220, 75);
+			this.la_Link3Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Link3Dist.Name = "la_Link3Dist";
+			this.la_Link3Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link3Dist.TabIndex = 16;
+			this.la_Link3Dist.Tag = "L3";
+			this.la_Link3Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Link3Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.la_Link3Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// tb_Link4Dist
+			// la_Link4Dist
 			// 
-			this.tb_Link4Dist.Location = new System.Drawing.Point(215, 100);
-			this.tb_Link4Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tb_Link4Dist.Name = "tb_Link4Dist";
-			this.tb_Link4Dist.ReadOnly = true;
-			this.tb_Link4Dist.Size = new System.Drawing.Size(35, 19);
-			this.tb_Link4Dist.TabIndex = 21;
-			this.tb_Link4Dist.Tag = "L4";
-			this.tb_Link4Dist.WordWrap = false;
-			this.tb_Link4Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tb_Link4Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.la_Link4Dist.Location = new System.Drawing.Point(220, 100);
+			this.la_Link4Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Link4Dist.Name = "la_Link4Dist";
+			this.la_Link4Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link4Dist.TabIndex = 21;
+			this.la_Link4Dist.Tag = "L4";
+			this.la_Link4Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Link4Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.la_Link4Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// tb_Link5Dist
+			// la_Link5Dist
 			// 
-			this.tb_Link5Dist.Location = new System.Drawing.Point(215, 125);
-			this.tb_Link5Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tb_Link5Dist.Name = "tb_Link5Dist";
-			this.tb_Link5Dist.ReadOnly = true;
-			this.tb_Link5Dist.Size = new System.Drawing.Size(35, 19);
-			this.tb_Link5Dist.TabIndex = 26;
-			this.tb_Link5Dist.Tag = "L5";
-			this.tb_Link5Dist.WordWrap = false;
-			this.tb_Link5Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tb_Link5Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.la_Link5Dist.Location = new System.Drawing.Point(220, 125);
+			this.la_Link5Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.la_Link5Dist.Name = "la_Link5Dist";
+			this.la_Link5Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link5Dist.TabIndex = 26;
+			this.la_Link5Dist.Tag = "L5";
+			this.la_Link5Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.la_Link5Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.la_Link5Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
 			// bu_GoLink1
 			// 
@@ -1116,7 +1111,6 @@ namespace MapView.Forms.Observers
 			this.gb_NodeData.ResumeLayout(false);
 			this.gb_TileData.ResumeLayout(false);
 			this.gb_LinkData.ResumeLayout(false);
-			this.gb_LinkData.PerformLayout();
 			this.gb_NodeEditor.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
