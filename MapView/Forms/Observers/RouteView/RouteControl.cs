@@ -139,6 +139,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal RouteControl()
 		{
+			Dock = DockStyle.Fill;
 			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;
 		}
 		#endregion cTor

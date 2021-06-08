@@ -105,12 +105,12 @@ namespace MapView.Forms.Observers
 
 				if (_file != null)
 				{
-					cbRank.Items.Clear();
+					co_Rank.Items.Clear();
 
 					if (_file.Descriptor.GroupType == GameType.Tftd)
-						cbRank.Items.AddRange(RouteNodes.RankTftd);
+						co_Rank.Items.AddRange(RouteNodes.RankTftd);
 					else
-						cbRank.Items.AddRange(RouteNodes.RankUfo);
+						co_Rank.Items.AddRange(RouteNodes.RankUfo);
 
 					UpdateNodeInformation();
 				}
@@ -185,7 +185,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private bool RoutesChanged // TODO: static
 		{
-			set { btnSave.Enabled = (_file.RoutesChanged = value); }
+			set { bu_Save.Enabled = (_file.RoutesChanged = value); }
 		}
 		#endregion Properties
 
@@ -203,7 +203,6 @@ namespace MapView.Forms.Observers
 			InitializeComponent();
 
 			RouteControl = new RouteControl();
-			RouteControl.Dock = DockStyle.Fill;
 			RouteControl.RouteControlMouseDownEvent += OnRouteControlMouseDown;
 			RouteControl.RouteControlMouseUpEvent   += OnRouteControlMouseUp;
 			RouteControl.MouseMove                  += OnRouteControlMouseMove;
@@ -220,18 +219,18 @@ namespace MapView.Forms.Observers
 				UnitType.FlyingSmall,
 				UnitType.FlyingLarge
 			};
-			cbType.Items.AddRange(unitTypes);
+			co_Type.Items.AddRange(unitTypes);
 
-			cbSpawn .Items.AddRange(RouteNodes.Spawn);
-			cbPatrol.Items.AddRange(RouteNodes.Patrol);
-			cbAttack.Items.AddRange(RouteNodes.Attack);
+			co_Spawn .Items.AddRange(RouteNodes.Spawn);
+			co_Patrol.Items.AddRange(RouteNodes.Patrol);
+			co_Attack.Items.AddRange(RouteNodes.Attack);
 
 			// link data ->
-			cbLink1UnitType.Items.AddRange(unitTypes);
-			cbLink2UnitType.Items.AddRange(unitTypes);
-			cbLink3UnitType.Items.AddRange(unitTypes);
-			cbLink4UnitType.Items.AddRange(unitTypes);
-			cbLink5UnitType.Items.AddRange(unitTypes);
+			co_Link1UnitType.Items.AddRange(unitTypes);
+			co_Link2UnitType.Items.AddRange(unitTypes);
+			co_Link3UnitType.Items.AddRange(unitTypes);
+			co_Link4UnitType.Items.AddRange(unitTypes);
+			co_Link5UnitType.Items.AddRange(unitTypes);
 
 			// TODO: change the distance textboxes to labels.
 
@@ -305,7 +304,7 @@ namespace MapView.Forms.Observers
 						color = Optionables.NodeSpawnColor;
 				}
 
-				lblOver.ForeColor = color;
+				la_Over.ForeColor = color;
 
 				PrintOverInfo(id);
 			}
@@ -324,7 +323,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void ClearOveredInfo()
 		{
-			lblOver.Text = String.Empty;
+			la_Over.Text = String.Empty;
 		}
 
 		/// <summary>
@@ -332,7 +331,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void ClearSelectedInfo()
 		{
-			lblSelected.Text = String.Empty;
+			la_Selected.Text = String.Empty;
 		}
 
 		/// <summary>
@@ -349,8 +348,8 @@ namespace MapView.Forms.Observers
 			else
 				color = Optionables.NodeSelectedColor;
 
-			ObserverManager.RouteView   .Control     .lblSelected.ForeColor =
-			ObserverManager.TopRouteView.ControlRoute.lblSelected.ForeColor = color;
+			ObserverManager.RouteView   .Control     .la_Selected.ForeColor =
+			ObserverManager.TopRouteView.ControlRoute.la_Selected.ForeColor = color;
 		}
 
 		/// <summary>
@@ -376,7 +375,7 @@ namespace MapView.Forms.Observers
 				else
 					color = Optionables.NodeSpawnColor;
 
-				lblOver.ForeColor = color; // set color in the overed viewer only.
+				la_Over.ForeColor = color; // set color in the overed viewer only.
 			}
 		}
 
@@ -408,7 +407,7 @@ namespace MapView.Forms.Observers
 						color = Optionables.NodeSpawnColor;
 				}
 
-				lblOver.ForeColor = color;
+				la_Over.ForeColor = color;
 
 				PrintOverInfo(id);
 			}
@@ -442,8 +441,8 @@ namespace MapView.Forms.Observers
 				info += "c " + c + "  r " + r + "  L " + l;
 			}
 
-			ObserverManager.RouteView   .Control     .lblOver.Text =
-			ObserverManager.TopRouteView.ControlRoute.lblOver.Text = info;
+			ObserverManager.RouteView   .Control     .la_Over.Text =
+			ObserverManager.TopRouteView.ControlRoute.la_Over.Text = info;
 		}
 
 		/// <summary>
@@ -460,13 +459,13 @@ namespace MapView.Forms.Observers
 
 				if (NodeSelected == null)
 				{
-					info = String.Empty;
+					info  = String.Empty;
 					level = MapFile.Level;
 					color = SystemColors.ControlText;
 				}
 				else
 				{
-					info = "Selected " + NodeSelected.Id;
+					info  = "Selected " + NodeSelected.Id;
 					level = NodeSelected.Lev;
 					color = Optionables.NodeSelectedColor;
 				}
@@ -482,9 +481,9 @@ namespace MapView.Forms.Observers
 
 				info += "c " + c + "  r " + r + "  L " + l;
 
-				lblSelected.ForeColor = color;
-				lblSelected.Text = info;
-				lblSelected.Refresh(); // fast update.
+				la_Selected.ForeColor = color;
+				la_Selected.Text = info;
+				la_Selected.Refresh(); // fast update.
 			}
 		}
 		#endregion Methods (print TileData)
@@ -598,14 +597,12 @@ namespace MapView.Forms.Observers
 		/// <param name="args"></param>
 		internal void OnRouteControlMouseMove(object sender, MouseEventArgs args)
 		{
-			//LogFile.WriteLine("RouteView.OnRouteControlMouseMove()");
-
 			RouteControl.SetOver(new Point(args.X, args.Y));
 
 			SetInfoOverText();
 
-			ObserverManager.RouteView   .Control     .lblOver.Refresh(); // fast update. // NOTE: Only RouteView not TopRouteView(Route)
-			ObserverManager.TopRouteView.ControlRoute.lblOver.Refresh(); // fast update. // wants fast update. go figure
+			ObserverManager.RouteView   .Control     .la_Over.Refresh(); // fast update. // NOTE: Only RouteView not TopRouteView(Route)
+			ObserverManager.TopRouteView.ControlRoute.la_Over.Refresh(); // fast update. // wants fast update. go figure
 
 			// TODO: if (MainView.Optionables.ShowOverlay)
 			RefreshPanels(); // fast update. (else the InfoOverlay on RouteView but not TopRouteView(Route) gets sticky - go figur)
@@ -729,40 +726,44 @@ namespace MapView.Forms.Observers
 		}
 
 
+		/// <summary>
+		/// Enables/disables the node-editor buttons as well as the ClearLinks
+		/// it.
+		/// </summary>
 		private static void EnableEditButtons()
 		{
 			bool valid = (NodeSelected != null);
 
-			ObserverManager.RouteView   .Control     .tsmiClearLinkData.Enabled =
-			ObserverManager.TopRouteView.ControlRoute.tsmiClearLinkData.Enabled =
+			ObserverManager.RouteView   .Control     .tsmi_ClearLinks.Enabled =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_ClearLinks.Enabled =
 
-			ObserverManager.RouteView   .Control     .btnCut           .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnCut           .Enabled =
+			ObserverManager.RouteView   .Control     .bu_Cut         .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Cut         .Enabled =
 
-			ObserverManager.RouteView   .Control     .btnCopy          .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnCopy          .Enabled =
+			ObserverManager.RouteView   .Control     .bu_Copy        .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Copy        .Enabled =
 
-			ObserverManager.RouteView   .Control     .btnDelete        .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnDelete        .Enabled = valid;
+			ObserverManager.RouteView   .Control     .bu_Delete      .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Delete      .Enabled = valid;
 
 			valid = valid && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
 
-			ObserverManager.RouteView   .Control     .btnPaste         .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnPaste         .Enabled = valid;
+			ObserverManager.RouteView   .Control     .bu_Paste       .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Paste       .Enabled = valid;
 		}
 
 
 		/// <summary>
 		/// Updates distances to and from the currently selected node.
-		/// @note NodeSelected must be valid before call.
 		/// </summary>
+		/// <remarks>NodeSelected must be valid before call.</remarks>
 		private void UpdateLinkDistances()
 		{
 			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // update distances to selected node's linked nodes ->
 			{
 				string distance;
 
-				var link = NodeSelected[slot];
+				Link link = NodeSelected[slot];
 				switch (link.Destination)
 				{
 					case Link.NotUsed: // NOTE: Should not change; is here to help keep distances consistent.
@@ -788,11 +789,11 @@ namespace MapView.Forms.Observers
 
 				switch (slot)
 				{
-					case 0: tbLink1Dist.Text = distance; break;
-					case 1: tbLink2Dist.Text = distance; break;
-					case 2: tbLink3Dist.Text = distance; break;
-					case 3: tbLink4Dist.Text = distance; break;
-					case 4: tbLink5Dist.Text = distance; break;
+					case 0: tb_Link1Dist.Text = distance; break;
+					case 1: tb_Link2Dist.Text = distance; break;
+					case 2: tb_Link3Dist.Text = distance; break;
+					case 3: tb_Link4Dist.Text = distance; break;
+					case 4: tb_Link5Dist.Text = distance; break;
 				}
 			}
 
@@ -830,85 +831,85 @@ namespace MapView.Forms.Observers
 
 			if (NodeSelected == null)
 			{
-				btnCut      .Enabled =
-				btnCopy     .Enabled =
-				btnPaste    .Enabled =
-				btnDelete   .Enabled =
+				bu_Cut       .Enabled =
+				bu_Copy      .Enabled =
+				bu_Paste     .Enabled =
+				bu_Delete    .Enabled =
 
-				gbNodeData  .Enabled =
-				gbLinkData  .Enabled =
-				gbNodeEditor.Enabled =
+				gb_NodeData  .Enabled =
+				gb_LinkData  .Enabled =
+				gb_NodeEditor.Enabled =
 
-				btnGoLink1  .Enabled =
-				btnGoLink2  .Enabled =
-				btnGoLink3  .Enabled =
-				btnGoLink4  .Enabled =
-				btnGoLink5  .Enabled = false;
+				bu_GoLink1   .Enabled =
+				bu_GoLink2   .Enabled =
+				bu_GoLink3   .Enabled =
+				bu_GoLink4   .Enabled =
+				bu_GoLink5   .Enabled = false;
 
-				btnGoLink1.Text =
-				btnGoLink2.Text =
-				btnGoLink3.Text =
-				btnGoLink4.Text =
-				btnGoLink5.Text = String.Empty;
+				bu_GoLink1.Text =
+				bu_GoLink2.Text =
+				bu_GoLink3.Text =
+				bu_GoLink4.Text =
+				bu_GoLink5.Text = String.Empty;
 
 
-				cbType.SelectedItem = UnitType.Any;
+				co_Type.SelectedItem = UnitType.Any;
 
 				if (_file.Descriptor.GroupType == GameType.Tftd)
-					cbRank.SelectedItem = RouteNodes.RankTftd[0];	//(byte)NodeRankTftd.CivScout
+					co_Rank.SelectedItem = RouteNodes.RankTftd[0];	//(byte)NodeRankTftd.CivScout
 				else
-					cbRank.SelectedItem = RouteNodes.RankUfo [0];	//(byte)NodeRankUfo.CivScout
+					co_Rank.SelectedItem = RouteNodes.RankUfo [0];	//(byte)NodeRankUfo.CivScout
 
-				cbSpawn .SelectedItem = RouteNodes.Spawn [0];		//(byte)SpawnWeight.None
-				cbPatrol.SelectedItem = RouteNodes.Patrol[0];		//(byte)PatrolPriority.Zero
-				cbAttack.SelectedItem = RouteNodes.Attack[0];		//(byte)AttackBase.Zero
+				co_Spawn .SelectedItem = RouteNodes.Spawn [0];		//(byte)SpawnWeight.None
+				co_Patrol.SelectedItem = RouteNodes.Patrol[0];		//(byte)PatrolPriority.Zero
+				co_Attack.SelectedItem = RouteNodes.Attack[0];		//(byte)AttackBase.Zero
 
-				cbLink1Dest.SelectedItem = // TODO: figure out why these show blank and not "NotUsed"
-				cbLink2Dest.SelectedItem = // when the app loads its very first Map.
-				cbLink3Dest.SelectedItem =
-				cbLink4Dest.SelectedItem =
-				cbLink5Dest.SelectedItem = LinkType.NotUsed;
+				co_Link1Dest.SelectedItem = // TODO: figure out why these show blank and not "NotUsed"
+				co_Link2Dest.SelectedItem = // when the app loads its very first Map.
+				co_Link3Dest.SelectedItem =
+				co_Link4Dest.SelectedItem =
+				co_Link5Dest.SelectedItem = LinkType.NotUsed;
 
-				cbLink1UnitType.SelectedItem =
-				cbLink2UnitType.SelectedItem =
-				cbLink3UnitType.SelectedItem =
-				cbLink4UnitType.SelectedItem =
-				cbLink5UnitType.SelectedItem = UnitType.Any;
+				co_Link1UnitType.SelectedItem =
+				co_Link2UnitType.SelectedItem =
+				co_Link3UnitType.SelectedItem =
+				co_Link4UnitType.SelectedItem =
+				co_Link5UnitType.SelectedItem = UnitType.Any;
 
-				tbLink1Dist.Text =
-				tbLink2Dist.Text =
-				tbLink3Dist.Text =
-				tbLink4Dist.Text =
-				tbLink5Dist.Text = String.Empty;
+				tb_Link1Dist.Text =
+				tb_Link2Dist.Text =
+				tb_Link3Dist.Text =
+				tb_Link4Dist.Text =
+				tb_Link5Dist.Text = String.Empty;
 
-				labelLink1.ForeColor =
-				labelLink2.ForeColor =
-				labelLink3.ForeColor =
-				labelLink4.ForeColor =
-				labelLink5.ForeColor = SystemColors.ControlText;
+				la_Link1.ForeColor =
+				la_Link2.ForeColor =
+				la_Link3.ForeColor =
+				la_Link4.ForeColor =
+				la_Link5.ForeColor = SystemColors.ControlText;
 			}
 			else // selected node is valid ->
 			{
-				gbNodeData  .Enabled =
-				gbLinkData  .Enabled =
-				gbNodeEditor.Enabled = true;
+				gb_NodeData  .Enabled =
+				gb_LinkData  .Enabled =
+				gb_NodeEditor.Enabled = true;
 
-				cbType.SelectedItem = NodeSelected.Unit;
+				co_Type.SelectedItem = NodeSelected.Unit;
 
 				if (_file.Descriptor.GroupType == GameType.Tftd)
-					cbRank.SelectedItem = RouteNodes.RankTftd[NodeSelected.Rank];
+					co_Rank.SelectedItem = RouteNodes.RankTftd[NodeSelected.Rank];
 				else
-					cbRank.SelectedItem = RouteNodes.RankUfo [NodeSelected.Rank];
+					co_Rank.SelectedItem = RouteNodes.RankUfo [NodeSelected.Rank];
 
-				cbSpawn .SelectedItem = RouteNodes.Spawn [(byte)NodeSelected.Spawn];
-				cbPatrol.SelectedItem = RouteNodes.Patrol[(byte)NodeSelected.Patrol];
-				cbAttack.SelectedItem = RouteNodes.Attack[(byte)NodeSelected.Attack];
+				co_Spawn .SelectedItem = RouteNodes.Spawn [(byte)NodeSelected.Spawn];
+				co_Patrol.SelectedItem = RouteNodes.Patrol[(byte)NodeSelected.Patrol];
+				co_Attack.SelectedItem = RouteNodes.Attack[(byte)NodeSelected.Attack];
 
-				cbLink1Dest.Items.Clear();
-				cbLink2Dest.Items.Clear();
-				cbLink3Dest.Items.Clear();
-				cbLink4Dest.Items.Clear();
-				cbLink5Dest.Items.Clear();
+				co_Link1Dest.Items.Clear();
+				co_Link2Dest.Items.Clear();
+				co_Link3Dest.Items.Clear();
+				co_Link4Dest.Items.Clear();
+				co_Link5Dest.Items.Clear();
 
 				_linksList.Clear();
 
@@ -922,17 +923,17 @@ namespace MapView.Forms.Observers
 
 				object[] linkListArray = _linksList.ToArray();
 
-				cbLink1Dest.Items.AddRange(linkListArray);
-				cbLink2Dest.Items.AddRange(linkListArray);
-				cbLink3Dest.Items.AddRange(linkListArray);
-				cbLink4Dest.Items.AddRange(linkListArray);
-				cbLink5Dest.Items.AddRange(linkListArray);
+				co_Link1Dest.Items.AddRange(linkListArray);
+				co_Link2Dest.Items.AddRange(linkListArray);
+				co_Link3Dest.Items.AddRange(linkListArray);
+				co_Link4Dest.Items.AddRange(linkListArray);
+				co_Link5Dest.Items.AddRange(linkListArray);
 
 
-				ComboBox cbTypL, cbDest;
-				TextBox tbDist;
-				Button btnGo;
-				Label lblText;
+				ComboBox co_TypL, co_Dest;
+				TextBox tb_Dist;
+				Button bu_Go;
+				Label la_Text;
 
 				Link link;
 				byte dest;
@@ -942,60 +943,60 @@ namespace MapView.Forms.Observers
 					switch (slot)
 					{
 						case 0:
-							cbTypL  = cbLink1UnitType;
-							cbDest  = cbLink1Dest;
-							tbDist  = tbLink1Dist;
-							btnGo   = btnGoLink1;
-							lblText = labelLink1;
+							co_TypL = co_Link1UnitType;
+							co_Dest = co_Link1Dest;
+							tb_Dist = tb_Link1Dist;
+							bu_Go   = bu_GoLink1;
+							la_Text = la_Link1;
 							break;
 
 						case 1:
-							cbTypL  = cbLink2UnitType;
-							cbDest  = cbLink2Dest;
-							tbDist  = tbLink2Dist;
-							btnGo   = btnGoLink2;
-							lblText = labelLink2;
+							co_TypL = co_Link2UnitType;
+							co_Dest = co_Link2Dest;
+							tb_Dist = tb_Link2Dist;
+							bu_Go   = bu_GoLink2;
+							la_Text = la_Link2;
 							break;
 
 						case 2:
-							cbTypL  = cbLink3UnitType;
-							cbDest  = cbLink3Dest;
-							tbDist  = tbLink3Dist;
-							btnGo   = btnGoLink3;
-							lblText = labelLink3;
+							co_TypL = co_Link3UnitType;
+							co_Dest = co_Link3Dest;
+							tb_Dist = tb_Link3Dist;
+							bu_Go   = bu_GoLink3;
+							la_Text = la_Link3;
 							break;
 
 						case 3:
-							cbTypL  = cbLink4UnitType;
-							cbDest  = cbLink4Dest;
-							tbDist  = tbLink4Dist;
-							btnGo   = btnGoLink4;
-							lblText = labelLink4;
+							co_TypL = co_Link4UnitType;
+							co_Dest = co_Link4Dest;
+							tb_Dist = tb_Link4Dist;
+							bu_Go   = bu_GoLink4;
+							la_Text = la_Link4;
 							break;
 
 						default: // case 4
-							cbTypL  = cbLink5UnitType;
-							cbDest  = cbLink5Dest;
-							tbDist  = tbLink5Dist;
-							btnGo   = btnGoLink5;
-							lblText = labelLink5;
+							co_TypL = co_Link5UnitType;
+							co_Dest = co_Link5Dest;
+							tb_Dist = tb_Link5Dist;
+							bu_Go   = bu_GoLink5;
+							la_Text = la_Link5;
 							break;
 					}
 
 					link = NodeSelected[slot];
 
-					cbTypL.SelectedItem = link.Unit;
-					btnGo.Enabled = link.IsNodelink();
+					co_TypL.SelectedItem = link.Unit;
+					bu_Go.Enabled = link.IsNodelink();
 
 					dest = link.Destination;
 					if (link.IsUsed())
 					{
-						btnGo .Text = Go;
-						tbDist.Text = link.Distance + GetDistanceArrow(slot);
+						bu_Go  .Text = Go;
+						tb_Dist.Text = link.Distance + GetDistanceArrow(slot);
 
 						if (link.IsNodelink())
 						{
-							cbDest.SelectedItem = dest;
+							co_Dest.SelectedItem = dest;
 
 							if (RouteNodes.OutsideMapBounds(
 														_file.Routes[dest],
@@ -1003,23 +1004,23 @@ namespace MapView.Forms.Observers
 														_file.Rows,
 														_file.Levs))
 							{
-								lblText.ForeColor = Color.Chocolate;
+								la_Text.ForeColor = Color.Chocolate;
 							}
 							else
-								lblText.ForeColor = SystemColors.ControlText;
+								la_Text.ForeColor = SystemColors.ControlText;
 						}
 						else
 						{
-							cbDest.SelectedItem = (LinkType)dest;
-							lblText.ForeColor = SystemColors.ControlText;
+							co_Dest.SelectedItem = (LinkType)dest;
+							la_Text.ForeColor = SystemColors.ControlText;
 						}
 					}
 					else
 					{
-						btnGo .Text =
-						tbDist.Text = String.Empty;
-						cbDest.SelectedItem = (LinkType)dest;
-						lblText.ForeColor = SystemColors.ControlText;
+						bu_Go  .Text =
+						tb_Dist.Text = String.Empty;
+						co_Dest.SelectedItem = (LinkType)dest;
+						la_Text.ForeColor = SystemColors.ControlText;
 					}
 				}
 			}
@@ -1057,36 +1058,46 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (NodeData)
+		/// <summary>
+		/// Handles unit-type changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnUnitTypeSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (!_loadingInfo)
 			{
 				RoutesChangedCoordinator = true;
-				NodeSelected.Unit = (UnitType)cbType.SelectedItem;
+				NodeSelected.Unit = (UnitType)co_Type.SelectedItem;
 
 				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.cbType.SelectedIndex = cbType.SelectedIndex;
+					ObserverManager.TopRouteView.ControlRoute.co_Type.SelectedIndex = co_Type.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
-					ObserverManager.RouteView.Control.cbType.SelectedIndex = cbType.SelectedIndex;
+					ObserverManager.RouteView.Control.co_Type.SelectedIndex = co_Type.SelectedIndex;
 			}
 		}
 
 		private bool _bypassRankChanged;
+		/// <summary>
+		/// Handles node-rank changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnNodeRankSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (!_loadingInfo && !_bypassRankChanged)
 			{
-				if (cbRank.SelectedIndex == 9)
+				if (co_Rank.SelectedIndex == 9)
 				{
 					_bypassRankChanged = true;	// because this funct is going to fire again immediately
-					cbRank.SelectedIndex = (int)NodeSelected.Rank;
+					co_Rank.SelectedIndex = (int)NodeSelected.Rank;
 					_bypassRankChanged = false;	// and I don't want the RoutesChanged flagged.
 				}
 				else
 				{
 					RoutesChangedCoordinator = true;
-					NodeSelected.Rank = (byte)cbRank.SelectedIndex;
-//					NodeSelected.Rank = (byte)((Pterodactyl)cbRank.SelectedItem).Case; // <- MapView1-type code.
+					NodeSelected.Rank = (byte)co_Rank.SelectedIndex;
+//					NodeSelected.Rank = (byte)((Pterodactyl)co_Rank.SelectedItem).Case; // <- MapView1-type code.
 
 					if (NodeSelected.Spawn != SpawnWeight.None)
 					{
@@ -1099,19 +1110,24 @@ namespace MapView.Forms.Observers
 					NodeSelected.OobRank = (byte)0;
 
 					if (Tag as String == "ROUTE")
-						ObserverManager.TopRouteView.ControlRoute.cbRank.SelectedIndex = cbRank.SelectedIndex;
+						ObserverManager.TopRouteView.ControlRoute.co_Rank.SelectedIndex = co_Rank.SelectedIndex;
 					else //if (Tag == "TOPROUTE")
-						ObserverManager.RouteView.Control.cbRank.SelectedIndex = cbRank.SelectedIndex;
+						ObserverManager.RouteView.Control.co_Rank.SelectedIndex = co_Rank.SelectedIndex;
 				}
 			}
 		}
 
+		/// <summary>
+		/// Handles spawn-weight changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnSpawnWeightSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (!_loadingInfo)
 			{
 				RoutesChangedCoordinator = true;
-				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)cbSpawn.SelectedItem).O;
+				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)co_Spawn.SelectedItem).O;
 
 				if (RoutesInfo != null)
 					RoutesInfo.ChangedSpawnweight(_curSpawnweight, NodeSelected.Spawn, NodeSelected.Rank);
@@ -1119,41 +1135,51 @@ namespace MapView.Forms.Observers
 				_curSpawnweight = NodeSelected.Spawn;
 
 				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
+					ObserverManager.TopRouteView.ControlRoute.co_Spawn.SelectedIndex = co_Spawn.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
-					ObserverManager.RouteView.Control.cbSpawn.SelectedIndex = cbSpawn.SelectedIndex;
+					ObserverManager.RouteView.Control.co_Spawn.SelectedIndex = co_Spawn.SelectedIndex;
 
 				RefreshControls(); // update the importance bar
 			}
 		}
 
+		/// <summary>
+		/// Handles patrol-priority changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnPatrolPrioritySelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (!_loadingInfo)
 			{
 				RoutesChangedCoordinator = true;
-				NodeSelected.Patrol = (PatrolPriority)((Pterodactyl)cbPatrol.SelectedItem).O;
+				NodeSelected.Patrol = (PatrolPriority)((Pterodactyl)co_Patrol.SelectedItem).O;
 
 				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
+					ObserverManager.TopRouteView.ControlRoute.co_Patrol.SelectedIndex = co_Patrol.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
-					ObserverManager.RouteView.Control.cbPatrol.SelectedIndex = cbPatrol.SelectedIndex;
+					ObserverManager.RouteView.Control.co_Patrol.SelectedIndex = co_Patrol.SelectedIndex;
 
 				RefreshControls(); // update the importance bar
 			}
 		}
 
+		/// <summary>
+		/// Handles base-attack changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnBaseAttackSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (!_loadingInfo)
 			{
 				RoutesChangedCoordinator = true;
-				NodeSelected.Attack = (AttackBase)((Pterodactyl)cbAttack.SelectedItem).O;
+				NodeSelected.Attack = (AttackBase)((Pterodactyl)co_Attack.SelectedItem).O;
 
 				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
+					ObserverManager.TopRouteView.ControlRoute.co_Attack.SelectedIndex = co_Attack.SelectedIndex;
 				else //if (Tag == "TOPROUTE")
-					ObserverManager.RouteView.Control.cbAttack.SelectedIndex = cbAttack.SelectedIndex;
+					ObserverManager.RouteView.Control.co_Attack.SelectedIndex = co_Attack.SelectedIndex;
 			}
 		}
 		#endregion Events (NodeData)
@@ -1173,43 +1199,43 @@ namespace MapView.Forms.Observers
 
 				int slot;
 				TextBox tb;
-				Button btnGo;
+				Button bu_Go;
 
-				var cb = sender as ComboBox;
-				if (cb == cbLink1Dest)
+				var co = sender as ComboBox;
+				if (co == co_Link1Dest)
 				{
 					slot  = 0;
-					tb    = tbLink1Dist;
-					btnGo = btnGoLink1;
+					tb    = tb_Link1Dist;
+					bu_Go = bu_GoLink1;
 				}
-				else if (cb == cbLink2Dest)
+				else if (co == co_Link2Dest)
 				{
 					slot  = 1;
-					tb    = tbLink2Dist;
-					btnGo = btnGoLink2;
+					tb    = tb_Link2Dist;
+					bu_Go = bu_GoLink2;
 				}
-				else if (cb == cbLink3Dest)
+				else if (co == co_Link3Dest)
 				{
 					slot  = 2;
-					tb    = tbLink3Dist;
-					btnGo = btnGoLink3;
+					tb    = tb_Link3Dist;
+					bu_Go = bu_GoLink3;
 				}
-				else if (cb == cbLink4Dest)
+				else if (co == co_Link4Dest)
 				{
 					slot  = 3;
-					tb    = tbLink4Dist;
-					btnGo = btnGoLink4;
+					tb    = tb_Link4Dist;
+					bu_Go = bu_GoLink4;
 				}
-				else //if (cb == cbLink5Dest)
+				else //if (co == co_Link5Dest)
 				{
 					slot  = 4;
-					tb    = tbLink5Dist;
-					btnGo = btnGoLink5;
+					tb    = tb_Link5Dist;
+					bu_Go = bu_GoLink5;
 				}
 
-				var dest = cb.SelectedItem as byte?; // check for id or compass pt/not used.
+				var dest = co.SelectedItem as byte?; // check for id or compass pt/not used.
 				if (!dest.HasValue)
-					dest = (byte?)(cb.SelectedItem as LinkType?);
+					dest = (byte?)(co.SelectedItem as LinkType?);
 
 				bool enable, text;
 
@@ -1248,8 +1274,8 @@ namespace MapView.Forms.Observers
 						break;
 				}
 
-				btnGo.Enabled = enable;
-				btnGo.Text = text ? Go : String.Empty;
+				bu_Go.Enabled = enable;
+				bu_Go.Text = text ? Go : String.Empty;
 
 				RouteControl.SetSpot(new Point(-1,-1));
 
@@ -1257,19 +1283,19 @@ namespace MapView.Forms.Observers
 				{
 					ObserverManager.TopRouteView.ControlRoute.TransferDestination(
 																				slot,
-																				cb.SelectedIndex,
+																				co.SelectedIndex,
 																				tb.Text,
 																				enable,
-																				btnGo.Text);
+																				bu_Go.Text);
 				}
 				else //if (Tag == "TOPROUTE")
 				{
 					ObserverManager.RouteView.Control.TransferDestination(
 																		slot,
-																		cb.SelectedIndex,
+																		co.SelectedIndex,
 																		tb.Text,
 																		enable,
-																		btnGo.Text);
+																		bu_Go.Text);
 				}
 
 				RefreshControls();
@@ -1288,47 +1314,47 @@ namespace MapView.Forms.Observers
 		/// <param name="text">the Go button text</param>
 		private void TransferDestination(int slot, int dest, string dist, bool enable, string text)
 		{
-			ComboBox cbDest;
-			TextBox tbDist;
-			Button btnGo;
+			ComboBox co_Dest;
+			TextBox tb_Dist;
+			Button bu_Go;
 
 			switch (slot)
 			{
 				case 0:
-					cbDest = cbLink1Dest;
-					tbDist = tbLink1Dist;
-					btnGo  = btnGoLink1;
+					co_Dest = co_Link1Dest;
+					tb_Dist = tb_Link1Dist;
+					bu_Go   = bu_GoLink1;
 					break;
 
 				case 1:
-					cbDest = cbLink2Dest;
-					tbDist = tbLink2Dist;
-					btnGo  = btnGoLink2;
+					co_Dest = co_Link2Dest;
+					tb_Dist = tb_Link2Dist;
+					bu_Go   = bu_GoLink2;
 					break;
 
 				case 2:
-					cbDest = cbLink3Dest;
-					tbDist = tbLink3Dist;
-					btnGo  = btnGoLink3;
+					co_Dest = co_Link3Dest;
+					tb_Dist = tb_Link3Dist;
+					bu_Go   = bu_GoLink3;
 					break;
 
 				case 3:
-					cbDest = cbLink4Dest;
-					tbDist = tbLink4Dist;
-					btnGo  = btnGoLink4;
+					co_Dest = co_Link4Dest;
+					tb_Dist = tb_Link4Dist;
+					bu_Go   = bu_GoLink4;
 					break;
 
 				default: //case 4:
-					cbDest = cbLink5Dest;
-					tbDist = tbLink5Dist;
-					btnGo  = btnGoLink5;
+					co_Dest = co_Link5Dest;
+					tb_Dist = tb_Link5Dist;
+					bu_Go   = bu_GoLink5;
 					break;
 			}
 
-			cbDest.SelectedIndex = dest;
-			tbDist.Text          = dist;
-			btnGo.Enabled        = enable;
-			btnGo.Text           = text;
+			co_Dest.SelectedIndex = dest;
+			tb_Dist.Text          = dist;
+			bu_Go.Enabled         = enable;
+			bu_Go.Text            = text;
 		}
 
 		/// <summary>
@@ -1372,24 +1398,24 @@ namespace MapView.Forms.Observers
 
 				int slot;
 
-				var cb = sender as ComboBox;
-				if (cb == cbLink1UnitType)
+				var co = sender as ComboBox;
+				if (co == co_Link1UnitType)
 					slot = 0;
-				else if (cb == cbLink2UnitType)
+				else if (co == co_Link2UnitType)
 					slot = 1;
-				else if (cb == cbLink3UnitType)
+				else if (co == co_Link3UnitType)
 					slot = 2;
-				else if (cb == cbLink4UnitType)
+				else if (co == co_Link4UnitType)
 					slot = 3;
-				else //if (cb == cbLink5UnitType)
+				else //if (co == co_Link5UnitType)
 					slot = 4;
 
-				NodeSelected[slot].Unit = (UnitType)cb.SelectedItem;
+				NodeSelected[slot].Unit = (UnitType)co.SelectedItem;
 
 				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.TransferUnitType(slot, cb.SelectedIndex);
+					ObserverManager.TopRouteView.ControlRoute.TransferUnitType(slot, co.SelectedIndex);
 				else //if (Tag == "TOPROUTE")
-					ObserverManager.RouteView.Control.TransferUnitType(slot, cb.SelectedIndex);
+					ObserverManager.RouteView.Control.TransferUnitType(slot, co.SelectedIndex);
 			}
 		}
 
@@ -1401,16 +1427,16 @@ namespace MapView.Forms.Observers
 		/// <param name="type"></param>
 		private void TransferUnitType(int slot, int type)
 		{
-			ComboBox cbUnitType;
+			ComboBox co_UnitType;
 			switch (slot)
 			{
-				case 0:  cbUnitType = cbLink1UnitType; break;
-				case 1:  cbUnitType = cbLink2UnitType; break;
-				case 2:  cbUnitType = cbLink3UnitType; break;
-				case 3:  cbUnitType = cbLink4UnitType; break;
-				default: cbUnitType = cbLink5UnitType; break; //case 4
+				case 0:  co_UnitType = co_Link1UnitType; break;
+				case 1:  co_UnitType = co_Link2UnitType; break;
+				case 2:  co_UnitType = co_Link3UnitType; break;
+				case 3:  co_UnitType = co_Link4UnitType; break;
+				default: co_UnitType = co_Link5UnitType; break; //case 4
 			}
-			cbUnitType.SelectedIndex = type;
+			co_UnitType.SelectedIndex = type;
 		}
 
 		/// <summary>
@@ -1423,12 +1449,12 @@ namespace MapView.Forms.Observers
 		{
 			int slot;
 
-			var btn = sender as Button;
-			if      (btn == btnGoLink1) slot = 0;
-			else if (btn == btnGoLink2) slot = 1;
-			else if (btn == btnGoLink3) slot = 2;
-			else if (btn == btnGoLink4) slot = 3;
-			else                        slot = 4; // btn == btnGoLink5
+			var bu = sender as Button;
+			if      (bu == bu_GoLink1) slot = 0;
+			else if (bu == bu_GoLink2) slot = 1;
+			else if (bu == bu_GoLink3) slot = 2;
+			else if (bu == bu_GoLink4) slot = 3;
+			else                       slot = 4; // bu == bu_GoLink5
 
 			byte dest = NodeSelected[slot].Destination;
 			var node  = _file.Routes[dest];
@@ -1458,8 +1484,8 @@ namespace MapView.Forms.Observers
 			{
 				_ogId = NodeSelected.Id; // store the current nodeId for the og-button.
 
-				ObserverManager.RouteView   .Control     .btnOg.Enabled =
-				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = true;
+				ObserverManager.RouteView   .Control     .bu_Og.Enabled =
+				ObserverManager.TopRouteView.ControlRoute.bu_Og.Enabled = true;
 
 				SelectNode(dest);
 
@@ -1587,8 +1613,8 @@ namespace MapView.Forms.Observers
 			}
 			else
 			{
-				ObserverManager.RouteView   .Control     .btnOg.Enabled =
-				ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
+				ObserverManager.RouteView   .Control     .bu_Og.Enabled =
+				ObserverManager.TopRouteView.ControlRoute.bu_Og.Enabled = false;
 			}
 
 			RouteControl.Select();
@@ -1616,8 +1642,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal static void DisableOg()
 		{
-			ObserverManager.RouteView   .Control     .btnOg.Enabled =
-			ObserverManager.TopRouteView.ControlRoute.btnOg.Enabled = false;
+			ObserverManager.RouteView   .Control     .bu_Og.Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Og.Enabled = false;
 		}
 		#endregion Events (LinkData)
 
@@ -1655,7 +1681,7 @@ namespace MapView.Forms.Observers
 					 break;
 
 				case Keys.Control | Keys.C:
-					 OnCopyClick( null, EventArgs.Empty);
+					 OnCopyClick(null, EventArgs.Empty);
 					 break;
 
 				 case Keys.Control | Keys.V:
@@ -1664,27 +1690,37 @@ namespace MapView.Forms.Observers
 			}
 		}
 
+		/// <summary>
+		/// Handles an edit-cut click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnCutClick(object sender, EventArgs e)
 		{
 			OnCopyClick(  null, EventArgs.Empty);
 			OnDeleteClick(null, EventArgs.Empty);
 		}
 
+		/// <summary>
+		/// Handles an edit-copy click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnCopyClick(object sender, EventArgs e)
 		{
 			RouteControl.Select();
 
 			if (NodeSelected != null)
 			{
-				ObserverManager.RouteView   .Control     .btnPaste.Enabled =
-				ObserverManager.TopRouteView.ControlRoute.btnPaste.Enabled = true;
+				ObserverManager.RouteView   .Control     .bu_Paste.Enabled =
+				ObserverManager.TopRouteView.ControlRoute.bu_Paste.Enabled = true;
 
 				string nodeCopy = NodeCopyPrefix         + NodeCopySeparator
-								+ cbType  .SelectedIndex + NodeCopySeparator
-								+ cbPatrol.SelectedIndex + NodeCopySeparator
-								+ cbAttack.SelectedIndex + NodeCopySeparator
-								+ cbRank  .SelectedIndex + NodeCopySeparator
-								+ cbSpawn .SelectedIndex;
+								+ co_Type  .SelectedIndex + NodeCopySeparator
+								+ co_Patrol.SelectedIndex + NodeCopySeparator
+								+ co_Attack.SelectedIndex + NodeCopySeparator
+								+ co_Rank  .SelectedIndex + NodeCopySeparator
+								+ co_Spawn .SelectedIndex;
 
 				// TODO: include Link info ... perhaps.
 				// But re-assigning the link node-ids would be difficult, since
@@ -1695,6 +1731,11 @@ namespace MapView.Forms.Observers
 				ShowError("A node must be selected.");
 		}
 
+		/// <summary>
+		/// Handles an edit-paste click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnPasteClick(object sender, EventArgs e)
 		{
 			RouteControl.Select();
@@ -1706,11 +1747,11 @@ namespace MapView.Forms.Observers
 				{
 					RoutesChangedCoordinator = true;
 
-					cbType  .SelectedIndex = Int32.Parse(nodeData[1]);
-					cbPatrol.SelectedIndex = Int32.Parse(nodeData[2]);
-					cbAttack.SelectedIndex = Int32.Parse(nodeData[3]);
-					cbRank  .SelectedIndex = Int32.Parse(nodeData[4]);
-					cbSpawn .SelectedIndex = Int32.Parse(nodeData[5]);
+					co_Type  .SelectedIndex = Int32.Parse(nodeData[1]);
+					co_Patrol.SelectedIndex = Int32.Parse(nodeData[2]);
+					co_Attack.SelectedIndex = Int32.Parse(nodeData[3]);
+					co_Rank  .SelectedIndex = Int32.Parse(nodeData[4]);
+					co_Spawn .SelectedIndex = Int32.Parse(nodeData[5]);
 
 					// TODO: include Link info ... perhaps.
 					// But re-assigning the link node-ids would be difficult, since
@@ -1718,8 +1759,8 @@ namespace MapView.Forms.Observers
 				}
 				else // non-node data is on the clipboard.
 				{
-					ObserverManager.RouteView   .Control     .btnPaste.Enabled =
-					ObserverManager.TopRouteView.ControlRoute.btnPaste.Enabled = false;
+					ObserverManager.RouteView   .Control     .bu_Paste.Enabled =
+					ObserverManager.TopRouteView.ControlRoute.bu_Paste.Enabled = false;
 
 					ShowError("The data on the clipboard is not a node.");
 				}
@@ -1728,6 +1769,11 @@ namespace MapView.Forms.Observers
 				ShowError("A node must be selected.");
 		}
 
+		/// <summary>
+		/// Handles an edit-delete click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OnDeleteClick(object sender, EventArgs e)
 		{
 			if (NodeSelected != null)
@@ -1747,8 +1793,8 @@ namespace MapView.Forms.Observers
 
 				UpdateNodeInfo();
 
-				gbNodeData.Enabled =
-				gbLinkData.Enabled = false;
+				gb_NodeData.Enabled =
+				gb_LinkData.Enabled = false;
 
 				// TODO: check if the Og-button should be disabled when a node gets deleted or cut.
 
@@ -1792,13 +1838,13 @@ namespace MapView.Forms.Observers
 			{
 				UpdateNodeInfo();
 
-				gbNodeData.Enabled =
-				gbLinkData.Enabled = false;
+				gb_NodeData.Enabled =
+				gb_LinkData.Enabled = false;
 
 				RouteControl.Invalidate();
 			}
 
-			tsmiClearLinkData.Enabled = false;
+			tsmi_ClearLinks.Enabled = false;
 		}
 
 
@@ -2037,7 +2083,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnAllNodesRank0Click(object sender, EventArgs e)
+		private void OnRank0Click(object sender, EventArgs e)
 		{
 			string rank;
 			if (_file.Descriptor.GroupType == GameType.Tftd)
@@ -2090,7 +2136,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnClearLinkDataClick(object sender, EventArgs e)
+		private void OnClearLinksClick(object sender, EventArgs e)
 		{
 			if (NodeSelected != null)
 			{
@@ -2125,7 +2171,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnUpdateAllLinkDistances(object sender, EventArgs e)
+		private void OnRecalcDistClick(object sender, EventArgs e)
 		{
 			RouteNode node;
 			Link link;
@@ -2217,7 +2263,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnTestNodeRanksClick(object sender, EventArgs e)
+		private void OnTestNoderanksClick(object sender, EventArgs e)
 		{
 			var invalids = new List<byte>();
 			foreach (RouteNode node in _file.Routes)
@@ -2311,9 +2357,9 @@ namespace MapView.Forms.Observers
 		#region Options
 		/// <summary>
 		/// Selects one of the connector-buttons when either the RouteView or
-		/// the TopRouteView toplevel form(s) is first shown. The connector-type
-		/// is determined by user-options.
+		/// the TopRouteView toplevel form(s) is first shown.
 		/// </summary>
+		/// <remarks>The connector-type is determined by user-options.</remarks>
 		internal void ActivateConnector()
 		{
 			if (!_connectoractivated)
