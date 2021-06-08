@@ -407,6 +407,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.pa_DataFields.Controls.Add(this.pa_DataFieldsLeft);
 			this.pa_DataFields.Controls.Add(this.gb_LinkData);
+			this.pa_DataFields.Controls.Add(this.bu_Og);
 			this.pa_DataFields.Controls.Add(this.bu_Tallyho);
 			this.pa_DataFields.Controls.Add(this.gb_NodeEditor);
 			this.pa_DataFields.Controls.Add(this.bu_Save);
@@ -625,11 +626,10 @@ namespace MapView.Forms.Observers
 			this.gb_LinkData.Controls.Add(this.bu_GoLink3);
 			this.gb_LinkData.Controls.Add(this.bu_GoLink4);
 			this.gb_LinkData.Controls.Add(this.bu_GoLink5);
-			this.gb_LinkData.Controls.Add(this.bu_Og);
 			this.gb_LinkData.Location = new System.Drawing.Point(245, 3);
 			this.gb_LinkData.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_LinkData.Name = "gb_LinkData";
-			this.gb_LinkData.Size = new System.Drawing.Size(315, 150);
+			this.gb_LinkData.Size = new System.Drawing.Size(290, 150);
 			this.gb_LinkData.TabIndex = 1;
 			this.gb_LinkData.TabStop = false;
 			this.gb_LinkData.Text = " Link data ";
@@ -995,11 +995,11 @@ namespace MapView.Forms.Observers
 			// 
 			// bu_Og
 			// 
-			this.bu_Og.Location = new System.Drawing.Point(290, 25);
+			this.bu_Og.Location = new System.Drawing.Point(540, 28);
 			this.bu_Og.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_Og.Name = "bu_Og";
 			this.bu_Og.Size = new System.Drawing.Size(20, 120);
-			this.bu_Og.TabIndex = 28;
+			this.bu_Og.TabIndex = 2;
 			this.bu_Og.Text = "o\r\ng";
 			this.bu_Og.UseVisualStyleBackColor = true;
 			this.bu_Og.Click += new System.EventHandler(this.OnOgClick);
@@ -1012,7 +1012,7 @@ namespace MapView.Forms.Observers
 			this.bu_Tallyho.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_Tallyho.Name = "bu_Tallyho";
 			this.bu_Tallyho.Size = new System.Drawing.Size(20, 120);
-			this.bu_Tallyho.TabIndex = 2;
+			this.bu_Tallyho.TabIndex = 3;
 			this.bu_Tallyho.Text = "t\r\na\r\nll\r\ny";
 			this.bu_Tallyho.UseVisualStyleBackColor = true;
 			this.bu_Tallyho.Click += new System.EventHandler(this.OnTallyhoClick);
@@ -1027,7 +1027,7 @@ namespace MapView.Forms.Observers
 			this.gb_NodeEditor.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_NodeEditor.Name = "gb_NodeEditor";
 			this.gb_NodeEditor.Size = new System.Drawing.Size(290, 52);
-			this.gb_NodeEditor.TabIndex = 3;
+			this.gb_NodeEditor.TabIndex = 4;
 			this.gb_NodeEditor.TabStop = false;
 			this.gb_NodeEditor.Text = " Node editor ";
 			// 
@@ -1087,7 +1087,7 @@ namespace MapView.Forms.Observers
 			this.bu_Save.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_Save.Name = "bu_Save";
 			this.bu_Save.Size = new System.Drawing.Size(46, 46);
-			this.bu_Save.TabIndex = 4;
+			this.bu_Save.TabIndex = 5;
 			this.bu_Save.Text = "save";
 			this.bu_Save.UseVisualStyleBackColor = true;
 			this.bu_Save.Click += new System.EventHandler(this.OnSaveClick);
