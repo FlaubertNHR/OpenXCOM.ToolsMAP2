@@ -1484,7 +1484,7 @@ namespace MapView.Forms.Observers
 			else if (bu == bu_GoLink2) slot = 1;
 			else if (bu == bu_GoLink3) slot = 2;
 			else if (bu == bu_GoLink4) slot = 3;
-			else                       slot = 4; // bu == bu_GoLink5
+			else                       slot = 4; // bu_GoLink5
 
 			byte dest = NodeSelected[slot].Destination;
 			RouteNode node = MapFile.Routes[dest];
@@ -1519,7 +1519,7 @@ namespace MapView.Forms.Observers
 
 				SelectNode(dest);
 
-				SpotDestination(slot); // highlight back to the startnode.
+				OnLinkMouseEnter(sender, EventArgs.Empty); // update Go info
 			}
 
 			RouteControl.Select();
@@ -1645,7 +1645,10 @@ namespace MapView.Forms.Observers
 			if (_ogId < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
 			{
 				if (NodeSelected == null || _ogId != NodeSelected.Id)
+				{
 					SelectNode(_ogId);
+					OnOgMouseEnter(null, EventArgs.Empty); // update Og info
+				}
 			}
 			else
 			{
