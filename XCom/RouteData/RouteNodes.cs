@@ -10,7 +10,7 @@ namespace XCom
 {
 	/// <summary>
 	/// This class reads, saves, and generally manages all the information in a
-	/// .RMP file. It's like the parent of RouteNode.
+	/// .RMP file. It contains <see cref="RouteNode"/>'s.
 	/// </summary>
 	public sealed class RouteNodes // fxCop ca1710 - wants "RouteNodeCollection"
 		:
