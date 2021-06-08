@@ -17,24 +17,24 @@ namespace MapView.Forms.Observers
 		private ToolStripMenuItem tsmiImport;
 
 		private ToolStripDropDownButton tsddbEdit;
+		private ToolStripMenuItem tsmi_RaiseNode;
+		private ToolStripMenuItem tsmi_LowerNode;
+		private ToolStripSeparator toolStripSeparator1;
 		private ToolStripMenuItem tsmiAllNodesRank0;
 		private ToolStripMenuItem tsmiClearLinkData;
 		private ToolStripMenuItem tsmiUpdateAllLinkDistances;
-		private ToolStripSeparator toolStripSeparator1;
-		private ToolStripMenuItem tsmi_RaiseNode;
-		private ToolStripMenuItem tsmi_LowerNode;
 
 		private ToolStripDropDownButton tsddbDebug;
-		private ToolStripMenuItem tsmiTestNodeRanks;
 		private ToolStripMenuItem tsmiTestPositions;
-
-		private ToolStripButton tsb_Options;
+		private ToolStripMenuItem tsmiTestNodeRanks;
 
 		private ToolStripSeparator tss_0;
 
 		private ToolStripButton tsb_connect0;
 		private ToolStripButton tsb_connect1;
 		private ToolStripButton tsb_connect2;
+
+		private ToolStripButton tsb_Options;
 
 		private Panel pnlDataFields;
 
@@ -85,6 +85,9 @@ namespace MapView.Forms.Observers
 		private Button btnGoLink3;
 		private Button btnGoLink4;
 		private Button btnGoLink5;
+		private Button btnOg;
+
+		private Button btnTallyho;
 
 		private GroupBox gbNodeEditor;
 		private Button btnCut;
@@ -92,8 +95,6 @@ namespace MapView.Forms.Observers
 		private Button btnPaste;
 		private Button btnDelete;
 
-		private Button btnOg;
-		private Button btnTallyho;
 		private Button btnSave;
 
 		private ToolTip toolTip1;
@@ -164,33 +165,33 @@ namespace MapView.Forms.Observers
 			this.labelLink3 = new System.Windows.Forms.Label();
 			this.labelLink4 = new System.Windows.Forms.Label();
 			this.labelLink5 = new System.Windows.Forms.Label();
-			this.tbLink1Dist = new System.Windows.Forms.TextBox();
-			this.tbLink2Dist = new System.Windows.Forms.TextBox();
-			this.tbLink3Dist = new System.Windows.Forms.TextBox();
-			this.tbLink4Dist = new System.Windows.Forms.TextBox();
-			this.tbLink5Dist = new System.Windows.Forms.TextBox();
-			this.cbLink1UnitType = new System.Windows.Forms.ComboBox();
-			this.cbLink2UnitType = new System.Windows.Forms.ComboBox();
-			this.cbLink3UnitType = new System.Windows.Forms.ComboBox();
-			this.cbLink4UnitType = new System.Windows.Forms.ComboBox();
-			this.cbLink5UnitType = new System.Windows.Forms.ComboBox();
 			this.cbLink1Dest = new System.Windows.Forms.ComboBox();
 			this.cbLink2Dest = new System.Windows.Forms.ComboBox();
 			this.cbLink3Dest = new System.Windows.Forms.ComboBox();
 			this.cbLink4Dest = new System.Windows.Forms.ComboBox();
 			this.cbLink5Dest = new System.Windows.Forms.ComboBox();
+			this.cbLink1UnitType = new System.Windows.Forms.ComboBox();
+			this.cbLink2UnitType = new System.Windows.Forms.ComboBox();
+			this.cbLink3UnitType = new System.Windows.Forms.ComboBox();
+			this.cbLink4UnitType = new System.Windows.Forms.ComboBox();
+			this.cbLink5UnitType = new System.Windows.Forms.ComboBox();
+			this.tbLink1Dist = new System.Windows.Forms.TextBox();
+			this.tbLink2Dist = new System.Windows.Forms.TextBox();
+			this.tbLink3Dist = new System.Windows.Forms.TextBox();
+			this.tbLink4Dist = new System.Windows.Forms.TextBox();
+			this.tbLink5Dist = new System.Windows.Forms.TextBox();
 			this.btnGoLink1 = new System.Windows.Forms.Button();
 			this.btnGoLink2 = new System.Windows.Forms.Button();
 			this.btnGoLink3 = new System.Windows.Forms.Button();
 			this.btnGoLink4 = new System.Windows.Forms.Button();
 			this.btnGoLink5 = new System.Windows.Forms.Button();
+			this.btnOg = new System.Windows.Forms.Button();
+			this.btnTallyho = new System.Windows.Forms.Button();
 			this.gbNodeEditor = new System.Windows.Forms.GroupBox();
 			this.btnCut = new System.Windows.Forms.Button();
 			this.btnCopy = new System.Windows.Forms.Button();
 			this.btnPaste = new System.Windows.Forms.Button();
 			this.btnDelete = new System.Windows.Forms.Button();
-			this.btnOg = new System.Windows.Forms.Button();
-			this.btnTallyho = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.tsMain.SuspendLayout();
@@ -327,14 +328,14 @@ namespace MapView.Forms.Observers
 			// tsmiTestPositions
 			// 
 			this.tsmiTestPositions.Name = "tsmiTestPositions";
-			this.tsmiTestPositions.Size = new System.Drawing.Size(157, 22);
+			this.tsmiTestPositions.Size = new System.Drawing.Size(180, 22);
 			this.tsmiTestPositions.Text = "Test node &positions";
 			this.tsmiTestPositions.Click += new System.EventHandler(this.OnTestPositionsClick);
 			// 
 			// tsmiTestNodeRanks
 			// 
 			this.tsmiTestNodeRanks.Name = "tsmiTestNodeRanks";
-			this.tsmiTestNodeRanks.Size = new System.Drawing.Size(157, 22);
+			this.tsmiTestNodeRanks.Size = new System.Drawing.Size(180, 22);
 			this.tsmiTestNodeRanks.Text = "Test node &ranks";
 			this.tsmiTestNodeRanks.Click += new System.EventHandler(this.OnTestNodeRanksClick);
 			// 
@@ -407,9 +408,8 @@ namespace MapView.Forms.Observers
 			// 
 			this.pnlDataFields.Controls.Add(this.pnlDataFieldsLeft);
 			this.pnlDataFields.Controls.Add(this.gbLinkData);
-			this.pnlDataFields.Controls.Add(this.gbNodeEditor);
-			this.pnlDataFields.Controls.Add(this.btnOg);
 			this.pnlDataFields.Controls.Add(this.btnTallyho);
+			this.pnlDataFields.Controls.Add(this.gbNodeEditor);
 			this.pnlDataFields.Controls.Add(this.btnSave);
 			this.pnlDataFields.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.pnlDataFields.Location = new System.Drawing.Point(0, 275);
@@ -606,30 +606,31 @@ namespace MapView.Forms.Observers
 			this.gbLinkData.Controls.Add(this.labelLink3);
 			this.gbLinkData.Controls.Add(this.labelLink4);
 			this.gbLinkData.Controls.Add(this.labelLink5);
-			this.gbLinkData.Controls.Add(this.tbLink1Dist);
-			this.gbLinkData.Controls.Add(this.tbLink2Dist);
-			this.gbLinkData.Controls.Add(this.tbLink3Dist);
-			this.gbLinkData.Controls.Add(this.tbLink4Dist);
-			this.gbLinkData.Controls.Add(this.tbLink5Dist);
-			this.gbLinkData.Controls.Add(this.cbLink1UnitType);
-			this.gbLinkData.Controls.Add(this.cbLink2UnitType);
-			this.gbLinkData.Controls.Add(this.cbLink3UnitType);
-			this.gbLinkData.Controls.Add(this.cbLink4UnitType);
-			this.gbLinkData.Controls.Add(this.cbLink5UnitType);
 			this.gbLinkData.Controls.Add(this.cbLink1Dest);
 			this.gbLinkData.Controls.Add(this.cbLink2Dest);
 			this.gbLinkData.Controls.Add(this.cbLink3Dest);
 			this.gbLinkData.Controls.Add(this.cbLink4Dest);
 			this.gbLinkData.Controls.Add(this.cbLink5Dest);
+			this.gbLinkData.Controls.Add(this.cbLink1UnitType);
+			this.gbLinkData.Controls.Add(this.cbLink2UnitType);
+			this.gbLinkData.Controls.Add(this.cbLink3UnitType);
+			this.gbLinkData.Controls.Add(this.cbLink4UnitType);
+			this.gbLinkData.Controls.Add(this.cbLink5UnitType);
+			this.gbLinkData.Controls.Add(this.tbLink1Dist);
+			this.gbLinkData.Controls.Add(this.tbLink2Dist);
+			this.gbLinkData.Controls.Add(this.tbLink3Dist);
+			this.gbLinkData.Controls.Add(this.tbLink4Dist);
+			this.gbLinkData.Controls.Add(this.tbLink5Dist);
 			this.gbLinkData.Controls.Add(this.btnGoLink1);
 			this.gbLinkData.Controls.Add(this.btnGoLink2);
 			this.gbLinkData.Controls.Add(this.btnGoLink3);
 			this.gbLinkData.Controls.Add(this.btnGoLink4);
 			this.gbLinkData.Controls.Add(this.btnGoLink5);
+			this.gbLinkData.Controls.Add(this.btnOg);
 			this.gbLinkData.Location = new System.Drawing.Point(245, 3);
 			this.gbLinkData.Margin = new System.Windows.Forms.Padding(0);
 			this.gbLinkData.Name = "gbLinkData";
-			this.gbLinkData.Size = new System.Drawing.Size(290, 150);
+			this.gbLinkData.Size = new System.Drawing.Size(315, 150);
 			this.gbLinkData.TabIndex = 1;
 			this.gbLinkData.TabStop = false;
 			this.gbLinkData.Text = " Link data ";
@@ -723,70 +724,70 @@ namespace MapView.Forms.Observers
 			this.labelLink5.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
 			this.labelLink5.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// tbLink1Dist
+			// cbLink1Dest
 			// 
-			this.tbLink1Dist.Location = new System.Drawing.Point(215, 25);
-			this.tbLink1Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tbLink1Dist.Name = "tbLink1Dist";
-			this.tbLink1Dist.ReadOnly = true;
-			this.tbLink1Dist.Size = new System.Drawing.Size(35, 19);
-			this.tbLink1Dist.TabIndex = 6;
-			this.tbLink1Dist.Tag = "L1";
-			this.tbLink1Dist.WordWrap = false;
-			this.tbLink1Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tbLink1Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink1Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbLink1Dest.Location = new System.Drawing.Point(45, 25);
+			this.cbLink1Dest.Margin = new System.Windows.Forms.Padding(0);
+			this.cbLink1Dest.Name = "cbLink1Dest";
+			this.cbLink1Dest.Size = new System.Drawing.Size(75, 20);
+			this.cbLink1Dest.TabIndex = 4;
+			this.cbLink1Dest.Tag = "L1";
+			this.cbLink1Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
+			this.cbLink1Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink1Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
 			// 
-			// tbLink2Dist
+			// cbLink2Dest
 			// 
-			this.tbLink2Dist.Location = new System.Drawing.Point(215, 50);
-			this.tbLink2Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tbLink2Dist.Name = "tbLink2Dist";
-			this.tbLink2Dist.ReadOnly = true;
-			this.tbLink2Dist.Size = new System.Drawing.Size(35, 19);
-			this.tbLink2Dist.TabIndex = 11;
-			this.tbLink2Dist.Tag = "L2";
-			this.tbLink2Dist.WordWrap = false;
-			this.tbLink2Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tbLink2Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink2Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbLink2Dest.Location = new System.Drawing.Point(45, 50);
+			this.cbLink2Dest.Margin = new System.Windows.Forms.Padding(0);
+			this.cbLink2Dest.Name = "cbLink2Dest";
+			this.cbLink2Dest.Size = new System.Drawing.Size(75, 20);
+			this.cbLink2Dest.TabIndex = 9;
+			this.cbLink2Dest.Tag = "L2";
+			this.cbLink2Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
+			this.cbLink2Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink2Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
 			// 
-			// tbLink3Dist
+			// cbLink3Dest
 			// 
-			this.tbLink3Dist.Location = new System.Drawing.Point(215, 75);
-			this.tbLink3Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tbLink3Dist.Name = "tbLink3Dist";
-			this.tbLink3Dist.ReadOnly = true;
-			this.tbLink3Dist.Size = new System.Drawing.Size(35, 19);
-			this.tbLink3Dist.TabIndex = 16;
-			this.tbLink3Dist.Tag = "L3";
-			this.tbLink3Dist.WordWrap = false;
-			this.tbLink3Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tbLink3Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink3Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbLink3Dest.Location = new System.Drawing.Point(45, 75);
+			this.cbLink3Dest.Margin = new System.Windows.Forms.Padding(0);
+			this.cbLink3Dest.Name = "cbLink3Dest";
+			this.cbLink3Dest.Size = new System.Drawing.Size(75, 20);
+			this.cbLink3Dest.TabIndex = 14;
+			this.cbLink3Dest.Tag = "L3";
+			this.cbLink3Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
+			this.cbLink3Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink3Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
 			// 
-			// tbLink4Dist
+			// cbLink4Dest
 			// 
-			this.tbLink4Dist.Location = new System.Drawing.Point(215, 100);
-			this.tbLink4Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tbLink4Dist.Name = "tbLink4Dist";
-			this.tbLink4Dist.ReadOnly = true;
-			this.tbLink4Dist.Size = new System.Drawing.Size(35, 19);
-			this.tbLink4Dist.TabIndex = 21;
-			this.tbLink4Dist.Tag = "L4";
-			this.tbLink4Dist.WordWrap = false;
-			this.tbLink4Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tbLink4Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink4Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbLink4Dest.Location = new System.Drawing.Point(45, 100);
+			this.cbLink4Dest.Margin = new System.Windows.Forms.Padding(0);
+			this.cbLink4Dest.Name = "cbLink4Dest";
+			this.cbLink4Dest.Size = new System.Drawing.Size(75, 20);
+			this.cbLink4Dest.TabIndex = 19;
+			this.cbLink4Dest.Tag = "L4";
+			this.cbLink4Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
+			this.cbLink4Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink4Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
 			// 
-			// tbLink5Dist
+			// cbLink5Dest
 			// 
-			this.tbLink5Dist.Location = new System.Drawing.Point(215, 125);
-			this.tbLink5Dist.Margin = new System.Windows.Forms.Padding(0);
-			this.tbLink5Dist.Name = "tbLink5Dist";
-			this.tbLink5Dist.ReadOnly = true;
-			this.tbLink5Dist.Size = new System.Drawing.Size(35, 19);
-			this.tbLink5Dist.TabIndex = 26;
-			this.tbLink5Dist.Tag = "L5";
-			this.tbLink5Dist.WordWrap = false;
-			this.tbLink5Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
-			this.tbLink5Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink5Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbLink5Dest.Location = new System.Drawing.Point(45, 125);
+			this.cbLink5Dest.Margin = new System.Windows.Forms.Padding(0);
+			this.cbLink5Dest.Name = "cbLink5Dest";
+			this.cbLink5Dest.Size = new System.Drawing.Size(75, 20);
+			this.cbLink5Dest.TabIndex = 24;
+			this.cbLink5Dest.Tag = "L5";
+			this.cbLink5Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
+			this.cbLink5Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			this.cbLink5Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
 			// 
 			// cbLink1UnitType
 			// 
@@ -853,70 +854,70 @@ namespace MapView.Forms.Observers
 			this.cbLink5UnitType.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			this.cbLink5UnitType.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
 			// 
-			// cbLink1Dest
+			// tbLink1Dist
 			// 
-			this.cbLink1Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbLink1Dest.Location = new System.Drawing.Point(45, 25);
-			this.cbLink1Dest.Margin = new System.Windows.Forms.Padding(0);
-			this.cbLink1Dest.Name = "cbLink1Dest";
-			this.cbLink1Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink1Dest.TabIndex = 4;
-			this.cbLink1Dest.Tag = "L1";
-			this.cbLink1Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
-			this.cbLink1Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
-			this.cbLink1Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink1Dist.Location = new System.Drawing.Point(215, 25);
+			this.tbLink1Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.tbLink1Dist.Name = "tbLink1Dist";
+			this.tbLink1Dist.ReadOnly = true;
+			this.tbLink1Dist.Size = new System.Drawing.Size(35, 19);
+			this.tbLink1Dist.TabIndex = 6;
+			this.tbLink1Dist.Tag = "L1";
+			this.tbLink1Dist.WordWrap = false;
+			this.tbLink1Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink1Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// cbLink2Dest
+			// tbLink2Dist
 			// 
-			this.cbLink2Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbLink2Dest.Location = new System.Drawing.Point(45, 50);
-			this.cbLink2Dest.Margin = new System.Windows.Forms.Padding(0);
-			this.cbLink2Dest.Name = "cbLink2Dest";
-			this.cbLink2Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink2Dest.TabIndex = 9;
-			this.cbLink2Dest.Tag = "L2";
-			this.cbLink2Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
-			this.cbLink2Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
-			this.cbLink2Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink2Dist.Location = new System.Drawing.Point(215, 50);
+			this.tbLink2Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.tbLink2Dist.Name = "tbLink2Dist";
+			this.tbLink2Dist.ReadOnly = true;
+			this.tbLink2Dist.Size = new System.Drawing.Size(35, 19);
+			this.tbLink2Dist.TabIndex = 11;
+			this.tbLink2Dist.Tag = "L2";
+			this.tbLink2Dist.WordWrap = false;
+			this.tbLink2Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink2Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// cbLink3Dest
+			// tbLink3Dist
 			// 
-			this.cbLink3Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbLink3Dest.Location = new System.Drawing.Point(45, 75);
-			this.cbLink3Dest.Margin = new System.Windows.Forms.Padding(0);
-			this.cbLink3Dest.Name = "cbLink3Dest";
-			this.cbLink3Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink3Dest.TabIndex = 14;
-			this.cbLink3Dest.Tag = "L3";
-			this.cbLink3Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
-			this.cbLink3Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
-			this.cbLink3Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink3Dist.Location = new System.Drawing.Point(215, 75);
+			this.tbLink3Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.tbLink3Dist.Name = "tbLink3Dist";
+			this.tbLink3Dist.ReadOnly = true;
+			this.tbLink3Dist.Size = new System.Drawing.Size(35, 19);
+			this.tbLink3Dist.TabIndex = 16;
+			this.tbLink3Dist.Tag = "L3";
+			this.tbLink3Dist.WordWrap = false;
+			this.tbLink3Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink3Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// cbLink4Dest
+			// tbLink4Dist
 			// 
-			this.cbLink4Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbLink4Dest.Location = new System.Drawing.Point(45, 100);
-			this.cbLink4Dest.Margin = new System.Windows.Forms.Padding(0);
-			this.cbLink4Dest.Name = "cbLink4Dest";
-			this.cbLink4Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink4Dest.TabIndex = 19;
-			this.cbLink4Dest.Tag = "L4";
-			this.cbLink4Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
-			this.cbLink4Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
-			this.cbLink4Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink4Dist.Location = new System.Drawing.Point(215, 100);
+			this.tbLink4Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.tbLink4Dist.Name = "tbLink4Dist";
+			this.tbLink4Dist.ReadOnly = true;
+			this.tbLink4Dist.Size = new System.Drawing.Size(35, 19);
+			this.tbLink4Dist.TabIndex = 21;
+			this.tbLink4Dist.Tag = "L4";
+			this.tbLink4Dist.WordWrap = false;
+			this.tbLink4Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink4Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
-			// cbLink5Dest
+			// tbLink5Dist
 			// 
-			this.cbLink5Dest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbLink5Dest.Location = new System.Drawing.Point(45, 125);
-			this.cbLink5Dest.Margin = new System.Windows.Forms.Padding(0);
-			this.cbLink5Dest.Name = "cbLink5Dest";
-			this.cbLink5Dest.Size = new System.Drawing.Size(75, 20);
-			this.cbLink5Dest.TabIndex = 24;
-			this.cbLink5Dest.Tag = "L5";
-			this.cbLink5Dest.SelectedIndexChanged += new System.EventHandler(this.OnLinkDestSelectedIndexChanged);
-			this.cbLink5Dest.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
-			this.cbLink5Dest.MouseHover += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink5Dist.Location = new System.Drawing.Point(215, 125);
+			this.tbLink5Dist.Margin = new System.Windows.Forms.Padding(0);
+			this.tbLink5Dist.Name = "tbLink5Dist";
+			this.tbLink5Dist.ReadOnly = true;
+			this.tbLink5Dist.Size = new System.Drawing.Size(35, 19);
+			this.tbLink5Dist.TabIndex = 26;
+			this.tbLink5Dist.Tag = "L5";
+			this.tbLink5Dist.WordWrap = false;
+			this.tbLink5Dist.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
+			this.tbLink5Dist.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
 			// btnGoLink1
 			// 
@@ -993,6 +994,30 @@ namespace MapView.Forms.Observers
 			this.btnGoLink5.MouseEnter += new System.EventHandler(this.OnLinkMouseEnter);
 			this.btnGoLink5.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
 			// 
+			// btnOg
+			// 
+			this.btnOg.Location = new System.Drawing.Point(290, 25);
+			this.btnOg.Margin = new System.Windows.Forms.Padding(0);
+			this.btnOg.Name = "btnOg";
+			this.btnOg.Size = new System.Drawing.Size(20, 120);
+			this.btnOg.TabIndex = 28;
+			this.btnOg.Text = "o\r\ng";
+			this.btnOg.UseVisualStyleBackColor = true;
+			this.btnOg.Click += new System.EventHandler(this.OnOgClick);
+			this.btnOg.MouseEnter += new System.EventHandler(this.OnOgMouseEnter);
+			this.btnOg.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
+			// 
+			// btnTallyho
+			// 
+			this.btnTallyho.Location = new System.Drawing.Point(565, 28);
+			this.btnTallyho.Margin = new System.Windows.Forms.Padding(0);
+			this.btnTallyho.Name = "btnTallyho";
+			this.btnTallyho.Size = new System.Drawing.Size(20, 120);
+			this.btnTallyho.TabIndex = 2;
+			this.btnTallyho.Text = "t\r\na\r\nll\r\ny";
+			this.btnTallyho.UseVisualStyleBackColor = true;
+			this.btnTallyho.Click += new System.EventHandler(this.OnTallyhoClick);
+			// 
 			// gbNodeEditor
 			// 
 			this.gbNodeEditor.Controls.Add(this.btnCut);
@@ -1003,7 +1028,7 @@ namespace MapView.Forms.Observers
 			this.gbNodeEditor.Margin = new System.Windows.Forms.Padding(0);
 			this.gbNodeEditor.Name = "gbNodeEditor";
 			this.gbNodeEditor.Size = new System.Drawing.Size(290, 52);
-			this.gbNodeEditor.TabIndex = 2;
+			this.gbNodeEditor.TabIndex = 3;
 			this.gbNodeEditor.TabStop = false;
 			this.gbNodeEditor.Text = " Node editor ";
 			// 
@@ -1055,30 +1080,6 @@ namespace MapView.Forms.Observers
 			this.toolTip1.SetToolTip(this.btnDelete, "deletes the selected node");
 			this.btnDelete.Click += new System.EventHandler(this.OnDeleteClick);
 			// 
-			// btnOg
-			// 
-			this.btnOg.Location = new System.Drawing.Point(540, 28);
-			this.btnOg.Margin = new System.Windows.Forms.Padding(0);
-			this.btnOg.Name = "btnOg";
-			this.btnOg.Size = new System.Drawing.Size(20, 120);
-			this.btnOg.TabIndex = 3;
-			this.btnOg.Text = "o\r\ng";
-			this.btnOg.UseVisualStyleBackColor = true;
-			this.btnOg.Click += new System.EventHandler(this.OnOgClick);
-			this.btnOg.MouseEnter += new System.EventHandler(this.OnOgMouseEnter);
-			this.btnOg.MouseLeave += new System.EventHandler(this.OnLinkMouseLeave);
-			// 
-			// btnTallyho
-			// 
-			this.btnTallyho.Location = new System.Drawing.Point(565, 28);
-			this.btnTallyho.Margin = new System.Windows.Forms.Padding(0);
-			this.btnTallyho.Name = "btnTallyho";
-			this.btnTallyho.Size = new System.Drawing.Size(20, 120);
-			this.btnTallyho.TabIndex = 4;
-			this.btnTallyho.Text = "t\r\na\r\nll\r\ny";
-			this.btnTallyho.UseVisualStyleBackColor = true;
-			this.btnTallyho.Click += new System.EventHandler(this.OnTallyhoClick);
-			// 
 			// btnSave
 			// 
 			this.btnSave.Enabled = false;
@@ -1087,7 +1088,7 @@ namespace MapView.Forms.Observers
 			this.btnSave.Margin = new System.Windows.Forms.Padding(0);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(46, 46);
-			this.btnSave.TabIndex = 5;
+			this.btnSave.TabIndex = 4;
 			this.btnSave.Text = "save";
 			this.btnSave.UseVisualStyleBackColor = true;
 			this.btnSave.Click += new System.EventHandler(this.OnSaveClick);
