@@ -446,11 +446,10 @@ namespace MapView.Forms.Observers
 		/// Prints mouseovered Go button link-node info to the TileData
 		/// groupbox.
 		/// </summary>
-		/// <param name="id"></param>
-		private void PrintGoInfo(int id)
+		/// <param name="node"></param>
+		/// <param name="isog"></param>
+		private void PrintGoInfo(RouteNode node, bool isog)
 		{
-			RouteNode node = MapFile.Routes[id]; // TODO: ensure that nodes are listed in RouteNodes in consecutive order ...
-
 			Color color;
 			if (node.Spawn == SpawnWeight.None)
 			{
@@ -461,9 +460,12 @@ namespace MapView.Forms.Observers
 
 			la_Over.ForeColor = color;
 
-			string info = "Link " + node.Id; // TODO: 'id'
+			string info;
 
-			info += Environment.NewLine;
+			if (isog) info = "Og ";
+			else      info = "Link ";
+
+			info += node.Id + Environment.NewLine;
 
 			int c = node.Col;
 			int r = node.Row;
@@ -1580,7 +1582,9 @@ namespace MapView.Forms.Observers
 
 			byte dest = NodeSelected[slot].Destination;
 			if (dest != Link.NotUsed)
-				PrintGoInfo(dest);
+			{
+				PrintGoInfo(MapFile.Routes[dest], false); // TODO: ensure that nodes are listed in RouteNodes in consecutive order ...
+			}
 		}
 
 		/// <summary>
@@ -1661,11 +1665,13 @@ namespace MapView.Forms.Observers
 		{
 			if (_ogId < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
 			{
-				var node = MapFile.Routes[_ogId];
+				RouteNode node = MapFile.Routes[_ogId];
 				RouteControl.SetSpot(new Point(node.Col, node.Row));
 
 				RouteControl.Refresh();
 //				RefreshControls();
+
+				PrintGoInfo(node, true);
 			}
 		}
 
