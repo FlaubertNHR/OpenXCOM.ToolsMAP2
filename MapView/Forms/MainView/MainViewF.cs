@@ -3201,7 +3201,7 @@ namespace MapView
 			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
 			//LogFile.WriteLine(". browseMapfile= " + browseMapfile);
 
-			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the PartslotTest dialog
+			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the TestPartslots dialog
 			{
 				TopView._fpartslots.Close();
 				TopView._fpartslots = null;
@@ -3282,9 +3282,6 @@ namespace MapView
 
 						routeview1.ClearSelectedInfo();
 						routeview2.ClearSelectedInfo();
-
-						RouteView.DisableOg();
-						RouteView.DisableOg();
 
 						Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
 						Optionables.OpenDoors = false;

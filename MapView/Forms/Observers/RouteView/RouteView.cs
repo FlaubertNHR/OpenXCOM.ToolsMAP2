@@ -49,11 +49,12 @@ namespace MapView.Forms.Observers
 		internal static RouteNode Dragnode;
 
 		/// <summary>
-		/// Stores the node-id from which a "Go" button is clicked. Used to
-		/// re-select the original node - which might not be equivalent to
-		/// "Back" (if there were a Back button).
+		/// Stores the current node-id when a Go button is clicked. Used to
+		/// re-select a previous node(s) - which is not be equivalent to "Back"
+		/// (if there were a Back button) since only nodes that were selected by
+		/// the Go button get pushed onto the stack.
 		/// </summary>
-		private static int _ogId;
+		private static Stack<int> _ogIds = new Stack<int>();
 
 		internal static byte _curNoderank;
 		internal static SpawnWeight _curSpawnweight;
@@ -100,6 +101,9 @@ namespace MapView.Forms.Observers
 				DeselectNode();
 
 				RouteControl.SetMapfile(base.MapFile);
+
+				_ogIds.Clear();
+				EnableOgButton(false);
 
 				if (base.MapFile != null)
 				{
@@ -1512,10 +1516,8 @@ namespace MapView.Forms.Observers
 			}
 			else
 			{
-				_ogId = NodeSelected.Id; // store the current nodeId for the og-button.
-
-				ObserverManager.RouteView   .Control     .bu_Og.Enabled =
-				ObserverManager.TopRouteView.ControlRoute.bu_Og.Enabled = true;
+				_ogIds.Push(NodeSelected.Id);
+				EnableOgButton(true);
 
 				SelectNode(dest);
 
@@ -1580,10 +1582,10 @@ namespace MapView.Forms.Observers
 			}
 			SpotDestination(slot); // TODO: RouteView/TopRouteView(Route)
 
-			byte dest = NodeSelected[slot].Destination;
-			if (dest != Link.NotUsed)
+			Link link = NodeSelected[slot];
+			if (link.IsNodelink())
 			{
-				PrintGoInfo(MapFile.Routes[dest], false); // TODO: ensure that nodes are listed in RouteNodes in consecutive order ...
+				PrintGoInfo(MapFile.Routes[link.Destination], false); // TODO: ensure that nodes are listed in RouteNodes in consecutive order ...
 			}
 		}
 
@@ -1642,19 +1644,18 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnOgClick(object sender, EventArgs e)
 		{
-			if (_ogId < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
+			int id = _ogIds.Pop();
+			if (id < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
 			{
-				if (NodeSelected == null || _ogId != NodeSelected.Id)
+				if (NodeSelected == null || id != NodeSelected.Id)
 				{
-					SelectNode(_ogId);
+					SelectNode(id);
 					OnOgMouseEnter(null, EventArgs.Empty); // update Og info
 				}
 			}
-			else
-			{
-				ObserverManager.RouteView   .Control     .bu_Og.Enabled =
-				ObserverManager.TopRouteView.ControlRoute.bu_Og.Enabled = false;
-			}
+
+			if (_ogIds.Count == 0)
+				EnableOgButton(false);
 
 			RouteControl.Select();
 		}
@@ -1666,25 +1667,30 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnOgMouseEnter(object sender, EventArgs e)
 		{
-			if (_ogId < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
+			if (_ogIds.Count != 0)
 			{
-				RouteNode node = MapFile.Routes[_ogId];
-				RouteControl.SetSpot(new Point(node.Col, node.Row));
+				int id = _ogIds.Peek();
+				if (id < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
+				{
+					RouteNode node = MapFile.Routes[id];
+					RouteControl.SetSpot(new Point(node.Col, node.Row));
 
-				RouteControl.Refresh();
-//				RefreshControls();
+					RouteControl.Refresh();
+//					RefreshControls();
 
-				PrintGoInfo(node, true);
+					PrintGoInfo(node, true);
+				}
 			}
 		}
 
 		/// <summary>
 		/// Disables the Og button when a Map gets loaded.
 		/// </summary>
-		internal static void DisableOg()
+		/// <param name="enable"></param>
+		internal static void EnableOgButton(bool enable)
 		{
 			ObserverManager.RouteView   .Control     .bu_Og.Enabled =
-			ObserverManager.TopRouteView.ControlRoute.bu_Og.Enabled = false;
+			ObserverManager.TopRouteView.ControlRoute.bu_Og.Enabled = enable;
 		}
 		#endregion Events (LinkData)
 
