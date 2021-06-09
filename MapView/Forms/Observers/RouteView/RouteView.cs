@@ -1027,8 +1027,7 @@ namespace MapView.Forms.Observers
 					co_unit.SelectedItem = link.Unit;
 					bu_go.Enabled = link.IsNodelink();
 
-					dest = link.Destination;
-					if (link.IsUsed())
+					if ((dest = link.Destination) != Link.NotUsed)
 					{
 						bu_go  .Text = Go;
 						la_dist.Text = link.Distance + GetDistanceArrow(slot);
@@ -1516,7 +1515,9 @@ namespace MapView.Forms.Observers
 			}
 			else
 			{
-				_ogIds.Push(NodeSelected.Id);
+				if (_ogIds.Count == 0 || _ogIds.Peek() != NodeSelected.Id)
+					_ogIds.Push(NodeSelected.Id);
+
 				EnableOgButton(true);
 
 				SelectNode(dest);
@@ -1645,7 +1646,7 @@ namespace MapView.Forms.Observers
 		private void OnOgClick(object sender, EventArgs e)
 		{
 			int id = _ogIds.Pop();
-			if (id < MapFile.Routes.Nodes.Count) // in case nodes were deleted.
+			if (id < MapFile.Routes.Nodes.Count) // in case nodes were deleted. TODO: check deleted nodes against ogIds as a List<int>
 			{
 				if (NodeSelected == null || id != NodeSelected.Id)
 				{
