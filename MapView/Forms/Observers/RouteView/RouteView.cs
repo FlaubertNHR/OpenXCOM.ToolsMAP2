@@ -50,9 +50,9 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Stores the current node-id when a Go button is clicked. Used to
-		/// re-select a previous node(s) - which is not be equivalent to "Back"
-		/// (if there were a Back button) since only nodes that were selected by
-		/// the Go button get pushed onto the stack.
+		/// re-select previous node(s) - which is not equivalent to "Back" (if
+		/// there were a Back button) since only nodes that were selected by the
+		/// Go button get pushed onto the stack.
 		/// </summary>
 		private static Stack<int> _ogIds = new Stack<int>();
 
