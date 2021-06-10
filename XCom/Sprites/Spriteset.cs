@@ -144,8 +144,18 @@ namespace XCom
 		/// cTor[0]. Creates a quick and dirty blank spriteset.
 		/// </summary>
 		/// <param name="label">file w/out path or extension</param>
-		/// <param name="pal"></param>
-		/// <param name="tabwordLength"></param>
+		/// <param name="pal">the <c><see cref="Palette"/></c> to use (typically
+		/// <c><see cref="Palette.UfoBattle">Palette.UfoBattle</see></c> for
+		/// UFO-sprites or <c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c>
+		/// for TFTD-sprites)</param>
+		/// <param name="tabwordLength"><c><see cref="SpritesetManager.TAB_WORD_LENGTH_2">SpritesetManager.TAB_WORD_LENGTH_2</see></c>
+		/// for terrains/bigobs/ufo-units, <c><see cref="SpritesetManager.TAB_WORD_LENGTH_4">SpritesetManager.TAB_WORD_LENGTH_4</see></c>
+		/// for tftd-units</param>
+		/// <remarks>A spriteset is created by
+		/// <list type="number">
+		/// <item><c>PckView.PckViewF.OnCreateClick()</c></item>
+		/// <item><c>McdView.TerrainPanel_main.addPart()</c></item>
+		/// </list></remarks>
 		public Spriteset(
 				string label,
 				Palette pal,
@@ -208,11 +218,11 @@ namespace XCom
 		/// 
 		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c> crippled sprites</item>
 		/// <item><c>PckView.PckViewF.LoadSpriteset(string, bool)</c></item>
-		/// <item><c>McdViewF.OnClick_Create()</c></item>
-		/// <item><c>McdViewF.LoadTerrain()</c></item>
-		/// <item><c>McdViewF.OnClick_Reload()</c></item>
-		/// <item><c>McdViewF.LoadRecords()</c></item>
-		/// <item><c>McdViewF.OpenCopier()</c></item>
+		/// <item><c>McdView.McdViewF.OnClick_Create()</c></item>
+		/// <item><c>McdView.McdViewF.LoadTerrain()</c></item>
+		/// <item><c>McdView.McdViewF.OnClick_Reload()</c></item>
+		/// <item><c>McdView.McdViewF.LoadRecords()</c></item>
+		/// <item><c>McdView.McdViewF.OpenCopier()</c></item>
 		/// </list></remarks>
 		public Spriteset(
 				string label,
