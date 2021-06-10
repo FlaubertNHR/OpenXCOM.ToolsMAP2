@@ -8,19 +8,25 @@ namespace DSShared.Controls
 {
 	// https://stackoverflow.com/questions/7768555/tabcontrol-and-borders-visual-glitch/7785745#7785745
 	/// <summary>
-	/// Dedicated to the pursuit of inelegant .NET workarounds.
-	/// eg,
+	/// A NativeWindow that hides the ugly border around tab-pages.
+	/// </summary>
+	/// <example><code>
 	/// public Form1()
 	/// {
-	/// 	InitializeComponent();
-	/// 	var tpBorder = new TabPageBorder(tabControl);	// ca1804: "Use this variable or remove it."
-	/// 	// or
-	/// 	new TabPageBorder(tabControl1);					// "Possible unassigned object creating by 'new' expression."
-	/// 	// so ->
-	/// 	var tpBorder = new TabPageBorder(tabControl);	// foff thx!
-	/// 	tpBorder.TabPageBorder_init();
+	///     InitializeComponent();
+	///
+	///     var tpBorder = new TabPageBorder(tabControl);
+	///     // ca1804: "Use this variable or remove it."
+	///     // or
+	///     new TabPageBorder(tabControl1);
+	///     // "Possible unassigned object creating by 'new' expression."
+	///     // so ->
+	///     var tpBorder = new TabPageBorder(tabControl);
+	///     tpBorder.TabPageBorder_init();
+	///     // foff thx!
 	/// }
-	/// </summary>
+	/// </code></example>
+	/// <remarks>Dedicated to the pursuit of inelegant .NET workarounds.</remarks>
 	public sealed class TabPageBorder
 		:
 			NativeWindow
