@@ -499,14 +499,11 @@ namespace MapView.Forms.Observers
 		{
 			MapFile file = ObserverManager.TopView.Control.TopControl.MapFile;
 
-			int c = location.Col;
-			int r = location.Row;
-			int l = file.Levs - file.Level;
-
-			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-			if (!MainViewF.Optionables.Base1_z) { --l; }
-
-			string loc = "c " + c + "  r " + r + "  L " + l;
+			string loc = Globals.GetLocationString(
+												location.Col,
+												location.Row,
+												file.Level,
+												file.Levs);
 
 			int w = TextRenderer.MeasureText(loc, LocationFont).Width;
 			if (StartX + Quadwidth * (QuadrantPart + 1) - MarginHori + w < panelwidth)
@@ -533,14 +530,11 @@ namespace MapView.Forms.Observers
 				int panelheight,
 				MapFile file)
 		{
-			int c = location.X;
-			int r = location.Y;
-			int l = file.Levs - file.Level;
-
-			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-			if (!MainViewF.Optionables.Base1_z) { --l; }
-
-			string loc = "c " + c + "  r " + r + "  L " + l;
+			string loc = Globals.GetLocationString(
+												location.X,
+												location.Y,
+												file.Level,
+												file.Levs);
 
 			int x = panelwidth - TextRenderer.MeasureText(loc, LocationFont).Width;
 			int y = panelheight - 20;

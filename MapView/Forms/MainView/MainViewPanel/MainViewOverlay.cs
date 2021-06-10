@@ -1231,14 +1231,11 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private void PrintSelectorLocation()
 		{
-			int c = _col;
-			int r = _row;
-			int l = MapFile.Levs - MapFile.Level;
-
-			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-			if (!MainViewF.Optionables.Base1_z) { --l; }
-
-			string loc = "c " + c + "  r " + r + "  L " + l;
+			string loc = Globals.GetLocationString(
+												_col,
+												_row,
+												MapFile.Level,
+												MapFile.Levs);
 
 			int x = Width - TextRenderer.MeasureText(loc, LocationFont).Width;
 			int y = Height - 20;

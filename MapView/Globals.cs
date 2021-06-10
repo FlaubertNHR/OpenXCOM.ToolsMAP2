@@ -71,6 +71,28 @@ namespace MapView
 
 			return val;
 		}
+
+
+		/// <summary>
+		/// Gets a c/r/L location in standard format.
+		/// </summary>
+		/// <param name="c">col</param>
+		/// <param name="r">row</param>
+		/// <param name="l">lev</param>
+		/// <param name="levels">total levels of the current Map</param>
+		/// <returns>the given location as a string</returns>
+		internal static string GetLocationString(
+				int c, int r, int l,
+				int levels)
+		{
+			l = levels - l; // invert
+
+			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
+			if (!MainViewF.Optionables.Base1_z) { --l; }
+
+			return "c " + c + "  r " + r + "  L " + l;
+
+		}
 		#endregion
 	}
 }

@@ -3563,15 +3563,11 @@ namespace MapView
 			if (MainViewOverlay.FirstClick)
 			{
 				MapFile file = MainViewUnderlay.MapFile;
-
-				int c = file.Location.Col;
-				int r = file.Location.Row;
-				int l = file.Levs - file.Level;
-
-				if (Optionables.Base1_xy) { ++c; ++r; }
-				if (!Optionables.Base1_z) { --l; }
-
-				tsslPosition.Text = "c " + c + "  r " + r + "  L " + l;
+				tsslPosition.Text = Globals.GetLocationString(
+															file.Location.Col,
+															file.Location.Row,
+															file.Level,
+															file.Levs);
 			}
 		}
 

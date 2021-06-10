@@ -430,16 +430,12 @@ namespace MapView.Forms.Observers
 
 			if (RouteControl._col != -1)
 			{
-				info += Environment.NewLine;
-
-				int c = RouteControl._col;
-				int r = RouteControl._row;
-				int l = MapFile.Levs - MapFile.Level;
-
-				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-				if (!MainViewF.Optionables.Base1_z) { --l; }
-
-				info += "c " + c + "  r " + r + "  L " + l;
+				info += Environment.NewLine
+					 + Globals.GetLocationString(
+											RouteControl._col,
+											RouteControl._row,
+											MapFile.Level,
+											MapFile.Levs);
 			}
 
 			ObserverManager.RouteView   .Control     .la_Over.Text =
@@ -447,7 +443,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Prints mouseovered Go button link-node info to the TileData
+		/// Prints mouseovered Go (or Og) button link-node info to the TileData
 		/// groupbox.
 		/// </summary>
 		/// <param name="node"></param>
@@ -469,25 +465,19 @@ namespace MapView.Forms.Observers
 			if (isog) info = "Og ";
 			else      info = "Link ";
 
-			info += node.Id + Environment.NewLine;
-
-			int c = node.Col;
-			int r = node.Row;
-			int l = MapFile.Levs - node.Lev;
-
-			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-			if (!MainViewF.Optionables.Base1_z) { --l; }
-
-			info += "c " + c + "  r " + r + "  L " + l;
-
-			la_Over.Text = info; // only this RouteView.
+			la_Over.Text = info + node.Id + Environment.NewLine // only this RouteView.
+						 + Globals.GetLocationString(
+												node.Col,
+												node.Row,
+												node.Lev,
+												MapFile.Levs);
 		}
 
 
 		/// <summary>
 		/// Prints the currently selected tile-info to the TileData groupbox.
-		/// NOTE: The displayed level is inverted here.
 		/// </summary>
+		/// <remarks>The displayed level is inverted.</remarks>
 		internal void PrintSelectedInfo()
 		{
 			if (MainViewOverlay.that.FirstClick)
@@ -509,16 +499,12 @@ namespace MapView.Forms.Observers
 					color = Optionables.NodeSelectedColor;
 				}
 
-				info += Environment.NewLine;
-
-				int c = MapFile.Location.Col;
-				int r = MapFile.Location.Row;
-				int l = MapFile.Levs - level;
-
-				if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-				if (!MainViewF.Optionables.Base1_z) { --l; }
-
-				info += "c " + c + "  r " + r + "  L " + l;
+				info += Environment.NewLine
+					  + Globals.GetLocationString(
+											MapFile.Location.Col,
+											MapFile.Location.Row,
+											level,
+											MapFile.Levs);
 
 				la_Selected.ForeColor = color;
 				la_Selected.Text = info;
