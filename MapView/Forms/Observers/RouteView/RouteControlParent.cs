@@ -19,7 +19,7 @@ namespace MapView.Forms.Observers
 		:
 			UserControl
 	{
-		public void DisposeControlParent()
+		protected void DisposeControlParent()
 		{
 			DSShared.LogFile.WriteLine("RouteControlParent.DisposeControlParent()");
 			_t1.Dispose();

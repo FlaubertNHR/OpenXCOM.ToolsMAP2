@@ -18,34 +18,6 @@ namespace XCom
 		:
 			XCImage
 	{
-//		#region disposal
-//		private bool _disposed; // <- probably for multithreaded stuff
-//
-//		protected override void Dispose(bool disposing)
-//		{
-//			// NOTE: Do not dispose '_spriteset'. Let it get disposed elsewhere.
-//
-//			if (!_disposed)
-//			{
-//				try
-//				{
-//					if (disposing) // DISPOSE OF MANAGED RESOURCES HERE ->
-//					{
-//						SpriteToned.Dispose();
-//						SpriteToned = null; // pointless.
-//					}
-//					// DISPOSE OF UN-MANAGED RESOURCES HERE ->
-//				}
-//				finally
-//				{
-//					_disposed = true;
-//					base.Dispose(disposing);
-//				}
-//			}
-//		}
-//		#endregion disposal
-
-
 		#region Fields (static)
 		/// <summary>
 		/// A marker that is inserted into the file-data that indicates that an

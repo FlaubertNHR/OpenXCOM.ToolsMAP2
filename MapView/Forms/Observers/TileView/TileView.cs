@@ -26,85 +26,51 @@ namespace MapView.Forms.Observers
 		:
 			ObserverControl // UserControl, IObserver
 	{
-		#region IDisposable interface
-		// https://dave-black.blogspot.com/2011/03/how-do-you-properly-implement.html
-
-		/// <summary>
-		/// Gets or sets a value indicating whether this instance is disposed.
-		/// </summary>
-		/// <value><c>true</c> if this instance is disposed</value>
-		/// <remarks>Default initialization for a bool is <c>false</c>.</remarks>
-		private bool _disposed;
-
-		/// <summary>
-		/// Overloaded Implementation of Dispose.
-		/// </summary>
-		/// <param name="disposing"><c>true</c> to release both managed and
-		/// unmanaged resources; <c>false</c> to release only unmanaged
-		/// resources.</param>
-		/// <remarks>
-		/// <list>Dispose(bool isDisposing) executes in two distinct scenarios.
-		///   <item>If <paramref name="disposing"/> equals <c>true</c> the
-		///   method has been called directly or indirectly by a user's code.
-		///   Managed and unmanaged resources can be disposed.</item>
-		///   <item>If <paramref name="disposing"/> equals <c>false</c> the
-		///   method has been called by the runtime from inside the finalizer
-		///   and you should not reference other objects. Only unmanaged
-		///   resources can be disposed.</item>
-		/// </list>
-		/// </remarks>
-		protected override void Dispose(bool disposing)
+		internal void DisposeObserver()
 		{
-			LogFile.WriteLine("TileView.Dispose(" + disposing + ")");
-			try
+			LogFile.WriteLine("TileView.DisposeObserver()");
+			if (ContextMenu != null)
 			{
-				if (!_disposed && disposing)
-				{
-//					if (_foptions != null) // static object
-//					{
-//						_foptions.Dispose();
-//						_foptions = null;
-//					}
+				DisposeContext(); // paranoia ... this is .net disposal stuff after all.
 
-					if (ContextMenu != null)
-					{
-//						DisposeContext(); // paranoia ...
-						ContextMenu.Dispose();
-						ContextMenu = null;
-					}
-
-					if (McdInfo != null)
-					{
-						McdInfo.Dispose();
-						McdInfo = null;
-					}
-				}
+				ContextMenu.Dispose();
+				ContextMenu = null;
 			}
-			finally
+
+			if (McdInfo != null)
 			{
-				_disposed = true;
-				base.Dispose(disposing);
+				McdInfo.Dispose();
+				McdInfo = null;
 			}
+
+			if (_t1 != null)
+			{
+				_t1.Tick -= t1_OnTick; // not a problem if already unsubscribed.
+				_t1.Dispose();
+//				_t1 = null;
+			}
+
+			// TODO: _foptions - look closer
+
+			TilePanel.DisposePanel();
 		}
 
-//		private void DisposeContext()
-//		{
-//			ContextMenu.MenuItems[3].Click -= OnMcdInfoClick;
-//			ContextMenu.MenuItems[3].Dispose();
-//			ContextMenu.MenuItems.RemoveAt(3);
-//
-//			ContextMenu.MenuItems[2].Dispose();
-//			ContextMenu.MenuItems.RemoveAt(2);
-//
-//			ContextMenu.MenuItems[1].Click -= OnMcdViewClick;
-//			ContextMenu.MenuItems[1].Dispose();
-//			ContextMenu.MenuItems.RemoveAt(1);
-//
-//			ContextMenu.MenuItems[0].Click -= OnPckViewClick;
-//			ContextMenu.MenuItems[0].Dispose();
-//			ContextMenu.MenuItems.RemoveAt(0);
-//		}
-		#endregion IDisposable interface
+		/// <summary>
+		/// Disposes the context paranoicly.
+		/// </summary>
+		private void DisposeContext()
+		{
+			ContextMenu.MenuItems[3].Click -= OnMcdInfoClick;
+			ContextMenu.MenuItems[3].Dispose();
+
+			ContextMenu.MenuItems[2].Dispose();
+
+			ContextMenu.MenuItems[1].Click -= OnMcdViewClick;
+			ContextMenu.MenuItems[1].Dispose();
+
+			ContextMenu.MenuItems[0].Click -= OnPckViewClick;
+			ContextMenu.MenuItems[0].Dispose();
+		}
 
 
 		#region Events
@@ -123,6 +89,8 @@ namespace MapView.Forms.Observers
 		#region Fields
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
+
+		private readonly Timer _t1 = new Timer();
 		#endregion Fields
 
 
@@ -214,7 +182,7 @@ namespace MapView.Forms.Observers
 //			tcPartTypes.MouseWheel           += tabs_OnMouseWheel;
 			tcPartTypes.SelectedIndexChanged += tabs_OnSelectedIndexChanged;
 
-			TilePanel.Chaparone = this;
+			TilePanel.TileView = this;
 
 			tpFloors    .Text = QuadrantDrawService.Floor;
 			tpWestwalls .Text = QuadrantDrawService.West;
@@ -242,11 +210,13 @@ namespace MapView.Forms.Observers
 			AddPanel(tpNorthwalls, northwalls);
 			AddPanel(tpContents,   content);
 
-			_allTiles.SetTickerSubscription(true);
-
 			ssStatus.Renderer = new CustomToolStripRenderer();
 
 			CreateContext();
+
+			_t1.Tick += t1_OnTick;			// Because the mouse OnLeave event doesn't
+			_t1.Interval = Globals.PERIOD;	// fire when the mouse moves out of the
+			_t1.Enabled = true;				// panel directly from a tilepart's icon.
 		}
 
 		/// <summary>
@@ -258,7 +228,7 @@ namespace MapView.Forms.Observers
 		/// <param name="panel"></param>
 		private void AddPanel(Control page, TilePanel panel)
 		{
-			panel.TilepartSelected += panel_OnTilepartSelected;
+			panel.TilepartSelected += panel_OnTilepartSelected; // 'this' won't be released until all panels are disposed.
 			page.Controls.Add(panel);
 		}
 
@@ -293,6 +263,17 @@ namespace MapView.Forms.Observers
 
 
 		#region Events
+		/// <summary>
+		/// Clears OverInfo on the statusbar when the cursor is not in a panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void t1_OnTick(object sender, EventArgs e)
+		{
+			if (tsslOver.Text.Length != 0)
+				GetSelectedPanel().ElvisHasLeft();
+		}
+
 /*		/// <summary>
 		/// Is supposed to flip through the tabs on mousewheel events when the
 		/// tabcontrol is focused, but focus switches to the page's panel ...
@@ -325,10 +306,6 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void tabs_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
-			TilePanel current = GetSelectedPanel();
-			foreach (var panel in _panels)
-				panel.SetTickerSubscription(panel == current);
-
 			panel_OnTilepartSelected(SelectedTilepart);
 		}
 

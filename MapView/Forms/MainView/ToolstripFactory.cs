@@ -9,15 +9,17 @@ using XCom;
 
 namespace MapView.Forms.MainView
 {
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
 	internal sealed class ToolstripFactory
-		:
-			IDisposable
 	{
 		/// <summary>
 		/// Disposal isn't necessary since this object lasts the lifetime of the
 		/// app. But FxCop gets antsy ....
 		/// </summary>
-		public void Dispose()
+		internal void Dispose()
 		{
 			DSShared.LogFile.WriteLine("ToolstripFactory.Dispose()");
 			_tsbCopy       .Dispose();
@@ -209,11 +211,11 @@ namespace MapView.Forms.MainView
 		/// TopRouteView(Top).
 		/// </summary>
 		/// <param name="ts">a toolstrip to put the buttons in</param>
-		/// <param name="tertiary">false for MainView's toolstrip, true for
+		/// <param name="observer">false for MainView's toolstrip, true for
 		/// TopView's and TopRouteView's toolstrips</param>
 		internal void CreateEditorTools(
 				ToolStrip ts,
-				bool tertiary = false)
+				bool observer = false)
 		{
 			ToolStripSeparator tss1;
 
@@ -233,7 +235,7 @@ namespace MapView.Forms.MainView
 
 			ToolStripSeparator tss4;
 
-			if (tertiary)
+			if (observer)
 			{
 				tss1      = new ToolStripSeparator();
 				tsbDown   = new ToolStripButton();

@@ -11,15 +11,14 @@ namespace MapView.Forms.Observers
 	/// Draws floor- and wall- and content-blobs for <see cref="TopView"/> and
 	/// <see cref="RouteView"/>.
 	/// </summary>
+	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
 	internal sealed class BlobDrawService
-		:
-			IDisposable
 	{
 		/// <summary>
 		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
 		/// of the app. But FxCop gets antsy ....
 		/// </summary>
-		public void Dispose()
+		internal void Dispose()
 		{
 			DSShared.LogFile.WriteLine("BlobDrawService.Dispose()");
 			_floor  .Dispose();

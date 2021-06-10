@@ -23,7 +23,7 @@ namespace MapView.Forms.MainView
 		:
 			BufferedPanel // god I hate these double-panels!!!! cf. MainViewUnderlay
 	{
-		public void DisposeOverlay()
+		internal void DisposeOverlay()
 		{
 			LogFile.WriteLine("MainViewOverlay.DisposeOverlay()");
 			LocationFont.Dispose();

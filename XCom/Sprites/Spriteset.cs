@@ -12,16 +12,15 @@ namespace XCom
 	/// a SPRITESET: A collection of images that is usually created of PCK/TAB
 	/// terrain file data but can also be bigobs or a ScanG iconset.
 	/// </summary>
+	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
 	public sealed class Spriteset
-		:
-			IDisposable
 	{
-		#region Methods (IDisposable)
+		#region Methods (disposable)
 		/// <summary>
 		/// Disposes all <see cref="XCImage"/>s in <see cref="Sprites"/> and
 		/// clears the list.
 		/// </summary>
-		/// <remarks>The spriteset itself remains valid along with the cleared
+		/// <remarks>This spriteset itself remains valid along with the cleared
 		/// sprites-list.</remarks>
 		public void Dispose()
 		{
@@ -31,7 +30,7 @@ namespace XCom
 
 			Sprites.Clear();
 		}
-		#endregion Methods (IDisposable)
+		#endregion Methods (disposable)
 
 
 		#region Fields (static)

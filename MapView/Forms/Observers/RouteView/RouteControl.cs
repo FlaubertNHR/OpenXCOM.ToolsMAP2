@@ -18,7 +18,7 @@ namespace MapView.Forms.Observers
 		:
 			RouteControlParent
 	{
-		public void DisposeControl()
+		internal void DisposeControl()
 		{
 			DSShared.LogFile.WriteLine("RouteControl.DisposeControl()");
 			BrushOverlayBlue .Dispose();

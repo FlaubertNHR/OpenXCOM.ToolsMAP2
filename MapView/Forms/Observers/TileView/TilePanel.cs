@@ -21,9 +21,21 @@ namespace MapView.Forms.Observers
 		:
 			BufferedPanel
 	{
-		#region IDisposable interface
+		internal static void DisposePanel()
+		{
+			DSShared.LogFile.WriteLine("TilePanel.DisposePanel() static");
+			if (PenRed != null) // static object
+			{
+				PenRed.Dispose();
+//				PenRed = null;
+			}
+		}
+
+
+/*		#region IDisposable interface
 		// https://www.codeproject.com/articles/29534/idisposable-what-your-mother-never-told-you-about
 		// https://dave-black.blogspot.com/2011/03/how-do-you-properly-implement.html
+		// etc etc etc
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is disposed.
@@ -137,16 +149,15 @@ namespace MapView.Forms.Observers
 				base.Dispose(disposing);
 			}
 		}
-		#endregion IDisposable interface
+		#endregion IDisposable interface */
 
 
 		internal delegate void TilepartSelectedEvent(Tilepart part);
-
 		internal event TilepartSelectedEvent TilepartSelected;
 
 
 		#region Fields (static)
-		internal static TileView Chaparone;
+		internal static TileView TileView;
 
 		private const int SpriteMargin = 2;
 		private const int SpriteWidth  = XCImage.SpriteWidth32  + SpriteMargin * 2;
@@ -159,8 +170,6 @@ namespace MapView.Forms.Observers
 							 new Dictionary<SpecialType, SolidBrush>();
 
 		private static readonly Pen PenRed = new Pen(Color.Red, 3);
-
-		private static readonly Timer _t1 = new Timer();
 
 		private const string Door = "door";
 		private static int TextWidth;
@@ -190,7 +199,8 @@ namespace MapView.Forms.Observers
 		/// Sets the selected-tilepart when a valid QuadrantControl quad is
 		/// double-clicked.
 		/// </summary>
-		/// <remarks>The setter is invoked only by TileView.SelectedTilepart.</remarks>
+		/// <remarks>The setter is used only by
+		/// <see cref="TileView.SelectedTilepart">TileView.SelectedTilepart</see>.</remarks>
 		internal Tilepart SelectedTilepart
 		{
 			get
@@ -210,8 +220,8 @@ namespace MapView.Forms.Observers
 				else
 					_id = 0;
 
-				if (TilepartSelected != null)
-					TilepartSelected(SelectedTilepart);
+//				if (TilepartSelected != null)
+				TilepartSelected(SelectedTilepart);
 
 				ScrollToTile();
 			}
@@ -238,41 +248,22 @@ namespace MapView.Forms.Observers
 			_scrollBar.LargeChange = _largeChange;
 			_scrollBar.SmallChange = 1;
 			_scrollBar.ValueChanged += OnScrollBarValueChanged;
-
 			Controls.Add(_scrollBar);
 
 			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
-
-			_t1.Interval = Globals.PERIOD;	// because the mouse OnLeave event doesn't fire
-			_t1.Enabled = true;				// when the mouse moves out of the panel directly
-		}									// from a tilepart's part-icon.
+		}
 		#endregion cTor
 
 
 		#region Events
 		/// <summary>
-		/// Ensures that any OverInfo on the statusbar is cleared when the
-		/// mouse-cursor leaves this panel.
+		/// Clears OverInfo on the statusbar when the cursor is not in a panel.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void t1_Tick(object sender, EventArgs e)
+		internal void ElvisHasLeft()
 		{
 			if (!Bounds.Contains(PointToClient(Control.MousePosition)))
-				Chaparone.PrintOverInfo(null);
+				TileView.PrintOverInfo(null);
 		}
-
-		/// <summary>
-		/// Subscribes or unsubscribes this panel's ticker-handler to the static
-		/// timer-object; prevents all 5 panels' handlers from firing needlessly.
-		/// </summary>
-		/// <param name="subscribe"></param>
-		internal void SetTickerSubscription(bool subscribe)
-		{
-			if (subscribe) _t1.Tick += t1_Tick;
-			else           _t1.Tick -= t1_Tick;
-		}
-
 		/// <summary>
 		/// Invalidates this TilePanel if tileparts are being animated.
 		/// </summary>
@@ -378,8 +369,8 @@ namespace MapView.Forms.Observers
 			{
 				_id = id;
 
-				if (TilepartSelected != null)
-					TilepartSelected(SelectedTilepart);
+//				if (TilepartSelected != null)
+				TilepartSelected(SelectedTilepart);
 
 				ScrollToTile();
 				Invalidate();
@@ -469,8 +460,8 @@ namespace MapView.Forms.Observers
 			{
 				_id = id;
 
-				if (TilepartSelected != null)
-					TilepartSelected(SelectedTilepart);
+//				if (TilepartSelected != null)
+				TilepartSelected(SelectedTilepart);
 
 				ScrollToTile();
 				Invalidate();
@@ -490,7 +481,7 @@ namespace MapView.Forms.Observers
 				switch (e.Button)
 				{
 					case MouseButtons.Left:
-						Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
+						TileView.OnMcdInfoClick(null, EventArgs.Empty);
 						break;
 				}
 			}
@@ -503,7 +494,7 @@ namespace MapView.Forms.Observers
 		protected override void OnKeyUp(KeyEventArgs e)
 		{
 			if (e.KeyData == Keys.I)
-				Chaparone.OnMcdInfoClick(null, EventArgs.Empty);
+				TileView.OnMcdInfoClick(null, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -518,7 +509,7 @@ namespace MapView.Forms.Observers
 			if (id != -1 && id < _parts.Length)
 				part = _parts[id];
 
-			Chaparone.PrintOverInfo(part);
+			TileView.PrintOverInfo(part);
 		}
 
 		/// <summary>

@@ -957,13 +957,13 @@ namespace MapView
 
 			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
-			QuadrantDrawService.DisposeService();
 
 			MonotoneSprites.Dispose();
 			CuboidSprite.DisposeCursorset();
 
 			Tilepart.DisposeCrippledSprites();	// NOTE: .net will try to draw the MainView panel again but
 												// if the tileset has crippled sprites it throws.
+
 			MainViewOverlay .DisposeOverlay();
 			MainViewUnderlay.DisposeUnderlay();
 
@@ -972,7 +972,10 @@ namespace MapView
 
 
 			// static
-			QuadrantControl.DisposeControl();
+			Palette             .DisposeMonoBrushes();
+
+			QuadrantControl     .DisposeControl();
+			QuadrantDrawService .DisposeService();
 
 			TileViewOptionables .DisposeOptionables();
 			TopViewOptionables  .DisposeOptionables();
@@ -982,9 +985,6 @@ namespace MapView
 
 			ObserverManager.RouteView   .Control     .RouteControl.DisposeControl();
 			ObserverManager.TopRouteView.ControlRoute.RouteControl.DisposeControl();
-
-
-			Palette.DisposeMonoBrushes();
 
 
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.MainView;
 
 
@@ -19,7 +21,7 @@ namespace MapView.Forms.Observers
 			IObserverProvider
 	{
 		#region Fields
-		private TileView _tileView;
+		private TileView _tile;
 		#endregion Fields
 
 
@@ -29,7 +31,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal TileView Control
 		{
-			get { return _tileView; }
+			get { return _tile; }
 		}
 
 		/// <summary>
@@ -38,7 +40,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>Satisfies <see cref="IObserverProvider"/>.</remarks>
 		public ObserverControl Observer
 		{
-			get { return _tileView; }
+			get { return _tile; }
 		}
 		#endregion Properties
 
@@ -51,8 +53,8 @@ namespace MapView.Forms.Observers
 		{
 			InitializeComponent();
 
-			_tileView = new TileView();
-			Controls.Add(_tileView);
+			_tile = new TileView();
+			Controls.Add(_tile);
 		}
 		#endregion cTor
 
@@ -68,7 +70,7 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			_tileView.GetSelectedPanel().Focus();
+			_tile.GetSelectedPanel().Focus();
 
 //			base.OnActivated(e);
 		}
@@ -85,7 +87,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			TilePanel panel = _tileView.GetSelectedPanel();
+			TilePanel panel = _tile.GetSelectedPanel();
 			if (panel.Focused)
 			{
 				switch (keyData)
@@ -118,12 +120,12 @@ namespace MapView.Forms.Observers
 			{
 				case Keys.Escape:
 					e.SuppressKeyPress = true;
-					_tileView.GetSelectedPanel().Focus();
+					_tile.GetSelectedPanel().Focus();
 					break;
 
 				case Keys.Control | Keys.O:
 					e.SuppressKeyPress = true;
-					_tileView.OnOptionsClick(_tileView.GetOptionsButton(), EventArgs.Empty);
+					_tile.OnOptionsClick(_tile.GetOptionsButton(), EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.Q:
@@ -138,7 +140,7 @@ namespace MapView.Forms.Observers
 				case Keys.Control | Keys.Home:
 				case Keys.Control | Keys.End:
 				{
-					TilePanel panel = _tileView.GetSelectedPanel();
+					TilePanel panel = _tile.GetSelectedPanel();
 					if (panel.Focused)
 					{
 						e.SuppressKeyPress = true;
@@ -152,6 +154,27 @@ namespace MapView.Forms.Observers
 					break;
 			}
 			base.OnKeyDown(e);
+		}
+
+		/// <summary>
+		/// Handles the FormClosing event. Ensures that the TestPartslots dialog
+		/// gets closed.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+//				if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed)
+//				{
+//					TopView._fpartslots.Close();
+//					TopView._fpartslots = null;
+//				}
+
+				if (MainViewF.Quit) // else just hide
+					_tile.DisposeObserver();
+			}
+			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
 	}

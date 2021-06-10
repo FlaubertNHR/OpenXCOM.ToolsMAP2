@@ -7,76 +7,30 @@ namespace XCom
 	/// <summary>
 	/// A container for storing data about an XCOM image.
 	/// </summary>
+	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
 	public class XCImage
-		:
-			IDisposable
 	{
-		#region Methods (IDisposable)
+		#region Methods (disposable)
 		/// <summary>
 		/// Disposes the Bitmaps 'Sprite' and 'SpriteToned' if applicable.
 		/// </summary>
 		public void Dispose()
 		{
 			DSShared.LogFile.WriteLine("XCImage.Dispose()");
-//			Sprite.Dispose();
-//
-//			var sprite = this as PckSprite;
-//			if (sprite != null && sprite.SpriteToned != null)
-//				sprite.SpriteToned.Dispose();
-
-			// fxCop ca1063
-			Dispose(true);
-//			GC.SuppressFinalize(this); // there is no finalizer.
-		}
-		#endregion Methods (IDisposable)
-
-
-		#region fxCop ca1063
-		private bool _disposed; // <- probably for multithreaded stuff
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!_disposed)
+			if (Sprite != null)
 			{
-//				try
-//				{
-				if (disposing)
-				{
-					if (Sprite != null)
-					{
-						Sprite.Dispose();
-						Sprite = null; // pointless. not necessarily ...
-					}
+				Sprite.Dispose();
+				Sprite = null; // pointless. not necessarily ...
+			}
 
-					var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
-					if (sprite != null && sprite.SpriteToned != null)
-					{
-						sprite.SpriteToned.Dispose();
-						sprite.SpriteToned = null; // pointless. not necessarily ...
-					}
-				}
-
-//				if (nativeResource != IntPtr.Zero) // dispose unmanaged resources here ->
-//				{
-//					Marshal.FreeHGlobal(nativeResource);
-//					nativeResource = IntPtr.Zero;
-//				}
-//				}
-//				finally
-//				{
-				_disposed = true;
-//				}
+			var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
+			if (sprite != null && sprite.SpriteToned != null)
+			{
+				sprite.SpriteToned.Dispose();
+				sprite.SpriteToned = null; // pointless. not necessarily ...
 			}
 		}
-
-		// NOTE: Leave out the finalizer altogether if this class doesn't own
-		// unmanaged resources itself but leave the other methods exactly as
-		// they are.
-//		~XCImage()
-//		{
-//			Dispose(false);
-//		}
-		#endregion fxCop ca1063
+		#endregion Methods (disposable)
 
 
 		#region Fields (static)
