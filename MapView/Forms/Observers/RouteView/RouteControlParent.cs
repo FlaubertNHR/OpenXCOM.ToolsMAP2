@@ -45,14 +45,14 @@ namespace MapView.Forms.Observers
 		/// Their values need to be updated only when the mouseovered
 		/// tile-location changes via <see cref="OnMouseMove"/>.
 		/// </summary>
-		internal protected int _col = -1;
+		internal int _col = -1;
 		/// <summary>
 		/// '_col' and '_row' track the location of the last mouse-overed tile;
 		/// '_col' needs to be set to "-1" when the mouse is not over a tile.
 		/// Their values need to be updated only when the mouseovered
 		/// tile-location changes via <see cref="OnMouseMove"/>.
 		/// </summary>
-		internal protected int _row = -1;
+		internal int _row = -1;
 
 		/// <summary>
 		/// Tracks tile-location for move/up/down mouse events: '_col' and
