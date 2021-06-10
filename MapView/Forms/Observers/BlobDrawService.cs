@@ -11,7 +11,7 @@ namespace MapView.Forms.Observers
 	/// Draws floor- and wall- and content-blobs for <see cref="TopView"/> and
 	/// <see cref="RouteView"/>.
 	/// </summary>
-	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
+	/// <remarks>This object is disposable but eff their <c>IDisposable</c> crap.</remarks>
 	internal sealed class BlobDrawService
 	{
 		/// <summary>

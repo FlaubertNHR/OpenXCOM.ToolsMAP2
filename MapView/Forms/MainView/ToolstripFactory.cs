@@ -12,7 +12,7 @@ namespace MapView.Forms.MainView
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
+	/// <remarks>This object is disposable but eff their <c>IDisposable</c> crap.</remarks>
 	internal sealed class ToolstripFactory
 	{
 		/// <summary>

@@ -8,7 +8,7 @@ namespace MapView.Forms.Observers
 	/// A BlobColorTool is used for drawing blobs in <see cref="TopView"/> and
 	/// <see cref="RouteView"/>.
 	/// </summary>
-	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
+	/// <remarks>This object is disposable but eff their <c>IDisposable</c> crap.</remarks>
 	internal sealed class BlobColorTool
 	{
 		/// <summary>

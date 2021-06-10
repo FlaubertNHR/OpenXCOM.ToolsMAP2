@@ -30,9 +30,10 @@ namespace XCom
 		/// next byte is a quantity of pixels that are transparent. This is part
 		/// of the RLE-compression.
 		/// </summary>
-		public const byte MarkerRle = 0xFE;	// the PCK-file uses 0xFE to flag a succeeding quantity of pixels
-											// as transparent. That is, it is *not* a color-id entry; it's
-											// just a marker in the Pck-file. Stop using it as a color-id entry.
+		/// <remarks>The PCK-file uses 0xFE to flag a succeeding quantity of
+		/// pixels as transparent. That is it is *not* a color-id entry; it's
+		/// just a marker in the Pck-file. Stop using it as a color-id entry.</remarks>
+		public const byte MarkerRle = 0xFE;
 
 		/// <summary>
 		/// The maximum valid color-id in a pck-packaged sprite.
@@ -41,8 +42,8 @@ namespace XCom
 
 		/// <summary>
 		/// Tracks the id of an image across all loaded terrainsets.
-		/// @note Used only by 'MapInfoDialog'.
 		/// </summary>
+		/// <remarks>Used only by 'MapInfoDialog'.</remarks>
 		private static int _setId = -1;
 		#endregion Fields (static)
 
@@ -64,19 +65,21 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Instantiates a PckSprite, based on an XCImage.
+		/// cTor[0]. Instantiates a <c><see cref="PckSprite"/></c>.
 		/// </summary>
-		/// <param name="bindata">the COMPRESSED source data</param>
-		/// <param name="pal"></param>
+		/// <param name="bindata">the COMPRESSED source-data</param>
+		/// <param name="pal">the <c><see cref="Palette"/></c></param>
 		/// <param name="id">the id of this sprite in its spriteset</param>
-		/// <param name="spriteset"></param>
-		/// <param name="bypassTonescales">true to not create Tonescaled sprites</param>
+		/// <param name="spriteset">the <c><see cref="Spriteset"/></c> this
+		/// belongs to</param>
+		/// <param name="bypassTonescaled">true to not create a <c><see cref="SpriteToned"/></c>
+		/// sprite</param>
 		internal PckSprite(
 				byte[] bindata,
 				Palette pal,
 				int id,
 				Spriteset spriteset,
-				bool bypassTonescales)
+				bool bypassTonescaled)
 			:
 				base(
 					new byte[XCImage.SpriteWidth
@@ -129,7 +132,7 @@ namespace XCom
 
 			// do NOT create ANY tone-scaled sprites for PckView or McdView nor
 			// MapView's MonotoneSprites or UFO/TFTD cursor-sprites
-			if (!bypassTonescales)
+			if (!bypassTonescaled)
 				SpriteToned = BitmapService.CreateSprite(
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,
@@ -210,17 +213,18 @@ namespace XCom
 		}
 		// So, question. Is one obligated to account for transparent pixels
 		// to the end of an image, or can one just assume that the program
-		// that reads and decompresses the data will force them to transparent ...
+		// that reads and decompresses the data will force them to transparent
+		// ...
 		//
 		// It looks like both OpenXcom and MapView will fill the sprite with
 		// all transparent pixels when each sprite is initialized. Therefore,
 		// it's not *required* to encode any pixels that are transparent to
 		// the end of the sprite.
 		//
-		// And when looking at some of the stock PCK's things look non-standardized.
-		// It's sorta like if there's at least one full row of transparent
-		// pixels at the end of an image, it gets 0xFE,0xFF tacked on before
-		// the final 0xFF (end of image) marker.
+		// And when looking at some of the stock PCK's things look
+		// non-standardized. It's sorta like if there's at least one full row of
+		// transparent pixels at the end of an image, it gets 0xFE,0xFF tacked
+		// on before the final 0xFF (end of image) marker.
 		#endregion Methods (static)
 
 

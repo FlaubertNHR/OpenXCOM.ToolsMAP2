@@ -5,9 +5,9 @@ using System.Drawing;
 namespace XCom
 {
 	/// <summary>
-	/// A container for storing data about an XCOM image.
+	/// A container for storing data about an XCOM sprite or ScanG/LoFT icon.
 	/// </summary>
-	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
+	/// <remarks>This object is disposable but eff their <c>IDisposable</c> crap.</remarks>
 	public class XCImage
 	{
 		#region Methods (disposable)
@@ -116,9 +116,11 @@ namespace XCom
 		/// <param name="bindata">the uncompressed source data</param>
 		/// <param name="width"></param>
 		/// <param name="height"></param>
-		/// <param name="pal">pass in null to *bypass* creating the 'Image'; ie,
-		/// the PckSprite..cTor has already unravelled the compressed image-data
-		/// instead</param>
+		/// <param name="pal">the <c><see cref="Palette"/></c>. Pass in
+		/// <c>null</c> to bypass creating the <c><see cref="Sprite"/></c> -
+		/// <c><see cref="PckSprite(byte[], Palette, int, Spriteset, bool)">PckSprite()</see></c>
+		/// has unravelled the compressed image-data and created the sprite
+		/// already</param>
 		/// <param name="id"></param>
 		/// <remarks>Binary data must not be compressed.</remarks>
 		internal XCImage(

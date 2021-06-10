@@ -48,14 +48,18 @@ namespace MapView
 
 		#region Methods (static)
 		/// <summary>
-		/// Clamps a value between min and max inclusively. Note that no check
-		/// is done to ensure that min is less than max.
+		/// Clamps a value between minimum and maximum values inclusively.
 		/// </summary>
-		/// <param name="val"></param>
-		/// <param name="min"></param>
-		/// <param name="max"></param>
-		/// <returns>min if val is less than min; max if value is greater than
-		/// max; else the value itself</returns>
+		/// <typeparam name="T">A type that inherits from the IComparable interface.</typeparam>
+		/// <param name="val">your value</param>
+		/// <param name="min">the minimum</param>
+		/// <param name="max">the maximum</param>
+		/// <returns><paramref name="min"/> if <paramref name="val"/> is less
+		/// than <paramref name="min"/>; <paramref name="max"/> if
+		/// <paramref name="val"/> is greater than <paramref name="max"/>; else
+		/// <paramref name="val"/> itself</returns>
+		/// <remarks>No check is done to ensure that <paramref name="min"/> is
+		/// less than <paramref name="max"/>. So do that before call ...</remarks>
 		internal static T Viceroy<T>(
 				this T val,
 				T min,

@@ -9,24 +9,26 @@ using DSShared;
 namespace XCom
 {
 	/// <summary>
-	/// a SPRITESET: A collection of images that is usually created of PCK/TAB
+	/// a SPRITESET. A collection of images that is usually created of PCK/TAB
 	/// terrain file data but can also be bigobs or a ScanG iconset.
 	/// </summary>
-	/// <remarks>This object is disposable but eff their IDisposable crap.</remarks>
+	/// <remarks>This object is disposable but eff their <c>IDisposable crap</c>.</remarks>
 	public sealed class Spriteset
 	{
 		#region Methods (disposable)
 		/// <summary>
-		/// Disposes all <see cref="XCImage"/>s in <see cref="Sprites"/> and
-		/// clears the list.
+		/// Disposes all <c><see cref="XCImage">XCImages</see></c> in <c><see cref="Sprites"/></c>
+		/// and clears the list.
 		/// </summary>
 		/// <remarks>This spriteset itself remains valid along with the cleared
 		/// sprites-list.</remarks>
 		public void Dispose()
 		{
 			LogFile.WriteLine("Spriteset.Dispose() Label= " + Label);
-			for (int i = Sprites.Count - 1; i != -1; --i)
-				Sprites[i].Dispose();
+//			for (int i = Sprites.Count - 1; i != -1; --i) // this does not need to be reversed for Dispose()
+//				Sprites[i].Dispose();
+			foreach (var sprite in Sprites)
+				sprite.Dispose();
 
 			Sprites.Clear();
 		}
@@ -37,7 +39,7 @@ namespace XCom
 		public const int FAIL_non            = 0x0; // bitflags for Fail states ->
 		public const int FAIL_OF_SPRITE      = 0x1; // overflow
 		public const int FAIL_OF_OFFSET      = 0x2; // overflow
-		public const int FAIL_COUNT_MISMATCH = 0x4; // Pck vs Tab counts mismatch error
+		public const int FAIL_COUNT_MISMATCH = 0x4; // Pck vs Tab counts-mismatch error
 		#endregion Fields (static)
 
 
@@ -87,11 +89,11 @@ namespace XCom
 
 		private Palette _pal;
 		/// <summary>
-		/// This Spriteset's reference to a <see cref="Palette"/>.
+		/// This Spriteset's reference to a <c><see cref="Palette"/></c>.
 		/// </summary>
 		/// <remarks>Changing the palette requires re-assigning the changed
-		/// <see cref="System.Drawing.Imaging.ColorPalette"/> to all sprites in
-		/// this spriteset.</remarks>
+		/// <c><see cref="System.Drawing.Imaging.ColorPalette"/></c> to all
+		/// sprites in this spriteset.</remarks>
 		public Palette Pal
 		{
 			get { return _pal; }
@@ -110,9 +112,9 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets/Sets the <see cref="XCImage"/> at a specified id. Adds a sprite
-		/// to the end of the set if the specified id falls outside the bounds
-		/// of the List.
+		/// Gets/Sets the <c><see cref="XCImage"/></c> at a specified id. Adds a
+		/// sprite to the end of the set if the specified id falls outside the
+		/// bounds of the List.
 		/// </summary>
 		public XCImage this[int id]
 		{
@@ -157,43 +159,68 @@ namespace XCom
 		/// <summary>
 		/// cTor[1]. Parses a PCK-file into a collection of images according to
 		/// its TAB-file.
-		/// 
-		/// 
-		/// A spriteset is loaded by:
-		/// 
-		/// 
-		/// 1.
-		/// MainViewF.LoadSelectedDescriptor()
-		/// calls MapFileService.LoadDescriptor()
-		/// calls Descriptor.GetTerrainRecords()
-		/// calls Descriptor.GetTerrainSpriteset()
-		/// calls SpritesetManager.LoadSpriteset()
-		/// calls Spriteset..cTor.
-		/// 
-		/// 
-		/// 2. PckViewF.LoadSpriteset()
-		/// 
-		/// 
-		/// 3. Also instantiated by Globals.LoadExtraSprites()
-		/// 
-		/// 
-		/// 4. MainViewF..cTor also needs to load the CURSOR.
 		/// </summary>
-		/// <param name="label">file w/out extension or path</param>
-		/// <param name="pal">the palette to use (typically Palette.UfoBattle
-		/// for UFO sprites or Palette.TftdBattle for TFTD sprites)</param>
-		/// <param name="tabwordLength">2 for terrains/bigobs/ufo-units, 4 for tftd-units</param>
+		/// <param name="label">file w/out path or extension</param>
+		/// <param name="pal">the <c><see cref="Palette"/></c> to use (typically
+		/// <c><see cref="Palette.UfoBattle">Palette.UfoBattle</see></c> for
+		/// UFO-sprites or <c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c>
+		/// for TFTD-sprites)</param>
+		/// <param name="tabwordLength"><c><see cref="SpritesetManager.TAB_WORD_LENGTH_2">SpritesetManager.TAB_WORD_LENGTH_2</see></c>
+		/// for terrains/bigobs/ufo-units, <c><see cref="SpritesetManager.TAB_WORD_LENGTH_4">SpritesetManager.TAB_WORD_LENGTH_4</see></c>
+		/// for tftd-units</param>
 		/// <param name="bytesPck">byte array of the PCK file</param>
 		/// <param name="bytesTab">byte array of the TAB file</param>
-		/// <param name="bypassTonescales">true to not create Tonescaled sprites</param>
-		/// <remarks>Ensure that 'bytesPck' and 'bytesTab' are valid before call.</remarks>
+		/// <param name="bypassTonescaled">true to not create Tonescaled sprites</param>
+		/// <remarks>Ensure that <paramref name="bytesPck"/> and <paramref name="bytesTab"/>
+		/// are valid before call.
+		/// 
+		/// 
+		/// A spriteset is loaded by
+		/// <list type="number">
+		/// <item><c>MapView.MainViewF()</c>
+		/// 
+		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c> partype icons</item>
+		/// <item><c>MapView.MainViewF()</c>
+		/// 
+		/// > <c><see cref="SpritesetManager.LoadSpriteset(string, string, int, Palette, bool)">SpritesetManager.LoadSpriteset()</see></c> ufo-cursor
+		/// 
+		/// > <c><see cref="SpritesetManager.LoadSpriteset(string, string, int, Palette, bool)">SpritesetManager.LoadSpriteset()</see></c> tftd-cursor</item>
+		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c>
+		/// 
+		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c>
+		/// 
+		/// > <c><see cref="Descriptor.CreateTerrain(int)">Descriptor.CreateTerrain()</see></c>
+		/// 
+		/// > <c><see cref="SpritesetManager.LoadSpriteset(string, string, int, Palette, bool)">SpritesetManager.LoadSpriteset()</see></c> tilepart sprites</item>
+		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c>
+		/// 
+		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c>
+		/// 
+		/// > <c><see cref="MapFile(Descriptor, IList, RouteNodes)">MapFile.MapFile()</see></c>
+		/// 
+		/// > <c>MapFile.LoadMapfile()</c>
+		/// 
+		/// > <c>MapFile.CreateTile()</c>
+		/// 
+		/// > <c><see cref="Tilepart.Cripple(PartType)">Tilepart.Cripple()</see></c>
+		/// 
+		/// > <c>Tilepart.CreateCrippledSprites()</c>
+		/// 
+		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c> crippled sprites</item>
+		/// <item><c>PckView.PckViewF.LoadSpriteset(string, bool)</c></item>
+		/// <item><c>McdViewF.OnClick_Create()</c></item>
+		/// <item><c>McdViewF.LoadTerrain()</c></item>
+		/// <item><c>McdViewF.OnClick_Reload()</c></item>
+		/// <item><c>McdViewF.LoadRecords()</c></item>
+		/// <item><c>McdViewF.OpenCopier()</c></item>
+		/// </list></remarks>
 		public Spriteset(
 				string label,
 				Palette pal,
 				int tabwordLength,
 				byte[] bytesPck,
 				byte[] bytesTab,
-				bool bypassTonescales = false)
+				bool bypassTonescaled = false)
 		{
 			//LogFile.WriteLine("Spriteset..cTor label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
@@ -324,7 +351,7 @@ namespace XCom
 												Pal,
 												i,
 												this,
-												bypassTonescales);
+												bypassTonescaled);
 
 						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckSprite above can set the Fail_Overflo flag
 							return;									// which shall be handled by the caller; ie. set the spriteset to null.
