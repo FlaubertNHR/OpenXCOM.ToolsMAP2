@@ -204,8 +204,17 @@ namespace MapView.Forms.Observers
 					TopView._fpartslots = null;
 				}
 
-				if (MainViewF.Quit) // else just hide
+				if (MainViewF.Quit)
+				{
+					LogFile.WriteLine("TopViewForm.OnFormClosing()");
+					ObserverManager.ToolFactory.DisposeTopviewTools(); // disposes tools for TopRouteView also. but might not be req'd
 					_top.DisposeObserver();
+				}
+				else
+				{
+					e.Cancel = true;
+					Hide();
+				}
 			}
 			base.OnFormClosing(e);
 		}

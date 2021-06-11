@@ -15,7 +15,7 @@ namespace MapView.Forms.Observers
 	{
 		internal static void DisposeOptionables()
 		{
-			DSShared.LogFile.WriteLine("RouteViewOptionables.DisposeOptionables()");
+			DSShared.LogFile.WriteLine("RouteViewOptionables.DisposeOptionables() static");
 			foreach (var pair in RouteControl.RoutePens)
 				pair.Value.Dispose();
 

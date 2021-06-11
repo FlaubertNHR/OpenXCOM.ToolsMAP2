@@ -949,9 +949,6 @@ namespace MapView
 			// NOTE: TopView's PartslotTest dialog is closed when TopView closes.
 			// TODO: McdRecordsExceeded dialog is pseudo-static ... close it (if it was instantiated).
 
-			if (ObserverManager.TileView.Control.McdInfo != null)
-				ObserverManager.TileView.Control.McdInfo.Close(); // close TileView's McdInfo dialog
-
 			if (RouteView.RoutesInfo != null)
 				RouteView.RoutesInfo.Close();	// close RouteView's SpawnInfo dialog
 
@@ -963,6 +960,8 @@ namespace MapView
 
 			Tilepart.DisposeCrippledSprites();	// NOTE: .net will try to draw the MainView panel again but
 												// if the tileset has crippled sprites it throws.
+
+			ObserverManager.ToolFactory.DisposeMainviewTools(); // might not be req'd
 
 			MainViewOverlay .DisposeOverlay();
 			MainViewUnderlay.DisposeUnderlay();
@@ -977,14 +976,13 @@ namespace MapView
 			QuadrantControl     .DisposeControl();
 			QuadrantDrawService .DisposeService();
 
+			RouteControl        .DisposeControlStatics();
+
 			TileViewOptionables .DisposeOptionables();
 			TopViewOptionables  .DisposeOptionables();
 			RouteViewOptionables.DisposeOptionables();
 
 			Optionables         .DisposeOptionables();
-
-			ObserverManager.RouteView   .Control     .RouteControl.DisposeControl();
-			ObserverManager.TopRouteView.ControlRoute.RouteControl.DisposeControl();
 
 
 			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size

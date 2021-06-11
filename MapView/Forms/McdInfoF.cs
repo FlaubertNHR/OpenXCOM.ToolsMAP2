@@ -2,6 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+using DSShared;
+
+using MapView.Forms.MainView;
 using MapView.Forms.Observers;
 
 using XCom;
@@ -50,8 +53,29 @@ namespace MapView
 			rtbInfo.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
 			rtbInfo.WordWrap = false;
 			rtbInfo.ReadOnly = true;
+
+			UpdateData();
 		}
 		#endregion cTor
+
+
+		#region Events (override)
+		/// <summary>
+		/// Cancels close and hides this dialog unless MapView is serious about
+		/// quitting.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (!RegistryInfo.FastClose(e.CloseReason)
+				&& !MainViewF.Quit)
+			{
+				ObserverManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
+				e.Cancel = true;
+			}
+			base.OnFormClosing(e);
+		}
+		#endregion Events (override)
 
 
 		#region Events

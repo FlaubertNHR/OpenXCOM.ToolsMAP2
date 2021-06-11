@@ -16,20 +16,15 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <remarks>Only views that do not close are valid; they shall use the
 		/// hide pattern instead.
-		/// 
-		/// - MainView
-		/// 
-		/// - TileView
-		/// 
-		/// - TopView
-		/// 
-		/// - RouteView
-		/// 
-		/// - TopRouteView
-		/// 
-		/// - ColorsHelp
-		/// 
-		/// - About</remarks>
+		/// <list type="bullet">
+		/// <item>MainView</item>
+		/// <item>TileView</item>
+		/// <item>TopView</item>
+		/// <item>RouteView</item>
+		/// <item>TopRouteView</item>
+		/// <item>ColorHelp</item>
+		/// <item>About</item>
+		/// </list></remarks>
 		internal static IList<Form> _zOrder = new List<Form>();
 
 		/// <summary>

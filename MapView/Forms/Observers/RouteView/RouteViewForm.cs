@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using DSShared;
+
 using MapView.Forms.MainView;
 
 
@@ -178,6 +180,31 @@ namespace MapView.Forms.Observers
 					break;
 			}
 			base.OnKeyDown(e);
+		}
+
+		/// <summary>
+		/// Handles the FormClosing event. TODO: Close subsidiary dialogs here.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
+				if (RouteView.RoutesInfo != null)
+					RouteView.RoutesInfo.Close();
+
+				if (MainViewF.Quit)
+				{
+					LogFile.WriteLine("RouteViewForm.OnFormClosing()");
+					_route.RouteControl.DisposeControl();
+				}
+				else
+				{
+					e.Cancel = true;
+					Hide();
+				}
+			}
+			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
 	}

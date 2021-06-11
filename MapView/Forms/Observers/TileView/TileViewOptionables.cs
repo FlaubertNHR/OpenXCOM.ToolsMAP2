@@ -17,7 +17,7 @@ namespace MapView.Forms.Observers
 	{
 		internal static void DisposeOptionables()
 		{
-			DSShared.LogFile.WriteLine("TileViewOptionables.DisposeOptionables()");
+			DSShared.LogFile.WriteLine("TileViewOptionables.DisposeOptionables() static");
 			foreach (var pair in TilePanel.SpecialBrushes)
 				pair.Value.Dispose();
 		}

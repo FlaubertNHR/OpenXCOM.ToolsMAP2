@@ -93,7 +93,7 @@ namespace MapView.Forms.MainView
 				OptionChangedEvent changer)
 		{
 			var it = new MenuItem(f.Text, OnMenuItemClick, shortcut);
-			it.Tag = f;
+			it.Tag = f; // TODO: nice doc not
 
 			Viewers.MenuItems.Add(it);
 
@@ -104,8 +104,6 @@ namespace MapView.Forms.MainView
 				if (!MainViewF.Quit)
 				{
 					it.Checked = false;
-					e.Cancel = true;
-					f.Hide();
 				}
 				else
 					RegistryInfo.UpdateRegistry(f);
@@ -127,7 +125,7 @@ namespace MapView.Forms.MainView
 				var foptions = MainViewF._foptions;
 				if (foptions != null)
 				{
-					var grid = (foptions as OptionsForm).propertyGrid;
+					OptionsPropertyGrid grid = (foptions as OptionsForm).propertyGrid;
 					grid.Refresh(); // yes refresh the grid even if it's hidden.
 				}
 			};

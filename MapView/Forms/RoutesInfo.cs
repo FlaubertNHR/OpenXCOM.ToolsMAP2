@@ -56,16 +56,16 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// Nulls <see cref="RouteView.RoutesInfo">RouteView.RoutesInfo</see>
-		/// when this form closes.
+		/// Nulls <c><see cref="RouteView.RoutesInfo">RouteView.RoutesInfo</see></c>
+		/// after this dialog closes.
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnFormClosing(FormClosingEventArgs e)
+		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 				RouteView.RoutesInfo = null;
 
-			base.OnFormClosing(e);
+			base.OnFormClosed(e);
 		}
 		#endregion Events (override)
 

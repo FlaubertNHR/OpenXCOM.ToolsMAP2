@@ -302,8 +302,20 @@ namespace MapView.Forms.Observers
 					TopView._fpartslots = null;
 				}
 
-				if (MainViewF.Quit) // else just hide
+				if (RouteView.RoutesInfo != null)
+					RouteView.RoutesInfo.Close();
+
+				if (MainViewF.Quit)
+				{
+					LogFile.WriteLine("TopRouteViewForm.OnFormClosing()");
 					_top.DisposeObserver();
+					_route.RouteControl.DisposeControl();
+				}
+				else
+				{
+					e.Cancel = true;
+					Hide();
+				}
 			}
 			base.OnFormClosing(e);
 		}

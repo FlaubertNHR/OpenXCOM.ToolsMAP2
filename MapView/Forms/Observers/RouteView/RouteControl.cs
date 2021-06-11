@@ -21,22 +21,26 @@ namespace MapView.Forms.Observers
 		internal void DisposeControl()
 		{
 			DSShared.LogFile.WriteLine("RouteControl.DisposeControl()");
-			BrushOverlayBlue .Dispose();
-			BrushOverlayLight.Dispose();
-			FontOverlay      .Dispose();
-			FontRose         .Dispose();
-			_nodeFill        .Dispose();
-			_lozSelector     .Dispose();
-			_lozSelected     .Dispose();
-			_lozSpotted      .Dispose();
+			_nodeFill   .Dispose();
+			_lozSelector.Dispose();
+			_lozSelected.Dispose();
+			_lozSpotted .Dispose();
 
 			DisposeControlParent();
 		}
 
+		internal static void DisposeControlStatics()
+		{
+			DSShared.LogFile.WriteLine("RouteControl.DisposeControlStatics() static");
+			BrushOverlayBlue .Dispose();
+			BrushOverlayLight.Dispose();
+			FontOverlay      .Dispose();
+			FontRose         .Dispose();
+		}
 
 		#region Fields (static)
 		private const int RoseMarginX = 25;
-		private const int RoseMarginY = 5;
+		private const int RoseMarginY =  5;
 
 		private const int NodeValHeight = 12;
 

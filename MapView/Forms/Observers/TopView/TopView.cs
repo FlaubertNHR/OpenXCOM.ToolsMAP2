@@ -26,10 +26,6 @@ namespace MapView.Forms.Observers
 		{
 			LogFile.WriteLine("TopView.DisposeObserver()");
 			TopControl.DisposeControl();
-
-			// static
-//			TopViewOptionables.DisposeOptionables();
-//			QuadrantControl.DisposeControl();
 		}
 
 

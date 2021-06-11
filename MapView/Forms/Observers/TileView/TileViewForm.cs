@@ -157,22 +157,26 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the FormClosing event. Ensures that the TestPartslots dialog
-		/// gets closed.
+		/// Handles the FormClosing event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-//				if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed)
-//				{
-//					TopView._fpartslots.Close();
-//					TopView._fpartslots = null;
-//				}
+				if (MainViewF.Quit)
+				{
+					LogFile.WriteLine("TileViewForm.OnFormClosing()");
+					if (_tile.McdInfo != null)
+						_tile.McdInfo.Close();
 
-				if (MainViewF.Quit) // else just hide
 					_tile.DisposeObserver();
+				}
+				else
+				{
+					e.Cancel = true;
+					Hide();
+				}
 			}
 			base.OnFormClosing(e);
 		}

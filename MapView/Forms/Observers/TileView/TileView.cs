@@ -411,38 +411,19 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		internal void OnMcdInfoClick(object sender, EventArgs e)
 		{
-			if (!ContextMenu.MenuItems[CONTEXT_MI_MCDINFO].Checked)
+			MenuItem it = ContextMenu.MenuItems[CONTEXT_MI_MCDINFO];
+			if (it.Checked = !it.Checked)
 			{
-				ContextMenu.MenuItems[CONTEXT_MI_MCDINFO].Checked = true;
-
 				if (McdInfo == null)
-				{
 					McdInfo = new McdInfoF(this);
-					McdInfo.FormClosing += OnMcdInfoFormClosing;
-					McdInfo.UpdateData();
-				}
+
 				McdInfo.Show();
 
 				if (McdInfo.WindowState == FormWindowState.Minimized)
 					McdInfo.WindowState  = FormWindowState.Normal;
 			}
 			else
-				OnMcdInfoFormClosing(null, null);
-		}
-
-		/// <summary>
-		/// Hides the <see cref="McdInfoF"/> dialog.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnMcdInfoFormClosing(object sender, CancelEventArgs e)
-		{
-			ContextMenu.MenuItems[CONTEXT_MI_MCDINFO].Checked = false;
-
-			if (e != null)			// if (e!=null) the form really was closed, so cancel that.
-				e.Cancel = true;	// if (e==null) the form is hiding due to a menu-click, or a double-click on a part
-									// TODO: wtf - is way too complicated for what it is
-			McdInfo.Hide();
+				McdInfo.Hide();
 		}
 
 		/// <summary>
