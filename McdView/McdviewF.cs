@@ -298,7 +298,7 @@ namespace McdView
 
 		#region cTor
 		/// <summary>
-		/// Instantiates the McdView app.
+		/// cTor. Instantiates the McdView app.
 		/// </summary>
 		/// <param name="isInvoked">true if invoked via TileView</param>
 		/// <param name="spriteshade">if 'isInvoked' is true you can pass in a
@@ -623,8 +623,15 @@ namespace McdView
 				{
 					RegistryInfo.UpdateRegistry(this);
 
-					Colors.BrushHilight      .Dispose();
-					Colors.BrushHilightsubsel.Dispose();
+					// do not dispose static brushes if McdView is invoked by TileView.
+					// Because if McdView gets invoked twice TerrainPanel.OnPaint()
+					// throws an ArgumentException.
+					if (!IsInvoked)
+					{
+						Colors.BrushHilight      .Dispose();
+						Colors.BrushHilightsubsel.Dispose();
+					}
+
 					_fontRose                .Dispose();
 					Ia                       .Dispose();
 					Isocube                  .Dispose();
