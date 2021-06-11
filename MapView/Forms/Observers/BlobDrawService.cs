@@ -16,7 +16,7 @@ namespace MapView.Forms.Observers
 	{
 		/// <summary>
 		/// Disposal isn't necessary since the GraphicsPaths last the lifetime
-		/// of the app. But FxCop gets antsy ....
+		/// of the app. But FxCop ca1001 gets antsy ....
 		/// </summary>
 		internal void Dispose()
 		{

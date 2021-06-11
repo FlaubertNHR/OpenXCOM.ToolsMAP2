@@ -342,11 +342,11 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Creates the tool-objects in the toolstrip.
+		/// Adds the tool-objects in the toolstrip.
 		/// </summary>
-		internal void CreateToolstripControls()
+		internal void AddToolstripControls()
 		{
-			ObserverManager.ToolFactory.CreateEditorTools(tsTools, true);
+			ObserverManager.ToolFactory.AddEditorTools(tsTools, true);
 		}
 
 		/// <summary>

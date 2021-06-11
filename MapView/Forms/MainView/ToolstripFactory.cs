@@ -10,18 +10,25 @@ using XCom;
 namespace MapView.Forms.MainView
 {
 	/// <summary>
-	/// 
+	/// A factory that creates toolstrips and their buttons etc. for MainView,
+	/// TopView, and TopRouteView.
 	/// </summary>
 	/// <remarks>This object is disposable but eff their <c>IDisposable</c> crap.</remarks>
 	internal sealed class ToolstripFactory
 	{
 		/// <summary>
 		/// Disposal isn't necessary since this object lasts the lifetime of the
-		/// app. But FxCop gets antsy ....
+		/// app. But FxCop ca1001 gets antsy ....
 		/// </summary>
-		internal void Dispose()
+		/// <remarks>Perhaps this shouldn't be necessary since these tools are
+		/// added to MainView's ToolStrip's ToolStripItemCollection and the
+		/// ToolStrip is added to the controls of the TopToolStripPanel of a
+		/// ToolStripContainer which is added to the controls of MainViewF which
+		/// is of course closed when MainView quits ... but I really don't know
+		/// for sure.</remarks>
+		internal void DisposeMainviewTools()
 		{
-			DSShared.LogFile.WriteLine("ToolstripFactory.Dispose()");
+			DSShared.LogFile.WriteLine("ToolstripFactory.DisposeMainviewTools()");
 			_tsbCopy       .Dispose();
 			_tsbCut        .Dispose();
 			_tsbDelete     .Dispose();
@@ -41,12 +48,31 @@ namespace MapView.Forms.MainView
 			_tstbSearch    .Dispose();
 		}
 
+		/// <summary>
+		/// Disposes the tools in TopView and TopRouteView(Top).
+		/// </summary>
+		/// <remarks>Perhaps this shouldn't be necessary since these tools are
+		/// added to the respective ToolStrips' ToolStripItemCollections and
+		/// each ToolStrip is added to the controls of the LeftToolStripPanel of
+		/// a ToolStripContainer which is added to the controls of TopView which
+		/// is instantiated by both TopViewForm and TopRouteViewForm which are
+		/// closed by ObserverManager.CloseViewers() and Close() is supposed to
+		/// Dispose() when MainView quits ... but I really don't know for sure.</remarks>
+		internal void DisposeTopviewTools()
+		{
+			DSShared.LogFile.WriteLine("ToolstripFactory.DisposeTopviewTools()");
+			foreach (var disposable in _disposables)
+				disposable.Dispose();
+		}
+
 
 		#region Fields
 		private readonly IList<ToolStripButton> _editors = new List<ToolStripButton>(); // all edit-buttons except the pasters
 		private readonly IList<ToolStripButton> _pasters = new List<ToolStripButton>();
 		private readonly IList<ToolStripButton> _downrs  = new List<ToolStripButton>();
 		private readonly IList<ToolStripButton> _uppers  = new List<ToolStripButton>();
+
+		private readonly IList<IDisposable> _disposables = new List<IDisposable>();
 
 		// The instantiations of toolstrip-objects that are classvars are for
 		// MainView, while the toolstrip-objects for TopView and
@@ -87,7 +113,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="ts"></param>
 		/// <remarks>Appears only in MainView.</remarks>
-		internal void CreateSearchTools(ToolStrip ts)
+		internal void AddSearchTools(ToolStrip ts)
 		{
 			ts.Items.Add(_tstbSearch);
 			ts.Items.Add(_tsbSearchClear);
@@ -128,7 +154,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="ts"></param>
 		/// <remarks>Appears only in MainView.</remarks>
-		internal void CreateScalerTools(ToolStrip ts)
+		internal void AddScalerTools(ToolStrip ts)
 		{
 			ts.Items.Add(_tss0);
 			ts.Items.Add(_tsbScale);
@@ -211,9 +237,9 @@ namespace MapView.Forms.MainView
 		/// TopRouteView(Top).
 		/// </summary>
 		/// <param name="ts">a toolstrip to put the buttons in</param>
-		/// <param name="observer">false for MainView's toolstrip, true for
-		/// TopView's and TopRouteView's toolstrips</param>
-		internal void CreateEditorTools(
+		/// <param name="observer"><c>false</c> for MainView's toolstrip,
+		/// <c>true</c> for TopView's and TopRouteView's toolstrips</param>
+		internal void AddEditorTools(
 				ToolStrip ts,
 				bool observer = false)
 		{
@@ -221,7 +247,7 @@ namespace MapView.Forms.MainView
 
 			ToolStripButton tsbDown;	// NOTE: Down/Up are not really editor-objects ...
 			ToolStripButton tsbUp;		// but they appear in TopView and TopRouteView(Top)
-										// as well as MainView, with the editor-objects.
+										// as well as MainView with the editor-objects.
 			ToolStripSeparator tss2;
 
 			ToolStripButton tsbCut;
@@ -248,6 +274,18 @@ namespace MapView.Forms.MainView
 				tss3      = new ToolStripSeparator();
 				tsbFill   = new ToolStripButton();
 				tss4      = new ToolStripSeparator();
+
+				_disposables.Add(tss1);
+				_disposables.Add(tsbDown);
+				_disposables.Add(tsbUp);
+				_disposables.Add(tss2);
+				_disposables.Add(tsbCut);
+				_disposables.Add(tsbCopy);
+				_disposables.Add(tsbPaste);
+				_disposables.Add(tsbDelete);
+				_disposables.Add(tss3);
+				_disposables.Add(tsbFill);
+				_disposables.Add(tss4);
 			}
 			else
 			{

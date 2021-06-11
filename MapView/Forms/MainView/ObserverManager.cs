@@ -44,14 +44,15 @@ namespace MapView.Forms.MainView
 
 		#region Methods (static)
 		/// <summary>
-		/// Creates the observers (secondary viewers) as well as
-		/// toolstrip-controls for <see cref="MainViewF"/>, <see cref="Observers.TopView"/>,
-		/// and <see cref="Observers.TopRouteViewForm"/>(Top). Also synchronizes
-		/// Optionables for TopRouteView(Top) and TopRouteView(Route) to
-		/// <see cref="Observers.TopView.Optionables">TopView.Optionables</see>
-		/// and <see cref="Observers.RouteView.Optionables">RouteView.Optionables</see>
-		/// respectively. Then loads default options for <see cref="Observers.TileView"/>,
-		/// <see cref="Observers.TopView"/>, and <see cref="Observers.RouteView"/>.
+		/// Creates the observers (secondary viewers) and adds
+		/// toolstrip-controls for <c><see cref="MainViewF"/></c> and
+		/// <c><see cref="Observers.TopView"/></c> (<c>TopView</c> and
+		/// <c>TopRouteView</c>). Also synchronizes Optionables for
+		/// <c>TopRouteView(Top)</c> and <c>TopRouteView(Route)</c> to
+		/// <c><see cref="Observers.TopView.Optionables">TopView.Optionables</see></c>
+		/// and <c><see cref="Observers.RouteView.Optionables">RouteView.Optionables</see></c>
+		/// respectively. Then loads default options for <c><see cref="Observers.TileView"/></c>,
+		/// <c><see cref="Observers.TopView"/></c>, and <c><see cref="Observers.RouteView"/></c>.
 		/// </summary>
 		internal static void CreateViewers()
 		{
@@ -62,8 +63,8 @@ namespace MapView.Forms.MainView
 
 			ToolFactory  = new ToolstripFactory();
 
-			TopView     .Control   .CreateToolstripControls();
-			TopRouteView.ControlTop.CreateToolstripControls();
+			TopView     .Control   .AddToolstripControls();
+			TopRouteView.ControlTop.AddToolstripControls();
 
 			_observers = new IObserver[]
 			{
