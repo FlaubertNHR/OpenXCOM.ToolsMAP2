@@ -55,15 +55,17 @@ namespace XCom
 		{ get; set; }
 
 		/// <summary>
-		/// Gets the sprite-array used to animate this tile.
-		/// TODO: This should never have happened; there should be no pointers
-		/// to sprites in a 'Tilepart'. The sprites need to be retrieved
-		/// directly from its 'Spriteset' by 'Record' (int)Phase*
-		/// on-the-fly.
-		/// 
-		/// But unfortunately that difficult perspective is deeply ingrained in
-		/// the design of the code.
+		/// The sprite-array used to animate this tile.
 		/// </summary>
+		/// <remarks>TODO: Instead of storing the sprite-references in
+		/// <c><see cref="Tilepart"/></c> reference the sprites directly in
+		/// <c><see cref="_spriteset"/></c> by <c><see cref="Record"/></c>.</remarks>
+		/// <code>
+		/// byte    id1    = Record.Sprite1;
+		/// XCImage sprite = spriteset.Sprites[id1];
+		/// </code>
+		/// <remarks>But unfortunately the current perspective is deeply
+		/// ingrained in the design of the code.</remarks>
 		private XCImage[] _sprites;
 
 		/// <summary>
@@ -131,7 +133,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a blank part for CreateInsert().
+		/// cTor[2]. Creates a blank tilepart for
+		/// <c><see cref="CreateInsert()">CreateInsert()</see></c>.
 		/// </summary>
 		private Tilepart()
 		{}
@@ -242,69 +245,75 @@ namespace XCom
 
 
 		/// <summary>
-		/// Returns a copy of this Tilepart with a deep-cloned Record for
-		/// McdView. But any referred to sprites and dead/altr tileparts
-		/// keep pointers to their current objects.
-		/// - classvars:
-		///   Record	(ptr)
-		///   Sprites	(ptr) -> not used in McdView
-		///   Spriteset	(ptr) -> not used in McdView
-		///   Dead		(ptr)
-		///   Altr		(ptr)
-		///
-		///   TerId		(int)
-		///   SetId		(int)
+		/// Returns a copy of this <c><see cref="Tilepart"/></c> with a
+		/// deep-cloned <c><see cref="Record"/></c> for McdView. But any
+		/// referred to sprites and dead/altr tileparts keep pointers to their
+		/// current objects.
+		/// 
+		/// 
+		/// - classvars
+		/// <list type="bullet">
+		/// <item><c><see cref="Record"/></c>     (ptr)</item>
+		/// <item><c><see cref="_sprites"/></c>   (ptr) -> not used in McdView</item>
+		/// <item><c><see cref="_spriteset"/></c> (ptr) -> not used in McdView</item>
+		/// <item><c><see cref="Dead"/></c>       (ptr)</item>
+		/// <item><c><see cref="Altr"/></c>       (ptr)</item>
+		/// <item><c><see cref="TerId"/></c>      (int)</item>
+		/// <item><c><see cref="SetId"/></c>      (int)</item>
+		/// </list>
 		/// </summary>
-		/// <returns></returns>
-		/// <remarks>Sprites and the Spriteset shall be null.</remarks>
+		/// <returns>a new <c><see cref="Tilepart"/></c> for insertion in McdView</returns>
+		/// <remarks><c><see cref="_sprites"/></c> and <c><see cref="_spriteset"/></c>
+		/// shall be null.</remarks>
 		public Tilepart CreateInsert()
 		{
 			var part = new Tilepart();
-
-			part.TerId = TerId;
-			part.SetId = SetId;
 
 			part.Record = Record.Duplicate();
 
 			part.Dead = Dead;	// NOTE: keep these pointers and use their TerIds to
 			part.Altr = Altr;	// determine the part's 'DieTile' and 'Alt_MCD' fields
 								// after insertion. (aha!)
+			part.TerId = TerId;
+			part.SetId = SetId;
+
 			return part;
 		}
 
 
 		/// <summary>
-		/// When a Mapfile contains tilepart-ids that are beyond the count of
-		/// parts in its current terrainset do not null those parts. To cripple
-		/// a part instead is to create a new part and assign it a default
-		/// record and one of the MonotoneSprites (based on its quadslot) but to
-		/// transfer the old SetId to the new SetId.
+		/// When a <c><see cref="MapFile"/></c> contains <c><see cref="MapFile.Parts"/></c>
+		/// with ids that are beyond the count of parts in its current
+		/// terrainset do not null those parts. To cripple a part instead is to
+		/// create a new part and assign it a default <c><see cref="McdRecord"/></c>
+		/// and one of the <c><see cref="CrippledSprites"/></c> (based on its
+		/// quadslot) but to transfer the old <c><see cref="SetId"/></c> to the
+		/// new <c><see cref="Tilepart"/></c>.
 		/// 
 		/// 
-		/// This allows the user to invoke TileslotSubstitution to shift ids
-		/// above the currently displayable range down into accepted values.
-		/// It's useful only when records have been removed from the Mapfile's
-		/// current terrains but there are still used records with ids that are
-		/// higher than any of the (previously/externally) removed records' ids.
+		/// This allows the user to invoke <c>MapView.TileslotSubstitution</c>
+		/// to shift ids that are above the currently displayable/valid range
+		/// down into acceptable values. It's useful only when records have been
+		/// removed from <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>
+		/// but there are still records with ids that are higher than any of the
+		/// (previously/externally) removed ids.
 		/// 
 		/// 
-		/// Records are MCD-entries in case you haven't figured that.
+		/// See <c><see cref="MapFile"/>.CreateTile().</c>
 		/// 
 		/// 
-		/// IMPORTANT: This is strictly a one-way operation!
-		/// 
-		/// 
-		/// See <see cref="MapFile"/> CreateTile()
-		/// 
-		/// 
-		/// IMPORTANT: All crippled parts shall go ~poof~ when the Mapfile is
-		/// saved. TODO: Dispose and null <see cref="CrippledSprites"/>.
+		/// <c><see cref="McdRecord"/></c> contains the MCD-entries in case you
+		/// haven't figured that.
 		/// </summary>
-		/// <param name="slot"></param>
+		/// <param name="slot">the <c><see cref="PartType"/></c> to show
+		/// crippled</param>
+		/// <remarks>This is strictly a one-way operation! All crippled parts
+		/// shall go ~poof~ when the Map is saved. TODO: Dispose and null
+		/// <c><see cref="CrippledSprites"/></c>.</remarks>
 		internal void Cripple(PartType slot)
 		{
-			// TODO: stop the 'tile' from being selected in TileView
-			// when the slot in QuadrantControl is double-clicked
+			// TODO: stop the part from being selected in TileView when the slot
+			// in QuadrantControl is double-clicked
 
 			// NOTE: Assigning "-1" to the record's 'PartType' shall force it to
 			// be listed in TopView's TestPartslots dialog. And discount it from
@@ -312,7 +321,8 @@ namespace XCom
 			// dialog.
 			Record.PartType = PartType.Invalid;
 
-			CreateCrippledSprites();
+			if (CrippledSprites == null)
+				CreateCrippledSprites();
 
 			_sprites = new XCImage[PHASES];
 
@@ -350,27 +360,24 @@ namespace XCom
 		/// it's kinda cute this way too.</remarks>
 		private static void CreateCrippledSprites()
 		{
-			if (CrippledSprites == null)
+			CrippledSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone_crippled");
+
+			byte[] bindata;
+			foreach (XCImage sprite in CrippledSprites.Sprites) // change nontransparent pixels to color ->
 			{
-				CrippledSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone_crippled");
-
-				byte[] bindata;
-				foreach (XCImage sprite in CrippledSprites.Sprites) // change nontransparent pixels to color ->
+				bindata = sprite.GetBindata();
+				for (int i = 0; i != bindata.Length; ++i)
 				{
-					bindata = sprite.GetBindata();
-					for (int i = 0; i != bindata.Length; ++i)
-					{
-						if (bindata[i] != Palette.Tid)
-							bindata[i] = (byte)96; // light brown/yellowy - is Palette.UfoBattle
-					}
-
-					(sprite as PckSprite).SpriteToned =
-					 sprite.Sprite = BitmapService.CreateSprite(
-															XCImage.SpriteWidth32,
-															XCImage.SpriteHeight40,
-															bindata,
-															sprite.Pal.Table);
+					if (bindata[i] != Palette.Tid)
+						bindata[i] = (byte)96; // light brown/yellowy - is Palette.UfoBattle
 				}
+
+				(sprite as PckSprite).SpriteToned =
+				 sprite.Sprite = BitmapService.CreateSprite(
+														XCImage.SpriteWidth32,
+														XCImage.SpriteHeight40,
+														bindata,
+														sprite.Pal.Table);
 			}
 		}
 		#endregion Methods (static)
