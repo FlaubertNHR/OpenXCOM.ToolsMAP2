@@ -219,9 +219,6 @@ namespace XCom
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)
 			{
-				Tilepart.DisposeCrippledSprites();	// dispose any crippled sprites used by a previous Mapfile
-													// they shall be re-created if req'd by CreateTile()
-
 				Rows = fs.ReadByte(); // http://www.ufopaedia.org/index.php/MAPS
 				Cols = fs.ReadByte(); // - says this header is "height, width and depth (in that order)"
 				Levs = fs.ReadByte(); //   ie. y/x/z
@@ -651,28 +648,10 @@ namespace XCom
 		{
 			if (Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
 			{
-//				MapTile tile;
-
 				for (int lev = Levs - 1; lev != 0; --lev)
 				for (int row = 0; row != Rows - 2; ++row)
 				for (int col = 0; col != Cols - 2; ++col)
 				{
-//					if ((tile = Tiles.GetTile(col, row, lev)) != null) // safety. The tile should always be valid.
-//					{
-//						tile.Occulted = !forceVis
-//									 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
-//
-//									 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
-//									 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
-//
-//									 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
-//									 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
-//
-//									 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
-//									 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
-//									 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
-//									 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
-//					}
 					Tiles.GetTile(col, row, lev).Occulted = !forceVis
 														 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
 
