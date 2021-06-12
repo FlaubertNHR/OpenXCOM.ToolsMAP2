@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
@@ -28,12 +27,15 @@ namespace MapView
 
 
 		#region Properties (override)
+		/// <summary>
+		/// Prevents flicker by setting the 'WS_EX_COMPOSITED' flag.
+		/// </summary>
 		protected override CreateParams CreateParams
 		{
 			get
 			{
 				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				cp.ExStyle |= 0x02000000;
 				return cp;
 			}
 		}
@@ -129,8 +131,6 @@ namespace MapView
 		/// </summary>
 		internal void UpdateData()
 		{
-			rtbInfo.Text = String.Empty;
-
 			Tilepart part; McdRecord record;
 			if ((part = _tileView.SelectedTilepart) != null
 				&& (record = part.Record) != null)
@@ -155,156 +155,156 @@ namespace MapView
 //				sb.AppendLine(string.Format("Unknown data: {0}", info[29]));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"ufo door:",
-											record.SlidingDoor));
+										"{0,-20}{1}",
+										"ufo door:",
+										record.SlidingDoor));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"stop LOS:",
-											record.StopLOS));
+										"{0,-20}{1}",
+										"stop LOS:",
+										record.StopLOS));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"no floor:",
-											record.NotFloored));
+										"{0,-20}{1}",
+										"no floor:",
+										record.NotFloored));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"bigwall:",
-											record.BigWall));
+										"{0,-20}{1}",
+										"bigwall:",
+										record.BigWall));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"gravlift:",
-											record.GravLift));
+										"{0,-20}{1}",
+										"gravlift:",
+										record.GravLift));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"standard door:",
-											record.HingedDoor));
+										"{0,-20}{1}",
+										"standard door:",
+										record.HingedDoor));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"blocks fire:",
-											record.BlockFire));
+										"{0,-20}{1}",
+										"blocks fire:",
+										record.BlockFire));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"blocks smoke:",
-											record.BlockSmoke));
+										"{0,-20}{1}",
+										"blocks smoke:",
+										record.BlockSmoke));
 
 				// LeftRightHalf
 //				sb.AppendLine(string.Format("Unknown data: {0}", info[38]));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"tu walk:",
-											record.TU_Walk));
+										"{0,-20}{1}",
+										"tu walk:",
+										record.TU_Walk));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"tu slide:",
-											record.TU_Slide));
+										"{0,-20}{1}",
+										"tu slide:",
+										record.TU_Slide));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"tu fly:",
-											record.TU_Fly));
+										"{0,-20}{1}",
+										"tu fly:",
+										record.TU_Fly));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"armor:",
-											record.Armor));
+										"{0,-20}{1}",
+										"armor:",
+										record.Armor));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"explosive block:",
-											record.HE_Block));
+										"{0,-20}{1}",
+										"explosive block:",
+										record.HE_Block));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"anti-flammability:",
-											record.FireResist));
-
-//				rtbInfo.SelectionColor = Color.Firebrick;
-				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"death tile:",
-											record.DieTile));
+										"{0,-20}{1}",
+										"anti-flammability:",
+										record.FireResist));
 
 //				rtbInfo.SelectionColor = Color.Firebrick;
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"alternate tile:",
-											record.Alt_MCD));
+										"{0,-20}{1}",
+										"death tile:",
+										record.DieTile));
+
+//				rtbInfo.SelectionColor = Color.Firebrick;
+				sb.AppendLine(string.Format(
+										"{0,-20}{1}",
+										"alternate tile:",
+										record.Alt_MCD));
 
 //				sb.AppendLine(string.Format("Unknown data: {0}", info[47]));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"unit y-offset:",
-											record.StandOffset));
+										"{0,-20}{1}",
+										"unit y-offset:",
+										record.StandOffset));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"tile y-offset:",
-											record.TileOffset));
+										"{0,-20}{1}",
+										"tile y-offset:",
+										record.TileOffset));
 
 //				sb.AppendLine(string.Format("Unknown data: {0}", info[50]));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"block light[0-10]:",
-											record.LightBlock));
+										"{0,-20}{1}",
+										"block light[0-10]:",
+										record.LightBlock));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"footstep sound:",
-											record.Footstep));
+										"{0,-20}{1}",
+										"footstep sound:",
+										record.Footstep));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1} - {2}",
-											"part type:",
-											(sbyte)record.PartType,
-											Enum.GetName(typeof(PartType), record.PartType)));
+										"{0,-20}{1} - {2}",
+										"part type:",
+										(sbyte)record.PartType,
+										Enum.GetName(typeof(PartType), record.PartType)));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1} - {2}",
-											"explosive type:",
-											record.HE_Type,
-											(record.HE_Type == 0) ? "HE" : (record.HE_Type == 1) ? "smoke" : "unknown"));
+										"{0,-20}{1} - {2}",
+										"explosive type:",
+										record.HE_Type,
+										(record.HE_Type == 0) ? "HE" : (record.HE_Type == 1) ? "smoke" : "unknown"));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"HE Strength:",
-											record.HE_Strength));
+										"{0,-20}{1}",
+										"HE Strength:",
+										record.HE_Strength));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"smoke block:",
-											record.SmokeBlockage));
+										"{0,-20}{1}",
+										"smoke block:",
+										record.SmokeBlockage));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"fuel:",
-											record.Fuel));
+										"{0,-20}{1}",
+										"fuel:",
+										record.Fuel));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"light:",
-											record.LightSource));
+										"{0,-20}{1}",
+										"light:",
+										record.LightSource));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1} - {2}",
-											"special property:",
-											(byte)record.Special,
-											Enum.GetName(typeof(SpecialType), record.Special)));
+										"{0,-20}{1} - {2}",
+										"special property:",
+										(byte)record.Special,
+										Enum.GetName(typeof(SpecialType), record.Special)));
 
 				sb.AppendLine(string.Format(
-											"{0,-20}{1}",
-											"base object:",
-											record.BaseObject));
+										"{0,-20}{1}",
+										"base object:",
+										record.BaseObject));
 
 //				sb.AppendLine(string.Format("Unknown data: {0}", info[61]));
 
@@ -321,7 +321,10 @@ namespace MapView
 				rtbInfo.SelectionLength = 0;
 			}
 			else
+			{
 				Text = TITLE;
+				rtbInfo.Text = String.Empty;
+			}
 		}
 		#endregion Methods
 	}
