@@ -1,6 +1,6 @@
 MapView ii
 
-2021 feb 9
+2021 jun 11
 
 MapView   .exe 3.9.0.0
 McdView   .exe 3.5.0.0
@@ -9,8 +9,8 @@ XCom      .dll 3.7.0.0
 DSShared  .dll 3.4.0.0
 YamlDotNet.dll 0.0.1.0
 
-ConfigConverter .exe 2.2.1.1
-RulesetConverter.exe 1.0.1.0
+ConfigConverter .exe 2.2.2.0
+RulesetConverter.exe 1.2.0.0
 
 
 major rewrite of the original MapView by Ben Ratzlaff aka DaiShiva (and others)
