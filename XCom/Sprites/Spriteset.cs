@@ -114,7 +114,7 @@ namespace XCom
 		/// <summary>
 		/// Gets/Sets the <c><see cref="XCImage"/></c> at a specified id. Adds a
 		/// sprite to the end of the set if the specified id falls outside the
-		/// bounds of the List.
+		/// bounds of the list.
 		/// </summary>
 		public XCImage this[int id]
 		{

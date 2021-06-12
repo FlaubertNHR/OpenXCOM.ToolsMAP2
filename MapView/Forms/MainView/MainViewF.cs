@@ -1379,7 +1379,7 @@ namespace MapView
 		private string _lastExportDirectory;
 
 		/// <summary>
-		/// Handles an export-Routesfile click.
+		/// Handles an export-MapRoutes click.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

@@ -12,10 +12,10 @@ namespace XCom
 		/// Creates a monotone spriteset from the embedded MONOTONE.PCK/TAB
 		/// files.
 		/// </summary>
-		/// <param name="label">"Monotone" creates the sprites for TopView's
-		/// blank quads and TileView's eraser or "Monotone_crippled" creates the
-		/// sprites for MainView's crippled tileparts.</param>
-		/// <returns>the monotone spriteset</returns>
+		/// <param name="label">"Monotone" is the label of the spriteset for
+		/// TopView's blank quads/TileView's eraser and "Monotone_crippled" is
+		/// the label for MainView's crippled tileparts.</param>
+		/// <returns>a monotone spriteset</returns>
 		public static Spriteset CreateMonotoneSpriteset(string label)
 		{
 			var ass = Assembly.GetExecutingAssembly();
