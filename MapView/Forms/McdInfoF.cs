@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
 
 using DSShared;
@@ -136,184 +137,185 @@ namespace MapView
 			{
 				Text = TITLE + " - " + _tileView.GetTerrainLabel() + "  terId " + part.TerId;
 
-				rtbInfo.SelectionColor = Color.Black;
+//				rtbInfo.SelectionColor = Color.Black;
 
-				// TODO: StringBuilder ->
+				var sb = new StringBuilder();
 
-				rtbInfo.AppendText(record.stSprites);
-				rtbInfo.AppendText(record.stLoFTs);
-				rtbInfo.AppendText(record.stScanG);
+				sb.AppendLine(record.stSprites);
+				sb.AppendLine(record.stLoFTs);
+				sb.AppendLine(record.stScanG);
 
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[22]));
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[23]));
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[24]));
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[25]));
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[26]));
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[27]));
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[28]));
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[29]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[22]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[23]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[24]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[25]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[26]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[27]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[28]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[29]));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"ufo door:",
 											record.SlidingDoor));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"stop LOS:",
 											record.StopLOS));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"no floor:",
 											record.NotFloored));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"bigwall:",
 											record.BigWall));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"gravlift:",
 											record.GravLift));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"standard door:",
 											record.HingedDoor));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"blocks fire:",
 											record.BlockFire));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"blocks smoke:",
 											record.BlockSmoke));
 
 				// LeftRightHalf
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[38]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[38]));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"tu walk:",
 											record.TU_Walk));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"tu slide:",
 											record.TU_Slide));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"tu fly:",
 											record.TU_Fly));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"armor:",
 											record.Armor));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"explosive block:",
 											record.HE_Block));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"anti-flammability:",
 											record.FireResist));
 
-				rtbInfo.SelectionColor = Color.Firebrick;
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+//				rtbInfo.SelectionColor = Color.Firebrick;
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"death tile:",
 											record.DieTile));
 
-				rtbInfo.SelectionColor = Color.Firebrick;
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+//				rtbInfo.SelectionColor = Color.Firebrick;
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"alternate tile:",
 											record.Alt_MCD));
 
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[47]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[47]));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"unit y-offset:",
 											record.StandOffset));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"tile y-offset:",
 											record.TileOffset));
 
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[50]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[50]));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"block light[0-10]:",
 											record.LightBlock));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"footstep sound:",
 											record.Footstep));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1} - {2}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1} - {2}",
 											"part type:",
 											(sbyte)record.PartType,
 											Enum.GetName(typeof(PartType), record.PartType)));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1} - {2}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1} - {2}",
 											"explosive type:",
 											record.HE_Type,
 											(record.HE_Type == 0) ? "HE" : (record.HE_Type == 1) ? "smoke" : "unknown"));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"HE Strength:",
 											record.HE_Strength));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"smoke block:",
 											record.SmokeBlockage));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"fuel:",
 											record.Fuel));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"light:",
 											record.LightSource));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1} - {2}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1} - {2}",
 											"special property:",
 											(byte)record.Special,
 											Enum.GetName(typeof(SpecialType), record.Special)));
 
-				rtbInfo.AppendText(string.Format(
-											"{0,-20}{1}" + Environment.NewLine,
+				sb.AppendLine(string.Format(
+											"{0,-20}{1}",
 											"base object:",
 											record.BaseObject));
 
-//				rtb.AppendText(string.Format("Unknown data: {0}" + Environment.NewLine, info[61]));
+//				sb.AppendLine(string.Format("Unknown data: {0}", info[61]));
 
 
-				rtbInfo.AppendText(Environment.NewLine);
-				rtbInfo.SelectionColor = Color.DarkGray;
-				rtbInfo.AppendText("byte data:" + Environment.NewLine);
-				rtbInfo.SelectionColor = Color.DarkGray;
-				rtbInfo.AppendText(record.ByteTable + Environment.NewLine);
+				sb.AppendLine();
+//				rtbInfo.SelectionColor = Color.DarkGray;
+				sb.AppendLine("byte data:");
+//				rtbInfo.SelectionColor = Color.DarkGray;
+				sb.AppendLine(record.ByteTable);
 
+				rtbInfo.Text = sb.ToString();
 
 				rtbInfo.SelectionStart  =
 				rtbInfo.SelectionLength = 0;

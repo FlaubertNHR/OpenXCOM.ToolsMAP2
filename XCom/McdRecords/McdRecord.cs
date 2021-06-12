@@ -308,40 +308,40 @@ namespace XCom
 
 
 			stSprites = string.Format(
-								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}" + Environment.NewLine,
-								"images:",
-								Sprite1,
-								Sprite2,
-								Sprite3,
-								Sprite4,
-								Sprite5,
-								Sprite6,
-								Sprite7,
-								Sprite8);
+								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}",
+								"images:",	// 0
+								Sprite1,	// 1
+								Sprite2,	// 2
+								Sprite3,	// 3
+								Sprite4,	// 4
+								Sprite5,	// 5
+								Sprite6,	// 6
+								Sprite7,	// 7
+								Sprite8);	// 8
 
 			stScanG = string.Format(
-								"{0,-20}{1} : {2} -> {3} [{4}]" + Environment.NewLine,
-								"scang reference:",
-								bindata[20],
-								bindata[21],
-								ScanG,
-								ScanG_reduced);
+								"{0,-20}{1} : {2} -> {3} [{4}]",
+								"scang reference:",	// 0
+								bindata[20],		// 1
+								bindata[21],		// 2
+								ScanG,				// 3
+								ScanG_reduced);		// 4
 
 			stLoFTs = string.Format(
-								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}" + Environment.NewLine,
-								"loft references:",
-								Loft1,
-								Loft2,
-								Loft3,
-								Loft4,
-								Loft5,
-								Loft6,
-								Loft7,
-								Loft8,
-								Loft9,
-								Loft10,
-								Loft11,
-								Loft12);
+								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}",
+								"loft references:",	// 0
+								Loft1,				// 1
+								Loft2,				// 2
+								Loft3,				// 3
+								Loft4,				// 4
+								Loft5,				// 5
+								Loft6,				// 6
+								Loft7,				// 7
+								Loft8,				// 8
+								Loft9,				// 9
+								Loft10,				// 10
+								Loft11,				// 11
+								Loft12);			// 12
 
 			ByteTable = BytesTable(bindata);
 		}
