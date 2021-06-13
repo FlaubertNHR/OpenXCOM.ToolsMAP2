@@ -1311,7 +1311,7 @@ namespace MapView
 
 			foreach (var @group in TileGroupManager.TileGroups)
 			foreach (var category in @group.Value.Categories)
-			if (category.Key != CategoryLabel)
+			if (@group.Value != TileGroup || category.Key != CategoryLabel)
 			{
 				foreach (var descriptor in category.Value.Values)
 				if (   descriptor.Label    == _descriptor.Label
