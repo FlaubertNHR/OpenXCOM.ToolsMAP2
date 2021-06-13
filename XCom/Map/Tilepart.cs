@@ -113,7 +113,7 @@ namespace XCom
 			TerId = id;
 			SetId = -1;
 
-			if ((_spriteset = spriteset) != null) // nota bene: 'Spriteset' and 'Sprites' shall be null for McdView.
+			if ((_spriteset = spriteset) != null) // nota bene: '_spriteset' and '_sprites' shall be null for McdView.
 			{
 				InitSprites();
 			}
@@ -308,20 +308,19 @@ namespace XCom
 		/// <param name="slot">the <c><see cref="PartType"/></c> to show
 		/// crippled</param>
 		/// <remarks>This is strictly a one-way operation! All crippled parts
-		/// shall go ~poof~ when the Map is saved. TODO: Dispose and null
-		/// <c><see cref="CrippledSprites"/></c>.</remarks>
+		/// shall go ~poof~ when the Map is saved.</remarks>
 		internal void Cripple(PartType slot)
 		{
 			// TODO: stop the part from being selected in TileView when the slot
 			// in QuadrantControl is double-clicked
 
-			// NOTE: Assigning "-1" to the record's 'PartType' shall force it to
-			// be listed in TopView's TestPartslots dialog. And discount it from
-			// consideration as a valid highid in the TilepartSubstitution
-			// dialog.
+			// NOTE: Assigning 'PartType.Invalid' to the record's 'PartType'
+			// shall force it to be listed in TopView's TestPartslots dialog and
+			// disallow it from consideration as a valid highid in the
+			// TilepartSubstitution dialog.
 			Record.PartType = PartType.Invalid;
 
-			if (CrippledSprites == null)
+			if (CrippledSprites == null) // once created the CrippledSprites shall be disposed explicitly when MapView quits.
 				CreateCrippledSprites();
 
 			_sprites = new XCImage[PHASES];
