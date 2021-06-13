@@ -47,7 +47,7 @@ namespace MapView.Forms.Observers
 			{
 				_t1.Tick -= t1_OnTick; // not a problem if already unsubscribed.
 				_t1.Dispose();
-//				_t1 = null;
+				_t1 = null;
 			}
 
 			// TODO: _foptions - look closer
@@ -90,7 +90,7 @@ namespace MapView.Forms.Observers
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
 
-		private readonly Timer _t1 = new Timer();
+		private Timer _t1 = new Timer();
 		#endregion Fields
 
 
