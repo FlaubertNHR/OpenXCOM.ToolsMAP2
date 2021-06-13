@@ -167,9 +167,6 @@ namespace MapView.Forms.Observers
 				if (MainViewF.Quit)
 				{
 					LogFile.WriteLine("TileViewForm.OnFormClosing()");
-					if (_tile.McdInfo != null)
-						_tile.McdInfo.Close();
-
 					_tile.DisposeObserver();
 				}
 				else
