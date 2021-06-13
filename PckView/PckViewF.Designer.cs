@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PckView
 {
-	partial class PckViewF
+	public sealed partial class PckViewF
 	{
 		#region Designer
 		private IContainer components;

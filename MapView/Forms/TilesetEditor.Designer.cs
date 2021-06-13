@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace MapView
 {
-	partial class TilesetEditor
+	internal sealed partial class TilesetEditor
 	{
 		#region Designer
 		/// <summary>

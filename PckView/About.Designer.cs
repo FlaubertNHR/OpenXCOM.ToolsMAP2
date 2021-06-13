@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PckView
 {
-	partial class About
+	internal sealed partial class About
 	{
 		#region Designer
 		private Label label1;

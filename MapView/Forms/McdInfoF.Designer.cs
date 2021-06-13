@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace MapView
 {
-	partial class McdInfoF
+	internal sealed partial class McdInfoF
 	{
 		#region Designer
 		private RichTextBox rtbInfo;

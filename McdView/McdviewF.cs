@@ -20,7 +20,7 @@ namespace McdView
 	/// <summary>
 	/// McdView app.
 	/// </summary>
-	public partial class McdviewF
+	public sealed partial class McdviewF
 		:
 			Form
 	{

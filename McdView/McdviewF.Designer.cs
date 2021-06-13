@@ -7,7 +7,7 @@ using DSShared.Controls;
 
 namespace McdView
 {
-	public partial class McdviewF
+	public sealed partial class McdviewF
 	{
 		#region Designer
 		private IContainer components;

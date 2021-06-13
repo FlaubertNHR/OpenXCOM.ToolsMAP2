@@ -18,7 +18,7 @@ namespace McdView
 	/// internal copy-buffer of McdView for pasting into the currently loaded
 	/// MCD-set.
 	/// </summary>
-	internal partial class CopierF
+	internal sealed partial class CopierF
 		:
 			Form
 	{

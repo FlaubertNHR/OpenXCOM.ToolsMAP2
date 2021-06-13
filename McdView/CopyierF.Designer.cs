@@ -6,7 +6,7 @@ using DSShared.Controls;
 
 namespace McdView
 {
-	internal partial class CopierF
+	internal sealed partial class CopierF
 	{
 		#region Designer
 		private GroupBox gb_Collection;

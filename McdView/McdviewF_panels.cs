@@ -18,7 +18,7 @@ using XCom;
 
 namespace McdView
 {
-	public partial class McdviewF
+	public sealed partial class McdviewF
 	{
 		#region Fields
 		private Graphics _graphics;

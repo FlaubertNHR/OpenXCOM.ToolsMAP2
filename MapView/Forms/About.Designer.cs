@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace MapView
 {
-	partial class About
+	internal sealed partial class About
 	{
 		#region Designer
 		/// <summary>
