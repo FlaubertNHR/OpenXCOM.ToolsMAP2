@@ -17,8 +17,8 @@ namespace MapView
 	/// </summary>
 	internal enum TilesetEditType
 	{
-		AddTileset,
-		EditTileset
+		AddTileset,	// 0
+		EditTileset	// 1
 	}
 
 
@@ -36,9 +36,9 @@ namespace MapView
 		/// </summary>
 		private enum AddType
 		{
-			non,
-			MapExists,
-			MapCreate
+			non,		// 0
+			MapExists,	// 1
+			MapCreate	// 2
 		}
 		#endregion Enums
 
@@ -50,11 +50,27 @@ namespace MapView
 
 
 		#region Fields
-		private bool _inited_TL; // inited the TilesetLabel textbox
-		private bool _inited_RE; // inited the BypassRecordsExceeded checkbox
+		/// <summary>
+		/// <c>true</c> if the TilesetLabel textbox has been inited.
+		/// </summary>
+		/// <remarks>Don't let setting the tileset-label fire
+		/// <c><see cref="OnTilesetTextboxChanged()">OnTilesetTextboxChanged()</see></c>
+		/// until after <c><see cref="TilesetBasepath"/></c> is initialized else
+		/// <c><see cref="ListTerrains()">ListTerrains()</see></c> will barf.</remarks>
+		private bool _inited_TL;
 
 		/// <summary>
-		/// A Descriptor used internally by this TilesetEditor.
+		/// <c>true</c> if the BypassRecordsExceeded checkbox has been inited.
+		/// </summary>
+		/// <remarks>Don't let initializing the <c>Descriptor.BypassRecordsExceeded</c>
+		/// checkbox fire
+		/// <c><see cref="OnBypassRecordsExceededCheckedChanged()">OnBypassRecordsExceededCheckedChanged()</see></c>
+		/// and flag the Maptree changed.</remarks>
+		private bool _inited_RE;
+
+		/// <summary>
+		/// A <c><see cref="Descriptor"/></c> used internally by this
+		/// <c>TilesetEditor</c>.
 		/// </summary>
 		private Descriptor _descriptor;
 
@@ -77,17 +93,32 @@ namespace MapView
 
 
 		#region Properties
+		/// <summary>
+		/// Gets/Sets whether the user is adding a tileset or editing an
+		/// existing tileset.
+		/// </summary>
+		/// <remarks>The <c>InputBoxType</c> is set in the constructor and does
+		/// not change.</remarks>
 		private TilesetEditType InputBoxType
 		{ get; set; }
 
+		/// <summary>
+		/// Gets/Sets whether this instantiation of the <c>TilesetEditor</c>
+		/// needs to deal with an existing tileset or create a new one.
+		/// </summary>
 		private AddType FileAddType
 		{ get; set; }
 
+		/// <summary>
+		/// The current <c><see cref="XCom.TileGroup"/></c>.
+		/// </summary>
+		/// <remarks>The <c>TileGroup</c> is set in the constructor and does not
+		/// change.</remarks>
 		private TileGroup TileGroup
 		{ get; set; }
 
 		/// <summary>
-		/// Gets/Sets the group-label.
+		/// Gets/Sets the group-label on the group-control.
 		/// </summary>
 		private string GroupLabel
 		{
@@ -96,7 +127,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets/Sets the category-label.
+		/// Gets/Sets the category-label on the category-control.
 		/// </summary>
 		private string CategoryLabel
 		{
@@ -105,7 +136,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets/Sets the tileset-label.
+		/// Gets/Sets the tileset-label on the tileset-control.
 		/// </summary>
 		internal string TilesetLabel
 		{
@@ -114,16 +145,19 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Stores the original tileset-label, used only for 'EditTileset' in
-		/// various ways.
+		/// Stores the original tileset-label.
 		/// </summary>
+		/// <remarks>Used only for
+		/// <c><see cref="TilesetEditType.EditTileset">TilesetEditType.EditTileset</see></c>
+		/// in various ways.</remarks>
 		private string TilesetLabel_0
 		{ get; set; }
 
 		private string _basepath;
 		/// <summary>
-		/// Gets/Sets the basepath of the Tileset. Setter calls ListTerrains()
-		/// which also sets the Descriptor.
+		/// Gets/Sets the basepath of the tileset. Setter calls
+		/// <c><see cref="ListTerrains()">ListTerrains()</see></c> which also
+		/// sets the <c><see cref="Descriptor"/></c>.
 		/// </summary>
 		private string TilesetBasepath
 		{
@@ -136,16 +170,18 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// The basepath that the user has set in the Configurator.
+		/// The basepath that the user has set in the
+		/// <c><see cref="MapView.ConfigurationForm">Configurator</see></c>.
 		/// </summary>
 		private string Basepath
 		{ get; set; }
 
 		/// <summary>
-		/// Stores the original terrainset of a tileset, used only for
-		/// 'EditTileset' to check if the terrains have changed when user clicks
-		/// Accept.
+		/// Stores the original terrainset of a tileset.
 		/// </summary>
+		/// <remarks>Used only for
+		/// <c><see cref="TilesetEditType.EditTileset">TilesetEditType.EditTileset</see></c>
+		/// to check if the terrains have changed when user clicks Accept.</remarks>
 		private Dictionary<int, Tuple<string,string>> Terrains_0
 		{ get; set; }
 
@@ -159,7 +195,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// Creates a Tileset Editor dialog.
+		/// Creates a <c>TilesetEditor</c> dialog.
 		/// </summary>
 		/// <param name="bt"></param>
 		/// <param name="labelGroup"></param>
@@ -185,8 +221,7 @@ namespace MapView
 			CategoryLabel = labelCategory;
 			TilesetLabel  = labelTileset;
 
-			_inited_TL = true;	// don't let setting 'Tileset' fire OnTilesetTextChanged() until
-								// after 'BasePath' is initialized. Else ListTerrains() will throwup.
+			_inited_TL = true;
 
 			Invalids = GetInvalids();
 
@@ -270,8 +305,8 @@ namespace MapView
 
 			PrintTilesetCount();
 
-			_inited_RE = true;	// don't let initializing the BypassRecordsExceeded
-		}						// checkbox flag the Maptree changed.
+			_inited_RE = true;
+		}
 		#endregion cTor
 
 
@@ -301,7 +336,8 @@ namespace MapView
 		/// <param name="e"></param>
 		/// <remarks>Terrains get changed on-the-fly and do not require an
 		/// Accept click. But the Map needs to be reloaded when things go back
-		/// to OnAdd/EditTilesetClick() in <see cref="MainViewF"/>.</remarks>
+		/// to <c><see cref="MainViewF">MainViewF</see>.OnAddTilesetClick()</c>
+		/// or <c><see cref="MainViewF">MainViewF</see>.OnEditTilesetClick()</c>.</remarks>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
@@ -357,7 +393,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Opens a dialog to browse for a Mapfile.
+		/// Opens a dialog to browse for a <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -400,7 +436,7 @@ namespace MapView
 
 		/// <summary>
 		/// Refreshes the terrains-lists and ensures that the tileset-label is
-		/// valid to be a Mapfile.
+		/// valid to be a <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -473,10 +509,10 @@ namespace MapView
 															"There {1} {0} other tileset{2} that {1} defined with the"
 														  + " current .MAP and .RMP files. The label{2} of {3} tileset{2}"
 														  + " will be changed also if you change the label of this Map.",
-															tilesets,
-															singular ? "is" : "are",
-															singular ? String.Empty : "s",
-															singular ? "that" : "those");
+															tilesets,						// 0
+															singular ? "is" : "are",		// 1
+															singular ? String.Empty : "s",	// 2
+															singular ? "that" : "those");	// 3
 
 									ShowWarn(Infobox.SplitString(warn));
 								}
@@ -491,9 +527,10 @@ namespace MapView
 
 		/// <summary>
 		/// Lists the allocated and available terrains in their list-boxes. This
-		/// function also sets the internal Descriptor, which is essential to
-		/// listing the terrains as well as to the proper functioning of various
-		/// control-buttons and routines in this TilesetEditor.
+		/// function also sets the internal <c><see cref="Descriptor"/></c>,
+		/// which is essential to listing the terrains as well as to the proper
+		/// functioning of various control-buttons and routines in this
+		/// <c>TilesetEditor</c>.
 		/// </summary>
 		private void ListTerrains()
 		{
@@ -618,15 +655,18 @@ namespace MapView
 
 
 		/// <summary>
-		/// Creates a tileset as a valid <see cref="Descriptor"/>. This is
-		/// allowed iff this dialog is <see cref="TilesetEditType.AddTileset"/>
-		/// - <see cref="AddType.MapExists"/>/<see cref="AddType.MapCreate"/>.
-		/// It's disallowed if the mode is <see cref="TilesetEditType.EditTileset"/>.
+		/// Creates a tileset as a <c><see cref="Descriptor"/></c>. This is
+		/// allowed iff this dialog is
+		/// <c><see cref="TilesetEditType.AddTileset">TilesetEditType.AddTileset</see></c>
+		/// and (<c><see cref="AddType.MapExists">AddType.MapExists</see></c> or
+		/// <c><see cref="AddType.MapCreate">AddType.MapCreate</see></c>).
+		/// It is disallowed if the mode is
+		/// <c><see cref="TilesetEditType.EditTileset">TilesetEditType.EditTileset</see></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>A Map's descriptor must be created/valid before terrains
-		/// can be added.</remarks>
+		/// <remarks>A <c><see cref="Descriptor"/></c> must be created/valid
+		/// before terrains can be added.</remarks>
 		private void OnCreateDescriptorClick(object sender, EventArgs e)
 		{
 			if (TilesetExistsInCategory())
@@ -679,16 +719,20 @@ namespace MapView
 
 
 		/// <summary>
-		/// If this inputbox is type <see cref="TilesetEditType.AddTileset"/>,
-		/// the accept click must check to see if a descriptor has been created
-		/// already with the CreateMap button first.
+		/// If this <c>TilesetEditor</c> is type
+		/// <c><see cref="TilesetEditType.AddTileset">TilesetEditType.AddTileset</see></c>,
+		/// the Accept click must check to see if a <c><see cref="Descriptor"/></c>
+		/// has been created with the Create button first.
 		/// 
-		/// If this inputbox is type <see cref="TilesetEditType.EditTileset"/>,
-		/// the accept click will create a descriptor if the tileset-label
-		/// changed and delete the old descriptor, and add the new one to the
-		/// current tilegroup/category. If the tileset-label didn't change,
-		/// nothing more need be done since any terrains that were changed have
-		/// already been changed by changes to the Allocated/Available listboxes.
+		/// 
+		/// If this <c>TilesetEditor</c> is type
+		/// <c><see cref="TilesetEditType.EditTileset">TilesetEditType.EditTileset</see></c>,
+		/// the Accept click will create a <c><see cref="Descriptor"/></c> if
+		/// the tileset-label changed and delete the old <c>Descriptor</c>, and
+		/// add the new one to the current tilegroup/category. If the
+		/// tileset-label didn't change, nothing more need be done since any
+		/// terrains that were changed have already been changed by changes to
+		/// the Allocated/Available listboxes.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -894,8 +938,8 @@ namespace MapView
 				// InvariantCulture, ListBox is likely sorting by that culture.
 				// So let String.Compare() use that culture also.
 
-				// TODO: Set the listbox Sort() method and this string comparison
-				// to use StringComparison.CurrentCultureIgnoreCase.
+				// TODO: Set the listbox Sort() method and this string
+				// comparison to use StringComparison.CurrentCultureIgnoreCase.
 
 				if (String.Compare(itAllocated, itAvailable, StringComparison.InvariantCultureIgnoreCase) < 0)
 					++sel;
@@ -908,7 +952,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Shifts a terrain up in the allocated terrains list.
+		/// Shifts a terrain up in the allocated terrains-list.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -918,7 +962,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Shifts a terrain down in the allocated terrains list.
+		/// Shifts a terrain down in the allocated terrains-list.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -928,11 +972,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Shifts a terrain up/down in the allocated terrains list.
+		/// Shifts a terrain up/down in the allocated terrains-list.
 		/// </summary>
 		/// <param name="dir"></param>
-		/// <remarks>Helper for <see cref="OnTerrainUpClick"/> and
-		/// <see cref="OnTerrainDownClick"/>.</remarks>
+		/// <remarks>Helper for
+		/// <c><see cref="OnTerrainUpClick()">OnTerrainUpClick()</see></c> and
+		/// <c><see cref="OnTerrainDownClick()">OnTerrainDownClick()</see></c></remarks>
 		private void ShiftTerrainEntry(int dir)
 		{
 			if (!MainViewF.that.MaptreeChanged && InputBoxType == TilesetEditType.EditTileset)
@@ -960,7 +1005,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Copies the current tileset's allocated terrains list.
+		/// Copies the current tileset's allocated terrains-list.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -979,7 +1024,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Pastes the currently copied allocated terrains list.
+		/// Pastes the currently copied allocated terrains-list.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1000,7 +1045,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Clears the current tileset's allocated terrains list.
+		/// Clears the current tileset's allocated terrains-list.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1392,9 +1437,10 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets the fullpath for a Map-file.
+		/// Gets the fullpath for a Mapfile.
 		/// </summary>
-		/// <param name="label">the label w/out extension of a Map-file to check for</param>
+		/// <param name="label">the label w/out extension of a Mapfile to check
+		/// for</param>
 		/// <returns></returns>
 		private string GetFullpathMapfile(string label)
 		{
@@ -1403,9 +1449,10 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets the fullpath for a Route-file.
+		/// Gets the fullpath for a Routefile.
 		/// </summary>
-		/// <param name="label">the label w/out extension of a Route-file to check for</param>
+		/// <param name="label">the label w/out extension of a Routefile to
+		/// check for</param>
 		/// <returns></returns>
 		private string GetFullpathRoutefile(string label)
 		{
@@ -1414,11 +1461,11 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Checks if a Map-file w/ label exists in the current basepath
+		/// Checks if a Mapfile w/ label exists in the current basepath
 		/// directory.
 		/// </summary>
-		/// <param name="label">the label w/out extension of a Map-file to check for</param>
-		/// <returns>true if the Map-file already exists on the hardrive</returns>
+		/// <param name="label">the label w/out extension of a Mapfile to check for</param>
+		/// <returns>true if the Mapfile already exists on the hardrive</returns>
 		private bool MapfileExists(string label)
 		{
 			return !String.IsNullOrEmpty(label)
@@ -1426,10 +1473,11 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets the count of a specified tileset in the TileGroups.
+		/// Gets the count of a specified tileset in every
+		/// <c><see cref="XCom.TileGroup"/></c>.
 		/// </summary>
 		/// <param name="label">the tileset-label to check against</param>
-		/// <returns>the count of tilesets already in the TileGroups</returns>
+		/// <returns>the count of extant tilesets</returns>
 		private int GetTilesetCount(string label)
 		{
 			int count = 0;
@@ -1448,8 +1496,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Prints the count of the tileset (in 'tbTileset') that are already in
-		/// the TileGroups.
+		/// Prints the count of the tileset that are in every
+		/// <c><see cref="XCom.TileGroup"/></c>.
 		/// </summary>
 		private void PrintTilesetCount()
 		{
@@ -1472,7 +1520,8 @@ namespace MapView
 		/// <summary>
 		/// Checks if the current tileset-label exists in a specified Group and
 		/// Category. The current tileset's Group and Category will be searched
-		/// if 'labelGroup' and 'labelCategory' are left to default.
+		/// if <paramref name="labelGroup"/> and <paramref name="labelCategory"/>
+		/// are null (default).
 		/// </summary>
 		/// <param name="labelGroup">the group-label of the category-label to check</param>
 		/// <param name="labelCategory">the category-label of the tileset-label to check</param>
@@ -1512,7 +1561,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Wrapper for <see cref="Infobox"/>.
+		/// Wrapper for <c><see cref="Infobox"/></c>.
 		/// </summary>
 		/// <param name="head">the error string to show</param>
 		private void ShowError(string head)
@@ -1528,7 +1577,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Wrapper for <see cref="Infobox"/>.
+		/// Wrapper for <c><see cref="Infobox"/></c>.
 		/// </summary>
 		/// <param name="warn">the warn string to show</param>
 		private void ShowWarn(string warn)
@@ -1716,11 +1765,15 @@ namespace MapView
 
 		/// <summary>
 		/// Required for
-		/// lbTerrainsAllocated.DisplayMember = "Terrain";
-		/// lbTerrainsAvailable.DisplayMember = "Terrain";
+		/// <list type="bullet">
+		/// <item>lb_TerrainsAllocated.DisplayMember = "Terrain";</item>
+		/// <item>lb_TerrainsAvailable.DisplayMember = "Terrain";</item>
+		/// </list>
+		/// 
+		/// 
 		/// to work correctly.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>the <c><see cref="Terrain"/></c> string</returns>
 		public override string ToString()
 		{
 			return Terrain;
