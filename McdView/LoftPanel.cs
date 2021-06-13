@@ -12,6 +12,9 @@ using XCom;
 
 namespace McdView
 {
+	/// <summary>
+	/// A small panel that contains a single LoFT icon.
+	/// </summary>
 	internal sealed class LoftPanel
 		:
 			BufferedPanel
@@ -55,12 +58,12 @@ namespace McdView
 
 					loftid *= 256; // array id
 
-					using (var loft = new Bitmap(16,16, PixelFormat.Format8bppIndexed))	// Format1bppIndexed <- uses only 1 BIT per pixel
-					{																	// - causes probs setting the pixels below.
+					using (var loft = new Bitmap(16,16, PixelFormat.Format8bppIndexed)) // Format1bppIndexed - causes probs setting the pixels below.
+					{
 						var data = loft.LockBits(
 											new Rectangle(0,0, loft.Width, loft.Height),
 											ImageLockMode.WriteOnly,
-											PixelFormat.Format8bppIndexed); // Format1bppIndexed
+											PixelFormat.Format8bppIndexed);
 						var start = data.Scan0;
 
 						unsafe
