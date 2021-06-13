@@ -1421,10 +1421,8 @@ namespace MapView
 		/// <returns>true if the Map-file already exists on the hardrive</returns>
 		private bool MapfileExists(string label)
 		{
-			if (!String.IsNullOrEmpty(label))
-				return File.Exists(GetFullpathMapfile(label));
-
-			return false;
+			return !String.IsNullOrEmpty(label)
+				 && File.Exists(GetFullpathMapfile(label));
 		}
 
 		/// <summary>
