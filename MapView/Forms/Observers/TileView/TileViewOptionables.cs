@@ -54,7 +54,7 @@ namespace MapView.Forms.Observers
 			Color.IndianRed,		//  2 - PowerSource		IonBeamAccel
 			Color.Turquoise,		//  3 - Navigation
 			Color.Khaki,			//  4 - Construction
-			Color.MistyRose,		//  5 - Food			Cryo
+			Color.Snow,				//  5 - Food			Cryo
 			Color.Aquamarine,		//  6 - Reproduction	Clon
 			Color.DeepSkyBlue,		//  7 - Entertainment	LearnArrays
 			Color.Thistle,			//  8 - Surgery			Implant
@@ -141,7 +141,7 @@ Color of TFTD Alien Sub Construction parts")]
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Alien Food parts
 Color of TFTD Alien Cryogenics parts")]
-		[DefaultValue(typeof(Color), "MistyRose")]
+		[DefaultValue(typeof(Color), "Snow")]
 		public Color Food
 		{
 			get { return _colorFood; }
