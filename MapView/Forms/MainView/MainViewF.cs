@@ -2022,8 +2022,7 @@ namespace MapView
 				miColors.Checked = true;
 				ObserverManager.TileView.Control.CheckColorhelp(true);
 
-				_fcolors = new ColorHelp(this);
-				_fcolors.Show(); // no owner.
+				_fcolors = new ColorHelp();
 			}
 			else
 				_fcolors.BringToFront();

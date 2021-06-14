@@ -22,13 +22,11 @@ namespace MapView
 	{
 		#region Fields (static)
 		private static int _x = -1;
-		private static int _y = -1;
+		private static int _y;
 		#endregion Fields (static)
 
 
 		#region Fields
-		private readonly MainViewF _f;
-
 		private Font _fontBold;
 		#endregion Fields
 
@@ -37,13 +35,11 @@ namespace MapView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal ColorHelp(MainViewF f)
+		internal ColorHelp()
 		{
 			InitializeComponent();
 			var tpBorder = new TabPageBorder(tabControl);
 			tpBorder.TabPageBorder_init();
-
-			_f = f;
 
 			_fontBold = new Font(Font, FontStyle.Bold);
 
@@ -71,13 +67,14 @@ namespace MapView
 			la_Type14      .Font = _fontBold;
 
 			UpdateColors();
-			OnCheckChanged(null, EventArgs.Empty);
+			rb_OnCheckChanged(null, EventArgs.Empty);
 
-			if (_x == -1) _x = _f.Left + _f.Width  / 2 - Width  / 2;
-			if (_y == -1) _y = _f.Top  + _f.Height / 2 - Height / 2 - 10;
-
-			Left = _x;
-			Top  = _y;
+			if (_x != -1)
+			{
+				StartPosition = FormStartPosition.Manual;
+				Left = _x; Top = _y;
+			}
+			Show(); // no owner.
 		}
 		#endregion cTor
 
@@ -101,12 +98,13 @@ namespace MapView
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				_x = Left;
-				_y = Top;
-
-				_f.DecheckColors();
+				_x = Math.Max(0, Left);
+				_y = Math.Max(0, Top);
 
 				_fontBold.Dispose();
+
+				if (!MainViewF.Quit)
+					MainViewF.that.DecheckColors();
 			}
 			base.OnFormClosing(e);
 		}
@@ -248,7 +246,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnCheckChanged(object sender, EventArgs e)
+		private void rb_OnCheckChanged(object sender, EventArgs e)
 		{
 			if (rbUfo.Checked)
 			{
@@ -295,7 +293,7 @@ namespace MapView
 		/// Closes the Help screen.
 		/// </summary>
 		/// <param name="e"></param>
-		protected override void OnKeyUp(KeyEventArgs e)
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyData)
 			{
@@ -437,7 +435,7 @@ namespace MapView
 			this.rbUfo.TabStop = true;
 			this.rbUfo.Text = "UFO";
 			this.rbUfo.UseVisualStyleBackColor = true;
-			this.rbUfo.CheckedChanged += new System.EventHandler(this.OnCheckChanged);
+			this.rbUfo.CheckedChanged += new System.EventHandler(this.rb_OnCheckChanged);
 			// 
 			// rbTftd
 			// 
@@ -448,7 +446,7 @@ namespace MapView
 			this.rbTftd.TabIndex = 2;
 			this.rbTftd.Text = "TFTD";
 			this.rbTftd.UseVisualStyleBackColor = true;
-			this.rbTftd.CheckedChanged += new System.EventHandler(this.OnCheckChanged);
+			this.rbTftd.CheckedChanged += new System.EventHandler(this.rb_OnCheckChanged);
 			// 
 			// gbTileViewColors
 			// 
@@ -787,7 +785,7 @@ namespace MapView
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ColorHelp";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Colors";
 			this.tabControl.ResumeLayout(false);
 			this.tpTileView.ResumeLayout(false);
