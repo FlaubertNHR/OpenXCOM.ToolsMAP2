@@ -102,11 +102,7 @@ namespace MapView.Forms.MainView
 			f.FormClosing += (sender, e) =>
 			{
 				if (!MainViewF.Quit)
-				{
 					it.Checked = false;
-				}
-				else
-					RegistryInfo.UpdateRegistry(f);
 			};
 
 			 // initialize MainView's Options w/ each viewer's default Start setting ->

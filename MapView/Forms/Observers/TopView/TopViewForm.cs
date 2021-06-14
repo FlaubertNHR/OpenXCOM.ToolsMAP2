@@ -207,6 +207,7 @@ namespace MapView.Forms.Observers
 				if (MainViewF.Quit)
 				{
 					LogFile.WriteLine("TopViewForm.OnFormClosing()");
+					RegistryInfo.UpdateRegistry(this);
 					ObserverManager.ToolFactory.DisposeTopviewTools(); // disposes tools for TopRouteView also. but might not be req'd
 					_top.DisposeObserver();
 				}
