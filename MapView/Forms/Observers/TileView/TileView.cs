@@ -679,7 +679,8 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Displays MainView's Colorhelp dialog.
+		/// Displays the <c><see cref="ColorHelp"/></c> dialog in
+		/// <c><see cref="MainViewF"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -689,7 +690,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Checks/Unchecks the colorhelp button.
+		/// Checks/Unchecks the <c><see cref="tsb_Colorhelp">colorhelp button</see></c>.
 		/// </summary>
 		/// <param name="checked"></param>
 		internal void CheckColorhelp(bool @checked)
