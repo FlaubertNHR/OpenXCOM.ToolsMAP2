@@ -84,7 +84,7 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// 
+		/// Handles the activated event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
@@ -94,7 +94,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// 
+		/// Handles the formclosing event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)

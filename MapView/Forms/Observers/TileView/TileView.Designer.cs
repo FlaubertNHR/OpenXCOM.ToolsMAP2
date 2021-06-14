@@ -11,21 +11,24 @@ namespace MapView.Forms.Observers
 		#region Designer
 		private CompositedTabControl tcPartTypes;
 
+		private TabPage tpAll;
+		private TabPage tpFloors;
+		private TabPage tpWestwalls;
+		private TabPage tpNorthwalls;
+		private TabPage tpContents;
+
 		private ToolStrip tsMain;
 		private ToolStripDropDownButton tsddbExternal;
 		private ToolStripMenuItem tsmiEditPck;
+		private ToolStripMenuItem tsmiEditMcd;
+		private ToolStripSeparator tsmi_Sep0;
 		private ToolStripMenuItem tsmiVolutarMcdEditor;
-		private TabPage tpAll;
-		private TabPage tpFloors;
-		private TabPage tpContents;
-		private TabPage tpNorthwalls;
-		private TabPage tpWestwalls;
+		private ToolStripButton tsb_Colorhelp;
+		private ToolStripButton tsb_Options;
+
 		private StatusStrip ssStatus;
 		private ToolStripStatusLabel tsslTotal;
 		private ToolStripStatusLabel tsslOver;
-		private ToolStripButton tsb_Options;
-		private ToolStripMenuItem tsmiEditMcd;
-		private ToolStripSeparator tsmi_Sep0;
 
 
 		/// <summary>
@@ -46,6 +49,7 @@ namespace MapView.Forms.Observers
 			this.tsmiEditMcd = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_Sep0 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmiVolutarMcdEditor = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsb_Colorhelp = new System.Windows.Forms.ToolStripButton();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.ssStatus = new System.Windows.Forms.StatusStrip();
 			this.tsslTotal = new System.Windows.Forms.ToolStripStatusLabel();
@@ -115,6 +119,7 @@ namespace MapView.Forms.Observers
 			this.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsddbExternal,
+			this.tsb_Colorhelp,
 			this.tsb_Options});
 			this.tsMain.Location = new System.Drawing.Point(0, 0);
 			this.tsMain.Name = "tsMain";
@@ -167,6 +172,17 @@ namespace MapView.Forms.Observers
 			this.tsmiVolutarMcdEditor.Size = new System.Drawing.Size(173, 22);
 			this.tsmiVolutarMcdEditor.Text = "&Volutar MCD Editor";
 			this.tsmiVolutarMcdEditor.Click += new System.EventHandler(this.OnVolutarMcdEditorClick);
+			// 
+			// tsb_Colorhelp
+			// 
+			this.tsb_Colorhelp.AutoToolTip = false;
+			this.tsb_Colorhelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsb_Colorhelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsb_Colorhelp.Margin = new System.Windows.Forms.Padding(0);
+			this.tsb_Colorhelp.Name = "tsb_Colorhelp";
+			this.tsb_Colorhelp.Size = new System.Drawing.Size(62, 25);
+			this.tsb_Colorhelp.Text = "Colorhelp";
+			this.tsb_Colorhelp.Click += new System.EventHandler(this.OnColorhelpClick);
 			// 
 			// tsb_Options
 			// 

@@ -60,7 +60,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DisposeContext()
 		{
-			ContextMenu.MenuItems[3].Click -= OnMcdInfoClick;
+			ContextMenu.MenuItems[3].Click -= OnMcdInfoClick; // CONTEXT_MI_MCDINFO
 			ContextMenu.MenuItems[3].Dispose();
 
 			ContextMenu.MenuItems[2].Dispose();
@@ -417,7 +417,7 @@ namespace MapView.Forms.Observers
 				if (McdInfo == null)
 					McdInfo = new McdInfoF(this);
 
-				McdInfo.Show();
+				McdInfo.Show(); // no owner.
 
 				if (McdInfo.WindowState == FormWindowState.Minimized)
 					McdInfo.WindowState  = FormWindowState.Normal;
@@ -675,6 +675,26 @@ namespace MapView.Forms.Observers
 			{
 				f.ShowDialog(this);
 			}
+		}
+
+
+		/// <summary>
+		/// Displays MainView's Colorhelp dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnColorhelpClick(object sender, EventArgs e)
+		{
+			MainViewF.that.OnColorsClick(null, EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// Checks/Unchecks the colorhelp button.
+		/// </summary>
+		/// <param name="checked"></param>
+		internal void CheckColorhelp(bool @checked)
+		{
+			tsb_Colorhelp.Checked = @checked;
 		}
 		#endregion Events (menu)
 

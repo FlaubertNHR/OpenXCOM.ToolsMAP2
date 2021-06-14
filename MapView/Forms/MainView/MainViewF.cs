@@ -950,7 +950,7 @@ namespace MapView
 			// TODO: McdRecordsExceeded dialog is pseudo-static ... close it (if it was instantiated).
 
 			if (RouteView.RoutesInfo != null)
-				RouteView.RoutesInfo.Close();	// close RouteView's SpawnInfo dialog
+				RouteView.RoutesInfo.Close();	// close RouteView's RoutesInfo dialog
 
 			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
@@ -2010,16 +2010,17 @@ namespace MapView
 
 		/// <summary>
 		/// Opens the ColorsHelp dialog.
-		/// @note This handler is not a toggle. The dialog will be focused if
-		/// already open.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnColorsClick(object sender, EventArgs e)
+		/// <remarks>This handler is not a toggle. The dialog will be focused if
+		/// already open.</remarks>
+		internal void OnColorsClick(object sender, EventArgs e)
 		{
 			if (!miColors.Checked)
 			{
 				miColors.Checked = true;
+				ObserverManager.TileView.Control.CheckColorhelp(true);
 
 				_fcolors = new ColorHelp(this);
 				_fcolors.Show(); // no owner.
@@ -2034,6 +2035,8 @@ namespace MapView
 		internal void DecheckColors()
 		{
 			miColors.Checked = false;
+			ObserverManager.TileView.Control.CheckColorhelp(false);
+
 			_fcolors = null;
 		}
 
