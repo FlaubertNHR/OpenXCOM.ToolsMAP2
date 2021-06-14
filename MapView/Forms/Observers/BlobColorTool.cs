@@ -16,7 +16,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void Dispose()
 		{
-			DSShared.LogFile.WriteLine("BlobColorTool.Dispose()");
+			DSShared.LogFile.WriteLine("BlobColorTool.Dispose() " + Label);
 			Pen         .Dispose();
 			PenLight    .Dispose();
 			PenLightPrep.Dispose();
@@ -34,33 +34,39 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
+		/// A human-readable label for this <c>BlobColorTool</c>.
+		/// </summary>
+		internal string Label
+		{ get; private set; }
+
+		/// <summary>
 		/// A pen for drawing walls.
 		/// </summary>
 		internal Pen Pen
-		{ get; set; }
+		{ get; private set; }
 
 		/// <summary>
 		/// A translucent pen for drawing non-solid walls (eg, windows and
 		/// fences).
 		/// </summary>
 		internal Pen PenLight
-		{ get; set; }
+		{ get; private set; }
 
 		internal Pen PenLightPrep
-		{ get; set; }
+		{ get; private set; }
 
 
 		/// <summary>
 		/// A brush for drawing content objects.
 		/// </summary>
 		internal Brush Brush
-		{ get; set; }
+		{ get; private set; }
 
 		/// <summary>
 		/// A translucent brush for drawing floor objects.
 		/// </summary>
 		internal Brush BrushLight
-		{ get; set; }
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -69,8 +75,11 @@ namespace MapView.Forms.Observers
 		/// cTor[0]. Instantiates a colortool from a Pen object.
 		/// </summary>
 		/// <param name="pen"></param>
-		internal BlobColorTool(Pen pen)
+		/// <param name="label"></param>
+		internal BlobColorTool(Pen pen, string label)
 		{
+			Label = label;
+
 			var colorLight = Color.FromArgb(ALFALFA, pen.Color);
 
 			Pen          = new Pen(pen.Color,   pen.Width);
@@ -86,8 +95,11 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="brush"></param>
 		/// <param name="width"></param>
-		internal BlobColorTool(SolidBrush brush, float width)
+		/// <param name="label"></param>
+		internal BlobColorTool(SolidBrush brush, float width, string label)
 		{
+			Label = label;
+
 			var colorLight = Color.FromArgb(ALFALFA, brush.Color);
 
 			Pen          = new Pen(brush.Color, width);

@@ -545,11 +545,11 @@ namespace MapView.Forms.Observers
 
 			pen = new Pen(def_WallColor, def_WallWidth);
 			RouteControl.RoutePens[str_WallColor] = pen;
-			RouteControl.ToolWall = new BlobColorTool(pen);
+			RouteControl.ToolWall = new BlobColorTool(pen, "RouteToolWall");
 
 			brush = new SolidBrush(def_ContentColor);
 			RouteControl.RouteBrushes[str_ContentColor] = brush;
-			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);
+			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT, "RouteToolContent");
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
 			brush = new SolidBrush(color);
@@ -664,7 +664,8 @@ namespace MapView.Forms.Observers
 					RouteControl.ToolContent.Dispose();
 					RouteControl.ToolContent = new BlobColorTool(
 															RouteControl.RouteBrushes[str_ContentColor],
-															BlobDrawService.LINEWIDTH_CONTENT);
+															BlobDrawService.LINEWIDTH_CONTENT,
+															"RouteToolContent");
 
 					if (MainViewF.that._fcolors != null)
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
@@ -735,7 +736,7 @@ namespace MapView.Forms.Observers
 			{
 				case str_WallColor:
 					RouteControl.ToolWall.Dispose();
-					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);
+					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key], "RouteToolWall");
 
 					if (MainViewF.that._fcolors != null)
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
@@ -756,7 +757,7 @@ namespace MapView.Forms.Observers
 			{
 				case str_WallColor: // doh!
 					RouteControl.ToolWall.Dispose();
-					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);
+					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key], "RouteToolWall");
 					break;
 			}
 		}
