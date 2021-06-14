@@ -691,7 +691,8 @@ namespace McdView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>Bypass event if cursor moves off the panel before released.</remarks>
+		/// <remarks>Bypass event if cursor moves off the trackbar before
+		/// released.</remarks>
 		private void OnMouseUp_BarIsoLoft(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right
