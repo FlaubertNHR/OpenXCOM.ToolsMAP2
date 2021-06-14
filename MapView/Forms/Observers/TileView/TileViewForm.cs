@@ -105,15 +105,18 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Handles KeyDown events at the form level.
-		/// - [Esc] focuses the current panel
-		/// - opens/closes Options on [Ctrl+o] event
-		/// - checks for and if so processes a viewer F-key
-		/// - passes edit-keys to the TileView control's current panel's
-		///   Navigate() funct
-		/// @note Requires 'KeyPreview' true.
-		/// @note See also TopViewForm, RouteViewForm, TopRouteViewForm
+		/// <list type="bullet">
+		/// <item>[Esc] focuses the current panel</item>
+		/// <item>opens/closes Options on [Ctrl+o] event</item>
+		/// <item>opens/focuses Colorhelp on [Ctrl+h] event</item>
+		/// <item>checks for and if so processes a viewer F-key</item>
+		/// <item>passes edit-keys to the TileView control's current panel's
+		/// Navigate() funct</item>
+		/// </list>
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Requires 'KeyPreview' true. See also <c><see cref="TopViewForm"/></c>,
+		/// <c><see cref="RouteViewForm"/></c>, <c><see cref="TopRouteViewForm"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyData)
@@ -126,6 +129,11 @@ namespace MapView.Forms.Observers
 				case Keys.Control | Keys.O:
 					e.SuppressKeyPress = true;
 					_tile.OnOptionsClick(_tile.GetOptionsButton(), EventArgs.Empty);
+					break;
+
+				case Keys.Control | Keys.H:
+					e.SuppressKeyPress = true;
+					MainViewF.that.OnColorsClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.Q:
