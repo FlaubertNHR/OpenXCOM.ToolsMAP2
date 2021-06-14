@@ -20,11 +20,6 @@ namespace McdView
 {
 	public sealed partial class McdviewF
 	{
-		#region Fields
-		private Graphics _graphics;
-		#endregion Fields
-
-
 		#region Anisprites
 		private  static int SPRITE_ORIGIN_X;
 		private  const  int SPRITE_ORIGIN_Y =  0;
@@ -86,12 +81,12 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPaint_Sprites(object sender, PaintEventArgs e)
 		{
-			_graphics = e.Graphics;
+			Graphics graphics = e.Graphics;
 
 			if (Selid != -1 && Spriteset != null)
 			{
-				_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
-				_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+				graphics.PixelOffsetMode   = PixelOffsetMode.Half;
+				graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
 				McdRecord record = Parts[Selid].Record;
 				int y = SPRITE_ORIGIN_Y;
@@ -110,7 +105,7 @@ namespace McdView
 					for (int i = 0; i != 8; ++i)
 					{
 						rect.X = SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i;
-						_graphics.FillRectangle(Brushes.Black, rect); // actually palette-id #0 Transparent
+						graphics.FillRectangle(Brushes.Black, rect); // actually palette-id #0 Transparent
 					}
 				}
 
@@ -130,11 +125,17 @@ namespace McdView
 					}
 
 					if (id < Spriteset.Count)
-						DrawSprite(
-								Spriteset[id].Sprite,
-								SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y);
+						graphics.DrawImage(
+										Spriteset[id].Sprite,
+										new Rectangle(
+													SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y,
+													XCImage.SpriteWidth32  * 2,
+													XCImage.SpriteHeight40 * 2),
+										0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+										GraphicsUnit.Pixel,
+										Ia);
 					else
-						_graphics.FillRectangle(
+						graphics.FillRectangle(
 											Colors.BrushInvalid,
 											SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i,
 											SPRITE_ORIGIN_Y,
@@ -153,31 +154,9 @@ namespace McdView
 				for (int i = 0; i != 8; ++i)
 				{
 					rect.X = SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i + 1;
-					_graphics.DrawRectangle(Colors.PenText, rect);
+					graphics.DrawRectangle(Colors.PenText, rect);
 				}
 			}
-		}
-
-		/// <summary>
-		/// Helper for OnPaint_Sprites().
-		/// </summary>
-		/// <param name="sprite"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		private void DrawSprite(
-				Image sprite,
-				int x,
-				int y)
-		{
-			_graphics.DrawImage(
-							sprite,
-							new Rectangle(
-										x, y,
-										XCImage.SpriteWidth32  * 2,
-										XCImage.SpriteHeight40 * 2),
-							0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
-							GraphicsUnit.Pixel,
-							Ia);
 		}
 
 
@@ -215,12 +194,12 @@ namespace McdView
 						{
 							if (Spriteset == null)
 							{
-								string copyable = Label + Environment.NewLine + Environment.NewLine;
-								copyable += Infobox.SplitString("A spriteset for the terrain can be created by"
-															  + " inserting records with the Copier or a spriteset"
-															  + " can be created externally with PckView.");
-								copyable += Environment.NewLine + Environment.NewLine
-										  + "Edit|Open Copier panel ...";
+								string copyable = Label + Environment.NewLine + Environment.NewLine
+												+ Infobox.SplitString("A spriteset for the terrain can be created by"
+																	+ " inserting records with the Copier or a spriteset"
+																	+ " can be created externally with PckView.")
+												+ Environment.NewLine + Environment.NewLine
+												+ "Edit|Open Copier panel ...";
 
 								// TODO: add a button to open the Copier
 
@@ -236,9 +215,9 @@ namespace McdView
 							else if (Spriteset.Count == 0)
 							{
 								string copyable = Infobox.SplitString("Sprites can be added by inserting records"
-																	+ " with the Copier or externally with PckView.");
-								copyable += Environment.NewLine + Environment.NewLine
-										  + "Edit|Open Copier panel ...";
+																	+ " with the Copier or externally with PckView.")
+												+ Environment.NewLine + Environment.NewLine
+												+ "Edit|Open Copier panel ...";
 
 								// TODO: add a button to open the Copier
 
@@ -380,9 +359,9 @@ namespace McdView
 				int id = Int32.Parse(tb20_scang1.Text);
 				if (id > ScanGicon.UNITICON_Max && id < ScanG.Length / ScanGicon.Length_ScanG)
 				{
-					_graphics = e.Graphics;
-					_graphics.PixelOffsetMode   = PixelOffsetMode.Half;
-					_graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+					Graphics graphics = e.Graphics;
+					graphics.PixelOffsetMode   = PixelOffsetMode.Half;
+					graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 
 					using (var icon = new Bitmap(4,4, PixelFormat.Format8bppIndexed))
 					{
@@ -415,7 +394,7 @@ namespace McdView
 						icon.Palette = pal;
 
 						var panel = sender as Panel;
-						_graphics.DrawImage(
+						graphics.DrawImage(
 										icon,
 										new Rectangle(
 													0,0,
@@ -586,9 +565,9 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnPaint_IsoLoft(object sender, PaintEventArgs e)
 		{
-			_graphics = e.Graphics;
+			Graphics graphics = e.Graphics;
 
-			_graphics.DrawRectangle(
+			graphics.DrawRectangle(
 								Colors.PenText,
 								0,0,
 								pnl_IsoLoft.Width  - 1,
@@ -624,18 +603,18 @@ namespace McdView
 							break;
 					}
 					TextRenderer.DrawText(
-										_graphics,
+										graphics,
 										rose,
 										_fontRose,
 										pt,
 										SystemColors.ControlDark);
 				}
 
-				_graphics.SmoothingMode = SmoothingMode.AntiAlias;
+				graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-				_graphics.DrawPath(Colors.PenLight, CuboidOutlinePath);
-				_graphics.DrawPath(Colors.PenLight, CuboidBotAnglePath);
-				_graphics.DrawPath(Colors.PenLight, CuboidVertLineTopPath);
+				graphics.DrawPath(Colors.PenLight, CuboidOutlinePath);
+				graphics.DrawPath(Colors.PenLight, CuboidBotAnglePath);
+				graphics.DrawPath(Colors.PenLight, CuboidVertLineTopPath);
 
 
 				int halfwidth  = Isocube.Width  / 2;
@@ -679,27 +658,50 @@ namespace McdView
 							if      (x_cell > x_origin) x_cell += (c - r);
 							else if (x_cell < x_origin) x_cell -= (r - c);
 
-							_graphics.DrawImage(Isocube, x_cell, y_cell);
+							graphics.DrawImage(Isocube, x_cell, y_cell);
 						}
 					}
 				}
-				_graphics.DrawPath(Colors.PenLight, CuboidTopAnglePath);
-				_graphics.DrawPath(Colors.PenLight, CuboidVertLineBotPath);
+				graphics.DrawPath(Colors.PenLight, CuboidTopAnglePath);
+				graphics.DrawPath(Colors.PenLight, CuboidVertLineBotPath);
 			}
 		}
 
 		/// <summary>
-		/// Clicking on the IsoLoFT panel selects its trackbar.
+		/// Clicking on a <c><see cref="LoftPanel"/></c> or on the
+		/// <c><see cref="pnl_IsoLoft">IsoLoFT panel</see></c> selects the
+		/// <c><see cref="bar_IsoLoft">IsoLoFT trackbar</see></c>. A rightclick
+		/// on the <c>IsoLoFT panel</c> resets its trackbar to full.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>A mouseclick event does not fire if the cursor moves off
+		/// the control before released.</remarks>
 		internal void OnMouseClick_IsoLoft(object sender, MouseEventArgs e)
 		{
 			bar_IsoLoft.Select();
 
 			if (sender != null && e.Button == MouseButtons.Right)
-				bar_IsoLoft.Value = 24;
+				bar_IsoLoft.Value = bar_IsoLoft.Maximum;
 		}
+
+		/// <summary>
+		/// A rightclick on the <c><see cref="bar_IsoLoft">IsoLoFT trackbar</see></c>
+		/// resets its value to full.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		/// <remarks>Bypass event if cursor moves off the panel before released.</remarks>
+		private void OnMouseUp_BarIsoLoft(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& e.X > -1 && e.X < bar_IsoLoft.Width
+				&& e.Y > -1 && e.Y < bar_IsoLoft.Height)
+			{
+				bar_IsoLoft.Value = bar_IsoLoft.Maximum;
+			}
+		}
+
 
 /*		// RotatingCube -->
 // OnPaint ->

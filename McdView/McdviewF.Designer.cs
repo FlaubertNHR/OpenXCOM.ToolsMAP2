@@ -3610,7 +3610,6 @@ namespace McdView
 			this.bar_IsoLoft.Location = new System.Drawing.Point(520, 10);
 			this.bar_IsoLoft.Margin = new System.Windows.Forms.Padding(0);
 			this.bar_IsoLoft.Maximum = 24;
-			this.bar_IsoLoft.Minimum = 0;
 			this.bar_IsoLoft.Name = "bar_IsoLoft";
 			this.bar_IsoLoft.Orientation = System.Windows.Forms.Orientation.Vertical;
 			this.bar_IsoLoft.Size = new System.Drawing.Size(16, 205);
@@ -3618,6 +3617,7 @@ namespace McdView
 			this.bar_IsoLoft.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.bar_IsoLoft.Value = 24;
 			this.bar_IsoLoft.ValueChanged += new System.EventHandler(this.OnValueChanged_IsoLoft);
+			this.bar_IsoLoft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp_BarIsoLoft);
 			// 
 			// pnl_bg
 			// 
