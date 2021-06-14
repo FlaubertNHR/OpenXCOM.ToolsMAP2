@@ -12,10 +12,10 @@ namespace DSShared
 	/// <summary>
 	/// A class to help facilitate the saving and loading of values into the
 	/// registry in a central location.
-	/// NOTE: MapViewII does not use the Windows Registry at all - this info is
-	/// rather for the settings file "MapViewers.yml". That is, think of
-	/// "settings\MapViewers.yml" as MapViewII's registry.
 	/// </summary>
+	/// <remarks>MapView2 does not use the Windows Registry at all - this info
+	/// is rather for the settings file "MapViewers.yml". That is think of
+	/// "settings\MapViewers.yml" as MapView2's registry.</remarks>
 	public static class RegistryInfo
 	{
 		#region Fields (static)
@@ -53,9 +53,10 @@ namespace DSShared
 
 		#region Methods (static)
 		/// <summary>
-		/// 
+		/// Sets the fullpath to "settings/MapViewers.yml" and loads its values to
+		/// MapView2.
 		/// </summary>
-		/// <param name="dir"></param>
+		/// <param name="dir">MapView2/PckView/McdView application directory</param>
 		public static void InitializeRegistry(string dir)
 		{
 			 dir = Path.Combine(dir, PathInfo.DIR_Settings);
@@ -65,10 +66,11 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// 
+		/// Loads every <c><see cref="Metric"/></c> in "settings/MapViewers.yml"
+		/// to MapView2.
 		/// </summary>
-		/// <remarks>Although there are 4 Options forms only 1 metric is saved
-		/// or loaded for all.</remarks>
+		/// <remarks>Although there are 4 Options forms only 1 <c>Metric</c> is
+		/// saved/loaded for all.</remarks>
 		private static void LoadMetrics()
 		{
 			using (var fs = FileService.OpenFile(_pfe))
@@ -224,13 +226,13 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// 
+		/// Writes the <c><see cref="Metric"/></c> of all registered forms to
+		/// "settings/MapViewers.yml".
 		/// </summary>
-		/// <remarks>Although there are 4 Options forms only 1 metric is saved
-		/// or loaded for all.</remarks>
+		/// <remarks>Although there are 4 Options forms only 1 <c>Metric</c> is
+		/// saved/loaded for all.</remarks>
 		public static void WriteRegistry()
 		{
-			// create "settings/MapViewers.yml"
 			string pfeT;
 			if (File.Exists(_pfe))
 				pfeT = _pfe + GlobalsXC.TEMPExt;
@@ -251,9 +253,10 @@ namespace DSShared
 					sw.WriteLine("# NOTE: Do *not* add extra lines or anything to the format; it's not that robust.");
 					sw.WriteLine("#");
 
+					Metric tric;
 					foreach (var key in _trics.Keys)
 					{
-						Metric tric = _trics[key];
+						tric = _trics[key];
 
 						sw.WriteLine(key + ":");
 						sw.WriteLine("  " + Left   + ": " + tric.left);
