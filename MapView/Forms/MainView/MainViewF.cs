@@ -938,6 +938,8 @@ namespace MapView
 		{
 			LogFile.WriteLine("MainViewF.SafeQuit() EXIT MapView ->");
 
+			RegistryInfo.UpdateRegistry(this); // store MainView's current location and size
+
 			OptionsManager.SaveOptions();	// save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
 			OptionsManager.CloseOptions();	// close any open Options windows
 
@@ -985,8 +987,7 @@ namespace MapView
 			Optionables         .DisposeOptionables();
 
 
-			RegistryInfo.UpdateRegistry(this);	// save MainView's location and size
-			RegistryInfo.WriteRegistry();		// write all registered windows' locations and sizes to file
+			RegistryInfo.WriteRegistry(); // write all registered windows' locations and sizes to file
 		}
 
 
