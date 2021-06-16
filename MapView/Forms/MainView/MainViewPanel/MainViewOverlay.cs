@@ -243,9 +243,9 @@ namespace MapView.Forms.MainView
 		private static bool SuppressTargeter()
 		{
 			MainViewUnderlay underlay = MainViewUnderlay.that;
-			var centerpanel = MainViewF.that.tscPanel.ContentPanel;
+			ToolStripContentPanel centerpanel = MainViewF.that.tscPanel.ContentPanel;
 
-			var allowablearea = centerpanel.ClientRectangle;
+			Rectangle allowablearea = centerpanel.ClientRectangle;
 			if (underlay.IsVertbarVisible)
 				allowablearea.Width -= underlay.WidthVertbar;
 
@@ -1961,55 +1961,37 @@ namespace MapView.Forms.MainView
 		/// <param name="dragrect"></param>
 		private void DrawSelectionBorder(Rectangle dragrect)
 		{
-			Point t0 = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Top));
-			Point r0 = GetClientCoordinates(new Point(dragrect.Right, dragrect.Top));
-			Point b0 = GetClientCoordinates(new Point(dragrect.Right, dragrect.Bottom));
-			Point l0 = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Bottom));
+			Point t = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Top));
+			Point r = GetClientCoordinates(new Point(dragrect.Right, dragrect.Top));
+			Point b = GetClientCoordinates(new Point(dragrect.Right, dragrect.Bottom));
+			Point l = GetClientCoordinates(new Point(dragrect.Left,  dragrect.Bottom));
 
-			t0.X += HalfWidth;
-			r0.X += HalfWidth;
-			b0.X += HalfWidth;
-			l0.X += HalfWidth;
+			t.X += HalfWidth;
+			r.X += HalfWidth;
+			b.X += HalfWidth;
+			l.X += HalfWidth;
 
-			if (MainViewF.Optionables.LayerSelectionBorder < 2)
+			if (MainViewF.Optionables.LayerSelectionBorder < 2) // draw at grid level ->
 			{
-				_graphics.DrawLine(PenSelect, t0,r0); // draw at grid level ->
-				_graphics.DrawLine(PenSelect, r0,b0);
-				_graphics.DrawLine(PenSelect, b0,l0);
-				_graphics.DrawLine(PenSelect, l0,t0);
+				_graphics.DrawLine(PenSelect, t,r);
+				_graphics.DrawLine(PenSelect, r,b);
+				_graphics.DrawLine(PenSelect, b,l);
+				_graphics.DrawLine(PenSelect, l,t);
 			}
 
-			if (MainViewF.Optionables.LayerSelectionBorder > 0)
+			if (MainViewF.Optionables.LayerSelectionBorder > 0) // draw at level above ->
 			{
-				var t1 = t0; // auto-copied ->
-				var r1 = r0;
-				var b1 = b0;
-				var l1 = l0;
-
 				int offsetVert = HalfHeight * 3;
 
-				t1.Y -= offsetVert;
-				r1.Y -= offsetVert;
-				b1.Y -= offsetVert;
-				l1.Y -= offsetVert;
+				t.Y -= offsetVert;
+				r.Y -= offsetVert;
+				b.Y -= offsetVert;
+				l.Y -= offsetVert;
 
-				_graphics.DrawLine(PenSelect, t1,r1); // draw at level above ->
-				_graphics.DrawLine(PenSelect, r1,b1);
-				_graphics.DrawLine(PenSelect, b1,l1);
-				_graphics.DrawLine(PenSelect, l1,t1);
-
-				if (MainViewF.Optionables.LayerSelectionBorder == 1)
-				{
-					offsetVert = (l0.Y - l1.Y) / 3; // NOTE: is for left And right verts
-
-					l0.Y -= offsetVert;
-					l1.Y += offsetVert;
-					r0.Y -= offsetVert;
-					r1.Y += offsetVert;
-
-					_graphics.DrawLine(PenSelect, l0,l1); // draw vertical lines ->
-					_graphics.DrawLine(PenSelect, r0,r1);
-				}
+				_graphics.DrawLine(PenSelect, t,r);
+				_graphics.DrawLine(PenSelect, r,b);
+				_graphics.DrawLine(PenSelect, b,l);
+				_graphics.DrawLine(PenSelect, l,t);
 			}
 		}
 #else
