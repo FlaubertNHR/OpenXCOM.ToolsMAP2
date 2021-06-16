@@ -789,7 +789,7 @@ namespace McdView
 			// miHelp
 			// 
 			this.miHelp.Index = 0;
-			this.miHelp.Shortcut = System.Windows.Forms.Shortcut.CtrlH;
+			this.miHelp.Shortcut = System.Windows.Forms.Shortcut.F1;
 			this.miHelp.Text = "&Help";
 			this.miHelp.Click += new System.EventHandler(this.OnClick_Help);
 			// 
