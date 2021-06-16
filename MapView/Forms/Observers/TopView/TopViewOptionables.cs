@@ -192,12 +192,12 @@ namespace MapView.Forms.Observers
 
 
 		internal const string str_NorthColor = "NorthColor";
-		private static Color  def_NorthColor = Color.Wheat;
+		private static Color  def_NorthColor = Color.Khaki;
 
 		private Color _northColor = def_NorthColor;
 		[Category(cat_Blobs)]
 		[Description("Color of the northwall indicator")]
-		[DefaultValue(typeof(Color), "Wheat")]
+		[DefaultValue(typeof(Color), "Khaki")]
 		public Color NorthColor
 		{
 			get { return _northColor; }
