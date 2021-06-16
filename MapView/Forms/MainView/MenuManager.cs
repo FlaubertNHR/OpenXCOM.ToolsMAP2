@@ -375,7 +375,6 @@ namespace MapView.Forms.MainView
 					it.Checked = true;
 
 					MainViewF.ScanG = new ScanGViewer(MainViewUnderlay.that.MapFile);
-					MainViewF.ScanG.Show(); // no owner.
 				}
 				else
 					MainViewF.ScanG.BringToFront();

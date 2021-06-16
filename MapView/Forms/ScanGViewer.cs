@@ -60,6 +60,7 @@ namespace MapView
 			}
 
 			LoadMapfile(file);
+			Show(); // no owner.
 		}
 		#endregion cTor
 
