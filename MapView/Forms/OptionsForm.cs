@@ -10,18 +10,35 @@ using MapView.Forms.Observers;
 
 namespace MapView
 {
+	/// <summary>
+	/// The viewer-type.
+	/// <list type="bullet">
+	/// <item>MainView</item>
+	/// <item>TileView</item>
+	/// <item>TopView</item>
+	/// <item>RouteView</item>
+	/// </list>
+	/// </summary>
 	internal enum OptionableType
 	{
-		MainView,
-		TileView,
-		TopView,
-		RouteView
+		MainView,	// 0
+		TileView,	// 1
+		TopView,	// 2
+		RouteView	// 3
 	}
 
 
 	/// <summary>
-	/// An Options form.
+	/// <c><see cref="MainViewF._foptions">MainViewF</see></c>,
+	/// <c><see cref="TileView._foptions">TileView</see></c>,
+	/// <c><see cref="TopView._foptions">TopView</see></c>,
+	/// <c><see cref="RouteView._foptions">RouteView</see></c> each get their
+	/// own <c>OptionsForm</c>.
 	/// </summary>
+	/// <remarks><c>TopView</c> and <c>RouteView</c> share their respective
+	/// <c>OptionsForm</c> with
+	/// <c><see cref="TopRouteViewForm.ControlTop">TopRouteViewForm.ControlTop</see></c> and
+	/// <c><see cref="TopRouteViewForm.ControlRoute">TopRouteViewForm.ControlRoute</see></c>.</remarks>
 	internal sealed class OptionsForm
 		:
 			Form
@@ -35,7 +52,7 @@ namespace MapView
 
 		#region Fields
 		/// <summary>
-		/// The viewer that this belongs to as an OptionableType.
+		/// The viewer that this belongs to as an <c><see cref="OptionableType"/></c>.
 		/// </summary>
 		private OptionableType _oType;
 
@@ -47,7 +64,7 @@ namespace MapView
 		private Control _desc;
 
 		/// <summary>
-		/// True bypasses eventhandlers during instantiation.
+		/// <c>true</c> bypasses eventhandlers during instantiation.
 		/// </summary>
 		private bool _init;
 		#endregion Fields
@@ -55,7 +72,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// cTor. Constructs an OptionsForm.
+		/// cTor. Constructs this <c>OptionsForm</c>.
 		/// </summary>
 		/// <param name="o">a class-object w/ Properties that are optionable</param>
 		/// <param name="options">its Options</param>
@@ -68,7 +85,6 @@ namespace MapView
 			_init = true;
 			InitializeComponent();
 
-			_desc = null;
 			foreach (Control control in propertyGrid.Controls)
 			if (control.GetType().Name == DocComment)
 			{
@@ -122,7 +138,7 @@ namespace MapView
 			{
 				case Keys.Control | Keys.O: // non-whiteman code-page users beware ... Mista Kurtz, he dead. GLORY TO THE LOST CAUSE!!! yeah whatever.
 				case Keys.Escape:
-					if (!FindFocusedControl().GetType().ToString().Contains(GridViewEdit))
+					if (!GetActiveControl().GetType().ToString().Contains(GridViewEdit)) // lalala i can't hear you
 					{
 						Close();
 						return true;
@@ -146,18 +162,10 @@ namespace MapView
 			{
 				switch (_oType)
 				{
-					case OptionableType.MainView:
-						MainViewF.Optionables.DescriptionHeight = _desc.Height;
-						break;
-					case OptionableType.TileView:
-						TileView .Optionables.DescriptionHeight = _desc.Height;
-						break;
-					case OptionableType.TopView:
-						TopView  .Optionables.DescriptionHeight = _desc.Height;
-						break;
-					case OptionableType.RouteView:
-						RouteView.Optionables.DescriptionHeight = _desc.Height;
-						break;
+					case OptionableType.MainView:  MainViewF.Optionables.DescriptionHeight = _desc.Height; break;
+					case OptionableType.TileView:  TileView .Optionables.DescriptionHeight = _desc.Height; break;
+					case OptionableType.TopView:   TopView  .Optionables.DescriptionHeight = _desc.Height; break;
+					case OptionableType.RouteView: RouteView.Optionables.DescriptionHeight = _desc.Height; break;
 				}
 			}
 		}
@@ -167,9 +175,9 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>The cached metric of an OptionsForm is updated every time
-		/// the form is hidden, unlike other viewers that update their metrics
-		/// only when MapView quits.</remarks>
+		/// <remarks>The cached metric of an <c>OptionsForm</c> is updated every
+		/// time the form is hidden, unlike other viewers that update their
+		/// metrics only when MapView quits.</remarks>
 		private void OnVisibleChanged(object sender, EventArgs e)
 		{
 			if (!Visible)
@@ -182,8 +190,8 @@ namespace MapView
 		/// <summary>
 		/// Finds the focused control in this container.
 		/// </summary>
-		/// <returns></returns>
-		private Control FindFocusedControl()
+		/// <returns>the active control</returns>
+		private Control GetActiveControl()
 		{
 			Control control = null;
 
