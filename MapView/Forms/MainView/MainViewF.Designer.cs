@@ -383,13 +383,15 @@ namespace MapView
 			// miColors
 			// 
 			this.miColors.Index = 1;
-			this.miColors.Text = "&Colors";
+			this.miColors.Shortcut = System.Windows.Forms.Shortcut.CtrlH;
+			this.miColors.Text = "&Colorhelp";
 			this.miColors.Click += new System.EventHandler(this.OnColorsClick);
 			// 
 			// miAbout
 			// 
 			this.miAbout.Index = 2;
-			this.miAbout.Text = "&About";
+			this.miAbout.Shortcut = System.Windows.Forms.Shortcut.CtrlB;
+			this.miAbout.Text = "A&bout";
 			this.miAbout.Click += new System.EventHandler(this.OnAboutClick);
 			// 
 			// miSeparator7

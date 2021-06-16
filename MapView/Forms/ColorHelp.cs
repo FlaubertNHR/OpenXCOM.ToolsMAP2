@@ -299,6 +299,7 @@ namespace MapView
 			{
 				case Keys.Escape:
 				case Keys.Enter:
+				case Keys.Control | Keys.H:
 					Close();
 					break;
 			}

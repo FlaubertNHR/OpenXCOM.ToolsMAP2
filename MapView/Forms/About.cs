@@ -97,11 +97,12 @@ namespace MapView
 		/// <param name="e"></param>
 		/// <remarks>[Esc] closes the About box. [Enter] starts and stops
 		/// brownian movement.</remarks>
-		protected override void OnKeyUp(KeyEventArgs e)
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyData)
 			{
 				case Keys.Escape:
+				case Keys.Control | Keys.B:
 					Close();
 					break;
 
@@ -118,9 +119,11 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (!RegistryInfo.FastClose(e.CloseReason))
+			if (!RegistryInfo.FastClose(e.CloseReason)
+				&& !MainViewF.Quit)
+			{
 				MainViewF.that.DecheckAbout();
-
+			}
 			base.OnFormClosing(e);
 		}
 		#endregion Events (override)
