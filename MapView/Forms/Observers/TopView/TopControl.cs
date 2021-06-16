@@ -13,7 +13,7 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The top region of <see cref="TopView"/>.
+	/// The top region of <c><see cref="Observers.TopView"/></c>.
 	/// </summary>
 	internal sealed class TopControl
 		:

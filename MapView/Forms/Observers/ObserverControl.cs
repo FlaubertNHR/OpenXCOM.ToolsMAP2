@@ -41,11 +41,10 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Satisfies <c><see cref="IObserver"/></c>. Is overridden only by
+		/// <c><see cref="RouteView.OnLocationSelectedObserver()">RouteView.OnLocationSelectedObserver()</see></c>.
 		/// </summary>
 		/// <param name="args"></param>
-		/// <remarks>Satisfies IObserver. Is overridden only by
-		/// <see cref="RouteView.OnLocationSelectedObserver">RouteView.OnLocationSelectedObserver</see>.</remarks>
 		public virtual void OnLocationSelectedObserver(LocationSelectedArgs args)
 		{
 			//DSShared.LogFile.WriteLine("ObserverControl.OnLocationSelectedObserver() DOES THIS EVER DO ANYTHING.");
@@ -56,12 +55,12 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Satisfies <c><see cref="IObserver"/></c>. Is overridden only by
+		/// <c><see cref="RouteView.OnLevelSelectedObserver()">RouteView.OnLevelSelectedObserver()</see></c>.
+		/// and
+		/// <c><see cref="TopView.OnLevelSelectedObserver()">TopView.OnLevelSelectedObserver()</see></c>.
 		/// </summary>
 		/// <param name="args"></param>
-		/// <remarks>Satisfies IObserver. Is overridden only by
-		/// <see cref="RouteView.OnLevelSelectedObserver">RouteView.OnLevelSelectedObserver</see>
-		/// and <see cref="TopView.OnLevelSelectedObserver">TopView.OnLevelSelectedObserver</see>.</remarks>
 		public virtual void OnLevelSelectedObserver(LevelSelectedArgs args)
 		{
 			//DSShared.LogFile.WriteLine("ObserverControl.OnLevelSelectedObserver() DOES THIS EVER DO ANYTHING.");
@@ -85,8 +84,8 @@ namespace MapView.Forms.Observers
 
 		#region Methods (pseudo-abstract)
 		/// <summary>
-		/// Loads default options for <see cref="TileView"/>, <see cref="TopView"/>,
-		/// and <see cref="RouteView"/>.
+		/// Loads default options for <c><see cref="TileView"/></c>,
+		/// <c><see cref="TopView"/></c>, and <c><see cref="RouteView"/></c>.
 		/// </summary>
 		/// <remarks>Do not make this abstract because the controls' designers
 		/// will foff instead of displaying their controls.</remarks>
@@ -97,10 +96,11 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Scrolls the z-axis for <see cref="TopView"/> and <see cref="RouteView"/>.
+		/// Scrolls the z-axis for <c><see cref="TopView"/></c> and
+		/// <c><see cref="RouteView"/></c>.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks><see cref="TileView"/> overrides this override to do
+		/// <remarks><c><see cref="TileView"/></c> overrides this override to do
 		/// nothing.</remarks>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{

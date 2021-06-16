@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 using DSShared;
@@ -121,10 +122,18 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Subscribes <see cref="IObserver.OnLocationSelectedObserver"/> and
-		/// <see cref="IObserver.OnLevelSelectedObserver"/> events to a
-		/// specified MapFile ( TODO: isn't that redundant ) for an observer -
-		/// incl/ the panels in TopView.
+		/// Subscribes <c><see cref="IObserver.OnLocationSelectedObserver"/></c>
+		/// and <c><see cref="IObserver.OnLevelSelectedObserver"/></c> handlers
+		/// to a specified <c><see cref="MapFile">MapFile.LocationSelected</see></c>
+		/// and <c><see cref="MapFile">MapFile.LevelSelected</see></c> event for
+		/// an <c><see cref="IObserver"/></c> incl/
+		/// <list type="bullet">
+		/// <item><c><see cref="Observers.TileView"/></c></item>
+		/// <item><c><see cref="Observers.TopView"/></c></item>
+		/// <item><c><see cref="Observers.RouteView"/></c></item>
+		/// <item><c><see cref="Observers.TopControl"/></c> in <c>TopView</c></item>
+		/// <item><c><see cref="Observers.QuadrantControl"/></c> in <c>TopView</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="file"></param>
 		/// <param name="observer"></param>
@@ -153,10 +162,10 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Closes each Observers' parent-Form.
 		/// <list>
-		///   <item><see cref="TileViewForm"/></item>
-		///   <item><see cref="TopViewForm"/></item>
-		///   <item><see cref="RouteViewForm"/></item>
-		///   <item><see cref="TopRouteViewForm"/></item>
+		///   <item><c><see cref="TileViewForm"/></c></item>
+		///   <item><c><see cref="TopViewForm"/></c></item>
+		///   <item><c><see cref="RouteViewForm"/></c></item>
+		///   <item><c><see cref="TopRouteViewForm"/></c></item>
 		/// </list>
 		/// </summary>
 		/// <remarks>Called by <c>MainViewF.SafeQuit()</c> so this really does

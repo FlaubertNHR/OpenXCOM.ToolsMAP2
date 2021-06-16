@@ -11,9 +11,9 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The bottom region of <see cref="TopView"/>.
+	/// The bottom region of <c><see cref="TopView"/></c>.
 	/// </summary>
-	/// <remarks>These are not actually "quadrants"; they are tile-part types.
+	/// <remarks>These are not actually "quadrants"; they are tilepart types.
 	/// But that's the way this trolls.</remarks>
 	internal sealed class QuadrantControl
 		:
@@ -97,7 +97,8 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl_Top"/>.
+		/// Inherited from <c><see cref="IObserver"/></c> through
+		/// <c><see cref="ObserverControl_Top"/></c>.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnLocationSelectedObserver(LocationSelectedArgs args)
@@ -109,7 +110,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl_Top"/>.
+		/// Inherited from <c><see cref="IObserver"/></c> through
+		/// <c><see cref="ObserverControl_Top"/></c>.
 		/// </summary>
 		/// <param name="args"></param>
 		public override void OnLevelSelectedObserver(LevelSelectedArgs args)
@@ -125,7 +127,8 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Wrapper for <see cref="OnMouseDown"/> for use by keyboard-input only.
+		/// Wrapper for <c><see cref="OnMouseDown"/></c> for use by
+		/// keyboard-input only.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <param name="slot"></param>
@@ -140,7 +143,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		///  Handles mousedown events on this QuadrantControl.
+		/// Handles mousedown events on this <c>QuadrantControl</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -188,12 +191,12 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Handles the details of LMB and RMB wrt the QuadrantControls.
-		/// TODO: GENERAL - Bypass operations (and the MapChanged flag)
-		///       if user does an operation that results in identical state.
 		/// </summary>
 		/// <param name="button"></param>
 		/// <param name="clicks"></param>
 		/// <param name="isKeyInput">true if invoked by keyboard-input</param>
+		/// <remarks>TODO: GENERAL - Bypass operations (and the MapChanged flag)
+		/// if user does an operation that results in an identical state.</remarks>
 		internal void Clicker(MouseButtons button, int clicks, bool isKeyInput = false)
 		{
 			if (Tile != null)
@@ -227,10 +230,13 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Overrides DoubleBufferedControl.OnPaintControl() - ie, OnPaint().
+		/// Overrides
+		/// <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaintControl()</see></c>
+		/// - ie, <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaint()</see></c>.
 		/// </summary>
 		/// <param name="graphics"></param>
-		/// <remarks>Calls the draw-function in QuadrantDrawService.</remarks>
+		/// <remarks>Calls the draw-function in
+		/// <c><see cref="QuadrantDrawService"/></c>.</remarks>
 		protected override void OnPaintControl(Graphics graphics)
 		{
 			QuadrantDrawService.SetGraphics(graphics);
@@ -248,9 +254,10 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="source"></param>
 		/// <param name="e"></param>
-		/// <remarks>WARNING: The interaction between this QuadrantControl, its
-		/// respective TopControl, and the TilePanel in TileView is a little bit
-		/// fragile.</remarks>
+		/// <remarks>WARNING: The interaction between this <c>QuadrantControl</c>,
+		/// its respective <c><see cref="TopControl"/></c>, and the
+		/// <c><see cref="TilePanel"/></c> in <c><see cref="TileView"/></c> is a
+		/// little bit fragile.</remarks>
 		private void OnClicksElapsed(object source, ElapsedEventArgs e)
 		{
 			//DSShared.LogFile.WriteLine("QuadrantControl.OnClicksElapsed() _t1Clicks= " + _t1Clicks);
@@ -271,7 +278,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Invalidates this QuadrantControl if tileparts are being animated.
+		/// Invalidates this <c>QuadrantControl</c> if tileparts are being
+		/// animated.
 		/// </summary>
 		private void OnPhaseEvent()
 		{

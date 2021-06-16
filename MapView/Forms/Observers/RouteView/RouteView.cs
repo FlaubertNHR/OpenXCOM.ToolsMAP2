@@ -242,7 +242,8 @@ namespace MapView.Forms.Observers
 
 		#region Events (override) inherited from IObserver/ObserverControl
 		/// <summary>
-		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
+		/// Inherited from <c><see cref="IObserver"/></c> through
+		/// <c><see cref="ObserverControl"/></c>.
 		/// </summary>
 		/// <param name="args"></param>
 		/// <remarks>This will fire twice whenever the location changes: once by
@@ -261,7 +262,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
+		/// Inherited from <c><see cref="IObserver"/></c> through
+		/// <c><see cref="ObserverControl"/></c>.
 		/// </summary>
 		/// <param name="args"></param>
 		/// <remarks>This will fire twice whenever the location changes: once by
