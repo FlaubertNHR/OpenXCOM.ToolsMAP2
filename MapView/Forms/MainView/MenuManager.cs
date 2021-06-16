@@ -9,9 +9,10 @@ namespace MapView.Forms.MainView
 {
 	/// <summary>
 	/// Instantiates and manages items on MainView's "Viewers" menu: TileView,
-	/// TopView, RouteView, TopRouteView, and the ScanG viewer.
-	/// @note See ObserverManager for instantiation of the viewers.
+	/// TopView, RouteView, TopRouteView, and the ScanG viewer. As well as
+	/// minimize/restore all.
 	/// </summary>
+	/// <remarks>See <c><see cref="ObserverManager"/></c> for instantiation of the viewers.</remarks>
 	internal static class MenuManager
 	{
 		#region Fields (static)
@@ -30,6 +31,14 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties (static)
+		/// <summary>
+		/// The "Viewers" <c>MenuItem</c> is assigned as
+		/// <c>(MenuItem)MainViewF.menuViewers</c> which is added to
+		/// <c>(MainMenu)MainViewF.mmMain</c> which is assigned as
+		/// <c>(MainMenu)MainViewF.Menu</c>. Is the <c>Menu</c> of a Form
+		/// disposed auto when the form closes - note that it is *not* added to
+		/// <c>(IContainer)components</c> so let's assume it is disposed auto.
+		/// </summary>
 		private static MenuItem Viewers
 		{ get; set; }
 		#endregion Properties (static)
@@ -37,7 +46,7 @@ namespace MapView.Forms.MainView
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes the menuitem "Viewers".
+		/// Initializes MainView's menuitem "Viewers".
 		/// </summary>
 		/// <param name="viewers"></param>
 		internal static void Initialize(MenuItem viewers)
@@ -61,18 +70,19 @@ namespace MapView.Forms.MainView
 			CreateSecondaryViewerMenuitem(ObserverManager.RouteView,    Shortcut.F7, options, MainViewOptionables.def_StartRouteView,    changer);	// id #3
 			CreateSecondaryViewerMenuitem(ObserverManager.TopRouteView, Shortcut.F8, options, MainViewOptionables.def_StartTopRouteView, changer);	// id #4
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));								// id #5
+			Viewers.MenuItems.Add(new MenuItem(Separator));							// id #5
 
-			var it6 = new MenuItem("&minimize all", OnMinimizeAllClick, Shortcut.F11);	// id #6
-			var it7 = new MenuItem("&restore all",  OnRestoreAllClick,  Shortcut.F12);	// id #7
-			Viewers.MenuItems.Add(it6);
-			Viewers.MenuItems.Add(it7);
+			MenuItem it;
+			it = new MenuItem("&minimize all", OnMinimizeAllClick, Shortcut.F11);	// id #6
+			Viewers.MenuItems.Add(it);
+			it = new MenuItem("&restore all",  OnRestoreAllClick,  Shortcut.F12);	// id #7
+			Viewers.MenuItems.Add(it);
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));								// id #8
+			Viewers.MenuItems.Add(new MenuItem(Separator));							// id #8
 
-			var it9 = new MenuItem("Scan&G view", OnScanGClick, Shortcut.CtrlG);		// id #9
-			it9.Enabled = false;
-			Viewers.MenuItems.Add(it9);
+			it = new MenuItem("Scan&G view", OnScanGClick, Shortcut.CtrlG);			// id #9
+			it.Enabled = false;
+			Viewers.MenuItems.Add(it);
 		}
 
 		/// <summary>
@@ -118,10 +128,10 @@ namespace MapView.Forms.MainView
 				options[key].Value = fobserver.Visible;
 				MainViewF.Optionables.setStartPropertyValue(fobserver, fobserver.Visible);
 
-				var foptions = MainViewF._foptions;
+				var foptions = MainViewF._foptions as OptionsForm;
 				if (foptions != null)
 				{
-					OptionsPropertyGrid grid = (foptions as OptionsForm).propertyGrid;
+					OptionsPropertyGrid grid = foptions.propertyGrid;
 					grid.Refresh(); // yes refresh the grid even if it's hidden.
 				}
 			};
@@ -130,7 +140,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Visibles the subsidiary viewers that are flagged when a Map loads.
 		/// </summary>
-		/// <remarks>Called by MainViewF.LoadSelectedDescriptor().</remarks>
+		/// <remarks>Called by <c>MainViewF.LoadSelectedDescriptor()</c>.</remarks>
 		internal static void StartSecondaryStageBoosters()
 		{
 			Viewers.Enabled = true;
@@ -140,7 +150,7 @@ namespace MapView.Forms.MainView
 			{
 				if (id == MI_sep1) ++id; // skip the separator
 
-				var it = Viewers.MenuItems[id];
+				MenuItem it = Viewers.MenuItems[id];
 				if (options[PropertyStartObserver + RegistryInfo.GetRegistryLabel(it.Tag as Form)].IsTrue)
 				{
 					OnMenuItemClick(it, EventArgs.Empty);
@@ -152,9 +162,13 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Processes keydown events that shall be captured and abused at the
 		/// Form level.
-		/// - shows/hides/minimizes/restores viewers on F-key events
-		/// - handles activity by TileViewForm, TopViewForm, RouteViewForm,
-		///   and TopRouteViewForm
+		/// <list type="bullet">
+		/// <item>shows/hides/minimizes/restores viewers on F-key events</item>
+		/// <item>handles activity by <c><see cref="Observers.TileViewForm"/></c>,
+		/// <c><see cref="Observers.TopViewForm"/></c>,
+		/// <c><see cref="Observers.RouteViewForm"/></c>, and
+		/// <c><see cref="Observers.TopRouteViewForm"/></c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="e"></param>
 		internal static void ViewerKeyDown(KeyEventArgs e)
@@ -254,8 +268,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Sets state when any of MainViewOptionables' start-viewer Properties
-		/// is user-changed.
+		/// Sets state when any of <c><see cref="MainViewOptionables"/></c>'
+		/// start-viewer Properties is user-changed.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="val"></param>
@@ -263,7 +277,7 @@ namespace MapView.Forms.MainView
 		{
 			if (Viewers.Enabled)
 			{
-				var it = Viewers.MenuItems[id];
+				MenuItem it = Viewers.MenuItems[id];
 				var f = it.Tag as Form;
 
 				if (it.Checked = val)
@@ -280,24 +294,22 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Handles clicks on the Viewers|MinimizeAll item. Also F11.
-		/// @note Ironically this seems to bypass MainView's Activated event but
-		/// RestoreAll doesn't. So just bypass that event's handler for safety
-		/// regardless of .NET's shenanigans.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Ironically this seems to bypass MainView's Activated event
+		/// but RestoreAll doesn't. So just bypass that event's handler for
+		/// safety regardless of .NET's shenanigans.</remarks>
 		private static void OnMinimizeAllClick(object sender, EventArgs e)
 		{
 			MainViewF.BypassActivatedEvent = true;
 
 			IList<Form> zOrder = ShowHideManager.getZorderList();
 			foreach (var f in zOrder)
+			if (   f.WindowState == FormWindowState.Normal
+				|| f.WindowState == FormWindowState.Maximized)
 			{
-				if (   f.WindowState == FormWindowState.Normal
-					|| f.WindowState == FormWindowState.Maximized)
-				{
-					f.WindowState = FormWindowState.Minimized;
-				}
+				f.WindowState = FormWindowState.Minimized;
 			}
 
 			MainViewF.BypassActivatedEvent = false;
@@ -305,13 +317,13 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Handles clicks on the Viewers|RestoreAll item. Also F12.
-		/// @note Ironically this - setting the windowstate (to 'Normal') -
-		/// seems to trigger MainView's Activated event but MinimizeAll doesn't.
-		/// So just bypass that event's handler for safety regardless of .NET's
-		/// shenanigans.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Ironically setting the windowstate (to 'Normal') seems to
+		/// trigger MainView's Activated event but MinimizeAll doesn't. So just
+		/// bypass that event's handler for safety regardless of .NET's
+		/// shenanigans.</remarks>
 		private static void OnRestoreAllClick(object sender, EventArgs e)
 		{
 			MainViewF.BypassActivatedEvent = true;
@@ -328,7 +340,7 @@ namespace MapView.Forms.MainView
 					f.WindowState = FormWindowState.Normal;
 				}
 
-				if (bringtofront) // tentative ->
+				if (bringtofront)
 				{
 					f.TopMost = true;
 					f.TopMost = false;
@@ -357,7 +369,7 @@ namespace MapView.Forms.MainView
 		{
 			if (MainViewUnderlay.that.MapFile != null)
 			{
-				var it = Viewers.MenuItems[MI_SCANG];
+				MenuItem it = Viewers.MenuItems[MI_SCANG];
 				if (!it.Checked)
 				{
 					it.Checked = true;
