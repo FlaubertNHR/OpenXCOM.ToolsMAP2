@@ -20,12 +20,6 @@ namespace MapView
 		:
 			Form
 	{
-		#region Fields (static)
-		private static int _x = -1;
-		private static int _y;
-		#endregion Fields (static)
-
-
 		#region Fields
 		private Font _fontBold;
 		#endregion Fields
@@ -43,36 +37,22 @@ namespace MapView
 
 			_fontBold = new Font(Font, FontStyle.Bold);
 
-			la_TopFloor    .Font =
-			la_TopWest     .Font =
-			la_TopNorth    .Font =
-			la_TopContent  .Font =
-			la_RouteWalls  .Font =
-			la_RouteContent.Font =
+			la_TopFloor  .Font = la_TopWest   .Font = la_TopNorth    .Font =
+			la_TopContent.Font = la_RouteWalls.Font = la_RouteContent.Font =
 
-			la_Type00      .Font =
-			la_Type01      .Font =
-			la_Type02      .Font =
-			la_Type03      .Font =
-			la_Type04      .Font =
-			la_Type05      .Font =
-			la_Type06      .Font =
-			la_Type07      .Font =
-			la_Type08      .Font =
-			la_Type09      .Font =
-			la_Type10      .Font =
-			la_Type11      .Font =
-			la_Type12      .Font =
-			la_Type13      .Font =
-			la_Type14      .Font = _fontBold;
+			la_Type00.Font = la_Type01.Font = la_Type02.Font = la_Type03.Font =
+			la_Type04.Font = la_Type05.Font = la_Type06.Font = la_Type07.Font =
+			la_Type08.Font = la_Type09.Font = la_Type10.Font = la_Type11.Font =
+			la_Type12.Font = la_Type13.Font = la_Type14.Font = _fontBold;
 
 			UpdateColors();
+
 			rb_OnCheckChanged(null, EventArgs.Empty);
 
-			if (_x != -1)
-			{
-				StartPosition = FormStartPosition.Manual;
-				Left = _x; Top = _y;
+			if (!RegistryInfo.RegisterProperties(this))	// NOTE: Respect only left and top props;
+			{											// let ClientSize deter width and height.
+				Left = 200;
+				Top  = 100;
 			}
 			Show(); // no owner.
 		}
@@ -98,8 +78,7 @@ namespace MapView
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				_x = Math.Max(0, Left);
-				_y = Math.Max(0, Top);
+				RegistryInfo.UpdateRegistry(this);
 
 				_fontBold.Dispose();
 
@@ -113,9 +92,9 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Wraps the several color-updates into one call. Update colors that
-		/// user could have changed in TileView's Option-settings.
+		/// Updates colors that user could have changed in Options.
 		/// </summary>
+		/// <remarks>Wraps the several color-updates into one call.</remarks>
 		private void UpdateColors()
 		{
 			UpdateSpecialPropertyColors();
@@ -125,8 +104,8 @@ namespace MapView
 
 		/// <summary>
 		/// Updates TileView's special property colors via an arcane methodology
-		/// from the user's custom Options. But I got rid of the arcane
-		/// methodology even though it was faster.
+		/// from the user's Options. But I got rid of the arcane methodology
+		/// even though it was faster.
 		/// </summary>
 		internal void UpdateSpecialPropertyColors()
 		{
@@ -180,8 +159,8 @@ namespace MapView
 
 		/// <summary>
 		/// Updates the TopView blob colors via an arcane methodology from the
-		/// user's custom Options. But I got rid of the arcane methodology even
-		/// though it was faster.
+		/// user's Options. But I got rid of the arcane methodology even though
+		/// it was faster.
 		/// </summary>
 		internal void UpdateTopViewBlobColors()
 		{
@@ -202,8 +181,8 @@ namespace MapView
 
 		/// <summary>
 		/// Updates the RouteView blob colors via an arcane methodology from the
-		/// user's custom Options. But I got rid of the arcane methodology even
-		/// though it was faster.
+		/// user's Options. But I got rid of the arcane methodology even though
+		/// it was faster.
 		/// </summary>
 		internal void UpdateRouteViewBlobColors()
 		{
@@ -218,7 +197,8 @@ namespace MapView
 
 		/// <summary>
 		/// Gets a contrasting color based on the input color.
-		/// See also Palette.CreateTonescaledPalettes().
+		/// See also
+		/// <c><see cref="XCom.Palette">Palette.CreateTonescaledPalettes()</see></c>.
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
@@ -290,7 +270,7 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// Closes the Help screen.
+		/// Closes this <c>ColorHelp</c> dialog.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
@@ -786,7 +766,7 @@ namespace MapView
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ColorHelp";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Colors";
 			this.tabControl.ResumeLayout(false);
 			this.tpTileView.ResumeLayout(false);

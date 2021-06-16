@@ -27,6 +27,7 @@ namespace DSShared
 
 		private const string TilesetEditor = "TilesetEditor";
 		private const string ScanG         = "ScanG";
+		private const string ColorHelp     = "ColorHelp";
 
 		private const string Options       = "Options";
 
@@ -44,6 +45,9 @@ namespace DSShared
 		private const string Height = "height";
 
 
+		/// <summary>
+		/// Path-file-extension of "settings/MapViewers.yml".
+		/// </summary>
 		private static string _pfe;
 
 		private static readonly Dictionary<string, Metric> _trics =
@@ -149,8 +153,11 @@ namespace DSShared
 				case "OptionsForm":      return Options;		// is in manifest
 				case "TilesetEditor":    return TilesetEditor;	// is in manifest
 				case "ScanGViewer":      return ScanG;
+				case "ColorHelp":        return ColorHelp;
+
 				case "McdviewF":         return McdView;		// is in manifest
 				case "CopyPanelF":       return CopyPanel;
+
 				case "PckViewF":         return PckView;		// is in manifest
 				case "SpriteEditorF":    return SpriteEditor;
 				case "PaletteF":         return PaletteViewer;
@@ -162,8 +169,8 @@ namespace DSShared
 		/// Properties to be assigned.
 		/// </summary>
 		/// <param name="f">a Form aka viewer</param>
-		/// <returns>true if form/viewer is found in the dictionary and its
-		/// properties get loaded</returns>
+		/// <returns><c>true</c> if form/viewer is found in the dictionary and
+		/// its properties get loaded</returns>
 		public static bool RegisterProperties(Form f)
 		{
 			string label = GetRegistryLabel(f);
@@ -187,9 +194,9 @@ namespace DSShared
 		/// Updates the dictionary's properties when a specified Form closes.
 		/// </summary>
 		/// <param name="f">a Form aka viewer</param>
-		/// <param name="bypassShow">true for Options forms when they are merely
-		/// changing their visible state; false to force the form to show before
-		/// the registry gets finalized</param>
+		/// <param name="bypassShow"><c>true</c> for Options forms when they are
+		/// merely changing their visible state; <c>false</c> to force the form
+		/// to show before the registry gets finalized</param>
 		/// <remarks>Most forms never actually close until the app exits; almost
 		/// all of them merely hide.</remarks>
 		public static void UpdateRegistry(Form f, bool bypassShow = false)
