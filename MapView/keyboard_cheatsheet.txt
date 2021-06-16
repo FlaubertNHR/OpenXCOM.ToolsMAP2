@@ -28,19 +28,23 @@ MAINVIEW
 Ctrl+a - save Map,Routes,and the tree
 Ctrl+m - save the Map
 Ctrl+r - save the Routes
-Ctrl+e - save Map+Routes as
+Ctrl+e - export Map+Routes as
 Ctrl+t - save the tree
 
-Ctrl+i - screenshot
-Ctrl+z - resize the map
+Ctrl+l - reload current Map,Routes,Terrains
+
+Ctrl+n - screenshot
+
+Ctrl+q - quit
+
+Ctrl+z - resize the Map
 Ctrl+u - tileslot substitution
-Ctrl+f - show map info
 
 Ctrl+g - show the ScanG viewer
 
-Ctrl+n - reload terrains
-
-Ctrl+q - quit
+Ctrl+h - show Colorhelp
+Ctrl+b - show About
+Ctrl+i - show Map info
 
 numeric keypad         - navigate the map
 Shift + numeric keypad - multi-tile selection
@@ -104,6 +108,8 @@ Ctrl+End  - goto last tile in the table
 i   - show MCD info (also, double-click a part)
 F9  - open selected part in PckView
 F10 - open selected part in McdView
+
+Ctrl+h - show Colorhelp
 
 
 TOPVIEW
