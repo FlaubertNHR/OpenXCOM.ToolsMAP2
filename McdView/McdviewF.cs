@@ -376,7 +376,7 @@ namespace McdView
 			}
 			else
 			{
-				string shade = PathInfo.GetSpriteShade(dirAppL); // get shade from MapView's options
+				string shade = GlobalsXC.GetSpriteShade(dirAppL); // get shade from MapView's options
 				if (shade != null)
 				{
 					int result;

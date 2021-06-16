@@ -260,7 +260,7 @@ namespace PckView
 			}
 			else
 			{
-				string shade = PathInfo.GetSpriteShade(dirAppL); // get shade from MapView's options
+				string shade = GlobalsXC.GetSpriteShade(dirAppL); // get shade from MapView's options
 				if (shade != null)
 				{
 					@set = Int32.TryParse(shade, out spriteshade)
