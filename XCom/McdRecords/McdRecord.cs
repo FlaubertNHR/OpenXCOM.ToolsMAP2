@@ -63,8 +63,8 @@ namespace XCom
 		public byte Loft11 { get; set; }
 		public byte Loft12 { get; set; }
 
-		public ushort ScanG         { get; set; }
 		public ushort ScanG_reduced { get; set; }
+		public ushort ScanG         { get; set; }
 
 		public byte Unknown22 { get; set; }
 		public byte Unknown23 { get; set; }
@@ -119,6 +119,9 @@ namespace XCom
 		public string ByteTable { get; set; }
 
 
+		/// <summary>
+		/// Gets the value of a given MCD-entry as an int.
+		/// </summary>
 		public int this[int id]
 		{
 			get
@@ -147,8 +150,8 @@ namespace XCom
 					case 18: return (int)Loft11;
 					case 19: return (int)Loft12;
 
-					case 20: return (int)ScanG;						// ushort +35
 					case 21: return (int)ScanG_reduced;				// ushort
+					case 20: return (int)ScanG;						// ushort +35
 
 					case 22: return (int)Unknown22;
 					case 23: return (int)Unknown23;
@@ -200,7 +203,7 @@ namespace XCom
 
 
 		/// <summary>
-		/// Used by MapView.BlobDrawService.
+		/// Used by <c>MapView.BlobDrawService</c>.
 		/// </summary>
 		public IList<byte> LoftList
 		{
@@ -235,7 +238,7 @@ namespace XCom
 		public McdRecord(IList<byte> bindata)
 		{
 			if (bindata == null)
-				bindata = new byte[McdRecord.Length]; // all values in the byte-array default to "0"
+				bindata = new byte[McdRecord.Length]; // all values in the byte-array default to (byte)0
 
 			Sprite1 = bindata[0];
 			Sprite2 = bindata[1];
@@ -259,8 +262,8 @@ namespace XCom
 			Loft11 = bindata[18];
 			Loft12 = bindata[19];
 
-			ScanG         = (ushort)(bindata[21] * 256 + bindata[20] + 35);
-			ScanG_reduced = (ushort)(bindata[21] * 256 + bindata[20]);
+			ScanG_reduced = (ushort)(bindata[21] * 256 + bindata[20]); // ushort in the MCD is little-endian
+			ScanG         = (ushort)(ScanG_reduced + 35);
 
 			Unknown22 = bindata[22];
 			Unknown23 = bindata[23];
@@ -320,12 +323,12 @@ namespace XCom
 								Sprite8);	// 8
 
 			stScanG = string.Format(
-								"{0,-20}{1} : {2} -> {3} [{4}]",
+								"{0,-20}{1} : {2} -> [{3}] {4}",
 								"scang reference:",	// 0
-								bindata[20],		// 1
-								bindata[21],		// 2
-								ScanG,				// 3
-								ScanG_reduced);		// 4
+								bindata[21],		// 1 - ushort in the MCD is little-endian
+								bindata[20],		// 2
+								ScanG_reduced,		// 3
+								ScanG);				// 4
 
 			stLoFTs = string.Format(
 								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}",
@@ -356,7 +359,8 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Creates a table of the byte-data for the MCD-info screen.
+		/// Creates a table of the byte-data for the <c>MapView.McdInfoF</c>
+		/// dialog.
 		/// </summary>
 		/// <returns></returns>
 		private static string BytesTable(IList<byte> bindata)
@@ -390,7 +394,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Writes/overwrites a specified MCD file.
+		/// Writes/overwrites a specified MCD-file.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
 		/// <param name="parts">an array of tileparts</param>
@@ -439,7 +443,7 @@ namespace XCom
 					fs.WriteByte((byte)record.Loft12);					// 19
 
 					u = record.ScanG_reduced;
-					fs.WriteByte((byte)( u & 0x00FF));					// 20
+					fs.WriteByte((byte)( u & 0x00FF));					// 20 - ushort in the MCD is little-endian
 					fs.WriteByte((byte)((u & 0xFF00) >> 8));			// 21
 
 					fs.WriteByte((byte)record.Unknown22);				// 22
@@ -527,8 +531,8 @@ namespace XCom
 			record.Loft11 = Loft11;
 			record.Loft12 = Loft12;
 
-			record.ScanG         = ScanG;			// ushort
 			record.ScanG_reduced = ScanG_reduced;	// ushort
+			record.ScanG         = ScanG;			// ushort
 
 			record.Unknown22 = Unknown22;
 			record.Unknown23 = Unknown23;
@@ -576,7 +580,7 @@ namespace XCom
 
 
 			#region Descript
-			// The following strings are used by the McdInfoF only.
+			// The following strings are used by the MapView.McdInfoF dialog only.
 			record.stSprites = stSprites;
 			record.stScanG   = stScanG;
 			record.stLoFTs   = stLoFTs;
