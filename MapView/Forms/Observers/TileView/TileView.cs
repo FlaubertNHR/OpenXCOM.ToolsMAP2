@@ -115,8 +115,8 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Gets the selected-tilepart.
-		/// Sets the selected-tilepart when a valid QuadrantControl quad is
-		/// double-clicked.
+		/// Sets the selected-tilepart when a valid
+		/// <c><see cref="QuadrantControl"/></c> quad is double-clicked.
 		/// </summary>
 		/// <remarks>TileView switches to the ALL tabpage and selects the
 		/// appropriate tilepart, w/ TilePanel.SelectedTilepart, when a quad is
@@ -167,7 +167,8 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiates the TileView control and its pages/panels.
+		/// cTor. Instantiates this <c>TileView</c> control and its
+		/// pages/panels.
 		/// </summary>
 		internal TileView()
 		{

@@ -94,7 +94,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// The background color of the selected quadrant.
 		/// </summary>
-		/// <remarks>Set in <see cref="TopViewOptionables"/>.</remarks>
+		/// <remarks>Set in <c><see cref="TopViewOptionables"/></c>.</remarks>
 		internal static SolidBrush Brush
 		{ get; set; }
 
@@ -104,6 +104,9 @@ namespace MapView.Forms.Observers
 		private static readonly SolidBrush LocationBrush = new SolidBrush(SystemColors.ControlText);
 
 
+		/// <summary>
+		/// The currently selected part in <c><see cref="TileView"/></c>.
+		/// </summary>
 		internal static Tilepart CurrentTilepart
 		{ get; set; }
 		#endregion Properties (static)
