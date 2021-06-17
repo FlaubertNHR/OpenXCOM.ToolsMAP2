@@ -15,11 +15,16 @@ namespace MapView
 {
 	/// <summary>
 	/// A simplistic presentation of the XCOM MiniMap.
-	/// A ScanG entry is 4x4 pixels and fills a single tile of the Map. The
-	/// floor-part is drawn first, followed by the westwall-part, the northwall-
-	/// part, and finally the content-part. The MCD-record of each tilepart
-	/// references a ScanG entry using this formula:
-	///     offset = [21] * 256 + [20] + 35
+	/// 
+	/// 
+	/// A ScanG entry is 4x4 pixels and represents an overhead view of a single
+	/// tile of the Map. The floor-part is drawn first, followed by the
+	/// westwall-part, the northwall-part, and finally the content-part.
+	/// The <c><see cref="McdRecord"/></c> of each tilepart produces a
+	/// <c>ScanG_reduced</c> entry using this formula:
+	/// <code>
+	/// offset = [21] * 256 + [20] + 35
+	/// </code>
 	/// </summary>
 	/// <remarks>The draw-scale is 4x.</remarks>
 	internal sealed class ScanGViewer
