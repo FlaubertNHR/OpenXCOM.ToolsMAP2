@@ -45,7 +45,7 @@ namespace MapView.Forms.Observers
 		/// These are default colors for the SpecialProperty of a tilepart.
 		/// TileView will load these colors when the app loads, then any colors
 		/// of SpecialType that were customized will be set and accessed by
-		/// TilePanel and/or the Help|Colors screen later.
+		/// TilePanel and/or the Help|Colorhelp dialog later.
 		/// </summary>
 		private static readonly Color[] def_SpecialColors =
 		{							//      __UFO__			__TFTD__
@@ -86,7 +86,8 @@ namespace MapView.Forms.Observers
 
 		private Color _colorStandard = def_SpecialColors[0];
 		[Category(cat_SpecialPropertyColors)]
-		[Description("Color of Standard parts")]
+		[Description(@"Color of Standard parts
+(default NavajoWhite)")]
 		[DefaultValue(typeof(Color), "NavajoWhite")]
 		public Color Standard
 		{
@@ -96,7 +97,8 @@ namespace MapView.Forms.Observers
 
 		private Color _colorEntryPoint = def_SpecialColors[1];
 		[Category(cat_SpecialPropertyColors)]
-		[Description("Color of Entry Point parts")]
+		[Description(@"Color of Entry Point parts
+(default Lavender)")]
 		[DefaultValue(typeof(Color), "Lavender")]
 		public Color EntryPoint
 		{
@@ -107,7 +109,8 @@ namespace MapView.Forms.Observers
 		private Color _colorPowerSource = def_SpecialColors[2];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Power Source parts
-Color of TFTD Ion-beam Accelerators parts")]
+Color of TFTD Ion-beam Accelerators parts
+(default IndianRed)")]
 		[DefaultValue(typeof(Color), "IndianRed")]
 		public Color PowerSource
 		{
@@ -118,7 +121,8 @@ Color of TFTD Ion-beam Accelerators parts")]
 		private Color _colorNavigation = def_SpecialColors[3];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Navigation parts
-Color of TFTD Magnetic Navigation parts")]
+Color of TFTD Magnetic Navigation parts
+(default Turquoise)")]
 		[DefaultValue(typeof(Color), "Turquoise")]
 		public Color Navigation
 		{
@@ -129,7 +133,8 @@ Color of TFTD Magnetic Navigation parts")]
 		private Color _colorConstruction = def_SpecialColors[4];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Construction parts
-Color of TFTD Alien Sub Construction parts")]
+Color of TFTD Alien Sub Construction parts
+(default Khaki)")]
 		[DefaultValue(typeof(Color), "Khaki")]
 		public Color Construction
 		{
@@ -140,7 +145,8 @@ Color of TFTD Alien Sub Construction parts")]
 		private Color _colorFood = def_SpecialColors[5];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Alien Food parts
-Color of TFTD Alien Cryogenics parts")]
+Color of TFTD Alien Cryogenics parts
+(default Snow)")]
 		[DefaultValue(typeof(Color), "Snow")]
 		public Color Food
 		{
@@ -151,7 +157,8 @@ Color of TFTD Alien Cryogenics parts")]
 		private Color _colorReproduction = def_SpecialColors[6];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Alien Reproduction parts
-Color of TFTD Alien Cloning parts")]
+Color of TFTD Alien Cloning parts
+(default Aquamarine)")]
 		[DefaultValue(typeof(Color), "Aquamarine")]
 		public Color Reproduction
 		{
@@ -162,7 +169,8 @@ Color of TFTD Alien Cloning parts")]
 		private Color _colorEntertainment = def_SpecialColors[7];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Alien Entertainment parts
-Color of TFTD Alien Learning Arrays parts")]
+Color of TFTD Alien Learning Arrays parts
+(default DeepSkyBlue)")]
 		[DefaultValue(typeof(Color), "DeepSkyBlue")]
 		public Color Entertainment
 		{
@@ -173,7 +181,8 @@ Color of TFTD Alien Learning Arrays parts")]
 		private Color _colorSurgery = def_SpecialColors[8];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Alien Surgery parts
-Color of TFTD Alien Implanter parts")]
+Color of TFTD Alien Implanter parts
+(default Thistle)")]
 		[DefaultValue(typeof(Color), "Thistle")]
 		public Color Surgery
 		{
@@ -183,7 +192,8 @@ Color of TFTD Alien Implanter parts")]
 
 		private Color _colorExamination = def_SpecialColors[9];
 		[Category(cat_SpecialPropertyColors)]
-		[Description("Color of Examination Room parts")]
+		[Description(@"Color of Examination Room parts
+(default YellowGreen)")]
 		[DefaultValue(typeof(Color), "YellowGreen")]
 		public Color Examination
 		{
@@ -194,7 +204,8 @@ Color of TFTD Alien Implanter parts")]
 		private Color _colorAlloys = def_SpecialColors[10];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Alien Alloys parts
-Color of TFTD Aqua Plastics parts")]
+Color of TFTD Aqua Plastics parts
+(default Orchid)")]
 		[DefaultValue(typeof(Color), "Orchid")]
 		public Color Alloys
 		{
@@ -205,7 +216,8 @@ Color of TFTD Aqua Plastics parts")]
 		private Color _colorHabitat = def_SpecialColors[11];
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Alien Habitat parts
-Color of TFTD Alien Re-animation Zone parts")]
+Color of TFTD Alien Re-animation Zone parts
+(default LightSteelBlue)")]
 		[DefaultValue(typeof(Color), "LightSteelBlue")]
 		public Color Habitat
 		{
@@ -215,7 +227,8 @@ Color of TFTD Alien Re-animation Zone parts")]
 
 		private Color _colorDestroyed = def_SpecialColors[12];
 		[Category(cat_SpecialPropertyColors)]
-		[Description("Color of Destroyed Alloys/Plastics parts")]
+		[Description(@"Color of Destroyed Alloys/Plastics parts
+(default Aqua)")]
 		[DefaultValue(typeof(Color), "Aqua")]
 		public Color Destroyed
 		{
@@ -225,7 +238,8 @@ Color of TFTD Alien Re-animation Zone parts")]
 
 		private Color _colorExitPoint = def_SpecialColors[13];
 		[Category(cat_SpecialPropertyColors)]
-		[Description("Color of Exit Point parts")]
+		[Description(@"Color of Exit Point parts
+(default BurlyWood)")]
 		[DefaultValue(typeof(Color), "BurlyWood")]
 		public Color ExitPoint
 		{
@@ -237,7 +251,8 @@ Color of TFTD Alien Re-animation Zone parts")]
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of Must Destroy parts
 eg. UFO Alien Brain parts
-eg. TFTD T'leth Power Cylinders parts")]
+eg. TFTD T'leth Power Cylinders parts
+(default LightCoral)")]
 		[DefaultValue(typeof(Color), "LightCoral")]
 		public Color MustDestroy
 		{
@@ -265,7 +280,7 @@ The path specified can actually be used to start any valid application"
 		private const string cat_nonBrowsable = "nonBrowsable";
 
 		private const string str_DescriptionHeight = "DescriptionHeight";
-		private const int    def_DescriptionHeight = 58; // header(22) + 3 line(12)
+		private const int    def_DescriptionHeight = 70; // header(22) + 4 line(12)
 
 		private int _descriptionHeight = def_DescriptionHeight;
 		[Browsable(false)]

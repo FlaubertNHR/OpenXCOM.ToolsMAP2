@@ -63,7 +63,7 @@ namespace MapView.Forms.Observers
 
 		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_Grid)]
-		[Description("Color of the grid lines")]
+		[Description("Color of the grid lines (default Black)")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLineColor
 		{
@@ -76,7 +76,7 @@ namespace MapView.Forms.Observers
 
 		private int _gridLineWidth = def_GridLineWidth;
 		[Category(cat_Grid)]
-		[Description("Width of the grid lines in pixels (1..6 default 1)")]
+		[Description("Width of the grid lines in pixels (1..5 default 1)")]
 		[DefaultValue(def_GridLineWidth)]
 		public int GridLineWidth
 		{
@@ -86,9 +86,9 @@ namespace MapView.Forms.Observers
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_GridLineWidth].Value =
-					_gridLineWidth = value.Viceroy(1,6);
+					_gridLineWidth = value.Viceroy(1,5);
 				}
-				else if ((_gridLineWidth = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_gridLineWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					_routeView.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
@@ -101,7 +101,7 @@ namespace MapView.Forms.Observers
 
 		private Color _gridLine10Color = def_GridLine10Color;
 		[Category(cat_Grid)]
-		[Description("Color of every tenth grid line")]
+		[Description("Color of every tenth grid line (default Black)")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLine10Color
 		{
@@ -114,7 +114,7 @@ namespace MapView.Forms.Observers
 
 		private int _gridLine10Width = def_GridLine10Width;
 		[Category(cat_Grid)]
-		[Description("Width of every tenth grid line in pixels (1..6 default 2)")]
+		[Description("Width of every tenth grid line in pixels (1..5 default 2)")]
 		[DefaultValue(def_GridLine10Width)]
 		public int GridLine10Width
 		{
@@ -124,9 +124,9 @@ namespace MapView.Forms.Observers
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_GridLine10Width].Value =
-					_gridLine10Width = value.Viceroy(1,6);
+					_gridLine10Width = value.Viceroy(1,5);
 				}
-				else if ((_gridLine10Width = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_gridLine10Width = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					_routeView.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
@@ -142,7 +142,7 @@ namespace MapView.Forms.Observers
 
 		private Color _wallColor = def_WallColor;
 		[Category(cat_Blobs)]
-		[Description("Color of the wall indicators")]
+		[Description("Color of the wall indicators (default BurlyWood)")]
 		[DefaultValue(typeof(Color), "BurlyWood")]
 		public Color WallColor
 		{
@@ -155,7 +155,7 @@ namespace MapView.Forms.Observers
 
 		private int _wallWidth = def_WallWidth;
 		[Category(cat_Blobs)]
-		[Description("Width of the wall indicators in pixels (1..9 default 3)")]
+		[Description("Width of the wall indicators in pixels (1..10 default 3)")]
 		[DefaultValue(def_WallWidth)]
 		public int WallWidth
 		{
@@ -165,9 +165,9 @@ namespace MapView.Forms.Observers
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_WallWidth].Value =
-					_wallWidth = value.Viceroy(1,9);
+					_wallWidth = value.Viceroy(1,10);
 				}
-				else if ((_wallWidth = value.Viceroy(1,9)) != value) // on user-changed
+				else if ((_wallWidth = value.Viceroy(1,10)) != value) // on user-changed
 				{
 					_routeView.Options[str_WallWidth].Value = _wallWidth;
 				}
@@ -180,7 +180,7 @@ namespace MapView.Forms.Observers
 
 		private Color _contentColor = def_ContentColor;
 		[Category(cat_Blobs)]
-		[Description("Color of the content indicator")]
+		[Description("Color of the content indicator (default DarkGoldenrod)")]
 		[DefaultValue(typeof(Color), "DarkGoldenrod")]
 		public Color ContentColor
 		{
@@ -197,7 +197,7 @@ namespace MapView.Forms.Observers
 
 		private Color _nodeColor = def_NodeColor;
 		[Category(cat_Nodes)]
-		[Description("Color of unselected nodes")]
+		[Description("Color of unselected nodes (default MediumSeaGreen)")]
 		[DefaultValue(typeof(Color), "MediumSeaGreen")]
 		public Color NodeColor
 		{
@@ -211,7 +211,7 @@ namespace MapView.Forms.Observers
 
 		private Color _nodeSpawnColor = def_NodeSpawnColor;
 		[Category(cat_Nodes)]
-		[Description("Color of spawn nodes")]
+		[Description("Color of spawn nodes (default GreenYellow)")]
 		[DefaultValue(typeof(Color), "GreenYellow")]
 		public Color NodeSpawnColor
 		{
@@ -225,7 +225,7 @@ namespace MapView.Forms.Observers
 
 		private Color _nodeSelectedColor = def_NodeSelectedColor;
 		[Category(cat_Nodes)]
-		[Description("Color of selected nodes")]
+		[Description("Color of selected nodes (default RoyalBlue)")]
 		[DefaultValue(typeof(Color), "RoyalBlue")]
 		public Color NodeSelectedColor
 		{
@@ -267,7 +267,7 @@ namespace MapView.Forms.Observers
 
 		private Color _linkColor = def_LinkColor;
 		[Category(cat_Links)]
-		[Description("Color of unselected link lines")]
+		[Description("Color of unselected link lines (default OrangeRed)")]
 		[DefaultValue(typeof(Color), "OrangeRed")]
 		public Color LinkColor
 		{
@@ -280,7 +280,7 @@ namespace MapView.Forms.Observers
 
 		private int _linkWidth = def_LinkWidth;
 		[Category(cat_Links)]
-		[Description("Width of unselected link lines in pixels (1..6 default 2)")]
+		[Description("Width of unselected link lines in pixels (1..5 default 2)")]
 		[DefaultValue(def_LinkWidth)]
 		public int LinkWidth
 		{
@@ -290,9 +290,9 @@ namespace MapView.Forms.Observers
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_LinkWidth].Value =
-					_linkWidth = value.Viceroy(1,6);
+					_linkWidth = value.Viceroy(1,5);
 				}
-				else if ((_linkWidth = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_linkWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					_routeView.Options[str_LinkWidth].Value = _linkWidth;
 				}
@@ -305,7 +305,7 @@ namespace MapView.Forms.Observers
 
 		private Color _linkSelectedColor = def_LinkSelectedColor;
 		[Category(cat_Links)]
-		[Description("Color of selected link lines")]
+		[Description("Color of selected link lines (default RoyalBlue)")]
 		[DefaultValue(typeof(Color), "RoyalBlue")]
 		public Color LinkSelectedColor
 		{
@@ -318,7 +318,7 @@ namespace MapView.Forms.Observers
 
 		private int _linkSelectedWidth = def_LinkSelectedWidth;
 		[Category(cat_Links)]
-		[Description("Width of selected link lines in pixels (1..6 default 2)")]
+		[Description("Width of selected link lines in pixels (1..5 default 2)")]
 		[DefaultValue(def_LinkSelectedWidth)]
 		public int LinkSelectedWidth
 		{
@@ -328,9 +328,9 @@ namespace MapView.Forms.Observers
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
 					_routeView.Options[str_LinkSelectedWidth].Value =
-					_linkSelectedWidth = value.Viceroy(1,6);
+					_linkSelectedWidth = value.Viceroy(1,5);
 				}
-				else if ((_linkSelectedWidth = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_linkSelectedWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					_routeView.Options[str_LinkSelectedWidth].Value = _linkSelectedWidth;
 				}
@@ -346,7 +346,7 @@ namespace MapView.Forms.Observers
 
 		private bool _showOverlay = def_ShowOverlay;
 		[Category(cat_Panel)]
-		[Description("True to display cursor info")]
+		[Description("True to display cursor info (default True)")]
 		[DefaultValue(true)]
 		public bool ShowOverlay
 		{
@@ -360,7 +360,7 @@ namespace MapView.Forms.Observers
 
 		private bool _showPriorityBars = def_ShowPriorityBars;
 		[Category(cat_Panel)]
-		[Description("True to display the spawn/patrol bars")]
+		[Description("True to display the spawn/patrol bars (default True)")]
 		[DefaultValue(true)]
 		public bool ShowPriorityBars
 		{
@@ -377,7 +377,8 @@ namespace MapView.Forms.Observers
 		[Description("True to reduce the frequency of draw-calls to the panel."
 					+ " If so the InfoOverlay doesn't track exactly with the"
 					+ " cursor but the panel feels solid. Note that when option "
-					+ str_ShowOverlay + " is false draws will be reduced regardless.")]
+					+ str_ShowOverlay + " is false draws will be reduced"
+					+ " regardless (default False)")]
 		[DefaultValue(false)]
 		public bool ReduceDraws
 		{

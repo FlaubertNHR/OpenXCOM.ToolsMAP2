@@ -65,7 +65,7 @@ namespace MapView.Forms.Observers
 
 		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_Grid)]
-		[Description("Color of the grid lines")]
+		[Description("Color of the grid lines (default Black)")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLineColor
 		{
@@ -78,7 +78,7 @@ namespace MapView.Forms.Observers
 
 		private int _gridLineWidth = def_GridLineWidth;
 		[Category(cat_Grid)]
-		[Description("Width of the grid lines in pixels (1..6 default 1)")]
+		[Description("Width of the grid lines in pixels (1..5 default 1)")]
 		[DefaultValue(def_GridLineWidth)]
 		public int GridLineWidth
 		{
@@ -88,9 +88,9 @@ namespace MapView.Forms.Observers
 				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_GridLineWidth].Value =
-					_gridLineWidth = value.Viceroy(1,6);
+					_gridLineWidth = value.Viceroy(1,5);
 				}
-				else if ((_gridLineWidth = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_gridLineWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					_topView.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
@@ -103,7 +103,7 @@ namespace MapView.Forms.Observers
 
 		private Color _gridLine10Color = def_GridLine10Color;
 		[Category(cat_Grid)]
-		[Description("Color of every tenth grid line")]
+		[Description("Color of every tenth grid line (default Black)")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLine10Color
 		{
@@ -116,7 +116,7 @@ namespace MapView.Forms.Observers
 
 		private int _gridLine10Width = def_GridLine10Width;
 		[Category(cat_Grid)]
-		[Description("Width of every tenth grid line in pixels (1..6 default 2)")]
+		[Description("Width of every tenth grid line in pixels (1..5 default 2)")]
 		[DefaultValue(def_GridLine10Width)]
 		public int GridLine10Width
 		{
@@ -126,9 +126,9 @@ namespace MapView.Forms.Observers
 				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_GridLine10Width].Value =
-					_gridLine10Width = value.Viceroy(1,6);
+					_gridLine10Width = value.Viceroy(1,5);
 				}
-				else if ((_gridLine10Width = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_gridLine10Width = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					_topView.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
@@ -144,7 +144,7 @@ namespace MapView.Forms.Observers
 
 		private Color _floorColor = def_FloorColor;
 		[Category(cat_Blobs)]
-		[Description("Color of the floor indicator")]
+		[Description("Color of the floor indicator (default BurlyWood)")]
 		[DefaultValue(typeof(Color), "BurlyWood")]
 		public Color FloorColor
 		{
@@ -158,7 +158,7 @@ namespace MapView.Forms.Observers
 
 		private Color _westColor = def_WestColor;
 		[Category(cat_Blobs)]
-		[Description("Color of the westwall indicator")]
+		[Description("Color of the westwall indicator (default Khaki)")]
 		[DefaultValue(typeof(Color), "Khaki")]
 		public Color WestColor
 		{
@@ -171,7 +171,7 @@ namespace MapView.Forms.Observers
 
 		private int _westWidth = def_WestWidth;
 		[Category(cat_Blobs)]
-		[Description("Width of the westwall indicator in pixels (1..9 default 3)")]
+		[Description("Width of the westwall indicator in pixels (1..10 default 3)")]
 		[DefaultValue(def_WestWidth)]
 		public int WestWidth
 		{
@@ -181,9 +181,9 @@ namespace MapView.Forms.Observers
 				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_WestWidth].Value =
-					_westWidth = value.Viceroy(1,9);
+					_westWidth = value.Viceroy(1,10);
 				}
-				else if ((_westWidth = value.Viceroy(1,9)) != value) // on user-changed
+				else if ((_westWidth = value.Viceroy(1,10)) != value) // on user-changed
 				{
 					_topView.Options[str_WestWidth].Value = _westWidth;
 				}
@@ -196,7 +196,7 @@ namespace MapView.Forms.Observers
 
 		private Color _northColor = def_NorthColor;
 		[Category(cat_Blobs)]
-		[Description("Color of the northwall indicator")]
+		[Description("Color of the northwall indicator (default Khaki)")]
 		[DefaultValue(typeof(Color), "Khaki")]
 		public Color NorthColor
 		{
@@ -209,7 +209,7 @@ namespace MapView.Forms.Observers
 
 		private int _northWidth = def_NorthWidth;
 		[Category(cat_Blobs)]
-		[Description("Width of the northwall indicator in pixels (1..9 default 3)")]
+		[Description("Width of the northwall indicator in pixels (1..10 default 3)")]
 		[DefaultValue(def_NorthWidth)]
 		public int NorthWidth
 		{
@@ -219,9 +219,9 @@ namespace MapView.Forms.Observers
 				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_NorthWidth].Value =
-					_northWidth = value.Viceroy(1,9);
+					_northWidth = value.Viceroy(1,10);
 				}
-				else if ((_northWidth = value.Viceroy(1,9)) != value) // on user-changed
+				else if ((_northWidth = value.Viceroy(1,10)) != value) // on user-changed
 				{
 					_topView.Options[str_NorthWidth].Value = _northWidth;
 				}
@@ -234,7 +234,7 @@ namespace MapView.Forms.Observers
 
 		private Color _contentColor = def_ContentColor;
 		[Category(cat_Blobs)]
-		[Description("Color of the content indicator")]
+		[Description("Color of the content indicator (default MediumSeaGreen)")]
 		[DefaultValue(typeof(Color), "MediumSeaGreen")]
 		public Color ContentColor
 		{
@@ -251,7 +251,7 @@ namespace MapView.Forms.Observers
 
 		private Color _selectorColor = def_SelectorColor;
 		[Category(cat_Selects)]
-		[Description("Color of the tile selector")]
+		[Description("Color of the tile selector (default Black)")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color SelectorColor
 		{
@@ -264,7 +264,7 @@ namespace MapView.Forms.Observers
 
 		private int _selectorWidth = def_SelectorWidth;
 		[Category(cat_Selects)]
-		[Description("Width of the tile selector in pixels (1..6 default 2)")]
+		[Description("Width of the tile selector in pixels (1..5 default 2)")]
 		[DefaultValue(def_SelectorWidth)]
 		public int SelectorWidth
 		{
@@ -274,9 +274,9 @@ namespace MapView.Forms.Observers
 				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_SelectorWidth].Value =
-					_selectorWidth = value.Viceroy(1,6);
+					_selectorWidth = value.Viceroy(1,5);
 				}
-				else if ((_selectorWidth = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_selectorWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					_topView.Options[str_SelectorWidth].Value = _selectorWidth;
 				}
@@ -289,7 +289,7 @@ namespace MapView.Forms.Observers
 
 		private Color _selectedColor = def_SelectedColor;
 		[Category(cat_Selects)]
-		[Description("Color of the selection border")]
+		[Description("Color of the selection border (default RoyalBlue)")]
 		[DefaultValue(typeof(Color), "RoyalBlue")]
 		public Color SelectedColor
 		{
@@ -302,7 +302,7 @@ namespace MapView.Forms.Observers
 
 		private int _selectedWidth = def_SelectedWidth;
 		[Category(cat_Selects)]
-		[Description("Width of the selection border in pixels (1..6 default 2)")]
+		[Description("Width of the selection border in pixels (1..5 default 2)")]
 		[DefaultValue(def_SelectedWidth)]
 		public int SelectedWidth
 		{
@@ -312,9 +312,9 @@ namespace MapView.Forms.Observers
 				if ((TopView._foptions as OptionsForm) == null) // on load
 				{
 					_topView.Options[str_SelectedWidth].Value =
-					_selectedWidth = value.Viceroy(1,6);
+					_selectedWidth = value.Viceroy(1,5);
 				}
-				else if ((_selectedWidth = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_selectedWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					_topView.Options[str_SelectedWidth].Value = _selectedWidth;
 				}
@@ -327,7 +327,7 @@ namespace MapView.Forms.Observers
 
 		private Color _selectedQuadColor = def_SelectedQuadColor;
 		[Category(cat_Selects)]
-		[Description("Background color of the selected parttype")]
+		[Description("Background color of the selected parttype (default LightBlue)")]
 		[DefaultValue(typeof(Color), "LightBlue")]
 		public Color SelectedQuadColor
 		{
@@ -349,10 +349,10 @@ namespace MapView.Forms.Observers
 			+ " in order to detect whether a single or double click happened."
 			+ " This delay is used to bypass a single-click event [place"
 			+ " tilepart] if a double-click [clear tilepart] is detected"
-			+ " instead. If this option is false (default) then a double"
-			+ " right-click causes a tilepart to be placed and cleared in rapid"
-			+ " succession. WARNING: Enabling this option could cause TopView"
-			+ " to exhibit unstable behavior")]
+			+ " instead. If this option is false then a double right-click"
+			+ " causes a tilepart to be placed and cleared in rapid succession."
+			+ " WARNING: Enabling this option could cause TopView to exhibit"
+			+ " unstable behavior (default False)")]
 		[DefaultValue(def_EnableRightClickWaitTimer)]
 		public bool EnableRightClickWaitTimer
 		{

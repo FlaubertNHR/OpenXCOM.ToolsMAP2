@@ -102,7 +102,7 @@ namespace MapView.Forms.MainView
 
 		private bool _starttileview = def_StartTileView;
 		[Category(cat_Observers)]
-		[Description("Open on load - TileView")]
+		[Description("Open on load - TileView (default True)")]
 		[DefaultValue(def_StartTileView)]
 		public bool StartTileView									// the Property.
 		{
@@ -115,7 +115,7 @@ namespace MapView.Forms.MainView
 
 		private bool _starttopview = def_StartTopView;
 		[Category(cat_Observers)]
-		[Description("Open on load - TopView")]
+		[Description("Open on load - TopView (default True)")]
 		[DefaultValue(def_StartTopView)]
 		public bool StartTopView
 		{
@@ -128,7 +128,7 @@ namespace MapView.Forms.MainView
 
 		private bool _startrouteview = def_StartRouteView;
 		[Category(cat_Observers)]
-		[Description("Open on load - RouteView")]
+		[Description("Open on load - RouteView (default True)")]
 		[DefaultValue(def_StartRouteView)]
 		public bool StartRouteView
 		{
@@ -141,7 +141,7 @@ namespace MapView.Forms.MainView
 
 		private bool _starttoprouteview = def_StartTopRouteView;
 		[Category(cat_Observers)]
-		[Description("Open on load - TopRouteView")]
+		[Description("Open on load - TopRouteView (default False)")]
 		[DefaultValue(def_StartTopRouteView)]
 		public bool StartTopRouteView
 		{
@@ -187,7 +187,8 @@ namespace MapView.Forms.MainView
 
 		private bool _gridVisible = def_GridVisible;
 		[Category(cat_Grid)]
-		[Description("If true a grid will display at the current level of editing (F4 - On/Off)")]
+		[Description(@"If true a grid will display at the current level of editing (F4 - On/Off)
+(default True)")]
 		[DefaultValue(def_GridVisible)]
 		public bool GridVisible
 		{
@@ -201,7 +202,7 @@ namespace MapView.Forms.MainView
 
 		private Color _gridLayerColor = def_GridLayerColor;
 		[Category(cat_Grid)]
-		[Description("Color of the grid")]
+		[Description("Color of the grid (default MediumVioletRed)")]
 		[DefaultValue(typeof(Color), "MediumVioletRed")]
 		public Color GridLayerColor
 		{
@@ -239,7 +240,7 @@ namespace MapView.Forms.MainView
 
 		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_Grid)]
-		[Description("Color of the lines that draw the grid")]
+		[Description("Color of the lines that draw the grid (default Black)")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLineColor
 		{
@@ -252,7 +253,7 @@ namespace MapView.Forms.MainView
 
 		private int _gridLineWidth = def_GridLineWidth;
 		[Category(cat_Grid)]
-		[Description("Width of the grid lines in pixels (1..6 default 1)")]
+		[Description("Width of the grid lines in pixels (1..5 default 1)")]
 		[DefaultValue(def_GridLineWidth)]
 		public int GridLineWidth
 		{
@@ -262,9 +263,9 @@ namespace MapView.Forms.MainView
 				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_GridLineWidth].Value =
-					_gridLineWidth = value.Viceroy(1,6);
+					_gridLineWidth = value.Viceroy(1,5);
 				}
-				else if ((_gridLineWidth = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_gridLineWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
@@ -277,7 +278,7 @@ namespace MapView.Forms.MainView
 
 		private Color _gridLine10Color = def_GridLine10Color;
 		[Category(cat_Grid)]
-		[Description("Color of every tenth line on the grid")]
+		[Description("Color of every tenth line on the grid (default Black)")]
 		[DefaultValue(typeof(Color), "Black")]
 		public Color GridLine10Color
 		{
@@ -290,7 +291,7 @@ namespace MapView.Forms.MainView
 
 		private int _gridLine10Width = def_GridLine10Width;
 		[Category(cat_Grid)]
-		[Description("Width of every tenth grid line in pixels (1..6 default 2)")]
+		[Description("Width of every tenth grid line in pixels (1..5 default 2)")]
 		[DefaultValue(def_GridLine10Width)]
 		public int GridLine10Width
 		{
@@ -300,9 +301,9 @@ namespace MapView.Forms.MainView
 				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_GridLine10Width].Value =
-					_gridLine10Width = value.Viceroy(1,6);
+					_gridLine10Width = value.Viceroy(1,5);
 				}
-				else if ((_gridLine10Width = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_gridLine10Width = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
@@ -318,7 +319,7 @@ namespace MapView.Forms.MainView
 
 		private Color _selectionBorderColor = def_SelectionBorderColor;
 		[Category(cat_Selection)]
-		[Description("Color of the border of selected tiles")]
+		[Description("Color of the border of selected tiles (default Tomato)")]
 		[DefaultValue(typeof(Color), "Tomato")]
 		public Color SelectionBorderColor
 		{
@@ -355,7 +356,7 @@ namespace MapView.Forms.MainView
 
 		private int _selectionBorderWidth = def_SelectionBorderWidth;
 		[Category(cat_Selection)]
-		[Description("Width of the border of selected tiles in pixels (1..6 default 2)")]
+		[Description("Width of the border of selected tiles in pixels (1..5 default 2)")]
 		[DefaultValue(def_SelectionBorderWidth)]
 		public int SelectionBorderWidth
 		{
@@ -365,9 +366,9 @@ namespace MapView.Forms.MainView
 				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_SelectionBorderWidth].Value =
-					_selectionBorderWidth = value.Viceroy(1,6);
+					_selectionBorderWidth = value.Viceroy(1,5);
 				}
-				else if ((_selectionBorderWidth = value.Viceroy(1,6)) != value) // on user-changed
+				else if ((_selectionBorderWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SelectionBorderWidth].Value = _selectionBorderWidth;
 				}
@@ -442,7 +443,8 @@ namespace MapView.Forms.MainView
 			+ " is only 1 tile selected. Typically this should be left false"
 			+ " but if particularly large sprites hide the selector then this"
 			+ " can help resolve the tile - see also " + str_LayerSelectionBorder
-			+ " (Ctrl+F9 - On/Off)")]
+			+ @" (Ctrl+F9 - On/Off)
+(default False)")]
 		[DefaultValue(def_OneTileDraw)]
 		public bool OneTileDraw
 		{
@@ -562,7 +564,8 @@ namespace MapView.Forms.MainView
 
 		private bool _animateSprites = def_AnimateSprites;
 		[Category(cat_General)]
-		[Description("If true the sprites will animate (F2 - On/Off)")]
+		[Description(@"If true the sprites will animate (F2 - On/Off)
+(default False)")]
 		[DefaultValue(def_AnimateSprites)]
 		public bool AnimateSprites
 		{
@@ -578,7 +581,8 @@ namespace MapView.Forms.MainView
 		[Category(cat_General)]
 		[Description("If true the doors will animate if Animate is also on - if"
 			+ " Animate is false the doors will show their alternate tile. This"
-			+ " setting may need to be re-toggled if Animate changes (F3 - On/Off)")]
+			+ @" setting may need to be re-toggled if Animate changes (F3 - On/Off)
+(default False)")]
 		[DefaultValue(def_OpenDoors)]
 		public bool OpenDoors
 		{
@@ -596,7 +600,7 @@ namespace MapView.Forms.MainView
 			+ " top of the desktop whenever MainView takes focus - this implements"
 			+ " a workaround that might help circumvent an issue in post Windows 7"
 			+ " OS, in which focus refuses to switch to MainView unless the"
-			+ " secondary viewers are closed")]
+			+ " secondary viewers are closed (default False)")]
 		[DefaultValue(def_BringAllToFront)]
 		public bool BringAllToFront
 		{
@@ -613,7 +617,8 @@ namespace MapView.Forms.MainView
 		[Description("If true use sprite-drawing algorithms that are designed for Mono."
 			+ " This fixes an issue on non-Windows systems where non-transparent"
 			+ " black boxes appear around sprites but it bypasses Interpolation"
-			+ " and SpriteShade routines. Also selected tiles will not be toned")]
+			+ " and SpriteShade routines. Also selected tiles will not be toned"
+			+ " (default False)")]
 		[DefaultValue(def_UseMono)]
 		public bool UseMono
 		{
@@ -630,7 +635,8 @@ namespace MapView.Forms.MainView
 
 		private Color _backgroundColor = def_BackgroundColor;
 		[Category(cat_Screenshot)]
-		[Description("The color for the background of a screenshot")]
+		[Description("The color for the background of a screenshot (default"
+			+ " Transparent)")]
 		[DefaultValue(typeof(Color), "Transparent")]
 		public Color BackgroundColor
 		{
@@ -644,7 +650,8 @@ namespace MapView.Forms.MainView
 
 		private bool _cropBackground = def_CropBackground;
 		[Category(cat_Screenshot)]
-		[Description("If true a screenshot will be cropped to its foreground pixels")]
+		[Description("If true a screenshot will be cropped to its foreground"
+			+ " pixels (default False)")]
 		[DefaultValue(def_CropBackground)]
 		public bool CropBackground
 		{
@@ -659,7 +666,7 @@ namespace MapView.Forms.MainView
 		private bool _png_notGif = def_Png_notGif;
 		[Category(cat_Screenshot)]
 		[Description("If true screenshots will be saved to PNG format, if false"
-			+ " they will be saved to GIF format")]
+			+ " they will be saved to GIF format (default True)")]
 		[DefaultValue(def_Png_notGif)]
 		public bool Png_notGif
 		{
@@ -677,7 +684,7 @@ namespace MapView.Forms.MainView
 		private bool _base1_xy = def_Base1_xy;
 		[Category(cat_Global)]
 		[Description("If true the printed position of rows and cols starts at 1"
-			+ " instead of 0")]
+			+ " instead of 0 (default False)")]
 		[DefaultValue(def_Base1_xy)]
 		public bool Base1_xy
 		{
@@ -692,7 +699,7 @@ namespace MapView.Forms.MainView
 		private bool _base1_z = def_Base1_z;
 		[Category(cat_Global)]
 		[Description("If true the printed position of the level starts at 1"
-			+ " instead of 0")]
+			+ " instead of 0 (default False)")]
 		[DefaultValue(def_Base1_z)]
 		public bool Base1_z
 		{
@@ -707,7 +714,7 @@ namespace MapView.Forms.MainView
 		private bool _ignoreRecordsExceeded = def_IgnoreRecordsExceeded;
 		[Category(cat_Global)]
 		[Description("If true do not show warnings when the total MCD (terrain)"
-			+ " record count exceeds 254")]
+			+ " record count exceeds 254 (default False)")]
 		[DefaultValue(def_IgnoreRecordsExceeded)]
 		public bool IgnoreRecordsExceeded
 		{
@@ -722,7 +729,7 @@ namespace MapView.Forms.MainView
 		private bool _invertMousewheel = def_InvertMousewheel;
 		[Category(cat_Global)]
 		[Description("If true the mousewheel changes levels in the opposite direction"
-			+ " than it should (default false)")]
+			+ " than it should (default False)")]
 		[DefaultValue(def_InvertMousewheel)]
 		public bool InvertMousewheel
 		{
