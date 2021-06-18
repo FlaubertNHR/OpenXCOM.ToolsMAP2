@@ -25,7 +25,6 @@ namespace MapView.Forms.Observers
 		/// <remarks>Is overridden by
 		/// <c><see cref="TopControl.MapFile">TopControl.MapFile</see></c> but
 		/// <c><see cref="QuadrantControl"/></c> uses this <c>MapFile</c>.</remarks>
-		[Browsable(false)]
 		public virtual MapFile MapFile
 		{ get; set; }
 
