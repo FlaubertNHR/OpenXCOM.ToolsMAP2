@@ -101,7 +101,6 @@ namespace MapView.Forms.Observers
 		/// Inherited from <c><see cref="IObserver"/></c> through
 		/// <c><see cref="ObserverControl"/></c>.
 		/// </summary>
-		[Browsable(false)]
 		public override MapFile MapFile
 		{
 			set

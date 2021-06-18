@@ -13,11 +13,9 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal interface IObserver
 	{
-		[Browsable(false)] // wtf
 		MapFile MapFile
 		{ set; get;}
 
-		[Browsable(false)]
 		Dictionary<string, IObserver> ObserverControls
 		{ get; }
 

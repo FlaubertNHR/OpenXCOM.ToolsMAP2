@@ -89,9 +89,9 @@ namespace MapView.Forms.Observers
 
 		#region Properties (override)
 		/// <summary>
-		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
+		/// Inherited from <see cref="IObserver"/> through
+		/// <see cref="ObserverControl"/>.
 		/// </summary>
-		[Browsable(false)]
 		public override MapFile MapFile
 		{
 			set // TODO: check RouteView/TopRouteView(Route)

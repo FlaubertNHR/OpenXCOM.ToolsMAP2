@@ -26,7 +26,6 @@ namespace MapView.Forms.Observers
 		/// <remarks>Is overridden by <see cref="TileView.MapFile">TileView.MapFile</see>
 		/// and <see cref="RouteView.MapFile">RouteView.MapFile</see>.
 		/// <see cref="TopView"/> uses this MapFile.</remarks>
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		[Browsable(false)]
 		public virtual MapFile MapFile
 		{ get; set; }
