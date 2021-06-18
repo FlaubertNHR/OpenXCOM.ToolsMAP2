@@ -82,6 +82,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields (static)
+		private const string TITLE = "TileView";
+
 		private const int CONTEXT_MI_MCDINFO = 3;
 		#endregion Fields (static)
 
@@ -96,34 +98,30 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
+		/// Inherited from <c><see cref="IObserver"/></c> through
+		/// <c><see cref="ObserverControl"/></c>.
 		/// </summary>
 		[Browsable(false)]
 		public override MapFile MapFile
 		{
 			set
 			{
-				IList<Tilepart> parts;
-				if ((base.MapFile = value) != null)
-					parts = value.Parts;
-				else
-					parts = null;
-
-				SetTileParts(parts);
+				PopulatePanels((base.MapFile = value).Parts);
 			}
 		}
 
 		/// <summary>
-		/// Gets the selected-tilepart.
-		/// Sets the selected-tilepart when a valid
-		/// <c><see cref="QuadrantControl"/></c> quad is double-clicked.
+		/// Gets the current <c>SelectedTilepart</c>.
+		/// 
+		/// Sets the <c>SelectedTilepart</c> when a valid
+		/// <c><see cref="QuadrantControl"/></c> quad is selected.
 		/// </summary>
-		/// <remarks>TileView switches to the ALL tabpage and selects the
-		/// appropriate tilepart, w/ TilePanel.SelectedTilepart, when a quad is
-		/// selected in the QuadrantControl. The TilepartSelected event then
-		/// fires, and then the TilepartSelected_SelectQuadrant event fires.
-		/// Thought you'd like to know how good the spaghetti tastes.</remarks>
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] // w.t.f.
+		/// <remarks>The setter is used only by
+		/// <c><see cref="QuadrantControl.Clicker()">QuadrantControl.Clicker()</see></c>.
+		/// <c>TileView</c> switches to the ALL tabpage and selects the
+		/// appropriate <c><see cref="Tilepart"/></c> per
+		/// <c><see cref="TilePanel.SelectedTilepart">TilePanel.SelectedTilepart</see></c>
+		/// when a quad is selected in the <c>QuadrantControl</c>.</remarks>
 		internal Tilepart SelectedTilepart
 		{
 			get { return GetSelectedPanel().SelectedTilepart; }
@@ -167,8 +165,8 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiates this <c>TileView</c> control and its
-		/// pages/panels.
+		/// cTor. Instantiates this <c>TileView</c> control and its pages of
+		/// <c><see cref="TilePanel">TilePanels</see></c>.
 		/// </summary>
 		internal TileView()
 		{
@@ -194,7 +192,13 @@ namespace MapView.Forms.Observers
 			var floors     = new TilePanel(PartType.Floor);
 			var westwalls  = new TilePanel(PartType.West);
 			var northwalls = new TilePanel(PartType.North);
-			var content    = new TilePanel(PartType.Content);
+			var contents   = new TilePanel(PartType.Content);
+
+			tpAll       .Controls.Add(_allTiles);
+			tpFloors    .Controls.Add(floors);
+			tpWestwalls .Controls.Add(westwalls);
+			tpNorthwalls.Controls.Add(northwalls);
+			tpContents  .Controls.Add(contents);
 
 			_panels = new[]
 			{
@@ -202,37 +206,17 @@ namespace MapView.Forms.Observers
 				floors,
 				westwalls,
 				northwalls,
-				content
+				contents
 			};
-
-			AddPanel(tpAll,       _allTiles);
-			AddPanel(tpFloors,     floors);
-			AddPanel(tpWestwalls,  westwalls);
-			AddPanel(tpNorthwalls, northwalls);
-			AddPanel(tpContents,   content);
 
 			ssStatus.Renderer = new CustomToolStripRenderer();
 
 			CreateContext();
 
 			_t1.Tick += t1_OnTick;			// Because the mouse OnLeave event doesn't
-			_t1.Interval = Globals.PERIOD;	// fire when the mouse moves out of the
+			_t1.Interval = Globals.PERIOD;	// fire when the mouse moves out of a
 			_t1.Enabled = true;				// panel directly from a tilepart's icon.
 		}
-
-		/// <summary>
-		/// Adds a panel to a specified tabpage and subscribes the panel's
-		/// <see cref="TilePanel.TilepartSelected">TilePanel.TilepartSelected</see>
-		/// event to <see cref="panel_OnTilepartSelected"/>.
-		/// </summary>
-		/// <param name="page"></param>
-		/// <param name="panel"></param>
-		private void AddPanel(Control page, TilePanel panel)
-		{
-			panel.TilepartSelected += panel_OnTilepartSelected; // 'this' won't be released until all panels are disposed.
-			page.Controls.Add(panel);
-		}
-
 
 		/// <summary>
 		/// Builds the ContextMenu.
@@ -272,7 +256,7 @@ namespace MapView.Forms.Observers
 		private void t1_OnTick(object sender, EventArgs e)
 		{
 			if (tsslOver.Text.Length != 0)
-				GetSelectedPanel().ElvisHasLeft();
+				GetSelectedPanel().ElvisHasLeftThePanel();
 		}
 
 /*		/// <summary>
@@ -300,22 +284,19 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Triggers when a tab-index changes. Updates the titlebar-text,
-		/// quadrant, and MCD-info (if applicable). Also subscribes/unsubscribes
-		/// panels to the static ticker's event.
+		/// quadrant, and <c><see cref="McdInfo"/></c> (if applicable).
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void tabs_OnSelectedIndexChanged(object sender, EventArgs e)
 		{
-			panel_OnTilepartSelected(SelectedTilepart);
+			SelectTilepart(SelectedTilepart);
 		}
 
 		/// <summary>
-		/// Handles the panels' <see cref="TilePanel.TilepartSelected">TilePanel.TilepartSelected</see>
-		/// event. Further triggers the 'TilepartSelected_SelectQuadrant' event.
+		/// Updates stuff after user selects a <c><see cref="Tilepart"/></c>.
 		/// </summary>
-		/// <param name="part"></param>
-		private void panel_OnTilepartSelected(Tilepart part)
+		internal void SelectTilepart(Tilepart part)
 		{
 			SetTitleText(part);
 
@@ -328,7 +309,7 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = part.Record.PartType;
 			}
 
-			QuadrantDrawService.CurrentTilepart = part;
+			QuadrantDrawService.SelectedTilepart = part;
 			ObserverManager.InvalidateQuadrantControls();
 		}
 		#endregion Events
@@ -336,7 +317,7 @@ namespace MapView.Forms.Observers
 
 		#region Options
 		/// <summary>
-		/// Loads default options for TileView.
+		/// Loads default options for <c>TileView</c>.
 		/// </summary>
 		internal protected override void LoadControlDefaultOptions()
 		{
@@ -613,7 +594,7 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Gets the current sprite-shade in
-		/// <see cref="MainViewF.Optionables">MainViewF.Optionables</see>.
+		/// <c><see cref="MainViewF.Optionables">MainViewF.Optionables</see></c>.
 		/// </summary>
 		/// <returns>sprite-shade or -1 if disabled</returns>
 		private static int GetSpriteshade()
@@ -703,13 +684,15 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Fills the <see cref="TileView"/> pages with tileparts.
+		/// Populates
+		/// <c>TileView</c> <c><see cref="TilePanel">TilePanels</see></c> with
+		/// <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
 		/// <param name="parts"></param>
-		private void SetTileParts(IList<Tilepart> parts)
+		private void PopulatePanels(IList<Tilepart> parts)
 		{
 			for (int id = 0; id != _panels.Length; ++id)
-				_panels[id].SetTiles(parts);
+				_panels[id].PopulatePanel(parts);
 
 			tsslTotal.Text = "Total " + parts.Count;
 
@@ -723,12 +706,12 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Sets the title-text to a string that's appropriate for the currently
-		/// selected tilepart.
+		/// selected <c><see cref="Tilepart"/></c>.
 		/// </summary>
 		/// <param name="part">can be null</param>
 		private void SetTitleText(Tilepart part)
 		{
-			string title = "TileView";
+			string title = TITLE;
 			if (part != null)
 			{
 				title += " - " + GetTerrainLabel()
@@ -739,7 +722,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Prints info for a mouseovered tilepart.
+		/// Prints info for a mouseovered <c><see cref="Tilepart"/></c>.
 		/// </summary>
 		/// <param name="part"></param>
 		internal void PrintOverInfo(Tilepart part)
@@ -756,7 +739,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Gets the label of the terrain of the currently selected tilepart.
+		/// Gets the label of the terrain of the <c><see cref="SelectedTilepart"/></c>.
 		/// </summary>
 		/// <returns></returns>
 		internal string GetTerrainLabel()
@@ -768,7 +751,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Gets the panel of the currently selected tabpage.
+		/// Gets the <c><see cref="TilePanel"/></c> of the currently selected
+		/// tabpage.
 		/// </summary>
 		/// <returns></returns>
 		internal TilePanel GetSelectedPanel()

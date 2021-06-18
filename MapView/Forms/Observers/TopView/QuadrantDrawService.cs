@@ -105,9 +105,9 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// The currently selected part in <c><see cref="TileView"/></c>.
+		/// The currently selected tilepart in <c><see cref="TileView"/></c>.
 		/// </summary>
-		internal static Tilepart CurrentTilepart
+		internal static Tilepart SelectedTilepart
 		{ get; set; }
 		#endregion Properties (static)
 
@@ -338,10 +338,10 @@ namespace MapView.Forms.Observers
 
 
 			// Current ->
-			if (CurrentTilepart != null)
+			if (SelectedTilepart != null)
 			{
-				McdRecord record = CurrentTilepart.Record;
-				DrawSprite(CurrentTilepart[phase], Quadwidth * QuadrantPart, record.TileOffset);
+				McdRecord record = SelectedTilepart.Record;
+				DrawSprite(SelectedTilepart[phase], Quadwidth * QuadrantPart, record.TileOffset);
 
 				if (record.HingedDoor || record.SlidingDoor)
 					DrawDoorString(QuadrantPart);

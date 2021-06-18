@@ -21,7 +21,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>Do NOT use <c>public void Dispose()</c> or else you'll have
 		/// one Fuck of a time trying to trace usage. Use <c>public void Dispose()</c>
 		/// only for the Designer code w/ <c>components</c>. Thank yourself for
-		/// heeding this piece of hard-won wisdom later.</remarks>
+		/// heeding this piece of ornery advice later.</remarks>
 		internal void DisposeObserver()
 		{
 			LogFile.WriteLine("TopView.DisposeObserver()");
@@ -346,7 +346,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Formats a string of x/y/z + quadtype for the TestPartslots dialog.
+		/// Formats a string of x/y/z + parttype for the TestPartslots dialog.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>

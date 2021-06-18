@@ -173,8 +173,8 @@ namespace MapView.Forms.Observers
 
 				case (PartType)QuadrantDrawService.QuadrantPart:
 					isPartSlot = true;
-					if (QuadrantDrawService.CurrentTilepart != null)
-						part = QuadrantDrawService.CurrentTilepart.Record.PartType;
+					if (QuadrantDrawService.SelectedTilepart != null)
+						part = QuadrantDrawService.SelectedTilepart.Record.PartType;
 					break;
 			}
 

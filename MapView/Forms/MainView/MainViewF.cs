@@ -3376,17 +3376,16 @@ namespace MapView
 				}
 
 				foreach (var spriteset in SpritesetManager.Spritesets)
+				for (int id = 0; id != spriteset.Count; ++id)
 				{
-					for (int id = 0; id != spriteset.Count; ++id)
-					{
-						(spriteset[id] as PckSprite).SpriteToned.Palette = table; // lovely.
-					}
+					(spriteset[id] as PckSprite).SpriteToned.Palette = table; // lovely.
 				}
 			}
 		}
 
 		/// <summary>
-		/// Resets the QuadrantControl when either a Map loads or gets resized.
+		/// Resets the <c><see cref="QuadrantControl"/></c> when either a Map
+		/// loads or gets resized.
 		/// </summary>
 		private static void ResetQuadrantPanel()
 		{
@@ -3399,7 +3398,7 @@ namespace MapView
 			p1.SelectedLocation =
 			p2.SelectedLocation = null;
 
-			QuadrantDrawService.CurrentTilepart = ObserverManager.TileView.Control.SelectedTilepart;
+			QuadrantDrawService.SelectedTilepart = ObserverManager.TileView.Control.SelectedTilepart;
 
 			p1.Invalidate();
 			p2.Invalidate();

@@ -24,10 +24,10 @@ namespace MapView.Forms.Observers
 		internal static void DisposePanel()
 		{
 			DSShared.LogFile.WriteLine("TilePanel.DisposePanel() static");
-			if (PenRed != null) // static object
+			if (PenSelectedPartBorder != null) // static object
 			{
-				PenRed.Dispose();
-//				PenRed = null;
+				PenSelectedPartBorder.Dispose();
+				PenSelectedPartBorder = null;
 			}
 		}
 
@@ -152,10 +152,6 @@ namespace MapView.Forms.Observers
 		#endregion IDisposable interface */
 
 
-		internal delegate void TilepartSelectedEvent(Tilepart part);
-		internal event TilepartSelectedEvent TilepartSelected;
-
-
 		#region Fields (static)
 		internal static TileView TileView;
 
@@ -169,7 +165,11 @@ namespace MapView.Forms.Observers
 		internal static readonly Dictionary<SpecialType, SolidBrush> SpecialBrushes =
 							 new Dictionary<SpecialType, SolidBrush>();
 
-		private static readonly Pen PenRed = new Pen(Color.Red, 3);
+		/// <summary>
+		/// The pen used to draw a highlighted border around the
+		/// <c><see cref="SelectedTilepart"/></c>.
+		/// </summary>
+		private static Pen PenSelectedPartBorder = new Pen(Color.Red, 3);
 
 		private const string Door = "door";
 		private static int TextWidth;
@@ -187,7 +187,13 @@ namespace MapView.Forms.Observers
 		private int _startY;
 		private int _id;
 
-		private PartType _quadType;
+		/// <summary>
+		/// The <c><see cref="PartType"/></c> of the
+		/// <c><see cref="Tilepart">Tileparts</see></c> that this
+		/// <c>TilePanel</c> displays.
+		/// </summary>
+		/// <remarks><c>PartType.Invalid</c> designates all types.</remarks>
+		private PartType _partType;
 
 		private bool _resetTrack;
 		#endregion Fields
@@ -195,12 +201,13 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Gets the selected-tilepart.
-		/// Sets the selected-tilepart when a valid QuadrantControl quad is
-		/// double-clicked.
+		/// Gets the current <c>SelectedTilepart</c>.
+		/// 
+		/// Sets the <c>SelectedTilepart</c> when a valid
+		/// <c><see cref="QuadrantControl"/></c> quad gets selected.
 		/// </summary>
 		/// <remarks>The setter is used only by
-		/// <see cref="TileView.SelectedTilepart">TileView.SelectedTilepart</see>.</remarks>
+		/// <c><see cref="TileView.SelectedTilepart">TileView.SelectedTilepart</see></c>.</remarks>
 		internal Tilepart SelectedTilepart
 		{
 			get
@@ -220,8 +227,7 @@ namespace MapView.Forms.Observers
 				else
 					_id = 0;
 
-//				if (TilepartSelected != null)
-				TilepartSelected(SelectedTilepart);
+				TileView.SelectTilepart(SelectedTilepart);
 
 				ScrollToTile();
 			}
@@ -233,10 +239,10 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="quadType"></param>
-		internal TilePanel(PartType quadType)
+		/// <param name="partType"></param>
+		internal TilePanel(PartType partType)
 		{
-			_quadType = quadType;
+			_partType = partType;
 
 			SetStyle(ControlStyles.Selectable, true);
 			TabStop = true;
@@ -259,13 +265,14 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Clears OverInfo on the statusbar when the cursor is not in a panel.
 		/// </summary>
-		internal void ElvisHasLeft()
+		internal void ElvisHasLeftThePanel()
 		{
 			if (!Bounds.Contains(PointToClient(Control.MousePosition)))
 				TileView.PrintOverInfo(null);
 		}
+
 		/// <summary>
-		/// Invalidates this TilePanel if tileparts are being animated.
+		/// Invalidates this <c>TilePanel</c> if tileparts are being animated.
 		/// </summary>
 		private void OnPhaseEvent()
 		{
@@ -357,7 +364,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Focuses this panel and selects a tilepart.
+		/// Focuses this <c>TilePanel</c> and selects a
+		/// <c><see cref="Tilepart"/></c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -369,8 +377,7 @@ namespace MapView.Forms.Observers
 			{
 				_id = id;
 
-//				if (TilepartSelected != null)
-				TilepartSelected(SelectedTilepart);
+				TileView.SelectTilepart(SelectedTilepart);
 
 				ScrollToTile();
 				Invalidate();
@@ -378,8 +385,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Navigates the tileparts of this panel on keydown events at the Form
-		/// level.
+		/// Navigates the <c><see cref="Tilepart">Tileparts</see></c> of this
+		/// <c>TilePanel</c> on keydown events at the Form level.
 		/// </summary>
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
@@ -460,8 +467,7 @@ namespace MapView.Forms.Observers
 			{
 				_id = id;
 
-//				if (TilepartSelected != null)
-				TilepartSelected(SelectedTilepart);
+				TileView.SelectTilepart(SelectedTilepart);
 
 				ScrollToTile();
 				Invalidate();
@@ -675,7 +681,7 @@ namespace MapView.Forms.Observers
 									TableOffset + SpriteWidth * _tilesX, TableOffset + _startY + i);
 
 				graphics.DrawRectangle(											// draw selected rectangle
-									PenRed,
+									PenSelectedPartBorder,
 									TableOffset + _id % _tilesX * SpriteWidth,
 									TableOffset + _id / _tilesX * SpriteHeight + _startY,
 									SpriteWidth, SpriteHeight);
@@ -689,45 +695,38 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Assigns tileparts to this TilePanel.
+		/// Assigns <c><see cref="Tilepart">Tileparts</see></c> to this
+		/// <c>TilePanel</c>.
 		/// </summary>
 		/// <param name="parts"></param>
-		internal void SetTiles(IList<Tilepart> parts)
+		internal void PopulatePanel(IList<Tilepart> parts)
 		{
-			if (parts != null)
+			if (_partType == PartType.Invalid)
 			{
-				if (_quadType == PartType.Invalid)
-				{
-					_parts = new Tilepart[parts.Count + 1]; // +1 for the null-sprite
-					_parts[0] = null;
+				_parts = new Tilepart[parts.Count + 1]; // +1 for the null-sprite
+				_parts[0] = null;
 
-					for (int i = 0; i != parts.Count; ++i)
-						_parts[i + 1] = parts[i];
-				}
-				else
-				{
-					int qtyTiles = 0;
-
-					for (int i = 0; i != parts.Count; ++i)
-						if (parts[i].Record.PartType == _quadType)
-							++qtyTiles;
-
-					_parts = new Tilepart[qtyTiles + 1]; // +1 for the null-sprite
-					_parts[0] = null;
-
-					for (int i = 0, j = 1; i != parts.Count; ++i)
-						if (parts[i].Record.PartType == _quadType)
-							_parts[j++] = parts[i];
-				}
-
-				if (_id >= _parts.Length)
-					_id = 0;
+				for (int i = 0; i != parts.Count; ++i)
+					_parts[i + 1] = parts[i];
 			}
 			else
 			{
-				_parts = null;
-				_id = 0;
+				int qtyTiles = 0;
+
+				for (int i = 0; i != parts.Count; ++i)
+					if (parts[i].Record.PartType == _partType)
+						++qtyTiles;
+
+				_parts = new Tilepart[qtyTiles + 1]; // +1 for the null-sprite
+				_parts[0] = null;
+
+				for (int i = 0, j = 1; i != parts.Count; ++i)
+					if (parts[i].Record.PartType == _partType)
+						_parts[j++] = parts[i];
 			}
+
+			if (_id >= _parts.Length)
+				_id = 0;
 
 			_resetTrack = true;
 			OnResize(null);

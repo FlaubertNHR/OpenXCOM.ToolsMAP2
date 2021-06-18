@@ -194,7 +194,7 @@ namespace MapView.Forms.MainView
 
 		#region Events and Methods for targeter-suppression
 		/// <summary>
-		/// 
+		/// Handles the focusgained event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -208,7 +208,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// 
+		/// Handles the focuslost event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -236,10 +236,10 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Checks if the cursor is *not* inside the ToolStripContainer's
 		/// center-panel and hence if the targeter ought be suppressed.
-		/// @note This funct ignores the '_targeterForced' var so that needs to
-		/// be checked before call.
 		/// </summary>
 		/// <returns></returns>
+		/// <remarks>This funct ignores the <c><see cref="_targeterForced"/></c>
+		/// var so that needs to be checked before call.</remarks>
 		private static bool SuppressTargeter()
 		{
 			MainViewUnderlay underlay = MainViewUnderlay.that;
@@ -283,10 +283,12 @@ namespace MapView.Forms.MainView
 
 
 		/// <summary>
-		/// Handles keyboard-input for editing and saving the Mapfile.
-		/// @note Navigation keys are handled by 'KeyPreview' at the form level.
+		/// Handles keyboard-input for editing and saving the
+		/// <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Navigation keys etc. are handled by 'KeyPreview' in
+		/// <c><see cref="MainViewF"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			//LogFile.WriteLine("MainViewOverlay.OnKeyDown()");
@@ -295,7 +297,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Performs edit-functions by keyboard or saves the Mapfile.
+		/// Performs edit-functions by keyboard or saves the
+		/// <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="e"></param>
 		internal void Edit(KeyEventArgs e)
@@ -344,7 +347,9 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Resets the values of '_col' and '_row' on [Esc] and OnFocusGained().
+		/// Resets the values of <c><see cref="_col"/></c> and
+		/// <c><see cref="_row"/></c> on <c>[Esc]</c> and
+		/// <c><see cref="OnFocusGained()">OnFocusGained()</see></c>.
 		/// </summary>
 		private void ResetMouseoverTracker()
 		{
@@ -358,6 +363,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Clears all tileparts from any currently selected tiles.
 		/// </summary>
+		/// <remarks>Respects parttype visibility.</remarks>
 		private void ClearSelection()
 		{
 			if (MapFile != null && FirstClick)
@@ -397,6 +403,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Copies any selected tiles to an internal buffer.
 		/// </summary>
+		/// <remarks>Disrespects parttype visibility.</remarks>
 		private void Copy()
 		{
 			if (MapFile != null && FirstClick)
@@ -429,11 +436,12 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Pastes any copied tiles to the currently selected location.
-		/// @note The terrainset of the current tileset needs to be identical to
-		/// the terrainset of the tileset from which parts were copied (or
-		/// nearly so).
-		/// @note Unlike FillSelectedQuads() this respects quadtype visibility.
 		/// </summary>
+		/// <remarks>The terrainset of the current tileset needs to be identical
+		/// to the terrainset of the tileset from which parts were copied (or
+		/// nearly so). Unlike
+		/// <c><see cref="FillSelectedQuads()">FillSelectedQuads()</see></c>
+		/// this respects parttype visibility.</remarks>
 		private void Paste()
 		{
 			if (MapFile != null && FirstClick && _copied != null)
@@ -506,11 +514,11 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Checks if two terrain-definitions are or are nearly identical.
-		/// @note It's okay if 'dst' has more terrains allocated than 'src'.
 		/// </summary>
 		/// <param name="src">source terrain definition</param>
 		/// <param name="dst">destination terrain definition</param>
 		/// <returns></returns>
+		/// <remarks>It's okay if 'dst' has more terrains allocated than 'src'.</remarks>
 		private static bool AllowPaste(
 				IDictionary<int, Tuple<string,string>> src,
 				IDictionary<int, Tuple<string,string>> dst)
@@ -547,9 +555,10 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Fills the selected quadrant of the currently selected tile(s) with
-		/// the currently selected tilepart from TileView.
+		/// the currently selected tilepart from <c><see cref="TileView"/></c>.
 		/// </summary>
-		/// <remarks>Unlike Paste() this ignores quadtype visibility.</remarks>
+		/// <remarks>Unlike <c><see cref="Paste()">Paste()</see></c> this
+		/// ignores parttype visibility.</remarks>
 		internal void FillSelectedQuads()
 		{
 			if (MapFile != null && FirstClick)
@@ -596,7 +605,9 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Clears the selected quadrant of the currently selected tile(s).
 		/// </summary>
-		/// <remarks>Unlike ClearSelection() this ignores quadtype visibility.</remarks>
+		/// <remarks>Unlike
+		/// <c><see cref="ClearSelection()">ClearSelection()</see></c> this
+		/// ignores quadtype visibility.</remarks>
 		internal void ClearSelectedQuads()
 		{
 			_mainView.MapChanged = true;
@@ -621,7 +632,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Replaces tileparts throughout the currently loaded Mapfile.
+		/// Replaces <c><see cref="Tilepart">Tileparts</see></c> throughout the
+		/// currently loaded <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="src0">start setId of parts to replace</param>
 		/// <param name="src1">stop  setId of parts to replace</param>
@@ -725,7 +737,8 @@ namespace MapView.Forms.MainView
 		/// Causes this panel to redraw along with the TopView, RouteView, and
 		/// TopRouteView forms - also invalidates the ScanG panel.
 		/// </summary>
-		/// <param name="refresh">true to refresh MainView; false to invalidate</param>
+		/// <param name="refresh"><c>true</c> to refresh MainView; <c>false</c>
+		/// to invalidate</param>
 		private void InvalidateObservers(bool refresh = false)
 		{
 			if (refresh)
@@ -745,12 +758,12 @@ namespace MapView.Forms.MainView
 
 		#region Keyboard navigation
 		/// <summary>
-		/// Keyboard navigation called by MainViewF (form-level) key events
-		/// OnKeyDown() and ProcessCmdKey().
+		/// Keyboard navigation called by <c><see cref="MainViewF"/></c>
+		/// key-events <c>OnKeyDown()</c> and <c>ProcessCmdKey()</c>.
 		/// </summary>
 		/// <param name="keyData"></param>
-		/// <param name="isTop">true if TopView is the active viewer</param>
-		internal void Navigate(Keys keyData, bool isTop = false)
+		/// <param name="top"><c>true</c> if <c>TopView</c> is the active viewer</param>
+		internal void Navigate(Keys keyData, bool top = false)
 		{
 			if (MapFile != null && (keyData & (Keys.Control | Keys.Alt)) == Keys.None)
 			{
@@ -814,7 +827,7 @@ namespace MapView.Forms.MainView
 						{
 							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
-														isTop ? TARGETER_KEY_TOP : TARGETER_KEY_MAIN, // WARNING: this is a trick (sic)
+														top ? TARGETER_KEY_TOP : TARGETER_KEY_MAIN, // WARNING: this is a trick (sic)
 														0,0, vert));
 						}
 					}
@@ -841,7 +854,7 @@ namespace MapView.Forms.MainView
 						ObserverManager.RouteView   .Control     .DeselectNode(false);
 						ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
 
-						_targeterForced = !isTop;
+						_targeterForced = !top;
 
 						int pos = DragBeg.X + _keyDeltaX + loc.X;
 						if (pos > -1 && pos < MapFile.Cols)
@@ -858,7 +871,7 @@ namespace MapView.Forms.MainView
 				}
 			}
 
-			if (!isTop)		// force redraw on every step when MainView is the active viewer
+			if (!top)		// force redraw on every step when MainView is the active viewer
 				Refresh();	// else the selector-sprite stops then jumps to the end on key up.
 		}
 
@@ -874,10 +887,10 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Scrolls the z-axis for MainView (and TopView by keyboard).
-		/// @note 'e.Clicks' denotes where the call is coming from and how it's
-		/// to be handled. It is not mouseclicks.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks><c>e.Clicks</c> denotes where the call is coming from and
+		/// how it's to be handled. It is not mouseclicks.</remarks>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
 			base.OnMouseWheel(e);

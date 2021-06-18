@@ -404,9 +404,10 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Forwards edit-operations or a Mapfile-save to MainView. Can also
 		/// perform some Quad-panel operations.
-		/// @note Navigation keys are handled by 'KeyPreview' at the form level.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Navigation keys etc. are handled by 'KeyPreview' in
+		/// <c><see cref="TopViewForm"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			MouseButtons button;
