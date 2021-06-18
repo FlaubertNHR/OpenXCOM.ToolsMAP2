@@ -162,10 +162,10 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Closes each Observers' parent-Form.
 		/// <list>
-		///   <item><c><see cref="TileViewForm"/></c></item>
-		///   <item><c><see cref="TopViewForm"/></c></item>
-		///   <item><c><see cref="RouteViewForm"/></c></item>
-		///   <item><c><see cref="TopRouteViewForm"/></c></item>
+		/// <item><c><see cref="TileViewForm"/></c></item>
+		/// <item><c><see cref="TopViewForm"/></c></item>
+		/// <item><c><see cref="RouteViewForm"/></c></item>
+		/// <item><c><see cref="TopRouteViewForm"/></c></item>
 		/// </list>
 		/// </summary>
 		/// <remarks>Called by <c>MainViewF.SafeQuit()</c> so this really does
