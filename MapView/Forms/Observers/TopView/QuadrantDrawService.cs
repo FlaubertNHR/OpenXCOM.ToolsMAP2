@@ -208,13 +208,13 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Draws the QuadrantControl incl/ sprites.
+		/// Draws a <c><see cref="QuadrantControl"/></c> incl/ sprites.
 		/// </summary>
 		/// <param name="tile"></param>
-		/// <param name="selectedQuadrant"></param>
+		/// <param name="partType"></param>
 		internal static void Draw(
 				MapTile tile,
-				PartType selectedQuadrant)
+				PartType partType)
 		{
 			if (!MainViewF.Optionables.UseMono && MainViewF.Optionables.SpriteShadeEnabled)
 			{
@@ -236,7 +236,7 @@ namespace MapView.Forms.Observers
 			}
 
 			// fill the background of the selected quadrant type
-			switch (selectedQuadrant)
+			switch (partType)
 			{
 				case PartType.Floor:
 					if (TopViewControl.Floor.Checked)
@@ -261,16 +261,16 @@ namespace MapView.Forms.Observers
 
 			// fill the background of !Visible quads incl/ the selected-quad
 			if (!TopViewControl.Floor.Checked)
-				_graphics.FillPath(Brushes.DarkGray, _pathFloor);
+				_graphics.FillPath(Brushes.Silver, _pathFloor);
 
 			if (!TopViewControl.West.Checked)
-				_graphics.FillPath(Brushes.DarkGray, _pathWest);
+				_graphics.FillPath(Brushes.Silver, _pathWest);
 
 			if (!TopViewControl.North.Checked)
-				_graphics.FillPath(Brushes.DarkGray, _pathNorth);
+				_graphics.FillPath(Brushes.Silver, _pathNorth);
 
 			if (!TopViewControl.Content.Checked)
-				_graphics.FillPath(Brushes.DarkGray, _pathContent);
+				_graphics.FillPath(Brushes.Silver, _pathContent);
 
 
 			// draw the Sprites
