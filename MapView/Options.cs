@@ -10,11 +10,14 @@ namespace MapView
 
 
 	/// <summary>
-	/// Options objects are for use with the OptionsPropertyGrid. An Options
-	/// object is created for each of <see cref="MainViewF"/>,
-	/// <see cref="MapView.Forms.Observers.TileView"/>,
-	/// <see cref="MapView.Forms.Observers.TopView"/>, and
-	/// <see cref="MapView.Forms.Observers.RouteView"/>.
+	/// <c>Options</c> are for use with the <c><see cref="OptionsPropertyGrid"/></c>.
+	/// <c>Options</c> is instantiated separately for
+	/// <list type="bullet">
+	/// <item><c><see cref="MainViewF"/></c></item>
+	/// <item><c><see cref="MapView.Forms.Observers.TileView"/></c></item>
+	/// <item><c><see cref="MapView.Forms.Observers.TopView"/></c></item>
+	/// <item><c><see cref="MapView.Forms.Observers.RouteView"/></c></item>
+	/// </list>
 	/// </summary>
 	internal sealed class Options
 	{
@@ -26,7 +29,7 @@ namespace MapView
 		#region Fields (static)
 		/// <summary>
 		/// These converters are for taking a property as input and outputting
-		/// it as a string to MapOptions.Cfg.
+		/// it as a string to "MapOptions.Cfg".
 		/// </summary>
 		private static Dictionary<Type, ConvertEvent> _converters =
 				   new Dictionary<Type, ConvertEvent>();
@@ -41,9 +44,9 @@ namespace MapView
 
 		#region Properties
 		/// <summary>
-		/// Gets an <see cref="Option"/> keyed by a specified key.
+		/// Gets an <c><see cref="Option"/></c> keyed by a specified key.
 		/// </summary>
-		/// <remarks>Ensure that 'key' is non-null before call.</remarks>
+		/// <remarks>Ensure that <paramref name="key"/> is non-null before call.</remarks>
 		internal Option this[string key]
 		{
 			get
@@ -59,7 +62,8 @@ namespace MapView
 
 		#region Methods (static)
 		/// <summary>
-		/// 
+		/// Adds an <c><see cref="ConvertEvent"/></c> for <c>Color</c> to
+		/// <c><see cref="_converters"/></c>.
 		/// </summary>
 		internal static void InitializeConverters()
 		{
@@ -67,7 +71,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Converts an object to a string for output to MapOptions.Cfg.
+		/// Converts an <c>object</c> to a <c>string</c> for output to
+		/// "MapOptions.Cfg".
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
@@ -81,7 +86,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Converts a color-object to a string for output to MapOptions.Cfg.
+		/// Converts an <c>(object)Color</c> to a <c>string</c> for output to
+		/// "MapOptions.Cfg".
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
@@ -99,46 +105,30 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Adds an Option w/ a default value.
+		/// Creates an <c><see cref="Option"/></c> w/ a specified (default)
+		/// value.
 		/// </summary>
 		/// <param name="key">property key</param>
 		/// <param name="default">default value of the property</param>
 		/// <param name="changer">pointer to a handler that subscribes to the
-		/// OptionChangedEvent</param>
+		/// <c><see cref="OptionChangedEvent"/></c></param>
 		/// <remarks>There is no error-handling so don't foff it.</remarks>
-		internal void AddOptionDefault(
+		internal void CreateOptionDefault(
 				string key,
 				object @default,
 				OptionChangedEvent changer)
 		{
-			//DSShared.LogFile.WriteLine("AddOptionDefault()");
+			//DSShared.LogFile.WriteLine("Options.CreateOptionDefault()");
 			//DSShared.LogFile.WriteLine(". key= " + key);
 			//DSShared.LogFile.WriteLine(". default= " + @default);
 			//DSShared.LogFile.WriteLine(". changer= " + changer);
 
 			var option = new Option(@default);
 
-			if (changer != null) // safety. I don't think this will ever be null.
-				option.OptionChanged += changer;
+//			if (changer != null) // safety. I don't think this will ever be null.
+			option.OptionChanged += changer;
 
 			_options[key] = option;
-		}
-
-		/// <summary>
-		/// Gets the object tied to the key. If there is no object one will be
-		/// created with the value specified.
-		/// </summary>
-		/// <param name="key">the name of the Option object</param>
-		/// <param name="val">if there is no Option object tied to the
-		/// string, an Option will be created with this as its Value</param>
-		/// <returns>the Option object tied to the key</returns>
-		/// <remarks>Is used only by VolutarService.</remarks>
-		internal Option GetOption(string key, object val)
-		{
-			if (!_options.ContainsKey(key))
-				_options.Add(key, new Option(val));
-
-			return _options[key];
 		}
 
 		/// <summary>

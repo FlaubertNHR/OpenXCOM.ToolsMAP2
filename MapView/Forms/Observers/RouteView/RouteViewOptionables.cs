@@ -574,32 +574,32 @@ namespace MapView.Forms.Observers
 			OptionChangedEvent changer0 = OnOptionChanged;
 			OptionChangedEvent changer1 = OnDescriptionHeightChanged;
 
-			options.AddOptionDefault(str_GridLineColor,     def_GridLineColor,     changer0);
-			options.AddOptionDefault(str_GridLineWidth,     def_GridLineWidth,     changer0);
-			options.AddOptionDefault(str_GridLine10Color,   def_GridLine10Color,   changer0);
-			options.AddOptionDefault(str_GridLine10Width,   def_GridLine10Width,   changer0);
+			options.CreateOptionDefault(str_GridLineColor,     def_GridLineColor,     changer0);
+			options.CreateOptionDefault(str_GridLineWidth,     def_GridLineWidth,     changer0);
+			options.CreateOptionDefault(str_GridLine10Color,   def_GridLine10Color,   changer0);
+			options.CreateOptionDefault(str_GridLine10Width,   def_GridLine10Width,   changer0);
 
-			options.AddOptionDefault(str_WallColor,         def_WallColor,         changer0);
-			options.AddOptionDefault(str_WallWidth,         def_WallWidth,         changer0);
-			options.AddOptionDefault(str_ContentColor,      def_ContentColor,      changer0);
+			options.CreateOptionDefault(str_WallColor,         def_WallColor,         changer0);
+			options.CreateOptionDefault(str_WallWidth,         def_WallWidth,         changer0);
+			options.CreateOptionDefault(str_ContentColor,      def_ContentColor,      changer0);
 
-			options.AddOptionDefault(str_NodeColor,         def_NodeColor,         changer0);
-			options.AddOptionDefault(str_NodeSpawnColor,    def_NodeSpawnColor,    changer0);
-			options.AddOptionDefault(str_NodeSelectedColor, def_NodeSelectedColor, changer0);
-			options.AddOptionDefault(str_NodeOpacity,       def_NodeOpacity,       changer0);
+			options.CreateOptionDefault(str_NodeColor,         def_NodeColor,         changer0);
+			options.CreateOptionDefault(str_NodeSpawnColor,    def_NodeSpawnColor,    changer0);
+			options.CreateOptionDefault(str_NodeSelectedColor, def_NodeSelectedColor, changer0);
+			options.CreateOptionDefault(str_NodeOpacity,       def_NodeOpacity,       changer0);
 
-			options.AddOptionDefault(str_LinkColor,         def_LinkColor,         changer0);
-			options.AddOptionDefault(str_LinkWidth,         def_LinkWidth,         changer0);
-			options.AddOptionDefault(str_LinkSelectedColor, def_LinkSelectedColor, changer0);
-			options.AddOptionDefault(str_LinkSelectedWidth, def_LinkSelectedWidth, changer0);
+			options.CreateOptionDefault(str_LinkColor,         def_LinkColor,         changer0);
+			options.CreateOptionDefault(str_LinkWidth,         def_LinkWidth,         changer0);
+			options.CreateOptionDefault(str_LinkSelectedColor, def_LinkSelectedColor, changer0);
+			options.CreateOptionDefault(str_LinkSelectedWidth, def_LinkSelectedWidth, changer0);
 
-			options.AddOptionDefault(str_ShowOverlay,       def_ShowOverlay,       changer0);
-			options.AddOptionDefault(str_ShowPriorityBars,  def_ShowPriorityBars,  changer0);
-			options.AddOptionDefault(str_ReduceDraws,       def_ReduceDraws,       changer0);
+			options.CreateOptionDefault(str_ShowOverlay,       def_ShowOverlay,       changer0);
+			options.CreateOptionDefault(str_ShowPriorityBars,  def_ShowPriorityBars,  changer0);
+			options.CreateOptionDefault(str_ReduceDraws,       def_ReduceDraws,       changer0);
 
-			options.AddOptionDefault(str_StartConnector,    def_StartConnector,    changer0);
+			options.CreateOptionDefault(str_StartConnector,    def_StartConnector,    changer0);
 
-			options.AddOptionDefault(str_DescriptionHeight, def_DescriptionHeight, changer1);
+			options.CreateOptionDefault(str_DescriptionHeight, def_DescriptionHeight, changer1);
 		}
 		#endregion Methods
 

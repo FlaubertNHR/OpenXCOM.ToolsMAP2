@@ -2,13 +2,13 @@ using System;
 using System.Windows.Forms;
 
 
-namespace MapView.Volutar
+namespace MapView.ExternalProcess
 {
 	/// <summary>
 	/// This could be turned easily into a generic form providing a textbox for
 	/// user-input.
 	/// </summary>
-	internal sealed class FindVolutarF
+	internal sealed class ExternalProcessF
 		:
 			Form
 	{
@@ -27,7 +27,7 @@ namespace MapView.Volutar
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal FindVolutarF()
+		internal ExternalProcessF()
 		{
 			InitializeComponent();
 			ActiveControl = btn_Cancel;
@@ -37,7 +37,7 @@ namespace MapView.Volutar
 
 		#region Events
 		/// <summary>
-		/// Opens an <see cref="OpenFileDialog"/>.
+		/// Opens an <c><see cref="OpenFileDialog"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -45,9 +45,7 @@ namespace MapView.Volutar
 		{
 			using (var ofd = new OpenFileDialog())
 			{
-				ofd.Title    = "Find MCDEdit.exe";
-				ofd.Filter   = "Executable files|*.EXE|All files|*.*";
-				ofd.FileName = "MCDEdit.exe";
+				ofd.Title = "Browse to an application or file";
 
 				if (ofd.ShowDialog(this) == DialogResult.OK)
 					tb_Input.Text = ofd.FileName;
@@ -112,7 +110,7 @@ namespace MapView.Volutar
 			this.lbl_Head.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
 			this.lbl_Head.Size = new System.Drawing.Size(392, 25);
 			this.lbl_Head.TabIndex = 0;
-			this.lbl_Head.Text = "Enter the path to Volutar\'s MCDEdit.exe in full.";
+			this.lbl_Head.Text = "Enter the path to an application or file.";
 			this.lbl_Head.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tb_Input
@@ -159,7 +157,7 @@ namespace MapView.Volutar
 			this.btn_FindFile.UseVisualStyleBackColor = true;
 			this.btn_FindFile.Click += new System.EventHandler(this.btnFindFile_Click);
 			// 
-			// FindVolutarF
+			// ExternalProcessF
 			// 
 			this.AcceptButton = this.btn_Ok;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -171,10 +169,10 @@ namespace MapView.Volutar
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.MinimumSize = new System.Drawing.Size(400, 105);
-			this.Name = "FindVolutarF";
+			this.Name = "ExternalProcessF";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Find Volutar";
+			this.Text = "External process";
 			this.pnl_Buttons.ResumeLayout(false);
 			this.pnl_Head.ResumeLayout(false);
 			this.pnl_Head.PerformLayout();

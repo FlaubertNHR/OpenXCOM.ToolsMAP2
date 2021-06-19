@@ -433,27 +433,27 @@ namespace MapView.Forms.Observers
 			OptionChangedEvent changer2 = OnFlagChanged;
 			OptionChangedEvent changer3 = OnDescriptionHeightChanged;
 
-			options.AddOptionDefault(str_GridLineColor,             def_GridLineColor,             changer0);
-			options.AddOptionDefault(str_GridLineWidth,             def_GridLineWidth,             changer0);
-			options.AddOptionDefault(str_GridLine10Color,           def_GridLine10Color,           changer0);
-			options.AddOptionDefault(str_GridLine10Width,           def_GridLine10Width,           changer0);
+			options.CreateOptionDefault(str_GridLineColor,             def_GridLineColor,             changer0);
+			options.CreateOptionDefault(str_GridLineWidth,             def_GridLineWidth,             changer0);
+			options.CreateOptionDefault(str_GridLine10Color,           def_GridLine10Color,           changer0);
+			options.CreateOptionDefault(str_GridLine10Width,           def_GridLine10Width,           changer0);
 
-			options.AddOptionDefault(str_FloorColor,                def_FloorColor,                changer0);
-			options.AddOptionDefault(str_WestColor,                 def_WestColor,                 changer0);
-			options.AddOptionDefault(str_WestWidth,                 def_WestWidth,                 changer0);
-			options.AddOptionDefault(str_NorthColor,                def_NorthColor,                changer0);
-			options.AddOptionDefault(str_NorthWidth,                def_NorthWidth,                changer0);
-			options.AddOptionDefault(str_ContentColor,              def_ContentColor,              changer0);
+			options.CreateOptionDefault(str_FloorColor,                def_FloorColor,                changer0);
+			options.CreateOptionDefault(str_WestColor,                 def_WestColor,                 changer0);
+			options.CreateOptionDefault(str_WestWidth,                 def_WestWidth,                 changer0);
+			options.CreateOptionDefault(str_NorthColor,                def_NorthColor,                changer0);
+			options.CreateOptionDefault(str_NorthWidth,                def_NorthWidth,                changer0);
+			options.CreateOptionDefault(str_ContentColor,              def_ContentColor,              changer0);
 
-			options.AddOptionDefault(str_SelectorColor,             def_SelectorColor,             changer0);
-			options.AddOptionDefault(str_SelectorWidth,             def_SelectorWidth,             changer0);
-			options.AddOptionDefault(str_SelectedColor,             def_SelectedColor,             changer0);
-			options.AddOptionDefault(str_SelectedWidth,             def_SelectedWidth,             changer0);
-			options.AddOptionDefault(str_SelectedQuadColor,         def_SelectedQuadColor,         changer1);
+			options.CreateOptionDefault(str_SelectorColor,             def_SelectorColor,             changer0);
+			options.CreateOptionDefault(str_SelectorWidth,             def_SelectorWidth,             changer0);
+			options.CreateOptionDefault(str_SelectedColor,             def_SelectedColor,             changer0);
+			options.CreateOptionDefault(str_SelectedWidth,             def_SelectedWidth,             changer0);
+			options.CreateOptionDefault(str_SelectedQuadColor,         def_SelectedQuadColor,         changer1);
 
-			options.AddOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, changer2);
+			options.CreateOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, changer2);
 
-			options.AddOptionDefault(str_DescriptionHeight,         def_DescriptionHeight,         changer3);
+			options.CreateOptionDefault(str_DescriptionHeight,         def_DescriptionHeight,         changer3);
 		}
 		#endregion Methods
 

@@ -278,8 +278,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Varidia.cs" />
-    <Compile Include="Volutar\FindVolutarF.cs" />
-    <Compile Include="Volutar\VolutarService.cs" />
+    <Compile Include="Volutar\ExternalProcessF.cs" />
+    <Compile Include="Volutar\ExternalProcessService.cs" />
     <EmbeddedResource Include="Error\ErrorF.resx">
       <DependentUpon>ErrorF.cs</DependentUpon>
     </EmbeddedResource>
@@ -355,8 +355,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Volutar\FindVolutarF.resx">
-      <DependentUpon>FindVolutarF.cs</DependentUpon>
+    <EmbeddedResource Include="Volutar\ExternalProcessF.resx">
+      <DependentUpon>ExternalProcessF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@ using DSShared.Controls;
 
 using MapView;
 using MapView.Forms.MainView;
-using MapView.Volutar;
+using MapView.ExternalProcess;
 
 using McdView;
 
@@ -52,7 +52,7 @@ namespace MapView.Forms.Observers
 
 			// TODO: _foptions - look closer
 
-			TilePanel.DisposePanel();
+			TilePanel.DisposePanels();
 		}
 
 		/// <summary>
@@ -75,7 +75,8 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
-		/// Fires if a save was done in PckView or McdView (via TileView).
+		/// Fires if a save was done in PckView or McdView after invoked by
+		/// <c>TileView</c>.
 		/// </summary>
 		internal event MethodInvoker ReloadDescriptor;
 		#endregion Events
@@ -227,7 +228,7 @@ namespace MapView.Forms.Observers
 			ContextMenu.MenuItems.Add(new MenuItem("open in PckView", OnPckViewClick, Shortcut.F9));	// 0
 			ContextMenu.MenuItems.Add(new MenuItem("open in McdView", OnMcdViewClick, Shortcut.F10));	// 1
 			ContextMenu.MenuItems.Add(new MenuItem("-"));												// 2
-			ContextMenu.MenuItems.Add(new MenuItem("view MCD record", OnMcdInfoClick));					// 3 //null, EventArgs.Empty
+			ContextMenu.MenuItems.Add(new MenuItem("MCD record", OnMcdInfoClick));						// 3 //null, EventArgs.Empty
 		}
 		#endregion cTor
 
@@ -408,25 +409,24 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Opens MCDEdit.exe or any program or file specified in Settings.
+		/// Opens any application - or file if its extension is associated in
+		/// the Windows Registry.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnVolutarMcdEditorClick(object sender, EventArgs e)
+		private void OnExternalProcessClick(object sender, EventArgs e)
 		{
-			if (MapFile != null)
+			if (MapFile != null) // TODO: huh
 			{
-				var service = new VolutarService(Options);
-				var pfe = service.FullPath;	// this will invoke a box for the user to input the
-											// executable's path if it doesn't exist in Options.
+				var pfe = new ExternalProcessService(Options).GetFullpath();
 				if (File.Exists(pfe))
 				{
-					// change to MCDEdit dir so that accessing MCDEdit.txt doesn't cause probls.
+					// change to pfe-dir so that accessing MCDEdit.txt (eg) doesn't cause probls.
 					Directory.SetCurrentDirectory(Path.GetDirectoryName(pfe));
 
 					Process.Start(new ProcessStartInfo(pfe));
 
-					// change back to app dir
+					// change back to app-dir
 					Directory.SetCurrentDirectory(SharedSpace.GetShareString(SharedSpace.ApplicationDirectory));
 				}
 			}

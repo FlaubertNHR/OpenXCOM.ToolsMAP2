@@ -22,7 +22,7 @@ namespace MapView.Forms.Observers
 		private ToolStripMenuItem tsmiEditPck;
 		private ToolStripMenuItem tsmiEditMcd;
 		private ToolStripSeparator tsmi_Sep0;
-		private ToolStripMenuItem tsmiVolutarMcdEditor;
+		private ToolStripMenuItem tsmiExternalProcess;
 		private ToolStripButton tsb_Colorhelp;
 		private ToolStripButton tsb_Options;
 
@@ -48,7 +48,7 @@ namespace MapView.Forms.Observers
 			this.tsmiEditPck = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiEditMcd = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_Sep0 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsmiVolutarMcdEditor = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiExternalProcess = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Colorhelp = new System.Windows.Forms.ToolStripButton();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.ssStatus = new System.Windows.Forms.StatusStrip();
@@ -136,7 +136,7 @@ namespace MapView.Forms.Observers
 			this.tsmiEditPck,
 			this.tsmiEditMcd,
 			this.tsmi_Sep0,
-			this.tsmiVolutarMcdEditor});
+			this.tsmiExternalProcess});
 			this.tsddbExternal.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbExternal.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
 			this.tsddbExternal.Name = "tsddbExternal";
@@ -165,13 +165,13 @@ namespace MapView.Forms.Observers
 			this.tsmi_Sep0.Name = "tsmi_Sep0";
 			this.tsmi_Sep0.Size = new System.Drawing.Size(170, 6);
 			// 
-			// tsmiVolutarMcdEditor
+			// tsmiExternalProcess
 			// 
-			this.tsmiVolutarMcdEditor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsmiVolutarMcdEditor.Name = "tsmiVolutarMcdEditor";
-			this.tsmiVolutarMcdEditor.Size = new System.Drawing.Size(173, 22);
-			this.tsmiVolutarMcdEditor.Text = "&Volutar MCD Editor";
-			this.tsmiVolutarMcdEditor.Click += new System.EventHandler(this.OnVolutarMcdEditorClick);
+			this.tsmiExternalProcess.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsmiExternalProcess.Name = "tsmiExternalProcess";
+			this.tsmiExternalProcess.Size = new System.Drawing.Size(173, 22);
+			this.tsmiExternalProcess.Text = "e&xternal process ...";
+			this.tsmiExternalProcess.Click += new System.EventHandler(this.OnExternalProcessClick);
 			// 
 			// tsb_Colorhelp
 			// 

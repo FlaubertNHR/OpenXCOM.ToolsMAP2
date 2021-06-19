@@ -117,10 +117,10 @@ namespace MapView.Forms.MainView
 
 			 // initialize MainView's Options w/ each viewer's default Start setting ->
 			string key = PropertyStartObserver + RegistryInfo.GetRegistryLabel(f);
-			options.AddOptionDefault(
-								key,
-								@default,
-								changer);
+			options.CreateOptionDefault(
+									key,
+									@default,
+									changer);
 
 			f.VisibleChanged += (sender, e) =>
 			{
@@ -138,7 +138,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Visibles the subsidiary viewers that are flagged when a Map loads.
+		/// Visibles the subsidiary viewers that are flagged to Start when a Map
+		/// loads.
 		/// </summary>
 		/// <remarks>Called by <c>MainViewF.LoadSelectedDescriptor()</c>.</remarks>
 		internal static void StartSecondaryStageBoosters()

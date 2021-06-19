@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 
 using MapView.Forms.MainView;
-using MapView.Volutar;
+using MapView.ExternalProcess;
 
 using XCom;
 
@@ -11,7 +11,8 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Properties for <see cref="TileView"/> that appear in TileView's Options.
+	/// Properties for <c><see cref="TileView"/></c> that appear in TileView's
+	/// <c><see cref="Options"/></c>.
 	/// </summary>
 	internal sealed class TileViewOptionables
 	{
@@ -263,16 +264,16 @@ eg. TFTD T'leth Power Cylinders parts
 
 		private const string cat_External = "External";
 
-		private string _volutar = String.Empty;
+		private string _process = String.Empty;
 		[Category(cat_External)]
-		[Description(@"Path to Volutar MCD Edit
-The path specified can actually be used to start any valid application"
-			+ " or to open a specified file with its associated application.")]
+		[Description(@"Path to external process
+The path specified can be used to start an application or to open a specified"
+			+ " file with its associated application.")]
 		[DefaultValue("")]
-		public string VolutarMcdEditorPath
+		public string ExternalProcess
 		{
-			get { return _volutar; }
-			set { _volutar = value; }
+			get { return _process; }
+			set { _process = value; }
 		}
 
 
@@ -319,15 +320,15 @@ The path specified can actually be used to start any valid application"
 			{
 				color = def_SpecialColors[(int)key];
 				TilePanel.SpecialBrushes[key] = new SolidBrush(color);
-				options.AddOptionDefault(
-									Enum.GetName(typeof(SpecialType), key),
-									color,
-									changer);
+				options.CreateOptionDefault(
+										Enum.GetName(typeof(SpecialType), key),
+										color,
+										changer);
 			}
 
-			options.AddOptionDefault(str_DescriptionHeight, def_DescriptionHeight, OnDescriptionHeightChanged);
+			options.CreateOptionDefault(ExternalProcessService.PROCESS, String.Empty, OnExternalProcessChanged);
 
-			VolutarService.AddVolutarOptionDefault(options);
+			options.CreateOptionDefault(str_DescriptionHeight, def_DescriptionHeight, OnDescriptionHeightChanged);
 		}
 		#endregion Methods
 
@@ -368,6 +369,16 @@ The path specified can actually be used to start any valid application"
 
 			if (MainViewF.that._fcolors != null)
 				MainViewF.that._fcolors.UpdateSpecialPropertyColors();
+		}
+
+		/// <summary>
+		/// Volutar never changes.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		private void OnExternalProcessChanged(string key, object val)
+		{
+			ExternalProcess = (String)val;
 		}
 
 		/// <summary>
