@@ -29,7 +29,8 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Gets '_top' as a child of <see cref="ObserverControl"/>.
+		/// Gets <c><see cref="_top"/></c> as a child of
+		/// <c><see cref="ObserverControl"/></c>.
 		/// </summary>
 		internal TopView Control
 		{

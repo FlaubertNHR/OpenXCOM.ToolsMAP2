@@ -12,7 +12,7 @@ namespace MapView.Forms.MainView
 	{
 		#region Fields (static)
 		/// <summary>
-		/// A dictionary that indexes Options by viewer. The type of Options, ie
+		/// A dictionary that indexes <c><see cref="Options"/></c> by viewer. The type of Options, ie
 		/// MainView Options, TileView Options, TopView Options, or RouteView
 		/// Options.
 		/// </summary>

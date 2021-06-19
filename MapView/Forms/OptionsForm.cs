@@ -126,8 +126,8 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles command-key processing. Closes this form when either of
-		/// [Esc] or [Ctrl+o] is pressed.
+		/// Handles command-key processing. Closes this <c>OptionsForm</c> when
+		/// either of <c>[Esc]</c> or <c>[Ctrl+o]</c> is pressed.
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="keyData"></param>

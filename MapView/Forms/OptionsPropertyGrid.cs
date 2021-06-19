@@ -7,7 +7,7 @@ using DSShared.Controls;
 namespace MapView
 {
 	/// <summary>
-	/// Derived class for CompositedPropertyGrid.
+	/// Derived class of <c><see cref="CompositedPropertyGrid"/></c>.
 	/// </summary>
 	public sealed class OptionsPropertyGrid
 		:

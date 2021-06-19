@@ -6,7 +6,7 @@ using System.Drawing;
 namespace MapView
 {
 	/// <summary>
-	/// The option of an Optionable Property.
+	/// The option of an Optionable property.
 	/// </summary>
 	internal sealed class Option
 	{
@@ -66,7 +66,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiates an Option with its default value.
+		/// cTor. Instantiates an <c>Option</c> with its default value.
 		/// </summary>
 		/// <param name="default"></param>
 		internal Option(object @default)
@@ -88,7 +88,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Parses out user-defined booleans output by MapOptions.Cfg.
+		/// Parses out user-defined booleans output by "MapOptions.Cfg".
 		/// </summary>
 		/// <param name="val"></param>
 		/// <returns></returns>
@@ -102,7 +102,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Parses out user-defined ints output by MapOptions.Cfg.
+		/// Parses out user-defined ints output by "MapOptions.Cfg".
 		/// </summary>
 		/// <param name="val"></param>
 		/// <returns></returns>
@@ -116,7 +116,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Parses out user-defined colors output by MapOptions.Cfg.
+		/// Parses out user-defined colors output by "MapOptions.Cfg".
 		/// UD-colors can be one of three formats:
 		/// - "color"
 		/// - (int)r,(int)g,(int)b
@@ -155,7 +155,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Helper for ParseColor().
+		/// Helper for <c><see cref="ParseColor()">ParseColor()</see></c>.
 		/// </summary>
 		/// <param name="vals"></param>
 		/// <param name="a"></param>
@@ -207,9 +207,11 @@ namespace MapView
 		#region Methods
 		// TODO: FxCop CA1030:UseEventsWhereAppropriate
 		/// <summary>
-		/// Called by OptionsManager.ReadOptions() when an OptionsForm loads or
-		/// OptionsForm.OnPropertyValueChanged() when user changes an Option's
-		/// value.
+		/// Called by
+		/// <c><see cref="MapView.Forms.MainView.OptionsManager">OptionsManager</see>.ReadOptions()</c>
+		/// when an <c><see cref="OptionsForm"/></c> loads or by
+		/// <c><see cref="OptionsPropertyGrid"></see>.OnPropertyValueChanged()</c>
+		/// when user changes an <c>Option</c>'s value.
 		/// </summary>
 		/// <param name="key"></param>
 		/// <param name="val"></param>
