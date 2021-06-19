@@ -500,7 +500,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>This is called by <see cref="QuadrantControl"/>.</remarks>
 		internal static void PrintSelectedLocation(MapLocation location, int panelwidth)
 		{
-			MapFile file = ObserverManager.TopView.Control.TopControl.MapFile;
+			MapFile file = MainViewUnderlay.that.MapFile;
 
 			string loc = Globals.GetLocationString(
 												location.Col,
