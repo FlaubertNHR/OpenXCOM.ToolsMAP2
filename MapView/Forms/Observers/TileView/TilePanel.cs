@@ -21,9 +21,9 @@ namespace MapView.Forms.Observers
 		:
 			BufferedPanel
 	{
-		internal static void DisposePanel()
+		internal static void DisposePanels()
 		{
-			DSShared.LogFile.WriteLine("TilePanel.DisposePanel() static");
+			DSShared.LogFile.WriteLine("TilePanel.DisposePanels() static");
 			if (PenSelectedPartBorder != null) // static object
 			{
 				PenSelectedPartBorder.Dispose();
