@@ -31,7 +31,6 @@ namespace MapView.Forms.Observers
 			}
 		}
 
-
 /*		#region IDisposable interface
 		// https://www.codeproject.com/articles/29534/idisposable-what-your-mother-never-told-you-about
 		// https://dave-black.blogspot.com/2011/03/how-do-you-properly-implement.html
