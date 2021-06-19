@@ -37,7 +37,7 @@ namespace McdView
 
 		protected bool _bypassScrollZero;
 
-		internal protected readonly SortedSet<int> SubIds = new SortedSet<int>();
+		internal readonly SortedSet<int> SubIds = new SortedSet<int>();
 		#endregion Fields
 
 
@@ -55,7 +55,7 @@ namespace McdView
 		/// <remarks>!!IMPORTANT: Only set 'Parts' via 'McdviewF.Parts' when
 		/// instantiating a 'TerrainPanel_main' object and via 'CopierF.Parts'
 		/// when instantiating a 'TerrainPanel_copier' object. IMPORTANT!!</remarks>
-		internal protected Tilepart[] Parts
+		internal Tilepart[] Parts
 		{
 			get { return _parts; }
 			set
