@@ -125,6 +125,9 @@ namespace MapView.Forms.Observers
 																	pnlMain.Width,
 																	pnlMain.Height);
 
+			ObserverChildControls.Add(TopControl);
+			ObserverChildControls.Add(QuadrantControl);
+
 			Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantVisibilityClick, Keys.F1);
 			West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantVisibilityClick, Keys.F2);
 			North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantVisibilityClick, Keys.F3);
@@ -143,9 +146,6 @@ namespace MapView.Forms.Observers
 			Content.Checked = true;
 
 			VisibleQuadrants = Vis_FLOOR | Vis_WEST | Vis_NORTH | Vis_CONTENT;
-
-			ObserverControls.Add("TopControl",      TopControl);
-			ObserverControls.Add("QuadrantControl", QuadrantControl);
 
 			ResumeLayout();
 		}

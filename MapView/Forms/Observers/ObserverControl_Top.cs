@@ -28,14 +28,6 @@ namespace MapView.Forms.Observers
 		public virtual MapFile MapFile
 		{ get; set; }
 
-
-		private readonly Dictionary<string, IObserver> _panels =
-					 new Dictionary<string, IObserver>();
-		public Dictionary<string, IObserver> ObserverControls
-		{
-			get { return _panels; }
-		}
-
 		/// <summary>
 		/// Satisfies <c><see cref="IObserver"/></c>. Is overridden only by
 		/// <c><see cref="QuadrantControl.OnLocationSelectedObserver()">QuadrantControl.OnLocationSelectedObserver()</see></c>.

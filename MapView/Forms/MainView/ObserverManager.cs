@@ -76,6 +76,10 @@ namespace MapView.Forms.MainView
 				TopRouteView.ControlRoute
 			};
 
+			_viewers.Add(TileView);
+			_viewers.Add(TopView);
+			_viewers.Add(RouteView);
+			_viewers.Add(TopRouteView);
 
 			// Register the subsidiary viewers via this ObserverManager.
 			// TODO: Make TopView's and RouteView's Options static.
@@ -85,8 +89,6 @@ namespace MapView.Forms.MainView
 			LoadDefaultOptions(RegistryInfo.TileView,  TileView);
 			LoadDefaultOptions(RegistryInfo.TopView,   TopView);
 			LoadDefaultOptions(RegistryInfo.RouteView, RouteView);
-
-			_viewers.Add(TopRouteView);
 		}
 
 		/// <summary>
@@ -101,8 +103,6 @@ namespace MapView.Forms.MainView
 			//DSShared.LogFile.WriteLine("ObserverManager.LoadDefaultOptions()");
 			//DSShared.LogFile.WriteLine(". key= " + key);
 			//DSShared.LogFile.WriteLine(". f= " + (f as Form).Name);
-
-			_viewers.Add(f as Form);
 
 			ObserverControl observer = f.Observer; // ie. TileView, TopView, RouteView.
 			observer.LoadControlDefaultOptions();
@@ -155,8 +155,12 @@ namespace MapView.Forms.MainView
 				observer.MapFile.LevelSelected    += observer.OnLevelSelectedObserver;
 			}
 
-			foreach (string key in observer.ObserverControls.Keys)						// ie. TopControl and QuadrantControl
-				SubscribeObserver(observer.MapFile, observer.ObserverControls[key]);	// ie. This recursion is req'd only for TopView.
+			var topView = observer as TopView;
+			if (topView != null)
+			{
+				foreach (var control in topView.ObserverChildControls)	// This recursion is req'd only for TopViewControl's
+					SubscribeObserver(observer.MapFile, control);		// subcontrols: TopControl and QuadrantControl
+			}
 		}
 
 		/// <summary>

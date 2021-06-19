@@ -30,28 +30,13 @@ namespace MapView.Forms.Observers
 		public virtual MapFile MapFile
 		{ get; set; }
 
-
-		private readonly Dictionary<string, IObserver> _panels =
-					 new Dictionary<string, IObserver>();
-		[Browsable(false)]
-		public Dictionary<string, IObserver> ObserverControls
-		{
-			get { return _panels; }
-		}
-
 		/// <summary>
 		/// Satisfies <c><see cref="IObserver"/></c>. Is overridden only by
 		/// <c><see cref="RouteView.OnLocationSelectedObserver()">RouteView.OnLocationSelectedObserver()</see></c>.
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnLocationSelectedObserver(LocationSelectedArgs args)
-		{
-			//DSShared.LogFile.WriteLine("ObserverControl.OnLocationSelectedObserver() DOES THIS EVER DO ANYTHING.");
-			// YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
-//			Refresh();
-			// But Refresh() doesn't appear to be needed.
-			// why would you need to refresh TileView ...
-		}
+		{}
 
 		/// <summary>
 		/// Satisfies <c><see cref="IObserver"/></c>. Is overridden only by
@@ -61,17 +46,19 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="args"></param>
 		public virtual void OnLevelSelectedObserver(LevelSelectedArgs args)
-		{
-			//DSShared.LogFile.WriteLine("ObserverControl.OnLevelSelectedObserver() DOES THIS EVER DO ANYTHING.");
-			// YES IT FIRES A HUNDRED THOUSAND TIMES PER SECOND.
-//			Refresh();
-			// Refresh() appears to be needed for TopView.
-			// why would you need to refresh TileView ...
-		}
+		{}
 		#endregion IObserver requirements
 
 
 		#region Properties
+		private readonly List<IObserver> _observerChildControls =
+					 new List<IObserver>();
+		[Browsable(false)]
+		public List<IObserver> ObserverChildControls
+		{
+			get { return _observerChildControls; }
+		}
+
 		private Options _options = new Options();
 		internal Options Options
 		{

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 
 using XCom;
 
@@ -13,11 +11,7 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal interface IObserver
 	{
-		MapFile MapFile
-		{ set; get;}
-
-		Dictionary<string, IObserver> ObserverControls
-		{ get; }
+		MapFile MapFile { set; get;}
 
 		void OnLocationSelectedObserver(LocationSelectedArgs args);
 		void OnLevelSelectedObserver(LevelSelectedArgs args);
