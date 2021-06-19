@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Timers;
 using System.Windows.Forms;
 
+using DSShared.Controls;
+
 using MapView.Forms.MainView;
 
 using XCom;
@@ -17,7 +19,7 @@ namespace MapView.Forms.Observers
 	/// But that's the way this trolls.</remarks>
 	internal sealed class QuadrantControl
 		:
-			ObserverControl_Top // DoubleBufferedControl, IObserver
+			DoubleBufferedControl
 	{
 		public static void DisposeControl()
 		{
@@ -45,6 +47,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
+		private MapFile _file;
+
 		/// <summary>
 		/// For use by keyboard-input.
 		/// </summary>
@@ -97,38 +101,8 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Inherited from <c><see cref="IObserver"/></c> through
-		/// <c><see cref="ObserverControl_Top"/></c>.
-		/// </summary>
-		/// <param name="args"></param>
-		public override void OnLocationSelectedObserver(LocationSelectedArgs args)
-		{
-			Tile             = args.Tile;
-			SelectedLocation = args.Location;
-
-			Refresh();
-		}
-
-		/// <summary>
-		/// Inherited from <c><see cref="IObserver"/></c> through
-		/// <c><see cref="ObserverControl_Top"/></c>.
-		/// </summary>
-		/// <param name="args"></param>
-		public override void OnLevelSelectedObserver(LevelSelectedArgs args)
-		{
-			if (SelectedLocation != null)
-			{
-				Tile = MapFile.GetTile(SelectedLocation.Col,
-									   SelectedLocation.Row);
-				SelectedLocation.Lev = args.Level;
-			}
-			Refresh();
-		}
-
-
-		/// <summary>
-		/// Wrapper for <c><see cref="OnMouseDown"/></c> for use by
-		/// keyboard-input only.
+		/// Wrapper for <c><see cref="OnMouseDown()">OnMouseDown()</see></c> for
+		/// use by keyboard-input only.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <param name="slot"></param>
@@ -250,6 +224,34 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="args"></param>
+		private void OnLocationSelectedObserver(LocationSelectedArgs args)
+		{
+			Tile             = args.Tile;
+			SelectedLocation = args.Location;
+
+			Refresh();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="args"></param>
+		private void OnLevelSelectedObserver(LevelSelectedArgs args)
+		{
+			if (SelectedLocation != null)
+			{
+				Tile = _file.GetTile(SelectedLocation.Col,
+									 SelectedLocation.Row);
+				SelectedLocation.Lev = args.Level;
+			}
+			Refresh();
+		}
+
+
+		/// <summary>
 		/// Clever handling of RMB double-click event ...
 		/// </summary>
 		/// <param name="source"></param>
@@ -286,5 +288,27 @@ namespace MapView.Forms.Observers
 			Invalidate();
 		}
 		#endregion Events
+
+
+		#region Methods
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="file"></param>
+		internal void SetMapfile(MapFile file)
+		{
+			if (_file != null)
+			{
+				_file.LocationSelected -= OnLocationSelectedObserver;
+				_file.LevelSelected    -= OnLevelSelectedObserver;
+			}
+
+			if ((_file = file) != null)
+			{
+				_file.LocationSelected += OnLocationSelectedObserver;
+				_file.LevelSelected    += OnLevelSelectedObserver;
+			}
+		}
+		#endregion Methods
 	}
 }

@@ -13,7 +13,7 @@ namespace MapView.Forms.Observers
 {
 	internal sealed partial class TopView
 		:
-			ObserverControl // UserControl, IObserver
+			ObserverControl
 	{
 		/// <summary>
 		/// Disposes <see cref="TopControl"/>.
@@ -43,6 +43,11 @@ namespace MapView.Forms.Observers
 		/// !null and !IsDisposed if necessary.</remarks>
 		internal static Infobox _fpartslots;
 		#endregion Fields (static)
+
+
+		#region Fields
+		private MapFile _file;
+		#endregion Fields
 
 
 		#region Properties (static)
@@ -125,9 +130,6 @@ namespace MapView.Forms.Observers
 																	pnlMain.Width,
 																	pnlMain.Height);
 
-			ObserverChildControls.Add(TopControl);
-			ObserverChildControls.Add(QuadrantControl);
-
 			Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantVisibilityClick, Keys.F1);
 			West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantVisibilityClick, Keys.F2);
 			North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantVisibilityClick, Keys.F3);
@@ -161,20 +163,44 @@ namespace MapView.Forms.Observers
 		#endregion cTor
 
 
-		#region Events (override) inherited from IObserver/ObserverControl
+		#region Events (override)
 		/// <summary>
-		/// Inherited from <see cref="IObserver"/> through <see cref="ObserverControl"/>.
+		/// Scrolls the z-axis.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <remarks>Duplicated in <c><see cref="RouteView"/></c>.</remarks>
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			base.OnMouseWheel(e);
+
+			int delta;
+			if (MainViewF.Optionables.InvertMousewheel)
+				delta = -e.Delta;
+			else
+				delta =  e.Delta;
+
+			int dir = MapFile.LEVEL_no;
+			if      (delta < 0) dir = MapFile.LEVEL_Up;
+			else if (delta > 0) dir = MapFile.LEVEL_Dn;
+			_file.ChangeLevel(dir);
+
+			ObserverManager.ToolFactory.EnableLevelers(_file.Level, _file.Levs);
+		}
+		#endregion Events (override)
+
+
+		#region Events
+		/// <summary>
+		/// 
 		/// </summary>
 		/// <param name="args"></param>
-		public override void OnLevelSelectedObserver(LevelSelectedArgs args)
+		private void OnLevelSelectedObserver(LevelSelectedArgs args)
 		{
 			//LogFile.WriteLine("TopView.OnLevelSelectedObserver() " + Tag);
 			Refresh(); // req'd.
 		}
-		#endregion Events (override) inherited from IObserver/ObserverControl
 
 
-		#region Events
 		/// <summary>
 		/// Handles a click on any of the quadrant-visibility menuitems.
 		/// </summary>
@@ -193,7 +219,7 @@ namespace MapView.Forms.Observers
 				else
 					VisibleQuadrants &= ~Vis_FLOOR;
 
-				MapFile.CalculateOccultations(!it.Checked);
+				_file.CalculateOccultations(!it.Checked);
 			}
 			else if (it == West)
 			{
@@ -257,11 +283,11 @@ namespace MapView.Forms.Observers
 			Tilepart part;
 			McdRecord record;
 
-			for (int l = 0; l != MapFile.Levs; ++l)
-			for (int r = 0; r != MapFile.Rows; ++r)
-			for (int c = 0; c != MapFile.Cols; ++c)
+			for (int l = 0; l != _file.Levs; ++l)
+			for (int r = 0; r != _file.Rows; ++r)
+			for (int c = 0; c != _file.Cols; ++c)
 			{
-				tile = MapFile.GetTile(c,r,l);
+				tile = _file.GetTile(c,r,l);
 				if (!tile.Vacant)
 				{
 					if ((part = tile.Floor) != null
@@ -338,6 +364,19 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="file"></param>
+		internal void SetMapfile(MapFile file)
+		{
+			if (_file != null)
+				_file.LevelSelected -= OnLevelSelectedObserver;
+
+			if ((_file = file) != null)
+				_file.LevelSelected += OnLevelSelectedObserver;
+		}
+
+		/// <summary>
 		/// Adds the tool-objects in the toolstrip.
 		/// </summary>
 		internal void AddToolstripControls()
@@ -363,7 +402,7 @@ namespace MapView.Forms.Observers
 				PartType parttype,
 				int id)
 		{
-			lev = MapFile.Levs - lev; // invert.
+			lev = _file.Levs - lev; // invert.
 
 			if (MainViewF.Optionables.Base1_xy) { ++col; ++row; }
 			if (!MainViewF.Optionables.Base1_z) { --lev; }
@@ -382,9 +421,9 @@ namespace MapView.Forms.Observers
 
 		#region Options
 		/// <summary>
-		/// Loads default options for TopView in TopRouteView(Top) screens.
+		/// Loads default options for <c>TopView</c>.
 		/// </summary>
-		internal protected override void LoadControlDefaultOptions()
+		internal override void LoadControlDefaultOptions()
 		{
 			//LogFile.WriteLine("TopView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);

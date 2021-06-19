@@ -12,9 +12,9 @@ namespace MapView.Forms.MainView
 	{
 		#region Fields (static)
 		/// <summary>
-		/// A dictionary that indexes <c><see cref="Options"/></c> by viewer. The type of Options, ie
-		/// MainView Options, TileView Options, TopView Options, or RouteView
-		/// Options.
+		/// A dictionary that indexes <c><see cref="Options"/></c> by viewer.
+		/// The type of Options - ie MainView Options, TileView Options, TopView
+		/// Options, or RouteView Options.
 		/// </summary>
 		private static readonly Dictionary<string, Options> _optionsTypes =
 							new Dictionary<string, Options>();
@@ -25,11 +25,11 @@ namespace MapView.Forms.MainView
 		private static IList<Form> _views = new List<Form>();
 		/// <summary>
 		/// A list of the <see cref="OptionsForm">OptionsForms</see> that are
-		/// instantiated by each viewer.
+		/// instantiated by each viewer respectively.
 		/// </summary>
 		/// <remarks>The list is used only to close any open forms when MapView
-		/// quits. Such forms are instantiated when called to, then they last
-		/// the lifetime of the app.</remarks>
+		/// quits - such forms last the lifetime of the app after they are
+		/// instantiated.</remarks>
 		internal static IList<Form> Views
 		{
 			get { return _views; }
@@ -39,14 +39,17 @@ namespace MapView.Forms.MainView
 
 		#region Methods (static)
 		/// <summary>
-		/// Adds an Options-object by key (viewer) to the types-dictionary.
+		/// Adds <c><see cref="Options"/></c> by key (viewer) to the
+		/// types-dictionary.
 		/// </summary>
-		/// <param name="key">a viewer by string - see RegistryInfo constants</param>
-		/// <param name="val">an Options object</param>
-		/// <remarks>Is used by MainViewF..cTor to assign MainView's
-		/// options-type and by ObserverManager.LoadDefaultOptions() to assign
+		/// <param name="key">a viewer by string - see <c><see cref="RegistryInfo"/></c>
+		/// constants</param>
+		/// <param name="val"><c><see cref="Options"/></c></param>
+		/// <remarks>Is used by <c><see cref="MainViewF()"/></c> to assign
+		/// MainView's options-type and by
+		/// <c><see cref="ObserverManager"/>.LoadDefaultOptions()</c> to assign
 		/// TileView's, TopView's, and RouteView's options-types.</remarks>
-		internal static void setOptionsType(string key, Options val)
+		internal static void SetOptionsType(string key, Options val)
 		{
 			_optionsTypes[key] = val;
 		}
@@ -55,8 +58,8 @@ namespace MapView.Forms.MainView
 		/// Gets the Options for MainView.
 		/// </summary>
 		/// <returns></returns>
-		/// <remarks>Is used by MenuManager.</remarks>
-		internal static Options getMainOptions()
+		/// <remarks>Is used by <c><see cref="MenuManager"/></c>.</remarks>
+		internal static Options GetMainOptions()
 		{
 			return _optionsTypes[RegistryInfo.MainView];
 		}
@@ -87,7 +90,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Helper for LoadUserOptions().
+		/// Helper for <c><see cref="LoadUserOptions()">LoadUserOptions()</see></c>.
 		/// </summary>
 		/// <param name="tr"></param>
 		/// <param name="options"></param>
@@ -139,7 +142,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Closes all the Options views.
+		/// Closes all the <c><see cref="OptionsForm"/></c> windows.
 		/// </summary>
 		internal static void CloseOptions()
 		{

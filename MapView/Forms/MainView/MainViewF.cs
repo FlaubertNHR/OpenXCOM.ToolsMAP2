@@ -343,7 +343,7 @@ namespace MapView
 			LogFile.WriteLine("OptionParsers initialized.");
 
 			Options = new Options();
-			OptionsManager.setOptionsType(RegistryInfo.MainView, Options);
+			OptionsManager.SetOptionsType(RegistryInfo.MainView, Options);
 
 			LoadDefaultOptions();									// TODO: check if this should go after the managers load
 			LogFile.WriteLine("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
@@ -1727,7 +1727,7 @@ namespace MapView
 						tsslPosition     .Text =
 						tsslSelectionSize.Text = String.Empty;
 
-						ObserverManager.SetMapfile(file);
+						ObserverManager.AssignMapfile(file);
 
 						ObserverManager.TopView     .Control   .TopControl.ClearSelectorLozenge();
 						ObserverManager.TopRouteView.ControlTop.TopControl.ClearSelectorLozenge();
@@ -3295,7 +3295,7 @@ namespace MapView
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 							MenuManager.StartSecondaryStageBoosters();
 
-						ObserverManager.SetMapfile(file); // and reset all observer events
+						ObserverManager.AssignMapfile(file); // and reset all observer events
 
 						RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
 						RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);

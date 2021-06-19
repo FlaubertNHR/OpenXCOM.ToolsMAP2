@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+
+using DSShared.Controls;
 
 using MapView.Forms.MainView;
 
@@ -17,7 +18,7 @@ namespace MapView.Forms.Observers
 	/// </summary>
 	internal sealed class TopControl
 		:
-			ObserverControl_Top // DoubleBufferedControl, IObserver
+			DoubleBufferedControl
 	{
 		/// <summary>
 		/// Disposes the GraphicsPaths.
@@ -43,6 +44,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
+		private MapFile _file;
+
 		private Graphics _graphics;
 		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over cursor lozenge
 		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // selected tile or tiles being drag-selected
@@ -61,26 +64,6 @@ namespace MapView.Forms.Observers
 
 		private bool _isMouseDrag;
 		#endregion Fields
-
-
-		#region Properties (override)
-		/// <summary>
-		/// Inherited from <see cref="IObserver"/> through
-		/// <see cref="ObserverControl_Top"/>.
-		/// </summary>
-		public override MapFile MapFile
-		{
-			set
-			{
-				base.MapFile = value;
-
-				_blobService.HalfWidth = 8;
-
-				ResizeObserver(Parent.Width, Parent.Height);
-				Refresh();
-			}
-		}
-		#endregion Properties (override)
 
 
 		#region Properties
@@ -134,7 +117,7 @@ namespace MapView.Forms.Observers
 		/// <param name="height">the height to resize to</param>
 		internal void ResizeObserver(int width, int height)
 		{
-			if (MapFile != null)
+			if (_file != null)
 			{
 				int halfWidth  = _blobService.HalfWidth;
 				int halfHeight = _blobService.HalfHeight;
@@ -144,11 +127,11 @@ namespace MapView.Forms.Observers
 				width  -= OffsetX * 2; // don't clip the right or bottom tip of the big-lozenge.
 				height -= OffsetY * 2;
 
-				if (MapFile.Rows > 0 || MapFile.Cols > 0) // safety vs. div-by-0
+				if (_file.Rows > 0 || _file.Cols > 0) // safety vs. div-by-0
 				{
 					if (height > width / 2) // use width
 					{
-						halfWidth = width / (MapFile.Rows + MapFile.Cols);
+						halfWidth = width / (_file.Rows + _file.Cols);
 
 						if (halfWidth % 2 != 0)
 							--halfWidth;
@@ -157,7 +140,7 @@ namespace MapView.Forms.Observers
 					}
 					else // use height
 					{
-						halfHeight = height / (MapFile.Rows + MapFile.Cols);
+						halfHeight = height / (_file.Rows + _file.Cols);
 						halfWidth  = halfHeight * 2;
 					}
 				}
@@ -176,13 +159,13 @@ namespace MapView.Forms.Observers
 				_blobService.HalfWidth  = halfWidth;
 				_blobService.HalfHeight = halfHeight;
 
-				_originX = OffsetX + MapFile.Rows * halfWidth;
+				_originX = OffsetX + _file.Rows * halfWidth;
 //				_originY = OffsetY;
 
 				if (halfWidthPre != halfWidth)
 				{
-					Width  = (MapFile.Rows + MapFile.Cols) * halfWidth;
-					Height = (MapFile.Rows + MapFile.Cols) * halfHeight;
+					Width  = (_file.Rows + _file.Cols) * halfWidth;
+					Height = (_file.Rows + _file.Cols) * halfHeight;
 
 					Refresh();
 				}
@@ -280,7 +263,7 @@ namespace MapView.Forms.Observers
 
 			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 
-			if (MapFile != null)
+			if (_file != null)
 			{
 				int halfWidth  = _blobService.HalfWidth;
 				int halfHeight = _blobService.HalfHeight;
@@ -291,7 +274,7 @@ namespace MapView.Forms.Observers
 						r = 0,
 							startX = _originX,
 							startY =  OffsetY;
-						r != MapFile.Rows;
+						r != _file.Rows;
 						++r,
 							startX -= halfWidth,
 							startY += halfHeight)
@@ -300,19 +283,19 @@ namespace MapView.Forms.Observers
 							c = 0,
 								x = startX,
 								y = startY;
-							c != MapFile.Cols;
+							c != _file.Cols;
 							++c,
 								x += halfWidth,
 								y += halfHeight)
 					{
-						if (!(tile = MapFile.GetTile(c,r)).Vacant)
+						if (!(tile = _file.GetTile(c,r)).Vacant)
 							DrawBlobs(tile, x,y);
 					}
 				}
 
 				// draw grid-lines ->
 				Pen pen;
-				for (int i = 0; i <= MapFile.Rows; ++i) // draw horizontal grid-lines (ie. upperleft to lowerright)
+				for (int i = 0; i <= _file.Rows; ++i) // draw horizontal grid-lines (ie. upperleft to lowerright)
 				{
 					if (i % 10 != 0) pen = TopPens[TopViewOptionables.str_GridLineColor];
 					else             pen = TopPens[TopViewOptionables.str_GridLine10Color];
@@ -321,11 +304,11 @@ namespace MapView.Forms.Observers
 									pen,
 									_originX - i * halfWidth,
 									 OffsetY + i * halfHeight,
-									_originX + (MapFile.Cols - i) * halfWidth,
-									 OffsetY + (MapFile.Cols + i) * halfHeight);
+									_originX + (_file.Cols - i) * halfWidth,
+									 OffsetY + (_file.Cols + i) * halfHeight);
 				}
 
-				for (int i = 0; i <= MapFile.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
+				for (int i = 0; i <= _file.Cols; ++i) // draw vertical grid-lines (ie. lowerleft to upperright)
 				{
 					if (i % 10 != 0) pen = TopPens[TopViewOptionables.str_GridLineColor];
 					else             pen = TopPens[TopViewOptionables.str_GridLine10Color];
@@ -334,15 +317,15 @@ namespace MapView.Forms.Observers
 									pen,
 									_originX + i * halfWidth,
 									 OffsetY + i * halfHeight,
-									_originX + i * halfWidth  - MapFile.Rows * halfWidth,
-									 OffsetY + i * halfHeight + MapFile.Rows * halfHeight);
+									_originX + i * halfWidth  - _file.Rows * halfWidth,
+									 OffsetY + i * halfHeight + _file.Rows * halfHeight);
 				}
 
 
 				// draw the selector lozenge ->
 				if (Focused
-					&& _col > -1 && _col < MapFile.Cols
-					&& _row > -1 && _row < MapFile.Rows)
+					&& _col > -1 && _col < _file.Cols
+					&& _row > -1 && _row < _file.Rows)
 				{
 					PathSelectorLozenge(
 									_originX + (_col - _row) * halfWidth,
@@ -351,7 +334,7 @@ namespace MapView.Forms.Observers
 
 					// print mouseover location ->
 					QuadrantDrawService.SetGraphics(_graphics);
-					QuadrantDrawService.PrintSelectorLocation(_loc, Width, Height, MapFile);
+					QuadrantDrawService.PrintSelectorLocation(_loc, Width, Height, _file);
 				}
 
 				// draw tiles-selected lozenge ->
@@ -460,8 +443,8 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			if (   _col > -1 && _col < MapFile.Cols
-				&& _row > -1 && _row < MapFile.Rows)
+			if (   _col > -1 && _col < _file.Cols
+				&& _row > -1 && _row < _file.Rows)
 			{
 				SelectMapLocation(); // NOTE: Will select a tile on any mousebutton down.
 
@@ -500,8 +483,8 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Selects a location when a tile is clicked.
-		/// @note Helper for OnMouseDown().
 		/// </summary>
+		/// <remarks>Helper for <c><see cref="OnMouseDown()"/></c>.</remarks>
 		private void SelectMapLocation()
 		{
 			ObserverManager.RouteView   .Control     .DeselectNode(false);
@@ -515,12 +498,12 @@ namespace MapView.Forms.Observers
 			// functions fire, FirstClick is set okay by the former.
 			//
 			// TODO: Make a flag of FirstClick in MapFile where Location is really
-			// set, and where all these OnLocationSelected events actually fire out of!
+			// set, and where all these LocationSelected events actually fire out of!
 //			MainViewOverlay.that.FirstClick = true;
 
-			MapFile.Location = new MapLocation( // fire LocationSelected
-											_col, _row,
-											MapFile.Level);
+			_file.Location = new MapLocation( // fire LocationSelected
+										_col, _row,
+										_file.Level);
 			MainViewOverlay.that.ProcessSelection(_loc, _loc);
 		}
 
@@ -564,6 +547,20 @@ namespace MapView.Forms.Observers
 
 
 		#region Methods
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="file"></param>
+		internal void SetMapfile(MapFile file)
+		{
+			_file = file;
+
+			_blobService.HalfWidth = 8;
+
+			ResizeObserver(Parent.Width, Parent.Height);
+			Refresh();
+		}
+
 		/// <summary>
 		/// Converts a position from screen-coordinates to tile-location.
 		/// </summary>

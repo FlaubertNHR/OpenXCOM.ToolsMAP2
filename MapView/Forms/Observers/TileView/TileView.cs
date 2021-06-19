@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -24,7 +23,7 @@ namespace MapView.Forms.Observers
 {
 	internal sealed partial class TileView
 		:
-			ObserverControl // UserControl, IObserver
+			ObserverControl
 	{
 		internal void DisposeObserver()
 		{
@@ -90,6 +89,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
+		private MapFile _file;
+
 		private TilePanel _allTiles;
 		private TilePanel[] _panels;
 
@@ -98,18 +99,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		/// <summary>
-		/// Inherited from <c><see cref="IObserver"/></c> through
-		/// <c><see cref="ObserverControl"/></c>.
-		/// </summary>
-		public override MapFile MapFile
-		{
-			set
-			{
-				PopulatePanels((base.MapFile = value).Parts);
-			}
-		}
-
 		/// <summary>
 		/// Gets the current <c>SelectedTilepart</c>.
 		/// 
@@ -233,20 +222,6 @@ namespace MapView.Forms.Observers
 		#endregion cTor
 
 
-		#region Events (override)
-		/// <summary>
-		/// Bypasses level-change in <see cref="ObserverControl"/> to prevent
-		/// awkward level changes.
-		/// </summary>
-		/// <param name="e"></param>
-		/// <remarks>redesign wanted.</remarks>
-		protected override void OnMouseWheel(MouseEventArgs e)
-		{
-//			base.OnMouseWheel(e);
-		}
-		#endregion Events (override)
-
-
 		#region Events
 		/// <summary>
 		/// Clears OverInfo on the statusbar when the cursor is not in a panel.
@@ -319,7 +294,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Loads default options for <c>TileView</c>.
 		/// </summary>
-		internal protected override void LoadControlDefaultOptions()
+		internal override void LoadControlDefaultOptions()
 		{
 			//LogFile.WriteLine("TileView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
@@ -416,7 +391,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnExternalProcessClick(object sender, EventArgs e)
 		{
-			if (MapFile != null) // TODO: huh
+			if (_file != null) // TODO: huh
 			{
 				var pfe = new ExternalProcessService(Options).GetFullpath();
 				if (File.Exists(pfe))
@@ -442,12 +417,12 @@ namespace MapView.Forms.Observers
 		{
 			if (SelectedTilepart != null)
 			{
-				Tuple<string,string> terrain = MapFile.GetTerrain(SelectedTilepart);
+				Tuple<string,string> terrain = _file.GetTerrain(SelectedTilepart);
 
 				string terr = terrain.Item1;
 				string path = terrain.Item2;
 
-				path = MapFile.Descriptor.GetTerrainDirectory(path);
+				path = _file.Descriptor.GetTerrainDirectory(path);
 
 				string pfePck = Path.Combine(path, terr + GlobalsXC.PckExt);
 				string pfeTab = Path.Combine(path, terr + GlobalsXC.TabExt);
@@ -501,7 +476,7 @@ namespace MapView.Forms.Observers
 					{
 						fPckView.SetSpritesetType(PckView.SpritesetType.Pck);
 						fPckView.LoadSpriteset(pfePck);
-						fPckView.SetPalette(MapFile.Descriptor.Pal);
+						fPckView.SetPalette(_file.Descriptor.Pal);
 						fPckView.SetSelected(SelectedTilepart[0].Id);
 
 						ShowHideManager.HideViewers();
@@ -538,12 +513,12 @@ namespace MapView.Forms.Observers
 		{
 			if (SelectedTilepart != null)
 			{
-				Tuple<string,string> terrain = MapFile.GetTerrain(SelectedTilepart);
+				Tuple<string,string> terrain = _file.GetTerrain(SelectedTilepart);
 
 				string terr = terrain.Item1;
 				string path = terrain.Item2;
 
-				path = MapFile.Descriptor.GetTerrainDirectory(path);
+				path = _file.Descriptor.GetTerrainDirectory(path);
 
 				string pfeMcd = Path.Combine(path, terr + GlobalsXC.McdExt);
 
@@ -567,7 +542,7 @@ namespace MapView.Forms.Observers
 
 						fMcdView.LoadRecords(
 										pfeMcd,
-										MapFile.Descriptor.Pal,
+										_file.Descriptor.Pal,
 										SelectedTilepart.TerId);
 
 						ShowHideManager.HideViewers();
@@ -616,10 +591,10 @@ namespace MapView.Forms.Observers
 						+ " that may have been made to its terrainset.";
 
 			string info = String.Empty;
-			if (MapFile.MapChanged)
+			if (_file.MapChanged)
 				info = "Map";
 
-			if (MapFile.RoutesChanged)
+			if (_file.RoutesChanged)
 			{
 				if (info.Length != 0) info += " and its ";
 				info += "Routes";
@@ -683,13 +658,15 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Populates
+		/// Sets <c><see cref="_file"/></c> and populates
 		/// <c>TileView</c> <c><see cref="TilePanel">TilePanels</see></c> with
 		/// <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
-		/// <param name="parts"></param>
-		private void PopulatePanels(IList<Tilepart> parts)
+		/// <param name="file"></param>
+		internal void SetMapfile(MapFile file)
 		{
+			IList<Tilepart> parts = (_file = file).Parts;
+
 			for (int id = 0; id != _panels.Length; ++id)
 				_panels[id].PopulatePanel(parts);
 
@@ -730,7 +707,7 @@ namespace MapView.Forms.Observers
 
 			if (part != null)
 			{
-				info = MapFile.GetTerrainLabel(part)
+				info = _file.GetTerrainLabel(part)
 					 + "  terId " + part.TerId
 					 + "  setId " + part.SetId;
 			}
@@ -744,7 +721,7 @@ namespace MapView.Forms.Observers
 		internal string GetTerrainLabel()
 		{
 			if (SelectedTilepart != null)
-				return MapFile.GetTerrainLabel(SelectedTilepart);
+				return _file.GetTerrainLabel(SelectedTilepart);
 
 			return "ERROR";
 		}

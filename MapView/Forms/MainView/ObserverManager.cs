@@ -17,11 +17,6 @@ namespace MapView.Forms.MainView
 		internal static ToolstripFactory ToolFactory;
 
 		/// <summary>
-		/// An array of controls that will act as observers.
-		/// </summary>
-		private static IObserver[] _observers;
-
-		/// <summary>
 		/// A list of forms that shall be closed when MapView quits.
 		/// </summary>
 		private static readonly IList<Form> _viewers = new List<Form>();
@@ -67,15 +62,6 @@ namespace MapView.Forms.MainView
 			TopView     .Control   .AddToolstripControls();
 			TopRouteView.ControlTop.AddToolstripControls();
 
-			_observers = new IObserver[]
-			{
-				TileView    .Control,
-				TopView     .Control,
-				RouteView   .Control,
-				TopRouteView.ControlTop,
-				TopRouteView.ControlRoute
-			};
-
 			_viewers.Add(TileView);
 			_viewers.Add(TopView);
 			_viewers.Add(RouteView);
@@ -106,62 +92,32 @@ namespace MapView.Forms.MainView
 
 			ObserverControl observer = f.Observer; // ie. TileView, TopView, RouteView.
 			observer.LoadControlDefaultOptions();
-			OptionsManager.setOptionsType(key, observer.Options);
+			OptionsManager.SetOptionsType(key, observer.Options);
 		}
 
 		/// <summary>
-		/// Sets or resets the MapFile for each observer-control.
+		/// Sets or resets the <c><see cref="MapFile"/></c> for controls that
+		/// need it.
 		/// </summary>
 		/// <param name="file"></param>
-		internal static void SetMapfile(MapFile file)
+		internal static void AssignMapfile(MapFile file)
 		{
-			foreach (var observer in _observers)
-				SubscribeObserver(file, observer);
+			TileView.Control                       .SetMapfile(file);
+
+			TopView.Control                        .SetMapfile(file); // level selected handler
+			TopView.Control.TopControl             .SetMapfile(file);
+			TopView.Control.QuadrantControl        .SetMapfile(file); // location,level selected handlers
+
+			TopRouteView.ControlTop                .SetMapfile(file); // level selected handler
+			TopRouteView.ControlTop.TopControl     .SetMapfile(file);
+			TopRouteView.ControlTop.QuadrantControl.SetMapfile(file); // location,level selected handlers
+
+			RouteView   .Control                   .SetMapfile(file); // location,level selected handlers
+			TopRouteView.ControlRoute              .SetMapfile(file); // location,level selected handlers
 
 			MainViewOverlay.that.Refresh();
 		}
 
-		/// <summary>
-		/// Subscribes <c><see cref="IObserver.OnLocationSelectedObserver"/></c>
-		/// and <c><see cref="IObserver.OnLevelSelectedObserver"/></c> handlers
-		/// to a specified <c><see cref="MapFile">MapFile.LocationSelected</see></c>
-		/// and <c><see cref="MapFile">MapFile.LevelSelected</see></c> event for
-		/// an <c><see cref="IObserver"/></c> incl/
-		/// <list type="bullet">
-		/// <item><c><see cref="Observers.TileView"/></c></item>
-		/// <item><c><see cref="Observers.TopView"/></c></item>
-		/// <item><c><see cref="Observers.RouteView"/></c></item>
-		/// <item><c><see cref="Observers.TopControl"/></c> in <c>TopView</c></item>
-		/// <item><c><see cref="Observers.QuadrantControl"/></c> in <c>TopView</c></item>
-		/// </list>
-		/// </summary>
-		/// <param name="file"></param>
-		/// <param name="observer"></param>
-		private static void SubscribeObserver(MapFile file, IObserver observer)
-		{
-			// TODO: This stuff is so useless/redundant (think TileView eg.)
-			// that the observer hierarchy needs to be reworked from scratch -
-			// ie. precision calls are warranted.
-
-			if (observer.MapFile != null)
-			{
-				observer.MapFile.LocationSelected -= observer.OnLocationSelectedObserver;
-				observer.MapFile.LevelSelected    -= observer.OnLevelSelectedObserver;
-			}
-
-			if ((observer.MapFile = file) != null)
-			{
-				observer.MapFile.LocationSelected += observer.OnLocationSelectedObserver;
-				observer.MapFile.LevelSelected    += observer.OnLevelSelectedObserver;
-			}
-
-			var topView = observer as TopView;
-			if (topView != null)
-			{
-				foreach (var control in topView.ObserverChildControls)	// This recursion is req'd only for TopViewControl's
-					SubscribeObserver(observer.MapFile, control);		// subcontrols: TopControl and QuadrantControl
-			}
-		}
 
 		/// <summary>
 		/// Closes each Observers' parent-Form.
