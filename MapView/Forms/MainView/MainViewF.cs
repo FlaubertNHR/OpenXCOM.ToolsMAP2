@@ -1669,7 +1669,8 @@ namespace MapView
 
 
 		/// <summary>
-		/// Opens a dialog for user to resize the current Mapfile.
+		/// Opens a dialog for user to resize the current
+		/// <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3278,11 +3279,8 @@ namespace MapView
 						if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
 						file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
 
-						var routeview1 = ObserverManager.RouteView.Control;
-						var routeview2 = ObserverManager.TopRouteView.ControlRoute;
-
-						routeview1.ClearSelectedInfo();
-						routeview2.ClearSelectedInfo();
+						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
+						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
 
 						Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
 						Optionables.OpenDoors = false;
@@ -3295,7 +3293,7 @@ namespace MapView
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 							MenuManager.StartSecondaryStageBoosters();
 
-						ObserverManager.AssignMapfile(file); // and reset all observer events
+						ObserverManager.AssignMapfile(file); // and reset all observers' Mapfile var
 
 						RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
 						RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);
