@@ -101,9 +101,9 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets <see cref="MapFile"/>.
+		/// Sets <c><see cref="MapFile"/></c>.
 		/// </summary>
-		/// <param name="file"></param>
+		/// <param name="file">a <c><see cref="XCom.MapFile"/></c></param>
 		internal void SetMapfile(MapFile file)
 		{
 			MapFile = file;

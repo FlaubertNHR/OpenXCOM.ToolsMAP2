@@ -12,13 +12,13 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// This is the form that contains TopView and RouteView as pages in a
-	/// tabcontrol.
+	/// This is the form that contains <c><see cref="TopView"/></c> and
+	/// <c><see cref="RouteView"/></c> as pages in a tabcontrol.
 	/// </summary>
 	/// <remarks>This is instantiated by
-	/// <see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see>
+	/// <c><see cref="ObserverManager.CreateViewers()">ObserverManager.CreateViewers()</see></c>
 	/// and closed by
-	/// <see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see>.</remarks>
+	/// <c><see cref="ObserverManager.CloseViewers()">ObserverManager.CloseViewers()</see></c>.</remarks>
 	internal sealed partial class TopRouteViewForm
 		:
 			Form
@@ -325,7 +325,8 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
-		/// Tracks the selected page in <see cref="MainViewF.Optionables">MainViewF.Optionables</see>.
+		/// Tracks the selected page in
+		/// <c><see cref="MainViewF.Optionables">MainViewF.Optionables</see></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -348,7 +349,8 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Focuses a tabpage when the MainView option "StartTopRoutePage"
+		/// Focuses a tabpage when
+		/// <c><see cref="MainViewOptionables.StartTopRoutePage">MainViewOptionables.StartTopRoutePage</see></c>
 		/// changes.
 		/// </summary>
 		/// <param name="page"></param>

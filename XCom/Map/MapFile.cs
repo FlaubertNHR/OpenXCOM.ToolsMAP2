@@ -88,7 +88,8 @@ namespace XCom
 		/// Gets/Sets the currently selected level.
 		/// WARNING: Level 0 is the top level of the displayed Map.
 		/// </summary>
-		/// <remarks>Setting the level will fire the LevelSelected event.</remarks>
+		/// <remarks>Setting the level will fire the
+		/// <c><see cref="LevelSelected"/></c> event.</remarks>
 		public int Level // TODO: why is Level distinct from Location.Lev - why is Location.Lev not even set by Level
 		{
 			get { return _level; }
@@ -105,7 +106,8 @@ namespace XCom
 		/// <summary>
 		/// Gets/Sets the currently selected location.
 		/// </summary>
-		/// <remarks>Setting the location will fire the LocationSelected event.</remarks>
+		/// <remarks>Setting the location will fire the
+		/// <c><see cref="LocationSelected"/></c> event.</remarks>
 		public MapLocation Location
 		{
 			get { return _location; }
@@ -129,19 +131,19 @@ namespace XCom
 
 		/// <summary>
 		/// User will be shown a dialog asking to save if the Map changed.
-		/// @note The setter must be mediated by MainViewF.MapChanged in order
-		/// to apply/remove an asterisk to/from the file-label in MainView's
-		/// statusbar.
 		/// </summary>
+		/// <remarks>The setter must be mediated by <c>MainViewF.MapChanged</c>
+		/// in order to apply/remove an asterisk to/from the file-label in
+		/// MainView's statusbar.</remarks>
 		public bool MapChanged
 		{ get; set; }
 
 		/// <summary>
 		/// User will be shown a dialog asking to save if the Routes changed.
-		/// @note The setter must be mediated by RouteView.RoutesChanged in
-		/// order to show/hide a "routes changed" label to/from 'pnlDataFields'
-		/// in RouteView.
 		/// </summary>
+		/// <remarks>The setter must be mediated by <c>RouteView.RoutesChanged</c>
+		/// in order to show/hide a "routes changed" label to/from
+		/// <c>RouteView.pa_DataFields</c>.</remarks>
 		public bool RoutesChanged
 		{ get; set; }
 
@@ -149,8 +151,8 @@ namespace XCom
 		{ get; set; }
 
 		/// <summary>
-		/// Set true if a crippled tile was deleted and MainView needs to reload
-		/// the Mapfile.
+		/// Set <c>true</c> if a crippled tile was deleted and MainView needs to
+		/// reload this <c>MapFile</c>.
 		/// </summary>
 		public bool ForceReload
 		{ get; set; }
@@ -174,7 +176,8 @@ namespace XCom
 		/// cTor.
 		/// </summary>
 		/// <param name="descriptor"></param>
-		/// <param name="parts">the list of parts in all allocated terrains (the terrainset)</param>
+		/// <param name="parts">the list of parts in all allocated terrains
+		/// (the terrainset)</param>
 		/// <param name="routes"></param>
 		internal MapFile(
 				Descriptor descriptor,
@@ -213,7 +216,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="pfe">path-file-extension of a Mapfile</param>
 		/// <param name="parts">a list of tileparts</param>
-		/// <returns>true if read okay</returns>
+		/// <returns><c>true</c> if read okay</returns>
 		private bool LoadMapfile(string pfe, IList<Tilepart> parts)
 		{
 			using (var fs = FileService.OpenFile(pfe))
@@ -259,7 +262,7 @@ namespace XCom
 		/// <summary>
 		/// Creates a tile with its four parts.
 		/// </summary>
-		/// <param name="parts">a list of total tileparts that can be used</param>
+		/// <param name="parts">a <c><see cref="Tilepart"/></c> list that can be used</param>
 		/// <param name="id_floor">the floor id</param>
 		/// <param name="id_west">the westwall id</param>
 		/// <param name="id_north">the northwall id</param>
@@ -408,7 +411,7 @@ namespace XCom
 		/// Writes a Mapfile.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
-		/// <returns>true on success</returns>
+		/// <returns><c>true</c> on success</returns>
 		private bool WriteMapfile(string pfe)
 		{
 			string pfeT;
@@ -514,8 +517,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Clears all route-nodes before RouteView.OnImportClick or for a
-		/// <see cref="MapFile.MapResize">MapFile.MapResize</see>.
+		/// Clears all route-nodes before <c>RouteView.OnImportClick()</c> or
+		/// for a <c><see cref="MapFile.MapResize()">MapFile.MapResize()</see></c>.
 		/// </summary>
 		public void ClearRouteNodes()
 		{
@@ -528,7 +531,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Adds a route-node to the map-tile at a given location.
+		/// Adds a <c><see cref="RouteNode"/></c> to a <c><see cref="MapTile"/></c>
+		/// at a given location.
 		/// </summary>
 		/// <param name="location"></param>
 		/// <returns>the route-node</returns>
@@ -548,7 +552,7 @@ namespace XCom
 
 		#region Methods (terrain)
 		/// <summary>
-		/// Gets the terrain-label of a given tile-part.
+		/// Gets the terrain-label of a given <c><see cref="Tilepart"/></c>.
 		/// </summary>
 		/// <param name="tilepart"></param>
 		/// <returns></returns>
@@ -571,7 +575,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the terrain of a given tile-part.
+		/// Gets the terrain of a given <c><see cref="Tilepart"/></c>.
 		/// </summary>
 		/// <param name="tilepart"></param>
 		/// <returns></returns>
@@ -597,7 +601,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Gets a MapTile object using col,row,lev values.
+		/// Gets a <c><see cref="MapTile"/></c> using col,row,lev values.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
@@ -608,7 +612,8 @@ namespace XCom
 			return Tiles.GetTile(col, row, lev);
 		}
 		/// <summary>
-		/// Gets a MapTile object at the current level using col,row values.
+		/// Gets the <c><see cref="MapTile"/></c> at the current level using
+		/// col,row values.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
@@ -620,7 +625,8 @@ namespace XCom
 
 
 		/// <summary>
-		/// Changes the view-level and fires the LevelSelected event.
+		/// Changes the view-level and fires the
+		/// <c><see cref="LevelSelected"/></c> event.
 		/// </summary>
 		/// <param name="dir">+1 is down, -1 is up</param>
 		public void ChangeLevel(int dir)
@@ -643,7 +649,7 @@ namespace XCom
 		/// <summary>
 		/// Generates occultation data for all tiles in the Map.
 		/// </summary>
-		/// <param name="forceVis">true to force visibility</param>
+		/// <param name="forceVis"><c>true</c> to force visibility</param>
 		public void CalculateOccultations(bool forceVis = false)
 		{
 			if (Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...

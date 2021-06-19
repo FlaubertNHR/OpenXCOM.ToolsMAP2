@@ -47,7 +47,7 @@ namespace XCom
 		{ get; set; }
 
 		/// <summary>
-		/// Gets/Sets the index of this RouteNode.
+		/// Gets/Sets the index of this <c>RouteNode</c>.
 		/// </summary>
 		public byte Id
 		{ get; internal set; }

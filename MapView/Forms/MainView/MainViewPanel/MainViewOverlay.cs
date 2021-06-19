@@ -92,7 +92,8 @@ namespace MapView.Forms.MainView
 
 		#region Properties
 		/// <summary>
-		/// MapFile is set only by MainViewUnderlay.MapFile{set}.
+		/// <c>MapFile</c> is set only by
+		/// <c><see cref="MainViewUnderlay.MapFile">MainViewUnderlay.MapFile</see></c>.
 		/// </summary>
 		internal MapFile MapFile
 		{ get; set; }
@@ -1034,12 +1035,13 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Sets drag-start and drag-end and fires a MouseDrag (path
-		/// selected lozenge).
-		/// @note Fires OnMouseDown and OnMouseMove in Main,Top,Route viewers.
+		/// Sets drag-start and drag-end and fires MouseDrag (path selected
+		/// lozenge).
 		/// </summary>
 		/// <param name="beg"></param>
 		/// <param name="end"></param>
+		/// <remarks>Fires OnMouseDown and OnMouseMove in Main,Top,Route
+		/// viewers.</remarks>
 		internal void ProcessSelection(Point beg, Point end)
 		{
 			if (DragBeg != beg || DragEnd != end)
