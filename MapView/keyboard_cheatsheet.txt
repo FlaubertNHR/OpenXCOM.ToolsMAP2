@@ -109,7 +109,7 @@ i   - show MCD info (also, double-click a part)
 F9  - open selected part in PckView
 F10 - open selected part in McdView
 
-Ctrl+h - show Colorhelp
+Ctrl+h - show the ColorHelp dialog
 
 
 TOPVIEW
