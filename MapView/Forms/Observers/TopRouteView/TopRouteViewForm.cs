@@ -30,17 +30,17 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		private TopView _top;
+		/// <summary>
+		/// Gets/Sets <c><see cref="TopView"/></c>.
+		/// </summary>
 		internal TopView ControlTop
-		{
-			get { return _top; }
-		}
+		{ get; set; }
 
-		private RouteView _route;
+		/// <summary>
+		/// Gets/Sets <c><see cref="RouteView"/></c>.
+		/// </summary>
 		internal RouteView ControlRoute
-		{
-			get { return _route; }
-		}
+		{ get; set; }
 		#endregion Properties
 
 
@@ -54,19 +54,19 @@ namespace MapView.Forms.Observers
 			var tpBorder = new TabPageBorder(tabControl);
 			tpBorder.TabPageBorder_init();
 
-			_top = new TopView();
-			_top.Name       = "TopViewControl";
-			_top.Dock       = DockStyle.Fill;
-			_top.TabIndex   = 0;
-			_top.Tag        = "TOPROUTE";
-			tp_Top.Controls.Add(_top);
+			ControlTop = new TopView();
+			ControlTop.Name       = "TopViewControl";
+			ControlTop.Dock       = DockStyle.Fill;
+			ControlTop.TabIndex   = 0;
+			ControlTop.Tag        = "TOPROUTE";
+			tp_Top.Controls.Add(ControlTop);
 
-			_route = new RouteView();
-			_route.Name     = "RouteViewControl";
-			_route.Dock     = DockStyle.Fill;
-			_route.TabIndex = 0;
-			_route.Tag      = "TOPROUTE";
-			tp_Route.Controls.Add(_route);
+			ControlRoute = new RouteView();
+			ControlRoute.Name     = "RouteViewControl";
+			ControlRoute.Dock     = DockStyle.Fill;
+			ControlRoute.TabIndex = 0;
+			ControlRoute.Tag      = "TOPROUTE";
+			tp_Route.Controls.Add(ControlRoute);
 		}
 		#endregion cTor
 
@@ -78,7 +78,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnShown(EventArgs e)
 		{
-			_route.ActivateConnector();
+			ControlRoute.ActivateConnector();
 
 //			base.OnShown(e);
 		}
@@ -96,8 +96,8 @@ namespace MapView.Forms.Observers
 
 			if (tabControl.SelectedIndex == TAB_TOP)
 			{
-				_top.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
-				_top.TopControl.Focus();
+				ControlTop.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+				ControlTop.TopControl.Focus();
 			}
 
 //			base.OnActivated(e);
@@ -118,7 +118,7 @@ namespace MapView.Forms.Observers
 			switch (tabControl.SelectedIndex)
 			{
 				case TAB_TOP:
-					if (_top.TopControl.Focused)
+					if (ControlTop.TopControl.Focused)
 					{
 						switch (keyData)
 						{
@@ -137,7 +137,7 @@ namespace MapView.Forms.Observers
 					break;
 
 				case TAB_ROT:
-					if (_route.RouteControl.Focused)
+					if (ControlRoute.RouteControl.Focused)
 					{
 						switch (keyData)
 						{
@@ -149,7 +149,7 @@ namespace MapView.Forms.Observers
 							case Keys.Shift | Keys.Right:
 							case Keys.Shift | Keys.Up:
 							case Keys.Shift | Keys.Down:
-								_route.RouteControl.Navigate(keyData);
+								ControlRoute.RouteControl.Navigate(keyData);
 								return true;
 						}
 					}
@@ -180,10 +180,10 @@ namespace MapView.Forms.Observers
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
-							if (!_top.TopControl.Focused)
+							if (!ControlTop.TopControl.Focused)
 							{
 								e.SuppressKeyPress = true;
-								_top.TopControl.Focus();
+								ControlTop.TopControl.Focus();
 							}
 							else
 								MainViewOverlay.that.Edit(e);
@@ -191,13 +191,13 @@ namespace MapView.Forms.Observers
 
 						case TAB_ROT:
 							e.SuppressKeyPress = true;
-							if (_route.RouteControl.Focused)
+							if (ControlRoute.RouteControl.Focused)
 							{
 								RouteView.NodeSelected = null;
 								RouteView.Invalidator();
 							}
 							else
-								_route.RouteControl.Focus();
+								ControlRoute.RouteControl.Focus();
 							break;
 					}
 					break;
@@ -207,10 +207,10 @@ namespace MapView.Forms.Observers
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
-							_top.OnOptionsClick(_top.GetOptionsButton(), EventArgs.Empty);
+							ControlTop.OnOptionsClick(ControlTop.GetOptionsButton(), EventArgs.Empty);
 							break;
 						case TAB_ROT:
-							_route.OnOptionsClick(_route.GetOptionsButton(), EventArgs.Empty);
+							ControlRoute.OnOptionsClick(ControlRoute.GetOptionsButton(), EventArgs.Empty);
 							break;
 					}
 					break;
@@ -238,7 +238,7 @@ namespace MapView.Forms.Observers
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
-							if (_top.TopControl.Focused)
+							if (ControlTop.TopControl.Focused)
 							{
 								e.SuppressKeyPress = true;
 								MainViewOverlay.that.Navigate(e.KeyData, true);
@@ -246,10 +246,10 @@ namespace MapView.Forms.Observers
 							break;
 
 						case TAB_ROT:
-							if (_route.RouteControl.Focused) // is Route
+							if (ControlRoute.RouteControl.Focused) // is Route
 							{
 								e.SuppressKeyPress = true;
-								_route.RouteControl.Navigate(e.KeyData);
+								ControlRoute.RouteControl.Navigate(e.KeyData);
 							}
 							break;
 					}
@@ -258,10 +258,10 @@ namespace MapView.Forms.Observers
 				case Keys.Shift | Keys.Subtract:
 				case Keys.Shift | Keys.Add:
 				case Keys.Enter:
-					if (tabControl.SelectedIndex == TAB_ROT && _route.RouteControl.Focused)
+					if (tabControl.SelectedIndex == TAB_ROT && ControlRoute.RouteControl.Focused)
 					{
 						e.SuppressKeyPress = true;
-						_route.RouteControl.Navigate(e.KeyData);
+						ControlRoute.RouteControl.Navigate(e.KeyData);
 					}
 					break;
 
@@ -277,7 +277,7 @@ namespace MapView.Forms.Observers
 					{
 						e.SuppressKeyPress = true;
 						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-						_top.QuadrantControl.doMouseDown(args, slot);
+						ControlTop.QuadrantControl.doMouseDown(args, slot);
 					}
 					break;
 
@@ -309,8 +309,8 @@ namespace MapView.Forms.Observers
 				{
 					LogFile.WriteLine("TopRouteViewForm.OnFormClosing()");
 					RegistryInfo.UpdateRegistry(this);
-					_top.DisposeObserver();
-					_route.RouteControl.DisposeControl();
+					ControlTop.DisposeObserver();
+					ControlRoute.RouteControl.DisposeControl();
 				}
 				else
 				{

@@ -19,31 +19,14 @@ namespace MapView.Forms.Observers
 	/// <see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see>.</remarks>
 	internal sealed partial class TopViewForm
 		:
-			Form,
-			IObserverProvider
+			Form
 	{
-		#region Fields
-		private TopView _top;
-		#endregion Fields
-
-
 		#region Properties
 		/// <summary>
-		/// Gets <c><see cref="_top"/></c> as a child of
-		/// <c><see cref="ObserverControl"/></c>.
+		/// Gets/Sets <c><see cref="TileView"/></c>.
 		/// </summary>
 		internal TopView Control
-		{
-			get { return _top; }
-		}
-
-		/// <summary>
-		/// Satisfies <see cref="IObserverProvider"/>.
-		/// </summary>
-		public ObserverControl Observer
-		{
-			get { return _top; }
-		}
+		{ get; set; }
 		#endregion Properties
 
 
@@ -55,14 +38,14 @@ namespace MapView.Forms.Observers
 		{
 			InitializeComponent();
 
-			_top = new TopView();
+			Control = new TopView();
 
-			_top.Name     = "TopViewControl";
-			_top.Dock     = DockStyle.Fill;
-			_top.TabIndex = 0;
-			_top.Tag      = "TOP";
+			Control.Name     = "TopViewControl";
+			Control.Dock     = DockStyle.Fill;
+			Control.TabIndex = 0;
+			Control.Tag      = "TOP";
 
-			Controls.Add(_top);
+			Controls.Add(Control);
 		}
 		#endregion cTor
 
@@ -78,8 +61,8 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			_top.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
-			_top.TopControl.Focus();
+			Control.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+			Control.TopControl.Focus();
 
 //			base.OnActivated(e);
 		}
@@ -96,7 +79,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			if (_top.TopControl.Focused)
+			if (Control.TopControl.Focused)
 			{
 				switch (keyData)
 				{
@@ -135,10 +118,10 @@ namespace MapView.Forms.Observers
 			switch (e.KeyData)
 			{
 				case Keys.Escape:
-					if (!_top.TopControl.Focused)
+					if (!Control.TopControl.Focused)
 					{
 						e.SuppressKeyPress = true;
-						_top.TopControl.Focus();
+						Control.TopControl.Focus();
 					}
 					else
 						MainViewOverlay.that.Edit(e);
@@ -146,7 +129,7 @@ namespace MapView.Forms.Observers
 
 				case Keys.Control | Keys.O:
 					e.SuppressKeyPress = true;
-					_top.OnOptionsClick(_top.GetOptionsButton(), EventArgs.Empty);
+					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.Q:
@@ -164,7 +147,7 @@ namespace MapView.Forms.Observers
 				case Keys.Shift | Keys.End:
 				case Keys.Shift | Keys.PageUp:
 				case Keys.Shift | Keys.PageDown:
-					if (_top.TopControl.Focused)
+					if (Control.TopControl.Focused)
 					{
 						e.SuppressKeyPress = true;
 						MainViewOverlay.that.Navigate(e.KeyData, true);
@@ -185,7 +168,7 @@ namespace MapView.Forms.Observers
 			{
 				e.SuppressKeyPress = true;
 				var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-				_top.QuadrantControl.doMouseDown(args, slot);
+				Control.QuadrantControl.doMouseDown(args, slot);
 			}
 //			base.OnKeyDown(e);
 		}
@@ -210,7 +193,7 @@ namespace MapView.Forms.Observers
 					LogFile.WriteLine("TopViewForm.OnFormClosing()");
 					RegistryInfo.UpdateRegistry(this);
 					ObserverManager.ToolFactory.DisposeTopviewTools(); // disposes tools for TopRouteView also. but might not be req'd
-					_top.DisposeObserver();
+					Control.DisposeObserver();
 				}
 				else
 				{

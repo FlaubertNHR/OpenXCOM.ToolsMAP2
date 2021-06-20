@@ -69,37 +69,29 @@ namespace MapView.Forms.MainView
 
 			// Register the subsidiary viewers via this ObserverManager.
 			// TODO: Make TopView's and RouteView's Options static.
-			TopRouteView.ControlTop  .Options = ObserverManager.TopView  .Control.Options;
-			TopRouteView.ControlRoute.Options = ObserverManager.RouteView.Control.Options;
+			TopRouteView.ControlTop  .Options = TopView  .Control.Options;
+			TopRouteView.ControlRoute.Options = RouteView.Control.Options;
 
-			LoadDefaultOptions(RegistryInfo.TileView,  TileView);
-			LoadDefaultOptions(RegistryInfo.TopView,   TopView);
-			LoadDefaultOptions(RegistryInfo.RouteView, RouteView);
+			TileView .Control.LoadControlDefaultOptions();
+			TopView  .Control.LoadControlDefaultOptions();
+			RouteView.Control.LoadControlDefaultOptions();
+
+			OptionsManager.SetOptionsType(RegistryInfo.TileView,  TileView .Control.Options);
+			OptionsManager.SetOptionsType(RegistryInfo.TopView,   TopView  .Control.Options);
+			OptionsManager.SetOptionsType(RegistryInfo.RouteView, RouteView.Control.Options);
 		}
 
-		/// <summary>
-		/// Sets a viewer as an observer and loads its default options.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="f"></param>
-		/// <remarks><see cref="TileViewForm"/>, <see cref="TopViewForm"/>,
-		/// <see cref="RouteViewForm"/> only.</remarks>
-		private static void LoadDefaultOptions(string key, IObserverProvider f)
-		{
-			//DSShared.LogFile.WriteLine("ObserverManager.LoadDefaultOptions()");
-			//DSShared.LogFile.WriteLine(". key= " + key);
-			//DSShared.LogFile.WriteLine(". f= " + (f as Form).Name);
-
-			ObserverControl observer = f.Observer; // ie. TileView, TopView, RouteView.
-			observer.LoadControlDefaultOptions();
-			OptionsManager.SetOptionsType(key, observer.Options);
-		}
 
 		/// <summary>
 		/// Sets or resets the <c><see cref="MapFile"/></c> for controls that
 		/// need it.
 		/// </summary>
 		/// <param name="file"></param>
+		/// <remarks>Note that
+		/// <c><see cref="MainViewUnderlay.MapFile">MainViewUnderlay.MapFile</see></c>
+		/// and
+		/// <c><see cref="RouteControlParent">RouteControlParent</see>.MapFile</c>
+		/// also contain references to the currently loaded <c>MapFile</c>.</remarks>
 		internal static void AssignMapfile(MapFile file)
 		{
 			TileView.Control                       .SetMapfile(file);

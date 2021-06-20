@@ -5,8 +5,8 @@ using System.Windows.Forms;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Inherited by <see cref="TileView"/>, <see cref="TopView"/>,
-	/// <see cref="RouteView"/>.
+	/// Inherited by <c><see cref="TileView"/></c>, <c><see cref="TopView"/></c>,
+	/// <c><see cref="RouteView"/></c>.
 	/// </summary>
 	internal class ObserverControl
 		:
