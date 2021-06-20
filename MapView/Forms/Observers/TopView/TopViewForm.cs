@@ -11,19 +11,19 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// This is the form that contains TopView.
+	/// This is the form that contains <c><see cref="TopView"/></c>.
 	/// </summary>
 	/// <remarks>This is instantiated by
-	/// <see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see>
+	/// <c><see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see></c>
 	/// and closed by
-	/// <see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see>.</remarks>
+	/// <c><see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see></c>.</remarks>
 	internal sealed partial class TopViewForm
 		:
 			Form
 	{
 		#region Properties
 		/// <summary>
-		/// Gets/Sets <c><see cref="TileView"/></c>.
+		/// Gets/Sets <c><see cref="TopView"/></c>.
 		/// </summary>
 		internal TopView Control
 		{ get; set; }

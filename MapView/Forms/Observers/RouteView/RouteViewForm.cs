@@ -9,12 +9,12 @@ using MapView.Forms.MainView;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// This is the form that contains RouteView.
+	/// This is the form that contains <c><see cref="RouteView"/></c>.
 	/// </summary>
 	/// <remarks>This is instantiated by
-	/// <see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see>
+	/// <c><see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see></c>
 	/// and closed by
-	/// <see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see>.</remarks>
+	/// <c><see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see></c>.</remarks>
 	internal sealed partial class RouteViewForm
 		:
 			Form
