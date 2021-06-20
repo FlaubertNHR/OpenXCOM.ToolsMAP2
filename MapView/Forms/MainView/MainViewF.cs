@@ -54,7 +54,7 @@ namespace MapView
 		#region Fields
 		private CompositedTreeView MapTree;
 
-		internal Options Options;
+		internal Options Options = new Options();
 
 		internal ColorHelp     _fcolors;
 		private  About         _fabout;
@@ -342,7 +342,6 @@ namespace MapView
 			Option.InitializeParsers();
 			LogFile.WriteLine("OptionParsers initialized.");
 
-			Options = new Options();
 			OptionsManager.SetOptionsType(RegistryInfo.MainView, Options);
 
 			LoadDefaultOptions();									// TODO: check if this should go after the managers load
