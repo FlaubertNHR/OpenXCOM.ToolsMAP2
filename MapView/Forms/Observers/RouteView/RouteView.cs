@@ -23,7 +23,7 @@ namespace MapView.Forms.Observers
 	/// - otherwise RouteView and TopRouteView(Route) instantiate separately.</remarks>
 	internal sealed partial class RouteView
 		:
-			ObserverControl
+			OptionableControl
 	{
 		#region Enums
 		private enum ConnectNodesType

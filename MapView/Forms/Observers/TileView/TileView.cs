@@ -23,7 +23,7 @@ namespace MapView.Forms.Observers
 {
 	internal sealed partial class TileView
 		:
-			ObserverControl
+			OptionableControl
 	{
 		internal void DisposeObserver()
 		{

@@ -13,7 +13,7 @@ namespace MapView.Forms.Observers
 {
 	internal sealed partial class TopView
 		:
-			ObserverControl
+			OptionableControl
 	{
 		/// <summary>
 		/// Disposes <see cref="TopControl"/>.

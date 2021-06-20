@@ -9,7 +9,7 @@ namespace MapView.Forms.Observers
 	/// <c><see cref="RouteView"/></c> for their
 	/// <c><see cref="MapView.Options"/></c>.
 	/// </summary>
-	internal class ObserverControl
+	internal class OptionableControl
 		:
 			UserControl
 	{
