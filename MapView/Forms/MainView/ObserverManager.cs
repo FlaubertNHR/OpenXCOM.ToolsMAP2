@@ -14,12 +14,10 @@ namespace MapView.Forms.MainView
 	internal static class ObserverManager
 	{
 		#region Fields (static)
-		internal static ToolstripFactory ToolFactory;
-
 		/// <summary>
 		/// A list of forms that shall be closed when MapView quits.
 		/// </summary>
-		private static readonly IList<Form> _viewers = new List<Form>();
+		private static readonly IList<Form> _observers = new List<Form>();
 		#endregion Fields (static)
 
 
@@ -35,6 +33,9 @@ namespace MapView.Forms.MainView
 
 		internal static TopRouteViewForm TopRouteView
 		{ get; private set; }
+
+		internal static ToolstripFactory ToolFactory
+		{ get; private set; }
 		#endregion Properties (static)
 
 
@@ -48,7 +49,7 @@ namespace MapView.Forms.MainView
 		/// <c><see cref="Observers.TopView"/></c>, and
 		/// <c><see cref="Observers.RouteView"/></c>.
 		/// </summary>
-		internal static void CreateViewers()
+		internal static void CreateObservers()
 		{
 			TileView     = new TileViewForm();
 			TopView      = new TopViewForm();
@@ -60,10 +61,10 @@ namespace MapView.Forms.MainView
 			TopView     .Control   .AddToolstripControls();
 			TopRouteView.ControlTop.AddToolstripControls();
 
-			_viewers.Add(TileView);
-			_viewers.Add(TopView);
-			_viewers.Add(RouteView);
-			_viewers.Add(TopRouteView);
+			_observers.Add(TileView);
+			_observers.Add(TopView);
+			_observers.Add(RouteView);
+			_observers.Add(TopRouteView);
 
 
 			TileView .Control.LoadControlDefaultOptions();
@@ -114,11 +115,11 @@ namespace MapView.Forms.MainView
 		/// <item><c><see cref="TopRouteViewForm"/></c></item>
 		/// </list>
 		/// </summary>
-		/// <remarks>Called by <c>MainViewF.SafeQuit()</c> so this really does
-		/// close the forms and update registry values.</remarks>
-		internal static void CloseViewers()
+		/// <remarks>Called by <c><see cref="MainViewF"></see>.SafeQuit()</c> so
+		/// this really does close the forms and update registry values.</remarks>
+		internal static void CloseObservers()
 		{
-			foreach (var f in _viewers)
+			foreach (var f in _observers)
 				f.Close();
 		}
 		#endregion Methods (static)
@@ -126,8 +127,8 @@ namespace MapView.Forms.MainView
 
 		#region Update UI (static)
 		/// <summary>
-		/// Invalidates the <see cref="TopControl">TopControls</see> in TopView
-		/// and TopRouteView(Top).
+		/// Invalidates the <c><see cref="TopControl">TopControls</see></c> in
+		/// <c>TopView</c> and <c>TopRouteView(Top)</c>.
 		/// </summary>
 		internal static void InvalidateTopControls()
 		{
@@ -136,8 +137,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Invalidates the <see cref="QuadrantControl">QuadrantControls</see>
-		/// in TopView and TopRouteView(Top).
+		/// Invalidates the <c><see cref="QuadrantControl">QuadrantControls</see></c>
+		/// in <c>TopView</c> and <c>TopRouteView(Top)</c>.
 		/// </summary>
 		internal static void InvalidateQuadrantControls()
 		{

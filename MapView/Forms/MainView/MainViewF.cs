@@ -360,7 +360,7 @@ namespace MapView
 			LogFile.WriteLine("Monotone sprites loaded.");
 
 
-			ObserverManager.CreateViewers(); // adds each subsidiary viewer's options and Options-type etc.
+			ObserverManager.CreateObservers(); // adds each subsidiary viewer's options and Options-type etc.
 			LogFile.WriteLine("ObserverManager initialized.");
 
 			ObserverManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
@@ -953,7 +953,7 @@ namespace MapView
 			if (RouteView.RoutesInfo != null)
 				RouteView.RoutesInfo.Close();	// close RouteView's RoutesInfo dialog
 
-			ObserverManager.CloseViewers();		// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
+			ObserverManager.CloseObservers();	// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
 
 			MonotoneSprites.Dispose();
