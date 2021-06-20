@@ -423,7 +423,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Loads default options for <c>TopView</c>.
 		/// </summary>
-		internal override void LoadControlDefaultOptions()
+		internal void LoadControlDefaultOptions()
 		{
 			//LogFile.WriteLine("TopView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);

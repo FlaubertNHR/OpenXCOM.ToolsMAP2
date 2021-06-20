@@ -6,7 +6,8 @@ namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// Inherited by <c><see cref="TileView"/></c>, <c><see cref="TopView"/></c>,
-	/// <c><see cref="RouteView"/></c>.
+	/// <c><see cref="RouteView"/></c> for their
+	/// <c><see cref="MapView.Options"/></c>.
 	/// </summary>
 	internal class ObserverControl
 		:
@@ -20,17 +21,5 @@ namespace MapView.Forms.Observers
 			set { _options = value; }
 		}
 		#endregion Properties
-
-
-		#region Methods (pseudo-abstract)
-		/// <summary>
-		/// Loads default options for <c><see cref="TileView"/></c>,
-		/// <c><see cref="TopView"/></c>, and <c><see cref="RouteView"/></c>.
-		/// </summary>
-		/// <remarks>Do not make this abstract because the controls' designers
-		/// will foff instead of displaying their controls.</remarks>
-		internal virtual void LoadControlDefaultOptions()
-		{}
-		#endregion Methods (pseudo-abstract)
 	}
 }
