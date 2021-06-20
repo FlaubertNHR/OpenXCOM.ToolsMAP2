@@ -129,12 +129,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
-		private static Options _options = new Options();
-		internal static Options Options
-		{
-			get { return _options; }
-			set { _options = value; }
-		}
+		internal static Options Options = new Options();
 
 		/// <summary>
 		/// A class-object that holds TileView's optionable Properties.
@@ -154,8 +149,7 @@ namespace MapView.Forms.Observers
 		/// equally arcane TypeDescriptors. Both of which had been implemented
 		/// but then rejected.
 		/// </summary>
-		internal static TileViewOptionables Optionables
-		{ get; private set; }
+		internal static TileViewOptionables Optionables = new TileViewOptionables();
 		#endregion Properties (static)
 
 
@@ -166,8 +160,6 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal TileView()
 		{
-			Optionables = new TileViewOptionables(this);
-
 			InitializeComponent();
 			var tpBorder = new TabPageBorder(tcPartTypes);
 			tpBorder.TabPageBorder_init();

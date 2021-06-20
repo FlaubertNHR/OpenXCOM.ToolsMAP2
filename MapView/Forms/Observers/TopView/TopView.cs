@@ -51,12 +51,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
-		private static Options _options = new Options();
-		internal static Options Options
-		{
-			get { return _options; }
-			set { _options = value; }
-		}
+		internal static Options Options = new Options();
 
 		/// <summary>
 		/// A class-object that holds TopView's optionable Properties.
@@ -76,8 +71,7 @@ namespace MapView.Forms.Observers
 		/// equally arcane TypeDescriptors. Both of which had been implemented
 		/// but then rejected.
 		/// </summary>
-		internal static TopViewOptionables Optionables
-		{ get; set; }
+		internal static TopViewOptionables Optionables = new TopViewOptionables();
 		#endregion Properties (static)
 
 
@@ -117,8 +111,6 @@ namespace MapView.Forms.Observers
 		/// will each invoke and maintain their own instantiations.</remarks>
 		internal TopView()
 		{
-			Optionables = new TopViewOptionables();
-
 			InitializeComponent();
 
 			SuspendLayout();

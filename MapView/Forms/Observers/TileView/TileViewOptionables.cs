@@ -24,23 +24,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-		#region Fields
-		private readonly TileView _tileView;
-		#endregion Fields
-
-
-		#region cTor
-		/// <summary>
-		/// cTor.
-		/// </summary>
-		/// <param name="tileView"></param>
-		internal TileViewOptionables(TileView tileView)
-		{
-			_tileView = tileView;
-		}
-		#endregion cTor
-
-
 		#region Fields (static)
 		/// <summary>
 		/// These are default colors for the SpecialProperty of a tilepart.
@@ -365,7 +348,7 @@ The path specified can be used to start an application or to open a specified"
 			}
 
 			TilePanel.SpecialBrushes[special].Color = color;
-			_tileView.GetSelectedPanel().Invalidate();
+			ObserverManager.TileView.Control.GetSelectedPanel().Invalidate();
 
 			if (MainViewF.that._fcolors != null)
 				MainViewF.that._fcolors.UpdateSpecialPropertyColors();

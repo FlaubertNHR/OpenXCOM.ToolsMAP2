@@ -89,12 +89,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
-		private static Options _options = new Options();
-		internal static Options Options
-		{
-			get { return _options; }
-			set { _options = value; }
-		}
+		internal static Options Options = new Options();
 
 		/// <summary>
 		/// A class-object that holds RouteView's optionable Properties.
@@ -114,8 +109,7 @@ namespace MapView.Forms.Observers
 		/// equally arcane TypeDescriptors. Both of which had been implemented
 		/// but then rejected.
 		/// </summary>
-		internal static RouteViewOptionables Optionables
-		{ get; private set; }
+		internal static RouteViewOptionables Optionables = new RouteViewOptionables();
 
 
 		private static RouteNode _nodeSelected;
@@ -175,8 +169,6 @@ namespace MapView.Forms.Observers
 		/// their own instantiations.</remarks>
 		public RouteView()
 		{
-			Optionables = new RouteViewOptionables();
-
 			InitializeComponent();
 
 			RouteControl = new RouteControl();
