@@ -190,7 +190,7 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
-		/// 
+		/// Handler for <c><see cref="MapFile"/>.LevelSelected</c>.
 		/// </summary>
 		/// <param name="args"></param>
 		private void OnLevelSelectedObserver(LevelSelectedArgs args)
@@ -454,7 +454,7 @@ namespace MapView.Forms.Observers
 											OptionableType.TopView);
 					_foptions.Text = "TopView Options";
 
-					OptionsManager.Views.Add(_foptions);
+					OptionsManager.Viewers.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{

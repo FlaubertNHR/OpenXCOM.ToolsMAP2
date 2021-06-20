@@ -59,7 +59,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal static void PopulateMenu()
 		{
-			Options options = OptionsManager.GetMainOptions();
+			Options options = MainViewF.that.Options;
 			OptionChangedEvent changer = MainViewF.Optionables.OnFlagChanged;
 
 			CreateSecondaryViewerMenuitem(ObserverManager.TileView,     Shortcut.F5, options, MainViewOptionables.def_StartTileView,     changer);	// id #0
@@ -146,7 +146,7 @@ namespace MapView.Forms.MainView
 		{
 			Viewers.Enabled = true;
 
-			Options options = OptionsManager.GetMainOptions();
+			Options options = MainViewF.that.Options;
 			for (int id = MI_TILE; id != MI_cutoff; ++id)
 			{
 				if (id == MI_sep1) ++id; // skip the separator

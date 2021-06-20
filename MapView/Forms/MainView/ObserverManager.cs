@@ -43,12 +43,10 @@ namespace MapView.Forms.MainView
 		/// Creates the observers (secondary viewers) and adds
 		/// toolstrip-controls for <c><see cref="MainViewF"/></c> and
 		/// <c><see cref="Observers.TopView"/></c> (<c>TopView</c> and
-		/// <c>TopRouteView</c>). Also synchronizes Optionables for
-		/// <c>TopRouteView(Top)</c> and <c>TopRouteView(Route)</c> to
-		/// <c><see cref="Observers.TopView.Optionables">TopView.Optionables</see></c>
-		/// and <c><see cref="Observers.RouteView.Optionables">RouteView.Optionables</see></c>
-		/// respectively. Then loads default options for <c><see cref="Observers.TileView"/></c>,
-		/// <c><see cref="Observers.TopView"/></c>, and <c><see cref="Observers.RouteView"/></c>.
+		/// <c>TopRouteView</c>). Also loads default options for
+		/// <c><see cref="Observers.TileView"/></c>,
+		/// <c><see cref="Observers.TopView"/></c>, and
+		/// <c><see cref="Observers.RouteView"/></c>.
 		/// </summary>
 		internal static void CreateViewers()
 		{
@@ -72,9 +70,9 @@ namespace MapView.Forms.MainView
 			TopView  .Control.LoadControlDefaultOptions();
 			RouteView.Control.LoadControlDefaultOptions();
 
-			OptionsManager.SetOptionsType(RegistryInfo.TileView,  Observers.TileView .Options);
-			OptionsManager.SetOptionsType(RegistryInfo.TopView,   Observers.TopView  .Options);
-			OptionsManager.SetOptionsType(RegistryInfo.RouteView, Observers.RouteView.Options);
+			OptionsManager.SetOptionsSection(RegistryInfo.TileView,  Observers.TileView .Options);
+			OptionsManager.SetOptionsSection(RegistryInfo.TopView,   Observers.TopView  .Options);
+			OptionsManager.SetOptionsSection(RegistryInfo.RouteView, Observers.RouteView.Options);
 		}
 
 

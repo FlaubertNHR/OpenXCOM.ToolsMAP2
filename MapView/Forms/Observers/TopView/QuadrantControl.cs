@@ -164,7 +164,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the details of LMB and RMB wrt the QuadrantControls.
+		/// Handles the details of LMB and RMB wrt the <c>QuadrantControl</c>.
 		/// </summary>
 		/// <param name="button"></param>
 		/// <param name="clicks"></param>
@@ -224,7 +224,7 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
-		/// 
+		/// Handler for <c><see cref="MapFile"/>.LocationSelected</c>.
 		/// </summary>
 		/// <param name="args"></param>
 		private void OnLocationSelectedObserver(LocationSelectedArgs args)
@@ -236,7 +236,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Handler for <c><see cref="MapFile"/>.LevelSelected</c>.
 		/// </summary>
 		/// <param name="args"></param>
 		private void OnLevelSelectedObserver(LevelSelectedArgs args)
@@ -262,8 +262,6 @@ namespace MapView.Forms.Observers
 		/// little bit fragile.</remarks>
 		private void OnClicksElapsed(object source, ElapsedEventArgs e)
 		{
-			//DSShared.LogFile.WriteLine("QuadrantControl.OnClicksElapsed() _t1Clicks= " + _t1Clicks);
-
 			_t1.Stop();
 
 			switch (_t1clicks)

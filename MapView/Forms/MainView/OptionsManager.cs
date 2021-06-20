@@ -13,10 +13,10 @@ namespace MapView.Forms.MainView
 		#region Fields (static)
 		/// <summary>
 		/// A dictionary that indexes <c><see cref="Options"/></c> by viewer.
-		/// The type of Options - ie MainView Options, TileView Options, TopView
+		/// The type of <c><see cref="Options"/></c> - ie MainView Options, TileView Options, TopView
 		/// Options, or RouteView Options.
 		/// </summary>
-		private static readonly Dictionary<string, Options> _optionsTypes =
+		private static readonly Dictionary<string, Options> _sections =
 							new Dictionary<string, Options>();
 		#endregion Fields (static)
 
@@ -24,13 +24,13 @@ namespace MapView.Forms.MainView
 		#region Properties (static)
 		private static IList<Form> _views = new List<Form>();
 		/// <summary>
-		/// A list of the <see cref="OptionsForm">OptionsForms</see> that are
-		/// instantiated by each viewer respectively.
+		/// A list of the <c><see cref="OptionsForm">OptionsForms</see></c> that
+		/// are instantiated by each viewer respectively.
 		/// </summary>
 		/// <remarks>The list is used only to close any open forms when MapView
 		/// quits - such forms last the lifetime of the app after they are
 		/// instantiated.</remarks>
-		internal static IList<Form> Views
+		internal static IList<Form> Viewers
 		{
 			get { return _views; }
 		}
@@ -42,26 +42,16 @@ namespace MapView.Forms.MainView
 		/// Adds <c><see cref="Options"/></c> by key (viewer) to the
 		/// types-dictionary.
 		/// </summary>
-		/// <param name="key">a viewer by string - see <c><see cref="RegistryInfo"/></c>
-		/// constants</param>
+		/// <param name="key">a viewer by string - see
+		/// <c><see cref="RegistryInfo"/></c> constants</param>
 		/// <param name="val"><c><see cref="Options"/></c></param>
 		/// <remarks>Is used by <c><see cref="MainViewF()"/></c> to assign
 		/// MainView's options-type and by
 		/// <c><see cref="ObserverManager"/>.LoadDefaultOptions()</c> to assign
 		/// TileView's, TopView's, and RouteView's options-types.</remarks>
-		internal static void SetOptionsType(string key, Options val)
+		internal static void SetOptionsSection(string key, Options val)
 		{
-			_optionsTypes[key] = val;
-		}
-
-		/// <summary>
-		/// Gets the Options for MainView.
-		/// </summary>
-		/// <returns></returns>
-		/// <remarks>Is used by <c><see cref="MenuManager"/></c>.</remarks>
-		internal static Options GetMainOptions()
-		{
-			return _optionsTypes[RegistryInfo.MainView];
+			_sections[key] = val;
 		}
 
 
@@ -81,8 +71,8 @@ namespace MapView.Forms.MainView
 				KeyvalPair keyval;
 				while ((keyval = Varidia.getKeyvalPair(sr)) != null) // NOTE: These are not keyvals; they are section-headers in the options file.
 				{
-					if (_optionsTypes.ContainsKey(keyval.Key))
-						ReadOptions(sr, _optionsTypes[keyval.Key]); // NOTE: This reads the options as keyvals.
+					if (_sections.ContainsKey(keyval.Key))
+						ReadOptions(sr, _sections[keyval.Key]); // NOTE: This reads the options as keyvals.
 				}
 				return true;
 			}
@@ -133,8 +123,8 @@ namespace MapView.Forms.MainView
 			if (fs != null)
 			using (var sw = new StreamWriter(fs))
 			{
-				foreach (string key in _optionsTypes.Keys)
-					_optionsTypes[key].WriteOptions(key, sw);
+				foreach (string key in _sections.Keys)
+					_sections[key].WriteOptions(key, sw);
 			}
 
 			if (pfeT != pfe)
@@ -146,7 +136,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal static void CloseOptions()
 		{
-			foreach (var view in Views)
+			foreach (var view in Viewers)
 				view.Close();
 		}
 		#endregion Methods (static)

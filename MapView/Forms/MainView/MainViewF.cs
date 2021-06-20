@@ -342,7 +342,7 @@ namespace MapView
 			Option.InitializeParsers();
 			LogFile.WriteLine("OptionParsers initialized.");
 
-			OptionsManager.SetOptionsType(RegistryInfo.MainView, Options);
+			OptionsManager.SetOptionsSection(RegistryInfo.MainView, Options);
 
 			LoadDefaultOptions();									// TODO: check if this should go after the managers load
 			LogFile.WriteLine("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
@@ -755,7 +755,7 @@ namespace MapView
 											OptionableType.MainView);
 					_foptions.Text = "MainView Options";
 
-					OptionsManager.Views.Add(_foptions);
+					OptionsManager.Viewers.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{

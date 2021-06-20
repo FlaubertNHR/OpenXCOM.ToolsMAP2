@@ -510,7 +510,7 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
-		/// 
+		/// Handler for <c><see cref="MapFile"/>.LocationSelected</c>.
 		/// </summary>
 		/// <param name="args"></param>
 		/// <remarks>This will fire twice whenever the location changes: once by
@@ -529,7 +529,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Handler for <c><see cref="MapFile"/>.LevelSelected</c>.
 		/// </summary>
 		/// <param name="args"></param>
 		/// <remarks>This will fire twice whenever the location changes: once by
@@ -2477,7 +2477,7 @@ namespace MapView.Forms.Observers
 											OptionableType.RouteView);
 					_foptions.Text = "RouteView Options";
 
-					OptionsManager.Views.Add(_foptions);
+					OptionsManager.Viewers.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{
