@@ -548,7 +548,7 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// 
+		/// Sets the current <c><see cref="MapFile"/></c>
 		/// </summary>
 		/// <param name="file"></param>
 		internal void SetMapfile(MapFile file)

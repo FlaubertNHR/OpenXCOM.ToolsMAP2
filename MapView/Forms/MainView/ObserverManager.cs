@@ -87,7 +87,7 @@ namespace MapView.Forms.MainView
 		/// <c><see cref="MainViewUnderlay.MapFile">MainViewUnderlay.MapFile</see></c>
 		/// and
 		/// <c><see cref="RouteControlParent">RouteControlParent</see>.MapFile</c>
-		/// also contain references to the currently loaded <c>MapFile</c>.</remarks>
+		/// also contain pointers to the currently loaded <c>MapFile</c>.</remarks>
 		internal static void AssignMapfile(MapFile file)
 		{
 			TileView.Control                       .SetMapfile(file);

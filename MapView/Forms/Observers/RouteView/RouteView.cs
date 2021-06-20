@@ -162,7 +162,7 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiates the RouteView viewer and its components/controls.
+		/// cTor. Instantiates this <c>RouteView</c> control.
 		/// </summary>
 		/// <remarks><c><see cref="RouteViewForm"/></c> and
 		/// <c><see cref="TopRouteViewForm"/></c> will each create and maintain
@@ -201,14 +201,16 @@ namespace MapView.Forms.Observers
 			co_Link4UnitType.Items.AddRange(unitTypes);
 			co_Link5UnitType.Items.AddRange(unitTypes);
 
-			// TODO: change the distance textboxes to labels.
-
 			DeselectNode();
 		}
 		#endregion cTor
 
 
 		#region Methods
+		/// <summary>
+		/// Sets the current <c><see cref="MapFile"/></c>.
+		/// </summary>
+		/// <param name="file"></param>
 		internal void SetMapfile(MapFile file)
 		{
 			if (_file != null)
