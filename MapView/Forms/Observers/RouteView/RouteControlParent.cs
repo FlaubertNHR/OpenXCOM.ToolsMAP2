@@ -10,11 +10,11 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The base class for <see cref="MapView.Forms.Observers.RouteControl"/>.
-	/// Generally handles mousey things and keyboard navigation.
+	/// The base class for
+	/// <c><see cref="RouteControl"/></c>. Generally handles mousey things and
+	/// keyboard navigation.
 	/// </summary>
-	/// <remarks><see cref="MapView.Forms.Observers.RouteView"/> also handles
-	/// mouse events.</remarks>
+	/// <remarks><c><see cref="RouteView"/></c> also handles mouse events.</remarks>
 	internal class RouteControlParent
 		:
 			UserControl
@@ -40,23 +40,26 @@ namespace MapView.Forms.Observers
 
 		#region Fields
 		/// <summary>
-		/// '_col' and '_row' track the location of the last mouse-overed tile;
-		/// '_col' needs to be set to "-1" when the mouse is not over a tile.
-		/// Their values need to be updated only when the mouseovered
-		/// tile-location changes via <see cref="OnMouseMove"/>.
+		/// <c>_col</c> and <c>_row</c> track the location of the last
+		/// mouse-overed tile; <c>_col</c> needs to be set to <c>-1</c> when the
+		/// mouse is not over a tile. Their values need to be updated only when
+		/// the mouseovered tile-location changes via
+		/// <c><see cref="OnMouseMove()">OnMouseMove()</see></c>.
 		/// </summary>
 		internal int _col = -1;
 		/// <summary>
-		/// '_col' and '_row' track the location of the last mouse-overed tile;
-		/// '_col' needs to be set to "-1" when the mouse is not over a tile.
-		/// Their values need to be updated only when the mouseovered
-		/// tile-location changes via <see cref="OnMouseMove"/>.
+		/// <c>_col</c> and <c>_row</c> track the location of the last
+		/// mouse-overed tile; <c>_col</c> needs to be set to <c>-1</c> when the
+		/// mouse is not over a tile. Their values need to be updated only when
+		/// the mouseovered tile-location changes via
+		/// <c><see cref="OnMouseMove()">OnMouseMove()</see></c>.
 		/// </summary>
 		internal int _row = -1;
 
 		/// <summary>
-		/// Tracks tile-location for move/up/down mouse events: '_col' and
-		/// '_row' in a convenient Point object.
+		/// Tracks tile-location for move/up/down mouse events:
+		/// <c><see cref="_col"/></c> and <c><see cref="_row"/></c> in a
+		/// convenient <c>Point</c> object.
 		/// </summary>
 		private Point _loc;
 
@@ -70,17 +73,18 @@ namespace MapView.Forms.Observers
 
 		#region Properties (static)
 		/// <summary>
-		/// A node that is currently selected. Set its value via
-		/// <see cref="RouteView.NodeSelected">RouteView.NodeSelected</see>
-		/// only.
+		/// A <c><see cref="XCom.RouteNode"/></c> that is currently selected.
 		/// </summary>
+		/// <remarks>Set its value via
+		/// <c><see cref="RouteView.NodeSelected">RouteView.NodeSelected</see></c>
+		/// only.</remarks>
 		protected static RouteNode NodeSelected
 		{ get; private set; }
 
 		/// <summary>
-		/// Sets <see cref="NodeSelected"/>.
+		/// Sets <c><see cref="NodeSelected"/></c>.
 		/// </summary>
-		/// <param name="node"></param>
+		/// <param name="node">a <c><see cref="XCom.RouteNode"/></c></param>
 		internal static void SetNodeSelected(RouteNode node)
 		{
 			NodeSelected = node;
@@ -95,8 +99,7 @@ namespace MapView.Forms.Observers
 			get { return _file; }
 			private set
 			{
-				_file = value;
-				OnResize(EventArgs.Empty);
+				_file = value; OnResize(EventArgs.Empty);
 			}
 		}
 
@@ -145,7 +148,8 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiated only as the parent of RouteControl.
+		/// cTor. Instantiated only as the parent of
+		/// <c><see cref="RouteControl"/></c>.
 		/// </summary>
 		protected RouteControlParent()
 		{
@@ -165,8 +169,8 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
-		/// A ticker that checks if the mouse has left the building. See also
-		/// RouteView.OnRouteControlMouseLeave().
+		/// A ticker that checks if the cursor has left the building. See also
+		/// <c><see cref="RouteView"/>.OnRouteControlMouseLeave()</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -193,7 +197,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Fires from (child)RouteControl.
+		/// Fires from <c><see cref="RouteControl"/></c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
@@ -229,11 +233,18 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Selects a tile on the mouse-down event.
+		/// 
+		/// 
+		/// Fires
+		/// <c><see cref="RouteControl.RouteControlMouseDownEvent">RouteControl.RouteControlMouseDownEvent</see></c>
+		/// which is handled by
+		/// <c><see cref="RouteView"></see>.OnRouteControlMouseDown()</c> for
+		/// <c><see cref="RouteNode"/></c> operations.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>Any changes that are done here regarding node-selection
-		/// should be reflected in RouteView.SelectNode() since that is an
-		/// alternate way to select a tile/node.</remarks>
+		/// should be reflected in <c><see cref="RouteView"/>.SelectNode()</c>
+		/// since that is an alternate way to select a tile/node.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			Select();
@@ -258,7 +269,11 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Calls RouteView.OnRouteControlMouseUp().
+		/// Fires
+		/// <c><see cref="RouteControl.RouteControlMouseUpEvent">RouteControl.RouteControlMouseUpEvent</see></c>
+		/// which is handled by
+		/// <c><see cref="RouteView"></see>.OnRouteControlMouseUp()</c> to
+		/// complete a dragnode operation.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -307,8 +322,8 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Keyboard navigation called by RouteViewForm (form-level) key events
-		/// OnKeyDown() and ProcessCmdKey().
+		/// Keyboard navigation called by <c><see cref="RouteViewForm"/></c> key
+		/// events <c>OnKeyDown()</c> and <c>ProcessCmdKey()</c>.
 		/// </summary>
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
@@ -481,25 +496,6 @@ namespace MapView.Forms.Observers
 			}
 		}
 
-
-/*		/// <summary>
-		/// Gets the tile contained at (x,y) wrt client-area in local screen
-		/// coordinates.
-		/// </summary>
-		/// <param name="x">ref to the x-position of the mouse-cursor wrt
-		/// Client-area (refout is the tile-x location)</param>
-		/// <param name="y">ref to the y-position of the mouse-cursor wrt
-		/// Client-area (refout is the tile-y location)</param>
-		/// <returns>the corresponding MapTile or null if (x,y) is an invalid
-		/// location for a tile</returns>
-		internal protected MapTile GetTile(ref int x, ref int y)
-		{
-			var loc = GetTileLocation(x,y);
-			if ((x = loc.X) != -1)
-				return MapFile[x, (y = loc.Y)];
-
-			return null;
-		} */
 
 		/// <summary>
 		/// Converts a position from client-coordinates to a tile-location.

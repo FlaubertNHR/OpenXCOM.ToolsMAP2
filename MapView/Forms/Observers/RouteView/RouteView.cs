@@ -1547,8 +1547,9 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <remarks>Any changes that are done here regarding node-selection
-		/// should be reflected in RouteControlParent.OnMouseDown() since that
-		/// is an alternate way to select a tile/node.</remarks>
+		/// should be reflected in
+		/// <c><see cref="RouteControlParent"/>.OnMouseDown()</c> since that is
+		/// an alternate way to select a tile/node.</remarks>
 		private void SelectNode(int id)
 		{
 			RouteNode node = _file.Routes[id];

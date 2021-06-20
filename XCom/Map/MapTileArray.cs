@@ -16,7 +16,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// Instantiates a MapTileArray object.
+		/// Instantiates a <c>MapTileArray</c>.
 		/// </summary>
 		/// <param name="cols"></param>
 		/// <param name="rows"></param>
@@ -34,7 +34,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Gets the tile at a specified location.
+		/// Gets the <c><see cref="MapTile"/></c> at a specified location.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
@@ -52,7 +52,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Sets a specified tile at a specified location.
+		/// Sets a specified <c><see cref="MapTile"/></c> at a specified
+		/// location.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
@@ -69,7 +70,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the Id of a specified tile location.
+		/// Gets the ID of a specified tile location in this <c>MapTileArray</c>.
 		/// </summary>
 		/// <param name="col">x-position</param>
 		/// <param name="row">y-position</param>

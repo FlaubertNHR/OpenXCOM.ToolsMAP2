@@ -12,7 +12,8 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The derived class for RouteControl. Handles drawing/painting the panel.
+	/// The derived class <c>RouteControl</c>. Handles drawing/painting the
+	/// panel.
 	/// </summary>
 	internal sealed class RouteControl
 		:
@@ -134,7 +135,7 @@ namespace MapView.Forms.Observers
 		private static readonly Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();
 		/// <summary>
-		/// Pens for use in RouteControl.
+		/// Pens for use in <c>RouteControl</c>.
 		/// </summary>
 		internal static Dictionary<string, Pen> RoutePens
 		{
@@ -144,7 +145,7 @@ namespace MapView.Forms.Observers
 		private static readonly Dictionary<string, SolidBrush> _brushes =
 							new Dictionary<string, SolidBrush>();
 		/// <summary>
-		/// Brushes for use in RouteControl.
+		/// Brushes for use in <c>RouteControl</c>.
 		/// </summary>
 		internal static Dictionary<string, SolidBrush> RouteBrushes
 		{
@@ -373,7 +374,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Draws link-lines for a given node.
+		/// Draws link-lines for a given <c><see cref="RouteNode"/></c>.
 		/// </summary>
 		/// <param name="xSrc"></param>
 		/// <param name="ySrc"></param>
@@ -490,7 +491,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Draws the nodes.
+		/// Draws the <c><see cref="RouteNode">RouteNodes</see></c>.
 		/// </summary>
 		private void DrawNodes()
 		{
@@ -661,7 +662,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Helper for DrawNodeMeters().
+		/// Helper for <c><see cref="DrawNodeMeters()">DrawNodeMeters()</see></c>.
 		/// </summary>
 		/// <param name="infoboxX"></param>
 		/// <param name="infoboxY"></param>
