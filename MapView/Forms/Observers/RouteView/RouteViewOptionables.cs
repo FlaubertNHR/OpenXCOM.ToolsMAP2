@@ -27,23 +27,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-		#region Fields
-		private readonly RouteView _routeView;
-		#endregion Fields
-
-
-		#region cTor
-		/// <summary>
-		/// cTor.
-		/// </summary>
-		/// <param name="routeView"></param>
-		internal RouteViewOptionables(RouteView routeView)
-		{
-			_routeView = routeView;
-		}
-		#endregion cTor
-
-
 		#region Properties (optionable)
 		// NOTE: The Properties are public for Reflection.
 
@@ -85,12 +68,12 @@ namespace MapView.Forms.Observers
 			{
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
-					_routeView.Options[str_GridLineWidth].Value =
+					RouteView.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Viceroy(1,5);
 				}
 				else if ((_gridLineWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
-					_routeView.Options[str_GridLineWidth].Value = _gridLineWidth;
+					RouteView.Options[str_GridLineWidth].Value = _gridLineWidth;
 				}
 			}
 		}
@@ -123,12 +106,12 @@ namespace MapView.Forms.Observers
 			{
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
-					_routeView.Options[str_GridLine10Width].Value =
+					RouteView.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Viceroy(1,5);
 				}
 				else if ((_gridLine10Width = value.Viceroy(1,5)) != value) // on user-changed
 				{
-					_routeView.Options[str_GridLine10Width].Value = _gridLine10Width;
+					RouteView.Options[str_GridLine10Width].Value = _gridLine10Width;
 				}
 			}
 		}
@@ -164,12 +147,12 @@ namespace MapView.Forms.Observers
 			{
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
-					_routeView.Options[str_WallWidth].Value =
+					RouteView.Options[str_WallWidth].Value =
 					_wallWidth = value.Viceroy(1,10);
 				}
 				else if ((_wallWidth = value.Viceroy(1,10)) != value) // on user-changed
 				{
-					_routeView.Options[str_WallWidth].Value = _wallWidth;
+					RouteView.Options[str_WallWidth].Value = _wallWidth;
 				}
 			}
 		}
@@ -248,12 +231,12 @@ namespace MapView.Forms.Observers
 			{
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
-					_routeView.Options[str_NodeOpacity].Value =
+					RouteView.Options[str_NodeOpacity].Value =
 					_nodeOpacity = value.Viceroy(0,255);
 				}
 				else if ((_nodeOpacity = value.Viceroy(0,255)) != value) // on user-changed
 				{
-					_routeView.Options[str_NodeOpacity].Value = _nodeOpacity;
+					RouteView.Options[str_NodeOpacity].Value = _nodeOpacity;
 				}
 			}
 		}
@@ -289,12 +272,12 @@ namespace MapView.Forms.Observers
 			{
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
-					_routeView.Options[str_LinkWidth].Value =
+					RouteView.Options[str_LinkWidth].Value =
 					_linkWidth = value.Viceroy(1,5);
 				}
 				else if ((_linkWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
-					_routeView.Options[str_LinkWidth].Value = _linkWidth;
+					RouteView.Options[str_LinkWidth].Value = _linkWidth;
 				}
 			}
 		}
@@ -327,12 +310,12 @@ namespace MapView.Forms.Observers
 			{
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
-					_routeView.Options[str_LinkSelectedWidth].Value =
+					RouteView.Options[str_LinkSelectedWidth].Value =
 					_linkSelectedWidth = value.Viceroy(1,5);
 				}
 				else if ((_linkSelectedWidth = value.Viceroy(1,5)) != value) // on user-changed
 				{
-					_routeView.Options[str_LinkSelectedWidth].Value = _linkSelectedWidth;
+					RouteView.Options[str_LinkSelectedWidth].Value = _linkSelectedWidth;
 				}
 			}
 		}
@@ -411,12 +394,12 @@ namespace MapView.Forms.Observers
 			{
 				if ((RouteView._foptions as OptionsForm) == null) // on load
 				{
-					_routeView.Options[str_StartConnector].Value =
+					RouteView.Options[str_StartConnector].Value =
 					_startConnector = value.Viceroy(LinkOff, LinkForBac);
 				}
 				else if ((_startConnector = value.Viceroy(LinkOff, LinkForBac)) != value) // on user-changed
 				{
-					_routeView.Options[str_StartConnector].Value = _startConnector;
+					RouteView.Options[str_StartConnector].Value = _startConnector;
 				}
 			}
 		}
@@ -438,7 +421,7 @@ namespace MapView.Forms.Observers
 			get { return _descriptionHeight; }
 			set
 			{
-				ObserverManager.RouteView.Control.Options[str_DescriptionHeight].Value =
+				RouteView.Options[str_DescriptionHeight].Value =
 				_descriptionHeight = value;
 			}
 		}

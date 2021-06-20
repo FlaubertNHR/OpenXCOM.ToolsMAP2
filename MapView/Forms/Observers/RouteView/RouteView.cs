@@ -23,7 +23,7 @@ namespace MapView.Forms.Observers
 	/// - otherwise RouteView and TopRouteView(Route) instantiate separately.</remarks>
 	internal sealed partial class RouteView
 		:
-			OptionableControl
+			UserControl
 	{
 		#region Enums
 		private enum ConnectNodesType
@@ -89,6 +89,13 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
+		private static Options _options = new Options();
+		internal static Options Options
+		{
+			get { return _options; }
+			set { _options = value; }
+		}
+
 		/// <summary>
 		/// A class-object that holds RouteView's optionable Properties.
 		/// @note C# doesn't allow inheritance of multiple class-objects, which
@@ -168,7 +175,7 @@ namespace MapView.Forms.Observers
 		/// their own instantiations.</remarks>
 		public RouteView()
 		{
-			Optionables = new RouteViewOptionables(this);
+			Optionables = new RouteViewOptionables();
 
 			InitializeComponent();
 

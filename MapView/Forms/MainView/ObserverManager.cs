@@ -67,18 +67,14 @@ namespace MapView.Forms.MainView
 			_viewers.Add(RouteView);
 			_viewers.Add(TopRouteView);
 
-			// Register the subsidiary viewers via this ObserverManager.
-			// TODO: Make TopView's and RouteView's Options static.
-			TopRouteView.ControlTop  .Options = TopView  .Control.Options;
-			TopRouteView.ControlRoute.Options = RouteView.Control.Options;
 
 			TileView .Control.LoadControlDefaultOptions();
 			TopView  .Control.LoadControlDefaultOptions();
 			RouteView.Control.LoadControlDefaultOptions();
 
-			OptionsManager.SetOptionsType(RegistryInfo.TileView,  TileView .Control.Options);
-			OptionsManager.SetOptionsType(RegistryInfo.TopView,   TopView  .Control.Options);
-			OptionsManager.SetOptionsType(RegistryInfo.RouteView, RouteView.Control.Options);
+			OptionsManager.SetOptionsType(RegistryInfo.TileView,  Observers.TileView .Options);
+			OptionsManager.SetOptionsType(RegistryInfo.TopView,   Observers.TopView  .Options);
+			OptionsManager.SetOptionsType(RegistryInfo.RouteView, Observers.RouteView.Options);
 		}
 
 

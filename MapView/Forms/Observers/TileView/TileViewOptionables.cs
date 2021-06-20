@@ -293,7 +293,7 @@ The path specified can be used to start an application or to open a specified"
 			get { return _descriptionHeight; }
 			set
 			{
-				ObserverManager.TileView.Control.Options[str_DescriptionHeight].Value =
+				TileView.Options[str_DescriptionHeight].Value =
 				_descriptionHeight = value;
 			}
 		}

@@ -23,7 +23,7 @@ namespace MapView.Forms.Observers
 {
 	internal sealed partial class TileView
 		:
-			OptionableControl
+			UserControl
 	{
 		internal void DisposeObserver()
 		{
@@ -129,6 +129,13 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
+		private static Options _options = new Options();
+		internal static Options Options
+		{
+			get { return _options; }
+			set { _options = value; }
+		}
+
 		/// <summary>
 		/// A class-object that holds TileView's optionable Properties.
 		/// @note C# doesn't allow inheritance of multiple class-objects, which

@@ -13,7 +13,7 @@ namespace MapView.Forms.Observers
 {
 	internal sealed partial class TopView
 		:
-			OptionableControl
+			UserControl
 	{
 		/// <summary>
 		/// Disposes <see cref="TopControl"/>.
@@ -51,6 +51,13 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
+		private static Options _options = new Options();
+		internal static Options Options
+		{
+			get { return _options; }
+			set { _options = value; }
+		}
+
 		/// <summary>
 		/// A class-object that holds TopView's optionable Properties.
 		/// @note C# doesn't allow inheritance of multiple class-objects, which
@@ -110,7 +117,7 @@ namespace MapView.Forms.Observers
 		/// will each invoke and maintain their own instantiations.</remarks>
 		internal TopView()
 		{
-			Optionables = new TopViewOptionables(this);
+			Optionables = new TopViewOptionables();
 
 			InitializeComponent();
 

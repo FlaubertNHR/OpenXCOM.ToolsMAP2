@@ -200,9 +200,6 @@
     <Compile Include="Forms\Observers\TopView\TopViewOptionables.cs" />
     <Compile Include="Forms\Observers\BlobColorTool.cs" />
     <Compile Include="Forms\Observers\BlobDrawService.cs" />
-    <Compile Include="Forms\Observers\OptionableControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Forms\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
