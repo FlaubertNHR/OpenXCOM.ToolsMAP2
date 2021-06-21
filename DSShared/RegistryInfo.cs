@@ -28,6 +28,7 @@ namespace DSShared
 		private const string TilesetEditor = "TilesetEditor";
 		private const string ScanG         = "ScanG";
 		private const string ColorHelp     = "ColorHelp";
+		private const string McdInfo       = "McdInfo";
 
 		private const string Options       = "Options";
 
@@ -154,6 +155,7 @@ namespace DSShared
 				case "TilesetEditor":    return TilesetEditor;	// is in manifest
 				case "ScanGViewer":      return ScanG;
 				case "ColorHelp":        return ColorHelp;
+				case "McdInfoF":         return McdInfo;
 
 				case "McdviewF":         return McdView;		// is in manifest
 				case "CopyPanelF":       return CopyPanel;

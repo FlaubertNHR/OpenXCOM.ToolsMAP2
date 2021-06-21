@@ -40,7 +40,7 @@ namespace MapView
 			this.Controls.Add(this.rtbInfo);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "McdInfoF";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "MCD Info";
 			this.ResumeLayout(false);
 

@@ -38,7 +38,7 @@ namespace MapView.Forms.Observers
 
 			if (McdInfo != null)
 			{
-				McdInfo.Dispose();
+				McdInfo.Close(); // needs to update registry
 				McdInfo = null;
 			}
 
@@ -361,7 +361,7 @@ namespace MapView.Forms.Observers
 
 		#region Events (menu)
 		/// <summary>
-		/// Opens the <c><see cref="McdInfoF"/></c> dialog.
+		/// Opens or hides the <c><see cref="McdInfoF"/></c> dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -390,19 +390,16 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnExternalProcessClick(object sender, EventArgs e)
 		{
-			if (_file != null) // TODO: huh
+			var pfe = new ExternalProcessService(Options).GetFullpath();
+			if (File.Exists(pfe))
 			{
-				var pfe = new ExternalProcessService(Options).GetFullpath();
-				if (File.Exists(pfe))
-				{
-					// change to pfe-dir so that accessing MCDEdit.txt (eg) doesn't cause probls.
-					Directory.SetCurrentDirectory(Path.GetDirectoryName(pfe));
+				// change to pfe-dir so that accessing MCDEdit.txt (eg) doesn't cause probls.
+				Directory.SetCurrentDirectory(Path.GetDirectoryName(pfe));
 
-					Process.Start(new ProcessStartInfo(pfe));
+				Process.Start(new ProcessStartInfo(pfe));
 
-					// change back to app-dir
-					Directory.SetCurrentDirectory(SharedSpace.GetShareString(SharedSpace.ApplicationDirectory));
-				}
+				// change back to app-dir
+				Directory.SetCurrentDirectory(SharedSpace.GetShareString(SharedSpace.ApplicationDirectory));
 			}
 		}
 

@@ -50,6 +50,12 @@ namespace MapView
 			rtbInfo.ReadOnly = true;
 
 			UpdateData();
+
+			if (!RegistryInfo.RegisterProperties(this))
+			{
+				Left = 200;
+				Top  = 100;
+			}
 		}
 		#endregion cTor
 
@@ -62,11 +68,15 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
-			if (!RegistryInfo.FastClose(e.CloseReason)
-				&& !MainViewF.Quit)
+			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				ObserverManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
-				e.Cancel = true;
+				if (!MainViewF.Quit)
+				{
+					ObserverManager.TileView.Control.OnMcdInfoClick(null, EventArgs.Empty);
+					e.Cancel = true;
+				}
+				else
+					RegistryInfo.UpdateRegistry(this);
 			}
 			base.OnFormClosing(e);
 		}
