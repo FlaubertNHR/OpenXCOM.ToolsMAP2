@@ -361,7 +361,7 @@ namespace MapView.Forms.Observers
 
 		#region Events (menu)
 		/// <summary>
-		/// Opens the <see cref="McdInfoF"/> dialog.
+		/// Opens the <c><see cref="McdInfoF"/></c> dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -371,7 +371,7 @@ namespace MapView.Forms.Observers
 			if (it.Checked = !it.Checked)
 			{
 				if (McdInfo == null)
-					McdInfo = new McdInfoF(this);
+					McdInfo = new McdInfoF();
 
 				McdInfo.Show(); // no owner.
 

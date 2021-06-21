@@ -21,11 +21,6 @@ namespace MapView
 		#endregion Fields (static)
 
 
-		#region Fields
-		TileView _tileView;
-		#endregion Fields
-
-
 		#region Properties (override)
 		/// <summary>
 		/// Prevents flicker by setting the 'WS_EX_COMPOSITED' flag.
@@ -46,12 +41,9 @@ namespace MapView
 		/// <summary>
 		/// cTor. Instantiates an MCD-info screen.
 		/// </summary>
-		/// <param name="tileView"></param>
-		internal McdInfoF(TileView tileView)
+		internal McdInfoF()
 		{
 			InitializeComponent();
-
-			_tileView = tileView;
 
 			rtbInfo.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
 			rtbInfo.WordWrap = false;
@@ -131,11 +123,13 @@ namespace MapView
 		/// </summary>
 		internal void UpdateData()
 		{
+			TileView tileView = ObserverManager.TileView.Control;
+
 			Tilepart part; McdRecord record;
-			if ((part = _tileView.SelectedTilepart) != null
+			if ((part = tileView.SelectedTilepart) != null
 				&& (record = part.Record) != null)
 			{
-				Text = TITLE + " - " + _tileView.GetTerrainLabel() + "  terId " + part.TerId;
+				Text = TITLE + " - " + tileView.GetTerrainLabel() + "  terId " + part.TerId;
 
 //				rtbInfo.SelectionColor = Color.Black;
 
