@@ -44,11 +44,11 @@ namespace XCom
 		/// so-called Blank MCD records (the scorched earth parts that are
 		/// instantiated when x-com itself loads). MapView, however, subtracts
 		/// the count of blanks-records to assign the id-values in the
-		/// <see cref="Parts">Parts</see> list; terrain- and terrainset-ids are
-		/// easier to cope with that way. The part-ids will then be incremented
-		/// again by the blanks-count when a .MAP file gets saved. Put another
-		/// way #0 and #1 are reserved, by x-com but not by MapView, for the 2
-		/// BLANKS tiles.
+		/// <c><see cref="Parts">Parts</see></c> list; terrain- and
+		/// terrainset-ids are easier to cope with that way. The part-ids will
+		/// then be incremented again by the blanks-count when a .MAP file gets
+		/// saved. Put another way #0 and #1 are reserved, by x-com but not by
+		/// MapView, for the 2 BLANKS tiles.
 		/// </summary>
 		private const int BlanksReservedCount = 2;
 		#endregion Fields (static)
@@ -142,8 +142,7 @@ namespace XCom
 		/// User will be shown a dialog asking to save if the Routes changed.
 		/// </summary>
 		/// <remarks>The setter must be mediated by <c>RouteView.RoutesChanged</c>
-		/// in order to show/hide a "routes changed" label to/from
-		/// <c>RouteView.pa_DataFields</c>.</remarks>
+		/// in order to enable/disable <c>RouteView.bu_Save</c>.</remarks>
 		public bool RoutesChanged
 		{ get; set; }
 
@@ -184,8 +183,6 @@ namespace XCom
 				IList<Tilepart> parts,
 				RouteNodes routes)
 		{
-			//LogFile.WriteLine("MapFile..cTor");
-
 			string dir = Path.Combine(descriptor.Basepath, GlobalsXC.MapsDir);
 			string pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
 
@@ -260,14 +257,14 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Creates a tile with its four parts.
+		/// Creates a <c><see cref="MapTile"/></c> with its four parts.
 		/// </summary>
 		/// <param name="parts">a <c><see cref="Tilepart"/></c> list that can be used</param>
 		/// <param name="id_floor">the floor id</param>
 		/// <param name="id_west">the westwall id</param>
 		/// <param name="id_north">the northwall id</param>
 		/// <param name="id_content">the content id</param>
-		/// <returns>the MapTile created</returns>
+		/// <returns>the <c>MapTile</c> created</returns>
 		/// <remarks>If an id in the Mapfile exceeds the maxid of the file's
 		/// terrainset a crippled tilepart will be created for it and displayed
 		/// in MainView.</remarks>
@@ -390,9 +387,9 @@ namespace XCom
 
 		#region Methods (save/write)
 		/// <summary>
-		/// Saves the current Mapfile.
+		/// Saves the current <c>MapFile</c>.
 		/// </summary>
-		/// <returns>true on success</returns>
+		/// <returns><c>true</c> on success</returns>
 		public bool SaveMap()
 		{
 			return WriteMapfile(_pfe);
@@ -484,14 +481,14 @@ namespace XCom
 		/// <summary>
 		/// Saves the current Routefile.
 		/// </summary>
-		/// <returns>true on success</returns>
+		/// <returns><c>true</c> on success</returns>
 		public bool SaveRoutes()
 		{
 			return Routes.SaveRoutes();
 		}
 
 		/// <summary>
-		/// Exports the routes to a different file.
+		/// Exports the Routes to a different file.
 		/// </summary>
 		/// <param name="pf">path-file w/out extension</param>
 		public void ExportRoutes(string pf)
@@ -503,8 +500,10 @@ namespace XCom
 
 		#region Methods (routenodes)
 		/// <summary>
-		/// Assigns route-nodes to tiles when this MapFile object is
-		/// instantiated or when importing a Routes file.
+		/// Assigns <c><see cref="RouteNode">RouteNodes</see></c> to
+		/// <c><see cref="MapTile">MapTiles</see></c> when this <c>MapFile</c>
+		/// is instantiated or when importing a <c><see cref="Routes"/></c>
+		/// file.
 		/// </summary>
 		public void SetupRouteNodes()
 		{
@@ -517,8 +516,9 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Clears all route-nodes before <c>RouteView.OnImportClick()</c> or
-		/// for a <c><see cref="MapFile.MapResize()">MapFile.MapResize()</see></c>.
+		/// Clears all <c><see cref="RouteNode">RouteNodes</see></c> before
+		/// <c>RouteView.OnImportClick()</c> or for a
+		/// <c><see cref="MapResize()">MapResize()</see></c>.
 		/// </summary>
 		public void ClearRouteNodes()
 		{
@@ -531,11 +531,11 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Adds a <c><see cref="RouteNode"/></c> to a <c><see cref="MapTile"/></c>
-		/// at a given location.
+		/// Adds a <c><see cref="RouteNode"/></c> to a
+		/// <c><see cref="MapTile"/></c> at a given location.
 		/// </summary>
 		/// <param name="location"></param>
-		/// <returns>the route-node</returns>
+		/// <returns>the <c>RouteNode</c></returns>
 		public RouteNode AddRouteNode(MapLocation location)
 		{
 			RouteNode node = Routes.AddNode(
@@ -677,8 +677,9 @@ namespace XCom
 
 
 		/// <summary>
-		/// Gets the copyable text that is displayed in an Infobox when a
-		/// tileset has parts that exceed the terrainset count.
+		/// Gets the copyable text that is displayed in an
+		/// <c><see cref="Infobox"/></c> when a tileset has parts that exceed
+		/// the terrainset count.
 		/// </summary>
 		/// <returns></returns>
 		private string GetCopyableWarning()
@@ -735,14 +736,17 @@ namespace XCom
 		/// <param name="cols">cols for the new Map</param>
 		/// <param name="rows">rows for the new Map</param>
 		/// <param name="levs">levs for the new Map</param>
-		/// <param name="zType">MRZT_TOP to add or subtract delta-levels
-		/// starting at the top level, MRZT_BOT to add or subtract delta-levels
-		/// starting at the ground level - but only if a height difference is
-		/// found for either case</param>
+		/// <param name="zType"><c><see cref="MapResizeZtype.MRZT_TOP">MapResizeZtype.MRZT_TOP</see></c>
+		/// to add or subtract delta-levels starting at the top level or
+		/// <c><see cref="MapResizeZtype.MRZT_BOT">MapResizeZtype.MRZT_BOT</see></c>
+		/// to add or subtract delta-levels starting at the ground level - but
+		/// only if a height difference is found for either case</param>
 		/// <returns>a bitwise int of changes
-		///          0x0 - no changes
-		///          0x1 - Map changed
-		///          0x2 - Routes changed</returns>
+		/// <list type="bullet">
+		/// <item><c><see cref="CHANGED_NOT"/></c> - no change</item>
+		/// <item><c><see cref="CHANGED_MAP"/></c> - Map changed</item>
+		/// <item><c><see cref="CHANGED_NOD"/></c> - Routes changed</item>
+		/// </list></returns>
 		public int MapResize(
 				int cols,
 				int rows,
