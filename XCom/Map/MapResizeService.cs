@@ -1,4 +1,7 @@
-﻿namespace XCom
+﻿using System;
+
+
+namespace XCom
 {
 	public enum MapResizeZtype
 	{
