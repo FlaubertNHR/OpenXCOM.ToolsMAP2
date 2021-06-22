@@ -15,13 +15,13 @@ namespace XCom
 		/// </summary>
 		/// <param name="terrain">the terrain label</param>
 		/// <param name="dirTerrain">path to the directory of the MCD-file</param>
-		/// <param name="spriteset">a <c>Spriteset</c> containing the terrain's
-		/// sprites</param>
+		/// <param name="terid">the id of this <c>Tilepart's</c> terrain in
+		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c></param>
 		/// <returns>an array of <c>Tileparts</c></returns>
 		internal static Tilepart[] CreateTileparts(
 				string terrain,
 				string dirTerrain,
-				Spriteset spriteset)
+				int terid)
 		{
 			//LogFile.WriteLine("TilepartFactory.CreateTileparts()");
 
@@ -40,7 +40,7 @@ namespace XCom
 					parts[id] = new Tilepart(
 										id,
 										new McdRecord(bindata),
-										spriteset);
+										terid);
 				}
 
 				Tilepart part;

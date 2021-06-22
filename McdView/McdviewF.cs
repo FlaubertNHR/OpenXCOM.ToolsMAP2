@@ -1045,11 +1045,11 @@ namespace McdView
 		/// </summary>
 		/// <param name="pfeMcd">path-file-extension of an MCD file</param>
 		/// <param name="pal">ufo- or tftd-battle palette</param>
-		/// <param name="terId">the record to select</param>
+		/// <param name="selid">the record to select</param>
 		public void LoadRecords(
 				string pfeMcd,
 				Palette pal,
-				int terId)
+				int selid)
 		{
 			using (var fs = FileService.OpenFile(pfeMcd))
 			if (fs != null)
@@ -1114,7 +1114,7 @@ namespace McdView
 					Parts = parts; // do not assign to 'Parts' until the array is gtg.
 					CacheLoad.SetCacheSaved(Parts);
 
-					if (terId < Parts.Length) Selid = terId;
+					if (selid < Parts.Length) Selid = selid;
 					else                      Selid = -1;
 
 					Changed =

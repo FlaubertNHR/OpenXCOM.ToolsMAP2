@@ -130,18 +130,18 @@ namespace XCom
 		/// <c>Descriptor</c> and returns an array of
 		/// <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
-		/// <param name="id">the id of the terrain in this tileset's
+		/// <param name="terid">the id of the terrain in this tileset's
 		/// <c><see cref="Terrains"/></c> dictionary.</param>
 		/// <returns>an array containing the <c>Tileparts</c> for the terrain,
 		/// or <c>null</c> if creating the <c>Spriteset</c> fails</returns>
 		/// <remarks>The TabwordLength of terrains in UFO and TFTD is 2-bytes.</remarks>
-		internal Tilepart[] CreateTerrain(int id)
+		internal Tilepart[] CreateTerrain(int terid)
 		{
-			Tuple<string,string> terrain = Terrains[id];
+			Tuple<string,string> terrain = Terrains[terid];
 			string terr = terrain.Item1;
 			string path = GetTerrainDirectory(terrain.Item2);
 
-			Spriteset spriteset = SpritesetManager.LoadSpriteset(
+			Spriteset spriteset = SpritesetManager.LoadSpriteset( // a pointer to the spriteset shall be stored in 'SpriteManager.Spritesets'
 															terr,
 															path,
 															SpritesetManager.TAB_WORD_LENGTH_2,
@@ -149,7 +149,7 @@ namespace XCom
 			if (spriteset != null)
 			{
 				//LogFile.WriteLine(". spriteset Valid - create tileparts");
-				return TilepartFactory.CreateTileparts(terr, path, spriteset);
+				return TilepartFactory.CreateTileparts(terr, path, terid); //, spriteset
 			}
 
 			//LogFile.WriteLine(". spriteset NOT Valid - ret null");

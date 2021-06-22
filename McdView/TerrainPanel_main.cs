@@ -179,7 +179,7 @@ namespace McdView
 				for (int i = id + 1; i != array.Length; ++i)
 				{
 					array[i] = Parts[i - 1];
-					array[i].TerId = i;
+					array[i].Id = i;
 				}
 
 				_bypassScrollZero = true;
@@ -223,7 +223,7 @@ namespace McdView
 							for (; i != length; ++i)
 							{
 								array[i] = Parts[i - _add];
-								array[i].TerId = i;
+								array[i].Id = i;
 							}
 
 							_bypassScrollZero = true;
@@ -288,7 +288,7 @@ namespace McdView
 						for (int pos = 0; pos != _partsCopied.Count; ++pos, ++i)
 						{
 							array[i] = _partsCopied[pos].CreateInsert();
-							array[i].TerId = i;
+							array[i].Id = i;
 
 							if (!isTer)
 							{
@@ -305,7 +305,7 @@ namespace McdView
 						break;
 
 					array[i] = Parts[j];
-					array[i].TerId = i;
+					array[i].Id = i;
 				}
 
 				_bypassScrollZero = true;
@@ -332,14 +332,14 @@ namespace McdView
 			{
 				if (Parts[i].Dead != null)
 				{
-					Parts[i].Record.DieTile = (byte)Parts[i].Dead.TerId;
+					Parts[i].Record.DieTile = (byte)Parts[i].Dead.Id;
 				}
 				else
 					Parts[i].Record.DieTile = (byte)0;
 
 				if (Parts[i].Altr != null)
 				{
-					Parts[i].Record.Alt_MCD = (byte)Parts[i].Altr.TerId;
+					Parts[i].Record.Alt_MCD = (byte)Parts[i].Altr.Id;
 				}
 				else
 					Parts[i].Record.Alt_MCD = (byte)0;
@@ -401,7 +401,7 @@ namespace McdView
 				}
 
 				Tilepart part_dst = part_src.CreateInsert();
-				part_dst.TerId = id_dst;
+				part_dst.Id = id_dst;
 				_ial_PartsList.Add(part_dst);
 
 				McdRecord record_dst = _ial_PartsList[id_dst].Record;
@@ -513,7 +513,7 @@ namespace McdView
 
 			for (int i = 0; i != _partsCopied.Count; ++i) // add parts that have been selected ->
 			{
-				addPart(_partsCopied[i].TerId, _ial_PartsList.Count);
+				addPart(_partsCopied[i].Id, _ial_PartsList.Count);
 			}
 
 
@@ -555,7 +555,7 @@ namespace McdView
 					else
 					{
 						array[i - j] = Parts[i];
-						array[i - j].TerId = i - j;
+						array[i - j].Id = i - j;
 					}
 				}
 
@@ -628,10 +628,10 @@ namespace McdView
 					array[i] = Parts[i];
 
 				array[id - 1] = Parts[id];
-				array[id - 1].TerId = id - 1;
+				array[id - 1].Id = id - 1;
 
 				array[id] = Parts[id - 1];
-				array[id].TerId = id;
+				array[id].Id = id;
 
 				for (int i = id + 1; i != Parts.Length; ++i)
 					array[i] = Parts[i];
@@ -663,10 +663,10 @@ namespace McdView
 					array[i] = Parts[i];
 
 				array[id] = Parts[id + 1];
-				array[id].TerId = id;
+				array[id].Id = id;
 
 				array[id + 1] = Parts[id];
-				array[id + 1].TerId = id + 1;
+				array[id + 1].Id = id + 1;
 
 				for (int i = id + 2; i != Parts.Length; ++i)
 					array[i] = Parts[i];

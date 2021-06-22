@@ -139,7 +139,7 @@ namespace MapView
 			if ((part = tileView.SelectedTilepart) != null
 				&& (record = part.Record) != null)
 			{
-				Text = TITLE + " - " + tileView.GetTerrainLabel() + "  terId " + part.TerId;
+				Text = TITLE + " - " + tileView.GetTerrainLabel() + "  terId " + part.Id;
 
 //				rtbInfo.SelectionColor = Color.Black;
 

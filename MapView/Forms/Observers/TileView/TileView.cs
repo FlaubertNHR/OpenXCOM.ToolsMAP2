@@ -539,7 +539,7 @@ namespace MapView.Forms.Observers
 						fMcdView.LoadRecords(
 										pfeMcd,
 										_file.Descriptor.Pal,
-										SelectedTilepart.TerId);
+										SelectedTilepart.Id);
 
 						ShowHideManager.HideViewers();
 						fMcdView.ShowDialog(ObserverManager.TileView); // <- Pause UI until McdView is closed.
@@ -687,7 +687,7 @@ namespace MapView.Forms.Observers
 			if (part != null)
 			{
 				title += " - " + GetTerrainLabel()
-					   + "  terId " + part.TerId
+					   + "  terId " + part.Id
 					   + "  setId " + part.SetId;
 			}
 			ObserverManager.TileView.Text = title;
@@ -704,7 +704,7 @@ namespace MapView.Forms.Observers
 			if (part != null)
 			{
 				info = _file.GetTerrainLabel(part)
-					 + "  terId " + part.TerId
+					 + "  terId " + part.Id
 					 + "  setId " + part.SetId;
 			}
 			tsslOver.Text = info;

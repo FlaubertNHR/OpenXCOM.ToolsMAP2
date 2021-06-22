@@ -46,10 +46,9 @@ namespace XCom
 		private static readonly IList<Spriteset> _spritesets = new List<Spriteset>();
 		/// <summary>
 		/// A list of <c><see cref="Spriteset">Spritesets</see></c> in
-		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c> or so.
+		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>.
 		/// </summary>
-//		/// <remarks>It has relevance only for MapInfoDialog and
-//		/// MainViewOptionables.SelectedTileColor/SelectedTileToner.</remarks>
+		/// <remarks>This pointer is used to get sprites only for MapView.</remarks>
 		public static IList<Spriteset> Spritesets
 		{
 			get { return _spritesets; }

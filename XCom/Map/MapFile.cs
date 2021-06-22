@@ -74,6 +74,13 @@ namespace XCom
 		public IList<Tilepart> Parts
 		{ get; private set; }
 
+		/// <summary>
+		/// The Map's terrainset.
+		/// </summary>
+		/// <remarks>A Map must have at least one terrain allocated. Ironically
+		/// a Map's terrain(s) are not referenced by a Mapfile; each Map needs
+		/// a separate configuration file that tells it what terrain(s) to use.
+		/// In MapView2 that file is "settings/MapTilesets.yml".</remarks>
 		public Dictionary<int, Tuple<string,string>> Terrains
 		{ get; private set; }
 
@@ -571,7 +578,7 @@ namespace XCom
 			int id = -1;
 			foreach (var part in Parts)
 			{
-				if (part.TerId == 0)
+				if (part.Id == 0)
 					++id;
 
 				if (part == tilepart)
@@ -594,7 +601,7 @@ namespace XCom
 			int id = -1;
 			foreach (var part in Parts)
 			{
-				if (part.TerId == 0)
+				if (part.Id == 0)
 					++id;
 
 				if (part == tilepart)

@@ -31,17 +31,6 @@ namespace XCom
 		#endregion Fields (static)
 
 
-		#region Fields
-		/// <summary>
-		/// The <c><see cref="Spriteset"/></c> of the
-		/// <c><see cref="_sprites"/></c> for this <c>Tilepart</c>.
-		/// </summary>
-		/// <remarks>A pointer to the <c>Spriteset</c> is maintained in addition
-		/// to <c>_sprites</c> in order for door-parts to animate.</remarks>
-		private Spriteset _spriteset;
-		#endregion Fields
-
-
 		#region Properties
 		/// <summary>
 		/// The <c><see cref="McdRecord"/></c> that has information about the
@@ -68,9 +57,9 @@ namespace XCom
 			set
 			{
 				if ((_altr = value) != null
-					&& _spriteset != null) // '_spriteset' is null in McdView
+					&& SpritesetManager.Spritesets.Count > TerId)
 				{
-					_spritealtr = _spriteset[_altr.Record.Sprite1];
+					_spritealtr = SpritesetManager.Spritesets[TerId][_altr.Record.Sprite1];
 				}
 				else
 					_spritealtr = null;
@@ -80,15 +69,6 @@ namespace XCom
 		/// <summary>
 		/// The sprite-array used to display and/or animate this <c>Tilepart</c>.
 		/// </summary>
-		/// <remarks>TODO: Instead of storing the sprite-references in
-		/// <c><see cref="Tilepart"/></c> reference the sprites directly in
-		/// <c><see cref="_spriteset"/></c> by <c><see cref="Record"/></c>.</remarks>
-		/// <code>
-		/// byte    id1    = Record.Sprite1;
-		/// XCImage sprite = spriteset.Sprites[id1];
-		/// </code>
-		/// <remarks>But unfortunately the current perspective is deeply
-		/// ingrained in the design of the code.</remarks>
 		private XCImage[] _sprites;
 
 		/// <summary>
@@ -109,7 +89,7 @@ namespace XCom
 		/// <summary>
 		/// The ID of this <c>Tilepart</c> in its terrain.
 		/// </summary>
-		public int TerId
+		public int Id
 		{ get; set; }
 
 		/// <summary>
@@ -120,6 +100,13 @@ namespace XCom
 		/// <remarks><c>SetId</c> is written to the Mapfile as a byte.</remarks>
 		public int SetId
 		{ get; internal set; }
+
+		/// <summary>
+		/// The ID of the terrain of this <c>Tilepart</c> in
+		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>
+		/// </summary>
+		public int TerId
+		{ get; set; }
 		#endregion Properties
 
 
@@ -130,24 +117,26 @@ namespace XCom
 		/// <param name="id">the id of this <c>Tilepart</c> in its recordset</param>
 		/// <param name="record">the <c><see cref="McdRecord"/></c> of this
 		/// <c>Tilepart</c></param>
-		/// <param name="spriteset">the <c><see cref="Spriteset"/></c> from
-		/// which to get the <c><see cref="_sprites"/></c> of this
-		/// <c>Tilepart</c></param>
-		/// <remarks><paramref name="spriteset"/> is <c>null</c> for McdView -
-		/// sprites shall be retrieved directly from a <c>Spriteset</c>.</remarks>
+		/// <param name="terid">the id of this <c>Tilepart's</c> terrain in
+		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c></param>
+		/// <param name="setsprites"><c>true</c> to reference this
+		/// <c>Tilepart's</c> sprites per <c><see cref="_sprites"/></c>,
+		/// <c>false</c> if McdView is going to handle the sprites itself</param>
 		public Tilepart(
 				int id,
 				McdRecord record,
-				Spriteset spriteset = null)
+				int terid = 0,
+				bool setsprites = true)
 		{
 			Record = record;
 
-			TerId = id;
+			Id    = id;
 			SetId = -1;
+			TerId = terid;
 
-			if ((_spriteset = spriteset) != null) // NOTA BENE: '_spriteset' and '_sprites' shall be null for McdView.
+			if (setsprites) // NOTA BENE: '_sprites' shall be null for McdView.
 			{
-				_sprites = new XCImage[PHASES]; // for MapView a part contains its own pointers to 8 sprites.
+				_sprites = new XCImage[PHASES]; // for MapView each part contains its own pointers to 8 sprites.
 
 				if (!Record.SlidingDoor && !Record.HingedDoor)
 				{
@@ -160,15 +149,15 @@ namespace XCom
 
 		/// <summary>
 		/// cTor[1]. Creates a blank <c>Tilepart</c> that's ready to go in
-		/// McdView (req'd: <c><see cref="TerId"/></c>). Also used for crippled
+		/// McdView (req'd: <c><see cref="Id"/></c>). Also used for crippled
 		/// parts on Mapfile load (req'd: <c><see cref="SetId"/></c>).
 		/// </summary>
 		public Tilepart(int id)
 		{
 			Record = new McdRecord(null);
 
-			TerId =
-			SetId = id;
+			Id = SetId = id;
+//			TerId = 0; // default
 		}
 
 		/// <summary>
@@ -205,14 +194,16 @@ namespace XCom
 		/// </summary>
 		private void SetSprites()
 		{
-			_sprites[0] = _spriteset[Record.Sprite1];
-			_sprites[1] = _spriteset[Record.Sprite2];
-			_sprites[2] = _spriteset[Record.Sprite3];
-			_sprites[3] = _spriteset[Record.Sprite4];
-			_sprites[4] = _spriteset[Record.Sprite5];
-			_sprites[5] = _spriteset[Record.Sprite6];
-			_sprites[6] = _spriteset[Record.Sprite7];
-			_sprites[7] = _spriteset[Record.Sprite8];
+			Spriteset spriteset = SpritesetManager.Spritesets[TerId];
+
+			_sprites[0] = spriteset[Record.Sprite1];
+			_sprites[1] = spriteset[Record.Sprite2];
+			_sprites[2] = spriteset[Record.Sprite3];
+			_sprites[3] = spriteset[Record.Sprite4];
+			_sprites[4] = spriteset[Record.Sprite5];
+			_sprites[5] = spriteset[Record.Sprite6];
+			_sprites[6] = spriteset[Record.Sprite7];
+			_sprites[7] = spriteset[Record.Sprite8];
 		}
 
 		/// <summary>
@@ -221,7 +212,7 @@ namespace XCom
 		/// </summary>
 		private void SetSprite1()
 		{
-			XCImage sprite = _spriteset[Record.Sprite1];
+			XCImage sprite = SpritesetManager.Spritesets[TerId][Record.Sprite1];
 			for (int i = 0; i != PHASES; ++i)
 				_sprites[i] = sprite;
 		}
@@ -233,8 +224,7 @@ namespace XCom
 		/// <remarks>This is for doors only.</remarks>
 		public void SetSprite1_altr()
 		{
-			if (_spriteset != null
-				&& (Record.SlidingDoor || Record.HingedDoor))
+			if (Record.SlidingDoor || Record.HingedDoor)
 			{
 				for (int i = 0; i != PHASES; ++i)
 					_sprites[i] = _spritealtr;
@@ -244,16 +234,15 @@ namespace XCom
 		/// <summary>
 		/// Toggles this <c>Tilepart's</c> array of sprites if it's a door-part.
 		/// </summary>
-		/// <param name="animate"><c>true</c> to animate through the 8 phases;
+		/// <param name="ani"><c>true</c> to animate through the 8 phases;
 		/// <c>false</c> to display only
 		/// <c><see cref="McdRecord.Sprite1">McdRecord.Sprite1</see></c>.</param>
 		/// <remarks>This is for doors only.</remarks>
-		public void ToggleDoorSprites(bool animate)
+		public void ToggleDoorSprites(bool ani)
 		{
-			if (_spriteset != null
-				&& (Record.SlidingDoor || Record.HingedDoor))
+			if (Record.SlidingDoor || Record.HingedDoor)
 			{
-				if (animate)
+				if (ani)
 				{
 					if (Record.SlidingDoor || Altr == null)
 					{
@@ -282,27 +271,28 @@ namespace XCom
 		/// <list type="bullet">
 		/// <item><c><see cref="Record"/></c>     (ptr)</item>
 		/// <item><c><see cref="_sprites"/></c>   (ptr) -> not used in McdView</item>
-		/// <item><c><see cref="_spriteset"/></c> (ptr) -> not used in McdView</item>
 		/// <item><c><see cref="Dead"/></c>       (ptr)</item>
 		/// <item><c><see cref="Altr"/></c>       (ptr)</item>
-		/// <item><c><see cref="TerId"/></c>      (int)</item>
+		/// <item><c><see cref="Id"/></c>         (int)</item>
 		/// <item><c><see cref="SetId"/></c>      (int)</item>
+		/// <item><c><see cref="TerId"/></c>      (int)</item>
 		/// </list>
 		/// </summary>
 		/// <returns>a new <c><see cref="Tilepart"/></c> for insertion in McdView</returns>
-		/// <remarks><c><see cref="_sprites"/></c> and <c><see cref="_spriteset"/></c>
-		/// shall be null.</remarks>
+		/// <remarks><c><see cref="_sprites"/></c> shall be null.</remarks>
+		// and <c><see cref="_spriteset"/></c>
 		public Tilepart CreateInsert()
 		{
 			var part = new Tilepart();
 
 			part.Record = Record.Duplicate();
 
-			part.Dead = Dead;	// NOTE: keep these pointers and use their TerIds to
+			part.Dead = Dead;	// NOTE: keep these pointers and use their Ids to
 			part.Altr = Altr;	// determine the part's 'DieTile' and 'Alt_MCD' fields
 								// after insertion. (aha!)
-			part.TerId = TerId;
+			part.Id    = Id;
 			part.SetId = SetId;
+			part.TerId = TerId;
 
 			return part;
 		}
