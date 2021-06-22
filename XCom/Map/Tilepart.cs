@@ -67,8 +67,11 @@ namespace XCom
 			get { return _altr; }
 			set
 			{
-				if ((_altr = value) != null)
-					_spritealtr = _spriteset[value.Record.Sprite1];
+				if ((_altr = value) != null
+					&& _spriteset != null) // '_spriteset' is null in McdView
+				{
+					_spritealtr = _spriteset[_altr.Record.Sprite1];
+				}
 				else
 					_spritealtr = null;
 			}
@@ -98,6 +101,9 @@ namespace XCom
 			get { return _sprites[id]; }
 		}
 
+		/// <summary>
+		/// A door's <c><see cref="Altr"/></c> sprite.
+		/// </summary>
 		private XCImage _spritealtr;
 
 		/// <summary>
@@ -313,7 +319,7 @@ namespace XCom
 		/// <c><see cref="Tilepart"/></c>.
 		/// 
 		/// 
-		/// This allows the user to invoke <c>MapView.TileslotSubstitution</c>
+		/// This allows the user to invoke <c>MapView.TilepartSubstitution</c>
 		/// to shift ids that are above the currently displayable/valid range
 		/// down into acceptable values. It's useful only when records have been
 		/// removed from <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>
