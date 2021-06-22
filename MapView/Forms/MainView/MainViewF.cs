@@ -3334,9 +3334,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Sets the toner to be used for drawing the parts of selected tiles.
+		/// Sets the toner to be used for drawing
+		/// <c><see cref="Tilepart">Tileparts</see></c> of selected tiles.
 		/// </summary>
-		/// <param name="toner"></param>
+		/// <param name="toner">one of the
+		/// <c><see cref="MainViewOptionables.TONER_NONE">MainViewOptionables.TONER_*</see></c>
+		/// constants</param>
 		internal void SetTileToner(int toner)
 		{
 			miNone .Checked = (toner == MainViewOptionables.TONER_NONE);
