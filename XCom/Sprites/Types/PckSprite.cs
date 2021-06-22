@@ -69,10 +69,11 @@ namespace XCom
 		/// </summary>
 		/// <param name="bindata">the COMPRESSED source-data</param>
 		/// <param name="pal">the <c><see cref="Palette"/></c></param>
-		/// <param name="id">the id of this sprite in its spriteset</param>
+		/// <param name="id">the id of this sprite in its <c>Spriteset</c></param>
 		/// <param name="spriteset">the <c><see cref="Spriteset"/></c> this
 		/// belongs to</param>
-		/// <param name="bypassTonescaled">true to not create a <c><see cref="SpriteToned"/></c>
+		/// <param name="bypassTonescaled"><c>true</c> to not create a
+		/// <c><see cref="SpriteToned"/></c>
 		/// sprite</param>
 		internal PckSprite(
 				byte[] bindata,

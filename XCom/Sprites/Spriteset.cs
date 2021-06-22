@@ -17,8 +17,8 @@ namespace XCom
 	{
 		#region Methods (disposable)
 		/// <summary>
-		/// Disposes all <c><see cref="XCImage">XCImages</see></c> in <c><see cref="Sprites"/></c>
-		/// and clears the list.
+		/// Disposes all <c><see cref="XCImage">XCImages</see></c> in
+		/// <c><see cref="Sprites"/></c> and clears the list.
 		/// </summary>
 		/// <remarks>This spriteset itself remains valid along with the cleared
 		/// sprites-list.</remarks>
@@ -167,7 +167,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[1]. Parses a PCK-file into a collection of images according to
+		/// cTor[1]. Parses a PCK-file into a collection of sprites according to
 		/// its TAB-file.
 		/// </summary>
 		/// <param name="label">file w/out path or extension</param>
@@ -412,18 +412,25 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a spriteset of ScanG or LoFT icons.
+		/// cTor[2]. Creates a <c>Spriteset</c> of ScanG or LoFT icons.
 		/// ScanG chops bindata into 16-byte icons (4x4 256-color indexed).
 		/// LoFT chops bindata into 256-bit icons (16x16 2-color true/false bits).
 		/// </summary>
 		/// <param name="label"></param>
-		/// <param name="fs">filestream of the SCANG.DAT or LOFTEMPS.DAT file</param>
-		/// <param name="isLoFT">true if LoFT data, false if ScanG</param>
-		/// <remarks>Cf
-		/// 
-		/// - SpritesetManager.LoadScanGufo()
-		/// 
-		/// - McdviewF.LoadScanGufo()</remarks>
+		/// <param name="fs">a <c>Stream</c> of the SCANG.DAT or LOFTEMPS.DAT
+		/// file</param>
+		/// <param name="isLoFT"><c>true</c> if LoFT data, <c>false</c> if ScanG</param>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="SpritesetManager.LoadScanGufo()">SpritesetManager.LoadScanGufo()</see></c></item>
+		/// <item><c><see cref="SpritesetManager.LoadScanGtftd()">SpritesetManager.LoadScanGtftd()</see></c></item>
+		/// <item><c><see cref="SpritesetManager.LoadLoFTufo()">SpritesetManager.LoadLoFTufo()</see></c></item>
+		/// <item><c><see cref="SpritesetManager.LoadLoFTtftd()">SpritesetManager.LoadLoFTtftd()</see></c></item>
+		/// <item><c>McdviewF.LoadScanGufo()</c></item>
+		/// <item><c>McdviewF.LoadScanGtftd()</c></item>
+		/// <item><c>McdviewF.LoadLoFTufo()</c></item>
+		/// <item><c>McdviewF.LoadLoFTtftd()</c></item>
+		/// </list></remarks>
 		public Spriteset(string label, Stream fs, bool isLoFT)
 		{
 			Label         = label;
@@ -498,13 +505,13 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Saves a specified spriteset to PCK+TAB.
+		/// Saves a specified <c><see cref="Spriteset"/></c> to PCK+TAB.
 		/// </summary>
 		/// <param name="pf">the directory to save to</param>
-		/// <param name="spriteset">pointer to the spriteset</param>
-		/// <returns>true if mission was successful; false if a 2-byte
-		/// tabword-length offset exceeds 'UInt16.MaxValue'. Also false if the
-		/// Pck or Tab file could not be created.</returns>
+		/// <param name="spriteset">pointer to the <c>Spriteset</c></param>
+		/// <returns><c>true</c> if mission was successful; <c>false</c> if a
+		/// 2-byte tabword-length offset exceeds <c>UInt16.MaxValue</c>. Also
+		/// <c>false</c> if the Pck or Tab file could not be created.</returns>
 		public static bool WriteSpriteset(
 				string pf,
 				Spriteset spriteset)

@@ -231,7 +231,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Closes (and disposes) this CopierF object.
+		/// Closes (and disposes) this <c>CopierF</c> object.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)

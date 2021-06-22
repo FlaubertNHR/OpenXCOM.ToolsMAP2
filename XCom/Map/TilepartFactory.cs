@@ -11,10 +11,10 @@ namespace XCom
 		#region Methods (static)
 		/// <summary>
 		/// Creates an array of <c><see cref="Tilepart">Tileparts</see></c>
-		/// from a given terrain and <c><see cref="Spriteset"/></c>.
+		/// for a given terrain with a given <c><see cref="Spriteset"/></c>.
 		/// </summary>
-		/// <param name="terrain">the terrain file w/out extension</param>
-		/// <param name="dirTerrain">path to the directory of the terrain file</param>
+		/// <param name="terrain">the terrain label</param>
+		/// <param name="dirTerrain">path to the directory of the MCD-file</param>
 		/// <param name="spriteset">a <c>Spriteset</c> containing the terrain's
 		/// sprites</param>
 		/// <returns>an array of <c>Tileparts</c></returns>

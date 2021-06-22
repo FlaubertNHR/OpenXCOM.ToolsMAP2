@@ -1663,11 +1663,13 @@ namespace McdView
 
 		/// <summary>
 		/// Loads a ScanG.dat file for UFO.
-		/// @note Cf
-		/// - SpritesetManager.LoadScanGufo()
-		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeScanG"></param>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="XCom.Spriteset">Spriteset</see>.Spriteset(string,Stream,bool)</c></item>
+		/// <item><c><see cref="SpritesetManager">SpritesetManager</see>.LoadScanGufo()</c></item>
+		/// </list></remarks>
 		private void LoadScanGufo(string pfeScanG)
 		{
 			byte[] bytes = FileService.ReadFile(pfeScanG);
@@ -1739,11 +1741,13 @@ namespace McdView
 		/// <summary>
 		/// Good Fucking Lord I want to knife-stab a stuffed Pikachu.
 		/// Loads a LoFTemps.dat file for UFO.
-		/// @note Cf
-		/// - SpritesetManager.LoadLoFTufo()
-		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeLoft"></param>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="XCom.Spriteset">Spriteset</see>.Spriteset(string,Stream,bool)</c></item>
+		/// <item><c><see cref="SpritesetManager">SpritesetManager</see>.LoadLoFTufo()</c></item>
+		/// </list></remarks>
 		private void LoadLoFTufo(string pfeLoft)
 		{
 			byte[] bytes = FileService.ReadFile(pfeLoft);
@@ -1827,11 +1831,13 @@ namespace McdView
 
 		/// <summary>
 		/// Loads a ScanG.dat file for TFTD.
-		/// @note Cf
-		/// - SpritesetManager.LoadScanGtftd()
-		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeScanG"></param>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="XCom.Spriteset">Spriteset</see>.Spriteset(string,Stream,bool)</c></item>
+		/// <item><c><see cref="SpritesetManager">SpritesetManager</see>.LoadScanGtftd()</c></item>
+		/// </list></remarks>
 		private void LoadScanGtftd(string pfeScanG)
 		{
 			byte[] bytes = FileService.ReadFile(pfeScanG);
@@ -1902,11 +1908,13 @@ namespace McdView
 
 		/// <summary>
 		/// Loads a LoFTemps.dat file for TFTD.
-		/// @note Cf
-		/// - SpritesetManager.LoadLoFTtftd()
-		/// - Spriteset(string, Stream, bool)
 		/// </summary>
 		/// <param name="pfeLoft"></param>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="XCom.Spriteset">Spriteset</see>.Spriteset(string,Stream,bool)</c></item>
+		/// <item><c><see cref="SpritesetManager">SpritesetManager</see>.LoadLoFTtftd()</c></item>
+		/// </list></remarks>
 		private void LoadLoFTtftd(string pfeLoft)
 		{
 			byte[] bytes = FileService.ReadFile(pfeLoft);

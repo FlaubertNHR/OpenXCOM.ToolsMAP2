@@ -111,7 +111,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Creates an XCImage.
+		/// cTor[0]. Creates an <c>XCImage</c>.
 		/// </summary>
 		/// <param name="bindata">the uncompressed source data</param>
 		/// <param name="width"></param>
@@ -148,8 +148,8 @@ namespace XCom
 		/// <summary>
 		/// cTor[1]. For clone.
 		/// </summary>
-		/// <remarks>See <see cref="PckSprite">PckSprite..cTor</see> and
-		/// <see cref="PckSprite.Duplicate">PckSprite.Duplicate</see></remarks>
+		/// <remarks>See <c><see cref="PckSprite">PckSprite</see>.PckSprite()</c> and
+		/// <c><see cref="PckSprite.Duplicate()">PckSprite.Duplicate()</see></c></remarks>
 		protected XCImage()
 		{}
 		#endregion cTor

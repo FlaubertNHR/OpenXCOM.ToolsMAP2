@@ -12,13 +12,17 @@ namespace XCom
 	/// terrain(s). It also holds the path to its files' parent directory.
 	/// </summary>
 	/// <remarks>A <c>Descriptor</c> is accessed *only* through a Group and
-	/// Category, and is identified by its tileset-label. This allows multiple
-	/// tilesets (ie. with the same label) to be configured differently
-	/// according to Category and Group.</remarks>
+	/// Category and is identified by its <c><see cref="Label"/></c>. This
+	/// allows multiple tilesets - ie. with the same <c>Label</c> - to be
+	/// configured differently according to Category and Group.</remarks>
 	public sealed class Descriptor // *snap*
 	{
 		#region Fields
-		private readonly string _dirTerr; // the Configurator's terrain-path for UFO or TFTD - depends on GroupType.
+		/// <summary>
+		/// The Configurator's terrain-path for UFO or TFTD - depends on
+		/// <c><see cref="GroupType"/></c>.
+		/// </summary>
+		private readonly string _dirTerr;
 		#endregion Fields
 
 
@@ -129,7 +133,7 @@ namespace XCom
 		/// <param name="id">the id of the terrain in this tileset's
 		/// <c><see cref="Terrains"/></c> dictionary.</param>
 		/// <returns>an array containing the <c>Tileparts</c> for the terrain,
-		/// or null if spriteset creation borks</returns>
+		/// or <c>null</c> if creating the <c>Spriteset</c> fails</returns>
 		/// <remarks>The TabwordLength of terrains in UFO and TFTD is 2-bytes.</remarks>
 		internal Tilepart[] CreateTerrain(int id)
 		{
@@ -138,10 +142,10 @@ namespace XCom
 			string path = GetTerrainDirectory(terrain.Item2);
 
 			Spriteset spriteset = SpritesetManager.LoadSpriteset(
-																terr,
-																path,
-																SpritesetManager.TAB_WORD_LENGTH_2,
-																Pal);
+															terr,
+															path,
+															SpritesetManager.TAB_WORD_LENGTH_2,
+															Pal);
 			if (spriteset != null)
 			{
 				//LogFile.WriteLine(". spriteset Valid - create tileparts");
