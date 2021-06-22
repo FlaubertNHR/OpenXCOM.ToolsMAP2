@@ -27,7 +27,12 @@ namespace XCom
 
 
 		#region Fields (static)
-		public const int MaxTerrainId = 253; // cf. MapFileService.MAX_MCDRECORDS=254
+		/// <summary>
+		/// The highest id of an <c><see cref="McdRecord"/></c> that a Mapfile
+		/// can cope with.
+		/// </summary>
+		/// <seealso cref="MapFileService.MAX_MCDRECORDS"><c>MapFileService.MAX_MCDRECORDS</c></seealso>
+		public const int MaxTerrainId = 253;
 
 		// bitwise changes for MapResize()
 		public const int CHANGED_NOT = 0; // changed not
@@ -90,9 +95,9 @@ namespace XCom
 		/// </summary>
 		/// <remarks>Setting the level will fire the
 		/// <c><see cref="LevelSelected"/></c> event.</remarks>
-		public int Level // TODO: why is Level distinct from Location.Lev - why is Location.Lev not even set by Level
+		public int Level
 		{
-			get { return _level; }
+			get { return _level; } // TODO: why is Level distinct from Location.Lev - why is Location.Lev not even set by Level
 			set
 			{
 				_level = Math.Max(0, Math.Min(value, Levs - 1));
@@ -151,7 +156,7 @@ namespace XCom
 
 		/// <summary>
 		/// Set <c>true</c> if a crippled tile was deleted and MainView needs to
-		/// reload this <c>MapFile</c>.
+		/// reload the current tileset.
 		/// </summary>
 		public bool ForceReload
 		{ get; set; }
@@ -178,6 +183,8 @@ namespace XCom
 		/// <param name="parts">the list of parts in all allocated terrains
 		/// (the terrainset)</param>
 		/// <param name="routes"></param>
+		/// <remarks>Intantiated by
+		/// <c><see cref="MapFileService.LoadDescriptor()">MapFileService.LoadDescriptor()</see></c></remarks>
 		internal MapFile(
 				Descriptor descriptor,
 				IList<Tilepart> parts,
@@ -453,7 +460,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Writes a tilepart's id to the Filestream.
+		/// Writes the id of a <c><see cref="Tilepart"/></c> to a given
+		/// <c>Stream</c>.
 		/// </summary>
 		/// <param name="fs"></param>
 		/// <param name="part"></param>
@@ -502,8 +510,9 @@ namespace XCom
 		/// <summary>
 		/// Assigns <c><see cref="RouteNode">RouteNodes</see></c> to
 		/// <c><see cref="MapTile">MapTiles</see></c> when this <c>MapFile</c>
-		/// is instantiated or when importing a <c><see cref="Routes"/></c>
-		/// file.
+		/// is instantiated or for a
+		/// <c><see cref="MapResize()">MapResize()</see></c> or a
+		/// <c>RouteView.OnImportClick()</c>.
 		/// </summary>
 		public void SetupRouteNodes()
 		{
@@ -516,7 +525,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Clears all <c><see cref="RouteNode">RouteNodes</see></c> before
+		/// Clears all <c><see cref="RouteNode">RouteNodes</see></c> for
 		/// <c>RouteView.OnImportClick()</c> or for a
 		/// <c><see cref="MapResize()">MapResize()</see></c>.
 		/// </summary>
@@ -532,7 +541,8 @@ namespace XCom
 
 		/// <summary>
 		/// Adds a <c><see cref="RouteNode"/></c> to a
-		/// <c><see cref="MapTile"/></c> at a given location.
+		/// <c><see cref="MapTile"/></c> at a given
+		/// <c><see cref="MapLocation"/></c>.
 		/// </summary>
 		/// <param name="location"></param>
 		/// <returns>the <c>RouteNode</c></returns>
@@ -678,8 +688,8 @@ namespace XCom
 
 		/// <summary>
 		/// Gets the copyable text that is displayed in an
-		/// <c><see cref="Infobox"/></c> when a tileset has parts that exceed
-		/// the terrainset count.
+		/// <c><see cref="Infobox"/></c> when this <c>MapFile</c> has
+		/// tilepart-ids that exceed the count of parts in its terrainset.
 		/// </summary>
 		/// <returns></returns>
 		private string GetCopyableWarning()

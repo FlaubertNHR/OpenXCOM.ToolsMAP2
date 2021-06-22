@@ -10,12 +10,14 @@ namespace XCom
 	{
 		#region Methods (static)
 		/// <summary>
-		/// Creates an array of tileparts from a given terrain and spriteset.
+		/// Creates an array of <c><see cref="Tilepart">Tileparts</see></c>
+		/// from a given terrain and <c><see cref="Spriteset"/></c>.
 		/// </summary>
 		/// <param name="terrain">the terrain file w/out extension</param>
 		/// <param name="dirTerrain">path to the directory of the terrain file</param>
-		/// <param name="spriteset">a Spriteset containing the needed sprites</param>
-		/// <returns>an array of Tileparts</returns>
+		/// <param name="spriteset">a <c>Spriteset</c> containing the terrain's
+		/// sprites</param>
+		/// <returns>an array of <c>Tileparts</c></returns>
 		internal static Tilepart[] CreateTileparts(
 				string terrain,
 				string dirTerrain,
@@ -58,7 +60,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the dead-part of a given MCD-record.
+		/// Gets the dead-part of a given <c><see cref="McdRecord"/></c>.
 		/// </summary>
 		/// <param name="record"></param>
 		/// <param name="parts"></param>
@@ -94,7 +96,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the altr-part of a given MCD-record.
+		/// Gets the altr-part of a given <c><see cref="McdRecord"/></c>.
 		/// </summary>
 		/// <param name="record"></param>
 		/// <param name="parts"></param>
@@ -107,7 +109,7 @@ namespace XCom
 				string terrain,
 				int id)
 		{
-			if (record.Alt_MCD != 0) // || record.HumanDoor || record.UfoDoor
+			if (record.Alt_MCD != 0)
 			{
 				if (record.Alt_MCD < parts.Length)
 					return parts[record.Alt_MCD];

@@ -9,18 +9,25 @@ using DSShared;
 namespace XCom
 {
 	/// <summary>
-	/// Instantiates a Map with its Routes and Terrains.
+	/// Instantiates a <c><see cref="MapFile"/></c> with its Routes and
+	/// Terrains.
 	/// </summary>
 	public static class MapFileService
 	{
 		#region Fields (static)
-		public const int MAX_MCDRECORDS = 254; // cf. MapFile.MaxTerrainId=253
+		/// <summary>
+		/// The maximum count of unique MCD-records that a Mapfile can cope
+		/// with.
+		/// </summary>
+		/// <seealso cref="MapFile.MaxTerrainId"><c>MapFile.MaxTerrainId</c></seealso>
+		public const int MAX_MCDRECORDS = 254;
 		#endregion Fields (static)
 
 
 		#region Methods (static)
 		/// <summary>
-		/// Checks if the Mapfile for a specified Descriptor exists.
+		/// Checks if the Mapfile for a specified
+		/// <c><see cref="Descriptor"/></c> exists.
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <returns>the path to the Mapfile else null</returns>

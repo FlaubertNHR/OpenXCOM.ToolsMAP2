@@ -3423,7 +3423,7 @@ namespace MapView
 			if (MainViewUnderlay.MapFile != null) // NOTE: MapFile is null on MapView load.
 			{
 				foreach (Tilepart part in MainViewUnderlay.MapFile.Parts)
-					part.SetSprite1_alt();
+					part.SetSprite1_altr();
 			}
 		}
 
