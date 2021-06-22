@@ -16,8 +16,8 @@ namespace XCom
 	{
 		#region Fields (static)
 		/// <summary>
-		/// The maximum count of unique MCD-records that a Mapfile can cope
-		/// with.
+		/// The maximum count of <c><see cref="McdRecord">McdRecords</see></c>
+		/// that a Mapfile can cope with.
 		/// </summary>
 		/// <seealso cref="MapFile.MaxTerrainId"><c>MapFile.MaxTerrainId</c></seealso>
 		public const int MAX_MCDRECORDS = 254;
@@ -26,13 +26,14 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Checks if the Mapfile for a specified
-		/// <c><see cref="Descriptor"/></c> exists.
+		/// Gets the fullpath to the Mapfile for a specified
+		/// <c><see cref="Descriptor"/></c>.
 		/// </summary>
-		/// <param name="descriptor"></param>
-		/// <returns>the path to the Mapfile else null</returns>
-		/// <remarks>Check (or ensure) that 'descriptor' is valid before call.</remarks>
-		public static string MapfileExists(Descriptor descriptor)
+		/// <param name="descriptor">a <c>Descriptor</c></param>
+		/// <returns>the path to the Mapfile else <c>null</c></returns>
+		/// <remarks>Check that <paramref name="descriptor"/> is valid before
+		/// call.</remarks>
+		public static string GetMapfilePath(Descriptor descriptor)
 		{
 			string dir = descriptor.Basepath;
 			if (!String.IsNullOrEmpty(dir)) // -> the BasePath can be null if resource-type is notconfigured.
@@ -47,18 +48,21 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Loads all routes and terrains for a Map. Called by
-		/// MainViewF.LoadSelectedDescriptor().
+		/// Loads a <c><see cref="MapFile"/></c> along with all routes and
+		/// terrains for a tileset. Called by
+		/// <c>MainViewF.LoadSelectedDescriptor()</c>.
 		/// </summary>
-		/// <param name="descriptor">a <see cref="Descriptor"/></param>
+		/// <param name="descriptor">a <c><see cref="Descriptor"/></c></param>
 		/// <param name="treechanged"></param>
-		/// <param name="browseMapfile">true to force the find Mapfile dialog</param>
-		/// <param name="ignoreRecordsExceeded">true to bypass a potential
-		/// RecordsExceeded warning dialog</param>
+		/// <param name="browseMapfile"><c>true</c> to force the find Mapfile
+		/// dialog</param>
+		/// <param name="ignoreRecordsExceeded"><c>true</c> to bypass a
+		/// potential RecordsExceeded warning dialog</param>
 		/// <param name="routes">current Routes - use this only when reloading
 		/// the current Mapfile and want to keep the route-collection as is</param>
-		/// <returns>null if things go south</returns>
-		/// <remarks>Check (or ensure) that 'descriptor' is valid before call.</remarks>
+		/// <returns><c>null</c> if things go south</returns>
+		/// <remarks>Check that <paramref name="descriptor"/> is valid before
+		/// call.</remarks>
 		public static MapFile LoadDescriptor(
 				Descriptor descriptor,
 				ref bool treechanged,
@@ -72,7 +76,7 @@ namespace XCom
 			//LogFile.WriteLine(". browseMapfile= " + browseMapfile);
 			//LogFile.WriteLine(". ignoreRecordsExceeded= " + ignoreRecordsExceeded);
 
-			string pfe = MapfileExists(descriptor);
+			string pfe = GetMapfilePath(descriptor);
 
 			if (pfe == null
 				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) == Keys.Shift)) // hold [Shift] to ask for a MapBrowser dialog.

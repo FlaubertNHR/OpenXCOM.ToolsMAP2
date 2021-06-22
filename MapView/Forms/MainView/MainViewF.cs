@@ -1130,7 +1130,7 @@ namespace MapView
 						e.SuppressKeyPress = true;
 
 						var descriptor = _selected.Tag as Descriptor;
-						if (MapFileService.MapfileExists(descriptor) == null)
+						if (MapFileService.GetMapfilePath(descriptor) == null)
 						{
 							_dontbeeptype = DontBeepType.MapBrowserDialog;
 							BeginInvoke(DontBeepEvent);
