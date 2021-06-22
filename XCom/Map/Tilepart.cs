@@ -6,7 +6,7 @@ namespace XCom
 	public sealed class Tilepart
 	{
 		/// <summary>
-		/// Disposes the crippled spriteset.
+		/// Disposes the <c><see cref="CrippledSprites"/></c>.
 		/// </summary>
 		public static void DisposeCrippledSprites()
 		{
@@ -33,29 +33,49 @@ namespace XCom
 
 		#region Fields
 		/// <summary>
-		/// The spriteset of this Tilepart's sprites. It's used to animate the
-		/// part or to render the part with its alternate part.
+		/// The <c><see cref="Spriteset"/></c> of the
+		/// <c><see cref="_sprites"/></c> for this <c>Tilepart</c>.
 		/// </summary>
+		/// <remarks>A pointer to the <c>Spriteset</c> is maintained in addition
+		/// to <c>_sprites</c> in order for door-parts to animate.</remarks>
 		private Spriteset _spriteset;
 		#endregion Fields
 
 
 		#region Properties
 		/// <summary>
-		/// The object that has information about the mechanics and appearance
-		/// of this tilepart.
+		/// The <c><see cref="McdRecord"/></c> that has information about the
+		/// properties of this <c>Tilepart</c>.
 		/// </summary>
 		public McdRecord Record
 		{ get; private set; }
 
+		/// <summary>
+		/// This <c>Tilepart's</c>
+		/// <c><see cref="McdRecord.DieTile">McdRecord.DieTile</see></c>.
+		/// </summary>
 		public Tilepart Dead
 		{ get; set; }
 
+		private Tilepart _altr;
+		/// <summary>
+		/// This <c>Tilepart's</c>
+		/// <c><see cref="McdRecord.Alt_MCD">McdRecord.Alt_MCD</see></c>.
+		/// </summary>
 		public Tilepart Altr
-		{ get; set; }
+		{
+			get { return _altr; }
+			set
+			{
+				if ((_altr = value) != null)
+					_spritealtr = _spriteset[value.Record.Sprite1];
+				else
+					_spritealtr = null;
+			}
+		}
 
 		/// <summary>
-		/// The sprite-array used to animate this tile.
+		/// The sprite-array used to display and/or animate this <c>Tilepart</c>.
 		/// </summary>
 		/// <remarks>TODO: Instead of storing the sprite-references in
 		/// <c><see cref="Tilepart"/></c> reference the sprites directly in
@@ -78,17 +98,20 @@ namespace XCom
 			get { return _sprites[id]; }
 		}
 
+		private XCImage _spritealtr;
+
 		/// <summary>
-		/// The ID of this tilepart that's unique to its terrain/MCD-record.
+		/// The ID of this <c>Tilepart</c> in its terrain.
 		/// </summary>
 		public int TerId
 		{ get; set; }
 
 		/// <summary>
-		/// The ID of this tilepart that's unique to the Map across all
-		/// allocated terrains. The value is set in MapFile..cTor.
-		/// IMPORTANT: The 'SetId' is written to the Mapfile (as a byte).
+		/// The ID of this <c>Tilepart</c> that's unique to the Map across all
+		/// allocated terrains. The value is usually set in
+		/// <c><see cref="MapFile()">MapFile()</see></c>.
 		/// </summary>
+		/// <remarks><c>SetId</c> is written to the Mapfile as a byte.</remarks>
 		public int SetId
 		{ get; internal set; }
 		#endregion Properties
@@ -96,13 +119,16 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Creates a standard Tilepart.
+		/// cTor[0]. Creates a standard <c>Tilepart</c>.
 		/// </summary>
-		/// <param name="id">the id of this part in its recordset</param>
-		/// <param name="record">this part's MCD-record as an object</param>
-		/// <param name="spriteset">the spriteset from which to get this part's
-		/// sprite-phases; null for McdView - sprites shall be retrieved
-		/// directly from the spriteset itself</param>
+		/// <param name="id">the id of this <c>Tilepart</c> in its recordset</param>
+		/// <param name="record">the <c><see cref="McdRecord"/></c> of this
+		/// <c>Tilepart</c></param>
+		/// <param name="spriteset">the <c><see cref="Spriteset"/></c> from
+		/// which to get the <c><see cref="_sprites"/></c> of this
+		/// <c>Tilepart</c></param>
+		/// <remarks><paramref name="spriteset"/> is <c>null</c> for McdView -
+		/// sprites shall be retrieved directly from a <c>Spriteset</c>.</remarks>
 		public Tilepart(
 				int id,
 				McdRecord record,
@@ -113,16 +139,23 @@ namespace XCom
 			TerId = id;
 			SetId = -1;
 
-			if ((_spriteset = spriteset) != null) // nota bene: '_spriteset' and '_sprites' shall be null for McdView.
+			if ((_spriteset = spriteset) != null) // NOTA BENE: '_spriteset' and '_sprites' shall be null for McdView.
 			{
-				InitSprites();
+				_sprites = new XCImage[PHASES]; // for MapView a part contains its own pointers to 8 sprites.
+
+				if (!Record.SlidingDoor && !Record.HingedDoor)
+				{
+					SetSprites();
+				}
+				else
+					SetSprite1();
 			}
 		}
 
 		/// <summary>
-		/// cTor[1]. Creates a blank part that's ready to go in McdView
-		/// (req'd: 'TerId'). Also used for crippled parts on Mapfile load
-		/// (req'd: 'SetId').
+		/// cTor[1]. Creates a blank <c>Tilepart</c> that's ready to go in
+		/// McdView (req'd: <c><see cref="TerId"/></c>). Also used for crippled
+		/// parts on Mapfile load (req'd: <c><see cref="SetId"/></c>).
 		/// </summary>
 		public Tilepart(int id)
 		{
@@ -133,7 +166,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[2]. Creates a blank tilepart for
+		/// cTor[2]. Creates a blank <c>Tilepart</c> for
 		/// <c><see cref="CreateInsert()">CreateInsert()</see></c>.
 		/// </summary>
 		private Tilepart()
@@ -162,23 +195,7 @@ namespace XCom
 		// first sprite only.
 
 		/// <summary>
-		/// Initializes this tilepart's array of sprites.
-		/// </summary>
-		private void InitSprites()
-		{
-			_sprites = new XCImage[PHASES]; // for MapView a part contains its own pointers to 8 sprites.
-
-			if (!Record.SlidingDoor && !Record.HingedDoor)
-			{
-				SetSprites();
-			}
-			else
-				SetSprite1();
-		}
-
-		/// <summary>
-		/// Sets this tilepart's sprites in accord with its record's
-		/// sprite-phases.
+		/// Sets this <c>Tilepart's</c> <c><see cref="_sprites"/></c>.
 		/// </summary>
 		private void SetSprites()
 		{
@@ -193,33 +210,38 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Sets this tilepart's sprites to its record's first sprite-phase.
+		/// Sets this <c>Tilepart's</c> <c><see cref="_sprites"/></c> to
+		/// <c><see cref="McdRecord.Sprite1">McdRecord.Sprite1</see></c>.
 		/// </summary>
 		private void SetSprite1()
 		{
+			XCImage sprite = _spriteset[Record.Sprite1];
 			for (int i = 0; i != PHASES; ++i)
-				_sprites[i] = _spriteset[Record.Sprite1];
+				_sprites[i] = sprite;
 		}
 
 		/// <summary>
-		/// Sets this tilepart's sprites to the first phase of its Altr part. Is
-		/// for doors only.
+		/// Sets this <c>Tilepart's</c> <c><see cref="_sprites"/></c> to the
+		/// first phase of its <c><see cref="Altr"/></c> part.
 		/// </summary>
-		public void SetSprite1_alt()
+		/// <remarks>This is for doors only.</remarks>
+		public void SetSprite1_altr()
 		{
 			if (_spriteset != null
 				&& (Record.SlidingDoor || Record.HingedDoor))
 			{
-				byte altr = Altr.Record.Sprite1;
 				for (int i = 0; i != PHASES; ++i)
-					_sprites[i] = _spriteset[altr];
+					_sprites[i] = _spritealtr;
 			}
 		}
 
 		/// <summary>
-		/// Toggles this tilepart's array of sprites if it's a door-part.
+		/// Toggles this <c>Tilepart's</c> array of sprites if it's a door-part.
 		/// </summary>
-		/// <param name="animate">true to animate</param>
+		/// <param name="animate"><c>true</c> to animate through the 8 phases;
+		/// <c>false</c> to display only
+		/// <c><see cref="McdRecord.Sprite1">McdRecord.Sprite1</see></c>.</param>
+		/// <remarks>This is for doors only.</remarks>
 		public void ToggleDoorSprites(bool animate)
 		{
 			if (_spriteset != null
@@ -233,9 +255,8 @@ namespace XCom
 					}
 					else
 					{
-						byte altr = Altr.Record.Sprite1;
-						for (int i = 4; i != PHASES; ++i) // ie. flip between Sprite1 and Altr.Sprite1
-							_sprites[i] = _spriteset[altr];
+						for (int i = 4; i != PHASES; ++i) // ie. flip between Record.Sprite1 and Altr.Record.Sprite1
+							_sprites[i] = _spritealtr;
 					}
 				}
 				else
@@ -282,13 +303,14 @@ namespace XCom
 
 
 		/// <summary>
-		/// When a <c><see cref="MapFile"/></c> contains <c><see cref="MapFile.Parts"/></c>
-		/// with ids that are beyond the count of parts in its current
-		/// terrainset do not null those parts. To cripple a part instead is to
-		/// create a new part and assign it a default <c><see cref="McdRecord"/></c>
-		/// and one of the <c><see cref="CrippledSprites"/></c> (based on its
-		/// quadslot) but to transfer the old <c><see cref="SetId"/></c> to the
-		/// new <c><see cref="Tilepart"/></c>.
+		/// When a <c><see cref="MapFile"/></c> contains
+		/// <c><see cref="MapFile.Parts"/></c> with ids that are beyond the
+		/// count of parts in its current terrainset do not null those parts. To
+		/// cripple a part instead is to create a new part and assign it a
+		/// default <c><see cref="McdRecord"/></c> and one of the
+		/// <c><see cref="CrippledSprites"/></c> (based on its quadslot) but to
+		/// transfer the old <c><see cref="SetId"/></c> to the new
+		/// <c><see cref="Tilepart"/></c>.
 		/// 
 		/// 
 		/// This allows the user to invoke <c>MapView.TileslotSubstitution</c>
@@ -308,7 +330,7 @@ namespace XCom
 		/// <param name="slot">the <c><see cref="PartType"/></c> to show
 		/// crippled</param>
 		/// <remarks>This is strictly a one-way operation! All crippled parts
-		/// shall go ~poof~ when the Map is saved.</remarks>
+		/// shall go ~poof~ when the Mapfile is saved.</remarks>
 		internal void Cripple(PartType slot)
 		{
 			// TODO: stop the part from being selected in TileView when the slot
@@ -353,7 +375,7 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Creates the sprites for crippled tileparts.
+		/// Creates the sprites for <c><see cref="CrippledSprites"/></c>.
 		/// </summary>
 		/// <remarks>These sprites could be broken out and put in Resources but
 		/// it's kinda cute this way too.</remarks>
@@ -362,13 +384,13 @@ namespace XCom
 			CrippledSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone_crippled");
 
 			byte[] bindata;
-			foreach (XCImage sprite in CrippledSprites.Sprites) // change nontransparent pixels to color ->
+			foreach (XCImage sprite in CrippledSprites.Sprites) // change nontransparent pixels to a color ->
 			{
 				bindata = sprite.GetBindata();
 				for (int i = 0; i != bindata.Length; ++i)
 				{
 					if (bindata[i] != Palette.Tid)
-						bindata[i] = (byte)96; // light brown/yellowy - is Palette.UfoBattle
+						bindata[i] = (byte)96; // colorid Palette.UfoBattle : light brown/yellowy
 				}
 
 				(sprite as PckSprite).SpriteToned =
