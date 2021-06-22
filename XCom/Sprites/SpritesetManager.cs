@@ -8,8 +8,34 @@ using DSShared;
 
 namespace XCom
 {
+	/// <summary>
+	/// Creates <c><see cref="Spriteset">Spritesets</see></c> that are required
+	/// to display <c><see cref="Tilepart">Tileparts</see></c> in MapView and
+	/// maintains them in the <c><see cref="Spritesets"/></c> list.
+	/// <c><see cref="LoadSpriteset()">LoadSpriteset()</see></c> is also used to
+	/// create the Cursor-sprites in MapView and to load <c>Spritesets</c> in
+	/// McdView but pointers to such <c>Spritesets</c> are not stored in the
+	/// <c>Spritesets</c> list.
+	/// </summary>
+	/// <remarks>This object is disposable but eff their <c>IDisposable crap</c>.</remarks>
 	public static class SpritesetManager
 	{
+		#region Methods (disposable)
+		/// <summary>
+		/// Disposes sprites and clears the <c><see cref="Spritesets"/></c> list.
+		/// </summary>
+		public static void Dispose()
+		{
+			LogFile.WriteLine("SpritesetManager.Dispose() static");
+			for (int i = 0; i != Spritesets.Count; ++i)
+			{
+				Spritesets[i].Dispose();
+			}
+			Spritesets.Clear();
+		}
+		#endregion Methods (disposable)
+
+
 		#region Fields (static)
 		private static int[,] _scanGufo;
 		private static int[,] _scanGtftd;
@@ -19,19 +45,21 @@ namespace XCom
 		#region Properties (static)
 		private static readonly IList<Spriteset> _spritesets = new List<Spriteset>();
 		/// <summary>
-		/// A list of spritesets in the currently loaded tileset or so.
+		/// A list of <c><see cref="Spriteset">Spritesets</see></c> in
+		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c> or so.
 		/// </summary>
-		/// <remarks>It has relevance only for MapInfoDialog and
-		/// MainViewOptionables.SelectedTileColor/SelectedTileToner.</remarks>
+//		/// <remarks>It has relevance only for MapInfoDialog and
+//		/// MainViewOptionables.SelectedTileColor/SelectedTileToner.</remarks>
 		public static IList<Spriteset> Spritesets
 		{
 			get { return _spritesets; }
 		}
 
 		/// <summary>
-		/// Gets the total count of sprites in all <see cref="Spritesets"/>.
+		/// Gets the total count of sprites in all
+		/// <c><see cref="Spritesets"/></c>.
 		/// </summary>
-		/// <remarks>Used only by MapInfoDialog.Analyze().</remarks>
+		/// <remarks>Used only by <c>MapInfoDialog.Analyze()</c>.</remarks>
 		public static int TotalSpriteCount
 		{
 			get
@@ -58,32 +86,37 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Loads a given spriteset for UFO or TFTD. This could go in Descriptor
-		/// except the XCOM cursor-sprites load w/out a descriptor. As do the
-		/// monotone-sprites - although that's done differently w/
-		/// MainViewF.LoadMonotoneSprites().
+		/// Loads a <c><see cref="Spriteset"/></c> for UFO or TFTD. This could
+		/// go in <c><see cref="Descriptor"/></c> except the XCOM cursor-sprites
+		/// load w/out a <c>Descriptor</c>. As do the monotone-sprites -
+		/// although that's done differently in
+		/// <c>MainViewF.LoadMonotoneSprites()</c>.
 		/// 
-		/// TODO: Each effing tilepart gets a pointer to the Spriteset.
-		/// Effectively, at present, every tilepart maintains the Spriteset; the
-		/// Spriteset should rather be an independent object maintained by a
-		/// MapFile object eg.
+		/// 
+		/// TODO: Each effing <c><see cref="Tilepart"/></c> gets a pointer to
+		/// its <c>Spriteset</c>. Effectively, at present, every <c>Tilepart</c>
+		/// maintains its <c>Spriteset</c>; the <c>Spriteset</c> should rather
+		/// be an independent object maintained by a
+		/// <c><see cref="MapFile"/></c> eg.
 		/// </summary>
 		/// <param name="label">the file w/out extension</param>
 		/// <param name="dir">path to the directory of the file</param>
-		/// <param name="tabwordLength"></param>
-		/// <param name="pal"></param>
-		/// <param name="bypassManager">true to not create Tonescaled sprites
-		/// and, if called by McdView, don't screw with the spritesets when
-		/// McdView is called via TileView</param>
-		/// <returns>a Spriteset containing all the sprites, or null if the
-		/// quantity of sprites in the PCK vs TAB files aren't equal</returns>
-		/// <remarks>Both UFO and TFTD use 2-byte TabwordLengths for
-		/// 
-		/// - 32x40 terrain-sprites and 32x48 bigobs-sprites
-		/// 
-		/// - TFTD unit-sprites use 4-byte TabwordLengths
-		/// 
-		/// - the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte</remarks>
+		/// <param name="tabwordLength">one of the
+		/// <c><see cref="TAB_WORD_LENGTH_0">TAB_WORD_LENGTH_*</see></c>
+		/// constants</param>
+		/// <param name="pal">a freakin <c><see cref="Palette"/></c></param>
+		/// <param name="bypassManager"><c>true</c> to not create Tonescaled
+		/// sprites and, if called by McdView, don't screw with the spritesets
+		/// when McdView is called via TileView</param>
+		/// <returns>a <c>Spriteset</c> containing all the sprites, or null if
+		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
+		/// <remarks>
+		/// <list type="bullet">
+		/// <item>both UFO and TFTD use 2-byte TabwordLengths for 32x40
+		/// terrain-sprites and 32x48 bigobs-sprites</item>
+		/// <item>TFTD unit-sprites use 4-byte TabwordLengths</item>
+		/// <item>the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte</item>
+		/// </list></remarks>
 		public static Spriteset LoadSpriteset(
 				string label,
 				string dir,
@@ -147,11 +180,11 @@ namespace XCom
 		/// </summary>
 		/// <param name="dirUfo"></param>
 		/// <returns></returns>
-		/// <remarks>See
-		/// 
-		/// - McdviewF.LoadScanGufo()
-		/// 
-		/// - Spriteset(string, Stream, bool)</remarks>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset(string, Stream, bool)</see></c></item>
+		/// <item><c>McdviewF.LoadScanGufo()</c></item>
+		/// </list></remarks>
 		public static bool LoadScanGufo(string dirUfo)
 		{
 			if (Directory.Exists(dirUfo))
@@ -182,11 +215,11 @@ namespace XCom
 		/// </summary>
 		/// <param name="dirTftd"></param>
 		/// <returns></returns>
-		/// <remarks>See
-		/// 
-		/// - McdviewF.LoadScanGtftd()
-		/// 
-		/// - Spriteset(string, Stream, bool)</remarks>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset(string, Stream, bool)</see></c></item>
+		/// <item><c>McdviewF.LoadScanGtftd()</c></item>
+		/// </list></remarks>
 		public static bool LoadScanGtftd(string dirTftd)
 		{
 			if (Directory.Exists(dirTftd))
@@ -218,11 +251,11 @@ namespace XCom
 		/// LoFTemps.dat file for UFO.
 		/// </summary>
 		/// <param name="dirUfo"></param>
-		/// <remarks>See
-		/// 
-		/// - McdviewF.LoadLoFTufo()
-		/// 
-		/// - Spriteset(string, Stream, bool)</remarks>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset(string, Stream, bool)</see></c></item>
+		/// <item><c>McdviewF.LoadLoFTufo()</c></item>
+		/// </list></remarks>
 		public static void LoadLoFTufo(string dirUfo)
 		{
 			if (Directory.Exists(dirUfo))
@@ -264,11 +297,11 @@ namespace XCom
 		/// Loads a LoFTemps.dat file for TFTD.
 		/// </summary>
 		/// <param name="dirTftd"></param>
-		/// <remarks>See
-		/// 
-		/// - McdviewF.LoadLoFTtftd()
-		/// 
-		/// - Spriteset(string, Stream, bool)</remarks>
+		/// <remarks>cf
+		/// <list type="bullet">
+		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset(string, Stream, bool)</see></c></item>
+		/// <item><c>McdviewF.LoadLoFTtftd()</c></item>
+		/// </list></remarks>
 		public static void LoadLoFTtftd(string dirTftd)
 		{
 			if (Directory.Exists(dirTftd))

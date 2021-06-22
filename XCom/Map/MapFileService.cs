@@ -134,9 +134,9 @@ namespace XCom
 
 			if (File.Exists(pfe))
 			{
-				var parts = new List<Tilepart>();
+				SpritesetManager.Dispose();
 
-				SpritesetManager.Spritesets.Clear();
+				var parts = new List<Tilepart>();
 
 				//LogFile.WriteLine(". . terraincount= " + descriptor.Terrains.Count);
 
@@ -146,6 +146,7 @@ namespace XCom
 					if (records == null)								// -> SpritesetManager.LoadSpriteset()
 					{
 						//LogFile.WriteLine(". . . . no records ABORT");
+						// TODO: dispose any created spritesets
 						return null;
 					}
 

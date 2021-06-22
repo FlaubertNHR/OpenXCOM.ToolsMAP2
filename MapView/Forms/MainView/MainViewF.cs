@@ -985,6 +985,8 @@ namespace MapView
 
 			Optionables         .DisposeOptionables();
 
+			SpritesetManager    .Dispose();
+
 
 			RegistryInfo.WriteRegistry(); // write all registered windows' locations and sizes to file
 		}
@@ -3191,9 +3193,10 @@ namespace MapView
 		#region Methods
 		/// <summary>
 		/// Loads the Map that's selected in the Maptree.
-		/// <param name="browseMapfile">true to force the find Mapfile dialog</param>
-		/// <param name="keepRoutes">true to keep the current Routes (use this
-		/// only when reloading the current Mapfile)</param>
+		/// <param name="browseMapfile"><c>true</c> to force the find Mapfile
+		/// dialog</param>
+		/// <param name="keepRoutes"><c>true</c> to keep the current Routes (use
+		/// this only when reloading the current Mapfile)</param>
 		/// </summary>
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
