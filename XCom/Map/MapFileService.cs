@@ -70,11 +70,11 @@ namespace XCom
 				bool ignoreRecordsExceeded,
 				RouteNodes routes)
 		{
-			//LogFile.WriteLine("MapFileService.LoadDescriptor()");
-			//LogFile.WriteLine(". descriptor.Label= " + descriptor.Label);
-			//LogFile.WriteLine(". treechanged= " + treechanged);
-			//LogFile.WriteLine(". browseMapfile= " + browseMapfile);
-			//LogFile.WriteLine(". ignoreRecordsExceeded= " + ignoreRecordsExceeded);
+			//Logfile.Log("MapFileService.LoadDescriptor()");
+			//Logfile.Log(". descriptor.Label= " + descriptor.Label);
+			//Logfile.Log(". treechanged= " + treechanged);
+			//Logfile.Log(". browseMapfile= " + browseMapfile);
+			//Logfile.Log(". ignoreRecordsExceeded= " + ignoreRecordsExceeded);
 
 			string pfe = GetMapfilePath(descriptor);
 
@@ -111,7 +111,7 @@ namespace XCom
 									descriptor.Basepath = fbd.SelectedPath;
 									treechanged = true;
 
-									//LogFile.WriteLine(". . treechanged= " + treechanged);
+									//Logfile.Log(". . treechanged= " + treechanged);
 								}
 								else
 								{
@@ -130,7 +130,7 @@ namespace XCom
 				}
 			}
 
-			//LogFile.WriteLine("");
+			//Logfile.Log("");
 
 			if (File.Exists(pfe))
 			{
@@ -138,14 +138,14 @@ namespace XCom
 
 				var parts = new List<Tilepart>();
 
-				//LogFile.WriteLine(". . terraincount= " + descriptor.Terrains.Count);
+				//Logfile.Log(". . terraincount= " + descriptor.Terrains.Count);
 
 				for (int terid = 0; terid != descriptor.Terrains.Count; ++terid) // push together the tileparts of all allocated terrains
 				{
 					Tilepart[] records = descriptor.CreateTerrain(terid);	// -> TilepartFactory.CreateTileparts()
 					if (records == null)									// -> SpritesetManager.LoadSpriteset()
 					{
-						//LogFile.WriteLine(". . . . no records ABORT");
+						//Logfile.Log(". . . . no records ABORT");
 						// TODO: dispose any created spritesets
 						return null;
 					}
@@ -154,8 +154,8 @@ namespace XCom
 						parts.Add(record);
 				}
 
-				//LogFile.WriteLine("");
-				//LogFile.WriteLine(". . partscount= " + parts.Count);
+				//Logfile.Log("");
+				//Logfile.Log(". . partscount= " + parts.Count);
 
 				if (parts.Count != 0)
 				{
@@ -191,7 +191,7 @@ namespace XCom
 						McdRecordsExceeded.that.ShowDialog();
 					}
 
-					//LogFile.WriteLine(". . . load Routes");
+					//Logfile.Log(". . . load Routes");
 
 					if (routes == null)
 					{
@@ -212,15 +212,15 @@ namespace XCom
 										routes);
 					if (!file.Fail)
 					{
-						//LogFile.WriteLine(". . . ret MapFile");
+						//Logfile.Log(". . . ret MapFile");
 						return file;
 					}
 
-					//LogFile.WriteLine(". . . MapFile FAILED");
+					//Logfile.Log(". . . MapFile FAILED");
 					return null;
 				}
 
-				//LogFile.WriteLine(". . MCD Error");
+				//Logfile.Log(". . MCD Error");
 				using (var f = new Infobox(
 										"Error",
 										"There are no terrains allocated or they do not contain MCD records.",
@@ -231,7 +231,7 @@ namespace XCom
 				}
 			}
 
-			//LogFile.WriteLine(". ret null Descriptor");
+			//Logfile.Log(". ret null Descriptor");
 			return null;
 		}
 		#endregion Methods (static)

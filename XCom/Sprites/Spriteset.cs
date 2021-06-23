@@ -24,7 +24,7 @@ namespace XCom
 		/// sprites-list.</remarks>
 		public void Dispose()
 		{
-			LogFile.WriteLine("Spriteset.Dispose() Label= " + Label);
+			Logfile.Log("Spriteset.Dispose() Label= " + Label);
 //			for (int i = Sprites.Count - 1; i != -1; --i) // this does not need to be reversed for Dispose()
 //				Sprites[i].Dispose();
 			foreach (var sprite in Sprites)
@@ -232,7 +232,7 @@ namespace XCom
 				byte[] bytesTab,
 				bool bypassTonescaled = false)
 		{
-			//LogFile.WriteLine("Spriteset..cTor label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
+			//Logfile.Log("Spriteset..cTor label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
 			Label         = label;
 			Pal           = pal;
@@ -355,7 +355,7 @@ namespace XCom
 						for (int j = 0; j != bindata.Length; ++j)
 							bindata[j] = bytesPck[offsets[i] + j];
 
-						//LogFile.WriteLine("sprite #" + i);
+						//Logfile.Log("sprite #" + i);
 						var sprite = new PckSprite(
 												bindata,
 												Pal,

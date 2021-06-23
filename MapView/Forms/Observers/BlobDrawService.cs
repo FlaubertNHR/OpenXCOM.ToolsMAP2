@@ -20,7 +20,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void Dispose()
 		{
-			DSShared.LogFile.WriteLine("BlobDrawService.Dispose()");
+			DSShared.Logfile.Log("BlobDrawService.Dispose()");
 			_floor  .Dispose();
 			_content.Dispose();
 		}

@@ -18,7 +18,7 @@ namespace MapView.Forms.Observers
 	{
 		internal static void DisposeOptionables()
 		{
-			DSShared.LogFile.WriteLine("TileViewOptionables.DisposeOptionables() static");
+			DSShared.Logfile.Log("TileViewOptionables.DisposeOptionables() static");
 			foreach (var pair in TilePanel.SpecialBrushes)
 				pair.Value.Dispose();
 		}
@@ -294,7 +294,7 @@ The path specified can be used to start an application or to open a specified"
 		/// <param name="options">TileView's options</param>
 		internal void LoadDefaults(Options options)
 		{
-			//DSShared.LogFile.WriteLine("TileViewOptionables.LoadDefaults()");
+			//DSShared.Logfile.Log("TileViewOptionables.LoadDefaults()");
 
 			OptionChangedEvent changer = OnSpecialPropertyColorChanged;
 

@@ -26,7 +26,7 @@ namespace XCom
 		/// </summary>
 		public static void Dispose()
 		{
-			LogFile.WriteLine("SpritesetManager.Dispose() static");
+			Logfile.Log("SpritesetManager.Dispose() static");
 			for (int i = 0; i != Spritesets.Count; ++i)
 			{
 				Spritesets[i].Dispose();
@@ -123,7 +123,7 @@ namespace XCom
 				Palette pal,
 				bool bypassManager = false)
 		{
-			//LogFile.WriteLine("SpritesetManager.LoadSpriteSet()");
+			//Logfile.Log("SpritesetManager.LoadSpriteSet()");
 
 			if (Directory.Exists(dir))
 			{

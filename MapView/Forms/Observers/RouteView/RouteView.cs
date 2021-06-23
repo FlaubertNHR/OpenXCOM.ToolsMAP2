@@ -542,11 +542,11 @@ namespace MapView.Forms.Observers
 		/// to stay selected while other tiles get highlighted.</remarks>
 		private void OnLevelSelectedObserver(LevelSelectedArgs args)
 		{
-			//LogFile.WriteLine("RouteView.OnLevelSelectedObserver() " + Tag);
+			//Logfile.Log("RouteView.OnLevelSelectedObserver() " + Tag);
 
 			if (RouteControl._col != -1) // find the Control that the mousecursor is in (if either)
 			{
-				//LogFile.WriteLine(". do overinfo");
+				//Logfile.Log(". do overinfo");
 
 				Color color; int id;
 
@@ -2439,7 +2439,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void LoadControlDefaultOptions()
 		{
-			//LogFile.WriteLine("RouteView.LoadControlDefaultOptions()");
+			//Logfile.Log("RouteView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
 		}
 

@@ -567,7 +567,7 @@ namespace McdView
 		/// <returns></returns>
 		protected override bool IsInputKey(Keys keyData)
 		{
-			//DSShared.LogFile.WriteLine("TerrainPanel.IsInputKey() keyData= " + keyData);
+			//DSShared.Logfile.Log("TerrainPanel.IsInputKey() keyData= " + keyData);
 
 			switch (keyData)
 			{

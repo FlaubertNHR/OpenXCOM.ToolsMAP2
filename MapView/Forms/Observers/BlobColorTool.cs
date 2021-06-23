@@ -16,7 +16,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void Dispose()
 		{
-			DSShared.LogFile.WriteLine("BlobColorTool.Dispose() " + Label);
+			DSShared.Logfile.Log("BlobColorTool.Dispose() " + Label);
 			Pen         .Dispose();
 			PenLight    .Dispose();
 			PenLightPrep.Dispose();

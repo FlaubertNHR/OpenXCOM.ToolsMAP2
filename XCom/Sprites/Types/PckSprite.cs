@@ -95,7 +95,7 @@ namespace XCom
 
 			Pal = pal;
 
-			//LogFile.WriteLine("PckSprite..cTor id= " + id + " bindata.Length= " + bindata.Length);
+			//Logfile.Log("PckSprite..cTor id= " + id + " bindata.Length= " + bindata.Length);
 
 			int dst = bindata[0] * XCImage.SpriteWidth; // first byte is count of transparent rows
 			for (int src = 1; src != bindata.Length; ++src)
@@ -103,24 +103,24 @@ namespace XCom
 				switch (bindata[src])
 				{
 					case MarkerEos: // end of sprite
-						//LogFile.WriteLine(". EoS");
+						//Logfile.Log(". EoS");
 						break;
 
 					case MarkerRle: // skip quantity of pixels
 						dst += bindata[++src];
-						//LogFile.WriteLine(". dst= " + dst);
+						//Logfile.Log(". dst= " + dst);
 						break;
 
 					default:
 						if (dst >= GetBindata().Length)
 						{
-							//LogFile.WriteLine(". . FAIL dst= " + dst);
+							//Logfile.Log(". . FAIL dst= " + dst);
 							_spriteset.Fail |= Spriteset.FAIL_OF_SPRITE;
 							return;
 						}
 
 						GetBindata()[dst++] = bindata[src];
-						//LogFile.WriteLine(". dst= " + dst);
+						//Logfile.Log(". dst= " + dst);
 						break;
 				}
 			}

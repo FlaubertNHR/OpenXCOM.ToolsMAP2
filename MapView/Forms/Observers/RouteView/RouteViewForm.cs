@@ -179,7 +179,7 @@ namespace MapView.Forms.Observers
 
 				if (MainViewF.Quit)
 				{
-					LogFile.WriteLine("RouteViewForm.OnFormClosing()");
+					Logfile.Log("RouteViewForm.OnFormClosing()");
 					RegistryInfo.UpdateRegistry(this);
 					Control.RouteControl.DisposeControl();
 				}

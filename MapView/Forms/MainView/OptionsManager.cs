@@ -62,7 +62,7 @@ namespace MapView.Forms.MainView
 		/// <returns>true if the file is found and read</returns>
 		internal static bool LoadUserOptions(string pfe)
 		{
-			//LogFile.WriteLine("OptionsManager.LoadUserOptions() pfe= " + pfe);
+			//Logfile.Log("OptionsManager.LoadUserOptions() pfe= " + pfe);
 
 			using (var fs = FileService.OpenFile(pfe))
 			if (fs != null)

@@ -20,7 +20,7 @@ namespace MapView.Forms.MainView
 	{
 		public void DisposeOptionables()
 		{
-			DSShared.LogFile.WriteLine("MainViewOptionables.DisposeOptionables()");
+			DSShared.Logfile.Log("MainViewOptionables.DisposeOptionables()");
 			_overlay.BrushLayer.Dispose();
 			_overlay.PenGrid   .Dispose();
 			_overlay.PenGrid10 .Dispose();
@@ -772,7 +772,7 @@ namespace MapView.Forms.MainView
 		/// <param name="options">MainView's options</param>
 		internal void LoadDefaults(Options options)
 		{
-			//DSShared.LogFile.WriteLine("MainViewOptionables.LoadDefaults()");
+			//DSShared.Logfile.Log("MainViewOptionables.LoadDefaults()");
 
 			Color color;
 

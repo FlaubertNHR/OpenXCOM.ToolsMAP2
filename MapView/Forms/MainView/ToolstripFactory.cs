@@ -28,7 +28,7 @@ namespace MapView.Forms.MainView
 		/// for sure.</remarks>
 		internal void DisposeMainviewTools()
 		{
-			DSShared.LogFile.WriteLine("ToolstripFactory.DisposeMainviewTools()");
+			DSShared.Logfile.Log("ToolstripFactory.DisposeMainviewTools()");
 			_tsbCopy       .Dispose();
 			_tsbCut        .Dispose();
 			_tsbDelete     .Dispose();
@@ -60,7 +60,7 @@ namespace MapView.Forms.MainView
 		/// Dispose() when MainView quits ... but I really don't know for sure.</remarks>
 		internal void DisposeTopviewTools()
 		{
-			DSShared.LogFile.WriteLine("ToolstripFactory.DisposeTopviewTools()");
+			DSShared.Logfile.Log("ToolstripFactory.DisposeTopviewTools()");
 			foreach (var disposable in _disposables)
 				disposable.Dispose();
 		}

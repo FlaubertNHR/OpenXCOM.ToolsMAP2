@@ -207,11 +207,11 @@ namespace MapView
 				string labelCategory,
 				string labelTileset)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("TilesetEditor..cTor");
-			//LogFile.WriteLine(". labelGroup= " + labelGroup);
-			//LogFile.WriteLine(". labelCategory= " + labelCategory);
-			//LogFile.WriteLine(". labelTileset= " + labelTileset);
+			//Logfile.Log("");
+			//Logfile.Log("TilesetEditor..cTor");
+			//Logfile.Log(". labelGroup= " + labelGroup);
+			//Logfile.Log(". labelCategory= " + labelCategory);
+			//Logfile.Log(". labelTileset= " + labelTileset);
 
 			InitializeComponent();
 
@@ -342,7 +342,7 @@ namespace MapView
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				//LogFile.WriteLine("TilesetEditor.OnFormClosing() _isDescriptor0= " + _isDescriptor0 + " DialogResult= " + DialogResult);
+				//Logfile.Log("TilesetEditor.OnFormClosing() _isDescriptor0= " + _isDescriptor0 + " DialogResult= " + DialogResult);
 
 				if (DialogResult != DialogResult.OK
 					&& _isDescriptor0)
@@ -354,7 +354,7 @@ namespace MapView
 					}
 					else if (TerrainsChanged(Terrains_0, _descriptor.Terrains))
 					{
-						//LogFile.WriteLine(". force DialogResult.OK");
+						//Logfile.Log(". force DialogResult.OK");
 						DialogResult = DialogResult.OK; // force reload of the Tileset
 					}
 				}
@@ -1679,8 +1679,8 @@ namespace MapView
 //		/// <param name="e"></param>
 //		private void OnTilesetKeyUp(object sender, KeyEventArgs e)
 //		{
-//			//LogFile.WriteLine("");
-//			//LogFile.WriteLine("OnTilesetLabelKeyUp");
+//			//Logfile.Log("");
+//			//Logfile.Log("OnTilesetLabelKeyUp");
 //
 //			if (InputBoxType == TilesetEditType.AddTileset	// NOTE: have to remove this. If a user enters an invalid char in the label
 //				&& btnCreateMap.Enabled						// then uses Enter to get rid of the error-popup, the KeyDown dismisses the
@@ -1693,14 +1693,14 @@ namespace MapView
 // was OnCreateDescriptorClick() checks ->>
 //			if (String.IsNullOrEmpty(Tileset)) // TODO: this should be checked before getting here.
 //			{
-//				LogFile.WriteLine(". The Map label cannot be blank.");
+//				Logfile.Log(". The Map label cannot be blank.");
 //				ShowError("The Map label cannot be blank.");
 //
 //				tbTileset.Select();
 //			}
 //			else if (!ValidateCharacters(Tileset)) // TODO: this should be checked before getting here.
 //			{
-//				LogFile.WriteLine(". The Map label contains illegal characters.");
+//				Logfile.Log(". The Map label contains illegal characters.");
 //				ShowError("The Map label contains illegal characters.");
 //
 //				tbTileset.Select();
@@ -1708,12 +1708,12 @@ namespace MapView
 //			}
 //			else if (MapFileExists(Tileset))	// TODO: check to ensure that this Create function (and KeyUp-Enter events)
 //			{									// cannot be called if a descriptor and/or a Map-file already exist.
-//				LogFile.WriteLine(". The Map file already exists."); // NOTE: Don't worry about it yet; this does not create a Map-file.
+//				Logfile.Log(". The Map file already exists."); // NOTE: Don't worry about it yet; this does not create a Map-file.
 //				ShowError("The Map file already exists.");
 //			}
 //			else if (TileGroup.Categories[Category].ContainsKey(Tileset))	// safety -> TODO: the create map and tileset keyup events should
 //			{																// be disabled if a Descriptor w/ tileset-label already exists
-//				LogFile.WriteLine(". The Tileset label already exists.");
+//				Logfile.Log(". The Tileset label already exists.");
 //				ShowError("The Tileset label already exists.");
 //			}
 //			else

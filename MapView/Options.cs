@@ -118,10 +118,10 @@ namespace MapView
 				object @default,
 				OptionChangedEvent changer)
 		{
-			//DSShared.LogFile.WriteLine("Options.CreateOptionDefault()");
-			//DSShared.LogFile.WriteLine(". key= " + key);
-			//DSShared.LogFile.WriteLine(". default= " + @default);
-			//DSShared.LogFile.WriteLine(". changer= " + changer);
+			//DSShared.Logfile.Log("Options.CreateOptionDefault()");
+			//DSShared.Logfile.Log(". key= " + key);
+			//DSShared.Logfile.Log(". default= " + @default);
+			//DSShared.Logfile.Log(". changer= " + changer);
 
 			var option = new Option(@default);
 

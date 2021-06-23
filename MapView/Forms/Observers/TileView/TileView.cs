@@ -27,7 +27,7 @@ namespace MapView.Forms.Observers
 	{
 		internal void DisposeObserver()
 		{
-			LogFile.WriteLine("TileView.DisposeObserver()");
+			Logfile.Log("TileView.DisposeObserver()");
 			if (ContextMenu != null)
 			{
 				DisposeContext(); // paranoia ... this is .net disposal stuff after all.
@@ -295,7 +295,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void LoadControlDefaultOptions()
 		{
-			//LogFile.WriteLine("TileView.LoadControlDefaultOptions()");
+			//Logfile.Log("TileView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
 		}
 

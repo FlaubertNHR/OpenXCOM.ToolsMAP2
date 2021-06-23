@@ -23,7 +23,7 @@ namespace MapView.Forms.Observers
 	{
 		internal static void DisposePanels()
 		{
-			DSShared.LogFile.WriteLine("TilePanel.DisposePanels() static");
+			DSShared.Logfile.Log("TilePanel.DisposePanels() static");
 			if (PenSelectedPartBorder != null) // static object
 			{
 				PenSelectedPartBorder.Dispose();
@@ -97,7 +97,7 @@ namespace MapView.Forms.Observers
 		/// </remarks>
 		protected override void Dispose(bool disposing)
 		{
-			DSShared.LogFile.WriteLine("TilePanel.Dispose(" + disposing + ")");
+			DSShared.Logfile.Log("TilePanel.Dispose(" + disposing + ")");
 			// TODO If you need thread safety, use a lock around these
 			// operations as well as in your methods that use the resource.
 			try

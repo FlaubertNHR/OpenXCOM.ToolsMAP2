@@ -37,7 +37,7 @@ namespace MapView
 //		#region Methods
 //		internal void SetSelectedValue(object val)
 //		{
-//			//LogFile.WriteLine("SetSelectedValue() val= " + val);
+//			//Logfile.Log("SetSelectedValue() val= " + val);
 //			if (SelectedGridItem != null && SelectedObject != null)
 //				SelectedGridItem.PropertyDescriptor.SetValue(SelectedObject, val); // no fucking guff.
 //		}

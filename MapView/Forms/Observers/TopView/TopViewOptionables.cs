@@ -14,7 +14,7 @@ namespace MapView.Forms.Observers
 	{
 		internal static void DisposeOptionables()
 		{
-			DSShared.LogFile.WriteLine("TopViewOptionables.DisposeOptionables() static");
+			DSShared.Logfile.Log("TopViewOptionables.DisposeOptionables() static");
 			foreach (var pair in TopControl.TopPens)
 				pair.Value.Dispose();
 
@@ -378,7 +378,7 @@ namespace MapView.Forms.Observers
 		/// <param name="options">TopView's options</param>
 		internal void LoadDefaults(Options options)
 		{
-			//DSShared.LogFile.WriteLine("TopViewOptionables.LoadDefaults()");
+			//DSShared.Logfile.Log("TopViewOptionables.LoadDefaults()");
 
 			Pen pen; SolidBrush brush;
 

@@ -16,7 +16,7 @@ namespace XCom
 		/// </summary>
 		public void Dispose()
 		{
-			DSShared.LogFile.WriteLine("XCImage.Dispose()");
+			DSShared.Logfile.Log("XCImage.Dispose()");
 			if (Sprite != null)
 			{
 				Sprite.Dispose();

@@ -25,7 +25,7 @@ namespace MapView.Forms.MainView
 	{
 		internal void DisposeOverlay()
 		{
-			LogFile.WriteLine("MainViewOverlay.DisposeOverlay()");
+			Logfile.Log("MainViewOverlay.DisposeOverlay()");
 			LocationFont.Dispose();
 			_layerFill  .Dispose();
 			_t1         .Dispose();
@@ -292,7 +292,7 @@ namespace MapView.Forms.MainView
 		/// <c><see cref="MainViewF"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewOverlay.OnKeyDown()");
+			//Logfile.Log("MainViewOverlay.OnKeyDown()");
 
 			Edit(e);
 		}
@@ -1134,7 +1134,7 @@ namespace MapView.Forms.MainView
 		/// <param name="args"></param>
 		internal void OnLocationSelectedMain(LocationSelectedArgs args)
 		{
-			//LogFile.WriteLine("MainViewOverlay.OnLocationSelectedMain");
+			//Logfile.Log("MainViewOverlay.OnLocationSelectedMain");
 
 			FirstClick = true;
 			_mainView.sb_PrintPosition();
@@ -1146,7 +1146,7 @@ namespace MapView.Forms.MainView
 		/// <param name="args"></param>
 		internal void OnLevelSelectedMain(LevelSelectedArgs args)
 		{
-			//LogFile.WriteLine("MainViewOverlay.OnLevelSelectedMain");
+			//Logfile.Log("MainViewOverlay.OnLevelSelectedMain");
 
 			_mainView.sb_PrintPosition();
 			Invalidate();
@@ -1172,9 +1172,9 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("OnPaint()");
-			//LogFile.WriteLine(Environment.StackTrace);
+			//Logfile.Log("");
+			//Logfile.Log("OnPaint()");
+			//Logfile.Log(Environment.StackTrace);
 //			base.OnPaint(e);
 
 			// NOTE: If the currently loaded tileset has crippled tileparts and

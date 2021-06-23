@@ -207,7 +207,7 @@ namespace PckView
 
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 #if DEBUG
-			LogFile.SetLogFilePath(dirAppL, IsInvoked);
+			Logfile.SetPath(dirAppL, IsInvoked);
 #endif
 
 			InitializeComponent();
@@ -563,7 +563,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("PckViewF.OnKeyDown() " + e.KeyData);
+			//Logfile.Log("PckViewF.OnKeyDown() " + e.KeyData);
 
 			switch (e.KeyData)
 			{

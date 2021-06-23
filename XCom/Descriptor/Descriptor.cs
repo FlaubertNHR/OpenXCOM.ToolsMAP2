@@ -75,7 +75,7 @@ namespace XCom
 				GameType groupType,
 				bool bypassRecordsExceeded)
 		{
-			//LogFile.WriteLine("Descriptor..cTor label= " + label);
+			//Logfile.Log("Descriptor..cTor label= " + label);
 
 			Label    = label;
 			Basepath = basepath;
@@ -148,11 +148,11 @@ namespace XCom
 															Pal);
 			if (spriteset != null)
 			{
-				//LogFile.WriteLine(". spriteset Valid - create tileparts");
+				//Logfile.Log(". spriteset Valid - create tileparts");
 				return TilepartFactory.CreateTileparts(terr, path, terid); //, spriteset
 			}
 
-			//LogFile.WriteLine(". spriteset NOT Valid - ret null");
+			//Logfile.Log(". spriteset NOT Valid - ret null");
 			return null;
 		}
 

@@ -24,7 +24,7 @@ namespace MapView.Forms.Observers
 		/// heeding this piece of ornery advice later.</remarks>
 		internal void DisposeObserver()
 		{
-			LogFile.WriteLine("TopView.DisposeObserver()");
+			Logfile.Log("TopView.DisposeObserver()");
 			TopControl.DisposeControl();
 		}
 
@@ -195,7 +195,7 @@ namespace MapView.Forms.Observers
 		/// <param name="args"></param>
 		private void OnLevelSelectedObserver(LevelSelectedArgs args)
 		{
-			//LogFile.WriteLine("TopView.OnLevelSelectedObserver() " + Tag);
+			//Logfile.Log("TopView.OnLevelSelectedObserver() " + Tag);
 			Refresh(); // req'd.
 		}
 
@@ -424,7 +424,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void LoadControlDefaultOptions()
 		{
-			//LogFile.WriteLine("TopView.LoadControlDefaultOptions()");
+			//Logfile.Log("TopView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
 		}
 

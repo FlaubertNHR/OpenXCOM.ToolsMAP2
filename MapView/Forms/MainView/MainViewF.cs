@@ -186,10 +186,10 @@ namespace MapView
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);
 #if DEBUG
-			LogFile.SetLogFilePath(dirAppL); // creates a logfile/wipes the old one.
+			Logfile.SetPath(dirAppL); // creates a logfile/wipes the old one.
 #endif
 
-			LogFile.WriteLine("Instantiating MAIN MapView window ...");
+			Logfile.Log("Instantiating MAIN MapView window ...");
 
 			// TODO: Either move all this SharedSpace stuff to DSShared so it
 			// can be implemented/instantiated for Mcd/PckView also, or better
@@ -198,7 +198,7 @@ namespace MapView
 			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL);
 			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSetT);
 
-			LogFile.WriteLine("App paths cached.");
+			Logfile.Log("App paths cached.");
 
 
 			// TODO: The .NET framework already has a class for "PathInfo":
@@ -215,7 +215,7 @@ namespace MapView
 			SharedSpace.SetShare(PathInfo.ShareTilesets,  piTilesets);			// set share for MapTilesets.yml
 			SharedSpace.SetShare(PathInfo.ShareViewers,   piViewers);			// set share for MapViewers.yml
 
-			LogFile.WriteLine("PathInfo cached.");
+			Logfile.Log("PathInfo cached.");
 
 
 			// Check if MapTilesets.yml and MapResources.yml exist yet, show the
@@ -223,19 +223,19 @@ namespace MapView
 			// NOTE: MapResources.yml and MapTilesets.yml are created by ConfigurationForm.
 			if (!piResources.FileExists() || !piTilesets.FileExists())
 			{
-				LogFile.WriteLine("Resources or Tilesets file does not exist: run configurator.");
+				Logfile.Log("Resources or Tilesets file does not exist: run configurator.");
 
 				using (var f = new ConfigurationForm())
 					f.ShowDialog(this);
 			}
 			else
-				LogFile.WriteLine("Resources and Tilesets files exist.");
+				Logfile.Log("Resources and Tilesets files exist.");
 
 
 			// Exit app if either MapResources.yml or MapTilesets.yml doesn't exist
 			if (!piResources.FileExists() || !piTilesets.FileExists()) // safety. The Configurator shall demand that both these files get created.
 			{
-				LogFile.WriteLine("Resources or Tilesets file does not exist: quit MapView.");
+				Logfile.Log("Resources or Tilesets file does not exist: quit MapView.");
 				using (var dialog = new Infobox(
 											"Error",
 											"Cannot find configuration files. The application will exit.",
@@ -252,17 +252,17 @@ namespace MapView
 			if (!piViewers.FileExists())
 			{
 				if (CopyViewersFile(piViewers.Fullpath))
-					LogFile.WriteLine("Viewers file created.");
+					Logfile.Log("Viewers file created.");
 				else
-					LogFile.WriteLine("Viewers file could not be created.");
+					Logfile.Log("Viewers file could not be created.");
 			}
 			else
-				LogFile.WriteLine("Viewers file exists.");
+				Logfile.Log("Viewers file exists.");
 
 
 
 			InitializeComponent(); // ffs. This fires OnActivated but the Optionables aren't ready yet.
-			LogFile.WriteLine("MainView initialized.");
+			Logfile.Log("MainView initialized.");
 
 
 			var splitter = new CollapsibleSplitter(); // NOTE: This needs to be weird ->
@@ -321,47 +321,47 @@ namespace MapView
 
 
 			QuadrantDrawService.CacheQuadrantPaths();
-			LogFile.WriteLine("Quadrant panel graphics paths cached.");
+			Logfile.Log("Quadrant panel graphics paths cached.");
 
 
 			that = this;
 
 			MainViewUnderlay = new MainViewUnderlay(this);
-			LogFile.WriteLine("MainView panels instantiated.");
+			Logfile.Log("MainView panels instantiated.");
 
 			Optionables = new MainViewOptionables(MainViewOverlay);
-			LogFile.WriteLine("MainView optionables initialized.");
+			Logfile.Log("MainView optionables initialized.");
 
 			RegistryInfo.InitializeRegistry(dirAppL);
-			LogFile.WriteLine("Registry initialized.");
+			Logfile.Log("Registry initialized.");
 			RegistryInfo.RegisterProperties(this);
-			LogFile.WriteLine("MainView registered.");
+			Logfile.Log("MainView registered.");
 
 			Options.InitializeConverters();
-			LogFile.WriteLine("OptionsConverters initialized.");
+			Logfile.Log("OptionsConverters initialized.");
 			Option.InitializeParsers();
-			LogFile.WriteLine("OptionParsers initialized.");
+			Logfile.Log("OptionParsers initialized.");
 
 			OptionsManager.SetOptionsSection(RegistryInfo.MainView, Options);
 
 			LoadDefaultOptions();									// TODO: check if this should go after the managers load
-			LogFile.WriteLine("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
+			Logfile.Log("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
 																	// when OnOptionsClick() runs ....
 
 
 			Palette.UfoBattle .SetTransparent(true); // WARNING: ufo/tftd Palettes created here ->
-			LogFile.WriteLine("ufo-battle Palette instantiated.");
+			Logfile.Log("ufo-battle Palette instantiated.");
 			Palette.TftdBattle.SetTransparent(true);
-			LogFile.WriteLine("tftd-battle Palette instantiated.");
-			LogFile.WriteLine("Palette transparencies set.");
+			Logfile.Log("tftd-battle Palette instantiated.");
+			Logfile.Log("Palette transparencies set.");
 
 			MonotoneSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone");	// sprites for TileView's eraser and QuadrantControl's blank quads.
 																					// NOTE: transparency of the 'UfoBattle' palette must be set first.
-			LogFile.WriteLine("Monotone sprites loaded.");
+			Logfile.Log("Monotone sprites loaded.");
 
 
 			ObserverManager.CreateObservers(); // adds each subsidiary viewer's options and Options-type etc.
-			LogFile.WriteLine("ObserverManager initialized.");
+			Logfile.Log("ObserverManager initialized.");
 
 			ObserverManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
@@ -373,11 +373,11 @@ namespace MapView
 			ObserverManager.ToolFactory.AddScalerTools(tsTools);
 			ObserverManager.ToolFactory.AddEditorTools(tsTools);
 			tsTools.ResumeLayout();
-			LogFile.WriteLine("MainView toolstrip created.");
+			Logfile.Log("MainView toolstrip created.");
 
 			MenuManager.Initialize(menuViewers);
 			MenuManager.PopulateMenu();
-			LogFile.WriteLine("Viewers menu populated.");
+			Logfile.Log("Viewers menu populated.");
 
 
 			PathInfo piScanGufo  = null;
@@ -451,14 +451,14 @@ namespace MapView
 					if (cuboidufo.Fail != Spriteset.FAIL_non)
 					{
 						cuboidufo = null;
-						LogFile.WriteLine("UFO Cursor failed to load.");
+						Logfile.Log("UFO Cursor failed to load.");
 					}
 					else
-						LogFile.WriteLine("UFO Cursor loaded.");
+						Logfile.Log("UFO Cursor loaded.");
 				}
 			}
 			else
-				LogFile.WriteLine("UFO Cursor directory not found.");
+				Logfile.Log("UFO Cursor directory not found.");
 
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
@@ -475,14 +475,14 @@ namespace MapView
 					if (cuboidtftd.Fail != Spriteset.FAIL_non)
 					{
 						cuboidtftd = null;
-						LogFile.WriteLine("TFTD Cursor failed to load.");
+						Logfile.Log("TFTD Cursor failed to load.");
 					}
 					else
-						LogFile.WriteLine("TFTD Cursor loaded.");
+						Logfile.Log("TFTD Cursor loaded.");
 				}
 			}
 			else
-				LogFile.WriteLine("TFTD Cursor directory not found.");
+				Logfile.Log("TFTD Cursor directory not found.");
 
 			// Exit app if a cuboid-targeter did not get instantiated
 			if (cuboidtftd != null) // NOTE: The TFTD cursorsprite takes precedence over the UFO cursorsprite.
@@ -495,7 +495,7 @@ namespace MapView
 			}
 			else
 			{
-				LogFile.WriteLine("Targeter not instantiated: quit MapView.");
+				Logfile.Log("Targeter not instantiated: quit MapView.");
 
 				string copyable = SharedSpace.CursorFilePrefix + GlobalsXC.PckExt
 								+ Environment.NewLine
@@ -517,37 +517,37 @@ namespace MapView
 			if (piScanGufo != null && piScanGufo.FileExists()
 				&& SpritesetManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
 			{
-				LogFile.WriteLine("ScanG UFO loaded.");
+				Logfile.Log("ScanG UFO loaded.");
 			}
 			else
-				LogFile.WriteLine("ScanG UFO not found.");
+				Logfile.Log("ScanG UFO not found.");
 
 			if (piScanGtftd != null && piScanGtftd.FileExists()
 				&& SpritesetManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 			{
-				LogFile.WriteLine("ScanG TFTD loaded.");
+				Logfile.Log("ScanG TFTD loaded.");
 			}
 			else
-				LogFile.WriteLine("ScanG TFTD not found.");
+				Logfile.Log("ScanG TFTD not found.");
 
 
 			TileGroupManager.LoadTileGroups(piTilesets.Fullpath); // load resources from YAML.
-			LogFile.WriteLine("Tilesets loaded/Descriptors created.");
+			Logfile.Log("Tilesets loaded/Descriptors created.");
 
 
 			if (piOptions.FileExists()) // NOTE: load user-options before MenuManager.StartSecondaryStageBoosters() in LoadSelectedDescriptor()
 			{
 				if (OptionsManager.LoadUserOptions(piOptions.Fullpath))
-					LogFile.WriteLine("User options loaded.");
+					Logfile.Log("User options loaded.");
 				else
-					LogFile.WriteLine("User options could not be opened.");
+					Logfile.Log("User options could not be opened.");
 			}
 			else
-				LogFile.WriteLine("User options NOT loaded - no options file to load.");
+				Logfile.Log("User options NOT loaded - no options file to load.");
 
 
 			CreateTree();
-			LogFile.WriteLine("Maptree instantiated.");
+			Logfile.Log("Maptree instantiated.");
 
 
 			splitter.SetClickableRectangle();
@@ -560,7 +560,7 @@ namespace MapView
 
 
 			Cursor.Current = Cursors.Default;
-			LogFile.WriteLine("About to show MainView ..." + Environment.NewLine);
+			Logfile.Log("About to show MainView ..." + Environment.NewLine);
 		}
 		#endregion cTor
 
@@ -597,14 +597,14 @@ namespace MapView
 		/// </summary>
 		private void CreateTree()
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("MainViewF.CreateTree");
+			//Logfile.Log("");
+			//Logfile.Log("MainViewF.CreateTree");
 
 			MapTree.BeginUpdate();
 			MapTree.Nodes.Clear();
 
 			var groups = TileGroupManager.TileGroups;
-			//LogFile.WriteLine(". groups= " + groups);
+			//Logfile.Log(". groups= " + groups);
 
 			SortableTreeNode nodeGroup;
 			TileGroup tileGroup;
@@ -617,7 +617,7 @@ namespace MapView
 
 			foreach (string keyGroup in groups.Keys)
 			{
-				//LogFile.WriteLine(". . keyGroup= " + keyGroup);
+				//Logfile.Log(". . keyGroup= " + keyGroup);
 
 				tileGroup = groups[keyGroup];
 
@@ -627,7 +627,7 @@ namespace MapView
 
 				foreach (string keyCategory in tileGroup.Categories.Keys)
 				{
-					//LogFile.WriteLine(". . . keyCategory= " + keyCategory);
+					//Logfile.Log(". . . keyCategory= " + keyCategory);
 
 					nodeCategory = new SortableTreeNode(keyCategory);
 					descriptors = tileGroup.Categories[keyCategory];
@@ -636,7 +636,7 @@ namespace MapView
 
 					foreach (string keyTileset in descriptors.Keys)
 					{
-						//LogFile.WriteLine(". . . . keyTileset= " + keyTileset);
+						//Logfile.Log(". . . . keyTileset= " + keyTileset);
 
 						nodeTileset = new SortableTreeNode(keyTileset);
 						nodeTileset.Tag = descriptors[keyTileset];
@@ -935,7 +935,7 @@ namespace MapView
 		/// </summary>
 		private void SafeQuit()
 		{
-			LogFile.WriteLine("MainViewF.SafeQuit() EXIT MapView ->");
+			Logfile.Log("MainViewF.SafeQuit() EXIT MapView ->");
 
 			RegistryInfo.UpdateRegistry(this); // store MainView's current location and size
 
@@ -1001,7 +1001,7 @@ namespace MapView
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			//LogFile.WriteLine("MainViewF.ProcessCmdKey() " + keyData);
+			//Logfile.Log("MainViewF.ProcessCmdKey() " + keyData);
 
 			bool invalidate = false;
 			bool focusearch = false;
@@ -1082,7 +1082,7 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnKeyDown() " + e.KeyData);
+			//Logfile.Log("MainViewF.OnKeyDown() " + e.KeyData);
 
 			string key; object val = null;
 			ToolStripMenuItem it = null;
@@ -1479,7 +1479,7 @@ namespace MapView
 		/// user chooses to reload the current Map et al. on the File menu.</remarks>
 		private void OnReloadDescriptor()
 		{
-			//LogFile.WriteLine("MainViewF.OnReloadDescriptor()");
+			//Logfile.Log("MainViewF.OnReloadDescriptor()");
 
 			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
@@ -1496,7 +1496,7 @@ namespace MapView
 		/// </summary>
 		private void ForceMapReload()
 		{
-			//LogFile.WriteLine("MainViewF.ForceMapReload()");
+			//Logfile.Log("MainViewF.ForceMapReload()");
 
 			MainViewUnderlay.MapFile.ForceReload = false;
 
@@ -2314,48 +2314,48 @@ namespace MapView
 				{
 					start = start0;
 
-					LogFile.WriteLine("");
-					LogFile.WriteLine("start= " + start.Text);
+					Logfile.Log("");
+					Logfile.Log("start= " + start.Text);
 
 					if (start.Nodes.Count != 0)
 					{
 						start = start.Nodes[0];
-						LogFile.WriteLine(". start.Nodes.Count != 0 start= " + start.Text);
+						Logfile.Log(". start.Nodes.Count != 0 start= " + start.Text);
 					}
 					else if (start.NextNode != null)
 					{
 						start = start.NextNode;
-						LogFile.WriteLine(". start.NextNode != null start= " + start.Text);
+						Logfile.Log(". start.NextNode != null start= " + start.Text);
 					}
 					else if (start.Parent != null)
 					{
-						LogFile.WriteLine(". start.Parent != null");
+						Logfile.Log(". start.Parent != null");
 
 						if (start.Parent.NextNode != null)
 						{
 							start = start.Parent.NextNode;
-							LogFile.WriteLine(". . start.Parent.NextNode != null start= " + start.Text);
+							Logfile.Log(". . start.Parent.NextNode != null start= " + start.Text);
 						}
 						else if (start.Parent.Parent != null
 							&& start.Parent.Parent.NextNode != null)
 						{
 							start = start.Parent.Parent.NextNode;
-							LogFile.WriteLine(". . start.Parent.Parent != null && start.Parent.Parent.NextNode != null start= " + start.Text);
+							Logfile.Log(". . start.Parent.Parent != null && start.Parent.Parent.NextNode != null start= " + start.Text);
 						}
 						else // wrap
 						{
-//							LogFile.WriteLine(". . . start.Parent.Parent == null RETURN");
+//							Logfile.Log(". . . start.Parent.Parent == null RETURN");
 //							return;
 							start = MapTree.Nodes[0];
-							LogFile.WriteLine(". . . start.Parent.Parent == null start= " + start.Text);
+							Logfile.Log(". . . start.Parent.Parent == null start= " + start.Text);
 						}
 					}
 					else // wrap
 					{
-//						LogFile.WriteLine(". start.NextNode == null && start.Parent == null RETURN");
+//						Logfile.Log(". start.NextNode == null && start.Parent == null RETURN");
 //						return;
 						start = MapTree.Nodes[0];
-						LogFile.WriteLine(". start.NextNode == null && start.Parent == null start= " + start.Text);
+						Logfile.Log(". start.NextNode == null && start.Parent == null start= " + start.Text);
 					}
 
 					if (start != null) // jic.
@@ -2389,18 +2389,18 @@ namespace MapView
 					if (!_active)
 					{
 						_active = (node == start);
-						if (_active) LogFile.WriteLine(recurse + " set Active");
+						if (_active) Logfile.Log(recurse + " set Active");
 					}
 					else if (node == start0)
 					{
-						LogFile.WriteLine(recurse + " node == start0 ret NULL");
+						Logfile.Log(recurse + " node == start0 ret NULL");
 						_hardstop = true;	// <- whatever you were doing in the way of recursions stop it.
 						return null;		// not found after wrapping. NOTE: Does not highlight the current node even if that node has the searched for text.
 					}
 
 					if (_active && node.Text.ToLower().Contains(text))
 					{
-						LogFile.WriteLine(recurse + " get " + node.Text);
+						Logfile.Log(recurse + " get " + node.Text);
 						return node;
 					}
 
@@ -2408,7 +2408,7 @@ namespace MapView
 					{
 						if ((child = SearchTreeview(text, node.Nodes, start, start0)) != null)
 						{
-							LogFile.WriteLine(recurse + " get child " + child.Text);
+							Logfile.Log(recurse + " get child " + child.Text);
 							return child;
 						}
 					}
@@ -2416,13 +2416,13 @@ namespace MapView
 						&& (node.Parent == null        || node.Parent.NextNode == null)			// and no parent OR parent is last node at its level
 						&& (node.Parent.Parent == null || node.Parent.Parent.NextNode == null))	// and no parent-of-parent OR parent-of-parent is last node at its level
 					{
-						LogFile.WriteLine(recurse + " search from Nodes[0]");
+						Logfile.Log(recurse + " search from Nodes[0]");
 						return SearchTreeview(text, MapTree.Nodes, MapTree.Nodes[0], start0);
 					}
 				}
 			}
 
-			LogFile.WriteLine("ret NULL");
+			Logfile.Log("ret NULL");
 			return null;
 		} */
 		#endregion Events
@@ -2529,7 +2529,7 @@ namespace MapView
 		/// blank. So use MouseDown.</remarks>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeMouseDown() BypassChanged= " + BypassChanged);
+			//Logfile.Log("MainViewF.OnMapTreeMouseDown() BypassChanged= " + BypassChanged);
 
 			switch (e.Button)
 			{
@@ -2880,7 +2880,7 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						//LogFile.WriteLine("return to OnEditTilesetClick() w/ DialogResult.OK");
+						//Logfile.Log("return to OnEditTilesetClick() w/ DialogResult.OK");
 
 						MaptreeChanged = true;
 
@@ -3132,7 +3132,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeNodeMouseClick() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMapTreeNodeMouseClick() _loadReady= " + _loadReady);
 
 			if (e.Node == _selected)
 			{
@@ -3158,7 +3158,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeBeforeSelect() BypassChanged= " + BypassChanged);
+			//Logfile.Log("MainViewF.OnMapTreeBeforeSelect() BypassChanged= " + BypassChanged);
 
 			if (!BypassChanged) // is true on TilesetEditor DialogResult.OK
 			{
@@ -3176,7 +3176,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
-			//LogFile.WriteLine("MainViewF.OnMapTreeAfterSelect() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMapTreeAfterSelect() _loadReady= " + _loadReady);
 
 			ClearSearched();
 
@@ -3200,10 +3200,10 @@ namespace MapView
 		/// </summary>
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("");
-			//LogFile.WriteLine("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
-			//LogFile.WriteLine(". browseMapfile= " + browseMapfile);
+			//Logfile.Log("");
+			//Logfile.Log("");
+			//Logfile.Log("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
+			//Logfile.Log(". browseMapfile= " + browseMapfile);
 
 			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the TestPartslots dialog
 			{
@@ -3444,7 +3444,7 @@ namespace MapView
 		/// about to load/reload.</remarks>
 		private DialogResult SaveAlertMap()
 		{
-			//LogFile.WriteLine("MainViewF.SaveAlertMap()");
+			//Logfile.Log("MainViewF.SaveAlertMap()");
 
 			if (MainViewUnderlay.MapFile != null && MainViewUnderlay.MapFile.MapChanged)
 			{

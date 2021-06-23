@@ -15,7 +15,7 @@ namespace MapView.Forms.Observers
 	{
 		internal static void DisposeOptionables()
 		{
-			DSShared.LogFile.WriteLine("RouteViewOptionables.DisposeOptionables() static");
+			DSShared.Logfile.Log("RouteViewOptionables.DisposeOptionables() static");
 			foreach (var pair in RouteControl.RoutePens)
 				pair.Value.Dispose();
 
@@ -517,7 +517,7 @@ namespace MapView.Forms.Observers
 		/// <param name="options">RouteView's options</param>
 		internal void LoadDefaults(Options options)
 		{
-			//DSShared.LogFile.WriteLine("RouteViewOptionables.LoadDefaults()");
+			//DSShared.Logfile.Log("RouteViewOptionables.LoadDefaults()");
 
 			Pen pen; SolidBrush brush; Color color;
 

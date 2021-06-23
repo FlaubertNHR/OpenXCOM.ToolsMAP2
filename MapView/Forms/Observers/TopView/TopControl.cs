@@ -25,7 +25,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		public void DisposeControl()
 		{
-			DSShared.LogFile.WriteLine("TopControl.DisposeControl()");
+			DSShared.Logfile.Log("TopControl.DisposeControl()");
 			_lozSelector.Dispose();
 			_lozSelected.Dispose();
 

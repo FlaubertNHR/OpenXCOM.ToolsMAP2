@@ -94,7 +94,7 @@ namespace XCom
 		/// <param name="fullpath">path-file-extension of settings/MapTilesets.yml</param>
 		public static void LoadTileGroups(string fullpath)
 		{
-			//LogFile.WriteLine("LoadTileGroups()");
+			//Logfile.Log("LoadTileGroups()");
 
 			using (var fs = FileService.OpenFile(fullpath))
 			if (fs != null)
@@ -147,7 +147,7 @@ namespace XCom
 					var tilesets = nodeRoot.Children[new YamlScalarNode(GlobalsXC.TILESETS)] as YamlSequenceNode;
 					foreach (YamlMappingNode tileset in tilesets) // iterate over all the tilesets
 					{
-						//LogFile.WriteLine("");
+						//Logfile.Log("");
 
 						keyvals = tileset.Children;
 
@@ -177,7 +177,7 @@ namespace XCom
 									}
 								}
 								terrainset[i] = new Tuple<string,string>(terr, path);
-								//LogFile.WriteLine(". terrainset[" + i + "]= " + terrainset[i]);
+								//Logfile.Log(". terrainset[" + i + "]= " + terrainset[i]);
 							}
 						}
 
@@ -192,7 +192,7 @@ namespace XCom
 
 						TileGroup @group;
 						string labelGroup = keyvals[keyGroup].ToString();
-						//LogFile.WriteLine(". labelGroup= " + labelGroup);
+						//Logfile.Log(". labelGroup= " + labelGroup);
 						if (!TileGroupManager.TileGroups.ContainsKey(labelGroup))
 						{
 							TileGroupManager.TileGroups[labelGroup] =
@@ -201,10 +201,10 @@ namespace XCom
 						else
 							@group = TileGroupManager.TileGroups[labelGroup];
 
-						//LogFile.WriteLine(". group= " + @group);
+						//Logfile.Log(". group= " + @group);
 
 						string labelCategory = keyvals[keyCategory].ToString();
-						//LogFile.WriteLine(". labelCategory= " + labelCategory);
+						//Logfile.Log(". labelCategory= " + labelCategory);
 						if (!@group.Categories.ContainsKey(labelCategory))
 						{
 							@group.AddCategory(labelCategory);
@@ -230,7 +230,7 @@ namespace XCom
 									break;
 							}
 						}
-						//LogFile.WriteLine(". basepath= " + basepath);
+						//Logfile.Log(". basepath= " + basepath);
 
 
 						var descriptor = new Descriptor(

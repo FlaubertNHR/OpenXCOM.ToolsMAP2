@@ -7,30 +7,31 @@ using System.IO;
 
 namespace DSShared
 {
-	public static class LogFile
+	public static class Logfile
 	{
 #if DEBUG
 		private const string FILE = "debug.log";
-		private static string _full;
+		private static string _pfe;
 #endif
 
-		public static void SetLogFilePath(string path, bool append = false)
+		public static void SetPath(string path, bool append = false)
 		{
 #if DEBUG
-			_full = Path.Combine(path, FILE);
-			if (!append) CreateLog();
+			_pfe = Path.Combine(path, FILE);
+			if (!append) Create();
 #endif
 		}
 
 		/// <summary>
 		/// Creates a logfile or cleans the old one. The logfile should be
-		/// created by calling SetLogFilePath() only.
+		/// created by calling <c><see cref="SetPath()">SetPath()</see></c>
+		/// only.
 		/// </summary>
-		private static void CreateLog()
+		private static void Create()
 		{
 #if DEBUG
 			using (var sw = new StreamWriter(File.Open(
-													_full,
+													_pfe,
 													FileMode.Create,
 													FileAccess.Write,
 													FileShare.None)))
@@ -42,11 +43,11 @@ namespace DSShared
 		/// Writes a line to the logfile.
 		/// </summary>
 		/// <param name="line">the line to write</param>
-		public static void WriteLine(string line)
+		public static void Log(string line)
 		{
 #if DEBUG
 			using (var sw = new StreamWriter(File.Open(
-													_full,
+													_pfe,
 													FileMode.Append,
 													FileAccess.Write,
 													FileShare.None)))

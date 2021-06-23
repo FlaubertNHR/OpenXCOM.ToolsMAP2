@@ -309,7 +309,7 @@ namespace McdView
 
 			string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 #if DEBUG
-			LogFile.SetLogFilePath(dirAppL, IsInvoked);
+			Logfile.SetPath(dirAppL, IsInvoked);
 #endif
 
 			isRunT = true;
@@ -688,7 +688,7 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//LogFile.WriteLine("McdviewF.OnKeyDown() e.KeyData= " + e.KeyData);
+			//Logfile.Log("McdviewF.OnKeyDown() e.KeyData= " + e.KeyData);
 
 			switch (e.KeyData)
 			{

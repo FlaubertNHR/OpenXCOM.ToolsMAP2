@@ -16,7 +16,7 @@ namespace MapView.Forms.MainView
 	{
 		internal static void DisposeUnderlay()
 		{
-			DSShared.LogFile.WriteLine("MainViewUnderlay.DisposeUnderlay() static");
+			DSShared.Logfile.Log("MainViewUnderlay.DisposeUnderlay() static");
 			if (_t1 != null)
 				_t1.Dispose();
 		}
@@ -121,19 +121,19 @@ namespace MapView.Forms.MainView
 			});
 
 
-//			DSShared.LogFile.WriteLine("");
-//			DSShared.LogFile.WriteLine("MainViewUnderlay cTor");
-//			DSShared.LogFile.WriteLine(". underlay.Width= " + Width);
-//			DSShared.LogFile.WriteLine(". underlay.Height= " + Height);
+//			DSShared.Logfile.Log("");
+//			DSShared.Logfile.Log("MainViewUnderlay cTor");
+//			DSShared.Logfile.Log(". underlay.Width= " + Width);
+//			DSShared.Logfile.Log(". underlay.Height= " + Height);
 //
-//			DSShared.LogFile.WriteLine(". underlay client.Width= " + ClientSize.Width);
-//			DSShared.LogFile.WriteLine(". underlay client.Height= " + ClientSize.Height);
+//			DSShared.Logfile.Log(". underlay client.Width= " + ClientSize.Width);
+//			DSShared.Logfile.Log(". underlay client.Height= " + ClientSize.Height);
 //
-//			DSShared.LogFile.WriteLine(". overlay.Width= " + _mainViewOverlay.Width);
-//			DSShared.LogFile.WriteLine(". overlay.Height= " + _mainViewOverlay.Height);
+//			DSShared.Logfile.Log(". overlay.Width= " + _mainViewOverlay.Width);
+//			DSShared.Logfile.Log(". overlay.Height= " + _mainViewOverlay.Height);
 //
-//			DSShared.LogFile.WriteLine(". overlay client.Width= " + _mainViewOverlay.ClientSize.Width);
-//			DSShared.LogFile.WriteLine(". overlay client.Height= " + _mainViewOverlay.ClientSize.Height);
+//			DSShared.Logfile.Log(". overlay client.Width= " + _mainViewOverlay.ClientSize.Width);
+//			DSShared.Logfile.Log(". overlay client.Height= " + _mainViewOverlay.ClientSize.Height);
 		}
 		#endregion cTor
 
@@ -168,20 +168,20 @@ namespace MapView.Forms.MainView
 
 		protected override void OnResize(EventArgs eventargs)
 		{
-//			DSShared.LogFile.WriteLine("");
-//			DSShared.LogFile.WriteLine("MainViewUnderlay.OnResize");
+//			DSShared.Logfile.Log("");
+//			DSShared.Logfile.Log("MainViewUnderlay.OnResize");
 //
-//			DSShared.LogFile.WriteLine("underlay.Width= " + Width);
-//			DSShared.LogFile.WriteLine("underlay.Height= " + Height);
+//			DSShared.Logfile.Log("underlay.Width= " + Width);
+//			DSShared.Logfile.Log("underlay.Height= " + Height);
 //
-//			DSShared.LogFile.WriteLine("underlay client.Width= " + ClientSize.Width);
-//			DSShared.LogFile.WriteLine("underlay client.Height= " + ClientSize.Height);
+//			DSShared.Logfile.Log("underlay client.Width= " + ClientSize.Width);
+//			DSShared.Logfile.Log("underlay client.Height= " + ClientSize.Height);
 //
-//			DSShared.LogFile.WriteLine("overlay.Width= " + MainViewOverlay.Width);
-//			DSShared.LogFile.WriteLine("overlay.Height= " + MainViewOverlay.Height);
+//			DSShared.Logfile.Log("overlay.Width= " + MainViewOverlay.Width);
+//			DSShared.Logfile.Log("overlay.Height= " + MainViewOverlay.Height);
 //
-//			DSShared.LogFile.WriteLine("overlay client.Width= " + MainViewOverlay.ClientSize.Width);
-//			DSShared.LogFile.WriteLine("overlay client.Height= " + MainViewOverlay.ClientSize.Height);
+//			DSShared.Logfile.Log("overlay client.Width= " + MainViewOverlay.ClientSize.Width);
+//			DSShared.Logfile.Log("overlay client.Height= " + MainViewOverlay.ClientSize.Height);
 
 
 			base.OnResize(eventargs);
@@ -195,7 +195,7 @@ namespace MapView.Forms.MainView
 
 			Invalidate(); // updates the reserved scroll indicators.
 
-//			DSShared.LogFile.WriteLine("MainViewUnderlay.OnResize EXIT");
+//			DSShared.Logfile.Log("MainViewUnderlay.OnResize EXIT");
 		}
 		#endregion Events (override)
 
@@ -208,7 +208,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnScrollVert(object sender, ScrollEventArgs e)
 		{
-			//DSShared.LogFile.WriteLine("OnVerticalScroll overlay.Left= " + MainViewOverlay.Left);
+			//DSShared.Logfile.Log("OnVerticalScroll overlay.Left= " + MainViewOverlay.Left);
 			MainViewOverlay.Location = new Point(
 											MainViewOverlay.Left,
 											-_scrollBarV.Value);
@@ -222,7 +222,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnScrollHori(object sender, ScrollEventArgs e)
 		{
-			//DSShared.LogFile.WriteLine("OnVerticalScroll overlay.Top= " + MainViewOverlay.Top);
+			//DSShared.Logfile.Log("OnVerticalScroll overlay.Top= " + MainViewOverlay.Top);
 			MainViewOverlay.Location = new Point(
 											-_scrollBarH.Value,
 											MainViewOverlay.Top);
@@ -367,8 +367,8 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal void SetScale()
 		{
-			//DSShared.LogFile.WriteLine("");
-			//DSShared.LogFile.WriteLine("MainViewUnderlay.SetScale");
+			//DSShared.Logfile.Log("");
+			//DSShared.Logfile.Log("MainViewUnderlay.SetScale");
 
 			var required = GetRequiredOverlaySize(1f);
 			Globals.Scale = Math.Min(
@@ -378,7 +378,7 @@ namespace MapView.Forms.MainView
 												Globals.ScaleMinimum,
 												Globals.ScaleMaximum);
 
-			//DSShared.LogFile.WriteLine(". scale set to= " + Globals.Scale);
+			//DSShared.Logfile.Log(". scale set to= " + Globals.Scale);
 		}
 
 		/// <summary>
@@ -386,19 +386,19 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal void SetOverlaySize()
 		{
-			//DSShared.LogFile.WriteLine("");
-			//DSShared.LogFile.WriteLine("MainViewUnderlay.SetOverlaySize");
+			//DSShared.Logfile.Log("");
+			//DSShared.Logfile.Log("MainViewUnderlay.SetOverlaySize");
 
 			if (MapFile != null)
 			{
-				//DSShared.LogFile.WriteLine(". scale= " + Globals.Scale);
+				//DSShared.Logfile.Log(". scale= " + Globals.Scale);
 				Size size = GetRequiredOverlaySize(Globals.Scale);
 
 				MainViewOverlay.Width  = size.Width;
 				MainViewOverlay.Height = size.Height;
 
-				//DSShared.LogFile.WriteLine(". set overlay.Width= " + MainViewOverlay.Width);
-				//DSShared.LogFile.WriteLine(". set overlay.Height= " + MainViewOverlay.Height);
+				//DSShared.Logfile.Log(". set overlay.Width= " + MainViewOverlay.Width);
+				//DSShared.Logfile.Log(". set overlay.Height= " + MainViewOverlay.Height);
 			}
 		}
 
@@ -410,19 +410,19 @@ namespace MapView.Forms.MainView
 		/// <returns></returns>
 		private Size GetRequiredOverlaySize(float scale)
 		{
-			//DSShared.LogFile.WriteLine("");
-			//DSShared.LogFile.WriteLine("MainViewUnderlay.GetRequiredOverlaySize");
+			//DSShared.Logfile.Log("");
+			//DSShared.Logfile.Log("MainViewUnderlay.GetRequiredOverlaySize");
 
 			if (MapFile != null)
 			{
-				//DSShared.LogFile.WriteLine(". scale= " + Globals.Scale);
+				//DSShared.Logfile.Log(". scale= " + Globals.Scale);
 
 				int halfWidth  = (int)(MainViewOverlay.HalfWidthConst  * scale);
 				int halfHeight = (int)(MainViewOverlay.HalfHeightConst * scale);
 
 				if (halfHeight > halfWidth / 2) // use width
 				{
-					//DSShared.LogFile.WriteLine(". use width");
+					//DSShared.Logfile.Log(". use width");
 
 					if (halfWidth % 2 != 0)
 						--halfWidth;
@@ -431,7 +431,7 @@ namespace MapView.Forms.MainView
 				}
 				else // use height
 				{
-					//DSShared.LogFile.WriteLine(". use height");
+					//DSShared.Logfile.Log(". use height");
 
 					halfWidth = halfHeight * 2;
 				}
@@ -448,19 +448,19 @@ namespace MapView.Forms.MainView
 				int height = (MapFile.Rows + MapFile.Cols) * halfHeight
 						   +  MapFile.Levs * halfHeight * 3;
 
-				//DSShared.LogFile.WriteLine(". width= " + width);
-				//DSShared.LogFile.WriteLine(". height= " + height);
+				//DSShared.Logfile.Log(". width= " + width);
+				//DSShared.Logfile.Log(". height= " + height);
 
 				Globals.Scale = (float)halfWidth / MainViewOverlay.HalfWidthConst;
 				_mainView.sb_PrintScale();
-				//DSShared.LogFile.WriteLine(". set scale= " + Globals.Scale);
+				//DSShared.Logfile.Log(". set scale= " + Globals.Scale);
 
 				return new Size(
 							OffsetX * 2 + width,  // + _scrollBarV.Width,
 							OffsetY * 2 + height);// + _scrollBarH.Height);
 			}
 
-			//DSShared.LogFile.WriteLine(". RET size empty.");
+			//DSShared.Logfile.Log(". RET size empty.");
 			return Size.Empty;
 		}
 		#endregion Methods

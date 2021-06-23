@@ -23,7 +23,7 @@ namespace XCom
 				string dirTerrain,
 				int terid)
 		{
-			//LogFile.WriteLine("TilepartFactory.CreateTileparts()");
+			//Logfile.Log("TilepartFactory.CreateTileparts()");
 
 			string pfe = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
 
@@ -51,11 +51,11 @@ namespace XCom
 					part.Altr = GetAltrPart(part.Record, parts, terrain, id);
 				}
 
-				//LogFile.WriteLine(". ret parts array");
+				//Logfile.Log(". ret parts array");
 				return parts;
 			}
 
-			//LogFile.WriteLine(". ret EMPTY parts array");
+			//Logfile.Log(". ret EMPTY parts array");
 			return new Tilepart[0];
 		}
 
