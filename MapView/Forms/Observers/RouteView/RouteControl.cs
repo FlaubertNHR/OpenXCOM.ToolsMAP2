@@ -437,11 +437,7 @@ namespace MapView.Forms.Observers
 							if ((dest = MapFile.Routes[destId]) == null
 								|| dest.Lev != MapFile.Level
 								|| (NodeSelected != null && dest == NodeSelected)
-								|| RouteNodes.OutsideMapBounds(
-															dest,
-															MapFile.Cols,
-															MapFile.Rows,
-															MapFile.Levs))
+								|| RouteCheckService.OutsideBounds(dest, MapFile))
 							{
 								continue;
 							}

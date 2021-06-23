@@ -5,8 +5,9 @@ using System.Windows.Forms;
 namespace XCom
 {
 	/// <summary>
-	/// A form that outputs data about out-of-bounds route-nodes and allows user
-	/// to delete said nodes.
+	/// A form that displays data about out-of-bounds
+	/// <c><see cref="RouteNode">RouteNodes</see></c> and allows user to delete
+	/// said <c>RouteNodes</c>.
 	/// </summary>
 	internal sealed class RouteCheckInfobox
 		:
@@ -26,7 +27,7 @@ namespace XCom
 
 		#region Events
 		/// <summary>
-		/// Closes this dialog and returns DialogResult.Yes.
+		/// Closes this dialog and returns <c>DialogResult.Yes</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

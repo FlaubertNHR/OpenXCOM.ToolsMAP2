@@ -770,7 +770,7 @@ namespace XCom
 				int levs,
 				MapResizeZtype zType)
 		{
-			int bit = CHANGED_NOT;
+			int ret = CHANGED_NOT;
 
 			MapTileArray tiles = MapResizeService.GetTileArray(
 															cols, rows, levs,
@@ -779,12 +779,12 @@ namespace XCom
 															zType);
 			if (tiles != null)
 			{
-				bit |= CHANGED_MAP;
+				ret |= CHANGED_MAP;
 
 				if (zType == MapResizeZtype.MRZT_TOP // adjust route-nodes ->
 					&& Routes.Any())
 				{
-					bit |= CHANGED_NOD;
+					ret |= CHANGED_NOD;
 
 					int delta = (levs - Levs);	// NOTE: Map levels are inverted so adding or subtracting levels
 												// to the top needs to push any existing node-levels down or up.
@@ -807,14 +807,14 @@ namespace XCom
 				Tiles = tiles;
 
 				if (RouteCheckService.CheckNodeBounds(this) == DialogResult.Yes)
-					bit |= CHANGED_NOD;
+					ret |= CHANGED_NOD;
 
 				ClearRouteNodes();
 				SetupRouteNodes();
 
 				Level = 0; // fire LevelSelected event
 			}
-			return bit;
+			return ret;
 		}
 		#endregion Methods (resize)
 	}

@@ -421,11 +421,7 @@ namespace MapView.Forms.Observers
 						{
 							co_dest.SelectedItem = dest;
 
-							if (RouteNodes.OutsideMapBounds(
-														_file.Routes[dest],
-														_file.Cols,
-														_file.Rows,
-														_file.Levs))
+							if (RouteCheckService.OutsideBounds(_file.Routes[dest], _file))
 							{
 								la_text.ForeColor = Color.Chocolate;
 							}
@@ -1507,16 +1503,12 @@ namespace MapView.Forms.Observers
 			byte dest = NodeSelected[slot].Destination;
 			RouteNode node = _file.Routes[dest];
 
-			if (RouteNodes.OutsideMapBounds(
-										node,
-										_file.Cols,
-										_file.Rows,
-										_file.Levs))
+			if (RouteCheckService.OutsideBounds(node, _file))
 			{
 				RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
 				RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);
 
-				if (RouteCheckService.dialog_InvalidNode(_file, node) == DialogResult.Yes)
+				if (RouteCheckService.dialog_InvalidDestination(_file, node) == DialogResult.Yes)
 				{
 					RoutesChangedCoordinator = true;
 

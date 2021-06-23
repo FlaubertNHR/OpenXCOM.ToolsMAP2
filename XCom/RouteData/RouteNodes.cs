@@ -381,25 +381,6 @@ namespace XCom
 				}
 			}
 		}
-
-		/// <summary>
-		/// Checks if a given node is outside the Map boundaries.
-		/// </summary>
-		/// <param name="node"></param>
-		/// <param name="cols"></param>
-		/// <param name="rows"></param>
-		/// <param name="levs"></param>
-		/// <returns></returns>
-		public static bool OutsideMapBounds(
-				RouteNode node,
-				int cols,
-				int rows,
-				int levs)
-		{
-			return node.Col < 0 || node.Col >= cols
-				|| node.Row < 0 || node.Row >= rows
-				|| node.Lev < 0 || node.Lev >= levs;
-		}
 		#endregion Methods
 	}
 }
