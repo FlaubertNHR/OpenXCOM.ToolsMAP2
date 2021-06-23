@@ -1468,10 +1468,12 @@ namespace MapView
 		/// Reloads the Map/Routes/Terrains when a save is done in PckView or
 		/// McdView (via TileView).
 		/// 
+		/// 
 		/// TODO: Neither event really needs to reload the Map/Routes (in fact
 		/// it would be better if it didn't so that the SaveAlerts could be
 		/// bypassed) - so this function ought be reworked to reload only the
 		/// Terrains (MCDs/PCKs/TABs). But that's a headache and a half ...
+		/// 
 		/// 
 		/// TODO: Actually there should be a separate ReloadTerrains() funct.
 		/// </summary>
@@ -1870,11 +1872,11 @@ namespace MapView
 			{
 				string head = Infobox.SplitString("Accepting the Configuration Editor can"
 							+ " restart MapView. The current " + info + " should be saved or"
-							+ " else any changes will be lost. How do you wish to proceed?");
+							+ " else any changes will be lost. How do you wish to proceed?", 80);
 
-				string copyable = "cancel - return to state"                               + Environment.NewLine
+				string copyable = "retry  - save changes and open the Configurator"        + Environment.NewLine
 								+ "ok     - risk losing changes and open the Configurator" + Environment.NewLine
-								+ "retry  - save changes and open the Configurator"        + Environment.NewLine;
+								+ "cancel - return to state";
 
 				using (var f = new Infobox(
 										"Changes detected",
@@ -2581,11 +2583,11 @@ namespace MapView
 
 						string head = Infobox.SplitString("Modifying the Maptree can cause the Tilesets"
 									+ " to reload. The current " + info + " should be saved or else any"
-									+ " changes will be lost. How do you wish to proceed?");
+									+ " changes will be lost. How do you wish to proceed?", 80);
 
-						string copyable = "cancel - return to state"                               + Environment.NewLine
+						string copyable = "retry  - save changes and show the Maptree-menu"        + Environment.NewLine
 										+ "ok     - risk losing changes and show the Maptree-menu" + Environment.NewLine
-										+ "retry  - save changes and show the Maptree-menu";
+										+ "cancel - return to state";
 
 						using (var f = new Infobox(
 												"Changes detected",
