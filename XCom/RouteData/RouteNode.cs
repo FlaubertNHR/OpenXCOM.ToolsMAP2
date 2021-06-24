@@ -138,7 +138,8 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Writes data to a filestream provided by RouteNodes.WriteNodes().
+		/// Writes data to a filestream provided by
+		/// <c><see cref="RouteNodes"/>.WriteNodes()</c>.
 		/// </summary>
 		/// <param name="fs"></param>
 		internal void WriteNode(Stream fs)
