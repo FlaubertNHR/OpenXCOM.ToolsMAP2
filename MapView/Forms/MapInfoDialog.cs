@@ -293,8 +293,8 @@ namespace MapView
 				for (int i = 0; i != Tilepart.PHASES; ++i)
 					_sprites.Add((part[i] as PckSprite).Ordinal);
 
-				tally(part.Dead);
-				tally(part.Altr);
+//				tally(part.Dead);
+//				tally(part.Altr);
 			}
 		}
 
