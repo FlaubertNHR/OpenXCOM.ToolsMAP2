@@ -48,6 +48,24 @@ namespace MapView
 		private const int TREELEVEL_GROUP    = 0;
 		private const int TREELEVEL_CATEGORY = 1;
 		private const int TREELEVEL_TILESET  = 2;
+
+		/// <summary>
+		/// Stops <c><see cref="MainViewOverlay"/>.OnPaint()</c> when quitting
+		/// per <c><see cref="SafeQuit()">SafeQuit()</see></c> or if reloading a
+		/// Mapfile per
+		/// <c><see cref="OnReloadDescriptor()">OnReloadDescriptor()</see></c>.
+		/// </summary>
+		/// <remarks>If the currently loaded tileset has crippled tileparts and
+		/// MapView is closing .net will try to paint <c>MainViewOverlay</c> one
+		/// last time. But the crippled tileparts' sprites have just been
+		/// disposed and nulled ...
+		/// 
+		/// 
+		/// Or when reloading a tileset that has crippled tileparts the
+		/// warning dialog appears before the sprites for the regular tileparts
+		/// are valid ... and MainView attempts to paint <c>MainViewOverlay</c>
+		/// as the dialog is displayed.</remarks>
+		internal static bool Dontdrawyougits;
 		#endregion Fields (static)
 
 
@@ -59,17 +77,6 @@ namespace MapView
 		internal ColorHelp     _fcolors;
 		private  About         _fabout;
 		private  MapInfoDialog _finfo;
-
-		/// <summary>
-		/// Stops <c><see cref="MainViewOverlay"/>.OnPaint()</c> when reloading
-		/// a Mapfile per
-		/// <c><see cref="OnReloadDescriptor()">OnReloadDescriptor()</see></c>.
-		/// </summary>
-		/// <remarks>When reloading a tileset that has crippled tileparts the
-		/// warning dialog appears before the sprites for the regular tileparts
-		/// are valid ... and MainView attempts to paint <c>MainViewOverlay</c>
-		/// as the dialog is displayed.</remarks>
-		internal bool Dontdrawyougits;
 		#endregion Fields
 
 
@@ -945,6 +952,8 @@ namespace MapView
 		private void SafeQuit()
 		{
 			Logfile.Log("MainViewF.SafeQuit() EXIT MapView ->");
+
+			Dontdrawyougits = true;
 
 			RegistryInfo.UpdateRegistry(this); // store MainView's current location and size
 

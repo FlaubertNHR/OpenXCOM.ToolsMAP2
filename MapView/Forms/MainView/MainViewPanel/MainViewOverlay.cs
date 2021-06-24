@@ -1177,16 +1177,7 @@ namespace MapView.Forms.MainView
 			//Logfile.Log(Environment.StackTrace);
 //			base.OnPaint(e);
 
-			// NOTE: If the currently loaded tileset has crippled tileparts and
-			// MapView is closing .net will try to paint the MainView panel one
-			// last time. But the crippled tileparts' sprites have just been
-			// disposed and nulled in MainViewF.SafeQuit() ...
-			//
-			// Or if reloading a tileset that has crippled tileparts the warning
-			// dialog appears before the sprites for regular tileparts become
-			// valid ... and MainView attempts to redraw when the dialog is
-			// displayed.
-			if (MainViewF.Quit || MainViewF.that.Dontdrawyougits) return;
+			if (MainViewF.Dontdrawyougits) return;
 
 
 			if (MapFile != null)
