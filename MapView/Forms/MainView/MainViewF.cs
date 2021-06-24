@@ -59,6 +59,17 @@ namespace MapView
 		internal ColorHelp     _fcolors;
 		private  About         _fabout;
 		private  MapInfoDialog _finfo;
+
+		/// <summary>
+		/// Stops <c><see cref="MainViewOverlay"/>.OnPaint()</c> when reloading
+		/// a Mapfile per
+		/// <c><see cref="OnReloadDescriptor()">OnReloadDescriptor()</see></c>.
+		/// </summary>
+		/// <remarks>When reloading a tileset that has crippled tileparts the
+		/// warning dialog appears before the sprites for the regular tileparts
+		/// are valid ... and MainView attempts to paint <c>MainViewOverlay</c>
+		/// as the dialog is displayed.</remarks>
+		internal bool Dontdrawyougits;
 		#endregion Fields
 
 
@@ -1481,15 +1492,17 @@ namespace MapView
 		/// user chooses to reload the current Map et al. on the File menu.</remarks>
 		private void OnReloadDescriptor()
 		{
-			//Logfile.Log("MainViewF.OnReloadDescriptor()");
-
 			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 
 			if (!cancel)
 			{
+				Dontdrawyougits = true;
+
 				_loadReady = LOADREADY_STAGE_2;
 				LoadSelectedDescriptor();
+
+				Dontdrawyougits = false;
 			}
 		}
 
@@ -1498,8 +1511,6 @@ namespace MapView
 		/// </summary>
 		private void ForceMapReload()
 		{
-			//Logfile.Log("MainViewF.ForceMapReload()");
-
 			MainViewUnderlay.MapFile.ForceReload = false;
 
 			_loadReady = LOADREADY_STAGE_2;

@@ -41,10 +41,14 @@ namespace XCom
 		internal const byte MaxId = 0xFD;
 
 		/// <summary>
-		/// Tracks the id of an image across all loaded terrainsets.
+		/// The ID of a sprite across all loaded terrainsets.
 		/// </summary>
-		/// <remarks>Used only by 'MapInfoDialog'.</remarks>
-		private static int _setId = -1;
+		/// <remarks>Used only by <c>MapView.MapInfoDialog</c>.</remarks>
+		private static int _ordinal = -1;
+		internal static void ResetOrdinal()
+		{
+			_ordinal = -1;
+		}
 		#endregion Fields (static)
 
 
@@ -60,6 +64,13 @@ namespace XCom
 		/// </summary>
 		public Bitmap SpriteToned
 		{ get; internal set; }
+
+		/// <summary>
+		/// The ID of a sprite across all loaded terrainsets.
+		/// </summary>
+		/// <remarks>Used only by <c>MapView.MapInfoDialog</c>.</remarks>
+		public int Ordinal
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -73,14 +84,17 @@ namespace XCom
 		/// <param name="spriteset">the <c><see cref="Spriteset"/></c> this
 		/// belongs to</param>
 		/// <param name="bypassTonescaled"><c>true</c> to not create a
-		/// <c><see cref="SpriteToned"/></c>
-		/// sprite</param>
+		/// <c><see cref="SpriteToned"/></c> sprite</param>
+		/// <param name="track"><c>true</c> if the sprite should be tallied for
+		/// recognition in <c>MapView.MapInfoDialog</c> - this is only for
+		/// terrain-sprites in the currently loaded terrainset</param>
 		internal PckSprite(
 				byte[] bindata,
 				Palette pal,
 				int id,
 				Spriteset spriteset,
-				bool bypassTonescaled)
+				bool bypassTonescaled,
+				bool track = false)
 			:
 				base(
 					new byte[XCImage.SpriteWidth
@@ -90,10 +104,14 @@ namespace XCom
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
 					id)
 		{
-			_spriteset = spriteset;	// only for ToString() and 'Fail'.
-			SetId = ++_setId;		// only for 'MapInfoDialog'.
+			_spriteset = spriteset; // only for ToString() and 'Fail'.
+
+			if (track)
+				Ordinal = ++_ordinal; // only for 'MapInfoDialog'.
 
 			Pal = pal;
+
+			//Logfile.Log("PckSprite spriteset= " + spriteset.Label + " Pal= " + Pal + " Id= " + Id + " Ordinal= " + Ordinal);
 
 			//Logfile.Log("PckSprite..cTor id= " + id + " bindata.Length= " + bindata.Length);
 
@@ -142,7 +160,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[1]. Creates a blank sprite for Duplicate().
+		/// cTor[1]. Creates a blank sprite for
+		/// <c><see cref="Duplicate()">Duplicate()</see></c>.
 		/// </summary>
 		private PckSprite()
 		{}
@@ -154,8 +173,8 @@ namespace XCom
 		/// Compresses and optionally writes a specified sprite to a specified
 		/// stream.
 		/// </summary>
-		/// <param name="sprite">an XCImage sprite</param>
-		/// <param name="bw">null for test only</param>
+		/// <param name="sprite">an <c><see cref="XCImage"/></c> sprite</param>
+		/// <param name="bw"><c>null</c> for test only</param>
 		/// <returns>the length of the sprite (in bytes) after compression</returns>
 		internal static uint Write(XCImage sprite, BinaryWriter bw = null)
 		{
@@ -231,7 +250,8 @@ namespace XCom
 
 		#region Methods (override)
 		/// <summary>
-		/// Gets a string-representation of this PckSprite incl/ its bindata.
+		/// Gets a string-representation of this <c>PckSprite</c> incl/ its
+		/// bindata.
 		/// </summary>
 		/// <returns></returns>
 		/// <remarks>Not used.</remarks>
@@ -268,12 +288,13 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Returns a deep clone of this PckSprite. Except 'Pal'.
+		/// Returns a deep clone of this <c>PckSprite</c>. Except
+		/// <c><see cref="Pal"/></c>.
 		/// </summary>
-		/// <param name="spriteset">the spriteset that the sprite will belong
-		/// to; note that the returned sprite has not been transfered to this
-		/// other spriteset yet</param>
-		/// <param name="id">the id in the destination spriteset</param>
+		/// <param name="spriteset">the <c><see cref="Spriteset"/></c> that the
+		/// sprite will belong to; note that the returned sprite has not been
+		/// transfered to this other spriteset yet</param>
+		/// <param name="id">the id in the destination <c>Spriteset</c></param>
 		/// <returns></returns>
 		public PckSprite Duplicate(
 				Spriteset spriteset,
@@ -283,7 +304,7 @@ namespace XCom
 
 			// PckSprite vars
 			sprite._spriteset = spriteset;
-			sprite.SetId = -1;
+//			sprite.Ordinal = -1; // not used.
 
 			// XCImage vars
 			sprite.SetBindata(GetBindata().Clone() as byte[]);

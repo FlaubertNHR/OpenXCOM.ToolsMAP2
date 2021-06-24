@@ -90,13 +90,6 @@ namespace XCom
 		/// load w/out a <c>Descriptor</c>. As do the monotone-sprites -
 		/// although that's done differently in
 		/// <c>MainViewF.LoadMonotoneSprites()</c>.
-		/// 
-		/// 
-		/// TODO: Each effing <c><see cref="Tilepart"/></c> gets a pointer to
-		/// its <c>Spriteset</c>. Effectively, at present, every <c>Tilepart</c>
-		/// maintains its <c>Spriteset</c>; the <c>Spriteset</c> should rather
-		/// be an independent object maintained by a
-		/// <c><see cref="MapFile"/></c> eg.
 		/// </summary>
 		/// <param name="label">the file w/out extension</param>
 		/// <param name="dir">path to the directory of the file</param>
@@ -107,6 +100,9 @@ namespace XCom
 		/// <param name="bypassManager"><c>true</c> to not create Tonescaled
 		/// sprites and, if called by McdView, don't screw with the spritesets
 		/// when McdView is called via TileView</param>
+		/// <param name="track"><c>true</c> if the sprite should be tallied for
+		/// recognition in <c>MapView.MapInfoDialog</c> - this is only for
+		/// terrain-sprites in the currently loaded terrainset</param>
 		/// <returns>a <c>Spriteset</c> containing all the sprites, or null if
 		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		/// <remarks>
@@ -121,7 +117,8 @@ namespace XCom
 				string dir,
 				int tabwordLength,
 				Palette pal,
-				bool bypassManager = false)
+				bool bypassManager = false,
+				bool track = false)
 		{
 			//Logfile.Log("SpritesetManager.LoadSpriteSet()");
 
@@ -144,7 +141,8 @@ namespace XCom
 													tabwordLength,
 													bytesPck,
 													bytesTab,
-													bypassManager);
+													bypassManager,
+													track);
 
 						if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non)
 						{

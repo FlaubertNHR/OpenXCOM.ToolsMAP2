@@ -236,18 +236,6 @@ namespace MapView.Forms.Observers
 //			}
 //			return true;
 //		}
-
-		/// <summary>
-		/// Checks if a tilepart is either a hinged door or a sliding door.
-		/// </summary>
-		/// <param name="part"></param>
-		/// <returns></returns>
-		internal static bool IsDoor(Tilepart part)
-		{
-			McdRecord record = part.Record;
-			return (record != null
-				&& (record.HingedDoor || record.SlidingDoor));
-		}
 		#endregion Methods (static)
 	}
 }

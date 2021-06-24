@@ -209,9 +209,6 @@ namespace XCom
 				Parts      = parts;
 				Routes     = routes;
 
-				for (int i = 0; i != Parts.Count; ++i)
-					Parts[i].SetId = i;
-
 				SetupRouteNodes();
 				CalculateOccultations();
 			}
@@ -223,10 +220,10 @@ namespace XCom
 
 		#region Methods (read/load)
 		/// <summary>
-		/// Reads a .MAP file.
+		/// Reads a MAP Mapfile.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of a Mapfile</param>
-		/// <param name="parts">a list of tileparts</param>
+		/// <param name="parts">a list of <c><see cref="Tilepart">Tileparts</see></c></param>
 		/// <returns><c>true</c> if read okay</returns>
 		private bool LoadMapfile(string pfe, IList<Tilepart> parts)
 		{
@@ -245,10 +242,10 @@ namespace XCom
 				{
 					Tiles.SetTile(col, row, lev, CreateTile(
 														parts,
-														fs.ReadByte(),		// floor id
-														fs.ReadByte(),		// westwall id
-														fs.ReadByte(),		// northwall id
-														fs.ReadByte()));	// content id
+														fs.ReadByte(),		// floor setid
+														fs.ReadByte(),		// westwall setid
+														fs.ReadByte(),		// northwall setid
+														fs.ReadByte()));	// content setid
 				}
 
 				if (TerrainsetCountExceeded != 0)

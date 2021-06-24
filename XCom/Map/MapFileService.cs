@@ -140,6 +140,10 @@ namespace XCom
 
 				//Logfile.Log(". . terraincount= " + descriptor.Terrains.Count);
 
+				PckSprite.ResetOrdinal();
+				Tilepart .ResetOrdinal();
+
+				int setid = -1;
 				for (int terid = 0; terid != descriptor.Terrains.Count; ++terid) // push together the tileparts of all allocated terrains
 				{
 					Tilepart[] records = descriptor.CreateTerrain(terid);	// -> TilepartFactory.CreateTileparts()
@@ -151,7 +155,10 @@ namespace XCom
 					}
 
 					foreach (Tilepart record in records)
+					{
+						record.SetId = ++setid;
 						parts.Add(record);
+					}
 				}
 
 				//Logfile.Log("");

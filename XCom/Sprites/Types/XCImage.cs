@@ -16,14 +16,18 @@ namespace XCom
 		/// </summary>
 		public void Dispose()
 		{
-			DSShared.Logfile.Log("XCImage.Dispose()");
+			var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
+			if (sprite != null)
+				DSShared.Logfile.Log("XCImage.Dispose() id= " + sprite.Id);
+			else
+				DSShared.Logfile.Log("XCImage.Dispose()");
+
 			if (Sprite != null)
 			{
 				Sprite.Dispose();
 				Sprite = null; // pointless. not necessarily ...
 			}
 
-			var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
 			if (sprite != null && sprite.SpriteToned != null)
 			{
 				sprite.SpriteToned.Dispose();
@@ -99,13 +103,6 @@ namespace XCom
 					Sprite.Palette = _palette.Table;
 			}
 		}
-
-		/// <summary>
-		/// The SetId is set in the <see cref="PckSprite"/> cTor if necessary.
-		/// </summary>
-		/// <remarks>SetId is used only by 'MapInfoDialog'.</remarks>
-		public int SetId
-		{ get; protected set; }
 		#endregion Properties
 
 
@@ -131,7 +128,6 @@ namespace XCom
 				int id)
 		{
 			Id = id;
-			SetId = -1; // used only by MapInfo
 
 			_bindata = bindata;
 

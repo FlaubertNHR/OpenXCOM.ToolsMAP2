@@ -1181,7 +1181,12 @@ namespace MapView.Forms.MainView
 			// MapView is closing .net will try to paint the MainView panel one
 			// last time. But the crippled tileparts' sprites have just been
 			// disposed and nulled in MainViewF.SafeQuit() ...
-			if (MainViewF.Quit) return;
+			//
+			// Or if reloading a tileset that has crippled tileparts the warning
+			// dialog appears before the sprites for regular tileparts become
+			// valid ... and MainView attempts to redraw when the dialog is
+			// displayed.
+			if (MainViewF.Quit || MainViewF.that.Dontdrawyougits) return;
 
 
 			if (MapFile != null)
@@ -1822,12 +1827,6 @@ namespace MapView.Forms.MainView
 				int x, int y,
 				bool toned)
 		{
-			// NOTE: The width and height args are based on a sprite that's 32x40.
-			// Going back to a universal sprite-size would do this:
-			//   (int)(sprite.Width  * Globals.Scale)
-			//   (int)(sprite.Height * Globals.Scale)
-			// with its attendant consequences.
-
 			Tilepart part;
 			var rect = new Rectangle(
 								 x,0,

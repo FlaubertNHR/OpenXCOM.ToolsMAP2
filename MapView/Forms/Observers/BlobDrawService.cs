@@ -162,7 +162,7 @@ namespace MapView.Forms.Observers
 									pT(x,y),
 									pR(x,y));
 
-					if (BlobTypeService.IsDoor(part))
+					if (part.isDoor)
 						graphics.DrawLine(
 										tool.Pen,
 										x + HalfWidth, y,
@@ -182,7 +182,7 @@ namespace MapView.Forms.Observers
 									pT(x,y),
 									pL(x,y));
 
-					if (BlobTypeService.IsDoor(part))
+					if (part.isDoor)
 						graphics.DrawLine(
 										tool.Pen,
 										x - HalfWidth, y,

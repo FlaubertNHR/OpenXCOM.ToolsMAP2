@@ -145,11 +145,13 @@ namespace XCom
 															terr,
 															path,
 															SpritesetManager.TAB_WORD_LENGTH_2,
-															Pal);
+															Pal,
+															false,
+															true);
 			if (spriteset != null)
 			{
 				//Logfile.Log(". spriteset Valid - create tileparts");
-				return TilepartFactory.CreateTileparts(terr, path, terid); //, spriteset
+				return TilepartFactory.CreateTileparts(terr, path, terid);
 			}
 
 			//Logfile.Log(". spriteset NOT Valid - ret null");

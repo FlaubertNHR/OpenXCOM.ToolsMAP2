@@ -632,7 +632,7 @@ namespace MapView.Forms.Observers
 
 						// NOTE: keep the door-string and its placement consistent with
 						// QuadrantDrawService.Draw().
-						if (part.Record.HingedDoor || part.Record.SlidingDoor)	// finally print "door" if it's a door
+						if (part.isDoor)										// finally print "door" if it's a door
 							graphics.DrawString(
 											Door,
 											Font,

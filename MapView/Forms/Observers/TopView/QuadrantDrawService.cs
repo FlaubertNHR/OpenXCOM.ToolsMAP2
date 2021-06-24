@@ -285,66 +285,49 @@ namespace MapView.Forms.Observers
 			}
 
 
-			// Floor ->
-			if (tile != null && tile.Floor != null)
-			{
-				McdRecord record = tile.Floor.Record;
-				DrawSprite(tile.Floor[phase], 0, record.TileOffset);
+			Tilepart part;
 
-				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString((int)PartType.Floor);
+			// Floor ->
+			if (tile != null && (part = tile.Floor) != null)
+			{
+				DrawSprite(part[phase], 0, part.Record.TileOffset);
+				if (part.isDoor) DrawDoorString((int)PartType.Floor);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_FLOOR], 0);
 
-
 			// West ->
-			if (tile != null && tile.West != null)
+			if (tile != null && (part = tile.West) != null)
 			{
-				McdRecord record = tile.West.Record;
-				DrawSprite(tile.West[phase], Quadwidth, record.TileOffset);
-
-				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString((int)PartType.West);
+				DrawSprite(part[phase], Quadwidth, part.Record.TileOffset);
+				if (part.isDoor) DrawDoorString((int)PartType.West);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_WEST], Quadwidth);
 
-
 			// North ->
-			if (tile != null && tile.North != null)
+			if (tile != null && (part = tile.North) != null)
 			{
-				McdRecord record = tile.North.Record;
-				DrawSprite(tile.North[phase], Quadwidth * (int)PartType.North, record.TileOffset);
-
-				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString((int)PartType.North);
+				DrawSprite(part[phase], Quadwidth * (int)PartType.North, part.Record.TileOffset);
+				if (part.isDoor) DrawDoorString((int)PartType.North);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_NORTH], Quadwidth * (int)PartType.North);
 
-
 			// Content ->
-			if (tile != null && tile.Content != null)
+			if (tile != null && (part = tile.Content) != null)
 			{
-				McdRecord record = tile.Content.Record;
-				DrawSprite(tile.Content[phase], Quadwidth * (int)PartType.Content, record.TileOffset);
-
-				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString((int)PartType.Content);
+				DrawSprite(part[phase], Quadwidth * (int)PartType.Content, part.Record.TileOffset);
+				if (part.isDoor) DrawDoorString((int)PartType.Content);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_CONTENT], Quadwidth * (int)PartType.Content);
 
-
 			// Current ->
 			if (SelectedTilepart != null)
 			{
-				McdRecord record = SelectedTilepart.Record;
-				DrawSprite(SelectedTilepart[phase], Quadwidth * QuadrantPart, record.TileOffset);
-
-				if (record.HingedDoor || record.SlidingDoor)
-					DrawDoorString(QuadrantPart);
+				DrawSprite(SelectedTilepart[phase], Quadwidth * QuadrantPart, SelectedTilepart.Record.TileOffset);
+				if (SelectedTilepart.isDoor) DrawDoorString(QuadrantPart);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_ERASER], Quadwidth * QuadrantPart);

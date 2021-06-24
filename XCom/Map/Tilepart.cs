@@ -28,7 +28,25 @@ namespace XCom
 		private const int MonoTONE_NORTH   = 2;
 		private const int MonoTONE_FLOOR   = 3;
 		private const int MonoTONE_CONTENT = 4;
+
+		/// <summary>
+		/// The ID of a <c>Tilepart</c> across all loaded terrainsets.
+		/// </summary>
+		private static int _ordinal = -1;
+		internal static void ResetOrdinal()
+		{
+			_ordinal = -1;
+		}
 		#endregion Fields (static)
+
+
+		#region Fields
+		/// <summary>
+		/// The ID of the terrain of this <c>Tilepart</c> in
+		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>
+		/// </summary>
+		private int _terId = -1;
+		#endregion Fields
 
 
 		#region Properties
@@ -57,15 +75,52 @@ namespace XCom
 			set
 			{
 				if ((_altr = value) != null
-					&& SpritesetManager.Spritesets.Count > TerId)
+					&& _terId != -1
+					&& SpritesetManager.Spritesets.Count > _terId)
 				{
-					_spritealtr = SpritesetManager.Spritesets[TerId][_altr.Record.Sprite1];
+					_spritealtr = SpritesetManager.Spritesets[_terId][_altr.Record.Sprite1];
 				}
 				else
 					_spritealtr = null;
 			}
 		}
 
+		/// <summary>
+		/// A door's <c><see cref="Altr"/></c> sprite.
+		/// </summary>
+		private XCImage _spritealtr;
+
+		/// <summary>
+		/// The ID of this <c>Tilepart</c> in its terrain.
+		/// </summary>
+		public int Id
+		{ get; set; }
+
+		private int _setId = -1;
+		/// <summary>
+		/// The ID of this <c>Tilepart</c> that's unique to the Map across all
+		/// allocated terrains. The value is usually set in
+		/// <c><see cref="MapFileService.LoadDescriptor()">MapFileService.LoadDescriptor()</see></c>.
+		/// </summary>
+		/// <remarks><c>SetId</c> is written to the Mapfile as a <c>byte</c>.</remarks>
+		public int SetId
+		{
+			get { return _setId; }
+			internal set { _setId = value; }
+		}
+
+		/// <summary>
+		/// <c>true</c> if
+		/// <c><see cref="McdRecord.HingedDoor">McdRecord.HingedDoor</see></c>
+		/// or
+		/// <c><see cref="McdRecord.SlidingDoor">McdRecord.SlidingDoor</see></c>.
+		/// </summary>
+		public bool isDoor
+		{ get; set; }
+		#endregion Properties
+
+
+		#region Indexers
 		/// <summary>
 		/// The sprite-array used to display and/or animate this <c>Tilepart</c>.
 		/// </summary>
@@ -80,34 +135,7 @@ namespace XCom
 		{
 			get { return _sprites[id]; }
 		}
-
-		/// <summary>
-		/// A door's <c><see cref="Altr"/></c> sprite.
-		/// </summary>
-		private XCImage _spritealtr;
-
-		/// <summary>
-		/// The ID of this <c>Tilepart</c> in its terrain.
-		/// </summary>
-		public int Id
-		{ get; set; }
-
-		/// <summary>
-		/// The ID of this <c>Tilepart</c> that's unique to the Map across all
-		/// allocated terrains. The value is usually set in
-		/// <c><see cref="MapFile()">MapFile()</see></c>.
-		/// </summary>
-		/// <remarks><c>SetId</c> is written to the Mapfile as a byte.</remarks>
-		public int SetId
-		{ get; internal set; }
-
-		/// <summary>
-		/// The ID of the terrain of this <c>Tilepart</c> in
-		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>
-		/// </summary>
-		public int TerId
-		{ get; set; }
-		#endregion Properties
+		#endregion Indexers
 
 
 		#region cTor
@@ -117,33 +145,61 @@ namespace XCom
 		/// <param name="id">the id of this <c>Tilepart</c> in its recordset</param>
 		/// <param name="record">the <c><see cref="McdRecord"/></c> of this
 		/// <c>Tilepart</c></param>
-		/// <param name="terid">the id of this <c>Tilepart's</c> terrain in
-		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c></param>
-		/// <param name="setsprites"><c>true</c> to reference this
-		/// <c>Tilepart's</c> sprites per <c><see cref="_sprites"/></c>,
-		/// <c>false</c> if McdView is going to handle the sprites itself</param>
+		/// <param name="terid">the ID of this <c>Tilepart's</c> terrain in
+		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c> and to
+		/// track this <c>Tilepart's</c> ID and sprites per
+		/// <c><see cref="SetId"/></c> and <c><see cref="_sprites"/></c>
+		/// respectively in MapView; default <c>-1</c> if McdView is going to
+		/// handle the sprites itself and this <c>Tilepart</c> is not part of a
+		/// terrainset</param>
 		public Tilepart(
 				int id,
 				McdRecord record,
-				int terid = 0,
-				bool setsprites = true)
+				int terid = -1)
 		{
+			Id = id;
+
 			Record = record;
+			isDoor = (Record.HingedDoor || Record.SlidingDoor);
 
-			Id    = id;
-			SetId = -1;
-			TerId = terid;
+			if (terid != -1)
+				SetId = ++_ordinal;
 
-			if (setsprites) // NOTA BENE: '_sprites' shall be null for McdView.
+			//DSShared.Logfile.Log("Tilepart terid= " + terid + " id= " + Id + " setid= " + SetId);
+
+			if (terid != -1) // NOTA BENE: _terId shall be -1 and _sprites shall be null for McdView.
 			{
+				_terId = terid;
+
 				_sprites = new XCImage[PHASES]; // for MapView each part contains its own pointers to 8 sprites.
 
-				if (!Record.SlidingDoor && !Record.HingedDoor)
-				{
-					SetSprites();
-				}
-				else
+//				Spriteset spriteset = SpritesetManager.Spritesets[_terId];
+//				string info = ". valid sprites PRE= "
+//						+ (spriteset[Record.Sprite1] != null) + ","
+//						+ (spriteset[Record.Sprite2] != null) + ","
+//						+ (spriteset[Record.Sprite3] != null) + ","
+//						+ (spriteset[Record.Sprite4] != null) + ","
+//						+ (spriteset[Record.Sprite5] != null) + ","
+//						+ (spriteset[Record.Sprite6] != null) + ","
+//						+ (spriteset[Record.Sprite7] != null) + ","
+//						+ (spriteset[Record.Sprite8] != null);
+//				DSShared.Logfile.Log(info);
+
+				if (isDoor)
 					SetSprite1();
+				else
+					SetSprites();
+
+//				info = ". valid sprites PST= "
+//						+ (_sprites[0].Sprite != null) + ","
+//						+ (_sprites[1].Sprite != null) + ","
+//						+ (_sprites[2].Sprite != null) + ","
+//						+ (_sprites[3].Sprite != null) + ","
+//						+ (_sprites[4].Sprite != null) + ","
+//						+ (_sprites[5].Sprite != null) + ","
+//						+ (_sprites[6].Sprite != null) + ","
+//						+ (_sprites[7].Sprite != null);
+//				DSShared.Logfile.Log(info);
 			}
 		}
 
@@ -155,9 +211,7 @@ namespace XCom
 		public Tilepart(int id)
 		{
 			Record = new McdRecord(null);
-
-			Id = SetId = id;
-//			TerId = 0; // default
+			Id = SetId = id; // TODO: are you sure this is correct for crippled parts
 		}
 
 		/// <summary>
@@ -194,7 +248,7 @@ namespace XCom
 		/// </summary>
 		private void SetSprites()
 		{
-			Spriteset spriteset = SpritesetManager.Spritesets[TerId];
+			Spriteset spriteset = SpritesetManager.Spritesets[_terId];
 
 			_sprites[0] = spriteset[Record.Sprite1];
 			_sprites[1] = spriteset[Record.Sprite2];
@@ -212,7 +266,7 @@ namespace XCom
 		/// </summary>
 		private void SetSprite1()
 		{
-			XCImage sprite = SpritesetManager.Spritesets[TerId][Record.Sprite1];
+			XCImage sprite = SpritesetManager.Spritesets[_terId][Record.Sprite1];
 			for (int i = 0; i != PHASES; ++i)
 				_sprites[i] = sprite;
 		}
@@ -224,7 +278,7 @@ namespace XCom
 		/// <remarks>This is for doors only.</remarks>
 		public void SetSprite1_altr()
 		{
-			if (Record.SlidingDoor || Record.HingedDoor)
+			if (isDoor)
 			{
 				for (int i = 0; i != PHASES; ++i)
 					_sprites[i] = _spritealtr;
@@ -240,22 +294,21 @@ namespace XCom
 		/// <remarks>This is for doors only.</remarks>
 		public void ToggleDoorSprites(bool ani)
 		{
-			if (Record.SlidingDoor || Record.HingedDoor)
+			if (isDoor)
 			{
-				if (ani)
+				if (!ani)
 				{
-					if (Record.SlidingDoor || Altr == null)
-					{
-						SetSprites();
-					}
-					else
-					{
-						for (int i = 4; i != PHASES; ++i) // ie. flip between Record.Sprite1 and Altr.Record.Sprite1
-							_sprites[i] = _spritealtr;
-					}
+					SetSprite1();
+				}
+				else if (Record.SlidingDoor || Altr == null)
+				{
+					SetSprites();
 				}
 				else
-					SetSprite1();
+				{
+					for (int i = 4; i != PHASES; ++i) // ie. flip between Record.Sprite1 and Altr.Record.Sprite1
+						_sprites[i] = _spritealtr;
+				}
 			}
 		}
 
@@ -263,24 +316,25 @@ namespace XCom
 		/// <summary>
 		/// Returns a copy of this <c><see cref="Tilepart"/></c> with a
 		/// deep-cloned <c><see cref="Record"/></c> for McdView. But any
-		/// referred to sprites and dead/altr tileparts keep pointers to their
-		/// current objects.
+		/// referred to sprites and dead/altr <c>Tileparts</c> keep pointers to
+		/// their current objects.
 		/// 
 		/// 
 		/// - classvars
 		/// <list type="bullet">
-		/// <item><c><see cref="Record"/></c>     (ptr)</item>
-		/// <item><c><see cref="_sprites"/></c>   (ptr) -> not used in McdView</item>
-		/// <item><c><see cref="Dead"/></c>       (ptr)</item>
-		/// <item><c><see cref="Altr"/></c>       (ptr)</item>
-		/// <item><c><see cref="Id"/></c>         (int)</item>
-		/// <item><c><see cref="SetId"/></c>      (int)</item>
-		/// <item><c><see cref="TerId"/></c>      (int)</item>
+		/// <item><c><see cref="Record"/></c>   (ptr)</item>
+		/// <item><c><see cref="_sprites"/></c> (ptr) -> not used in McdView</item>
+		/// <item><c><see cref="Dead"/></c>     (ptr)</item>
+		/// <item><c><see cref="Altr"/></c>     (ptr)</item>
+		/// <item><c><see cref="Id"/></c>       (int)</item>
+		/// <item><c><see cref="SetId"/></c>    (int)</item>
+		/// <item><c><see cref="_terId"/></c>   (int) -> not used in McdView</item>
+		/// <item><c><see cref="isDoor"/></c>   (bool) -> not used in McdView</item>
 		/// </list>
 		/// </summary>
 		/// <returns>a new <c><see cref="Tilepart"/></c> for insertion in McdView</returns>
-		/// <remarks><c><see cref="_sprites"/></c> shall be null.</remarks>
-		// and <c><see cref="_spriteset"/></c>
+		/// <remarks><c><see cref="_sprites"/></c> shall be <c>null</c> and
+		/// <c><see cref="_terId"/></c> shall be <c>-1</c></remarks>
 		public Tilepart CreateInsert()
 		{
 			var part = new Tilepart();
@@ -292,7 +346,6 @@ namespace XCom
 								// after insertion. (aha!)
 			part.Id    = Id;
 			part.SetId = SetId;
-			part.TerId = TerId;
 
 			return part;
 		}
@@ -398,5 +451,33 @@ namespace XCom
 			}
 		}
 		#endregion Methods (static)
+
+
+/*		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			string cripples = String.Empty;
+			for (int i = 0; i != CrippledSprites.Sprites.Count; ++i)
+				cripples += i + ((CrippledSprites.Sprites[i] != null) ? ":true " : ":false ");
+
+			return "Tilepart terid= " + _terId + " id= " + Id + " setid= " + SetId
+				+ Environment.NewLine
+				+ ". quadslot= " + Record.PartType
+				+ Environment.NewLine
+				+ ". CrippledSprites valid= " + cripples
+				+ Environment.NewLine
+				+ ". valid sprites= "
+					+ (_sprites[0].Sprite != null) + ","
+					+ (_sprites[1].Sprite != null) + ","
+					+ (_sprites[2].Sprite != null) + ","
+					+ (_sprites[3].Sprite != null) + ","
+					+ (_sprites[4].Sprite != null) + ","
+					+ (_sprites[5].Sprite != null) + ","
+					+ (_sprites[6].Sprite != null) + ","
+					+ (_sprites[7].Sprite != null);
+		} */
 	}
 }

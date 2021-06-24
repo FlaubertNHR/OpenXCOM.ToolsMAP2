@@ -20,13 +20,11 @@ namespace XCom
 		/// Disposes all <c><see cref="XCImage">XCImages</see></c> in
 		/// <c><see cref="Sprites"/></c> and clears the list.
 		/// </summary>
-		/// <remarks>This spriteset itself remains valid along with the cleared
-		/// sprites-list.</remarks>
+		/// <remarks>This <c>Spriteset</c> itself remains valid along with the
+		/// cleared <c>Sprites</c> list.</remarks>
 		public void Dispose()
 		{
 			Logfile.Log("Spriteset.Dispose() Label= " + Label);
-//			for (int i = Sprites.Count - 1; i != -1; --i) // this does not need to be reversed for Dispose()
-//				Sprites[i].Dispose();
 			foreach (var sprite in Sprites)
 				sprite.Dispose();
 
@@ -181,6 +179,11 @@ namespace XCom
 		/// <param name="bytesPck">byte array of the PCK file</param>
 		/// <param name="bytesTab">byte array of the TAB file</param>
 		/// <param name="bypassTonescaled">true to not create Tonescaled sprites</param>
+		/// <param name="track"><c>true</c> if the sprite should be tallied for
+		/// recognition in <c>MapView.MapInfoDialog</c> - this is only for
+		/// terrain-sprites in the currently loaded terrainset</param>
+		/// <returns>a <c>Spriteset</c> containing all the sprites, or null if
+		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		/// <remarks>Ensure that <paramref name="bytesPck"/> and <paramref name="bytesTab"/>
 		/// are valid before call.
 		/// 
@@ -230,9 +233,10 @@ namespace XCom
 				int tabwordLength,
 				byte[] bytesPck,
 				byte[] bytesTab,
-				bool bypassTonescaled = false)
+				bool bypassTonescaled = false,
+				bool track = false)
 		{
-			//Logfile.Log("Spriteset..cTor label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
+			//Logfile.Log("Spriteset label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
 			Label         = label;
 			Pal           = pal;
@@ -361,7 +365,8 @@ namespace XCom
 												Pal,
 												i,
 												this,
-												bypassTonescaled);
+												bypassTonescaled,
+												track);
 
 						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckSprite above can set the Fail_Overflo flag
 							return;									// which shall be handled by the caller; ie. set the spriteset to null.
