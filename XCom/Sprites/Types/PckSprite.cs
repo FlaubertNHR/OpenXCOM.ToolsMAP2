@@ -83,18 +83,15 @@ namespace XCom
 		/// <param name="id">the id of this sprite in its <c>Spriteset</c></param>
 		/// <param name="spriteset">the <c><see cref="Spriteset"/></c> this
 		/// belongs to</param>
-		/// <param name="bypassTonescaled"><c>true</c> to not create a
-		/// <c><see cref="SpriteToned"/></c> sprite</param>
-		/// <param name="track"><c>true</c> if the sprite should be tallied for
-		/// recognition in <c>MapView.MapInfoDialog</c> - this is only for
-		/// terrain-sprites in the currently loaded terrainset</param>
+		/// <param name="createToned"><c>true</c> to create
+		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
+		/// sprites for MapView</param>
 		internal PckSprite(
 				byte[] bindata,
 				Palette pal,
 				int id,
 				Spriteset spriteset,
-				bool bypassTonescaled,
-				bool track = false)
+				bool createToned = false)
 			:
 				base(
 					new byte[XCImage.SpriteWidth
@@ -106,7 +103,7 @@ namespace XCom
 		{
 			_spriteset = spriteset; // only for ToString() and 'Fail'.
 
-			if (track)
+			if (createToned)
 				Ordinal = ++_ordinal; // only for 'MapInfoDialog'.
 
 			Pal = pal;
@@ -151,7 +148,7 @@ namespace XCom
 
 			// do NOT create ANY tone-scaled sprites for PckView or McdView nor
 			// MapView's MonotoneSprites or UFO/TFTD cursor-sprites
-			if (!bypassTonescaled)
+			if (createToned)
 				SpriteToned = BitmapService.CreateSprite(
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,

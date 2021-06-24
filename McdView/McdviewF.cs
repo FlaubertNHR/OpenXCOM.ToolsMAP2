@@ -826,8 +826,7 @@ namespace McdView
 																		Label,
 																		Path.GetDirectoryName(PfeMcd),
 																		SpritesetManager.TAB_WORD_LENGTH_2,
-																		Pal,
-																		true);
+																		Pal);
 							}
 							else
 								Spriteset = null;
@@ -916,8 +915,7 @@ namespace McdView
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															SpritesetManager.TAB_WORD_LENGTH_2,
-															Pal,
-															true);
+															Pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -998,8 +996,7 @@ namespace McdView
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															SpritesetManager.TAB_WORD_LENGTH_2,
-															Pal,
-															true);
+															Pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -1080,8 +1077,7 @@ namespace McdView
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															SpritesetManager.TAB_WORD_LENGTH_2,
-															pal,
-															true);
+															pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -1457,8 +1453,7 @@ namespace McdView
 																		Copier.Label,
 																		Path.GetDirectoryName(Copier.PfeMcd),
 																		SpritesetManager.TAB_WORD_LENGTH_2,
-																		Pal,
-																		true);
+																		Pal);
 
 						for (int id = 0; id != parts.Length; ++id)
 						{

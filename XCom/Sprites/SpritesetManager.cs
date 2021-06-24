@@ -97,12 +97,13 @@ namespace XCom
 		/// <c><see cref="TAB_WORD_LENGTH_0">TAB_WORD_LENGTH_*</see></c>
 		/// constants</param>
 		/// <param name="pal">a freakin <c><see cref="Palette"/></c></param>
-		/// <param name="bypassManager"><c>true</c> to not create Tonescaled
-		/// sprites and, if called by McdView, don't screw with the spritesets
-		/// when McdView is called via TileView</param>
-		/// <param name="track"><c>true</c> if the sprite should be tallied for
-		/// recognition in <c>MapView.MapInfoDialog</c> - this is only for
-		/// terrain-sprites in the currently loaded terrainset</param>
+		/// <param name="createToned"><c>true</c> to create
+		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
+		/// sprites for MapView - <c>false</c> to not screw with
+		/// <c><see cref="Spritesets"/></c> when McdView is invoked by
+		/// <c>TileView.OnMcdViewClick()</c>. Also <c>true</c> if the sprites
+		/// should be tallied for recognition in <c>MapView.MapInfoDialog</c> -
+		/// which is only for terrain-sprites in the currently loaded terrainset</param>
 		/// <returns>a <c>Spriteset</c> containing all the sprites, or null if
 		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		/// <remarks>
@@ -117,8 +118,7 @@ namespace XCom
 				string dir,
 				int tabwordLength,
 				Palette pal,
-				bool bypassManager = false,
-				bool track = false)
+				bool createToned = false)
 		{
 			//Logfile.Log("SpritesetManager.LoadSpriteSet()");
 
@@ -141,8 +141,7 @@ namespace XCom
 													tabwordLength,
 													bytesPck,
 													bytesTab,
-													bypassManager,
-													track);
+													createToned);
 
 						if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non)
 						{
@@ -160,7 +159,7 @@ namespace XCom
 						// {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
-							if (!bypassManager)
+							if (createToned)
 								Spritesets.Add(spriteset);
 
 							return spriteset;

@@ -454,8 +454,7 @@ namespace MapView
 														label,
 														dir,
 														SpritesetManager.TAB_WORD_LENGTH_2,
-														Palette.UfoBattle,
-														true);
+														Palette.UfoBattle);
 
 				if (cuboidufo != null)
 				{
@@ -478,8 +477,7 @@ namespace MapView
 														label,
 														dir,
 														SpritesetManager.TAB_WORD_LENGTH_4,
-														Palette.TftdBattle,
-														true);
+														Palette.TftdBattle);
 
 				if (cuboidtftd != null)
 				{

@@ -178,10 +178,9 @@ namespace XCom
 		/// for tftd-units</param>
 		/// <param name="bytesPck">byte array of the PCK file</param>
 		/// <param name="bytesTab">byte array of the TAB file</param>
-		/// <param name="bypassTonescaled">true to not create Tonescaled sprites</param>
-		/// <param name="track"><c>true</c> if the sprite should be tallied for
-		/// recognition in <c>MapView.MapInfoDialog</c> - this is only for
-		/// terrain-sprites in the currently loaded terrainset</param>
+		/// <param name="createToned"><c>true</c> to create
+		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
+		/// sprites for MapView</param>
 		/// <returns>a <c>Spriteset</c> containing all the sprites, or null if
 		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
 		/// <remarks>Ensure that <paramref name="bytesPck"/> and <paramref name="bytesTab"/>
@@ -233,8 +232,7 @@ namespace XCom
 				int tabwordLength,
 				byte[] bytesPck,
 				byte[] bytesTab,
-				bool bypassTonescaled = false,
-				bool track = false)
+				bool createToned = false)
 		{
 			//Logfile.Log("Spriteset label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
@@ -365,8 +363,7 @@ namespace XCom
 												Pal,
 												i,
 												this,
-												bypassTonescaled,
-												track);
+												createToned);
 
 						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckSprite above can set the Fail_Overflo flag
 							return;									// which shall be handled by the caller; ie. set the spriteset to null.

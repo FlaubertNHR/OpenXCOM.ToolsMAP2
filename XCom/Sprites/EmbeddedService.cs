@@ -33,8 +33,7 @@ namespace XCom
 								Palette.UfoBattle,
 								SpritesetManager.TAB_WORD_LENGTH_2,
 								bytesPck,
-								bytesTab,
-								true);
+								bytesTab);
 			}
 		}
 	}

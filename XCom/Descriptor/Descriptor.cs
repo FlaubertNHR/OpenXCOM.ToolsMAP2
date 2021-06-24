@@ -146,7 +146,6 @@ namespace XCom
 															path,
 															SpritesetManager.TAB_WORD_LENGTH_2,
 															Pal,
-															false,
 															true);
 			if (spriteset != null)
 			{
