@@ -1757,7 +1757,10 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Draws the tileparts in the Tile if 'UseMono' or LOCKBITS.
+		/// Draws the <c><see cref="Tilepart">Tileparts</see></c> in a specified
+		/// <c><see cref="MapTile"/></c> if
+		/// <c><see cref="MainViewOptionables.UseMono">MainViewOptionables.UseMono</see></c>
+		/// or <c>#LOCKBITS</c>.
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="x"></param>
@@ -1805,12 +1808,14 @@ namespace MapView.Forms.MainView
 
 #if !LOCKBITS
 		/// <summary>
-		/// Draws the tileparts in the Tile if not 'UseMono'.
+		/// Draws the <c><see cref="Tilepart">Tileparts</see></c> in a specified
+		/// <c><see cref="MapTile"/></c> if not
+		/// <c><see cref="MainViewOptionables.UseMono">MainViewOptionables.UseMono</see></c>.
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		/// <param name="toned">true to draw the monotone version of the
+		/// <param name="toned"><c>true</c> to draw the monotone version of the
 		/// tile-sprites</param>
 		private void DrawTile(
 				MapTile tile,
@@ -1828,41 +1833,62 @@ namespace MapView.Forms.MainView
 								 x,0,
 								_halfwidth2, _halfheight5);
 
-			if (_visFloor && (part = tile.Floor) != null)
+			if (toned)
 			{
-				Bitmap sprite = toned ? (part[_phase] as PckSprite).SpriteToned
-									  :  part[_phase].Sprite;
-				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
-				DrawSprite(sprite, rect);
-			}
+				if (_visFloor && (part = tile.Floor) != null)
+				{
+					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
+				}
 
-			if (_visWest && (part = tile.West) != null)
-			{
-				Bitmap sprite = toned ? (part[_phase] as PckSprite).SpriteToned
-									  :  part[_phase].Sprite;
-				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
-				DrawSprite(sprite, rect);
-			}
+				if (_visWest && (part = tile.West) != null)
+				{
+					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
+				}
 
-			if (_visNorth && (part = tile.North) != null)
-			{
-				Bitmap sprite = toned ? (part[_phase] as PckSprite).SpriteToned
-									  :  part[_phase].Sprite;
-				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
-				DrawSprite(sprite, rect);
-			}
+				if (_visNorth && (part = tile.North) != null)
+				{
+					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
+				}
 
-			if (_visContent && (part = tile.Content) != null)
+				if (_visContent && (part = tile.Content) != null)
+				{
+					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
+				}
+			}
+			else
 			{
-				Bitmap sprite = toned ? (part[_phase] as PckSprite).SpriteToned
-									  :  part[_phase].Sprite;
-				rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
-				DrawSprite(sprite, rect);
+				if (_visFloor && (part = tile.Floor) != null)
+				{
+					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					DrawSprite(part[_phase].Sprite, rect);
+				}
+
+				if (_visWest && (part = tile.West) != null)
+				{
+					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					DrawSprite(part[_phase].Sprite, rect);
+				}
+
+				if (_visNorth && (part = tile.North) != null)
+				{
+					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					DrawSprite(part[_phase].Sprite, rect);
+				}
+
+				if (_visContent && (part = tile.Content) != null)
+				{
+					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					DrawSprite(part[_phase].Sprite, rect);
+				}
 			}
 		}
 
 		/// <summary>
-		/// Draws a tilepart's sprite w/ FillRectangle().
+		/// Draws a tilepart's sprite w/ <c>FillRectangle()</c>.
 		/// </summary>
 		/// <param name="bindata">binary data of XCImage (list of palette-ids)</param>
 		/// <param name="x">x-pixel start</param>
@@ -1888,7 +1914,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Draws a tilepart's sprite w/ DrawImage().
+		/// Draws a tilepart's sprite w/ <c>DrawImage()</c>.
 		/// </summary>
 		/// <param name="sprite"></param>
 		/// <param name="rect">destination rectangle</param>
