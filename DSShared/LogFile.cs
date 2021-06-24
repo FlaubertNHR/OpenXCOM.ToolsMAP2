@@ -43,7 +43,7 @@ namespace DSShared
 		/// Writes a line to the logfile.
 		/// </summary>
 		/// <param name="line">the line to write</param>
-		public static void Log(string line)
+		public static void Log(string line = "")
 		{
 #if DEBUG
 			using (var sw = new StreamWriter(File.Open(
