@@ -119,9 +119,10 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Fills <c><see cref="Invalids"/></c> with any invalid
-		/// <c><see cref="RouteNode">RouteNodes</see></c> in a given
-		/// <c><see cref="MapFile"/></c>.
+		/// Checks all <c><see cref="RouteNode">RouteNodes</see></c> in a
+		/// specified <c><see cref="MapFile"/></c> and fills
+		/// <c><see cref="Invalids"/></c> with any <c>RouteNodes</c> that are
+		/// outside the x/y/z bounds of the <c>MapFile</c>.
 		/// <param name="file">a <c>MapFile</c></param>
 		/// </summary>
 		private static void TallyInvalids(MapFile file)
@@ -133,17 +134,19 @@ namespace XCom
 			int levs = file.Levs;
 
 			foreach (RouteNode node in file.Routes)
-			if (   node.Col < 0 || node.Col >= cols
-				|| node.Row < 0 || node.Row >= rows
-				|| node.Lev < 0 || node.Lev >= levs)
 			{
-				Invalids.Add(node);
+				if (   node.Col < 0 || node.Col >= cols
+					|| node.Row < 0 || node.Row >= rows
+					|| node.Lev < 0 || node.Lev >= levs)
+				{
+					Invalids.Add(node);
+				}
 			}
 		}
 
 		/// <summary>
 		/// Checks if a given <c><see cref="RouteNode"/></c> is outside the
-		/// boundaries of a given <c><see cref="MapFile"/></c>.
+		/// x/y/z bounds of a specified <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="node">a <c>RouteNode</c></param>
 		/// <param name="file">a <c>MapFile</c></param>
@@ -180,7 +183,7 @@ namespace XCom
 
 				string text = String.Empty;
 				int total = file.Routes.Nodes.Count;
-				byte loc;
+				int loc;
 				foreach (RouteNode node in Invalids)
 				{
 					text += "id ";
@@ -199,7 +202,7 @@ namespace XCom
 					}
 					text += node.Id + " :  c ";
 
-					loc = node.Col;
+					loc = (int)node.Col;
 					if (Base1_xy) ++loc;
 
 					if (loc < 10)
@@ -207,7 +210,7 @@ namespace XCom
 
 					text += loc + "  r ";
 
-					loc = node.Row;
+					loc = (int)node.Row;
 					if (Base1_z) ++loc;
 
 					if (loc < 10)
@@ -215,10 +218,13 @@ namespace XCom
 
 					text += loc + "  L ";
 
-					loc = (byte)(file.Levs - node.Lev);
+					loc = file.Levs - node.Lev;
 					if (!Base1_z) --loc;
 
-					if (loc < 10)
+					// if level goes out of bounds 'loc' can be less than 0 here
+					if (loc < 0)
+						text += " ";
+					else if (loc < 10)
 						text += "  ";
 					else if (loc < 100)
 						text += " ";
