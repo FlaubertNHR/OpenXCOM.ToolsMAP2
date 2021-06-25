@@ -404,12 +404,13 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Opens PckView with the spriteset of the currently selected tilepart
-		/// loaded.
+		/// Invokes <c><see cref="PckViewF"/>.PckViewF()</c> with the
+		/// <c><see cref="Spriteset"/></c> of the currently selected
+		/// <c><see cref="Tilepart"/></c> loaded.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnPckViewClick(object sender, EventArgs e)
+		private void OnPckViewClick(object sender, EventArgs e)
 		{
 			if (SelectedTilepart != null)
 			{
@@ -500,12 +501,12 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Opens McdView with the recordset of the currently selected tilepart
-		/// loaded.
+		/// Invokes <c><see cref="McdviewF"/>.McdviewF()</c> with the recordset
+		/// of the currently selected <c><see cref="Tilepart"/></c> loaded.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		internal void OnMcdViewClick(object sender, EventArgs e)
+		private void OnMcdViewClick(object sender, EventArgs e)
 		{
 			if (SelectedTilepart != null)
 			{
