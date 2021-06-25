@@ -26,36 +26,13 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Gets the fullpath to the Mapfile for a specified
-		/// <c><see cref="Descriptor"/></c>.
-		/// </summary>
-		/// <param name="descriptor">a <c>Descriptor</c></param>
-		/// <returns>the path to the Mapfile else <c>null</c></returns>
-		/// <remarks>Check that <paramref name="descriptor"/> is valid before
-		/// call.</remarks>
-		public static string GetMapfilePath(Descriptor descriptor)
-		{
-			string dir = descriptor.Basepath;
-			if (!String.IsNullOrEmpty(dir)) // -> the BasePath can be null if resource-type is notconfigured.
-			{
-					   dir = Path.Combine(dir, GlobalsXC.MapsDir);
-				string pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
-
-				if (File.Exists(pfe))
-					return pfe;
-			}
-			return null;
-		}
-
-		/// <summary>
 		/// Loads a <c><see cref="MapFile"/></c> along with all routes and
 		/// terrains for a tileset. Called by
 		/// <c>MainViewF.LoadSelectedDescriptor()</c>.
 		/// </summary>
 		/// <param name="descriptor">a <c><see cref="Descriptor"/></c></param>
-		/// <param name="treechanged"></param>
 		/// <param name="browseMapfile"><c>true</c> to force the find Mapfile
-		/// dialog</param>
+		/// dialog - returns <c>true</c> if the Maptree changes</param>
 		/// <param name="ignoreRecordsExceeded"><c>true</c> to bypass a
 		/// potential RecordsExceeded warning dialog</param>
 		/// <param name="routes">current Routes - use this only when reloading
@@ -65,22 +42,22 @@ namespace XCom
 		/// call.</remarks>
 		public static MapFile LoadDescriptor(
 				Descriptor descriptor,
-				ref bool treechanged,
-				bool browseMapfile,
+				ref bool browseMapfile,
 				bool ignoreRecordsExceeded,
 				RouteNodes routes)
 		{
 			//Logfile.Log("MapFileService.LoadDescriptor()");
 			//Logfile.Log(". descriptor.Label= " + descriptor.Label);
-			//Logfile.Log(". treechanged= " + treechanged);
 			//Logfile.Log(". browseMapfile= " + browseMapfile);
 			//Logfile.Log(". ignoreRecordsExceeded= " + ignoreRecordsExceeded);
 
 			string pfe = GetMapfilePath(descriptor);
 
 			if (pfe == null
-				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) == Keys.Shift)) // hold [Shift] to ask for a MapBrowser dialog.
-			{
+				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) == Keys.Shift))	// hold [Shift] to ask for a MapBrowser dialog
+			{																				// (only so user doesn't have to click the tree-node twice)
+				browseMapfile = false;
+
 				using (var f = new Infobox(
 										"Files not found",
 										"Browse to a basepath for the MAP and RMP files ...",
@@ -109,7 +86,7 @@ namespace XCom
 								if (File.Exists(pfe))
 								{
 									descriptor.Basepath = fbd.SelectedPath;
-									treechanged = true;
+									browseMapfile = true;
 
 									//Logfile.Log(". . treechanged= " + treechanged);
 								}
@@ -129,6 +106,8 @@ namespace XCom
 					}
 				}
 			}
+			else
+				browseMapfile = false;
 
 			//Logfile.Log("");
 
@@ -239,6 +218,28 @@ namespace XCom
 			}
 
 			//Logfile.Log(". ret null Descriptor");
+			return null;
+		}
+
+		/// <summary>
+		/// Gets the fullpath to the Mapfile for a specified
+		/// <c><see cref="Descriptor"/></c>.
+		/// </summary>
+		/// <param name="descriptor">a <c>Descriptor</c></param>
+		/// <returns>the path to the Mapfile else <c>null</c></returns>
+		/// <remarks>Check that <paramref name="descriptor"/> is valid before
+		/// call.</remarks>
+		public static string GetMapfilePath(Descriptor descriptor)
+		{
+			string dir = descriptor.Basepath;
+			if (!String.IsNullOrEmpty(dir)) // -> the BasePath can be null if resource-type is notconfigured.
+			{
+					   dir = Path.Combine(dir, GlobalsXC.MapsDir);
+				string pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
+
+				if (File.Exists(pfe))
+					return pfe;
+			}
 			return null;
 		}
 		#endregion Methods (static)

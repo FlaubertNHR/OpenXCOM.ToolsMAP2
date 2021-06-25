@@ -3149,9 +3149,10 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// If user clicks on an already selected node, for which the Mapfile
-		/// has not been loaded, this handler offers to show a dialog for the
-		/// user to browse to the file.
+		/// If user clicks on an already selected node for which the Mapfile has
+		/// not been loaded
+		/// <c><see cref="LoadSelectedDescriptor()">LoadSelectedDescriptor()</see></c>
+		/// offers to show a dialog for the user to browse to the file.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3244,8 +3245,6 @@ namespace MapView
 				var descriptor = MapTree.SelectedNode.Tag as Descriptor;
 				if (descriptor != null)
 				{
-					bool treechanged = false;
-
 					RouteNodes routes; bool routesChanged;
 					if (keepRoutes)
 					{
@@ -3260,11 +3259,10 @@ namespace MapView
 
 					MapFile file = MapFileService.LoadDescriptor(
 															descriptor,
-															ref treechanged,
-															browseMapfile,
+															ref browseMapfile,
 															Optionables.IgnoreRecordsExceeded,
 															routes);
-					if (treechanged) MaptreeChanged = true;
+					if (browseMapfile) MaptreeChanged = true;
 
 					if (file != null)
 					{
