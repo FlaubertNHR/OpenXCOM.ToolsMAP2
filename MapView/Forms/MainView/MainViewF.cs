@@ -1484,7 +1484,8 @@ namespace MapView
 
 		/// <summary>
 		/// Reloads the Map/Routes/Terrains when a save is done in PckView or
-		/// McdView (via TileView).
+		/// McdView via <c><see cref="TileView"/>.OnPckViewClick()</c>
+		/// or <c><see cref="TileView"/>.OnMcdViewClick()</c>.
 		/// 
 		/// 
 		/// TODO: Neither event really needs to reload the Map/Routes (in fact
@@ -1514,8 +1515,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Call this only after the Mapfile was saved successfully.
+		/// Call this only when crippled
+		/// <c><see cref="Tilepart">Tileparts</see></c> got wiped during a
+		/// successfully save of the Mapfile.
 		/// </summary>
+		/// <remarks>The forced reload shall keep its
+		/// <c><see cref="RouteNodes"/></c>.</remarks>
 		private void ForceMapReload()
 		{
 			MainViewUnderlay.MapFile.ForceReload = false;
@@ -3212,11 +3217,12 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Loads the Map that's selected in the Maptree.
+		/// Loads the tileset that's selected in the Maptree.
 		/// <param name="browseMapfile"><c>true</c> to force the find Mapfile
 		/// dialog</param>
-		/// <param name="keepRoutes"><c>true</c> to keep the current Routes (use
-		/// this only when reloading the current Mapfile)</param>
+		/// <param name="keepRoutes"><c>true</c> to keep the current
+		/// <c><see cref="RouteNodes"/></c> - see
+		/// <c><see cref="ForceMapReload()">ForceMapReload()</see></c></param>
 		/// </summary>
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
@@ -3262,15 +3268,7 @@ namespace MapView
 
 					if (file != null)
 					{
-						miSaveAll             .Enabled =
-						miSaveMap             .Enabled =
-						miSaveRoutes          .Enabled =
-						miExport              .Enabled =
-						miReload              .Enabled =
-						miScreenshot          .Enabled =
-						miModifySize          .Enabled =
-						miTilepartSubstitution.Enabled =
-						miMapInfo             .Enabled = true;
+						EnableMenuIts();
 
 						MainViewOverlay.FirstClick = false;
 
@@ -3351,6 +3349,26 @@ namespace MapView
 				}
 			}
 			_loadReady = LOADREADY_STAGE_0;
+		}
+
+		/// <summary>
+		/// Enables all relevant its under the
+		/// <c><see cref="mmMain">MainMenu</see></c> when a
+		/// <c><see cref="MapFile"/></c> loads.
+		/// </summary>
+		/// <remarks>Helper for
+		/// <c><see cref="LoadSelectedDescriptor()">LoadSelectedDescriptor()</see></c></remarks>
+		private void EnableMenuIts()
+		{
+			miSaveAll             .Enabled =
+			miSaveMap             .Enabled =
+			miSaveRoutes          .Enabled =
+			miExport              .Enabled =
+			miReload              .Enabled =
+			miScreenshot          .Enabled =
+			miModifySize          .Enabled =
+			miTilepartSubstitution.Enabled =
+			miMapInfo             .Enabled = true;
 		}
 
 		/// <summary>
