@@ -190,7 +190,7 @@ namespace XCom
 		/// <param name="parts">the list of parts in all allocated terrains
 		/// (the terrainset)</param>
 		/// <param name="routes"></param>
-		/// <remarks>Intantiated by
+		/// <remarks>Instantiated by
 		/// <c><see cref="MapFileService.LoadDescriptor()">MapFileService.LoadDescriptor()</see></c></remarks>
 		internal MapFile(
 				Descriptor descriptor,
