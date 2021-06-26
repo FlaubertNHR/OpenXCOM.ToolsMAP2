@@ -2356,8 +2356,8 @@ namespace MapView
 
 		/// <summary>
 		/// Tracks the currently selected treenode. Is used to determine if a
-		/// MapBrowserDialog should popup on [Shift+Enter] - iff the MAP+RMP
-		/// files are invalid.
+		/// MapBrowserDialog should popup on <c>[Shift+Enter]</c> - iff the
+		/// MAP+RMP files are invalid.
 		/// </summary>
 		private TreeNode _selected;
 
@@ -2373,17 +2373,18 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// This flag is used to bypass checks when accessing the TilesetEditor
-		/// while maintaining the current state of the actual changed-flags.
+		/// This flag is used to bypass checks when accessing the
+		/// <c><see cref="TilesetEditor"/></c> while maintaining the current
+		/// state of the actual changed-flags.
 		/// </summary>
 		private bool _bypassChanged;
 
 		/// <summary>
 		/// By keeping this value below 2 until either (a) a leftclick is
-		/// confirmed on a treenode with a tileset or (b) keydown [Enter] the
-		/// <c><see cref="MapTree"/></c> can be navigated by keyboard without
-		/// loading every darn Map whose treenode gets selected during keyboard
-		/// navigation.
+		/// confirmed on a treenode with a tileset or (b) keydown <c>[Enter]</c>
+		/// the <c><see cref="MapTree"/></c> can be navigated by keyboard
+		/// without loading every darn Map whose treenode gets selected during
+		/// keyboard navigation.
 		/// </summary>
 		private int _loadReady;
 		const int LOADREADY_STAGE_0 = 0; // totally undecided
@@ -2438,7 +2439,8 @@ namespace MapView
 
 
 		/// <summary>
-		/// Opens a context-menu on RMB-click.
+		/// Opens the <c><see cref="MapTree">MapTree's</see></c> context on
+		/// rightclick.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
