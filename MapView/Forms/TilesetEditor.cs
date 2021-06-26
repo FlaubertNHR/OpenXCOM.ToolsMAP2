@@ -1465,7 +1465,7 @@ namespace MapView
 		/// directory.
 		/// </summary>
 		/// <param name="label">the label w/out extension of a Mapfile to check for</param>
-		/// <returns>true if the Mapfile already exists on the hardrive</returns>
+		/// <returns><c>true</c> if the Mapfile already exists on the hardrive</returns>
 		private bool MapfileExists(string label)
 		{
 			return !String.IsNullOrEmpty(label)
