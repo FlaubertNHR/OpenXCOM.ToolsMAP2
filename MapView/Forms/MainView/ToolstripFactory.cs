@@ -21,11 +21,12 @@ namespace MapView.Forms.MainView
 		/// app. But FxCop ca1001 gets antsy ....
 		/// </summary>
 		/// <remarks>Perhaps this shouldn't be necessary since these tools are
-		/// added to MainView's ToolStrip's ToolStripItemCollection and the
-		/// ToolStrip is added to the controls of the TopToolStripPanel of a
-		/// ToolStripContainer which is added to the controls of MainViewF which
-		/// is of course closed when MainView quits ... but I really don't know
-		/// for sure.</remarks>
+		/// added to <c><see cref="MainViewF">MainView's</see></c>
+		/// <c>ToolStrip's ToolStripItemCollection</c> and the <c>ToolStrip</c>
+		/// is added to the controls of the <c>TopToolStripPanel</c> of a
+		/// <c>ToolStripContainer</c> which is added to the controls of
+		/// <c>MainViewF</c> which is of course closed when MapView quits ...
+		/// but I really don't know for sure.</remarks>
 		internal void DisposeMainviewTools()
 		{
 			DSShared.Logfile.Log("ToolstripFactory.DisposeMainviewTools()");
@@ -52,12 +53,16 @@ namespace MapView.Forms.MainView
 		/// Disposes the tools in TopView and TopRouteView(Top).
 		/// </summary>
 		/// <remarks>Perhaps this shouldn't be necessary since these tools are
-		/// added to the respective ToolStrips' ToolStripItemCollections and
-		/// each ToolStrip is added to the controls of the LeftToolStripPanel of
-		/// a ToolStripContainer which is added to the controls of TopView which
-		/// is instantiated by both TopViewForm and TopRouteViewForm which are
-		/// closed by ObserverManager.CloseViewers() and Close() is supposed to
-		/// Dispose() when MainView quits ... but I really don't know for sure.</remarks>
+		/// added to the respective <c>ToolStrips' ToolStripItemCollections</c>
+		/// and each <c>ToolStrip</c> is added to the controls of the
+		/// <c>LeftToolStripPanel</c> of a <c>ToolStripContainer</c> which is
+		/// added to the controls of <c><see cref="Observers.TopView"/></c>
+		/// which is instantiated by both
+		/// <c><see cref="Observers.TopViewForm"/></c> and
+		/// <c><see cref="Observers.TopRouteViewForm"/></c> which are closed by
+		/// <c><see cref="ObserverManager.CloseObservers()">ObserverManager.CloseObservers()</see></c>
+		/// and <c>Close()</c> is supposed to <c>Dispose()</c> when MapView
+		/// quits ... but I really don't know for sure.</remarks>
 		internal void DisposeTopviewTools()
 		{
 			DSShared.Logfile.Log("ToolstripFactory.DisposeTopviewTools()");

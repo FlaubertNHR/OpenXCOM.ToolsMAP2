@@ -12,9 +12,9 @@ namespace MapView.Forms.Observers
 	/// This is the form that contains <c><see cref="RouteView"/></c>.
 	/// </summary>
 	/// <remarks>This is instantiated by
-	/// <c><see cref="ObserverManager.CreateViewers">ObserverManager.CreateViewers</see></c>
+	/// <c><see cref="ObserverManager.CreateObservers">ObserverManager.CreateObservers</see></c>
 	/// and closed by
-	/// <c><see cref="ObserverManager.CloseViewers">ObserverManager.CloseViewers</see></c>.</remarks>
+	/// <c><see cref="ObserverManager.CloseObservers">ObserverManager.CloseObservers</see></c>.</remarks>
 	internal sealed partial class RouteViewForm
 		:
 			Form

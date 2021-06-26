@@ -2462,8 +2462,8 @@ namespace MapView
 		// MainViewF.LoadSelectedDescriptor()
 
 		/// <summary>
-		/// Cache of the currently selected treenode. Is used to determine if
-		/// a MapBrowserDialog should popup on [Shift+Enter] - iff the MAP+RMP
+		/// Tracks the currently selected treenode. Is used to determine if a
+		/// MapBrowserDialog should popup on [Shift+Enter] - iff the MAP+RMP
 		/// files are invalid.
 		/// </summary>
 		private TreeNode _selected;
@@ -2483,7 +2483,7 @@ namespace MapView
 		/// This flag is used to bypass checks when accessing the TilesetEditor
 		/// while maintaining the current state of the actual changed-flags.
 		/// </summary>
-		private bool BypassChanged;
+		private bool _bypassChanged;
 
 		/// <summary>
 		/// By keeping this value below 2 until either (a) a leftclick is
@@ -2499,11 +2499,13 @@ namespace MapView
 
 		/// <summary>
 		/// Bypasses ornery system-beeps that can happen on keydown events.
-		/// - [Space] opens the Context menu
-		/// - [Enter] loads a Descriptor
-		/// - [Shift+Enter] opens the MapBrowserDialog if a tileset's files are
-		///                 invalid; will also load a Descriptor if the files
-		///                 are valid.
+		/// <list type="bullet">
+		/// <item><c>[Space]</c> opens the Context menu</item>
+		/// <item><c>[Enter]</c> loads a Descriptor</item>
+		/// <item><c>[Shift+Enter]</c> opens the MapBrowserDialog if a tileset's
+		/// files are invalid; will also load a <c><see cref="Descriptor"/></c>
+		/// if the files are valid.</item>
+		/// </list>
 		/// </summary>
 		private void FireContext()
 		{
@@ -2554,17 +2556,17 @@ namespace MapView
 		/// blank. So use MouseDown.</remarks>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMapTreeMouseDown() BypassChanged= " + BypassChanged);
+			//Logfile.Log("MainViewF.OnMapTreeMouseDown() _bypassChanged= " + _bypassChanged);
 
 			switch (e.Button)
 			{
 				case MouseButtons.Right:
 					if (MainViewUnderlay.MapFile == null					// prevent a bunch of problems, like looping dialogs when returning from
-						|| BypassChanged									// the Tileset Editor and the Maptree-node gets re-selected, causing
+						|| _bypassChanged									// the Tileset Editor and the Maptree-node gets re-selected, causing
 						|| (   !MainViewUnderlay.MapFile.MapChanged			// this class-object to react as if a different Map is going to load ...
 							&& !MainViewUnderlay.MapFile.RoutesChanged))	// vid. LoadSelectedDescriptor()
 					{
-						BypassChanged = false;
+						_bypassChanged = false;
 
 						cmMapTreeMenu.MenuItems.Clear();
 
@@ -2642,7 +2644,7 @@ namespace MapView
 									break;
 
 								case DialogResult.OK:
-									BypassChanged = true;
+									_bypassChanged = true;
 									break;
 							}
 						}
@@ -2871,13 +2873,9 @@ namespace MapView
 					{
 						MaptreeChanged = true;
 
-						BypassChanged = true;
+						_bypassChanged = true;
 						CreateTree();
 
-						// CreateTree() fires OnMapTreeBeforeSelect() which clears 'BypassChanged'
-						// so it needs to be set again - the wonders of the .net Framework in action!
-						// NOTE: just don't release it until the file loads
-//						BypassChanged = true;
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 					}
 				}
@@ -2905,17 +2903,11 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						//Logfile.Log("return to OnEditTilesetClick() w/ DialogResult.OK");
-
 						MaptreeChanged = true;
 
-						BypassChanged = true;
+						_bypassChanged = true;
 						CreateTree();
 
-						// CreateTree() fires OnMapTreeBeforeSelect() which clears 'BypassChanged'
-						// so it needs to be set again - the wonders of the .net Framework in action!
-						// Solution: just don't release it until the file loads
-//						BypassChanged = true;
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 					}
 				}
@@ -3004,7 +2996,7 @@ namespace MapView
 		// TODO: consolidate the select node functions into a single function.
 
 		/// <summary>
-		/// Selects the top treenode in the Maps tree if one exists.
+		/// Selects the top treenode in the Maptree if one exists.
 		/// </summary>
 		private void SelectGroupNodeTop()
 		{
@@ -3013,11 +3005,11 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects the top category treenode in the Maps tree if one exists
+		/// Selects the top category treenode in the Maptree if one exists
 		/// under a given group treenode.
-		/// @note Assumes that the parent-group node is valid.
 		/// </summary>
 		/// <param name="labelGroup"></param>
+		/// <remarks>Assumes that the parent-group node is valid.</remarks>
 		private void SelectCategoryNodeTop(string labelGroup)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -3032,12 +3024,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects the top tileset treenode in the Maps tree if one exists
+		/// Selects the top tileset treenode in the Maptree if one exists
 		/// under a given category treenode.
-		/// @note Assumes that the parent-parent-group and parent-category nodes
-		/// are valid.
 		/// </summary>
 		/// <param name="labelCategory"></param>
+		/// <remarks>Assumes that the parent-parent-group and parent-category
+		/// nodes are valid.</remarks>
 		private void SelectTilesetNodeTop(string labelCategory)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -3056,10 +3048,9 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the Maps tree given a group-label.
+		/// Selects a treenode in the Maptree given a group-label.
 		/// </summary>
 		/// <param name="labelGroup"></param>
-		/// <returns>true if node is found</returns>
 		private void SelectGroupNode(string labelGroup)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -3074,11 +3065,10 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the Maps tree given a category-label.
+		/// Selects a treenode in the Maptree given a category-label.
 		/// </summary>
 		/// <param name="labelCategory"></param>
 		/// <param name="labelGroup"></param>
-		/// <returns>true if node is found</returns>
 		private void SelectCategoryNode(string labelCategory, string labelGroup)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -3100,13 +3090,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the Maps tree given a tileset-label and
+		/// Selects a treenode in the Maptree given a tileset-label and
 		/// Category.
 		/// </summary>
 		/// <param name="labelTileset"></param>
 		/// <param name="labelCategory"></param>
 		/// <param name="labelGroup"></param>
-		/// <returns>true if node is found</returns>
 		private void SelectTilesetNode(string labelTileset, string labelCategory, string labelGroup)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
@@ -3184,15 +3173,15 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMapTreeBeforeSelect() BypassChanged= " + BypassChanged);
+			//Logfile.Log("MainViewF.OnMapTreeBeforeSelect() _bypassChanged= " + _bypassChanged);
 
-			if (!BypassChanged) // is true on TilesetEditor DialogResult.OK
+			if (!_bypassChanged) // is true on TilesetEditor DialogResult.OK
 			{
 				e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				e.Cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 			}
 //			else
-//				BypassChanged = false;
+//				_bypassChanged = false;
 		}
 
 		/// <summary>
@@ -3240,7 +3229,7 @@ namespace MapView
 
 			if (_loadReady == LOADREADY_STAGE_2)
 			{
-				BypassChanged = false;
+				_bypassChanged = false;
 
 				var descriptor = MapTree.SelectedNode.Tag as Descriptor;
 				if (descriptor != null)
@@ -3474,14 +3463,13 @@ namespace MapView
 		/// Shows the user a dialog-box asking to Save if the currently
 		/// displayed Map has changed.
 		/// </summary>
-		/// <returns>DialogResult.OK if things can proceed; DialogResult.Cancel
-		/// if user chose to cancel or the Mapfile was not written successfully</returns>
+		/// <returns><c>DialogResult.OK</c> if things can proceed;
+		/// <c>DialogResult.Cancel</c> if user chose to cancel or the Mapfile
+		/// was not written successfully</returns>
 		/// <remarks>Is called when either (a) MapView is closing (b) a Map is
 		/// about to load/reload.</remarks>
 		private DialogResult SaveAlertMap()
 		{
-			//Logfile.Log("MainViewF.SaveAlertMap()");
-
 			if (MainViewUnderlay.MapFile != null && MainViewUnderlay.MapFile.MapChanged)
 			{
 				using (var f = new Infobox(
@@ -3515,9 +3503,9 @@ namespace MapView
 		/// Shows the user a dialog-box asking to Save if the currently
 		/// displayed Routes has changed.
 		/// </summary>
-		/// <returns>DialogResult.OK if things can proceed; DialogResult.Cancel
-		/// if user chose to cancel or the Routefile was not written
-		/// successfully</returns>
+		/// <returns><c>DialogResult.OK</c> if things can proceed;
+		/// <c>DialogResult.Cancel</c> if user chose to cancel or the Routefile
+		/// was not written successfully</returns>
 		/// <remarks>Is called when either (a) MapView is closing (b) another
 		/// Map is about to load.</remarks>
 		private DialogResult SaveAlertRoutes()
@@ -3555,8 +3543,9 @@ namespace MapView
 		/// Shows the user a dialog-box asking to Save the Maptree if it has
 		/// changed.
 		/// </summary>
-		/// <returns>DialogResult.OK if things can proceed; DialogResult.Cancel
-		/// if user chose to cancel or MapTilesets was not written successfully.</returns>
+		/// <returns><c>DialogResult.OK</c> if things can proceed;
+		/// <c>DialogResult.Cancel</c> if user chose to cancel or MapTilesets
+		/// was not written successfully.</returns>
 		/// <remarks>Is called when either (a) MapView is closing (b) MapView is
 		/// reloading due to a configuration change (ie. only if resource-paths
 		/// have been changed, since the only other relevant option - if the
