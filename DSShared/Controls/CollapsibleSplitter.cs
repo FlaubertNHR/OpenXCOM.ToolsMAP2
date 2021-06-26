@@ -13,6 +13,23 @@ namespace DSShared.Controls
 		:
 			Splitter
 	{
+		#region IDisposable
+		private bool _disposed;
+		protected override void Dispose(bool disposing)
+		{
+			Logfile.Log("CollapsibleSplitter.Dispose(" + disposing + ")");
+			if (!_disposed && disposing)
+			{
+				_disposed = true;
+
+				_pathTrisLeft .Dispose();
+				_pathTrisRight.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+		#endregion IDisposable
+
+
 		#region Fields (static)
 		private const int WidthTri  = 3;
 		private const int HeightTri = 6;
@@ -58,7 +75,7 @@ namespace DSShared.Controls
 
 		#region Methods
 		/// <summary>
-		/// Assigns what control to collapse.
+		/// Assigns what <c>Control</c> to collapse.
 		/// </summary>
 		/// <param name="control"></param>
 		public void SetControl(Control control)
@@ -68,8 +85,8 @@ namespace DSShared.Controls
 
 		/// <summary>
 		/// Defines the center third of the splitter as a clickable area that
-		/// collapses the Maptree. Also sets the graphics-paths for the small
-		/// triangles.
+		/// collapses the <c><see cref="CompositedTreeView"/></c>. Also sets the
+		/// graphics-paths for the small triangles.
 		/// </summary>
 		public void SetClickableRectangle()
 		{
@@ -108,7 +125,7 @@ namespace DSShared.Controls
 
 
 		/// <summary>
-		/// Toggles visibility of the splitter.
+		/// Toggles visibility of this <c>CollapsibleSplitter</c>.
 		/// </summary>
 		private void ToggleSplitter()
 		{
