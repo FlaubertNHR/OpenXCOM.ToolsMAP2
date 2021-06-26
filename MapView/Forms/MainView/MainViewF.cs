@@ -133,7 +133,7 @@ namespace MapView
 		{ get; set; }
 
 		/// <summary>
-		/// Sets the <see cref="MainViewOverlay"/> property.
+		/// Sets the <c><see cref="MainViewOverlay"/></c> property.
 		/// </summary>
 		/// <param name="overlay"></param>
 		internal void SetMainViewOverlay(MainViewOverlay overlay)
@@ -144,7 +144,7 @@ namespace MapView
 
 		private bool _treeChanged;
 		/// <summary>
-		/// Gets/Sets the MaptreeChanged flag.
+		/// Gets/Sets the <c>MaptreeChanged</c> flag.
 		/// </summary>
 		internal bool MaptreeChanged
 		{
@@ -162,10 +162,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Sets the MapChanged flag. This is only an intermediary that adds an
-		/// asterisk to the file-label in MainView's statusbar; the real
-		/// MapChanged flag is stored in <see cref="MapFile"/>. reasons.
+		/// Sets the <c>MapChanged</c> flag.
 		/// </summary>
+		/// <remarks>This is only an intermediary that adds an asterisk to the
+		/// file-label in MainView's statusbar; the real flag is stored in
+		/// <c><see cref="MapFile">MapFile</see>.MapChanged</c>.
+		/// reasons.</remarks>
 		internal bool MapChanged
 		{
 			set
@@ -584,7 +586,7 @@ namespace MapView
 		#region Methods (static)
 		/// <summary>
 		/// Transposes all the default viewer positions and sizes from the
-		/// embedded MapViewers manifest to a file: settings/MapViewers.yml.
+		/// embedded MapViewers manifest to a file: "settings/MapViewers.yml".
 		/// </summary>
 		/// <param name="fullpath"></param>
 		/// <returns>true on success</returns>
@@ -609,11 +611,11 @@ namespace MapView
 
 		#region Create tree
 		/// <summary>
-		/// Creates the Map-tree on the left side of MainView.
+		/// Creates the Maptree on the left side of MainView.
 		/// </summary>
 		private void CreateTree()
 		{
-			//Logfile.Log("");
+			//Logfile.Log();
 			//Logfile.Log("MainViewF.CreateTree");
 
 			MapTree.BeginUpdate();
@@ -677,7 +679,7 @@ namespace MapView
 			{}
 
 			/// <summary>
-			/// Required by IComparable.
+			/// Required by <c>IComparable</c>.
 			/// </summary>
 			/// <param name="other"></param>
 			/// <returns></returns>
@@ -752,9 +754,9 @@ namespace MapView
 
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an Options-
-		/// form. Instantiates an 'OptionsForm' if one doesn't exist for this
-		/// viewer. Also subscribes to a form-closing handler that will hide the
-		/// form unless MainView is closing.
+		/// form. Instantiates an <c><see cref="OptionsForm"/></c> if one
+		/// doesn't exist for this viewer. Also subscribes to a form-closing
+		/// handler that will hide the form unless MapView is closing.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -849,8 +851,9 @@ namespace MapView
 		/// <remarks>Trying to bring this form to the top after the other forms
 		/// apparently fails in Windows 10 - which makes it impossible for
 		/// MainView to gain focus when clicked (if there are other viewers
-		/// open). Hence <see cref="MainViewOptionables.BringAllToFront">
-		/// MainViewOptionables.BringAllToFront</see> is FALSE by default.</remarks>
+		/// open). Hence
+		/// <c><see cref="MainViewOptionables.BringAllToFront()">MainViewOptionables.BringAllToFront()</see></c>
+		/// is <c>false</c> by default.</remarks>
 		protected override void OnActivated(EventArgs e)
 		{
 			ShowHideManager._zOrder.Remove(this);
@@ -1089,15 +1092,22 @@ namespace MapView
 
 		/// <summary>
 		/// Handles key-down event at the Form level.
-		/// Requires 'KeyPreview' true.
-		/// @note This differs from the Viewers-menu item-click/key in that
-		/// [Ctrl] is used to focus a subsidiary viewer instead of doing
-		/// show/hide.
-		/// Cf OnKeyDown() in TileViewForm, TopViewForm, RouteViewForm, and
-		/// TopRouteViewForm -> ViewerKeyDown().
-		/// @note Edit/Save keys are handled by 'MainViewOverlay.OnKeyDown()'.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Requires <c>KeyPreview</c>.
+		/// 
+		/// 
+		/// This differs from the Viewers-menu item-click/key in that
+		/// <c>[Ctrl]</c> is used to focus a subsidiary viewer instead of doing
+		/// show/hide. See also <c>OnKeyDown()</c> in
+		/// <c><see cref="TileViewForm"/></c>, <c><see cref="TopViewForm"/></c>,
+		/// <c><see cref="RouteViewForm"/></c>, and
+		/// <c><see cref="TopRouteViewForm"/></c> ->
+		/// <c><see cref="MenuManager.ViewerKeyDown()">MenuManager.ViewerKeyDown()</see></c>.
+		/// 
+		/// 
+		/// Edit/Save keys are handled by
+		/// <c><see cref="Forms.MainView.MainViewOverlay">MainViewOverlay</see>.OnKeyDown()</c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			//Logfile.Log("MainViewF.OnKeyDown() " + e.KeyData);
