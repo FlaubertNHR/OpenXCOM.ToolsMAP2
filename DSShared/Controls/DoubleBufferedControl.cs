@@ -13,8 +13,8 @@ namespace DSShared.Controls
 		:
 			Control
 	{
-		#region Properties (override)
-/*		/// <summary>
+/*		#region Properties (override)
+		/// <summary>
 		/// Prevents flicker.
 		/// </summary>
 		protected override CreateParams CreateParams
@@ -25,8 +25,8 @@ namespace DSShared.Controls
 				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
 				return cp;
 			}
-		} */
-		#endregion Properties (override)
+		}
+		#endregion Properties (override) */
 
 
 		#region cTor
