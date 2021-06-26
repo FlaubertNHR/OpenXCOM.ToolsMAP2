@@ -186,8 +186,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// The currently searched and found and highlighted Treenode on the
-		/// MapTree.
+		/// The currently searched and found and highlighted treenode on the
+		/// <c><see cref="MapTree"/></c>.
 		/// </summary>
 		private TreeNode Searched
 		{ get; set; }
@@ -611,7 +611,8 @@ namespace MapView
 
 		#region Create tree
 		/// <summary>
-		/// Creates the Maptree on the left side of MainView.
+		/// Creates the <c><see cref="MapTree"/></c> on the left side of
+		/// MainView.
 		/// </summary>
 		private void CreateTree()
 		{
@@ -693,8 +694,9 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Shifts the splitter between the MapTree and the MapPanel to ensure
-		/// that the longest tree-node's Text gets fully displayed.
+		/// Shifts the splitter between the <c><see cref="MapTree"/></c> and the
+		/// panel to ensure that the longest tree-node's Text gets fully
+		/// displayed.
 		/// </summary>
 		private void ShiftSplitter()
 		{
@@ -802,8 +804,8 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles CL-args after Configurator restart - selects a node in the
-		/// Maptree.
+		/// Handles CL-args after Configurator restart - selects a treenode in
+		/// the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnShown(EventArgs e)
@@ -1286,7 +1288,7 @@ namespace MapView
 
 		#region Events
 		/// <summary>
-		/// Draws treenodes on the Maptree.
+		/// Draws treenodes on the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1473,7 +1475,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Saves the tree to "settings/MapTilesets.yml".
+		/// Saves the <c><see cref="MapTree"/></c> to "settings/MapTilesets.yml".
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1825,7 +1827,9 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Clears all 'Descriptor.BypassRecordsExceeded' flags in the Maptree.
+		/// Clears all
+		/// <c><see cref="Descriptor"></see>.BypassRecordsExceeded</c>
+		/// flags in the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1864,7 +1868,12 @@ namespace MapView
 
 
 		/// <summary>
-		/// Gets a string of Changed objects - Map, Routes, and/or the Maptree.
+		/// Gets a string of changed objects.
+		/// <list type="bullet">
+		/// <item><c><see cref="MapFile"/>.MapChanged</c></item>
+		/// <item><c><see cref="MapFile"/>.RoutesChanged</c></item>
+		/// <item><c><see cref="MaptreeChanged"/></c></item>
+		/// </list>
 		/// </summary>
 		/// <returns></returns>
 		private string GetChangedInfo()
@@ -2204,7 +2213,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Searches the MapTree for a given string.
+		/// Searches the <c><see cref="MapTree"/></c> for a given string.
 		/// </summary>
 		/// <param name="text"></param>
 		internal void Search(string text)
@@ -2273,7 +2282,8 @@ namespace MapView
 		bool _active, _hardstop;
 
 		/// <summary>
-		/// Searches through the MapTree given a node to start at.
+		/// Searches through the <c><see cref="MapTree"/></c> given a node to
+		/// start at.
 		/// </summary>
 		/// <param name="text">the text to search for (lowercase)</param>
 		/// <param name="nodes">the collection of nodes to search through</param>
@@ -2326,7 +2336,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Clears the searched/found/highlighted Treenode.
+		/// Clears the searched/found/highlighted treenode.
 		/// </summary>
 		internal void ClearSearched()
 		{
@@ -2500,8 +2510,9 @@ namespace MapView
 		/// <summary>
 		/// By keeping this value below 2 until either (a) a leftclick is
 		/// confirmed on a treenode with a tileset or (b) keydown [Enter] the
-		/// Maptree can be navigated by keyboard without loading every darn Map
-		/// whose treenode gets selected during keyboard navigation.
+		/// <c><see cref="MapTree"/></c> can be navigated by keyboard without
+		/// loading every darn Map whose treenode gets selected during keyboard
+		/// navigation.
 		/// </summary>
 		private int _loadReady;
 		const int LOADREADY_STAGE_0 = 0; // totally undecided
@@ -2673,7 +2684,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Adds a group to the Maptree.
+		/// Adds a group to the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2700,7 +2711,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Edits the label of a group on the Maptree.
+		/// Edits the label of a group on the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2731,7 +2742,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Deletes a group from the Maptree.
+		/// Deletes a group from the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2765,7 +2776,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Adds a category to a group on the Maptree.
+		/// Adds a category to a group on the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2793,7 +2804,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Edits the label of a category on the Maptree.
+		/// Edits the label of a category on the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2824,7 +2835,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Deletes a category from the Maptree.
+		/// Deletes a category from the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2863,7 +2874,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Adds a tileset and its characteristics to the Maptree.
+		/// Adds a tileset and its characteristics to the
+		/// <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2895,7 +2907,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Edits the characteristics of a tileset on the Maptree.
+		/// Edits the characteristics of a tileset on the
+		/// <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2965,7 +2978,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Deletes a tileset from the Maptree.
+		/// Deletes a tileset from the <c><see cref="MapTree"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3008,7 +3021,8 @@ namespace MapView
 		// TODO: consolidate the select node functions into a single function.
 
 		/// <summary>
-		/// Selects the top treenode in the Maptree if one exists.
+		/// Selects the top treenode in the <c><see cref="MapTree"/></c> if one
+		/// exists.
 		/// </summary>
 		private void SelectGroupNodeTop()
 		{
@@ -3017,8 +3031,9 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects the top category treenode in the Maptree if one exists
-		/// under a given group treenode.
+		/// Selects the top category treenode in the
+		/// <c><see cref="MapTree"/></c> if one exists under a given group
+		/// treenode.
 		/// </summary>
 		/// <param name="labelGroup"></param>
 		/// <remarks>Assumes that the parent-group node is valid.</remarks>
@@ -3036,8 +3051,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects the top tileset treenode in the Maptree if one exists
-		/// under a given category treenode.
+		/// Selects the top tileset treenode in the <c><see cref="MapTree"/></c>
+		/// if one exists under a given category treenode.
 		/// </summary>
 		/// <param name="labelCategory"></param>
 		/// <remarks>Assumes that the parent-parent-group and parent-category
@@ -3060,7 +3075,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the Maptree given a group-label.
+		/// Selects a treenode in the <c><see cref="MapTree"/></c> given a
+		/// group-label.
 		/// </summary>
 		/// <param name="labelGroup"></param>
 		private void SelectGroupNode(string labelGroup)
@@ -3077,7 +3093,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the Maptree given a category-label.
+		/// Selects a treenode in the <c><see cref="MapTree"/></c> given a
+		/// category-label.
 		/// </summary>
 		/// <param name="labelCategory"></param>
 		/// <param name="labelGroup"></param>
@@ -3102,8 +3119,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the Maptree given a tileset-label and
-		/// Category.
+		/// Selects a treenode in the <c><see cref="MapTree"/></c> given a
+		/// tileset-label and Category.
 		/// </summary>
 		/// <param name="labelTileset"></param>
 		/// <param name="labelCategory"></param>
@@ -3137,9 +3154,11 @@ namespace MapView
 
 
 		/// <summary>
-		/// For an ungodly reason when the Maptree gains/loses focus
-		/// tv_DrawNode() re-colors selected and focused nodes correctly but
-		/// does not re-color a Searched node.
+		/// For an ungodly reason when the <c><see cref="MapTree"/></c>
+		/// gains/loses focus
+		/// <c><see cref="tv_DrawNode()">tv_DrawNode()</see></c> re-colors
+		/// selected and focused nodes correctly but does not re-color a
+		/// Searched node.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3219,7 +3238,8 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Loads the tileset that's selected in the Maptree.
+		/// Loads the tileset that's selected in the
+		/// <c><see cref="MapTree"/></c>.
 		/// <param name="browseMapfile"><c>true</c> to force the find Mapfile
 		/// dialog</param>
 		/// <param name="keepRoutes"><c>true</c> to keep the current
@@ -3552,8 +3572,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Shows the user a dialog-box asking to Save the Maptree if it has
-		/// changed.
+		/// Shows the user a dialog-box asking to save the
+		/// <c><see cref="MapTree"/></c> if it has changed.
 		/// </summary>
 		/// <returns><c>DialogResult.OK</c> if things can proceed;
 		/// <c>DialogResult.Cancel</c> if user chose to cancel or MapTilesets
