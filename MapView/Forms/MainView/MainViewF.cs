@@ -1893,7 +1893,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Opens the Configuration Editor.
+		/// Checks for changes before calling
+		/// <c><see cref="Configurator()">Configurator()</see></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1966,7 +1967,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Opens the Configurator dialog, then does a restart if necessary.
+		/// Opens the <c><see cref="ConfigurationForm">Configurator</see></c>
+		/// dialog then does a restart if user clicks Accept.
 		/// </summary>
 		private void Configurator()
 		{
