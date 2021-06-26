@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 
 
-namespace XCom
+namespace DSShared.Controls
 {
-	internal sealed class ProgressBarForm
+	public sealed class ProgressBarF
 		:
 			Form
 	{
@@ -12,7 +12,7 @@ namespace XCom
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		internal ProgressBarForm(string text)
+		public ProgressBarF(string text)
 		{
 			InitializeComponent();
 			lblInfo.Text = text;
@@ -23,17 +23,28 @@ namespace XCom
 
 
 		#region Methods
-		internal void SetText(string text)
+		/// <summary>
+		/// Sets header text.
+		/// </summary>
+		/// <param name="text"></param>
+		public void SetText(string text)
 		{
 			lblInfo.Text = text;
 		}
 
-		internal void SetTotal(int total)
+		/// <summary>
+		/// Sets the total value to <c><see cref="Step()">Step()</see> to.</c>
+		/// </summary>
+		/// <param name="total"></param>
+		public void SetTotal(int total)
 		{
 			pbProgress.Maximum = total;
 		}
 
-		internal void Step()
+		/// <summary>
+		/// Increments the progressbar value.
+		/// </summary>
+		public void Step()
 		{
 			++pbProgress.Value;
 			Refresh();
@@ -43,23 +54,8 @@ namespace XCom
 
 
 		#region Designer
-		private System.ComponentModel.Container components = null;
-
 		private Label lblInfo;
 		private ProgressBar pbProgress;
-
-
-		/// <summary>
-		/// Cleans up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && components != null)
-				components.Dispose();
-
-			base.Dispose(disposing);
-		}
-
 
 		/// <summary>
 		/// Required method for Designer support - do not modify the contents of
@@ -78,7 +74,7 @@ namespace XCom
 			this.lblInfo.Margin = new System.Windows.Forms.Padding(0);
 			this.lblInfo.Name = "lblInfo";
 			this.lblInfo.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-			this.lblInfo.Size = new System.Drawing.Size(314, 20);
+			this.lblInfo.Size = new System.Drawing.Size(261, 18);
 			this.lblInfo.TabIndex = 0;
 			this.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lblInfo.UseWaitCursor = true;
@@ -86,27 +82,27 @@ namespace XCom
 			// pbProgress
 			// 
 			this.pbProgress.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pbProgress.Location = new System.Drawing.Point(0, 20);
+			this.pbProgress.Location = new System.Drawing.Point(0, 18);
 			this.pbProgress.Margin = new System.Windows.Forms.Padding(0);
 			this.pbProgress.Name = "pbProgress";
-			this.pbProgress.Size = new System.Drawing.Size(314, 19);
+			this.pbProgress.Size = new System.Drawing.Size(261, 18);
 			this.pbProgress.TabIndex = 1;
 			this.pbProgress.UseWaitCursor = true;
 			// 
-			// ProgressBarForm
+			// ProgressBarF
 			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(6, 13);
-			this.ClientSize = new System.Drawing.Size(314, 39);
+			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
+			this.ClientSize = new System.Drawing.Size(261, 36);
 			this.ControlBox = false;
 			this.Controls.Add(this.pbProgress);
 			this.Controls.Add(this.lblInfo);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
-			this.MaximumSize = new System.Drawing.Size(320, 45);
+			this.MaximumSize = new System.Drawing.Size(267, 42);
 			this.MinimizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(320, 45);
-			this.Name = "ProgressBarForm";
+			this.MinimumSize = new System.Drawing.Size(267, 42);
+			this.Name = "ProgressBarF";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

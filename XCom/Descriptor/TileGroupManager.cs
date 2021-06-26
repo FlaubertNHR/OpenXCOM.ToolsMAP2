@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using DSShared;
+using DSShared.Controls;
 
 using YamlDotNet.RepresentationModel;
 
@@ -20,8 +21,9 @@ namespace XCom
 
 
 	/// <summary>
-	/// Manages tileset-groups, loads the tilesets into
-	/// <see cref="Descriptor">Descriptors</see>, and writes MapTilesets.yml.
+	/// Manages <c><see cref="TileGroup">TileGroups</see></c>, loads the
+	/// tilesets into <c><see cref="Descriptor">Descriptors</see></c>, and
+	/// writes "settings/MapTilesets.yml".
 	/// </summary>
 	public static class TileGroupManager
 	{
@@ -43,7 +45,8 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Adds a group. Called by MainViewF.OnAddGroupClick()
+		/// Adds a <c><see cref="TileGroup"/></c>. Called by
+		/// <c>MainViewF.OnAddGroupClick()</c>.
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to add</param>
 		/// <remarks>Check if the group already exists first.</remarks>
@@ -53,7 +56,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Deletes a group. Called by MainViewF.OnDeleteGroupClick()
+		/// Deletes a <c><see cref="TileGroup"/></c>. Called by
+		/// <c>MainViewF.OnDeleteGroupClick()</c>.
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to delete</param>
 		public static void DeleteTileGroup(string labelGroup)
@@ -62,47 +66,53 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Creates a new tilegroup and transfers ownership of all Categories
-		/// and Descriptors from their previous Group to the specified new
-		/// Group. Called by MainViewF.OnEditGroupClick()
+		/// Creates a new <c><see cref="TileGroup"/></c> and transfers ownership
+		/// of all
+		/// <c><see cref="TileGroup.Categories">TileGroup.Categories</see></c>
+		/// and <c><see cref="Descriptor">Descriptors</see></c> from their
+		/// previous <c>TileGroup</c> to the specified new <c>TileGroup</c>.
+		/// Called by <c>MainViewF.OnEditGroupClick()</c>.
 		/// </summary>
-		/// <param name="labelGroup">the new label for the group</param>
-		/// <param name="labelGroupPre">the old label of the group</param>
-		/// <remarks>Check if the group and category already exist first.</remarks>
-		public static void EditTileGroup(string labelGroup, string labelGroupPre)
+		/// <param name="labelGroup">the new label for the <c>TileGroup</c></param>
+		/// <param name="labelGroup0">the old label of the <c>TileGroup</c></param>
+		/// <remarks>Check if the <c>TileGroup</c> and <c>Category</c> already
+		/// exist first.</remarks>
+		public static void EditTileGroup(string labelGroup, string labelGroup0)
 		{
 			TileGroups[labelGroup] = new TileGroup(labelGroup);
 			//or, AddTileGroup(labelGroup);
 
-			foreach (var labelCategory in TileGroups[labelGroupPre].Categories.Keys)
+			foreach (var labelCategory in TileGroups[labelGroup0].Categories.Keys)
 			{
 				TileGroups[labelGroup].AddCategory(labelCategory);
 
-				foreach (var descriptor in TileGroups[labelGroupPre].Categories[labelCategory].Values)
+				foreach (var descriptor in TileGroups[labelGroup0].Categories[labelCategory].Values)
 				{
 					TileGroups[labelGroup].Categories[labelCategory][descriptor.Label] = descriptor;
 				}
 			}
-			DeleteTileGroup(labelGroupPre);
+			DeleteTileGroup(labelGroup0);
 		}
 
 
 		/// <summary>
-		/// Reads MapTilesets.yml and converts all its data to
-		/// <see cref="Descriptor">Descriptors</see>.
+		/// Reads "settings/MapTilesets.yml" and converts all its data to
+		/// <c><see cref="Descriptor">Descriptors</see></c>.
 		/// </summary>
-		/// <param name="fullpath">path-file-extension of settings/MapTilesets.yml</param>
+		/// <param name="fullpath">path-file-extension of
+		/// "settings/MapTilesets.yml"</param>
 		public static void LoadTileGroups(string fullpath)
 		{
-			//Logfile.Log("LoadTileGroups()");
+			//Logfile.Log();
+			//Logfile.Log("TileGroupManager.LoadTileGroups()");
 
 			using (var fs = FileService.OpenFile(fullpath))
 			if (fs != null)
 			using (var sr = new StreamReader(fs))
 			{
-				var progress = new ProgressBarForm("parsing Tilesets ...");
+				var progress = new ProgressBarF("parsing Tilesets ...");
 				progress.Refresh();
-				var typeCount = 0;
+				int typeCount = 0;
 
 				string line; // fuck this shit.
 				while ((line = sr.ReadLine()) != null)
@@ -120,7 +130,7 @@ namespace XCom
 				var str = new YamlStream();
 				str.Load(sr);
 
-				var docs = str.Documents;
+				IList<YamlDocument> docs = str.Documents;
 				if (docs != null && docs.Count != 0)
 				{
 					string terr, path, basepath;
@@ -147,7 +157,7 @@ namespace XCom
 					var tilesets = nodeRoot.Children[new YamlScalarNode(GlobalsXC.TILESETS)] as YamlSequenceNode;
 					foreach (YamlMappingNode tileset in tilesets) // iterate over all the tilesets
 					{
-						//Logfile.Log("");
+						//Logfile.Log();
 
 						keyvals = tileset.Children;
 
@@ -252,10 +262,12 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Saves the <see cref="TileGroup">TileGroups</see> with their children
-		/// (categories and tilesets) to a YAML file.
+		/// Saves the <c><see cref="TileGroup">TileGroups</see></c> with their
+		/// <c><see cref="TileGroup.Categories">TileGroup.Categories</see></c>
+		/// and <c><see cref="Descriptor">Descriptors</see></c> aka tilesets to
+		/// "settings/MapTilesets.yml".
 		/// </summary>
-		/// <returns>true if no exception was thrown</returns>
+		/// <returns><c>true</c> if no exception was thrown</returns>
 		public static bool WriteTileGroups()
 		{
 			string dir = SharedSpace.GetShareString(SharedSpace.SettingsDirectory);	// settings
@@ -331,7 +343,7 @@ namespace XCom
 
 								blankline = true;
 								sw.WriteLine(String.Empty);
-								sw.WriteLine(PrePad + labelGroup + Padder(labelGroup.Length + PrePadLength));
+								sw.WriteLine(PrePad + labelGroup + padder(labelGroup.Length + PrePadLength));
 
 								foreach (var labelCategory in @group.Categories.Keys)
 								{
@@ -342,7 +354,7 @@ namespace XCom
 											sw.WriteLine(String.Empty);
 
 										blankline = false;
-										sw.WriteLine(PrePad + labelCategory + Padder(labelCategory.Length + PrePadLength));
+										sw.WriteLine(PrePad + labelCategory + padder(labelCategory.Length + PrePadLength));
 
 										foreach (var labelTileset in category.Keys)
 										{
@@ -398,7 +410,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="length"></param>
 		/// <returns></returns>
-		private static string Padder(int length)
+		private static string padder(int length)
 		{
 			string pad = String.Empty;
 			if (length < 79) pad = " ";

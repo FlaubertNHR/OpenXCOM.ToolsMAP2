@@ -5,8 +5,9 @@ using System.Collections.Generic;
 namespace XCom
 {
 	/// <summary>
-	/// The class for a TileGroup contains its Categories and through those
-	/// Categories all of its tilesets/Descriptors.
+	/// The class for a <c>TileGroup</c> contains its
+	/// <c><see cref="Categories"/></c> and through those <c>Categories</c> all
+	/// of its <c><see cref="Descriptor">Descriptors</see></c> aka tilesets.
 	/// </summary>
 	public sealed class TileGroup
 	{
@@ -21,9 +22,10 @@ namespace XCom
 		private readonly Dictionary<string, Dictionary<string, Descriptor>> _categories
 				   = new Dictionary<string, Dictionary<string, Descriptor>>();
 		/// <summary>
-		/// Categories is a dictionary of category-labels mapped to a
+		/// <c>Categories</c> is a dictionary of category-labels mapped to a
 		/// subdictionary of descriptor-labels (.MAP/.RMP filenames w/out
-		/// extension) mapped to the Descriptors themselves.
+		/// extension) mapped to the
+		/// <c><see cref="Descriptor">Descriptors</see></c> themselves.
 		/// </summary>
 		public Dictionary<string, Dictionary<string, Descriptor>> Categories
 		{
@@ -38,7 +40,8 @@ namespace XCom
 		/// </summary>
 		/// <param name="labelGroup"></param>
 		/// <remarks>If the prefix "tftd" is not found at the beginning of this
-		/// TileGroup's label then default to UFO grouptype.</remarks>
+		/// <c>TileGroup's</c> label then default to UFO
+		/// <c><see cref="GroupType"/></c>.</remarks>
 		internal TileGroup(string labelGroup)
 		{
 			Label = labelGroup;
@@ -57,9 +60,8 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Adds a category. Called by
-		/// 
-		/// MainViewF.OnAddCategoryClick()
+		/// Adds a <c><see cref="Categories">Category</see></c>. Called by
+		/// <c>MainViewF.OnAddCategoryClick()</c>.
 		/// </summary>
 		/// <param name="labelCategory">the label of the category to add</param>
 		/// <remarks>Check if the category already exists first.</remarks>
@@ -69,60 +71,59 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Deletes a category. Called by
-		/// 
-		/// MainViewF.OnDeleteCategoryClick()
+		/// Deletes a <c><see cref="Categories">Category</see></c>. Called by
+		/// <c>MainViewF.OnDeleteCategoryClick()</c>.
 		/// </summary>
-		/// <param name="labelCategory">the label of the category to delete</param>
+		/// <param name="labelCategory">the label of the <c>Category</c> to
+		/// delete</param>
 		public void DeleteCategory(string labelCategory)
 		{
 			Categories.Remove(labelCategory);
 		}
 
 		/// <summary>
-		/// Creates a new category and transfers ownership of all Descriptors
-		/// from their previous Category to the specified new Category. Called
-		/// by
-		/// 
-		/// MainViewF.OnEditCategoryClick()
+		/// Creates a new <c><see cref="Categories">Category</see></c> and
+		/// transfers ownership of all
+		/// <c><see cref="Descriptor">Descriptors</see></c> from their previous
+		/// <c>Category</c> to the specified new <c>Category</c>. Called by
+		/// <c>MainViewF.OnEditCategoryClick()</c>.
 		/// </summary>
-		/// <param name="labelCategory">the new label for the category</param>
-		/// <param name="labelCategoryPre">the old label of the category</param>
-		/// <remarks>Check if the category already exists first.</remarks>
-		public void EditCategory(string labelCategory, string labelCategoryPre)
+		/// <param name="labelCategory">the new label for the <c>Category</c></param>
+		/// <param name="labelCategory0">the old label of the <c>Category</c></param>
+		/// <remarks>Check if the <c>Category</c> already exists first.</remarks>
+		public void EditCategory(string labelCategory, string labelCategory0)
 		{
 			AddCategory(labelCategory);
 
-			foreach (var descriptor in Categories[labelCategoryPre].Values)
+			foreach (var descriptor in Categories[labelCategory0].Values)
 				Categories[labelCategory][descriptor.Label] = descriptor;
 
-			DeleteCategory(labelCategoryPre); // hopefully this won't wipe all Values after transfering ownership.
+			DeleteCategory(labelCategory0);
 		}
 
 		/// <summary>
-		/// Adds a tileset-descriptor. Called by
-		/// 
-		/// TilesetEditor.OnAcceptClick().
+		/// Adds a <c><see cref="Descriptor"/></c>. Called by
+		/// <c>TilesetEditor.OnAcceptClick()</c>.
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="labelCategory"></param>
-		/// <remarks>Check that the descriptor does *not* exist and category
-		/// does exist first.</remarks>
+		/// <remarks>Check that the <c>Descriptor</c> does *not* exist and
+		/// category does exist first.</remarks>
 		public void AddTileset(Descriptor descriptor, string labelCategory)
 		{
 			Categories[labelCategory][descriptor.Label] = descriptor;
 		}
 
 		/// <summary>
-		/// Deletes a tileset-descriptor. Called by
-		/// 
-		/// MainViewF.OnDeleteTilesetClick()
-		/// 
-		/// TilesetEditor.OnAcceptClick()
+		/// Deletes a <c><see cref="Descriptor"/></c>. Called by
+		/// <c>MainViewF.OnDeleteTilesetClick()</c> and
+		/// <c>TilesetEditor.OnAcceptClick()</c>.
 		/// </summary>
 		/// <param name="labelTileset">the label of the tileset to delete</param>
-		/// <param name="labelCategory">the label of the category of the tileset</param>
-		/// <remarks>Check that category and perhaps tileset exist first.</remarks>
+		/// <param name="labelCategory">the label of the
+		/// <c><see cref="Categories">Category</see></c> of the tileset</param>
+		/// <remarks>Check that <c>Category</c> and perhaps tileset exist
+		/// first.</remarks>
 		public void DeleteTileset(string labelTileset, string labelCategory)
 		{
 			Categories[labelCategory].Remove(labelTileset);
@@ -132,7 +133,7 @@ namespace XCom
 
 		#region Methods (override)
 		/// <summary>
-		/// Overrides Object.ToString()
+		/// Overrides <c>Object.ToString()</c>.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()

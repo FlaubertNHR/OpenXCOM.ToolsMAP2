@@ -93,7 +93,6 @@
     </Compile>
     <Compile Include="McdRecords\McdRecordsExceeded.cs" />
     <Compile Include="McdRecords\SpecialType.cs" />
-    <Compile Include="ProgressBarForm.cs" />
     <Compile Include="Sprites\BitmapLoader.cs" />
     <Compile Include="Sprites\BitmapService.cs">
       <SubType>Code</SubType>
@@ -156,9 +155,6 @@
     </Compile>
     <EmbeddedResource Include="McdRecords\McdRecordsExceeded.resx">
       <DependentUpon>McdRecordsExceeded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProgressBarForm.resx">
-      <DependentUpon>ProgressBarForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>

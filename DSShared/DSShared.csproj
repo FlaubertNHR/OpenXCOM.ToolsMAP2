@@ -79,6 +79,7 @@
     <Compile Include="Controls\CompositedPropertyGrid.cs" />
     <Compile Include="Controls\CompositedTreeView.cs" />
     <Compile Include="Controls\CustomToolStripRenderer.cs" />
+    <Compile Include="Controls\ProgressBarF.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="GlobalsXC.cs" />
     <Compile Include="Infobox.cs" />
@@ -122,6 +123,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ProgressBarF.resx">
+      <DependentUpon>ProgressBarF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Infobox.resx">
       <DependentUpon>Infobox.cs</DependentUpon>
     </EmbeddedResource>
