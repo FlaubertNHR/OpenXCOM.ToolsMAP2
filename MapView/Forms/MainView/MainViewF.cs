@@ -7,6 +7,9 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+#if !__MonoCS__
+using System.Runtime.InteropServices;
+#endif
 using System.Windows.Forms;
 
 using DSShared;
@@ -28,7 +31,46 @@ namespace MapView
 	internal sealed partial class MainViewF
 		:
 			Form
+#if !__MonoCS__
+			, IMessageFilter
+#endif
 	{
+#if !__MonoCS__
+		#region P/Invoke declarations
+		[DllImport("user32.dll")]
+		static extern IntPtr WindowFromPoint(Point pt);
+
+		[DllImport("user32.dll")]
+		static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+		#endregion P/Invoke declarations
+
+		#region IMessageFilter
+		/// <summary>
+		/// Sends mousewheel messages to the control that the mouse-cursor is
+		/// hovering over.
+		/// </summary>
+		/// <param name="m">the message</param>
+		/// <returns>true if a mousewheel message was handled successfully</returns>
+		/// <remarks>https://stackoverflow.com/questions/4769854/windows-forms-capturing-mousewheel#4769961</remarks>
+		public bool PreFilterMessage(ref Message m)
+		{
+			if (m.Msg == 0x20a)
+			{
+				// WM_MOUSEWHEEL - find the control at screen position m.LParam
+				var pos = new Point(m.LParam.ToInt32());
+
+				IntPtr hWnd = WindowFromPoint(pos);
+				if (hWnd != IntPtr.Zero && hWnd != m.HWnd && Control.FromHandle(hWnd) != null)
+				{
+					SendMessage(hWnd, m.Msg, m.WParam, m.LParam);
+					return true;
+				}
+			}
+			return false;
+		}
+		#endregion IMessageFilter
+#endif
+
 		#region Delegates
 		/// <summary>
 		/// Good fuckin Lord I just wrote a "DontBeep" delegate.
@@ -576,7 +618,9 @@ namespace MapView
 
 			ssMain.Renderer = new CustomToolStripRenderer();
 
-
+#if !__MonoCS__
+			Application.AddMessageFilter(this);
+#endif
 			Cursor.Current = Cursors.Default;
 			Logfile.Log("About to show MainView ..." + Environment.NewLine);
 		}
