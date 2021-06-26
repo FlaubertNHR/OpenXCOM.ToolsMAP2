@@ -302,7 +302,7 @@ namespace MapView
 			MapTree.TabIndex      = 0;
 			MapTree.HideSelection = false;
 
-			MapTree.DrawNode       += tv_DrawNode;
+			MapTree.DrawNode       += OnMapTreeDrawNode;
 			MapTree.GotFocus       += OnMapTreeFocusChanged;
 			MapTree.LostFocus      += OnMapTreeFocusChanged;
 			MapTree.MouseDown      += OnMapTreeMouseDown;
@@ -1292,21 +1292,21 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void tv_DrawNode(object sender, DrawTreeNodeEventArgs e)
+		private void OnMapTreeDrawNode(object sender, DrawTreeNodeEventArgs e)
 		{
 			if (e.Node != null)
 			{
-				var graphics = e.Graphics;
+				Graphics graphics = e.Graphics;
 
 				Brush brush;
 				Pen pen;
 
-				if ((e.State & TreeNodeStates.Focused) == TreeNodeStates.Focused) // WARNING: May require 'HideSelection' false.
+				if ((e.State & TreeNodeStates.Focused) != 0) // WARNING: May require 'HideSelection' false.
 				{
 					brush = Brushes.BurlyWood;
 					pen   = Pens.SlateBlue;
 				}
-				else if ((e.State & TreeNodeStates.Selected) == TreeNodeStates.Selected) // WARNING: Requires 'HideSelection' false.
+				else if ((e.State & TreeNodeStates.Selected) != 0) // WARNING: Requires 'HideSelection' false.
 				{
 					brush = Brushes.Wheat;
 					pen   = Pens.SlateBlue;
@@ -1322,7 +1322,6 @@ namespace MapView
 				}
 				else
 				{
-//					e.DrawDefault = true;
 					brush = SystemBrushes.Control;
 					pen   = SystemPens.Control;
 				}
@@ -1336,17 +1335,17 @@ namespace MapView
 					++rect.Width;
 				}
 
-				rect.Width += 4;							// conceal .NET glitch.
+				rect.Width += 4;						// conceal .NET glitch.
 				graphics.FillRectangle(brush, rect);
-				rect.Height -= 1;							// keep border inside bounds
+				rect.Height -= 1;						// keep border inside bounds
 				graphics.DrawRectangle(pen, rect);
 
 				rect = e.Bounds;
-				rect.X += 2;								// re-align text due to .NET glitch.
+				rect.X += 2;							// re-align text due to .NET glitch.
 				TextRenderer.DrawText(
 									graphics,
 									e.Node.Text,
-									e.Node.TreeView.Font,	//e.Node.NodeFont ?? e.Node.TreeView.Font
+									e.Node.TreeView.Font,
 									rect,
 									SystemColors.ControlText);
 			}
@@ -3029,9 +3028,9 @@ namespace MapView
 		/// <summary>
 		/// For an ungodly reason when the <c><see cref="MapTree"/></c>
 		/// gains/loses focus
-		/// <c><see cref="tv_DrawNode()">tv_DrawNode()</see></c> re-colors
-		/// selected and focused nodes correctly but does not re-color a
-		/// Searched node.
+		/// <c><see cref="OnMapTreeDrawNode()">OnMapTreeDrawNode()</see></c>
+		/// re-colors selected and focused nodes correctly but does not re-color
+		/// a Searched node.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
