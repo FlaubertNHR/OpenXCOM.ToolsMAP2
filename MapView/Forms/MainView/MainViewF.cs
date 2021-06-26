@@ -661,22 +661,19 @@ namespace MapView
 		private void CreateTree()
 		{
 			//Logfile.Log();
-			//Logfile.Log("MainViewF.CreateTree");
+			//Logfile.Log("MainViewF.CreateTree()");
 
 			MapTree.BeginUpdate();
 			MapTree.Nodes.Clear();
 
-			var groups = TileGroupManager.TileGroups;
-			//Logfile.Log(". groups= " + groups);
-
-			SortableTreeNode nodeGroup;
 			TileGroup tileGroup;
-
+			SortableTreeNode nodeGroup;
+			Dictionary<string, Descriptor> category;
 			SortableTreeNode nodeCategory;
-
 			SortableTreeNode nodeTileset;
-			Dictionary<string, Descriptor> descriptors;
 
+			Dictionary<string, TileGroup> groups = TileGroupManager.TileGroups;
+			//Logfile.Log(". groups= " + groups);
 
 			foreach (string keyGroup in groups.Keys)
 			{
@@ -685,7 +682,7 @@ namespace MapView
 				tileGroup = groups[keyGroup];
 
 				nodeGroup = new SortableTreeNode(tileGroup.Label);
-				nodeGroup.Tag = tileGroup;
+//				nodeGroup.Tag = tileGroup;								// <- Tag not used.
 				MapTree.Nodes.Add(nodeGroup);
 
 				foreach (string keyCategory in tileGroup.Categories.Keys)
@@ -693,16 +690,16 @@ namespace MapView
 					//Logfile.Log(". . . keyCategory= " + keyCategory);
 
 					nodeCategory = new SortableTreeNode(keyCategory);
-					descriptors = tileGroup.Categories[keyCategory];
-					nodeCategory.Tag = descriptors;
+					category = tileGroup.Categories[keyCategory];
+//					nodeCategory.Tag = category;						// <- Tag not used.
 					nodeGroup.Nodes.Add(nodeCategory);
 
-					foreach (string keyTileset in descriptors.Keys)
+					foreach (string keyTileset in category.Keys)
 					{
 						//Logfile.Log(". . . . keyTileset= " + keyTileset);
 
 						nodeTileset = new SortableTreeNode(keyTileset);
-						nodeTileset.Tag = descriptors[keyTileset];
+						nodeTileset.Tag = category[keyTileset];			// <- Tag is Descriptor
 						nodeCategory.Nodes.Add(nodeTileset);
 					}
 				}
