@@ -1339,33 +1339,39 @@ namespace MapView
 			{
 				Graphics graphics = e.Graphics;
 
-				Brush brush;
-				Pen pen;
+				Brush fillbrush; Pen border;
+				Color textcolor;
 
 				if ((e.State & TreeNodeStates.Focused) != 0) // WARNING: May require 'HideSelection' false.
 				{
-					brush = Brushes.BurlyWood;
-					pen   = Pens.SlateBlue;
+					fillbrush = Brushes.Wheat;
+					border    = Pens.SlateBlue;
 				}
 				else if ((e.State & TreeNodeStates.Selected) != 0) // WARNING: Requires 'HideSelection' false.
 				{
-					brush = Brushes.Wheat;
-					pen   = Pens.SlateBlue;
+					fillbrush = Brushes.AntiqueWhite;
+					border    = Pens.SlateBlue;
 				}
 				else if (e.Node == Searched)
 				{
-					pen = Pens.SlateBlue;
+					border = Pens.SlateBlue;
 
 					if (MapTree.Focused)
-						brush = Brushes.SkyBlue;
+						fillbrush = Brushes.LightSkyBlue;
 					else
-						brush = Brushes.PowderBlue;
+						fillbrush = Brushes.AliceBlue;
 				}
 				else
 				{
-					brush = SystemBrushes.Control;
-					pen   = SystemPens.Control;
+					fillbrush = SystemBrushes.Control;
+					border    = SystemPens.Control;
 				}
+
+				if (e.Node.Tag == null || (e.Node.Tag as Descriptor).FileValid)
+					textcolor = SystemColors.ControlText;
+				else
+					textcolor = Color.MediumVioletRed;
+
 
 				Rectangle rect = e.Bounds;
 
@@ -1377,9 +1383,9 @@ namespace MapView
 				}
 
 				rect.Width += 4;						// conceal .NET glitch.
-				graphics.FillRectangle(brush, rect);
+				graphics.FillRectangle(fillbrush, rect);
 				rect.Height -= 1;						// keep border inside bounds
-				graphics.DrawRectangle(pen, rect);
+				graphics.DrawRectangle(border, rect);
 
 				rect = e.Bounds;
 				rect.X += 2;							// re-align text due to .NET glitch.
@@ -1388,7 +1394,7 @@ namespace MapView
 									e.Node.Text,
 									e.Node.TreeView.Font,
 									rect,
-									SystemColors.ControlText);
+									textcolor);
 			}
 		}
 
@@ -3095,7 +3101,7 @@ namespace MapView
 
 			if (e.Node == _selected)
 			{
-				var descriptor = e.Node.Tag as Descriptor;
+				var descriptor = _selected.Tag as Descriptor;
 				if (descriptor != null)
 				{
 					if (   MainViewUnderlay.MapFile == null

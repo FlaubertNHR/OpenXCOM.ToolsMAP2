@@ -50,6 +50,14 @@ namespace XCom
 		{ get; private set; }
 
 
+		/// <summary>
+		/// <c>true</c> if a Mapfile for this <c>Descriptor</c> exists on the
+		/// hardrive.
+		/// </summary>
+		/// <remarks>Used to color text on the Maptree nodes.</remarks>
+		public bool FileValid
+		{ get; set; }
+
 		public bool BypassRecordsExceeded
 		{ get; set; }
 		#endregion Properties
@@ -98,8 +106,10 @@ namespace XCom
 			{
 				_dirTerr = Path.Combine(_dirTerr, GlobalsXC.TerrainDir);
 			}
-			else // NOTE: the Share can return null if the resource-type is notconfigured
+			else // the Share can return null if the resource-type is notconfigured
 				_dirTerr = String.Empty;
+
+			FileValid = CheckMapfilePath();
 
 			BypassRecordsExceeded = bypassRecordsExceeded;
 		}
@@ -107,6 +117,41 @@ namespace XCom
 
 
 		#region Methods
+		/// <summary>
+		/// Checks the fullpath to the Mapfile for this <c>Descriptor</c>.
+		/// </summary>
+		/// <returns><c>true</c> if the Mapfile exists on the hardrive</returns>
+		public bool CheckMapfilePath()
+		{
+			string path = Basepath;
+			if (!String.IsNullOrEmpty(path)) // the BasePath can be null if resource-type is notconfigured.
+			{
+				path = Path.Combine(path, GlobalsXC.MapsDir);
+				path = Path.Combine(path, Label + GlobalsXC.MapExt);
+
+				return File.Exists(path);
+			}
+			return false;
+		}
+
+/*		/// <summary>
+		/// Gets the fullpath to the Mapfile for this <c>Descriptor</c>.
+		/// </summary>
+		/// <returns>the path to the Mapfile else <c>null</c></returns>
+		public string GetMapfilePath()
+		{
+			string dir = Basepath;
+			if (!String.IsNullOrEmpty(dir)) // -> the BasePath can be null if resource-type is notconfigured.
+			{
+					   dir = Path.Combine(dir, GlobalsXC.MapsDir);
+				string pfe = Path.Combine(dir, Label + GlobalsXC.MapExt);
+
+				if (File.Exists(pfe))
+					return pfe;
+			}
+			return null;
+		} */
+
 		/// <summary>
 		/// Gets the appropriate TERRAIN directory for this tileset.
 		/// </summary>
