@@ -2824,6 +2824,7 @@ namespace MapView
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 
 						Dontdrawyougits = false;
+						MainViewOverlay.Invalidate();
 					}
 				}
 			}
@@ -2861,6 +2862,7 @@ namespace MapView
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
 
 						Dontdrawyougits = false;
+						MainViewOverlay.Invalidate();
 					}
 				}
 			}
