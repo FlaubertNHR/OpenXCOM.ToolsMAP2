@@ -30,7 +30,6 @@ namespace MapView
 		:
 			Form
 	{
-		#region Enums
 		/// <summary>
 		/// The possible add-types.
 		/// </summary>
@@ -40,7 +39,6 @@ namespace MapView
 			MapExists,	// 1
 			MapCreate	// 2
 		}
-		#endregion Enums
 
 
 		#region Fields (static)
@@ -48,6 +46,12 @@ namespace MapView
 		private const string EditTileset = "Edit Tileset";
 
 		private static string _lastTerrainFolder = String.Empty;
+
+		/// <summary>
+		/// Is static to grant access to subsequent instantiations.
+		/// </summary>
+		private static readonly Dictionary<int, Tuple<string,string>> _copiedTerrains
+						  = new Dictionary<int, Tuple<string,string>>();
 		#endregion Fields (static)
 
 
@@ -81,15 +85,6 @@ namespace MapView
 		private bool _warned_MultipleTilesets;
 		private bool _bypassTerrainPathChanged;
 		#endregion Fields
-
-
-		#region Properties (static)
-		/// <summary>
-		/// Is static to grant access to subsequent instantiations.
-		/// </summary>
-		private static readonly Dictionary<int, Tuple<string,string>> _copiedTerrains
-						  = new Dictionary<int, Tuple<string,string>>();
-		#endregion Properties (static)
 
 
 		#region Properties
@@ -352,7 +347,7 @@ namespace MapView
 						e.Cancel = true;
 						ShowError("The Map must have at least one terrain allocated.");
 					}
-					else if (TerrainsChanged(Terrains_0, _descriptor.Terrains))
+					else if (!TerrainsEqual(Terrains_0, _descriptor.Terrains))
 					{
 						//Logfile.Log(". force DialogResult.OK");
 						DialogResult = DialogResult.OK; // force reload of the Tileset
@@ -658,8 +653,8 @@ namespace MapView
 		/// Creates a tileset as a <c><see cref="Descriptor"/></c>. This is
 		/// allowed iff this dialog is
 		/// <c><see cref="TilesetEditType.AddTileset">TilesetEditType.AddTileset</see></c>
-		/// and (<c><see cref="AddType.MapExists">AddType.MapExists</see></c> or
-		/// <c><see cref="AddType.MapCreate">AddType.MapCreate</see></c>).
+		/// - <c><see cref="AddType.MapExists">AddType.MapExists</see></c> or
+		/// <c><see cref="AddType.MapCreate">AddType.MapCreate</see></c>.
 		/// It is disallowed if the mode is
 		/// <c><see cref="TilesetEditType.EditTileset">TilesetEditType.EditTileset</see></c>.
 		/// </summary>
@@ -689,7 +684,7 @@ namespace MapView
 										TileGroup.GroupType,
 										cb_BypassRecordsExceeded.Checked);
 
-				if (MapfileExists(TilesetLabel))
+				if (_descriptor.FileValid)
 				{
 					lbl_AddType.Text = "Add using existing Map file";
 					FileAddType = AddType.MapExists;
@@ -702,6 +697,7 @@ namespace MapView
 
 				btn_CreateDescriptor.Enabled = false;
 				btn_Accept          .Enabled = true;
+
 				ListTerrains();
 
 
@@ -721,8 +717,9 @@ namespace MapView
 		/// <summary>
 		/// If this <c>TilesetEditor</c> is type
 		/// <c><see cref="TilesetEditType.AddTileset">TilesetEditType.AddTileset</see></c>,
-		/// the Accept click must check to see if a <c><see cref="Descriptor"/></c>
-		/// has been created with the Create button first.
+		/// the Accept click must check to see if a
+		/// <c><see cref="Descriptor"/></c> has been created with the Create
+		/// button first.
 		/// 
 		/// 
 		/// If this <c>TilesetEditor</c> is type
@@ -771,6 +768,8 @@ namespace MapView
 								{
 									// NOTE: The descriptor has already been created with the
 									// Create descriptor button.
+									_descriptor.FileValid = true;
+
 									goto case AddType.MapExists;
 								}
 								break;
@@ -785,7 +784,7 @@ namespace MapView
 					case TilesetEditType.EditTileset:
 						if (TilesetLabel == TilesetLabel_0) // label didn't change; check if terrains changed ->
 						{
-							if (!TerrainsChanged(Terrains_0, _descriptor.Terrains))
+							if (TerrainsEqual(Terrains_0, _descriptor.Terrains))
 							{
 								// NOTE: This shouldn't happen anymore now that the
 								// Accept button remains disabled until it isn't.
@@ -826,7 +825,7 @@ namespace MapView
 
 							using (var f = new Infobox(
 													"Error",
-													Infobox.SplitString(head),
+													Infobox.SplitString(head, 80),
 													GetFullpathMapfile(TilesetLabel),
 													InfoboxType.Error))
 							{
@@ -1468,7 +1467,8 @@ namespace MapView
 		/// Checks if a Mapfile w/ label exists in the current basepath
 		/// directory.
 		/// </summary>
-		/// <param name="label">the label w/out extension of a Mapfile to check for</param>
+		/// <param name="label">the label w/out extension of a Mapfile to check
+		/// for</param>
 		/// <returns><c>true</c> if the Mapfile already exists on the hardrive</returns>
 		private bool MapfileExists(string label)
 		{
@@ -1600,27 +1600,27 @@ namespace MapView
 
 		#region Methods (static)
 		/// <summary>
-		/// Checks if two terrains-lists are (not) equivalent.
+		/// Checks if two terrains-lists are equivalent.
 		/// </summary>
 		/// <param name="a">first terrains-list</param>
 		/// <param name="b">second terrains-list</param>
-		/// <returns>true if the specified terrains-lists are different</returns>
-		private static bool TerrainsChanged(
+		/// <returns><c>true</c> if the specified terrains-lists are equal</returns>
+		private static bool TerrainsEqual(
 				IDictionary<int, Tuple<string,string>> a,
 				IDictionary<int, Tuple<string,string>> b)
 		{
 			if (a.Count != b.Count)
-				return true;
+				return false;
 
 			for (int i = 0; i != a.Count; ++i)
 			{
 				if (   a[i].Item1 != b[i].Item1
 					|| a[i].Item2 != b[i].Item2)
 				{
-					return true;
+					return false;
 				}
 			}
-			return false;
+			return true;
 		}
 
 		/// <summary>
