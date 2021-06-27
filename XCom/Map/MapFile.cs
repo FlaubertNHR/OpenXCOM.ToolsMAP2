@@ -373,7 +373,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="pfeMap"></param>
 		/// <param name="pfeRoutes"></param>
-		/// <returns>true on success</returns>
+		/// <returns><c>true</c> on success</returns>
 		/// <remarks>Call this funct only if the Mapfile does *not* exist. This
 		/// funct does *not* create backup files!</remarks>
 		public static bool CreateDefault(string pfeMap, string pfeRoutes)
