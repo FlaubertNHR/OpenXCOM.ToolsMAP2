@@ -18,27 +18,32 @@ namespace MapView
 	/// </summary>
 	internal enum TsEditMode
 	{
-		Create,	// 0
-		Exists	// 1
+		CreateDescriptor,	// 0
+		DescriptorExists	// 1
 	}
 
 
 	/// <summary>
-	/// This is the Tileset Editor for MapView ii. It replaces the Paths Editor
-	/// of MapView i.
+	/// This is the <c>TilesetEditor</c> for MapView ii. It replaces the Paths
+	/// Editor of MapView i.
 	/// </summary>
 	internal sealed partial class TilesetEditor
 		:
 			Form
 	{
 		/// <summary>
-		/// The possible add-types.
+		/// The possible create-types.
 		/// </summary>
-		private enum AddType
+		/// <remarks>These are used only when this <c>TilesetEditor</c> is
+		/// invoked for
+		/// <c><see cref="TsEditMode.CreateDescriptor">TsEditMode.CreateDescriptor</see></c>.
+		/// The <c>.MAP</c> either exists on disk already or else it needs to be
+		/// created.</remarks>
+		private enum CreateType
 		{
 			non,		// 0
-			MapExists,	// 1
-			MapCreate	// 2
+			FileExists,	// 1
+			CreateFile	// 2
 		}
 
 
@@ -102,7 +107,7 @@ namespace MapView
 		/// Gets/Sets whether this instantiation of the <c>TilesetEditor</c>
 		/// needs to deal with an existing tileset or create a new one.
 		/// </summary>
-		private AddType FileAddType
+		private CreateType FileAddType
 		{ get; set; }
 
 		/// <summary>
@@ -144,7 +149,7 @@ namespace MapView
 		/// Stores the original tileset-label.
 		/// </summary>
 		/// <remarks>Used only for
-		/// <c><see cref="TsEditMode.Exists">TsEditMode.Exists</see></c>
+		/// <c><see cref="TsEditMode.DescriptorExists">TsEditMode.DescriptorExists</see></c>
 		/// in various ways.</remarks>
 		private string TilesetLabel_0
 		{ get; set; }
@@ -176,7 +181,7 @@ namespace MapView
 		/// Stores the original terrainset of a tileset.
 		/// </summary>
 		/// <remarks>Used only for
-		/// <c><see cref="TsEditMode.Exists">TsEditMode.Exists</see></c>
+		/// <c><see cref="TsEditMode.DescriptorExists">TsEditMode.DescriptorExists</see></c>
 		/// to check if the terrains have changed when user clicks Accept.</remarks>
 		private Dictionary<int, Tuple<string,string>> Terrains_0
 		{ get; set; }
@@ -240,7 +245,7 @@ namespace MapView
 
 			switch (InputBoxType = bt)
 			{
-				case TsEditMode.Create:
+				case TsEditMode.CreateDescriptor:
 					Text = AddTileset;
 					lbl_AddType.Text = "Descriptor invalid";
 
@@ -258,7 +263,7 @@ namespace MapView
 					TilesetBasepath = Basepath;
 					break;
 
-				case TsEditMode.Exists:
+				case TsEditMode.DescriptorExists:
 				{
 					Text = EditTileset;
 					lbl_AddType.Text = "Modify existing tileset";
@@ -295,7 +300,7 @@ namespace MapView
 					break;
 				}
 			}
-			FileAddType = AddType.non;
+			FileAddType = CreateType.non;
 
 			btn_Cancel.Select();
 
@@ -454,7 +459,7 @@ namespace MapView
 
 					switch (InputBoxType)
 					{
-						case TsEditMode.Create:
+						case TsEditMode.CreateDescriptor:
 							ListTerrains();
 
 							if (String.IsNullOrEmpty(TilesetLabel))
@@ -463,7 +468,7 @@ namespace MapView
 								btn_Accept          .Enabled = false;
 
 								lbl_AddType.Text = "Descriptor invalid";
-								FileAddType = AddType.non;
+								FileAddType = CreateType.non;
 							}
 							else if (_descriptor == null || _descriptor.Label != TilesetLabel)
 							{
@@ -471,7 +476,7 @@ namespace MapView
 								btn_Accept          .Enabled = false;
 
 								lbl_AddType.Text = "Create";
-								FileAddType = AddType.non;
+								FileAddType = CreateType.non;
 							}
 							else
 							{
@@ -481,17 +486,17 @@ namespace MapView
 								if (MapfileExists(TilesetLabel))
 								{
 									lbl_AddType.Text = "Add using existing Map file";
-									FileAddType = AddType.MapExists;
+									FileAddType = CreateType.FileExists;
 								}
 								else
 								{
 									lbl_AddType.Text = "Add by creating a new Map file";
-									FileAddType = AddType.MapCreate;
+									FileAddType = CreateType.CreateFile;
 								}
 							}
 							break;
 
-						case TsEditMode.Exists:
+						case TsEditMode.DescriptorExists:
 							if (!_warned_MultipleTilesets && TilesetLabel != TilesetLabel_0)
 							{
 								_warned_MultipleTilesets = true; // only once per instantiation.
@@ -547,12 +552,12 @@ namespace MapView
 
 			switch (InputBoxType)
 			{
-				case TsEditMode.Create:
+				case TsEditMode.CreateDescriptor:
 					if (TilesetExistsInCategory())
 						_descriptor = null;
 					break;
 
-				case TsEditMode.Exists:
+				case TsEditMode.DescriptorExists:
 					if (TilesetLabel == TilesetLabel_0
 						|| (!TilesetExistsInCategory() && !MapfileExists(TilesetLabel)))
 					{
@@ -653,11 +658,11 @@ namespace MapView
 		/// <summary>
 		/// Creates a tileset as a <c><see cref="Descriptor"/></c>. This is
 		/// allowed iff this dialog is
-		/// <c><see cref="TsEditMode.Create">TsEditMode.Create</see></c> -
-		/// <c><see cref="AddType.MapExists">AddType.MapExists</see></c> or
-		/// <c><see cref="AddType.MapCreate">AddType.MapCreate</see></c>.
+		/// <c><see cref="TsEditMode.CreateDescriptor">TsEditMode.CreateDescriptor</see></c> -
+		/// <c><see cref="CreateType.FileExists">CreateType.FileExists</see></c> or
+		/// <c><see cref="CreateType.CreateFile">CreateType.CreateFile</see></c>.
 		/// It is disallowed if the mode is
-		/// <c><see cref="TsEditMode.Exists">TsEditMode.Exists</see></c>.
+		/// <c><see cref="TsEditMode.DescriptorExists">TsEditMode.DescriptorExists</see></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -688,12 +693,12 @@ namespace MapView
 				if (_descriptor.FileValid)
 				{
 					lbl_AddType.Text = "Add using existing Map file";
-					FileAddType = AddType.MapExists;
+					FileAddType = CreateType.FileExists;
 				}
 				else
 				{
 					lbl_AddType.Text = "Add by creating a new Map file";
-					FileAddType = AddType.MapCreate;
+					FileAddType = CreateType.CreateFile;
 				}
 
 				btn_CreateDescriptor.Enabled = false;
@@ -717,19 +722,20 @@ namespace MapView
 
 		/// <summary>
 		/// If this <c>TilesetEditor</c> is type
-		/// <c><see cref="TsEditMode.Create">TsEditMode.Create</see></c>, the
-		/// Accept click must check to see if a <c><see cref="Descriptor"/></c>
-		/// has been created with the Create button first.
+		/// <c><see cref="TsEditMode.CreateDescriptor">TsEditMode.CreateDescriptor</see></c>,
+		/// the Accept click must check to see if a
+		/// <c><see cref="Descriptor"/></c> has been created with the Create
+		/// button first.
 		/// 
 		/// 
 		/// If this <c>TilesetEditor</c> is type
-		/// <c><see cref="TsEditMode.Exists">TsEditMode.Exists</see></c>, the
-		/// Accept click will create a <c><see cref="Descriptor"/></c> if the
-		/// tileset-label changed and delete the old <c>Descriptor</c>, and add
-		/// the new one to the current tilegroup/category. If the tileset-label
-		/// didn't change, nothing more need be done since any terrains that
-		/// were changed have already been changed by changes to the
-		/// Allocated/Available listboxes.
+		/// <c><see cref="TsEditMode.DescriptorExists">TsEditMode.DescriptorExists</see></c>,
+		/// the Accept click will create a <c><see cref="Descriptor"/></c> if
+		/// the tileset-label changed and delete the old <c>Descriptor</c>, and
+		/// add the new one to the current tilegroup/category. If the
+		/// tileset-label didn't change, nothing more need be done since any
+		/// terrains that were changed have already been changed by changes to
+		/// the Allocated/Available listboxes.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -752,13 +758,13 @@ namespace MapView
 			{
 				switch (InputBoxType)
 				{
-					case TsEditMode.Create:
+					case TsEditMode.CreateDescriptor:
 
-						// TODO: MapfileExists(TilesetLabel) - see TsEditMode.Exists below.
+						// TODO: MapfileExists(TilesetLabel) - see TsEditMode.DescriptorExists below.
 
 						switch (FileAddType)
 						{
-							case AddType.MapCreate:
+							case CreateType.CreateFile:
 								string pfeMap   = GetFullpathMapfile(TilesetLabel);
 								string pfeRoute = GetFullpathRoutefile(TilesetLabel);
 
@@ -770,18 +776,18 @@ namespace MapView
 									// Create descriptor button.
 									_descriptor.FileValid = true;
 
-									goto case AddType.MapExists;
+									goto case CreateType.FileExists;
 								}
 								break;
 
-							case AddType.MapExists:
+							case CreateType.FileExists:
 								TileGroup.AddTileset(_descriptor, CategoryLabel);
 								DialogResult = DialogResult.OK; // re/load the Tileset in MainView.
 								break;
 						}
 						break;
 
-					case TsEditMode.Exists:
+					case TsEditMode.DescriptorExists:
 						if (TilesetLabel == TilesetLabel_0) // label didn't change; check if terrains changed ->
 						{
 							if (TerrainsEqual(Terrains_0, _descriptor.Terrains))
@@ -872,7 +878,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainLeftClick(object sender, EventArgs e)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.Exists)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.DescriptorExists)
 				 MainViewF.that.MaptreeChanged = true;
 
 			int sel = lb_TerrainsAvailable.SelectedIndex;
@@ -903,7 +909,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainRightClick(object sender, EventArgs e)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.Exists)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.DescriptorExists)
 				 MainViewF.that.MaptreeChanged = true;
 
 			string itAvailable = null;
@@ -979,7 +985,7 @@ namespace MapView
 		/// <c><see cref="OnTerrainDownClick()">OnTerrainDownClick()</see></c></remarks>
 		private void ShiftTerrainEntry(int dir)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.Exists)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.DescriptorExists)
 				 MainViewF.that.MaptreeChanged = true;
 
 			var terrains = _descriptor.Terrains;
@@ -1029,7 +1035,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainPasteClick(object sender, EventArgs e)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.Exists)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.DescriptorExists)
 				 MainViewF.that.MaptreeChanged = true;
 
 			_descriptor.Terrains.Clear();
@@ -1050,7 +1056,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainClearClick(object sender, EventArgs e)
 		{
-			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.Exists)
+			if (!MainViewF.that.MaptreeChanged && InputBoxType == TsEditMode.DescriptorExists)
 				 MainViewF.that.MaptreeChanged = true;
 
 			_descriptor.Terrains.Clear();
@@ -1507,7 +1513,7 @@ namespace MapView
 		{
 			int count = GetTilesetCount(TilesetLabel);
 
-			if (InputBoxType == TsEditMode.Create
+			if (InputBoxType == TsEditMode.CreateDescriptor
 				&& _descriptor != null
 				&& _descriptor.Label == TilesetLabel)
 			{
@@ -1686,10 +1692,10 @@ namespace MapView
 //			//Logfile.Log("");
 //			//Logfile.Log("OnTilesetLabelKeyUp");
 //
-//			if (InputBoxType == TsEditMode.Create	// NOTE: have to remove this. If a user enters an invalid char in the label
-//				&& btnCreateMap.Enabled				// then uses Enter to get rid of the error-popup, the KeyDown dismisses the
-//				&& e.KeyCode == Keys.Enter)			// error but then the KeyUp will instantiate a descriptor ....
-//			{										// Am sick of fighting with WinForms in an already complicated class like this.
+//			if (InputBoxType == TsEditMode.CreateDescriptor	// NOTE: have to remove this. If a user enters an invalid char in the label
+//				&& btnCreateMap.Enabled						// then uses Enter to get rid of the error-popup, the KeyDown dismisses the
+//				&& e.KeyCode == Keys.Enter)					// error but then the KeyUp will instantiate a descriptor ....
+//			{												// Am sick of fighting with WinForms in an already complicated class like this.
 //				OnCreateDescriptorClick(null, EventArgs.Empty);
 //			}
 //		}
@@ -1770,8 +1776,8 @@ namespace MapView
 		/// <summary>
 		/// Required for
 		/// <list type="bullet">
-		/// <item>lb_TerrainsAllocated.DisplayMember = "Terrain";</item>
-		/// <item>lb_TerrainsAvailable.DisplayMember = "Terrain";</item>
+		/// <item><c>lb_TerrainsAllocated.DisplayMember = "Terrain";</c></item>
+		/// <item><c>lb_TerrainsAvailable.DisplayMember = "Terrain";</c></item>
 		/// </list>
 		/// 
 		/// 
