@@ -74,7 +74,7 @@ namespace XCom
 		/// or <c><see cref="GameType.Tftd">GameType.Tftd</see></c></param>
 		/// <param name="bypassRecordsExceeded"><c>true</c> to not issue a
 		/// warning if the terrainset exceeds
-		/// <c><see cref="MapFileService.MAX_MCDRECORDS">MapFileService.MAX_MCDRECORDS</see></c>
+		/// <c><see cref="MapFile.MAX_MCDRECORDS">MapFile.MAX_MCDRECORDS</see></c>
 		/// parts</param>
 		public Descriptor(
 				string label,

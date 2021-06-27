@@ -23,8 +23,8 @@ namespace XCom
 				   = new Dictionary<string, Dictionary<string, Descriptor>>();
 		/// <summary>
 		/// <c>Categories</c> is a dictionary of category-labels mapped to a
-		/// subdictionary of descriptor-labels (.MAP/.RMP filenames w/out
-		/// extension) mapped to the
+		/// subdictionary of descriptor-labels - .MAP/.RMP filenames w/out
+		/// extension - mapped to the
 		/// <c><see cref="Descriptor">Descriptors</see></c> themselves.
 		/// </summary>
 		public Dictionary<string, Dictionary<string, Descriptor>> Categories
