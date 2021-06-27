@@ -2814,12 +2814,16 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
+						Dontdrawyougits = true;
+
 						MaptreeChanged = true;
 
 						_bypassChanged = true;
 						CreateTree();
 
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
+
+						Dontdrawyougits = false;
 					}
 				}
 			}
@@ -2847,12 +2851,16 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
+						Dontdrawyougits = true;
+
 						MaptreeChanged = true;
 
 						_bypassChanged = true;
 						CreateTree();
 
 						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
+
+						Dontdrawyougits = false;
 					}
 				}
 			}

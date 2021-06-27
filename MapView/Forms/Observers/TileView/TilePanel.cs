@@ -538,6 +538,8 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			if (MainViewF.Dontdrawyougits) return;
+
 			if (_parts != null && _parts.Length != 0)
 			{
 				Graphics graphics = e.Graphics;
