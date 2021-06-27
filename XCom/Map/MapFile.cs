@@ -28,11 +28,19 @@ namespace XCom
 
 		#region Fields (static)
 		/// <summary>
+		/// The maximum count of <c><see cref="McdRecord">McdRecords</see></c>
+		/// that a Mapfile can cope with.
+		/// </summary>
+		/// <seealso cref="MaxTerrainId"><c>MaxTerrainId</c></seealso>
+		public const int MAX_MCDRECORDS = 254;
+
+		/// <summary>
 		/// The highest id of an <c><see cref="McdRecord"/></c> that a Mapfile
 		/// can cope with.
 		/// </summary>
-		/// <seealso cref="MapFileService.MAX_MCDRECORDS"><c>MapFileService.MAX_MCDRECORDS</c></seealso>
+		/// <seealso cref="MAX_MCDRECORDS"><c>MAX_MCDRECORDS</c></seealso>
 		public const int MaxTerrainId = 253;
+
 
 		// bitwise changes for MapResize()
 		public const int CHANGED_NOT = 0; // changed not

@@ -121,7 +121,7 @@ namespace XCom
 		/// Checks the fullpath to the Mapfile for this <c>Descriptor</c>.
 		/// </summary>
 		/// <returns><c>true</c> if the Mapfile exists on the hardrive</returns>
-		public bool CheckMapfilePath()
+		private bool CheckMapfilePath()
 		{
 			string path = Basepath;
 			if (!String.IsNullOrEmpty(path)) // the BasePath can be null if resource-type is notconfigured.
@@ -134,7 +134,7 @@ namespace XCom
 			return false;
 		}
 
-/*		/// <summary>
+		/// <summary>
 		/// Gets the fullpath to the Mapfile for this <c>Descriptor</c>.
 		/// </summary>
 		/// <returns>the path to the Mapfile else <c>null</c></returns>
@@ -150,7 +150,7 @@ namespace XCom
 					return pfe;
 			}
 			return null;
-		} */
+		}
 
 		/// <summary>
 		/// Gets the appropriate TERRAIN directory for this tileset.

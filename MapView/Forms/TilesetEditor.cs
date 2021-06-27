@@ -288,7 +288,7 @@ namespace MapView
 					}
 					lbl_McdRecords.Text = records + " MCD Records";
 
-					if (records > MapFileService.MAX_MCDRECORDS)
+					if (records > MapFile.MAX_MCDRECORDS)
 						lbl_McdRecords.ForeColor = Color.MediumVioletRed;
 					else
 						lbl_McdRecords.ForeColor = Color.Tan;
@@ -585,7 +585,7 @@ namespace MapView
 			}
 			lbl_McdRecords.Text = records + " MCD Records";
 
-			if (records > MapFileService.MAX_MCDRECORDS)
+			if (records > MapFile.MAX_MCDRECORDS)
 				lbl_McdRecords.ForeColor = Color.MediumVioletRed;
 			else
 				lbl_McdRecords.ForeColor = Color.Tan;

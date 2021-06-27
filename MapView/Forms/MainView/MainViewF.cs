@@ -1202,8 +1202,7 @@ namespace MapView
 					{
 						e.SuppressKeyPress = true;
 
-						var descriptor = _selected.Tag as Descriptor;
-						if (MapFileService.GetMapfilePath(descriptor) == null)
+						if (!(_selected.Tag as Descriptor).FileValid)
 						{
 							_dontbeeptype = DontBeepType.MapBrowserDialog;
 							BeginInvoke(DontBeepEvent);
@@ -1569,6 +1568,7 @@ namespace MapView
 				LoadSelectedDescriptor();
 
 				Dontdrawyougits = false;
+				MainViewOverlay.Invalidate();
 			}
 		}
 
@@ -3076,8 +3076,8 @@ namespace MapView
 		/// For an ungodly reason when the <c><see cref="MapTree"/></c>
 		/// gains/loses focus
 		/// <c><see cref="OnMapTreeDrawNode()">OnMapTreeDrawNode()</see></c>
-		/// re-colors selected and focused nodes correctly but does not re-color
-		/// a Searched node.
+		/// re-colors selected and focused treenodes correctly but does not
+		/// re-color a <c><see cref="Searched"/></c> treenode.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3088,10 +3088,10 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// If user clicks on an already selected node for which the Mapfile has
-		/// not been loaded
-		/// <c><see cref="LoadSelectedDescriptor()">LoadSelectedDescriptor()</see></c>
-		/// offers to show a dialog for the user to browse to the file.
+		/// If user clicks on the already <c><see cref="_selected"/></c>
+		/// treenode for which the Mapfile has not been loaded
+		/// <c><see cref="MapFileService"/>.LoadDescriptor()</c> offers to show
+		/// a dialog for the user to browse to the file.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

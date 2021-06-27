@@ -652,8 +652,8 @@ namespace MapView.Forms.MainView
 			Tilepart part;
 			int id;
 
-			int records = Math.Min(MapFile.Parts.Count, MapFileService.MAX_MCDRECORDS);	// NOTE: Also checked in the TilepartSubstitution
-																						// dialog else the Accept button does not enable.
+			int records = Math.Min(MapFile.Parts.Count, MapFile.MAX_MCDRECORDS);	// NOTE: Also checked in the TilepartSubstitution
+																					// dialog else the Accept button does not enable.
 			for (int lev = 0; lev != MapFile.Levs; ++lev)
 			for (int row = 0; row != MapFile.Rows; ++row)
 			for (int col = 0; col != MapFile.Cols; ++col)

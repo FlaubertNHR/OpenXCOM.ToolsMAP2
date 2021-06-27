@@ -14,16 +14,6 @@ namespace XCom
 	/// </summary>
 	public static class MapFileService
 	{
-		#region Fields (static)
-		/// <summary>
-		/// The maximum count of <c><see cref="McdRecord">McdRecords</see></c>
-		/// that a Mapfile can cope with.
-		/// </summary>
-		/// <seealso cref="MapFile.MaxTerrainId"><c>MapFile.MaxTerrainId</c></seealso>
-		public const int MAX_MCDRECORDS = 254;
-		#endregion Fields (static)
-
-
 		#region Methods (static)
 		/// <summary>
 		/// Loads a <c><see cref="MapFile"/></c> along with all routes and
@@ -51,11 +41,11 @@ namespace XCom
 			//Logfile.Log(". browseMapfile= " + browseMapfile);
 			//Logfile.Log(". ignoreRecordsExceeded= " + ignoreRecordsExceeded);
 
-			string pfe = GetMapfilePath(descriptor);
+			string pfe = descriptor.GetMapfilePath();
 
 			if (pfe == null
-				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) == Keys.Shift))	// hold [Shift] to ask for a MapBrowser dialog
-			{																				// (only so user doesn't have to click the tree-node twice)
+				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) != 0))
+			{
 				browseMapfile = false;
 
 				using (var f = new Infobox(
@@ -86,6 +76,7 @@ namespace XCom
 								if (File.Exists(pfe))
 								{
 									descriptor.Basepath = fbd.SelectedPath;
+									descriptor.FileValid = true;
 									browseMapfile = true;
 
 									//Logfile.Log(". . treechanged= " + treechanged);
@@ -146,7 +137,7 @@ namespace XCom
 				if (parts.Count != 0)
 				{
 					if (!ignoreRecordsExceeded && !descriptor.BypassRecordsExceeded // issue warning ->
-						&& parts.Count > MAX_MCDRECORDS)
+						&& parts.Count > MapFile.MAX_MCDRECORDS)
 					{
 						string text = String.Empty;
 
@@ -218,28 +209,6 @@ namespace XCom
 			}
 
 			//Logfile.Log(". ret null Descriptor");
-			return null;
-		}
-
-		/// <summary>
-		/// Gets the fullpath to the Mapfile for a specified
-		/// <c><see cref="Descriptor"/></c>.
-		/// </summary>
-		/// <param name="descriptor">a <c>Descriptor</c></param>
-		/// <returns>the path to the Mapfile else <c>null</c></returns>
-		/// <remarks>Check that <paramref name="descriptor"/> is valid before
-		/// call.</remarks>
-		public static string GetMapfilePath(Descriptor descriptor)
-		{
-			string dir = descriptor.Basepath;
-			if (!String.IsNullOrEmpty(dir)) // -> the BasePath can be null if resource-type is notconfigured.
-			{
-					   dir = Path.Combine(dir, GlobalsXC.MapsDir);
-				string pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
-
-				if (File.Exists(pfe))
-					return pfe;
-			}
 			return null;
 		}
 		#endregion Methods (static)
