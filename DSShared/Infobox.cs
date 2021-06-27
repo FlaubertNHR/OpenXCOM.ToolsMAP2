@@ -252,8 +252,6 @@ namespace DSShared
 		{
 			e.Graphics.DrawLine(Pens.Black, 0,0, 0, pa_Copyable.Height - 1);
 			e.Graphics.DrawLine(Pens.Black, 1,0, pa_Copyable.Width - 1, 0);
-
-//			e.Graphics.DrawLine(Pens.Black, 0, pa_Copyable.Height - 1, pa_Copyable.Width, pa_Copyable.Height - 1); // test
 		}
 
 		/// <summary>
