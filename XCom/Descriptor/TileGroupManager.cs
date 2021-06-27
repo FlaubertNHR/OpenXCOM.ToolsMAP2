@@ -229,12 +229,10 @@ namespace XCom
 						{
 							switch (@group.GroupType)
 							{
-								default:
-									goto case GameType.Ufo; // workaround for c#
-
-								case GameType.Ufo:
+								default: // case GameType.Ufo
 									basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
 									break;
+
 								case GameType.Tftd:
 									basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
 									break;
