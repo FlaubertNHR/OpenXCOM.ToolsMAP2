@@ -2807,7 +2807,7 @@ namespace MapView
 				string labelTileset  = String.Empty;
 
 				using (var f = new TilesetEditor(
-											TilesetEditType.AddTileset,
+											TsEditMode.Create,
 											labelGroup,
 											labelCategory,
 											labelTileset))
@@ -2845,7 +2845,7 @@ namespace MapView
 				string labelTileset  = MapTree.SelectedNode.Text;
 
 				using (var f = new TilesetEditor(
-											TilesetEditType.EditTileset,
+											TsEditMode.Exists,
 											labelGroup,
 											labelCategory,
 											labelTileset))
