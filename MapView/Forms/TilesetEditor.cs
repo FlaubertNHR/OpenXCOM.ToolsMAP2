@@ -46,6 +46,8 @@ namespace MapView
 		#region Fields (static)
 		private const string AddTileset  = "Add Tileset";
 		private const string EditTileset = "Edit Tileset";
+
+		private static string _lastTerrainFolder = String.Empty;
 		#endregion Fields (static)
 
 
@@ -78,8 +80,6 @@ namespace MapView
 
 		private bool _warned_MultipleTilesets;
 		private bool _bypassTerrainPathChanged;
-
-		private string _lastTerrainFolder = String.Empty;
 		#endregion Fields
 
 
@@ -1177,7 +1177,7 @@ namespace MapView
 				tb_PathAvailable.ReadOnly = false;
 				btn_FindBasepath.Visible = true;
 
-				if (String.IsNullOrEmpty(_lastTerrainFolder))
+				if (_lastTerrainFolder.Length == 0)
 					_lastTerrainFolder = Basepath;
 
 				basepath = _lastTerrainFolder;
