@@ -34,7 +34,7 @@ namespace DSShared
 			this.pa_Copyable.Location = new System.Drawing.Point(0, 0);
 			this.pa_Copyable.Margin = new System.Windows.Forms.Padding(0);
 			this.pa_Copyable.Name = "pa_Copyable";
-			this.pa_Copyable.Padding = new System.Windows.Forms.Padding(18, 9, 0, 5);
+			this.pa_Copyable.Padding = new System.Windows.Forms.Padding(17, 9, 0, 5);
 			this.pa_Copyable.Size = new System.Drawing.Size(394, 130);
 			this.pa_Copyable.TabIndex = 1;
 			this.pa_Copyable.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintPanel);
@@ -45,12 +45,12 @@ namespace DSShared
 			this.rt_Copyable.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.rt_Copyable.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rt_Copyable.HideSelection = false;
-			this.rt_Copyable.Location = new System.Drawing.Point(18, 9);
+			this.rt_Copyable.Location = new System.Drawing.Point(17, 9);
 			this.rt_Copyable.Margin = new System.Windows.Forms.Padding(0);
 			this.rt_Copyable.Name = "rt_Copyable";
 			this.rt_Copyable.ReadOnly = true;
 			this.rt_Copyable.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-			this.rt_Copyable.Size = new System.Drawing.Size(376, 116);
+			this.rt_Copyable.Size = new System.Drawing.Size(377, 116);
 			this.rt_Copyable.TabIndex = 0;
 			this.rt_Copyable.Text = "";
 			this.rt_Copyable.WordWrap = false;
