@@ -3201,7 +3201,8 @@ namespace MapView
 															descriptor,
 															ref browseMapfile,
 															Optionables.IgnoreRecordsExceeded,
-															routes);
+															routes,
+															_selected);
 					if (browseMapfile) MaptreeChanged = true;
 
 					if (file != null)

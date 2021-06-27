@@ -27,6 +27,7 @@ namespace XCom
 		/// potential RecordsExceeded warning dialog</param>
 		/// <param name="routes">current Routes - use this only when reloading
 		/// the current Mapfile and want to keep the route-collection as is</param>
+		/// <param name="selected">for MapBrowserDialog info only</param>
 		/// <returns><c>null</c> if things go south</returns>
 		/// <remarks>Check that <paramref name="descriptor"/> is valid before
 		/// call.</remarks>
@@ -34,7 +35,8 @@ namespace XCom
 				Descriptor descriptor,
 				ref bool browseMapfile,
 				bool ignoreRecordsExceeded,
-				RouteNodes routes)
+				RouteNodes routes,
+				TreeNode selected)
 		{
 			//Logfile.Log("MapFileService.LoadDescriptor()");
 			//Logfile.Log(". descriptor.Label= " + descriptor.Label);
@@ -48,14 +50,19 @@ namespace XCom
 			{
 				browseMapfile = false;
 
+				string copyable = "group:    " + selected.Parent.Parent.Text + Environment.NewLine
+								+ "category: " + selected.Parent.Text        + Environment.NewLine
+								+ "tileset:  " + descriptor.Label            + Environment.NewLine + Environment.NewLine
+								+ "basepath: " + descriptor.Basepath;
+
 				using (var f = new Infobox(
 										"Files not found",
 										"Browse to a basepath for the MAP and RMP files ...",
-										descriptor.Label,
+										copyable,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
 				{
-					if (f.ShowDialog() == DialogResult.OK) // Open a folderbrowser for user to find a basepath ->
+					if (f.ShowDialog() == DialogResult.OK) // Open a folderbrowser for user to set 'descriptor.Basepath' ->
 					{
 						using (var fbd = new FolderBrowserDialog())
 						{
