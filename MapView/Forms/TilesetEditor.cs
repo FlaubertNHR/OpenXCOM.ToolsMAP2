@@ -62,8 +62,8 @@ namespace MapView
 		/// <summary>
 		/// <c>true</c> if the BypassRecordsExceeded checkbox has been inited.
 		/// </summary>
-		/// <remarks>Don't let initializing the <c>Descriptor.BypassRecordsExceeded</c>
-		/// checkbox fire
+		/// <remarks>Don't let initializing the
+		/// <c><see cref="Descriptor"/>.BypassRecordsExceeded</c> checkbox fire
 		/// <c><see cref="OnBypassRecordsExceededCheckedChanged()">OnBypassRecordsExceededCheckedChanged()</see></c>
 		/// and flag the Maptree changed.</remarks>
 		private bool _inited_RE;
@@ -1251,8 +1251,8 @@ namespace MapView
 
 
 		/// <summary>
-		/// Handles the checkedchanged event for the BypassRecordsExceeded
-		/// checkbox.
+		/// Handles the checkedchanged event for the
+		/// <c><see cref="Descriptor"/>.BypassRecordsExceeded</c> checkbox.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1269,7 +1269,9 @@ namespace MapView
 
 		/// <summary>
 		/// Applies the current Allocated terrains-list to all tilesets that
-		/// have the current tileset's label and basepath.
+		/// have the current tileset's
+		/// <c><see cref="Descriptor"/>.Label</c> and
+		/// <c><see cref="Descriptor"/>.Basepath</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1301,7 +1303,8 @@ namespace MapView
 
 		/// <summary>
 		/// Shows a dialog that lists other tilesets that have an identical
-		/// Path+Map as the current tileset.
+		/// <c><see cref="Descriptor"/>.Basepath</c> and
+		/// <c><see cref="Descriptor"/>.Label</c> as the current tileset.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1339,7 +1342,8 @@ namespace MapView
 		#region Methods
 		/// <summary>
 		/// Changes the labels of all tilesets that have the original tileset's
-		/// label and basepath.
+		/// <c><see cref="Descriptor"/>.Basepath</c> and
+		/// <c><see cref="Descriptor"/>.Label</c>.
 		/// </summary>
 		private void GlobalChangeLabels()
 		{
