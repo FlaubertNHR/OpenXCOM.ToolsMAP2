@@ -86,7 +86,7 @@ namespace McdView
 
 		private Tilepart[] _parts;
 		/// <summary>
-		/// An array of <see cref="Tilepart">Tileparts</see>.
+		/// An array of <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
 		/// <remarks>Each entry's record is referenced w/ Tilepart.Record.
 		/// 
@@ -1138,6 +1138,32 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// Checks if <c><see cref="Parts"></see>.Length</c> - the count of
+		/// <c><see cref="McdRecord">McdRecords</see></c> - is less than or
+		/// equal to
+		/// <c><see cref="MapFile.MAX_MCDRECORDS">MapFile.MAX_MCDRECORDS</see></c>
+		/// </summary>
+		/// <returns><c>true</c> if legit or user doesn't care</returns>
+		private bool CheckRecordCount()
+		{
+			bool proceed = (Parts.Length <= MapFile.MAX_MCDRECORDS);
+			if (!proceed)
+			{
+				using (var f = new Infobox(
+										"Warning",
+										"Total MCD records exceeds " + MapFile.MAX_MCDRECORDS + ".",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (f.ShowDialog(this) == DialogResult.OK)
+						return true;
+				}
+			}
+			return proceed;
+		}
+
+		/// <summary>
 		/// Handles clicking the File|Save menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -1146,22 +1172,7 @@ namespace McdView
 		{
 			SaveRecordsetFailed = true;
 
-			bool proceed = (Parts.Length <= MapFileService.MAX_MCDRECORDS);
-			if (!proceed)
-			{
-				using (var f = new Infobox(
-										"Warning",
-										"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
-										null,
-										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
-				{
-					if (f.ShowDialog(this) == DialogResult.OK)
-						proceed = true;
-				}
-			}
-
-			if (proceed && McdRecord.WriteRecords(PfeMcd, Parts))
+			if (CheckRecordCount() && McdRecord.WriteRecords(PfeMcd, Parts))
 			{
 				SaveRecordsetFailed = false;
 
@@ -1219,75 +1230,58 @@ namespace McdView
 					sfd.InitialDirectory = _lastBrowserDirectory;
 
 
-				if (sfd.ShowDialog(this) == DialogResult.OK)
+				if (sfd.ShowDialog(this) == DialogResult.OK
+					&& CheckRecordCount())
 				{
-					bool proceed = (Parts.Length <= MapFileService.MAX_MCDRECORDS);
-					if (!proceed)
+					string pfe = sfd.FileName;
+					_lastBrowserDirectory = Path.GetDirectoryName(pfe);
+
+					if (McdRecord.WriteRecords(pfe, Parts))
 					{
-						using (var f = new Infobox(
-												"Warning",
-												"Total MCD records exceeds " + MapFileService.MAX_MCDRECORDS + ".",
-												null,
-												InfoboxType.Warn,
-												InfoboxButtons.CancelOkay))
+						PfeMcd = pfe;
+
+						CacheLoad.SetCacheSaved(Parts);
+
+						Changed = false;
+
+						FireMvReload = true;
+
+
+						if (Spriteset != null)
 						{
-							if (f.ShowDialog(this) == DialogResult.OK)
-								proceed = true;
-						}
-					}
+							string dir    = Path.GetDirectoryName(PfeMcd);
+							string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
+							string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
 
-					if (proceed)
-					{
-						string pfe = sfd.FileName;
-						_lastBrowserDirectory = Path.GetDirectoryName(pfe);
+							InfoboxType bt;
 
-						if (McdRecord.WriteRecords(pfe, Parts))
-						{
-							PfeMcd = pfe;
-
-							CacheLoad.SetCacheSaved(Parts);
-
-							Changed = false;
-
-							FireMvReload = true;
-
-
-							if (Spriteset != null)
+							string head;
+							if (File.Exists(pfePck) || File.Exists(pfeTab))
 							{
-								string dir    = Path.GetDirectoryName(PfeMcd);
-								string pfePck = Path.Combine(dir, Label + GlobalsXC.PckExt);
-								string pfeTab = Path.Combine(dir, Label + GlobalsXC.TabExt);
-
-								InfoboxType bt;
-
-								string head;
-								if (File.Exists(pfePck) || File.Exists(pfeTab))
-								{
-									bt = InfoboxType.Warn;
-									head = "A spriteset for the terrain is detected on disk."
-										 + " Do you want to overwrite that spriteset ...";
-								}
-								else
-								{
-									bt = InfoboxType.Info;
-									head = "A spriteset was not found with that label. Do you"
-										 + " want to write the spriteset also ...";
-								}
-
-								using (var f = new Infobox(
-														"Write spriteset",
-														Infobox.SplitString(head),
-														pfePck + Environment.NewLine + pfeTab,
-														bt,
-														InfoboxButtons.CancelOkay))
-								{
-									if (f.ShowDialog(this) == DialogResult.OK)
-										OnClick_SaveSpriteset(null, EventArgs.Empty);
-								}
+								bt = InfoboxType.Warn;
+								head = "A spriteset for the terrain is detected on disk."
+									 + " Do you want to overwrite that spriteset ...";
+							}
+							else
+							{
+								bt = InfoboxType.Info;
+								head = "A spriteset was not found with that label. Do you"
+									 + " want to write the spriteset also ...";
 							}
 
-							OnClick_Reload(null, EventArgs.Empty);
+							using (var f = new Infobox(
+													"Write spriteset",
+													Infobox.SplitString(head),
+													pfePck + Environment.NewLine + pfeTab,
+													bt,
+													InfoboxButtons.CancelOkay))
+							{
+								if (f.ShowDialog(this) == DialogResult.OK)
+									OnClick_SaveSpriteset(null, EventArgs.Empty);
+							}
 						}
+
+						OnClick_Reload(null, EventArgs.Empty);
 					}
 				}
 			}
