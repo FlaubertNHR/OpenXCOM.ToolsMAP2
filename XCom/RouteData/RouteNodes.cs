@@ -165,7 +165,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Returns the node at id.
+		/// Gets the <c><see cref="RouteNode"/></c> at <paramref name="id"/>.
 		/// </summary>
 		public RouteNode this[int id]
 		{
@@ -185,7 +185,9 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Reads a Routefile and adds its nodes to a list.
+		/// cTor[0]. Reads a Routefile and adds its
+		/// <c><see cref="RouteNode">RouteNodes</see></c> to
+		/// <c><see cref="Nodes"/></c>.
 		/// </summary>
 		/// <param name="label"></param>
 		/// <param name="basepath"></param>
@@ -199,11 +201,12 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[1]. Imports a Routefile and replaces the current nodes-list
-		/// with its nodes.
+		/// cTor[1]. Imports a Routefile and replaces <c><see cref="Nodes"/></c>
+		/// with its <c><see cref="RouteNode">RouteNodes</see></c>.
 		/// </summary>
 		/// <param name="pfe"></param>
-		/// <remarks>Do *not* replace 'PfeRoutes' on an import.</remarks>
+		/// <remarks>Do *not* replace <c><see cref="PfeRoutes"/></c> on an
+		/// import.</remarks>
 		public RouteNodes(string pfe)
 		{
 			if (!LoadNodes(pfe))
@@ -211,10 +214,10 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Helper for the cTors. Reads a file into this RouteNodes.
+		/// Reads a Routefile into this <c>RouteNodes</c>. Helper for the cTors.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
-		/// <returns>true if situation normal</returns>
+		/// <returns><c>true</c> if situation normal</returns>
 		private bool LoadNodes(string pfe)
 		{
 			using (var fs = FileService.OpenFile(pfe))
@@ -288,7 +291,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Saves the current Routefile.
+		/// Saves this <c>RouteNodes</c>.
 		/// </summary>
 		/// <returns>true on success</returns>
 		internal bool SaveRoutes()
@@ -297,7 +300,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Exports the routes to a different file.
+		/// Exports this <c>RouteNodes</c> to a different Routefile.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
 		public void ExportRoutes(string pfe)
@@ -306,10 +309,10 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Saves the routes to a Routefile.
+		/// Writes this <c>RouteNodes</c> to a given path.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
-		/// <returns>true on success</returns>
+		/// <returns><c>true</c> on success</returns>
 		private bool WriteNodes(string pfe)
 		{
 			string pfeT;
@@ -335,7 +338,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Adds a node to the node-list.
+		/// Adds a <c><see cref="RouteNode"/></c> to <c><see cref="Nodes"/></c>.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
@@ -350,9 +353,10 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Deletes a node from the node-list.
+		/// Deletes a <c><see cref="RouteNode"/></c> from
+		/// <c><see cref="Nodes"/></c>.
 		/// </summary>
-		/// <param name="node">the node to delete</param>
+		/// <param name="node">the <c>RouteNode</c> to delete</param>
 		public void DeleteNode(RouteNode node)
 		{
 			int id = node.Id;

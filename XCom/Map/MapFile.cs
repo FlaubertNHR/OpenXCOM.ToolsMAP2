@@ -371,14 +371,15 @@ namespace XCom
 		/// <summary>
 		/// Writes default Map and blank Route files.
 		/// </summary>
-		/// <param name="pfeMap"></param>
-		/// <param name="pfeRoutes"></param>
+		/// <param name="pfeMap">path-file-extension of the Mapfile to create</param>
+		/// <param name="pfeRoutes">path-file-extension of the Routefile to
+		/// create</param>
 		/// <returns><c>true</c> on success</returns>
 		/// <remarks>Call this funct only if the Mapfile does *not* exist. This
 		/// funct does *not* create backup files!</remarks>
 		public static bool CreateDefault(string pfeMap, string pfeRoutes)
 		{
-			using (var fs = FileService.CreateFile(pfeMap)) // create a default Map-file and release its handle.
+			using (var fs = FileService.CreateFile(pfeMap)) // create a default Mapfile and release its handle
 			if (fs != null)
 			{
 				fs.WriteByte((byte)10); // rows // default new Map size ->
@@ -394,10 +395,10 @@ namespace XCom
 					fs.WriteByte((byte)0);
 				}
 
-				using (var fsRoutes = FileService.CreateFile(pfeRoutes)) // create a blank Route-file and release its handle.
+				using (var fsRoutes = FileService.CreateFile(pfeRoutes)) // create a blank Routefile and release its handle
 				{}
 
-				return true; // ie. don't worry too much about successful creation of the Routesfile.
+				return true; // don't worry too much about successful creation of the Routefile.
 			}
 			return false;
 		}
@@ -406,7 +407,7 @@ namespace XCom
 
 		#region Methods (save/write)
 		/// <summary>
-		/// Saves the current <c>MapFile</c>.
+		/// Saves this <c>MapFile</c>.
 		/// </summary>
 		/// <returns><c>true</c> on success</returns>
 		public bool SaveMap()
@@ -415,7 +416,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Exports the Map to a different file.
+		/// Exports this <c>MapFile</c> to a different file.
 		/// </summary>
 		/// <param name="pf">path-file w/out extension</param>
 		public void ExportMap(string pf)
@@ -424,7 +425,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Writes a Mapfile.
+		/// Writes this <c>MapFile</c> to a given path.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
 		/// <returns><c>true</c> on success</returns>
@@ -499,7 +500,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Saves the current Routefile.
+		/// Saves <c><see cref="Routes"/></c> to the current Routefile.
 		/// </summary>
 		/// <returns><c>true</c> on success</returns>
 		public bool SaveRoutes()
@@ -508,7 +509,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Exports the Routes to a different file.
+		/// Exports the Routes to a different Routefile.
 		/// </summary>
 		/// <param name="pf">path-file w/out extension</param>
 		public void ExportRoutes(string pf)
